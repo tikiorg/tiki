@@ -25,7 +25,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 // | Based on OLE::Storage_Lite by Kawai, Takanori                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: ole.php,v 1.2 2004-09-08 19:52:32 mose Exp $
+// $Id: ole.php,v 1.3 2005-05-18 11:01:21 mose Exp $
 
 
 /**

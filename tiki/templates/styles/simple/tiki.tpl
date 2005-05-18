@@ -1,6 +1,7 @@
 {include file="header.tpl"}{* This must be included as the first thing in a document to be XML compliant *}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki.tpl,v 1.8 2005-03-12 16:51:19 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki.tpl,v 1.9 2005-05-18 11:03:56 mose Exp $ *}
 {* Main template for TikiWiki layout *}
+{if $feature_bidi eq 'y'}<table dir="rtl" ><tr><td>{/if}
 <div id="main">
   {if $feature_top_bar eq 'y'}
   <div id="top">
@@ -87,5 +88,6 @@
 
   
 
-</div><!-- main -->
+</div><!-- main --> 
+{if $feature_bidi eq 'y'}</td></tr></table>{/if}
 {include file="footer.tpl"}

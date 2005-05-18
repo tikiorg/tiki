@@ -24,17 +24,17 @@
 {assign var=fld value="z"}
 {foreach key=fk item=fi from=$field_types}
 {if $fi.opt}
-<span id='{$fk}' {if $type eq $fk}style="display:inline;"{else}style="display:none;"{/if}><br /><i>{$fi.help}</i></span>
+<div id='{$fk}' {if $type eq $fk}style="display:block;font-style:italic;"{else}style="display:none;font-style:italic;"{/if}>{$fi.help}</div>
 {assign var=fld value=$fld|cat:$fk}
 {/if}
 {/foreach}
 </td><td>
-<select name="type" id='trkfldtype' onchange="javascript:chgTrkFld('{$fld}',this.options[selectedIndex].value);">
+<select name="type" id='trkfldtype' onchange='javascript:chgTrkFld("{$fld}",this.options[selectedIndex].value);'>
 {foreach key=fk item=fi from=$field_types}
 <option value="{$fk}" {if $type eq $fk}{if $fi.opt}{assign var=showit value=true}{/if}selected="selected"{/if}>{$fi.label}</option>
 {/foreach}
 </select>
-<span  id='z' {if $showit}style="display:inline;"{else}style="display:none;"{/if}><br /><input type="text" name="options" value="{$options|escape}" size="50" /></span>
+<div  id='z' {if $showit}style="display:block;"{else}style="display:none;"{/if}><input type="text" name="options" value="{$options|escape}" size="50" /></div>
 </td></tr>
 <tr class="formcolor"><td>{tr}Is column visible when listing tracker items?{/tr}</td><td><input type="checkbox" name="isTblVisible" {if $isTblVisible eq 'y'}checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td>{tr}Column links to edit/view item?{/tr}</td><td><input type="checkbox" name="isMain" {if $isMain eq 'y'}checked="checked"{/if} /></td></tr>

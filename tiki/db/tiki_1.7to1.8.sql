@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.109 2005-03-12 16:49:05 mose Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.110 2005-05-18 10:59:05 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 

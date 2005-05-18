@@ -7,7 +7,7 @@ error_reporting (E_ALL);
 
 require_once ('irclib.php');
 
-echo '$Id: split_logs.php,v 1.4 2005-01-01 00:17:23 damosoft Exp $', "\n";
+echo '$Id: split_logs.php,v 1.5 2005-05-18 11:00:59 mose Exp $', "\n";
 
 if ($argc < 2) {
 	echo "

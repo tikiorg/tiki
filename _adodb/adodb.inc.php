@@ -423,9 +423,9 @@
 			$err = "Missing extension for ".$this->dataProvider;
 			$ret = 0;
 		}
-		
 		if ($fn = $this->raiseErrorFn) 
 			$fn($this->databaseType,'CONNECT',$this->ErrorNo(),$err,$this->host,$this->database,$this);
+		
 		
 		$this->_connectionID = false;
 		if ($this->debug) ADOConnection::outp( $this->host.': '.$err);

@@ -48,14 +48,14 @@
 $listpages[ix].image_caption}{$listpages[ix].image_caption}{else}{$listpages[ix].topicName}{/if}"><img 
 {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} 
 alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption}{else}{$listpages[ix].topicName}{/if}" 
-src="article_image.php?id={$listpages[ix].articleId} class="articletypeimage" 
-{if $listpages[ix].image_x > 0}width="{$listpages[ix].image_x}"{/if}{if $listpages[ix].image_y > 0 }height="{$listpages[ix].image_y}"{/if}/></a>
+border="0" src="article_image.php?id={$listpages[ix].articleId}" 
+{if $listpages[ix].image_x > 0}width="{$listpages[ix].image_x}"{/if}{if $listpages[ix].image_y > 0 }height="{$listpages[ix].image_y}"{/if} /></a>
 {else}
 <a href="tiki-read_article.php?articleId={$listpages[ix].articleId}" title="{if $listpages[ix].show_image_caption and
 $listpages[ix].image_caption}{$listpages[ix].image_caption}{else}{$listpages[ix].topicName}{/if}"><img 
 {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} 
 alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption}{else}{$listpages[ix].topicName}{/if}" 
-src="topic_image.php?id={$listpages[ix].topicId}" class="articletypeimage"/></a>
+border="0" src="topic_image.php?id={$listpages[ix].topicId}" /></a>
 {/if}
 {else}
 {section name=it loop=$topics}
@@ -64,7 +64,7 @@ src="topic_image.php?id={$listpages[ix].topicId}" class="articletypeimage"/></a>
 $listpages[ix].image_caption}{$listpages[ix].image_caption}{else}{$listpages[ix].topicName}{/if}"><img 
 {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} 
 alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption}{else}{$listpages[ix].topicName}{/if}" 
-src="topic_image.php?id={$listpages[ix].topicId}" class="articletypeimage" /></a>
+border="0" src="topic_image.php?id={$listpages[ix].topicId}" /></a>
 {/if}
 {/section}
 {/if}
@@ -111,6 +111,9 @@ src="topic_image.php?id={$listpages[ix].topicId}" class="articletypeimage" /></a
   <a class="trailer" href="tiki-edit_article.php?articleId={$listpages[ix].articleId}"><img src='img/icons/edit.gif' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
 {/if}
   <a class="trailer" href="tiki-print_article.php?articleId={$listpages[ix].articleId}"><img src='img/icons/ico_print.gif' border='0' alt='{tr}Print{/tr}' title='{tr}Print{/tr}' /></a>
+{if $feature_multilingual eq 'y' and $tiki_p_edit_article eq 'y'}
+<a class="trailer" href="tiki-edit_translation.php?id={$listpages[ix].articleId}&amp;type=article"><img src='img/icons2/translation.gif' border='0' alt='{tr}Translation{/tr}' title='{tr}Translation{/tr}' /></a>
+{/if}
 {if $tiki_p_remove_article eq 'y'}
   &nbsp;&nbsp;<a class="trailer" href="tiki-list_articles.php?remove={$listpages[ix].articleId}"><img src='img/icons2/delete.gif' border='0' alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' /></a>
 {/if}

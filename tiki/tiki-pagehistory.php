@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.26 2005-03-12 16:49:00 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.27 2005-05-18 10:58:58 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -40,7 +40,7 @@ if (!isset($_REQUEST["page"])) {
 include_once ("tiki-pagesetup.php");
 
 // Now check permissions to access this page
-if ($tiki_p_view != 'y' || (isset($tiki_p_view_wiki_history) && $tiki_p_view_wiki_history == 'n')) {
+if ($tiki_p_view != 'y' || (isset($tiki_p_wiki_view_history) && $tiki_p_wiki_view_history != 'y') ) {
 	$smarty->assign('msg', tra("Permission denied you cannot browse this page history"));
 
 	$smarty->display("error.tpl");
@@ -124,9 +124,15 @@ if (!isset($_REQUEST["newver"])) {
 }
 
 if (isset($_REQUEST["compare"])) {
-	foreach ($history as $old) {
-		if ($old["version"] == $_REQUEST["oldver"])
-			break;
+	if ($_REQUEST["oldver"] == 0 || $_REQUEST["oldver"] == $info["version"]) {
+		$old = & $info;
+		$smarty->assign_by_ref('new', $info);
+	}
+	else {
+		foreach ($history as $old) {
+			if ($old["version"] == $_REQUEST["oldver"])
+				break;
+		}
 	}
 	$smarty->assign_by_ref('old', $old);
 	if ($_REQUEST["newver"] == 0 || $_REQUEST["newver"] == $info["version"]) {
@@ -140,8 +146,8 @@ if (isset($_REQUEST["compare"])) {
 		}
 		$smarty->assign_by_ref('new', $new);
 	}
-	if (!isset($_REQUEST["diff_style"]))
-		$_REQUEST["diff_style"] = 'minsidediff';
+	if (!isset($_REQUEST["diff_style"]) || $_REQUEST["diff_style"] == "old")
+		$_REQUEST["diff_style"] = 'unidiff';
 	$smarty->assign('diff_style', $_REQUEST["diff_style"]);
 	if ($_REQUEST["diff_style"] == "sideview") {
 		$old["data"] = $tikilib->parse_data($old["data"]);

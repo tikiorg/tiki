@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.46 2005-03-12 16:48:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.47 2005-05-18 10:58:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,7 +9,6 @@
 // Initialization
 $tikifeedback = array();
 require_once ('tiki-setup.php');
-require_once ('lib/userslib/userslib_admin.php');
 
 if (!($user == 'admin' || $tiki_p_admin == 'y' || $tiki_p_admin_users == 'y')) { // temporary patch: tiki_p_admin includes tiki_p_admin_users but if you don't clean the temp/cache each time you sqlupgrade the perms setting is not synchornous with the cache
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
@@ -23,7 +22,7 @@ function discardUser($u, $reason) {
 }
 
 function batchImportUsers() {
-	global $userlib, $smarty;
+	global $userlib, $smarty, $logslib;
 
 	$fname = $_FILES['csvlist']['tmp_name'];
 	$fhandle = fopen($fname, "r");
@@ -62,7 +61,7 @@ function batchImportUsers() {
 			$discarded[] = discardUser($u, tra("User is duplicated"));
 		} else {
 			if (!$userlib->user_exists($u['login'])) {
-				$userslibadmin->add_user($u['login'], $u['password'], $u['email']);
+				$userlib->add_user($u['login'], $u['password'], $u['email']);
 				$logslib->add_log('users',sprintf(tra("Created account %s <%s>"),$u["login"], $u["email"]));				
 			}
 
@@ -104,7 +103,7 @@ if (isset($_REQUEST["newuser"])) {
 			if ($userlib->user_exists($_REQUEST["name"])) {
 				$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("User %s already exists"),$_REQUEST["name"]));
 			} else {
-				if ($userslibadmin->add_user($_REQUEST["name"], $_REQUEST["pass"], $_REQUEST["email"])) {
+				if ($userlib->add_user($_REQUEST["name"], $_REQUEST["pass"], $_REQUEST["email"])) {
 					$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("New %s created with %s %s."),tra("user"),tra("username"),$_REQUEST["name"]));
 					$cookietab = '1';
 					$_REQUEST['find'] = $_REQUEST["name"];
@@ -122,7 +121,7 @@ if (isset($_REQUEST["newuser"])) {
 		$area = 'deluser';
 		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
-			$userslibadmin->remove_user($_REQUEST["user"]);
+			$userlib->remove_user($_REQUEST["user"]);
 			$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s %s successfully deleted."),tra("user"),$_REQUEST["user"]));
 		} else {
 			key_get($area);
@@ -132,7 +131,7 @@ if (isset($_REQUEST["newuser"])) {
 		$area = 'deluserfromgroup';
 		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
-			$userslibadmin->remove_user_from_group($_REQUEST["user"], $_REQUEST["group"]);
+			$userlib->remove_user_from_group($_REQUEST["user"], $_REQUEST["group"]);
 			$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s %s removed from %s %s."),tra("user"),$_REQUEST["user"],tra("group"),$_REQUEST["group"]));
 		} else {
 			key_get($area);
@@ -145,12 +144,18 @@ if (isset($_REQUEST["newuser"])) {
 } elseif (!empty($_REQUEST["submit_mult"]) && !empty($_REQUEST["checked"])) {
 	if ($_REQUEST["submit_mult"] == "remove_users") {
 		$area = 'batchdeluser';
-		if ($feature_ticketlib2 == 'n' or ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])))) {
+		if ($feature_ticketlib2 == 'n' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
-		foreach ($_REQUEST["checked"] as $deleteuser) {
-			$userlib->remove_user($deleteuser);
-			$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s <b>%s</b> successfully deleted."),tra("user"),$deleteuser));
-		}
+			foreach ($_REQUEST["checked"] as $deleteuser) {
+				$userlib->remove_user($deleteuser);
+				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s <b>%s</b> successfully deleted."),tra("user"),$deleteuser));
+			}
+		} elseif ( $feature_ticketlib2 == 'y') {
+			$ch = "";
+			foreach ($_REQUEST['checked'] as $c) {
+				$ch .= "&amp;checked[]=".urlencode($c);
+			}
+			key_get($area, "", "tiki-adminusers.php?submit_mult=remove_users".$ch);
 		} else {
 			key_get($area);
 		}

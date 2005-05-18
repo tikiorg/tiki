@@ -1,5 +1,5 @@
 {include file="header.tpl"}{* This must be included as the first thing in a document to be XML compliant *}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-print_article.tpl,v 1.3 2004-06-23 22:34:33 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-print_article.tpl,v 1.4 2005-05-18 11:03:56 mose Exp $ *}
 {* Index we display a wiki page here *}
 
 <div id="tiki-main">

@@ -1,9 +1,16 @@
 {if $feature_help eq "y"}
-<div class="highlight">{tr}Tip{/tr}: {tr}you can see users rank by score in the module users_rank, for that go to{/tr} "<a class="link" href="tiki-admin_modules.php">{tr}Admin modules{/tr}</a>"</div><br />
+<div class="rbox" style="margin-top: 10px;">
+<div class="rbox-title" style="background-color: #eeee99; font-weight : bold; display : inline; padding : 0 10px;">{tr}Tip{/tr}</div>
+<div class="rbox-data" style="padding: 2px 10px; background-color: #eeee99;">{tr}You can see users rank by score in the module users_rank, for that go to{/tr} "<a class="link" href="tiki-admin_modules.php">{tr}Admin modules{/tr}</a>"</div>
+</div>
+<br />
 {/if}
 
 <div class="cbox">
-  <div class="cbox-title">{tr}Score settings{/tr}</div>
+  <div class="cbox-title">
+    {tr}{$crumbs[$crumb]->description}{/tr}
+    {help crumb=$crumbs[$crumb]}
+  </div>
   <div class="cbox-data">
       <form action="tiki-admin.php?page=score" method="post">
 

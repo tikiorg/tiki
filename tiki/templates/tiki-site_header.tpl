@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-site_header.tpl,v 1.5 2005-03-12 16:50:53 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-site_header.tpl,v 1.6 2005-05-18 11:03:20 mose Exp $ *}
 {* Template for TikiWiki site identity header *}
 {if $feature_sitemycode eq 'y' && ($sitemycode_publish eq 'y' or $tiki_p_admin eq 'y')}{eval var=$sitemycode}{* here can be custom site admin code *}{/if}
-{if $feature_siteloc eq 'y'}
+{if $feature_siteloc eq 'y' and $feature_breadcrumbs eq 'y'}
 <div id="sitelocbar">
-{if $feature_sitetitle eq 'n'}{tr}Location : {/tr}{/if}
+{if $feature_siteloclabel eq 'y' }{tr}Location : {/tr}{/if}
 		{if $trail}{breadcrumbs type="trail" loc="site" crumbs=$trail}{breadcrumbs type="pagetitle" loc="site" crumbs=$trail} 
 		{else}
                         <a title="{tr}{$crumbs[0]->description}{/tr}" href="{$crumbs[0]->url}" accesskey="1">{$crumbs[0]->title}</a>
@@ -31,8 +31,8 @@
 			{/if}
 		{/if}
 </div>{* bar with location indicator *}
-{/if}
 {if $trail}{breadcrumbs type="desc" loc="site" crumbs=$trail}{else}{breadcrumbs type="desc" loc="site" crumbs=$crumbs}{/if}
+{/if}
 {if $feature_sitenav eq 'y'}
 <div id="sitenavbar">
 	{eval var=$sitenav_code}

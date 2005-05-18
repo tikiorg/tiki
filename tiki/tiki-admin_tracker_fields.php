@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.32 2005-01-22 22:54:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.33 2005-05-18 10:58:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -84,68 +84,91 @@ $smarty->assign('isMandatory', $info["isMandatory"]);
 if (isset($_REQUEST["remove"]) and ($tracker_info['useRatings'] != 'y' or $info['name'] != tra('Rating'))) {
   $area = 'deltrackerfield';
   if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-    key_check($area);
-		$trklib->remove_tracker_field($_REQUEST["remove"],$_REQUEST["trackerId"]);
-		$logslib->add_log('admintrackerfields','removed tracker field '.$_REQUEST["remove"].' from tracker '.$tracker_info['name']);
-	} else {
-		key_get($area);
-	}
+      key_check($area);
+      $trklib->remove_tracker_field($_REQUEST["remove"],$_REQUEST["trackerId"]);
+      $logslib->add_log('admintrackerfields','removed tracker field '.$_REQUEST["remove"].' from tracker '.$tracker_info['name']);
+  } else {
+      key_get($area);
+  }
+}
+
+function replace_tracker_from_request( $tracker_info )
+{
+    global $trklib, $logslib, $smarty;
+
+    check_ticket('admin-tracker-fields');
+
+    if (isset($_REQUEST["isMain"]) && ( $_REQUEST["isMain"] == 'on' || $_REQUEST["isMain"] == 'y' )) {
+	$isMain = 'y';
+    } else {
+	$isMain = 'n';
+    }
+
+    if (isset($_REQUEST["isSearchable"]) && ( $_REQUEST["isSearchable"] == 'on' || $_REQUEST["isSearchable"] == 'y' )) {
+	$isSearchable = 'y';
+    } else {
+	$isSearchable = 'n';
+    }
+
+    if (isset($_REQUEST["isTblVisible"]) && ( $_REQUEST["isTblVisible"] == 'on' || $_REQUEST["isTblVisible"] == 'y' )) {
+	$isTblVisible = 'y';
+    } else {
+	$isTblVisible = 'n';
+    }
+
+    if (isset($_REQUEST["isPublic"]) && ( $_REQUEST["isPublic"] == 'on' || $_REQUEST["isPublic"] == 'y' )) {
+	$isPublic = 'y';
+    } else {
+	$isPublic = 'n';
+    }
+
+    if (isset($_REQUEST["isHidden"]) && ( $_REQUEST["isHidden"] == 'on' || $_REQUEST["isHidden"] == 'y' )) {
+	$isHidden = 'y';
+    } else {
+	$isHidden = 'n';
+    }
+
+    if (isset($_REQUEST["isMandatory"]) && ( $_REQUEST["isMandatory"] == 'on' || $_REQUEST["isMandatory"] == 'y' )) {
+	$isMandatory = 'y';
+    } else {
+	$isMandatory = 'n';
+    }
+
+    //$_REQUEST["name"] = str_replace(' ', '_', $_REQUEST["name"]);
+    $trklib->replace_tracker_field($_REQUEST["trackerId"], $_REQUEST["fieldId"], $_REQUEST["name"], $_REQUEST["type"], $isMain, $isSearchable,
+	    $isTblVisible, $isPublic, $isHidden, $isMandatory, $_REQUEST["position"], $_REQUEST["options"]);
+    $logslib->add_log('admintrackerfields','changed or created tracker field '.$_REQUEST["name"].' in tracker '.$tracker_info['name']);
+    $smarty->assign('fieldId', 0);
+    $smarty->assign('name', '');
+    $smarty->assign('type', '');
+    $smarty->assign('options', '');
+    $smarty->assign('isMain', $isMain);
+    $smarty->assign('isSearchable', $isSearchable);
+    $smarty->assign('isTblVisible', $isTblVisible);
+    $smarty->assign('isPublic', $isPublic);
+    $smarty->assign('isHidden', $isHidden);
+    $smarty->assign('isMandatory', $isMandatory);
+    $smarty->assign('position', $trklib->get_last_position($_REQUEST["trackerId"])+1);
 }
 
 if (isset($_REQUEST["save"])) {
-	check_ticket('admin-tracker-fields');
-	
-	if (isset($_REQUEST["isMain"]) && $_REQUEST["isMain"] == 'on') {
-		$isMain = 'y';
-	} else {
-		$isMain = 'n';
-	}
 
-	if (isset($_REQUEST["isSearchable"]) && $_REQUEST["isSearchable"] == 'on') {
-		$isSearchable = 'y';
-	} else {
-		$isSearchable = 'n';
-	}
+    if (isset($_REQUEST['import']) and isset($_REQUEST['rawmeat'])) {
+	$raw = $tikilib->read_raw($_REQUEST['rawmeat']);
 
-	if (isset($_REQUEST["isTblVisible"]) && $_REQUEST["isTblVisible"] == 'on') {
-		$isTblVisible = 'y';
-	} else {
-		$isTblVisible = 'n';
-	}
+	foreach( $raw as $field=>$value )
+	{
 
-	if (isset($_REQUEST["isPublic"]) && $_REQUEST["isPublic"] == 'on') {
-		$isPublic = 'y';
-	} else {
-		$isPublic = 'n';
-	}
+	    foreach( $value as $it=>$da) {
+		$_REQUEST["$it"] = $da;
+	    }
 
-	if (isset($_REQUEST["isHidden"]) && $_REQUEST["isHidden"] == 'on') {
-		$isHidden = 'y';
-	} else {
-		$isHidden = 'n';
-	}
-	
-	if (isset($_REQUEST["isMandatory"]) && $_REQUEST["isMandatory"] == 'on') {
-		$isMandatory = 'y';
-	} else {
-		$isMandatory = 'n';
-	}
+	    replace_tracker_from_request( $tracker_info );
 
-	//$_REQUEST["name"] = str_replace(' ', '_', $_REQUEST["name"]);
-	$trklib->replace_tracker_field($_REQUEST["trackerId"], $_REQUEST["fieldId"], $_REQUEST["name"], $_REQUEST["type"], $isMain, $isSearchable,
-		$isTblVisible, $isPublic, $isHidden, $isMandatory, $_REQUEST["position"], $_REQUEST["options"]);
-	$logslib->add_log('admintrackerfields','changed or created tracker field '.$_REQUEST["name"].' in tracker '.$tracker_info['name']);
-	$smarty->assign('fieldId', 0);
-	$smarty->assign('name', '');
-	$smarty->assign('type', '');
-	$smarty->assign('options', '');
-	$smarty->assign('isMain', $isMain);
-	$smarty->assign('isSearchable', $isSearchable);
-	$smarty->assign('isTblVisible', $isTblVisible);
-	$smarty->assign('isPublic', $isPublic);
-	$smarty->assign('isHidden', $isHidden);
-	$smarty->assign('isMandatory', $isMandatory);
-	$smarty->assign('position', $trklib->get_last_position($_REQUEST["trackerId"])+1);
+	}
+    } else {
+	replace_tracker_from_request( $tracker_info );
+    }
 }
 
 if (!isset($_REQUEST["sort_mode"])) {

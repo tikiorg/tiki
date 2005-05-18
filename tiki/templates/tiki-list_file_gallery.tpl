@@ -1,7 +1,12 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.23 2005-03-12 16:50:47 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.24 2005-05-18 11:03:17 mose Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}">{tr}Listing Gallery{/tr}: {$name}</a></h1>
-<span class="button2"><a href="tiki-file_galleries.php" class="linkbut" title="{tr}list galleries{/tr}">{tr}list galleries{/tr}</a></span>
+
+<table><tr>
+<td style="vertical-align:top;">
+
+<a href="tiki-file_galleries.php" class="linkbut" title="{tr}list galleries{/tr}">{tr}list galleries{/tr}</a>
+
 {if $tiki_p_admin_file_galleries eq 'y' or $user eq $owner}
   <a href="tiki-file_galleries.php?edit_mode=1&amp;galleryId={$galleryId}" class="linkbut">{tr}edit gallery{/tr}</a>
 {/if}
@@ -30,7 +35,19 @@
 {/if}
 {/if}
 
-  
+</td>
+<td style="text-align:right;width:142px;wrap:nowrap">
+
+       {if $user and $feature_user_watches eq 'y'}
+		{if $user_watching_file_gallery eq 'n'}
+			<a href="tiki-list_file_gallery.php?galleryId={$galleryId|escape:"url"}&amp;galleryName={$name}&amp;watch_event=file_gallery_changed&amp;watch_object={$galleryId|escape:"url"}&amp;watch_action=add">{html_image file='img/icons/icon_watch.png' border='0' alt='{tr}monitor this gallery{/tr}' title='{tr}monitor this gallery{/tr}'}</a>
+		{else}
+			<a href="tiki-list_file_gallery.php?galleryId={$galleryId|escape:"url"}&amp;galleryName={$name}&amp;watch_event=file_gallery_changed&amp;watch_object={$galleryId|escape:"url"}&amp;watch_action=remove">{html_image file='img/icons/icon_unwatch.png' border='0' alt='{tr}stop monitoring this gallery{/tr}' title='{tr}stop monitoring this gallery{/tr}'}</a>
+		{/if}
+	{/if}  
+
+</td></tr></table>
+       
 {if strlen($description) > 0}
     {$description}
     <br />

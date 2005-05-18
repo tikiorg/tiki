@@ -10,11 +10,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 * Params: 
 * - title : if is "title", show the title of the post, else show the date of creation
 */
-global $bloglib;
-if (!is_object($bloglib)) {
-	include_once('lib/blogs/bloglib.php');
-}
-$ranking = $bloglib->list_posts(0, $module_rows, 'created_desc', '');
+$ranking = $tikilib->list_posts(0, $module_rows, 'created_desc', '');
 
 $smarty->assign('modLastBlogPosts', $ranking["data"]);
 $smarty->assign('modLastBlogPostsTitle',(isset($module_params["title"])?$module_params["title"]:""));

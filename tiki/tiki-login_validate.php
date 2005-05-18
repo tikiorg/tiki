@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login_validate.php,v 1.13 2005-03-12 16:49:00 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login_validate.php,v 1.14 2005-05-18 10:58:58 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,12 +8,13 @@
 
 // Initialization
 require_once ('tiki-setup.php');
-require_once ('lib/userslib/userslib_admin.php');
 
 $isvalid = false;
-if (isset($_REQUEST["user"]) && isset($_REQUEST["pass"])) {
-	$isvalid = $userslibadmin->validate_user($_REQUEST["user"], $_REQUEST["pass"], '', '');
-}
+if (isset($_REQUEST["user"])) {
+	if (isset($_REQUEST["pass"])) {
+		$isvalid = $userlib->validate_user($_REQUEST["user"], $_REQUEST["pass"],'','');
+	}
+}	
 if ($isvalid) {
 	//session_register("user",$_REQUEST["user"]); 
 	$userlib->confirm_user($_REQUEST['user']);
@@ -28,8 +29,8 @@ if ($isvalid) {
 	} else {
 		$_SESSION["$user_cookie_site"] = $_REQUEST["user"];
 	}
-	header ("location: $tikiIndex");
-	die;
+	$smarty->assign('msg', tra("Account validated successfully."));
+	$smarty->display("information.tpl");
 } else {
 	$smarty->assign('msg', tra("Invalid username or password"));
 	$smarty->display("error.tpl");

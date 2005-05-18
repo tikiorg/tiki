@@ -96,6 +96,17 @@ src='img/icons/key.gif' border='0' alt="{tr}permissions{/tr}" /></a>{/if}</td>
 <tr class="formcolor"><td>{tr}Description{/tr}:</td><td colspan="2"><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
 {assign var=cols value="2"}
 {include file=categorize.tpl}
+
+{if $trk_with_mirror_tables eq 'y'}
+<tr class="formcolor"><td class="auto" colspan="2">
+{tr}Use "explicit" names in the mirror table{/tr}<br/>
+<em>{tr}tracker name must be unique, field names must be unique 
+for a tracker and they must be valid in SQL{/tr}</em>
+</td><td class="auto">
+<input type="checkbox" name="useExplicitNames" {if $useExplicitNames eq 'y'}checked="checked"{/if} />
+</td></tr>
+{/if}
+
 <tr class="formcolor"><td class="auto" colspan="2">{tr}Show status{/tr}</td><td>
 <input type="checkbox" name="showStatus" {if $showStatus eq 'y'}checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td class="auto" colspan="2">{tr}Default status displayed in list mode{/tr}</td><td>
@@ -105,6 +116,12 @@ src='img/icons/key.gif' border='0' alt="{tr}permissions{/tr}" /></a>{/if}</td>
 </td></tr>
 <tr class="formcolor"><td class="auto" colspan="2">{tr}Show status to tracker admin only{/tr}</td><td>
 <input type="checkbox" name="showStatusAdminOnly" {if $showStatusAdminOnly eq 'y'}checked="checked"{/if} /></td></tr>
+<tr class="formcolor"><td class="auto" colspan="2">{tr}Send copies of all activity in this tracker to this e-mail address{/tr}:</td><td><input type="text" name="outboundEmail" value="{$outboundEmail|escape}" /></td></tr>
+<tr class="formcolor"><td class="auto" colspan="2">{tr}Use simplified e-mail format{/tr}
+<br /><i>{tr}The tracker needs a text field named Subject{/tr}</i>
+</td><td>
+<input type="checkbox" name="simpleEmail" {if $simpleEmail eq 'y'}checked="checked"{/if} />
+</td></tr>
 <tr class="formcolor"><td class="auto" colspan="2">{tr}New items are created with status{/tr}</td><td>
 <select name="newItemStatus">
 {foreach key=st item=stdata from=$status_types}
@@ -183,6 +200,7 @@ src='img/icons/key.gif' border='0' alt="{tr}permissions{/tr}" /></a>{/if}</td>
 </tr></table>
 </div>
 </td></tr>
+
 <tr class="formcolor"><td>&nbsp;</td><td colspan="2"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
@@ -201,9 +219,12 @@ src='img/icons/key.gif' border='0' alt="{tr}permissions{/tr}" /></a>{/if}</td>
 trackerId = {$trackerId}
 name = {$name}
 description = {$description}
+useExplicitNames = {$useExplicitNames}
 showStatus = {$showStatus}
 defaultStatus = {foreach key=st item=stdata from=$status_types}{if $defaultStatusList.$st}{$st}{/if}{/foreach} 
 showStatusAdminOnly = {$showStatusAdminOnly}
+outboundEmail = {$outboundEmail|escape}
+simpleEmail = {$simpleEmail}
 newItemStatus = {$newItemStatus}
 modItemStatus = {$modItemStatus}
 writerCanModify = {$writerCanModify}

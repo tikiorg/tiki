@@ -14,15 +14,14 @@
 
 
 <br /><br />
-<span class="button2"><a href="tiki-admin_polls.php?setlast=1" class="linkbut">{tr}Set last poll as current{/tr}</a></span>
-<span class="button2"><a href="tiki-admin_polls.php?closeall=1" class="linkbut">{tr}Close all polls but last{/tr}</a></span>
-<span class="button2"><a href="tiki-admin_polls.php?activeall=1" class="linkbut">{tr}Activate all polls{/tr}</a></span>
+<a href="tiki-admin_polls.php?setlast=1" class="linkbut">{tr}Set last poll as current{/tr}</a>
+<a href="tiki-admin_polls.php?closeall=1" class="linkbut">{tr}Close all polls but last{/tr}</a>
+<a href="tiki-admin_polls.php?activeall=1" class="linkbut">{tr}Activate all polls{/tr}</a>
 <h2>{tr}Create/edit Polls{/tr}</h2>
 <form action="tiki-admin_polls.php" method="post">
 <input type="hidden" name="pollId" value="{$pollId|escape}" />
 <table class="normal">
 <tr><td class="formcolor">{tr}Title{/tr}:</td><td class="formcolor"><input type="text" name="title" value="{$title|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea name="description" rows="8" cols="42">{$description}</textarea></td></tr>
 <tr><td class="formcolor">{tr}Active{/tr}:</td><td class="formcolor">
 <select name="active">
 <option value='a' {if $active eq 'a'}selected="selected"{/if}>{tr}active{/tr}</option>
@@ -34,11 +33,8 @@
 </select>
 </td></tr>
 {include file=categorize.tpl}
-<tr><td class="formcolor">{tr}Publication Date{/tr}:</td><td class="formcolor">
+<tr><td class="formcolor">{tr}PublishDate{/tr}:</td><td class="formcolor">
 {html_select_date time=$publishDate end_year="+1"} {tr}at{/tr} {html_select_time time=$publishDate display_seconds=false}
-</td></tr>
-<tr><td class="formcolor">{tr}Release Date{/tr}:</td><td class="formcolor">
-{html_select_date prefix='r_Date_' time=$releaseDate end_year="+1"} {tr}at{/tr} {html_select_time prefix='r_Time_' time=$releaseDate display_seconds=false}
 </td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
@@ -63,26 +59,39 @@
 <td class="heading"><a class="tableheading" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'active_desc'}active_asc{else}active_desc{/if}">{tr}active{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'votes_desc'}votes_asc{else}votes_desc{/if}">{tr}votes{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'publishDate_desc'}publishDate_asc{else}publishDate_desc{/if}">{tr}Publish{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'releaseDate_desc'}releaseDate_asc{else}releaseDate_desc{/if}">{tr}Release{/tr}</a></td>
 <td class="heading">{tr}options{/tr}</td>
 <td class="heading">{tr}action{/tr}</td>
 </tr>
-{cycle values="odd,even" print=false}
 {section name=user loop=$channels}
+{if $smarty.section.user.index % 2}
 <tr>
-<td class="{cycle advance=false}">{$channels[user].pollId}</td>
-<td class="{cycle advance=false}"><a class="tablename" href="tiki-poll_results.php?pollId={$channels[user].pollId}">{$channels[user].title}</a></td>
-<td class="{cycle advance=false}">{$channels[user].active}</td>
-<td class="{cycle advance=false}">{$channels[user].votes}</td>
-<td class="{cycle advance=false}">{$channels[user].publishDate|tiki_short_datetime}</td>
-<td class="{cycle advance=false}">{$channels[user].releaseDate|tiki_short_datetime}</td>
-<td class="{cycle advance=false}">{$channels[user].options}</td>
-<td class="{cycle}">
+<td class="odd">{$channels[user].pollId}</td>
+<td class="odd"><a class="tablename" href="tiki-poll_results.php?pollId={$channels[user].pollId}">{$channels[user].title}</a></td>
+<td class="odd">{$channels[user].active}</td>
+<td class="odd">{$channels[user].votes}</td>
+<td class="odd">{$channels[user].publishDate|tiki_short_datetime}</td>
+<td class="odd">{$channels[user].options}</td>
+<td class="odd">
    <a class="link" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pollId}">{tr}delete{/tr}</a>
    <a class="link" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pollId={$channels[user].pollId}">{tr}edit{/tr}</a>
    <a class="link" href="tiki-admin_poll_options.php?pollId={$channels[user].pollId}">{tr}options{/tr}</a>
 </td>
 </tr>
+{else}
+<tr>
+<td class="even">{$channels[user].pollId}</td>
+<td class="even"><a class="tablename" href="tiki-poll_results.php?pollId={$channels[user].pollId}">{$channels[user].title}</a></td>
+<td class="even">{$channels[user].active}</td>
+<td class="even">{$channels[user].votes}</td>
+<td class="even">{$channels[user].publishDate|tiki_short_datetime}</td>
+<td class="even">{$channels[user].options}</td>
+<td class="even">
+   <a class="link" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pollId}">{tr}delete{/tr}</a>
+   <a class="link" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pollId={$channels[user].pollId}">{tr}edit{/tr}</a>
+   <a class="link" href="tiki-admin_poll_options.php?pollId={$channels[user].pollId}">{tr}options{/tr}</a>
+</td>
+</tr>
+{/if}
 {sectionelse}
 <tr><td colspan="7" class="odd">{tr}No records found{/tr}</td></tr>
 {/section}

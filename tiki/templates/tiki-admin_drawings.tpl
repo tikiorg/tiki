@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_drawings.tpl,v 1.22 2005-03-12 16:50:29 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_drawings.tpl,v 1.23 2005-05-18 11:02:56 mose Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_drawings.php">{tr}Admin drawings{/tr}</a>
 
       {if $feature_help eq 'y'}
-<a href="{$helpurl}DrawingsDoc" target="tikihelp" class="tikihelp" title="{tr}admin Drawings{/tr}"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>
+<a href="{$helpurl}Drawings" target="tikihelp" class="tikihelp" title="{tr}Help on Drawings{/tr}"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>
 {/if}
 
       {if $feature_view_tpl eq 'y'}

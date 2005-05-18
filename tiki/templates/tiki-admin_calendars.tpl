@@ -1,5 +1,5 @@
 <h1><a class="pagetitle" href="tiki-admin_calendars.php">{tr}Admin Calendars{/tr}</a>
-{if $tiki_p_admin_calendar eq 'y'}
+{if $tiki_p_admin eq 'y'}
 <a title="{tr}Configure/Options{/tr}" href="tiki-admin.php?page=calendar">{html_image file='img/icons/config.gif' border='0' alt='{tr}Configure/Options{/tr}'}</a>
 {/if} 
 </h1>
@@ -35,7 +35,7 @@
 <td class="heading"><a class="tableheading" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'customcategories_desc'}customcategories_asc{else}customcategories_desc{/if}">{tr}cat{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'customlanguages_desc'}customlanguages_asc{else}customlanguages_desc{/if}">{tr}lang{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'custompriorities_desc'}custompriorities_asc{else}custompriorities_desc{/if}">{tr}prio{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'customevents_desc'}customevents_asc{else}customevents_desc{/if}">{tr}event{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'customsubscription_desc'}customsubscription_asc{else}customsubscription_desc{/if}">{tr}subscription{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'personal_desc'}personal_asc{else}personal_desc{/if}">{tr}perso{/tr}</a></td>
 <td class="heading">&nbsp;</td>
 <td class="heading">&nbsp;</td>
@@ -50,7 +50,7 @@
 <td>{$cal.customcategories}</td>
 <td>{$cal.customlanguages}</td>
 <td>{$cal.custompriorities}</td>
-<td>{$cal.customevents}</td>
+<td>{$cal.customsubscription}</td>
 <td>{$cal.personal}</td>
 <td>
 <a title="{tr}permissions{/tr}" class="link" 
@@ -123,16 +123,18 @@ title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
 <option value='n' {if $customlanguages eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
 </select>
 </td></tr>
+{if $feature_newsletters eq 'y'}
+<tr><td class="formcolor">{tr}Custom Subscription List{/tr}:</td><td class="formcolor">
+<select name="customsubscription">
+<option value='y' {if $customsubscription eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>
+<option value='n' {if $customsubscription eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
+</select>
+</td></tr>
+{/if}
 <tr><td class="formcolor">{tr}Custom Priorities{/tr}:</td><td class="formcolor">
 <select name="custompriorities">
 <option value='y' {if $custompriorities eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>
 <option value='n' {if $custompriorities eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
-</select>
-</td></tr>
-<tr><td class="formcolor">{tr}Custom Events{/tr}:</td><td class="formcolor">
-<select name="customevents">
-<option value='y' {if $customevents eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>
-<option value='n' {if $customevents eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
 </select>
 </td></tr>
 <tr><td class="formcolor">{tr}Personal Calendar{/tr}:</td><td class="formcolor">

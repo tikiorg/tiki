@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-sent.php,v 1.2 2005-03-12 16:48:57 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-sent.php,v 1.3 2005-05-18 10:58:52 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -50,6 +50,26 @@ if (isset($_REQUEST["archive"]) && isset($_REQUEST["msg"])) {
 		$messulib->archive_message($user, $msg, 'sent');
 		$tmp++;
 	}
+}
+
+// Download messages if the download button was pressed
+if (isset($_REQUEST["download"])) {
+	check_ticket('messu-sent');
+	// if message ids are handed over, use them:
+	if (isset($_REQUEST["msg"])) {
+		foreach (array_keys($_REQUEST["msg"])as $msg) {
+			$tmp = $messulib->get_message($user, $msg, 'sent');
+			$items[] = $tmp;
+		}
+	} else {
+			$items = $messulib->get_messages($user, 'sent', '', '', '');
+	}
+	$smarty->assign_by_ref('items', $items);
+
+	header("Content-type: application/download ");
+    header("Content-Disposition: attachment; filename=tiki-msg-sent-".time("U").".txt ");
+	$smarty->display("messu-download.tpl");
+	die;
 }
 
 if (isset($_REQUEST['filter'])) {

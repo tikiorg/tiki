@@ -230,31 +230,32 @@ class Comments extends TikiLib {
 
     function process_inbound_mail($forumId)
     {
-	require_once ("lib/webmail/pop3.php");
+	// require_once ("lib/webmail/pop3.php");
+	require_once ("lib/webmail/net_pop3.php");
 
 	require_once ("lib/mail/mimelib.php");
 	//require_once ("lib/webmail/mimeDecode.php");
 	include_once ("lib/webmail/class.rc4crypt.php");
 	include_once ("lib/webmail/htmlMimeMail.php");
 	$info = $this->get_forum($forumId);
+
 	// for any reason my sybase test machine adds a space to
 	// the inbound_pop_server field in the table.
 	$info["inbound_pop_server"]=trim($info["inbound_pop_server"]);
+
 	if (!$info["inbound_pop_server"] || empty($info["inbound_pop_server"]))
 	    return;
 
-	$pop3 = new POP3($info["inbound_pop_server"], $info["inbound_pop_user"], $info["inbound_pop_password"]);
-
+	$pop3 = new Net_POP3();
+	$pop3->connect($info["inbound_pop_server"]);
+	$pop3->login($info["inbound_pop_user"], $info["inbound_pop_password"]);
+	
 	if (!$pop3)
 	    return;
 
-	$pop3->Open();
-	$s = $pop3->Stats();
-	$mailsum = $s["message"];
+	$mailsum = $pop3->numMsg();
 
-	// Close for now; will re-open in a bit.
-	$pop3->close();
-
+	$pop3->disconnect();
 
 	for ($i = 1; $i <= $mailsum; $i++) {
 
@@ -274,28 +275,30 @@ class Comments extends TikiLib {
 	    //
 	    // -Robin Powell, 8 Nov 2004
 
-	    $pop3->Open();
+	    $pop3->connect($info["inbound_pop_server"]);
+	    $pop3->login($info["inbound_pop_user"], $info["inbound_pop_password"]);
 
-	    $aux = $pop3->ListMessage( 1 );
+	    $aux = $pop3->getParsedHeaders( 1 );
 
 	    // If the connection is done, or the mail has an error, or whatever,
 	    // we try to delete the current mail (because something is wrong with it)
 	    // and continue on. --rlpowell
-	    if( $aux == -1 )
-	    {
-		$pop3->DeleteMessage( 1 );
-
-		$pop3->close();
-
+	    if( $aux == FALSE ) {
+		$pop3->deleteMsg( 1 );
 		continue;
 	    }
 
-	    if (empty($aux["sender"]["name"]))
-		$aux["sender"]["name"] = $aux["sender"]["email"];
+	    if (!isset($aux["From"]))
+	    {
+		$aux['From'] = $aux['Return-path'];
+	    }
 
-	    $email = $aux["sender"]["email"];
-	    $message = $pop3->GetMessage( 1 );
-	    $full = $message["full"];
+	    preg_match('/<?([-!#$%&\'*+\.\/0-9=?A-Z^_`a-z{|}~]+@[-!#$%&\'*+\/0-9=?A-Z^_`a-z{|}~]+\.[-!#$%&\'*+\.\/0-9=?A-Z^_`a-z{|}~]+)>?/',$aux["From"],$mail);
+
+	    $email = $mail[1];
+			
+	    $full = $pop3->getMsg( 1 );
+	    $message = $pop3->getBody( 1 );
 
 	    // print( "<pre>" );
 	    // print_r( $full );
@@ -332,7 +335,7 @@ class Comments extends TikiLib {
 			)
 		    );
 
-	    if (stristr($aux['subject'], "=?iso-8859-1?") == $aux['subject'])
+	    if (stristr($aux['Subject'], "=?iso-8859-1?") == $aux['Subject'])
 		$title = utf8_encode($title);
 
 	    //Todo: check permissions
@@ -346,7 +349,6 @@ class Comments extends TikiLib {
 	    } else {
 		$in_reply_to = '';
 	    }
-
 	    // Determine user from email
 	    $userName = $this->getOne("select `login` from `users_users` where `email`=?",array($email));
 
@@ -377,6 +379,7 @@ class Comments extends TikiLib {
 			sprintf(tra("Use this thread to discuss the %s page."), "[tiki-index.php?page=$title|$title]"),
 			$temp_msid
 			);
+	        $this->register_forum_post($forumid,0);
 	    }
 
 	    // post
@@ -384,9 +387,25 @@ class Comments extends TikiLib {
 		    $parentId, $userName, $title, $body,
 		    $message_id, $in_reply_to);
 
-	    $pop3->DeleteMessage( 1 );
+	    $this->register_forum_post($forumid,$parentId);
 
-	    $pop3->close();
+	    // Deal with mail notifications.
+	    if( array_key_exists( 'outbound_mails_reply_link', $info )
+		&& $info['outbound_mails_for_inbound_mails'] == 'y' )
+	    {
+	    //phpinfo();
+		include_once('lib/notifications/notificationemaillib.php');
+		sendForumEmailNotification('forum_post_thread',
+			$threadid, $info,
+			$title, $body, $userName,
+			$title, $message_id, $in_reply_to,
+			$threadid, $parentId);
+	    }
+
+
+	    $pop3->deleteMsg( 1 );
+
+	    $pop3->disconnect();
 
 	}
 
@@ -604,13 +623,13 @@ class Comments extends TikiLib {
 	    $topics_list_lastpost, $topics_list_author, $vote_threads,
 	    $show_description, $inbound_pop_server, $inbound_pop_port,
 	    $inbound_pop_user, $inbound_pop_password, $outbound_address,
+	    $outbound_mails_for_inbound_mails, $outbound_mails_reply_link,
 	    $outbound_from, $topic_smileys, $topic_summary, $ui_avatar,
 	    $ui_flag, $ui_posts, $ui_level, $ui_email, $ui_online,
 	    $approval_type, $moderator_group, $forum_password,
 	    $forum_use_password, $att, $att_store, $att_store_dir,
 	    $att_max_size,$forum_last_n)
     {
-
 	if ($forumId)
 	{
 	    $query = "update `tiki_forums` set
@@ -634,6 +653,8 @@ class Comments extends TikiLib {
 	    `inbound_pop_user` = ?,
 	    `inbound_pop_password` = ?,
 	    `outbound_address` = ?,
+	    `outbound_mails_for_inbound_mails` = ?,
+	    `outbound_mails_reply_link` = ?,
 	    `outbound_from` = ?,
 	    `topic_smileys` = ?,
 	    `topic_summary` = ?,
@@ -683,6 +704,8 @@ class Comments extends TikiLib {
 			$inbound_pop_user,
 			$inbound_pop_password,
 			$outbound_address,
+			$outbound_mails_for_inbound_mails,
+			$outbound_mails_reply_link,
 			$outbound_from,
 			$topic_smileys,
 			$topic_summary,
@@ -724,7 +747,8 @@ class Comments extends TikiLib {
 	    `topics_list_pts`, `topics_list_lastpost`,
 	    `topics_list_author`, `vote_threads`, `show_description`,
 	    `inbound_pop_server`,`inbound_pop_port`,`inbound_pop_user`,`inbound_pop_password`,
-	    `outbound_address`, `outbound_from`,
+	    `outbound_address`, `outbound_mails_for_inbound_mails`,
+	    `outbound_mails_reply_link`, `outbound_from`,
 	    `topic_smileys`,`topic_summary`,
 	    `ui_avatar`, `ui_flag`, `ui_posts`, `ui_level`, `ui_email`,
 	    `ui_online`, `approval_type`, `moderator_group`,
@@ -734,7 +758,7 @@ class Comments extends TikiLib {
 			?,?,?,?,?,?,?,?,?,?,
 			?,?,?,?,?,?,?,?,?,?,
 			?,?,?,?,?,?,?,?,?,?,
-			?,?,?,?,?,?,?,?,?,?)";
+			?,?,?,?,?,?,?,?,?,?,?,?)";
 	    $bindvars=array($name, $description, (int) $now, (int) $now, 0, 0,
 		    $controlFlood, (int) $floodInterval, $moderator, 0, $mail,
 		    $useMail, $usePruneUnreplied, (int) $pruneUnrepliedAge,
@@ -744,6 +768,8 @@ class Comments extends TikiLib {
 		    $topics_list_lastpost, $topics_list_author, $vote_threads,
 		    $show_description, $inbound_pop_server, $inbound_pop_port,
 		    $inbound_pop_user, $inbound_pop_password, $outbound_address,
+		    $outbound_mails_for_inbound_mails,
+		    $outbound_mails_reply_link,
 		    $outbound_from,  $topic_smileys, $topic_summary, $ui_avatar,
 		    $ui_flag, $ui_posts, $ui_level, $ui_email, $ui_online,
 		    $approval_type, $moderator_group, $forum_password,
@@ -1104,14 +1130,25 @@ class Comments extends TikiLib {
 	}
 	$res = $result->fetchRow();
 	if($res) { //if there is a comment with that id
+	   $this->add_comments_extras($res);
+	}
+
+	return $res;
+    }
+
+    function add_comments_extras(&$res) { 
+	    // this function adds some extras to the referenced array. 
+	    // This array should already contain the contents of the tiki_comments table row
+	    // used in $this->get_comment and $this->get_comments
+
 	    $res["parsed"] = $this->parse_comment_data($res["data"]);
 
-	    $res['user_posts'] = $this->getOne("select `posts` from
-		    `tiki_user_postings` where `user`=?",
-		    array( $res['userName'] ) );
-	    $res['user_level'] = $this->getOne("select `level` from
-		    `tiki_user_postings` where `user`=?",
-		    array( $res['userName'] ) );
+	    // these could be cached or probably queried along with the original query of the tiki_comments table
+	    $result2=$this->query("select `posts`, `level` from `tiki_user_postings` where `user`=?",
+	    	array( $res['userName'] ) );
+            $res2=$result2->fetchRow();
+	    $res['user_posts'] = $res2['posts'];
+	    $res['user_level'] = $res2['level'];
 
 	    if ($this->get_user_preference($res['userName'], 'email is public', 'n') == 'y') {
 		$res['user_email'] = $this->getOne("select `email` from
@@ -1122,17 +1159,12 @@ class Comments extends TikiLib {
 	    }
 
 	    $res['attachments'] = $this->get_thread_attachments($res['threadId'], 0);
-	    $res['user_online'] = 'n';
+	    // is the 'is_reported' really used? can be queried with orig table i think
 	    $res['is_reported'] = $this->is_reported($res['threadId']);
-
+	    $res['user_online'] = 'n';
 	    if ($res['userName']) {
-		$res['user_online'] = $this->getOne("select count(*) from
-			`tiki_sessions` where `user`=?", array( $res['userName'] ) )
-		    ? 'y' : 'n';
+		$res['user_online'] = $this->is_user_online($res['userName'])? 'y' : 'n';
 	    }
-	}
-
-	return $res;
     }
 
     function get_comment_father($id) {
@@ -1356,97 +1388,7 @@ class Comments extends TikiLib {
 	$data = $this->parse_smileys($data);
 	$data = preg_replace("/---/", "<hr/>", $data);
 	// Reemplazar --- por <hr/>
-	
-	if ($feature_forum_parse != 'y') {
-		$data = $this->parse_quote($data);
-	} else {
-		$data = nl2br($data);
-	}
-	
-	return $data;
-    }
-    
-    function parse_quote(&$data, $quote_parsed = FALSE) {
-    	global $tikilib, $feature_wiki_plugins_allcaps;
-    	
-	    // Find the plugins
-	    // note: [1] is plugin name, [2] is plugin arguments
-	    if (!empty($feature_wiki_plugins_allcaps) && $feature_wiki_plugins_allcaps == 'y') {
-	    	// match QUOTE plugin in all caps
-		    preg_match_all("/\{(QUOTE)\(([^\)]*)\)( *\/ *)?\}/", $data, $plugins);
-	    } else {
-	    	// match QUOTE plugin, case-insensitive
-	    	preg_match_all("/\{(QUOTE)\(([^\)]*)\)( *\/ *)?\}/i", $data, $plugins);
-	    }
-
-	    // Process plugins in reverse order, so that nested plugins are handled
-	    // from the inside out.
-	    $i = count($plugins[0]) - 1;
-
-	    while ($i >= 0) {
-			$plugin_start = $plugins[0][$i];
-
-			$plugin = 'QUOTE';
-			$plugin_start_base = '{QUOTE(';
-			$pos = strpos($data, $plugin_start); // where plugin starts
-			// process "short" plugins here: {PLUGIN(par1=>val1)/} - melmut
-			if (preg_match("/\/ *\}$/",$plugin_start)) {
-			    $plugin_end='';
-			    $pos_end=$pos+strlen($plugin_start);
-			}
-			else {
-			    $plugin_end = '{' . $plugin . '}';
-			    $pos_end = strpos($data, $plugin_end, $pos); // where plugin data ends
-			}
-
-		    // Extract the plugin data
-		    $plugin_data_len = $pos_end - $pos - strlen($plugins[0][$i]);
-		    $plugin_data = substr($data, $pos + strlen($plugin_start), $plugin_data_len);
-
-		    // Construct plugin file pathname
-		    $php_name = 'lib/wiki-plugins/wikiplugin_';
-		    $php_name .= strtolower($plugins[1][$i]). '.php';
-	
-		    // Construct plugin function name
-		    $func_name = 'wikiplugin_' . strtolower($plugins[1][$i]);
-	
-		    // Construct argument list array
-		    $params = split(',', trim($plugins[2][$i]));
-		    $arguments = array();
-
-		    foreach ($params as $param) {
-				// the following str_replace line is to decode the &gt; char when html is turned off
-				// perhaps the plugin syntax should be changed in 1.8 not to use any html special chars
-				$decoded_param = str_replace('&gt;', '>', $param);
-				$parts = split( '=>?', $decoded_param );
-
-				if (isset($parts[0]) && isset($parts[1])) {
-				    $name = trim($parts[0]);
-				    $arguments[$name] = trim($parts[1]);
-				}
-		    }
-
-		    if (file_exists($php_name)) {
-				include_once ($php_name);
-				$quote_parsed = TRUE;
-
-				$ret = $func_name($plugin_data, $arguments);
-				
-				$this->parse_quote($ret, $quote_parsed);
-
-				// Replace plugin section with its output in data
-				$data = substr_replace($data, $ret, $pos, $pos_end - $pos + strlen($plugin_end));
-		    }
-
-			$i--;
-
-	    } // while
-	    
-	    if (!$quote_parsed) {
-	    	$data = nl2br($data);
-	    }
-   	
-    	return $data;
+	return nl2br($data);
     }
 
     /*****************/
@@ -1519,7 +1461,7 @@ class Comments extends TikiLib {
 	    $query = "select `message_id` from `tiki_comments` where `threadId` = ?";
 	    $parent_message_id = $this->getOne($query, array( $parentId ) );
 
-	    $query = "select `tc1`.threadId from `tiki_comments` as tc1
+	    $query = "select tc1.`threadId`, tc1.`object`, tc1.`objectType`, tc1.`parentId`, tc1.`userName`, tc1.`commentDate`, tc1.`hits`, tc1.`type`, tc1.`points`, tc1.`votes`, tc1.`average`, tc1.`title`, tc1.`data`, tc1.`hash`, tc1.`user_ip`, tc1.`summary`, tc1.`smiley`, tc1.`message_id`, tc1.`in_reply_to`, tc1.`comment_rating`  from `tiki_comments` as tc1
 		left outer join `tiki_comments` as tc2 on tc1.`in_reply_to` = tc2.`message_id`
 		$mid 
 		and (tc1.`in_reply_to` = ?
@@ -1531,7 +1473,7 @@ class Comments extends TikiLib {
 		$query_cant = "select count(*) from `tiki_comments` as tc1 $mid $time_cond";
 	} else {
 	    $query_cant = "select count(*) from `tiki_comments` as tc1 $mid $time_cond";
-	    $query = "select threadId from `tiki_comments` as tc1 $mid $time_cond order by tc1.".$this->convert_sortmode($sort_mode).",`threadId`";
+	    $query = "select * from `tiki_comments` as tc1 $mid $time_cond order by tc1.".$this->convert_sortmode($sort_mode).",`threadId`";
 	    $bind_mid_cant = $bind_mid;
 	}
 
@@ -1547,7 +1489,8 @@ class Comments extends TikiLib {
 		$result = $this->query($query,array_merge($bind_mid,$bind_time));
 		$cant = $this->getOne($query_cant,array_merge($bind_mid_cant,$bind_time));
 		while ( $row = $result->fetchRow() ) {
-			$ret[] = $this->get_comment( $row['threadId'] );
+			$this->add_comments_extras($row);
+			$ret[] = $row;
 		}
 	}
 
@@ -1656,6 +1599,7 @@ class Comments extends TikiLib {
  	*/
 	function get_comments_fathers($threadId, $ret = null, $message_id = null) {
 		$com = $this->get_comment($threadId, $message_id);
+
 		if ($com['objectType'] == 'forum' && $com['parentId'] == 0 ) {// don't want the 1 level
 			return $ret;
 		}

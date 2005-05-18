@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_modif_tracker_items.tpl,v 1.9 2005-03-12 16:51:00 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_modif_tracker_items.tpl,v 1.10 2005-05-18 11:03:30 mose Exp $ *}
 
 {if $feature_trackers eq 'y'}
 {if $nonums eq 'y'}
@@ -13,11 +13,7 @@
         {if $nonums != 'y'}<td class="module" >{$smarty.section.ix.index_next})</td>{/if}
         <td class="module">
           <a class="linkmodule" href="tiki-view_tracker_item.php?itemId={$modLastModifItems[ix].itemId}&amp;trackerId={$modLastModifItems[ix].trackerId}">
-          {section name=jjj loop=$modLastModifItems[ix].field_values}
-            {if $modlmifn eq $modLastModifItems[ix].field_values[jjj].name}
-              {$modLastModifItems[ix].field_values[jjj].value}
-            {/if}
-          {/section}
+              {$modLastModifItems[ix].subject}
           </a>
         </td>
       </tr>

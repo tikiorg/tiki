@@ -2,8 +2,8 @@
 
 // HAWHAW: HTML and WML hybrid adapted webserver
 // PHP class library
-// Copyright (C) 2003 Norbert Huffschmid
-// Last modified: 3. December 2003
+// Copyright (C) 2005 Norbert Huffschmid
+// Last modified: 16. May 2005
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -20,9 +20,15 @@
 //
 // For further information about this library and its license terms please visit:
 // http://www.hawhaw.de/
+//
+// modifications against V5.9
+// optimization: set [HTML_links] in brackets for better accessability
+// optimization: control TTS for french and spanish per VoiceXML property
+// bugfix: remove illegal characters from VoiceXML GSL grammar
+// optimization: abandon border in HAW_linkset
 
 // miscellaneous constants
-define("HAW_VERSION", "HAWHAW V5.3");
+define("HAW_VERSION", "HAWHAW V5.10B");
 define("HAW_COPYRIGHT", "(C) Norbert Huffschmid");
 
 // constants for markup languages
@@ -32,14 +38,20 @@ define("HAW_HDML", 3);
 define("HAW_VXML", 4);
 
 // constants for forced markup output
-define("HAW_OUTPUT_AUTOMATIC", 0);
-define("HAW_OUTPUT_BIGSCREEN", 1);
-define("HAW_OUTPUT_WAP",       2);
-define("HAW_OUTPUT_HDML",      3);
-define("HAW_OUTPUT_PDA",       4);
-define("HAW_OUTPUT_IMODE",     5);
-define("HAW_OUTPUT_MML",       6);
-define("HAW_OUTPUT_VOICEXML",  7);
+define("HAW_OUTPUT_AUTOMATIC", "automatic");
+define("HAW_OUTPUT_BIGSCREEN", "bigscreen");
+define("HAW_OUTPUT_WAP",       "wap");
+define("HAW_OUTPUT_HDML",      "hdml");
+define("HAW_OUTPUT_PDA",       "pda");
+define("HAW_OUTPUT_IMODE",     "imode");
+define("HAW_OUTPUT_MML",       "mml");
+define("HAW_OUTPUT_VOICEXML",  "voicexml");
+define("HAW_OUTPUT_XHTML",     "xhtml");
+define("HAW_OUTPUT_LYNX",      "lynx");
+// ----- proprietary output types (for debugging purposes only) ------
+define("HAW_OUTPUT_UP",        "up");	// UP browser
+define("HAW_OUTPUT_OWGUI",     "owgui");// Openwave GUI
+define("HAW_OUTPUT_PVX",       "pvx");	// PublicVoiceXML
 
 // constants for page elements
 define("HAW_PLAINTEXT", 1);
@@ -66,7 +78,7 @@ define("HAW_USERDEFINED", 19);
 define("HAW_ALIGN_LEFT", 1);
 define("HAW_ALIGN_RIGHT", 2);
 define("HAW_ALIGN_CENTER", 3);
-define("HAW_NOTITLE", -1);
+define("HAW_NOTITLE", "");
 
 // constants for text formatting
 define("HAW_TEXTFORMAT_NORMAL", 0);
@@ -76,6 +88,10 @@ define("HAW_TEXTFORMAT_ITALIC", 4);
 define("HAW_TEXTFORMAT_BIG", 8);
 define("HAW_TEXTFORMAT_SMALL", 16);
 define("HAW_TEXTFORMAT_BOXED", 32);
+
+// constants for form handling
+define("HAW_METHOD_GET", 0);
+define("HAW_METHOD_POST", 1);
 
 // constants for input treatment
 define("HAW_INPUT_TEXT", 0);
@@ -114,6 +130,12 @@ define("HAW_INPUT_NUMERIC", 4);
 // constants for VoiceXML
 define("HAW_VOICE_PAUSE", 300);   // pause after text output
 define("HAW_VOICE_ENUMERATE", 1); // activate enumeration
+
+// constants for bigscreen default display
+define("HAW_DISP_BGCOLOR",    "#00BB77"); // green HAWHAW display
+define("HAW_DISP_LINKCOLOR",  "#004411"); // dark green
+define("HAW_DISP_VLINKCOLOR", "#006633"); // lighter green
+define("HAW_DISP_FACE",       "Arial,Times");
 
 function HAW_specchar($input, $deck)
 {
@@ -248,6 +270,22 @@ function HAW_voice_eventhandler($handler, $audio_array, $deck)
 
       echo "</catch>\n"; 
     }
+  }
+}
+
+
+function HAW_handle_forced_output(&$url, $hawoutput)
+{
+  // add hawoutput query parameter to url in order to force special HAWHAW output type
+
+  if ($hawoutput)
+  {
+    // hawoutput parameter to be added
+
+    if (strchr($url, '?'))
+      $url .= "&hawoutput=" . $hawoutput;
+    else
+      $url .= "?hawoutput=" . $hawoutput;
   }
 }
 
@@ -455,7 +493,7 @@ class HAW_hdmlcardset
   generated. For HDML browsers one deck including as much cards as necessary will
   generated. HTML browsers will receive a normal HTML page, PDA browsers will
   receive handheldfriendly HTML etc.
-  <p>Do not overload HAW_deck objects! Remember that a lot of WAP clients can not
+  <p>Do not overload HAW_deck objects! Remember that a lot of older WAP devices can not
   handle more than about 1400 byte of compiled data.
   <p><b>Examples:</b><p>
   $myPage = new HAW_deck();<br>
@@ -499,23 +537,28 @@ class HAW_deck
   var $upbrowser = false;               // UP browser
   var $owgui_1_3 = false;               // Openwave GUI Extensions for WML 1.3
   var $MMLstyle = false;		// Mobile Markup Language
+  var $lynx = false;			// Lynx text browser
+  var $xhtml = false;			// XHTML MP (mobile profile)
   var $gif_enabled = false;             // browser can not deal with GIF images
   var $submitViaLink = false;           // use link instead of <do>
   var $supportsVXMLBreakTag = true;     // false for PublicVoiceXML browser only
+  var $MotorolaVoiceXML = false;        // for Motorola VoiceXML specifics
+  var $css_enabled = false;             // support of cascading style sheets (HTML)
   var $debug = false;                   // HAWHAW debugger off
+  var $hawoutput = "";                  // no forced output
 
   // device simulator properies
-  var $td_scroll = false;          // specifies if bigscreen browser is able to scroll table cells
-  var $sim_device;                 // can be set to path where the device simulator resides
-  var $simdev_width;               // size of display area inside the simulator device
-  var $simdev_height;
   var $use_simulator = false;      // decide whether default simulator device is to be used
+  var $skin = "";                  // contains css url, where skinning is defined
 
   // character set properties
   var $charset = "iso-8859-1";     // default charset
   var $unicodemaptab;              // filename of cross mapping table to map country
                                    // specific character code into unicode
   var $unicodearray;               // array containing cross mapping table
+
+  // language properties
+  var $language = "";
 
 
   // display properties for HTML
@@ -526,7 +569,7 @@ class HAW_deck
 
   // display (table) properties
   var $border = 8;
-  var $disp_bgcolor = "#00BB77";
+  var $disp_bgcolor = "";
   var $disp_background = "";
   var $width  = 200;
   var $height = 200;
@@ -534,9 +577,10 @@ class HAW_deck
   // text properties
   var $size = "";
   var $color = "";
-  var $link_color = "#004411";
-  var $vlink_color = "006633";
-  var $face = "Arial,Times";
+  var $link_color = "";
+  var $vlink_color = "";
+  var $face = "";
+  var $fontstyle_attrbs = "";
 
   // voice properties
   var $voice_links = "";
@@ -548,6 +592,7 @@ class HAW_deck
   var $voice_noinput = array();
   var $voice_nomatch = array();
   var $voice_property = array();
+  var $voice_navigator = array();
 
   /**
     Constructor
@@ -573,86 +618,140 @@ class HAW_deck
        <li>HAW_OUTPUT_IMODE</li>
        <li>HAW_OUTPUT_MML</li>
        <li>HAW_OUTPUT_VOICEXML</li>
+       <li>HAW_OUTPUT_XHTML</li>
+       <li>HAW_OUTPUT_LYNX</li>
        </ul><br>
-       With this parameter you can offer dedicated links for PC users, WAP users, PDA users etc.
+       With this parameter you can offer dedicated links for PC's, WAP phones, PDA's,
+       XHTML phones etc.
   */
   function HAW_deck($title=HAW_NOTITLE, $alignment=HAW_ALIGN_LEFT, $output=HAW_OUTPUT_AUTOMATIC)
   {
-    // register_globals=off in PHP4 inhibits automatic setup of global variables!
-    $HTTP_USER_AGENT = getenv('HTTP_USER_AGENT');
-    $HTTP_ACCEPT = getenv('HTTP_ACCEPT');
-    $HTTP_HOST = getenv('HTTP_HOST');
-    $SCRIPT_NAME = getenv('SCRIPT_NAME');
+    // determine environment variables
+    if (isset($_SERVER['HTTP_USER_AGENT']))
+      $HTTP_USER_AGENT = $_SERVER['HTTP_USER_AGENT'];
+    else
+      $HTTP_USER_AGENT = "";
 
-    if ($title != HAW_NOTITLE)
-      $this->title = $title;
+    if (isset($_SERVER['HTTP_ACCEPT']))
+      $HTTP_ACCEPT = $_SERVER['HTTP_ACCEPT'];
+    else
+      $HTTP_ACCEPT = "";
 
-    $this->alignment = $alignment;
-    $this->output = $output;
+    if (isset($_SERVER['HTTP_HOST']))
+      $HTTP_HOST = $_SERVER['HTTP_HOST'];
+    else
+      $HTTP_HOST = "";
+
+    if (isset($_SERVER['SCRIPT_NAME']))
+      $SCRIPT_NAME = $_SERVER['SCRIPT_NAME'];
+    else
+      $SCRIPT_NAME = "";
+
+    $this->set_title($title);
+    $this->set_alignment($alignment);
+    
     $this->timeout = 0;
     $this->red_url = "";
 
     $this->waphome = "http://" . $HTTP_HOST . $SCRIPT_NAME;
 
-    // set debug flag if required
-    // to debug HAWHAW WML output for your script:
-    //   enter http://wap.yourdomain.com/yourscript.php?hawdebug=wml
-    //   resp. other control string listed below
+    // query parameter "hawdebug" can be used to debug hawhaw output
+    //     enter http://wap.yourdomain.com/yourscript.php?hawdebug=wap
+    //     resp. other value defined above for HAW_OUTPUT_...
+    // query parameter "hawoutput" can be used for overwrite output type
+    //     enter http://wap.yourdomain.com/yourscript.php?hawoutput=wap
     global $HTTP_GET_VARS;
-    $this->debug = (isset ($HTTP_GET_VARS["hawdebug"]) ? $HTTP_GET_VARS["hawdebug"] : "");
+    $forced_output = "";
 
-    // manipulate HTTP environment variables in case of debug mode
-    if ($this->debug)
+    if (isset ($HTTP_GET_VARS["hawdebug"]))
     {
-      if ($this->debug == "wml")
+      $forced_output = $HTTP_GET_VARS["hawdebug"];
+      $this->debug = true;
+    }
+    elseif (isset ($HTTP_GET_VARS["hawoutput"]))
+    {
+      $forced_output = $HTTP_GET_VARS["hawoutput"];
+      $this->hawoutput = $HTTP_GET_VARS["hawoutput"];
+    }
+    elseif ($output != HAW_OUTPUT_AUTOMATIC)
+      $forced_output = $output;
+
+    // manipulate HTTP environment variables in case of forced output
+    if ($forced_output)
+    {
+      if ($forced_output == HAW_OUTPUT_BIGSCREEN)
+      {
+        $HTTP_ACCEPT = "";
+        $HTTP_USER_AGENT = "MSIE";
+      }
+      elseif ($forced_output == HAW_OUTPUT_WAP)
+      {
         $HTTP_ACCEPT = "text/vnd.wap.wml";
-      elseif ($this->debug == "hdml")
+        $HTTP_USER_AGENT = "";
+      }
+      elseif ($forced_output == HAW_OUTPUT_HDML)
+      {
         $HTTP_ACCEPT = "hdml;version=3.0";
-      elseif ($this->debug == "pda")
+        $HTTP_USER_AGENT = "";
+      }
+      elseif ($forced_output == HAW_OUTPUT_PDA)
+      {
+        $HTTP_ACCEPT = "";
         $HTTP_USER_AGENT = "avantgo";
-      elseif ($this->debug == "chtml")
+      }
+      elseif ($forced_output == HAW_OUTPUT_IMODE)
+      {
+        $HTTP_ACCEPT = "";
         $HTTP_USER_AGENT = "DoCoMo";
-      elseif ($this->debug == "mml")
+      }
+      elseif ($forced_output == HAW_OUTPUT_MML)
+      {
+        $HTTP_ACCEPT = "";
         $HTTP_USER_AGENT = "J-";
-      elseif ($this->debug == "up")
-      {
-        $HTTP_ACCEPT = "text/vnd.wap.wml";
-        $HTTP_USER_AGENT = "UP.Browser";
       }
-      elseif ($this->debug == "owgui")
-      {
-        $HTTP_ACCEPT = "text/vnd.wap.wml";
-        $HTTP_USER_AGENT = "UP/GUI...UP.Link ";
-      }
-      elseif ($this->debug == "vxml")
+      elseif ($forced_output == HAW_OUTPUT_VOICEXML)
       {
         $HTTP_ACCEPT = "text/x-vxml";
         $HTTP_USER_AGENT = "Tellme";
       }
-      elseif ($this->debug == "pvx")
+      elseif ($forced_output == HAW_OUTPUT_XHTML)
       {
+        $HTTP_ACCEPT = "application/vnd.wap.xhtml+xml";
+        $HTTP_USER_AGENT = "";
+      }
+      elseif ($forced_output == HAW_OUTPUT_LYNX)
+      {
+        $HTTP_ACCEPT = "";
+        $HTTP_USER_AGENT = "Lynx";
+      }
+      elseif ($forced_output == HAW_OUTPUT_UP)
+      {
+        $HTTP_ACCEPT = "text/vnd.wap.wml";
+        $HTTP_USER_AGENT = "UP.Browser";
+      }
+      elseif ($forced_output == HAW_OUTPUT_OWGUI)
+      {
+        $HTTP_ACCEPT = "text/vnd.wap.wml";
+        $HTTP_USER_AGENT = "UP/GUI...UP.Link ";
+      }
+      elseif ($forced_output == HAW_OUTPUT_PVX)
+      {
+        $HTTP_ACCEPT = "";
         $HTTP_USER_AGENT = "publicVoiceXML"; // user agent header of PublicVoiceXML browser
       }
-
-      $this->output = HAW_OUTPUT_AUTOMATIC; // turn off forced output for debugging
     }
-
 
     // determine markup language to create
 
-    if (($this->output == HAW_OUTPUT_BIGSCREEN) ||
-        ($this->output == HAW_OUTPUT_PDA) ||
-        ($this->output == HAW_OUTPUT_IMODE) ||
-        ($this->output == HAW_OUTPUT_MML) ||              // until here forced HTML output
-        strstr(strtolower($HTTP_USER_AGENT), "docomo") ||
+    if (strstr(strtolower($HTTP_USER_AGENT), "docomo") ||
         strstr(strtolower($HTTP_USER_AGENT), "portalmmm") ||
         strstr(strtolower($HTTP_USER_AGENT), "opera ") ||
-        strstr(strtolower($HTTP_USER_AGENT), "reqwirelessweb"))
+        strstr(strtolower($HTTP_USER_AGENT), "reqwirelessweb") ||
+        strstr(strtolower($HTTP_ACCEPT), "vnd.wap.xhtml"))
     {
       $this->ml = HAW_HTML;   // create HTML (even when device accepts text/vnd.wap.wml too!)
     }
-    elseif (($this->output == HAW_OUTPUT_WAP) ||  // forced WML output
-            (strstr(strtolower($HTTP_ACCEPT), "text/vnd.wap.wml")))
+    elseif (strstr(strtolower($HTTP_ACCEPT), "text/vnd.wap.wml"))
     {
       $this->ml = HAW_WML;  // create WML
 
@@ -666,11 +765,9 @@ class HAW_deck
            strstr($HTTP_USER_AGENT, "UP.Link")) // Non-UP.Link gateways sometimes have problems!
         $this->owgui_1_3 = true; // device accepts Openwave GUI extensions for WML 1.3
     }
-    elseif (($this->output == HAW_OUTPUT_HDML) ||                  // forced HDML output
-            (strstr(strtolower($HTTP_ACCEPT), "hdml;version=3."))) // HDML 3.0 and 3.1 
+    elseif (strstr(strtolower($HTTP_ACCEPT), "hdml;version=3.")) // HDML 3.0 and 3.1 
       $this->ml = HAW_HDML; // create HDML
-    elseif (($this->output == HAW_OUTPUT_VOICEXML) ||                 // forced VoiceXML output
-            strstr(strtolower($HTTP_ACCEPT), "vxml") ||               // VoiceXML signalled in accept header
+    elseif (strstr(strtolower($HTTP_ACCEPT), "vxml") ||               // VoiceXML signalled in accept header
             strstr(strtolower($HTTP_ACCEPT), "voicexml") ||           // alternative accept header
             strstr($HTTP_USER_AGENT, "OpenVXI") ||                    // Speechworks OpenVXI
             strstr(strtolower($HTTP_USER_AGENT), "publicvoicexml") || // PublicVoiceXML voice browser
@@ -683,11 +780,18 @@ class HAW_deck
       {
         $this->supportsVXMLBreakTag = false;
       }
+
+      // detect Motorola VoiceXML platform
+      if (strstr(strtolower($HTTP_USER_AGENT), "motorola"))
+      {
+        $this->MotorolaVoiceXML = true;
+      }
     }
     else
     {
       if (strstr($HTTP_USER_AGENT, "Mozilla") ||
           strstr($HTTP_USER_AGENT, "MSIE") ||
+          strstr(strtolower($HTTP_USER_AGENT), "lynx") ||
           strstr(strtolower($HTTP_USER_AGENT), "avantgo") ||
           strstr(strtolower($HTTP_USER_AGENT), "pendragonweb") ||
           strstr(strtolower($HTTP_USER_AGENT), "j-"))
@@ -702,20 +806,28 @@ class HAW_deck
     $this->number_of_links = 0;
     $this->number_of_phones = 0;
 
-    if (($this->output == HAW_OUTPUT_PDA) ||
-        strstr(strtolower($HTTP_USER_AGENT), "avantgo") ||
-        strstr(strtolower($HTTP_USER_AGENT), "reqwirelessweb") ||
-        strstr(strtolower($HTTP_USER_AGENT), "pendragonweb") ||
-        strstr(strtolower($HTTP_USER_AGENT), "palmos") ||
-        strstr(strtolower($HTTP_USER_AGENT), "windows ce"))
+    if (strstr(strtolower($HTTP_ACCEPT), "vnd.wap.xhtml"))
     {
-      // PDA browser detected
+      // XHTML device detected
+      $this->xhtml = true;
+      $this->pureHTML = false;
+      $this->display_banners = false;
+      $this->gif_enabled = true;
+      $this->css_enabled = true;
+    }
+    elseif ( strstr(strtolower($HTTP_USER_AGENT), "avantgo") ||
+             strstr(strtolower($HTTP_USER_AGENT), "reqwirelessweb") ||
+             strstr(strtolower($HTTP_USER_AGENT), "pendragonweb") ||
+             strstr(strtolower($HTTP_USER_AGENT), "palmos") ||
+             strstr(strtolower($HTTP_USER_AGENT), "windows ce") ||
+             strstr($HTTP_USER_AGENT, "Mozilla/4.7"))
+    {
+      // PDA browser detected  (or poor old Netscape 4.7x which messes with CSS)
       $this->PDAstyle = true;
       $this->pureHTML = false;
       $this->display_banners = false;
     }
-    elseif (($this->output == HAW_OUTPUT_IMODE) ||
-            strstr(strtolower($HTTP_USER_AGENT), "docomo") ||
+    elseif (strstr(strtolower($HTTP_USER_AGENT), "docomo") ||
             strstr(strtolower($HTTP_USER_AGENT), "portalmmm"))
     {
       // i-mode browser detected
@@ -723,26 +835,33 @@ class HAW_deck
       $this->pureHTML = false;
       $this->display_banners = false;
     }
-    elseif (($this->output == HAW_OUTPUT_MML) ||
-            strstr(strtolower($HTTP_USER_AGENT), "j-"))
+    elseif (strstr(strtolower($HTTP_USER_AGENT), "j-"))
     {
       // MML browser detected
       $this->MMLstyle = true;
       $this->pureHTML = false;
       $this->display_banners = false;
     }
-
-    // determine if browser is able to scroll table cells
-    // (requirement for the usage of the device simulator)
-    if (strstr($HTTP_USER_AGENT, "MSIE") && !strstr($HTTP_USER_AGENT, "Opera"))
+    elseif (strstr(strtolower($HTTP_USER_AGENT), "lynx"))
     {
-      $this->td_scroll = true;
+      // text browser detected
+      $this->lynx = true;
+      $this->css_enabled = true; // enabled in the meaning of silently discarding it ...
+      $this->pureHTML = true;
+      $this->display_banners = false;
     }
+
+    // determine if browser is CSS-enbled
+    if (($this->ml == HAW_HTML) &&
+        (strstr($HTTP_USER_AGENT, "MSIE") ||
+         strstr($HTTP_USER_AGENT, "Mozilla") ||
+         strstr($HTTP_USER_AGENT, "Opera")))
+      $this->css_enabled = true;
 
     // determine if browser is able to display GIF images
     if (($this->ml == HAW_HTML) ||
         (strstr(strtolower($HTTP_ACCEPT), "image/gif")) ||
-        (strstr(strtolower($HTTP_USER_AGENT), "T68")))
+        (strstr(strtolower($HTTP_USER_AGENT), "t68")))
       $this->gif_enabled = true; // browsers can display GIF
 
     // determine how forms are to be transmitted 
@@ -1046,7 +1165,6 @@ class HAW_deck
     // set session server options
     ini_set('session.use_cookies', 0);         // do not use cookies
     ini_set('session.use_trans_sid', 1);       // use transient sid support
-    ini_set('session.name', 'SID');            // make short query URL's
     ini_set('arg_separator.output', '&amp;');  // '&' is not allowed in WML (XML)
 
     // url rewriter tags are dependent from markup language
@@ -1138,8 +1256,22 @@ class HAW_deck
 
 
   /**
-    Sets the background color for a HTML created page. Has no effect on WML/handheld
-    pages.
+    Sets a given language. <br>
+    Note: Specifies the main language of the deck, as e.g. english, german,
+    japanese or whatever. Language declaration is highly recommended in order
+    to provide barrierfree content and as is required to validate a deck as
+    Bobby AAA approved!
+    @param language Language code according ISO 639, e.g. "en", "de", etc.
+  */
+  function set_language($language)
+  {
+    $this->language = $language;
+  }
+
+
+  /**
+    Sets the window background color for a HTML (big-screen browser) page.
+    Has no effect on WML/handheld pages.
     @param bgcolor See HTML specification for possible values (e.g. "#CCFFFF",
       "red", ...).
   */
@@ -1150,7 +1282,8 @@ class HAW_deck
 
 
   /**
-    Sets a wallpaper for a HTML created page. Has no effect on WML/handheld pages.
+    Sets a window wallpaper for a HTML (big-screen browser) page.
+    Has no effect on WML/handheld pages.
     @param background e.g. "backgrnd.gif"
   */
   function set_background($background)
@@ -1170,8 +1303,8 @@ class HAW_deck
 
 
   /**
-    Sets the display background color for a HTML created page. Has no effect on
-    WML/handheld pages.
+    Sets the display background color for a (X)HTML page. Has no effect on
+    WML pages.
     @param disp_bgcolor See HTML specification for possible values (e.g. "#CCFFFF",
       "red", ...).
   */
@@ -1182,7 +1315,7 @@ class HAW_deck
 
 
   /**
-    Sets a display wallpaper for a HTML created page. Has no effect on WML/handheld
+    Sets a display wallpaper for a (X)HTML page. Has no effect on WML
     pages.
     @param background e.g. "backgrnd.gif"
   */
@@ -1193,7 +1326,7 @@ class HAW_deck
 
 
   /**
-    Sets the display width for a HTML created page. Has no effect on WML/handheld
+    Sets the display width for a HTML page. Has no effect on WML/handheld
     pages.
     @param width See HTML specification for possible values (e.g. "200", "50%", ...).
   */
@@ -1204,7 +1337,7 @@ class HAW_deck
 
 
   /**
-    Sets the display height for a HTML created page. Has no effect on WML/handheld
+    Sets the display height for a HTML page. Has no effect on WML/handheld
     pages.
     @param height See HTML specification for possible values (e.g. "200", "50%", ...).
   */
@@ -1215,9 +1348,9 @@ class HAW_deck
 
 
   /**
-    Sets the font size for all characters in a HTML created page. Has no effect on
-    WML/handheld pages.
-    @param size See HTML specification for possible values (e.g. "4", "+2", ...).
+    Sets the font size for all characters in a (X)HTML page. Has no effect on
+    WML pages.
+    @param size See HTML specification for possible values (e.g. "12pt", ...).
   */
   function set_size($size)
   {
@@ -1226,10 +1359,12 @@ class HAW_deck
 
 
   /**
-    Sets the color for all characters in a HTML created page. Has no effect on
-    WML/handheld pages.
+    Sets the color for all characters in a (X)HTML page. Has no effect on WML pages.
+    Nevertheless, HAW_text objects can overwrite this value by defining their own color
+    attributes.
     @param color See HTML specification for possible values (e.g. "#CCFFFF", "red",
        ...).
+    @see HAW_text
   */
   function set_color($color)
   {
@@ -1238,8 +1373,8 @@ class HAW_deck
 
 
   /**
-    Sets the color of links in a HTML created page. Has no effect on
-    WML/handheld pages.
+    Sets the color of links in a (X)HTML page. Has no effect on
+    WML pages.
     @param link_color See HTML specification for possible values (e.g. "#CCFFFF", "red",
        ...).
   */
@@ -1250,8 +1385,8 @@ class HAW_deck
 
 
   /**
-    Sets the color of visited links in a HTML created page. Has no effect on
-    WML/handheld pages.
+    Sets the color of visited links in a (X)HTML page. Has no effect on
+    WML pages.
     @param vlink_color See HTML specification for possible values (e.g. "#CCFFFF", "red",
        ...).
   */
@@ -1262,14 +1397,42 @@ class HAW_deck
 
 
   /**
-    Sets the font for all characters in a HTML created page. Has no effect on
-    WML/handheld pages.
+    Sets the font for all characters in a (X)HTML page. Has no effect on
+    WML pages.
     @param face See HTML specification for possible values (e.g. "Avalon",
        "Wide Latin").
   */
   function set_face($face)
   {
     $this->face = $face;
+  }
+
+
+  /**
+    Sets the deck title (see also HAW_deck constructor).
+    @param title deck title
+  */
+  function set_title($title)
+  {
+    $this->title = $title;
+  }
+
+
+  /**
+    Sets the text alignment for the whole deck.
+    @param alignment text alignment <br>
+     HAW_ALIGN_LEFT (default)<br>
+     HAW_ALIGN_CENTER<br>
+     HAW_ALIGN_RIGHT
+  */
+  function set_alignment($alignment)
+  {
+    if ($alignment == HAW_ALIGN_CENTER)
+      $this->alignment = "center";
+    elseif ($alignment == HAW_ALIGN_RIGHT)
+      $this->alignment = "right";
+    else
+      $this->alignment = "left";
   }
 
 
@@ -1290,15 +1453,17 @@ class HAW_deck
 
 
   /**
-    Activates the built-in device simulator on bigscreen browsers.
-    The device simulator can be displayed only by Internet Explorer. This
-    is because the layout requires a scrollable table element, which is unfortunately not
-    supported by all browsers. For visitors with other browsers the
-    classic HAWHAW layout will be presented instead.
+    Activates the device simulator on bigscreen browsers. <br>
+    Note: If no skin is specified, the HAWHAW default skin is used.
+    HAWHAW output can be displayed in any kind of user-defined skin.
+    See <a href="http://skin.hawhaw.de/skin.css" target="_blank">
+    CSS file</a> of the HAWHAW default skin for more info.
+    @param skin URL of CSS file, where skin is defined (optional)
   */
-  function use_simulator()
+  function use_simulator($skin="http://skin.hawhaw.de/skin.css")
   {
     $this->use_simulator = true;
+    $this->skin = $skin;
   }
 
 
@@ -1412,6 +1577,37 @@ class HAW_deck
 
 
   /**
+    Defines a DTMF/voice grammar to repeat or skip voice output. <br>
+    This function enables voice users to repeat or skip voice output which
+    has been created by means of HAW_text objects.
+    For both <i>repeat</i> and <i>forward</i> at least one trigger criteria (DTMF or voice)
+    has to be defined. 
+    HAW_text objects where user navigation should apply have to call <i>set_voice_navigation()</i>.
+    @param repeat_dtmf DTMF key that triggers the repetition of the current output (e.g. "1", "2", "", etc.)
+    @param repeat_voice What the user has to say to repeat the current output (e.g. "repeat", "")
+    @param forward_dtmf DTMF key that terminates the current output (e.g. "0", "*", "", etc.)
+    @param forward_voice What the user has to say to continue with the next output (e.g. "forward", "")
+    @see HAW_text
+  */
+  function set_voice_navigator($repeat_dtmf, $repeat_voice, $forward_dtmf, $forward_voice)
+  {
+    $repeat_dtmf  = (string) $repeat_dtmf;
+    $forward_dtmf = (string) $forward_dtmf;
+ 
+    if (!ereg("^[0-9#\*]$", $repeat_dtmf) && !$repeat_voice)
+      die("at least one repeat indication required in set_voice_navigator()");
+
+    if (!ereg("^[0-9#\*]$", $forward_dtmf) && !$forward_voice)
+      die("at least one forward indication required in set_voice_navigator()");
+
+    $this->voice_navigator["repeat_dtmf"]   = $repeat_dtmf;
+    $this->voice_navigator["repeat_voice"]  = $repeat_voice;
+    $this->voice_navigator["forward_dtmf"]  = $forward_dtmf;
+    $this->voice_navigator["forward_voice"] = $forward_voice;
+  }
+
+
+  /**
     Smooth contiguous text sections. <br>
     Note: This function affects VoiceXML output only.<br>
     Voice decks often are assembled by some HAW_text objects. Each HAW_text
@@ -1463,45 +1659,33 @@ class HAW_deck
   }
 
 
-  /*
-    Deprecated function - was replaced by use_simulator()
-
-    Activates the device simulator on bigscreen browsers.
-    This function requires an image of your favorite device, which must be
-    sliced into five JPG files as the figure shows.<br>
-    <img src="set_sim_device.gif" alt="set_sim_device" align="right"/>
-    These five subimages MUST be named:
-    <ul>
-    <li>top.jpg</li>
-    <li>left.jpg</li>
-    <li>display.jpg</li>
-    <li>right.jpg</li>
-    <li>bottom.jpg</li>
-    </ul>
-    The segment in the middle, represented by display.jpg, will contain the HAWHAW
-    output. The size of this segment can be specified in the function call. By default
-    a size of 150 x 120 pixel is assumed.
-    The device simulator can be displayed only by Internet Explorer. This
-    is because the layout requires a scrollable table element, which is unfortunately not
-    supported by all browsers. For visitors with other browsers the
-    classic HAWHAW layout will be presented instead.
-    <br><br>
-    @param path Relative or absolute path where the device image segments are stored.
-    @param width (optional) Width of the display segment (default: 150)
-    @param height (optional) Height of the display segment (default: 120)
-    <br clear=all>
+  /**
+    Get markup language evaluated for the detected browser. <br>
+    (returns <b>int</b> and not <b>void</b>. Must update this documentation tool ...)<br><br>
+    Returns:<br>
+    - HAW_HTML (HTML)<br>
+    - HAW_WML (WML)<br>
+    - HAW_HDML (HDML)<br>
+    - HAW_VXML (VoiceXML)<br><br>
+    Example:<br>
+    ...<br>
+    $myDeck = new HAW_deck();<br>
+    if ($myDeck->get_markup_language() == HAW_VXML) {<br>
+      // some VoiceXML stuff<br>
+    }<br>
+    else {<br>
+      // some visual stuff<br>
+    } 
   */
-  function set_sim_device($path, $width=150, $height=120)
+  function get_markup_language()
   {
-    $this->sim_device = $path;
-    $this->simdev_width = $width;
-    $this->simdev_height = $height;
+    return $this->ml;
   }
-
-
+  
+  
   /**
     Creates the page in the according markup language. Depending on the clients
-    browser type, HTML (pure HTML, handheldfriendly HTML, i-mode cHTML, MML),
+    browser type, HTML (pure HTML, handheldfriendly HTML, XHTML, i-mode cHTML, MML),
     WML, HDML or VoiceXML is thrown out.
   */
   function create_page()
@@ -1512,8 +1696,14 @@ class HAW_deck
     global $haw_sig_text;
     global $haw_sig_link;
 
+    // add hawoutput query parameter to redirection url, if required
+    HAW_handle_forced_output($this->red_url, $this->hawoutput);
+
     if ($this->debug)
       header("content-type: text/plain");
+
+    if ($this->disable_cache)
+      header("cache-control: no-cache");
 
     if ($this->ml == HAW_HTML)
     {
@@ -1521,15 +1711,52 @@ class HAW_deck
 
       if (!$this->debug)
       {
-        $ct = sprintf("content-type: text/html;charset=%s", $this->charset);
+        if ($this->xhtml)
+        {
+          if ($this->lynx)
+            $ct = "content-type: text/html";
+          else
+            $ct = "content-type: application/vnd.wap.xhtml+xml";
+        }
+        else
+          $ct = sprintf("content-type: text/html;charset=%s", $this->charset);
+
         header($ct);
       }
 
-      if (!$this->MMLstyle)
-        echo "<!doctype html public \"-//w3c//dtd html 4.0 transitional//en\">\n";
+      if ($this->xhtml)
+      {
+        printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", $this->charset);
 
-      echo "<html>\n";
+        if ($this->lynx)
+          echo "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\" >\n";
+        else
+          echo "<!DOCTYPE html PUBLIC \"-//WAPFORUM//DTD XHTML Mobile 1.0//EN\" \"http://www.wapforum.org/DTD/xhtml-mobile10.dtd\" >\n";
+      }
+      elseif ($this->css_enabled)
+        echo "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">\n";
+
+      if ($this->language)
+      {
+        if ($this->xhtml)
+          $language = sprintf(" xml:lang=\"%s\"", $this->language);
+        else
+          $language = sprintf(" lang=\"%s\"", $this->language);
+      }
+      else
+        $language = "";
+
+      printf("<html%s>\n", $language);
       echo "<head>\n";
+
+      // validation issue: HTML does not allow XHTML-stylish "/>" within <head> part
+      // HTML has set option SHORTTAG=YES in SGML declaration
+      // ==> "/" closes the tag and ">" will be treated as text
+      // <body> allows text, but <head> does not! 
+      if ($this->xhtml)
+        $endtag = "/>";
+      else
+        $endtag = ">";
 
       if (!$this->iModestyle && !$this->MMLstyle)
       {
@@ -1540,29 +1767,29 @@ class HAW_deck
         else
           $license = "";
 
-        printf("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=%s\">\n",
-                $this->charset);
-        printf("<meta name=\"GENERATOR\" content=\"%s (PHP) %s%s\">\n",
-               HAW_VERSION, HAW_COPYRIGHT, $license);
+        printf("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=%s\" %s\n",
+                $this->charset, $endtag);
+        printf("<meta name=\"GENERATOR\" content=\"%s (PHP) %s%s\" %s\n",
+               HAW_VERSION, HAW_COPYRIGHT, $license, $endtag);
 
         if ($this->timeout > 0)
         {
-          printf("<meta http-equiv=\"refresh\" content=\"%d; URL=%s\">\n",
-                  $this->timeout, $this->red_url);
+          printf("<meta http-equiv=\"refresh\" content=\"%d; URL=%s\" %s\n",
+                  $this->timeout, HAW_specchar($this->red_url, $this), $endtag);
         }
 
         if ($this->disable_cache)
         {
-          echo "<meta http-equiv=\"Cache-Control\" content=\"must-revalidate\">\n";
-          echo "<meta http-equiv=\"Cache-Control\" content=\"no-cache\">\n";
-          echo "<meta http-equiv=\"Cache-Control\" content=\"max-age=0\">\n";
-          echo "<meta http-equiv=\"Expires\" content=\"0\">\n";
+          echo "<meta http-equiv=\"Cache-Control\" content=\"must-revalidate\" $endtag\n";
+          echo "<meta http-equiv=\"Cache-Control\" content=\"no-cache\" $endtag\n";
+          echo "<meta http-equiv=\"Cache-Control\" content=\"max-age=0\" $endtag\n";
+          echo "<meta http-equiv=\"Expires\" content=\"0\" $endtag\n";
         }
       }
 
       if ($this->PDAstyle)
       {
-        echo "<meta name=\"HandheldFriendly\" content=\"True\">\n";
+        echo "<meta name=\"HandheldFriendly\" content=\"True\" $endtag\n";
       }
 
       // init style properties
@@ -1574,50 +1801,111 @@ class HAW_deck
       $link_color = "";
       $vlink_color = "";
       $face = "";
+      $bodystyle = "text-align: center; ";
+      $css_style = "";
 
-      if ($this->pureHTML)
+      if ($this->pureHTML || $this->PDAstyle || $this->xhtml)
       {
-        if ($this->bgcolor)
-          // set background color for a HTML created page
-          $bgcolor = " bgcolor=\"" . $this->bgcolor . "\"";
+        if ($this->pureHTML)
+        {
+          // big-screen browser
+ 
+          if ($this->bgcolor)
+          {
+            // set background color (=window background color) 
+            $bgcolor = " bgcolor=\"" . $this->bgcolor . "\"";
+            $bodystyle .= sprintf("background-color:%s; ", $this->bgcolor);
+          }
 
-        if ($this->background)
-          // set wallpaper for a HTML created page
-          $background = " background=\"" . $this->background . "\"";
+          if ($this->background)
+          {
+            // set wallpaper (=window wallpaper)
+            $background = " background=\"" . $this->background . "\"";
+            $bodystyle .= sprintf("background-image:url(%s); ", $this->background);
+          }
 
-        if ($this->disp_background)
-          // set display wallpaper for a HTML created page
-          $disp_background = " background=\"" . $this->disp_background . "\"";
+          // set display defaults, if not assigned by yet
+          if (!$this->disp_bgcolor)
+            $this->disp_bgcolor = HAW_DISP_BGCOLOR;
+          if (!$this->link_color)
+            $this->link_color = HAW_DISP_LINKCOLOR;
+          if (!$this->vlink_color)
+            $this->vlink_color = HAW_DISP_VLINKCOLOR;
+          if (!$this->face)
+            $this->face = HAW_DISP_FACE;
+        }
+        else
+        {
+          // XHTML or PDA
+
+          if ($this->disp_bgcolor)
+          {
+            // set background color of mobile device
+            $bgcolor = " bgcolor=\"" . $this->disp_bgcolor . "\"";
+            $bodystyle .= sprintf("background-color:%s; ", $this->disp_bgcolor);
+          }
+
+          if ($this->disp_background)
+          {
+            // set wallpaper of mobile device
+            $background = " background=\"" . $this->disp_background . "\"";
+            $bodystyle .= sprintf("background-image:url(%s); ", $this->disp_background);
+          }
+        }
 
         if ($this->size)
+        {
           // set the font size for all characters in a HTML created page
           $size = " size=\"" . $this->size . "\"";
+          $bodystyle .= sprintf("font-size:%s; ", $this->size);
+        }
 
         if ($this->color)
+        {
           // set the color for all characters in a HTML created page
           $color = " color=\"" . $this->color . "\"";
+          $bodystyle .= sprintf("color:%s; ", $this->color);
+        }
 
         if ($this->link_color)
+        {
           // set the color of links in a HTML created page
           $link_color = " link=\"" . $this->link_color . "\"";
+          $css_style .= sprintf("a:link { color:%s; }\n", $this->link_color);
+        }
 
         if ($this->vlink_color)
+        {
           // set the color of visited links in a HTML created page
           $vlink_color = " vlink=\"" . $this->vlink_color . "\"";
+          $css_style .= sprintf("a:visited { color:%s; }\n", $this->vlink_color);
+        }
 
         if ($this->face)
+        {
           // set the font for all characters in a HTML created page
           $face = " face=\"" . $this->face . "\"";
+          $bodystyle .= sprintf("font-family:%s; ", $this->face);
+        }
+
+        $this->fontstyle_attrbs = $size . $color . $face;
       }
 
       printf("<title>%s</title>\n", HAW_specchar($this->title, $this));
 
-      if ($this->pureHTML && $this->use_simulator && $this->td_scroll)
-        // use central HAWHAW simdev stylesheet
-        echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"http://simdev.hawhaw.de/device.css\">\n";
+      if ($this->pureHTML && $this->use_simulator && $this->css_enabled)
+        // use HAWHAW default- or user-defined skin
+        printf("<link rel=\"stylesheet\" type=\"text/css\" href=\"%s\" $endtag\n", $this->skin);
+
+      if ($this->css_enabled)
+        printf("<style type=\"text/css\">\n<!--\nbody { %s}\n%s-->\n</style>\n", $bodystyle, $css_style);
 
       echo "</head>\n";
-      printf("<body%s%s%s%s>\n", $bgcolor, $background, $link_color, $vlink_color);
+
+      if ($this->css_enabled)
+        echo "<body>\n";
+      else
+        printf("<body%s%s%s%s>\n", $bgcolor, $background, $link_color, $vlink_color);
 
       if ($this->display_banners)
       {
@@ -1638,36 +1926,24 @@ class HAW_deck
 
       if ($this->pureHTML)
       {
-        echo "<center><br>\n";
-
-        if ($this->td_scroll && $this->sim_device)
+        if ($this->css_enabled && $this->use_simulator)
         {
-          // create customized device simulator table layout
-          echo "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n";
-          printf("<tr><td colspan=\"3\"><img src=\"%s/top.jpg\" /></td></tr>\n",
-                  $this->sim_device);
-          printf("<tr><td valign=\"top\"><img src=\"%s/left.jpg\" /></td>\n",
-                  $this->sim_device);
-          printf("<td width=\"%d\" height=\"%d\" background=\"%s/display.jpg\" valign=\"top\">\n",
-                  $this->simdev_width, $this->simdev_height, $this->sim_device);
-        }
-        elseif ($this->td_scroll && $this->use_simulator)
-        {
-          // create default device simulator table layout with central CSS layout
-          echo "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n";
-          echo "<tr><td colspan=\"3\" class=\"top\">&nbsp;</td></tr>\n";
-          echo "<tr><td valign=\"top\" class=\"left\">&nbsp;</td>\n";
-          echo "<td valign=\"top\" class=\"display\">\n";
+          // use simulator design
+          echo "<div id=\"skin\">\n";
+          echo "<div id=\"display\">\n";
         }
         else
         {
-          // create simple table design for big-screen HTML
-          printf("<table border=\"%d\" bgcolor=\"%s\" cellpadding=\"8\" width=\"%s\" height=\"%s\"%s>\n",
-                  $this->border, $this->disp_bgcolor, $this->width, $this->height, $disp_background);
-          echo "<tr><td valign=\"top\">\n";
+          // use classic HAWHAW design
+          printf("<div style=\"background-color: %s; background-image: url(%s); border: %dpx solid #aaa; padding: 8px; width: %spx; margin: 0px auto;\">\n",
+                 $this->disp_bgcolor, $this->disp_background, $this->border, $this->width);
         }
+      }
 
-        printf("<font%s%s%s>\n", $size, $color, $face);
+      if (!$this->css_enabled && $this->fontstyle_attrbs)
+      {
+        // write style attributes, if any
+        printf("<font%s>\n", $this->fontstyle_attrbs);
       }
     }
     else
@@ -1699,7 +1975,10 @@ class HAW_deck
           // not all WAP clients interprete meta directives!
           // disable caching by sending HTTP content-location header with unique value
 
-          $request_uri = getenv(REQUEST_URI);
+          if (isset($_SERVER['REQUEST_URI']))
+            $request_uri = $_SERVER['REQUEST_URI'];
+          else
+            $request_uri = "";
 
           if (strchr($request_uri, "?"))
             // request URI already contains parameter(s)
@@ -1720,7 +1999,12 @@ class HAW_deck
 
         printf("<!-- Generated by %s %s -->\n", HAW_VERSION, HAW_COPYRIGHT);
 
-        echo "<wml>\n";
+        if ($this->language)
+          $language = sprintf(" xml:lang=\"%s\"", $this->language);
+        else
+          $language = "";
+
+        printf("<wml%s>\n", $language);
 
         if ($this->disable_cache)
         {
@@ -1809,16 +2093,66 @@ class HAW_deck
 
         printf("<!-- Generated by %s %s -->\n", HAW_VERSION, HAW_COPYRIGHT);
 
-        echo "<vxml version=\"2.0\">\n";
+        // language declaration breaks Voxeo Motorola voice browser!!!
+        if ($this->language && !$this->MotorolaVoiceXML)
+          $language = sprintf(" xml:lang=\"%s\"", $this->language);
+        else
+          $language = "";
+
+        printf("<vxml%s version=\"2.0\">\n", $language);
         
         if ($this->disable_cache)
           echo "<meta http-equiv=\"Expires\" content=\"0\"/>\n";
 
         // define voice deck properties
         while (list($key, $val) = each($this->voice_property))
-          printf("<property name=\"%s\" value=\"%s\"/>\n", $val["name"], $val["value"]); 
+          printf("<property name=\"%s\" value=\"%s\"/>\n", $val["name"], $val["value"]);
+
+        // Voxeo-specific TTS settings
+        if ($this->MotorolaVoiceXML)
+        {
+          if ($this->language == "fr")
+            echo "<property name=\"nuance.core.tts.ResourceName\" value=\"fr-FR.default\"/>\n";
+          if ($this->language == "es")
+            echo "<property name=\"nuance.core.tts.ResourceName\" value=\"es-MX.default\"/>\n";
+        }
 
         echo "<form>\n";
+
+        if (count($this->voice_navigator) > 0)
+        {
+          // allow user navigation in dedicated prompts
+
+          echo "<var name=\"nav_counter\"/>\n";
+
+          if (strlen($this->voice_navigator["repeat_dtmf"]) > 0)
+            $dtmf = sprintf(" dtmf=\"%s\"", $this->voice_navigator["repeat_dtmf"]);
+          else
+            $dtmf = "";
+
+          if ($this->voice_navigator["repeat_voice"])
+            $voice_grammar = sprintf("<grammar>[%s]</grammar>", $this->voice_navigator["repeat_voice"]);
+          else
+            $voice_grammar = "";
+
+          printf("<link%s event=\"repeat\">%s</link>\n", $dtmf, $voice_grammar); // define repeat link
+
+          if (strlen($this->voice_navigator["forward_dtmf"]) > 0)
+            $dtmf = sprintf(" dtmf=\"%s\"", $this->voice_navigator["forward_dtmf"]);
+          else
+            $dtmf = "";
+
+          if ($this->voice_navigator["forward_voice"])
+            $voice_grammar = sprintf("<grammar>[%s]</grammar>", $this->voice_navigator["forward_voice"]);
+          else
+            $voice_grammar = "";
+
+          printf("<link%s event=\"forward\">%s</link>\n", $dtmf, $voice_grammar); // define forward link
+
+          // define catch handler for links
+          echo "<catch event=\"repeat\"><goto expritem=\"'block' + nav_counter\"/></catch>\n"; 
+          echo "<catch event=\"forward\"><goto expritem=\"'block' + nav_counter + 'end'\"/></catch>\n"; 
+        }
 
         if ($this->voice_text || $this->voice_audio_src)
         {
@@ -1834,49 +2168,19 @@ class HAW_deck
       }
     }
 
-    if ($this->td_scroll && $this->sim_device)
-      // make content of table element scrollable (customized simulator)
-      $divstyle = sprintf(" style=\"width:%d;height:%d;overflow:auto\"",
-                            $this->simdev_width, $this->simdev_height);
-    elseif ($this->td_scroll && $this->use_simulator)
-      // make content of table element scrollable (HAWHAW default  simulator)
-      $divstyle = " class=\"simdev\"";
-    else
-      $divstyle = "";
+    // position:relative is needed to work-around MSIE's Peekaboo bug ...
+    // text-align aligns left, centered or right
+    $divstyle = sprintf("text-align:%s; position:relative;", $this->alignment);
 
-    switch ( $this->alignment )
+    if ($this->ml == HAW_HTML)
     {
-      case HAW_ALIGN_LEFT:
-      {
-        if ($this->ml == HAW_HTML)
-          printf("<div align=\"left\"%s>\n", $divstyle);
-        elseif ($this->ml == HAW_WML)
-          echo "<p>\n"; // left is default
-
-        break;
-      }
-
-      case HAW_ALIGN_CENTER:
-      {
-        if ($this->ml == HAW_HTML)
-          printf("<div align=\"center\"%s>\n", $divstyle);
-        elseif ($this->ml == HAW_WML)
-          echo "<p align=\"center\">\n";
-
-        break;
-      }
-
-      case HAW_ALIGN_RIGHT:
-      {
-        if ($this->ml == HAW_HTML)
-          printf("<div align=\"right\"%s>\n", $divstyle);
-        elseif ($this->ml == HAW_WML)
-          echo "<p align=\"right\">\n";
-
-        break;
-      }
-
+      if ($this->css_enabled)
+        printf("<div style=\"%s\">\n", $divstyle);
+      else
+        printf("<div align=\"%s\">\n", $this->alignment);
     }
+    elseif ($this->ml == HAW_WML)
+      printf("<p align=\"%s\">\n", $this->alignment);
 
     $i = 0;
     while (isset($this->element[$i]))
@@ -1923,44 +2227,35 @@ class HAW_deck
 
       echo "</div>\n";
 
+      if (!$this->css_enabled && $this->fontstyle_attrbs)
+        echo "</font>\n";
+
       if ($this->pureHTML)
       {
-        echo "</font></td>\n";
+        if ($this->css_enabled && $this->use_simulator)
+          // terminate display div
+          echo "</div>\n";
 
-        if ($this->td_scroll && $this->sim_device)
+        echo "</div>\n"; // terminate skin/classic div
+
+        if (!$this->lynx)
         {
-          // display lower part of customized device simulator
-          printf("<td valign=\"top\"><img src=\"%s/right.jpg\" /></td></tr>\n",
-                  $this->sim_device);
-          printf("<tr><td colspan=\"3\"><img src=\"%s/bottom.jpg\" /></td>\n",
-                  $this->sim_device);
-        }
-        elseif ($this->td_scroll && $this->use_simulator)
-        {
-          // display lower part of HAWHAW default device simulator
-          echo "<td valign=\"top\" class=\"right\">&nbsp;</td></tr>\n";
-          echo "<tr><td colspan=\"3\" class=\"bottom\">&nbsp;</td>\n";
-        }
-
-
-        echo "</tr></table>\n";
-
-        if ($haw_license_holder && $haw_signature)
-        {
-          if ($haw_signature == 1)
-            $signature = sprintf("<font size=-1>Powered by HAWHAW (C)<br />and TikiWiki</font>\n");
+          if ($haw_license_holder && $haw_signature)
+          {
+            if ($haw_signature == 1)
+              $signature = "<small>Powered by HAWHAW (C)</small>\n";
+            else
+              if ($haw_sig_text)
+                if ($haw_sig_link)
+                  $signature = sprintf("<a href=\"%s\" target=\"_blank\"><small>%s</small></a>\n", $haw_sig_link, $haw_sig_text);
+                else
+                  $signature = sprintf("<small>%s</small>\n", $haw_sig_text);
+          }
           else
-            if ($haw_sig_text)
-              if ($haw_sig_link)
-                $signature = sprintf("<a href=\"%s\" target=\"_blank\"><font size=-1>%s</font></a>\n", $haw_sig_link, $haw_sig_text);
-              else
-                $signature = sprintf("<font size=-1>%s</font>\n", $haw_sig_text);
-        }
-        else
-          $signature = sprintf("<a href=\"http://info.hawhaw.de/index.htm?host=%s\" target=\"_blank\"><font size=-1>Powered by HAWHAW (C)</font></a><br />and <a href=\"http://tikiwiki.org\" target=\"_blank\"><font size=-1>TikiWiki (C)</font></a>\n", $this->waphome);
-        echo $signature;
+            $signature = sprintf("<a href=\"http://info.hawhaw.de/index.htm?host=%s\" target=\"_blank\"><small>Powered by HAWHAW (C)</small></a>\n", $this->waphome);
 
-        echo "</center>\n";
+          echo $signature;
+        }
       }
 
       if ($this->display_banners)
@@ -2004,8 +2299,9 @@ class HAW_deck
       if ($this->timeout > 0)
       {
         // redirect after <timout> to another URL
-        printf("<field><prompt timeout=\"%ds\"/><noinput><goto next=\"%s\"/></noinput></field>\n",
-                  $this->timeout, $this->red_url);
+        // (define dummy grammar in case that no other grammar is active)
+        printf("<field><grammar>[(hawhaw really rocks)]</grammar><prompt timeout=\"%ds\"/><noinput><goto next=\"%s\"/></noinput></field>\n",
+               $this->timeout, $this->red_url);
       }
       elseif($this->voice_timeout > 0)
       {
@@ -2013,11 +2309,11 @@ class HAW_deck
         // wait longest link timeout value until disconnect is forced
 
         printf("<field><prompt timeout=\"%ds\"/>", $this->voice_timeout);
-        
+
         // test for user-defined noinput event handler
         if (!isset($this->voice_noinput) || (count($this->voice_noinput) == 0))
           echo "<noinput><exit/></noinput>"; // terminate in case of no input
-          
+
         echo "</field>\n";
       }
 
@@ -2074,6 +2370,7 @@ class HAW_deck
 class HAW_form
 {
   var $url;
+  var $method;
   var $element;
   var $number_of_elements = 0;
   var $number_of_submitobjects = 0;
@@ -2083,11 +2380,17 @@ class HAW_form
   /**
     Constructor
     @param url Address where the user input is sent to.<br>
-      Note: Currently only the GET method is supported.
+    @param method (optional)<br>
+      HAW_METHOD_GET  (default)<br>
+      HAW_METHOD_POST
   */
-  function HAW_form($url)
+  function HAW_form($url, $method=HAW_METHOD_GET)
   {
+    if (!is_int($method) || (($method != HAW_METHOD_GET) && ($method != HAW_METHOD_POST)))
+      die("invalid method in HAW_form: " . $method . " (possible values: HAW_METHOD_GET or HAW_METHOD_POST)");
+
     $this->url = $url;
+    $this->method = $method;
   }
 
 
@@ -2371,9 +2674,17 @@ class HAW_form
 
   function create(&$deck)
   {
+    // add hawoutput query parameter to form, if required
+    if ($deck->hawoutput)
+    {
+      $hidden_hawoutput = new HAW_hidden("hawoutput", $deck->hawoutput);
+      $this->add_hidden($hidden_hawoutput);
+    }
+
     // determine all elements that have to be submitted
 
     $i = 0;
+    $varnames = null;
     while (list($key, $val) = each($this->element))
     {
       switch ($val->get_elementtype())
@@ -2386,7 +2697,7 @@ class HAW_form
         case HAW_HIDDEN:
         {
           $element = $val;
-          $getvar[$i] = $element->get_name();
+          $varnames[$i] = $element->get_name();
           $i++;
         }
       }
@@ -2395,7 +2706,15 @@ class HAW_form
     if ($deck->ml == HAW_HTML)
     {
       // start tag of HTML form
-      printf("<form action=\"%s\" method=\"get\">\n", $this->url);
+      if ($this->method == HAW_METHOD_POST)
+        $method = " method=\"post\"";
+      else
+        $method = " method=\"get\"";
+
+      printf("<form action=\"%s\"%s>\n", $this->url, $method);
+
+      if ($deck->xhtml)
+        echo "<div>\n"; // needed for validation
     }
       // not necessary in WML, HDML and VoiceXML!
 
@@ -2440,7 +2759,7 @@ class HAW_form
         case HAW_SUBMIT:
         {
           $submit = $this->element[$i];
-          $submit->create($deck, $getvar, $this->url);
+          $submit->create($deck, $varnames, $this->url, $this->method);
           break;
         }
 
@@ -2451,6 +2770,9 @@ class HAW_form
 
     if ($deck->ml == HAW_HTML)
     {
+      if ($deck->xhtml)
+        echo "</div>\n";
+
       // terminate HTML form
       echo "</form>\n";
     }
@@ -2478,9 +2800,12 @@ class HAW_text
 {
   var $text;
   var $attrib;
+  var $color;
+  var $boxcolor;
   var $br;
   var $voice_text;
   var $voice_audio_src;
+  var $voice_navigation;
 
   /**
     Constructor
@@ -2492,15 +2817,31 @@ class HAW_text
       HAW_TEXTFORMAT_ITALIC<br>
       HAW_TEXTFORMAT_BIG<br>
       HAW_TEXTFORMAT_SMALL<br>
-      HAW_TEXTFORMAT_BOXED (HTML only)
+      HAW_TEXTFORMAT_BOXED (text in a colored box for headings etc.)
   */
   function HAW_text($text, $attrib=HAW_TEXTFORMAT_NORMAL)
   {
     $this->text = $text;
     $this->attrib = $attrib;
+    $this->color = "";
+    $this->boxcolor = "";
     $this->br = 1; // default: 1 line break after text
     $this->voice_text = $text;
     $this->voice_audio_src = "";
+    $this->voice_navigation = false;
+  }
+
+  /**
+    Sets the color of this object in a (X)HTML page.
+    @param color See HTML specification for possible values (e.g. "#CCFFFF", "red",
+       ...).
+    @param boxcolor (optional)<br>
+       box background for attribute HAW_TEXTFORMAT_BOXED
+  */
+  function set_color($color, $boxcolor="")
+  {
+    $this->color = $color;
+    $this->boxcolor = $boxcolor;
   }
 
   /**
@@ -2529,9 +2870,24 @@ class HAW_text
     $this->voice_audio_src = $audio_src;
   }
 
+  /**
+    Turns on the voice navigation capability for this object. <br>
+    Note: See <i>set_voice_navigator(...)</i> in class HAW_deck.
+    @see HAW_deck
+  */
+  function set_voice_navigation()
+  {
+    $this->voice_navigation = true;
+  }
+
   function get_text()
   {
     return $this->text;
+  }
+
+  function get_color()
+  {
+    return $this->color;
   }
 
   function get_br()
@@ -2555,13 +2911,7 @@ class HAW_text
     {
       // HDML
 
-      if ($deck->alignment == HAW_ALIGN_CENTER)
-        // repeat alignment in HDML for each paragraph
-        $deck->hdmlcardset->add_display_content("<center>\n");
-
-      if ($deck->alignment == HAW_ALIGN_RIGHT)
-        // repeat alignment in HDML for each paragraph
-        $deck->hdmlcardset->add_display_content("<right>\n");
+      $deck->hdmlcardset->add_display_content("<" . $deck->alignment . ">\n");
 
       // print text
       if ($this->text)
@@ -2583,18 +2933,44 @@ class HAW_text
 
       if (($this->attrib & HAW_TEXTFORMAT_BOXED) && ($deck->ml == HAW_HTML))
       {
-        if (!($box_color = $deck->color))
-          $box_color = "#000000"; // set box color black, if no text color specified
-          
-        printf("<table border=\"0\" bgcolor=\"%s\" width=\"100%%\"><tr><td><font color=\"%s\">\n",
-               $box_color, $deck->disp_bgcolor);
+        // determine text and background color, if not already assigned
+
+        if (!$this->color)
+          $this->color = $deck->disp_bgcolor;
+        if (!$this->color)
+          $this->color = "#FFFFFF"; // default: white text
+
+        if (!$this->boxcolor)
+          $this->boxcolor = $deck->color;
+        if (!$this->boxcolor)
+          $this->boxcolor = "#000000"; // default: on black background
+
+        if ($deck->css_enabled)
+          printf("<div style=\"background-color:%s; margin:0px;\">\n", $this->boxcolor);
+        else
+        {
+          printf("<table border=\"0\" bgcolor=\"%s\" width=\"100%%\"><tr><td><font%s>\n",
+                 $this->boxcolor, $deck->fontstyle_attrbs);
+  
+          // align text in (table-)box
+          printf("<div align=\"%s\">\n", $deck->alignment);
+        }
+
+        // decrement line breaks because div/table already causes 1 br
+        if ($this->br >= 1)
+          $this->br--;
       }
 
       if ($this->attrib & HAW_TEXTFORMAT_BOLD)
         echo "<b>\n";
 
       if ($this->attrib & HAW_TEXTFORMAT_UNDERLINE)
-        echo "<u>\n";
+      {
+        if ($deck->css_enabled)
+          echo "<span style=\"text-decoration:underline;\">\n";
+        else
+          echo "<u>\n";
+      }
 
       if ($this->attrib & HAW_TEXTFORMAT_ITALIC)
         echo "<i>\n";
@@ -2605,9 +2981,25 @@ class HAW_text
       if ($this->attrib & HAW_TEXTFORMAT_SMALL)
         echo "<small>\n";
 
+      if (($deck->ml == HAW_HTML) && $this->color)
+      {
+        if ($deck->css_enabled)
+          printf("<span style=\"color:%s;\">\n", $this->color);
+        else
+          printf("<font color=\"%s\">", $this->color);
+      }
+
       // print text
       if (isset($this->text))
         printf("%s\n", HAW_specchar($this->text, $deck));
+
+      if (($deck->ml == HAW_HTML) && $this->color)
+      {
+        if ($deck->css_enabled)
+          echo "</span>";
+        else
+          echo "</font>";
+      }
 
       if ($this->attrib & HAW_TEXTFORMAT_SMALL)
         echo "</small>\n";
@@ -2619,33 +3011,41 @@ class HAW_text
         echo "</i>\n";
 
       if ($this->attrib & HAW_TEXTFORMAT_UNDERLINE)
-        echo "</u>\n";
+      {
+        if ($deck->css_enabled)
+          echo "</span>\n";
+        else
+          echo "</u>\n";
+      }
 
       if ($this->attrib & HAW_TEXTFORMAT_BOLD)
         echo "</b>\n";
 
       if (($this->attrib & HAW_TEXTFORMAT_BOXED) && ($deck->ml == HAW_HTML))
-        echo "</font></td></tr></table>\n";
+      {
+        if ($deck->css_enabled)
+          echo "</div>\n";
+        else
+          echo "</div></font></td></tr></table>\n";
+      }
 
       // create required amount of carriage return's
-      if ($deck->ml == HAW_HTML)
-      {
-        // break instruction in HTML
-        $br_command = "<br>\n";
-      }
-      elseif ($deck->ml == HAW_WML)
-      {
-        // break instruction in WML
-        $br_command = "<br />\n";
-      }
       for ($i=0; $i < $this->br; $i++)
-        echo $br_command;
+        echo "<br />\n";
     }
     elseif($deck->ml == HAW_VXML)
     {
       // VoiceXML
 
-      echo "<block><prompt>";
+      if ($this->voice_navigation)
+      {
+        // enable navigation (repeat/forward)
+        static $block_counter = 0;
+        printf("<block name=\"block%d\"><assign name=\"nav_counter\" expr=\"%d\"/><prompt>",
+               $block_counter, $block_counter);        
+      }
+      else
+        echo "<block><prompt>";
   
       $pause = $this->br * HAW_VOICE_PAUSE; // short pause for each break
 
@@ -2654,6 +3054,19 @@ class HAW_text
                       $this->voice_audio_src, $pause, $deck);
   
       echo "</prompt></block>\n";
+
+      if ($this->voice_navigation)
+      {
+        // create artificial field to control VoiceXML sequencing
+        printf("<field name=\"dummy%d\">\n", $block_counter);
+        echo "<property name=\"timeout\" value=\"0.5s\"/>\n";
+        echo "<grammar>[(hawhaw really rocks)]</grammar>\n";
+        printf("<noinput><assign name=\"dummy%d\" expr=\"true\"/></noinput>\n", $block_counter);
+        echo "</field>\n";
+
+        // create block end where forward will go to
+        printf("<block name=\"block%dend\"/>\n", $block_counter++);
+      }
     }
   }
 };
@@ -2789,19 +3202,16 @@ class HAW_image
 
   function create(&$deck)
   {
-    $HTTP_ACCEPT = getenv('HTTP_ACCEPT');
+    if (isset($_SERVER['HTTP_ACCEPT']))
+      $HTTP_ACCEPT = $_SERVER['HTTP_ACCEPT'];
+    else
+      $HTTP_ACCEPT = "";
 
     if ($deck->ml == HAW_HDML)
     {
       // HDML
 
-      if ($deck->alignment == HAW_ALIGN_CENTER)
-        // repeat alignment in HDML for each paragraph
-        $deck->hdmlcardset->add_display_content("<center>\n");
-
-      if ($deck->alignment == HAW_ALIGN_RIGHT)
-        // repeat alignment in HDML for each paragraph
-        $deck->hdmlcardset->add_display_content("<right>\n");
+      $deck->hdmlcardset->add_display_content("<" . $deck->alignment . ">\n");
 
       if ($this->localsrc)
         $icon = sprintf(" icon=\"%s\"", $this->localsrc);
@@ -2850,8 +3260,10 @@ class HAW_image
         // evaluate HTML break instruction
         if ($deck->MMLstyle)
           $br_command = "<br>\n"; // MML has problems with clear attribute
+        elseif ($deck->xhtml)
+          $br_command = "<br style=\"clear:both;\" />\n"; // XHTML does not know clear attribute
         else
-          $br_command = "<br clear=all>\n";
+          $br_command = "<br clear=\"all\" />\n";
       }
       else
       {
@@ -2883,7 +3295,7 @@ class HAW_image
                   HAW_specchar($this->alt, $deck), $localsrc);
 
         // break instruction in WML
-        $br_command = "<br />\n";
+        $br_command = "<br/>\n";
       }
 
       // create required amount of carriage return's
@@ -2998,7 +3410,11 @@ class HAW_table
     if ($deck->ml == HAW_HTML)
     {
       // HTML
-      echo "<table border=\"1\">\n";
+      if ($deck->xhtml)
+        // border attribute is not allowed in XHTML
+        echo "<table style=\"border-width:1px; border-style:solid;\">\n";
+      else
+        printf("<table border=\"1\" align=\"%s\">\n", $deck->alignment);
     }
     elseif ($deck->ml == HAW_WML)
     {
@@ -3045,13 +3461,15 @@ class HAW_table
       // make new line in HTML
       if ($deck->MMLstyle)
         echo "</table><br>\n"; // MML has problems with clear attribute
+      elseif ($deck->xhtml)
+        echo "</table><br style=\"clear:both;\" />\n"; // XHTML does not know clear attribute
       else
-        echo "</table><br clear=all>\n";
+        echo "</table><br clear=\"all\" />\n";
     }
     elseif ($deck->ml == HAW_WML)
     {
       // make new line in WML
-      echo "</table><br />\n";
+      echo "</table><br/>\n";
     }
   }
 };
@@ -3094,13 +3512,12 @@ class HAW_row
   /**
     Adds a cell element to a HAW_row object.
     @param cell_element (optional)<br>Can be a HAW_text object, a HAW_image object,
-      a HAW_link object or the NULL pointer (default).
+      a HAW_link object, an array containing some of these three objects,
+      or the NULL pointer (default).
       The latter results in an empty cell element.
   */
   function add_column($cell_element=NULL)
   {
-    $this->column[$this->number_of_columns] = $cell_element;
-
     if (is_object($cell_element))
     {
       if (($cell_element->get_elementtype() != HAW_PLAINTEXT) &&
@@ -3108,7 +3525,18 @@ class HAW_row
           ($cell_element->get_elementtype() != HAW_LINK))
         die("invalid argument in add_column()");
     }
+    elseif (is_array($cell_element))
+    {
+      foreach ($cell_element as $an_element)
+      {
+        if (($an_element->get_elementtype() != HAW_PLAINTEXT) &&
+            ($an_element->get_elementtype() != HAW_IMAGE) &&
+            ($an_element->get_elementtype() != HAW_LINK))
+          die("invalid argument in add_column() array");
+      }
+    }
 
+    $this->column[$this->number_of_columns] = $cell_element;
     $this->number_of_columns++;
   }
 
@@ -3133,6 +3561,9 @@ class HAW_row
       $column = $this->column[$i];
       if (is_object($column))
         $column->create($deck);
+      elseif (is_array($column))
+        foreach ($column as $an_element)
+          $an_element->create($deck);
 
       if (($deck->ml != HAW_HDML) && ($deck->ml != HAW_VXML))
         echo "</td>\n";  // end of column
@@ -3320,11 +3751,11 @@ class HAW_input
     only! Please refer to the W3C VoiceXML Recommendation for detailled info
     about grammar definitions. 
     @param src URL specifying the location of the grammar, e.g. "http://www.foo.com/myinput.grxml".
-    @param type Media type of the grammar, e.g. "application/srgs+xml".
+    @param type Media type of the grammar, e.g. "application/srgs+xml (optional)".
   */
-  function set_voice_grammar($src, $type)
+  function set_voice_grammar($src, $type="")
   {
-    if (!is_string($src) || !is_string($type))
+    if (!is_string($src))
       die("invalid argument in set_voice_grammar()");
 
     $this->voice_grammar["src"]  = $src;
@@ -3441,9 +3872,13 @@ class HAW_input
 
     if ($this->size)
       $size = sprintf("size=\"%d\"", $this->size);
+    else
+      $size = "";
 
     if ($this->maxlength)
       $maxlength = sprintf("maxlength=\"%d\"", $this->maxlength);
+    else
+      $maxlength = "";
 
     if ($deck->ml == HAW_HTML)
     {
@@ -3465,12 +3900,21 @@ class HAW_input
       }
 
       // create HTML input
-      printf("%s <input %s name=\"%s\" value=\"%s\" %s %s%s> ",
-              HAW_specchar($this->label, $deck), $type,
-              $this->name, $this->value, $size, $maxlength, $mode);
+      if ($deck->xhtml || $deck->pureHTML)
+      {
+        printf("<label for=\"%s\">%s</label>\n",
+                $this->name, HAW_specchar($this->label, $deck));
+        printf("<input %s name=\"%s\" id=\"%s\" value=\"%s\" %s %s%s /> ",
+                $type, $this->name,
+                $this->name, $this->value, $size, $maxlength, $mode);
+      }
+      else
+        printf("%s <input %s name=\"%s\" value=\"%s\" %s %s%s /> ",
+                HAW_specchar($this->label, $deck), $type,
+                $this->name, $this->value, $size, $maxlength, $mode);
 
       for ($i=0; $i < $this->br; $i++)
-        echo "<br>\n";
+        echo "<br />\n";
     }
     elseif ($deck->ml == HAW_WML)
     {
@@ -3489,10 +3933,7 @@ class HAW_input
       if ($this->type == HAW_INPUT_PASSWORD)
         $options .= " NOECHO=\"true\"";
 
-      if ($deck->alignment == HAW_ALIGN_CENTER)
-        $display_content = "<center>\n";
-      elseif ($deck->alignment == HAW_ALIGN_RIGHT)
-        $display_content = "<right>\n";
+      $display_content = "<" . $deck->alignment . ">\n";
 
       $display_content .= HAW_specchar($this->label, $deck);
       $display_content .= "\n";
@@ -3519,8 +3960,14 @@ class HAW_input
       if ($this->voice_grammar)
       {
         // external grammar has been defined
-        printf("<grammar src=\"%s\" type=\"%s\"/>\n",
-                $this->voice_grammar["src"], $this->voice_grammar["type"]);
+
+        if ($this->voice_grammar["type"])
+          $grammar_type = sprintf(" type=\"%s\"", $this->voice_grammar["type"]);
+        else
+          $grammar_type = ""; // let the interpreter context determine the grammar type
+
+        printf("<grammar src=\"%s\"%s/>\n",
+                $this->voice_grammar["src"], $grammar_type);
       }
 
       if ($this->voice_text || $this->voice_audio_src)
@@ -3664,12 +4111,12 @@ class HAW_textarea
         $wrap = sprintf(" wrap=\"virtual\"");
 
       // create HTML input
-      printf("%s<br><textarea name=\"%s\" rows=\"%s\" cols=\"%s\"%s%s>%s</textarea> ",
+      printf("%s<br /><textarea name=\"%s\" rows=\"%s\" cols=\"%s\"%s%s>%s</textarea> ",
               HAW_specchar($this->label, $deck), $this->name, $this->rows,
               $this->cols, $mode, $wrap, $this->value);
 
       for ($i=0; $i < $this->br; $i++)
-        echo "<br>\n";
+        echo "<br />\n";
     }
     elseif ($deck->ml == HAW_WML)
     {
@@ -3684,10 +4131,7 @@ class HAW_textarea
 
       $options = " key=\"$this->name\"";
 
-      if ($deck->alignment == HAW_ALIGN_CENTER)
-        $display_content = "<center>\n";
-      elseif ($deck->alignment == HAW_ALIGN_RIGHT)
-        $display_content = "<right>\n";
+      $display_content = "<" . $deck->alignment . ">\n";
 
       $display_content .= HAW_specchar($this->label, $deck);
       $display_content .= "\n";
@@ -3867,17 +4311,25 @@ class HAW_select
     {
       // create HTML select
 
-      echo "<select name=\"" . $this->name . "\" size=\"1\">\n";
+      if ($deck->xhtml || $deck->pureHTML)
+      {
+        // dummy label for select element (needed for Bobby approval)
+        // object to be enhanced in future versions ...
+        printf("<label for=\"%s\">%s</label>\n", $this->name, " ");
+        printf("<select name=\"%s\" id=\"%s\" size=\"1\">\n", $this->name, $this->name);
+      }
+      else
+        printf("<select name=\"%s\" size=\"1\">\n", $this->name);
 
       for ($i=0; $i < $this->number_of_options; $i++)
       {
         if ($this->options[$i]["value"] == $this->value)
-          $state = " selected";
+          $state = " selected=\"selected\"";
         else
           $state = "";
 
         echo "<option" . $state . " value=\"" . $this->options[$i]["value"] . "\">"
-                       . HAW_specchar($this->options[$i]["label"], $deck) . "\n";
+                       . HAW_specchar($this->options[$i]["label"], $deck) . "</option>\n";
       }
 
       echo "</select>\n";
@@ -4133,13 +4585,22 @@ class HAW_radio
       while (list($key, $val) = each($this->buttons))
       {
         if ($val["value"] == $this->value)
-          $state = "checked";
+          $state = "checked=\"checked\"";
         else
           $state = "";
 
-        printf("<input type=\"radio\" name=\"%s\" %s value=\"%s\"> %s<br>\n",
-                $this->name, $state, $val["value"],
-                HAW_specchar($val["label"], $deck));
+        if ($deck->xhtml || $deck->pureHTML)
+        {
+          printf("<input type=\"radio\" name=\"%s\" id=\"%s\" %s value=\"%s\" />",
+                  $this->name, $this->name . $key, $state, $val["value"]);
+
+          printf(" <label for=\"%s\">%s</label><br />\n",
+                  $this->name . $key, HAW_specchar($val["label"], $deck));
+        }
+        else
+          printf("<input type=\"radio\" name=\"%s\" %s value=\"%s\" /> %s<br />\n",
+                  $this->name, $state, $val["value"],
+                  HAW_specchar($val["label"], $deck));
       }
     }
     elseif ($deck->ml == HAW_WML)
@@ -4373,11 +4834,20 @@ class HAW_checkbox
     {
       // create HTML checkbox
 
-      $state = ($this->is_checked() ? "checked" : "");
+      $state = ($this->is_checked() ? "checked=\"checked\"" : "");
 
-      printf("<input type=\"checkbox\" name=\"%s\" %s value=\"%s\"> %s<br>\n",
-              $this->name, $state, $this->value,
-              HAW_specchar($this->label, $deck));
+      if ($deck->xhtml || $deck->pureHTML)
+      {
+        printf("<input type=\"checkbox\" name=\"%s\" id=\"%s\" %s value=\"%s\" />",
+                $this->name, $this->name, $state, $this->value);
+
+        printf(" <label for=\"%s\">%s</label><br />\n",
+                $this->name, HAW_specchar($this->label, $deck));
+      }
+      else
+        printf("<input type=\"checkbox\" name=\"%s\" %s value=\"%s\" /> %s<br />\n",
+                $this->name, $state, $this->value,
+                HAW_specchar($this->label, $deck));
     }
     elseif ($deck->ml == HAW_WML)
     {
@@ -4484,7 +4954,7 @@ class HAW_hidden
     {
       // create hidden HTML field
 
-      printf("<input type=\"hidden\" name=\"%s\" value=\"%s\">\n",
+      printf("<input type=\"hidden\" name=\"%s\" value=\"%s\" />\n",
               $this->name, HAW_specchar($this->value, $deck));
     }
     elseif ($deck->ml == HAW_VXML)
@@ -4544,7 +5014,7 @@ class HAW_submit
     return HAW_SUBMIT;
   }
 
-  function create(&$deck, $getvar, $url)
+  function create(&$deck, $varnames, $url, $method)
   {
     if ($deck->ml == HAW_HTML)
     {
@@ -4552,45 +5022,59 @@ class HAW_submit
 
       $name = ($this->name ? "name=\"" . "$this->name" ."\"" : "");
 
-      printf("<input type=\"submit\" %s value=\"%s\"><br>\n", $name,
+      printf("<input type=\"submit\" %s value=\"%s\" /><br />\n", $name,
              HAW_specchar($this->label, $deck));
 
     }
     elseif (($deck->ml == HAW_WML) || ($deck->ml == HAW_HDML))
     {
-      // determine querystring for both WML and HDML
+      // determine querystring and postfields for WML and postdata for HDML
 
       $query_string = "";
+      $post_fields = "";
+      $post_data = "";
 
-      if ($getvar) // safety check for "empty" forms
+      if ($varnames) // safety check for "empty" forms
       {
-        while (list($key, $val) = each($getvar))
+        while (list($key, $val) = each($varnames))
+        {
           $query_string .= $val . "=$(" . $val . ")&amp;";
+          $post_fields .= sprintf("<postfield name=\"%s\" value=\"$(%s)\"/>\n", $val, $val);
+          $post_data .= sprintf("%s=$(%s)&", $val, $val);
+        }
       }
 
       if ($this->name != "")
+      {
         $query_string .= $this->name . "=" . urlencode($this->label);
+        $post_fields .= sprintf("<postfield name=\"%s\" value=\"%s\"/>\n",
+                                 $this->name, HAW_specchar($this->label, $deck));
+        $post_data .= sprintf("%s=%s", $this->name, HAW_specchar($this->label, $deck));
+      }
 
       if (substr($query_string, -5) == "&amp;")
+      {
         $query_string = substr($query_string, 0, strlen($query_string)-5);
+        $post_data = substr($post_data, 0, strlen($post_data)-1);
+      }
 
       // replace '&' character in URL with '&amp;'
       $url = ereg_replace("&", "&amp;", $url);
 
+      if (strchr($url,"?"))
+        $sep = "&amp;";
+      else
+        $sep = "?";
+
       if ($deck->ml == HAW_WML)
       {
-        if ($deck->submitViaLink)
+        if ($deck->submitViaLink && ($method == HAW_METHOD_GET))
         {
           // special handling for devices which have problems with <do> construct
 
           printf("<anchor>%s\n", HAW_specchar($this->label, $deck));
-
-          if (strchr($url,"?"))
-            printf("<go href=\"%s&amp;%s\"/>\n", $url, $query_string);
-          else
-            printf("<go href=\"%s?%s\"/>\n", $url, $query_string);
-
-          echo "</anchor><br />\n";
+          printf("<go href=\"%s%s%s\"/>\n", $url, $sep, $query_string);
+          echo "</anchor><br/>\n";
         }
         else
         {
@@ -4604,12 +5088,12 @@ class HAW_submit
             // create <do type="accept"> sequence in normal WML
             printf("<do type=\"accept\" label=\"%s\">\n",
                     HAW_specchar($this->label, $deck));
-  
-          if (strchr($url,"?"))
-            printf("<go href=\"%s&amp;%s\">\n", $url, $query_string);
+
+          if ($method == HAW_METHOD_GET)
+            printf("<go href=\"%s%s%s\">\n", $url, $sep, $query_string);
           else
-            printf("<go href=\"%s?%s\">\n", $url, $query_string);
-  
+            printf("<go href=\"%s\">\n%s", $url, $post_fields);
+
           echo "</go>\n";
           echo "</do>\n";
         }
@@ -4618,14 +5102,14 @@ class HAW_submit
       {
         // store info for final card in HDML card set
 
-        if (strchr($url,"?"))
-          $action = sprintf("<action type=\"accept\" label=\"%s\" task=\"go\" dest=\"%s&amp;%s\">\n",
+        if ($method == HAW_METHOD_GET)
+          $action = sprintf("<action type=\"accept\" label=\"%s\" task=\"go\" dest=\"%s%s%s\">\n",
                              HAW_specchar($this->label, $deck),
-                             $url, $query_string);
+                             $url, $sep, $query_string);
         else
-          $action = sprintf("<action type=\"accept\" label=\"%s\" task=\"go\" dest=\"%s?%s\">\n",
+          $action = sprintf("<action type=\"accept\" label=\"%s\" task=\"go\" dest=\"%s\" method=\"post\" postdata=\"%s\">\n",
                              HAW_specchar($this->label, $deck),
-                             $url, $query_string);
+                             $url, $post_data);
 
         $deck->hdmlcardset->set_final_action($action);
       }
@@ -4636,11 +5120,11 @@ class HAW_submit
 
       $namelist = " namelist=\""; // init namelist attribute
 
-      if ($getvar) // safety check for "empty" forms
+      if ($varnames) // safety check for "empty" forms
       {
         // created namelist attribute with form fields
 
-        while (list($key, $val) = each($getvar))
+        while (list($key, $val) = each($varnames))
           $namelist .= $val . " ";
       }
 
@@ -4664,8 +5148,14 @@ class HAW_submit
       // replace '&' character in URL with '&amp;'
       $url = ereg_replace("&", "&amp;", $url);
 
-      printf("<filled><submit next=\"%s\"%s method=\"get\"/></filled>\n",
-             $url, $namelist);
+      // consider send method
+      if ($method == HAW_METHOD_POST)
+        $sendmethod = " method=\"post\"";
+      else
+        $sendmethod = " method=\"get\"";
+
+      printf("<filled><submit next=\"%s\"%s%s/></filled>\n",
+             $url, $namelist, $sendmethod);
     }
   }
 };
@@ -4702,8 +5192,8 @@ class HAW_link
     @param label Describes the link on the surfer's screen/display.
     @param url Next destination address.
     @param title (optional)<br>If a string is provided here, it will be displayed
-       in the HTML browser status bar during "MouseOver", respectively somewhere
-       on the WAP display. In order to work well with a broad range of user agents,
+       by means of the title option on bigscreen browsers, respectively somewhere
+       on the WAP/XHTML display. In order to work well with a broad range of user agents,
        keep your title under 6 characters.
   */
   function HAW_link($label, $url, $title="")
@@ -4807,6 +5297,9 @@ class HAW_link
 
   function create(&$deck)
   {
+    // add hawoutput query parameter to url, if required
+    HAW_handle_forced_output($this->url, $deck->hawoutput);
+
     if ($this->url)
     {
       // inhibit "empty" links
@@ -4817,13 +5310,13 @@ class HAW_link
   
         $title_option = "";
 
-        if ($this->title && $deck->pureHTML)
-          $title_option = sprintf(" onmouseover=\"self.status='%s';return true;\"",
-                                  HAW_specchar($this->title, $deck));
+        if ($this->title && ($deck->xhtml || $deck->lynx  || $deck->pureHTML))
+          $title_option = sprintf(" title=\"%s\"", HAW_specchar($this->title, $deck));
 
         $accesskey_option = "";
-  
-        if ($deck->iModestyle && ($this->accesskey != HAW_NO_ACCESSKEY))
+
+        if (($this->accesskey != HAW_NO_ACCESSKEY) &&
+            ($deck->iModestyle || $deck->xhtml))
           $accesskey_option = sprintf(" accesskey=\"%s\"", $this->accesskey);
   
         if ($deck->MMLstyle && ($this->accesskey != HAW_NO_ACCESSKEY))
@@ -4832,10 +5325,10 @@ class HAW_link
         // create required amount of carriage return's
         $br = "";
         for ($i=0; $i < $this->br; $i++)
-          $br .= "<br>";
+          $br .= "<br />";
   
-        printf("<a href=\"%s\"%s%s>%s</a>%s\n",
-               $this->url, $title_option, $accesskey_option,
+        printf("[<a href=\"%s\"%s%s>%s</a>]%s\n",
+               HAW_specchar($this->url, $deck), $title_option, $accesskey_option,
                HAW_specchar($this->label, $deck), $br);
       }
   
@@ -4852,7 +5345,7 @@ class HAW_link
         // create required amount of carriage return's
         $br = "";
         for ($i=0; $i < $this->br; $i++)
-          $br .= "<br />";
+          $br .= "<br/>";
   
         printf("<a%s href=\"%s\">%s</a>%s\n",
                $title_option, HAW_specchar($this->url, $deck),
@@ -4892,6 +5385,9 @@ class HAW_link
         // remove http:// from link label, as voice browsers complain about :
         //        (and users can't speak complete url anyway)
         $label = ereg_replace("^http://", "", strtolower(HAW_specchar($this->label, $deck)));
+
+        // * / ? and = are not allowed in GSL grammar???
+        $label = ereg_replace("[\*\/\?=]", "", $label);
 
         if ($this->accesskey != HAW_NO_ACCESSKEY)
           $dtmf = sprintf(" dtmf=\"%s\"", $this->accesskey);
@@ -4957,7 +5453,7 @@ class HAW_phone
     Constructor
     @param phone_number Phone number to dial.
     @param title (optional)<br>If a string is provided here, the call button on a
-       WAP/HDML device will be entitled. In order to work well with a broad range
+       WAP/HDML/XHTML device will be entitled. In order to work well with a broad range
        of user agents, keep your title under 6 characters.
   */
   function HAW_phone($phone_number, $title="")
@@ -4992,27 +5488,36 @@ class HAW_phone
   {
     if ($deck->ml == HAW_HTML)
     {
+      if ($this->title)
+        $title_option = sprintf(" title=\"%s\"", HAW_specchar($this->title, $deck));
+      else
+        $title_option = "";
+
       if ($deck->iModestyle)
         // create phoneto: link for i-Mode
-        printf("<a href=\"phoneto:%s\">%s</a><br>",
+        printf("[<a href=\"phoneto:%s\">%s</a>]<br>\n",
                 $this->number, HAW_specchar($this->label, $deck));
       elseif ($deck->MMLstyle)
         // create tel: link for MML
-        printf("<a href=\"tel:%s\">%s</a><br>",
+        printf("[<a href=\"tel:%s\">%s</a>]<br>\n",
                 $this->number, HAW_specchar($this->label, $deck));
       else
-        // create phone number as plain text
-        printf("<code><big>%s</big></code><br>\n", HAW_specchar($this->label, $deck));
+        // create wtai: link for all other HTML browsers
+        // (they will at least throw an error message if a click on it does not work)
+        printf("[<a href=\"wtai://wp/mc;%s\"%s>%s</a>]<br />\n",
+                ereg_replace("[+]", "%2B", $this->number), $title_option,
+                HAW_specchar($this->label, $deck));
     }
     elseif ($deck->ml == HAW_WML)
     {
       // create phone number in WML
 
       if ($this->title)
-        $title_option = sprintf(" title=\"%s\"",
-                                 HAW_specchar($this->title, $deck));
+        $title_option = sprintf(" title=\"%s\"", HAW_specchar($this->title, $deck));
+      else
+        $title_option = "";
 
-      printf("<a%s href=\"wtai://wp/mc;%s\">%s</a><br />\n", $title_option,
+      printf("<a%s href=\"wtai://wp/mc;%s\">%s</a><br/>\n", $title_option,
               ereg_replace("[+]", "%2B", $this->number), HAW_specchar($this->label, $deck));
     }
     elseif ($deck->ml == HAW_HDML)
@@ -5020,8 +5525,9 @@ class HAW_phone
       // create phone number in HDML
 
       if ($this->title)
-        $title_option = sprintf(" label=\"%s\"",
-                                 HAW_specchar($this->title, $deck));
+        $title_option = sprintf(" label=\"%s\"", HAW_specchar($this->title, $deck));
+      else
+        $title_option = "";
 
       $content = sprintf("<a task=\"call\" number=\"%s\"%s>%s</a><br>\n",
                           $this->number, $title_option, HAW_specchar($this->label, $deck));
@@ -5216,30 +5722,31 @@ class HAW_linkset
       {
         // create linkset in HTML
 
-        if ($deck->pureHTML)
+        if ($deck->css_enabled)
         {
-          // create links inside a table for big-screen HTML
-          echo "<table border=\"1\" cellpadding=\"4\"><tr><td>\n";
+          // create links inside a frame
 
-          // repeat size and face declarations in table element
-          if ($deck->size)
-            // set the font size for all characters in the table element
-            $size = " size=\"" . $deck->size . "\"";
+          echo "<div style=\"padding: 5px;\">\n";
+
+          if ($deck->lynx)
+          {
+            // create link list to avoid whitespace between links
+            echo "<ul>\n";
+            while (list($key, $val) = each($this->element))
+            {
+              echo "<li>\n";
+              $val->create($deck); // create one list element for each link
+              echo "</li>\n";
+            }
+            echo "</ul>\n";
+          }
           else
-            $size = "";
+          {
+            while (list($key, $val) = each($this->element))
+              $val->create($deck);
+          }
 
-          if ($deck->face)
-            // set the font for all characters in the table element
-            $face = " face=\"" . $deck->face . "\"";
-          else
-            $face = "";
-
-          printf("<font%s%s>\n", $size, $face);
-
-          while (list($key, $val) = each($this->element))
-            $val->create($deck);
-
-          echo "</font></td></tr></table>\n";
+          echo "</div>\n";
         }
         else
           // create normal links for the small devices
@@ -5454,9 +5961,9 @@ class HAW_banner
 
     if (($this->width>0) && ($this->height>0))
       // prepare this variable only if size info available
-      $size = sprintf(" width=%d height=%d", $this->width, $this->height);
+      $size = sprintf(" width=\"%d\" height=\"%d\"", $this->width, $this->height);
 
-    printf("<img src=\"%s\" alt=\"%s\"%s hspace=10 vspace=10 border=0 />",
+    printf("<img src=\"%s\" alt=\"%s\"%s hspace=\"10\" vspace=\"10\" border=\"0\" />",
            $this->image, $this->alt, $size);
 
     if ($this->url != HAW_NOLINK)
@@ -5465,7 +5972,7 @@ class HAW_banner
 
     for ($i=0; $i<$this->br; $i++)
       // create required number of line breaks
-      echo "<br>\n";
+      echo "<br />\n";
   }
 };
 
@@ -5519,7 +6026,7 @@ class HAW_rule
 
     if ($deck->ml == HAW_HTML)
       // draw horizontal row in HTML
-      echo "<hr" . $width_option . $size_option . ">\n";
+      echo "<hr" . $width_option . $size_option . " />\n";
 
     elseif ($deck->ml == HAW_WML)
     {
@@ -5529,20 +6036,14 @@ class HAW_rule
       else
         // WAP device does not understand <hr> tags
         // ==> draw some number of hyphens to create a rule
-        echo "----------<br />\n";
+        echo "----------<br/>\n";
     }
     elseif ($deck->ml == HAW_HDML)
     {
       // HDML devices doesn't understand <hr>
       // ==> draw some number of hyphens to create a rule
 
-      if ($deck->alignment == HAW_ALIGN_CENTER)
-        // repeat alignment in HDML for each paragraph
-        $deck->hdmlcardset->add_display_content("<center>\n");
-
-      if ($deck->alignment == HAW_ALIGN_RIGHT)
-        // repeat alignment in HDML for each paragraph
-        $deck->hdmlcardset->add_display_content("<right>\n");
+      $deck->hdmlcardset->add_display_content("<" . $deck->alignment . ">\n");
 
       $deck->hdmlcardset->add_display_content("----------\n<br>\n");
     }

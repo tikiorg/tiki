@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-xmlrpc_services.php,v 1.10 2005-01-22 22:54:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-xmlrpc_services.php,v 1.11 2005-05-18 10:59:01 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,8 +13,6 @@ require_once ('lib/userslib.php');
 require_once ("lib/xmlrpc.inc");
 require_once ("lib/xmlrpcs.inc");
 include_once ('lib/blogs/bloglib.php');
-require_once ('lib/userslib/userslib_admin.php');
-
 
 $tikilib = new Tikilib($dbTiki);
 $userlib = new Userslib($dbTiki);
@@ -70,7 +68,7 @@ function getUserInfo($params) {
 	$passwordp = $params->getParam(2);
 	$password = $passwordp->scalarval();
 
-	if ($userslibadmin->validate_user($username, $password, '', '')) {
+	if ($userlib->validate_user($username, $password, '', '')) {
 		$myStruct = new xmlrpcval(array(
 			"nickname" => new xmlrpcval($username),
 			"firstname" => new xmlrpcval("none"),
@@ -104,7 +102,7 @@ function newPost($params) {
 	$publish = $passp->scalarval();
 
 	// Now check if the user is valid and if the user can post a submission
-	if (!$userslibadmin->validate_user($username, $password, '', '')) {
+	if (!$userlib->validate_user($username, $password, '', '')) {
 		return new xmlrpcresp(0, 101, "Invalid username or password");
 	}
 
@@ -119,7 +117,7 @@ function newPost($params) {
 			return new xmlrpcresp(0, 101, "User is not allowed to post");
 		}
 
-		$blog_info = $bloglib->get_blog($blogid);
+		$blog_info = $tikilib->get_blog($blogid);
 
 		if ($blog_info["public"] != 'y') {
 			if ($username != $blog_info["user"]) {
@@ -154,7 +152,7 @@ function editPost($params) {
 	$publish = $passp->scalarval();
 
 	// Now check if the user is valid and if the user can post a submission
-	if (!$userslibadmin->validate_user($username, $password, '', '')) {
+	if (!$userlib->validate_user($username, $password, '', '')) {
 		return new xmlrpcresp(0, 101, "Invalid username or password");
 	}
 
@@ -201,7 +199,7 @@ function deletePost($params) {
 	$publish = $passp->scalarval();
 
 	// Now check if the user is valid and if the user can post a submission
-	if (!$userslibadmin->validate_user($username, $password, '', '')) {
+	if (!$userlib->validate_user($username, $password, '', '')) {
 		return new xmlrpcresp(0, 101, "Invalid username or password");
 	}
 
@@ -241,7 +239,7 @@ function getPost($params) {
 	$password = $passwordp->scalarval();
 
 	// Now check if the user is valid and if the user can post a submission
-	if (!$userslibadmin->validate_user($username, $password, '', '')) {
+	if (!$userlib->validate_user($username, $password, '', '')) {
 		return new xmlrpcresp(0, 101, "Invalid username or password");
 	}
 
@@ -294,7 +292,7 @@ function getRecentPosts($params) {
 	$number = $passp->scalarval();
 
 	// Now check if the user is valid and if the user can post a submission
-	if (!$userslibadmin->validate_user($username, $password, '', '')) {
+	if (!$userlib->validate_user($username, $password, '', '')) {
 		return new xmlrpcresp(0, 101, "Invalid username or password");
 	}
 
@@ -350,11 +348,7 @@ function getUserBlogs($params) {
 
 	$arrayVal = array();
 
-	global $bloglib;
-	if (!is_object($bloglib)) {
-		include_once('lib/blogs/bloglib.php');
-	}
-	$blogs = $bloglib->list_user_blogs($username, true);
+	$blogs = $tikilib->list_user_blogs($username, true);
 	$foo = parse_url($_SERVER["REQUEST_URI"]);
 	$foo1 = $tikilib->httpPrefix(). str_replace("xmlrpc", "tiki-view_blog", $foo["path"]);
 

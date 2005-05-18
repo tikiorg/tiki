@@ -1,5 +1,8 @@
 <div class="cbox">
-  <div class="cbox-title">{tr}Search settings{/tr}</div>
+  <div class="cbox-title">
+    {tr}{$crumbs[$crumb]->description}{/tr}
+    {help crumb=$crumbs[$crumb]}
+  </div>
   <div class="cbox-data">
     <form action="tiki-admin.php?page=search" method="post">
       <table class="admin">
@@ -14,15 +17,7 @@
           <td><input type="checkbox" name="feature_search_fulltext"
                 {if $feature_search_fulltext eq 'y'}checked="checked"{/if}/></td>
         </tr><tr>
-	  <td class="form">
-	{if $feature_help eq 'y'}<a href="{$helpurl}MySQL4Boolean" target="tikihelp" class="tikihelp" title="{tr}Boolean search for MySQL4{/tr}">{/if}
-		{tr}Boolean search for MySQL4 (only works with search_box module, not search_new){/tr}
-		{if $feature_help eq 'y'}</a>{/if}
-	        :</td>
-          <td><input type="checkbox" name="feature_search_mysql4_boolean"
-                {if $feature_search_mysql4_boolean eq 'y'}checked="checked"{/if}/></td>
-        </tr><tr>
-	<td>
+	<td class="form">
 {if $feature_help eq 'y'}<a href="{$helpurl}SearchStats" target="tikihelp" class="tikihelp" title="{tr}SearchStats{/tr}">{/if}
                         {tr}Search stats{/tr}
                         {if $feature_help eq 'y'}</a>{/if}
@@ -30,16 +25,6 @@
         <td><input type="checkbox" name="feature_search_stats"
             {if $feature_search_stats eq 'y'}checked="checked"{/if}/>
 	</td>
-	</tr>
-	{if $refresh_index_now neq 'y'}
-	<tr>
-	<td>
-<a href="tiki-admin.php?page=search&refresh_index_now=y" class="link" title="{tr}Refresh wiki search index now{/tr}">
-                        {tr}Refresh wiki search index now{/tr}</a></td>
-    <td></td>
-	</tr>
-	{/if}
-
 	</tr><tr>
           <td class="form">
         {*if $feature_help eq 'y'}<a href="{$helpurl}PageName" target="tikihelp" class="tikihelp" title="{tr}Referer Search Highlighting{/tr}">{/if*}
@@ -94,7 +79,7 @@
           value="{$search_lru_length|escape}" /></td>
         </tr><tr>
           <td colspan="2" class="button"><input type="submit" name="searchprefs"
-              value="{tr}Change preferences{/tr}" /></td>
+              value="{tr}Change settings{/tr}" /></td>
         </tr>
       </table>
     </form>

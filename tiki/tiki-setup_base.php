@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.86 2005-03-12 16:49:01 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.87 2005-05-18 10:58:59 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -35,7 +35,7 @@ ini_set('session.use_only_cookies', 1);
 
 // Smarty workaround - if this would be 'On' in php.ini Smarty fails to parse tags
 ini_set('magic_quotes_sybase','Off');
-
+ini_set('magic_quotes_runtime',0);
 // ---------------------------------------------------------------------
 // inclusions of mandatory stuff and setup
 require_once("lib/tikiticketlib.php");
@@ -49,7 +49,10 @@ $tikilib = new TikiLib($dbTiki);
 require_once("lib/userslib.php");
 $userlib = new UsersLib($dbTiki);
 
+// require_once("lib/tikiaccesslib.php");
 require_once("lib/breadcrumblib.php");
+//require_once("lib/tikihelplib.php");
+// $access = new TikiAccessLib();
 
 // ------------------------------------------------------
 // DEAL WITH XSS-TYPE ATTACKS AND OTHER REQUEST ISSUES
@@ -121,6 +124,16 @@ $vartype['lang'] = 'char';
 $vartype['page'] = 'string';
 $vartype['edit_mode'] = 'char';
 $vartype['reqId'] = 'hash';
+
+// if we get an error while reading language from prefs, assume the db
+// is not yet set up and give a message
+$rc = @$tikilib->getOne( "select `value` from `tiki_preferences` where `name`=?",array("language"),false);
+if (!$rc) {
+	print "<html><head><title>Site not available</title></head><body><center><br />";
+	if (file_exists("img/tiki.jpg")) { print "<a href=\"http://tikiwiki.org/\"><img src=\"img/tiki.jpg\" alt=\"TikiWiki\" border=\"0\"></a>"; }
+	print "<h1>TikiWiki CMS</h1><b>Notice: this site is currently unavailable.<br /><br />Please try again later or contact the admin.</b></center></body></html>";
+	die();
+}
 
 $language = $tikilib->get_preference('language', 'en');// varcheck use tra
 

@@ -14,7 +14,7 @@
 {/if}</h1>
 
 {if $tiki_p_create_galleries eq 'y'}
-{if $edit_mode ne 'y' or $galleryId ne 0}<div class="navbar"><a class="linkbut" href="tiki-galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new gallery{/tr}</a></div>{/if}
+{if $edit_mode ne 'y' or $galleryId ne 0}<div class="navbar"><a class="linkbut" href="tiki-galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new gallery{/tr}</a>{if $feature_gal_imgcache eq 'y'} <a class="linkbut" href="tiki-galleries.php?rebuild_imgcache=1&amp;galleryId=0">{tr}rebuild cache{/tr}</a>{/if}</div>{/if}
 {if $edit_mode eq 'y'}
 {if $galleryId eq 0}
 <h2>{tr}Create a gallery{/tr}</h2>
@@ -136,7 +136,7 @@
 <td class="heading"><a class="tableheading" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></td>
 {/if}
 {if $gal_list_imgs eq 'y'}   
-<td style="text-align:right;"  class="heading"><a class="tableheading" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'images_desc'}images_asc{else}images_desc{/if}">{tr}Imgs{/tr}</a></td>
+<td style="text-align:right;"  class="heading">{* not done on a computed field<a class="tableheading" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'images_desc'}images_asc{else}images_desc{/if}">*}{tr}Imgs{/tr}{*</a>*}</td>
 {/if}
 {if $gal_list_visits eq 'y'}   
 <td style="text-align:right;"  class="heading"><a class="tableheading" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Visits{/tr}</a></td>

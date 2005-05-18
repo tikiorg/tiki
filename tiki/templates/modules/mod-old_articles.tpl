@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-old_articles.tpl,v 1.8 2005-03-12 16:51:00 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-old_articles.tpl,v 1.9 2005-05-18 11:03:30 mose Exp $ *}
 
 {if $feature_articles eq 'y'}
 {tikimodule title="{tr}Old articles{/tr}" name="old_articles" flip=$module_params.flip decorations=$module_params.decorations}

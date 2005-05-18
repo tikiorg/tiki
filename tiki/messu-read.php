@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-read.php,v 1.17 2005-03-12 16:48:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-read.php,v 1.18 2005-05-18 10:58:52 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.

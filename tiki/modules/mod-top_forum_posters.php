@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/modules/mod-top_forum_posters.php,v 1.4 2005-01-22 22:56:13 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/modules/mod-top_forum_posters.php,v 1.5 2005-05-18 11:02:28 mose Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {

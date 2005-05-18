@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_fgal.php,v 1.12 2005-01-22 22:54:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_fgal.php,v 1.13 2005-05-18 10:58:53 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -31,7 +31,7 @@ if (isset($_REQUEST["filegalfeatures"])) {
                 $_REQUEST["fgal_use_dir"] .= "/";
         }
 
-	simple_set_toggle("fgal_use_db");
+	simple_set_value("fgal_use_db");
 	simple_set_value("fgal_use_dir");
 
 	simple_set_toggle("feature_file_galleries_comments");
@@ -89,11 +89,7 @@ $handlers = $filegallib->get_file_handlers();
 ksort($handlers);
 $smarty->assign("fgal_handlers",$handlers);
 
-global $filegallib;
-if (!is_object($filegallib)) {
-	include_once ('lib/filegals/filegallib.php');
-}
-$file_galleries = $filegallib->list_visible_file_galleries(0, -1, 'name_desc', 'admin', '');
+$file_galleries = $tikilib->list_visible_file_galleries(0, -1, 'name_desc', 'admin', '');
 $smarty->assign_by_ref('file_galleries', $file_galleries["data"]);
 
 $smarty->assign("fgal_match_regex", $tikilib->get_preference("fgal_match_regex", ''));

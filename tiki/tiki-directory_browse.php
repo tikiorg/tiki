@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_browse.php,v 1.11 2005-01-01 00:16:32 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_browse.php,v 1.12 2005-05-18 10:58:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -50,6 +50,17 @@ $dirlib->dir_add_category_hit($_REQUEST['parent']);
 // Now get the path to the parent category
 $path = $dirlib->dir_get_category_path_browse($_REQUEST["parent"]);
 $smarty->assign_by_ref('path', $path);
+$crumbs[] = new Breadcrumb('Directory',
+                            '',
+                            'tiki-directory_browse.php?parent=0',
+                            'Directory+User',
+                            'How to use Directory');
+// Now append the path to the parent category
+array_splice($crumbs, count($crumbs), 0, $dirlib->dir_build_breadcrumb_trail($_REQUEST["parent"]));
+$smarty->assign('trail', $crumbs);     
+$headtitle = breadcrumb_buildHeadTitle($crumbs);
+$smarty->assign_by_ref('headtitle', $headtitle); 
+
 
 // Now get the sub categories from this parent category
 $categs = $dirlib->dir_list_categories($_REQUEST['parent'], 0, -1, 'name_asc', '');

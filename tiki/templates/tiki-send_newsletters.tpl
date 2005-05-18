@@ -1,5 +1,5 @@
 <h1><a class="pagetitle" href="tiki-send_newsletters.php">{tr}Send newsletters{/tr}</a></h1>
-{if $tiki_p_admin_newsletters}<a class="linkbut" href="tiki-admin_newsletters.php">{tr}admin newsletters{/tr}</a>{/if}<br />
+{if $tiki_p_admin_newsletters eq "y"}<a class="linkbut" href="tiki-admin_newsletters.php">{tr}admin newsletters{/tr}</a>{/if}<br />
 {assign var=area_name value="editnl"}
 {if $emited eq 'y'}
 {tr}The newsletter was sent to {$sent} email addresses{/tr}<br /><br />

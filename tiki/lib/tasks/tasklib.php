@@ -22,7 +22,7 @@ class TaskLib extends TikiLib {
 	
 	function get_task($user, $taskId, $task_version = null, $admin_mode = false) { 
 		if($admin_mode){
-			$query  = "select distinct `t_head`.`*`, `t_history`.* FROM ";
+			$query  = "select distinct `t_head`.*, `t_history`.* FROM ";
 			$query .= "`tiki_user_tasks_history` AS `t_history`, `tiki_user_tasks` AS `t_head` ";
 			$query .= "WHERE ";
 			$query .= "`t_head`.`taskId` = `t_history`.`belongs_to` AND";
@@ -106,13 +106,10 @@ class TaskLib extends TikiLib {
 	
 	
 	function new_task($task_user, $creator, $public_for_group, $rights_by_creator, $created, $values){
-		$query  = "INSERT INTO `tiki_user_tasks` SET ";
-		$query .= "`last_version` = ?, ";
-		$query .= "`user` = ?, ";
-		$query .= "`creator` = ?, ";
-		$query .= "`public_for_group` = ?, ";
-		$query .= "`rights_by_creator` = ?, ";
-		$query .= "`created` = ? ";
+		$query  = "INSERT INTO `tiki_user_tasks` ( ";
+		$query .= "`last_version`, `user`, `creator`, ";
+		$query .= "`public_for_group`, `rights_by_creator`, `created`) ";
+		$query .= "VALUES (?, ?, ?, ?, ?, ?)";
 		$this->query($query,array((int) 0, $task_user, $creator, $public_for_group, $rights_by_creator, (int)$created));
 		$query = "select `taskId` from `tiki_user_tasks` where `creator` = ? AND `created` = ?";
 		$taskId = $this->getOne($query, array($creator, (int)$created));
@@ -121,12 +118,15 @@ class TaskLib extends TikiLib {
 		$values['lastchanges'] = $created;
 		$values['task_version'] = (int) 0;
 		if($task_user != $creator) $values['accepted_creator'] = 'y';
-		$query  = "INSERT INTO `tiki_user_tasks_history` SET ";
+		$query  = "INSERT INTO `tiki_user_tasks_history` ( ";
 		$comma = '';
+		$query_values = "";
 		foreach ($values as $key => $value) {
-			$query .= "$comma `$key` = ? ";
+			$query .= "$comma `$key`";
+			$query_values .= "$comma ?";
 			$comma = ', ';
 		}
+		$query .= " ) VALUES ( " . $query_values . ")";
 		$this->query($query,$values);
 		return $taskId;
 	}
@@ -146,8 +146,8 @@ class TaskLib extends TikiLib {
 		$result = $this->query($query,$values_select); 
 		$entries = $result->fetchRow(); 
 		
-		$query  = "INSERT INTO `tiki_user_tasks_history` SET ";
-		
+		$query  = "INSERT INTO `tiki_user_tasks_history` (";
+		$query_values = ") VALUES (";
 		
 		$count_values = 0;
 		foreach ($values as $key => $value) {
@@ -173,13 +173,16 @@ class TaskLib extends TikiLib {
 			$entries['task_version'] = $entries['task_version'] + 1;
 			$entries['lasteditor'] = $user;
 			$entries['lastchanges'] = date('U');
+			$comma = '';
 			foreach ($entries as $key => $value) {
-				if($count_entries > 0) $query .= ', ';
-				$query .= "`$key` = ? ";
+				$query .= "$comma `$key`";
+				$query_values.= "$comma ?";
+				$comma  = ', ';
 				$count_entries++;
 				//echo("entries.$key: $value<br/>");
 			}
 			//echo("$query<br/>");
+			$query .= $query_values . ")";
 			$this->query($query,$entries);
 		}
 		
@@ -302,7 +305,7 @@ class TaskLib extends TikiLib {
 			$query .= "`t_head`.`taskId` = `t_history`.`belongs_to` AND ";
 			$query .= "`t_head`.`last_version` = `t_history`.`task_version` AND ";
 			$query .= "( ";
-			$query .= "( 0 ) "; //Dummy
+			$query .= "( 1 = 0 ) "; //Dummy
 			if($use_show_shared_for_group){
 					$query .= " OR ";
 					$query .= "(`users_usergroups`.`userId` = ?"; 
@@ -371,17 +374,15 @@ class TaskLib extends TikiLib {
 			$order_str = "`t_history`.".$this->convert_sortmode($sort_mode) . ", ";
 		}
 		else $order_str = '';
-		$query .= "ORDER BY $order_str `t_head`.`taskId` desc";
-		
-		
-		
+
+		// Place the count query before the addition of the order by
+		// clause to make the query work in postgres..
 		$query_count = "select count(distinct `t_head`.`taskId`) $query";
 		$cant = $this->getOne($query_count,$values);
-		
+
+		$query .= "ORDER BY $order_str `t_head`.`taskId` desc";
 		
 		$tasklist = array();
-		
-		
 		
 		$query_tasklist = "select distinct `t_head`.*, `t_history`.* $query";		
 		$result = $this->query($query_tasklist, $values, $maxRecords, $offset);

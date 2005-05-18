@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index_p.php,v 1.18 2005-01-01 00:16:33 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index_p.php,v 1.19 2005-05-18 10:58:57 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,6 +12,13 @@ require_once('tiki-setup.php');
 include_once('lib/structures/structlib.php');
 
 include_once('lib/wiki/wikilib.php');
+
+if ($feature_categories == 'y') {
+	global $categlib;
+	if (!is_object($categlib)) {
+		include_once('lib/categories/categlib.php');
+	}
+}
 
 if ($feature_wiki != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
@@ -57,6 +64,35 @@ if (!$tikilib->page_exists($page)) {
 
 	$smarty->display("error.tpl");
 	die;
+}
+
+// Check to see if page is categorized
+$objId = urldecode($page);
+if ($tiki_p_admin != 'y' && $feature_categories == 'y' && !$object_has_perms) {
+    // Check to see if page is categorized
+    $perms_array = $categlib->get_object_categories_perms($user, 'wiki page', $objId);
+    if ($perms_array) {
+	$is_categorized = TRUE;
+    	foreach ($perms_array as $perm => $value) {
+	    $$perm = $value;
+    	}
+    } else {
+	$is_categorized = FALSE;
+    }
+    if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+	if (!isset($user)){
+	    $smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
+	    $smarty->assign('errortitle',tra("Please login"));
+	} else {
+	    $smarty->assign('msg',tra("Permission denied you cannot view this page"));
+	}
+	$smarty->display("error.tpl");
+	die;
+    }
+} elseif ($feature_categories == 'y') {
+    $is_categorized = $categlib->is_categorized('wiki page',$objId);
+} else {
+    $is_categorized = FALSE;
 }
 
 // Now check permissions to access this page
@@ -249,8 +285,7 @@ if ($feature_theme_control == 'y') {
 ask_ticket('index-p');
 
 // Display the Index Template
-global $feature_wiki_dblclickedit;
-$smarty->assign('feature_wiki_dblclickedit',$feature_wiki_dblclickedit);
+$smarty->assign('dblclickedit', 'y');
 $smarty->display("tiki-index_p.tpl");
 
 ?>

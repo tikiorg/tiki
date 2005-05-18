@@ -228,7 +228,7 @@
 	{/if}
 	
 	{if $info.deleted}
-	<tr><td class="formcolor">{tr}Maked as deleted{/tr}</td>
+	<tr><td class="formcolor">{tr}Marked as deleted{/tr}</td>
 		<td colspan="3" class="formcolor"><b>{$info.deleted|date_format:"%d/%m/%Y -- %H:%M"}</b></td>
 	</tr> 
 	{/if}

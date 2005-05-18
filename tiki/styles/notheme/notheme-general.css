@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-general.css,v 1.7 2003-11-15 06:42:15 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-general.css,v 1.8 2005-05-18 11:02:47 mose Exp $
  *
  */
 
@@ -77,4 +77,9 @@ dt {
 }
 dd {
     margin-left: 4em;
+}
+
+/* General form elements */
+input, textarea, select {
+        font-size : 10px;
 }

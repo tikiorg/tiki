@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.30 2005-03-12 16:50:47 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.31 2005-05-18 11:03:17 mose Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-list_articles.php">{tr}Articles{/tr}</a>
 
@@ -16,7 +16,9 @@
   <a class="linkbut" href="tiki-edit_article.php">{tr}edit new article{/tr}</a>
 {/if}
 <a class="linkbut" href="tiki-view_articles.php">{tr}view articles{/tr}</a>
-
+{if $feature_submissions == 'y' && ($tiki_p_approve_submission == "y" || $tiki_p_remove_submission == "y" || $tiki_p_edit_submission == "y")}
+<a class="linkbut" href="tiki-list_submissions.php">{tr}View submissions{/tr}</a>
+{/if}
 {if $tiki_p_admin eq 'y'}
 <a href="tiki-admin.php?page=cms"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
 {/if}

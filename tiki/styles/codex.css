@@ -36,7 +36,7 @@ DIV#tiki-top {
 	padding:   2px 2px 2px 2px;
 }
 
-DIV#tiki-top a {
+DIV#tiki-top > a {
 	color:    white;
 	text-decoration:   none;
 }
@@ -193,10 +193,9 @@ div.box {
 }
 
 /* Boxes are divided in title and data, this is the title */
-div.box-title {
+div.box-title, span.box-titletext {
 	background-color:    #333366;
 	border-bottom:   1px solid black;
-	color:   white;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   13px;
 	color:   white;
@@ -209,6 +208,10 @@ div.box-title {
 	width:   170px;
 }
 
+div.box-title a, span.box-titletext a {
+  color: white;
+}
+
 div.box-title table {
     width: 100%;
 }
@@ -216,12 +219,19 @@ div.box-title table {
 /* And this is the data */
 div.box-data {
 	overflow:    hidden;
-	color:   white;
 	margin-left:   5px;
 	margin-right:   5px;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
 	width:   170px;
+}
+
+TD#leftcolumn > div > div.box-data {
+  color: white;
+}
+
+TD#rightcolumn > div > div.box-data {
+  color: black;
 }
 
 /* When modules display a list of items each item is enclosed in a cell with the following style */
@@ -478,7 +488,8 @@ FORM {
 /* General form elements */
 input, textarea, select {
 	color:    #000000;
-	font:   normal 11px Verdana, Arial, Helvetica, sans-serif;
+	font-family:   Verdana, Arial, Helvetica, sans-serif;
+	font-size : 10px;
 }
 
 input {
@@ -947,7 +958,11 @@ p.editdate {
 	font-size:   smaller;
 	font-family:   "Lucida Grande", Helvetica, Arial, sans-serif;
 }
-
+#description {
+  font-size : 10px !important;
+  padding-left:   10px;
+  color:   #333300;
+}
 /* The edit-help used to display the wiki syntax when editing a page */
 div.wiki-edithelp {
 	background:    white;
@@ -2717,6 +2732,7 @@ a.tikihelp, a.tikihelp:visited {
 	margin:   inherit;
 	padding:   inherit;
 	text-decoration:   inherit;
+	vertical-align: text-top;
 }
 
 a.tikihelp:hover {
@@ -2729,79 +2745,9 @@ a.tikihelp:hover {
 	padding:   inherit;
 	cursor:   help;
 	text-decoration:   inherit;
-}
-.mdksubmenu {
-  z-index: 999;
-  position: absolute;
-  left: 0;
-  top: 0;
-  background-color: #FFFFFF;
-  visibility: hidden;
-}
-.mdksubmenu table {
-  width: auto !important;
+	vertical-align: text-top;
 }
 
-.mdksubframe  {
-  z-index: 1000;
-  position: relative;
-  display: block;
-  border: 1px solid #000000;
-}
-
-.mdkitem  {
-  border-top: 1px solid #dedede;
-  position: relative;
-  text-align: left;
-  white-space: nowrap;
-}
-
-.mdkitem a  {
-  padding: 2px 5px 2px 5px;
-  position: relative;
-  display: block;
-	text-decoration: none;
-	color: #000000;
-}
-
-.mdkitem a:visited  {
-}
-
-.mdkitem a:hover  {
-	background-color: #cccccc;
-}
-
-.mdkitem a:active {
-  color: #993300;
-}
-
-.mdkitem .mdkfwdarr {
-  position: absolute;
-  top: 5px;
-  right: 12px;
-}
-
-.toc {
-}
-.toc li {
-  margin-top: 3px;
-}
-.tocnav {
-  background-color: #ededed;
-  margin-bottom: 16px;
-}
-.tocnav table {
-  width: 100%;
-  background-color: #ffffff;
-}
-.tocnav a {
-  font-size: 90%;
-  color: #424242;
-}
-/* for jscalendar */
-.calendar {
-  z-index: 200;
-}
 .catblock {
   border: 1px solid #aaaaaa;
 } 
@@ -2830,10 +2776,6 @@ a.tikihelp:hover {
 .catlists a.link:hover {
   color: #000000;
 } 
-/* TikiIntegrator: By default copy rules dialog not shown */
-div#rules-copy-panel {
-    display: none;
-}
 
 /*
 ** JsCalendar wrapper
@@ -2846,7 +2788,6 @@ div#rules-copy-panel {
   font-weight:bold; 
 }
 
-TABLE.admin { width: 100%; }
 table.commentinfo { width: 100%; background-color: #FFF7E6; }
 div#loadstats {
   background-color: #dedede;
@@ -2857,19 +2798,151 @@ div#loadstats {
 
 /* phplayers style */
 .box-data table {
-  width: 100%; 
-} 
+  width: 100%;
+}
+
+.mdkhorbar      {
+}
+
+.horbar {
+  margin-left: 10px;
+}
+
+.horbaritem a {
+  font-size: 10px;
+  text-decoration: none;
+  color: white;
+}
+
+.harbaritem a:visited {
+  color: white;
+}
+
+.horbaritem a:hover {
+  text-decoration: underline;
+}
+
+.mdkhorbaritem  {
+  float: left;
+  white-space: nowrap;
+  font-size: 10px;
+}
+
+.mdkhorbaritem a        {
+  display: block;
+  text-decoration: none;
+}
+
+.mdkhorbaritem a:link   {
+}
+
+.mdkhorbaritem a:visited        {
+}
+
+.mdkhorbaritem a:hover  {
+}
+
+.mdkhorbaritem a:active {
+}
+
 .mdkverbar  {
   margin: 0px;
 } 
+
+.mdksubmenu {
+  z-index: 999;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: #FFFFFF;
+  visibility: hidden;
+}
+.mdksubmenu table {
+  width: auto !important;
+}
+
+.mdksubframe  {
+  background-image: url(codex/page_2_2.png);
+  background-repeat: repeat;
+  z-index: 1000;
+  position: relative;
+  display: block;
+  border: 1px solid #000000;
+}
+
+.mdkitem  {
+  border-top: 1px solid #dedede;
+  position: relative;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.mdkitem a  {
+  padding: 2px 5px 2px 5px;
+  margin-right: 2px;
+  position: relative;
+  display: block;
+  text-decoration: none;
+  color: #000000;
+}
+
+.mdkitem a:visited  {
+}
+
+.mdkitem a:hover  {
+  color:   #333366;
+  padding-left: 7px;
+  margin-right: 0;
+  text-decoration: underline;
+}
+
+.mdkitem a:active {
+  color: #993300;
+}
+
+.mdkitem .mdkfwdarr {
+  position: absolute;
+  top: 5px;
+  right: 12px;
+}
+
+a.phplm	{
+	color: #000000;
+	text-decoration: none;
+}
+
+a.phplm:hover	{
+	background-color: #dedede;
+}
+
+/* TOC */
+.toc {
+}
+.toc li {
+  margin-top: 3px;
+}
+.tocnav {
+  background-color: #ededed;
+  margin-bottom: 16px;
+}
+.tocnav table {
+  width: 100%;
+  background-color: #ffffff;
+}
+.tocnav a {
+  font-size: 90%;
+  color: #424242;
+}
+
+/* for jscalendar */
+.calendar {
+  z-index: 200;
+}
 
 /* TikiIntegrator: By default copy rules dialog not shown */
 div#rules-copy-panel {
     display: none;
 }
-
-/* format tables on admin pages */
-TABLE.admin { width: 100%; }
 
 /* ASSORTED  */
 
@@ -2882,12 +2955,10 @@ TABLE.admin { width: 100%; }
 	white-space: nowrap;
 	font-size: 14px;
 }
-a.phplm	{
-	color: #000000;
-	text-decoration: none;
-}
-a.phplm:hover	{
-	background-color: #dedede;
+
+/* Table admin width */
+TABLE.admin {
+  width: 100%;
 }
 
 /* tiki tabs */
@@ -2936,75 +3007,18 @@ a.phplm:hover	{
   margin: 1px;
   border: 1px inset #666666;
   -moz-border-radius: 20px;
-  vertcal-align: middle;
+  vertical-align: middle;
   background-color: #bbaa99;
 }
 .statusoff {
   padding: 1px;
   margin: 2px;
-  vertcal-align: middle;
+  vertical-align: middle;
 }
 
 /**** coloration for c o d e plugin *****/
 .codelisting 
 { font-family : monospace; padding : 2ex; background-color : #edeeef; margin : 1ex; border : 1px dashed #adacaf; }
-
-/* wiki diff styles */
-
-.diffheader {
-margin: 10px 5px 0px 5px;
-padding: 4px;
-border-width: 1px 1px 0px 1px;
-border-style: solid;
-border-color: #A9B8C2;
-color: black;
-font-weight: bold;
-background-color: #A9B8C2;
-font-size: 8pt;
-}
-.diffbody {
-margin: 0px 5px 10px 5px;
-padding: 5px;
-border-color: #A9B8C2;
-border-width: 0px 1px 1px 1px;
-border-style: solid;
-font-family: monospace, 'Courier New', courier;
-color: black;
-background-color: #edeeef;
-}
-.diffdeleted {
-border-color: #A9B8C2;
-color: black;
-background-color: #ffcccc;
-}
-.diffadded {
-border-color: #A9B8C2;
-color: black;
-background-color: #ccffcc;
-}
-.diffchar{color: red;}
-
-/**** coloration for QUOTE plugin *****/
-.quoteheader {
-margin: 10px 5px 0px 5px;
-padding: 4px;
-border-width: 1px 1px 0px 1px;
-border-style: solid;
-border-color: #A9B8C2;
-color: black;
-font-weight: bold;
-background-color: #A9B8C2;
-font-size: 8pt;
-}
-.quotebody {
-margin: 0px 5px 10px 5px;
-padding: 5px;
-border-color: #A9B8C2;
-border-width: 0px 1px 1px 1px;
-border-style: solid;
-color: black;
-background-color: #edeeef;
-}
 
 /* Version Plugin Style */
 
@@ -3048,3 +3062,27 @@ float : right;
 .diffdeleted {background-color:#ffcccc;}
 .diffbody{background-color:#F2F4F5}
 .diffchar {color: red;}
+
+/**** coloration for QUOTE plugin *****/
+.quoteheader {
+margin: 10px 5px 0px 5px;
+padding: 4px;
+border-width: 1px 1px 0px 1px;
+border-style: solid;
+border-color: #A9B8C2;
+color: black;
+font-weight: bold;
+background-color: #A9B8C2;
+font-size: 8pt;
+}
+.quotebody {
+margin: 0px 5px 10px 5px;
+padding: 5px;
+border-color: #A9B8C2;
+border-width: 0px 1px 1px 1px;
+border-style: solid;
+color: black;
+background-color: #edeeef;
+}
+
+/* end of css file */

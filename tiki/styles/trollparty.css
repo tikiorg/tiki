@@ -1,5 +1,5 @@
 /*
-$Id: trollparty.css,v 1.39 2004-10-08 10:00:02 damosoft Exp $
+$Id: trollparty.css,v 1.40 2005-05-18 11:02:38 mose Exp $
 made by mose@trollparty.org
 
 background: #000000;
@@ -384,7 +384,8 @@ padding : 0px;
 input, select {
 color : #ffffff;
 background-color: #122232;
-font: normal 10px Verdana, Arial, Helvetica, sans-serif;
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-size: 10px;
 border: 1px solid #425262;
 }
 
@@ -392,7 +393,9 @@ textarea {
 color : #ffffff;
 background-color: #122232;
 border: 1px solid #425262;
-font: normal 12px fixed, courier, monospace;
+font-size: 12px;
+font-family: fixed, courier, monospace;
+font-style: normal;
 }
 
 input {
@@ -1088,7 +1091,10 @@ padding: 0 10px;
 color: #999999;
 background: #121212;
 }
-
+#description {
+  font-size : 10px !important;
+  padding-left:   10px;
+}
 .toptitledesc {
 font-size: smaller;
 padding-left: 10px;
@@ -2396,6 +2402,7 @@ font-weight: inherit;
 margin: inherit;
 padding: inherit;
 text-decoration: inherit;
+vertical-align: text-top;
 }
 a.tikihelp:hover {
 color: #224466;
@@ -2407,6 +2414,7 @@ margin: inherit;
 padding: inherit;
 cursor: help;
 text-decoration: inherit;
+vertical-align: text-top;
 }
 .catblock {
 padding : 0;
@@ -2602,13 +2610,13 @@ TABLE.admin {
   margin: 1px;
   border: 1px inset #666666;
   -moz-border-radius: 20px;
-  vertcal-align: middle;
+  vertical-align: middle;
   background-color: #bbaa99;
 }
 .statusoff {
   padding: 1px;
   margin: 2px;
-  vertcal-align: middle;
+  vertical-align: middle;
 }
 
 /**** coloration for c o d e plugin *****/
@@ -2665,41 +2673,13 @@ border-left : 1px dashed #999999;
 padding : 2px 30px;
 float : right;
 }
-
 /* wiki diff styles */
-
-.diffheader {
-margin: 10px 5px 0px 5px;
-padding: 4px;
-border-width: 1px 1px 0px 1px;
-border-style: solid;
-border-color: #A9B8C2;
-color: black;
-font-weight: bold;
-background-color: #A9B8C2;
-font-size: 8pt;
-}
-.diffbody {
-margin: 0px 5px 10px 5px;
-padding: 5px;
-border-color: #A9B8C2;
-border-width: 0px 1px 1px 1px;
-border-style: solid;
-font-family: monospace, 'Courier New', courier;
-color: black;
-background-color: #edeeef;
-}
-.diffdeleted {
-border-color: #A9B8C2;
-color: black;
-background-color: #ffcccc;
-}
-.diffadded {
-border-color: #A9B8C2;
-color: black;
-background-color: #ccffcc;
-}
-.diffchar{color: red;}
+.diff div {border-top: 1px solid black}
+.diffheader{background-color:#222222; font-weight: bold;}
+.diffadded {background-color:#ccffcc;}
+.diffdeleted {background-color:#ffcccc;}
+.diffbody{background-color:#121212;}
+.diffchar {color: red;}
 
 /**** coloration for QUOTE plugin *****/
 .quoteheader {
@@ -2723,3 +2703,4 @@ color: black;
 background-color: #edeeef;
 }
 
+/* end of css file */

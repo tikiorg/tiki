@@ -1,7 +1,7 @@
 <?php
 
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_category.php,v 1.12 2005-01-22 22:55:56 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_category.php,v 1.13 2005-05-18 11:01:59 mose Exp $
  *
  * Tiki-Wiki CATEGORY plugin.
  * 
@@ -13,7 +13,6 @@
  *	sort=>[type|created|name|hits]_[asc|desc]	# default name_asc,
  *	sub=>true|false		# display items of subcategories # default is 'true';
  *	split=>y|n		# when displaying multiple categories, whether they should be split or not; defaults to yes
- *	title=>y|n|title		# is the category name displayed ? if 'n', it is not, if 'y' (default), it is displayed, if a text is given, it will replace the name of the category
  * )}
  * {CATEGORY}
  * 

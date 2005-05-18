@@ -38,7 +38,7 @@ Step one: unpack the archive
 Unpack the Tiki files to the document root of where you want Tiki installed, e.g. /var/www/tiki/ 
 
 To unpack the bz2 file, use:
-tar xjf tikiwiki-1.9.dr4.tar.bz2
+tar xjf tikiwiki-1.9.0.tar.bz2
 
 
 Step two: run setup.sh to set permissions
@@ -108,6 +108,8 @@ Step three: browser-based setup
   http://localhost/tiki/tiki-install.php)
 * Follow the instructions there
   you'll need the password and user name for your database 
+* use a profile to populate your database.
+  default values are very minimal, and basicEnabled maybe suits more immediate use
 * To log into Tiki for the first time:
   - user: admin
   - password: admin

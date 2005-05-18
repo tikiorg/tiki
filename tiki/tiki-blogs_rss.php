@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blogs_rss.php,v 1.28 2005-01-22 22:54:53 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blogs_rss.php,v 1.29 2005-05-18 10:58:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -7,7 +7,8 @@
 
 require_once ('tiki-setup.php');
 require_once ('lib/tikilib.php');
-include_once ('lib/blogs/bloglib.php');
+require_once ('lib/blogs/bloglib.php');
+require_once ('lib/rss/rsslib.php');
 
 if ($rss_blogs != 'y') {
         $errmsg=tra("rss feed disabled");
@@ -26,17 +27,27 @@ $now = date("U");
 $id = "blogId";
 $descId = "data";
 $dateId = "created";
-$titleId = "blogtitle";
-$readrepl = "tiki-view_blog_post.php?$id=";
+$titleId = "title";
+$authorId = "user";
+$readrepl = "tiki-view_blog_post.php?$id=%s&postId=%s";
 $uniqueid = $feed;
 
-require ("tiki-rss_readcache.php");
+$tmp = $tikilib->get_preference('title_rss_'.$feed, '');
+if ($tmp<>'') $title = $tmp;
+$tmp = $tikilib->get_preference('desc_rss_'.$feed, '');
+if ($desc<>'') $desc = $tmp;
 
-if ($output == "EMPTY") {
-  $changes = $bloglib -> list_all_blog_posts(0, $max_rss_blogs, $dateId.'_desc', '', $now);
-  $output="";
+$changes = $bloglib -> list_all_blog_posts(0, $max_rss_blogs, $dateId.'_desc', '', $now);
+$tmp = array();
+foreach ($changes["data"] as $data)  {
+	$data["$descId"] = $tikilib->parse_data($data["$descId"]);
+	$tmp[] = $data;
 }
+$changes["data"] = $tmp;
+$tmp = null;
+$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, 'postId', $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
 
-require ("tiki-rss.php");
+header("Content-type: ".$output["content-type"]);
+print $output["data"];
 
 ?>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.63 2005-03-12 16:50:44 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.64 2005-05-18 11:03:16 mose Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -39,6 +39,14 @@
 {if $add_child}
 <input type="hidden" name="add_child" value="true" />
 {/if}
+{if $can_wysiwyg}
+{if !$wysiwyg}
+<span class="button2"><a class="linkbut" href="?page={$page}&&wysiwyg=y">{tr}Use wysiwyg editor{/tr}</a></span>
+{else}
+<span class="button2"><a class="linkbut" href="?page={$page}&&wysiwyg=n">{tr}Use normal editor{/tr}</a></span>
+{/if}
+{/if}
+
 <table class="normal">
 
 {if $categIds}
@@ -116,7 +124,7 @@ or use
 {*<tr class="formcolor"><td>{tr}Is a translation of this page:{/tr}</td><td><input style="width:95%;" type="text" name="translation" value="{$translation|escape}" /></td></tr>*}
 {/if}
 
-{if $feature_smileys eq 'y'}
+{if $feature_smileys eq 'y'&&!$wysiwyg}
 <tr class="formcolor"><td>{tr}Smileys{/tr}:</td><td>
 {include file="tiki-smileys.tpl" area_name='editwiki'}
 </td>
@@ -126,11 +134,22 @@ or use
 <tr class="formcolor"><td>{tr}Description{/tr}:</td><td><input style="width:95%;" class="wikitext" type="text" name="description" value="{$description|escape}" /></td></tr>
 {/if}
 <tr class="formcolor"><td>{tr}Edit{/tr}:<br /><br />
+{if !$wysiwyg}
 {include file="textareasize.tpl" area_name='editwiki' formId='editpageform'}<br /><br />
 {include file=tiki-edit_help_tool.tpl area_name='editwiki'}
+{/if}
 </td>
 <td>
-<textarea id='editwiki' class="wikiedit" name="edit" rows="{$rows}" cols="{$cols}">{$pagedata|escape}</textarea>
+<textarea id='editwiki' class="wikiedit" name="edit" rows="{$rows}" cols="{$cols}" style="WIDTH: 100%; HEIGHT: 300px">{$pagedata|escape}</textarea>
+{if $wysiwyg}
+ <script type="text/javascript" src="lib/fckeditor/fckeditor.js"></script>
+ <script type="text/javascript">
+        sBasePath = 'lib/fckeditor/';
+	var oFCKeditor = new FCKeditor( 'edit' ) ;
+	oFCKeditor.BasePath	= sBasePath ;
+	oFCKeditor.ReplaceTextarea() ;
+ </script>
+{/if}
 <input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/>
 </td></tr>
@@ -159,6 +178,7 @@ or use
 <tr class="formcolor"><td>{tr}Spellcheck{/tr}: </td><td><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td></tr>
 {/if}
 
+{if $feature_wiki_import_html eq 'y'}
 <tr class="formcolor">
   <td>{tr}Import HTML{/tr}:</td>
   <td>
@@ -173,6 +193,8 @@ or use
     {tr}Try to convert HTML to wiki{/tr}
   </td>
 </tr>
+{/if}
+
 {if $tiki_p_admin_wiki eq 'y'}
 <tr class="formcolor"><td>{tr}Import page{/tr}:</td><td>
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
@@ -233,4 +255,6 @@ or use
 </table>
 </form>
 <br />
-{include file=tiki-edit_help.tpl}
+{if !$wysiwyg}
+ {include file=tiki-edit_help.tpl}
+{/if}

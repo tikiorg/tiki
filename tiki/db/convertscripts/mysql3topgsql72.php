@@ -52,26 +52,29 @@ function parse($stmt)
 
   //replace comments
   $stmt=preg_replace("/#/","--",$stmt);
+  //Remove odd characters.
+  //These chars should probably never be in the mysql file, but there are some there now.  So this'll remove them.
+  $stmt=preg_replace("/`/","",$stmt);
   // drop TYPE=MyISAM and AUTO_INCREMENT=1
   $stmt=preg_replace("/TYPE=MyISAM/","",$stmt);
   $stmt=preg_replace("/AUTO_INCREMENT=1/","",$stmt);
   //postgres cannot DROP TABLE IF EXISTS
   $stmt=preg_replace("/DROP TABLE IF EXISTS/","DROP TABLE",$stmt);
   //auto_increment things
-  $stmt=preg_replace("/int\(.\) (unsigned )*NOT NULL auto_increment/","serial",$stmt);
-  $stmt=preg_replace("/int\(..\) (unsigned )*NOT NULL auto_increment/","bigserial",$stmt);
+  $stmt=preg_replace("/int(eger)* NOT NULL auto_increment/i","bigserial",$stmt);
+  $stmt=preg_replace("/int(eger)*\(\d\) (unsigned )*NOT NULL auto_increment/i","serial",$stmt);
+  $stmt=preg_replace("/int(eger)*\(\d\d\) (unsigned )*NOT NULL auto_increment/i","bigserial",$stmt);
   // integer types
   $stmt=preg_replace("/tinyint\([1-4]\)/","smallint",$stmt);
-  $stmt=preg_replace("/int\([1-4]\) unsigned/","smallint",$stmt);
-  $stmt=preg_replace("/int\([1-4]\)/","smallint",$stmt);
-  $stmt=preg_replace("/int\([5-9]\) unsigned/","integer",$stmt);
-  $stmt=preg_replace("/int\([5-9]\)/","integer",$stmt);
-  $stmt=preg_replace("/int\(..\) unsigned/","bigint",$stmt);
-  $stmt=preg_replace("/int\(..\)/","bigint",$stmt);
+  $stmt=preg_replace("/int(eger)*\([1-4]\)( unsigned)*/","smallint",$stmt);
+  $stmt=preg_replace("/int(eger)*\([5-9]\)( unsigned)*/","integer",$stmt);
+  $stmt=preg_replace("/int(eger)*\(\d\d\)( unsigned)*/","bigint",$stmt);
   // timestamps
   $stmt=preg_replace("/timestamp\([^\)]+\)/","timestamp(3)",$stmt);
   // blobs
   $stmt=preg_replace("/longblob|tinyblob|blob/","bytea",$stmt);
+  // text fields
+  $stmt=preg_replace("/longtext/","text",$stmt);
   // quote column names
   $stmt=preg_replace("/\n[ \t]+([a-zA-Z0-9_]+)/","\n  \"$1\"",$stmt);
   // quote and record table names
@@ -79,23 +82,24 @@ function parse($stmt)
   // unquote the PRIMARY and other Keys
   $stmt=preg_replace("/\n[ \t]+\"(PRIMARY|KEY|FULLTEXT|UNIQUE)\"/","\n  $1",$stmt);
   // convert enums
-  $stmt=preg_replace("/\n[ \t]+(\"[a-zA-Z0-9_]+\") enum\(([^\)]+)\)/e","convert_enums('$1','$2')",$stmt);
+  $stmt=preg_replace("/\n[ \t]+(\"[a-zA-Z0-9_]+\") enum *\(([^\)]+)\)/e","convert_enums('$1','$2')",$stmt);
   // quote column names in primary keys
-  $stmt=preg_replace("/\n[ \t]+(PRIMARY KEY)\s*\((.+)\),*/e","quote_prim_cols('$1','$2')",$stmt);
+  $stmt=preg_replace("/\n[ \t]+(PRIMARY KEY) *\((.+)\)/e","quote_prim_cols('$1','$2')",$stmt);
   // create indexes from KEY ...
-  $stmt=preg_replace("/\n[ \t]+KEY ([a-zA-Z0-9_]+) \((.+)\),*/e","create_index('$1','$2')",$stmt);
-  $stmt=preg_replace("/\n[ \t]+FULLTEXT KEY ([a-zA-Z0-9_]+) \((.+)\),*/e","create_index('$1','$2')",$stmt);
-  $stmt=preg_replace("/\n[ \t]+(UNIQUE) KEY ([a-zA-Z0-9_]+) \((.+)\),*/e","create_index('$2','$3','$1')",$stmt);
+  $stmt=preg_replace("/,\n[ \t]+KEY ([a-zA-Z0-9_]+) \((.+)\)/e","create_index('$1','$2')",$stmt);
+  $stmt=preg_replace("/,\n[ \t]+FULLTEXT KEY ([a-zA-Z0-9_]+) \((.+)\)/e","create_index('$1','$2')",$stmt);
+  $stmt=preg_replace("/,\n[ \t]+(UNIQUE) KEY ([a-zA-Z0-9_]+) \((.+)\)/e","create_index('$2','$3','$1')",$stmt);
+  $stmt=preg_replace("/,\n[ \t]+(UNIQUE) *\((.+)\)/e","create_index('unknown','$2','$1')",$stmt);
+  // explicit create index
+  $stmt=preg_replace("/CREATE *(UNIQUE)* *INDEX *([a-z0-9_]+) *ON *([a-z0-9_]+) *\((.*)\)/ei","create_explicit_index('$2','$3','$4','$1')",$stmt);
   // handle inserts
-  $stmt=preg_replace("/INSERT INTO ([a-zA-Z0-9_]*).*\(([^\)]+)\) VALUES (.*)/e","do_inserts('$1','$2','$3')",$stmt);
-  $stmt=preg_replace("/INSERT IGNORE INTO ([a-zA-Z0-9_]*).*\(([^\)]+)\) VALUES (.*)/e","do_inserts('$1','$2','$3')",$stmt);
-  // why does i modifier not work???
-  $stmt=preg_replace("/insert into ([a-zA-Z0-9_]*).*\(([^\)]+)\) values(.*)/e","do_inserts('$1','$2','$3')",$stmt);
+  $stmt=preg_replace("/INSERT INTO ([a-zA-Z0-9_]*).*\(([^\)]+)\) VALUES *(.*)/ie","do_inserts('$1','$2','$3')",$stmt);
+  $stmt=preg_replace("/INSERT IGNORE INTO ([a-zA-Z0-9_]*).*\(([^\)]+)\) VALUES *(.*)/ie","do_inserts('$1','$2','$3')",$stmt);
   // the update
   $stmt=preg_replace("/update ([a-zA-Z0-9_]+) set (.*)/e","do_updates('$1','$2')",$stmt);
   $stmt=preg_replace("/UPDATE ([a-zA-Z0-9_]+) set (.*)/e","do_updates('$1','$2')",$stmt);
 	// clean cases where UNIQUE was alone at the end
-  $stmt=preg_replace("/,(\s*)\)/","$1)",$stmt);
+  $stmt=preg_replace("/,( *)\)/","$1)",$stmt);
   return $stmt.";".$poststmt;
 }
 
@@ -106,6 +110,19 @@ function record_tablename($stmt,$tabnam,$tail)
   return($stmt."\"".$tabnam."\"".$tail);
 }
 
+function create_explicit_index($name,$table_name,$content,$type)
+{
+  $cols=split(",",$content);
+  $allvals="";
+  foreach ($cols as $vals) {
+    $vals=preg_replace("/\(.*\)/","",$vals);
+    $vals=preg_replace("/([a-zA-Z0-9_]+)/","\"$1\"",$vals);
+    $allvals.=$vals;
+  }
+  $allvals=preg_replace("/\"\"/","\",\"",$allvals);
+  return("CREATE $type INDEX \"" . $name . "\" ON \"" . $table_name . "\" (" . $allvals . ");\n");
+}
+
 function create_index($name,$content,$type="")
 {
   global $table_name;
@@ -114,6 +131,8 @@ function create_index($name,$content,$type="")
   $cols=split(",",$content);
   $allvals="";
   foreach ($cols as $vals) {
+    $vals=preg_replace("/^ */","",$vals);
+    $vals=preg_replace("/ *$/","",$vals);
     $vals=preg_replace("/\(.*\)/","",$vals);
     $vals=preg_replace("/([a-zA-Z0-9_]+)/","\"$1\"",$vals);
     $allvals.=$vals;

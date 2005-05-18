@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-list_integrator_repositories.php,v 1.12 2005-01-05 19:22:42 jburleyebuilt Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-list_integrator_repositories.php,v 1.13 2005-05-18 10:58:58 mose Exp $
  *
  * Admin interface for repositories management
  *

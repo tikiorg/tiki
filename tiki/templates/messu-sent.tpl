@@ -61,6 +61,7 @@
 <input type="hidden" name="priority" value="{$priority|escape}" />
 <input type="submit" name="delete" value="{tr}delete{/tr}" />
 <input type="submit" name="archive" value="{tr}move to archive{/tr}" />
+<input type="submit" name="download" value="{tr}download{/tr}" />
 <table class="normal" >
   <tr>
     <td class="heading" >&nbsp;</td>
@@ -69,7 +70,7 @@
     <td class="heading" ><a class="tableheading" href="messu-sent.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'subject_desc'}subject_asc{else}subject_desc{/if}">{tr}subject{/tr}</a></td>
     <td class="heading" ><a class="tableheading" href="messu-sent.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'date_desc'}date_asc{else}date_desc{/if}">{tr}date{/tr}</a></td>
     <td class="heading" ><a class="tableheading" href="messu-sent.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'isReplied_desc'}isReplied_asc{else}isReplied_desc{/if}">{tr}replies{/tr}</a></td>
-    <td style="text-align:right;" class="heading" ><a class="tableheading" href="messu-mailbox.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">{tr}size{/tr}</a></td>
+    <td style="text-align:right;" class="heading" >{tr}size{/tr}</td>
   </tr>
   {cycle values="odd,even" print=false}
   {section name=user loop=$items}
@@ -77,16 +78,17 @@
     <td class="prio{$items[user].priority}"><input type="checkbox" name="msg[{$items[user].msgId}]" /></td>
     <td class="prio{$items[user].priority}">{if $items[user].isFlagged eq 'y'}<img src="img/flagged.gif" border="0" width="16" height="16" alt='{tr}flagged{/tr}'>{/if}</td>
     <td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}">{$items[user].user_to}</td>
-    <td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}"><a class="readlink" href="messu-read_sent.php?offset={$offset}&amp;flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;msgId={$items[user].msgId}">{$items[user].subject}</a></td>
+    <td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}"><a class="readlink" href="messu-read_sent.php?offset={$offset}&amp;flag={$flag}&amp;priority={$items[user].priority}&amp;flagval={$flagval}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;msgId={$items[user].msgId}">{$items[user].subject}</a></td>
     <td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}">{$items[user].date|tiki_short_datetime}</td><!--date_format:"%d %b %Y [%H:%I]"-->
 
-		<td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}">
+	<td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}">
     {if $items[user].isReplied eq 'n'}{tr}no{/tr}{else}
-    
-<a class="readlink" href="messu-mailbox.php?replyto={$items[user].hash}">
-    <img src="img/webmail/replied.gif" alt='{tr}replied{/tr}' border='1'/>
-</a>    
-    
+	<a class="readlink" href="messu-mailbox.php?replyto={$items[user].hash}">
+	    <img src="img/webmail/replied.gif" alt='{tr}replied{/tr}' border='1'/>
+	</a>
+	&nbsp;
+	
+	<a href="tiki-user_information.php?view_user={$items[user].user_from}">{$items[user].user_from}</a>
     {/if}</td>
     <td  style="text-align:right;{if $items[user].isRead eq 'n'}font-weight:bold;{/if}" class="prio{$items[user].priority}">{$items[user].len|kbsize}</td>
   </tr>

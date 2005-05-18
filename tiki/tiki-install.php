@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.70 2005-04-02 16:52:02 michael_davey Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.71 2005-05-18 10:58:57 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -24,6 +24,7 @@ define('SMARTY_DIR', "lib/smarty/libs/");
 
 require_once (SMARTY_DIR . 'Smarty.class.php');
 $commands = array();
+ini_set('magic_quotes_runtime',0);
 
 function process_sql_file($file,$db_tiki) {
 	global $dbTiki;
@@ -54,10 +55,10 @@ function process_sql_file($file,$db_tiki) {
 	    $statements=split("(\r|\n)go(\r|\n)",$command);
             break;
 	  case "oci8":
-	    $statements=preg_split("#(;\n)|(\n/\n)#",$command);
+	    $statements=preg_split("#(;\s*\n)|(\n/\n)#",$command);
 	    break;
 	  default:
-		$statements=preg_split("#(;\n)|(;\r\n)#",$command);
+		$statements=preg_split("#(;\s*\n)|(;\s*\r\n)#",$command);
 	    break;
 	}
 	$prestmt="";
@@ -98,10 +99,11 @@ function process_sql_file($file,$db_tiki) {
 	$smarty->assign_by_ref('failedcommands', $failedcommands);
 }
 
-function write_local_php($db_tiki,$host_tiki,$user_tiki,$pass_tiki,$dbs_tiki,$dbversion_tiki="1.10") {
+function write_local_php($dbb_tiki,$host_tiki,$user_tiki,$pass_tiki,$dbs_tiki,$dbversion_tiki="1.9") {
 	global $local;
+	global $db_tiki;
 	if ($dbs_tiki and $user_tiki) {
-		$db_tiki=addslashes($db_tiki);
+		$db_tiki=addslashes($dbb_tiki);
 		$host_tiki=addslashes($host_tiki);
 		$user_tiki=addslashes($user_tiki);
 		$pass_tiki=addslashes($pass_tiki);
@@ -403,7 +405,7 @@ function load_sql_scripts() {
 	//echo $dbversion_tiki . "---";
 
 	while ($file = readdir($h)) {
-        	if (preg_match('#1\..to1\..*\.sql$#',$file)) {
+        	if (preg_match('#1\..to1\..*\.sql$#',$file) || preg_match('#secdb#',$file)) {
                 	$files[] = $file;
         	}
 	}
@@ -488,14 +490,15 @@ $smarty->assign('virt',$virt);
 $smarty->assign('multi', $multi);
 
 // Tiki Database schema version
-$tiki_version = '1.10';
+$tiki_version = '1.9';
 $smarty->assign('tiki_version', $tiki_version);
 
 // Available DB Servers
-$dbservers = array('MySQL', 'PostgeSQL 7.2+', 'Oracle', 'Sybase','SQLLite','MSSQL');
+$dbservers = array('MySQL', 'MySQL (mysqli driver)', 'PostgeSQL 7.2+', 'Oracle', 'Sybase','SQLLite','MSSQL');
 
 $dbtodsn = array(
 	"MySQL" => "mysql",
+	"MySQL (mysqli driver)" => "mysqli",
 	"PostgeSQL 7.2+" => "pgsql",
 	"Oracle" => "oci8",
 	"Sybase" => "sybase",

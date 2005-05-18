@@ -31,7 +31,7 @@
 </td></tr>
 {/if}
   <tr><td class="form">{tr}Displayed time zone{/tr}:</td><td>{$display_timezone}</td></tr>
-{if $feature_friends eq 'y' && $user ne $userwatch}
+{if $feature_friends eq 'y' && $user ne $userwatch && $user}
   {if $friend}
   <tr><td class="form">&nbsp;</td><td class="form">
     <img src="img/icons/ico_friend.gif" width="7" height="10"> {tr}This user is your friend{/tr}

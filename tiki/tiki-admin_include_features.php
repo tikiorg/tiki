@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.36 2005-03-12 16:48:57 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.37 2005-05-18 10:58:53 mose Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -43,7 +43,6 @@ $features_toggles = array(
 	"feature_friends",
 	"feature_galleries",
 	"feature_games",
-	"feature_homework",
 	"feature_hotwords",
 	"feature_hotwords_nw",
 	"feature_help",
@@ -56,14 +55,14 @@ $features_toggles = array(
 	"feature_maps",
 	"feature_messages",
 	"feature_minical",
-  "feature_modulecontrols",
+	"feature_mobile",
+	"feature_modulecontrols",
 	"feature_newsletters",
 	"feature_newsreader",
 	"feature_notepad",
-  "feature_phplayers",
+	"feature_phplayers",
 	"feature_phpopentracker",
 	"feature_polls",
-	"feature_projects",
 	"feature_quizzes",
 	"feature_referer_stats",
 	"feature_score",
@@ -114,6 +113,7 @@ if (isset($_REQUEST["features"])) {
     foreach ($pref_byref_values as $britem) {
         byref_set_value ($britem);
     }
+		$smarty->clear_compiled_tpl();
 }
 
 ask_ticket('admin-inc-features');

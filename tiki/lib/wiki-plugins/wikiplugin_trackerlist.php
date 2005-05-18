@@ -165,11 +165,7 @@ function wikiplugin_trackerlist($data, $params) {
 			$smarty->assign_by_ref('items', $items["data"]);
 			$smarty->assign('daformat', $tikilib->get_long_date_format()." ".tra("at")." %H:%M"); 
 			
-			global $trklib;
-			if (!is_object($trklib)) {
-				require_once('lib/trackers/trackerlib.php');
-			}
-			$tracker = $trklib->get_tracker($trackerId,0,-1);
+			$tracker = $tikilib->get_tracker($trackerId,0,-1);
 
 			foreach ($query_array as $k=>$v) {
 				$quarray[] = urlencode($k) ."=". urlencode($v);

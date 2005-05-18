@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-searchresults.php,v 1.33 2005-03-12 16:49:00 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-searchresults.php,v 1.34 2005-05-18 10:58:59 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,13 +20,13 @@ if ($feature_search != 'y') {
 	die;
 }
 
-if(!empty($_REQUEST["words"])) {
-  $_REQUEST["words"]=$_REQUEST["words"];
-} else {
-  $smarty->assign('msg', tra("You have to type a searchword"));
-  $smarty->display("error.tpl");
-  die;
-}
+// if(!empty($_REQUEST["words"])) {
+//   $_REQUEST["words"]=$_REQUEST["words"];
+// } else {
+//   $smarty->assign('msg', tra("You have to type a searchword"));
+//   $smarty->display("error.tpl");
+//   die;
+// }
 
 if ($feature_search_stats == 'y') {
 	$searchlib->register_search(isset($_REQUEST["words"]) ? $_REQUEST["words"] : '');

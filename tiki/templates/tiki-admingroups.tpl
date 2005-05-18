@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.58 2005-03-12 16:50:33 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.59 2005-05-18 11:02:58 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -22,12 +22,12 @@
 {if $feature_tabs eq 'y'}
 {cycle name=tabs values="1,2,3,4" print=false advance=false}
 <div id="page-bar">
-<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}List{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $smarty.cookies.tab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}List{/tr}</a></span>
 {if $groupname}
-<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Edit group{/tr} <i>{$groupname}</i></a></span>
-<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Members{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $smarty.cookies.tab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Edit group{/tr} <i>{$groupname}</i></a></span>
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $smarty.cookies.tab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Members{/tr}</a></span>
 {else}
-<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Add a new group{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $smarty.cookies.tab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Add a new group{/tr}</a></span>
 {/if}
 </div>
 {/if}
@@ -128,7 +128,10 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}remove{/tr}" src="img/icons2/de
 <table class="normal">
 <tr class="formcolor"><td><label for="groups_group">{tr}Group{/tr}:</label></td><td><input type="text" name="name" id="groups_group" value="{$groupname|escape}" /></td></tr>
 <tr class="formcolor"><td><label for="groups_desc">{tr}Description{/tr}:</label></td><td><textarea rows="5" cols="20" name="desc" id="groups_desc">{$groupdesc}</textarea></td></tr>
-<tr class="formcolor"><td><label for="groups_inc">{tr}Include the permissions of{/tr}:</label></td><td>
+<tr class="formcolor"><td><label for="groups_inc">{tr}Include{/tr}:</label></td><td>
+{if $inc|@count > 20 and $hasOneIncludedGroup eq "y"}
+{foreach key=gr item=yn from=$inc}{if $yn eq 'y'}{$gr|escape} {/if}{/foreach}<br />
+{/if}
 <select name="include_groups[]" id="groups_inc" multiple="multiple" size="4">
 {foreach key=gr item=yn from=$inc}
 <option value="{$gr|escape}" {if $yn eq 'y'} selected="selected"{/if}>{$gr|truncate:"52":" ..."}</option>

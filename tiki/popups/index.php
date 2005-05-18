@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/popups/index.php,v 1.4 2005-01-01 00:17:48 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/popups/index.php,v 1.5 2005-05-18 11:02:29 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.

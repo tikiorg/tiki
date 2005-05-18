@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-tc.php,v 1.8 2005-01-01 00:16:35 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-tc.php,v 1.9 2005-05-18 10:58:59 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -23,6 +23,8 @@ if ($feature_theme_control == 'y') {
 
 	include_once ('lib/categories/categlib.php');
 
+	$tc_theme = '';
+
 	//SECTIONS
 	if (isset($section)) {
 		$tc_theme = $tcontrollib->tc_get_theme_by_section($section);
@@ -32,10 +34,9 @@ if ($feature_theme_control == 'y') {
 	if (isset($cat_type) && isset($cat_objid)) {
 		$tc_categs = $categlib->get_object_categories($cat_type, $cat_objid);
 
-		$tc_theme = '';
-
 		if (count($tc_categs)) {
-			$tc_theme = $tcontrollib->tc_get_theme_by_categ($tc_categs[0]);
+			if ($cat_theme = $tcontrollib->tc_get_theme_by_categ($tc_categs[0]))
+				$tc_theme = $cat_theme;
 			$catt=$categlib->get_category($tc_categs[0]);
 			$smarty->assign_by_ref('category', $catt["name"]);
 		}

@@ -1,4 +1,4 @@
-# $Id: fulltext.sql,v 1.3 2004-09-08 19:51:52 mose Exp $
+# $Id: fulltext.sql,v 1.4 2005-05-18 10:59:04 mose Exp $
 
 ALTER TABLE tiki_pages MODIFY data text;
 CREATE FULLTEXT INDEX ft ON tiki_pages (pageName,data);

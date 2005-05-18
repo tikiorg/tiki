@@ -6,10 +6,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/hawhaw/hawtikilib.php,v 1.12 2004-08-26 19:23:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/hawhaw/hawtikilib.php,v 1.13 2005-05-18 11:00:54 mose Exp $
 
 // HAWHAW function library for TikiWiki
-// Last modified: 13. December 2003
 
 require_once("lib/hawhaw/hawhaw.inc");
 require_once("lib/hawhaw/hawiki_cfg.inc");
@@ -56,7 +55,8 @@ function HAWTIKI_index($info)
     $_SESSION["calling_party_number"] = "(+) " . $matches[1];
   }
 
-  $wikiPage = new HAWIKI_page($info['data'],"tiki-index.php?mode=mobile$framearg$jinglearg&page=", $title);
+  $wikiPage = new HAWIKI_page($info['data'],"tiki-index.php?mode=mobile$framearg$jinglearg&page=",
+                              $title, $info['lang']);
 
   if ($_REQUEST['frame'] != 'no')
   {
@@ -83,7 +83,7 @@ function HAWTIKI_index($info)
 function HAWTIKI_list_blogs($listpages, $tiki_p_read_blog)
 {
   $blogsList = new HAW_deck(HAWIKI_TITLE, HAW_ALIGN_CENTER);
-  $blogsList->enable_session();
+  HAWTIKI_deck_init($blogsList);
 
   $title = new HAW_text(hawtra("Blogs"), HAW_TEXTFORMAT_BOLD);
   $blogsList->add_text($title);
@@ -180,7 +180,7 @@ function HAWTIKI_view_blog($listpages, $blog_data)
                                hawtra("Continue"));
   }
 
-  $blog = new HAWIKI_page($nonparsed_text, "tiki-index.php?mode=mobile$framearg$jinglearg&page=", $title);
+  $blog = new HAWIKI_page($nonparsed_text, "tiki-index.php?mode=mobile$framearg$jinglearg&page=", $title, "");
 
   if ($_REQUEST['frame'] != 'no')
   {
@@ -205,7 +205,7 @@ function HAWTIKI_view_blog($listpages, $blog_data)
 function HAWTIKI_list_articles($listpages, $tiki_p_read_article, $offset, $maxRecords, $cant)
 {
   $articleList = new HAW_deck(HAWIKI_TITLE);
-  $articleList->enable_session();
+  HAWTIKI_deck_init($articleList);
 
   $pagetitle = new HAW_text(hawtra("Articles"), HAW_TEXTFORMAT_BOLD | HAW_TEXTFORMAT_BOXED);
   $articleList->add_text($pagetitle);
@@ -276,7 +276,7 @@ function HAWTIKI_read_article($article_data, $pages)
   $heading = sprintf("\n%s\n---\n", $article_data['heading']);
 
   $article = new HAWIKI_page($prefix . $heading . $article_data["body"],
-                             "tiki-index.php?mode=mobile&page=", $article_data["title"]);
+                             "tiki-index.php?mode=mobile&page=", $article_data["title"], $article_data["lang"]);
 
   $article->set_navlink(tra("List articles"), "tiki-list_articles.php?mode=mobile", HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
 
@@ -304,6 +304,28 @@ function HAWTIKI_read_article($article_data, $pages)
   $article->display();
 
   die;
+}
+
+
+function HAWTIKI_deck_init(&$deck)
+{
+  // init tiki deck
+
+  $deck->enable_session();
+
+  if (isset($_REQUEST['skin']))
+  {
+    if ($_REQUEST['skin'] == "none")
+      unset($_SESSION['haw_skin']);
+    else
+      $_SESSION['haw_skin'] = $_REQUEST['skin'];
+  }
+  
+  if (isset($_SESSION['haw_skin']))
+    $deck->use_simulator("/lib/hawhaw/skin/" . $_SESSION['haw_skin'] . "/skin.css");
+
+  $banner = new HAW_banner("/img/tiki/tikibutton2.png", "http://tikiwiki.org/", "Powered by TikiWiki");
+  $deck->add_banner($banner);
 }
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/doc/devtools/ggg-trace.php,v 1.3 2004-10-15 15:54:46 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/doc/devtools/ggg-trace.php,v 1.4 2005-05-18 10:59:14 mose Exp $
 //
 // George G. Geller
 // January 24, 2004

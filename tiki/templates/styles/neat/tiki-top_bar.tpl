@@ -1,1 +1,1 @@
-{tr}This is{/tr} Tiki v1.9 -Sirius-(c)2002-2004 {tr}by the{/tr} Tiki community. {$smarty.now|tiki_short_datetime}
+{tr}This is{/tr} TikiWiki v1.9DR4 (CVS) -Sirius- &#169; 2002&#8211;2005 {tr}by the{/tr} <a href="http://tikiwiki.org" title="tikiwiki.org">{tr}Tiki community{/tr}</a>. {$smarty.now|tiki_short_datetime}

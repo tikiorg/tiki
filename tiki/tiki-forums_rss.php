@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-forums_rss.php,v 1.19 2005-01-22 22:54:54 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-forums_rss.php,v 1.20 2005-05-18 10:58:56 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -7,6 +7,7 @@
 
 require_once ('tiki-setup.php');
 require_once ('lib/tikilib.php');
+require_once ('lib/rss/rsslib.php');
 
 if ($rss_forums != 'y') {
         $errmsg=tra("rss feed disabled");
@@ -23,19 +24,23 @@ $title = (!empty($title_rss_forums)) ? $title_rss_forums :  tra("Tiki RSS feed f
 $desc = (!empty($desc_rss_forums)) ? $desc_rss_forums : tra("Last topics in forums.");
 $now = date("U");
 $id = "forumId";
+$param = "parentId";
 $descId = "data";
 $dateId = "commentDate";
+$authorId = "userName";
 $titleId = "title";
-$readrepl = "tiki-view_forum_thread.php?$id=";
+$readrepl = "tiki-view_forum_thread.php?$id=%s&comments_$param=%s";
 $uniqueid = $feed;
 
-require ("tiki-rss_readcache.php");
+$tmp = $tikilib->get_preference('title_rss_'.$feed, '');
+if ($tmp<>'') $title = $tmp;
+$tmp = $tikilib->get_preference('desc_rss_'.$feed, '');
+if ($desc<>'') $desc = $tmp;
 
-if ($output == "EMPTY") {
-  $changes = $tikilib -> list_all_forum_topics(0, $max_rss_forums, $dateId.'_desc', '');
-  $output = "";
-}
+$changes = $tikilib -> list_all_forum_topics(0, $max_rss_forums, $dateId.'_desc', '');
+$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, $param, $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
 
-require ("tiki-rss.php");
+header("Content-type: ".$output["content-type"]);
+print $output["data"];
 
 ?>

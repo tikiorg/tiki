@@ -26,7 +26,7 @@ function wikiplugin_alink_help() {
 function wikiplugin_alink($data, $params)
 {
         global $tikilib;
-        extract ($params);
+        extract ($params, EXTR_SKIP);
 
 	if (!isset($aname)) {
 		return ("<b>missing parameter for aname</b><br />");

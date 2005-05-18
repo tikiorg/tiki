@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_download.tpl,v 1.9 2005-04-02 17:43:38 michael_davey Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_download.tpl,v 1.10 2005-05-18 11:03:27 mose Exp $ *}
 
 <h3>{tr}Download Layer{/tr}</h3>
 {if $nodownload}
-{tr}<b>This layer has been set by the maps administrator to not be downloadable</b>{/tr}
+<b>{tr}This layer has been set by the maps administrator to not be downloadable{/tr}</b>
 {else}
 <b>{$userwatch}</b>, {tr}you have requested to download the layer:{/tr}<b>{$layer}</b> {tr}from
 the mapfile:{/tr}<b>{$mapfile}</b><br /><br />

@@ -47,6 +47,9 @@
 </div>
 </div>
 
+{if $feature_wiki_pageid eq 'y'}
+	<small><a class="link" href="tiki-index.php?page_id={$page_id}">{tr}page id{/tr}: {$page_id}</a></small>
+{/if}
 
 {if $feature_wiki_description eq 'y'}
 <div class="toptitledesc">
@@ -59,9 +62,7 @@
 {$description}</div>
 {/if}
 
-<div class="wikitext"
-{if $user_dbl eq 'y' and $feature_wiki_dblclickedit eq 'wikitext_only' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}>
-{if $structure eq 'y'}
+<div class="wikitext">{if $structure eq 'y'}
 <div class="tocnav">
 <table width='100%'>
 {foreach from=$struct_prev_next item=struct name=str key=key}
@@ -119,20 +120,46 @@
 		<a href="tiki-index.php?page={$page}&amp;pagenum={$last_page}">{html_image file='img/icons2/nav_last.gif' border='0' alt='{tr}Last page{/tr}' title='{tr}Last page{/tr}'}</a>
 	</div>
 {/if}
-</div>
+</div> {* End of main wiki page *}
 
 {if $has_footnote eq 'y'}
 <div class="wikitext">
 {$footnote}
 </div>
 {/if}
-{if $tiki_p_wiki_view_author eq 'y' || $tiki_p_admin eq 'y' || $tiki_p_admin_wiki eq 'y'}
-<p class="editdate">{tr}Created by{/tr}: {$creator|userlink} {tr}last modification{/tr}: <b>{$lastModif|tiki_long_date}</b> {$lastModif|tiki_long_time} {tr}by{/tr} {$lastUser|userlink}
-{else}
-<p class="editdate">{tr}Last modification{/tr}: {$lastModif|tiki_long_datetime}
-{/if}
-{if $feature_wiki_page_footer eq 'y'}<br />{$wiki_page_footer_content}{/if}
+
+{if isset($wiki_authors_style) && $wiki_authors_style eq 'business'}
+<p class="editdate">
+  {tr}Last edited by{/tr} {$lastUser|userlink}
+  {section name=author loop=$contributors}
+   {if $smarty.section.author.first}, {tr}based on work by{/tr}
+   {else}
+    {if !$smarty.section.author.last},
+    {else} {tr}and{/tr}
+    {/if}
+   {/if}
+   {$contributors[author]|userlink}
+  {/section}.<br />                                         
+  {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}.
 </p>
+{elseif isset($wiki_authors_style) &&  $wiki_authors_style eq 'collaborative'}
+<p class="editdate">
+  {tr}Contributors to this page{/tr}: {$lastUser|userlink}
+  {section name=author loop=$contributors}
+   {if !$smarty.section.author.last},
+   {else} {tr}and{/tr}
+   {/if}
+   {$contributors[author]|userlink}
+  {/section}.<br />
+  {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}.
+</p>
+{elseif isset($wiki_authors_style) &&  $wiki_authors_style eq 'none'}
+{else}
+<p class="editdate">
+  {tr}Created by{/tr}: {$creator|userlink}
+  {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}
+</p>
+{/if}
 
 {if $wiki_feature_copyrights  eq 'y'}
 {if $wikiLicensePage == $page}
@@ -151,8 +178,6 @@
 <div class="catblock">{$display_catobjects}</div>
 {/if}
 
-{if $wiki_extras eq 'y'}
-<br />
 {if $wiki_extras eq 'y' && $feature_wiki_attachments eq 'y' and $tiki_p_wiki_view_attachments eq 'y'}
 {include file=attachments.tpl}
 {/if}
@@ -160,5 +185,5 @@
 {if $feature_wiki_comments and $tiki_p_wiki_view_comments eq 'y'}
 {include file=comments.tpl}
 {/if}
-{/if}
+
 

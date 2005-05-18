@@ -1,5 +1,5 @@
 <?php
-/* $Id: wikiplugin_module.php,v 1.26 2005-03-12 16:50:00 mose Exp $
+/* $Id: wikiplugin_module.php,v 1.27 2005-05-18 11:02:00 mose Exp $
 Displays a module inlined in page
 
 Parameters

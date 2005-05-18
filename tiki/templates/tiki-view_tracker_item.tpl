@@ -1,4 +1,4 @@
-<h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Editing tracker item{/tr} {$tracker_info.name}</a></h1>
+<h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
 <span class="button2"><a href="tiki-view_tracker.php?trackerId={$trackerId}" class="linkbut">{tr}View this tracker items{/tr}</a></span>
@@ -17,22 +17,22 @@
 {if $feature_tabs eq 'y'}
 {cycle name=tabs values="1,2,3,4,5" print=false advance=false}
 <div id="page-bar">
-<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}View{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}View{/tr}</a></span>
 {if $tracker_info.useComments eq 'y'}
-<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Comments{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Comments{/tr}</a></span>
 {/if}
 {if $tracker_info.useAttachments eq 'y'}
-<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Attachments{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Attachments{/tr}</a></span>
 {/if}
 {if $tiki_p_modify_tracker_items eq 'y'}
-<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Edit{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Edit{/tr}</a></span>
 {/if}
 </div>
 {/if}
 
 {cycle name=content values="1,2,3,4,5" print=false advance=false}
 {* --- tab with view --- *}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}View item{/tr}</h2>
 <table class="normal">
 {if $tracker_info.showStatus eq 'y' and ($tracker_info.showStatusAdminOnly ne 'y' or $tiki_p_admin_trackers eq 'y')}
@@ -40,62 +40,62 @@
 <tr class="formcolor"><td>{tr}Status{/tr}</td><td>{$status_types.$ustatus.label}</td>
 <td colspan="2">{html_image file=$status_types.$ustatus.image title=$status_types.$ustatus.label alt=$status_types.$ustatus.label}</td></tr>
 {/if}
-{section name=ix loop=$ins_fields}
-{if $ins_fields[ix].isHidden ne 'y' or $tiki_p_admin_trackers eq 'y'}
-{if $ins_fields[ix].type eq 'h'}
+{foreach from=$ins_fields key=ix item=cur_field}
+{if $cur_field.isHidden ne 'y' or $tiki_p_admin_trackers eq 'y'}
+{if $cur_field.type eq 'h'}
 </table>
-<h2>{$ins_fields[ix].name}</h2>
+<h2>{$cur_field.name}</h2>
 <table class="normal">
 
-{elseif $ins_fields[ix].type ne 'x'}
-{if ($ins_fields[ix].type eq 'c' or $fields[ix].type eq 't' or $fields[ix].type eq 'n') and $fields[ix].options_array[0] eq '1'}
-<tr class="formcolor"><td class="formlabel">{$ins_fields[ix].name}</td><td>
+{elseif $cur_field.type ne 'x'}
+{if ($cur_field.type eq 'c' or $fields[ix].type eq 't' or $fields[ix].type eq 'n') and $fields[ix].options_array[0] eq '1'}
+<tr class="formcolor"><td class="formlabel">{$cur_field.name}</td><td>
 {elseif $stick eq 'y'}
-<td class="formlabel right">{$ins_fields[ix].name}</td><td>
+<td class="formlabel right">{$cur_field.name}</td><td>
 {else}
-<tr class="formcolor"><td>{$ins_fields[ix].name}
-{if ($ins_fields[ix].type eq 'l')}
+<tr class="formcolor"><td>{$cur_field.name}
+{if ($cur_field.type eq 'l')}
 <br />
-<a href="tiki-view_tracker.php?trackerId={$ins_fields[ix].trackerId}&amp;filterfield={$ins_fields[ix].options_array[1]}&amp;filtervalue={section name=ox loop=$ins_fields}{if $ins_fields[ox].fieldId eq $ins_fields[ix].options_array[2]}{$ins_fields[ox].value}{/if}{/section}">{tr}Filter Tracker Items{/tr}<br />
+<a href="tiki-view_tracker.php?trackerId={$cur_field.trackerId}&amp;filterfield={$cur_field.options_array[1]}&amp;filtervalue={section name=ox loop=$ins_fields}{if $ins_fields[ox].fieldId eq $cur_field.options_array[2]}{$ins_fields[ox].value}{/if}{/section}">{tr}Filter Tracker Items{/tr}</a><br />
 {/if}
 
 </td>
 <td colspan="3">
 {/if}
-{if $ins_fields[ix].type eq 'f' or $ins_fields[ix].type eq 'j'}
-{$ins_fields[ix].value|tiki_long_date}</td></tr>
+{if $cur_field.type eq 'f' or $cur_field.type eq 'j'}
+{$cur_field.value|tiki_long_date}</td></tr>
 
-{elseif $ins_fields[ix].type eq 'l'}
-{foreach key=tid item=tlabel from=$ins_fields[ix].links}
-<div><a href="tiki-view_tracker_item.php?trackerId={$ins_fields[ix].trackerId}&amp;itemId={$tid}" class="link">{$tlabel}</a></div>
+{elseif $cur_field.type eq 'l'}
+{foreach key=tid item=tlabel from=$cur_field.links}
+<div><a href="tiki-view_tracker_item.php?trackerId={$cur_field.trackerId}&amp;itemId={$tid}" class="link">{$tlabel}</a></div>
 {/foreach}
 
-{elseif $ins_fields[ix].type eq 'u'}
-<a href="tiki-user_information.php?view_user={$ins_fields[ix].value|escape:"url"}">{$ins_fields[ix].value}</a>
+{elseif $cur_field.type eq 'u'}
+<a href="tiki-user_information.php?view_user={$cur_field.value|escape:"url"}">{$cur_field.value}</a>
 
-{elseif $ins_fields[ix].type eq 'a'}
-{$ins_fields[ix].pvalue|default:"&nbsp;"}
+{elseif $cur_field.type eq 'a'}
+{$cur_field.pvalue|default:"&nbsp;"}
 
-{elseif $ins_fields[ix].type eq 'e'}
-{assign var=fca value=$fields[ix].options}
-<table width="100%"><tr>{cycle name=$fca values=",</tr><tr>" advance=false print=false}
-{foreach key=ku item=iu from=$fields[ix].$fca}
-{assign var=fcat value=$iu.categId }
+{elseif $cur_field.type eq 'e'}
+{assign var=fca value=$cur_field.options}
+<table width="100%"><tr>{cycle name="1_$fca" values=",</tr><tr>" advance=false print=false}
+{foreach key=ku item=iu from=$ins_fields.$ix.$fca}
+{assign var=fcat value=$iu.categId}
 <td width="50%" nowrap="nowrap">
-{if $ins_fields[ix].cat.$fcat eq 'y'}
+{if $cur_field.cat.$fcat eq 'y'}
 <tt>X&nbsp;</tt><b>{$iu.name}</b></td>
 {else}
 <tt>&nbsp;&nbsp;</tt><s>{$iu.name}</s></td>
 {/if}
-{cycle name=$fca}
+{cycle name="1_$fca"}
 {/foreach}
 </tr></table></td></tr>
 
-{elseif $ins_fields[ix].type eq 'c'}
-{if $ins_fields[ix].value eq 'y'}{tr}Yes{/tr}
+{elseif $cur_field.type eq 'c'}
+{if $cur_field.value eq 'y'}{tr}Yes{/tr}
 {else}{tr}No{/tr}
 {/if}
-{if $ins_fields[ix].options_array[0] eq '1' and $stick ne 'y'}
+{if $cur_field.options_array[0] eq '1' and $stick ne 'y'}
 </td>
 {assign var=stick value="y"}
 {else}
@@ -103,16 +103,23 @@
 {assign var=stick value="n"}
 {/if}
 
-{elseif $ins_fields[ix].type eq 't' or $ins_fields[ix].type eq 'r' or $ins_fields[ix].type eq 'n'}
-{if $ins_fields[ix].options_array[2]}<span class="formunit">{$ins_fields[ix].options_array[2]|escape}&nbsp;</span>{/if}
-{if $ins_fields[ix].linkId}
-<a href="tiki-view_tracker_item.php?trackerId={$ins_fields[ix].options_array[0]}&amp;itemId={$ins_fields[ix].linkId}" class="link">{$ins_fields[ix].value|default:"&nbsp;"}</a>
+{elseif $cur_field.type eq 't' or $cur_field.type eq 'r' or $cur_field.type eq 'n'}
+{if $cur_field.options_array[2]}<span class="formunit">{$cur_field.options_array[2]|escape}&nbsp;</span>{/if}
+{if $cur_field.linkId}
+<a href="tiki-view_tracker_item.php?trackerId={$cur_field.options_array[0]}&amp;itemId={$cur_field.linkId}" class="link">{$cur_field.value|default:"&nbsp;"}</a>
 {else}
-{$ins_fields[ix].value|default:"&nbsp;"}
+{$cur_field.value|default:"&nbsp;"}
 {/if}
-{if $ins_fields[ix].options_array[3]}<span class="formunit">&nbsp;{$ins_fields[ix].options_array[3]|escape}</span>{/if}
+{if $cur_field.options_array[3]}<span class="formunit">&nbsp;{$cur_field.options_array[3]|escape}</span>{/if}
 
-{if $ins_fields[ix].options_array[0] eq '1' and $stick ne 'y'}
+{if $cur_field.options_array[0] eq '1' and $stick ne 'y'}
+{* ********** was only for 1.8 <tr><td class="formcolor">{$cur_field.name}</td>
+<td class="formcolor">
+{if $cur_field.type eq 'f'}
+{$cur_field.value|tiki_short_datetime}
+{else}
+{$cur_field.value}
+{/if} ************ *}
 </td>
 {assign var=stick value="y"}
 {else}
@@ -120,17 +127,17 @@
 {assign var=stick value="n"}
 {/if}
 
-{elseif $ins_fields[ix].type eq 'm'}
-{if $ins_fields[ix].options_array[0] eq '1'}
-{mailto address=$ins_fields[ix].value|escape encode="hex"}
-{elseif $ins_fields[ix].options_array[0] eq '2'}
-{mailto address=$ins_fields[ix].value|escape encode="none"}
+{elseif $cur_field.type eq 'm'}
+{if $cur_field.options_array[0] eq '1'}
+{mailto address=$cur_field.value|escape encode="hex"}
+{elseif $cur_field.options_array[0] eq '2'}
+{mailto address=$cur_field.value|escape encode="none"}
 {else}
-{$ins_fields[ix].value|escape|default:"&nbsp;"}
+{$cur_field.value|escape|default:"&nbsp;"}
 {/if}
 
 {elseif $fields[ix].type eq 's' and $fields[ix].name eq "{tr}Rating{/tr}"}
-{$ins_fields[ix].value|default:"<i>{tr}Not rated yet{/tr}</i>"}
+{$cur_field.value|default:"<i>{tr}Not rated yet{/tr}</i>"}
 <span class="button2">
 {section name=i loop=$fields[ix].options_array}
 {if $fields[ix].options_array[i] eq $my_rate}
@@ -142,19 +149,19 @@
 </span>
 
 {else}
-{$ins_fields[ix].value|default:"&nbsp;"}
+{$cur_field.value|default:"&nbsp;"}
 </td></tr>
 {assign var=stick value="n"}
 {/if}
 {/if}
 {/if}
-{/section}
+{/foreach}
 </table>
 </div>
 
 {* -------------------------------------------------- tab with comments --- *}
 {if $tracker_info.useComments eq 'y'}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 {if $tiki_p_comment_tracker_items eq 'y'}
 <h2>{tr}Add a comment{/tr}</h2>
 <form action="tiki-view_tracker_item.php" method="post">
@@ -183,7 +190,7 @@ title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
 
 {* ---------------------------------------- tab with attachements --- *}
 {if $tracker_info.useAttachments eq 'y'}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};" {/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};" {/if}>
 {if $tiki_p_attach_trackers eq 'y'}
 <h2>{tr}Attach a file to this item{/tr}</h2>
 <form enctype="multipart/form-data" action="tiki-view_tracker_item.php" method="post">
@@ -191,12 +198,12 @@ title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
 <input type="hidden" name="itemId" value="{$itemId|escape}" />
 <input type="hidden" name="commentId" value="{$commentId|escape}" />
 <table class="normal">
-<tr class="formcolor"><td>{tr}Upload file{/tr}</td><td><input type="hidden" name="MAX_FILE_SIZE" value="1000000000" /><input name="userfile1" type="file" /></td></tr>
-<tr class="formcolor"><td>{tr}comment{/tr}</td><td><input type="text" name="attach_comment" maxlength="250" /></td></tr>
-<tr class="formcolor"><td>{tr}version{/tr}</td><td><input type="text" name="attach_version" size="5" maxlength="10" /></td></tr>
-<tr class="formcolor"><td>{tr}description{/tr}</td><td><textarea name="attach_longdesc" style="width:100%;" rows="10"></textarea></td></tr>
+<tr class="formcolor"><td>{tr}Upload file{/tr}</td><td>{if $attach_file}{tr}Edit{/tr}: {/if}<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" /><input name="userfile1" type="file"  />{if $attach_file}<br />{$attach_file|escape}{/if}</td></tr>
+<tr class="formcolor"><td>{tr}comment{/tr}</td><td><input type="text" name="attach_comment" maxlength="250" value="{$attach_comment|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}version{/tr}</td><td><input type="text" name="attach_version" size="5" maxlength="10" value="{$attach_version|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}description{/tr}</td><td><textarea name="attach_longdesc" style="width:100%;" rows="10" >{$attach_longdesc|escape}</textarea></td></tr>
 
-<tr class="formcolor"><td></td><td><input type="submit" name="attach" value="{tr}attach{/tr}" /></td></tr>
+<tr class="formcolor"><td></td><td><input type="submit" name="attach" value={if $attach_file}"{tr}edit{/tr}"{else}"{tr}attach{/tr}"{/if} /></td></tr>
 </table>
 </form>
 {/if}
@@ -216,8 +223,8 @@ title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
 {if $attextra eq 'y'}
 {assign var=link value='tiki-view_tracker_more_info.php?attId='|cat:$atts[ix].attId}
 <a class="tablename" href="#" title="{tr}more info{/tr}"
-onClick="javascript:window.open('{$link}','','menubar=no,toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=yes,width=450,height=600');"><img src="img/icons/question.gif" border="0" alt="{tr}question{/tr}"  hspace="2" vspace="1" /></a>{/if}<a 
-class="tablename" href="tiki-download_item_attachment.php?attId={$atts[ix].attId}" title="{tr}download{/tr}"><img src="img/icons/icon38.gif" border="0" alt="{tr}download{/tr}" hspace="8" vspace="O" /></a>
+onClick="javascript:window.open('{$link}','','menubar=no,toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=yes,width=450,height=600');"><img src="img/icons/question.gif" border="0" alt="{tr}more info{/tr}"  hspace="2" vspace="1" /></a>{/if}<a 
+class="tablename" href="tiki-download_item_attachment.php?attId={$atts[ix].attId}" title="{tr}download{/tr}"><img src="img/icons/icon38.gif" border="0" alt="{tr}download{/tr}" hspace="8" vspace="0" /></a>
 </td>
 {foreach key=k item=x from=$attfields}
 {if $x eq 'created'}
@@ -234,6 +241,8 @@ class="tablename" href="tiki-download_item_attachment.php?attId={$atts[ix].attId
 {if $tiki_p_wiki_admin_attachments eq 'y' or ($user and ($atts[ix].user eq $user))}
 <a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}" title="{tr}delete{/tr}"><img
 src="img/icons2/delete.gif" border="0" alt="{tr}delete{/tr}"  hspace="2" vspace="0" /></a>
+<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;editattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}" title="{tr}edit{/tr}"><img
+src="img/icons/edit.gif" border="0" alt="{tr}edit{/tr}"  hspace="2" vspace="0" /></a>
 {/if}
 </td>
 </tr>
@@ -248,7 +257,7 @@ src="img/icons2/delete.gif" border="0" alt="{tr}delete{/tr}"  hspace="2" vspace=
 
 {* --------------------------------------------------------------- tab with edit --- *}
 {if $tiki_p_modify_tracker_items eq 'y'}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}Edit item{/tr}</h2>
 <form action="tiki-view_tracker_item.php" method="post">
 {if $special}
@@ -257,6 +266,7 @@ src="img/icons2/delete.gif" border="0" alt="{tr}delete{/tr}"  hspace="2" vspace=
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 <input type="hidden" name="itemId" value="{$itemId|escape}" />
 {/if}
+{if $from}<input type="hidden" name="from" value="{$from}" />{/if}
 {section name=ix loop=$fields}
 {if $fields[ix].value}
 <input type="hidden" name="{$fields[ix].id|escape}" value="{$fields[ix].value|escape}" />
@@ -277,28 +287,28 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 </td></tr>
 {/if}
 
-{section name=ix loop=$ins_fields}
-{if $ins_fields[ix].isHidden ne 'y' or $tiki_p_admin_trackers eq 'y'}
-{if $ins_fields[ix].type ne 'x' and $ins_fields[ix].type ne 's'}
-{if $ins_fields[ix].type eq 'h'}
+{foreach from=$ins_fields key=ix item=cur_field}
+{if $cur_field.isHidden ne 'y' or $tiki_p_admin_trackers eq 'y'}
+{if $cur_field.type ne 'x' and $cur_field.type ne 's'}
+{if $cur_field.type eq 'h'}
 </table>
-<h2>{$ins_fields[ix].name}</h2>
+<h2>{$cur_field.name}</h2>
 <table class="normal">
 {else}
-{if ($ins_fields[ix].type eq 'c' or $fields[ix].type eq 't' or $fields[ix].type eq 'n') and $fields[ix].options_array[0] eq '1'}
-<tr class="formcolor"><td class="formlabel">{$ins_fields[ix].name}</td><td nowrap="nowrap">
+{if ($cur_field.type eq 'c' or $$cur_field.type eq 't' or $$cur_field.type eq 'n') and $$cur_field.options_array[0] eq '1'}
+<tr class="formcolor"><td class="formlabel">{$cur_field.name}</td><td nowrap="nowrap">
 {elseif $stick eq 'y'}
-<td class="formlabel right">{$ins_fields[ix].name}</td><td nowrap="nowrap">
+<td class="formlabel right">{$cur_field.name}</td><td nowrap="nowrap">
 {else}
-<tr class="formcolor"><td class="formlabel">{$ins_fields[ix].name}
-{if $ins_fields[ix].type eq 'a' and $ins_fields[ix].options_array[0] eq 1}
+<tr class="formcolor"><td class="formlabel">{$cur_field.name}
+{if $cur_field.type eq 'a' and $cur_field.options_array[0] eq 1}
 <br />
-{include file=tiki-edit_help_tool.tpl qtnum=$ins_fields[ix].id area_name="area_"|cat:$ins_fields[ix].id}
-{elseif ($ins_fields[ix].type eq 'l' and $tiki_p_create_tracker_items eq 'y')}
+{include file=tiki-edit_help_tool.tpl qtnum=$cur_field.id area_name="area_"|cat:$cur_field.id}
+{elseif ($cur_field.type eq 'l' and $tiki_p_create_tracker_items eq 'y')}
 <br />
-<a href="tiki-view_tracker.php?trackerId={$ins_fields[ix].trackerId}&amp;vals%5B{$ins_fields[ix].options_array[1]}%5D=
+<a href="tiki-view_tracker.php?trackerId={$cur_field.trackerId}&amp;vals%5B{$cur_field.options_array[1]}%5D=
 {section name=ox loop=$ins_fields}
-{if $ins_fields[ox].fieldId eq $ins_fields[ix].options_array[2]}
+{if $ins_fields[ox].fieldId eq $cur_field.options_array[2]}
 {$ins_fields[ox].value}
 {/if}
 {/section}
@@ -308,87 +318,90 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {/if}
 {/if}
 
-{if $ins_fields[ix].type eq 'u'}
-{if !$fields[ix].options or $tiki_p_admin_trackers eq 'y'}
-<select name="ins_{$ins_fields[ix].id}">
+{if $cur_field.type eq 'u'}
+{if !$cur_field.options or $tiki_p_admin_trackers eq 'y'}
+<select name="ins_{$cur_field.id}">
 <option value="">{tr}None{/tr}</option>
 {foreach key=id item=one from=$users}
-<option value="{$one|escape}" {if $ins_fields[ix].value eq $one}selected="selected"{/if}>{$one}</option>
+<option value="{$one|escape}" {if $cur_field.value eq $one}selected="selected"{/if}>{$one}</option>
 {/foreach}
 </select>
-{elseif $ins_fields[ix].options}
-<a href="tiki-user_information.php?user={$ins_fields[ix].value|escape:"url"}" class="link">{$ins_fields[ix].value}</a>
+{elseif $cur_field.options}
+<a href="tiki-user_information.php?user={$cur_field.value|escape:"url"}" class="link">{$cur_field.value}</a>
 {/if}
 
-{elseif $ins_fields[ix].type eq 'g'}
-{if !$fields[ix].options or $tiki_p_admin_trackers eq 'y'}
-<select name="ins_{$ins_fields[ix].id}">
+{elseif $cur_field.type eq 'g'}
+{if !$cur_field.options or $tiki_p_admin_trackers eq 'y'}
+<select name="ins_{$cur_field.id}">
 <option value="">{tr}None{/tr}</option>
 {section name=ux loop=$groups}
-<option value="{$groups[ux]|escape}" {if $ins_fields[ix].value|default:$ins_fields[ix].pvalue eq $groups[ux]}selected="selected"{/if}>{$groups[ux]}</option>
+<option value="{$groups[ux]|escape}" {if $cur_field.value|default:$cur_field.pvalue eq $groups[ux]}selected="selected"{/if}>{$groups[ux]}</option>
 {/section}
 </select>
-{elseif $ins_fields[ix].options}
-{$ins_fields[ix].value}
+{elseif $cur_field.options}
+{$cur_field.value}
 {/if}
 
-{elseif $ins_fields[ix].type eq 'l'}
-{foreach key=tid item=tlabel from=$ins_fields[ix].links}
-<div><a href="tiki-view_tracker_item.php?trackerId={$ins_fields[ix].trackerId}&amp;itemId={$tid}" class="link">{$tlabel}</a></div>
+{elseif $cur_field.type eq 'l'}
+{foreach key=tid item=tlabel from=$cur_field.links}
+<div><a href="tiki-view_tracker_item.php?trackerId={$cur_field.trackerId}&amp;itemId={$tid}" class="link">{$tlabel}</a></div>
 {/foreach}
 
-{elseif $ins_fields[ix].type eq 'e'}
-{assign var=fca value=$ins_fields[ix].options}
+{elseif $cur_field.type eq 'e'}
+{assign var=fca value=$cur_field.options}
 <table width="100%"><tr>{cycle name="2_$fca" values=",</tr><tr>" advance=false print=false}
-{foreach key=ku item=iu from=$fields[ix].$fca}
+{foreach key=ku item=iu from=$cur_field.$fca}
 {assign var=fcat value=$iu.categId }
-<td width="50%" nowrap="nowrap"><input type="checkbox" name="ins_cat_{$fca}[]" value="{$fcat}" {if $ins_fields[ix].cat.$fcat eq 'y'}checked="checked"{/if}/>{$iu.name}</td>{cycle name="2_$fca"}
+<td width="50%" nowrap="nowrap"><input type="checkbox" name="ins_cat_{$fca}[]" value="{$fcat}" {if $cur_field.cat.$fcat eq 'y'}checked="checked"{/if}/>{$iu.name}</td>
+{cycle name="2_$fca"}
 {/foreach}
 </table>
 
-{elseif $ins_fields[ix].type eq 't' || $ins_fields[ix].type eq 'm'}
-{if $ins_fields[ix].options_array[2]}<span class="formunit">{$ins_fields[ix].options_array[2]}&nbsp;</span>{/if}
-<input type="text" name="ins_{$ins_fields[ix].id}" value="{$ins_fields[ix].value|escape}" {if $ins_fields[ix].options_array[1]}size="{$ins_fields[ix].options_array[1]}" maxlength="{$ins_fields[ix].options_array[1]}"{/if} />
-{if $ins_fields[ix].options_array[3]}<span class="formunit">&nbsp;{$ins_fields[ix].options_array[3]}</span>{/if}
+{elseif $cur_field.type eq 't' || $cur_field.type eq 'm'}
+{if $cur_field.options_array[2]}<span class="formunit">{$cur_field.options_array[2]}&nbsp;</span>{/if}
+<input type="text" name="ins_{$cur_field.id}" value="{$cur_field.value|escape}" {if $cur_field.options_array[1]}size="{$cur_field.options_array[1]}" maxlength="{$cur_field.options_array[1]}"{/if} />
+{if $cur_field.options_array[3]}<span class="formunit">&nbsp;{$cur_field.options_array[3]}</span>{/if}
 
-{elseif $ins_fields[ix].type eq 'n'}
-{if $ins_fields[ix].options_array[2]}<span class="formunit">{$ins_fields[ix].options_array[2]}&nbsp;</span>{/if}
-<input type="text" name="ins_{$ins_fields[ix].id}" value="{$ins_fields[ix].value|escape}" {if $ins_fields[ix].options_array[1]}size="{$ins_fields[ix].options_array[1]}" maxlength="{$ins_fields[ix].options_array[1]}"{/if} />
-{if $ins_fields[ix].options_array[3]}<span class="formunit">&nbsp;{$ins_fields[ix].options_array[3]}</span>{/if}
+{elseif $cur_field.type eq 'n'}
+{if $cur_field.options_array[2]}<span class="formunit">{$cur_field.options_array[2]}&nbsp;</span>{/if}
+<input type="text" name="ins_{$cur_field.id}" value="{$cur_field.value|escape}" {if $cur_field.options_array[1]}size="{$cur_field.options_array[1]}" maxlength="{$cur_field.options_array[1]}"{/if} />
+{if $cur_field.options_array[3]}<span class="formunit">&nbsp;{$cur_field.options_array[3]}</span>{/if}
 
-{elseif $ins_fields[ix].type eq 'a'}
-<textarea name="ins_{$ins_fields[ix].id}" id="area_{$ins_fields[ix].id}" cols="{if $fields[ix].options_array[1] gt 1}{$fields[ix].options_array[1]}{else}50{/if}" 
-rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}4{/if}">{$ins_fields[ix].value|escape}</textarea>
+{elseif $cur_field.type eq 'a'}
+<textarea name="ins_{$cur_field.id}" id="area_{$cur_field.id}" cols="{if $cur_field.options_array[1] gt 1}{$cur_field.options_array[1]}{else}50{/if}" 
+rows="{if $cur_field.options_array[2] gt 1}{$cur_field.options_array[2]}{else}4{/if}">{$cur_field.value|escape}</textarea>
 
-{elseif $ins_fields[ix].type eq 'f'}
-{html_select_date prefix="ins_"|cat:$ins_fields[ix].id time=$ins_fields[ix].value start_year="-4" end_year="+4"} {html_select_time prefix="ins_"|cat:$ins_fields[ix].id time=$ins_fields[ix].value display_seconds=false}
+{elseif $cur_field.type eq 'f'}
+{html_select_date prefix="ins_"|cat:$cur_field.id time=$cur_field.value start_year="-4" end_year="+4"} {html_select_time prefix="ins_"|cat:$cur_field.id time=$cur_field.value display_seconds=false}
 
-{elseif $ins_fields[ix].type eq 'r'}
-<select name="ins_{$ins_fields[ix].id}">
-{foreach key=id item=label from=$ins_fields[ix].list}
-<option value="{$label|escape}" {if $ins_fields[ix].value eq $label}selected="selected"{/if}>{$label}</option>
+{elseif $cur_field.type eq 'r'}
+<select name="ins_{$cur_field.id}">
+{if $cur_field.isMandatory}<option value="" />{/if}
+{foreach key=id item=label from=$cur_field.list}
+<option value="{$label|escape}" {if $cur_field.value eq $label}selected="selected"{/if}>{$label}</option>
 {/foreach}
 </select>
 
-{elseif $ins_fields[ix].type eq 'd'}
-<select name="ins_{$ins_fields[ix].id}">
-{section name=jx loop=$ins_fields[ix].options_array}
-<option value="{$ins_fields[ix].options_array[jx]|escape}" {if $ins_fields[ix].value eq $ins_fields[ix].options_array[jx]}selected="selected"{/if}>{$fields[ix].options_array[jx]}</option>
+{elseif $cur_field.type eq 'd'}
+<select name="ins_{$cur_field.id}">
+{if $cur_field.isMandatory}<option value="" />{/if}
+{section name=jx loop=$cur_field.options_array}
+<option value="{$cur_field.options_array[jx]|escape}" {if $cur_field.value eq $cur_field.options_array[jx]}selected="selected"{/if}>{$cur_field.options_array[jx]}</option>
 {/section}
 </select>
 
-{elseif $ins_fields[ix].type eq 'c'}
-<input type="checkbox" name="ins_{$ins_fields[ix].id}" {if $ins_fields[ix].value eq 'y'}checked="checked"{/if}/>
+{elseif $cur_field.type eq 'c'}
+<input type="checkbox" name="ins_{$cur_field.id}" {if $cur_field.value eq 'y'}checked="checked"{/if}/>
 
-{elseif $ins_fields[ix].type eq 'j'}
-<input type="hidden" name="ins_{$ins_fields[ix].id}" value="{$ins_fields[ix].value|default:$smarty.now}" id="ins_{$ins_fields[ix].id}" />
-<span id="disp_{$ins_fields[ix].id}" class="daterow">{$ins_fields[ix].value|default:$smarty.now|tiki_long_datetime}</span>
+{elseif $cur_field.type eq 'j'}
+<input type="hidden" name="ins_{$cur_field.id}" value="{$cur_field.value|default:$smarty.now}" id="ins_{$cur_field.id}" />
+<span id="disp_{$cur_field.id}" class="daterow">{$cur_field.value|default:$smarty.now|tiki_long_datetime}</span>
 <script type="text/javascript">
 {literal}Calendar.setup( { {/literal}
-date        : "{$ins_fields[ix].value|default:$smarty.now|date_format:"%B %e, %Y %H:%M"}",      // initial date
-inputField  : "ins_{$ins_fields[ix].id}",      // ID of the input field
+date        : "{$cur_field.value|default:$smarty.now|date_format:"%B %e, %Y %H:%M"}",      // initial date
+inputField  : "ins_{$cur_field.id}",      // ID of the input field
 ifFormat    : "%s",    // the date format
-displayArea : "disp_{$ins_fields[ix].id}",       // ID of the span where the date is to be shown
+displayArea : "disp_{$cur_field.id}",       // ID of the span where the date is to be shown
 daFormat    : "{$long_date_format}",  // format of the displayed date
 showsTime   : true,
 singleClick : true,
@@ -396,31 +409,31 @@ align       : "bR"
 {literal} } );{/literal}
 </script>
 {/if}
-{if (($ins_fields[ix].type eq 'c' or $fields[ix].type eq 't' or $fields[ix].type eq 'n') and $fields[ix].options_array[0] eq '1') and $stick ne 'y'}
+{if (($cur_field.type eq 'c' or $cur_field.type eq 't' or $cur_field.type eq 'n') and $cur_field.options_array[0] eq '1') and $stick ne 'y'}
 </td>{assign var=stick value="y"}
 {else}
 </td></tr>{assign var=stick value="n"}
 {/if}
 
-{elseif $ins_fields[ix].type eq 'x'}
+{elseif $cur_field.type eq 'x'}
 
 {capture name=trkaction}
-{if $ins_fields[ix].options_array[1] eq 'post'}
-<form action="{$ins_fields[ix].options_array[2]}" method="post">
+{if $cur_field.options_array[1] eq 'post'}
+<form action="{$cur_field.options_array[2]}" method="post">
 {else}
-<form action="{$ins_fields[ix].options_array[2]}" method="get">
+<form action="{$cur_field.options_array[2]}" method="get">
 {/if}
-{section name=tl loop=$ins_fields[ix].options_array start=3}
-{assign var=valvar value=$ins_fields[ix].options_array[tl]|regex_replace:"/^[^:]*:/":""|escape}
-{if $infohash.$valvar eq ''}
-{assign var=valvar value=$ins_fields[ix].options_array[tl]|regex_replace:"/^[^\=]*\=/":""|escape}
-<input type="hidden" name="{$ins_fields[ix].options_array[tl]|regex_replace:"/\=.*$/":""|escape}" value="{$valvar|escape}" />
+{section name=tl loop=$cur_field.options_array start=3}
+{assign var=valvar value=$cur_field.options_array[tl]|regex_replace:"/^[^:]*:/":""|escape}
+{if $info.$valvar eq ''}
+{assign var=valvar value=$cur_field.options_array[tl]|regex_replace:"/^[^\=]*\=/":""|escape}
+<input type="hidden" name="{$cur_field.options_array[tl]|regex_replace:"/\=.*$/":""|escape}" value="{$valvar|escape}" />
 {else}
-<input type="hidden" name="{$ins_fields[ix].options_array[tl]|regex_replace:"/:.*$/":""|escape}" value="{$infohash.$valvar|escape}" />
+<input type="hidden" name="{$cur_field.options_array[tl]|regex_replace:"/:.*$/":""|escape}" value="{$info.$valvar|escape}" />
 {/if}
 {/section}
 <table class="normal">
-<tr class="formcolor"><td>{$ins_fields[ix].name}</td><td><input type="submit" class="submit" name="trck_act" value="{$ins_fields[ix].options_array[0]|escape}" /></td><tr>
+<tr class="formcolor"><td>{$cur_field.name}</td><td><input type="submit" class="submit" name="trck_act" value="{$cur_field.options_array[0]|escape}" /></td><tr>
 </table>
 </form>
 {/capture}
@@ -428,8 +441,9 @@ align       : "bR"
 {/if}
 
 {/if}
-{/section}
-<tr class="formcolor"><td>&nbsp;</td><td colspan="3"><input type="submit" name="save" value="{tr}save{/tr}" />
+{/foreach}
+<tr class="formcolor"><td>&nbsp;</td><td colspan="3">
+<input type="submit" name="save" value="{tr}save{/tr}" />
 </td></tr>
 </table>
 </form>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-export_sheet.php,v 1.4 2005-01-01 00:16:32 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-export_sheet.php,v 1.5 2005-05-18 10:58:56 mose Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -27,7 +27,7 @@ if ($feature_sheet != 'y') {
 	die;
 }
 
-if ($tiki_p_edit_sheet != 'y' && $tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y') {
+if ($tiki_p_view_sheet != 'y' && $tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y') {
 	$smarty->assign('msg', tra("Access Denied").": feature_sheets");
 
 	$smarty->display("error.tpl");

@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/tree/categ_admin_tree.php,v 1.4 2003-09-25 01:05:18 rlpowell Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/tree/categ_admin_tree.php,v 1.5 2005-05-18 11:01:54 mose Exp $
  *
  * \brief Categories browse tree
  *
@@ -41,10 +41,10 @@ class CatAdminTreeMaker extends TreeMaker {
 	//  
 	// Need to generate:
 	//
-	// [node start = <div class=treenode><table><tr>]
+	// [node start = <div class="treenode"><table><tr>]
 	//  [flipper] user data    [edit][del]
 	// [node data end = </div>]
-	// [node child start = <div class=tree>]
+	// [node child start = <div class="tree">]
 	//   [childs code]
 	// [node child end = </div>]
 	//

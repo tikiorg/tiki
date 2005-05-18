@@ -192,21 +192,9 @@ class SearchLib extends TikiLib {
 		if ($fulltext) {
 			$qwords = $this->db->quote($words);
 
-			global $feature_search_mysql4_boolean;
-			if ($feature_search_mysql4_boolean == 'y') {
-				$sqlft = 'MATCH(' . join(',', $h['search']). ') AGAINST (' . $qwords;
-				global $db_tiki;
-				if ($db_tiki='mysql') {
-					$sqlft .= ' IN BOOLEAN MODE)';
-				} else {
-					$sqlft .= ' )';
-				}
-			} else {
-				$sqlft = 'MATCH(' . join(',', $h['search']). ') AGAINST (' . $qwords . ')';
-			}
-			
-			$sql2 .= ' AND ' . $sqlft ;
-			$sql .= ', ' . $sqlft . ' AS relevance';
+			$sqlft = 'MATCH(' . join(',', $h['search']). ') AGAINST (' . $qwords . ')';
+			$sqlWhere .= ' AND ' . $sqlft ;
+			$sqlFields .= ', ' . $sqlft . ' AS relevance';
 			$orderby = 'relevance desc, ' . $orderby;
 		} else if ($words) {
 			$sqlFields .= ', -1 AS relevance';
@@ -240,8 +228,6 @@ class SearchLib extends TikiLib {
 		$cant = $result->numRows();
 
 
-		global $feature_search_mysql4_boolean;
-		if ($feature_search_mysql4_boolean != 'y') {
 		if (!$cant) { // no result
 			if ($fulltext && $words) // try a simple search
 				return $this->_find($h, $words, $offset, $maxRecords, false);
@@ -250,7 +236,6 @@ class SearchLib extends TikiLib {
 					'data' => array(),
 					'cant' => 0
 				);
-		}
 		}
 
 		$result = $this->query($sql, $bindVars, $maxRecords, $offset);

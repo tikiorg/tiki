@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.47 2005-03-12 16:49:00 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.48 2005-05-18 10:58:58 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -22,9 +22,7 @@ global $language;
 clearstatcache();
 $now = date("U");
 
-if (!empty($static_mode) && $static_mode == 'y') {
-	$user_groups = array($static_group);
-} elseif ($user != 'admin') {
+if ($user != 'admin') {
 	$user_groups = $userlib->get_user_groups($user);
 } else {
 	$allgroups = $userlib->list_all_groups();
@@ -105,7 +103,7 @@ for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
 		}
 		$module_rows = $mod_reference["rows"];
 		$smarty->assign_by_ref('module_rows',$mod_reference["rows"]);
-		if ((!file_exists($cachefile)) || (file_exists($nocache)) || (($now - filemtime($cachefile)) > $mod_reference["cache_time"])) {
+		if ((!file_exists($cachefile)) || (file_exists($nocache)) || (($now - filemtime($cachefile)) >= $mod_reference["cache_time"])) {
 			$mod_reference["data"] = '';
             $smarty->assign_by_ref('module_params', $module_params); // module code can unassign this if it wants to hide params
 			if (file_exists($phpfile)) {
@@ -116,7 +114,7 @@ for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
 			} else {
 				if ($tikilib->is_user_module($mod_reference["name"])) {
 					$info = $tikilib->get_user_module($mod_reference["name"]);
-					$smarty->assign_by_ref('user_title', $info["title"]);
+					$smarty->assign_by_ref('user_title', tra($info["title"]));
 					if (isset($info['parse']) && $info["parse"] == 'y')
 						$info["data"] = $tikilib->parse_data($info["data"]);
 					$smarty->assign_by_ref('user_data', $info["data"]);

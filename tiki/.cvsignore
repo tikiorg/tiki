@@ -1,8 +1,8 @@
-.htaccess
-static
 templates_c
 var
 .project
 phpmyadmin
 tiki-emptycache.php
 project.index
+ZendStudioServer
+dummy.php

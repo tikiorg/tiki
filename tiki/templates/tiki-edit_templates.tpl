@@ -1,7 +1,7 @@
 <h1><a class="pagetitle" href="tiki-edit_templates.php?mode=listing">{tr}Edit templates{/tr}</a>
 
       {if $feature_help eq 'y'}
-<a href="{$helpurl}EditTemplates" target="tikihelp" class="tikihelp" title="{tr}EditTemplates{/tr}">
+<a href="{$helpurl}Edit+Templates" target="tikihelp" class="tikihelp" title="{tr}EditTemplates{/tr}">
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 
       {if $feature_view_tpl eq 'y'}

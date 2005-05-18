@@ -1,15 +1,17 @@
 {if $feature_help eq "y"}
-<div class="simplebox">{tr}Tip{/tr}: {tr}look under "Articles" on the application menu for links to{/tr} "<a class="link" href="tiki-admin_topics.php">{tr}Admin topics{/tr}</a>" {tr}and{/tr} "<a class="link" href="tiki-article_types.php">{tr}Admin types{/tr}</a>".</div><br />
+<div class="rbox" style="margin-top: 10px;">
+<div class="rbox-title" style="background-color: #eeee99; font-weight : bold; display : inline; padding : 0 10px;">{tr}Tip{/tr}</div>
+<div class="rbox-data" style="padding: 2px 10px; background-color: #eeee99;">{tr}Look under "Articles" on the application menu for links to{/tr} "<a class="link" href="tiki-admin_topics.php">{tr}Admin topics{/tr}</a>" {tr}and{/tr} "<a class="link" href="tiki-article_types.php">{tr}Admin types{/tr}</a>".</div>
+</div>
+<br />
 {/if}
 <div class="cbox">
-  <div class="cbox-title">{tr}Article/CMS settings{/tr}</div>
+  <div class="cbox-title">{tr}CMS features{/tr}</div>
   <div class="cbox-data">
-    <div class="simplebox">
-      {tr}CMS features{/tr}<br />
       <form action="tiki-admin.php?page=cms" method="post">
         <table class="admin"><tr>
           <td class="form"><label for="articles-submission">
-				{if $feature_help eq 'y'}<a href="{$helpurl}Article" target="tikihelp" class="tikihelp" title="{tr}Articles{/tr}">{/if}
+				{if $feature_help eq 'y'}<a href="{$helpurl}Articles" target="tikihelp" class="tikihelp" title="{tr}Articles{/tr}">{/if}
 				{tr}Submissions{/tr}
 				{if $feature_help eq 'y'}</a>{/if}
 				:</td>
@@ -37,9 +39,12 @@
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>
-    </div>
+  </div>
+</div>
 
-    <div class="simplebox">
+<div class="cbox">
+  <div class="cbox-title">{tr}Settings for page articles home{/tr}</div>
+  <div class="cbox-data">
       <form method="post" action="tiki-admin.php?page=cms">
         <table class="admin"><tr>
           <td class="form"><label for="articles-maxhome">{tr}Maximum number of articles in home{/tr}: </label></td>
@@ -50,10 +55,12 @@
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>
-    </div>
+  </div>
+</div>
 
-    <div class="simplebox">
-      {tr}Article comments settings{/tr}
+<div class="cbox">
+  <div class="cbox-title">{tr}Article comments settings{/tr}</div>  
+  <div class="cbox-data">
       <form method="post" action="tiki-admin.php?page=cms">
         <table class="admin"><tr>
           <td class="form"><label for="articles-commentsnumber">{tr}Default number of comments per page{/tr}: </label></td>
@@ -71,10 +78,12 @@
               name="articlecomprefs" value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>
-    </div>
-    
-    <div class="simplebox">
-      {tr}Fields to display on page{/tr} <a href="tiki-list_articles.php" class="link">{tr}List articles{/tr}</a> :<br />
+  </div>
+</div>
+   
+<div class="cbox">
+  <div class="cbox-title">{tr}Fields to display on page{/tr} <a href="tiki-list_articles.php" class="link">{tr}List articles{/tr}</a></div>
+  <div class="cbox-data">
       <form method="post" action="tiki-admin.php?page=cms">
         <table class="admin"><tr>
           <td class="form"><label for="articles-title">{tr}Title{/tr}</label></td>

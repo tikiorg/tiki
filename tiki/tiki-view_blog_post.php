@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog_post.php,v 1.28 2005-01-22 22:54:57 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog_post.php,v 1.29 2005-05-18 10:59:00 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -68,6 +68,7 @@ $parts = parse_url($_SERVER['REQUEST_URI']);
 
 $postId = $_REQUEST["postId"];
 $post_info = $bloglib->get_post($_REQUEST["postId"]);
+$post_info['data']=htmldecode($post_info['data']);
 $smarty->assign('post_info', $post_info);
 $smarty->assign('postId', $_REQUEST["postId"]);
 $_REQUEST["blogId"] = $post_info["blogId"];
@@ -167,7 +168,7 @@ if ($tiki_p_read_blog != 'y') {
 	die;
 }
 
-$blog_data = $bloglib->get_blog($_REQUEST["blogId"]);
+$blog_data = $tikilib->get_blog($_REQUEST["blogId"]);
 $ownsblog = 'n';
 
 if ($user && $user == $blog_data["user"]) {
@@ -231,5 +232,11 @@ ask_ticket('view-blog-post');
 // Display the template
 $smarty->assign('mid', 'tiki-view_blog_post.tpl');
 $smarty->display("tiki.tpl");
+
+function htmldecode($string) {
+   $string = strtr($string, array_flip(get_html_translation_table(HTML_ENTITIES)));
+   $string = preg_replace("/&#([0-9]+);/me", "chr('\\1')", $string);
+   return $string;
+}
 
 ?>

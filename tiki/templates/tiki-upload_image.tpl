@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.28 2005-03-12 16:50:54 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.29 2005-05-18 11:03:21 mose Exp $ *}
 <h1><a href="tiki-upload_image.php?galleryId={$galleryId}" class="pagetitle">{tr}Upload Image{/tr}</a>
 
 {if $feature_help eq 'y'}
@@ -20,7 +20,7 @@
 <a href="tiki-galleries.php" class="linkbut">
 {/if}
 {tr}Browse gallery{/tr}</a></span>
-  {if $tiki_p_batch_upload_image_dir eq 'y'}
+  {if $feature_gal_batch eq "y" and $tiki_p_batch_upload_image_dir eq 'y'}
     {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'}
       <span class="button2"><a href="tiki-batch_upload.php?galleryId={$galleryId}" class="linkbut">{tr}Directory batch{/tr}</a></span>
     {/if}
@@ -72,7 +72,7 @@
 	<input name="userfile7" type="file" />
 	<input name="userfile8" type="file" />
 	</td></tr>
-	<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="upload" value="{tr}upload{/tr}" /></td></tr>
+	<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="upload" value="{tr}upload{/tr}" /> <span class="rbox-data">{tr}Note: Maximum image size is limited to{/tr} {$max_img_upload_size|kbsize}</span></td></tr>
 	</table>
 	</form>
 	</div>

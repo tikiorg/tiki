@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_character.php,v 1.2 2004-08-17 16:33:31 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_character.php,v 1.3 2005-05-18 11:00:35 mose Exp $
 
 /**
  * "Side-by-Side" diff renderer.
@@ -8,7 +8,7 @@
  *
  * @package Text_Diff
  */
-class Text_Diff_Renderer_character extends Text_Diff_Renderer {
+class Text_Diff_Renderer_character extends Tiki_Text_Diff_Renderer {
     var $orig;
     var $final;
 
@@ -16,6 +16,8 @@ class Text_Diff_Renderer_character extends Text_Diff_Renderer {
     {
         $this->_leading_context_lines = $context_lines;
         $this->_trailing_context_lines = $context_lines;
+        $this->orig = "";
+        $this->final = "";
     }
     
     function _startDiff()

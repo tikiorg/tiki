@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.33 2005-03-12 16:48:57 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.34 2005-05-18 10:58:53 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -76,6 +76,8 @@ if (isset($_REQUEST["save"])) {
 	$_REQUEST['usePruneOld'] = isset($_REQUEST['usePruneOld']) ? 'y' : 'n';
 	$usePruneOld = $_REQUEST['usePruneOld'];
 	$_REQUEST['vote_threads'] = isset($_REQUEST['vote_threads']) ? 'y' : 'n';
+	$_REQUEST['outbound_mails_for_inbound_mails'] = isset($_REQUEST['outbound_mails_for_inbound_mails']) ? 'y' : 'n';
+	$_REQUEST['outbound_mails_reply_link'] = isset($_REQUEST['outbound_mails_reply_link']) ? 'y' : 'n';
 	$_REQUEST['topics_list_reads'] = isset($_REQUEST['topics_list_reads']) ? 'y' : 'n';
 	$_REQUEST['topics_list_replies'] = isset($_REQUEST['topics_list_replies']) ? 'y' : 'n';
 	$_REQUEST['show_description'] = isset($_REQUEST['show_description']) ? 'y' : 'n';
@@ -106,10 +108,13 @@ if (isset($_REQUEST["save"])) {
 		$usePruneUnreplied, $_REQUEST["pruneUnrepliedAge"],
 		$usePruneOld, $_REQUEST["pruneMaxAge"], $_REQUEST["topicsPerPage"], $_REQUEST["topicOrdering"], $_REQUEST["threadOrdering"],
 		$_REQUEST["section"], $_REQUEST['topics_list_reads'], $_REQUEST['topics_list_replies'], $_REQUEST['topics_list_pts'],
-		$_REQUEST['topics_list_lastpost'], $_REQUEST['topics_list_author'], $_REQUEST['vote_threads'],
+		$_REQUEST['topics_list_lastpost'], $_REQUEST['topics_list_author'], 
+		$_REQUEST['vote_threads'],
 		$_REQUEST['show_description'], $_REQUEST['inbound_pop_server'],
 		110, $_REQUEST['inbound_pop_user'], $_REQUEST['inbound_pop_password'], 
 		trim($_REQUEST['outbound_address']),
+		$_REQUEST['outbound_mails_for_inbound_mails'],
+		$_REQUEST['outbound_mails_reply_link'],
 		$_REQUEST['outbound_from'],
 		$_REQUEST['topic_smileys'], $_REQUEST['topic_summary'], $_REQUEST['ui_avatar'], $_REQUEST['ui_flag'], $_REQUEST['ui_posts'],
 		$_REQUEST['ui_level'], $_REQUEST['ui_email'], $_REQUEST['ui_online'], $_REQUEST['approval_type'],
@@ -150,6 +155,8 @@ if ($_REQUEST["forumId"]) {
 	$info["show_description"] = 'n';
 
 	$info["outbound_address"] = '';
+	$info["outbound_mails_for_inbound_mails"] = 'n';
+	$info["outbound_mails_reply_link"] = 'n';
 	$info["outbound_from"] = '';
 	$info["inbound_pop_server"] = '';
 	$info["inbound_pop_port"] = 110;

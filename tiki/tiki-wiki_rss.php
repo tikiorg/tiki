@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-wiki_rss.php,v 1.31 2005-01-22 22:54:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-wiki_rss.php,v 1.32 2005-05-18 10:59:01 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -7,7 +7,8 @@
 
 require_once ('tiki-setup.php');
 require_once ('lib/tikilib.php');
-include_once ('lib/wiki/histlib.php');
+require_once ('lib/wiki/histlib.php');
+require_once ('lib/rss/rsslib.php'); 
 
 if ($rss_wiki != 'y') {
 	$errmsg=tra("rss feed disabled");
@@ -22,23 +23,31 @@ if ($tiki_p_view != 'y') {
 $feed = "wiki";
 $title = (!empty($title_rss_wiki)) ? $title_rss_wiki : tra("Tiki RSS feed for the wiki pages");
 $desc = (!empty($desc_rss_wiki)) ? $desc_rss_wiki : tra("Last modifications to the Wiki.");
-
 $now = date("U");
 $id = "pageName";
 $titleId = "pageName";
-$descId = "comment";
+$descId = "description";
 $dateId = "lastModif";
-$readrepl = "tiki-index.php?page=";
+$authorId = "user";
+$readrepl = "tiki-index.php?page=%s";
 $uniqueid = $feed;
 
-require ("tiki-rss_readcache.php");
+$tmp = $tikilib->get_preference('title_rss_'.$feed, '');
+if ($tmp<>'') $title = $tmp;
+$tmp = $tikilib->get_preference('desc_rss_'.$feed, '');
+if ($desc<>'') $desc = $tmp;
 
-if ($output == "EMPTY") {
-  $changes = $tikilib -> list_pages(0, $max_rss_wiki, 'lastModif_desc');
-  // FIX: get_last_changes does not return pages with german umlauts (they are left out)
-  $output = "";
+$changes = $tikilib -> list_pages(0, $max_rss_wiki, 'lastModif_desc');
+$tmp = array();
+foreach ($changes["data"] as $data)  {
+	$data["$descId"] = $tikilib->parse_data($data["$descId"]);
+	$tmp[] = $data;
 }
+$changes["data"] = $tmp;
+$tmp = null;
+$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, '', $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
 
-require ("tiki-rss.php");
+header("Content-type: ".$output["content-type"]);
+print $output["data"];
 
 ?>

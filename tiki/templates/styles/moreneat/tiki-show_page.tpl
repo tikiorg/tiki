@@ -1,4 +1,4 @@
-{if $tiki_p_wiki_view_header eq 'y'}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki-show_page.tpl,v 1.48 2005-05-18 11:03:37 mose Exp $ *}
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
     {$page_info.page_alias}
@@ -12,6 +12,7 @@
 {if $feature_wiki_pageid eq 'y'}
 	<small><a class="link" href="tiki-index.php?page_id={$page_id}">{tr}page id{/tr}: {$page_id}</a></small>
 {/if}
+
 <table class="wikibar">
 
 {if $is_categorized eq 'y' and $feature_categories eq 'y' and $feature_categorypath eq 'y'}
@@ -27,7 +28,7 @@
 <small>{$description}</small>
 {/if}
 {if $cached_page eq 'y'}
-<small>(cached)</small>
+<small>({tr}cached{/tr})</small>
 {/if}
 </td>
 {if $print_page ne 'y'}
@@ -102,9 +103,8 @@
 </tr>
 {/if}
 </table>
-{else}
-<br />
-{/if}
+
+{strip}{* remove all additional and unwanted white space produced by smarty code indentation to get the tabs displayed as intended *}
 
 {if $print_page ne 'y'}
 {if !$lock}
@@ -140,7 +140,7 @@
 {/if}
 
 {if $page|lower ne 'sandbox'}
-	{if $feature_history eq 'y' && ($tiki_p_admin_wiki eq 'y' || $tiki_p_view_wiki_history eq 'y')}
+	{if $feature_history eq 'y' and $tiki_p_wiki_view_history eq 'y'}
 		<span class="tabbut"><a href="tiki-pagehistory.php?page={$page|escape:"url"}" class="tablink">{tr}history{/tr}</a></span>
 	{/if}
 {/if}
@@ -169,45 +169,53 @@
 	<span class="tabbut"><a href="tiki-view_forum.php?forumId={$wiki_forum_id}&amp;comments_postComment=post&amp;comments_title={$page|escape:"url"}&amp;comments_data={"Use this thread to discuss the [tiki-index.php?page="}{$page}{"|"}{$page}{"] page."|escape:"url"}&amp;comment_topictype=n" class="tablink">{tr}discuss{/tr}</a></span>
 {/if}
 
-{* don't show comments if feature disabled or not enough rights *}
-{if $feature_wiki_comments == 'y'
-&& (($tiki_p_read_comments  == 'y' && $comments_cant != 0)
-||  $tiki_p_post_comments  == 'y'
-||  $tiki_p_edit_comments  == 'y')}
-  <span class="tabbut">
-  <a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink"{if $comments_cant != 0}  style="background: #FFAAAA"{/if}>{if $comments_cant == 0}{tr}add comment{/tr}{elseif $comments_cant == 1}{tr}1 comment{/tr}{else}{$comments_cant} {tr}comments{/tr}{/if}</a></span>
-{/if}
-
-{php} global $atts; global $smarty; $smarty->assign('atts_cnt', count($atts["data"])); {/php}
-{if $feature_wiki_attachments      == 'y'
-  && ($tiki_p_wiki_view_attachments  == 'y'
-  &&  count($atts) > 0
-  ||  $tiki_p_wiki_attach_files      == 'y'
-  ||  $tiki_p_wiki_admin_attachments == 'y'
-  ||  $tiki_p_admin == 'y')}
-<span class="tabbut"><a href="#attachments" onclick="javascript:flip('attzone{if $atts_show eq 'y'}open{/if}');" class="tablink">
-{if $atts_cnt == 0
-  || $tiki_p_wiki_attach_files == 'y'
-  && $tiki_p_wiki_view_attachments == 'n'
-  && $tiki_p_wiki_admin_attachments == 'n'}
-	{tr}attach file{/tr}
-{elseif $atts_cnt == 1}
-	<span class="highlight">{tr}1 file attached{/tr}</span>
+{if $feature_wiki_comments eq 'y' and $tiki_p_wiki_view_comments eq 'y' and $show_page eq 'y'}
+<span class="tabbut">
+{if $comments_cant > 0}
+	<a href="{if $comments_show ne 'y'}tiki-index.php?page={$page|escape:"url"}&amp;comzone=show#comments{else}tiki-index.php?page={$page|escape:"url"}&amp;comzone=hide{/if}" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');{if $comments_show eq 'y'} return false;{/if}" class="tablink" style="background: #FFAAAA">{if $comments_cant eq 1}1&nbsp;{tr}comment{/tr}{else}{$comments_cant}&nbsp;{tr}comments{/tr}{/if}</a>
 {else}
-	<span class="highlight">{tr}{$atts_cnt} files attached{/tr}</span>
-{/if}</a></span>
+	<a href="{if $comments_show ne 'y'}tiki-index.php?page={$page|escape:"url"}&amp;comzone=show#comments{else}tiki-index.php?page={$page|escape:"url"}&amp;comzone=hide{/if}" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');{if $comments_show eq 'y'} return false;{/if}" class="tablink">{tr}comment{/tr}</a>
+{/if}
+</span>
 {/if}
 
-
+{* Attaching a file and viewing attachments are separate permissions! *}
+{if $feature_wiki_attachments eq 'y' and $show_page eq 'y'}
+  {if $tiki_p_wiki_attach_files eq 'y'}
+    <span class="tabbut">
+      <a href="#attachments" onclick="javascript:flip('attzone{if $atts_show eq 'y'}open{/if}');" class="tablink">
+        {if $atts_count eq 0}
+          {tr}attach file{/tr}
+        {elseif $atts_count eq 1}
+          1&nbsp;{tr}attachment{/tr}
+        {else}
+          {$atts_count}&nbsp;{tr}attachments{/tr}
+        {/if}
+      </a>
+    </span>
+  {elseif $tiki_p_wiki_view_attachments eq 'y' and $atts_count gt 0}
+    <span class="tabbut">
+      <a href="#attachments" onclick="javascript:flip('attzone{if $atts_show eq 'y'}open{/if}');" class="tablink">
+        {if $atts_count eq 1}
+          1&nbsp;{tr}attachment{/tr}
+        {else}
+          {$atts_count}&nbsp;{tr}attachments{/tr}
+        {/if}
+      </a>
+    </span>
+  {/if}
+{/if}
 {/if}
 
 {if $feature_multilingual eq 'y' and $tiki_p_edit eq 'y' and !$lock}
-     <span class="tabbut"><a href="tiki-edit_translation.php?page={$page|escape:'url'}" class="tablink">{tr}translation{/tr}</a></span>
+    <span class="tabbut">
+      <a href="tiki-edit_translation.php?page={$page|escape:'url'}" class="tablink">{tr}translation{/tr}</a>
+    </span>
 {/if}
 
-<div class="wikitext"
-{if $user_dbl eq 'y' and $feature_wiki_dblclickedit eq 'wikitext_only' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}>
-{if $structure eq 'y'}
+{/strip}
+
+<div class="wikitext">{if $structure eq 'y'}
 <div class="tocnav">
 <table width='100%'>
 <tr>
@@ -292,24 +300,47 @@
 {$footnote}
 </div>
 {/if}
-{if $tiki_p_wiki_view_author eq 'y' || $tiki_p_admin eq 'y' || $tiki_p_admin_wiki eq 'y'}
-<p class="editdate">{tr}Created by{/tr}: {$creator|userlink} {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}
-{else}
-<p class="editdate">{tr}Last modification{/tr}: {$lastModif|tiki_long_datetime}
-{/if}
-{if $feature_wiki_page_footer eq 'y'}<br />{$wiki_page_footer_content}{/if}
+
+{if isset($wiki_authors_style) && $wiki_authors_style eq 'business'}
+<p class="editdate">
+  {tr}Last edited by{/tr} {$lastUser|userlink}
+  {section name=author loop=$contributors}
+   {if $smarty.section.author.first}, {tr}based on work by{/tr}
+   {else}
+    {if !$smarty.section.author.last},
+    {else} {tr}and{/tr}
+    {/if}
+   {/if}
+   {$contributors[author]|userlink}
+  {/section}.<br />                                         
+  {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}.
 </p>
+{elseif isset($wiki_authors_style) &&  $wiki_authors_style eq 'collaborative'}
+<p class="editdate">
+  {tr}Contributors to this page{/tr}: {$lastUser|userlink}
+  {section name=author loop=$contributors}
+   {if !$smarty.section.author.last},
+   {else} {tr}and{/tr}
+   {/if}
+   {$contributors[author]|userlink}
+  {/section}.<br />
+  {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}.
+</p>
+{elseif isset($wiki_authors_style) &&  $wiki_authors_style eq 'none'}
+{else}
+<p class="editdate">
+  {tr}Created by{/tr}: {$creator|userlink}
+  {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}
+</p>
+{/if}
+
 {if $wiki_extras eq 'y'}
 <br />
-
-{if $feature_wiki_attachments eq 'y'}
 {include file=attachments.tpl}
-{/if}
 
 {if $feature_wiki_comments eq 'y' and $tiki_p_wiki_view_comments eq 'y'}
 {include file=comments.tpl}
 {/if}
-
 {/if}
 {if $is_categorized eq 'y' and $feature_categories eq 'y' and $feature_categoryobjects eq 'y'}
 <div class="catblock">{$display_catobjects}</div>

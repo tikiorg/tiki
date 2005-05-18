@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.49 2005-03-12 16:48:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.50 2005-05-18 10:58:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,11 +8,6 @@
 
 // Initialization
 require_once ('tiki-setup.php');
-require_once ('lib/userslib/userslib_admin.php');
-global $trklib;
-if (!is_object($trklib)) {
-	require_once('lib/trackers/trackerlib.php');
-}
 
 // PERMISSIONS: NEEDS p_admin
 if ($user != 'admin') {
@@ -27,7 +22,7 @@ $cookietab = "1";
 list($trackers,$ag_utracker,$ag_ufield,$ag_gtracker,$ag_gfield) = array(array(),0,0,0,0);
 
 if (isset($groupTracker) and $groupTracker == 'y') {
-	$trackerlist = $trklib->list_trackers(0, -1, 'name_asc', '');
+	$trackerlist = $tikilib->list_trackers(0, -1, 'name_asc', '');
 	$trackers = $trackerlist['list'];
 	if (isset($_REQUEST["groupstracker"]) and isset($trackers[$_REQUEST["groupstracker"]])) {
 		$ag_gtracker = $_REQUEST["groupstracker"];
@@ -38,7 +33,7 @@ if (isset($groupTracker) and $groupTracker == 'y') {
 }
 
 if (isset($userTracker) and $userTracker == 'y') {
-	if (!isset($trackerlist)) $trackerlist = $trklib->list_trackers(0, -1, 'name_asc', '');
+	if (!isset($trackerlist)) $trackerlist = $tikilib->list_trackers(0, -1, 'name_asc', '');
 	$trackers = $trackerlist['list'];
 	if (isset($_REQUEST["userstracker"]) and isset($trackers[$_REQUEST["userstracker"]])) {
 		$ag_utracker = $_REQUEST["userstracker"];
@@ -61,7 +56,7 @@ if (isset($_REQUEST["newgroup"]) and $_REQUEST["name"]) {
 		$smarty->display("error.tpl");
 		die;
 	} else {
-		$userslibadmin->add_group($_REQUEST["name"],$_REQUEST["desc"],$ag_home,$ag_utracker,$ag_gtracker);
+		$userlib->add_group($_REQUEST["name"],$_REQUEST["desc"],$ag_home,$ag_utracker,$ag_gtracker);
 		if (isset($_REQUEST["include_groups"])) {
 			foreach ($_REQUEST["include_groups"] as $include) {
 				if ($_REQUEST["name"] != $include) {
@@ -77,7 +72,7 @@ if (isset($_REQUEST["newgroup"]) and $_REQUEST["name"]) {
 // modification
 if (isset($_REQUEST["save"]) and isset($_REQUEST["olgroup"]) and !empty($_REQUEST["name"])) {
 	check_ticket('admin-groups');
-	$userslibadmin->change_group($_REQUEST["olgroup"],$_REQUEST["name"],$_REQUEST["desc"],$ag_home,$ag_utracker,$ag_gtracker,$ag_ufield,$ag_gfield);
+	$userlib->change_group($_REQUEST["olgroup"],$_REQUEST["name"],$_REQUEST["desc"],$ag_home,$ag_utracker,$ag_gtracker,$ag_ufield,$ag_gfield);
 	$userlib->remove_all_inclusions($_REQUEST["name"]);
 	if (isset($_REQUEST["include_groups"]) and is_array($_REQUEST["include_groups"])) {
 		foreach ($_REQUEST["include_groups"] as $include) {
@@ -93,11 +88,11 @@ if (isset($_REQUEST["save"]) and isset($_REQUEST["olgroup"]) and !empty($_REQUES
 // Process a form to remove a group
 if (isset($_REQUEST["action"])) {
 	if ($_REQUEST["action"] == 'delete') {
-		$userslibadmin->remove_group($_REQUEST["group"]);
+		$userlib->remove_group($_REQUEST["group"]);
 		$area = 'delgroup';
 		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
-			$userslibadmin->remove_group($_REQUEST["group"]);
+			$userlib->remove_group($_REQUEST["group"]);
 			$logslib->add_log('admingroups','removed group '.$_REQUEST["group"]);
 		} else {
 			key_get($area);
@@ -107,7 +102,7 @@ if (isset($_REQUEST["action"])) {
 		$area = 'delgroupperm';
 		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
-			$userslibadmin->remove_permission_from_group($_REQUEST["permission"], $_REQUEST["group"]);
+			$userlib->remove_permission_from_group($_REQUEST["permission"], $_REQUEST["group"]);
 			$logslib->add_log('admingroups','removed permission '.$_REQUEST["permission"].' from group '.$_REQUEST["group"]);
     } else {
       key_get($area);
@@ -209,6 +204,7 @@ if (isset($_REQUEST["group"])and $_REQUEST["group"]) {
 		$inc["$rr"] = "n";
 		if (in_array($rr, $rs)) {
 			$inc["$rr"] = "y";
+			$smarty->assign('hasOneIncludedGroup', "y");
 		}
 	}
 	$cookietab = "2";

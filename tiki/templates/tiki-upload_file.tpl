@@ -1,4 +1,4 @@
-<h1><a href="tiki-upload_file.php?galleryId={$galleryId}" class="pagetitle">{tr}{if $editFileId}Edit File: {$fileInfo.filename}{else}Upload File{/if}{/tr}</a></h1>
+<h1><a href="tiki-upload_file.php?galleryId={$galleryId}" class="pagetitle">{if $editFileId}{tr}Edit File:{/tr} {$fileInfo.filename}{else}{tr}Upload File{/tr}{/if}</a></h1>
 {if count($galleries) > 0}
 	<a href="tiki-list_file_gallery.php?galleryId={$galleryId}" class="linkbut">{tr}Browse gallery{/tr}</a><br /><br />
 	<div align="center">

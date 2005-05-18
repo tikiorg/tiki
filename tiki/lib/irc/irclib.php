@@ -1,4 +1,4 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/lib/irc/irclib.php,v 1.9 2005-01-01 00:17:23 damosoft Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/lib/irc/irclib.php,v 1.10 2005-05-18 11:00:59 mose Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {

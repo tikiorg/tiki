@@ -1,10 +1,14 @@
-/* Default2 style for Tiki 1.2 this is a short-version CSS template if you want to FULLY customize
-   every aspect of Tiki adpat the subsilver CSS file, but normally this is the file you want to
-   adapt to produce a new theme
+/* 
+  $Header: /cvsroot/tikiwiki/tiki/styles/mozilla.css,v 1.44 2005-05-18 11:02:35 mose Exp $
+  mozilla.css
+  This theme is based on the default2 style for Tiki 1.2
+  If you want  a short-version CSS template, start with default2
+  If you want to control every aspect of Tiki, copy the subsilver CSS file
+  Normally default2 is the file you want to adapt to produce a new theme
 */
 
 body {
-	background-color:    #EFEFE7;
+	background-color:    #e9ecef;
 	margin-top:   0px;
 	margin-left:   0px;
 	margin-bottom:   0px;
@@ -25,7 +29,7 @@ body {
 
 /* This div encloses the whole Tiki application */
 DIV#tiki-main {
-	background:    #EFEFE7;
+	background:    #e9ecef;
 	height:   100%;
 	width:   100%;
 	margin-top:   0px;
@@ -39,7 +43,9 @@ DIV#tiki-top {
 	background-color:    #b5c1cc;
 	background-repeat:   no-repeat;
 	color:   black;
+/*
 	height:   12px;
+*/
 	padding-right:   0px;
 	font-size:   10px;
 	width:   100%;
@@ -47,7 +53,7 @@ DIV#tiki-top {
 
 /* This is the middle */
 DIV#tiki-mid {
-	background:    #EFEFE7;
+	background:    #e9ecef;
 	height:   auto;
 	padding-bottom:   0px;
 }
@@ -72,14 +78,14 @@ TD#leftcolumn {
 	padding-left:    2px;
 	padding-right:   2px;
 	vertical-align:   top;
-	background:   #c7d0d9;
+	background:   #d0d7df;
 	width:   180px;
 }
 
 TD#rightcolumn {
 	padding-left:    2px;
 	vertical-align:   top;
-	background:   #c7d0d9;
+	background:   #d0d7df;
 	width:   180px;
 }
 
@@ -203,6 +209,8 @@ div.cbox {
 
 /* Boxes are divided in title and data, this is the title */
 div.cbox-title {
+        background-image:    url(mozilla/mozilla-menubar.png);                        background-repeat:   repeat-x;
+        height:   19px;
 	background-color:    #b5c1cc;
 	color:   black;
 	border-bottom:   1px solid black;
@@ -257,7 +265,7 @@ div.cbox-data {
 /* Menus */
 /* Separators are used to separate menu areas in the application menu and user created menus*/
 div.separator {
-	background-color:    #c7d0d9;
+	background-color:    #d0d7df;
 	color:   black;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   10px;
@@ -274,19 +282,20 @@ div.separator {
 	font-size:   11px;
 	color:   black;
 	text-decoration:   none;
+	border: 1px solid transparent;
 }
 
-.linkmenu:active, .rsslink:active {
+.linkmenu:active, .rsslink:active, .linkmenu:focus, .rsslink:focus {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
-	color:   black;
+	border: 1px inset #aaa;
 	text-decoration:   none;
 }
 
 .linkmenu:hover, .rsslink:hover {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
-	color:   gray;
+	border: 1px outset #aaa;
 	text-decoration:   none;
 }
 /* style for rss lists in modules or in wiki */
@@ -318,7 +327,7 @@ div.separator {
 	text-decoration:   none;
 }
 
-.separator:active {
+.separator:active, .separator:focus {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   10px;
 	color:   black;
@@ -328,8 +337,20 @@ div.separator {
 .separator:hover {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   10px;
-	color:   gray;
+	/* border: 1px outset #aaa; */
 	text-decoration:   none;
+}
+
+a.separator {
+        border: 1px outset transparent;
+}
+
+a.separator:hover {
+        border: 1px outset #aaa;
+}
+
+a.seperator:active, a.separator:focus {
+	border: 1px inset #aaa;
 }
 
 /* Links to collapse menus for example the main menu can be completely collapsed*/
@@ -415,7 +436,8 @@ FORM {
 /* General form elements */
 input, textarea, select {
 	color:    #000000;
-	font:   normal 11px Verdana, Arial, Helvetica, sans-serif;
+	font-family:   Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
 }
 
 input {
@@ -586,7 +608,7 @@ tr.odd {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   12px;  
 	color:   black;
-	background-color:   #c7d0d9;
+	background-color:   #d0d7df;
 	vertical-align:   top;
 	text-align:   left;
 }
@@ -608,7 +630,7 @@ TD.odd, td.gallistnameodd, td.gallistdescriptionodd, td.gallistcreatedodd, td.ga
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   12px;  
 	color:   black;
-	background-color:   #c7d0d9;
+	background-color:   #d0d7df;
 	vertical-align:   top;
 	text-align:   left;
 }
@@ -799,7 +821,7 @@ DIV#page-bar {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
 	color:   black;
-	background-color:   #c7d0d9;
+	background-color:   #d0d7df;
 	text-decoration:   underline;
 }
 
@@ -893,7 +915,11 @@ p.editdate {
 	font-size:   smaller;
 	font-family:   "Lucida Grande", Helvetica, Arial, sans-serif;
 }
-
+#description {
+  font-size : 10px !important;
+  padding-left:   10px;
+  color:   #333300;
+}
 /* The edit-help used to display the wiki syntax when editing a page */
 div.wiki-edithelp {
 	background-color:    white;
@@ -935,7 +961,7 @@ TD.oddthumb {
 }
 
 TD.eventhumb {
-	background-color: #c7d0d9;
+	background-color: #d0d7df;
 }
 
 /* Gallery Title */
@@ -1963,7 +1989,7 @@ hr {
 div.tocnav {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   9px;
-	background:   #7B99CD;
+	background:   #89a; /* #7B99CD; */
 	color:   white;
 	padding-bottom:   5px;
 	padding-top:   5px;
@@ -2699,6 +2725,7 @@ a.tikihelp, a.tikihelp:visited {
 	margin:   inherit;
 	padding:   inherit;
 	text-decoration:   inherit;
+	vertical-align: text-top;
 }
 
 a.tikihelp:hover {
@@ -2711,6 +2738,7 @@ a.tikihelp:hover {
 	padding:   inherit;
 	cursor:   help;
 	text-decoration:   inherit;
+	vertical-align: text-top;
 }
 
 /* TikiIntegrator: By default copy rules dialog not shown */
@@ -2729,6 +2757,117 @@ TABLE.admin {
   width: 100%;
 }
 
+/* =========================================== PHP Layers ================================= */
+.mdkhorbar      {
+        color: black;
+        background-color: #e6e7e6;
+        border: 1px outset #555;
+}
+
+.horbar {
+	margin-left: 10px;
+}
+
+.horbaritem a {
+	font-size: 10px;
+	text-decoration: none;
+	color: #000000;
+	border: 1px inset transparent;
+}
+
+.harbaritem a:visited {
+	color: #000000;
+}
+
+.horbaritem a:hover {
+	border: 1px inset #aaa;
+}
+
+.mdkhorbaritem  {
+        float: left;
+        white-space: nowrap;
+        font-size: 10px;
+}
+
+.mdkhorbaritem a        {
+        display: block;
+        text-decoration: none;
+}
+
+.mdkhorbaritem a:link   {
+        color: #000000;
+}
+
+.mdkhorbaritem a:visited        {
+        color: #000000;
+}
+
+.mdkhorbaritem a:hover  {
+        color: #ffffff;
+        background-color: #21449c;
+}
+
+.mdkhorbaritem a:active {
+        color: #ff0000;
+}
+
+.mdkverbar      {
+        color: black;
+        background-color: #e6e7e6;
+        border: 1px outset #fdfefd;
+}
+
+.mdksubmenu     {
+        position: absolute;
+        left: 0;
+        top: 0;
+        visibility: hidden;
+         -moz-opacity:0.8;
+	filter:alpha(opacity=80)
+}
+
+.mdksubframe    {
+        position: relative;
+        display: block;
+        background-color: #b5c1cc;
+        border: 2px outset #555;
+}
+
+.mdkitem        {
+        position: relative;
+        text-align: left;
+        white-space: nowrap;
+        font-size: 10px;
+}
+
+.mdkitem a      {
+        position: relative;
+        display: block;
+        text-decoration: none;
+}
+
+.mdkitem a:link {
+        color: #000000;
+}
+
+.mdkitem a:visited      {
+        color: #000000;
+}
+
+.mdkitem a:hover        {
+        color: #ffffff;
+        background-color: #21449c;
+}
+
+.mdkitem a:active       {
+        color: #ff0000;
+}
+
+.mdkitem .mdkfwdarr     {
+        position: absolute;
+        top: 5px;
+        right: 12px;
+}
 
 /* tiki tabs */
 
@@ -2776,13 +2915,13 @@ TABLE.admin {
   margin: 1px;
   border: 1px inset #666666;
   -moz-border-radius: 20px;
-  vertcal-align: middle;
+  vertical-align: middle;
   background-color: #bbaa99;
 }
 .statusoff {
   padding: 1px;
   margin: 2px;
-  vertcal-align: middle;
+  vertical-align: middle;
 }
 
 
@@ -2793,63 +2932,6 @@ padding : 2ex;
 background-color : #edeeef;
 margin : 1ex;
 border : 1px dashed #adacaf; }
-
-/* wiki diff styles */
-
-.diffheader {
-margin: 10px 5px 0px 5px;
-padding: 4px;
-border-width: 1px 1px 0px 1px;
-border-style: solid;
-border-color: #A9B8C2;
-color: black;
-font-weight: bold;
-background-color: #A9B8C2;
-font-size: 8pt;
-}
-.diffbody {
-margin: 0px 5px 10px 5px;
-padding: 5px;
-border-color: #A9B8C2;
-border-width: 0px 1px 1px 1px;
-border-style: solid;
-font-family: monospace, 'Courier New', courier;
-color: black;
-background-color: #edeeef;
-}
-.diffdeleted {
-border-color: #A9B8C2;
-color: black;
-background-color: #ffcccc;
-}
-.diffadded {
-border-color: #A9B8C2;
-color: black;
-background-color: #ccffcc;
-}
-.diffchar{color: red;}
-
-/**** coloration for QUOTE plugin *****/
-.quoteheader {
-margin: 10px 5px 0px 5px;
-padding: 4px;
-border-width: 1px 1px 0px 1px;
-border-style: solid;
-border-color: #A9B8C2;
-color: black;
-font-weight: bold;
-background-color: #A9B8C2;
-font-size: 8pt;
-}
-.quotebody {
-margin: 0px 5px 10px 5px;
-padding: 5px;
-border-color: #A9B8C2;
-border-width: 0px 1px 1px 1px;
-border-style: solid;
-color: black;
-background-color: #edeeef;
-}
 
 /* Version Plugin Style */
 
@@ -2893,3 +2975,27 @@ float : right;
 .diffdeleted {background-color:#ffcccc;}
 .diffbody{background-color:#F2F4F5}
 .diffchar {color: red;}
+
+/**** coloration for QUOTE plugin *****/
+.quoteheader {
+margin: 10px 5px 0px 5px;
+padding: 4px;
+border-width: 1px 1px 0px 1px;
+border-style: solid;
+border-color: #A9B8C2;
+color: black;
+font-weight: bold;
+background-color: #A9B8C2;
+font-size: 8pt;
+}
+.quotebody {
+margin: 0px 5px 10px 5px;
+padding: 5px;
+border-color: #A9B8C2;
+border-width: 0px 1px 1px 1px;
+border-style: solid;
+color: black;
+background-color: #edeeef;
+}
+
+/* end of css file */

@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.12 2005-03-12 16:50:40 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.13 2005-05-18 11:02:59 mose Exp $ *}
 
-<h1><a class="pagetitle" href="tiki-browse_categories.php">{if $parentId ne 0}{tr}Categorie:{/tr} {$p_info.name}{else}{tr}Categories{/tr}{/if}</a></h1>
+<h1><a class="pagetitle" href="tiki-browse_categories.php">{if $parentId ne 0}{tr}Category{/tr} {$p_info.name}{else}{tr}Categories{/tr}{/if}</a></h1>
 {if $parentId and $p_info.description}<div class="description">{$p_info.description}</div>{/if}
 {if $tiki_p_admin_categories eq 'y'}
-<div="navbar"><a class="linkbut" href="tiki-admin_categories.php?parentId={$parentId}" title="admin the category system">{tr}admin category{/tr}</a></div>
+<div="navbar"><a class="linkbut" href="tiki-admin_categories.php?parentId={$parentId}" title="{tr}admin the category system{/tr}">{tr}admin category{/tr}</a></div>
 {/if}
 {tr}Browse in{/tr}:<br />
 <a class="linkbut" href="tiki-browse_categories.php?find={$find|escape}&amp;deep={$deep}&amp;parentId={$parentId}&amp;sort_mode={$sort_mode}">{tr}All{/tr}</a>
@@ -24,7 +24,7 @@
 {/if}
 {if $feature_trackers eq 'y'}
 <a class="linkbut" href="tiki-browse_categories.php?find={$find|escape}&amp;deep={$deep}&amp;type=tracker&amp;parentId={$parentId}&amp;sort_mode={$sort_mode}">{if $type eq 'tracker'}<span class="highlight">{/if}{tr}Trackers{/tr}{if $type eq 'tracker'}</span>{/if}</a>
-{/if}
+{/if}<a class="linkbut" href="tiki-browse_categories.php?find={$find|escape}&amp;deep={$deep}&amp;type=trackerItem&amp;parentId={$parentId}&amp;sort_mode={$sort_mode}">{if $type eq 'trackerItem'}<span class="highlight">{/if}{tr}Trackers Items{/tr}{if $type eq 'trackerItem'}</span>{/if}</a>
 {if $feature_quizzes eq 'y'}
 <a class="linkbut" href="tiki-browse_categories.php?find={$find|escape}&amp;deep={$deep}&amp;type=quiz&amp;parentId={$parentId}&amp;sort_mode={$sort_mode}">{if $type eq 'quiz'}<span class="highlight">{/if}{tr}Quizzes{/tr}{if $type eq 'quiz'}</span>{/if}</a>
 {/if}
@@ -91,7 +91,7 @@
 {cycle values="odd,even" print=false}
 {section name=ix loop=$objects}
 <tr class="{cycle}" >
-<td>{tr}{$objects[ix].type|replace:"wiki page":"Wiki"|replace:"article":"Article"}{/tr}</td>
+<td>{tr}{$objects[ix].type|replace:"wiki page":"Wiki"|replace:"article":"Article"|regex_replace:"/tracker [0-9]*/":"tracker item"}{/tr}</td>
 <td><a href="{$objects[ix].href}" class="catname">{$objects[ix].name}</a></td>
 <td>{$objects[ix].description}&nbsp;</td>
 </tr>

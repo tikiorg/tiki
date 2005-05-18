@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.95 2005-03-12 16:49:06 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.96 2005-05-18 10:59:05 mose Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -194,6 +194,7 @@ CREATE TABLE `tiki_shoutbox_words` (
   PRIMARY KEY ( `word` )
 ) TYPE=MyISAM;
 # --------------------------------------------------------
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Shoutbox' and url='tiki-admin_shoutbox_words.php' and position='1191' and section='' and perm='tiki_p_admin_shoutbox' and groupname='' ;
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Shoutbox','tiki-admin_shoutbox_words.php',1191,'','tiki_p_admin_shoutbox','');
 # --------------------------------------------------------
 
@@ -273,7 +274,7 @@ ALTER TABLE `tiki_quicktags` ADD `tagcategory` CHAR( 255 ) AFTER `tagicon` ;
 ALTER TABLE `tiki_quicktags` ADD INDEX `tagcategory` (`tagcategory`);
 ALTER TABLE `tiki_quicktags` ADD INDEX `taglabel` (`taglabel`);
 
-UPDATE `tiki_quicktags` set `tagcategory`='wiki' where `tagcategory`=NULL;
+UPDATE `tiki_quicktags` set `tagcategory`='wiki' where `tagcategory`is NULL;
 
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New wms Metadata','METADATA\r\n		"wms_name" "myname"\r\n		"wms_srs" "EPSG:4326"\r\n	"wms_server_version" " "\r\n	"wms_layers" "mylayers"\r\n	"wms_request" "myrequest"\r\n	"wms_format" " "\r\n	"wms_time" " "\r\n END','img/icons/admin_metatags.png', 'maps');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Class','CLASS\r\n EXPRESSION ()\r\n SYMBOL 0\r\n OUTLINECOLOR\r\n COLOR\r\n  NAME "myclass"\r\nEND #end of class','img/icons/mini_triangle.gif', 'maps');
@@ -306,19 +307,27 @@ DELETE FROM `tiki_preferences` WHERE `name`='email_encoding';
 ALTER TABLE `tiki_pages` ADD `lang` VARCHAR( 16 ) AFTER `page_size` ;
 
 #added on 2004-4-27 ggeller
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Homework','tiki-hw_teacher_assignments.php','270','feature_homework','tiki_p_hw_teacher','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Assignments','tiki-hw_teacher_assignments.php','272','feature_homework','tiki_p_hw_teacher','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Grading Queue','tiki-hw_teacher_grading_queue.php','274','feature_homework','tiki_p_hw_teacher','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Last Changes','tiki-hw_teacher_last_changes.php','276','feature_homework','tiki_p_hw_teacher','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Homework','tiki-hw_student_assignments.php','280','feature_homework','tiki_p_hw_student','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Assignments','tiki-hw_teacher_assignments.php','282','feature_homework','tiki_p_hw_student','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Last Changes','tiki-hw_teacher_assignments.php','284','feature_homework','tiki_p_hw_student','');
+
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='s' and name='Homework' and url='tiki-hw_teacher_assignments.php' and position='270' and section='feature_homework' and perm='tiki_p_hw_teacher' and groupname='';
+# INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Homework','tiki-hw_teacher_assignments.php','270','feature_homework','tiki_p_hw_teacher','');
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Assignments' and url='tiki-hw_teacher_assignments.php' and position='272' and section='feature_homework' and perm='tiki_p_hw_teacher' and groupname='';
+# INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Assignments','tiki-hw_teacher_assignments.php','272','feature_homework','tiki_p_hw_teacher','');
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Grading Queue' and url='tiki-hw_teacher_grading_queue.php' and position='274' and section='feature_homework' and perm='tiki_p_hw_teacher' and groupname='';
+# INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Grading Queue','tiki-hw_teacher_grading_queue.php','274','feature_homework','tiki_p_hw_teacher','');
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Last Changes' and url='tiki-hw_teacher_last_changes.php' and position='276' and section='feature_homework' and perm='tiki_p_hw_teacher' and groupname='';
+# INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Last Changes','tiki-hw_teacher_last_changes.php','276','feature_homework','tiki_p_hw_teacher','');
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='s' and name='Homework' and url='tiki-hw_student_assignments.php' and position='280' and section='feature_homework' and perm='tiki_p_hw_student' and groupname='';
+# INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Homework','tiki-hw_student_assignments.php','280','feature_homework','tiki_p_hw_student','');
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Assignments' and url='tiki-hw_teacher_assignments.php' and position='282' and section='feature_homework' and perm='tiki_p_hw_student' and groupname='';
+# INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Assignments','tiki-hw_teacher_assignments.php','282','feature_homework','tiki_p_hw_student','');
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Last Changes' and url='tiki-hw_teacher_assignments.php' and position='284' and section='feature_homework' and perm='tiki_p_hw_student' and groupname='';
+# INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Last Changes','tiki-hw_teacher_assignments.php','284','feature_homework','tiki_p_hw_student','');
 
 #added on 2004-4-27 ggeller
-INSERT INTO users_permissions(permName, permDesc, level, type) VALUES ('tiki_p_hw_admin','Can adminsiter homework','admin','homework');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_teacher','Can create new homework assignments, see student names and grade assignments','editors','homework');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_grader','Can grade homework assignments','editors','homework');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_student','Can do homework assignments','registered','homework');
+# INSERT INTO users_permissions(permName, permDesc, level, type) VALUES ('tiki_p_hw_admin','Can adminsiter homework','admin','homework');
+# INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_teacher','Can create new homework assignments, see student names and grade assignments','editors','homework');
+# INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_grader','Can grade homework assignments','editors','homework');
+# INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_student','Can do homework assignments','registered','homework');
 
 #
 # Homework tables start
@@ -326,92 +335,90 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 #added on 2004-4-27 ggeller
 #
 
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_homework','n');
+#  CREATE TABLE tiki_hw_actionlog (
+#    action varchar(255) NOT NULL default '',
+#    lastModif int(14) NOT NULL default '0',
+#    pageId int(14) default NULL,
+#    user varchar(200) default NULL,
+#    ip varchar(15) default NULL,
+#    comment varchar(200) default NULL,
+#    PRIMARY KEY  (lastModif)
+#  ) TYPE=MyISAM;
 
-CREATE TABLE tiki_hw_actionlog (
-  action varchar(255) NOT NULL default '',
-  lastModif int(14) NOT NULL default '0',
-  pageId int(14) default NULL,
-  user varchar(200) default NULL,
-  ip varchar(15) default NULL,
-  comment varchar(200) default NULL,
-  PRIMARY KEY  (lastModif)
-) TYPE=MyISAM;
+#  CREATE TABLE tiki_hw_assignments (
+#    assignmentId int(8) NOT NULL auto_increment,
+#    title varchar(80) default NULL,
+#    teacherName varchar(40) NOT NULL default '',
+#    created int(14) NOT NULL default '0',
+#    dueDate int(14) default NULL,
+#    modified int(14) NOT NULL default '0',
+#    heading text,
+#    body text,
+#    deleted tinyint(4) NOT NULL default '0',
+#    PRIMARY KEY  (assignmentId),
+#    KEY dueDate (dueDate)
+#  ) TYPE=MyISAM;
 
-CREATE TABLE tiki_hw_assignments (
-  assignmentId int(8) NOT NULL auto_increment,
-  title varchar(80) default NULL,
-  teacherName varchar(40) NOT NULL default '',
-  created int(14) NOT NULL default '0',
-  dueDate int(14) default NULL,
-  modified int(14) NOT NULL default '0',
-  heading text,
-  body text,
-  deleted tinyint(4) NOT NULL default '0',
-  PRIMARY KEY  (assignmentId),
-  KEY dueDate (dueDate)
-) TYPE=MyISAM;
+#  CREATE TABLE tiki_hw_grading_queue (
+#    id int(14) NOT NULL auto_increment,
+#    status int(4) default NULL,
+#    submissionDate int(14) default NULL,
+#    userLogin varchar(40) NOT NULL default '',
+#    userIp varchar(15) default NULL,
+#    pageId int(14) default NULL,
+#    pageDate int(14) default NULL,
+#    pageVersion int(14) default NULL,
+#    assignmentId int(14) default NULL,
+#    PRIMARY KEY  (id)
+#  ) TYPE=MyISAM;
 
-CREATE TABLE tiki_hw_grading_queue (
-  id int(14) NOT NULL auto_increment,
-  status int(4) default NULL,
-  submissionDate int(14) default NULL,
-  userLogin varchar(40) NOT NULL default '',
-  userIp varchar(15) default NULL,
-  pageId int(14) default NULL,
-  pageDate int(14) default NULL,
-  pageVersion int(14) default NULL,
-  assignmentId int(14) default NULL,
-  PRIMARY KEY  (id)
-) TYPE=MyISAM;
+#  CREATE TABLE tiki_hw_history (
+#    id int(14) NOT NULL default '0',
+#    version int(8) NOT NULL default '0',
+#    lastModif int(14) NOT NULL default '0',
+#    user varchar(200) NOT NULL default '',
+#    ip varchar(15) NOT NULL default '',
+#    comment varchar(200) default NULL,
+#    data text,
+#    PRIMARY KEY  (id,version)
+#  ) TYPE=MyISAM;
 
-CREATE TABLE tiki_hw_history (
-  id int(14) NOT NULL default '0',
-  version int(8) NOT NULL default '0',
-  lastModif int(14) NOT NULL default '0',
-  user varchar(200) NOT NULL default '',
-  ip varchar(15) NOT NULL default '',
-  comment varchar(200) default NULL,
-  data text,
-  PRIMARY KEY  (id,version)
-) TYPE=MyISAM;
+#  CREATE TABLE tiki_hw_pages_history (
+#    id int(14) NOT NULL default '0',
+#    version int(8) NOT NULL default '0',
+#    lastModif int(14) NOT NULL default '0',
+#    user varchar(200) NOT NULL default '',
+#    ip varchar(15) NOT NULL default '',
+#    comment varchar(200) default NULL,
+#    data text,
+#    PRIMARY KEY  (id,version)
+#  ) TYPE=MyISAM;
 
-CREATE TABLE tiki_hw_pages_history (
-  id int(14) NOT NULL default '0',
-  version int(8) NOT NULL default '0',
-  lastModif int(14) NOT NULL default '0',
-  user varchar(200) NOT NULL default '',
-  ip varchar(15) NOT NULL default '',
-  comment varchar(200) default NULL,
-  data text,
-  PRIMARY KEY  (id,version)
-) TYPE=MyISAM;
-
-CREATE TABLE tiki_hw_pages (
-  id int(14) NOT NULL auto_increment,
-  assignmentId int(14) NOT NULL default '0',
-  studentName varchar(200) NOT NULL default '',
-  data text,
-  description varchar(200) default NULL,
-  lastModif int(14) default NULL,
-  user varchar(200) default NULL,
-  comment varchar(200) default NULL,
-  version int(8) NOT NULL default '0',
-  ip varchar(15) default NULL,
-  flag char(1) default NULL,
-  points int(8) default NULL,
-  votes int(8) default NULL,
-  cache text,
-  wiki_cache int(10) default '0',
-  cache_timestamp int(14) default NULL,
-  page_size int(10) unsigned default '0',
-  lockUser varchar(200) default NULL,
-  lockExpires int(14) default '0',
-  PRIMARY KEY  (studentName,assignmentId),
-  KEY id (id),
-  KEY assignmentId (assignmentId),
-  KEY studentName (studentName)
-) TYPE=MyISAM;
+#  CREATE TABLE tiki_hw_pages (
+#    id int(14) NOT NULL auto_increment,
+#    assignmentId int(14) NOT NULL default '0',
+#    studentName varchar(200) NOT NULL default '',
+#    data text,
+#    description varchar(200) default NULL,
+#    lastModif int(14) default NULL,
+#    user varchar(200) default NULL,
+#    comment varchar(200) default NULL,
+#    version int(8) NOT NULL default '0',
+#    ip varchar(15) default NULL,
+#    flag char(1) default NULL,
+#    points int(8) default NULL,
+#    votes int(8) default NULL,
+#    cache text,
+#    wiki_cache int(10) default '0',
+#    cache_timestamp int(14) default NULL,
+#    page_size int(10) unsigned default '0',
+#    lockUser varchar(200) default NULL,
+#    lockExpires int(14) default '0',
+#    PRIMARY KEY  (studentName,assignmentId),
+#    KEY id (id),
+#    KEY assignmentId (assignmentId),
+#    KEY studentName (studentName)
+#  ) TYPE=MyISAM;
 
 #
 # Homework tables end
@@ -543,8 +550,11 @@ ALTER TABLE users_users ADD KEY (score);
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_score','n');
 
 # Added June 15th sylvie
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='s' and name='Community' and url='tiki-list_users.php' and position='187' and section='feature_friends' and perm='tiki_p_list_users' and groupname='';
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Community','tiki-list_users.php','187','feature_friends','tiki_p_list_users','');
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Member list' and url='tiki-list_users.php' and position='188' and section='feature_friends' and perm='tiki_p_list_users' and groupname='';
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Member list','tiki-list_users.php','188','feature_friends','tiki_p_list_users','');
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Friendship Network' and url='tiki-friends.php' and position='189' and section='feature_friends' and perm='' and groupname='';
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Friendship Network','tiki-friends.php','189','feature_friends','','');
 
 # Added June 15th fhcorrea
@@ -595,21 +605,26 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_userpage_p
 #added 7/12/04 sylvie
 UPDATE `tiki_menu_options` set `name`='Upload file' where `name`='Upload  File' and menuId='42';
 UPDATE `tiki_menu_options` set `name`='MyTiki' where `name`='MonTiki (clic!)' and menuId='42';
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='MyTiki home' and url='tiki-my_tiki.php' and position='51' and section='' and perm='' and groupname='Registered';
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','MyTiki home','tiki-my_tiki.php',51,'','','Registered');
 UPDATE `tiki_menu_options` set `name`='Admin' where `name`='Admin (click!)' and menuId='42';
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Admin home' and url='tiki-admin.php' and position='1051' and section='' and perm='tiki_p_admin' and groupname='';
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin home','tiki-admin.php',1051,'','tiki_p_admin','');
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='System Admin' and url='tiki-admin_system.php' and position='1230' and section='' and perm='tiki_p_admin' and groupname='';
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','System Admin','tiki-admin_system.php',1230,'','tiki_p_admin','');
 UPDATE `tiki_menu_options` set `name`='Shoutbox Words' where `position`='1191' and menuId='42';
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Score' and url='tiki-admin_score.php' and position='1235' and section='' and perm='tiki_p_admin' and groupname='';
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Score','tiki-admin_score.php',1235,'','tiki_p_admin','');
 UPDATE `tiki_menu_options` set `name`='User list' where `url`='tiki-list_users.php' and menuId='42';
 UPDATE `tiki_menu_options` set `section`='feature_articles,feature_cms_rankings'  where `section`='feature_articles,feature_cms_ranking' and menuId='42';
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='s' and name='TikiSheet' and url='tiki-sheets.php' and position='780' and section='feature_sheet' and perm='' and groupname='';
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','TikiSheet','tiki-sheets.php',780,'feature_sheet','','');
 UPDATE `tiki_menu_options` set `url`='tiki-blog_rankings.php' where `url`='tiki-blogs_rankings.php' and menuId='42';
 
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('contact_anon','n');
 
 #revised  20040903 ggeller
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_homework','n');
+# INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_homework','n');
 
 #added 20040906 chris_holman
 CREATE TABLE tiki_structure_versions (
@@ -674,61 +689,18 @@ alter table tiki_galleries_scales drop column ysize;
 alter table tiki_galleries_scales add primary key (galleryId,scale);
 
 # added on 2004-10-20 by gg. added event registration to 1.9
+# removed on 2005-04-01 by gg. removed poor implementation of events
 
-ALTER TABLE `tiki_calendars` ADD `customevents` ENUM('n','y') DEFAULT 'n' NOT NULL AFTER `customparticipants` ;
-ALTER TABLE `tiki_calendar_items` ADD `evId` INT( 12 ) DEFAULT '0' NOT NULL AFTER `categoryId` ;
+alter table `tiki_calendars` drop `customevent`;
+alter table `tiki_calendar_items` drop `evId`;
+drop table if exists tiki_event_subscription;
+drop table if exists tiki_events;
+drop table if exists tiki_sent_events;
 
-CREATE TABLE tiki_event_subscriptions (
-  evId int(12) NOT NULL default '0',
-  email varchar(255) NOT NULL default '',
-  fname varchar(255) NOT NULL default '',
-  lname varchar(255) NOT NULL default '',
-  company varchar(255) NOT NULL default '',
-  code varchar(32) default NULL,
-  valid char(1) default NULL,
-  subscribed int(14) default NULL,
-  PRIMARY KEY  (evId,email)
-) TYPE=MyISAM;
-# --------------------------------------------------------
+# added on 2005-03-26 by jmj
+ALTER TABLE `tiki_calendar_items` ADD `nlId` INT( 12 ) DEFAULT '0' NOT NULL AFTER `categoryId` ;
+ALTER TABLE `tiki_calendars` ADD `customsubscription` ENUM('n','y') DEFAULT 'n' NOT NULL AFTER `customparticipants` ;
 
-CREATE TABLE tiki_events (
-  evId int(12) NOT NULL auto_increment,
-  calitemId int(14) NOT NULL default '0',
-  name varchar(200) default NULL,
-  description text,
-  created int(14) default NULL,
-  lastSent int(14) default NULL,
-  editions int(10) default NULL,
-  users int(10) default NULL,
-  allowUserSub char(1) default 'y',
-  allowAnySub char(1) default NULL,
-  unsubMsg char(1) default 'y',
-  validateAddr char(1) default 'y',
-  frequency int(14) default NULL,
-  PRIMARY KEY  (evId)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-CREATE TABLE tiki_sent_events (
-  editionId int(12) NOT NULL auto_increment,
-  evId int(12) NOT NULL default '0',
-  users int(10) default NULL,
-  sent int(14) default NULL,
-  subject varchar(200) default NULL,
-  data longblob,
-  PRIMARY KEY  (editionId)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_events', 'Can admin events', 'admin', 'events');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_send_events', 'Can send events', 'editors', 'events');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_subscribe_events', 'Can subscribe to events', 'basic', 'events');
-INSERT INTO tiki_preferences(name,value) VALUES ('feature_events','n');
-
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Events','tiki-events.php',920,'feature_events','','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Send events','tiki-send_events.php',925,'feature_events','tiki_p_send_events','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin events','tiki-admin_events.php',930,'feature_events','tiki_p_admin_events','');
 
 #added on 2004-10-22 by sylvie
 ALTER TABLE `tiki_pages` ADD `lockedby` VARCHAR(200) default NULL;
@@ -796,7 +768,6 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_vote_ratings', 'Can participate to rating of wiki pages', 'registered', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_admin_ratings', 'Can add and change ratings on wiki pages', 'admin', 'wiki');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_ratings','n');
-CREATE INDEX urlindex ON tiki_link_cache (url(250));
 
 CREATE TABLE `tiki_poll_objects` (
   `catObjectId` int(11) NOT NULL default '0',
@@ -807,7 +778,9 @@ CREATE TABLE `tiki_poll_objects` (
 
 ALTER TABLE `tiki_poll_options` ADD `position` INT( 4 ) DEFAULT '0' NOT NULL AFTER `title` ;
 
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Admin mods' and url='tiki-mods.php' and position='1240' and section='' and perm='tiki_p_admin' and groupname='';
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin mods','tiki-mods.php',1240,'','tiki_p_admin','');
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Tiki Logs' and url='tiki-syslog.php' and position='1245' and section='' and perm='tiki_p_admin' and groupname='';
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Tiki Logs','tiki-syslog.php',1245,'','tiki_p_admin','');
 
 
@@ -854,7 +827,9 @@ UPDATE tiki_menu_options set `perm`='tiki_p_live_support_admin' where `perm`='ti
 #2005-01-02 sylvieg
 UPDATE tiki_menu_options set `perm`= 'tiki_p_subscribe_events' where `url`='tiki-events.php';
 UPDATE tiki_menu_options set `perm`= 'tiki_p_subscribe_newsletters' where `url`='tiki-newsletters.php';
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='s' and name='Newsletters' and url='tiki-newsletters.php' and position='900' and section='feature_newsletters' and perm='tiki_p_send_newsletters' and groupname='';
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Newsletters','tiki-newsletters.php',900,'feature_newsletters','tiki_p_send_newsletters','');
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='s' and name='Newsletters' and url='tiki-newsletters.php' and position='900' and section='feature_newsletters' and perm='tiki_p_admin_newsletters' and groupname='';
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Newsletters','tiki-newsletters.php',900,'feature_newsletters','tiki_p_admin_newsletters','');
 
 #2005-01-07 sylvieg
@@ -893,11 +868,11 @@ INSERT INTO tiki_user_tasks_history (belongs_to, title, start, description, last
 ALTER TABLE tiki_user_tasks DROP description;
 ALTER TABLE tiki_user_tasks DROP title;
 ALTER TABLE tiki_user_tasks ADD last_version integer(4) NOT NULL DEFAULT 0 AFTER taskId;
-ALTER TABLE tiki_user_tasks MODIFY user varchar(200) NOT NULL AFTER last_version;
+ALTER TABLE tiki_user_tasks MODIFY user varchar(200) NOT NULL;
 ALTER TABLE tiki_user_tasks ADD creator varchar(200) NOT NULL AFTER user;
 ALTER TABLE tiki_user_tasks ADD public_for_group varchar(30) DEFAULT NULL AFTER creator;
 ALTER TABLE tiki_user_tasks ADD rights_by_creator char(1) DEFAULT NULL AFTER public_for_group;
-ALTER TABLE tiki_user_tasks CHANGE date created integer(14) NOT NULL AFTER rights_by_creator;
+ALTER TABLE tiki_user_tasks CHANGE `date` `created` integer(14) NOT NULL;
 
 
 #2005-01-13 sir-b
@@ -932,13 +907,19 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('image', '{img src= width= height= align= desc= link= }', 'images/ed_image.gif', 'newsletters');
 
 UPDATE tiki_quicktags set taginsert='[http://example.com|text|nocache]' where taginsert='[http://example.com|text]' and tagcategory='newsletters';
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Security Admin' and url='tiki-admin_security.php' and position='1250' and section='' and perm='tiki_p_admin' and groupname='';
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Security Admin','tiki-admin_security.php',1250,'','tiki_p_admin','');
 
 #2005-02-20 adding Directory Batch Load feature
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Directory batch' and url='tiki-batch_upload.php' and position='318' and section='feature_galleries,feature_gal_batch' and perm='tiki_p_batch_upload_image_dir' and groupName='';
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Directory batch','tiki-batch_upload.php',318,'feature_galleries,feature_gal_batch','tiki_p_batch_upload_image_dir','');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_batch_upload_image_dir', 'Can use Directory Batch Load', 'editors', 'image galleries');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_gal_batch','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('gal_batch_dir','');
+
+#2005-04-15 adding Images Cache
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_gal_imgcache','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('gal_imgcache_dir','temp/cache');
 
 #2005-02-23 sylvieg
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('calendar_sticky_popup','n');
@@ -1005,3 +986,112 @@ UPDATE tiki_menu_options SET name="Admin charts" WHERE url='tiki-admin_charts.ph
 
 # Added 9 Mar 2005 by Robin Lee Powell; watches also activate on translated versions.
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_user_watches_translations','y');
+
+# 2005-03-16 sylvieg
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('limitedGoGroupHome', 'y');
+
+#2005-03-22 noia
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_map_view_mapfiles', 'Can view mapfiles content', 'registered', 'maps');
+
+# 2005-03-26 marclaporte (this should have been optional since the beginning)
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_import_html', 'n');
+
+# 2005-03-30 mdavey
+ALTER TABLE tiki_history ADD version_minor int(8) NOT NULL default 0 AFTER version;
+
+# 2005-04-03 ohertel
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('directory_cool_sites','y');
+
+# 2005-04-07 mose
+UPDATE tiki_menu_options SET url="tiki-list_games.php" where name="Games";
+
+# Per-forum outbound mail options.  Added 9 April 2005 by rlpowell
+ALTER TABLE `tiki_forums` ADD `outbound_mails_for_inbound_mails` CHAR( 1 ) AFTER `outbound_address` ;
+ALTER TABLE `tiki_forums` ADD `outbound_mails_reply_link` CHAR( 1 ) AFTER `outbound_mails_for_inbound_mails`;
+
+# 2005-04-18 melmut
+ALTER TABLE `tiki_pages` ADD `is_html` TINYINT(1) default 0; 
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_wikisyntax_in_html','full');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wysiwyg','no');
+
+#2005-2-22 moved back to be still be able to assign perm
+UPDATE users_permissions SET type="topics" WHERE permName='tiki_p_topic_read';
+
+# 2005_04-23 removed projects 
+delete from tiki_menu_options where section='feature_projects';
+DROP TABLE IF EXISTS tiki_projects;
+DROP TABLE IF EXISTS tiki_projects_objects;
+DROP TABLE IF EXISTS tiki_projects_preferences;
+
+# 2005-04-24 rss tracker
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_tracker','10');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_tracker','n');
+
+# added on 2005-04-24 by ohertel: view wiki history
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_history', 'Can view wiki history', 'basic', 'wiki');
+
+# 2005-04-24 togg: view wiki history copied for groups
+DROP TABLE IF EXISTS temp_users_grouppermissions;
+CREATE TABLE temp_users_grouppermissions (
+  groupName varchar(255) NOT NULL default '',
+  permName varchar(30) NOT NULL default '',
+  value char(1) default '',
+  PRIMARY KEY  (groupName(30),permName)
+) TYPE=MyISAM;
+INSERT into temp_users_grouppermissions SELECT groupName, 'tiki_p_wiki_view_history', value FROM users_grouppermissions WHERE permName='tiki_p_view';
+INSERT into users_grouppermissions SELECT * FROM temp_users_grouppermissions;
+DROP TABLE temp_users_grouppermissions;
+
+# 2005-04-25 redflo: tiki_secdb for admin->security checks
+DROP TABLE IF EXISTS tiki_secdb;
+CREATE TABLE tiki_secdb(
+  md5_value varchar(32) NOT NULL,
+  filename varchar(250) NOT NULL,
+  tiki_version varchar(60) NOT NULL,
+  severity int(4) NOT NULL default '0',
+  PRIMARY KEY  (md5_value,filename,tiki_version),
+  KEY sdb_fn (filename)
+) TYPE=MyISAM;
+
+update tiki_menu_options set section="feature_featuredLinks" where url="tiki-admin_links.php";
+update tiki_menu_options set section="feature_hotwords" where url="tiki-admin_hotwords.php";
+update tiki_menu_options set section="feature_polls" where url="tiki-admin_polls.php";
+update tiki_menu_options set section="feature_search" where url="tiki-search_stats.php";
+update tiki_menu_options set section="feature_chat" where url="tiki-admin_chat.php";
+update tiki_menu_options set section="feature_categories" where url="tiki-admin_categories.php";
+update tiki_menu_options set section="feature_edit_templates" where url="tiki-edit_templates.php";
+update tiki_menu_options set section="feature_drawings" where url="tiki-admin_drawings.php";
+update tiki_menu_options set section="feature_mailin" where url="tiki-admin_mailin.php";
+update tiki_menu_options set section="feature_html_pages" where url="tiki-admin_html_pages.php";
+update tiki_menu_options set section="feature_shoutbox" where url="tiki-shoutbox.php";
+update tiki_menu_options set section="feature_shoutbox" where url="tiki-admin_shoutbox_words.php";
+update tiki_menu_options set section="feature_referer_stats" where url="tiki-referer_stats.php";
+update tiki_menu_options set section="feature_score" where url="tiki-admin_score.php";
+
+# 2005-04-25 ohertel: switch for (dis/en)abling tiki-mobile
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_mobile', 'n');
+
+# 2005-04-28 get synchronised with tiki.sql
+ALTER  TABLE  tiki_newsletter_groups  modify  code varchar(32) default NULL;
+
+# 2005-04-29 rv540
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('trk_with_mirror_tables', 'n');
+
+# 2005-05-03
+UPDATE tiki_menu_options SET perm="tiki_p_view_trackers" WHERE url="tiki-list_trackers.php";
+
+#2005-05-04 sg
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_tiki_calendar', 'Can view TikiWiki tools calendar', 'basic', 'calendar');
+DROP TABLE IF EXISTS temp_users_grouppermissions;
+CREATE TABLE temp_users_grouppermissions (
+  groupName varchar(255) NOT NULL default '',
+  permName varchar(30) NOT NULL default '',
+  value char(1) default '',
+  PRIMARY KEY  (groupName(30),permName)
+) TYPE=MyISAM;
+INSERT into temp_users_grouppermissions SELECT groupName, 'tiki_p_view_tiki_calendar', value FROM users_grouppermissions WHERE permName='tiki_p_view_calendar';
+INSERT into users_grouppermissions SELECT * FROM temp_users_grouppermissions;
+DROP TABLE temp_users_grouppermissions;
+
+# 2005-05-10 redflo
+alter table tiki_sessions add tikihost varchar(200) default NULL;

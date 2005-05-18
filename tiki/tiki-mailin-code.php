@@ -15,7 +15,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],"tiki-mailin-code.php")!=FALSE) {
 
 include_once ('lib/mailin/mailinlib.php');
 
-require_once ("lib/webmail/pop3.php");
+// require_once ("lib/webmail/pop3.php");
+require_once ("lib/webmail/net_pop3.php");
 include_once ("lib/webmail/class.rc4crypt.php");
 
 include_once ("lib/mail/mimelib.php");
@@ -72,29 +73,35 @@ foreach ($accs['data'] as $acc) {
   $content .= "Account :" . $acc['account'] . "<br />";
   $content .= "Type    :" . $acc['type'] . "<br />";
   $content .= "--------------------------<br />";
-  $pop3 = new POP3($acc["pop"], $acc["username"], $acc["pass"]);
-  $pop3->Open();
-  $s = $pop3->Stats();
-  $mailsum = $s["message"];
+  //$pop3 = new POP3($acc["pop"], $acc["username"], $acc["pass"]);
+  //$pop3->Open();
+	$pop3 = new Net_Pop3();
+	$pop3->connect($acc["pop"]);
+	$pop3->login($acc["username"], $acc["pass"]);
+  $mailsum = $pop3->numMsg();
 
   for ($i = 1; $i <= $mailsum; $i++) {
-    $aux = $pop3->ListMessage($i);
-
+    $aux = $pop3->getParsedHeaders($i);
+var_dump($aux);
+ 		if (!isset($aux["From"])) $aux['From'] = $aux['Return-path'];
+		preg_match('/<?([-!#$%&\'*+\.\/0-9=?A-Z^_`a-z{|}~]+@[-!#$%&\'*+\/0-9=?A-Z^_`a-z{|}~]+\.[-!#$%&\'*+\.\/0-9=?A-Z^_`a-z{|}~]+)>?/',$aux["From"],$mail);
+		$email_from = $mail[1];
+						 
     $aux["msgid"] = $i;
-    $aux["realmsgid"] = $pop3->GetMessageID($i);
-    $message = $pop3->GetMessage($i);
-    $output = mime::decode($message['full']);
+    $aux["realmsgid"] = ereg_replace("[<>]","",$aux["Message-ID"]);
+    $message = $pop3->getMsg($i);
+    $output = mime::decode($message);
         //mailin_parse_output($output, $parts, 0);
 
-    $content .= "Reading a request.<br />From: " . $aux["sender"]["email"] . "<br />Subject: " . $output['header']['subject'] . "<br />";
+    $content .= "Reading a request.<br />From: " . $aux["From"] . "<br />Subject: " . $output['header']['subject'] . "<br />";
 
-    $content .= "sender email: " . $aux["sender"]["email"] . "<br />";
-    $aux["sender"]["user"] = $userlib->get_user_by_email($aux["sender"]["email"]);
+    $content .= "sender email: " . $email_from . "<br />";
+    $aux["sender"]["user"] = $userlib->get_user_by_email($email_from);
     $content .= "sender user: " .  $aux["sender"]["user"] . "<br />";
 
     $cantUseMailIn = $acc["anonymous"]=='n' && empty($aux["sender"]["user"]);
     if($cantUseMailIn) {
-      $content .= "Anonymous user acces denied, sending auto-reply to email address:&nbsp;" .  $aux["sender"]["email"] . "<br />";
+      $content .= "Anonymous user acces denied, sending auto-reply to email address:&nbsp;" .  $aux["From"] . "<br />";
       $mail = new TikiMail();
       $mail->setFrom($acc["account"]);
       $c = $tikilib->get_preference("default_mail_charset", "utf8");
@@ -104,14 +111,14 @@ foreach ($accs['data'] as $acc) {
       $mail->setSubject(tra('Tiki mail-in auto-reply', $l));
       $mail->setSMTPParams($acc["smtp"], $acc["smtpPort"], '', $acc["useAuth"], $acc["username"], $acc["pass"]);
       $mail->setText(tra("Sorry, you can't use this feature.", $l));
-      $res = $mail->send(array($aux["sender"]["email"]), 'mail');
+      $res = $mail->send(array($email_from), 'mail');
       $content .= "Response sent<br />";
     } else {
       if (empty($aux["sender"]["user"]))
-        $aux["sender"]["user"] = $aux["sender"]["email"];
+        $aux["sender"]["user"] = $email_from;
   
       if (empty($aux["sender"]["name"]))
-        $aux["sender"]["name"] = $aux["sender"]["email"];
+        $aux["sender"]["name"] = $email_from;
   
       if ($acc['type'] == 'article-put') {
         // This is used to CREATE articles
@@ -164,7 +171,7 @@ foreach ($accs['data'] as $acc) {
 
       } else {
          if ($acc['type'] == 'wiki') {
-           $p_page = trim($output['header']['subject']);
+           $p_page = trim($aux['Subject']);
            $parts = explode(':', $p_page);
            if (!isset($parts[1])) {
              $parts[1] = $parts[0];
@@ -173,7 +180,7 @@ foreach ($accs['data'] as $acc) {
            $method = $parts[0];
            $page = $parts[1];
          } else {
-           $page = trim($output['header']['subject']);
+           $page = trim($aux['Subject']);
          }
 
       if ($acc['type'] == 'wiki-get' || ($acc['type'] == 'wiki' && $method == "GET")) {
@@ -198,7 +205,7 @@ foreach ($accs['data'] as $acc) {
           $mail_data = $smarty->fetchLang($l, "mail/mailin_reply_subject.tpl");
           $mail->setSubject($mail_data.$page);
         }
-        $res = $mail->send(array($aux["sender"]["email"]), 'mail');
+        $res = $mail->send(array($email_from), 'mail');
         $content .= "Response sent<br />";
       }
   
@@ -268,15 +275,15 @@ foreach ($accs['data'] as $acc) {
           $smarty->assign('subject', $output['header']['subject']);
           $mail_data = $smarty->fetchLang($l, "mail/mailin_help.tpl");
           $mail->setText($mail_data);
-          $res = $mail->send(array($aux["sender"]["email"]), 'mail');
+          $res = $mail->send(array($email_from), 'mail');
         }
       }
     }//end if($cantUseMailIn)
     // Remove the email from the pop3 server
-    $pop3->DeleteMessage($i);
+    $pop3->deleteMsg($i);
   }//end for ($i = 1; $i <= $mailsum; $i++)
 
-  $pop3->close();
+  $pop3->disconnect();
 //echo $content;
 }//end foreach ($accs['data'] as $acc) {
 

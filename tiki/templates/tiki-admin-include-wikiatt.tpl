@@ -11,10 +11,9 @@
 </form>
 </div>
 </div>
-
 <br />
 <div class="cbox">
-  <div class="cbox-title">{tr}Attachments{/tr}</div>
+  <div class="cbox-title">{tr}Wiki attachments{/tr}</div>
   <div class="cbox-data">
 <div class="admin">
 <form action="tiki-admin.php?page=wikiatt" method="post">

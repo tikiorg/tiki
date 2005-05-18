@@ -1,5 +1,5 @@
 {* 
-$Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_category_objects.tpl,v 1.3 2005-03-12 16:51:00 mose Exp $ 
+$Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_category_objects.tpl,v 1.4 2005-05-18 11:03:29 mose Exp $ 
 parameters : id=1&type=*&maxlen=20
 id is the categId of the parent categ to list
 type is the type of object to list. default is 'wiki page' and * get all types

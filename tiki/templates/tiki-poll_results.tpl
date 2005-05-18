@@ -1,6 +1,5 @@
 <div class="pollresults">
 <h3>{$poll_info.title}</h3>
-<div class="wikitext">{$poll_info.description}</div>
 <table class="pollresults">
 {section name=ix loop=$options}
 <tr><td class="pollr">{$options[ix].title}</td>

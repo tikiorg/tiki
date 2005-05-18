@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>
-		{html_image file="$img_accepted" height="$img_accepted_height" width="$img_accepted_width" title='{tr}accepted by task user and creator{/tr}' border='0' alt='{tr}accepted user and creator{/tr}'}: 
+		<img src="{$img_accepted}" height="{$img_accepted_height}" width="{$img_accepted_width}" title='{tr}accepted by task user and creator{/tr}' border='0' alt='{tr}accepted user and creator{/tr}'>:
 	</td>
 	<td>
 		{tr}Task is accepted by user and creator{/tr}.
@@ -68,7 +68,7 @@
 </tr>
 <tr>
 	<td>
-		{html_image  file="$img_not_accepted" height="$img_not_accepted_height" width="$img_not_accepted_width" title='{tr}not accepted by one user{/tr}'  border='0' alt='{tr}not accepted user{/tr}'}:
+		<img src="{$img_not_accepted}" height="{$img_not_accepted_height}" width="{$img_not_accepted_width}" title='{tr}not accepted by one user{/tr}'  border='0' alt='{tr}not accepted user{/tr}'>:
 	</td>
 	<td>
 		{tr}Task is rejected by one user{/tr}.
@@ -76,7 +76,7 @@
 </tr>
 <tr>
 	<td>
-		{html_image file="$img_me_waiting"  height="$img_me_waiting_height" width="$img_me_waiting_width" border='0' alt='{tr}waiting for me{/tr}' title='{tr}waiting for me{/tr}'}
+		<img src="{$img_me_waiting}"  height="{$img_me_waiting_height}" width="{$img_me_waiting_width}" border='0' alt="{tr}waiting for me{/tr}" title="{tr}waiting for me{/tr}"}
 	</td>
 	<td>
 		{tr}Task is not accepted by you, read the task and accept or reject it{/tr}.
@@ -84,7 +84,7 @@
 </tr>
 <tr>
 	<td>
-		{html_image file="$img_he_waiting"  height="$img_he_waiting_height" width="$img_he_waiting_width" border='0' alt='{tr}waiting for ohter user{/tr}' title='{tr}waiting for other user{/tr}'}
+		<img src="{$img_he_waiting}"  height="{$img_he_waiting_height}" width="{$img_he_waiting_width}" border='0' alt="{tr}waiting for other user{/tr}" title="{tr}waiting for other user{/tr}">
 	</td>
 	<td>
 		{tr}Task is not accepted/rejected by other user{/tr}.
@@ -137,7 +137,7 @@
    <td class="findtable">
 	<div align="right">
 		<form method="get" action="tiki-user_tasks.php">
-			<img src="img/icons/trash.gif" title="trash" width="16" height="16" align="middle" border="0" alt="trash" /> 
+			<img src="img/icons/trash.gif" title="{tr}trash{/tr}" width="16" height="16" align="middle" border="0" alt="{tr}trash{/tr}" /> 
 			&nbsp;
 			<input type="submit" value="{tr}empty trash{/tr}" name="emty_trash" />
 		</form>

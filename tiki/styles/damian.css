@@ -446,7 +446,9 @@ FORM {
 /* General form elements */
 input, textarea, select {
 	color:    #000000;
-	font:   normal 10px Verdana, Arial, Helvetica, sans-serif;
+	font-family:   Verdana, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	font-size: 10px;
 }
 
 input {
@@ -828,7 +830,11 @@ p.editdate {
 	margin-bottom:   -1ex;
 	font-family:   "Lucida Grande", Helvetica, Arial, sans-serif;
 }
-
+#description {
+  font-size : 10px !important;
+  padding-left:   10px;
+  color:   #333300;
+}
 /* The edit-help used to display the wiki syntax when editing a page */
 div.wiki-edithelp {
 	background:    white;
@@ -1652,6 +1658,10 @@ div.tocnav {
 	text-decoration:   underline;
 }
 
+.fancytoclevel {
+	list-style-image: url(../img/icons/footprint.gif);
+}
+
 /*************************************************** DIRECTORY ***************************************************/
 /* The list of categories */
 div.dircategs {
@@ -2348,6 +2358,7 @@ a.tikihelp, a.tikihelp:visited {
 	margin:   inherit;
 	padding:   inherit;
 	text-decoration:   inherit;
+	vertical-align: text-top;
 }
 
 a.tikihelp:hover {
@@ -2360,6 +2371,7 @@ a.tikihelp:hover {
 	padding:   inherit;
 	cursor:   help;
 	text-decoration:   inherit;
+	vertical-align: text-top;
 }
 
 /* TikiIntegrator: By default copy rules dialog not shown */
@@ -2528,13 +2540,13 @@ TABLE.admin { width: 100%; }
   margin: 1px;
   border: 1px inset #666666;
   -moz-border-radius: 20px;
-  vertcal-align: middle;
+  vertical-align: middle;
   background-color: #bbaa99;
 }
 .statusoff {
   padding: 1px;
   margin: 2px;
-  vertcal-align: middle;
+  vertical-align: middle;
 }
 
 /**** coloration for c o d e plugin *****/
@@ -2542,61 +2554,14 @@ TABLE.admin { width: 100%; }
 { font-family : monospace; padding : 2ex; background-color : #edeeef; margin : 1ex; border : 1px dashed #adacaf; }
 
 /* wiki diff styles */
-
-.diffheader {
-margin: 10px 5px 0px 5px;
-padding: 4px;
-border-width: 1px 1px 0px 1px;
-border-style: solid;
-border-color: #A9B8C2;
-color: black;
-font-weight: bold;
-background-color: #A9B8C2;
-font-size: 8pt;
-}
-.diffbody {
-margin: 0px 5px 10px 5px;
-padding: 5px;
-border-color: #A9B8C2;
-border-width: 0px 1px 1px 1px;
-border-style: solid;
-font-family: monospace, 'Courier New', courier;
-color: black;
-background-color: #edeeef;
-}
-.diffdeleted {
-border-color: #A9B8C2;
-color: black;
-background-color: #ffcccc;
-}
-.diffadded {
-border-color: #A9B8C2;
-color: black;
-background-color: #ccffcc;
-}
+table.diff{border: 1px solid #8CACBB}
+.diff td{border: 1px solid #A9B8C2}
+.diff div{border-top: 1px solid #8CACBB}
+.diffheader{background-color:#a9b8c2; font-weight: bold;}
+.diffadded {background-color:#ccffcc;}
+.diffdeleted {background-color:#ffcccc;}
+.diffbody{}
 .diffchar{color: red;}
-
-/**** coloration for QUOTE plugin *****/
-.quoteheader {
-margin: 10px 5px 0px 5px;
-padding: 4px;
-border-width: 1px 1px 0px 1px;
-border-style: solid;
-border-color: #A9B8C2;
-color: black;
-font-weight: bold;
-background-color: #A9B8C2;
-font-size: 8pt;
-}
-.quotebody {
-margin: 0px 5px 10px 5px;
-padding: 5px;
-border-color: #A9B8C2;
-border-width: 0px 1px 1px 1px;
-border-style: solid;
-color: black;
-background-color: #edeeef;
-}
 
 /* Version Plugin Style */
 
@@ -2633,3 +2598,26 @@ padding : 2px 30px;
 float : right;
 }
 
+/**** coloration for QUOTE plugin *****/
+.quoteheader {
+margin: 10px 5px 0px 5px;
+padding: 4px;
+border-width: 1px 1px 0px 1px;
+border-style: solid;
+border-color: #A9B8C2;
+color: black;
+font-weight: bold;
+background-color: #A9B8C2;
+font-size: 8pt;
+}
+.quotebody {
+margin: 0px 5px 10px 5px;
+padding: 5px;
+border-color: #A9B8C2;
+border-width: 0px 1px 1px 1px;
+border-style: solid;
+color: black;
+background-color: #edeeef;
+}
+
+/* end of css file */

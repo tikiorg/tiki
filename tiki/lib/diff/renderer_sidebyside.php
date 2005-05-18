@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_sidebyside.php,v 1.8 2004-08-20 11:26:09 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_sidebyside.php,v 1.9 2005-05-18 11:00:35 mose Exp $
 
 /**
  * "Side-by-Side" diff renderer.
@@ -8,7 +8,7 @@
  *
  * @package Text_Diff
  */
-class Text_Diff_Renderer_sidebyside extends Text_Diff_Renderer {
+class Text_Diff_Renderer_sidebyside extends Tiki_Text_Diff_Renderer {
 
     function Text_Diff_Renderer_sidebyside($context_lines = 4)
     {

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.45 2005-03-12 16:48:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.46 2005-05-18 10:58:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -8,6 +8,7 @@
 require_once ('tiki-setup.php');
 
 include_once ('lib/calendar/calendarlib.php');
+include_once ('lib/newsletters/nllib.php');
 
 # perms are 
 # 	$tiki_p_view_calendar
@@ -20,16 +21,13 @@ if ($feature_calendar != 'y') {
 	die;
 }
 
-if ($tiki_p_view_calendar != 'y') {
-	$smarty->assign('msg', tra("Permission denied you cannot view the calendar"));
-	$smarty->display("error.tpl");
-	die;
-}
 $bufid = array();
 $bufdata = array();
 $modifiable = array();
 $cookietab = 1;
 $rawcals = $calendarlib->list_calendars();
+$viewOneCal = $tiki_p_view_calendar;
+$modifTab = 0;
 
 foreach ($rawcals["data"] as $cal_id=>$cal_data) {
 	if ($tiki_p_admin == 'y') {
@@ -45,6 +43,8 @@ foreach ($rawcals["data"] as $cal_id=>$cal_data) {
 			}
 			if ($userlib->object_has_permission($user, $cal_id, 'calendar', 'tiki_p_add_events')) {
 				$cal_data["tiki_p_add_events"] = 'y';
+				$tiki_p_add_events = "y";
+				$smarty->assign("tiki_p_add_events", "y");
 			} else {
 				$cal_data["tiki_p_add_events"] = 'n';
 			}
@@ -65,19 +65,30 @@ foreach ($rawcals["data"] as $cal_id=>$cal_data) {
 		}
 	}
 	if ($cal_data["tiki_p_view_calendar"] == 'y') {
+		$viewOneCal = 'y';
 		$bufid[] = $cal_id;
 		$bufdata["$cal_id"] = $cal_data;
 	}
-	if (($cal_data["tiki_p_add_events"] == 'y') or ($cal_data["tiki_p_change_events"] == 'y')) {
+	if ($cal_data["tiki_p_add_events"] == 'y') {
+		$modifTab = 1;
+	}
+	if ($cal_data["tiki_p_change_events"] == 'y') {
+		$modifTab = 1;
 		$modifiable[] = $cal_id;
 	}
 }
+if ($viewOneCal != 'y') {
+	$smarty->assign('msg', tra("Permission denied you cannot view the calendar"));
+	$smarty->display("error.tpl");
+	die;
+}
+
 $listcals = $bufid;
 $infocals["data"] = $bufdata;
 
 $smarty->assign('infocals', $infocals["data"]);
 $smarty->assign('listcals', $listcals);
-$smarty->assign('modifiable', count($modifiable));
+$smarty->assign('modifTab', $modifTab);
 
 // set up list of groups 
 if (isset($_REQUEST["calIds"])and is_array($_REQUEST["calIds"])and count($_REQUEST["calIds"])) {
@@ -86,6 +97,8 @@ if (isset($_REQUEST["calIds"])and is_array($_REQUEST["calIds"])and count($_REQUE
 	$_SESSION['CalendarViewGroups'] = $listcals;
 } elseif (isset($_REQUEST["refresh"])and !isset($_REQUEST["calIds"])) {
 	$_SESSION['CalendarViewGroups'] = array();
+} elseif (isset($_REQUEST["calIds"])and !is_array($_REQUEST["calIds"])) {
+	$_SESSION['CalendarViewGroups'] = array($_REQUEST["calIds"]);
 }
 
 // setup list of tiki items displayed
@@ -257,9 +270,6 @@ if (!isset($_REQUEST["locationId"]))
 if (!isset($_REQUEST["categoryId"]))
 	$_REQUEST["categoryId"] = 0;
 
-if (!isset($_REQUEST["evId"]))
-	$_REQUEST["evId"] = 0;
-
 if (!isset($_REQUEST["organizers"]))
 	$_REQUEST["organizers"] = "";
 
@@ -277,6 +287,9 @@ if (!isset($_REQUEST["priority"]))
 
 if (!isset($_REQUEST["lang"]))
 	$_REQUEST["lang"] = $language;
+
+if (!isset($_REQUEST["nlId"]))
+	$_REQUEST["nlId"] = 0;
 
 if (!isset($_REQUEST["status"]))
 	$_REQUEST["status"] = 0;
@@ -349,8 +362,8 @@ if (isset($_REQUEST["save"])and ($_REQUEST["save"])) {
 			"priority" => $_REQUEST["priority"],
 			"status" => $_REQUEST["status"],
 			"url" => $_REQUEST["url"],
-			"evId" => $_REQUEST["evId"],
 			"lang" => $_REQUEST["lang"],
+			"nlId" => $_REQUEST["nlId"],
 			"name" => $_REQUEST["name"],
 			"description" => $_REQUEST["description"]
 		));
@@ -395,8 +408,8 @@ if ($_REQUEST["calitemId"] && !isset($_REQUEST["preview"])) {
 	$info["categoryName"] = $_REQUEST["newcat"];
 	$info["priority"] = $_REQUEST["priority"];
 	$info["url"] = $_REQUEST["url"];
-	$info["evId"] = $_REQUEST["evId"];
 	$info["lang"] = $_REQUEST["lang"];
+	$info["nlId"] = $_REQUEST["nlId"];
 	$info["name"] = $_REQUEST["name"];
 	$info["description"] = $_REQUEST["description"];
 	$info["created"] = isset($_REQUEST["created"]) ? $_REQUEST["created"]: time();
@@ -419,8 +432,8 @@ if ($_REQUEST["calitemId"] && !isset($_REQUEST["preview"])) {
 	$info["categoryName"] = '';
 	$info["priority"] = 5;
 	$info["url"] = '';
-	$info["evId"] = 0;
 	$info["lang"] = $tikilib->get_user_preference($user, "language");
+	$info["nlId"] = 0;
 	$info["name"] = isset($_REQUEST["name"])? $_REQUEST["name"]: '';
 	$info["description"] = isset($_REQUEST["description"])? $_REQUEST["description"]: '';
 	$info["created"] = time();
@@ -431,7 +444,7 @@ if ($_REQUEST["calitemId"] && !isset($_REQUEST["preview"])) {
 	$info["customlanguages"] = 'n';
 	$info["custompriorities"] = 'n';
 	$info["customparticipants"] = 'n';
-	$info["customevents"] = 'n';
+	$info["customsubscription"] = 'n';
 }
 $info["duration_hours"] = intval(($info["end"] - $info["start"]) / (60*60));
 $info["duration_minutes"] = intval(($info["end"] - $info["start"]) - ($info["duration_hours"] *60*60))/60;
@@ -452,8 +465,8 @@ $smarty->assign('categoryId', $info["categoryId"]);
 $smarty->assign('categoryName', $info["categoryName"]);
 $smarty->assign('priority', $info["priority"]);
 $smarty->assign('url', $info["url"]);
-$smarty->assign('evId', $info["evId"]);
 $smarty->assign('lang', $info["lang"]);
+$smarty->assign('nlId', $info["nlId"]);
 $smarty->assign('name', $info["name"]);
 $smarty->assign('description', $info["description"]);
 $smarty->assign('parsedDescription', $tikilib->parse_data($info["description"]));
@@ -489,14 +502,20 @@ if ($defaultAddCal) {
 	$info["customlanguages"] = $thatcal["customlanguages"];
 	$info["custompriorities"] = $thatcal["custompriorities"];
 	$info["customparticipants"] = $thatcal["customparticipants"];
-	$info["customevents"] = $thatcal["customevents"];
+	$info["customsubscription"] = $thatcal["customsubscription"];
 	$listcat = array();
 	$listloc = array();
 	$listpeople = array();
 	$languages = array();
+	$subscrips = array();
 
 	if ($thatcal["customcategories"] == 'y') {
 		$listcat = $calendarlib->list_categories($defaultAddCal);
+	}
+
+	if ($thatcal["customsubscription"] == 'y') {
+		$subscrips = $nllib->list_avail_newsletters();
+//gg		$subscrips = $tikilib->list_languages();
 	}
 
 	if ($thatcal["customlocations"] == 'y') {
@@ -510,6 +529,7 @@ if ($defaultAddCal) {
 	$smarty->assign('listcat', $listcat);
 	$smarty->assign('listloc', $listloc);
 	$smarty->assign_by_ref('languages', $languages);
+	$smarty->assign_by_ref('subscrips', $subscrips);
 }
 
 $smarty->assign('calendarId', $_REQUEST["calendarId"]);
@@ -518,7 +538,7 @@ $smarty->assign('customcategories', $info["customcategories"]);
 $smarty->assign('customlanguages', $info["customlanguages"]);
 $smarty->assign('custompriorities', $info["custompriorities"]);
 $smarty->assign('customparticipants', $info["customparticipants"]);
-$smarty->assign('customevents', $info["customevents"]);
+$smarty->assign('customsubscription', $info["customsubscription"]);
 
 if (isset($_REQUEST["find"])) {
 	$find = $_REQUEST["find"];
@@ -543,6 +563,7 @@ $z = date("z");
 
 if (($firstDayofWeek = $tikilib->get_user_preference($user, "")) == "") { /* 0 for Sundays, 1 for Mondays */
 	$strRef = "First day of week: Sunday (its ID is 0) - translators you need to localize this string!";
+//get_strings tra("First day of week: Sunday (its ID is 0) - translators you need to localize this string!");
 	if (($str = tra($strRef)) != $strRef) {
 		$firstDayofWeek = ereg_replace("[^0-9]", "",$str);
 		if ($firstDayofWeek < 0 || $firstDayofWeek > 9)
@@ -783,6 +804,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 			$e = 0;
 
 			foreach ($listevents["$dday"] as $le) {
+				$le['modifiable'] = in_array($le['calendarId'], $modifiable)? "y": "n";
 				$leday["{$le['time']}$e"] = $le;
 
 				$smarty->assign_by_ref('cellhead', $le["head"]);

@@ -42,7 +42,7 @@ $incErrorManager = true;
  * @package 
  * @author Diogene
  * @copyright Copyright (c) 2003
- * @version $Id: ErrorManager.php,v 1.2 2004-09-08 19:52:33 mose Exp $
+ * @version $Id: ErrorManager.php,v 1.3 2005-05-18 11:01:38 mose Exp $
  * @access public
  **/
 class ErrorManager extends Object {

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_history.php,v 1.2 2005-01-22 22:54:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_history.php,v 1.3 2005-05-18 10:58:58 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -28,7 +28,11 @@ if (isset($_REQUEST["mapfile"])) {
 		$smarty->display('error.tpl');
 		die;
 	}
+  $mapfile = $_REQUEST['mapfile'];
+} else {
+  $mapfile = $default_map;
 }
+
 if (!isset($map_path) or !$map_path) {
 	$smarty->assign('msg', tra("Maps feature is not correctly setup : Maps path is missing."));
 	$smarty->display('error.tpl');
@@ -41,13 +45,13 @@ if (!is_dir($map_path)) {
 	die;							
 }
 
-if (!preg_match('/\.map$/i', $_REQUEST["mapfile"])) {
+if (!preg_match('/\.map$/i', $mapfile)) {
 	$smarty->assign('msg', tra("mapfile name incorrect"));
 	$smarty->display("error.tpl");
 	die;
 }
 
-$smarty->assign('mapfile', $_REQUEST["mapfile"]);
+$smarty->assign('mapfile', $mapfile);
 
 
 //Get the history
@@ -67,8 +71,8 @@ sort ($files);
 $history=array();
 $j=0;	
 for ($i=0;$i<count($files);$i++) {
- 	if (substr($files[$i],0,strlen($_REQUEST["mapfile"]))==$_REQUEST["mapfile"]) {
- 		$suffix=substr($files[$i],strlen($_REQUEST["mapfile"]));
+ 	if (substr($files[$i],0,strlen($mapfile))==$mapfile) {
+ 		$suffix=substr($files[$i],strlen($mapfile));
  		$revision=intval(substr($suffix,1));
  		if ($revision!=0) {
 	 		$history[$j]["version"]=$revision;
@@ -79,7 +83,7 @@ for ($i=0;$i<count($files);$i++) {
 }
 
 $history[$j]["version"]=$j+1;
-$history[$j]["data"]=nl2br(file_get_contents($map_path.$_REQUEST["mapfile"]));
+$history[$j]["data"]=nl2br(file_get_contents($map_path.$mapfile));
 
 for ($i=0;$i<count($history);$i++) {
 	if (strpos($history[$i]["data"],"##TIKIMAPS HEADER: END##")!=FALSE) {
@@ -95,7 +99,7 @@ for ($i=0;$i<count($history);$i++) {
 		if (strpos($searchdata,"#GMT Date: ")!=FALSE) {
 			$IP=substr($searchdata,strpos($searchdata,"#GMT Date: ")+10);
 			$IP=substr($IP,0,strpos($IP,"<br"));
-			$history[$i]["lastModif"]=mktime(substr($IP,10,2),substr($IP,12,2),substr($IP,14,2),substr($IP,5,2),substr($IP,7,2),substr($IP,1,4));
+			$history[$i]["lastModif"]=gmmktime(substr($IP,10,2),substr($IP,12,2),substr($IP,14,2),substr($IP,5,2),substr($IP,7,2),substr($IP,1,4));
 		}
 	}
 }

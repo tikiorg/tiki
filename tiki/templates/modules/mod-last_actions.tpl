@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_actions.tpl,v 1.3 2005-03-12 16:51:00 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_actions.tpl,v 1.4 2005-05-18 11:03:29 mose Exp $ *}
 
 {if $nonums eq 'y'}
 {eval var="{tr}Last `$module_rows` actions{/tr}" assign="tpl_module_title"}

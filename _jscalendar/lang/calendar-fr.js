@@ -67,7 +67,6 @@ Calendar._SDN = new Array
  "Jeu",
  "Ven",
  "Sam");
-Calendar._SMN = new Array
 ("Jan",
  "Fev",
  "Mar",
@@ -125,6 +124,8 @@ Calendar._TT["NEXT_YEAR"] = "Année suiv. (maintenir pour menu)";
 Calendar._TT["SEL_DATE"] = "Sélectionner une date";
 Calendar._TT["DRAG_TO_MOVE"] = "Déplacer";
 Calendar._TT["PART_TODAY"] = " (Aujourd'hui)";
+Calendar._TT["DAY_FIRST"] = "Commencer par %s";
+Calendar._TT["WEEKEND"] = "6,0";
 
 // the following is to inform that "%s" is to be the first day of week
 // %s will be replaced with the day name.

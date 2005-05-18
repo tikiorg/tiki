@@ -47,9 +47,6 @@
 {/if}
 {/if}
 <h2>{tr}Available Sheets{/tr}</h2>
-{if $tiki_p_edit_sheet eq 'y'}
-<a class="linkbut" href="tiki-sheets.php?edit_mode=1&amp;sheetId=0">{tr}create new sheet{/tr}</a><br /><br />
-{/if}
 <div align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
@@ -64,15 +61,9 @@
 </table>
 <table class="normal">
 <tr>
-{if $gal_list_name eq 'y'}
 <td class="heading"><a class="tableheading" href="tiki-sheets.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></td>
-{/if}
-{if $gal_list_description eq 'y'}
 <td class="heading"><a class="tableheading" href="tiki-sheets.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a></td>
-{/if}
-{if $gal_list_user eq 'y'} 
 <td class="heading"><a class="tableheading" href="tiki-sheets.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></td>
-{/if}
 <td  class="heading">{tr}Actions{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
@@ -82,7 +73,12 @@
   <td class="{cycle advance=false}">{$sheets[changes].description}</td>
   <td class="{cycle advance=false}">{$sheets[changes].author}</td>
   <td class="{cycle}">
+  {if $chart_enabled eq 'y'}
+    <a class="gallink" href="tiki-graph_sheet.php?sheetId={$sheets[changes].sheetId}"><img src='img/icons2/icn_budgetgraph.gif' border='0' alt='{tr}Graph{/tr}' title='{tr}Graph{/tr}' /></a>
+  {/if}
+  {if ( $tiki_p_admin_sheet eq 'y' or ($author and $sheets[changes].author eq $author) or $tiki_p_admin eq 'y' or $tiki_p_view_sheet_history eq 'y') }
     <a class="gallink" href="tiki-history_sheets.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;sheetId={$sheets[changes].sheetId}"><img src='img/icons/history_layer.gif' alt='{tr}History{/tr}' title='{tr}History{/tr}' border='0' /></a>
+  {/if}
     <a class="gallink" href="tiki-export_sheet.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;sheetId={$sheets[changes].sheetId}"><img src='img/icons/export.gif' alt='{tr}Export{/tr}' title='{tr}Export{/tr}' border='0' /></a>
   {if $tiki_p_admin_sheet eq 'y' or ($author and $sheets[changes].author eq $author) or ($tiki_p_admin eq 'y') }
     <a class="gallink" href="tiki-import_sheet.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;sheetId={$sheets[changes].sheetId}"><img src='img/icons/import.gif' alt='{tr}Import{/tr}' title='{tr}Import{/tr}' border='0' /></a>

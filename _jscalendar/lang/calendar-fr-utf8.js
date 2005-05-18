@@ -1,4 +1,4 @@
-// ** -*-codinf:utf-8 -*-
+// ** -*-coding:utf-8 -*-
 Calendar._DN = new Array
 ("Dimanche",
  "Lundi",
@@ -51,18 +51,18 @@ Calendar._TT["INFO"] = "A propos du calendrier";
 Calendar._TT["ABOUT"] =
 "DHTML Date/Heure Selecteur\n" +
 "(c) dynarch.com 2002-2003\n" + // don't translate this this ;-)
-"Pour la derniere version visitez: http://dynarch.com/mishoo/calendar.epl\n" +
-"Distribué par GNU LGPL.  Voir http://gnu.org/licenses/lgpl.html pour les details." +
+"Pour la dernière version visitez: http://dynarch.com/mishoo/calendar.epl\n" +
+"Distribué par GNU LGPL.  Voir http://gnu.org/licenses/lgpl.html pour les détails." +
 "\n\n" +
-"Selection de la date :\n" +
-"- Utiliser les bouttons \xab, \xbb  pour selectionner l\'annee\n" +
-"- Utiliser les bouttons " + String.fromCharCode(0x2039) + ", " + String.fromCharCode(0x203a) + " pour selectionner les mois\n" +
-"- Garder la souris sur n'importe quels boutons pour un selection plus rapide";
+"Sélection de la date :\n" +
+"- Utiliser les bouttons \xab, \xbb  pour sélectionner l\'année\n" +
+"- Utiliser les bouttons " + String.fromCharCode(0x2039) + ", " + String.fromCharCode(0x203a) + " pour sélectionner les mois\n" +
+"- Garder la souris sur n'importe quels boutons pour un sélection plus rapide";
 Calendar._TT["ABOUT_TIME"] = "\n\n" +
-"Selection de l\'heure:\n" +
+"Sélection de l\'heure:\n" +
 "- Cliquer sur heures ou minutes pour incrementer\n" +
-"- ou Maj-clic pour decrementer\n" +
-"- ou clic et glisser deplacer pour un selection plus rapide";
+"- ou Maj-clic pour décrementer\n" +
+"- ou clic et glisser déplacer pour une sélection plus rapide";
 
 Calendar._TT["TOGGLE"] = "Changer le premier jour de la semaine";
 Calendar._TT["PREV_YEAR"] = "Année préc. (maintenir pour menu)";

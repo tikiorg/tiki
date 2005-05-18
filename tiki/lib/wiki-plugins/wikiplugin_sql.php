@@ -1,6 +1,6 @@
 <?php
 function wikiplugin_sql_help() {
-	return tra("Run a sql query").":<br />~np~{SQL(db=>dsnname, 0=>\$var)}".tra("sql query")."{SQL}~/np~";
+	return tra("Run a sql query").":<br />~np~{SQL(db=>dsnname)}".tra("sql query")."{SQL}~/np~";
 }
 
 function wikiplugin_sql($data, $params) {
@@ -14,35 +14,17 @@ function wikiplugin_sql($data, $params) {
 
 	$perm_name = 'tiki_p_dsn_' . $db;
 	global $$perm_name;
-	if ($$perm_name != 'y') {
-		return (tra('You do not have permission to use this feature'));
-	}
 
-	$bindvars = array();
-	if ($nb = preg_match_all("/\?/", $data, $out)) {
-		foreach($params as $key => $value) {
-			if (ereg("^[0-9]*$", $key)) {
-				if (strpos($value, "$") === 0) {
-					$value = substr($value, 1);
-					global $$value;
-					$bindvars[$key] = $$value;
-				}
-				else {
-					$bindvars[$key] = $value;
-				}
-			}
-		}
-		if (count($bindvars) != $nb) {
-			return tra('Missing db param');
-		}
-	}		
+	if ($$perm_name != 'y') {
+		return ('');
+	}
 
 	$ret = '';
 	$sql_oke = true;
  	$dbmsg = '';
 
 	if ($db == 'local') {
-		$result = $tikilib->query($data, $bindvars);
+		$result = $tikilib->query($data,array());
 	} else {
 
 		$dsnsqlplugin = $tikilib->get_dsn_by_name($db);

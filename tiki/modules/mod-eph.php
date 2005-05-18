@@ -8,6 +8,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 include_once ("lib/ephemerides/ephlib.php");
 
+global $ephlib; // no idea why this is needed currently, but it doesnt work without
+
 if (isset($_SESSION['thedate'])) {
 	$modephpdate = $_SESSION['thedate'];
 } else {

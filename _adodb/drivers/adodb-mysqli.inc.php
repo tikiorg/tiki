@@ -49,7 +49,7 @@ class ADODB_mysqli extends ADOConnection {
 	function ADODB_mysqli() 
 	{			
 	 // if(!extension_loaded("mysqli"))
-	      //trigger_error("You must have the mysqli extension installed.", E_USER_ERROR);
+	      ;//trigger_error("You must have the mysqli extension installed.", E_USER_ERROR);
 	    
 	}
 	
@@ -482,6 +482,8 @@ class ADODB_mysqli extends ADOConnection {
 	{
 		$offsetStr = ($offset >= 0) ? "$offset," : '';
 		
+		// fix for mysql 4.X "LIMIT" syntax change
+		if ($nrows < 0) $nrows = '18446744073709551615';
 		if ($secs)
 			$rs =& $this->CacheExecute($secs, $sql . " LIMIT $offsetStr$nrows" , $inputarr , $arg3);
 		else

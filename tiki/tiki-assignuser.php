@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-assignuser.php,v 1.17 2005-03-12 16:48:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-assignuser.php,v 1.18 2005-05-18 10:58:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,7 +10,6 @@
 // ASSIGN USER TO GROUPS
 // Initialization
 require_once ('tiki-setup.php');
-require_once ('lib/userslib/userslib_admin.php');
 
 if ($user != 'admin') {
 	if ($tiki_p_admin != 'y') {
@@ -58,7 +57,7 @@ if (isset($_REQUEST["action"])) {
 		$area = 'deluserfromgroup';
 		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
-			$userslibadmin->remove_user_from_group($_REQUEST["assign_user"], $_REQUEST["group"]);
+			$userlib->remove_user_from_group($_REQUEST["assign_user"], $_REQUEST["group"]);
 			$logslib->add_log('perms',sprintf(tra("Removed %s from group %s"),$_REQUEST["assign_user"], $_REQUEST["group"]));
 		} else {
 			key_get($area);

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-directory_stats.tpl,v 1.7 2005-03-12 16:50:59 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-directory_stats.tpl,v 1.8 2005-05-18 11:03:29 mose Exp $ *}
 
 {if $feature_directory eq 'y'}
 {tikimodule title="{tr}Directory Stats{/tr}" name="directory_stats" flip=$module_params.flip decorations=$module_params.decorations}

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/modules/mod-change_category.php,v 1.3 2005-03-12 16:50:01 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/modules/mod-change_category.php,v 1.4 2005-05-18 11:02:28 mose Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {

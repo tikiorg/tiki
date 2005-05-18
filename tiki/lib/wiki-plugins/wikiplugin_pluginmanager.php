@@ -16,7 +16,7 @@
     * @package TikiWiki
     * @subpackage TikiPlugins
     * @author Claudio Bustos
-    * @version $Revision: 1.6 $
+    * @version $Revision: 1.7 $
     */
     class WikiPluginPluginManager extends PluginsLib {
         var $expanded_params = array("info");
@@ -28,7 +28,7 @@
         }
         function getVersion() {
             return preg_replace("/[Revision: $]/", '',
-                "\$Revision: 1.6 $");
+                "\$Revision: 1.7 $");
         }
         function getDescription() {
             return tra("Provides a list of plugins on this wiki.").":<br />~np~{PLUGINMANAGER(info=>version|description|arguments)}{PLUGINMANAGER}~/np~";

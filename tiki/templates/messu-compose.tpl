@@ -1,7 +1,7 @@
 <h1><a class="pagetitle" href="messu-compose.php">{tr}Compose message{/tr}</a>
 
 {if $feature_help eq 'y'}
-<a href="{$helpurl}UserMessagesDoc" target="tikihelp" class="tikihelp" title="{tr}Compose Message{/tr}">
+<a href="{$helpurl}User+Messages" target="tikihelp" class="tikihelp" title="{tr}Compose Message{/tr}">
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>
 {/if}
 
@@ -16,6 +16,9 @@
 
 {if $sent}
 {$message}<br /><br />
+{/if}
+{if $allowMsgs ne "y"}
+<div>{tr}If you people want to be able to reply to you, you have to check <a href='tiki-user_preferences.php'>Allow messages from other users</a>{/tr}</div>
 {/if}
 <form action="messu-compose.php" method="post">
 <table class="normal" >

@@ -1,4 +1,5 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.66 2005-03-12 16:50:33 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.67 2005-05-18 11:02:58 mose Exp $ *}
+{popup_init src="lib/overlib.js"}
 
 <h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
   
@@ -26,11 +27,11 @@
 {if $feature_tabs eq 'y'}
 {cycle name=tabs values="1,2,3,4" print=false advance=false}
 <div id="page-bar">
-<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Users{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Users{/tr}</a></span>
 {if $userinfo.userId}
-<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Edit user{/tr} <i>{$userinfo.login}</i></a></span>
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Edit user{/tr} <i>{$userinfo.login}</i></a></span>
 {else}
-<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Add a new user{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Add a new user{/tr}</a></span>
 {/if}
 </span>
 </div>
@@ -94,11 +95,11 @@ title="{tr}edit account settings{/tr}: {$users[user].user}"><img border="0" alt=
 <td>
 {foreach from=$users[user].groups key=grs item=what}
 {if $grs != "Anonymous"}
-{if $what eq 'included'}<i>{/if}<a class="link" href="tiki-admingroups.php?group={$grs|escape:"url"}">{$grs}</a>{if $what eq 'included'}</i>{/if}
+{if $what eq 'included'}<i>{/if}<a class="link" href="tiki-admingroups.php?group={$grs|escape:"url"}" {if $what eq 'included'}title="{tr}Included group{/tr}"{/if}>{$grs}</a>{if $what eq 'included'}</i>{/if}
 (<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].user}&amp;action=removegroup&amp;group={$grs|escape:"url"}">x</a>)<br />
 {/if}
 {/foreach}
-<td  class="thin">{if $users[user].user ne 'admin'}<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;user={$users[user].user}"
+<td  class="thin">{if $users[user].user ne 'admin'}<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;user={$users[user].user|escape:url}"
 title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}'></a>{/if}
 </td>
 </tr>
@@ -196,7 +197,7 @@ title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
 <input type="hidden" name="edituser" value="1" />
 <input type="submit" name="submit" value="{tr}Save{/tr}" />
 {else}
-<tr class="formcolor"><td>{tr}Batch upload (CSV file){/tr}:</td><td><input type="file" name="csvlist"/><br />{tr}Overwrite{/tr}: <input type="checkbox" name="overwrite" checked="checked" /></td></tr>
+<tr class="formcolor"><td>{tr}Batch upload (CSV file<a {popup text='login,password,email'}><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>){/tr}:</td><td><input type="file" name="csvlist"/><br />{tr}Overwrite{/tr}: <input type="checkbox" name="overwrite" checked="checked" /></td></tr>
 <tr class="formcolor"><td>&nbsp;</td><td>
 <input type="hidden" name="newuser" value="1" />
 <input type="submit" name="submit" value="{tr}Add{/tr}" />

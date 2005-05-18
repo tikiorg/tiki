@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_sheets.php,v 1.9 2005-01-01 00:16:35 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_sheets.php,v 1.10 2005-05-18 10:59:00 mose Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -41,6 +41,7 @@ if ( !isset($_REQUEST['sheetId']) ) {
 }
 
 $smarty->assign('sheetId', $_REQUEST["sheetId"]);
+$smarty->assign('chart_enabled', (function_exists('imagepng') || function_exists('pdf_new')) ? 'y' : 'n');
 
 // Individual permissions are checked because we may be trying to edit the gallery
 
@@ -74,7 +75,7 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' )
 
 	// Save the changes
 	$handler = &new TikiSheetDatabaseHandler( $_REQUEST["sheetId"] );
-	$grid->export( &$handler );
+	$grid->export( $handler );
 
 	// Load the layout settings from the database
 	$grid = &new TikiSheet;
@@ -83,7 +84,7 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' )
 	$handler = &new TikiSheetOutputHandler;
 
 	ob_start();
-	$grid->export( &$handler );
+	$grid->export( $handler );
 	$smarty->assign( 'grid_content', ob_get_contents() );
 	ob_end_clean();
 }

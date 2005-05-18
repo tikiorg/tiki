@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-page_bar.tpl,v 1.8 2005-03-12 16:51:16 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-page_bar.tpl,v 1.9 2005-05-18 11:03:35 mose Exp $ *}
 
 <div id="page-bar">
 
@@ -29,7 +29,7 @@ class="linkbut">{if $beingEdited eq 'y'}<span class="highlight">{tr}edit{/tr}</s
 <div class="button2"><a href="tiki-pagepermissions.php?page={$page|escape:"url"}" class="linkbut">{tr}perms{/tr}</a></div>
 {/if}
 
-{if $feature_history eq 'y' && ($tiki_p_admin_wiki eq 'y' || $tiki_p_view_wiki_history eq 'y')}
+{if $feature_history eq 'y' and $tiki_p_edit eq 'y' and $tiki_p_wiki_view_history eq 'y'}
 <div class="button2"><a href="tiki-pagehistory.php?page={$page|escape:"url"}" class="linkbut">{tr}history{/tr}</a></div>
 {/if}
 {/if}

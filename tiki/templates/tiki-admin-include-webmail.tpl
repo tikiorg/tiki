@@ -1,5 +1,8 @@
 <div class="cbox">
-<div class="cbox-title">{tr}Webmail{/tr}</div>
+<div class="cbox-title">
+  {tr}{$crumbs[$crumb]->description}{/tr}
+  {help crumb=$crumbs[$crumb]}
+</div>
 <div class="cbox-data">
 <form action="tiki-admin.php?page=webmail" method="post">
 <table class="admin">
@@ -11,7 +14,7 @@
 <option value="2000000" {if $webmail_max_attachment eq 2000000}selected="selected"{/if}>2Mb</option>
 <option value="2500000" {if $webmail_max_attachment eq 2500000}selected="selected"{/if}>2.5Mb</option>
 <option value="3000000" {if $webmail_max_attachment eq 3000000}selected="selected"{/if}>3Mb</option>
-<option value="100000000" {if $webmail_max_attachment eq 100000000}selected="selected"{/if}>Unlimited</option>
+<option value="100000000" {if $webmail_max_attachment eq 100000000}selected="selected"{/if}>{tr}Unlimited{/tr}</option>
 </select></tr>
 <tr><td colspan="2" class="button"><input type="submit" name="webmail" value="{tr}Change preferences{/tr}" /></td></tr>    
 </table>

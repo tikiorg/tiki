@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 // Otherwise you will be ok.
 $api_tiki       = 'adodb';
 $db_tiki     = 'mysql';
-$dbversion_tiki = '1.10';
+$dbversion_tiki = '1.9';
 $host_tiki   = 'localhost';
 $user_tiki   = 'root';
 $pass_tiki   = '';
@@ -71,7 +71,7 @@ if (is_file('db/virtuals.inc')) {
 if (is_file($local_php)) {
 	require_once($local_php);
 } else {
-	die("<b style=color:red;>$local_php not found.</b><br /><br />Please run <a href=tiki-install.php>tiki-install.php</a>");
+	die("<b style=\"color:red;\">$local_php not found.</b><br /><br />Please run <a href=tiki-install.php>tiki-install.php</a>");
 }
 if (preg_match('/^adodb$/i', $api_tiki)) {
 	TikiInit::prependIncludePath('lib/adodb');

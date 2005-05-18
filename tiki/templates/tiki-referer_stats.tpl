@@ -1,7 +1,7 @@
 <h1><a class="pagetitle" href="tiki-referer_stats.php">{tr}Referer stats{/tr}</a>
   
       {if $feature_help eq 'y'}
-<a href="{$helpurl}RefererStats" target="tikihelp" class="tikihelp" title="{tr}admin Referer stats{/tr}">
+<a href="{$helpurl}Referer+Stats" target="tikihelp" class="tikihelp" title="{tr}admin Referer stats{/tr}">
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 
       {if $feature_view_tpl eq 'y'}

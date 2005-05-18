@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagepermissions.tpl,v 1.17 2004-07-01 00:07:07 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagepermissions.tpl,v 1.18 2005-05-18 11:03:19 mose Exp $ *}
 
 <h2>{tr}Assign permissions to page{/tr}: <a href="tiki-index.php?page={$page}">{$page}</a></h2>
 <h3>{tr}Current permissions for this page{/tr}:</h3>
@@ -11,7 +11,7 @@
   <td class="{cycle advance=false}">{$page_perms[pg].permName}</td>
   <td class="{cycle}">
     (<a class="link" href="tiki-pagepermissions.php?referer={$referer}&amp;action=remove&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;page={$page}&amp;perm={$page_perms[pg].permName}&amp;group={$page_perms[pg].groupName}">{tr}remove from this page{/tr}</a>)
-    (<a class="link" href="tiki-pagepermissions.php?referer={$referer}&amp;action=removestructure&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;page={$page}&amp;perm={$page_perms[pg].permName}&amp;group={$page_perms[pg].groupName}">{tr}remove from this structure{/tr}</a>)
+    {if $isStructure eq "y"}(<a class="link" href="tiki-pagepermissions.php?referer={$referer}&amp;action=removestructure&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;page={$page}&amp;perm={$page_perms[pg].permName}&amp;group={$page_perms[pg].groupName}">{tr}remove from this structure{/tr}</a>){/if}
   </td></tr>
 {sectionelse}
 <tr><td>{tr}No individual permissions; category or global permissions apply{/tr}</td></tr>
@@ -34,7 +34,7 @@
 </select>
 {tr}for{/tr}
 <input type="submit" name="assign" value="{tr}this page{/tr}" />
-<input type="submit" name="assignstructure" value="{tr}this structure{/tr}" />
+{if $inStructure eq "y"}<input type="submit" name="assignstructure" value="{tr}this structure{/tr}" />{/if}
 </form>
 
 <br /><br />

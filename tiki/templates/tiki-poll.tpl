@@ -4,8 +4,6 @@
 {section name=ix loop=$channels}
   <input type="radio" name="polls_optionId" value="{$channels[ix].optionId|escape}" />{tr}{$channels[ix].title}{/tr}<br />
 {/section}
-
-  <input type="radio" name="polls_optionId" value="WithdrawVote" />{tr}Withdraw Vote{/tr}<br />
 <div align="center">
 <input type="submit" name="pollVote" value="{tr}vote{/tr}" /><br />
 <a class="linkmodule" href="tiki-poll_results.php?pollId={$menu_info.pollId}">{tr}View Results{/tr}</a><br />

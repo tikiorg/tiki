@@ -13,7 +13,7 @@
 		{/if}
 		{/if}
 		{if $rss_blog eq "y"}
-		<a class="bloglink" href="tiki-blog_rss.php?blogId={$blogId}&amp;ver=2&amp;css=y"><img src='img/icons/mode_desc.gif' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' /></a>
+		<a class="bloglink" href="tiki-blog_rss.php?blogId={$blogId}"><img src='img/rss.png' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' /></a>
 		{/if}
 		{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y"}
 		<a class="bloglink" href="tiki-edit_blog.php?blogId={$blogId}"><img src='img/icons/config.gif' border='0' alt='{tr}Edit blog{/tr}' title='{tr}Edit blog{/tr}' /></a>

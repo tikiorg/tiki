@@ -1,11 +1,13 @@
 TikiWiki DevTools 
 -----------------
-$Id: README.txt,v 1.4 2004-01-25 00:31:30 ggeller Exp $
+$Id: README.txt,v 1.5 2005-05-18 10:59:14 mose Exp $
 
 The content of this directory is intended to be used for 
 TikiWiki development. It's included in the package for use
 of developers whose task is to release new versions of tikiwiki.
 
+Main tools
+==========
 
 * tikiwiki.spec
   made by dheltzel
@@ -22,3 +24,22 @@ of developers whose task is to release new versions of tikiwiki.
 * ggg-trace.php
   made by George G. Geller
   For tracing and debugging php code -- output a text file.
+
+
+Helper tools
+============
+
+* findstyledef.sh, findstyledef.pl
+  made by ohertel
+  Provide a report on CSS classes referenced in tpl and php files
+
+* csscheck.sh, stripbraces.pl, stripcomments.pl
+  made by mdavey
+  Provide a report on CSS classes used in a stylesheet
+  See http://tikiwiki.org/RecipeRestoreCss for details
+
+* cvsup.sh
+  made by mose
+  Perform a cvs up and create files so that tiki can display date in footer.tpl
+
+

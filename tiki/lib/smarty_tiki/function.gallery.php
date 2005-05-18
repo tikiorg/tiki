@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/function.gallery.php,v 1.9 2005-01-22 22:55:52 mose Exp $ */
+/* $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/function.gallery.php,v 1.10 2005-05-18 11:01:44 mose Exp $ */
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");

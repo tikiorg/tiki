@@ -1,26 +1,34 @@
-<div class="cbox">
-<div class="cbox-title">{tr}Wiki settings{/tr}</div>
-<div class="cbox-data">
-    <table class="admin">
-    <tr><td  valign="top">
-    <div class="simplebox">
-    {tr}Dumps{/tr}:<br />
+{if $feature_help eq "y"}
+<div class="rbox" style="margin-top: 10px;">
+<div class="rbox-title" style="background-color: #eeee99; font-weight : bold; display : inline; padding : 0 10px;">{tr}Tip{/tr}</div>  
+<div class="rbox-data" style="padding: 2px 10px; background-color: #eeee99;">{tr}To add/edit wiki pages easily, add the module quick_edit via "Modules" on the application menu, or{/tr} <a class="link" href="tiki-admin_modules.php">{tr}click here{/tr}</a>.</div>
+</div>
+<br />
+{/if}
+<table class="admin">
+<tr><td  valign="top" width="50%">
+    
+  <div class="cbox">
+    <div class="cbox-title">
+    {tr}Dumps{/tr}
+    </div>
+    <div class="cbox-data">
     <a class="link" href="tiki-admin.php?page=wiki&amp;dump=1">{tr}Generate dump{/tr}</a><br />
     <a class="link" href="dump/{if $tikidomain}{$tikidomain}/{/if}new.tar">{tr}Download last dump{/tr}</a>
-    </div>
+         
+    <br /><br />
+    <div class="heading">{tr}Create a Tag for the Current Wiki{/tr}</div>
     
-    <div class="simplebox">
     <form action="tiki-admin.php?page=wiki" method="post">
-    {tr}Create a tag for the current wiki{/tr}<br />
-    {tr}Tag Name{/tr}<input  maxlength="20" size="10" type="text" name="tagname"/>
+    {tr}Tag name{/tr}: <input  maxlength="20" size="10" type="text" name="tagname"/>
     <input type="submit" name="createtag" value="{tr}create{/tr}"/>
     </form>
-    </div>
     
-    <div class="simplebox">
+    <br />
+    <div class="heading">{tr}Restore the Wiki{/tr}</div>
+
     <form action="tiki-admin.php?page=wiki" method="post">
-    {tr}Restore the wiki{/tr}<br />
-    {tr}Tag Name{/tr}: <select name="tagname">
+    {tr}Tag name{/tr}: <select name="tagname">
           {section name=sel loop=$tags}
           <option value="{$tags[sel]|escape}">{$tags[sel]}</option>
           {sectionelse}
@@ -29,12 +37,12 @@
           </select>
     <input type="submit" name="restoretag" value="{tr}restore{/tr}"/>          
     </form>
-    </div>
     
-    <div class="simplebox">
+    <br />
+    <div class="heading">{tr}Remove a Tag{/tr}</div>
+
     <form action="tiki-admin.php?page=wiki" method="post">
-    {tr}Remove a tag{/tr}<br />
-    {tr}Tag Name{/tr}<select name="tagname">
+    {tr}Tag name{/tr}: <select name="tagname">
           {section name=sel loop=$tags}
           <option value="{$tags[sel]|escape}">{$tags[sel]}</option>
           {sectionelse}
@@ -43,11 +51,15 @@
           </select>
     <input type="submit" name="removetag" value="{tr}remove{/tr}"/>          
     </form>
-    </div>    
-    
-    
-    <div class="simplebox">
-    {tr}Wiki comments settings{/tr}
+    <br />
+    </div>
+  </div>
+  
+  <div class="cbox">
+    <div class="cbox-title">
+    {tr}Wiki Comments Settings{/tr}
+    </div>
+    <div class="cbox-data">
     <form method="post" action="tiki-admin.php?page=wiki">
     <table class="admin">
     <tr><td class="form">{tr}Default number of comments per page{/tr}: </td><td><input size="5" type="text" name="wiki_comments_per_page" value="{$wiki_comments_per_page|escape}" /></td></tr>
@@ -59,91 +71,90 @@
     <option value="points_desc" {if $wiki_comments_default_ordering eq 'points_desc'}selected="selected"{/if}>{tr}Points{/tr}</option>
     </select>
     </td></tr>
-    <tr><td colspan="2" class="button"><input type="submit" name="wikiprefs" value="{tr}Change preferences{/tr}" /></td></tr>
+    <tr><td colspan="2" class="button"><input type="submit" name="wikiprefs" value="{tr}Change settings{/tr}" /></td></tr>
     </table>
     </form>
     </div>
+    </div>
     
     
-    <div class="simplebox">
+  <div class="cbox">
+    <div class="cbox-title">
     {tr}Export Wiki Pages{/tr}
+    </div>
+    <div class="cbox-data">
     <form method="post" action="tiki-admin.php?page=wiki">
     <table class="admin">
     <tr><td align="center" colspan="2"><a class="link" href="tiki-export_wiki_pages.php">{tr}Export{/tr}</a></td></tr>
     </table>
     </form>
     </div>
+  </div>
     
-     <div class="simplebox">
+    {*next two probably don't belong here *}
+    
+  <div class="cbox">
+    <div class="cbox-title">
+    {tr}Wiki Administration{/tr}
+    </div>
+    <div class="cbox-data">
     <a class="link" href="tiki-admin.php?page=wikiatt">{tr}Manage attachment preferences{/tr}</a>
     </div>
-    
-    <div class="simplebox">
+
+    <div class="cbox-data">
     <a class="link" href="tiki-admin.php?page=wiki&amp;rmvunusedpic=1">{tr}Remove unused pictures{/tr}</a>
     </div>
-    
-    <div class="simplebox">
-    <form method="post" action="tiki-admin.php?page=wiki">
+  </div>
+
+  <div class="cbox">
+    <div class="cbox-title">
+    {tr}Wiki Home Page{/tr}
+    </div>
+    <div class="cbox-data">
+     <form method="post" action="tiki-admin.php?page=wiki">
     <table class="admin"><tr>
-    <td class="form">{tr}Wiki Home Page{/tr}</td><td class="form"><input type="text" name="wikiHomePage" value="{$wikiHomePage|escape}" />
+    <td class="form"><input type="text" name="wikiHomePage" value="{$wikiHomePage|escape}" />
     <input type="submit" name="setwikihome" value="{tr}set{/tr}" />
     </td>
     </tr></table>
     </form>
     </div>
-    
-    <div class="simplebox">
+  </div>
+  
+  <div class="cbox">
+    <div class="cbox-title">
+    {tr}Wiki Discussion{/tr}
+    </div>
+    <div class="cbox-data">
     <form method="post" action="tiki-admin.php?page=wiki">
-    <table class="admin"><tr>
-    <td colspan="2" class="form">{tr}Wiki Discussion{/tr}</td></tr><tr><td class="form">
+    <table class="admin">
+    <tr><td class="form">
     {tr}Discuss pages on forums{/tr}: </td><td>
     <input type="checkbox" name="feature_wiki_discuss" {if $feature_wiki_discuss eq 'y'}checked="checked"{/if}/> </td></tr>
     <tr><td class="form">{tr}Forum{/tr}:</td><td class="form">
 {*    <input maxlength="20" size="10" type="text" name="wiki_forum" value="{$wiki_forum|escape}"/> *}
-	<select name="wiki_forum">
-{section name=ix loop=$all_forums}
-<option value="{$all_forums[ix].name|escape}" {if $all_forums[ix].name eq $wiki_forum}selected="selected"{/if}>{$all_forums[ix].name}</option>
-{/section}
-</select>
+	  <select name="wiki_forum">
+    {section name=ix loop=$all_forums}
+    <option value="{$all_forums[ix].name|escape}" {if $all_forums[ix].name eq $wiki_forum}selected="selected"{/if}>{$all_forums[ix].name}</option>
+    {/section}
+    </select>
 
-</td></tr>
+    </td></tr>
     <tr><td colspan="2" class="button"><input type="submit" name="wikidiscussprefs" value="{tr}Change preferences{/tr}" />
     </td>
     </tr></table>
     </form>
     </div>
-
-    <div class="simplebox">
-    <form method="post" action="tiki-admin.php?page=wiki">
-    <table class="admin"><tr>
-    <td colspan="2" class="form">{tr}Real-time Static Wiki Pages{/tr}</td></tr><tr><td class="form">
-    {tr}If enabled, wiki pages will be created as static HTML pages in addition to the normal tiki-index.php pages{/tr}:
-    </td></tr><tr><td>
-    <select name="feature_wiki_realtime_static">
-    <option value='disabled' {if $feature_wiki_realtime_static neq 'y'}selected="selected"{/if}>{tr}disabled{/tr}</option>
-    <option value='enabled' {if $feature_wiki_realtime_static eq 'y'}selected="selected"{/if}>{tr}enabled{/tr}</option>
-    </select>
-    </td>
-    </tr>
-    <tr><td colspan="2" class="form">{tr}Full path to directory for storing static pages (must be writable){/tr}:<br /><input name="staticpath" size="40" value="{$wiki_realtime_static_path}"></tr>
-    <tr><td colspan="2" class="form">{tr}Static pages will be built according to permissions assigned to the following group{/tr}:<br />
-    	<select name="staticgroup">
-    	<option></option>
-    	{foreach from=$allgroups item=grp}
-			<option value="{$grp.groupName}" {if $grp.groupName eq $wiki_realtime_static_group}selected="selected"{/if}>{$grp.groupName}</option>
-		{/foreach}
-		</select></td></tr>
-    <tr><td colspan="2" class="form"><a href="tiki-admin.php?page=wiki&amp;rebuildstatic=y" class="link">{tr}(re)build all static pages{/tr}</a></td></tr>
-    <tr><td colspan="2" class="form"><a href="tiki-admin.php?page=wiki&amp;purgestatic=y" class="link">{tr}remove ghost static pages{/tr}</a></td></tr>
-    <tr><td colspan="2" class="button"><input type="submit" name="staticwiki" value="{tr}Change preferences{/tr}" /></td></tr>
-    </table>
-    </form>
+  </div>
+  
+  <div class="cbox">
+    <div class="cbox-title">
+    {tr}Wiki Link Format{/tr}
     </div>
-
-    <div class="simplebox">
+    <div class="cbox-data">
     <form method="post" action="tiki-admin.php?page=wiki">
-    <table class="admin"><tr>
-    <td colspan="2" class="form">{tr}Wiki Link Format{/tr}</td></tr><tr><td class="form">
+    <table class="admin">
+    <tr><td class="form">
     {tr}Controls recognition of Wiki links using the two parenthesis Wiki link syntax <i>((page name))</i>.{/tr}
     </td></tr><tr><td>
     <select name="wiki_page_regex">
@@ -156,9 +167,13 @@
     </tr></table>
     </form>
     </div>
+  </div>
     
-    <div class="simplebox">
-    {tr}Wiki page list configuration{/tr}
+  <div class="cbox">
+    <div class="cbox-title">
+    {tr}Wiki Page List Configuration{/tr}
+    </div>
+    <div class="cbox-data">
     <form method="post" action="tiki-admin.php?page=wiki">
     <table class="admin">
     	<tr>
@@ -236,15 +251,19 @@
 
     	<tr>
     		<td colspan="2" class="button">
-   	 			<input type="submit" name="wikilistprefs" value="{tr}Change preferences{/tr}" />
+   	 			<input type="submit" name="wikilistprefs" value="{tr}Change configuration{/tr}" />
     		</td>
     	</tr>
     </table>
     </form>
     </div>
+  </div>
 
-    <div class="simplebox">
-    {tr}Wiki 3D browser configuration{/tr}
+  <div class="cbox">
+    <div class="cbox-title">
+    {tr}Wiki 3D Browser Configuration{/tr}
+    </div>
+    <div class="cbox-data">
     <form action="tiki-admin.php?page=wiki" method="post">
     <table class="admin">
       <tr>
@@ -276,46 +295,53 @@
 	<td><input type="text" name="wiki_3d_missing_page_color" value="{$wiki_3d_missing_page_color|escape}" size="7" /></td>
       </tr>
       <tr>
-        <td colspan="2" class="button"><input type="submit" name="wikiset3d" value="{tr}Change preferences{/tr}" /></td>
+        <td colspan="2" class="button"><input type="submit" name="wikiset3d" value="{tr}Change configuration{/tr}" /></td>
       </tr>    
     </table>
     </form>
-
     </div>
-    
-    <div class="simplebox">
-    <form method="post" action="tiki-admin.php?page=wiki">
-    <table class="admin"><tr>
-    <td colspan="2" class="form">{tr}Wiki Page Footer configuration{/tr}</td></tr><tr><td colspan="2" class="form">
-    {tr}Place copyright notices, certifying authorities, or page URLs (&#123;url&#125;) here{/tr}
-    </td></tr><tr>
-    <td>Enable wiki page footer:</td>
-    <td><input type="checkbox" name="feature_wiki_page_footer" {if $feature_wiki_page_footer eq 'y'}checked="checked"{/if}/></td>
-    </tr>
-    <tr>
-    <td colspan="2" class="form">{tr}Wiki page footer content:{/tr}<br />
-    <textarea rows="3" cols="40" name="wiki_page_footer_content">{$wiki_page_footer_content}</textarea></td>
-    <tr><td colspan="2" class="button"><input type="submit" name="wikifooter" value="{tr}Change preferences{/tr}" /></td></tr>
+  </div>
+
+  <div class="cbox">
+    <div class="cbox-title">
+    {tr}HTML in Wiki Pages{/tr}
+    </div>
+    <div class="cbox-data">
+    <form action="tiki-admin.php?page=wiki" method="post">
+    <table class="admin">
+    <tr><td class="form">{tr}Allow HTML{/tr}:</td><td><input type="checkbox" name="feature_wiki_allowhtml" {if $feature_wiki_allowhtml eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Wiki syntax used when a page contains HTML{/tr}:</td><td>
+    <select name="wiki_wikisyntax_in_html">
+    <option value="full" {if $wiki_wikisyntax_in_html eq 'full'}selected="selected"{/if}>{tr}full{/tr}</option>
+    <option value="partial" {if $wiki_wikisyntax_in_html eq 'partial'}selected="selected"{/if}>{tr}partial{/tr}</option>
+    <option value="none" {if $wiki_wikisyntax_in_html eq 'none'}selected="selected"{/if}>{tr}none{/tr}</option>
+    </select>
+    </td></tr>
+    <tr><td class="form">{tr}Wysiwyg editor{/tr}:</td><td>
+    <select name="feature_wysiwyg" disabled="1">
+    <option value="default" {if $feature_wysiwyg eq 'default'}selected="selected"{/if}>{tr}default{/tr}</option>
+    <option value="optional" {if $feature_wysiwyg eq 'optional'}selected="selected"{/if}>{tr}optional{/tr}</option>
+    <option value="no" {if $feature_wysiwyg eq 'no'}selected="selected"{/if}>{tr}no{/tr}</option>
+    </select>
+    </td></tr>
+    <tr><td colspan="2" class="button"><input type="submit" name="wikisethtmloptions" value="{tr}Change preferences{/tr}" /></td></tr>    
     </table>
     </form>
     </div>
+  </div>
 
-    </td>
+  </td>
+  <td  valign="top" width="50%">
     
-    <td  valign="top">
-    <div class="simplebox">
-    {tr}Wiki Features{/tr}:<br />
+  <div class="cbox">
+    <div class="cbox-title">
+    {tr}Wiki Features{/tr}
+    </div>
+    <div class="cbox-data">
     <form action="tiki-admin.php?page=wiki" method="post">
     <table class="admin">
     <tr><td class="form">{tr}Sandbox{/tr}:</td><td><input type="checkbox" name="feature_sandbox" {if $feature_sandbox eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Anonymous editors must input anti-bot code{/tr}:</td><td><input type="checkbox" name="feature_antibot" {if $feature_antibot eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="form">{tr}Double-click to edit page{/tr}:</td><td>
-      <select name="feature_wiki_dblclickedit">
-        <option value="wikitext_only" {if $feature_wiki_dblclickedit eq 'wikitext_only'}selected="selected"{/if}>{tr}Double-click in wiki text only{/tr}</option>
-        <option value="whole_page" {if $feature_wiki_dblclickedit eq 'whole_page'}selected="selected"{/if}>{tr}Double-click in whole page{/tr}</option>
-        <option value="disabled" {if $feature_wiki_dblclickedit eq 'disabled'}selected="selected"{/if}>{tr}Disabled{/tr}</option>
-      </select>
-    </td></tr>
     <tr><td class="form">{tr}Last changes{/tr}:</td><td><input type="checkbox" name="feature_lastChanges" {if $feature_lastChanges eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Dump{/tr}:</td><td><input type="checkbox" name="feature_dump" {if $feature_dump eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Export{/tr}:</td><td><input type="checkbox" name="feature_wiki_export" {if $feature_wiki_export eq 'y'}checked="checked"{/if}/></td></tr>
@@ -345,7 +371,7 @@
     <tr><td class="form">{tr}Pictures{/tr}:</td><td><input type="checkbox" name="feature_wiki_pictures" {if $feature_wiki_pictures eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Use page description{/tr}:</td><td><input type="checkbox" name="feature_wiki_description" {if $feature_wiki_description eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Show page title{/tr}:</td><td><input type="checkbox" name="feature_page_title" {if $feature_page_title eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="form">{tr}Show page id{/tr}:</td><td><input type="checkbox" name="feature_wiki_pageid" {if $feature_wiki_pageid eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Show page ID{/tr}:</td><td><input type="checkbox" name="feature_wiki_pageid" {if $feature_wiki_pageid eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Cache wiki pages (global){/tr}:</td><td>
     <select name="wiki_cache">
     <option value="0" {if $wiki_cache eq 0}selected="selected"{/if}>0 ({tr}no cache{/tr})</option>
@@ -365,38 +391,51 @@
     <tr><td class="form">{tr}Use WikiWords{/tr}:</td><td><input type="checkbox" name="feature_wikiwords" {if $feature_wikiwords eq 'y'}checked="checked"{/if}/></td></tr>    
     <tr><td class="form">{tr}Accept dashes and underscores in WikiWords{/tr}:</td><td><input type="checkbox" name="feature_wikiwords_usedash" {if $feature_wikiwords_usedash eq 'y'}checked="checked"{/if}/></td></tr>    
     <tr><td class="form">{tr}Link plural WikiWords to their singular forms{/tr}:</td><td><input type="checkbox" name="feature_wiki_plurals" {if $feature_wiki_plurals eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="form">{tr}Use JavaScript tooltips for wiki links{/tr}:</td><td><input type="checkbox" name="feature_wiki_jstooltips" {if $feature_wiki_jstooltips eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Use Wiki paragraph formatting{/tr}:</td><td><input type="checkbox" name="feature_wiki_paragraph_formatting" {if $feature_wiki_paragraph_formatting eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="form">{tr}Page creators are admin of their pages{/tr}:</td><td><input type="checkbox" name="wiki_creator_admin" {if $wiki_creator_admin eq 'y'}checked="checked"{/if}/></td></tr>    
+    <tr><td class="form">{tr}Automonospaced text{/tr}:</td><td><input type="checkbox" name="feature_wiki_monosp" {if $feature_wiki_monosp eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Tables syntax{/tr}:</td><td>
     <select name="feature_wiki_tables">
     <option value="old" {if $feature_wiki_tables eq 'old'}selected="selected"{/if}>{tr}|| for rows{/tr}</option>
     <option value="new" {if $feature_wiki_tables eq 'new'}selected="selected"{/if}>{tr}\n for rows{/tr}</option>
     </select>
     </td></tr>
-    <tr><td class="form">{tr}Automonospaced text{/tr}:</td><td><input type="checkbox" name="feature_wiki_monosp" {if $feature_wiki_monosp eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Uses Slideshow{/tr}:</td><td><input type="checkbox" name="wiki_uses_slides" {if $wiki_uses_slides eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="form">{tr}Allow HTML{/tr}:</td><td><input type="checkbox" name="feature_wiki_allowhtml" {if $feature_wiki_allowhtml eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Open page as structure{/tr}:</td><td><input type="checkbox" name="feature_wiki_open_as_structure" {if $feature_wiki_open_as_structure eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Use external link icons{/tr}:</td><td><input type="checkbox" name="feature_wiki_ext_icon" {if $feature_wiki_ext_icon eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}User's Page{/tr}:</td><td><input type="checkbox" name="feature_wiki_userpage" {if $feature_wiki_userpage eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}UserPage prefix{/tr}:</td><td><input type="text" name="feature_wiki_userpage_prefix" value="{$feature_wiki_userpage_prefix|default:'UserPage'}" size="12" /></td></tr>
-    <tr><td class="form">{tr}Plugins must be typed in ALL CAPS{/tr}:</td><td><input type="checkbox" name="feature_wiki_plugins_allcaps" {if $feature_wiki_plugins_allcaps eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td colspan="2" class="button"><input type="submit" name="wikifeatures" value="{tr}Change preferences{/tr}" /></td></tr>
+    <tr><td class="form">{tr}Page creators are admin of their pages{/tr}:</td><td><input type="checkbox" name="wiki_creator_admin" {if $wiki_creator_admin eq 'y'}checked="checked"{/if}/></td></tr>    
+    <tr><td class="form">{tr}Import HTML{/tr}:</td><td><input type="checkbox" name="feature_wiki_import_html" {if $feature_wiki_import_html eq 'y'}checked="checked"{/if}/></td></tr>    
+
+    </table><table class="admin">
+    
+    <tr><td class="form">{tr}List authors{/tr}:</td><td>
+    <select name="wiki_authors_style">
+    <option value="classic" {if $wiki_authors_style eq 'classic'}selected="selected"{/if}>{tr}as Creator &amp; Last Editor{/tr}</option>
+    <option value="business" {if $wiki_authors_style eq 'business'}selected="selected"{/if}>{tr}Business style{/tr}</option>
+    <option value="collaborative" {if $wiki_authors_style eq 'collaborative'}selected="selected"{/if}>{tr}Collaborative style{/tr}</option>
+    <option value="none" {if $wiki_authors_style eq 'none'}selected="selected"{/if}>{tr}no (disabled){/tr}</option>
+    </select> 
+    </td></tr>
+    <tr><td colspan="2" class="button"><input type="submit" name="wikifeatures" value="{tr}Set features{/tr}" /></td></tr>
     </table>
     </form>
     </div>
+  </div>
     
-    <div class="simplebox">
+  <div class="cbox">
+    <div class="cbox-title">
     {tr}Wiki History{/tr}
+    </div>
+    <div class="cbox-data">
     <form action="tiki-admin.php?page=wiki" method="post">
     <table class="admin">
     <tr><td class="form">{tr}Maximum number of versions for history{/tr}: </td><td><input size="5" type="text" name="maxVersions" value="{$maxVersions|escape}" /> (0={tr}unlimited{/tr})</td></tr>
     <tr><td class="form">{tr}Never delete versions younger than days{/tr}: </td><td><input size="5" type="text" name="keep_versions" value="{$keep_versions|escape}" /></td></tr>
-    <tr><td class="form">{tr}IP not displayed in history{/tr}:</td><td>
+       <tr><td class="form">{tr}IP not displayed in history{/tr}:</td><td>
 	<input type="checkbox" name="feature_wiki_history_ip" {if $feature_wiki_history_ip eq 'n'}checked="checked"{/if}/>
     </td></tr>
-    <tr><td class="form">{tr}Diff style{/tr}: </td><td><select name="default_wiki_diff_style">
+     <tr><td class="form">{tr}Diff style{/tr}: </td><td><select name="default_wiki_diff_style">
        <option value="old" {if $default_wiki_diff_style eq 'old'}selected="selected"{/if}>{tr}Only with last version{/tr}</option>
        <option value="minsidediff" {if $default_wiki_diff_style ne 'old'}selected="selected"{/if}>{tr}Any 2 versions{/tr}</option>
     </select></td></tr>
@@ -404,9 +443,13 @@
     </table>
     </form>
     </div>
+  </div>
 
-    <div class="simplebox">
+  <div class="cbox">
+    <div class="cbox-title">
     {tr}Copyright Management{/tr}
+    </div>
+    <div class="cbox-data">
     <form action="tiki-admin.php?page=wiki" method="post">
     <table class="admin">
     <tr><td class="form">{tr}Enable Feature{/tr}:</td><td><input type="checkbox" name="wiki_feature_copyrights" {if $wiki_feature_copyrights eq 'y'}checked="checked"{/if}/></td></tr>
@@ -416,26 +459,23 @@
     </table>
     </form>
     </div>
+  </div>
 
-    <div class="simplebox">
-    {tr}Wiki Watch{/tr}:<br />
+  <div class="cbox">
+    <div class="cbox-title">
+    {tr}Wiki Watch{/tr}
+    </div>
+    <div class="cbox-data">
     <form action="tiki-admin.php?page=wiki" method="post">
     <table class="admin">
     <tr><td class="form">{tr}Create watch for author on page creation{/tr}:</td><td><input type="checkbox" name="wiki_watch_author" {if $wiki_watch_author eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="form">{tr}Enable watches on comments{/tr}:</td><td><input type="checkbox" name="wiki_watch_comments" {if $wiki_watch_comments eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Enable watch events when I am the editor{/tr}:</td><td><input type="checkbox" name="wiki_watch_editor" {if $wiki_watch_editor eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="form">{tr}Diff style{/tr}:</td><td>
-      <select name="feature_wiki_email_diff_style">
-        <option value="source" {if $feature_wiki_email_diff_style eq 'source'}selected="selected"{/if}>{tr}New page source{/tr}</option>
-        <option value="unidiff" {if $feature_wiki_email_diff_style eq 'unidiff'}selected="selected"{/if}>{tr}Unified diff{/tr}</option>
-      </select>
-    </td></tr>
-    <tr><td align="center" colspan="2"><input type="submit" name="wikisetwatch" value="{tr}Set{/tr}" /></td></tr>
+    <tr><td class="form">{tr}Enable watches on comments{/tr}:</td><td><input type="checkbox" name="wiki_watch_comments" {if $wiki_watch_comments eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td colspan="2" class="button"><input type="submit" name="wikisetwatch" value="{tr}Change preferences{/tr}" /></td></tr>
     </table>
     </form>
     </div>
+  </div>
 
-    </td></tr>
-    </table>
-</div>
-</div>
+  </td></tr>
+  </table>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-compose.php,v 1.23 2005-03-12 16:48:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-compose.php,v 1.24 2005-05-18 10:58:52 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -157,7 +157,9 @@ if (isset($_REQUEST['send'])) {
 	$users = array_unique($users);
 
 	// Validation: either to, cc or bcc must have a valid user
-	if (count($users) <= 0) {
+	if (count($users) > 0) {
+		$message .= tra("Message will be sent to: "). implode(',', $users). "<br />";
+	} else {
 		$message .= tra('ERROR: No valid users to send the message');
 		$smarty->assign('message', $message);
 		$smarty->display("tiki.tpl");
@@ -178,7 +180,6 @@ if (isset($_REQUEST['send'])) {
 			$messulib->mark_replied($a_user, $_REQUEST['replyto_hash']);
 		}
 	}
-	$message .= tra("Message sent to: "). implode(',', $users). "<br />";
 	
 	// Insert a copy of the message in the sent box of the sender
 	$messulib->save_sent_message(
@@ -187,6 +188,8 @@ if (isset($_REQUEST['send'])) {
 
 	$smarty->assign('message', $message);
 }
+$allowMsgs = $messulib->get_user_preference($user, 'allowMsgs', 'y');
+$smarty->assign('allowMsgs', $allowMsgs);
 
 $section = 'user_messages';
 include_once ('tiki-section_options.php');

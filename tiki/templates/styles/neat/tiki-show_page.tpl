@@ -11,6 +11,7 @@
 {if $feature_wiki_pageid eq 'y'}
 	<small><a class="link" href="tiki-index.php?page_id={$page_id}">{tr}page id{/tr}: {$page_id}</a></small>
 {/if}
+
 <table width="100%">
 {if $is_categorized eq 'y' and $feature_categories eq 'y' and $feature_categorypath eq 'y'}
 <tr>
@@ -19,7 +20,7 @@
 <small>{$description}</small>
 {/if}
 {if $cached_page eq 'y'}
-<small>(cached)</small>
+<small>({tr}cached{/tr})</small>
 {/if}
 </td>
 <td align="right">
@@ -141,7 +142,7 @@
 {/if}
 
 {if $page|lower ne 'sandbox'}
-	{if $feature_history eq 'y' && ($tiki_p_admin_wiki eq 'y' || $tiki_p_view_wiki_history eq 'y')}
+	{if $feature_history eq 'y' and $tiki_p_wiki_view_history eq 'y'}
 		<span class="tabbut"><a href="tiki-pagehistory.php?page={$page|escape:"url"}" class="tablink">{tr}history{/tr}</a></span>
 	{/if}
 {/if}
@@ -170,33 +171,11 @@
 	<span class="tabbut"><a href="tiki-view_forum.php?forumId={$wiki_forum_id}&amp;comments_postComment=post&amp;comments_title={$page|escape:"url"}&amp;comments_data={"Use this thread to discuss the [tiki-index.php?page="}{$page}{"|"}{$page}{"] page."|escape:"url"}&amp;comment_topictype=n" class="tablink">{tr}discuss{/tr}</a></span>
 {/if}
 
-{* don't show comments if feature disabled or not enough rights *}
-{if $feature_wiki_comments == 'y'
-&& (($tiki_p_read_comments  == 'y' && $comments_cant != 0)
-||  $tiki_p_post_comments  == 'y'
-||  $tiki_p_edit_comments  == 'y')}
-  <span class="tabbut">
-  <a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink"{if $comments_cant != 0}  style="background: #FFAAAA"{/if}>{if $comments_cant == 0}{tr}add comment{/tr}{elseif $comments_cant == 1}{tr}1 comment{/tr}{else}{$comments_cant} {tr}comments{/tr}{/if}</a></span>
+{if $feature_wiki_comments eq 'y' and $tiki_p_wiki_view_comments eq 'y' and $show_page eq 'y'}
+        <span class="tabbut"><a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink">{if $comments_cant eq 0}{tr}comment{/tr}{elseif $comments_cant eq 1}1 {tr}comment{/tr}{else}{$comments_cant} {tr}comments{/tr}{/if}</a></span>
 {/if}
-
-{php} global $atts; global $smarty; $smarty->assign('atts_cnt', count($atts["data"])); {/php}
-{if $feature_wiki_attachments      == 'y'
-  && ($tiki_p_wiki_view_attachments  == 'y'
-  &&  count($atts) > 0
-  ||  $tiki_p_wiki_attach_files      == 'y'
-  ||  $tiki_p_wiki_admin_attachments == 'y'
-  ||  $tiki_p_admin == 'y')}
-<span class="tabbut"><a href="#attachments" onclick="javascript:flip('attzone{if $atts_show eq 'y'}open{/if}');" class="tablink">
-{if $atts_cnt == 0
-  || $tiki_p_wiki_attach_files == 'y'
-  && $tiki_p_wiki_view_attachments == 'n'
-  && $tiki_p_wiki_admin_attachments == 'n'}
-	{tr}attach file{/tr}
-{elseif $atts_cnt == 1}
-	<span class="highlight">{tr}1 file attached{/tr}</span>
-{else}
-	<span class="highlight">{tr}{$atts_cnt} files attached{/tr}</span>
-{/if}</a></span>
+{if $feature_wiki_attachments eq 'y' and $tiki_p_wiki_view_attachments eq 'y' and $show_page eq 'y'}
+<span class="tabbut"><a href="#attachments" onclick="javascript:flip('attzone{if $atts_show eq 'y'}open{/if}');" class="tablink">{if $atts_count eq 0}{tr}attach file{/tr}{elseif $atts_count eq 1}1 {tr}attachment{/tr}{else}{$atts_count} {tr}attachments{/tr}{/if}</a></span>
 {/if}
 {if $feature_multilingual eq 'y' and $tiki_p_edit eq 'y' and !$lock}
      <span class="tabbut"><a href="tiki-edit_translation.php?page={$page|escape:'url'}" class="tablink">{tr}translation{/tr}</a></span>
@@ -204,8 +183,7 @@
 
 {/if}
 
-<div class="wikitext"
-{if $user_dbl eq 'y' and $feature_wiki_dblclickedit eq 'wikitext_only' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}>
+<div class="wikitext">
 {if $structure eq 'y'}
 <div class="tocnav">
 <table width='100%'>
@@ -297,18 +275,88 @@
 </div>
 {/if}
 
-{if $tiki_p_wiki_view_author eq 'y' || $tiki_p_admin eq 'y' || $tiki_p_admin_wiki eq 'y'}
-<p class="editdate">{tr}Created by{/tr}: {$creator|userlink} {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}
-{else}
-<p class="editdate">{tr}Last modification{/tr}: {$lastModif|tiki_long_datetime}
-{/if}
-{if $feature_wiki_page_footer eq 'y'}<br />{$wiki_page_footer_content}{/if}
+{if isset($wiki_authors_style) && $wiki_authors_style eq 'business'}
+<p class="editdate">
+  {tr}Last edited by{/tr} {$lastUser|userlink}
+  {section name=author loop=$contributors}
+   {if $smarty.section.author.first}, {tr}based on work by{/tr}
+   {else}
+    {if !$smarty.section.author.last},
+    {else} {tr}and{/tr}
+    {/if}
+   {/if}
+   {$contributors[author]|userlink}
+  {/section}.<br />                                         
+  {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}.
 </p>
+{elseif isset($wiki_authors_style) &&  $wiki_authors_style eq 'collaborative'}
+<p class="editdate">
+  {tr}Contributors to this page{/tr}: {$lastUser|userlink}
+  {section name=author loop=$contributors}
+   {if !$smarty.section.author.last},
+   {else} {tr}and{/tr}
+   {/if}
+   {$contributors[author]|userlink}
+  {/section}.<br />
+  {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}.
+</p>
+{elseif isset($wiki_authors_style) &&  $wiki_authors_style eq 'none'}
+{else}
+<p class="editdate">
+  {tr}Created by{/tr}: {$creator|userlink}
+  {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}
+</p>
+{/if}
 
 {if $wiki_extras eq 'y'}
 <br />
 {if $feature_wiki_attachments eq 'y'}
-{include file=attachments.tpl}
+{if $tiki_p_wiki_view_attachments eq 'y' or $tiki_p_wiki_admin_attachments eq 'y'}
+<a name="attachments"></a>
+<div id="attzone">
+<table class="normal">
+<tr>
+  <td class="heading"><a class="tableheading" href="tiki-index.php?page={$page}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'filename_desc'}filename_asc{else}filename_desc{/if}">{tr}name{/tr}</a></td>
+  <td class="heading"><a class="tableheading" href="tiki-index.php?page={$page}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}uploaded{/tr}</a></td>
+  <td style="text-align:right;"   class="heading"><a class="tableheading" href="tiki-index.php?page={$page}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">{tr}size{/tr}</a></td>
+  <td style="text-align:right;"   class="heading"><a class="tableheading" href="tiki-index.php?page={$page}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'downloads_desc'}downloads_asc{else}downloads_desc{/if}">{tr}dls{/tr}</a></td>
+  <td class="heading"><a class="tableheading" href="tiki-index.php?page={$page}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'comment_desc'}comment_asc{else}comment_desc{/if}">{tr}desc{/tr}</a></td>
+</tr>
+{cycle values="odd,even" print=false}
+{section name=ix loop=$atts}
+<tr>
+ <td class="{cycle advance=false}">
+ {$atts[ix].filename|iconify}
+ <a class="tablename" href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}">{$atts[ix].filename}</a>
+ {if $tiki_p_wiki_admin_attachments eq 'y' or ($user and ($atts[ix].user eq $user))}
+ <a class="link" href="tiki-index.php?page={$page}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">[x]</a>
+ {/if}
+ </td>
+ <td class="{cycle advance=false}"><small>{$atts[ix].created|tiki_short_datetime}{if $atts[ix].user} {tr}by{/tr} {$atts[ix].user}{/if}</small></td>
+ <td style="text-align:right;" class="{cycle advance=false}">{$atts[ix].filesize|kbsize}</td>
+ <td style="text-align:right;" class="{cycle advance=false}">{$atts[ix].downloads}</td>
+ <td class="{cycle}"><small>{$atts[ix].comment}</small></td>
+</tr>
+{sectionelse}
+<tr>
+ <td colspan="19" class="even">{tr}No attachments for this page{/tr}</td>
+</tr>
+{/section}
+</table>
+{if $tiki_p_wiki_attach_files eq 'y' or $tiki_p_wiki_admin_attachments eq 'y'}
+<form enctype="multipart/form-data" action="tiki-index.php?page={$page}" method="post">
+<table class="normal">
+<tr>
+ <td class="formcolor">{tr}Upload file{/tr}:<input type="hidden" name="MAX_FILE_SIZE" value="1000000000"><input  style="font-size:9px;" size="16" name="userfile1" type="file">
+ {tr}comment{/tr}: <input  style="font-size:9px;"  type="text" name="attach_comment" maxlength="250" />
+ <input style="font-size:9px;" type="submit" name="attach" value="{tr}attach{/tr}" />
+ </td>
+</tr>
+</table>
+</form>
+{/if}
+</div>
+{/if}
 {/if}
 {if $feature_wiki_comments eq 'y' and $tiki_p_wiki_view_comments eq 'y'}
 {include file=comments.tpl}

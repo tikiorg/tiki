@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.32 2005-03-12 16:49:01 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.33 2005-05-18 10:58:59 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -95,7 +95,7 @@ if (isset($_REQUEST["upload"])) {
 		die;
 	}
 
-	$gal_info = $filegallib->get_file_gallery($_REQUEST["galleryId"]);
+	$gal_info = $tikilib->get_file_gallery($_REQUEST["galleryId"]);
 
 	// Check the user to be admin or owner or the gallery is public
 	if ($tiki_p_admin_file_galleries != 'y' && (!$user || $user != $gal_info["user"]) && $gal_info["public"] != 'y') {
@@ -262,7 +262,7 @@ if (isset($_REQUEST["galleryId"])) {
 }
 
 if ($tiki_p_admin_file_galleries != 'y') {
-	$galleries = $filegallib->list_visible_file_galleries(0, -1, 'lastModif_desc', $user, '');
+	$galleries = $tikilib->list_visible_file_galleries(0, -1, 'lastModif_desc', $user, '');
 } else {
 	$galleries = $filegallib->list_file_galleries(0, -1, 'lastModif_desc', $user, '');
 }

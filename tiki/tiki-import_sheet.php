@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-import_sheet.php,v 1.3 2005-01-01 00:16:33 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-import_sheet.php,v 1.4 2005-05-18 10:58:57 mose Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -59,15 +59,23 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' )
 	$sheetId = $_REQUEST['sheetId'];
 	$handler = $_REQUEST['handler'];
 	
-	if( !in_array( $handler, TikiSheet::getHandlerList() ) )
+	// Instanciate the handler
+	switch( $handler )
 	{
-		$smarty->assign('msg', "Handler is not allowed.");
+	case 'TikiSheetWikiTableHandler': // Well known, special handlers
+		$handler = &new $handler( $_POST['page'] );
+		break;
+	default: // All file based handlers registered
+		if( !in_array( $handler, TikiSheet::getHandlerList() ) )
+		{
+			$smarty->assign('msg', "Handler is not allowed.");
+			$smarty->display("error.tpl");
+			die;
+		}
 
-		$smarty->display("error.tpl");
-		die;
+		$handler = &new $handler( $_FILES['file']['tmp_name'] );
 	}
 
-	$handler = &new $handler( $_FILES['file']['tmp_name'] );
 	if( !$grid->import( $handler ) )
 	{
 		$smarty->assign('msg', "Impossible to import the file.");

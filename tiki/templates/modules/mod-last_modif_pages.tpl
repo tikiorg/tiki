@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_modif_pages.tpl,v 1.19 2005-03-12 16:51:00 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_modif_pages.tpl,v 1.20 2005-05-18 11:03:30 mose Exp $ *}
 
 {if $feature_wiki eq 'y'}
 {if $nonums eq 'y'}

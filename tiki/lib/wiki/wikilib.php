@@ -85,8 +85,7 @@ class WikiLib extends TikiLib {
     function get_contributors($page, $last) {
         $notus = "`user` not like \"admin\" and `user` not like \"system\" and `user` not like \"$last\"";
         $query = "select `user` from `tiki_history` where ($notus) and `pageName`=? order by `version` desc";
-        // $result = $this->query($query,array($page));
-        $result = $this->db->CacheSelectLimit($query,10,-1,array($page)); // return 10 rows max.
+        $result = $this->query($query,array($page), 10);
         $ret = array();
         $seen = array();
         //$seen = array("system", "admin", $last); // would it be more efficient to put admin and system in here rather than in the where clause, above?
@@ -164,19 +163,10 @@ class WikiLib extends TikiLib {
 		$query = "select `fromPage` from `tiki_links` where `toPage`=?";
 		$result = $this->query($query, array( $oldName ) );
 
-		// check if statictiki is enabled; staticlib is used within the while loop below
-		global $feature_wiki_realtime_static;
-		if ($feature_wiki_realtime_static == 'y') {
-			global $staticlib;
-			if (!is_object($staticlib)) {
-				require_once('lib/static/staticlib.php');
-			}
-			$staticlib->rename_page($oldName, $newName);
-		}
-
+		$linksToOld=array();
 		while ($res = $result->fetchRow()) {
 		    $page = $res['fromPage'];
-	
+		    $linksToOld[] = $res['fromPage'];
 		    $info = $this->get_page_info($page);
 		    //$data=addslashes(str_replace($oldName,$newName,$info['data']));
 		    $data = $info['data'];
@@ -189,14 +179,20 @@ class WikiLib extends TikiLib {
 		    $query = "update `tiki_pages` set `data`=?,`page_size`=? where `pageName`=?";
 		    $this->query($query, array( $data,(int) strlen($data), $page));
 		    $this->invalidate_cache($page);
-		    
-		    // rebuild static html pages if necessary
-			if ($feature_wiki_realtime_static == 'y') {
-				$staticlib->update_page($page);
-			}
 		}
 
 		// correct toPage and fromPage in tiki_links
+		// before update, manage to avoid duplicating index(es) when B is renamed to C while page(s) points to both C (not created yet) and B 
+		$query = "select `fromPage` from `tiki_links` where `toPage`=?";
+		$result = $this->query($query, array( $newName ) );
+		$linksToNew = array();
+		while ($res = $result->fetchRow()) {
+			$linksToNew[] = $res['fromPage'];
+		}
+		if ($extra = array_intersect($linksToOld, $linksToNew)) {
+			$query = "delete from `tiki_links` where `fromPage` in (".implode(',', array_fill(0,count($extra),'?')).") and `toPage`=?";
+			$this->query($query,array_merge($extra,array($oldName)));
+		}
 		$query = "update `tiki_links` set `fromPage`=? where `fromPage`=?";
 		$this->query($query, array( $newName, $oldName));
 	
@@ -280,8 +276,8 @@ class WikiLib extends TikiLib {
 	function update_cache($page, $data) {
 		$now = date('U');
 
-		$query = "update `tiki_pages` set `cache`=?, cache_timestamp=$now where `pageName`=?";
-		$result = $this->query($query, array( $data, $page ) );
+		$query = "update `tiki_pages` set `cache`=?, `cache_timestamp`=? where `pageName`=?";
+		$result = $this->query($query, array( $data, $now, $page ) );
 		return true;
 	}
 
@@ -467,17 +463,6 @@ class WikiLib extends TikiLib {
 
 	    $histlib->use_version($res["pageName"], $res["version"]);
 	    $histlib->remove_version($res["pageName"], $res["version"]);
-
-		// update static html page if necessary
-		global $feature_wiki_realtime_static;
-		if ($feature_wiki_realtime_static == 'y') {
-			global $staticlib;
-			if (!is_object($staticlib)) {
-				require_once('lib/static/staticlib.php');
-			}
-			$staticlib->update_page($page);
-		}
-
 	} else {
 	    $this->remove_all_versions($page);
 	}

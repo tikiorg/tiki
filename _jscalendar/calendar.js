@@ -12,7 +12,7 @@
  * Read the entire license text here: http://www.gnu.org/licenses/lgpl.html
  */
 
-// $Id: calendar.js,v 1.3 2005-04-23 13:19:09 tombombadilom Exp $
+// $Id: calendar.js,v 1.4 2005-05-18 11:01:00 mose Exp $
 
 /** The Calendar object constructor. */
 Calendar = function (firstDayOfWeek, dateStr, onSelected, onClose) {
@@ -1063,6 +1063,21 @@ Calendar._keyEvent = function(ev) {
 				else
 					nextMonth();
 			}
+		}
+		break;
+	    case 13: // KEY enter
+		if (act)
+			Calendar.cellClick(cal.currentDateEl, ev);
+		break;
+	    default:
+		return false;
+	}
+	return Calendar.stopEvent(ev);
+};
+
+/**
+ *  (RE)Initializes the calendar to the given date and firstDayOfWeek
+ */
 Calendar.prototype._init = function (firstDayOfWeek, date) {
 	var today = new Date(),
 		TY = today.getFullYear(),

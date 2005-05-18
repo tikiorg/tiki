@@ -1,4 +1,4 @@
-<h2><a class="pagetitle" href="tiki-pagehistory?page={$page|escape:"url"}">{tr}Rename page{/tr}</a>: <a class="pagetitle" href="tiki-index.php?page={$page|escape:"url"}">{$page}</a></h2>
+<h1><a class="pagetitle" href="tiki-pagehistory?page={$page|escape:"url"}">{tr}Rename page{/tr}</a>: <a class="pagetitle" href="tiki-index.php?page={$page|escape:"url"}">{$page}</a></h1>
 <form action="tiki-rename_page.php" method="post">
 <input type="hidden"  name="page" value="{$page|escape}" />
 <table class="normal">

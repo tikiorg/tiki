@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-google.tpl,v 1.15 2005-03-12 16:51:00 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-google.tpl,v 1.16 2005-05-18 11:03:29 mose Exp $ *}
 
 {tikimodule title="{tr}Google Search{/tr}" name="google" flip=$module_params.flip decorations=$module_params.decorations}
 <form method="get" action="http://www.google.com/search" target="Google" style="margin-bottom:2px;">

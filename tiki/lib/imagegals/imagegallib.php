@@ -49,8 +49,8 @@ class ImageGalsLib extends TikiLib {
 			$this->havegd = false;
 		}
 
-		// Do we have the imagick PEAR module?
-		// Module can be downloaded at http://pear.php.net/package-info.php?pacid=76
+		// Do we have the imagick PECL module?
+		// Module can be downloaded at http://pecl.php.net/package/imagick
 		if (in_array('imagick',$exts)) {
 			$this->haveimagick = true;
 		} else {
@@ -74,7 +74,51 @@ class ImageGalsLib extends TikiLib {
 
 			$this->set_preference('gal_use_lib', 'gd');
 		}
+
+		// get variables to determine if we can upload and how many data
+		// we can upload
+		$this->file_uploads=ini_get('file_uploads');
+		$this->upload_max_filesize=ini_get('upload_max_filesize');
+		$this->post_max_size=ini_get('post_max_size');
+		if($this->file_uploads==0) {
+		   $this->max_img_upload_size=0;
+		} else {
+
+		   }
+
 	}
+
+	function max_img_upload_size() {
+	   $this->upload_max_filesize=$this->return_bytes($this->upload_max_filesize);
+	   $this->post_max_size=$this->return_bytes($this->post_max_size);
+	   if($this->file_uploads==0) {
+	      return(0);
+	   } else {
+	      return(($this->post_max_size > $this->upload_max_filesize) ? $this->post_max_size : $this->upload_max_filesize);
+	   }
+	}
+
+
+
+	// from php manual. one of the rare circumstances where
+	// a break in the switch-case is not needed
+        function return_bytes($val) {
+          $val = trim($val);
+          $last = strtolower($val{strlen($val)-1});
+          switch($last) {
+
+          // The 'G' modifier is available since PHP 5.1.0
+            case 'g':
+              $val *= 1024;
+            case 'm':
+              $val *= 1024;
+            case 'k':
+              $val *= 1024;
+          }
+
+          return $val;
+        }
+
 	// Features
 	function canrotate() {
 		return $this->canrotate;
@@ -187,8 +231,7 @@ class ImageGalsLib extends TikiLib {
 
 		$this->getimageinfo();
 		//update
-		$query = "update `tiki_images_data` set `xsize`=? , `ysize`=?
-    		where `imageId`=? and `type`=?";
+		$query = "update `tiki_images_data` set `xsize`=? , `ysize`=? where `imageId`=? and `type`=?";
 		$this->query($query,array((int)$this->xsize,(int)$this->ysize,(int)$this->imageId,$this->type));
 	}
 
@@ -591,18 +634,18 @@ class ImageGalsLib extends TikiLib {
 			}
 
 			$query = "update `tiki_images_data` set `filetype`=?,
-				filename=?,data=?,
-				filesize=? ,xsize=?, 
-				ysize=?
+				`filename`=?,`data`=?,
+				`filesize`=? ,`xsize`=?, 
+				`ysize`=?
 			where
-			imageId=? and type=? and
-			xsize=? and ysize=?";
-			$bindvars=array($this->filetype,$this->filename,$this->image,(int)$size,(int)$this->xsize,(int)$this->ysize,(int)$this->imageId,$this->type,(int)$this->oldxsize,(int)$this->oldysize);
+			`imageId`=? and `type`=? and
+			`xsize`=? and `ysize`=?";
+			 $bindvars=array($this->filetype,$this->filename,($gal_use_db == 'y')?$this->image:'',(int)$size,(int)$this->xsize,(int)$this->ysize,(int)$this->imageId,$this->type,(int)$this->oldxsize,(int)$this->oldysize);
 		} else {
-			$query = "insert into `tiki_images_data`(imageId,xsize,ysize,
-                                type,filesize,filetype,filename,data)
+			$query = "insert into `tiki_images_data`(`imageId`,`xsize`,`ysize`,
+                                `type`,`filesize`,`filetype`,`filename`,`data`)
                         values (?,?,?,?,?,?,?,?)";
-			$bindvars=array((int)$this->imageId,(int)$this->xsize,(int)$this->ysize,$this->type,(int)$size,$this->filetype,$this->filename,$this->image);
+			$bindvars=array((int)$this->imageId,(int)$this->xsize,(int)$this->ysize,$this->type,(int)$size,$this->filetype,$this->filename,($gal_use_db == 'y')?$this->image:'');
 		}
 
 		$result = $this->query($query,$bindvars);
@@ -721,7 +764,7 @@ class ImageGalsLib extends TikiLib {
 
 			$result1 = $this->query($query1,array((int)$galleryId));
 
-			while ($res = $result->fetchRow()) {
+			while ($res = $result1->fetchRow()) {
 				$query2 = "delete from `tiki_images_data` where `ImageId`=? and not `type`=?";
 
 				$result2 = $this->query($query2,array((int)$res["imageId"],'o'));
@@ -738,7 +781,7 @@ class ImageGalsLib extends TikiLib {
 		$name = strip_tags($name);
 
 		$description = strip_tags($description);
-		$query = "update `tiki_images` set `name`=?, description=?, lat=?, lon=? where `imageId` = ?";
+		$query = "update `tiki_images` set `name`=?, `description`=?, `lat`=?, `lon`=? where `imageId` = ?";
 		$result = $this->query($query,array($name,$description,$lat,$lon,(int)$id));
 		return true;
 	}
@@ -868,7 +911,7 @@ class ImageGalsLib extends TikiLib {
 		if ($find) {
 			$findesc = '%' . $find . '%';
 
-			$mid = " and (i.`name` like ? or i.`description` like ?)";
+			$mid = " and (`name` like ? or `description` like ?)";
 			$bindvars=array('o',$findesc,$findesc);
 		} else {
 			$mid = "";
@@ -926,10 +969,15 @@ class ImageGalsLib extends TikiLib {
 	       		g.`created`,g.`lastModif`,g.`visible`,g.`theme`,g.`user`,
        			g.`hits`,g.`maxRows`,g.`rowImages`,g.`thumbSizeX`,
 	 		g.`thumbSizeY`,g.`public`,g.`sortorder`,g.`sortdirection`,
-			g.`galleryimage`,g.`parentgallery`,count(i.`imageId`) numimages
+			g.`galleryimage`,g.`parentgallery`,count(i.`imageId`) as numimages
 			from `tiki_galleries` g, `tiki_images` i
 			where i.`galleryId`=g.`galleryId` and
-                 	`parentgallery`=? $mid group by g.`galleryId`
+                 	`parentgallery`=? $mid group by 
+			g.`galleryId`, g.`name`,g.`description`,
+			g.`created`,g.`lastModif`,g.`visible`,g.`theme`,g.`user`,
+			g.`hits`,g.`maxRows`,g.`rowImages`,g.`thumbSizeX`,
+			g.`thumbSizeY`,g.`public`,g.`sortorder`,g.`sortdirection`,
+			g.`galleryimage`,g.`parentgallery`
                 order by ".$this->convert_sortmode($sort_mode);
                 $result = $this->query($query,$bindvars,$maxRecords,$offset);
                 $ret = array();
@@ -993,7 +1041,7 @@ class ImageGalsLib extends TikiLib {
 				break;
 			case 'default':
 				//check gallery settings and re-run this function
-				$query='select `galleryimage` from `tiki-galleries` where `galleryId`=?';
+				$query='select `galleryimage` from `tiki_galleries` where `galleryId`=?';
 				$rule=$this->getOne($query,array($galleryId));
 				$imageId=$this->get_gallery_image($galleryId,$rule);
 				break;
@@ -1486,7 +1534,7 @@ class ImageGalsLib extends TikiLib {
 		}
 
 		// get image data from fs
-		if ($res["data"] == '') {
+		if (strlen($res["data"]) < 3) { // this is needed by postgres, because it inserts '' in the data field
 			switch ($itype) {
 			case 't':
 				$ext = ".thumb";
@@ -1540,6 +1588,59 @@ class ImageGalsLib extends TikiLib {
 
    }
 
+   function get_etag($id, $itype = 'o', $xsize = 0, $ysize = 0) {
+      // used to get the etag of a image. This function can be called
+      // before we load the image into memory to check if the browser
+      // has the image cached.
+       $mid = "";
+
+       if ($itype == 't') {
+	       $galid = $this->get_gallery_from_image($id);
+
+	       $galinfo = $this->get_gallery_info($galid);
+	       $xsize = $galinfo["thumbSizeX"];
+	       $ysize = $galinfo["thumbSizeY"];
+       }
+
+       if ($xsize != 0 && $ysize == 0) {
+	       // first parameter (xsize) represents a scale
+	       // so we select a bounding box
+	       $ysize=$xsize;
+       }
+
+       if ($xsize != 0 && $ysize != 0) {
+	       if ($ysize == $xsize) {
+		       // we don't know yet.
+		       $mid = "and (d.`xsize`=? or d.`ysize`=?) order by `xysize` desc ";
+		       $bindvars=array((int)$id,$itype,(int)$xsize,(int)$ysize);
+	       } else {
+		       //exact match
+		       $mid = "and d.`xsize`=? and d.`ysize`=? ";
+		       $bindvars=array((int)$id,$itype,(int)$xsize,(int)$ysize);
+	       }
+       }
+
+       if(!@is_array($bindvars)) {
+	       $bindvars=array((int)$id,$itype);
+       }
+
+       $query = "select d.`xsize` * d.`ysize` as `xysize`, d.`etag`
+	from `tiki_images_data` d where d.`imageId`=? and d.`type`=?
+	    $mid";
+
+       $result = $this->query($query,$bindvars,1);
+
+       if ($result===false || $result===null) {
+	       return(false);
+       }
+
+       $res = $result->fetchRow();
+       $this->etag=$res["etag"];
+
+       return($res["etag"]);
+    }
+
+
    function get_imageid_byname($name) {
 	
 		$bindvars=array($name);
@@ -1565,6 +1666,10 @@ class ImageGalsLib extends TikiLib {
 
 		$description = strip_tags($description);
 		$now = date("U");
+
+		// check if the gallery already exists. if yes: do update, if no: update it
+		if ($galleryId<1)
+		$galleryId = $this->getOne("select `galleryId` from `tiki_galleries` where `name`=? and `parentgallery`=?",array($name,$parentgallery));
 
 		if ($galleryId > 0) {
 			//$res = $result->fetchRow();

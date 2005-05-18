@@ -1,14 +1,11 @@
 {popup_init src="lib/overlib.js"}
 <div id="pageheader">
-{breadcrumbs type="trail" loc="page" crumbs=$crumbs}{breadcrumbs type="pagetitle" loc="admin" crumbs=$crumbs}
+{breadcrumbs type="trail" loc="admin" crumbs=$crumbs}{breadcrumbs type="pagetitle" loc="admin" crumbs=$crumbs}
 {breadcrumbs type="desc" loc="page" crumbs=$trail}
 </div>
-{if $feature_siteloc eq 'page' or $feature_description eq 'page'}
-<br /><br />
-{/if}
 {* The rest determines which page to include using "page" GET parameter. Default : list-sections
 Add a value in first check when you create a new admin page. *}
-{if in_array($smarty.get.page, array("features", "general", "login", "wiki", "gal", "fgal", "cms", "polls", "search", "blogs", "forums", "faqs", "trackers", "webmail", "rss", "directory", "userfiles", "maps", "metatags", "jukebox","wikiatt","score","projects","community","siteid", "calendar"))}
+{if in_array($smarty.get.page, array("features", "general", "login", "wiki", "gal", "fgal", "cms", "polls", "search", "blogs", "forums", "faqs", "trackers", "webmail", "rss", "directory", "userfiles", "maps", "metatags", "wikiatt","score", "community", "siteid", "calendar"))}
   {assign var="include" value=$smarty.get.page}
 {else}
   {assign var="include" value="list-sections"}

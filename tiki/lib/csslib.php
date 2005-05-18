@@ -134,6 +134,44 @@ class cssLib extends TikiLib {
 
 		return $back;
 	}
+
+	/**
+	 *  Find the version of Tiki that a CSS is compatible with
+	 *  @returns int the version number, eg 109 for v1.9, 110 for v1.10
+	 *  or false if the version isn't specified
+	 *
+	 *  @TODO: cache the results
+	 *  @TODO: only read the first 30 lines or so of the file
+	 */
+	function version_css($path) {
+		if (!file_exists($path))
+			return false;
+		$data = implode("", file($path));
+		$pos = strpos($data, "@version");
+		if( $pos === false ) { return false; }
+		// get version
+		preg_match("/(@[V|v]ersion):?\s+([\d]?)\.([\d]+)/i",
+		$data, $matches);
+		$version = $matches[2].".".$matches[3];
+		return $version;
+	}
+
+	/**
+	 *  Work out which transition stylesheet to use with a given stylesheet
+	 *  @returns path to transition stylesheet
+	 *  or empty string if a transition style isn't required
+	 *  @TODO: check that the transition stylesheet exists
+	 *  @TODO: cache results
+	 *  @TODO: return empty string if CSS file is /newer/ than db version?
+	 */
+	function transition_css($path) {
+		global $dbversion_tiki;
+		$cssversion = $this->version_css($path);
+		// assume v1.8.x if no @version string
+		$cssversion = $cssversion ? $cssversion : "1.8";
+		if( $dbversion_tiki == $cssversion ) { return ''; }
+		return $cssversion."to".$dbversion_tiki.".css";
+	}
 }
 
 $csslib = new cssLib($dbTiki);

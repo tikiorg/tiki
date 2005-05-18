@@ -913,6 +913,8 @@ CREATE TABLE tiki_forums (
   outbound_from varchar(250) default NULL,
   approval_type varchar(20) DEFAULT NULL,
   outbound_address varchar(250) DEFAULT NULL,
+  outbound_mails_for_inbound_mails char(1) DEFAULT NULL,
+  outbound_mails_reply_link char(1) DEFAULT NULL,
   inbound_pop_server varchar(250) DEFAULT NULL,
   inbound_pop_port int(4) DEFAULT NULL,
   inbound_pop_user varchar(200) DEFAULT NULL,

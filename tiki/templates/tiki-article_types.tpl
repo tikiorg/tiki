@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.23 2005-03-12 16:50:34 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.24 2005-05-18 11:02:58 mose Exp $ *}
 
 <h1><a  class="pagetitle" href="tiki-article_types.php">{tr}Admin Article Types{/tr}</a>
 

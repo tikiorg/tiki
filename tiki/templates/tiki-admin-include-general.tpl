@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.41 2005-03-12 16:50:11 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.42 2005-05-18 11:02:54 mose Exp $ *}
 
-<script language="JavaScript">
+<script type="text/javascript">
 {literal}
 
   function previous_site_style() {
@@ -21,11 +21,8 @@
 </script>
 <div class="cbox">
   <div class="cbox-title">
-    {tr}General preferences and settings{/tr}
-    {if $feature_help eq 'y'}
-      <a href="{$helpurl}{$sectionhelp}" target="tikihelp" class="tikihelp" title="{tr}General Admin Doc{/tr}">
-      <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
-    {/if}
+    {tr}{$crumbs[$crumb]->description}{/tr}
+    {help crumb=$crumbs[$crumb]}
   </div>
   <div class="cbox-data">
     <form action="tiki-admin.php?page=general" method="post">
@@ -41,21 +38,9 @@
                 {$styles[ix]}</option>
             {/section}
             </select>
-            <a class="link" href="javascript:previous_site_style();">&lt;&lt;</a>&nbsp;
-            <a class="link" href="javascript:next_site_style();">&gt;&gt;</a>&nbsp;&nbsp;
+            &nbsp;<a href="javascript:previous_site_style();" title="{tr}prev{/tr}"><img src="img/icons2/nav_dot_right.gif" alt="&#9665;" height="11" width="8" border="0" /></a>
+            <a href="javascript:next_site_style();" title="{tr}next{/tr}"><img src="img/icons2/nav_dot_left.gif" alt="&#9655" height="11" width="8" border="0" /></a>&nbsp;
             <input type="submit" name="style" value="{tr}Change style only{/tr}" />
-        </td>
-      </tr><tr>
-        <td class="form" ><label for="transition-theme">{tr}Also use transition stylesheet{/tr}:</label></td>
-        <td width="67%"><select name="transition_style" id="transition-theme">
-             <option value="none">{tr}none{/tr}</option>
-            {section name=ix loop=$transition_styles}
-              <option value="{$transition_styles[ix]|escape}"
-                {if $transition_style eq $transition_styles[ix]}selected="selected"{/if}>
-                {$transition_styles[ix]}</option>
-            {/section}
-            </select>
-            <!--input type="submit" name="style" value="{tr}Change style only{/tr}" /-->
         </td>
       </tr><tr>
         <td class="form"><label for="general-slideshows">{tr}Slideshows theme{/tr}:</label></td>
@@ -68,13 +53,20 @@
             </select>
         </td>
       </tr>
-      <tr><td colspan="2"><hr/></td></tr>
+      
+      <tr><td colspan="2"><hr/></td></tr>      
+      
       <tr>
         <td class="form"><label for="general-homepages">{tr}Use group homepages{/tr}:</label></td>
         <td><input type="checkbox" name="useGroupHome" id="general-homepages"
               {if $useGroupHome eq 'y'}checked="checked"{/if}/>
         </td>
       </tr>
+	<tr>
+		<td class="form"><label for="general-gogrouphome">{tr}Go to group homepage only if login from default homepage{/tr}:</label></td>
+		<td><input type="checkbox" name="limitedGoGroupHome" id="general-gogrouphome"{if $limitedGoGroupHome eq 'y'}checked="checked"{/if}/>
+        </td>
+	</tr>
       <tr>
         <td class="form"><label for="general-uri">{tr}Use URI as Home Page{/tr}:</label></td>
         <td><input type="checkbox" name="useUrlIndex" id="general-uri"
@@ -152,7 +144,7 @@
             </select>
         </td>
       </tr><tr>
-      <td class="form"><label for="general-error">{tr}Php error reporting level for non-admin:{/tr}</label></td>
+      <td class="form"><label for="general-error">{tr}PHP error reporting level for non-admin:{/tr}</label></td>
       <td><select name="error_reporting_level" id="general-error">
             <option value="0" {if $error_reporting_level eq 0}selected="selected"{/if}>{tr}No error reporting{/tr}</option>
             <option value="2047" {if $error_reporting_level eq 2047}selected="selected"{/if}>{tr}Report all PHP errors{/tr}</option>
@@ -177,7 +169,7 @@
 	</tr>
       </table>
       <table class="admin"><tr>
-        <td class="heading" colspan="5"
+        <td class="heading" colspan="2"
             align="center">{tr}General Settings{/tr}</td>
       </tr><tr>
         <td class="form" >
@@ -367,8 +359,44 @@
           <a class="link" target="strftime" href="{$fcnlink}">
             {tr}Date and Time Format Help{/tr}</a></td>
       </tr>
+		</table>
+			
+			<table class="admin">
+				<tr>
+					<td class="heading" colspan="2" align="center">{tr}Other{/tr}</td>
+				</tr>
+				<tr>
+				<tr>
+					<td class="form"><label for="favicon">{tr}Favicon icon file name:{/tr}</label></td>
+					<td><input type="text" name="favicon" id="favicon" value="{$favicon}" size="12" maxlength="32" /></td>
+				</tr>
+				<tr>
+					<td class="form"><label for="favicon_type">{tr}Favicon icon MIME type:{/tr}</label></td>
+					<td>
+						<select name="favicon_type" id="favicon_type">
+							<option value="image/png" {if $favicon_type eq 'image/png'}selected="selected"{/if}>{tr}image/png{/tr}</option>
+							<option value="image/bmp" {if $favicon_type eq 'image/bmp'}selected="selected"{/if}>{tr}image/bmp{/tr}</option>
+							<option value="image/x-icon" {if $favicon_type eq 'image/ico'}selected="selected"{/if}>{tr}image/x-icon{/tr}</option>
+						</select>
+					</td>
+				</tr>
+				
+				<tr>
+					<td colspan="2"><hr/></td>
+				</tr>
+				      
+				<tr>
+					<td class="form"><label for="site_crumb_seper">{tr}Locations separator{/tr}:</label></td>
+					<td>
+						<div style="float: left"><input type="text" name="site_crumb_seper" id="site_crumb_seper" value="{$site_crumb_seper}" size="5" maxlength="8" /></div>
+						<div>
+							&nbsp; <small><em>{tr}Example{/tr}</em>: &nbsp; &raquo; &nbsp; / &nbsp; &gt; &nbsp; : &nbsp; -> &nbsp; &#8594;</small>
+						</div>
+					</td>
+				</tr>
+			
       <tr>
-        <td colspan="2" class="button">
+        <td class="button" colspan='2'>
           <input type="submit" name="prefs" value="{tr}Change preferences{/tr}" />
         </td>
       </tr></table>

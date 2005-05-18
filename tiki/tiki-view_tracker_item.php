@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.77 2005-03-12 16:49:03 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.78 2005-05-18 10:59:00 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -26,8 +26,18 @@ if (!isset($_REQUEST['trackerId']) && $userTracker == 'y') {
 		$_REQUEST['trackerId'] = $utid['usersTrackerId'];
 		$_REQUEST["itemId"] = $trklib->get_item_id($_REQUEST['trackerId'],$utid['usersFieldId'],$user);
 		if ($_REQUEST['itemId'] == NULL) {
-			$addit['data'][]['fieldId'] = $utid['usersFieldId'];
-			$addit['data'][]['value'] = $user;
+			$addit['data'][0]['fieldId'] = $utid['usersFieldId'];
+			$addit['data'][0]['value'] = $user;
+			$i = 1;
+			if ($f = $trklib->get_field_id_from_type($_REQUEST['trackerId'], "u", 1)) {
+				$addit['data'][1]['fieldId'] = $f;
+				$addit['data'][1]['value'] = $user;
+				++$i;
+			}
+			if ($f = $trklib->get_field_id_from_type($_REQUEST['trackerId'], "g", 1)) {
+				$addit['data'][$i]['fieldId'] = $f;
+				$addit['data'][$i]['value'] = $group;
+			}				
 			$_REQUEST['itemId'] = $trklib->replace_item($_REQUEST["trackerId"], 0, $addit, 'c');
 		}
 		$smarty->assign('special',' user');
@@ -45,8 +55,8 @@ if (!isset($_REQUEST['trackerId']) && $groupTracker == 'y') {
 		$_REQUEST["trackerId"] = $gtid['groupTrackerId'];
 		$_REQUEST["itemId"] = $trklib->get_item_id($_REQUEST['trackerId'],$gtid['groupFieldId'],$group);
 		if ($_REQUEST['itemId'] == NULL) {
-			$addit['data'][]['fieldId'] = $gtid['groupFieldId'];
-			$addit['data'][]['value'] = $group;
+			$addit['data'][0]['fieldId'] = $gtid['groupFieldId'];
+			$addit['data'][0]['value'] = $group;
 			$_REQUEST['itemId'] = $trklib->replace_item($_REQUEST["trackerId"], 0, $addit, 'c');
 		}
 		$smarty->assign('special',' group');
@@ -135,7 +145,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 	$xfields["data"][$i]["filter_id"] = $filter_id;
 
 	if (!isset($mainfield) and $xfields["data"][$i]['isMain'] == 'y') {
-		$mainfield = $xfields["data"][$i]["name"];
+		$mainfield = $i;
 	}
 
 	if ($xfields["data"][$i]['type'] == 's') {
@@ -275,6 +285,12 @@ for ($i = 0; $i < $temp_max; $i++) {
 				}
 			}
 		}
+	} elseif ($xfields["data"][$i]["type"] == "u" and isset($xfields["data"][$i]["options"]) and $user and $xfields["data"][$i]["options"] == 1 and isset($tracker_info["writerCanModify"]) and $tracker_info["writerCanModify"] == 'y') {
+		// even if field is hidden need to pick up user for perm
+		$tracker_info["authorfield"] = $fid;
+	} elseif ($xfields["data"][$i]["type"] == "g" and isset($xfields["data"][$i]["options"]) and $group and $xfields["data"][$i]["options"] == 1 and isset($tracker_info["writerGroupCanModify"]) and $tracker_info["writerGroupCanModify"] == 'y') {
+		// even if field hidden need to pick up the group for perm
+		$tracker_info["authorgroupfield"] = $fid;
 	}
 }
 
@@ -293,7 +309,7 @@ if (isset($tracker_info["authorgroupfield"])) {
 }
 if (isset($tracker_info["authorfield"])) {
 	$tracker_info['authorindiv'] = $trklib->get_item_value($_REQUEST["trackerId"],$_REQUEST["itemId"],$tracker_info["authorfield"]);
-	if ($tracker_info['authorindiv'] == $user) {
+	if ($tracker_info['authorindiv'] == $user or $tracker_info['authorindiv'] == '') {
 		$tiki_p_modify_tracker_items = 'y';
 		$smarty->assign("tiki_p_modify_tracker_items","y");
 		$tiki_p_attach_trackers = 'y';
@@ -311,8 +327,9 @@ if ($tiki_p_view_trackers != 'y') {
 }
 
 if (!isset($mainfield)) {
-	$mainfield = $fields["data"][0]["value"];
+	$mainfield = 0;
 }
+
 if ($textarea_options) {
 	include_once ('lib/quicktags/quicktagslib.php');
 	$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','');
@@ -333,6 +350,7 @@ if ($tiki_p_modify_tracker_items == 'y') {
 			$_REQUEST["status"] = $tracker_info["modItemStatus"];
 		}
 		$trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $_REQUEST["status"]);
+		$mainfield = $ins_fields["data"][$mainfield]["value"];
 		$_REQUEST['show']  = 'view';
 		$temp_max = count($fields["data"]);
 		for ($i = 0; $i < $temp_max; $i++) {
@@ -359,6 +377,10 @@ if ($tiki_p_modify_tracker_items == 'y') {
 				}
 				$categlib->categorize($catObjectId, $cats);
 			}
+		}
+		if (isset($_REQUEST['from'])) {
+			header('Location: tiki-index.php?page='.urlencode($_REQUEST['from']));
+			exit;
 		}
 	}
 }
@@ -389,13 +411,16 @@ if ($_REQUEST["itemId"]) {
 					if (!isset($info["$fid"])) $info["$fid"] = '';
 				}
 				if ($fields["data"][$i]["type"] == 'e') {
+					include_once('lib/categories/categlib.php');
+					$k = $fields["data"][$i]["options"];
+					$ins_fields["data"][$i]["$k"] = $categlib->get_child_categories($k);
 					if (!isset($cat)) {
 						$cat = $categlib->get_object_categories("tracker ".$_REQUEST["trackerId"],$_REQUEST["itemId"]);
 					}
 					foreach ($cat as $c) {
 						$ins_fields["data"][$i]["cat"]["$c"] = 'y';
 					}
-				} elseif  ($fields["data"][$i]["type"] == 'l') {
+				} elseif ($fields["data"][$i]["type"] == 'l') {
 					if (isset($fields["data"][$i]["options_array"][3])) {
 						if (isset($last["{$fields["data"][$i]["options_array"][2]}"])) {
 							$lst = $last["{$fields["data"][$i]["options_array"][2]}"];
@@ -437,9 +462,21 @@ if ($_REQUEST["itemId"]) {
 			}
 		}
 	}
+/* **************** seems it is only 1.8
+	for ($i = 0; $i < count($fields["data"]); $i++) {
+		$name = $fields["data"][$i]["name"];
+
+		$ins_name = 'ins_' . $name;
+        if ($fields["data"][$i]['type'] == 'f') {
+            $ins_fields["data"][$i]["value"] = 
+                    smarty_make_timestamp($info["$name"]);
+        } else {
+            $ins_fields["data"][$i]["value"] = $info["$name"];
+        }
+	}
+******************* */
 }
-$infohash = $trklib->get_tracker_item_hash($_REQUEST["itemId"]);
-$smarty->assign_by_ref('infohash', $infohash);
+
 $smarty->assign_by_ref('info', $info);
 $smarty->assign_by_ref('fields', $fields["data"]);
 $smarty->assign_by_ref('ins_fields', $ins_fields["data"]);
@@ -463,7 +500,6 @@ if (isset($_REQUEST["find"])) {
 } else {
 	$find = '';
 }
-
 $smarty->assign('find', $find);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 
@@ -549,6 +585,15 @@ if ($tracker_info["useAttachments"] == 'y') {
 		  }
 		}
 	}
+	if (isset($_REQUEST["editattach"])) {
+		$att = $trklib->get_item_attachment($_REQUEST["editattach"]);
+		$smarty->assign("attach_comment", $att['comment']);
+		$smarty->assign("attach_version", $att['version']);
+		$smarty->assign("attach_longdesc", $att['longdesc']);
+		$smarty->assign("attach_file", $att["filename"]);
+		$smarty->assign("commentId", $att["attId"]);
+		$_REQUEST["show"] = "att";
+	}
 	if (isset($_REQUEST["attach"]) && ($tiki_p_attach_trackers == 'y')) {
 		// Process an attachment here
 		if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
@@ -580,8 +625,20 @@ if ($tracker_info["useAttachments"] == 'y') {
 			$size = $_FILES['userfile1']['size'];
 			$name = $_FILES['userfile1']['name'];
 			$type = $_FILES['userfile1']['type'];
-			$trklib->item_attach_file($_REQUEST["itemId"], $name, $type, $size, $data, $_REQUEST["attach_comment"], $user, $fhash,$_REQUEST["attach_version"],$_REQUEST["attach_longdesc"]);
+		} else {
+			$name = "";
+			$size = "";
+			$type = "";
+			$data = "";
+			$fhash="";
 		}
+		if (empty($_REQUEST["commentId"]) || $_REQUEST["commentId"] == 0) {
+			$trklib->item_attach_file($_REQUEST["itemId"], $name, $type, $size, $data, $_REQUEST["attach_comment"], $user, $fhash,$_REQUEST["attach_version"],$_REQUEST["attach_longdesc"]);
+		} else {
+			$trklib->replace_item_attachment($_REQUEST["commentId"], $name, $type, $size, $data, $_REQUEST["attach_comment"], $user, $fhash,$_REQUEST["attach_version"],$_REQUEST["attach_longdesc"]);
+		}
+		$_REQUEST["commentId"] = 0;
+		$_REQUEST['show'] = "att";
 	}
 
 	// If anything below here is changed, please change lib/wiki-plugins/wikiplugin_attach.php as well.
@@ -595,19 +652,30 @@ if ($tracker_info["useAttachments"] == 'y') {
 	$smarty->assign('attfields', $attfields);
 	$smarty->assign('attextra', $attextra);
 }
-
-$tabi = 2;
+$tabi = 1;
 if (isset($_REQUEST['show'])) {
 	if ($_REQUEST['show'] == 'view') {
 		$tabi = 1;
 	} elseif ($tracker_info["useComments"] == 'y' and $_REQUEST['show'] == 'com') {
-		if ($tracker_info["useAttachments"] == 'y') $tabi++;
+		$tabi = 2;
 	} elseif ($_REQUEST['show'] == "mod") {
+		$tabi = 2;
 		if ($tracker_info["useAttachments"] == 'y') $tabi++;
 		if ($tracker_info["useComments"] == 'y') $tabi++;
+	} elseif ($_REQUEST['show'] == "att") {
+		$tabi = 2;
+		if ($tracker_info["useComments"] == 'y') $tabi = 3;	
 	}
-	setcookie("tab","$tabi");
-} 
+}
+setcookie("tab","$tabi");
+$smarty->assign('cookietab',$tabi);
+
+if (isset($_REQUEST['from'])) {
+	$from = $_REQUEST['from'];
+} else {
+	$from = false;
+}
+$smarty->assign('from',$from);
 
 $section = 'trackers';
 include_once ('tiki-section_options.php');

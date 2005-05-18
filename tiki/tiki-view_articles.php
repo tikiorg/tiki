@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_articles.php,v 1.28 2005-03-12 16:49:02 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_articles.php,v 1.29 2005-05-18 10:59:00 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -82,7 +82,7 @@ if (isset($_SESSION["thedate"])) {
 	if ($_SESSION["thedate"] < $now) {
 		$pdate = $_SESSION["thedate"];
 	} else {
-		if ($tiki_p_admin == 'y') {
+		if ($tiki_p_admin == 'y' || $tiki_p_admin_cms == 'y') {
 			$pdate = $_SESSION["thedate"];
 		} else {
 			$pdate = $now;

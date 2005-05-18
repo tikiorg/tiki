@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/help.php,v 1.2 2005-03-12 16:48:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/help.php,v 1.3 2005-05-18 10:58:52 mose Exp $
 
 // Initialization
 require_once ('tiki-setup.php');

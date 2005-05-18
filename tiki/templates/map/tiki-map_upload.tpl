@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_upload.tpl,v 1.11 2004-08-12 22:31:58 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_upload.tpl,v 1.12 2005-05-18 11:03:27 mose Exp $ *}
 
 <a class="pagetitle" href="tiki-map_upload.php">Layer Management</a><br /><br />
 <a class="link" href="tiki-map_upload.php?dir={$dir}">

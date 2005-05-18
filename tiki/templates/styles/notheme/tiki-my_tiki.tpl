@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki-my_tiki.tpl,v 1.6 2004-06-23 22:34:32 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki-my_tiki.tpl,v 1.7 2005-05-18 11:03:55 mose Exp $ *}
 
 <a class="pagetitle" href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a><br /><br />
 {include file=tiki-mytiki_bar.tpl}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-search_wiki_page_new.tpl,v 1.2 2005-03-12 16:51:00 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-search_wiki_page_new.tpl,v 1.3 2005-05-18 11:03:31 mose Exp $ *}
 
 {tikimodule title="{tr}Search Wiki PageName{/tr}" name="search_wiki_page" flip=$module_params.flip decorations=$module_params.decorations}
   <form class="forms" method="post" action="tiki-listpages.php">

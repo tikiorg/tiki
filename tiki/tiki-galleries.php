@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.39 2005-01-22 22:54:54 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.40 2005-05-18 10:58:56 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -100,8 +100,7 @@ $options_sortorder=array(tra('id') => 'imageId',
 		tra('Creation Date') => 'created',
 		tra('Owner') => 'user',
 		tra('Hits') => 'hits',
-		tra('Size') => 'filesize',
-		tra('Individual Order') => 'individual');
+		tra('Size') => 'filesize');
 $smarty->assign_by_ref('options_sortorder',$options_sortorder);
 $smarty->assign('sortorder','imageId');
 $smarty->assign('sortorder','created');

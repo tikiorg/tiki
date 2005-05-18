@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/modules/mod-wiki_last_comments.php,v 1.7 2004-10-08 10:00:02 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/modules/mod-wiki_last_comments.php,v 1.8 2005-05-18 11:02:29 mose Exp $
 // \brief Show last comments on wiki pages
 //
 
@@ -15,16 +15,20 @@ function wiki_last_comments($limit)
     $query = "select `object`,`title`,`commentDate`,`userName`
               from `tiki_comments` where `objectType`='wiki page' order by `commentDate` desc";
     global $tikilib;
+    global $user;
     $result = $tikilib->query($query, array(), $limit, 0);
     $ret = array();
 
     while ($res = $result->fetchRow())
     {
+      //WYSIWYCA hack: the $limit will not be respected
+      if($tikilib->user_has_perm_on_object($user,$res["object"],'wiki page','tiki_p_view')) {
         $aux["page"] = $res["object"];
         $aux["title"]= $res["title"];
         $aux["commentDate"] = $res["commentDate"];
         $aux["user"] = $res["userName"];
         $ret[] = $aux;
+      }
     }
     return $ret;
 }

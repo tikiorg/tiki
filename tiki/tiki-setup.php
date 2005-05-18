@@ -1,5 +1,6 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.269 2005-03-13 00:37:54 mose Exp $
+
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.270 2005-05-18 10:58:59 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -272,8 +273,9 @@ if ($load = @file('/proc/loadavg')) {
             exit;
         }
     }
+} else {
+	$smarty->assign('server_load','?');
 }
-
 
 // The votes array stores the votes the user has made
 if (!isset($_SESSION["votes"])) {
@@ -345,6 +347,8 @@ $gal_nmatch_regex = '';
 $fgal_use_dir = '';
 $gal_use_dir = '';
 $gal_batch_dir = '';
+$feature_experimental = 'n'; /* hide experimental features */
+$smarty->assign('feature_experimental', $feature_experimental);
 $feature_gal_batch = 'n';
 $feature_integrator = 'n';
 $feature_xmlrpc = 'n';
@@ -375,15 +379,8 @@ $feature_wiki_icache = 'n';
 $feature_wiki_undo = 'n';
 $feature_wiki_multiprint = 'n';
 $feature_wiki_pdf = 'n';
-$feature_wiki_page_footer = 'n';
-$smarty->assign("feature_wiki_page_footer",'n');
-$feature_wiki_realtime_static = 'n';
-$wiki_realtime_static_group = "Anonymous";
-$smarty->assign('wiki_realtime_static_group', 'Anonymous');
 $feature_wiki_export = 'y';
 $smarty->assign('feature_wiki_export', $feature_wiki_export);
-$feature_wiki_ratings = 'n';
-$smarty->assign('feature_wiki_ratings', $feature_wiki_ratings);
 $feature_forum_rankings = 'y';
 $feature_forum_parse = 'n';
 $feature_forum_quickjump = 'n';
@@ -396,7 +393,6 @@ $feature_backlinks = 'y';
 $feature_likePages = 'y';
 $feature_search = 'y';
 $feature_search_fulltext = 'y';
-$feature_search_mysql4_boolean = 'n';
 $feature_search_show_forbidden_obj = 'n';
 $feature_search_show_forbidden_cat = 'n';
 $feature_sandbox = 'y';
@@ -460,6 +456,8 @@ $smarty->assign('feature_usability', $feature_usability);
 $wiki_feature_copyrights = 'n';
 $wiki_creator_admin = 'n';
 $smarty->assign('wiki_creator_admin', $wiki_creator_admin);
+$wiki_authors_style = 'classic';
+$smarty->assign('wiki_authors_style', $wiki_authors_style);
 
 $wiki_watch_author = 'n';
 $smarty->assign('wiki_watch_author',$wiki_watch_author);
@@ -499,17 +497,6 @@ $smarty->assign('wiki_list_size','y');
 //default: don't show wiki page_id
 $feature_wiki_pageid = 'n';
 $smarty->assign('feature_wiki_pageid',$feature_wiki_pageid);
-
-//default wiki double-click edit setting
-$feature_wiki_dblclickedit = 'whole_page';
-
-//default wiki page version diff style
-$feature_wiki_history_ip = 'y';
-$smarty->assign('feature_wiki_history_ip',$feature_wiki_history_ip);
-
-//default wiki link tooltip setting
-$feature_wiki_jstooltips = 'n';
-$smarty->assign('feature_wiki_jstooltips',$feature_wiki_jstooltips);
 
 //default wiki mailin feature values
 $feature_mailin = 'n';
@@ -597,7 +584,8 @@ $smarty->assign('feature_use_quoteplugin',$feature_use_quoteplugin);
 $system_os = $tikilib->get_preference('system_os', TikiSetup::os());
 $smarty->assign('system_os', $system_os);
 
-$error_reporting_level = (int)($tikilib->get_preference('error_reporting_level', E_ALL));
+// default: 1. report eveything to admin only
+$error_reporting_level = (int)($tikilib->get_preference('error_reporting_level', 1));
 if ($error_reporting_level == 1)
 	$error_reporting_level = ($tiki_p_admin == "y") ? E_ALL: 0;
 error_reporting($error_reporting_level);
@@ -612,8 +600,6 @@ $feature_wiki_description = 'n';
 $smarty->assign('feature_wiki_description', $feature_wiki_description);
 $feature_wiki_pictures = 'n';
 $smarty->assign('feature_wiki_pictures', $feature_wiki_pictures);
-$feature_wiki_pictures_new = 'n';
-$smarty->assign('feature_wiki_pictures_new', $feature_wiki_pictures_new);
 $feature_wikiwords = 'y';
 $smarty->assign('feature_wikiwords', $feature_wikiwords);
 $feature_wikiwords_usedash = 'y';
@@ -662,6 +648,7 @@ $rss_wiki = 'y';
 $rss_image_gallery = 'n';
 $rss_file_gallery = 'n';
 $rss_blog = 'n';
+$rss_tracker = 'n';
 
 $count_admin_pvs = 'y';
 
@@ -670,6 +657,8 @@ $directory_links_per_page = 20;
 $directory_open_links = 'n';
 $directory_validate_urls = 'n';
 $smarty->assign('directory_validate_urls', $directory_validate_urls);
+$directory_cool_sites = 'y';
+$smarty->assign('directory_cool_sites', $directory_cool_sites);
 $smarty->assign('directory_columns', $directory_columns);
 $smarty->assign('directory_links_per_page', $directory_links_per_page);
 $smarty->assign('directory_open_links', $directory_open_links);
@@ -686,6 +675,7 @@ $max_rss_image_gallery = 10;
 $max_rss_file_gallery = 10;
 $max_rss_blog = 10;
 $max_rss_mapfiles = 10;
+$max_rss_tracker = 10;
 
 $metatag_keywords = '';
 $metatag_description = '';
@@ -752,6 +742,8 @@ $feature_user_watches = 'n';
 $smarty->assign('feature_user_watches', $feature_user_watches);
 $feature_user_watches_translations = 'y';
 $smarty->assign('feature_user_watches_translations', $feature_user_watches_translations);
+$feature_mobile = 'n';
+$smarty->assign('feature_mobile', $feature_mobile);
 
 $feature_eph = 'n';
 $smarty->assign('feature_eph', $feature_eph);
@@ -801,6 +793,8 @@ $smarty->assign('feature_page_title', $feature_page_title);
 $smarty->assign('w_use_db', $w_use_db);
 $smarty->assign('w_use_dir', $w_use_dir);
 $smarty->assign('feature_wiki_attachments', $feature_wiki_attachments);
+
+$smarty->assign('dblclickedit', 'n');
 
 $smarty->assign('feature_custom_home', $feature_custom_home);
 
@@ -870,6 +864,7 @@ $smarty->assign('rss_wiki', $rss_wiki);
 $smarty->assign('rss_image_gallery', $rss_image_gallery);
 $smarty->assign('rss_file_gallery', $rss_file_gallery);
 $smarty->assign('rss_blog', $rss_blog);
+$smarty->assign('rss_tracker', $rss_tracker);
 
 $smarty->assign('max_rss_directories', $max_rss_directories);
 $smarty->assign('max_rss_articles', $max_rss_articles);
@@ -880,6 +875,7 @@ $smarty->assign('max_rss_wiki', $max_rss_wiki);
 $smarty->assign('max_rss_image_gallery', $max_rss_image_gallery);
 $smarty->assign('max_rss_file_gallery', $max_rss_file_gallery);
 $smarty->assign('max_rss_blog', $max_rss_blog);
+$smarty->assign('max_rss_tracker', $max_rss_tracker);
 
 $smarty->assign('metatag_keywords', $metatag_keywords);
 $smarty->assign('metatag_description', $metatag_description);
@@ -890,17 +886,10 @@ $smarty->assign('metatag_geoplacename', $metatag_geoplacename);
 $smarty->assign('metatag_robots', $metatag_robots);
 $smarty->assign('metatag_revisitafter', $metatag_revisitafter);
 
-$smarty->assign("rssfeed_default_version", $tikilib->get_preference("rssfeed_default_version","2"));
+$smarty->assign("rssfeed_default_version", $tikilib->get_preference("rssfeed_default_version","9"));
 $smarty->assign("rssfeed_language", $tikilib->get_preference("rssfeed_language","en-us"));
 $smarty->assign("rssfeed_editor", $tikilib->get_preference("rssfeed_editor",""));
-$smarty->assign("rssfeed_publisher", $tikilib->get_preference("rssfeed_publisher",""));
 $smarty->assign("rssfeed_webmaster", $tikilib->get_preference("rssfeed_webmaster",""));
-$smarty->assign("rssfeed_creator", $tikilib->get_preference("rssfeed_creator",""));
-
-$smarty->assign("rssfeed_cssparam", "&amp;css=y");
-if ($tikilib->get_preference("rssfeed_css","y") <> "y") {
-    $smarty->assign("rssfeed_cssparam", "");
-}
 
 $smarty->assign('fgal_use_db', $fgal_use_db);
 $smarty->assign('fgal_use_dir', $fgal_use_dir);
@@ -1067,8 +1056,9 @@ $feature_community_mouseover_score = 'y';
 $feature_community_mouseover_country = 'y';
 $feature_community_mouseover_email = 'y';
 $feature_community_mouseover_lastlogin = 'y';
+$feature_community_mouseover_distance = 'y';
 $feature_community_friends_permission = 'n';
-$feature_community_friends_permission_depth = '2';
+$feature_community_friends_permission_dep = '2';
 
 $smarty->assign('feature_community_mouseover',$feature_community_mouseover);
 $smarty->assign('feature_community_mouseover_name',$feature_community_mouseover_name);
@@ -1078,8 +1068,9 @@ $smarty->assign('feature_community_mouseover_score',$feature_community_mouseover
 $smarty->assign('feature_community_mouseover_country',$feature_community_mouseover_country);
 $smarty->assign('feature_community_mouseover_email',$feature_community_mouseover_email);
 $smarty->assign('feature_community_mouseover_lastlogin',$feature_community_mouseover_lastlogin);
+$smarty->assign('feature_community_mouseover_distance',$feature_community_mouseover_distance);
 $smarty->assign('feature_community_friends_permission',$feature_community_friends_permission);
-$smarty->assign('feature_community_friends_permission_depth',$feature_community_friends_permission_depth);
+$smarty->assign('feature_community_friends_permission_dep',$feature_community_friends_permission_dep);
 
 // Other preferences
 $popupLinks = $tikilib->get_preference("popupLinks", 'n');
@@ -1243,8 +1234,14 @@ $smarty->assign('feature_sitead', $feature_sitead);
 $smarty->assign('sitead', $sitead);
 $smarty->assign('sitead_publish', $sitead_publish);
 
+$feature_breadcrumbs='n';
+$smarty->assign('feature_breadcrumbs', $feature_breadcrumbs);
+$feature_siteloclabel='y';
+$smarty->assign('feature_siteloclabel', $feature_siteloclabel);
 $feature_sitesearch='y';
 $smarty->assign('feature_sitesearch', $feature_sitesearch);
+$feature_sitemenu='n';
+$smarty->assign('feature_sitemenu', $feature_sitemenu);
 $feature_sitetitle='y';
 $smarty->assign('feature_sitetitle', $feature_sitetitle);
 $feature_sitedesc='n';
@@ -1469,6 +1466,7 @@ if ($feature_detect_language == "y") {
 }
 
 $useGroupHome = $tikilib->get_preference("useGroupHome",'n');
+$limitedGoGroupHome = $tikilib->get_preference("limitedGoGroupHome",'n');
 $tikiIndex = $tikilib->get_preference("tikiIndex",'tiki-index.php');
 $group = '';
 
@@ -1530,6 +1528,7 @@ if ($feature_userPreferences == 'y') {
     $style = $user_style;
 }
 
+if (!(is_file("styles/$style") or is_file("styles/$tikidomain/$style"))) { $style = "tikineat.css"; }
 if (!(isset($user) && $user)  && !empty($saveLanguage) ) { // users not logged that change the preference
 	$language = $saveLanguage;
 	$smarty->assign('language', $language);
@@ -1552,6 +1551,8 @@ if ($tikidomain and is_file("styles/$tikidomain/$style")) {
 	$style = "$tikidomain/$style";
 }
 $smarty->assign('style', $style);
+include_once("csslib.php");
+$transition_style = $csslib->transition_css("styles/".$style);
 $smarty->assign('transition_style', $transition_style);
 
 $messu_mailbox_size = $tikilib->get_preference('messu_mailbox_size', '0');
@@ -1838,10 +1839,14 @@ if ($feature_debug_console == 'y') {
 
 $smarty->assign_by_ref('num_queries',$num_queries);
 
-if (is_file("styles/$tikidomain/favicon.png")) {
-	$smarty->assign('favicon',"styles/$tikidomain/favicon.png");
-} elseif (is_file("favicon.png")) {
-	$smarty->assign('favicon',"favicon.png");
+$favicon = $tikilib->get_preference('site_favicon','favicon.png');
+$favicon_type = $tikilib->get_preference('site_favicon_type','image/png');
+if (is_file("styles/$tikidomain/$favicon")) {
+	$smarty->assign('favicon',"styles/$tikidomain/$favicon");
+	$smarty->assign('favicon_type',"$favicon_type");
+} elseif (is_file("$favicon")) {
+	$smarty->assign('favicon',"$favicon");
+	$smarty->assign('favicon_type',"$favicon_type");
 } else {
 	$smarty->assign('favicon',false);
 }
@@ -1939,4 +1944,13 @@ function setDisplayMenu($name) {
 	else
 		$smarty->assign('mnu_'.$name, 'display:none;');
 }
+
+/*
+ * Some languages needs BiDi support. Add their code names here ...
+ */
+if ($language == 'ar' || $language == 'he' || $language == 'fa') {
+	$feature_bidi='y';
+	$smarty->assign('feature_bidi', $feature_bidi);
+}
+
 ?>

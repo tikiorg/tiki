@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_topics.tpl,v 1.24 2005-03-12 16:50:32 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_topics.tpl,v 1.25 2005-05-18 11:02:57 mose Exp $ *}
 
 <h1><a  class="pagetitle" href="tiki-admin_topics.php">{tr}Admin Topics{/tr}</a>
 
@@ -42,7 +42,7 @@
 &nbsp;
 {/if}
 </td>
-<td class="{cycle advance=false}">{tr}{$topics[user].active}{/tr}</td>
+<td class="{cycle advance=false}">{$topics[user].active}</td>
 <td class="{cycle advance=false}">{$topics[user].arts} ({$topics[user].subs})</td>
 <td class="{cycle}">
 <a class="link" href="tiki-admin_topics.php?remove={$topics[user].topicId}">{tr}Remove{/tr}</a>

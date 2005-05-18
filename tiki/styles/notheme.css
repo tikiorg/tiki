@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme.css,v 1.20 2005-01-22 22:56:15 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme.css,v 1.21 2005-05-18 11:02:35 mose Exp $
  *
  * My second theme :)
  * The main feature of this theme -- NO COLORS AND BACKGROUNDS AT ALL :)
@@ -32,13 +32,13 @@
 	margin: 1px;
 	border: 1px inset #666666;
 	-moz-border-radius: 20px;
-	vertcal-align: middle;
+	vertical-align: middle;
 	background-color: #bbaa99;
 }
 .statusoff {
 	padding: 1px;
 	margin: 2px;
-	vertcal-align: middle;
+	vertical-align: middle;
 }
 
 
@@ -88,49 +88,24 @@
   margin: 1px;
   border: 1px inset #666666;
   -moz-border-radius: 20px;
-  vertcal-align: middle;
+  vertical-align: middle;
   background-color: #bbaa99;
 }
 .statusoff {
   padding: 1px;
   margin: 2px;
-  vertcal-align: middle;
+  vertical-align: middle;
 }
+
+.wikitopline table { width: 100%; }
 
 /* wiki diff styles */
-
-.diffheader {
-margin: 10px 5px 0px 5px;
-padding: 4px;
-border-width: 1px 1px 0px 1px;
-border-style: solid;
-border-color: #A9B8C2;
-color: black;
-font-weight: bold;
-background-color: #A9B8C2;
-font-size: 8pt;
-}
-.diffbody {
-margin: 0px 5px 10px 5px;
-padding: 5px;
-border-color: #A9B8C2;
-border-width: 0px 1px 1px 1px;
-border-style: solid;
-font-family: monospace, 'Courier New', courier;
-color: black;
-background-color: #edeeef;
-}
-.diffdeleted {
-border-color: #A9B8C2;
-color: black;
-background-color: #ffcccc;
-}
-.diffadded {
-border-color: #A9B8C2;
-color: black;
-background-color: #ccffcc;
-}
-.diffchar{color: red;}
+.diff div{border-top: 1px solid black;}
+.diffheader{background-color:#a9b8c2; font-weight: bold;}
+.diffadded {background-color:#ccffcc;}
+.diffdeleted {background-color:#ffcccc;}
+.diffbody{background-color:#F2F4F5}
+.diffchar {color: red;}
 
 /**** coloration for QUOTE plugin *****/
 .quoteheader {
@@ -154,12 +129,4 @@ color: black;
 background-color: #edeeef;
 }
 
-.wikitopline table { width: 100%; }
-
-/* wiki diff styles */
-.diff div{border-top: 1px solid black;}
-.diffheader{background-color:#a9b8c2; font-weight: bold;}
-.diffadded {background-color:#ccffcc;}
-.diffdeleted {background-color:#ffcccc;}
-.diffbody{background-color:#F2F4F5}
-.diffchar {color: red;}
+/* end of css file */

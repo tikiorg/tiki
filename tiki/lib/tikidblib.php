@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.16 2005-03-12 16:49:18 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.17 2005-05-18 10:59:49 mose Exp $
 //
 
 //this script may only be included - so its better to die if called directly.

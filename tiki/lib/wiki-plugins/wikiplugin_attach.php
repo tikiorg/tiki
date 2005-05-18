@@ -1,16 +1,17 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_attach.php,v 1.9 2005-03-12 16:50:00 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_attach.php,v 1.10 2005-05-18 11:01:59 mose Exp $
 // Displays an attachment or a list of attachments
 // Currently works with wiki pages and tracker items.
 // Parameters: ln => line numbering (default false)
 // 		inline => puts the stuff between {ATTACH} tags as the link text instead of the file name or description.
+// 		name => Gives the name of the attached file to link to.
+// 		file => Same as name.
+// 		image => Says that this file is an image, and should be displayed inline using the img tag.
 // 		showdesc => shows the description as the link text instead of the file name
 // 		icon => shows a file icon
 // 		dls => ????
 // 		id => Gives the actual id of the attachment to link in.  Might as well just do a straight link in this case...
 // 		num => Gives the number, in the list of attachments, of the attachment to link to
-// 		name => Gives the name of the attached file to link to.
-// 		file => Same as name.
 // 		page => Gives the name of another page the attached file is on.  The file on that page is linked to instead.  Only works with wiki pages.
 // Example:
 // {ATTACH(name=>foobar.zip)}
@@ -120,37 +121,53 @@ function wikiplugin_attach($data, $params) {
     }
     foreach ($loop as $n) {
 	$n--;
-	if ( (!$name and !$id) or $id == $atts['data'][$n]['attId'] or $name == $atts['data'][$n]['filename'] ) {
-	    $link = '<a href="tiki-download_wiki_attachment.php?attId='.$atts['data'][$n]['attId'].'" class="wiki"';
-	    $link.= ' title="';
-	    if (isset($showdesc)) {
-		$link.= $atts['data'][$n]['filename'];
-	    } else {
-		$link.= $atts['data'][$n]['comment'];
-	    }
-	    if (isset($dls)) {
-		$link.= " ".$atts['data'][$n]['downloads'];
-	    }
-	    $link.= '">';
-	    if (isset($icon)) {
-		if (!isset($mimeextensions)) {
-		    require("lib/mime/mimeextensions.php");
-		}
-		$ext = $atts['data'][$n]['filetype'];
-		if (isset($mimeextensions["$ext"]) and (is_file("img/icn/".$mimeextensions["$ext"].".gif"))) {
-		    $link.= '<img src="img/icn/'.$mimeextensions["$ext"].'.gif" border="0" />&nbsp;';
+	if ( (!$name and !$id) or $id == $atts['data'][$n]['attId'] or $name == $atts['data'][$n]['filename'] )
+	{
+	    if(isset($image) and $image )
+	    {
+		$link = '<img src="tiki-download_wiki_attachment.php?attId='.$atts['data'][$n]['attId'].'" class="wiki"';
+		$link.= ' alt="';
+		if (isset($showdesc)) {
+		    $link.= $atts['data'][$n]['filename'];
 		} else {
-		    $link.= '<img src="img/icn/else.gif" border="0" />&nbsp;';
+		    $link.= $atts['data'][$n]['comment'];
 		}
-	    }
-	    if (isset($showdesc)) {
-		$link.= strip_tags($atts['data'][$n]['comment']);
-	    } else if( isset( $inline ) ) {
-		$link.= $data;
+		if (isset($dls)) {
+		    $link.= " ".$atts['data'][$n]['downloads'];
+		}
+		$link.= '"/>';
 	    } else {
-		$link.= strip_tags($atts['data'][$n]['filename']);
+		$link = '<a href="tiki-download_wiki_attachment.php?attId='.$atts['data'][$n]['attId'].'" class="wiki"';
+		$link.= ' title="';
+		if (isset($showdesc)) {
+		    $link.= $atts['data'][$n]['filename'];
+		} else {
+		    $link.= $atts['data'][$n]['comment'];
+		}
+		if (isset($dls)) {
+		    $link.= " ".$atts['data'][$n]['downloads'];
+		}
+		$link.= '">';
+		if (isset($icon)) {
+		    if (!isset($mimeextensions)) {
+			require("lib/mime/mimeextensions.php");
+		    }
+		    $ext = $atts['data'][$n]['filetype'];
+		    if (isset($mimeextensions["$ext"]) and (is_file("img/icn/".$mimeextensions["$ext"].".gif"))) {
+			$link.= '<img src="img/icn/'.$mimeextensions["$ext"].'.gif" border="0" />&nbsp;';
+		    } else {
+			$link.= '<img src="img/icn/else.gif" border="0" />&nbsp;';
+		    }
+		}
+		if (isset($showdesc)) {
+		    $link.= strip_tags($atts['data'][$n]['comment']);
+		} else if( isset( $inline ) ) {
+		    $link.= $data;
+		} else {
+		    $link.= strip_tags($atts['data'][$n]['filename']);
+		}
+		$link.= '</a>';
 	    }
-	    $link.= '</a>';
 	    $out[] = $link;
 	}
     }

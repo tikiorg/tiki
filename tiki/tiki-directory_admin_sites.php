@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_admin_sites.php,v 1.16 2005-01-01 00:16:32 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_admin_sites.php,v 1.17 2005-05-18 10:58:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -194,21 +194,19 @@ $smarty->assign_by_ref('items', $items["data"]);
 $categs = $dirlib->dir_get_all_categories_accept_sites(0, -1, 'name asc', $find, $_REQUEST["siteId"]);
 $smarty->assign('categs', $categs);
 
-// Get flags here
-$flags = array();
-$h = opendir("img/flags/");
+$countries = array();
+$h = opendir("img/flags");
 
 while ($file = readdir($h)) {
-	if (strstr($file, ".gif")) {
-		$parts = explode('.', $file);
+	if (is_file('img/flags/' . $file)) {
+		$name = explode('.', $file);
 
-		$flags[] = $parts[0];
+		$countries[] = $name[0];
 	}
 }
 
-closedir ($h);
-sort ($flags);
-$smarty->assign('flags', $flags);
+closedir($h);
+$smarty->assign_by_ref('countries', $countries);
 
 // This page should be displayed with Directory section options
 $section='directory';

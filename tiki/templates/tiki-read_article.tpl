@@ -67,7 +67,7 @@ alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
 <a class="trailer" href="tiki-edit_article.php?articleId={$articleId}"><img src='img/icons/edit.gif' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
 {/if}
 <a class="trailer" href="tiki-print_article.php?articleId={$articleId}"><img src='img/icons/ico_print.gif' border='0' alt='{tr}Print{/tr}' title='{tr}Print{/tr}' /></a>
-{if $feature_multilingual eq 'y'}
+{if $feature_multilingual eq 'y' and $tiki_p_edit_article eq 'y'}
 <a class="trailer" href="tiki-edit_translation.php?id={$articleId}&amp;type=article"><img src='img/icons2/translation.gif' border='0' alt='{tr}Translation{/tr}' title='{tr}Translation{/tr}' /></a>
 {/if}
 {if $tiki_p_remove_article eq 'y'}

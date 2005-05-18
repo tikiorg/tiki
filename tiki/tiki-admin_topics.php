@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_topics.php,v 1.18 2005-01-05 19:22:41 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_topics.php,v 1.19 2005-05-18 10:58:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -97,6 +97,8 @@ for ($i = 0; $i < $temp_max; $i++) {
 
 $smarty->assign('topics', $topics);
 ask_ticket('admin-topics');
+$section = 'cms';
+include_once ('tiki-section_options.php');
 
 $smarty->assign('mid', 'tiki-admin_topics.tpl');
 $smarty->display("tiki.tpl");

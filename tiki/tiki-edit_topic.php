@@ -49,6 +49,8 @@ if(isset($_REQUEST["edittopic"])) {
 
   header("Location: tiki-admin_topics.php");
 }
+$section = 'cms';
+include_once ('tiki-section_options.php');
 
 $smarty->assign('mid','tiki-edit_topic.tpl');
 $smarty->display("tiki.tpl");

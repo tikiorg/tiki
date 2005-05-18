@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.48 2005-03-12 16:48:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.49 2005-05-18 10:58:51 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -41,7 +41,20 @@ if (!isset($_REQUEST["comment_rating"])) {
 }
 
 $comments_aux = array();
-$comments_show = 'n';
+// show/hide comments zone on request and store the status in a cookie (also works with javascript off)
+if (isset($_REQUEST['comzone'])) {
+	$comments_show = 'n';
+	$comzone_state = $_REQUEST['comzone'];
+	if ($comzone_state=='show'||$comzone_state=='o')	{
+		$comments_show = 'y';
+		if (!isset($_COOKIE['comzone'])||$_COOKIE['comzone']=='c') setcookie('comzone','o');	
+	} 
+	if ($comzone_state=='hide'||$comzone_state=='c') {
+		if (!isset($_COOKIE['comzone'])||$_COOKIE['comzone']=='o') setcookie('comzone','c');
+	}
+} else {
+	$comments_show = 'n';
+}
 $comments_t_query = '';
 $comments_first = 1;
 
@@ -85,8 +98,7 @@ if (!isset($comments_parsed["query"])) {
 }
 
 parse_str($comments_parsed["query"], $comments_query);
-$comments_father = $tikilib->httpPrefix(). $comments_parsed["path"];
-$comments_complete_father = $comments_father;
+$comments_father = $comments_parsed["path"];
 
 /*
    if(count($comments_query)>0) {
@@ -259,7 +271,9 @@ if ($tiki_p_post_comments == 'y') {
 		sendForumEmailNotification('forum_post_thread',
 			$_REQUEST['comments_parentId'], $forum_info,
 			$_REQUEST["comments_title"], $_REQUEST["comments_data"], $user,
-			$thread_info['title'], $message_id, $in_reply_to);
+			$thread_info['title'], $message_id, $in_reply_to, 
+			$_REQUEST['comments_parentId'], 
+			$_REQUEST['comments_grandParentId'] );
 
 		$commentslib->register_forum_post($_REQUEST["forumId"], $_REQUEST["comments_parentId"]);
 	    }
@@ -340,9 +354,20 @@ if ($_REQUEST["comments_threadId"] > 0) {
     //	$smarty->assign('comment_data', '');
     // Re-enabled by rlpowell; my users rely on this.  If you want to disable it, put an option in the forums or something.
     // However, I re-enabled it *working*, instead of broken.  -rlpowell
+    // check to see if QUOTE plugin or > should be used -Terence
+    global $feature_forum_parse, $feature_use_quoteplugin;
+	if ($feature_forum_parse == 'y' && $feature_use_quoteplugin == 'y') {
+		$comment_info["data"] = "\n{QUOTE()}" . $comment_info["data"] . '{QUOTE}';
+	} else {
     $comment_info["data"] = preg_replace( '/\n/', "\n> ", $comment_info["data"] ) ;
     $comment_info["data"] = "\n> " . $comment_info["data"];
+	}
     $smarty->assign( 'comment_data', $comment_info["data"] );
+
+    if( ! array_key_exists( "title", $comment_info ) )
+    {
+	$comment_info["title"] = $_REQUEST["comments_title"];
+    }
 
     $smarty->assign('comment_title', tra('Re:').' '.$comment_info["title"]);
     $smarty->assign('comments_reply_threadId', $_REQUEST["comments_reply_threadId"]);
@@ -451,7 +476,8 @@ $comments_coms = $commentslib->get_comments($comments_objectId, $_REQUEST["comme
 	$comments_offset, $_REQUEST["comments_maxComments"], $_REQUEST["comments_sort_mode"], $_REQUEST["comments_commentFind"],
 	$_REQUEST['comments_threshold'], $_REQUEST["comments_style"], $threadId_if_reply);
 
-$comments_cant = $comments_coms['cant'];
+$comments_cant = $commentslib->count_comments($comments_objectId);
+$comments_cant_page = $comments_coms['cant'];
 
 $smarty->assign('comments_below', $comments_coms["below"]);
 $smarty->assign('comments_cant', $comments_cant);
@@ -471,7 +497,7 @@ $comments_maxRecords = $_REQUEST["comments_maxComments"];
 
 if( $comments_maxRecords != 0 )
 {
-    $comments_cant_pages = ceil($comments_cant / $comments_maxRecords);
+    $comments_cant_pages = ceil($comments_cant_page / $comments_maxRecords);
     $smarty->assign('comments_actual_page', 1 + ($comments_offset / $comments_maxRecords));
 } else {
     $comments_cant_pages = 1;
@@ -479,7 +505,7 @@ if( $comments_maxRecords != 0 )
 }
 $smarty->assign('comments_cant_pages', $comments_cant_pages);
 
-if ($comments_cant > ($comments_offset + $comments_maxRecords)) {
+if ($comments_cant_page > ($comments_offset + $comments_maxRecords)) {
     $smarty->assign('comments_next_offset', $comments_offset + $comments_maxRecords);
 } else {
     $smarty->assign('comments_next_offset', -1);

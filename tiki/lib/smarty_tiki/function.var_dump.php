@@ -7,7 +7,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/function.var_dump.php,v 1.3 2004-08-26 19:24:02 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/function.var_dump.php,v 1.4 2005-05-18 11:01:44 mose Exp $
  *
  * \author zaufi <zaufi@sendmail.ru>
  */
@@ -26,7 +26,7 @@ function smarty_function_var_dump($params, &$smarty)
   if (strlen($v) != 0)
   {
     $tmp = $smarty->get_template_vars();
-    if (is_array($tmp) && isset($tmp[$v]))
+    if (is_array($tmp) && isset($tmp["$v"]))
       $debugger->msg("Smarty var_dump(".$v.') = '.print_r($tmp[$v], true));
     else
       $debugger->msg("Smarty var_dump(".$v."): Variable not found");

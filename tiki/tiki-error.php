@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-error.php,v 1.13 2005-04-02 16:52:02 michael_davey Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-error.php,v 1.14 2005-05-18 10:58:56 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.

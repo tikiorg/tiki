@@ -1,7 +1,7 @@
 <?php
 
 /**
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_showpages.php,v 1.3 2005-01-22 22:55:56 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_showpages.php,v 1.4 2005-05-18 11:02:00 mose Exp $
  *
  * SHOWPAGES plugin
  * Displays wiki pages that match a supplied pagename criteria.
@@ -19,7 +19,7 @@
  *
  * @package TikiWiki
  * @subpackage TikiPlugins
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 function wikiplugin_showpages_help() {

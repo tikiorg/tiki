@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/_jscalendar/lang/index.php,v 1.3 2005-01-01 00:17:25 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/_jscalendar/lang/index.php,v 1.4 2005-05-18 11:01:01 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.

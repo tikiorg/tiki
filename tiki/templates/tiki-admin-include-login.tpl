@@ -1,22 +1,19 @@
 <div class="cbox">
 <div class="cbox-title">{tr}Users &amp; groups{/tr}</div>
 <div class="cbox-data">
-<div class="simplebox">
+<br />
 <span class="button2"><a href="tiki-admingroups.php" class="linkbut">{tr}Admin groups{/tr}</a></span>
 <span class="button2"><a href="tiki-adminusers.php" class="linkbut">{tr}Admin users{/tr}</a></span>
-</div>
+<br /><br />
 </div>
 </div>
 
 <div class="cbox">
-<div class="cbox-title">{tr}User registration and login{/tr}
-{if $feature_help eq 'y'}
-<a href="{$helpurl}UserRegistrationSettings" target="tikihelp" class="tikihelp" title="{tr}User registration and login{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'>{/if}
-{if $feature_help eq 'y'}</a>{/if}
+<div class="cbox-title">
+  {tr}User registration and login{/tr}
+  {help url="User+Registration+Settings" desc="{tr}User registration and login{/tr}"}
 </div>
 <div class="cbox-data">
-<div class="simplebox">
 <form action="tiki-admin.php?page=login" method="post" name="login">
 <table class="admin">
 <tr><td class="form">{tr}Authentication method{/tr}</td><td>
@@ -38,7 +35,7 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 <tr><td class="form">{tr}Use tracker for more group information{/tr}:</td><td><input type="checkbox" name="groupTracker" {if $groupTracker eq 'y'}checked="checked"{/if} /></td></tr>
 
 <tr><td class="form">{tr}Request passcode to register{/tr}:</td><td><input type="checkbox" name="useRegisterPasscode" {if $useRegisterPasscode eq 'y'}checked="checked"{/if}/><input type="text" name="registerPasscode" value="{$registerPasscode|escape}"/></td></tr>
-<tr><td class="form">{tr}Prevent automatic/robot registration{/tr}{php}if (!function_exists("gd_info")) print(tra(" - Php GD library required")); {/php}:</td><td><input type="checkbox" name="rnd_num_reg" {if $rnd_num_reg eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Prevent automatic/robot registration{/tr}{php}if (!function_exists("gd_info")){ {/php} {tr} - Php GD library required{/tr}{php}}{/php}:</td><td><input type="checkbox" name="rnd_num_reg" {if $rnd_num_reg eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Validate users by email{/tr}:</td><td><input type="checkbox" name="validateUsers" {if $validateUsers eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Validate email address (may not work){/tr}:</td><td><input type="checkbox" name="validateEmail" {if $validateEmail eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Remind passwords by email{/tr}:</td><td><input type="checkbox" name="forgotPass" {if $forgotPass ne 'n'}checked="checked"{/if}/></td></tr>
@@ -154,17 +151,13 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 </form>
 </div>
 </div>
-</div>
 
 <div class="cbox">
-<div class="cbox-title">{tr}PEAR::Auth{/tr}
-{if $feature_help eq 'y'}
-<a href="{$helpurl}UserRegistrationSettings" target="tikihelp" class="tikihelp" title="{tr}LDAP{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'>{/if}
-{if $feature_help eq 'y'}</a>{/if}
+<div class="cbox-title">
+  {tr}PEAR::Auth{/tr}
+  {help url="User+Registration+Settings" desc="{tr}LDAP{/tr}"}
 </div>
 <div class="cbox-data">
-<div class="simplebox">
 <form action="tiki-admin.php?page=login" method="post">
 <table class="admin">
 <tr><td class="form">{tr}Create user if not in Tiki?{/tr}</td><td><input type="checkbox" name="auth_create_user_tiki" {if $auth_create_user_tiki eq 'y'}checked="checked"{/if} /></td></tr>
@@ -196,17 +189,13 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 </form>
 </div>
 </div>
-</div>
 
 <div class="cbox">
-<div class="cbox-title">{tr}PAM{/tr}
-{if $feature_help eq 'y'}
-<a href="{$helpurl}AuthPAM" target="tikihelp" class="tikihelp" title="{tr}PAM{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'>{/if}
-{if $feature_help eq 'y'}</a>{/if}
+<div class="cbox-title">
+  {tr}PAM{/tr}
+  {help url="AuthPAM" desc="{tr}PAM{/tr}"}
 </div>
 <div class="cbox-data">
-<div class="simplebox">
 <form action="tiki-admin.php?page=login" method="post">
 <table class="admin">
 <tr><td class="form">{tr}Create user if not in Tiki?{/tr}</td><td><input type="checkbox" name="pam_create_user_tiki" {if $pam_create_user_tiki eq 'y'}checked="checked"{/if} /></td></tr>
@@ -217,17 +206,13 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 </form>
 </div>
 </div>
-</div>
 
 <div class="cbox">
-<div class="cbox-title">{tr}CAS (Central Authentication Service){/tr}
-{if $feature_help eq 'y'}
-<a href="{$helpurl}AuthCAS" target="tikihelp" class="tikihelp" title="{tr}CAS (Central Authentication Service){/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'>{/if}
-{if $feature_help eq 'y'}</a>{/if}
+<div class="cbox-title">
+  {tr}CAS (Central Authentication Service){/tr}
+  {help url="AuthCAS" desc="{tr}CAS (Central Authentication Service){/tr}"}
 </div>
 <div class="cbox-data">
-<div class="simplebox">
 
 
 
@@ -248,41 +233,5 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 <tr><td colspan="2" class="button"><input type="submit" name="auth_cas" value="{tr}Change CAS preferences{/tr}" /></td></tr>
 </table>
 </form>
-</div>
-</div>
-</div>
-
-<div class="cbox">
-<div class="cbox-title">{tr}Secondary Validation with External XML Source{/tr}</div>
-<div class="cbox-data">
-<div class="simplebox">
-<form action="tiki-admin.php?page=login" method="post">
-<table class="admin">
-<tr><td class="form">{tr}Enable secondary validation through external XML source?{/tr}</td><td><input type="checkbox" name="auth_ext_xml_enabled" {if $auth_ext_xml_enabled eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="form">{tr}Delete user if permission denied (according to XML)?{/tr}</td><td><input type="checkbox" name="auth_ext_xml_delete_user_tiki" {if $auth_ext_xml_delete_user_tiki eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="form">{tr}Add or remove user from groups (according to XML)?{/tr}</td><td><input type="checkbox" name="auth_ext_xml_manage_group" {if $auth_ext_xml_manage_group eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="form">{tr}Just use Tiki auth for admin?{/tr}</td><td><input type="checkbox" name="auth_ext_xml_skip_admin" {if $auth_ext_xml_skip_admin eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="form">{tr}Pass a CAS Proxy Ticket to XML source (if using CAS auth)?{/tr}</td><td><input type="checkbox" name="auth_ext_xml_cas_proxy" {if $auth_ext_xml_cas_proxy eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="form">{tr}External XML source URL{/tr}:</td><td><input type="text" name="auth_ext_xml_url" value="{$auth_ext_xml_url|escape}" size="50" /></td></tr>
-<tr><td class="form" colspan="2">
-	<div class="simplebox">&lt;<b>ELname</b> <b>ATname</b>="<b><i>ATvalue</i></b>"&gt; <b><i>ELvalue</i></b> &lt;/<b>ELname</b>&gt;
-	<br />where <b>EL</b> = element and <b>AT</b> = attribute</div>
-</td></tr>
-<tr><td class="form">{tr}Expected login permission ELEMENT path{/tr}:</td><td><input type="text" name="auth_ext_xml_login_element" value="{$auth_ext_xml_login_element|escape}" size="20" /></td></tr>
-<tr><td class="form">{tr}Expected login permission ELEMENT value{/tr}:</td><td><input type="text" name="auth_ext_xml_login_element_value" value="{$auth_ext_xml_login_element_value|escape}" size="20" /></td></tr>
-<tr><td class="form">{tr}Expected login permission ATTRIBUTE name{/tr}:</td><td><input type="text" name="auth_ext_xml_login_attribute" value="{$auth_ext_xml_login_attribute|escape}" size="20" /></td></tr>
-<tr><td class="form">{tr}Expected login permission ATTRIBUTE value{/tr}:</td><td><input type="text" name="auth_ext_xml_login_attribute_value" value="{$auth_ext_xml_login_attribute_value|escape}" size="20" /></td></tr>
-{section name=ix loop=$groups}
-<tr><td class="form">{tr}Add or remove user from <i>{$groups[ix].groupName}</i> group (according to XML){/tr}?</td><td><input type="checkbox" name="auth_ext_xml_manage_{$groups[ix].groupName}" {if $groups[ix].auth_ext_xml_manage_group eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="form">{tr}Expected <i>{$groups[ix].groupName}</i> group ELEMENT path{/tr}:</td><td><input type="text" name="auth_ext_xml_element_{$groups[ix].groupName}" value="{$groups[ix].auth_ext_xml_group_element|escape}" size="20" /></td></tr>
-<tr><td class="form">{tr}Expected <i>{$groups[ix].groupName}</i> group ELEMENT value{/tr}:</td><td><input type="text" name="auth_ext_xml_element_val_{$groups[ix].groupName}" value="{$groups[ix].auth_ext_xml_group_element_value|escape}" size="20" /></td></tr>
-<tr><td class="form">{tr}Expected <i>{$groups[ix].groupName}</i> group ATTRIBUTE name{/tr}:</td><td><input type="text" name="auth_ext_xml_attr_{$groups[ix].groupName}" value="{$groups[ix].auth_ext_xml_group_attribute|escape}" size="20" /></td></tr>
-<tr><td class="form">{tr}Expected <i>{$groups[ix].groupName}</i> group ATTRIBUTE value{/tr}:</td><td><input type="text" name="auth_ext_xml_attr_val_{$groups[ix].groupName}" value="{$groups[ix].auth_ext_xml_group_attribute_value|escape}" size="20" /></td></tr>
-{/section}
-
-<tr><td colspan="2" class="button"><input type="submit" name="auth_ext_xml" value="{tr}Change Secondary Validation preferences{/tr}" /></td></tr>
-</table>
-</form>
-</div>
 </div>
 </div>

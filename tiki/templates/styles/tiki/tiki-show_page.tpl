@@ -62,7 +62,7 @@
 <small>{$description}</small>
 {/if}
 {if $cached_page eq 'y'}
-<small>(cached)</small>
+<small>({tr}cached{/tr})</small>
 {/if}
 </div>
 
@@ -108,7 +108,7 @@
 
 {if $print_page ne 'y'}
 {if $page|lower ne 'sandbox'}
-	{if $feature_history eq 'y' && ($tiki_p_admin_wiki eq 'y' || $tiki_p_view_wiki_history eq 'y')}
+	{if $feature_history eq 'y' and $tiki_p_wiki_view_history eq 'y'}
 		<span class="tabbut"><a href="tiki-pagehistory.php?page={$page|escape:"url"}" class="tablink">{tr}history{/tr}</a></span>
 	{/if}
 {/if}
@@ -148,24 +148,14 @@
 {/if}
 {/if}
 
-
 {if $print_page ne 'y'}
-{* don't show comments if feature disabled or not enough rights *}
-{if $feature_wiki_comments == 'y'
-&& (($tiki_p_read_comments  == 'y' && $comments_cant != 0)
-||  $tiki_p_post_comments  == 'y'
-||  $tiki_p_edit_comments  == 'y')}
-  <span class="tabbut">
-  <a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink"{if $comments_cant != 0}  style="background: #FFAAAA"{/if}>
-	{if $comments_cant == 0}
-          {tr}add comment{/tr}
-        {elseif $comments_cant == 1}
-          {tr}1 comment{/tr}
-        {else}
-          {$comments_cant} {tr}comments{/tr}
-        {/if}
-  </a>
-  </span>
+{if $show_page eq 'y' && $feature_wiki_comments == 'y' && $tiki_p_wiki_view_comments == 'y'}
+<span class="tabbut">
+{if $comments_cant > 0}
+	<a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink" style="background: #FFAAAA">{if $comments_cant eq 1}1 {tr}comment{/tr}{else}{$comments_cant} {tr}comments{/tr}{/if}</a></span>
+{else}
+	<a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink">{tr}comment{/tr}</a></span>
+{/if}
 {/if}
 {/if}
 
@@ -182,9 +172,7 @@
 </div>
 {/if}
 
-<div class="wikitext"
-{if $user_dbl eq 'y' and $feature_wiki_dblclickedit eq 'wikitext_only' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}>
-{if $structure eq 'y'}
+<div class="wikitext">{if $structure eq 'y'}
 <div class="tocnav">
 <table width='100%'>
 {foreach from=$struct_prev_next item=struct name=str key=key}
@@ -250,23 +238,45 @@
 </div>
 {/if}
 
-{if $tiki_p_wiki_view_author eq 'y' || $tiki_p_admin eq 'y' || $tiki_p_admin_wiki eq 'y'}
-<p class="editdate">{tr}Created by{/tr}: {$creator|userlink} {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}
-{else}
-<p class="editdate">{tr}last modification{/tr}: {$lastModif|tiki_long_datetime} 
-{/if}
-{if $feature_wiki_page_footer eq 'y'}<br />{$wiki_page_footer_content}{/if}
+{if isset($wiki_authors_style) && $wiki_authors_style eq 'business'}
+<p class="editdate">
+  {tr}Last edited by{/tr} {$lastUser|userlink}
+  {section name=author loop=$contributors}
+   {if $smarty.section.author.first}, {tr}based on work by{/tr}
+   {else}
+    {if !$smarty.section.author.last},
+    {else} {tr}and{/tr}
+    {/if}
+   {/if}
+   {$contributors[author]|userlink}
+  {/section}.<br />                                         
+  {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}.
 </p>
+{elseif isset($wiki_authors_style) &&  $wiki_authors_style eq 'collaborative'}
+<p class="editdate">
+  {tr}Contributors to this page{/tr}: {$lastUser|userlink}
+  {section name=author loop=$contributors}
+   {if !$smarty.section.author.last},
+   {else} {tr}and{/tr}
+   {/if}
+   {$contributors[author]|userlink}
+  {/section}.<br />
+  {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}.
+</p>
+{elseif isset($wiki_authors_style) &&  $wiki_authors_style eq 'none'}
+{else}
+<p class="editdate">
+  {tr}Created by{/tr}: {$creator|userlink}
+  {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}
+</p>
+{/if}
 
-{if $wiki_extras eq 'y'}
-<br />
 {if $wiki_extras eq 'y' && $feature_wiki_attachments eq 'y' and $tiki_p_wiki_view_attachments eq 'y'}
 {include file=attachments.tpl}
 {/if}
 
 {if $feature_wiki_comments eq 'y' and $tiki_p_wiki_view_comments eq 'y'}
 {include file=comments.tpl}
-{/if}
 {/if}
 
 {if $print_page eq 'y'}

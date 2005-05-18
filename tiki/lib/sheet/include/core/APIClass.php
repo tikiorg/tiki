@@ -46,7 +46,7 @@ APIClassRegistry::register('core.APIC');
  * @package 
  * @author Diogene
  * @copyright Copyright (c) 2003
- * @version $Id: APIClass.php,v 1.2 2004-09-08 19:52:33 mose Exp $
+ * @version $Id: APIClass.php,v 1.3 2005-05-18 11:01:22 mose Exp $
  * @access public
  **/
 class APIClass {

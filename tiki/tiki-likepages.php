@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-likepages.php,v 1.11 2005-04-02 16:52:02 michael_davey Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-likepages.php,v 1.12 2005-05-18 10:58:57 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.

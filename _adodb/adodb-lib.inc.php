@@ -794,6 +794,8 @@ function _adodb_column_sql(&$zthis, $action, $type, $fname, $fnameq, $arrFields,
 	return $sql;
 }
 
+
+
 function _adodb_debug_execute(&$zthis, $sql, $inputarr)
 {
 global $HTTP_SERVER_VARS;

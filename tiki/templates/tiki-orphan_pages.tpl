@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-orphan_pages.tpl,v 1.16 2004-03-27 22:23:24 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-orphan_pages.tpl,v 1.17 2005-05-18 11:03:19 mose Exp $ *}
 
 <a href="tiki-orphan_pages.php" class="pagetitle">{tr}Orphan Pages{/tr}</a><br /><br />
 <table class="findtable">
@@ -92,7 +92,7 @@
 	</td>
 {/if}
 {if $wiki_list_versions eq 'y'}
-	{if $feature_history eq 'y'}
+	{if $feature_history eq 'y' and $tiki_p_wiki_view_history eq 'y'}
 	<td style="text-align:right;" class="{cycle advance=false}"><a class="link" href="tiki-pagehistory.php?page={$listpages[changes].pageName|escape:"url"}">{$listpages[changes].versions}</a></td>
 	{else}
 	<td style="text-align:right;" class="{cycle advance=false}">{$listpages[changes].versions}</td>

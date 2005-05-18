@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/mods.sh,v 1.3 2005-03-12 16:49:07 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/mods.sh,v 1.4 2005-05-18 10:59:14 mose Exp $
 # 
 # Copyright (c) 2005, the Tikiwiki Community
 # All Rights Reserved. See copyright.txt for details and a complete list of authors.

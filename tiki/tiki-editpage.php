@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.107 2005-03-12 16:48:59 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.108 2005-05-18 10:58:56 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -21,7 +21,7 @@ if ($feature_wiki != 'y') {
   die;
 }
 
-/* Should not check for global tiki_p_view here... see permission check farther down
+/* Should not check for global tiki_p_view here... see permission check farther downs
 if ($tiki_p_view != 'y') {
   $smarty->assign('msg', tra("Permission denied you cannot view this section"));
 
@@ -29,7 +29,6 @@ if ($tiki_p_view != 'y') {
   die;
 }
 */
-
 // Anti-bot feature: if enabled, anon user must type in a code displayed in an image
 if (isset($_REQUEST['save']) && (!$user || $user == 'anonymous') && $feature_antibot == 'y') {
 	if((!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
@@ -170,17 +169,18 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
   }
 }
 
-// upload pictures here
 $wiki_up = "img/wiki_up";
 if ($tikidomain) { $wiki_up.= "/$tikidomain"; }
+// Upload pictures here
 if (($feature_wiki_pictures == 'y') && (isset($tiki_p_upload_picture)) && ($tiki_p_upload_picture == 'y')) {
   if (isset($_FILES['picfile1']) && is_uploaded_file($_FILES['picfile1']['tmp_name'])) {
     $picname = $_FILES['picfile1']['name'];
+
 		if (preg_match('/\.(gif|png|jpe?g)$/i',$picname)) { 
     	move_uploaded_file($_FILES['picfile1']['tmp_name'], "$wiki_up/$picname");
-    	$_REQUEST["edit"] = $_REQUEST["edit"] . "{picture file=img/wiki_up/$picname}";
 		}
-	}
+    //is done in js... $_REQUEST["edit"] = $_REQUEST["edit"] . "{img src=\"img/wiki_up/$tikidomain$picname\"}";
+  }
 }
 
 /**
@@ -433,11 +433,41 @@ if (strtolower($page) != 'sandbox') {
   }
 }
 
-if ($tiki_p_admin != 'y') {
-  if ($tiki_p_use_HTML != 'y') {
-    $_REQUEST["allowhtml"] = 'off';
+# melmut - is_html is defined here...
+ $can_html=$feature_wiki_allowhtml == 'y' && ($tiki_p_admin||$tiki_p_use_HTML == 'y');
+ $is_html=false;
+ if ($can_html)
+ {
+  if ((!isset($_REQUEST["edit"])&&$info['is_html'])||(isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"]=="on"))
+  {
+	  $is_html=true;
+	  $_REQUEST["allowhtml"] = 'on';
   }
-}
+  else
+  {
+	  $_REQUEST["allowhtml"] = 'off';
+  }
+ }
+
+# melmut - can_wysiwyg is set if a user can use the wysiwyg editor in html
+# wysiwyg is set if it should be used right now
+ $can_wysiwyg=$feature_wysiwyg!='no'&&$can_html&&$is_html;
+ $wysiwyg=false;
+ if ($can_wysiwyg) 
+ {
+  if (isset($_REQUEST['wysiwyg']))
+   $wysiwyg=$_REQUEST['wysiwyg']=='y';
+  else
+   $wysiwyg=$feature_wysiwyg=='default';
+ }
+ $smarty->assign('can_wysiwyg',$can_wysiwyg);
+ $smarty->assign('wysiwyg',$wysiwyg);
+
+#if ($tiki_p_admin != 'y') {
+#  if ($tiki_p_use_HTML != 'y') {
+#    $_REQUEST["allowhtml"] = 'off';
+#  }
+#}
 
 //$smarty->assign('allowhtml','y');
 
@@ -503,8 +533,7 @@ if (isset($_REQUEST["ratingId"]) && $_REQUEST["ratingId"] > 0) {
 
 if(isset($_REQUEST["edit"])) {
   
-  if (($feature_wiki_allowhtml == 'y' and $tiki_p_use_HTML == 'y' 
-		and isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"]=="on")) {
+  if ($is_html) {
     $edit_data = $_REQUEST["edit"];  
   } else {
   $edit_data = htmlspecialchars($_REQUEST["edit"]);
@@ -551,7 +580,7 @@ if(isset($_REQUEST["description"])) {
   $smarty->assign_by_ref('description',$_REQUEST["description"]);
   $description = $_REQUEST["description"];
 }
-if(isset($_REQUEST["allowhtml"]) and $_REQUEST["allowhtml"] == "on") {
+if($is_html) {
     $smarty->assign('allowhtml','y');
 } else {
   $smarty->assign('allowhtml','n');
@@ -574,19 +603,12 @@ if (isset($_REQUEST["lang"])) {
 }
 $smarty->assign('lang', $pageLang);
 
-$edit_data_htmldecoded = htmldecode($edit_data);
-$smarty->assign_by_ref('pagedata',$edit_data_htmldecoded);
-
-if (($tiki_p_use_HTML == 'y' || $tiki_p_admin == 'y') && $feature_wiki_allowhtml == 'y' && $edit_data == $edit_data_htmldecoded) {
-	$smarty->assign('allowhtml', 'y');
-} else {
-	$smarty->assign('allowhtml', 'n');
-}
+$smarty->assign_by_ref('pagedata',htmldecode($edit_data));
 
 // apply the optional post edit filters before preview
 if(isset($_REQUEST["preview"]) || ($wiki_spellcheck == 'y' && isset($_REQUEST["spellcheck"]) && $_REQUEST["spellcheck"] == 'on')) {
   $parsed = $tikilib->apply_postedit_handlers($edit_data);
-  $parsed = $tikilib->parse_data($parsed);
+  $parsed = $tikilib->parse_data($parsed,$is_html);
 } else {
   $parsed = "";
 }
@@ -670,11 +692,11 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 
   if ((($feature_wiki_description == 'y')
     && (md5($info["description"]) != md5($_REQUEST["description"])))
-    || (md5($info["data"]) != md5($_REQUEST["edit"])) || $info["lang"] != $_REQUEST["lang"]) {
+    || (md5($info["data"]) != md5($_REQUEST["edit"])) || $info["lang"] != $_REQUEST["lang"] || $info["is_html"] != $is_html) {
 
     $page = $_REQUEST["page"];
 
-    if(isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"]=="on") {
+    if($is_html) {
       $edit = $_REQUEST["edit"];
     } else {
 //      $edit = strip_tags($_REQUEST["edit"]);
@@ -714,15 +736,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
       $tikilib->cache_links($cachedlinks);
       */
       $t = date("U");
-      $tikilib->create_page($_REQUEST["page"], 0, $edit, $t, $_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description, $pageLang);
-      global $feature_wiki_realtime_static;
-      if ($feature_wiki_realtime_static == 'y') {
-      	  global $staticlib;
-      	  if (!is_object($staticlib)) {
-		      require_once('lib/static/staticlib.php');
-      	  }
-	      $staticlib->create_page($_REQUEST['page']);
-      }
+      $tikilib->create_page($_REQUEST["page"], 0, $edit, $t, $_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description, $pageLang, $is_html);
       if ($wiki_watch_author == 'y') {
         $tikilib->add_user_watch($user,"wiki_page_changed",$_REQUEST["page"],'Wiki page',$page,"tiki-index.php?page=$page");
       }
@@ -736,15 +750,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
       } else {
         $minor=false;
       }
-      $tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description,$minor,$pageLang);
-      global $feature_wiki_realtime_static;
-      if ($feature_wiki_realtime_static == 'y') {
-      	  global $staticlib;
-      	  if (!is_object($staticlib)) {
-		      require_once('lib/static/staticlib.php');
-      	  }
-	      $staticlib->update_page($_REQUEST['page']);
-      }
+      $tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description,$minor,$pageLang, $is_html);
     }
   }
 
@@ -766,6 +772,9 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
       //Insert page after current page
       $page_ref_id = $structlib->s_create_page($page_info["parent_id"], $_REQUEST['current_page_id'], $_REQUEST["page"], '');
     }
+    //Criss Holman added the if containing this code of which I don't know the use, but a check before the permissions copy
+    //is definitely needed in case someone has tiki_p_edit/tiki_p_admin_wiki in a page belonging to a structure. chealer
+    if ($tikilib->user_has_perm_on_object($user, $_REQUEST["page"],'wiki page', 'tiki_p_admin_wiki', 'tiki_p_admin_categories'))
     $userlib->copy_object_permissions($page_info["pageName"], $_REQUEST["page"],'wiki page');
   } 
     

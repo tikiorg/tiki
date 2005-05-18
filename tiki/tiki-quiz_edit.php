@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_edit.php,v 1.15 2005-01-01 00:16:34 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_edit.php,v 1.16 2005-05-18 10:58:58 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, 
 //                          George G. Geller et. al.
@@ -139,7 +139,7 @@ function quiz_data_load(){
 									'additionalQuestions',
 									'forum');
 	foreach ($fields as $field){
-		fetchYNOption(&$quiz_data, $quiz_data, $field);
+		fetchYNOption($quiz_data, $quiz_data, $field);
 		// echo '$quiz_data["'.$field.'"] = '.$quiz_data[$field]."<br>";
  	}
 
@@ -262,7 +262,7 @@ function setup_options(&$tpl){
 }
 
 $tpl = array();
-setup_options(&$tpl);
+setup_options($tpl);
 $smarty->assign('tpl', $tpl);
 
 ask_ticket('edit-quiz-question');

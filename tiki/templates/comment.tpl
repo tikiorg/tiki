@@ -65,7 +65,7 @@
 	    	</td>
 
 	    	{if $comments_style != 'commentStyle_headers'}
-				{if ($tiki_p_vote_comments eq 'y' or $tiki_p_remove_comments eq 'y' or $tiki_p_edit_comments eq 'y') and $comment.userName ne $user}
+				{if (($tiki_p_vote_comments eq 'y' and $forum_mode ne 'y') or ($tiki_p_forum_vote eq 'y' and $forum_mode eq 'y')) and $comment.userName ne $user}
 				<td style="font-size:8pt;">
 					<b>{tr}Vote{/tr}</b>:  
 					<a class="link" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_threadId={$comment.threadId}&amp;comments_vote=1&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}&amp;comments_style={$comments_style}">1</a>
@@ -74,7 +74,7 @@
 					<a class="link" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_threadId={$comment.threadId}&amp;comments_vote=4&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}&amp;comments_style={$comments_style}">4</a>
 					<a class="link" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_threadId={$comment.threadId}&amp;comments_vote=5&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}&amp;comments_style={$comments_style}">5</a>
 				</td>
-				{/if} {* if ($tiki_p_vote_comments eq 'y' or $tiki_p_remove_comments eq 'y' or $tiki_p_edit_comments eq 'y') and $comment.userName ne $user *}
+				{/if} {* if ($tiki_p_vote_comments eq 'y' ... *}
 				<td align="right">
 					{if $tiki_p_remove_comments eq 'y'}
 					  &nbsp;&nbsp;<a title="{tr}delete{/tr}" class="link" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_threadId={$comment.threadId}&amp;comments_remove=1&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}&amp;comments_style={$comments_style}"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt='{tr}Remove{/tr}'></a>
@@ -82,7 +82,7 @@
 					{if $tiki_p_edit_comments eq 'y' || $user == $comment.userName}
 					  &nbsp;&nbsp;<a title="{tr}edit{/tr}" class="link" href="{$comments_complete_father}comments_threadId={$comment.threadId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}&amp;comments_style={$comments_style}&amp;edit_reply=1#form"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
 					{/if}
-					{if $tiki_p_post_comments == 'y'}
+					{if ($tiki_p_post_comments == 'y' and $forum_mode ne 'y') or ($tiki_p_forum_post eq 'y' and $forum_mode eq 'y') }
 						{if $forum_mode neq 'y'}
 							<a class="linkbut" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_reply_threadId={$comment.threadId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_grandParentId={$comment.parentId}&amp;comments_parentId={$comment.threadId}&amp;comments_style={$comments_style}&amp;post_reply=1#form">{tr}reply{/tr}</a>
 						{else}

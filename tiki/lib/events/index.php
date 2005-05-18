@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/events/index.php,v 1.2 2005-01-22 22:55:45 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/events/index.php,v 1.3 2005-05-18 11:00:36 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.

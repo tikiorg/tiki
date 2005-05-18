@@ -1,5 +1,5 @@
 <?php
-/** $Header: /cvsroot/tikiwiki/tiki/modules/mod-breadcrumb.php,v 1.6 2004-08-26 19:24:10 mose Exp $
+/** $Header: /cvsroot/tikiwiki/tiki/modules/mod-breadcrumb.php,v 1.7 2005-05-18 11:02:27 mose Exp $
  * \param maxlen = max number of displayed characters for the page name
  */
 

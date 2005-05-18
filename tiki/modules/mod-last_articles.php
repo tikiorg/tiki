@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/modules/mod-last_articles.php,v 1.7 2005-01-22 22:56:13 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/modules/mod-last_articles.php,v 1.8 2005-05-18 11:02:28 mose Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_edit.tpl,v 1.16 2005-03-12 16:50:51 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_edit.tpl,v 1.17 2005-05-18 11:03:20 mose Exp $ *}
 
 {* Copyright (c) 2004 George G. Geller et. al. *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -136,25 +136,25 @@
               </td>
 						</tr>
 						<tr>
-							<td class=formcolor><label>{tr}Show students the correct answers {/tr}</label><select name=quiz.showCorrectAnswers>{html_options values=$tpl.optionsShowScore selected=$quiz->showCorrectAnswers output=$tpl.optionsShowScore}</select>
+							<td class="formcolor"><label>{tr}Show students the correct answers {/tr}</label><select name=quiz.showCorrectAnswers>{html_options values=$tpl.optionsShowScore selected=$quiz->showCorrectAnswers output=$tpl.optionsShowScore}</select>
               </td>
 						</tr>
 						<tr>
-							<td class=formcolor><label>{tr}Publish statistics {/tr}</label><select name=quiz.publishStats>{html_options values=$tpl.optionsShowScore selected=$quiz->publishStats output=$tpl.optionsShowScore}</select>
+							<td class="formcolor"><label>{tr}Publish statistics {/tr}</label><select name=quiz.publishStats>{html_options values=$tpl.optionsShowScore selected=$quiz->publishStats output=$tpl.optionsShowScore}</select>
 						</tr>
 					</table>
 			  </div>
 			</td>
 		</tr>
-		<tr class=formcolor>
+		<tr class="formcolor">
 			<td>{tr}Extra Options{/tr}</td>
 			<td {if $cols} colspan={$cols}{/if}>
 				[ <a class="link" href="javascript:show('after-test');">{tr}show{/tr}</a>
  				| <a class="link" href="javascript:hide('after-test');">{tr}hide{/tr}</a> ]
  				<div id="after-test" style="display:none;">
-					<table class=normal>
+					<table class="normal">
 						<tr>
-							<td class=formcolor><input type=checkbox name=quiz.additionalQuestions {if $quiz->additionalQuestions eq 'y'}checked="checked"{/if} /><label for="additional-questions">{tr}Solicit additional questions from students{/tr}</td>
+							<td class="formcolor"><input type=checkbox name=quiz.additionalQuestions {if $quiz->additionalQuestions eq 'y'}checked="checked"{/if} /><label for="additional-questions">{tr}Solicit additional questions from students{/tr}</td>
 						</tr>
 					</table>
 					<table class="normal">

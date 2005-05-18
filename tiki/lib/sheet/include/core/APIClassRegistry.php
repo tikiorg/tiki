@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 *		APIC::import('org.apicnet.security.Auth');
 * 
 *
-* @update $Date: 2004-09-08 19:52:33 $
+* @update $Date: 2005-05-18 11:01:38 $
 * @version 1.0
 * @author diogène MOULRON <logiciel@apicnet.net>
 * @package core

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.26 2005-03-12 16:49:00 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.27 2005-05-18 10:58:58 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -40,7 +40,7 @@ if ($_REQUEST["galleryId"] == 0) {
 }
 
 if ($_REQUEST["galleryId"] != 0) {
-	$gal_info = $filegallib->get_file_gallery($_REQUEST["galleryId"]);
+	$gal_info = $tikilib->get_file_gallery($_REQUEST["galleryId"]);
 } else {
 	// This is an unreachable block. Remove this code or the verification above?
 	// rbschmidt and lfagundes
@@ -111,7 +111,19 @@ if ($tiki_p_admin_file_galleries == 'y') {
 	if (isset($_REQUEST['delsel_x'])) {
 		check_ticket('list-fgal');
 		foreach (array_values($_REQUEST['file'])as $file) {
-			$filegallib->remove_file($file);
+//Watches
+                        if ($_REQUEST['file'] > 0) {
+                                $info = $filegallib->get_file_info($file);
+ 
+                                $smarty->assign('fileId', $file);
+                                $smarty->assign('galleryId', $_REQUEST['galleryId']);
+                                $smarty->assign_by_ref('filename', $info['filename']);
+                                $smarty->assign_by_ref('fname', $info['name']);
+                                $smarty->assign_by_ref('fdescription', $info['description']);
+                        }
+                //      $filegallib->remove_file($file);
+                        $filegallib->remove_file($file, $_REQUEST['galleryId'], $info['name'], $info['filename'], $user);
+
 		}
 	}
 
@@ -136,7 +148,7 @@ $smarty->assign_by_ref('owner', $gal_info["user"]);
 $smarty->assign_by_ref('public', $gal_info["public"]);
 $smarty->assign_by_ref('galleryId', $_REQUEST["galleryId"]);
 
-$filegallib->add_file_gallery_hit($_REQUEST["galleryId"]);
+$tikilib->add_file_gallery_hit($_REQUEST["galleryId"]);
 
 if (isset($_REQUEST["remove"])) {
 	// To remove an image the user must be the owner or admin
@@ -148,7 +160,21 @@ if (isset($_REQUEST["remove"])) {
   $area = 'delfile';
   if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
-		$filegallib->remove_file($_REQUEST["remove"]);
+
+//Watches
+	if ($_REQUEST['remove'] > 0) {
+                $info = $filegallib->get_file_info($_REQUEST['remove']);
+        
+                $smarty->assign('fileId', $_REQUEST['remove']);
+                $smarty->assign('galleryId', $_REQUEST['galleryId']);
+                $smarty->assign_by_ref('filename', $info['filename']);
+                $smarty->assign_by_ref('fname', $info['name']);
+                $smarty->assign_by_ref('fdescription', $info['description']);
+        }
+                $filegallib->remove_file($_REQUEST['remove'], $_REQUEST['galleryId'], $info['name'], $info['filename'], $user);
+
+		//$filegallib->remove_file($_REQUEST["remove"]);
+
   } else {
     key_get($area);
   }
@@ -307,6 +333,32 @@ if ($feature_theme_control == 'y') {
 	$cat_objid = $_REQUEST["galleryId"];
 	include ('tiki-tc.php');
 }
+
+// Watches
+$galleryId = $_REQUEST["galleryId"];
+                                
+if (!isset($_REQUEST["galleryName"])) {
+        $galleryName = '';
+} else {
+        $galleryName = $_REQUEST["galleryName"];
+}
+
+if($feature_user_watches == 'y') {
+    if($user && isset($_REQUEST['watch_event'])) {
+        check_ticket('index');
+        if($_REQUEST['watch_action']=='add') {
+            $tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'File Gallery',$galleryName,"tiki-list_file_gallery.php?galleryId=$galleryId");
+        } else {
+            $tikilib->remove_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object']);
+        }   
+    }
+    $smarty->assign('user_watching_file_gallery','n');
+    if($user && $watch = $tikilib->get_user_event_watches($user,'file_gallery_changed',$galleryId)) {
+        $smarty->assign('user_watching_file_gallery','y');
+    }
+}
+
+
 
 $all_galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '');
 $smarty->assign('all_galleries', $all_galleries['data']);

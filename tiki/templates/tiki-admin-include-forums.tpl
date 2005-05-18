@@ -1,11 +1,13 @@
 {if $feature_help eq 'y'}
-<div class="simplebox">{tr}Tip{/tr}: {tr}to add/remove forums, look for "Admin forums" under "Forums" on the application menu, or{/tr} <a class="link" href="tiki-admin_forums.php">{tr}click here{/tr}</a>.</div><br />
+<div class="rbox" style="margin-top: 10px;">
+<div class="rbox-title" style="background-color: #eeee99; font-weight : bold; display : inline; padding : 0 10px;">{tr}Tip{/tr}</div>
+<div class="rbox-data" style="padding: 2px 10px; background-color: #eeee99;">{tr}To add/remove forums, look for "Admin forums" under "Forums" on the application menu, or{/tr} <a class="link" href="tiki-admin_forums.php">{tr}click here{/tr}</a>.</div>
+</div>
+<br />
 {/if}
 <div class="cbox">
-  <div class="cbox-title">{tr}Forums{/tr}</div>
+  <div class="cbox-title">{tr}Home Forum{/tr}</div>
   <div class="cbox-data">
-    {tr}Forums settings{/tr}
-    <div class="simplebox">
       <form method="post" action="tiki-admin.php?page=forums">
         <table class="admin"><tr class="form">
           <td><label>{tr}Home Forum (main forum){/tr}</label></td>
@@ -19,9 +21,12 @@
               value="{tr}ok{/tr}" /></td>
         </tr></table>
       </form>
-    </div>
-    
-    <div class="simplebox">
+  </div>
+</div>
+
+<div class="cbox">
+  <div class="cbox-title">{tr}Forums features{/tr}</div>
+  <div class="cbox-data">
       <form method="post" action="tiki-admin.php?page=forums">
         <table class="admin"><tr class="form">
           <td><label>{tr}Rankings{/tr}:</label></td>
@@ -51,10 +56,12 @@
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>
-    </div>
-    
-    <div class="simplebox">
-      {tr}Forum listing configuration{/tr}
+  </div>
+</div>
+
+<div class="cbox">
+  <div class="cbox-title">{tr}Forum listing configuration{/tr}</div>
+  <div class="cbox-data">
       <form method="post" action="tiki-admin.php?page=forums">
         <table class="admin"><tr class="form">
           <td><label>{tr}Topics{/tr}</label></td>
@@ -85,7 +92,6 @@
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>
-    </div>
   </div>
 </div>    
 

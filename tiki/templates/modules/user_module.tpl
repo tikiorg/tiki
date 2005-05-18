@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/user_module.tpl,v 1.9 2005-03-12 16:51:00 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/user_module.tpl,v 1.10 2005-05-18 11:03:32 mose Exp $ *}
 
 {tikimodule title=$user_title name=$user_module_name flip=$module_params.flip decorations=$module_params.decorations}
 {* This will be nested 'box-data' div... *}

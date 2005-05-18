@@ -11,4 +11,5 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 $languages = array();
 $languages = $tikilib->list_languages(false, 'y');
 $smarty->assign_by_ref('languages', $languages);
+$smarty->assign("available_languages", unserialize($tikilib->get_preference("available_languages")));
 ?>

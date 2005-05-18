@@ -1,9 +1,9 @@
 {popup_init src="lib/overlib.js"}
 <h1><a class="pagetitle" href="tiki-blog_post.php?blogId={$blogId}&amp;postId={$postId}">{tr}Edit Post{/tr}</a></h1><br />
 {if $wysiwyg eq 'n'}
-<span class="button2"><a class="linkbut" href="tiki-blog_post.php?wysiwyg=y">{tr}Use wysiwyg editor{/tr}</a></span>
+<span class="button2"><a class="linkbut" href="tiki-blog_post.php?{if $blogId ne ''}blogId={$blogId}&amp;{/if}{if $postId ne ''}&amp;postId={$postId}{/if}&amp;wysiwyg=y">{tr}Use wysiwyg editor{/tr}</a></span>
 {else}
-<span class="button2"><a class="linkbut" href="tiki-blog_post.php?wysiwyg=n">{tr}Use normal editor{/tr}</a></span>
+<span class="button2"><a class="linkbut" href="tiki-blog_post.php?{if $blogId ne ''}blogId={$blogId}&amp;{/if}{if $postId ne ''}&amp;postId={$postId}{/if}&amp;wysiwyg=n">{tr}Use normal editor{/tr}</a></span>
 {/if}
 {if $preview eq 'y'}
 	{include file=tiki-preview_post.tpl}

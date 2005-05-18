@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_miniquiz.php,v 1.6 2005-03-12 16:50:00 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_miniquiz.php,v 1.7 2005-05-18 11:02:00 mose Exp $
 /*
 DEV NOTE
 that plugin is not finished !! -- mose
@@ -34,12 +34,8 @@ function wikiplugin_miniquiz($data, $params) {
 	if (!isset($trackerId)) {
 		return ("<b>missing tracker ID for plugin TRACKER</b><br />");
 	}
-	global $trklib;
-	if (!is_object($trklib)) {
-		require_once('lib/trackers/trackerlib.php');
-	}
-	$tracker = $trklib->get_tracker($trackerId);
-	$items = $trklib->list_tracker_items($trackerId,0,-1,'lastModif_desc','','o');
+	$tracker = $tikilib->get_tracker($trackerId);
+	$items = $tikilib->list_tracker_items($trackerId,0,-1,'lastModif_desc','','o');
 	foreach ($items['data'] as $it) {
 		$id = $it['itemId'];
 		foreach ($it['field_values'] as $val) {

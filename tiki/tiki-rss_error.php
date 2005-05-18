@@ -1,28 +1,22 @@
 <?php
 $feed = tra("Error Message");
-$title = tra("Tiki RSS Feed Error Message");
+$title = tra("Tiki RSS Feed Error Message: $errmsg");
 $desc = $errmsg;
-$dateId = "lastModif";
-$titleId = "name";
-$descId = "description";
+$now = date("U");
 $id = "errorMessage";
-$home ="";
-$output="";
+$titleId = "title";
+$descId = "description";
+$dateId = "lastModif";
+$authorId = "";
+$readrepl = "";
 $uniqueid=$feed;
 
-$now = date("U");
-// get default rss feed version from database or set to 1.0 if none in there
-$rss_version = $tikilib->get_preference("rssfeed_default_version",1);
-
-// override version if set as request parameter
-if (isset($_REQUEST["ver"]))
-        if (substr($_REQUEST["ver"],0,1) == '2') {
-                $rss_version = 2;
-        } else $rss_version = 1;
-
-$readrepl = "";
-//$changes=array("data"=>array("name"=>tra("Error"),"description"=>$errmsg,"lastModified"=>$now));
 $changes=array("data"=>array());
-require ("tiki-rss.php");
+
+$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, '', $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
+
+header("Content-type: ".$output["content-type"]);
+print $output["data"];
+
 die;
 ?>

@@ -1,19 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages.tpl,v 1.33 2005-03-13 11:33:36 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages.tpl,v 1.34 2005-05-18 11:03:18 mose Exp $ *}
 
 <h1><a href="tiki-listpages.php" class="pagetitle">{tr}Pages{/tr}</a></h1>
-
 {if $tiki_p_admin eq 'y'}
 <a href="tiki-admin.php?page=wiki"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
-
-<br />
-{if $tikifeedback}
-<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">{section name=n loop=$tikifeedback}{$tikifeedback[n].mes}<br />{/section}</div>
 {/if}
-<br />
-
-
-{/if}
-</h1>
 <table class="findtable">
 <tr><td class="findtitle">{tr}Find{/tr}</td>
    <td class="findtitle">
@@ -22,28 +12,9 @@
      {tr}Exact&nbsp;match{/tr}<input type="checkbox" name="exact_match" {if $exact_match ne 'n'}checked="checked"{/if}/>
      <input type="submit" name="search" value="{tr}find{/tr}" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-     <input type="hidden" name="max_records" value="{$maxRecords}" />
    </form>
    </td>
 </tr>
-
-<tr><td colspan="2"><form method="post" action="tiki-listpages.php">
-{tr}Show{/tr}
-<select name="max_records" onchange="this.form.submit();">
-<option value="10" {if $maxRecords eq 10}selected {/if}>10</option>
-<option value="20" {if $maxRecords eq 20}selected {/if}>20</option>
-<option value="50" {if $maxRecords eq 50}selected {/if}>50</option>
-<option value="100" {if $maxRecords eq 100}selected {/if}>100</option>
-{if $tiki_p_admin eq y}
-<option value="250" {if $maxRecords eq 250}selected {/if}>250</option>
-<option value="500" {if $maxRecords eq 500}selected {/if}>500</option>
-<option value="1000" {if $maxRecords eq 500}selected {/if}>1000</option>
-{/if}
-</select>
-{tr}per page{/tr}
-<input type="hidden" name="find" value="{$find|escape}" /></form>
-</td></tr>
-
 </table>
 
 <div align="center">
@@ -71,7 +42,7 @@ class="prevnext">{tr}All{/tr}</a>
     so for now the checkboxes are visible iff $tiki_p_remove is set. Other applications make 
     sense as well (categorize, convert to pdf, etc). Add necessary corresponding permission here:
 *}    
-{if $tiki_p_admin eq 'y' || $tiki_p_remove eq 'y' || $tiki_p_admin_categories eq 'y'}              {* ... "or $tiki_p_other_sufficient_condition_for_checkboxes eq 'y'"  *}
+{if $tiki_p_remove eq 'y'}              {* ... "or $tiki_p_other_sufficient_condition_for_checkboxes eq 'y'"  *}
   {assign var='checkboxes_on' value='y'}
 {else}
   {assign var='checkboxes_on' value='n'}
@@ -125,7 +96,7 @@ class="prevnext">{tr}All{/tr}</a>
 {section name=changes loop=$listpages}
 <tr>
 {if $checkboxes_on eq 'y'}
-<td class="{cycle advance=false}"><input type="checkbox" name="checked[]" value="{$listpages[changes].pageName|escape}" {if $listpages[changes].checked eq 'y'}checked="checked" {/if}/></td>
+<td class="{cycle advance=false}"><input type="checkbox" name="checked[]" value="{$listpages[changes].pageName|escape}"/></td>
 {/if}
 {if $wiki_list_name eq 'y'}
 	<td class="{cycle advance=false}"><a href="tiki-index.php?page={$listpages[changes].pageName|escape:"url"}" class="link" title="{$listpages[changes].pageName}">{$listpages[changes].pageName|truncate:20:"...":true}</a>
@@ -151,7 +122,7 @@ class="prevnext">{tr}All{/tr}</a>
 	<td style="text-align:right;" class="{cycle advance=false}">{$listpages[changes].version}</td>
 {/if}
 {if $wiki_list_comment eq 'y'}
-	<td class="{cycle advance=false}">{$listpages[changes].comment}</td>
+	<td class="{cycle advance=false}">{if $listpages[changes].comment eq ""}&nbsp;{else}{$listpages[changes].comment}{/if}</td>
 {/if}
 {if $wiki_list_status eq 'y'}
 	<td style="text-align:center;" class="{cycle advance=false}">
@@ -163,7 +134,7 @@ class="prevnext">{tr}All{/tr}</a>
 	</td>
 {/if}
 {if $wiki_list_versions eq 'y'}
-	{if $feature_history eq 'y'}
+	{if $feature_history eq 'y' and $tiki_p_wiki_view_history eq 'y'}
 	<td style="text-align:right;" class="{cycle advance=false}"><a class="link" href="tiki-pagehistory.php?page={$listpages[changes].pageName|escape:"url"}">{$listpages[changes].versions}</a></td>
 	{else}
 	<td style="text-align:right;" class="{cycle advance=false}">{$listpages[changes].versions}</td>
@@ -196,54 +167,28 @@ class="prevnext">{tr}All{/tr}</a>
   // in the future, we could extend this to happen serverside as well for the convenience of people w/o javascript.
   // for now those people just have to check every single box
   document.write("<tr><td><input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/></td>");
-  document.write("<td colspan=\"15\"><label for=\"clickall\">{tr}select all{/tr}</label></td></tr>");
+  document.write("<td colspan=\"15\"><label for=\"clickall\">{tr}all{/tr}</label></td></tr>");
   //-->                     
   </script>
 {/if}
 </table>
 {if $checkboxes_on eq 'y'} {* what happens to the checked items? *}
   <p align="left"> {*on the left to have it close to the checkboxes*}
-  {if $categorize_mode neq 'y' && $rename_mode neq 'y'}
-  {tr}Perform action with checked:{/tr}
-  <select name="submit_mult">
-    <option value="" selected>-</option>
+  <select name="submit_mult" onchange="this.form.submit();">
+    <option value="" selected="selected">{tr}with checked{/tr}:</option>
     {if $tiki_p_remove eq 'y'} 
       <option value="remove_pages" >{tr}remove{/tr}</option>
     {/if}
     {* add here e.g. <option value="categorize" >{tr}categorize{/tr}</option> *}
-    {if $feature_categories eq 'y' && $tiki_p_admin_categories eq 'y'}
-      <option value="categorize" >{tr}categorize{/tr}</option>
-    {/if}
-    {if $tiki_p_admin eq 'y'}
-      <option value="rename">{tr}rename{/tr}</option>
-    {/if}
-  </select>
-{*
+  </select>                
   <script language='Javascript' type='text/javascript'>
   <!--
   // Fake js to allow the use of the <noscript> tag (so non-js-users can still submit)
-  //
-  -->
+  //-->
   </script>
   <noscript>
-*}
-<input type="submit" value="{tr}ok{/tr}" />
-<input type="hidden" name="find" value="{$find|escape}" />
-<input type="hidden" name="max_records" value="{$maxRecords}" />
-{*</noscript>*}
-  {elseif $categorize_mode eq 'y'}
-  <select name="categorization">
-  	<option value="add">{tr}Add selected to{/tr}</option>
-  	<option value="remove">{tr}Remove selected from{/tr}</option>
-  </select>
-  {tr}the following categories:{/tr}
-  {section name=ix loop=$categories}
-  	<br /><input type="checkbox" name="cat_categories[]" value="{$categories[ix].categId|escape}" /> <a class="link" href="tiki-admin_categories.php?parentId={$categories[ix].categId}" title="{tr}edit{/tr}">{$categories[ix].categpath}</a>
-  {/section}
-  <br /><input type="submit" value="{tr}ok{/tr}" />
-  <input type="hidden" name="find" value="{$find|escape}" />
-  <input type="hidden" name="max_records" value="{$maxRecords}" />
-
+    <input type="submit" value="{tr}ok{/tr}" />
+  </noscript>
   </p>
 {/if}
 </form>
@@ -266,27 +211,4 @@ class="prevnext">{tr}All{/tr}</a>
 {/if}
 </div>
 </div>
-{else}
-<form name="renameform" method="post" action="{$smarty.server.PHP_SELF}">
-<input type="hidden" name="offset" value="{$offset|escape}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-<input type="hidden" name="find" value="{$find|escape}" />
-<input type="hidden" name="max_records" value="{$maxRecords}" />
-<table class="normal">
-<tr><td class="heading">{tr}Rename from{/tr}</td>
-<td class="heading">{tr}to{/tr}</td></tr>
-{cycle values="even,odd" print=false}
-{section name=changes loop=$listpages}
-{if $listpages[changes].checked eq 'y'}
-<tr><td class="{cycle advance=false}"><a href="tiki-index.php?page={$listpages[changes].pageName|escape:"url"}" class="link" title="{$listpages[changes].pageName}">{$listpages[changes].pageName|truncate:20:"...":true}</a>
-	{if $tiki_p_edit eq 'y'}
-	<br />(<a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}">{tr}edit{/tr}</a>)
-	{/if}</td>
-<td class="{cycle advance=false}"><input type='text' size='40' name='newpages[{$listpages[changes].pageName|escape}]' value='{$listpages[changes].pageName|escape}'/></td></tr>
-{/if}
-{cycle print=false}
-{/section}
-</table>
-<input type="submit" value="{tr}rename{/tr}" />
-</form>
-{/if}
+

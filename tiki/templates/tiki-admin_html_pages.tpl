@@ -10,7 +10,7 @@
 </h1>
 
 {if $pageName ne ''}
-<div class=navbar"><a href="tiki-admin_html_pages.php" class="linkbut">{tr}Create new HTML page{/tr}</a></div>
+<div class="navbar"><a href="tiki-admin_html_pages.php" class="linkbut">{tr}Create new HTML page{/tr}</a></div>
 {/if}
 {if $preview eq 'y'}
 <h2>{tr}Preview{/tr}</h2>

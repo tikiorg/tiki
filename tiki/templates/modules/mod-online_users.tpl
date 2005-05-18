@@ -1,12 +1,12 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-online_users.tpl,v 1.6 2005-03-12 16:51:00 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-online_users.tpl,v 1.7 2005-05-18 11:03:30 mose Exp $ *}
 
 {tikimodule title="{tr}Online users{/tr}" name="online_users" flip=$module_params.flip decorations=$module_params.decorations}
-{section name=ix loop=$online_users}
-{if $online_users[ix].user_information eq 'public'}
-{$online_users[ix].user|userlink}<br />
+{foreach key=ix from=$online_users item=online_user}
+{if $online_user.user_information eq 'public'}
+{$online_user.user|userlink}<br />
 {else}
-{$online_users[ix].user}<br />
+{$online_user.user}<br />
 {/if}
-{/section}
+{/foreach}
 {/tikimodule}
 

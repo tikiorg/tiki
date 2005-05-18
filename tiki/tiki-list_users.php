@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_users.php,v 1.6 2005-03-12 16:49:00 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_users.php,v 1.7 2005-05-18 10:58:58 mose Exp $
 
 // Initialization
 require_once('tiki-setup.php');
@@ -79,10 +79,12 @@ for ($i=0;$i<count($listusers["data"]);$i++) {
 	} else {
 		$listdistance[]=round($distance,0);
 	}
-	$userprefs=$userprefslib->get_userprefs($userlogin);
+
+	$userprefs=$listusers["data"][$i]["preferences"];
 	$country="None";
 	for ($j=0;$j<count($userprefs);$j++) {
 			if ($userprefs[$j]["prefName"]=="country") $country=$userprefs[$j]["value"];
+			if ($userprefs[$j]["prefName"]=="realName") $listusers["data"][$i]["realName"]=$userprefs[$j]["value"];
 	}
 	$listuserscountry[]=$country;
 }

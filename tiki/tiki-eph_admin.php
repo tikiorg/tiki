@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-eph_admin.php,v 1.10 2005-03-12 16:48:59 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-eph_admin.php,v 1.11 2005-05-18 10:58:56 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -101,9 +101,12 @@ if (isset($_REQUEST['save'])) {
 
 // Process removal here
 if (isset($_REQUEST["delete"])) {
-	check_ticket('admin-eph');
-	foreach (array_keys($_REQUEST["ephitem"])as $item) {
-		$ephlib->remove_eph($item);
+	if (isset($_REQUEST["ephitem"]))
+	if (is_array($_REQUEST["ephitem"])) {
+		check_ticket('admin-eph');
+		foreach (array_keys($_REQUEST["ephitem"])as $item) {
+			$ephlib->remove_eph($item);
+		}
 	}
 }
 

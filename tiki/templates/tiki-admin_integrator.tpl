@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.23 2005-03-12 16:50:30 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.24 2005-05-18 11:02:57 mose Exp $ *}
 
 <h1>{tr}Integrator{/tr}<h1>
 {if $repID > 0}

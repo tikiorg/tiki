@@ -6,7 +6,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-/* $Id: taillib.php,v 1.7 2004-08-26 19:24:05 mose Exp $*/
+/* $Id: taillib.php,v 1.8 2005-05-18 11:01:49 mose Exp $*/
 function tail_filter_irc(&$item, $key) {
 	# here is a sample line
 	# [06-24-03/05:13] <mose> how is everyone ?

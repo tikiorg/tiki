@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/categobjects.tpl,v 1.3 2005-03-12 16:50:08 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/categobjects.tpl,v 1.4 2005-05-18 11:02:52 mose Exp $ *}
 
 <div class="catblock">
 <div class="cattitle">

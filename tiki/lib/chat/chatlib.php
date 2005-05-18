@@ -15,6 +15,16 @@ class ChatLib extends TikiLib {
 		$this->db = $db;
 	}
 
+	function parse_chat_data($data) {
+		// parse external links
+		$data = preg_replace("/\[([^\|\]]+)\|([^\]]+)\]/", "<a href=\"$1\">$2</a>", $data);
+		// external links without description
+		$data = preg_replace("/\[([^\]\|]+)\]/", "<a href=\"$1\">$1</a>", $data);
+		// parse smileys
+		$data = $this->parse_smileys($data);
+		return $data;
+	}
+
 	function send_message($user, $channelId, $data) {
 		$now = date("U");
 		$info = $this->get_channel($channelId);

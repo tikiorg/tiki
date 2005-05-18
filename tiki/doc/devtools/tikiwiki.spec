@@ -1,5 +1,5 @@
 # Command to build: rpmbuild -ba --target noarch tikiwiki.spec
-# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/tikiwiki.spec,v 1.7 2005-01-22 22:55:01 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/tikiwiki.spec,v 1.8 2005-05-18 10:59:14 mose Exp $
 
 %define name tikiwiki
 %define version 1.9.DR4

@@ -6,12 +6,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-global $imagegallib;
-if (!is_object($imagegallib)) {
-	require_once('lib/imagegals/imagegallib.php');
-}
-
-$ranking = $imagegallib->list_visible_galleries(0, $module_rows, 'lastModif_desc', 'admin', '');
+$ranking = $tikilib->list_visible_galleries(0, $module_rows, 'lastModif_desc', 'admin', '');
 
 $smarty->assign('modLastGalleries', $ranking["data"]);
 $smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');

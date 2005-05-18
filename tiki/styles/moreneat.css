@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.72 2005-03-12 16:50:02 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.73 2005-05-18 11:02:34 mose Exp $
 
 MoreNeat theme
 */
@@ -63,7 +63,9 @@ DIV#tiki-top {
 background-color: #C7D0D9; 
 background-repeat: no-repeat;
 color: #225566; 
+/*
 height: 12px;  
+*/
 padding-right: 0px;  
 font-size: 10px;
 padding-bottom: 1px;
@@ -319,7 +321,10 @@ div.simplebox {
 FORM {  margin : 0px 0px 0px 0px;  padding-bottom : 0px;  padding-left : 0px;  padding-right : 0px;  padding-top : 0px;}
 
 /* General form elements */
-input,textarea, select { font: normal 10px Verdana, Arial, Helvetica, sans-serif; }
+input, textarea, select {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size : 10px;
+}
 input { text-indent : 2px; }
 input[type=submit]:hover {
   background-color: #aaaaaa;
@@ -365,7 +370,7 @@ td.listfilesheading, td.listartheading, td.forumheading, td.viewthread
   background-color: #C7D0D9; 
   border: 1px solid #8CACBB;
   padding-left: 2px;
-  padding-right: 5px;
+  padding-right: 2px;
 }
 
 th, th.gallistheading, th.listgalheading, th.bloglistheading, th.listfgalheading, th.jukeboxlistheading,
@@ -602,7 +607,11 @@ div.wikitext {
 
 /* Date displayed for last modification date of pages */
 p.editdate { color: black; font-size: smaller; font-family: "Lucida Grande", Helvetica, Arial, sans-serif; }
-
+#description {
+  font-size : 10px !important;
+  padding-left:   10px;
+  color:   #333300;
+}
 /* The edit-help used to display the wiki syntax when editing a page */
 div.wiki-edithelp { background: white; border: 1px solid black; font-size: smaller; padding: 6pt;}
 
@@ -1714,6 +1723,7 @@ font-weight: inherit;
 margin: inherit;
 padding: inherit;
 text-decoration: inherit;
+vertical-align: text-top;
 }
 a.tikihelp:hover {
 color: #224466;
@@ -1725,6 +1735,7 @@ margin: inherit;
 padding: inherit;
 cursor: help;
 text-decoration: inherit;
+vertical-align: text-top;
 }
 .catblock {
   border: 1px solid #aaaaaa;
@@ -1812,13 +1823,12 @@ TABLE.admin { width: 100%; }
   position: relative;
   display: block;
   text-decoration: none;
-	font-weight: bold;
+  font-weight: bold;
 }
 .mdksubmenu .mdkitem a {
 	font-weight: normal;
 }
 .mdkitem a:hover  {
-	padding: 1px 4px 1px 4px;
 }
 .mdkitem .mdkfwdarr {
   position: absolute;
@@ -1857,6 +1867,9 @@ TABLE.admin { width: 100%; }
 
 /* tiki tabs */
 
+.tabs {
+	padding : 1px 5px;
+}
 .tabmark {
 	display: inline;
 	font-size: 85%;
@@ -1903,13 +1916,13 @@ TABLE.admin { width: 100%; }
   margin: 1px;
   border: 1px inset #666666;
   -moz-border-radius: 20px;
-  vertcal-align: middle;
+  vertical-align: middle;
   background-color: #bbaa99;
 }
 .statusoff {
   padding: 1px;
   margin: 2px;
-  vertcal-align: middle;
+  vertical-align: middle;
 }
 /* wiki diff styles */
 
@@ -1927,61 +1940,6 @@ font-family: monospace, 'Courier New', courier;
 .diffbody{background-color:#F2F4F5}
 .diffchar {color: red;}
 
-/* wiki diff styles */
-
-table.diff {
-border-color: #A9B8C2;
-border-width: 1px 1px 1px 1px;
-border-style: solid;
-font-family: monospace, 'Courier New', courier;
-}
-.diffheader {
-margin: 10px 5px 0px 5px;
-padding: 4px;
-border-width: 1px 1px 0px 1px;
-border-style: solid;
-border-color: #A9B8C2;
-color: black;
-font-weight: bold;
-background-color: #A9B8C2;
-font-size: 8pt;
-}
-.diffbody {
-margin: 0px 5px 10px 5px;
-padding: 5px;
-border-color: #A9B8C2;
-border-width: 0px 1px 1px 1px;
-border-style: solid;
-font-family: monospace, 'Courier New', courier;
-color: black;
-background-color: #edeeef;
-}
-.diffdeleted {
-border-color: #A9B8C2;
-color: black;
-background-color: #ffcccc;
-}
-.diffadded {
-border-color: #A9B8C2;
-color: black;
-background-color: #ccffcc;
-}
-tr.diffdeleted {
-border-color: #A9B8C2;
-border-width: 0px 1px 1px 1px;
-border-style: solid;
-color: black;
-background-color: #ffcccc;
-}
-tr.diffadded {
-border-color: #A9B8C2;
-border-width: 0px 1px 1px 1px;
-border-style: solid;
-color: black;
-background-color: #ccffcc;
-}
-.diffchar{color: red;}
-
 /**** coloration for c o d e plugin *****/
 .codelisting
 { font-family : monospace;
@@ -1989,28 +1947,7 @@ padding : 2ex;
 padding-top : 2.5ex;
 background-color : #edeeef;
 margin : 1ex;
-border : 1px dashed #adacaf; }
-
-/**** coloration for QUOTE plugin *****/
-.quoteheader {
-margin: 10px 5px 0px 5px;
-padding: 4px;
-border-width: 1px 1px 0px 1px;
-border-style: solid;
-border-color: #A9B8C2;
-color: black;
-font-weight: bold;
-background-color: #A9B8C2;
-font-size: 8pt;
-}
-.quotebody {
-margin: 0px 5px 10px 5px;
-padding: 5px;
-border-color: #A9B8C2;
-border-width: 0px 1px 1px 1px;
-border-style: solid;
-color: black;
-background-color: #edeeef;
+border : 1px dashed #adacaf; 
 }
 .codecaption {
 font-size : smaller;
@@ -2057,3 +1994,26 @@ padding : 2px 30px;
 float : right;
 }
 
+/**** coloration for QUOTE plugin *****/
+.quoteheader {
+margin: 10px 5px 0px 5px;
+padding: 4px;
+border-width: 1px 1px 0px 1px;
+border-style: solid;
+border-color: #A9B8C2;
+color: black;
+font-weight: bold;
+background-color: #A9B8C2;
+font-size: 8pt;
+}
+.quotebody {
+margin: 0px 5px 10px 5px;
+padding: 5px;
+border-color: #A9B8C2;
+border-width: 0px 1px 1px 1px;
+border-style: solid;
+color: black;
+background-color: #edeeef;
+}
+
+/* end of css file */

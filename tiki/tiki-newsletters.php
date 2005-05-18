@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-newsletters.php,v 1.21 2005-03-12 16:49:00 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-newsletters.php,v 1.22 2005-05-18 10:58:58 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,7 +34,6 @@ $smarty->assign('unsub', 'n');
 
 if (isset($_REQUEST["unsubscribe"])) {
 	$conf = $nllib->unsubscribe($_REQUEST["unsubscribe"]);
-echo "EEEAAA".$conf;
 	if ($conf) {
 		$smarty->assign('unsub', 'y');
 
@@ -104,7 +103,11 @@ if ($tiki_p_subscribe_newsletters == 'y') {
 		}
 
 		// Now subscribe the email address to the newsletter
-		if ($nllib->newsletter_subscribe($_REQUEST["nlId"], $_REQUEST["email"] ))
+		$nl_info = $nllib->get_newsletter($_REQUEST["nlId"]);
+		if ($nl_info['allowAnySub'] != 'y' && $user) {
+			if ($nllib->newsletter_subscribe($_REQUEST["nlId"], $user, "y"))
+				$smarty->assign('subscribed', 'y');
+		} elseif ($nllib->newsletter_subscribe($_REQUEST["nlId"], $_REQUEST["email"] ))
 			$smarty->assign('subscribed', 'y'); /* will receive en email */
 
 	}

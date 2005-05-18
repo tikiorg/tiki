@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagepermissions.php,v 1.22 2005-01-01 00:16:34 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagepermissions.php,v 1.23 2005-05-18 10:58:58 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -82,10 +82,14 @@ if (!$tikilib->page_exists($page)) {
 if (isset($_REQUEST["assign"])) {
 	$userlib->assign_object_permission($_REQUEST["group"], $page, 'wiki page', $_REQUEST["perm"]);
 }
+
+$pageInfoTree=array();
+$pageInfoTree=$structlib->s_get_structure_pages($structlib->get_struct_ref_id($page));
+if (count($pageInfoTree) > 1)
+	$smarty->assign('inStructure', "y");
+
 // Process the form to assign a new permission to this structure
 if(isset($_REQUEST["assignstructure"])) {
-        $pageInfoTree=array();
-	$pageInfoTree=$structlib->s_get_structure_pages($structlib->get_struct_ref_id($page));
 	foreach($pageInfoTree as $subPage) {
 	  $userlib->assign_object_permission($_REQUEST["group"],$subPage["pageName"],'wiki page',$_REQUEST["perm"]);
         }
@@ -97,8 +101,6 @@ if (isset($_REQUEST["action"])) {
 	}
 // Process the form to remove a permission from the structure
 	if($_REQUEST["action"] == 'removestructure') {
-        	$pageInfoTree=array();
-		$pageInfoTree=$structlib->s_get_structure_pages($structlib->get_struct_ref_id($page));
 		foreach($pageInfoTree as $subPage) {
 			$userlib->remove_object_permission($_REQUEST["group"],$subPage["pageName"],'wiki page',$_REQUEST["perm"]);
 		}
@@ -115,7 +117,9 @@ if ($feature_categories == 'y') {
   $parents = $categlib->get_object_categories('wiki page',$page);
   foreach ($parents as $categId) {
     if ($userlib->object_has_one_permission($categId, 'category')) {
-      $categ_perms[] = $userlib->get_object_permissions($categId, 'category');
+      $categ_perm = $userlib->get_object_permissions($categId, 'category');
+      $categ_perm[0]['catpath'] = $categlib->get_category_name($categId);
+      $categ_perms[] = $categ_perm;
     } else {
       $categpath = $categlib->get_category_path($categId);
       $arraysize = count($categpath);

@@ -98,15 +98,15 @@ class Messu extends TikiLib {
 		return true;
 	}
 
-	/* I think this is totally unneeded here. remove it later.
-	 * 11. jul. 2004 redflo.
+	/**
+	 * Validate user (wrapper for userlib function)
+	 */ 
 	function validate_user($user, $pass) {
 		global $userlib;
 
 		$cant = $userlib->validate_user($user, $pass, '', '');
 		return $cant;
 	}
-	*/
 
 	/**
 	 * Get a list of messages from users mailbox or users mail archive (from
@@ -325,12 +325,57 @@ class Messu extends TikiLib {
 		$result = $this->query($query,$bindvars);
 		$res = $result->fetchRow();
 		$res['parsed'] = $this->parse_data($res['body']);
+		$res['len'] = strlen($res['parsed']);
 
 		if (empty($res['subject']))
 			$res['subject'] = tra('NONE');
 
 		return $res;
 	}
+
+	/**
+	 * Get message from the users mailbox or his mail archive (from which
+	 * depends on $dbsource)
+	 */
+	 function get_messages($user, $dbsource='messages', $subject='', $to='', $from='') {
+		if ($dbsource=='') $dbsource="messages";
+		$bindvars[] = array($user);
+
+		$mid = "";
+
+		// find mails with a specific subject
+		if ($subject<>'') {
+			$findesc = '%'.$subject.'%';		
+			$bindvars[] = $findesc;
+			$mid.= " and `subject` like ?";
+		}
+		// find mails to a specific user (to, cc, bcc)
+		if ($to<>'') {
+			$findesc = '%'.$to.'%';		
+			$bindvars[] = $findesc;
+			$bindvars[] = $findesc;
+			$bindvars[] = $findesc;
+			$mid.= " and (`user_to` like ? or `user_cc` like ? or `user_bcc` like ?)";
+		}
+		// find mails from a specific user
+		if ($from<>'') {
+			$findesc = '%'.$from.'%';		
+			$bindvars[] = $findesc;
+			$mid.= " and `user_from` like ?";
+		}
+		$query = "select * from `messu_".$dbsource."` where `user`=? $mid";
+		
+		$result = $this->query($query,$bindvars);
+		while ($res = $result->fetchRow()) {
+			$res['parsed'] = $this->parse_data($res['body']);
+			$res['len'] = strlen($res['parsed']);
+			if (empty($res['subject']))
+				$res['subject'] = tra('NONE');
+			$ret[] = $res;
+		}
+		return $ret;
+	}
+
 }
 
 $messulib = new Messu($dbTiki);
