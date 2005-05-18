@@ -340,6 +340,7 @@
     <div class="cbox-data">
     <form action="tiki-admin.php?page=wiki" method="post">
     <table class="admin">
+    <tr><td class="form"><label for="pear_wiki_parser">Use <a href="http://pear.php.net/package/text_Wiki">PEAR::Text_Wiki</a> to parse Wiki-text (experimental)</label>:</td><td><input type="checkbox" name="pear_wiki_parser" id="pear_wiki_parser"{if $pear_wiki_parser eq 'y'} checked{/if}></td></tr>
     <tr><td class="form">{tr}Sandbox{/tr}:</td><td><input type="checkbox" name="feature_sandbox" {if $feature_sandbox eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Anonymous editors must input anti-bot code{/tr}:</td><td><input type="checkbox" name="feature_antibot" {if $feature_antibot eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Last changes{/tr}:</td><td><input type="checkbox" name="feature_lastChanges" {if $feature_lastChanges eq 'y'}checked="checked"{/if}/></td></tr>

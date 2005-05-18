@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.49 2005-05-18 10:58:54 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.50 2005-05-18 22:49:45 papercrane Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -213,6 +213,16 @@ if (isset($_REQUEST['wikilistprefs'])) {
 
 if (isset($_REQUEST["wikifeatures"])) {
 	check_ticket('admin-inc-wiki');
+	if (isset($_REQUEST["pear_wiki_parser"]) && $_REQUEST["pear_wiki_parser"] == "on") {
+		$tikilib->set_preference("pear_wiki_parser", 'y');
+
+		$smarty->assign("pear_wiki_parser", 'y');
+	} else {
+		$tikilib->set_preference("pear_wiki_parser", 'n');
+
+		$smarty->assign("pear_wiki_parser", 'n');
+	}
+
 	if (isset($_REQUEST["feature_lastChanges"]) && $_REQUEST["feature_lastChanges"] == "on") {
 		$tikilib->set_preference("feature_lastChanges", 'y');
 
