@@ -18,6 +18,11 @@ require_once ('lib/tikidblib.php');
 // * generic functions that MANY scripts must use
 // * shared functions (marked as /*shared*/) are functions that are
 //   called from Tiki modules.
+
+if (!defined('PAGE_SEP')) {
+    define('PAGE_SEP', isset($GLOBALS['pear_wiki_parser']) ? '...page...' : 'PAGE MARKER HERE*&^%$#^$%*PAGEMARKERHERE');
+}
+
 class TikiLib extends TikiDB {
     var $db; // The ADODB db object used to access the database
 
@@ -4227,6 +4232,25 @@ function add_pageview() {
 
     //PARSEDATA
     function parse_data($data,$is_html=false) {
+        if ($GLOBALS['pear_wiki_parser'] == 'y') {
+            require_once('lib/wiki/Text/Wiki/Tiki.php');
+            $wiki =& new Text_Wiki_Tiki();
+            $wiki->setRenderConf('xhtml', 'wikilink', 'exists_callback', array(&$this, 'page_exists'));
+            $wiki->setRenderConf('xhtml', 'wikilink', 'view_url', 'tiki-index.php?page=');
+            $wiki->setRenderConf('xhtml', 'wikilink', 'new_url', 'tiki-editpage.php?page=');
+            $wiki->setRenderConf('xhtml', 'table', 'css_table', 'wikitable');
+            $wiki->setRenderConf('xhtml', 'table', 'css_td', 'wikicell');
+            $wiki->setFormatConf('Xhtml', 'translate', false);
+            $extwiki = array();
+            $extwikiSth = $this->query('SELECT `extwiki`, `name` FROM `tiki_extwiki`');
+            while ($rec = $extwikiSth->fetchRow()) {
+                $extwiki[$rec['name']] = str_replace('$page', '%s', $rec['extwiki']);
+            }
+            $wiki->setRenderConf('xhtml', 'interwiki', 'sites', $extwiki);
+            return $wiki->transform($data, 'Xhtml');
+        }
+
+
 	global $page_regex;
 
 	global $slidemode;
@@ -5210,17 +5234,17 @@ if (!$simple_wiki) {
 			if (count($tocs[0]) > 0) {
 			    // OK. Must insert <a id=...> before HEADER and collect TOC entry
 			    $thisid = 'id' . microtime() * 1000000;
-			    $pageNumLink = ($pageNum >= 2)? "tiki-index.php?page=$page&pagenum=$pageNum": "";
+			    $pageNumLink = ($pageNum >= 2)? "tiki-index.php?page=$page&amp;pagenum=$pageNum": "";
 			    array_push($anch, str_repeat("*", $hdrlevel). " <a href='$pageNumLink#$thisid' class='link'>" . substr($line, $hdrlevel + $addremove). '</a>');
 			    $anchor = "<a id='$thisid'>";
 			    $aclose = '</a>' . $aclose;
 			}
 			$line = $anchor . "<h$hdrlevel>" . substr($line, $hdrlevel + $addremove). "</h$hdrlevel>" . $aclose;
-		    } elseif (!strcmp($line, "...page...")) {
+		    } elseif (!strcmp($line, PAGE_SEP)) {
 			// Close open paragraph, lists, and div's
 			$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 1);
 			// Leave line unchanged... tiki-index.php will split wiki here
-			$line = "...page...";
+			$line = PAGE_SEP;
 			$pageNum += 1;
 		    } else {
 			/** Usual paragraph.  
@@ -5303,7 +5327,7 @@ if (!$simple_wiki) {
 		$items = $rsslib->parse_rss_data($rssdata, $id);
 
 		$repl="";		
-		if ($items[0]["isTitle"]=="y") {
+		if (isset($items[0]) && $items[0]["isTitle"]=="y") {
 			$repl .= '<div class="wiki"><a target="_blank" href="'.$items[0]["link"].'">'.$items[0]["title"].'</a></div>'; 
 			$items = array_slice ($items, 1);
 		}

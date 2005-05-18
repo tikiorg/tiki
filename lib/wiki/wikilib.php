@@ -9,6 +9,10 @@ if( !defined( 'PLUGINS_DIR' ) ) {
 	define('PLUGINS_DIR', 'lib/wiki-plugins');
 }
 
+if (!defined('PAGE_SEP')) {
+    define('PAGE_SEP', isset($GLOBALS['pear_wiki_parser']) ? '...page...' : 'PAGE MARKER HERE*&^%$#^$%*PAGEMARKERHERE');
+}
+
 class WikiLib extends TikiLib {
     function WikiLib($db) {
 	if (!$db) {
@@ -39,7 +43,7 @@ class WikiLib extends TikiLib {
 	    $idx = $idx + 1;
 	}
 
-	$parts = explode("...page...", $data);
+	$parts = explode(PAGE_SEP, $data);
 	return count($parts);
     }
 
@@ -65,7 +69,7 @@ class WikiLib extends TikiLib {
 	}
 */
 	// Get slides
-	$parts = explode("...page...", $data);
+	$parts = explode(PAGE_SEP, $data);
 	$ret = $parts[$i - 1];
 
 	if (substr($parts[$i - 1], 1, 5) == "<br/>") $ret = substr($parts[$i - 1], 6);
