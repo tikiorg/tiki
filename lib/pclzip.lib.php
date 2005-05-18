@@ -29,7 +29,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 //   The use of this software is at the risk of the user.
 //
 // --------------------------------------------------------------------------------
-// $Id: pclzip.lib.php,v 1.9 2004-08-26 19:23:17 mose Exp $
+// $Id: pclzip.lib.php,v 1.10 2005-05-18 10:59:48 mose Exp $
 // --------------------------------------------------------------------------------
 
   // ----- Constants

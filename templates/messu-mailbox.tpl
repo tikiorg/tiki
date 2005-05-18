@@ -2,7 +2,7 @@
 <h1><a class="pagetitle" href="messu-mailbox.php">{tr}Messages{/tr}</a>
 
 {if $feature_help eq 'y'}
-<a href="{$helpurl}UserMessagesDoc" target="tikihelp" class="tikihelp" title="{tr}Messages{/tr}"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>
+<a href="{$helpurl}User+Messages" target="tikihelp" class="tikihelp" title="{tr}Messages{/tr}"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
@@ -36,7 +36,7 @@
 <option value="isRead_y" {if $flag eq 'isRead' and $flagval eq 'y'}selected="selected"{/if}>{tr}Read{/tr}</option>
 <option value="isRead_n" {if $flag eq 'isRead' and $flagval eq 'n'}selected="selected"{/if}>{tr}Unread{/tr}</option>
 <option value="isFlagged_y" {if $flag eq 'isFlagged' and $flagval eq 'y'}selected="selected"{/if}>{tr}Flagged{/tr}</option>
-<option value="isFlagged_y" {if $flag eq 'isflagged' and $flagval eq 'n'}selected="selected"{/if}>{tr}Unflagged{/tr}</option>
+<option value="isFlagged_n" {if $flag eq 'isflagged' and $flagval eq 'n'}selected="selected"{/if}>{tr}Unflagged{/tr}</option>
 <option value="" {if $flag eq ''}selected="selected"{/if}>{tr}All{/tr}</option>
 </select>
 <label for="mess-mailprio">{tr}Priority{/tr}:</label>
@@ -63,11 +63,12 @@
 <input type="hidden" name="priority" value="{$priority|escape}" />
 <input type="submit" name="delete" value="{tr}delete{/tr}" />
 <input type="submit" name="archive" value="{tr}move to archive{/tr}" />
+<input type="submit" name="download" value="{tr}download{/tr}" />
 <select name="action">
-<option value="isRead_n">{tr}Mark as unread{/tr}</option>
 <option value="isRead_y">{tr}Mark as read{/tr}</option>
-<option value="isFlagged_n">{tr}Mark as unflagged{/tr}</option>
+<option value="isRead_n">{tr}Mark as unread{/tr}</option>
 <option value="isFlagged_y">{tr}Mark as flagged{/tr}</option>
+<option value="isFlagged_n">{tr}Mark as unflagged{/tr}</option>
 </select>
 <input type="submit" name="mark" value="{tr}mark{/tr}" />
 <table class="normal" >
@@ -78,7 +79,7 @@
     <td class="heading" ><a class="tableheading" href="messu-mailbox.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'subject_desc'}subject_asc{else}subject_desc{/if}">{tr}subject{/tr}</a></td>
     <td class="heading" ><a class="tableheading" href="messu-mailbox.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'date_desc'}date_asc{else}date_desc{/if}">{tr}date{/tr}</a></td>
     <td class="heading" >{tr}reply to{/tr}</td>
-    <td style="text-align:right;" class="heading" ><a class="tableheading" href="messu-mailbox.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">{tr}size{/tr}</a></td>
+    <td style="text-align:right;" class="heading" >{tr}size{/tr}</td>
   </tr>
   {cycle values="odd,even" print=false}
   {section name=user loop=$items}
@@ -86,7 +87,7 @@
     <td class="prio{$items[user].priority}"><input type="checkbox" name="msg[{$items[user].msgId}]" /></td>
     <td class="prio{$items[user].priority}">{if $items[user].isFlagged eq 'y'}<img src="img/flagged.gif" border="0" width="16" height="16" alt='{tr}flagged{/tr}'>{/if}</td>
     <td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}">{$items[user].user_from|userlink}</td>
-    <td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}"><a class="readlink" href="messu-read.php?offset={$offset}&amp;flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;msgId={$items[user].msgId}">{$items[user].subject}</a></td>
+    <td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}"><a class="readlink" href="messu-read.php?offset={$offset}&amp;flag={$flag}&amp;priority={$items[user].priority}&amp;flagval={$flagval}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;msgId={$items[user].msgId}">{$items[user].subject}</a></td>
     <td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}">{$items[user].date|tiki_short_datetime}</td><!--date_format:"%d %b %Y [%H:%I]"-->
 		<td class="prio{$items[user].priority}">
 		{if $items[user].replyto_hash eq ""}&nbsp;{else}

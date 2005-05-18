@@ -1,11 +1,16 @@
 {if $feature_help eq "y"}
-<div class="simplebox">{tr}Tip{/tr}: {tr}to add/remove FAQs, look for "Admin FAQs" under "FAQs" on the application menu, or{/tr} <a class="link" href="tiki-list_faqs.php">{tr}click here{/tr}</a>.</div><br />
+<div class="rbox" style="margin-top: 10px;">
+<div class="rbox-title" style="background-color: #eeee99; font-weight : bold; display : inline; padding : 0 10px;">{tr}Tip{/tr}</div>
+<div class="rbox-data" style="padding: 2px 10px; background-color: #eeee99;">{tr}To add/remove FAQs, look for "Admin FAQs" under "FAQs" on the application menu, or{/tr} <a class="link" href="tiki-list_faqs.php">{tr}click here{/tr}</a>.</div>
+</div>
+<br />
 {/if}
 <div class="cbox">
-  <div class="cbox-title">{tr}FAQs settings{/tr}</div>
-  <div class"cbox-data">
-    <div class="simplebox">
-      {tr}FAQ comments{/tr}<br />
+  <div class="cbox-title">
+    {tr}{$crumbs[$crumb]->description}{/tr}
+    {help crumb=$crumbs[$crumb]}
+  </div>
+  <div class="cbox-data">
       <form action="tiki-admin.php?page=faqs" method="post">
         <table class="admin"><tr>
           <td class="form">{tr}Comments{/tr}:</td>
@@ -24,11 +29,9 @@
               </select></td>
         </tr><tr>
           <td colspan="2" class="button"><input type="submit" name="faqcomprefs"
-              value="{tr}Change preferences{/tr}" /></td>
+              value="{tr}Change settings{/tr}" /></td>
         </tr></table>
       </form>
-    </div>
   </div>
 </div>
-
 

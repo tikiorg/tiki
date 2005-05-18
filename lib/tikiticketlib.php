@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/lib/tikiticketlib.php,v 1.14 2004-09-08 19:52:27 mose Exp $
+/* $Header: /cvsroot/tikiwiki/tiki/lib/tikiticketlib.php,v 1.15 2005-05-18 10:59:50 mose Exp $
 
 Tikiwiki CSRF protection.
 also called Sea-Surfing
@@ -40,7 +40,8 @@ function check_ticket($area) {
 
 // new valid function for ticketing :
 
-function key_get($area, $confirmation_text = '') {
+function key_get($area, $confirmation_text = '', $confirmaction='') {
+//confirmaction actin must be set if the param are not transfer via the URI
 	global $tikilib,$smarty,$feature_ticketlib2,$user;
 	if ($feature_ticketlib2 == 'y') {
 		if ($user) {
@@ -55,8 +56,11 @@ function key_get($area, $confirmation_text = '') {
 		if (empty($confirmation_text)) {
 			$confirmation_text = tra('Click here to confirm your action');
 		}
+		if (empty($confirmationaction)) {
+			$confirmationaction = $_SERVER['REQUEST_URI'];
+		}
 		$smarty->assign('confirmation_text', $confirmation_text);
-		$smarty->assign('confirmaction', $_SERVER['REQUEST_URI']);
+		$smarty->assign('confirmaction', $confirmaction);
 		$smarty->display("confirm.tpl");
 		die();
 	}

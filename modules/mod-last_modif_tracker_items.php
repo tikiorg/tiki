@@ -6,15 +6,31 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
+// in wikipages, add params like this:    ,trackerId=...,name=...
+// in module list, add params like this in params fiels:  trackerId=...&name=...
+// name is the name of the tracker field to be displayed (should be descriptive)
+
 if ($feature_trackers == 'y') {
 	$smarty->assign('modlmifn', $module_params["name"]);
 
 	if (isset($module_params["trackerId"])) {
-		global $trklib;
-		if (!is_object($trklib)) {
-			require_once('lib/trackers/trackerlib.php');
+		$tmp = $tikilib->list_tracker_items($module_params["trackerId"], 0, $module_rows, 'lastModif_desc', '');
+		foreach ($tmp["data"] as $data) {
+			foreach ($data["field_values"] as $data2) {
+				if (isset($data2["name"])) {
+					if (strtolower($data2["name"])==strtolower($module_params["name"])) {
+						$data["subject"] = $data2["value"];
+						break; // found a subject
+					}
+				}
+			}
+			$data["id"]=$module_params["trackerId"];
+			$data["field_values"]=null;
+		
+			$ranking["data"][] = $data;
+			$data=null;
 		}
-		$ranking = $trklib->list_tracker_items($module_params["trackerId"], 0, $module_rows, 'lastModif_desc', '');
+		$tmp=null;
 	} else {
 		$ranking = array();
 		$ranking['data'] = '';

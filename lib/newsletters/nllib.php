@@ -125,7 +125,7 @@ class NlLib extends TikiLib {
 			$isUser="n";
 		}
 		$query = "select * from `tiki_newsletter_subscriptions` where `nlId`=? and `email`=? and `isUser`=? and `valid`=?";
-		$result = $this->query($query,array((int)$nlId,$add,$isUser, 'n'));
+		$result = $this->query($query,array((int)$nlId,$add,$isUser, 'y'));
 		if ($res = $result->fetchRow()) {
 			return false; /* already subscribed and valid - keep the same valid status */
 			}
@@ -359,6 +359,17 @@ print_r($ret);
 		return $retval;
 	}
 
+	function list_avail_newsletters() {
+		$res = array();
+		$query = "select `nlId`, `name` from `tiki_newsletters` where `allowUserSub`='y'";
+		$bindvars = array();
+		$result = $this->query($query, $bindvars);
+		while ($rez = $result->fetchRow()){
+			$res[] = $rez;
+		}
+		return $res;
+	}
+
 	function list_editions($nlId, $offset, $maxRecords, $sort_mode, $find) {
 		$bindvars = array();
 		$mid = "";
@@ -487,8 +498,14 @@ print_r($ret);
 	function list_tpls() {
 		global $tikidomain;
 		$tpls = array();
-		if (is_dir("templates/newsletters/$tikidomain")) {
-			$h = opendir("templates/newsletters/$tikidomain");
+		if (is_dir("templates/$tikidomain/newsletters/")) {
+			$h = opendir("templates/$tikidomain/newsletters/");
+ 			while ($file = readdir($h)) {
+				if (ereg("\.tpl$", $file))
+					$tpls[] = $file;
+			}
+		} elseif (is_dir("templates/newsletters/")) {
+			$h = opendir("templates/newsletters/");
  			while ($file = readdir($h)) {
 				if (ereg("\.tpl$", $file))
 					$tpls[] = $file;

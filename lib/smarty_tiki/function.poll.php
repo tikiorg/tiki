@@ -24,10 +24,13 @@ function smarty_function_poll($params, &$smarty) {
 			}
 		}
 		if (empty($id)) { 
-      $id = $polllib->get_random_active_poll();
+      $id = $polllib->get_random_poll("a");
     }
+	if ($id == "current")
+		$id = $polllib->get_random_poll("c");
     if($id) {
       $menu_info = $polllib->get_poll($id);
+	if ($menu_info) {
       $channels = $polllib->list_poll_options($id);
 			if ($feature_poll_comments == 'y') {
 				$commentslib = new Comments($dbTiki);
@@ -38,6 +41,7 @@ function smarty_function_poll($params, &$smarty) {
       $smarty->assign('menu_info',$menu_info);
       $smarty->assign('channels',$channels);
       $smarty->display('tiki-poll.tpl');
+	}
     }
 }
 

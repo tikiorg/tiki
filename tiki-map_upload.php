@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_upload.php,v 1.14 2005-03-12 16:49:00 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_upload.php,v 1.15 2005-05-18 10:58:58 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -185,8 +185,7 @@ if (isset($_REQUEST["action"]) && isset($_REQUEST["indexfile"])
         $indexfile=escapeshellarg($indexfile."/".basename($_REQUEST["indexfile"]));
         $filestoindex=escapeshellarg($filestoindex."/".basename($_REQUEST["filestoindex"]));
 	      $command=$gdaltindex." ".$indexfile." ".$filestoindex;
-  	    $output=array();
-	      exec($command,$output,$return);
+	      $return=shell_exec($command);
 	      if ($return<>0) {
 	        $smarty->assign('msg',tra("I could not create the index file"));
 	        $smarty->display("error.tpl");

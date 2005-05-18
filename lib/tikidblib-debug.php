@@ -1,6 +1,29 @@
 <?php
+//
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib-debug.php,v 1.11 2005-05-18 10:59:49 mose Exp $
+//
 
-// Database access functions
+
+// INSTRUCTIONS
+
+    // This Library is a replacement for the tikidblib.php library to record
+    // SQL query statistics. Copy the original tikidblib.php somewhere
+    // and copy this library over the tikidblib.php
+    //
+    // To record the query stats you have to create a table:
+    // CREATE TABLE tiki_querystats (
+    //   qcount int(11) default NULL,
+    //   qtext varchar(255) default NULL,
+    //   qtime float default NULL,
+    //   UNIQUE KEY qtext (qtext)
+    // ) TYPE=MyISAM;
+    //
+    // to show queries that are executed very often use:
+    // select `qcount`, `qtime` , `qtext` from `tiki_querystats` order by 1 ;
+    //
+    // to show queries that take much time to execute:
+    // select `qtime`/`qcount` as time_per_query, `qcount` , `qtext` from `tiki_querystats` order by 1 ;
+
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -13,13 +36,11 @@ class TikiDB {
 
 var $db; // The ADODB db object used to access the database
 
-function TikiDB ($db) {
-  if (!$db) {
-    die ("Invalid db object passed to TikiLib constructor");
-  }
+function TikiDB($db)
+{
+  if (!$db) die("Invalid db object passed to TikiLib constructor");
   $this->db = $db;
 }
-
 
 // Use ADOdb->qstr() for 1.8
 function qstr($str) {
@@ -30,35 +51,22 @@ function qstr($str) {
     }
 }
 
-    // These functions are only for performance collection of all queries
-    // uncomment them if you want to profile queries
-    // to record the query stats, create a table:
-    // CREATE TABLE tiki_querystats (
-    //   qcount int(11) default NULL,
-    //   qtext varchar(255) default NULL,
-    //   qtime float default NULL,
-    //   UNIQUE KEY qtext (qtext)
-    // ) TYPE=MyISAM;
-    //
-    // to show queries to tune use queries like this one:
-    // select `qcount` *qtime , qtext from `tiki_querystats` order by 1 ;
-
-    // Queries the database, *returning* an error if one occurs, rather
-    // than exiting while printing the error.
-    // -rlpowell
-    function queryError( $query, &$error, $values = null, $numrows = -1,
-    $offset = -1 )
-    {
+// Queries the database, *returning* an error if one occurs, rather
+// than exiting while printing the error.
+// -rlpowell
+function queryError( $query, &$error, $values = null, $numrows = -1,
+        $offset = -1 )
+{
+    $numrows = intval($numrows);
+    $offset = intval($offset);
     $this->convert_query($query);
-
-    //for performance stats
     list($micro,$sec)=explode(' ',microtime());
     $query_start=$sec+$micro;
 
     if ($numrows == -1 && $offset == -1)
-    $result = $this->db->Execute($query, $values);
+        $result = $this->db->Execute($query, $values);
     else
-    $result = $this->db->SelectLimit($query, $numrows, $offset, $values);
+        $result = $this->db->SelectLimit($query, $numrows, $offset, $values);
 
     list($micro,$sec)=explode(' ',microtime());
     $query_stop=$sec+$micro;
@@ -66,52 +74,53 @@ function qstr($str) {
     $querystat="insert into `tiki_querystats` values(1,'".addslashes($query)."',$qdiff)";
     $qresult=$this->db->Execute($querystat);
     if(!$qresult) {
-    $querystat="update `tiki_querystats` set `qcount`=`qcount`+1, `qtime`=`qtime`+$qdiff where `qtext`='".addslashes($query)."'";
-    $qresult=$this->db->Execute($querystat);
+       $querystat="update `tiki_querystats` set `qcount`=`qcount`+1, `qtime`=`qtime`+$qdiff where `qtext`='".addslashes($query)."'";
+       $qresult=$this->db->Execute($querystat);
     }
 
     if (!$result )
     {
-    $error = $this->db->ErrorMsg();
-    $result=false;
+        $error = $this->db->ErrorMsg();
+        $result=false;
     }
 
     //count the number of queries made
     global $num_queries;
     $num_queries++;
-
+    //$this->debugger_log($query, $values);
     return $result;
-    }
+}
 
-    // Queries the database reporting an error if detected
-    // 
-    function query($query, $values = null, $numrows = -1,
-    $offset = -1, $reporterrors = true )
-    {
+// Queries the database reporting an error if detected
+// 
+function query($query, $values = null, $numrows = -1,
+        $offset = -1, $reporterrors = true )
+{
+    $numrows = intval($numrows);
+    $offset = intval($offset);
     $this->convert_query($query);
 
     //echo "query: $query <br />";
     //echo "<pre>";
     //print_r($values);
     //echo "\n";
-    //for performance stats
     list($micro,$sec)=explode(' ',microtime());
     $query_start=$sec+$micro;
-
+    
     if ($numrows == -1 && $offset == -1)
-    $result = $this->db->Execute($query, $values);
+        $result = $this->db->Execute($query, $values);
     else
-    $result = $this->db->SelectLimit($query, $numrows, $offset, $values);
+        $result = $this->db->SelectLimit($query, $numrows, $offset, $values);
+
     list($micro,$sec)=explode(' ',microtime());
     $query_stop=$sec+$micro;
     $qdiff=$query_stop-$query_start;
     $querystat="insert into `tiki_querystats` values(1,'".addslashes($query)."',$qdiff)";
     $qresult=$this->db->Execute($querystat);
     if(!$qresult) {
-    $querystat="update `tiki_querystats` set `qcount`=`qcount`+1, `qtime`=`qtime`+$qdiff where `qtext`='".addslashes($query)."'";
-    $qresult=$this->db->Execute($querystat);
+      $querystat="update `tiki_querystats` set `qcount`=`qcount`+1, `qtime`=`qtime`+$qdiff where `qtext`='".addslashes($query)."'";
+      $qresult=$this->db->Execute($querystat);
     }
-
 
     //print_r($result);
     //echo "\n</pre>\n";
@@ -127,7 +136,7 @@ function qstr($str) {
     //count the number of queries made
     global $num_queries;
     $num_queries++;
-
+    //$this->debugger_log($query, $values);
     return $result;
 }
 
@@ -139,7 +148,6 @@ function getOne($query, $values = null, $reporterrors = true, $offset = 0) {
     //echo "query: $query \n";
     //print_r($values);
     //echo "\n";
-    //for performance stats
     list($micro,$sec)=explode(' ',microtime());
     $query_start=$sec+$micro;
 
@@ -150,8 +158,8 @@ function getOne($query, $values = null, $reporterrors = true, $offset = 0) {
     $querystat="insert into `tiki_querystats` values(1,'".addslashes($query)."',$qdiff)";
     $qresult=$this->db->Execute($querystat);
     if(!$qresult) {
-        $querystat="update `tiki_querystats` set `qcount`=`qcount`+1, `qtime`=`qtime`+$qdiff where `qtext`='".addslashes($query)."'";
-        $qresult=$this->db->Execute($querystat);
+      $querystat="update `tiki_querystats` set `qcount`=`qcount`+1, `qtime`=`qtime`+$qdiff where `qtext`='".addslashes($query)."'";
+      $qresult=$this->db->Execute($querystat);
     }
 
     //echo "\n</pre>\n";
@@ -168,6 +176,7 @@ function getOne($query, $values = null, $reporterrors = true, $offset = 0) {
     //count the number of queries made
     global $num_queries;
     $num_queries++;
+    //$this->debugger_log($query, $values);
 
     if ($res === false)
         return (NULL); //simulate pears behaviour
@@ -179,17 +188,42 @@ function getOne($query, $values = null, $reporterrors = true, $offset = 0) {
 
 // Reports SQL error from PEAR::db object.
 function sql_error($query, $values, $result) {
-    global $ADODB_LASTDB;
+    global $ADODB_LASTDB, $smarty;
 
-    trigger_error($ADODB_LASTDB . " error:  " . $this->db->ErrorMsg(). " in query:<br />" . $query . "<br />", E_USER_WARNING);
+    trigger_error($ADODB_LASTDB . " error:  " . $this->db->ErrorMsg(). " in query:<br/><pre>\n" . $query . "\n</pre><br/>", E_USER_WARNING);
     // only for debugging.
-    echo "Values: <br>";
-    print_r($values);
-    if($result===false) echo "<br>\$result is false";
-    if($result===null) echo "<br>\$result is null";
-    if(empty($result)) echo "<br>\$result is empty";
-    // end only for debugging
+    //trigger_error($ADODB_LASTDB . " error:  " . $this->db->ErrorMsg(). " in query:<br />" . $query . "<br />", E_USER_WARNING);
+    $outp = "<div class='simplebox'><b>".tra("An error occured in a database query!")."</b></div>";
+    $outp.= "<br /><table class='form'>";
+    $outp.= "<tr class='heading'><td colspan='2'>Context:</td></tr>";
+		$outp.= "<tr class='formcolor'><td>File</td><td>".$_SERVER['SCRIPT_NAME']."</td></tr>";
+		$outp.= "<tr class='formcolor'><td>Url</td><td>".$_SERVER['REQUEST_URI']."</td></tr>";
+		$outp.= "<tr class='heading'><td colspan='2'>Query:</td></tr>";
+		$outp.= "<tr class='formcolor'><td colspan='2'><tt>$query</tt></td></tr>";
+    $outp.= "<tr class='heading'><td colspan='2'>Values:</td></tr>";
+    foreach ($values as $k=>$v) {
+      $outp.= "<tr class='formcolor'><td>$k</td><td>$v</td></tr>";
+    }
+    $outp.= "<tr class='heading'><td colspan='2'>Message:</td></tr><tr class='formcolor'><td>Error Message</td><td>".$this->db->ErrorMsg()."</td></tr>\n";
+    $outp.= "</table>";
+    //if($result===false) echo "<br>\$result is false";
+    //if($result===null) echo "<br>\$result is null";
+    //if(empty($result)) echo "<br>\$result is empty";
+    require_once('tiki-setup.php');
+    if ($smarty) {
+      $smarty->assign('msg',$outp);
+      $smarty->display("error.tpl");
+    } else {
+      echo $outp;
+    }
+    echo "<pre>";
+    var_dump(debug_backtrace());
+    echo "</pre>";
     die;
+}
+
+function ifNull($narg1,$narg2) {
+  return $this->db->ifNull($narg1,$narg2);
 }
 
 // functions to support DB abstraction
@@ -204,7 +238,8 @@ function convert_query(&$query) {
         $qe = explode("?", $query);
         $query = '';
 
-        for ($i = 0; $i < sizeof($qe) - 1; $i++) {
+        $temp_max = sizeof($qe) - 1;
+        for ($i = 0; $i < $temp_max; $i++) {
             $query .= $qe[$i] . ":" . $i;
         }
 
@@ -217,15 +252,16 @@ function convert_query(&$query) {
 
         break;
 
+	case "mssql":
+    	  $query = preg_replace("/`/","",$query);
+	  $query = preg_replace("/\?/","'?'",$query);
+	  break;
+
             case "sqlite":
             $query = preg_replace("/`/", "", $query);
             break;
     }
 
-}
-
-function ifNull($narg1,$narg2) {
-  return $this->db->ifNull($narg1,$narg2);
 }
 
 function blob_encode(&$blob) {
@@ -256,29 +292,29 @@ function convert_sortmode($sort_mode) {
     }
 
     switch ($ADODB_LASTDB) {
-        case "pgsql72":
-            case "postgres7":
+        case "postgres7":
             case "oci8":
             case "sybase":
+	case "mssql":
             // Postgres needs " " around column names
             //preg_replace("#([A-Za-z]+)#","\"\$1\"",$sort_mode);
-            $sort_mode = str_replace("_asc", "\" asc", $sort_mode);
-        $sort_mode = str_replace("_desc", "\" desc", $sort_mode);
+            $sort_mode = preg_replace("/_asc$/", "\" asc", $sort_mode);
+        $sort_mode = preg_replace("/_desc$/", "\" desc", $sort_mode);
         $sort_mode = str_replace(",", "\",\"",$sort_mode);
 
         $sort_mode = "\"" . $sort_mode;
         break;
 
         case "sqlite":
-            $sort_mode = str_replace("_asc", " asc", $sort_mode);
-            $sort_mode = str_replace("_desc", " desc", $sort_mode);
+            $sort_mode = preg_replace("/_asc$/", " asc", $sort_mode);
+            $sort_mode = preg_replace("/_desc$/", " desc", $sort_mode);
             break;
 
         case "mysql3":
             case "mysql":
         default:
-            $sort_mode = str_replace("_asc", "` asc", $sort_mode);
-            $sort_mode = str_replace("_desc", "` desc", $sort_mode);
+            $sort_mode = preg_replace("/_asc$/", "` asc", $sort_mode);
+            $sort_mode = preg_replace("/_desc$/", "` desc", $sort_mode);
             $sort_mode = str_replace(",", "`,`",$sort_mode);
             $sort_mode = "`" . $sort_mode;
             break;
@@ -291,8 +327,7 @@ function convert_binary() {
     global $ADODB_LASTDB;
 
     switch ($ADODB_LASTDB) {
-        case "pgsql72":
-            case "oci8":
+        case "oci8":
             case "postgres7":
             case "sqlite":
             return;
@@ -329,5 +364,27 @@ function sql_cast($var,$type) {
     }
 
 }
+function debugger_log($query, $values)
+{
+    // Will spam only if debug parameter present in URL
+    // \todo DON'T FORGET TO REMOVE THIS BEFORE 1.8 RELEASE
+    if (!isset($_REQUEST["debug"])) return;
+    // spam to debugger log
+    include_once ('lib/debug/debugger.php');
+    global $debugger;
+    if (is_array($values) && strpos($query, '?'))
+        foreach ($values as $v)
+        {
+            $q = strpos($query, '?');
+            if ($q)
+            {
+                $tmp = substr($query, 0, $q)."'".$v."'".substr($query, $q + 1);
+                $query = $tmp;
+            }
+        }
+    $debugger->msg($this->num_queries.': '.$query);
 }
+}
+
+
 ?>

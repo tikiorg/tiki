@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.28 2005-03-12 16:49:03 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.29 2005-05-18 10:59:01 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -25,7 +25,8 @@ if ($tiki_p_use_webmail != 'y') {
 	die;
 }
 
-require_once ("lib/webmail/pop3.php");
+//require_once ("lib/webmail/pop3.php");
+require_once ("lib/webmail/net_pop3.php");
 //require_once ("lib/webmail/mimeDecode.php");
 require_once ("lib/mail/mimelib.php");
 include_once ("lib/webmail/class.rc4crypt.php");
@@ -140,24 +141,27 @@ if ($_REQUEST["locSection"] == 'read') {
 
 	$current = $webmaillib->get_current_webmail_account($user);
 	$smarty->assign('current', $current);
-	$pop3 = new POP3($current["pop"], $current["username"], $current["pass"]);
-	$pop3->Open();
+	//$pop3 = new POP3($current["pop"], $current["username"], $current["pass"]);
+	//$pop3->Open();
+	$pop3 = new Net_POP3();
+	$pop3->connect($current["pop"]);
+	$pop3->login($current["username"], $current["pass"]);
 
 	if (isset($_REQUEST["delete_one"])) {
 		check_ticket('webmail');
-		$realmsgid = $pop3->GetMessageID($_REQUEST["msgdel"]);
-
+		$aux = $pop3->getParsedHeaders($_REQUEST["msgdel"]);
+		$realmsgid = ereg_replace("[<>]","",$aux["Message-ID"]);
 		$webmaillib->remove_webmail_message($current["accountId"], $user, $realmsgid);
-		$pop3->DeleteMessage($_REQUEST["msgdel"]);
+		$pop3->deleteMsg($_REQUEST["msgdel"]);
 	}
 
-	$message = $pop3->GetMessage($_REQUEST["msgid"]);
-	$realmsgid = $pop3->GetMessageID($_REQUEST["msgid"]);
+	$aux = $pop3->getParsedHeaders($_REQUEST["msgid"]);
+	$message = $pop3->getMsg($_REQUEST["msgid"]);
+	$realmsgid = ereg_replace("[<>]","",$aux["Message-ID"]);
 	$smarty->assign('msgid', $_REQUEST["msgid"]);
 	$smarty->assign('realmsgid', $realmsgid);
 	$webmaillib->set_mail_flag($current["accountId"], $user, $realmsgid, 'isRead', 'y');
-	$s = $pop3->Stats();
-	$mailsum = $s["message"];
+	$mailsum = $pop3->numMsg();
 	$numshow = $current["msgs"];
 
 	if ($_REQUEST["msgid"] == $mailsum) {
@@ -172,10 +176,8 @@ if ($_REQUEST["locSection"] == 'read') {
 		$smarty->assign('prev', '');
 	}
 
-	$body = $message["body"];
-	$header = $message["header"];
-	$full = $message["full"];
-	$pop3->Close();
+	$full = $pop3->getMsg($_REQUEST["msgid"]);
+	$pop3->disconnect();
 
 	$output = mime::decode($full);
 //echo "<pre>OUTPUT:";print_r($output); echo"</pre>";
@@ -271,46 +273,53 @@ if ($_REQUEST["locSection"] == 'mailbox') {
 		die;
 	}
 
+//die(date(time()));
 	$smarty->assign('current', $current);
 	// Now get messages from mailbox
-	$pop3 = new POP3($current["pop"], $current["username"], $current["pass"]);
-
-	$pop3->exit = false;    //new
-	$pop3->Open();
-
-	if ($pop3->has_error) { //new
+	//$pop3 = new POP3($current["pop"], $current["username"], $current["pass"]);
+	//$pop3->exit = false;    //new
+	//$pop3->Open();
+	$pop3 = new Net_POP3();
+	if (!$pop3->connect($current["pop"]) || !$pop3->login($current["username"], $current["pass"])) {
 		echo '<b><br /><center><a href="tiki-webmail.php?locSection=settings">Click here for settings.</a></center></b>';
-
 		die;
 	}
-
+/*
+	if ($pop3->has_error) { //new
+		echo '<b><br /><center><a href="tiki-webmail.php?locSection=settings">Click here for settings.</a></center></b>';
+		die;
+	}
+*/
 	if (isset($_REQUEST["delete"])) {
 		if (isset($_REQUEST["msg"])) {
 			check_ticket('webmail');
 			// Now we can delete the messages
 			foreach (array_keys($_REQUEST["msg"])as $msg) {
-				$realmsgid = $pop3->GetMessageID($msg);
-
+				$listing = $pop3->GetListing($msg);
+				$realmsgid = $listing["msg_id"];
 				$webmaillib->remove_webmail_message($current["accountId"], $user, $realmsgid);
-				$pop3->DeleteMessage($msg);
+				$pop3->deleteMsg($msg);
 			}
 		}
 	}
 
 	if (isset($_REQUEST["delete_one"])) {
 		check_ticket('webmail');
-		$realmsgid = $pop3->GetMessageID($_REQUEST["msgdel"]);
-
+		$aux = $pop3->getParsedHeaders($_REQUEST["msgdel"]);
+		$realmsgid = ereg_replace("[<>]","",$aux["Message-ID"]);
 		$webmaillib->remove_webmail_message($current["accountId"], $user, $realmsgid);
-		$pop3->DeleteMessage($_REQUEST["msgdel"]);
+		$pop3->deleteMsg($_REQUEST["msgdel"]);
 	}
 
-	// Now delete the messages and reopen the mailbox to renumber messages
-	$pop3->close();
+	if (isset($_REQUEST["delete_one"]) || isset($_REQUEST["delete"])) {
+		// Now delete the messages and reopen the mailbox to renumber messages
+		//$pop3->close();
+		$pop3->disconnect();
 
-	$pop3->Open();
-	$s = $pop3->Stats();
-	$mailsum = $s["message"];
+		$pop3->connect($current["pop"]);
+		$pop3->login($current["username"], $current["pass"]);
+	}
+	$mailsum = $pop3->numMsg();
 
 	if (isset($_REQUEST["operate"])) {
 		if (isset($_REQUEST["msg"])) {
@@ -344,8 +353,6 @@ if ($_REQUEST["locSection"] == 'mailbox') {
 		}
 	}
 
-	$s = $pop3->Stats();
-	$mailsum = $s["message"];
 	$numshow = $current["msgs"];
 
 	if (isset($_REQUEST["start"]) && $_REQUEST["start"] > $mailsum)
@@ -365,10 +372,10 @@ if ($_REQUEST["locSection"] == 'mailbox') {
 		$filtered[] = $aux;
 
 		for ($i = 1; $i <= $mailsum; $i++) {
-			$aux = $pop3->ListMessage($i);
-			$aux["subject"] = decode_subject_utf8($aux["subject"]);
+			$aux = $pop3->getParsedHeaders($i);
+			$aux["subject"] = decode_subject_utf8($aux["Subject"]);
 			$aux["msgid"] = $i;
-			$aux["realmsgid"] = $pop3->GetMessageID($i);
+			$aux["realmsgid"] = ereg_replace("[<>]","",$aux["Message-ID"]);
 			$webmaillib->replace_webmail_message($current["accountId"], $user, $aux["realmsgid"]);
 			list($aux["isRead"], $aux["isFlagged"], $aux["isReplied"])
 				= $webmaillib->get_mail_flags($current["accountId"], $user, $aux["realmsgid"]);
@@ -406,11 +413,16 @@ if ($_REQUEST["locSection"] == 'mailbox') {
 		if (isset($_REQUEST["filter"])) {
 			$aux = $filtered[$i];
 		} else {
-			$aux = $pop3->ListMessage($i);
-			$aux["subject"] = decode_subject_utf8($aux["subject"] );
+			$aux = $pop3->getParsedHeaders($i);
+			preg_match('/<?([-!#$%&\'*+\.\/0-9=?A-Z^_`a-z{|}~]+@[-!#$%&\'*+\/0-9=?A-Z^_`a-z{|}~]+\.[-!#$%&\'*+\.\/0-9=?A-Z^_`a-z{|}~]+)>?/',$aux["From"],$mail);
+			$aux["sender"]["email"] = $mail[1];
+			$aux["subject"] = decode_subject_utf8($aux["Subject"] );
+			$aux["timestamp"] = strtotime($aux['Date']);
+			$l = $pop3->_cmdList($i);
+			$aux["size"] = $l["size"];
 			
 			//print_r($aux);print("<br />");
-			$aux["realmsgid"] = $pop3->GetMessageID($i);
+			$aux["realmsgid"] = ereg_replace("[<>]","",$aux["Message-ID"]);
 			$webmaillib->replace_webmail_message($current["accountId"], $user, $aux["realmsgid"]);
 			list($aux["isRead"], $aux["isFlagged"], $aux["isReplied"]) = $webmaillib->get_mail_flags($current["accountId"], $user, $aux["realmsgid"]);
 
@@ -476,7 +488,7 @@ if ($_REQUEST["locSection"] == 'mailbox') {
 		$smarty->assign('last', '');
 	}
 
-	$pop3->Close();
+	$pop3->disconnect();
 	$smarty->assign('list', $list);
 }
 

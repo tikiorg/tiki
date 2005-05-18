@@ -1,5 +1,8 @@
 <div class="cbox">
-	<div class="cbox-title">{tr}User files{/tr}</div>
+  <div class="cbox-title">
+    {tr}{$crumbs[$crumb]->description}{/tr}
+    {help crumb=$crumbs[$crumb]}
+  </div>
 		<div class="cbox-data">
 				<form action="tiki-admin.php?page=userfiles" method="post">
 				<table class="admin">

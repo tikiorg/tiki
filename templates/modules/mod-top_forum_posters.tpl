@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-top_forum_posters.tpl,v 1.4 2005-03-12 16:51:00 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-top_forum_posters.tpl,v 1.5 2005-05-18 11:03:31 mose Exp $ *}
 
 {if $feature_forums eq 'y'}
 {if $nonums eq 'y'}

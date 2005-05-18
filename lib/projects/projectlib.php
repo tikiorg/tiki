@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/projects/projectlib.php,v 1.2 2005-01-22 22:55:50 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/projects/projectlib.php,v 1.3 2005-05-18 11:01:16 mose Exp $
 
 // Damian Parker aka Damosoft
 

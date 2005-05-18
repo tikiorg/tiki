@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_games.php,v 1.24 2005-01-22 22:54:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_games.php,v 1.25 2005-05-18 10:58:58 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -54,7 +54,8 @@ while ($file = readdir($h)) {
     $game = array();
 
     // LeChuckdaPirate added "is_file" so folders don't be taken as games...
-    if (is_file("games/thumbs/$file") && $file != '.' && $file != '..' && !ereg('\.txt$',$file)) {
+    if (is_file("games/thumbs/$file") && $file != '.' && $file != '..' && !ereg('\.txt$',$file)
+        && $file != 'index.php' && $file != 'README' ) {
 
         if (is_file("games/thumbs/$file" . '.txt')) {
             $data = file_get_contents("games/thumbs/$file" . '.txt');

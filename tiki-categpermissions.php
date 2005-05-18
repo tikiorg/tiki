@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-categpermissions.php,v 1.13 2005-01-01 00:16:32 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-categpermissions.php,v 1.14 2005-05-18 10:58:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -100,7 +100,6 @@ $path = $categlib->get_category_path($categId);
 $smarty->assign_by_ref('path', $path);
 
 $smarty->assign('mid', 'tiki-categpermissions.tpl');
-$smarty->assign('show_page_bar', 'y');
 $smarty->display("tiki.tpl");
 
 ?>

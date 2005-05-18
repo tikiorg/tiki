@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-switch_lang2.tpl,v 1.6 2005-03-12 16:51:00 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-switch_lang2.tpl,v 1.7 2005-05-18 11:03:31 mose Exp $ *}
 
 {tikimodule title="{tr}Language{/tr}: `$language`" name="switch_lang2" flip=$module_params.flip decorations=$module_params.decorations}
 <table width="100%" border="0" cellpadding="0" cellspacing="0">

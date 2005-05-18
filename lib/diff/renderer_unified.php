@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_unified.php,v 1.7 2005-01-22 22:55:45 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_unified.php,v 1.8 2005-05-18 11:00:35 mose Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {

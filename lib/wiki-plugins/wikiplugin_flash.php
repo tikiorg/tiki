@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_flash.php,v 1.4 2005-01-22 22:55:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_flash.php,v 1.5 2005-05-18 11:02:00 mose Exp $
 
 // Wiki plugin to display a SWF file
 // damian aka damosoft 30 March 2004

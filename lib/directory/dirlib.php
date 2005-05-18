@@ -17,36 +17,61 @@ class DirLib extends TikiLib {
 
 	// Path functions
 	function dir_get_category_path_admin($categId) {
+		global $site_crumb_seper;
 		$info = $this->dir_get_category($categId);
 		$path = '<a class="link" href="tiki-directory_admin_categories.php?parent=' . $info["categId"] . '">' . $info["name"] . '</a>';
 		while ($info["parent"] != 0) {
 			$info = $this->dir_get_category($info["parent"]);
-			$path = '<a class="link" href="tiki-directory_admin_categories.php?parent=' . $info["categId"] . '">' . $info["name"] . '</a>' . '>' . $path;
+			$path = '<a class="link" href="tiki-directory_admin_categories.php?parent=' . $info["categId"] . '">' . $info["name"] . '</a>' . $site_crumb_seper . $path;
 		}
 		return $path;
 	}
 
 	function dir_get_path_text($categId) {
+		global $site_crumb_seper;
 		$info = $this->dir_get_category($categId);
 		$path = $info["name"];
 		while ($info["parent"] != 0) {
 			$info = $this->dir_get_category($info["parent"]);
-			$path = $info["name"] . '&gt;&gt;' . $path;
+			$path = $info["name"] . $site_crumb_seper . $path;
 		}
 		return $path;
 	}
 
 	function dir_get_category_path_browse($categId) {
+		global $site_crumb_seper;
 		$path = '';
 		$info = $this->dir_get_category($categId);
 		$path = '<a class="dirlink" href="tiki-directory_browse.php?parent=' . $info["categId"] . '">' . $info["name"] . '</a>';
 		while ($info["parent"] != 0) {
 			$info = $this->dir_get_category($info["parent"]);
-			$path = '<a class="dirlink" href="tiki-directory_browse.php?parent=' . $info["categId"] . '">' . $info["name"] . '</a>' . '>' . $path;
+			$path = '<a class="dirlink" href="tiki-directory_browse.php?parent=' . $info["categId"] . '">' . $info["name"] . '</a> ' . $site_crumb_seper . ' ' . $path;
 		}
 
 		return $path;
 	}
+
+	function dir_build_breadcrumb_trail($categId) {
+		$crumbs = array();
+		$info = $this->dir_get_category($categId);
+		if(isset($info["name"])) {
+			$crumbs[] = new Breadcrumb($info["name"],  
+				'',            
+				'tiki-directory_browse.php?parent=' . $info["categId"],
+				'',
+				'');
+		}
+		while ($info["parent"] != 0) {
+			$info = $this->dir_get_category($info["parent"]);
+			$crumbs[] = new Breadcrumb($info["name"],
+				'',
+				'tiki-directory_browse.php?parent=' . $info["categId"],
+				'',               
+				'');                    
+		}
+		return empty($crumbs) ? null : array_reverse($crumbs);
+	}
+
 
 	// Stats functions
 	// get stats (valid sites, invalid sites, categories, searches)

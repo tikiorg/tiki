@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.35 2005-03-12 16:50:30 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.36 2005-05-18 11:02:57 mose Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
 {* the help link info *}
@@ -44,9 +44,9 @@ from Admin->General
 <tr>
 <td class="{cycle advance=false}">{$user_modules[user].name}</td>
 <td class="{cycle advance=false}">{$user_modules[user].title}</td>
-<td class="{cycle}"><a class="link" href="tiki-admin_modules.php?um_remove={$user_modules[user].name}">{tr}delete{/tr}</a>
-             <a class="link" href="tiki-admin_modules.php?um_edit={$user_modules[user].name}#editcreate">{tr}edit{/tr}</a>
-             <a class="link" href="tiki-admin_modules.php?edit_assign={$user_modules[user].name}#assign">{tr}assign{/tr}</a></td>
+<td class="{cycle}"><a class="link" href="tiki-admin_modules.php?um_edit={$user_modules[user].name}#editcreate">{tr}edit{/tr}</a>
+             <a class="link" href="tiki-admin_modules.php?edit_assign={$user_modules[user].name}#assign">{tr}assign{/tr}</a>
+             <a class="link" href="tiki-admin_modules.php?um_remove={$user_modules[user].name}">{tr}delete{/tr}</a></td>
 </tr>
 {sectionelse}
 <tr><td colspan="6" class="odd">
@@ -93,7 +93,7 @@ from Admin->General
 <tr><td class="formcolor">{tr}Rows{/tr}</td><td class="formcolor"><input type="text" name="assign_rows" value="{$assign_rows|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Parameters{/tr}</td><td class="formcolor"><input type="text" name="assign_params" value="{$assign_params|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Groups{/tr}</td><td class="formcolor">
-<select multiple="multiple" name="groups[]"{if $modallgroups eq 'y'} disabled="disabled"{/if}>
+<select multiple="multiple" name="groups[]">
 {section name=ix loop=$groups}
 <option value="{$groups[ix].groupName|escape}" {if $groups[ix].selected eq 'y'}selected="selected"{/if}>{$groups[ix].groupName}</option>
 {/section}
@@ -214,7 +214,7 @@ from Admin->General
 {/if}
 
 </td></tr>
-<tr><td class="form">Must be wiki parsed</td><td class="form"><input type="checkbox" name="um_parse" value="y" {if $um_parse eq "y"}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Must be wiki parsed{/tr}</td><td class="form"><input type="checkbox" name="um_parse" value="y" {if $um_parse eq "y"}checked="checked"{/if}/></td></tr>
 <tr><td>&nbsp;</td><td><input type="submit" name="um_update" value="{tr}create/edit{/tr}" /></td></tr>
 </table>
 </form>
@@ -227,6 +227,8 @@ from Admin->General
   </td>
   <td>
     <select name="polls" id='list_polls'>
+	<option value="{literal}{{/literal}poll{literal}}{/literal}">--{tr}Random active poll{/tr}--</option>
+	<option value="{literal}{{/literal}poll id=current{literal}}{/literal}">--{tr}Random current poll{/tr}--</option> 
     {section name=ix loop=$polls}
     <option value="{literal}{{/literal}poll id={$polls[ix].pollId}{literal}}{/literal}">{$polls[ix].title}</option>   
     {/section}

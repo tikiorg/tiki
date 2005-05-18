@@ -1,3 +1,11 @@
+/* 
+  $Header: /cvsroot/tikiwiki/tiki/styles/default.css,v 1.60 2005-05-18 11:02:31 mose Exp $
+  default.css
+  This theme is based on the subsilver style for Tiki 1.2
+  If you want  a short-version CSS template, start with default2
+  If you want to control every aspect of Tiki, copy the subsilver CSS file
+  Normally default2 is the file you want to adapt to produce a new theme
+*/
 
 body {
 	background-color:    #EFEFE7;
@@ -36,7 +44,7 @@ DIV#tiki-top {
 	padding-right:   0px;
 }
 
-DIV#tiki-top a {
+DIV#tiki-top > a {
 	color:    white;
 	text-decoration:   none;
 }
@@ -116,7 +124,7 @@ span.off-option {
    The box class is used for modules while the cbox class is used for other boxes
 */
 
-/* Modules (modules are those boxes in the left/right columns) */
+/* Boxes used for modules (modules are those boxes in the left/right columns) */
 div.box {
 	background-color:    white;
 	margin-left:   4px;
@@ -130,13 +138,11 @@ div.box {
 }
 
 /* Boxes are divided in title and data, this is the title */
-div.box-title {
+div.box-title, span.box-titletext {
 	background-color:    #B5A58C;
-	border-bottom:   1px solid black;
-	color:   white;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   13px;
-	color:   white;
+	color:   black;
 	font-weight:   bold;
 	overflow:   hidden;
 	text-align:   center;
@@ -144,6 +150,16 @@ div.box-title {
 	padding-right:   0px;
 	margin-bottom:   1px;
 	width:   170px;
+}
+
+div.box-title > a, span.box-titletext > a {
+	border-bottom:   1px solid black;
+	text-decoration: underline;
+	color: black;
+}
+
+div.box-title > a, span.box-titletext > a:hover {
+	color: white;
 }
 
 div.box-title table {
@@ -271,21 +287,21 @@ div.separator {
 }
 
 /* Links in menus */
-.linkmenu, .rsslink {
+.linkmenu, .rsslink, a.separator {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
 	color:   black;
 	text-decoration:   none;
 }
 
-.linkmenu:active, .rsslink:active {
+.linkmenu:active, .rsslink:active, a.separator:active {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
 	color:   black;
 	text-decoration:   none;
 }
 
-.linkmenu:hover, .rsslink:hover {
+.linkmenu:hover, .rsslink:hover, a.separator:hover {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
 	color:   black;
@@ -416,7 +432,8 @@ FORM {
 
 /* General form elements */
 input, textarea, select {
-	font:   normal 11px Verdana, Arial, Helvetica, sans-serif;
+	font-family:   Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
 }
 
 input {
@@ -884,7 +901,11 @@ p.editdate {
 	font-size:   smaller;
 	font-family:   "Lucida Grande", Helvetica, Arial, sans-serif;
 }
-
+#description {
+  font-size : 10px !important;
+  padding-left:   10px;
+  color:   #333300;
+}
 /* The edit-help used to display the wiki syntax when editing a page */
 div.wiki-edithelp {
 	background-color:    white;
@@ -2636,6 +2657,7 @@ a.tikihelp, a.tikihelp:visited {
 	margin:   inherit;
 	padding:   inherit;
 	text-decoration:   inherit;
+	vertical-align: text-top;
 }
 
 a.tikihelp:hover {
@@ -2648,7 +2670,110 @@ a.tikihelp:hover {
 	padding:   inherit;
 	cursor:   help;
 	text-decoration:   inherit;
+	vertical-align: text-top;
 }
+.catblock {
+  border: 1px solid #aaaaaa;
+}
+.catlists {
+  border-top: 1px solid #ffffff;
+  padding: 1px 6px 1px 6px;
+  background-color: none;
+  color: #666666;
+}
+.catlists:last-child {
+  border-bottom: 1px solid #ffffff;
+}
+.catlists:hover {
+  background-color: #dedede;
+}
+.cattitle {
+  color: #000000;
+  font-weight: bold;
+}
+.catlists a.link {
+  color: #666666;
+  padding: 0px 4px 0px 4px;
+  border: 1px solid #aaaaaa;
+  -moz-border-radius: 6px;
+}
+.catlists a.link:hover {
+  color: #000000;
+}
+
+/*
+** JsCalendar wrapper
+*/
+#datrigger {
+  border: 2px outset #666666;
+  padding: 1px 3px 1px 5px;
+  margin: 2px;
+  cursor: pointer;
+  font-weight:bold;
+}
+
+table.commentinfo { width: 100%; background-color: #FFF7E6; }
+div#loadstats {
+  background-color: #dedede;
+  font-size: 70%;
+  color: #666666;
+  padding: 5px;
+}
+
+/* phplayers style */
+.box-data table {
+  width: 100%;
+}
+
+.mdkhorbar      {
+}
+
+.horbar {
+  margin-left: 10px;
+}
+
+.horbaritem a {
+  font-size: 10px;
+  text-decoration: none;
+  color: white;
+}
+
+.harbaritem a:visited {
+  text-decoration: underline;
+}
+
+.horbaritem a:hover {
+  background-color: gray;
+  text-decoration: underline;
+}
+
+.mdkhorbaritem  {
+  float: left;
+  white-space: nowrap;
+  font-size: 10px;
+}
+
+.mdkhorbaritem a        {
+  display: block;
+  text-decoration: none;
+}
+
+.mdkhorbaritem a:link   {
+}
+
+.mdkhorbaritem a:visited        {
+}
+
+.mdkhorbaritem a:hover  {
+}
+
+.mdkhorbaritem a:active {
+}
+
+.mdkverbar  {
+  margin: 0px;
+}
+
 .mdksubmenu {
   z-index: 999;
   position: absolute;
@@ -2657,6 +2782,7 @@ a.tikihelp:hover {
   background-color: #FFFFFF;
   visibility: hidden;
 }
+
 .mdksubmenu table {
   width: auto;
 }
@@ -2673,19 +2799,24 @@ a.tikihelp:hover {
   position: relative;
   text-align: left;
   white-space: nowrap;
+  text-decoration: none;
+  color: black;
 }
 
 .mdkitem a  {
   padding: 2px 5px 2px 5px;
   position: relative;
   display: block;
+  text-decoration: none;
+  color: black;
 }
 
 .mdkitem a:visited  {
 }
 
 .mdkitem a:hover  {
-  padding: 2px 5px 1px 5px;
+  text-decoration: underline;
+  background-color: #eee;
 }
 
 .mdkitem a:active {
@@ -2698,6 +2829,7 @@ a.tikihelp:hover {
   right: 12px;
 }
 
+/* TOC */
 .toc {
 }
 .toc li {
@@ -2715,69 +2847,11 @@ a.tikihelp:hover {
   font-size: 90%;
   color: #424242;
 }
+
 /* for jscalendar */
 .calendar {
   z-index: 200;
 }
-.catblock {
-  border: 1px solid #aaaaaa;
-} 
-.catlists {
-  border-top: 1px solid #ffffff;
-  padding: 1px 6px 1px 6px;
-  background-color: none;
-  color: #666666;
-} 
-.catlists:last-child {
-  border-bottom: 1px solid #ffffff;
-}
-.catlists:hover {
-  background-color: #dedede;
-}
-.cattitle {
-  color: #000000; 
-  font-weight: bold;
-}
-.catlists a.link {
-  color: #666666; 
-  padding: 0px 4px 0px 4px;
-  border: 1px solid #aaaaaa;
-  -moz-border-radius: 6px;
-}
-.catlists a.link:hover {
-  color: #000000;
-} 
-/* TikiIntegrator: By default copy rules dialog not shown */
-div#rules-copy-panel {
-    display: none;
-}
-
-/*
-** JsCalendar wrapper
-*/
-#datrigger {
-  border: 2px outset #666666;
-  padding: 1px 3px 1px 5px;
-  margin: 2px;
-  cursor: pointer;
-  font-weight:bold; 
-}
-
-table.commentinfo { width: 100%; background-color: #FFF7E6; }
-div#loadstats {
-  background-color: #dedede;
-  font-size: 70%;
-  color: #666666;
-  padding: 5px;
-}
-
-/* phplayers style */
-.box-data table {
-  width: 100%; 
-} 
-.mdkverbar  {
-  margin: 0px;
-} 
 
 /* TikiIntegrator: By default copy rules dialog not shown */
 div#rules-copy-panel {
@@ -2841,13 +2915,13 @@ TABLE.admin {
   margin: 1px;
   border: 1px inset #666666;
   -moz-border-radius: 20px;
-  vertcal-align: middle;
+  vertical-align: middle;
   background-color: #bbaa99;
 }
 .statusoff {
   padding: 1px;
   margin: 2px;
-  vertcal-align: middle;
+  vertical-align: middle;
 }
 
 
@@ -2872,63 +2946,6 @@ padding : 2ex;
 background-color : #D2B48C;
 margin : 1ex;
 border : 1px dashed #adacaf; }
-
-/* wiki diff styles */
-
-.diffheader {
-margin: 10px 5px 0px 5px;
-padding: 4px;
-border-width: 1px 1px 0px 1px;
-border-style: solid;
-border-color: #A9B8C2;
-color: black;
-font-weight: bold;
-background-color: #A9B8C2;
-font-size: 8pt;
-}
-.diffbody {
-margin: 0px 5px 10px 5px;
-padding: 5px;
-border-color: #A9B8C2;
-border-width: 0px 1px 1px 1px;
-border-style: solid;
-font-family: monospace, 'Courier New', courier;
-color: black;
-background-color: #edeeef;
-}
-.diffdeleted {
-border-color: #A9B8C2;
-color: black;
-background-color: #ffcccc;
-}
-.diffadded {
-border-color: #A9B8C2;
-color: black;
-background-color: #ccffcc;
-}
-.diffchar{color: red;}
-
-/**** coloration for QUOTE plugin *****/
-.quoteheader {
-margin: 10px 5px 0px 5px;
-padding: 4px;
-border-width: 1px 1px 0px 1px;
-border-style: solid;
-border-color: #A9B8C2;
-color: black;
-font-weight: bold;
-background-color: #A9B8C2;
-font-size: 8pt;
-}
-.quotebody {
-margin: 0px 5px 10px 5px;
-padding: 5px;
-border-color: #A9B8C2;
-border-width: 0px 1px 1px 1px;
-border-style: solid;
-color: black;
-background-color: #edeeef;
-}
 
 /* Version Plugin Style */
 
@@ -2972,3 +2989,27 @@ float : right;
 .diffdeleted {background-color:#ffcccc;}
 .diffbody{background-color:#F2F4F5}
 .diffchar {color: red;}
+
+/**** coloration for QUOTE plugin *****/
+.quoteheader {
+margin: 10px 5px 0px 5px;
+padding: 4px;
+border-width: 1px 1px 0px 1px;
+border-style: solid;
+border-color: #A9B8C2;
+color: black;
+font-weight: bold;
+background-color: #A9B8C2;
+font-size: 8pt;
+}
+.quotebody {
+margin: 0px 5px 10px 5px;
+padding: 5px;
+border-color: #A9B8C2;
+border-width: 0px 1px 1px 1px;
+border-style: solid;
+color: black;
+background-color: #edeeef;
+}
+
+/* end of css file */

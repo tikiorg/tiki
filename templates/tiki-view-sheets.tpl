@@ -28,10 +28,10 @@
 	var g;
 {$init_grid}
 
-	controlInsertRowBefore = '<form name="insert" onSubmit="insertRowSubmit(this)"><input type="radio" name="pos" value="before" checked /> {tr}Before{/tr} <input type="radio" name="pos" value="after" /> {tr}After{/tr} <select name="row">';
+	controlInsertRowBefore = '<form name="insert" onSubmit="insertRowSubmit(this)"><input type="radio" name="pos" value="before" checked="checked" id="sht_ins_row_before" /> <label for="sht_ins_row_before">{tr}Before{/tr}</label> <input type="radio" name="pos" value="after" id="sht_ins_row_after" /> <label for="sht_ins_row_after">{tr}After{/tr}</label> <select name="row">';
 	controlInsertRowAfter = '</select><input type="text" name="qty" value="1" size="2" /><input type="submit" name="submit" value="{tr}Insert Row{/tr}" /></form>';
 	
-	controlInsertColumnBefore = '<form name="insert" onSubmit="insertColumnSubmit(this)"><input type="radio" name="pos" value="before" checked /> {tr}Before{/tr} <input type="radio" name="pos" value="after" /> {tr}After{/tr} <select name="column">';
+	controlInsertColumnBefore = '<form name="insert" onSubmit="insertColumnSubmit(this)"><input type="radio" name="pos" value="before" checked="checked" id="sht_ins_col_before" /> <label for="sht_ins_col_before">{tr}Before{/tr}</label> <input type="radio" name="pos" value="after" id="sht_ins_col_after" /> <label for="sht_ins_col_after">{tr}After{/tr}</label> <select name="column">';
 	controlInsertColumnAfter = '</select><input type="text" name="qty" value="1" size="2" /><input type="submit" name="submit" value="{tr}Insert Column{/tr}" /></form>';
 
 	controlRemoveRowBefore = '<form name="remove" onSubmit="removeRowSubmit(this)"><select name="row">';
@@ -47,5 +47,17 @@
 
 {else}
 {$grid_content}
-<a href="tiki-view_sheets.php?sheetId={$sheetId}&readdate={$read_date}&mode=edit" class="linkbut">{tr}Edit{/tr}</a>
+{if $tiki_p_edit_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
+<a href="tiki-view_sheets.php?sheetId={$sheetId}&readdate={$read_date}&mode=edit" class="linkbut">{tr}edit{/tr}</a>
+{/if}
+{if $tiki_p_view_sheet_history eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
+<a href="tiki-history_sheets.php?sheetId={$sheetId}" class="linkbut">{tr}history{/tr}</a>
+{/if}
+<a href="tiki-export_sheet.php?sheetId={$sheetId}" class="linkbut">{tr}export{/tr}</a>
+{if $tiki_p_edit_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
+<a href="tiki-import_sheet.php?sheetId={$sheetId}" class="linkbut">{tr}import{/tr}</a>
+{/if}
+{if $chart_enabled eq 'y'}
+<a href="tiki-graph_sheet.php?sheetId={$sheetId}" class="linkbut">{tr}graph{/tr}</a>
+{/if}
 {/if}

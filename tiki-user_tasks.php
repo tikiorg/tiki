@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_tasks.php,v 1.18 2005-03-12 16:49:02 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_tasks.php,v 1.19 2005-05-18 10:59:00 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -32,8 +32,11 @@ if ($tiki_p_tasks != 'y') {
 }
 
 
-if ($tiki_p_tasks_admin == 'y') $task_admin = true;
-else $task_admin = false;
+if (isset($tiki_p_tasks_admin) && $tiki_p_tasks_admin == 'y') {
+	$task_admin = true;
+} else {
+	$task_admin = false;
+}
 $smarty->assign('task_admin', $task_admin);
 
 $comp_array = array();
@@ -435,7 +438,7 @@ if ((isset($_REQUEST['save'])) || (isset($_REQUEST['preview']))) {
 		$save['description'] = $_REQUEST['description'];
 		$msg_changes .= tra('Description').': '.$info['description'].' --> '. $save['description']."\n";
 	}
-	
+
 	if(isset($_REQUEST['use_start_date']) and $info['start'] != $start_date){
 		$save['start'] = $start_date;
 			$msg_changes .=  tra('Start').": ";
@@ -556,8 +559,8 @@ if (isset($_REQUEST['save'])) {
 	} else {
 		$task_info_message = '';
 	}
-	
-	if(isset($save['title']) and strlen($save['title']) < 3){
+
+	if(isset($save['title']) && strlen($save['title']) < 3){
 		$smarty->assign('msg', tra("The task title must have at least 3 characters"));
 		$smarty->display("error.tpl");
 		die;
@@ -565,16 +568,15 @@ if (isset($_REQUEST['save'])) {
 	
 	if($info['taskId'] == 0){
 		//new task
-		if(isset($save['title'])) {
-			if($_REQUEST['task_user'] != $user){
-			 	$save['accepted_creator'] = 'y';
-				$msg_from = $user;
-				$msg_to = $_REQUEST['task_user'];
-				$msg_title = tra("NEW Task") .': "'.$save['title'] . '"';
-				$send_message = true;
-			} else {
-				$send_message = false;
-			}
+		if($_REQUEST['task_user'] != $user){
+		 	$save['accepted_creator'] = 'y';
+			$msg_from = $user;
+			$msg_to = $_REQUEST['task_user'];
+			$msg_title = tra("NEW Task") .': "'.$save['title'] . '"';
+			$send_message = true;
+		} else {
+			$send_message = false;
+		}
 			if(	($_REQUEST['task_user'] == $user) or
 				($userlib->user_has_permission($_REQUEST['task_user'],'tiki_p_tasks_receive') and 
 				 $userlib->user_has_permission($user,'tiki_p_tasks_send')))
@@ -589,11 +591,6 @@ if (isset($_REQUEST['save'])) {
                 		die;
         		}
 
-		} else {
-			$smarty->assign('msg', tra("The task title must have at least 3 characters"));
-			$smarty->display("error.tpl");
-			die;
-		}
 	} else {
 		if($auto_accepted_status){
 			if($info['user'] == $user) {
@@ -655,7 +652,7 @@ if (isset($_REQUEST['save'])) {
 
 	if(!isset($info['user'])){
 		unset($_REQUEST['taskId']);
-		$smarty->assign('msg', tra("Sorry this problems by writing into the database"));
+		$smarty->assign('msg', tra("Sorry, there was an error while trying to write data into the database"));
 		$smarty->display("error.tpl");
 		die;
 	}

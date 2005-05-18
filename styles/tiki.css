@@ -706,7 +706,11 @@ border-top: 1px solid #8CACBB;
 font-size: 0.9em; 
 padding-left: 10px
 }
-
+#description {
+  font-size : 10px !important;
+  padding-left:   10px;
+  color:   #333300;
+}
 /* The edit-help used to display the wiki syntax when editing a page */
 div.wiki-edithelp { 
 background: white; 
@@ -1879,6 +1883,7 @@ font-weight: inherit;
 margin: inherit;
 padding: inherit;
 text-decoration: inherit;
+vertical-align: text-top;
 }
 a.tikihelp:hover {
 color: #224466;
@@ -1890,6 +1895,7 @@ margin: inherit;
 padding: inherit;
 cursor: help;
 text-decoration: inherit;
+vertical-align: text-top;
 }
 .catblock {
   border: 1px solid #aaaaaa;
@@ -2123,65 +2129,6 @@ font-weight : bold;
 -moz-border-radius-topright : 1ex;
 }
 /* patch temporaire to see the edit comment textarea */
-textarea#editpost2 { width: 100%} 
-
-/* wiki diff styles */
-
-.diffheader {
-margin: 10px 5px 0px 5px;
-padding: 4px;
-border-width: 1px 1px 0px 1px;
-border-style: solid;
-border-color: #A9B8C2;
-color: black;
-font-weight: bold;
-background-color: #A9B8C2;
-font-size: 8pt;
-}
-.diffbody {
-margin: 0px 5px 10px 5px;
-padding: 5px;
-border-color: #A9B8C2;
-border-width: 0px 1px 1px 1px;
-border-style: solid;
-font-family: monospace, 'Courier New', courier;
-color: black;
-background-color: #edeeef;
-}
-.diffdeleted {
-border-color: #A9B8C2;
-color: black;
-background-color: #ffcccc;
-}
-.diffadded {
-border-color: #A9B8C2;
-color: black;
-background-color: #ccffcc;
-}
-.diffchar{color: red;}
-
-/**** coloration for QUOTE plugin *****/
-.quoteheader {
-margin: 10px 5px 0px 5px;
-padding: 4px;
-border-width: 1px 1px 0px 1px;
-border-style: solid;
-border-color: #A9B8C2;
-color: black;
-font-weight: bold;
-background-color: #A9B8C2;
-font-size: 8pt;
-}
-.quotebody {
-margin: 0px 5px 10px 5px;
-padding: 5px;
-border-color: #A9B8C2;
-border-width: 0px 1px 1px 1px;
-border-style: solid;
-color: black;
-background-color: #edeeef;
-}
-
 textarea#editpost { width: 100%} 
 textarea#editpost2 { width: 100%} 
 textarea#editnl { width: 100%} 
@@ -2223,3 +2170,40 @@ padding : 2px 30px;
 float : right;
 }
 
+/* TikiSheet Default Style {{{1 */
+table.default	thead	td,	table.default	tfoot	td
+{
+	font-weight:		bold;
+	text-align:			center;
+}
+
+table.default	td
+{
+	border-style:		solid;
+	border-width:		1px;
+	border-color:		#000000;
+}
+/* }}}1 */
+/**** coloration for QUOTE plugin *****/
+.quoteheader {
+margin: 10px 5px 0px 5px;
+padding: 4px;
+border-width: 1px 1px 0px 1px;
+border-style: solid;
+border-color: #A9B8C2;
+color: black;
+font-weight: bold;
+background-color: #A9B8C2;
+font-size: 8pt;
+}
+.quotebody {
+margin: 0px 5px 10px 5px;
+padding: 5px;
+border-color: #A9B8C2;
+border-width: 0px 1px 1px 1px;
+border-style: solid;
+color: black;
+background-color: #edeeef;
+}
+
+/* end of css file */

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.20 2005-03-12 16:50:45 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.21 2005-05-18 11:03:16 mose Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-forums.php">{tr}Forums{/tr}</a>
 

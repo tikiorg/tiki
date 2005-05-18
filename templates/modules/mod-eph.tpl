@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-eph.tpl,v 1.6 2005-03-12 16:50:59 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-eph.tpl,v 1.7 2005-05-18 11:03:29 mose Exp $ *}
 
 {tikimodule title="<a class=\"cboxtlink\" href=\"tiki-eph.php\">{tr}Ephemerides{/tr}</a>" name="eph" flip=$module_params.flip decorations=$module_params.decorations}
 {if $modephdata}

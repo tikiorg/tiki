@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.39 2005-01-22 22:54:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.40 2005-05-18 10:58:53 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.39 2005-01-22 22:54:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.40 2005-05-18 10:58:53 mose Exp $
 //
 
 // Initialization
@@ -155,6 +155,11 @@ if (isset($_REQUEST["save"]) && isset($_REQUEST["name"]) && strlen($_REQUEST["na
 	check_ticket('admin-categories');
 	// Save
 	if ($_REQUEST["categId"]) {
+	        if ($_REQUEST['parentId'] == $_REQUEST['categId']) {
+	            $smarty->assign('msg', tra("Category can`t be parent of itself"));
+  	            $smarty->display("error.tpl");
+	            die;
+                }
 		$categlib->update_category($_REQUEST["categId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["parentId"]);
 	} else {
 		$newcategId = $categlib->add_category($_REQUEST["parentId"], $_REQUEST["name"], $_REQUEST["description"]);
@@ -207,7 +212,7 @@ $smarty->assign('categ_name', $categ_name);
 // ---------------------------------------------------
 // Convert $childrens
 //$debugger->var_dump('$children');
-$ctall = $categlib->get_all_categories();
+$ctall = $categlib->get_all_categories_ext();
 $tree_nodes = array();
 
 foreach ($ctall as $c) {
@@ -246,8 +251,8 @@ function array_csort($marray, $column) {
 	}
 }
 
-$catree = $categlib->list_categs(true);
-$catree = array_csort($catree,'categpath');
+$catree = $categlib->list_all_categories(0,-1,'name_asc','','',0);
+$catree = array_csort($catree['data'],'categpath');
 $smarty->assign('catree', $catree);
 
 // var_dump($catree); 
@@ -311,11 +316,7 @@ if ($offset > 0) {
 $categories = $categlib->get_all_categories();
 $smarty->assign_by_ref('categories', $categories);
 */
-global $imagegallib;
-if (!is_object($imagegallib)) {
-	require_once('lib/imagegals/imagegallib.php');
-}
-$galleries = $imagegallib->list_galleries(0, -1, 'name_desc', 'admin', $find_objects);
+$galleries = $tikilib->list_galleries(0, -1, 'name_desc', 'admin', $find_objects);
 $smarty->assign_by_ref('galleries', $galleries["data"]);
 
 $file_galleries = $filegallib->list_file_galleries(0, -1, 'name_desc', 'admin', $find_objects);
@@ -327,28 +328,16 @@ $smarty->assign_by_ref('forums', $forums["data"]);
 $polls = $polllib->list_polls(0, -1, 'title_asc', $find_objects);
 $smarty->assign_by_ref('polls', $polls["data"]);
 
-global $bloglib;
-if (!is_object($bloglib)) {
-	include_once('lib/blogs/bloglib.php');
-}
-$blogs = $bloglib->list_blogs(0, -1, 'title_asc', $find_objects);
+$blogs = $tikilib->list_blogs(0, -1, 'title_asc', $find_objects);
 $smarty->assign_by_ref('blogs', $blogs["data"]);
 
 $pages = $tikilib->list_pages(0, -1, 'pageName_asc', $find_objects);
 $smarty->assign_by_ref('pages', $pages["data"]);
 
-global $faqlib;
-if (!is_object($faqlib)) {
-	include_once('lib/faqs/faqlib.php');
-}
-$faqs = $faqlib->list_faqs(0, -1, 'title_asc', $find_objects);
+$faqs = $tikilib->list_faqs(0, -1, 'title_asc', $find_objects);
 $smarty->assign_by_ref('faqs', $faqs["data"]);
 
-global $quizlib;
-if (!is_object($quizlib)) {
-	include_once('lib/quizzes/quizlib.php');
-}
-$quizzes = $quizlib->list_quizzes(0, -1, 'name_asc', $find_objects);
+$quizzes = $tikilib->list_quizzes(0, -1, 'name_asc', $find_objects);
 $smarty->assign_by_ref('quizzes', $quizzes["data"]);
 
 $trackers = $trklib->list_trackers(0, -1, 'name_asc', $find_objects);

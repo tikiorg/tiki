@@ -55,7 +55,7 @@
 {/if}
 
 {if $page|lower ne 'sandbox'}
-  {if $feature_history eq 'y'}
+  {if $feature_history eq 'y' and $tiki_p_wiki_view_history eq 'y'}
     <span class="tabbut"><a href="tiki-pagehistory.php?page={$page|escape:"url"}" class="tablink">{tr}history{/tr}</a></span>
   {/if}
 {/if}

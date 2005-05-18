@@ -1,7 +1,8 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.33 2005-03-12 16:48:57 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.34 2005-05-18 10:58:54 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
@@ -482,114 +483,6 @@ if (isset($_REQUEST['auth_cas'])) {
 	}
 }
 
-// list of user groups is needed by auth_ext_xml and the rendering of Admin/Login
-$groups = $userlib->get_groups();
-$group_arraylen = count($groups['data']);
-$groups_array_set = false;
-
-if (isset($_REQUEST['auth_ext_xml'])) {
-	
-    check_ticket('admin-inc-login');
-    if (isset($_REQUEST['auth_ext_xml_enabled']) && $_REQUEST['auth_ext_xml_enabled'] ==  'on') {
-        $tikilib->set_preference('auth_ext_xml_enabled', 'y');
-        $smarty->assign('auth_ext_xml_enabled', 'y');
-    } else {
-        $tikilib->set_preference('auth_ext_xml_enabled', 'n');
-        $smarty->assign('auth_ext_xml_enabled', 'n');
-    }
-    if (isset($_REQUEST['auth_ext_xml_delete_user_tiki']) && $_REQUEST['auth_ext_xml_delete_user_tiki'] ==  'on') {
-        $tikilib->set_preference('auth_ext_xml_delete_user_tiki', 'y');
-        $smarty->assign('auth_ext_xml_delete_user_tiki', 'y');
-    } else {
-        $tikilib->set_preference('auth_ext_xml_delete_user_tiki', 'n');
-        $smarty->assign('auth_ext_xml_delete_user_tiki', 'n');
-    }
-    if (isset($_REQUEST['auth_ext_xml_manage_group']) && $_REQUEST['auth_ext_xml_manage_group'] ==  'on') {
-        $tikilib->set_preference('auth_ext_xml_manage_group', 'y');
-        $smarty->assign('auth_ext_xml_manage_group', 'y');
-    } else {
-        $tikilib->set_preference('auth_ext_xml_manage_group', 'n');
-        $smarty->assign('auth_ext_xml_manage_group', 'n');
-    }
-    if (isset($_REQUEST['auth_ext_xml_skip_admin']) && $_REQUEST['auth_ext_xml_skip_admin'] == 'on') {
-        $tikilib->set_preference('auth_ext_xml_skip_admin', 'y');
-        $smarty->assign('auth_ext_xml_skip_admin', 'y');
-    } else {
-        $tikilib->set_preference('auth_ext_xml_skip_admin', 'n');
-        $smarty->assign('auth_ext_xml_skip_admin', 'n');
-    }
-    if (isset($_REQUEST['auth_ext_xml_cas_proxy']) && $_REQUEST['auth_ext_xml_cas_proxy'] == 'on') {
-        $tikilib->set_preference('auth_ext_xml_cas_proxy', 'y');
-        $smarty->assign('auth_ext_xml_cas_proxy', 'y');
-    } else {
-        $tikilib->set_preference('auth_ext_xml_cas_proxy', 'n');
-        $smarty->assign('auth_ext_xml_cas_proxy', 'n');
-    }
-	if (isset($_REQUEST['auth_ext_xml_url'])) {
-		$tikilib->set_preference('auth_ext_xml_url', $_REQUEST['auth_ext_xml_url']);
-		$smarty->assign('auth_ext_xml_url', $_REQUEST['auth_ext_xml_url']);
-	}
-	if (isset($_REQUEST['auth_ext_xml_login_element'])) {
-		$tikilib->set_preference('auth_ext_xml_login_element', $_REQUEST['auth_ext_xml_login_element']);
-		$smarty->assign('auth_ext_xml_login_element', $_REQUEST['auth_ext_xml_login_element']);
-	}
-	if (isset($_REQUEST['auth_ext_xml_login_element_value'])) {
-		$tikilib->set_preference('auth_ext_xml_login_element_value', $_REQUEST['auth_ext_xml_login_element_value']);
-		$smarty->assign('auth_ext_xml_login_element_value', $_REQUEST['auth_ext_xml_login_element_value']);
-	}
-	if (isset($_REQUEST['auth_ext_xml_login_attribute'])) {
-		$tikilib->set_preference('auth_ext_xml_login_attribute', $_REQUEST['auth_ext_xml_login_attribute']);
-		$smarty->assign('auth_ext_xml_login_attribute', $_REQUEST['auth_ext_xml_login_attribute']);
-	}
-	if (isset($_REQUEST['auth_ext_xml_login_attribute_value'])) {
-		$tikilib->set_preference('auth_ext_xml_login_attribute_value', $_REQUEST['auth_ext_xml_login_attribute_value']);
-		$smarty->assign('auth_ext_xml_login_attribute_value', $_REQUEST['auth_ext_xml_login_attribute_value']);
-	}
-	for ($i=0; $i<$group_arraylen; $i++) {
-		$groupname = $groups['data'][$i]['groupName'];
-		$auth_ext_xml_manage_group = 'auth_ext_xml_manage_'. $groupname;
-		$auth_ext_xml_group_element = 'auth_ext_xml_element_' . $groupname;
-		$auth_ext_xml_group_element_value = 'auth_ext_xml_element_val_' . $groupname;
-		$auth_ext_xml_group_attribute = 'auth_ext_xml_attr_' . $groupname;
-		$auth_ext_xml_group_attribute_value = 'auth_ext_xml_attr_val_' . $groupname;
-		global $$auth_ext_xml_manage_group;
-		global $$auth_ext_xml_group_element;
-		global $$auth_ext_xml_group_element_value;
-		global $$auth_ext_xml_group_attribute;
-		global $$auth_ext_xml_group_attribute_value;
-	    if (isset($_REQUEST["$auth_ext_xml_manage_group"]) && $_REQUEST["$auth_ext_xml_manage_group"] ==  'on') {
-	        $tikilib->set_preference("$auth_ext_xml_manage_group", 'y');
-	        $$auth_ext_xml_manage_group = 'y';
-	    } else {
-	        $tikilib->set_preference("$auth_ext_xml_manage_group", 'n');
-	        $$auth_ext_xml_manage_group = 'n';
-	    }
-		if (isset($_REQUEST["$auth_ext_xml_group_element"])) {
-			$tikilib->set_preference("$auth_ext_xml_group_element", $_REQUEST["$auth_ext_xml_group_element"]);
-			$$auth_ext_xml_group_element = $_REQUEST["$auth_ext_xml_group_element"];
-		}
-		if (isset($_REQUEST["$auth_ext_xml_group_element_value"])) {
-			$tikilib->set_preference("$auth_ext_xml_group_element_value", $_REQUEST["$auth_ext_xml_group_element_value"]);
-			$$auth_ext_xml_group_element_value = $_REQUEST["$auth_ext_xml_group_element_value"];
-		}
-		if (isset($_REQUEST["$auth_ext_xml_group_attribute"])) {
-			$tikilib->set_preference("$auth_ext_xml_group_attribute", $_REQUEST["$auth_ext_xml_group_attribute"]);
-			$$auth_ext_xml_group_attribute = $_REQUEST["$auth_ext_xml_group_attribute"];
-		}
-		if (isset($_REQUEST["$auth_ext_xml_group_attribute_value"])) {
-			$tikilib->set_preference("$auth_ext_xml_group_attribute_value", $_REQUEST["$auth_ext_xml_group_attribute_value"]);
-			$$auth_ext_xml_group_attribute_value = $_REQUEST["$auth_ext_xml_group_attribute_value"];
-		}
-		$groups['data'][$i]['auth_ext_xml_manage_group'] = $$auth_ext_xml_manage_group;
-		$groups['data'][$i]['auth_ext_xml_group_element'] = $$auth_ext_xml_group_element;
-		$groups['data'][$i]['auth_ext_xml_group_element_value'] = $$auth_ext_xml_group_element_value;
-		$groups['data'][$i]['auth_ext_xml_group_attribute'] = $$auth_ext_xml_group_attribute;
-		$groups['data'][$i]['auth_ext_xml_group_attribute_value'] = $$auth_ext_xml_group_attribute_value;
-		$groups_array_set = true;
-	}
-	
-}
-
 // Get list of available languages
 $languages = array();
 $languages = $tikilib->list_languages();
@@ -603,34 +496,8 @@ $smarty->assign("available_styles", unserialize($tikilib->get_preference("availa
 $smarty->assign("userTracker", $tikilib->get_preference("userTracker", "n"));
 $smarty->assign("groupTracker", $tikilib->get_preference("groupTracker", "n"));
 
-global $trklib;
-if (!is_object($trklib)) {
-	require_once('lib/trackers/trackerlib.php');
-}
-$listTrackers = $trklib->list_trackers(0,-1,"name_desc","");
+$listTrackers = $tikilib->list_trackers(0,-1,"name_desc","");
 $smarty->assign("listTrackers",$listTrackers['list']);
-
-if ($groups_array_set != true) {
-	for ($i=0; $i<$group_arraylen; $i++) {
-		$groupname = $groups['data'][$i]['groupName'];
-		$auth_ext_xml_manage_group = 'auth_ext_xml_manage_'. $groupname;
-		$auth_ext_xml_group_element = 'auth_ext_xml_element_' . $groupname;
-		$auth_ext_xml_group_element_value = 'auth_ext_xml_element_val_' . $groupname;
-		$auth_ext_xml_group_attribute = 'auth_ext_xml_attr_' . $groupname;
-		$auth_ext_xml_group_attribute_value = 'auth_ext_xml_attr_val_' . $groupname;
-		global $$auth_ext_xml_manage_group;
-		global $$auth_ext_xml_group_element;
-		global $$auth_ext_xml_group_element_value;
-		global $$auth_ext_xml_group_attribute;
-		global $$auth_ext_xml_group_attribute_value;
-		$groups['data'][$i]['auth_ext_xml_manage_group'] = $$auth_ext_xml_manage_group;
-		$groups['data'][$i]['auth_ext_xml_group_element'] = $$auth_ext_xml_group_element;
-		$groups['data'][$i]['auth_ext_xml_group_element_value'] = $$auth_ext_xml_group_element_value;
-		$groups['data'][$i]['auth_ext_xml_group_attribute'] = $$auth_ext_xml_group_attribute;
-		$groups['data'][$i]['auth_ext_xml_group_attribute_value'] = $$auth_ext_xml_group_attribute_value;
-	}
-}
-$smarty->assign('groups', $groups['data']);
 
 $smarty->assign("change_theme", $tikilib->get_preference("change_theme", "n"));
 $smarty->assign("change_language", $tikilib->get_preference("change_language", "n"));

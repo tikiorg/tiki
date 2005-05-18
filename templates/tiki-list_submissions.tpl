@@ -1,5 +1,8 @@
 <h1><a class="pagetitle" href="tiki-list_submissions.php">{tr}Submissions{/tr}</a></h1>
 <a class="linkbut" href="tiki-edit_submission.php">{tr}edit new submission{/tr}</a>
+{if $tiki_p_read_article eq 'y'}
+<a class="linkbut" href="tiki-list_articles.php">{tr}List articles{/tr}</a>
+{/if}
 <br /><br />
 <div align="center">
 <table class="findtable">

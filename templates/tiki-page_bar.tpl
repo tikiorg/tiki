@@ -1,11 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.41 2005-03-12 16:50:50 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.42 2005-05-18 11:03:19 mose Exp $ *}
 
 <hr/>
 <div id="page-bar">
   <table>
     <tr>
 
-{* Check that page is not locked and edit permission granted. SandBox can be adited w/o perm *}
+{* Check that page is not locked and edit permission granted. SandBox can be edited w/o perm *}
 {if (!$lock and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox')) or $tiki_p_admin_wiki eq 'y'}
     <td>
       <div class="button2" >
@@ -19,6 +19,7 @@
       </div>
     </td>
 {else}
+    {if $feature_history eq 'y' and $tiki_p_wiki_view_history eq 'y'}
     <td>
       <div class="button2" >
       <a href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;source=0" class="linkbut">
@@ -26,6 +27,7 @@
       </a>
       </div>
     </td>
+    {/if}
 {/if}
 
 {if $page|lower ne 'sandbox'}
@@ -46,7 +48,7 @@
 <td><div class="button2"><a href="tiki-pagepermissions.php?page={$page|escape:"url"}" class="linkbut">{tr}perms{/tr}</a></div></td>
 {/if}
 
-{if $feature_history eq 'y' && ($tiki_p_admin_wiki eq 'y' || $tiki_p_view_wiki_history eq 'y')}
+{if $feature_history eq 'y' and $tiki_p_wiki_view_history eq 'y'}
 <td><div class="button2"><a href="tiki-pagehistory.php?page={$page|escape:"url"}" class="linkbut">{tr}history{/tr}</a></div></td>
 {/if}
 {/if}
@@ -91,7 +93,7 @@
   ||  $tiki_p_edit_comments  == 'y')}
    <td>
     <div class="button2">
-      <a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');"
+      <a href="{if $comments_show ne 'y'}tiki-index.php?page={$page|escape:"url"}&amp;comzone=show#comments{else}tiki-index.php?page={$page|escape:"url"}&amp;comzone=hide{/if}" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');{if $comments_show eq 'y'} return false;{/if}"
          class="linkbut">
 	{if $comments_cant == 0}
           {tr}add comment{/tr}

@@ -29,7 +29,7 @@ APIC::import("org.apicnet.io.OOo.absOOo");
  * @package 
  * @author Diogene 
  * @copyright Copyright (c) 2003
- * @version $Id: OOoTable.php,v 1.2 2004-09-08 19:52:35 mose Exp $
+ * @version $Id: OOoTable.php,v 1.3 2005-05-18 11:01:39 mose Exp $
  * @access public 
  */
 class OOoTable extends absOOo {

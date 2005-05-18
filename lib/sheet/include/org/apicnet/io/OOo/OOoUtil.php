@@ -33,7 +33,7 @@ APIC::import("org.apicnet.io.CDir");
  * @package 
  * @author apicnet
  * @copyright Copyright (c) 2004
- * @version $Id: OOoUtil.php,v 1.2 2004-09-08 19:52:34 mose Exp $
+ * @version $Id: OOoUtil.php,v 1.3 2005-05-18 11:01:39 mose Exp $
  * @access public
  **/
 class OOoUtil extends absOOo{

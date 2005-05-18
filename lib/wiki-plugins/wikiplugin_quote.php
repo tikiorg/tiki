@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_quote.php,v 1.5 2004-07-02 22:07:38 teedog Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_quote.php,v 1.6 2005-05-18 11:02:00 mose Exp $
  *
  * TikiWiki QUOTE plugin.
  * 

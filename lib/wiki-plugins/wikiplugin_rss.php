@@ -12,9 +12,10 @@ function wikiplugin_rss($data,$params) {
 	global $smarty;
 	global $tikilib;
 	global $dbTiki;
+	global $rsslib;
 
 	if (!isset($rsslib)) {
-		include ('lib/rss/rsslib.php');
+		include_once ('lib/rss/rsslib.php');
 	}
 
 	extract($params,EXTR_SKIP);

@@ -15,7 +15,7 @@
 <form class="box" method="get" action="tiki-batch_upload.php" name="f">
 <table border="0" class="normal">
 <tr>
-<td width="42" class="heading" nowrap="nowrap"><input name="tikiswitch" id="tikiswitch" type="checkbox" onclick="switchCheckboxes(this.form,'imgs[]',this.checked);" /><label class="tableheading" for="tikiswitch">{tr}all{/tr}</label></td>
+<td width="42" class="heading" nowrap="nowrap"><input type="checkbox" name="imgs[]" value="ALL" id="box_all"><label class="tableheading" for="box_all">{tr}all{/tr}</label></td>
 <td class="heading"><a class="tableheading" href="javascript:void(0);">{tr}filename{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="javascript:void(0);">{tr}width{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="javascript:void(0);">{tr}height{/tr}</a></td>
@@ -33,6 +33,16 @@
 {/foreach}
 </table>
 <br />
+&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="removeExt" value="true" id="removeExt"> {tr}remove file extension from image name{/tr}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {tr}eg. from "digicam0001.jpg" then name digicam0001 will be used for the name field{/tr}<br />
+&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="subdirToSubgal" value="true" id="subdirToSubgal"> {tr}convert sub directories to sub galleries{/tr}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {tr}eg. from "misc/screenshots/digicam0001.jpg" a gallery named screenshots will be created{/tr}<br />
+<br />
+{if $permAddGallery eq "y" || $user ne "admin"}
+&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="subToDesc" value="true" id="subToDesc"> {tr}use sub directory names as description{/tr}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {tr}eg. from "misc/screenshots/digicam0001.jpg" a description misc/screenshots will be created{/tr}<br />
+<br />
+{/if}
 &nbsp;&nbsp;&nbsp;&nbsp; {tr}Select a Gallery{/tr}  
 <select name="galleryId">
 {section name=idx loop=$galleries}

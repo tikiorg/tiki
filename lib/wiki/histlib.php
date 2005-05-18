@@ -33,7 +33,7 @@ class HistLib extends TikiLib {
 		// Store the current page in tiki_history before rolling back
 		if (strtolower($page) != 'sandbox') {
 			$info = $this->get_page_info($page);
-			$old_version = $this->get_page_latest_version($page);
+			$old_version = $this->get_page_latest_version($page) + 1;
 		    $lastModif = $info["lastModif"];
 		    $user = $info["user"];
 		    $ip = $info["ip"];
@@ -61,7 +61,7 @@ class HistLib extends TikiLib {
 		$pages = $this->get_pages($res["data"]);
 
 		foreach ($pages as $a_page) {
-			$this->replace_link($page, $a_page, false);
+			$this->replace_link($page, $a_page);
 		}
 
 		//$query="delete from `tiki_history` where `pageName`='$page' and version='$version'";
@@ -130,17 +130,14 @@ class HistLib extends TikiLib {
 		return $ret;
 	}
 	
-	function get_page_latest_version($page, $data=null) {
+	function get_page_latest_version($page) {
 
-		$query = "select `version`, `data` from `tiki_history` where `pageName`=? order by `version` desc";
+		$query = "select `version` from `tiki_history` where `pageName`=? order by `version` desc";
 		$result = $this->query($query,array($page),1);
 		$ret = array();
 		
 		if ($res = $result->fetchRow()) {
-			$ret = $res['version'] + 1;
-			$data= $res['data'];
-		} elseif ($this->page_exists($page)) {
-			$ret =  1;
+			$ret = $res['version'];
 		} else {
 			$ret = FALSE;
 		}
@@ -159,6 +156,7 @@ class HistLib extends TikiLib {
 	// if days is 0 this gets all the registers
 	// function parameters modified by ramiro_v on 11/03/2002
 	function get_last_changes($days, $offset = 0, $limit = -1, $sort_mode = 'lastModif_desc', $findwhat = '') {
+	        global $user;
 
 		$where = "where (th.`version` != 0 or tp.`version` != 0) ";
 		$bindvars = array();
@@ -188,7 +186,10 @@ class HistLib extends TikiLib {
 		$ret = array();
 		$retval = array();
 		while ($res = $result->fetchRow()) {
+		   //WYSIWYCA hack: the $limit will not be respected
+		   if($this->user_has_perm_on_object($user,$res["pageName"],'wiki page','tiki_p_view')) {
 			$ret[] = $res;
+		   }
 		}
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;

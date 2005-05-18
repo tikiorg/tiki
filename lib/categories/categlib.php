@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.68 2005-03-12 16:49:42 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.69 2005-05-18 11:00:32 mose Exp $
  *
  * \brief Categories support class
  *
@@ -23,10 +23,10 @@ class CategLib extends TikiLib {
 		$this->db = $db;
 	}
 
-	function list_categs($checkperms=false) {
+	function list_categs() {
 		global $cachelib;
 		if (!$cachelib->isCached("allcategs")) {
-			$query = "select * from `tiki_categories` order by ".$this->convert_sortmode('name_asc');
+			$query = "select * from `tiki_categories`";
 			$result = $this->query($query,array());
 			$ret = array();
 			while ($res = $result->fetchRow()) {
@@ -38,26 +38,65 @@ class CategLib extends TikiLib {
 				$categpath = implode("::",$tepath);
 				$res["categpath"] = $categpath;
 				$res["tepath"] = $tepath;
-				$res["deep"] = count($tepath);
 				$ret["$categpath"] = $res;
 			}
 			ksort($ret);
 			$back = array_values($ret);
 			$cachelib->cacheItem("allcategs",serialize($back));
+			return $back;
 		} else {
-			$back = unserialize($cachelib->getCached("allcategs"));
+			return unserialize($cachelib->getCached("allcategs"));
 		}
-		if ($checkperms) {
-			global $userlib;
-			foreach ($back as $key => $cat) {
-				if ($userlib->object_has_one_permission($cat['categId'], 'category')) {
-					$back[$key]['has_perm'] = 'y';
-				} else {
-					$back[$key]['has_perm'] = 'n';
-				}
+	}
+	
+	function list_all_categories($offset, $maxRecords, $sort_mode = 'name_asc', $find, $type, $objid) {
+		$cats = $this->get_object_categories($type, $objid);
+
+		if ($find) {
+			$findesc = '%' . $find . '%';
+			$bindvals=array($findesc,$findesc);
+			$mid = " where (`name` like ? or `description` like ?)";
+		} else {
+      $bindvals=array();
+			$mid = "";
+		}
+
+		$query = "select * from `tiki_categories` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_categories` $mid";
+		$result = $this->query($query,$bindvals,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvals);
+		$ret = array();
+
+		while ($res = $result->fetchRow()) {
+			if (in_array($res["categId"], $cats)) {
+				$res["incat"] = 'y';
+			} else {
+				$res["incat"] = 'n';
 			}
+      
+      $catpath = $this->get_category_path($res["categId"]);
+			$tepath = array();	
+			foreach ($catpath as $cat) {
+				$tepath[] = $cat['name'];
+			}
+			$categpath = implode("::",$tepath);
+			$res["categpath"] = $categpath;
+			$res["tepath"] = $tepath;
+			$res["deep"] = count($tepath);
+			global $userlib;
+			if ($userlib->object_has_one_permission($res['categId'], 'category')) {
+				$res['has_perm'] = 'y';
+			} else {
+				$res['has_perm'] = 'n';
+			}
+			$ret["$categpath"] = $res;
 		}
-		return $back;
+		ksort($ret);
+		
+		$retval = array();
+    $retval["data"] = array_values($ret);
+		$retval["cant"] = $cant;
+		return $retval;
 	}
 	
 	function get_category_path($categId) {
@@ -73,11 +112,15 @@ class CategLib extends TikiLib {
 	}
 
 	function get_category($categId) {
+	   if(!isset($this->category_cache) || !isset($this->category_cache[$categId])) {
 		$query = "select * from `tiki_categories` where `categId`=?";
 		$result = $this->query($query,array((int) $categId));
-		if (!$result->numRows()) return false;
-		$res = $result->fetchRow();
-		return $res;
+		if (!$result->numRows()) {
+		   $this->category_cache[$categId] = false;
+		}
+		$this->category_cache[$categId] = $result->fetchRow();
+	   }
+	   return $this->category_cache[$categId];
 	}
 	
 	function get_category_name($categId) {
@@ -128,6 +171,7 @@ class CategLib extends TikiLib {
 		$query = "update `tiki_categories` set `name`=?, `parentId`=?, `description`=? where `categId`=?";
 		$result = $this->query($query,array($name,(int) $parentId,$description,(int) $categId));
 		$cachelib->invalidate('allcategs');
+		$cachelib->invalidate('childcategs'.$parentId);
 	}
 
 	function add_category($parentId, $name, $description) {
@@ -137,6 +181,7 @@ class CategLib extends TikiLib {
 		$query = "select `categId` from `tiki_categories` where `name`=? and `parentId`=?";
 		$id = $this->getOne($query,array($name,(int) $parentId));
 		$cachelib->invalidate('allcategs');
+		$cachelib->invalidate('childcategs'.$parentId);
 		return $id;
 	}
 
@@ -261,21 +306,35 @@ class CategLib extends TikiLib {
 		// individual permission for user 'allow', and global permissions.
 		// The condition perms=0 is equivalent to allow is null, but the first one is more didatic, otherwise
 		// we wouldn't need counting. Does counting reduce performance?
-		$sqlHaving = " HAVING ((perms=0 AND o.`type` IN (''";
+		$sqlHaving = " HAVING ((perms=0 AND (o.`type` IN (''";
 		$bindHaving = array();
 
+		$addTrackerItem = false;
 		foreach ($permMap as $objType => $permName) {
-		  if (empty($type) || $type == $objType) {
-		    $allowField .= "(o.`type`=? AND u.permName=?) OR ";
-		    $bindAllow[] = $objType;
+		  if (empty($type) || $type == $objType || ($type == "trackerItem" && $objType == "tracker")) {
+		    if ($type == "trackerItem") {
+			$allowField .= "(o.`type`like ? AND u.`permName`=?) OR ";
+			$bindAllow[] = "tracker %";
+		    } else {
+			$allowField .= "(o.`type`=? AND u.`permName`=?) OR ";
+			$bindAllow[] = $objType;
+		    }
 		    $bindAllow[] = $permName;
 		    
 		    global $$permName;
-		    if ($$permName == 'y') {
+		    if ($$permName == 'y' && (empty($type) || $type != "trackerItem")) {
 			$sqlHaving .= ",?";
 			$bindHaving[] = $objType;
 		    }
+		    if ($objType == "tracker" && $$permName == 'y') {
+			$addTrackerItem = true;
+		    }
 		  }
+		}
+		$sqlHaving .= ")";
+		if ($addTrackerItem) {
+			$sqlHaving .= " OR o.`type` like ?";
+			$bindHaving[] .= "tracker %";
 		}
 		
 		$sqlHaving .= ")) OR allow=1) ";
@@ -295,7 +354,6 @@ class CategLib extends TikiLib {
 
 		$query_cant = "SELECT c.*, o.*, count(u.`objectId`) as perms, $allowField as allow FROM `tiki_category_objects` c,`tiki_categorized_objects` o LEFT JOIN `users_objectpermissions` u ON u.`objectId`=MD5(".$this->db->concat("o.`type`","LOWER(o.`objId`)").") AND u.`objectType`=o.`type` WHERE c.`catObjectId`=o.`catObjectId` $where GROUP BY o.`type`, o.`objId` $sqlHaving";
 		$query = $query_cant . $orderBy;
-
 		$result = $this->query($query,$bindVars,$maxRecords,$offset);
 		$resultCant = $this->query($query_cant,$bindVars);
 		$cant = $resultCant->numRows();
@@ -337,7 +395,7 @@ class CategLib extends TikiLib {
 	}
 	
 	// get the permissions assigned to the parent categories of an object
-	function get_object_categories_perms($user, $type, $objId, $group = NULL) {	// the last parameter $group is optional, used when we specify a group but not a user
+	function get_object_categories_perms($user, $type, $objId) {		
 		$is_categorized = $this->is_categorized("$type",$objId);
 		if ($is_categorized) {
 			global $cachelib;
@@ -361,7 +419,7 @@ class CategLib extends TikiLib {
 				} else {
 					foreach ($parents as $categId) {
 						if ($userlib->object_has_one_permission($categId, 'category')) {
-							if ($userlib->object_has_permission($user, $categId, 'category', $perm, $group)) {
+							if ($userlib->object_has_permission($user, $categId, 'category', $perm)) {
 								$return_perms["$perm"] = 'y';
 							} else {
 								$return_perms["$perm"] = 'n';
@@ -373,10 +431,9 @@ class CategLib extends TikiLib {
 							}
 						} else {
 							$categpath = $this->get_category_path($categId);
-							$arraysize = count($categpath);
-							for ($i=$arraysize-2; $i>=0; $i--) {
-								if ($userlib->object_has_one_permission($categpath[$i]['categId'], 'category')) {
-									if ($userlib->object_has_permission($user, $categpath[$i]['categId'], 'category', $perm, $group)) {
+							foreach ($categpath as $cat) {
+								if ($userlib->object_has_one_permission($cat['categId'], 'category')) {
+									if ($userlib->object_has_permission($user, $cat['categId'], 'category', $perm)) {
 										$return_perms["$perm"] = 'y';
 								   		break 1;
 									} else {
@@ -416,17 +473,15 @@ class CategLib extends TikiLib {
 		return $ret;
 	}
 
-	function remove_object_from_category($catObjectId, $categId, $check_uncategorize=true) {
+	function remove_object_from_category($catObjectId, $categId) {
 		global $cachelib;
 		$query = "delete from `tiki_category_objects` where `catObjectId`=? and `categId`=?";
 		$result = $this->query($query,array($catObjectId,$categId));
-		if ($check_uncategorize) {
 		$query = "select count(*) from `tiki_category_objects` where `catObjectId`=?";
 		$cant = $this->getOne($query,array((int) $catObjectId));
 		if (!$cant) {
 			$query = "delete from `tiki_categorized_objects` where `catObjectId`=?";
 			$result = $this->query($query,array((int) $catObjectId));
-		}
 		}
 		$cachelib->invalidate('allcategs');
 	}
@@ -454,12 +509,8 @@ class CategLib extends TikiLib {
 		$catObjectId = $this->is_categorized('tracker', $trackerId);
 
 		if (!$catObjectId) {
-			global $trklib;
-			if (!is_object($trklib)) {
-				require_once('lib/trackers/trackerlib.php');
-			}
 			// The page is not cateorized
-			$info = $trklib->get_tracker($trackerId);
+			$info = $this->get_tracker($trackerId);
 
 			$href = 'tiki-view_tracker.php?trackerId=' . $trackerId;
 			$catObjectId = $this->add_categorized_object('tracker', $trackerId, substr($info["description"], 0, 200),$info["name"] , $href);
@@ -474,11 +525,7 @@ class CategLib extends TikiLib {
 
 		if (!$catObjectId) {
 			// The page is not cateorized
-			global $quizlib;
-			if (!is_object($quizlib)) {
-				require_once('lib/quizzes/quizlib.php');
-			}
-			$info = $quizlib->get_quiz($quizId);
+			$info = $this->get_quiz($quizId);
 
 			$href = 'tiki-take_quiz.php?quizId=' . $quizId;
 			$catObjectId
@@ -508,12 +555,8 @@ class CategLib extends TikiLib {
 		$catObjectId = $this->is_categorized('faq', $faqId);
 
 		if (!$catObjectId) {
-			global $faqlib;
-			if (!is_object($faqlib)) {
-				include_once('lib/faqs/faqlib.php');
-			}
 			// The page is not cateorized
-			$info = $faqlib->get_faq($faqId);
+			$info = $this->get_faq($faqId);
 
 			$href = 'tiki-view_faq.php?faqId=' . $faqId;
 			$catObjectId = $this->add_categorized_object('faq', $faqId, $info["description"], $info["title"], $href);
@@ -527,12 +570,8 @@ class CategLib extends TikiLib {
 		$catObjectId = $this->is_categorized('blog', $blogId);
 
 		if (!$catObjectId) {
-			global $bloglib;
-			if (!is_object($bloglib)) {
-				include_once('lib/blogs/bloglib.php');
-			}
 			// The page is not cateorized
-			$info = $bloglib->get_blog($blogId);
+			$info = $this->get_blog($blogId);
 
 			$href = 'tiki-view_blog.php?blogId=' . $blogId;
 			$catObjectId = $this->add_categorized_object('blog', $blogId, $info["description"], $info["title"], $href);
@@ -561,12 +600,8 @@ class CategLib extends TikiLib {
 		$catObjectId = $this->is_categorized('image gallery', $galleryId);
 
 		if (!$catObjectId) {
-			global $imagegallib;
-			if (!is_object($imagegallib)) {
-				require_once('lib/imagegals/imagegallib.php');
-			}
 			// The page is not cateorized
-			$info = $imagegallib->get_gallery($galleryId);
+			$info = $this->get_gallery($galleryId);
 
 			$href = 'tiki-browse_gallery.php?galleryId=' . $galleryId;
 			$catObjectId = $this->add_categorized_object('image gallery', $galleryId, $info["description"], $info["name"], $href);
@@ -580,12 +615,8 @@ class CategLib extends TikiLib {
 		$catObjectId = $this->is_categorized('file gallery', $galleryId);
 
 		if (!$catObjectId) {
-			global $filegallib;
-			if (!is_object($filegallib)) {
-				include_once ('lib/filegals/filegallib.php');
-			}
 			// The page is not cateorized
-			$info = $filegallib->get_file_gallery($galleryId);
+			$info = $this->get_file_gallery($galleryId);
 
 			$href = 'tiki-list_file_gallery.php?galleryId=' . $galleryId;
 			$catObjectId = $this->add_categorized_object('file gallery', $galleryId, $info["description"], $info["name"], $href);
@@ -653,6 +684,22 @@ class CategLib extends TikiLib {
 	}
 
 	function get_all_categories() {
+		global $cachelib;
+	/*
+		// inhibited because allcateg_ext is cached now
+		$query = " select `name`,`categId`,`parentId` from `tiki_categories` order by `name`";
+		$result = $this->query($query,array());
+		$ret = array();
+
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res;
+		}
+	*/
+		return $this->get_all_categories_ext();
+	}
+
+	// Same as get_all_categories + it also get info about count of objects
+	function get_all_categories_ext() {
 		global $cachelib;
 		if (!$cachelib->isCached("allcategs")) {
 			$ret = array();

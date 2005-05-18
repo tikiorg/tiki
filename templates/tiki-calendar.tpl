@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.52 2005-03-12 16:50:40 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.53 2005-05-18 11:02:59 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-calendar.php">{tr}Calendar{/tr}</a></h1>
@@ -7,7 +7,7 @@
 {/if}
 {if $feature_tabs ne 'y'}
 <span class="button2"><a href="#filter" class="linkbut">{tr}filter{/tr}</a></span>
-{if $modifiable}
+{if $modifTab or $modifTab eq "0"}
 <span class="button2"><a href="#add"class="linkbut">{tr}add item{/tr}</a></span>
 {/if}
 {/if}
@@ -16,10 +16,10 @@
 {if $feature_tabs eq 'y'}
 {cycle name=tabs values="1,2,3" print=false advance=false}
 <div id="page-bar">
-<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Calendar{/tr}</a></span>
-<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Filter{/tr}</a></span>
-{if $modifiable}
-<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Edit/Create{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Calendar{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Filter{/tr}</a></span>
+{if $modifTab or $modifTab eq "0"}
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Edit/Create{/tr}</a></span>
 {/if}
 </div>
 {/if}
@@ -166,10 +166,10 @@ firstDay : {$firstDayofWeek}
 <tr><td width="42" class="{cycle advance=false}">{$h}{tr}h{/tr}</td>
 <td class="{cycle}">
 {section name=hr loop=$hrows[$h]}
-<div class="Cal{$hrows[$h][hr].type}" style="clear:both">
-{$hours[$h]}:{$hrows[$h][hr].mins} : 
+<div {if $hrows[$h][hr].calname ne ""}class="Cal{$hrows[$h][hr].type}"{/if} style="clear:both">
+{$hours[$h]}:{$hrows[$h][hr].mins} : {if $hrows[$h][hr].calname eq ""}{$hrows[$h][hr].type} : {/if}
 <a href="{$hrows[$h][hr].url}" class="linkmenu">{$hrows[$h][hr].name}</a>
-{$hrows[$h][hr].parsedDescription}{if ($calendar_view_tab eq "y" or $tiki_p_change_events eq "y") and $hrows[$h][hr].calname ne ""}<span  style="float:right;">{if $calendar_view_tab eq "y"}<a href="tiki-calendar.php?calitemId={$hrows[$h][hr].calitemId}&amp;editmode=details"{if $feature_tabs ne 'y'}#details{/if}" title="{tr}details{/tr}"><img src="img/icons/zoom.gif" border=0 width="16" height="16" alt="{tr}zoom{/tr}" /></a>&nbsp;{/if}{if $tiki_p_change_events eq "y"}<a href="tiki-calendar.php?calitemId={$hrows[$h][hr].calitemId}&amp;editmode=1{if $feature_tabs ne 'y'}#add{/if}" title="{tr}edit{/tr}"><img src="img/icons/edit.gif" border="0"  width="20" height="16" alt="{tr}edit{/tr}" /></a><a href="tiki-calendar.php?calitemId={$hrows[$h][hr].calitemId}&amp;delete=1"  title="{tr}remove{/tr}" /><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt="{tr}remove{/tr}" /></a>{/if}</span>{/if}
+{if $hrows[$h][hr].calname ne ""}{$hrows[$h][hr].parsedDescription}{else}{$hrows[$h][hr].description}{/if}{if ($calendar_view_tab eq "y" or $tiki_p_change_events eq "y") and $hrows[$h][hr].calname ne ""}<span  style="float:right;">{if $calendar_view_tab eq "y"}<a href="tiki-calendar.php?calitemId={$hrows[$h][hr].calitemId}&amp;editmode=details"{if $feature_tabs ne 'y'}#details{/if}" title="{tr}details{/tr}"><img src="img/icons/zoom.gif" border="0" width="16" height="16" alt="{tr}zoom{/tr}" /></a>&nbsp;{/if}{if $tiki_p_change_events eq "y"}<a href="tiki-calendar.php?calitemId={$hrows[$h][hr].calitemId}&amp;editmode=1{if $feature_tabs ne 'y'}#add{/if}" title="{tr}edit{/tr}"><img src="img/icons/edit.gif" border="0"  width="20" height="16" alt="{tr}edit{/tr}" /></a><a href="tiki-calendar.php?calitemId={$hrows[$h][hr].calitemId}&amp;delete=1"  title="{tr}remove{/tr}" /><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt="{tr}remove{/tr}" /></a>{/if}</span>{/if}
 </div>
 {/section}
 </td></tr>
@@ -207,13 +207,13 @@ firstDay : {$firstDayofWeek}
 {section name=items loop=$cell[w][d].items}
 {assign var=over value=$cell[w][d].items[items].over}
 <div class="Cal{$cell[w][d].items[items].type} calId{$cell[w][d].items[items].calendarId}" {if $cell[w][d].items[items].calitemId eq $calitemId and $calitemId|string_format:"%d" ne 0}style="padding:5px;border:1px solid black;"{/if}>
-<span class="calprio{$cell[w][d].items[items].prio}" style="padding-left:3px;padding-right:3px;"><a {if $calendar_view_tab eq "y" || $tiki_p_change_events eq "y" || $cell[w][d].items[items].calname eq ""}href="{$cell[w][d].items[items].url}{if $feature_tabs ne 'y'}#add{/if}"{/if} {if $calendar_sticky_popup eq "y" and $cell[w][d].items[items].calitemId}{popup sticky=true fullhtml="1" text=$over|escape:"javascript"|escape:"html"}{else}{popup fullhtml="1" text=$over|escape:"javascript"|escape:"html"}{/if}
+<span class="calprio{$cell[w][d].items[items].prio}" style="padding-left:3px;padding-right:3px;"><a {if $calendar_view_tab eq "y" || $cell[w][d].items[items].modifiable eq "y" || $cell[w][d].items[items].calname eq ""}href="{$cell[w][d].items[items].url}{if $feature_tabs ne 'y'}#add{/if}"{/if} {if $calendar_sticky_popup eq "y" and $cell[w][d].items[items].calitemId}{popup sticky=true fullhtml="1" text=$over|escape:"javascript"|escape:"html"}{else}{popup fullhtml="1" text=$over|escape:"javascript"|escape:"html"}{/if}
 class="linkmenu">{$cell[w][d].items[items].name|truncate:$trunc:".."|default:"..."}</a></span>
 {if $cell[w][d].items[items].web}
 <a href="{$cell[w][d].items[items].web}" target="_other" class="calweb" title="{$cell[w][d].items[items].web}"><img src="img/icons/external_link.gif" width="7" height="7" alt=">" border="0"/></a>
 {/if}
-{if $cell[w][d].items[items].evId > 0}
-<a href=tiki-events.php?evId={$cell[w][d].items[items].evId}&info=1 target="_other" class="calweb" title="Event Registration">e</a>
+{if $cell[w][d].items[items].nl}
+<a href="tiki-newsletters.php?nlId={$cell[w][d].items[items].nl}&info=1" class="calweb" title="Subscribe"><img src="img/icons/external_link.gif" width="7" height="7" alt=">" border="0"/></a>
 {/if}
 <br />
 </div>
@@ -249,6 +249,7 @@ class="linkmenu">{$cell[w][d].items[items].name|truncate:$trunc:".."|default:"..
 </td>
 
 <td>
+{if $tiki_p_view_tiki_calendar eq "y"}
 <div class="caltitle">{tr}Tools Calendars{/tr}</div>
 <div class="caltoggle"><input name="tikiswitch" id="tikiswitch" type="checkbox" onclick="switchCheckboxes(this.form,'tikicals[]',this.checked);" /> <label for="tikiswitch">{tr}check / uncheck all{/tr}</label></div>
 {foreach from=$tikiItems key=ki item=vi}
@@ -257,6 +258,7 @@ class="linkmenu">{$cell[w][d].items[items].name|truncate:$trunc:".."|default:"..
 <label for="tikical_{$ki}" class="Cal{$ki}"> = {$vi.label}</label></div>
 {/if}
 {/foreach}
+{/if}
 </td>
 </tr></table>
 </form>
@@ -265,7 +267,7 @@ class="linkmenu">{$cell[w][d].items[items].name|truncate:$trunc:".."|default:"..
 
 <a name="add" id="add"/>
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
-{if $modifiable}
+{if $modifTab or $modifTab eq "0"}
 
 {* ................................................................................... *}
 {if (($calitemId > 0 and $tiki_p_change_events eq 'y') or ($tiki_p_add_events eq 'y')) && $editmode ne "details"}
@@ -405,7 +407,7 @@ timeFormat : {$timeFormat12_24}
 </td>
 </tr>
 
-<tr><td class="formcolor">{tr}Name{/tr}</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}" />
+<tr><td class="formcolor">{tr}Title{/tr}</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}" />
 </td></tr>
 <tr><td  class="formcolor">{tr}Description{/tr}<br /><br />{include file="textareasize.tpl" area_name='description' formId='editcalitem'}<br /><br />
 {include file=tiki-edit_help_tool.tpl area_name="description"}</td><td class="formcolor">
@@ -416,12 +418,6 @@ timeFormat : {$timeFormat12_24}
 
 <tr><td class="formcolor">{tr}URL{/tr}</td><td class="formcolor"><input type="text" name="url" value="{$url|escape}" />
 </td></tr>
-
-{if $customevents eq 'y'}
-<tr><td  class="formcolor">{tr}Event ID{/tr}</td><td class="formcolor">
-<input type="text" name="evId" value="{$evId|escape}" />
-</td></tr>
-{/if}
 
 {if $custompriorities eq 'y'}
 <tr><td class="formcolor">{tr}Priority{/tr}</td><td class="formcolor">
@@ -459,13 +455,27 @@ timeFormat : {$timeFormat12_24}
 </select>
 </td></tr>
 {/if}
+
+{if $customsubscription eq 'y'}
+<tr><td class="formcolor">{tr}Subscription List{/tr}</td><td class="formcolor">
+<select name="nlId">
+{section name=l loop=$subscrips}
+{if $subscrips[l]}
+<option value="{$subscrips[l].nlId|escape}" {if $nlId eq $subscrips[l].nlId}selected="selected"{/if}>{$subscrips[l].name}</option>
+{/if}
+{/section}
+<option value=0>{tr}None{/tr}</option>
+</select>
+</td></tr>
+{/if}
+
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor">
 <span  style="float:right;"><a href="tiki-calendar.php?calitemId={$calitemId}&amp;delete=1"  title="{tr}remove{/tr}" /><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt="{tr}remove{/tr}" /></a></span>
 <input type="submit" name="save" value="{tr}save{/tr}" />
 {if $calitemId and $tiki_p_change_events}
 <input type="submit" name="copy" value="{tr}duplicate{/tr}" />
 {/if}
-{tr}to{/tr}
+{tr}save_to{/tr}
 <select name="calendarId2">
 {foreach item=lc from=$listcals}
 <option value="{$lc|escape}" {if $defaultAddCal eq $lc}selected="selected"{/if}>{$infocals.$lc.name}</option>
@@ -475,7 +485,7 @@ timeFormat : {$timeFormat12_24}
 </td></tr>
 </table>
 </form>
-{/if}{/if} {* modifiable *}
+{/if}{/if} {* modifTab *}
 {if $calitemId}
 <a name="details" />
 <h2>{$name}</h2>
@@ -496,10 +506,14 @@ timeFormat : {$timeFormat12_24}
 {if $customlocations eq 'y'}<tr><td class="{cycle advance=false}">{tr}Location{/tr}</td><td class="{cycle}">{$listloc[$locationId].name}</td></tr>{/if}
 {if $customparticipants eq 'y'}<tr><td class="{cycle advance=false}">{tr}Organized by{/tr}</td><td class="{cycle}">{$organizers|escape}</td></tr><tr><td class="{cycle advance=false}">{tr}Participants{/tr}</td><td class="{cycle}">{$participants|escape}</td></tr>{/if}
 <tr><td class="{cycle advance=false}">{tr}URL{/tr}</td><td class="{cycle}">{if $url}<a href="{$url}">{$url}</a>{else}&nbsp;{/if}</td></tr>
-{if $customevents eq 'y'}<tr><td class="{cycle advance=false}">{tr}Event ID{/tr}</td><td class="{cycle}">{if $evId}<a href="tiki-events.php?evId={$evId}&amp;info=1">_</a>{else}&nbsp;{/if}</td></tr>{/if}
 {if $custompriorities eq 'y'}<tr><td class="{cycle advance=false}">{tr}Priority{/tr}</td><td class="{cycle}"><span class="calprio{$priority}">{$priority}</span></td></tr>{/if}
 <tr><td class="{cycle advance=false}">{tr}Status{/tr}</td><td class="{cycle}"><span class="Cal{$status}">{if $status eq '0'}{tr}Tentative{/tr}{elseif $status eq '1'}{tr}Confirmed{/tr}{else}{tr}Cancelled{/tr}{/if}</span></td></tr>
 {if $customlanguages eq 'y'}<tr><td class="{cycle advance=false}">{tr}Language{/tr}</td><td class="{cycle}">{$lang}</td></tr>{/if}
+
+{if $customsubscription eq 'y'}<tr><td class="{cycle advance=false}">{tr}Subscription List{/tr}</td><td class="{cycle}">
+{foreach item=k from=$subscrips}{if $k.nlId eq $nlId}{$k.name}{/if}{/foreach}
+<td></tr>{/if}
+
 </table>
 {/if} {*calitemId *}
 {* ....................................................... 
@@ -514,4 +528,3 @@ timeFormat : {$timeFormat12_24}
 </ul>
  ....................................................... *}
 </div>
-

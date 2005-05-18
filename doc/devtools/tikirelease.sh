@@ -1,10 +1,21 @@
 #!/bin/sh
-# $Id: tikirelease.sh,v 1.9 2004-09-08 19:51:55 mose Exp $
+# $Id: tikirelease.sh,v 1.10 2005-05-18 10:59:14 mose Exp $
 # written and maintained by mose@tikiwiki.org
 #
 # HOWTO release TikiWiki ?
 # --------------------------
+#
 # 
+# pre/
+#    update changelog.txt (from CVS commit logs)
+#    update INSTALL
+#    run doc/devtools/diffsql.sh to make sure tiki.sql and upgrade script from 
+#    previous version give the same db structure 
+#    run db/convertscripts/convertsqls.sh
+#    update templates/tiki-top_bar.tpl (including templates/styles/*/tiki-top_bar.tpl)
+#    update templates/tiki-install.tpl
+#    create the checksum file: copy doc/devtools/tiki-create_md5.php in tiki root and execute it
+#
 # 0/ Setup the lines in the configuration section just below with your own
 #    identity and settings (note that the script could be used on other projects)
 #
@@ -35,7 +46,7 @@
 #
 # 9/ unless in step 8/ you warned everybody you have now to announce the good news
 #    on devel mailing-list and ask marc to launch the announce-speading process 
-#    (manually for now).
+#    (Freshmeat, SourceForge and tikiwiki.org (manually for now).
 #
 #
 # All that process has to be relayed on live irc channel : 
@@ -49,7 +60,7 @@ CVSROOT=":ext:$USER@cvs.sf.net:/cvsroot/tikiwiki"
 WORKDIR="/home/$USER/tikipack"
 MODULE="tikiwiki"
 
-# when creating pre-release packages, change RELTAG to the correct branch
+# when creating pre-release packages, change RELTAG to the correct branch (ex:REL-1-9-DR4)
 # comment this line when ready to release (step 3)
 RELTAG="BRANCH-1-9"
 

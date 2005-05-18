@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mobile.php,v 1.9 2005-01-01 00:16:33 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mobile.php,v 1.10 2005-05-18 10:58:58 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,8 +9,15 @@ require_once ('tiki-setup.php');
 
 include_once ("lib/hawhaw/hawtikilib.php");
 
+if ($feature_mobile != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled").": feature_mobile");
+
+	$smarty->display("error.tpl");
+	die;
+}
+
 $TikiPage = new HAW_deck(HAWIKI_TITLE, HAW_ALIGN_CENTER);
-$TikiPage->enable_session();
+HAWTIKI_deck_init($TikiPage);
 
 if ($_REQUEST['content'] == "about") {
 	// show info about hawiki
@@ -58,7 +65,6 @@ if ($_REQUEST['content'] == "about") {
 		$linkset->add_link($articles);
 	}
 
-	//$about = new HAW_link(hawtra("About"),"tiki-index.php?page=AboutHawiki&mode=mobile");
 	$about = new HAW_link(hawtra("About"), $_SERVER['PHP_SELF'] . "?content=about");
 	$linkset->add_link($about);
 

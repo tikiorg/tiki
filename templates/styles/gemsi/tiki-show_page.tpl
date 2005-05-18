@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-show_page.tpl,v 1.12 2005-03-12 16:51:16 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-show_page.tpl,v 1.13 2005-05-18 11:03:35 mose Exp $ *}
 
 {if $feature_page_title eq 'y'}
 <h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
@@ -10,8 +10,7 @@
 	<small><a class="link" href="tiki-index.php?page_id={$page_id}">{tr}page id{/tr}: {$page_id}</a></small>
 {/if}
 
-<div class="wikitext"
-{if $user_dbl eq 'y' and $feature_wiki_dblclickedit eq 'wikitext_only' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}>
+<div class="wikitext">
 {if $structure eq 'y'}
 <div class="tocnav">
 <table>
@@ -31,9 +30,13 @@
 </tr></table>
 <div>
 {section loop=$structure_path name=ix}
-{if $structure_path[ix].parent_id}->{/if}
-<a href="tiki-index.php?page_ref_id={$structure_path[ix].page_ref_id}" class="link">
-{if $structure_path[ix].page_alias}{$structure_path[ix].page_alias}{else}{$structure_path[ix].pageName}{/if}
+      {if $structure_path[ix].parent_id}&nbsp;{$site_crumb_seper}&nbsp;{/if}
+	  <a href="tiki-index.php?page_ref_id={$structure_path[ix].page_ref_id}">
+      {if $structure_path[ix].page_alias}
+        {$structure_path[ix].page_alias}
+	  {else}
+        {$structure_path[ix].pageName}
+	  {/if}
 </a>
 {/section}
 </div>
@@ -53,20 +56,44 @@
 {/if}
 </div> {* End of main wiki page *}
 
-{if $has_footnote eq 'y'}<div class="wikitext">{$footnote}</div>{/if}
-
-{if $tiki_p_wiki_view_author eq 'y' || $tiki_p_admin eq 'y' || $tiki_p_admin_wiki eq 'y'}
-<p class="editdate">
-{tr}Created by{/tr}: {$creator|userlink} - 
-{tr}last modification{/tr}:
-{tr}by{/tr}: {$lastUser|userlink} - 
-{$lastModif|tiki_long_datetime} 
-{else}
-<p class="editdate">{tr}Last modification{/tr}: {$lastModif|tiki_long_datetime}
+{if $has_footnote eq 'y'}
+<div class="wikitext">
+{$footnote}
+</div>
 {/if}
-{if $feature_wiki_page_footer eq 'y'}<br />{$wiki_page_footer_content}{/if}
-</p>
 
+{if isset($wiki_authors_style) && $wiki_authors_style eq 'business'}
+<p class="editdate">
+  {tr}Last edited by{/tr} {$lastUser|userlink}
+  {section name=author loop=$contributors}
+   {if $smarty.section.author.first}, {tr}based on work by{/tr}
+   {else}
+    {if !$smarty.section.author.last},
+    {else} {tr}and{/tr}
+    {/if}
+   {/if}
+   {$contributors[author]|userlink}
+  {/section}.<br />                                         
+  {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}.
+</p>
+{elseif isset($wiki_authors_style) &&  $wiki_authors_style eq 'collaborative'}
+<p class="editdate">
+  {tr}Contributors to this page{/tr}: {$lastUser|userlink}
+  {section name=author loop=$contributors}
+   {if !$smarty.section.author.last},
+   {else} {tr}and{/tr}
+   {/if}
+   {$contributors[author]|userlink}
+  {/section}.<br />
+  {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}.
+</p>
+{elseif isset($wiki_authors_style) &&  $wiki_authors_style eq 'none'}
+{else}
+<p class="editdate">
+  {tr}Created by{/tr}: {$creator|userlink}
+  {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}
+</p>
+{/if}
 
 {if $wiki_feature_copyrights  eq 'y' and $wikiLicensePage}
   {if $wikiLicensePage == $page}

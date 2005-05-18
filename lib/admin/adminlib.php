@@ -402,10 +402,11 @@ class AdminLib extends TikiLib {
 	}
 
 	function list_content_tables() {
+		global $dbversion_tiki;
 	   // this function lists all tables and fields that hold textual content.
 	   // used in System Admin -> Fix UTF-8 Errors.
 
-	   $tikisql=file('db/tiki-1.9-mysql.sql');
+	   $tikisql=file('db/tiki-'.$dbversion_tiki.'-mysql.sql');
 	   $tabfields=array();
 	   foreach($tikisql as $item) {
 	      if(preg_match('/^CREATE TABLE ([a-zA-Z0-9_]+)/',$item,$tmatch)) {

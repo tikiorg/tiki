@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_edit.tpl,v 1.13 2005-01-22 22:56:26 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_edit.tpl,v 1.14 2005-05-18 11:03:27 mose Exp $ *}
 
 <a class="pagetitle" href="tiki-map_edit.php?mode=listing">{tr}Mapfiles{/tr}</a><br />
 <a href="http://mapserver.gis.umn.edu/doc/mapfile-reference.html">http://mapserver.gis.umn.edu/doc/mapfile-reference.html</a><br /><br />

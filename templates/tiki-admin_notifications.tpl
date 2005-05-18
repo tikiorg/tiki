@@ -20,6 +20,7 @@
       <option value="user_registers">{tr}A user registers{/tr}</option>
       <option value="article_submitted">{tr}A user submits an article{/tr}</option>
       <option value="wiki_page_changes">{tr}Any wiki page is changed{/tr}</option>
+      <option value="wiki_page_changes_incl_minor">{tr}Any wiki page is changed, even minor changes{/tr}</option>
 	<option value="php_error">{tr}PHP error{/tr}</option>
     </select>
     </td>
@@ -52,7 +53,7 @@
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-admin_notifications.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'event_desc'}event_asc{else}event_desc{/if}">{tr}event{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_notifications.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'object_desc'}object_asc{else}object_desc{/if}">{tr}object{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_notifications.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}emails_desc{/if}">{tr}email{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-admin_notifications.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}email{/tr}</a></td>
 <td class="heading">{tr}action{/tr}</td>
 </tr>
 {cycle print=false values="even,odd"}

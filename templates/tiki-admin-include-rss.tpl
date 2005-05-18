@@ -1,8 +1,17 @@
-{if $feature_help eq "y"}
-<div class="highlight">{tr}Tip{/tr}: {tr}This page is to configure settings of RSS feeds generated/exported by Tiki. To read/import RSS feeds, look for "RSS modules" on the application menu, or{/tr} <a class="link" href="tiki-admin_rssmodules.php">{tr}click here{/tr}</a>.</div><br />
+{if $feature_help eq 'y'}
+<div class="rbox" style="margin-top: 10px;">
+<div class="rbox-title" style="background-color: #eeee99; font-weight : bold; display : inline; padding : 0 10px;">{tr}Tip{/tr}</div>
+<div class="rbox-data" style="padding: 2px 10px; background-color: #eeee99;">{tr}This page is to configure settings of RSS feeds generated/exported by Tiki. To read/import RSS feeds, look for "RSS modules" on the application menu, or{/tr} <a class="link" href="tiki-admin_rssmodules.php">{tr}click here{/tr}</a>.</div>
+</div>
+<br />
 {/if}
+
+
 <div class="cbox">
-<div class="cbox-title">{tr}RSS feeds{/tr}</div>
+<div class="cbox-title">
+  {tr}{$crumbs[$crumb]->title}{/tr}
+  {help crumb=$crumbs[$crumb]}
+</div>
 <div class="cbox-data">
         <form action="tiki-admin.php?page=rss" method="post">
         <table class="admin">
@@ -24,20 +33,28 @@
         <tr><td class="form">{tr}Feed for individual forums{/tr}:</td><td><input type="checkbox" name="rss_forum" {if $rss_forum eq 'y'}checked="checked"{/if}/></td><td><input type="text" name="max_rss_forum" size="5" value="{$max_rss_forum|escape}" /></td><td><input type='text' name='title_rss_forum' size='20' maxlength='255' value='{$title_rss_forum|escape}' /></td><td><textarea name='desc_rss_forum' cols='20'>{$desc_rss_forum|escape}</textarea></td></tr>
         <tr><td class="form">{tr}Feed for mapfiles{/tr}:</td><td><input type="checkbox" name="rss_mapfiles" {if $rss_mapfiles eq 'y'}checked="checked"{/if}/></td><td><input type="text" name="max_rss_mapfiles" size="5" value="{$max_rss_mapfiles|escape}" /></td><td><input type='text' name='title_rss_mapfiles' size='20' maxlength='255' value='{$title_rss_mapfiles|escape}' /></td><td><textarea name='desc_rss_mapfiles' cols='20'>{$desc_rss_mapfiles|escape}</textarea></td></tr>
         <tr><td class="form">{tr}Feed for directories{/tr}:</td><td><input type="checkbox" name="rss_directories" {if $rss_directories eq 'y'}checked="checked"{/if}/></td><td><input type="text" name="max_rss_directories" size="5" value="{$max_rss_directories|escape}" /></td><td><input type='text' name='title_rss_directories' size='20' maxlength='255' value='{$title_rss_directories|escape}' /></td><td><textarea name='desc_rss_directories' cols='20'>{$desc_rss_directories|escape}</textarea></td></tr>
+        <tr><td class="form">{tr}Feed for tracker items{/tr}:</td><td><input type="checkbox" name="rss_tracker" {if $rss_tracker eq 'y'}checked="checked"{/if}/></td><td><input type="text" name="max_rss_tracker" size="5" value="{$max_rss_tracker|escape}" /></td><td><input type='text' name='title_rss_tracker' size='20' maxlength='255' value='{$title_rss_tracker|escape}' /></td><td><textarea name='desc_rss_tracker' cols='20'>{$desc_rss_tracker|escape}</textarea></td></tr>
 
         <tr><td class="form" colspan="3">&nbsp;</td></tr>
-        <tr><td class="form">{tr}Default RDF version{/tr}:</td><td class="form"><input type="text" name="rssfeed_default_version" size="1" value="{$rssfeed_default_version|escape}" />.0</td><td class="form" colspan="3">{tr}Specification{/tr} 1: <a href="http://www.w3.org/TR/rdf-schema/" class="tikihelp" title="{tr}Specification{/tr}: RDF 1.0">RDF 1.0</a>,
-        2: <a href="http://blogs.law.harvard.edu/tech/rss" class="tikihelp" title="{tr}Specification{/tr}: RDF 2.0">RDF 2.0</a>,
-        5: <a href="http://bitworking.org/rfc/draft-gregorio-07.html" class="tikihelp" title="{tr}Specification{/tr}: Atom 0.3">Atom 0.3</a>
-        <tr><td class="form">{tr}Append CSS file to feed urls{/tr}:</td><td class="form"><input type="checkbox" name="rssfeed_css" {if $rssfeed_css eq 'y'}checked="checked"{/if}/></td></tr>
-        <tr><td class="form"><a href="http://blogs.law.harvard.edu/tech/rss#optionalChannelElements" target="tikihelp" class="tikihelp" title="{tr}Documentation{/tr}: RDF">{tr}Language{/tr}</a>:</td><td class="form"><input type="text" name="rssfeed_language" size="10" length="40" value="{$rssfeed_language|escape}" /></td></tr>
+        <tr><td class="form">{tr}Default RDF version{/tr}:</td><td class="form">
+           <select name="rssfeed_default_version" id="rssfeed_default_version">
+              <option value="9" {if $rssfeed_default_version eq "9"}selected="selected"{/if}> RSS 0.91 </option>
+              <option value="1" {if $rssfeed_default_version eq "1"}selected="selected"{/if}> RSS 1.0 </option>
+              <option value="2" {if $rssfeed_default_version eq "2"}selected="selected"{/if}> RSS 2.0 </option>
+              <option value="3" {if $rssfeed_default_version eq "3"}selected="selected"{/if}> PIE0.1 </option>
+              <option value="4" {if $rssfeed_default_version eq "4"}selected="selected"{/if}> MBOX </option>
+              <option value="5" {if $rssfeed_default_version eq "5"}selected="selected"{/if}> ATOM 0.3 </option>
+              <option value="6" {if $rssfeed_default_version eq "6"}selected="selected"{/if}> OPML </option>
+              <option value="7" {if $rssfeed_default_version eq "7"}selected="selected"{/if}> HTML </option>
+              <option value="8" {if $rssfeed_default_version eq "8"}selected="selected"{/if}> JS </option>
+            </select>
+        </td><td class="form" colspan="3">{tr}Specification{/tr} <a href="http://www.w3.org/TR/rdf-schema/" class="tikihelp" title="{tr}Specification{/tr}: RDF 1.0">RDF 1.0</a>,
+        <a href="http://blogs.law.harvard.edu/tech/rss" class="tikihelp" title="{tr}Specification{/tr}: RDF 2.0">RDF 2.0</a>,
+        <a href="http://bitworking.org/rfc/draft-gregorio-07.html" class="tikihelp" title="{tr}Specification{/tr}: Atom 0.3">Atom 0.3</a>
+        <tr><td class="form" colspan="4"><a href="http://blogs.law.harvard.edu/tech/rss#optionalChannelElements" target="tikihelp" class="tikihelp" title="{tr}Documentation{/tr}: RDF">{tr}Language{/tr}</a>:</td><td class="form"><input type="text" name="rssfeed_language" size="10" length="40" value="{$rssfeed_language|escape}" /></td></tr>
         <tr><td class="form" colspan="5">&nbsp;</td></tr>
-
-        <tr><td class="form"><a href="http://blogs.law.harvard.edu/tech/rss#optionalChannelElements" target="tikihelp" class="tikihelp" title="{tr}Documentation{/tr}: RDF">{tr}Publisher{/tr}</a>: (RDF 1.0)</td><td colspan="4"><input type="text" name="rssfeed_publisher" size="50" value="{$rssfeed_publisher|escape}" /></td></tr>
-        <tr><td class="form"><a href="http://blogs.law.harvard.edu/tech/rss#optionalChannelElements" target="tikihelp" class="tikihelp" title="{tr}Documentation{/tr}: RDF">{tr}Creator{/tr}</a>: (RDF 1.0)</td><td colspan="4"><input type="text" name="rssfeed_creator" size="50" value="{$rssfeed_creator|escape}" /></td></tr>
-        <tr><td class="form"><a href="http://blogs.law.harvard.edu/tech/rss#optionalChannelElements" target="tikihelp" class="tikihelp" title="{tr}Documentation{/tr}: RDF">{tr}Editor{/tr}</a>: (RDF 2.0)</td><td colspan="4"><input type="text" name="rssfeed_editor" size="50" value="{$rssfeed_editor|escape}" /></td></tr>
-        <tr><td class="form"><a href="http://blogs.law.harvard.edu/tech/rss#optionalChannelElements" target="tikihelp" class="tikihelp" title="{tr}Documentation{/tr}: RDF">{tr}Webmaster{/tr}</a>: (RDF 2.0)</td><td colspan="4"><input type="text" name="rssfeed_webmaster" size="50" value="{$rssfeed_webmaster|escape}" /></td></tr>
-       
+        <tr><td class="form"><a href="http://blogs.law.harvard.edu/tech/rss#optionalChannelElements" target="tikihelp" class="tikihelp" title="{tr}Documentation{/tr}: RDF">{tr}Editor{/tr}</a>:</td><td colspan="4"><input type="text" name="rssfeed_editor" size="50" value="{$rssfeed_editor|escape}" /></td></tr>
+        <tr><td class="form"><a href="http://blogs.law.harvard.edu/tech/rss#optionalChannelElements" target="tikihelp" class="tikihelp" title="{tr}Documentation{/tr}: RDF">{tr}Webmaster{/tr}</a>:</td><td colspan="4"><input type="text" name="rssfeed_webmaster" size="50" value="{$rssfeed_webmaster|escape}" /></td></tr>
         <tr><td colspan="5" class="button"><input type="submit" name="rss" value="{tr}Change preferences{/tr}" /></td></tr>
         </table>
         </form>

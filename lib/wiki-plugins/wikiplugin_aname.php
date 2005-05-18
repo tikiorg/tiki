@@ -24,7 +24,7 @@ function wikiplugin_aname_help() {
 function wikiplugin_aname($data, $params)
 {
         global $tikilib;
-        extract ($params);
+        extract ($params, EXTR_SKIP);
 
 	return "<A NAME=\"$data\"></A>";
 }

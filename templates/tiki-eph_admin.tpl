@@ -53,7 +53,7 @@
 <form action="tiki-eph_admin.php" method="post">
 <table class="normal">
 <tr>
-<td class="heading"><input type="submit" name="delete" value="{tr}del{/tr}" /></td>
+<td class="heading"><input type="submit" name="delete" value="{tr}x{/tr}" /></td>
 <td class="heading"><a class="tableheading" href="tiki-userfiles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}title{/tr}</a></td>
 <td class="heading">{tr}data{/tr}</td>
 </tr>

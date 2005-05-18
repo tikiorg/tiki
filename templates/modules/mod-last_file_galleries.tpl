@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_file_galleries.tpl,v 1.9 2005-03-12 16:51:00 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_file_galleries.tpl,v 1.10 2005-05-18 11:03:29 mose Exp $ *}
 
 {if $feature_file_galleries eq 'y'}
 {if $nonums eq 'y'}

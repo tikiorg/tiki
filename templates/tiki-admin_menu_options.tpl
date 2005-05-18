@@ -53,7 +53,7 @@
 <option value=",,,">{tr}Choose{/tr} ...</option>
 <option value="tiki-chat.php,{tr}Chat{/tr},feature_chat,tiki_p_chat">{tr}Chat{/tr}</option>
 <option value="tiki-stats.php,{tr}Stats{/tr},feature_stats,tiki_p_view_stats">{tr}Stats{/tr}</option>
-<option value="tiki-games.php,{tr}Games{/tr},feature_games,tiki_p_play_games">{tr}Games{/tr}</option>
+<option value="tiki-list_games.php,{tr}Games{/tr},feature_games,tiki_p_play_games">{tr}Games{/tr}</option>
 <option value="tiki-browse_categories.php,{tr}Categories{/tr},feature_categories,tiki_p_view_categories">{tr}Categories{/tr}</option>
 <option value="tiki-user_preferences.php,{tr}User preferences{/tr}">{tr}User prefs{/tr}</option>
 </select></td></tr>

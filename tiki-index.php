@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.137 2005-03-12 16:48:59 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.138 2005-05-18 10:58:57 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,8 +10,12 @@
 require_once('tiki-setup.php');
 include_once('lib/structures/structlib.php');
 include_once('lib/wiki/wikilib.php');
+
 if ($feature_categories == 'y') {
-	include_once('lib/categories/categlib.php');
+	global $categlib;
+	if (!is_object($categlib)) {
+		include_once('lib/categories/categlib.php');
+	}
 }
 
 if($feature_wiki != 'y') {
@@ -27,29 +31,30 @@ if(!isset($_SESSION["thedate"])) {
 }
 
 if (isset($_REQUEST["page_id"])) {
-	$_REQUEST["page"] = $tikilib->get_page_name_from_id($_REQUEST["page_id"]);
-//TODO: introduce a get_info_from_id to save a sql request
+    $_REQUEST["page"] = $tikilib->get_page_name_from_id($_REQUEST["page_id"]);
+    //TODO: introduce a get_info_from_id to save a sql request
 }
 
 $use_best_language = false;
 
 if (!isset($_REQUEST["page"]) || $_REQUEST["page"] == '') {
-	if ($useGroupHome == 'y') { 
-		$groupHome = $userlib->get_user_default_homepage($user);
-		if ($groupHome) {
-			$_REQUEST["page"] = $groupHome;
-		} else {
-			$_REQUEST["page"] = $wikiHomePage;
-		}
-	} else {
-		$_REQUEST["page"] = $wikiHomePage;
-	}
-	if(!$tikilib->page_exists($wikiHomePage)) {
-		$tikilib->create_page($wikiHomePage,0,'',date("U"),'Tiki initialization');
-	}
-	if ($feature_best_language == 'y') {
-	    $use_best_language = true;
-	}
+    if ($useGroupHome == 'y') { 
+        $groupHome = $userlib->get_user_default_homepage($user);
+        if ($groupHome) {
+            $_REQUEST["page"] = $groupHome;
+        } else {
+            $_REQUEST["page"] = $wikiHomePage;
+        }
+    } else {
+        $_REQUEST["page"] = $wikiHomePage;
+    }
+    // Create the HomePage if it doesn't exist
+    if(!$tikilib->page_exists($wikiHomePage)) {
+        $tikilib->create_page($wikiHomePage,0,'',date("U"),'Tiki initialization');
+    }
+    if ($feature_best_language == 'y') {
+        $use_best_language = true;
+    }
 }
 $page = $_REQUEST["page"];
 
@@ -69,14 +74,14 @@ if ($feature_multilingual == 'y' && $use_best_language) { // chose the best lang
 }
 
 
-$smarty->assign('structure','n');
+$structure = 'n';
+$smarty->assign('structure',$structure);
 
-//If we requested a structure page
 if (isset($_REQUEST["page_ref_id"])) {
+    // If a structure page has been requested
     $page_ref_id = $_REQUEST["page_ref_id"];
-}
-//else check if page is a structure head page 
-else {
+} else {
+    // else check if page is the head of a structure 
     $page_ref_id = $structlib->get_struct_ref_if_head($page);
 }
 
@@ -88,6 +93,7 @@ if (!isset($page_ref_id)) {
     } else {
       $structure='';
     }
+    //Get the structures this page is a member of
     $structs = $structlib->get_page_structures($_REQUEST["page"],$structure);
     //If page is only member of one structure, display if requested
     $single_struct = count($structs) == 1; 
@@ -103,7 +109,8 @@ if (!isset($page_ref_id)) {
 }
 
 if(isset($page_ref_id)) {
-    $smarty->assign('structure','y');
+    $structure = 'y';
+    $smarty->assign('structure',$structure);
     $page_info = $structlib->s_get_page_info($page_ref_id);
     $smarty->assign('page_info', $page_info);
     $navigation_info = $structlib->get_navigation_info($page_ref_id);
@@ -131,17 +138,41 @@ if (!$info)
 
 // If the page doesn't exist then display an error
 if(empty($info)) {
-    $smarty->assign('msg',tra("Sorry, \"$page\" has not been created."));
-    $smarty->display("error.tpl");
+  $likepages = $wikilib->get_like_pages($page);
+  /* if we have exactly one match, redirect to it */
+  if(count($likepages) == 1 ) {
+    header ("Status: 402 Found"); /* PHP3 */
+    header ("HTTP/1.0 402 Found"); /* PHP4 */
+    header("Location: tiki-index.php?page=$likepages[0]");
     die;
+  }
+  $smarty->assign_by_ref('likepages', $likepages);
+  $smarty->assign('msg',tra("Page cannot be found"));
+  header ("Status: 404 Not Found"); /* PHP3 */
+  header ("HTTP/1.0 404 Not Found"); /* PHP4 */
+  $smarty->assign('headtitle',tra("Page cannot be found"));
+  $smarty->assign('errortitle',tra("Page cannot be found")." (404)");
+  $smarty->assign('errortype', '404');
+  $smarty->display("error.tpl");
+  die;
 }
-
-// Update the pagename with the canonical name
+/*Wiki SECURITY warning to optimizers : Although get_page_info is currently
+called even if permission is denied, we must still get page's real name
+(case-sensitive) before tiki-pagesetup.php is included. Bug #990242 for
+details */
+// Update the pagename with the canonical name.  This makes it
+// possible to link to a page using any case, but the page is still
+// displayed with the original capitalization.  So if there's a page
+// called 'About Me', then one can conveniently make a link to it in
+// the text as '... learn more ((about me)).'.  When the link is
+// followed, then it still says 'About Me' in the title.
 $page = $info['pageName'];
 
 // Get the contributors for this page
-$contributors = $wikilib->get_contributors($page, $info['user']);
-$smarty->assign('contributors',$contributors);
+if (isset($wiki_authors_style) && $wiki_authors_style != "classic") {
+	$contributors = $wikilib->get_contributors($page, $info['user']);
+	$smarty->assign('contributors',$contributors);
+}
 
 $creator = $wikilib->get_creator($page);
 $smarty->assign('creator',$creator);
@@ -156,6 +187,7 @@ if($wiki_creator_admin == 'y') {
 
 require_once('tiki-pagesetup.php');
 
+// Check to see if page is categorized
 $objId = urldecode($page);
 if ($tiki_p_admin != 'y' && $feature_categories == 'y' && !$object_has_perms) {
 	// Check to see if page is categorized
@@ -169,10 +201,7 @@ if ($tiki_p_admin != 'y' && $feature_categories == 'y' && !$object_has_perms) {
    		$is_categorized = FALSE;
    	}
 	if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
-		if (!isset($user) && $tikilib->get_preference('auth_method', 'tiki') == 'cas') {
-			header('location: tiki-login.php');
-			exit;
-		} elseif (!isset($user)) {
+		if (!isset($user)){
 			$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
 			$smarty->assign('errortitle',tra("Please login"));
 		} else {
@@ -189,10 +218,7 @@ if ($tiki_p_admin != 'y' && $feature_categories == 'y' && !$object_has_perms) {
 
 // Now check permissions to access this page
 if($tiki_p_view != 'y') {
-    if (!isset($user) && $tikilib->get_preference('auth_method', 'tiki') == 'cas') {
-		header('location: tiki-login.php');
-		exit;
-    } elseif (!isset($user)) {
+    if (!isset($user)){
 	$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
 	$smarty->assign('errortitle',tra("Please login"));
     } else {
@@ -348,6 +374,76 @@ if ($wiki_uses_slides == 'y') {
     $smarty->assign('show_slideshow','n');
 }
 
+if(isset($_REQUEST['refresh'])) {
+    check_ticket('index');
+    $tikilib->invalidate_cache($page);	
+}
+
+if(!isset($info["is_html"])) {
+    $info["is_html"]=false;
+}
+
+$smarty->assign('cached_page','n');
+if(isset($info['wiki_cache'])) {$wiki_cache=$info['wiki_cache'];}
+if($wiki_cache>0) {
+    $cache_info = $wikilib->get_cache_info($page);
+    $now = date('U');
+    if($cache_info['cache_timestamp']+$wiki_cache > $now) {
+	$pdata = $cache_info['cache'];
+	$smarty->assign('cached_page','y');
+    } else {
+	$pdata = $tikilib->parse_data($info["data"],$info["is_html"]);
+	$wikilib->update_cache($page,$pdata);
+    }
+} else {
+    $pdata = $tikilib->parse_data($info["data"],$info["is_html"]);
+}
+
+$smarty->assign_by_ref('parsed',$pdata);
+
+if(!isset($_REQUEST['pagenum'])) $_REQUEST['pagenum']=1;
+$pages = $wikilib->get_number_of_pages($pdata);
+$pdata=$wikilib->get_page($pdata,$_REQUEST['pagenum']);
+$smarty->assign('pages',$pages);
+
+if($pages>$_REQUEST['pagenum']) {
+    $smarty->assign('next_page',$_REQUEST['pagenum']+1);
+} else {
+    $smarty->assign('next_page',$_REQUEST['pagenum']);
+}
+if($_REQUEST['pagenum']>1) {
+    $smarty->assign('prev_page',$_REQUEST['pagenum']-1);
+} else {
+    $smarty->assign('prev_page',1);
+}
+
+$smarty->assign('first_page',1);
+$smarty->assign('last_page',$pages);
+$smarty->assign('pagenum',$_REQUEST['pagenum']);
+
+//$smarty->assign_by_ref('lastModif',date("l d of F, Y  [H:i:s]",$info["lastModif"]));
+$smarty->assign_by_ref('lastModif',$info["lastModif"]);
+if(empty($info["user"])) {
+    $info["user"]='anonymous';  
+}
+$smarty->assign_by_ref('lastUser',$info["user"]);
+$smarty->assign_by_ref('description',$info["description"]);
+/*
+// force enable wiki comments (for development)
+$feature_wiki_comments = 'y';
+$smarty->assign('feature_wiki_comments','y');
+ */
+
+// Comments engine!
+if ($feature_wiki_comments == 'y' and $tiki_p_wiki_view_comments == 'y') {
+    $comments_per_page = $wiki_comments_per_page;
+    $comments_default_ordering = $wiki_comments_default_ordering;
+    $comments_vars=Array('page');
+    $comments_prefix_var='wiki page:';
+    $comments_object_var='page';
+    include_once("comments.php");
+}
+
 if($feature_wiki_attachments == 'y') {
     if(isset($_REQUEST["removeattach"])) {
 	check_ticket('index');
@@ -407,80 +503,6 @@ if($feature_wiki_attachments == 'y') {
     $atts = $wikilib->list_wiki_attachments($page,0,-1,'created_desc','');
     $smarty->assign('atts',$atts["data"]);
     $smarty->assign('atts_count',count($atts["data"]));
-}
-
-
-if(isset($_REQUEST['refresh'])) {
-    check_ticket('index');
-    $tikilib->invalidate_cache($page);	
-}
-
-$smarty->assign('cached_page','n');
-if(isset($info['wiki_cache'])) {$wiki_cache=$info['wiki_cache'];}
-if($wiki_cache>0) {
-    $cache_info = $wikilib->get_cache_info($page);
-    $now = date('U');
-    if($cache_info['cache_timestamp']+$wiki_cache > $now) {
-	$pdata = $cache_info['cache'];
-	$smarty->assign('cached_page','y');
-    } else {
-	$pdata = $tikilib->parse_data($info["data"]);
-	$wikilib->update_cache($page,$pdata);
-    }
-} else {
-    $pdata = $tikilib->parse_data($info["data"]);
-}
-
-$smarty->assign_by_ref('parsed',$pdata);
-
-if(!isset($_REQUEST['pagenum'])) $_REQUEST['pagenum']=1;
-
-
-$pages = $wikilib->get_number_of_pages($pdata);
-
-$pdata=$wikilib->get_page($pdata,$_REQUEST['pagenum']);
-
-$smarty->assign('pages',$pages);
-
-if($pages>$_REQUEST['pagenum']) {
-    $smarty->assign('next_page',$_REQUEST['pagenum']+1);
-} else {
-    $smarty->assign('next_page',$_REQUEST['pagenum']);
-}
-if($_REQUEST['pagenum']>1) {
-    $smarty->assign('prev_page',$_REQUEST['pagenum']-1);
-} else {
-    $smarty->assign('prev_page',1);
-}
-
-$smarty->assign('first_page',1);
-
-$smarty->assign('last_page',$pages);
-
-$smarty->assign('pagenum',$_REQUEST['pagenum']);
-
-
-//$smarty->assign_by_ref('lastModif',date("l d of F, Y  [H:i:s]",$info["lastModif"]));
-$smarty->assign_by_ref('lastModif',$info["lastModif"]);
-if(empty($info["user"])) {
-    $info["user"]='anonymous';  
-}
-$smarty->assign_by_ref('lastUser',$info["user"]);
-$smarty->assign_by_ref('description',$info["description"]);
-/*
-// force enable wiki comments (for development)
-$feature_wiki_comments = 'y';
-$smarty->assign('feature_wiki_comments','y');
- */
-
-// Comments engine!
-if ($feature_wiki_comments == 'y' and $tiki_p_read_comments == 'y') {
-    $comments_per_page = $wiki_comments_per_page;
-    $comments_default_ordering = $wiki_comments_default_ordering;
-    $comments_vars=Array('page');
-    $comments_prefix_var='wiki page:';
-    $comments_object_var='page';
-    include_once("comments.php");
 }
 
 $section='wiki';
@@ -550,18 +572,20 @@ if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='mobile') {
 // Display category path or not (like {catpath()})
 if (isset($is_categorized) && $is_categorized) {
     $smarty->assign('is_categorized','y');
-    if(isset($feature_categorypath) && $feature_categorypath == 'y') {
+    if(isset($feature_categorypath) and $feature_categories == 'y') {
+	if ($feature_categorypath == 'y') {
 	    $cats = $categlib->get_object_categories('wiki page',$objId);
 	    $display_catpath = $categlib->get_categorypath($cats);
 	    $smarty->assign('display_catpath',$display_catpath);
+	}
     }
     // Display current category objects or not (like {category()})
-    if (isset($feature_categoryobjects) && $feature_categoryobjects == 'y') {
-	    if (!isset($cats)) {
-	    	$cats = $categlib->get_object_categories('wiki page', $objId);
-	    }
-	    $display_catobjects = $categlib->get_categoryobjects($cats);
+    if (isset($feature_categoryobjects) and $feature_categories == 'y') {
+	if ($feature_categoryobjects == 'y') {
+	    $catids = $categlib->get_object_categories('wiki page', $objId);
+	    $display_catobjects = $categlib->get_categoryobjects($catids);
 	    $smarty->assign('display_catobjects',$display_catobjects);
+	}
     }
 } else {
     $smarty->assign('is_categorized','n');
@@ -585,23 +609,24 @@ if ($feature_polls =='y' and $feature_wiki_ratings == 'y' && $tiki_p_wiki_view_r
 $smarty->assign('show_page','y');
 ask_ticket('index');
 
-global $feature_wiki_dblclickedit, $feature_wiki_page_footer, $tiki_p_view_wiki_history;
-$smarty->assign('feature_wiki_dblclickedit',$feature_wiki_dblclickedit);
-$smarty->assign('tiki_p_view_wiki_history',$tiki_p_view_wiki_history);
-$smarty->assign('is_a_wiki_page', 'y');
+  if (isset($structure) && $structure == 'y' && isset($page_info['page_alias']) && $page_info['page_alias'] != '') {
+    $crumbpage = $page_info['page_alias'];
+  } else {
+    $crumbpage = $page;
+  }
+  //global $description;
+  $crumbs[] = new Breadcrumb($crumbpage,
+                              $info["description"],
+                              'tiki-index.php?page='.urlencode($page),
+                              '',
+                              '');
 
-if ($feature_wiki_page_footer == 'y') {
-	$smarty->assign('feature_wiki_page_footer', 'y');
-	global $wiki_page_footer_content;
-	$current_url = 'http://' . $_REQUEST['HTTP_HOST'] . $_REQUEST['REQUEST_URI'];
-	$content = str_replace('{url}', $current_url, $wiki_page_footer_content);
-	$smarty->assign('wiki_page_footer_content', $content);
-} else {
-	$smarty->assign('feature_wiki_page_footer', 'n');
-	$smarty->assign('wiki_page_footer_content', '');
-}
+  $headtitle = breadcrumb_buildHeadTitle($crumbs);
+  $smarty->assign_by_ref('headtitle', $headtitle);
+  $smarty->assign('trail', $crumbs);
 
 // Display the Index Template
+$smarty->assign('dblclickedit','y');
 $smarty->assign('print_page','n');
 $smarty->assign('mid','tiki-show_page.tpl');
 $smarty->assign('show_page_bar','y');

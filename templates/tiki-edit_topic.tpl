@@ -1,17 +1,14 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_topic.tpl,v 1.6 2005-03-12 16:50:44 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_topic.tpl,v 1.7 2005-05-18 11:03:16 mose Exp $ *}
 
-<a  class="pagetitle" href="tiki-admin_topics.php">{tr}Admin Topics{/tr}</a>
+<h1><a  class="pagetitle" href="tiki-admin_topics.php">{tr}Admin Topics{/tr}</a>
 
 {if $feature_help eq 'y'}
-
-<a href="{$helpurl}Article" target="tikihelp" class="tikihelp" title="{tr}Admin Topics{/tr}">
+<a href="{$helpurl}Articles" target="tikihelp" class="tikihelp" title="{tr}Admin Topics{/tr}">
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'>
 </a>{/if}
+</h1>
 
-
-
-<br /><br />
-<h3>{tr}Edit a topic{/tr}</h3>
+<h2>{tr}Edit a topic{/tr}</h2>
 
 <form enctype="multipart/form-data" action="tiki-edit_topic.php" method="post">
  <table class="normal">

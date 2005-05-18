@@ -20,7 +20,7 @@
     * @package TikiWiki
     * @subpackage TikiPlugins
     * @author Claudio Bustos
-    * @version $Revision: 1.11 $
+    * @version $Revision: 1.12 $
     */
     class WikiPluginBackLinks extends PluginsLib {
         var $expanded_params = array("exclude", "info");
@@ -39,7 +39,7 @@
         }
         function getVersion() {
             return preg_replace("/[Revision: $]/", '',
-                "\$Revision: 1.11 $");
+                "\$Revision: 1.12 $");
         }
         function run ($data, $params) {
             global $wikilib;

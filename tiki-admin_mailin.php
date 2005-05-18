@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_mailin.php,v 1.18 2005-01-05 19:22:40 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_mailin.php,v 1.19 2005-05-18 10:58:54 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -25,12 +25,22 @@ if ($tiki_p_admin_mailin != 'y' and $tiki_p_admin != 'y') {
 }	
 
 function account_ok($pop, $user, $pass) {
-	include_once ("lib/webmail/pop3.php");
-	$pop3 = new POP3($pop, $user, $pass);
-  	$pop3->Open();
-	$err = $pop3->has_error;
-	$pop3->close();
-	return !$err;
+	//include_once ("lib/webmail/pop3.php");
+	include_once ("lib/webmail/net_pop3.php");
+	//$pop3 = new POP3($pop, $user, $pass);
+  //$pop3->Open();
+	//$err = $pop3->has_error;
+	//$pop3->close();
+	$pop3 = new Net_POP3();
+	$pop3->connect($pop);
+	$pop3->login($user, $pass);
+	if (!$pop3) {
+		$pop3->disconnect();
+		return false;
+	} else {
+		$pop3->disconnect();
+		return true;
+	}
 }
 
 // Add a new mail account for the user here  
@@ -46,7 +56,7 @@ if (isset($_REQUEST["new_acc"])) {
 	else {
 		$mailinlib->replace_mailin_account($_REQUEST["accountId"], $_REQUEST["account"], $_REQUEST["pop"], $_REQUEST["port"],
 			$_REQUEST["username"], $_REQUEST["pass"], $_REQUEST["smtp"], $_REQUEST["useAuth"], $_REQUEST["smtpPort"], $_REQUEST["type"],
-			$_REQUEST["active"], $_REQUEST["anonymous"], $_REQUEST["attachments"], $_REQUEST["article_topicId"], $_REQUEST["article_type"], $_REQUEST["discard_after"]);
+			$_REQUEST["active"], $_REQUEST["anonymous"], $_REQUEST["attachments"], $_REQUEST["article_topicId"], $_REQUEST["article_type"]);
 //	$_REQUEST["accountId"] = 0;
 		$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("Mail-in account %s saved"),$_REQUEST["account"]));
 	}
@@ -83,7 +93,6 @@ if ($_REQUEST["accountId"]) {
 	$info["attachments"] = 'n';
 	$info["article_topicId"] = '';
 	$info["article_type"] = '';
-	$info["discard_after"] = '';
 }
 
 $smarty->assign('info', $info);

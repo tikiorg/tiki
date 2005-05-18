@@ -54,7 +54,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 *    perhaps even message/partial.
 *
 * @author  Richard Heyes <richard@phpguru.org>
-* @version $Revision: 1.10 $
+* @version $Revision: 1.11 $
 * @package Mail
 */
 class Mail_mimeDecode extends PEAR {

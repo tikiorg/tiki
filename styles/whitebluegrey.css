@@ -1,10 +1,14 @@
-/* Default style for Tiki 1.2 this is a short-version CSS template if you want to FULLY customize
-   every aspect of Tiki adpat the subsilver CSS file, but normally this is the file you want to
-   adapt to produce a new theme. Good luck!
+/* 
+  $Header: /cvsroot/tikiwiki/tiki/styles/whitebluegrey.css,v 1.43 2005-05-18 11:02:39 mose Exp $
+  whitebluegrey.css
+  This theme is based on the default2 style for Tiki 1.2
+  If you want  a short-version CSS template, start by copying default2
+  If you want to FULLY customize every aspect of Tiki, copy the subsilver CSS file
+  Normally default2 is the file you want to adapt to produce a new theme
 */
 
 body {
-	background-color:    White;
+	background:    White;
 	margin-top:   0px;
 	margin-left:   0px;
 	margin-bottom:   0px;
@@ -35,7 +39,7 @@ DIV#tiki-main {
 
 /* This is the header */
 DIV#tiki-top {
-	background-color:    White;
+	background:    White;
 	color:   #10186B;
 	padding-right:   0px;
 }
@@ -94,7 +98,7 @@ DIV#tiki-center {
 
 div#debugconsole {
 	position:    absolute;
-	background-color:   #eeddcc;
+	background:   #eeddcc;
 	color:   #009000;
 	top:   0px;
 	left:   20px;
@@ -115,12 +119,14 @@ span.off-option {
 	color: #005000;
 }
 
-/************************** GENERAL STYLE PROPERTIES ******************************/
+/********************************************* GENERAL STYLE PROPERTIES **********************************************/
 
-/* BOXES boxes are used to present a box with a title bar and content, they are used for modules and they are also used in the rankings, admin screen etc.  The box class is used for modules while the cbox class is used for other boxes
+/* BOXES boxes are used to present a box with a title bar and content, they are used for modules and they
+   are also used in the rankings, admin screen etc. 
+   The box class is used for modules while the cbox class is used for other boxes
 */
 
-/* Modules (modules are those boxes in the left/right columns) */
+/* Boxes used for modules (modules are those boxes in the left/right columns) */
 div.box {
 	background:    #DEDFDE;
 	margin-left:   4px;
@@ -134,10 +140,9 @@ div.box {
 }
 
 /* Boxes are divided in title and data, this is the title */
-div.box-title {
-	background-color:    #10186B;
+div.box-title, span.box-titletext {
+	background:    #10186B;
 	border-bottom:   1px solid black;
-	color:   #DEDFDE;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   13px;
 	color:   white;
@@ -148,6 +153,18 @@ div.box-title {
 	padding-right:   0px;
 	margin-bottom:   1px;
 	width:   170px;
+}
+
+div.box-title > a, span.box-titletext > a {
+	border-bottom:   1px solid white;
+	text-decoration: underline;
+	color: white;
+}
+
+div.box-title > a:hover, span.box-titletext > a:hover {
+	color: #ddd;
+	text-decoration: underline;
+	border-bottom:   1px solid #ddd;
 }
 
 div.box-title table {
@@ -211,7 +228,7 @@ div.cbox {
 
 /* Boxes are divided in title and data, this is the title */
 div.cbox-title {
-	background-color:    #10186B;
+	background:    #10186B;
 	color:   white;
 	border-bottom:   1px solid black;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
@@ -301,30 +318,31 @@ div.separator {
 }
 
 /* Links in menus */
-.linkmenu, .rsslink {
+.linkmenu, .rsslink, a.separator {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
 	color:   black;
 	text-decoration:   none;
 }
 
-.linkmenu:active, .rsslink:active {
+.linkmenu:active, .rsslink:active, a.separator:active {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
 	color:   black;
 	text-decoration:   none;
 }
 
-.linkmenu:hover, .rsslink:hover {
+.linkmenu:hover, .rsslink:hover, a.separator:hover {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
 	color:   black;
 	text-decoration:   underline;
 	background:   #EFEFEF;
 }
+
 /* style for rss lists in modules or in wiki */
 .rsslist {
-  background-color: #ffffff;
+  background: #ffffff;
   margin: 0;
   margin-right: 10px;
   padding: 1px;
@@ -448,7 +466,8 @@ FORM {
 /* General form elements */
 input, textarea, select {
 	color:    #000000;
-	font:   normal 11px Verdana, Arial, Helvetica, sans-serif;
+	font-family:   Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
 }
 
 input {
@@ -487,7 +506,7 @@ TD {
 	font-size:   11px;
 	vertical-align:   top;
 	text-align:   left;
-	background-color:   #DEDFDE;
+	background:   #DEDFDE;
 }
 
 /* The table */
@@ -510,7 +529,7 @@ TD.heading, td.gallistheading, td.listgalheading, td.bloglistheading, td.listfga
 	color:   white;
 	font-size:   11px;
 	font-weight:   bold;
-	background-color:   #10186B;
+	background:   #10186B;
 	padding-left:   2px;
 	padding-right:   5px;
 }
@@ -521,7 +540,7 @@ th, th.gallistheading, th.listgalheading, th.bloglistheading, th.listfgalheading
 	color:   white;
 	font-size:   11px;
 	font-weight:   bold;
-	background-color:   #10186B;
+	background:   #10186B;
 	padding-left:   2px;
 	padding-right:   5px;
 }
@@ -531,7 +550,7 @@ TD.button {
 	color:   white;
 	font-size:   11px;
 	font-weight:   bold;
-	background-color:   #10186B;
+	background:   #10186B;
 	padding-left:   2px;
 	padding-right:   5px;
 	text-align:   center;
@@ -612,30 +631,30 @@ tr.odd {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   12px;
 	color:   Black;
-	background-color:   #DDDDDD;
+	background:   #DDDDDD;
 	vertical-align:   top;
 	text-align:   left;
 }
 tr.odd:hover {
-background-color: #FFF7E6;
+background: #FFF7E6;
 }
 tr.even {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   12px;
-	background-color:   White;
+	background:   White;
 	color:   Black;
 	vertical-align:   top;
 	text-align:   left;
 }
 tr.even:hover {
-background-color: #FFF7E6;
+background: #FFF7E6;
 }
 
 TD.odd, td.gallistnameodd, td.gallistdescriptionodd, td.gallistcreatedodd, td.gallistlastModifodd, td.gallistuserodd, td.gallistimagesodd, td.gallisthitsodd, td.gallistactionsodd, td.listgalidodd, td.listgalnameodd, td.listgalcreatedodd, td.listgalhitsodd, td.listgaluserodd, td.listgalfilesizeodd, td.bloglistnameodd, td.bloglistdescriptionodd, td.bloglistcreatedodd, td.bloglistlastModifodd, td.bloglistuserodd, td.bloglistpublicodd, td.bloglistpostsodd, td.bloglistvisitsodd, td.bloglistactivityodd, td.bloglistactionsodd, td.listfgalnameodd, td.listfgaldescriptionodd, td.listfgalcreatedodd, td.listfgallastModifodd, td.listfgaluserodd, td.listfgalfilesodd, td.listfgalvisitsodd, td.listfgalactionsodd, td.listfilesnameodd, td.listfilesdescriptionodd, td.listfilesidodd, td.listfilesfilenameodd, td.listfilesfilesizeodd, td.listfilescreatedodd, td.listfilesdlsodd, td.listfilesnameodd, td.listfilesuserodd, td.listfilesactionsodd, td.listarttitleodd, td.listarttopicodd, td.listartpublishDateodd, td.listartauthorodd, td.listartreadsodd, td.listarthasimageodd, td.listartuseimageodd, td.listartactionsodd, td.listartsizeodd, td.forumstableodd, td.forumstableinfoodd, td.topictitleodd, td.topicrepliesodd, td.topicreadsodd, td.topicscoreodd, td.topiclastpostodd, td.topicauthorodd,td.jukeboxlistnameodd, td.jukeboxdescriptionodd, td.jukeboxcreatedodd, td.jukeboxlastmodifodd, td.jukeboxlistuserodd, td.jukeboxlisttracksodd, td.jukeboxlistvisitsodd {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   12px;
 	color:   Black;
-	background-color:   #DDDDDD;
+	background:   #DDDDDD;
 	vertical-align:   top;
 	text-align:   left;
 }
@@ -644,7 +663,7 @@ TD.odd, td.gallistnameodd, td.gallistdescriptionodd, td.gallistcreatedodd, td.ga
 TD.even, td.gallistnameeven, td.gallistdescriptioneven, td.gallistcreatedeven, td.gallistlastModifeven, td.gallistusereven, td.gallistimageseven, td.gallisthitseven, td.gallistactionseven, td.listgalideven, td.listgalnameeven, td.listgalcreatedeven, td.listgalhitseven, td.listgalusereven, td.listgalfilesizeeven, td.bloglistnameeven, td.bloglistdescriptioneven, td.bloglistcreatedeven, td.bloglistlastModifeven, td.bloglistusereven, td.bloglistpubliceven, td.bloglistpostseven, td.bloglistvisitseven, td.bloglistactivityeven, td.bloglistactionseven, td.listfgalnameeven, td.listfgaldescriptioneven, td.listfgalcreatedeven, td.listfgallastModifeven, td.listfgalusereven, td.listfgalfileseven, td.listfgalvisitseven, td.listfgalactionseven, td.listfilesnameeven, td.listfilesdescriptioneven, td.listfilesideven, td.listfilesfilenameeven, td.listfilesfilesizeeven, td.listfilescreatedeven, td.listfilesdlseven, td.listfilesnameeven, td.listfilesusereven, td.listfilesactionseven, td.listarttitleeven, td.listarttopiceven, td.listartpublishDateeven, td.listartauthoreven, td.listartreadseven, td.listarthasimageeven, td.listartuseimageeven, td.listartactionseven, td.listartsizeeven, td.forumstableeven, td.forumstableinfoeven, td.topictitleeven, td.topicreplieseven, td.topicreadseven, td.topicscoreeven, td.topiclastposteven, td.topicauthoreven, td.jukeboxlistnameeven, td.jukeboxdescriptioneven, td.jukeboxcreatedeven, td.jukeboxlastmodifeven, td.jukeboxlistusereven, td.jukeboxlisttrackseven, td.jukeboxlistvisitseven {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   12px;
-	background-color:   White;
+	background:   White;
 	color:   Black;
 	vertical-align:   top;
 	text-align:   left;
@@ -654,7 +673,7 @@ TD.third {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   12px;
 	color:   Black;
-	background-color:   #CCCCCC;
+	background:   #CCCCCC;
 	vertical-align:   top;
 	text-align:   left;
 }
@@ -759,7 +778,7 @@ div.searchdate {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   12px;
 	color:   black;
-	background-color:   #EFEFEF;
+	background:   #EFEFEF;
 }
 
 /* Warning background/color */
@@ -878,7 +897,7 @@ table.wikitable {
 }
 
 td.wikicell {
-	background-color: #EFEFEF;
+	background: #EFEFEF;
 }
 
 /* Text in wiki pages is displayed using the following style */
@@ -907,7 +926,7 @@ div.wikitext {
 
 .wiki:hover {
 	color:    black;
-	background-color:   #EFEFEF;
+	background:   #EFEFEF;
 }
 
 /* Date displayed for last modification date of pages */
@@ -916,7 +935,11 @@ p.editdate {
 	font-size:   smaller;
 	font-family:   "Lucida Grande", Helvetica, Arial, sans-serif;
 }
-
+#description {
+  font-size : 10px !important;
+  padding-left:   10px;
+  color:   #333300;
+}
 /* The edit-help used to display the wiki syntax when editing a page */
 div.wiki-edithelp {
 	background:    white;
@@ -1020,7 +1043,7 @@ td.imageinfo {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   12px;
 	color:   Black;
-	background-color:   #DEDFDE;
+	background:   #DEDFDE;
 	vertical-align:   top;
 	text-align:   left;
 }
@@ -1074,7 +1097,7 @@ div.linksinfo {
 
 /* The header of a weblog post */
 div.posthead {
-	background-color:    #10186B;
+	background:    #10186B;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   13px;
 	color:   white;
@@ -1142,7 +1165,7 @@ div.blogtitle {
 	font-size:   11px;
 	font-weight:   bold;
 	font-size:   18px;
-	background-color:   #10186B;
+	background:   #10186B;
 	padding-left:   2px;
 	padding-right:   5px;
 	margin-top:   10px;
@@ -1219,7 +1242,7 @@ div.articletitle {
 	color:   white;
 	font-size:   11px;
 	font-weight:   bold;
-	background-color:   #10186B;
+	background:   #10186B;
 	border:   1px solid black;
 	border-bottom:   0px;
 	padding-left:   0.8em;
@@ -1613,7 +1636,7 @@ table.threads {
 td.viewthreadl {
 	font-family:    Verdana, Arial, Helvetica, sans-serif;
 	font-size:   11px;
-	background-color:   #DEDFDE;
+	background:   #DEDFDE;
 	height:   30px;
 	width:   30%;
 	vertical-align:   top;
@@ -1622,7 +1645,7 @@ td.viewthreadl {
 td.viewthreadr {
 	font-family:    Verdana, Arial, Helvetica, sans-serif;
 	font-size:   11px;
-	background-color:   #DEDFDE;
+	background:   #DEDFDE;
 	height:   30px;
 	vertical-align:   top;
 }
@@ -1632,14 +1655,14 @@ td.threadsevenl {
 	font-family:    Verdana, Arial, Helvetica, sans-serif;
 	width:   30%;
 	font-size:   12px;
-	background-color:   #DEDFDE;
+	background:   #DEDFDE;
 	vertical-align:   top;
 }
 
 td.threadsevenr {
 	font-family:    Verdana, Arial, Helvetica, sans-serif;
 	font-size:   13px;
-	background-color:   #DEDFDE;
+	background:   #DEDFDE;
 	vertical-align:   top;
 }
 
@@ -1647,19 +1670,19 @@ td.threadsoddl {
 	font-family:    Verdana, Arial, Helvetica, sans-serif;
 	width:   30%;
 	font-size:   12px;
-	background-color:   #DEDFDE;
+	background:   #DEDFDE;
 	vertical-align:   top;
 }
 
 td.threadsoddr {
 	font-family:    Verdana, Arial, Helvetica, sans-serif;
 	font-size:   13px;
-	background-color:   #DEDFDE;
+	background:   #DEDFDE;
 	vertical-align:   top;
 }
 
 td.threadseparator {
-	background-color:    #DEDFDE;
+	background:    #DEDFDE;
 	height:   5px;
 }
 
@@ -1749,7 +1772,7 @@ td.tdcategpath {
 	color:   white;
 	font-size:   13px;
 	font-weight:   bold;
-	background-color:   #10186B;
+	background:   #10186B;
 	padding-left:   2px;
 	margin:   0px;
 	border-spacing:   0px;
@@ -1833,13 +1856,13 @@ table.catobjects {
 td.categobjectsnameeven, td.categobjectsnameodd {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
-	background-color:   #DEDFDE;
+	background:   #DEDFDE;
 }
 
 td.categobjectsdataeven, td.categobjectsdataodd {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
-	background-color:   #DEDFDE;
+	background:   #DEDFDE;
 }
 
 .catname {
@@ -1966,7 +1989,7 @@ div.shoutboxmodmsg {
 }
 
 textarea.tshoutbox {
-	background-color:    white;
+	background:    white;
 	border-bottom:   #5e5d63 1px solid;
 	border-left:   #5e5d63 1px solid;
 	border-right:   #5e5d63 1px solid;
@@ -1981,6 +2004,7 @@ textarea.tshoutbox {
 {
 width:100%;
 }
+
 .Cal0, .Cal1, .Cal2 {
 	border-top:    1px dashed #cccccc;
 	color:   #425262;
@@ -1994,12 +2018,12 @@ width:100%;
 
 .Cal1:before {
 	content:    "+ ";
-	background-color:   #FFCC77;
+	background:   #FFCC77;
 }
 
 .Cal2:before {
 	content:    "X ";
-	background-color:   #eeeeaa;
+	background:   #eeeeaa;
 }
 /* misc cal styles */
 .caltitle {
@@ -2019,19 +2043,19 @@ a.caltab {
 	text-decoration:    none;
 	font-weight:   bold;
 	font-size:   11px;
-	background-color:   #dedede;
+	background:   #dedede;
 	color:   #000000;
 }
 
 a.caltab:hover {
-	background-color:    #efefaf;
+	background:    #efefaf;
 	border-bottom:   2px solid #dedede;
 }
 
 .caltabon {
 	padding-left:    10px;
 	padding-right:   10px;
-	background-color:   #ffffff;
+	background:   #ffffff;
 	border:   1px solid #666666;
 	border-bottom:   2px solid #FFFFFF;
 	margin-right:   6px;
@@ -2045,7 +2069,7 @@ a.caltabon {
 }
 
 a.caltabon:hover {
-	background-color: transparent;
+	background: transparent;
 }
 
 div#tab, div#tabcal, div#tabnav {
@@ -2059,7 +2083,7 @@ div#tab {
 
 div.tabcal, div.tabnav {
 	padding:    10px;
-	background-color:   #ffffff;
+	background:   #ffffff;
 	border:   1px solid #666666;
 	border-bottom:   1px solid #aeaeae;
 	font-size:   11px;
@@ -2067,7 +2091,7 @@ div.tabcal, div.tabnav {
 
 /* checkboxes background is required for rollover display */
 .calcheckbox {
-	background-color: #ffffff;
+	background: #ffffff;
 }
 
 .caltoggle {
@@ -2077,12 +2101,12 @@ div.tabcal, div.tabnav {
 
 /* style of the popup background in case of transparent styles */
 #opaque {
-	background-color: #DEDFDE;
+	background: #DEDFDE;
 }
 
 .calfocus {
 	font-size:    9px;
-	background-color:   transparent;
+	background:   transparent;
 }
 
 .calfocus a {
@@ -2092,7 +2116,7 @@ div.tabcal, div.tabnav {
 
 .calfocuson {
 	font-size:    9px;
-	background-color:   #f3e498;
+	background:   #f3e498;
 }
 
 .calfocuson a {
@@ -2115,7 +2139,7 @@ div.tabcal, div.tabnav {
 .Calwiki:before {
 	content:    "w";
 	font-family:   monospace;
-	background-color:   #ffffff;
+	background:   #ffffff;
 }
 
 .Calblog {
@@ -2132,7 +2156,7 @@ div.tabcal, div.tabnav {
 .Calblog:before {
 	content:    "b";
 	font-family:   monospace;
-	background-color:   #ffffff;
+	background:   #ffffff;
 }
 
 .Calgal {
@@ -2149,7 +2173,7 @@ div.tabcal, div.tabnav {
 .Calgal:before {
 	content:    "i";
 	font-family:   monospace;
-	background-color:   #ffffff;
+	background:   #ffffff;
 }
 
 .Calart {
@@ -2166,7 +2190,7 @@ div.tabcal, div.tabnav {
 .Calart:before {
 	content:    "a";
 	font-family:   monospace;
-	background-color:   #ffffff;
+	background:   #ffffff;
 }
 
 .Calforum {
@@ -2183,7 +2207,7 @@ div.tabcal, div.tabnav {
 .Calforum:before {
 	content:    "o";
 	font-family:   monospace;
-	background-color:   #ffffff;
+	background:   #ffffff;
 }
 
 .Caldir {
@@ -2200,7 +2224,7 @@ div.tabcal, div.tabnav {
 .Caldir:before {
 	content:    "d";
 	font-family:   monospace;
-	background-color:   #ffffff;
+	background:   #ffffff;
 }
 
 .Calfgal {
@@ -2217,7 +2241,7 @@ div.tabcal, div.tabnav {
 .Calfgal:before {
 	content:    "f";
 	font-family:   monospace;
-	background-color:   #ffffff;
+	background:   #ffffff;
 }
 
 .Calfaq {
@@ -2234,7 +2258,7 @@ div.tabcal, div.tabnav {
 .Calfaq:before {
 	content:    "q";
 	font-family:   monospace;
-	background-color:   #ffffff;
+	background:   #ffffff;
 }
 
 .Calquiz {
@@ -2251,7 +2275,7 @@ div.tabcal, div.tabnav {
 .Calquiz:before {
 	content:    "z";
 	font-family:   monospace;
-	background-color:   #ffffff;
+	background:   #ffffff;
 }
 
 .Caltrack {
@@ -2268,7 +2292,7 @@ div.tabcal, div.tabnav {
 .Caltrack:before {
 	content:    "t";
 	font-family:   monospace;
-	background-color:   #ffffff;
+	background:   #ffffff;
 }
 
 .Calsurv {
@@ -2285,7 +2309,7 @@ div.tabcal, div.tabnav {
 .Calsurv:before {
 	content:    "s";
 	font-family:   monospace;
-	background-color:   #ffffff;
+	background:   #ffffff;
 }
 
 .Calnl {
@@ -2302,7 +2326,7 @@ div.tabcal, div.tabnav {
 .Calnl:before {
 	content:    "n";
 	font-family:   monospace;
-	background-color:   #ffffff;
+	background:   #ffffff;
 }
 
 .Caleph {
@@ -2319,7 +2343,7 @@ div.tabcal, div.tabnav {
 .Caleph:before {
 	content:    "e";
 	font-family:   monospace;
-	background-color:   #ffffff;
+	background:   #ffffff;
 }
 
 .Calchart {
@@ -2336,7 +2360,7 @@ div.tabcal, div.tabnav {
 .Calchart:before {
 	content:    "c";
 	font-family:   monospace;
-	background-color:   #ffffff;
+	background:   #ffffff;
 }
 
 .calweb {
@@ -2353,43 +2377,43 @@ div.tabcal, div.tabnav {
 }
 
 .calprio1 {
-	background-color: #DAE0E0;
+	background: #DAE0E0;
 }
 
 .calprio2 {
-	background-color: #DADCDC;
+	background: #DADCDC;
 }
 
 .calprio3 {
-	background-color: #DAD0D0;
+	background: #DAD0D0;
 }
 
 .calprio4 {
-	background-color: #DACACA;
+	background: #DACACA;
 }
 
 .calprio5 {
-	background-color: #DAC0D0;
+	background: #DAC0D0;
 }
 
 .calprio6 {
-	background-color: #DABABA;
+	background: #DABABA;
 }
 
 .calprio7 {
-	background-color: #DAB0B0;
+	background: #DAB0B0;
 }
 
 .calprio8 {
-	background-color: #DAAAAA;
+	background: #DAAAAA;
 }
 
 .calprio9 {
-	background-color: #DA9A9A;
+	background: #DA9A9A;
 }
 div.tabrow {
 	margin-left: 29px;
-	background-color: #efefef;
+	background: #efefef;
 	border: 1px solid #787878;
 	border-bottom: 0;
 	font-size: 11px;
@@ -2406,7 +2430,7 @@ td.middle {
 }
 .opaque
 {
-	background-color: #ffffff;
+	background: #ffffff;
 	width: auto;
 	border: 1px solid #666666;
 	padding: 1px; 
@@ -2458,7 +2482,7 @@ div#attzoneopen {
 }
 
 .highlight {
-	background-color:    #FFAAAA;
+	background:    #FFAAAA;
 	color:   #000000;
 }
 
@@ -2498,6 +2522,7 @@ a.tikihelp, a.tikihelp:visited {
 	margin:   inherit;
 	padding:   inherit;
 	text-decoration:   inherit;
+	vertical-align: text-top;
 }
 
 a.tikihelp:hover {
@@ -2510,6 +2535,7 @@ a.tikihelp:hover {
 	padding:   inherit;
 	cursor:   help;
 	text-decoration:   inherit;
+	vertical-align: text-top;
 }
 .catblock {
   border: 1px solid #aaaaaa;
@@ -2517,14 +2543,14 @@ a.tikihelp:hover {
 .catlists {
   border-top: 1px solid #ffffff;
   padding: 1px 6px 1px 6px;
-  background-color: none;
+  background: transparent;
   color: #666666;
 }
 .catlists:last-child {
   border-bottom: 1px solid #ffffff;
 }
 .catlists:hover {
-  background-color: #dedede;
+  background: #dedede;
 }
 .cattitle {
   color: #000000;
@@ -2555,9 +2581,9 @@ div#rules-copy-panel {
   font-weight:bold;
 }
 
-table.commentinfo { width: 100%; background-color: #FFF7E6; }
+table.commentinfo { width: 100%; background: #FFF7E6; }
 div#loadstats {
-  background-color: #dedede;
+  background: #dedede;
   font-size: 70%;
   color: #666666;
   padding: 5px;
@@ -2567,27 +2593,75 @@ div#loadstats {
 .box-data table {
   width: 100%;
 }
+
+.mdkhorbar      {
+}
+
+.horbar {
+  margin-left: 10px;
+}
+
+.horbaritem a {
+  font-size: 10px;
+  text-decoration: none;
+  color: white;
+}
+
+.harbaritem a:visited {
+  text-decoration: underline;
+}
+
+.horbaritem a:hover {
+  background: #eee;
+  text-decoration: underline;
+}
+
+.mdkhorbaritem  {
+  float: left;
+  white-space: nowrap;
+  font-size: 10px;
+}
+
+.mdkhorbaritem a        {
+  display: block;
+  text-decoration: none;
+}
+
+.mdkhorbaritem a:link   {
+}
+
+.mdkhorbaritem a:visited        {
+}
+
+.mdkhorbaritem a:hover  {
+}
+
+.mdkhorbaritem a:active {
+}
+
 .mdkverbar  {
   margin: 0px;
 }
+
 .mdksubmenu {
   z-index: 999;
   position: absolute;
-  left: 0;  
+  left: 0;
   top: 0;
-  background-color: #FFFFFF;
+  background: #FFFFFF;
   visibility: hidden;
 }
+
 .mdksubmenu table {
   width: auto;
-} 
-  
+}
+
 .mdksubframe  {
-  z-index: 1000; 
+  z-index: 1000;
   position: relative;
   display: block;
   border: 1px solid #000000;
-} 
+}
 
 .mdkitem  {
   border-top: 1px solid #dedede;
@@ -2606,41 +2680,43 @@ div#loadstats {
 }
 
 .mdkitem a:hover  {
-  padding: 2px 5px 1px 5px;
+  text-decoration: underline;
+  background: #eee;
 }
 
 .mdkitem a:active {
   color: #993300;
-} 
-  
+}
+
 .mdkitem .mdkfwdarr {
   position: absolute;
   top: 5px;
   right: 12px;
 }
 
+/* TOC */
 .toc {
 }
 .toc li {
   margin-top: 3px;
 }
 .tocnav {
-  background-color: #ededed;
+  background: #ededed;
   margin-bottom: 16px;
-} 
+}
 .tocnav table {
   width: 100%;
-  background-color: #ffffff;
+  background: #ffffff;
 }
 .tocnav a {
   font-size: 90%;
-  color: #424242; 
+  color: #424242;
 }
+
 /* for jscalendar */
 .calendar {
   z-index: 200;
-} 
-
+}
 
 /* TikiIntegrator: By default copy rules dialog not shown */
 div#rules-copy-panel {
@@ -2653,6 +2729,7 @@ div#rules-copy-panel {
 	clear:both;
 	}
 	
+/* admin screen tables */
 TABLE.admin {
   width: 100%;
 }
@@ -2662,7 +2739,7 @@ TABLE.admin {
 .tabmark {
 	display: inline;
 	font-size: 85%;
-	background-color: #dddddd;
+	background: #dddddd;
 	border: 1px solid #666666;
 	margin: 0px;
 	margin-right: 5px;
@@ -2677,24 +2754,24 @@ TABLE.admin {
 	padding: 1px 5px 1px 5px;
 }
 .tabmark a:active {
-	background-color: white;
+	background: white;
 	color: red;
 }
 .tabmark a:hover {
 	color: black;
-	background-color: #CCCCCC;
+	background: #CCCCCC;
 }
+
 .tabcontent {
 	z-index : 200;
 	position: relative;
 	border: 1px solid #999999;
 	padding: 6px 2px 2px 2px;
 	margin-bottom: 25px;
-	background-color: #eeeeee;
+	background: #eeeeee;
 	-moz-border-radius: 0px 4px 4px 4px;
 	width: 100%;
 }
-
 
 /* trackers specific style */
 
@@ -2703,57 +2780,64 @@ TABLE.admin {
   margin: 1px;
   border: 1px inset #666666;
   -moz-border-radius: 20px;
-  vertcal-align: middle;
-  background-color: #bbaa99;
+  vertical-align: middle;
+  background: #bbaa99;
 }
 .statusoff {
   padding: 1px;
   margin: 2px;
-  vertcal-align: middle;
+  vertical-align: middle;
 }
 
 /**** coloration for c o d e plugin *****/
 .codelisting {
 font-family : monospace;
 padding : 2ex;
-background-color : #DEDFDE;
+background : #DEDFDE;
 margin : 1ex;
 border : 1px dashed #adacaf; }
 
-/* wiki diff styles */
+/* Version Plugin Style */
 
-.diffheader {
-margin: 10px 5px 0px 5px;
-padding: 4px;
-border-width: 1px 1px 0px 1px;
-border-style: solid;
-border-color: #A9B8C2;
-color: black;
-font-weight: bold;
-background-color: #A9B8C2;
-font-size: 8pt;
+.versions {
+border-top : 1px dashed #999999;
+border-bottom : 1px dashed #999999;
+min-height : 142px;
 }
-.diffbody {
-margin: 0px 5px 10px 5px;
-padding: 5px;
-border-color: #A9B8C2;
-border-width: 0px 1px 1px 1px;
-border-style: solid;
-font-family: monospace, 'Courier New', courier;
-color: black;
-background-color: #edeeef;
+.versionav {
+display : inline;
+float : right;
+border-left : 1px dashed #999999;
 }
-.diffdeleted {
-border-color: #A9B8C2;
-color: black;
-background-color: #ffcccc;
+.versionav .button2 {
+display : block;
+border : 0;
+border-bottom : 1px dashed #999999;
+background : transparent;
 }
-.diffadded {
-border-color: #A9B8C2;
-color: black;
-background-color: #ccffcc;
+.versionav .button2 .linkbut {
+border : 0;
+background-color : inherit;
+padding : 0 10px;
 }
-.diffchar{color: red;}
+.versionav .highlight {
+background : #cccccc;
+font-weight : bold;
+}
+.versiontitle {
+font-weight : bold;
+border-bottom : 1px dashed #999999;
+border-left : 1px dashed #999999;
+padding : 2px 30px;
+float : right;
+}
+
+/* wiki diff styles */
+.diff div {border-top: 1px solid black}
+.diffheader{background:#DDDDDD; font-weight: bold;}
+.diffadded {background:#ccffcc;}
+.diffdeleted {background:#ffcccc;}
+.diffchar {color: red;}
 
 /**** coloration for QUOTE plugin *****/
 .quoteheader {
@@ -2777,44 +2861,4 @@ color: black;
 background-color: #edeeef;
 }
 
-/* Version Plugin Style */
-
-.versions {
-border-top : 1px dashed #999999;
-border-bottom : 1px dashed #999999;
-min-height : 142px;
-}
-.versionav {
-display : inline;
-float : right;
-border-left : 1px dashed #999999;
-}
-.versionav .button2 {
-display : block;
-border : 0;
-border-bottom : 1px dashed #999999;
-background-color : none;
-}
-.versionav .button2 .linkbut {
-border : 0;
-background-color : inherit;
-padding : 0 10px;
-}
-.versionav .highlight {
-background-color : #cccccc;
-font-weight : bold;
-}
-.versiontitle {
-font-weight : bold;
-border-bottom : 1px dashed #999999;
-border-left : 1px dashed #999999;
-padding : 2px 30px;
-float : right;
-}
-
-/* wiki diff styles */
-.diff div {border-top: 1px solid black}
-.diffheader{background-color:#DDDDDD; font-weight: bold;}
-.diffadded {background-color:#ccffcc;}
-.diffdeleted {background-color:#ffcccc;}
-.diffchar {color: red;}
+/* end of css file */

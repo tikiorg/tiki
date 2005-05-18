@@ -1,10 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.60 2005-03-12 16:50:08 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.61 2005-05-18 11:02:52 mose Exp $ *}
 
 {if $forum_mode eq 'y'}
     <tr><td>
 {else}
     <a name="comments"></a>
-    <br />
     {if $comments_show eq 'y'}
 	<div id="comzoneopen">
     {else}
@@ -12,7 +11,7 @@
     {/if}
 {/if}
 
-{if $tiki_p_read_comments eq 'y' }
+{if ($tiki_p_read_comments eq 'y'  and $forum_mode ne 'y') or ($tiki_p_forum_read eq 'y' and $forum_mode eq 'y')}
 
   {* This section (comment) is only displayed * }
   {* if a reply to it is being composed * }
@@ -105,11 +104,18 @@
     <td class="heading"><label for="comments-search">{tr}Find{/tr}</label>
         <input type="text" size="7" name="comments_commentFind" id="comments-search" value="{$comments_commentFind|escape}" />
     </td>
-    
+
     <td class="heading"><input type="submit" name="comments_setOptions" value="{tr}set{/tr}" /></td>
-    <td class="heading" valign="bottom">
-    &nbsp;<a class="link" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}{$comments_sort_mode_param}&amp;comments_maxComments={$comments_maxComments}&amp;comments_style={$comments_style}&amp;comments_parentId=0">{tr}Top{/tr}</a>
+    <td class="heading" style="text-align: center; vertical-align: middle">
+    	<a class="link" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}{$comments_sort_mode_param}&amp;comments_maxComments={$comments_maxComments}&amp;comments_style={$comments_style}&amp;comments_parentId=0">{tr}Top{/tr}</a>
     </td>
+
+{if $forum_mode ne 'y'}
+    <td class="heading" style="text-align: center; vertical-align: middle">
+		<a class="link" href="{$comments_complete_father}comzone=hide">{tr}Hide all{/tr}</a>
+    </td>
+{/if}
+
   </tr>
   </table>
  
@@ -151,9 +157,9 @@
   {/if}
 
 {* Post dialog *}	
-{if $tiki_p_post_comments eq 'y'}
+{if ($tiki_p_forum_post eq 'y' and $forum_mode eq 'y') or ($tiki_p_post_comments eq 'y' and $forum_mode ne 'y')}
     {if $forum_mode eq 'y'}
-	{if $post_reply > 0 || $edit_reply > 0 || $comment_preview} {* posting a reply or editing a reply: show form *}
+	{if $post_reply > 0 || $edit_reply > 0 || $comment_preview} {* posting a reply or editing or previwing a reply: show form *}
 		<div id='{$postclass}open' class="threadpost">
 	{else}
 		<input type="button" name="comments_postComment" value="{tr}new reply{/tr}" onclick="flip('{$postclass}');"/>
@@ -163,14 +169,13 @@
 
 	<a name="form"></a>
 	<div>
-    <h2 style="float: left">
+    <h2 style="text-align: left">
     {if $forum_mode eq 'y'}
     {if $comments_threadId > 0}{tr}Editing reply{/tr}{elseif $parent_com}{tr}Reply to the selected post{/tr}{else}{tr}Post new reply{/tr}{/if}
     {else}
     {if $comments_threadId > 0}{tr}Editing comment{/tr}{elseif $parent_com}{tr}Comment on the selected post{/tr}{else}{tr}Post new comment{/tr}{/if}
     {/if}
     </h2>
-		<br style="clear: both" />
 	</div>
 
   {if $comment_preview eq 'y'}

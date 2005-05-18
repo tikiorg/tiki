@@ -16,7 +16,7 @@
 // | Authors: Martin Jansen <mj@php.net>                                  |
 // +----------------------------------------------------------------------+
 //
-// $Id: Auth.php,v 1.2 2004-06-23 22:34:24 mose Exp $
+// $Id: Auth.php,v 1.3 2005-05-18 11:01:09 mose Exp $
 //
 
 require_once "PEAR.php";
@@ -133,7 +133,7 @@ require_once "PEAR.php";
  *
  * @author  Martin Jansen <mj@php.net>
  * @package Auth
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 define("AUTH_LOGIN_OK",          2);

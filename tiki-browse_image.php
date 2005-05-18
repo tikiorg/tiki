@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.30 2005-01-22 22:54:53 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.31 2005-05-18 10:58:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -99,6 +99,12 @@ if ($tiki_p_view_image_gallery != 'y') {
 	die;
 }
 
+if (isset($_REQUEST['slideshow_p'])) {
+	$smarty->assign_by_ref('slideshow_p', $_REQUEST['slideshow_p']);
+}
+if (isset($_REQUEST['slideshow_n'])) {
+	$smarty->assign_by_ref('slideshow_n', $_REQUEST['slideshow_n']);
+}
 
 $scalesize = 0;
 if (isset($_REQUEST['scalesize'])) {
@@ -242,6 +248,7 @@ if (isset($_REQUEST["move_image"])) {
 }
 
 $smarty->assign_by_ref('owner', $gal_info["user"]);
+$smarty->assign_by_ref('defaultscale', $gal_info["defaultscale"]);
 $smarty->assign_by_ref('imageId', $_REQUEST["imageId"]);
 $smarty->assign_by_ref('name', $info["name"]);
 $smarty->assign_by_ref('title', $info["name"]);

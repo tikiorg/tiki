@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.23 2005-03-12 16:49:00 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.24 2005-05-18 10:58:59 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,13 +20,12 @@ if ($feature_newsletters != 'y') {
 if (!isset($_REQUEST["nlId"])) $_REQUEST["nlId"] = 0;
 $smarty->assign('nlId', $_REQUEST["nlId"]);
 
-$newsl = $nllib->list_newsletters(0, -1, 'created_desc', '');
-$newsletters = array('data'=>array(),'cant'=>0);
-for ($i = 0; $i < $newsl["cant"]; $i++) {
-	if ($tiki_p_admin == 'y' || $tiki_p_admin_newsletters == 'y' || $userlib->object_has_permission($user, $newsl["data"][$i]["nlId"], 'newsletter', 'tiki_p_send_newsletters')) {
-		$newsletters["data"][] = $newsl["data"][$i];
-		$newsletters["cant"]++;
-	}
+$newsletters = $nllib->list_newsletters(0, -1, 'created_desc', '', '', array("tiki_p_admin_newsletters", "tiki_p_send_newsletters"));
+
+if (($user=="admin") && (count($newsletters["data"])==0)) {
+	$smarty->assign('msg', tra("No newsletters available."));
+	$smarty->display("error.tpl");
+	die;
 }
 
 if (!$newsletters["cant"]) {
@@ -89,7 +88,7 @@ if (isset($_REQUEST["preview"])) {
 	if (!empty($_REQUEST["usedTpl"])) {
 		$smarty->assign('dataparsed', $tikilib->parse_data($info["data"]));
 		$smarty->assign('subject', $info["subject"]);
-		$info["dataparsed"]  = $smarty->fetch("newsletters/$tikidomain".$_REQUEST["usedTpl"]);
+		$info["dataparsed"]  = $smarty->fetch("newsletters/".$_REQUEST["usedTpl"]);
 		$smarty->assign("usedTpl", $_REQUEST["usedTpl"]);
 	} else {
 		$info["dataparsed"] = $tikilib->parse_data($info["data"]);
@@ -110,7 +109,7 @@ if (isset($_REQUEST["save"])) {
 	if (!empty($_REQUEST["usedTpl"])) {
 		$smarty->assign('dataparsed', $tikilib->parse_data($_REQUEST["data"]));
 		$smarty->assign('subject', $_REQUEST["subject"]);
-		$smarty->assign('dataparsed', $smarty->fetch("newsletters/$tikidomain".$_REQUEST["usedTpl"]));
+		$smarty->assign('dataparsed', $smarty->fetch("newsletters/".$_REQUEST["usedTpl"]));
 	} else {
 		$smarty->assign('dataparsed', $tikilib->parse_data($_REQUEST["data"]));
 	}
@@ -137,9 +136,9 @@ if (isset($_REQUEST["send"])) {
 	$errors =  array();
 
 	$users = $nllib->get_all_subscribers($_REQUEST["nlId"], $nl_info["unsubMsg"]);
-	foreach ($users as $user) {
-		$userEmail  = $user["login"];
-		$email = $user["email"];
+	foreach ($users as $us) {
+		$userEmail  = $us["login"];
+		$email = $us["email"];
 		if ($email == "") {
 			$errors[] = array("user"=>$userEmail, "email"=>"");
 			continue;
@@ -151,7 +150,7 @@ if (isset($_REQUEST["send"])) {
 		$mail->setSubject($_REQUEST["subject"]); // htmlMimeMail memorised the encoded subject 
 		$languageEmail = !$userEmail? $language: $tikilib->get_user_preference($userEmail, "language", $language);
  		if ($nl_info["unsubMsg"] == 'y') {
-			$unsubmsg = $nllib->get_unsub_msg($_REQUEST["nlId"], $userEmail, $languageEmail, $user["code"], $userEmail);
+			$unsubmsg = $nllib->get_unsub_msg($_REQUEST["nlId"], $userEmail, $languageEmail, $us["code"], $userEmail);
 			if (stristr($html, "</body>") === false)
 				$msg = $html.nl2br($unsubmsg);
 			else

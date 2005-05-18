@@ -228,6 +228,8 @@ class ArtLib extends TikiLib {
 		    }		    
 		    global $feature_user_watches, $smarty,$tikilib;
 		    if ($feature_user_watches == 'y') {
+			    #workaround to "pass" $topicId to get_event_watches
+			    $GLOBALS["topicId"] = $topicId;
 			    $nots = $this->get_event_watches('article_submitted', '*');
 			    if (!isset($_SERVER["SERVER_NAME"])) {
 				    $_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
@@ -288,8 +290,10 @@ class ArtLib extends TikiLib {
 	function replace_topic_name($topicId, $name) {
 		$query = "update `tiki_topics` set `name` = ? where
 			`topicId` = ?";
-		$result = $this->query($query, array($name, $topicId));
+		$result = $this->query($query, array($name, (int)$topicId));
 
+		$query = "update `tiki_articles` set `topicName` = ? where `topicId`= ?";
+		$result = $this->query($query, array($name, (int)$topicId));
 		return true;
 	}
 

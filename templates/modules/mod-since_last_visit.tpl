@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-since_last_visit.tpl,v 1.9 2005-03-12 16:51:00 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-since_last_visit.tpl,v 1.10 2005-05-18 11:03:31 mose Exp $ *}
 
 {if $user}
 {tikimodule title="{tr}Since your last visit{/tr}" name="since_last_visit" flip=$module_params.flip decorations=$module_params.decorations}

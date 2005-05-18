@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @package 
  * @author Diogene 
  * @copyright Copyright (c) 2003
- * @version $Id: OOoImg.php,v 1.2 2004-09-08 19:52:35 mose Exp $
+ * @version $Id: OOoImg.php,v 1.3 2005-05-18 11:01:39 mose Exp $
  * @access public 
  */
 class OOoImg extends absOOo {

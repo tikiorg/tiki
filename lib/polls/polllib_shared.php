@@ -30,15 +30,26 @@ class PollLibShared extends TikiLib {
 		return $ret;
 	}
 
-  function get_random_active_poll() {
-    $pollcount = $this->getOne("select count(*) from `tiki_polls` where `active`=? and `publishDate`<=? ", array('c',(int) $this->now));
-		if ($pollcount) {
-			$bid = rand(0, $pollcount - 1);
-			$pollId = $this->getOne("select `pollId` from `tiki_polls` where `active`=? and `publishDate`<=? ", array('c',(int) $this->now),1,$bid);
-			return $pollId;
-		} else {
-			return 0;
-		}
+  function get_random_poll($active="a") {
+	global $now;
+	$bindvars = array((int)$now, $active);
+	if ($active == "a") {
+		$bindvars[] = "c"; // current;
+		$mid = "or `active`=?";
+	}
+	$result = $this->query("select `pollId` from `tiki_polls` where `publishDate`<=? and (`active`=? $mid) ",$bindvars);
+	$ret = array();
+	while ($res = $result->fetchRow()) {
+		$ret[] = $res;
+	}
+	if (count($res)== 0)
+		return 0;
+	elseif (count($ret) == 1)
+		return $ret[0]['pollId'];
+	else {
+		$bid = rand(0, count($ret) - 1);
+		return $ret[$bid]['pollId'];
+	}
   }
 
   function get_polls($type='a',$datestart=0,$dateend='',$find='') {

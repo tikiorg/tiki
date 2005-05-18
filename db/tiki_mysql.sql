@@ -969,6 +969,8 @@ CREATE TABLE tiki_forums (
   moderator_group varchar(200) DEFAULT NULL,
   approval_type varchar(20) DEFAULT NULL,
   outbound_address varchar(250) DEFAULT NULL,
+  outbound_mails_for_inbound_mails char(1) DEFAULT NULL,
+  outbound_mails_reply_link char(1) DEFAULT NULL,
   outbound_from varchar(250) default NULL,
   inbound_pop_server varchar(250) DEFAULT NULL,
   inbound_pop_port integer(4) DEFAULT NULL,
@@ -1092,6 +1094,7 @@ DROP TABLE IF EXISTS tiki_history;
 CREATE TABLE tiki_history (
   pageName varchar(160) NOT NULL DEFAULT '',
   version integer(8) NOT NULL DEFAULT '0',
+  version_minor integer(8) NOT NULL DEFAULT '0',
   lastModif integer(14) DEFAULT NULL,
   description varchar(200) DEFAULT NULL,
   user varchar(200) DEFAULT NULL,

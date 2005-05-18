@@ -9,7 +9,7 @@
 {assign var=area_name value="body"}
 
 {if $feature_help eq 'y'}
-<a href="{$helpurl}ArticleDoc" target="tikihelp" class="tikihelp" title="{tr}Edit Submissions{/tr}">
+<a href="{$helpurl}Articles" target="tikihelp" class="tikihelp" title="{tr}Help on Articles{/tr}">
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>
 {/if}
 

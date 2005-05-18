@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.63 2005-03-12 16:50:02 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.64 2005-05-18 11:02:34 mose Exp $
 2003 - created and maintained by mose@tikiwiki.org
 
 colorset:
@@ -176,8 +176,8 @@ DIV#tiki-bot {
 	padding-bottom:   0px;
 }
 DIV#tiki-bot > table{
-	width:100%;
 	margin: 0;
+	width : 100%;
 }
 /* 
 The three columns 
@@ -198,8 +198,7 @@ TD#centercolumn {
 	background:   #EFEFE7;
 	vertical-align:   top;
 	border-top:   1px solid #5A4A39;
-	padding: 10px 25px 0px 25px;
-	width: 100%;
+	padding : 0 10px;
 }
 
 /* 
@@ -415,6 +414,8 @@ div.separator:hover {
 	color: #999999;
 	font-style: italic;
 }
+
+
 /* 
 Links to extend/collapse menus 
 */
@@ -825,7 +826,6 @@ div.wikitext {
 	padding:  3px 10px 3px 10px;
 	margin: 1px 0 1px 0;
 	clear:   both;
-	width: 100%;
 }
 div.wikitext pre {
 	font-family: monospace;
@@ -854,7 +854,11 @@ p.editdate {
 	font-size:   smaller;
 	font-family:   Helvetica, Arial, sans-serif;
 }
-
+#description {
+  font-size : 10px !important;
+  padding-left:   10px;
+  color:   #333300;
+}
 /* 
 The edit-help used to display the wiki 
 syntax when editing a page 
@@ -2571,6 +2575,7 @@ a.tikihelp, a.tikihelp:visited {
 	margin:   inherit;
 	padding:   inherit;
 	text-decoration:   inherit;
+	vertical-align: text-top;
 }
 
 a.tikihelp:hover {
@@ -2583,6 +2588,7 @@ a.tikihelp:hover {
 	padding:   inherit;
 	cursor:   help;
 	text-decoration:   inherit;
+	vertical-align: text-top;
 }
 .catblock {
 	border: 1px solid #aaaaaa;
@@ -2641,6 +2647,49 @@ div#loadstats {
 .box-data table {
 	width: 100%;
 }
+
+.mdkhorbar      {
+}
+
+.horbar {
+  margin-left: 10px;
+}
+
+.horbaritem a {
+  font-size: 10px;
+  text-decoration: none;
+}
+
+.harbaritem a:visited {
+  text-decoration: underline;
+}
+
+.horbaritem a:hover {
+}
+
+.mdkhorbaritem  {
+  float: left;
+  white-space: nowrap;
+  font-size: 10px;
+}
+
+.mdkhorbaritem a        {
+  display: block;
+  text-decoration: none;
+}
+
+.mdkhorbaritem a:link   {
+}
+
+.mdkhorbaritem a:visited        {
+}
+
+.mdkhorbaritem a:hover  {
+}
+
+.mdkhorbaritem a:active {
+}
+
 .mdkverbar	{
 	margin: 0px;
 }
@@ -2788,62 +2837,6 @@ div#loadstats {
 .codelisting 
 { font-family : monospace; padding : 2ex; background-color : #edeeef; margin : 1ex; border : 1px dashed #adacaf; }
 
-/* wiki diff styles */
-
-.diffheader {
-margin: 10px 5px 0px 5px;
-padding: 4px;
-border-width: 1px 1px 0px 1px;
-border-style: solid;
-border-color: #A9B8C2;
-color: black;
-font-weight: bold;
-background-color: #A9B8C2;
-font-size: 8pt;
-}
-.diffbody {
-margin: 0px 5px 10px 5px;
-padding: 5px;
-border-color: #A9B8C2;
-border-width: 0px 1px 1px 1px;
-border-style: solid;
-font-family: monospace, 'Courier New', courier;
-color: black;
-background-color: #edeeef;
-}
-.diffdeleted {
-border-color: #A9B8C2;
-color: black;
-background-color: #ffcccc;
-}
-.diffadded {
-border-color: #A9B8C2;
-color: black;
-background-color: #ccffcc;
-}
-.diffchar{color: red;}
-
-/**** coloration for QUOTE plugin *****/
-.quoteheader {
-margin: 10px 5px 0px 5px;
-padding: 4px;
-border-width: 1px 1px 0px 1px;
-border-style: solid;
-border-color: #A9B8C2;
-color: black;
-font-weight: bold;
-background-color: #A9B8C2;
-font-size: 8pt;
-}
-.quotebody {
-margin: 0px 5px 10px 5px;
-padding: 5px;
-border-color: #A9B8C2;
-border-width: 0px 1px 1px 1px;
-border-style: solid;
-color: black;
-background-color: #edeeef;
-}
 
 /* Version Plugin Style */
 
@@ -2880,3 +2873,39 @@ padding : 2px 30px;
 float : right;
 }
 
+/* wiki diff styles */
+.diff div{border-top: 1px solid black;}
+.diffheader{background-color:#5a4a39; font-weight: bold;color:white;}
+.diffadded {background-color:#ccffcc;}
+.diffdeleted {background-color:#ffcccc;}
+.diffbody{background-color:#EFEeE5}
+.diffchar {color: red;}
+
+/* site identity styles */
+#sitelogo a {
+	border: none;
+}
+
+/**** coloration for QUOTE plugin *****/
+.quoteheader {
+margin: 10px 5px 0px 5px;
+padding: 4px;
+border-width: 1px 1px 0px 1px;
+border-style: solid;
+border-color: #A9B8C2;
+color: black;
+font-weight: bold;
+background-color: #A9B8C2;
+font-size: 8pt;
+}
+.quotebody {
+margin: 0px 5px 10px 5px;
+padding: 5px;
+border-color: #A9B8C2;
+border-width: 0px 1px 1px 1px;
+border-style: solid;
+color: black;
+background-color: #edeeef;
+}
+
+/* end of css file */

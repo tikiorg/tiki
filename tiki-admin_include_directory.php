@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_directory.php,v 1.9 2005-01-01 00:16:31 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_directory.php,v 1.10 2005-05-18 10:58:53 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -16,12 +16,18 @@ if (isset($_REQUEST["directory"])) {
 	check_ticket('admin-inc-directory');
 	if (isset($_REQUEST["directory_validate_urls"]) && $_REQUEST["directory_validate_urls"] == "on") {
 		$tikilib->set_preference('directory_validate_urls', 'y');
-
 		$smarty->assign('directory_validate_urls', 'y');
 	} else {
 		$tikilib->set_preference('directory_validate_urls', 'n');
-
 		$smarty->assign('directory_validate_urls', 'n');
+	}
+
+	if (isset($_REQUEST["directory_cool_sites"]) && $_REQUEST["directory_cool_sites"] == "on") {
+		$tikilib->set_preference('directory_cool_sites', 'y');
+		$smarty->assign('directory_cool_sites', 'y');
+	} else {
+		$tikilib->set_preference('directory_cool_sites', 'n');
+		$smarty->assign('directory_cool_sites', 'n');
 	}
 
 	$tikilib->set_preference('directory_columns', $_REQUEST["directory_columns"]);

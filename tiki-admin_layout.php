@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_layout.php,v 1.14 2005-01-05 19:22:40 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_layout.php,v 1.15 2005-05-18 10:58:54 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -23,30 +23,7 @@ if ($tiki_p_admin != 'y') {
 	die;
 }
 
-$sections = array(
-	'wiki',
-	'galleries',
-	'file_galleries',
-	'cms',
-	'blogs',
-	'forums',
-	'chat',
-	'categories',
-	'games',
-	'faqs',
-	'html_pages',
-	'quizzes',
-	'surveys',
-	'webmail',
-	'trackers',
-	'featured_links',
-	'directory',
-	'user_messages',
-	'newsreader',
-	'mytiki',
-	'workflow',
-	'charts'
-);
+$sections = $tikilib->list_sections();
 
 $sections_smt = array();
 

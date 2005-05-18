@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.38 2005-01-01 00:16:32 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.39 2005-05-18 10:58:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -35,7 +35,7 @@ if (isset($_REQUEST['wysiwyg']) && $_REQUEST['wysiwyg'] == 'y') {
 if (isset($_REQUEST["blogId"])) {
 	$blogId = $_REQUEST["blogId"];
 
-	$blog_data = $bloglib->get_blog($_REQUEST["blogId"]);
+	$blog_data = $tikilib->get_blog($_REQUEST["blogId"]);
 } else {
 	$blogId = 0;
 }
@@ -218,7 +218,7 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) {
 	if ($_REQUEST["postId"] > 0) {
 		$data = $bloglib->get_post($_REQUEST["postId"]);
 
-		$blog_data = $bloglib->get_blog($data["blogId"]);
+		$blog_data = $tikilib->get_blog($data["blogId"]);
 
 		if ($user && $user == $blog_data["user"]) {
 			$data["user"] = $user;
@@ -236,7 +236,6 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) {
 
 	$edit_data = $imagegallib->capture_images($edit_data);
 	$title = isset($_REQUEST['title']) ? $_REQUEST['title'] : '';
-
 	if ($_REQUEST["postId"] > 0) {
 		$bloglib->update_post($_REQUEST["postId"], $_REQUEST["blogId"], $edit_data, $user, $title, $_REQUEST['trackback']);
 	} else {

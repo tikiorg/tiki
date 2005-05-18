@@ -268,7 +268,7 @@ class MultilingualLib extends TikiLib {
 				}
 			}
 		}
-		return array_merge($listObjs, null);// take away the unset rows
+		return array_merge($listObjs);// take away the unset rows
 	}
 
 	/* @brief : select the object with the best language from another object
@@ -287,5 +287,6 @@ class MultilingualLib extends TikiLib {
 		return $objId;
 	}
 }
+global $dbTiki;
 $multilinguallib = new MultilingualLib($dbTiki);
 ?>

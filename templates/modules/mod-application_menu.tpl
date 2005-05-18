@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.118 2005-03-12 16:50:59 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.119 2005-05-18 11:03:27 mose Exp $ *}
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip=$module_params.flip decorations=$module_params.decorations}
 &nbsp;<a href="{$tikiIndex}" class="linkmenu">{tr}Home{/tr}</a><br />
 {if $feature_chat eq 'y' and $tiki_p_chat eq 'y'}
@@ -162,47 +162,6 @@
    &nbsp;<a href="tiki-admin_structures.php" class="linkmenu">{tr}Structures{/tr}</a><br />
   {/if}
   </div>
-{/if}
-
-{if $feature_projects eq 'y'}
-	<div class="separator">
-	{if $feature_menusfolderstyle eq 'y'}
-	<a class="separator" href="javascript:toggle('prjmenu');"><img src="img/icons/{$icn_projectmenu}fo.gif" border='0' name='projectmenuicn' alt='{tr}Projects Menu{/tr}' /></a>&nbsp;
-	{else}
-	<a class="separator" href="javascript:toggle('prjmenu');">[-]</a>{/if}
-	<a class="separator" href="tiki-list_projects.php">{tr}Projects{/tr}</a>
-	{if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('prjmenu');">[+]</a>{/if}
-	</div>
-	<div id="prjmenu" style="{$mnu_prjmenu}">
-	{if $tiki_p_project_register eq 'y'}
-	  <a class="separator" href="tiki-project_register.php">{tr}Register New Project{/tr}</a><br />
-	{/if}
-	</div>
-{/if}
-
-{if $feature_homework eq 'y' and $tiki_p_hw_student eq 'y'}
-  <div class="separator">
-    {if $feature_menusfolderstyle eq 'y'}
-    <a class='separator' href="javascript:toggle('homeworkmenu');"><img src="img/icons/{$icn_homeworkmenu}fo.gif" border='0' name='homeworkmenuicn' alt='{tr}HomeworkMenu{/tr}' /></a>&nbsp;
-  {else}<a class="separator" href="javascript:toggle('homeworkmenu');">[-]</a>{/if}
-    {if $tiki_p_hw_teacher eq 'y'}
-      <a class='separator' href='tiki-hw_teacher_assignments.php'>{tr}Homework{/tr}</a>
-    {elseif $tiki_p_hw_student eq 'y'}
-      <a class='separator' href='tiki-hw_student_assignments.php'>{tr}Homework{/tr}</a>
-    {/if}
-  </div>
-  {if $tiki_p_hw_teacher eq 'y'}
-    <div id="homeworkmenu" style="{$mnu_homeworkmenu}">
-      &nbsp;<a href="tiki-hw_teacher_assignments.php" class="linkmenu">{tr}Assignments{/tr}</a><br />
-      {* &nbsp;<a href="tiki-hw_teacher_grading_queue.php" class="linkmenu">{tr}Grading Queue{/tr}</a><br /> *}
-      &nbsp;<a href="tiki-hw_teacher_last_changes.php" class="linkmenu">{tr}Last Changes{/tr}</a><br />
-    </div>
-  {elseif $tiki_p_hw_student eq 'y'}
-    <div id="homeworkmenu" style="{$mnu_homeworkmenu}">
-      &nbsp;<a href="tiki-hw_student_assignments.php" class="linkmenu">{tr}Assignments{/tr}</a><br />
-      &nbsp;<a href="tiki-hw_student_last_changes.php" class="linkmenu">{tr}Last Changes{/tr}</a><br />
-    </div>
-  {/if}
 {/if}
 
 {if $feature_galleries eq 'y'}

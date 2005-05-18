@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-replicate_console.php,v 1.3 2005-01-05 19:22:42 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-replicate_console.php,v 1.4 2005-05-18 10:58:59 mose Exp $
 
 require_once ('tiki-setup.php');
 include_once 'lib/logs/logslib.php';

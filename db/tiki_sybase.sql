@@ -1069,6 +1069,8 @@ CREATE TABLE tiki_forums (
   moderator_group varchar(200) DEFAULT NULL NULL,
   approval_type varchar(20) DEFAULT NULL NULL,
   outbound_address varchar(250) DEFAULT NULL NULL,
+  outbound_mails_for_inbound_mails char(1) DEFAULT NULL NULL,
+  outbound_mails_reply_link char(1) DEFAULT NULL NULL,
   outbound_from varchar(250) default NULL,
   inbound_pop_server varchar(250) DEFAULT NULL NULL,
   inbound_pop_port numeric(4) DEFAULT NULL NULL,

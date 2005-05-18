@@ -1,7 +1,7 @@
 <h1><a class="pagetitle" href="tiki-list_contents.php">{tr}Dynamic content system{/tr}</a>
   
       {if $feature_help eq 'y'}
-<a href="{$helpurl}DynamicContent" target="tikihelp" class="tikihelp" title="{tr}admin DynamicContent{/tr}">
+<a href="{$helpurl}Dynamic+Content" target="tikihelp" class="tikihelp" title="{tr}Help on Dynamic Content{/tr}">
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 
       {if $feature_view_tpl eq 'y'}

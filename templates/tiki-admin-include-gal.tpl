@@ -1,10 +1,15 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.18 2005-05-18 11:02:54 mose Exp $ *}
 {if $feature_help eq "y"}
-<div class="simplebox">{tr}Tip{/tr}: {tr}to add/remove image galleries, go to "Image Galleries" on the application menu, or{/tr} <a class="link" href="tiki-galleries.php">{tr}click here{/tr}</a>.</div><br />
+<div class="rbox" style="margin-top: 10px;">
+<div class="rbox-title" style="background-color: #eeee99; font-weight : bold; display : inline; padding : 0 10px;">{tr}Tip{/tr}</div>  
+<div class="rbox-data" style="padding: 2px 10px; background-color: #eeee99;">{tr}To add/remove image galleries, go to "Image Galleries" on the application menu, or{/tr} <a class="link" href="tiki-galleries.php">{tr}click here{/tr}</a>.</div>
+<div class="rbox-data" style="padding: 2px 10px; background-color: #eeee99;">{tr}You can upload images of a size of {/tr}{$max_img_upload_size|kbsize}. {tr}Alter the php.ini variables file_uploads, upload_max_filesize, post_max_size and database variables (max_allowed_packet for mysql) to change this value{/tr}.</div>
+</div>
+<br />
 {/if}
 <div class="cbox">
-<div class="cbox-title">{tr}Image galleries{/tr}</div>
+<div class="cbox-title">{tr}Home Gallery{/tr}</div>
 <div class="cbox-data">
-<div class="simplebox">
 <form action="tiki-admin.php?page=gal" method="post">
 <table class="admin">
 <tr class="form"><td><label>{tr}Home Gallery (main gallery){/tr}</label></td><td>
@@ -17,10 +22,12 @@
 </table>
 </form>
 </div>
+</div>
 
-<div class="simplebox">
-{tr}Galleries features{/tr}<br />
-<form action="tiki-admin.php?page=gal" method="post">
+<div class="cbox">
+  <div class="cbox-title">{tr}Galleries features{/tr}</div>
+  <div class="cbox-data">
+    <form action="tiki-admin.php?page=gal" method="post">
     <table class="admin">
     <tr class="form"><td><label>{tr}Rankings{/tr}:</label></td><td><input type="checkbox" name="feature_gal_rankings" {if $feature_gal_rankings eq 'y'}checked="checked"{/if}/></td></tr>
     <tr class="form"><td><label>{tr}Comments{/tr}:</label></td><td><input type="checkbox" name="feature_image_galleries_comments" {if $feature_image_galleries_comments eq 'y'}checked="checked"{/if}/></td></tr>
@@ -33,16 +40,33 @@
 		<tr><td colspan="2"><b>{tr}Directory Batch Loading{/tr}</b><br />
 		{tr}If you enable Directory Batch Loading, you need to setup a web-readable directory (outside of your web space is better). Then setup a way to upload images in that dir, either by scp, ftp, or other protocols{/tr}</td></tr>
     <tr class="form"><td><label>{tr}Enable directory batch loading{/tr}:</label></td><td><input type="checkbox" name="feature_gal_batch" {if $feature_gal_batch eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr class="form"><td><label>{tr}Batch loading directory{/tr}:</label></td><td><input type="text" name="gal_batch_dir" value="{$gal_batch_dir|escape}"/></td></tr>
+    <tr class="form"><td><label>{tr}Batch loading directory{/tr}:</label></td><td><input type="text" name="gal_batch_dir" value="{$gal_batch_dir|escape}" size="50" /></td></tr>
+    <tr class="form"><td><label>{tr}Enable cache images to all galleries{/tr}:</label></td><td><input type="checkbox" name="feature_gal_imgcache" {if $feature_gal_imgcache eq 'y'}checked="checked"{/if}/></td></tr>
+     <tr class="form"><td><label>{tr}Images cache directory{/tr}:</label></td><td><input type="text" name="gal_imgcache_dir" value="{$gal_imgcache_dir|escape}" size="50" /></td></tr>
     <tr><td colspan="2" class="button"><input type="submit" name="galfeatures" value="{tr}Set features{/tr}" /></td></tr>
     </table>
+    </form>
+  </div>
+</div>
+
+<div class="cbox">
+  <div class="cbox-title">{tr}Exterminator{/tr}</div>
+  <div class="cbox-data">
+<form action="tiki-admin.php?page=gal" method="post">
+<table class="admin">
+<tr class="form"><td><label>
+{tr}Remove images in the system gallery not being used in Wiki pages, articles or blog posts{/tr}
+</label>
+<input type="hidden" name="rmvorphimg" value="1"></td><!--/tr>
+<tr><td colspan="2" class="button"--><td><input type="submit" name="button" value="{tr}Remove{/tr}" /></td></tr>
+</table>                 
 </form>
 </div>
-<div class="simplebox">
-<a class="link" href="tiki-admin.php?page=gal&amp;rmvorphimg=1">{tr}Remove images in the system gallery not being used in Wiki pages, articles or blog posts{/tr}</a>
 </div>
-  <div class="simplebox">
-	{tr}Gallery listing configuration{/tr}
+
+<div class="cbox">
+  <div class="cbox-title">{tr}Gallery listing configuration{/tr}</div>
+  <div class="cbox-data">
 	<form method="post" action="tiki-admin.php?page=gal">
 	<table class="admin">
 	<tr class="form">
@@ -73,13 +97,15 @@
 		<td><label>{tr}Visits{/tr}</label></td>
 		<td><input type="checkbox" name="gal_list_visits" {if $gal_list_visits eq 'y'}checked="checked"{/if} /></td>
 	</tr>
-	<tr><td colspan="2" class="button"><input type="submit" name="imagegallistprefs" value="{tr}Change preferences{/tr}" /></td></tr>
+	<tr><td colspan="2" class="button"><input type="submit" name="imagegallistprefs" value="{tr}Change configuration{/tr}" /></td></tr>
 	</table>	
 	</form>	
-	</div>
+  </div>
+</div>
 
-    <div class="simplebox">
-    {tr}Image galleries comments settings{/tr}
+<div class="cbox">
+  <div class="cbox-title">{tr}Image galleries comments settings{/tr}</div>
+  <div class="cbox-data">
     <form method="post" action="tiki-admin.php?page=gal">
     <table class="admin">
     <tr class="form"><td><label>{tr}Default number of comments per page{/tr}: </label></td><td><input size="5" type="text" name="image_galleries_comments_per_page" value="{$image_galleries_comments_per_page|escape}" /></td></tr>
@@ -91,9 +117,8 @@
     <option value="points_desc" {if $image_galleries_comments_default_order eq 'points_desc'}selected="selected"{/if}>{tr}Points{/tr}</option>
     </select>
     </td></tr>
-    <tr><td colspan="2" class="button"><input type="submit" name="imagegalcomprefs" value="{tr}Change preferences{/tr}" /></td></tr>
+    <tr><td colspan="2" class="button"><input type="submit" name="imagegalcomprefs" value="{tr}Change settings{/tr}" /></td></tr>
     </table>
     </form>
-    </div>
   </div>
 </div>

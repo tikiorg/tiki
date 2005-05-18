@@ -31,7 +31,7 @@
  *
  * @package TikiWiki
  * @subpackage TikiPlugins
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 function wikiplugin_include_help() {

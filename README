@@ -1,5 +1,5 @@
 Tiki! The wiki with a lot of features!
-version 1.10 -tba-
+version 1.9 -Sirius-
 
 
 DOCUMENTATION
@@ -11,7 +11,7 @@ DOCUMENTATION
   documentation, in pdf format (350 pages) (outdated at the time of this writing):
   http://tikiwiki.org/tiki.pdf (version 1.6 but with many valuable help)
 
-* The documentation for 1.10 version is maintained on http://doc.tikiwiki.org.
+* The documentation for 1.9 version is maintained on http://doc.tikiwiki.org.
   You're encouraged to contribute.
 
 * Notes about the releases are accessible from http://tikiwiki.org/TikiReleases

@@ -3,6 +3,8 @@ I'm testing too!
 askjdhakjsdjashdh
 tests !
 
+I hope this works.
+
 that is a file just to
 test how your client commit !
 
@@ -45,3 +47,7 @@ hello
 Mon Sep 20 10:06:16 PDT 2004
 
 Berryweb was somewhere here :)
+
+JasonDiceman trys to commit.
+
+Herve : NOW I'M HERE

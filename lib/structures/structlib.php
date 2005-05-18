@@ -354,6 +354,7 @@ class StructLib extends TikiLib {
 						$res['sub'] = $sub;	
 					}
 				}
+				if ($res["page_alias"]<>"") $res["pageName"]=$res["page_alias"];
 				$back[] = $res;
 			}
 		} else {
@@ -362,12 +363,12 @@ class StructLib extends TikiLib {
 		return $back;
 	}
 
-	function get_toc($page_ref_id,$order='asc',$showdesc=false,$numbering=true,$numberPrefix='') {
+	function get_toc($page_ref_id,$order='asc',$showdesc=false,$numbering=true,$numberPrefix='',$type='plain') {
 		$structure_tree = $this->build_subtree_toc($page_ref_id,false,$order,$numberPrefix);
-		return $this->fetch_toc($structure_tree,$showdesc,$numbering);
+		return $this->fetch_toc($structure_tree,$showdesc,$numbering,$type);
 	}
 
-	function fetch_toc($structure_tree,$showdesc,$numbering) {
+	function fetch_toc($structure_tree,$showdesc,$numbering,$type='plain') {
 		global $smarty;
 		$ret='';
 		if ($structure_tree != '') {
@@ -377,9 +378,10 @@ class StructLib extends TikiLib {
 				$smarty->assign_by_ref('structure_tree',$leaf);
 				$smarty->assign('showdesc',$showdesc);
 				$smarty->assign('numbering',$numbering);
+				$smarty->assign('toc_type',$type);
 				$ret.=$smarty->fetch("structures_toc-leaf.tpl");
 				if(isset($leaf["sub"]) && is_array($leaf["sub"])) {
-					$ret.=$this->fetch_toc($leaf["sub"],$showdesc,$numbering);
+					$ret.=$this->fetch_toc($leaf["sub"],$showdesc,$numbering,$type);
 				}
 			}
 			$ret.=$smarty->fetch("structures_toc-endul.tpl");

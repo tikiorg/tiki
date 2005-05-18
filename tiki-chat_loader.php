@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-chat_loader.php,v 1.14 2005-01-01 00:16:32 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-chat_loader.php,v 1.15 2005-05-18 10:58:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -58,8 +58,8 @@ if (isset($_REQUEST["channelId"])) {
 			} else {
 				$classt = 'blue';
 			}
-			//the order seems to be imported to parse the smile ans special characteres
-$parsed = $tikilib->parse_comment_data(htmlspecialchars($msg["data"]));
+			//the order seems to be imported to parse the smile and special characteres
+$parsed = $chatlib->parse_chat_data(htmlspecialchars($msg["data"]));
 			$prmsg = "<span style=\"color:$classt;\">" . $msg["posterName"] . ": " . $parsed . "</span><br />";
 			//$com = "top.document.frames[0].document.write('".$prmsg."');";
 			$com = "top.chatdata.document.write('" . $prmsg . "');";
@@ -87,7 +87,7 @@ if (count($messages) > 0) {
 	foreach ($messages as $msg) {
 		$classt = 'red';
 
-		$parsed = $tikilib->parse_comment_data($msg["data"]);
+		$parsed = $chatlib->parse_chat_data($msg["data"]);
 		$prmsg = "<span style=\"color:$classt;\">" . $msg["posterName"] . ": " . $parsed . "</span><br />";
 		$com = "top.chatdata.document.write('" . $prmsg . "');";
 		print ($com);

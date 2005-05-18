@@ -78,11 +78,7 @@ if ($feature_user_bookmarks == 'y' && $user && $tiki_p_create_bookmarks == 'y') 
 
 			// Check if we are bookmarking a file gallery
 			if (strstr($_SERVER["REQUEST_URI"], 'tiki-list_file_gallery')) {
-				global $filegallib;
-				if (!is_object($filegallib)) {
-					include_once ('lib/filegals/filegallib.php');
-				}
-				$info = $filegallib->get_file_gallery($setup_query_data["galleryId"]);
+				$info = $tikilib->get_file_gallery($setup_query_data["galleryId"]);
 
 				$_REQUEST["bookmark_urlname"] = $info["name"];
 			}
@@ -107,22 +103,14 @@ if ($feature_user_bookmarks == 'y' && $user && $tiki_p_create_bookmarks == 'y') 
 
 			// Check if we are bookmarking a faq
 			if (strstr($_SERVER["REQUEST_URI"], 'tiki-view_faq')) {
-				global $faqlib;
-				if (!is_object($faqlib)) {
-					include_once('lib/faqs/faqlib.php');
-				}	
-				$info = $faqlib->get_faq($setup_query_data["faqId"]);
+				$info = $tikilib->get_faq($setup_query_data["faqId"]);
 
 				$_REQUEST["bookmark_urlname"] = $info["title"];
 			}
 
 			// Check if we are bookmarking a weblog
 			if (strstr($_SERVER["REQUEST_URI"], 'tiki-view_blog')) {
-				global $bloglib;
-				if (!is_object($bloglib)) {
-					include_once('lib/blogs/bloglib.php');
-				}
-				$info = $bloglib->get_blog($setup_query_data["blogId"]);
+				$info = $tikilib->get_blog($setup_query_data["blogId"]);
 
 				$_REQUEST["bookmark_urlname"] = $info["title"];
 			}

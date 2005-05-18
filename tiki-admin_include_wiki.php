@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.48 2005-01-22 22:54:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.49 2005-05-18 10:58:54 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -102,58 +102,6 @@ if (isset($_REQUEST["wikidiscussprefs"])) {
 		$wiki_forum_id = $tikilib->getOne("select `forumId` from `tiki_forums` where `name`=?",array($_REQUEST["wiki_forum"]));
 		$tikilib->set_preference('wiki_forum_id', $wiki_forum_id);
 		$smarty->assign('wiki_forum_id', $wiki_forum_id);
-	}
-}
-
-if (isset($_REQUEST['staticwiki'])) {
-	check_ticket('admin-inc-wiki');
-	if (!empty($_REQUEST['feature_wiki_realtime_static']) && $_REQUEST['feature_wiki_realtime_static'] == 'enabled') {
-		$tikilib->set_preference('feature_wiki_realtime_static', 'y');
-		$smarty->assign('feature_wiki_realtime_static', 'y');
-	} else {
-		$tikilib->set_preference('feature_wiki_realtime_static', 'n');
-		$smarty->assign('feature_wiki_realtime_static', 'n');
-	}
-	if (!empty($_REQUEST['staticpath'])) {
-		// make sure staticpath has a trailing slash
-		$tail = strlen($_REQUEST['staticpath']) - 1;
-		if (substr($_REQUEST['staticpath'], $tail) != '/') {
-			$_REQUEST['staticpath'] = $_REQUEST['staticpath'] . '/';
-		}
-		$tikilib->set_preference('wiki_realtime_static_path', $_REQUEST['staticpath']);
-		$smarty->assign('wiki_realtime_static_path', $_REQUEST['staticpath']);
-	}
-	if (!empty($_REQUEST['staticgroup'])){
-		$tikilib->set_preference('wiki_realtime_static_group', $_REQUEST['staticgroup']);
-		$smarty->assign('wiki_realtime_static_group', $_REQUEST['staticgroup']);
-	}
-}
-
-// rebuild all static html pages
-if (isset($_REQUEST['rebuildstatic']) && $_REQUEST['rebuildstatic'] == 'y') {
-	$area = "rebuildstatic";
-	if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
-		key_check($area);
-		global $staticlib;
-		include_once('lib/static/staticlib.php');
-		$staticlib->rebuild_all_pages();
-	} else {
-		$confirmation = tra('Click here to (re)build all static pages');
-		key_get($area, $confirmation);
-	}
-}
-
-// purge ghost static html pages
-if (isset($_REQUEST['purgestatic']) && $_REQUEST['purgestatic'] == 'y') {
-	$area = "purgestatic";
-	if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
-		key_check($area);
-		global $staticlib;
-		include_once('lib/static/staticlib.php');
-		$staticlib->purge_ghost_pages();
-	} else {
-		$confirmation = tra('Click here to purge ghost static pages');
-		key_get($area, $confirmation);
 	}
 }
 
@@ -374,16 +322,6 @@ if (isset($_REQUEST["wikifeatures"])) {
 		
 		$smarty->assign("feature_wiki_plurals",'n');
 	}
-	
-	if(isset($_REQUEST["feature_wiki_jstooltips"]) && $_REQUEST["feature_wiki_jstooltips"]=="on") {
-		$tikilib->set_preference("feature_wiki_jstooltips",'y');
-		
-		$smarty->assign("feature_wiki_jstooltips",'y');
-	} else {
-		$tikilib->set_preference("feature_wiki_jstooltips",'n');
-		
-		$smarty->assign("feature_wiki_jstooltips",'n');
-	}
 
 	if(isset($_REQUEST["feature_wiki_paragraph_formatting"]) && $_REQUEST["feature_wiki_paragraph_formatting"]=="on") {
 		$tikilib->set_preference("feature_wiki_paragraph_formatting",'y');
@@ -400,11 +338,6 @@ if (isset($_REQUEST["wikifeatures"])) {
 
 	$tikilib->set_preference("warn_on_edit_time", $_REQUEST["warn_on_edit_time"]);
 	$smarty->assign('warn_on_edit_time', $_REQUEST["warn_on_edit_time"]);
-	
-	global $feature_wiki_dblclickedit;
-	$feature_wiki_dblclickedit = $_REQUEST["feature_wiki_dblclickedit"];
-	$tikilib->set_preference("feature_wiki_dblclickedit", $_REQUEST["feature_wiki_dblclickedit"]);
-	$smarty->assign('feature_wiki_dblclickedit', $_REQUEST["feature_wiki_dblclickedit"]);
 
 	if (isset($_REQUEST["feature_dump"]) && $_REQUEST["feature_dump"] == "on") {
 		$tikilib->set_preference("feature_dump", 'y');
@@ -464,6 +397,15 @@ if (isset($_REQUEST["wikifeatures"])) {
 		$smarty->assign("feature_wiki_monosp", 'n');
 	}
 
+	/*  
+	  if(isset($_REQUEST["feature_wiki_notepad"]) && $_REQUEST["feature_wiki_notepad"]=="on") {
+		$tikilib->set_preference("feature_wiki_notepad",'y'); 
+		$smarty->assign("feature_wiki_notepad",'y');
+	  } else {
+		$tikilib->set_preference("feature_wiki_notepad",'n');
+		$smarty->assign("feature_wiki_notepad",'n');
+	  }
+	*/
 	if (isset($_REQUEST["feature_wiki_usrlock"]) && $_REQUEST["feature_wiki_usrlock"] == "on") {
 		$tikilib->set_preference("feature_wiki_usrlock", 'y');
 
@@ -497,6 +439,15 @@ if (isset($_REQUEST["wikifeatures"])) {
 		$smarty->assign("feature_wiki_icache", 'n');
 	}
 
+	if (isset($_REQUEST["feature_wiki_import_html"]) && $_REQUEST["feature_wiki_import_html"] == "on") {
+		$tikilib->set_preference("feature_wiki_import_html", 'y');
+
+		$smarty->assign("feature_wiki_import_html", 'y');
+	} else {
+		$tikilib->set_preference("feature_wiki_import_html", 'n');
+
+		$smarty->assign("feature_wiki_import_html", 'n');
+	}
 
 	if (isset($_REQUEST["wiki_creator_admin"]) && $_REQUEST["wiki_creator_admin"] == "on") {
 		$tikilib->set_preference("wiki_creator_admin", 'y');
@@ -616,14 +567,6 @@ if (isset($_REQUEST["wikifeatures"])) {
 		$smarty->assign("wiki_uses_slides", 'n');
 	}
 
-	if (isset($_REQUEST["feature_wiki_allowhtml"]) && $_REQUEST["feature_wiki_allowhtml"] == "on") {
-		$tikilib->set_preference("feature_wiki_allowhtml", 'y');
-		$smarty->assign("feature_wiki_allowhtml", 'y');
-	} else {
-		$tikilib->set_preference("feature_wiki_allowhtml", 'n');
-		$smarty->assign("feature_wiki_allowhtml", 'n');
-	}
-
 	if (isset($_REQUEST["feature_wiki_open_as_structure"]) && $_REQUEST["feature_wiki_open_as_structure"] == "on") {
 		$tikilib->set_preference("feature_wiki_open_as_structure", 'y');
 		$smarty->assign("feature_wiki_open_as_structure", 'y');
@@ -654,15 +597,8 @@ if (isset($_REQUEST["wikifeatures"])) {
 		$tikilib->set_preference("feature_wiki_userpage_prefix", 'UserPage');
 		$smarty->assign("feature_wiki_userpage_prefix", 'UserPage');
 	}
-	
-	if (isset($_REQUEST["feature_wiki_plugins_allcaps"]) && $_REQUEST["feature_wiki_plugins_allcaps"] == "on") {
-		$tikilib->set_preference("feature_wiki_plugins_allcaps", 'y');
-		$smarty->assign("feature_wiki_plugins_allcaps", 'y');
-	} else {
-		$tikilib->set_preference("feature_wiki_plugins_allcaps", 'n');
-		$smarty->assign("feature_wiki_plugins_allcaps", 'n');
-	}
-
+	$tikilib->set_preference('wiki_authors_style', $_REQUEST['wiki_authors_style']);
+	$smarty->assign('wiki_authors_style', $_REQUEST['wiki_authors_style']);
 }
 
 if (isset($_REQUEST["wikisetprefs"])) {
@@ -676,6 +612,12 @@ if (isset($_REQUEST["wikisetprefs"])) {
 
 		$smarty->assign('keep_versions', $_REQUEST["keep_versions"]);
 	}
+
+	if (isset($_REQUEST["default_wiki_diff_style"])) {
+		$tikilib->set_preference("default_wiki_diff_style", $_REQUEST["default_wiki_diff_style"]);
+		$smarty->assign('default_wiki_diff_style', $_REQUEST["default_wiki_diff_style"]);
+	}
+
 	if (isset($_REQUEST["feature_wiki_history_ip"]) && $_REQUEST["feature_wiki_history_ip"] == "on") {
 		$tikilib->set_preference("feature_wiki_history_ip", 'n');
 		$smarty->assign('feature_wiki_history_ip', 'n');
@@ -685,10 +627,25 @@ if (isset($_REQUEST["wikisetprefs"])) {
 		$smarty->assign('feature_wiki_history_ip', 'y');
 	}	
 
-	if (isset($_REQUEST["default_wiki_diff_style"])) {
-		$tikilib->set_preference("default_wiki_diff_style", $_REQUEST["default_wiki_diff_style"]);
-		$smarty->assign('default_wiki_diff_style', $_REQUEST["default_wiki_diff_style"]);
+}
+
+if (isset($_REQUEST["feature_wysiwyg"])) {
+	check_ticket('admin-inc-wiki');
+	$tikilib->set_preference('feature_wysiwyg', $_REQUEST['feature_wysiwyg']);
+	$smarty->assign('feature_wysiwyg', $_REQUEST['feature_wysiwyg']);
+}
+if (isset($_REQUEST["wikisethtmloptions"])) {
+	check_ticket('admin-inc-wiki');
+	if (isset($_REQUEST["feature_wiki_allowhtml"]) && $_REQUEST["feature_wiki_allowhtml"] == "on") {
+		$tikilib->set_preference("feature_wiki_allowhtml", 'y');
+		$smarty->assign("feature_wiki_allowhtml", 'y');
+	} else {
+		$tikilib->set_preference("feature_wiki_allowhtml", 'n');
+		$smarty->assign("feature_wiki_allowhtml", 'n');
 	}
+	$tikilib->set_preference('wiki_wikisyntax_in_html', $_REQUEST['wiki_wikisyntax_in_html']);
+	$smarty->assign('wiki_wikisyntax_in_html', $_REQUEST['wiki_wikisyntax_in_html']);
+
 }
 
 if (isset($_REQUEST["wikisetcopyright"])) {
@@ -757,24 +714,6 @@ if (isset($_REQUEST["wikiset3d"])) {
 	}
 }
 
-if (isset($_REQUEST["wikifooter"])) {
-	check_ticket('admin-inc-wiki');
-	if (isset($_REQUEST["feature_wiki_page_footer"]) && $_REQUEST["feature_wiki_page_footer"] = "on") {
-		$tikilib->set_preference("feature_wiki_page_footer",'y'); 
-		$smarty->assign("feature_wiki_page_footer",'y');
-	} else {
-		$tikilib->set_preference("feature_wiki_page_footer",'n'); 
-		$smarty->assign("feature_wiki_page_footer",'n');
-	}
-	if (!empty($_REQUEST["wiki_page_footer_content"])) {
-		$tikilib->set_preference("wiki_page_footer_content", $_REQUEST["wiki_page_footer_content"]); 
-		$smarty->assign("wiki_page_footer_content", $_REQUEST["wiki_page_footer_content"]);
-	} else {
-		$tikilib->set_preference("wiki_page_footer_content",'');
-		$smarty->assign("wiki_page_footer_content",'');
-	}
-}
-
 if(isset($_REQUEST["wikisetwatch"])) {
 	check_ticket('admin-inc-wiki');
   if(isset($_REQUEST["wiki_watch_author"]) && $_REQUEST["wiki_watch_author"]=="on") {
@@ -801,10 +740,6 @@ if(isset($_REQUEST["wikisetwatch"])) {
     $smarty->assign("wiki_watch_editor",'n');
   }
 }
-if(isset($_REQUEST["feature_wiki_email_diff_style"])) {
-	$tikilib->set_preference("feature_wiki_email_diff_style", $_REQUEST["feature_wiki_email_diff_style"]);
-	$smarty->assign('feature_wiki_email_diff_style', $_REQUEST["feature_wiki_email_diff_style"]);
-}
 
 if ($feature_forums == 'y') {
 	$commentslib = new Comments($dbTiki);
@@ -812,14 +747,8 @@ if ($feature_forums == 'y') {
 	$smarty->assign_by_ref("all_forums", $all_forums["data"]);
 }
 
-$allgroups = $userlib->get_groups();
-$smarty->assign('allgroups', $allgroups['data']);
-
 $tags = $adminlib->get_tags();
 $smarty->assign_by_ref("tags", $tags);
-
-global $feature_wiki_dblclickedit;
-$smarty->assign('feature_wiki_dblclickedit',$feature_wiki_dblclickedit);
 
 $smarty->assign("maxVersions", $tikilib->get_preference("maxVersions", 0));
 $smarty->assign("keep_versions", $tikilib->get_preference("keep_versions", 1));

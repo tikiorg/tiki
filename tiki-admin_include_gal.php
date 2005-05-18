@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.14 2005-03-12 16:48:57 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.15 2005-05-18 10:58:54 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -25,10 +25,18 @@ if (isset($_REQUEST["galfeatures"])) {
 	simple_set_toggle ("feature_gal_rankings");
 	simple_set_toggle ("feature_image_galleries_comments");
 	simple_set_toggle ("feature_gal_batch");
+	simple_set_toggle ("feature_gal_imgcache");
 
 	// Check for last character being a / or a \
+	// My next commit is to create a clas to put this code into
 	if (substr($_REQUEST["gal_use_dir"], -1) != "\\" && substr($_REQUEST["gal_use_dir"], -1) != "/" && $_REQUEST["gal_use_dir"] != "") {
 		$_REQUEST["gal_use_dir"] .= "/";
+	}
+	if (substr($_REQUEST["gal_imgcache_dir"], -1) != "\\" && substr($_REQUEST["gal_imgcache_dir"], -1) != "/" && $_REQUEST["gal_imgcache_dir"] != "") {
+		$_REQUEST["gal_imgcache_dir"] .= "/";
+	}
+	if (substr($_REQUEST["gal_batch_dir"], -1) != "\\" && substr($_REQUEST["gal_batch_dir"], -1) != "/" && $_REQUEST["gal_batch_dir"] != "") {
+		$_REQUEST["gal_batch_dir"] .= "/";
 	}
 
 	$pref_simple_values = array(
@@ -37,7 +45,8 @@ if (isset($_REQUEST["galfeatures"])) {
 	"gal_use_dir",
 	"gal_match_regex",
 	"gal_nmatch_regex",
-	"gal_batch_dir"
+	"gal_batch_dir",
+	"gal_imgcache_dir"
 	);
 
 	foreach ($pref_simple_values as $svitem) {
@@ -88,13 +97,12 @@ if($imagegallib->haveimagick) {
 $smarty->assign('gdlib',$gdlib);
 $smarty->assign('imagicklib',$imagicklib);
 
-global $imagegallib;
-if (!is_object($imagegallib)) {
-	require_once('lib/imagegals/imagegallib.php');
-}
-$galleries = $imagegallib->list_visible_galleries(0, -1, 'name_desc', 'admin', '');
+$galleries = $tikilib->list_visible_galleries(0, -1, 'name_desc', 'admin', '');
 $smarty->assign_by_ref('galleries', $galleries["data"]);
 
 $smarty->assign("gal_match_regex", $tikilib->get_preference("gal_match_regex", ''));
+
+$smarty->assign("max_img_upload_size", $imagegallib->max_img_upload_size());
+
 ask_ticket('admin-inc-gal');
 ?>

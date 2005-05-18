@@ -9,8 +9,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 /**
 * Filename.......: class.html.mime.mail.inc
 * Project........: HTML Mime mail class
-* Last Modified..: $Date: 2004-08-26 19:24:08 $
-* CVS Revision...: $Revision: 1.12 $
+* Last Modified..: $Date: 2005-05-18 11:01:57 $
+* CVS Revision...: $Revision: 1.13 $
 * Copyright......: 2001, 2002 Richard Heyes
 */
 
@@ -885,7 +885,7 @@ class htmlMimeMail {
 *    re-build the message.
 *
 * @author  Richard Heyes <richard@phpguru.org>
-* @version $Revision: 1.12 $
+* @version $Revision: 1.13 $
 * @package Mail
 */
 class Mail_mimePart {
@@ -1175,7 +1175,7 @@ class Mail_mimePart {
 *
 * @author  Richard Heyes <richard@phpguru.org>
 * @author  Chuck Hagenbuch <chuck@horde.org>
-* @version $Revision: 1.12 $
+* @version $Revision: 1.13 $
 * @package Mail
 */
 class Mail_RFC822 {

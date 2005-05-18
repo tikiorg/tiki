@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/babelfish.tpl,v 1.4 2004-07-29 17:38:16 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/babelfish.tpl,v 1.5 2005-05-18 11:02:52 mose Exp $ *}
 
 {if $feature_babelfish eq 'y' and $feature_babelfish_logo eq 'y'}
 

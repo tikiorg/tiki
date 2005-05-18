@@ -1053,6 +1053,8 @@ CREATE TABLE "tiki_forums" (
   "moderator_group" character varying(200) DEFAULT NULL,
   "approval_type" character varying(20) DEFAULT NULL,
   "outbound_address" character varying(250) DEFAULT NULL,
+  "outbound_mails_for_inbound_mails" char(1) DEFAULT NULL,
+  "outbound_mails_reply_link" char(1) DEFAULT NULL,
   "outbound_from" varchar(250) default NULL,
   "inbound_pop_server" character varying(250) DEFAULT NULL,
   "inbound_pop_port"  smallint DEFAULT NULL,

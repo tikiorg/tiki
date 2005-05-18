@@ -1,4 +1,14 @@
 {if $popup ne ""}
+  {if $slideshow_p ne ''}
+    {if $previmg ne '' && $desp ne 0}
+    <META HTTP-EQUIV="Refresh" CONTENT="{$slideshow_p};tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$previmg}{if $itype=='s'}&amp;scaled&amp;scalesize={$scalesize}{/if}&amp;popup={$popup}&amp;slideshow_p={$slideshow_p}">
+    {/if}
+  {/if}
+  {if $slideshow_n ne ''}
+    {if $nextimg ne ''}
+    <META HTTP-EQUIV="Refresh" CONTENT="{$slideshow_n};tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$nextdesp}&amp;galleryId={$galleryId}&amp;imageId={$nextimg}{if $itype=='s'}&amp;scaled&amp;scalesize={$scalesize}{/if}&amp;popup={$popup}&amp;slideshow_n={$slideshow_n}">
+    {/if}
+  {/if}
   <script language='Javascript' type='text/javascript'>
 	window.resizeTo({$winx},{$winy});
   </script>
@@ -29,13 +39,16 @@
     {/if}
 
     {if $previmg ne '' && $desp ne 0}
-    	<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$previmg}{if $itype=='s'}&amp;scaled&amp;xsize={$sxsize}&amp;ysize={$sysize}{/if}&amp;popup={$popup}" class="gallink">{html_image file='img/icons2/nav_dot_right.gif' border='0' alt='{tr}prev image{/tr}' title='{tr}prev image{/tr}'}</a>
+    	<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$previmg}{if $itype=='s'}&amp;scaled&amp;scalesize={$scalesize}{/if}&amp;popup={$popup}&amp;slideshow_p=5" class="gallink">{html_image file='img/icons2/nav_prev.gif' border='0' alt='{tr}slideshow_p{/tr}' title='{tr}slideshow backward{/tr}'}</a>
+    	<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$previmg}{if $itype=='s'}&amp;scaled&amp;scalesize={$scalesize}{/if}&amp;popup={$popup}" class="gallink">{html_image file='img/icons2/nav_dot_right.gif' border='0' alt='{tr}prev image{/tr}' title='{tr}prev image{/tr}'}</a>
     {/if}
+
     {if $nextimg ne ''}
-    	<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$nextdesp}&amp;galleryId={$galleryId}&amp;imageId={$nextimg}{if $itype=='s'}&amp;scaled&amp;xsize={$sxsize}&amp;ysize={$sysize}{/if}&amp;popup={$popup}" class="gallink">{html_image file='img/icons2/nav_dot_left.gif' border='0' alt='{tr}next image{/tr}' title='{tr}next image{/tr}'}</a>
+    	<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$nextdesp}&amp;galleryId={$galleryId}&amp;imageId={$nextimg}{if $itype=='s'}&amp;scaled&amp;scalesize={$scalesize}{/if}&amp;popup={$popup}" class="gallink">{html_image file='img/icons2/nav_dot_left.gif' border='0' alt='{tr}next image{/tr}' title='{tr}next image{/tr}'}</a>
+    	<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$nextdesp}&amp;galleryId={$galleryId}&amp;imageId={$nextimg}{if $itype=='s'}&amp;scaled&amp;scalesize={$scalesize}{/if}&amp;popup={$popup}&amp;slideshow_n=5" class="gallink">{html_image file='img/icons2/nav_next.gif' border='0' alt='{tr}slideshow_n{/tr}' title='{tr}slideshow forward{/tr}'}</a>
     {/if}
 		{if $imageId ne $lastId}
-    	<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$lastdesp}&amp;galleryId={$galleryId}&amp;imageId={$lastId}{if $itype=='s'}&amp;scaled&amp;xsize={$sxsize}&amp;ysize={$sysize}{/if}&amp;popup={$popup}" class="gallink">{html_image file='img/icons2/nav_last.gif' border='0' alt='{tr}last image{/tr}' title='{tr}last image{/tr}'}</a>    
+    	<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$lastdesp}&amp;galleryId={$galleryId}&amp;imageId={$lastId}{if $itype=='s'}&amp;scaled&amp;scalesize={$scalesize}{/if}&amp;popup={$popup}" class="gallink">{html_image file='img/icons2/nav_last.gif' border='0' alt='{tr}last image{/tr}' title='{tr}last image{/tr}'}</a>    
 		{/if}
   </div>
   <br />
@@ -43,10 +56,10 @@
 
   <div class="showimage" {if ($popup) }style="height: 400px"{/if}>
     {if $itype eq 'o'}
-    	<img src="show_image.php?id={$imageId}" alt="{tr}image{/tr}" />
+    	<img src="show_image.php?id={$imageId}&amp;nocount=y" alt="{tr}image{/tr}" />
     {else}
 	    <a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$desp}&amp;galleryId={$galleryId}&amp;imageId={$imageId}&amp;scalesize={$scaleinfo.nextscale}&amp;scaled" title="{tr}Click to zoom{/tr}">
-	    <img src="show_image.php?id={$imageId}&amp;scaled&amp;scalesize={$scalesize}" alt="{tr}image{/tr}" /></a>
+	    <img src="show_image.php?id={$imageId}&amp;scaled&amp;scalesize={$scalesize}&amp;nocount=y" alt="{tr}image{/tr}" /></a>
     {/if}
   </div>
   
@@ -67,12 +80,16 @@
 	    {if $previmg ne '' && $desp ne 0}
 	    	<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$previmg}{if $itype eq 's'}&amp;scaled&amp;scalesize={$scalesize}{/if}" class="gallink">{html_image file='img/icons2/nav_dot_right.gif' border='0' alt='{tr}prev image{/tr}' title='{tr}prev image{/tr}'}</a>
 	    {/if}
-	    <a {jspopup height="$winy" width="$winx" href="tiki-browse_image.php?offset=$offset&amp;sort_mode=$sort_mode&amp;desp=$nextdesp&amp;galleryId=$galleryId&amp;imageId=$imageId&amp;popup=1"} class="gallink">{html_image file='img/icons2/admin_unhide.gif' border='0' alt='{tr}Popup window{/tr}' title='{tr}popup window{/tr}'}</a>
+            {if $defaultscale eq 'o'}
+	        <a {jspopup height="$winy" width="$winx" href="tiki-browse_image.php?offset=$offset&amp;sort_mode=$sort_mode&amp;desp=$nextdesp&amp;galleryId=$galleryId&amp;imageId=$imageId&amp;popup=1"} class="gallink">
+            {else}
+	        <a {jspopup height="$winy" width="$winx" href="tiki-browse_image.php?offset=$offset&amp;sort_mode=$sort_mode&amp;desp=$nextdesp&amp;galleryId=$galleryId&amp;imageId=$imageId&amp;scaled&amp;scalesize=$defaultscale&amp;popup=1"} class="gallink">
+            {/if}{html_image file='img/icons2/admin_unhide.gif' border='0' alt='{tr}Popup window{/tr}' title='{tr}popup window{/tr}'}</a>
 	    {if $nextimg ne ''}
 	    	<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$nextdesp}&amp;galleryId={$galleryId}&amp;imageId={$nextimg}{if $itype eq 's'}&amp;scaled&amp;scalesize={$scalesize}{/if}" class="gallink">{html_image file='img/icons2/nav_dot_left.gif' border='0' alt='{tr}next image{/tr}' title='{tr}next image{/tr}'}</a>
 	    {/if}
 	   	{if $imageId ne $lastId}
-				<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$lastdesp}&amp;galleryId={$galleryId}&amp;imageId={$lastId}{if $itype=='s'}&amp;scaled&amp;xsize={$sxsize}&amp;ysize={$sysize}{/if}" class="gallink">{html_image file='img/icons2/nav_last.gif' border='0' alt='{tr}last image{/tr}' title='{tr}last image{/tr}'}</a>    
+				<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$lastdesp}&amp;galleryId={$galleryId}&amp;imageId={$lastId}{if $itype=='s'}&amp;scaled&amp;scalesize={$scalesize}{/if}" class="gallink">{html_image file='img/icons2/nav_last.gif' border='0' alt='{tr}last image{/tr}' title='{tr}last image{/tr}'}</a>    
 			{/if}
 	</div>
 {/if}

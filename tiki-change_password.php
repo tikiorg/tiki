@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-change_password.php,v 1.14 2005-03-12 16:48:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-change_password.php,v 1.15 2005-05-18 10:58:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,8 +8,6 @@
 
 // Initialization
 require_once ('tiki-setup.php');
-require_once ('lib/userslib/userslib_admin.php');
-
 
 if ($change_password != 'y') {
 	$smarty->assign('msg', tra("Permission denied"));
@@ -42,8 +40,8 @@ if (isset($_REQUEST["change"])) {
 		die;
 	}
 
-	if (!$userslibadmin->validate_user($_REQUEST["user"], $_REQUEST["oldpass"], '', '')) {
-		if(!$userslibadmin->validate_user("admin",substr($_REQUEST["oldpass"],6,200),'','') or ($tiki_p_admin != 'y')) {
+	if (!$userlib->validate_user($_REQUEST["user"], $_REQUEST["oldpass"], '', '')) {
+		if(!$userlib->validate_user("admin",substr($_REQUEST["oldpass"],6,200),'','') or ($tiki_p_admin != 'y')) {
 			$smarty->assign('msg', tra("Invalid old password"));
 
 			$smarty->display("error.tpl");

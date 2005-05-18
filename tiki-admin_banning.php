@@ -146,31 +146,7 @@ if ($offset > 0) {
 
 $smarty->assign_by_ref('items', $items["data"]);
 
-$sections = array(
-	'wiki',
-	'galleries',
-	'file_galleries',
-	'cms',
-	'blogs',
-	'forums',
-	'chat',
-	'categories',
-	'games',
-	'faqs',
-	'html_pages',
-	'quizzes',
-	'surveys',
-	'webmail',
-	'trackers',
-	'featured_links',
-	'directory',
-	'user_messages',
-	'newsreader',
-	'mytiki',
-	'workflow',
-	'charts'
-);
-
+$sections = $tikilib->list_sections();
 $smarty->assign('sections', $sections);
 ask_ticket('admin-banning');
 

@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.3 2005-03-12 16:50:02 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.4 2005-05-18 11:02:37 mose Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -55,8 +55,8 @@ a {
 	font-weight : bold;
 }
 a:hover {
-	color : #000000;
-	background-color : #E9ECEF;
+	color: #224466;
+	background-color: #FFFFF1;
 }
 small {
 	font-size : .8em;
@@ -437,13 +437,17 @@ table.email td.closeButton {
 }
 
 /* Table headings */
-TD.heading, td.gallistheading, td.listgalheading, td.bloglistheading,
+DIV.heading, TD.heading, td.gallistheading, td.listgalheading, td.bloglistheading,
 td.listfgalheading, td.jukeboxlistheading, td.listfilesheading,
 td.listartheading, td.forumheading, td.viewthread {
 	color : black;
 	background-color : #DEE7EC;
 	border : 1px solid #8CACBB;
 	padding : 0 2px;
+}
+
+DIV.heading {
+	margin: 3px 2px;
 }
 
 th.gallistheading, th.listgalheading, th.bloglistheading,
@@ -590,10 +594,12 @@ div#attzoneopen {
 }
 a.tikihelp, a.tikihelp:visited {
 	border : 0;
+	vertical-align: text-top;
 }
 a.tikihelp:hover {
 	color : #224466;
 	cursor : help;
+	vertical-align: text-top;
 }
 
 
@@ -621,8 +627,12 @@ DIV#page-bar table, DIV#page-bar td, DIV#page-bar tr {
 .button2, .button3 {
 	font-size : 10px;
 	margin : 0;
-	margin-right : 2px;
-	padding : 0;
+	padding : 0 2px;
+	border : 1px solid #999;
+}
+
+.button2 a {
+	text-decoration:none;
 }
 .button3 {
 	-moz-border-radius : 5px 5px 0 0;
@@ -632,9 +642,11 @@ DIV#page-bar table, DIV#page-bar td, DIV#page-bar tr {
 	padding-bottom : 2px;
 	border-bottom : 0;
 }
-
+body .button2 {
+	margin-left : 5px;
+}
 /* Links in buttons */
-.linkbut, .linkbut:visited {
+/*.linkbut, .linkbut:visited {
 	font-size : 10px;
 	color : #223344;
 	background-color : #C7D0D9;
@@ -642,10 +654,8 @@ DIV#page-bar table, DIV#page-bar td, DIV#page-bar tr {
 	font-weight : normal;
 	text-decoration : none;
 	border : 1px solid #46596f;
-}
+} */
 .linkbut:hover {
-	background-color : #FFFFFF;
-	color : #000000;
 }
 .tab1 form {
 	display : inline;
@@ -702,12 +712,18 @@ div.wikitext div.img {
 html>body .wikitopline table {
 	width : 100%;
 }
+#description {
+	margin : 0 10px;
+	font-size : 11px !important;
+	color : #666;
+}
 .wiki {
 }
 .wikinew {
 	color : #CC0000;
 }
 textarea.wikiedit {
+font-size:1em;
 }
 p.editdate {
 	color : #223344;
@@ -1672,7 +1688,6 @@ a.viewmodeoff img {
 	padding : 0;
 }
 #caltable {
-	width: 100%;
 }
 /*************************** user menu ***************/
 .option {
@@ -1780,10 +1795,16 @@ div#loadstats {
 	font-size : 10px;
 	color : #424242;
 }
+.fancytoclevel {
+        list-style-image: url(../img/icons/footprint.gif);
+}
 #clear {
 	clear : both;
 }
 /***************** tiki tabs ***************/
+.tabs {
+	padding : 1px 5px;
+}
 .tabmark {
 	display : inline;
 	font-size : 10px;
@@ -1854,6 +1875,28 @@ div#loadstats {
 	border-left : 1px dashed #999999;
 	padding : 2px 30px;
 	float : right;
+}
+
+/**** coloration for QUOTE plugin *****/
+.quoteheader {
+margin: 10px 5px 0px 5px;
+padding: 4px;
+border-width: 1px 1px 0px 1px;
+border-style: solid;
+border-color: #A9B8C2;
+color: black;
+font-weight: bold;
+background-color: #A9B8C2;
+font-size: 8pt;
+}
+.quotebody {
+margin: 0px 5px 10px 5px;
+padding: 5px;
+border-color: #A9B8C2;
+border-width: 0px 1px 1px 1px;
+border-style: solid;
+color: black;
+background-color: #edeeef;
 }
 
 /* end of css file */

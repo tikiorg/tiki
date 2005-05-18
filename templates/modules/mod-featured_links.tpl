@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-featured_links.tpl,v 1.11 2005-03-12 16:50:59 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-featured_links.tpl,v 1.12 2005-05-18 11:03:29 mose Exp $ *}
 
 {if $feature_featuredLinks eq 'y'}
   {tikimodule title="{tr}Featured links{/tr}" name="featured_links" flip=$module_params.flip decorations=$module_params.decorations}

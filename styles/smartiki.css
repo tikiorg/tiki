@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.19 2005-01-22 22:56:15 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.20 2005-05-18 11:02:36 mose Exp $
 
 Smarty style by mose@tikiwiki.org
 
@@ -622,6 +622,11 @@ div.wikitext {
 
 /* Date displayed for last modification date of pages */
 p.editdate { color: black; font-size: smaller; font-family: "Lucida Grande", Helvetica, Arial, sans-serif; }
+#description {
+  font-size : 10px !important;
+  padding-left:   10px;
+  color:   #333300;
+}
 
 /* The edit-help used to display the wiki syntax when editing a page */
 div.wiki-edithelp { background: white; border: 1px solid black; font-size: smaller; padding: 6pt;}
@@ -1746,6 +1751,7 @@ font-weight: inherit;
 margin: inherit;
 padding: inherit;
 text-decoration: inherit;
+vertical-align: text-top;
 }
 a.tikihelp:hover {
 color: #224466;
@@ -1757,6 +1763,7 @@ margin: inherit;
 padding: inherit;
 cursor: help;
 text-decoration: inherit;
+vertical-align: text-top;
 }
 
 
@@ -1934,13 +1941,13 @@ a.phplm:hover	{
   margin: 1px;
   border: 1px inset #666666;
   -moz-border-radius: 20px;
-  vertcal-align: middle;
+  vertical-align: middle;
   background-color: #bbaa99;
 }
 .statusoff {
   padding: 1px;
   margin: 2px;
-  vertcal-align: middle;
+  vertical-align: middle;
 }
 
 /**** coloration for c o d e plugin *****/
@@ -1949,63 +1956,6 @@ a.phplm:hover	{
 padding : 2ex;
 background-color : #f0ead8;
 margin : 1ex; border : 1px dashed #adacaf; }
-
-/* wiki diff styles */
-
-.diffheader {
-margin: 10px 5px 0px 5px;
-padding: 4px;
-border-width: 1px 1px 0px 1px;
-border-style: solid;
-border-color: #A9B8C2;
-color: black;
-font-weight: bold;
-background-color: #A9B8C2;
-font-size: 8pt;
-}
-.diffbody {
-margin: 0px 5px 10px 5px;
-padding: 5px;
-border-color: #A9B8C2;
-border-width: 0px 1px 1px 1px;
-border-style: solid;
-font-family: monospace, 'Courier New', courier;
-color: black;
-background-color: #edeeef;
-}
-.diffdeleted {
-border-color: #A9B8C2;
-color: black;
-background-color: #ffcccc;
-}
-.diffadded {
-border-color: #A9B8C2;
-color: black;
-background-color: #ccffcc;
-}
-.diffchar{color: red;}
-
-/**** coloration for QUOTE plugin *****/
-.quoteheader {
-margin: 10px 5px 0px 5px;
-padding: 4px;
-border-width: 1px 1px 0px 1px;
-border-style: solid;
-border-color: #A9B8C2;
-color: black;
-font-weight: bold;
-background-color: #A9B8C2;
-font-size: 8pt;
-}
-.quotebody {
-margin: 0px 5px 10px 5px;
-padding: 5px;
-border-color: #A9B8C2;
-border-width: 0px 1px 1px 1px;
-border-style: solid;
-color: black;
-background-color: #edeeef;
-}
 
 /* Version Plugin Style */
 
@@ -2049,3 +1999,27 @@ float : right;
 .diffdeleted {background-color:#ffcccc;}
 .diffbody{background-color:#F2F4F5}
 .diffchar {color: red;}
+
+/**** coloration for QUOTE plugin *****/
+.quoteheader {
+margin: 10px 5px 0px 5px;
+padding: 4px;
+border-width: 1px 1px 0px 1px;
+border-style: solid;
+border-color: #A9B8C2;
+color: black;
+font-weight: bold;
+background-color: #A9B8C2;
+font-size: 8pt;
+}
+.quotebody {
+margin: 0px 5px 10px 5px;
+padding: 5px;
+border-color: #A9B8C2;
+border-width: 0px 1px 1px 1px;
+border-style: solid;
+color: black;
+background-color: #edeeef;
+}
+
+/* end of css file */

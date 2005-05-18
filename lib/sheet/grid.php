@@ -22,7 +22,7 @@ require_once( "lib/sheet/ole/pps/root.php" );
 require_once( "lib/sheet/ole/pps/file.php" );
 require_once( "lib/sheet/ole.php" );
 require_once( "lib/sheet/excel/writer.php" );
-require_once( "lib/sheet/conf/config.inc.php" );
+//require_once( "lib/sheet/conf/config.inc.php" );
 
 // Constants {{{1
 
@@ -139,6 +139,8 @@ class TikiSheet
 
 	var $usedRow;
 	var $usedCol;
+
+	var $errorFlag;
 	// }}}2
 	
 	/** getHandlerList {{{2
@@ -152,8 +154,7 @@ class TikiSheet
 		return array(
 			'TikiSheetSerializeHandler',
 			'TikiSheetCSVHandler',
-			'TikiSheetExcelHandler',
-			'TikiSheetOpenOfficeHandler'
+			'TikiSheetExcelHandler'
 		);
 	}// }}}2
 	
@@ -287,22 +288,26 @@ class TikiSheet
 		$this->rowCount = $maxRow + 1;
 		$this->columnCount = $maxCol + 1;
 
+		$base = array( 'width' => 1, 'height' => 1, 'format' => null );
 		for( $y = 0; $this->rowCount > $y; $y++ )
 			for( $x = 0; $this->columnCount > $x; $x++ )
 			{
+				if( !isset( $this->dataGrid[$y] ) )
+					$this->dataGrid[$y] = array();
+				if( !isset( $this->calcGrid[$y] ) )
+					$this->calcGrid[$y] = array();
+				if( !isset( $this->cellInfo[$y] ) )
+					$this->cellInfo[$y] = array();
+
 				if( !isset( $this->dataGrid[$y][$x] ) )
 					$this->dataGrid[$y][$x] = '';
 				if( !isset( $this->calcGrid[$y][$x] ) )
 					$this->calcGrid[$y][$x] = '';
+				if( !isset( $this->cellInfo[$y][$x] ) )
+					$this->cellInfo[$y][$x] = $base;
 
-				if( empty( $this->cellInfo[$y][$x]['width'] ) )
-					$this->cellInfo[$y][$x]['width'] = 1;
-
-				if( empty( $this->cellInfo[$y][$x]['height'] ) )
-					$this->cellInfo[$y][$x]['height'] = 1;
-
-				if( empty( $this->cellInfo[$y][$x]['format'] ) )
-					$this->cellInfo[$y][$x]['format'] = '';
+				
+				$this->cellInfo[$y][$x] = array_merge( $base, $this->cellInfo[$y][$x] );
 			}
 
 		return true;
@@ -372,6 +377,43 @@ class TikiSheet
 		return $this->columnCount;
 	}
 
+	/** getRange {{{2
+	 * Reutrns an array containing the values located in
+	 * a given range (ex: A1:B9)
+	 */
+	function getRange( $range )
+	{
+		if( preg_match( "/^([A-Z]+)([0-9]+):([A-Z]+)([0-9]+)$/", $range, $parts ) )
+		{
+			$beginRow = $parts[2] - 1;
+			$endRow = $parts[4] - 1;
+			$beginCol = $this->getColumnNumber( $parts[1] );
+			$endCol = $this->getColumnNumber( $parts[3] );
+
+			if( $beginRow > $endRow )
+			{
+				$a = $endRow;
+				$endRow = $beginRow;
+				$beginRow = $a;
+			}
+			if( $beginCol > $endCol )
+			{
+				$a = $endCol;
+				$endCol = $beginCol;
+				$beginCol = $a;
+			}
+
+			$data = array();
+			for( $row = $beginRow; $endRow + 1 > $row; $row++ )
+				for( $col = $beginCol; $endCol + 1 > $col; $col++ )
+					if( isset( $this->dataGrid[$row] ) && isset( $this->dataGrid[$row][$col] ) )
+						$data[] = $this->dataGrid[$row][$col];
+
+			return $data;
+		}
+		else
+			return false;
+	}
 	/** getRowCount {{{2
 	 * Returns the row count.
 	 */
@@ -391,10 +433,16 @@ class TikiSheet
 		$this->dataGrid = array();
 		$this->calcGrid = array();
 		$this->cellInfo = array();
+		$this->errorFlag = false;
 		
-		if( !$handler->_load( $this ) )
+		set_error_handler( array( &$this, "error_handler" ) );
+		if( !$handler->_load( $this ) || $this->errorFlag )
+		{
+			restore_error_handler();
 			return false;
+		}
 
+		restore_error_handler();
 		return $this->finalize();
 	}
 
@@ -486,6 +534,11 @@ class TikiSheet
 	function setSize( $width, $height )
 	{
 		$this->cellInfo[$this->usedRow][$this->usedCol] = array( "width" => $width, "height" => $height );
+
+		for( $y = $this->usedRow; $this->usedRow + $height > $y; $y++ )
+			for( $x = $this->usedCol; $this->usedCol + $width > $x; $x++ )
+				if( !($y == $this->usedRow && $x == $this->usedCol) )
+					$this->createDeadCell( $x, $y );
 	}
 	
 	/** setValue {{{2
@@ -498,6 +551,44 @@ class TikiSheet
 		$this->dataGrid[$this->usedRow][$this->usedCol] = $value;
 	}
 
+	/** createDeadCell {{{2
+	 * Assigns the cell as overlapped by a wide cell.
+	 * @param $x Coordinate of the cell
+	 * @param $y Coordinate of the cell
+	 */
+	function createDeadCell( $x, $y )
+	{
+		$this->dataGrid[$y][$x] = null;
+		$this->cellInfo[$y][$x] = array( "width" => 0, "height" => 0, "format" => null );
+	}
+
+	/** getColumnNumber {{{2
+	 * Returns the column number from the letter-style.
+	 */
+	function getColumnNumber( $letter )
+	{
+		$val = 0;
+		$len = strlen( $letter );
+		
+		for( $i = 0; $len > $i; $i++ )
+		{
+			$pow = pow( 26, $len - $i - 1 );
+			$val += $pow * ( ord( $letter[$i] ) - 64 );
+		}
+		$val--;
+
+		return $val;
+	}
+	
+	/** error_handler {{{2
+	 * Callback error handler function. Used by import.
+	 * @see http://ca.php.net/set_error_handler
+	 */
+	function error_handler( $errno, $errstr, $errfile, $errline )
+	{
+		echo $errstr . ': ' .  $errfile . ' (' . $errline . ')';
+		$this->errorFlag = true;
+	}
 } // }}}1 
 
 /** TikiSheetDataHandler {{{1
@@ -653,7 +744,7 @@ class TikiSheetFormHandler extends TikiSheetDataHandler
 				echo "		cell.endValue = '{$value}';\n";
 				echo "		cell.format = {$format};\n";
 
-				if( !empty( $width ) && !empty( $height ) )
+				if( !empty( $width ) && !empty( $height ) && ($width != 1 || $height != 1) )
 					echo "		cell.changeSize( {$height}, {$width} );\n";
 			}
 		}
@@ -708,7 +799,7 @@ class TikiSheetFormHandler extends TikiSheetDataHandler
 	// version {{{2
 	function version()
 	{
-		return "1.0-test";
+		return "1.1-test";
 	}
 } // }}}1
 
@@ -760,6 +851,11 @@ class TikiSheetSerializeHandler extends TikiSheetDataHandler
 
 		if( $this->file == "php://stdout" )
 		{
+			header("Content-type: application/octet-stream");
+			header("Content-Disposition: attachment; filename=export.tws");
+			header("Expires: 0");
+			header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
+			header("Pragma: public");
 			echo $data;
 			return true;
 		}
@@ -895,7 +991,7 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 	// version {{{2
 	function version()
 	{
-		return "0.1-dev";
+		return "1.0-test";
 	}
  } // }}}1
 
@@ -1044,7 +1140,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 	// version {{{2
 	function version()
 	{
-		return "1.0-test";
+		return "1.0";
 	}
 } // }}}1
 
@@ -1223,6 +1319,102 @@ class TikiSheetOpenOfficeHandler extends TikiSheetDataHandler
 	}
 } // }}}1
 
+/** TikiSheetWikiTableHandler {{{1
+ * Class that stores the sheet representation in a
+ * standard text file as a serialized PHP object.
+ */
+class TikiSheetWikiTableHandler extends TikiSheetDataHandler
+{
+	var $pageName;
+
+	/** Constructor {{{2
+	 * Initializes the the serializer on a wiki page
+	 * @param $file The name of the wiki page to perform actions on.
+	 */
+	function TikiSheetWikiTableHandler( $pageName )
+	{
+		$this->pageName = $pageName;
+	}
+
+	// _load {{{2
+	function _load( &$sheet )
+	{
+		global $tikilib;
+		
+		$result = $tikilib->query( "SELECT `data` FROM `tiki_pages` WHERE `pageName` = ?", array( $this->pageName ) );
+		if( $row = $result->fetchRow() )
+		{
+			$tables = $this->getRawTables( $row['data'] );
+			
+			$row = 0;
+			foreach( $tables as $table )
+			{
+				$table = explode( "\n", $table );
+
+				foreach( $table as $line )
+				{
+					$line = explode( '|', trim( $line ) );
+
+					foreach( $line as $col => $value )
+					{
+						$sheet->initCell( $row, $col );
+						$sheet->setValue( $value );
+						$sheet->setSize( 1, 1 );
+					}
+					++$row;
+				}
+			}
+
+			return true;
+		}
+		else
+			return false;
+	}
+
+	/** getRawTables {{{2
+	 * Returns an array containing all table-like structures
+	 * in the wiki-content.
+	 */
+	function getRawTables( $data )
+	{
+		$pos = 0;
+		$tables = array();
+		while( true ) // Keep looping
+		{
+			if( ( $begin = strpos( $data, '||', $pos ) ) === false ) break;;
+			if( ( $end = strpos( $data, '||', $begin + 2 ) ) === false ) break;
+
+			$pos = $end + 2;
+
+			$content = substr( $data, $begin + 2, $end - $begin - 2 );
+			
+			if( strpos( $content, '|' ) !== false )
+				$tables[] = $content;
+		}
+
+
+		return $tables;
+	}
+
+	// name {{{2
+	function name()
+	{
+		return "CSV File";
+	}
+
+	// supports {{{2
+	function supports( $type )
+	{
+		return ( TIKISHEET_LOAD_DATA & $type ) > 0;
+	}
+
+	// version {{{2
+	function version()
+	{
+		return "0.1-dev";
+	}
+ } // }}}1
+
 /** TikiSheetOutputHandler {{{1
  * Class to output the data sheet as a standard HTML table.
  * Importing is not supported.
@@ -1293,7 +1485,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 				extract( $sheet->cellInfo[$i][$j] );
 				$append = "";
 
-				if( empty( $width ) || empty( $height ) )
+				if( empty( $width ) || empty( $height ) || $width == 0 || $height == 0 )
 					continue;
 
 				if( $width > 1 )
@@ -1326,7 +1518,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 	// version {{{2
 	function version()
 	{
-		return "1.0-test";
+		return "1.0";
 	}
 } // }}}1
 

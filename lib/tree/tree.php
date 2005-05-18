@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/tree/tree.php,v 1.8 2004-08-26 19:24:07 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/tree/tree.php,v 1.9 2005-05-18 11:01:55 mose Exp $
  *
  * \brief Base tree maker
  *

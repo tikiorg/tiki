@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-directory_top_sites.tpl,v 1.8 2005-03-12 16:50:59 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-directory_top_sites.tpl,v 1.9 2005-05-18 11:03:29 mose Exp $ *}
 
 {if $feature_directory eq 'y'}
 {if $nonums eq 'y'}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_users.tpl,v 1.7 2005-03-12 16:50:49 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_users.tpl,v 1.8 2005-05-18 11:03:18 mose Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_users.php">{tr}User List{/tr}</a>
 
 {if $feature_help eq 'y'}
@@ -24,7 +24,7 @@
 {if $feature_score eq 'y'}
   <td class="userlistheading"><a class="userlistheading" href="tiki-list_users.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'score_desc'}score_asc{else}score_desc{/if}">{tr}Score{/tr}</a>&nbsp;</td>
 {/if}
-	<td class="userlistheading">{tr}Country{/tr}&nbsp;</td>
+	<td class="userlistheading"><a class="userlistheading" href="tiki-list_users.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'country_desc'}country_asc{else}country_desc{/if}">{tr}Country{/tr}</a>&nbsp;</td>
   <td class="userlistheading">{tr}Distance (km){/tr}&nbsp;</td>
 </tr>
 {cycle values="odd,even" print=false}

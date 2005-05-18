@@ -139,7 +139,17 @@
 <br /><br /><br /><br /><br /><br />
 <div align="left" class="simplebox">
 <h2>{tr}Remove Zones (you lose entered info for the banner){/tr}</h2>
+<table class="normal">
+<tr>
+<td class="heading">{tr}name{/tr}</td>
+<td class="heading">{tr}action{/tr}</td>
+</tr>
+{cycle print=false values="even,odd"}
 {section name=ix loop=$zones}
-{$zones[ix].zone}   <a class="link" href="tiki-edit_banner.php?removeZone={$zones[ix].zone}">remove</a><br />
+<tr>
+<td class="{cycle advance=false}">{$zones[ix].zone}</td>
+<td class="{cycle}"><a class="link" href="tiki-edit_banner.php?removeZone={$zones[ix].zone}">remove</a></td>
+</tr>
 {/section}
+</table>
 </div>

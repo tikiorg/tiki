@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_gallery.php,v 1.18 2005-01-22 22:54:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_gallery.php,v 1.19 2005-05-18 10:58:58 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -18,14 +18,14 @@ if ($feature_galleries != 'y') {
 	die;
 }
 
-if ($_REQUEST["galleryId"] == 0 && $tiki_p_admin_galleries != 'y') {
+if ($tiki_p_admin_galleries != 'y') {
 	$smarty->assign('msg', tra("Permission denied you cannot access this gallery"));
 
 	$smarty->display("error.tpl");
 	die;
 }
 
-if (!isset($_REQUEST["galleryId"])) {
+if (empty($_REQUEST["galleryId"])) {
 	$smarty->assign('msg', tra("No gallery indicated"));
 
 	$smarty->display("error.tpl");

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_created_faqs.tpl,v 1.8 2005-03-12 16:51:00 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_created_faqs.tpl,v 1.9 2005-05-18 11:03:29 mose Exp $ *}
 
 {if $feature_faqs eq 'y'}
 {if $nonums eq 'y'}

@@ -7,7 +7,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/modifier.dbg.php,v 1.3 2004-08-26 19:24:02 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/modifier.dbg.php,v 1.4 2005-05-18 11:01:44 mose Exp $
  *
  * \author zaufi <zaufi@sendmail.ru>
  */

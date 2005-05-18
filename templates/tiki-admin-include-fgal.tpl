@@ -1,10 +1,13 @@
 {if $feature_help eq "y"}
-<div class="simplebox">{tr}Tip{/tr}: {tr}to add/remove file galleries, go to "File Galleries" on the application menu, or{/tr} <a class="link" href="tiki-file_galleries.php">{tr}click here{/tr}</a>.</div><br />
+<div class="rbox" style="margin-top: 10px;">
+<div class="rbox-title" style="background-color: #eeee99; font-weight : bold; display : inline; padding : 0 10px;">{tr}Tip{/tr}</div>  
+<div class="rbox-data" style="padding: 2px 10px; background-color: #eeee99;">{tr}To add/remove file galleries, go to "File Galleries" on the application menu, or{/tr} <a class="link" href="tiki-file_galleries.php">{tr}click here{/tr}</a>.</div>
+</div>
+<br />
 {/if}
 <div class="cbox">
-  <div class="cbox-title">{tr}File galleries{/tr}</div>
+  <div class="cbox-title">{tr}Home Gallery{/tr}</div>
   <div class="cbox-data">
-    <div class="simplebox">
       <form action="tiki-admin.php?page=fgal" method="post">
         <table class="admin"><tr>
           <td class="form">{tr}Home Gallery (main gallery){/tr}</td>
@@ -17,10 +20,12 @@
               value="{tr}ok{/tr}" /></td>
         </tr></table>
       </form>
-    </div>
+  </div>
+</div>
 
-    <div class="simplebox">
-      {tr}Galleries features{/tr}<br />
+<div class="cbox">
+  <div class="cbox-title">{tr}Galleries features{/tr}</div>
+  <div class="cbox-data">
       <form action="tiki-admin.php?page=fgal" method="post">
         <table class="admin"><tr>
           <td class="form">{tr}Rankings{/tr}:</td>
@@ -52,25 +57,22 @@
           <td class="form">{tr}Uploaded filenames cannot match regex{/tr}:</td>
           <td><input type="text" name="fgal_nmatch_regex"
               value="{$fgal_nmatch_regex|escape}"/><a class="link" {popup sticky="true"
-              trigger="onclick" caption="Storing files in a directory"
-              text="If you decide to store files in a directory you must ensure
-that the user cannot access directly to the directory. You have two options to
-accomplish this:<br />
-<ul><li>Use a directory ourside your document root, make sure your php script can
-read and write to that directory</li>
-<li>Use a directory inside the document root and use and .htaccess to prevent the
-user from listing the directory contents</li></ul>
-To configure the directory path use UNIX like paths for example files/ or
-c:/foo/files or /www/files/"}>{tr}please read{/tr}</a></td>
+              trigger="onclick" caption="{tr}Storing files in a directory{/tr}"
+              text="{tr}If you decide to store files in a directory you must ensure that the user cannot access directly to the directory.{/tr}
+              {tr}You have two options to accomplish this:<br /><ul><li>Use a directory outside your document root, make sure your php script can read and write to that directory</li><li>Use a directory inside the document root and use .htaccess to prevent the user from listing the directory contents</li></ul>{/tr}
+              {tr}To configure the directory path use UNIX like paths for example files/ or c:/foo/files or /www/files/{/tr}"}>
+              {tr}please read{/tr}</a></td>
         </tr><tr>
           <td colspan="2" class="button"><input type="submit" name="filegalfeatures"
-              value="{tr}Change preferences{/tr}" /></td>
+              value="{tr}Set features{/tr}" /></td>
        </tr></table>
       </form>
-    </div>
+  </div>
+</div>
 
-    <div class="simplebox">
-      {tr}Gallery listing configuration{/tr}
+<div class="cbox">
+  <div class="cbox-title">{tr}Gallery listing configuration{/tr}</div>
+  <div class="cbox-data">
       <form method="post" action="tiki-admin.php?page=fgal">
         <table class="admin"><tr class="form">
           <td>{tr}Name{/tr}</td>
@@ -102,13 +104,15 @@ c:/foo/files or /www/files/"}>{tr}please read{/tr}</a></td>
               {if $fgal_list_hits eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td colspan="2" class="button"><input type="submit"
-              name="filegallistprefs" value="{tr}Change preferences{/tr}" /></td>
+              name="filegallistprefs" value="{tr}Change configuration{/tr}" /></td>
         </tr></table>
       </form>
-    </div>
+  </div>
+</div>
 
-    <div class="simplebox">
-      {tr}File galleries comments settings{/tr}
+<div class="cbox">
+  <div class="cbox-title">{tr}File galleries comments settings{/tr}</div>
+  <div class="cbox-data">
       <form method="post" action="tiki-admin.php?page=fgal">
         <table class="admin"><tr>
           <td class="form">{tr}Default number of comments per page{/tr}: </td>
@@ -123,16 +127,17 @@ c:/foo/files or /www/files/"}>{tr}please read{/tr}</a></td>
               </select></td>
         </tr><tr>
           <td colspan="2" class="button"><input type="submit" name="filegalcomprefs"
-              value="{tr}Change preferences{/tr}" /></td>
+              value="{tr}Change settings{/tr}" /></td>
         </tr></table>
       </form>
-    </div>
-    
-    <div class="simplebox">
-    	{tr}File galleries search indexing{/tr}<br>
-    	<br>
-    	{tr}Leave command blank to delete handler{/tr}<br>
-    	{tr}Use %1 for where internal file name should be substituted (example: "strings %1" to convert the document to text using the unix strings command){/tr}<br>
+  </div>
+</div>
+
+<div class="cbox">
+  <div class="cbox-title">{tr}File galleries search indexing{/tr}</div>
+  <div class="cbox-data">
+  		<ul><li>{tr}Leave command blank to delete handler{/tr}</li><li>
+    	{tr}Use %1 for where internal file name should be substituted (example: "strings %1" to convert the document to text using the unix strings command){/tr}</li></ul>
     	<form method="post" action="tiki-admin.php?page=fgal">
         <table class="admin">
 		<tr class="form">
@@ -141,11 +146,11 @@ c:/foo/files or /www/files/"}>{tr}please read{/tr}</a></td>
               {if $fgal_enable_auto_indexing eq 'y'}checked="checked"{/if} /></td>
         </tr>
         <tr><td colspan=2><table class="normal">
-        <tr><td class=heading>MIME Type</td><td class=heading>System command</td></tr>
+        <tr><td class="heading">{tr}MIME Type{/tr}</td><td class="heading">{tr}System command{/tr}</td></tr>
         {foreach  key=mime item=cmd from=$fgal_handlers}
-        <tr><td class=odd>{$mime}</td><td class=odd><input name="mimes[{$mime}]" type="text" value="{$cmd|escape:html}" size="30"/></td></tr>
+        <tr><td class="odd">{$mime}</td><td class="odd"><input name="mimes[{$mime}]" type="text" value="{$cmd|escape:html}" size="30"/></td></tr>
         {/foreach}
-        <tr><td class=odd><input name="newMime" type="text" size="30"/></td><td class=odd><input name=newCmd type="text" size="30"/></td></tr>
+        <tr><td class="odd"><input name="newMime" type="text" size="30"/></td><td class="odd"><input name=newCmd type="text" size="30"/></td></tr>
         </table></td></tr>
         <tr><td colspan="2" align="left"><input type="submit" name="filegalredosearch" value="{tr}Reindex all files for search{/tr}"/></td></tr>
            <tr><td colspan="2" class="button"><input type="submit" name="filegalhandlers" value="{tr}Change preferences{/tr}" /></td></tr>

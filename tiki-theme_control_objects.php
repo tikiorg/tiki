@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-theme_control_objects.php,v 1.15 2005-01-05 19:22:42 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-theme_control_objects.php,v 1.16 2005-05-18 10:58:59 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -61,11 +61,7 @@ $smarty->assign('type', $_REQUEST['type']);
 
 switch ($_REQUEST['type']) {
 case 'image gallery':
-	global $imagegallib;
-	if (!is_object($imagegallib)) {
-		require_once('lib/imagegals/imagegallib.php');
-	}
-	$objects = $imagegallib->list_galleries(0, -1, 'name_desc', 'admin', $find_objects);
+	$objects = $tikilib->list_galleries(0, -1, 'name_desc', 'admin', $find_objects);
 
 	$smarty->assign_by_ref('objects', $objects["data"]);
 	$objects = $objects['data'];
@@ -93,11 +89,7 @@ case 'forum':
 	break;
 
 case 'blog':
-	global $bloglib;
-	if (!is_object($bloglib)) {
-		include_once('lib/blogs/bloglib.php');
-	}
-	$objects = $bloglib->list_blogs(0, -1, 'title_asc', $find_objects);
+	$objects = $tikilib->list_blogs(0, -1, 'title_asc', $find_objects);
 
 	$smarty->assign_by_ref('objects', $objects["data"]);
 	$objects = $objects['data'];
@@ -121,11 +113,7 @@ case 'html page':
 	break;
 
 case 'faq':
-	global $faqlib;
-	if (!is_object($faqlib)) {
-		include_once('lib/faqs/faqlib.php');
-	}
-	$objects = $faqlib->list_faqs(0, -1, 'title_asc', $find_objects);
+	$objects = $tikilib->list_faqs(0, -1, 'title_asc', $find_objects);
 
 	$smarty->assign_by_ref('objects', $objects["data"]);
 	$objects = $objects['data'];
@@ -211,8 +199,6 @@ if ($offset > 0) {
 }
 
 $smarty->assign_by_ref('channels', $channels["data"]);
-
-//$sections=Array('wiki','galleries','file_galleries','cms','blogs','forums','chat','categories','games','faqs','html_pages','quizzes','surveys','webmail','trackers','featured_links','directory','user_messages','newsreader','mytiki');
 
 ask_ticket('tc-objects');
 

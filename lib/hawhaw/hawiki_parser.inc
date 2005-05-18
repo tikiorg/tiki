@@ -1,7 +1,7 @@
 <?php
 
 // HAWIKI parser for TikiWiki
-// Last modified: 13. December 2003
+// Last modified: 9. May 2005
 
 // token definitions
 define("HAWIKI_TOKEN_NEWLINE",    1);
@@ -290,6 +290,32 @@ function HAWIKI_parser(&$input, $isFirstColumn)
       elseif (strtolower(substr($value, 0, 5)) == "link=")
       {
         $po["link"] = substr($value, 5, strlen($value) - 5);
+      }
+    }
+
+    $po["token"] = HAWIKI_TOKEN_IMAGE;
+    return($po);
+  }
+
+  if (preg_match("/^\{picture ((.|[\r\n])*?)\}/", $input, $matches))
+  {
+    // image (alternative syntax)
+    $po["text"] = $matches[1];
+    $input = substr($input, strlen($po["text"]) + 10);
+
+    $po["text"] = trim($po["text"]); // strip leading and tailing whitespace
+    $po["text"] = ereg_replace("[\r\n]", " ", $po["text"]);
+    $po["text"] = ereg_replace(" +", " ", $po["text"]);
+    $img_arr = explode(" ", $po["text"]);
+
+    while (list($key, $value) = each($img_arr))
+    {
+      $value = ereg_replace("[\"']", "", $value); // unquote attribute (if quoted)
+
+      if (strtolower(substr($value, 0, 5)) == "file=")
+      {
+        $po["src"] = substr($value, 5, strlen($value) - 5);
+        $po["alt"] = substr($value, 5, strlen($value) - 5);
       }
     }
 

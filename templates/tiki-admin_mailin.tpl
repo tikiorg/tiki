@@ -88,7 +88,7 @@
       </td>
     </tr>
 
-<tr id='article_topic' class="formcolor" {if $info.type ne 'article-put'}style="display:none;"{/if}><td>{tr}Article Topic{/tr}</td><td colspan="3">
+<tr id='article_topic' class="formcolor" {if $info.type ne 'article-put'}style="display:none;"{/if}><td>{tr}Article Topic{/tr}</td><td>
 <select name="article_topicId">
 {section name=t loop=$topics}
 <option value="{$topics[t].topicId|escape}" {if $info.article_topicId eq $topics[t].topicId}selected="selected"{/if}>{$topics[t].name}</option>
@@ -96,8 +96,8 @@
 <option value="" {if $info.article_topicId eq 0}selected="selected"{/if}>{tr}None{/tr}</option>
 </select>
 {if $tiki_p_admin_cms eq 'y'}<a href="tiki-admin_topics.php" class="link">{tr}Admin topics{/tr}</a>{/if}
-</td></tr>
-<tr id='article_type' class="formcolor" {if $info.type ne 'article-put'}style="display:none;"{/if}><td>{tr}Article Type{/tr}</td><td colspan="3">
+</td><td></td><td></td></tr>
+<tr id='article_type' class="formcolor" {if $info.type ne 'article-put'}style="display:none;"{/if}><td>{tr}Article Type{/tr}</td><td>
 <select id='articletype' name='article_type'>
 <option value="">-</option>
 {section name=t loop=$types}
@@ -105,7 +105,7 @@
 {/section}
 </select>
 {if $tiki_p_admin_cms eq 'y'}<a href="tiki-article_types.php" class="link">{tr}Admin types{/tr}</a>{/if}
-</td></tr>
+</td><td></td><td></td></tr>
 
     <tr class="formcolor">
       <td>{tr}Active{/tr}</td>

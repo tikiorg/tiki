@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_calendars.php,v 1.20 2005-03-12 16:48:57 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_calendars.php,v 1.21 2005-05-18 10:58:53 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -41,7 +41,7 @@ if (isset($_REQUEST["save"])) {
 	$customflags["customparticipants"] = $_REQUEST["customparticipants"];
 	$customflags["customcategories"] = $_REQUEST["customcategories"];
 	$customflags["custompriorities"] = $_REQUEST["custompriorities"];
-	$customflags["customevents"] = $_REQUEST["customevents"];
+	$customflags["customsubscription"] = isset($_REQUEST["customsubscription"]) ? $_REQUEST["customsubscription"] : 'n';
 	$customflags["personal"] = $_REQUEST["personal"];
 	$_REQUEST["calendarId"] = $calendarlib->set_calendar($_REQUEST["calendarId"],$user,$_REQUEST["name"],$_REQUEST["description"],$customflags);
 	if ($_REQUEST["personal"]) {
@@ -63,7 +63,7 @@ if ($_REQUEST["calendarId"]) {
 	$info["customparticipants"] = 'n';
 	$info["customcategories"] = 'n';
 	$info["custompriorities"] = 'n';
-	$info["customevents"] = 'n';
+	$info["customsubscription"] = 'n';
 	$info["user"] = "$user";
 	$info["personal"] = 'n';
 }
@@ -76,7 +76,7 @@ $smarty->assign('customlocations', $info["customlocations"]);
 $smarty->assign('customparticipants', $info["customparticipants"]);
 $smarty->assign('customcategories', $info["customcategories"]);
 $smarty->assign('custompriorities', $info["custompriorities"]);
-$smarty->assign('customevents', $info["customevents"]);
+$smarty->assign('customsubscription', $info["customsubscription"]);
 $smarty->assign('calendarId', $_REQUEST["calendarId"]);
 $smarty->assign('personal', $info["personal"]);
 

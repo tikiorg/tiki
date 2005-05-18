@@ -1,7 +1,9 @@
 <div class="cbox">
-<div class="cbox-title">{tr}Maps{/tr}</div>
+<div class="cbox-title">
+  {tr}{$crumbs[$crumb]->title}{/tr}
+  {help crumb=$crumbs[$crumb]}
+</div>
 <div class="cbox-data">
-<div class="simplebox">
 <form action="tiki-admin.php?page=maps" method="post">
 <table class="admin">
 <tr><td class="form">{tr}full path to mapfiles{/tr}:</td><td><input type="text" name="map_path" value="{$map_path|escape}" size="50" /></td></tr>
@@ -14,14 +16,11 @@
 {html_radios name="mapzone" options=$checkboxes_mapzone selected=$mapzone_id separator="  "}
 </td></tr>
 <tr><td colspan="2" class="button"><input type="submit" name="mapsset" value="{tr}Change preferences{/tr}" /></td></tr> 
-<hr>
 <tr><td colspan="2" class="button"><input type="submit" name="mapuser" value="{tr}Generate User Map{/tr}" /></td></tr> 
-<hr>
 {if $map_error neq ''}
 <tr><td align="center" colspan="2">{$map_error}</td></tr>
 {/if}   
 </table>
 </form>
-</div>
 </div>
 </div>

@@ -29,7 +29,7 @@
         <div class="cbox-data">
         <br />
         {if ($errortype eq "404")}
-          Perhaps you were looking for:
+          {tr}Perhaps you were looking for:{/tr}
           <ul>
           {section name=back loop=$likepages}
           <li><a  href="tiki-index.php?page={$likepages[back]|escape:"url"}" class="wiki">{$likepages[back]}</a></li>

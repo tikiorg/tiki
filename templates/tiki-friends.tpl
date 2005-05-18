@@ -1,7 +1,7 @@
 <a href="tiki-friends.php" class="pagetitle">{tr}Friendship Network{/tr}</a>
   
       {if $feature_help eq 'y'}
-<a href="{$helpurl}FriendshipNetwork" target="tikihelp" class="tikihelp" title="{tr}Friendship Network{/tr}">
+<a href="{$helpurl}Friendship+Network" target="tikihelp" class="tikihelp" title="{tr}Friendship Network{/tr}">
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 
 
@@ -76,7 +76,7 @@
 {section name=changes loop=$listpages}
 <tr>
   <td class="userlist{cycle advance=false}">
-  <a class="userlistlogin{cycle advance=false}" href="tiki-user_information.php?view_user={$listpages[changes].login}">{$listpages[changes].login}</a>{if $feature_score eq 'y'}{$listpages[changes].score|star}{/if}
+  <a class="userlistlogin{cycle advance=false}" href="tiki-user_information.php?view_user={$listpages[changes].login}">{$listpages[changes].login|userlink}</a>{if $feature_score eq 'y'}{$listpages[changes].score|star}{/if}
   </td>
   <td class="userlist{cycle advance=false}"><a class="userlistlogin{cycle advance=false}" href="tiki-user_information.php?view_user={$listpages[changes].login}">{$listpages[changes].realname}</a></td>
   <td class="userlist{cycle advance=true}"><a class="userlistlogin{cycle advance=false}" href="?break={$listpages[changes].login}"><img src="img/icons2/delete.gif" alt="{tr}break friendship{/tr}" border="0"></a></td>

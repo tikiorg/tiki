@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_community.php,v 1.2 2005-01-22 22:54:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_community.php,v 1.3 2005-05-18 10:58:53 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,7 +12,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-
 if (isset($_REQUEST["mouseoverfeatures"])) {
 	check_ticket('admin-inc-community');
 	simple_set_toggle("feature_community_mouseover");
@@ -23,14 +22,18 @@ if (isset($_REQUEST["mouseoverfeatures"])) {
 	simple_set_toggle("feature_community_mouseover_country");
 	simple_set_toggle("feature_community_mouseover_email");
 	simple_set_toggle("feature_community_mouseover_lastlogin");
+	simple_set_toggle("feature_community_mouseover_distance");
 }
 
+/* This is desired future feature
 if (isset($_REQUEST["friendshipfeatures"])) {
 	check_ticket('admin-inc-community');
 	simple_set_toggle("feature_community_friends_permission");
-	simple_set_int("feature_community_friends_permission_depth");
+	simple_set_int("feature_community_friends_permission_dep");
 
 }
+*/
+
 ask_ticket('admin-inc-community');
 ?>
 

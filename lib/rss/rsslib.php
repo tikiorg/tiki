@@ -6,6 +6,12 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
+include_once ('lib/userslib.php');
+include_once ('lib/userprefs/scrambleEmail.php');
+include_once ('lib/feedcreator/feedcreator.class.php');
+
+$userslib = new Userslib($dbTiki);
+
 class RSSLib extends TikiLib {
 	function RSSLib($db) {
 		# this is probably uneeded now
@@ -16,6 +22,298 @@ class RSSLib extends TikiLib {
 		$this->db = $db;
 	}
 
+	function get_rss_version($ver) {
+		if ($ver=='') {
+			// get default rss feed version from database or set to 0.91 if none in there
+			$ver = $this->get_preference("rssfeed_default_version",9);
+		}
+
+		$rss_version=$ver;
+		
+		// valid format strings are: RSS0.91, RSS1.0, RSS2.0, PIE0.1, MBOX, OPML, ATOM0.3, HTML, JS
+		// valid format ids        :    9   ,   1   ,    2  ,   3   ,  4  ,   6 ,    5   ,  7  ,  8
+		switch ($ver) {
+			case "RSS0.91":
+			   $rss_version=9;
+			   break;
+			case "RSS1.0":
+			   $rss_version=1;
+			   break;
+			case "RSS2.0":
+			   $rss_version=2;
+			   break;
+			case "PIE0.1":
+			   $rss_version=3;
+			   break;
+			case "MBOX":
+			   $rss_version=4;
+			   break;
+			case "ATOM0.3":
+			   $rss_version=5;
+			   break;
+			case "OPML":
+			   $rss_version=6;
+			   break;
+			case "HTML":
+			   $rss_version=7;
+			   break;
+			case "JS":
+			   $rss_version=8;
+			   break;
+		}
+		return $rss_version;
+	}
+
+	function get_rss_version_name($ver) {
+		if ($ver=='') {
+			// get default rss feed version from database or set to 0.91 if none in there
+			$ver = $this->get_preference("rssfeed_default_version","RSS0.91");
+		}
+
+		$rss_version_name=$ver;
+
+		// valid format strings are: RSS0.91, RSS1.0, RSS2.0, PIE0.1, MBOX, OPML, ATOM0.3, HTML, JS
+		// valid format ids        :    9   ,   1   ,    2  ,   3   ,  4  ,   6 ,    5   ,  7  ,  8
+		switch ($ver) {
+			case "9":
+			   $rss_version_name="RSS0.91";
+			   break;
+			case "1":
+			   $rss_version_name="RSS1.0";
+			   break;
+			case "2":
+			   $rss_version_name="RSS2.0";
+			   break;
+			case "3":
+			   $rss_version_name="PIE0.1";
+			   break;
+			case "4":
+			   $rss_version_name="MBOX";
+			   break;
+			case "5":
+			   $rss_version_name="ATOM0.3";
+			   break;
+			case "6":
+			   $rss_version_name="OPML";
+			   break;
+			case "7":
+			   $rss_version_name="HTML";
+			   break;
+			case "8":
+			   $rss_version_name="JS";
+			   break;
+		}
+		return $rss_version_name;
+	}
+
+	/* check for cached rss feed data */
+	function get_from_cache($uniqueid, $rss_version="9") {
+		global $user;
+		// caching rss data for anonymous users only		
+		if ($user<>"") return "EMPTY";
+		$now = date("U");
+		$query = "select * from `tiki_rss_feeds` where `name`=? and `rssVer`=?";
+		$bindvars=array($uniqueid, (int)$rss_version);
+		$result = $this->query($query, $bindvars);
+		
+		$changes = "";
+		$output = "EMPTY";
+		
+		if (!$result->numRows())
+		{
+		  // nothing found, then insert row for this feed+rss_ver
+		  $now = date("U");
+		  $query = "insert into `tiki_rss_feeds`(`name`,`rssVer`,`refresh`,`lastUpdated`,`cache`) values(?,?,?,?,?)";
+		  
+		  // default value for cache timeout is 300 (5 minutes)
+		  $bindvars=array($uniqueid,(int) $rss_version,(int) 300 ,(int) $now, $output);
+		  $result = $this->query($query, $bindvars);
+		}
+		else
+		{
+		  // entry found in db:
+		  $res = $result->fetchRow();
+		  $output = $res["cache"];
+		  $refresh = $res["refresh"];
+		  $lastUpdated = $res["lastUpdated"];
+		  // up to date? if not, then set trigger to reload data:
+		  if ($lastUpdated + $refresh < $now) { $output="EMPTY"; } // TODO: make timeout configurable (is 5 minutes now)
+		}
+		return $output;
+	}
+
+	/* put to cache */
+	function put_to_cache($uniqueid, $rss_version="9", $output) {
+		global $user;
+		// caching rss data for anonymous users only		
+		if ($user<>"") return;
+
+		if ($output == "") return;
+		// update cache with new generated data if data not empty
+		$now = date("U");
+		$query = "update `tiki_rss_feeds` set `cache`=?, `lastUpdated`=? where `name`=? and `rssVer`=?";
+		$bindvars = array($output, (int) $now, $uniqueid, (int) $rss_version);
+		$result = $this->query($query,$bindvars);
+	}
+
+	function generate_feed($feed, $uniqueid, $rss_version, $changes, $itemurl, $urlparam, $id, $title, $titleId, $desc, $descId, $dateId, $authorId) {
+
+		global $tikiIndex;
+		global $userslib;
+		
+		if ($rss_version=='') {
+			// override version if set as request parameter
+			if (isset($_REQUEST["ver"])) {
+				$ver = $_REQUEST["ver"];
+				$rss_version = $this->get_rss_version($ver);
+			} else {
+				$rss_version = 9; // default to RSS 0.91
+			}
+		} else $rss_version = $this->get_rss_version($rss_version);
+
+		$now = date("U");
+		$output = $this->get_from_cache($uniqueid, $rss_version);
+		if ($output<>"EMPTY") return $output;
+		
+		$urlarray = parse_url($_SERVER["REQUEST_URI"]);
+
+		$url = htmlspecialchars($this->httpPrefix().$_SERVER["REQUEST_URI"]);
+		$home = htmlspecialchars($this->httpPrefix().dirname( $urlarray["path"] )."/".$tikiIndex);
+		$img = htmlspecialchars($this->httpPrefix().dirname( $urlarray["path"] )."/img/tiki.jpg");
+		
+		$title = htmlspecialchars($title);
+		$desc = htmlspecialchars($desc);
+		$read = $this->httpPrefix().dirname( $urlarray["path"] )."/".$itemurl;
+
+		// different stylesheets for atom and rss	
+		$cssStyleSheet = "";
+		$xslStyleSheet = "";
+
+		$encoding = "ISO-8859-1";
+		$encoding = "UTF-8";
+		$contenttype = "application/xml";
+
+		// valid format strings are: RSS0.91, RSS1.0, RSS2.0, PIE0.1, MBOX, OPML, ATOM0.3, HTML, JS
+		// valid format ids        :    9   ,   1   ,    2  ,   3   ,  4  ,   6 ,    5   ,  7  ,  8
+
+		switch ($rss_version) {
+			case "1": // RSS 1.0
+				$cssStyleSheet = $this->httpPrefix().dirname( $urlarray["path"] )."/lib/rss/rss-style.css";
+			break;
+			case "2": // RSS 2.0
+				$cssStyleSheet = $this->httpPrefix().dirname( $urlarray["path"] )."/lib/rss/rss-style.css";
+				$xslStyleSheet = $this->httpPrefix().dirname( $urlarray["path"] )."/lib/rss/rss20.xsl";
+			break;
+			case "3": // PIE 0.1
+			break;
+			case "4": // MBOX
+				$contenttype = "text/plain";
+			break;
+			case "5": // ATOM0.3
+				$cssStyleSheet = $this->httpPrefix().dirname( $urlarray["path"] )."/lib/rss/atom-style.css";
+			break;
+			case "6": // OPML
+				$xslStyleSheet = $this->httpPrefix().dirname( $urlarray["path"] )."/lib/rss/opml.xsl";
+			break;
+			case "7": // HTML
+				$contenttype = "text/plain";
+			break;
+			case "8": // JS
+				$contenttype = "text/javascript";
+			break;
+			case "9": // RSS 0.91
+				$cssStyleSheet = $this->httpPrefix().dirname( $urlarray["path"] )."/lib/rss/rss-style.css";
+			break;
+		}
+
+	
+		$rss = new UniversalFeedCreator(); 
+		$rss->title = $title;
+		$rss->description = $desc;
+		
+		//optional
+		$rss->descriptionTruncSize = 500;
+		$rss->descriptionHtmlSyndicated = true;
+		$rss->cssStyleSheet = htmlspecialchars($cssStyleSheet);
+		$rss->xslStyleSheet = htmlspecialchars($xslStyleSheet);
+		$rss->encoding = $encoding;
+		
+		$rss->language = $this->get_preference("rssfeed_language","en-us");
+		$rss->editor = $this->get_preference("rssfeed_editor","");
+		$rss->webmaster = $this->get_preference("rssfeed_webmaster","");
+		
+		$rss->link = $url;
+		$rss->feedURL = $url;
+		
+		$image = new FeedImage();
+		$image->title = tra("tikiwiki logo");
+		$image->url = $img;
+		$image->link = $home;
+		$image->description = tra(sprintf("Feed provided by %s. Click to visit.", $home));
+	
+		//optional
+		$image->descriptionTruncSize = 500;
+		$image->descriptionHtmlSyndicated = true;
+		
+		$rss->image = $image; 
+
+		global $dbTiki;
+        if (!isset($userslib)) $userslib = new Userslib($dbTiki);
+		
+		foreach ($changes["data"] as $data)  {
+			$item = new FeedItem(); 
+			$item->title = $data["$titleId"]; 
+
+			// 2 parameters to replace			
+			if ($urlparam<>'') {
+				$item->link = sprintf($read, urlencode($data["$id"]), urlencode($data["$urlparam"]));
+			} else {
+				$item->link = sprintf($read, urlencode($data["$id"]));
+			}
+
+			if (isset($data["$descId"])) {			
+				$item->description = $data["$descId"]; 
+			} else {
+				$item->description = ""; 
+			}
+	
+			//optional
+			//item->descriptionTruncSize = 500;
+			$item->descriptionHtmlSyndicated = true;
+			$item->date = (int) $data["$dateId"]; 
+	
+			$item->source = $url; 
+
+			$item->author = "";
+			if ($authorId<>"") {
+				if ($userslib->user_exists($data["$authorId"])) {
+					$item->author = $data["$authorId"];
+					// only use realname <email> if existing and
+					$tmp = "";
+					if ($this->get_user_preference($data["$authorId"], 'user_information', 'private')=='public') {
+						$tmp = $this->get_user_preference($data["$authorId"], "realName");
+					}
+					$epublic = $this->get_user_preference($data["$authorId"], 'email is public', 'n');
+					if ($epublic!='n') {
+						$res = $userslib->get_user_info($data["$authorId"], false);
+						if ($tmp<>"") $tmp .= ' ';
+						$tmp .= "<".scrambleEmail($res['email'], $epublic).">";
+					}
+					if ($tmp<>"") $item->author = $tmp;
+				} else $item->author = $data["$authorId"];
+			}
+			 
+			$rss->addItem($item); 
+		} 
+		$data = $rss->createFeed($this->get_rss_version_name($rss_version));
+		$this->put_to_cache($uniqueid, (int) $data, $rss_version);
+		$output = array();
+		$output["data"] = $data;
+		$output["content-type"] = $contenttype;
+		$output["encoding"] = $encoding;
+		return $output;
+	}
+	
 	/* get (a part of) the list of existing rss feeds from db */
 	function list_rss_modules($offset, $maxRecords, $sort_mode, $find) {
 

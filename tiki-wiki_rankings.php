@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-wiki_rankings.php,v 1.12 2005-01-22 22:54:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-wiki_rankings.php,v 1.13 2005-05-18 10:59:01 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.

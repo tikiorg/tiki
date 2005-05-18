@@ -1,15 +1,15 @@
-<a class="pagetitle" href="tiki-map_history.php?mapfile={$mapfile}">{tr}Mapfile History{/tr}</a> {tr}of{/tr} {$mapfile}<br />
+<a class="pagetitle" href="tiki-map_history.php?mapfile={$mapfile}">{tr}Mapfile History{/tr}</a> {tr}of{/tr}<a class="pagetitle" href="tiki-map_edit.php?mapfile={$mapfile}&mode=editing"> {$mapfile}</a><br />
 {if $preview}
 <h2>{tr}Version{/tr}: {$preview}</h2>
 <div  class="wikitext">{$previewd}</div>
 {/if}
 
 {if $diff_style}
-<h2><a href="tiki-map_history.php?page={$page|escape:"url"}&amp;compare&amp;oldver={$old.version}&amp;newver={$new.version}&amp;diff_style={$diff_style}" title="{tr}compare{/tr}">{tr}Comparing version {$old.version} with version {$new.version}{/tr}</a></h2>
+<h2><a href="tiki-map_history.php?mapfile={$mapfile}" title="{tr}compare{/tr}">{tr}Comparing version {$old.version} with version {$new.version}{/tr}</a></h2>
 <table class="normal diff">
 <tr>
-  <th colspan="2"><b>{tr}Version:{/tr} <a href="tiki-map_history.php?page={$page|escape:"url"}&amp;preview={$old.version}" title="{tr}view{/tr}">{$old.version}</a>{if $old.version == $info.version} ({tr}current{/tr})</a>{/if}</b></th>
-  <th colspan="2"><b>{tr}Version:{/tr} <a href="tiki-map_history.php?page={$page|escape:"url"}&amp;preview={$new.version}" title="{tr}view{/tr}">{$new.version}{if $new.version == $info.version} ({tr}current{/tr})</a>{/if}</b></th>
+  <th colspan="2"><b>{tr}Version:{/tr} {$old.version}{if $old.version == $info.version} ({tr}current{/tr}){/if}</b></th>
+  <th colspan="2"><b>{tr}Version:{/tr} {$new.version}{if $new.version == $info.version} ({tr}current{/tr}){/if}</b></th>
 </tr>
 <tr>
   <td colspan="2">{$old.user|userlink} - {$old.lastModif|tiki_short_datetime}</td>

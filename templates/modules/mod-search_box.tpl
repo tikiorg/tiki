@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-search_box.tpl,v 1.17 2005-03-12 16:51:00 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-search_box.tpl,v 1.18 2005-05-18 11:03:30 mose Exp $ *}
 
 {if $feature_search eq 'y'}
 {tikimodule title="{tr}Search{/tr}" name="search_box" flip=$module_params.flip decorations=$module_params.decorations}
     <form class="forms" method="get" action="tiki-searchresults.php">
-    <input id="fuser" name="highlight" size="14" type="text" accesskey="s" /> {tr}in:{/tr}<br />
+    <input id="fuser" name="words" size="14" type="text" accesskey="s" /> {tr}in:{/tr}<br />
     <select name="where">
     <option value="pages">{tr}Entire Site{/tr}</option>
     {if $feature_wiki eq 'y'}

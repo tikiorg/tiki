@@ -1,4 +1,4 @@
-<?php // -*- coding:utf-8 -*- $Header: /cvsroot/tikiwiki/tiki/img/flags/flagnames.php,v 1.5 2004-10-15 15:54:46 damosoft Exp $
+<?php // -*- coding:utf-8 -*- $Header: /cvsroot/tikiwiki/tiki/img/flags/flagnames.php,v 1.6 2005-05-18 10:59:16 mose Exp $
 /* 
  * The listing associates country names used as filenames for flags in TikiWiki for language translation
  */
@@ -26,6 +26,7 @@ tra('Belarus');
 tra('Belgium');
 tra('Bermuda');
 tra('Bolivia');
+tra("Bulgaria");
 tra('Brazil');
 tra('Brunei');
 tra('Canada');

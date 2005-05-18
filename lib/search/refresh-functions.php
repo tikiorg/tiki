@@ -200,13 +200,6 @@ function random_refresh_index_wiki(){
     refresh_index_wiki($rpages["0"]);
 }
 
-function refresh_index_wiki_all() {
-  global $tikilib;
-  $pages=$tikilib->get_all_pages();
-  foreach($pages as $page) {
-    refresh_index_wiki($page['pageName']);
-  }
-}
 
 function refresh_index_oldest(){
   global $tikilib;

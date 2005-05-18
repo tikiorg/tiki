@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-admin_menu.tpl,v 1.26 2005-03-12 16:50:59 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-admin_menu.tpl,v 1.27 2005-05-18 11:03:27 mose Exp $ *}
 
 {tikimodule title="{tr}Admin Menu{/tr}" name="admin_menu" flip=$module_params.flip decorations=$module_params.decorations}
 {if $tiki_p_admin eq 'y' or 

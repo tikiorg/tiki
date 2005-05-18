@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_box.php,v 1.15 2005-03-12 16:50:00 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_box.php,v 1.16 2005-05-18 11:01:59 mose Exp $
  *
  * Tiki-Wiki BOX plugin.
  * 
@@ -11,16 +11,14 @@
  *  {BOX}
  * 
  */
-
 function wikiplugin_box_help() {
 	return tra("Insert theme styled box on wiki page").":<br />~np~{BOX(title=>Title, bg=>color, width=>num[%], align=>left|right|center, float=>|left|right)}".tra("text")."{BOX}~/np~";
 }
 
 function wikiplugin_box($data, $params) {
-	global $smarty;
-	/* set default values for some args */
-	$title = tra("Message box");
+	global $tikilib;
 	
+	// Remove first <ENTER> if exists...
 	// if (substr($data, 0, 2) == "\r\n") $data = substr($data, 2);
     
 	extract ($params,EXTR_SKIP);
@@ -46,14 +44,11 @@ function wikiplugin_box($data, $params) {
 		$end .= "</td></tr></table>";
 	}
 	// Prepend any newline char with br
-	$data = preg_replace("/\\n/", "<br />\n", $data);
+	//$data = preg_replace("/\\n/", "<br />", $data);
 	// Insert "\n" at data begin if absent (so start-of-line-sensitive syntaxes will be parsed OK)
-	if (substr($data, 0, 1) != "\n") 
-    	$data = "\n".$data;
-	
-	$smarty->assign('plugin_box_data', $data);
-	
-	return $smarty->fetch('plugins/plugin-box.tpl');
+	//if (substr($data, 0, 1) != "\n") $data = "\n".$data;
+	$data = $tikilib->parse_data($data);
+	return $begin . $data . $end;
 }
 
 ?>

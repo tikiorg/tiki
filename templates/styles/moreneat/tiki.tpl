@@ -46,12 +46,35 @@
 
 <div id="tiki-mid">
 <table id="tikimidtbl" border="0" cellpadding="0" cellspacing="0" >
+  {if $feature_left_column eq 'user' or $feature_right_column eq 'user'}
+    <tr><td id="tiki-columns" colspan="0" width="100%">
+      {if $feature_left_column eq 'user'}
+        <span style="float: left"><a class="flip" href="javascript:icntoggle('leftcolumn');">
+        <img name="leftcolumnicn" class="colflip" src="img/icons/ofo.gif" border="0" alt="+/-" />&nbsp;{tr}Show/Hide Left Menus{/tr}&nbsp;</a>
+        </span>
+      {/if}
+      {if $feature_right_column eq 'user'}
+        <span style="float: right"><a class="flip" href="javascript:icntoggle('rightcolumn');">
+        <img name="rightcolumnicn" class="colflip" src="img/icons/ofo.gif" border="0" alt="+/-" />&nbsp;{tr}Show/Hide Right Menus{/tr}&nbsp;</a>
+        </span>
+      {/if}
+      <br />
+    </td></tr>
+  {/if}
 <tr>
 {if $feature_left_column ne 'n'}
 <td id="leftcolumn">
 {section name=homeix loop=$left_modules}
 {$left_modules[homeix].data}
 {/section}
+          {if $feature_left_column eq 'user'}
+            <img src="blank.gif" width="100%" height="0px">
+            {literal}
+              <script language="Javascript" type="text/javascript">
+                setfolderstate("leftcolumn");
+              </script>
+            {/literal}
+          {/if}
 </td>
 {/if}
 <td id="centercolumn">
@@ -69,6 +92,14 @@
 {section name=homeix loop=$right_modules}
 {$right_modules[homeix].data}
 {/section}
+          {if $feature_right_column eq 'user'}
+            <img src="blank.gif" width="100%" height="0px">
+            {literal}
+              <script language="Javascript" type="text/javascript"> 
+                setfolderstate("rightcolumn");
+              </script>
+            {/literal}
+          {/if}
 </td>
 {/if}
 </tr></table>

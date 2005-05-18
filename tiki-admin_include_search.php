@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_search.php,v 1.13 2005-03-12 16:48:57 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_search.php,v 1.14 2005-05-18 10:58:54 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -16,7 +16,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 if (isset($_REQUEST["searchprefs"])) {
 	check_ticket('admin-inc-search');
 	simple_set_toggle("feature_search_fulltext");
-	simple_set_toggle("feature_search_mysql4_boolean");
 	simple_set_toggle("feature_search_stats");
 	simple_set_toggle("feature_referer_highlight");
 	simple_set_toggle("feature_search_show_forbidden_obj");
@@ -28,17 +27,5 @@ if (isset($_REQUEST["searchprefs"])) {
 	simple_set_int("search_lru_purge_rate");
 	simple_set_int("search_lru_length");
 }
-
-global $tiki_p_admin;
-if ($tiki_p_admin == 'y' && basename($_SERVER['HTTP_REFERER']) == 'tiki-admin.php?page=search' &&
-	!empty($_REQUEST['refresh_index_now']) && $_REQUEST['refresh_index_now'] == 'y') {
-  	require_once('lib/search/refresh-functions.php');
-  	refresh_index_wiki_all();
-}
-
-if (!empty($_REQUEST['refresh_index_now'])) {
-	$smarty->assign('refresh_index_now', $_REQUEST['refresh_index_now']);
-}
-
 ask_ticket('admin-inc-search');
 ?>

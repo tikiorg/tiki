@@ -1,21 +1,15 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.86 2005-03-12 16:50:52 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.87 2005-05-18 11:03:20 mose Exp $ *}
 
-{if $feature_page_title eq 'y'}
-<h1><a  href="tiki-index.php?page={$page|escape:'url'}" class="pagetitle">
-{if $structure eq 'y' and $page_info.page_alias ne ''}{$page_info.page_alias}{else}{$page}{/if}</a>
-{if $lock and $print_page ne 'y'}<img src="img/icons/lock_topic.gif" height="19" width="19" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />{/if}
-</h1>
-{/if}
-{if $feature_wiki_pageid eq 'y'}
-	<small><a class="link" href="tiki-index.php?page_id={$page_id}">{tr}page id{/tr}: {$page_id}</a></small>
-{/if}
+{breadcrumbs type="trail" loc="page" crumbs=$crumbs}{breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs}
 
 <div class="wikitopline">
 <table><tr>
 <td style="vertical-align:top;">
-&nbsp;
-{if $feature_wiki_description eq 'y'}<small>{$description}</small>{/if}
-{if $cached_page eq 'y'}<small>(cached)</small>{/if}
+{if $feature_wiki_pageid eq 'y'}
+	<small><a class="link" href="tiki-index.php?page_id={$page_id}">{tr}page id{/tr}: {$page_id}</a></small>
+{/if}
+{breadcrumbs type="desc" loc="page" crumbs=$crumbs}
+{if $cached_page eq 'y'}<small>({tr}cached{/tr})</small>{/if}
 </td>
 {if $is_categorized eq 'y' and $feature_categories eq 'y' and $feature_categorypath eq 'y'}
 	<td style="vertical-align:top;width:100px;">{$display_catpath}</td>
@@ -87,8 +81,7 @@
 </tr></table>
 </div>
 
-<div class="wikitext"
-{if $user_dbl eq 'y' and $feature_wiki_dblclickedit eq 'wikitext_only' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}>
+<div class="wikitext">
 {if $structure eq 'y'}
 <div class="tocnav">
 <table>
@@ -143,7 +136,7 @@
 <tr>
   <td colspan="2">
     {section loop=$structure_path name=ix}
-      {if $structure_path[ix].parent_id}->{/if}
+      {if $structure_path[ix].parent_id}&nbsp;{$site_crumb_seper}&nbsp;{/if}
 	  <a href="tiki-index.php?page_ref_id={$structure_path[ix].page_ref_id}">
       {if $structure_path[ix].page_alias}
         {$structure_path[ix].page_alias}
@@ -178,16 +171,38 @@
 
 {if $has_footnote eq 'y'}<div class="wikitext wikifootnote">{$footnote}</div>{/if}
 
-{if $tiki_p_wiki_view_author eq 'y' || $tiki_p_admin eq 'y' || $tiki_p_admin_wiki eq 'y'}
+{if isset($wiki_authors_style) && $wiki_authors_style eq 'business'}
+<p class="editdate">
+  {tr}Last edited by{/tr} {$lastUser|userlink}
+  {section name=author loop=$contributors}
+   {if $smarty.section.author.first}, {tr}based on work by{/tr}
+   {else}
+    {if !$smarty.section.author.last},
+    {else} {tr}and{/tr}
+    {/if}
+   {/if}
+   {$contributors[author]|userlink}
+  {/section}.<br />                                         
+  {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}.
+</p>
+{elseif isset($wiki_authors_style) &&  $wiki_authors_style eq 'collaborative'}
+<p class="editdate">
+  {tr}Contributors to this page{/tr}: {$lastUser|userlink}
+  {section name=author loop=$contributors}
+   {if !$smarty.section.author.last},
+   {else} {tr}and{/tr}
+   {/if}
+   {$contributors[author]|userlink}
+  {/section}.<br />
+  {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}.
+</p>
+{elseif isset($wiki_authors_style) &&  $wiki_authors_style eq 'none'}
+{else}
 <p class="editdate">
   {tr}Created by{/tr}: {$creator|userlink}
   {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}
-{else}
-<p class="editdate">
-  {tr}Last modification{/tr}: {$lastModif|tiki_long_datetime}
-{/if}
-{if $feature_wiki_page_footer eq 'y'}<br />{$wiki_page_footer_content}{/if}
 </p>
+{/if}
 
 {if $wiki_feature_copyrights  eq 'y' and $wikiLicensePage}
   {if $wikiLicensePage == $page}

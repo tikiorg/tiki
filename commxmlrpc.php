@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/commxmlrpc.php,v 1.16 2005-01-01 00:16:15 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/commxmlrpc.php,v 1.17 2005-05-18 10:58:51 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/commxmlrpc.php,v 1.16 2005-01-01 00:16:15 damosoft Exp $
+# $Header: /cvsroot/tikiwiki/tiki/commxmlrpc.php,v 1.17 2005-05-18 10:58:51 mose Exp $
 include_once("lib/init/initlib.php");
 include_once ('db/tiki-db.php');
 
@@ -15,8 +15,6 @@ include_once ('lib/userslib.php');
 include_once ("lib/xmlrpc.inc");
 include_once ("lib/xmlrpcs.inc");
 include_once ('lib/commcenter/commlib.php');
-require_once ('lib/userslib/userslib_admin.php');
-
 
 $tikilib = new Tikilib($dbTiki);
 $userlib = new Userslib($dbTiki);
@@ -52,7 +50,7 @@ function sendPage($params) {
 	$pp = $params->getParam(6);
 	$description = $pp->scalarval();
 	// 
-	if (!$userslibadmin->validate_user($username, $password, '', '')) {
+	if (!$userlib->validate_user($username, $password, '', '')) {
 		return new xmlrpcresp(0, 101, "Invalid username or password");
 	}
 
@@ -117,7 +115,7 @@ function sendArticle($params) {
 	$rating = $pp->scalarval();
 
 	// 
-	if (!$userslibadmin->validate_user($username, $password, '', '')) {
+	if (!$userlib->validate_user($username, $password, '', '')) {
 		return new xmlrpcresp(0, 101, "Invalid username or password");
 	}
 

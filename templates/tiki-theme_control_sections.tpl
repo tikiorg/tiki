@@ -2,7 +2,7 @@
 <h1><a class="pagetitle" href="tiki-theme_control_sections.php">{tr}Theme Control Center: sections{/tr}</a>
 
       {if $feature_help eq 'y'}
-<a href="{$helpurl}ThemeControl" target="tikihelp" class="tikihelp" title="{tr}Theme Control{/tr}">
+<a href="{$helpurl}Theme+Control" target="tikihelp" class="tikihelp" title="{tr}Theme Control{/tr}">
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 
       {if $feature_view_tpl eq 'y'}

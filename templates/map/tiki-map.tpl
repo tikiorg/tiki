@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.27 2005-01-22 22:56:26 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.28 2005-05-18 11:03:26 mose Exp $ *}
 
 <script src="lib/map/map.js"></script>
 

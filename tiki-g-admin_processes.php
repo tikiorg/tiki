@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_processes.php,v 1.11 2005-01-01 00:16:33 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_processes.php,v 1.12 2005-05-18 10:58:56 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -79,9 +79,12 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 }
 
 if (isset($_REQUEST["delete"])) {
-	check_ticket('g-admin-processes');
-	foreach (array_keys($_REQUEST["process"])as $item) {
-		$processManager->remove_process($item);
+	if (isset($_REQUEST["process"]))
+	if (is_array($_REQUEST["process"])) {
+		check_ticket('g-admin-processes');
+		foreach (array_keys($_REQUEST["process"])as $item) {
+			$processManager->remove_process($item);
+		}
 	}
 }
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.43 2005-03-12 16:48:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.44 2005-05-18 10:58:51 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -17,6 +17,7 @@
  * \param patch      : looks for the file 'language.patch' in the same directory as the corresponding language.php and overrides any strings in language.php - good if a user does not agree with some translations or if only changes are sent to the maintainer
  * \param spelling   : generate a file spellcheck_me.txt in the applicable languages directory that contains all the words used in the translated text. This makes it simple to use a spellchecker on the resulting file
  * \param groupwrite : Sets the generated files permissions to allow the generated language.php also be group writable. This is good for translators if they do not have root access to tiki but are in the same group as the webserver. Please remember to have write access removed when translation is finished for security reasons. (Run script again whithout this parameter)
+ * \param sort ='n' don't sort the filenames 
  */
 
 
@@ -223,11 +224,13 @@ hardwire_file ('./img/flags/flagnames.php');
 
 // Sort files to make generated strings appear in language.php in the same 
 // order across different systems
-echo "Sorting files...";
-flush();
-sort($files);
-echo count($files), " items done.<br/>\nTiki directory parsed in: ", $tiki_timer->stop("files"), " seconds<br/>\n<br/>\n";
-flush();
+if (!isset($_REQUEST["sort"]) || $_REQUEST["sort"] != 'n') {
+	echo "Sorting files...";
+	flush();
+	sort($files);
+	echo count($files), " items done.<br/>\nTiki directory parsed in: ", $tiki_timer->stop("files"), " seconds<br/>\n<br/>\n";
+	flush();
+}
 $tiki_timer->start("processing");
 
 

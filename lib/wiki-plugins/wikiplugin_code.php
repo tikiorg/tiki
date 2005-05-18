@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_code.php,v 1.17 2005-01-22 22:55:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_code.php,v 1.18 2005-05-18 11:02:00 mose Exp $
 // Displays a snippet of code
 // Parameters: ln => line numbering (default false)
 // Example:
@@ -60,6 +60,8 @@ function wikiplugin_code($data, $params) {
 			}
 		}
 	}
+	$out = str_replace("\\", "\\\\", $out);//prevents vanishing of backslash occurences
+	$out = str_replace("$", "\\$", $out);//prevents vanishing of e.g. $1 strings from code listing
 	return $out;
 }
 

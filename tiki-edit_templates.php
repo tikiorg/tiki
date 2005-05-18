@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_templates.php,v 1.16 2005-03-12 16:48:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_templates.php,v 1.17 2005-05-18 10:58:56 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,7 +9,8 @@
 // Initialization
 require_once ('tiki-setup.php');
 
-if ($feature_view_tpl != 'y' && $feature_edit_templates != 'y' ) {
+// if any of the two rights is not set, yell!
+if ($feature_view_tpl != 'y' || $feature_edit_templates != 'y' ) {
 	$smarty->assign('msg', tra("Feature disabled"));
 
 	$smarty->display("error.tpl");

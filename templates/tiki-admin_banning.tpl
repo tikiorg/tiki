@@ -1,7 +1,7 @@
 <h1><a class="pagetitle" href="tiki-admin_banning.php">{tr}Banning system{/tr}</a>
 
       {if $feature_help eq 'y'}
-<a href="{$helpurl}BanningSystem" target="tikihelp" class="tikihelp" title="{tr}Banning{/tr}">
+<a href="{$helpurl}Banning+System" target="tikihelp" class="tikihelp" title="{tr}Help on Banning System{/tr}">
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 
       {if $feature_view_tpl eq 'y'}

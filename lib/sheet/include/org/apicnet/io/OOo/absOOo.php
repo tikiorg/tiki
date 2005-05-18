@@ -35,7 +35,7 @@ APIC::import("org.apicnet.io.File");
  * @package 
  * @author diogene
  * @copyright Copyright (c) 2004
- * @version $Id: absOOo.php,v 1.2 2004-09-08 19:52:34 mose Exp $
+ * @version $Id: absOOo.php,v 1.3 2005-05-18 11:01:39 mose Exp $
  * @access public
  **/
 class absOOo extends ErrorManager {

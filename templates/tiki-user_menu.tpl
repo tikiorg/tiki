@@ -59,7 +59,7 @@
   {if $feature_menusfolderstyle eq 'y'}
     setfolderstate('menu{$menu_info.menuId|cat:'__'|cat:$chdata.position}', '{$menu_info.type}');
   {else}
-    setsectionstate('menu{$menu_info.menuId|cat:'__'|cat:$chdata.position}');
+    setsectionstate('menu{$menu_info.menuId|cat:'__'|cat:$chdata.position}', '{$menu_info.type}');
   {/if}
 {/if}
 {/foreach}

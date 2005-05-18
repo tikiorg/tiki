@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.63 2005-03-12 16:50:54 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.64 2005-05-18 11:03:21 mose Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -22,7 +22,7 @@
 {/if}
 <div align="right">
   {if $rss_forum eq 'y'}
-   <a class="linkbut" href="tiki-forum_rss.php?forumId={$forumId}">{tr}RSS feed{/tr}</a>
+   <a href="tiki-forum_rss.php?forumId={$forumId}"><img src='img/rss.png' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' /></a>
   {/if}
   <a class="linkbut" href="tiki-forums.php">{tr}Forum List{/tr}</a> 
   {if $tiki_p_admin_forum eq 'y'}
@@ -323,7 +323,7 @@ a moderator approves it.{/tr}</small>
   
   <td class="{cycle advance=false}">
   <table width="100%"><tr><td>
-  <a {if $comments_coms[ix].is_marked}class="forumnameread"{else}class="forumname"{/if}  href="tiki-view_forum_thread.php?comments_parentId={$comments_coms[ix].threadId}{$topics_threshold_param}&amp;topics_offset={math equation="x + y" x=$comments_offset y=$smarty.section.ix.index}{$topics_sort_mode_param}{$topics_find_param}&amp;forumId={$forum_info.forumId}">{$comments_coms[ix].title}</a>
+  <a {if $comments_coms[ix].is_marked}class="forumnameread"{else}class="forumname"{/if}  href="tiki-view_forum_thread.php?comments_parentId={$comments_coms[ix].threadId}&amp;topics_threshold={$comments_threshold}&amp;topics_offset={math equation="x + y" x=$comments_offset y=$smarty.section.ix.index}&amp;topics_sort_mode={$comments_sort_mode}&amp;topics_find={$comments_find}&amp;forumId={$forum_info.forumId}">{$comments_coms[ix].title}</a>
   {if $forum_info.topic_summary eq 'y'}
   <br /><small>{$comments_coms[ix].summary|truncate:240:"...":true}</small>     
   {/if}

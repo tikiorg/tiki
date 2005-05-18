@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_charts.php,v 1.11 2005-01-01 00:16:31 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_charts.php,v 1.12 2005-05-18 10:58:53 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -53,9 +53,12 @@ $smarty->assign('chartId', $_REQUEST['chartId']);
 $smarty->assign('info', $info);
 
 if (isset($_REQUEST["delete"])) {
-	check_ticket('admin-charts'); 
-	foreach (array_keys($_REQUEST["chart"])as $item) {
-		$chartlib->remove_chart($item);
+	if (isset($_REQUEST["chart"]))
+	if (is_array($_REQUEST["chart"])) {
+		check_ticket('admin-charts'); 
+		foreach (array_keys($_REQUEST["chart"])as $item) {
+			$chartlib->remove_chart($item);
+		}
 	}
 }
 

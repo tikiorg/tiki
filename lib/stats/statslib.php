@@ -16,6 +16,7 @@ class StatsLib extends TikiLib {
 	}
 
 	function list_orphan_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '') {
+	        global $user;
 
 		if ($sort_mode == 'size_desc') {
 			$sort_mode = 'page_size_desc';
@@ -62,6 +63,8 @@ class StatsLib extends TikiLib {
 		$num_or = 0;
 
 		while ($res = $result->fetchRow()) {
+		   //WYSIWYCA
+		   if($this->user_has_perm_on_object($user,$res["pageName"],'wiki page','tiki_p_view')) {
 			$pageName = $res["pageName"];
 			$queryc = "select count(*) from `tiki_links` where `toPage`=?";
 			$cant = $this->getOne($queryc,array($pageName));
@@ -87,6 +90,7 @@ class StatsLib extends TikiLib {
 				$aux["backlinks"] = $this->getOne("select count(*) from `tiki_links` where `toPage`=?",array($page_as));
 				$ret[] = $aux;
 			}
+		    }
 		}
 
 		// If sortmode is versions, links or backlinks sort using the ad-hoc function and reduce using old_offse and old_maxRecords
@@ -164,11 +168,7 @@ class StatsLib extends TikiLib {
 	}
 
 	function quiz_stats() {
-		global $quizlib;
-		if (!is_object($quizlib)) {
-			require_once('lib/quizzes/quizlib.php');
-		}
-		$quizlib->compute_quiz_stats();
+		$this->compute_quiz_stats();
 		$stats = array();
 		$stats["quizzes"] = $this->getOne("select count(*) from `tiki_quizzes`",array());
 		$stats["questions"] = $this->getOne("select count(*) from `tiki_quiz_questions`",array());

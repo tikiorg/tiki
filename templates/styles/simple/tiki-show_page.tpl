@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-show_page.tpl,v 1.4 2005-03-12 16:51:19 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-show_page.tpl,v 1.5 2005-05-18 11:03:56 mose Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle" title="{tr}Refresh{/tr}">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -11,6 +11,10 @@
   {/if}
   </h1>
 {/if}
+{if $feature_wiki_pageid eq 'y'}
+	<small><a class="link" href="tiki-index.php?page_id={$page_id}">{tr}page id{/tr}: {$page_id}</a></small>
+{/if}
+
 <div class="wikitopline">
 {if $feature_wiki_description eq 'y' or $cached_page eq 'y'}
 	{if $feature_wiki_description eq 'y'}<small>{$description}</small>{/if}
@@ -166,12 +170,44 @@
 {/if}
 </div> {* End of main wiki page *}
 
-{if $has_footnote eq 'y'}<div class="wikitext">{$footnote}</div>{/if}
+{if $has_footnote eq 'y'}
+<div class="wikitext">
+{$footnote}
+</div>
+{/if}
 
+{if isset($wiki_authors_style) && $wiki_authors_style eq 'business'}
+<p class="editdate">
+  {tr}Last edited by{/tr} {$lastUser|userlink}
+  {section name=author loop=$contributors}
+   {if $smarty.section.author.first}, {tr}based on work by{/tr}
+   {else}
+    {if !$smarty.section.author.last},
+    {else} {tr}and{/tr}
+    {/if}
+   {/if}
+   {$contributors[author]|userlink}
+  {/section}.<br />                                         
+  {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}.
+</p>
+{elseif isset($wiki_authors_style) &&  $wiki_authors_style eq 'collaborative'}
+<p class="editdate">
+  {tr}Contributors to this page{/tr}: {$lastUser|userlink}
+  {section name=author loop=$contributors}
+   {if !$smarty.section.author.last},
+   {else} {tr}and{/tr}
+   {/if}
+   {$contributors[author]|userlink}
+  {/section}.<br />
+  {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}.
+</p>
+{elseif isset($wiki_authors_style) &&  $wiki_authors_style eq 'none'}
+{else}
 <p class="editdate">
   {tr}Created by{/tr}: {$creator|userlink}
   {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}
 </p>
+{/if}
 
 {if $wiki_feature_copyrights  eq 'y' and $wikiLicensePage}
   {if $wikiLicensePage == $page}

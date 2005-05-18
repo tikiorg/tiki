@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-articles.tpl,v 1.5 2005-03-12 16:50:59 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-articles.tpl,v 1.6 2005-05-18 11:03:28 mose Exp $ *}
 
 {if $feature_articles eq 'y'}
 {tikimodule title=$module_title name="articles" flip=$module_params.flip decorations=$module_params.decorations}

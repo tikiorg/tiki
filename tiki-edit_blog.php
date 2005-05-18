@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.26 2005-01-01 00:16:32 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.27 2005-05-18 10:58:56 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -78,6 +78,8 @@ if (!isset($lastModif)) {
 	$smarty->assign('lastModif', $lastModif);
 }
 
+$rss_version = $tikilib->get_preference("rssfeed_default_version","2");
+
 if (isset($_REQUEST["heading"])and $tiki_p_edit_templates) {
 	$heading = $_REQUEST["heading"];
 } else {
@@ -92,7 +94,7 @@ if (isset($_REQUEST["heading"])and $tiki_p_edit_templates) {
 	$heading .= '{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y" or $public eq "y"}' . "\n";
 	$heading .= '<a class="bloglink" href="tiki-blog_post.php?blogId={$blogId}"><img src="img/icons/edit.gif" border="0" alt="{tr}Post{/tr}" title="{tr}post{/tr}" /></a>{/if}{/if}' . "\n";
 	$heading .= '{if $rss_blog eq "y"}' . "\n";
-	$heading .= '<a class="bloglink" href="tiki-blog_rss.php?blogId={$blogId}&amp;ver=2&amp;css=y"><img src="img/icons/mode_desc.gif" border="0" alt="{tr}RSS feed{/tr}" title="{tr}RSS feed{/tr}" /></a>{/if}' . "\n";
+	$heading .= '<a class="bloglink" href="tiki-blog_rss.php?blogId={$blogId}&amp;ver='.$rss_version.'"><img src="img/rss.png" border="0" alt="{tr}RSS feed{/tr}" title="{tr}RSS feed{/tr}" /></a>{/if}' . "\n";
 	$heading .= '{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y"}' . "\n";
 	$heading .= '<a class="bloglink" href="tiki-edit_blog.php?blogId={$blogId}"><img src="img/icons/config.gif" border="0" alt="{tr}Edit blog{/tr}" title="{tr}Edit blog{/tr}" /></a>{/if}' . "\n";
 	$heading .= '{if $user and $feature_user_watches eq "y"}' . "\n";
@@ -107,7 +109,7 @@ $smarty->assign_by_ref('heading', $heading);
 
 if (isset($_REQUEST["blogId"]) && $_REQUEST["blogId"] > 0) {
 	// Check permission
-	$data = $bloglib->get_blog($_REQUEST["blogId"]);
+	$data = $tikilib->get_blog($_REQUEST["blogId"]);
 
 	if ($data["user"] != $user || !$user) {
 		if ($tiki_p_blog_admin != 'y') {

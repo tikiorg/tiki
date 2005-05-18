@@ -1,11 +1,22 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_browse.tpl,v 1.13 2005-03-12 16:50:42 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_browse.tpl,v 1.14 2005-05-18 11:02:59 mose Exp $ *}
 
+{* The heading and category path *}
+{if $feature_siteidentity ne 'y' or $feature_breadcrumbs ne 'y'}
 <h1><a class="pagetitle" href="tiki-directory_browse.php?parent={$parent}">{tr}Directory{/tr}</a></h1>
+{else}
+<div id="pageheader">
+{breadcrumbs type="trail" loc="page" crumbs=$crumbs}{breadcrumbs type="pagetitle"
+loc="page" crumbs=$crumbs}
+{breadcrumbs type="desc" loc="page" crumbs=$crumbs}
+</div>
+{/if}
 {* The navigation bar *}
 {include file=tiki-directory_bar.tpl}
 <br /><br />
 {* The category path *}
+{if $feature_siteidentity ne 'y' or $feature_breadcrumbs ne 'y'}
 <a class="dirlink" href="tiki-directory_browse.php?parent=0">Top</a>{if $parent > 0} >> {/if}{$path}
+{/if}
 <br /><br />
 <div align="center">
 <form action="tiki-directory_search.php" method="post">
@@ -92,7 +103,7 @@
 {section name=ix loop=$items}
 <div class="dirsite">
 <img alt="flag" src="img/flags/{$items[ix].country}.gif" />
-<a title="{$items[ix].url}" class="dirsitelink" href="tiki-directory_redirect.php?siteId={$items[ix].siteId}" {if $directory_open_links eq 'n'}target='_blank'{/if}>{$items[ix].name}</a>
+<a class="dirsitelink" href="tiki-directory_redirect.php?siteId={$items[ix].siteId}" {if $directory_open_links eq 'n'}target='_blank'{/if}>{$items[ix].name}</a>
 {if $tiki_p_admin_directory_sites eq 'y'} [<a class="dirsitelink" href="tiki-directory_admin_sites.php?parent={$parent}&amp;siteId={$items[ix].siteId}">{tr}edit{/tr}</a>]{/if} 
 {if $cachepages eq 'y'}(<a  class="dirsitelink" href="tiki-view_cache.php?url={$items[ix].url}" target="_blank">{tr}cache{/tr}</a>){/if}
 <br />

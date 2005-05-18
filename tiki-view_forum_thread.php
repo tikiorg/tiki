@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.77 2005-01-22 22:54:57 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.78 2005-05-18 10:59:00 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -30,47 +30,20 @@ if (!isset($_REQUEST['comments_parentId'])) {
     die;
 }
 
-include_once ("lib/commentslib.php");
-$commentslib = new Comments($dbTiki);
-$forum_info = $commentslib->get_forum($_REQUEST["forumId"]);
-$comments_default_ordering = $forum_info["topicOrdering"];
-
 if (!isset($_REQUEST['topics_offset'])) {
     $_REQUEST['topics_offset'] = 1;
 }
 
 if(!isset($_REQUEST['topics_sort_mode']) || empty($_REQUEST['topics_sort_mode'])) {
-    $_REQUEST['topics_sort_mode'] = $comments_default_ordering;
-    $smarty->assign('topics_sort_mode_param', NULL);
-    $smarty->assign('comments_sort_mode_param', NULL);
-} else {
-	$topics_sort_mode_param = '&topics_sort_mode=' . $_REQUEST['topics_sort_mode'];
-	$comments_sort_mode_param = '&comments_sort_mode=' . $_REQUEST['topics_sort_mode'];
-	$smarty->assign('topics_sort_mode_param', htmlspecialchars($topics_sort_mode_param));
-	$smarty->assign('comments_sort_mode_param', htmlspecialchars($comments_sort_mode_param));
+    $_REQUEST['topics_sort_mode'] = 'commentDate_desc';
 }
 
-if (empty($_REQUEST['topics_find'])) {
-	$_REQUEST['topics_find'] = NULL;
-	$smarty->assign('topics_find_param', NULL);
-	$smarty->assign('comments_find_param', NULL);
-} else {
-	$topics_find_param = '&topics_find=' . $_REQUEST['topics_find'];
-	$comments_find_param = '&comments_find=' . $_REQUEST['topics_find'];
-	$smarty->assign('topics_find_param', htmlspecialchars($topics_find_param));
-	$smarty->assign('comments_find_param', htmlspecialchars($comments_find_param));
+if (!isset($_REQUEST['topics_find'])) {
+    $_REQUEST['topics_find'] = '';
 }
-$smarty->assign('topics_find', $_REQUEST['topics_find']);
 
 if(!isset($_REQUEST['topics_threshold']) || empty($_REQUEST['topics_threshold'])) {
     $_REQUEST['topics_threshold'] = 0;
-    $smarty->assign('topics_threshold_param', NULL);
-    $smarty->assign('comments_threshold_param', NULL);
-} else {
-	$topics_threshold_param = '&topics_threshold=' . $_REQUEST['topics_threshold'];
-	$comments_threshold_param = '&comments_threshold=' . $_REQUEST['topics_threshold'];
-	$smarty->assign('topics_threshold_param', htmlspecialchars($topics_threshold_param));
-	$smarty->assign('comments_threshold_param', htmlspecialchars($comments_threshold_param));
 }
 
 if (isset($_REQUEST["quote"]) &&
@@ -107,9 +80,13 @@ if( isset( $_REQUEST["comments_reply_threadId"] ) )
 }
 
 $smarty->assign('forumId', $_REQUEST["forumId"]);
+include_once ("lib/commentslib.php");
+$commentslib = new Comments($dbTiki);
 
 $commentslib->comment_add_hit($_REQUEST["comments_parentId"]);
 $commentslib->mark_comment($user, $_REQUEST['forumId'], $_REQUEST["comments_parentId"]);
+
+$forum_info = $commentslib->get_forum($_REQUEST["forumId"]);
 
 $smarty->assign('individual', 'n');
 

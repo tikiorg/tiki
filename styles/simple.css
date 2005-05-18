@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.32 2005-03-12 16:50:02 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.33 2005-05-18 11:02:36 mose Exp $
  *
  * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye
  * Enables font re-sizing in all browsers, aims to be WCAG 1.0 compatible (not yet), one simple css file.
@@ -9,14 +9,15 @@
  */
 
 /*
- * first are going common html elements; here we start with styling the body
+ * the first there are going common html elements; here we start with styling the body
  */
 
 body {
  /* setting up the background. the color, then bg image and its form of repeating. */
  background: #ffffff url('simple/bg.png') top center repeat-y;
  /* shorthand for default font setting. size in percentage and font-family here */
- font: 75% 'Trebuchet MS', 'Luxi Sans', 'Lucida Grande', Tahoma, helvetica, sans-serif;
+ font-family: 'Trebuchet MS', 'Luxi Sans', 'Lucida Grande', Tahoma, helvetica, sans-serif;
+ font-size: 75%;
  /* size of 75% here prevents unreadable microscopic font size in MSIE when using em for further elements sizes */
  margin: 0; /* zero margins for body */
  padding: 0; /* and padding */
@@ -299,6 +300,13 @@ div.box-title table {
  padding: 0.2em;
  text-align: left;
 }
+
+/* lists in modules */
+.box-data li {
+ padding: 0.2em;
+ text-align: left;
+}
+
 /*
  * controls for modules (logged-in users only)
  */
@@ -490,6 +498,109 @@ textarea.tshoutbox { /* correct width for shoutboxmod textarea only (needed by m
 	color: #c00;
 }
 
+/*
+ ***** JS related stuff *****
+ */
+
+/*
+ * PHP Layers Menus
+ */
+.mdkhorbar {
+	color: black;
+	background-color: #def;
+	border: 1px outset #525252;
+}
+
+.horbar {
+	margin-left: 0;
+}
+
+.horbaritem a {
+	font-size: 1em;
+	text-decoration: none;
+}
+
+.mdkhorbaritem {
+	float: left;
+	white-space: nowrap;
+	font-size: 1em;
+}
+
+.mdkhorbaritem a {
+	display: block;
+	text-decoration: none;
+}
+
+.mdkhorbaritem a:link {
+	color: #000000;
+}
+
+.mdkhorbaritem a:visited {
+	color: #000000;
+}
+
+.mdkhorbaritem a:hover  {
+	background-color: #abcdef;
+}
+
+.mdkhorbaritem a:active {
+	color: #ff0000;
+}
+
+.mdkverbar {
+	color: black;
+	border: 1px solid #fdfefd;
+}
+
+.mdksubmenu {
+	position: absolute;
+	left: 0;
+	top: 0;
+	visibility: hidden;
+}
+
+.mdksubframe {
+	position: relative;
+	display: block;
+	background-color: #def;
+	border: 1px solid #fdfefd;
+}
+
+.mdkitem {
+	position: relative;
+	text-align: left;
+	white-space: nowrap;
+	font-size: 10px;
+	font-weight: bold;
+}
+
+.mdkitem a {
+	position: relative;
+	display: block;
+	text-decoration: none;
+}
+
+.mdkitem a:link {
+}
+
+.mdkitem a:visited {
+}
+
+.mdkitem a:hover {
+	color: #000;
+	background-color: #abcdef;
+}
+
+.mdkitem a:active {
+	color: #ff0000;
+}
+
+.mdkitem .mdkfwdarr {
+	position: absolute;
+	top: 5px;
+	right: 12px;
+}
+
 
 /* tiki tabs */
 
@@ -506,7 +617,7 @@ textarea.tshoutbox { /* correct width for shoutboxmod textarea only (needed by m
 	border-bottom : 0;
 	color: #000;
 	padding: 1px 5px 1px 5px;
-	text-dexoration: none;
+	text-decoration: none;
 }
 .tabmark a:active {
 	background-color: #fff;
@@ -532,14 +643,13 @@ textarea.tshoutbox { /* correct width for shoutboxmod textarea only (needed by m
   padding: 1px;
   margin: 1px;
   border: 1px inset #666666;
-  -moz-border-radius: 20px;
-  vertcal-align: middle;
+  vertical-align: middle;
   background-color: #bbaa99;
 }
 .statusoff {
   padding: 1px;
   margin: 2px;
-  vertcal-align: middle;
+  vertical-align: middle;
 }
 
 .normal { border:solid 1px #abcdef;}
@@ -552,40 +662,47 @@ textarea.tshoutbox { /* correct width for shoutboxmod textarea only (needed by m
   margin : 1ex;
    border : 1px dashed #adacaf; }
 
-   /* wiki diff styles */
+/* Version Plugin Style */
 
-.diffheader {
-margin: 10px 5px 0px 5px;
-padding: 4px;
-border-width: 1px 1px 0px 1px;
-border-style: solid;
-border-color: #A9B8C2;
-color: black;
-font-weight: bold;
-background-color: #A9B8C2;
-font-size: 8pt;
+.versions {
+border-top : 1px dashed #999999;
+border-bottom : 1px dashed #999999;
+min-height : 142px;
 }
-.diffbody {
-margin: 0px 5px 10px 5px;
-padding: 5px;
-border-color: #A9B8C2;
-border-width: 0px 1px 1px 1px;
-border-style: solid;
-font-family: monospace, 'Courier New', courier;
-color: black;
-background-color: #edeeef;
+.versionav {
+display : inline;
+float : right;
+border-left : 1px dashed #999999;
 }
-.diffdeleted {
-border-color: #A9B8C2;
-color: black;
-background-color: #ffcccc;
+.versionav .button2 {
+display : block;
+border : 0;
+border-bottom : 1px dashed #999999;
+background-color : transparent;
 }
-.diffadded {
-border-color: #A9B8C2;
-color: black;
-background-color: #ccffcc;
+.versionav .button2 .linkbut {
+border : 0;
+background-color : inherit;
+padding : 0 10px;
 }
-.diffchar{color: red;}
+.versionav .highlight {
+background-color : #cccccc;
+font-weight : bold;
+}
+.versiontitle {
+font-weight : bold;
+border-bottom : 1px dashed #999999;
+border-left : 1px dashed #999999;
+padding : 2px 30px;
+float : right;
+}
+
+/* wiki diff styles */
+.diffheader {background-color:#a9b8c2; font-weight: bold;}
+.diff div {text-align: left; border-top: 1px solid #abcdef; }
+.diffadded {background-color:#ccffcc;}
+.diffdeleted {background-color:#ffcccc;}
+.diffchar {color: red;}
 
 /**** coloration for QUOTE plugin *****/
 .quoteheader {
@@ -609,44 +726,4 @@ color: black;
 background-color: #edeeef;
 }
 
-/* Version Plugin Style */
-
-.versions {
-border-top : 1px dashed #999999;
-border-bottom : 1px dashed #999999;
-min-height : 142px;
-}
-.versionav {
-display : inline;
-float : right;
-border-left : 1px dashed #999999;
-}
-.versionav .button2 {
-display : block;
-border : 0;
-border-bottom : 1px dashed #999999;
-background-color : none;
-}
-.versionav .button2 .linkbut {
-border : 0;
-background-color : inherit;
-padding : 0 10px;
-}
-.versionav .highlight {
-background-color : #cccccc;
-font-weight : bold;
-}
-.versiontitle {
-font-weight : bold;
-border-bottom : 1px dashed #999999;
-border-left : 1px dashed #999999;
-padding : 2px 30px;
-float : right;
-}
-
-/* wiki diff styles */diffheader{background-color:#a9b8c2; font-weight: bold;}
-.diff div {text-align: left; border-top: 1px solid #abcdef; }
-.diffheader {font-weight: bold;}
-.diffadded {background-color:#ccffcc;}
-.diffdeleted {background-color:#ffcccc;}
-.diffchar {color: red;}
+/* end of css file */

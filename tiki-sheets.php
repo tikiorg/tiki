@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-sheets.php,v 1.8 2005-01-01 00:16:35 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-sheets.php,v 1.9 2005-05-18 10:58:59 mose Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -21,6 +21,13 @@ if($tiki_p_view != 'y') {
 */
 if ($feature_sheet != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_sheets");
+
+	$smarty->display("error.tpl");
+	die;
+}
+
+if ($tiki_p_view_sheet != 'y' && $tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y') {
+	$smarty->assign('msg', tra("Access Denied").": feature_sheets");
 
 	$smarty->display("error.tpl");
 	die;
@@ -75,6 +82,7 @@ if ($userlib->object_has_one_permission($_REQUEST["sheetId"], 'image gallery')) 
 $smarty->assign('title', '');
 $smarty->assign('description', '');
 $smarty->assign('edit_mode', 'n');
+$smarty->assign('chart_enabled', (function_exists('imagepng') || function_exists('pdf_new')) ? 'y' : 'n');
 
 // If we are editing an existing gallery prepare smarty variables
 if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {

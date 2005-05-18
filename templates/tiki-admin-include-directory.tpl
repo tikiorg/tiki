@@ -1,10 +1,16 @@
 {if $feature_help eq "y"}
-<div class="simplebox">{tr}Tip{/tr}: {tr}to configure your directory, find "Admin directory" under "Directory" on the application menu, or{/tr} <a class="link" href="tiki-directory_admin.php">{tr}click here{/tr}</a>.</div><br />
+<div class="rbox" style="margin-top: 10px;">
+<div class="rbox-title" style="background-color: #eeee99; font-weight : bold; display : inline; padding : 0 10px;">{tr}Tip{/tr}</div>
+<div class="rbox-data" style="padding: 2px 10px; background-color: #eeee99;">{tr}To configure your directory, find "Admin directory" under "Directory" on the application menu, or{/tr} <a class="link" href="tiki-directory_admin.php">{tr}click here{/tr}</a>.</div>
+</div>
+<br />
 {/if}
 <div class="cbox">
-  <div class="cbox-title">{tr}Directory{/tr}</div>
+  <div class="cbox-title">
+    {tr}{$crumbs[$crumb]->title}{/tr}
+    {help crumb=$crumbs[$crumb]}
+  </div>
   <div class="cbox-data">
-    <div class="simplebox">
       <form action="tiki-admin.php?page=directory" method="post">
         <table class="admin"><tr>
           <td class="form"><label for="directory-columns">{tr}Number of columns per page when listing categories{/tr}</label></td>
@@ -25,6 +31,10 @@
           <td><input type="checkbox" name="directory_validate_urls" id="directory-validate"
               {if $directory_validate_urls eq 'y'}checked="checked"{/if}></td>
         </tr><tr>
+          <td class="form"><label for="directory-cool-sites">{tr}enable cool sites{/tr}</label></td>
+          <td><input type="checkbox" name="directory_cool_sites" id="directory-cool-sites"
+              {if $directory_cool_sites eq 'y'}checked="checked"{/if}></td>
+        </tr><tr>
           <td class="form"><label for="directory-openlinks">{tr}Method to open directory links{/tr}</label></td>
           <td><select name="directory_open_links" id="directory-openlinks">
               <option value="r" {if $directory_open_links eq 'r'}selected="selected"{/if}>{tr}replace current window{/tr}</option>
@@ -36,6 +46,5 @@
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>
-    </div>
   </div>
 </div>

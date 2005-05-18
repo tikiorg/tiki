@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-debug_console.php,v 1.7 2005-01-01 00:16:32 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-debug_console.php,v 1.8 2005-05-18 10:58:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-debug_console.php,v 1.7 2005-01-01 00:16:32 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-debug_console.php,v 1.8 2005-05-18 10:58:55 mose Exp $
 //
 
 global $feature_debug_console;

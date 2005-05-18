@@ -1,7 +1,7 @@
 <div id="tiki-top">
 <table cellpadding="0" cellspacing="0" border="0">
 <tr><td class="left">
-<a href="http://{$http_domain}" title="{tr}back to homepage{/tr} {$siteTitle}" class="linkh">{$siteTitle}</a>
+<a href="{if $http_domain}http://{$http_domain}{else}{$crumbs[0]->url}{/if}" title="{tr}back to homepage{/tr} {$siteTitle}" class="linkh">{$siteTitle}</a>
 </td>
 <td class="center">
 {if $user}
@@ -18,3 +18,6 @@
 {/if}
 </div></td></tr></table>
 </div>
+{if $feature_phplayers eq 'y' and $feature_siteidentity eq 'y' and $feature_sitemenu eq 'y'}
+{phplayers id=42 type=horiz}
+{/if}

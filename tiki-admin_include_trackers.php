@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_trackers.php,v 1.11 2005-01-01 00:16:31 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_trackers.php,v 1.12 2005-05-18 10:58:54 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,8 +12,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
-include "lib/trackers/trackerlib.php";
 
+include "lib/trackers/trackerlib.php";
 
 if (isset($_REQUEST["trkset"])) {
 	check_ticket('admin-inc-trackers');
@@ -21,6 +21,31 @@ if (isset($_REQUEST["trkset"])) {
 	$tikilib->set_preference('t_use_dir', $_REQUEST["t_use_dir"]);
 	$smarty->assign('t_use_db', $_REQUEST["t_use_db"]);
 	$smarty->assign('t_use_dir', $_REQUEST["t_use_dir"]);
+}
+
+// You can switch between old and new trackers
+// only when no trackers exist.
+if (isset($_REQUEST["trkMirrorTables"])) {
+
+	if(isset($_REQUEST["trk_with_mirror_tables"])) {
+	
+		$_REQUEST["trk_with_mirror_tables"] = 'y';
+	}
+	else {
+		$_REQUEST["trk_with_mirror_tables"] = 'n';
+	}
+		
+	if(!$trklib->getOne("select * from tiki_trackers")) {
+	
+		$tikilib->set_preference('trk_with_mirror_tables', $_REQUEST["trk_with_mirror_tables"]);
+		$smarty->assign('trk_with_mirror_tables', $_REQUEST["trk_with_mirror_tables"]);
+	}
+	elseif($tikilib->get_preference('trk_with_mirror_tables') != $_REQUEST["trk_with_mirror_tables"]) {
+		
+		$smarty->assign('msg', tra("You cannot mix old and new trackers"));
+		$smarty->display("error.tpl");
+		die;
+	}
 }
 
 if (isset($_REQUEST['action']) and isset($_REQUEST['attId'])) {

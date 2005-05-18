@@ -85,6 +85,12 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set')
 				if ($country && $country != "Other") {
 				   $content .= "<img src='img/flags/$country.gif' /> ".tra($country) . "<br/>";
 				}
+					}
+					if ($feature_community_mouseover_distance == 'y') {
+				$distance = $tikilib->get_userdistance($other_user,$user);
+				if (!is_null($distance)) {
+				   $content .= $distance." ".tra("km") . "<br/>";
+				}
 			    }
 			    if($feature_community_mouseover_email == 'y') {
 				$email_isPublic = $tikilib->get_user_preference($other_user, "email is public");

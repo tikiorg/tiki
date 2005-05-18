@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.5 2004-09-08 19:52:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.6 2005-05-18 11:01:01 mose Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {

@@ -53,11 +53,10 @@
   <img alt="{tr}flag{/tr}" title="{tr}flag{/tr}" src="img/flags/{$country}.gif" />
   {/if}
 <select name="country">
-  <option value="None" {if $country eq "None"}selected="selected"{/if}>{tr}None{/tr}</option>
   <option value="Other" {if $country eq "Other"}selected="selected"{/if}>{tr}Other{/tr}</option>
   {sortlinks}
   {section name=ix loop=$flags}
-  {if $flags[ix] ne "Other" and $flags[ix] ne "None"}
+  {if $flags[ix] ne "Other"}
   <option value="{$flags[ix]|escape}" {if $country eq $flags[ix]}selected="selected"{/if}>{tr}{$flags[ix]}{/tr}</option>
   {/if}
   {/section}
@@ -65,8 +64,8 @@
   </select>
   </td></tr>
   
-  <tr><td class="form">{tr}Latitude (WGS84/decimal degrees){/tr}:</td><td class="form"><input type="text" name="lat" value="{$lat|escape}" /></td></tr>
   <tr><td class="form">{tr}Longitude (WGS84/decimal degrees){/tr}:</td><td class="form"><input type="text" name="lon" value="{$lon|escape}" /></td></tr>
+  <tr><td class="form">{tr}Latitude (WGS84/decimal degrees){/tr}:</td><td class="form"><input type="text" name="lat" value="{$lat|escape}" /></td></tr>
   
   <tr><td class="form">{tr}Avatar{/tr}:</td><td class="form">{$avatar} <a href="tiki-pick_avatar.php" class="link">{tr}Pick user Avatar{/tr}</a></td></tr>
   <tr><td class="form">{tr}HomePage{/tr}:</td><td class="form"><input type="text" size="40" name="homePage" value="{$homePage|escape}" /></td></tr>
@@ -136,7 +135,7 @@
       {/if}
     {/section}
         </select>
-		{if $feature_editcss eq 'y' and $tiki_p_create_css eq 'y'}
+		{if $feature_editcss and $tiki_p_create_css}
 			<a href="tiki-edit_css.php" class="link" title="{tr}Edit CSS{/tr}">{tr}Edit CSS{/tr}</a>
 		{/if}
 				</td></tr>
@@ -176,14 +175,8 @@
     <option value='public' {if $user_information eq 'public'}selected="selected"{/if}>{tr}public{/tr}</option>
   </select>
   </td></tr>
-  {if $feature_wiki eq 'y' and $feature_wiki_dblclickedit neq 'disabled'}
-  <tr><td class="form">
-  {if $feature_wiki_dblclickedit eq 'wikitext_only'}
-	  {tr}Double-click on wiki text to edit page{/tr}:
-  {else}
-	  {tr}Double-click to edit pages{/tr}:
-  {/if}
-  </td>
+  {if $feature_wiki eq 'y'}
+  <tr><td class="form">{tr}Use double-click to edit pages{/tr}:</td>
   <td class="form">
   <input type="checkbox" name="user_dbl" {if $user_dbl eq 'y'}checked="checked"{/if} />
   </td>

@@ -19,7 +19,6 @@ function refresh_search_index() {
     ///iprint "<pre>rate: $search_refresh_rate.</pre>\n";
   list($usec, $sec) = explode(" ",microtime());
   srand (ceil($sec+100*$usec));
-  // check if we should refresh the search index for all wiki pages
   if(rand(1,$search_refresh_rate)==1) {
     // print "<pre>refreshing</pre>\n";
 

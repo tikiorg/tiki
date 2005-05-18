@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/banner_image.php,v 1.11 2005-01-18 13:04:43 telenieko Exp $
+// $Header: /cvsroot/tikiwiki/tiki/banner_image.php,v 1.12 2005-05-18 10:58:51 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/banner_image.php,v 1.11 2005-01-18 13:04:43 telenieko Exp $
+# $Header: /cvsroot/tikiwiki/tiki/banner_image.php,v 1.12 2005-05-18 10:58:51 mose Exp $
 
 // application to display an image from the database with 
 // option to resize the image dynamically creating a thumbnail on the fly.
@@ -21,7 +21,7 @@ $bannercachefile = "temp";
 if ($tikidomain) { $bannercachefile.= "/$tikidomain"; }
 $bannercachefile.= "/banner.".$_REQUEST["id"];
 
-if (is_file($bannercachefile) and (!isset($_REQUEST["reload"]))) {
+if (is_file($bannerchefile) and (!isset($_REQUEST["reload"]))) {
 	$size = getimagesize($bannercachefile);
 	$type = $size['mime'];
 } else {

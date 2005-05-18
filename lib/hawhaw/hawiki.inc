@@ -2,8 +2,8 @@
 
 // HAWIKI
 // PHP wrapper class for HAWHAW-based wiki's
-// Copyright (C) 2003 Norbert Huffschmid & TikiWiki community
-// Last modified: 13. December 2003
+// Copyright (C) 2005 Norbert Huffschmid & TikiWiki community
+// Last modified: 17. May 2005
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -101,7 +101,7 @@ class HAWIKI_page
   var $debugflags;    // flags for dumping debug info
   var $textformat;    // text format: bold, italic etc.
 
-  function HAWIKI_page($input, $wiki_base, $title)
+  function HAWIKI_page($input, $wiki_base, $title, $language)
   {
     $this->wiki_string = utf8_decode($input);
     $this->wiki_base = $wiki_base;
@@ -118,27 +118,26 @@ class HAWIKI_page
     $this->textformat = HAW_TEXTFORMAT_NORMAL;
 
     // check input string for presence resp. maximum length
-    if ((strlen($input) == 0) || (strlen($input) > HAWIKI_MAXINPUTCHARS))
+    if (strlen($input) > HAWIKI_MAXINPUTCHARS)
     {
       // invalid input size
       HAWIKI_error("Error: Invalid wiki size"); // script end
     }
 
     $this->deck = new HAW_deck(HAWIKI_TITLE);
-    $this->deck->enable_session();
+    HAWTIKI_deck_init($this->deck);
     $this->deck->set_width(HAWIKI_DISP_WIDTH);
     $this->deck->set_height(HAWIKI_DISP_HEIGHT);
     $this->deck->set_disp_bgcolor(HAWIKI_DISP_BGCOLOR);
+
+    if (isset($language) && (strlen($language) == 2))
+      $this->deck->set_language($language);
   }
 
 
   function display()
   {
     // convert wiki text into HAWHAW object structure and create appropriate markup
-
-    // remove remote debugging in stable versions !!!
-//    global $HTTP_GET_VARS;
-//    $url_debugflags = $HTTP_GET_VARS["hawikidebugremote"];
 
     $url_debugflags = $_GET["hawikidebugremote"];
     if ($url_debugflags && ($this->debugflags == HAWIKI_DEBUG_NONE))
@@ -175,7 +174,7 @@ class HAWIKI_page
       $this->deck->add_rule($rule);
     }
 
-    $input = $this->wiki_string;
+    $input = strip_tags($this->wiki_string); // remove all HTML
 
     while ($po = HAWIKI_parser($input, $this->firstColumn)) // evaluate parser output
     {
@@ -220,12 +219,12 @@ class HAWIKI_page
           if ($this->debugflags & HAWIKI_DEBUG_PARSER)
             printf("<b>Text:</b> %s<br>\n", $po["text"]);
 
-          //if (strlen($po["text"]) == 0)
-          //  die("length of text is 0"); // for test only
-
-          $text = new HAW_text(HAWIKI_unhtmlentities($po["text"]), $this->textformat);
-          $text->set_br(0);
-          $this->deck->add_text($text);
+          if (strlen($po["text"]) > 0)
+          {
+            $text = new HAW_text(HAWIKI_unhtmlentities($po["text"]), $this->textformat);
+            $text->set_br(0);
+            $this->deck->add_text($text);
+          }
 
           break;
         }
@@ -436,6 +435,15 @@ class HAWIKI_page
             $link = new HAW_link($po["label"], HAWIKI_specchar($po["url"]));
             $link->set_br(0);
             $this->deck->add_link($link);
+
+            // mark as external link
+            if (!strstr(strtolower($po["url"]), "mode=mobile"))
+            {
+              $el_image = new HAW_image("/img/icons/external_link.wbmp",
+                                        "/img/icons/external_link.gif", hawtra("external link"));
+              $el_image->set_voice_text(hawtra("external link"));
+              $this->deck->add_image($el_image);
+            }
           }
 
           break;
@@ -475,6 +483,11 @@ class HAWIKI_page
 
         case HAWIKI_TOKEN_IMAGE:
         {
+          global $tikidomain;
+          
+          if ($tikidomain)
+            $po["src"] = preg_replace("~img/wiki_up/~","img/wiki_up/$tikidomain/", $po["src"]);
+
           if ($this->debugflags & HAWIKI_DEBUG_PARSER)
             printf("<b>Image:</b> src:%s alt:%s link:%s<br>\n", $po["src"], $po["alt"], $po["link"]);
 

@@ -453,7 +453,8 @@ General form elements
 input, select {
 	color:    #000000;
 	background-color:   #f1f1c9;
-	font:   normal 10px Verdana, Arial, Helvetica, sans-serif;
+	font-family:   Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
 	border:   1px solid #999970;
 }
 
@@ -461,7 +462,9 @@ textarea {
 	color:    #000000;
 	background-color:   #f1f1c9;
 	border:   1px solid #999970;
-	font:   normal 12px fixed, courier, monospace;
+	font-size: 12px;
+	font-family: fixed, courier, monospace;
+	font-style: normal;
 }
 
 input {
@@ -989,12 +992,10 @@ Date displayed for last modification date of pages
 /*
 
 */
-.toptitledesc {
-	font-size:    smaller;
+#description {
+	font-size : 10px !important;
 	padding-left:   10px;
 	color:   #333300;
-	background:   #d1d2a9;
-	font-family:   Helvetica, Arial, sans-serif;
 }
 
 /* 
@@ -2534,6 +2535,7 @@ a.tikihelp, a.tikihelp:visited {
 	margin:   inherit;
 	padding:   inherit;
 	text-decoration:   inherit;
+	vertical-align: text-top;
 }
 
 a.tikihelp:hover {
@@ -2546,6 +2548,7 @@ a.tikihelp:hover {
 	padding:   inherit;
 	cursor:   help;
 	text-decoration:   inherit;
+	vertical-align: text-top;
 }
 .catblock {
   border: 1px solid #aaaaaa;
@@ -2742,13 +2745,13 @@ TABLE.admin {
   margin: 1px;
   border: 1px inset #666666;
   -moz-border-radius: 20px;
-  vertcal-align: middle;
+  vertical-align: middle;
   background-color: #bbaa99;
 }
 .statusoff {
   padding: 1px;
   margin: 2px;
-  vertcal-align: middle;
+  vertical-align: middle;
 }
 
 
@@ -2770,63 +2773,6 @@ table.default	td
 .codelisting 
 { font-family : monospace; padding : 2ex;
 background-color : #EEE8AA; margin : 1ex; border : 1px dashed #adacaf; }
-
-/* wiki diff styles */
-
-.diffheader {
-margin: 10px 5px 0px 5px;
-padding: 4px;
-border-width: 1px 1px 0px 1px;
-border-style: solid;
-border-color: #A9B8C2;
-color: black;
-font-weight: bold;
-background-color: #A9B8C2;
-font-size: 8pt;
-}
-.diffbody {
-margin: 0px 5px 10px 5px;
-padding: 5px;
-border-color: #A9B8C2;
-border-width: 0px 1px 1px 1px;
-border-style: solid;
-font-family: monospace, 'Courier New', courier;
-color: black;
-background-color: #edeeef;
-}
-.diffdeleted {
-border-color: #A9B8C2;
-color: black;
-background-color: #ffcccc;
-}
-.diffadded {
-border-color: #A9B8C2;
-color: black;
-background-color: #ccffcc;
-}
-.diffchar{color: red;}
-
-/**** coloration for QUOTE plugin *****/
-.quoteheader {
-margin: 10px 5px 0px 5px;
-padding: 4px;
-border-width: 1px 1px 0px 1px;
-border-style: solid;
-border-color: #A9B8C2;
-color: black;
-font-weight: bold;
-background-color: #A9B8C2;
-font-size: 8pt;
-}
-.quotebody {
-margin: 0px 5px 10px 5px;
-padding: 5px;
-border-color: #A9B8C2;
-border-width: 0px 1px 1px 1px;
-border-style: solid;
-color: black;
-background-color: #edeeef;
-}
 
 /* Version Plugin Style */
 
@@ -2871,3 +2817,27 @@ float : right;
 .diffdeleted {background-color:#ffcccc;}
 .diffbody{background-color:#f1f1c9;}
 .diffchar {color: red;}
+
+/**** coloration for QUOTE plugin *****/
+.quoteheader {
+margin: 10px 5px 0px 5px;
+padding: 4px;
+border-width: 1px 1px 0px 1px;
+border-style: solid;
+border-color: #A9B8C2;
+color: black;
+font-weight: bold;
+background-color: #A9B8C2;
+font-size: 8pt;
+}
+.quotebody {
+margin: 0px 5px 10px 5px;
+padding: 5px;
+border-color: #A9B8C2;
+border-width: 0px 1px 1px 1px;
+border-style: solid;
+color: black;
+background-color: #edeeef;
+}
+
+/* end of css file */

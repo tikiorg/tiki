@@ -1,6 +1,4 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_security.php,v 1.2 2005-01-22 22:54:52 mose Exp $
-
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -93,21 +91,41 @@ $smarty->assign_by_ref('tikisettings',$tikisettings);
 
 // dir walk & check functions
 function md5_check_dir($dir,&$result) { // save all suspicious files in $result
-  global $tikimd5; // todo: put md5 sums in db to avoid the problem that the md5 sum of lib/admin/secdb.php is wron always
+  global $tikilib;
+  global $tiki_version;
+  $query="select * from `tiki_secdb` where `filename`=?";
   $d=dir($dir);
   while (false !== ($e = $d->read())) {
     $entry=$dir.'/'.$e;
     if(is_dir($entry)) {
-      if($e != '..' && $e != '.') { // do not descend
+      if($e != '..' && $e != '.' && $entry!='./templates_c') { // do not descend and no checking of templates_c since the file based md5 database would grow to big
         md5_check_dir($entry,$result);
       }
-    } else {
-      if(!isset($tikimd5[$entry])) {
-        $result[$entry]=tra('This is not a TikiWiki File. Check if this file was uploaded and if it is dangerous.');
-      } else if(!is_readable($entry)) {
-	$result[$entry]=tra('File is not readable. Unable to check.');
-      } else if(md5_file($entry) != $tikimd5[$entry]) {
-        $result[$entry]=tra('This file is modified.');
+    } else if(substr($e,-4,4) == ".php") {
+      if(!is_readable($entry)) {
+	 $result[$entry]=tra('File is not readable. Unable to check.');
+      } else {
+	 $md5val=md5_file($entry);
+         $dbresult=$tikilib->query($query,array($entry));
+	 $is_tikifile=false;
+	 $is_tikiver=array();
+	 $severity=0;
+	 // we could avoid the following with a second sql, but i think, this is faster.
+         while($res=$dbresult->FetchRow()) {
+	    $is_tikifile=true; // we know the filename ... probably modified
+	    if($res['md5_value']==$md5val) {
+	       $is_tikiver[]=$res['tiki_version']; // found
+	       $severity=$res['severity'];
+	    }
+	 }
+
+        if($is_tikifile==false) {
+           $result[$entry]=tra('This is not a TikiWiki file. Check if this file was uploaded and if it is dangerous.');
+        } else if($is_tikifile==true && count($is_tikiver)==0) {
+	   $result[$entry]=tra('This is a modified File. Cannot check version. Check if it is dangerous.');
+        } else if(array_search($tiki_version, $is_tikiver)===FALSE) {
+           $result[$entry]=tra('This file is from another TikiWiki version: ').implode(tra(' or '),$is_tikiver);
+	}
       }
     }
   }
@@ -117,7 +135,8 @@ function md5_check_dir($dir,&$result) { // save all suspicious files in $result
 
 // if check installation is pressed, walk through all files and compute md5 sums
 if (isset($_REQUEST['check_files'])) {
-  require_once('lib/admin/secdb.php');
+  global $tiki_version;
+  $tiki_version='1.9';
   $result=array();
   md5_check_dir(".",$result);
   // echo "<pre>"; print_r($tikimd5);echo "</pre><br />";
@@ -125,7 +144,6 @@ if (isset($_REQUEST['check_files'])) {
   $smarty->assign('filecheck',true);
   $smarty->assign_by_ref('tikifiles',$result);
 }
-
 
 $smarty->assign('mid', 'tiki-admin_security.tpl');
 $smarty->display("tiki.tpl");

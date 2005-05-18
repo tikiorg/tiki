@@ -27,14 +27,10 @@ function wikiplugin_tracker($data, $params) {
 	if (!isset($action)) {
 		$action = tra("Save");
 	}
-	global $trklib;
-	if (!is_object($trklib)) {
-		require_once('lib/trackers/trackerlib.php');
-	}
-	$tracker = $trklib->get_tracker($trackerId);
 	if (!isset($showmandatory)) {
 		$showmandatory = 'y';
 	}
+	$tracker = $tikilib->get_tracker($trackerId);
 	
 	if ($tracker) {
 		include_once('lib/trackers/trackerlib.php');
@@ -71,7 +67,7 @@ function wikiplugin_tracker($data, $params) {
 					$ins_fields["data"][] = array('fieldId' => $embeddedId, 'value' => $_REQUEST['page']);
 				}
 				$rid = $trklib->replace_item($trackerId,0,$ins_fields,$tracker['newItemStatus']);
-				header("Location: tiki-index.php?page=".urlencode($page));
+				header("Location: tiki-index.php?page=".urlencode($page)."&ok=y");
 				die;
 				// return "<div>$data</div>";
 			}
@@ -148,7 +144,11 @@ function wikiplugin_tracker($data, $params) {
 						$onemandatory = true;
 					}
 					$back.= "</td><td>";
-					$back.= '<textarea cols="29" rows="7" name="track['.$f["fieldId"].']" wrap="soft"></textarea>';
+					if( isset($f['options_array'][1]) ) {
+						$back.= '<textarea cols='.$f['options_array'][1].' rows='.$f['options_array'][2].' name="track['.$f["fieldId"].']" wrap="soft"></textarea>';
+					} else {
+						$back.= '<textarea cols="29" rows="7" name="track['.$f["fieldId"].']" wrap="soft"></textarea>';
+					}
 				} elseif ($f['type'] == 'd' or $f['type'] == 'u' or $f['type'] == 'g' or $f['type'] == 'r') {
 					if ($f['type'] == 'd') {
 						$list = split(',',$f['options']);
@@ -190,8 +190,10 @@ function wikiplugin_tracker($data, $params) {
 	} else {
 		$back = "No such id in trackers.";
 	}
-
-	return $back;
+	if (isset($_REQUEST["ok"]) && $_REQUEST["ok"]  == "y")
+		return "<div>$data</div>";
+	else
+		return $back;
 }
 
 ?>

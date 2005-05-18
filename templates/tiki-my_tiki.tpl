@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.16 2005-03-12 16:50:50 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.17 2005-05-18 11:03:18 mose Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a>
 
@@ -135,8 +135,8 @@
 
 {if $feature_workflow eq 'y' && $tiki_p_use_workflow eq 'y' && $mytiki_workflow eq 'y'}
   <div id="content7" class="content">
-      {include file="templates/tiki-g-my_activities.tpl"}
+      {include file="tiki-g-my_activities.tpl"}
       <br /><br />
-      {include file="templates/tiki-g-my_instances.tpl"}
+      {include file="tiki-g-my_instances.tpl"}
   </div>
 {/if}

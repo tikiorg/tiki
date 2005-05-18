@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.79 2005-01-22 22:54:57 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.80 2005-05-18 10:59:00 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -153,7 +153,7 @@ foreach ($status_raw as $let=>$sta) {
 }
 $smarty->assign('status_types', $status_types);
 
-if (count($status_types) == 1) {
+if (count($status_types) == 0) {
 	$tracker_info["showStatus"] = 'n';
 }
 
@@ -397,13 +397,22 @@ if (isset($_REQUEST["save"])) {
 		$itemid = $trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $_REQUEST['status']);
 		$cookietab = "1";
 		$smarty->assign('itemId', '');
-		
-		if (count($ins_categs)) {
+	// Monchofix 2005. Vamo lo pibeh.	
+$ins_categs = array();
+while (list($postVar, $postVal) = each($_REQUEST))
+  {
+  if(preg_match("/^ins_cat_[0-9]+/", $postVar))
+    {
+    $ins_categs[] = $postVal[0];
+    }
+  }
+		if (count($ins_categs) > 0) {
 			$cat_type = "tracker ".$_REQUEST["trackerId"];
 			$cat_objid = $_REQUEST["itemId"];
 			$cat_desc = "";
 			$cat_name = $mainfield;
 			$cat_href = "tiki-view_tracker_item.php?trackerId=".$_REQUEST["trackerId"]."&amp;itemId=".$_REQUEST["itemId"];
+                        if (isset($itemid)){$cat_objid = $itemid;}
 			$categlib->uncategorize_object($cat_type, $cat_objid);
 			foreach ($ins_categs as $cats) {
 				$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
@@ -482,7 +491,7 @@ if ($my and $writerfield) {
 	$filtervalue = '';
 	$_REQUEST['status'] = 'opc';
 } else {
-	if (isset($_REQUEST["filtervalue"]) and isset($_REQUEST["filtervalue"]["$filterfield"])) {
+	if (isset($_REQUEST["filtervalue"]) and is_array($_REQUEST["filtervalue"]) and isset($_REQUEST["filtervalue"]["$filterfield"])) {
 		$filtervalue = $_REQUEST["filtervalue"]["$filterfield"];
 	} else if (isset($_REQUEST["filtervalue"])) {
 		$filtervalue = $_REQUEST["filtervalue"];
@@ -511,6 +520,23 @@ $urlquery["filtervalue[".$filterfield."]"] = $filtervalue;
 $smarty->assign_by_ref('urlquery', $urlquery);
 $cant = $items["cant"];
 include "tiki-pagination.php";
+
+if ($tracker_info['useAttachments'] == 'y' && $tracker_info['showAttachments'] == 'y') {
+	foreach ($items["data"] as $itkey=>$oneitem) {
+		$items["data"][$itkey]['attachments'] = $trklib->get_item_nb_attachments($items["data"][$itkey]['itemId']);
+	}
+}
+
+/* ************** not merge needed from 1.8
+foreach ($items["data"] as $itkey=>$oneitem) {
+    foreach ($oneitem['field_values'] as $ifld=>$valfld) {
+        if ($valfld['type'] == 'f') {
+            $items["data"][$itkey]['field_values'][$ifld]['value'] =
+                smarty_make_timestamp($valfld['value']);
+        }
+    }
+}
+******************** */
 
 $smarty->assign_by_ref('items', $items["data"]);
 $smarty->assign_by_ref('listfields', $listfields);

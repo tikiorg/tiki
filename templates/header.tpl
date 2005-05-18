@@ -2,14 +2,12 @@
 
 You should only modify header.tpl via a text editor through console, or ssh, or FTP edit commands. And only if you know what you are doing ;-)
 
-You are most likely wanting to modify the top of your Tiki site. Please consider modifying tiki-top_bar.tpl which you can do safely via the web-based interface.       --- *}
-<?xml version="1.0" encoding="UTF-8"?>
+You are most likely wanting to modify the top of your Tiki site. Please consider using Site Identity feature or modifying tiki-top_bar.tpl which you can do safely via the web-based interface.       --- *}<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html 
 	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-{if $static_mode eq 'y'}<base href="{$base_href}" />{/if}
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 {if $metatag_keywords ne ''}<meta name="keywords" content="{$metatag_keywords}" />
 {/if}
@@ -95,28 +93,28 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 
 {* --- Firefox RSS icons --- *}
 {if $feature_wiki eq 'y' and $rss_wiki eq 'y'}
-<link rel="alternate" type="application/xml" title="{tr}RSS Wiki{/tr}" href="tiki-wiki_rss.php?ver={$rssfeed_default_version}{$rssfeed_cssparam}" />
+<link rel="alternate" type="application/xml" title="{tr}RSS Wiki{/tr}" href="tiki-wiki_rss.php?ver={$rssfeed_default_version}" />
 {/if}
 {if $feature_blogs eq 'y' and $rss_blogs eq 'y'}
-<link rel="alternate" type="application/xml" title="{tr}RSS Blogs{/tr}" href="tiki-blogs_rss.php?ver={$rssfeed_default_version}{$rssfeed_cssparam}" />
+<link rel="alternate" type="application/xml" title="{tr}RSS Blogs{/tr}" href="tiki-blogs_rss.php?ver={$rssfeed_default_version}" />
 {/if}
 {if $feature_articles eq 'y' and $rss_articles eq 'y'}
-<link rel="alternate" type="application/xml" title="{tr}RSS Articles{/tr}" href="tiki-articles_rss.php?ver={$rssfeed_default_version}{$rssfeed_cssparam}" />
+<link rel="alternate" type="application/xml" title="{tr}RSS Articles{/tr}" href="tiki-articles_rss.php?ver={$rssfeed_default_version}" />
 {/if}
 {if $feature_galleries eq 'y' and $rss_image_galleries eq 'y'}
-<link rel="alternate" type="application/xml" title="{tr}RSS Image Galleries{/tr}" href="tiki-image_galleries_rss.php?ver={$rssfeed_default_version}{$rssfeed_cssparam}" />
+<link rel="alternate" type="application/xml" title="{tr}RSS Image Galleries{/tr}" href="tiki-image_galleries_rss.php?ver={$rssfeed_default_version}" />
 {/if}
 {if $feature_file_galleries eq 'y' and $rss_file_galleries eq 'y'}
-<link rel="alternate" type="application/xml" title="{tr}RSS File Galleries{/tr}" href="tiki-file_galleries_rss.php?{$rssfeed_default_version}{$rssfeed_cssparam}" />
+<link rel="alternate" type="application/xml" title="{tr}RSS File Galleries{/tr}" href="tiki-file_galleries_rss.php?{$rssfeed_default_version}" />
 {/if}
 {if $feature_forums eq 'y' and $rss_forums eq 'y'}
-<link rel="alternate" type="application/xml" title="{tr}RSS Forums{/tr}" href="tiki-forums_rss.php?ver={$rssfeed_default_version}{$rssfeed_cssparam}" />
+<link rel="alternate" type="application/xml" title="{tr}RSS Forums{/tr}" href="tiki-forums_rss.php?ver={$rssfeed_default_version}" />
 {/if}
 {if $feature_maps eq 'y' and $rss_mapfiles eq 'y'}
-<link rel="alternate" type="application/xml" title="{tr}RSS Maps{/tr}" href="tiki-map_rss.php?ver={$rssfeed_default_version}{$rssfeed_cssparam}" />
+<link rel="alternate" type="application/xml" title="{tr}RSS Maps{/tr}" href="tiki-map_rss.php?ver={$rssfeed_default_version}" />
 {/if}
 {if $feature_directory eq 'y' and $rss_directories eq 'y'}
-<link rel="alternate" type="application/xml" title="{tr}RSS Directories{/tr}" href="tiki-directories_rss.php?ver={$rssfeed_default_version}{$rssfeed_cssparam}" />
+<link rel="alternate" type="application/xml" title="{tr}RSS Directories{/tr}" href="tiki-directories_rss.php?ver={$rssfeed_default_version}" />
 {/if}
 {* ---- END ---- *}
 
@@ -124,8 +122,8 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 
 </head>
 
-<body {if $is_a_wiki_page eq 'y' and $user_dbl eq 'y' and $feature_wiki_dblclickedit eq 'whole_page' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}
-{if $show_comzone eq 'y'}onload="javascript:flip('comzone');"{/if}  id="{$mid|replace:".tpl":""}">
+<body {if $user_dbl eq 'y' and $dblclickedit eq 'y' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}
+{if $show_comzone eq 'y'}onload="javascript:flip('comzone');"{/if}{if $section} class="tiki_{$section}"{/if}>
 {if $minical_reminders>100}
 	<iframe width='0' height='0' frameborder="0" src="tiki-minical_reminders.php"></iframe>
 {/if}

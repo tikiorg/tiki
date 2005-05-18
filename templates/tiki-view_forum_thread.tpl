@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.64 2005-03-12 16:50:54 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.65 2005-05-18 11:03:21 mose Exp $ *}
 
 <h1><a href="tiki-view_forum.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forum_info.forumId}" class="pagetitle">{tr}Forum{/tr}: {$forum_info.name}</a></h1>
 
@@ -12,13 +12,13 @@
 a moderator approves it.{/tr}</small>
 </div>
 {/if}
-{if $tiki_p_admin_forum}
+{if $tiki_p_admin_forum eq "y"}
 <a class="linkbut" title="{tr}Edit Forum{/tr}" href="tiki-admin_forums.php?forumId={$forumId}">{tr}Edit Forum{/tr}</a><br />
 {/if}
 <a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a>-&gt;<a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name}</a>-><a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forumId}&amp;comments_parentId={$smarty.request.comments_parentId}">{$thread_info.title}</a>
 <div align="right">
-[{if $prev_topic and $prev_topic ne $comments_parentId}<a href="tiki-view_forum_thread.php?topics_offset={$topics_prev_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forumId}&amp;comments_parentId={$prev_topic}" class="link">{tr}prev topic{/tr}</a>{if $next_topic} | {/if}{/if}
-{if $next_topic}<a href="tiki-view_forum_thread.php?topics_offset={$topics_next_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forumId}&amp;comments_parentId={$next_topic}" class="link">{tr}next topic{/tr}</a>{/if}] 
+{if ($prev_topic and $prev_topic ne $comments_parentId) or $next_topic}[{if $prev_topic and $prev_topic ne $comments_parentId}<a href="tiki-view_forum_thread.php?topics_offset={$topics_prev_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forumId}&amp;comments_parentId={$prev_topic}" class="link">{tr}prev topic{/tr}</a>{if $next_topic} | {/if}{/if}
+{if $next_topic}<a href="tiki-view_forum_thread.php?topics_offset={$topics_next_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forumId}&amp;comments_parentId={$next_topic}" class="link">{tr}next topic{/tr}</a>{/if}]{/if}
  </div>
 <br /><br />
 {if $openpost eq 'y'}

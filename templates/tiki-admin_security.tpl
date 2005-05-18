@@ -11,7 +11,7 @@
 <tr><td colspan="4" class="heading">{tr}PHP settings{/tr}</td></tr>
 <tr><td class="heading">{tr}PHP variable{/tr}</td>
 <td class="heading">{tr}Setting{/tr}</td>
-<td class="heading">{tr}Risk Faktor{/tr}</td>
+<td class="heading">{tr}Risk Factor{/tr}</td>
 <td class="heading">{tr}Explanation{/tr}</td></tr>
 {foreach from=$phpsettings key=key item=item}
 <tr><td>{$key}</td>
@@ -25,7 +25,7 @@
 <tr><td colspan="4" class="heading">{tr}TikiWiki settings{/tr}</td></tr>
 <tr><td class="heading">{tr}Tiki variable{/tr}</td>
 <td class="heading">{tr}Setting{/tr}</td>
-<td class="heading">{tr}Risk Faktor{/tr}</td>
+<td class="heading">{tr}Risk Factor{/tr}</td>
 <td class="heading">{tr}Explanation{/tr}</td></tr>
 {foreach from=$tikisettings key=key item=item}
 <tr><td>{$key}</td>
@@ -36,7 +36,8 @@
 </table>
 <br />
 <a href="tiki-admin_security.php?check_files">{tr}Check all tiki files{/tr}</a><br />
-{tr}Note, that this can take a very long time. You should check your max_execution_time setting in php.ini.{/tr}
+{tr}Note, that this can take a very long time. You should check your max_execution_time setting in php.ini.{/tr}<br />
+{tr}Note: You have to import security data via installation process (<a href="tiki-install.php">tiki-install.php</a>). Import the *secdb* update files in your database.{/tr}
 <br />
 {if $filecheck}
 <table>

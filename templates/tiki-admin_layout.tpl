@@ -9,7 +9,7 @@
 {/section}]
 
 <div class="cbox">
-<div class="cbox-title">{$sections[ix].name} {tr}layout options{/tr}</div>
+<div class="cbox-title">{tr}layout options{/tr}: {tr}{$sections[ix].name}{/tr}</div>
 <div class="cbox-data">
 
   <div class="simplebox">

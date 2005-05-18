@@ -6,7 +6,12 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 if ($user && isset($feature_tasks) && $feature_tasks == 'y' && isset($tiki_p_tasks) && $tiki_p_tasks == 'y') {
+	global $tasklib;
 
+	if (!is_object($tasklib)) {
+		global $dbTiki;
+		include "lib/tasks/tasklib.php";
+	}
     $smarty->assign('ownurl', $tikilib->httpPrefix().$_SERVER["SCRIPT_NAME"].urlencode($_SERVER["QUERY_STRING"]));
 	$user_groups = $tasklib->get_groups_to_user_with_permissions($user,'tiki_p_tasks_receive');
 

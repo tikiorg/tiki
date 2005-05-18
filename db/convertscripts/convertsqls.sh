@@ -1,8 +1,8 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/db/convertscripts/convertsqls.sh,v 1.7 2005-01-22 22:55:00 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/convertscripts/convertsqls.sh,v 1.8 2005-05-18 10:59:06 mose Exp $
 
 
-VERSION="1.10"
+VERSION="1.9"
 
 if [ -z $1 ]; then
 	echo "Usage: ./convertscript.sh <host> <tikiversion>"
@@ -17,7 +17,7 @@ if [ "$2" ] ; then
 fi
 
 cp ../tiki.sql ../tiki-$VERSION-mysql.sql
-/* the scripts use mysql.sql */
+# /* the scripts use mysql.sql */
 wget -O pgsql72.sql.tmp "http://$TIKISERVER/db/convertscripts/mysql3topgsql72.php?version=$VERSION" 
 wget -O sybase.sql.tmp "http://$TIKISERVER/db/convertscripts/mysql3tosybase.php?version=$VERSION" 
 wget -O sqlite.sql.tmp "http://$TIKISERVER/db/convertscripts/mysql3tosqlite.php?version=$VERSION"

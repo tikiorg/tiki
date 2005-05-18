@@ -4,10 +4,13 @@
 <a href="{$helpurl}RSSModules" target="tikihelp" class="tikihelp" title="{tr}admin RSS modules{/tr}">
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 
-
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_rssmodules.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin RSSmodules template{/tr}">
 <img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit{/tr}'></a>{/if}</h1>
+
+{if $feature_help eq "y"}
+<div class="highlight">{tr}Tip{/tr}: {tr}This page is to configure settings of RSS feeds read/imported by Tiki. To generate/export RSS feeds, look for "RSS feeds" on the admin panel, or{/tr} <a class="link" href="tiki-admin.php?page=rss">{tr}click here{/tr}</a>.</div><br />
+{/if}
 
 {if $preview eq 'y'}
 <div class="simplebox">
@@ -89,7 +92,7 @@
 <td class="odd">{$channels[user].rssId}</td>
 <td class="odd">{$channels[user].name}</td>
 <td class="odd">{$channels[user].description}</td>
-<td class="odd">{$channels[user].url}</td>
+<td class="odd"><a class="link" href="{$channels[user].url}">{$channels[user].url|truncate:30:"...":true}</a></td>
 <td class="odd">{$channels[user].size}</td>
 <td class="odd">{$channels[user].lastUpdated|tiki_short_datetime}</td>
 <td class="odd">{$channels[user].minutes} min</td>
@@ -107,7 +110,7 @@
 <td class="even">{$channels[user].rssId}</td>
 <td class="even">{$channels[user].name}</td>
 <td class="even">{$channels[user].description}</td>
-<td class="even">{$channels[user].url}</td>
+<td class="even"><a class="link" href="{$channels[user].url}">{$channels[user].url|truncate:30:"...":true}</a></td>
 <td class="even">{$channels[user].size}</td>
 <td class="even">{$channels[user].lastUpdated|tiki_short_datetime}</td>
 <td class="even">{$channels[user].minutes} min</td>

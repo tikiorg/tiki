@@ -1,6 +1,6 @@
 TikiWiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.166 2005-03-12 16:48:55 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.167 2005-05-18 10:58:51 mose Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionally include an identifer
@@ -15,13 +15,300 @@ Use the following tags to distinguish changes :
 Please wrap your lines at 80 characters and indent them with spaces only.
 ------------------
 
-Version 1.10
-<http://tikiwiki.org/ReleaseProcess110>
-* [NEW] Subgalleries in Imagegalleries
-* [MOD] Added per gallery default sortorder in Imagegalleries
-
 Version 1.9 
 <http://tikiwiki.org/ReleaseProcess19>
+- (1.9.0) ------------------------------------------------------------------
+- 4/27/2005
+* [NEW] New placeholder page when database has not been created yet
+* [FIX] Calendar: missing tab fix
+* [FIX] Module forums_last_posts -> fixed 'endless loop' bug
+* [FIX] restored graph on stats page with new GraphEngine
+* [MOD] Updated translations: Spanish, Czech, French, Japanese & German
+* [MOD] Updated translations: Brazilian-Portuguese, Dutch
+* [MOD] Removed Project, Jukebox & Homework (will be in mods)
+* [NEW] Groundwork for a future WYSIWYG editor (not working yet)
+* [MOD] Admin panel icons are now grayed out when feature is not activated
+* [MOD] Changes to features now clear compiled templates
+* [FIX] Fix table bug in wiki admin panel
+* [NEW] User & group panel and trackers now highlights (focus) of current tab
+* [MOD] Security admin control panel (md5 sums) is better & faster 
+* [NEW] Interfaces to generate graphs from TikiSheet 
+* [FIX] Category list is now refresh (after a change) for use in trackers
+* [MOD] tiki-mobile optional now (default: disabled)
+* [MOD] Added feature check in admin menu (WYSIWYCA)
+* [FIX] View tracker item: fixed the display of tab by default
+* [FIX] Tracker items respect perm in browse categ + special filter tracker item
+* [FIX] Restore tracker items in category browser
+* [FIX] Adding admin cms (tiki_p_admin_cms) perm to view articles
+* [FIX] Improved cookie handling on tracker item view
+* [NEW] Adding a links to TikiSheet (import, export, history)
+* [FIX] modules: fixing caching on redirections, common on login/logout
+* [FIX] category name was not appearing in page permission
+* [FIX] added category permission check on tiki-index_p.php
+* [MOD] put security md5 database to relational database
+* [FIX] removed pop3.php (GPL lib), replaced by net_pop3.php
+* [FIX] topics perms read for articles now acting like Tiki 1.8
+* [FIX] many css syntax fixes and cleaning to many templates
+* [NEW] added wiki view history page permission (WYSIWYCA)
+* [FIX] Fix BiDi settings for Persian & Hebrew
+* [FIX] WYSIWYCA of source button (in wiki pages)
+* [NEW] RSS feeds for trackers
+* [MOD] updated JS calendar lib to version 1.0 (fixes at least 1 bug) 
+* [MOD] cleanup user registration process (when validated by admin)
+* [MOD] checks and displays php ini vars (ex.: max upload) for image uploads
+* [FIX] siteId location label is now optional
+* [FIX] minor fixes to calendar layout
+* [FIX] Fixes problems with Blog's wysiwyg editor
+* [MOD] all rss feeds use name and description from admin/rss feeds.
+* [FIX] Tracker item modules show subject of tracker items now
+* [FIX] Moved tiki-special_chars to avoid executing code in templates directory
+* [FIX] Fixed sorting by date in trackers
+* [FIX] Calendar: fixed edit event and add event perms
+* [MOD] Authors styles option in wiki pages (none, business, collab, etc)
+* [FIX] WCYSIWYCA for modules wiki_last_comments and last_modif_page
+* [MOD] Use default theme when theme is not found
+* [FIX] Module "Search new" is now WYSIWYCA
+* [MOD] Since_last_visit_new module only shows if there are new items
+* [NEW] Calendar: first day of the week localization
+* [FIX] Fixed public task user module
+* [FIX] Many tracker display fixes
+* [FIX] fixed last tracker item module
+* [FIX] fixed tracker field imports
+* [NEW] made a "HTML in Wiki Pages" box in wiki admin options
+* [FIX] make "allow html" checkbox sticky (in wiki pages)
+* [NEW] Batch upload of pictures (from a directory on server)
+* [FIX] rss feed caching for anonymous users only (security issue)
+* [NEW] password reset: users must click email link to confirm
+* [MOD] Add button to rebuild cache for all galeries
+* [NEW] Allow to import tables from wiki pages into tikisheet.
+* [FIX] broken link to games
+* [FIX] fix for double slashes in some email notifications links
+* [MOD] added name of page editor in wiki page watch email
+* [NEW] implement imgcache feature (for faster image galleries)
+* [NEW] TikiMaps: new permission for viewing content of mapfiles
+* [FIX] TikiMaps: history fixes
+* [MOD] Merged events-newsletter feature into an option of newsletters
+* [MOD] internal messaging: inform users to allow others to send to them
+* [NEW] 1.8to1.9.css transition css
+* [FIX] fix: batch delete of users in admin
+* [MOD] Clean up of bottom bar & logos
+* [FIX] WYSIWYCA for categories in list articles
+* [FIX] Fix poll inlcuding {poll} and {poll id=current}
+* [FIX] Fixed a double image counter on tiki-browse_image
+* [NEW] Replaced rss generator with "FeedCreator", which became LGPL. Tiki's 
+        outbound feeds now support: RSS0.91, RSS1.0, RSS2.0, PIE0.1, MBOX,
+        OPML, ATOM0.3, HTML, JS
+* [NEW] Added two new outbound forum mail features; one forwards even inbound
+        mail to the outbound address, the other adds a reply link.
+* [NEW] module shading-up support
+* [MOD] simplification of modules, using ul/ol instead of tables
+* [FIX] Newsletter SQL error if subscribe a user 2 times
+* [FIX] avoid "unknown" language in languages list
+- (rc4) ---------------------------------------------------------------------
+* [NEW] Added information about the wiki file attachment image tag.
+* [NEW] Added inline image capability to file attachment inclusion code
+* [NEW] Inter-user message system: fix: (un)flag messages,
+* [FIX] Inter-user message system:  enhancement: if mail with reply is in 
+        list, replier will be shown, new: user can download marked mails 
+        from mailbox/sent/archive folder
+* [FIX] Arguments for plugins length fixed 
+* [FIX] Image gallery Remove bugged Individual order 
+* [FIX] Admin notifications, fix sort by email
+* [FIX] fix for recursive plugins bug #1172422 (needs testing)
+* [MOD] default lang when create an article = user lang
+* [FIX] SF1167375 quicktags were not anymore in wiki after an tiki sql upgrade
+* [FIX] Various geography fixes in user lists
+* [FIX] moved wikigraph to mods
+* [FIX]  fixed display of list gallery
+* [FIX]  fixed find function in newlestter list of subscribers
+* [FIX]  fixed newsletter sending 
+* [FIX]  rename page with a name containing space adds parentheses around name in other pages 
+* [FIX]  link in the register message is encoded for username with accent 
+* [FIX]  remove structure with all the pages does remove page if no permission 
+* [FIX]  article publish/experitation date must be filled up if article displayed only
+   between these dates (even if these dates are not displayed) 
+* [FIX]  page modules with a pagename with special characters (ex: C++) 
+* [FIX]  fixed autosubmission for articles with a too long titles and special characters 
+* [FIX]  edit article entry is no more displayed if submission article is on 
+* [FIX]  fixed number od comments for the last comments module used in a wiki page 
+* [FIX]  wiki page changed notification used the current page version 
+* [FIX]  wikiwords can have multibyte characters (but also needs 2 capitals A-Zexternal link 
+* [FIX]  fixed numbering first line glitch in code plugin 
+* [FIX]  MultiTiki? sites can have there own favicon, in styles/$tikidomain 
+* [FIX]  fixed the display of types of perms and added a groups menu in assign perms 
+* [FIX]  Luxemburg flag 
+* [FIX]  can create a page with a & 
+* [FIX]  fix slideshow for a pagename with special characters 
+* [FIX]  a module can be used 2 times in a same page with different parameters 
+* [FIX]  newsletter / page chosen template stays checked 
+* [FIX]  remind title / data if you forget to fill up both in forum 
+* [FIX]  removed last html code from categlib 
+* [FIX]  a non admin user can see the file gal he creates 
+* [FIX]  aPageName is not recognized as a backlink 
+* [FIX]  update categ and perm list if a forum is deleted 
+* [FIX]  aPageName was recognized as a backlink of PageName? 
+* [FIX]  update categ & perm if a forum is deleted 
+* [FIX]  group homepage for a user belonging to several groups 
+* [FIX]  maketoc on the first page of a multipage 
+* [FIX]  isPublic don't affect the fieds displayed in tracker view page 
+* [FIX]  tiki-listpages has now another filter on wikipagename initial ang
+* [FIX]  day name in French for jscalendar popup 
+* [FIX]  ite language in user perf for monolingual site 
+* [FIX]  fix the date/number appearing in the ranking functions 
+* [FIX]  separator option close a menu section 
+* [FIX]  minor change and last_modif_pages module 
+* [FIX]  switch lang for anonymous change page lang (if best language activated) 
+* [FIX]  definition list with external link 
+* [FIX]  user email not public by default 
+* [FIX]  hotword with quote - hotword following a quote 
+* [FIX]  wrong parsing of ((WikiWord))((AnotherOne)) 
+* [FIX]  fixed exploding pages bug for CODE plugin and img/picture quicktags
+   for tikineat.css theme, documented solution for theme designers 
+* [FIX]  SF BUG #1108572: tiki-user_preferences.php not saving users Message settings
+* [FIX]  SF BUG #1083307: user_preferences defaults not applied. All emails exposed 
+* [FIX]  message list did use maxRecords instead of mess_maxRecords 
+* [FIX]  drawing in wikis (JgraphPad) works again: path to images fixed 
+* [FIX]  charts: tiki_p_suggest_chart_item enables charts items
+* [FIX]  quicktags for the newletter content 
+* [FIX]  the section is set as a class of the BODY to easy customisation as tiki_<section> 
+* [FIX]  additional param hideimgname and hidelink for randow img module 
+* [FIX]  css cleaning: pages are supposed to have a h1 as title and h2, h3 .. 
+* [FIX]  articles are displayed event if the creator/modifior doesn't exist anyore 
+* [FIX]  can sent to anonymous in message broadcast 
+* [FIX]  username can be begin with an accentuated letter 
+* [FIX]  an error message when a newsletter can't be sent to an email 
+* [FIX]  fix webmail with the new mime lib 
+* [FIX]  clean the modules cache if an menu option chages 
+* [FIX]  the letters in IE bottom status bar doesn't appear anymore
+* [FIX]  fix broken pagination in forum thread 
+* [FIX]  group calendar event displayed in day view if begins before 10 
+* [FIX]  a user can modify trackers even if he has his user tracker set 
+* [FIX]  moreneat style keeps size in a split 
+* [FIX]  avatars are limited to 45x45 even in the user popup 
+* [FIX]  library avatars shown in the user popup 
+* [FIX]  multiple {toc with differing arguments, in single page 
+* [FIX]  fixed priority bug in messages - when replying it was always set to lowest 
+* [FIX]  fixed js toggle - e.g. the since_last_visit_new module and debugger console
+  stays closed when it was re-opening after page reload 
+* [FIX]  fixed anonymous anti-bot code check by moving it out of commented part of php code so it works now 
+* [FIX]  SF Bug #1095239: Two times same word display (list newsletters) 
+* [FIX]  SF Bug #1170596: Browse directory button on Browse page (browse directories) 
+* [FIX]  SF Bug #982970: "phantom" games upon installation 
+* [FIX]  SF Bug #1170608: Unwished list of cool sites - cool sites can get switched off now in admin menu 
+* [FIX]  SF Bug #1151923: Blog RSS Feed Shows Blog Name Repeatedly - changed blogtitle to title 
+* [FIX]  SF Bug #1116551: structure alias name not used in  
+* [FIX] [FIX] no more double image insert in wiki image insert 
+* [FIX] to be able to delete a user with a & in the name 
+* [FIX] fix user CSV import 
+* [FIX] fix batch remove users 
+* [FIX] fix articles shown in mod-articles in perm on them 
+* [FIX] fix file icon in image galleries if uppercase extension (()
+* [FIX] article categ shown for admin 
+* [FIX] reintroduce some comment post perms / forum post perm 
+* [FIX status switch buttoms not displayed in view tracker is status is not displayed 
+* [FIX] displays the status in view tracker if status on even if only one status shown 
+* [FIX]  fix for the parsing of recursive plugins
+* [NEW] new module: mod-last_images (use parameter galleryId=>x 
+   for images from the gallery only) - latest images 
+* [NEW] new module: mod-last_images_th (use parameter galleryId=>x 
+   for images from the gallery only) - thumbnails of latest images 
+* [NEW] TikiMaps: the community map, create a layer with all the positions from the user preferences 
+* [NEW] TikiMaps: Create a layer from geographic image galleries 
+* [NEW] TikiMaps: View system, from a mapfile METADATA you can create map views for direct zooming tna?
+* [NEW] Tiki Mods installer : new item under admin menu, Package admin, make possible to install, and remove mods packages 
+* [NEW] Added an optional validation step for user registration 
+* [NEW] Discard_t_end in mail-in 
+* [NEW] New perm tiki_p_admin_users 
+* [NEW] Calendar event can be view and edit in user local timezone 
+* [NEW] A user can always edit his own comment 
+* [NEW] Personal calendar in the user calendar 
+* [NEW] A user module can be wiki parsed or not 
+* [NEW] SF RFE #946590: Sent box for user messages 
+* [NEW] SF RFE #716822: link from sent messages to available replies 
+* [NEW] link from replied back to replied message 
+* [NEW] user can enable "send read status to author" in user preferences 
+* [NEW] auto-archiving of read mails after x days (configurable ob user prefs) 
+* [NEW] Archive for user messages, helpful if you dont want to delete your messages
+   but get them out of the way to speed up the message checking etc 
+* [NEW] Admin can set limits for the user mailbox and the user message archive
+   in admin / login, there is a percentage bar that shows how much space is already occupied;
+  users with full mailboxes wont get any more mail 
+* [NEW] new module: mod-last_actions to display users last actions (or all actions if current user is admin) 
+* [NEW] new plugin: {RSS(id=>feedId,max=>5,date=>1,desc=>1,author=>1)}{RSS} 
+* [NEW] Image galleries: Search box for image name / description on browse gallery page 
+* [NEW] group calendar respects timezone 
+* [NEW] group calendar list view 
+* [NEW] group calendar event view 
+* [NEW] some check about group calendar creation (respect start < end, format ...) 
+* [NEW] group calendar date navigation bar 
+* [NEW] group calendar event end can be defined by a duration 
+* [NEW] group calendar event descriptions are wiki persed 
+* [NEW] group calendar evetns can have a sticky popup 
+* [NEW] a group or a user can be directly subscribed in the newsletter - the emails list is refreshed at sending tile 
+* [NEW] newsletter archive 
+* [NEW] change_password new perm 
+* [NEW] batch images upload (6 at a time) 
+* [NEW] a newsletter can use a smarty template defined in templates/newsletters 
+* [NEW] can specify a usemap in image wiki tag 
+* [NEW] display category description in category browsing if available 
+* [NEW] new LSDIR plugin can list files in a directory with many options for display 
+* [NEW] new QUOTE plugin resembles the quoteexternal link bbcode 
+* [NEW] new option to use QUOTE plugin by default when replying to forum posts, comments and user messages 
+* [NEW] new option to display the page_id as a hyperlink under the page title 
+* [NEW] new option to force to go in group homepage not only from the default homepage 
+* [NEW] csv import for group calendar 
+* [MOD] now use the Admin->Menu based application menu rather than the .tpl 
+* [MOD] a module can be displayed only for some languages 
+* [MOD] TikiMaps: Can handle non square maps tna?
+* [MOD] Simple style updated luci
+* [MOD] added direct link to display poll's comments luci
+* [MOD] a message is sent if the page doesn't exist in a mailin wiki-get 
+* [MOD] check the mailin pop3 account before saving it in the database 
+* [MOD] img in wiki syntax can have a alt parameter 
+* [MOD] forum post area displays quicktags if wiki syntax allowed 
+* [MOD] mod_articles param topic=topic_name 
+* [MOD] user pref page title shows the username 
+* [MOD] register subject in a template 
+* [MOD] HTML comments either removed or changed to smarty ones 
+   (preserves bandwidth, they do mount up!)
+   (better wording on tips)
+* [MOD] enhanced the quick_edit module with 3 parameters : module_title, categId, submit, size, heading and templateId 
+* [MOD] added optional taking in account of a categId param in editpage 
+* [MOD] improved article plugin : it takes the Id of last article when no Id is given 
+* [MOD] Additional parameter to last_modif_page module: minor=y to see minor changes 
+* [MOD] Added optional sort order in image galleries, as well as sub-galleries redflo?
+* [MOD] New optional "side-by-side" diff report style that resembles Wikipedia's diff style ()()
+* [MOD] Different styles added in Wiki history + diff between arbritary versions 
+* [MOD] a mail-in pop3 account must be valid before been saved 
+* [MOD] PluginModule's np parameter defaults to 1 (enable). Existing uses of PluginModule without np
+   set should see the output change, but it's unlikely that this will have undesired effects. 
+* [MOD] can choice email enf of line CRLF / LF 
+* [MOD] implemented the sticky tracker item : if a fieldname is page, it is used as a filter on
+   trackerlist wikiplugin and automaticaly fed in tracker wikiplugin 
+* [MOD] new (experimental) referal search functionality, see SearchDev - 
+* [MOD] Patch#1093839external link Wiki says "page not found" if query string is "?page=" 
+* [MOD] styles transitions: support for older stylesheets on v1.9
+* [MOD] modules can be UserShadeModules or have their Modules Admin - 
+* [MOD] plugin PluginTitlesearch: additional parameter style=>list for reducing the output to a comma separated list 
+* [MOD] module mod-last_articles: additional parameters for filtering articles 
+* [MOD] initial work for RFE#918526external link Search wiki page name module should use real search 
+* [MOD] RFE#828048external link Wiki : Add a "View Source" option 
+* [MOD] Fancy TOC 
+* [MOD] DIV plugin got ability to float left or right luci
+* [MOD] enhanced ((page|desc)) syntax: ((page|)) (no characters after |) will yield "page: page's description" 
+* [MOD] image galleries batch upload from directory: switch for "create sub galleries from
+   sub directory names", means: when uploading images dirname/*.jpg, the images may go to a sub gallery
+   'dirname'. preferences for the new galleries are taken from the parent gallery 
+* [MOD] image galleries batch upload from directory: switch for "remove file extension" from image name in 'name field' 
+* [MOD] image galleries batch upload from directory: switch for "use sub dir name as file description" 
+* [MOD] image galleries batch upload from directory: works on subdirectories now 
+* [MOD] image galleries: image popup windows have "slideshow" buttons now (back and forward)  
+* [NEW] wiki diff styles : .diff, .diffheader,.diffbody,.diffdeleted, .diffadded, .diffchar
+* [NEW] site identity styles : .sitelocbar, .sitenavbar, .sitelogo, .sitead, .sitesearchbar, .description, .crumblink
+* [NEW] admin remarks box styles : .rbox, .rbox-title, .rbox-data, .rbox-title[name="warning"], .rbox-title[name="note"], .rbox-title[name="tip"], .rbox-title[name="comment"], .rbox-data[name="warning"], .rbox-data[name="note"], .rbox-data[name="tip"], .rbox-data[name="comment"] - will eventually be used for a wiki plugin, too.
+* [NEW] (module) box styles : table.box-title, span.box-titletext, a.flipmodtitle, img.flipmodimage, div.box-data now has unique id also.
+* [NEW] a.tikihelp style : new attribute: vertical-align: text-top;
+* [NEW] {toc} style : .fancytoclevel 
 - (rc3) ---------------------------------------------------------------------
 * [NEW] changes in score and friendship new feature
 * [NEW] new wikiplugin Versions mandatory for building up the doc 

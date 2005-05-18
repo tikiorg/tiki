@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-search_new.tpl,v 1.9 2005-03-12 16:51:00 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-search_new.tpl,v 1.10 2005-05-18 11:03:30 mose Exp $ *}
 
 {if $feature_search eq 'y'}
 {tikimodule title="{tr}Search{/tr}" name="search_new" flip=$module_params.flip decorations=$module_params.decorations}

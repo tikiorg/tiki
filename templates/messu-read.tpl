@@ -40,7 +40,7 @@
     <input type="hidden" name="flagval" value="{$flagval|escape}" />
     <input type="hidden" name="to" value="{$msg.user_from|escape}" />
     <input type="hidden" name="subject" value="{tr}Re:{/tr} {$msg.subject}" />
-    <input type="hidden" name="body" value="{$msg.body|quoted|escape}" />
+    <input type="hidden" name="body" value="{$msg.body|quoted:$quote_format:$msg.user_from|escape}" />
     <input type="hidden" name="replyto_hash" value="{$msg.hash}" />
     <input type="submit" name="reply" value="{tr}reply{/tr}" />
     </form>
@@ -56,7 +56,7 @@
     <input type="hidden" name="flagval" value="{$flagval|escape}" />
     <input type="hidden" name="to" value="{$msg.user_from|escape},{$msg.user_cc},{$msg.user_to}" />
     <input type="hidden" name="subject" value="{tr}Re:{/tr} {$msg.subject}" />
-    <input type="hidden" name="body" value="{$msg.body|quoted|escape}" />
+    <input type="hidden" name="body" value="{$msg.body|quoted:$quote_format:$msg.user_from|escape}" />
     <input type="hidden" name="replyto_hash" value="{$msg.hash}" />
     <input type="submit" name="replyall" value="{tr}replyall{/tr}" />
   </td></tr>

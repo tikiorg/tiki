@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_lang.php,v 1.5 2005-01-22 22:55:56 mose Exp $
+/* $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_lang.php,v 1.6 2005-05-18 11:02:00 mose Exp $
  * Displays the content data only if the language matched the current language or the language is the URI
  * {LANG(lang=fr)}Bon appétit{LANG}
  * 

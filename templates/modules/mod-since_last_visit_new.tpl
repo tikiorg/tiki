@@ -11,6 +11,7 @@
       </tr>
     </table>
     {foreach key=pos item=slvn_item from=$slvn_info.items}
+     {if $slvn_item.count > 0 }
       {assign var=cname value=$slvn_item.cname}
       <div class="separator">
         <a class="separator" href="javascript:toggle('{$cname}');">
@@ -34,6 +35,7 @@
           {/section}
         </table>
       </div>
+     {/if}
     {/foreach}
   {/tikimodule}
 {/if}

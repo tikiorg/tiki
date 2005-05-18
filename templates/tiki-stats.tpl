@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-stats.tpl,v 1.21 2005-03-12 16:50:53 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-stats.tpl,v 1.22 2005-05-18 11:03:20 mose Exp $ *}
 
 <h1><a href="tiki-stats.php" class="pagetitle">{tr}Stats{/tr}</a></h1>
 
@@ -159,3 +159,32 @@
 <br />
 <br />
 <br />
+
+<br />
+<br />
+<br />
+<a href="tiki-stats.php?chart=usage" class="link">{tr}Usage chart{/tr}</a><br /><br />
+
+{if $usage_chart eq 'y'}
+<br /> 
+<div align="center">
+<img src="tiki-usage_chart.php" alt='{tr}Usage chart image{/tr}'/>
+</div>
+<br /><br />
+{/if}
+
+{* Removed for 1.9.0
+<form action="tiki-stats.php" method="post">
+{tr}Show chart for the last {/tr}
+<input type="text" name="days" size="10" value="{$days|escape}" /> {tr}days (0=all){/tr}
+<input type="submit" name="pv_chart" value="{tr}display{/tr}" />
+</form>
+{if $pv_chart eq 'y'} 
+<br /> 
+<div align="center">
+<img src="tiki-pv_chart.php?days={$days}" alt=''/>
+</div>
+<br />
+{/if}
+<br />
+  *}

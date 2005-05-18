@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.39 2005-03-12 16:48:57 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.40 2005-05-18 10:58:54 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -38,6 +38,7 @@ elseif (isset($_REQUEST["prefs"])) {
         "record_untranslated",
         "site_closed",
         "useGroupHome",
+        "limitedGoGroupHome",
         "useUrlIndex",
         "use_load_threshold",
         "use_proxy",
@@ -50,6 +51,7 @@ elseif (isset($_REQUEST["prefs"])) {
     }
 
     $pref_simple_values = array(
+        "site_crumb_seper",
         "contact_user",
         "feature_server_name",
         "maxRecords",
@@ -81,7 +83,6 @@ elseif (isset($_REQUEST["prefs"])) {
         "short_time_format",
         "siteTitle",
         "slide_style",
-        "transition_style",
         "tikiIndex",
 	"https"
     );
@@ -144,18 +145,6 @@ elseif (isset($_REQUEST["newadminpass"])) {
 
 $smarty->assign_by_ref( "styles", $tikilib->list_styles());
 
-// Get list of available transition stylesheets
-$transition_styles = array();
-// add the 'none' style
-$h = opendir("styles/transitions");
-while ($file = readdir($h)) {
-    if (preg_match("/\.css$/", $file)) {
-        $transition_styles[] = $file;
-    }
-}
-closedir ($h);
-$smarty->assign_by_ref("transition_styles", $transition_styles);
-
 // Get list of available slideshow styles
 $slide_styles = array();
 $h = opendir("styles/slideshows");
@@ -209,11 +198,7 @@ $smarty->assign("home_gallery_url", "tiki-browse_gallery.php?galleryId=" . $home
 $smarty->assign("home_file_gallery_url", "tiki-list_file_gallery.php?galleryId=" . $home_file_gallery);
 
 if ($home_blog) {
-	global $bloglib;
-	if (!is_object($bloglib)) {
-		include_once('lib/blogs/bloglib.php');
-	}
-    $hbloginfo = $bloglib->get_blog($home_blog);
+    $hbloginfo = $tikilib->get_blog($home_blog);
 
     $smarty->assign("home_blog_name", substr($hbloginfo["title"], 0, 20));
 } else {
@@ -221,11 +206,7 @@ if ($home_blog) {
 }
 
 if ($home_gallery) {
-	global $imagegallib;
-	if (!is_object($imagegallib)) {
-		require_once('lib/imagegals/imagegallib.php');
-	}
-    $hgalinfo = $imagegallib->get_gallery($home_gallery);
+    $hgalinfo = $tikilib->get_gallery($home_gallery);
 
     $smarty->assign("home_gal_name", substr($hgalinfo["name"], 0, 20));
 } else {
@@ -245,11 +226,7 @@ if ($home_forum) {
 }
 
 if ($home_file_gallery) {
-	global $imagegallib;
-	if (!is_object($imagegallib)) {
-		require_once('lib/imagegals/imagegallib.php');
-	}
-    $hgalinfo = $imagegallib->get_gallery($home_file_gallery);
+    $hgalinfo = $tikilib->get_gallery($home_file_gallery);
 
     $smarty->assign("home_fil_name", substr($hgalinfo["name"], 0, 20));
 } else {

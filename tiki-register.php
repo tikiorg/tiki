@@ -5,7 +5,6 @@ require_once('lib/tikilib.php'); # httpScheme()
 include_once('lib/registration/registrationlib.php');
 include_once('lib/notifications/notificationlib.php');
 include_once('lib/webmail/tikimaillib.php');
-require_once ('lib/userslib/userslib_admin.php');
 include_once('lib/userprefs/userprefslib.php');
 
 // Permission: needs p_register
@@ -115,45 +114,6 @@ if(isset($_REQUEST["register"])) {
       	}
       }
     }
-
-  $emails = $notificationlib->get_mail_events('user_registers','*');
-  if (count($emails)) {
-    include_once("lib/notifications/notificationemaillib.php");
-    $smarty->assign('mail_user',$_REQUEST["name"]);
-    $smarty->assign('mail_date',date("U"));
-    $smarty->assign('mail_site',$_SERVER["SERVER_NAME"]);
-    sendEmailNotification($emails, "email", "new_user_notification_subject.tpl", null, "new_user_notification.tpl");
-  }
-  
-  if($validateUsers == 'y' and $email_valid != 'no') {
-    //$apass = addslashes(substr(md5($tikilib->genPass()),0,25));
-    $apass = addslashes(md5($tikilib->genPass()));
-    $foo = parse_url($_SERVER["REQUEST_URI"]);
-    $foo1=str_replace("tiki-register","tiki-login_validate",$foo["path"]);
-    $machine =httpPrefix().$foo1;
-    $userslibadmin->add_user($_REQUEST["name"],$apass,$_REQUEST["email"],$_REQUEST["pass"]);
-		$logslib->add_log('register','created account '.$_REQUEST["name"]);
-    // Send the mail
-    $smarty->assign('msg',tra('You will receive an email with information to login for the first time into this site'));
-    $smarty->assign('mail_machine',$machine);
-    $smarty->assign('mail_site',$_SERVER["SERVER_NAME"]);
-    $smarty->assign('mail_user',$_REQUEST["name"]);
-    $smarty->assign('mail_apass',$apass);
-    $mail_data = $smarty->fetch('mail/user_validation_mail.tpl');
-    include_once("lib/notifications/notificationemaillib.php");
-    $mail = new TikiMail();
-    $mail->setText($mail_data);
-    $mail_data = $smarty->fetch('mail/user_validation_mail_subject.tpl');
-    $mail->setSubject($mail_data);
-    $mail->send(array($_REQUEST["email"]));
-    
-    $smarty->assign('showmsg','y');
-  } elseif ($email_valid != 'no') {
-    $userslibadmin->add_user($_REQUEST["name"],$_REQUEST["pass"],$_REQUEST["email"],'');
-		$logslib->add_log('register','created account '.$_REQUEST["name"]);
-    $smarty->assign('msg',tra("Thank you for you registration. You may log in now."));
-    $smarty->assign('showmsg','y');
-  }
 
   if($email_valid != 'no') {
 		if($validateUsers == 'y') {

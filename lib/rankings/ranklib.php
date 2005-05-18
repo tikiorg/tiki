@@ -73,11 +73,11 @@ class RankLib extends TikiLib {
 			$ret[] = $aux;
 		}
 
-		$ret["data"] = $ret;
-		$ret["title"] = tra("Wiki last pages");
-		$ret["y"] = tra("Modified");
-		$ret["type"] = "date";
-		return $ret;
+		$retval["data"] = $ret;
+		$retval["title"] = tra("Wiki last pages");
+		$retval["y"] = tra("Modified");
+		$retval["type"] = "date";
+		return $retval;
 	}
 
 	function forums_ranking_last_topics($limit) {
@@ -97,11 +97,11 @@ class RankLib extends TikiLib {
 			$ret[] = $aux;
 		}
 
-		$ret["data"] = $ret;
-		$ret["title"] = tra("Forums last topics");
-		$ret["y"] = tra("Topic date");
-		$ret["type"] = "date";
-		return $ret;
+		$retval["data"] = $ret;
+		$retval["title"] = tra("Forums last topics");
+		$retval["y"] = tra("Topic date");
+		$retval["type"] = "date";
+		return $retval;
 	}
 
 	function forums_ranking_last_posts($limit) {
@@ -123,11 +123,11 @@ class RankLib extends TikiLib {
 			$ret[] = $aux;
 		}
 
-		$ret["data"] = $ret;
-		$ret["title"] = tra("Forums last posts");
-		$ret["y"] = tra("Topic date");
+		$retval["data"] = $ret;
+		$retval["title"] = tra("Forums last posts");
+		$retval["y"] = tra("Topic date");
 		$retval["type"] = "date";
-		return $ret;
+		return $retval;
 	}
 
 	function forums_ranking_most_read_topics($limit) {
@@ -148,11 +148,11 @@ class RankLib extends TikiLib {
 			$ret[] = $aux;
 		}
 
-		$ret["data"] = $ret;
-		$ret["title"] = tra("Forums most read topics");
-		$ret["y"] = tra("Reads");
-		$ret["type"] = "nb";
-		return $ret;
+		$retval["data"] = $ret;
+		$retval["title"] = tra("Forums most read topics");
+		$retval["y"] = tra("Reads");
+		$retval["type"] = "nb";
+		return $retval;
 	}
 
     function forums_top_posters($qty) {
@@ -190,11 +190,11 @@ class RankLib extends TikiLib {
 			$ret[] = $aux;
 		}
 
-		$ret["data"] = $ret;
-		$ret["title"] = tra("Forums best topics");
-		$ret["y"] = tra("Score");
-		$ret["type"] = "nb";
-		return $ret;
+		$retval["data"] = $ret;
+		$retval["title"] = tra("Forums best topics");
+		$retval["y"] = tra("Score");
+		$retval["type"] = "nb";
+		return $retval;
 	}
 
 	function forums_ranking_most_visited_forums($limit) {
@@ -211,11 +211,11 @@ class RankLib extends TikiLib {
 			$ret[] = $aux;
 		}
 
-		$ret["data"] = $ret;
-		$ret["title"] = tra("Forums most visited forums");
-		$ret["y"] = tra("Visits");
-		$ret["type"] = "nb";
-		return $ret;
+		$retval["data"] = $ret;
+		$retval["title"] = tra("Forums most visited forums");
+		$retval["y"] = tra("Visits");
+		$retval["type"] = "nb";
+		return $retval;
 	}
 
 	function forums_ranking_most_commented_forum($limit) {
@@ -232,11 +232,11 @@ class RankLib extends TikiLib {
 			$ret[] = $aux;
 		}
 
-		$ret["data"] = $ret;
-		$ret["title"] = tra("Forums with most posts");
-		$ret["y"] = tra("Posts");
-		$ret["type"] = "nb";
-		return $ret;
+		$retval["data"] = $ret;
+		$retval["title"] = tra("Forums with most posts");
+		$retval["y"] = tra("Posts");
+		$retval["type"] = "nb";
+		return $retval;
 	}
 
 	function gal_ranking_top_galleries($limit) {

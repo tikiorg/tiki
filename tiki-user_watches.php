@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_watches.php,v 1.13 2005-01-22 22:54:57 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_watches.php,v 1.14 2005-05-18 10:59:00 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -38,15 +38,18 @@ if (isset($_REQUEST["add"])) {
 }
 
 if (isset($_REQUEST["delete"]) && isset($_REQUEST['watch'])) {
-  $area = 'delwatches';
+  check_ticket('user-watches');
+/* CSRL doesn't work if param as passed not in the uri */
+/*  $area = 'delwatches';
   if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-    key_check($area);
+    key_check($area); */
 	foreach (array_keys($_REQUEST["watch"])as $item) {
 		$tikilib->remove_user_watch_by_hash($item);
 	}
-  } else {
+/*  } else {
 	key_get($area);
-  }
+  } */
+// 
 }
 
 // Get watch events and put them in watch_events
@@ -60,8 +63,8 @@ if (!isset($_REQUEST['event']))
 // get all the information for the event
 $watches = $tikilib->get_user_watches($user, $_REQUEST['event']);
 $smarty->assign('watches', $watches);
-//get_strings tra("forum_post_topic"); tra("wiki_page_changed"), tra("forum_post_thread");
-include_once ('tiki-mytiki_shared.php');
+// this was never needed here, was it ? -- luci
+//include_once ('tiki-mytiki_shared.php');
 
 ask_ticket('user-watches');
 

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/debug/tiki-debug_console_tab.tpl,v 1.3 2004-06-23 22:34:28 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/debug/tiki-debug_console_tab.tpl,v 1.4 2005-05-18 11:03:25 mose Exp $ *}
 {* Debug console tab -- to display result of command *}
 
 

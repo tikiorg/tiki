@@ -1,10 +1,13 @@
 {if $feature_help eq "y"}
-<div class="simplebox">{tr}Tip{/tr}: {tr}to add/remove blogs, go to "Create/Edit blog" under "Blogs" on the application menu, or{/tr} <a class="link" href="tiki-edit_blog.php">{tr}click here{/tr}</a>.</div><br />
+<div class="rbox" style="margin-top: 10px;">
+<div class="rbox-title" style="background-color: #eeee99; font-weight : bold; display : inline; padding : 0 10px;">{tr}Tip{/tr}</div>
+<div class="rbox-data" style="padding: 2px 10px; background-color: #eeee99;">{tr}To add/remove blogs, go to "Create/Edit blog" under "Blogs" on the application menu, or{/tr} <a class="link" href="tiki-edit_blog.php">{tr}click here{/tr}</a>.</div>
+</div>
+<br />
 {/if}
 <div class="cbox">
-  <div class="cbox-title">{tr}Blog settings{/tr}</div>
+  <div class="cbox-title">{tr}Home Blog{/tr}</div>
   <div class="cbox-data">
-    <div class="simplebox">
       <form action="tiki-admin.php?page=blogs" method="post">
         <table class="admin"><tr>
           <td class="form"><label for="blogs-home">{tr}Home Blog (main blog){/tr}</label></td>
@@ -16,10 +19,12 @@
           <td><input type="submit" name="blogset" value="{tr}ok{/tr}" /></td>
         </tr></table>
       </form>
-    </div>
+  </div>
+</div>
 
-    <div class="simplebox">
-      {tr}Blog features{/tr}<br />
+<div class="cbox">
+  <div class="cbox-title">{tr}Blog features{/tr}</div>
+  <div class="cbox-data">
       <form action="tiki-admin.php?page=blogs" method="post">
         <table class="admin"><tr>
           <td class="form"><label for="blogs-rankings">{tr}Rankings{/tr}:</label></td>
@@ -52,10 +57,12 @@
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>
-    </div>
+  </div>
+</div>
 
-    <div class="simplebox">
-      {tr}Blog listing configuration (when listing available blogs){/tr}
+<div class="cbox">
+  <div class="cbox-title">{tr}Blog listing configuration (when listing available blogs){/tr}</div>
+  <div class="cbox-data">
       <form method="post" action="tiki-admin.php?page=blogs">
         <table class="admin"><tr>
           <td class="form"><label for="blogs-title">{tr}Title{/tr}</label></td>
@@ -98,10 +105,12 @@
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>
-    </div>
+  </div>
+</div>
 
-    <div class="simplebox">
-      {tr}Blog comments settings{/tr}
+<div class="cbox">
+  <div class="cbox-title">{tr}Blog comments settings{/tr}</div>
+  <div class="cbox-data">
       <form method="post" action="tiki-admin.php?page=blogs">
         <table class="admin"><tr>
           <td class="form"><label for="blogs-commpage">{tr}Default number of comments per page{/tr}: </label></td>
@@ -118,7 +127,5 @@
           <td colspan="2" class="button"><input type="submit" name="blogcomprefs" value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>
-    </div>
-
   </div>
 </div>

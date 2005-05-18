@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.41 2005-01-22 22:54:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.42 2005-05-18 10:58:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -81,6 +81,21 @@ if (isset($_REQUEST["save"])) {
 		$tracker_options["showStatusAdminOnly"] = 'y';
 	} else {
 		$tracker_options["showStatusAdminOnly"] = 'n';
+	}
+	
+	if (isset($_REQUEST["simpleEmail"]) 
+		&& ($_REQUEST["simpleEmail"] == 'on' 
+			or $_REQUEST["simpleEmail"] == 'y')) {
+		$tracker_options["simpleEmail"] = 'y';
+	} else {
+		$tracker_options["simpleEmail"] = 'n';
+	}
+	
+	if( isset($_REQUEST["outboundEmail"]) )
+	{
+		$tracker_options["outboundEmail"] = $_REQUEST["outboundEmail"];
+	} else {
+		$tracker_options["outboundEmail"] = '';
 	}
 	
 	if (isset($_REQUEST["newItemStatus"]) 
@@ -227,6 +242,17 @@ if (isset($_REQUEST["save"])) {
 		}
 		$tracker_options["orderAttachments"] = $orderat;
 	}
+	
+	
+	if(isset($_REQUEST["useExplicitNames"]) 
+		&& ($_REQUEST["useExplicitNames"] == 'on' 
+			or $_REQUEST["useExplicitNames"] == 'y')) {
+		$tracker_options["useExplicitNames"] = 'y';
+	}
+	else {
+		$tracker_options["useExplicitNames"] = 'n';
+	}
+	
 	$trklib->replace_tracker($_REQUEST["trackerId"], $_REQUEST["name"], $_REQUEST["description"], $tracker_options);
 	$logslib->add_log('admintrackers','changed or created tracker '.$_REQUEST["name"]);
 
@@ -245,8 +271,11 @@ $fields = array('data'=>array());
 $info["name"] = '';
 $info["description"] = '';
 $info["showCreated"] = '';
+$info["useExplicitNames"] = '';
 $info["showStatus"] = '';
 $info["showStatusAdminOnly"] = '';
+$info["simpleEmail"] = '';
+$info["outboundEmail"] = '';
 $info["newItemStatus"] = '';
 $info["showLastModif"] = '';
 $info["useRatings"] = '';
@@ -267,11 +296,7 @@ $info["defaultStatusList"] = array();
 $info["orderAttachments"] = 'name,created,filesize,downloads,desc';
 
 if ($_REQUEST["trackerId"]) {
-	global $trklib;
-	if (!is_object($trklib)) {
-		require_once('lib/trackers/trackerlib.php');
-	}
-	$info = array_merge($info,$trklib->get_tracker($_REQUEST["trackerId"]));
+	$info = array_merge($info,$tikilib->get_tracker($_REQUEST["trackerId"]));
 	$info = array_merge($info,$trklib->get_tracker_options($_REQUEST["trackerId"]));
 	$cookietab = '2';
 	$fields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '');
@@ -285,8 +310,11 @@ $smarty->assign('fields', $fields['data']);
 $smarty->assign('name', $info["name"]);
 $smarty->assign('description', $info["description"]);
 $smarty->assign('showCreated', $info["showCreated"]);
+$smarty->assign('useExplicitNames', $info["useExplicitNames"]);
 $smarty->assign('showStatus', $info["showStatus"]);
 $smarty->assign('showStatusAdminOnly', $info["showStatusAdminOnly"]);
+$smarty->assign('simpleEmail', $info["simpleEmail"]);
+$smarty->assign('outboundEmail', $info["outboundEmail"]);
 $smarty->assign('newItemStatus', $info["newItemStatus"]);
 $smarty->assign('showLastModif', $info["showLastModif"]);
 $smarty->assign('useRatings', $info["useRatings"]);
@@ -367,12 +395,8 @@ setcookie('tab',$cookietab);
 $smarty->assign('cookietab',$cookietab);
 $smarty->assign('uses_tabs', 'y');
 
-// block for categories
+// block for categorization
 include_once ("categorize_list.php");
-if (!isset($cats)) {
-	$cats = $categlib->get_object_categories($cat_type, $cat_objid);
-}
-$smarty->assign('catsdump', implode(',',$cats));
 
 ask_ticket('admin-trackers');
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-remote_backup.php,v 1.7 2005-01-01 00:16:35 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-remote_backup.php,v 1.8 2005-05-18 10:58:59 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.

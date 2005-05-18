@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.23 2005-01-05 19:22:40 jburleyebuilt Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.24 2005-05-18 10:58:54 mose Exp $
  *
  * Admin interface for rules management
  *

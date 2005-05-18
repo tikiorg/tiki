@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.22 2005-03-12 16:50:34 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.23 2005-05-18 11:02:59 mose Exp $ *}
 
 <a href="tiki-assignuser.php?assign_user={$assign_user}" class="pagetitle">{tr}Assign user{/tr} {$assign_user} {tr}to groups{/tr}</a><br /><br />
 <a href="tiki-adminusers.php" class="linkbut">{tr}Admin users{/tr}</a>
@@ -59,7 +59,7 @@
 <td class="{cycle advance=false}">{tr}{$users[user].groupDesc}{/tr}</td>
 <td class="{cycle}">
 {if $users[user].groupName != 'Anonymous'}
-<a class="link" href="tiki-assignuser.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=assign&amp;group={$users[user].groupName}&amp;assign_user={$assign_user}">{tr}assign {$user_info.login} to {$users[user].groupName}{/tr}</a></td>
+<a class="link" href="tiki-assignuser.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=assign&amp;group={$users[user].groupName}&amp;assign_user={$assign_user}">{tr}assign{/tr} {$user_info.login} {tr}to{/tr} "{$users[user].groupName}"</a></td>
 {/if}
 </tr>
 {/section}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.39 2005-03-12 16:50:12 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.40 2005-05-18 11:02:56 mose Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
   

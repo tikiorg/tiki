@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.22 2005-03-12 16:49:00 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.23 2005-05-18 10:58:58 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -31,10 +31,6 @@ if ($tiki_p_view != 'y') {
 	die;
 }
 
-global $tiki_p_admin;
-global $feature_categories;
-global $tiki_p_admin_categories;
-
 /* mass-remove: 
    the checkboxes are sent as the array $_REQUEST["checked[]"], values are the wiki-PageNames, 
    e.g. $_REQUEST["checked"][3]="HomePage"
@@ -43,12 +39,11 @@ global $tiki_p_admin_categories;
    then we check permission to delete pages.
    if so, we call histlib's method remove_all_versions for all the checked pages.
 */
-if (!empty($_REQUEST["submit_mult"]) && !empty($_REQUEST["checked"])) {
-	if ($_REQUEST["submit_mult"] == "remove_pages") {
+if (isset($_REQUEST["submit_mult"]) && isset($_REQUEST["checked"]) && $_REQUEST["submit_mult"] == "remove_pages") {
 	check_ticket('list-pages');
 
 	// Now check permissions to remove the selected pages
-	if ($tiki_p_remove != 'y' && $tiki_p_admin != 'y') {
+	if ($tiki_p_remove != 'y') {
 		$smarty->assign('msg', tra("Permission denied you cannot remove pages"));
 
 		$smarty->display("error.tpl");
@@ -60,96 +55,6 @@ if (!empty($_REQUEST["submit_mult"]) && !empty($_REQUEST["checked"])) {
 
 	foreach ($_REQUEST["checked"] as $deletepage) {
 		$histlib->remove_all_versions($deletepage);
-		$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("Page <b>%s</b> successfully deleted."),$deletepage));
-	}
-	} elseif ($_REQUEST['submit_mult'] == 'categorize') {
-		$categorize_mode = TRUE;
-		$smarty->assign('categorize_mode', 'y');
-		include_once ('lib/categories/categlib.php');
-		$categories = $categlib->list_categs();
-		$smarty->assign('categories', $categories);
-	} elseif ($_REQUEST['submit_mult'] == 'rename') {
-		$rename_mode = TRUE;
-		$smarty->assign('rename_mode', 'y');
-	}
-}
-// to-do: place the following code in categorize.php?
-// mass categorization: add to categories
-elseif (!empty($_REQUEST['categorization']) && $_REQUEST['categorization'] == 'add') {
-	
-	if ($tiki_p_admin_categories != 'y' && $tiki_p_admin != 'y') {
-		$smarty->assign('msg', tra("Permission denied: you cannot administer categories"));
-		$smarty->display("error.tpl");
-		die;
-	}
-	
-	global $categlib;
-	if (!is_object($categlib)) {
-		include_once('lib/categories/categlib.php');
-	}
-	$cat_type='wiki page';
-	if (!empty($_REQUEST["cat_categories"]) && !empty($_REQUEST["checked"])) {
-		foreach ($_REQUEST['checked'] as $page) {
-			$pageinfo = $tikilib->get_page_info($page);
-			$cat_objid = $pageinfo['pageName'];
-			$cat_desc = ($feature_wiki_description == 'y') ? $pageinfo['description'] : '';
-			$cat_name = $pageinfo['pageName'];
-			$cat_href="tiki-index.php?page=".$cat_objid;
-			foreach ($_REQUEST["cat_categories"] as $cat_acat) {
-				$categ_object = $categlib->get_category($cat_acat);
-				$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
-				if (!$catObjectId) {
-					// The object is not cateorized  
-					$catObjectId = $categlib->add_categorized_object($cat_type, $cat_objid, $cat_desc, $cat_name, $cat_href);
-				}
-				$categlib->categorize($catObjectId, $cat_acat);
-				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("Page <b>%s</b> added to %s <b>%s</b>."),$cat_objid,tra("category"),$categ_object['name']));
-			}
-		}
-	}
-}
-// mass categorization: remove from categories
-elseif (!empty($_REQUEST['categorization']) && $_REQUEST['categorization'] == 'remove') {
-	
-	if ($tiki_p_admin_categories != 'y' && $tiki_p_admin != 'y') {
-		$smarty->assign('msg', tra("Permission denied: you cannot administer categories"));
-		$smarty->display("error.tpl");
-		die;
-	}
-	
-	global $categlib;
-	if (!is_object($categlib)) {
-		include_once('lib/categories/categlib.php');
-	}
-	$cat_type='wiki page';
-	if (!empty($_REQUEST["cat_categories"]) && !empty($_REQUEST["checked"])) {
-		foreach ($_REQUEST['checked'] as $page) {
-			$pageinfo = $tikilib->get_page_info($page);
-			$cat_objid = $pageinfo['pageName'];
-			foreach ($_REQUEST["cat_categories"] as $cat_acat) {
-				$categ_object = $categlib->get_category($cat_acat);
-				$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
-				if ($catObjectId) {
-					$categlib->remove_object_from_category($catObjectId, $cat_acat);
-					$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("Page <b>%s</b> removed from %s <b>%s</b>."),$cat_objid,tra("category"),$categ_object['name']));
-				}
-			}
-		}
-	}
-}
-// mass page renaming
-elseif (!empty($_REQUEST['newpages'])) {
-	$newpages = $_REQUEST['newpages'];
-	global $wikilib;
-	if (!is_object($wikilib)) {
-		include_once ('lib/wiki/wikilib.php');
-	}
-	foreach ($newpages as $oldpage => $newpage) {
-		if ($wikilib->wiki_rename_page($oldpage, $newpage)) {
-			$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("Page <b>%s</b> renamed to <b>%s</b>."),$oldpage,$newpage));
-		} else {
-			$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("Failed to rename page <b>%s</b> to <b>%s</b>; perhaps <b>%s</b> already exists."),$oldpage,$newpage,$newpage));
-		}
 	}
 }
 
@@ -172,10 +77,6 @@ if (!isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST["offset"];
-}
-
-if (!empty($_REQUEST['max_records'])) {
-	$maxRecords = $_REQUEST['max_records'];
 }
 
 $smarty->assign_by_ref('offset', $offset);
@@ -207,21 +108,10 @@ $smarty->assign('initials', split(' ','a b c d e f g h i j k l m n o p q r s t u
 
 // Get a list of last changes to the Wiki database
 $listpages = $tikilib->list_pages($offset, $maxRecords, $sort_mode, $find, $initial, $exact_match);
-
-if (!empty($categorize_mode) || !empty($rename_mode)) {
-	$arraylen = count($listpages['data']);
-	for ($i=0; $i<$arraylen; $i++) {
-		if (in_array($listpages['data'][$i]['pageName'], $_REQUEST["checked"])) {
-			$listpages['data'][$i]['checked'] = 'y';
-		}
-	}
-}
-
 // If there're more records then assign next_offset
 $cant_pages = ceil($listpages["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
 $smarty->assign('actual_page', 1 + ($offset / $maxRecords));
-$smarty->assign('maxRecords', $maxRecords);
 
 if ($listpages["cant"] > ($offset + $maxRecords)) {
 	$smarty->assign('next_offset', $offset + $maxRecords);
@@ -235,8 +125,6 @@ if ($offset > 0) {
 } else {
 	$smarty->assign('prev_offset', -1);
 }
-
-$smarty->assign_by_ref('tikifeedback', $tikifeedback);
 
 
 $smarty->assign_by_ref('listpages', $listpages["data"]);

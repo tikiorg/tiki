@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-integrator.php,v 1.17 2005-01-22 22:54:55 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-integrator.php,v 1.18 2005-05-18 10:58:57 mose Exp $
  *
  * Integrated files viewer (wrapper)
  *

@@ -37,7 +37,7 @@
   <td class="even">{$nl_info.description}</td>
 </tr>
 {if ($nl_info.allowUserSub eq 'y') or ($tiki_p_admin_newsletters eq 'y')}
-{if $tiki_p_subscribe_email eq 'y' and (($nl_info.allowAnySub eq 'y' or $user) || $user)}
+{if $tiki_p_subscribe_email eq 'y' and (($nl_info.allowAnySub eq 'y' and $user) || !$user)}
 <tr>
   <td class="even">{tr}Email:{/tr}</td>
   <td class="even"><input type="text" name="email" value="{$email|escape}" /></td>
@@ -54,7 +54,7 @@
 </form>
 {/if}
 
-<h2>{tr}Newsletters{/tr}</h2>
+<h2>{tr}Available Newsletters{/tr}</h2>
 <div  align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>

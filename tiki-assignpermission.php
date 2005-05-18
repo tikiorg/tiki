@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-assignpermission.php,v 1.23 2005-01-05 19:22:41 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-assignpermission.php,v 1.24 2005-05-18 10:58:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,7 +10,6 @@
 // ASSIGN PERMISSIONS TO GROUPS
 // Initialization
 require_once ('tiki-setup.php');
-require_once ('lib/userslib/userslib_admin.php');
 
 if ($user != 'admin') {
 	if ($tiki_p_admin != 'y') {
@@ -42,10 +41,10 @@ $smarty->assign_by_ref('group', $group);
 if (isset($_REQUEST['allper'])) {
 	check_ticket('admin-perms');
 	if ($_REQUEST['oper'] == 'assign') {
-		$userslibadmin->assign_level_permissions($group, $_REQUEST['level']);
+		$userlib->assign_level_permissions($group, $_REQUEST['level']);
 		$logslib->add_log('perms',"assigned all perms level ".$_REQUEST['level']." to group $group");
 	} else {
-		$userslibadmin->remove_level_permissions($group, $_REQUEST['level']);
+		$userlib->remove_level_permissions($group, $_REQUEST['level']);
 		$logslib->add_log('perms',"unassigned all perms level ".$_REQUEST['level']." from group $group");
 	}
 }
@@ -53,7 +52,7 @@ if (isset($_REQUEST['allper'])) {
 if (isset($_REQUEST["action"])) {
 	check_ticket('admin-perms');
 	if ($_REQUEST["action"] == 'assign') {
-		$userslibadmin->assign_permission_to_group($_REQUEST["perm"], $group);
+		$userlib->assign_permission_to_group($_REQUEST["perm"], $group);
 		$logslib->add_log('perms',"assigned perm ".$_REQUEST['perm']." to group $group");
 	}
 
@@ -61,7 +60,7 @@ if (isset($_REQUEST["action"])) {
 		$area = 'delpermassign';
 		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
-			$userslibadmin->remove_permission_from_group($_REQUEST["permission"], $group);
+			$userlib->remove_permission_from_group($_REQUEST["permission"], $group);
 			$logslib->add_log('perms',"unassigned perm ".$_REQUEST['permission']." from group $group");
 		} else {
 			key_get($area);
@@ -122,9 +121,9 @@ if (isset($_REQUEST['update'])) {
 		$userlib->change_permission_level($per, $_REQUEST['level'][$per]);
 
 		if (isset($_REQUEST['perm'][$per])) {
-			$userslibadmin->assign_permission_to_group($per, $group);
+			$userlib->assign_permission_to_group($per, $group);
 		} else {
-			$userslibadmin->remove_permission_from_group($per, $group);
+			$userlib->remove_permission_from_group($per, $group);
 		}
 		$logslib->add_log('perms',"changed perms for group $group");
 	}

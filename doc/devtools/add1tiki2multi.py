@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/add1tiki2multi.py,v 1.8 2004-04-28 03:58:00 ggeller Exp $
+# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/add1tiki2multi.py,v 1.9 2005-05-18 10:59:14 mose Exp $
 
 # Copyright (c) 2004 George G. Geller
 # All Rights Reserved. See copyright.txt for details and a complete list of au\thors.
@@ -26,7 +26,7 @@ import re
 # THIS SCRIPT IS DISABLED BY DEFAULT TO MINIMIZE THE SECURITY RISK FOR NAIVE
 #  TIKI ADMINS!
 # YOU MUST COMMENT OUT THE FOLLOWING LINE FOR THIS SCRIPT TO FUNCTION!!!!
-sys.exit(0)
+# sys.exit(0)
 
 
 def usage():
@@ -83,14 +83,12 @@ if not re.search(r'[a-z]$',sNewDomain):
     sys.exit(-1)
 
 # check for /www
-status = os.system("ls /www > /dev/null 2>&1")
-if status:
-    print sys.argv[0]+":", "ls /www failed.  Exiting."
+if not os.path.exists("/www"):
+    print sys.argv[0]+":", "/www does not exist.  Exiting."
     sys.exit(status)
 
 # check for sNewDomain already in /www
-status = os.system("ls /www/" + sNewDomain + " > /dev/null 2>&1")
-if status == 0:
+if os.path.exists("/www/" + sNewDomain + ""):
     print sys.argv[0]+":", "file /www/" + sNewDomain + " already exists.  Exiting."
     sys.exit(status)
 
@@ -143,29 +141,20 @@ for line in lines:
             sys.exit(-1)
 
 # check for /etc
-status = os.system("ls /etc > /dev/null 2>&1")
-if status:
-    print sys.argv[0]+":", "ls /etc failed.  Exiting."
-    sys.exit(status)
-
-# check for /etc/httpd
-status = os.system("ls /etc/httpd > /dev/null 2>&1")
-if status:
-    print sys.argv[0]+":", "ls /etc/httpd failed.  Exiting."
+if not os.path.exists("/etc/"):
+    print sys.argv[0]+":", "/etc does not exist.  Exiting."
     sys.exit(status)
 
 # check for /etc/httpd/conf.d
-status = os.system("ls /etc/httpd/conf.d > /dev/null 2>&1")
-if status:
-    print sys.argv[0]+":", "ls /etc/httpd/conf.d failed.  Exiting."
+if not os.path.exists("/etc/httpd/conf.d"):
+    print sys.argv[0]+":", "File /etc/httpd/conf.d does not exist.  Exiting."
     sys.exit(status)
 
 #
 # Check for something like /etc/httd/conf.d/new.wikiplanet.com.vh
 #
 sVHFileName = "/etc/httpd/conf.d/" + sNewDomain + ".vh"
-status = os.system("ls " + sVHFileName + " > /dev/null 2>&1")
-if status == 0:
+if os.path.exists(sVHFileName):
     print sys.argv[0]+":", "file " + sVHFileName + " already exists.  Exiting."
     sys.exit(status)
 

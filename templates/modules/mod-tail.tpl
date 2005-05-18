@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-tail.tpl,v 1.6 2005-03-12 16:51:00 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-tail.tpl,v 1.7 2005-05-18 11:03:31 mose Exp $ *}
 
 {if $feature_tail eq 'y'}
 {popup_init src="lib/overlib.js"}

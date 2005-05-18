@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/module.tpl,v 1.2 2004-03-27 21:25:03 mose Exp $*}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/module.tpl,v 1.3 2005-05-18 11:03:56 mose Exp $*}
 {* Module layout with controls *}
 
 <div class="box"><div class="box-title">
@@ -10,10 +10,10 @@
     <a class="movemodopside" title="{tr}Move module to opposite side{/tr}" href="{$current_location}?mc_move={$module_name}"><span>{tr}left/right{/tr}</span></a>
     <a class="removemod" title="{tr}Unassign module{/tr}" href="{$current_location}?mc_unassign={$module_name}"><span>{tr}remove{/tr}</span></a>
   </span>
-  <strong>{$module_title}</strong>
-{else}
-  <strong>{$module_title}</strong>
 {/if}
-</div><div class="box-data">
-    {$module_content}
+{if $module_flip eq 'y'}<a href="javascript:toggle('mod-{$module_name|escape}');" style="text-decoration: none"><strong>{$module_title}</strong></a>
+{else}<strong>{$module_title}</strong>
+{/if}
+</div><div class="box-data" id="mod-{$module_name|escape}" style="display: block">
+    {$module_content}{$module_error}
 </div></div>

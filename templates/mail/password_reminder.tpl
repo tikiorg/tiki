@@ -9,4 +9,6 @@
 {tr}The old password remains active until you activate the new one by following this link:{/tr}
 
 {$mail_machine}?user={$mail_user|escape:'url'}&actpass={$mail_apass}
+
+{tr}This is only a temporary password. After you logged in with it, you will get to the 'change password' dialog.{/tr}
 {/if}

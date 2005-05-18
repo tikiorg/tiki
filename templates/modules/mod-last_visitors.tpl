@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_visitors.tpl,v 1.3 2005-03-12 16:51:00 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_visitors.tpl,v 1.4 2005-05-18 11:03:30 mose Exp $ *}
 
 {if $nonums eq 'y'}
 {eval var="{tr}Last `$module_rows` visitors{/tr}" assign="tpl_module_title"}

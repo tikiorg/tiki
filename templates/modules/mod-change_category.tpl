@@ -1,5 +1,5 @@
 {* 
-$Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-change_category.tpl,v 1.3 2005-03-12 16:50:59 mose Exp $ 
+$Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-change_category.tpl,v 1.4 2005-05-18 11:03:28 mose Exp $ 
 parameters : id=1
 id is the categId of the parent categ to list
 note : lists the objects from a given category not a recursive tree

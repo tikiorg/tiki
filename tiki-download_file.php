@@ -78,6 +78,9 @@ $file=&$info["filename"];
 $content=&$info["data"];
 
 
+// close the session in case of large downloads to enable further browsing
+session_write_close();
+
 //print("File:$file<br />");
 //die;
 header("Content-type: $type");

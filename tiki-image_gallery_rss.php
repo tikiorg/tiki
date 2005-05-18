@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-image_gallery_rss.php,v 1.23 2005-01-01 00:16:33 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-image_gallery_rss.php,v 1.24 2005-05-18 10:58:57 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,6 +8,7 @@
 require_once ('tiki-setup.php');
 require_once ('lib/tikilib.php');
 require_once ('lib/imagegals/imagegallib.php');
+require_once ('lib/rss/rsslib.php');
 
 if ($rss_image_gallery != 'y') {
         $errmsg=tra("rss feed disabled");
@@ -32,17 +33,20 @@ $desc = $tmp["description"]; // TODO: make configurable
 $id = "imageId";
 $titleId = "name";
 $descId = "description";
+$authorId = "user";
 $dateId = "created";
-$readrepl = "tiki-browse_image.php?imageId=";
+$readrepl = "tiki-browse_image.php?imageId=%s";
 $uniqueid = "$feed.id=".$_REQUEST["galleryId"];
 
-require ("tiki-rss_readcache.php");
+$tmp = $tikilib->get_preference('title_rss_'.$feed, '');
+if ($tmp<>'') $title = $tmp;
+$tmp = $tikilib->get_preference('desc_rss_'.$feed, '');
+if ($desc<>'') $desc = $tmp;
 
-if ($output == "EMPTY") {
-  $changes = $imagegallib->get_images( 0,$max_rss_image_gallery,$dateId.'_desc', '', $_REQUEST["galleryId"]);
-  $output = "";
-}
+$changes = $imagegallib->get_images( 0,$max_rss_image_gallery,$dateId.'_desc', '', $_REQUEST["galleryId"]);
+$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, '', $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
 
-require ("tiki-rss.php");
+header("Content-type: ".$output["content-type"]);
+print $output["data"];
 
 ?>

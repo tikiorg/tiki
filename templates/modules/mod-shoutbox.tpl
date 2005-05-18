@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-shoutbox.tpl,v 1.25 2005-03-12 16:51:00 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-shoutbox.tpl,v 1.26 2005-05-18 11:03:31 mose Exp $ *}
 
 {if $feature_shoutbox eq 'y' and $tiki_p_view_shoutbox eq 'y'}
 {tikimodule title="{tr}Shoutbox{/tr}" name="shoutbox" flip=$module_params.flip decorations=$module_params.decorations}

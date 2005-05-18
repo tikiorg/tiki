@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_submissions.tpl,v 1.11 2005-03-12 16:51:00 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_submissions.tpl,v 1.12 2005-05-18 11:03:30 mose Exp $ *}
 
 {if $feature_submissions eq 'y'}
 {if $nonums eq 'y'}

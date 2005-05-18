@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/styles/gemsi/index.php,v 1.2 2005-03-12 16:50:04 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/styles/gemsi/index.php,v 1.3 2005-05-18 11:02:41 mose Exp $
 
 // This redirects to the sites root to prevent directory browsing
 

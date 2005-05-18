@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.22 2005-03-12 16:50:08 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.23 2005-05-18 11:02:52 mose Exp $ *}
 
 <a name="attachments"></a>
 {* Don't even generate DIV if no any needed rights *}

@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/tree/categ_browse_tree.php,v 1.4 2004-01-20 06:30:38 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/tree/categ_browse_tree.php,v 1.5 2005-05-18 11:01:54 mose Exp $
  *
  * \brief Categories browse tree
  *
@@ -41,10 +41,10 @@ class CatBrowseTreeMaker extends TreeMaker {
 	//  
 	// Need to generate:
 	//
-	// [node start = <div class=treenode>]
+	// [node start = <div class="treenode">]
 	//  [flipper] user data
 	// [node data end = </div>]
-	// [node child start = <div class=tree>]
+	// [node child start = <div class="tree">]
 	//   [childs code]
 	// [node child end = </div>]
 	//

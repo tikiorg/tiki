@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/damian/module.tpl,v 1.3 2005-03-12 16:51:15 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/damian/module.tpl,v 1.4 2005-05-18 11:03:34 mose Exp $ *}
 {* Module layout with controls *}
 
 <div class="box{if $module_side eq "right_modules"}_right{/if} "><div class="box-title">

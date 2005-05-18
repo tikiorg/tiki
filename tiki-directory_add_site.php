@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_add_site.php,v 1.16 2005-01-01 00:16:32 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_add_site.php,v 1.17 2005-05-18 10:58:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -87,7 +87,7 @@ if (isset($_REQUEST["save"])) {
 		$msg = tra("Must enter a name to add a site. ");
 	}
 
-	if (empty($_REQUEST["url"]) || $_REQUEST["url"] == 'http://') {
+	if (empty($_REQUEST["url"])) {
 		$msg .= tra("Must enter a url to add a site. ");
 	}
 	else {
@@ -204,21 +204,20 @@ if (isset($_REQUEST["save"]) && $msg != "" && isset($_REQUEST["siteCats"])) { //
 }
 $smarty->assign('categs', $categs);
 
-// Get flags here
-$flags = array();
-$h = opendir("img/flags/");
+$countries = array();
+$h = opendir("img/flags");
 
 while ($file = readdir($h)) {
-	if (strstr($file, ".gif")) {
-		$parts = explode('.', $file);
+	if (is_file('img/flags/' . $file) && preg_match('/\.gif$/', $file)) {
+		$name = explode('.', $file);
 
-		$flags[] = $parts[0];
+		$countries[] = $name[0];
 	}
 }
 
 closedir ($h);
-sort ($flags);
-$smarty->assign('flags', $flags);
+usort($countries, 'country_sort');
+$smarty->assign_by_ref('countries', $countries);
 
 // This page should be displayed with Directory section options
 $section='directory';
@@ -228,5 +227,15 @@ ask_ticket('dir-add-site');
 // Display the template
 $smarty->assign('mid', 'tiki-directory_add_site.tpl');
 $smarty->display("tiki.tpl");
+
+function country_sort($a, $b) {
+    if ($a == 'None' || $b == 'Other') {
+        return -1;
+    } elseif ($b == 'None' || $a == 'Other') {
+	return 1;
+    } else {
+	return strcmp($a, $b);
+    }
+}
 
 ?>

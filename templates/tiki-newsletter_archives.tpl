@@ -6,9 +6,9 @@
 <a href="tiki-edit_templates.php?template=tiki-newsletter_archives.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin newsletters template{/tr}">
 <img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit{/tr}'></a>{/if}</h1>
 
-<a class="linkbut" href="tiki-newsletters.php">{tr}list newsletters{/tr}</a>{if $tiki_p_subscribe_newsletters}<a class="linkbut" href="tiki-newsletters.php?nlId={$nlId}&amp;info=1">{tr}subscribe{/tr}</a>{/if}
-{if $tiki_p_send_newsletters}<a class="linkbut" href="tiki-send_newsletters.php?nlId={$nlId}">{tr}send newsletters{/tr}</a>{/if}
-{if $tiki_p_admin_newsletters}<a class="linkbut" href="tiki-admin_newsletters.php">{tr}admin newsletters{/tr}</a>{/if}
+<a class="linkbut" href="tiki-newsletters.php">{tr}list newsletters{/tr}</a>{if $tiki_p_subscribe_newsletters eq "y"}<a class="linkbut" href="tiki-newsletters.php?nlId={$nlId}&amp;info=1">{tr}subscribe{/tr}</a>{/if}
+{if $tiki_p_send_newsletters eq "y"}<a class="linkbut" href="tiki-send_newsletters.php?nlId={$nlId}">{tr}send newsletters{/tr}</a>{/if}
+{if $tiki_p_admin_newsletters eq "y"}<a class="linkbut" href="tiki-admin_newsletters.php">{tr}admin newsletters{/tr}</a>{/if}
 
 {if $edition}
 <h2>{tr}Sent edition{/tr}</h2>

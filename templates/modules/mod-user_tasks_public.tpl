@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-user_tasks_public.tpl,v 1.3 2005-03-12 16:51:00 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-user_tasks_public.tpl,v 1.4 2005-05-18 11:03:32 mose Exp $ *}
 {if $feature_tasks eq 'y' and $user}
 {tikimodule title="<a class='cboxtlink' href='tiki-user_tasks.php'>{tr}Public tasks{/tr}</a>" name="user_tasks_public" flip=$module_params.flip decorations=$module_params.decorations}
 <table class="normal">

@@ -1,24 +1,49 @@
-{if $feature_help eq 'y'}
-<div class="simplebox">{tr}Tip{/tr}: {tr}to configure your trackers, look for "Admin trackers" under "Trackers" on the application menu, or{/tr} <a class="link" href="tiki-admin_trackers.php">{tr}click here{/tr}</a>.</div><br />
+{if $feature_help eq 'y'} 
+<div class="rbox" style="margin-top: 10px;">
+<div class="rbox-title" style="background-color: #eeee99; font-weight : bold; display : inline; padding : 0 10px;">{tr}Tip{/tr}</div>
+<div class="rbox-data" style="padding: 2px 10px; background-color: #eeee99;">{tr}To configure your trackers, look for "Admin trackers" under "Trackers" on the application menu, or{/tr} <a class="link" href="tiki-admin_trackers.php">{tr}click here{/tr}</a>.</div>
+</div>
+<br />
 {/if}
 <div class="cbox">
-<div class="cbox-title">{tr}Trackers{/tr}</div>
+<div class="cbox-title">{tr}Trackers attachments preferences{/tr}</div>
 <div class="cbox-data">
-<div class="simplebox">
 <form action="tiki-admin.php?page=trackers" method="post">
 <table class="admin">
+
 <tr><td class="form">{tr}Use database to store files{/tr}:</td><td><input type="radio" name="t_use_db" value="y" {if $t_use_db eq 'y'}checked="checked"{/if}/></td></tr>
+
 <tr><td class="form">{tr}Use a directory to store files{/tr}:</td><td><input type="radio" name="t_use_db" value="n" {if $t_use_db eq 'n'}checked="checked"{/if}/> {tr}Path{/tr}:<br /><input type="text" name="t_use_dir" value="{$t_use_dir|escape}" size="50" /> </td></tr>
+
 <tr><td colspan="2" class="button"><input type="submit" name="trkset" value="{tr}Change preferences{/tr}" /></td></tr>    
 </table>
 </form>
 </div>
 </div>
+
+<div class="cbox">
+<div class="cbox-title">{tr}Trackers with mirror tables{/tr}</div>
+<div class="cbox-data">
+<form action="tiki-admin.php?page=trackers" method="post">
+<table class="admin">
+
+<tr><td class="form">{tr}Use trackers with mirror tables{/tr}:</td><td><input type="checkbox" name="trk_with_mirror_tables" {if $trk_with_mirror_tables eq 'y'}checked="checked"{/if}/></td></tr>
+<tr>
+<td class="form">{tr}Values are stored in a dedicated table for each tracker, then you can easily manipulate them outside TikiWiki{/tr}</td>
+<td class="form">{tr}WARNING : Old and New trackers cannot coexist. Trackers created with new library
+will not work with old library and conversely{/tr}.</td>
+</tr>
+
+<tr><td colspan="2" class="button"><input type="submit" name="trkMirrorTables" value="{tr}Validate choice{/tr}" /></td></tr>    
+</table>
+</form>
+</div>
 </div>
 
-<br />
+<div class="cbox">
+<div class="cbox-title">{tr}Trackers attachments{/tr}</div>
+<div class="cbox-data">
 <div class="admin">
-{tr}Attachments{/tr}
 <form action="tiki-admin.php?page=trackers" method="post">
 <input type="text" name="find" value="{$find|escape}">
 <input type="submit" name="action" value="{tr}find{/tr}">
@@ -63,4 +88,5 @@
 <input type="submit" name="action" value="{tr}Change all to file{/tr}">
 </form>
 </td></tr></table>
-
+</div>
+</div>

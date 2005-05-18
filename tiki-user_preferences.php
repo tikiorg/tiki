@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.66 2005-03-12 16:49:02 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.67 2005-05-18 10:58:59 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,10 +11,6 @@ require_once ('tiki-setup.php');
 include_once('lib/modules/modlib.php');
 include_once ('lib/userprefs/scrambleEmail.php');
 include_once ('lib/userprefs/userprefslib.php');
-global $bloglib;
-if (!is_object($bloglib)) {
-	include_once('lib/blogs/bloglib.php');
-}
 
 // User preferences screen
 if ($feature_userPreferences != 'y' && $user != 'admin') {
@@ -155,12 +151,22 @@ if (isset($_REQUEST['info'])) {
 		$tikilib->set_user_preference($userwatch, 'homePage', $_REQUEST["homePage"]);
 
 	if (isset($_REQUEST["lat"])) {
-		$smarty->assign('lat', (float) $_REQUEST["lat"]);
-		$tikilib->set_user_preference($userwatch, 'lat', floatval($_REQUEST["lat"]));
+	  if (is_numeric($_REQUEST["lat"])) {
+	  	$lat=floatval($_REQUEST["lat"]);
+	  } else {
+	  	$lat=NULL;
+	  }
+		$smarty->assign('lat', $lat);
+		$tikilib->set_user_preference($userwatch, 'lat', $lat);
 	}
 	if (isset($_REQUEST["lon"])) {
-		$smarty->assign('lon', (float) $_REQUEST["lon"]);
-		$tikilib->set_user_preference($userwatch, 'lon', floatval($_REQUEST["lon"]));
+		  if (is_numeric($_REQUEST["lon"])) {
+	  	$lon=floatval($_REQUEST["lon"]);
+	  } else {
+	  	$lon=NULL;
+	  }
+		$smarty->assign('lon', $lon);
+		$tikilib->set_user_preference($userwatch, 'lon', $lon);
 	}
 
 	$tikilib->set_user_preference($userwatch, 'country', $_REQUEST["country"]);
@@ -179,9 +185,8 @@ if (isset($_REQUEST['chgadmin'])) {
 
 	// check user's password, admin doesn't need it to change other user's info
 	if ($tiki_p_admin != 'y' || $user == $userwatch) {
-            require_once ('lib/userslib/userslib_admin.php');
 
-	    if (!$userslibadmin->validate_user($userwatch, $pass, '', '')) {
+	    if (!$userlib->validate_user($userwatch, $pass, '', '')) {
 		$smarty->assign('msg', tra("Invalid password.  Your current password is required to change administrative information"));
 		
 		$smarty->display("error.tpl");
@@ -342,7 +347,7 @@ $smarty->assign("available_languages", unserialize($tikilib->get_preference("ava
 
 // Get user pages
 $user_pages = $tikilib->get_user_pages($userwatch, -1);
-$user_blogs = $bloglib->list_user_blogs($userwatch, false);
+$user_blogs = $tikilib->list_user_blogs($userwatch, false);
 $user_galleries = $tikilib->get_user_galleries($userwatch, -1);
 $smarty->assign_by_ref('user_pages', $user_pages);
 $smarty->assign_by_ref('user_blogs', $user_blogs);
@@ -438,8 +443,6 @@ if ($display_timezone != "UTC")
 
 $smarty->assign_by_ref('display_timezone', $display_timezone);
 $smarty->assign_by_ref('tikifeedback', $tikifeedback);
-global $feature_wiki_dblclickedit;
-$smarty->assign('feature_wiki_dblclickedit',$feature_wiki_dblclickedit);
 
 setcookie('tab',$cookietab);
 $smarty->assign_by_ref('cookietab',$cookietab);
