@@ -1,6 +1,6 @@
 TikiWiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.167 2005-05-18 10:58:51 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.168 2005-05-18 11:17:01 mose Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionally include an identifer
@@ -14,6 +14,12 @@ Use the following tags to distinguish changes :
 
 Please wrap your lines at 80 characters and indent them with spaces only.
 ------------------
+
+Version 1.10
+<http://tikiwiki.org/ReleaseProcess110>
+
+- 2005/05/18 : http://dev.tikiwiki.org/RefreshHEAD
+
 
 Version 1.9 
 <http://tikiwiki.org/ReleaseProcess19>
