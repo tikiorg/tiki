@@ -1,6 +1,28 @@
 <?php
 
-// $Id: Toc.php,v 1.1 2005-05-18 23:43:16 papercrane Exp $
+if (version_compare(phpversion(), '5.0') === -1 && !function_exists('clone')) {
+    eval('
+    function clone($object)
+    {
+        // Sanity check
+        if (!is_object($object)) {
+            user_error(\'clone() __clone method called on non-object\', E_USER_WARNING);
+            return;
+        }
+
+        // Use serialize/unserialize trick to deep copy the object
+        $object = unserialize(serialize($object));
+
+        // If there is a __clone method call it on the "new" class
+        if (method_exists($object, \'__clone\')) {
+            $object->__clone();
+        }
+
+        return $object;
+    }');
+}
+
+// $Id: Toc.php,v 1.2 2005-05-19 20:33:14 papercrane Exp $
 
 class Text_Wiki_Render_Xhtml_Toc extends Text_Wiki_Render {
     
