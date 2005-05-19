@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2005-05-18 10:59:05 $
-# $Author: mose $
+# $Date: 2005-05-19 00:16:21 $
+# $Author: papercrane $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -4363,6 +4363,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_image_galleries
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_integrator','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_jscalendar','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_lastChanges','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('pear_wiki_parser','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_left_column','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_likePages','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_listPages','y');
