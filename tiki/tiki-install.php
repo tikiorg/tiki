@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.71 2005-05-18 10:58:57 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.72 2005-05-19 18:24:30 amette Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -99,7 +99,7 @@ function process_sql_file($file,$db_tiki) {
 	$smarty->assign_by_ref('failedcommands', $failedcommands);
 }
 
-function write_local_php($dbb_tiki,$host_tiki,$user_tiki,$pass_tiki,$dbs_tiki,$dbversion_tiki="1.9") {
+function write_local_php($dbb_tiki,$host_tiki,$user_tiki,$pass_tiki,$dbs_tiki,$dbversion_tiki="1.10") {
 	global $local;
 	global $db_tiki;
 	if ($dbs_tiki and $user_tiki) {
@@ -490,7 +490,7 @@ $smarty->assign('virt',$virt);
 $smarty->assign('multi', $multi);
 
 // Tiki Database schema version
-$tiki_version = '1.9';
+$tiki_version = '1.10';
 $smarty->assign('tiki_version', $tiki_version);
 
 // Available DB Servers
