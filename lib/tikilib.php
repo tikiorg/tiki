@@ -19,8 +19,12 @@ require_once ('lib/tikidblib.php');
 // * shared functions (marked as /*shared*/) are functions that are
 //   called from Tiki modules.
 
+/*if (isset($_REQUEST['tikiParser']) && $GLOBALS['pear_wiki_parser']) {
+    $GLOBALS['pear_wiki_parser'] = false;
+}*/
+
 if (!defined('PAGE_SEP')) {
-    define('PAGE_SEP', isset($GLOBALS['pear_wiki_parser']) ? '...page...' : 'PAGE MARKER HERE*&^%$#^$%*PAGEMARKERHERE');
+    define('PAGE_SEP', isset($GLOBALS['pear_wiki_parser']) && $GLOBALS['pear_wiki_parser'] == 'y' ? '...page...' : 'PAGE MARKER HERE*&^%$#^$%*PAGEMARKERHERE');
 }
 
 class TikiLib extends TikiDB {
@@ -4232,7 +4236,7 @@ function add_pageview() {
 
     //PARSEDATA
     function parse_data($data,$is_html=false) {
-        if ($GLOBALS['pear_wiki_parser'] == 'y') {
+        if (isset($GLOBALS['pear_wiki_parser']) && $GLOBALS['pear_wiki_parser'] == 'y') {
             require_once('lib/wiki/Text/Wiki/Tiki.php');
             $wiki =& new Text_Wiki_Tiki();
             $wiki->setRenderConf('xhtml', 'wikilink', 'exists_callback', array(&$this, 'page_exists'));
