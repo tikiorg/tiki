@@ -31,7 +31,7 @@ class Text_Wiki_Tiki extends Text_Wiki {
         'Newline',
         'Paragraph',
         'Url',
-        'Freelink',
+        //'Freelink',
         'Colortext',
         'Wikilink',
         'Strong',
