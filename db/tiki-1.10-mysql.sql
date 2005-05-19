@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2004-09-21 23:12:17 $
-# $Author: ggeller $
+# $Date: 2005-05-19 18:24:32 $
+# $Author: amette $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -32,6 +32,7 @@ CREATE TABLE galaxia_activities (
   isInteractive char(1) default NULL,
   lastModif int(14) default NULL,
   description text,
+  expirationTime int(6) unsigned NOT NULL default '0',
   PRIMARY KEY  (activityId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -104,6 +105,7 @@ CREATE TABLE galaxia_instances (
   instanceId int(14) NOT NULL auto_increment,
   pId int(14) NOT NULL default '0',
   started int(14) default NULL,
+  name varchar(200) default 'No Name',
   owner varchar(200) default NULL,
   nextActivity int(14) default NULL,
   nextUser varchar(200) default NULL,
@@ -224,6 +226,7 @@ CREATE TABLE messu_messages (
   subject varchar(255) default NULL,
   body text,
   hash varchar(32) default NULL,
+  replyto_hash varchar(32) default NULL,
   date int(14) default NULL,
   isRead char(1) default NULL,
   isReplied char(1) default NULL,
@@ -233,6 +236,63 @@ CREATE TABLE messu_messages (
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
 
+#
+# Table structure for table messu_archive (same structure as messu_messages)
+# desc: user may archive his messages to this table to speed up default msg handling
+#
+# Creation: Feb 26, 2005 at 03:00 PM
+# Last update: Feb 26, 2005 at 03:00 PM
+#
+
+DROP TABLE IF EXISTS messu_archive;
+CREATE TABLE messu_archive (
+  msgId int(14) NOT NULL auto_increment,
+  user varchar(200) NOT NULL default '',
+  user_from varchar(200) NOT NULL default '',
+  user_to text,
+  user_cc text,
+  user_bcc text,
+  subject varchar(255) default NULL,
+  body text,
+  hash varchar(32) default NULL,
+  replyto_hash varchar(32) default NULL,
+  date int(14) default NULL,
+  isRead char(1) default NULL,
+  isReplied char(1) default NULL,
+  isFlagged char(1) default NULL,
+  priority int(2) default NULL,
+  PRIMARY KEY  (msgId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table messu_sent (same structure as messu_messages)
+# desc: user may archive his messages to this table to speed up default msg handling
+#
+# Creation: Feb 26, 2005 at 11:00 PM
+# Last update: Feb 26, 2005 at 11:00 PM
+#
+
+DROP TABLE IF EXISTS messu_sent;
+CREATE TABLE messu_sent (
+  msgId int(14) NOT NULL auto_increment,
+  user varchar(200) NOT NULL default '',
+  user_from varchar(200) NOT NULL default '',
+  user_to text,
+  user_cc text,
+  user_bcc text,
+  subject varchar(255) default NULL,
+  body text,
+  hash varchar(32) default NULL,
+  replyto_hash varchar(32) default NULL,
+  date int(14) default NULL,
+  isRead char(1) default NULL,
+  isReplied char(1) default NULL,
+  isFlagged char(1) default NULL,
+  priority int(2) default NULL,
+  PRIMARY KEY  (msgId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
 DROP TABLE IF EXISTS sessions;
 CREATE TABLE sessions(
@@ -566,6 +626,7 @@ CREATE TABLE tiki_calendar_items (
   name varchar(255) NOT NULL default '',
   description blob,
   user varchar(40) default NULL,
+  nlId int(12) default NULL,
   created int(14) NOT NULL default '0',
   lastmodif int(14) NOT NULL default '0',
   PRIMARY KEY  (calitemId),
@@ -625,8 +686,10 @@ CREATE TABLE tiki_calendars (
   customlanguages enum('n','y') NOT NULL default 'n',
   custompriorities enum('n','y') NOT NULL default 'n',
   customparticipants enum('n','y') NOT NULL default 'n',
+  customsubscription enum('n','y') NOT NULL default 'n',
   created int(14) NOT NULL default '0',
   lastmodif int(14) NOT NULL default '0',
+  personal enum ('n', 'y') NOT NULL default 'n',
   PRIMARY KEY  (calendarId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -682,6 +745,21 @@ CREATE TABLE tiki_category_objects (
   catObjectId int(12) NOT NULL default '0',
   categId int(12) NOT NULL default '0',
   PRIMARY KEY  (catObjectId,categId)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table tiki_category_sites
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 07, 2003 at 01:53 AM
+#
+
+DROP TABLE IF EXISTS tiki_object_ratings;
+CREATE TABLE tiki_object_ratings (
+  catObjectId int(12) NOT NULL default '0',
+  pollId int(12) NOT NULL default '0',
+  PRIMARY KEY  (catObjectId,pollId)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -1182,6 +1260,19 @@ CREATE TABLE tiki_featured_links (
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
+# Table structure for table tiki_features
+#
+
+DROP TABLE IF EXISTS tiki_features;
+CREATE TABLE tiki_features (
+  featureId INT NOT NULL AUTO_INCREMENT ,
+  Name VARCHAR( 200 ) NOT NULL ,
+  Description text,
+  Helplink VARCHAR( 200 ) NOT NULL ,
+  Variable VARCHAR( 200 ) NOT NULL ,
+  PRIMARY KEY ( featureId )
+) TYPE=MyISAM;
+
 #
 # Table structure for table tiki_file_galleries
 #
@@ -1219,7 +1310,7 @@ CREATE TABLE tiki_file_galleries (
 # Table structure for table tiki_files
 #
 # Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 13, 2003 at 01:13 AM
+# Last update: Nov 02, 2004 at 05:59 PM
 # Last check: Jul 03, 2003 at 07:42 PM
 #
 
@@ -1242,11 +1333,14 @@ CREATE TABLE tiki_files (
   reference_url varchar(250) default NULL,
   is_reference char(1) default NULL,
   hash varchar(32) default NULL,
+  search_data longtext,
+  lastModif integer(14) DEFAULT NULL,
+  lastModifUser varchar(200) DEFAULT NULL,
   PRIMARY KEY  (fileId),
   KEY name (name),
   KEY description (description(255)),
   KEY downloads (downloads),
-  FULLTEXT KEY ft (name,description)
+  FULLTEXT KEY ft (name,description,search_data)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
 
@@ -1331,6 +1425,8 @@ CREATE TABLE tiki_forums (
   moderator_group varchar(200) default NULL,
   approval_type varchar(20) default NULL,
   outbound_address varchar(250) default NULL,
+  outbound_mails_for_inbound_mails char(1) default NULL,
+  outbound_mails_reply_link char(1) default NULL,
   outbound_from varchar(250) default NULL,
   inbound_pop_server varchar(250) default NULL,
   inbound_pop_port int(4) default NULL,
@@ -1498,13 +1594,14 @@ CREATE TABLE tiki_group_inclusion (
 # Table structure for table tiki_history
 #
 # Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 13, 2003 at 12:29 AM
+# Last update: Mar 30, 2005 at 10:21 PM
 #
 
 DROP TABLE IF EXISTS tiki_history;
 CREATE TABLE tiki_history (
   pageName varchar(160) NOT NULL default '',
   version int(8) NOT NULL default '0',
+  version_minor int(8) NOT NULL default '0',
   lastModif int(14) default NULL,
   description varchar(200) default NULL,
   user varchar(200) default NULL,
@@ -1613,6 +1710,7 @@ CREATE TABLE tiki_images_data (
   filesize int(14) default NULL,
   filetype varchar(80) default NULL,
   filename varchar(80) default NULL,
+  etag varchar(32) default NULL,
   data longblob,
   PRIMARY KEY  (imageId,xsize,ysize,type),
   KEY t_i_d_it (imageId,type)
@@ -1649,7 +1747,7 @@ CREATE TABLE tiki_languages (
   PRIMARY KEY  (lang)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
-INSERT INTO tiki_languages VALUES('en','English');
+INSERT INTO tiki_languages(lang, language) VALUES('en','English');
 # --------------------------------------------------------
 
 #
@@ -1667,6 +1765,7 @@ CREATE TABLE tiki_link_cache (
   refresh int(14) default NULL,
   PRIMARY KEY  (cacheId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
+CREATE INDEX urlindex ON tiki_link_cache (url(250));
 # --------------------------------------------------------
 
 #
@@ -1928,7 +2027,7 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Contact us','tiki-contact.php',20,'feature_contact','','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Stats','tiki-stats.php',23,'feature_stats','tiki_p_view_stats','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Categories','tiki-browse_categories.php',25,'feature_categories','tiki_p_view_categories','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Games','tiki-games.php',30,'feature_games','tiki_p_play_games','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Games','tiki-list_games.php',30,'feature_games','tiki_p_play_games','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Calendar','tiki-calendar.php',35,'feature_calendar','tiki_p_view_calendar','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','(debug)','javascript:toggle("debugconsole")',40,'feature_debug_console','tiki_p_admin','');
 
@@ -1973,14 +2072,15 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Received pages','tiki-received_pages.php',245,'feature_wiki,feature_comm','tiki_p_view,tiki_p_admin_received_pages','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Structures','tiki-admin_structures.php',250,'feature_wiki','tiki_p_edit_structures','');
 
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Homework','tiki-hw_student_assignments.php','280','feature_homework','tiki_p_hw_student','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Assignments','tiki-hw_teacher_assignments.php','282','feature_homework','tiki_p_hw_student','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Last Changes','tiki-hw_teacher_assignments.php','284','feature_homework','tiki_p_hw_student','');
+# INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Homework','tiki-hw_student_assignments.php','280','feature_homework','tiki_p_hw_student','');
+# INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Assignments','tiki-hw_teacher_assignments.php','282','feature_homework','tiki_p_hw_student','');
+# INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Last Changes','tiki-hw_teacher_assignments.php','284','feature_homework','tiki_p_hw_student','');
 
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Image Galleries','tiki-galleries.php',300,'feature_galleries','tiki_p_view_image_gallery','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Galleries','tiki-galleries.php',305,'feature_galleries','tiki_p_view_image_gallery','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Rankings','tiki-galleries_rankings.php',310,'feature_galleries,feature_gal_rankings','tiki_p_view_image_gallery','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Upload image','tiki-upload_image.php',315,'feature_galleries','tiki_p_upload_images','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Directory batch','tiki-batch_upload.php',318,'feature_galleries,feature_gal_batch','tiki_p_batch_upload','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','System gallery','tiki-list_gallery.php?galleryId=0',320,'feature_galleries','tiki_p_admin_galleries','');
 
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Articles','tiki-view_articles.php',350,'feature_articles','tiki_p_read_article','');
@@ -1993,7 +2093,7 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','View submissions','tiki-list_submissions.php',375,'feature_articles,feature_submissions','tiki_p_read_article,tiki_p_remove_submission','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Edit article','tiki-edit_article.php',380,'feature_articles','tiki_p_read_article,tiki_p_edit_article','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Send articles','tiki-send_objects.php',385,'feature_articles,feature_comm','tiki_p_read_article,tiki_p_send_articles','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Received articles','tiki-send_objects.php',385,'feature_articles,feature_comm','tiki_p_read_article,tiki_p_send_articles','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Received articles','tiki-received_articles.php',385,'feature_articles,feature_comm','tiki_p_read_article,tiki_p_admin_received_articles','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin topics','tiki-admin_topics.php',390,'feature_articles','tiki_p_read_article,tiki_p_admin_cms','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin types','tiki-article_types.php',395,'feature_articles','tiki_p_read_article,tiki_p_admin_cms','');
 
@@ -2021,11 +2121,6 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Rankings','tiki-file_galleries_rankings.php',610,'feature_file_galleries,feature_file_galleries_rankings','tiki_p_view_file_gallery','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Upload file','tiki-upload_file.php',615,'feature_file_galleries','tiki_p_view_file_gallery,tiki_p_upload_files','');
 
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Jukebox','tiki-jukebox_albums.php',620,'feature_jukebox','tiki_p_jukebox_albums', '');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Tracks','tiki-jukebox_tracks.php',625,'feature_jukebox','tiki_p_jukebox_tracks', '');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Genres Admin','tiki-jukebox_genres.php',630,'feature_jukebox','tiki_p_jukebox_genres', '');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Jukebox Admin','tiki-jukebox_admin.php',635,'feature_jukebox','tiki_p_jukebox_admin', '');
-
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','FAQs','tiki-list_faqs.php',650,'feature_faqs','tiki_p_view_faqs','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','List FAQs','tiki-list_faqs.php',665,'feature_faqs','tiki_p_view_faqs','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin FAQs','tiki-list_faqs.php',660,'feature_faqs','tiki_p_admin_faqs','');
@@ -2047,10 +2142,12 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Surveys','tiki-list_surveys.php',850,'feature_surveys','','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','List surveys','tiki-list_surveys.php',855,'feature_surveys','','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Stats','tiki-surveys_stats.php',860,'feature_surveys','tiki_p_view_survey_stats','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Stats','tiki-survey_stats.php',860,'feature_surveys','tiki_p_view_survey_stats','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin surveys','tiki-admin_surveys.php',865,'feature_surveys','tiki_p_admin_surveys','');
 
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Newsletters','tiki-newsletters.php',900,'feature_newsletters','','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Newsletters','tiki-newsletters.php',900,'feature_newsletters','tiki_p_subscribe_newsletters','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Newsletters','tiki-newsletters.php',900,'feature_newsletters','tiki_p_send_newsletters','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Newsletters','tiki-newsletters.php',900,'feature_newsletters','tiki_p_admin_newsletters','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Send newsletters','tiki-send_newsletters.php',905,'feature_newsletters','tiki_p_send_newsletters','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin newsletters','tiki-admin_newsletters.php',910,'feature_newsletters','tiki_p_admin_newsletters','');
 
@@ -2058,7 +2155,7 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin','tiki-eph_admin.php',955,'feature_eph','tiki_p_eph_admin','');
 
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Charts','tiki-charts.php',1000,'feature_charts','','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Charts','tiki-admin_charts.php',1005,'feature_charts','tiki_p_admin_charts','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin charts','tiki-admin_charts.php',1005,'feature_charts','tiki_p_admin_charts','');
 
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_chat','');
@@ -2073,7 +2170,7 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_view_referer_stats','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_drawings','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_shoutbox','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_live_support','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_live_support_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin','tiki-admin.php',1050,'','user_is_operator','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin','tiki-admin.php',1050,'feature_integrator','tiki_p_admin_integrator','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin home','tiki-admin.php',1051,'','tiki_p_admin','');
@@ -2081,42 +2178,43 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Live support','tiki-live_support_admin.php',1055,'feature_live_support','user_is_operator','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Banning','tiki-admin_banning.php',1060,'feature_banning','tiki_p_admin_banning','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Calendar','tiki-admin_calendars.php',1065,'feature_calendar','tiki_p_admin_calendar','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Users','tiki-adminusers.php',1070,'','tiki_p_admin','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Users','tiki-adminusers.php',1070,'','tiki_p_admin_users','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Groups','tiki-admingroups.php',1075,'','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Cache','tiki-list_cache.php',1080,'','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Modules','tiki-admin_modules.php',1085,'','tiki_p_admin','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Links','tiki-admin_links.php',1090,'','tiki_p_admin','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Hotwords','tiki-admin_hotwords.php',1095,'','tiki_p_admin','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Links','tiki-admin_links.php',1090,'feature_featuredLinks','tiki_p_admin','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Hotwords','tiki-admin_hotwords.php',1095,'feature_hotwords','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','RSS modules','tiki-admin_rssmodules.php',1100,'','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Menus','tiki-admin_menus.php',1105,'','tiki_p_admin','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Polls','tiki-admin_polls.php',1110,'','tiki_p_admin','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Polls','tiki-admin_polls.php',1110,'feature_polls','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Backups','tiki-backup.php',1115,'','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Mail notifications','tiki-admin_notifications.php',1120,'','tiki_p_admin','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Search stats','tiki-search_stats.php',1125,'','tiki_p_admin','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Theme control','tiki-theme_control.php',1130,'','tiki_p_admin','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Search stats','tiki-search_stats.php',1125,'feature_search','tiki_p_admin','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Theme control','tiki-theme_control.php',1130,'feature_theme_control','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','QuickTags','tiki-admin_quicktags.php',1135,'','tiki_p_admin','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Chat','tiki-admin_chat.php',1140,'','tiki_p_admin_chat','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Categories','tiki-admin_categories.php',1145,'','tiki_p_admin_categories','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Banners','tiki-list_banners.php',1150,'','tiki_p_admin_banners','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Edit templates','tiki-edit_templates.php',1155,'','tiki_p_edit_templates','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Drawings','tiki-admin_drawings.php',1160,'','tiki_p_admin_drawings','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Dynamic content','tiki-list_contents.php',1165,'','tiki_p_admin_dynamic','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Chat','tiki-admin_chat.php',1140,'feature_chat','tiki_p_admin_chat','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Categories','tiki-admin_categories.php',1145,'feature_categories','tiki_p_admin_categories','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Banners','tiki-list_banners.php',1150,'feature_banners','tiki_p_admin_banners','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Edit templates','tiki-edit_templates.php',1155,'feature_edit_templates','tiki_p_edit_templates','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Drawings','tiki-admin_drawings.php',1160,'feature_drawings','tiki_p_admin_drawings','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Dynamic content','tiki-list_contents.php',1165,'feature_dynamic_content','tiki_p_admin_dynamic','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Cookies','tiki-admin_cookies.php',1170,'','tiki_p_edit_cookies','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Mail-in','tiki-admin_mailin.php',1175,'','tiki_p_admin_mailin','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Mail-in','tiki-admin_mailin.php',1175,'feature_mailin','tiki_p_admin_mailin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Content templates','tiki-admin_content_templates.php',1180,'','tiki_p_edit_content_templates','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','HTML pages','tiki-admin_html_pages.php',1185,'','tiki_p_edit_html_pages','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Shoutbox','tiki-shoutbox.php',1190,'','tiki_p_admin_shoutbox','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Shoutbox Words','tiki-admin_shoutbox_words.php',1191,'','tiki_p_admin_shoutbox','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Referer stats','tiki-referer_stats.php',1195,'','tiki_p_view_referer_stats','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','HTML pages','tiki-admin_html_pages.php',1185,'feature_html_pages','tiki_p_edit_html_pages','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Shoutbox','tiki-shoutbox.php',1190,'feature_shoutbox','tiki_p_admin_shoutbox','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Shoutbox Words','tiki-admin_shoutbox_words.php',1191,'feature_shoutbox','tiki_p_admin_shoutbox','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Referer stats','tiki-referer_stats.php',1195,'feature_referer_stats','tiki_p_view_referer_stats','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Edit languages','tiki-edit_languages.php',1200,'','tiki_p_edit_languages,lang_use_db','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Integrator','tiki-admin_integrator.php',1205,'feature_integrator','tiki_p_admin_integrator','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Import PHPWiki Dump','tiki-import_phpwiki.php',1210,'','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','phpinfo','tiki-phpinfo.php',1215,'','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','DSN','tiki-admin_dsn.php',1220,'','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','External wikis','tiki-admin_external_wikis.php',1225,'','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','System Admin','tiki-admin_system.php',1230,'','tiki_p_admin','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Score','tiki-admin_score.php',1235,'','tiki_p_admin','');
-
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Score','tiki-admin_score.php',1235,'feature_score','tiki_p_admin','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin mods','tiki-mods.php',1240,'','tiki_p_admin','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Tiki Logs','tiki-syslog.php',1245,'','tiki_p_admin','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Security Admin','tiki-admin_security.php',1250,'','tiki_p_admin','');
 # --------------------------------------------------------
 
 #
@@ -2205,7 +2303,7 @@ CREATE TABLE tiki_modules (
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 INSERT INTO tiki_modules (name,position,ord,cache_time,groups) VALUES ('login_box','r',1,0,'a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}');
-INSERT INTO tiki_modules (name,position,ord,cache_time,groups) VALUES ('application_menu','l',1,0,'a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}');
+INSERT INTO tiki_modules (name,position,ord,cache_time,params,groups) VALUES ('mnu_application_menu','l',1,0,'flip=y','a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}');
 INSERT INTO tiki_modules (name,position,ord,cache_time,groups) VALUES ('assistant','l',10,0,'a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}');
 # --------------------------------------------------------
 
@@ -2223,7 +2321,24 @@ CREATE TABLE tiki_newsletter_subscriptions (
   code varchar(32) default NULL,
   valid char(1) default NULL,
   subscribed int(14) default NULL,
-  PRIMARY KEY  (nlId,email)
+  isUser char(1) NOT NULL default 'n',
+  PRIMARY KEY  (nlId,email,isUser)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table tiki_newsletter_groups
+#
+# Creation: Jan 18, 2005
+# Last update: Jan 18, 2005
+#
+
+DROP TABLE IF EXISTS tiki_newsletter_groups;
+CREATE TABLE tiki_newsletter_groups (
+  nlId int(12) NOT NULL default '0',
+  groupName varchar(255) NOT NULL default '',
+  code varchar(32) default NULL,
+  PRIMARY KEY  (nlId,groupName)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -2333,8 +2448,11 @@ CREATE TABLE tiki_pages (
   cache_timestamp int(14) default NULL,
   pageRank decimal(4,3) default NULL,
   creator varchar(200) default NULL,
-  page_size int(10) unsigned default 0,
+  page_size int(10) unsigned default '0',
   lang varchar(16) default NULL,
+  lockedby varchar(200) default NULL,
+  created int(14),
+  is_html tinyint(1) default 0,
   PRIMARY KEY  (page_id),
   UNIQUE KEY pageName (pageName),
   KEY data (data(255)),
@@ -2359,6 +2477,19 @@ CREATE TABLE tiki_pageviews (
 # --------------------------------------------------------
 
 #
+# Table structure for table tiki_poll_objects
+#
+
+DROP TABLE IF EXISTS tiki_poll_objects;
+CREATE TABLE `tiki_poll_objects` (
+  `catObjectId` int(11) NOT NULL default '0',
+  `pollId` int(11) NOT NULL default '0',
+  `title` varchar(255) default NULL,
+  PRIMARY KEY  (`catObjectId`,`pollId`)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
 # Table structure for table tiki_poll_options
 #
 # Creation: Jul 03, 2003 at 07:42 PM
@@ -2370,6 +2501,7 @@ CREATE TABLE tiki_poll_options (
   pollId int(8) NOT NULL default '0',
   optionId int(8) NOT NULL auto_increment,
   title varchar(200) default NULL,
+  position int(4) NOT NULL default '0',
   votes int(8) default NULL,
   PRIMARY KEY  (optionId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
@@ -2386,15 +2518,10 @@ DROP TABLE IF EXISTS tiki_polls;
 CREATE TABLE tiki_polls (
   pollId int(8) NOT NULL auto_increment,
   title varchar(200) default NULL,
-  description text,
   votes int(8) default NULL,
   active char(1) default NULL,
   publishDate int(14) default NULL,
-  releaseDate int(14) default NULL,
-  PRIMARY KEY  (pollId),
-	KEY pubdate (publishDate),
-  KEY reldate (releaseDate),
-  KEY active (active)		
+  PRIMARY KEY  (pollId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
 
@@ -2583,6 +2710,7 @@ CREATE TABLE tiki_quizzes (
   sPrologue text,
   sData text,
   sEpilogue text,
+  passingperct int(4) default 0,
   PRIMARY KEY  (quizId, nVersion)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -2760,6 +2888,21 @@ CREATE TABLE tiki_search_stats (
 # --------------------------------------------------------
 
 #
+# Table structure for table tiki_secdb
+#
+#
+
+DROP TABLE IF EXISTS tiki_secdb;
+CREATE TABLE tiki_secdb(
+  md5_value varchar(32) NOT NULL,
+  filename varchar(250) NOT NULL,
+  tiki_version varchar(60) NOT NULL,
+  severity int(4) NOT NULL default '0',
+  PRIMARY KEY  (md5_value,filename,tiki_version),
+  KEY sdb_fn (filename)
+) TYPE=MyISAM;
+
+#
 # Table structure for table tiki_semaphores
 #
 # Creation: Jul 03, 2003 at 07:42 PM
@@ -2805,6 +2948,7 @@ DROP TABLE IF EXISTS tiki_sessions;
 CREATE TABLE tiki_sessions (
   sessionId varchar(32) NOT NULL default '',
   user varchar(200) default NULL,
+  tikihost varchar(200) default NULL,
   timestamp int(14) default NULL,
   PRIMARY KEY  (sessionId)
 ) TYPE=MyISAM;
@@ -3260,7 +3404,7 @@ CREATE TABLE tiki_tracker_options (
 DROP TABLE IF EXISTS tiki_trackers;
 CREATE TABLE tiki_trackers (
   trackerId int(12) NOT NULL auto_increment,
-  name varchar(80) default NULL,
+  name varchar(255) default NULL,
   description text,
   created int(14) default NULL,
   lastModif int(14) default NULL,
@@ -3311,6 +3455,28 @@ CREATE TABLE tiki_user_answers (
   PRIMARY KEY  (userResultId,quizId,questionId,optionId)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
+
+
+#
+# Table structure for table tiki_user_answers_uploads
+#
+# Creation: Jan 25, 2005 at 07:42 PM
+# Last update: Jan 25, 2005 at 07:42 PM
+#
+
+
+
+CREATE TABLE `tiki_user_answers_uploads` (
+  `answerUploadId` int(4) NOT NULL auto_increment,
+  `userResultId` int(11) NOT NULL default '0',
+  `questionId` int(11) NOT NULL default '0',
+  `filename` varchar(255) NOT NULL default '',
+  `filetype` varchar(64) NOT NULL default '',
+  `filesize` varchar(255) NOT NULL default '',
+  `filecontent` longblob NOT NULL,
+  PRIMARY KEY  (`answerUploadId`)
+) TYPE=MyISAM;
+
 
 #
 # Table structure for table tiki_user_assigned_modules
@@ -3423,9 +3589,11 @@ CREATE TABLE tiki_user_modules (
   name varchar(200) NOT NULL default '',
   title varchar(40) default NULL,
   data longblob,
+  parse char(1) default NULL,
   PRIMARY KEY  (name)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
+INSERT INTO tiki_user_modules (name, title, data, parse) VALUES ('mnu_application_menu', 'Menu', '{menu id=42}', 'n');
 
 #
 # Table structure for table tiki_user_notes
@@ -3518,26 +3686,55 @@ CREATE TABLE tiki_user_taken_quizzes (
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
+
+#
+# Table structure for table tiki_user_tasks_history
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jan 25, 2005 by sir-b & moresun
+#
+DROP TABLE IF EXISTS tiki_user_tasks_history;
+CREATE TABLE tiki_user_tasks_history (
+  belongs_to integer(14) NOT NULL,                   -- the fist task in a history it has the same id as the task id
+  task_version integer(4) NOT NULL DEFAULT 0,        -- version number for the history it starts with 0
+  title varchar(250) NOT NULL,                       -- title
+  description text DEFAULT NULL,                     -- description
+  start integer(14) DEFAULT NULL,                    -- date of the starting, if it is not set than there is not starting date
+  end integer(14) DEFAULT NULL,                      -- date of the end, if it is not set than there is not dealine
+  lasteditor varchar(200) NOT NULL,                  -- lasteditor: username of last editior
+  lastchanges integer(14) NOT NULL,                  -- date of last changes
+  priority integer(2) NOT NULL DEFAULT 3,                     -- priority
+  completed integer(14) DEFAULT NULL,                -- date of the completation if it is null it is not yet completed
+  deleted integer(14) DEFAULT NULL,                  -- date of the deleteation it it is null it is not deleted
+  status char(1) DEFAULT NULL,                       -- null := waiting, 
+                                                     -- o := open / in progress, 
+                                                     -- c := completed -> (percentage = 100) 
+  percentage int(4) DEFAULT NULL,
+  accepted_creator char(1) DEFAULT NULL,             -- y - yes, n - no, null - waiting
+  accepted_user char(1) DEFAULT NULL,                -- y - yes, n - no, null - waiting
+  PRIMARY KEY (belongs_to, task_version)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+
+
 #
 # Table structure for table tiki_user_tasks
 #
 # Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 08, 2003 at 05:30 PM
+# Last update: Jan 25, 2005 by sir-b & moresun
 #
-
 DROP TABLE IF EXISTS tiki_user_tasks;
 CREATE TABLE tiki_user_tasks (
-  user varchar(200) default NULL,
-  taskId int(14) NOT NULL auto_increment,
-  title varchar(250) default NULL,
-  description text,
-  date int(14) default NULL,
-  status char(1) default NULL,
-  priority int(2) default NULL,
-  completed int(14) default NULL,
-  percentage int(4) default NULL,
-  PRIMARY KEY  (taskId)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+  taskId integer(14) NOT NULL auto_increment,        -- task id
+  last_version integer(4) NOT NULL DEFAULT 0,        -- last version of the task starting with 0
+  user varchar(200) NOT NULL,                        -- task user
+  creator varchar(200) NOT NULL,                     -- username of creator
+  public_for_group varchar(30) DEFAULT NULL,         -- this group can also view the task, if it is null it is not public
+  rights_by_creator char(1) DEFAULT NULL,            -- null the user can delete the task, 
+  created integer(14) NOT NULL,                      -- date of the creation
+  PRIMARY KEY (taskId),
+  UNIQUE(creator, created)
+) TYPE=MyISAM AUTO_INCREMENT=1;
+
 # --------------------------------------------------------
 
 #
@@ -3748,6 +3945,8 @@ CREATE TABLE users_grouppermissions (
 # --------------------------------------------------------
 
 insert into users_grouppermissions (groupName,permName) values('Anonymous','tiki_p_view');
+insert into users_grouppermissions (groupName,permName) values('Anonymous','tiki_p_wiki_view_history');
+insert into users_grouppermissions (groupName,permName) values('Anonymous','tiki_p_wiki_view_comments');
 
 #
 # Table structure for table users_groups
@@ -3761,6 +3960,7 @@ CREATE TABLE users_groups (
   groupName varchar(255) NOT NULL default '',
   groupDesc varchar(255) default NULL,
   groupHome varchar(255),
+  groupHomeLocalized char(1) default 'n',
   usersTrackerId int(11),
   groupTrackerId int(11),
   usersFieldId int(11),
@@ -3782,7 +3982,7 @@ CREATE TABLE users_objectpermissions (
   permName varchar(30) NOT NULL default '',
   objectType varchar(20) NOT NULL default '',
   objectId varchar(32) NOT NULL default '',
-  PRIMARY KEY  (objectId,groupName(30),permName)
+  PRIMARY KEY  (objectId, objectType, groupName(30),permName)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -3803,7 +4003,6 @@ CREATE TABLE users_permissions (
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 # 
-
 
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_abort_instance', 'Can abort a process instance', 'editors', 'workflow');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_access_closed_site', 'Can access site when closed', 'admin', 'tiki');
@@ -3826,10 +4025,8 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_forum', 'Can admin forums', 'editors', 'forums');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_galleries', 'Can admin Image Galleries', 'editors', 'image galleries');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_games', 'Can admin games', 'editors', 'games');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_integrator', 'Can admin integrator repositories and rules', 'admin', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_mailin', 'Can admin mail-in accounts', 'admin', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_newsletters', 'Can admin newsletters', 'admin', 'newsletters');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_packager', 'Can admin packages/packager', 'admin', 'packages');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_quizzes', 'Can admin quizzes', 'editors', 'quizzes');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_received_articles', 'Can admin received articles', 'editors', 'comm');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_received_pages', 'Can admin received pages', 'editors', 'comm');
@@ -3846,6 +4043,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_autoval_chart_suggestio', 'Autovalidate suggestions', 'editors', 'charts');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_batch_upload_files', 'Can upload zip files with files', 'editors', 'file galleries');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_batch_upload_images', 'Can upload zip files with images', 'editors', 'image galleries');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_batch_upload_image_dir', 'Can use Directory Batch Load', 'editors', 'image galleries');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_blog_admin', 'Can admin blogs', 'editors', 'blogs');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_blog_post', 'Can post to a blog', 'registered', 'blogs');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_broadcast', 'Can broadcast messages to groups', 'admin', 'messu');
@@ -3869,10 +4067,8 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_cookies', 'Can admin cookies', 'editors', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_copyrights', 'Can edit copyright notices', 'editors', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_drawings', 'Can edit drawings', 'basic', 'drawings');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_dynvar', 'Can edit dynamic variables', 'editors', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_html_pages', 'Can edit HTML pages', 'editors', 'html pages');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_languages', 'Can edit translations and create new languages', 'editors', 'tiki');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_package', 'Can create packages with packager', 'admin', 'packages');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_sheet', 'Can create and edit sheets', 'editors', 'sheet');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_structures', 'Can create and edit structures', 'editors', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_submission', 'Can edit submissions', 'editors', 'cms');
@@ -3886,16 +4082,10 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_forum_read', 'Can read forums', 'basic', 'forums');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_forum_vote', 'Can vote comments in forums', 'registered', 'forums');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_forums_report', 'Can report msgs to moderator', 'registered', 'forums');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_admin','Can adminsiter homework permissions, add and delete students','admin','homework');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_grader','Can grade homework assignments','editors','homework');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_student','Can do homework assignments','registered','homework');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_teacher','Can create new homework assignments, see student names and grade assignments','editors','homework');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_install_package', 'Can install packages', 'admin', 'packages');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_admin', 'Can admin the jukebox system', 'admin', 'jukebox');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_albums', 'Can view jukebox albums', 'registered', 'jukebox');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_genres', 'Can admin the jukebox genres', 'admin', 'jukebox');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_tracks', 'Can view jukebox tracklist', 'registered', 'jukebox');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_upload', 'Can upload new jukebox tracks', 'registered', 'jukebox');
+# INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_admin','Can adminsiter homework permissions, add and delete students','admin','homework');
+# INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_grader','Can grade homework assignments','editors','homework');
+# INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_student','Can do homework assignments','registered','homework');
+# INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_teacher','Can create new homework assignments, see student names and grade assignments','editors','homework');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_list_users', 'Can list registered users', 'registered', 'community');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_live_support', 'Can use live support system', 'basic', 'support');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_live_support_admin', 'Admin live support system', 'admin', 'support');
@@ -3904,6 +4094,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_map_delete', 'Can delete mapfiles', 'admin', 'maps');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_map_edit', 'Can edit mapfiles', 'editors', 'maps');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_map_view', 'Can view mapfiles', 'basic', 'maps');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_map_view_mapfiles', 'Can view contents of mapfiles', 'registered', 'maps');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_messages', 'Can use the messaging system', 'registered', 'messu');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_minical', 'Can use the mini event calendar', 'registered', 'user');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_minor', 'Can save as minor edit', 'registered', 'wiki');
@@ -3911,16 +4102,6 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_newsreader', 'Can use the newsreader', 'registered', 'user');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_notepad', 'Can use the notepad', 'registered', 'user');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_play_games', 'Can play games', 'basic', 'games');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_poll_add_comment', 'Can add coments to polls', 'registered', 'polls');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_poll_add_item_comment', 'Can add comments to poll items', 'registered', 'polls');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_poll_admin', 'Admin has all polls perms', 'admin', 'polls');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_poll_create', 'Can create new polls', 'editors', 'polls');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_poll_edit', 'Can modify polls', 'editors', 'polls');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_poll_item_submit', 'Can propose new poll items', 'editors', 'polls');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_poll_submit', 'Can propose new polls', 'registered', 'polls');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_poll_view', 'Can view polls', 'basic', 'polls');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_poll_view_comments', 'Can view polls', 'basic', 'polls');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_poll_view_submissions', 'Can browse polls submissions', 'registered', 'polls');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_post_comments', 'Can post new comments', 'registered', 'comments');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_post_shoutbox', 'Can post messages in shoutbox', 'basic', 'shoutbox');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_read_article', 'Can read articles', 'basic', 'cms');
@@ -3948,6 +4129,8 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_take_survey', 'Can take surveys', 'basic', 'surveys');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_tasks', 'Can use tasks', 'registered', 'user');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_topic_read', 'Can read a topic (Applies only to individual topic perms)', 'basic', 'topics');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_tracker_view_ratings', 'Can view rating result for tracker items', 'basic', 'trackers');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_tracker_vote_ratings', 'Can vote a rating for tracker items', 'registered', 'trackers');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_upload_files', 'Can upload files', 'registered', 'file galleries');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_upload_images', 'Can upload images', 'registered', 'image galleries');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_upload_picture', 'Can upload pictures to wiki pages', 'registered', 'wiki');
@@ -3968,7 +4151,6 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_file_gallery', 'Can view file galleries', 'basic', 'file galleries');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_html_pages', 'Can view HTML pages', 'basic', 'html pages');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_image_gallery', 'Can view image galleries', 'basic', 'image galleries');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_integrator', 'Can view integrated repositories', 'basic', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_quiz_stats', 'Can view quiz stats', 'basic', 'quizzes');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_referer_stats', 'Can view referer stats', 'editors', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_sheet', 'Can view sheet', 'basic', 'sheet');
@@ -3980,17 +4162,21 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_trackers_closed', 'Can view trackers closed items', 'registered', 'trackers');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_trackers_pending', 'Can view trackers pending items', 'editors', 'trackers');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_user_results', 'Can view user quiz results', 'editors', 'quizzes');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_wiki_history', 'Can view wiki page history', 'registered', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_vote_chart', 'Can vote', 'basic', 'charts');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_vote_comments', 'Can vote comments', 'registered', 'comments');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_vote_poll', 'Can vote polls', 'basic', 'polls');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_vote_poll', 'Can vote polls', 'basic', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_admin_attachments', 'Can admin attachments to wiki pages', 'editors', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_attach_files', 'Can attach files to wiki pages', 'registered', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_attachments', 'Can view wiki attachments and download', 'registered', 'wiki');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_author', 'Can view wiki page authors', 'basic', 'wiki');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_header', 'Can view page wiki page headers, like pagename, description, wiki bar, etc.', 'basic', 'wiki');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_user_information', 'Can view user info on tiki-user_information.php', 'registered', 'tiki');
-
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_comments', 'Can view wiki comments', 'basic', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_history', 'Can view wiki history', 'basic', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_ratings', 'Can view rating of wiki pages', 'basic', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_vote_ratings', 'Can participate to rating of wiki pages', 'registered', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_admin_ratings', 'Can add and change ratings on wiki pages', 'admin', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES('tiki_p_admin_users', 'Can admin users', 'admin', 'user');
+INSERT INTO users_permissions (permName, permDesc, level,type) VALUES ('tiki_p_tasks_send', 'Can send tasks to other users', 'registered', 'user');
+INSERT INTO users_permissions (permName, permDesc, level,type) VALUES ('tiki_p_tasks_receive', 'Can  receive tasks from other users', 'registered', 'user');
+INSERT INTO users_permissions (permName, permDesc, level,type) VALUES ('tiki_p_tasks_admin', 'Can admin public tasks', 'admin', 'user');
 
 # --------------------------------------------------------
 
@@ -4074,6 +4260,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('auth_ldap_basedn','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('auth_ldap_groupattr','cn');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('auth_ldap_groupdn','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('auth_ldap_groupoc','groupOfUniqueNames');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('auth_ldap_url','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('auth_ldap_host','localhost');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('auth_ldap_memberattr','uniqueMember');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('auth_ldap_memberisdn','n');
@@ -4100,8 +4287,12 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('blog_list_visits','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('blog_spellcheck','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('cacheimages','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('cachepages','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('calendar_sticky_popup','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('calendar_view_tab','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('change_language','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('change_password','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('change_theme','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('change_password','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('cms_bot_bar','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('cms_left_column','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('cms_right_column','y');
@@ -4116,8 +4307,8 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('directory_columns','3')
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('directory_links_per_page','20');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('directory_open_links','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('directory_validate_urls','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('directory_cool_sites','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('display_timezone','EST');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('email_encoding','utf-8');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('eponymousGroups','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('faq_comments_default_ordering','points_desc');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('faq_comments_per_page','10');
@@ -4170,10 +4361,12 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_forum_topicd','
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_forums','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_friends','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_gal_rankings','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_gal_batch','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_galleries','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_gal_imgcache','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_games','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_history','y');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_homework','n');
+# INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_homework','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_hotwords','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_hotwords_nw','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_html_pages','n');
@@ -4186,9 +4379,10 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_likePages','y')
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_listPages','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_live_support','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_maps','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_menusfolderstyle','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_menusfolderstyle','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_messages','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_minical','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_mobile', 'n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_modulecontrols', 'n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_newsletters','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_newsreader','n');
@@ -4199,11 +4393,8 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_phplayers','n')
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_phpopentracker','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_poll_anonymous','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_poll_comments','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_poll_item_comments','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_poll_submissions','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_polls','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_quizzes','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_ranking','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_referer_stats','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_right_column','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_sandbox','y');
@@ -4228,6 +4419,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_userPreferences
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_userVersions','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_user_bookmarks','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_user_watches','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_user_watches_translations','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_userfiles','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_usermenu','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_view_tpl','y');
@@ -4240,6 +4432,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_comments',
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_description','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_discuss','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_footnotes','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_import_html', 'n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_monosp','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_multiprint','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_notepad','n');
@@ -4247,6 +4440,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_open_as_st
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_pdf','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_pictures','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_rankings','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_ratings','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_tables','old');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_templates','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_undo','n');
@@ -4255,6 +4449,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_userpage_p
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_usrlock','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wikiwords','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_workflow','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wysiwyg','no');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_xmlrpc','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_list_created','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_list_description','n');
@@ -4277,6 +4472,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('forum_list_ppd','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('forum_list_topics','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('forum_list_visits','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('forums_ordering','created_desc');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('gal_batch_dir','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('gal_list_created','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('gal_list_description','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('gal_list_imgs','y');
@@ -4289,11 +4485,13 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('gal_nmatch_regex','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('gal_use_db','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('gal_use_dir','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('gal_use_lib','gd');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('gal_imgcache_dir','temp/cache');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('groupTracker','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('home_file_gallery','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('http_domain','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('http_port','80');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('http_prefix','/');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('https','auto');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('https_domain','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('https_login','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('https_login_required','n');
@@ -4307,6 +4505,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('language','en');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('layout_section','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('long_date_format','%A %d of %B, %Y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('long_time_format','%H:%M:%S %Z');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('mail_crlf','LF');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('map_path','/var/www/html/map/');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('maxArticles','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('maxRecords','10');
@@ -4323,6 +4522,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_image_galleries
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_image_gallery','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_mapfiles','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_wiki','10');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_tracker','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('min_pass_length','1');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('modallgroups','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('pass_chr_num','n');
@@ -4349,12 +4549,10 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_image_galleries','y
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_image_gallery','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_mapfiles','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_wiki','y');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_creator','');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_css','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_tracker','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_default_version','2');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_editor','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_language','en-us');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_publisher','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_webmaster','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('search_lru_length','100');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('search_lru_purge_rate','5');
@@ -4368,10 +4566,11 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('short_time_format','%H:
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('shoutbox_autolink','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('siteTitle','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('slide_style','slidestyle.css');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('style','moreneat.css');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('style','tikineat.css');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('system_os','unix');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('t_use_db','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('t_use_dir','');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('trk_with_mirror_tables','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('tikiIndex','tiki-index.php');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('tmpDir','temp');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('uf_use_db','y');
@@ -4385,6 +4584,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('user_assigned_modules',
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('user_list_order','score_desc');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('userfiles_quota','30');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('validateEmail','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('validateRegistration','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('validateUsers','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('w_use_db','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('w_use_dir','');
@@ -4421,7 +4621,17 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_right_column','y')
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_spellcheck','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_top_bar','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_uses_slides','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_wikisyntax_in_html','full');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('default_wiki_diff_style', 'old');
+
+# default sizes for mailbox, read box and mail archive
+# in messages per user and box (0=unlimited)
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('messu_mailbox_size','0');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('messu_archive_size','200');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('messu_sent_size','200');
+
 # Dynamic variables
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_dynvar', 'Can edit dynamic variables', 'editors', 'wiki');
 
 #
 # Table structure for table 'tiki_integrator_reps'
@@ -4474,6 +4684,9 @@ INSERT INTO tiki_integrator_rules VALUES ('3','1','3','href=(\"|\')(?!(#|(http|f
 #
 # Integrator permissions
 #
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_integrator', 'Can admin integrator repositories and rules', 'admin', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_integrator', 'Can view integrated repositories', 'basic', 'tiki');
+
 #
 # Table structures for table 'tiki_quicktags'
 # 
@@ -4481,10 +4694,11 @@ DROP TABLE IF EXISTS tiki_quicktags;
 CREATE TABLE tiki_quicktags (
   tagId int(4) unsigned NOT NULL auto_increment,
   taglabel varchar(255) default NULL,
-  taginsert varchar(255) default NULL,
+  taginsert text,
   tagicon varchar(255) default NULL,
   tagcategory varchar(255) default NULL,
   PRIMARY KEY  (tagId),
+  KEY taglabel (taglabel),
   KEY tagcategory (tagcategory)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -4506,7 +4720,7 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('colored text','~~#FF0000:text~~','images/fontfamily.gif','wiki');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('dynamic variable','%text%','images/book.gif','wiki');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('image','{img src= width= height= align= desc= link= }','images/ed_image.gif','wiki');
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New wms Metadata','METADATA\r\n    "wms_name" "myname"\r\n   "wms_srs" "EPSG:4326"\r\n   "wms_server_version" " "\r\n   "wms_layers" "mylayers"\r\n   "wms_request" "myrequest"\r\n   "wms_format" " "\r\n   "wms_time" " "\r\n END', 'img/icons/admin_metatags.png','maps');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New wms Metadata','METADATA\r\n		"wms_name" "myname"\r\n 	"wms_srs" "EPSG:4326"\r\n 	"wms_server_version" " "\r\n 	"wms_layers" "mylayers"\r\n 	"wms_request" "myrequest"\r\n 	"wms_format" " "\r\n 	"wms_time" " "\r\n END', 'img/icons/admin_metatags.png','maps');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Class', 'CLASS\r\n EXPRESSION ()\r\n SYMBOL 0\r\n OUTLINECOLOR\r\n COLOR\r\n NAME "myclass" \r\nEND #end of class', 'img/icons/mini_triangle.gif','maps');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Projection','PROJECTION\r\n "init=epsg:4326"\r\nEND','images/ico_mode.gif','maps');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Query','#\r\n# Start of query definitions\r\n#\r\n QUERYMAP\r\n STATUS ON\r\n STYLE HILITE\r\nEND','img/icons/questions.gif','maps');
@@ -4518,53 +4732,15 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Web','#\r\n# Start of web interface definition\r\n#\r\nWEB\r\n TEMPLATE "myfile/url"\r\n MINSCALE 1000\r\n MAXSCALE 40000\r\n IMAGEPATH "myimagepath"\r\n IMAGEURL "mypath"\r\nEND','img/icons/ico_link.gif','maps');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Outputformat','OUTPUTFORMAT\r\n NAME\r\n DRIVER " "\r\n MIMETYPE "myimagetype"\r\n IMAGEMODE RGB\r\n EXTENSION "png"\r\nEND','img/icons/opera.gif','maps');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Mapfile','#\r\n# Start of mapfile\r\n#\r\nNAME MYMAPFLE\r\n STATUS ON\r\nSIZE \r\nEXTENT\r\nUNITS \r\nSHAPEPATH " "\r\nIMAGETYPE " "\r\nFONTSET " "\r\nIMAGECOLOR -1 -1 -1\r\n\r\n#remove this text and add objects here\r\n\r\nEND # end of mapfile','img/icons/global.gif','maps');
-
-
-#
-# Tiki Jukebox tables
-#
-
-DROP TABLE IF EXISTS tiki_jukebox_genres;
-CREATE TABLE tiki_jukebox_genres (
-  genreId int(14) unsigned NOT NULL auto_increment,
-  genreName varchar(80),
-  genreDescription text,
-  PRIMARY KEY  (genreId)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
-
-DROP TABLE IF EXISTS tiki_jukebox_albums;
-CREATE TABLE tiki_jukebox_albums (
-  albumId int(14) unsigned NOT NULL auto_increment,
-  title varchar(80) default NULL,
-  description text,
-  created int(14),
-  lastModif int(14),
-  user varchar(200),
-  visits int(14),
-  public char(1),
-  genreId int(14),
-  PRIMARY KEY  (albumId)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
-
-DROP TABLE IF EXISTS tiki_jukebox_tracks;
-CREATE TABLE tiki_jukebox_tracks (
-  trackId int(14) unsigned NOT NULL auto_increment,
-  albumId int(14),
-  artist varchar(200),
-  title varchar(200),
-  created int(14),
-  url varchar(255),
-  filename varchar(80),
-  filesize int(14),
-  filetype varchar(250),
-  genreId int(14),
-  plays int(14),
-  PRIMARY KEY  (trackId)
-) TYPE=MyISAM AUTO_INCREMENT=1;
-
-#
-# End of tiki jukebox tables
-#
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('bold', '__text__', 'images/ed_format_bold.gif', 'newsletters');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('italic', '\'\'text\'\'', 'images/ed_format_italic.gif', 'newsletters');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('underline', '===text===', 'images/ed_format_underline.gif', 'newsletters');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('external link', '[http://example.com|text|nocache]', 'images/ed_link.gif', 'newsletters');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('heading1', '!text', 'images/ed_custom.gif', 'newsletters');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('hr', '---', 'images/ed_hr.gif', 'newsletters');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('center text', '::text::', 'images/ed_align_center.gif', 'newsletters');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('colored text', '~~#FF0000:text~~', 'images/fontfamily.gif', 'newsletters');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('image', '{img src= width= height= align= desc= link= }', 'images/ed_image.gif', 'newsletters');
 
 #
 # Homework tables start
@@ -4573,89 +4749,89 @@ CREATE TABLE tiki_jukebox_tracks (
 # Revised May 04, 2004
 #
 
-DROP TABLE IF EXISTS hw_actionlog;
-DROP TABLE IF EXISTS tiki_hw_actionlog;
-CREATE TABLE tiki_hw_actionlog (
-  action varchar(255) NOT NULL default '',
-  lastModif int(14) NOT NULL default '0',
-  pageId int(14) default NULL,
-  user varchar(200) default NULL,
-  ip varchar(15) default NULL,
-  comment varchar(200) default NULL,
-  PRIMARY KEY  (lastModif)
-) TYPE=MyISAM;
+# DROP TABLE IF EXISTS hw_actionlog;
+# DROP TABLE IF EXISTS tiki_hw_actionlog;
+# CREATE TABLE tiki_hw_actionlog (
+#   action varchar(255) NOT NULL default '',
+#   lastModif int(14) NOT NULL default '0',
+#   pageId int(14) default NULL,
+#   user varchar(200) default NULL,
+#   ip varchar(15) default NULL,
+#   comment varchar(200) default NULL,
+#   PRIMARY KEY  (lastModif)
+# ) TYPE=MyISAM;
 
-DROP TABLE IF EXISTS hw_assignments;
-DROP TABLE IF EXISTS tiki_hw_assignments;
-CREATE TABLE tiki_hw_assignments (
-  assignmentId int(8) NOT NULL auto_increment,
-  title varchar(80) default NULL,
-  teacherName varchar(40) NOT NULL default '',
-  created int(14) NOT NULL default '0',
-  dueDate int(14) default NULL,
-  modified int(14) NOT NULL default '0',
-  heading text,
-  body text,
-  deleted tinyint(4) NOT NULL default '0',
-  PRIMARY KEY  (assignmentId),
-  KEY dueDate (dueDate)
-) TYPE=MyISAM;
+# DROP TABLE IF EXISTS hw_assignments;
+# DROP TABLE IF EXISTS tiki_hw_assignments;
+# CREATE TABLE tiki_hw_assignments (
+#   assignmentId int(8) NOT NULL auto_increment,
+#   title varchar(80) default NULL,
+#   teacherName varchar(40) NOT NULL default '',
+#   created int(14) NOT NULL default '0',
+#   dueDate int(14) default NULL,
+#   modified int(14) NOT NULL default '0',
+#   heading text,
+#   body text,
+#   deleted tinyint(4) NOT NULL default '0',
+#   PRIMARY KEY  (assignmentId),
+#   KEY dueDate (dueDate)
+# ) TYPE=MyISAM;
 
-DROP TABLE IF EXISTS hw_grading_queue;
-DROP TABLE IF EXISTS tiki_hw_grading_queue;
-CREATE TABLE tiki_hw_grading_queue (
-  id int(14) NOT NULL auto_increment,
-  status int(4) default NULL,
-  submissionDate int(14) default NULL,
-  userLogin varchar(40) NOT NULL default '',
-  userIp varchar(15) default NULL,
-  pageId int(14) default NULL,
-  pageDate int(14) default NULL,
-  pageVersion int(14) default NULL,
-  assignmentId int(14) default NULL,
-  PRIMARY KEY  (id)
-) TYPE=MyISAM;
+# DROP TABLE IF EXISTS hw_grading_queue;
+# DROP TABLE IF EXISTS tiki_hw_grading_queue;
+# CREATE TABLE tiki_hw_grading_queue (
+#   id int(14) NOT NULL auto_increment,
+#   status int(4) default NULL,
+#   submissionDate int(14) default NULL,
+#   userLogin varchar(40) NOT NULL default '',
+#   userIp varchar(15) default NULL,
+#   pageId int(14) default NULL,
+#   pageDate int(14) default NULL,
+#   pageVersion int(14) default NULL,
+#   assignmentId int(14) default NULL,
+#   PRIMARY KEY  (id)
+# ) TYPE=MyISAM;
 
-DROP TABLE IF EXISTS hw_history;
-DROP TABLE IF EXISTS tiki_hw_history;
-CREATE TABLE tiki_hw_history (
-  id int(14) NOT NULL default '0',
-  version int(8) NOT NULL default '0',
-  lastModif int(14) NOT NULL default '0',
-  user varchar(200) NOT NULL default '',
-  ip varchar(15) NOT NULL default '',
-  comment varchar(200) default NULL,
-  data text,
-  PRIMARY KEY  (id,version)
-) TYPE=MyISAM;
+# DROP TABLE IF EXISTS hw_history;
+# DROP TABLE IF EXISTS tiki_hw_history;
+# CREATE TABLE tiki_hw_history (
+#   id int(14) NOT NULL default '0',
+#   version int(8) NOT NULL default '0',
+#   lastModif int(14) NOT NULL default '0',
+#   user varchar(200) NOT NULL default '',
+#   ip varchar(15) NOT NULL default '',
+#   comment varchar(200) default NULL,
+#   data text,
+#   PRIMARY KEY  (id,version)
+# ) TYPE=MyISAM;
 
-DROP TABLE IF EXISTS hw_pages;
-DROP TABLE IF EXISTS tiki_hw_pages;
-CREATE TABLE tiki_hw_pages (
-  id int(14) NOT NULL auto_increment,
-  assignmentId int(14) NOT NULL default '0',
-  studentName varchar(200) NOT NULL default '',
-  data text,
-  description varchar(200) default NULL,
-  lastModif int(14) default NULL,
-  user varchar(200) default NULL,
-  comment varchar(200) default NULL,
-  version int(8) NOT NULL default '0',
-  ip varchar(15) default NULL,
-  flag char(1) default NULL,
-  points int(8) default NULL,
-  votes int(8) default NULL,
-  cache text,
-  wiki_cache int(10) default '0',
-  cache_timestamp int(14) default NULL,
-  page_size int(10) unsigned default '0',
-  lockUser varchar(200) default NULL,
-  lockExpires int(14) default '0',
-  PRIMARY KEY  (studentName,assignmentId),
-  KEY id (id),
-  KEY assignmentId (assignmentId),
-  KEY studentName (studentName)
-) TYPE=MyISAM;
+# DROP TABLE IF EXISTS hw_pages;
+# DROP TABLE IF EXISTS tiki_hw_pages;
+# CREATE TABLE tiki_hw_pages (
+#   id int(14) NOT NULL auto_increment,
+#   assignmentId int(14) NOT NULL default '0',
+#   studentName varchar(200) NOT NULL default '',
+#   data text,
+#   description varchar(200) default NULL,
+#   lastModif int(14) default NULL,
+#   user varchar(200) default NULL,
+#   comment varchar(200) default NULL,
+#   version int(8) NOT NULL default '0',
+#   ip varchar(15) default NULL,
+#   flag char(1) default NULL,
+#   points int(8) default NULL,
+#   votes int(8) default NULL,
+#   cache text,
+#   wiki_cache int(10) default '0',
+#   cache_timestamp int(14) default NULL,
+#   page_size int(10) unsigned default '0',
+#   lockUser varchar(200) default NULL,
+#   lockExpires int(14) default '0',
+#   PRIMARY KEY  (studentName,assignmentId),
+#   KEY id (id),
+#   KEY assignmentId (assignmentId),
+#   KEY studentName (studentName)
+# ) TYPE=MyISAM;
 
 #
 # Homework tables end
@@ -4716,44 +4892,16 @@ CREATE TABLE tiki_users_score (
 #
 
 #
-# Tables of the Opinion-Network
+# Table structure for table tiki_file_handlers
+#
+# Creation: Nov 02, 2004 at 05:59 PM
+# Last update: Nov 02, 2004 at 05:59 PM
 #
 
-DROP TABLE IF EXISTS tiki_opnet_question;
-CREATE TABLE tiki_opnet_question (
-  id INT( 10 ) NOT NULL AUTO_INCREMENT ,
-  formtype INT(10) NOT NULL,
-  question VARCHAR( 100 ) NOT NULL ,
-  PRIMARY KEY ( id ) 
-);
+DROP TABLE IF EXISTS tiki_file_handlers;
+CREATE TABLE tiki_file_handlers (
+	mime_type varchar(64) default NULL,
+	cmd varchar(238) default NULL
+) TYPE=MyISAM;
 
-DROP TABLE IF EXISTS tiki_opnet_formtype;
-CREATE TABLE tiki_opnet_formtype (
-  id INT( 10 ) NOT NULL AUTO_INCREMENT ,
-  name VARCHAR( 30 ) NOT NULL ,
-  timestamp INT( 14 ) NOT NULL,
-  PRIMARY KEY ( id ) 
-);
-
-DROP TABLE IF EXISTS tiki_opnet_answer;
-CREATE TABLE tiki_opnet_answer (
-  id INT( 10 ) NOT NULL AUTO_INCREMENT ,
-  question_id INT( 10 ) NOT NULL ,
-  filledform_id INT( 10 ) NOT NULL ,
-  value TEXT NOT NULL ,
-  PRIMARY KEY ( id ) 
-);
-
-DROP TABLE IF EXISTS tiki_opnet_filledform;
-CREATE TABLE tiki_opnet_filledform (
-  id INT( 10 ) NOT NULL AUTO_INCREMENT ,
-  who VARCHAR( 40 ) NOT NULL ,
-  about_who VARCHAR( 40 ) NOT NULL ,
-  formtype INT( 10 ) NOT NULL ,
-  timestamp INT( 14 ) NOT NULL,
-  PRIMARY KEY ( id ) 
-);
-
-#
-# Opinion-Network tables END
-#
+# --------------------------------------------------------
