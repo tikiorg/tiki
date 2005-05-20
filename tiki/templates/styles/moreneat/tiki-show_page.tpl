@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki-show_page.tpl,v 1.48 2005-05-18 11:03:37 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki-show_page.tpl,v 1.49 2005-05-20 18:12:55 papercrane Exp $ *}
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
     {$page_info.page_alias}
@@ -11,6 +11,13 @@
 </h1>{/if}
 {if $feature_wiki_pageid eq 'y'}
 	<small><a class="link" href="tiki-index.php?page_id={$page_id}">{tr}page id{/tr}: {$page_id}</a></small>
+{/if}
+
+{if $pear_wiki_parser}
+<a href="tiki-index.php?page={$page|escape:"url"}{if !$smarty.request.tikiParser}&amp;tikiParser=1{/if}{if $pagenum > 1}&amp;pagenum={$pagenum}{/if}">View parsed by {if $smarty.request.tikiParser}Text_Wiki{else}Tikilib{/if}</a>
+{if $smarty.request.tikiParser}
+{assign var="pageNumUrlExtra" value="&amp;tikiParser=1"}
+{/if}
 {/if}
 
 <table class="wikibar">
@@ -286,11 +293,11 @@
 {if $pages > 1}
 	<br />
 	<div align="center">
-		<a href="tiki-index.php?page={$page|escape:"url"}&amp;pagenum={$first_page}"><img src='img/icons2/nav_first.gif' border='0' alt='{tr}First page{/tr}' title='{tr}First page{/tr}' /></a>
-		<a href="tiki-index.php?page={$page|escape:"url"}&amp;pagenum={$prev_page}"><img src='img/icons2/nav_dot_right.gif' border='0' alt='{tr}Previous page{/tr}' title='{tr}Previous page{/tr}' /></a>
+		<a href="tiki-index.php?page={$page|escape:"url"}&amp;pagenum={$first_page}{$pageNumUrlExtra}"><img src='img/icons2/nav_first.gif' border='0' alt='{tr}First page{/tr}' title='{tr}First page{/tr}' /></a>
+		<a href="tiki-index.php?page={$page|escape:"url"}&amp;pagenum={$prev_page}{$pageNumUrlExtra}"><img src='img/icons2/nav_dot_right.gif' border='0' alt='{tr}Previous page{/tr}' title='{tr}Previous page{/tr}' /></a>
 		<small>{tr}page{/tr}:{$pagenum}/{$pages}</small>
-		<a href="tiki-index.php?page={$page|escape:"url"}&amp;pagenum={$next_page}"><img src='img/icons2/nav_dot_left.gif' border='0' alt='{tr}Next page{/tr}' title='{tr}Next page{/tr}' /></a>
-		<a href="tiki-index.php?page={$page|escape:"url"}&amp;pagenum={$last_page}">{html_image file='img/icons2/nav_last.gif' border='0' alt='{tr}Last page{/tr}' title='{tr}Last page{/tr}'}</a>
+		<a href="tiki-index.php?page={$page|escape:"url"}&amp;pagenum={$next_page}{$pageNumUrlExtra}"><img src='img/icons2/nav_dot_left.gif' border='0' alt='{tr}Next page{/tr}' title='{tr}Next page{/tr}' /></a>
+		<a href="tiki-index.php?page={$page|escape:"url"}&amp;pagenum={$last_page}{$pageNumUrlExtra}">{html_image file='img/icons2/nav_last.gif' border='0' alt='{tr}Last page{/tr}' title='{tr}Last page{/tr}'}</a>
 	</div>
 {/if}
 </div>
