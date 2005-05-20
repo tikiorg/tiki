@@ -19,14 +19,6 @@ require_once ('lib/tikidblib.php');
 // * shared functions (marked as /*shared*/) are functions that are
 //   called from Tiki modules.
 
-/*if (isset($_REQUEST['tikiParser']) && $GLOBALS['pear_wiki_parser']) {
-    $GLOBALS['pear_wiki_parser'] = false;
-}*/
-
-if (!defined('PAGE_SEP')) {
-    define('PAGE_SEP', isset($GLOBALS['pear_wiki_parser']) && $GLOBALS['pear_wiki_parser'] == 'y' ? '...page...' : 'PAGE MARKER HERE*&^%$#^$%*PAGEMARKERHERE');
-}
-
 class TikiLib extends TikiDB {
     var $db; // The ADODB db object used to access the database
 
