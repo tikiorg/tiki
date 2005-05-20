@@ -2555,7 +2555,7 @@ function add_pageview() {
 	}
 	$this->query($query, $bindvars, -1, -1, false);
 	$query = "insert into `tiki_sessions`(`sessionId`,`timestamp`,`user`,`tikihost`) values(?,?,?,?)";
-	$result = $this->query($query, array($sessionId, (int)$now, $user,$_ENV["HOSTNAME"]));
+	$result = $this->query($query, array($sessionId, (int)$now, $user,$_SERVER['HTTP_HOST']));
 	return true;
     }
 
