@@ -10,7 +10,7 @@
 <img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}
 
 {if $tiki_p_admin eq 'y'}
-<a href="tiki-admin.php?page=gal"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
+<a href="tiki-admin.php?page=gal" class="tikihelp"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
 {/if}</h1>
 
 {if $tiki_p_create_galleries eq 'y'}
