@@ -8,12 +8,11 @@
 * 
 * @package Text_Wiki
 * 
-* @author Justin Patrin <papercrane@reversefold.com>
 * @author Paul M. Jones <pmjones@php.net>
 * 
 * @license LGPL
 * 
-* @version $Id: Heading.php,v 1.1 2005-05-18 23:43:16 papercrane Exp $
+* @version $Id: Heading.php,v 1.2 2005-06-01 17:09:43 papercrane Exp $
 * 
 */
 
@@ -31,7 +30,6 @@
 * 
 * @package Text_Wiki
 * 
-* @author Justin Patrin <papercrane@reversefold.com>
 * @author Paul M. Jones <pmjones@php.net>
 * 
 */
@@ -53,7 +51,7 @@ class Text_Wiki_Parse_Heading extends Text_Wiki_Parse {
     */
 
     //TODO: add support for expandable / contractable sections (-+ after !)    
-    var $regex = '/^(!{1,6})(.*)/m';
+    var $regex = '/(^|\n)(!{1,6})([-+]?)([^\n]*)(.*?)(?=\n!|$)/s';
     
     var $conf = array(
         'id_prefix' => 'toc'
@@ -80,31 +78,55 @@ class Text_Wiki_Parse_Heading extends Text_Wiki_Parse {
         // keep a running count for header IDs.  we use this later
         // when constructing TOC entries, etc.
         static $id;
-        if (! isset($id)) {
+        if (!isset($id)) {
             $id = 0;
+        } else {
+            ++$id;
         }
-        
+
         $prefix = htmlspecialchars($this->getConf('id_prefix'));
-        
-        $start = $this->wiki->addToken(
-            $this->rule, 
-            array(
-                'type' => 'start',
-                'level' => strlen($matches[1]),
-                'text' => $matches[2],
-                'id' => $prefix . $id ++
-            )
-        );
-        
-        $end = $this->wiki->addToken(
-            $this->rule, 
-            array(
-                'type' => 'end',
-                'level' => strlen($matches[1])
-            )
-        );
-        
-        return $start . $matches[2] . $end . "\n";
+        $collapse = $matches[3] ? ($matches[3] == '-') : null;
+        return $matches[1].
+            $this->wiki->addToken(
+                                  $this->rule, 
+                                  array(
+                                        'type' => 'start',
+                                        'level' => strlen($matches[2]),
+                                        'text' => $matches[4],
+                                        'id' => $prefix.$id,
+                                        'collapse' => $collapse,
+                                        )
+                                  ).
+            $matches[4].
+            $this->wiki->addToken(
+                                  $this->rule, 
+                                  array(
+                                        'type' => 'end',
+                                        'text' => $matches[4],
+                                        'level' => strlen($matches[2]),
+                                        'collapse' => $collapse,
+                                        'id' => $prefix.$id,
+                                        )
+                                  ).
+            $this->wiki->addToken($this->rule,
+                                  array(
+                                        'type' =>'startContent',
+                                        'id' => $prefix.$id,
+                                        'level' => strlen($matches[2]),
+                                        'collapse' => $collapse,
+                                        'text' => $matches[4],
+                                        )
+                                  ).
+            $matches[5].
+            $this->wiki->addToken($this->rule,
+                                  array(
+                                        'type' => 'endContent',
+                                        'collapse' => $collapse,
+                                        'level' => strlen($matches[2]),
+                                        'id' => $prefix.$id,
+                                        'text' => $matches[4],
+                                        )
+                                  );
     }
 }
 ?>
