@@ -438,7 +438,11 @@ class TrackerLib extends TikiLib {
 				} elseif ($fopt["type"] == 's') {
 					$key = 'tracker.'.$trackerId.'.'.$itid;
 					$fopt["numvotes"] = $this->getOne("select count(*) from `tiki_user_votings` where `id`=?",array($key));
-					$voteavg = $fopt["value"]/$fopt["numvotes"];
+					if ($fopt["numvotes"]) {
+                        $voteavg = $fopt["value"]/$fopt["numvotes"];
+                    } else {
+                        $voteavg = 0;
+                    }
 					$fopt["voteavg"] = $voteavg;
 				} elseif ($fopt["type"] == 'e') {
 					global $categlib;
