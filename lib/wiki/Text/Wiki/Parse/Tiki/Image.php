@@ -13,7 +13,7 @@
 * 
 * @license LGPL
 * 
-* @version $Id: Image.php,v 1.1 2005-05-18 23:43:16 papercrane Exp $
+* @version $Id: Image.php,v 1.2 2005-06-03 16:49:55 toggg Exp $
 * 
 */
 
@@ -44,7 +44,7 @@ class Text_Wiki_Parse_Image extends Text_Wiki_Parse {
     * 
     */
     
-    var $regex = '/({img )(.+?)(})/i';
+    var $regex = '/(?:{img\s+)(.+?)\s*}/i';
     
     
     /**
@@ -66,7 +66,47 @@ class Text_Wiki_Parse_Image extends Text_Wiki_Parse {
     
     function process(&$matches)
     {
-        $pos = strpos($matches[2], ' ');
+        $options = array('src' => '', 'attr' => array(border=>"0"));
+        $src = $link = $align = $desc = '';
+        preg_match_all('#(\w+)\s*=\s*(&quot;(.*?)&quot;|\S*)#',
+        str_replace(array('}', '{', '\''), '', $matches[1]), $splits, PREG_SET_ORDER);
+
+        foreach ($splits as $attr) {
+            if ($attr[3]) {
+                $attr[2] = $attr[3];
+            }
+            $attr[1] == strtolower($attr[1]);
+            switch ($attr[1]) {
+            case "src":
+                $options['src'] = $attr[2];
+                break;
+	        case "height":
+	        case "width":
+            case "alt":
+                $options['attr'][$attr[1]] = $attr[2];
+                break;
+	        case "link":
+//	            $link = $attr[2];
+                $options['attr'][$attr[1]] = $attr[2];
+                break;
+    	    case "align":
+    	        $align = $attr[2];
+                break;
+    	    case "desc":
+    	        $desc = $attr[2];
+                break;
+    	    case "imalign":;
+                $options['attr']['align'] = $attr[2];
+                break;
+            case "usemap":
+                $options['attr']['usemap'] = '#'.$attr[2];
+                break;
+            }
+        }
+/*        if ($link) {
+            $this->wiki->addToken('Url', $options);
+        }
+            
         
         if ($pos === false) {
             $options = array(
@@ -79,7 +119,7 @@ class Text_Wiki_Parse_Image extends Text_Wiki_Parse {
                 'attr' => $this->getAttrs(substr($matches[2], $pos+1))
             );
         }
-        
+*/
         return $this->wiki->addToken($this->rule, $options);
     }
 }

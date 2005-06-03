@@ -4236,6 +4236,11 @@ function add_pageview() {
             $wiki->setRenderConf('xhtml', 'wikilink', 'new_url', 'tiki-editpage.php?page=');
             $wiki->setRenderConf('xhtml', 'table', 'css_table', 'wikitable');
             $wiki->setRenderConf('xhtml', 'table', 'css_td', 'wikicell');
+            $wiki->setRenderConf('xhtml', 'image', 'base', '');
+            $wiki->setRenderConf('xhtml', 'image', 'url_base', '');
+
+            $wiki->setParseConf('image', 'popupLinks', $this->get_preference('popupLinks', 'n'));
+
             $wiki->setFormatConf('Xhtml', 'translate', false);
             $extwiki = array();
             $extwikiSth = $this->query('SELECT `extwiki`, `name` FROM `tiki_extwiki`');

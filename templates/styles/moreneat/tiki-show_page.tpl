@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki-show_page.tpl,v 1.49 2005-05-20 18:12:55 papercrane Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki-show_page.tpl,v 1.50 2005-06-03 16:49:55 toggg Exp $ *}
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
     {$page_info.page_alias}
@@ -14,7 +14,7 @@
 {/if}
 
 {if $pear_wiki_parser}
-<a href="tiki-index.php?page={$page|escape:"url"}{if !$smarty.request.tikiParser}&amp;tikiParser=1{/if}{if $pagenum > 1}&amp;pagenum={$pagenum}{/if}">View parsed by {if $smarty.request.tikiParser}Text_Wiki{else}Tikilib{/if}</a>
+<a href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1{if !$smarty.request.tikiParser}&amp;tikiParser=1{/if}{if $pagenum > 1}&amp;pagenum={$pagenum}{/if}">View parsed by {if $smarty.request.tikiParser}Text_Wiki{else}Tikilib{/if}</a>
 {if $smarty.request.tikiParser}
 {assign var="pageNumUrlExtra" value="&amp;tikiParser=1"}
 {/if}
