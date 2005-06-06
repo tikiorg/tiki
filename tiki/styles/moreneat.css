@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.73 2005-05-18 11:02:34 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.74 2005-06-06 23:50:25 papercrane Exp $
 
 MoreNeat theme
 */
@@ -159,7 +159,7 @@ div.box {
   background-color: white;
   margin: 4px;
   border: 1px solid #8CACBB; 
-	overflow: hidden; 
+  overflow: auto;
   width: 170px;
 }
 
