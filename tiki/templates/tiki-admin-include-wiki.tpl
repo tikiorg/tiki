@@ -6,7 +6,7 @@
 <br />
 {/if}
 <table class="admin">
-<tr><td  valign="top" width="50%">
+<tr><td  valign="top">
     
   <div class="cbox">
     <div class="cbox-title">
@@ -331,7 +331,7 @@
   </div>
 
   </td>
-  <td  valign="top" width="50%">
+  <td  valign="top">
     
   <div class="cbox">
     <div class="cbox-title">
