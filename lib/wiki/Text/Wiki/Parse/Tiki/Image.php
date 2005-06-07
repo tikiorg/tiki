@@ -13,7 +13,7 @@
 * 
 * @license LGPL
 * 
-* @version $Id: Image.php,v 1.2 2005-06-03 16:49:55 toggg Exp $
+* @version $Id: Image.php,v 1.3 2005-06-07 00:08:27 papercrane Exp $
 * 
 */
 
@@ -66,39 +66,39 @@ class Text_Wiki_Parse_Image extends Text_Wiki_Parse {
     
     function process(&$matches)
     {
-        $options = array('src' => '', 'attr' => array(border=>"0"));
+        $options = array('src' => '', 'attr' => array('border' => '0'));
         $src = $link = $align = $desc = '';
         preg_match_all('#(\w+)\s*=\s*(&quot;(.*?)&quot;|\S*)#',
         str_replace(array('}', '{', '\''), '', $matches[1]), $splits, PREG_SET_ORDER);
 
         foreach ($splits as $attr) {
-            if ($attr[3]) {
+            if (isset($attr[3])) {
                 $attr[2] = $attr[3];
             }
             $attr[1] == strtolower($attr[1]);
             switch ($attr[1]) {
-            case "src":
+            case 'src':
                 $options['src'] = $attr[2];
                 break;
-	        case "height":
-	        case "width":
-            case "alt":
+	        case 'height':
+	        case 'width':
+            case 'alt':
                 $options['attr'][$attr[1]] = $attr[2];
                 break;
-	        case "link":
+	        case 'link':
 //	            $link = $attr[2];
                 $options['attr'][$attr[1]] = $attr[2];
                 break;
-    	    case "align":
+    	    case 'align':
     	        $align = $attr[2];
                 break;
-    	    case "desc":
+    	    case 'desc':
     	        $desc = $attr[2];
                 break;
-    	    case "imalign":;
+    	    case 'imalign':;
                 $options['attr']['align'] = $attr[2];
                 break;
-            case "usemap":
+            case 'usemap':
                 $options['attr']['usemap'] = '#'.$attr[2];
                 break;
             }
