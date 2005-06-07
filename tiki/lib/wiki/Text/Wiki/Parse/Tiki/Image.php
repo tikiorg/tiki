@@ -13,7 +13,7 @@
 * 
 * @license LGPL
 * 
-* @version $Id: Image.php,v 1.3 2005-06-07 00:08:27 papercrane Exp $
+* @version $Id: Image.php,v 1.4 2005-06-07 00:17:33 papercrane Exp $
 * 
 */
 
@@ -68,12 +68,12 @@ class Text_Wiki_Parse_Image extends Text_Wiki_Parse {
     {
         $options = array('src' => '', 'attr' => array('border' => '0'));
         $src = $link = $align = $desc = '';
-        preg_match_all('#(\w+)\s*=\s*(&quot;(.*?)&quot;|\S*)#',
+        preg_match_all('#(\w+)\s*=\s*((&quot;|\'|"|&apos;|&#34;|&#39;)(.*?)\3|\S*)#',
         str_replace(array('}', '{', '\''), '', $matches[1]), $splits, PREG_SET_ORDER);
 
         foreach ($splits as $attr) {
-            if (isset($attr[3])) {
-                $attr[2] = $attr[3];
+            if (isset($attr[4])) {
+                $attr[2] = $attr[4];
             }
             $attr[1] == strtolower($attr[1]);
             switch ($attr[1]) {
