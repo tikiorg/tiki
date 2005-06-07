@@ -8,25 +8,13 @@
 * 
 * @package Text_Wiki
 * 
+* @author bertrand Gugger <bertrand@toggg.com>
 * @author Justin Patrin <papercrane@reversefold.com>
 * @author Paul M. Jones <pmjones@php.net>
 * 
 * @license LGPL
 * 
-* @version $Id: Image.php,v 1.5 2005-06-07 00:23:38 papercrane Exp $
-* 
-*/
-
-/**
-* 
-* Parses for image placement.
-* 
-* @category Text
-* 
-* @package Text_Wiki
-* 
-* @author Justin Patrin <papercrane@reversefold.com>
-* @author Paul M. Jones <pmjones@php.net>
+* @version $Id: Image.php,v 1.6 2005-06-07 12:11:02 toggg Exp $
 * 
 */
 
@@ -68,7 +56,7 @@ class Text_Wiki_Parse_Image extends Text_Wiki_Parse {
     {
         $options = array('src' => '', 'attr' => array('border' => '0'));
         $src = $link = $align = $desc = '';
-        preg_match_all('#(\w+)\s*=\s*((&quot;|\'|"|&apos;|&#34;|&#39;)(.*?)\3|\S*)#',
+        preg_match_all('/(\w+)\s*=\s*((&quot;|\'|"|&apos;|&#34;|&#39;)(.*?)\3|\S*)/',
                        str_replace(array('}', '{'), '', $matches[1]), $splits, PREG_SET_ORDER);
 
         foreach ($splits as $attr) {
