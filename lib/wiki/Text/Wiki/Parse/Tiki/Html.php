@@ -13,7 +13,7 @@
 * 
 * @license LGPL
 * 
-* @version $Id: Html.php,v 1.1 2005-05-18 23:43:16 papercrane Exp $
+* @version $Id: Html.php,v 1.2 2005-06-16 06:24:27 papercrane Exp $
 * 
 */
 
@@ -50,7 +50,7 @@ class Text_Wiki_Parse_Html extends Text_Wiki_Parse {
     * 
     */
     
-    var $regex = '/^\<html\>\n(.+)\n\<\/html\>(\s|$)/Umsi';
+    var $regex = '/^\<html\>\n(.+?)\n\<\/html\>(\s|$)/msi';
     
     
     /**
