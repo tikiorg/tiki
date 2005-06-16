@@ -13,7 +13,7 @@
 * 
 * @license LGPL
 * 
-* @version $Id: Italic.php,v 1.1 2005-05-18 23:43:16 papercrane Exp $
+* @version $Id: Italic.php,v 1.2 2005-06-16 06:14:34 papercrane Exp $
 * 
 */
 
@@ -51,7 +51,7 @@ class Text_Wiki_Parse_Italic extends Text_Wiki_Parse {
     * 
     */
     
-    var $regex = "/''(()|[^'].*)''/U";
+    var $regex = "/''(|[^'].*?)''/";
     
     
     /**
