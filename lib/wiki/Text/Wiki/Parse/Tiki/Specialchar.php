@@ -24,7 +24,7 @@ class Text_Wiki_Parse_SpecialChar extends Text_Wiki_Parse {
             }
             $this->regex .= preg_quote($type);
         }
-        $this->regex = '/('.$this->regex.'|("|&quot;) \-\- (\2)|\~\d+\~)/';
+        $this->regex = '/('.$this->regex.'|(?:"|&quot;) \-\- (?:\2)|\~\d+\~)/';
     }
     
     /**
