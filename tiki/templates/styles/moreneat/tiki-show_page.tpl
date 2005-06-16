@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki-show_page.tpl,v 1.51 2005-06-07 13:36:02 toggg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki-show_page.tpl,v 1.52 2005-06-16 22:45:35 toggg Exp $ *}
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
     {$page_info.page_alias}
@@ -14,7 +14,7 @@
 {/if}
 
 {if $pear_wiki_parser}
-<a href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1{if !$smarty.request.tikiParser}&amp;tikiParser=1{/if}{if $pagenum > 1}&amp;pagenum={$pagenum}{/if}">View parsed by {if ($smarty.request.tikiParser and $pear_wiki_parser eq 'y') or (!$smarty.request.tikiParser and $pear_wiki_parser eq 'n')}Text_Wiki{else}Tikilib{/if}</a>
+<a href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1{if !$smarty.request.tikiParser}&amp;tikiParser=1{/if}{if $pagenum > 1}&amp;pagenum={$pagenum}{/if}">View parsed by {if ($smarty.request.tikiParser and ($pear_wiki_parser eq 'y')) or (!$smarty.request.tikiParser and ($pear_wiki_parser eq 'n'))}Text_Wiki{else}Tikilib{/if}</a>
 {if $smarty.request.tikiParser}
 {assign var="pageNumUrlExtra" value="&amp;tikiParser=1"}
 {/if}
