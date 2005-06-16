@@ -13,7 +13,7 @@
 * 
 * @license LGPL
 * 
-* @version $Id: Colortext.php,v 1.1 2005-05-18 23:43:16 papercrane Exp $
+* @version $Id: Colortext.php,v 1.2 2005-06-16 17:11:31 papercrane Exp $
 * 
 */
 
@@ -45,7 +45,7 @@ class Text_Wiki_Parse_Colortext extends Text_Wiki_Parse {
     * 
     */
     
-    var $regex = "/~~(.+?):(.+?)~~/";
+    var $regex = '/~~(.+?):(.+?)~~/';
     
 
     /**
