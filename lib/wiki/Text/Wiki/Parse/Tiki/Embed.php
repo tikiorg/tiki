@@ -13,7 +13,7 @@
 * 
 * @license LGPL
 * 
-* @version $Id: Embed.php,v 1.1 2005-05-18 23:43:16 papercrane Exp $
+* @version $Id: Embed.php,v 1.2 2005-06-16 17:08:31 papercrane Exp $
 * 
 */
 
@@ -64,7 +64,7 @@ class Text_Wiki_Parse_Embed extends Text_Wiki_Parse {
     * 
     */
     
-    var $regex = '/(\[\[embed )(.+?)( .+?)?(\]\])/i';
+    var $regex = '/\[\[embed (.+?)( .+?)?\]\]/i';
     
     
     /**
@@ -85,10 +85,10 @@ class Text_Wiki_Parse_Embed extends Text_Wiki_Parse {
     function process(&$matches)
     {    
         // save the file location
-        $this->file = $this->getConf('base', './') . $matches[2];
+        $this->file = $this->getConf('base', './') . $matches[1];
         
         // extract attribs as variables in the local space
-        $this->vars = $this->getAttrs($matches[3]);
+        $this->vars = $this->getAttrs($matches[2]);
         unset($this->vars['this']);
         extract($this->vars);
         

@@ -13,7 +13,7 @@
 * 
 * @license LGPL
 * 
-* @version $Id: Deflist.php,v 1.1 2005-05-18 23:43:16 papercrane Exp $
+* @version $Id: Deflist.php,v 1.2 2005-06-16 17:10:44 papercrane Exp $
 * 
 */
 
@@ -53,7 +53,7 @@ class Text_Wiki_Parse_Deflist extends Text_Wiki_Parse {
     * 
     */
     
-    var $regex = '/\n((;).*\n)(?!(;|\n))/Us';
+    var $regex = '/\n(;.*\n)(?!(;|\n))/Us';
     
     
     /**
@@ -94,7 +94,7 @@ class Text_Wiki_Parse_Deflist extends Text_Wiki_Parse {
         // create an array called $list that contains a new set of
         // matches for the various definition-list elements.
         preg_match_all(
-            '/^(;)(.*?)?(:)(.*?)?$/ms',
+            '/^[;](.*?)?[:](.*?)?$/ms',
             $matches[1],
             $list,
             PREG_SET_ORDER
@@ -104,10 +104,10 @@ class Text_Wiki_Parse_Deflist extends Text_Wiki_Parse {
         foreach ($list as $key => $val) {
             $return .= (
                 $this->wiki->addToken($this->rule, array('type' => 'term_start')) .
-                trim($val[2]) .
+                trim($val[1]) .
                 $this->wiki->addToken($this->rule, array('type' => 'term_end')) .
                 $this->wiki->addToken($this->rule, array('type' => 'narr_start')) .
-                trim($val[4]) . 
+                trim($val[2]) . 
                 $this->wiki->addToken($this->rule, array('type' => 'narr_end'))
             );
         }
