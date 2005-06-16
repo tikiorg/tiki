@@ -13,7 +13,7 @@
 * 
 * @license LGPL
 * 
-* @version $Id: Raw.php,v 1.1 2005-05-18 23:43:16 papercrane Exp $
+* @version $Id: Raw.php,v 1.2 2005-06-16 05:59:58 papercrane Exp $
 * 
 */
 
@@ -48,7 +48,7 @@ class Text_Wiki_Parse_Raw extends Text_Wiki_Parse {
     * 
     */
     
-    var $regex = '/~np~(.*?)~\/np~/s';
+    var $regex = '!~np~(.*?)~/np~!s';
     
     /**
     * 
@@ -67,7 +67,7 @@ class Text_Wiki_Parse_Raw extends Text_Wiki_Parse {
     
     function process(&$matches)
     {
-        $options = array('text' => strlen($matches[1]) ? $matches[1] : $matches[2]);
+        $options = array('text' => $matches[1]);
         return $this->wiki->addToken($this->rule, $options);
     }
 }
