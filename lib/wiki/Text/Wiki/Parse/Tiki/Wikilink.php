@@ -13,7 +13,7 @@
 * 
 * @license LGPL
 * 
-* @version $Id: Wikilink.php,v 1.1 2005-05-18 23:43:16 papercrane Exp $
+* @version $Id: Wikilink.php,v 1.2 2005-06-16 05:21:29 papercrane Exp $
 * 
 */
 
@@ -90,12 +90,12 @@ class Text_Wiki_Parse_Wikilink extends Text_Wiki_Parse {
             "[$upper]" .       // 1 upper
             "[$either]*" .     // 0+ or more alpha or digit
             ")" .              // END WikiPage pattern (/1)
-            "((\#" .           // START Anchor pattern (2)(3)
+            "((?:\#" .           // START Anchor pattern (2)()
             "[$either]" .      // 1 alpha
-            "(" .              // start sub pattern (4)
+            "(?:" .              // start sub pattern ()
             "[-_$either:.]*" . // 0+ dash, alpha, digit, underscore, colon, dot
             "[-_$either]" .    // 1 dash, alpha, digit, or underscore
-            ")?)?)";           // end subpatterns (/4)(/3)(/2)
+            ")?)?)";           // end subpatterns (/)(/)(/2)
     }
     
     
@@ -118,7 +118,7 @@ class Text_Wiki_Parse_Wikilink extends Text_Wiki_Parse {
 		}
 		
         // described wiki links
-        $tmp_regex = '/\(\(' . /*$this->regex*/ '(['.$either.'\s\.\-]*?)((\#['.$either.'\s\.\-](['.$either.'\s\.\-]*?)?)?)' . '(\|(.+?))?\)\)/';
+        $tmp_regex = '/\(\(' . /*$this->regex*/ '(['.$either.'\s\.\-]*?)(?:(\#['.$either.'\s\.\-](?:['.$either.'\s\.\-]*?)?)?)(?:\|(.+?))?\)\)/';
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
             array(&$this, 'processDescr'),
@@ -127,6 +127,7 @@ class Text_Wiki_Parse_Wikilink extends Text_Wiki_Parse {
         
         // standalone wiki links
         $tmp_regex = '/(^|[^$either\-_])(\)\))?' . $this->regex . '(\(\()?/';
+        echo $tmp_regex.'<br/>';
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
             array(&$this, 'process'),
@@ -153,8 +154,8 @@ class Text_Wiki_Parse_Wikilink extends Text_Wiki_Parse {
         // set the options
         $options = array(
             'page'   => $matches[1],
-            'text'   => isset($matches[6]) && strlen($matches[6]) ? $matches[6] : $matches[1],
-            'anchor' => isset($matches[3]) ? $matches[3] : '',
+            'text'   => isset($matches[3]) && strlen($matches[3]) ? $matches[3] : $matches[1],
+            'anchor' => isset($matches[2]) ? $matches[2] : '',
         );
         if ($options['text'] == $options['page']) {
             $options['text'] = '';
@@ -191,7 +192,7 @@ class Text_Wiki_Parse_Wikilink extends Text_Wiki_Parse {
         /*if ($matches[3]{0} == '!') {
             return $matches[1] . substr($matches[3], 1) . $matches[4] . $matches[7];
         }*/
-        if (isset($matches[2]) && $matches[2] == '))' && isset($matches[7]) && $matches[7] == '((') {
+        if (isset($matches[2]) && $matches[2] == '))' && isset($matches[5]) && $matches[5] == '((') {
             return $matches[1] . $matches[3] . $matches[4];
         }
         
@@ -211,7 +212,7 @@ class Text_Wiki_Parse_Wikilink extends Text_Wiki_Parse {
             $this->wiki->addToken($this->rule, array_merge(array('type' => 'start'), $options)).
             $options['text'].
             $this->wiki->addToken($this->rule, array_merge(array('type' => 'end'), $options)).
-            (isset($matches[7]) ? $matches[7] : '');
+            (isset($matches[5]) ? $matches[5] : '');
     }
 }
 ?>
