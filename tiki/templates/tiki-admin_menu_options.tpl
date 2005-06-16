@@ -20,12 +20,13 @@
 <form action="tiki-admin_menu_options.php" method="post">
 <input type="hidden" name="optionId" value="{$optionId|escape}" />
 <input type="hidden" name="menuId" value="{$menuId|escape}" />
+<input type="hidden" name="offset" value="{$offset|escape}" />
 <table>
 <tr class="formcolor"><td>{tr}Name{/tr}:</td><td colspan="3"><input id="menu_name" type="text" name="name" value="{$name|escape}" size="34" /></td></tr>
 <tr class="formcolor"><td>{tr}URL{/tr}:</td><td colspan="3"><input id="menu_url" type="text" name="url" value="{$url|escape}" size="34" /></td></tr>
 <tr class="formcolor"><td>{tr}Sections{/tr}:</td><td colspan="3"><input id="menu_section" type="text" name="section" value="{$section|escape}" size="34" /></td></tr>
 <tr class="formcolor"><td>{tr}Permissions{/tr}:</td><td colspan="3"><input id="menu_perm" type="text" name="perm" value="{$perm|escape}" size="34" /></td></tr>
-<tr class="formcolor"><td>{tr}Groups{/tr}:</td><td colspan="3"><input id="menu_groupname" type="text" name="groupname" value="{$groupname|escape}" size="34" /></td></tr>
+<tr class="formcolor"><td>{tr}Group{/tr}:</td><td colspan="3"><input id="menu_groupname" type="text" name="groupname" value="{$groupname|escape}" size="34" /></td></tr>
 <tr class="formcolor"><td>{tr}Type{/tr}:</td><td>
 <select name="type">
 <option value="s" {if $type eq 's'}selected="selected"{/if}>{tr}section{/tr}</option>

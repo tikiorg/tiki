@@ -242,6 +242,8 @@ class TikiLib extends TikiDB {
 	$ret = array();
 
 	$where = array();
+	$mid = '';
+	$bindvars[] = $event;
 	if( $feature_user_watches_translations == 'y'  && $event == 'wiki_page_changed') {
 	    // If $feature_user_watches_translations is turned on, also look for
 	    // pages in a translation group.
@@ -250,13 +252,17 @@ class TikiLib extends TikiDB {
 		$page_info = $this->get_page_info( $object );
 		$pages = $multilinguallib->getTranslations('wiki page', $page_info['page_id'], $object, '' );
 		foreach ($pages as $page) {
-			$where[] = "`object`='".$page['objName']."'";
+			if ($mid != "")
+				$mid .= " or ";
+			$mid .= "`object`=?";
+			$bindvars[] = $page['objName'];
 		}
 	} else {
-		$where[] = "`object`='$object'";
+		$mid .= "`object`=?";
+		$bindvars[] = $object;
 	}
-	$query = "select * from `tiki_user_watches` where `event`=? and ".implode(" or ", $where);
-	$result = $this->query($query,array($event));
+	$query = "select * from `tiki_user_watches` where `event`=? and (".$mid.")";
+	$result = $this->query($query,$bindvars);
 
 	if (!$result->numRows()) {
 	    return $ret;
@@ -373,6 +379,7 @@ class TikiLib extends TikiDB {
 	$ret = array();
 	while ($res = $result->fetchRow()) {
 	    $res['user_information'] = $this->get_user_preference($res['user'], 'user_information', 'public');
+	    $res['allowMsgs'] = $this->get_user_preference($res['user'], 'allowMsgs', 'y');
 	    $this->online_users_cache[$res['user']] = $res;
 	}
 	}
@@ -2189,16 +2196,27 @@ function add_pageview() {
 	return $ret;
     }
 
-    /*shared*/
-    function list_posts($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '') {
+    function list_posts($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $filterByBlogId = -1) {
+
+	if ($filterByBlogId >= 0) {
+		// get posts for a given blogId:
+	    $mid = " where ( `blogId` = ? ) ";
+	    $bindvars = array($filterByBlogId);
+	} else {
+		// get posts from all blogs
+	    $mid = '';
+	    $bindvars = array();
+	}
 
 	if ($find) {
 	    $findesc = '%' . $find . '%';
-	    $mid = " where (`data` like ?) ";
-	    $bindvars=array($findesc);
-	} else {
-	    $mid = '';
-	    $bindvars=array();
+		if ($mid == "") {
+		    $mid = " where ";
+		} else {
+		    $mid .= " and ";
+	    }
+	    $mid .= " ( `data` like ? ) ";
+	    $bindvars[] = $findesc;
 	}
 
 	$query = "select * from `tiki_blog_posts` $mid order by ".$this->convert_sortmode($sort_mode);
@@ -2862,6 +2880,21 @@ function add_pageview() {
 
 	return $ret;
     }
+
+    // Returns the name of all pages
+    function get_all_pages() {
+    	
+		$query = "select `pageName` from `tiki_pages`";
+		$result = $this->query($query,array());
+		$ret = array();
+
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res;
+		}
+
+		return $ret;
+    }
+
     /**
      * \brief Cache given url
      * If \c $data present (passed) it is just associated \c $url and \c $data.
@@ -3407,7 +3440,7 @@ function add_pageview() {
 	    $preferences = $this->get_all_preferences();
 	}
 
-	if (!isset($preferences[$name])) {
+	if (empty($preferences[$name])) {
 	    $preferences[$name] = $default;
 	}
 
@@ -3579,12 +3612,12 @@ function add_pageview() {
 
 	$html=$is_html?1:0;
 	if ($lang) {	// not sure it is necessary
-		$query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`,`lang`,`is_html`) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		$result = $this->query($query, array($name, (int)$hits, $data, (int)$lastModif, $comment, 1, $user, $ip, $description, $user, (int)strlen($data), $lang, $html));
+		$query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`,`lang`,`is_html`,`created`) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		$result = $this->query($query, array($name, (int)$hits, $data, (int)$lastModif, $comment, 1, $user, $ip, $description, $user, (int)strlen($data), $lang, $html, mktime()));
 	}
 	else  {
-		$query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`,`is_html`) values(?,?,?,?,?,?,?,?,?,?,?,?)";	
-		$result = $this->query($query, array($name, (int)$hits, $data, (int)$lastModif, $comment, 1, $user, $ip, $description, $user, (int)strlen($data), $html));
+		$query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`,`is_html`,`created`) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";	
+		$result = $this->query($query, array($name, (int)$hits, $data, (int)$lastModif, $comment, 1, $user, $ip, $description, $user, (int)strlen($data), $html,mktime()));
 	}
 
 	$this->clear_links($name);
@@ -4591,6 +4624,19 @@ function add_pageview() {
 		$data = preg_replace("/::(.+?)::/", "<div align=\"center\">$1</div>", $data);
 	}
 
+    // definitively put out the protected words ))protectedWord((
+    preg_match_all("/\)\)(\S*?)\(\(/", $data, $matches);
+    $noParseWikiLinksK = array();
+    $noParseWikiLinksT = array();
+    foreach ($matches[0] as $mi=>$match) {
+        do {
+            $randNum = chr(0xff).rand(0, 1048576).chr(0xff);
+        } while (strstr($data, $randNum));
+        $data = str_replace($match, $randNum, $data);
+        $noParseWikiLinksK[] = $randNum;
+        $noParseWikiLinksT[] = $matches[1][$mi];
+    }
+
 	// New syntax for wiki pages ((name|desc)) Where desc can be anything
 	    // preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/", $data, $pages);
 	    // match ((name|desc)) as well as ((name|))
@@ -4747,8 +4793,8 @@ function add_pageview() {
 	    }
 	}
 
-	// Replace ))Words((
-	$data = preg_replace("/([ \n\t\r\,\;]|^)\)\)([^\(]+)\(\(($|[ \n\t\r\,\;\.])/", "$1" . "$2" . "$3", $data);
+	// Reinsert ))Words((
+    $data = str_replace($noParseWikiLinksK, $noParseWikiLinksT, $data);
 
 	// reinsert hash-replaced links into page
 	foreach ($noparsedlinks as $np) {
@@ -4895,9 +4941,8 @@ function add_pageview() {
 	$data = str_replace( "[[", "[", $data );
 
 /*
- * THIS CODE IS NOT WORKING FOR || ... | ... || tables anymore, no idea why.
- * Remove it?
- * 
+ * Wiki Tables syntax
+ */
 	// tables in old style
 	if ($feature_wiki_tables != 'new') {
 	    if (preg_match_all("/\|\|(.*)\|\|/", $data, $tables)) {
@@ -4947,7 +4992,7 @@ function add_pageview() {
 			} // for ($i ...
 	    } // if (preg_match_all("/\|\|(.*)\|\|/", $data, $tables))
 	} else
-*/	
+
 	
 	{
 	    // New syntax for tables

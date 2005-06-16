@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-edit_programmed_content.php?contentId={$contentId}">{tr}Program dynamic content for block{/tr}: {$contentId}</a><br /><br />
+<h1><a class="pagetitle" href="tiki-edit_programmed_content.php?contentId={$contentId}">{tr}Program dynamic content for block{/tr}: {$contentId}</a></h1>
 <a class="linkbut" href="tiki-edit_programmed_content.php?contentId={$contentId}">{tr}create new block{/tr}</a>
 <a class="linkbut" href="tiki-list_contents.php">{tr}Return to block listing{/tr}</a><br />
 <h2>{tr}Block description: {/tr}{$description}</h2>

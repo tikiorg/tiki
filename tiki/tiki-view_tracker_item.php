@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.78 2005-05-18 10:59:00 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.79 2005-06-16 20:10:51 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -584,6 +584,7 @@ if ($tracker_info["useAttachments"] == 'y') {
     		key_get($area);
 		  }
 		}
+	$_REQUEST["show"] = "att";
 	}
 	if (isset($_REQUEST["editattach"])) {
 		$att = $trklib->get_item_attachment($_REQUEST["editattach"]);
@@ -591,7 +592,7 @@ if ($tracker_info["useAttachments"] == 'y') {
 		$smarty->assign("attach_version", $att['version']);
 		$smarty->assign("attach_longdesc", $att['longdesc']);
 		$smarty->assign("attach_file", $att["filename"]);
-		$smarty->assign("commentId", $att["attId"]);
+		$smarty->assign("attId", $att["attId"]);
 		$_REQUEST["show"] = "att";
 	}
 	if (isset($_REQUEST["attach"]) && ($tiki_p_attach_trackers == 'y')) {
@@ -632,12 +633,12 @@ if ($tracker_info["useAttachments"] == 'y') {
 			$data = "";
 			$fhash="";
 		}
-		if (empty($_REQUEST["commentId"]) || $_REQUEST["commentId"] == 0) {
+		if (empty($_REQUEST["attId"]) || $_REQUEST["attId"] == 0) {
 			$trklib->item_attach_file($_REQUEST["itemId"], $name, $type, $size, $data, $_REQUEST["attach_comment"], $user, $fhash,$_REQUEST["attach_version"],$_REQUEST["attach_longdesc"]);
 		} else {
-			$trklib->replace_item_attachment($_REQUEST["commentId"], $name, $type, $size, $data, $_REQUEST["attach_comment"], $user, $fhash,$_REQUEST["attach_version"],$_REQUEST["attach_longdesc"]);
+			$trklib->replace_item_attachment($_REQUEST["attId"], $name, $type, $size, $data, $_REQUEST["attach_comment"], $user, $fhash,$_REQUEST["attach_version"],$_REQUEST["attach_longdesc"]);
 		}
-		$_REQUEST["commentId"] = 0;
+		$_REQUEST["attId"] = 0;
 		$_REQUEST['show'] = "att";
 	}
 

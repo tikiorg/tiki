@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2005-05-19 00:16:21 $
-# $Author: papercrane $
+# $Date: 2005-06-16 20:10:52 $
+# $Author: mose $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -2766,7 +2766,7 @@ CREATE TABLE tiki_received_pages (
 
 DROP TABLE IF EXISTS tiki_referer_stats;
 CREATE TABLE tiki_referer_stats (
-  referer varchar(50) NOT NULL default '',
+  referer varchar(255) NOT NULL default '',
   hits int(10) default NULL,
   last int(14) default NULL,
   PRIMARY KEY  (referer)
@@ -4281,7 +4281,6 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('calendar_view_tab','n')
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('change_language','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('change_password','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('change_theme','y');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('change_password','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('cms_bot_bar','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('cms_left_column','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('cms_right_column','y');

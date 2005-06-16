@@ -23,8 +23,12 @@ if (isset($module_params["topic"])) {
 } else {
 	$topic = '';
 }
-
-$ranking = $tikilib->list_articles(0, $module_rows, 'publishDate_desc', '', '', $user, $type, $topicId, 'y', $topic);
+if (isset($module_params["start"])) {
+	$start = $module_params["start"];
+} else {
+	$start = isset($start) ? $start : 0;
+}
+$ranking = $tikilib->list_articles($start, $module_rows, 'publishDate_desc', '', '', $user, $type, $topicId, 'y', $topic);
 
 $smarty->assign('modArticles', $ranking["data"]);
 

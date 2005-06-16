@@ -87,6 +87,7 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 		$smarty->assign('mail_author', $author);
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 		$machine = $tikilib->httpPrefix() . dirname( $foo["path"] );
+		$machine = preg_replace("!/$!", "", $machine); // just incase
  		$smarty->assign('mail_machine', $machine);
 		$smarty->assign('forumId', $forum_info["forumId"]);
 		if ($event == "forum_post_topic") {
@@ -123,7 +124,7 @@ function testEmailInList($nots, $email) {
   * \$event: 'wiki_page_created'|'wiki_page_changed'
   */
 function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment, $oldver, $edit_data, $machine, $diff='', $minor=false) {
-	global $tikilib, $notificationlib, $feature_user_watches, $smarty, $userlib, $wiki_watch_editor;;
+	global $tikilib, $notificationlib, $feature_user_watches, $smarty, $userlib, $wiki_watch_editor;
 	$nots = array();
 	$defaultLanguage = $tikilib->get_preference("language", "en");
 
@@ -168,6 +169,8 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 			}
 		}
 	}
+	
+	if ($edit_user=='') $edit_user = tra('Anonymous');
 
 	if (count($nots)) {
 	    if (function_exists("html_entity_decode"))

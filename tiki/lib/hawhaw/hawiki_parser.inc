@@ -1,20 +1,20 @@
 <?php
 
 // HAWIKI parser for TikiWiki
-// Last modified: 9. May 2005
+// Last modified: 5. June 2005
 
 // token definitions
 define("HAWIKI_TOKEN_NEWLINE",    1);
 define("HAWIKI_TOKEN_TEXT",       2);
 define("HAWIKI_TOKEN_BOLD",       3);
 define("HAWIKI_TOKEN_ITALIC",     4);
-define("HAWIKI_TOKEN_HEADING",    5);
-define("HAWIKI_TOKEN_BULLIST",    6);
-define("HAWIKI_TOKEN_NUMLIST",    7);
-define("HAWIKI_TOKEN_PARAGRAPH",  8);
-define("HAWIKI_TOKEN_COLORED",    9);
-define("HAWIKI_TOKEN_MONOSPACED", 10);
-define("HAWIKI_TOKEN_BOX",        11);
+define("HAWIKI_TOKEN_UNDERLINE",  5);
+define("HAWIKI_TOKEN_HEADING",    6);
+define("HAWIKI_TOKEN_BULLIST",    7);
+define("HAWIKI_TOKEN_NUMLIST",    8);
+define("HAWIKI_TOKEN_PARAGRAPH",  9);
+define("HAWIKI_TOKEN_COLORED",    10);
+define("HAWIKI_TOKEN_MONOSPACED", 11);
 define("HAWIKI_TOKEN_RULE",       12);
 define("HAWIKI_TOKEN_WIKINAME",   13);
 define("HAWIKI_TOKEN_LINK",       14);
@@ -71,6 +71,14 @@ function HAWIKI_parser(&$input, $isFirstColumn)
     return($po);
   }
 
+  if (preg_match("/^===/", $input))
+  {
+    // format underline
+    $input = substr($input, 3);
+    $po["token"] = HAWIKI_TOKEN_UNDERLINE;
+    return($po);
+  }
+
   if (preg_match("/^-=(.*?)=-/", $input, $matches))
   {
     // paragraph
@@ -80,12 +88,11 @@ function HAWIKI_parser(&$input, $isFirstColumn)
     return($po);
   }
 
-  if (preg_match("/^\^(.*?)\^/", $input, $matches))
+  if (preg_match("/^\^/", $input))
   {
-    // box
-    $po["text"] = $matches[1];
-    $input = substr($input, strlen($po["text"]) + 2);
-    $po["token"] = HAWIKI_TOKEN_BOX;
+    // box (show as normal output between horizontal rules)
+    $input = substr($input, 1);
+    $po["token"] = HAWIKI_TOKEN_RULE;
     return($po);
   }
 
@@ -131,11 +138,11 @@ function HAWIKI_parser(&$input, $isFirstColumn)
     $po["token"] = HAWIKI_TOKEN_DUMMY;
     return($po);
   }
-
+  
   if (preg_match("/^~~#(\w*?):/", $input, $matches))
   {
     // colored text start
-    $po["text"] = $matches[1];
+    $po["color"] = $matches[1];
     $input = substr($input, strlen($matches[1]) + 4);
     $po["token"] = HAWIKI_TOKEN_COLORED;
     return($po);
@@ -144,7 +151,7 @@ function HAWIKI_parser(&$input, $isFirstColumn)
   if (preg_match("/^~~/", $input))
   {
     // colored text end
-    $po["text"] = "";
+    $po["color"] = "";
     $input = substr($input, 2);
     $po["token"] = HAWIKI_TOKEN_COLORED;
     return($po);
@@ -197,7 +204,18 @@ function HAWIKI_parser(&$input, $isFirstColumn)
     $wikiname = explode(":", $matches[1]); // test for external wiki page
     if (count($wikiname) > 1)
     {
-      $po["extwiki"] = $wikiname[0];
+      global $tikilib;
+      if ($tikilib->db->getOne("select count(*) from `tiki_extwiki` where `name`=?",
+                        array($wikiname[0])) == 1)
+      {
+        // external wiki found in DB
+        $po["extwiki"] = $tikilib->db->getOne("select `extwiki`  from `tiki_extwiki` where `name`=?",
+                         array($wikiname[0]));
+      }
+      else
+        // external wiki not found: link will not work anyway
+        $po["extwiki"] = "";
+
       $wikipage = $wikiname[1];
     }
     else
@@ -250,6 +268,17 @@ function HAWIKI_parser(&$input, $isFirstColumn)
       $po["label"] = $link[0];
     }
 
+    if (strstr($po["url"], "mode=mobile") || strstr($po["url"], "tiki-mobile.php"))
+    {
+      // do not display these as external links
+      $po["ext"] = false;
+    }
+    else
+    {
+      $po["ext"] = true;
+      $po["extlink_text"] = hawtra("external link");
+    }
+
     $po["token"] = HAWIKI_TOKEN_LINK;
     return($po);
   }
@@ -277,6 +306,7 @@ function HAWIKI_parser(&$input, $isFirstColumn)
 
     while (list($key, $value) = each($img_arr))
     {
+      $value = ereg_replace("&quot;", "\"", $value); // &quot; -> "
       $value = ereg_replace("[\"']", "", $value); // unquote attribute (if quoted)
 
       if (strtolower(substr($value, 0, 4)) == "src=")
@@ -310,6 +340,7 @@ function HAWIKI_parser(&$input, $isFirstColumn)
 
     while (list($key, $value) = each($img_arr))
     {
+      $value = ereg_replace("&quot;", "\"", $value); // &quot; -> "
       $value = ereg_replace("[\"']", "", $value); // unquote attribute (if quoted)
 
       if (strtolower(substr($value, 0, 5)) == "file=")
@@ -395,7 +426,7 @@ function HAWIKI_parser(&$input, $isFirstColumn)
 
     if (!preg_match("/(href|HREF)=\"(.*?)\"/", $link_attribs, $matches))
       return(0); // no href attribute found in link
-    
+
     $url = $matches[2];
 
     if (preg_match("/<(img|IMG)(.*?)>/", $link_label, $matches))
@@ -420,6 +451,9 @@ function HAWIKI_parser(&$input, $isFirstColumn)
       // text link
       $po["url"]   = $url;
       $po["label"] = $link_label;
+      $po["ext"]   = true;
+      $po["extlink_text"] = hawtra("external link");
+
       $po["token"] = HAWIKI_TOKEN_LINK;
     }
 
@@ -427,7 +461,7 @@ function HAWIKI_parser(&$input, $isFirstColumn)
   }
 
   // plain text - search next syntax element resp. eof
-  if (preg_match("/^(.*?)(~np~|__|''|-=|\^|::|~~|\)\)|\(\(|\[|\|\||\{img |\(:|[A-Z][a-z0-9_]+[A-Z][a-z0-9_]+[\|\w]*|[\r\n]|\{[A-Z]+\([^\)]*\)\}|<[aA]|$)/",
+  if (preg_match("/^(.*?)(~np~|__|''|===|-=|\^|::|~~|\)\)|\(\(|\[|\|\||\{img |\(:|[A-Z][a-z0-9_]+[A-Z][a-z0-9_]+[\|\w]*|[\r\n]|\{[A-Z]+\([^\)]*\)\}|<[aA]|$)/",
       $input, $matches))
   {
     // plain text

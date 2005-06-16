@@ -1,9 +1,9 @@
 {popup_init src="lib/overlib.js"}
 {*Smarty template*}
-<a class="pagetitle" href="tiki-g-monitor_workitems.php">{tr}Monitor workitems{/tr}</a>
-<br /><br />
+<h1><a class="pagetitle" href="tiki-g-monitor_workitems.php">{tr}Monitor workitems{/tr}</a>
+</h1>
 {include file=tiki-g-monitor_bar.tpl}
-<h3>{tr}List of workitems{/tr} ({$cant})</h3>
+<h2>{tr}List of workitems{/tr} ({$cant})</h2>
 
 {* FILTERING FORM *}
 <form action="tiki-g-monitor_workitems.php" method="post">
@@ -119,7 +119,7 @@
 </tr>
 {foreachelse}
 <tr>
-	<td class="{cycle advance=false}" colspan="7">
+	<td class="{cycle advance=false}" colspan="8">
 	{tr}No instances created yet{/tr}
 	</td>
 </tr>	

@@ -16,15 +16,34 @@ function wikiplugin_sql($data, $params) {
 	global $$perm_name;
 
 	if ($$perm_name != 'y') {
-		return ('');
+		return (tra('You do not have permission to use this feature'));
 	}
+
+	$bindvars = array();
+	if ($nb = preg_match_all("/\?/", $data, $out)) {
+		foreach($params as $key => $value) {
+			if (ereg("^[0-9]*$", $key)) {
+				if (strpos($value, "$") === 0) {
+					$value = substr($value, 1);
+					global $$value;
+					$bindvars[$key] = $$value;
+				}
+				else {
+					$bindvars[$key] = $value;
+				}
+			}
+		}
+		if (count($bindvars) != $nb) {
+			return tra('Missing db param');
+		}
+	}		
 
 	$ret = '';
 	$sql_oke = true;
  	$dbmsg = '';
 
 	if ($db == 'local') {
-		$result = $tikilib->query($data,array());
+		$result = $tikilib->query($data,$bindvars);
 	} else {
 
 		$dsnsqlplugin = $tikilib->get_dsn_by_name($db);
@@ -51,7 +70,7 @@ function wikiplugin_sql($data, $params) {
             	   	$dbmsg = "<div>$dberror</div>";
 					$sql_oke = false;
 				} else {
-           			$result=$dbsqlplugin->Execute($data); 
+           			$result=$dbsqlplugin->Execute($data, $bindvars); 
 					if (!$result) {
 						$dberror = $dbsqlplugin->ErrorMsg();
                			$dbmsg = "<div>$dberror</div>";

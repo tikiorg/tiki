@@ -1,6 +1,9 @@
 <h1><a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
+{if $filtervalue}
+<span class="button2"><a href="tiki-view_tracker.php?trackerId={$trackerId}" class="linkbut">{tr}View this tracker items{/tr}</a></span>
+{/if}
 {if $user}
 <span class="button2"><a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;monitor=1" class="linkbut">{tr}{$email_mon}{/tr}</a></span>
 {/if}
@@ -115,6 +118,7 @@ class="prevnext">{tr}All{/tr}</a>
 </div>
 {/if}
 
+{* ------- list headings --- *}
 <table class="normal">
 <tr>
 {if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
@@ -142,6 +146,7 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 {/if}
 {if $tracker_info.useAttachments eq 'y' and  $tracker_info.showAttachments eq 'y'}
 <td class="heading" width="5%">{tr}atts{/tr}</td>
+{if $tiki_p_admin_trackers eq 'y'}<td class="heading" width="5%">{tr}dls{/tr}</td>{/if}
 {/if}
 {if $tiki_p_admin_trackers eq 'y'}
 <td class="heading" width="5%">&nbsp;</td>
@@ -157,6 +162,7 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 </td>
 {/if}
 
+{* ------- list values --- *}
 {section name=ix loop=$items[user].field_values}
 
 {if $items[user].field_values[ix].isTblVisible eq 'y'}
@@ -185,7 +191,7 @@ key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape
 {$items[user].field_values[ix].value|tiki_short_datetime|truncate:255:"..."|default:"&nbsp;"}
 
 {elseif $items[user].field_values[ix].type eq 'c'}
-{$items[user].field_values[ix].value|replace:"y":"Yes"|replace:"n":"No"}
+{$items[user].field_values[ix].value|replace:"y":"Yes"|replace:"n":"No"|replace:"on":"Yes"}
 
 {elseif $items[user].field_values[ix].type eq 'a'}
 {$items[user].field_values[ix].pvalue}
@@ -212,9 +218,9 @@ key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape
 {else}
 {if $items[user].field_values[ix].type eq 'm'}
 <td class="auto">
-{if $items[user].field_values[ix].options_array[0] eq '1'}
+{if $items[user].field_values[ix].options_array[0] eq '1' and $items[user].field_values[ix].value}
 {mailto address=$items[user].field_values[ix].value|escape encode="hex"}
-{elseif $items[user].field_values[ix].options_array[0] eq '2'}
+{elseif $items[user].field_values[ix].options_array[0] eq '2' and $items[user].field_values[ix].value}
 {mailto address=$items[user].field_values[ix].value|escape encode="none"}
 {else}
 {$items[user].field_values[ix].value|escape|default:"&nbsp;"}
@@ -254,7 +260,8 @@ key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape
 {if $tracker_info.useAttachments eq 'y' and $tracker_info.showAttachments eq 'y'}
 <td  style="text-align:center;"><a href="tiki-view_tracker_item.php?itemId={$items[user].itemId}&amp;show=att{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}{section name=mix loop=$fields}{if $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}" 
 link="{tr}list attachments{/tr}"><img src="img/icons/folderin.gif" border="0" alt="{tr}List Attachments{/tr}" 
-/></a>{$items[user].attachments}</td>
+/></a> {$items[user].attachments}</td>
+{if $tiki_p_admin_trackers eq 'y'}<td  style="text-align:center;">{$items[user].downloads}</td>{/if}
 {/if}
 {if $tiki_p_admin_trackers eq 'y'}
 <td><a class="link" href="tiki-view_tracker.php?status={$status}&amp;trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{section 

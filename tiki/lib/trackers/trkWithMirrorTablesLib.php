@@ -129,7 +129,7 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 	function check_col_name($colName, $update, $trackerId) {
 			
 		$preg = preg_match("/^[a-zA-Z][a-zA-Z0-9_]+$/", $colName);
-		echo "<br>CHECK COL NAME : $colName : -> $preg";
+		//echo "<br>CHECK COL NAME : $colName : -> $preg";
 		if ($preg > 0) {
 			if($update == false) {
 				$query = "select distinct `name` from `tiki_tracker_fields` where `trackerId`=?";
@@ -140,17 +140,17 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 				}
 			}
 			// nom de colonne ok
-			echo "TRUE<br>\n";
+			//echo "TRUE<br>\n";
 			return true;
 		}
 		elseif ($preg == 0) {
 			// erreur nom de colonne
-			echo "FALSE<br>\n";
+			//echo "FALSE<br>\n";
 			return false;
 		} 
 		elseif ($preg == false) {
 			// erreur sur l'expression régulière
-			echo "FALSE<br>\n";
+			//echo "FALSE<br>\n";
 			return false;
 		}
 	}
@@ -900,6 +900,7 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 	function replace_tracker($trackerId, $name, $description, $options) {
 		
 		$explicit = $options['useExplicitNames'] == "y" ? true : false;
+		$createNewTracker = $trackerId == false;
 		
 		if(!$explicit || $this->check_table_name($name, $trackerId == true)) {
 		
@@ -909,20 +910,55 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 			elseif(!$explicit) {
 				// TODO code to change from (explicit/non explicit)
 			}
-			
-			// delegation a tracklib
-			$trackerIdNew = parent::replace_tracker($trackerId, $name, $description, $options);
-			
+		
+			// -------------------
+			$now = date("U");
+			if ($trackerId) {
+				$query = "update `tiki_trackers` set `name`=?,`description`=?,`lastModif`=? where `trackerId`=?";
+				$this->query($query,array($name,$description,(int)date('U'),(int) $trackerId));
+			} else {
+				$this->getOne("delete from `tiki_trackers` where `name`=?",array($name),false);
+				$query = "insert into `tiki_trackers`(`name`,`description`,`created`,`lastModif`) values(?,?,?,?)";
+				$this->query($query,array($name,$description,(int) $now,(int) $now));
+				$trackerId = $this->getOne("select max(`trackerId`) from `tiki_trackers` where `name`=? and `created`=?",array($name,(int) $now));
+			}
+			$this->query("delete from `tiki_tracker_options` where `trackerId`=?",array((int)$trackerId));
+			$rating = false;
+			foreach ($options as $kopt=>$opt) {
+				$this->query("insert into `tiki_tracker_options`(`trackerId`,`name`,`value`) values(?,?,?)",array((int)$trackerId,$kopt,$opt));
+				if ($kopt == 'useRatings' and $opt == 'y') {
+					$rating = true;
+				} elseif ($kopt == 'ratingOptions') {
+					$ratingoptions = $opt;
+				} elseif ($kopt == 'showRatings') {
+					$showratings = $opt;
+				}
+			}
+			// -------------------
+		
 			// creation de la table des items
 			// si elle n'existe pas deja.
-			if($trackerId == false && $trackerIdNew) {
-				$this->create_value_table($trackerIdNew, $explicit, $dsn);
+			if($createNewTracker && $trackerId) {
+				$dsn = null;
+				$this->create_value_table($trackerId, $explicit, $dsn);
 			}
 			elseif($explicit) {
 				$query = "alter table $oldName rename to ".$this->EXPLICIT_PREFIX.$name;
 				$this->query($query);
 			}
-			return $trackerIdNew;
+		
+			// -------------------
+			$ratingId = $this->get_field_id($trackerId,tra('Rating'));
+			if ($rating) {
+				if (!$ratingId) $ratingId = 0;
+				if (!isset($ratingoptions)) $ratingoptions = '';
+				if (!isset($showratings)) $showratings = 'n';
+				$this->replace_tracker_field($trackerId,$ratingId,tra('Rating'),'s','-','-',$showratings,'y','-','-',0,$ratingoptions);
+			} else {
+				$this->query('delete from `tiki_tracker_fields` where `fieldId`=?',array((int)$ratingId));
+			}
+			return $trackerId;
+			// -------------------
 		}
 		return false;
 	}

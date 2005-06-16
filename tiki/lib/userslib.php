@@ -864,6 +864,7 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $fin
 
 	    $aux["user"] = $res["login"];
 	    $aux["userId"] = $res["userId"];
+	    $aux["default_group"] = $res["default_group"];
 	    $user = $aux["user"];
 	    $aux["email"] = $res["email"];
 	    $aux["lastLogin"] = $res["lastLogin"];
@@ -887,7 +888,6 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $fin
     function group_inclusion($group, $include) {
 	$query = "insert into `tiki_group_inclusion`(`groupName`,`includeGroup`)
 		values(?,?)";
-
 	$result = $this->query($query, array($group, $include));
     }
 
@@ -993,6 +993,22 @@ function get_included_groups($group) {
 		} else {
 			return unserialize($cachelib->getCached("grouplist"));
 		}
+	}
+	
+	function list_can_include_groups($group) {
+		
+		$list = array();
+    		$query = "select `groupName` from `users_groups`";
+		$result = $this->query($query);
+		while($res = $result->fetchRow()) {
+			if($res['groupName'] != $group) {
+				$includedGroups = $this->get_included_groups($res['groupName']);
+				if(!in_array($group, $includedGroups)) {
+					$list[] = $res['groupName'];
+				}
+			}
+		}
+		return $list;
 	}
 
 
@@ -1225,7 +1241,6 @@ function get_included_groups($group) {
 			$ret[$group] = "included";
 	        }
 	    }
-	    $ret['Anonymous'] = "included";
 	    foreach ($real as $group) {
 		$ret[$group] = "real";
 	    }

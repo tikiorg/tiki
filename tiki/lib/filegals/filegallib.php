@@ -487,6 +487,8 @@ class FileGalLib extends TikiLib {
 				$result = $this->query($query,array($search_text,$row['fileId']));
 			}
 		}
+		include_once("lib/search/refresh-functions.php");
+		refresh_index_files();
 	}
 
 	function get_search_text_for_data($data,$path,$type) {

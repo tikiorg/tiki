@@ -1,4 +1,4 @@
-<a class="pagetitle">{tr}Search results{/tr}</a><br /><br />
+<h1><a class="pagetitle">{tr}Search results{/tr}</a></h1>
 {* The navigation bar *}
 {include file=tiki-directory_bar.tpl}
 <br /><br />
@@ -59,17 +59,17 @@
 <div align="center">
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-directory_search.php?$words={$words}&amp;how={$how}&amp;where={$where}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-directory_search.php?words={$words}&amp;how={$how}&amp;where={$where}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-directory_browse.php?$words={$words}&amp;how={$how}&amp;where={$where}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="tiki-directory_search.php?words={$words}&amp;how={$how}&amp;where={$where}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
-<a class="prevnext" href="tiki-directory_admin_sites.php?parent={$parent}&amp;find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
+<a class="prevnext" href="tiki-directory_search.php?parent={$parent}&amp;words={$words}&amp;how={$how}&amp;where={$where}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
 {/if}

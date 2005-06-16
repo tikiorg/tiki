@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.50 2005-05-18 10:58:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.51 2005-06-16 20:10:49 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -74,7 +74,7 @@ if (isset($_REQUEST["save"]) and isset($_REQUEST["olgroup"]) and !empty($_REQUES
 	check_ticket('admin-groups');
 	$userlib->change_group($_REQUEST["olgroup"],$_REQUEST["name"],$_REQUEST["desc"],$ag_home,$ag_utracker,$ag_gtracker,$ag_ufield,$ag_gfield);
 	$userlib->remove_all_inclusions($_REQUEST["name"]);
-	if (isset($_REQUEST["include_groups"]) and is_array($_REQUEST["include_groups"])) {
+	if (isset($_REQUEST["include_groups"]) and is_array($_REQUEST["include_groups"])) {		
 		foreach ($_REQUEST["include_groups"] as $include) {
 			if ($_REQUEST["name"] != $include) {
 				$userlib->group_inclusion($_REQUEST["name"], $include);
@@ -197,7 +197,8 @@ if (isset($_REQUEST["group"])and $_REQUEST["group"]) {
 
 	$groupperms = $re["perms"];
 	
-	$allgroups = $userlib->list_all_groups();
+	//$allgroups = $userlib->list_all_groups();
+	$allgroups = $userlib->list_can_include_groups($re["groupName"]);
 	$rs = $userlib->get_included_groups($_REQUEST["group"]);
 
 	foreach ($allgroups as $rr) {

@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/hec.css,v 1.2 2005-05-18 11:02:33 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/hec.css,v 1.3 2005-06-16 20:11:05 mose Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -33,9 +33,6 @@ H1, .pagetitle {
 	color: #042D56;
 	font-family: Arial, Helvetica, sans-serif;
 	text-align: left;
-/*	border-left-width: 40px;
-	border-left-style: solid;
-	border-left-color: #C88FAF; */
 }
 .pagetitle {
 	border-left-width: 40px;
@@ -47,62 +44,45 @@ H1, .pagetitle {
 a.pagetitle {
 	text-decoration: none;
 }
-.rubpresentation, .tiki_wiki .pagetitle, .rubmanifestations, .tiki_calendar .pagetitle, .rubcommuniquons, .tiki_forums .pagetitle, .tiki_surveys .pagetitle, .tiki_faqs .pagetitle, .tiki_cms .pagetitle, .tiki_user_messages .pagetitle, .tiki_newsletters .pagetitle, .rubbibliotheque, .tiki_file_galleries .pagetitle, .tiki_galleries .pagetitle, .rublastarticle, .rublastcreatedfaqs, .rubforumslasttopics, .rublastfiles, .tiki_mytiki .pagetitle, .tiki_admin .pagetitle {
+.tiki_wiki .pagetitle, .tiki_calendar .pagetitle, .tiki_forums .pagetitle, .tiki_surveys .pagetitle, .tiki_faqs .pagetitle, .tiki_cms .pagetitle, .tiki_user_messages .pagetitle, .tiki_newsletters .pagetitle,
+ .tiki_file_galleries .pagetitle, .tiki_galleries .pagetitle, .tiki_mytiki .pagetitle, .tiki_admin .pagetitle {
 	border-left-width: 40px;
 	border-left-style: solid;
 	margin-top: 10px;
 	margin-left: -40px;
 }
-.rubpresentation, .tiki_wiki .pagetitle {
+.tiki_wiki .pagetitle {
 	border-left-color: #F48E00;
 	margin-right: 0px;
 	margin-bottom: 10px;
 	margin-left: 0px;
 }
-.rubmanifestations, .tiki_calendar .pagetitle {
+.tiki_calendar .pagetitle {
 	border-left-color: #9FA160;
 	margin-right: 0px;
 	margin-bottom: 10px;
 	margin-left: 0px;
 }
-.rubcommuniquons, .tiki_forums .pagetitle, .tiki_surveys .pagetitle, .tiki_faqs .pagetitle, .tiki_cms .pagetitle, .tiki_user_messages .pagetitle , .tiki_newsletters .pagetitle {
+.tiki_forums .pagetitle, .tiki_surveys .pagetitle, .tiki_faqs .pagetitle, .tiki_cms .pagetitle, .tiki_user_messages .pagetitle , .tiki_newsletters .pagetitle {
 	border-left-color: #4E6996;
 	margin-right: 0px;
 	margin-bottom: 10px;
 	margin-left: 0px;
 }
-.rubbibliotheque, .tiki_file_galleries .pagetitle, .tiki_galleries .pagetitle {
+.tiki_file_galleries .pagetitle, .tiki_galleries .pagetitle {
 	border-left-color: #8D93A1;
 	margin-right: 0px;
 	margin-bottom: 10px;
 	margin-left: 0px;
 }
-.rublastarticle, .tiki_admin .pagetitle {
+.tiki_admin .pagetitle {
 	border-left-color: #997090;
-	margin-right: 0px;
-	margin-bottom: 10px;
-	margin-left: 0px;
-}
-.rublastcreatedfaqs {
-	border-left-color: #032D57;
-	margin-right: 0px;
-	margin-bottom: 10px;
-	margin-left: 0px;
-}
-.rubforumslasttopics {
-	border-left-color: #562543;
 	margin-right: 0px;
 	margin-bottom: 10px;
 	margin-left: 0px;
 }
 .tiki_mytiki .pagetitle {
 	border-left-color: #562543;
-	margin-right: 0px;
-	margin-bottom: 10px;
-	margin-left: 0px;
-}
-.rublastfiles {
-	border-left-color: #ACBAC7;
 	margin-right: 0px;
 	margin-bottom: 10px;
 	margin-left: 0px;
@@ -351,116 +331,35 @@ div.box a {
 	margin : 0;
 	font-weight: bold;
 	color: #042D56;
-	padding-left: 3px;
 	display: block;
-	padding-top: 0px;
-	padding-right: 0px;
-	padding-bottom: 0px;
+	padding: 0 0 0 2px;
 	text-decoration: none;
 }
 .box-title a {
 	text-decoration: none;
 }
-.presentation .box-title, .Manifestations .box-title, .communiquons .box-title, .Bibliotheque .box-title, .last_articles, .last_created_faqs, .forums_last_topics, .last_files  {
+#leftcolumn .box-title {
 	margin : 0;
-	border-left-width: 7px;
+	padding: 0;
+	border-left-width: 4px;
 	border-left-style: solid;
-	padding-left: 3px;
-	display: block;
-	padding-top: 0px;
-	padding-right: 0px;
-	padding-bottom: 0px;
-}
-.presentation, .presentation .box-title {
-	border-left-color: #F48E00;
-}
-.Manifestations, .Manifestations .box-title{
-	border-left-color: #9FA160;
-}
-.communiquons, .communiquons .box-title{
-	border-left-color: #4E6996;
-}
-.Bibliotheque, .Bibliotheque .box-title{
-	border-left-color: #8D93A1;
-}
-.last_articles {
-	border-left-color: #997090;
-}
-.last_created_faqs {
-	border-left-color: #032D57;
-}
-.forums_last_topics {
-	border-left-color: #562543;
-}
-.last_files {
-	border-left-color: #ACBAC7;
+	border-left-color: #4E6996; 
+/*#F48E00;#8D93A1;#9FA160*/
 }
 div.box-title table {
 	width : 100%;
 }
-div.box-data {
+#leftcolumn div.box-data {
 	overflow : hidden;
 	color : #042D56;
-	padding : 0px 5px 0px 0px;
+	padding : 0px 5px 0px 2px;
 	font-size : 10px;
-}
-#presentation {
-	border-left-width: 7px;
-	border-left-style: solid;
-	border-left-color: #F48E00;
-	margin-top: 2px;
-	margin-bottom: 5px;
-}
-#Manifestations {
-	border-left-width: 7px;
-	border-left-style: solid;
-	border-left-color: #9FA160;
-	margin-top: 2px;
-	margin-bottom: 5px;
-}
-#communiquons {
 	border-left-width: 7px;
 	border-left-style: solid;
 	border-left-color: #4E6996;
 	margin-top: 2px;
 	margin-bottom: 5px;
 }
-#Bibliotheque {
-	border-left-width: 7px;
-	border-left-style: solid;
-	border-left-color: #8D93A1;
-	margin-top: 2px;
-	margin-bottom: 5px;
-}
-#last_articles {
-	border-left-width: 7px;
-	border-left-style: solid;
-	border-left-color: #997090;
-	margin-top: 2px;
-	margin-bottom: 5px;
-}
-#last_created_faqs {
-	border-left-width: 7px;
-	border-left-style: solid;
-	border-left-color: #032D57;
-	margin-top: 2px;
-	margin-bottom: 5px;
-}
-#forums_last_topics {
-	border-left-width: 7px;
-	border-left-style: solid;
-	border-left-color: #562543;
-	margin-top: 2px;
-	margin-bottom: 5px;
-}
-#last_files {
-	border-left-width: 7px;
-	border-left-style: solid;
-	border-left-color: #ACBAC7;
-	margin-top: 2px;
-	margin-bottom: 5px;
-}
-/*.login_box .box-title, .search_box .box-title, .messages_unread_messages .box-title, .Fast_admin .box-title, .who_is_there .box-title, .mnu_application_menu .box-title, .switch_lang .box-title, .featured_links .box-title { */
 #rightcolumn .box-title {
 	background-color: #997090;
 	font-size: 10px;
@@ -1698,13 +1597,13 @@ div.messureadbody {
 	text-align: left;
 }
 .Cal0 {
-	background-image: url(hec/attente2.gif);
+	background-image: url(hec/attente.gif);
 }
 .Cal1 {
-	background-image: url(hec/confirmer2.gif);
+	background-image: url(hec/confirmer.gif);
 }
 .Cal2 {
-	background-image: url(hec/annuler2.gif);
+	background-image: url(hec/annuler.gif);
 }
 
 .Cal0:before {
@@ -1955,66 +1854,6 @@ div.tabrow {
 	text-align: center;
 	margin-bottom: 10px;
 	width: 100%;
-} 
-.confirmer {
-   /*font-family: Verdana, Arial, Helvetica, sans-serif;
-   font-size: 10px;
-   background-image: url(confirmer.gif);
-   height: 8px;
-   width: 8px;
-   padding-right: 30px;
-   padding-left: 12px;
-   background-repeat: no-repeat;
-   background-position: left;*/
-
-font-family: Verdana, Arial, Helvetica, sans-serif;
-   font-size: 10px;
-   background-image: url(confirmer.gif);
-   height: 8px;
-   padding-right: 30px;
-   padding-left: 12px;
-   background-repeat: no-repeat;
-   background-position: left; 
-}
-.attente {
-  /* font-family: Verdana, Arial, Helvetica, sans-serif;
-   font-size: 10px;
-   background-image: url(attente.gif);
-   height: 8px;
-   width: 8px;
-   padding-right: 30px;
-   padding-left: 12px;
-   background-repeat: no-repeat;
-   background-position: left;*/
-
-font-family: Verdana, Arial, Helvetica, sans-serif;
-   font-size: 10px;
-   background-image: url(attente.gif);
-   height: 8px;
-   padding-right: 30px;
-   padding-left: 12px;
-   background-repeat: no-repeat;
-   background-position: left; 
-}
-.annuler {
-   /*font-family: Verdana, Arial, Helvetica, sans-serif;
-   font-size: 10px;
-   background-image: url(annuler.gif);
-   height: 8px;
-   width: 8px;
-   padding-right: 30px;
-   padding-left: 12px;
-   background-repeat: no-repeat;
-   background-position: left;*/
-
-font-family: Verdana, Arial, Helvetica, sans-serif;
-   font-size: 10px;
-   background-image: url(annuler.gif);
-   height: 8px;
-   padding-right: 30px;
-   padding-left: 12px;
-   background-repeat: no-repeat;
-   background-position: left; 
 } 
 td.middle {
 	vertical-align : middle;

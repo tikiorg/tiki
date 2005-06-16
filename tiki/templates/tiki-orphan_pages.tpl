@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-orphan_pages.tpl,v 1.17 2005-05-18 11:03:19 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-orphan_pages.tpl,v 1.18 2005-06-16 20:11:08 mose Exp $ *}
 
-<a href="tiki-orphan_pages.php" class="pagetitle">{tr}Orphan Pages{/tr}</a><br /><br />
+<h1><a href="tiki-orphan_pages.php" class="pagetitle">{tr}Orphan Pages{/tr}</a></h1>
 <table class="findtable">
 <tr><td class="findtitle">{tr}Find{/tr}</td>
    <td class="findtitle">

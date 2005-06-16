@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-live_support_admin.php">
+<h1><a class="pagetitle" href="tiki-live_support_admin.php">
 {tr}Live support system{/tr}</a>
 
   
@@ -13,7 +13,7 @@
 <img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}
 
 
-<br /><br />
+</h1>
 <a class="linkbut" {jspopup href="tiki-live_support_console.php"}>{tr}Open operator console{/tr}</a>
 <a class="linkbut" {jspopup width="300" height="450" href="tiki-live_support_client.php"}> {tr}Open client window{/tr}</a>
 <a class="linkbut" href="tiki-live_support_admin.php?show_html">{tr}Generate HTML{/tr}</a>
@@ -37,7 +37,7 @@
 	</table>	
 {/if}
 {if count($online_operators) > 0}
-<h3>{tr}Online operators{/tr}</h3>
+<h2>{tr}Online operators{/tr}</h2>
 <table class="normal">
 	<tr>
 		<td  class="heading" style="text-align:center;">	
@@ -82,7 +82,7 @@
 {/if}
 
 {if count($offline_operators) > 0}
-<h3>{tr}Offline operators{/tr}</h3>
+<h2>{tr}Offline operators{/tr}</h2>
 {cycle values='odd,even' print=false}
 <table class="normal">
 	<tr>
@@ -124,7 +124,7 @@
 {/if}
 
 {if $tiki_p_live_support_admin eq 'y'}
-<h3>{tr}Add an operator to the system{/tr}</h3>
+<h2>{tr}Add an operator to the system{/tr}</h2>
 <small>{tr}Operators must be tiki users{/tr}</small>
 <form method="post" action="tiki-live_support_admin.php">
 <table class="normal">

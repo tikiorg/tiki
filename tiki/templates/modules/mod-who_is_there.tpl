@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-who_is_there.tpl,v 1.12 2005-05-18 11:03:32 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-who_is_there.tpl,v 1.13 2005-06-16 20:11:14 mose Exp $ *}
 
 {tikimodule title="{tr}Online users{/tr}" name="who_is_there" flip=$module_params.flip decorations=$module_params.decorations}
 <div>
@@ -15,7 +15,11 @@
 {/foreach}
 {foreach key=ix item=online_user from=$online_users}
 {if $user and $feature_messages eq 'y' and $tiki_p_messages eq 'y'}
-<a class="linkmodule" href="messu-compose.php?to={$online_user.user}" title="{tr}Send a message to{/tr} {$online_user.user}"><img src="img/icons/icon_ultima.gif" width="18" height="9" hspace="2" vspace="0" border="0" alt="{tr}Send message{/tr}" /></a>
+{if $online_user.allowMsgs eq 'n'}
+<img src="img/icons/icon_ultima_no.gif" width="18" height="9" hspace="2" vspace="0" border="0" alt="->" />
+{else}
+<a class="linkmodule" href="messu-compose.php?to={$online_user.user}" title="{tr}Send a message to{/tr} {$online_user.user}"><img src="img/icons/icon_ultima.gif" width="18" height="9" hspace="2" vspace="0" border="0" alt="{tr}Send a message{/tr}" /></a>
+{/if}
 {/if}
 {if $online_user.user_information eq 'public'}
 {math equation="x - y" x=$smarty.now y=$online_user.timestamp assign=idle}
@@ -35,7 +39,11 @@
 </div>
 {foreach key=ix item=online_user from=$online_users}
 {if $user and $feature_messages eq 'y' and $tiki_p_messages eq 'y'}
-<a class="linkmodule" href="messu-compose.php?to={$online_user.user}" title="{tr}Send a message to{/tr} {$online_user.user}"><img src="img/icons/icon_ultima.gif" width="18" height="9" hspace="2" vspace="0" border="0" alt="{tr}Send message{/tr}" /></a>
+{if $online_user.allowMsgs eq 'n'}
+<img src="img/icons/icon_ultima_no.gif" width="18" height="9" hspace="2" vspace="0" border="0" alt="->" />
+{else}
+<a class="linkmodule" href="messu-compose.php?to={$online_user.user}" title="{tr}Send a message to{/tr} {$online_user.user}"><img src="img/icons/icon_ultima.gif" width="18" height="9" hspace="2" vspace="0" border="0" alt="{tr}Send a message{/tr}" /></a>
+{/if}
 {/if}
 {if $online_user.user_information eq 'public'}
 {math equation="x - y" x=$smarty.now y=$online_user.timestamp assign=idle}

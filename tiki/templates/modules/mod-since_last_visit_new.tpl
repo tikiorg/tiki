@@ -1,6 +1,6 @@
 {if $user}
   {assign var=module_title value=$slvn_info.label}
-  {tikimodule title="$module_title" name="since_last_visit" flip=$module_params.flip decorations=$module_params.decorations}
+  {tikimodule title="$module_title" name="since_last_visit_new" flip=$module_params.flip decorations=$module_params.decorations}
     <table>
       <tr height="20">
         <td align="center">

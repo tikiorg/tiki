@@ -1,4 +1,4 @@
-<h2>{tr}Rollback page{/tr}: {$page} {tr}to_version{/tr}: {$version}</h2>
+<h1>{tr}Rollback page{/tr}: {$page} {tr}to_version{/tr}: {$version}</h1>
 <div class="wikitext">{$preview.data}</div>
 <div align="center">
 <form action="tiki-rollback.php?page={$page|escape}&amp;version={$version|escape}&amp;rollback=y" method="post">

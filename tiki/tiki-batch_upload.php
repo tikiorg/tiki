@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-batch_upload.php,v 1.3 2005-05-18 10:58:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-batch_upload.php,v 1.4 2005-06-16 20:10:49 mose Exp $
 
 require_once ('tiki-setup.php');
 include_once ('lib/imagegals/imagegallib.php');
@@ -49,11 +49,16 @@ function getdircontent($sub) {
 	global $allowed_types;
 	global $a_img;
 	global $a_path;
-	global $imgdir;
+	global $imgdir, $smarty;
 	
 	$tmp=$imgdir;
 	if ($sub <> "") $tmp .= '/'.$sub;
-	$dimg = opendir($tmp);
+	if (!@($dimg = opendir($tmp))) {
+		$msg= tra("Invalid directory name");
+		$smarty->assign('msg', $msg); 
+		$smarty->display("error.tpl");
+		die;
+	}
 	while((false!==($imgfile=readdir($dimg)))) {
 		// ignore . and ..
 		if ($imgfile != "." && $imgfile != "..") {

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.53 2005-05-18 11:02:59 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.54 2005-06-16 20:11:06 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-calendar.php">{tr}Calendar{/tr}</a></h1>
@@ -17,7 +17,9 @@
 {cycle name=tabs values="1,2,3" print=false advance=false}
 <div id="page-bar">
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Calendar{/tr}</a></span>
+{if $tiki_p_view_tiki_calendar eq "y" or $listcals|@count > 1}
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Filter{/tr}</a></span>
+{else}<span id="tab{cycle name=tabs}" />{/if}
 {if $modifTab or $modifTab eq "0"}
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Edit/Create{/tr}</a></span>
 {/if}
@@ -134,7 +136,7 @@ firstDay : {$firstDayofWeek}
 <br /><a href="{$listevents[w].web}" target="_other" class="calweb" title="{$listevents[w].web}"><img src="img/icons/external_link.gif" width="7" height="7" alt=">" /></a>
 {/if}
 </td>
-<td>{if $tiki_p_change_events eq "y"}<a class="link" href="tiki-calendar.php?calitemId={$listevents[w].calitemId}&amp;editmode=add{if $feature_tabs ne 'y'}#add{/if}" title="{tr}edit{/tr}"><img src="img/icons/edit.gif" border="0"  width="20" height="16" alt="{tr}edit{/tr}" /></a><a class="link" href="tiki-calendar.php?calitemId={$listevents[w].calitemId}&amp;delete=1" title="{tr}remove{/tr}"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt='{tr}remove{/tr}'>{/if}</td></tr>
+<td>{if $listevents[w].modifiable eq "y"}<a class="link" href="tiki-calendar.php?calitemId={$listevents[w].calitemId}&amp;editmode=add{if $feature_tabs ne 'y'}#add{/if}" title="{tr}edit{/tr}"><img src="img/icons/edit.gif" border="0"  width="20" height="16" alt="{tr}edit{/tr}" /></a><a class="link" href="tiki-calendar.php?calitemId={$listevents[w].calitemId}&amp;delete=1" title="{tr}remove{/tr}"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt='{tr}remove{/tr}'>{/if}</td></tr>
 {/section}
 </td></tr>
 </table>
@@ -169,7 +171,7 @@ firstDay : {$firstDayofWeek}
 <div {if $hrows[$h][hr].calname ne ""}class="Cal{$hrows[$h][hr].type}"{/if} style="clear:both">
 {$hours[$h]}:{$hrows[$h][hr].mins} : {if $hrows[$h][hr].calname eq ""}{$hrows[$h][hr].type} : {/if}
 <a href="{$hrows[$h][hr].url}" class="linkmenu">{$hrows[$h][hr].name}</a>
-{if $hrows[$h][hr].calname ne ""}{$hrows[$h][hr].parsedDescription}{else}{$hrows[$h][hr].description}{/if}{if ($calendar_view_tab eq "y" or $tiki_p_change_events eq "y") and $hrows[$h][hr].calname ne ""}<span  style="float:right;">{if $calendar_view_tab eq "y"}<a href="tiki-calendar.php?calitemId={$hrows[$h][hr].calitemId}&amp;editmode=details"{if $feature_tabs ne 'y'}#details{/if}" title="{tr}details{/tr}"><img src="img/icons/zoom.gif" border="0" width="16" height="16" alt="{tr}zoom{/tr}" /></a>&nbsp;{/if}{if $tiki_p_change_events eq "y"}<a href="tiki-calendar.php?calitemId={$hrows[$h][hr].calitemId}&amp;editmode=1{if $feature_tabs ne 'y'}#add{/if}" title="{tr}edit{/tr}"><img src="img/icons/edit.gif" border="0"  width="20" height="16" alt="{tr}edit{/tr}" /></a><a href="tiki-calendar.php?calitemId={$hrows[$h][hr].calitemId}&amp;delete=1"  title="{tr}remove{/tr}" /><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt="{tr}remove{/tr}" /></a>{/if}</span>{/if}
+{if $hrows[$h][hr].calname ne ""}{$hrows[$h][hr].parsedDescription}{else}{$hrows[$h][hr].description}{/if}{if ($calendar_view_tab eq "y" or $tiki_p_change_events eq "y") and $hrows[$h][hr].calname ne ""}<span  style="float:right;">{if $calendar_view_tab eq "y"}<a href="tiki-calendar.php?calitemId={$hrows[$h][hr].calitemId}&amp;editmode=details"{if $feature_tabs ne 'y'}#details{/if}" title="{tr}details{/tr}"><img src="img/icons/zoom.gif" border="0" width="16" height="16" alt="{tr}zoom{/tr}" /></a>&nbsp;{/if}{if $hrows[$h][hr].modifiable eq "y"}<a href="tiki-calendar.php?calitemId={$hrows[$h][hr].calitemId}&amp;editmode=1{if $feature_tabs ne 'y'}#add{/if}" title="{tr}edit{/tr}"><img src="img/icons/edit.gif" border="0"  width="20" height="16" alt="{tr}edit{/tr}" /></a><a href="tiki-calendar.php?calitemId={$hrows[$h][hr].calitemId}&amp;delete=1"  title="{tr}remove{/tr}" /><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt="{tr}remove{/tr}" /></a>{/if}</span>{/if}
 </div>
 {/section}
 </td></tr>
@@ -270,7 +272,7 @@ class="linkmenu">{$cell[w][d].items[items].name|truncate:$trunc:".."|default:"..
 {if $modifTab or $modifTab eq "0"}
 
 {* ................................................................................... *}
-{if (($calitemId > 0 and $tiki_p_change_events eq 'y') or ($tiki_p_add_events eq 'y')) && $editmode ne "details"}
+{if (($calitemId > 0 and $modifiable eq 'y') or ($tiki_p_add_events eq 'y' and $calitemId == 0)) && $editmode ne "details"}
 
 {* .............................................. *}{if $calitemId}
 <h2>{tr}Edit Calendar Item{/tr}</h2>
@@ -300,7 +302,9 @@ class="linkmenu">{$cell[w][d].items[items].name|truncate:$trunc:".."|default:"..
 <tr><td class="formcolor">{tr}Calendar{/tr}</td><td class="formcolor">
 <select name="calendarId" onchange="formAddItem.submit();">
 {foreach item=lc from=$listcals}
+{if ($infocals.$lc.tiki_p_add_events eq "y" or $infocals.$lc.tiki_change_events eq "y")}
 <option value="{$lc|escape}" {if $defaultAddCal eq $lc}selected="selected"{/if}>{$infocals.$lc.name}</option>
+{/if}
 {/foreach}
 </select>
 </td></tr>
@@ -349,7 +353,7 @@ class="linkmenu">{$cell[w][d].items[items].name|truncate:$trunc:".."|default:"..
 <tr><td  class="formcolor">{tr}Start{/tr}</td><td class="formcolor">
 {if $feature_jscalendar eq 'y'}
 <input type="hidden" name="start_date_input" value="{$start}" id="start_date_input" />
-<span id="start_date_display" class="daterow">{$start|date_format:$daformat}</span>
+<a href="#"><span id="start_date_display" class="daterow">{$start|date_format:$daformat}</span></a>
 <script type="text/javascript">
 {literal}Calendar.setup( { {/literal}
 date        : "{$start|date_format:"%B %e, %Y %H:%M"}",      // initial date
@@ -378,7 +382,7 @@ timeFormat : {$timeFormat12_24}
 <input type="radio" name="endChoice" value="date" checked="checked" />
 {if $feature_jscalendar eq 'y'}
 <input type="hidden" name="end_date_input" value="{$end}" id="end_date_input" />
-<span id="end_date_display" class="daterow">{$end|date_format:$daformat}</span>
+<a href="#"><span id="end_date_display" class="daterow">{$end|date_format:$daformat}</span></a>
 <script type="text/javascript">
 {literal}Calendar.setup( { {/literal}
 date        : "{$end|date_format:"%B %e, %Y %H:%M"}",      // initial date
@@ -478,7 +482,9 @@ timeFormat : {$timeFormat12_24}
 {tr}save_to{/tr}
 <select name="calendarId2">
 {foreach item=lc from=$listcals}
+{if ($infocals.$lc.tiki_p_add_events eq "y" or $infocals.$lc.tiki_change_events eq "y")}
 <option value="{$lc|escape}" {if $defaultAddCal eq $lc}selected="selected"{/if}>{$infocals.$lc.name}</option>
+{/if}
 {/foreach}
 </select>
 

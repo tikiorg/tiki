@@ -1,31 +1,18 @@
 {popup_init src="lib/overlib.js"}
 {*Smarty template*}
-<a class="pagetitle" href="tiki-g-monitor_instances.php">{tr}Monitor instances{/tr}</a>
+<h1><a class="pagetitle" href="tiki-g-monitor_instances.php">{tr}Monitor instances{/tr}</a>
 
-
-  
       {if $feature_help eq 'y'}
 <a href="{$helpurl}GalaxiaMonitorInstances" target="tikihelp" class="tikihelp" title="{tr}Galaxia Monitor Instances{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'>{/if}
-                        {if $feature_help eq 'y'}</a>{/if}
-
-
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 
       {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-g-monitor_instances.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Galaxia Monitor Instances tpl{/tr}">
-<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'> {/if}
-{if $feature_view_tpl eq 'y'}</a>{/if}
+<a href="tiki-edit_templates.php?template=tiki-g-monitor_instances.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Galaxia Monitor Instances tpl{/tr}"><img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}
 
 
+</h1>
 
-
-
-
-
-
-<br /><br />
-
-<h3>{tr}List of instances{/tr} ({$cant})</h3>
+<h2>{tr}List of instances{/tr} ({$cant})</h2>
 
 {* FILTERING FORM *}
 <form action="tiki-g-monitor_instances.php" method="post">
@@ -136,7 +123,7 @@
 </tr>
 {foreachelse}
 <tr>
-	<td class="{cycle advance=false}" colspan="6">
+	<td class="{cycle advance=false}" colspan="7">
 	{tr}No instances created yet{/tr}
 	</td>
 </tr>	

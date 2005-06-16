@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-replicate.php">{tr}Replicate{/tr}</a>
+<h1><a class="pagetitle" href="tiki-replicate.php">{tr}Replicate{/tr}</a>
 
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Replicate" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}system admin{/tr}">
@@ -7,7 +7,7 @@
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-replicate.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}system admin tpl{/tr}">
 <img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}
-<br /><br />
+</h1>
 
 {if $tikifeedback}
 <br />{section name=n loop=$tikifeedback}<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">{$tikifeedback[n].mes}</div>{/section}

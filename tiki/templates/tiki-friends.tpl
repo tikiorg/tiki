@@ -1,4 +1,4 @@
-<a href="tiki-friends.php" class="pagetitle">{tr}Friendship Network{/tr}</a>
+<h1><a href="tiki-friends.php" class="pagetitle">{tr}Friendship Network{/tr}</a>
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}Friendship+Network" target="tikihelp" class="tikihelp" title="{tr}Friendship Network{/tr}">
@@ -9,7 +9,7 @@
 <a href="tiki-edit_templates.php?template=tiki-friends.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}friends tpl{/tr}">
 <img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}
 
-<br /><br />
+</h1>
 
 {if $msg}
 <center>{$msg}</center>

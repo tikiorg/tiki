@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.67 2005-05-18 10:58:59 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.68 2005-06-16 20:10:50 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -75,17 +75,14 @@ if (isset($_REQUEST["prefs"])) {
 	if (isset($_REQUEST["userbreadCrumb"]))
 		$tikilib->set_user_preference($userwatch, 'userbreadCrumb', $_REQUEST["userbreadCrumb"]);
 
-	if ($change_language == 'y') {
-		if (isset($_REQUEST["language"])) {
-			$tikilib->set_user_preference($userwatch, 'language', $_REQUEST["language"]);
-
-			$smarty->assign('language', $_REQUEST["language"]);
-			include ('lang/' . $_REQUEST["language"] . '/language.php');
-		}
+	if (($tiki_p_admin || $change_language == 'y') && isset($_REQUEST["language"])) {
+		$tikilib->set_user_preference($userwatch, 'language', $_REQUEST["language"]);
 	}
 
-	if (isset($_REQUEST["language"]))
+	if ($userwatch == $user && isset($_REQUEST["language"])) {
 		$smarty->assign('language', $_REQUEST["language"]);
+		include ('lang/' . $_REQUEST["language"] . '/language.php');
+	}
 
 	if (isset($_REQUEST['display_timezone'])) {
 		$tikilib->set_user_preference($userwatch, 'display_timezone', $_REQUEST['display_timezone']);
@@ -94,7 +91,6 @@ if (isset($_REQUEST["prefs"])) {
 	}
 
 	$tikilib->set_user_preference($userwatch, 'user_information', $_REQUEST['user_information']);
-
 	if (isset($_REQUEST['user_dbl']) && $_REQUEST['user_dbl'] == 'on') {
 		$tikilib->set_user_preference($userwatch, 'user_dbl', 'y');
 
@@ -374,7 +370,8 @@ $smarty->assign('flags', $flags);
 
 // Get preferences
 $style = $tikilib->get_user_preference($userwatch, 'theme', $style);
-//$language = $tikilib->get_user_preference($userwatch, 'language', $language);
+$langUser = $tikilib->get_user_preference($userwatch, 'language', $language);
+$smarty->assign('langUser', $langUser);
 $smarty->assign_by_ref('style', $style);
 $realName = $tikilib->get_user_preference($userwatch, 'realName', '');
 $country = $tikilib->get_user_preference($userwatch, 'country', 'Other');
@@ -401,6 +398,8 @@ $smarty->assign('avatar', $avatar);
 $smarty->assign('mailCharset', $tikilib->get_user_preference($userwatch, 'mailCharset', $tikilib->get_preference('default_mail_charset', 'utf-8')));
 $mailCharsets = array('utf-8', 'iso-8859-1');
 $smarty->assign_by_ref('mailCharsets', $mailCharsets);
+$user_dbl = $tikilib->get_user_preference($userwatch, 'user_dbl', 'y');
+$smarty->assign_by_ref('user_dbl', $user_dbl);
 
 $user_information = $tikilib->get_user_preference($userwatch, 'user_information', 'public');
 $smarty->assign('user_information', $user_information);

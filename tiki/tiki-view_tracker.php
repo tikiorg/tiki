@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.80 2005-05-18 10:59:00 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.81 2005-06-16 20:10:51 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -523,7 +523,9 @@ include "tiki-pagination.php";
 
 if ($tracker_info['useAttachments'] == 'y' && $tracker_info['showAttachments'] == 'y') {
 	foreach ($items["data"] as $itkey=>$oneitem) {
-		$items["data"][$itkey]['attachments'] = $trklib->get_item_nb_attachments($items["data"][$itkey]['itemId']);
+		$res = $trklib->get_item_nb_attachments($items["data"][$itkey]['itemId']);
+		$items["data"][$itkey]['attachments']  = $res['attachments'];
+		$items["data"][$itkey]['downloads'] = $res['downloads'];
 	}
 }
 

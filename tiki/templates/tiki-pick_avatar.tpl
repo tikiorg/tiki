@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-pick_avatar.php">{tr}Pick your avatar{/tr}</a><br /><br />
+<h1><a class="pagetitle" href="tiki-pick_avatar.php">{tr}Pick your avatar{/tr}</a></h1>
 {include file=tiki-mytiki_bar.tpl}
 <br /><br />
 <table class="normal">

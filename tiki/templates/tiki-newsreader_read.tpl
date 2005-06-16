@@ -1,5 +1,5 @@
 {*Smarty template*}
-<a class="pagetitle" href="tiki-newsreader_read.php?offset={$offset}&amp;id={$id}&amp;serverId={$serverId}&amp;server={$server}&amp;port={$port}&amp;username={$username}&amp;password={$password}&amp;group={$group}">{tr}Reading article from{/tr}:{$group}</a><br /><br />
+<h1><a class="pagetitle" href="tiki-newsreader_read.php?offset={$offset}&amp;id={$id}&amp;serverId={$serverId}&amp;server={$server}&amp;port={$port}&amp;username={$username}&amp;password={$password}&amp;group={$group}">{tr}Reading article from{/tr}:{$group}</a></h1>
 {include file=tiki-mytiki_bar.tpl}
 <br /><br />
 <a class="linkbut" href="tiki-newsreader_servers.php">{tr}Back to servers{/tr}</a>

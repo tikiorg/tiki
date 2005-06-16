@@ -1,4 +1,4 @@
-<h1><a class="pagetitle" href="tiki-user_preferences.php">{tr}User Preferences{/tr}</a>
+<h1>{if $userwatch ne $user}<a class="pagetitle" href="tiki-user_preferences.php?view_user={$userwatch}">{tr}User Preferences{/tr}: {$userwatch}</a>{else}<a class="pagetitle" href="tiki-user_preferences.php">{tr}User Preferences{/tr}</a>{/if}
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}User+Preferences" target="tikihelp" class="tikihelp" title="{tr}User Preferences{/tr}">
@@ -10,7 +10,7 @@
 <img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}'></a>
 {/if}</h1>
 
-{include file=tiki-mytiki_bar.tpl}
+{if $userwatch eq $user or $userwatch eq ""}{include file=tiki-mytiki_bar.tpl}{/if}
 <br />
 {if $tikifeedback}
 <div class="simplebox highlight">{section name=n loop=$tikifeedback}{$tikifeedback[n].mes}<br />{/section}</div>
@@ -146,7 +146,7 @@
     {section name=ix loop=$languages}
       {if count($available_languages) == 0 || in_array($languages[ix].value, $available_languages)}
         <option value="{$languages[ix].value|escape}"
-          {if $language eq $languages[ix].value}selected="selected"{/if}>
+          {if $langUser eq $languages[ix].value}selected="selected"{/if}>
           {$languages[ix].name}
         </option>
       {/if}

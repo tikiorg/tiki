@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-import_structuredtext.php">{tr}Import pages from a Structured Text Dump{/tr}</a>
+<h1><a class="pagetitle" href="tiki-import_structuredtext.php">{tr}Import pages from a Structured Text Dump{/tr}</a>
 
 
   
@@ -13,11 +13,7 @@
 <img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}
 
 
-
-
-
-
-<br /><br />
+</h1>
 
 <form method="post" action="tiki-import_structuredtext.php">
 <table class="normal">

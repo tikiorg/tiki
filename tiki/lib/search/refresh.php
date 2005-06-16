@@ -56,7 +56,11 @@ function refresh_search_index() {
       $locs[]="random_refresh_imggals";
       $locs[]="random_refresh_img";
     }
-
+    global $feature_file_galleries;
+    if ($feature_file_galleries == "y") {
+      $locs[]="random_refresh_filegal";
+      $locs[]="random_refresh_file";
+    }
 
     // comments can be everywhere?
     $locs[]="random_refresh_index_comments";

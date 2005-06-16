@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.273 2005-06-07 13:36:01 toggg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.274 2005-06-16 20:10:50 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1496,6 +1496,7 @@ if($useGroupHome == 'y') {
     }
 }
 
+$smarty->assign('default_group',$group);
 $smarty->assign('tikiIndex',$tikiIndex);
 
 $user_dbl = 'y';
