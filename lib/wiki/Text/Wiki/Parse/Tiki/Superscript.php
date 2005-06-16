@@ -13,7 +13,7 @@
 * 
 * @license LGPL
 * 
-* @version $Id: Superscript.php,v 1.2 2005-06-16 05:50:51 papercrane Exp $
+* @version $Id: Superscript.php,v 1.3 2005-06-16 17:17:18 papercrane Exp $
 * 
 */
 
@@ -47,7 +47,7 @@ class Text_Wiki_Parse_Superscript extends Text_Wiki_Parse {
     * 
     */
     
-    var $regex =  '/\^\^(|.*?)\^\^/';
+    var $regex =  '/\^\^(|[^\^].*?)\^\^/';
     
     
     /**
