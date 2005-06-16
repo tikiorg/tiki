@@ -12,7 +12,7 @@
 * 
 * @license LGPL
 * 
-* @version $Id: Phplookup.php,v 1.1 2005-05-18 23:43:16 papercrane Exp $
+* @version $Id: Phplookup.php,v 1.2 2005-06-16 06:09:37 papercrane Exp $
 * 
 */
 
@@ -44,7 +44,7 @@ class Text_Wiki_Parse_Phplookup extends Text_Wiki_Parse {
     * 
     */
     
-    var $regex = "/\[\[php (.+?)\]\]/";
+    var $regex = '/\[\[php (.+?)\]\]/';
     
     
     /**
