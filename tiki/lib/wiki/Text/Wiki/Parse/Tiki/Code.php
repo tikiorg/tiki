@@ -13,7 +13,7 @@
 * 
 * @license LGPL
 * 
-* @version $Id: Code.php,v 1.1 2005-05-18 23:43:16 papercrane Exp $
+* @version $Id: Code.php,v 1.2 2005-06-16 17:13:41 papercrane Exp $
 * 
 */
 
@@ -51,7 +51,7 @@ class Text_Wiki_Parse_Code extends Text_Wiki_Parse {
     * 
     */
     
-    var $regex = '/^({CODE\((.+)?\)})\n(.+)\n({CODE})(\s|$)/Umsi';
+    var $regex = '/^{CODE\((.+)?\)}\n(.+)\n{CODE}(\s|$)/Umsi';
     
     
     /**
@@ -72,14 +72,14 @@ class Text_Wiki_Parse_Code extends Text_Wiki_Parse {
     function process(&$matches)
     {
         // are there additional attribute arguments?
-        $args = trim(html_entity_decode($matches[2]));
+        $args = trim(html_entity_decode($matches[1]));
 
-        $matches[3] = html_entity_decode($matches[3]);
+        $matches[2] = html_entity_decode($matches[2]);
 
 
         if ($args == '') {
             $options = array(
-                'text' => $matches[3],
+                'text' => $matches[2],
                 'attr' => array('type' => '')
             );
         } else {
@@ -105,12 +105,12 @@ class Text_Wiki_Parse_Code extends Text_Wiki_Parse {
         	
         	// retain the options
             $options = array(
-                'text' => $matches[3],
+                'text' => $matches[2],
                 'attr' => $attr
             );
         }
         
-        return $this->wiki->addToken($this->rule, $options) . $matches[5];
+        return $this->wiki->addToken($this->rule, $options) . $matches[3];
     }
 }
 ?>
