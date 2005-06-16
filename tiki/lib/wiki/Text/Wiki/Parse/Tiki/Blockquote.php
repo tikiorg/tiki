@@ -13,7 +13,7 @@
 * 
 * @license LGPL
 * 
-* @version $Id: Blockquote.php,v 1.1 2005-05-18 23:43:16 papercrane Exp $
+* @version $Id: Blockquote.php,v 1.2 2005-06-16 17:20:39 papercrane Exp $
 * 
 */
 
@@ -50,7 +50,7 @@ class Text_Wiki_Parse_Blockquote extends Text_Wiki_Parse {
     * 
     */
     
-    var $regex = '/\n((\>).*\n)(?!(\>))/Us';
+    var $regex = '/\n(\>.*?\n)(?!\>)/s';
     
     
     /**
@@ -87,7 +87,7 @@ class Text_Wiki_Parse_Blockquote extends Text_Wiki_Parse {
         // create an array called $list that contains a new set of
         // matches for the various list-item elements.
         preg_match_all(
-            '=^(\>+) (.*\n)=Ums',
+            '/^(\>+?) (.*?\n)/ms',
             $matches[1],
             $list,
             PREG_SET_ORDER
