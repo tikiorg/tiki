@@ -13,7 +13,7 @@
 * 
 * @license LGPL
 * 
-* @version $Id: Subscript.php,v 1.2 2005-06-16 05:51:26 papercrane Exp $
+* @version $Id: Subscript.php,v 1.3 2005-06-16 17:17:46 papercrane Exp $
 * 
 */
 
@@ -47,7 +47,7 @@ class Text_Wiki_Parse_Subscript extends Text_Wiki_Parse {
     * 
     */
     
-    var $regex =  '/,,(|.*?),,/';
+    var $regex =  '/,,(|[^,].*?),,/';
     
     
     /**

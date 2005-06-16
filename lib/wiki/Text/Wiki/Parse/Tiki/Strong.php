@@ -13,7 +13,7 @@
 * 
 * @license LGPL
 * 
-* @version $Id: Strong.php,v 1.2 2005-06-16 05:52:17 papercrane Exp $
+* @version $Id: Strong.php,v 1.3 2005-06-16 17:18:16 papercrane Exp $
 * 
 */
 
@@ -58,7 +58,7 @@ class Text_Wiki_Parse_Strong extends Text_Wiki_Parse {
     
     // alternatives:
     // var $regex = "/\*\*(()|[^\n]*)\*\*/U";
-    var $regex = '/__(|.*?)__/';
+    var $regex = '/__(|[^_].*?)__/';
     
     /**
     * 
