@@ -14,7 +14,7 @@ class Text_Wiki_Parse_Plugin extends Text_Wiki_Parse {
     */
     
     //var $regex = '/^({([A-Z]+?)\((.+)?\)})((.+)({\2}))?(\s|$)/Umsi';
-    var $regex = '/^({([A-Z]+?)\((.+)?\)})((.+)({\2}))(\s|$)/Umsi';
+    var $regex = '/^(?:{([A-Z]+?)\((.+)?\)})(?:(.+)(?:{\1}))(\s|$)/Umsi';
     
     
     /**
@@ -35,12 +35,12 @@ class Text_Wiki_Parse_Plugin extends Text_Wiki_Parse {
     function process(&$matches)
     {
         // are there additional attribute arguments?
-        $args = trim($matches[3]);
+        $args = trim($matches[2]);
         
         if ($args == '') {
             $options = array(
-                'text' => $matches[5],
-                'plugin' => $matches[2],
+                'text' => $matches[3],
+                'plugin' => $matches[1],
                 'attr' => array()
             );
         } else {
@@ -56,13 +56,13 @@ class Text_Wiki_Parse_Plugin extends Text_Wiki_Parse {
         	
         	// retain the options
             $options = array(
-                'text' => $matches[5],
-                'plugin' => $matches[2],
+                'text' => $matches[3],
+                'plugin' => $matches[1],
                 'attr' => $attr
             );
         }
         
-        return $this->wiki->addToken($this->rule, $options) . $matches[7];
+        return $this->wiki->addToken($this->rule, $options) . $matches[4];
     }
 }
 ?>
