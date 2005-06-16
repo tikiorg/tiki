@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/setup.sh,v 1.35 2005-05-18 10:58:52 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/setup.sh,v 1.36 2005-06-16 20:34:09 mose Exp $
 
 # Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 # All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -48,14 +48,11 @@ directories.
 
 Usage $0 user [group] [rights] [list of virtual host domains]
 
-For example, if apache is running as user $AUSER and group $AGROUP, type:
+For example, if apache is running as user $AUSER and group $AGROUP (can be found in phpinfo),
+ and if you are running as user $USER, type:
 
-  su -c '$0 $AUSER'
- 
-Alternatively, you may wish to set both the user and group:
-  
   su -c '$0 $USER $AGROUP'
-
+ 
 This will allow you to delete certain files/directories without becoming root.
   
 Or, if you can't become root, but are a member of the group apache runs under
