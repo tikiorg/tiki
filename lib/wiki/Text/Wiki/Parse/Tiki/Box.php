@@ -13,7 +13,7 @@
 * 
 * @license LGPL
 * 
-* @version $Id: Box.php,v 1.1 2005-05-18 23:43:16 papercrane Exp $
+* @version $Id: Box.php,v 1.2 2005-06-16 17:14:15 papercrane Exp $
 * 
 */
 
@@ -52,7 +52,7 @@ class Text_Wiki_Parse_Box extends Text_Wiki_Parse {
     * 
     */
     
-    var $regex =  '/\^(()|.*?)\^/s';
+    var $regex =  '/\^(|.*?)\^/s';
     
     
     /**
