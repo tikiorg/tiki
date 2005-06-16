@@ -13,7 +13,7 @@
 * 
 * @license LGPL
 * 
-* @version $Id: List.php,v 1.1 2005-05-18 23:43:16 papercrane Exp $
+* @version $Id: List.php,v 1.2 2005-06-16 06:13:27 papercrane Exp $
 * 
 */
 
@@ -56,7 +56,7 @@ class Text_Wiki_Parse_List extends Text_Wiki_Parse {
 
     //TODO: add text continuations (any number of + signs) and expandable areas (- after *s ot #s)
     
-    var $regex = '/\n((\*|#)+.*?\n(?!(\*|#)+))/s';
+    var $regex = '/\n((?:\*|#)+.*?\n(?!(?:\*|#)+))/s';
 
     /**
     * 
