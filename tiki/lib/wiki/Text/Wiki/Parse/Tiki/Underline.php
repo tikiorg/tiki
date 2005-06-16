@@ -13,7 +13,7 @@
 * 
 * @license LGPL
 * 
-* @version $Id: Underline.php,v 1.1 2005-05-18 23:43:16 papercrane Exp $
+* @version $Id: Underline.php,v 1.2 2005-06-16 05:42:00 papercrane Exp $
 * 
 */
 
@@ -52,7 +52,7 @@ class Text_Wiki_Parse_Underline extends Text_Wiki_Parse {
     * 
     */
     
-    var $regex =  "/===(()|[^=].*?)===/";
+    var $regex =  "/===(|[^=].*?)===/";
     
     
     /**
