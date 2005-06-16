@@ -13,7 +13,7 @@
 * 
 * @license LGPL
 * 
-* @version $Id: Wikilink.php,v 1.2 2005-06-16 05:21:29 papercrane Exp $
+* @version $Id: Wikilink.php,v 1.3 2005-06-16 05:26:30 papercrane Exp $
 * 
 */
 
@@ -127,7 +127,6 @@ class Text_Wiki_Parse_Wikilink extends Text_Wiki_Parse {
         
         // standalone wiki links
         $tmp_regex = '/(^|[^$either\-_])(\)\))?' . $this->regex . '(\(\()?/';
-        echo $tmp_regex.'<br/>';
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
             array(&$this, 'process'),
