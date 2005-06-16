@@ -132,11 +132,11 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set')
 
 
 		if (is_numeric($idletime) && empty($mouseover)) {
-		    $ret = "<a class='$class' href='tiki-user_information.php?view_user=$other_user' title='".tra("More info about $other_user")." ".tra("(idle for $idletime seconds)")."'>$ou</a>$friend$star";
+		    $ret = "<a class='$class' href='tiki-user_information.php?view_user=".urlencode($other_user)."' title='".tra("More info about $other_user")." ".tra("(idle for $idletime seconds)")."'>$ou</a>$friend$star";
                     $cachelib->cacheItem($cacheItem, $ret);
                     return $ret;
 		} else {
-                    $ret = "<a class='$class' $mouseover href='tiki-user_information.php?view_user=$other_user' >$ou</a>$friend$star";
+                    $ret = "<a class='$class' $mouseover href='tiki-user_information.php?view_user=".urlencode($other_user)."' >$ou</a>$friend$star";
                     $cachelib->cacheItem($cacheItem, $ret);
                     return $ret;
 		}

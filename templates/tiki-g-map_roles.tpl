@@ -1,5 +1,5 @@
 {*Smarty template*}
-<a class="pagetitle" href="tiki-g-map_roles.php?pid={$pid}">{tr}Map process roles{/tr}</a><br /><br />
+<h1><a class="pagetitle" href="tiki-g-map_roles.php?pid={$pid}">{tr}Map process roles{/tr}</a></h1>
 <a class="linkbut" href="tiki-g-admin_processes.php">{tr}admin processes{/tr}</a>
 <a class="linkbut" href="tiki-g-admin_activities.php?pid={$pid}">{tr}admin activities{/tr}</a>
 <a class="linkbut" href="tiki-g-admin_roles.php?pid={$pid}">{tr}admin roles{/tr}</a>
@@ -18,7 +18,7 @@ Errors:<br />
 {/if}
 
 {if count($roles) > 0}
-	<h3>{tr}Map users to roles{/tr}</h3>
+	<h2>{tr}Map users to roles{/tr}</h2>
 	<form method="post" action="tiki-g-map_roles.php">
 	<input type="hidden" name="pid" value="{$pid|escape}" />
 	<input type="hidden" name="offset" value="{$offset|escape}" />
@@ -69,11 +69,11 @@ Errors:<br />
 	</table>
 	</form>
 {else}
-	<h3>{tr}Warning{/tr}</h3>
+	<h2>{tr}Warning{/tr}</h2>
 	{tr}No roles are defined yet so no roles can be mapped{/tr}<br />
 {/if}
 
-<h3>{tr}List of mappings{/tr}</h3>
+<h2>{tr}List of mappings{/tr}</h2>
 <form action="tiki-g-map_roles.php" method="post">
 <input type="hidden" name="pid" value="{$pid|escape}" />
 <input type="hidden" name="offset" value="{$offset|escape}" />

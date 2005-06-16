@@ -1,35 +1,21 @@
 {popup_init src="lib/overlib.js"}
 {*Smarty template*}
-<a class="pagetitle" href="tiki-g-admin_graph.php">{tr}Process Graph{/tr}</a>
+<h1><a class="pagetitle" href="tiki-g-admin_graph.php">{tr}Process Graph{/tr}</a>
 
 
   
       {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaAdminGraph" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Galaxia Admin Graph{/tr}">
-<img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" />{/if}
-                        {if $feature_help eq 'y'}</a>{/if}
+<a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaAdminGraph" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Galaxia Admin Graph{/tr}"><img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a>{/if}
 
 
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-g-admin_graph.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Galaxia Admin Graph tpl{/tr}">
-<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'> {/if}
-{if $feature_view_tpl eq 'y'}</a>{/if}
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-<br /><br />
+</h1>
 {include file=tiki-g-monitor_bar.tpl}
 {if $pid > 0}
   {include file=tiki-g-proc_bar.tpl}
@@ -42,7 +28,7 @@
     </div>
   {/if}
 {/if}
-  <h3>{tr}Process Graph for{/tr} {$info.name}</h3>
+  <h2>{tr}Process Graph for{/tr} {$info.name}</h2>
   {if $info.graph neq ''}
     <table class="normal">
       <tr>
@@ -64,7 +50,7 @@
     {tr}No process graph is available. Either the process still contains errors, the graph is not generated yet, or <a href="http://www.research.att.com/sw/tools/graphviz/">GraphViz</a> is not properly installed.{/tr}
   {/if}
   <br /><br />
-<h3>{tr}List of processes{/tr} ({$cant})</h3>
+<h2>{tr}List of processes{/tr} ({$cant})</h2>
 <form action="tiki-g-admin_graph.php" method="post">
 <input type="hidden" name="offset" value="{$offset|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />

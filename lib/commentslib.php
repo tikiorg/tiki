@@ -379,7 +379,7 @@ class Comments extends TikiLib {
 			sprintf(tra("Use this thread to discuss the %s page."), "[tiki-index.php?page=$title|$title]"),
 			$temp_msid
 			);
-	        $this->register_forum_post($forumid,0);
+	        $this->register_forum_post($forumId,0);
 	    }
 
 	    // post
@@ -387,7 +387,7 @@ class Comments extends TikiLib {
 		    $parentId, $userName, $title, $body,
 		    $message_id, $in_reply_to);
 
-	    $this->register_forum_post($forumid,$parentId);
+	    $this->register_forum_post($forumId,$parentId);
 
 	    // Deal with mail notifications.
 	    if( array_key_exists( 'outbound_mails_reply_link', $info )

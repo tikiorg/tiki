@@ -43,7 +43,7 @@ class SearchLib extends TikiLib {
           if (count($part)) foreach ($part["data"] as $p) {
             $same = false;
             foreach ($exact["data"] as $e) {
-              if ($p["pageName"] == $e["pageName"]) {
+              if ($p["pageName"] == $e["pageName"] && $p["location"] == $e["location"]) {
                 $same = true;
                 break;
               }
@@ -95,7 +95,10 @@ class SearchLib extends TikiLib {
             case "trackers":
               return $this->find_part_trackers($words,$offset, $maxRecords);
               break;
-
+            case "files":
+              return $this->find_part_files($words,$offset, $maxRecords);
+              break;
+		  
             default:
               return $this->find_part_all($words,$offset, $maxRecords);
               break;
@@ -230,6 +233,10 @@ class SearchLib extends TikiLib {
         function &find_part_trackers($words,$offset, $maxRecords) {
                 return $this->find_exact_trackers($this->get_wordlist_from_syllables($words),$offset, $maxRecords);
         }
+  
+      function &find_part_files($words,$offset, $maxRecords) {
+                return $this->find_exact_files($this->get_wordlist_from_syllables($words),$offset, $maxRecords);
+        }
 
 
 
@@ -238,7 +245,7 @@ class SearchLib extends TikiLib {
 			global $feature_wiki, $feature_directory, $feature_galleries, $feature_file_galleries,
 				$feature_articles, $feature_forums, $feature_blogs, $feature_faqs, $feature_trackers;
 			global $tiki_p_view, $tiki_p_view_directory, $tiki_p_view_image_gallery, $tiki_p_view_file_gallery,
-				$tiki_p_read_article, $tiki_p_forum_read, $tiki_p_read_blog, $tiki_p_view_faqs, $tiki_p_view_trackers;
+				$tiki_p_read_article, $tiki_p_forum_read, $tiki_p_read_blog, $tiki_p_view_faqs, $tiki_p_view_trackers, $tiki_p_download_files;
 		
 			if ($feature_wiki == 'y' && $tiki_p_view == 'y') {
 				$wikiresults=$this->find_part_wiki($words,$offset, $maxRecords);
@@ -300,6 +307,12 @@ class SearchLib extends TikiLib {
 				$trackerresults['data'] = NULL;
 				$trackerresults['cant'] = 0;
 			}
+			if ($feature_file_galleries == 'y' && $tiki_p_download_files == 'y') {
+				$fileresults=$this->find_part_files($words,$offset, $maxRecords);
+			} else {
+				$fileresults['data'] = NULL;
+				$fileresults['cant'] = 0;
+			}
 
 		  /* // check if feature is enabled before searching
           $wikiresults=$this->find_part_wiki($words,$offset, $maxRecords);
@@ -320,12 +333,14 @@ class SearchLib extends TikiLib {
                         $blogresults["data"],$faqresults["data"],
                         $blogpostsresults["data"],$forumresults["data"],
                         $dirresults["data"],$imggalsresults["data"],
-                        $imgresults["data"],$trackerresults["data"]);
+                        $imgresults["data"],$trackerresults["data"],
+				$fileresults["data"]);
           $res["cant"]=$wikiresults["cant"]+$artresults["cant"]+
                         $blogresults["cant"]+$faqresults["cant"]+
                         $blogpostsresults["cant"]+$forumresults["cant"]+
                         $dirresults["cant"]+$imggalsresults["cant"]+
-                        $imgresults["cant"]+$trackerresults["cant"];
+                        $imgresults["cant"]+$trackerresults["cant"]+
+				$fileresults["cant"];
           return ($res);
         }
 
@@ -363,6 +378,9 @@ class SearchLib extends TikiLib {
 	    case "trackers":
 	      return $this->find_exact_trackers($words,$offset, $maxRecords);
 	      break;
+	    case "files":
+	      return $this->find_exact_files($words,$offset, $maxRecords);
+	      break;
 
 	    default:
 	      return $this->find_exact_all($words,$offset, $maxRecords);
@@ -373,9 +391,9 @@ class SearchLib extends TikiLib {
 
 	function &find_exact_all($words,$offset, $maxRecords) {
 		global $feature_wiki, $feature_directory, $feature_galleries, $feature_file_galleries,
-			$feature_articles, $feature_forums, $feature_blogs, $feature_faqs, $feature_trackers;
+			$feature_articles, $feature_forums, $feature_blogs, $feature_faqs, $feature_trackers, $feature_file_galleries;
 		global $tiki_p_view, $tiki_p_view_directory, $tiki_p_view_image_gallery, $tiki_p_view_file_gallery,
-			$tiki_p_read_article, $tiki_p_forum_read, $tiki_p_read_blog, $tiki_p_view_faqs, $tiki_p_view_trackers;
+			$tiki_p_read_article, $tiki_p_forum_read, $tiki_p_read_blog, $tiki_p_view_faqs, $tiki_p_view_trackers, $tiki_p_download_files;
 		
 		if ($feature_wiki == 'y' && $tiki_p_view == 'y') {
 			$wikiresults=$this->find_exact_wiki($words,$offset, $maxRecords);
@@ -437,6 +455,12 @@ class SearchLib extends TikiLib {
 			$trackerresults['data'] = NULL;
 			$trackerresults['cant'] = 0;
 		}
+		if ($feature_file_galleries == 'y' && $tiki_p_download_files == 'y') {
+			$trackerresults=$this->find_exact_files($words,$offset, $maxRecords);
+		} else {
+			$trackerresults['data'] = NULL;
+			$trackerresults['cant'] = 0;
+		}
 		
 	  /* // should check if feature is enabled before searching
 	  $artresults=$this->find_exact_articles($words,$offset, $maxRecords);
@@ -467,24 +491,22 @@ class SearchLib extends TikiLib {
 
 
         function &find_exact_trackers($words,$offset, $maxRecords) {
-	  global $feature_trackers;
+	  global $feature_trackers, $tiki_p_view_trackers_pending, $tiki_p_view_trackers_closed, $tikilib;
 	  global $user;
+	  global $trklib; include_once("lib/trackers/trackerlib.php");
           if ($feature_trackers == 'y' && count($words) >0 ) {
-            $query="select s.`page`, s.`location`, s.`last_update`, s.`count`,
+            $query="select distinct s.`page`, s.`location`, s.`last_update`, s.`count`,
                 t.`description`,t.`lastModif`,t.`name` from
                 `tiki_searchindex` s, `tiki_trackers` t where `searchword` in
                 (".implode(',',array_fill(0,count($words),'?')).") and
                 s.`location`='tracker' and
                 ".$this->sql_cast("s.`page`","int")."=t.`trackerId`";
             $result=$this->query($query,$words,$maxRecords,$offset);
-            $querycant="select count(*) from `tiki_searchindex` s, `tiki_trackers` t where `searchword` in
-                (".implode(',',array_fill(0,count($words),'?')).") and
-                s.`location`='tracker' and
-                ".$this->sql_cast("s.`page`","int")."=t.`trackerId`";
-            $cant1=$this->getOne($querycant,$words);
+            $cant1=0;
             $ret1=array();
             while ($res = $result->fetchRow()) {
 	     if($this->user_has_perm_on_object($user,$res["page"],'tracker','tiki_p_view_trackers')) {
+              ++$cant1;
               $href = "tiki-view_tracker.php?trackerId=".urlencode($res["page"]);
               $ret1[] = array(
                 'pageName' => $res["name"],
@@ -510,25 +532,24 @@ class SearchLib extends TikiLib {
 		$offset=0;
 	      }
 
-	      $query="select s.`page`, s.`location`, s.`last_update`, s.`count`,
-	          t.`lastModif`,t.`trackerId` from 
-	  	  `tiki_searchindex` s, `tiki_tracker_items` t where `searchword` in
+	      $query="select distinct s.`page`, s.`location`, s.`last_update`, s.`count`,
+	          t.`lastModif`,t.`trackerId`, t.`status` from 
+	  	  `tiki_searchindex` s, `tiki_tracker_items` t  where `searchword` in
 	  	  (".implode(',',array_fill(0,count($words),'?')).") and
 		  s.`location`='trackeritem' and
-		  ".$this->sql_cast("s.`page`","int")."=t.`itemId`";
+		  s.`page` like concat(t.`itemId`,'#%')";
 	      $result=$this->query($query,$words,$maxRecords,$offset);
-	      $querycant="select count(*) from `tiki_searchindex` s, `tiki_tracker_items` t where `searchword` in
-	          (".implode(',',array_fill(0,count($words),'?')).") and
-		  s.`location`='trackeritem' and
-		  ".$this->sql_cast("s.`page`","int")."=t.`itemId`";
-	      $cant2=$this->getOne($querycant,$words);
+	      $cant2=0;
 	      while ($res = $result->fetchRow()) {
-	       if($this->user_has_perm_on_object($user,$res['trackerId'],'tracker','tiki_p_view_trackers')) {
-	        $href = "tiki-view_tracker_item.php?trackerId=".urlencode($res["trackerId"])."&amp;itemId=".urlencode($res["page"]);
+	       if($this->user_has_perm_on_object($user,$res['trackerId'],'tracker','tiki_p_view_trackers') && 
+			($res["status"] == 'o' || ($res["status"] == 'p'  && $tiki_p_view_trackers_pending == "y") || ($res["status"] == 'c'  && $tiki_p_view_trackers_closed == "y"))) {
+              ++$cant2;
+		  list($itemId, $fieldId) = split("#", $res["page"]);
+	        $href = "tiki-view_tracker_item.php?trackerId=".urlencode($res["trackerId"])."&amp;itemId=".urlencode($itemId);
 	        $ret2[] = array(
-	          'pageName' => $res["page"],
+	          'pageName' => "(#".$itemId.") ".$trklib->get_isMain_value($res["trackerId"], $res["page"]),
 		  'location' => tra("Trackeritem"),
-		  'data' => tra("Unknown"),
+		  'data' => "",// we don't have the fieldId(s) of the item to select the data
 		  'hits' => tra("Unknown"),
 		  'lastModif' => $res["lastModif"],
 		  'href' => $href,
@@ -553,21 +574,18 @@ class SearchLib extends TikiLib {
           global $feature_galleries;
 	  global $user;
           if ($feature_galleries == 'y'  && count($words) >0) {
-            $query="select s.`page`, s.`location`, s.`last_update`, s.`count`,
+            $query="select distinct s.`page`, s.`location`, s.`last_update`, s.`count`,
                 g.`description`,g.`hits`,g.`lastModif`,g.`name` from
                 `tiki_searchindex` s, `tiki_galleries` g where `searchword` in
                 (".implode(',',array_fill(0,count($words),'?')).") and
                 s.`location`='imggal' and
                 ".$this->sql_cast("s.`page`","int")."=g.`galleryId` order by `hits` desc";
             $result=$this->query($query,$words,$maxRecords,$offset);
-            $querycant="select count(*) from `tiki_searchindex` s, `tiki_galleries` g where `searchword` in
-                (".implode(',',array_fill(0,count($words),'?')).") and
-                s.`location`='imggal' and
-                ".$this->sql_cast("s.`page`","int")."=g.`galleryId`";
-            $cant=$this->getOne($querycant,$words);
+            $cant=0;
             $ret=array();
             while ($res = $result->fetchRow()) {
 	     if($this->user_has_perm_on_object($user,$res['page'],'image gallery','tiki_p_view_image_gallery')) {
+              ++$cant;
               $href = "tiki-browse_gallery.php?galleryId=".urlencode($res["page"]);
               $ret[] = array(
                 'pageName' => $res["name"],
@@ -590,22 +608,19 @@ class SearchLib extends TikiLib {
           global $feature_galleries;
 	  global $user;
           if ($feature_galleries == 'y'  && count($words) >0) {
-            $query="select s.`page`, s.`location`, s.`last_update`, s.`count`,
+            $query="select distinct s.`page`, s.`location`, s.`last_update`, s.`count`,
                 g.`description`,g.`hits`,g.`created`,g.`name` from
                 `tiki_searchindex` s, `tiki_images` g where `searchword` in
                 (".implode(',',array_fill(0,count($words),'?')).") and
                 s.`location`='img' and
                 ".$this->sql_cast("s.`page`","int")."=g.`imageId` order by `hits` desc";
             $result=$this->query($query,$words,$maxRecords,$offset);
-            $querycant="select count(*) from `tiki_searchindex` s, `tiki_images` g where `searchword` in
-                (".implode(',',array_fill(0,count($words),'?')).") and
-                s.`location`='img' and
-                ".$this->sql_cast("s.`page`","int")."=g.`imageId`";
-            $cant=$this->getOne($querycant,$words);
+            $cant=0;
             $ret=array();
             while ($res = $result->fetchRow()) {
 	     // get imagegallery for that image first
 	     // if($this->user_has_perm_on_object($user,$res['page'],'image gallery','tiki_p_view_image_gallery')) {
+              ++$cant;
               $href = "tiki-browse_image.php?imageId=".urlencode($res["page"]);
               $ret[] = array(
                 'pageName' => $res["name"],
@@ -628,21 +643,18 @@ class SearchLib extends TikiLib {
           global $feature_blogs;
 	  global $user;
           if ($feature_blogs == 'y'  && count($words) >0) {
-            $query="select s.`page`, s.`location`, s.`last_update`, s.`count`,
+            $query="select distinct s.`page`, s.`location`, s.`last_update`, s.`count`,
                 b.`description`,b.`hits`,b.`lastModif`,b.`title` from
                 `tiki_searchindex` s, `tiki_blogs` b where `searchword` in
                 (".implode(',',array_fill(0,count($words),'?')).") and
                 s.`location`='blog' and
                 ".$this->sql_cast("s.`page`","int")."=b.`blogId` order by `hits` desc";
             $result=$this->query($query,$words,$maxRecords,$offset);
-            $querycant="select count(*) from `tiki_searchindex` s, `tiki_blogs` b where `searchword` in
-                (".implode(',',array_fill(0,count($words),'?')).") and
-                s.`location`='blog' and
-                ".$this->sql_cast("s.`page`","int")."=b.`blogId`";
-            $cant=$this->getOne($querycant,$words);
+            $cant=0;
             $ret=array();
             while ($res = $result->fetchRow()) {
 	     if($this->user_has_perm_on_object($user,$res['page'],'blog','tiki_p_read_blog')) {
+              ++$cant;
               $href = "tiki-view_blog.php?blogId=".urlencode($res["page"]);
               $ret[] = array(
                 'pageName' => $res["title"],
@@ -666,7 +678,7 @@ class SearchLib extends TikiLib {
           global $feature_blogs;
 	  global $user;
           if ($feature_blogs == 'y'  && count($words) >0) {
-            $query="select s.`page`, s.`location`, s.`last_update`, s.`count`,
+            $query="select distinct s.`page`, s.`location`, s.`last_update`, s.`count`,
                 bp.`data`,b.`hits`,b.`title` as `btitle`,bp.`created`,b.`title`,b.`blogId` from
                 `tiki_searchindex` s, `tiki_blogs` b ,`tiki_blog_posts` bp where `searchword` in
                 (".implode(',',array_fill(0,count($words),'?')).") and
@@ -674,14 +686,11 @@ class SearchLib extends TikiLib {
                 ".$this->sql_cast("s.`page`","int")."=bp.`postId` and
 		bp.`blogId`=b.`blogId` order by `hits` desc";
             $result=$this->query($query,$words,$maxRecords,$offset);
-            $querycant="select count(*) from `tiki_searchindex` s, `tiki_blog_posts` bp where `searchword` in
-                (".implode(',',array_fill(0,count($words),'?')).") and
-                s.`location`='blog_post' and
-                ".$this->sql_cast("s.`page`","int")."=bp.`postId`";
-            $cant=$this->getOne($querycant,$words);
+            $cant=0;
             $ret=array();
             while ($res = $result->fetchRow()) {
 	     if($this->user_has_perm_on_object($user,$res['blogId'],'blog','tiki_p_read_blog')) {
+              ++$cant;
               $href = "tiki-view_blog_post.php?blogId=".urlencode($res["blogId"])."&amp;postId=".urlencode($res["page"]);
               $ret[] = array(
                 'pageName' => $res["btitle"],
@@ -704,21 +713,18 @@ class SearchLib extends TikiLib {
 	  global $feature_articles;
 	  global $user;
 	  if ($feature_articles  == 'y'  && count($words) >0) {
-	    $query="select s.`page`, s.`location`, s.`last_update`, s.`count`,
+	    $query="select distinct s.`page`, s.`location`, s.`last_update`, s.`count`,
 	    	a.`heading`,a.`reads`,a.`publishDate`,a.`title` from
 		`tiki_searchindex` s, `tiki_articles` a where `searchword` in
 		(".implode(',',array_fill(0,count($words),'?')).") and
 		s.`location`='article' and
 		".$this->sql_cast("s.`page`","int")."=a.`articleId` order by `reads` desc";
 	    $result=$this->query($query,$words,$maxRecords,$offset);
-            $querycant="select count(*) from `tiki_searchindex` s, `tiki_articles` a where `searchword` in
-	     	(".implode(',',array_fill(0,count($words),'?')).") and
-		s.`location`='article' and
-		".$this->sql_cast("s.`page`","int")."=a.`articleId`";
-	    $cant=$this->getOne($querycant,$words);
+	    $cant=0;
 	    $ret=array();
 	    while ($res = $result->fetchRow()) {
 	     if($this->user_has_perm_on_object($user,$res['page'],'article','tiki_p_read_article')) {
+		++$cant;
 	      $href = "tiki-read_article.php?articleId=".urlencode($res["page"]);
 	      $ret[] = array(
 	        'pageName' => $res["title"],
@@ -741,7 +747,7 @@ class SearchLib extends TikiLib {
 	  global $feature_wiki;
 	  global $user;
 	  if ($feature_wiki == 'y'  && count($words) >0) {
-	  $query="select s.`page`, s.`location`, s.`last_update`, s.`count`,
+	  $query="select distinct s.`page`, s.`location`, s.`last_update`, s.`count`,
 	  	p.`data`, p.`hits`, p.`lastModif` from
 	        `tiki_searchindex` s, `tiki_pages` p  where `searchword` in
 		(".implode(',',array_fill(0,count($words),'?')).") and
@@ -749,20 +755,15 @@ class SearchLib extends TikiLib {
 		s.`page`=p.`pageName` order by `count` desc";
 	  $result=$this->query($query,$words,$maxRecords,$offset);
 
-	  $querycant="select count(*) from `tiki_searchindex` s, `tiki_pages` p where
-	  	`searchword` in
-		(".implode(',',array_fill(0,count($words),'?')).") and
-		s.`location`='wiki' and
-		s.`page`=p.`pageName`";
-	  $cant=$this->getOne($querycant,$words);
-
+	  $cant=0;
 	  $ret=array();
           while ($res = $result->fetchRow()) {
 	   if($this->user_has_perm_on_object($user,$res["page"],'wiki page','tiki_p_view')) {
             $href = "tiki-index.php?page=".urlencode($res["page"]);
+            ++$cant;
             $ret[] = array(
               'pageName' => $res["page"],
-	      'location' => tra("Wiki"),
+              'location' => tra("Wiki"),
               'data' => substr($res["data"],0,250),
               'hits' => $res["hits"],
               'lastModif' => $res["lastModif"],
@@ -782,21 +783,18 @@ class SearchLib extends TikiLib {
           global $feature_directory;
 	  global $user;
           if ($feature_directory== 'y'  && count($words) >0) {
-            $query="select s.`page`, s.`location`, s.`last_update`, s.`count`,
+            $query="select distinct s.`page`, s.`location`, s.`last_update`, s.`count`,
                 d.`description`,d.`hits`,d.`name` from
                 `tiki_searchindex` s, `tiki_directory_categories` d where `searchword` in
                 (".implode(',',array_fill(0,count($words),'?')).") and
                 s.`location`='dir_cat' and
                 ".$this->sql_cast("s.`page`","int")."=d.`categId` order by `hits` desc";
             $result=$this->query($query,$words,$maxRecords,$offset);
-            $querycant="select count(*) from `tiki_searchindex` s, `tiki_directory_categories` d where `searchword` in
-                (".implode(',',array_fill(0,count($words),'?')).") and
-                s.`location`='dir_cat' and
-                ".$this->sql_cast("s.`page`","int")."=d.`categId`";
-            $cant=$this->getOne($querycant,$words);
+            $cant=0;
             $ret=array();
             while ($res = $result->fetchRow()) {
 	     if($this->user_has_perm_on_object($user,$res["page"],'directory','tiki_p_view_directory')) {
+              ++$cant;
               $href = "tiki-directory_browse.php?parent=".urlencode($res["page"]);
               $ret[] = array(
                 'pageName' => $res["name"],
@@ -820,7 +818,7 @@ class SearchLib extends TikiLib {
           global $feature_directory;
 	  global $user;
           if ($feature_directory== 'y'  && count($words) >0) {
-            $query="select s.`page`, s.`location`, s.`last_update`, s.`count`,
+            $query="select distinct s.`page`, s.`location`, s.`last_update`, s.`count`,
                 d.`description`,d.`hits`,d.`name`,d.`lastModif`,cs.`categId` from
                 `tiki_searchindex` s, `tiki_directory_sites` d ,`tiki_category_sites` cs where `searchword` in
                 (".implode(',',array_fill(0,count($words),'?')).") and
@@ -829,16 +827,12 @@ class SearchLib extends TikiLib {
 		cs.`siteId`=d.`siteId`
 		order by `hits` desc";
             $result=$this->query($query,$words,$maxRecords,$offset);
-            $querycant="select count(*) from `tiki_searchindex` s, `tiki_directory_sites` d , `tiki_category_sites` cs where `searchword` in
-                (".implode(',',array_fill(0,count($words),'?')).") and
-                s.`location`='dir_site' and
-                ".$this->sql_cast("s.`page`","int")."=d.`siteId` and
-		cs.`siteId`=d.`siteId`";
-            $cant=$this->getOne($querycant,$words);
+            $cant=0;
             $ret=array();
             while ($res = $result->fetchRow()) {
 	     // only permissions on directory - have to find out first?
 	     // if($this->user_has_perm_on_object($user,$res["page"],'directory','tiki_p_view_directory')) {
+              ++$cant;
               $href = "tiki-directory_browse.php?parent=".urlencode($res["categId"]);
               $ret[] = array(
                 'pageName' => $res["name"],
@@ -862,21 +856,18 @@ class SearchLib extends TikiLib {
           global $feature_faqs;
 	  global $user;
           if ($feature_faqs== 'y'  && count($words) >0) {
-            $query="select s.`page`, s.`location`, s.`last_update`, s.`count`,
+            $query="select distinct s.`page`, s.`location`, s.`last_update`, s.`count`,
                 f.`description`,f.`hits`,f.`created`,f.`title` from
                 `tiki_searchindex` s, `tiki_faqs` f where `searchword` in
                 (".implode(',',array_fill(0,count($words),'?')).") and
                 s.`location`='faq' and
                 ".$this->sql_cast("s.`page`","int")."=f.`faqId` order by `hits` desc";
             $result=$this->query($query,$words,$maxRecords,$offset);
-            $querycant="select count(*) from `tiki_searchindex` s, `tiki_faqs` f where `searchword` in
-                (".implode(',',array_fill(0,count($words),'?')).") and
-                s.`location`='faq' and
-                ".$this->sql_cast("s.`page`","int")."=f.`faqId`";
-            $cant=$this->getOne($querycant,$words);
+            $cant=0;
             $ret=array();
             while ($res = $result->fetchRow()) {
 	     if($this->user_has_perm_on_object($user,$res["page"],'faq','tiki_p_view_faq')) {
+              ++$cant;
               $href = "tiki-view_faq.php?faqId=".urlencode($res["page"]);
               $ret[] = array(
                 'pageName' => $res["title"],
@@ -900,7 +891,7 @@ class SearchLib extends TikiLib {
           global $feature_faqs;
 	  global $user;
           if ($feature_faqs== 'y'  && count($words) >0) {
-            $query="select s.`page`, s.`location`, s.`last_update`, s.`count`,
+            $query="select distinct s.`page`, s.`location`, s.`last_update`, s.`count`,
                 f.`question`,faq.`hits`,faq.`created`,faq.`title`,f.`answer`,f.`faqId` from
                 `tiki_searchindex` s, `tiki_faqs` faq, `tiki_faq_questions` f where `searchword` in
                 (".implode(',',array_fill(0,count($words),'?')).") and
@@ -908,15 +899,11 @@ class SearchLib extends TikiLib {
                 ".$this->sql_cast("s.`page`","int")."=f.`questionId` and
 		f.`faqId`=faq.`faqId` order by `hits` desc";
             $result=$this->query($query,$words,$maxRecords,$offset);
-            $querycant="select count(*) from `tiki_searchindex` s, `tiki_faqs` faq, `tiki_faq_questions` f  where `searchword` in
-                (".implode(',',array_fill(0,count($words),'?')).") and
-                s.`location`='faq_question' and
-                ".$this->sql_cast("s.`page`","int")."=f.`questionId` and
-                f.`faqId`=faq.`faqId`";
-            $cant=$this->getOne($querycant,$words);
+            $cant=0;
             $ret=array();
             while ($res = $result->fetchRow()) {
 	     if($this->user_has_perm_on_object($user,$res["faqId"],'faq','tiki_p_view_faq')) {
+              ++$cant;
               $href = "tiki-view_faq.php?faqId=".urlencode($res["faqId"])."#".urlencode($res["page"]);
               $ret[] = array(
                 'pageName' => substr($res["question"],0,40),
@@ -940,21 +927,18 @@ class SearchLib extends TikiLib {
           global $feature_forums;
 	  global $user;
           if ($feature_forums== 'y'  && count($words) >0) {
-            $query="select s.`page`, s.`location`, s.`last_update`, s.`count`,
+            $query="select distinct s.`page`, s.`location`, s.`last_update`, s.`count`,
                 f.`description`,f.`hits`,f.`lastPost`,f.`name` from
                 `tiki_searchindex` s, `tiki_forums` f where `searchword` in
                 (".implode(',',array_fill(0,count($words),'?')).") and
                 s.`location`='forum' and
                 ".$this->sql_cast("s.`page`","int")."=f.`forumId` order by `hits` desc";
             $result=$this->query($query,$words,$maxRecords,$offset);
-            $querycant="select count(*) from `tiki_searchindex` s, `tiki_forums` f where `searchword` in
-                (".implode(',',array_fill(0,count($words),'?')).") and
-                s.`location`='forum' and
-                ".$this->sql_cast("s.`page`","int")."=f.`forumId`";
-            $cant=$this->getOne($querycant,$words);
+            $cant=0;
             $ret=array();
             while ($res = $result->fetchRow()) {
 	     if($this->user_has_perm_on_object($user,$res["page"],'forum','tiki_p_forum_read')) {
+              ++$cant;
               $href = "tiki-view_forum.php?forumId=".urlencode($res["page"]);
               $ret[] = array(
                 'pageName' => $res["name"],
@@ -978,7 +962,7 @@ class SearchLib extends TikiLib {
 	  global $feature_forums;
 	  global $user;
 	  if ($feature_forums == 'y'  && count($words) >0) {
-	  $query="select s.`page`, s.`location`, s.`last_update`, s.`count`,
+	  $query="select distinct s.`page`, s.`location`, s.`last_update`, s.`count`,
 	  	f.`data`,f.`hits`,f.`commentDate`,f.`object`,f.`title`,fo.`name` from
 		`tiki_searchindex` s, `tiki_comments` f,`tiki_forums` fo where `searchword` in
 		(".implode(',',array_fill(0,count($words),'?')).") and
@@ -986,16 +970,11 @@ class SearchLib extends TikiLib {
 		".$this->sql_cast("s.`page`","int")."=f.`threadId` and
 		fo.`forumId`=".$this->sql_cast("f.`object`","int")." order by `count` desc";
 	  $result=$this->query($query,$words,$maxRecords,$offset);
-
-	  $querycant="select count(*) from `tiki_searchindex` s, `tiki_comments` f ,`tiki_forums` fo where `searchword` in
-	  	(".implode(',',array_fill(0,count($words),'?')).") and
-		s.`location`='forumcomment' and
-		".$this->sql_cast("s.`page`","int")."=f.`threadId` and
-		fo.`forumId`=".$this->sql_cast("f.`object`","int")." order by `count` desc";
-	  $cant=$this->getOne($querycant,$words);
+	  $cant=0;
 	  $ret=array();
 	  while ($res = $result->fetchRow()) {
 	   if($this->user_has_perm_on_object($user,$res["object"],'forum','tiki_p_forum_read')) {
+          ++$cant;
 	    $href = "tiki-view_forum_thread.php?comments_parentId=".urlencode($res["page"])."&amp;forumId=".urlencode($res["object"]);
 	    $ret[] = array(
 	      'pageName' => $res["title"],
@@ -1013,6 +992,41 @@ class SearchLib extends TikiLib {
 	  return array('data' => array(),'cant' => 0);
 	  }
 	}
+	function &find_exact_files($words,$offset, $maxRecords) {
+	  global $feature_file_galleries;
+	  global $user;
+	  if ($feature_file_galleries == 'y'  && count($words) >0) {
+	  $query="select distinct s.`page`, s.`location`, s.`last_update`, s.`count`, f.`search_data`, 
+	  	f.`data`,f.`lastModif`, f.`filename`, f.`downloads`, f.`description`, f.`name`, g.`name` as `galName` from
+		`tiki_searchindex` s, `tiki_files` f, `tiki_file_galleries` g  where `searchword` in
+		(".implode(',',array_fill(0,count($words),'?')).") and
+		s.`location`='file' and f.`galleryId`= g.`galleryId` and
+		".$this->sql_cast("s.`page`","int")."=f.`fileId` order by `count` desc";
+	  $result=$this->query($query,$words,$maxRecords,$offset);
+
+	  $cant = 0;
+	  $ret = array();
+	  while ($res = $result->fetchRow()) {
+	   if($this->user_has_perm_on_object($user,$res["page"],'file gallery','tiki_p_download_files')) {
+	    ++$cant;
+	    $href = "tiki-download_file.php?fileId=".urlencode($res["page"]);
+	    $ret[] = array(
+	      'pageName' => $res["name"]? $res["name"]: $res["filename"],
+	      'location' => tra("File Gallery").":".$res["galName"],
+	      'data' => $res["description"], //$res["search_data"] can be messy
+	      'hits' => $res["downloads"],
+	      'lastModif' => $res["lastModif"],
+	      'href' => $href,
+	      'relevance' => $res["count"]
+	    );
+	   }
+	  }
+	  return array('data' => $ret,'cant' => $cant);
+	  }else {
+	  return array('data' => array(),'cant' => 0);
+	  }
+	}
+
 
 
 } # class SearchLib

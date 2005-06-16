@@ -56,9 +56,11 @@ class TrackerLib extends TikiLib {
 	}
 
 	function get_item_nb_attachments($itemId) {
-		$query_cant = "select count(*) from `tiki_tracker_item_attachments` where `itemId`=?";
-		$cant = $this->getOne($query_cant, array($itemId));
-		return $cant;
+		$query = "select sum(downloads) as downloads, count(*) as attachments from `tiki_tracker_item_attachments` where `itemId`=?";
+		$result = $this->query($query, array($itemId));
+		if ($res = $result->fetchRow())
+			return $res;
+		return array();
 	}
 
 	function list_all_attachements($offset=0, $maxRecords=-1, $sort_mode='created_desc', $find='') {
@@ -334,16 +336,18 @@ class TrackerLib extends TikiLib {
 		$bindvars = array((int) $trackerId);
 
 		if ($status) {
-			if (sizeof($status > 1)) {
 				if ($tiki_p_view_trackers_pending != 'y') $status = str_replace('p','',$status);
 				if ($tiki_p_view_trackers_closed != 'y') $status = str_replace('c','',$status);
-				$sts = preg_split('//', $status, -1, PREG_SPLIT_NO_EMPTY);
-				$mid.= " and (".implode('=? or ',array_fill(0,count($sts),'`status`'))."=?) ";
-				$bindvars = array_merge($bindvars,$sts);
-			} else {
-				$mid.= " and tti.`status`=? ";
-				$bindvars[] = $status;
-			}
+				if (!$status) {
+					return (array("cant"=>0, "data"=>''));
+				} elseif (sizeof($status > 1)) {
+					$sts = preg_split('//', $status, -1, PREG_SPLIT_NO_EMPTY);
+					$mid.= " and (".implode('=? or ',array_fill(0,count($sts),'`status`'))."=?) ";
+					$bindvars = array_merge($bindvars,$sts);
+				} else {
+					$mid.= " and tti.`status`=? ";
+					$bindvars[] = $status;
+				}
 		}
 		if (!$sort_mode) {
 			$sort_mode = "lastModif_desc";
@@ -564,7 +568,7 @@ class TrackerLib extends TikiLib {
 
 		$options = $this->get_tracker_options( $trackerId );
 
-		include_once('lib/notifications/notificationlib.php');	
+		include_once('lib/notifications/notificationlib.php');
 
 		$emails = $notificationlib->get_mail_events('tracker_modified', $trackerId);
 		$emails2 = $notificationlib->get_mail_events('tracker_item_modified', $itemId);
@@ -1003,14 +1007,23 @@ class TrackerLib extends TikiLib {
 		$status['c'] = array('label'=>tra('closed'),'perm'=>'tiki_p_view_trackers_closed','image'=>'img/icons2/status_closed.gif');
 		return $status;
 	}
+	function get_isMain_value($trackerId, $itemId) {
+		$query = "select i.`value` from `tiki_tracker_item_fields` i, `tiki_tracker_fields` f where f.`trackerId`=? and i.`itemId`=? and f.`fieldId` = i.`fieldId` and f.`isMain`=?";
+		$result = $this->getOne($query, array((int)$trackerId, (int)$itemId, "y"));
+		return $result;
+	}
 }
 
-if(isset($trk_with_mirror_tables) && $trk_with_mirror_tables == 'y') {
+
+//if(isset($trk_with_mirror_tables) && $trk_with_mirror_tables == 'y') {
+if($tikilib->get_preference('trk_with_mirror_tables') == 'y') {
 	include_once ("trkWithMirrorTablesLib.php");
 	$trklib = new TrkWithMirrorTablesLib($dbTiki);
+	//echo "<br>MIRROR</br>\n";
 }
 else {
 	$trklib = new TrackerLib($dbTiki);
+	//echo "<br>NORMAL</br>\n";
 }
 
 ?>

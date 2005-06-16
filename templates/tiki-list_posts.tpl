@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-list_posts.php">{tr}Blogs{/tr}</a>
+<h1><a class="pagetitle" href="tiki-list_posts.php">{tr}Blogs{/tr}</a>
 
   
       {if $feature_help eq 'y'}
@@ -14,7 +14,7 @@
 
 
 
-<br /><br />
+</h1>
 <a class="linkbut" href="tiki-edit_blog.php">{tr}edit blog{/tr}</a>
 <a class="linkbut" href="tiki-blog_post.php">{tr}post{/tr}</a>
 <a class="linkbut" href="tiki-list_blogs.php">{tr}list blogs{/tr}</a>

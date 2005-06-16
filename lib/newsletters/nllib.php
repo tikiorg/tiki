@@ -328,8 +328,9 @@ print_r($ret);
 		$query = "update `tiki_newsletters` set `users`=? where `nlId`=?";
 		$result = $this->query($query,array($users,(int)$nlId));
 	}
-
-	function list_newsletters($offset, $maxRecords, $sort_mode, $find, $update='') {
+/* perms = a or between perms */
+	function list_newsletters($offset, $maxRecords, $sort_mode, $find, $update='', $perms='') {
+		global $user;
 		$bindvars = array();
 		if ($find) {
 			$findesc = '%' . $find . '%';
@@ -341,12 +342,27 @@ print_r($ret);
 		}
 
 		$query = "select * from `tiki_newsletters` $mid order by ".$this->convert_sortmode("$sort_mode");
-		$query_cant = "select count(*) from `tiki_newsletters` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvars);
+		$cant = 0;
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
+			if (!empty($perms)) {
+				$hasPerm = false;
+				if (is_array($perms)) {
+					foreach ($perms as $perm) {
+			 			if ($this->user_has_perm_on_object($user,$res['nlId'],'newsletter',$perm)) {
+							$hasPerm = true;
+							break;
+						}
+					}
+				} else {
+					$hasPerm = $this->user_has_perm_on_object($user,$res['nlId'],'newsletter',$perms);
+				}
+				if (!$hasPerm)
+					continue;
+			}
+			++$cant;
 			$ok = count($this->get_all_subscribers($res["nlId"], ""));
 			$notok = $this->getOne("select count(*) from `tiki_newsletter_subscriptions` where `valid`=? and `nlId`=?",array('n',(int)$res["nlId"]));
 			$res["users"] = $ok + $notok;

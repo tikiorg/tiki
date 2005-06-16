@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-edit_css.php">{tr}Edit Style Sheet{/tr}</a><br /><br />
+<h1><a class="pagetitle" href="tiki-edit_css.php">{tr}Edit Style Sheet{/tr}</a></h1>
 <div>
 <form method="post" action="tiki-edit_css.php">
 {tr}Style Sheet{/tr} : 

@@ -1,4 +1,4 @@
-<a href="tiki-batch_upload.php" class="pagetitle">{tr}Directory batch upload{/tr}</a><br /><br />
+<h1><a href="tiki-batch_upload.php" class="pagetitle">{tr}Directory batch upload{/tr}</a></h1>
 <span class="button2">
 {if $galleryId ne ''}
 <a href="tiki-browse_gallery.php?galleryId={$galleryId}" class="linkbut">
@@ -15,7 +15,25 @@
 <form class="box" method="get" action="tiki-batch_upload.php" name="f">
 <table border="0" class="normal">
 <tr>
-<td width="42" class="heading" nowrap="nowrap"><input type="checkbox" name="imgs[]" value="ALL" id="box_all"><label class="tableheading" for="box_all">{tr}all{/tr}</label></td>
+<td width="42" class="heading" nowrap="nowrap">
+<input type="checkbox" name="imgs[]" value="ALL" id="box_all" onclick="disableOthers(this);"/>
+<script type="text/javascript" language="javascript">
+{literal}
+<!--
+function disableOthers(all) {
+    els = document.getElementsByTagName("input");
+    for(i = 0; i < els.length; ++i) {
+    if(els[i].type == "checkbox" && els[i].name == "imgs[]" && els[i].value != "ALL" && all.checked) {
+      els[i].disabled = true;
+    } else {
+      els[i].disabled = false;    
+    }
+  }
+}
+//-->
+{/literal}
+</script>
+<label class="tableheading" for="box_all">{tr}all{/tr}</label></td>
 <td class="heading"><a class="tableheading" href="javascript:void(0);">{tr}filename{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="javascript:void(0);">{tr}width{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="javascript:void(0);">{tr}height{/tr}</a></td>

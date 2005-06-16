@@ -1,14 +1,20 @@
 <?php
 
+//
+// TODO : 
+// ----------
+// - filtrage avec expression exacte
+//
+
 function wikiplugin_trackerlist_help() {
 	$help = tra("Displays the output of a tracker content, fields are indicated with numeric ids.").":\n";
-	$help.= "~np~{TRACKERLIST(trackerId=>1,fields=>2:4:5,showtitle=>y|n,showlinks=>y|n,showdesc=>y|n,showinitials=>y|n,status=>o|p|c|op|oc|pc|opc,sort_mode=>,max=>,filterfield=>,filtervalue=>)}Notice{TRACKERLIST}~/np~";
+	$help.= "~np~{TRACKERLIST(trackerId=>1,fields=>2:4:5,showtitle=>y|n,showlinks=>y|n,showdesc=>y|n,showinitials=>y|n,status=>o|p|c|op|oc|pc|opc,sort_mode=>,max=>,filterfield=>,filtervalue=>,exactvalue=>)}Notice{TRACKERLIST}~/np~";
 	return $help;
 }
 
 function wikiplugin_trackerlist($data, $params) {
 	global $smarty, $trklib, $tikilib, $dbTiki, $userlib, $tiki_p_admin, $maxRecords, $_REQUEST, $tiki_p_view_trackers, $user, $page;
-
+	global $notificationlib; //needed if plugin tracker after plugin trackerlist
 	extract ($params,EXTR_SKIP);
 
 	if (!isset($trackerId)) {
@@ -16,6 +22,8 @@ function wikiplugin_trackerlist($data, $params) {
 		return $smarty->fetch("error_simple.tpl");
 	} else {
 
+		$smarty->assign('trackerId', $trackerId);
+		
 		require_once("lib/trackers/trackerlib.php");
 		if (!isset($fields)) {
 			$smarty->assign('msg', tra("missing fields list"));
@@ -116,6 +124,10 @@ function wikiplugin_trackerlist($data, $params) {
 			$filtervalue = '';
 		}
 		
+		if (!isset($exactvalue)) {
+			$exactvalue = '';
+		}
+		
 		$rated = false;
 		$status_types = $trklib->status_types();
 		$smarty->assign('status_types', $status_types);
@@ -138,9 +150,10 @@ function wikiplugin_trackerlist($data, $params) {
 		$smarty->assign_by_ref('filterfield',$filterfield);
 		$smarty->assign_by_ref('filterfield',$filtervalue);
 		$smarty->assign_by_ref('fields', $passfields);
+		$smarty->assign_by_ref('filterfield',$exactvalue);
 		
 		if (count($passfields)) {
-			$items = $trklib->list_items($trackerId, $tr_offset, $max, $tr_sort_mode, $passfields, $filterfield, $filtervalue, $tr_status, $tr_initial);
+			$items = $trklib->list_items($trackerId, $tr_offset, $max, $tr_sort_mode, $passfields, $filterfield, $filtervalue, $tr_status, $tr_initial, $exactvalue);
 			
 			if ($rated) {
 				foreach ($items['data'] as $f=>$v) {
@@ -166,9 +179,10 @@ function wikiplugin_trackerlist($data, $params) {
 			$smarty->assign('daformat', $tikilib->get_long_date_format()." ".tra("at")." %H:%M"); 
 			
 			$tracker = $tikilib->get_tracker($trackerId,0,-1);
-
 			foreach ($query_array as $k=>$v) {
-				$quarray[] = urlencode($k) ."=". urlencode($v);
+				if (!is_array($v)) { //only to avoid an error: eliminate the params that are not simple (ex: if you have in the same page a tracker list plugin and a tracker plugin, filling the tracker plugin interfers with the tracker list. In any case this is buggy if two tracker list plugins in the same page and if one needs the query value....
+					$quarray[] = urlencode($k) ."=". urlencode($v);
+				}
 			}
 			if (is_array($quarray)) {
 				$query_string = implode("&amp;",$quarray);

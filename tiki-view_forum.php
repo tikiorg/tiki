@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.84 2005-05-18 10:59:00 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.85 2005-06-16 20:10:50 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -734,14 +734,9 @@ if ($comments_offset > 0) {
 $smarty->assign_by_ref('comments_coms', $comments_coms);
 
 $section = 'forums';
+$cat_type = 'forum';
+$cat_objid = $_REQUEST["forumId"];
 include_once ('tiki-section_options.php');
-
-if ($feature_theme_control == 'y') {
-    $cat_type = 'forum';
-
-    $cat_objid = $_REQUEST["forumId"];
-    include ('tiki-tc.php');
-}
 
 if ($feature_user_watches == 'y') {
     if ($user && isset($_REQUEST['watch_event'])) {

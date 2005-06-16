@@ -1,4 +1,5 @@
 <?php
+/* $Header: /cvsroot/tikiwiki/tiki/db/convertscripts/mysql3topgsql72.php,v 1.15 2005-06-16 20:10:53 mose Exp $ */
 
 $tikiversion='1.9';
 if(!isset($_GET['version'])) {
@@ -87,7 +88,14 @@ function parse($stmt)
   $stmt=preg_replace("/\n[ \t]+(PRIMARY KEY) *\((.+)\)/e","quote_prim_cols('$1','$2')",$stmt);
   // create indexes from KEY ...
   $stmt=preg_replace("/,\n[ \t]+KEY ([a-zA-Z0-9_]+) \((.+)\)/e","create_index('$1','$2')",$stmt);
-  $stmt=preg_replace("/,\n[ \t]+FULLTEXT KEY ([a-zA-Z0-9_]+) \((.+)\)/e","create_index('$1','$2')",$stmt);
+
+  // Postgres does not support FULLTEXT indexing.  If we were to index the text columns
+  // then there would be a limit to the size of the data that could occupy the text
+  // columns.
+  // Work arounds for this include adding the tsearch2 module to postgres and other drastic changes.
+  //$stmt=preg_replace("/,\n[ \t]+FULLTEXT KEY ([a-zA-Z0-9_]+) \((.+)\)/e","create_index('$1','$2')",$stmt);
+  $stmt=preg_replace("/,\n[ \t]+FULLTEXT KEY ([a-zA-Z0-9_]+) \((.+)\)/e","",$stmt);
+
   $stmt=preg_replace("/,\n[ \t]+(UNIQUE) KEY ([a-zA-Z0-9_]+) \((.+)\)/e","create_index('$2','$3','$1')",$stmt);
   $stmt=preg_replace("/,\n[ \t]+(UNIQUE) *\((.+)\)/e","create_index('unknown','$2','$1')",$stmt);
   // explicit create index
@@ -115,11 +123,18 @@ function create_explicit_index($name,$table_name,$content,$type)
   $cols=split(",",$content);
   $allvals="";
   foreach ($cols as $vals) {
-    $vals=preg_replace("/\(.*\)/","",$vals);
     $vals=preg_replace("/([a-zA-Z0-9_]+)/","\"$1\"",$vals);
+
+    // Do var(val) conversion to substr(var, 0, val); since that's what is expected for these indexes
+    $vals=preg_replace("/([\"a-z0-9_]+) *\(\"([0-9]+)\"\)/i","substr($1, 0, $2)",$vals);
+
     $allvals.=$vals;
   }
+  // Put commas between elements.
   $allvals=preg_replace("/\"\"/","\",\"",$allvals);
+  $allvals=preg_replace("/\"substr/","\",substr",$allvals);
+  $allvals=preg_replace("/(substr\(.*\))\"/","$1,\",substr",$allvals);
+
   return("CREATE $type INDEX \"" . $name . "\" ON \"" . $table_name . "\" (" . $allvals . ");\n");
 }
 
@@ -133,11 +148,18 @@ function create_index($name,$content,$type="")
   foreach ($cols as $vals) {
     $vals=preg_replace("/^ */","",$vals);
     $vals=preg_replace("/ *$/","",$vals);
-    $vals=preg_replace("/\(.*\)/","",$vals);
-    $vals=preg_replace("/([a-zA-Z0-9_]+)/","\"$1\"",$vals);
+    $vals=preg_replace("/([a-z0-9_]+)/i","\"$1\"",$vals);
+
+    // Do var(val) conversion to substr(var, 0, val); since that's what is expected for these indexes
+    $vals=preg_replace("/([\"a-z0-9_]+) *\(\"([0-9]+)\"\)/i","substr($1, 0, $2)",$vals);
+
     $allvals.=$vals;
   }
+  // Put commas between elements.
   $allvals=preg_replace("/\"\"/","\",\"",$allvals);
+  $allvals=preg_replace("/\"substr/","\",substr",$allvals);
+  $allvals=preg_replace("/(substr\(.*\))\"/","$1,\",substr",$allvals);
+
   $poststmt.=$allvals.");\n";
 }
 
@@ -157,7 +179,7 @@ function do_inserts($tab,$content,$tail)
 {
   // for some reason are the quotes in $tail addslashed. i dont know why
   $tail=preg_replace('/\\\"/','"',$tail);
-  echo "tail: $tail :tail";
+//  echo "tail: $tail :tail";
   $ret="INSERT INTO \"".$tab."\" (";
   $cols=split(",",$content);
   foreach ($cols as $vals) {

@@ -32,7 +32,7 @@
 {section name=changes loop=$images}
 <tr>
 <td class="{cycle advance=false}">{$images[changes].imageId}&nbsp;</td>
-<td class="{cycle advance=false}"><a class="imagename" href="tiki-browse_image.php?galleryId={$images[changes].galleryId}&amp;imageId={$images[changes].imageId}">{$images[changes].name|truncate:22:"..."}</a>&nbsp;
+<td class="{cycle advance=false}"><a class="imagename" href="tiki-browse_image.php?{if $images[changes].galleryId}galleryId={$images[changes].galleryId}&amp;{/if}imageId={$images[changes].imageId}">{$images[changes].name|truncate:22:"..."}</a>&nbsp;
 {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
 <a class="gallink" href="tiki-list_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$images[changes].imageId}">[x]</a>
 {/if}

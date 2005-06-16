@@ -1,5 +1,5 @@
 {*Smarty template*}
-<a class="pagetitle" href="tiki-g-admin_roles.php?pid={$pid}">{tr}Admin process roles{/tr}</a><br /><br />
+<h1><a class="pagetitle" href="tiki-g-admin_roles.php?pid={$pid}">{tr}Admin process roles{/tr}</a></h1>
 {include file=tiki-g-proc_bar.tpl}
 {if count($errors) > 0}
 <div class="wikitext">
@@ -10,7 +10,7 @@ Errors:<br />
 </div>
 {/if}
 
-<h3>{tr}Add or edit a role{/tr} <a class="link" href="tiki-g-admin_roles.php?pid={$pid}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;sort_mode2={$sort_mode2}&amp;find={$find}&amp;roleId=0">{tr}new{/tr}</a></h3>
+<h2>{tr}Add or edit a role{/tr} <a class="link" href="tiki-g-admin_roles.php?pid={$pid}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;sort_mode2={$sort_mode2}&amp;find={$find}&amp;roleId=0">{tr}new{/tr}</a></h2>
 <form action="tiki-g-admin_roles.php" method="post">
 <input type="hidden" name="pid" value="{$pid|escape}" />
 <input type="hidden" name="roleId" value="{$info.roleId|escape}" />
@@ -34,7 +34,7 @@ Errors:<br />
 </table>
 </form>
 
-<h3>{tr}Process roles{/tr}</h3>
+<h2>{tr}Process roles{/tr}</h2>
 	
 
 <form action="tiki-g-admin_roles.php" method="post">
@@ -76,7 +76,7 @@ Errors:<br />
 
 
 {if count($roles) > 0}
-	<h3>{tr}Map users to roles{/tr}</h3>
+	<h2>{tr}Map users to roles{/tr}</h2>
 	<form method="post" action="tiki-g-admin_roles.php">
 	<input type="hidden" name="pid" value="{$pid|escape}" />
 	<input type="hidden" name="offset" value="{$offset|escape}" />
@@ -130,7 +130,7 @@ Errors:<br />
 	</form>
 	
 	{* GROUPS *}
-	<h3>{tr}Map groups to roles{/tr}</h3>
+	<h2>{tr}Map groups to roles{/tr}</h2>
 	<form method="post" action="tiki-g-admin_roles.php">
 	<input type="hidden" name="pid" value="{$pid|escape}" />
 	<input type="hidden" name="offset" value="{$offset|escape}" />
@@ -186,11 +186,11 @@ Errors:<br />
 	
 	
 {else}
-	<h3>{tr}Warning{/tr}</h3>
+	<h2>{tr}Warning{/tr}</h2>
 	{tr}No roles are defined yet so no roles can be mapped{/tr}<br />
 {/if}
 
-<h3>{tr}List of mappings{/tr}</h3>
+<h2>{tr}List of mappings{/tr}</h2>
 <form action="tiki-g-admin_roles.php" method="post">
 <input type="hidden" name="pid" value="{$pid|escape}" />
 <input type="hidden" name="offset" value="{$offset|escape}" />

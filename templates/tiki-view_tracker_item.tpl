@@ -128,9 +128,9 @@
 {/if}
 
 {elseif $cur_field.type eq 'm'}
-{if $cur_field.options_array[0] eq '1'}
+{if $cur_field.options_array[0] eq '1' and $cur_field.value}
 {mailto address=$cur_field.value|escape encode="hex"}
-{elseif $cur_field.options_array[0] eq '2'}
+{elseif $cur_field.options_array[0] eq '2' and $cur_field.value}
 {mailto address=$cur_field.value|escape encode="none"}
 {else}
 {$cur_field.value|escape|default:"&nbsp;"}
@@ -196,7 +196,7 @@ title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
 <form enctype="multipart/form-data" action="tiki-view_tracker_item.php" method="post">
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 <input type="hidden" name="itemId" value="{$itemId|escape}" />
-<input type="hidden" name="commentId" value="{$commentId|escape}" />
+<input type="hidden" name="attId" value="{$attId|escape}" />
 <table class="normal">
 <tr class="formcolor"><td>{tr}Upload file{/tr}</td><td>{if $attach_file}{tr}Edit{/tr}: {/if}<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" /><input name="userfile1" type="file"  />{if $attach_file}<br />{$attach_file|escape}{/if}</td></tr>
 <tr class="formcolor"><td>{tr}comment{/tr}</td><td><input type="text" name="attach_comment" maxlength="250" value="{$attach_comment|escape}" /></td></tr>
@@ -232,7 +232,7 @@ class="tablename" href="tiki-download_item_attachment.php?attId={$atts[ix].attId
 {elseif $x eq 'filesize'}
 <td nowrap="nowrap">{$atts[ix].$x|kbsize}</td>
 {elseif $x eq 'filetype'}
-<td>{$atts[ix].$x|iconify}</td>
+<td>{$atts[ix].filename|iconify}</td>
 {else}
 <td>{$atts[ix].$x}</td>
 {/if}
@@ -257,7 +257,7 @@ src="img/icons/edit.gif" border="0" alt="{tr}edit{/tr}"  hspace="2" vspace="0" /
 
 {* --------------------------------------------------------------- tab with edit --- *}
 {if $tiki_p_modify_tracker_items eq 'y'}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent nohighlight"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}Edit item{/tr}</h2>
 <form action="tiki-view_tracker_item.php" method="post">
 {if $special}
@@ -451,7 +451,7 @@ align       : "bR"
 <h2>{tr}Special Operations{/tr}</h2>
 {$trkact}
 {/if}
-</div>
+</div>{*nohighlight - important comment to delimit the zone not to highlight in a search result*}
 {/if}
 
 <br /><br />

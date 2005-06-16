@@ -6,13 +6,12 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/hawhaw/hawtikilib.php,v 1.13 2005-05-18 11:00:54 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/hawhaw/hawtikilib.php,v 1.14 2005-06-16 20:11:01 mose Exp $
 
 // HAWHAW function library for TikiWiki
 
 require_once("lib/hawhaw/hawhaw.inc");
 require_once("lib/hawhaw/hawiki_cfg.inc");
-require_once("lib/hawhaw/hawiki_parser.inc");
 require_once("lib/hawhaw/hawiki.inc");
 
 error_reporting(E_ALL & ~E_NOTICE);

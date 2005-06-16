@@ -3,7 +3,7 @@
 // HAWIKI
 // PHP wrapper class for HAWHAW-based wiki's
 // Copyright (C) 2005 Norbert Huffschmid & TikiWiki community
-// Last modified: 17. May 2005
+// Last modified: 5. June 2005
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -25,12 +25,14 @@
 // non-parsed sections
 // bold text __bold__
 // italic text ''italic''
-// colored text ~~#0000FF:colored~~ (workaround: bold)
+// underlined text ===underline===
+// colored text ~~#0000FF:colored~~
 // monospaced BLANK text (workaround: small)
 // headings ! !! !!!
 // numbered lists
 // paragraphs -= paragraph =-
 // WikiNames
+// ext:WikiNames
 // links
 // tables
 // textbox ^box^
@@ -39,6 +41,8 @@
 // smileys
 // plugins (for HTML browsers only)
 
+require_once("lib/hawhaw/hawiki_cfg.inc");
+require_once("lib/hawhaw/hawiki_parser.inc");
 
 // internal trace facilities for debugging
 define("HAWIKI_DEBUG_NONE",   0);
@@ -90,7 +94,6 @@ class HAWIKI_page
   var $wiki_string;   // input in wiki syntax
   var $wiki_base;     // URL for WikiName links
   var $title;         // page title
-  var $extwiki;       // array with external wiki declaration
   var $navlink;       // array with navigation links (home, menue etc.)
   var $smiley_dir;    // where smiley gif's are stored
   var $link_jingle;   // where link wav file for VoiceXML is located
@@ -100,8 +103,9 @@ class HAWIKI_page
   var $listNumbering; // array with current list numbers
   var $debugflags;    // flags for dumping debug info
   var $textformat;    // text format: bold, italic etc.
+  var $textcolor;     // text color
 
-  function HAWIKI_page($input, $wiki_base, $title, $language)
+  function HAWIKI_page($input, $wiki_base, $title, $lang)
   {
     $this->wiki_string = utf8_decode($input);
     $this->wiki_base = $wiki_base;
@@ -109,13 +113,13 @@ class HAWIKI_page
     $this->smiley_dir = "";       // has to be set later by function call
     $this->link_jingle = "";      // dito
     $this->hawimconv = "";        // dito
-    $this->extwiki = array();
     $this->navlink = array();
     $this->firstColumn = true;
     $this->listLine = false;
     $this->listNumbering = array();
     $this->debugflags = HAWIKI_DEBUG_NONE;
     $this->textformat = HAW_TEXTFORMAT_NORMAL;
+    $this->textcolor = "";
 
     // check input string for presence resp. maximum length
     if (strlen($input) > HAWIKI_MAXINPUTCHARS)
@@ -130,8 +134,28 @@ class HAWIKI_page
     $this->deck->set_height(HAWIKI_DISP_HEIGHT);
     $this->deck->set_disp_bgcolor(HAWIKI_DISP_BGCOLOR);
 
-    if (isset($language) && (strlen($language) == 2))
-      $this->deck->set_language($language);
+    if (isset($lang) && (strlen($lang) == 2))
+    {
+      $this->deck->set_language($lang);
+
+      if ($this->deck->ml == HAW_VXML)
+      {
+        global $language; // needed for tra(nslation) to work properly
+        $language = $lang;
+
+        if ($lang == "en")
+          $this->deck->set_voice_nomatch("I did not understand what you said, please try again.");
+
+        if ($lang == "fr")
+          $this->deck->set_voice_nomatch("Je n'ai pas compris ce que vous avez dit. SVP essayer de nouveau.");
+
+        if ($lang == "es")
+          $this->deck->set_voice_nomatch("No comprendo lo que tu dices. Por favor, intenta otra vez.");
+
+        if ($lang == "de")
+          $this->deck->set_voice_nomatch("Ich habe Sie leider nicht verstanden. Bitte wiederholen Sie.");
+      }
+    }
   }
 
 
@@ -222,6 +246,10 @@ class HAWIKI_page
           if (strlen($po["text"]) > 0)
           {
             $text = new HAW_text(HAWIKI_unhtmlentities($po["text"]), $this->textformat);
+            
+            if ($this->textcolor)
+              $text->set_color($this->textcolor);
+
             $text->set_br(0);
             $this->deck->add_text($text);
           }
@@ -249,13 +277,22 @@ class HAWIKI_page
           break;
         }
 
+        case HAWIKI_TOKEN_UNDERLINE:
+        {
+          if ($this->debugflags & HAWIKI_DEBUG_PARSER)
+            printf("<b>Toggle underline</b><br>\n");
+
+          $this->textformat ^= HAW_TEXTFORMAT_UNDERLINE;
+
+          break;
+        }
+
         case HAWIKI_TOKEN_COLORED:
         {
           if ($this->debugflags & HAWIKI_DEBUG_PARSER)
-            printf("<b>Colored: %s</b><br>\n", $po["text"]);
+            printf("<b>Colored: %s</b><br>\n", $po["color"]);
 
-          // color is not supported by HAWHAW -> display as bold
-          $this->textformat ^= HAW_TEXTFORMAT_BOLD;
+          $this->textcolor = $po["color"];
 
           break;
         }
@@ -279,18 +316,6 @@ class HAWIKI_page
           $paragraph = new HAW_text($po["text"], HAW_TEXTFORMAT_BIG | HAW_TEXTFORMAT_BOXED);
           $paragraph->set_br(0);
           $this->deck->add_text($paragraph);
-
-          break;
-        }
-
-        case HAWIKI_TOKEN_BOX:
-        {
-          if ($this->debugflags & HAWIKI_DEBUG_PARSER)
-            printf("<b>Box:</b> %s<br>\n", $po["text"]);
-
-          $box = new HAW_text($po["text"], HAW_TEXTFORMAT_BOXED);
-          $box->set_br(0);
-          $this->deck->add_text($box);
 
           break;
         }
@@ -374,28 +399,10 @@ class HAWIKI_page
           if ($this->debugflags & HAWIKI_DEBUG_PARSER)
             printf("<b>WikiName:</b> extwiki:%s page:%s label:%s dtmf:%s<br>\n",
                    $po["extwiki"], $po["page"], $po["label"], $po["dtmf"]);
-
+          
           if ($po["extwiki"])
           {
-            // external wiki page ==> search url of this wiki
-
-            unset($link);
-
-            foreach ($this->extwiki as $value)
-            {
-              if ($value["name"] == $po["extwiki"])
-              {
-                // external wiki has been declared before
-                $link = new HAW_link($po["label"], ereg_replace("\$page", $po["page"], $value["url"]));
-              }
-            }
-
-            if (!isset($link))
-            {
-              // external wiki has not been declared!!!
-              $link = new HAW_link($po["label"], $this->wiki_base . $po["extwiki"] . ":" . $po["page"]);
-
-            }
+            $link = new HAW_link($po["label"], ereg_replace('\$page', $po["page"], $po["extwiki"]) . "&mode=mobile");
           }
           else
             $link = new HAW_link($po["label"], $this->wiki_base . $po["page"]);
@@ -431,19 +438,19 @@ class HAWIKI_page
           }
           else
           {
+            // mark as external link
+            if ($po["ext"])
+            {
+              $el_image = new HAW_image(HAWIKI_EXTLINK_ICON . ".wbmp",
+                                        HAWIKI_EXTLINK_ICON . ".gif", $po["extlink_text"]);
+              $el_image->set_voice_text($po["extlink_text"]);
+              $this->deck->add_image($el_image);
+            }
+
             // create link
             $link = new HAW_link($po["label"], HAWIKI_specchar($po["url"]));
             $link->set_br(0);
             $this->deck->add_link($link);
-
-            // mark as external link
-            if (!strstr(strtolower($po["url"]), "mode=mobile"))
-            {
-              $el_image = new HAW_image("/img/icons/external_link.wbmp",
-                                        "/img/icons/external_link.gif", hawtra("external link"));
-              $el_image->set_voice_text(hawtra("external link"));
-              $this->deck->add_image($el_image);
-            }
           }
 
           break;
@@ -657,18 +664,6 @@ class HAWIKI_page
     $arr["pos"]   = $pos;
 
     $this->navlink[] = $arr; // enhance array with navigation links
-  }
-
-
-  function set_extwiki($name, $url)
-  {
-    // define external wiki
-    // e.g. set_extwiki("HAWHAW", "http://www.hawhaw.de/tiki/tiki-index.php?page=$page");
-
-    $arr["name"] = $name;
-    $arr["url"]  = $url;
-
-    $this->extwiki[] = $arr; // enhance array with external wikis
   }
 
 

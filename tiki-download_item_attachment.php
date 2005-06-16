@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-download_item_attachment.php,v 1.10 2005-05-18 10:58:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-download_item_attachment.php,v 1.11 2005-06-16 20:10:49 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -35,12 +35,17 @@ session_write_close();
 //print("File:$file<br />");
 //die;
 header ("Content-type: $type");
-//header( "Content-Disposition: attachment; filename=$file" );
-header ("Content-Disposition: inline; filename=\"".urlencode($file)."\"");
+header( "Content-Disposition: attachment; filename=$file" );
+//header ("Content-Disposition: inline; filename=\"".urlencode($file)."\"");
+header("Expires: 0");
+header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+header("Pragma: public");
 
 if ($info["path"]) {
+	header("Content-Length: ". filesize( $fgal_use_dir.$info["path"] ) );
 	readfile ($t_use_dir . $info["path"]);
 } else {
+	header("Content-Length: ". $info[ "filesize" ] );
 	echo "$content";
 }
 

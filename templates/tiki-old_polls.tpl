@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-old_polls.php">{tr}Polls{/tr}</a><br /><br />
+<h1><a class="pagetitle" href="tiki-old_polls.php">{tr}Polls{/tr}</a></h1>
 <div align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>

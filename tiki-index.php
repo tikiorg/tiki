@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.138 2005-05-18 10:58:57 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.139 2005-06-16 20:10:49 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -424,7 +424,7 @@ $smarty->assign('pagenum',$_REQUEST['pagenum']);
 //$smarty->assign_by_ref('lastModif',date("l d of F, Y  [H:i:s]",$info["lastModif"]));
 $smarty->assign_by_ref('lastModif',$info["lastModif"]);
 if(empty($info["user"])) {
-    $info["user"]='anonymous';  
+    $info["user"]=tra('Anonymous');  
 }
 $smarty->assign_by_ref('lastUser',$info["user"]);
 $smarty->assign_by_ref('description',$info["description"]);

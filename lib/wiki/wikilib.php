@@ -87,7 +87,7 @@ class WikiLib extends TikiLib {
      *  the returned array does not contain the last editor/contributor
      */
     function get_contributors($page, $last) {
-        $notus = "`user` not like \"admin\" and `user` not like \"system\" and `user` not like \"$last\"";
+        $notus = "`user` not like \"system\" and `user` not like \"$last\"";
         $query = "select `user` from `tiki_history` where ($notus) and `pageName`=? order by `version` desc";
         $result = $this->query($query,array($page), 10);
         $ret = array();

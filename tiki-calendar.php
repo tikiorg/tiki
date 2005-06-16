@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.46 2005-05-18 10:58:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.47 2005-06-16 20:10:49 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -34,6 +34,16 @@ foreach ($rawcals["data"] as $cal_id=>$cal_data) {
 		$cal_data["tiki_p_view_calendar"] = 'y';
 		$cal_data["tiki_p_add_events"] = 'y';
 		$cal_data["tiki_p_change_events"] = 'y';
+	} elseif ($cal_data["personal"] == "y") {
+		if ($user) {
+			$cal_data["tiki_p_view_calendar"] = 'y';
+			$cal_data["tiki_p_add_events"] = 'y';
+			$cal_data["tiki_p_change_events"] = 'y';
+		} else {
+			$cal_data["tiki_p_view_calendar"] = 'n';
+			$cal_data["tiki_p_add_events"] = 'n';
+			$cal_data["tiki_p_change_events"] = 'n';
+		}
 	} else {
 		if ($userlib->object_has_one_permission($cal_id,'calendar')) {
 			if ($userlib->object_has_permission($user, $cal_id, 'calendar', 'tiki_p_view_calendar')) {
@@ -93,12 +103,12 @@ $smarty->assign('modifTab', $modifTab);
 // set up list of groups 
 if (isset($_REQUEST["calIds"])and is_array($_REQUEST["calIds"])and count($_REQUEST["calIds"])) {
 	$_SESSION['CalendarViewGroups'] = $_REQUEST["calIds"];
+} elseif (isset($_REQUEST["calIds"])and !is_array($_REQUEST["calIds"])) {
+	$_SESSION['CalendarViewGroups'] = array($_REQUEST["calIds"]);
 } elseif (!isset($_SESSION['CalendarViewGroups'])) {
 	$_SESSION['CalendarViewGroups'] = $listcals;
 } elseif (isset($_REQUEST["refresh"])and !isset($_REQUEST["calIds"])) {
 	$_SESSION['CalendarViewGroups'] = array();
-} elseif (isset($_REQUEST["calIds"])and !is_array($_REQUEST["calIds"])) {
-	$_SESSION['CalendarViewGroups'] = array($_REQUEST["calIds"]);
 }
 
 // setup list of tiki items displayed
@@ -375,6 +385,7 @@ if (isset($_REQUEST["save"])and ($_REQUEST["save"])) {
 
 if ($_REQUEST["calitemId"] && !isset($_REQUEST["preview"])) {
 	$info = $calendarlib->get_item($_REQUEST["calitemId"]);
+	$info['modifiable'] = in_array($info['calendarId'], $modifiable)? "y": "n";
 } elseif ($error  == "y" || isset($_REQUEST["preview"])) {
 	if (isset($_REQUEST["preview"])) {
 		$info["parsedDescription"] = $tikilib->parse_data($_REQUEST["description"]);
@@ -415,6 +426,7 @@ if ($_REQUEST["calitemId"] && !isset($_REQUEST["preview"])) {
 	$info["created"] = isset($_REQUEST["created"]) ? $_REQUEST["created"]: time();
 	$info["lastModif"] = isset($_REQUEST["lastModif"])? $_REQUEST["lastModif"]: time();
 	$info["status"] = $_REQUEST["status"];
+	$info['modifiable'] = in_array($info['calendarId'], $modifiable)? "y": "n";
 } else {
 	$info = array();
 
@@ -445,6 +457,7 @@ if ($_REQUEST["calitemId"] && !isset($_REQUEST["preview"])) {
 	$info["custompriorities"] = 'n';
 	$info["customparticipants"] = 'n';
 	$info["customsubscription"] = 'n';
+	$info["modifiable"] = "y";
 }
 $info["duration_hours"] = intval(($info["end"] - $info["start"]) / (60*60));
 $info["duration_minutes"] = intval(($info["end"] - $info["start"]) - ($info["duration_hours"] *60*60))/60;
@@ -476,6 +489,7 @@ $smarty->assign('lastUser', $info["user"]);
 $smarty->assign('status', $info["status"]);
 $smarty->assign('duration_hours', $info["duration_hours"]);
 $smarty->assign('duration_minutes', $info["duration_minutes"]);
+$smarty->assign('modifiable', $info['modifiable']);
 
 if ((isset($_REQUEST["editmode"]) && $_REQUEST["editmode"]) || $error == "y"){ /* 1 for edit item - add for new item - details for view item*/
 	$cookietab = 3;
@@ -757,6 +771,8 @@ if ($_SESSION['CalendarViewGroups']) {
 		} else
 			$sort_mode = "start_asc";
 		$listevents = $calendarlib->list_raw_items($_SESSION['CalendarViewGroups'], $user, $viewstart, $viewend, 0, 50, $sort_mode);
+		for ($i = count($listevents) - 1; $i >= 0; --$i)
+			$listevents[$i]['modifiable'] = in_array($listevents[$i]['calendarId'], $modifiable)? "y": "n";
 	} else {
 		$listevents = $calendarlib->list_items($_SESSION['CalendarViewGroups'], $user, $viewstart, $viewend, 0, 50);
 	}
@@ -816,6 +832,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 				$smarty->assign_by_ref('cellurl', $le["url"]);
 				$smarty->assign_by_ref('cellid', $le["calitemId"]);
 				$smarty->assign_by_ref('celldescription', $tikilib->parse_data($le["description"]));
+				$smarty->assign_by_ref('cellmodif', $le['modifiable']);
 				$leday["{$le['time']}$e"]["over"] = $smarty->fetch("tiki-calendar_box.tpl");
 				$e++;
 			}

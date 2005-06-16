@@ -34,7 +34,7 @@ function wikiplugin_tracker($data, $params) {
 	
 	if ($tracker) {
 		include_once('lib/trackers/trackerlib.php');
-		include_once('lib/notifications/notificationlib.php');	
+		global $notificationlib; include_once('lib/notifications/notificationlib.php');	
 		$tracker = array_merge($tracker,$trklib->get_tracker_options($trackerId));
 		$flds = $trklib->list_tracker_fields($trackerId,0,-1,"position_asc","");
 		$back = '';
@@ -109,7 +109,7 @@ function wikiplugin_tracker($data, $params) {
 				if (in_array($f['fieldId'],$optional)) {
 					$f['name'] = "<i>".$f['name']."</i>";
 				}
-				if ($f['type'] == 't' or $f['type'] == 'n' and $f["fieldId"] != $embeddedId) {
+				if ($f['type'] == 't' or $f['type'] == 'n' and $f["fieldId"] != $embeddedId or $f['type'] == 'm') {
 					$back.= "<tr><td>".$f['name'];
 					if ($f['isMandatory'] == 'y') {
 						$back.= "&nbsp;<b>*</b>&nbsp;";
@@ -174,8 +174,31 @@ function wikiplugin_tracker($data, $params) {
 						}
 						$back.= "</select>";
 					} else {
-						$back.= '<inputy type="hidden" name="track['.$f["fieldId"].']" value="'.$user.'" />';
+						$back.= '<input type="hidden" name="track['.$f["fieldId"].']" value="'.$user.'" />';
 					}
+				} elseif ($f['type'] == 'h') {
+					$back .= "</td></tr></table><h2>".$f['name']."</h2><table><tr><td>";
+				} elseif ($f['type'] == 'e') {
+					$back .="<tr><td>".$f['name'];
+					if ($f['isMandatory'] == 'y') {
+						$back.= "&nbsp;<b>*</b>&nbsp;";
+						$onemandatory = true;
+					}
+					$back .= "</td><td>";
+					$k = $f["options_array"][0];
+					global $categlib; include_once('lib/categories/categlib.php');
+					$cats = $categlib->get_child_categories($k);
+					foreach ($cats as $cat) {
+						$back .= '<input type="checkbox" name="track['.$f["fieldId"].']" value="'.$cat["categId"].'">'.$cat['name'].'</input>';
+					}
+				} elseif ($f['type'] == 'c') {
+					$back .="<tr><td>".$f['name'];
+					if ($f['isMandatory'] == 'y') {
+						$back.= "&nbsp;<b>*</b>&nbsp;";
+						$onemandatory = true;
+					}
+					$back .= '</td><td><input type="checkbox" name="track['.$f["fieldId"].']" value="y" />';
+				} else {
 				}
 				$back.= "</td></tr>";
 			}

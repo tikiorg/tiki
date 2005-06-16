@@ -1,5 +1,5 @@
 {*Smarty template*}
-<a class="pagetitle" href="tiki-g-admin_activities.php?pid={$pid}">{tr}Admin process activities{/tr}</a><br /><br />
+<h1><a class="pagetitle" href="tiki-g-admin_activities.php?pid={$pid}">{tr}Admin process activities{/tr}</a></h1>
 {include file=tiki-g-proc_bar.tpl}
 
 {if count($errors) > 0}
@@ -11,7 +11,7 @@ Errors:<br />
 </div>
 {/if}
 
-<h3>{tr}Add or edit an activity{/tr} <a class="link" href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={$sort_mode}&amp;activityId=0">{tr}new{/tr}</a></h3>
+<h2>{tr}Add or edit an activity{/tr} <a class="link" href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={$sort_mode}&amp;activityId=0">{tr}new{/tr}</a></h2>
 <form action="tiki-g-admin_activities.php" method="post">
 <input type="hidden" name="pid" value="{$pid|escape}" />
 <input type="hidden" name="activityId" value="{$info.activityId|escape}" />
@@ -128,7 +128,7 @@ Errors:<br />
 </table>
 </form>
 
-<h3>{tr}Process activities{/tr}</h3>
+<h2>{tr}Process activities{/tr}</h2>
 	
 <form action="tiki-g-admin_activities.php" method="post">
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
@@ -256,7 +256,7 @@ Errors:<br />
 </table>
 </form>	
 
-<h3>{tr}Process Transitions{/tr}</h3>
+<h2>{tr}Process Transitions{/tr}</h2>
 <table class="normal">
 <tr>
 	<td >

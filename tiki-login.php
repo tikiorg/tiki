@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.46 2005-05-18 10:58:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.47 2005-06-16 20:10:50 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.46 2005-05-18 10:58:58 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.47 2005-06-16 20:10:50 mose Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -148,17 +148,14 @@ if ($https_mode) {
 	$stay_in_ssl_mode = isset($_REQUEST['stay_in_ssl_mode']) && $_REQUEST['stay_in_ssl_mode'] == 'on';
 
 	if (!$stay_in_ssl_mode) {
-		$http_domain = $tikilib->get_preference('http_domain', '');
-
-		$http_port = $tikilib->get_preference('http_port', 80);
-		$http_prefix = $tikilib->get_preference('http_prefix', '/');
-
-		$prefix = 'http://';
+		$prefix      = 'http://';
+		$http_domain = $tikilib->get_preference('http_domain', $_SERVER['SERVER_NAME']);
+		$http_port   = $tikilib->get_preference('http_port', 80);
 
 		if ($http_port != 80)
-			$prefix .= ':' . $http_port;
+			$http_domain .= ':' . $http_port;
 
-		$prefix .= $http_domain;
+		$prefix .= $http_domain . '/';
 		$url = $prefix . $url;
 
 		if (SID)

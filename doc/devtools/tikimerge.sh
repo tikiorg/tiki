@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/tikimerge.sh,v 1.8 2005-05-18 10:59:14 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/tikimerge.sh,v 1.9 2005-06-16 20:10:53 mose Exp $
 #
 # NOTE: Please start the merge process from BRANCH-1-8; don't start with 1-9
 #
@@ -23,40 +23,35 @@
 # run it in branch to merge change to head instantly
 
 # Use it giving file name(s) as arguments: file name(s) can be particular files
-# or "." for all files
+# or "." (default) for all files
 
+EXCLUDE="lang"
 if [ -z $1 ]; then
-	echo "Usage: tikimerge.sh <files>"
-	echo "<files> can be a file name like lib/tikilib.php or . for all files"
-	exit 0
+	FILES="."
+else
+	FILES=$*
 fi
-
-FILES=$*
 
 echo "# Start of block you can just copy-paste"
 echo "# or adapt (especially comment of commit)"
 echo "# NOTE: Please start the merge process from BRANCH-1-8; don't start with 1-9"
 echo ""
 
-echo "cvs -q up -dP -r BRANCH-1-8 $FILES"
-echo "cvs -q tag -r BRANCH-1-8 -F BRANCH-1-8-HEAD $FILES"
 echo "cvs -q up -dP -r BRANCH-1-9 $FILES"
-for i in $FILES; do
-	echo "cvs -q up -dkk -j MERGE-BRANCH-1-8-to-1-9 -j BRANCH-1-8-HEAD $i"
-done
-echo "grep -r '<<<<<' $FILES"
-echo "cvs ci -m'Instant-Auto-Merge from BRANCH-1-8 to BRANCH-1-9' $FILES"
-echo "cvs -q tag -r BRANCH-1-8-HEAD -F MERGE-BRANCH-1-8-to-1-9 $FILES"
 echo "cvs -q tag -r BRANCH-1-9 -F BRANCH-1-9-HEAD $FILES"
-echo "cvs -q up -AdP $FILES"
+echo "cvs -q up -dAP $FILES"
 for i in $FILES; do
 	echo "cvs -q up -dkk -j MERGE-BRANCH-1-9-to-HEAD -j BRANCH-1-9-HEAD $i"
 done
-echo "grep -r '<<<<<' $FILES"
+for i in $EXCLUDE; do
+	echo "rm -rf $i"
+	echo "cvs -q up -dAP $i"
+done
+echo "grep -r '<<<<<<<' $FILES"
 echo "cvs ci -m'Instant-Auto-Merge from BRANCH-1-9 to HEAD' $FILES"
 echo "cvs -q tag -r BRANCH-1-9-HEAD -F MERGE-BRANCH-1-9-to-HEAD $FILES"
-echo "cvs -q up -r BRANCH-1-8 -dP $FILES"
 
+echo 
 echo "# Done."
 exit 0
 

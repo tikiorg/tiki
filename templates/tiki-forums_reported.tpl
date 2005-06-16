@@ -1,10 +1,10 @@
 {popup_init src="lib/overlib.js"}
 {*Smarty template*}
-<a class="pagetitle" href="tiki-forums_reported.php?forumId={$forumId}">{tr}Reported messages for{/tr}: {$forum_info.name}</a>
-<br /><br />
+<h1><a class="pagetitle" href="tiki-forums_reported.php?forumId={$forumId}">{tr}Reported messages for{/tr}: {$forum_info.name}</a>
+</h1>
 <a class="link" href="tiki-view_forum.php?forumId={$forumId}">{tr}back to forum{/tr}</a>
 
-<h3>{tr}List of messages{/tr} ({$cant})</h3>
+<h2>{tr}List of messages{/tr} ({$cant})</h2>
 {* FILTERING FORM *}
 <form action="tiki-forums_reported.php" method="post">
 <input type="hidden" name="forumId" value="{$forumId|escape}" />

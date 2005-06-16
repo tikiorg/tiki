@@ -1,5 +1,5 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_articles.tpl,v 1.21 2005-05-18 11:03:20 mose Exp $ *}
-<a class="pagetitle" href="tiki-received_articles.php">{tr}Received articles{/tr}</a><br /><br />
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_articles.tpl,v 1.22 2005-06-16 20:11:13 mose Exp $ *}
+<h1><a class="pagetitle" href="tiki-received_articles.php">{tr}Received articles{/tr}</a>
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Articles" target="tikihelp" class="tikihelp" title="{tr}Received Articles{/tr}">
@@ -11,7 +11,7 @@
 <img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}'></a>
 {/if}
 
-<br /><br />
+</h1>
 {if $preview eq 'y'}
 <h2>{tr}Preview{/tr}</h2>
 <div class="articletitle">

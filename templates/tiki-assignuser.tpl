@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.23 2005-05-18 11:02:59 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.24 2005-06-16 20:11:06 mose Exp $ *}
 
-<a href="tiki-assignuser.php?assign_user={$assign_user}" class="pagetitle">{tr}Assign user{/tr} {$assign_user} {tr}to groups{/tr}</a><br /><br />
+<h1><a href="tiki-assignuser.php?assign_user={$assign_user}" class="pagetitle">{tr}Assign user{/tr} {$assign_user} {tr}to groups{/tr}</a></h1>
 <a href="tiki-adminusers.php" class="linkbut">{tr}Admin users{/tr}</a>
 <br />
 <h2>{tr}User Information{/tr}</h2>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_topics.tpl,v 1.25 2005-05-18 11:02:57 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_topics.tpl,v 1.26 2005-06-16 20:11:06 mose Exp $ *}
 
 <h1><a  class="pagetitle" href="tiki-admin_topics.php">{tr}Admin Topics{/tr}</a>
 
@@ -34,7 +34,7 @@
 {cycle print=false values="even,odd"}
 {section name=user loop=$topics}
 <tr>
-<td class="{cycle advance=false}">{$topics[user].name}</td>
+<td class="{cycle advance=false}"><a class="link" href="tiki-view_articles.php?topic={$topics[user].topicId}">{$topics[user].name}</a></td>
 <td class="{cycle advance=false}">
 {if $topics[user].image_size}
 <img alt="{tr}topic image{/tr}" border="0" src="topic_image.php?id={$topics[user].topicId}&amp;reload=1" />

@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.96 2005-05-18 10:59:05 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.97 2005-06-16 20:10:53 mose Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -1095,3 +1095,10 @@ DROP TABLE temp_users_grouppermissions;
 
 # 2005-05-10 redflo
 alter table tiki_sessions add tikihost varchar(200) default NULL;
+
+#2005-06-08 sylvieg
+UPDATE users_objectpermissions set permName='tiki_p_add_events' where permName='tiki_p_add_calendar';
+UPDATE users_objectpermissions set permName='tiki_p_change_events' where permName='tiki_p_edit_calendar';
+
+# 2005-06-14 rv540
+alter table tiki_referer_stats change referer referer varchar(255) not null;

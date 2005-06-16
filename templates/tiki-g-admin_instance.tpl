@@ -1,11 +1,11 @@
 {popup_init src="lib/overlib.js"}
 {*Smarty template*}
-<a class="pagetitle" href="tiki-g-admin_instance.php?iid={$iid}">{tr}Admin instance{/tr}</a>
-<br /><br />
+<h1><a class="pagetitle" href="tiki-g-admin_instance.php?iid={$iid}">{tr}Admin instance{/tr}</a>
+</h1>
 {include file=tiki-g-monitor_bar.tpl}
-<h3>{tr}Process:{/tr} {$proc_info.name} {$proc_info.version}<br>
+<h2>{tr}Process:{/tr} {$proc_info.name} {$proc_info.version}<br>
 <form method="POST" action="tiki-g-admin_instance.php?aid={$aid}">
-{tr}Instance{/tr}: <input type="text" name="name" value="{$ins_info.name}"></h3>
+{tr}Instance{/tr}: <input type="text" name="name" value="{$ins_info.name}"></h2>
 <input type="hidden" name="iid" value="{$iid|escape}" />
 <table class="normal">
 <tr>
@@ -50,7 +50,7 @@
 </tr>
 
 <tr>
-	<td class="formcolor"><h3>{tr}Activities{/tr}</h3></td>
+	<td class="formcolor"><h2>{tr}Activities{/tr}</h2></td>
 </tr>
 <tr>
 	<td class="formcolor" colspan="2">
@@ -84,7 +84,7 @@
 </table>
 </form>
 
-<h3>{tr}Properties{/tr}</h3>
+<h2>{tr}Properties{/tr}</h2>
 <form method="POST" action="tiki-g-admin_instance.php?iid={$iid}&aid={$aid}">
 <input type="hidden" name="iid" value="{$iid|escape}" />
 <table class="normal">
@@ -115,7 +115,7 @@
 
 </table>
 </form>
-<h3>{tr}Add property{/tr}</h3>
+<h2>{tr}Add property{/tr}</h2>
 <form method="POST" action="tiki-g-admin_instance.php?iid={$iid}&aid={$aid}">
 <input type="hidden" name="iid" value="{$iid|escape}" />
 <table class="normal">

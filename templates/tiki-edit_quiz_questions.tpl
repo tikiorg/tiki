@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz_questions.tpl,v 1.18 2005-05-18 11:03:00 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz_questions.tpl,v 1.19 2005-06-16 20:11:07 mose Exp $ *}
 
 {* Copyright (c) 2004 *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -6,24 +6,21 @@
 
 <!- tiki-edit_quiz_questions.tpl start ->
 
-<a class="pagetitle" href="tiki-edit_quiz_questions.php?quizId={$quizId}">{tr}Edit quiz questions{/tr}</a>
+<h1><a class="pagetitle" href="tiki-edit_quiz_questions.php?quizId={$quizId}">{tr}Edit quiz questions{/tr}</a>
 <! -- the help link info -->
   
       {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=QuizzesDoc#id141161" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}edit quiz questions{/tr}">
-<img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a>{/if}
+<a href="http://tikiwiki.org/tiki-index.php?page=QuizzesDoc#id141161" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}edit quiz questions{/tr}"><img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a>{/if}
 
 <! -- link to tpl -->
 
      {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=/tiki-edit_quiz_questions.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}edit quiz questions tpl{/tr}">
-<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'>
-</a>
+<a href="tiki-edit_templates.php?template=/tiki-edit_quiz_questions.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}edit quiz questions tpl{/tr}"><img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>
 {/if}
 
 
 
-<br /><br />
+</h1>
 
 <! -- beginning of link buttons -->
 <a class="linkbut" href="tiki-list_quizzes.php">{tr}list quizzes{/tr}</a>
@@ -33,7 +30,7 @@
 <a class="linkbut" href="tiki-edit_quiz.php">{tr}admin quizzes{/tr}</a>
 <br /><br />
 
-<h2>{tr}Create/edit questions for quiz{/tr}: <a href="tiki-edit_quiz.php?quizId={$quiz_info.quizId}" class="pagetitle">{$quiz_info.name}</a></h2>
+<h2>{tr}Create/edit questions for quiz{/tr}: <a href="tiki-edit_quiz.php?quizId={$quiz_info.quizId}" >{$quiz_info.name}</a></h2>
 <form action="tiki-edit_quiz_questions.php" method="post">
 <input type="hidden" name="quizId" value="{$quizId|escape}" />
 <input type="hidden" name="questionId" value="{$questionId|escape}" />

@@ -1,6 +1,6 @@
-<a class="pagetitle" href="tiki-edit_structure.php?page_ref_id={$page_ref_id}">
+<h1><a class="pagetitle" href="tiki-edit_structure.php?page_ref_id={$page_ref_id}">
   {tr}Modify Structure{/tr}: {$structure_name}
-</a><br /><br />
+</a></h1>
 
 {if $remove eq 'y'}
 {tr}You will remove{/tr} '{$removePageName}' {tr}and its subpages from the structure, now you have two options:{/tr}

@@ -4,7 +4,7 @@
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr>
   <td{if $xtitle} width="30%"{/if}>
-    <a class="pagetitle" href="tiki-list_games.php">{tr}Games{/tr}</a>
+    <h1><a class="pagetitle" href="tiki-list_games.php">{tr}Games{/tr}</a>
 
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Games" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Games{/tr}">
@@ -13,16 +13,16 @@
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-list_games.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}games tpl{/tr}">
-<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}</h1>
 
     
   </td>
 {if $xtitle}
   <td align="center">
-    <a class="pagetitle" href="/">{tr}/{/tr}</a>
+    <h1><a class="pagetitle" href="/">{tr}/{/tr}</a></h1>
   </td>
   <td align="right" width="30%">
-    <a class="pagetitle" href="tiki-index.php">{tr}Home{/tr}</a>
+    <h1><a class="pagetitle" href="tiki-index.php">{tr}Home{/tr}</a></h1>
   </td>
 {/if}
   </tr>

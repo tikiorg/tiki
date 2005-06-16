@@ -1,38 +1,23 @@
 {popup_init src="lib/overlib.js"}
 {*Smarty template*}
-<a class="pagetitle" href="tiki-g-admin_processes.php">{tr}Admin processes{/tr}</a>
+<h1><a class="pagetitle" href="tiki-g-admin_processes.php">{tr}Admin processes{/tr}</a>
 
 
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}GalaxiaAdminProcesses" target="tikihelp" class="tikihelp" title="{tr}Galaxia Admin Processes{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'>{/if}
-                        {if $feature_help eq 'y'}</a>{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 
 
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-g-admin_processes.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Galaxia Admin Processes tpl{/tr}">
-<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'> {/if}
-{if $feature_view_tpl eq 'y'}</a>{/if}
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-<br /><br />
+</h1>
 {include file=tiki-g-monitor_bar.tpl}
-<h3>{tr}Add or edit a process{/tr} <a class="link" href="tiki-g-admin_processes.php?where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;pid=0">{tr}new{/tr}</a>
-</h3>
+<h2>{tr}Add or edit a process{/tr} <a class="link" href="tiki-g-admin_processes.php?where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;pid=0">{tr}new{/tr}</a>
+</h2>
 {if $pid > 0}
 {include file=tiki-g-proc_bar.tpl}
 {/if}
@@ -71,7 +56,7 @@
 </table>
 </form>
 
-<h3>{tr}Or upload a process using this form{/tr}</h3>
+<h2>{tr}Or upload a process using this form{/tr}</h2>
 <form enctype="multipart/form-data" action="tiki-g-admin_processes.php" method="post">
 <table class="normal">
 <tr>
@@ -86,7 +71,7 @@
 </form>
 
 
-<h3>{tr}List of processes{/tr} ({$cant})</h3>
+<h2>{tr}List of processes{/tr} ({$cant})</h2>
 <form action="tiki-g-admin_processes.php" method="post">
 <input type="hidden" name="offset" value="{$offset|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />

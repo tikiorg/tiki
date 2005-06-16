@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-searchresults.php,v 1.34 2005-05-18 10:58:59 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-searchresults.php,v 1.35 2005-06-16 20:10:50 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -18,6 +18,9 @@ if ($feature_search != 'y') {
 
 	$smarty->display("error.tpl");
 	die;
+}
+if(isset($_REQUEST["highlight"]) && !empty($_REQUEST["highlight"])) {
+	$_REQUEST["words"] = $_REQUEST["highlight"];
 }
 
 // if(!empty($_REQUEST["words"])) {

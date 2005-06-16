@@ -182,13 +182,13 @@ function random_refresh_index_tracker_items() {
   $cant=$tikilib->getOne("select count(*) from `tiki_tracker_item_fields` f, `tiki_tracker_fields` tf 
 	where tf.`type` in (?,?) and tf.`fieldId`=f.`fieldId`",array("t","a"));
   if($cant>0) {
-    $query="select f.`value`, f.`itemId` 
+    $query="select f.`value`, f.`itemId`, f.`fieldId`
 	from `tiki_tracker_item_fields` f, `tiki_tracker_fields` tf
 	where tf.`type` in (?,?) and tf.`fieldId`=f.`fieldId`";
     $result=$tikilib->query($query,array("t","a"),1,rand(0,$cant-1));
     $res=$result->fetchRow();
     $words=&search_index($res["value"]);
-    insert_index($words,'trackeritem',$res["itemId"]);
+    insert_index($words,'trackeritem',$res["itemId"]."#".$res["fieldId"]);
   }
 }
 
@@ -200,6 +200,13 @@ function random_refresh_index_wiki(){
     refresh_index_wiki($rpages["0"]);
 }
 
+function refresh_index_wiki_all() {
+  global $tikilib;
+  $pages=$tikilib->get_all_pages();
+  foreach($pages as $page) {
+    refresh_index_wiki($page['pageName']);
+  }
+}
 
 function refresh_index_oldest(){
   global $tikilib;
@@ -233,7 +240,7 @@ function refresh_index_comments($threadId) {
 
     if( isset( $threadId ) )
     {
-    $query="select * from `tiki_comments` where threadID = ? ";
+    $query="select * from `tiki_comments` where `threadId` = ? ";
     $result = $tikilib->query( $query, array( $threadId ) );
     $res=$result->fetchRow();
 
@@ -254,8 +261,14 @@ function refresh_index_forum($page) {
 
 }
 
-function refresh_index_trackers($page) {
-
+function refresh_index_trackers() {
+	global $tikilib;
+	$query = "select v.`itemId`, v.`fieldId`, v.`value` from `tiki_tracker_item_fields` v, `tiki_tracker_fields` tf where v.`fieldId`=tf.`fieldId` and (tf.`type`='t' or tf.`type`= 'a')";
+	$result = $tikilib->query($query);
+	while ($res = $result->fetchRow()) {
+		$words=&search_index($res["value"]);
+		insert_index($words,'trackeritem',$res["itemId"]."#".$res["fieldId"]);
+	}
 }
 
 function &search_index($data) {
@@ -274,13 +287,13 @@ function &search_index($data) {
 }
 
 function insert_index(&$words,$location,$page) {
-  global $tikilib;
+  global $tikilib, $search_min_wordlength;
   $query="delete from `tiki_searchindex` where `location`=? and `page`=?";
   $tikilib->query($query,array($location,$page),-1,-1,false);
 
   $now= (int) date('U');
   foreach ($words as $key=>$value) {
-    if (strlen($key)>3) {//todo: make min length configurable
+    if (strlen($key)>$search_min_wordlength) {//todo: make min length configurable
       // todo: stopwords
       $query="insert into `tiki_searchindex`
     		(`location`,`page`,`searchword`,`count`,`last_update`)
@@ -288,7 +301,40 @@ function insert_index(&$words,$location,$page) {
       $tikilib->query($query,array($location,$page,$key,(int) $value,$now),-1,-1,false);
     }
   }
+}
 
+function random_refresh_file(){
+   global $tikilib;
+   $cant=$tikilib->getOne("select count(*) from `tiki_files`",array());
+   if($cant>0) {
+     $query="select * from `tiki_files`";
+     $result=$tikilib->query($query,array(),1,rand(0,$cant-1));
+     $info=$result->fetchRow();
+     $words=&search_index($info["data"]." ".$info["description"]." ".$info["name"]);
+     insert_index($words,"file",$info["fileId"]);
+   }
+}
+
+function refresh_index_files() {
+  global $tikilib;
+  $result = $tikilib->query("select * from `tiki_files`", array());
+  while ($info = $result->fetchRow()) {
+      $words=&search_index($info["data"]." ".$info["description"]." ".$info["name"]);
+      insert_index($words,"file",$info["fileId"]);
+  }
+}
+
+function random_refresh_filegal() {
+  global $feature_galleries;
+  global $tikilib;
+  $cant=$tikilib->getOne("select count(*) from `tiki_file_galleries`",array());
+  if($cant>0) {
+    $query="select * from `tiki_file_galleries`";
+    $result=$tikilib->query($query,array(),1,rand(0,$cant-1));
+    $res=$result->fetchRow();
+    $words=&search_index($res["name"]." ".$res["description"]);
+    insert_index($words,"filegal",$res["galleryId"]);
+  }
 }
 
 ?>

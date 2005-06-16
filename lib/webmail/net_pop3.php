@@ -33,7 +33,7 @@
 // | Co-Author: Damian Fernandez Sosa <damlists@cnba.uba.ar>               |
 // +-----------------------------------------------------------------------+
 //
-// $Id: net_pop3.php,v 1.2 2005-05-18 11:01:57 mose Exp $
+// $Id: net_pop3.php,v 1.3 2005-06-16 20:11:03 mose Exp $
 
 require_once('Net/Socket.php');
 
@@ -295,14 +295,18 @@ class Net_POP3 {
                         $this->_capability['implementation'] = $matches[1];
                         break;
                     case 'sasl':
-                        $this->_capability['sasl'] = preg_split('/\s+/', $matches[1]);
-                        break;
-                    default :
-                        $this->_capability[$capa] = $matches[1];
-                        break;
-                }
-            }
-        }
+			if (isset($matches[3])) {
+			    $this->_capability['sasl'] = preg_split('/\s+/', $matches[3]);
+			} else {
+			    $this->_capability['sasl'] = $matches[1];
+			}
+			break;
+		    default :
+			$this->_capability[$capa] = $matches[1];
+			break;
+		}
+	    }
+	}
     }
 
 
@@ -323,12 +327,12 @@ class Net_POP3 {
     function _getBestAuthMethod($userMethod = null)
     {
 
-/*
-       return 'USER';
-       return 'APOP';
-       return 'DIGEST-MD5';
-       return 'CRAM-MD5';
-*/
+	/*
+	   return 'USER';
+	   return 'APOP';
+	   return 'DIGEST-MD5';
+	   return 'CRAM-MD5';
+	 */
 
 
         $this->_parseCapability();

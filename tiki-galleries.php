@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.40 2005-05-18 10:58:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.41 2005-06-16 20:10:49 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -136,7 +136,7 @@ if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
 	$smarty->assign('edited', 'y');
 
 	if ($_REQUEST["galleryId"] > 0) {
-		$info = $imagegallib->get_gallery_info($_REQUEST["galleryId"]);
+		if ($info = $imagegallib->get_gallery_info($_REQUEST["galleryId"])) {
 
 		$scaleinfo = $imagegallib->get_gallery_scale_info($_REQUEST["galleryId"]);
 		$gallery_images = $imagegallib->get_images(0,-1,'name_asc',false,$_REQUEST['galleryId']);
@@ -168,6 +168,7 @@ if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
 		$smarty->assign('defaultscale',$info['defaultscale']);
 		$smarty->assign_by_ref('geographic', $info["geographic"]);
 		$smarty->assign_by_ref('scaleinfo', $scaleinfo);
+		}
 	}
 }
 
