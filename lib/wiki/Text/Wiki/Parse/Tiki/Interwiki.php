@@ -13,7 +13,7 @@
 * 
 * @license LGPL
 * 
-* @version $Id: Interwiki.php,v 1.1 2005-05-18 23:43:16 papercrane Exp $
+* @version $Id: Interwiki.php,v 1.2 2005-06-16 06:19:08 papercrane Exp $
 * 
 */
 
@@ -54,7 +54,7 @@ class Text_Wiki_Parse_Interwiki extends Text_Wiki_Parse {
     function parse()
     {
         // described interwiki links
-        $tmp_regex = '/\(\(' . str_replace(']', '\s]', $this->regex) . '(\|(.+?))?\)\)/';
+        $tmp_regex = '/\(\(' . str_replace(']', '\s]', $this->regex) . '(?:\|(.+?))?\)\)/';
         $this->wiki->source = preg_replace_callback(
             $tmp_regex,
             array(&$this, 'processDescr'),
@@ -131,7 +131,7 @@ class Text_Wiki_Parse_Interwiki extends Text_Wiki_Parse {
         $options = array(
             'site' => $matches[1],
             'page' => $matches[2],
-            'text' => isset($matches[4]) && strlen($matches[4]) ? $matches[4] : $matches[1].':'.$matches[2]
+            'text' => isset($matches[3]) && strlen($matches[3]) ? $matches[3] : $matches[1].':'.$matches[2]
         );
         
         return $this->wiki->addToken($this->rule, $options);
