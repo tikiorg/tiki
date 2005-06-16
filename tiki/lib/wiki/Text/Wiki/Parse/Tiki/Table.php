@@ -13,7 +13,7 @@
 * 
 * @license LGPL
 * 
-* @version $Id: Table.php,v 1.1 2005-05-18 23:43:16 papercrane Exp $
+* @version $Id: Table.php,v 1.2 2005-06-16 05:48:59 papercrane Exp $
 * 
 */
 
@@ -97,6 +97,7 @@ class Text_Wiki_Parse_Table extends Text_Wiki_Parse {
         // the number of rows in the table
         $num_rows = 0;
         
+        //TODO: technically this should check the TW option for line endings
         // rows are separated by newlines or || in the matched text
         if (strstr($matches[1], "\n")) {
             $rows = explode("\n", $matches[1]);
