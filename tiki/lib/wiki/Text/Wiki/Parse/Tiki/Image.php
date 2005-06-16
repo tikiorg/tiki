@@ -14,7 +14,7 @@
 * 
 * @license LGPL
 * 
-* @version $Id: Image.php,v 1.6 2005-06-07 12:11:02 toggg Exp $
+* @version $Id: Image.php,v 1.7 2005-06-16 06:23:14 papercrane Exp $
 * 
 */
 
@@ -32,7 +32,7 @@ class Text_Wiki_Parse_Image extends Text_Wiki_Parse {
     * 
     */
     
-    var $regex = '/(?:{img\s+)(.+?)\s*}/i';
+    var $regex = '/{img\s+(.+?)\s*}/i';
     
     
     /**
