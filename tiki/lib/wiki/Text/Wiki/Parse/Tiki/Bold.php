@@ -13,7 +13,7 @@
 * 
 * @license LGPL
 * 
-* @version $Id: Bold.php,v 1.1 2005-05-18 23:43:16 papercrane Exp $
+* @version $Id: Bold.php,v 1.2 2005-06-16 17:16:02 papercrane Exp $
 * 
 */
 
@@ -52,7 +52,7 @@ class Text_Wiki_Parse_Bold extends Text_Wiki_Parse {
     * 
     */
     
-    var $regex =  "/__(()|[^'].*)__/U";
+    var $regex =  '/__(|[^_].*?)__/';
     
     
     /**
