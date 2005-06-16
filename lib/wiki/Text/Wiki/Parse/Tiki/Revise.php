@@ -13,7 +13,7 @@
 * 
 * @license LGPL
 * 
-* @version $Id: Revise.php,v 1.1 2005-05-18 23:43:16 papercrane Exp $
+* @version $Id: Revise.php,v 1.2 2005-06-16 05:55:25 papercrane Exp $
 * 
 */
 
@@ -46,7 +46,7 @@ class Text_Wiki_Parse_Revise extends Text_Wiki_Parse {
     * 
     */
     
-    var $regex = "/\@\@({*?.*}*?)\@\@/U";
+    var $regex = '/\@\@({*.*?}*)\@\@/';
     
     
     /**
