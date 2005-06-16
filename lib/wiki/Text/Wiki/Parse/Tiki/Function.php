@@ -13,7 +13,7 @@
 * 
 * @license LGPL
 * 
-* @version $Id: Function.php,v 1.1 2005-05-18 23:43:16 papercrane Exp $
+* @version $Id: Function.php,v 1.2 2005-06-16 06:29:45 papercrane Exp $
 * 
 */
 
@@ -32,7 +32,7 @@
 
 class Text_Wiki_Parse_Function extends Text_Wiki_Parse {
 
-    var $regex = '/^(\<function\>)\n(.+)\n(\<\/function\>)(\s|$)/Umsi';
+    var $regex = '!^\<function\>\n(.+?)\n\</function\>(\s|$)!msi';
     
     function process(&$matches)
     {
@@ -46,7 +46,7 @@ class Text_Wiki_Parse_Function extends Text_Wiki_Parse {
         );
         
         // split apart the markup lines and loop through them
-        $lines = explode("\n", $matches[2]);
+        $lines = explode("\n", $matches[1]);
         foreach ($lines as $line) {
             
             // skip blank lines
@@ -136,7 +136,7 @@ class Text_Wiki_Parse_Function extends Text_Wiki_Parse {
         }
         
         // add the token back in place
-        return $this->wiki->addToken($this->rule, $opts) . $matches[4];
+        return $this->wiki->addToken($this->rule, $opts) . $matches[2];
     }
 }
 
