@@ -15,7 +15,7 @@
 * 
 * @license LGPL
 * 
-* @version $Id: Anchor.php,v 1.1 2005-05-18 23:43:16 papercrane Exp $
+* @version $Id: Anchor.php,v 1.2 2005-06-16 17:22:05 papercrane Exp $
 * 
 */
 
@@ -49,7 +49,7 @@ class Text_Wiki_Parse_Anchor extends Text_Wiki_Parse {
     * 
     */
     
-    var $regex = '/(\[\[# )([-_A-Za-z0-9.]+?)( .+)?(\]\])/i';
+    var $regex = '/\[\[# ([-_A-Za-z0-9.]+?)( .+)?\]\]/i';
     
     
     /**
@@ -69,8 +69,8 @@ class Text_Wiki_Parse_Anchor extends Text_Wiki_Parse {
     
     function process(&$matches) {
     
-        $name = $matches[2];
-        $text = $matches[3];
+        $name = $matches[1];
+        $text = $matches[2];
         
         $start = $this->wiki->addToken(
             $this->rule,
