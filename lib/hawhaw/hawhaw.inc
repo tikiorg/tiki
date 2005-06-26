@@ -3,7 +3,7 @@
 // HAWHAW: HTML and WML hybrid adapted webserver
 // PHP class library
 // Copyright (C) 2005 Norbert Huffschmid
-// Last modified: 3. June 2005
+// Last modified: 11. June 2005
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -20,18 +20,9 @@
 //
 // For further information about this library and its license terms please visit:
 // http://www.hawhaw.de/
-//
-// modifications against V5.9
-// optimization: set [HTML_links] in brackets for better accessability
-// optimization: control TTS for french and spanish per VoiceXML property
-// bugfix: remove illegal characters from VoiceXML GSL grammar
-// optimization: abandon border in HAW_linkset
-// optimization: replaced Tellme with Motorola VoxGateway for hawdebug=voicexml
-// optimization: declare encoding type in opening XML tag in case of VoiceXML
-// optimization: short break after each VoiceXML link phrase
 
 // miscellaneous constants
-define("HAW_VERSION", "HAWHAW V5.10B");
+define("HAW_VERSION", "HAWHAW V5.10");
 define("HAW_COPYRIGHT", "(C) Norbert Huffschmid");
 
 // constants for markup languages
@@ -5095,7 +5086,7 @@ class HAW_submit
           if ($method == HAW_METHOD_GET)
             printf("<go href=\"%s%s%s\">\n", $url, $sep, $query_string);
           else
-            printf("<go href=\"%s\">\n%s", $url, $post_fields);
+            printf("<go href=\"%s\" method=\"post\">\n%s", $url, $post_fields);
 
           echo "</go>\n";
           echo "</do>\n";
@@ -5374,15 +5365,15 @@ class HAW_link
         $br = "";
         for ($i=0; $i < $this->br; $i++)
           $br .= "<br>";
-  
+
         $content = sprintf("<a task=\"go\" dest=\"%s\"%s%s>%s</a>%s\n",
                             HAW_specchar($this->url, $deck),
                             $title_option, $accesskey_option,
                             HAW_specchar($this->label, $deck), $br);
-  
+
         $deck->hdmlcardset->add_display_content($content);
       }
-  
+
       elseif ($deck->ml == HAW_VXML)
       {
         // remove http:// from link label, as voice browsers complain about :
@@ -5392,6 +5383,9 @@ class HAW_link
         // * / ? and = are not allowed in GSL grammar???
         $label = ereg_replace("[\*\/\?=]", "", $label);
 
+        // ampersand not allowed in GSL grammar???
+        $label = ereg_replace("&amp;", "", $label);
+
         if ($this->accesskey != HAW_NO_ACCESSKEY)
           $dtmf = sprintf(" dtmf=\"%s\"", $this->accesskey);
         else
@@ -5400,13 +5394,13 @@ class HAW_link
         // prepare tag for VoiceXML link (will be written at form end)
         $deck->voice_links .= sprintf("<link next=\"%s\"%s><grammar>[%s]</grammar></link>\n",
                                        HAW_specchar($this->url, $deck), $dtmf, $label);
-  
+
         if ($this->voice_text || $this->voice_audio_src)
         {
           // create audio output for VoiceXML link
-  
+
           echo "<block><prompt>";
-  
+
           if ($deck->voice_jingle)
           {
             // play jingle before link label is spoken
@@ -5417,16 +5411,16 @@ class HAW_link
             $pause = $this->br * HAW_VOICE_PAUSE; // short pause for each break
           else
             $pause = HAW_VOICE_PAUSE; // at least a short break to make the link phrase detectable
-                       
+
           HAW_voice_audio(HAW_specchar($this->voice_text, $deck),
                           $this->voice_audio_src, $pause, $deck);
-    
+
           echo "</prompt></block>\n";
         }
-  
+
         // update deck timeout
         if ($deck->voice_timeout < $this->voice_timeout)
-          $deck->voice_timeout = $this->voice_timeout; 
+          $deck->voice_timeout = $this->voice_timeout;
       }
     }
   }

@@ -42,21 +42,25 @@ function _translate_lang($key) {
     $query="select `tran` from `tiki_language` where `source`=? and `lang`=?";
     $result=$tikilib->query($query,array($content,$language));
     $res=$result->fetchRow();
-    if(!$res) { return $content; }
-    if(!isset($res["tran"])) {
-      global $record_untranslated;
-      if ($record_untranslated=='y') {
-        $query="insert into `tiki_untranslated` (`source`,`lang`) values(?,?)";
-        //No eror checking here
-        $tikilib->query($query,array($content,$language),-1,-1,false);
-      }
-      return $key[1].$content."{/tr}";
-    }
-    if ($key[1] == "{tr}") {
-      return $res["tran"];// no more possible translation in block.tr.php
+    if(isset($res["tran"])) {
+	if ($key[1] == "{tr}") {
+	    return $res["tran"];// no more possible translation in block.tr.php
+	} else {
+	    return $key[1].$res["tran"]."{/tr}";// perhaps variable substituion to do in block.tr.php
+	}
     } else {
-      return $key[1].$res["tran"]."{/tr}";// perhaps variable substituion to do in block.tr.php
-		}
-  }
+	global $record_untranslated;
+	if ($record_untranslated=='y') {
+	    $query="insert into `tiki_untranslated` (`source`,`lang`) values(?,?)";
+	    //No eror checking here
+	    $tikilib->query($query,array($content,$language),-1,-1,false);
+	}
+	if (strstr($key[2], "{\$"))  {
+	    return $key[1].$content."{/tr}";
+	} else {
+	    return $key[2];
+	}
+    }
+   }
 }
 ?>

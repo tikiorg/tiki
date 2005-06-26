@@ -28,7 +28,7 @@
 {/if}
 
 {if $feature_backlinks eq 'y' and $backlinks}
-<form action="tiki-index.php" method="post">
+<form action="tiki-index.php" method="get">
 <select name="page" onchange="page.form.submit()">
 <option>{tr}backlinks{/tr}...</option>
 {section name=back loop=$backlinks}

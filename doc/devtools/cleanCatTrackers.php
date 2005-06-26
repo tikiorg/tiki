@@ -26,7 +26,7 @@ $query = "select * from `tiki_tracker_fields`where `isMain`=? order by `position
 $result = $tikilib->query($query, array('y'));
 while ($res = $result->fetchRow()) {
 	$mainFields[$res['trackerId']] = $res['fieldId'];
-echo "Tracker: ".$res['trackerId']." - main field: ".$res['fieldId']."<br>";
+	echo "Tracker: ".$res['trackerId']." - main field: ".$res['fieldId']."<br>";
 }
 
 
@@ -42,10 +42,10 @@ while ($res = $result->fetchRow()) {
 		if ($debug == 'n') {
 			$result2 = $tikilib->query($query, array($mainValue, $itemId, "tracker ".$trackerId));
 		}
-		echo "Update tracker $trackerId pour l'item $itemId avec la valeur $mainValue<br>";
+		echo "Update tracker $trackerId for item $itemId with value $mainValue<br>";
 	} elseif (empty($mainValue)) {
 		if ($trklib->get_tracker_item($itemId))
-			echo "No value tracker $trackerId pour l'item <a href='tiki-view_tracker_item.php?trackerId=$trackerId&itemId=$itemId'>$itemId</a><br>";
+			echo "No value for tracker: $trackerId, item: <a href='tiki-view_tracker_item.php?trackerId=$trackerId&itemId=$itemId'>$itemId</a><br>";
 		else {
 			echo "Obsolete categorised object $trackerId - $itemId<br>";
 			if ($debug == 'n')

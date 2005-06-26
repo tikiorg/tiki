@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.48 2005-05-18 10:58:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.49 2005-06-26 14:28:28 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -92,18 +92,20 @@ for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
 		}
 	}
 	if ($pass == 'y') {
-		$cachefile = 'modules/cache/';
-		if ($tikidomain) { $cachefile.= "$tikidomain/"; }
-		$cachefile.= 'mod-' . $mod_reference["name"] . '.tpl.'.$language.'.cache';
-		$phpfile = 'modules/mod-' . $mod_reference["name"] . '.php';
+// Commented out here too.  See zaufi's note in lib/wiki-plugins/wikiplugin_module.php	
+//		$cachefile = 'modules/cache/';
+//		if ($tikidomain) { $cachefile.= "$tikidomain/"; }
+//		$cachefile.= 'mod-' . $mod_reference["name"] . '.tpl.'.$language.'.cache';
+//		$nocache = 'templates/modules/mod-' . $mod_reference["name"] . '.tpl.nocache';
 		$template = 'modules/mod-' . $mod_reference["name"] . '.tpl';
-		$nocache = 'templates/modules/mod-' . $mod_reference["name"] . '.tpl.nocache';
+		$phpfile = 'modules/mod-' . $mod_reference["name"] . '.php';
+
 		if (!$mod_reference["rows"]) {
 			$mod_reference["rows"] = 10;
 		}
 		$module_rows = $mod_reference["rows"];
 		$smarty->assign_by_ref('module_rows',$mod_reference["rows"]);
-		if ((!file_exists($cachefile)) || (file_exists($nocache)) || (($now - filemtime($cachefile)) >= $mod_reference["cache_time"])) {
+//		if ((!file_exists($cachefile)) || (file_exists($nocache)) || (($now - filemtime($cachefile)) >= $mod_reference["cache_time"])) {
 			$mod_reference["data"] = '';
             $smarty->assign_by_ref('module_params', $module_params); // module code can unassign this if it wants to hide params
 			if (file_exists($phpfile)) {
@@ -127,17 +129,17 @@ for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
             $smarty->assign('module_params',array()); // ensure params not available outside current module
             unset($info); // clean up when done
 			$mod_reference["data"] = $data;
-			if (!file_exists($nocache)) {
-				$fp = fopen($cachefile, "w+");
-				fwrite($fp, $data, strlen($data));
-				fclose ($fp);
-			}
-		} else {
-			$fp = fopen($cachefile, "r");
-			$data = @fread($fp, filesize($cachefile));
-			fclose ($fp);
-			$mod_reference["data"] = $data;
-		}
+//			if (!file_exists($nocache)) {
+//				$fp = fopen($cachefile, "w+");
+//				fwrite($fp, $data, strlen($data));
+//				fclose ($fp);
+//			}
+//		} else {
+//			$fp = fopen($cachefile, "r");
+//			$data = @fread($fp, filesize($cachefile));
+//			fclose ($fp);
+//			$mod_reference["data"] = $data;
+//		}
 	}
 } // end for
 $smarty->assign_by_ref($these_modules_name, $these_modules);

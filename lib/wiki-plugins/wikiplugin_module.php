@@ -1,5 +1,5 @@
 <?php
-/* $Id: wikiplugin_module.php,v 1.27 2005-05-18 11:02:00 mose Exp $
+/* $Id: wikiplugin_module.php,v 1.28 2005-06-26 14:28:34 mose Exp $
 Displays a module inlined in page
 
 Parameters
@@ -75,12 +75,12 @@ function wikiplugin_module($data, $params) {
 			$args = '';
 		}
 
-		$cachefile = 'modules/cache/';
-		if ($tikidomain) { $cachefile.= "$tikidomain/"; }
-		$cachefile.= 'mod-' . $module . '.tpl.'.$language.'.cache';
+//		$cachefile = 'modules/cache/';
+//		if ($tikidomain) { $cachefile.= "$tikidomain/"; }
+//		$cachefile.= 'mod-' . $module . '.tpl.'.$language.'.cache';
+//		$nocache = 'templates/modules/mod-' . $module . '.tpl.nocache';
 		$phpfile = 'modules/mod-' . $module . '.php';
 		$template = 'modules/mod-' . $module . '.tpl';
-		$nocache = 'templates/modules/mod-' . $module . '.tpl.nocache';
 
 		$module_rows = $max;
 		$module_params = $params;
@@ -107,11 +107,11 @@ function wikiplugin_module($data, $params) {
 			}
 		$smarty->clear_assign('module_params'); // ensure params not available outside current module
             	$smarty->clear_assign('no_module_controls');
-			if (!file_exists($nocache)) {
-				$fp = fopen($cachefile, "w+");
-				fwrite($fp, $data, strlen($data));
-				fclose ($fp);
-			}
+//			if (!file_exists($nocache)) {
+//				$fp = fopen($cachefile, "w+");
+//				fwrite($fp, $data, strlen($data));
+//				fclose ($fp);
+//			}
 //		} else {
 //			$fp = fopen($cachefile, "r");
 //			$out = fread($fp, filesize($cachefile));

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-my_tiki.php,v 1.19 2005-05-18 10:58:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-my_tiki.php,v 1.20 2005-06-26 14:28:28 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -145,8 +145,10 @@ closedir ($h);
 $smarty->assign('flags', $flags);
 
 // Get preferences
-$style = $tikilib->get_user_preference($userwatch, 'theme', $style);
-$language = $tikilib->get_user_preference($userwatch, 'language', $language);
+if ($change_theme == 'y')
+	$style = $tikilib->get_user_preference($userwatch, 'theme', $style);
+if ($change_language == "y")
+	$language = $tikilib->get_user_preference($userwatch, 'language', $language);
 $smarty->assign_by_ref('style', $style);
 $realName = $tikilib->get_user_preference($userwatch, 'realName', '');
 $country = $tikilib->get_user_preference($userwatch, 'country', 'Other');

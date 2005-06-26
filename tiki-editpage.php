@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.108 2005-05-18 10:58:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.109 2005-06-26 14:28:28 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -196,12 +196,18 @@ if (($feature_wiki_pictures == 'y') && (isset($tiki_p_upload_picture)) && ($tiki
                        ['listack'] = stack of list types currently opened
                        ['first_td'] = flag: 'is <tr> was just before this <td>'
  */
-function walk_and_parse(&$c, &$src, &$p)
+function walk_and_parse(&$c, &$src, &$p, $head_url )
 {
     for ($i=0; $i <= $c["contentpos"]; $i++)
     {
         // If content type 'text' output it to destination...
-        if ($c[$i]["type"] == "text") $src .= $c[$i]["data"];
+        if ($c[$i]["type"] == "text")
+	{
+	    if( ! preg_match( '/^\s*$/s', $c[$i]["data"] ) )
+	    {
+		$src .= preg_replace( '/^\s+/s', ' ', $c[$i]["data"] );
+	    }
+	}
         elseif ($c[$i]["type"] == "tag")
         {
             if ($c[$i]["data"]["type"] == "open")
@@ -209,6 +215,11 @@ function walk_and_parse(&$c, &$src, &$p)
                 // Open tag type
                 switch ($c[$i]["data"]["name"])
                 {
+		// Tags we don't want at all.
+		case "meta": 
+		    $c[$i]["content"] = '';
+		break;
+
                 case "br": $src .= "\n"; break;
                 case "title": $src .= "\n!"; $p['stack'][] = array('tag' => 'title', 'string' => "\n"); break;
                 case "p": $src .= "\n"; $p['stack'][] = array('tag' => 'p', 'string' => "\n"); break;
@@ -252,13 +263,23 @@ function walk_and_parse(&$c, &$src, &$p)
                     // If src attribute present in <img> tag
                     if (isset($c[$i]["pars"]["src"]["value"]))
                         // Note what it produce (img) not {img}! Will fix this below...
-                        $src .= '(img src='.$c[$i]["pars"]["src"]["value"].')';
+		        if( strstr( $c[$i]["pars"]["src"]["value"], "http:" ) )
+			{
+			    $src .= '(img src='.$c[$i]["pars"]["src"]["value"].')';
+			} else {
+			    $src .= '(img src='.$head_url.$c[$i]["pars"]["src"]["value"].')';
+			}
                     break;
                 case "a":
                     // If href attribute present in <a> tag
                     if (isset($c[$i]["pars"]["href"]["value"]))
-                    {
-                        $src .= '['.$c[$i]["pars"]["href"]["value"].'|';
+		    {
+		        if( strstr( $c[$i]["pars"]["href"]["value"], "http:" ) )
+			{
+			    $src .= '['.$c[$i]["pars"]["href"]["value"].'|';
+			} else {
+			    $src .= '['.$head_url.$c[$i]["pars"]["href"]["value"].'|';
+			}
                         $p['stack'][] = array('tag' => 'a', 'string' => ']');
                     }
                     break;
@@ -290,7 +311,7 @@ function walk_and_parse(&$c, &$src, &$p)
         if (isset($c[$i]["content"]))
         {
 //            if (substr($src, -1) != " ") $src .= " ";
-            walk_and_parse($c[$i]["content"], $src, $p);
+            walk_and_parse($c[$i]["content"], $src, $p, $head_url );
         }
     }
 }
@@ -336,7 +357,9 @@ if (isset($_REQUEST['do_suck']) && strlen($suck_url) > 0)
         // Should I try to convert HTML to wiki?
         $parseddata = '';
         $p =  array('stack' => array(), 'listack' => array(), 'first_td' => false);
-        walk_and_parse($htmlparser->content, $parseddata, $p);
+
+	$head_url = preg_replace( ';[^/]*$;', '', $_REQUEST["suck_url"] );
+        walk_and_parse( $htmlparser->content, $parseddata, $p, $head_url );
         // Is some tags still opened? (It can be if HTML not valid, but this is not reason
         // to produce invalid wiki :)
         while (count($p['stack']))
