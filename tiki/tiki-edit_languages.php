@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_languages.php,v 1.19 2005-05-18 10:58:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_languages.php,v 1.20 2005-06-26 14:28:28 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -204,7 +204,7 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 		$untr_numrows= $tikilib->getOne($nquery,$bindvars);
 	        $result = $tikilib->query($query,$bindvars,$maxRecords,$tr_recnum);
 	} elseif ($whataction == "edit_rec_sw") {
-		$query = "select `source` from `tiki_untranslated` where `lang`=? $squeryedit order by ".$tikilib->convert_sortmode($sort_mode);
+		$query = "select `source` from `tiki_untranslated` where `lang`=? $squeryrec order by ".$tikilib->convert_sortmode($sort_mode);
 		$nquery = "select count(*) from `tiki_untranslated` where `lang`=? $squeryrec";
 		$untr_numrows= $tikilib->getOne($nquery,$bindvars2);
 	        $result = $tikilib->query($query,$bindvars2,$maxRecords,$tr_recnum);

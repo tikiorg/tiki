@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-assignuser.php,v 1.18 2005-05-18 10:58:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-assignuser.php,v 1.19 2005-06-26 14:28:28 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -52,13 +52,13 @@ if (isset($_REQUEST["action"])) {
 			die;
 		} 
 		$userlib->assign_user_to_group($_REQUEST["assign_user"], $_REQUEST["group"]);
-		$logslib->add_log('perms',sprintf(tra("Assigned %s in group %s"),$_REQUEST["assign_user"], $_REQUEST["group"]));				
+		$logslib->add_log('perms',sprintf("Assigned %s in group %s",$_REQUEST["assign_user"], $_REQUEST["group"]));				
 	} elseif ($_REQUEST["action"] == 'removegroup') {
 		$area = 'deluserfromgroup';
 		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 			$userlib->remove_user_from_group($_REQUEST["assign_user"], $_REQUEST["group"]);
-			$logslib->add_log('perms',sprintf(tra("Removed %s from group %s"),$_REQUEST["assign_user"], $_REQUEST["group"]));
+			$logslib->add_log('perms',sprintf("Removed %s from group %s",$_REQUEST["assign_user"], $_REQUEST["group"]));
 		} else {
 			key_get($area);
 		}

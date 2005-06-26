@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-show_page.tpl,v 1.5 2005-05-18 11:03:56 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-show_page.tpl,v 1.6 2005-06-26 14:28:35 mose Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle" title="{tr}Refresh{/tr}">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -48,7 +48,7 @@
 		{/if}
 	{/if}
 	{if $feature_backlinks eq 'y' and $backlinks}
-	<form action="tiki-index.php" method="post">
+	<form action="tiki-index.php" method="get">
 	  <select name="page" onchange="page.form.submit()">
 			<option>{tr}backlinks{/tr}...</option>
 		{section name=back loop=$backlinks}

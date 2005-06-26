@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/article_image.php,v 1.13 2005-05-18 10:58:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/article_image.php,v 1.14 2005-06-26 14:28:28 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/article_image.php,v 1.13 2005-05-18 10:58:51 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/article_image.php,v 1.14 2005-06-26 14:28:28 mose Exp $
 
 // application to display an image from the database with 
 // option to resize the image dynamically creating a thumbnail on the fly.
@@ -24,7 +24,7 @@ $topiccachefile.= "/article.".$_REQUEST["id"];
 
 if (is_file($topiccachefile) and (!isset($_REQUEST["reload"]))) {
 	$size = getimagesize($topiccachefile);
-//	header ("Content-type: ".$size['mime']);
+	header ("Content-type: ".$size['mime']); /* do not backport to 1.8 */
 	readfile($topiccachefile);
 	die();
 } else {

@@ -2255,7 +2255,7 @@ function add_pageview() {
     }
 
 /*shared*/
-    function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '', $user, $type = '', $topicId = '', $visible_only = 'y', $topic='') {
+    function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '', $user=false, $type = '', $topicId = '', $visible_only = 'y', $topic='') {
         global $userlib, $user;
 
 	$mid = " left join `users_users` on `tiki_articles`.`author` = `users_users`.`login` where `tiki_articles`.`type` = `tiki_article_types`.`type` ";
@@ -2346,17 +2346,23 @@ function add_pageview() {
         }
         if ($add <> "") { $mid .= " ( ".$add." ) "; }
     }
-
     if (($visible_only) && ($visible_only <> 'n')) {
-	$now = date('U');
-	$bindvars[]=(int) $now;
-	$bindvars[]=(int) $now;
-	$condition = "(`tiki_articles`.`publishDate`<? or `tiki_article_types`.`show_pre_publ`='y') and (`tiki_articles`.`expireDate`>? or `tiki_article_types`.`show_post_expire`='y')";
-	if ($mid) {
-	    $mid .= " and $condition";
-	} else {
-	    $mid .= " where $condition";
-	}
+		if ($date !== false){ // looking for articles on a specific date (or today)
+			if ($date === ""){ // show articles published today
+				$date = date('U');
+			}
+			$bindvars[]=(int) $date;
+			$bindvars[]=(int) date('U');
+			$condition = "(`tiki_articles`.`publishDate`<? or `tiki_article_types`.`show_pre_publ`='y') and (`tiki_articles`.`expireDate`>? or `tiki_article_types`.`show_post_expire`='y')";
+		}else{ // looking for all articles not expired
+			$condition = "(`tiki_articles`.`expireDate`>? or `tiki_article_types`.`show_post_expire`='y')";
+			$bindvars[]=date('U');
+		}
+		if ($mid) {
+		    $mid .= " and $condition";
+		} else {
+		    $mid .= " where $condition";
+		}
     }
 	$query = "select `tiki_articles`.*,
 	`users_users`.`avatarLibName`,

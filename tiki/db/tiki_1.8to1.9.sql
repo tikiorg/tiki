@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.97 2005-06-16 20:10:53 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.98 2005-06-26 14:28:31 mose Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -1102,3 +1102,6 @@ UPDATE users_objectpermissions set permName='tiki_p_change_events' where permNam
 
 # 2005-06-14 rv540
 alter table tiki_referer_stats change referer referer varchar(255) not null;
+
+#2005-06-20 amette: added on request of toggg(currently without CVS-access)
+ALTER TABLE `tiki_pages` ADD created int(14);

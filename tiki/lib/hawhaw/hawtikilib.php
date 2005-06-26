@@ -6,7 +6,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/hawhaw/hawtikilib.php,v 1.14 2005-06-16 20:11:01 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/hawhaw/hawtikilib.php,v 1.15 2005-06-26 14:28:34 mose Exp $
 
 // HAWHAW function library for TikiWiki
 
@@ -238,7 +238,7 @@ function HAWTIKI_list_articles($listpages, $tiki_p_read_article, $offset, $maxRe
     $title = new HAW_text(HAWIKI_specchar($article['title']), HAW_TEXTFORMAT_BOLD);
     $articleList->add_text($title);
 
-    $date = new HAW_text(date(HAWIKI_DATETIME_SHORT, $article['created']));
+    $date = new HAW_text(date(HAWIKI_DATETIME_SHORT, $article['publishDate']));
     $articleList->add_text($date);
 
     $author = new HAW_text(hawtra("By:") . HAWIKI_specchar($article['authorName']), HAW_TEXTFORMAT_SMALL | HAW_TEXTFORMAT_ITALIC);
@@ -269,7 +269,7 @@ function HAWTIKI_list_articles($listpages, $tiki_p_read_article, $offset, $maxRe
 function HAWTIKI_read_article($article_data, $pages)
 {
   $prefix = sprintf("__~np~%s~/np~__\n__%s ~np~%s~/np~__\n",
-                    date(HAWIKI_DATETIME_SHORT, $article_data['created']),
+                    date(HAWIKI_DATETIME_SHORT, $article_data['publishDate']),
                     hawtra("By:"), $article_data['authorName']);
 
   $heading = sprintf("\n%s\n---\n", $article_data['heading']);

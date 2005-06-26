@@ -73,10 +73,10 @@
   <tr><td class="form">{tr}Your personal Wiki Page{/tr}:</td><td class="form"><a class="link" href="tiki-index.php?page={$feature_wiki_userpage_prefix}{$userinfo.login}">{$feature_wiki_userpage_prefix}{$userinfo.login}</a> 
 	(<a class="link" href="tiki-editpage.php?page={$feature_wiki_userpage_prefix}{$userinfo.login}">{tr}edit{/tr}</a>)</td></tr>
   {/if}
-	{if $userTracker eq 'y'}
+	{if $userTracker eq 'y' && $usertrackerId}
   <tr><td class="form">{tr}Your personal tracker information{/tr}:</td><td class="form">
 	{if $useritemId}
-	<a class="link" href="tiki-view_tracker_item.php?trackerId={$usertrackerId}&amp;itemId={$useritemId}">{tr}Edit information{/tr}</a>
+	<a class="link" href="tiki-view_tracker_item.php?trackerId={$usertrackerId}&amp;itemId={$useritemId}&amp;show=mod">{tr}Edit information{/tr}</a>
 	{else}
 	<a class="link" href="tiki-view_tracker_item.php?view=+user">{tr}View extra information{/tr}</a>
 	{/if}

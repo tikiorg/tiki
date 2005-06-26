@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/lib/tikihelplib.php,v 1.2 2005-05-18 10:59:49 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/tikihelplib.php,v 1.3 2005-06-26 14:28:32 mose Exp $
  * Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -46,3 +46,4 @@ function help_doclink($params) {
     }
     return $ret;
 }
+?>

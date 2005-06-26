@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.88 2005-06-16 20:11:14 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.89 2005-06-26 14:28:34 mose Exp $ *}
 
 {breadcrumbs type="trail" loc="page" crumbs=$crumbs}{breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs}
 
@@ -43,7 +43,7 @@
 
 	{if $feature_backlinks eq 'y' and $backlinks}
 		<td style="text-align:right;width:42px;">
-		<form action="tiki-index.php" method="post">
+		<form action="tiki-index.php" method="get">
 		<select name="page" onchange="page.form.submit()">
 		<option>{tr}backlinks{/tr}...</option>
 		{section name=back loop=$backlinks}

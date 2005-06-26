@@ -35,22 +35,22 @@ function wikiplugin_snarf($data, $params)
 	ob_end_clean(); 
 
 	$snarf = preg_replace( "/.*<[^>]*body[^>]*>(.*)<[^>]*\/[^>]*body[^>]*>.*/si", "$1", $html );
+
+	// If the user specified a more specialized regex
+	if( isset( $regex ) && isset( $regexres ) 
+		and preg_match('/^(.)(.)+\1[^e]*$/', $regex))
+	{
+	    //print("<pre>regex: ".htmlspecialchars($regex)."</pre>"); 
+	    //print("<pre>regexres: ".htmlspecialchars($regexres)."</pre>"); 
+	    $snarf = preg_replace( $regex, $regexres, $snarf );
+	}
+
+	//print("<pre>BODY: " . htmlspecialchars( $snarf ) . "</pre>"); 
+
+	$ret = "{CODE(wrap=>1,caption=>" . $data . ")}" . $snarf . "{CODE}";
     } else {
 	$ret = "<p>You need php-curl for the SNARF plugin!</p>\n";
     }
-
-    // If the user specified a more specialized regex
-    if( isset( $regex ) && isset( $regexres ) 
-    	and preg_match('/^(.)(.)+\1[^e]*$/', $regex))
-    {
-	//print("<pre>regex: ".htmlspecialchars($regex)."</pre>"); 
-	//print("<pre>regexres: ".htmlspecialchars($regexres)."</pre>"); 
-	$snarf = preg_replace( $regex, $regexres, $snarf );
-    }
-
-    //print("<pre>BODY: " . htmlspecialchars( $snarf ) . "</pre>"); 
-
-    $ret = "{CODE(wrap=>1,caption=>" . $data . ")}" . $snarf . "{CODE}";
 
 
     return $ret;

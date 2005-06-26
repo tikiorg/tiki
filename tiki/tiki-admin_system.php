@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.22 2005-05-18 10:58:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.23 2005-06-26 14:28:28 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -22,7 +22,7 @@ function du($path, $begin=null) {
 		} elseif (!is_dir($path.'/'.$file)) { 
 			if (isset($begin) && substr($file, 0, strlen($begin)) != $begin)
 				continue; // the file name doesn't begin with the good beginning
-			$stats = stat($path.'/'.$file);
+			$stats = @stat($path.'/'.$file); // avoid the warning if safe mode on
 			$total += $stats['size'];
 			$cant++;
 			unset($file);
