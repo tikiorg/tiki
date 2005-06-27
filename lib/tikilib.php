@@ -5283,10 +5283,6 @@ if (!$simple_wiki) {
 			    $addremove = 1;
 			}
 
-            if (!defined('PAGE_SEP')) {
-                require_once('lib/wiki/wikilib.php');
-            }
-
 			// Is any {maketoc} present on page?
 			if (count($tocs[0]) > 0) {
 			    // OK. Must insert <a id=...> before HEADER and collect TOC entry
