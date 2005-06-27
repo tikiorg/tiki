@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.49 2005-05-18 10:58:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.50 2005-06-27 15:15:34 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -281,6 +281,19 @@ if ($tiki_p_post_comments == 'y') {
 		include_once ('lib/webmail/tikimaillib.php');
 		$nots = $commentslib->get_event_watches('wiki_page_changed', $_REQUEST["page"]);
 		$isBuilt = false;
+		global $notificationlib; include_once("lib/notifications/notificationlib.php");
+		$emails = $notificationlib->get_mail_events('wiki_comment_changes', $_REQUEST["page"]);
+		foreach ($emails as $email) {
+			$already = false;
+			foreach ($nots as $not) {
+				if ($not['email'] == $email) {
+					$already = true;
+					break;
+				}
+			}
+			if (!$already)
+				$nots[] = array("user"=>"", "hash"=>"", "email"=>$email);
+		}
 		foreach ($nots as $not) {
 		    if ($wiki_watch_editor != 'y' && $not['user'] == $user)
 			break;

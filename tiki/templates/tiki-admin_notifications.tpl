@@ -21,6 +21,7 @@
       <option value="article_submitted">{tr}A user submits an article{/tr}</option>
       <option value="wiki_page_changes">{tr}Any wiki page is changed{/tr}</option>
       <option value="wiki_page_changes_incl_minor">{tr}Any wiki page is changed, even minor changes{/tr}</option>
+	<option value="wiki_comment_changes">{tr}A comment in a wiki page is posted or edited{/tr}</option> 
 	<option value="php_error">{tr}PHP error{/tr}</option>
     </select>
     </td>
