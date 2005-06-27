@@ -6,10 +6,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-if (!defined('PAGE_SEP')) {
-    define('PAGE_SEP', isset($GLOBALS['pear_wiki_parser']) && $GLOBALS['pear_wiki_parser'] == 'y' ? 'PAGE MARKER HERE*&^%$#^$%*PAGEMARKERHERE' : '...page...');
-}
-
 require_once ('lib/pear/Date.php');
 require_once ('lib/tikidate.php');
 require_once ('lib/tikidblib.php');
@@ -5297,11 +5293,11 @@ if (!$simple_wiki) {
 			    $aclose = '</a>' . $aclose;
 			}
 			$line = $anchor . "<h$hdrlevel>" . substr($line, $hdrlevel + $addremove). "</h$hdrlevel>" . $aclose;
-		    } elseif (!strcmp($line, PAGE_SEP)) {
+		    } elseif (!strcmp($line, $GLOBALS['PAGE_SEP'])) {
 			// Close open paragraph, lists, and div's
 			$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 1);
 			// Leave line unchanged... tiki-index.php will split wiki here
-			$line = PAGE_SEP;
+			$line = $GLOBALS['PAGE_SEP'];
 			$pageNum += 1;
 		    } else {
 			/** Usual paragraph.  
