@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.274 2005-06-16 20:10:50 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.275 2005-06-27 16:45:57 papercrane Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1442,6 +1442,7 @@ if (isset($GLOBALS['pear_wiki_parser']) && $GLOBALS['pear_wiki_parser'] == 'y') 
         $GLOBALS['pear_wiki_parser'] = 'n';
     }
 }
+$GLOBALS['PAGE_SEP'] = $GLOBALS['pear_wiki_parser'] == 'y' ? 'PAGE MARKER HERE*&^%$#^$%*PAGEMARKERHERE' : '...page...';
 
 if ($feature_polls == 'y' and isset($_REQUEST["pollVote"])) {
 	if ($tiki_p_vote_poll == 'y' && isset($_REQUEST["polls_optionId"])) {
