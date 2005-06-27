@@ -9,9 +9,6 @@ if( !defined( 'PLUGINS_DIR' ) ) {
 	define('PLUGINS_DIR', 'lib/wiki-plugins');
 }
 
-if (!defined('PAGE_SEP')) {
-    define('PAGE_SEP', isset($GLOBALS['pear_wiki_parser']) && $GLOBALS['pear_wiki_parser'] == 'y' ? 'PAGE MARKER HERE*&^%$#^$%*PAGEMARKERHERE' : '...page...');
-}
 
 class WikiLib extends TikiLib {
     function WikiLib($db) {
