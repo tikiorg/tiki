@@ -40,7 +40,7 @@ class WikiLib extends TikiLib {
 	    $idx = $idx + 1;
 	}
 
-	$parts = explode(PAGE_SEP, $data);
+	$parts = explode($GLOBALS['PAGE_SEP'], $data);
 	return count($parts);
     }
 
@@ -66,7 +66,7 @@ class WikiLib extends TikiLib {
 	}
 */
 	// Get slides
-	$parts = explode(PAGE_SEP, $data);
+	$parts = explode($GLOBALS['PAGE_SEP'], $data);
 	$ret = $parts[$i - 1];
 
 	if (substr($parts[$i - 1], 1, 5) == "<br/>") $ret = substr($parts[$i - 1], 6);
