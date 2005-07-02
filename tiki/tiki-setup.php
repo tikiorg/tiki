@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.275 2005-06-27 16:45:57 papercrane Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.276 2005-07-02 19:56:39 damosoft Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -45,7 +45,11 @@ class TikiSetup extends TikiInit {
         $errors = '';
         
         if (strpos($_SERVER["SERVER_SOFTWARE"],"IIS")==TRUE){
+		if (array_key_exists('PATH_TRANSLATED', $_SERVER)) {
         	$docroot = dirname($_SERVER['PATH_TRANSLATED']);
+		} else {
+			$docroot = getcwd();
+		}
         }
         else{
         	$docroot = getcwd();
