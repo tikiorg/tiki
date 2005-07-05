@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2005-06-16 20:10:52 $
-# $Author: mose $
+# $Date: 2005-07-05 21:49:37 $
+# $Author: rlpowell $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -2520,7 +2520,7 @@ CREATE TABLE tiki_polls (
 DROP TABLE IF EXISTS tiki_preferences;
 CREATE TABLE tiki_preferences (
   name varchar(40) NOT NULL default '',
-  value varchar(250) default NULL,
+  value text,
   PRIMARY KEY  (name)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
