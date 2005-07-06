@@ -4041,25 +4041,38 @@ function add_pageview() {
 		// Construct plugin function name
 		$func_name = 'wikiplugin_' . strtolower($plugins[1]);
 
-		    // Construct argument list array
-		    $params = split(',', trim($plugins[2]));
-		    $arguments = array();
+		$params_string = $plugins[2];
 
-		    foreach ($params as $param) {
-			// the following str_replace line is to decode the &gt; char when html is turned off
-			// perhaps the plugin syntax should be changed in 1.8 not to use any html special chars
-			$decoded_param = str_replace('&gt;', '>', $param);
-			$decoded_param = str_replace('&lt;', '<', $decoded_param);
-			$decoded_param = str_replace('&quot;', '"', $decoded_param);
-			$parts = split( '=>?', $decoded_param );
+		// the following str_replace line is to decode the &gt; char when html is turned off
+		// perhaps the plugin syntax should be changed in 1.8 not to use any html special chars
+		$params_string = str_replace('&gt;', '>', $params_string);
+		$params_string = str_replace('&lt;', '<', $params_string);
+		$params_string = str_replace('&quot;', '"', $params_string);
 
-			if (isset($parts[0]) && isset($parts[1])) {
-			    $name = trim($parts[0]);
-			    $argument = trim($parts[1]);
-			    // the following preg_replace removes more unwanted css attributes passed after ";" (including)
-			    $arguments[$name] = preg_replace('/([^\;]+)\;.*/','$1;',$argument);
-			}
+		// Construct argument list array
+		$params = $this->quotesplit(',', trim($params_string) );
+		$arguments = array();
+
+		foreach ($params as $param) {
+		    $parts = $this->quotesplit( '=>?', $param );
+
+		    if (isset($parts[0]) && isset($parts[1])) {
+			$name = trim($parts[0]);
+			$argument = trim($parts[1]);
+
+                        // the following preg_replace removes more unwanted css attributes passed after ";" (including)
+                        $argument = preg_replace('/([^\;]+)\;.*/','$1;',$argument);
+
+                        // The following strips quotes at the beginning and end, if both are found
+                        if( preg_match( '/^".*"$/', $argument ) )
+                        {
+                            $argument = preg_replace( '/^"/', '', $argument );
+                            $argument = preg_replace( '/"$/', '', $argument );
+                        }
+
+                        $arguments[$name] = $argument;
 		    }
+		}
 
 		if (file_exists($php_name)) {
 		    include_once ($php_name);
@@ -4112,6 +4125,45 @@ function add_pageview() {
 	} // while
 
 	// print "<pre>real done data: :".htmlspecialchars( $data ) .":</pre>";
+    }
+
+
+
+    function quotesplit( $splitter=',', $repl_string )
+    {
+	$matches = preg_match_all( '/"[^"]*"/', $repl_string, $quotes );
+
+	$quote_keys = array();
+	if( $matches )
+	{
+	    foreach( array_unique( $quotes ) as $quote )
+	    {
+		$key = md5( $this->genPass() );
+
+		$aux["key"] = $key;
+		$aux["data"] = $quote;
+		$quote_keys[] = $aux;
+		$repl_string = str_replace( $quote, $key, $repl_string );
+	    }
+	}
+
+	$result = split($splitter, $repl_string);
+
+	if( $matches )
+	{
+	    // Loop through the result sections
+	    while(list($rarg, $rval) = each($result))
+	    {
+		// Replace all stored strings
+		foreach( $quote_keys as $qval )
+		{
+		    $replacement = $qval["data"][0];
+		    $result[$rarg] = str_replace( $qval["key"], $replacement, $rval );
+		}
+	    }
+	}
+
+	return $result;
     }
 
     // Replace hotwords in given line
