@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.33 2005-05-18 11:02:59 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.34 2005-07-06 20:19:02 rlpowell Exp $ *}
 {* Show wiki syntax and plugins help *}
 {* TODO: Add links to add samples to edit form *}
 
@@ -65,6 +65,8 @@
     <a title="{tr}Close{/tr}" href="javascript:flip('edithelpzone');">[x]</a>
   </div>
 <br />
+
+Note that plugin arguments can be closed in double quotes (&quot;); this allows them to contain , or = or &gt;.
 
 <table width="100%">
 {section name=i loop=$plugins}
