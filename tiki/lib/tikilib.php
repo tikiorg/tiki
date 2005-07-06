@@ -4396,6 +4396,40 @@ function add_pageview() {
 	$noparsed = array('data'=>array(),'key'=>array());
 	$this->parse_first($data, $preparsed, $noparsed);
 
+	// Handle |# anchor links by turning them into ALINK module calls.
+	preg_match_all("/\(\(([^|)]*\|#[^)]*)\)\)/", $data, $anchors);
+
+	foreach( array_unique($anchors[1]) as $anchor_line )
+	{
+	    $parts1 = explode( "|#", $anchor_line );
+
+	    $anchor_page = "";
+	    $anchor_desc = "";
+	    $anchor = "";
+
+	    // Break out |desc bits from whatever section they happen to be in
+	    if( strpos( $parts1[0], "|" ) )
+	    {
+		$parts2 = explode( "|", $parts1[0] );
+		$anchor_page = $parts2[0];
+		$anchor_desc = $parts2[1];
+		$anchor = $parts1[1];
+	    } elseif( strpos( $parts1[1], "|" ) ) {
+		$parts2 = explode( "|", $parts1[1] );
+		$anchor_page = $parts1[0];
+		$anchor = $parts2[0];
+		$anchor_desc = $parts2[1];
+	    } else {
+		// No |desc bit
+		$anchor_page = $parts1[0];
+		$anchor_desc = $parts1[0];
+		$anchor = $parts1[1];
+	    }
+
+	    $repl = "{ALINK(pagename=>".$anchor_page.",aname=>".$anchor.")}".$anchor_desc."{ALINK}";
+	    $data = str_replace( "((".$anchor_line."))", $repl, $data);
+	}
+
 	global $feature_wiki_attachments;
 
 	if( $feature_wiki_attachments == 'y' )
