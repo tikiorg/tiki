@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.28 2005-05-18 10:58:59 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.29 2005-07-08 22:23:02 luciash Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -89,11 +89,13 @@ $user_language = $tikilib->get_language($userwatch);
 $smarty->assign_by_ref('user_language',$user_language);
 $smarty->assign_by_ref('user_style',$user_style);
 $realName = $tikilib->get_user_preference($userwatch,'realName','');
+$gender = $tikilib->get_user_preference($userwatch,'gender','');
 $country = $tikilib->get_user_preference($userwatch,'country','Other');
 $smarty->assign('country',$country);
 $anonpref = $tikilib->get_preference('userbreadCrumb',4);
 $userbreadCrumb = $tikilib->get_user_preference($userwatch,'userbreadCrumb',$anonpref);
 $smarty->assign_by_ref('realName',$realName);
+$smarty->assign_by_ref('gender',$gender);
 $smarty->assign_by_ref('userbreadCrumb',$userbreadCrumb);
 $homePage = $tikilib->get_user_preference($userwatch,'homePage','');
 
