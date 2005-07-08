@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login_validate.php,v 1.14 2005-05-18 10:58:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login_validate.php,v 1.15 2005-07-08 20:17:24 xavidp Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -22,8 +22,8 @@ if ($isvalid) {
 		$email = $userlib->get_user_email($user);
 		include_once("lib/webmail/tikimaillib.php");
 		$mail = new TikiMail();
-		$mail->setText($smarty->fetch('mail/moderate_welcome_mail.tpl'));					
-		$mail->setSubject($smarty->fetch('mail/moderate_welcome_mail_subject.tpl'));					
+		$mail->setText($smarty->fetch('mail/moderate_validation_mail.tpl'));					
+		$mail->setSubject($smarty->fetch('mail/moderate_validation_mail_subject.tpl'));					
 		$mail->send(array($email));
 		$logslib->add_log('register','validated account '.$user);
 	} else {
