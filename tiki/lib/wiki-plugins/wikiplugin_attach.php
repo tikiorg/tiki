@@ -1,26 +1,28 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_attach.php,v 1.10 2005-05-18 11:01:59 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_attach.php,v 1.11 2005-07-10 01:37:03 rlpowell Exp $
 // Displays an attachment or a list of attachments
 // Currently works with wiki pages and tracker items.
-// Parameters: ln => line numbering (default false)
-// 		inline => puts the stuff between {ATTACH} tags as the link text instead of the file name or description.
-// 		name => Gives the name of the attached file to link to.
-// 		file => Same as name.
-// 		image => Says that this file is an image, and should be displayed inline using the img tag.
-// 		showdesc => shows the description as the link text instead of the file name
-// 		icon => shows a file icon
-// 		dls => ????
-// 		id => Gives the actual id of the attachment to link in.  Might as well just do a straight link in this case...
-// 		num => Gives the number, in the list of attachments, of the attachment to link to
-// 		page => Gives the name of another page the attached file is on.  The file on that page is linked to instead.  Only works with wiki pages.
-// Example:
-// {ATTACH(name=>foobar.zip)}
-//  comment about attachment, that will be display under attachment informations
-// {ATTACH}
+// Parameters:
+// 	See help text.
+// Examples:
+// 	{ATTACH(name=>foobar.zip)}  -- make link to foobar.zip
+// 	{ATTACH(showdesc=>1,bullets=>1)} -- make links to all attachments as a bullet list
 function wikiplugin_attach_help() {
-    $help = tra("Displays an attachment or a list of them").": ";
-    $help.= "~np~{ATTACH(name|file=file.ext,id=1|num=1,showdesc=0|1,dls=0|1,icon=0|1,inline=0|1)}".tra("comment")."{ATTACH}~/np~ ";
-    $help.= tra("num is optional and is the order number of the attachment in the list. If not provided, a list of all attachments is displayed.  Inline makes the comment be the text of the link.");
+    $help = tra("Displays an attachment or a list of them").": \n";
+    $help.= "~np~{ATTACH(name|file=file.ext,page=WikiPage,showdesc=0|1,bullets=>0|1,image=>0|1,inline=0|1,id=1|num=1,dls=0|1,icon=0|1,)}".tra("comment")."{ATTACH}~/np~ ";
+    $help.= tra("
+ 		name => Gives the name of the attached file to link to.
+ 		file => Same as name.
+ 		page => Gives the name of another page the attached file is on.  The file on that page is linked to instead.  Only works with wiki pages.
+ 		showdesc => shows the description as the link text instead of the file name
+		bullets => Makes the list of attachments a bulleted list
+ 		image => Says that this file is an image, and should be displayed inline using the img tag.
+ 		inline => puts the stuff between {ATTACH} tags as the link text instead of the file name or description.
+ 		num => Gives the number, in the list of attachments, of the attachment to link to
+ 		id => Gives the actual id of the attachment to link in.  You probably should never use this.
+ 		dls => Puts the number of downloads in the alt comment
+ 		icon => shows a file icon
+    ");
     return $help;
 }
 
@@ -119,13 +121,20 @@ function wikiplugin_attach($data, $params) {
     if ($data) {
 	$out[] = $data;
     }
+
     foreach ($loop as $n) {
 	$n--;
 	if ( (!$name and !$id) or $id == $atts['data'][$n]['attId'] or $name == $atts['data'][$n]['filename'] )
 	{
+	    $link = "";
+	    if( isset( $bullets ) && $bullets )
+	    {
+		$link .= "<li>";
+	    }
+
 	    if(isset($image) and $image )
 	    {
-		$link = '<img src="tiki-download_wiki_attachment.php?attId='.$atts['data'][$n]['attId'].'" class="wiki"';
+		$link.= '<img src="tiki-download_wiki_attachment.php?attId='.$atts['data'][$n]['attId'].'" class="wiki"';
 		$link.= ' alt="';
 		if (isset($showdesc)) {
 		    $link.= $atts['data'][$n]['filename'];
@@ -137,7 +146,7 @@ function wikiplugin_attach($data, $params) {
 		}
 		$link.= '"/>';
 	    } else {
-		$link = '<a href="tiki-download_wiki_attachment.php?attId='.$atts['data'][$n]['attId'].'" class="wiki"';
+		$link.= '<a href="tiki-download_wiki_attachment.php?attId='.$atts['data'][$n]['attId'].'" class="wiki"';
 		$link.= ' title="';
 		if (isset($showdesc)) {
 		    $link.= $atts['data'][$n]['filename'];
@@ -168,6 +177,12 @@ function wikiplugin_attach($data, $params) {
 		}
 		$link.= '</a>';
 	    }
+
+	    if( isset( $bullets ) && $bullets )
+	    {
+		$link .= "</li>";
+	    }
+
 	    $out[] = $link;
 	}
     }
@@ -178,6 +193,11 @@ function wikiplugin_attach($data, $params) {
 	$data = $out[1];
     } else {
 	$data = implode($separator,$out);
+    }
+
+    if( isset( $bullets ) && $bullets )
+    {
+	$data = "<ul>".$data."</ul>";
     }
 
     if( strlen( $data ) == 0 )
