@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.64 2005-05-18 11:03:16 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.65 2005-07-14 14:00:08 mose Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -140,7 +140,7 @@ or use
 {/if}
 </td>
 <td>
-<textarea id='editwiki' class="wikiedit" name="edit" rows="{$rows}" cols="{$cols}" style="WIDTH: 100%; HEIGHT: 300px">{$pagedata|escape}</textarea>
+<textarea id='editwiki' class="wikiedit" name="edit" rows="{$rows}" cols="{$cols}" style="WIDTH: 100%;">{$pagedata|escape}</textarea>
 {if $wysiwyg}
  <script type="text/javascript" src="lib/fckeditor/fckeditor.js"></script>
  <script type="text/javascript">

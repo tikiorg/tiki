@@ -5,6 +5,7 @@
 ::
 <a href="tiki-admin_categories.php?parentId={$path[x].categId}">{$path[x].name}</a>
 {/section}</h1>
+<div class="navbar"><a class="linkbut" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a></div>
 <h2>{tr}Current permissions for this category{/tr}:</h2>
 <table class="normal">
 <tr><td class="heading">{tr}group{/tr}</td><td class="heading">{tr}permission{/tr}</td><td class="heading">{tr}action{/tr}</td></tr>

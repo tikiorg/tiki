@@ -653,6 +653,51 @@ div.titlebar {
 DIV#page-bar {
 	margin-left: 5px;
 }
+/* Page bar with <ul> <li> based on the vidiki theme */
+#page-bar {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+#page-bar ul {
+	width: 100%;
+	display: inline;
+	list-style: none;
+}
+#page-bar ul li {
+	display: inline;
+	list-style: none;
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   10px;
+	color:   white;
+	font-weight:   bold;
+	margin:   0.0ex 0px; 
+}
+#page-bar ul li a {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   10px;
+	color:   #F5F5F5;
+	font-weight:   bold;
+	float: left;
+	text-decoration: none;
+	padding: 0.2em 0.4em;
+	background: #044873;
+	border:   1px solid black;
+	padding-left:   2px;
+	padding-right:   2px;
+	padding-top:   1px;
+	padding-bottom:   2px;
+	-moz-border-radius : 5px 5px 0 0;
+	border-bottom : 0;
+	margin-left: 5px;
+}
+#page-bar ul li a:hover {
+	color:	white;
+}
+#page-bar ul li a.active {
+	background: #FFAAAA;
+	color:	white;
+}
 
 /* Wiki action buttons (the buttons displayed at the end of each page to edit/print/remove/etc a page */
 .button2, .button3 {

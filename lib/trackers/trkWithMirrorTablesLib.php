@@ -149,7 +149,7 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 			return false;
 		} 
 		elseif ($preg == false) {
-			// erreur sur l'expression régulière
+			// erreur sur l'expression rï¿½guliï¿½re
 			//echo "FALSE<br>\n";
 			return false;
 		}
@@ -175,7 +175,7 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 			return false;
 		} 
 		elseif ($preg == false) {
-			// erreur sur l'expression régulière
+			// erreur sur l'expression rï¿½guliï¿½re
 			return false;
 		}
 	}
@@ -616,7 +616,9 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 				} elseif ($fopt["type"] == 's') {
 					$key = 'tracker.'.$trackerId.'.'.$itid;
 					$fopt["numvotes"] = $this->getOne("select count(*) from `tiki_user_votings` where `id`=?",array($key));
-					$voteavg = $fopt["value"]/$fopt["numvotes"];
+					if ($fopt["numvotes"] > 0) {
+						$voteavg = $fopt["value"]/$fopt["numvotes"];
+					} else $voteavg = '0';
 					$fopt["voteavg"] = $voteavg;
 				} elseif ($fopt["type"] == 'e') {
 					global $categlib;

@@ -3,7 +3,7 @@
 // HAWHAW: HTML and WML hybrid adapted webserver
 // PHP class library
 // Copyright (C) 2005 Norbert Huffschmid
-// Last modified: 11. June 2005
+// Last modified: 2. July 2005
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -20,9 +20,12 @@
 //
 // For further information about this library and its license terms please visit:
 // http://www.hawhaw.de/
+//
+// changes against V5.10:
+// - optimization: set height and overflow attribute for classic display div (Firefox issue)
 
 // miscellaneous constants
-define("HAW_VERSION", "HAWHAW V5.10");
+define("HAW_VERSION", "HAWHAW V5.11B");
 define("HAW_COPYRIGHT", "(C) Norbert Huffschmid");
 
 // constants for markup languages
@@ -245,7 +248,7 @@ function HAW_voice_audio($text, $audio_src, $pause, $deck)
 function HAW_voice_eventhandler($handler, $audio_array, $deck)
 {
   // create VoiceXML event handler, e.g. "help", "nomatch", "noinput"
- 
+
   if (count($audio_array) > 0)
   {
     while (list($key, $val) = each($audio_array))
@@ -565,8 +568,8 @@ class HAW_deck
   var $border = 8;
   var $disp_bgcolor = "";
   var $disp_background = "";
-  var $width  = 200;
-  var $height = 200;
+  var $width  = "200px";
+  var $height = "200px";
 
   // text properties
   var $size = "";
@@ -1322,22 +1325,28 @@ class HAW_deck
   /**
     Sets the display width for a HTML page. Has no effect on WML/handheld
     pages.
-    @param width See HTML specification for possible values (e.g. "200", "50%", ...).
+    @param width See HTML specification for possible values (e.g. "200px", "50%", ...).
   */
   function set_width($width)
   {
-    $this->width = $width;
+    if (is_int($width))
+      $this->width = $width . "px"; // for compatibility reasons (until V5.10 HAWHAW interpreted int as px)
+    else
+      $this->width = $width;
   }
 
 
   /**
     Sets the display height for a HTML page. Has no effect on WML/handheld
     pages.
-    @param height See HTML specification for possible values (e.g. "200", "50%", ...).
+    @param height See HTML specification for possible values (e.g. "200px", "50%", ...).
   */
   function set_height($height)
   {
-    $this->height = $height;
+    if (is_int($height))
+      $this->height = $height . "px";
+    else
+      $this->height = $height;
   }
 
 
@@ -1929,8 +1938,8 @@ class HAW_deck
         else
         {
           // use classic HAWHAW design
-          printf("<div style=\"background-color: %s; background-image: url(%s); border: %dpx solid #aaa; padding: 8px; width: %spx; margin: 0px auto;\">\n",
-                 $this->disp_bgcolor, $this->disp_background, $this->border, $this->width);
+          printf("<div style=\"background-color: %s; background-image: url(%s); border: %dpx solid #aaa; padding: 8px; width: %s; height: %s; margin: 0px auto; overflow: auto;\">\n",
+                 $this->disp_bgcolor, $this->disp_background, $this->border, $this->width, $this->height);
         }
       }
 
@@ -2094,7 +2103,7 @@ class HAW_deck
           $language = "";
 
         printf("<vxml%s version=\"2.0\">\n", $language);
-        
+
         if ($this->disable_cache)
           echo "<meta http-equiv=\"Expires\" content=\"0\"/>\n";
 
@@ -2144,8 +2153,8 @@ class HAW_deck
           printf("<link%s event=\"forward\">%s</link>\n", $dtmf, $voice_grammar); // define forward link
 
           // define catch handler for links
-          echo "<catch event=\"repeat\"><goto expritem=\"'block' + nav_counter\"/></catch>\n"; 
-          echo "<catch event=\"forward\"><goto expritem=\"'block' + nav_counter + 'end'\"/></catch>\n"; 
+          echo "<catch event=\"repeat\"><goto expritem=\"'block' + nav_counter\"/></catch>\n";
+          echo "<catch event=\"forward\"><goto expritem=\"'block' + nav_counter + 'end'\"/></catch>\n";
         }
 
         if ($this->voice_text || $this->voice_audio_src)

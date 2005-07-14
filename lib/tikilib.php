@@ -4059,18 +4059,17 @@ function add_pageview() {
 		    if (isset($parts[0]) && isset($parts[1])) {
 			$name = trim($parts[0]);
 			$argument = trim($parts[1]);
+			// the following preg_replace removes more unwanted css attributes passed after ";" (including)
+			$argument = preg_replace('/([^\;]+)\;.*/','$1;',$argument);
 
-                        // the following preg_replace removes more unwanted css attributes passed after ";" (including)
-                        $argument = preg_replace('/([^\;]+)\;.*/','$1;',$argument);
+			// The following strips quotes at the beginning and end, if both are found
+			if( preg_match( '/^".*"$/', $argument ) )
+			{
+			    $argument = preg_replace( '/^"/', '', $argument );
+			    $argument = preg_replace( '/"$/', '', $argument );
+			}
 
-                        // The following strips quotes at the beginning and end, if both are found
-                        if( preg_match( '/^".*"$/', $argument ) )
-                        {
-                            $argument = preg_replace( '/^"/', '', $argument );
-                            $argument = preg_replace( '/"$/', '', $argument );
-                        }
-
-                        $arguments[$name] = $argument;
+			$arguments[$name] = $argument;
 		    }
 		}
 
@@ -4127,8 +4126,6 @@ function add_pageview() {
 	// print "<pre>real done data: :".htmlspecialchars( $data ) .":</pre>";
     }
 
-
-
     function quotesplit( $splitter=',', $repl_string )
     {
 	$matches = preg_match_all( '/"[^"]*"/', $repl_string, $quotes );
@@ -4165,6 +4162,7 @@ function add_pageview() {
 
 	return $result;
     }
+
 
     // Replace hotwords in given line
     function replace_hotwords($line, $words) {

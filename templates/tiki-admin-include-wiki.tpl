@@ -318,7 +318,7 @@
     </select>
     </td></tr>
     <tr><td class="form">{tr}Wysiwyg editor{/tr}:</td><td>
-    <select name="feature_wysiwyg" disabled="1">
+    <select name="feature_wysiwyg" disabled="disabled">
     <option value="default" {if $feature_wysiwyg eq 'default'}selected="selected"{/if}>{tr}default{/tr}</option>
     <option value="optional" {if $feature_wysiwyg eq 'optional'}selected="selected"{/if}>{tr}optional{/tr}</option>
     <option value="no" {if $feature_wysiwyg eq 'no'}selected="selected"{/if}>{tr}no{/tr}</option>
@@ -408,8 +408,6 @@
     <tr><td class="form">{tr}Page creators are admin of their pages{/tr}:</td><td><input type="checkbox" name="wiki_creator_admin" {if $wiki_creator_admin eq 'y'}checked="checked"{/if}/></td></tr>    
     <tr><td class="form">{tr}Import HTML{/tr}:</td><td><input type="checkbox" name="feature_wiki_import_html" {if $feature_wiki_import_html eq 'y'}checked="checked"{/if}/></td></tr>    
 
-    </table><table class="admin">
-    
     <tr><td class="form">{tr}List authors{/tr}:</td><td>
     <select name="wiki_authors_style">
     <option value="classic" {if $wiki_authors_style eq 'classic'}selected="selected"{/if}>{tr}as Creator &amp; Last Editor{/tr}</option>

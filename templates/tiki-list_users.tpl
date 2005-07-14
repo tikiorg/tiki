@@ -1,9 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_users.tpl,v 1.8 2005-05-18 11:03:18 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_users.tpl,v 1.9 2005-07-14 14:00:08 mose Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_users.php">{tr}User List{/tr}</a>
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}UserList" target="tikihelp" class="tikihelp" title="{tr}User List{/tr}">
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}</h1>
+<br />
+{$cant_users} {tr}users registered{/tr}
 <br /><br />
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
@@ -16,34 +18,33 @@
    </td>
 </tr>
 </table>
-<br />
-<table class="userlist">
+<table bgcolor="#ffffff" class="normal">
 <tr>
-  <td class="userlistheading"><a class="userlistheading" href="tiki-list_users.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'login_desc'}login_asc{else}login_desc{/if}">{tr}User{/tr}</a>&nbsp;</td>
-  <td class="userlistheading"><a class="userlistheading" href="tiki-list_users.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'realName_desc'}realName_asc{else}realName_desc{/if}">{tr}Real Name{/tr}</a>&nbsp;</td>
+  <td class="heading"><a href="tiki-list_users.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'login_desc'}login_asc{else}login_desc{/if}" class="userlistheading" style="color: White;">{tr}User{/tr}</a>&nbsp;</td>
+  <td class="heading"><a class="userlistheading" href="tiki-list_users.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'realName_desc'}realName_asc{else}realName_desc{/if}" style="color: White;">{tr}Real Name{/tr}</a>&nbsp;</td>
 {if $feature_score eq 'y'}
-  <td class="userlistheading"><a class="userlistheading" href="tiki-list_users.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'score_desc'}score_asc{else}score_desc{/if}">{tr}Score{/tr}</a>&nbsp;</td>
+  <td class="heading"><a class="userlistheading" href="tiki-list_users.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'score_desc'}score_asc{else}score_desc{/if}" style="color: White;">{tr}Score{/tr}</a>&nbsp;</td>
 {/if}
-	<td class="userlistheading"><a class="userlistheading" href="tiki-list_users.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'country_desc'}country_asc{else}country_desc{/if}">{tr}Country{/tr}</a>&nbsp;</td>
-  <td class="userlistheading">{tr}Distance (km){/tr}&nbsp;</td>
+	<td class="heading">{tr}Country{/tr}&nbsp;</td>
+  <td class="heading">{tr}Distance (km){/tr}&nbsp;</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=changes loop=$listusers}
 <tr>
-  <td class="userlist{cycle advance=false}">&nbsp;{$listusers[changes].login|userlink}&nbsp;</td>
-  <td class="userlist{cycle advance=false}">&nbsp;{$listusers[changes].realName}&nbsp;</td>
+  <td class="odd">&nbsp;{$listusers[changes].login|userlink}&nbsp;</td>
+  <td class="odd">&nbsp;{$listusers[changes].realName}&nbsp;</td>
 {if $feature_score eq 'y'}
-  <td class="userlist{cycle advance=false}">&nbsp;{$listusers[changes].score}&nbsp;</td>
+  <td class="odd">&nbsp;{$listusers[changes].score}&nbsp;</td>
 {/if}
-	<td class="userlist{cycle advance=false}">&nbsp;
+	<td class="odd">
 	{if $listuserscountry[changes] == "None" || $listuserscountry[changes] == "Other" || $listuserscountry[changes] == ""}
-  <img src="img/flags/Other.gif" border="0" width="20" height="13" alt='' />
+  {html_image file='img/flags/Other.gif' border='0' hspace='4' vspace='1' alt='{tr}flag{/tr}' title='{tr}flag{/tr}'}
   {else}
-  <img src="img/flags/{$listuserscountry[changes]}.gif" alt='' />
+  {html_image file="img/flags/$listuserscountry[changes].gif" hspace='4' vspace='1' alt='{tr}flag{/tr}' title='{tr}flag{/tr}'}
   &nbsp;{tr}{$listuserscountry[changes]}{/tr}
   {/if}
 	&nbsp;</td>
-	<td class="userlist{cycle advance=true}">&nbsp;{$listdistance[changes]}&nbsp;</td>
+	<td class="odd">&nbsp;{$listdistance[changes]}&nbsp;</td>
 </tr>
 {sectionelse}
 <tr><td colspan="6">

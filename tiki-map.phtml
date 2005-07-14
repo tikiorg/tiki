@@ -34,6 +34,8 @@ if (isset($_REQUEST['mapfile'])) {
   $mapfile = $default_map;
 }
 
+$map_path = preg_replace("/\/?$/","/",$map_path);
+
 //checking the mapfile
 if (!is_file($map_path.$mapfile) || preg_match("/(\/\.)/", $map_path.$mapfile)) {
   $smarty->assign('msg',tra("invalid mapfile name"));

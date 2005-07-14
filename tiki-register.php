@@ -22,6 +22,12 @@ if (!isset($_REQUEST['novalidation'])) {
 	$novalidation = $_REQUEST['novalidation'];
 }
 
+//get custom fields
+$customfields = array();
+$customfields = $userprefslib->get_userprefs('CustomFields');
+$smarty->assign_by_ref('customfields', $customfields);
+		
+
 if(isset($_REQUEST["register"])) {
   check_ticket('register');
   if($novalidation != 'yes' and ($_REQUEST["pass"] <> $_REQUEST["passAgain"])) {
@@ -198,14 +204,11 @@ if(isset($_REQUEST["register"])) {
 		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_workflow', 'n');
 		$tikilib->set_user_preference($_REQUEST["name"], 'tasks_maxRecords', 10);
 
-/* TODO: initial setup of custom fields
 		// Custom fields
 		foreach ($customfields as $custpref=>$prefvalue ) {
-			//print $customfields[$custpref]['prefName'];
-			//print $_REQUEST[$customfields[$custpref]['prefName']];
-			$tikilib->set_user_preference($_REQUEST["name"], $customfields[$custpref]['prefName'], $_REQUEST[$customfields[$custpref]['prefName']]);
+		    //print $_REQUEST[$customfields[$custpref]['prefName']];
+		    $tikilib->set_user_preference($_REQUEST["name"], $customfields[$custpref]['prefName'], $_REQUEST[$customfields[$custpref]['prefName']]);
 		}
-*/
 
 		$emails = $notificationlib->get_mail_events('user_registers','*');
 		if (count($emails)) {

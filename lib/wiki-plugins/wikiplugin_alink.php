@@ -46,11 +46,11 @@ function wikiplugin_alink($data, $params)
 		$bestLang = ($feature_multilingual == 'y' && $feature_best_language == 'y')? "&amp;bl" : ""; 
 		// $bestLang = $feature_best_language == 'y' ? "&amp;bl" : ""; 
 
-		return "<a title=\"$desc\" href='tiki-index.php?page=" . urlencode($pagename) .
+		return "<a title=\"$desc\" href='tiki-index.php?page=" . urlencode($pagename) . 
 			$bestLang .  "#" . $aname .  "' class='wiki'>$data</a>";
 	    } else {
-		return $data . '<a href="tiki-editpage.php?page=' . urlencode($pagename) .
-			'" title="' . tra("Create page:") . ' ' . urlencode($pagename) .
+		return $data . '<a href="tiki-editpage.php?page=' . urlencode($pagename) . 
+			'" title="' . tra("Create page:") . ' ' . urlencode($page_parse) . 
 			'"  class="wiki wikinew">?</a>';
 	    }
 
