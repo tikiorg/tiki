@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.36 2005-07-12 22:49:05 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.37 2005-07-14 05:31:31 rlpowell Exp $ *}
 {* Show wiki syntax and plugins help *}
 {* TODO: Add links to add samples to edit form *}
 
@@ -15,6 +15,12 @@
 <br />
 
 <p>{tr}For more information, please see <a href="{$helpurl}WikiSyntax">WikiSyntax</a>{/tr}</p>
+
+{if $feature_wiki_paragraph_formatting eq 'y' }
+<p>{tr}Because the Wiki paragraph formatting feature is on, all groups of non-blank lines are collected into paragraphs.  Lines can be of any length, and will be wrapped together with the next line.  Paragraphs are seperated by blank lines.{/tr}</p>
+{else}
+<p>{tr}Because the Wiki paragraph formatting feature is off, each line will be presented as you write it.  This means that if you want paragraphs to be wrapped properly, a paragraph should be all together on one line.{/tr}</p>
+{/if}
 
 <table width="100%">
 <tr><td width="20%"><strong>{tr}Emphasis{/tr}:</strong></td><td> '<strong></strong>' {tr}for{/tr} <em>{tr}italics{/tr}</em>, _<em></em>_ {tr}for{/tr} <strong>{tr}bold{/tr}</strong>, '<strong></strong>'_<em></em>_ {tr}for{/tr} <em><strong>{tr}both{/tr}</strong></em></td></tr>
@@ -46,7 +52,8 @@
 <tr><td><strong>{tr}Colored text{/tr}:</strong></td><td> "~~#FFEE33:{tr}some text{/tr}~~" {tr}Will display using the indicated HTML color{/tr}</td></tr>
 <tr><td><strong>{tr}Center{/tr}:</strong></td><td> "::{tr}some text{/tr}::" {tr}Will display the text centered{/tr}</td></tr>
 <tr><td><strong>{tr}Non parsed sections{/tr}:</strong></td><td> "~np~ {tr}data{/tr} ~/np~" {tr}Prevents wiki parsing of the enclosed data.{/tr}</td></tr>
-<tr><td><strong>{tr}Preformated sections{/tr}:</strong></td><td> "~pp~ {tr}data{/tr} ~/pp~" {tr}Displays preformated text/code; no Wiki processing is done inside these sections (as with np), and the spacing is fixed (no word wrapping is done).{/tr}</td></tr>
+<tr><td><strong>{tr}Preformated sections{/tr}:</strong></td><td> {tr}"~pp~ data ~/pp~" Displays preformated text/code; no Wiki processing is done inside these sections (as with np), and the spacing is fixed (no word wrapping is done).  "~pre~ data ~/pre~" also displayes preformatted text with fixed spacing, but wiki processing still occurs on the text.{/tr}</td></tr>
+<tr><td><strong>{tr}Comments{/tr}:</strong></td><td> {tr}"~c~ comment ~/c~" makes a comment.  It will be completely removed from the display, but saved in the file for future reference.  "~hc~ comment ~/hc~" makes an HTML comment.  It will be inserted as a comment in the output HTML; these are not normally displayed in browsers, but can be seen using "View Source" or similar.{/tr}</td></tr>
 <tr><td><strong>{tr}Square Brackets{/tr}:</strong></td><td> {tr}Use [[foo] to show [foo].{/tr}</td></tr>
 <tr><td><strong>{tr}Block Preformatting{/tr}:</strong></td><td> {tr}Indent text with any number of spaces to turn it into a monospaced block that still follows other Wiki formatting instructions. It will be indended with the same number of spaces that you used.  Note that this mode does not preserve exact spacing and line breaks; use ~pp~...~/pp~ for that.{/tr}</td></tr>
 <tr><td><strong>{tr}Line Breaks{/tr}:</strong></td><td> {tr}Use %%% to produce a line break.  Works in lists.{/tr}</td></tr>

@@ -4486,6 +4486,13 @@ function add_pageview() {
 
 	$this->parse_first($data, $preparsed, $noparsed);
 
+	// Handle ~pre~...~/pre~ sections
+	$data = preg_replace(';~pre~(.*?)~/pre~;s', '<pre>$1</pre>', $data);
+	
+	// Handle comment sections
+	$data = preg_replace(';\s*~c~(.*?)~/c~\s*;s', '', $data);
+	$data = preg_replace(';\n*~hc~(.*?)~/hc~\n*;s', '<!-- $1 -->', $data);
+
 	// Extract [link] sections (to be re-inserted later)
 	$noparsedlinks = array();
 
@@ -5167,6 +5174,8 @@ if (!$simple_wiki) {
 	$listbeg = array();
 	$divdepth = array();
 	$inTable = 0;
+	$inPre = 0;
+	$inComment = 0;
 
 	// loop: process all lines
 	$in_paragraph = 0;
@@ -5223,6 +5232,16 @@ if (!$simple_wiki) {
 		continue;
 	    }
 
+	    // check if we are inside a ~hc~ block and, if so, ignore
+	    // monospaced and do not insert <br />
+	    $inComment += substr_count(strtolower($line), "<!--");
+	    $inComment -= substr_count(strtolower($line), "-->");
+
+	    // check if we are inside a ~pre~ block and, if so, ignore
+	    // monospaced and do not insert <br />
+	    $inPre += substr_count(strtolower($line), "<pre");
+	    $inPre -= substr_count(strtolower($line), "</pre");
+
 	    // check if we are inside a table, if so, ignore monospaced and do
 	    // not insert <br />
 	    $inTable += substr_count(strtolower($line), "<table");
@@ -5231,7 +5250,7 @@ if (!$simple_wiki) {
 	    // If the first character is ' ' and we are not in pre then we are in pre
 	    global $feature_wiki_monosp;
 
-	    if (substr($line, 0, 1) == ' ' && $feature_wiki_monosp == 'y' && $inTable == 0) {
+	    if (substr($line, 0, 1) == ' ' && $feature_wiki_monosp == 'y' && $inTable == 0 && $inPre == 0 && $inComment == 0 ) {
 		// Close open paragraph and lists, but not div's
 		$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 0);
 
@@ -5406,7 +5425,10 @@ if (!$simple_wiki) {
 			 *
 			 * @since Version 1.9
 			 */
-			if ($inTable == 0) {
+			if ($inTable == 0 && $inPre == 0 && $inComment == 0 
+				// Don't put newlines at comments' end!
+				&& ! substr_count(strtolower($line), "-->")
+			) {
 			    if ($feature_wiki_paragraph_formatting == 'y') {
 				if ($in_paragraph && (0 == strcmp("", trim($line)))) {
 				    // Blank line; end the paragraph
