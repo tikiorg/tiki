@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.13 2005-05-18 11:02:59 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.14 2005-07-14 17:29:17 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-browse_categories.php">{if $parentId ne 0}{tr}Category{/tr} {$p_info.name}{else}{tr}Categories{/tr}{/if}</a></h1>
 {if $parentId and $p_info.description}<div class="description">{$p_info.description}</div>{/if}
@@ -48,8 +48,8 @@
 {/if}
 <br /><br />
 <form method="post" action="tiki-browse_categories.php">
-  {tr}search category{/tr}: <input type="text" name="find" value="{$find|escape}" size="35" />
-  {tr}deep{/tr}:            <input type="checkbox" name="deep" {if $deep eq 'on'}checked="checked"{/if}/>
+  {tr}Find in:{/tr} {$p_info.name} <input type="text" name="find" value="{$find|escape}" size="35" />
+  {tr}and its subcategories: {/tr}<input type="checkbox" name="deep" {if $deep eq 'on'}checked="checked"{/if}/>
                             <input type="hidden" name="parentId" value="{$parentId|escape}" />
                             <input type="hidden" name="type" value="{$type|escape}" />
                             <input type="submit" value="{tr}find{/tr}" name="search" />
