@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.109 2005-06-26 14:28:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.110 2005-07-14 06:21:24 rlpowell Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -225,6 +225,8 @@ function walk_and_parse(&$c, &$src, &$p, $head_url )
                 case "p": $src .= "\n"; $p['stack'][] = array('tag' => 'p', 'string' => "\n"); break;
                 case "b": $src .= '__'; $p['stack'][] = array('tag' => 'b', 'string' => '__'); break;
                 case "i": $src .= "''"; $p['stack'][] = array('tag' => 'i', 'string' => "''"); break;
+                case "em": $src .= "''"; $p['stack'][] = array('tag' => 'em', 'string' => "''"); break;
+                case "strong": $src .= '__'; $p['stack'][] = array('tag' => 'strong', 'string' => '__'); break;
                 case "u": $src .= "=="; $p['stack'][] = array('tag' => 'u', 'string' => "=="); break;
                 case "center": $src .= '::'; $p['stack'][] = array('tag' => 'center', 'string' => '::'); break;
                 case "code": $src .= '-+';  $p['stack'][] = array('tag' => 'code', 'string' => '+-'); break;
@@ -236,7 +238,8 @@ function walk_and_parse(&$c, &$src, &$p, $head_url )
                 case "h4": $src .= "\n!!!!"; $p['stack'][] = array('tag' => 'h4', 'string' => "\n"); break;
                 case "h5": $src .= "\n!!!!!"; $p['stack'][] = array('tag' => 'h5', 'string' => "\n"); break;
                 case "h6": $src .= "\n!!!!!!"; $p['stack'][] = array('tag' => 'h6', 'string' => "\n"); break;
-                case "pre": $src .= '~pp~'; $p['stack'][] = array('tag' => 'pre', 'string' => '~/pp~'); break;
+                case "pre": $src .= "~pre~\n"; $p['stack'][] = array('tag' => 'pre', 'string' => "~/pre~\n"); break;
+                case "sub": $src .= "{SUB()}"; $p['stack'][] = array('tag' => 'sub', 'string' => "{SUB}"); break;
                 // Table parser
                 case "table": $src .= '||'; $p['stack'][] = array('tag' => 'table', 'string' => '||'); break;
                 case "tr": $p['first_td'] = true; break;
