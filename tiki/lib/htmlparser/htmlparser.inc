@@ -382,7 +382,7 @@ anyword -1  2  3  3  5  3 -1  8 -1
  ********************************************************************************************/
   function AddNewTag($open,$xmlclose=0) {
     $actionclose=0;
-    if (!$open && $this->pg[$this->tagname]["endtag"]!="absent") $actionclose=1;
+    if (!$open && in_array( $this->tagname, $this->pg ) && $this->pg[$this->tagname]["endtag"]!="absent") $actionclose=1;
 
     if ($open)
       for ($i=$this->stacktagpos;$i>0;$i--) {
@@ -439,7 +439,7 @@ anyword -1  2  3  3  5  3 -1  8 -1
           $this->tagreg[$this->tagname]--;
     if ($xmlclose) $this->c[$this->cp]["xmlclose"]=1;
     if (sizeof($this->pars)) $this->c[$this->cp]["pars"]=$this->pars;
-    if ($open && !$xmlclose && $this->pg[$this->tagname]["endtag"]!="absent") {
+    if ($open && !$xmlclose && in_array( $this->tagname, $this->pg ) && $this->pg[$this->tagname]["endtag"]!="absent") {
       if (!isset($this->tagreg[$this->tagname])) $this->tagreg[$this->tagname]=0;
       $this->tagreg[$this->tagname]++;
       $this->stacktagpos++;
