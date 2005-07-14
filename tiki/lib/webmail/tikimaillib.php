@@ -9,7 +9,7 @@ class TikiMail extends HtmlMimeMail {
 	
 	function TikiMail($user = null) {
 		global $sender_email;
-		global $tikilib;
+		global $tikilib, $mail_crlf;
 
 		parent::htmlMimeMail();
 		$this->charset = !$user ? $tikilib->get_preference("default_mail_charset", "utf-8"): $tikilib->get_user_preference($user, "mailCharset", "utf-8");
@@ -17,7 +17,7 @@ class TikiMail extends HtmlMimeMail {
 		$this->setHtmlCharset($this->charset);
 		$this->setHeadCharset($this->charset);
 		if (isset($mail_crlf))
-			$this->setCrlf($mail_crlf);
+			$this->setCrlf($mail_crlf == "LF"? "\n": "\r\n");
 		$this->setFrom($sender_email);
 	}
 

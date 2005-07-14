@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_users.php,v 1.7 2005-05-18 10:58:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_users.php,v 1.8 2005-07-14 13:59:50 mose Exp $
 
 // Initialization
 require_once('tiki-setup.php');
@@ -90,6 +90,7 @@ for ($i=0;$i<count($listusers["data"]);$i++) {
 }
 
 $smarty->assign_by_ref('listusers',$listusers["data"]);
+$smarty->assign_by_ref('cant_users',$listusers["cant"]);
 $smarty->assign_by_ref('listdistance',$listdistance);
 $smarty->assign_by_ref('listuserscountry',$listuserscountry);
 

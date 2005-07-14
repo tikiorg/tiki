@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.24 2005-05-18 10:58:59 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.25 2005-07-14 13:59:50 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -61,7 +61,7 @@ if (isset($_REQUEST["remove"])) {
 	}
 }
 
-if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0) {
+if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0 && (!isset($_REQUEST['previousTemplateId']) || $_REQUEST['previousTemplateId'] != $_REQUEST['templateId'])) {
 	$template_data = $tikilib->get_template($_REQUEST["templateId"]);
 	$_REQUEST["data"] = $template_data["content"];
 	$_REQUEST["preview"] = 1;
@@ -89,9 +89,12 @@ if (isset($_REQUEST["preview"])) {
 		$smarty->assign('dataparsed', $tikilib->parse_data($info["data"]));
 		$smarty->assign('subject', $info["subject"]);
 		$info["dataparsed"]  = $smarty->fetch("newsletters/".$_REQUEST["usedTpl"]);
+	        if (stristr($info['dataparsed'], "<body>") === false) {
+        	        $info['dataparsed'] = "<html><body>".$info['dataparsed']."</body></html>";
+        	}
 		$smarty->assign("usedTpl", $_REQUEST["usedTpl"]);
 	} else {
-		$info["dataparsed"] = $tikilib->parse_data($info["data"]);
+		$info["dataparsed"] = "<html><body>".$tikilib->parse_data($info["data"])."</body></html>";
 	}
 	$smarty->assign('info', $info);
 }
@@ -106,13 +109,19 @@ if (isset($_REQUEST["save"])) {
 	$subscribers = $nllib->get_all_subscribers($_REQUEST["nlId"], "");
 	$smarty->assign('nlId', $_REQUEST["nlId"]);
 	$smarty->assign('data', $_REQUEST["data"]);
+	$parsed = '';
 	if (!empty($_REQUEST["usedTpl"])) {
 		$smarty->assign('dataparsed', $tikilib->parse_data($_REQUEST["data"]));
 		$smarty->assign('subject', $_REQUEST["subject"]);
-		$smarty->assign('dataparsed', $smarty->fetch("newsletters/".$_REQUEST["usedTpl"]));
+		$parsed = $smarty->fetch("newsletters/".$_REQUEST["usedTpl"]);
 	} else {
-		$smarty->assign('dataparsed', $tikilib->parse_data($_REQUEST["data"]));
+		$parsed = $tikilib->parse_data($_REQUEST["data"]);
 	}
+	if (stristr($parsed, "<body>") === false) {
+		$parsed = "<html><body>$parsed</body></html>";
+	}
+	$smarty->assign('dataparsed',$parsed);
+	
 	$smarty->assign('subject', $_REQUEST["subject"]);
 	$cant = count($subscribers);
 	$smarty->assign('subscribers', $cant);
@@ -125,7 +134,7 @@ if (isset($_REQUEST["send"])) {
 	check_ticket('send-newsletter');
 
 	$mail = new TikiMail();
-	$txt = preg_replace(array("/\s+/","/&nbsp;/"),array(" "," "),strip_tags($_REQUEST["dataparsed"])); 
+	$txt = strip_tags(str_replace(array("\r\n","&nbsp;") , array("\n"," ") , $_REQUEST["data"]));
 	if (stristr($_REQUEST["dataparsed"], "<body>") === false) {
 		$html = "<html><body>".$tikilib->parse_data($_REQUEST["dataparsed"])."</body></html>";
 	} else {
@@ -157,8 +166,8 @@ if (isset($_REQUEST["send"])) {
 				$msg = str_replace("</body>", nl2br($unsubmsg)."</body>", $html);
 		} else
 			$msg = $html;
+		$mail->setHtml($msg, $txt.strip_tags($unsubmsg));
 		$mail->buildMessage();
-		$mail->setHtml($msg, $txt. strip_tags($unsubmsg));
 		if ($mail->send(array($email)))
 			$sent++;
 		else

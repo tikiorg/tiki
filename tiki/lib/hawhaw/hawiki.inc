@@ -3,7 +3,7 @@
 // HAWIKI
 // PHP wrapper class for HAWHAW-based wiki's
 // Copyright (C) 2005 Norbert Huffschmid & TikiWiki community
-// Last modified: 5. June 2005
+// Last modified: 28. June 2005
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -540,6 +540,7 @@ class HAWIKI_page
           {
             // HAWHAW does not support images as links
             // ==> draw @-link next to image (for visual browsers)
+            $po["link"] = ereg_replace("&amp;", "&", $po["link"]); // &-treatment is done by HAWHAW
             $link = new HAW_link("@", $po["link"]);
             $link->set_br(0);
             $this->deck->add_link($link);

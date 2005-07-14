@@ -330,7 +330,7 @@ class TrackerLib extends TikiLib {
 	}
 
 	/* experimental shared */
-	function list_items($trackerId, $offset, $maxRecords, $sort_mode, $listfields, $filterfield='', $filtervalue='', $status = '', $initial = '',$exactvalue='',$numsort=false) {
+	function list_items($trackerId, $offset, $maxRecords, $sort_mode, $listfields, $filterfield='', $filtervalue='', $status = '', $initial = '',$exactvalue='',$numsort=false) {		
 		global $tiki_p_view_trackers_pending,$tiki_p_view_trackers_closed,$tiki_p_admin_trackers;
 		$mid = " where tti.`trackerId`=? ";
 		$bindvars = array((int) $trackerId);
@@ -400,7 +400,6 @@ class TrackerLib extends TikiLib {
 		$cant = $this->getOne($query_cant,$bindvars);
 		$type = '';
 		$ret = array();
-		$opts = $optsl = array();
 		while ($res = $result->fetchRow()) {
 			$fields = array();
 			$opts = array();
@@ -458,11 +457,9 @@ class TrackerLib extends TikiLib {
 					}
 					$fopt['categs'] = $cats;
 				} elseif ($fopt["type"] == 'l') {
-					if (!$optsl) {
-						$optsl = split(',',$fopt['options']);
-					}
+					$optsl = split(',',$fopt['options']);
 					$fopt["links"] = array();
-					$lst = $last[$optsl[2]];
+					$lst = $fil[$optsl[2]];
 					if ($lst) {
 						$links = $this->get_items_list($optsl[0],$optsl[1],$lst);
 						foreach ($links as $link) {
@@ -696,6 +693,8 @@ class TrackerLib extends TikiLib {
 		$result = $this->query($query,array((int) $itemId));
 		$query = "delete from `tiki_tracker_item_comments` where `itemId`=?";
 		$result = $this->query($query,array((int) $itemId));
+		$query = "delete from `tiki_tracker_item_attachments` where `itemId`=?";
+		$result = $this->query($query,array((int) $itemId));
 	}
 
 	// Lists all the fields for an existing tracker
@@ -795,7 +794,7 @@ class TrackerLib extends TikiLib {
 
 	function replace_rating($trackerId,$itemId,$fieldId,$user,$new_rate) {
 		$val = $this->getOne("select `value` from `tiki_tracker_item_fields` where `itemId`=? and `fieldId`=?", array((int)$itemId,(int)$fieldId));
-		if ($val === NULL) { 
+		if ($val === NULL) {
 			$query = "insert into `tiki_tracker_item_fields`(`value`,`itemId`,`fieldId`) values (?,?,?)";
 			$newval = $new_rate;
 			//echo "$newval";die;
@@ -940,7 +939,7 @@ class TrackerLib extends TikiLib {
 		$type['a'] = array(
 			'label'=>tra('textarea'),      
 			'opt'=>true,  
-			'help'=>tra('Textarea options: options,width,height,max with option is 1 or 0, rest is size indicated in chars and lines, max is the maximum number of characters that can be saved.'));
+			'help'=>tra('Textarea options: quicktags,width,height,max - Use Quicktags is 1 or 0, width is indicated in chars, height is indicated in lines, max is the maximum number of characters that can be saved.'));
 		$type['c'] = array(
 			'label'=>tra('checkbox'),      
 			'opt'=>true,  
@@ -970,7 +969,7 @@ class TrackerLib extends TikiLib {
 		$type['i'] = array(
 			'label'=>tra('image'),         
 			'opt'=>true, 
-			'help'=>tra('Image options: xSize,ySize indicated in pixels.')  );
+			'help'=>tra('Image options: xListSize,yListSize,xDetailsSize,yDetailsSize indicated in pixels.')  );
 		$type['x'] = array(
 			'label'=>tra('action'),      
 			'opt'=>true, 
@@ -1014,16 +1013,13 @@ class TrackerLib extends TikiLib {
 	}
 }
 
-
 //if(isset($trk_with_mirror_tables) && $trk_with_mirror_tables == 'y') {
 if($tikilib->get_preference('trk_with_mirror_tables') == 'y') {
 	include_once ("trkWithMirrorTablesLib.php");
 	$trklib = new TrkWithMirrorTablesLib($dbTiki);
-	//echo "<br>MIRROR</br>\n";
 }
 else {
 	$trklib = new TrackerLib($dbTiki);
-	//echo "<br>NORMAL</br>\n";
 }
 
 ?>

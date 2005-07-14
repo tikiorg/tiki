@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_image.php,v 1.15 2005-05-18 10:58:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_image.php,v 1.16 2005-07-14 13:59:49 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -98,6 +98,12 @@ if (isset($_REQUEST["editimage"])) {
 	}
 
 	$error_msg = '';
+
+	// Avoid warnings
+	if ($feature_maps != 'y') {
+	    $_REQUEST['lat'] = '';
+	    $_REQUEST['lon'] = '';
+	}
 
 	if ($imagegallib->edit_image($_REQUEST['edit'], $_REQUEST['name'], $_REQUEST['description'],$_REQUEST['lat'],$_REQUEST['lon'])) {
 		$smarty->assign('show', 'y');

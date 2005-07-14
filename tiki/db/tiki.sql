@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2005-07-05 21:49:37 $
-# $Author: rlpowell $
+# $Date: 2005-07-14 13:59:50 $
+# $Author: mose $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -3450,7 +3450,7 @@ CREATE TABLE tiki_user_answers (
 #
 
 
-
+DROP TABLE IF EXISTS tiki_user_answers_uploads;
 CREATE TABLE `tiki_user_answers_uploads` (
   `answerUploadId` int(4) NOT NULL auto_increment,
   `userResultId` int(11) NOT NULL default '0',

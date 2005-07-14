@@ -1,3 +1,4 @@
+{* $Id: tiki-view_tracker_item.tpl,v 1.85 2005-07-14 14:00:09 mose Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -27,6 +28,15 @@
 {if $tiki_p_modify_tracker_items eq 'y'}
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Edit{/tr}</a></span>
 {/if}
+{* ------- return/next/previous tab --- *}
+<span id="tab{cycle name=tabs advance=false}" class="tabmark">
+<a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}">{tr}back{/tr} {tr}items list{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false}" class="tabmark">
+{if $prevmsg}<span class="attention">{$prevmsg}</span>{else}
+<a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}&amp;move=prev"><- {tr}Previous{/tr}</a>{/if}</span>
+<span id="tab{cycle name=tabs advance=false}" class="tabmark">
+{if $nextmsg}<span class="attention">{$nextmsg}</span>{else}
+<a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}&amp;move=next">{tr}next{/tr} -></a>{/if}</span>
 </div>
 {/if}
 
@@ -274,7 +284,11 @@ src="img/icons/edit.gif" border="0" alt="{tr}edit{/tr}"  hspace="2" vspace="0" /
 {/section}
 
 <table class="normal">
-<tr class="formcolor"><td>&nbsp;</td><td colspan="3"><input type="submit" name="save" value="{tr}save{/tr}" />
+<tr class="formcolor"><td>&nbsp;</td><td colspan="3">
+<input type="submit" name="save" value="{tr}save{/tr}" />
+{* --------------------------- to return to tracker list after saving --------- *}
+<input type="submit" name="save_return" value="{tr}save{/tr} & {tr}back{/tr} {tr}items list{/tr}" />
+{* ------------------- *}
 {if $tracker_info.showStatus eq 'y' or $tiki_p_admin_trackers eq 'y'}
 <tr class="formcolor"><td>{tr}Status{/tr}</td>
 <td>
@@ -444,8 +458,16 @@ align       : "bR"
 {/foreach}
 <tr class="formcolor"><td>&nbsp;</td><td colspan="3">
 <input type="submit" name="save" value="{tr}save{/tr}" />
+{* --------------------------- to retrun to tracker list after saving --------- *}
+<input type="submit" name="save_return" value="{tr}save{/tr} & {tr}back{/tr} {tr}items list{/tr}" />
 </td></tr>
 </table>
+<input type="hidden" name="offset" value="{$offset|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+{foreach key=urlkey item=urlval from=$urlquery}
+<input type="hidden" name="{$urlkey}" value="{$urlval|escape}" />
+{/foreach}
+{* ------------------- *}
 </form>
 {if $trkact}
 <h2>{tr}Special Operations{/tr}</h2>

@@ -1,3 +1,4 @@
+{* $Id: tiki-view_tracker.tpl,v 1.97 2005-07-14 14:00:09 mose Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -152,6 +153,9 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 <td class="heading" width="5%">&nbsp;</td>
 {/if}
 </tr>
+
+{* ------- Items loop --- *}
+{assign var=itemoff value=0}
 {cycle values="odd,even" print=false}
 {section name=user loop=$items}
 <tr class="{cycle}">
@@ -169,7 +173,7 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 {if $items[user].field_values[ix].type eq 'l'}
 <td class="auto">
 {foreach key=tid item=tlabel from=$items[user].field_values[ix].links}
-<div><a href="tiki-view_tracker_item.php?itemId={$tid}{foreach 
+<div><a href="tiki-view_tracker_item.php?itemId={$tid}&amp;offset={$offset}&amp;reloff={$itemoff}{foreach 
 key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}" class="link">{$tlabel|truncate:255:"..."}</a></div>
 {/foreach}
 </td>
@@ -177,11 +181,11 @@ key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape
 <td class="auto">
 
 {if $items[user].field_values[ix].linkId and $items[user].field_values[ix].trackerId}
-<a href="tiki-view_tracker_item.php?itemId={$items[user].field_values[ix].linkId}{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}" class="link">
+<a href="tiki-view_tracker_item.php?itemId={$items[user].field_values[ix].linkId}&amp;offset={$offset}&amp;reloff={$itemoff}{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}" class="link">
 
 {elseif $tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y' 
  or ($tracker_info.writerCanModify eq 'y' and $user and $my eq $user) or ($tracker_info.writerCanModify eq 'y' and $group and $ours eq $group)}
-<a class="tablename" href="tiki-view_tracker_item.php?itemId={$items[user].itemId}&amp;show=view{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}">
+<a class="tablename" href="tiki-view_tracker_item.php?itemId={$items[user].itemId}&amp;show=view&amp;offset={$offset}&amp;reloff={$itemoff}{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}">
 {/if}
 
 {if  ($items[user].field_values[ix].type eq 't' or $items[user].field_values[ix].type eq 'n' or $items[user].field_values[ix].type eq 'c') 
@@ -258,7 +262,7 @@ key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape
 <td  style="text-align:center;">{$items[user].comments}</td>
 {/if}
 {if $tracker_info.useAttachments eq 'y' and $tracker_info.showAttachments eq 'y'}
-<td  style="text-align:center;"><a href="tiki-view_tracker_item.php?itemId={$items[user].itemId}&amp;show=att{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}{section name=mix loop=$fields}{if $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}" 
+<td  style="text-align:center;"><a href="tiki-view_tracker_item.php?itemId={$items[user].itemId}&amp;show=att&amp;offset={$offset}&amp;reloff={$itemoff}{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}{section name=mix loop=$fields}{if $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}" 
 link="{tr}list attachments{/tr}"><img src="img/icons/folderin.gif" border="0" alt="{tr}List Attachments{/tr}" 
 /></a> {$items[user].attachments}</td>
 {if $tiki_p_admin_trackers eq 'y'}<td  style="text-align:center;">{$items[user].downloads}</td>{/if}
@@ -269,6 +273,7 @@ name=mix loop=$fields}{if $fields[mix].value}&amp;{$fields[mix].name}={$fields[m
 title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}'></a></td>
 {/if}
 </tr>
+{assign var=itemoff value=$itemoff+1}
 {/section}
 </table>
 {include file="tiki-pagination.tpl"}

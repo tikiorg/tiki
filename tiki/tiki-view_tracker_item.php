@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.79 2005-06-16 20:10:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.80 2005-07-14 13:59:50 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -79,6 +79,64 @@ if (!isset($utid) and !isset($gtid) and (!isset($_REQUEST["itemId"]) or !$_REQUE
 	$smarty->display("error.tpl");
 	die;
 }
+
+if (!isset($_REQUEST["sort_mode"])) {
+	$sort_mode = 'created_desc';
+} else {
+	$sort_mode = $_REQUEST["sort_mode"];
+}
+
+if (!isset($_REQUEST["offset"])) {
+	$offset = 0;
+} else {
+	$offset = $_REQUEST["offset"];
+}
+
+$smarty->assign_by_ref('offset', $offset);
+
+if (isset($_REQUEST["find"])) {
+	$find = $_REQUEST["find"];
+} else {
+	$find = '';
+}
+$smarty->assign('find', $find);
+$smarty->assign_by_ref('sort_mode', $sort_mode);
+
+// ************* previous/next **************
+$urlquery = array();
+foreach (array('status', 'filterfield', 'filtervalue', 'initial', 'exactvalue', 'reloff') as $reqfld) {
+    $trynam = 'try'.$reqfld;
+    if (isset($_REQUEST[$reqfld]) && is_string($_REQUEST[$reqfld])) {
+        $$trynam = $urlquery[$reqfld] = $_REQUEST[$reqfld];
+    } else {
+        $$trynam = '';
+    }
+}
+if (isset($_REQUEST["filtervalue"]) and is_array($_REQUEST["filtervalue"]) and isset($_REQUEST["filtervalue"]["$tryfilterfield"])) {
+	$tryfiltervalue = $_REQUEST["filtervalue"]["$tryfilterfield"];
+    $urlquery["filtervalue[".$tryfilterfield."]"] = $tryfiltervalue;
+}
+
+if (isset($_REQUEST["move"])) {
+    $move = ($_REQUEST["move"] == 'prev') ? -1 : 1;
+	if ($offset + ($tryreloff += $move) >= 0) {
+    	$trymove = 
+    	  $trklib->list_items($_REQUEST["trackerId"], $offset + $tryreloff, 1,
+    	    $_REQUEST["sort_mode"], array(),
+    	    $tryfilterfield, $tryfiltervalue, $trystatus, $tryinitial, $tryexactvalue);
+    }
+	if (isset($trymove["data"][0]["itemId"])) {
+    	$_REQUEST["itemId"] = $trymove["data"][0]["itemId"];
+    	$urlquery['reloff'] = $tryreloff;
+	} elseif ($move > 0) {
+        	$smarty->assign('nextmsg', tra("Last page"));
+	}
+}
+if ($offset + $tryreloff <= 0) {
+	$smarty->assign('prevmsg', tra("First page"));
+}
+$smarty->assign_by_ref('urlquery', $urlquery);
+//*********** that's all for prev/next *****************
 
 $smarty->assign('itemId', $_REQUEST["itemId"]);
 $item_info = $trklib->get_tracker_item($_REQUEST["itemId"]);
@@ -344,7 +402,7 @@ if ($tiki_p_admin_trackers == 'y') {
 }
 
 if ($tiki_p_modify_tracker_items == 'y') {
-	if (isset($_REQUEST["save"])) {
+	if (isset($_REQUEST["save"]) || isset($_REQUEST["save_return"])) {
 		check_ticket('view-trackers-items');
 		if (!isset($_REQUEST["status"]) or ($tracker_info["showStatus"] != 'y' and $tiki_p_admin_trackers != 'y')) {
 			$_REQUEST["status"] = $tracker_info["modItemStatus"];
@@ -384,6 +442,13 @@ if ($tiki_p_modify_tracker_items == 'y') {
 		}
 	}
 }
+// ************* return to list ***************************
+if(isset($_REQUEST["returntracker"]) || isset($_REQUEST["save_return"])) {
+	$urlreturn = "tiki-view_tracker.php?trackerId={$_REQUEST['trackerId']}&sort_mode={$_REQUEST['sort_mode']}&offset={$_REQUEST['offset']}";
+	foreach ($urlquery as $fldkey=>$fldval) {if ($fldval) { $urlreturn .= "&{$fldkey}=".urlencode($fldval); } }			header("Location: $urlreturn");
+	die;
+}
+// ********************************************************
 
 if (isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y' and $tiki_p_tracker_view_ratings == 'y') {
 	if ($user and $tiki_p_tracker_vote_ratings == 'y' and isset($_REQUEST['rate']) and isset($_REQUEST['fieldId'])) {
@@ -480,28 +545,6 @@ if ($_REQUEST["itemId"]) {
 $smarty->assign_by_ref('info', $info);
 $smarty->assign_by_ref('fields', $fields["data"]);
 $smarty->assign_by_ref('ins_fields', $ins_fields["data"]);
-
-if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'created_desc';
-} else {
-	$sort_mode = $_REQUEST["sort_mode"];
-}
-
-if (!isset($_REQUEST["offset"])) {
-	$offset = 0;
-} else {
-	$offset = $_REQUEST["offset"];
-}
-
-$smarty->assign_by_ref('offset', $offset);
-
-if (isset($_REQUEST["find"])) {
-	$find = $_REQUEST["find"];
-} else {
-	$find = '';
-}
-$smarty->assign('find', $find);
-$smarty->assign_by_ref('sort_mode', $sort_mode);
 
 $users = $userlib->list_all_users();
 $smarty->assign_by_ref('users', $users);
