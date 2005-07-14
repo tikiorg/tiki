@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.110 2005-07-14 06:21:24 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.111 2005-07-14 20:06:31 rlpowell Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -211,7 +211,7 @@ function walk_and_parse(&$c, &$src, &$p, $head_url )
         elseif ($c[$i]["type"] == "tag")
         {
             if ($c[$i]["data"]["type"] == "open")
-            {
+	    {
                 // Open tag type
                 switch ($c[$i]["data"]["name"])
                 {
@@ -220,7 +220,7 @@ function walk_and_parse(&$c, &$src, &$p, $head_url )
 		    $c[$i]["content"] = '';
 		break;
 
-                case "br": $src .= "\n"; break;
+		case "br": $src .= '%%%'; break;
                 case "title": $src .= "\n!"; $p['stack'][] = array('tag' => 'title', 'string' => "\n"); break;
                 case "p": $src .= "\n"; $p['stack'][] = array('tag' => 'p', 'string' => "\n"); break;
                 case "b": $src .= '__'; $p['stack'][] = array('tag' => 'b', 'string' => '__'); break;
@@ -230,6 +230,8 @@ function walk_and_parse(&$c, &$src, &$p, $head_url )
                 case "u": $src .= "=="; $p['stack'][] = array('tag' => 'u', 'string' => "=="); break;
                 case "center": $src .= '::'; $p['stack'][] = array('tag' => 'center', 'string' => '::'); break;
                 case "code": $src .= '-+';  $p['stack'][] = array('tag' => 'code', 'string' => '+-'); break;
+                case "dd": $src .= ':';  $p['stack'][] = array('tag' => 'dd', 'string' => "\n"); break;
+                case "dt": $src .= ';';  $p['stack'][] = array('tag' => 'dt', 'string' => ''); break;
                 // headers detection looks like real suxx code...
                 // but possible it run faster :) I don't know where is profiler in PHP...
                 case "h1": $src .= "\n!"; $p['stack'][] = array('tag' => 'h1', 'string' => "\n"); break;
