@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2005-07-14 13:59:50 $
-# $Author: mose $
+# $Date: 2005-07-15 23:54:24 $
+# $Author: rlpowell $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -2418,7 +2418,7 @@ CREATE TABLE tiki_pages (
   page_id int(14) NOT NULL auto_increment,
   pageName varchar(160) NOT NULL default '',
   hits int(8) default NULL,
-  data text,
+  data mediumtext,
   description varchar(200) default NULL,
   lastModif int(14) default NULL,
   comment varchar(200) default NULL,
