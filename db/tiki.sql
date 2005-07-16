@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2005-07-15 23:54:24 $
+# $Date: 2005-07-16 00:00:02 $
 # $Author: rlpowell $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -2428,7 +2428,7 @@ CREATE TABLE tiki_pages (
   flag char(1) default NULL,
   points int(8) default NULL,
   votes int(8) default NULL,
-  cache text,
+  cache mediumtext,
   wiki_cache int(10) default NULL,
   cache_timestamp int(14) default NULL,
   pageRank decimal(4,3) default NULL,
