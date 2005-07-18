@@ -3821,12 +3821,12 @@ function add_pageview() {
 	    $data1 = $data;
 	    if (isset($noparsed["key"]) and count($noparsed["key"]) and count($noparsed["key"]) == count($noparsed["data"]))
 	    { 
-		$data = preg_replace($noparsed["key"], $noparsed["data"], $data);
+		$data = str_replace($noparsed["key"], $noparsed["data"], $data);
 	    }
 
 	    if (isset($preparsed["key"]) and count($preparsed["key"]) and count($preparsed["key"]) == count($preparsed["data"]))
 	    {
-		$data = preg_replace($preparsed["key"], $preparsed["data"], $data);
+		$data = str_replace($preparsed["key"], $preparsed["data"], $data);
 	    }
 	    $data2 = $data;
 	}
@@ -3942,7 +3942,7 @@ function add_pageview() {
 	       print_r( $plugins );
 	       print "</pre>";
 	       print "<pre>start: :".htmlspecialchars( $plugin_start ) .":</pre>";
-	     */
+	    */
 
 	    if( count($plugins) > 1 )
 	    {
@@ -3953,8 +3953,8 @@ function add_pageview() {
 
 	    $pos = strpos( $data, $plugins[0] ); // where the plugin starts
 
-		// where the part after the plugin arguments starts
-		$pos_middle = $pos + strlen( $plugins[0] );
+	    // where the part after the plugin arguments starts
+	    $pos_middle = $pos + strlen( $plugins[0] );
 
 	    // print "<pre>pos's: :$pos, $pos_middle:</pre>";
 
@@ -3963,28 +3963,31 @@ function add_pageview() {
 	    {
 		$plugin_end='';
 		$pos_end = $pos + strlen($plugin_start);
-	    } else if( preg_match( "/^ *~pp~|^ *~np~/", $plugin_start ) ) {
-		$plugin_end = preg_replace( '/^(.)/', '$1/', $plugin_start );
+	    } else if( ! ( strpos( $plugin_start, '~pp~' ) === false ) ) {
+		$plugin_end = '~/pp~';
+		$pos_end = strpos($data, $plugin_end, $pos); // where plugin data ends
+	    } else if( ! ( strpos( $plugin_start, '~np~' ) === false ) ) {
+		$plugin_end = '~/np~';
 		$pos_end = strpos($data, $plugin_end, $pos); // where plugin data ends
 	    } else if( preg_match( "/^ *&lt;[pP][rR][eE]&gt;/", $plugin_start ) ) {
 		preg_match("/&lt;\/[pP][rR][eE]&gt;/", $data, $plugin_ends, 0, $pos); // where plugin data ends
 		$plugin_end = $plugin_ends[0];
 		$pos_end = strpos($data, $plugin_end, $pos); // where plugin data ends
-			} else {
-				$plugin_end = '{' . $plugin;
-				$count=1;
-				while($count) { // this takes care of possible nested plugins with same name
-					$pos_end = strpos($data, $plugin_end, $pos_middle);
-					if ($pos_end === false) {
-						$pos_end = strlen($data);
-						break;
-					}
-					$pos_middle = $pos_end+strlen($plugin_end);
-					if ($data{$pos_middle} == '}') $count--;
-					else if ($data{$pos_middle} == '(') $count++;
-				}
-				$plugin_end .= '}'; // where plugin data ends
-			}
+	    } else {
+		$plugin_end = '{' . $plugin;
+		$count=1;
+		while($count) { // this takes care of possible nested plugins with same name
+		    $pos_end = strpos($data, $plugin_end, $pos_middle);
+		    if ($pos_end === false) {
+			$pos_end = strlen($data);
+			break;
+		    }
+		    $pos_middle = $pos_end+strlen($plugin_end);
+		    if ($data{$pos_middle} == '}') $count--;
+		    else if ($data{$pos_middle} == '(') $count++;
+		}
+		$plugin_end .= '}'; // where plugin data ends
+	    }
 
 	    /*
 	       print "<pre>pos's2: :$pos, $pos_middle, $pos_end:</pre>";
@@ -4004,7 +4007,7 @@ function add_pageview() {
 		// ~pp~ type "plugins"
 	    {
 		$key = md5($this->genPass());
-		$noparsed["key"][] = "/". preg_quote($key)."/";
+		$noparsed["key"][] = $key;
 
 		if( strstr( $plugin_data, '$' ) )
 		{
@@ -4087,7 +4090,7 @@ function add_pageview() {
 			if( count( $stuff ) > 0 )
 			{
 			    $key = md5($this->genPass());
-			    $noparsed["key"][] = "/". preg_quote($key)."/";
+			    $noparsed["key"][] = $key;
 			    $noparsed["data"][] = $stuff[1];
 
 			    $ret = preg_replace( "/~np~.*~\/np~/s", $key, $ret );

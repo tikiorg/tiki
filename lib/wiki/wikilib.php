@@ -27,7 +27,7 @@ class WikiLib extends TikiLib {
 	// any interpretation)
 	$preparsed = array();
 
-	preg_match_all("/(<[Pp][Rr][Ee]>)((.|\n)*?)(<\/[Pp][Rr][Ee]>)/", $data, $preparse);
+	preg_match_all("/(<[Pp][Rr][Ee]>)(.*?)(<\/[Pp][Rr][Ee]>)/s", $data, $preparse);
 	$idx = 0;
 
 	foreach (array_unique($preparse[2])as $pp) {
@@ -36,7 +36,7 @@ class WikiLib extends TikiLib {
 	    $aux["key"] = $key;
 	    $aux["data"] = $pp;
 	    $preparsed[] = $aux;
-	    $data = str_replace($preparse[1][$idx] . $pp . $preparse[4][$idx], $key, $data);
+	    $data = str_replace($preparse[1][$idx] . $pp . $preparse[3][$idx], $key, $data);
 	    $idx = $idx + 1;
 	}
 
