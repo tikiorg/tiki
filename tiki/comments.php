@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.50 2005-06-27 15:15:34 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.51 2005-07-19 17:30:11 rlpowell Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -379,7 +379,13 @@ if ($_REQUEST["comments_threadId"] > 0) {
 
     if( ! array_key_exists( "title", $comment_info ) )
     {
-	$comment_info["title"] = $_REQUEST["comments_title"];
+    	if( array_key_exists( "comments_title", $_REQUEST ) )
+	{
+	    $comment_info["title"] = $_REQUEST["comments_title"];
+	} else {
+	    $comment_info["title"] = "";
+	    $_REQUEST["comments_title"] = "";
+	}
     }
 
     $smarty->assign('comment_title', tra('Re:').' '.$comment_info["title"]);
