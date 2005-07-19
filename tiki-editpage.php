@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.111 2005-07-14 20:06:31 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.112 2005-07-19 04:39:44 rlpowell Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -287,6 +287,11 @@ function walk_and_parse(&$c, &$src, &$p, $head_url )
 			}
                         $p['stack'][] = array('tag' => 'a', 'string' => ']');
                     }
+
+                    if( isset($c[$i]["pars"]["name"]["value"]) )
+		    {
+		    	$src .= '{ANAME()}'.$c[$i]["pars"]["name"]["value"].'{ANAME}';
+		    }
                     break;
                 }
             }
