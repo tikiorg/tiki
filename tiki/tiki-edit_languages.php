@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_languages.php,v 1.20 2005-06-26 14:28:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_languages.php,v 1.21 2005-07-19 01:07:12 rlpowell Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -105,10 +105,7 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 	check_ticket('edit-languages');
 	//check if user has translated something
 	if (isset($_REQUEST["tr_recnum"])) {
-		$tr_recnum = $_REQUEST["tr_recnum"];
-
-		$temp_max = $tr_recnum + $maxRecords;
-		for ($i = $tr_recnum; $i <= $temp_max; $i++) {
+		for ($i = 0; $i <= $maxRecords; $i++) {
 			// Handle edits in translate recorded
 			if (isset($_REQUEST["edit_rec_$i"])) {
 				if (strlen($_REQUEST["edit_rec_tran_$i"]) > 0 && strlen($_REQUEST["edit_rec_source_$i"]) > 0) {
