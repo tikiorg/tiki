@@ -50,7 +50,7 @@ function wikiplugin_alink($data, $params)
 			$bestLang .  "#" . $aname .  "' class='wiki'>$data</a>";
 	    } else {
 		return $data . '<a href="tiki-editpage.php?page=' . urlencode($pagename) . 
-			'" title="' . tra("Create page:") . ' ' . urlencode($page_parse) . 
+			'" title="' . tra("Create page:") . ' ' . urlencode($pagename) . 
 			'"  class="wiki wikinew">?</a>';
 	    }
 
