@@ -174,36 +174,6 @@ if(isset($_REQUEST["register"])) {
 			$smarty->assign('showmsg','y');
 		}
 
-		// save default user preferences
-		$tikilib->set_user_preference($_REQUEST["name"], 'theme', $style);
-		$tikilib->set_user_preference($_REQUEST["name"], 'userbreadCrumb', 4);
-		$tikilib->set_user_preference($_REQUEST["name"], 'language', $language);
-		$tikilib->set_user_preference($_REQUEST["name"], 'display_timezone', 'Local');
-		$tikilib->set_user_preference($_REQUEST["name"], 'user_information', 'private');
-		$tikilib->set_user_preference($_REQUEST["name"], 'user_dbl', 'n');
-		$tikilib->set_user_preference($_REQUEST["name"], 'diff_versions', 'n');
-		$tikilib->set_user_preference($_REQUEST["name"], 'show_mouseover_user_info', 'n');
-		$tikilib->set_user_preference($_REQUEST["name"], 'email is public', 'n');
-		$tikilib->set_user_preference($_REQUEST["name"], 'mailCharset', 'utf-8');
-		$tikilib->set_user_preference($_REQUEST["name"], 'realName', '');
-		$tikilib->set_user_preference($_REQUEST["name"], 'homePage', '');
-		$tikilib->set_user_preference($_REQUEST["name"], 'lat', floatval(0));
-		$tikilib->set_user_preference($_REQUEST["name"], 'lon', floatval(0));
-		$tikilib->set_user_preference($_REQUEST["name"], 'country', '');
-		$tikilib->set_user_preference($_REQUEST["name"], 'mess_maxRecords', 10);
-		$tikilib->set_user_preference($_REQUEST["name"], 'mess_archiveAfter', 0);
-		$tikilib->set_user_preference($_REQUEST["name"], 'mess_sendReadStatus', 'n');
-		$tikilib->set_user_preference($_REQUEST["name"], 'minPrio', 6);
-		$tikilib->set_user_preference($_REQUEST["name"], 'allowMsgs', 'n');
-		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_pages', 'n');
-		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_blogs', 'n');
-		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_gals', 'n');
-		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_msgs', 'n');
-		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_tasks', 'n');
-		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_items', 'n');
-		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_workflow', 'n');
-		$tikilib->set_user_preference($_REQUEST["name"], 'tasks_maxRecords', 10);
-
 		// Custom fields
 		foreach ($customfields as $custpref=>$prefvalue ) {
 		    //print $_REQUEST[$customfields[$custpref]['prefName']];

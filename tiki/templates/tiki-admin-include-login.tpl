@@ -235,3 +235,229 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 </form>
 </div>
 </div>
+
+{* ************ Users Default Preferences *}
+<div class="cbox">
+<div class="cbox-title">
+  {tr}Users Defaults{/tr}
+  {help url="UsersDefaultPrefs" desc="{tr}Users Default Preferences{/tr}"}
+</div>
+<div class="cbox-data">
+
+<form action="tiki-admin.php?page=login" method="post">
+
+<table class="admin">
+
+{* *** Preferences *** *}
+<tr><td colspan="2" class="heading">
+  {tr}Preferences{/tr}
+</td></tr>
+
+<tr><td class="form">{tr}Does your mail reader need a special charset{/tr}</td>
+  <td class="form">
+  <select name="users_prefs_mailCharset">
+   {section name=ix loop=$mailCharsets}
+      <option value="{$mailCharsets[ix]|escape}" {if $users_prefs_mailCharset eq $mailCharsets[ix]}selected="selected"{/if}>{$mailCharsets[ix]}</option>
+   {/section}
+  </select>
+</td></tr>
+
+{if $change_theme eq 'y'}
+<tr><td class="form">{tr}Theme{/tr}:</td><td class="form">
+<select name="users_prefs_theme">
+{section name=ix loop=$styles}
+	{if count($available_styles) == 0 || in_array($styles[ix], $available_styles)}
+        <option value="{$styles[ix]|escape}" {if $users_prefs_theme eq $styles[ix]}selected="selected"{/if}>{$styles[ix]}</option>
+	{/if}
+{/section}
+</select>
+{if $feature_editcss and $tiki_p_create_css}
+	<a href="tiki-edit_css.php" class="link" title="{tr}Edit CSS{/tr}">{tr}Edit CSS{/tr}</a>
+{/if}
+</td></tr>
+{/if}
+
+{if $change_language eq 'y'}
+<tr><td  class="form">{tr}Language{/tr}:</td><td class="form">
+<select name="users_prefs_language">
+	{section name=ix loop=$languages}
+	{if count($available_languages) == 0 || in_array($languages[ix].value, $available_languages)}
+        <option value="{$languages[ix].value|escape}"
+		{if $users_prefs_language eq $languages[ix].value}selected="selected"{/if}>
+		{$languages[ix].name}
+        </option>
+	{/if}
+	{/section}
+</select></td></tr>
+{/if}
+
+<tr><td class="form">{tr}Number of visited pages to remember{/tr}:</td><td class="form">
+<select name="users_prefs_userbreadCrumb">
+<option value="1" {if $users_prefs_userbreadCrumb eq 1}selected="selected"{/if}>1</option>
+<option value="2" {if $users_prefs_userbreadCrumb eq 2}selected="selected"{/if}>2</option>
+<option value="3" {if $users_prefs_userbreadCrumb eq 3}selected="selected"{/if}>3</option>
+<option value="4" {if $users_prefs_userbreadCrumb eq 4}selected="selected"{/if}>4</option>
+<option value="5" {if $users_prefs_userbreadCrumb eq 5}selected="selected"{/if}>5</option>
+<option value="10" {if $users_prefs_userbreadCrumb eq 10}selected="selected"{/if}>10</option>
+</select>
+</td></tr>
+<tr><td class="form">{tr}Displayed time zone{/tr}:</td>
+<td class="form">
+<input type="radio" name="users_prefs_display_timezone" value="UTC" {if $users_prefs_display_timezone eq 'UTC'}checked="checked"{/if}/> {tr}UTC{/tr}
+<input type="radio" name="users_prefs_display_timezone" value="Local" {if $users_prefs_display_timezone ne 'UTC'}checked="checked"{/if}/> {tr}Local{/tr}
+</td>
+</tr>
+<tr><td class="form">{tr}User information{/tr}:</td><td class="form">
+<select name="users_prefs_user_information">
+<option value='private' {if $users_prefs_user_information eq 'private'}selected="selected"{/if}>{tr}private{/tr}</option>
+<option value='public' {if $users_prefs_user_information eq 'public'}selected="selected"{/if}>{tr}public{/tr}</option>
+</select>
+</td></tr>
+{if $feature_wiki eq 'y'}
+<tr><td class="form">{tr}Use double-click to edit pages{/tr}:</td>
+<td class="form">
+<input type="checkbox" name="users_prefs_user_dbl" {if $users_prefs_user_dbl eq 'y'}checked="checked"{/if} />
+</td>
+</tr>
+{* not used {if $feature_history eq 'y'}
+<tr><td class="form">Use new diff any version interface:</td>
+<td class="form">
+<input type="checkbox" name="users_prefs_diff_versions" {if $users_prefs_diff_versions eq 'y'}checked="checked"{/if} />
+</td>
+</tr>
+{/if} *}
+{/if}
+{if $feature_community_mouseover eq 'y'}
+<tr><td class="form">{tr}Show user's info on mouseover{/tr}:</td>
+<td class="form">
+<input type="checkbox" name="users_prefs_show_mouseover_user_info" {if $users_prefs_show_mouseover_user_info eq 'y'}checked="checked"{/if} />
+</td>
+</tr>
+{/if}
+
+{if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}
+{* *** User Messages *** *}
+
+<tr><td colspan="2" class="heading">
+  {tr}User Messages{/tr}
+</td></tr>
+
+<tr>
+  <td class="form">{tr}Messages per page{/tr}</td>
+  <td class="form">
+    <select name="users_prefs_mess_maxRecords">
+      <option value="2" {if $users_prefs_mess_maxRecords eq 2}selected="selected"{/if}>2</option>
+      <option value="5" {if $users_prefs_mess_maxRecords eq 5}selected="selected"{/if}>5</option>
+      <option value="10" {if $users_prefs_mess_maxRecords eq 10}selected="selected"{/if}>10</option>
+      <option value="20" {if $users_prefs_mess_maxRecords eq 20}selected="selected"{/if}>20</option>
+      <option value="30" {if $users_prefs_mess_maxRecords eq 30}selected="selected"{/if}>30</option>
+      <option value="40" {if $users_prefs_mess_maxRecords eq 40}selected="selected"{/if}>40</option>
+      <option value="50" {if $users_prefs_mess_maxRecords eq 50}selected="selected"{/if}>50</option>
+    </select>
+  </td>
+</tr>
+<tr>
+  <td class="form">{tr}Allow messages from other users{/tr}</td>
+  <td class="form"><input type="checkbox" name="users_prefs_allowMsgs" {if $users_prefs_allowMsgs eq 'y'}checked="checked"{/if}/></td>
+</tr>
+<tr>
+  <td class="form">{tr}Note author when reading his mail{/tr}</td>
+  <td class="form"><input type="checkbox" name="users_prefs_mess_sendReadStatus" {if $users_prefs_mess_sendReadStatus eq 'y'}checked="checked"{/if}/></td>
+</tr>
+<tr>
+  <td class="form">{tr}Send me an email for messages with priority equal or greater than{/tr}:</td>
+  <td class="form">
+    <select name="users_prefs_minPrio">
+      <option value="1" {if $users_prefs_minPrio eq 1}selected="selected"{/if}>1</option>
+      <option value="2" {if $users_prefs_minPrio eq 2}selected="selected"{/if}>2</option>
+      <option value="3" {if $users_prefs_minPrio eq 3}selected="selected"{/if}>3</option>
+      <option value="4" {if $users_prefs_minPrio eq 4}selected="selected"{/if}>4</option>
+      <option value="5" {if $users_prefs_minPrio eq 5}selected="selected"{/if}>5</option>
+      <option value="6" {if $users_prefs_minPrio eq 6}selected="selected"{/if}>{tr}none{/tr}</option>
+    </select>
+  </td>
+</tr>
+<tr>
+  <td class="form">{tr}Auto-archive read messages after x days{/tr}</td>
+  <td class="form">
+    <select name="users_prefs_mess_archiveAfter">
+      <option value="0" {if $users_prefs_mess_archiveAfter eq 0}selected="selected"{/if}>{tr}never{/tr}</option>
+      <option value="1" {if $users_prefs_mess_archiveAfter eq 1}selected="selected"{/if}>1</option>
+      <option value="2" {if $users_prefs_mess_archiveAfter eq 2}selected="selected"{/if}>2</option>
+      <option value="5" {if $users_prefs_mess_archiveAfter eq 5}selected="selected"{/if}>5</option>
+      <option value="10" {if $users_prefs_mess_archiveAfter eq 10}selected="selected"{/if}>10</option>
+      <option value="20" {if $users_prefs_mess_archiveAfter eq 20}selected="selected"{/if}>20</option>
+      <option value="30" {if $users_prefs_mess_archiveAfter eq 30}selected="selected"{/if}>30</option>
+      <option value="40" {if $users_prefs_mess_archiveAfter eq 40}selected="selected"{/if}>40</option>
+      <option value="50" {if $users_prefs_mess_archiveAfter eq 50}selected="selected"{/if}>50</option>
+      <option value="60" {if $users_prefs_mess_archiveAfter eq 60}selected="selected"{/if}>60</option>
+    </select>
+  </td>
+</tr>
+
+{/if}
+
+{if $feature_tasks eq 'y' and $tiki_p_tasks eq 'y'}
+{* *** User Tasks *** *}
+<tr><td colspan="2" class="heading">
+  {tr}User Tasks{/tr}
+</td></tr>
+
+<tr>
+  <td class="form">{tr}Tasks per page{/tr}</td>
+  <td class="form">
+    <select name="users_prefs_tasks_maxRecords">
+      <option value="2" {if $users_prefs_tasks_maxRecords eq 2}selected="selected"{/if}>2</option>
+      <option value="5" {if $users_prefs_tasks_maxRecords eq 5}selected="selected"{/if}>5</option>
+      <option value="10" {if $users_prefs_tasks_maxRecords eq 10}selected="selected"{/if}>10</option>
+      <option value="20" {if $users_prefs_tasks_maxRecords eq 20}selected="selected"{/if}>20</option>
+      <option value="30" {if $users_prefs_tasks_maxRecords eq 30}selected="selected"{/if}>30</option>
+      <option value="40" {if $users_prefs_tasks_maxRecords eq 40}selected="selected"{/if}>40</option>
+      <option value="50" {if $users_prefs_tasks_maxRecords eq 50}selected="selected"{/if}>50</option>
+    </select>
+  </td>
+</tr>
+
+{/if}
+
+{* *** My Tiki *** *}
+<tr><td colspan="2" class="heading">
+  {tr}My Tiki{/tr}
+</td></tr>
+
+{if $feature_wiki eq 'y'}
+<tr><td class="form">{tr}My pages{/tr}</td><td class="form"><input type="checkbox" name="users_prefs_mytiki_pages" {if $users_prefs_mytiki_pages eq 'y'}checked="checked"{/if} /></td></tr>
+{/if}
+
+{if $feature_blogs eq 'y'}
+<tr><td class="form">{tr}My blogs{/tr}</td><td class="form"><input type="checkbox" name="users_prefs_mytiki_blogs" {if $users_prefs_mytiki_blogs eq 'y'}checked="checked"{/if} /></td></tr>
+{/if}
+
+{if $feature_galleries eq 'y'}
+<tr><td class="form">{tr}My galleries{/tr}</td><td class="form"><input type="checkbox" name="users_prefs_mytiki_gals" {if $users_prefs_mytiki_gals eq 'y'}checked="checked"{/if} /></td></tr>
+{/if}
+
+{if $feature_messages eq 'y'and $tiki_p_messages eq 'y'}
+<tr><td class="form">{tr}My messages{/tr}</td><td class="form"><input type="checkbox" name="users_prefs_mytiki_msgs" {if $users_prefs_mytiki_msgs eq 'y'}checked="checked"{/if} /></td></tr>
+{/if}
+
+{if $feature_tasks eq 'y' and $tiki_p_tasks eq 'y'}
+<tr><td class="form">{tr}My tasks{/tr}</td><td class="form"><input type="checkbox" name="users_prefs_mytiki_tasks" {if $users_prefs_mytiki_tasks eq 'y'}checked="checked"{/if} /></td></tr>
+{/if}
+
+{if $feature_trackers eq 'y'}
+<tr><td class="form">{tr}My items{/tr}</td><td class="form"><input type="checkbox" name="users_prefs_mytiki_items" {if $users_prefs_mytiki_items eq 'y'}checked="checked"{/if} /></td></tr>
+{/if}
+
+{if $feature_workflow eq 'y'}
+  {if $tiki_p_use_workflow eq 'y'}
+    <tr><td class="form">{tr}My workflow{/tr}</td><td class="form"><input type="checkbox" name="users_prefs_mytiki_workflow" {if $users_prefs_mytiki_workflow eq 'y'}checked="checked"{/if} /></td></tr>
+  {/if}
+{/if}
+
+<tr><td colspan="2" class="button"><input type="submit" name="users_defaults" value="{tr}Change users defaults{/tr}" /></td></tr>
+
+</table>
+</form>
+</div>
+</div>
