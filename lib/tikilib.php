@@ -3438,6 +3438,19 @@ function add_pageview() {
 
 	return $preferences;
     }
+    
+    function get_preferences( $filter_name ) {
+    
+	$query = "select `name` ,`value` from `tiki_preferences` where `name` like ?";
+	$result = $this->query($query,array($filter_name));
+	$preferences = array();
+
+	while ($res = $result->fetchRow()) {
+		$preferences[$res["name"]] = $res["value"];
+	}
+
+	return $preferences;
+    }
 
     function get_preference($name, $default = '') {
 	global $preferences;

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.34 2005-05-18 10:58:54 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.35 2005-07-20 11:56:47 rv540 Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -483,6 +483,57 @@ if (isset($_REQUEST['auth_cas'])) {
 	}
 }
 
+// Users Defaults
+if (isset($_REQUEST['users_defaults'])) {
+	check_ticket('admin-inc-login');
+
+	// numerical and text values
+	$prefs = array(
+		'users_prefs_theme',
+		'users_prefs_userbreadCrumb',
+		'users_prefs_language',
+		'users_prefs_display_timezone',
+		'users_prefs_user_information',
+		'users_prefs_mailCharset',
+		'users_prefs_mess_maxRecords',
+		'users_prefs_minPrio',
+		'users_prefs_user_dbl',
+		'users_prefs_diff_versions',
+		'users_prefs_mess_archiveAfter',
+		'users_prefs_tasks_maxRecords'
+	);
+	foreach($prefs as $pref) {
+		if(isset($_REQUEST[$pref])) {
+			$tikilib->set_preference($pref, $_REQUEST[$pref]);
+			$smarty->assign($pref, $_REQUEST[$pref]);
+		}
+	}
+	
+	// boolean values
+	$prefs = array(
+		'users_prefs_show_mouseover_user_info',
+		'users_prefs_allowMsgs',
+		'users_prefs_mytiki_pages',
+		'users_prefs_mytiki_blogs',
+		'users_prefs_mytiki_gals',
+		'users_prefs_mytiki_msgs',
+		'users_prefs_mytiki_tasks',
+		'users_prefs_mytiki_items',
+		'users_prefs_mytiki_workflow',
+		'users_prefs_mess_sendReadStatus'
+	);
+	foreach($prefs as $pref) {
+		if(isset($_REQUEST[$pref])) {
+			$tikilib->set_preference($pref, 'y');
+			$smarty->assign($pref, 'y');
+		}
+		else {
+			$tikilib->set_preference($pref, 'n');
+			$smarty->assign($pref, 'n');
+		}
+	}
+}
+
 // Get list of available languages
 $languages = array();
 $languages = $tikilib->list_languages();
@@ -513,6 +564,16 @@ $smarty->assign("validateEmail", $tikilib->get_preference("validateEmail", 'n'))
 $smarty->assign("forgotPass", $tikilib->get_preference("forgotPass", 'n'));
 $smarty->assign("highlight_group", $tikilib->get_preference("highlight_group", ''));
 $smarty->assign("listgroups", $listgroups = $userlib->list_all_groups());
+
+// Users Defaults
+$mailCharsets = array('utf-8', 'iso-8859-1');
+$smarty->assign_by_ref('mailCharsets', $mailCharsets);
+
+$smarty->assign_by_ref('languages', array_merge(array( array('value' => 'global', 'name' => 'global') ), $tikilib->list_languages()));
+$smarty->assign("available_languages", unserialize($tikilib->get_preference("available_languages")));
+
+$smarty->assign_by_ref('styles', array_merge('global', $tikilib->list_styles()));
+$smarty->assign("available_styles", unserialize($tikilib->get_preference("available_styles")));
 
 ask_ticket('admin-inc-login');
 ?>

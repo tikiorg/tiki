@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2005-07-16 00:00:02 $
-# $Author: rlpowell $
+# $Date: 2005-07-20 11:56:48 $
+# $Author: rv540 $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -4572,6 +4572,37 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('userTracker','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('user_assigned_modules','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('user_list_order','score_desc');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('userfiles_quota','30');
+
+# user defaults
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_theme', 'global');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_userbreadCrumb', '4');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_language', 'global');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_display_timezone', 'Local');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_user_information', 'private');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_user_dbl', 'n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_diff_versions', 'n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_show_mouseover_user_info', 'n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_email_is_public', 'n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_mailCharset', 'utf-8');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_realName', '');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_homePage', '');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_lat', '0');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_lon', '0');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_country', '');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_mess_maxRecords', '10');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_mess_archiveAfter', '0');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_mess_sendReadStatus', 'n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_minPrio', '6');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_allowMsgs', 'n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_mytiki_pages', 'n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_mytiki_blogs', 'n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_mytiki_gals', 'n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_mytiki_msgs', 'n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_mytiki_tasks', 'n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_mytiki_items', 'n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_mytiki_workflow', 'n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_tasks_maxRecords', '10');
+
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('validateEmail','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('validateRegistration','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('validateUsers','n');
