@@ -21,6 +21,7 @@ class RegistrationLib extends TikiLib {
   function SnowCheckMail($Email,$sender_email,$novalidation,$Debug=false)
   {
 	global $validateEmail;
+	$Debug=true;
 	if (!isset($_SERVER["SERVER_NAME"])) {
 		$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 	}	
@@ -33,7 +34,7 @@ class RegistrationLib extends TikiLib {
 
 //    if (!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $Email)) {
     //Fix by suilinma
-    if (!eregi("^[-_a-z0-9]+(\\.[-_a-z0-9]+)*\\@([-a-z0-9]+\\.)*([a-z]{2,4})$", $Email)) {
+    if (!eregi("^[-_a-z0-9+]+(\\.[-_a-z0-9+]+)*\\@([-a-z0-9]+\\.)*([a-z]{2,4})$", $Email)) {
 	// luci's regex that also works
 	//	if (!eregi("^[_a-z0-9\.\-]+@[_a-z0-9\.\-]+\.[a-z]{2,4}$", $Email)) {
         $Return[0]=false;
