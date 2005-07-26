@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.37 2005-07-14 05:31:31 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.38 2005-07-26 04:56:53 rlpowell Exp $ *}
 {* Show wiki syntax and plugins help *}
 {* TODO: Add links to add samples to edit form *}
 
@@ -14,7 +14,7 @@
 {/if}
 <br />
 
-<p>{tr}For more information, please see <a href="{$helpurl}WikiSyntax">WikiSyntax</a>{/tr}</p>
+<p>{tr}For more information, please see <a href="{$helpurl}Wiki Page Editor">Wiki Page Editor</a>{/tr}</p>
 
 {if $feature_wiki_paragraph_formatting eq 'y' }
 <p>{tr}Because the Wiki paragraph formatting feature is on, all groups of non-blank lines are collected into paragraphs.  Lines can be of any length, and will be wrapped together with the next line.  Paragraphs are seperated by blank lines.{/tr}</p>
