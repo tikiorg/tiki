@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/damian/tiki-show_page.tpl,v 1.15 2005-07-26 06:12:15 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/damian/tiki-show_page.tpl,v 1.16 2005-07-26 06:14:57 rlpowell Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -213,8 +213,8 @@
 {elseif isset($wiki_authors_style) &&  $wiki_authors_style eq 'none'}
 {else}
 <p class="editdate">
-  {tr}Created by{/tr}: {$creator|userlink}
-  {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}
+  {tr}Created by:{/tr} {$creator|userlink},
+  {tr}last modification:{/tr} {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}
 </p>
 {/if}
 
