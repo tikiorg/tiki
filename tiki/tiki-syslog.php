@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-syslog.php,v 1.4 2005-05-18 10:58:59 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-syslog.php,v 1.5 2005-07-28 15:06:33 sylvieg Exp $
 
 require_once ('tiki-setup.php');
 
@@ -12,6 +12,11 @@ if ($tiki_p_admin != 'y') {
 	}
 	$smarty->display("error.tpl");
 	die;
+}
+
+if (isset($_REQUEST["clean"])) {
+	$date = strtotime("-".$_REQUEST["months"]." months");
+	$logslib->clean_logs($date);
 }
 
 if (!isset($_REQUEST["sort_mode"])) {
