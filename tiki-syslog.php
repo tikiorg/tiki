@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-syslog.php,v 1.5 2005-07-28 15:06:33 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-syslog.php,v 1.6 2005-07-28 15:20:18 sylvieg Exp $
 
 require_once ('tiki-setup.php');
 
@@ -15,8 +15,13 @@ if ($tiki_p_admin != 'y') {
 }
 
 if (isset($_REQUEST["clean"])) {
-	$date = strtotime("-".$_REQUEST["months"]." months");
-	$logslib->clean_logs($date);
+	$area = 'cleanlogs';
+	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		key_check($area);	
+		$date = strtotime("-".$_REQUEST["months"]." months");
+		$logslib->clean_logs($date);
+	} else
+		key_get($area);
 }
 
 if (!isset($_REQUEST["sort_mode"])) {
@@ -49,6 +54,7 @@ $urlquery['find'] = $find;
 $smarty->assign_by_ref('urlquery', $urlquery);
 $cant = $list['cant'];
 include "tiki-pagination.php";
+ask_ticket('admin-logs');
 
 $smarty->assign('mid', 'tiki-syslog.tpl');
 $smarty->display('tiki.tpl');
