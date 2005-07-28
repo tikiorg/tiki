@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.6 2005-05-18 11:01:01 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.7 2005-07-28 15:06:34 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -76,6 +76,10 @@ class LogsLib extends TikiLib {
     $retval["data"] = $ret;
     $retval["cant"] = $cant;
     return $retval;
+	}
+	function clean_logs($date) {
+		$query = "delete from `tiki_logs` where `logtime`<=?";
+		$this->query($query, array((int)$date));
 	}
 
 }

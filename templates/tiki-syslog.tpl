@@ -14,6 +14,13 @@
 {/if}
 
 <br /><br />
+
+<form method="get" action="tiki-syslog.php">
+{tr}Clean logs older than{/tr}&nbsp;
+<input type="text" name="months" size="4" /> {tr}months{/tr}
+<input type="submit" value="{tr}clean{/tr}" name="clean" />
+</form>
+
 <div align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
@@ -42,7 +49,7 @@
 <tr class="{cycle}">
 <td>{$list[ix].logId}</td>
 <td>{$list[ix].logtype}</td>
-<td><span title="{$list[ix].logtime|tiki_long_datetime}">{$list[ix].logtime|tiki_short_time}</span></td>
+<td><span title="{$list[ix].logtime|tiki_long_datetime}">{$list[ix].logtime|tiki_short_datetime}</span></td>
 <td>{$list[ix].loguser}</td>
 <td title="{$list[ix].logmessage}">{$list[ix].logmessage|truncate:60}</td>
 <td>{$list[ix].logip}</td>
