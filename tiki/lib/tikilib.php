@@ -2568,9 +2568,23 @@ function add_pageview() {
 
     function update_session($sessionId) {
 	global $user;
+	global $logslib; include_once("lib/logs/logslib.php");
+
 	if ($user === false) $user = '';
 	$now = date("U");
-	$oldy = $now - (5 * 60);
+	$delay = 5*60; // 5 minutes
+	$oldy = $now - $delay;
+	if ($user != '') { // was the user timeout?
+		$query = "select count(*) from `tiki_sessions` where `sessionId`=?";
+		$cant = $this->getOne($query, array($sessionId));
+		if ($cant == 0)
+			$logslib->add_log("login", "back", $user, '', '', $now);
+	}
+	$query = "select * from `tiki_sessions` where `timestamp`<? and `sessionId`!=?";
+	$result = $this->query($query, array($oldy, $sessionId));
+	while ($res = $result->fetchRow()) {
+		$logslib->add_log("login", "timeout", $res["user"], '', '', $res["timestamp"]+ $delay);
+	}
 	$query = "delete from `tiki_sessions` where `sessionId`=? or `timestamp`<?";
 	$bindvars = array($sessionId, $oldy);
 	if ($user) {
@@ -5476,8 +5490,10 @@ if (!$simple_wiki) {
 	    $html .= $tocentry . "\n";
 	}
 
-	if (count($anch))
+	if (count($anch)) {
 	    $html = $this->parse_data($html);
+		$html = '<div class="toc">'.$html.'</div>'; // the class will be better on the firts ul but hard to do
+	}
 
 	$data = str_replace("{maketoc}", $html, $data);
 // closing if ($simple_wiki){
