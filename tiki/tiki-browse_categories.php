@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.23 2005-05-18 10:58:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.24 2005-07-30 11:34:05 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.23 2005-05-18 10:58:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.24 2005-07-30 11:34:05 sylvieg Exp $
 //
 
 // Initialization
@@ -117,7 +117,8 @@ if ($feature_phplayers == 'y') {
 	include_once ("lib/phplayers/lib/PHPLIB.php");
 	include_once ("lib/phplayers/lib/layersmenu-common.inc.php");
 	include_once ("lib/phplayers/lib/treemenu.inc.php");
-	$phplayers = new TreeMenu();
+	if (!@is_object($phplayers))
+		$phplayers = new TreeMenu();
 	$phplayers->setDirrootCommon("lib/phplayers");
 	$phplayers->setLibjsdir("lib/phplayers/libjs/");
 	$phplayers->setImgdir("lib/phplayers/images/");
