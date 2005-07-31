@@ -79,7 +79,7 @@ class TikiLib extends TikiDB {
 		   * /etc/passwd and other file from the local host.
 		   * it's also more safe to use httprequest, because the admin can set
 		   * a proxy so that noone can upload files in tiki from behind a
-		   * firewall (safes the net where tiki runs in). 
+		   * firewall (safes the net where tiki runs in).
 			$fp = fopen($url, "r");
 
 			if ($fp) {
@@ -783,7 +783,7 @@ class TikiLib extends TikiDB {
     }
 
 
-    /* 
+    /*
      * Checks if an event should be scored and grants points to proper user
      * $multiplier is for rating events, in which the score will
      * be multiplied by other user's rating. Not yet used
@@ -796,7 +796,7 @@ class TikiLib extends TikiDB {
 			include_once("lib/score/scorelib.php");
 		}
 	if ($user == 'admin' || !$user) { return; }
-	
+
 	$event = $scorelib->get_event($event_type);
 	if (!$event || !$event['score']) {
 	    return;
@@ -824,7 +824,7 @@ class TikiLib extends TikiDB {
 	    $query = "delete from `tiki_users_score` where `user`=? and `event_id`=?";
 	    $this->query($query, array($user, $event_id));
 
-	    $query = "insert into `tiki_users_score` (`user`, `event_id`, `expire`) values (?, ?, ?)"; 
+	    $query = "insert into `tiki_users_score` (`user`, `event_id`, `expire`) values (?, ?, ?)";
 	    $this->query($query, array($user, $event_id, time() + ($expire*60)));
 	}
 
@@ -832,7 +832,7 @@ class TikiLib extends TikiDB {
 	$event['id'] = $id; // just for debug
 
 	$this->query($query, array($score, $user));
-	return;	
+	return;
     }
 
     // List users by best scoring
@@ -866,13 +866,13 @@ class TikiLib extends TikiDB {
 			     2500 => 'orange',
 			     5000 => 'red',
 			     10000 => 'purple');
-	
+
 	foreach ($star_colors as $boundary => $color) {
 	    if ($score >= $boundary) {
 		$star = 'star_'.$color.'.gif';
 	    }
 	}
-                                                                                                                                            
+
 	if (!empty($star)) {
 	    $alt = sprintf(tra("%d points"), $score);
 	    $star = "<img src='img/icons/$star' height='11' width='11' alt='$alt' />&nbsp;";
@@ -1165,7 +1165,7 @@ class TikiLib extends TikiDB {
 function add_pageview() {
     $dayzero = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
     $cant = $this->getOne("select count(*) from `tiki_pageviews` where `day`=?",array((int)$dayzero));
-                                                                                                                                                                                                      
+
     if ($cant) {
         $query = "update `tiki_pageviews` set `pageviews`=`pageviews`+1 where `day`=?";
     } else {
@@ -1193,7 +1193,7 @@ function add_pageview() {
 
 	$data['xdata'][] = tra('arts');
 	$data['ydata'][] = $this->getOne('select sum(`reads`) from `tiki_articles`',array());
-	
+
 	$data['xdata'][] = tra('blogs');
 	$data['ydata'][] = $this->getOne('select sum(`hits`) from `tiki_blogs`',array());
 
@@ -1262,7 +1262,7 @@ function add_pageview() {
 	    return $this->usergroups_cache[$user];
 	}
     }
-    
+
     function get_user_cache_id($user) {
       $groups = $this->get_user_groups($user);
       sort($groups, SORT_STRING);
@@ -1299,11 +1299,11 @@ function add_pageview() {
 	    $add=$this->user_has_perm_on_object($user,$res['faqId'],'faq','tiki_p_view_faqs');
 		if ($add) {
 		    $res["suggested"] = $this->getOne("select count(*) from `tiki_suggested_faq_questions` where `faqId`=?",array((int) $res["faqId"]));
-		}	
+		}
 		    $ret[] = $res;
-		
+
 	}
-	
+
 	$retval = array();
 	$retval["data"] = $ret;
 	$retval["cant"] = $cant;
@@ -1688,7 +1688,7 @@ function add_pageview() {
 	return $retval;
     }
 
-    /* shared 
+    /* shared
      * gets result from list_menu_options and sorts "sorted section" sections.
      */
     function sort_menu_options($channels) {
@@ -1699,7 +1699,7 @@ function add_pageview() {
 	    $cant = $channels['cant'];
 	    $channels = $channels['data'];
 	}
-	
+
 	$temp_max = sizeof($channels);
 	for ($i=0; $i < $temp_max; $i++) {
 	    $sorted_channels[$i] = $channels[$i];
@@ -1778,7 +1778,7 @@ function add_pageview() {
   function get_user_vote($id,$user) {
 		return $this->getOne("select `optionId` from `tiki_user_votings` where `user` = ? and `id` = ?",array( $user, $id));
 	}
-	// end of user voting methods		
+	// end of user voting methods
 
     // FILE GALLERIES ////
     /*shared*/
@@ -1860,7 +1860,7 @@ function add_pageview() {
 	    $owner = $this->getOne($query, array((int)$id));
 	    $this->score_event($owner, 'fgallery_is_downloaded', "$user:$id");
 	}
-	
+
 	return true;
     }
 
@@ -2070,7 +2070,7 @@ function add_pageview() {
 	}
     }
 
-	
+
     function list_users($offset = 0, $maxRecords = -1, $sort_mode = 'realName', $find = '')
     {
 	global $user;
@@ -2093,7 +2093,7 @@ function add_pageview() {
 	// loading all user list in memory?
 
 	// This query is not database independent. the "is not null" and the left join syntax should be replaced
-	
+
 	// Fixed the not null. After some research i came to the conclusion that only these dbms that i use
 	// lack a ansi outer join syntax. I guess using outer joins should be ok. redflo.
 	if (substr($sort_mode,1,7)=="country") {
@@ -2120,7 +2120,7 @@ function add_pageview() {
 		}
 		$ret[$i]["preferences"]=$retuser;
 	}
-	
+
 	$retval = Array();
 	$retval["data"] = $ret;
 	$retval["cant"] = $cant;
@@ -2175,7 +2175,7 @@ function add_pageview() {
 	    $this->score_event($user, 'blog_read', $blogId);
 	    $this->score_event($res['user'], 'blog_is_read', "$user:$blogId");
 	}
-	
+
 	return $res;
     }
 
@@ -2391,7 +2391,7 @@ function add_pageview() {
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
-	    if ($res['topicId'] != 0 && $userlib->object_has_one_permission($res['topicId'], 'topic')) {// if no topic or if topic has no special perm don't have to check for topic perm 
+	    if ($res['topicId'] != 0 && $userlib->object_has_one_permission($res['topicId'], 'topic')) {// if no topic or if topic has no special perm don't have to check for topic perm
 		$add=$this->user_has_perm_on_object($user,$res['topicId'],'topic','tiki_p_topic_read');
 	    } else
 		$add = true;
@@ -2522,7 +2522,7 @@ function add_pageview() {
 	    $this->score_event($user, 'article_read', $articleId);
 	    $this->score_event($res['author'], 'article_is_read', $articleId . '_' . $user);
 	}
-	
+
 	return $res;
     }
 
@@ -2903,7 +2903,7 @@ function add_pageview() {
 
     // Returns the name of all pages
     function get_all_pages() {
-    	
+
 		$query = "select `pageName` from `tiki_pages`";
 		$result = $this->query($query,array());
 		$ret = array();
@@ -3274,8 +3274,8 @@ function add_pageview() {
 	    $mid = "";
 	    $bindvars = array();
 	}
-        if ($initial) {                                                                                                                                                   
-                $mid = " where `pageName` like ?";                                                                                                                           
+        if ($initial) {
+                $mid = " where `pageName` like ?";
                 $mmid = $mid;
                 $bindvars = array($initial.'%');
                 $mbindvars = $bindvars;
@@ -3363,7 +3363,7 @@ function add_pageview() {
 	return $retval;
     }
 
-  
+
   // Function that checks for:
   // - tiki_p_admin
   // - the permission itself
@@ -3371,7 +3371,7 @@ function add_pageview() {
   // - category permission
   // if O.K. this function shall replace similar constructs in list_pages and other functions above.
   // $categperm is the category permission that should grant $perm. if none, pass 0
-  function user_has_perm_on_object($user,$object,$objtype,$perm,$categperm='tiki_p_view_categories') { 
+  function user_has_perm_on_object($user,$object,$objtype,$perm,$categperm='tiki_p_view_categories') {
             global $feature_categories;
             global $userlib;
             // superadmin
@@ -3432,7 +3432,7 @@ function add_pageview() {
 		      return(FALSE);
 		   }
 		}
-		
+
       return(TRUE);
     }
 
@@ -3452,9 +3452,9 @@ function add_pageview() {
 
 	return $preferences;
     }
-    
+
     function get_preferences( $filter_name ) {
-    
+
 	$query = "select `name` ,`value` from `tiki_preferences` where `name` like ?";
 	$result = $this->query($query,array($filter_name));
 	$preferences = array();
@@ -3649,7 +3649,7 @@ function add_pageview() {
 		$result = $this->query($query, array($name, (int)$hits, $data, (int)$lastModif, $comment, 1, $user, $ip, $description, $user, (int)strlen($data), $lang, $html, mktime()));
 	}
 	else  {
-		$query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`,`is_html`,`created`) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";	
+		$query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`,`is_html`,`created`) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		$result = $this->query($query, array($name, (int)$hits, $data, (int)$lastModif, $comment, 1, $user, $ip, $description, $user, (int)strlen($data), $html,mktime()));
 	}
 
@@ -3688,7 +3688,7 @@ function add_pageview() {
 	    $machine = $this->httpPrefix(). dirname( $foo["path"] );
 	    sendWikiEmailNotification('wiki_page_created', $name, $user, $comment, 1, $data, $machine);
 	}
-	
+
 	//if there are links to this page, clear cache to avoid linking to edition
 	$result = $this->query("select `fromPage` from `tiki_links` where `toPage`=?",array($name));
 	while ($res = $result->fetchRow()) {
@@ -3847,7 +3847,7 @@ function add_pageview() {
 	{
 	    $data1 = $data;
 	    if (isset($noparsed["key"]) and count($noparsed["key"]) and count($noparsed["key"]) == count($noparsed["data"]))
-	    { 
+	    {
 		$data = str_replace($noparsed["key"], $noparsed["data"], $data);
 	    }
 
@@ -4317,7 +4317,7 @@ function add_pageview() {
 	$closed = 0;	// Set to non-zero if something has been closed out
 	// Close the paragraph if inside one.
 	if ($close_paragraph && $in_paragraph) {
-	    $data .= "</p>";	
+	    $data .= "</p>";
 	    $in_paragraph = 0;
 	    $closed++;
 	}
@@ -4348,7 +4348,7 @@ function add_pageview() {
     //PARSEDATA
     function parse_data($data,$is_html=false) {
         if (isset($GLOBALS['pear_wiki_parser']) && $GLOBALS['pear_wiki_parser'] == 'y') {
-            require_once('lib/wiki/Text/Wiki/Tiki.php');
+            require_once('Text/Wiki/Tiki.php');
             $wiki =& new Text_Wiki_Tiki();
             $wiki->setRenderConf('xhtml', 'wikilink', 'exists_callback', array(&$this, 'page_exists'));
             $wiki->setRenderConf('xhtml', 'wikilink', 'view_url', 'tiki-index.php?page=');
@@ -4516,7 +4516,7 @@ function add_pageview() {
 
 	// Handle ~pre~...~/pre~ sections
 	$data = preg_replace(';~pre~(.*?)~/pre~;s', '<pre>$1</pre>', $data);
-	
+
 	// Handle comment sections
 	$data = preg_replace(';\s*~c~(.*?)~/c~\s*;s', '', $data);
 	$data = preg_replace(';\n*~hc~(.*?)~/hc~\n*;s', '<!-- $1 -->', $data);
@@ -5074,53 +5074,53 @@ function add_pageview() {
 	if ($feature_wiki_tables != 'new') {
 	    if (preg_match_all("/\|\|(.*)\|\|/", $data, $tables)) {
 			$maxcols = 1;
-	
+
 			$cols = array();
-	
+
 			$temp_max = count($tables[0]);
 			for ($i = 0; $i < $temp_max; $i++) {
 			    $rows = explode('||', $tables[0][$i]);
 			    $temp_max2 = count($rows);
 			    for ($j = 0; $j < $temp_max2; $j++) {
 				$cols[$i][$j] = explode('|', $rows[$j]);
-	
+
 				if (count($cols[$i][$j]) > $maxcols)
 				    $maxcols = count($cols[$i][$j]);
 			    }
 			} // for ($i ...
-	
+
 			$temp_max3 = count($tables[0]);
 			for ($i = 0; $i < $temp_max3; $i++) {
 			    $repl = '<table class="wikitable">';
-	
+
 			    $temp_max4 = count($cols[$i]);
 			    for ($j = 0; $j < $temp_max4; $j++) {
 					$ncols = count($cols[$i][$j]);
-		
+
 					if ($ncols == 1 && !$cols[$i][$j][0])
 					    continue;
-		
+
 					$repl .= '<tr>';
-		
+
 					for ($k = 0; $k < $ncols; $k++) {
 					    $repl .= '<td class="wikicell" ';
-		
+
 					    if ($k == $ncols - 1 && $ncols < $maxcols)
 						$repl .= ' colspan="' . ($maxcols - $k).'"';
-		
+
 					    $repl .= '>' . $cols[$i][$j][$k] . '</td>';
 					} // // for ($k ...
-		
+
 					$repl .= '</tr>';
 			    } // for ($j ...
-	
+
 			    $repl .= '</table>';
 			    $data = str_replace($tables[0][$i], $repl, $data);
 			} // for ($i ...
 	    } // if (preg_match_all("/\|\|(.*)\|\|/", $data, $tables))
 	} else
 
-	
+
 	{
 	    // New syntax for tables
 	    // REWRITE THIS CODE
@@ -5211,7 +5211,7 @@ if (!$simple_wiki) {
 	    $line = rtrim($line); // Trim off trailing white space
 	    // Check for titlebars...
 	    // NOTE: that title bar should start at the beginning of the line and
-	    //	   be alone on that line to be autoaligned... otherwise, it is an old 
+	    //	   be alone on that line to be autoaligned... otherwise, it is an old
 	    //	   styled title bar...
 	    if (substr(ltrim($line), 0, 2) == '-=' && substr($line, -2, 2) == '=-') {
 		// Close open paragraph and lists, but not div's
@@ -5433,7 +5433,7 @@ if (!$simple_wiki) {
 			$line = $GLOBALS['PAGE_SEP'];
 			$pageNum += 1;
 		    } else {
-			/** Usual paragraph.  
+			/** Usual paragraph.
 			 *
 			 * If the
 			 * $feature_wiki_paragraph_formatting
@@ -5453,7 +5453,7 @@ if (!$simple_wiki) {
 			 *
 			 * @since Version 1.9
 			 */
-			if ($inTable == 0 && $inPre == 0 && $inComment == 0 
+			if ($inTable == 0 && $inPre == 0 && $inComment == 0
 				// Don't put newlines at comments' end!
 				&& ! substr_count(strtolower($line), "-->")
 			) {
@@ -5517,9 +5517,9 @@ if (!$simple_wiki) {
 		$rssdata = $rsslib->get_rss_module_content($id);
 		$items = $rsslib->parse_rss_data($rssdata, $id);
 
-		$repl="";		
+		$repl="";
 		if (isset($items[0]) && $items[0]["isTitle"]=="y") {
-			$repl .= '<div class="wiki"><a target="_blank" href="'.$items[0]["link"].'">'.$items[0]["title"].'</a></div>'; 
+			$repl .= '<div class="wiki"><a target="_blank" href="'.$items[0]["link"].'">'.$items[0]["title"].'</a></div>';
 			$items = array_slice ($items, 1);
 		}
 
@@ -6197,7 +6197,7 @@ if (!$simple_wiki) {
 			    /* What is this $tikidomain section?
 			     * Some files that call this method used to list styles without considering
 			     * $tikidomain, now they do. They're listed below:
-                             *  
+                             *
                              *  tiki-theme_control.php
                              *  tiki-theme_control_objects.php
                              *  tiki-theme_control_sections.php
@@ -6205,17 +6205,17 @@ if (!$simple_wiki) {
                              *  modules/mod-switch_theme.php
                              *
                              *  lfagundes
-			     */ 
-			    
+			     */
+
 			    if ($tikidomain) {
 			    if (is_dir("styles/$tikidomain")) {
 					$h = opendir("styles/$tikidomain");
 					while ($file = readdir($h)) {
 					    if (strstr($file, ".css") and substr($file,0,1) != '.') {
 						$sty["$file"] = 1;
-					    } 
-					} 
-					closedir($h);				
+					    }
+					}
+					closedir($h);
 				    }
 			    }
 
@@ -6371,7 +6371,7 @@ if (!$simple_wiki) {
     function httpPrefix() {
         return $this->httpScheme().'://'.$_SERVER['HTTP_HOST'];
     }
-    
+
     function distance($lat1,$lon1,$lat2,$lon2) {
     // This function uses a pure spherical model
     // it could be improved to use the WGS84 Datum
@@ -6383,8 +6383,8 @@ if (!$simple_wiki) {
 				$distance=6367*acos(sin($lat1rad)*sin($lat2rad)+cos($lat1rad)*cos($lat2rad)*cos($lon1rad-$lon2rad));
 				return($distance);
     }
-	
-	 /** 
+
+	 /**
 	 * returns a list of usergroups where the user is a member and the group has the right perm
 	 * sir-b
 	 **/
@@ -6431,8 +6431,8 @@ if (!$simple_wiki) {
 			'charts'
 		);
 	}
-	
-} 
+
+}
 
 // end of class ------------------------------------------------------
 
@@ -6555,8 +6555,8 @@ function detect_browser_language() {
 
     return $aproximate_lang;
 }
-		
-		
+
+
 if (!function_exists('file_get_contents')) {
 	function file_get_contents($f) {
 		if (is_file($f)) {
@@ -6571,8 +6571,8 @@ if (!function_exists('file_get_contents')) {
 			return false;
 		}
 	}
-	
-	
+
+
 }
 
 
