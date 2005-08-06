@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_attach.php,v 1.12 2005-07-19 17:32:37 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_attach.php,v 1.13 2005-08-06 21:56:45 rlpowell Exp $
 // Displays an attachment or a list of attachments
 // Currently works with wiki pages and tracker items.
 // Parameters:
@@ -7,6 +7,7 @@
 // Examples:
 // 	{ATTACH(name=>foobar.zip)}  -- make link to foobar.zip
 // 	{ATTACH(showdesc=>1,bullets=>1)} -- make links to all attachments as a bullet list
+// 	{ATTACH(all=>1,bullets=>1)} -- make links to *all* attachments in the whole wiki as a bullet list
 function wikiplugin_attach_help() {
     $help = tra("Displays an attachment or a list of them").": \n";
     $help.= "~np~{ATTACH(name|file=file.ext,page=WikiPage,showdesc=0|1,bullets=>0|1,image=>0|1,inline=0|1,id=1|num=1,dls=0|1,icon=0|1,)}".tra("comment")."{ATTACH}~/np~ ";
@@ -18,6 +19,7 @@ function wikiplugin_attach_help() {
 		bullets => Makes the list of attachments a bulleted list
  		image => Says that this file is an image, and should be displayed inline using the img tag.
  		inline => puts the stuff between {ATTACH} tags as the link text instead of the file name or description.
+ 		all => Shows all attachments from the whole wiki.
  		num => Gives the number, in the list of attachments, of the attachment to link to
  		id => Gives the actual id of the attachment to link in.  You probably should never use this.
  		dls => Puts the number of downloads in the alt comment
@@ -81,6 +83,11 @@ function wikiplugin_attach($data, $params) {
 
 	    $atts = $wikilib->list_wiki_attachments($page,0,-1,'created_desc','');
 	}
+    }
+
+    if( isset( $all ) )
+    {
+	$atts = $wikilib->list_all_attachements(0,-1,'page_asc','');
     }
 
     if( ! array_key_exists( "cant", $atts ) )
@@ -154,6 +161,7 @@ function wikiplugin_attach($data, $params) {
 	    } else {
 		$link.= '<a href="tiki-download_wiki_attachment.php?attId='.$atts['data'][$n]['attId'].'" class="wiki"';
 		$link.= ' title="';
+
 		if (isset($showdesc)) {
 		    $link.= $atts['data'][$n]['filename'];
 		} else {
@@ -162,7 +170,9 @@ function wikiplugin_attach($data, $params) {
 		if (isset($dls)) {
 		    $link.= " ".$atts['data'][$n]['downloads'];
 		}
+
 		$link.= '">';
+
 		if (isset($icon)) {
 		    if (!isset($mimeextensions)) {
 			require("lib/mime/mimeextensions.php");
@@ -174,6 +184,7 @@ function wikiplugin_attach($data, $params) {
 			$link.= '<img src="img/icn/else.gif" border="0" />&nbsp;';
 		    }
 		}
+
 		if (isset($showdesc)) {
 		    $link.= strip_tags($atts['data'][$n]['comment']);
 		} else if( isset( $inline ) ) {
@@ -181,7 +192,14 @@ function wikiplugin_attach($data, $params) {
 		} else {
 		    $link.= strip_tags($atts['data'][$n]['filename']);
 		}
+
 		$link.= '</a>';
+
+		if( isset( $all ) )
+		{
+		    $link .= " From Page ((" . $atts['data'][$n]['page'] . "))";
+		}
+
 	    }
 
 	    if( isset( $bullets ) && $bullets )
