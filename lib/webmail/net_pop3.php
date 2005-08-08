@@ -33,7 +33,7 @@
 // | Co-Author: Damian Fernandez Sosa <damlists@cnba.uba.ar>               |
 // +-----------------------------------------------------------------------+
 //
-// $Id: net_pop3.php,v 1.3 2005-06-16 20:11:03 mose Exp $
+// $Id: net_pop3.php,v 1.4 2005-08-08 22:44:53 rlpowell Exp $
 
 require_once('Net/Socket.php');
 
@@ -342,14 +342,15 @@ class Net_POP3 {
 	$serverMethods = array();
 
        if( isset($this->_capability['sasl']) ){
-           $serverMethods[] = $this->_capability['sasl'][0];
-       }else{
-            $serverMethods=array('USER');
-            // Check for timestamp before attempting APOP
-            if ($this->_timestamp != null)
-            {
-                $serverMethods[] = 'APOP';
-            }
+           $serverMethods[] = $this->_capability['sasl'];
+       }
+
+       $serverMethods[]='USER';
+
+       // Check for timestamp before attempting APOP
+       if ($this->_timestamp != null)
+       {
+	       $serverMethods[] = 'APOP';
        }
 
         if($userMethod !== null && $userMethod !== true ){
@@ -370,6 +371,7 @@ class Net_POP3 {
             }
             $serverMethods=implode(',' , $serverMethods );
             $myMethods=implode(',' ,$this->supportedAuthMethods);
+
             return $this->_raiseError("$method NOT supported authentication method!. This server " .
                 "supports these methods: $serverMethods, but I support $myMethods");
         }else{
