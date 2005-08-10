@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.25 2005-07-14 13:59:50 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.26 2005-08-10 15:56:00 rv540 Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,6 +34,8 @@ if (!$newsletters["cant"]) {
 	die;
 }
 
+if(!isset($_REQUEST['cookietab'])) $_REQUEST['cookietab'] = 1;
+
 $smarty->assign('newsletters', $newsletters["data"]);
 
 if ($_REQUEST["nlId"]) {
@@ -47,6 +49,7 @@ if ($_REQUEST["nlId"]) {
 		$info = array();
 		$info["data"] = '';
 		$info["subject"] = '';
+		$info["editionId"] = 0;
 	}
 	$smarty->assign('info', $info);
 }
@@ -178,52 +181,84 @@ if (isset($_REQUEST["send"])) {
 	$smarty->assign('emited', 'y');
 	if (count($errors) > 0)
 		$smarty->assign_by_ref('errors', $errors);
-	$nllib->replace_edition($_REQUEST["nlId"], $_REQUEST["subject"], $_REQUEST["data"], $sent);
+	$nllib->replace_edition($_REQUEST["nlId"], $_REQUEST["subject"], $_REQUEST["data"], $sent, $_REQUEST['editionId']);
+	//$nllib->replace_edition($_REQUEST["nlId"], $_REQUEST["subject"], $_REQUEST["data"], $sent);
 }
 
-if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'sent_desc';
-} else {
-	$sort_mode = $_REQUEST["sort_mode"];
+if (isset($_REQUEST["save_only"])) {
+
+	$smarty->assign('nlId', $_REQUEST['nlId']);	
+	$editionId = $nllib->replace_edition($_REQUEST['nlId'], $_REQUEST['subject'], $_REQUEST['data'], -1, $_REQUEST['editionId'], true);
+	$info = $nllib->get_edition($editionId);	
+	$smarty->assign('info', $info);
 }
 
-if (!isset($_REQUEST["offset"])) {
-	$offset = 0;
+if (!isset($_REQUEST['ed_sort_mode']) && !isset($_REQUEST['dr_sort_mode'])) {
+	$ed_sort_mode = $dr_sort_mode = 'sent_desc';
 } else {
-	$offset = $_REQUEST["offset"];
+	$ed_sort_mode = $_REQUEST['ed_sort_mode'];
+	$dr_sort_mode = $_REQUEST['dr_sort_mode'];
+}	
+$smarty->assign_by_ref('ed_sort_mode', $ed_sort_mode);
+$smarty->assign_by_ref('dr_sort_mode', $dr_sort_mode);
+
+if (!isset($_REQUEST['ed_offset']) && !isset($_REQUEST['dr_offset'])) {
+	$ed_offset = $dr_offset = 0;
+} else {
+	$ed_offset = $_REQUEST['ed_offset'];
+	$dr_offset = $_REQUEST['dr_offset'];
 }
+$smarty->assign_by_ref('ed_offset', $ed_offset);
+$smarty->assign_by_ref('dr_offset', $dr_offset);
 
-$smarty->assign_by_ref('offset', $offset);
-
-if (isset($_REQUEST["find"])) {
-	$find = $_REQUEST["find"];
+if (isset($_REQUEST['ed_find']) && isset($_REQUEST['dr_find'])) {
+	$ed_find = $_REQUEST['ed_find'];
+	$dr_find = $_REQUEST['dr_find'];
 } else {
-	$find = '';
+	$ed_find = $dr_find = '';
 }
+$smarty->assign_by_ref('ed_find', $ed_find);
+$smarty->assign_by_ref('dr_find', $dr_find);
+	
+$editions = $nllib->list_editions($_REQUEST["nlId"], $ed_offset, $maxRecords, $ed_sort_mode, $ed_find);
+$drafts = $nllib->list_editions($_REQUEST["nlId"], $dr_offset, $maxRecords, $dr_sort_mode, $dr_find, true);
 
-$smarty->assign('find', $find);
+$ed_cant_pages = ceil($editions["cant"] / $maxRecords);
+$dr_cant_pages = ceil($drafts["cant"] / $maxRecords);
+$smarty->assign_by_ref('ed_cant_pages', $ed_cant_pages);
+$smarty->assign('ed_actual_page', 1 + ($ed_offset / $maxRecords));
+$smarty->assign_by_ref('dr_cant_pages', $dr_cant_pages);
+$smarty->assign('dr_actual_page', 1 + ($dr_offset / $maxRecords));
 
-$smarty->assign_by_ref('sort_mode', $sort_mode);
-$channels = $nllib->list_editions($_REQUEST["nlId"], $offset, $maxRecords, $sort_mode, $find);
-$smarty->assign('url', "tiki-send_newsletters.php");
-
-$cant_pages = ceil($channels["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
-
-if ($channels["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
+if ($editions["cant"] > ($ed_offset + $maxRecords)) {
+	$smarty->assign('ed_next_offset', $ed_offset + $maxRecords);
 } else {
-	$smarty->assign('next_offset', -1);
+	$smarty->assign('ed_next_offset', -1);
+}
+if ($drafts["cant"] > ($dr_offset + $maxRecords)) {
+	$smarty->assign('dr_next_offset', $dr_offset + $maxRecords);
+} else {
+	$smarty->assign('dr_next_offset', -1);
 }
 
 // If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
+if ($ed_offset > 0) {
+	$smarty->assign('ed_prev_offset', $ed_offset - $maxRecords);
 } else {
-	$smarty->assign('prev_offset', -1);
+	$smarty->assign('ed_prev_offset', -1);
 }
-$smarty->assign_by_ref('channels', $channels["data"]);
+if ($dr_offset > 0) {
+	$smarty->assign('dr_prev_offset', $dr_offset - $maxRecords);
+} else {
+	$smarty->assign('dr_prev_offset', -1);
+}
+
+$smarty->assign_by_ref('editions', $editions["data"]);
+$smarty->assign_by_ref('drafts', $drafts["data"]);
+$smarty->assign_by_ref('cant_editions', $editions["cant"]);
+$smarty->assign_by_ref('cant_drafts', $drafts["cant"]);
+
+$smarty->assign('url', "tiki-send_newsletters.php");
 
 if ($tiki_p_use_content_templates == 'y') {
 	$templates = $tikilib->list_templates('newsletters', 0, -1, 'name_asc', '');
@@ -240,6 +275,9 @@ $smarty->assign_by_ref('quicktags', $quicktags["data"]);
 
 $section = 'newsletters';
 include_once ('tiki-section_options.php');
+
+setcookie('tab',$_REQUEST['cookietab']);
+$smarty->assign('cookietab', $_REQUEST['cookietab']);
 
 ask_ticket ('send-newsletter');
 
