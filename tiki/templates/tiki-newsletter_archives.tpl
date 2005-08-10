@@ -6,9 +6,10 @@
 <a href="tiki-edit_templates.php?template=tiki-newsletter_archives.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin newsletters template{/tr}">
 <img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit{/tr}'></a>{/if}</h1>
 
-<a class="linkbut" href="tiki-newsletters.php">{tr}list newsletters{/tr}</a>{if $tiki_p_subscribe_newsletters eq "y"}<a class="linkbut" href="tiki-newsletters.php?nlId={$nlId}&amp;info=1">{tr}subscribe{/tr}</a>{/if}
-{if $tiki_p_send_newsletters eq "y"}<a class="linkbut" href="tiki-send_newsletters.php?nlId={$nlId}">{tr}send newsletters{/tr}</a>{/if}
-{if $tiki_p_admin_newsletters eq "y"}<a class="linkbut" href="tiki-admin_newsletters.php">{tr}admin newsletters{/tr}</a>{/if}
+<span class="button2"><a class="linkbut" href="tiki-newsletters.php">{tr}list newsletters{/tr}</a></span>
+{if $tiki_p_subscribe_newsletters eq "y"}<span class="button2"><a class="linkbut" href="tiki-newsletters.php?nlId={$nlId}&amp;info=1">{tr}subscribe{/tr}</a></span>{/if}
+{if $tiki_p_send_newsletters eq "y"}<span class="button2"><a class="linkbut" href="tiki-send_newsletters.php?nlId={$nlId}">{tr}send newsletters{/tr}</a></span>{/if}
+{if $tiki_p_admin_newsletters eq "y"}<span class="button2"><a class="linkbut" href="tiki-admin_newsletters.php">{tr}admin newsletters{/tr}</a></span>{/if}
 
 {if $edition}
 <h2>{tr}Sent edition{/tr}</h2>
@@ -21,4 +22,13 @@
 {$edition.sent|tiki_short_datetime}
 {/if}
 
+{assign var=view_editions value='y'}
+{assign var=cur value='ed'}
+{assign var=bak value='dr'}
+{assign var=sort_mode value=$ed_sort_mode}
+{assign var=sort_mode_bak value='sent_desc'}
+{assign var=offset value=$ed_offset}
+{assign var=offset_bak value=0}
+{assign var=find value=$ed_find}
+{assign var=find_bak value=''}
 {include file=sent_newsletters.tpl }

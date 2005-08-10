@@ -27,12 +27,43 @@ class NlLib extends TikiLib {
 		return $nlId;
 	}
 
-	function replace_edition($nlId, $subject, $data, $users) {
-		$now = date("U");
-		$query = "insert into `tiki_sent_newsletters`(`nlId`,`subject`,`data`,`sent`,`users`) values(?,?,?,?,?)";
-		$result = $this->query($query,array((int)$nlId,$subject,$data,(int)$now,$users));
-		$query = "update `tiki_newsletters` set `editions`= `editions`+ 1 where `nlId`=?";
-		$result = $this->query($query,array((int)$nlId));
+	function replace_edition($nlId, $subject, $data, $users, $editionId=0, $draft=false) {
+		
+		if( $draft == false ) {
+			$now = date("U");
+			
+			if( $editionId > 0 && $this->getOne('select `sent` from `tiki_sent_newsletters` where `editionId`=?', array( (int)$editionId )) == -1 ) {
+				// save and send a draft
+				$query = "update `tiki_sent_newsletters` set `subject`=?, `data`=?, `sent`=?, `users`=? ";
+				$query.= "where editionId=? and nlId=?";
+				$result = $this->query($query,array($subject,$data, (int)$now, $users, (int)$editionId,(int)$nlId));
+				$query = "update `tiki_newsletters` set `editions`= `editions`+ 1 where `nlId`=? ";
+				$result = $this->query($query,array((int)$nlId));
+				
+			}
+			else {
+				// save and send an edition				
+				$query = "insert into `tiki_sent_newsletters`(`nlId`,`subject`,`data`,`sent`,`users`) values(?,?,?,?,?)";
+				$result = $this->query($query,array((int)$nlId,$subject,$data,(int)$now,$users));
+				$query = "update `tiki_newsletters` set `editions`= `editions`+ 1 where `nlId`=?";
+				$result = $this->query($query,array((int)$nlId));
+				$editionId = $this->getOne('select max(`editionId`) from `tiki_sent_newsletters`');				
+			}
+		} else {
+			if( $editionId > 0 && $this->getOne('select `sent` from `tiki_sent_newsletters` where `editionId`=?', array( (int)$editionId )) == -1 ) {
+				// save an existing draft
+				$query = "update `tiki_sent_newsletters` set `subject`=?, `data`=?";
+				$query.= "where editionId=? and nlId=?";			
+				$result = $this->query($query,array($subject,$data,(int)$editionId,(int)$nlId));
+				
+			} else {
+				// save a new draft
+				$query = "insert into `tiki_sent_newsletters`(`nlId`,`subject`,`data`,`sent`,`users`) values(?,?,?,?,?)";
+				$result = $this->query($query,array((int)$nlId,$subject,$data,-1,0));
+				$editionId = $this->getOne('select max(`editionId`) from `tiki_sent_newsletters`');				
+			}
+		}
+		return $editionId;
 	}
 
 	/* get only the email subscribers */
@@ -364,9 +395,11 @@ print_r($ret);
 			}
 			++$cant;
 			$ok = count($this->get_all_subscribers($res["nlId"], ""));
-			$notok = $this->getOne("select count(*) from `tiki_newsletter_subscriptions` where `valid`=? and `nlId`=?",array('n',(int)$res["nlId"]));
+			$notok = $this->getOne("select count(*) from `tiki_newsletter_subscriptions` where `valid`=? and `nlId`=?",array('n',(int)$res["nlId"]));			
 			$res["users"] = $ok + $notok;
 			$res["confirmed"] = $ok;
+			$nb_drafts = $this->getOne("select count(*) from `tiki_sent_newsletters` where `nlId`=? and `sent`=-1", array((int)$res['nlId']));
+			$res['drafts'] = $nb_drafts;
 			$ret[] = $res;
 		}
 		$retval = array();
@@ -386,7 +419,7 @@ print_r($ret);
 		return $res;
 	}
 
-	function list_editions($nlId, $offset, $maxRecords, $sort_mode, $find) {
+	function list_editions($nlId, $offset, $maxRecords, $sort_mode, $find, $drafts=false) {
 		$bindvars = array();
 		$mid = "";
 		
@@ -399,6 +432,12 @@ print_r($ret);
 			$mid.= " and (`subject` like ? or `data` like ?)";
 			$bindvars[] = $findesc;
 			$bindvars[] = $findesc;
+		}
+		
+		if($drafts) {
+			$mid.= ' and tsn.`sent`=-1';
+		} else {
+			$mid.= ' and tsn.`sent`<>-1';
 		}
 
 		$query = "select tsn.`editionId`,tn.`nlId`,`subject`,`data`,tsn.`users`,`sent`,`name` from `tiki_newsletters` tn, `tiki_sent_newsletters` tsn ";
@@ -494,6 +533,8 @@ print_r($ret);
 		$query = "delete from `tiki_newsletter_subscriptions` where `nlId`=?";
 		$result = $this->query($query,array((int)$nlId), -1, -1, false);
 		$query = "delete from `tiki_newsletter_groups` where `nlId`=?";
+		$result = $this->query($query,array((int)$nlId), -1, -1, false);
+		$query = "delete from `tiki_sent_newsletters` where `nlId`=? and `sent`=-1";
 		$result = $this->query($query,array((int)$nlId), -1, -1, false);
 		$this->remove_object('newsletter', $nlId);
 		return true;

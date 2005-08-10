@@ -1,5 +1,5 @@
-<h1><a class="pagetitle" href="tiki-send_newsletters.php">{tr}Send newsletters{/tr}</a></h1>
-{if $tiki_p_admin_newsletters eq "y"}<a class="linkbut" href="tiki-admin_newsletters.php">{tr}admin newsletters{/tr}</a>{/if}<br />
+<h1><a class="pagetitle" href="tiki-send_newsletters.php">{tr}Send newsletters{/tr} {if $nlId ne '0'}{$nlName}{/if}</a></h1>
+{if $tiki_p_admin_newsletters eq "y"}<span class="button2"><a class="linkbut" href="tiki-admin_newsletters.php">{tr}admin newsletters{/tr}</a></span>{/if}<br />
 {assign var=area_name value="editnl"}
 {if $emited eq 'y'}
 {tr}The newsletter was sent to {$sent} email addresses{/tr}<br /><br />
@@ -19,9 +19,11 @@
 <b>{tr}This newsletter will be sent to {$subscribers} email addresses.{/tr}</b>
 <form method="post" action="tiki-send_newsletters.php">
 <input type="hidden" name="nlId" value="{$nlId|escape}" />
+<input type="hidden" name="editionId" value="{$info.editionId}"/>
 <input type="hidden" name="subject" value="{$subject|escape}" />
 <input type="hidden" name="data" value="{$data|escape}" />
 <input type="hidden" name="dataparsed" value="{$dataparsed|escape}" />
+<input type="hidden" name="cookietab" value="3" />
 <input type="submit" name="send" value="{tr}send{/tr}" />
 <input type="submit" name="preview" value="{tr}cancel{/tr}" />
 </form>
@@ -35,8 +37,25 @@
 <div class="wikitext">{$info.dataparsed}</div>
 {if $txt}<div class="wikitext">{$txt}</div>{/if}
 {/if}
+
+<br/>
+{* --- tab headers --- *}
+{if $feature_tabs eq 'y'}
+{cycle name=tabs values="1,2,3,4" print=false advance=false}
+<div id="page-bar">
+<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Edit{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Drafts{/tr}&nbsp;({$cant_drafts})</a></span>
+<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Sent editions{/tr}&nbsp;({$cant_editions})</a></span>
+</div>
+{/if}
+
+{cycle name=content values="1,2,3,4" print=false advance=false}
+{* --- tab with editior --- *}
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+
 <h2>{tr}Prepare a newsletter to be sent{/tr}</h2>
 <form action="tiki-send_newsletters.php" method="post" id='editpageform'>
+<input type="hidden" name="editionId" value="{$info.editionId}"/>
 <table class="normal">
 <tr><td class="formcolor">{tr}Subject{/tr}:</td><td class="formcolor"><input type="text" maxlength="250" size="40" name="subject" value="{$info.subject|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Newsletter{/tr}:</td><td class="formcolor">
@@ -73,12 +92,53 @@
 <input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/>
 </td></tr>
-<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}Preview{/tr}" /></td></tr>
-<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Send Newsletters{/tr}" /></td></tr>
+<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}Preview{/tr}" />&nbsp;<input type="submit" name="save_only" value="{tr}Save as draft{/tr}" /></td></tr>
+<tr><td  class="formcolor">&nbsp;</td><td>&nbsp;<input type="submit" name="save" value="{tr}Send Newsletters{/tr}" /></td></tr>
 </table>
 </form>
-{/if}
+</div>
 
-{if $presend ne 'y'}
+{* --- tab with drafts --- *}
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+{assign var=channels value=$drafts}
+{assign var=view_editions value='n'}
+{assign var=offset value=$dr_offset}
+{assign var=next_offset value=$dr_next_offset}
+{assign var=prev_offset value=$dr_prev_offset}
+{assign var=actual_page value=$dr_actual_page}
+{assign var=cant_pages value=$dr_cant_pages}
+{assign var=cur value='dr'}
+{assign var=bak value='ed'}
+{assign var=sort_mode value=$dr_sort_mode}
+{assign var=sort_mode_bak value=$ed_sort_mode}
+{assign var=offset value=$dr_offset}
+{assign var=offset_bak value=$ed_offset}
+{assign var=find value=$dr_find}
+{assign var=find_bak value=$ed_find}
+{assign var=tab value=2}
+<h2>{tr}Drafts{/tr}&nbsp;({$cant_drafts})</h2>
 {include file=sent_newsletters.tpl }
+</div>
+
+{* --- tab with editions --- *}
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+{assign var=channels value=$editions}
+{assign var=view_editions value='y'}
+{assign var=offset value=$ed_offset}
+{assign var=next_offset value=$ed_next_offset}
+{assign var=prev_offset value=$ed_prev_offset}
+{assign var=actual_page value=$ed_actual_page}
+{assign var=cant_pages value=$ed_cant_pages}
+{assign var=cur value='ed'}
+{assign var=bak value='dr'}
+{assign var=sort_mode value=$ed_sort_mode}
+{assign var=sort_mode_bak value=$dr_sort_mode}
+{assign var=offset value=$ed_offset}
+{assign var=offset_bak value=$dr_offset}
+{assign var=find value=$ed_find}
+{assign var=find_bak value=$dr_find}
+{assign var=tab value=3}
+<h2>{tr}Sent editions{/tr}&nbsp;({$cant_editions})</h2>
+{include file=sent_newsletters.tpl }
+</div>
 {/if}

@@ -8,8 +8,8 @@
 <a href="tiki-edit_templates.php?template=tiki-admin_newsletters.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin newsletters template{/tr}">
 <img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit{/tr}'></a>{/if}</h1>
 
-<a class="linkbut" href="tiki-newsletters.php">{tr}list newsletters{/tr}</a>
-<a class="linkbut" href="tiki-send_newsletters.php">{tr}send newsletters{/tr}</a>
+<span class="button2"><a class="linkbut" href="tiki-newsletters.php">{tr}list newsletters{/tr}</a></span>
+<span class="button2"><a class="linkbut" href="tiki-send_newsletters.php">{tr}send newsletters{/tr}</a></span>
 <br /><br />
 <h2>{tr}Create/edit newsletters{/tr}</h2>
 {if $individual eq 'y'}
@@ -60,6 +60,7 @@
 <td class="heading"><a class="tableheading" href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}description{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'users_desc'}users_asc{else}users_desc{/if}">{tr}users{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'editions_desc'}editions_asc{else}editions_desc{/if}">{tr}editions{/tr}</a></td>
+<td class="heading"><a class="tableheading">{tr}drafts{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastSent_desc'}lastSent_asc{else}lastSent_desc{/if}">{tr}last sent{/tr}</a></td>
 <td class="heading">{tr}action{/tr}</td>
 </tr>
@@ -74,6 +75,7 @@
 <td class="{cycle advance=false}">{$channels[user].description}</td>
 <td class="{cycle advance=false}">{$channels[user].users} ({$channels[user].confirmed})</td>
 <td class="{cycle advance=false}">{$channels[user].editions}</td>
+<td class="{cycle advance=false}">{$channels[user].drafts}</td>
 <td class="{cycle advance=false}">{$channels[user].lastSent|tiki_short_datetime}</td>
 <td class="{cycle}">
 <a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=newsletter&amp;permType=newsletters&amp;objectId={$channels[user].nlId}" title="{tr}Assign Permissions{/tr}"><img 
