@@ -1,5 +1,5 @@
 <h1><a class="pagetitle" href="tiki-user_information.php?view_user={$userwatch}">{tr}User Information{/tr}</a></h1>
-<table >
+<table>
 <tr>
   <td valign="top">
   <div class="cbox">
@@ -7,12 +7,12 @@
   <div class="cbox-data">
   <div class="simplebox">
   <table>
-  <tr><td class="form">{tr}User{/tr}:</td><td>{$userinfo.login}{if $tiki_p_admin eq 'y'} <a class="link" href="tiki-user_preferences.php?view_user={$userinfo.login}"><IMG SRC="img/icons/config.gif" title="{tr}Change user preferences{/tr}" border="0" /> </a>  {/if}</td></tr>
+  <tr><td class="form">{tr}User{/tr}:</td><td>{$userinfo.login}{if $tiki_p_admin eq 'y'} <a class="link" href="tiki-user_preferences.php?view_user={$userinfo.login}"><img src="img/icons/config.gif" title="{tr}Change user preferences{/tr}" border="0" /> </a>  {/if}</td></tr>
 {if $feature_score eq 'y'}
   <tr><td class="form">{tr}Score{/tr}:</td><td>{$userinfo.score|star}{$userinfo.score}</td></tr>
 {/if}
   <tr><td class="form">{tr}Last login{/tr}:</td><td>{$userinfo.lastLogin|tiki_short_datetime}</td></tr>
-{if $email_isPublic neq 'n'}  
+{if $email_isPublic neq 'n'}
   <tr><td class="form">{tr}Email{/tr}:</td><td>{$userinfo.email}</td></tr>
 {/if}  
   <tr><td class="form">{tr}Country{/tr}:</td><td><img alt="flag" src="img/flags/{$country}.gif" /> {tr}{$country}{/tr}</td></tr>
@@ -41,15 +41,14 @@
   {if $friend}
   <tr><td class="form">&nbsp;</td><td class="form">
     <img src="img/icons/ico_friend.gif" width="7" height="10"> {tr}This user is your friend{/tr}
-  </td></tr>  
+  </td></tr>
   {else}
   <tr><td class="form">&nbsp;</td><td class="form">
     <img src="img/icons/ico_not_friend.png"> <a class="link" href="tiki-friends.php?request_friendship={$userinfo.login}">{tr}Request friendship from this user{/tr}</a>
-  </td></tr>  
+  </td></tr>
   {/if}
 {/if}
   </table>
-  </form>
   </div>
   </div>
   </div>
@@ -88,14 +87,12 @@
   </tr>
 </table>
 
-  
   </form>
   </div>
   </div>
   </div>
-
   </td>
-</tr>  
+</tr>
 {/if}
 </table>
-<br /><br />  
+<br /><br />
