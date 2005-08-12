@@ -1545,7 +1545,6 @@ CREATE TABLE tiki_pages (
   lang varchar(16) default NULL,
   lockedby varchar(200) default NULL,
   created int(14),
-  is_html tinyint(1) default 0,
   PRIMARY KEY  (page_id),
   UNIQUE KEY pageName (pageName),
   KEY data (data(255)),
@@ -2819,5 +2818,15 @@ DROP TABLE IF EXISTS tiki_file_handlers;
 CREATE TABLE tiki_file_handlers (
 	mime_type varchar(64) default NULL,
 	cmd varchar(238) default NULL
+) TYPE=MyISAM;
+
+
+DROP TABLE IF EXISTS `tiki_stats`;
+CREATE TABLE `tiki_stats` (
+  `object` varchar(255) NOT NULL default '',
+  `type` varchar(20) NOT NULL default '',
+  `day` int(14) NOT NULL default '0',
+  `hits` int(14) NOT NULL default '0',
+  PRIMARY KEY  (`object`,`type`,`day`)
 ) TYPE=MyISAM;
 

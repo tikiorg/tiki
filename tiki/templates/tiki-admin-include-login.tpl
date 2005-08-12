@@ -11,7 +11,7 @@
 <div class="cbox">
 <div class="cbox-title">
   {tr}User registration and login{/tr}
-  {help url="User+Registration+Settings" desc="{tr}User registration and login{/tr}"}
+  {help url="Login+Config" desc="{tr}User registration and login{/tr}"}
 </div>
 <div class="cbox-data">
 <form action="tiki-admin.php?page=login" method="post" name="login">

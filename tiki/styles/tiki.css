@@ -123,7 +123,9 @@ padding-top : 20px;
 DIV#tiki-center { 
 background-color: #f3f6f9; 
 border: 1px solid #46596f;
+border-radius: 6px;
 -moz-border-radius: 6px;
+-khtml-border-radius: 6px;
 margin: 10px 0;
 padding: 10px;
 z-index: 15;
@@ -177,7 +179,9 @@ padding: 0 6px 0px 6px;
 font-weight: normal;
 text-decoration: none;
 border: 1px solid #46596f;
+border-radius: 6px 6px 0 0;
 -moz-border-radius: 6px 6px 0 0;
+-khtml-border-radius: 6px 6px 0 0;
 background-color: #C7D0D9;
 margin: 0;
 }
@@ -188,7 +192,9 @@ padding: 0 6px 0 6px;
 font-weight: normal;
 border: 1px solid #46596f;
 border-bottom: 1px solid #99bec6;
+border-radius: 6px 6px 0 0;
 -moz-border-radius: 6px 6px 0 0;
+-khtml-border-radius: 6px 6px 0 0;
 margin: 0;
 }
 /********************************************* GENERAL STYLE PROPERTIES **********************************************/
@@ -215,7 +221,9 @@ div.box-title {
 	display: inline;
 	background-color: #f3f6f9;
 	border: 1px solid #5a7a8a;
+	border-radius: 0px 0px 6px 6px;
 	-moz-border-radius: 0px 0px 6px 6px;
+	-khtml-border-radius: 0px 0px 6px 6px;
   overflow: hidden;
 	font-size: .8em;
   text-align: center;
@@ -248,7 +256,9 @@ div.separator, div.separatorline {
   color: black; 
   margin: 4px 2px 2px 0px;  
 	padding-left: 2px;
+	border-radius: 0px 10px 10px 0px;
 	-moz-border-radius: 0px 10px 10px 0px;
+	-khtml-border-radius: 0px 10px 10px 0px;
 	border-bottom: 1px solid #8CACBB;
 	border-top: 1px solid #ffffff;
 }
@@ -375,7 +385,9 @@ border: 0;
 input[type=submit] { 
 border: 1px solid #46596f;
 background-color: #C7D0D9;
+border-radius: 0px 6px 6px 0px;
 -moz-border-radius: 0px 6px 6px 0px;
+-khtml-border-radius: 0px 6px 6px 0px;
 font-weight: bold;
 }
 input[type=submit]:hover {
@@ -606,7 +618,9 @@ div.titlebar {
   color: #000000;
 	font-size: .9em;
   border: 1px solid #46596f;
+	border-radius: 0 0 6px 6px;
 	-moz-border-radius: 0 0 6px 6px;
+	-khtml-border-radius: 0 0 6px 6px;
 	letter-spacing: 1px;
   padding: 0 6px 1px 6px; 
   margin: 3px 0 6px 0;
@@ -629,8 +643,18 @@ DIV#page-bar table,DIV#page-bar td,DIV#page-bar tr {
 	margin-bottom: -1px;
 	padding: 0;
 }
-.button3 { -moz-border-radius : 5px 5px 0 0;  }
-.button3 .linkbut { -moz-border-radius : 5px 5px 0 0; padding-bottom : 2px; border-bottom : 0; }
+.button3 {
+  border-radius : 5px 5px 0 0;
+  -moz-border-radius : 5px 5px 0 0;
+  -khtml-border-radius : 5px 5px 0 0;
+}
+.button3 .linkbut {
+  border-radius : 5px 5px 0 0;
+  -moz-border-radius : 5px 5px 0 0;
+  -khtml-border-radius : 5px 5px 0 0;
+  padding-bottom : 2px;
+  border-bottom : 0;
+}
 
 /* Links in buttons */
 .linkbut, .linkbut:visited { 
@@ -641,7 +665,9 @@ padding: 0 6px 1px 6px;
 font-weight: normal;
 text-decoration: none;
 border: 1px solid #46596f;
+border-radius: 6px 6px 0 0;
 -moz-border-radius: 6px 6px 0 0;
+-khtml-border-radius: 6px 6px 0 0;
 margin: 0;
 }
 .linkbut:hover { 
@@ -651,7 +677,9 @@ padding: 0 6px 0px 6px;
 font-weight: normal;
 border: 1px solid #46596f;
 border-bottom: 1px solid #99bec6;
+border-radius: 6px 6px 0 0;
 -moz-border-radius: 6px 6px 0 0;
+-khtml-border-radius: 6px 6px 0 0;
 margin: 0;
 }
 
@@ -844,7 +872,9 @@ div.articletitle {
 /* The article title */
 span.titlea {    
 background: #C7D0D9;
+border-radius: 0 0 6px 6px;
 -moz-border-radius: 0 0 6px 6px;
+-khtml-border-radius: 0 0 6px 6px;
 border: 1px solid #46596f;
 padding: 0px 20px 3px 20px;
 margin: 3px 0 6px 0;
@@ -1344,7 +1374,9 @@ color: #425262;
 padding-left: 10px;
 padding-right: 10px;
 border: 1px solid #666666;
+border-radius: 6px 6px 0px 0px;
 -moz-border-radius: 6px 6px 0px 0px;
+-khtml-border-radius: 6px 6px 0px 0px;
 border-bottom: 0;
 margin-right: 6px;
 color: #000000;
@@ -1369,7 +1401,9 @@ padding-left: 10px;
 padding-right: 10px;
 background-color: #ffffff;
 border: 1px solid #666666;
+border-radius: 6px 6px 0px 0px;
 -moz-border-radius: 6px 6px 0px 0px;
+-khtml-border-radius: 6px 6px 0px 0px;
 border-bottom: 1px solid #FFFFFF;
 margin-right: 6px; 
 color: #000000;
@@ -1775,7 +1809,9 @@ font-weight: normal;
 #opaque
 {
 background-color: #ffffff;
+border-radius: 10px;
 -moz-border-radius: 10px;
+-khtml-border-radius: 10px;
 border: 1px solid #8CACBB;
 }
 div.tabrow {
@@ -1920,7 +1956,9 @@ vertical-align: text-top;
   color: #666666;
   padding: 0px 4px 0px 4px;
   border: 1px solid #aaaaaa;
+  border-radius: 6px;
   -moz-border-radius: 6px;
+  -khtml-border-radius: 6px;
 }
 .catlists a.link:hover {
   color: #000000;
@@ -2052,10 +2090,14 @@ TABLE.admin {
 	margin: 0px;
 	margin-right: 5px;
 	padding: 1px 0px 1px 0px;
+	border-radius : 5px 5px 0 0;
 	-moz-border-radius : 5px 5px 0 0;  
+	-khtml-border-radius : 5px 5px 0 0;
 }
 .tabmark a { 
+	border-radius : 5px 5px 0 0;
 	-moz-border-radius : 5px 5px 0 0; 
+	-khtml-border-radius : 5px 5px 0 0;
 	border-bottom : 0; 
 	color: #666666;
 	font-weight: 700 !important;
@@ -2076,7 +2118,9 @@ TABLE.admin {
 	padding: 6px 2px 2px 2px;
 	margin-bottom: 25px;
 	background-color: #eeeeee;
+	border-radius: 0px 4px 4px 4px;
 	-moz-border-radius: 0px 4px 4px 4px;
+	-khtml-border-radius: 0px 4px 4px 4px;
 	width: 100%;
 }
 
@@ -2087,7 +2131,9 @@ TABLE.admin {
   padding: 1px;
   margin: 1px;
   border: 1px inset #666666;
+  border-radius: 20px;
   -moz-border-radius: 20px;
+  -khtml-border-radius: 20px;
   vertcal-align: middle;
   background-color: #bbaa99;
 }
@@ -2126,7 +2172,9 @@ margin : 0;
 color : #666666;
 background-color: #E9ECEF;
 font-weight : bold;
+border-radius-topright : 1ex;
 -moz-border-radius-topright : 1ex;
+-khtml-border-radius-topright : 1ex;
 }
 /* patch temporaire to see the edit comment textarea */
 textarea#editpost { width: 100%} 

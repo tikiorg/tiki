@@ -12,6 +12,7 @@ if(isset($_COOKIE['tiki-theme']) && !($feature_userPreferences == 'y' && $user &
 }
 
 $smarty->assign('styleslist',$tikilib->list_styles());
+$smarty->assign("available_styles", unserialize($tikilib->get_preference("available_styles")));
 
 if(isset($style)){
 	$smarty->assign('styleName', ereg_replace($tikidomain."/", "", $style));

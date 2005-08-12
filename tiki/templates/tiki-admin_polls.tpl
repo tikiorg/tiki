@@ -26,7 +26,6 @@
 <select name="active">
 <option value='a' {if $active eq 'a'}selected="selected"{/if}>{tr}active{/tr}</option>
 <option value='c' {if $active eq 'c'}selected="selected"{/if}>{tr}current{/tr}</option>
-<option value='t' {if $active eq 't'}selected="selected"{/if}>{tr}template{/tr}</option>
 <option value='x' {if $active eq 'x'}selected="selected"{/if}>{tr}closed{/tr}</option>
 <option value='t' {if $active eq 't'}selected="selected"{/if} style="border-top:1px solid black;">{tr}template{/tr}</option>
 <option value='o' {if $active eq 'o'}selected="selected"{/if}>{tr}object{/tr}</option>

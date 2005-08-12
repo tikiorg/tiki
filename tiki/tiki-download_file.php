@@ -2,6 +2,7 @@
 // Initialization
 include_once("lib/init/initlib.php");
 require_once('tiki-setup_base.php');
+include_once ('lib/stats/statslib.php');
 /*
 if($feature_file_galleries != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -77,6 +78,8 @@ $type=&$info["filetype"];
 $file=&$info["filename"];
 $content=&$info["data"];
 
+//add a hit
+$statslib->stats_hit($file,"file",$_REQUEST["fileId"]);
 
 // close the session in case of large downloads to enable further browsing
 session_write_close();

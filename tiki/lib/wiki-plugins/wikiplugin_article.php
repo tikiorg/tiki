@@ -10,6 +10,7 @@ function wikiplugin_article_help() {
 }
 function wikiplugin_article($data, $params) {
 	global $tikilib;
+	include_once('lib/stats/statslib.php');
 
 	extract ($params,EXTR_SKIP);
 

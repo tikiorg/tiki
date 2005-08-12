@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.100 2005-07-20 02:36:17 rlpowell Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.101 2005-08-12 13:01:58 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -1053,7 +1053,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_tracker','n');
 # added on 2005-04-24 by ohertel: view wiki history
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_history', 'Can view wiki history', 'basic', 'wiki');
 
-# 2005-04-24 togg: view wiki history copied for groups
+# 2005-04-24 toggg: view wiki history copied for groups
 DROP TABLE IF EXISTS temp_users_grouppermissions;
 CREATE TABLE temp_users_grouppermissions (
   groupName varchar(255) NOT NULL default '',
@@ -1128,3 +1128,36 @@ alter table tiki_referer_stats change referer referer varchar(255) not null;
 
 #2005-06-20 amette: added on request of toggg(currently without CVS-access)
 ALTER TABLE `tiki_pages` ADD created int(14);
+ALTER TABLE `tiki_cookies` CHANGE cookie cookie text;
+
+#2005-07-14 avgasse: these tables appeared to be missing when comparing a fresh and an upgraded database
+CREATE TABLE `tiki_features` (
+  `featureId` int(11) NOT NULL auto_increment,
+  `Name` varchar(200) NOT NULL default '',
+  `Description` text,
+  `Helplink` varchar(200) NOT NULL default '',
+  `Variable` varchar(200) NOT NULL default '',
+  PRIMARY KEY  (`featureId`)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+CREATE TABLE `tiki_object_ratings` (
+  `catObjectId` int(12) NOT NULL default '0',
+  `pollId` int(12) NOT NULL default '0',
+  PRIMARY KEY  (`catObjectId`,`pollId`)
+) TYPE=MyISAM;
+
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_bot_bar_icons', 'y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_bot_bar_debug', 'y');
+
+ALTER TABLE tiki_articles DROP COLUMN `bibliographical_references`;
+ALTER TABLE tiki_articles DROP COLUMN `resume`;
+#2005-07-28 gg: added preference for file gallery to have duplicates
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_allow_duplicates', 'n');
+
+#2005-08-05 franck: New table to handle statistics per object
+CREATE TABLE `tiki_stats` (
+  `object` varchar(255) NOT NULL default '',
+  `type` varchar(20) NOT NULL default '',
+  `day` int(14) NOT NULL default '0',
+  `hits` int(14) NOT NULL default '0',
+  PRIMARY KEY  (`object`,`type`,`day`)
+) TYPE=MyISAM;

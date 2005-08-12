@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-stats.php,v 1.14 2005-05-18 10:58:59 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-stats.php,v 1.15 2005-08-12 13:01:58 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -111,6 +111,12 @@ $smarty->assign_by_ref('user_stats', $user_stats);
 
 $site_stats = $statslib->site_stats();
 $smarty->assign_by_ref('site_stats', $site_stats);
+
+$best_objects_stats = $statslib->best_overall_object_stats(20);
+$smarty->assign_by_ref('best_objects_stats', $best_objects_stats);
+
+$best_objects_stats_lastweek = $statslib->best_overall_object_stats(20,7);
+$smarty->assign_by_ref('best_objects_stats_lastweek', $best_objects_stats_lastweek);
 
 ask_ticket('stats');
 

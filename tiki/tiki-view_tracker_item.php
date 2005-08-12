@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.80 2005-07-14 13:59:50 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.81 2005-08-12 13:01:58 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -305,6 +305,22 @@ for ($i = 0; $i < $temp_max; $i++) {
 			if (1 or $fields["data"][$i]["options_array"][0])	{
 				$textarea_options = true;
 			} 
+			
+		} elseif($fields["data"][$i]["type"] == 'y' ) { // country list			
+			if (isset($_REQUEST["$ins_id"])) {			
+				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];				
+			}
+			// Get flags here
+			$flags = array();
+			$h = opendir("img/flags/");
+			
+			while ($file = readdir($h)) {
+				if (strstr($file, ".gif")) {
+					$parts = explode('.', $file);
+					$flags[] = $parts[0];
+				}
+			}			
+			$ins_fields["data"][$i]['flags'] = $flags;
 
 		} else {
 
@@ -319,7 +335,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 				$fields["data"][$i]["value"] = '';
 			}
 			if ($fields["data"][$i]["type"] == 'i')	{
-				if (isset($_FILES["$ins_id"]) && is_uploaded_file($_FILES["$ins_id"]['tmp_name'])) {
+				if (isset($_FILES["$ins_id"]) && is_uploaded_file($_FILES["$ins_id"]['tmp_name'])) {					
 					if (!empty($gal_match_regex)) {
 						if (!preg_match("/$gal_match_regex/", $_FILES["$ins_id"]['name'], $reqs)) {
 							$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
@@ -333,13 +349,19 @@ for ($i = 0; $i < $temp_max; $i++) {
 							$smarty->display("error.tpl");
 							die;
 						}
+					}					
+					$fp = fopen( $_FILES["$ins_id"]['tmp_name'], 'rb' );
+					$data = '';
+					while (!feof($fp)) {
+						$data .= fread($fp, 8192 * 16);
 					}
-					$type = $_FILES["$ins_id"]['type'];
-					$size = $_FILES["$ins_id"]['size'];
-					$filename = $_FILES["$ins_id"]['name'];
-					$ins_fields["data"][$i]["value"] = $_FILES["$ins_id"]['name'];
-					$ins_fields["data"][$i]["file_type"] = $_FILES["$ins_id"]['type'];
+					fclose ($fp);
+					$ins_fields["data"][$i]["value"] = $data;
+					
+					//$ins_fields["data"][$i]["value"] = $_FILES["$ins_id"]['name'];					
+					$ins_fields["data"][$i]["file_type"] = mime_content_type( $_FILES["$ins_id"]['tmp_name'] );
 					$ins_fields["data"][$i]["file_size"] = $_FILES["$ins_id"]['size'];
+					$ins_fields["data"][$i]["file_name"] = $_FILES["$ins_id"]['name'];
 				}
 			}
 		}
@@ -487,18 +509,27 @@ if ($_REQUEST["itemId"]) {
 					}
 				} elseif ($fields["data"][$i]["type"] == 'l') {
 					if (isset($fields["data"][$i]["options_array"][3])) {
-						if (isset($last["{$fields["data"][$i]["options_array"][2]}"])) {
-							$lst = $last["{$fields["data"][$i]["options_array"][2]}"];
+						
+						//if (isset($last["{$fields["data"][$i]["options_array"][2]}"])) {
+						if (isset($last[$fields["data"][$i]["options_array"][2]])) {
+							//$lst = $last["{$fields["data"][$i]["options_array"][2]}"];
+							$lst = $last[$fields["data"][$i]["options_array"][2]];
 						}
+						else {
+							$lst = $trklib->get_item_value($_REQUEST['trackerId'], $_REQUEST['itemId'],
+															$fields["data"][$i]["options_array"][2]);
+						}
+						
 						$ins_fields["data"][$i]['links'] = array();
 						if ($lst) {
 							$links = $trklib->get_items_list($fields["data"][$i]["options_array"][0],$fields["data"][$i]["options_array"][1],$lst);
 							foreach ($links as $link) {
 								$ins_fields["data"][$i]['links'][$link] = $trklib->get_item_value($fields["data"][$i]["options_array"][0],$link,$fields["data"][$i]["options_array"][3]);
-							}
+							}							
 							$ins_fields["data"][$i]['trackerId'] = $fields["data"][$i]["options_array"][0];
-						}
+						}					
 					}
+					
 					//ob_start();var_dump($last);$output = ob_get_contents();ob_end_clean();
 					//$ins_fields["data"][$i]["links"][] = $output;
 				} elseif  ($fields["data"][$i]["type"] == 'r') {

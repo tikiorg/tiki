@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.27 2005-05-18 10:58:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.28 2005-08-12 13:01:58 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,6 +10,7 @@
 require_once ('tiki-setup.php');
 
 include_once ('lib/filegals/filegallib.php');
+include_once ('lib/stats/statslib.php');
 
 if ($feature_categories == 'y') {
 	global $categlib;
@@ -363,6 +364,9 @@ if($feature_user_watches == 'y') {
 $all_galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '');
 $smarty->assign('all_galleries', $all_galleries['data']);
 ask_ticket('list-fgal');
+
+//add a hit
+$statslib->stats_hit($gal_info["name"],"file gallery",$galleryId);
 
 // Display the template
 $smarty->assign('mid', 'tiki-list_file_gallery.tpl');

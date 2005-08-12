@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-newsletters.php,v 1.22 2005-05-18 10:58:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-newsletters.php,v 1.23 2005-08-12 13:01:58 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -143,7 +143,7 @@ if (isset($_REQUEST["find"])) {
 $smarty->assign('find', $find);
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
-$channels = $nllib->list_newsletters($offset, $maxRecords, $sort_mode, $find);
+$channels = $nllib->list_newsletters($offset, $maxRecords, $sort_mode, $find, '', array("tiki_p_subscribe_newsletters", "tiki_p_admin_newsletters", "tiki_p_send_newsletters"));
 
 $temp_max = count($channels["data"]);
 for ($i = 0; $i < $temp_max; $i++) {

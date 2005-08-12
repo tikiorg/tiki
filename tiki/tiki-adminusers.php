@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.48 2005-07-28 16:05:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.49 2005-08-12 13:01:58 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -316,7 +316,7 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 				die; 	
 			} 
 			if ($pass_chr_num == 'y') {
-				if (!preg_match_all("/[0-9]+/",$_POST["pass"],$foo) || !preg_match_all("/[A-Za-z]+/",$_POST["pass1"],$foo)) {
+				if (!preg_match_all("/[0-9]+/",$_POST["pass"],$foo) || !preg_match_all("/[A-Za-z]+/",$_POST["pass"],$foo)) {
 					$smarty->assign('msg',tra("Password must contain both letters and numbers"));
 					$smarty->display("error.tpl");
 					die; 	

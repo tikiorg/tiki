@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-show_page.tpl,v 1.6 2005-06-26 14:28:35 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-show_page.tpl,v 1.7 2005-08-12 13:02:13 sylvieg Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle" title="{tr}Refresh{/tr}">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -11,27 +11,43 @@
   {/if}
   </h1>
 {/if}
-{if $feature_wiki_pageid eq 'y'}
-	<small><a class="link" href="tiki-index.php?page_id={$page_id}">{tr}page id{/tr}: {$page_id}</a></small>
+
+{if $feature_wiki_description eq 'y'}
+	<div class="description"><strong>{$description}</strong></div>
 {/if}
 
-<div class="wikitopline">
-{if $feature_wiki_description eq 'y' or $cached_page eq 'y'}
-	{if $feature_wiki_description eq 'y'}<small>{$description}</small>{/if}
-	{if $cached_page eq 'y'}<small>({tr}cached{/tr})</small>{/if}
+{if $feature_wiki_pageid eq 'y'}
+	<div style="float: left"><small><a class="link" href="tiki-index.php?page_id={$page_id}">{tr}page id{/tr}: {$page_id}</a></small></div>
 {/if}
+{if $cached_page eq 'y'}<div style="float: right"><small>({tr}cached{/tr})</small>	<a title="{tr}refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1"><img src="img/icons/ico_redo.gif" border="0" height="16" width="16"  alt='{tr}refresh{/tr}'></a></div>{/if}
+
+<div class="wikitopline" style="clear: both;">
+{if $feature_multilingual == 'y'}
+	<div style="float: left">{include file="translated-lang.tpl"}</div>
+{/if}
+{if $feature_backlinks eq 'y' and $backlinks}
+<form action="tiki-index.php" method="post" style="float: right">
+  <select name="page" onchange="page.form.submit()">
+		<option>{tr}backlinks{/tr}&hellip;</option>
+	{section name=back loop=$backlinks}
+	  <option value="{$backlinks[back].fromPage}">{$backlinks[back].fromPage}</option>
+	{/section}
+	</select>
+	<noscript><input type="submit" value="{tr}go{/tr}" /></noscript>
+</form>
+{/if}
+
 {if $is_categorized eq 'y' and $feature_categories eq 'y' and $feature_categorypath eq 'y'}
-	{$display_catpath}
+	<div class="catpaths" style="clear: both">{tr}Categories{/tr}: |{$display_catpath}</div>
 {/if}
+
 {if $print_page ne 'y'}
+<div style="text-align: center">
 	{if !$lock and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y'}
 	<a title="{tr}edit{/tr}" href="tiki-editpage.php?page={$page|escape:"url"}"><img src="img/icons/edit.gif" border="0"  width="20" height="16" alt='{tr}edit{/tr}' /></a>
 	{/if}       
 	{if $wiki_feature_3d eq 'y'}
 	<a title="{tr}3d browser{/tr}" href="javascript:wiki3d_open('{$page|escape}',{$wiki_3d_width}, {$wiki_3d_height})"><img src="img/icons/ico_wiki3d.gif" border="0" width="13" height="16" alt='{tr}3d browser{/tr}' /></a>
-	{/if}
-	{if $cached_page eq 'y'}
-	<a title="{tr}refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1"><img src="img/icons/ico_redo.gif" border="0" height="16" width="16"  alt='{tr}refresh{/tr}'></a>
 	{/if}
 	<a title="{tr}print{/tr}" href="tiki-print.php?page={$page|escape:"url"}"><img src="img/icons/ico_print.gif" border="0"  width="16" height="16" alt='{tr}print{/tr}' /></a>
 	{if $feature_wiki_pdf eq 'y'}
@@ -47,16 +63,7 @@
 	<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this page{/tr}' title='{tr}stop monitoring this page{/tr}' src='img/icons/icon_unwatch.png' /></a>
 		{/if}
 	{/if}
-	{if $feature_backlinks eq 'y' and $backlinks}
-	<form action="tiki-index.php" method="get">
-	  <select name="page" onchange="page.form.submit()">
-			<option>{tr}backlinks{/tr}...</option>
-		{section name=back loop=$backlinks}
-		  <option value="{$backlinks[back].fromPage}">{$backlinks[back].fromPage}</option>
-		{/section}
-		</select>
-	</form>
-	{/if}
+
 	{* 
 	 * If not displaying structure but page is member of 
 	 * one or more structures display a list of structures 
@@ -78,7 +85,7 @@
 	  </select>
 	</form>
 	{/if}
-	{if $feature_multilingual == 'y'}{include file="translated-lang.tpl"}{/if}
+</div>
 {/if}
 </div>
 

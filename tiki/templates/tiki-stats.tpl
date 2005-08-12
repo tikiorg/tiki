@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-stats.tpl,v 1.22 2005-05-18 11:03:20 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-stats.tpl,v 1.23 2005-08-12 13:02:11 sylvieg Exp $ *}
 
 <h1><a href="tiki-stats.php" class="pagetitle">{tr}Stats{/tr}</a></h1>
 
@@ -16,6 +16,9 @@
 {if $user_stats}<span class="button2"> <a class="linkbut" href="#user_stats">{tr}User{/tr}</a></span>{/if}
 {if $quiz_stats}<span class="button2"> <a class="linkbut" href="#quiz_stats">{tr}Quizzes{/tr}</a></span>{/if}
 {if $feature_referer_stats eq 'y' and $tiki_p_view_referer_stats eq 'y'}<span class="button2"> <a class="linkbut" href="tiki-referer_stats.php">{tr}Referer stats{/tr}</a></span>{/if}
+{if $best_objects_stats}<span class="button2"> <a class="linkbut" href="#best_objects_stats">{tr}Most viewed objects{/tr}</a></span>{/if}
+{if $best_objects_stats_lastweek}<span class="button2"> <a class="linkbut" href="#best_objects_stats_lastweek">{tr}Most viewed objects in last 7 days{/tr}</a></span>{/if}
+
 </p>
 </div>
 
@@ -159,7 +162,47 @@
 <br />
 <br />
 <br />
-
+{if $best_objects_stats}
+<table class="normal">
+<tr><td colspan="3"><a name="best_objects_stats"></a></td></tr>
+<tr><td class="heading" colspan="3">{tr}Most viewed objects{/tr}</td></tr>
+<tr><td class="heading">{tr}Object{/tr}</td><td class="heading">{tr}Section{/tr}</td><td class="heading">{tr}Hits{/tr}</td></tr>
+{section name=i loop=$best_objects_stats}
+<tr>
+{if $smarty.section.i.index % 2}
+<td class="even">{$best_objects_stats[i]->object}</td>
+<td class="even">{$best_objects_stats[i]->type}</td>
+<td class="even">{$best_objects_stats[i]->hits}</td>
+{else}
+<td class="odd">{$best_objects_stats[i]->object}</td>
+<td class="odd">{$best_objects_stats[i]->type}</td>
+<td class="odd">{$best_objects_stats[i]->hits}</td>
+{/if}
+</tr>
+{/section}
+</table>
+{/if}
+<br />
+{if $best_objects_stats_lastweek}
+<table class="normal">
+<tr><td colspan="3"><a name="best_objects_stats_lastweek"></a></td></tr>
+<tr><td class="heading" colspan="3">{tr}Most viewed objects in the last 7 days{/tr}</td></tr>
+<tr><td class="heading">{tr}Object{/tr}</td><td class="heading">{tr}Section{/tr}</td><td class="heading">{tr}Hits{/tr}</td></tr>
+{section name=i loop=$best_objects_stats_lastweek}
+<tr>
+{if $smarty.section.i.index % 2}
+<td class="even">{$best_objects_stats_lastweek[i]->object}</td>
+<td class="even">{$best_objects_stats_lastweek[i]->type}</td>
+<td class="even">{$best_objects_stats_lastweek[i]->hits}</td>
+{else}
+<td class="odd">{$best_objects_stats_lastweek[i]->object}</td>
+<td class="odd">{$best_objects_stats_lastweek[i]->type}</td>
+<td class="odd">{$best_objects_stats_lastweek[i]->hits}</td>
+{/if}
+</tr>
+{/section}
+</table>
+{/if}
 <br />
 <br />
 <br />

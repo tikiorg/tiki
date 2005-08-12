@@ -44,7 +44,7 @@
 	<option value="">{tr}Unknown{/tr}</option>
 	{/if}
 	{section name=ix loop=$languages}
-	{if in_array($languages[ix].value, $available_languages)}
+	{if in_array($languages[ix].value, $available_languages) or $available_languages|@count eq 0}
 	<option value="{$languages[ix].value|escape}"{if $langpage eq $languages[ix].value} selected="selected"{/if}>{$languages[ix].name}</option>
 	{/if}
 	{/section}</select>

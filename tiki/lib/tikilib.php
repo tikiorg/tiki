@@ -48,7 +48,7 @@ class TikiLib extends TikiDB {
     function httprequest($url, $reqmethod = "GET") {
 	global $use_proxy,$proxy_host,$proxy_port;
 	// test url :
-	if (!preg_match("/^[-_a-zA-Z0-9:\/\.\?&;=\+~%]*$/",$url)) return false;
+	if (!preg_match("/^[-_a-zA-Z0-9:\/\.\?&;=\+~%,]*$/",$url)) return false;
 	// rewrite url if sloppy # added a case for https urls
 	if ( (substr($url,0,7) <> "http://") and
 		(substr($url,0,8) <> "https://")
@@ -5492,7 +5492,7 @@ if (!$simple_wiki) {
 
 	if (count($anch)) {
 	    $html = $this->parse_data($html);
-		$html = '<div class="toc">'.$html.'</div>'; // the class will be better on the firts ul but hard to do
+		$html= preg_replace("/^<ul>/", '<ul class="toc">', $html);
 	}
 
 	$data = str_replace("{maketoc}", $html, $data);

@@ -11,9 +11,35 @@ include_once ('lib/notifications/notificationlib.php');
 class TrackerLib extends TikiLib {
 
 	var $trackerinfo_cache;
+	
+	// allowed types for image fields
+	var $imgMimeTypes;
+	var $imgMaxSize;
 
 	function TrackerLib($db) {
 		parent::TikiLib($db);
+		
+		$this->imgMimeTypes = array('image/jpeg', 'image/gif', 'image/png');
+		$this->imgMaxSize = (1048576 * 4); // 4Mo
+	}
+	
+	// check that the image type is good
+	function check_image_type($mimeType) {
+		return in_array( $mimeType, $this->imgMimeTypes );
+	}
+	
+	function get_image_filename($imageFileName, $itemId, $fieldId) {
+		return $file_name = 'img/trackers/'.md5( "$imageFileName.$itemId.$fieldId" );
+	}
+	
+	function remove_field_images($fieldId) {
+		$query = 'select `value` from `tiki_tracker_item_fields` where `fieldId`=?';
+		$result = $this->query( $query, array((int)$fieldId) );
+		while( $r = $result->fetchRow() ) {
+			if( file_exists($r['value']) ) {
+				unlink( $r['value'] );
+			}
+		}
 	}
 
 	function add_item_attachment_hit($id) {
@@ -431,9 +457,7 @@ class TrackerLib extends TikiLib {
 				$fopt["linkId"] = '';
 				if ($fopt["type"] == 'r') {
 					$fopt["links"] = array();
-					if (!$opts) {
-						$opts = split(',',$fopt['options']);
-					}
+					$opts = split(',',$fopt['options']);
 					$fopt["linkId"] = $this->get_item_id($opts[0],$opts[1],$fopt["value"]);
 					$fopt["trackerId"] = $opts[0];
 				} elseif ($fopt["type"] == 'a') {
@@ -527,6 +551,38 @@ class TrackerLib extends TikiLib {
 			if (isset($ins_fields["data"][$i]["type"]) and $ins_fields["data"][$i]["type"] == 'e') {
 				
 			} elseif (isset($ins_fields["data"][$i]["fieldId"])) {
+				
+				// -----------------------------
+				// save image on disk
+				if ( isset($ins_fields["data"][$i]["type"]) and $ins_fields["data"][$i]["type"] == 'i') {					
+						
+					$itId = $itemId ? $itemId : $new_itemId;
+					if( $ins_fields["data"][$i]['value'] != ''
+						&& $ins_fields["data"][$i]['file_size'] <= $this->imgMaxSize 
+						&& $this->check_image_type( $ins_fields["data"][$i]['file_type'] ) ) {		
+						
+						$file_name = $this->get_image_filename(	$ins_fields["data"][$i]['file_name'],
+																$itemId,
+																$ins_fields["data"][$i]['fieldId']);
+
+						$fw = fopen( $file_name, "wb");
+						fwrite($fw, $ins_fields["data"][$i]['value']);
+						fflush($fw);
+						fclose($fw);
+						
+						$ins_fields['data'][$i]['value'] = $file_name;
+						
+						$old_file = $this->get_item_value($trackerId, $itemId, $ins_fields["data"][$i]['fieldId']);
+						if(file_exists($old_file) && $old_file != $file_name) {
+							unlink($old_file);
+						}
+					}
+					else {
+						continue;
+					}
+				}
+				// ---------------------------
+				
 				$fieldId = $ins_fields["data"][$i]["fieldId"];
 				if (isset($ins_fields["data"][$i]["name"])) {
 					$name = $ins_fields["data"][$i]["name"];
@@ -534,11 +590,13 @@ class TrackerLib extends TikiLib {
 					$name = $this->getOne("select `name` from `tiki_tracker_fields` where `fieldId`=?",array((int)$fieldId));
 				}
 				$value = $ins_fields["data"][$i]["value"];
-				if (isset($ins_fields["data"][$i]["type"]) and ($ins_fields["data"][$i]["type"] == 'f' or $ins_fields["data"][$i]["type"] == 'j')) {
-					$human_value = date('r',$ins_fields["data"][$i]["value"]);
-					$the_data .= "  $name = $human_value\n";
-				} else {
-					$the_data .= "  $name = $value\n";
+				if (isset($ins_fields["data"][$i]["isHidden"]) && $ins_fields["data"][$i]["isHidden"] == 'n') { // TODO: on perm control
+					if (isset($ins_fields["data"][$i]["type"]) and ($ins_fields["data"][$i]["type"] == 'f' or $ins_fields["data"][$i]["type"] == 'j')) {
+						$human_value = date('r',$ins_fields["data"][$i]["value"]);
+						$the_data .= "  $name = $human_value\n";
+					} else {
+						$the_data .= "  $name = $value\n";
+					}
 				}
 
 				if ($itemId) {
@@ -683,6 +741,16 @@ class TrackerLib extends TikiLib {
 		$now = date("U");
 
 		$trackerId = $this->getOne("select `trackerId` from `tiki_tracker_items` where `itemId`=?",array((int) $itemId));
+
+		// ---- save image list before sql query ---------------------------------
+		$fieldList = $this->list_tracker_fields($trackerId, 0, -1, 'name_asc', '');
+		$imgList = array();
+		foreach($fieldList['data'] as $f) {
+			if( $f['type'] == 'i' ) {
+				$imgList[] = $this->get_item_value($trackerId, $itemId, $f['fieldId']);
+			}
+		}
+		
 		$query = "update `tiki_trackers` set `lastModif`=? where `trackerId`=?";
 		$result = $this->query($query,array((int) $now,(int) $trackerId));
 		$query = "update `tiki_trackers` set `items`=`items`-1 where `trackerId`=?";
@@ -695,6 +763,14 @@ class TrackerLib extends TikiLib {
 		$result = $this->query($query,array((int) $itemId));
 		$query = "delete from `tiki_tracker_item_attachments` where `itemId`=?";
 		$result = $this->query($query,array((int) $itemId));
+		
+		// ---- delete image from disk -------------------------------------
+		foreach($imgList as $img) {
+			if( file_exists($img) ) {
+				unlink( $img );
+			}
+		}
+		return true;
 	}
 
 	// Lists all the fields for an existing tracker
@@ -762,7 +838,14 @@ class TrackerLib extends TikiLib {
 
 
 	function replace_tracker_field($trackerId, $fieldId, $name, $type, $isMain, $isSearchable, $isTblVisible, $isPublic, $isHidden, $isMandatory, $position, $options) {
-		if ($fieldId) {
+		if ($fieldId) {			
+			// -------------------------------------
+			// remove images when needed
+			$old_field = $this->get_tracker_field($fieldId); 
+			if( $old_field['type'] == 'i' && $type != 'i' ) {
+				$this->remove_field_images( $fieldId );
+			}
+				
 			$query = "update `tiki_tracker_fields` set `name`=? ,`type`=?,`isMain`=?,`isSearchable`=?,
 				`isTblVisible`=?,`isPublic`=?,`isHidden`=?,`isMandatory`=?,`position`=?,`options`=? where `fieldId`=?";
 			$bindvars=array($name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,$isHidden,$isMandatory,(int)$position,$options,(int) $fieldId);
@@ -815,8 +898,17 @@ class TrackerLib extends TikiLib {
 	}
 
 	function remove_tracker($trackerId) {
+		
+		// ---- delete image from disk -------------------------------------
+		$fieldList = $this->list_tracker_fields($trackerId, 0, -1, 'name_asc', '');		
+		foreach($fieldList['data'] as $f) {
+			if( $f['type'] == 'i' ) {
+				$this->remove_field_images($f['fieldId']);
+			}
+		}
+		
 		$bindvars=array((int) $trackerId);
-		$query = "delete from `tiki_trackers` where `trackerId`=?";
+		$query = "delete from `tiki_trackers` where `trackerId`=?";		
 
 		$result = $this->query($query,$bindvars);
 		// Remove the fields
@@ -842,11 +934,20 @@ class TrackerLib extends TikiLib {
 		$result = $this->query($query,$bindvars);
 		
 		$this->remove_object('tracker', $trackerId);
+		
 		return true;
 	}
 
 	function remove_tracker_field($fieldId,$trackerId) {
 		global $cachelib;
+		
+		// -------------------------------------
+		// remove images when needed 
+		$field = $this->get_tracker_field($fieldId);
+		if( $field['type'] == 'i' ) {
+			$this->remove_field_images($fieldId);
+		}
+		
 		$query = "delete from `tiki_tracker_fields` where `fieldId`=?";
 		$bindvars=array((int) $fieldId);
 		$result = $this->query($query,$bindvars);
@@ -859,6 +960,7 @@ class TrackerLib extends TikiLib {
 		$cachelib->invalidate(md5('trackerfield'.$fieldId.'oc'));
 		$cachelib->invalidate(md5('trackerfield'.$fieldId.'pc'));
 		$cachelib->invalidate(md5('trackerfield'.$fieldId.'opc'));
+		
 		return true;
 	}
 
@@ -960,6 +1062,10 @@ class TrackerLib extends TikiLib {
 			'label'=>tra('group selector'),
 			'opt'=>true,  
 			'help'=>tra('Group Selector: use options for automatic field feeding : you can use 1 for group of creation and 2 for group where modification come from. The default group has to be set, or the first group that come is chosen for a user, or the default group is Registered.'));
+		$type['y'] = array(
+			'label'=>tra('country selector'),
+			'opt'=>true,
+			'help'=>tra('Country Selector options: 0|1|2 where 0 show both country flag and country name, 1 show only country name and 2 show only country flag') );
 		$type['f'] = array(
 			'label'=>tra('date and time'), 
 			'opt'=>false);
@@ -984,11 +1090,11 @@ class TrackerLib extends TikiLib {
 		$type['r'] = array(
 			'label'=>tra('item link'),  
 			'opt'=>true,
-			'help'=>tra('Item Link options: trackerId,fieldId links to item from trackerId which fieldId matches the content of that field.') );
+			'help'=>tra('Item Link options: trackerId,fieldId,linkToItem links to item from trackerId which fieldId matches the content of that field. linkToItem 1|0 to create a link to the item in view mode and listing') );
 		$type['l'] = array(
 			'label'=>tra('items list'),  
 			'opt'=>true, 
-			'help'=>tra('Items list options: trackerId,fieldIdThere, fieldIdHere, displayFieldIdThere displays the list of displayFieldIdThere from item in tracker trackerId where fieldIdThere matches fieldIdHere.') );
+			'help'=>tra('Items list options: trackerId,fieldIdThere, fieldIdHere, displayFieldIdThere, linkToItems displays the list of displayFieldIdThere from item in tracker trackerId where fieldIdThere matches fieldIdHere. linkToItems 1|0 to create a link to items in view mode and listing') );
 		$type['m'] = array(
 			'label'=>tra('email'),    
 			'opt'=>true,

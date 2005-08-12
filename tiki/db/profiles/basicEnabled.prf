@@ -1,5 +1,5 @@
 # BasicEnabled profile for easy use
-# $Header: /cvsroot/tikiwiki/tiki/db/profiles/basicEnabled.prf,v 1.2 2005-05-18 10:59:13 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/profiles/basicEnabled.prf,v 1.3 2005-08-12 13:01:59 sylvieg Exp $
 REPLACE INTO tiki_calendars VALUES (1,'Public','Public calendar','admin','n','n','n','n','n','n',1072170381,1072170381,'n');
 REPLACE INTO tiki_modules VALUES ('login_box','r',1,'P','',0,0,'','a:1:{i:0;s:9:\"Anonymous\"\;}');
 REPLACE INTO tiki_preferences VALUES ('allowRegister','y');
@@ -38,7 +38,7 @@ REPLACE INTO tiki_preferences VALUES ('feature_menusfolderstyle','y');
 REPLACE INTO tiki_preferences VALUES ('feature_messages','y');
 REPLACE INTO tiki_preferences VALUES ('feature_modulecontrols','n');
 REPLACE INTO tiki_preferences VALUES ('feature_notepad','y');
-REPLACE INTO tiki_preferences VALUES ('feature_obzip','y');
+REPLACE INTO tiki_preferences VALUES ('feature_obzip','n');
 REPLACE INTO tiki_preferences VALUES ('feature_phplayers','n');
 REPLACE INTO tiki_preferences VALUES ('feature_poll_comments','y');
 REPLACE INTO tiki_preferences VALUES ('feature_referer_stats','y');

@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.4 2005-05-18 11:02:37 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.5 2005-08-12 13:02:10 sylvieg Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -318,7 +318,9 @@ div.cbox-data {
 }
 .rbox-title, .rbox-title[name="warning"] { 
   border: 0;
+  border-radius-topright : 1ex;
   -moz-border-radius-topright : 1ex;
+  -khtml-border-radius-topright : 1ex;
   font-size : 10px;
   padding : 0 10px;   
   position : relative;
@@ -635,10 +637,14 @@ DIV#page-bar table, DIV#page-bar td, DIV#page-bar tr {
 	text-decoration:none;
 }
 .button3 {
+	border-radius : 5px 5px 0 0;
 	-moz-border-radius : 5px 5px 0 0;
+	-khtml-border-radius : 5px 5px 0 0;
 }
 .button3 .linkbut {
+	border-radius : 5px 5px 0 0;
 	-moz-border-radius : 5px 5px 0 0;
+	-khtml-border-radius : 5px 5px 0 0;
 	padding-bottom : 2px;
 	border-bottom : 0;
 }
@@ -790,7 +796,6 @@ div.code {
         overflow: auto;       /* for Netscape, Firefox, Opera */
         overflow-y: auto;     /* for IE */
         overflow-x: hidden;   /* for IE */
-        width: 100%;
 }
 .codecaption {
 	font-size : 10px;
@@ -805,7 +810,9 @@ div.code {
 	color : #666666;
 	background-color: #E9ECEF;
 	font-weight : bold;
+	border-radius-topright : 1ex;
 	-moz-border-radius-topright : 1ex;
+	-khtml-border-radius-topright : 1ex;
 }
 
 /******************************************************* IMAGE GALLERIES **********************************************/
@@ -929,7 +936,9 @@ span.titlea {
 	margin : 3px 0 6px 0;
 	font-size : 12px;
 	font-weight : bold;
+	border-radius-bottomright : 20px;
 	-moz-border-radius-bottomright : 20px;
+	-khtml-border-radius-bottomright : 20px;
 }
 span.titleb,
 span.titleb:after {
@@ -1224,7 +1233,9 @@ td.categobjectsdataodd {
 	color : #666666;
 	padding : 0px 4px 0px 4px;
 	border : 1px solid #AAAAAA;
+	border-radius : 6px;
 	-moz-border-radius : 6px;
+	-khtml-border-radius : 6px;
 }
 .catlists a.link:hover {
 	color : #000000;
@@ -1401,7 +1412,9 @@ div.messureadbody {
 	padding : 1px;
 	margin : 1px;
 	border : 1px inset #666666;
+	border-radius : 20px;
 	-moz-border-radius : 20px;
+	-khtml-border-radius : 20px;
 	vertical-align : middle;
 	background-color : #BBAA99;
 }
@@ -1663,7 +1676,9 @@ td.middle {
 	background-color: #FFFFFF;
 	width : auto;
 	border : 1px solid #666666;
+	border-radius : 10px;
 	-moz-border-radius : 10px;
+	-khtml-border-radius : 10px;
 	padding : 5px;
 }
 .opaque .box-title,
@@ -1813,10 +1828,14 @@ div#loadstats {
 	margin : 0px;
 	margin-right : 5px;
 	padding: 2px 0;
+	border-radius : 5px 5px 0 0;
 	-moz-border-radius : 5px 5px 0 0;
+	-khtml-border-radius : 5px 5px 0 0;
 }
 .tabmark a {
+	border-radius : 5px 5px 0 0;
 	-moz-border-radius : 5px 5px 0 0;
+	-khtml-border-radius : 5px 5px 0 0;
 	border-bottom : 0;
 	color : #666666;
 	font-weight : bold;
@@ -1838,7 +1857,9 @@ div#loadstats {
 	margin: 5px;
 	margin-top : 0;
 	background-color : #EEEEEE;
+	border-radius : 0px 4px 4px 4px;
 	-moz-border-radius : 0px 4px 4px 4px;
+	-khtml-border-radius : 0px 4px 4px 4px;
 }
 
 /*********************** Version Plugin Style **********************/

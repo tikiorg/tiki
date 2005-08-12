@@ -1,4 +1,4 @@
-
+{if $feature_bot_bar_icons eq 'y'}
 	<div id="power" style="text-align: center">
 		<a href="http://tikiwiki.org/" title="TikiWiki"><img style="border: 0; vertical-align: middle" alt="{tr}Powered by{/tr} TikiWiki" src="img/tiki/tikibutton2.png" /></a>
 		<a href="http://www.php.net/" title="PHP"><img style="border: 0; vertical-align: middle" alt="{tr}Powered by{/tr} PHP" src="img/php.png" /></a>
@@ -14,7 +14,8 @@
 		{/if}		
 		
 	</div>
-	
+
+{/if}
 	<div id="rss" style="text-align: center">
 		{if $feature_wiki eq 'y' and $rss_wiki eq 'y'}
 				<a title="{tr}Wiki RSS{/tr}" href="tiki-wiki_rss.php?ver={$rssfeed_default_version}"><img alt="RSS" style="border: 0; vertical-align: text-bottom;" src="img/rss.png" /></a>
@@ -52,6 +53,8 @@
 
 {include file="babelfish.tpl"}
 
+{if $feature_bot_bar_debug eq 'y'}
 <div id="loadstats" style="text-align: center">
 	<small>[ {tr}Execution time{/tr}: {elapsed} {tr}secs{/tr} ] &nbsp; [ {tr}Memory usage{/tr}: {memusage} ] &nbsp; [ {$num_queries} {tr}database queries used{/tr} ] &nbsp; [ GZIP {$gzip} ] &nbsp; [ {tr}Server load{/tr}: {$server_load} ]</small>
 </div>
+{/if}

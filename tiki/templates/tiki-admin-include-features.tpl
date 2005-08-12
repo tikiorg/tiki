@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.63 2005-05-18 11:02:53 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.64 2005-08-12 13:02:11 sylvieg Exp $ *}
 
 {* this is the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
@@ -343,8 +343,9 @@
             {if $contact_anon eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Contact+Us" target="tikihelp" class="tikihelp" title="{tr}Contact Us{/tr}">{/if} {tr}Contact Us (Anonymous){/tr} {if $feature_help eq 'y'}</a>{/if}</td>
     <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td class="form">&nbsp;</td>
+    <td><input type="checkbox" name="feature_redirect_on_error"
+    	{if $feature_redirect_on_error eq 'y'}checked="checked"{/if}/></td>
+    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Redirect+On+Error" target="tikihelp" class="tikihelp" title="{tr}Redirect On Error{/tr}">{/if} {tr}Redirect On Error{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
     </tr>
 </table>
 {* --- User Features --- *}
@@ -467,6 +468,16 @@
         <td><input type="checkbox" name="feature_bot_bar"
             {if $feature_bot_bar eq 'y'}checked="checked"{/if}/></td>
         <td colspan="3">&nbsp;</td>
+      </tr><tr>
+      <td class="form">{tr}Bottom bar icons{/tr}</td>
+        <td><input type="checkbox" name="feature_bot_bar_icons"
+            {if $feature_bot_bar_icons eq 'y'}checked="checked"{/if}/></td>
+        <td colspan="3">&nbsp;</td>
+      </tr><tr>
+        <td class="form">{tr}Bottom bar debug{/tr}</td>
+        <td><input type="checkbox" name="feature_bot_bar_debug"
+	    {if $feature_bot_bar_debug eq 'y'}checked="checked"{/if}/></td>
+	<td colspan="3">&nbsp;</td>
       </tr><tr>
         <td colspan="5" class="button">
           <input type="submit" name="features" value="{tr}Change preferences{/tr}" />

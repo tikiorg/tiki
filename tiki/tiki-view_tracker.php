@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.82 2005-07-13 14:58:01 joeyhartmann Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.83 2005-08-12 13:01:58 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -192,7 +192,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 		$orderkey = true;
 	}
 	if (($xfields["data"][$i]['isTblVisible'] == 'y' or $xfields["data"][$i]['isSearchable'] == 'y') 
-		and ($xfields["data"][$i]['isPublic'] == 'y' or $tiki_p_admin_trackers == 'y')
+//		and ($xfields["data"][$i]['isPublic'] == 'y' or $tiki_p_admin_trackers == 'y') ispublic is for tracker plugin not normal view
 		and ($xfields["data"][$i]['isHidden'] == 'n' or $tiki_p_admin_trackers == 'y')
 		) {
 		
@@ -296,6 +296,23 @@ for ($i = 0; $i < $temp_max; $i++) {
 				$textarea_options = true;
 			} 
 			
+		} elseif(  $fields["data"][$i]["type"] == 'y' ) { // country list
+			if (isset($_REQUEST["$ins_id"])) {		
+				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];	
+			}
+			// Get flags here
+			$flags = array();
+			$h = opendir("img/flags/");
+			
+			while ($file = readdir($h)) {
+				if (strstr($file, ".gif")) {
+					$parts = explode('.', $file);
+					$flags[] = $parts[0];
+				}
+			}			
+			$fields["data"][$i]['flags'] = $flags;
+			$fields["data"][$i]['defaultvalue'] = 'None';
+			
 		} else {
 			if (isset($_REQUEST["$ins_id"])) {
 				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
@@ -330,12 +347,20 @@ for ($i = 0; $i < $temp_max; $i++) {
 							die;
 						}
 					}
-					$type = $_FILES["$ins_id"]['type'];
-					$size = $_FILES["$ins_id"]['size'];
-					$filename = $_FILES["$ins_id"]['name'];
-					$ins_fields["data"][$i]["value"] = $_FILES["$ins_id"]['name'];
-					$ins_fields["data"][$i]["file_type"] = $_FILES["$ins_id"]['type'];
+					$fp = fopen( $_FILES["$ins_id"]['tmp_name'], 'rb' );
+					//$fhash = md5($name = $_FILES["$ins_id"]['name']);
+					$data = '';
+					while (!feof($fp)) {
+						$data .= fread($fp, 8192 * 16);
+					}
+					fclose ($fp);
+					$ins_fields["data"][$i]["value"] = $data;
+					$ins_fields["data"][$i]["file_type"] = mime_content_type( $_FILES["$ins_id"]['tmp_name'] );
+					
+					//$ins_fields["data"][$i]["value"] = $_FILES["$ins_id"]['name'];
+					//$ins_fields["data"][$i]["file_type"] = $_FILES["$ins_id"]['type'];
 					$ins_fields["data"][$i]["file_size"] = $_FILES["$ins_id"]['size'];
+					$ins_fields["data"][$i]["file_name"] = $_FILES["$ins_id"]['name'];
 				}
 			}
 		}
@@ -541,6 +566,7 @@ foreach ($items["data"] as $itkey=>$oneitem) {
 ******************** */
 
 $smarty->assign_by_ref('items', $items["data"]);
+$smarty->assign_by_ref('item_count', $items['cant']);
 $smarty->assign_by_ref('listfields', $listfields);
 
 $users = $userlib->list_all_users();

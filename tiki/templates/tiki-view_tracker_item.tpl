@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker_item.tpl,v 1.85 2005-07-14 14:00:09 mose Exp $ *}
+{* $Id: tiki-view_tracker_item.tpl,v 1.86 2005-08-12 13:02:11 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -12,6 +12,18 @@
 <span class="button2"><a href="tiki-admin_trackers.php?trackerId={$trackerId}" class="linkbut">{tr}Edit this tracker{/tr}</a></span>
 <span class="button2"><a href="tiki-admin_tracker_fields.php?trackerId={$trackerId}" class="linkbut">{tr}Edit fields{/tr}</a></span>
 {/if}
+</div>
+<br />
+<div>
+{* ------- return/next/previous tab --- *}
+<span class="button2">
+<a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}">{tr}back{/tr} {tr}items list{/tr}</a></span>
+<span class="button2">
+{if $prevmsg}<span class="attention">{$prevmsg}</span>{else}
+<a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}&amp;move=prev"><- {tr}Previous{/tr}</a>{/if}</span>
+<span class="button2">
+{if $nextmsg}<span class="attention">{$nextmsg}</span>{else}
+<a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}&amp;move=next">{tr}next{/tr} -></a>{/if}</span>
 </div>
 <br /><br />
 
@@ -28,15 +40,6 @@
 {if $tiki_p_modify_tracker_items eq 'y'}
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Edit{/tr}</a></span>
 {/if}
-{* ------- return/next/previous tab --- *}
-<span id="tab{cycle name=tabs advance=false}" class="tabmark">
-<a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}">{tr}back{/tr} {tr}items list{/tr}</a></span>
-<span id="tab{cycle name=tabs advance=false}" class="tabmark">
-{if $prevmsg}<span class="attention">{$prevmsg}</span>{else}
-<a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}&amp;move=prev"><- {tr}Previous{/tr}</a>{/if}</span>
-<span id="tab{cycle name=tabs advance=false}" class="tabmark">
-{if $nextmsg}<span class="attention">{$nextmsg}</span>{else}
-<a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}&amp;move=next">{tr}next{/tr} -></a>{/if}</span>
 </div>
 {/if}
 
@@ -64,9 +67,9 @@
 <td class="formlabel right">{$cur_field.name}</td><td>
 {else}
 <tr class="formcolor"><td>{$cur_field.name}
-{if ($cur_field.type eq 'l')}
+{if ($cur_field.type eq 'l' and $cur_field.options_array[4] eq '1')}
 <br />
-<a href="tiki-view_tracker.php?trackerId={$cur_field.trackerId}&amp;filterfield={$cur_field.options_array[1]}&amp;filtervalue={section name=ox loop=$ins_fields}{if $ins_fields[ox].fieldId eq $cur_field.options_array[2]}{$ins_fields[ox].value}{/if}{/section}">{tr}Filter Tracker Items{/tr}</a><br />
+<a href="tiki-view_tracker.php?trackerId={$cur_field.options_array[0]}&amp;filterfield={$cur_field.options_array[1]}&amp;filtervalue={section name=ox loop=$ins_fields}{if $ins_fields[ox].fieldId eq $cur_field.options_array[2]}{$ins_fields[ox].value}{/if}{/section}">{tr}Filter Tracker Items{/tr}</a><br />
 {/if}
 
 </td>
@@ -77,7 +80,11 @@
 
 {elseif $cur_field.type eq 'l'}
 {foreach key=tid item=tlabel from=$cur_field.links}
+{if $cur_field.options_array[4] eq '1'}
 <div><a href="tiki-view_tracker_item.php?trackerId={$cur_field.trackerId}&amp;itemId={$tid}" class="link">{$tlabel}</a></div>
+{else}
+<div>{$tlabel}</div>
+{/if}
 {/foreach}
 
 {elseif $cur_field.type eq 'u'}
@@ -113,13 +120,15 @@
 {assign var=stick value="n"}
 {/if}
 
-{elseif $cur_field.type eq 't' or $cur_field.type eq 'r' or $cur_field.type eq 'n'}
+{elseif $cur_field.type eq 'y'}
+{assign var=o_opt value=$cur_field.options_array[0]}
+{if $o_opt eq '0' or $o_opt eq 2}<img border="0" src="img/flags/{$cur_field.value}.gif">{/if}
+{if $o_opt eq '0'}&nbsp;{/if}
+{if $o_opt eq '0' or $o_opt eq 1}{$cur_field.value}{/if}
+
+{elseif $cur_field.type eq 't' or $cur_field.type eq 'n'}
 {if $cur_field.options_array[2]}<span class="formunit">{$cur_field.options_array[2]|escape}&nbsp;</span>{/if}
-{if $cur_field.linkId}
-<a href="tiki-view_tracker_item.php?trackerId={$cur_field.options_array[0]}&amp;itemId={$cur_field.linkId}" class="link">{$cur_field.value|default:"&nbsp;"}</a>
-{else}
 {$cur_field.value|default:"&nbsp;"}
-{/if}
 {if $cur_field.options_array[3]}<span class="formunit">&nbsp;{$cur_field.options_array[3]|escape}</span>{/if}
 
 {if $cur_field.options_array[0] eq '1' and $stick ne 'y'}
@@ -135,6 +144,13 @@
 {else}
 </td></tr>
 {assign var=stick value="n"}
+{/if}
+
+{elseif $cur_field.type eq 'r'}
+{if $cur_field.options_array[2] eq '1'}
+<a href="tiki-view_tracker_item.php?trackerId={$cur_field.options_array[0]}&amp;itemId={$cur_field.linkId}" class="link">{$cur_field.value|default:"&nbsp;"}</a>
+{else}
+{$cur_field.value|default:"&nbsp;"}
 {/if}
 
 {elseif $cur_field.type eq 'm'}
@@ -157,6 +173,9 @@
 {/if}
 {/section}
 </span>
+
+{elseif $cur_field.type eq 'i'}
+<img src="{$cur_field.value}" alt="n/a" width="{$cur_field.options_array[2]}" height="{$cur_field.options_array[3]}" >
 
 {else}
 {$cur_field.value|default:"&nbsp;"}
@@ -188,7 +207,7 @@
 <h2>{tr}Comments{/tr}</h2>
 {section name=ix loop=$comments}
 <b>{$comments[ix].title}</b> {if $comments[ix].user}{tr}by{/tr} {$comments[ix].user}{/if}
-  {if $tiki_p_admin_trackers eq 'y'}[<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;commentId={$comments[ix].commentId}" title="{tr}edit{/tr}"><img src="img/icons/edit.gif" border="0" width="20" height="16"  alt='{tr}edit{/tr}'></a>|&nbsp;&nbsp;<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;remove_comment={$comments[ix].commentId}" 
+  {if $tiki_p_admin_trackers eq 'y'}[<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;commentId={$comments[ix].commentId}" title="{tr}edit{/tr}"><img src="img/icons/edit.gif" border="0" width="20" height="16"  alt='{tr}edit{/tr}'></a>|&nbsp;&nbsp;<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;remove_comment={$comments[ix].commentId}"
 title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}'></a>&nbsp;&nbsp;]{/if}
 <br />
 <small>{tr}posted on{/tr}: {$comments[ix].posted|tiki_short_datetime}</small><br />
@@ -219,7 +238,7 @@ title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
 {/if}
 <h2>{tr}Attachments{/tr}</h2>
 <table class="normal">
-<tr> 
+<tr>
 <td class="heading auto">&nbsp;</td>
 {section name=ix loop=$attfields}
 <td class="heading auto">{tr}{$attfields[ix]}{/tr}</td>
@@ -233,7 +252,7 @@ title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
 {if $attextra eq 'y'}
 {assign var=link value='tiki-view_tracker_more_info.php?attId='|cat:$atts[ix].attId}
 <a class="tablename" href="#" title="{tr}more info{/tr}"
-onClick="javascript:window.open('{$link}','','menubar=no,toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=yes,width=450,height=600');"><img src="img/icons/question.gif" border="0" alt="{tr}more info{/tr}"  hspace="2" vspace="1" /></a>{/if}<a 
+onClick="javascript:window.open('{$link}','','menubar=no,toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=yes,width=450,height=600');"><img src="img/icons/question.gif" border="0" alt="{tr}more info{/tr}"  hspace="2" vspace="1" /></a>{/if}<a
 class="tablename" href="tiki-download_item_attachment.php?attId={$atts[ix].attId}" title="{tr}download{/tr}"><img src="img/icons/icon38.gif" border="0" alt="{tr}download{/tr}" hspace="8" vspace="0" /></a>
 </td>
 {foreach key=k item=x from=$attfields}
@@ -269,7 +288,7 @@ src="img/icons/edit.gif" border="0" alt="{tr}edit{/tr}"  hspace="2" vspace="0" /
 {if $tiki_p_modify_tracker_items eq 'y'}
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent nohighlight"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}Edit item{/tr}</h2>
-<form action="tiki-view_tracker_item.php" method="post">
+<form enctype="multipart/form-data" action="tiki-view_tracker_item.php" method="post">
 {if $special}
 <input type="hidden" name="view" value="{$special}" />
 {else}
@@ -294,7 +313,7 @@ src="img/icons/edit.gif" border="0" alt="{tr}edit{/tr}"  hspace="2" vspace="0" /
 <td>
 <select name="status">
 {foreach key=st item=stdata from=$status_types}
-<option value="{$st}"{if $item_info.status eq $st} selected="selected"{/if} 
+<option value="{$st}"{if $item_info.status eq $st} selected="selected"{/if}
 style="background-image:url('{$stdata.image}');background-repeat:no-repeat;padding-left:17px;">{$stdata.label}</option>
 {/foreach}
 </select>
@@ -320,13 +339,14 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {include file=tiki-edit_help_tool.tpl qtnum=$cur_field.id area_name="area_"|cat:$cur_field.id}
 {elseif ($cur_field.type eq 'l' and $tiki_p_create_tracker_items eq 'y')}
 <br />
-<a href="tiki-view_tracker.php?trackerId={$cur_field.trackerId}&amp;vals%5B{$cur_field.options_array[1]}%5D=
+{* <a href="tiki-view_tracker.php?trackerId={$cur_field.trackerId}&amp;vals%5B{$cur_field.options_array[1]}%5D= *}
+<a href="tiki-view_tracker.php?trackerId={$cur_field.options_array[0]}&amp;vals%5B{$cur_field.options_array[1]}%5D=
 {section name=ox loop=$ins_fields}
 {if $ins_fields[ox].fieldId eq $cur_field.options_array[2]}
 {$ins_fields[ox].value}
 {/if}
 {/section}
-">{tr}Insert new item{/tr}<br /> 
+">{tr}Insert new item{/tr}<br />
 {/if}
 </td><td colspan="3" nowrap="nowrap">
 {/if}
@@ -382,7 +402,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {if $cur_field.options_array[3]}<span class="formunit">&nbsp;{$cur_field.options_array[3]}</span>{/if}
 
 {elseif $cur_field.type eq 'a'}
-<textarea name="ins_{$cur_field.id}" id="area_{$cur_field.id}" cols="{if $cur_field.options_array[1] gt 1}{$cur_field.options_array[1]}{else}50{/if}" 
+<textarea name="ins_{$cur_field.id}" id="area_{$cur_field.id}" cols="{if $cur_field.options_array[1] gt 1}{$cur_field.options_array[1]}{else}50{/if}"
 rows="{if $cur_field.options_array[2] gt 1}{$cur_field.options_array[2]}{else}4{/if}">{$cur_field.value|escape}</textarea>
 
 {elseif $cur_field.type eq 'f'}
@@ -390,7 +410,7 @@ rows="{if $cur_field.options_array[2] gt 1}{$cur_field.options_array[2]}{else}4{
 
 {elseif $cur_field.type eq 'r'}
 <select name="ins_{$cur_field.id}">
-{if $cur_field.isMandatory}<option value="" />{/if}
+{if $cur_field.isMandatory}<option value=""></option>{/if}
 {foreach key=id item=label from=$cur_field.list}
 <option value="{$label|escape}" {if $cur_field.value eq $label}selected="selected"{/if}>{$label}</option>
 {/foreach}
@@ -398,7 +418,7 @@ rows="{if $cur_field.options_array[2] gt 1}{$cur_field.options_array[2]}{else}4{
 
 {elseif $cur_field.type eq 'd'}
 <select name="ins_{$cur_field.id}">
-{if $cur_field.isMandatory}<option value="" />{/if}
+{if $cur_field.isMandatory}<option value=""></option>{/if}
 {section name=jx loop=$cur_field.options_array}
 <option value="{$cur_field.options_array[jx]|escape}" {if $cur_field.value eq $cur_field.options_array[jx]}selected="selected"{/if}>{$cur_field.options_array[jx]}</option>
 {/section}
@@ -406,6 +426,17 @@ rows="{if $cur_field.options_array[2] gt 1}{$cur_field.options_array[2]}{else}4{
 
 {elseif $cur_field.type eq 'c'}
 <input type="checkbox" name="ins_{$cur_field.id}" {if $cur_field.value eq 'y'}checked="checked"{/if}/>
+
+{elseif $cur_field.type eq 'y'}
+<select name="ins_{$cur_field.id}">
+{foreach item=flag from=$cur_field.flags}
+<option value="{$flag|escape}" {if ($cur_field.value ne '' and $cur_field.value eq $flag) or ($cur_field.value eq '' and $flag eq 'None')}selected="selected"{/if}
+style="background-image:url('img/flags/{$flag}.gif');background-repeat:no-repeat;padding-left:25px;padding-bottom:3px;">{$flag}</option>
+{/foreach}
+</select>
+
+{elseif $cur_field.type eq 'i'}
+<input type="file" name="ins_{$cur_field.id}" />
 
 {elseif $cur_field.type eq 'j'}
 <input type="hidden" name="ins_{$cur_field.id}" value="{$cur_field.value|default:$smarty.now}" id="ins_{$cur_field.id}" />

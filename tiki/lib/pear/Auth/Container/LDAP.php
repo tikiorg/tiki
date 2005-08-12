@@ -16,7 +16,7 @@
 // | Authors: Jan Wagner <wagner@netsols.de>                              |
 // +----------------------------------------------------------------------+
 //
-// $Id: LDAP.php,v 1.3 2003-07-12 09:36:39 mose Exp $
+// $Id: LDAP.php,v 1.4 2005-08-12 13:02:02 sylvieg Exp $
 //
 
 require_once "Auth/Container.php";
@@ -86,7 +86,7 @@ require_once "PEAR.php";
  *
  * @author   Jan Wagner <wagner@netsols.de>
  * @package  Auth
- * @version  $Revision: 1.3 $
+ * @version  $Revision: 1.4 $
  */
 class Auth_Container_LDAP extends Auth_Container
 {
@@ -375,93 +375,6 @@ class Auth_Container_LDAP extends Auth_Container
      * @param  string  Additional values (array)
      * @return Error   True, if it worked, otherwise a PEAR::Error object
      */
-    function addUser($username, $password, $additional)
-    {
-        include_once("System/Command.php");
-        // build up the admin user's Distinguished Name
-        $adminuser = escapeshellcmd(trim($this->options["adminuser"]));
-        $adminpass = escapeshellcmd(trim($this->options["adminpass"]));
-        $basedn = $this->options["basedn"];
-        $useroc = $this->options["useroc"];
-        $userdn = $this->options["userdn"];
-        $userattr = $this->options["userattr"];
-        $status = "";
-
-        // flow:
-        // make sure we have all the required variables
-        if(empty($username) || $username == "")
-            $status = "User's name cannot be blank";
-        elseif(empty($password) || $password == "")
-            $status = "User's password cannot be blank";
-        elseif(!isset($additional["email"]))
-            $status = "User's email address cannot be blank";
-        elseif(empty($this->options["adminuser"]) || $this->options["adminuser"] == "")
-            $status = "adminuser cannot be blank";
-        elseif(empty($this->options["adminpass"]) || $this->options["adminpass"] == "")
-            $status = "adminpass cannot be blank";
-        // if we've gotten an error message already, just exit
-        if($status != "")
-            return new PEAR_Error($status, PEAR_ERROR_RETURN);
-
-        $command = "ldapmodify";
-        $arguments = " -a -x -D \"".$adminuser."\" -w \"".$adminpass."\"";
-        if(!empty($userdn))
-            $userdn .= ",";
-        $input = "dn: ".$userattr."=".$username.",".$userdn.$basedn."\n"
-                .$userattr.": ".$username."\n"
-                ."sn: ".$username."\n"
-                ."userPassword: ".$password."\n"
-                ."mail: ".$additional["email"]."\n"
-                ."objectClass: top\n"
-                ."objectClass: ".$useroc."\n"
-                ."\n\n";
-        $descriptorspec = array(
-            0 => array("pipe", "r"), // stdin is a pipe that the child will read from
-            1 => array("pipe", "w"), // stdout is a pipe that the child will write to
-            2 => array("pipe", "w"), // stderr is a pipe that the child will write to
-        );
-        // workout whether we have the ldapmodify command or not        
-        $cmd = new System_Command();
-        $command = $cmd->which($command);
-        $cmd = null;
-        $result = "";
-
-        // if the command wasn't found, just exit
-        if( $command == false) {
-            $status = "Unable to find required command 'ldapmodify'.";
-        }
-        // if the command was found, continue on
-        else {
-            // open the process
-            $process = proc_open( $command.$arguments, $descriptorspec, $pipes );
-            // make sure it worked
-            if( is_resource($process) ) {
-                // write out the creation strings
-                fwrite( $pipes[0], $input );
-                fclose( $pipes[0] );
-
-                // get the input
-                while(!feof($pipes[1])) {
-                    $result .= fgets($pipes[1], 1024);
-                }
-                fclose( $pipes[1] );
-                $return = proc_close($process);
-                $pos = strstr($result, "adding new entry");
-                if($return == 0 && $pos != false)
-                   return true;
-                else
-                $status = "Arguments: $arguments\nResult: ".$return."\n".$result."\n\nInput:\n".$input;
-            }
-            else {
-                $status = "Failed to open command.";
-            }
-        }
-
-        if($this->debug != false)
-        mail($this->debug, "adduser", $status);
-
-        return PEAR::raiseError("Auth_Container_LDAP: ".$status, -1, PEAR_ERROR_PRINT);
-    }
 
     /**
      * Add a new user
@@ -473,7 +386,7 @@ class Auth_Container_LDAP extends Auth_Container
      * @param  string  Additional values (array)
      * @return Error   True, if it worked, otherwise a PEAR::Error object
      */
-    function addUser2($username, $password, $additional)
+    function addUser($username, $password, $additional)
     {
         // build up the admin user's Distinguished Name
         $adminuser = $this->options["adminuser"];
@@ -571,6 +484,94 @@ class Auth_Container_LDAP extends Auth_Container
             return 2;
         else
             return new PEAR_Error($status, PEAR_ERROR_RETURN);
+    }
+
+    function addUser2($username, $password, $additional)
+    {
+        include_once("System/Command.php");
+        // build up the admin user's Distinguished Name
+        $adminuser = escapeshellcmd(trim($this->options["adminuser"]));
+        $adminpass = escapeshellcmd(trim($this->options["adminpass"]));
+        $basedn = $this->options["basedn"];
+        $useroc = $this->options["useroc"];
+        $userdn = $this->options["userdn"];
+        $userattr = $this->options["userattr"];
+        $status = "";
+
+        // flow:
+        // make sure we have all the required variables
+        if(empty($username) || $username == "")
+            $status = "User's name cannot be blank";
+        elseif(empty($password) || $password == "")
+            $status = "User's password cannot be blank";
+        elseif(!isset($additional["email"]))
+            $status = "User's email address cannot be blank";
+        elseif(empty($this->options["adminuser"]) || $this->options["adminuser"] == "")
+            $status = "adminuser cannot be blank";
+        elseif(empty($this->options["adminpass"]) || $this->options["adminpass"] == "")
+            $status = "adminpass cannot be blank";
+        // if we've gotten an error message already, just exit
+        if($status != "")
+            return new PEAR_Error($status, PEAR_ERROR_RETURN);
+
+        $command = "ldapmodify";
+        $arguments = " -a -x -D \"".$adminuser."\" -w \"".$adminpass."\"";
+        if(!empty($userdn))
+            $userdn .= ",";
+        $input = "dn: ".$userattr."=".$username.",".$userdn.$basedn."\n"
+                .$userattr.": ".$username."\n"
+                ."sn: ".$username."\n"
+                ."userPassword: ".$password."\n"
+                ."mail: ".$additional["email"]."\n"
+                ."objectClass: top\n"
+                ."objectClass: ".$useroc."\n"
+                ."\n\n";
+        $descriptorspec = array(
+            0 => array("pipe", "r"), // stdin is a pipe that the child will read from
+            1 => array("pipe", "w"), // stdout is a pipe that the child will write to
+            2 => array("pipe", "w"), // stderr is a pipe that the child will write to
+        );
+        // workout whether we have the ldapmodify command or not        
+        $cmd = new System_Command();
+        $command = $cmd->which($command);
+        $cmd = null;
+        $result = "";
+
+        // if the command wasn't found, just exit
+        if( $command == false) {
+            $status = "Unable to find required command 'ldapmodify'.";
+        }
+        // if the command was found, continue on
+        else {
+            // open the process
+            $process = proc_open( $command.$arguments, $descriptorspec, $pipes );
+            // make sure it worked
+            if( is_resource($process) ) {
+                // write out the creation strings
+                fwrite( $pipes[0], $input );
+                fclose( $pipes[0] );
+
+                // get the input
+                while(!feof($pipes[1])) {
+                    $result .= fgets($pipes[1], 1024);
+                }
+                fclose( $pipes[1] );
+                $return = proc_close($process);
+                $pos = strstr($result, "adding new entry");
+                if($return == 0 && $pos != false)
+                   return true;
+                else
+                $status = "Arguments: $arguments\nResult: ".$return."\n".$result."\n\nInput:\n".$input;
+            }
+            else {
+                $status = "Failed to open command.";
+            }
+        }
+
+        if($this->debug != false)
+        mail($this->debug, "adduser", $status);
+
+        return PEAR::raiseError("Auth_Container_LDAP: ".$status, -1, PEAR_ERROR_PRINT);
     }
 
 }

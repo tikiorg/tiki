@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.40 2005-05-18 10:58:53 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.41 2005-08-12 13:01:58 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.40 2005-05-18 10:58:53 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.41 2005-08-12 13:01:58 sylvieg Exp $
 //
 
 // Initialization
@@ -51,7 +51,7 @@ if (!isset($_REQUEST["parentId"])) {
 
 $smarty->assign('parentId', $_REQUEST["parentId"]);
 
-if (isset($_REQUEST["addpage"])) {
+if (isset($_REQUEST["addpage"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize a page
 	// $categlib->categorize_page($_REQUEST["pageName"],$_REQUEST["parentId"]);
@@ -61,61 +61,61 @@ if (isset($_REQUEST["addpage"])) {
 	}
 }
 
-if (isset($_REQUEST["addpoll"])) {
+if (isset($_REQUEST["addpoll"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize a poll
 	$categlib->categorize_poll($_REQUEST["pollId"], $_REQUEST["parentId"]);
 }
 
-if (isset($_REQUEST["addfaq"])) {
+if (isset($_REQUEST["addfaq"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize a faq
 	$categlib->categorize_faq($_REQUEST["faqId"], $_REQUEST["parentId"]);
 }
 
-if (isset($_REQUEST["addtracker"])) {
+if (isset($_REQUEST["addtracker"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize a tracker
 	$categlib->categorize_tracker($_REQUEST["trackerId"], $_REQUEST["parentId"]);
 }
 
-if (isset($_REQUEST["addquiz"])) {
+if (isset($_REQUEST["addquiz"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize a quiz
 	$categlib->categorize_quiz($_REQUEST["quizId"], $_REQUEST["parentId"]);
 }
 
-if (isset($_REQUEST["addforum"])) {
+if (isset($_REQUEST["addforum"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize a forum
 	$categlib->categorize_forum($_REQUEST["forumId"], $_REQUEST["parentId"]);
 }
 
-if (isset($_REQUEST["addgallery"])) {
+if (isset($_REQUEST["addgallery"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize an image gallery
 	$categlib->categorize_gallery($_REQUEST["galleryId"], $_REQUEST["parentId"]);
 }
 
-if (isset($_REQUEST["addfilegallery"])) {
+if (isset($_REQUEST["addfilegallery"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize a file gallery
 	$categlib->categorize_file_gallery($_REQUEST["file_galleryId"], $_REQUEST["parentId"]);
 }
 
-if (isset($_REQUEST["addarticle"])) {
+if (isset($_REQUEST["addarticle"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize an article
 	$categlib->categorize_article($_REQUEST["articleId"], $_REQUEST["parentId"]);
 }
 
-if (isset($_REQUEST["addblog"])) {
+if (isset($_REQUEST["addblog"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize a blog
 	$categlib->categorize_blog($_REQUEST["blogId"], $_REQUEST["parentId"]);
 }
 
-if (isset($_REQUEST["adddirectory"])) {
+if (isset($_REQUEST["adddirectory"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize a directory category
 	$categlib->categorize_directory($_REQUEST["directoryId"], $_REQUEST["parentId"]);

@@ -278,6 +278,62 @@ class StatsLib extends TikiLib {
 		$stats["worstday"] = $this->getOne("select `day` from `tiki_pageviews` where `pageviews`=?",array((int)$stats["worstpvs"]));
 		return $stats;
 	}
+	
+	function stats_hit($object,$type,$id=NULL) {
+		if (is_null($object) || is_null($type)) {
+			$result=false;
+			return $result;
+		}
+    $dayzero = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
+    if (!is_null($id)) {
+    	$object=$id."?".$object;
+    }
+    $cant = $this->getOne("select count(*) from `tiki_stats` where `object`=? and `type`=? and `day`=?",array($object,$type,(int)$dayzero));
+    if ($cant) {
+        $query = "update `tiki_stats` set `hits`=`hits`+1 where `object`=? and `type`=? and `day`=?";
+    } else {
+        $query = "insert into `tiki_stats`(`object`,`type`, `day`,`hits`) values(?,?,?,1)";
+    }
+
+    $result = $this->query($query,array($object,$type,(int)$dayzero),-1,-1,false);
+    return $result;
+	}
+	
+	function best_overall_object_stats($max=20,$days=0) {
+		$stats = array();
+		if ($days!=0) {
+			$mid="WHERE `day` >= ".mktime(0, 0, 0, date("m"), date("d")-$days, date("Y"))." ";
+		} else {
+			$mid="";
+		}
+		$query="SELECT `object`, `type`, sum(`hits`) AS `hits` FROM `tiki_stats` ".$mid."GROUP BY `object`,`type` ORDER BY `hits` DESC";
+		$result = $this->query($query,array(),$max,0);
+		$i=0;
+		while ($res = $result->fetchRow()) {
+		  if (strpos($res["object"],"?")) {
+		  	list($stats[$i]->ID,$stats[$i]->object)=explode("?",$res["object"],2);
+		  } else {
+		  	$stats[$i]->object=$res["object"];
+		  	$stats[$i]->ID=$res["object"];
+		  }
+		  $stats[$i]->type=$res["type"];
+		  $stats[$i]->hits=$res["hits"];
+		  $i++;
+		}
+		return $stats;
+	}
+	
+	function object_hits($object,$type,$days=0) {
+		if ($days!=0) {
+			$mid="AND `day` >= ".mktime(0, 0, 0, date("m"), date("d")-$days, date("Y"))." ";
+		} else {
+			$mid="";
+		}
+		$query_cant="SELECT sum(`hits`) AS `hits` FROM `tiki_stats` WHERE `object`=? AND `type`=?".$mid."GROUP BY `object`,`type`";
+		$cant = $this->getOne($query_cant,array($object,$type));
+		return $cant;
+	}
+	
 }
 
 $statslib = new StatsLib($dbTiki);

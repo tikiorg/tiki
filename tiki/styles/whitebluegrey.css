@@ -1,5 +1,5 @@
 /* 
-  $Header: /cvsroot/tikiwiki/tiki/styles/whitebluegrey.css,v 1.43 2005-05-18 11:02:39 mose Exp $
+  $Header: /cvsroot/tikiwiki/tiki/styles/whitebluegrey.css,v 1.44 2005-08-12 13:02:10 sylvieg Exp $
   whitebluegrey.css
   This theme is based on the default2 style for Tiki 1.2
   If you want  a short-version CSS template, start by copying default2
@@ -820,8 +820,18 @@ DIV#page-bar {
 	padding-bottom:   0.1em;
 	margin:   0.0ex 0px;
 }
-.button3 { -moz-border-radius : 5px 5px 0 0;  }
-.button3 .linkbut { -moz-border-radius : 5px 5px 0 0; padding-bottom : 2px; border-bottom : 0; }
+.button3 {
+  border-radius : 5px 5px 0 0;
+  -moz-border-radius : 5px 5px 0 0;
+  -khtml-border-radius : 5px 5px 0 0;
+}
+.button3 .linkbut {
+  border-radius : 5px 5px 0 0;
+  -moz-border-radius : 5px 5px 0 0;
+  -khtml-border-radius : 5px 5px 0 0;
+  padding-bottom : 2px;
+  border-bottom : 0;
+}
 
 /* Links in buttons */
 .linkbut {
@@ -2560,7 +2570,9 @@ a.tikihelp:hover {
   color: #666666;
   padding: 0px 4px 0px 4px;
   border: 1px solid #aaaaaa;
+  border-radius: 6px;
   -moz-border-radius: 6px;
+  -khtml-border-radius: 6px;
 }
 .catlists a.link:hover {
   color: #000000;
@@ -2744,10 +2756,14 @@ TABLE.admin {
 	margin: 0px;
 	margin-right: 5px;
 	padding: 1px 0px 1px 0px;
+	border-radius : 5px 5px 0 0;
 	-moz-border-radius : 5px 5px 0 0;  
+	-khtml-border-radius : 5px 5px 0 0;
 }
 .tabmark a { 
+	border-radius : 5px 5px 0 0;
 	-moz-border-radius : 5px 5px 0 0; 
+	-khtml-border-radius : 5px 5px 0 0;
 	border-bottom : 0; 
 	color: #666666;
 	font-weight: 700 !important;
@@ -2769,7 +2785,9 @@ TABLE.admin {
 	padding: 6px 2px 2px 2px;
 	margin-bottom: 25px;
 	background: #eeeeee;
+	border-radius: 0px 4px 4px 4px;
 	-moz-border-radius: 0px 4px 4px 4px;
+	-khtml-border-radius: 0px 4px 4px 4px;
 	width: 100%;
 }
 
@@ -2779,7 +2797,9 @@ TABLE.admin {
   padding: 1px;
   margin: 1px;
   border: 1px inset #666666;
+  border-radius: 20px;
   -moz-border-radius: 20px;
+  -khtml-border-radius: 20px;
   vertical-align: middle;
   background: #bbaa99;
 }
