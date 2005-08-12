@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-page.php,v 1.12 2005-05-18 10:58:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-page.php,v 1.13 2005-08-12 13:01:58 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,6 +10,7 @@
 require_once ('tiki-setup.php');
 
 include_once ('lib/htmlpages/htmlpageslib.php');
+include_once ('lib/stats/statslib.php');
 
 if ($feature_html_pages != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_html_pages");
@@ -48,6 +49,8 @@ if ($feature_theme_control == 'y') {
 }
 
 ask_ticket('html-page');
+//add a hit
+$statslib->stats_hit($_REQUEST['pageName'],"html_pages");
 
 // Display the template
 $smarty->assign('mid', 'tiki-page.tpl');

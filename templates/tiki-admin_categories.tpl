@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.40 2005-05-18 11:02:56 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.41 2005-08-12 13:02:11 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
   
@@ -148,6 +148,7 @@ border="0" src="img/icons/edit.gif" height="12" width="12" hspace="5" vspace="1"
   </td>
   </tr>
   </table>
+{if $parentId != 0}
   <br />
 <table class="normalnoborder" cellpadding="0" cellspacing="0">  
   <tr>
@@ -238,3 +239,4 @@ border="0" src="img/icons/edit.gif" height="12" width="12" hspace="5" vspace="1"
   </td>
 </tr>
 </table>
+{/if}

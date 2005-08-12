@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.40 2005-05-18 10:58:54 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.41 2005-08-12 13:01:58 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -53,6 +53,8 @@ elseif (isset($_REQUEST["prefs"])) {
     $pref_simple_values = array(
         "site_crumb_seper",
         "contact_user",
+        "favicon",
+        "favicon_type",
         "feature_server_name",
         "maxRecords",
         "sender_email",
@@ -128,6 +130,14 @@ elseif (isset($_REQUEST["newadminpass"])) {
         die;
     }
 
+    // Dont allow blank passwords here
+    if (strlen($_REQUEST["adminpass"]) == 0) {
+    	$smarty->assign("msg", tra("You cannot have a blank password"));
+	$smarty->display("error.tpl");
+	die;
+    }
+	
+
     // Validate password here
     if (strlen($_REQUEST["adminpass"]) < $min_pass_length) {
         $text = tra("Password should be at least");
@@ -176,6 +186,8 @@ $smarty->assign_by_ref("timezone_server", $timezone_server);
 // Set defaults
 $smarty->assign("language", $tikilib->get_preference("language", "en"));
 $smarty->assign("feature_detect_language", $tikilib->get_preference("feature_detect_language", 'n'));
+$smarty->assign("favicon", $tikilib->get_preference("favicon", 'favicon.png'));
+$smarty->assign("favicon_type", $tikilib->get_preference("favicon_type", 'image/png'));
 $smarty->assign("lang_use_db", $tikilib->get_preference("lang_use_db", 'n'));
 $smarty->assign("useUrlIndex", $tikilib->get_preference("useUrlIndex", 'n'));
 $smarty->assign("urlIndex", $tikilib->get_preference("urlIndex", ''));

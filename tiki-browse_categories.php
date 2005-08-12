@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.24 2005-07-30 11:34:05 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.25 2005-08-12 13:01:58 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.24 2005-07-30 11:34:05 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.25 2005-08-12 13:01:58 sylvieg Exp $
 //
 
 // Initialization
@@ -95,6 +95,7 @@ $smarty->assign('father', $father);
 $ctall = $categlib->get_all_categories_respect_perms($user, 'tiki_p_view_categories');
 
 if ($feature_phplayers == 'y') {
+	if (!function_exists("mktree")) {
 	function mktree($ind,$indent="",$back) {
 		global $ctall, $deep, $type;
 		$kids = array();
@@ -112,6 +113,7 @@ if ($feature_phplayers == 'y') {
 		} else {
 			return "";
 		}
+	}
 	}
 	$itall = mktree(0,".","");
 	include_once ("lib/phplayers/lib/PHPLIB.php");

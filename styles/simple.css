@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.33 2005-05-18 11:02:36 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.34 2005-08-12 13:02:10 sylvieg Exp $
  *
  * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye
  * Enables font re-sizing in all browsers, aims to be WCAG 1.0 compatible (not yet), one simple css file.
@@ -60,6 +60,8 @@ table.galtable {
 
 table.normal td.heading {
  text-align: left;
+ background-color: #abcdef;
+ font-size: 1em;
  width: 15px;
 }
 
@@ -108,7 +110,8 @@ input[type='submit'], input[type='file'], select {
 	font-size: 0.9em;
 }
 select {
-	text-align: right;
+	height: 1.6em;
+	text-align: start;
 }
 
 textarea {
@@ -460,7 +463,9 @@ textarea.tshoutbox { /* correct width for shoutboxmod textarea only (needed by m
 }
 
 .wikitext {
- background-color: transparent;
+	background-color: transparent;
+	overflow: auto;
+	clip: rect(0,100%,100%,0);
 }
 
 .wikitopline {
@@ -468,7 +473,7 @@ textarea.tshoutbox { /* correct width for shoutboxmod textarea only (needed by m
 	background-color: #f0f9ff;
 }
 .wiki-edithelp {
- display: none;
+	display: none;
 }
 /*
  * articles
@@ -640,90 +645,96 @@ textarea.tshoutbox { /* correct width for shoutboxmod textarea only (needed by m
 /* trackers specific style */
 
 .statuson {
-  padding: 1px;
-  margin: 1px;
-  border: 1px inset #666666;
-  vertical-align: middle;
-  background-color: #bbaa99;
+	padding: 1px;
+	margin: 1px;
+	border: 1px inset #666666;
+	vertical-align: middle;
+	background-color: #bbaa99;
 }
 .statusoff {
-  padding: 1px;
-  margin: 2px;
-  vertical-align: middle;
+	padding: 1px;
+	margin: 2px;
+	vertical-align: middle;
 }
 
-.normal { border:solid 1px #abcdef;}
+.normal {
+	border: solid 1px #abcdef;
+}
 
-/**** coloration for c o d e plugin *****/
-.codelisting 
-{ font-family : monospace;
- padding : 2ex;
-  background-color : #ddeeff;
-  margin : 1ex;
-   border : 1px dashed #adacaf; }
+.categpath {
+	font-size: x-small;
+}
 
-/* Version Plugin Style */
+/* CODE plugin */
+.codelisting {
+	font-family : monospace;
+	padding: 2ex;
+	background-color: #ddeeff;
+	margin: 1ex;
+	border: 1px dashed #adacaf;
+}
 
+/* VERSION plugin */
 .versions {
-border-top : 1px dashed #999999;
-border-bottom : 1px dashed #999999;
-min-height : 142px;
+	border-top: 1px dashed #999999;
+	border-bottom: 1px dashed #999999;
+	min-height: 142px;
 }
 .versionav {
-display : inline;
-float : right;
-border-left : 1px dashed #999999;
+	display: inline;
+	float: right;
+	border-left: 1px dashed #999999;
 }
 .versionav .button2 {
-display : block;
-border : 0;
-border-bottom : 1px dashed #999999;
-background-color : transparent;
+	display: block;
+	border: 0;
+	border-bottom: 1px dashed #999999;
+	background-color: transparent;
 }
 .versionav .button2 .linkbut {
-border : 0;
-background-color : inherit;
-padding : 0 10px;
+	border: 0;
+	background-color: inherit;
+	padding: 0 10px;
 }
 .versionav .highlight {
-background-color : #cccccc;
-font-weight : bold;
+	background-color: #cccccc;
+	font-weight: bold;
 }
 .versiontitle {
-font-weight : bold;
-border-bottom : 1px dashed #999999;
-border-left : 1px dashed #999999;
-padding : 2px 30px;
-float : right;
+	font-weight: bold;
+	border-bottom: 1px dashed #999999;
+	border-left: 1px dashed #999999;
+	padding: 2px 30px;
+	float: right;
 }
 
 /* wiki diff styles */
 .diffheader {background-color:#a9b8c2; font-weight: bold;}
 .diff div {text-align: left; border-top: 1px solid #abcdef; }
-.diffadded {background-color:#ccffcc;}
-.diffdeleted {background-color:#ffcccc;}
+.diffadded {background-color: #ccffcc;}
+.diffdeleted {background-color: #ffcccc;}
 .diffchar {color: red;}
 
-/**** coloration for QUOTE plugin *****/
+/* QUOTE plugin */
 .quoteheader {
-margin: 10px 5px 0px 5px;
-padding: 4px;
-border-width: 1px 1px 0px 1px;
-border-style: solid;
-border-color: #A9B8C2;
-color: black;
-font-weight: bold;
-background-color: #A9B8C2;
-font-size: 8pt;
+	margin: 10px 5px 0px 5px;
+	padding: 4px;
+	border-width: 1px 1px 0px 1px;
+	border-style: solid;
+	border-color: #A9B8C2;
+	color: black;
+	font-weight: bold;
+	background-color: #A9B8C2;
+	font-size: 8pt;
 }
 .quotebody {
-margin: 0px 5px 10px 5px;
-padding: 5px;
-border-color: #A9B8C2;
-border-width: 0px 1px 1px 1px;
-border-style: solid;
-color: black;
-background-color: #edeeef;
+	margin: 0px 5px 10px 5px;
+	padding: 5px;
+	border-color: #A9B8C2;
+	border-width: 0px 1px 1px 1px;
+	border-style: solid;
+	color: black;
+	background-color: #edeeef;
 }
 
 /* end of css file */

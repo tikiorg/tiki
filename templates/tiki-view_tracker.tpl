@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker.tpl,v 1.97 2005-07-14 14:00:09 mose Exp $ *}
+{* $Id: tiki-view_tracker.tpl,v 1.98 2005-08-12 13:02:11 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -100,7 +100,9 @@ fields[{$c}] = '{$fid}'
 </td>
 {/if}
 <td><input type="submit" name="filter" value="{tr}filter{/tr}" /></td>
-</tr></table>
+</tr>
+</table>
+<div align='left'>{$item_count}{if $item_count eq 1}{tr} item found{/tr}{else}{tr} items found{/tr}{/if}</div>
 </form>
 {/if}
 
@@ -118,7 +120,6 @@ class="prevnext">{$initials[ini]}</a> .
 class="prevnext">{tr}All{/tr}</a>
 </div>
 {/if}
-
 {* ------- list headings --- *}
 <table class="normal">
 <tr>
@@ -173,17 +174,17 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 {if $items[user].field_values[ix].type eq 'l'}
 <td class="auto">
 {foreach key=tid item=tlabel from=$items[user].field_values[ix].links}
-<div><a href="tiki-view_tracker_item.php?itemId={$tid}&amp;offset={$offset}&amp;reloff={$itemoff}{foreach 
-key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}" class="link">{$tlabel|truncate:255:"..."}</a></div>
+{if $items[user].field_values[ix].options_array[4] eq '1'}
+<div><a href="tiki-view_tracker_item.php?itemId={$tid}&trackerId={$items[user].field_values[ix].options_array[0]}" class="link">{$tlabel|truncate:255:"..."}</a></div>
+{else}
+<div>{$tlabel|truncate:255:"..."}</div>
+{/if}
 {/foreach}
 </td>
-{elseif $items[user].field_values[ix].isMain eq 'y' or ($items[user].field_values[ix].linkId and $items[user].field_values[ix].trackerId)}
+{elseif $items[user].field_values[ix].isMain eq 'y'}
 <td class="auto">
 
-{if $items[user].field_values[ix].linkId and $items[user].field_values[ix].trackerId}
-<a href="tiki-view_tracker_item.php?itemId={$items[user].field_values[ix].linkId}&amp;offset={$offset}&amp;reloff={$itemoff}{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}" class="link">
-
-{elseif $tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y' 
+{if $tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y' 
  or ($tracker_info.writerCanModify eq 'y' and $user and $my eq $user) or ($tracker_info.writerCanModify eq 'y' and $group and $ours eq $group)}
 <a class="tablename" href="tiki-view_tracker_item.php?itemId={$items[user].itemId}&amp;show=view&amp;offset={$offset}&amp;reloff={$itemoff}{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}">
 {/if}
@@ -201,13 +202,21 @@ key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape
 {$items[user].field_values[ix].pvalue}
 
 {elseif $items[user].field_values[ix].type eq 'i'}
-<img src="{$items[user].field_values[ix].value}" alt="" />
+{assign var=width value=$items[user].field_values[ix].options_array[0]}
+{assign var=height value=$items[user].field_values[ix].options_array[1]}
+<img border="0" src="{$items[user].field_values[ix].value}" width="{$width}" height="{$height}" alt="n/a" />
 
 {elseif $items[user].field_values[ix].type eq 'm'}
 {$items[user].field_values[ix].value|default:"&nbsp;"}
 
 {elseif $items[user].field_values[ix].type eq 'e'}
 {foreach item=ii from=$items[user].field_values[ix].categs}{$ii.name}<br />{/foreach}
+
+{elseif $items[user].field_values[ix].type eq 'y'}
+{assign var=o_opt value=$items[user].field_values[ix].options_array[0]}
+{if $o_opt eq '0' or $o_opt eq 2}<img border="0" src="img/flags/{$items[user].field_values[ix].value}.gif">{/if}
+{if $o_opt eq '0'}&nbsp;{/if}
+{if $o_opt eq '0' or $o_opt eq 1}{$items[user].field_values[ix].value}{/if}
 
 {else}
 {$items[user].field_values[ix].value|truncate:255:"..."|default:"&nbsp;"}
@@ -217,10 +226,22 @@ key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape
 {if ($items[user].field_values[ix].type eq 't' or $items[user].field_values[ix].type eq 'n' or $items[user].field_values[ix].type eq 'c') 
  and $items[user].field_values[ix].options_array[3]}<span class="formunit">&nbsp;{$items[user].field_values[ix].options_array[3]}</span>{/if}
 
-{if $tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y' or $items[user].field_values[ix].linkId}</a>{/if}
+{if $tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y'}</a>{/if}
 </td>
 {else}
-{if $items[user].field_values[ix].type eq 'm'}
+
+{if $items[user].field_values[ix].linkId and $items[user].field_values[ix].trackerId}
+<td class="auto">
+{if $items[user].field_values[ix].options_array[2] eq '1'}
+<a href="tiki-view_tracker_item.php?itemId={$items[user].field_values[ix].linkId}&amp;trackerId={$items[user].field_values[ix].trackerId}" class="link">
+{$items[user].field_values[ix].value|truncate:255:"..."|default:"&nbsp;"}
+</a>
+{else}
+{$items[user].field_values[ix].value|truncate:255:"..."|default:"&nbsp;"}
+{/if}
+</td>
+
+{elseif $items[user].field_values[ix].type eq 'm'}
 <td class="auto">
 {if $items[user].field_values[ix].options_array[0] eq '1' and $items[user].field_values[ix].value}
 {mailto address=$items[user].field_values[ix].value|escape encode="hex"}
@@ -242,9 +263,26 @@ key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape
 <td class="auto">
 {foreach item=ii from=$items[user].field_values[ix].categs}{$ii.name}<br />{/foreach}
 </td>
+{elseif $items[user].field_values[ix].type eq 'i'}
+<td class="auto">
+{assign var=width value=$items[user].field_values[ix].options_array[0]}
+{assign var=height value=$items[user].field_values[ix].options_array[1]}
+<img border="0" src="{$items[user].field_values[ix].value}" width="{$width}" height="{$height}" alt="n/a" />
+</td>
+{elseif $items[user].field_values[ix].type eq 'y'}
+<td class="auto">
+{assign var=o_opt value=$items[user].field_values[ix].options_array[0]}
+{if $o_opt eq '0' or $o_opt eq 2}<img border="0" src="img/flags/{$items[user].field_values[ix].value}.gif">{/if}
+{if $o_opt eq '0'}&nbsp;{/if}
+{if $o_opt eq '0' or $o_opt eq 1}{$items[user].field_values[ix].value}{/if}
+</td>
 {elseif $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h'}
 <td class="auto">
+{if  ($items[user].field_values[ix].type eq 't' or $items[user].field_values[ix].type eq 'n' or $items[user].field_values[ix].type eq 'c') 
+ and $items[user].field_values[ix].options_array[2]}<span class="formunit">&nbsp;{$items[user].field_values[ix].options_array[2]}&nbsp;</span>{/if}
 {$items[user].field_values[ix].value|truncate:255:"..."|default:"&nbsp;"}
+{if ($items[user].field_values[ix].type eq 't' or $items[user].field_values[ix].type eq 'n' or $items[user].field_values[ix].type eq 'c') 
+ and $items[user].field_values[ix].options_array[3]}<span class="formunit">&nbsp;{$items[user].field_values[ix].options_array[3]}</span>{/if}
 </td>
 {/if}
 {/if}
@@ -283,7 +321,7 @@ title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
 {* --------------------------------------------------------------------------------- tab with edit --- *}
 {if $tiki_p_create_tracker_items eq 'y'}
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
-<form action="tiki-view_tracker.php" method="post">
+<form enctype="multipart/form-data" action="tiki-view_tracker.php" method="post">
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 
 <h2>{tr}Insert new item{/tr}</h2>
@@ -417,6 +455,14 @@ align       : "bR"
 {if $fields[ix].isMandatory}<option value="" />{/if}
 {foreach key=id item=label from=$fields[ix].list}
 <option value="{$label|escape}" {if $defaultvalue eq $label}selected="selected"{/if}>{$label}</option>
+{/foreach}
+</select>
+
+{elseif $fields[ix].type eq 'y'}
+<select name="{$fields[ix].ins_id}">
+{foreach item=flag from=$fields[ix].flags}
+<option value="{$flag|escape}" {if $flag eq $fields[ix].defaultvalue}selected="selected"{/if}
+style="background-image:url('img/flags/{$flag}.gif');background-repeat:no-repeat;padding-left:25px;padding-bottom:3px;">{$flag}</option>
 {/foreach}
 </select>
 

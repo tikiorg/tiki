@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.276 2005-07-02 19:56:39 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.277 2005-08-12 13:01:58 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -432,6 +432,9 @@ $smarty->assign('feature_jscalendar', $feature_jscalendar);
 $feature_tabs = 'n';
 $smarty->assign('feature_tabs', $feature_tabs);
 
+$feature_redirect_on_error = 'n';
+$smarty->assign('feature_redirect_on_error', $feature_redirect_on_error);
+
 $feature_ticketlib = 'n';
 $smarty->assign('feature_ticketlib',$feature_ticketlib);
 
@@ -566,6 +569,8 @@ $feature_left_column = 'y';
 $feature_right_column = 'y';
 $feature_top_bar = 'y';
 $feature_bot_bar = 'y';
+$feature_bot_bar_icons = 'y';
+$feature_bot_bar_debug = 'y';
 
 $feature_blogposts_comments = 'n';
 $smarty->assign('feature_blogposts_comments', $feature_blogposts_comments);
@@ -909,6 +914,8 @@ $smarty->assign('feature_left_column', $feature_left_column);
 $smarty->assign('feature_right_column', $feature_right_column);
 $smarty->assign('feature_top_bar', $feature_top_bar);
 $smarty->assign('feature_bot_bar', $feature_bot_bar);
+$smarty->assign('feature_bot_bar_icons', $feature_bot_bar_icons);
+$smarty->assign('feature_bot_bar_debug', $feature_bot_bar_debug);
 
 $smarty->assign('feature_file_galleries', $feature_file_galleries);
 $smarty->assign('feature_file_galleries_rankings', $feature_file_galleries_rankings);

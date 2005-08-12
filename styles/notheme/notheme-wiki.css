@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-wiki.css,v 1.11 2004-04-09 03:55:10 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-wiki.css,v 1.12 2005-08-12 13:02:10 sylvieg Exp $
  *
  */
 
@@ -75,8 +75,18 @@ div#page-bar {
     border-bottom: 1px solid ThreeDShadow;
     border-right: 1px solid ThreeDShadow;
 }
-.button3 { -moz-border-radius : 5px 5px 0 0;  }
-.button3 .linkbut { -moz-border-radius : 5px 5px 0 0; padding-bottom : 2px; border-bottom : 0; }
+.button3 {
+  border-radius : 5px 5px 0 0;
+  -moz-border-radius : 5px 5px 0 0;
+  -khtml-border-radius : 5px 5px 0 0;
+}
+.button3 .linkbut {
+  border-radius : 5px 5px 0 0;
+  -moz-border-radius : 5px 5px 0 0;
+  -khtml-border-radius : 5px 5px 0 0;
+  padding-bottom : 2px;
+  border-bottom : 0;
+}
 
 .button2:hover {
     /*

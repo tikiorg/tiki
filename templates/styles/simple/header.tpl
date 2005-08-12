@@ -3,28 +3,19 @@
 	PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-{if $metatag_keywords ne ''}<meta name="keywords" content="{$metatag_keywords}" />
-{/if}
-{if $metatag_author ne ''}<meta name="author" content="{$metatag_author}" />
-{/if}
-{if $metatag_description ne ''}<meta name="description" content="{$metatag_description}" />
-{/if}
-{if $metatag_geoposition ne ''}<meta name="geo.position" content="{$metatag_geoposition}" />
-{/if}
-{if $metatag_georegion ne ''}<meta name="geo.region" content="{$metatag_georegion}" />
-{/if}
-{if $metatag_geoplacename ne ''}<meta name="geo.placename" content="{$metatag_geoplacename}" />
-{/if}
-{if $metatag_robots ne ''}<meta name="robots" content="{$metatag_robots}" />
-{/if}
-{if $metatag_revisitafter ne ''}<meta name="revisit-after" content="{$metatag_revisitafter}" />
-{/if}
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+{if $metatag_keywords ne ''}		<meta name="keywords" content="{$metatag_keywords}" />{/if}
+{if $metatag_author ne ''}		<meta name="author" content="{$metatag_author|escape}" />{/if}
+{if $metatag_description ne ''}		<meta name="description" content="{$metatag_description}" />{/if}
+{if $metatag_geoposition ne ''}		<meta name="geo.position" content="{$metatag_geoposition}" />{/if}
+{if $metatag_georegion ne ''}		<meta name="geo.region" content="{$metatag_georegion}" />{/if}
+{if $metatag_geoplacename ne ''}		<meta name="geo.placename" content="{$metatag_geoplacename}" />{/if}
+{if $metatag_robots ne ''}		<meta name="robots" content="{$metatag_robots}" />{/if}
+{if $metatag_revisitafter ne ''}		<meta name="revisit-after" content="{$metatag_revisitafter}" />{/if}
 
-{include file="bidi.tpl"}
-
-<title>
+{strip}
+		<title>
 {$siteTitle}
 {if $page ne ''} : {$page|escape}
 {elseif $headtitle} : {$headtitle}
@@ -34,7 +25,8 @@
 {elseif $post_info.title ne ''} : {$post_info.title}
 {elseif $forum_info.name ne ''} : {$forum_info.name}
 {/if}
-</title>
+		</title>
+{/strip}
 
 {php} include("lib/tiki-dynamic-js.php"); {/php}
 {if $feature_community_mouseover}{popup_init src="lib/overlib.js"}{/if}
@@ -101,6 +93,8 @@
 {* ---- END ---- *}
 
 {$trl}
+{* this is included for Right-to-left languages *}
+{include file="bidi.tpl"}
 </head>
 <body {if $user_dbl eq 'y' and $dblclickedit eq 'y' and $tiki_p_edit eq 'y'} ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}{if $show_comzone eq 'y'}onload="javascript:flip('comzone');"{/if}>
 {if $minical_reminders>100}

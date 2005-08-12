@@ -3,7 +3,9 @@
 <form method="get" action="tiki-switch_theme.php" target="_self">
 <select name="theme" size="1" onchange="this.form.submit();">
 {section name=ix loop=$styleslist}
-<option value="{$styleslist[ix]}"{if $styleslist[ix] == $styleName} selected="selected"{/if}>{$styleslist[ix]|truncate:15}</option>
+      {if count($available_styles) == 0 || in_array($styleslist[ix], $available_styles)}
+        <option value="{$styleslist[ix]|escape}" {if $style eq $styleslist[ix]}selected="selected"{/if}>{$styleslist[ix]|truncate:15}</option>
+      {/if}
 {/section}
 </select>
 </form>

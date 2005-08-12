@@ -15,7 +15,7 @@
 <td>{tr}Find{/tr}</td>
 <td><input type="text" name="find" value="{$find|escape}" /></td>
 <td><input type="submit" value="{tr}find{/tr}" name="search" /></td>
-<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" /></td>
+<td><input type="hidden" name="sort_mode" value="{$sort_mode|escape}" /></td>
 </tr></table>
 </form>
 

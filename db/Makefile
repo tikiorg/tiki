@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.1 2003-08-12 21:24:54 rossta Exp $
+# $Id: Makefile,v 1.2 2005-08-12 13:01:58 sylvieg Exp $
 
 # [SQL::Translator] Error: translate: Error with producer 'SQL::Translator::Producer::ClassDBI': 
 # Class::DBI isn't going to like that you don't have a primary key field for table galaxia_activities at
@@ -32,7 +32,7 @@ SCHEMAS= \
 .PHONY:	all clean delete_empty_files
 
 define sql_translator
-	sql_translator.pl -d --add-drop-table -f MySQL -t
+	sqlt -d --add-drop-table -f MySQL -t
 endef
 
 all:  delete_empty_files $(SCHEMAS)

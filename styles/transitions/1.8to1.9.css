@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/transitions/1.8to1.9.css,v 1.3 2005-05-18 11:02:50 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/transitions/1.8to1.9.css,v 1.4 2005-08-12 13:02:11 sylvieg Exp $
 
 The following CSS classes were added to Tiki between v1.8.5 and v1.9.0
 They should be added to themes (possibly with tweaks) to make the theme v1.9 ready
@@ -39,7 +39,9 @@ They should be added to themes (possibly with tweaks) to make the theme v1.9 rea
 }
 .rbox-title, .rbox-title[name="warning"] { 
   border: 0;
+  border-radius-topright : 1ex;
   -moz-border-radius-topright : 1ex;
+  -khtml-border-radius-topright : 1ex;
   font-size : small;
   padding : 0 10px;   
   position : relative;
@@ -136,3 +138,7 @@ table.default	td
 	border-color:		#000000;
 }
 /* }}}1 */
+
+/* on the {maketoc} global ul
+.toc {}
+*/

@@ -1,6 +1,7 @@
 <?php
 $_SERVER["SCRIPT_NAME"]=basename(__FILE__);
 require_once('tiki-setup.php');
+include_once ('lib/stats/statslib.php');
 
 if (!function_exists('ms_newMapObj')) {
 	$smarty->assign('msg',tra("You must first setup MapServer"));
@@ -478,6 +479,10 @@ $smarty->assign('zoom',$zoom);
 $smarty->assign_by_ref('zoom_values',$zoom_values);
 $smarty->assign_by_ref('zoom_display',$zoom_display);
 
+//add a hit
+$statslib->stats_hit($mapfile,"map");
+
+//display the template
 $smarty->assign('mid','map/tiki-map.tpl');
 $smarty->display("tiki.tpl");
 ?>

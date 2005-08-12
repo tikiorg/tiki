@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.42 2005-05-18 11:02:54 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.43 2005-08-12 13:02:11 sylvieg Exp $ *}
 
 <script type="text/javascript">
 {literal}
@@ -376,7 +376,7 @@
 						<select name="favicon_type" id="favicon_type">
 							<option value="image/png" {if $favicon_type eq 'image/png'}selected="selected"{/if}>{tr}image/png{/tr}</option>
 							<option value="image/bmp" {if $favicon_type eq 'image/bmp'}selected="selected"{/if}>{tr}image/bmp{/tr}</option>
-							<option value="image/x-icon" {if $favicon_type eq 'image/ico'}selected="selected"{/if}>{tr}image/x-icon{/tr}</option>
+							<option value="image/x-icon" {if $favicon_type eq 'image/x-icon'}selected="selected"{/if}>{tr}image/x-icon{/tr}</option>
 						</select>
 					</td>
 				</tr>

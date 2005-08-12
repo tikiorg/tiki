@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2005-07-20 11:56:48 $
-# $Author: rv540 $
+# $Date: 2005-08-12 13:01:58 $
+# $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -354,8 +354,6 @@ CREATE TABLE tiki_articles (
   publishDate int(14) default NULL,
   expireDate int(14) default NULL,
   created int(14) default NULL,
-  bibliographical_references text default NULL,
-  resume text default NULL,
   heading text,
   body text,
   hash varchar(32) default NULL,
@@ -1021,7 +1019,7 @@ CREATE TABLE tiki_content_templates_sections (
 DROP TABLE IF EXISTS tiki_cookies;
 CREATE TABLE tiki_cookies (
   cookieId int(10) NOT NULL auto_increment,
-  cookie varchar(255) default NULL,
+  cookie text,
   PRIMARY KEY  (cookieId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -3072,8 +3070,6 @@ CREATE TABLE tiki_submissions (
   publishDate int(14) default NULL,
   expireDate int(14) default NULL,
   created int(14) default NULL,
-  bibliographical_references text default NULL,
-  resume text default NULL,
   heading text,
   body text,
   hash varchar(32) default NULL,
@@ -4313,6 +4309,8 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_blog_rankings',
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_blogposts_comments','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_blogs','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_bot_bar','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_bot_bar_icons','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_bot_bar_debug','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_calendar','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_categories','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_categoryobjects','n');
@@ -4440,6 +4438,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wikiwords','y')
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_workflow','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wysiwyg','no');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_xmlrpc','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_allow_duplicates','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_list_created','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_list_description','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_list_files','y');
@@ -4922,6 +4921,22 @@ DROP TABLE IF EXISTS tiki_file_handlers;
 CREATE TABLE tiki_file_handlers (
 	mime_type varchar(64) default NULL,
 	cmd varchar(238) default NULL
+) TYPE=MyISAM;
+
+#
+# Table structure for table tiki_stats
+#
+# Creation: Aug 04, 2005 at 05:59 PM
+# Last update: Aug 04, 2005 at 05:59 PM
+#
+
+DROP TABLE IF EXISTS `tiki_stats`;
+CREATE TABLE `tiki_stats` (
+  `object` varchar(255) NOT NULL default '',
+  `type` varchar(20) NOT NULL default '',
+  `day` int(14) NOT NULL default '0',
+  `hits` int(14) NOT NULL default '0',
+  PRIMARY KEY  (`object`,`type`,`day`)
 ) TYPE=MyISAM;
 
 # --------------------------------------------------------

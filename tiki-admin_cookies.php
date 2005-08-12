@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_cookies.php,v 1.13 2005-05-18 10:58:53 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_cookies.php,v 1.14 2005-08-12 13:01:58 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -60,7 +60,7 @@ if (isset($_REQUEST["upload"])) {
 		$fp = fopen($_FILES['userfile1']['tmp_name'], "r");
 
 		while (!feof($fp)) {
-			$data = fgets($fp, 255);
+			$data = fgets($fp, 65535);
 
 			if (!empty($data)) {
 				$data = str_replace("\n", "", $data);

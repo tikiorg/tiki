@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.64 2005-05-18 11:02:34 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.65 2005-08-12 13:02:10 sylvieg Exp $
 2003 - created and maintained by mose@tikiwiki.org
 
 colorset:
@@ -743,8 +743,18 @@ end of each page to edit/print/remove/etc a page
 	padding: 1px 0 1px 0;
 	margin-left: 2px;
 }
-.button3 { -moz-border-radius : 5px 5px 0 0;  }
-.button3 .linkbut { -moz-border-radius : 5px 5px 0 0; padding-bottom : 2px; border-bottom : 0; }
+.button3 {
+  border-radius : 5px 5px 0 0;
+  -moz-border-radius : 5px 5px 0 0;
+  -khtml-border-radius : 5px 5px 0 0;
+}
+.button3 .linkbut {
+  border-radius : 5px 5px 0 0;
+  -moz-border-radius : 5px 5px 0 0;
+  -khtml-border-radius : 5px 5px 0 0;
+  padding-bottom : 2px;
+  border-bottom : 0;
+}
 
 /* 
 Links in buttons 
@@ -2613,7 +2623,9 @@ a.tikihelp:hover {
 	color: #666666;
 	padding: 0px 4px 0px 4px;
 	border: 1px solid #aaaaaa;
+	border-radius: 6px;
 	-moz-border-radius: 6px;
+	-khtml-border-radius: 6px;
 }
 .catlists a.link:hover {
 	color: #000000;
@@ -2789,10 +2801,14 @@ div#loadstats {
 	margin: 0px;
 	margin-right: 5px;
 	padding: 1px 0px 1px 0px;
+	border-radius : 5px 5px 0 0;
 	-moz-border-radius : 5px 5px 0 0;  
+	-khtml-border-radius : 5px 5px 0 0;
 }
 .tabmark a { 
+	border-radius : 5px 5px 0 0;
 	-moz-border-radius : 5px 5px 0 0; 
+	-khtml-border-radius : 5px 5px 0 0;
 	border-bottom : 0; 
 	color: #666666;
 	font-weight: 700 !important;
@@ -2814,7 +2830,9 @@ div#loadstats {
 	padding: 6px 2px 2px 2px;
 	margin-bottom: 25px;
 	background-color: #eeeeee;
+	border-radius: 0px 4px 4px 4px;
 	-moz-border-radius: 0px 4px 4px 4px;
+	-khtml-border-radius: 0px 4px 4px 4px;
 	width: 100%;
 }
 
@@ -2824,7 +2842,9 @@ div#loadstats {
   padding: 1px;
   margin: 1px;
   border: 1px inset #666666;
+  border-radius: 20px;
   -moz-border-radius: 20px;
+  -khtml-border-radius: 20px;
   vertical-align: middle;
   background-color: #bbaa99;
 }

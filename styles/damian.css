@@ -161,7 +161,9 @@ div.box {
 	padding-bottom:   10px;
 	overflow:   hidden;
 	width:   170px;
+	border-radius: .5em .5em 2.5em 0.5em;
 	-moz-border-radius: .5em .5em 2.5em 0.5em;
+	-khtml-border-radius: .5em .5em 2.5em 0.5em;
 }
 
 div.box_right {
@@ -172,7 +174,9 @@ div.box_right {
         border:   1px solid #9F9F9F;
         padding-bottom:   10px;
         overflow:   hidden;
+	border-radius: .5em .5em .5em 2.5em;
 	-moz-border-radius: .5em .5em .5em 2.5em;
+	-khtml-border-radius: .5em .5em .5em 2.5em;
         width:   170px;
 }
 
@@ -186,8 +190,12 @@ div.box-title {
 	text-align:   center;
 	padding-left:   0px;
 	padding-right:   0px;
+	border-radius-topleft: .5em;
 	-moz-border-radius-topleft: .5em;
+	-khtml-border-radius-topleft: .5em;
+	border-radius-topright: .5em;
 	-moz-border-radius-topright: .5em;
+	-khtml-border-radius-topright: .5em;
 	margin-bottom:   1px;
 	width:   170px;
 }
@@ -337,7 +345,9 @@ div.cbox {
 	padding-bottom:   10px;
 	overflow:   hidden;
 	width:   99%;
+	border-radius: 0.5em;
 	-moz-border-radius: 0.5em;
+	-khtml-border-radius: 0.5em;
 }
 
 /* Boxes are divided in title and data, this is the title */
@@ -351,8 +361,12 @@ div.cbox-title {
 	padding-left:   0px;
 	padding-right:   0px;
 	margin-bottom:   0px;
+	border-radius-topleft: 0.5em;
 	-moz-border-radius-topleft: 0.5em;
+	-khtml-border-radius-topleft: 0.5em;
+	border-radius-topright: 0.5em;
 	-moz-border-radius-topright: 0.5em;
+	-khtml-border-radius-topright: 0.5em;
 	width:   100%;
 }
 
@@ -713,7 +727,9 @@ div.button2 {
 	color:   #578308;
 	background:   white;
 	border:   1px solid #26334D;
+	border-radius: 0.5em;
 	-moz-border-radius: 0.5em;
+	-khtml-border-radius: 0.5em;
 	margin:   0.0ex 0px;
 }
 
@@ -2504,10 +2520,14 @@ TABLE.admin { width: 100%; }
   margin: 0px;
   margin-right: 5px;
   padding: 1px 0px 1px 0px;
+  border-radius : 5px 5px 0 0;
   -moz-border-radius : 5px 5px 0 0;
+  -khtml-border-radius : 5px 5px 0 0;
 }
 .tabmark a {
+  border-radius : 5px 5px 0 0;
   -moz-border-radius : 5px 5px 0 0;
+  -khtml-border-radius : 5px 5px 0 0;
   border-bottom : 0;
   color: #666666;
   font-weight: 700 !important;
@@ -2529,7 +2549,9 @@ TABLE.admin { width: 100%; }
   padding: 6px 2px 2px 2px;
   margin-bottom: 25px;
   background-color: #eeeeee;
+  border-radius: 0px 4px 4px 4px;
   -moz-border-radius: 0px 4px 4px 4px;
+  -khtml-border-radius: 0px 4px 4px 4px;
 	width: 100%;
 }
 
@@ -2539,7 +2561,9 @@ TABLE.admin { width: 100%; }
   padding: 1px;
   margin: 1px;
   border: 1px inset #666666;
+  border-radius: 20px;
   -moz-border-radius: 20px;
+  -khtml-border-radius: 20px;
   vertical-align: middle;
   background-color: #bbaa99;
 }

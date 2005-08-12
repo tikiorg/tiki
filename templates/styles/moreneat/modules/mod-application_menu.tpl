@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/modules/mod-application_menu.tpl,v 1.48 2005-05-18 11:03:38 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/modules/mod-application_menu.tpl,v 1.49 2005-08-12 13:02:13 sylvieg Exp $ *}
 
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 <div id="mainmenu" style="display: block">
@@ -280,7 +280,7 @@
 {if $feature_maps eq 'y'}
   <div class="separator">
   <a class="separator" href="javascript:toggle('mapsmenu');">::</a>
-  <a href="tiki-map.phtml" class="separator">{tr}Maps{/tr}</a>
+  <a href="tiki-map.php" class="separator">{tr}Maps{/tr}</a>
   </div>
   <div id="mapsmenu" style="{$mnu_mapsmenu}">
   {if $tiki_p_map_view eq 'y'}
