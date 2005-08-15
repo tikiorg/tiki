@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.112 2005-07-19 04:39:44 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.113 2005-08-15 14:15:35 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -182,6 +182,15 @@ if (($feature_wiki_pictures == 'y') && (isset($tiki_p_upload_picture)) && ($tiki
     //is done in js... $_REQUEST["edit"] = $_REQUEST["edit"] . "{img src=\"img/wiki_up/$tikidomain$picname\"}";
   }
 }
+
+if ($feature_wiki_attachments == 'y' && isset($_REQUEST["attach"]) && ($tiki_p_wiki_attach_files == 'y' || $tiki_p_wiki_admin_attachments == 'y')) {
+	if (isset($_FILES['userfile2']) && is_uploaded_file($_FILES['userfile2']['tmp_name'])) {
+		$ret = $tikilib->attach_file($_FILES['userfile2']['name'], $_FILES['userfile2']['tmp_name'], $w_use_db== 'y'? 'dir': 'db');
+		if ($ret['ok'])
+			$wikilib->wiki_attach_file($page, $_FILES['userfile2']['name'], $_FILES['userfile2']['type'], $_FILES['userfile2']['size'], $ret['data'], $_REQUEST["attach_comment"], $user, $ret['fhash']);
+	}
+}
+
 
 /**
  * \brief Parsed HTML tree walker (used by HTML sucker)
@@ -549,7 +558,7 @@ if ($feature_wiki_footnotes == 'y') {
 
 if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0 && !isset($_REQUEST['preview']) && !isset($_REQUEST['save'])) {
   $template_data = $tikilib->get_template($_REQUEST["templateId"]);
-  $_REQUEST["edit"] = $template_data["content"];
+  $_REQUEST["edit"] = $template_data["content"]. $_REQUEST["edit"];
   $_REQUEST["preview"] = 1;
   $smarty->assign("templateId", $_REQUEST["templateId"]);
 }

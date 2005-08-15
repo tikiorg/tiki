@@ -6432,6 +6432,37 @@ if (!$simple_wiki) {
 		);
 	}
 
+	function attach_file($file_name, $file_tmp_name, $store_type) {
+		global $tmpDir;
+		$tmp_dest = $tmpDir . "/" . $file_name.".tmp";
+		if (!move_uploaded_file($file_tmp_name, $tmp_dest))
+			return array("ok"=>false, "error"=>tra('Errors detected'));
+		$fp = fopen($tmp_dest, "rb");
+		$data = '';
+		$fhash = '';
+		if ($store_type == 'dir') {
+			$fhash = md5($name = $file_name);    
+			$fw = fopen($w_use_dir.$fhash, "wb");
+			if (!$fw)
+			    return array("ok"=>false, "error"=>tra('Cannot write to this file:').$fhash);
+		}
+		while(!feof($fp)) {
+			if ($store_type == 'dir') {
+				$data .= fread($fp, 8192*16);
+				fwrite($fw, $data);
+			} else {
+				$data = fread($fp, 8192*16);
+			}
+		}
+		fclose($fp);
+		unlink($tmp_dest);
+		if ($store_type == 'dir') {
+			fclose($fw);
+			$data = "";
+		}
+		return array("ok"=>true, "data"=>$data, "fhash"=>$fhash);
+	}
+
 }
 
 // end of class ------------------------------------------------------
@@ -6574,6 +6605,5 @@ if (!function_exists('file_get_contents')) {
 
 
 }
-
 
 ?>
