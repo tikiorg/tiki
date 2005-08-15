@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/modules/mod-categories.php,v 1.1 2005-07-30 11:34:05 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/modules/mod-categories.php,v 1.2 2005-08-15 12:04:53 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -30,7 +30,7 @@ if ($feature_categories != 'y') {
 		$urlEnd = "";
 	}
 	if (isset($module_params["deep"]))
-		$deep = $module_params["type"];
+		$deep = $module_params["deep"];
 	else
 		$deep= 'on';
 	$urlEnd .= "&amp;deep=$deep";
