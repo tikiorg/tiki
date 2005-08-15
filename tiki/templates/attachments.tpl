@@ -1,11 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.23 2005-05-18 11:02:52 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.24 2005-08-15 15:32:52 sylvieg Exp $ *}
 
 <a name="attachments"></a>
 {* Don't even generate DIV if no any needed rights *}
 {if $tiki_p_wiki_view_attachments == 'y'
  || $tiki_p_wiki_admin_attachments == 'y'
  || $tiki_p_wiki_attach_files == 'y'}
-<div id="attzone">
+{if $atts_show eq 'y'}<div id="attzoneopen">{else}<div id="attzone">{/if}
 
 {* Generate table if view permissions granted
  * and if count of attached files > 0
@@ -18,23 +18,24 @@
  <table class="normal">
  <caption> {tr}List of attached files{/tr} </caption>
  <tr>
-  <td class="heading">&nbsp;</td>
+  <td class="heading">&nbsp;</td><td class="heading"><a class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'attId_desc'}attId_asc{else}attId_desc{/if}&amp;atts_show=y#attachments">{tr}id{/tr}</a></td>
   <td class="heading">
-   <a class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'filename_desc'}filename_asc{else}filename_desc{/if}">{tr}name{/tr}</a>
+   <a class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'filename_desc'}filename_asc{else}filename_desc{/if}&amp;atts_show=y#attachments">{tr}name{/tr}</a>
   </td><td class="heading">
-   <a class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'comment_desc'}comment_asc{else}comment_desc{/if}">{tr}desc{/tr}</a>
+   <a class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'comment_desc'}comment_asc{else}comment_desc{/if}&amp;atts_show=y#attachments">{tr}desc{/tr}</a>
   </td><td class="heading">
-   <a class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}uploaded{/tr}</a>
+   <a class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}&amp;atts_show=y#attachments">{tr}uploaded{/tr}</a>
   </td><td class="heading">
-   <a class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">{tr}size{/tr}</a>
+   <a class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}&amp;atts_show=y#attachments">{tr}size{/tr}</a>
   </td><td class="heading">
-   <a class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'downloads_desc'}downloads_asc{else}downloads_desc{/if}"><b>&gt;</b></a>
+   <a class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'downloads_desc'}downloads_asc{else}downloads_desc{/if}&amp;atts_show=y#attachments">{tr}downloads{/tr}</a>
   </td>
  </tr>
 {cycle values="odd,even" print=false advance=false}
 {section name=ix loop=$atts}
 <tr>
-<td class="{cycle advance=false}"><span class="mini">{$smarty.section.ix.index_next} : {$atts[ix].attId}</span></td>
+<td class="{cycle advance=false}">{$smarty.section.ix.index_next}</td>
+<td class="{cycle advance=false}">{$atts[ix].attId}</td>
 <td class="{cycle advance=false}">
  {$atts[ix].filename|iconify}
  <a class="tablename" href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}">{$atts[ix].filename}</a>
