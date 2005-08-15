@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.42 2005-05-18 11:03:19 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.43 2005-08-15 14:59:27 sylvieg Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -109,8 +109,7 @@
 
   {* don't show attachments button if feature disabled or no corresponding rights or no attached files and r/o*}
 
-  {php} global $atts; global $smarty; $smarty->assign('atts_cnt', count($atts["data"])); {/php}
-  {if $feature_wiki_attachments      == 'y'
+    {if $feature_wiki_attachments      == 'y'
   && ($tiki_p_wiki_view_attachments  == 'y'
   &&  count($atts) > 0
   ||  $tiki_p_wiki_attach_files      == 'y'
@@ -123,15 +122,15 @@
         {* display 'attach file' only if no attached files or
          * only $tiki_p_wiki_attach_files perm
          *}
-        {if $atts_cnt == 0
+        {if $atts|@count == 0
          || $tiki_p_wiki_attach_files == 'y'
          && $tiki_p_wiki_view_attachments == 'n'
          && $tiki_p_wiki_admin_attachments == 'n'}
           {tr}attach file{/tr}
-        {elseif $atts_cnt == 1}
+        {elseif $atts|@count == 1}
           <span class="highlight">{tr}1 file attached{/tr}</span>
         {else}
-          <span class="highlight">{tr}{$atts_cnt} files attached{/tr}</span>
+          <span class="highlight">{tr}{$atts|@count} files attached{/tr}</span>
         {/if}
       </a>
     </div>
