@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.140 2005-08-12 13:01:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.141 2005-08-15 15:34:00 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -452,56 +452,30 @@ if($feature_wiki_attachments == 'y') {
 	if( ($user && ($owner == $user) ) || ($tiki_p_wiki_admin_attachments == 'y') ) {
 	    $wikilib->remove_wiki_attachment($_REQUEST["removeattach"]);
 	}
+    $smarty->assign("atts_show", 'y');
     }
     if(isset($_REQUEST["attach"]) && ($tiki_p_wiki_admin_attachments == 'y' || $tiki_p_wiki_attach_files == 'y')) {
 	check_ticket('index');
 	// Process an attachment here
 	if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
-
-	    $file_name = $_FILES['userfile1']['name'];	
-	    $file_tmp_name = $_FILES['userfile1']['tmp_name'];
-	    $tmp_dest = $tmpDir . "/" . $file_name.".tmp";
-	    if (!move_uploaded_file($file_tmp_name, $tmp_dest)) {
-		$smarty->assign('msg', tra('Errors detected'));
-		$smarty->display("error.tpl");
-		die();
-	    }
-
-	    $fp = fopen($tmp_dest, "rb");
-	    $data = '';
-	    $fhash='';
-	    if($w_use_db == 'n') {
-		$fhash = md5($name = $_FILES['userfile1']['name']);    
-		$fw = fopen($w_use_dir.$fhash,"wb");
-		if(!$fw) {
-		    $smarty->assign('msg',tra('Cannot write to this file:').$fhash);
-		    $smarty->display("error.tpl");
-		    die;  
-		}
-	    }
-	    while(!feof($fp)) {
-		if($w_use_db == 'y') {
-		    $data .= fread($fp,8192*16);
-		} else {
-		    $data = fread($fp,8192*16);
-		    fwrite($fw,$data);
-		}
-	    }
-	    fclose($fp);
-	    unlink($tmp_dest);
-	    if($w_use_db == 'n') {
-		fclose($fw);
-		$data='';
-	    }
-	    $size = $_FILES['userfile1']['size'];
-	    $name = $_FILES['userfile1']['name'];
-	    $type = $_FILES['userfile1']['type'];
-	    $wikilib->wiki_attach_file($page,$name,$type,$size, $data, $_REQUEST["attach_comment"], $user,$fhash);
+	    $ret = $tikilib->attach_file($_FILES['userfile1']['name'], $_FILES['userfile1']['tmp_name'], $w_use_db== 'y'? 'dir': 'db');	
+	    if ($ret['ok']) {
+		    $wikilib->wiki_attach_file($page, $_FILES['userfile1']['name'], $_FILES['userfile1']['type'], $_FILES['userfile1']['size'], $ret['data'], $_REQUEST["attach_comment"], $user, $ret['fhash']);
+	    } else {
+				$smarty->assign('msg', $ret['error']);
+				$smarty->display("error.tpl");
+				die();
+		}		
 	}
     }
 
     // If anything below here is changed, please change lib/wiki-plugins/wikiplugin_attach.php as well.
-    $atts = $wikilib->list_wiki_attachments($page,0,-1,'created_desc','');
+    if (!isset($_REQUEST['sort_mode']))
+       $_REQUEST['sort_mode'] = 'created_desc';
+    $smarty->assign('sort_mode', $_REQUEST['sort_mode']);
+    if (isset($_REQUEST['atts_show']))
+	 $smarty->assign('atts_show', $_REQUEST['atts_show']);
+    $atts = $wikilib->list_wiki_attachments($page,0,-1, $_REQUEST['sort_mode'],'');
     $smarty->assign('atts',$atts["data"]);
     $smarty->assign('atts_count',count($atts["data"]));
 }
