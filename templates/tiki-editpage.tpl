@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.65 2005-07-14 14:00:08 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.66 2005-08-15 14:15:35 sylvieg Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -203,11 +203,21 @@ or use
 </td></tr>
 {/if}
 {if $feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y'}
-<tr class="formcolor"><td>{tr}Upload picture{/tr}</td><td>
+<tr class="formcolor"><td>{tr}Upload picture{/tr}:</td><td>
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
 <input type="hidden" name="hasAlreadyInserted" value="" />
 <input type="hidden" name="prefix" value="/img/wiki_up/{if $tikidomain}{$tikidomain}/{/if}" />
-<input name="picfile1" type="file" onchange="javascript:insertImg('editwiki','picfile1','hasAlreadyInserted')"/>
+<input name="picfile1" type="file" onchange="javascript:insertImgFile('editwiki','picfile1','hasAlreadyInserted','img')"/>
+</td></tr>
+{/if}
+{if $feature_wiki_attachments == 'y' and ($tiki_p_wiki_attach_files eq 'y' or $tiki_p_wiki_admin_attachments eq 'y')}
+<tr class="formcolor"><td>{tr}Upload file{/tr}:
+</td><td>
+<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
+<input type="hidden" name="hasAlreadyInserted2" value="" />
+<input name="userfile2" type="file" id="attach-upload" />
+ {tr}comment{/tr}:<input type="text" name="attach_comment" maxlength="250" id="attach-comment" />
+<input type="submit" class="wikiaction" name="attach" value="{tr}attach{/tr}" onClick="javascript:insertImgFile('editwiki','userfile2','hasAlreadyInserted2','file'); return true;" />
 </td></tr>
 {/if}
 {if $feature_wiki_icache eq 'y'}
