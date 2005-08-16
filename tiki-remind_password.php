@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-remind_password.php,v 1.22 2005-05-18 10:58:59 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-remind_password.php,v 1.23 2005-08-16 14:44:45 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -35,7 +35,14 @@ if (isset($_REQUEST["user"])) {
 }	
 
 if (isset($_REQUEST["remind"])) {
-	if ($userlib->user_exists($_REQUEST["username"])) {
+	if (!($ok = $userlib->user_exists($_REQUEST["username"]))) {
+		list($cant, $u) = $userlib->other_user_exists_case_insensitive($_REQUEST["username"]);
+		if ($cant == 1) {
+			$ok = true;
+			$_REQUEST["username"] = $u;
+		}
+	}
+	if ($ok) {
 		include_once ('lib/webmail/tikimaillib.php');
 		$email = $userlib->get_user_email($_REQUEST["username"]);
 

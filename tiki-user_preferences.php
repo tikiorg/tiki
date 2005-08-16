@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.70 2005-07-08 22:23:03 luciash Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.71 2005-08-16 14:44:45 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -184,8 +184,8 @@ if (isset($_REQUEST['chgadmin'])) {
 
 	// check user's password, admin doesn't need it to change other user's info
 	if ($tiki_p_admin != 'y' || $user == $userwatch) {
-
-	    if (!$userlib->validate_user($userwatch, $pass, '', '')) {
+	    list($ok, $userwatch, $error) = $userlib->validate_user($userwatch, $pass, '', '');
+	    if (!$ok) {
 		$smarty->assign('msg', tra("Invalid password.  Your current password is required to change administrative information"));
 		
 		$smarty->display("error.tpl");

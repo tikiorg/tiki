@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-change_password.php,v 1.15 2005-05-18 10:58:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-change_password.php,v 1.16 2005-08-16 14:44:45 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -39,9 +39,10 @@ if (isset($_REQUEST["change"])) {
 		$smarty->display("error.tpl");
 		die;
 	}
-
-	if (!$userlib->validate_user($_REQUEST["user"], $_REQUEST["oldpass"], '', '')) {
-		if(!$userlib->validate_user("admin",substr($_REQUEST["oldpass"],6,200),'','') or ($tiki_p_admin != 'y')) {
+	list($isvalid, $_REQUEST["user"], $error) = $userlib->validate_user($_REQUEST["user"], $_REQUEST["oldpass"], '', '');
+	if (!$isvalid) {
+		list($isvalid, $u, $error) = $userlib->validate_user("admin",substr($_REQUEST["oldpass"],6,200),'','');
+		if(!$ok or ($tiki_p_admin != 'y')) {
 			$smarty->assign('msg', tra("Invalid old password"));
 
 			$smarty->display("error.tpl");

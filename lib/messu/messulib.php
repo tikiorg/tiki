@@ -104,7 +104,7 @@ class Messu extends TikiLib {
 	function validate_user($user, $pass) {
 		global $userlib;
 
-		$cant = $userlib->validate_user($user, $pass, '', '');
+		list($cant, $user, $error) = $userlib->validate_user($user, $pass, '', '');
 		return $cant;
 	}
 

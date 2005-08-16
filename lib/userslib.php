@@ -187,7 +187,7 @@ class UsersLib extends TikiLib {
 	static $rv = array();
 
 	if (!isset($rv[$user])) {
-	    $query = "select count(*) from `users_users` where `login` = ?";
+	    $query = "select count(*) from `users_users` where ". $this->convert_binary()." `login` = ?";
 
 	    $result = $this->getOne($query, array($user));
 	    $rv[$user] = $result;
@@ -195,6 +195,16 @@ class UsersLib extends TikiLib {
 
 	return $rv[$user];
     }
+	function other_user_exists_case_insensitive($user) {
+		$query = "select * from `users_users` where upper(`login`) = ?";
+		$result = $this->query($query, array(strtoupper( $user )));
+		$cant = $result->numRows();
+		while ($ret = $result->fetchRow()) {
+			if ($ret['login'] != $user)
+				return array($cant, $ret['login']);
+		}
+		return array($cant, $user);
+	}
 
     function group_exists($group) {
 	static $rv = array();
@@ -274,7 +284,7 @@ class UsersLib extends TikiLib {
 		);
     }
 
-    function validate_user(&$user, $pass, $challenge, $response) {
+    function validate_user($user, $pass, $challenge, $response) {
 	global $tikilib, $sender_email;
 
 	// these will help us keep tabs of what is going on
@@ -301,7 +311,7 @@ class UsersLib extends TikiLib {
 
 	// first attempt a login via the standard Tiki system
 	if (!$auth_cas || $user == 'admin') {
-		$result = $this->validate_user_tiki($user, $pass, $challenge, $response);
+		list($result, $user) = $this->validate_user_tiki($user, $pass, $challenge, $response);
 	} else {
 		$result = NULL;
 	}
@@ -322,14 +332,14 @@ class UsersLib extends TikiLib {
 	if ((!$auth_pear && !$auth_pam && !$auth_cas) || ((($auth_pear && $skip_admin) || ($auth_pam && $pam_skip_admin) || ($auth_cas && $cas_skip_admin)) && $user == "admin")) {
 	    // if the user verified ok, log them in
 	    if ($userTiki)
-		return $this->update_lastlogin($user);
+		return array($this->update_lastlogin($user), $user, $result);
 	    // if the user password was incorrect but the account was there, give an error
 	    elseif ($userTikiPresent)
-		return false;
+		return array(false, $user, $result);
 	    // if the user was not found, give an error
 	    // this could be for future uses
 	    else
-		return false;
+		return array(false, $user, $result);
 	}
 	// next see if we need to check PAM
 	elseif ($auth_pam) {
@@ -349,11 +359,11 @@ class UsersLib extends TikiLib {
     	// start off easy
 	    // if the user verified in Tiki and PAM, log in
 	    if ($userPAM && $userTiki) {
-			return $this->update_lastlogin($user);
+			return array($this->update_lastlogin($user), $user, $result);
 	    }
 	    // if the user wasn't found in either system, just fail
 	    elseif (!$userTikiPresent && !$userPAM) {
-			return false;
+			return array(false, $user, $result);
 	    }
 	    // if the user was logged into PAM but not found in Tiki
 	    elseif ($userPAM && !$userTikiPresent) {
@@ -365,24 +375,24 @@ class UsersLib extends TikiLib {
 			    // if it worked ok, just log in
 			    if ($result == USER_VALID)
 					// before we log in, update the login counter
-					return $this->update_lastlogin($user);
+					return array($this->update_lastlogin($user), $user, $result);
 			    // if the server didn't work, do something!
 			    elseif ($result == SERVER_ERROR) {
 					// check the notification status for this type of error
-					return false;
+					return array(false, $user, $result);
 			    }
 			    // otherwise don't log in.
 			    else
-					return false;
+					return array(false, $user, $result);
 			}
 			// otherwise
 			else
 			    // just say no!
-			    return false;
+			    return array(false, $user, $result);
 	    }
 	    // if the user was logged into PAM and found in Tiki (no password in Tiki user table necessary)
 	    elseif ($userPAM && $userTikiPresent)
-			return $this->update_lastlogin($user);
+			return array($this->update_lastlogin($user), $user, $result);
 	}
 
 	// next see if we need to check CAS
@@ -407,11 +417,11 @@ class UsersLib extends TikiLib {
     	// start off easy
 	    // if the user verified in Tiki and by CAS, log in
 	    if ($userCAS && $userTiki) {
-			return $this->update_lastlogin($user);
+			return array($this->update_lastlogin($user), $user, $result);
 	    }
 	    // if the user wasn't authenticated through CAS, just fail
 	    elseif (!$userCAS) {
-			return false;
+			return array(false, $user, $result);
 	    }
 	    // if the user was authenticated by CAS but not found in Tiki
 	    elseif ($userCAS && !$userTikiPresent) {
@@ -426,24 +436,24 @@ class UsersLib extends TikiLib {
 			    // if it worked ok, just log in
 			    if ($result == USER_VALID)
 					// before we log in, update the login counter
-					return $this->update_lastlogin($user);
+					return array($this->update_lastlogin($user), $user, $result);
 			    // if the server didn't work, do something!
 			    elseif ($result == SERVER_ERROR) {
 					// check the notification status for this type of error
-					return false;
+					return array(false, $user, $result);
 			    }
 			    // otherwise don't log in.
 			    else
-					return false;
+					return array(false, $user, $result);
 			}
 			// otherwise
 			else
 			    // just say no!
-			    return false;
+			    return array(false, $user, $result);
 	    }
 	    // if the user was authenticated by CAS and found in Tiki (no password in Tiki user table necessary)
 	    elseif ($userCAS && $userTikiPresent)
-			return $this->update_lastlogin($user);
+			return array($this->update_lastlogin($user), $user, $result);
 	}
 
 	// next see if we need to check LDAP
@@ -467,11 +477,11 @@ class UsersLib extends TikiLib {
 	    // start off easy
 	    // if the user verified in Tiki and Auth, log in
 	    if ($userAuth && $userTiki) {
-		return $this->update_lastlogin($user);
+		return array($this->update_lastlogin($user), $user, $result);
 	    }
 	    // if the user wasn't found in either system, just fail
 	    elseif (!$userTikiPresent && !$userAuthPresent) {
-		return false;
+		return array(false, $user, $result);
 	    }
 	    // if the user was logged into Tiki but not found in Auth
 	    elseif ($userTiki && !$userAuthPresent) {
@@ -483,20 +493,20 @@ class UsersLib extends TikiLib {
 		    // if it worked ok, just log in
 		    if ($result == USER_VALID)
 			// before we log in, update the login counter
-			return $this->update_lastlogin($user);
+			return array($this->update_lastlogin($user), $user, $result);
 		    // if the server didn't work, do something!
 		    elseif ($result == SERVER_ERROR) {
 			// check the notification status for this type of error
-			return false;
+			return array(false, $user, $result);
 		    }
 		    // otherwise don't log in.
 		    else
-			return false;
+			return array(false, $user, $result);
 		}
 		// otherwise
 		else
 		    // just say no!
-		    return false;
+		    return array(false, $user, $result);
 	    }
 
 	    // if the user was logged into Auth but not found in Tiki
@@ -509,28 +519,28 @@ class UsersLib extends TikiLib {
 		    // if it worked ok, just log in
 		    if ($result == USER_VALID)
 			// before we log in, update the login counter
-			return $this->update_lastlogin($user);
+			return array($this->update_lastlogin($user), $user, $result);
 		    // if the server didn't work, do something!
 		    elseif ($result == SERVER_ERROR) {
 			// check the notification status for this type of error
-			return false;
+			return array(false, $user, $result);
 		    }
 		    // otherwise don't log in.
 		    else
-			return false;
+			return array(false, $user, $result);
 		}
 		// otherwise
 		else
 		    // just say no!
-		    return false;
+		    return array(false, $user, $result);
 	    }
 	    // if the user was logged into Auth and found in Tiki (no password in Tiki user table necessary)
 	    elseif ($userAuth && $userTikiPresent)
-		return $this->update_lastlogin($user);
+		return array($this->update_lastlogin($user), $user, $result);
 	}
 
 	// we will never get here
-	return false;
+	return array(false, $user, $result);
     }
 
   // validate the user through PAM
@@ -639,7 +649,7 @@ class UsersLib extends TikiLib {
     }
 
     // validate the user in the Tiki database
-    function validate_user_tiki(&$user, $pass, $challenge, $response) {
+    function validate_user_tiki($user, $pass, $challenge, $response) {
 	global $feature_challenge;
 
 	// first verify that the user exists
@@ -651,9 +661,9 @@ class UsersLib extends TikiLib {
 	    $query = "select * from `users_users` where upper(`login`) = ?";
 	    $result = $this->query($query, array(strtoupper( $user )));
 	    switch ($result->numRows()) {
-	        case 0: return USER_NOT_FOUND;
+	        case 0: return array(USER_NOT_FOUND, $user);
 	        case 1: break;
-	        default: return USER_AMBIGOUS;
+	        default: return array(USER_AMBIGOUS, $user);
 	    }
 	}
 
@@ -699,7 +709,7 @@ class UsersLib extends TikiLib {
 //			    $user
 //			    ));
 
-		return true;
+		return array(true, $user);
 	    }
 	} else {
 	    // Use challenge-reponse method
@@ -708,7 +718,7 @@ class UsersLib extends TikiLib {
 		    array($user) );
 
 	    if (!isset($_SESSION["challenge"]))
-		return false;
+		return array(false, $user);
 
 	    //print("pass: $pass user: $user hash: $hash <br />");
 	    //print("challenge: ".$_SESSION["challenge"]." challenge: $challenge<br />");
@@ -737,13 +747,13 @@ class UsersLib extends TikiLib {
 			    $user
 			    ));
 
-		return true;
+		return array(true, $user);
 	    } else {
-		return false;
+		return array(false, $user);
 	    }
 	}
 
-	return PASSWORD_INCORRECT;
+	return array(PASSWORD_INCORRECT, $user);
     }
 
     // update the lastlogin status on this user
@@ -1029,17 +1039,17 @@ function get_included_groups($group) {
 
     function remove_user($user) {
 		global $cachelib;
-	$userId = $this->getOne("select `userId`  from `users_users` where `login` = ?", array($user));
+	$userId = $this->getOne("select `userId`  from `users_users` where ". $this->convert_binary()." `login` = ?", array($user));
 
-	$query = "delete from `users_users` where `login` = ?";
+	$query = "delete from `users_users` where ". $this->convert_binary()." `login` = ?";
 	$result = $this->query($query, array( $user ) );
 	$query = "delete from `users_usergroups` where `userId`=?";
 	$result = $this->query($query, array( $userId ) );
-	$query = "delete from `tiki_user_watches` where `user`=?";
+	$query = "delete from `tiki_user_watches` where ". $this->convert_binary()." `user`=?";
 	$result = $this->query($query, array($user));
-	$query = "delete from `tiki_user_preferences` where `user`=?";
+	$query = "delete from `tiki_user_preferences` where ". $this->convert_binary()." `user`=?";
 	$result = $this->query($query, array($user));
-	$query = "delete from `tiki_newsletter_subscriptions` where `email`=? and `isUser`=?";
+	$query = "delete from `tiki_newsletter_subscriptions` where ". $this->convert_binary()." `email`=? and `isUser`=?";
 	$result = $this->query($query, array($user, 'y'));
 
 	$cachelib->invalidate('userslist');

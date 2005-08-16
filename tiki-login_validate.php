@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login_validate.php,v 1.15 2005-07-08 20:17:24 xavidp Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login_validate.php,v 1.16 2005-08-16 14:44:45 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,7 +12,7 @@ require_once ('tiki-setup.php');
 $isvalid = false;
 if (isset($_REQUEST["user"])) {
 	if (isset($_REQUEST["pass"])) {
-		$isvalid = $userlib->validate_user($_REQUEST["user"], $_REQUEST["pass"],'','');
+		list($isvalid, $_REQUEST["user"], $error) = $userlib->validate_user($_REQUEST["user"], $_REQUEST["pass"],'','');
 	}
 }	
 if ($isvalid) {
@@ -32,7 +32,17 @@ if ($isvalid) {
 	$smarty->assign('msg', tra("Account validated successfully."));
 	$smarty->display("information.tpl");
 } else {
-	$smarty->assign('msg', tra("Invalid username or password"));
+	if ($error == PASSWORD_INCORRECT)
+		$error = tra("Invalid password");
+	else if ($error == USER_NOT_FOUND)
+		$error = tra("Invalid username");
+	else if ($error == ACCOUNT_DISABLED)
+		$error = tra("Account disabled");
+	else if ($error == USER_AMBIGOUS)
+		$error = tra("You must use the right case for your user name");
+	else
+		$error= tra('Invalid username or password');
+	$smarty->assign('msg', $error);
 	$smarty->display("error.tpl");
 }
 
