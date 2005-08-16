@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.49 2005-08-12 13:01:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.50 2005-08-16 14:44:45 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -60,9 +60,10 @@ function batchImportUsers() {
 		} elseif ($userlib->user_exists($u['login'])and (!$_REQUEST['overwrite'])) {
 			$discarded[] = discardUser($u, tra("User is duplicated"));
 		} else {
-			if (!$userlib->user_exists($u['login'])) {
+			list($cant, $uu) = $userlib->other_user_exists_case_insensitive($u['login']);
+			if (!$cant == 0) {
 				$userlib->add_user($u['login'], $u['password'], $u['email']);
-				$logslib->add_log('users',sprintf(tra("Created account %s <%s>"),$u["login"], $u["email"]));				
+				$logslib->add_log('users',sprintf(tra("Created account %s <%s>"),$u["login"], $u["email"]));
 			}
 
 			$userlib->set_user_fields($u);
@@ -100,8 +101,9 @@ if (isset($_REQUEST["newuser"])) {
 		if ($_REQUEST["pass"] != $_REQUEST["pass2"]) {
 			$tikifeedback[] = array('num'=>1,'mes'=>tra("The passwords don't match"));
 		} else {
-			if ($userlib->user_exists($_REQUEST["name"])) {
-				$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("User %s already exists"),$_REQUEST["name"]));
+			list($cant, $uu) = $userlib->other_user_exists_case_insensitive($_REQUEST["name"]);
+			if ($cant != 0) {
+				$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("User %s already exists"),$uu));
 			} else {
 				if ($userlib->add_user($_REQUEST["name"], $_REQUEST["pass"], $_REQUEST["email"])) {
 					$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("New %s created with %s %s."),tra("user"),tra("username"),$_REQUEST["name"]));

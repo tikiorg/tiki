@@ -35,8 +35,9 @@ if(isset($_REQUEST["register"])) {
     $smarty->display("error.tpl");
     die;
   }
-  if($userlib->user_exists($_REQUEST["name"])) {
-    $smarty->assign('msg',tra("User already exists"));
+list($cant, $u) = $userlib->other_user_exists_case_insensitive($_REQUEST["name"]);
+  if($cant > 0) {
+    $smarty->assign('msg',tra("User already exists").": ".$u);
     $smarty->display("error.tpl");
     die;
   }

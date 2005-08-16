@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.47 2005-06-16 20:10:50 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.48 2005-08-16 14:44:45 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.47 2005-06-16 20:10:50 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.48 2005-08-16 14:44:45 sylvieg Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -86,7 +86,7 @@ $isvalid = false;
 $isdue = false;
 
 // Verify user is valid
-$isvalid = $userlib->validate_user($user, $pass, $challenge, $response);
+list($isvalid, $user, $error) = $userlib->validate_user($user, $pass, $challenge, $response);
 
 // If the password is valid but it is due then force the user to change the password by
 // sending the user to the new password change screen without letting him use tiki
@@ -141,7 +141,17 @@ if ($isvalid) {
 } else {
 	unset($user);
 	unset($isvalid);
-	$url = 'tiki-error.php?error=' . urlencode(tra('Invalid username or password'));
+	if ($error == PASSWORD_INCORRECT)
+		$error = tra("Invalid password");
+	else if ($error == USER_NOT_FOUND)
+		$error = tra("Invalid username");
+	else if ($error == ACCOUNT_DISABLED)
+		$error = tra("Account disabled");
+	else if ($error == USER_AMBIGOUS)
+		$error = tra("You must use the right case for your user name");
+	else
+		$error= tra('Invalid username or password');
+	$url = 'tiki-error.php?error=' . urlencode($error);
 }
 
 if ($https_mode) {
