@@ -17,6 +17,7 @@ define("SERVER_ERROR", -1);
 define("PASSWORD_INCORRECT", -3);
 define("USER_NOT_FOUND", -5);
 define("ACCOUNT_DISABLED", -6);
+define ("USER_AMBIGOUS", -7);
 
 class UsersLib extends TikiLib {
 # var $db;  // The PEAR db object used to access the database
@@ -638,20 +639,27 @@ class UsersLib extends TikiLib {
     }
 
     // validate the user in the Tiki database
-    function validate_user_tiki($user, $pass, $challenge, $response) {
+    function validate_user_tiki(&$user, $pass, $challenge, $response) {
 	global $feature_challenge;
 
 	// first verify that the user exists
-	$query = "select `email` from `users_users` where " . $this->convert_binary(). " `login` = ?";
+	$query = "select * from `users_users` where " . $this->convert_binary(). " `login` = ?";
 	$result = $this->query($query, array($user) );
 
 	if (!$result->numRows())
 	{
-	    return USER_NOT_FOUND;
+	    $query = "select * from `users_users` where upper(`login`) = ?";
+	    $result = $this->query($query, array(strtoupper( $user )));
+	    switch ($result->numRows()) {
+	        case 0: return USER_NOT_FOUND;
+	        case 1: break;
+	        default: return USER_AMBIGOUS;
+	    }
 	}
 
 
 	$res = $result->fetchRow();
+	$user = $res['login'];
 	$hash=md5($user.$pass.trim($res['email']));
 	$hash2 = md5($user.$pass);
 	$hash3 = md5($pass);
