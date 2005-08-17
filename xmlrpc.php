@@ -1,5 +1,5 @@
 <?php 
-# $Header: /cvsroot/tikiwiki/tiki/xmlrpc.php,v 1.23 2005-05-18 10:59:01 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/xmlrpc.php,v 1.24 2005-08-17 13:25:51 sylvieg Exp $
 include_once("lib/init/initlib.php");
 require_once('db/tiki-db.php');
 require_once('lib/tikilib.php');
@@ -45,7 +45,8 @@ function getUserInfo($params) {
  $appkeyp=$params->getParam(0); $appkey=$appkeyp->scalarval();
  $usernamep=$params->getParam(1); $username=$usernamep->scalarval();
  $passwordp=$params->getParam(2); $password=$passwordp->scalarval();
- if($userlib->validate_user($username,$password,'','')) {
+ list($ok, $username, $e) = $userlib->validate_user($username,$password,'','');
+ if($ok) {
    $myStruct=new xmlrpcval(array("nickname" => new xmlrpcval($username),
                                  "firstname" => new xmlrpcval("none"),
                                  "lastname" => new xmlrpcval("none"),
@@ -74,7 +75,8 @@ function newPost($params) {
   $title = $title[1];
   $content = ereg_replace("<title>(.*)</title>","",$content);
   // Now check if the user is valid and if the user can post a submission
-  if(!$userlib->validate_user($username,$password,'','')) {
+  list($ok, $username, $e) = $userlib->validate_user($username,$password,'','');
+  if(!$ok) {
     return new xmlrpcresp(0, 101, "Invalid username or password");
   }
  
@@ -118,7 +120,8 @@ function editPost($params) {
   $title = $title[1];
   $content = ereg_replace("<title>(.*)</title>","",$content);
   // Now check if the user is valid and if the user can post a submission
-  if(!$userlib->validate_user($username,$password,'','')) {
+  list($ok, $username, $e) = $userlib->validate_user($username,$password,'','');
+  if(!$ok) {
     return new xmlrpcresp(0, 101, "Invalid username or password");
   }
  
@@ -155,7 +158,8 @@ function deletePost($params) {
   $passwordp=$params->getParam(3); $password=$passwordp->scalarval();
   $passp=$params->getParam(4); $publish=$passp->scalarval();
   // Now check if the user is valid and if the user can post a submission
-  if(!$userlib->validate_user($username,$password,'','')) {
+  list($ok, $username, $e) = $userlib->validate_user($username,$password,'','');
+  if(!$ok) {
     return new xmlrpcresp(0, 101, "Invalid username or password");
   }
  
@@ -187,7 +191,8 @@ function getPost($params) {
   $usernamep=$params->getParam(2); $username=$usernamep->scalarval();
   $passwordp=$params->getParam(3); $password=$passwordp->scalarval();
   // Now check if the user is valid and if the user can post a submission
-  if(!$userlib->validate_user($username,$password,'','')) {
+  list($ok, $username, $e) = $userlib->validate_user($username,$password,'','');
+  if(!$ok) {
     return new xmlrpcresp(0, 101, "Invalid username or password");
   }
   if(!check_individual($username,$blogid,'tiki_p_blog_post') ) {
@@ -230,7 +235,8 @@ function getRecentPosts($params) {
   $passwordp=$params->getParam(3); $password=$passwordp->scalarval();
   $passp=$params->getParam(4); $number=$passp->scalarval();
   // Now check if the user is valid and if the user can post a submission
-  if(!$userlib->validate_user($username,$password,'','')) {
+  list($ok, $username, $e) = $userlib->validate_user($username,$password,'','');
+  if(!$ok) {
     return new xmlrpcresp(0, 101, "Invalid username or password");
   }
   
