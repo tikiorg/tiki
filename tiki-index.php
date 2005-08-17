@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.141 2005-08-15 15:34:00 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.142 2005-08-17 15:02:30 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -157,6 +157,11 @@ if(empty($info)) {
   $smarty->display("error.tpl");
   die;
 }
+
+if ((!isset($_REQUEST['noredirect']) || $_REQUEST['noredirect'] != 'y') && preg_match("/^\s*#REDIRECT\s+(.*)\s*/", $info['data'], $matches)) { // a redirection
+	header('Location: tiki-index.php?page='.$matches[1].'&noredirect=y');//need a replace because some plugin use the url
+}
+
 /*Wiki SECURITY warning to optimizers : Although get_page_info is currently
 called even if permission is denied, we must still get page's real name
 (case-sensitive) before tiki-pagesetup.php is included. Bug #990242 for
