@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.65 2005-08-15 14:15:35 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.66 2005-08-17 13:26:40 sylvieg Exp $
 var feature_no_cookie = 'n';
 
 function browser() {
@@ -773,7 +773,7 @@ function insertImgFile(elementId, fileId, oldfileId,type) {
     // @todo - here's a hack: we know its ending up in img/wiki_up. 
     //      replace with dyn. variable once in a while to respect the tikidomain 
     if (type == "file")
-        str = "{ATTACH(name=>"+filename+")}{ATTACH}";
+        str = "{file name="+filename+"}";
     else
         str = "{img src=\"img/wiki_up/" + filename + "\" }";
     insertAt(elementId, str);
