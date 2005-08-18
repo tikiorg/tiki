@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-print.php,v 1.22 2005-05-18 10:58:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-print.php,v 1.23 2005-08-18 16:23:05 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -45,7 +45,7 @@ if (!$tikilib->page_exists($page)) {
 }
 
 // Now check permissions to access this page
-if ($tiki_p_view != 'y') {
+if (!$tikilib->user_has_perm_on_object($user, $_REQUEST["page"],'wiki page','tiki_p_view')) {
 	$smarty->assign('msg', tra("Permission denied you cannot view this page"));
 
 	$smarty->display("error.tpl");

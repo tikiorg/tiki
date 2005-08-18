@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/lib/tikiticketlib.php,v 1.15 2005-05-18 10:59:50 mose Exp $
+/* $Header: /cvsroot/tikiwiki/tiki/lib/tikiticketlib.php,v 1.16 2005-08-18 16:23:05 mose Exp $
 
 Tikiwiki CSRF protection.
 also called Sea-Surfing
@@ -90,7 +90,6 @@ function key_check($area) {
 		}
 		unset($_SESSION["ticket_$area"]);
 		$smarty->assign('msg',tra('Sea Surfing (CSRF) detected. Operation blocked.'));
-		$smarty->assign('nocreate',1);
 		$smarty->display("error.tpl");
 		die();
 	}

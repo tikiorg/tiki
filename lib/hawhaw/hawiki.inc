@@ -163,7 +163,11 @@ class HAWIKI_page
   {
     // convert wiki text into HAWHAW object structure and create appropriate markup
 
-    $url_debugflags = $_GET["hawikidebugremote"];
+    if (isset($_GET["hawikidebugremote"]))
+      $url_debugflags = $_GET["hawikidebugremote"];
+    else
+      $url_debugflags = HAWIKI_DEBUG_NONE;
+    
     if ($url_debugflags && ($this->debugflags == HAWIKI_DEBUG_NONE))
       $this->debugflags = $url_debugflags;
 
@@ -529,14 +533,16 @@ class HAWIKI_page
               $img_wbmp = ereg_replace(".gif$|.png$|.jpg$", ".wbmp", $po["src"]);
             }
 
-            if (!($img_alt = $po["alt"]))
+            if (isset($po["alt"]) && ($po["alt"] != ""))
+              $img_alt = $po["alt"];
+            else
               $img_alt = $po["src"]; // set alternative text to src, if not available
 
             $image = new HAW_image($img_wbmp, $po["src"], $img_alt);
             $this->deck->add_image($image);
           }
 
-          if ($po["link"] && ($this->deck->ml != HAW_VXML))
+          if (isset($po["link"]) && $po["link"] && ($this->deck->ml != HAW_VXML))
           {
             // HAWHAW does not support images as links
             // ==> draw @-link next to image (for visual browsers)

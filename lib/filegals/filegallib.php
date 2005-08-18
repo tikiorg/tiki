@@ -183,7 +183,10 @@ class FileGalLib extends TikiLib {
 				$aux["user"] = $res["user"];
 				$aux["hits"] = $res["hits"];
 				$aux["public"] = $res["public"];
+// Only get the file count when necessary. Otherwise there are many excess db queries. GG
+				if ($maxRecords > -1) {
 				$aux["files"] = $this->getOne("select count(*) from `tiki_files` where `galleryId`=?",array($gid));
+				}
 				$ret[] = $aux;
 			}
 		}

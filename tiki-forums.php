@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-forums.php,v 1.13 2005-05-18 10:58:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-forums.php,v 1.14 2005-08-18 16:23:05 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -112,6 +112,13 @@ if ($offset > 0) {
 $smarty->assign_by_ref('channels', $channels["data"]);
 $section = 'forums';
 include_once ('tiki-section_options.php');
+
+if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
+	include_once ("lib/hawhaw/hawtikilib.php");
+
+	HAWTIKI_forums($channels["data"], $tiki_p_forum_read, $offset, $maxRecords, $channels["cant"]);
+}
+
 ask_ticket('forums');
 
 // Display the template

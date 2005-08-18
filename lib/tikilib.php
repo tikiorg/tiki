@@ -1822,7 +1822,7 @@ function add_pageview() {
 
 	if ($find) {
 	    $findesc='%' . $find . '%';
-	    $mid = " where `galleryId`=? and (`name` like ? or `description` like ?)";
+	    $mid = " where `galleryId`=? and (upper(`name`) like upper(?) or upper(`description`) like upper(?))";
 	    $bindvars=array((int) $galleryId,$findesc,$findesc);
 	} else {
 	    $mid = "where `galleryId`=?";
@@ -1933,7 +1933,8 @@ function add_pageview() {
 	    $aux["user"] = $res["user"];
 	    $aux["hits"] = $res["hits"];
 	    $aux["public"] = $res["public"];
-	    $aux["files"] = $this->getOne("select count(*) from `tiki_files` where `galleryId`=?",array((int)$gid));
+//  The file count is not needed by any caller, so save the query. GG
+//	    $aux["files"] = $this->getOne("select count(*) from `tiki_files` where `galleryId`=?",array((int)$gid));
 	    $ret[] = $aux;
 	}
 	if ($old_sort_mode == 'files_asc') {
@@ -2256,9 +2257,8 @@ function add_pageview() {
 
 /*shared*/
     function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '', $user=false, $type = '', $topicId = '', $visible_only = 'y', $topic='') {
-        global $userlib, $user;
+        global $userlib, $user, $mid;
 
-	$mid = " left join `users_users` on `tiki_articles`.`author` = `users_users`.`login` where `tiki_articles`.`type` = `tiki_article_types`.`type` ";
 	$bindvars=array();
 	if ($find) {
 	    $findesc = '%' . $find . '%';
@@ -2365,26 +2365,30 @@ function add_pageview() {
 		}
     }
 	$query = "select `tiki_articles`.*,
-	`users_users`.`avatarLibName`,
-	`tiki_article_types`.`use_ratings`,
-	`tiki_article_types`.`show_pre_publ`,
-	`tiki_article_types`.`show_post_expire`,
-	`tiki_article_types`.`heading_only`,
-	`tiki_article_types`.`allow_comments`,
-	`tiki_article_types`.`show_image`,
-	`tiki_article_types`.`show_avatar`,
-	`tiki_article_types`.`show_author`,
-	`tiki_article_types`.`show_pubdate`,
-	`tiki_article_types`.`show_expdate`,
-	`tiki_article_types`.`show_reads`,
-	`tiki_article_types`.`show_size`,
-	`tiki_article_types`.`show_topline`,
-	`tiki_article_types`.`show_subtitle`,
-	`tiki_article_types`.`show_linkto`,
-	`tiki_article_types`.`show_image_caption`,
-	`tiki_article_types`.`show_lang`,
-	`tiki_article_types`.`creator_edit`
-	    from `tiki_article_types`, `tiki_articles` $mid order by ".$this->convert_sortmode($sort_mode);
+				`users_users`.`avatarLibName`,
+				`tiki_article_types`.`use_ratings`,
+				`tiki_article_types`.`show_pre_publ`,
+				`tiki_article_types`.`show_post_expire`,
+				`tiki_article_types`.`heading_only`,
+				`tiki_article_types`.`allow_comments`,
+				`tiki_article_types`.`show_image`,
+				`tiki_article_types`.`show_avatar`,
+				`tiki_article_types`.`show_author`,
+				`tiki_article_types`.`show_pubdate`,
+				`tiki_article_types`.`show_expdate`,
+				`tiki_article_types`.`show_reads`,
+				`tiki_article_types`.`show_size`,
+				`tiki_article_types`.`show_topline`,
+				`tiki_article_types`.`show_subtitle`,
+				`tiki_article_types`.`show_linkto`,
+				`tiki_article_types`.`show_image_caption`,
+				`tiki_article_types`.`show_lang`,
+				`tiki_article_types`.`creator_edit`
+	    	from `tiki_articles`
+	    	join `tiki_article_types` on `tiki_articles`.`type` = `tiki_article_types`.`type`
+	    	left join `users_users` on `tiki_articles`.`author` = `users_users`.`login`
+	    	$mid order by ".$this->convert_sortmode($sort_mode);
+
 	$query_cant = "select count(*) from `tiki_article_types`, `tiki_articles` $mid";
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
 	$cant = $this->getOne($query_cant,$bindvars);
@@ -2953,7 +2957,7 @@ function add_pageview() {
     // Removes all the versions of a page and the page itself
     /*shared*/
     function remove_all_versions($page, $comment = '') {
-	global $dbTiki;
+	global $dbTiki, $user;
 	global $multilinguallib;
 	if (!is_object($multilinguallib)) {
 		include_once('lib/multilingual/multilinguallib.php');// must be done even in feature_multilingual not set
@@ -2980,7 +2984,7 @@ function add_pageview() {
 	$query .= "`tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) ";
 	$query .= "values(?,?,?,?,?,?)";
 	$result = $this->query($query, array(
-		    $action,$page,(int) $t,'admin',$_SERVER["REMOTE_ADDR"],$comment
+		    $action,$page,(int) $t,$user,$_SERVER["REMOTE_ADDR"],$comment
 		    ) );
 	$query = "update `users_groups` set `groupHome`=? where `groupHome`=?";
 	$this->query($query, array(NULL, $page));

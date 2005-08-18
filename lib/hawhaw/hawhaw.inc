@@ -3,7 +3,7 @@
 // HAWHAW: HTML and WML hybrid adapted webserver
 // PHP class library
 // Copyright (C) 2005 Norbert Huffschmid
-// Last modified: 2. July 2005
+// Last modified: 15. August 2005
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -23,6 +23,7 @@
 //
 // changes against V5.10:
 // - optimization: set height and overflow attribute for classic display div (Firefox issue)
+// - optimization: inhibit notice warning due to uninitialized size variable in HAW_banner
 
 // miscellaneous constants
 define("HAW_VERSION", "HAWHAW V5.11B");
@@ -5971,6 +5972,8 @@ class HAW_banner
     if (($this->width>0) && ($this->height>0))
       // prepare this variable only if size info available
       $size = sprintf(" width=\"%d\" height=\"%d\"", $this->width, $this->height);
+    else
+      $size = "";
 
     printf("<img src=\"%s\" alt=\"%s\"%s hspace=\"10\" vspace=\"10\" border=\"0\" />",
            $this->image, $this->alt, $size);
