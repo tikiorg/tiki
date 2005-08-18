@@ -1,6 +1,6 @@
 -- $Rev$
--- $Date: 2005-05-18 10:59:04 $
--- $Author: mose $
+-- $Date: 2005-08-18 14:19:08 $
+-- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -385,8 +385,6 @@ CREATE TABLE "tiki_articles" (
   "publishDate" bigint default NULL,
   "expireDate" bigint default NULL,
   "created" bigint default NULL,
-  "bibliographical_references" text default NULL,
-  "resume" text default NULL,
   "heading" text,
   "body" text,
   "hash" varchar(32) default NULL,
@@ -1116,7 +1114,7 @@ DROP TABLE "tiki_cookies";
 
 CREATE TABLE "tiki_cookies" (
   "cookieId" bigserial,
-  "cookie" varchar(255) default NULL,
+  "cookie" text,
   PRIMARY KEY ("cookieId")
 )   ;
 
@@ -1379,23 +1377,6 @@ CREATE TABLE "tiki_featured_links" (
 ) ;
 
 -- --------------------------------------------------------
-
--- Table structure for table tiki_features
---
-
-DROP TABLE "tiki_features";
-
-CREATE TABLE "tiki_features" (
-  "featureId" INT NOT NULL AUTO_INCREMENT ,
-  "Name" VARCHAR( 200 ) NOT NULL ,
-  "Description" text,
-  "Helplink" VARCHAR( 200 ) NOT NULL ,
-  "Variable" VARCHAR( 200 ) NOT NULL ,
-  PRIMARY KEY ( featureId )
-) ;
-
-
---
 -- Table structure for table tiki_file_galleries
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
@@ -2429,9 +2410,9 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','TikiSheet','tiki-sheets.php',780,'feature_sheet','','');
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Trackers','tiki-list_trackers.php',800,'feature_trackers','','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Trackers','tiki-list_trackers.php',800,'feature_trackers','tiki_p_view_trackers','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','List trackers','tiki-list_trackers.php',805,'feature_trackers','','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','List trackers','tiki-list_trackers.php',805,'feature_trackers','tiki_p_view_trackers','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin trackers','tiki-admin_trackers.php',810,'feature_trackers','tiki_p_admin_trackers','');
 
@@ -2825,7 +2806,7 @@ CREATE TABLE "tiki_pages" (
   "page_id" bigserial,
   "pageName" varchar(160) NOT NULL default '',
   "hits" integer default NULL,
-  "data" text,
+  "data" mediumtext,
   "description" varchar(200) default NULL,
   "lastModif" bigint default NULL,
   "comment" varchar(200) default NULL,
@@ -2835,7 +2816,7 @@ CREATE TABLE "tiki_pages" (
   "flag" char(1) default NULL,
   "points" integer default NULL,
   "votes" integer default NULL,
-  "cache" text,
+  "cache" mediumtext,
   "wiki_cache" bigint default NULL,
   "cache_timestamp" bigint default NULL,
   "pageRank" decimal(4,3) default NULL,
@@ -2937,7 +2918,7 @@ DROP TABLE "tiki_preferences";
 
 CREATE TABLE "tiki_preferences" (
   "name" varchar(40) NOT NULL default '',
-  "value" varchar(250) default NULL,
+  "value" text,
   PRIMARY KEY ("name")
 ) ;
 
@@ -3205,7 +3186,7 @@ CREATE TABLE "tiki_received_pages" (
 DROP TABLE "tiki_referer_stats";
 
 CREATE TABLE "tiki_referer_stats" (
-  "referer" varchar(50) NOT NULL default '',
+  "referer" varchar(255) NOT NULL default '',
   "hits" bigint default NULL,
   "last" bigint default NULL,
   PRIMARY KEY ("referer")
@@ -3394,6 +3375,7 @@ DROP TABLE "tiki_sessions";
 CREATE TABLE "tiki_sessions" (
   "sessionId" varchar(32) NOT NULL default '',
   "user" varchar(200) default NULL,
+  "tikihost" varchar(200) default NULL,
   "timestamp" bigint default NULL,
   PRIMARY KEY ("sessionId")
 ) ;
@@ -3548,8 +3530,6 @@ CREATE TABLE "tiki_submissions" (
   "publishDate" bigint default NULL,
   "expireDate" bigint default NULL,
   "created" bigint default NULL,
-  "bibliographical_references" text default NULL,
-  "resume" text default NULL,
   "heading" text,
   "body" text,
   "hash" varchar(32) default NULL,
@@ -3963,6 +3943,7 @@ CREATE TABLE "tiki_user_answers" (
 --
 
 
+DROP TABLE "tiki_user_answers_uploads";
 
 CREATE TABLE `tiki_user_answers_uploads` (
   `answerUploadId` serial,
@@ -4256,6 +4237,10 @@ CREATE TABLE "tiki_user_tasks" (
   "public_for_group" varchar(30) DEFAULT NULL,         -- this group can also view the task, if it is null it is not public
   "rights_by_creator" char(1) DEFAULT NULL,            -- null the user can delete the task, 
   "created" integer(14) NOT NULL,                      -- date of the creation
+  "status" char(1) default NULL,
+  "priority" smallint default NULL,
+  "completed" bigint default NULL,
+  "percentage" smallint default NULL,
   PRIMARY KEY (taskId),
   UNIQUE(creator, created)
 )  ;
@@ -4512,7 +4497,6 @@ CREATE TABLE "users_groups" (
   "groupName" varchar(255) NOT NULL default '',
   "groupDesc" varchar(255) default NULL,
   "groupHome" varchar(255),
-  "groupHomeLocalized" char(1) default 'n',
   "usersTrackerId" bigint,
   "groupTrackerId" bigint,
   "usersFieldId" bigint,
@@ -4875,6 +4859,8 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_trackers_pending', 'Can view trackers pending items', 'editors', 'trackers');
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_tiki_calendar', 'Can view TikiWiki tools calendar', 'basic', 'calendar');
+
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_user_results', 'Can view user quiz results', 'editors', 'quizzes');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_vote_chart', 'Can vote', 'basic', 'charts');
@@ -4961,7 +4947,7 @@ CREATE TABLE "users_users" (
   "avatarData" bytea,
   "avatarLibName" varchar(200) default NULL,
   "avatarType" char(1) default NULL,
-  "score" smallint NOT NULL default 0,
+  "score" bigint NOT NULL default 0,
   PRIMARY KEY ("userId")
 )   ;
 
@@ -5085,8 +5071,6 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('change_password','y');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('change_theme','y');
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('change_password','y');
-
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('cms_bot_bar','y');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('cms_left_column','y');
@@ -5150,6 +5134,10 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_blogposts_comme
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_blogs','n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_bot_bar','y');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_bot_bar_icons','y');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_bot_bar_debug','y');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_calendar','n');
 
@@ -5248,6 +5236,8 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_integrator','n'
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_jscalendar','n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_lastChanges','y');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('pear_wiki_parser','n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_left_column','y');
 
@@ -5402,6 +5392,8 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_workflow','n');
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wysiwyg','no');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_xmlrpc','n');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('fgal_allow_duplicates','n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('fgal_list_created','y');
 
@@ -5641,7 +5633,7 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('t_use_db','y');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('t_use_dir','');
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('trk_with_mirror_tables','n');
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('trk_with_mirror_tables', 'n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('tikiIndex','tiki-index.php');
 
@@ -5666,6 +5658,65 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('user_assigned_modules',
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('user_list_order','score_desc');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('userfiles_quota','30');
+
+
+-- user defaults
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_theme', 'global');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_userbreadCrumb', '4');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_language', 'global');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_display_timezone', 'Local');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_user_information', 'private');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_user_dbl', 'n');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_diff_versions', 'n');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_show_mouseover_user_info', 'n');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_email_is_public', 'n');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_mailCharset', 'utf-8');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_realName', '');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_homePage', '');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_lat', '0');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_lon', '0');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_country', '');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_mess_maxRecords', '10');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_mess_archiveAfter', '0');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_mess_sendReadStatus', 'n');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_minPrio', '6');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_allowMsgs', 'n');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_mytiki_pages', 'n');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_mytiki_blogs', 'n');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_mytiki_gals', 'n');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_mytiki_msgs', 'n');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_mytiki_tasks', 'n');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_mytiki_items', 'n');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_mytiki_workflow', 'n');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_tasks_maxRecords', '10');
+
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('validateEmail','n');
 
@@ -6107,6 +6158,24 @@ DROP TABLE "tiki_file_handlers";
 CREATE TABLE "tiki_file_handlers" (
   "mime_type" varchar(64) default NULL,
   "cmd" varchar(238) default NULL
+) ;
+
+
+--
+-- Table structure for table tiki_stats
+--
+-- Creation: Aug 04, 2005 at 05:59 PM
+-- Last update: Aug 04, 2005 at 05:59 PM
+--
+
+DROP TABLE `tiki_stats`;
+
+CREATE TABLE `tiki_stats` (
+  `object` varchar(255) NOT NULL default '',
+  `type` varchar(20) NOT NULL default '',
+  `day` bigint NOT NULL default '0',
+  `hits` bigint NOT NULL default '0',
+  PRIMARY KEY ("`object`","`type`","`day`")
 ) ;
 
 
