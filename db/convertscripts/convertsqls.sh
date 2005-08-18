@@ -1,8 +1,8 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/db/convertscripts/convertsqls.sh,v 1.8 2005-05-18 10:59:06 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/convertscripts/convertsqls.sh,v 1.9 2005-08-18 14:00:36 sylvieg Exp $
 
 
-VERSION="1.9"
+VERSION="1.10"
 
 if [ -z $1 ]; then
 	echo "Usage: ./convertscript.sh <host> <tikiversion>"
