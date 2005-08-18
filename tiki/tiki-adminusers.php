@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.50 2005-08-16 14:44:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.51 2005-08-18 16:23:04 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -57,7 +57,7 @@ function batchImportUsers() {
 			$discarded[] = discardUser($u, tra("Password is required"));
 		} elseif (empty($u['email'])) {
 			$discarded[] = discardUser($u, tra("Email is required"));
-		} elseif ($userlib->user_exists($u['login'])and (!$_REQUEST['overwrite'])) {
+		} elseif ($userlib->user_exists($u['login'])and (!isset($_REQUEST['overwrite']))) {
 			$discarded[] = discardUser($u, tra("User is duplicated"));
 		} else {
 			list($cant, $uu) = $userlib->other_user_exists_case_insensitive($u['login']);

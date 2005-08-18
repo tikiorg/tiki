@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mobile.php,v 1.10 2005-05-18 10:58:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mobile.php,v 1.11 2005-08-18 16:23:05 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -19,7 +19,7 @@ if ($feature_mobile != 'y') {
 $TikiPage = new HAW_deck(HAWIKI_TITLE, HAW_ALIGN_CENTER);
 HAWTIKI_deck_init($TikiPage);
 
-if ($_REQUEST['content'] == "about") {
+if (isset($_REQUEST['content']) && $_REQUEST['content'] == "about") {
 	// show info about hawiki
 	$title = new HAW_text(hawtra("Welcome at Hawiki"), HAW_TEXTFORMAT_BOLD);
 
@@ -45,8 +45,6 @@ if ($_REQUEST['content'] == "about") {
 
 	$linkset = new HAW_linkset();
 
-	//$forum = new HAW_link("Forum","forum.php");
-	//$linkset->add_link($forum);
 	$wiki = new HAW_link(hawtra("Wiki"), "tiki-index.php?mode=mobile");
 
 	if ($feature_wiki == 'y') {
@@ -63,6 +61,12 @@ if ($_REQUEST['content'] == "about") {
 
 	if ($feature_articles == 'y') {
 		$linkset->add_link($articles);
+	}
+
+	$forums = new HAW_link(hawtra("Forums"), "tiki-forums.php?mode=mobile");
+
+	if ($feature_forums == 'y') {
+		$linkset->add_link($forums);
 	}
 
 	$about = new HAW_link(hawtra("About"), $_SERVER['PHP_SELF'] . "?content=about");

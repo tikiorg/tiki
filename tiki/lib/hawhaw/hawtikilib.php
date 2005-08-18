@@ -6,7 +6,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/hawhaw/hawtikilib.php,v 1.16 2005-07-14 14:00:06 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/hawhaw/hawtikilib.php,v 1.17 2005-08-18 16:23:05 mose Exp $
 
 // HAWHAW function library for TikiWiki
 
@@ -15,6 +15,156 @@ require_once("lib/hawhaw/hawiki_cfg.inc");
 require_once("lib/hawhaw/hawiki.inc");
 
 error_reporting(E_ALL & ~E_NOTICE);
+
+
+/**
+  generic class for articles lists, forum lists etc.
+*/
+class HAWTIKI_list
+{
+  var $title;
+  var $offset;
+  var $maxRecords;
+  var $cant;      //list size
+  var $backlink;
+  var $items;
+  var $use_separators = false;
+  var $offset_parm_name = "offset"; // default name (for article and forum lists)
+
+  function HAWTIKI_list($title, $offset, $maxRecords, $nav_url, $cant)
+  {
+    $this->title = $title;
+    $this->offset = $offset;
+    $this->maxRecords = $maxRecords;
+    $this->nav_url = $nav_url;
+    $this->cant = $cant;
+    $this->items = array();
+    $this->query_parms = array();
+  }
+
+  function set_backlink($label, $url)
+  {
+    $this->backlink = new HAW_link($label, $url);
+  }
+
+  function set_offset_parm_name($name)
+  {
+    $this->offset_parm_name = $name; // modify default name (e.g. for forum thread lists)
+  }
+  
+  function set_query_parameter($query_parameter)
+  {
+    $this->query_parms[] = $query_parameter;
+  }
+
+  function add_listitem($item)
+  {
+    $this->items[] = $item; // push item on top of array
+
+    if ($item->get_size() > 1)
+      $this->use_separators = true;
+  }
+
+  function create()
+  {
+    $list = new HAW_deck(HAWIKI_TITLE);
+    HAWTIKI_deck_init($list);
+
+    $listtitle = new HAW_text($this->title, HAW_TEXTFORMAT_BOLD | HAW_TEXTFORMAT_BOXED);
+    $list->add_text($listtitle);
+
+    if (isset($this->backlink))
+      $list->add_link($this->backlink);
+
+    if ($this->offset > 0)
+    {
+      // previous list items are available
+      $prev_offset = $this->offset - $this->maxRecords;
+      $prev_url = $this->nav_url . "?mode=mobile&" . $this->offset_parm_name . "=" . $prev_offset;
+      while (list($key, $val) = each($this->query_parms))
+        $prev_url .= "&" . $val; // add query parameters
+      $prev = new HAW_link(hawtra("previous page"), $prev_url);
+      $list->add_link($prev);
+    }
+
+    if ($this->cant > ($this->offset + $this->maxRecords))
+    {
+      // next list items are available
+      $next_offset = $this->offset + $this->maxRecords;
+      $next_url = $this->nav_url . "?mode=mobile&" . $this->offset_parm_name . "=" . $next_offset;
+      while (list($key, $val) = each($this->query_parms))
+        $next_url .= "&" . $val; // add query parameters
+      $next = new HAW_link(hawtra("next page"), $next_url);
+      $list->add_link($next);
+    }
+
+    $rule = new HAW_rule();
+    $list->add_rule($rule);
+
+    // show all list items
+    while (list($key, $val) = each($this->items))
+    {
+      $val->render($list);
+
+      if ($this->use_separators)
+        $list->add_rule($rule);
+    }
+
+    if (!$this->use_separators)
+      $list->add_rule($rule);  // show at least one separator here ...
+
+    // repeat navigation links
+    if (isset($this->backlink))
+      $list->add_link($this->backlink);
+    if (isset($prev))
+      $list->add_link($prev);
+    if (isset($next))
+      $list->add_link($next);
+
+    $list->create_page();
+    die;
+  }
+};
+
+
+/**
+  listitem used in HAWTIKI_list class
+*/
+class HAWTIKI_listitem
+{
+  var $arr_text;
+  var $arr_link;
+
+  function HAWTIKI_listitem()
+  {
+    $this->arr_text = array();
+    $this->arr_link = array();
+  }
+
+  function add_text($hawtext)
+  {
+    $this->arr_text[] = $hawtext; // push HAW_text object on top of text array
+  }
+
+  function add_link($hawlink)
+  {
+    $this->arr_link[] = $hawlink; // push HAW_link object on top of link array
+  }
+
+  function get_size()
+  {
+    return (count($this->arr_text) + count($this->arr_link));
+  }
+
+  function render(&$deck)
+  {
+    while (list($key, $val) = each($this->arr_text))
+      $deck->add_text($val);
+
+    while (list($key, $val) = each($this->arr_link))
+      $deck->add_text($val);
+  }
+};
 
 
 function hawtra($string)
@@ -28,7 +178,7 @@ function hawtra($string)
 function HAWTIKI_index($info)
 {
   // determine title and url switch for navigation links
-  if ($_REQUEST['frame'] == 'no')
+  if (isset($_REQUEST['frame']) && $_REQUEST['frame'] == 'no')
   {
     $framearg = '&frame=no';
     $title = '';
@@ -40,7 +190,7 @@ function HAWTIKI_index($info)
   }
 
   // determine url switch for jingle playing at links
-  if ($_REQUEST['jingle'] == 'no')
+  if (isset($_REQUEST['jingle']) && $_REQUEST['jingle'] == 'no')
     $jinglearg = '&jingle=no';
   else
     $jinglearg = '';
@@ -57,14 +207,14 @@ function HAWTIKI_index($info)
   $wikiPage = new HAWIKI_page($info['data'],"tiki-index.php?mode=mobile$framearg$jinglearg&page=",
                               $title, $info['lang']);
 
-  if ($_REQUEST['frame'] != 'no')
+  if (!isset($_REQUEST['frame']) || $_REQUEST['frame'] != 'no')
   {
     // create standard hawiki deck with title and navigation links
     $wikiPage->set_navlink(tra('Wiki Home'), "tiki-index.php?mode=mobile$jinglearg", HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
     $wikiPage->set_navlink(tra('Home'), 'tiki-mobile.php', HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
   }
 
-  if ($_REQUEST['jingle'] != 'no')
+  if (!isset($_REQUEST['jingle']) || $_REQUEST['jingle'] != 'no')
   {
     // play standard jingle before link text is spoken
     $wikiPage->set_link_jingle("lib/hawhaw/link.wav");
@@ -115,7 +265,7 @@ function HAWTIKI_list_blogs($listpages, $tiki_p_read_blog)
 function HAWTIKI_view_blog($listpages, $blog_data)
 {
   // determine title and url switch for navigation links
-  if ($_REQUEST['frame'] == 'no')
+  if (isset($_REQUEST['frame']) && $_REQUEST['frame'] == 'no')
   {
     $framearg = '&frame=no';
     $title = '';
@@ -127,7 +277,7 @@ function HAWTIKI_view_blog($listpages, $blog_data)
   }
 
   // determine url switch for jingle playing at links
-  if ($_REQUEST['jingle'] == 'no')
+  if (isset($_REQUEST['jingle']) && $_REQUEST['jingle'] == 'no')
     $jinglearg = '&jingle=no';
   else
     $jinglearg = '';
@@ -181,13 +331,13 @@ function HAWTIKI_view_blog($listpages, $blog_data)
 
   $blog = new HAWIKI_page($nonparsed_text, "tiki-index.php?mode=mobile$framearg$jinglearg&page=", $title, "");
 
-  if ($_REQUEST['frame'] != 'no')
+  if (!isset($_REQUEST['frame']) || $_REQUEST['frame'] != 'no')
   {
     // create standard hawiki deck with title and navigation links
     $blog->set_navlink(tra('Blogs'), "tiki-list_blogs.php?mode=mobile", HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
   }
 
-  if ($_REQUEST['jingle'] != 'no')
+  if (!isset($_REQUEST['jingle']) || $_REQUEST['jingle'] != 'no')
   {
     // play standard jingle before link text is spoken
     $blog->set_link_jingle("lib/hawhaw/link.wav");
@@ -203,65 +353,32 @@ function HAWTIKI_view_blog($listpages, $blog_data)
 
 function HAWTIKI_list_articles($listpages, $tiki_p_read_article, $offset, $maxRecords, $cant)
 {
-  $articleList = new HAW_deck(HAWIKI_TITLE);
-  HAWTIKI_deck_init($articleList);
+  if ($tiki_p_read_article != 'y') die;
 
-  $pagetitle = new HAW_text(hawtra("Articles"), HAW_TEXTFORMAT_BOLD | HAW_TEXTFORMAT_BOXED);
-  $articleList->add_text($pagetitle);
+  $article_list = new HAWTIKI_list(hawtra("Articles"), $offset, $maxRecords, "tiki-list_articles.php", $cant);
+  $article_list->set_backlink(hawtra("Home"), "tiki-mobile.php");
 
-  $home = new HAW_link(hawtra("Home"),"tiki-mobile.php");
-  $articleList->add_link($home);
-
-  if ($offset > 0)
-  {
-    // previous articles are available
-    $prev_offset = $offset - $maxRecords;
-    $prev = new HAW_link(hawtra("previous page"),"tiki-list_articles.php?mode=mobile&offset=" . $prev_offset);
-    $articleList->add_link($prev);
-  }
-
-  if ($cant > ($offset + $maxRecords))
-  {
-    // next articles are available
-    $next_offset = $offset + $maxRecords;
-    $next = new HAW_link(hawtra("next page"),"tiki-list_articles.php?mode=mobile&offset=" . $next_offset);
-    $articleList->add_link($next);
-  }
-
-  $rule = new HAW_rule();
-  $articleList->add_rule($rule);
-
-  for($i=0;$i<count($listpages['data']);$i++)
+  for ( $i = 0; $i < count($listpages['data']); $i++)
   {
     $article = $listpages['data'][$i];
+    $listitem = new HAWTIKI_listitem();
 
     $title = new HAW_text(HAWIKI_specchar($article['title']), HAW_TEXTFORMAT_BOLD);
-    $articleList->add_text($title);
+    $listitem->add_text($title);
 
     $date = new HAW_text(date(HAWIKI_DATETIME_SHORT, $article['publishDate']));
-    $articleList->add_text($date);
+    $listitem->add_text($date);
 
     $author = new HAW_text(hawtra("By:") . HAWIKI_specchar($article['authorName']), HAW_TEXTFORMAT_SMALL | HAW_TEXTFORMAT_ITALIC);
-    $articleList->add_text($author);
+    $listitem->add_text($author);
 
-    // without read permission no reading is allowed
-    if($tiki_p_read_article == 'y') {
-      $readlink = new HAW_link(hawtra("Read"),"tiki-read_article.php?mode=mobile&articleId=".$article['articleId']);
-      $articleList->add_link($readlink);
-    }
+    $readlink = new HAW_link(hawtra("Read"),"tiki-read_article.php?mode=mobile&articleId=".$article['articleId']);
+    $listitem->add_link($readlink);
 
-    $articleList->add_rule($rule);
+    $article_list->add_listitem($listitem);
   }
 
-  // repeat navigation links from above
-  $articleList->add_link($home);
-  if (isset($prev))
-    $articleList->add_link($prev);
-  if (isset($next))
-    $articleList->add_link($next);
-
-  $articleList->create_page();
-
+  $article_list->create();
   die;
 }
 
@@ -306,6 +423,97 @@ function HAWTIKI_read_article($article_data, $pages)
 }
 
 
+function HAWTIKI_forums($data, $tiki_p_forum_read, $offset, $maxRecords, $cant)
+{
+  if($tiki_p_forum_read != 'y') die;
+
+  $forum_list = new HAWTIKI_list(hawtra("Forums"), $offset, $maxRecords, "tiki-forums.php", $cant);
+  $forum_list->set_backlink(hawtra("Home"), "tiki-mobile.php");
+
+  for ($i = 0; $i < count($data); $i++)
+  {
+    $listitem = new HAWTIKI_listitem();
+    $link = new HAW_link($data[$i]['name'], "tiki-view_forum.php?mode=mobile&forumId=" . $data[$i]['forumId'] . "&comments_sort_mode=lastPost_desc");
+    $listitem->add_link($link);
+    $forum_list->add_listitem($listitem);
+  }
+
+  $forum_list->create();
+
+  die;
+}
+
+
+function HAWTIKI_view_forum($forum_name, $threads, $tiki_p_forum_read, $offset, $maxRecords, $cant)
+{
+  if($tiki_p_forum_read != 'y') die;
+
+  $thread_list = new HAWTIKI_list($forum_name, $offset, $maxRecords, "tiki-view_forum.php", $cant);
+  $thread_list->set_offset_parm_name("comments_offset");
+  $thread_list->set_query_parameter("forumId=" . $_REQUEST['forumId']);
+  $thread_list->set_backlink(hawtra("Forums"), "tiki-forums.php?mode=mobile");
+
+  while (list($key, $val) = each($threads))
+  {
+    $listitem = new HAWTIKI_listitem();
+
+    $title = new HAW_text(HAWIKI_specchar($val['title']), HAW_TEXTFORMAT_BOLD);
+    $listitem->add_text($title);
+
+    if (isset($val['lastPostData']))
+    {
+      // there's a reply available - show data of last post
+      $date = new HAW_text(date(HAWIKI_DATETIME_SHORT, $val['lastPostData']['commentDate']));
+      $author = new HAW_text(hawtra("By:") . HAWIKI_specchar($val['lastPostData']['userName']), HAW_TEXTFORMAT_SMALL | HAW_TEXTFORMAT_ITALIC);
+      $threadId = $val['lastPostData']['threadId'];
+    }
+    else
+    {
+      // no reply at all - show data of original posting
+      $date = new HAW_text(date(HAWIKI_DATETIME_SHORT, $val['commentDate']));
+      $author = new HAW_text(hawtra("By:") . HAWIKI_specchar($val['userName']), HAW_TEXTFORMAT_SMALL | HAW_TEXTFORMAT_ITALIC);
+      $threadId = $val['threadId'];
+    }
+
+    $listitem->add_text($date);
+    $listitem->add_text($author);
+
+    $readlink = new HAW_link(hawtra("Read"),"tiki-view_forum_thread.php?mode=mobile&comments_parentId=" . $threadId . "&forumId=" . $_REQUEST['forumId']);
+    $listitem->add_link($readlink);
+
+    $thread_list->add_listitem($listitem);
+  }
+
+  $thread_list->create();
+
+  die;
+}
+
+
+function HAWTIKI_view_forum_thread($forum_name, $thread_info, $tiki_p_forum_read)
+{
+  if($tiki_p_forum_read != 'y') die;
+
+  $prefix = sprintf("__%s:__\n__~np~%s~/np~__\n__%s ~np~%s~/np~__\n---\n",
+                    hawtra("Last post"),
+                    date(HAWIKI_DATETIME_SHORT, $thread_info['commentDate']),
+                    hawtra("By:"), $thread_info['userName']);
+
+  $thread = new HAWIKI_page($prefix . $thread_info['data'],
+                            "tiki-index.php?mode=mobile&page=", $thread_info['title'], "");
+
+  $thread->set_navlink($forum_name, "tiki-view_forum.php?mode=mobile&comments_sort_mode=lastPost_desc&forumId=" . $_REQUEST['forumId'], HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
+
+  $thread->set_smiley_dir("img/smiles");
+  $thread->set_link_jingle("lib/hawhaw/link.wav");
+  $thread->set_hawimconv("lib/hawhaw/hawimconv.php");
+
+  $thread->display();
+
+  die;
+}
+
+
 function HAWTIKI_deck_init(&$deck)
 {
   // init tiki deck
@@ -319,13 +527,17 @@ function HAWTIKI_deck_init(&$deck)
     else
       $_SESSION['haw_skin'] = $_REQUEST['skin'];
   }
-  
+
   if (isset($_SESSION['haw_skin']))
     $deck->use_simulator("/lib/hawhaw/skin/" . $_SESSION['haw_skin'] . "/skin.css");
 
-  $banner = new HAW_banner("/img/tiki/tikibutton2.png", 
+  $banner = new HAW_banner("/img/tiki/tikibutton2.png",
 "http://mobile.tikiwiki.org/", "Powered by MobileTiki");
   $deck->add_banner($banner);
+  
+  $deck->set_width(HAWIKI_DISP_WIDTH);
+  $deck->set_height(HAWIKI_DISP_HEIGHT);
+  $deck->set_disp_bgcolor(HAWIKI_DISP_BGCOLOR);
 }
 
 ?>

@@ -84,7 +84,7 @@ class WikiLib extends TikiLib {
      *  the returned array does not contain the last editor/contributor
      */
     function get_contributors($page, $last) {
-        $notus = "`user` not like \"system\" and `user` not like \"$last\"";
+	$notus = "`user` not like 'system' and `user` not like '$last'";
         $query = "select `user` from `tiki_history` where ($notus) and `pageName`=? order by `version` desc";
         $result = $this->query($query,array($page), 10);
         $ret = array();
@@ -303,6 +303,7 @@ class WikiLib extends TikiLib {
 		$comment = strip_tags($comment);
 		$now = date("U");
 		$query = "insert into `tiki_wiki_attachments`(`page`,`filename`,`filesize`,`filetype`,`data`,`created`,`downloads`,`user`,`comment`,`path`) values(?,?,?,?,?,?,0,?,?,?)";
+		$this->blob_encode($data);
 		$result = $this->query($query,array("$page","$name", (int) $size,"$type","$data", (int) $now,"$user","$comment","$fhash"));
 
 		global $feature_score;

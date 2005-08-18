@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.142 2005-08-17 15:02:30 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.143 2005-08-18 16:23:05 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -154,6 +154,7 @@ if(empty($info)) {
   $smarty->assign('headtitle',tra("Page cannot be found"));
   $smarty->assign('errortitle',tra("Page cannot be found")." (404)");
   $smarty->assign('errortype', '404');
+  $smarty->assign('create', 'y');
   $smarty->display("error.tpl");
   die;
 }

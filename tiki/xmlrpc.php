@@ -1,11 +1,11 @@
 <?php 
-# $Header: /cvsroot/tikiwiki/tiki/xmlrpc.php,v 1.24 2005-08-17 13:25:51 sylvieg Exp $
+var_dump($HTTP_RAW_POST_DATA);
+# $Header: /cvsroot/tikiwiki/tiki/xmlrpc.php,v 1.25 2005-08-18 16:23:05 mose Exp $
 include_once("lib/init/initlib.php");
 require_once('db/tiki-db.php');
 require_once('lib/tikilib.php');
 require_once('lib/userslib.php');
-require_once("lib/xmlrpc.inc");
-require_once("lib/xmlrpcs.inc");
+require_once("XML/Server.php");
 include_once('lib/blogs/bloglib.php');
 $tikilib = new Tikilib($dbTiki);
 $userlib = new Userslib($dbTiki);
@@ -23,7 +23,7 @@ $map = array (
         "blogger.getUsersBlogs" => array( "function" => "getUserBlogs")
         
 );
-$s=new xmlrpc_server( $map );
+$s=new XML_RPC_Server( $map );
 
 function check_individual($user,$blogid,$permName) {
   global $userlib;
@@ -47,16 +47,16 @@ function getUserInfo($params) {
  $passwordp=$params->getParam(2); $password=$passwordp->scalarval();
  list($ok, $username, $e) = $userlib->validate_user($username,$password,'','');
  if($ok) {
-   $myStruct=new xmlrpcval(array("nickname" => new xmlrpcval($username),
-                                 "firstname" => new xmlrpcval("none"),
-                                 "lastname" => new xmlrpcval("none"),
-                                 "email" => new xmlrpcval("none"),
-                                 "userid" => new xmlrpcval("$username"),
-                                 "url" => new xmlrpcval("none")
+   $myStruct=new XML_RPC_Value(array("nickname" => new XML_RPC_Value($username),
+                                 "firstname" => new XML_RPC_Value("none"),
+                                 "lastname" => new XML_RPC_Value("none"),
+                                 "email" => new XML_RPC_Value("none"),
+                                 "userid" => new XML_RPC_Value("$username"),
+                                 "url" => new XML_RPC_Value("none")
                                  ),"struct");
-   return new xmlrpcresp($myStruct);
+   return new XML_RPC_Response($myStruct);
  } else {
-    return new xmlrpcresp(0, 101, "Invalid username or password");
+    return new XML_RPC_Response(0, 101, "Invalid username or password");
  } 
 }
  
@@ -77,23 +77,23 @@ function newPost($params) {
   // Now check if the user is valid and if the user can post a submission
   list($ok, $username, $e) = $userlib->validate_user($username,$password,'','');
   if(!$ok) {
-    return new xmlrpcresp(0, 101, "Invalid username or password");
+    return new XML_RPC_Response(0, 101, "Invalid username or password");
   }
  
   // Get individual permissions for this weblog if they exist
   if(!check_individual($username,$blogid,'tiki_p_blog_post') ) {
-    return new xmlrpcresp(0, 101, "User is not allowed to post to this weblog due to individual restrictions for this weblog");
+    return new XML_RPC_Response(0, 101, "User is not allowed to post to this weblog due to individual restrictions for this weblog");
   }
   
   // If the blog is not public then check if the user is the owner
   if(!$userlib->user_has_permission($username,'tiki_p_blog_admin')) {
     if(!$userlib->user_has_permission($username,'tiki_p_blog_post')) {
-      return new xmlrpcresp(0, 101, "User is not allowed to post");
+      return new XML_RPC_Response(0, 101, "User is not allowed to post");
     }
     $blog_info = $tikilib->get_blog($blogid);
     if($blog_info["public"]!='y') {
       if($username != $blog_info["user"]) {
-        return new xmlrpcresp(0, 101, "User is not allowed to post");
+        return new XML_RPC_Response(0, 101, "User is not allowed to post");
       }
     }
   }
@@ -103,7 +103,7 @@ function newPost($params) {
   
   $id = $bloglib->blog_post($blogid,$content,$username, $title);
    
-  return new xmlrpcresp(new xmlrpcval("$id"));
+  return new XML_RPC_Response(new XML_RPC_Value("$id"));
 }
 // :TODO: editPost
 function editPost($params) {
@@ -122,32 +122,32 @@ function editPost($params) {
   // Now check if the user is valid and if the user can post a submission
   list($ok, $username, $e) = $userlib->validate_user($username,$password,'','');
   if(!$ok) {
-    return new xmlrpcresp(0, 101, "Invalid username or password");
+    return new XML_RPC_Response(0, 101, "Invalid username or password");
   }
  
   if(!check_individual($username,$blogid,'tiki_p_blog_post') ) {
-    return new xmlrpcresp(0, 101, "User is not allowed to post to this weblog due to individual restrictions for this weblog therefor the user cannot edit a post");
+    return new XML_RPC_Response(0, 101, "User is not allowed to post to this weblog due to individual restrictions for this weblog therefor the user cannot edit a post");
   }
  
   if(!$userlib->user_has_permission($username,'tiki_p_blog_post')) {
-    return new xmlrpcresp(0, 101, "User is not allowed to post");
+    return new XML_RPC_Response(0, 101, "User is not allowed to post");
   }
   
   // Now get the post information
   $post_data = $bloglib->get_post($postid);
   if(!$post_data) {
-    return new xmlrpcresp(0, 101, "Post not found");
+    return new XML_RPC_Response(0, 101, "Post not found");
   }
   
   if($post_data["user"]!=$username) {
     if(!$userlib->user_has_permission($username,'tiki_p_blog_admin')) {
-      return new xmlrpcresp(0, 101, "Permission denied to edit that post since the post does not belong to the user");
+      return new XML_RPC_Response(0, 101, "Permission denied to edit that post since the post does not belong to the user");
     }
   }
  
   $now=date("U");
   $id = $bloglib->update_post($postid,$blogid,$content,$username,$title);
-  return new xmlrpcresp(new xmlrpcval(1,"boolean"));
+  return new XML_RPC_Response(new XML_RPC_Value(1,"boolean"));
 }
 // :TODO: deletePost
 function deletePost($params) {
@@ -160,26 +160,26 @@ function deletePost($params) {
   // Now check if the user is valid and if the user can post a submission
   list($ok, $username, $e) = $userlib->validate_user($username,$password,'','');
   if(!$ok) {
-    return new xmlrpcresp(0, 101, "Invalid username or password");
+    return new XML_RPC_Response(0, 101, "Invalid username or password");
   }
  
   
   // Now get the post information
   $post_data = $bloglib->get_post($postid);
   if(!$post_data) {
-    return new xmlrpcresp(0, 101, "Post not found");
+    return new XML_RPC_Response(0, 101, "Post not found");
   }
       
   if($post_data["user"]!=$username) {
     if(!$userlib->user_has_permission($username,'tiki_p_blog_admin')) {
-      return new xmlrpcresp(0, 101, "Permission denied to edit that post");
+      return new XML_RPC_Response(0, 101, "Permission denied to edit that post");
     }
   }
  
   
   $now=date("U");
   $id = $bloglib->remove_post($postid);
-  return new xmlrpcresp(new xmlrpcval(1,"boolean"));
+  return new XML_RPC_Response(new XML_RPC_Value(1,"boolean"));
 }
 // :TODO: getTemplate
 // :TODO: setTemplate
@@ -193,38 +193,38 @@ function getPost($params) {
   // Now check if the user is valid and if the user can post a submission
   list($ok, $username, $e) = $userlib->validate_user($username,$password,'','');
   if(!$ok) {
-    return new xmlrpcresp(0, 101, "Invalid username or password");
+    return new XML_RPC_Response(0, 101, "Invalid username or password");
   }
   if(!check_individual($username,$blogid,'tiki_p_blog_post') ) {
-    return new xmlrpcresp(0, 101, "User is not allowed to post to this weblog due to individual restrictions for this weblog");
+    return new XML_RPC_Response(0, 101, "User is not allowed to post to this weblog due to individual restrictions for this weblog");
   }
  
   if(!$userlib->user_has_permission($username,'tiki_p_blog_post')) {
-    return new xmlrpcresp(0, 101, "User is not allowed to post");
+    return new XML_RPC_Response(0, 101, "User is not allowed to post");
   }
   if(!$userlib->user_has_permission($username,'tiki_p_read_blog')) {
-      return new xmlrpcresp(0, 101, "Permission denied to read this blog");
+      return new XML_RPC_Response(0, 101, "Permission denied to read this blog");
   }
   
   // Now get the post information
   $post_data = $bloglib->get_post($postid);
   if(!$post_data) {
-    return new xmlrpcresp(0, 101, "Post not found");
+    return new XML_RPC_Response(0, 101, "Post not found");
   }
 #  $dateCreated=date("Ymd",$post_data["created"])."T".date("h:i:s",$post_data["created"]);
   $dateCreated=$tikilib->get_iso8601_datetime($post_data["created"]);    
   // added dateTime type for blogger compliant xml tag Joerg Knobloch <joerg@happypenguins.net>
-  $myStruct=new xmlrpcval(array("userid" => new xmlrpcval($username),
-"dateCreated" => new xmlrpcval($dateCreated, "dateTime.iso8601"),
+  $myStruct=new XML_RPC_Value(array("userid" => new XML_RPC_Value($username),
+"dateCreated" => new XML_RPC_Value($dateCreated, "dateTime.iso8601"),
 // Fix for w.Bloggar
-"content" => new xmlrpcval("<title>" . $post_data["title"] . "</title>" . $post_data["data"]),
-"postid" => new xmlrpcval($post_data["postId"])
+"content" => new XML_RPC_Value("<title>" . $post_data["title"] . "</title>" . $post_data["data"]),
+"postid" => new XML_RPC_Value($post_data["postId"])
 ),"struct");
   
  
   // User ok and can submit then submit an article
   
-  return new xmlrpcresp($myStruct);
+  return new XML_RPC_Response($myStruct);
 }
 // :TODO: getRecentPosts
 function getRecentPosts($params) {
@@ -237,40 +237,40 @@ function getRecentPosts($params) {
   // Now check if the user is valid and if the user can post a submission
   list($ok, $username, $e) = $userlib->validate_user($username,$password,'','');
   if(!$ok) {
-    return new xmlrpcresp(0, 101, "Invalid username or password");
+    return new XML_RPC_Response(0, 101, "Invalid username or password");
   }
   
   if(!check_individual($username,$blogid,'tiki_p_blog_post') ) {
-    return new xmlrpcresp(0, 101, "User is not allowed to post to this weblog due to individual restrictions for this weblog therefore the user cannot edit a post");
+    return new XML_RPC_Response(0, 101, "User is not allowed to post to this weblog due to individual restrictions for this weblog therefore the user cannot edit a post");
   }
   
   if(!$userlib->user_has_permission($username,'tiki_p_blog_post')) {
-    return new xmlrpcresp(0, 101, "User is not allowed to post");
+    return new XML_RPC_Response(0, 101, "User is not allowed to post");
   }
   
   // Now get the post information
   $posts = $bloglib->list_blog_posts($blogid, 0, $number,'created_desc', '', '');
   if(count($posts)==0) {
-    return new xmlrpcresp(0, 101, "No posts");
+    return new XML_RPC_Response(0, 101, "No posts");
   }
   $arrayval = Array();
   foreach($posts["data"] as $post) {
     
 #    $dateCreated=date("Ymd",$post["created"])."T".date("h:i:s",$post["created"]);    
     $dateCreated=$tikilib->get_iso8601_datetime($post["created"]);    
-    $myStruct=new xmlrpcval(array("userid" => new xmlrpcval($username),
-  "dateCreated" => new xmlrpcval($dateCreated, "dateTime.iso8601"),
+    $myStruct=new XML_RPC_Value(array("userid" => new XML_RPC_Value($username),
+  "dateCreated" => new XML_RPC_Value($dateCreated, "dateTime.iso8601"),
   // Fix for w.Bloggar
-  "content" => new xmlrpcval("<title>" . $post["title"] . "</title>" . $post["data"]),
-  "postid" => new xmlrpcval($post["postId"])
+  "content" => new XML_RPC_Value("<title>" . $post["title"] . "</title>" . $post["data"]),
+  "postid" => new XML_RPC_Value($post["postId"])
   ),"struct");
     $arrayval[]=$myStruct;
   }  
  
   // User ok and can submit then submit an article
   
- $myVal=new xmlrpcval($arrayval, "array");
- return new xmlrpcresp($myVal);
+ $myVal=new XML_RPC_Value($arrayval, "array");
+ return new XML_RPC_Response($myVal);
 }
 // :TODO: tiki.tikiPost
 /* Get the topics where the user can post a new */
@@ -286,13 +286,13 @@ function getUserBlogs($params) {
  $foo = parse_url($_SERVER["REQUEST_URI"]);
  $foo1=$tikilib->httpPrefix().str_replace("xmlrpc","tiki-view_blog",$foo["path"]);
  foreach($blogs as $blog) {
-   $myStruct=new xmlrpcval(array("blogName" => new xmlrpcval($blog["title"]),
-                               "url" => new xmlrpcval($foo1."?blogId=".$blog["blogId"]),
-                               "blogid" => new xmlrpcval($blog["blogId"])),"struct");
+   $myStruct=new XML_RPC_Value(array("blogName" => new XML_RPC_Value($blog["title"]),
+                               "url" => new XML_RPC_Value($foo1."?blogId=".$blog["blogId"]),
+                               "blogid" => new XML_RPC_Value($blog["blogId"])),"struct");
    $arrayVal[] = $myStruct;                              
  }
  
- $myVal=new xmlrpcval($arrayVal, "array");
- return new xmlrpcresp($myVal);
+ $myVal=new XML_RPC_Value($arrayVal, "array");
+ return new XML_RPC_Response($myVal);
 }
 ?>

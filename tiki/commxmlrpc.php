@@ -1,19 +1,18 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/commxmlrpc.php,v 1.18 2005-08-16 14:44:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/commxmlrpc.php,v 1.19 2005-08-18 16:23:04 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/commxmlrpc.php,v 1.18 2005-08-16 14:44:45 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/commxmlrpc.php,v 1.19 2005-08-18 16:23:04 mose Exp $
 include_once("lib/init/initlib.php");
 include_once ('db/tiki-db.php');
 
 include_once ('lib/tikilib.php');
 include_once ('lib/userslib.php');
-include_once ("lib/xmlrpc.inc");
-include_once ("lib/xmlrpcs.inc");
+include_once ("XML/Server.php");
 include_once ('lib/commcenter/commlib.php');
 
 $tikilib = new Tikilib($dbTiki);
@@ -28,7 +27,7 @@ $map = array(
 	"sendArticle" => array("function" => "sendArticle")
 );
 
-$s = new xmlrpc_server($map);
+$s = new XML_RPC_Server($map);
 
 /* Validates the user and returns user information */
 function sendPage($params) {
@@ -49,21 +48,21 @@ function sendPage($params) {
 	$comment = $pp->scalarval();
 	$pp = $params->getParam(6);
 	$description = $pp->scalarval();
-	//
+
 	list($ok, $username, $error) = $userlib->validate_user($username, $password, '', '');
 	if (!$ok) {
-		return new xmlrpcresp(0, 101, "Invalid username or password");
+		return new XML_RPC_Response(0, 101, "Invalid username or password");
 	}
 
 	// Verify if the user has tiki_p_sendme_pages
 	if (!$userlib->user_has_permission($username, 'tiki_p_sendme_pages')) {
-		return new xmlrpcresp(0, 101, "Permissions denied user $username cannot send pages to this site");
+		return new XML_RPC_Response(0, 101, "Permissions denied user $username cannot send pages to this site");
 	}
 
 	// Store the page in the tiki_received_pages_table
 	$data = base64_decode($data);
 	$commlib->receive_page($pageName, $data, $comment, $site, $username, $description);
-	return new xmlrpcresp(new xmlrpcval(1, "boolean"));
+	return new XML_RPC_Response(new XML_RPC_Value(1, "boolean"));
 }
 
 function sendArticle($params) {
@@ -115,15 +114,14 @@ function sendArticle($params) {
 	$pp = $params->getParam(21);
 	$rating = $pp->scalarval();
 
-	//
 	list($ok, $username, $error) = $userlib->validate_user($username, $password, '', '');
 	if (!$ok) {
-		return new xmlrpcresp(0, 101, "Invalid username or password");
+		return new XML_RPC_Response(0, 101, "Invalid username or password");
 	}
 
 	// Verify if the user has tiki_p_sendme_pages
 	if (!$userlib->user_has_permission($username, 'tiki_p_sendme_articles')) {
-		return new xmlrpcresp(0, 101, "Permissions denied user $username cannot send articles to this site");
+		return new XML_RPC_Response(0, 101, "Permissions denied user $username cannot send articles to this site");
 	}
 
 	// Store the page in the tiki_received_pages_table
@@ -136,7 +134,7 @@ function sendArticle($params) {
 	$commlib->receive_article($site, $username, $title, $authorName, $size, $use_image, $image_name, $image_type, $image_size,
 		$image_x, $image_y, $image_data, $publishDate, $expireDate, $created, $heading, $body, $hash, $author, $type, $rating);
 
-	return new xmlrpcresp(new xmlrpcval(1, "boolean"));
+	return new XML_RPC_Response(new XML_RPC_Value(1, "boolean"));
 }
 
 ?>

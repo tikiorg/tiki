@@ -50,7 +50,7 @@
         {$msg}
         <br /><br />
         {/if}
-        {if $page and !$nocreate and ($tiki_p_admin eq 'y' or $tiki_p_admin_wiki eq 'y'  or $tiki_p_edit eq 'y')}<a href="tiki-editpage.php?page={$page}" class="linkmenu">{tr}Create this page{/tr}</a> {tr}(page will be orphaned){/tr}<br /><br />{/if}
+        {if $page and $create eq 'y' and ($tiki_p_admin eq 'y' or $tiki_p_admin_wiki eq 'y'  or $tiki_p_edit eq 'y')}<a href="tiki-editpage.php?page={$page}" class="linkmenu">{tr}Create this page{/tr}</a> {tr}(page will be orphaned){/tr}<br /><br />{/if}
         <a href="javascript:history.back()" class="linkmenu">{tr}Go back{/tr}</a><br /><br />
         <a href="{$tikiIndex}" class="linkmenu">{tr}Return to home page{/tr}</a>
         </div>

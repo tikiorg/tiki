@@ -6,14 +6,13 @@ include_once("lib/init/initlib.php");
 require_once('db/tiki-db.php');
 require_once('lib/tikilib.php');
 require_once('lib/userslib.php');
-require_once("lib/xmlrpc.inc");
-require_once("lib/xmlrpcs.inc");
+require_once("XML/Server.php");
 require_once("lib/wiki/wikilib.php");
 
 
 $map = array ("getSubGraph" => array( "function" => "getSubGraph" ) );
 
-$server = new xmlrpc_server( $map );
+$server = new XML_RPC_Server( $map );
 
 function getSubGraph($params) {
     global $wikilib, $dbTiki;
@@ -43,7 +42,7 @@ function getSubGraph($params) {
 		    $nextQueue[] = $neighbours[$j];
 		    $passed[$neighbours[$j]] = true;
 		}
-		$neighbours[$j] = new XmlRpcVal($neighbours[$j]);
+		$neighbours[$j] = new XML_RPC_Value($neighbours[$j]);
 	    }
 
 	    $node = array();
@@ -59,22 +58,22 @@ function getSubGraph($params) {
 		$actionUrl = "${base_url}/tiki-editpage.php?page=${nodeName}";
 	    }
 
-	    $node['neighbours'] = new XmlRpcVal($neighbours, "array");
+	    $node['neighbours'] = new XML_RPC_Value($neighbours, "array");
 	    if (!empty($color)) {
-		$node['color'] = new XmlRpcVal($color, "string");
+		$node['color'] = new XML_RPC_Value($color, "string");
 	    }
-	    $node['actionUrl'] = new XmlRpcVal($actionUrl, "string");
+	    $node['actionUrl'] = new XML_RPC_Value($actionUrl, "string");
 
-	    $nodes[$nodeName] = new XmlRpcVal($node, "struct");
+	    $nodes[$nodeName] = new XML_RPC_Value($node, "struct");
 
 	}
 	$i++;
 	$queue = $nextQueue;
     }
 
-    $response = array("graph" => new XmlRpcVal($nodes, "struct"));
+    $response = array("graph" => new XML_RPC_Value($nodes, "struct"));
     
-    return new XmlRpcResp(new XmlRpcVal($response, "struct"));
+    return new XML_RPC_Response(new XML_RPC_Value($response, "struct"));
 }
 
 ?>

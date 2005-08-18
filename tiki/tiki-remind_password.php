@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-remind_password.php,v 1.23 2005-08-16 14:44:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-remind_password.php,v 1.24 2005-08-18 16:23:05 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -28,11 +28,11 @@ if (isset($_REQUEST["user"])) {
 			header ("location: $tikiIndex");
 			die;
 		}
-		$smarty->assign('msg', tra("Invalid username or activation code"));
+		$smarty->assign('msg', tra("Invalid username or activation code. Maybe this code has already been used."));
 		$smarty->display("error.tpl");
 		die;
 	}
-}	
+}
 
 if (isset($_REQUEST["remind"])) {
 	if (!($ok = $userlib->user_exists($_REQUEST["username"]))) {
@@ -88,7 +88,7 @@ if (isset($_REQUEST["remind"])) {
 		if ($feature_clear_passwords == 'y') {
 			$tmp = tra("A password and your IP address reminder email has been sent ");
 		} else {
-			$tmp = tra("A new password and your IP address has been sent ");
+			$tmp = tra("A new (and temporary) password and your IP address has been sent ");
 		}
 
 		$tmp .= tra("to the registered email address for");
