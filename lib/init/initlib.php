@@ -1,4 +1,4 @@
-<?php
+<?php // $Id: initlib.php,v 1.8 2005-08-18 12:59:23 mashmorgan Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
