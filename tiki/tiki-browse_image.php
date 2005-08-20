@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.32 2005-08-12 13:01:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.33 2005-08-20 15:35:55 wesleywillians Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -69,22 +69,22 @@ if ($userlib->object_has_one_permission($_REQUEST["galleryId"], 'image gallery')
 	}
 } elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
 	$perms_array = $categlib->get_object_categories_perms($user, 'image gallery', $_REQUEST['galleryId']);
-   	if ($perms_array) {
-   		$is_categorized = TRUE;
-    	foreach ($perms_array as $perm => $value) {
-    		$$perm = $value;
-    	}
-   	} else {
-   		$is_categorized = FALSE;
-   	}
+	if ($perms_array) {
+		$is_categorized = TRUE;
+		foreach ($perms_array as $perm => $value) {
+			$$perm = $value;
+		}
+	} else {
+		$is_categorized = FALSE;
+	}
 	if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
 		if (!isset($user)){
 			$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
 			$smarty->assign('errortitle',tra("Please login"));
 		} else {
 			$smarty->assign('msg',tra("Permission denied you cannot view this page"));
-    	}
-	    $smarty->display("error.tpl");
+		}
+		$smarty->display("error.tpl");
 		die;
 	}
 }
@@ -306,6 +306,79 @@ if ($feature_theme_control == 'y') {
 // now set it if needed
 if (isset($_REQUEST['popup'])and ($_REQUEST['popup'])) {
 	$smarty->assign('popup', 'y');
+
+	if (!isset($_REQUEST["sort_mode"])) {
+		if(isset($info['sortorder'])) {
+			// default sortorder from gallery settings
+			$sort_mode = $info['sortorder'].'_'.$info['sortdirection'];
+		} else {
+			$sort_mode = 'created_desc';
+		}
+	} else {
+		$sort_mode = $_REQUEST["sort_mode"];
+	}
+
+	$smarty->assign_by_ref('sort_mode', $sort_mode);
+
+
+	if ($_REQUEST["galleryId"] == 0) {
+		$info["thumbSizeX"] = 100;
+
+		$info["thumbSizeY"] = 100;
+		$info["galleryId"] = 0;
+		$info["user"] = 'admin';
+		$info["name"] = 'System';
+		$info["public"] = 'y';
+		$info["description"] = 'System Gallery';
+		$info['sortorder'] = 'created';
+		$info['sortdirection'] = 'desc';
+		$info['galleryimage'] = 'last';
+		$smarty->assign('system', 'y');
+	} else {
+		$info = $imagegallib->get_gallery($_REQUEST["galleryId"]);
+
+		$nextscaleinfo = $imagegallib->get_gallery_next_scale($_REQUEST["galleryId"]);
+	}
+
+	if (!isset($info["maxRows"]))
+	$info["maxRows"] = 10;
+
+	if (!isset($info["rowImages"]))
+	$info["rowImages"] = 5;
+
+	if (!isset($nextscaleinfo['scale'])) {
+		$nextscaleinfo['scale'] = 0;
+
+		$nextscaleinfo['scale'] = 0;
+	}
+
+	if ($info["maxRows"] == 0)
+	$info["maxRows"] = 10;
+
+	if ($info["rowImages"] == 0)
+	$info["rowImages"] = 6;
+
+	$maxImages = $info["maxRows"] * $info["rowImages"];
+	$smarty->assign_by_ref('maxImages', $maxImages);
+	$smarty->assign_by_ref('rowImages', $info["rowImages"]);
+	$smarty->assign('rowImages2', $info["rowImages"] - 1);
+	$smarty->assign_by_ref('thx', $info["thumbSizeX"]);
+	$smarty->assign_by_ref('thy', $info["thumbSizeY"]);
+	$smarty->assign_by_ref('name', $info["name"]);
+	$smarty->assign('title', $info["name"]);
+	$smarty->assign_by_ref('description', $info["description"]);
+	$smarty->assign_by_ref('nextscale', $nextscaleinfo['scale']);
+
+	$subgals = $imagegallib->get_subgalleries($offset, $maxImages, $sort_mode, '', $_REQUEST["galleryId"]);
+	$remainingImages = $maxImages-count($subgals['data']);
+	$newoffset = $offset -$subgals['cant'];
+	$images = $imagegallib->get_images($newoffset, $remainingImages, $sort_mode, '', $_REQUEST["galleryId"]);
+
+	$images_slide = $imagegallib->get_images($newoffset, $remainingImages, $sort_mode, '', $_REQUEST["galleryId"]);
+
+	
+	$smarty->assign('slide_show',$images_slide);
+
 
 	$smarty->assign('feature_top_bar', 'n');
 	$smarty->assign('feature_left_column', 'n');

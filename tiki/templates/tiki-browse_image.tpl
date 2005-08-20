@@ -1,4 +1,5 @@
 {if $popup ne ""}
+
   {if $slideshow_p ne ''}
     {if $previmg ne '' && $desp ne 0}
     <META HTTP-EQUIV="Refresh" CONTENT="{$slideshow_p};tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$previmg}{if $itype=='s'}&amp;scaled&amp;scalesize={$scalesize}{/if}&amp;popup={$popup}&amp;slideshow_p={$slideshow_p}">
@@ -9,9 +10,8 @@
     <META HTTP-EQUIV="Refresh" CONTENT="{$slideshow_n};tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$nextdesp}&amp;galleryId={$galleryId}&amp;imageId={$nextimg}{if $itype=='s'}&amp;scaled&amp;scalesize={$scalesize}{/if}&amp;popup={$popup}&amp;slideshow_n={$slideshow_n}">
     {/if}
   {/if}
-  <script language='Javascript' type='text/javascript'>
-	window.resizeTo({$winx},{$winy});
-  </script>
+  
+
 {/if}
 
 {if $popup eq ""}
@@ -55,12 +55,114 @@
 {/if}   
 
   <div class="showimage" {if ($popup) }style="height: 400px"{/if}>
-    {if $itype eq 'o'}
+  
+  
+  {literal}  
+<script language="JavaScript" type="text/JavaScript">
+		// (C) 2000 www.CodeLifter.com
+		// http://www.codelifter.com
+		// Free for all users, but leave in this  header
+		// NS4-6,IE4-6
+		// Fade effect only in IE; degrades gracefully
+		var stopstatus = 0
+		
+		// Set slideShowSpeed (milliseconds)
+		var slideShowSpeed = 5000
+		
+		// Duration of crossfade (seconds)
+		var crossFadeDuration = 3
+		
+		// Specify the image files
+		var Pic = new Array() // don't touch this
+		// to add more images, just continue
+		// the pattern, adding to the array below
+		{/literal}
+		
+			{foreach from=$slide_show item=item}
+			{foreach from=$item item=item_ok key=key}
+		
+			Pic[{$key}] = 'show_image.php?id={$item_ok.imageId}&amp;nocount=y'
+			
+		{/foreach}
+		{/foreach}
+		
+		
+		var t
+		var j = 1
+		var keyPic = 'show_image.php?id={$imageId}&amp;nocount=y'
+		{literal}
+		var p = Pic.length
+		var pos = j
+		var preLoad = new Array()
+		
+		function preLoadPic(index){
+  			if (Pic[index] != ''){
+				window.status='Loading : '+Pic[index]
+				preLoad[index] = new Image()
+				preLoad[index].src = Pic[index]
+				Pic[index] = ''
+				window.status=''
+  			}
+		}
+		
+		function runSlideShow(){
+	  		if (stopstatus != '1'){
+				if (document.all){
+	  				document.images.zImage.style.filter="blendTrans(duration=2)"
+	  				document.images.zImage.style.filter= "blendTrans(duration=crossFadeDuration)"
+	      			document.images.zImage.filters.blendTrans.Apply()
+				}
+				document.images.zImage.src = preLoad[j].src
+				if (document.all){
+	  				document.images.zImage.filters.blendTrans.Play()
+				}
+				pos = j
+				j = j + 1
+				if (j > (p-1)) j=0
+				t = setTimeout('runSlideShow()', slideShowSpeed)
+				preLoadPic(j)
+  			}
+		}
+
+		function endSlideShow(){
+  			stopstatus = 1
+  			document.images.zImage.src = keyPic
+		}
+
+		preLoadPic(j)
+		
+		</script>
+  
+		{/literal}
+  
+  
+  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+    
+    <tr>
+  	<td align="center" valign="middle">
+  		<div align="center">
+  		<a href="javascript:stopstatus=0;runSlideShow();blocking('details', 'block')">[{tr}play{/tr}]</a>
+  		<a href="javascript:endSlideShow();blocking('details', 'block')" >[{tr}stop{/tr}]</a>
+  		<br />
+  		<br />
+  		</div>
+  	</td>
+  </tr>
+  </table>
+    		
+<div align="center"><img src="show_image.php?id={$imageId}&amp;nocount=y" alt="" border="1" name="zImage" onClick="javscript:window.close()"> </center> 
+  
+
+  {*
+  
+  old code of slideshow
+  	{if $itype eq 'o'}
     	<img src="show_image.php?id={$imageId}&amp;nocount=y" alt="{tr}image{/tr}" />
     {else}
 	    <a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$desp}&amp;galleryId={$galleryId}&amp;imageId={$imageId}&amp;scalesize={$scaleinfo.nextscale}&amp;scaled" title="{tr}Click to zoom{/tr}">
 	    <img src="show_image.php?id={$imageId}&amp;scaled&amp;scalesize={$scalesize}&amp;nocount=y" alt="{tr}image{/tr}" /></a>
     {/if}
+    *}
   </div>
   
 {if $popup eq ""}
