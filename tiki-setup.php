@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.277 2005-08-12 13:01:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.278 2005-08-22 10:55:29 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1521,6 +1521,14 @@ if( isset($_COOKIE['tiki-theme']) )
 {
         $user_style = $_COOKIE['tiki-theme'];
 }
+if (isset($_REQUEST['switchLang'])) {
+	if ($change_language != 'y'
+		|| !preg_match("/[a-zA-Z-_]*$/", $_REQUEST['switchLang'])
+		|| !file_exists('lang/'.$_REQUEST['switchLang'].'/language.php')
+		|| ($available_languages && !in_array($_REQUEST['switchLang'], unserialize($available_languages))) ) {
+			unset($_REQUEST['switchLang']);
+	}
+}
 
 if ($feature_userPreferences == 'y') {
     // Check for FEATURES for the user
@@ -1538,12 +1546,16 @@ if ($feature_userPreferences == 'y') {
         }
 
         if ($change_language == 'y') {
-            $user_language = $tikilib->get_user_preference($user, 'language', $language);
-
-            if ($user_language) {
-                $language = $user_language;
-            }
-        }
+		if (isset($_REQUEST['switchLang'])) {
+			$language = $_REQUEST['switchLang'];
+			$tikilib->set_user_preference($user, 'language', $language);
+		} else {
+            	$user_language = $tikilib->get_user_preference($user, 'language', $language);
+	            if ($user_language) {
+                		$language = $user_language;
+            	}
+        	}
+	}
     } else {
 	$style = $user_style;
     }
@@ -1553,19 +1565,23 @@ if ($feature_userPreferences == 'y') {
     $style = $user_style;
 }
 
-if (!(is_file("styles/$style") or is_file("styles/$tikidomain/$style"))) { $style = "tikineat.css"; }
-if (!(isset($user) && $user)  && !empty($saveLanguage) ) { // users not logged that change the preference
-	$language = $saveLanguage;
-	$smarty->assign('language', $language);
+if (!(is_file("styles/$style") or is_file("styles/$tikidomain/$style"))) {
+	$style = "tikineat.css";
+}
+
+if (!$user) {
+	if (isset($_REQUEST['switchLang'])) {
+		$language = $_REQUEST['switchLang'];
+		$_SESSION['language'] = $language;
+		$smarty->assign('language', $language);
+	} elseif  (!empty($saveLanguage)) { // users not logged that change the preference
+		$language = $saveLanguage;
+		$smarty->assign('language', $language);
+	}
 }
 
 $stlstl = split("-|\.", $style);
 $style_base = $stlstl[0];
-
-if (!(isset($user) && $user) && !empty($saveLanguage) ) { // anonymous that change the preference
-	$language = $saveLanguage;
-	$smarty->assign('language', $language);
-}
 
 if ($lang_use_db != 'y') {
     // check if needed!!!
