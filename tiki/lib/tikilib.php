@@ -2257,8 +2257,9 @@ function add_pageview() {
 
 /*shared*/
     function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '', $user=false, $type = '', $topicId = '', $visible_only = 'y', $topic='') {
-        global $userlib, $user, $mid;
+        global $userlib, $user;
 
+	$mid = '';
 	$bindvars=array();
 	if ($find) {
 	    $findesc = '%' . $find . '%';
@@ -2364,6 +2365,12 @@ function add_pageview() {
 		    $mid .= " where $condition";
 		}
     }
+	if ($mid)
+		$mid2 = " and ";
+	else
+		$mid2 = " where ";
+	$mid2 .= "  `tiki_articles`.`type` = `tiki_article_types`.`type`and `tiki_articles`.`author` = `users_users`.`login`";
+
 	$query = "select `tiki_articles`.*,
 				`users_users`.`avatarLibName`,
 				`tiki_article_types`.`use_ratings`,
@@ -2384,12 +2391,9 @@ function add_pageview() {
 				`tiki_article_types`.`show_image_caption`,
 				`tiki_article_types`.`show_lang`,
 				`tiki_article_types`.`creator_edit`
-	    	from `tiki_articles`
-	    	join `tiki_article_types` on `tiki_articles`.`type` = `tiki_article_types`.`type`
-	    	left join `users_users` on `tiki_articles`.`author` = `users_users`.`login`
-	    	$mid order by ".$this->convert_sortmode($sort_mode);
-
-	$query_cant = "select count(*) from `tiki_article_types`, `tiki_articles` $mid";
+	    	from `tiki_articles`, `tiki_article_types`, `users_users` 
+	    	$mid $mid2 order by ".$this->convert_sortmode($sort_mode);
+	$query_cant = "select count(*) from  `tiki_articles`, `tiki_article_types`,  `users_users` $mid $mid2";
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
 	$cant = $this->getOne($query_cant,$bindvars);
 	$ret = array();
