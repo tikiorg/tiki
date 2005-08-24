@@ -8,6 +8,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
+{* can be needed for sefurls with tiki not installed at the root server {if $feature_server_name}<base href="{$feature_server_name}" />{/if} *}
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 {if $metatag_keywords ne ''}<meta name="keywords" content="{$metatag_keywords}" />
 {/if}
@@ -72,7 +73,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 <link rel="StyleSheet" href="lib/phplayers/layerstreemenu.css" type="text/css"></link>
 <style type="text/css"><!-- @import url("lib/phplayers/layerstreemenu-hidden.css"); //--></style>
 <script language="JavaScript" type="text/javascript"><!--
-{php} include_once ("lib/phplayers/libjs/layersmenu-browser_detection.js"); {/php}
+{php} include_once ("lib/phplayers/libjs/layersmenu-browser_detection.js"); global $LayersMenu, $TreeMenu, $PHPTreeMenu, $PlainMenu;{/php}
 // --></script>
 <script language="JavaScript" type="text/javascript" src="lib/phplayers/libjs/layersmenu-library.js"></script>
 {*

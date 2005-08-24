@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.25 2005-08-12 13:01:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.26 2005-08-24 22:23:56 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.25 2005-08-12 13:01:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.26 2005-08-24 22:23:56 sylvieg Exp $
 //
 
 // Initialization
@@ -91,47 +91,16 @@ if ($_REQUEST["parentId"]) {
 $smarty->assign('path', $path);
 $smarty->assign('father', $father);
 
-//$ctall = $categlib->get_all_categories();
 $ctall = $categlib->get_all_categories_respect_perms($user, 'tiki_p_view_categories');
 
 if ($feature_phplayers == 'y') {
-	if (!function_exists("mktree")) {
-	function mktree($ind,$indent="",$back) {
-		global $ctall, $deep, $type;
-		$kids = array();
-		foreach ($ctall as $v) {
-			if ($v['parentId'] == $ind) {
-				$kids[] = $v;
-			}
-		}
-		if (count($kids)) {
-			foreach ($kids as $k) {
-				$back.= $indent."|".$k['name']."|tiki-browse_categories.php?parentId=".$k['categId']."&amp;type=".urlencode($type)."&amp;deep=$deep\n";
-				$back.= mktree($k['categId'],".$indent","");
-			}
-			return $back;
-		} else {
-			return "";
-		}
-	}
-	}
-	$itall = mktree(0,".","");
-	include_once ("lib/phplayers/lib/PHPLIB.php");
-	include_once ("lib/phplayers/lib/layersmenu-common.inc.php");
-	include_once ("lib/phplayers/lib/treemenu.inc.php");
-	if (!@is_object($phplayers))
-		$phplayers = new TreeMenu();
-	$phplayers->setDirrootCommon("lib/phplayers");
-	$phplayers->setLibjsdir("lib/phplayers/libjs/");
-	$phplayers->setImgdir("lib/phplayers/images/");
-	$phplayers->setImgwww("lib/phplayers/images/");
-	$phplayers->setTpldirCommon("lib/phplayers/templates/");
-	if ($itall) {
-		$phplayers->setMenuStructureString($itall);
-	}
-	$phplayers->parseStructureForMenu("treemenu1");
-	$phpitall = $phplayers->newTreeMenu("treemenu1");
-	$smarty->assign('tree', $phpitall);
+	global $tikiphplayers; include_once('lib/phplayers_tiki/tiki-phplayers.php');
+	$urlEnd = "&amp;deep=$deep";
+	if ($type)
+		$urlEnd .= "&amp;type=$type";
+	$urlEnd .= "\n";
+	list($itall, $count) = $tikiphplayers->mkCatEntry(0, ".", '', $ctall, $urlEnd, 'browsedcategory.tpl');
+	$smarty->assign('tree', $tikiphplayers->mkmenu($itall, 'treecategories', 'tree'));
 } else {
 	$tree_nodes = array();
 	foreach ($ctall as $c) {
