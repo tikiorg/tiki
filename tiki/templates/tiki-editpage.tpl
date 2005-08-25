@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.66 2005-08-15 14:15:35 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.67 2005-08-25 18:46:53 sylvieg Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -215,9 +215,10 @@ or use
 </td><td>
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
 <input type="hidden" name="hasAlreadyInserted2" value="" />
+<input type="hidden" name="page2" value="{$page}" />
 <input name="userfile2" type="file" id="attach-upload" />
  {tr}comment{/tr}:<input type="text" name="attach_comment" maxlength="250" id="attach-comment" />
-<input type="submit" class="wikiaction" name="attach" value="{tr}attach{/tr}" onClick="javascript:insertImgFile('editwiki','userfile2','hasAlreadyInserted2','file'); return true;" />
+<input type="submit" class="wikiaction" name="attach" value="{tr}attach{/tr}" onClick="javascript:insertImgFile('editwiki','userfile2','hasAlreadyInserted2','file', 'page2', 'attach_comment'); return true;" />
 </td></tr>
 {/if}
 {if $feature_wiki_icache eq 'y'}
