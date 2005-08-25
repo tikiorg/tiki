@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.115 2005-08-18 16:23:04 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.116 2005-08-25 18:54:47 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -561,7 +561,7 @@ if ($feature_wiki_footnotes == 'y') {
 
 if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0 && !isset($_REQUEST['preview']) && !isset($_REQUEST['save'])) {
   $template_data = $tikilib->get_template($_REQUEST["templateId"]);
-  $_REQUEST["edit"] = $template_data["content"].$_REQUEST["edit"];
+  $_REQUEST["edit"] = $template_data["content"]."\n".$_REQUEST["edit"];
   $_REQUEST["preview"] = 1;
   $smarty->assign("templateId", $_REQUEST["templateId"]);
 }
