@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.88 2005-08-22 10:55:29 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.89 2005-08-25 20:50:04 michael_davey Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -48,6 +48,8 @@ require_once("lib/logs/logslib.php");
 $tikilib = new TikiLib($dbTiki);
 require_once("lib/userslib.php");
 $userlib = new UsersLib($dbTiki);
+require_once("lib/tikiaccesslib.php");
+$access = new TikiAccessLib();
 
 // require_once("lib/tikiaccesslib.php");
 require_once("lib/breadcrumblib.php");

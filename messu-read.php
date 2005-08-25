@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-read.php,v 1.18 2005-05-18 10:58:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-read.php,v 1.19 2005-08-25 20:50:04 michael_davey Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,6 +8,10 @@
 require_once ('tiki-setup.php');
 
 include_once ('lib/messu/messulib.php');
+
+/*
+$access->check_page( $user, array("feature_messages"), array("tiki_p_messages") );
+*/
 
 if (!$user) {
 	$smarty->assign('msg', tra("You are not logged in"));

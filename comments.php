@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.51 2005-07-19 17:30:11 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.52 2005-08-25 20:50:04 michael_davey Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -15,16 +15,10 @@
 // cannot be aliased by normal tiki variables.
 // Traverse each _REQUEST data adn put them in an array
 
-//this script may only be included - so its better to die if called directly.
-
-if (strpos($_SERVER["SCRIPT_NAME"],"comments.php")!=FALSE) {
-    //smarty is not there - we need setup
-    require_once('tiki-setup.php');
-    $smarty->assign('msg',tra("This script cannot be called directly"));
-    $smarty->display("error.tpl");
-    die;
-}
-
+//this script may only be included - so its better to err & die if called directly.
+//smarty is not there - we need setup
+require_once('tiki-setup.php');  
+$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 require_once ('lib/tikilib.php'); # httpScheme()
 
@@ -233,9 +227,8 @@ if ($tiki_p_post_comments == 'y') {
 
 				    @$fw = fopen($forum_info['att_store_dir'] . $fhash, "wb");
 				    if (!$fw) {
-					$smarty->assign('msg', tra('Cannot write to this file:'). $fhash);
-					$smarty->display("error.tpl");
-					die;
+					$msg = tra('Cannot write to this file:'). $fhash;
+                                        $access->display_error(basename(__FILE__), $msg);
 				    }
 				}
 				while (!feof($fp)) {
@@ -258,9 +251,8 @@ if ($tiki_p_post_comments == 'y') {
 				$type = $_FILES['userfile1']['type'];
 
 				if ($size > $forum_info['att_max_size']) {
-				    $smarty->assign('msg', tra('Cannot upload this file maximum upload size exceeded'));
-				    $smarty->display("error.tpl");
-				    die;
+				    $msg = tra('Cannot upload this file maximum upload size exceeded');
+				    $access->display_error(basename(__FILE__), $msg);
 				}
 
 				$commentslib->attach_file($qId, 0, $name, $type, $size, $data,
@@ -329,10 +321,8 @@ if ($tiki_p_post_comments == 'y') {
 	    }
 
 	} else {
-	    $smarty->assign('msg', tra("Missing title or body when trying to post a comment"));
-
-	    $smarty->display("error.tpl");
-	    die;
+	    $msg = tra("Missing title or body when trying to post a comment");
+	    $access->display_error(basename(__FILE__), $msg);
 	}
     }
 }

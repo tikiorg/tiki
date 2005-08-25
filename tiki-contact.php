@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-contact.php,v 1.17 2005-05-18 10:58:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-contact.php,v 1.18 2005-08-25 20:50:04 michael_davey Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,18 +11,9 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/messu/messulib.php');
 
-if (!$user and $contact_anon != 'y') {
-	$smarty->assign('msg', tra("You are not logged in"));
-
-	$smarty->display("error.tpl");
-	die;
-}
-
-if ($feature_contact != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_contact");
-
-	$smarty->display("error.tpl");
-	die;
+$access->check_feature($feature_contact, "feature_contact");
+if ($contact_anon != 'y') {
+  $access->check_user($user);
 }
 
 $smarty->assign('mid', 'tiki-contact.tpl');

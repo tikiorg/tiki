@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.34 2005-05-18 10:58:53 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.35 2005-08-25 20:50:04 michael_davey Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,12 +13,8 @@ if (!isset($_REQUEST["forumId"])) {
 	$_REQUEST["forumId"] = 0;
 }
 
-if ($feature_forums != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_forums");
+$access->check_feature($feature_forums, "feature_forums");
 
-	$smarty->display("error.tpl");
-	die;
-}
 
 $smarty->assign('individual', 'n');
 
@@ -44,12 +40,8 @@ if ($userlib->object_has_one_permission($_REQUEST["forumId"], 'forum')) {
 	}
 }
 
-if ($tiki_p_admin_forum != 'y') {
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
+$access->check_permission(array('tiki_p_admin_forum'), tra("Admin: Forums"));
 
-	$smarty->display("error.tpl");
-	die;
-}
 
 include_once ("lib/commentslib.php");
 $commentslib = new Comments($dbTiki);

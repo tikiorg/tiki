@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.28 2005-08-18 16:23:05 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.29 2005-08-25 20:50:04 michael_davey Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,19 +11,7 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/wiki/histlib.php');
 
-if ($feature_wiki != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
-
-	$smarty->display("error.tpl");
-	die;
-}
-
-if ($feature_history != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_history");
-
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature(array('feature_wiki', 'feature_history'));
 
 // Get the page from the request var or default it to HomePage
 if (!isset($_REQUEST["page"])) {
@@ -48,12 +36,7 @@ if (!$tikilib->user_has_perm_on_object($user, $_REQUEST["page"],'wiki page','tik
 }
 
 // If the page doesn't exist then display an error
-if (!$tikilib->page_exists($page)) {
-	$smarty->assign('msg', tra("Page cannot be found"));
-
-	$smarty->display("error.tpl");
-	die;
-}
+//check_page_exits($page);
 
 if (isset($_REQUEST["delete"]) && isset($_REQUEST["hist"])) {
 	check_ticket('page-history');

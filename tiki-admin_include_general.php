@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.41 2005-08-12 13:01:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.42 2005-08-25 20:50:04 michael_davey Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,11 +8,9 @@
 
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
-}
-
+//smarty is not there - we need setup
+require_once('tiki-setup.php');  
+$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 // Just change site style
 if (isset($_REQUEST["style"])) {
@@ -124,10 +122,8 @@ elseif (isset($_REQUEST["prefs"])) {
 elseif (isset($_REQUEST["newadminpass"])) {
 	check_ticket('admin-inc-general');
     if ($_REQUEST["adminpass"] <> $_REQUEST["again"]) {
-        $smarty->assign("msg", tra("The passwords don't match"));
-
-        $smarty->display("error.tpl");
-        die;
+        $msg = tra("The passwords don't match");
+        $access->display_error(basename(__FILE__), $msg);
     }
 
     // Dont allow blank passwords here
@@ -144,9 +140,7 @@ elseif (isset($_REQUEST["newadminpass"])) {
 
         $text .= " " . $min_pass_length . " ";
         $text .= tra("characters long");
-        $smarty->assign("msg", $text);
-        $smarty->display("error.tpl");
-        die;
+        $access->display_error(basename(__FILE__), $text);
     }
 
     $userlib->change_user_password("admin", $_REQUEST["adminpass"]);

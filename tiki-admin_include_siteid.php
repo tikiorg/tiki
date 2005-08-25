@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_siteid.php,v 1.4 2005-05-18 10:58:54 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_siteid.php,v 1.5 2005-08-25 20:50:04 michael_davey Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,10 +8,9 @@
 
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
-}
+//smarty is not there - we need setup
+require_once('tiki-setup.php');  
+$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 // Site Identity Settings
 if (isset($_REQUEST["siteidentityset"])) {
@@ -26,9 +25,8 @@ if (isset($_REQUEST["siteidentityset"])) {
 		 $alter_result=false;
 	 }
 	 if ($alter_result!=true) {
-        $smarty->assign("msg", tra('Altering database table failed'));
-        $smarty->display("error.tpl");
-        die;
+         $msg = tra('Altering database table failed');
+         $access->display_error(basename(__FILE__), $msg);
 	 }
  }
 

@@ -5,13 +5,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],"tiki-mailin-code.php")!=FALSE) {
-  //smarty is not there - we need setup
-  require_once('tiki-setup.php');
-  $smarty->assign('msg',tra("This script cannot be called directly"));
-  $smarty->display("error.tpl");
-  die;
-}
+//smarty is not there - we need setup
+require_once('tiki-setup.php');  
+$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 include_once ('lib/mailin/mailinlib.php');
 
