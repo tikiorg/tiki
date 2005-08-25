@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/redirect/wiki-plugins/wikiplugin_redirect.php,v 1.3 2005-02-09 07:31:23 mhausi Exp $
+// $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/redirect/wiki-plugins/wikiplugin_redirect.php,v 1.4 2005-08-25 13:18:05 sylvieg Exp $
 
 // Wiki plugin to redirect to another page.
 // damian aka damosoft 30 March 2004
@@ -19,10 +19,11 @@ function wikiplugin_redirect($data, $params) {
 		$areturn = "REDIRECT plugin: No page specified!";
 	
 	} else {
-		if ((isset($_REQUEST['redirectpage'])) && ($page == $_REQUEST['redirectpage'])){
+		if ((isset($_REQUEST['redirectpage']))) {
 			$areturn = "REDIRECT plugin: redirect loop dedected!";
 		}else{
 			header("Location: tiki-index.php?page=$page&redirectpage=".$_REQUEST['page']);
+			exit;
 		}
 	}
 
