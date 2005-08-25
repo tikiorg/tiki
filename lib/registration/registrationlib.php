@@ -138,9 +138,32 @@ class RegistrationLib extends TikiLib {
     return $Return;
   }
 
+  /**
+   *
+   */
   function saveRegistration() {
-  global $allowRegister, $_REQUEST, $_SESSION, $min_pass_length, $useRegisterPasscode, $validateUsers;
-  global $sender_email, $default_sender_email, $contact_user, $pass_chr_num, $validateRegistration;
+      global $allowRegister, $_REQUEST, $_SERVER;
+
+      if($allowRegister != 'y') {
+          header("location: index.php");
+          exit;
+          die;
+      }
+
+      if ( $this->validateRegistration() and $this->createUser() ) {
+	  $this->_tikisignal_logslib_user_registers($_REQUEST["name"], $_SERVER["SERVER_NAME"]);
+          $this->sendEmail($_REQUEST["name"], $_SERVER["SERVER_NAME"]);
+          $this->_tikisignal__user_registers($_REQUEST["name"], $_SERVER["SERVER_NAME"]);
+      }
+  }
+
+
+  /**
+   *  @access private
+   */
+  function validateRegistration() {
+  global $allowRegister, $_REQUEST, $_SESSION, $min_pass_length, $useRegisterPasscode, $validateUsers, $rnd_num_reg;
+  global $sender_email, $default_sender_email, $contact_user, $pass_chr_num, $validateRegistration, $email_valid;
   global $userlib, $logslib, $smarty, $tikilib;
 
   if($allowRegister != 'y') {
@@ -228,7 +251,6 @@ class RegistrationLib extends TikiLib {
     }
   }
 
-
     $email_valid = 'yes';
     if($validateUsers=='y') {
       $ret = $this->SnowCheckMail($_REQUEST["email"],$sender_email,$novalidation);
@@ -248,22 +270,65 @@ class RegistrationLib extends TikiLib {
         }
       }
     }
+    return true;
+  }
 
-    if($email_valid != 'no') {
+
+  /**
+   *  @access private
+   */
+  function createUser() {
+        global $_REQUEST, $_SERVER, $email_valid, $validateUsers, $registrationlib_apass, $customfields;
+        global $userlib, $tikilib;
+
+	if($email_valid != 'no') {
                 if($validateUsers == 'y') {
-                        //$apass = addslashes(substr(md5($tikilib->genPass()),0,25));
+			//$apass = addslashes(substr(md5($tikilib->genPass()),0,25));
                         $apass = addslashes(md5($tikilib->genPass()));
-                        $foo = parse_url($_SERVER["REQUEST_URI"]);
+			$registrationlib_apass = $apass;
+
+                        $userlib->add_user($_REQUEST["name"],$apass,$_REQUEST["email"],$_REQUEST["pass"]);
+		} else {
+                        $userlib->add_user($_REQUEST["name"],$_REQUEST["pass"],$_REQUEST["email"],'');
+		}
+                // Custom fields
+                foreach ($customfields as $custpref=>$prefvalue ) {
+                    //print $_REQUEST[$customfields[$custpref]['prefName']];
+                    $tikilib->set_user_preference($_REQUEST["name"], $customfields[$custpref]['prefName'], $_REQUEST[$customfields[$custpref]['prefName']]);
+                }
+	}
+  }
+
+
+  /**
+   *  @access private
+   */
+  function _tikisignal_logslib_user_registers($user, $site) {
+	global $logslib;
+	$logslib->add_log('register','created account '.$user);
+  }
+
+  /**
+   *  @access private
+   */
+  function sendEmail($mail_user, $mail_site) {
+	global $_REQUEST, $_SESSION, $_SERVER, $min_pass_length, $useRegisterPasscode, $validateUsers, $registrationlib_apass;
+	global $sender_email, $default_sender_email, $contact_user, $pass_chr_num, $validateRegistration;
+	global $smarty, $tikilib;
+
+	if($email_valid != 'no') {
+                if($validateUsers == 'y') {
+			//$apass = addslashes(substr(md5($tikilib->genPass()),0,25));
+			$apass = $registrationlib_apass;
+			$foo = parse_url($_SERVER["REQUEST_URI"]);
                         $foo1=str_replace("tiki-register","tiki-login_validate",$foo["path"]);
                         $machine =$tikilib->httpPrefix().$foo1;
-                        $userlib->add_user($_REQUEST["name"],$apass,$_REQUEST["email"],$_REQUEST["pass"]);
 
-
-                        $logslib->add_log('register','created account '.$_REQUEST["name"]);
                         $smarty->assign('mail_machine',$machine);
-                        $smarty->assign('mail_site',$_SERVER["SERVER_NAME"]);
-                        $smarty->assign('mail_user',$_REQUEST["name"]);
+                        $smarty->assign('mail_site',$mail_site);
+                        $smarty->assign('mail_user',$mail_user);
                         $smarty->assign('mail_apass',$apass);
+			$registrationlib_apass = "";
                         $smarty->assign('mail_email',$_REQUEST['email']);
                         include_once("lib/notifications/notificationemaillib.php");
                         if (isset($validateRegistration) and $validateRegistration == 'y') {
@@ -295,31 +360,29 @@ class RegistrationLib extends TikiLib {
                         }
                         $smarty->assign('showmsg','y');
                 } else {
-                        $userlib->add_user($_REQUEST["name"],$_REQUEST["pass"],$_REQUEST["email"],'');
-                        $logslib->add_log('register','created account '.$_REQUEST["name"]);
-
                         $smarty->assign('msg',$smarty->fetch('mail/user_welcome_msg.tpl'));
                         $smarty->assign('showmsg','y');
                 }
+	}
+    }
 
-                // Custom fields
-                foreach ($customfields as $custpref=>$prefvalue ) {
-                    //print $_REQUEST[$customfields[$custpref]['prefName']];
-                    $tikilib->set_user_preference($_REQUEST["name"], $customfields[$custpref]['prefName'], $_REQUEST[$customfields[$custpref]['prefName']]);
-                }
 
+	/**
+	 *  @access private
+	 */
+	function _tikisignal__user_registers($mail_user, $mail_site) {
+		global $notificationlib;
                 $emails = $notificationlib->get_mail_events('user_registers','*');
                 if (count($emails)) {
                         include_once("lib/notifications/notificationemaillib.php");
-                        $smarty->assign('mail_user',$_REQUEST["name"]);
+                        $smarty->assign('mail_user',$mail_user);
                         $smarty->assign('mail_date',date("U"));
-                        $smarty->assign('mail_site',$_SERVER["SERVER_NAME"]);
+                        $smarty->assign('mail_site',$mail_site);
                         sendEmailNotification($emails, "email", "new_user_notification_subject.tpl", null, "new_user_notification.tpl");
                 }
 
         }
 
-    }
 
     function registerForm() {
         global $allowRegister, $smarty;
@@ -334,10 +397,8 @@ class RegistrationLib extends TikiLib {
         $smarty->assign('mid','tiki-register.tpl');
         $smarty->display("tiki.tpl");
     }
-  
-  
 }
-
+  
 $registrationlib= new RegistrationLib($dbTiki);
 
 ?>
