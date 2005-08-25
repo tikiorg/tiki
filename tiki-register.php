@@ -15,12 +15,6 @@ if($allowRegister != 'y') {
 }
 
 $smarty->assign('showmsg','n');
-// novalidation is set to yes if a user confirms his email is correct after tiki fails to validate it
-if (!isset($_REQUEST['novalidation'])) {
-	$novalidation = '';
-} else {
-	$novalidation = $_REQUEST['novalidation'];
-}
 
 //get custom fields
 $customfields = array();
@@ -29,13 +23,40 @@ $smarty->assign_by_ref('customfields', $customfields);
 		
 
 if(isset($_REQUEST["register"])) {
+    saveRegistration();
+} else {
+    registerForm();
+}
+
+
+/**
+ * @access private
+ */
+function saveRegistration() {
+  global $allowRegister, $_REQUEST, $_SESSION, $min_pass_length, $useRegisterPasscode, $validateUsers;
+  global $sender_email, $default_sender_email, $contact_user, $pass_chr_num, $validateRegistration;
+  global $userlib, $logslib, $smarty, $tikilib;
+
+  if($allowRegister != 'y') {
+    header("location: index.php");
+    exit;
+    die;
+  }
+
+  // novalidation is set to yes if a user confirms his email is correct after tiki fails to validate it
+  if (!isset($_REQUEST['novalidation'])) {
+        $novalidation = '';
+  } else {
+        $novalidation = $_REQUEST['novalidation'];
+  }
+
   check_ticket('register');
   if($novalidation != 'yes' and ($_REQUEST["pass"] <> $_REQUEST["passAgain"])) {
     $smarty->assign('msg',tra("The passwords don't match"));
     $smarty->display("error.tpl");
     die;
   }
-list($cant, $u) = $userlib->other_user_exists_case_insensitive($_REQUEST["name"]);
+  list($cant, $u) = $userlib->other_user_exists_case_insensitive($_REQUEST["name"]);
   if($cant > 0) {
     $smarty->assign('msg',tra("User already exists").": ".$u);
     $smarty->display("error.tpl");
@@ -194,9 +215,20 @@ list($cant, $u) = $userlib->other_user_exists_case_insensitive($_REQUEST["name"]
 
 }
 
+/**
+ * @access private
+ */
+function registerForm() {
+    global $allowRegister, $smarty;
+    if($allowRegister != 'y') {
+        header("location: index.php");
+        exit;
+        die;
+    }
 
-ask_ticket('register');
+    ask_ticket('register');
 
-$smarty->assign('mid','tiki-register.tpl');
-$smarty->display("tiki.tpl");
+    $smarty->assign('mid','tiki-register.tpl');
+    $smarty->display("tiki.tpl");
+}
 ?>
