@@ -4,31 +4,20 @@ require_once('tiki-setup.php');
 include_once ('lib/stats/statslib.php');
 
 if (!function_exists('ms_newMapObj')) {
-	$smarty->assign('msg',tra("You must first setup MapServer"));
-	$smarty->display("error.tpl");
-	die;
+  $msg = tra("You must first setup MapServer");
+  $access->display_error(basename(__FILE__), $msg);
 }
 
-if(@$feature_maps != 'y') {
-  $smarty->assign('msg',tra("Feature disabled"));
-  $smarty->display("error.tpl");
-  die;
-}
-
-if($tiki_p_map_view != 'y') {
-  $smarty->assign('msg',tra("You do not have permissions to view the maps"));
-  $smarty->display("error.tpl");
-  die;
-}
+$access->check_feature(@$feature_maps, "feature_maps");
+$access->check_permission(array('tiki_p_map_view'), tra("View maps"));
 
 $smarty->assign('tiki_p_map_edit',$tiki_p_map_edit);
 
 if (isset($_REQUEST['mapfile'])) {
   // Validate to prevent displaying any file
   if (strstr($_REQUEST["mapfile"], '..')) {
-    $smarty->assign('msg', tra("You do not have permission to do that"));
-    $smarty->display('error.tpl');
-    die;
+    $msg = tra("You do not have permission to do that");
+    $access->display_error(basename(__FILE__), $msg);
   }
   $mapfile = $_REQUEST['mapfile'];
 } else {
@@ -39,9 +28,8 @@ $map_path = preg_replace("/\/?$/","/",$map_path);
 
 //checking the mapfile
 if (!is_file($map_path.$mapfile) || preg_match("/(\/\.)/", $map_path.$mapfile)) {
-  $smarty->assign('msg',tra("invalid mapfile name"));
-  $smarty->display("error.tpl");
-  die;
+  $msg = tra("invalid mapfile name");
+  $access->display_error(basename(__FILE__), $msg);
 }
 		      
 // user defined error handling function to handle errors in loading mapfile
@@ -91,9 +79,7 @@ function userErrorHandler ($errno, $errmsg, $filename, $linenum, $vars)
      $msg.='</a>';
   }
   
-  $smarty->assign('msg',$msg);
-  $smarty->display("error.tpl");
-  die;
+  $access->display_error(basename(__FILE__), $msg);
 }
 
 $old_error_handler = set_error_handler("userErrorHandler");

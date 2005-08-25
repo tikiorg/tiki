@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/textareasize.php,v 1.3 2004-03-27 21:23:52 mose Exp $
+/* $Header: /cvsroot/tikiwiki/tiki/textareasize.php,v 1.4 2005-08-25 20:50:04 michael_davey Exp $
  * \brief: 4 buttoms to change a textArea size - works with textareaSize.tpl template
  * \param: $defaultRows - optional : the number of rows by default
  * \comment: the cols nb is managed by a javascript program to optimize the display perf (seems to work generally with browsers)
@@ -7,14 +7,9 @@
  */
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== FALSE) {
-  //smarty is not there - we need setup
-  require_once('tiki-setup.php');
-  $smarty->assign('msg',tra("This script cannot be called directly"));
-  $smarty->display("error.tpl");
-  die;
-}
-
+//smarty is not there - we need setup
+require_once('tiki-setup.php');  
+$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 $rows = isset($_REQUEST['rows'])? $_REQUEST['rows']: (isset($defaultRows)?$defaultRows: 20);
 // the rows modification is managed by a javascript program
