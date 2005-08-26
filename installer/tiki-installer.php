@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.1 2005-08-26 00:30:40 luciash Exp $
+// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.2 2005-08-26 00:51:14 luciash Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -136,6 +136,7 @@ function create_dirs($domain=''){
 		'dump',
 		'img/wiki',
 		'img/wiki_up',
+		'img/trackers',
 		'modules/cache',
 		'temp',
 		'temp/cache',
