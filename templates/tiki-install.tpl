@@ -188,15 +188,18 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
     		{$failedcommands[ix]}
     		{/section}
     		</textarea><br/><br/>
-    		Your database has been configured and Tiki is ready to run, if
-    		this is your first install your admin password is 'admin'. You can
-    		now log in into Tiki as 'admin' - 'admin' and start configuring
+    		Your database has been configured and Tikiwiki is ready to run! If
+    		this is your first install, your admin password is 'admin'. You can
+    		now log in into Tikiwiki as user 'admin' and start configuring
     		the application.<br/>
-    		Note: This install script may be potentially harmful so we strongly
-    		recommend you to remove the script and then proceed into Tiki. If
-    		you decide to remove the script it will be renamed to tiki-install.done<br/><br/>
-    		<a href="tiki-install.php?kill=1" class="link">Click here to disable the install script and proceed into tiki</a><br /><br />
-    		<a href="tiki-index.php" class="link">Click here to proceed into tiki without disabling the script</a><br /><br />
+    		<b>Note:</b> This installer script may be potentially harmful so we strongly
+    		recommend you to disable the script and then proceed into Tiki. If
+    		you now decide to disable the script by <strong>renaming</strong>, the installer will try to
+    		rename itself to tiki-installer.done and it will stay available in the installer/ folder for later use. If
+    		you decide to <strong>remove</strong> the script <strong>it will be completely deleted!</strong><br/><br/>
+    		<a href="tiki-install.php?kill" class="link">Click here to <b>disable the installer script by renaming it for later use</b> and proceed into Tikiwiki</a><br /><br />
+    		<a href="tiki-install.php?kill&amp;remove" class="link">Click here to <b>disable the installer script by deleting it completely</b> and proceed into Tikiwiki</a><br /><br />
+    		<a href="tiki-index.php" class="link">Click here to proceed into Tikiwiki without disabling the script</a><br /><br />
     		<a href="tiki-install.php?reset=yes{if $multi}&amp;multi={$multi}{/if}" class="link">Reset database connection settings</a><br /><br />
     		<a href="tiki-install.php{if $multi}?multi={$multi}{/if}" class="link">Go back and run another install/upgrade script</a> - do not use your Back button in your browser!<br /><br />
     	{/if}
