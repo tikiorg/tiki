@@ -159,7 +159,7 @@ class WikiLib extends TikiLib {
 
 		$query = "update `tiki_history` set `pageName`=? where `pageName`=?";
 		$this->query($query, array( $newName, $tmpName ) );
-		
+
 		// get pages linking to the old page
 		$query = "select `fromPage` from `tiki_links` where `toPage`=?";
 		$result = $this->query($query, array( $oldName ) );
@@ -183,7 +183,7 @@ class WikiLib extends TikiLib {
 		}
 
 		// correct toPage and fromPage in tiki_links
-		// before update, manage to avoid duplicating index(es) when B is renamed to C while page(s) points to both C (not created yet) and B 
+		// before update, manage to avoid duplicating index(es) when B is renamed to C while page(s) points to both C (not created yet) and B
 		$query = "select `fromPage` from `tiki_links` where `toPage`=?";
 		$result = $this->query($query, array( $newName ) );
 		$linksToNew = array();
@@ -196,10 +196,10 @@ class WikiLib extends TikiLib {
 		}
 		$query = "update `tiki_links` set `fromPage`=? where `fromPage`=?";
 		$this->query($query, array( $newName, $oldName));
-	
+
 		$query = "update `tiki_links` set `toPage`=? where `toPage`=?";
 		$this->query($query, array( $newName, $oldName));
-	
+
 		// tiki_footnotes change pageName
 		$query = "update `tiki_page_footnotes` set `pageName`=? where `pageName`=?";
 		$this->query($query, array( $newName, $oldName ));
@@ -208,12 +208,12 @@ class WikiLib extends TikiLib {
 		$newcathref = 'tiki-index.php?page=' . urlencode($newName);
 		$query = "update `tiki_categorized_objects` set `objId`=?,`name`=?,`href`=? where `objId`=?";
 		$this->query($query, array( $newName, $newName, $newcathref, $oldName));
-	
+
 		// old code that doesn't seem to be working
 		//	$query = "update tiki_categorized_objects set objId='$newId' where objId='$oldId'";
-		//    $this->query($query);	  	  	  	
-	
-		// in tiki_comments update object  
+		//    $this->query($query);
+
+		// in tiki_comments update object
 		$query = "update `tiki_comments` set `object`=? where `object`=?";
 		$this->query($query, array( $newName, $oldName ) );
 
@@ -232,7 +232,7 @@ class WikiLib extends TikiLib {
 		$newId = md5('wiki page' . $newName);
 		$query = "update `tiki_theme_control_objects` set `objId`=?, `name`=? where `objId`=?";
 		$this->query($query, array( $newId, $newName, $oldId ) );
-	
+
 		$query = "update `tiki_wiki_attachments` set `page`=? where `page`=?";
 		$this->query($query, array( $newName, $oldName ) );
 
@@ -360,7 +360,7 @@ class WikiLib extends TikiLib {
 		$retval["cant"] = $cant;
 		return $retval;
 	}
-		
+
 	function file_to_db($path,$attId) {
 		if (is_file($path)) {
 			$fp = fopen($path,'rb');
@@ -507,7 +507,7 @@ class WikiLib extends TikiLib {
 		$result = $this->query($query, array( $page ) );
 		$info = $result->fetchRow();
 	}
-	return ($info["flag"] == 'L')? $info["user"] : null; 
+	return ($info["flag"] == 'L')? $info["user"] : null;
     }
     function is_editable($page, $user, $info=null) {
 	global $tiki_p_admin, $tiki_p_admin_wiki;
@@ -573,11 +573,23 @@ class WikiLib extends TikiLib {
     // Call 'wikiplugin_.*_description()' from given file
     //
     function get_plugin_description($file) {
-	global $tikilib;
-
-	include_once (PLUGINS_DIR . '/' . $file);
-	$func_name = str_replace(".php", "", $file). '_help';
-	return function_exists($func_name) ? $tikilib->parse_data($func_name()) : "";
+    	global $tikilib;
+        $data = '';
+        $fp = fopen(PLUGINS_DIR . '/' . $file, 'r');
+        while(!feof($fp)) {
+              $data .= fread($fp,4096);
+        }
+        fclose($fp);
+        $func_name = str_replace('.php', '', $file). '_help';
+    	if (!preg_match('#.*?' . $func_name . '[\s|^]*\([\s|^]*\)[\s|^]*(.+)#msi',
+    	            $data, $prematch)
+    	    || !preg_match('#\{((?:(?R)|[^{}]+)+)}#ms',
+    	            $prematch[1], $matches)) {
+    	   return '';
+    	}
+        $fun = create_function('', $matches[1]);
+        $ret = $fun();
+        return $ret;
     }
 }
 
