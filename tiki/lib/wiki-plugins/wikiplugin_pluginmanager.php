@@ -16,8 +16,11 @@
     * @package TikiWiki
     * @subpackage TikiPlugins
     * @author Claudio Bustos
-    * @version $Revision: 1.7 $
+    * @version $Revision: 1.8 $
     */
+    function wikiplugin_pluginmanager_help() {
+        return tra("Provides a list of plugins on this wiki.").":<br />~np~{PLUGINMANAGER(info=>version|description|arguments)}{PLUGINMANAGER}~/np~";
+    }
     class WikiPluginPluginManager extends PluginsLib {
         var $expanded_params = array("info");
         function getDefaultArguments() {
@@ -28,10 +31,10 @@
         }
         function getVersion() {
             return preg_replace("/[Revision: $]/", '',
-                "\$Revision: 1.7 $");
+                "\$Revision: 1.8 $");
         }
         function getDescription() {
-            return tra("Provides a list of plugins on this wiki.").":<br />~np~{PLUGINMANAGER(info=>version|description|arguments)}{PLUGINMANAGER}~/np~";
+            return wikiplugin_pluginmanager_help();
         }
         function run($data, $params) {
             global $wikilib, $helpurl;
@@ -95,9 +98,5 @@
     function wikiplugin_pluginmanager($data, $params) {
         $plugin = new WikiPluginPluginManager();
         return $plugin->run($data, $params);
-    }
-    function wikiplugin_pluginmanager_help() {
-        $plugin = new WikiPluginPluginManager();
-        return $plugin->getDescription();
     }
 ?>

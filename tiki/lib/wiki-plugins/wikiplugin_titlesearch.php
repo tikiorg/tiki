@@ -9,20 +9,23 @@
     * Params
     * <ul>
     * <li> search: required
-    * <li> info (allows multiple columns, joined by '|') : hits,lastModif,user,ip,len,comment, 
+    * <li> info (allows multiple columns, joined by '|') : hits,lastModif,user,ip,len,comment,
     * creator, version, flag, versions,links,backlinks
     * <li> exclude (allows multiple pagenames) : HomePage|RecentChanges
     * <li> noheader         : by default, false
-    * </ul>    
+    * </ul>
     * @package TikiWiki
     * @subpackage TikiPlugins
     * @author Claudio Bustos
-    * @version $Revision: 1.18 $
+    * @version $Revision: 1.19 $
     */
+    function wikiplugin_titlesearch_help() {
+        return tra("Search the titles of all pages in this wiki").":<br />~np~{TITLESEARCH(search=>Admin,info=>hits|user,exclude=>HomePage|SandBox,noheader=>0)}{TITLESEARCH}~/np~";
+    }
     class WikiPluginTitleSearch extends PluginsLib {
         var $expanded_params = array("exclude", "info");
         function getDescription() {
-            return tra("Search the titles of all pages in this wiki").":<br />~np~{TITLESEARCH(search=>Admin,info=>hits|user,exclude=>HomePage|SandBox,noheader=>0)}{TITLESEARCH}~/np~";
+            return wikiplugin_titlesearch_help();
         }
         function getDefaultArguments() {
             return array('exclude' => '' ,
@@ -37,7 +40,7 @@
         }
         function getVersion() {
             return preg_replace("/[Revision: $]/", '',
-                "\$Revision: 1.18 $");
+                "\$Revision: 1.19 $");
         }
         function run ($data, $params) {
             global $wikilib;
@@ -110,9 +113,5 @@
     function wikiplugin_titlesearch($data, $params) {
         $plugin = new WikiPluginTitleSearch();
         return $plugin->run($data, $params);
-    }
-    function wikiplugin_titlesearch_help() {
-        $plugin = new WikiPluginTitleSearch();
-        return $plugin->getDescription();
     }
 ?>
