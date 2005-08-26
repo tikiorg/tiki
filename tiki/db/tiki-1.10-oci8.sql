@@ -1,6 +1,6 @@
 -- $Rev$
--- $Date: 2005-08-18 14:19:08 $
--- $Author: sylvieg $
+-- $Date: 2005-08-26 16:24:25 $
+-- $Author: michael_davey $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -6460,6 +6460,35 @@ CREATE TABLE `tiki_stats` (
   `hits` number(14) default '0' NOT NULL,
   PRIMARY KEY ("`object`","`type`","`day`")
 ) ;
+
+
+--
+-- Table structure for table tiki_events
+--
+-- Creation: Aug 26, 2005 at 06:59 AM
+-- Last update: Aug 26, 2005 at 06:59 AM
+--
+DROP TABLE `tiki_events`;
+
+CREATE TABLE `tiki_events` (
+  `callback_type` number(1) default '3' NOT NULL,
+  `order` number(2) default '50' NOT NULL,
+  `event` varchar(200) default '' NOT NULL,
+  `object` varchar(200) default '' NOT NULL,
+  `method` varchar(200) default '' NOT NULL,
+  PRIMARY KEY ("`callback_type`","`order`")
+) ;
+
+
+INSERT INTO "tiki_events" ("`callback_type`","`order`","`event`","`object`","`method`") VALUES ('1', '20', 'user_registers', 'registrationlib', 'callback_tikiwiki_setup_custom_fields');
+
+INSERT INTO "tiki_events" ("`event`","`object`","`method`") VALUES ('user_registers', 'registrationlib', 'callback_tikiwiki_save_registration');
+
+INSERT INTO "tiki_events" ("`callback_type`","`order`","`event`","`object`","`method`") VALUES ('5', '20', 'user_registers', 'registrationlib', 'callback_logslib_user_registers');
+
+INSERT INTO "tiki_events" ("`callback_type`","`order`","`event`","`object`","`method`") VALUES ('5', '25', 'user_registers', 'registrationlib', 'callback_tikiwiki_send_email');
+
+INSERT INTO "tiki_events" ("`callback_type`","`order`","`event`","`object`","`method`") VALUES ('5', '30', 'user_registers', 'registrationlib', 'callback_tikimail_user_registers');
 
 
 -- --------------------------------------------------------

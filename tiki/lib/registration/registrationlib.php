@@ -1,10 +1,22 @@
 <?php
+/**
+ * @class RegistrationLib
+ *
+ * This class provides registration functions
+ *
+ * @license GNU LGPL
+ * @copyright Tiki Community
+ * @date created:
+ * @date last-modified: 2005-08-26 13:01
+ */
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
+
+if (!isset($Debug)) $Debug = false;
 
 class RegistrationLib extends TikiLib {
 
@@ -21,13 +33,11 @@ class RegistrationLib extends TikiLib {
   function SnowCheckMail($Email,$sender_email,$novalidation,$Debug=false)
   {
 	global $validateEmail;
-	$Debug=true;
 	if (!isset($_SERVER["SERVER_NAME"])) {
 		$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 	}	
     $HTTP_HOST=$_SERVER['SERVER_NAME']; 
     $Return =array();
-    // $Debug = true;
     // Variable for return.
     // $Return[0] : [true|false]
     // $Return[1] : Processing result save.
@@ -139,10 +149,13 @@ class RegistrationLib extends TikiLib {
   }
 
   /**
-   *
+   *  Default TikiWiki 'user_registers' callback
+   *  validates data and creates a new user in the database on user registration
+   *  @access private
+   *  @returns true if user data validates and user was created, false (or never returns) otherwise
    */
-  function saveRegistration() {
-      global $allowRegister, $_REQUEST, $_SERVER;
+  function callback_tikiwiki_save_registration($raisedBy, $data) {
+      global $allowRegister;
 
       if($allowRegister != 'y') {
           header("location: index.php");
@@ -150,21 +163,23 @@ class RegistrationLib extends TikiLib {
           die;
       }
 
-      if ( $this->validateRegistration() and $this->createUser() ) {
-	  $this->_tikisignal_logslib_user_registers($_REQUEST["name"], $_SERVER["SERVER_NAME"]);
-          $this->sendEmail($_REQUEST["name"], $_SERVER["SERVER_NAME"]);
-          $this->_tikisignal__user_registers($_REQUEST["name"], $_SERVER["SERVER_NAME"]);
+      if ( $this->validate_registration() and $this->create_user() ) {
+          return true;
       }
+      return false;
   }
 
 
   /**
+   *  Validate the registration data
    *  @access private
+   *  @returns true if registration data is valid, false (or never returns) otherwise
    */
-  function validateRegistration() {
+  function validate_registration() {
   global $allowRegister, $_REQUEST, $_SESSION, $min_pass_length, $useRegisterPasscode, $validateUsers, $rnd_num_reg;
   global $sender_email, $default_sender_email, $contact_user, $pass_chr_num, $validateRegistration, $email_valid;
   global $userlib, $logslib, $smarty, $tikilib;
+  global $Debug;
 
   if($allowRegister != 'y') {
     header("location: index.php");
@@ -253,7 +268,7 @@ class RegistrationLib extends TikiLib {
 
     $email_valid = 'yes';
     if($validateUsers=='y') {
-      $ret = $this->SnowCheckMail($_REQUEST["email"],$sender_email,$novalidation);
+      $ret = $this->SnowCheckMail($_REQUEST["email"],$sender_email,$novalidation, $Debug);
       if(!$ret[0]) {
         if($ret[1] == 'not_recognized') {
                         $smarty->assign('notrecognized','y');
@@ -275,11 +290,16 @@ class RegistrationLib extends TikiLib {
 
 
   /**
+   *  Create a new user in the database on user registration
    *  @access private
+   *  @returns true on success, false to halt event proporgation
    */
-  function createUser() {
+  function create_user() {
         global $_REQUEST, $_SERVER, $email_valid, $validateUsers, $registrationlib_apass, $customfields;
         global $userlib, $tikilib;
+	global $Debug;
+
+	if ($Debug) print "::create_user";
 
 	if($email_valid != 'no') {
                 if($validateUsers == 'y') {
@@ -297,24 +317,36 @@ class RegistrationLib extends TikiLib {
                     $tikilib->set_user_preference($_REQUEST["name"], $customfields[$custpref]['prefName'], $_REQUEST[$customfields[$custpref]['prefName']]);
                 }
 	}
+	return true;
   }
 
 
   /**
+   *  A default TikiWiki callback that enters a line in the logs on user registration
    *  @access private
+   *  @returns true on success, false to halt event proporgation
    */
-  function _tikisignal_logslib_user_registers($user, $site) {
+  function callback_logslib_user_registers($raisedBy, $data) {
 	global $logslib;
-	$logslib->add_log('register','created account '.$user);
+	$logslib->add_log('register','created account '.$data['user']);
+	return true;
   }
 
   /**
+   *  A default TikiWiki callback that sends the welcome email on user registraion
    *  @access private
+   *  @returns true on success, false to halt event proporgation
    */
-  function sendEmail($mail_user, $mail_site) {
+  function callback_tikiwiki_send_email($raisedBy, $data) {
 	global $_REQUEST, $_SESSION, $_SERVER, $min_pass_length, $useRegisterPasscode, $validateUsers, $registrationlib_apass;
-	global $sender_email, $default_sender_email, $contact_user, $pass_chr_num, $validateRegistration;
+	global $sender_email, $default_sender_email, $contact_user, $pass_chr_num, $validateRegistration, $email_valid;
 	global $smarty, $tikilib;
+	global $Debug;
+
+	if ($Debug) print "::send_email";
+
+	$mail_user = $data['user'];
+	$mail_site = $data['mail_site'];
 
 	if($email_valid != 'no') {
                 if($validateUsers == 'y') {
@@ -364,27 +396,33 @@ class RegistrationLib extends TikiLib {
                         $smarty->assign('showmsg','y');
                 }
 	}
+	return true;
     }
 
 
 	/**
+         *  A callback that performs email notifications when a new user registers
 	 *  @access private
+	 *  @returns true on success, false to halt event proporgation
 	 */
-	function _tikisignal__user_registers($mail_user, $mail_site) {
+	function callback_tikimail_user_registers($raisedBy, $data) {
 		global $notificationlib;
                 $emails = $notificationlib->get_mail_events('user_registers','*');
                 if (count($emails)) {
                         include_once("lib/notifications/notificationemaillib.php");
-                        $smarty->assign('mail_user',$mail_user);
+                        $smarty->assign('mail_user',$data['user']);
                         $smarty->assign('mail_date',date("U"));
-                        $smarty->assign('mail_site',$mail_site);
+                        $smarty->assign('mail_site',$data['mail_site']);
                         sendEmailNotification($emails, "email", "new_user_notification_subject.tpl", null, "new_user_notification.tpl");
                 }
-
+		return true;
         }
 
 
-    function registerForm() {
+    /**
+     *  Display the registration form
+     */
+    function registration_form() {
         global $allowRegister, $smarty;
         if($allowRegister != 'y') {
             header("location: index.php");
@@ -393,9 +431,6 @@ class RegistrationLib extends TikiLib {
         }
 
         ask_ticket('register');
-
-        $smarty->assign('mid','tiki-register.tpl');
-        $smarty->display("tiki.tpl");
     }
 }
   

@@ -23,8 +23,14 @@ $smarty->assign_by_ref('customfields', $customfields);
 		
 
 if(isset($_REQUEST["register"])) {
-    $registrationlib->saveRegistration();
+    // $registrationlib->save_registration();
+    $data = array('user'=> $_REQUEST['name'], 'mail_site'=>$_SERVER["SERVER_NAME"]);
+    $notificationlib->raise_event("user_registers", $data, "tiki-register.php");
 } else {
-    $registrationlib->registerForm();
+    $registrationlib->registration_form();
 }
+
+$smarty->assign('mid','tiki-register.tpl');
+$smarty->display("tiki.tpl");
+
 ?>
