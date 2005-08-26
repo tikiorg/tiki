@@ -1,11 +1,11 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/setup.sh,v 1.37 2005-08-12 13:01:58 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/setup.sh,v 1.38 2005-08-26 00:16:50 luciash Exp $
 
 # Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 # All Rights Reserved. See copyright.txt for details and a complete list of authors.
 # Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-DIRS="backups db dump files img/wiki img/wiki_up img/trackers modules/cache temp temp/cache templates_c templates styles maps whelp mods"
+DIRS="backups db dump files img/wiki img/wiki_up img/trackers installer modules/cache temp temp/cache templates_c templates styles maps whelp mods"
 
 if [ -d 'lib/Galaxia' ]; then
 	DIRS=$DIRS" lib/Galaxia/processes"
@@ -152,7 +152,7 @@ chmod -R $RIGHTS $DIRS
 chown $AUSER robots.txt
 chmod $RIGHTS robots.txt
 
-# by setting the rights to tiki-install.php tiki-installer can be used in most cases to disable the file.
+# by setting the rights to tiki-install.php file, tiki-installer can be used in most cases to disable execution of the script
 chown $AUSER tiki-install.php
 chmod $RIGHTS tiki-install.php
 
