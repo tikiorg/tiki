@@ -31,11 +31,11 @@ if(isset($_REQUEST["register"])) {
       $registrationlib->callback_logslib_user_registers( $data, "tiki-register.php" ) &&
       $registrationlib->callback_tikiwiki_send_email( $data, "tiki-register.php" ) &&
       $registrationlib->callback_tikimail_user_registers( $data, "tiki-register.php" );
-      ) { /* success */ }
+      ) { /* success 
     else { */
-      $notificationlib->raise_event("user_registers", $data, "tiki-register.php");
-    // }
-} else {
+     $notificationlib->raise_event("user_registers", $data, "tiki-register.php");
+     }
+ else {
     $registrationlib->registration_form();
 }
 
