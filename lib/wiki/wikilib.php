@@ -581,8 +581,8 @@ class WikiLib extends TikiLib {
         }
         fclose($fp);
         $func_name = str_replace('.php', '', $file). '_help';
-    	if (!preg_match('#.*?' . $func_name . '[\s|^]*\([\s|^]*\)[\s|^]*(.+)#msi',
-    	            $data, $prematch)
+    	if (!preg_match('#.*?function\s+' . $func_name .
+    	                '[\s|^]*\([\s|^]*\)[\s|^]*(.+)#msi', $data, $prematch)
     	    || !preg_match('#\{((?:(?R)|[^{}]+)+)}#ms',
     	            $prematch[1], $matches)) {
     	   return '';
