@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: tikirelease.sh,v 1.10 2005-05-18 10:59:14 mose Exp $
+# $Id: tikirelease.sh,v 1.11 2005-08-29 03:14:44 mose Exp $
 # written and maintained by mose@tikiwiki.org
 #
 # HOWTO release TikiWiki ?
@@ -47,6 +47,12 @@
 # 9/ unless in step 8/ you warned everybody you have now to announce the good news
 #    on devel mailing-list and ask marc to launch the announce-speading process 
 #    (Freshmeat, SourceForge and tikiwiki.org (manually for now).
+#
+# post/ After release, update templates/tiki-install.tpl and 
+#       templates/tiki-top_bar.tpl (including templates/styles/*/tiki-top_bar.tpl) 
+#       to next version number with CVS   ex.: 1.9.2 (CVS)  . This helps later on to 
+#       know exactly which files were included or not in a release.
+#
 #
 #
 # All that process has to be relayed on live irc channel : 

@@ -1,5 +1,5 @@
 <?php
-
+// $Id: searchlib.php,v 1.28 2005-08-29 03:14:44 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -37,7 +37,7 @@ class SearchLib extends TikiLib {
 		}
 	}
 
-	function &find($where,$words,$offset, $maxRecords) {
+	function find($where,$words,$offset, $maxRecords) {
 	  $exact=$this->find_exact($where,$words,$offset, $maxRecords);
 	  $part=$this->find_part($where,$words,$offset, $maxRecords);
           if (count($part)) foreach ($part["data"] as $p) {
@@ -61,7 +61,7 @@ class SearchLib extends TikiLib {
 	}
 
 
-        function &find_part($where,$words,$offset, $maxRecords) {
+        function find_part($where,$words,$offset, $maxRecords) {
           $words=preg_split("/[\s]+/",$words,-1,PREG_SPLIT_NO_EMPTY);
           if (count($words)>0) {
           switch($where) {
@@ -98,15 +98,15 @@ class SearchLib extends TikiLib {
             case "files":
               return $this->find_part_files($words,$offset, $maxRecords);
               break;
-		  
+
             default:
               return $this->find_part_all($words,$offset, $maxRecords);
               break;
           }
           }
         }
-	
-	function &refresh_lru_wordlist($syllable) {
+
+	function refresh_lru_wordlist($syllable) {
 		global $search_max_syllwords;
 		global $search_lru_length;
 		global $search_lru_purge_rate;
@@ -131,9 +131,9 @@ class SearchLib extends TikiLib {
 		$now=time();
 		$this->query("insert into `tiki_searchsyllable`(`syllable`,`lastUsed`,`lastUpdated`) values (?,?,?)",
 			array($syllable,(int) $now,(int) $now));
-		
+
 		// at random rate: check length of lru list and purge these that
-		// have not been used for long time. This is what a lru list 
+		// have not been used for long time. This is what a lru list
 		// basically does
 		list($usec, $sec) = explode(" ",microtime());
 		srand (ceil($sec+100*$usec));
@@ -160,8 +160,9 @@ class SearchLib extends TikiLib {
 		return $ret;
 	}
 
-	function &get_lru_wordlist($syllable) {
+	function get_lru_wordlist($syllable) {
 		if(!isset($this->wordlist_cache[$syllable])) {
+		        $this->wordlist_cache[$syllable] = array();
         		$query="select `searchword` from `tiki_searchwords` where `syllable`=?";
         		$result=$this->query($query,array($syllable));
         		while ($res = $result->fetchRow()) {
@@ -171,7 +172,7 @@ class SearchLib extends TikiLib {
 		return $this->wordlist_cache[$syllable];
 	}
 
-	function &get_wordlist_from_syllables($syllables) {
+	function get_wordlist_from_syllables($syllables) {
 		$ret=array();
 		global $search_syll_age;
 		foreach($syllables as $syllable) {
@@ -194,59 +195,59 @@ class SearchLib extends TikiLib {
 		return $ret;
 	}
 
-	function &find_part_wiki($words,$offset, $maxRecords) {
+	function find_part_wiki($words,$offset, $maxRecords) {
 		return $this->find_exact_wiki($this->get_wordlist_from_syllables($words),$offset, $maxRecords);
 	}
 
-        function &find_part_articles($words,$offset, $maxRecords) {
+        function find_part_articles($words,$offset, $maxRecords) {
                 return $this->find_exact_articles($this->get_wordlist_from_syllables($words),$offset, $maxRecords);
         }
 
-        function &find_part_forums($words,$offset, $maxRecords) {
+        function find_part_forums($words,$offset, $maxRecords) {
                 return $this->find_exact_forums($this->get_wordlist_from_syllables($words),$offset, $maxRecords);
         }
 
-        function &find_part_blogs($words,$offset, $maxRecords) {
+        function find_part_blogs($words,$offset, $maxRecords) {
                 return $this->find_exact_blogs($this->get_wordlist_from_syllables($words),$offset, $maxRecords);
         }
 
-        function &find_part_blog_posts($words,$offset, $maxRecords) {
+        function find_part_blog_posts($words,$offset, $maxRecords) {
                 return $this->find_exact_blog_posts($this->get_wordlist_from_syllables($words),$offset, $maxRecords);
         }
 
-        function &find_part_faqs($words,$offset, $maxRecords) {
+        function find_part_faqs($words,$offset, $maxRecords) {
                 return $this->find_exact_faqs($this->get_wordlist_from_syllables($words),$offset, $maxRecords);
         }
 
-        function &find_part_directory($words,$offset, $maxRecords) {
+        function find_part_directory($words,$offset, $maxRecords) {
                 return $this->find_exact_directory($this->get_wordlist_from_syllables($words),$offset, $maxRecords);
         }
 
-        function &find_part_imggals($words,$offset, $maxRecords) {
+        function find_part_imggals($words,$offset, $maxRecords) {
                 return $this->find_exact_imggals($this->get_wordlist_from_syllables($words),$offset, $maxRecords);
         }
 
-        function &find_part_img($words,$offset, $maxRecords) {
+        function find_part_img($words,$offset, $maxRecords) {
                 return $this->find_exact_img($this->get_wordlist_from_syllables($words),$offset, $maxRecords);
         }
 
-        function &find_part_trackers($words,$offset, $maxRecords) {
+        function find_part_trackers($words,$offset, $maxRecords) {
                 return $this->find_exact_trackers($this->get_wordlist_from_syllables($words),$offset, $maxRecords);
         }
-  
-      function &find_part_files($words,$offset, $maxRecords) {
+
+      function find_part_files($words,$offset, $maxRecords) {
                 return $this->find_exact_files($this->get_wordlist_from_syllables($words),$offset, $maxRecords);
         }
 
 
 
-        function &find_part_all($words,$offset, $maxRecords) {
-        	
+        function find_part_all($words,$offset, $maxRecords) {
+
 			global $feature_wiki, $feature_directory, $feature_galleries, $feature_file_galleries,
 				$feature_articles, $feature_forums, $feature_blogs, $feature_faqs, $feature_trackers;
 			global $tiki_p_view, $tiki_p_view_directory, $tiki_p_view_image_gallery, $tiki_p_view_file_gallery,
 				$tiki_p_read_article, $tiki_p_forum_read, $tiki_p_read_blog, $tiki_p_view_faqs, $tiki_p_view_trackers, $tiki_p_download_files;
-		
+
 			if ($feature_wiki == 'y' && $tiki_p_view == 'y') {
 				$wikiresults=$this->find_part_wiki($words,$offset, $maxRecords);
 			} else {
@@ -344,7 +345,7 @@ class SearchLib extends TikiLib {
           return ($res);
         }
 
-	function &find_exact($where,$words,$offset, $maxRecords) {
+	function find_exact($where,$words,$offset, $maxRecords) {
 	  $words=preg_split("/[\s]+/",$words,-1,PREG_SPLIT_NO_EMPTY);
 	  if (count($words)>0) {
 	  switch($where) {
@@ -389,12 +390,12 @@ class SearchLib extends TikiLib {
 	  }
 	}
 
-	function &find_exact_all($words,$offset, $maxRecords) {
+	function find_exact_all($words,$offset, $maxRecords) {
 		global $feature_wiki, $feature_directory, $feature_galleries, $feature_file_galleries,
 			$feature_articles, $feature_forums, $feature_blogs, $feature_faqs, $feature_trackers, $feature_file_galleries;
 		global $tiki_p_view, $tiki_p_view_directory, $tiki_p_view_image_gallery, $tiki_p_view_file_gallery,
 			$tiki_p_read_article, $tiki_p_forum_read, $tiki_p_read_blog, $tiki_p_view_faqs, $tiki_p_view_trackers, $tiki_p_download_files;
-		
+
 		if ($feature_wiki == 'y' && $tiki_p_view == 'y') {
 			$wikiresults=$this->find_exact_wiki($words,$offset, $maxRecords);
 		} else {
@@ -461,7 +462,7 @@ class SearchLib extends TikiLib {
 			$trackerresults['data'] = NULL;
 			$trackerresults['cant'] = 0;
 		}
-		
+
 	  /* // should check if feature is enabled before searching
 	  $artresults=$this->find_exact_articles($words,$offset, $maxRecords);
 	  $forumresults=$this->find_exact_forums($words,$offset, $maxRecords);
@@ -490,7 +491,7 @@ class SearchLib extends TikiLib {
 	}
 
 
-        function &find_exact_trackers($words,$offset, $maxRecords) {
+        function find_exact_trackers($words,$offset, $maxRecords) {
 	  global $feature_trackers, $tiki_p_view_trackers_pending, $tiki_p_view_trackers_closed, $tikilib;
 	  global $user;
 	  global $trklib; include_once("lib/trackers/trackerlib.php");
@@ -519,7 +520,7 @@ class SearchLib extends TikiLib {
               );
 	     }
             }
-	    
+
 	    //tracker items
 	    $ret2=array();
 	    $cant2=0;
@@ -533,7 +534,7 @@ class SearchLib extends TikiLib {
 	      }
 
 	      $query="select distinct s.`page`, s.`location`, s.`last_update`, s.`count`,
-	          t.`lastModif`,t.`trackerId`, t.`status` from 
+	          t.`lastModif`,t.`trackerId`, t.`status` from
 	  	  `tiki_searchindex` s, `tiki_tracker_items` t  where `searchword` in
 	  	  (".implode(',',array_fill(0,count($words),'?')).") and
 		  s.`location`='trackeritem' and
@@ -541,7 +542,7 @@ class SearchLib extends TikiLib {
 	      $result=$this->query($query,$words,$maxRecords,$offset);
 	      $cant2=0;
 	      while ($res = $result->fetchRow()) {
-	       if($this->user_has_perm_on_object($user,$res['trackerId'],'tracker','tiki_p_view_trackers') && 
+	       if($this->user_has_perm_on_object($user,$res['trackerId'],'tracker','tiki_p_view_trackers') &&
 			($res["status"] == 'o' || ($res["status"] == 'p'  && $tiki_p_view_trackers_pending == "y") || ($res["status"] == 'c'  && $tiki_p_view_trackers_closed == "y"))) {
               ++$cant2;
 		  list($itemId, $fieldId) = split("#", $res["page"]);
@@ -570,7 +571,7 @@ class SearchLib extends TikiLib {
 
 
 
-        function &find_exact_imggals($words,$offset, $maxRecords) {
+        function find_exact_imggals($words,$offset, $maxRecords) {
           global $feature_galleries;
 	  global $user;
           if ($feature_galleries == 'y'  && count($words) >0) {
@@ -604,7 +605,7 @@ class SearchLib extends TikiLib {
           }
         }
 
-        function &find_exact_img($words,$offset, $maxRecords) {
+        function find_exact_img($words,$offset, $maxRecords) {
           global $feature_galleries;
 	  global $user;
           if ($feature_galleries == 'y'  && count($words) >0) {
@@ -639,7 +640,7 @@ class SearchLib extends TikiLib {
           }
         }
 
-	function &find_exact_blogs($words,$offset, $maxRecords) {
+	function find_exact_blogs($words,$offset, $maxRecords) {
           global $feature_blogs;
 	  global $user;
           if ($feature_blogs == 'y'  && count($words) >0) {
@@ -674,7 +675,7 @@ class SearchLib extends TikiLib {
         }
 
 
-        function &find_exact_blog_posts($words,$offset, $maxRecords) {
+        function find_exact_blog_posts($words,$offset, $maxRecords) {
           global $feature_blogs;
 	  global $user;
           if ($feature_blogs == 'y'  && count($words) >0) {
@@ -709,7 +710,7 @@ class SearchLib extends TikiLib {
           }
         }
 
-	function &find_exact_articles($words,$offset, $maxRecords) {
+	function find_exact_articles($words,$offset, $maxRecords) {
 	  global $feature_articles;
 	  global $user;
 	  if ($feature_articles  == 'y'  && count($words) >0) {
@@ -742,8 +743,8 @@ class SearchLib extends TikiLib {
 	    return array('data' => array(),'cant' => 0);
 	  }
 	}
-	
-	function &find_exact_wiki($words,$offset, $maxRecords) {
+
+	function find_exact_wiki($words,$offset, $maxRecords) {
 	  global $feature_wiki;
 	  global $user;
 	  if ($feature_wiki == 'y'  && count($words) >0) {
@@ -779,7 +780,7 @@ class SearchLib extends TikiLib {
 	  }
         }
 
-        function &find_exact_directory($words,$offset, $maxRecords) {
+        function find_exact_directory($words,$offset, $maxRecords) {
           global $feature_directory;
 	  global $user;
           if ($feature_directory== 'y'  && count($words) >0) {
@@ -823,7 +824,7 @@ class SearchLib extends TikiLib {
                 `tiki_searchindex` s, `tiki_directory_sites` d ,`tiki_category_sites` cs where `searchword` in
                 (".implode(',',array_fill(0,count($words),'?')).") and
                 s.`location`='dir_site' and
-                ".$this->sql_cast("s.`page`","int")."=d.`siteId` and 
+                ".$this->sql_cast("s.`page`","int")."=d.`siteId` and
 		cs.`siteId`=d.`siteId`
 		order by `hits` desc";
             $result=$this->query($query,$words,$maxRecords,$offset);
@@ -845,14 +846,15 @@ class SearchLib extends TikiLib {
               );
 	     //}
             }
-            return array('data' => $ret,'cant' => $cant);
+            $return = array('data' => $ret,'cant' => $cant);
           } else {
-            return array('data' => array(),'cant' => 0);
+            $return = array('data' => array(),'cant' => 0);
           }
+          return $return;
         }
 
 
-	function &find_exact_faqs($words,$offset, $maxRecords) {
+	function find_exact_faqs($words,$offset, $maxRecords) {
           global $feature_faqs;
 	  global $user;
           if ($feature_faqs== 'y'  && count($words) >0) {
@@ -887,7 +889,7 @@ class SearchLib extends TikiLib {
           }
         }
 
-        function &find_exact_faqquestions($words,$offset, $maxRecords) {
+        function find_exact_faqquestions($words,$offset, $maxRecords) {
           global $feature_faqs;
 	  global $user;
           if ($feature_faqs== 'y'  && count($words) >0) {
@@ -923,7 +925,7 @@ class SearchLib extends TikiLib {
         }
 
 
-        function &find_exact_forums($words,$offset, $maxRecords) {
+        function find_exact_forums($words,$offset, $maxRecords) {
           global $feature_forums;
 	  global $user;
           if ($feature_forums== 'y'  && count($words) >0) {
@@ -958,7 +960,7 @@ class SearchLib extends TikiLib {
           }
         }
 
-	function &find_exact_forumcomments($words,$offset, $maxRecords) {
+	function find_exact_forumcomments($words,$offset, $maxRecords) {
 	  global $feature_forums;
 	  global $user;
 	  if ($feature_forums == 'y'  && count($words) >0) {
@@ -992,11 +994,11 @@ class SearchLib extends TikiLib {
 	  return array('data' => array(),'cant' => 0);
 	  }
 	}
-	function &find_exact_files($words,$offset, $maxRecords) {
+	function find_exact_files($words,$offset, $maxRecords) {
 	  global $feature_file_galleries;
 	  global $user;
 	  if ($feature_file_galleries == 'y'  && count($words) >0) {
-	  $query="select distinct s.`page`, s.`location`, s.`last_update`, s.`count`, f.`search_data`, 
+	  $query="select distinct s.`page`, s.`location`, s.`last_update`, s.`count`, f.`search_data`,
 	  	f.`data`,f.`lastModif`, f.`filename`, f.`downloads`, f.`description`, f.`name`, g.`name` as `galName` from
 		`tiki_searchindex` s, `tiki_files` f, `tiki_file_galleries` g  where `searchword` in
 		(".implode(',',array_fill(0,count($words),'?')).") and

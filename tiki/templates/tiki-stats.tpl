@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-stats.tpl,v 1.23 2005-08-12 13:02:11 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-stats.tpl,v 1.24 2005-08-29 03:14:45 mose Exp $ *}
 
 <h1><a href="tiki-stats.php" class="pagetitle">{tr}Stats{/tr}</a></h1>
 
@@ -17,7 +17,7 @@
 {if $quiz_stats}<span class="button2"> <a class="linkbut" href="#quiz_stats">{tr}Quizzes{/tr}</a></span>{/if}
 {if $feature_referer_stats eq 'y' and $tiki_p_view_referer_stats eq 'y'}<span class="button2"> <a class="linkbut" href="tiki-referer_stats.php">{tr}Referer stats{/tr}</a></span>{/if}
 {if $best_objects_stats}<span class="button2"> <a class="linkbut" href="#best_objects_stats">{tr}Most viewed objects{/tr}</a></span>{/if}
-{if $best_objects_stats_lastweek}<span class="button2"> <a class="linkbut" href="#best_objects_stats_lastweek">{tr}Most viewed objects in last 7 days{/tr}</a></span>{/if}
+{if $best_objects_stats_lastweek}<span class="button2"> <a class="linkbut" href="#best_objects_stats_lastweek">{tr}Most viewed objects in the last 7 days{/tr}</a></span>{/if}
 
 </p>
 </div>

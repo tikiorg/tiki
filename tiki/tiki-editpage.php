@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.116 2005-08-25 18:54:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.117 2005-08-29 03:14:43 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -21,14 +21,6 @@ if ($feature_wiki != 'y') {
   die;
 }
 
-/* Should not check for global tiki_p_view here... see permission check farther downs
-if ($tiki_p_view != 'y') {
-  $smarty->assign('msg', tra("Permission denied you cannot view this section"));
-
-  $smarty->display("error.tpl");
-  die;
-}
-*/
 // Anti-bot feature: if enabled, anon user must type in a code displayed in an image
 if (isset($_REQUEST['save']) && (!$user || $user == 'anonymous') && $feature_antibot == 'y') {
 	if((!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
@@ -355,7 +347,7 @@ if (isset($_REQUEST['do_suck']) && strlen($suck_url) > 0)
     //   pluged into wiki page edit form too... (like HTML importer may have
     //   flags 'strip HTML tags' and 'try to convert HTML to wiki' :)
     //   At least one export filter for wiki already coded :) -- PDF exporter...
-    $sdta = @file_get_contents($suck_url);
+    $sdta = $tikilib->httprequest($suck_url);
     if (isset($php_errormsg) && strlen($php_errormsg))
     {
         $smarty->assign('msg', tra("Can't import remote HTML page"));
@@ -430,15 +422,6 @@ if (!isset($_REQUEST["comment"])) {
 
 include_once ("tiki-pagesetup.php");
 
-// Now check permissions to access this page
-if (strtolower($page) != 'sandbox') {
-  if ($tiki_p_edit != 'y') {
-    $smarty->assign('msg', tra("Permission denied you cannot edit this page"));
-
-    $smarty->display("error.tpl");
-    die;
-  }
-}
 
 // Get page data
 $info = $tikilib->get_page_info($page);
@@ -458,24 +441,11 @@ if (strtolower($page) != 'sandbox') {
 	// Permissions
 	// if this page has at least one permission then we apply individual group/page permissions
 	// if not then generic permissions apply
-	if ($tiki_p_admin != 'y') {
-		if ($userlib->object_has_one_permission($page, 'wiki page')) {
-			// check for both edit and view perm; no view perm means no edit perm either
-			if (!$userlib->object_has_permission($user, $page, 'wiki page', 'tiki_p_edit') or
-				!$userlib->object_has_permission($user, $page, 'wiki page', 'tiki_p_view')) {
-				$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
-				$smarty->display("error.tpl");
-				die;
-			}
-		} else {
-			// check for both edit and view perm; no view perm means no edit perm either
-			if ($tiki_p_edit != 'y' or $tiki_p_view != 'y') {
-				$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
-        $smarty->display("error.tpl");
-        die;
-      }
-    }
-  }
+	if ($tiki_p_admin != 'y' && !$tikilib->user_has_perm_on_object($user, $page, 'wiki page', 'tiki_p_edit')) {
+		$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
+		$smarty->display("error.tpl");
+		die;
+	}
 }
 
 # melmut - is_html is defined here...

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.83 2005-08-12 13:01:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.84 2005-08-29 03:14:43 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -309,7 +309,10 @@ for ($i = 0; $i < $temp_max; $i++) {
 					$parts = explode('.', $file);
 					$flags[] = $parts[0];
 				}
-			}			
+			}
+			
+			closedir ($h);
+			sort($flags, SORT_STRING);
 			$fields["data"][$i]['flags'] = $flags;
 			$fields["data"][$i]['defaultvalue'] = 'None';
 			

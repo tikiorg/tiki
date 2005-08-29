@@ -11,7 +11,7 @@
 {$mail_machine}?user={$mail_user|escape:'url'}&actpass={$mail_apass}
 
 2. Click the following link to go to the screen where you must enter a new "permanent" password. Please pick a password only you will know, and don't share it with anyone else.
-http://{$mail_site}/tiki-change_password.php?user={$mail_user}&oldpass={$mail_pass}
+http://{$mail_machine}/tiki-change_password.php?user={$mail_user}&oldpass={$mail_pass}
 
 Alternatively, go to {$mail_site} and login using your username and temporary password:
  Username:   {$mail_user}

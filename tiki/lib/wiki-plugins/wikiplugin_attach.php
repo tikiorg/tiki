@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_attach.php,v 1.13 2005-08-06 21:56:45 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_attach.php,v 1.14 2005-08-29 03:14:44 mose Exp $
 // Displays an attachment or a list of attachments
 // Currently works with wiki pages and tracker items.
 // Parameters:
@@ -34,6 +34,7 @@ function wikiplugin_attach($data, $params) {
     global $wikilib;
     global $tikilib;
     global $user;
+    include_once('lib/wiki/wikilib.php');
 
     extract ($params,EXTR_SKIP);
 
@@ -65,7 +66,7 @@ function wikiplugin_attach($data, $params) {
 	}
 
 	# See if we're being called from a wiki page.
-	if( strstr( $_REQUEST["SCRIPT_NAME"], "tiki-index.php" ) || strstr( $_REQUEST["SCRIPT_NAME"], "tiki-editpage.php" ) )
+	if( strstr( $_REQUEST["SCRIPT_NAME"], "tiki-index.php" ) || strstr( $_REQUEST["SCRIPT_NAME"], "tiki-editpage.php" ) || strstr( $_REQUEST["SCRIPT_NAME"], 'tiki-pagehistory.php') )
 	{
 	    $atts_item_name = $_REQUEST["page"];
 

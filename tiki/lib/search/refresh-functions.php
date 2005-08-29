@@ -61,7 +61,7 @@ function random_refresh_index_comments( $times = 1 ) {
 
 function random_refresh_index_blogs() {
   global $tikilib;
-  // get random blog 
+  // get random blog
   $cant=$tikilib->getOne("select count(*) from `tiki_blogs`",array());
   if($cant>0) {
     $query="select * from `tiki_blogs`";
@@ -100,7 +100,7 @@ function random_refresh_index_dir_sites() {
 
 function random_refresh_index_faqs() {
   global $tikilib;
-  // get random faq 
+  // get random faq
   $cant=$tikilib->getOne("select count(*) from `tiki_faqs`",array());
   if($cant>0) {
     $query="select * from `tiki_faqs`";
@@ -113,7 +113,7 @@ function random_refresh_index_faqs() {
 
 function random_refresh_index_faq_questions() {
   global $tikilib;
-  // get random faq   
+  // get random faq
   $cant=$tikilib->getOne("select count(*) from `tiki_faq_questions`",array());
   if($cant>0) {
     $query="select * from `tiki_faq_questions`";
@@ -126,7 +126,7 @@ function random_refresh_index_faq_questions() {
 
 function random_refresh_index_blog_posts() {
   global $tikilib;
-  // get random blog 
+  // get random blog
   $cant=$tikilib->getOne("select count(*) from `tiki_blog_posts`",array());
   if($cant>0) {
     $query="select * from `tiki_blog_posts`";
@@ -179,7 +179,7 @@ function random_refresh_index_trackers() {
 
 function random_refresh_index_tracker_items() {
   global $tikilib;
-  $cant=$tikilib->getOne("select count(*) from `tiki_tracker_item_fields` f, `tiki_tracker_fields` tf 
+  $cant=$tikilib->getOne("select count(*) from `tiki_tracker_item_fields` f, `tiki_tracker_fields` tf
 	where tf.`type` in (?,?) and tf.`fieldId`=f.`fieldId`",array("t","a"));
   if($cant>0) {
     $query="select f.`value`, f.`itemId`, f.`fieldId`
@@ -283,7 +283,7 @@ function &search_index($data) {
     $words[strtolower($value)]++;
   }
 
-  return($words);
+  return $words;
 }
 
 function insert_index(&$words,$location,$page) {

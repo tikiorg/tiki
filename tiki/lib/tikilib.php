@@ -1,5 +1,5 @@
 <?php
-
+// CVS: $Id: tikilib.php,v 1.600 2005-08-29 03:14:44 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -429,7 +429,7 @@ class TikiLib extends TikiDB {
 
 	foreach ($groups as $group) {
 	    $query = "select ttf.`trackerId`, tti.`itemId` from `tiki_tracker_fields` ttf, `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif ";
-	    $query .= " where ttf.`fieldId`=ttif.`fieldId` and ttif.`itemId`=tti.`itemId` and `type`=? and tti.`status`=? and value=?";
+	    $query .= " where ttf.`fieldId`=ttif.`fieldId` and ttif.`itemId`=tti.`itemId` and `type`=? and tti.`status`=? and `value`=?";
 	    $result = $this->query($query,array('g','o',$group));
 
 	    while ($res = $result->fetchRow()) {
@@ -2263,7 +2263,7 @@ function add_pageview() {
 	$bindvars=array();
 	if ($find) {
 	    $findesc = '%' . $find . '%';
-	    $mid .= " and (`title` like ? or `heading` like ? or `body` like ?) ";
+	    $mid = " where (`title` like ? or `heading` like ? or `body` like ?) ";
 	    $bindvars=array($findesc,$findesc,$findesc);
 	}
 
@@ -2391,7 +2391,7 @@ function add_pageview() {
 				`tiki_article_types`.`show_image_caption`,
 				`tiki_article_types`.`show_lang`,
 				`tiki_article_types`.`creator_edit`
-	    	from `tiki_articles`, `tiki_article_types`, `users_users` 
+	    	from `tiki_articles`, `tiki_article_types`, `users_users`
 	    	$mid $mid2 order by ".$this->convert_sortmode($sort_mode);
 	$query_cant = "select count(*) from  `tiki_articles`, `tiki_article_types`,  `users_users` $mid $mid2";
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
@@ -3856,7 +3856,7 @@ function add_pageview() {
 	    $data1 = $data;
 	    if (isset($noparsed["key"]) and count($noparsed["key"]) and count($noparsed["key"]) == count($noparsed["data"]))
 	    {
-		$data = str_replace($noparsed["key"], $noparsed["data"], $data);
+		$data = preg_replace($noparsed["key"], $noparsed["data"], $data);
 	    }
 
 	    if (isset($preparsed["key"]) and count($preparsed["key"]) and count($preparsed["key"]) == count($preparsed["data"]))
@@ -3914,6 +3914,7 @@ function add_pageview() {
 			$curlies--;
 		    } else if( $data[$i] == ")" ) {
 			$parens--;
+			$lastParens = $i;
 		    }
 
 		    // If we found the end of the match...
@@ -3927,7 +3928,7 @@ function add_pageview() {
 
 		if( $curlies == 0 && $parens == 0 )
 		{
-		    $plugins[2] = (string) substr($data, $pos_end, $i - $pos_end - 1);
+		    $plugins[2] = (string) substr($data, $pos_end, $lastParens - $pos_end);
 		    $plugins[0] = $plugins[0] . (string) substr($data, $pos_end, $i - $pos_end + 1);
 		    /*
 		       print "<pre>Match found: ";
@@ -4226,12 +4227,23 @@ function add_pageview() {
 	//		global $feature_autolinks;
 
 	//		if ($feature_autolinks == "y") {
+	global $feature_wiki_ext_icon;
+	$attrib = '';
+	if ($this->get_preference('popupLinks', 'n') == 'y')
+		$attrib .= 'target="_blank" ';
+	if ($feature_wiki_ext_icon == 'y') {
+		$attrib .= 'class="wiki external" ';
+		$ext_icon = "<img border=\"0\" class=\"externallink\" src=\"img/icons/external_link.gif\" alt=\"external link\" />";
+	} else {
+		$attrib .= 'class="wiki" ';
+		$ext_icon = "";
+	}
 
 	// add a space so we can match links starting at the beginning of the first line
 	$text = " " . $text;
 	// match prefix://suffix, www.prefix.suffix/optionalpath, prefix@suffix
 	$patterns = array("#([\n ])([a-z0-9]+?)://([^, \n\r]+)#i", "#([\n ])www\.([a-z0-9\-]+)\.([a-z0-9\-.\~]+)((?:/[^, \n\r]*)?)#i", "#([\n ])([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i", "#([\n ])magnet\:\?([^, \n\r]+)#i");
-	$replacements = array("\\1<a class='wiki' href=\"\\2://\\3\">\\2://\\3</a>", "\\1<a class='wiki' href=\"http://www.\\2.\\3\\4\">www.\\2.\\3\\4</a>", "\\1<a class='wiki' href=\"mailto:\\2@\\3\">\\2@\\3</a>", "\\1<a class='wiki' href=\"magnet:?\\2\">magnet:?\\2</a>");
+	$replacements = array("\\1<a $attrib href=\"\\2://\\3\">\\2://\\3$ext_icon</a>", "\\1<a $attrib href=\"http://www.\\2.\\3\\4\">www.\\2.\\3\\4$ext_icon</a>", "\\1<a class='wiki' href=\"mailto:\\2@\\3\">\\2@\\3</a>", "\\1<a class='wiki' href=\"magnet:?\\2\">magnet:?\\2</a>");
 	$text = preg_replace($patterns, $replacements, $text);
 	// strip the space we added
 	$text = substr($text, 1);
@@ -6472,6 +6484,7 @@ if (!$simple_wiki) {
 	}
 
 }
+
 
 // end of class ------------------------------------------------------
 

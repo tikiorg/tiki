@@ -1,4 +1,5 @@
 <?php
+// $Id: notificationemaillib.php,v 1.12 2005-08-29 03:14:44 mose Exp $
 /** \brief send the email notifications dealing with the forum changes to
   * \brief outbound address + admin notification addresses / forum admin email + watching users addresses
   * \param $event = 'forum_post_topic' or 'forum_post_thread'
@@ -8,7 +9,7 @@
   * \param $topicName name of the parent topic
   */
 
-function sendForumEmailNotification($event, $object, $forum_info, $title, $data, $author, $topicName, $messageId='', $inReplyTo='', $threadId='', $parentId='') { 
+function sendForumEmailNotification($event, $object, $forum_info, $title, $data, $author, $topicName, $messageId='', $inReplyTo='', $threadId='', $parentId='') {
 	global $tikilib, $feature_user_watches, $smarty, $userlib, $sender_email;
 
 	// Per-forum From address overrides global default.
@@ -67,7 +68,7 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 	}
 
 	// Special forward address
-	//TODO: merge or use the admin notification feature 
+	//TODO: merge or use the admin notification feature
 	if ($forum_info["useMail"] == 'y') {
 		$not['email'] =  $forum_info['mail'];
 		if ($not['user'] = $userlib->get_user_by_email($forum_info['mail']) )
@@ -112,7 +113,7 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 /** \brief test if email already in the notification list
  */
 function testEmailInList($nots, $email) {
-	for ($i = count($nots) - 1; $i >=0; --$i) {
+	foreach (array_keys($nots) as $i) {
 		if ($nots[$i]['email'] == $email)
 			return true;
 	}
@@ -138,7 +139,7 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 					break;
 				}
 		}
-		for ($i = count($nots) - 1; $i >=0; --$i) {
+		foreach (array_keys($nots) as $i) {
 			$nots[$i]['language'] = $tikilib->get_user_preference($nots[$i]['user'], "language", $defaultLanguage);
 		}
 	}
@@ -160,7 +161,7 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 		if ($wiki_watch_editor != "y" && $email == $edit_user)
 		    continue;
 		if (!testEmailInList($nots, $email)) {
-		    $not['email'] =  $email;
+		    $not = array('email' =>  $email);
 		    if ($not['user'] = $userlib->get_user_by_email($email))
 			$not['language'] = $tikilib->get_user_preference($not['user'], "language", $defaultLanguage);
 		    else
@@ -169,7 +170,7 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 			}
 		}
 	}
-	
+
 	if ($edit_user=='') $edit_user = tra('Anonymous');
 
 	if (count($nots)) {
@@ -212,7 +213,7 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 	}
 }
 
-/** \brief Send email notification to a list of emails or a list of (email, user) in a charset+language associated with each email 
+/** \brief Send email notification to a list of emails or a list of (email, user) in a charset+language associated with each email
  * \param $list : emails list or (users, email) list
  * \param $type: type of the list element =  'email'|'watch'
  * \param $subjectTpl: subject template file or null (ex: "submission_notifcation.tpl")
@@ -233,7 +234,7 @@ function sendEmailNotification($list, $type, $subjectTpl, $subjectParam, $txtTpl
 			$email = $elt['email'];
 			$userEmail = $elt['user'];
 			$smarty->assign('mail_hash', $elt['hash']);
-		}	
+		}
 		else {
 			$email = $elt;
 			$userEmail = $userlib->get_user_by_email($email);
@@ -258,7 +259,7 @@ function sendEmailNotification($list, $type, $subjectTpl, $subjectParam, $txtTpl
 		if ($mail->send(array($email)))
 			$sent++;
 	}
-return $sent;		
+return $sent;
 }
 function activeErrorEmailNotivation() {
 	set_error_handler("sendErrorEmailNotification");
@@ -277,16 +278,16 @@ function sendErrorEmailNotification($errno, $errstr, $errfile='?', $errline= '?'
 //	include_once('lib/webmail/tikimaillib.php');
 //	$mail = new TikiMail();
 	mail($email,
-        "PHP: $errfile, $errline", 
-        "$errfile, Line $errline\n$err($errno)\n$errstr"); 
-} 
+        "PHP: $errfile, $errline",
+        "$errfile, Line $errline\n$err($errno)\n$errstr");
+}
 
 function sendFileGalleryEmailNotification($event, $galleryId, $galleryName, $name, $filename, $description, $action, $user) {
         global $tikilib, $feature_user_watches, $smarty, $userlib, $sender_email;
-                
+
         $nots = array();
         $defaultLanguage = $tikilib->get_preference("language", "en");
-                                
+
         // Users watching this gallery
         if ($feature_user_watches == 'y') {
                 $nots = $tikilib->get_event_watches($event, $galleryId);
@@ -294,7 +295,7 @@ function sendFileGalleryEmailNotification($event, $galleryId, $galleryName, $nam
                         $nots[$i]['language'] = $tikilib->get_user_preference($nots[$i]['user'], "language", $defaultLanguage);
                 }
         }
-         
+
         if (count($nots)) {
                 include_once('lib/webmail/tikimaillib.php');
                 $mail = new TikiMail();

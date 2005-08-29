@@ -13,6 +13,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 if ($feature_trackers == 'y') {
 	$smarty->assign('modlmifn', $module_params["name"]);
 
+	$ranking = array();
+	$ranking['data'] = array();
 	if (isset($module_params["trackerId"])) {
 		$tmp = $tikilib->list_tracker_items($module_params["trackerId"], 0, $module_rows, 'lastModif_desc', '');
 		foreach ($tmp["data"] as $data) {
@@ -26,14 +28,11 @@ if ($feature_trackers == 'y') {
 			}
 			$data["id"]=$module_params["trackerId"];
 			$data["field_values"]=null;
-		
+
 			$ranking["data"][] = $data;
 			$data=null;
 		}
 		$tmp=null;
-	} else {
-		$ranking = array();
-		$ranking['data'] = '';
 	}
 
 	$smarty->assign('modLastModifItems', $ranking["data"]);
