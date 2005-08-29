@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker.tpl,v 1.98 2005-08-12 13:02:11 sylvieg Exp $ *}
+{* $Id: tiki-view_tracker.tpl,v 1.99 2005-08-29 03:14:45 mose Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -214,9 +214,9 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 
 {elseif $items[user].field_values[ix].type eq 'y'}
 {assign var=o_opt value=$items[user].field_values[ix].options_array[0]}
-{if $o_opt eq '0' or $o_opt eq 2}<img border="0" src="img/flags/{$items[user].field_values[ix].value}.gif">{/if}
-{if $o_opt eq '0'}&nbsp;{/if}
-{if $o_opt eq '0' or $o_opt eq 1}{$items[user].field_values[ix].value}{/if}
+{if $o_opt ne '1'}<img border="0" src="img/flags/{$items[user].field_values[ix].value}.gif">{/if}
+{if $o_opt ne '1' and $o_opt ne '2'}&nbsp;{/if}
+{if $o_opt ne '2'}{tr}{$items[user].field_values[ix].value}{/tr}{/if}
 
 {else}
 {$items[user].field_values[ix].value|truncate:255:"..."|default:"&nbsp;"}
@@ -274,7 +274,7 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 {assign var=o_opt value=$items[user].field_values[ix].options_array[0]}
 {if $o_opt eq '0' or $o_opt eq 2}<img border="0" src="img/flags/{$items[user].field_values[ix].value}.gif">{/if}
 {if $o_opt eq '0'}&nbsp;{/if}
-{if $o_opt eq '0' or $o_opt eq 1}{$items[user].field_values[ix].value}{/if}
+{if $o_opt eq '0' or $o_opt eq 1}{tr}{$items[user].field_values[ix].value}{/tr}{/if}
 </td>
 {elseif $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h'}
 <td class="auto">
@@ -425,7 +425,7 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 
 {elseif $fields[ix].type eq 'd'}
 <select name="{$fields[ix].ins_id}">
-{if $fields[ix].isMandatory}<option value="" />{/if}
+{if $fields[ix].isMandatory ne 'y'}<option value="" />{/if}
 {section name=jx loop=$fields[ix].options_array}
 <option value="{$fields[ix].options_array[jx]|escape}" {if $defaultvalues.$fid eq $fields[ix].options_array[jx]}selected="selected"{/if}>{$fields[ix].options_array[jx]}</option>
 {/section}
@@ -452,7 +452,7 @@ align       : "bR"
 
 {elseif $fields[ix].type eq 'r'}
 <select name="{$fields[ix].ins_id}">
-{if $fields[ix].isMandatory}<option value="" />{/if}
+{if $fields[ix].isMandatory ne 'y'}<option value="" />{/if}
 {foreach key=id item=label from=$fields[ix].list}
 <option value="{$label|escape}" {if $defaultvalue eq $label}selected="selected"{/if}>{$label}</option>
 {/foreach}
@@ -462,7 +462,7 @@ align       : "bR"
 <select name="{$fields[ix].ins_id}">
 {foreach item=flag from=$fields[ix].flags}
 <option value="{$flag|escape}" {if $flag eq $fields[ix].defaultvalue}selected="selected"{/if}
-style="background-image:url('img/flags/{$flag}.gif');background-repeat:no-repeat;padding-left:25px;padding-bottom:3px;">{$flag}</option>
+style="background-image:url('img/flags/{$flag}.gif');background-repeat:no-repeat;padding-left:25px;padding-bottom:3px;">{tr}{$flag}{/tr}</option>
 {/foreach}
 </select>
 

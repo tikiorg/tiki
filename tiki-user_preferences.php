@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.71 2005-08-16 14:44:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.72 2005-08-29 03:14:43 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -75,13 +75,14 @@ if (isset($_REQUEST["prefs"])) {
 	if (isset($_REQUEST["userbreadCrumb"]))
 		$tikilib->set_user_preference($userwatch, 'userbreadCrumb', $_REQUEST["userbreadCrumb"]);
 
-	if (($tiki_p_admin || $change_language == 'y') && isset($_REQUEST["language"])) {
-		$tikilib->set_user_preference($userwatch, 'language', $_REQUEST["language"]);
-	}
-
-	if ($userwatch == $user && isset($_REQUEST["language"])) {
-		$smarty->assign('language', $_REQUEST["language"]);
-		include ('lang/' . $_REQUEST["language"] . '/language.php');
+	if (isset($_REQUEST["language"]) && preg_match("/^[a-zA-Z-_]*$/", $_REQUEST['language'])  && file_exists('lang/' . $_REQUEST['language'] . '/language.php')) {
+		if ($tiki_p_admin || $change_language == 'y') {
+			$tikilib->set_user_preference($userwatch, 'language', $_REQUEST["language"]);
+		}
+		if ($userwatch == $user) {
+			$smarty->assign('language', $_REQUEST["language"]);
+			include ('lang/' . $_REQUEST["language"] . '/language.php');
+		}
 	}
 
 	if (isset($_REQUEST['display_timezone'])) {

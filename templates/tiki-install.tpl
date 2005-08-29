@@ -1,5 +1,5 @@
 <div style="margin-left:180px;margin-right:180px;">
-<h1>Tiki installer v{$tiki_version} <a title='help' href='http://tikiwiki.org/InstallTiki' target="help"><img
+<h1>Tiki installer v1.9.2 (CVS) <a title='help' href='http://tikiwiki.org/InstallTiki' target="help"><img
 border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a></h1>
 
 {if $tikifeedback}
@@ -151,6 +151,7 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 				<li>comments_fix_1.7to1.8.sql - use only once!</li>
 				<li>structure_fix_1.7to1.8.sql use only once!</li>
 				<li>tiki_1.8to1.9.sql - can be run more than once if errors occur</li>
+				<li>tiki_1.9to1.9.1.sql - can be run more than once if errors occur</li>
 			</ol>
 			We recommend that you <b>backup your database</b> with mysqldump or phpmyadmin.
 		</td></tr>

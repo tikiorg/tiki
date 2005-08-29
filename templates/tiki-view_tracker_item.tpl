@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker_item.tpl,v 1.86 2005-08-12 13:02:11 sylvieg Exp $ *}
+{* $Id: tiki-view_tracker_item.tpl,v 1.87 2005-08-29 03:14:45 mose Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -122,9 +122,9 @@
 
 {elseif $cur_field.type eq 'y'}
 {assign var=o_opt value=$cur_field.options_array[0]}
-{if $o_opt eq '0' or $o_opt eq 2}<img border="0" src="img/flags/{$cur_field.value}.gif">{/if}
-{if $o_opt eq '0'}&nbsp;{/if}
-{if $o_opt eq '0' or $o_opt eq 1}{$cur_field.value}{/if}
+{if $o_opt ne '1'}<img border="0" src="img/flags/{$cur_field.value}.gif">{/if}
+{if $o_opt ne '1' and $o_opt ne '2'}&nbsp;{/if}
+{if $o_opt ne '2'}{tr}{$cur_field.value}{/tr}{/if}
 
 {elseif $cur_field.type eq 't' or $cur_field.type eq 'n'}
 {if $cur_field.options_array[2]}<span class="formunit">{$cur_field.options_array[2]|escape}&nbsp;</span>{/if}
@@ -431,7 +431,7 @@ rows="{if $cur_field.options_array[2] gt 1}{$cur_field.options_array[2]}{else}4{
 <select name="ins_{$cur_field.id}">
 {foreach item=flag from=$cur_field.flags}
 <option value="{$flag|escape}" {if ($cur_field.value ne '' and $cur_field.value eq $flag) or ($cur_field.value eq '' and $flag eq 'None')}selected="selected"{/if}
-style="background-image:url('img/flags/{$flag}.gif');background-repeat:no-repeat;padding-left:25px;padding-bottom:3px;">{$flag}</option>
+style="background-image:url('img/flags/{$flag}.gif');background-repeat:no-repeat;padding-left:25px;padding-bottom:3px;">{tr}{$flag}{/tr}</option>
 {/foreach}
 </select>
 

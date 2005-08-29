@@ -131,7 +131,7 @@ function md5_check_dir($dir,&$result) { // save all suspicious files in $result
 // if check installation is pressed, walk through all files and compute md5 sums
 if (isset($_REQUEST['check_files'])) {
   global $tiki_version;
-  $tiki_version='1.9';
+  $tiki_version='1.9.1';
   $result=array();
   md5_check_dir(".",$result);
   // echo "<pre>"; print_r($tikimd5);echo "</pre><br />";

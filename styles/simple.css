@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.34 2005-08-12 13:02:10 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.35 2005-08-29 03:14:45 mose Exp $
  *
  * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye
  * Enables font re-sizing in all browsers, aims to be WCAG 1.0 compatible (not yet), one simple css file.
@@ -91,6 +91,7 @@ form {
 	text-align: left;
 }
 
+/* Horizontal lines */
 hr {
 	border-top: none;
 	border-bottom: solid 0.2em #abcdef;
@@ -99,22 +100,46 @@ hr {
 	height: 1px;
 }
 
-input[type='text'], input[type='password'], textarea {
+/* All input elements */
+input {
 	border: solid 1px #abcdef;
 	padding: 0.1em;
+	vertical-align: middle;
 }
+
+/* Set font size for one-line text input fields and password fields */
+input[type='text'], input[type='password'] {
+	font-size: 1em;
+}
+/* Same border for them and for textarea too */
+input[type='text'], input[type='password'], textarea {
+	border: solid 1px #abcdef;
+}
+/* Try to have same look for submit buttons, file chooser fields and select dropdowns too */
 input[type='submit'], input[type='file'], select {
 	border: solid 1px #abcdef;
 	background: #f0f9ff;
 	color: #000;
 	font-size: 0.9em;
+	height: 2em;
+	vertical-align: middle;
 }
+
+/* All select elements, NOTE: text-align: start is RTL languages compatible */
 select {
-	height: 1.6em;
+	_font-size: 1em; /* MSIE workaround for simmilar height like input and submit */
 	text-align: start;
+	_vertical-align: top; /* MSIE workaround for simmilar height like input and submit */
+}
+/*select[name='lang'], select[name='language'] {
+	height: 2em;
+}*/
+select[multiple] {
+	height: 10em;
 }
 
 textarea {
+	padding: 0.1em;
 	width: 98%;
 }
 
@@ -167,6 +192,10 @@ textarea {
 	text-decoration: none;
 }
 
+#mod-assistant {
+	text-align: left;
+}
+
 /* TikiIntegrator: By default copy rules dialog not shown */
 #rules-copy-panel {
 	display: none;
@@ -193,6 +222,7 @@ textarea {
 }
 .maincontent {
  float: right; text-align: center; width: 75%;
+ overflow: auto;
 }
 .maincontent div {
 	text-align: center;
@@ -237,6 +267,7 @@ textarea {
 div.box-title {
  background: #abcdef;
  border-bottom: solid 0 #abcdef;
+ overflow: hidden;
  text-align: center;
 }
 div.box-title table {
@@ -246,7 +277,12 @@ div.box-title table {
  border-bottom: dashed 0.2em #abcdef;
  border-left: dashed 0.2em #abcdef;
  border-right: dashed 0.2em #abcdef;
+ overflow: auto;
+ _overflow: hidden; /* MSIE workaround */
+ _overflow-x: auto; /* MSIE workaround */
+ padding-bottom: 0.2em;
  text-align: center;
+ _width: 100%; /* MSIE workaround to make overflow work */
 }
 .box-data a {
 	text-decoration: none;
@@ -276,7 +312,7 @@ div.box-title table {
 }
 
 /* custom menus */
-.box-data .option {
+.box-data .option, .box-data .separatorline {
 	font-size: 0.9em;
 	height: 1.2em;
 	text-align: left;
@@ -399,6 +435,13 @@ textarea.tshoutbox { /* correct width for shoutboxmod textarea only (needed by m
 }
 
 /*
+ * user (messu) messages
+ */
+div.messureadbody {
+	text-align: left;
+}
+
+/*
  * common page classes
  */
 .linkbut {
@@ -484,11 +527,17 @@ textarea.tshoutbox { /* correct width for shoutboxmod textarea only (needed by m
 .titleb {
  font-size: x-small;
 }
+div.articlebody {
+	text-align: left;
+}
 /*
  * blogs
  */
 .blogtitle {
 	font-size: large;
+}
+.postbody {
+	text-align: left;
 }
 /*
  * image galleries

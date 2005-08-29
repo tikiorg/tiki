@@ -1,5 +1,5 @@
 <?php
-
+// CVS: $Id: mod-eph.php,v 1.7 2005-08-29 03:14:45 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -7,8 +7,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 include_once ("lib/ephemerides/ephlib.php");
-
-global $ephlib; // no idea why this is needed currently, but it doesnt work without
 
 if (isset($_SESSION['thedate'])) {
 	$modephpdate = $_SESSION['thedate'];

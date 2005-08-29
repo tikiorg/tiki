@@ -1065,7 +1065,7 @@ class TrackerLib extends TikiLib {
 		$type['y'] = array(
 			'label'=>tra('country selector'),
 			'opt'=>true,
-			'help'=>tra('Country Selector options: 0|1|2 where 0 show both country flag and country name, 1 show only country name and 2 show only country flag') );
+			'help'=>tra('Country Selector options: 1|2 where 1 show only country name and 2 show only country flag. By default show both country name and flag') );
 		$type['f'] = array(
 			'label'=>tra('date and time'), 
 			'opt'=>false);

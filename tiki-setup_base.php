@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.89 2005-08-25 20:50:04 michael_davey Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.90 2005-08-29 03:14:43 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -36,6 +36,7 @@ ini_set('session.use_only_cookies', 1);
 // Smarty workaround - if this would be 'On' in php.ini Smarty fails to parse tags
 ini_set('magic_quotes_sybase','Off');
 ini_set('magic_quotes_runtime',0);
+ini_set('allow_call_time_pass_reference','On');
 // ---------------------------------------------------------------------
 // inclusions of mandatory stuff and setup
 require_once("lib/tikiticketlib.php");
@@ -108,9 +109,9 @@ $patterns['int']   = "/^[0-9]*$/"; // *Id
 $patterns['intSign']   = "/^[-+]?[0-9]*$/"; // *offset,
 $patterns['char']  = "/^[-,_a-zA-Z0-9]*$/"; // sort_mode, 
 $patterns['string']  = "/^[^<>\";#]*$/"; // find, and such extended chars
-
 $patterns['vars']  = "/^[-_a-zA-Z0-9]*$/"; // for variable keys
 $patterns['hash'] = "/^[a-z0-9]*$/"; // for hash reqId in live support
+$patterns['url'] = "/^https?:\/\/[^<>\"']*$/"; // needed for the htmlpage inclusion in tiki-editpage
 
 $vartype['id'] = 'int';
 $vartype['offset'] = 'intSign';
@@ -124,6 +125,7 @@ $vartype['theme'] = 'string';
 $vartype['flag'] = 'char';
 $vartype['lang'] = 'char';
 $vartype['switchLang'] = 'char';
+$vartype['language'] = 'char';
 $vartype['page'] = 'string';
 $vartype['edit_mode'] = 'char';
 $vartype['reqId'] = 'hash';

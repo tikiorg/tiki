@@ -1,22 +1,7 @@
 <?php
 
-// Displays a graphical GAUGE
-// Usage:
-// {GAUGE(params)}description{GAUGE}
-// Description is optional and will be displayed below the gauge if present
-// Parameters:
-//   color	bar color
-//   bgcolor	background color
-//   max	maximum possible value (default to for percentages 100)
-//   value	current value (REQUIRED)
-//   size	Bar size 
-//   perc	If true then a percentage is displayed
-//   height	Bar height
-// EXAMPLE:
-//
-// {GAUGE(perc=>true,value=>35,bgcolor=>#EEEEEE,height=>20)}happy users over total{GAUGE}
 function wikiplugin_thumb_help() {
-	return tra("Displays the thumbnail for an image").":<br />~np~{THUMB(image=>,max=>,float=>)}".tra("description")."{THUMB}~/np~";
+	return tra("Displays the thumbnail for an image").":<br />~np~{THUMB(image=>,max=>,float=>,url=>)}".tra("description")."{THUMB}~/np~";
 }
 
 function wikiplugin_thumb($data, $params) {
@@ -39,6 +24,10 @@ function wikiplugin_thumb($data, $params) {
 		$style = "margin-right: 2ex;";
 	} else {
 		$float = "none";
+	}
+
+	if (!isset($url)) {
+		$url = "";
 	}
 
 	if (!isset($image)) {
@@ -72,7 +61,7 @@ function wikiplugin_thumb($data, $params) {
 		$html.= '<script type="text/javascript" language="JavaScript" src="lib/overlib.js"></script>';
 		$smarty->assign('overlib_loaded',1);
 	}
-	$html.= "<a href='#' style='float:$float;$style' ";
+	$html.= "<a href='$url' style='float:$float;$style' ";
 	$html.= " onmouseover=\"return overlib('$data',BACKGROUND,'$image',WIDTH,'$width',HEIGHT,$height);\" onmouseout='nd();' >";
 	$html.= "<img src='$image' width='$twidth' height='$theight' /></a>";
 
