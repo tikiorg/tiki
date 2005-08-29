@@ -16,6 +16,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
+require_once('lib/tikilib.php'); # httpScheme()
+require_once('lib/webmail/tikimaillib.php');
+
 if (!isset($Debug)) $Debug = false;
 
 class RegistrationLib extends TikiLib {
