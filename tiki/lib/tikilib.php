@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.600 2005-08-29 03:14:44 mose Exp $
+// CVS: $Id: tikilib.php,v 1.601 2005-08-29 15:16:47 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4043,7 +4043,7 @@ function add_pageview() {
 		// ~pp~ type "plugins"
 	    {
 		$key = md5($this->genPass());
-		$noparsed["key"][] = $key;
+		$noparsed["key"][] = "/". preg_quote($key)."/";
 
 		if( strstr( $plugin_data, '$' ) )
 		{
@@ -4126,7 +4126,7 @@ function add_pageview() {
 			if( count( $stuff ) > 0 )
 			{
 			    $key = md5($this->genPass());
-			    $noparsed["key"][] = $key;
+			    $noparsed["key"][] =  "/". preg_quote($key)."/";
 			    $noparsed["data"][] = $stuff[1];
 
 			    $ret = preg_replace( "/~np~.*~\/np~/s", $key, $ret );
