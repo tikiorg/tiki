@@ -219,7 +219,7 @@ class RegistrationLib extends TikiLib {
   }
 
   // VALIDATE NAME HERE
-  if(strtolower($_REQUEST["name"])=='admin') {
+  if(strtolower($_REQUEST["name"])=='admin' || strtolower($_REQUEST["name"])=='customfields') {
     $smarty->assign('msg',tra("Invalid username"));
     $smarty->display("error.tpl");
     die;
