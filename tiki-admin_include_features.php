@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.38 2005-08-12 13:01:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.39 2005-08-30 12:51:31 michael_davey Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -70,6 +70,7 @@ $features_toggles = array(
 	"feature_redirect_on_error",
 	"feature_score",
 	"feature_search",
+	"feature_signal",
 	"feature_sheet",
 	"feature_shoutbox",
 	"feature_siteidentity",
