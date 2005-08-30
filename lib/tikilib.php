@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.601 2005-08-29 15:16:47 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.602 2005-08-30 00:36:14 rlpowell Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4266,10 +4266,9 @@ function add_pageview() {
 
 
     // split string into a list of
-    function split_tag($string) {
+    function split_tag( $string, $cleanup = TRUE ) {
 	$_splts = split('&quot;', $string);
 	$inside = FALSE;
-	$cleanup= TRUE;  // @todo: make this an option for other code
 	$parts = array();
 	$index=0;
 
@@ -4486,7 +4485,7 @@ function add_pageview() {
 	    preg_match_all("/(\{file [^\}]+})/", $data, $pages);
 
 	    foreach (array_unique($pages[1])as $page_parse) {
-		$parts = $this->split_tag( $page_parse);
+		$parts = $this->split_tag( $page_parse, FALSE );
 
 		$filedata = array();      // pre-set preferences
 		$filedata["name"] = '';
