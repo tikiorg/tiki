@@ -219,6 +219,9 @@ class RegistrationLib extends TikiLib {
   }
 
   // VALIDATE NAME HERE
+  // 'CustomFields' is an interal database token used to store additional fields to be used by the registration form
+  // for historical reasons, this data is stored in the user_preferences table and so the string is not available for
+  // use as a username
   if(strtolower($_REQUEST["name"])=='admin' || strtolower($_REQUEST["name"])=='customfields') {
     $smarty->assign('msg',tra("Invalid username"));
     $smarty->display("error.tpl");
