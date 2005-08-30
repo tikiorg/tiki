@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-compose.php,v 1.25 2005-08-12 13:01:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-compose.php,v 1.26 2005-08-30 11:55:00 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -93,15 +93,17 @@ if (isset($_REQUEST['send'])) {
 	}
 
 	// Parse the to, cc and bcc fields into an array
-	$arr_to = preg_split('/\s*(,|\s)\s*/', $_REQUEST['to']);
-	$arr_cc = preg_split('/\s*(,|\s)\s*/', $_REQUEST['cc']);
-	$arr_bcc = preg_split('/\s*(,|\s)\s*/', $_REQUEST['bcc']);
+	$arr_to = preg_split('/\s*(?<!\\\);\s*/', $_REQUEST['to']);
+	$arr_cc = preg_split('/\s*(?<!\\\);\s*/', $_REQUEST['cc']);
+	$arr_bcc = preg_split('/\s*(?<!\\\);\s*/', $_REQUEST['bcc']);
 
 	// Remove invalid users from the to, cc and bcc fields
 	$users = array();
 
 	foreach ($arr_to as $a_user) {
 		if (!empty($a_user)) {
+			$a_user = str_replace('\\;', ';', $a_user);
+echo "<pre>$a_user</pre>";
 			if ($messulib->user_exists($a_user)) {
 				// mail only to users with activated message feature
 				if ($messulib->get_user_preference($a_user, 'allowMsgs', 'y') == 'y') {
@@ -122,6 +124,7 @@ if (isset($_REQUEST['send'])) {
 
 	foreach ($arr_cc as $a_user) {
 		if (!empty($a_user)) {
+			$a_user = str_replace('\\;', ';', $a_user);
 			if ($messulib->user_exists($a_user)) {
 				// mail only to users with activated message feature
 				if ($messulib->get_user_preference($a_user, 'allowMsgs', 'y') == 'y') {
@@ -142,6 +145,7 @@ if (isset($_REQUEST['send'])) {
 
 	foreach ($arr_bcc as $a_user) {
 		if (!empty($a_user)) {
+			$a_user = str_replace('\\;', ';', $a_user);
 			if ($messulib->user_exists($a_user)) {
 				// mail only to users with activated message feature
 				if ($messulib->get_user_preference($a_user, 'allowMsgs', 'y') == 'y') {
