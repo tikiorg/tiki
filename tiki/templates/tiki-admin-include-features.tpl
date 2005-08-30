@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.64 2005-08-12 13:02:11 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.65 2005-08-30 12:51:31 michael_davey Exp $ *}
 
 {* this is the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
@@ -13,6 +13,11 @@
     </div>
 {* the heading of the  box *}
 <div class="cbox-data">
+
+{*
+ * The following section is typically for features that act like TikiWiki
+ * sections and add a configuration icon to the sections list
+ *}
 <table width="100%" class="admin">
   <tr>
     <td class="heading" colspan="7" align="center">{tr}Tiki sections and features{/tr}</td>
@@ -139,15 +144,7 @@
       <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}TikiMap" target="tikihelp" class="tikihelp" title="{tr}Maps{/tr}">{/if} {tr}Maps{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
       {* here is the categories option *}      </tr>
   {* Calendar option on left side of first row of table*}
-  <tr>
-    <td><input type="checkbox" name="feature_help"
-            {if $feature_help eq 'y'}checked="checked"{/if}/></td>
-    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Help+System+Future+Concept" target="tikihelp" class="tikihelp" title="{tr}Help System{/tr}">{/if} {tr}Help System{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
-    <td>&nbsp;</td>
-    <td><input type="checkbox" name="feature_multilingual" {if $feature_multilingual eq 'y'}checked="checked"{/if} />
-    </td>
-    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Internationalization" target="tikihelp" class="tikihelp" title="{tr}tikiwiki.org help{/tr}: {tr}Multilingual{/tr}">{/if} {tr}Multilingual{/tr}{if $feature_help eq 'y'}</a>{/if}</td>
-  </tr>
+
   <tr>
     <td><input type="checkbox" name="feature_categories"
                 {if $feature_categories eq 'y'}checked="checked"{/if}/></td>
@@ -235,6 +232,25 @@
   </tr>
 
 </table>    
+
+{* ---------- System features ------------ *}
+<table width="100%" class="admin">  <tr>
+    <td class="heading" colspan="5"
+            align="center">{tr}System Features{/tr}</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="feature_help"
+            {if $feature_help eq 'y'}checked="checked"{/if}/></td>
+    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Help+System+Future+Concept" target="tikihelp" class="tikihelp" title="{tr}Help System{/tr}">{/if} {tr}Help System{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
+    <td class="form">&nbsp;</td>    <td><input type="checkbox" name="feature_signal"            {if $feature_signal eq 'y'}checked="checked"{/if}/></td>    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}TikiSignal" target="tikihelp" class="tikihelp" title="{tr}Signal System{/tr}">{/if} {tr}Signal System{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
+</tr>
+<tr>
+    <td><input type="checkbox" name="feature_multilingual" {if $feature_multilingual eq 'y'}checked="checked"{/if} />
+    </td>
+    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Internationalization" target="tikihelp" class="tikihelp" title="{tr}tikiwiki.org help{/tr}: {tr}Multilingual{/tr}">{/if} {tr}Multilingual{/tr}{if $feature_help eq 'y'}</a>{/if}</td>
+</tr>
+</table>
+
 {* ---------- Content features ------------ *}
 <table width="100%" class="admin">
   <tr>
