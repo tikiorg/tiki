@@ -23,6 +23,8 @@ define ("TIKI_CALLBACK_EARLY", 1);
 define ("TIKI_CALLBACK_STANDARD", 3);
 define ("TIKI_CALLBACK_LATE", 5);
 
+if (!isset($Debug)) $Debug = false;
+
 /**
  * This class provides an events notification
  *
@@ -139,7 +141,7 @@ class NotificationLib extends TikiLib {
 	 *  @param self the object raising the event
 	 */
 	function raise_event( $event, $data, $raisedBy ) {
-		$Debug = true;
+		global $Debug;
 		if ($Debug) print "event raised: $event<br />";
 		$maxRecords = 3*100;
        		// get list of early objects that want to be notified about
