@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.279 2005-08-30 12:51:31 michael_davey Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.280 2005-08-31 15:13:33 michael_davey Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -775,10 +775,11 @@ $smarty->assign('minical_reminders', $minical_reminders);
 
 $feature_contact = 'n';
 $smarty->assign('feature_contact', $feature_contact);
+
 $contact_user = $tikilib->get_preference('contact_user', 'admin');
 $smarty->assign('contact_user', $contact_user);
-$default_sender_email = $userlib->get_user_email($contact_user);
-$sender_email = $tikilib->get_preference('sender_email', $default_sender_email);
+
+$sender_email = $userlib->get_admin_email();
 $smarty->assign('sender_email', $sender_email);
 
 $webmail_view_html = 'y';

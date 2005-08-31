@@ -180,7 +180,7 @@ class RegistrationLib extends TikiLib {
    */
   function validate_registration() {
   global $allowRegister, $_REQUEST, $_SESSION, $min_pass_length, $useRegisterPasscode, $validateUsers, $rnd_num_reg;
-  global $sender_email, $default_sender_email, $contact_user, $pass_chr_num, $validateRegistration, $email_valid;
+  global $sender_email, $contact_user, $pass_chr_num, $validateRegistration, $email_valid;
   global $userlib, $logslib, $smarty, $tikilib;
   global $Debug;
 
@@ -345,12 +345,13 @@ class RegistrationLib extends TikiLib {
    */
   function callback_tikiwiki_send_email($raisedBy, $data) {
 	global $_REQUEST, $_SESSION, $_SERVER, $min_pass_length, $useRegisterPasscode, $validateUsers, $registrationlib_apass;
-	global $sender_email, $default_sender_email, $contact_user, $pass_chr_num, $validateRegistration, $email_valid;
-	global $smarty, $tikilib;
+	global $contact_user, $pass_chr_num, $validateRegistration, $email_valid;
+	global $smarty, $tikilib, $userlib;
 	global $Debug;
 
 	if ($Debug) print "::send_email";
 
+	$sender_email = $userlib->get_admin_email();
 	$mail_user = $data['user'];
 	$mail_site = $data['mail_site'];
 
@@ -371,7 +372,7 @@ class RegistrationLib extends TikiLib {
                         include_once("lib/notifications/notificationemaillib.php");
                         if (isset($validateRegistration) and $validateRegistration == 'y') {
                                 $smarty->assign('msg',$smarty->fetch('mail/user_validation_waiting_msg.tpl'));
-                                if ($default_sender_email == NULL or !$default_sender_email) {
+                                if ($sender_email == NULL or !$sender_email) {
                                         include_once('lib/messu/messulib.php');
                                         $mail_data = $smarty->fetch('mail/moderate_validation_mail.tpl');
                                         $mail_subject = $smarty->fetch('mail/moderate_validation_mail_subject.tpl');
@@ -382,7 +383,7 @@ class RegistrationLib extends TikiLib {
                                         $mail->setText($mail_data);
                                         $mail_data = $smarty->fetch('mail/moderate_validation_mail_subject.tpl');
                                         $mail->setSubject($mail_data);
-                                        if (!$mail->send(array($default_sender_email)))
+                                        if (!$mail->send(array($sender_email)))
                                                 $smarty->assign('msg', tra("The registration mail can't be sent. Contact the administrator"));
                                 }
                         } else {

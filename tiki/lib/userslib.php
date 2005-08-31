@@ -1764,7 +1764,18 @@ function get_included_groups($group) {
     }
 
     function get_user_email($user) {
-		return $this->getOne("select `email` from `users_users` where " . $this->convert_binary(). " `login`=?", array($user));
+        return $this->getOne("select `email` from `users_users` where " . $this->convert_binary(). " `login`=?", array($user));
+    }
+
+    /**
+     *  Returns the contact users' email if set and permitted by Admin->Features settings
+     */
+    function get_admin_email() {
+        global $user, $contact_anon, $feature_contact, $tikilib, $contact_user;
+        if (( !isset($user) && isset($contact_anon) && $contact_anon == 'y' ) ||
+                ( isset($user) && $user != "" && isset($feature_contact) && $feature_contact == 'y' )) {
+            return $tikilib->get_preference('sender_email', $this->get_user_email($contact_user));
+        }
     }
 
     function get_user_hash($user) {
