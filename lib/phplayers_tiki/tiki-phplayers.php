@@ -80,9 +80,9 @@ class TikiPhplayers extends TikiLib {
 			$tpl = '';
 			break;
 		case 'plain':
-			$type = 'phptreemenu.inc.php';
+			$type = 'plainmenu.inc.php';
 			$class = 'PlainMenu';
-			$new = 'newTreeMenu';
+			$new = 'newPlainMenu';
 			$tplFct = '';
 			$tpl = '';
 			break;
