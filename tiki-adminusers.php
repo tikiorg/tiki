@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.51 2005-08-18 16:23:04 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.52 2005-09-01 18:39:12 rv540 Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -261,7 +261,26 @@ if (isset($_REQUEST["find"])) {
 }
 $smarty->assign('find', $find);
 
-$users = $userlib->get_users($offset, $numrows, $sort_mode, $find, $initial, true);
+if (isset($_REQUEST["filterGroup"])) {
+	$filterGroup = $_REQUEST["filterGroup"];
+} else {
+	$filterGroup = '';
+}
+$smarty->assign('filterGroup', $filterGroup);
+
+if (isset($_REQUEST["filterEmail"])) {
+	$filterEmail = $_REQUEST["filterEmail"];
+} else {
+	$filterEmail = '';
+}
+$smarty->assign('filterEmail', $filterEmail);
+
+
+$groups = $userlib->get_groups(0, $maxRecords, 'groupName_asc', '', '');
+$smarty->assign('groups', $groups['data']);
+
+//$users = $userlib->get_users($offset, $numrows, $sort_mode, $find, $initial, true);
+$users = $userlib->get_users($offset, $numrows, $sort_mode, $find, $initial, true, $filterGroup, $filterEmail);
 
 if (!empty($group_management_mode) || !empty($set_default_groups_mode)) {
 	$arraylen = count($users['data']);
