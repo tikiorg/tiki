@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2005-08-29 03:14:44 $
-# $Author: mose $
+# $Date: 2005-09-01 13:04:36 $
+# $Author: michael_davey $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -4943,8 +4943,8 @@ CREATE TABLE `tiki_stats` (
 #
 # Table structure for table tiki_events
 #
-# Creation: Aug 26, 2005 at 06:59 AM
-# Last update: Aug 26, 2005 at 06:59 AM
+# Creation: Aug 26, 2005 at 06:59 AM - mdavey
+# Last update: Aug 26, 2005 at 06:59 AM - mdavey
 #
 
 DROP TABLE IF EXISTS `tiki_events`;
@@ -4962,5 +4962,23 @@ INSERT IGNORE INTO tiki_events(`event`,`object`,`method`) VALUES ('user_register
 INSERT IGNORE INTO tiki_events(`callback_type`,`order`,`event`,`object`,`method`) VALUES ('5', '20', 'user_registers', 'registrationlib', 'callback_logslib_user_registers');
 INSERT IGNORE INTO tiki_events(`callback_type`,`order`,`event`,`object`,`method`) VALUES ('5', '25', 'user_registers', 'registrationlib', 'callback_tikiwiki_send_email');
 INSERT IGNORE INTO tiki_events(`callback_type`,`order`,`event`,`object`,`method`) VALUES ('5', '30', 'user_registers', 'registrationlib', 'callback_tikimail_user_registers');
+
+#
+# Table structure for table `tiki_registration_fields`
+#
+# Creation: Aug 31, 2005 at 12:57 PM - mdavey
+# Last update: Aug 31, 2005 at 12:57 PM - mdavey
+# 
+
+DROP TABLE IF EXISTS `tiki_registration_fields`;
+CREATE TABLE `tiki_registration_fields` (
+  `id` int(11) NOT NULL auto_increment,
+  `field` varchar(255) NOT NULL default '',
+  `name` varchar(255) default NULL,
+  `type` varchar(255) NOT NULL default 'text',
+  `show` tinyint(1) NOT NULL default '0',
+  `size` varchar(10) default '10',
+  PRIMARY KEY  (`id`)
+) TYPE=MyISAM;
 
 # --------------------------------------------------------
