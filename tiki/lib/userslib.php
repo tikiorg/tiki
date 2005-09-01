@@ -848,7 +848,7 @@ class UsersLib extends TikiLib {
 	return ($ret);
     }
 
-function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $find = '', $initial = '', $inclusion=false) {
+function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $find = '', $initial = '', $inclusion=false, $group='', $email='') {
 	
 	$now = date('U');
 	$mid = '';
@@ -856,11 +856,29 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $fin
 	$mmid = '';
 	$mbindvars = array();
 	// Return an array of users indicating name, email, last changed pages, versions, lastLogin 
+	if($group) {
+		$mid = ', `users_usergroups` uug where uu.`userId`=uug.`userId` and uug.`groupName`=?';
+		$mmid = $mid;
+	    	$bindvars = array($group);
+		$mbindvars = $bindvars;
+	}
+	if($email) {
+		$mid.= $mid == '' ? ' where' : ' and';
+		$mid.= ' uu.`email`=?';
+		$mmid = $mid;
+	    	$bindvars[] = $email;
+		$mbindvars[] = $email;
+	}
+	
 	if ($find) {
-	    $mid = " where `login` like ?";
+	    $mid.= $mid == '' ? ' where' : ' and';
+	    //$mid = " where `login` like ?";
+	    $mid.= " uu.`login` like ?";
 			$mmid = $mid;
-	    $bindvars = array('%'.$find.'%');
-			$mbindvars = $bindvars;
+	    //$bindvars = array('%'.$find.'%');
+	    $bindvars[] = '%'.$find.'%';
+			//$mbindvars = $bindvars;
+			$mbindvars[] = '%'.$find.'%';
 	}
 
 	if ($initial) {
@@ -870,9 +888,11 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $fin
 		$mbindvars = $bindvars;
 	}
 
-	$query = "select * from `users_users` $mid order by ".$this->convert_sortmode($sort_mode);
+	//$query = "select * from `users_users` $mid order by ".$this->convert_sortmode($sort_mode);
+	$query = "select uu.* from `users_users` uu $mid order by ".$this->convert_sortmode($sort_mode);
 
-	$query_cant = "select count(*) from `users_users` $mmid";
+	//$query_cant = "select count(*) from `users_users` $mmid";
+	$query_cant = "select count(*) from `users_users` uu $mmid";
 	$result = $this->query($query, $bindvars, $maxRecords, $offset);
 	$cant = $this->getOne($query_cant, $mbindvars);
 	$ret = array();

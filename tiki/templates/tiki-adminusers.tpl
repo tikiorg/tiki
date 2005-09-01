@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.69 2005-08-18 16:23:06 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.70 2005-09-01 18:39:12 rv540 Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
@@ -43,15 +43,35 @@
 <h2>{tr}Users{/tr}</h2>
 
 <form method="get" action="tiki-adminusers.php">
-<table class="findtable"><tr>
+<table class="findtable">
+<tr>
 <td>{tr}Find{/tr}</td>
 <td><input type="text" name="find" value="{$find|escape}" /></td>
 <td><input type="submit" value="{tr}find{/tr}" name="search" /></td>
 <td>{tr}Number of displayed rows{/tr}</td>
-<td><input type="text" size="4" name="numrows" value="{$numrows|escape}">
-<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" /></td>
-</tr></table>
+<td><input type="text" size="4" name="numrows" value="{$numrows|escape}"><td>
+</tr>
+<tr><td colspan="5"><a href="javascript:toggleBlock('search')" class="link"><img src="img/icons/plus.gif" border='0' alt='+' />&nbsp;{tr}more criteria{/tr}</a></td></tr>
+</table>
+<div  id="search" {if $search}style="display:block;"{else}style="display:none;"{/if}>
+<table class="findtable">
+<tr>
+<td>{tr}Group{/tr}</td>
+<td><select name="filterGroup">
+	<option value=""></option>
+{section name=ix loop=$groups}
+	<option value="{$groups[ix].groupName}" {if $filterGroup eq $groups[ix].groupName}selected{/if}>{$groups[ix].groupName}</option>
+{/section}
+</select></td>
+</tr><tr>
+<td>{tr}Email{/tr}</td>
+<td><input type="text" name="filterEmail" value="{$filterEmail}" /></td>
+</tr>
+</table>
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 </form>
+<br/>
+</div>
 
 {if $cant_pages > 1}
 <div align="center">
