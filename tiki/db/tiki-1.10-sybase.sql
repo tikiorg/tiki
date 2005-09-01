@@ -2,7 +2,7 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2005-08-26 16:24:25 $
+-- $Date: 2005-09-01 13:04:36 $
 -- $Author: michael_davey $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
@@ -473,6 +473,8 @@ go
 CREATE  INDEX "tiki_articles_body" ON "tiki_articles"("body")
 go
 CREATE  INDEX "tiki_articles_reads" ON "tiki_articles"("reads")
+go
+CREATE  INDEX "tiki_articles_author" ON "tiki_articles"("author")
 go
 CREATE  INDEX "tiki_articles_ft" ON "tiki_articles"("title","heading","body")
 go
@@ -2871,7 +2873,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Rankings','tiki-cms_rankings.php',365,'feature_cms_rankings','tiki_p_read_article','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Rankings','tiki-cms_rankings.php',365,'feature_articles,feature_cms_rankings','tiki_p_read_article','')
 go
 
 
@@ -8737,8 +8739,8 @@ go
 --
 -- Table structure for table tiki_events
 --
--- Creation: Aug 26, 2005 at 06:59 AM
--- Last update: Aug 26, 2005 at 06:59 AM
+-- Creation: Aug 26, 2005 at 06:59 AM - mdavey
+-- Last update: Aug 26, 2005 at 06:59 AM - mdavey
 --
 
 -- DROP TABLE `tiki_events`
@@ -8774,6 +8776,30 @@ go
 
 
 INSERT INTO "tiki_events" ("`callback_type`","`order`","`event`","`object`","`method`") VALUES ('5', '30', 'user_registers', 'registrationlib', 'callback_tikimail_user_registers')
+go
+
+
+
+--
+-- Table structure for table `tiki_registration_fields`
+--
+-- Creation: Aug 31, 2005 at 12:57 PM - mdavey
+-- Last update: Aug 31, 2005 at 12:57 PM - mdavey
+-- 
+
+-- DROP TABLE `tiki_registration_fields`
+go
+
+
+CREATE TABLE `tiki_registration_fields` (
+  `id numeric(11 ,0) identity,
+  `field` varchar(255) default '' NOT NULL,
+  `name` varchar(255) default NULL NULL,
+  `type` varchar(255) default 'text' NOT NULL,
+  `show` numeric(1,0) default '0' NOT NULL,
+  `size` varchar(10) default '10',
+  PRIMARY KEY ("`id`")
+) 
 go
 
 

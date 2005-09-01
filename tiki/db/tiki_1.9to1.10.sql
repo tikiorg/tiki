@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.34 2005-08-26 16:24:25 michael_davey Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.35 2005-09-01 13:04:37 michael_davey Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -71,5 +71,17 @@ INSERT IGNORE INTO tiki_events(`event`,`object`,`method`) VALUES ('user_register
 INSERT IGNORE INTO tiki_events(`callback_type`,`order`,`event`,`object`,`method`) VALUES ('5', '20', 'user_registers', 'registrationlib', 'callback_logslib_user_registers');
 INSERT IGNORE INTO tiki_events(`callback_type`,`order`,`event`,`object`,`method`) VALUES ('5', '25', 'user_registers', 'registrationlib', 'callback_tikiwiki_send_email');
 INSERT IGNORE INTO tiki_events(`callback_type`,`order`,`event`,`object`,`method`) VALUES ('5', '30', 'user_registers', 'registrationlib', 'callback_tikimail_user_registers');
+
+# 2005-08-31: mdavey: new table tiki_registration_fields
+DROP TABLE IF EXISTS `tiki_registration_fields`;
+CREATE TABLE `tiki_registration_fields` (
+  `id` int(11) NOT NULL auto_increment,
+  `field` varchar(255) NOT NULL default '',
+  `name` varchar(255) default NULL,
+  `type` varchar(255) NOT NULL default 'text',
+  `show` tinyint(1) NOT NULL default '0',
+  `size` varchar(10) default '10',
+  PRIMARY KEY  (`id`)
+) TYPE=MyISAM;
 
 # --------------------------------------------------------
