@@ -75,7 +75,7 @@ class TikiPhplayers extends TikiLib {
 		case 'phptree':
 			$type = 'phptreemenu.inc.php';
 			$class = 'PHPTreeMenu';
-			$new =  'newTreeMenu';
+			$new =  'newPHPTreeMenu';
 			$tplFct = '';
 			$tpl = '';
 			break;
