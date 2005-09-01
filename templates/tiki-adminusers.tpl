@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.70 2005-09-01 18:39:12 rv540 Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.71 2005-09-01 22:03:24 rv540 Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
@@ -51,12 +51,12 @@
 <td>{tr}Number of displayed rows{/tr}</td>
 <td><input type="text" size="4" name="numrows" value="{$numrows|escape}"><td>
 </tr>
-<tr><td colspan="5"><a href="javascript:toggleBlock('search')" class="link"><img src="img/icons/plus.gif" border='0' alt='+' />&nbsp;{tr}more criteria{/tr}</a></td></tr>
+<tr><td colspan="2"></td><td colspan="3"><a href="javascript:toggleBlock('search')" class="link"><img src="img/icons/plus.gif" border='0' alt='+' />&nbsp;{tr}more criteria{/tr}</a></td></tr>
 </table>
-<div  id="search" {if $search}style="display:block;"{else}style="display:none;"{/if}>
+<div  id="search" {if $filterGroup or $filterEmail}style="display:block;"{else}style="display:none;"{/if}>
 <table class="findtable">
 <tr>
-<td>{tr}Group{/tr}</td>
+<td>{tr}Group (direct){/tr}</td>
 <td><select name="filterGroup">
 	<option value=""></option>
 {section name=ix loop=$groups}
@@ -64,7 +64,7 @@
 {/section}
 </select></td>
 </tr><tr>
-<td>{tr}Email{/tr}</td>
+</td><td>{tr}Email{/tr}</td>
 <td><input type="text" name="filterEmail" value="{$filterEmail}" /></td>
 </tr>
 </table>

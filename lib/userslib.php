@@ -856,6 +856,8 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $fin
 	$mmid = '';
 	$mbindvars = array();
 	// Return an array of users indicating name, email, last changed pages, versions, lastLogin 
+	
+	//TODO : recurse included groups 
 	if($group) {
 		$mid = ', `users_usergroups` uug where uu.`userId`=uug.`userId` and uug.`groupName`=?';
 		$mmid = $mid;
@@ -864,20 +866,17 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $fin
 	}
 	if($email) {
 		$mid.= $mid == '' ? ' where' : ' and';
-		$mid.= ' uu.`email`=?';
+		$mid.= ' uu.`email` like ?';
 		$mmid = $mid;
-	    	$bindvars[] = $email;
-		$mbindvars[] = $email;
+	    	$bindvars[] = '%'.$email.'%';
+		$mbindvars[] = '%'.$email.'%';
 	}
 	
 	if ($find) {
 	    $mid.= $mid == '' ? ' where' : ' and';
-	    //$mid = " where `login` like ?";
 	    $mid.= " uu.`login` like ?";
 			$mmid = $mid;
-	    //$bindvars = array('%'.$find.'%');
 	    $bindvars[] = '%'.$find.'%';
-			//$mbindvars = $bindvars;
 			$mbindvars[] = '%'.$find.'%';
 	}
 
@@ -888,10 +887,8 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $fin
 		$mbindvars = $bindvars;
 	}
 
-	//$query = "select * from `users_users` $mid order by ".$this->convert_sortmode($sort_mode);
 	$query = "select uu.* from `users_users` uu $mid order by ".$this->convert_sortmode($sort_mode);
 
-	//$query_cant = "select count(*) from `users_users` $mmid";
 	$query_cant = "select count(*) from `users_users` uu $mmid";
 	$result = $this->query($query, $bindvars, $maxRecords, $offset);
 	$cant = $this->getOne($query_cant, $mbindvars);
