@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.602 2005-08-30 00:36:14 rlpowell Exp $
+// CVS: $Id: tikilib.php,v 1.603 2005-09-04 00:06:57 rlpowell Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -6453,6 +6453,7 @@ if (!$simple_wiki) {
 
 	function attach_file($file_name, $file_tmp_name, $store_type) {
 		global $tmpDir;
+		global $w_use_dir;
 		$tmp_dest = $tmpDir . "/" . $file_name.".tmp";
 		if (!move_uploaded_file($file_tmp_name, $tmp_dest))
 			return array("ok"=>false, "error"=>tra('Errors detected'));
