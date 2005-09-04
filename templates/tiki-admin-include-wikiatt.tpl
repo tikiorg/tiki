@@ -37,7 +37,7 @@
 <tr class={cycle}>
 <td>{$attachements[x].user}</td>
 <td>{$attachements[x].page}</td>
-<td>{$attachements[x].filename}</td>
+<td><a href="tiki-download_wiki_attachment.php?attId={$attachements[x].attId}">{$attachements[x].filename}</a></td>
 <td>{$attachements[x].filesize|kbsize}</td>
 <td>{$attachements[x].filetype}</td>
 <td>{if $attachements[x].path}file{else}db{/if}</td>
