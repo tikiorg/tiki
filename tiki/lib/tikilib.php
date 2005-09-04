@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.605 2005-09-04 01:02:09 rlpowell Exp $
+// CVS: $Id: tikilib.php,v 1.606 2005-09-04 02:00:14 rlpowell Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4444,7 +4444,7 @@ function add_pageview() {
 	$this->parse_first($data, $preparsed, $noparsed);
 
 	// Handle |# anchor links by turning them into ALINK module calls.
-	preg_match_all("/\(\(([^|)]*\|#[^)]*)\)\)/", $data, $anchors);
+	preg_match_all("/\(\(([^)]*\|#[^)]*)\)\)/", $data, $anchors);
 
 	foreach( array_unique($anchors[1]) as $anchor_line )
 	{
