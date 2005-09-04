@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.144 2005-09-01 22:04:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.145 2005-09-04 00:06:56 rlpowell Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -461,9 +461,15 @@ if($feature_wiki_attachments == 'y') {
 	check_ticket('index');
 	// Process an attachment here
 	if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
-	    $ret = $tikilib->attach_file($_FILES['userfile1']['name'], $_FILES['userfile1']['tmp_name'], $w_use_db== 'y'? 'dir': 'db');	
+	    $ret = $tikilib->attach_file($_FILES['userfile1']['name'], $_FILES['userfile1']['tmp_name'], $w_use_db== 'y'? 'db': 'dir');	
 	    if ($ret['ok']) {
+	    	// Set "data" field only if we're using db
+	    	if( $w_use_db == 'y' )
+		{
 		    $wikilib->wiki_attach_file($page, $_FILES['userfile1']['name'], $_FILES['userfile1']['type'], $_FILES['userfile1']['size'], $ret['data'], $_REQUEST["attach_comment"], $user, $ret['fhash']);
+		} else {
+		    $wikilib->wiki_attach_file($page, $_FILES['userfile1']['name'], $_FILES['userfile1']['type'], $_FILES['userfile1']['size'], '', $_REQUEST["attach_comment"], $user, $ret['fhash']);
+		}
 	    } else {
 				$smarty->assign('msg', $ret['error']);
 				$smarty->display("error.tpl");
