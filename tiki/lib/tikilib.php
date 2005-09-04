@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.604 2005-09-04 01:00:39 rlpowell Exp $
+// CVS: $Id: tikilib.php,v 1.605 2005-09-04 01:02:09 rlpowell Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -5515,7 +5515,7 @@ if (!$simple_wiki) {
 		$html= preg_replace("/^<ul>/", '<ul class="toc">', $html);
 	}
 
-	$data = str_replace("{maketoc}", $html, $data);
+	$data = str_replace("{maketoc}", "<h2>".tra("Table Of Contents")."</h2>" . $html, $data);
 // closing if ($simple_wiki){
 }
 
