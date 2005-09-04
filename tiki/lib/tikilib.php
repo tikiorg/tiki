@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.603 2005-09-04 00:06:57 rlpowell Exp $
+// CVS: $Id: tikilib.php,v 1.604 2005-09-04 01:00:39 rlpowell Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -5444,7 +5444,8 @@ if (!$simple_wiki) {
 			    $anchor = "<a id='$thisid'>";
 			    $aclose = '</a>' . $aclose;
 			}
-			$line = $anchor . "<h$hdrlevel>" . substr($line, $hdrlevel + $addremove). "</h$hdrlevel>" . $aclose;
+			// Use $hdrlevel + 1 because the page title is H1, so none of the other headers should be.
+			$line = $anchor . "<h" . ($hdrlevel+1) . ">" . substr($line, $hdrlevel + $addremove). "</h".($hdrlevel+1).">" . $aclose;
 		    } elseif (!strcmp($line, $GLOBALS['PAGE_SEP'])) {
 			// Close open paragraph, lists, and div's
 			$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 1);
