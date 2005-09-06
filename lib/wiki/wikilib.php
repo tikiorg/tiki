@@ -588,7 +588,7 @@ class WikiLib extends TikiLib {
     	   return '';
     	}
         $fun = create_function('', $matches[1]);
-        $ret = $fun();
+        $ret = $tikilib->parse_data($fun());
         return $ret;
     }
 }
