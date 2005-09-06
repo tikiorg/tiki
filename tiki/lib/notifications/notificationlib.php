@@ -160,7 +160,7 @@ class NotificationLib extends TikiLib {
 			if ($Debug) print $class . "=>" . $method ."<br/>";
 			if ( is_callable(array(get_class($$class), $method)) ) {
 				if ($Debug) print $class . "=>" . $method . "<br/>";
-				$continue = $$class->$method($raisedBy, &$data);
+				$continue = $$class->$method($raisedBy, $data);
 			}
                 }
 	}
