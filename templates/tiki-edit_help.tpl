@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.38 2005-07-26 04:56:53 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.39 2005-09-06 02:50:28 rlpowell Exp $ *}
 {* Show wiki syntax and plugins help *}
 {* TODO: Add links to add samples to edit form *}
 
@@ -53,7 +53,7 @@
 <tr><td><strong>{tr}Center{/tr}:</strong></td><td> "::{tr}some text{/tr}::" {tr}Will display the text centered{/tr}</td></tr>
 <tr><td><strong>{tr}Non parsed sections{/tr}:</strong></td><td> "~np~ {tr}data{/tr} ~/np~" {tr}Prevents wiki parsing of the enclosed data.{/tr}</td></tr>
 <tr><td><strong>{tr}Preformated sections{/tr}:</strong></td><td> {tr}"~pp~ data ~/pp~" Displays preformated text/code; no Wiki processing is done inside these sections (as with np), and the spacing is fixed (no word wrapping is done).  "~pre~ data ~/pre~" also displayes preformatted text with fixed spacing, but wiki processing still occurs on the text.{/tr}</td></tr>
-<tr><td><strong>{tr}Comments{/tr}:</strong></td><td> {tr}"~c~ comment ~/c~" makes a comment.  It will be completely removed from the display, but saved in the file for future reference.  "~hc~ comment ~/hc~" makes an HTML comment.  It will be inserted as a comment in the output HTML; these are not normally displayed in browsers, but can be seen using "View Source" or similar.{/tr}</td></tr>
+<tr><td><strong>{tr}Comments{/tr}:</strong></td><td> {tr}"~tc~ Tiki Comment ~/tc~" makes a Tiki comment.  It will be completely removed from the display, but saved in the file for future reference.  "~hc~ HTML Comment ~/hc~" makes an HTML comment.  It will be inserted as a comment in the output HTML; these are not normally displayed in browsers, but can be seen using "View Source" or similar.{/tr}</td></tr>
 <tr><td><strong>{tr}Square Brackets{/tr}:</strong></td><td> {tr}Use [[foo] to show [foo].{/tr}</td></tr>
 <tr><td><strong>{tr}Block Preformatting{/tr}:</strong></td><td> {tr}Indent text with any number of spaces to turn it into a monospaced block that still follows other Wiki formatting instructions. It will be indended with the same number of spaces that you used.  Note that this mode does not preserve exact spacing and line breaks; use ~pp~...~/pp~ for that.{/tr}</td></tr>
 <tr><td><strong>{tr}Line Breaks{/tr}:</strong></td><td> {tr}Use %%% to produce a line break.  Works in lists.{/tr}</td></tr>
@@ -62,6 +62,7 @@
 <tr><td><strong>{tr}Rendering Program Code{/tr}:</strong></td><td> {tr}{literal}{CODE()}some code{CODE} {/literal} will render "some code" as program code. This plugin has other options; see <a href="{$helpurl}PluginCode">PluginCode</a>.  For short or inline code blocks, use -+code here+-.{/tr}</td></tr>
 <tr><td><strong>{tr}Direction{/tr}:</strong></td><td>"{literal}{r2l}{/literal}", "{literal}{l2r}{/literal}", "{literal}{rm}{/literal}", "{literal}{lm}{/literal}" Insert resp. right-to-left and left-to-right text direction DIV (up to end of text) and markers for langages as arabic or hebrew.</td></tr>
 <tr><td><strong>{tr}Table of contents{/tr}</strong></td><td>{tr}"{literal}{toc}{/literal}", "{literal}{maketoc}{/literal}" prints out a table of contents for the current page based on structures (toc) or ! headings (maketoc){/tr}</td></tr>
+<tr><td><strong>{tr}Special Characters{/tr}</strong></td><td>{tr}The following special character codes can be used: ~bs~ is backslash, ~hs~ is a non-breaking space, ~amp~ is an ampersand, ~ldq~ is a left oriented double quote, ~rdq~ is a right oriented double quote, ~lsq~ and ~rsq~ are the same for single quotes, ~c~ is a copyright symbol, ~--~ or " -- " is a medium dash, ~lt~ is a less than sign, ~gt~ is a greater than sign, and placing numbers between tildes constructs an arbitrary HTML entity.{/tr}</td></tr>
 <tr><td><strong>{tr}Misc{/tr}:</strong></td><td>"{literal}{cookie}{/literal}"</td></tr>
 </table>
 </div>
