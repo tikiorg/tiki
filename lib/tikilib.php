@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.607 2005-09-06 02:50:28 rlpowell Exp $
+// CVS: $Id: tikilib.php,v 1.608 2005-09-06 16:42:41 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4227,7 +4227,7 @@ function add_pageview() {
 	//		global $feature_autolinks;
 
 	//		if ($feature_autolinks == "y") {
-	global $feature_wiki_ext_icon;
+	global $feature_wiki_ext_icon, $feature_wiki_protect_email;
 	$attrib = '';
 	if ($this->get_preference('popupLinks', 'n') == 'y')
 		$attrib .= 'target="_blank" ';
@@ -4242,8 +4242,19 @@ function add_pageview() {
 	// add a space so we can match links starting at the beginning of the first line
 	$text = " " . $text;
 	// match prefix://suffix, www.prefix.suffix/optionalpath, prefix@suffix
-	$patterns = array("#([\n ])([a-z0-9]+?)://([^, \n\r]+)#i", "#([\n ])www\.([a-z0-9\-]+)\.([a-z0-9\-.\~]+)((?:/[^, \n\r]*)?)#i", "#([\n ])([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i", "#([\n ])magnet\:\?([^, \n\r]+)#i");
-	$replacements = array("\\1<a $attrib href=\"\\2://\\3\">\\2://\\3$ext_icon</a>", "\\1<a $attrib href=\"http://www.\\2.\\3\\4\">www.\\2.\\3\\4$ext_icon</a>", "\\1<a class='wiki' href=\"mailto:\\2@\\3\">\\2@\\3</a>", "\\1<a class='wiki' href=\"magnet:?\\2\">magnet:?\\2</a>");
+	$patterns = array();
+	$replacements = array();
+	$patterns[] = "#([\n ])([a-z0-9]+?)://([^, \n\r]+)#i";
+	$replacements[] = "\\1<a $attrib href=\"\\2://\\3\">\\2://\\3$ext_icon</a>";
+	$patterns[] = "#([\n ])www\.([a-z0-9\-]+)\.([a-z0-9\-.\~]+)((?:/[^, \n\r]*)?)#i";
+	$replacements[] = "\\1<a $attrib href=\"http://www.\\2.\\3\\4\">www.\\2.\\3\\4$ext_icon</a>";
+	$patterns[] = "#([\n ])([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i";
+	if ($feature_wiki_protect_email == 'y')
+		$replacements[] = "\\1<script language=\"Javascript\" type=\"text/javascript\">protectEmail('\\2', '\\3', '@');</script><noscript>\\2@\\3</noscript>";
+	else
+		$replacements[] = "\\1<a class='wiki' href=\"mailto:\\2@\\3\">\\2@\\3</a>";
+	$patterns[] = "#([\n ])magnet\:\?([^, \n\r]+)#i";
+	$replacements[] = "\\1<a class='wiki' href=\"magnet:?\\2\">magnet:?\\2</a>";
 	$text = preg_replace($patterns, $replacements, $text);
 	// strip the space we added
 	$text = substr($text, 1);

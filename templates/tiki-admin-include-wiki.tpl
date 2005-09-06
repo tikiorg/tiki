@@ -416,6 +416,7 @@
     <option value="none" {if $wiki_authors_style eq 'none'}selected="selected"{/if}>{tr}no (disabled){/tr}</option>
     </select> 
     </td></tr>
+    <tr><td class="form">{tr}Protect email against spam{/tr}</td><td><input type="checkbox" name="feature_wiki_protect_email" {if $feature_wiki_protect_email eq 'y'}checked="checked"{/if}/></td></tr> 
     <tr><td colspan="2" class="button"><input type="submit" name="wikifeatures" value="{tr}Set features{/tr}" /></td></tr>
     </table>
     </form>
