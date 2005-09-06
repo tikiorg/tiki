@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.606 2005-09-04 02:00:14 rlpowell Exp $
+// CVS: $Id: tikilib.php,v 1.607 2005-09-06 02:50:28 rlpowell Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4537,7 +4537,7 @@ function add_pageview() {
 	$data = preg_replace(';~pre~(.*?)~/pre~;s', '<pre>$1</pre>', $data);
 
 	// Handle comment sections
-	$data = preg_replace(';\s*~c~(.*?)~/c~\s*;s', '', $data);
+	$data = preg_replace(';\s*~tc~(.*?)~/tc~\s*;s', '', $data);
 	$data = preg_replace(';\n*~hc~(.*?)~/hc~\n*;s', '<!-- $1 -->', $data);
 
 	// Extract [link] sections (to be re-inserted later)
