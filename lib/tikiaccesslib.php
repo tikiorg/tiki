@@ -36,7 +36,12 @@ class TikiAccessLib extends TikiLib {
         require_once ('tiki-setup.php');
         if (!$user) {
             $title = tra("You are not logged in");
-            $this->display_error('',$title,'402');
+            if (isset( $feature_usability ) && $feature_usability == 'y' ) {
+                $this->display_error('',$title,'402');
+            } else {
+                $smarty->assign('msg', $title);
+                $smarty->display("error.tpl");
+            }
             die;
         }
     }
