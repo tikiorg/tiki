@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.36 2005-09-01 13:05:49 michael_davey Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.37 2005-09-07 21:02:44 rlpowell Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -82,5 +82,16 @@ CREATE TABLE `tiki_registration_fields` (
   `size` varchar(10) default '10',
   PRIMARY KEY  (`id`)
 ) TYPE=MyISAM;
+
+# 2005-09-07: rlpowell: These changes make a *huge* difference to speed of retrieval of forum threads.
+ALTER TABLE tiki_comments MODIFY COLUMN `message_id` varchar(128) default NULL;
+ALTER TABLE tiki_comments MODIFY COLUMN `in_reply_to` varchar(128) default NULL;
+ALTER TABLE tiki_comments ADD INEDX THREADED (message_id, in_reply_to, parentId);
+
+# 2005-09-07: rlpowell: These changes stop the mail system from repeatedly adding the same posts.
+# NOTE: It is possible to lose data with the "ALTER IGNORE TABLE" line, but it should only be repeat data anyways.
+ALTER TABLE tiki_comments MODIFY COLUMN `userName` varchar(40) default NULL;
+ALTER IGNORE TABLE tiki_comments ADD UNIQUE (parentId, userName, title, commentDate, message_id, in_reply_to);
+
 
 # --------------------------------------------------------
