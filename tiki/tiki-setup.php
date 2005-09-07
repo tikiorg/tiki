@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.280 2005-08-31 15:13:33 michael_davey Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.281 2005-09-07 15:12:51 michael_davey Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1882,8 +1882,8 @@ if ($feature_debug_console == 'y') {
 
 $smarty->assign_by_ref('num_queries',$num_queries);
 
-$favicon = $tikilib->get_preference('site_favicon','favicon.png');
-$favicon_type = $tikilib->get_preference('site_favicon_type','image/png');
+$favicon = $tikilib->get_preference('favicon','favicon.png');
+$favicon_type = $tikilib->get_preference('favicon_type','image/png');
 if (is_file("styles/$tikidomain/$favicon")) {
 	$smarty->assign('favicon',"styles/$tikidomain/$favicon");
 	$smarty->assign('favicon_type',"$favicon_type");
