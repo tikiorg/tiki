@@ -58,13 +58,14 @@ class TikiAccessLib extends TikiLib {
         }
     }
 
-    function check_feature($features) {
+    function check_feature($features, $feature_name="") {
         global $smarty;
         require_once ('tiki-setup.php');
         foreach ($features as $feature) {
             global $$feature;
             if ($$feature != 'y') {
-                $smarty->assign('msg', tra("This feature is disabled").": ". $feature);
+                if ($feature_name == '') { $feature_name = $feature; }
+                $smarty->assign('msg', tra("This feature is disabled").": ". $feature_name);
                 $smarty->display("error.tpl");
                 die;
             }
