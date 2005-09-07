@@ -32,7 +32,7 @@ class TikiAccessLib extends TikiLib {
     }
 
     function check_user($user) {
-        global $smarty;
+        global $smarty, $feature_usability;
         require_once ('tiki-setup.php');
         if (!$user) {
             $title = tra("You are not logged in");
