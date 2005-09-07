@@ -22,6 +22,11 @@
       {/if}
       <td id="centercolumn"><div id="tiki-center">
       <br />
+      {if ($errortype eq "402")}
+      <center>
+      {include file=tiki-login.tpl}
+      </center>
+      {else}
         <div class="cbox">
         <div class="cbox-title">
         {$errortitle|default:"{tr}Error{/tr}"}
@@ -55,6 +60,7 @@
         <a href="{$tikiIndex}" class="linkmenu">{tr}Return to home page{/tr}</a>
         </div>
         </div>
+      {/if}
       </div></td>
       {if $feature_right_column eq 'y'}
       <td id="rightcolumn">

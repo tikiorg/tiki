@@ -35,8 +35,8 @@ class TikiAccessLib extends TikiLib {
         global $smarty;
         require_once ('tiki-setup.php');
         if (!$user) {
-            $smarty->assign('msg', tra("You are not logged in"));
-            $smarty->display("error.tpl");
+            $title = tra("You are not logged in");
+            $this->display_error('',$title,'402');
             die;
         }
     }
@@ -148,6 +148,7 @@ class TikiAccessLib extends TikiLib {
             $smarty->assign('page', $page);
             $smarty->assign('errortype', $errortype);
         } else {
+            $smarty->assign('errortype', $errortype);
         }
         $smarty->display("error.tpl");
         die;
@@ -178,5 +179,7 @@ class TikiAccessLib extends TikiLib {
         return $page;
     }
 }
+
+$access = new TikiAccessLib($dbTiki);
 
 ?>
