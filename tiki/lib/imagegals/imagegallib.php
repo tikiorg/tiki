@@ -1925,6 +1925,7 @@ class ImageGalsLib extends TikiLib {
 						//print("Changing $url to imageId: $imageId");
 						$uri = parse_url($_SERVER["REQUEST_URI"]);
 						$path = str_replace("tiki-editpage", "show_image", $uri["path"]);
+						$path = str_replace("tiki-edit_article", "show_image", $path);
 						$page_data = str_replace($url, $tikilib->httpPrefix(). $path . '?id=' . $imageId, $page_data);
 					} // if strlen
 				} // if $fp

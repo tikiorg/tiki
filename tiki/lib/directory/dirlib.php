@@ -200,7 +200,7 @@ class DirLib extends TikiLib {
 			$bindvars[] = $isValid;
 		}
 		$query = "select * from `tiki_directory_sites` tds, `tiki_category_sites` tcs where tds.`siteId`=tcs.`siteId` and tcs.`categId`=? $mid order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_directory_sites` tds, `tiki_category_sites` tcs where tds.`siteId`=tcs.siteId and tcs.`categId`=? $mid";
+		$query_cant = "select count(*) from `tiki_directory_sites` tds, `tiki_category_sites` tcs where tds.`siteId`=tcs.`siteId` and tcs.`categId`=? $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();

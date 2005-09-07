@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.71 2005-09-01 22:03:24 rv540 Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.72 2005-09-07 12:35:41 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
@@ -203,7 +203,7 @@ title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
 {/if}
 <form action="tiki-adminusers.php" method="post" enctype="multipart/form-data">
 <table class="normal">
-<tr class="formcolor"><td>{tr}User{/tr}:</td><td><input type="text" name="name"  value="{$userinfo.login|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}User{/tr}:</td><td><input type="text" name="name"  value="{$userinfo.login|escape}" />{if $userinfo.userId}<i>{tr}Warning: changing the username will require the user to change his password{/tr}</i>{/if}</td></tr>
 <tr class="formcolor"><td>{tr}Pass{/tr}:</td><td><input type="password" name="pass" id="pass" /></td></tr>
 <tr class="formcolor"><td>{tr}Again{/tr}:</td><td><input type="password" name="pass2" id="pass2" /></td></tr>
 <tr class="formcolor"><td>{tr}Email{/tr}:</td><td><input type="text" name="email" size="30"  value="{$userinfo.email|escape}" /></td></tr>

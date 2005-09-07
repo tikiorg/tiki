@@ -34,7 +34,7 @@ function wikiplugin_snarf($data, $params)
 	$html = ob_get_contents(); 
 	ob_end_clean(); 
 
-	$snarf = preg_replace( "/.*<[^>]*body[^>]*>(.*)<[^>]*\/[^>]*body[^>]*>.*/si", "$1", $html );
+	$snarf = preg_replace( "/.*<\s*body[^>]*>(.*)<[^>]*\/\s*body[^>]*>.*/si", "$1", $html );
 
 	// If the user specified a more specialized regex
 	if( isset( $regex ) && isset( $regexres ) 

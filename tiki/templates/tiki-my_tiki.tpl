@@ -1,7 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.17 2005-05-18 11:03:18 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.18 2005-09-07 12:35:41 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a>
-
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}MyTiki" target="tikihelp" class="tikihelp" title="{tr}MyTiki{/tr}">
@@ -13,31 +12,29 @@
 <img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}'></a>
 {/if}</h1>
 
-
-
 {include file=tiki-mytiki_bar.tpl}
 <br /><br />
 
 {if $feature_wiki eq 'y' and $mytiki_pages eq 'y'}
 <div id="content1" class="content">
   <div class="cbox">
-  <div class="cbox-title">
-    <table width="100%">
-    <tr>
-      <td width="70%">{tr}User Pages{/tr}</td>
-      <td><div class="button2"><a href="tiki-my_tiki.php?by=creator" title="{tr}List pages where I am a creator{/tr}">{tr}by creator{/tr}</a></div></td>
-      <td><div class="button2"><a href="tiki-my_tiki.php?by=modificator" title="{tr}List pages where I am a modificator{/tr}">{tr}by modificator{/tr}</a></div></td>
-    </tr>
-    </table>
-  </div>
+  <div class="cbox-title">{if $userwatch eq $user}{tr}My pages{/tr}{else}{tr}User Pages{/tr}{/if}</div>
   <div class="cbox-data">
-  <table >
+  <table class="normal">
+  <tr>
+  <th class="heading"><a class="tableheading" href="tiki-my_tiki.php?sort_mode={if $sort_mode eq 'pageName_desc'}pageName_asc{else}pageName_desc{/if}">{tr}Page{/tr}</a></th>
+  <th class="heading">{tr}Creator{/tr}</th>
+  <th class="heading">{tr}Last editor{/tr}</th>
+  <th class="heading"><a class="tableheading" href="tiki-my_tiki.php?sort_mode={if $sort_mode eq 'date_desc'}date_asc{else}date_desc{/if}">{tr}Last modification{/tr}</a></th><th class="heading">{tr}Actions{/tr}</th></tr>
+  {cycle values="even,odd" print=false}
   {section name=ix loop=$user_pages}
-  <tr><td>
-  <a class="link" title="{$user_pages[ix].pageName}" href="tiki-index.php?page={$user_pages[ix].pageName|escape:"url"}">{$user_pages[ix].pageName|truncate:30:"(...)"}</a>
-  </td><td align="right">
-  (<a class="link" href="tiki-editpage.php?page={$user_pages[ix].pageName|escape:"url"}">{tr}edit{/tr}</a>)
-  </td></tr>
+  <tr>
+  <td class="{cycle advance=false}"><a class="link" title="{tr}view{/tr}: {$user_pages[ix].pageName}" href="tiki-index.php?page={$user_pages[ix].pageName|escape:"url"}">{$user_pages[ix].pageName|truncate:40:"(...)"}</a></td>
+  <td class="{cycle advance=false}" style="text-align:center;">{if $userwatch eq $user_pages[ix].creator}{tr}y{/tr}{else}&nbsp;{/if}</td>
+  <td class="{cycle advance=false}" style="text-align:center;">{if $userwatch eq $user_pages[ix].lastEditor}{tr}y{/tr}{else}&nbsp;{/if}</td>
+  <td class="{cycle advance=false}">{$user_pages[ix].date|tiki_short_datetime}</td>
+  <td class="{cycle}" style="text-align:center;"><a class="link" href="tiki-editpage.php?page={$user_pages[ix].pageName|escape:"url"}"><img border="0" alt="{tr}edit{/tr}" title="{tr}edit{/tr}: {$user_pages[ix].pageName}" src="img/icons/edit.gif" /></a></td>
+  </tr>
   {/section}
   </table>
   </div>
@@ -48,14 +45,15 @@
 {if $feature_galleries eq 'y' and $mytiki_gals eq 'y'}
 <div id="content2" class="content">
   <div class="cbox">
-  <div class="cbox-title">{tr}User Galleries{/tr}</div>
+  <div class="cbox-title">{if $userwatch eq $user}{tr}My galleries{/tr}{else}{tr}User Galleries{/tr}{/if}</div>
   <div class="cbox-data">
-  <table >
+  <table class="normal">
+  {cycle values="even,odd" print=false}
   {section name=ix loop=$user_galleries}
-  <tr><td>
+  <tr><td class="{cycle advance=false}">
   <a class="link" href="tiki-browse_gallery.php?galleryId={$user_galleries[ix].galleryId}">{$user_galleries[ix].name}</a>
-  </td><td align="right">
-  <a class="link" href="tiki-galleries.php?editgal={$user_galleries[ix].galleryId}">({tr}edit{/tr})</a>
+  </td><td class="{cycle}" style="text-align:center;">
+  <a class="link" href="tiki-galleries.php?editgal={$user_galleries[ix].galleryId}"><img border="0" alt="{tr}edit{/tr}" title="{tr}edit{/tr}" src="img/icons/edit.gif" /></a>
   </td></tr>
   {/section}
   </table>
@@ -67,15 +65,15 @@
 {if $feature_trackers eq 'y' and $mytiki_items eq 'y'}
 <div id="content3" class="content">
   <div class="cbox">
-  <div class="cbox-title">{tr}Assigned items{/tr}</div>
+  <div class="cbox-title">{if $userwatch eq $user}{tr}My items{/tr}{else}{tr}Assigned items{/tr}{/if}</div>
   <div class="cbox-data">
-  <table >
-  {section name=ix loop=$user_items}
-  <tr><td>
-  <b>{$user_items[ix].value}</b> {tr}at tracker{/tr} {$user_items[ix].name}  
-  </td><td align="right">
-  <a class="link" href="tiki-view_tracker_item.php?trackerId={$user_items[ix].trackerId}&amp;itemId={$user_items[ix].itemId}">({tr}edit{/tr})</a>
-  </td>
+  <table class="normal">
+  <tr><th class="heading">{tr}Item{/tr}</th><th class="heading">{tr}Tracker{/tr}</th></tr>
+  {cycle values="even,odd" print=false}
+   {section name=ix loop=$user_items}
+  <tr><td class="{cycle advance=false}">
+  <a class="link" title="{tr}view{/tr}" href="tiki-view_tracker_item.php?trackerId={$user_items[ix].trackerId}&amp;itemId={$user_items[ix].itemId}">{$user_items[ix].value}</a></td>
+   <td class="{cycle}"><a class="link" title="{tr}view{/tr}" href="tiki-view_tracker.php?trackerId={$user_items[ix].trackerId}">{$user_items[ix].name}</a></td>
   </tr>
   {/section}
   </table>
@@ -88,11 +86,14 @@
 <div id="content4" class="content">
   <div class="cbox">
   <div class="cbox-title">{tr}Unread Messages{/tr}</div>
-  <table >
+  <table  class="normal">
+  <tr><th class="heading">{tr}Subject{/tr}</th><th class="heading">{tr}From{/tr}</th><th class="heading">{tr}Date{/tr}</th></tr>
+  {cycle values="even,odd" print=false}
   {section name=ix loop=$msgs}
-  <tr><td>
-  <a class="link" href="messu-read.php?offset=0&amp;flag=&amp;flagval=&amp;find=&amp;sort_mode=date_desc&amp;priority=&amp;msgId={$msgs[ix].msgId}">{$msgs[ix].subject}</a>
-  </td></tr>
+  <tr><td class="{cycle advance=false}">
+  <a class="link" title="{tr}view{/tr}" href="messu-read.php?offset=0&amp;flag=&amp;flagval=&amp;find=&amp;sort_mode=date_desc&amp;priority=&amp;msgId={$msgs[ix].msgId}">{$msgs[ix].subject}</a>
+  </td>
+  <td class="{cycle advance=false}">{$msgs[ix].user_from}</td><td class="{cycle}">{$msgs[ix].date|tiki_short_datetime}</td></tr>
   {/section}
   </table>
   </div>
@@ -102,10 +103,11 @@
 {if $feature_tasks eq 'y' and $mytiki_tasks eq 'y'}
 <div id="content5" class="content">
   <div class="cbox">
-  <div class="cbox-title">{tr}Tasks{/tr}</div>
-  <table >
+  <div class="cbox-title">{if $userwatch eq $user}{tr}My tasks{/tr}{else}{tr}User tasks{/tr}{/if}</div>
+  <table  class="normal">
+  {cycle values="even,odd" print=false}
   {section name=ix loop=$tasks}
-  <tr><td>
+  <tr><td class="{cycle}">
   <a class="link" href="tiki-user_tasks.php?taskId={$tasks[ix].taskId}">{$tasks[ix].title}</a>
   </td></tr>
   {/section}
@@ -119,13 +121,14 @@
 {if $feature_blogs eq y && $mytiki_blogs eq 'y'}
 <div id="content6" class="content">
   <div class="cbox">
-  <div class="cbox-title">{tr}User Blogs{/tr}</div>
-  <table >
+  <div class="cbox-title">{if $userwatch eq $user}{tr}My blogs{/tr}{else}{tr}User Blogs{/tr}{/if}</div>
+  <table  class="normal">
+  {cycle values="even,odd" print=false}
   {section name=ix loop=$user_blogs}
-  <tr><td>
-  <a class="link" href="tiki-view_blog.php?blogId={$user_blogs[ix].blogId}">{$user_blogs[ix].title}</a>
-  </td><td align="right">
-  (<a class="link" href="tiki-edit_blog.php?blogId={$user_blogs[ix].blogId}">{tr}edit{/tr}</a>)
+  <tr><td class="{cycle advance=false}">
+  <a class="link" title="{tr}view{/tr}" href="tiki-view_blog.php?blogId={$user_blogs[ix].blogId}">{$user_blogs[ix].title}</a>
+  </td><td class="{cycle}" style="text-align:center;">
+  <a class="link" href="tiki-edit_blog.php?blogId={$user_blogs[ix].blogId}"><img border="0" alt="{tr}edit{/tr}" title="{tr}edit{/tr}" src="img/icons/edit.gif" /></a>
   </td></tr>
   {/section}
   </table>

@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.28 2005-05-18 11:03:26 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.29 2005-09-07 12:35:41 sylvieg Exp $ *}
 
 <script src="lib/map/map.js"></script>
 
-<h1><a href="tiki-map.phtml">TikiMap</a></h1><br />
+<h1>{$pagelink}</h1>
 <div align="center">
   <form name="frmmap" action="tiki-map.phtml" method="get">
    <input type="hidden" name="mapfile" value="{$mapfile}" />
@@ -11,12 +11,18 @@
 	     <td align="center" valign="middle">
 		<table class="normal">
 		  <tr><td align="center">
-		      	<input type="image" id="map" src="{$image_url}"
+		      	<input type="image" id="map" src="{$image_url}" 
 			{if $xsize != ""}width="{$xsize}"{/if} 
 			{if $ysize != ""}height="{$ysize}"{/if} 
 		  border="1"
 		  alt="{tr}click on the map to zoom or pan, do not drag{/tr}" 
 		  title="{tr}click on the map to zoom or pan, do not drag{/tr}" />
+		  <script language="JavaScript">	
+		  	document.getElementById('map').onmousemove = map_mousemove;
+				if (document.getElementById('map').captureEvents) document.getElementById('map').captureEvents(Event.MOUSEMOVE);
+			</script>
+		  <div id="stat">
+			</div>
 		  </td></tr>
 		  <tr><td align="center">
 		 	<img id="scale" src="{$image_scale_url}" border="0" alt="{tr}Scale{/tr}" title="{tr}Scale{/tr}" />
@@ -97,10 +103,11 @@
 			<input type="hidden" name="maxy" value="{$maxy}" />
 			<input type="hidden" name="oldsize" value="{$size}" />
 			<a href="tiki-index.php?page={$map_help}"><small>{tr}Help{/tr}</small></a>&nbsp;
-			<a href="tiki-index.php?page={$map_comments}"><small>{tr}Comments{/tr}</small></a>
+			<a href="tiki-index.php?page={$map_comments}"><small>{tr}Comments{/tr}</small></a><br />
 		</td></tr>
 	<tr><td>{$map_querymsg}</td></tr>	
 		</table>
+		<p class="editdate">{tr}Last modification date{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} <a class="link" href="tiki-user_information.php?view_user={$lastUser}">{$lastUser}</a> ({$ip})-{tr}Hits{/tr}:{$mapstats}({$mapstats7days})</p>
 	     
 	     </td>
 		<td valign="top">

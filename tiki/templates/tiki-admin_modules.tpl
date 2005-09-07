@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.36 2005-05-18 11:02:57 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.37 2005-09-07 12:35:41 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
 {* the help link info *}
@@ -336,5 +336,23 @@ from Admin->General
     <a class="link" href="javascript:setUserModuleFromCombo('list_banners');">{tr}use banner zone{/tr}</a>
   </td>
 </tr>
+
+<tr>
+  <td class="form">
+    {tr}Wiki{/tr} {tr}Structures{/tr}:
+  </td>
+  <td>
+    <select name=wiki"structures" id='list_wikistructures'>
+    {section name=ix loop=$wikistructures}
+    <option value="{literal}{{/literal}wikistructure id={$wikistructures[ix].page_ref_id}{literal}}{/literal}">{$wikistructures[ix].pageName}</option>   
+    {/section}
+    </select>
+  </td>
+  <td class="form">
+    <a class="link" href="javascript:setUserModuleFromCombo('list_wikistructures');">{tr}use{/tr} {tr}wiki{/tr} {tr}structure{/tr}</a>
+  </td>
+</tr>
+
+
 </table>
 </td></tr></table>

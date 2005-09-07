@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-stats.tpl,v 1.24 2005-08-29 03:14:45 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-stats.tpl,v 1.25 2005-09-07 12:35:41 sylvieg Exp $ *}
 
 <h1><a href="tiki-stats.php" class="pagetitle">{tr}Stats{/tr}</a></h1>
 
@@ -212,6 +212,10 @@
 <br /> 
 <div align="center">
 <img src="tiki-usage_chart.php" alt='{tr}Usage chart image{/tr}'/>
+</div>
+<br />
+<div align="center">
+<img src="tiki-usage_chart.php?type=daily" alt='{tr}Daily Usage chart image{/tr}'/>
 </div>
 <br /><br />
 {/if}

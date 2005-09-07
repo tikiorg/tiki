@@ -49,7 +49,7 @@ Set the names of the table headings to reflect the names of the db
 <td class="heading">
 <! -- sort results -->
 <a class="tableheading" href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'resultId_desc'}resultId_asc{else}resultId_desc{/if}">{tr}result{/tr}</a></td>
-<td class="heading">P/F</td>
+<td class="heading">{tr}P/F{/tr}</td>
 </tr>
 {section name=user loop=$channels}
 {if $smarty.section.user.index % 2}

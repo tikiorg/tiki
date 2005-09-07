@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_objects.php,v 1.18 2005-05-18 10:58:59 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_objects.php,v 1.19 2005-09-07 12:35:39 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,8 +9,7 @@
 // Initialization
 require_once ('tiki-setup.php');
 
-include_once ("lib/xmlrpc.inc");
-include_once ("lib/xmlrpcs.inc");
+include_once ("XML/Server.php");
 
 if ($feature_comm != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_comm");
@@ -92,7 +91,7 @@ $msg = '';
 if (isset($_REQUEST["send"])) {
 	check_ticket('send-objects');
 	// Create XMLRPC object
-	$client = new xmlrpc_client($_REQUEST["path"], $_REQUEST["site"], 80);
+	$client = new XML_RPC_Client($_REQUEST["path"], $_REQUEST["site"], 80);
 
 	$client->setDebug(0);
 
@@ -100,32 +99,28 @@ if (isset($_REQUEST["send"])) {
 		$page_info = $tikilib->get_page_info($page);
 
 		if ($page_info) {
-			$searchMsg = new xmlrpcmsg('sendPage', array(
-				new xmlrpcval($_SERVER["SERVER_NAME"], "string"),
-				new xmlrpcval($_REQUEST["username"], "string"),
-				new xmlrpcval($_REQUEST["password"], "string"),
-				new xmlrpcval($page, "string"),
-				new xmlrpcval(base64_encode($page_info["data"]), "string"),
-				new xmlrpcval($page_info["comment"], "string"),
-				new xmlrpcval($page_info["description"], "string")
+			$searchMsg = new XML_RPC_Message('sendPage', array(
+				new XML_RPC_Value($_SERVER["SERVER_NAME"], "string"),
+				new XML_RPC_Value($_REQUEST["username"], "string"),
+				new XML_RPC_Value($_REQUEST["password"], "string"),
+				new XML_RPC_Value($page, "string"),
+				new XML_RPC_Value(base64_encode($page_info["data"]), "string"),
+				new XML_RPC_Value($page_info["comment"], "string"),
+				new XML_RPC_Value($page_info["description"], "string")
 			));
 
 			$result = $client->send($searchMsg);
-
+					
 			if (!$result) {
 				$errorMsg = 'Cannot login to server maybe the server is down';
+				$msg .= tra($errorMsg);
 			} else {
 				if (!$result->faultCode()) {
-					// We have a response
-					$res = xmlrpc_tkdecode($result->value());
-
-					if ($res) {
-						$msg .= tra('page'). ': ' . $page . tra(' successfully sent'). "<br />";
-					}
+				    $msg .= tra('Page'). ': ' . $page . tra(' successfully sent'). "<br />";
 				} else {
-					$errorMsg = $result->faultstring();
-
-					$msg .= tra('page'). ': ' . $page . tra(' not sent').': '. tra($errorMsg) . "<br />";
+				    $errorMsg = $result->faultString();
+				    $msg .= tra('Page'). ': ' . $page . tra(' not sent') . '!' . "<br />";
+				    $msg .= tra('Error: ') . $result->faultCode() . '-' . tra($errorMsg) . "<br />";
 				}
 			}
 		}
@@ -135,46 +130,42 @@ if (isset($_REQUEST["send"])) {
 		$page_info = $tikilib->get_article($article);
 
 		if ($page_info) {
-			$searchMsg = new xmlrpcmsg('sendArticle', array(
-				new xmlrpcval($_SERVER["SERVER_NAME"], "string"),
-				new xmlrpcval($_REQUEST["username"], "string"),
-				new xmlrpcval($_REQUEST["password"], "string"),
-				new xmlrpcval(base64_encode($page_info["title"]), "string"),
-				new xmlrpcval(base64_encode($page_info["authorName"]), "string"),
-				new xmlrpcval($page_info["size"], "int"),
-				new xmlrpcval($page_info["useImage"], "string"),
-				new xmlrpcval($page_info["image_name"], "string"),
-				new xmlrpcval($page_info["image_type"], "string"),
-				new xmlrpcval($page_info["image_size"], "int"),
-				new xmlrpcval($page_info["image_x"], "int"),
-				new xmlrpcval($page_info["image_x"], "int"),
-				new xmlrpcval(base64_encode($page_info["image_data"]), "string"),
-				new xmlrpcval($page_info["publishDate"], "int"),
-				new xmlrpcval($page_info["created"], "int"),
-				new xmlrpcval(base64_encode($page_info["heading"]), "string"),
-				new xmlrpcval(base64_encode($page_info["body"]), "string"),
-				new xmlrpcval($page_info["hash"], "string"),
-				new xmlrpcval($page_info["author"], "string"),
-				new xmlrpcval($page_info["type"], "string"),
-				new xmlrpcval($page_info["rating"], "string")
+			$searchMsg = new XML_RPC_Message('sendArticle', array(
+				new XML_RPC_Value($_SERVER["SERVER_NAME"], "string"),
+				new XML_RPC_Value($_REQUEST["username"], "string"),
+				new XML_RPC_Value($_REQUEST["password"], "string"),
+				new XML_RPC_Value(base64_encode($page_info["title"]), "string"),
+				new XML_RPC_Value(base64_encode($page_info["authorName"]), "string"),
+				new XML_RPC_Value($page_info["size"], "int"),
+				new XML_RPC_Value($page_info["useImage"], "string"),
+				new XML_RPC_Value($page_info["image_name"], "string"),
+				new XML_RPC_Value($page_info["image_type"], "string"),
+				new XML_RPC_Value($page_info["image_size"], "int"),
+				new XML_RPC_Value($page_info["image_x"], "int"),
+				new XML_RPC_Value($page_info["image_x"], "int"),
+				new XML_RPC_Value(base64_encode($page_info["image_data"]), "string"),
+				new XML_RPC_Value($page_info["publishDate"], "int"),
+				new XML_RPC_Value($page_info["created"], "int"),
+				new XML_RPC_Value(base64_encode($page_info["heading"]), "string"),
+				new XML_RPC_Value(base64_encode($page_info["body"]), "string"),
+				new XML_RPC_Value($page_info["hash"], "string"),
+				new XML_RPC_Value($page_info["author"], "string"),
+				new XML_RPC_Value($page_info["type"], "string"),
+				new XML_RPC_Value($page_info["rating"], "string")
 			));
 
 			$result = $client->send($searchMsg);
-
+			
 			if (!$result) {
 				$errorMsg = 'Cannot login to server maybe the server is down';
+				$msg .= tra($errorMsg);
 			} else {
 				if (!$result->faultCode()) {
-					// We have a response
-					$res = xmlrpc_tkdecode($result->value());
-
-					if ($res) {
-						$msg .= tra('article'). ': ' . $article . tra(' successfully sent'). "<br />";
-					}
+				    $msg .= tra('page'). ': ' . $page . tra(' successfully sent'). "<br />";
 				} else {
-					$errorMsg = $result->faultstring();
-
-					$msg .= tra('page'). ': ' . $article . tra(' not sent'). ': '.tra($errorMsg) . "<br />";
+				    $errorMsg = $result->faultString();
+				    $msg .= tra('page'). ': ' . $page . tra(' not sent') . '!' . "<br />";
+				    $msg .= tra('Error: ') . $result->faultCode() . '-' . tra($errorMsg) . "<br />";
 				}
 			}
 		}

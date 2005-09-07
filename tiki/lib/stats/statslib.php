@@ -334,6 +334,22 @@ class StatsLib extends TikiLib {
 		return $cant;
 	}
 	
+	function get_daily_usage_chart_data($days=30) {
+		if ($days!=0) {
+			$mid="WHERE `day` >= ".mktime(0, 0, 0, date("m"), date("d")-$days, date("Y"))." ";
+		} else {
+			$mid="";
+		}
+		$query="SELECT `day`,sum(`hits`) AS `hits` FROM `tiki_stats` ".$mid."GROUP BY `day`";
+		$result = $this->query($query,array(),-1,0);
+		$data=array();
+		while ($res = $result->fetchRow()) {
+			$data['xdata'][]=date("Y/m/d",$res['day']);
+			$data['ydata'][]=$res['hits'];
+		}
+		return $data;
+	}
+	
 }
 global $dbTiki;
 $statslib = new StatsLib($dbTiki);
