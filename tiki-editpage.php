@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.117 2005-08-29 03:14:43 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.118 2005-09-07 17:34:53 rlpowell Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -204,6 +204,12 @@ if ($feature_wiki_attachments == 'y' && isset($_REQUEST["attach"]) && ($tiki_p_w
  */
 function walk_and_parse(&$c, &$src, &$p, $head_url )
 {
+    // If no string
+    if( ! $c )
+    {
+	return;
+    }
+
     for ($i=0; $i <= $c["contentpos"]; $i++)
     {
         // If content type 'text' output it to destination...
@@ -213,6 +219,12 @@ function walk_and_parse(&$c, &$src, &$p, $head_url )
 	    {
 		$src .= preg_replace( '/^\s+/s', ' ', $c[$i]["data"] );
 	    }
+	}
+        elseif ($c[$i]["type"] == "comment")
+        {
+		$src .= preg_replace( '/<!--/', "\n~hc~", 
+			preg_replace( '/-->/', "~/hc~\n", $c[$i]["data"] )
+			);
 	}
         elseif ($c[$i]["type"] == "tag")
         {
