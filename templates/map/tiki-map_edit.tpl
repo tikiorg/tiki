@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_edit.tpl,v 1.14 2005-05-18 11:03:27 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_edit.tpl,v 1.15 2005-09-07 12:35:41 sylvieg Exp $ *}
 
 <a class="pagetitle" href="tiki-map_edit.php?mode=listing">{tr}Mapfiles{/tr}</a><br />
 <a href="http://mapserver.gis.umn.edu/doc/mapfile-reference.html">http://mapserver.gis.umn.edu/doc/mapfile-reference.html</a><br /><br />
@@ -8,7 +8,9 @@
 <table class="normal">
 <tr>
 <td class="heading">{tr}Mapfile{/tr}</td>
-<td class="heading">{tr}Actions{/tr}</td>
+<td class="heading" width="20%">{tr}Actions{/tr}</td>
+<td class="heading" width="10%">{tr}hits{/tr}</td>
+<td class="heading" width="10%">{tr}hits last 7 days{/tr}</td>
 </tr>
 {section name=user loop=$files}
 {if $smarty.section.user.index % 2}
@@ -30,6 +32,12 @@
 	{/if}
 {/if}
 </td>
+<td class="odd">
+{$mapstats[user]}
+</td>
+<td class="odd">
+{$mapstats7days[user]}
+</td>
 </tr>
 {else}
 <tr>
@@ -49,6 +57,12 @@
 		<a href="tiki-map_edit.php?watch_event=map_changed&amp;watch_object={$files[user]}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this map{/tr}' title='{tr}stop monitoring this map{/tr}' src='img/icons/icon_unwatch.png' /></a>
 	{/if}
 {/if}	
+</td>
+<td class="even">
+{$mapstats[user]}
+</td>
+<td class="even">
+{$mapstats7days[user]}
 </td>
 </tr>
 {/if}

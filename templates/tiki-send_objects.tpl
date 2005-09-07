@@ -109,7 +109,7 @@
 <input type="hidden" name="password" value="{$password|escape}" />
 <select name="articleId">
 {section name=ix loop=$articles}
-<option value="{$articles[ix].articleId|escape}">{$articles[ix].title}</option>
+<option value="{$articles[ix].articleId|escape}">{$articles[ix].articleId}:{$articles[ix].title}</option>
 {/section}
 </select>
 <input type="submit" name="addarticle" value="{tr}add article{/tr}" />

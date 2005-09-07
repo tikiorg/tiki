@@ -88,7 +88,17 @@ $map = ms_newMapObj($map_path.$mapfile);
 
 restore_error_handler();
 
-$smarty->assign("page",$map->name." Map");
+$page=$map->name." Map";
+$smarty->assign("page",$page);
+
+if($tikilib->page_exists($page))
+{
+ 	$pagelink='<a href="tiki-index.php?page='.$page.'">'.$page.'</a>';
+} else
+{
+  $pagelink=$page.'<a href="tiki-editpage.php?page='.$page.'">?</a>';
+}
+$smarty->assign("pagelink",$pagelink);
  
 $layerbol=FALSE;
 
@@ -467,6 +477,38 @@ $smarty->assign_by_ref('zoom_display',$zoom_display);
 
 //add a hit
 $statslib->stats_hit($mapfile,"map");
+
+//get some stats info
+$data=nl2br(file_get_contents($map_path.$mapfile));
+
+$ip="";
+$lastUser=tra("unknown");
+$lastModif="";
+if (strpos($data,"##TIKIMAPS HEADER: END##")!=FALSE) {
+	$searchdata=substr($data,0,strpos($data,"##TIKIMAPS HEADER: END##"));
+	if (strpos($searchdata,"#IP: ")!=FALSE) {
+		$IP=substr($searchdata,strpos($searchdata,"#IP: ")+4);
+		$ip=substr($IP,0,strpos($IP,"<br"));
+	}
+	if (strpos($searchdata,"#Modified by: ")!=FALSE) {
+		$IP=substr($searchdata,strpos($searchdata,"#Modified by: ")+13);
+		$lastUser=substr($IP,0,strpos($IP,"<br"));
+	}
+	if (strpos($searchdata,"#GMT Date: ")!=FALSE) {
+		$IP=substr($searchdata,strpos($searchdata,"#GMT Date: ")+10);
+		$IP=substr($IP,0,strpos($IP,"<br"));
+		$lastModif=gmmktime(substr($IP,10,2),substr($IP,12,2),substr($IP,14,2),substr($IP,5,2),substr($IP,7,2),substr($IP,1,4));
+	}
+}
+$smarty->assign('ip',$ip);
+$smarty->assign('lastUser',$lastUser);
+$smarty->assign('lastModif',$lastModif);
+
+$mapstats = $statslib->object_hits($mapfile,"map");
+$mapstats7days = $statslib->object_hits($mapfile,"map",7);
+
+$smarty->assign('mapstats', $mapstats);
+$smarty->assign('mapstats7days', $mapstats7days);
 
 //display the template
 $smarty->assign('mid','map/tiki-map.tpl');

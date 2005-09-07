@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_versions.php,v 1.7 2005-05-18 11:02:01 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_versions.php,v 1.8 2005-09-07 12:35:41 sylvieg Exp $
  *
  * Tiki-Wiki BOX plugin.
  * 
@@ -12,17 +12,21 @@
  * 
  */
 function wikiplugin_versions_help() {
-	return tra("Split the text in parts visible only under some conditions").":<br />~np~{VERSIONS(nav=>y|n)}".tra("text")."{VERSIONS}~/np~";
+	return tra("Split the text in parts visible only under some conditions").":<br />~np~{VERSIONS(nav=>y|n,title=>y|n,default=>)}".tra("text")."{VERSIONS}~/np~";
 }
 
+global $use_best_language,$language;
+
 function wikiplugin_versions($data, $params) {
-	
+	global $use_best_language,$language;
 	if (isset($params) and is_array($params)) {
 		extract ($params,EXTR_SKIP);
 	}
-	$data = trim($data);
+	$data = $data;
 	$navbar = '';
 	if (!isset($default)) { $default = 'Default'; }
+	if (!isset($title)) { $title = 'y'; }
+	if (!isset($nav)) { $nav = 'n'; }
 	
 	preg_match_all('/---\(([^\):]*)( : [^\)]*)?\)---*/',$data,$v);
 
@@ -35,6 +39,8 @@ function wikiplugin_versions($data, $params) {
 	} else {
 		if (isset($_REQUEST['tikiversion'])) {
 			$vers = $_REQUEST['tikiversion'];
+		} elseif ($use_best_language == 'y' and in_array($language,$v[1]))  {
+			$vers = $language;
 		} else {
 			$vers = $default;
 		}
@@ -51,17 +57,22 @@ function wikiplugin_versions($data, $params) {
 		if (strpos($data,'---(')) {
 			$data = substr($data,0,strpos($data,'---('));
 		}
-		$data = "<b class='versiontitle'>". $default .'</b>'. substr($data,strpos("\n",$data));
+		if ($nav == 'n' and $title == 'y') { $data = "<b class='versiontitle'>". $default .'</b>'.$data; }
+		$data = ltrim(substr($data,strpos("\n",$data)));
 	} elseif (isset($v[1][$p-1]) and strpos($data,'---('.$v[1][$p-1])) {
-		$data = substr($data,strpos($data,'---('.$v[1][$p-1]));
-		$data = preg_replace('/\)---*[\r\n]*/',"</b>\n","<b class='versiontitle'>". substr($data,4));
+		if ($nav == 'n' and $title == 'y') {
+			$data = substr($data,strpos($data,'---('.$v[1][$p-1]));
+			$data = preg_replace('/\)---*[\r\n]*/',"</b>\n","<b class='versiontitle'>". substr($data,4));
+		} else {
+			$data = substr($data,strpos($data,'---('.$v[1][$p-1]));
+			$data = preg_replace('/.*\)---*[\r\n]*/',"", substr($data,4));
+		}
 		if (strpos($data,'---(')) {
 			$data = substr($data,0,strpos($data,'---('));
 		}
 	}
 	
-	
-	if (isset($nav) and $nav == 'y') {
+	if ($nav == 'y') {
 		$highed = false;
 		for ($i=0;$i<count($v[1]);$i++) {
 			$version = $v[1][$i];
@@ -97,7 +108,7 @@ function wikiplugin_versions($data, $params) {
 		} else {
 			$navbar = '<span class="button2'.$high.'"><a href="'. preg_replace("~(\?|&)tikiversion=[^&]*~","",$_SERVER['REQUEST_URI']) .'" class="linkbut">'.$default.'</a></span>'.$navbar;
 		}
-		$data = '<div class="versions"><div class="versionav">'.$navbar."</div><div>".$data."</div>\n</div>";
+		$data = '<div class="versions"><div class="versionav">'.$navbar."</div><div>\n".$data."</div>\n</div>";
 	}
 
 	return $data;

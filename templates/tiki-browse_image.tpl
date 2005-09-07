@@ -39,13 +39,13 @@
     {/if}
 
     {if $previmg ne '' && $desp ne 0}
-    	<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$previmg}{if $itype=='s'}&amp;scaled&amp;scalesize={$scalesize}{/if}&amp;popup={$popup}&amp;slideshow_p=5" class="gallink">{html_image file='img/icons2/nav_prev.gif' border='0' alt='{tr}slideshow_p{/tr}' title='{tr}slideshow backward{/tr}'}</a>
+    	<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$previmg}{if $itype=='s'}&amp;scaled&amp;scalesize={$scalesize}{/if}&amp;popup={$popup}&amp;slideshow_p=5" class="gallink">{html_image file='img/icons2/nav_prev.gif' border='0' alt='{tr}slideshow backward{/tr}' title='{tr}slideshow backward{/tr}'}</a>
     	<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$previmg}{if $itype=='s'}&amp;scaled&amp;scalesize={$scalesize}{/if}&amp;popup={$popup}" class="gallink">{html_image file='img/icons2/nav_dot_right.gif' border='0' alt='{tr}prev image{/tr}' title='{tr}prev image{/tr}'}</a>
     {/if}
 
     {if $nextimg ne ''}
     	<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$nextdesp}&amp;galleryId={$galleryId}&amp;imageId={$nextimg}{if $itype=='s'}&amp;scaled&amp;scalesize={$scalesize}{/if}&amp;popup={$popup}" class="gallink">{html_image file='img/icons2/nav_dot_left.gif' border='0' alt='{tr}next image{/tr}' title='{tr}next image{/tr}'}</a>
-    	<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$nextdesp}&amp;galleryId={$galleryId}&amp;imageId={$nextimg}{if $itype=='s'}&amp;scaled&amp;scalesize={$scalesize}{/if}&amp;popup={$popup}&amp;slideshow_n=5" class="gallink">{html_image file='img/icons2/nav_next.gif' border='0' alt='{tr}slideshow_n{/tr}' title='{tr}slideshow forward{/tr}'}</a>
+    	<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$nextdesp}&amp;galleryId={$galleryId}&amp;imageId={$nextimg}{if $itype=='s'}&amp;scaled&amp;scalesize={$scalesize}{/if}&amp;popup={$popup}&amp;slideshow_n=5" class="gallink">{html_image file='img/icons2/nav_next.gif' border='0' alt='{tr}slideshow forward{/tr}' title='{tr}slideshow forward{/tr}'}</a>
     {/if}
 		{if $imageId ne $lastId}
     	<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$lastdesp}&amp;galleryId={$galleryId}&amp;imageId={$lastId}{if $itype=='s'}&amp;scaled&amp;scalesize={$scalesize}{/if}&amp;popup={$popup}" class="gallink">{html_image file='img/icons2/nav_last.gif' border='0' alt='{tr}last image{/tr}' title='{tr}last image{/tr}'}</a>    
@@ -86,7 +86,7 @@ Yes, you may use slideshow.js under the LGPL.
 <!--
 
 /*==================================================*
- $Id: tiki-browse_image.tpl,v 1.34 2005-09-02 01:52:09 wesleywillians Exp $
+ $Id: tiki-browse_image.tpl,v 1.35 2005-09-07 12:35:41 sylvieg Exp $
  Copyright 2000-2003 Patrick Fitzgerald
  http://slideshow.barelyfitz.com/
 

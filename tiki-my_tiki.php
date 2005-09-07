@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-my_tiki.php,v 1.20 2005-06-26 14:28:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-my_tiki.php,v 1.21 2005-09-07 12:35:39 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,6 +10,7 @@
 require_once ('tiki-setup.php');
 
 include_once ('lib/messu/messulib.php');
+include_once ('lib/wiki/wikilib.php');
 include_once ('lib/tasks/tasklib.php');
 
 if (!$user) {
@@ -117,9 +118,12 @@ closedir ($h);
 $smarty->assign_by_ref('languages', $languages);
 
 // Get user pages
-$who='user';
-if (isset($_REQUEST["by"]) && ($_REQUEST["by"]=='creator')) $who = 'creator';
-$user_pages = $tikilib->get_user_pages($userwatch,-1, $who);
+if (!isset($_REQUEST["sort_mode"]))
+	$sort_mode = 'pageName_asc';
+else
+	$sort_mode = $_REQUEST["sort_mode"];
+$smarty->assign_by_ref('sort_mode', $sort_mode);
+$user_pages = $wikilib->get_user_all_pages($userwatch, $sort_mode);
 $user_blogs = $tikilib->list_user_blogs($userwatch,false);
 $user_galleries = $tikilib->get_user_galleries($userwatch, -1);
 $smarty->assign_by_ref('user_pages', $user_pages);

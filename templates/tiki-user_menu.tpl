@@ -12,13 +12,13 @@
 
 {if $chdata.url}
 {if $feature_menusfolderstyle eq 'y'}
-<a class='separator' href="javascript:icntoggle('menu{$cname}');" title="{tr}Toggle options{/tr}"><img src="img/icons/{if $menu_info.type ne 'd'}o{/if}fo.gif" border="0" name="menu{$cname}icn" alt=''/></a>&nbsp;
+<a class='separator' href="javascript:icntoggle('menu{$cname}');" title="{tr}Toggle options{/tr}"><img src="img/icons/{if $menu_info.type ne 'd'}o{/if}fo.gif" border="0" name="menu{$cname}icn" alt='{tr}Toggle{/tr}'/></a>&nbsp;
 {else}<a class='separator' href="javascript:toggle('menu{$cname}');">[-]</a>{/if} 
 <a href="{$chdata.url|escape}" class="separator">{tr}{$chdata.name}{/tr}</a>
 {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('menu{$cname}');">[+]</a>{/if} 
 {else}
 {if $feature_menusfolderstyle eq 'y'}
-<a class='separator' href="javascript:icntoggle('menu{$cname}');" title="{tr}Toggle options{/tr}"><img src="img/icons/{if $menu_info.type ne 'd'}o{/if}fo.gif" border="0" name="menu{$cname}icn" alt=''/>&nbsp;
+<a class='separator' href="javascript:icntoggle('menu{$cname}');" title="{tr}Toggle options{/tr}"><img src="img/icons/{if $menu_info.type ne 'd'}o{/if}fo.gif" border="0" name="menu{$cname}icn" alt='{tr}Toggle{/tr}'/>&nbsp;
 {else}<a class='separator' href="javascript:toggle('menu{$cname}');">[-]{/if}{tr}{$chdata.name}{/tr}{if $feature_menusfolderstyle ne 'y'}[+]{/if}</a> 
 {/if}
 </div>

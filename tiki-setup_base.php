@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.90 2005-08-29 03:14:43 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.91 2005-09-07 12:35:39 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -135,8 +135,7 @@ $vartype['reqId'] = 'hash';
 $rc = @$tikilib->getOne( "select `value` from `tiki_preferences` where `name`=?",array("language"),false);
 if (!$rc) {
 	print "<html><head><title>Site not available</title></head><body><center><br />";
-	if (file_exists("img/tiki.jpg")) { print "<a href=\"http://tikiwiki.org/\"><img src=\"img/tiki.jpg\" alt=\"TikiWiki\" border=\"0\"></a>"; }
-	print "<h1>TikiWiki CMS</h1><b>Notice: this site is currently unavailable.<br /><br />Please try again later or contact the admin.</b></center></body></html>";
+	print "<b>Notice: this site is currently unavailable.<br /><br />Please try again later or contact the admin.</b></center></body></html>";
 	die();
 }
 

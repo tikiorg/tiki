@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.608 2005-09-06 16:42:41 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.609 2005-09-07 12:35:39 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2182,7 +2182,7 @@ function add_pageview() {
 
     /*shared*/
     function list_user_blogs($user, $include_public = false) {
-	$query = "select * from `tiki_blogs` where `user`=?";
+	$query = "select * from `tiki_blogs` where `user`=? order by `title` asc";
 	$bindvars=array($user);
 	if ($include_public) {
 	    $query .= " or `public`=?";
@@ -3725,7 +3725,7 @@ function add_pageview() {
     }
 
     function get_user_galleries($user, $max) {
-	$query = "select `name` ,`galleryId`  from `tiki_galleries` where `user`=?";
+	$query = "select `name` ,`galleryId`  from `tiki_galleries` where `user`=? order by `name` asc";
 
 	$result = $this->query($query,array($user),$max);
 	$ret = array();

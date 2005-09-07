@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_code.php,v 1.18 2005-05-18 11:02:00 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_code.php,v 1.19 2005-09-07 12:35:41 sylvieg Exp $
 // Displays a snippet of code
 // Parameters: ln => line numbering (default false)
 // Example:
@@ -15,7 +15,7 @@ function wikiplugin_code_help() {
 //	$help.= "* caption=>provides a caption for the code\n";
 //	$help.= "* wrap=>allows line wrapping in the code\n";
 //	$help.= "* wiki=>allow wiki interpolation of the code\n";
-	$help = tra("Displays a snippet of code").":<br />~np~{CODE(ln=>1,colors=>php|highlights|phpcode),caption=>caption text,wrap=>1,wiki=>1}".tra("code")."{CODE}~/np~ - ''".tra("note: colors and ln are exclusive")."''";
+	$help = tra("Displays a snippet of code").":<br />~np~{CODE(ln=>1,colors=>php|highlights|phpcode,caption=>caption text,wrap=>1,wiki=>1,rtl=>1)}".tra("code")."{CODE}~/np~ - ''".tra("note: colors and ln are exclusive")."''";
 	return tra($help);
 }
 
@@ -32,7 +32,12 @@ function wikiplugin_code($data, $params) {
 	$code = $data;
 	$out = '';
 	if (isset($caption)) {
-		$out = '<div class="codecaption">'.$caption.'</div>';
+		$out .= '<div class="codecaption">'.$caption.'</div>';
+	}
+	if (isset($rtl) && $rtl == 1) {
+		$out .= '<div dir="rtl">'; // force writing the code right to left
+	} else {
+		$out .= '<div dir="ltr">'; // default is left to right
 	}
 	if (isset($colors) and ($colors == 'php')) {
 		$out.= "<div class='codelisting'>~np~".highlight_string(decodeHTML(trim($code)),1)."~/np~</div>";
@@ -62,6 +67,7 @@ function wikiplugin_code($data, $params) {
 	}
 	$out = str_replace("\\", "\\\\", $out);//prevents vanishing of backslash occurences
 	$out = str_replace("$", "\\$", $out);//prevents vanishing of e.g. $1 strings from code listing
+	$out .= '</div>'; 
 	return $out;
 }
 

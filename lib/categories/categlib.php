@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.69 2005-05-18 11:00:32 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.70 2005-09-07 12:35:39 sylvieg Exp $
  *
  * \brief Categories support class
  *
@@ -350,7 +350,12 @@ class CategLib extends TikiLib {
 
 		$bindVars = array_merge($bindAllow, $bindWhere, $bindHaving);
 
-		$orderBy = " ORDER BY ".$this->convert_sortmode($sort_mode);
+		$orderBy = '';
+		if ($sort_mode) {
+			if ($sort_mode != 'shuffle') {
+				$orderBy = " ORDER BY ".$this->convert_sortmode($sort_mode);
+			}
+		}
 
 		$query_cant = "SELECT c.*, o.*, count(u.`objectId`) as perms, $allowField as allow FROM `tiki_category_objects` c,`tiki_categorized_objects` o LEFT JOIN `users_objectpermissions` u ON u.`objectId`=MD5(".$this->db->concat("o.`type`","LOWER(o.`objId`)").") AND u.`objectType`=o.`type` WHERE c.`catObjectId`=o.`catObjectId` $where GROUP BY o.`type`, o.`objId` $sqlHaving";
 		$query = $query_cant . $orderBy;
@@ -370,6 +375,9 @@ class CategLib extends TikiLib {
 		}
 
 		$retval = array();
+		if ($sort_mode == 'shuffle') {
+			shuffle($ret);
+		}
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;
 

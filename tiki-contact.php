@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-contact.php,v 1.18 2005-08-25 20:50:04 michael_davey Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-contact.php,v 1.19 2005-09-07 12:35:39 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -18,7 +18,7 @@ if ($contact_anon != 'y') {
 
 $smarty->assign('mid', 'tiki-contact.tpl');
 
-$email = $userlib->get_user_email($contact_user);
+$email = $userlib->get_admin_email();
 $smarty->assign('email', $email);
 
 if ($user == '' and $contact_anon == 'y') {

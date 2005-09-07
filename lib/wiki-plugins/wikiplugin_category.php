@@ -1,7 +1,7 @@
 <?php
 
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_category.php,v 1.13 2005-05-18 11:01:59 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_category.php,v 1.14 2005-09-07 12:35:41 sylvieg Exp $
  *
  * Tiki-Wiki CATEGORY plugin.
  * 
@@ -13,12 +13,13 @@
  *	sort=>[type|created|name|hits]_[asc|desc]	# default name_asc,
  *	sub=>true|false		# display items of subcategories # default is 'true';
  *	split=>y|n		# when displaying multiple categories, whether they should be split or not; defaults to yes
+ *	one=>y|n		# when y displays one categoy per line
  * )}
  * {CATEGORY}
  * 
   */
 function wikiplugin_category_help() {
-	return tra("Insert list of items for the current/given category into wiki page").":<br />~np~{CATEGORY(id=>1+2+3,types=>article+blog+faq+fgal+igal+newsletter+event+poll+quiz+survey+tracker+wiki+img,sort=>[type|created|name|hits]_[asc|desc],sub=>true|false,split=>y|n)}{CATEGORY}~/np~";
+	return tra("Insert list of items for the current/given category into wiki page").":<br />~np~{CATEGORY(id=>1+2+3,types=>article+blog+faq+fgal+igal+newsletter+event+poll+quiz+survey+tracker+wiki+img,sort=>[type|created|name|hits|shuffle]_[asc|desc],sub=>true|false,split=>y|n)}{CATEGORY}~/np~";
 }
 
 function wikiplugin_category($data, $params) {
@@ -52,10 +53,12 @@ function wikiplugin_category($data, $params) {
 	} else {
 		$and = false;
 	}
-	$sort = (isset($sort)) ? $sort : "created_desc";
+	$sort = (isset($sort)) ? $sort : "";
 	$types = (isset($types)) ? strtolower($types) : "*";
 	
 	$id = (isset($id)) ? $id : 'current'; // use current category if none is given
+	if (isset($one) && $one == 'y')
+		$smarty->assign('one', $one);
 
 	if ($id == 'current') {
 		$objId = urldecode($_REQUEST['page']);

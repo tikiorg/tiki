@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.40 2005-08-25 20:50:04 michael_davey Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.41 2005-09-07 12:35:38 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,6 +13,7 @@ include_once ('lib/polls/polllib.php');
 include_once ('lib/banners/bannerlib.php');
 include_once ('lib/dcs/dcslib.php');
 include_once ('lib/modules/modlib.php');
+include_once ('lib/structures/structlib.php');
 
 if (!isset($dcslib)) {
 	$dcslib = new DCSLib($dbTiki);
@@ -28,6 +29,10 @@ if (!isset($rsslib)) {
 
 if (!isset($polllib)) {
 	$polllib = new PollLib($dbTiki);
+}
+
+if (!isset($structlib)) {
+  $structlib = new StructLib($dbTiki);
 }
 
 $smarty->assign('wysiwyg', 'n');
@@ -280,6 +285,8 @@ $menus = $menulib->list_menus(0, -1, 'menuId_desc', '');
 $smarty->assign('menus', $menus["data"]);
 $banners = $bannerlib->list_zones();
 $smarty->assign('banners', $banners["data"]);
+$wikistructures = $structlib->list_structures('0','100','pageName_asc','');
+$smarty->assign('wikistructures', $wikistructures["data"]);
 $left = $tikilib->get_assigned_modules('l');
 $right = $tikilib->get_assigned_modules('r');
 $smarty->assign_by_ref('left', $left);
