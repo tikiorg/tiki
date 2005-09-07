@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.37 2005-09-07 21:02:44 rlpowell Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.38 2005-09-07 22:00:56 rlpowell Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -89,9 +89,12 @@ ALTER TABLE tiki_comments MODIFY COLUMN `in_reply_to` varchar(128) default NULL;
 ALTER TABLE tiki_comments ADD INEDX THREADED (message_id, in_reply_to, parentId);
 
 # 2005-09-07: rlpowell: These changes stop the mail system from repeatedly adding the same posts.
-# NOTE: It is possible to lose data with the "ALTER IGNORE TABLE" line, but it should only be repeat data anyways.
 ALTER TABLE tiki_comments MODIFY COLUMN `userName` varchar(40) default NULL;
 ALTER IGNORE TABLE tiki_comments ADD UNIQUE (parentId, userName, title, commentDate, message_id, in_reply_to);
-
+# NOTE: It is possible to lose data with the "ALTER IGNORE TABLE" line, but it should only be repeat data anyways.
+# In addition, ALTER IGNORE TABLE is a MySQL extension.  If it doesn't work,
+# the following should give you a tiki_comments table that you can apply the unique key to, but I suggest
+# making a copy first.
+# delete from tiki_comments tc1, tiki_comments tc2 where tc1.threadId < tc2.threadId and tc1.parentId = tc2.parentId and  tc1.userName = tc2.userName and  tc1.title = tc2.title and  tc1.commentDate = tc2.commentDate and  tc1.message_id = tc2.message_id and tc1.in_reply_to = tc2.in_reply_to;
 
 # --------------------------------------------------------
