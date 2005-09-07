@@ -8,7 +8,7 @@ if (!function_exists('ms_newMapObj')) {
   $access->display_error(basename(__FILE__), $msg);
 }
 
-$access->check_feature(@$feature_maps, "feature_maps");
+$access->check_feature('feature_maps');
 $access->check_permission(array('tiki_p_map_view'), tra("View maps"));
 
 $smarty->assign('tiki_p_map_edit',$tiki_p_map_edit);
