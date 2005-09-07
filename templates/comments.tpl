@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.61 2005-05-18 11:02:52 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.62 2005-09-07 22:46:39 rlpowell Exp $ *}
 
 {if $forum_mode eq 'y'}
     <tr><td>
@@ -19,7 +19,7 @@
 
   {if $comments_cant gt 0}
 
- <form method="post" action="{$comments_father}" class="comments">
+ <form method="get" action="{$comments_father}" class="comments">
   {section name=i loop=$comments_request_data}
   <input type="hidden" name="{$comments_request_data[i].name|escape}" value="{$comments_request_data[i].value|escape}" />
   {/section}
