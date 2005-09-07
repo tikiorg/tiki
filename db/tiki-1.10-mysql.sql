@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2005-09-01 13:04:36 $
-# $Author: michael_davey $
+# $Date: 2005-09-07 21:02:44 $
+# $Author: rlpowell $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -937,7 +937,7 @@ CREATE TABLE tiki_comments (
   object varchar(255) NOT NULL default '',
   objectType varchar(32) NOT NULL default '',
   parentId int(14) default NULL,
-  userName varchar(200) default NULL,
+  userName varchar(40) default NULL,
   commentDate int(14) default NULL,
   hits int(8) default NULL,
   type char(1) default NULL,
@@ -950,15 +950,17 @@ CREATE TABLE tiki_comments (
   user_ip varchar(15) default NULL,
   summary varchar(240) default NULL,
   smiley varchar(80) default NULL,
-  message_id varchar(250) default NULL,
-  in_reply_to varchar(250) default NULL,
+  message_id varchar(128) default NULL,
+  in_reply_to varchar(128) default NULL,
   comment_rating tinyint(2) default NULL,  
   PRIMARY KEY  (threadId),
+  UNIQUE KEY no_repeats (parentId, userName, title, commentDate, message_id, in_reply_to),
   KEY title (title),
   KEY data (data(255)),
   KEY object (object),
   KEY hits (hits),
   KEY tc_pi (parentId),
+  KEY threaded (message_id, in_reply_to, parentId),
   FULLTEXT KEY ft (title,data)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------

@@ -1,6 +1,6 @@
 -- $Rev$
--- $Date: 2005-09-01 13:04:36 $
--- $Author: michael_davey $
+-- $Date: 2005-09-07 21:02:44 $
+-- $Author: rlpowell $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -1021,7 +1021,7 @@ CREATE TABLE "tiki_comments" (
   "object" varchar(255) NOT NULL default '',
   "objectType" varchar(32) NOT NULL default '',
   "parentId" bigint default NULL,
-  "userName" varchar(200) default NULL,
+  "userName" varchar(40) default NULL,
   "commentDate" bigint default NULL,
   "hits" integer default NULL,
   "type" char(1) default NULL,
@@ -1034,8 +1034,8 @@ CREATE TABLE "tiki_comments" (
   "user_ip" varchar(15) default NULL,
   "summary" varchar(240) default NULL,
   "smiley" varchar(80) default NULL,
-  "message_id" varchar(250) default NULL,
-  "in_reply_to" varchar(250) default NULL,
+  "message_id" varchar(128) default NULL,
+  "in_reply_to" varchar(128) default NULL,
   "comment_rating" smallint default NULL,  
   PRIMARY KEY ("threadId")
 )   ;
@@ -1045,6 +1045,8 @@ CREATE  INDEX "tiki_comments_data" ON "tiki_comments"(substr("data", 0, 255));
 CREATE  INDEX "tiki_comments_object" ON "tiki_comments"("object");
 CREATE  INDEX "tiki_comments_hits" ON "tiki_comments"("hits");
 CREATE  INDEX "tiki_comments_tc_pi" ON "tiki_comments"("parentId");
+CREATE  INDEX "tiki_comments_threaded" ON "tiki_comments"("message_id","in_reply_to","parentId");
+CREATE UNIQUE INDEX "tiki_comments_no_repeats" ON "tiki_comments"("parentId","userName","title","commentDate","message_id","in_reply_to");
 -- --------------------------------------------------------
 
 --
