@@ -61,6 +61,7 @@ class TikiAccessLib extends TikiLib {
     function check_feature($features, $feature_name="") {
         global $smarty;
         require_once ('tiki-setup.php');
+	if ( ! is_array($features) ) { $features = array($features); }
         foreach ($features as $feature) {
             global $$feature;
             if ($$feature != 'y') {
@@ -75,6 +76,7 @@ class TikiAccessLib extends TikiLib {
     function check_permission($permissions, $permission_name='') {
         global $smarty;
         require_once ('tiki-setup.php');
+        if ( ! is_array($permissions) ) { $permissions = array($permissions); }
         foreach ($permissions as $permission) {
             global $$permission;
             if ($$permission != 'y') {

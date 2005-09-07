@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_drawings.php,v 1.16 2005-09-07 21:47:31 michael_davey Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_drawings.php,v 1.17 2005-09-07 22:23:21 michael_davey Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,7 +11,7 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/drawings/drawlib.php');
 
-$access->check_feature($feature_drawings);
+$access->check_feature('feature_drawings');
 $access->check_permission(array('tiki_p_admin_drawings'));
 
 
