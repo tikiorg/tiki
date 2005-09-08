@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/plazes/wiki-plugins/wikiplugin_plazeswhereis.php,v 1.1 2005-09-08 02:35:34 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/plazes/wiki-plugins/wikiplugin_plazeswhereis.php,v 1.2 2005-09-08 10:26:45 sylvieg Exp $
 
 // Wiki plugin to display your whereis page
 // make sure you sign up and register for the whereis first ;)
@@ -17,7 +17,7 @@ function wikiplugin_plazeswhereis_help() {
 
 function wikiplugin_plazeswhereis($data, $params) {
 	
-	extract ($params);
+	extract ($params, EXTR_SKIP);
 
 	if (!$name) {
 		return "Plugin called without a name.";
