@@ -57,3 +57,5 @@
 'wikiplugins','js','1.0','Insert javascript in wiki code','GNU/LGPL'
 'modules','extcalculator','1.1','Extended Calculator','GNU/LGPL'
 'modules','worldclock','1.1','World Clock','GNU_LGPL'
+'taglines','rcogley','1.2','Tagline collection from Tiki developer rcogley','Unknown'
+'taglines','damian1','1.1','Tagline collection from Tiki developer Damian','Various Sources'
