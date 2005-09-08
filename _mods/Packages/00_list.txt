@@ -54,3 +54,4 @@
 'modules','plazes','1.1','Module options for www.plazes.com to show your current location','GNU/LGPL'
 'modules','calculator','1.1','Very kewl little calculator to site in the left/right column','GNU/LGPL'
 'modules','clock','1.1','Neat ticking clock as a borderless module','GNU/LGPL'
+'wikiplugins','js','1.0','Insert javascript in wiki code','GNU/LGPL'
