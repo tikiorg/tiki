@@ -12,6 +12,7 @@ DOCUMENTATION
   format (350 pages) (outdated at the time of this writing):
   http://prdownloads.sourceforge.net/tikiwiki/tiki16pdfmanual.zip?download
 * TikiWiki also has an active IRC channel: #tikiwiki on irc.freenode.net
+  see http://tikiwiki.org/ConnectingToIRC for how to join the IRC channel
 
 The rest of this document includes parts of the online documentation that might be enough to get you running Tiki.
 
@@ -38,7 +39,7 @@ Step one: unpack the archive
 Unpack the Tiki files to the document root of where you want Tiki installed, e.g. /var/www/tiki/ 
 
 To unpack the bz2 file, use:
-tar xjf tikiwiki-1.9.1.tar.bz2
+tar xjf tikiwiki-1.10.tar.bz2
 
 
 Step two: run setup.sh to set permissions
