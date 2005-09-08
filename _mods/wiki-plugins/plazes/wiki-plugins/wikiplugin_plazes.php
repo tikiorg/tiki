@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/plazes/wiki-plugins/wikiplugin_plazes.php,v 1.1 2005-01-06 22:45:08 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/plazes/wiki-plugins/wikiplugin_plazes.php,v 1.2 2005-09-08 17:10:27 damosoft Exp $
 
 // Wiki plugin to display your location
 // use with plazes : http://www.plazes.com
@@ -13,10 +13,10 @@ function wikiplugin_plazes_help() {
 
 function wikiplugin_plazes($data, $params) {
 	
-	extract ($params);
+	extract ($params, EXTR_SKIP);
 
 	if (!$key) {
-		return "Plugin called without a key.";
+		return "No Key";
 	}
 
 	if ($map != 0 && $map != 1) {
