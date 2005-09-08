@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/_mods/modules/worldclock/mod-worldclock.tpl,v 1.1 2005-09-08 10:40:45 damosoft Exp $ 
+{* $Header: /cvsroot/tikiwiki/_mods/modules/worldclock/mod-worldclock.tpl,v 1.2 2005-09-08 10:56:29 damosoft Exp $ 
    TikiWiki ticking clock in a module
 *}
-{tikimodule title="{tr}World Clock{/tr}" name="clock" flip=$module_params.flip decorations=$module_params.decorations}
+{tikimodule title="{tr}World Clock{/tr}" name="worldclock" flip=$module_params.flip decorations=$module_params.decorations}
 {literal}
 <style type="text/css">
 <!--

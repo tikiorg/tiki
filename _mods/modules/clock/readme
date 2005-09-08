@@ -2,9 +2,9 @@ Clock Module
 =================
 
 Very cool little javascript ticking clock to sit in your left or right column
-without a module frame as well for added coolness, or with world mode displays a large analog and digital world clock in border
+without a module frame as well for added coolness
 
 Enjoy :)
 
 Damian
-$Header: /cvsroot/tikiwiki/_mods/modules/clock/readme,v 1.3 2005-09-08 10:41:02 damosoft Exp $
+$Header: /cvsroot/tikiwiki/_mods/modules/clock/readme,v 1.4 2005-09-08 10:59:20 damosoft Exp $
