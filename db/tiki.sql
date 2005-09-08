@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2005-09-07 21:02:44 $
-# $Author: rlpowell $
+# $Date: 2005-09-08 15:17:03 $
+# $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -4651,6 +4651,9 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('default_wiki_diff_style
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('messu_mailbox_size','0');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('messu_archive_size','200');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('messu_sent_size','200');
+
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_protect_email', 'n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_1like_redirection', 'y');
 
 # Dynamic variables
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_dynvar', 'Can edit dynamic variables', 'editors', 'wiki');
