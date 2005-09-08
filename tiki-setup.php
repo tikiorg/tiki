@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.281 2005-09-07 15:12:51 michael_davey Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.282 2005-09-08 14:47:57 damosoft Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -595,7 +595,7 @@ $system_os = $tikilib->get_preference('system_os', TikiSetup::os());
 $smarty->assign('system_os', $system_os);
 
 // default: 1. report eveything to admin only
-$error_reporting_level = (int)($tikilib->get_preference('error_reporting_level', 1));
+$error_reporting_level = (int)($tikilib->get_preference('error_reporting_level', 2047));
 if ($error_reporting_level == 1)
 	$error_reporting_level = ($tiki_p_admin == "y") ? E_ALL: 0;
 error_reporting($error_reporting_level);
