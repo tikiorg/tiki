@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-read.php,v 1.19 2005-08-25 20:50:04 michael_davey Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-read.php,v 1.20 2005-09-08 01:45:05 damosoft Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,22 +9,28 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/messu/messulib.php');
 
-/*
-$access->check_page( $user, array("feature_messages"), array("tiki_p_messages") );
-*/
-
 if (!$user) {
+	if ($feature_redirect_on_error == 'y') {
+		header("location: $tikiIndex");
+		die;
+	} else {
 	$smarty->assign('msg', tra("You are not logged in"));
 
 	$smarty->display("error.tpl");
 	die;
 }
+}
 
 if ($feature_messages != 'y') {
+	if ($feature_redirect_on_error == 'y') {
+		header("location: $tikiIndex");
+		die;
+	} else {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_messages");
 
 	$smarty->display("error.tpl");
 	die;
+	}
 }
 
 if ($tiki_p_messages != 'y') {
