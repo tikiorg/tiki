@@ -1,0 +1,23 @@
+contributor:
+$Author: damosoft $
+
+revision: 
+$Revision $
+
+lastmodif:
+$Date: 2005-09-08 04:23:21 $
+
+files: 
+modules/mod-calc.tpl templates/modules/mod-calc.tpl
+
+author:
+Damosoft / Damian Parker
+
+licence:
+GNU/LGPL
+
+Description: 
+Kewl little calculator for your right or left column within TikiWiki
+
+ChangeLog
+1.1 Initial Module

@@ -1,0 +1,23 @@
+contributor:
+$Author: damosoft $
+
+revision: 
+$Revision $
+
+lastmodif:
+$Date: 2005-09-08 04:23:21 $
+
+files: 
+modules/mod-clock.tpl templates/modules/mod-clock.tpl
+
+author:
+Damosoft / Damian Parker
+
+licence:
+GNU/LGPL
+
+Description: 
+Very neat borderless module holding a ticking clock
+
+ChangeLog
+1.1 Initial Module
