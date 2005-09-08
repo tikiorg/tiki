@@ -1,0 +1,23 @@
+contributor:
+$Author: damosoft $
+
+revision:
+$Revision: 1.1 $
+
+lastmodif:
+$Date: 2005-09-08 02:40:16 $
+
+files:
+sqls/tiki_1.9to1.9.1.sql db/tiki_1.9to1.9.1.sql
+
+author:
+Tiki Community
+
+licence:
+GNU/LGPL
+
+Description: 
+Upgrades from Tiki 1.9 to 1.9.1
+
+Changelog:
+1 initial package
