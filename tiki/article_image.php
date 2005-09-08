@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/article_image.php,v 1.14 2005-06-26 14:28:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/article_image.php,v 1.15 2005-09-08 01:08:59 damosoft Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/article_image.php,v 1.14 2005-06-26 14:28:28 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/article_image.php,v 1.15 2005-09-08 01:08:59 damosoft Exp $
 
 // application to display an image from the database with 
 // option to resize the image dynamically creating a thumbnail on the fly.
@@ -18,7 +18,8 @@ if (!isset($_REQUEST["id"])) {
 include_once ('lib/init/initlib.php');
 include_once ('tiki-setup_base.php');
 
-$topiccachefile = "temp";
+$topiccachefile = $tikilib->get_preference("tmpdir", "temp");
+
 if ($tikidomain) { $topiccachefile.= "/$tikidomain"; }
 $topiccachefile.= "/article.".$_REQUEST["id"];
 
