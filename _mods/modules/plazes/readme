@@ -6,4 +6,12 @@ within your TikiWiki site through a Module.
 
 There is also available a wiki-plugin to do the similar.
 
+Parameters for the module are:
+
+  key: your "hash" key
+  map: 0 = no map, 1 = display with a map
+  
+You can find out your hash key through 
+  Your Plazes -> Badge once you have signed in.
+
 -Damian Parker
