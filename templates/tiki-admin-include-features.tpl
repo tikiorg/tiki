@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.65 2005-08-30 12:51:31 michael_davey Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.66 2005-09-08 13:45:23 sylvieg Exp $ *}
 
 {* this is the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
@@ -222,14 +222,18 @@
     <td><input type="checkbox" name="feature_mobile" {if $feature_mobile eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Mobile" target="tikihelp" class="tikihelp" title="{tr}tikiwiki.org help{/tr}: {tr}Mobile{/tr}">{/if} {tr}Mobile{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
     <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
   </tr>
+{if $feature_experimental eq 'y'}
   <tr>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td class="form">{if $feature_experimental eq 'y'} {if $feature_help eq 'y'}<a href="{$helpurl}Jukebox" target="tikihelp" class="tikihelp" title="{tr}tikiwiki.org help{/tr}: {tr}Jukebox{/tr}">{/if} {tr}Jukebox{/tr} {if $feature_help eq 'y'}</a>{/if} : {else} &nbsp; {/if} </td>
+    <td><input type="checkbox" name="feature_jukebox" {if $feature_jukebox eq 'y'}checked="checked"{/if}/></td>
+    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Jukebox" target="tikihelp" class="tikihelp" title="{tr}tikiwiki.org help{/tr}: {tr}Jukebox{/tr}">{/if} {tr}Jukebox{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
   </tr>
+{/if}
 
 </table>    
 
