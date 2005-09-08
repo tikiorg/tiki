@@ -43,7 +43,7 @@ function wikiplugin_wikigraph($data, $params) {
 	global $dbTiki;
 	$wikigraphlib = new WikiGraphLib($dbTiki);
 	$add = "";
-	extract ($params);
+	extract ($params, EXTR_SKIP);
   if(!isset($level)) $level = 0;
 	if(!isset($title)) $title = "wikigraph";
 	if(isset($nodesep)) $add.="&amp;nodesep=$nodesep";

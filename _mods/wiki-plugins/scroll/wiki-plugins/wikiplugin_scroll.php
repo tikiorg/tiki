@@ -18,7 +18,7 @@ function wikiplugin_scroll_help() {
 	return tra("Scroll").":<br />~np~{SCROLL(width=> height=> speed=> left=> top=>)}".tra("text")."{SCROLL}~/np~";
 }
 function wikiplugin_scroll($data, $params) {
-	extract ($params);
+	extract ($params, EXTR_SKIP);
 //minimum parameters
 	if (!isset($width)) {
 		return ("<b>missing  width parameter for plugin</b><br/>");

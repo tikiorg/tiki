@@ -18,7 +18,7 @@ function wikiplugin_svg_help() {
 	return tra("Svg").":<br />~np~{SVG(width=> height=> src=> )}".tra("text")."{SVG}~/np~";
 }
 function wikiplugin_svg($data, $params) {
-	extract ($params);
+	extract ($params, EXTR_SKIP);
 //minimum parameters
 	if (!isset($width)) {
 		return ("<b>missing  width parameter for plugin</b><br/>");

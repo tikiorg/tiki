@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/ebay/wiki-plugins/wikiplugin_ebay.php,v 1.3 2004-09-13 14:44:58 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/ebay/wiki-plugins/wikiplugin_ebay.php,v 1.4 2005-09-08 17:22:15 damosoft Exp $
 
 // Wiki plugin to display ebay search results file
 // damian aka damosoft 13 Sep 2004
@@ -11,7 +11,7 @@ function wikiplugin_ebay_help() {
 
 function wikiplugin_ebay($data, $params) {
 	
-	extract ($params);
+	extract ($params, EXTR_SKIP);
 
 	$asetup = '<form action="http://search.ebay.co.uk/search/search.dll" method="get">';
 	$asetup .='<input type="hidden" name="sokeywordredirect">';

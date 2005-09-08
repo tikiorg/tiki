@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/formula/wiki-plugins/wikiplugin_formula.php,v 1.2 2004-06-14 04:04:51 ggeller Exp $
+ * $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/formula/wiki-plugins/wikiplugin_formula.php,v 1.3 2005-09-08 17:22:15 damosoft Exp $
  * Tiki-Wiki plugin formula
  *  
  * This plugin will try to render a formula written with LaTeX syntax
@@ -42,7 +42,7 @@ function wikiplugin_formula($data, $params) {
 	$html .= "</i>";
 	return $html;
 
-	extract ($params);
+	extract ($params, EXTR_SKIP);
 
 	$data=trim($data);
 	if ( ereg ("^[-a-zA-Z+*/=,0-9 <>^_{}()]*$", $data ))  {
