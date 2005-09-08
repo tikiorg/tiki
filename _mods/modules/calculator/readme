@@ -3,7 +3,12 @@ Calculator Module
 
 Very kewl little javascript calculator to sit in your left or right column
 
+Params are:
+  mode: default | cool
+    default: damian's 16 button version - telephone layout
+    cool: 27 button extended - calculator layout
+
 Enjoy :)
 
 Damian
-$Header: /cvsroot/tikiwiki/_mods/modules/calculator/readme,v 1.1 2005-09-08 04:21:29 damosoft Exp $
+$Header: /cvsroot/tikiwiki/_mods/modules/calculator/readme,v 1.2 2005-09-08 09:49:56 michael_davey Exp $
