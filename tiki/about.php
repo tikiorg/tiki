@@ -22,7 +22,7 @@ DOCUMENTATION
 * The documentation for all versions is maintained on http://doc.tikiwiki.org,
   come and help if you can and wish.
 
-* Notes about the releases are accessible from http://tikiwiki.org/ReleaseProcess19
+* Notes about the releases are accessible from http://tikiwiki.org/ReleaseProcess110
 * TikiWiki is also a live community on irc.freenode.net channel #tikiwiki
 
 
