@@ -1,9 +1,10 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/help.php,v 1.3 2005-05-18 10:58:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/help.php,v 1.4 2005-09-08 01:33:00 damosoft Exp $
 
 // Initialization
 require_once ('tiki-setup.php');
+$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 include_once ('lib/wiki/wikilib.php');
 include_once ('lib/structures/structlib.php');
