@@ -1,11 +1,11 @@
 contributor:
-$Author: mose $
+$Author: damosoft $
 
 revision:
-$Revision: 1.2 $
+$Revision: 1.3 $
 
 lastmodif:
-$Date: 2004-09-30 16:41:24 $
+$Date: 2005-09-08 02:39:45 $
 
 author:
 the Tikiwiki community
@@ -20,6 +20,7 @@ Description:
 The menu including all tiki sites. hardstamped to menuId=41
 
 Changelog:
+1.3 added mobile.tw.o
 1.2 added dev.tw.o
 1.1 initial package
 
@@ -46,6 +47,7 @@ INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`) VA
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`) VALUES (41, 'o', 'mods.tikiwiki.org',   'http://mods.tikiwiki.org',     270);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`) VALUES (41, 'o', 'maps.tikiwiki.org',   'http://maps.tikiwiki.org',     280);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`) VALUES (41, 'o', 'dupli.tikiwiki.org',  'http://dupli.tikiwiki.org',    290);
+INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`) VALUES (41, 'o', 'mobile.tikiwiki.org',  'http://mobile.tikiwiki.org',    295);
 
 sql-remove:
 delete from `tiki_menu_options` where `menuId`=41;
