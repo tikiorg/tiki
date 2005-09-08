@@ -16,11 +16,12 @@ class TikiAccessLib extends TikiLib {
 
     // check that the user is admin or has admin permissions
     function check_admin($user,$feature_name="") {
-        global $smarty, $tiki_p_admin;
+        global $smarty, $tiki_p_admin, $feature_redirect_on_error, $tikiIndex;
         require_once ('tiki-setup.php');
         // first check that user is logged in
         $this->check_user($user);
         if (($user != 'admin') && ($tiki_p_admin != 'y')) {
+        	if ($feature_redirect_on_error != 'y') {
             $msg = tra("You do not have permission to use this feature");
             if ($feature_name) {
                 $msg = $msg . ": " . $feature_name;
@@ -28,13 +29,18 @@ class TikiAccessLib extends TikiLib {
             $smarty->assign('msg', $msg);
             $smarty->display("error.tpl");
             die;
+        	} else {
+        		header("location: $tikiIndex");
+        		die;
+        	}
         }
     }
 
     function check_user($user) {
-        global $smarty, $feature_usability;
+        global $smarty, $feature_usability, $feature_redirect_on_error, $tikiIndex;
         require_once ('tiki-setup.php');
         if (!$user) {
+        	if ($feature_redirect_on_error != 'y') {
             $title = tra("You are not logged in");
             if (isset( $feature_usability ) && $feature_usability == 'y' ) {
                 $this->display_error('',$title,'402');
@@ -43,6 +49,10 @@ class TikiAccessLib extends TikiLib {
                 $smarty->display("error.tpl");
             }
             die;
+        	} else {
+        		header ("location: $tikiIndex");
+        		die;
+        	}
         }
     }
 
@@ -59,16 +69,21 @@ class TikiAccessLib extends TikiLib {
     }
 
     function check_feature($features, $feature_name="") {
-        global $smarty;
+        global $smarty, $feature_redirect_on_error, $tikiIndex;
         require_once ('tiki-setup.php');
 	if ( ! is_array($features) ) { $features = array($features); }
         foreach ($features as $feature) {
             global $$feature;
             if ($$feature != 'y') {
+            	if ($feature_redirect_on_error != 'y') {
                 if ($feature_name == '') { $feature_name = $feature; }
                 $smarty->assign('msg', tra("This feature is disabled").": ". $feature_name);
                 $smarty->display("error.tpl");
                 die;
+            	} else {
+            		header("location: $tikiIndex");
+            		die;
+            	}
             }
         }
     }
