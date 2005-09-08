@@ -1,0 +1,25 @@
+contributor:
+$Author: damosoft $
+
+revision: 
+$Revision: 1.1 $
+
+lastmodif:
+$Date: 2005-09-08 10:53:49 $
+
+files: 
+modules/clock/mod-worldclock.tpl templates/modules/mod-worldclock.tpl
+
+author:
+mdavey
+
+licence:
+GNU/LGPL
+
+Description: 
+World Clock for a module
+
+ChangeLog
+1.1 Initial Module
+1.2 Fix typos
+1.3 Restoration
