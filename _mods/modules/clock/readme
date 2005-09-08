@@ -4,12 +4,7 @@ Clock Module
 Very cool little javascript ticking clock to sit in your left or right column
 without a module frame as well for added coolness, or with world mode displays a large analog and digital world clock in border
 
-Params are:
-  mode: default | world
-     default: damian's 1-row and status bar version
-     world - an anlog and digital world clock (doesn't support DST)
-
 Enjoy :)
 
 Damian
-$Header: /cvsroot/tikiwiki/_mods/modules/clock/readme,v 1.2 2005-09-08 10:14:36 michael_davey Exp $
+$Header: /cvsroot/tikiwiki/_mods/modules/clock/readme,v 1.3 2005-09-08 10:41:02 damosoft Exp $
