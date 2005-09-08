@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.38 2005-09-07 22:00:56 rlpowell Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.39 2005-09-08 15:17:03 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -96,5 +96,9 @@ ALTER IGNORE TABLE tiki_comments ADD UNIQUE (parentId, userName, title, commentD
 # the following should give you a tiki_comments table that you can apply the unique key to, but I suggest
 # making a copy first.
 # delete from tiki_comments tc1, tiki_comments tc2 where tc1.threadId < tc2.threadId and tc1.parentId = tc2.parentId and  tc1.userName = tc2.userName and  tc1.title = tc2.title and  tc1.commentDate = tc2.commentDate and  tc1.message_id = tc2.message_id and tc1.in_reply_to = tc2.in_reply_to;
+
+# 2005-09-08 sylvieg
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_protect_email', 'n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_1like_redirection', 'y');
 
 # --------------------------------------------------------
