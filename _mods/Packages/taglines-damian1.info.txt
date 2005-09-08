@@ -1,0 +1,224 @@
+contributor:
+$Author: damosoft $
+
+revision: 
+$Revision: 1.1 $
+
+lastmodif:
+$Date: 2005-09-08 15:13:59 $
+
+author:
+Damian Parker/damosoft
+
+licence:
+Unknown
+
+Description: 
+A Collection of taglines
+
+ChangeLog
+1.1 Initial Collection
+
+sql-install:
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('AD&D Famous Last Words: "Am I seeing things or is that a dragon?"');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Actors do it on camera.');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Backing up is an acquired taste; after a crash.');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Bill Clinton doesn''t know my pain...he *IS* my pain.');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Bother! said Pooh, as he looked into the face of the Myrddraal.');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Blood calls out for blood - Londo');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Big talk always compensates for liberal accomplishments.');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('BC1: Seeing isn''t everything');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('COPY TEXT BELOW INTO A WORD PROGRAM (NOTEPAD, WORDPAD,');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Christ paid a debt he didn''t owe to satisfy a debt we couldn''t pay');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Clod Merlot - The Googooplex Names of Tom Servo!');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('DEFINITION: Chaining - A method of attaching programmers');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Don''t try this at home, we''re PROFESSIONAL idiots!');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Don''t you step on my blue suede aardvarks!');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Embrace the Penguin, Kill the Borg! Microsoft *IS* the Virus!');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Ewwww...you''ve been eating garlic! - Dot Warner');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Experience: Knowing a lot of things you shouldn''t do again.');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('EMBARRASSMENT: Spitting out the car window when it isn''t open.');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Easy: a woman who has the sexual morals of a man.');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('For the Love of God, let the boy give your grandmother a bath!');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Fluffing the blankets after farting is not necessary!');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Gilligan of Borg. Escape from the island is futile');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Game show hosts DO IT for what''s in the box');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Guns don''t kill people..Mail readers kill people ___ Blue Wave/QWK v2.12');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Gal with no arms and legs on a music stand? Carol');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Give him a fire, he''ll be warm for a day. Set him on fire, he''ll be warm for the rest of his life.');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Got a girlfriend; got a computer. Guess which one goes down?');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Holly: The phrase `cargo bay doors'' does not appear to be in my lexicon');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Happy happy happy ... peel peel peel. - Stimpy');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('How are you getting on with your Stylophone?');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Horse sense is the thing a horse has that keeps it from b');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Hobbes: Until you stalk and overcome, you can''t devour anyone');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('He''s so conceited he walks down Lover''s Lane holding his own hand');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('It is not enough to have a good mind. The main thing is to use it well. -- Rene Descartes');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('It is impossible to travel faster than light, and certainly not desirable, as one''s hat keeps blowing off');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Internal editor allows message editing on-the-fly.');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('JABBA ? RTFM [alternate]: "The Joy of Sex."');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Jesus would''ve been a Democrat. The money lenders, GOP');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Just climb in, and hang on. Open your eyes, if you dare.');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Just follow the trail of heads - Crow');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('JOHN WAYNE IS BIG LEGGY');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Just another one adding their 2 senses');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('kinda like a cloud i was up, way up in the sky.');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Keep your dreams alive - Darkwood');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('LoonFests: where the beer is cold and the women are hot');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Look! She put her breasts on! - Tom on Tia Carrera');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Love of money is the root of all politics.');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Ljubicu te isto ko nekada, jednog dana ni sam ne znam kada.');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Life is a dilemma wrapped in an oxymoron.');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Mommas don''t let your babies grow up to be message');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Mathematical Model: 46-26-38');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Man is an animal that thinks; chicken is an animal that flies.');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Military intelligence is a contradiction in terms -- Groucho Marx');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('My Dad''s a Mortician - by Phil Degraves');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Microsoft: Making it all. Make sense?');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Nigel Mansell, Indy Champ');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('New Computer---- to be superseded as soon as it''s installed');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Orville Bullitt doesn''t need therapy - he needs a lobotomy.');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Ooooooops... - Captain of the Titanic');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('@N@''s a self-made man, and worships his creator');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('* <- Tribble @U*++------o <- Top Fuel Class Tribble');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('-> guy happy about about collecting disability pension');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Perfumery, something else and leather goods, going up');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Punny Book: Cry Wolf - Al Armist');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Parkinson''s First Law: Work expands to fill the time avai');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Phobia: What''s left after 20 beers in a 24 pack.');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Philip R. Sharp, Congressman, (Ind.), was an Eagle Scout.');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Prediction is very difficult, especially of the future. -- Niels Bohr');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Quod erat demonstrandum. [Thus it is proven. For those who wondered WTF QED means.]');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Q: Why''d the convict want a computer?');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Quindam: a mother of five babies.');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Quick Gary, what color is an Orange?');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('"Some of us live in perpetual 20-20 chaos." -Opus, Bloom County');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('"Very unfortunate. We will be dead." -- Worf');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('"You are not ready for immortality." -- Kosh, Babylon 5');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('"I send my soul through time and space To greet you." Flecker');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('"Bother!" said Pooh in an attempt to compose a scintillating tagline.');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Rush Limbaugh: So narrow minded he can look in a keyhole w/both eyes.');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Seen it. Done that. Got the souvenir hat with my name on it');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('The UART''s will''na take this speed cap''n');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('That wasn''t a bowl of oatmeal! That was Odo!');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('That which we resist the most is what we become');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('They were probably stolen while we were unconscious. --Sisko');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('URA redneck if "SAY NO TO CRACK" reminds you to pull your pants up');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Ura Redneck Trekker if u think the Borg are new-fangled punk rockers.');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Very few profundities can be expressed in 57 characters.');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Water... facinating... never touch the stuff myself... -- Londo');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('We all make mistakes. Few ''fess up'' as quickly as I did.');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Worker who fell in upholstery machine, now fully recovered!');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('What!? I''m missing Babylon5?`v=y%%(v@!~~%!# NO CARRIER');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('X T u s e r s d o i t s l o w l y');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Xpress Yourself!');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('You knooowww... uhhh... they''re F-A-K-E! (Elaine)');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('You''re about as useful as a parachute on a submarine');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('You have many friends and very few enemies');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Zephram Cochrane died 150 years ago! - McCoy');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('ZAR: Zero Any Register');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Zoroastrianism - **** happens half the time.');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('Zmodem Pizza DownLoad: Slices DownLoaded: 02 Slices Remaining: 04');
+INSERT INTO `tiki_cookies` (`cookie`) VALUES ('ZIPPEDTAGLINE ');
+
+sql-remove:
+DELETE FROM `tiki_cookies` WHERE `cookie`='AD&D Famous Last Words: "Am I seeing things or is that a dragon?"' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Actors do it on camera.' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Backing up is an acquired taste; after a crash.' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Bill Clinton doesn''t know my pain...he *IS* my pain.' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Bother! said Pooh, as he looked into the face of the Myrddraal.' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Blood calls out for blood - Londo' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Big talk always compensates for liberal accomplishments.' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='BC1: Seeing isn''t everything' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='COPY TEXT BELOW INTO A WORD PROGRAM (NOTEPAD, WORDPAD,' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Christ paid a debt he didn''t owe to satisfy a debt we couldn''t pay' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Clod Merlot - The Googooplex Names of Tom Servo!' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='DEFINITION: Chaining - A method of attaching programmers' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Don''t try this at home, we''re PROFESSIONAL idiots!' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Don''t you step on my blue suede aardvarks!' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Embrace the Penguin, Kill the Borg! Microsoft *IS* the Virus!' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Ewwww...you''ve been eating garlic! - Dot Warner' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Experience: Knowing a lot of things you shouldn''t do again.' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='EMBARRASSMENT: Spitting out the car window when it isn''t open.' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Easy: a woman who has the sexual morals of a man.' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='For the Love of God, let the boy give your grandmother a bath!' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Fluffing the blankets after farting is not necessary!' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Gilligan of Borg. Escape from the island is futile' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Game show hosts DO IT for what''s in the box' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Guns don''t kill people..Mail readers kill people ___ Blue Wave/QWK v2.12' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Gal with no arms and legs on a music stand? Carol' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Give him a fire, he''ll be warm for a day. Set him on fire, he''ll be warm for the rest of his life.' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Got a girlfriend; got a computer. Guess which one goes down?' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Holly: The phrase `cargo bay doors'' does not appear to be in my lexicon' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Happy happy happy ... peel peel peel. - Stimpy' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='How are you getting on with your Stylophone?' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Horse sense is the thing a horse has that keeps it from b' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Hobbes: Until you stalk and overcome, you can''t devour anyone' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='He''s so conceited he walks down Lover''s Lane holding his own hand' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='It is not enough to have a good mind. The main thing is to use it well. -- Rene Descartes' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='It is impossible to travel faster than light, and certainly not desirable, as one''s hat keeps blowing off' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Internal editor allows message editing on-the-fly.' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='JABBA ? RTFM [alternate]: "The Joy of Sex."' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Jesus would''ve been a Democrat. The money lenders, GOP' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Just climb in, and hang on. Open your eyes, if you dare.' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Just follow the trail of heads - Crow' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='JOHN WAYNE IS BIG LEGGY' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Just another one adding their 2 senses' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='kinda like a cloud i was up, way up in the sky.' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Keep your dreams alive - Darkwood' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='LoonFests: where the beer is cold and the women are hot' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Look! She put her breasts on! - Tom on Tia Carrera' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Love of money is the root of all politics.' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Ljubicu te isto ko nekada, jednog dana ni sam ne znam kada.' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Life is a dilemma wrapped in an oxymoron.' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Mommas don''t let your babies grow up to be message' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Mathematical Model: 46-26-38' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Man is an animal that thinks; chicken is an animal that flies.' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Military intelligence is a contradiction in terms -- Groucho Marx' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='My Dad''s a Mortician - by Phil Degraves' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Microsoft: Making it all. Make sense?' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Nigel Mansell, Indy Champ' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='New Computer---- to be superseded as soon as it''s installed' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Orville Bullitt doesn''t need therapy - he needs a lobotomy.' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Ooooooops... - Captain of the Titanic' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='@N@''s a self-made man, and worships his creator' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='* <- Tribble @U*++------o <- Top Fuel Class Tribble' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='-> guy happy about about collecting disability pension' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Perfumery, something else and leather goods, going up' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Punny Book: Cry Wolf - Al Armist' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Parkinson''s First Law: Work expands to fill the time avai' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Phobia: What''s left after 20 beers in a 24 pack.' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Philip R. Sharp, Congressman, (Ind.), was an Eagle Scout.' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Prediction is very difficult, especially of the future. -- Niels Bohr' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Quod erat demonstrandum. [Thus it is proven. For those who wondered WTF QED means.]' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Q: Why''d the convict want a computer?' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Quindam: a mother of five babies.' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Quick Gary, what color is an Orange?' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='"Some of us live in perpetual 20-20 chaos." -Opus, Bloom County' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='"Very unfortunate. We will be dead." -- Worf' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='"You are not ready for immortality." -- Kosh, Babylon 5' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='"I send my soul through time and space To greet you." Flecker' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='"Bother!" said Pooh in an attempt to compose a scintillating tagline.' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Rush Limbaugh: So narrow minded he can look in a keyhole w/both eyes.' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Seen it. Done that. Got the souvenir hat with my name on it' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='The UART''s will''na take this speed cap''n' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='That wasn''t a bowl of oatmeal! That was Odo!' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='That which we resist the most is what we become' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='They were probably stolen while we were unconscious. --Sisko' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='URA redneck if "SAY NO TO CRACK" reminds you to pull your pants up' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Ura Redneck Trekker if u think the Borg are new-fangled punk rockers.' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Very few profundities can be expressed in 57 characters.' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Water... facinating... never touch the stuff myself... -- Londo' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='We all make mistakes. Few ''fess up'' as quickly as I did.' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Worker who fell in upholstery machine, now fully recovered!' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='What!? I''m missing Babylon5?`v=y%%(v@!~~%!# NO CARRIER' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='X T u s e r s d o i t s l o w l y' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Xpress Yourself!' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='You knooowww... uhhh... they''re F-A-K-E! (Elaine)' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='You''re about as useful as a parachute on a submarine' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='You have many friends and very few enemies' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Zephram Cochrane died 150 years ago! - McCoy' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='ZAR: Zero Any Register' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Zoroastrianism - **** happens half the time.' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='Zmodem Pizza DownLoad: Slices DownLoaded: 02 Slices Remaining: 04' LIMIT 1;
+DELETE FROM `tiki_cookies` WHERE `cookie`='ZIPPEDTAGLINE ');
