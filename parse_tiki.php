@@ -1,11 +1,18 @@
-<?php // $Header: /cvsroot/tikiwiki/tiki/parse_tiki.php,v 1.5 2004-06-16 01:24:10 teedog Exp $
+<?php // $Header: /cvsroot/tikiwiki/tiki/parse_tiki.php,v 1.6 2005-09-08 01:45:05 damosoft Exp $
 
 // heaviled modified get_strings.php
 // dedicated as a tool for use in an eventual test suite
 // mose@tikiwiki.org
 
 require_once('tiki-setup.php');
-if($tiki_p_admin != 'y')   die("You need to be admin to run this script");
+if($tiki_p_admin != 'y') {
+		if ($feature_redirect_on_error == 'y') {
+		header("location: $tikiIndex");
+		die;
+	} else {
+	  die("You need to be admin to run this script");
+		}
+}
 $logfile = 'temp/tiki_parsed.txt';
 $logfilehtml = 'temp/tiki_parsed.html';
 
