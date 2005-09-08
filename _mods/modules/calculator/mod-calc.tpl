@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/_mods/modules/calculator/mod-calc.tpl,v 1.2 2005-09-08 09:49:56 michael_davey Exp $ 
+{* $Header: /cvsroot/tikiwiki/_mods/modules/calculator/mod-calc.tpl,v 1.3 2005-09-08 10:39:55 michael_davey Exp $ 
 
    TikiWiki calculator in a module
 
@@ -80,6 +80,7 @@ cool:
 	height: 20;
 	font-size: 10px;
 	color: #FFF;
+	background-color: #999;
 }
 {/literal}
 </style>
