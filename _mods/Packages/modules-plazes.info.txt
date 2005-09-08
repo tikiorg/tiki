@@ -1,15 +1,15 @@
 contributor:
-$Author: damosoft $
+$Author: michael_davey $
 
 revision: 
-$Revision $
+$Revision: 1.2 $
 
 lastmodif:
-$Date: 2005-09-08 03:04:33 $
+$Date: 2005-09-08 08:30:40 $
 
 files: 
-modules/mod-plazes.php modules/mod-plazes.php
-modules/mod-plazes.tpl templates/modules/mod-plazes.tpl
+modules/plazes/mod-plazes.php modules/mod-plazes.php
+modules/plazes/mod-plazes.tpl templates/modules/mod-plazes.tpl
 
 author:
 Damosoft / Damian Parker

@@ -1,14 +1,14 @@
 contributor:
-$Author: damosoft $
+$Author: michael_davey $
 
 revision: 
-$Revision $
+$Revision: 1.2 $
 
 lastmodif:
-$Date: 2005-09-08 04:23:21 $
+$Date: 2005-09-08 08:30:40 $
 
 files: 
-modules/mod-clock.tpl templates/modules/mod-clock.tpl
+modules/clock/mod-clock.tpl templates/modules/mod-clock.tpl
 
 author:
 Damosoft / Damian Parker

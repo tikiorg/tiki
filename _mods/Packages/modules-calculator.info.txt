@@ -1,14 +1,14 @@
 contributor:
-$Author: damosoft $
+$Author: michael_davey $
 
 revision: 
-$Revision $
+$Revision: 1.2 $
 
 lastmodif:
-$Date: 2005-09-08 04:23:21 $
+$Date: 2005-09-08 08:30:39 $
 
 files: 
-modules/mod-calc.tpl templates/modules/mod-calc.tpl
+modules/calculator/mod-calc.tpl templates/modules/mod-calc.tpl
 
 author:
 Damosoft / Damian Parker
