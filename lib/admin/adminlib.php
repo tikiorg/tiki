@@ -289,10 +289,8 @@ class AdminLib extends TikiLib {
 
 		$query = "delete from `tiki_tags` where `tagName`=?";
 		$result = $this->query($query,array($tagname));
-		$action = "removed tag: $tagname";
-		$t = date("U");
-		$query = "insert into `tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) values(?,?,?,?,?,?)";
-		$result = $this->query($query,array($action,$wikiHomePage,$t,'admin' ,$_SERVER["REMOTE_ADDR"],''));
+		global $logslib; include_once('lib/logs/logslib.php');
+		$logslib->add_log('dump', "removed tag: $tagname");
 		return true;
 	}
 
@@ -328,10 +326,8 @@ class AdminLib extends TikiLib {
 			$result2 = $this->query($query,array($tagname,$pageName,$res["hits"],$data,$res["lastModif"],$res["comment"],$res["version"],$res["user"],$res["ip"],$res["flag"],$description));
 		}
 
-		$action = "created tag: $tagname";
-		$t = date("U");
-		$query = "insert into `tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) values(?,?,?,?,?,?)";
-		$result = $this->query($query,array($action,$wikiHomePage,$t,'admin',$_SERVER["REMOTE_ADDR"],$comment));
+		global $logslib; include_once('lib/logs/logslib.php');
+		$logslib->add_log('dump', "created tag: $tagname");
 		return true;
 	}
 
@@ -356,10 +352,8 @@ class AdminLib extends TikiLib {
 			$result2 = $this->query($query,array($res["hits"],$res["data"],$res["lastModif"],$res["comment"],$res["user"],$res["ip"],$res["flag"],$res["description"],$res["pageName"]));
 		}
 
-		$action = "recovered tag: $tagname";
-		$t = date("U");
-		$query = "insert into `tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) values(?,?,?,?,?,?)";
-		$result = $this->query($query,array($action,$wikiHomePage,$t,'admin',$_SERVER["REMOTE_ADDR"],''));
+		global $logslib; include_once('lib/logs/logslib.php');
+		$logslib->add_log('dump', "recovered tag: $tagname");
 		return true;
 	}
 
@@ -395,10 +389,8 @@ class AdminLib extends TikiLib {
 
 		$tar->toTar("$dump_path/new.tar", FALSE);
 		unset ($tar);
-		$action = "dump created";
-		$t = date("U");
-		$query = "insert into `tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) values(?,?,?,?,?,?)";
-		$result = $this->query($query,array($action,$wikiHomePage,$t,'admin',$_SERVER["REMOTE_ADDR"],''));
+		global $logslib; include_once('lib/logs/logslib.php');
+		$logslib->add_log('dump', 'dump created');
 	}
 
 	function list_content_tables() {
