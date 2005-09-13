@@ -12,7 +12,7 @@
  *
  * Last Editor: $Author: damosoft $
  * @author Richard Tango-Lowy & Dan Cech
- * @version $Revision: 1.1.1.5 $
+ * @version $Revision: 1.1.1.6 $
  *
  * @package axmls
  * @tutorial getting_started.pkg
@@ -921,9 +921,10 @@ class dbData extends dbObject {
 			// check that no required columns are missing
 			if( count( $fields ) < $table_field_count ) {
 				foreach( $table_fields as $field ) {
-					if( ( in_array( 'NOTNULL', $field['OPTS'] ) || in_array( 'KEY', $field['OPTS'] ) ) && !in_array( 'AUTOINCREMENT', $field['OPTS'] ) ) {
-						continue(2);
-					}
+					if (isset( $field['OPTS'] ))
+						if( ( in_array( 'NOTNULL', $field['OPTS'] ) || in_array( 'KEY', $field['OPTS'] ) ) && !in_array( 'AUTOINCREMENT', $field['OPTS'] ) ) {
+							continue(2);
+						}
 				}
 			}
 			
@@ -1194,7 +1195,7 @@ class dbQuerySet extends dbObject {
 * @tutorial getting_started.pkg
 *
 * @author Richard Tango-Lowy & Dan Cech
-* @version $Revision: 1.1.1.5 $
+* @version $Revision: 1.1.1.6 $
 *
 * @package axmls
 */
@@ -1983,7 +1984,7 @@ class adoSchema {
 						
 						while( $row = $rs->FetchRow() ) {
 							foreach( $row as $key => $val ) {
-								$row[$key] = htmlentities($row);
+								$row[$key] = htmlentities($val);
 							}
 							
 							$schema .= '			<row><f>' . implode( '</f><f>', $row ) . '</f></row>' . "\n";
