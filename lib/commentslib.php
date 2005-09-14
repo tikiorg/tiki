@@ -1654,12 +1654,20 @@ class Comments extends TikiLib {
 	$this->query($query, array( (int) $threadId ) );
     }
 
-    function update_comment($threadId, $title, $comment_rating, $data, $type = 'n', $summary = '', $smiley = '') {
+    function update_comment($threadId, $title, $comment_rating, $data, $type = 'n', $summary = '', $smiley = '', $objectId='') {
 	$query = "update `tiki_comments` set `title`=?, `comment_rating`=?,
 	`data`=?, `type`=?, `summary`=?, `smiley`=?
 	    where `threadId`=?";
 	$result = $this->query($query, array( $title, (int) $comment_rating, $data, $type,
 		    $summary, $smiley, (int) $threadId ) );
+
+	global $feature_actionlog;
+	if ($feature_actionlog == 'y' && $objectId[0] == 'forum') {
+		global $logslib; include_once('lib/logs/logslib.php');
+		$object = explode( ":", $objectId, 2);
+		$logslib->add_action('Updated', $object[1], $object[0], 'comments_parentId='.$threadId);
+	}
+
     }
 
     function post_new_comment($objectId, $parentId, $userName,
@@ -1790,6 +1798,12 @@ class Comments extends TikiLib {
 	/* Force an index refresh of the data */
 	include_once("lib/search/refresh-functions.php");
 	refresh_index_comments( $threadId );
+
+	global $feature_actionlog;
+	if ($feature_actionlog == 'y' && $object[0] == 'forum') {
+		global $logslib; include_once('lib/logs/logslib.php');
+		$logslib->add_action(($parentId == 0)? 'Posted': 'Replied', $object[1], $object[0], 'comments_parentId='.$threadId);
+	}
 
 	return $threadId;
 	//return $return_result;

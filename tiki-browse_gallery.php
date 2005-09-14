@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.34 2005-08-12 13:01:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.35 2005-09-14 21:45:38 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -354,6 +354,10 @@ if ($feature_theme_control == 'y') {
 ask_ticket('browse-gallery');
 //add a hit
 $statslib->stats_hit($gal_info["name"],"image gallery",$_REQUEST["galleryId"]);
+if ($feature_actionlog == 'y') {
+	include_once('lib/logs/logslib.php');
+	$logslib->add_action('Viewed', $_REQUEST['galleryId'], 'image gallery');
+}
 
 // Display the template
 $smarty->assign('mid', 'tiki-browse_gallery.tpl');

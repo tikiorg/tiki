@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.79 2005-08-18 16:23:05 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.80 2005-09-14 21:45:38 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -307,6 +307,11 @@ if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
 	include_once ("lib/hawhaw/hawtikilib.php");
 
 	HAWTIKI_view_forum_thread($forum_info['name'], $thread_info, $tiki_p_forum_read);
+}
+
+if ($feature_actionlog == 'y') {
+	include_once('lib/logs/logslib.php');
+	$logslib->add_action('Viewed', $_REQUEST['forumId'], 'forum', 'comments_parentId='.$comments_parentId);
 }
 
 ask_ticket('view-forum');

@@ -75,6 +75,11 @@ class FileGalLib extends TikiLib {
 		if ($feature_score == 'y') {
 		    $this->score_event($user, 'fgallery_new_file');
 		}
+		global $feature_actionlog;
+		if ($feature_actionlog == 'y') {
+			global $logslib; include_once('lib/logs/logslib.php');
+			$logslib->add_action('Uploaded', $galleryId, 'file gallery');
+		}
 
 		//Watches
 		$smarty->assign('galleryId', $galleryId);

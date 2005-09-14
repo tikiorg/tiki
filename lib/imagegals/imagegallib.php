@@ -855,7 +855,12 @@ class ImageGalsLib extends TikiLib {
 		if ($feature_score == 'y') {
 		    $this->score_event($user, 'igallery_new_img');
 		}
-
+		global $feature_actionlog;
+		if ($feature_actionlog == 'y') {
+			global $logslib; include_once('lib/logs/logslib.php');
+			$logslib->add_action('Uploaded', $_REQUEST['galleryId'], 'image gallery', 'imageId='.$imageId);
+		}
+		
 		return $imageId;
 	}
 

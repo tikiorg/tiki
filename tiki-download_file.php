@@ -80,7 +80,10 @@ $content=&$info["data"];
 
 //add a hit
 $statslib->stats_hit($file,"file",$_REQUEST["fileId"]);
-
+if ($feature_actionlog == 'y') {
+	include_once('lib/logs/logslib.php');
+	$logslib->add_action('Viewed', $_REQUEST['galleryId'], 'file gallery');
+}
 // close the session in case of large downloads to enable further browsing
 session_write_close();
 
