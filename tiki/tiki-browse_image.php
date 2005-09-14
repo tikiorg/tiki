@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.33 2005-08-20 15:35:55 wesleywillians Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.34 2005-09-14 21:45:38 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -389,6 +389,10 @@ ask_ticket('browse-image');
 
 //add a hit
 $statslib->stats_hit($info["name"],"image",$_REQUEST["imageId"]);
+if ($feature_actionlog == 'y') {
+	include_once('lib/logs/logslib.php');
+	$logslib->add_action('Viewed', $_REQUEST['galleryId'], 'image gallery');
+}
 
 // Display the template
 $smarty->assign('mid', 'tiki-browse_image.tpl');

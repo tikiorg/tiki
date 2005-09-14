@@ -468,11 +468,9 @@ class WikiLib extends TikiLib {
 	} else {
 	    $this->remove_all_versions($page);
 	}
-
-	$action = "Removed last version";
-	$t = date("U");
-	$query = "insert into `tiki_actionlog`( `action`, `pageName`, `lastModif`, `user`, `ip`, `comment`) values( ?, ?, ?, ?, ?, ?)";
-	$result = $this->query($query, array( $action, $page, $t, "admin", $_SERVER["REMOTE_ADDR"], $comment ) );
+	global  $logslib; include_once('lib/logs/logslib.php');
+	$logslib->add_action('Removed last version', $page, 'wiki page', $comment);
+	//get_strings tra("Removed last version");
     }
 
     // Like pages are pages that share a word in common with the current page
@@ -594,7 +592,7 @@ class WikiLib extends TikiLib {
 
 	// get all modified pages for a user (if actionlog is not clean
 	function get_user_all_pages($user, $sort_mode) {
-		$query = "select  distinct(p.`pageName`), p.`user` as lastEditor, p.`creator`, max(a.`lastModif`) as date from `tiki_actionlog` as a, `tiki_pages` as p where a.`pageName`= p.`pageName` and a.`user`= ? group by p.`pagename` asc order by ".$this->convert_sortmode($sort_mode);
+		$query = "select  distinct(p.`pageName`), p.`user` as lastEditor, p.`creator`, max(a.`lastModif`) as date from `tiki_actionlog` as a, `tiki_pages` as p where a.`object`= p.`pageName` and a.`user`= ? group by p.`pagename` asc order by ".$this->convert_sortmode($sort_mode);
 		$result = $this->query($query, array($user));
 		$ret = array();
 		while ($res = $result->fetchRow()) {

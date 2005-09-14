@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.39 2005-08-30 12:51:31 michael_davey Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.40 2005-09-14 21:45:38 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -98,7 +98,8 @@ $features_toggles = array(
 	"user_assigned_modules",
 	"feature_multilingual",
 	"feature_best_language",
-	"contact_anon"
+	"contact_anon",
+	"feature_actionlog"
 );
 
     $pref_byref_values = array(

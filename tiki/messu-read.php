@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-read.php,v 1.20 2005-09-08 01:45:05 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-read.php,v 1.21 2005-09-14 21:45:38 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -94,6 +94,11 @@ if ($messulib->get_user_preference($user, 'mess_sendReadStatus', 'n') == 'y') {
 	// Mark the message as read in the senders sent box:
 	$messulib->flag_message($msg['user_from'], $_REQUEST['msgId'], 'isRead', 'y', 'sent');
 }
+if ($feature_actionlog == 'y') {
+	include_once('lib/logs/logslib.php');
+	$logslib->add_action('Viewed', $_REQUEST['msgId'], 'message');
+}
+
 
 ask_ticket('messu-read');
 $section = 'user_messages';

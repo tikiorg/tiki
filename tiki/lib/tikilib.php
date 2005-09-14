@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.609 2005-09-07 12:35:39 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.610 2005-09-14 21:45:38 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2982,14 +2982,9 @@ function add_pageview() {
 	$result = $this->query($query, array( $page ) );
 	$query = "delete from `tiki_links` where `fromPage` = ?";
 	$result = $this->query($query, array( $page ) );
-	$action = "Removed"; //get_strings tra("Removed");
-	$t = date("U");
-	$query = "insert into ";
-	$query .= "`tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) ";
-	$query .= "values(?,?,?,?,?,?)";
-	$result = $this->query($query, array(
-		    $action,$page,(int) $t,$user,$_SERVER["REMOTE_ADDR"],$comment
-		    ) );
+	global $logslib; include_once('lib/logs/logslib.php');
+	$logslib->add_action('Removed', $page, 'wiki page', $comment);
+	//get_strings tra("Removed");
 	$query = "update `users_groups` set `groupHome`=? where `groupHome`=?";
 	$this->query($query, array(NULL, $page));
 
@@ -3225,7 +3220,7 @@ function add_pageview() {
     function last_major_pages($maxRecords = -1) {
         global $user;
 	$query = "select distinct(tp.`pageName`),tp.`lastModif`,tp.`user` from `tiki_pages` tp left join `tiki_actionlog` ta
-	    on tp.`pageName`=ta.`pageName` where ta.`action`!='' order by tp.".$this->convert_sortmode('lastModif_desc');
+	    on tp.`pageName`=ta.`object` where ta.`action`!='' and ta.`objectType`= 'wiki page' order by tp.".$this->convert_sortmode('lastModif_desc');
 	$result = $this->query($query,array(),$maxRecords,0);
 	$ret = array();
 	while ($res = $result->fetchRow()) {
@@ -3670,17 +3665,9 @@ function add_pageview() {
 
 	// Update the log
 	if (strtolower($name) != 'sandbox') {
-	    $action = "Created";//get_strings tra("Created");
-
-	    $query = "insert into `tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) values(?,?,?,?,?,?)";
-	    $result = $this->query($query, array(
-			$action,
-			$name,
-			(int)$lastModif,
-			$user,
-			$ip,
-			$comment
-			));
+	    global $logslib; include_once("lib/logs/logslib.php");
+	    $logslib->add_action("Created", $name, 'wiki page', $comment, $user, $ip, '', $lastModif);
+	    //get_strings tra("Created");
 
 	    //  Deal with mail notifications.
 	    include_once('lib/notifications/notificationemaillib.php');
@@ -5691,10 +5678,9 @@ if (!$simple_wiki) {
 
 	// Update the log
 	if (strtolower($pageName) != 'sandbox' && !$minor) {
-	    $action = "Updated"; //get_strings tra("Updated")
-
-	    $query = "insert into `tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) values(?,?,?,?,?,?)";
-	    $result = $this->query($query,array($action,$pageName,(int) $t,$edit_user,$edit_ip,$edit_comment));
+	    global $logslib; include_once('lib/logs/logslib.php');
+	    $logslib->add_action('Updated', $pageName, 'wiki page', $edit_comment, $edit_user, $edit_ip, '', $t); 
+	    //get_strings tra("Updated")
 	    $maxversions = $this->get_preference("maxVersions", 0);
 
 	    if ($maxversions && ($nb = $histlib->get_nb_history($pageName)) > $maxversions) {

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.28 2005-08-12 13:01:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.29 2005-09-14 21:45:38 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -367,7 +367,10 @@ ask_ticket('list-fgal');
 
 //add a hit
 $statslib->stats_hit($gal_info["name"],"file gallery",$galleryId);
-
+if ($feature_actionlog == 'y') {
+	include_once('lib/logs/logslib.php');
+	$logslib->add_action('Viewed', $galleryId, 'file gallery');
+}
 // Display the template
 $smarty->assign('mid', 'tiki-list_file_gallery.tpl');
 $smarty->display("tiki.tpl");

@@ -20,10 +20,9 @@ class HistLib extends TikiLib {
 	function remove_version($page, $version, $comment = '') {
 		$query = "delete from `tiki_history` where `pageName`=? and `version`=?";
 		$result = $this->query($query,array($page,$version));
-		$action = "Removed version $version";
-		$t = date("U");
-		$query = "insert into `tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) values(?,?,?,?,?,?)";
-		$result = $this->query($query,array($action,$page,$t,"admin",$_SERVER["REMOTE_ADDR"],$comment));
+		global $logslib; include_once('lib/logs/logslib.php');
+		$logslib->add_action("Removed version", $page, 'wiki page', "version=$version");
+		//get_strings tra("Removed version $version")
 		return true;
 	}
 
@@ -67,10 +66,12 @@ class HistLib extends TikiLib {
 		//$query="delete from `tiki_history` where `pageName`='$page' and version='$version'";
 		//$result=$this->query($query);
 		//
-		$action = "Changed actual version to $version";
-		$t = date("U");
-		$query = "insert into `tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) values(?,?,?,?,?,?)";
-		$result = $this->query($query,array($action,$page,$t,'admin',$_SERVER["REMOTE_ADDR"],$comment));
+		global $feature_actionlog;
+		if ($feature_actionlog == 'y') {
+			global $logslib; include_once('lib/logs/logslib.php');
+			$logslib->add_action("Rollback", $page, 'wiki page', "version=$version");
+		}
+		//get_strings tra("Changed actual version to $version");
 		return true;
 	}
 
@@ -175,11 +176,11 @@ class HistLib extends TikiLib {
 		}
 
 		$query = "select ta.`action`, ta.`lastModif`, ta.`user`, ta.`ip`, ta.`pageName`,ta.`comment`, th.`version` as version, tp.`version` as versionlast from `tiki_actionlog` ta 
-			left join `tiki_history` th on  ta.`pageName`=th.`pageName` and ta.`lastModif`=th.`lastModif` 
-			left join `tiki_pages` tp on ta.`pageName`=tp.`pageName` and ta.`lastModif`=tp.`lastModif` " . $where . " order by ta.".$this->convert_sortmode($sort_mode);
+			left join `tiki_history` th on  ta.`object`=th.`pageName` and ta.`lastModif`=th.`lastModif` 
+			left join `tiki_pages` tp on ta.`object`=tp.`pageName` and ta.`lastModif`=tp.`lastModif` " . $where . " order by ta.".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_actionlog` ta 
-			left join `tiki_history` th on  ta.`pageName`=th.`pageName` and ta.`lastModif`=th.`lastModif` 
-			left join `tiki_pages` tp on ta.`pageName`=tp.`pageName` and ta.`lastModif`=tp.`lastModif` " . $where;
+			left join `tiki_history` th on  ta.`object`=th.`pageName` and ta.`lastModif`=th.`lastModif` 
+			left join `tiki_pages` tp on ta.`object`=tp.`pageName` and ta.`lastModif`=tp.`lastModif` " . $where;
 
 		$result = $this->query($query,$bindvars,$limit,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
