@@ -57,11 +57,8 @@
   <div class="showimage" {if ($popup) }style="height: 400px"{/if}>
   
   
-  {literal}  
   
-  <!--
-
-	About LGPL:
+ {*	About LGPL:
 	
 	Hi,
  
@@ -80,13 +77,14 @@ Patrick Fitzgerald
 	 More options	  Aug 26 
 Yes, you may use slideshow.js under the LGPL.
 
--->
+*}
+  {literal}
   
   <SCRIPT TYPE="text/javascript">
 <!--
 
 /*==================================================*
- $Id: tiki-browse_image.tpl,v 1.35 2005-09-07 12:35:41 sylvieg Exp $
+ $Id: tiki-browse_image.tpl,v 1.36 2005-09-14 17:03:26 sylvieg Exp $
  Copyright 2000-2003 Patrick Fitzgerald
  http://slideshow.barelyfitz.com/
 
