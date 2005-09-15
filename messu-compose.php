@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-compose.php,v 1.28 2005-09-14 21:45:38 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-compose.php,v 1.29 2005-09-15 14:52:33 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -73,6 +73,7 @@ if (!isset($_REQUEST['priority']))
 // Strip Re:Re:Re: from subject
 if(isset($_REQUEST['reply'])||isset($_REQUEST['replyall'])) {
 	$_REQUEST['subject'] = tra("Re:") . ereg_replace("^(".tra("Re:").")+", "", $_REQUEST['subject']);
+	$smarty->assign('reply', 'y');
 }
 
 $smarty->assign('to', $_REQUEST['to']);
@@ -113,7 +114,6 @@ if (isset($_REQUEST['send'])) {
 	foreach ($arr_to as $a_user) {
 		if (!empty($a_user)) {
 			$a_user = str_replace('\\;', ';', $a_user);
-echo "<pre>$a_user</pre>";
 			if ($messulib->user_exists($a_user)) {
 				// mail only to users with activated message feature
 				if ($messulib->get_user_preference($a_user, 'allowMsgs', 'y') == 'y') {
@@ -210,7 +210,7 @@ echo "<pre>$a_user</pre>";
 
 	if ($feature_actionlog == 'y') {
 		include_once('lib/logs/logslib.php');
-		if (isset($_REQUEST['reply']) || isset($_REQUEST['replyall']))
+		if (isset($_REQUEST['reply']) && $_REQUEST['reply'] == 'y')
 			$logslib->add_action('Replied', '', 'message');
 		else
 			$logslib->add_action('Posted', '', 'message');
