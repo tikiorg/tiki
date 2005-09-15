@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-broadcast.php,v 1.24 2005-09-08 01:45:05 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-broadcast.php,v 1.25 2005-09-15 14:52:33 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -148,6 +148,10 @@ if (isset($_REQUEST['send'])) {
 		$_REQUEST['priority'], $_REQUEST['replyto_hash']);
 
 	$smarty->assign('message', $message);
+
+	if ($feature_actionlog == 'y') {
+		$logslib->add_action('Posted', '', 'message');
+	}
 }
 ask_ticket('messu-broadcast');
 

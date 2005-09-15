@@ -1662,10 +1662,12 @@ class Comments extends TikiLib {
 		    $summary, $smiley, (int) $threadId ) );
 
 	global $feature_actionlog;
-	if ($feature_actionlog == 'y' && $objectId[0] == 'forum') {
-		global $logslib; include_once('lib/logs/logslib.php');
+	if ($feature_actionlog == 'y') {
 		$object = explode( ":", $objectId, 2);
-		$logslib->add_action('Updated', $object[1], $object[0], 'comments_parentId='.$threadId);
+		if ($object[0] == 'forum') {
+			global $logslib; include_once('lib/logs/logslib.php');
+			$logslib->add_action('Updated', $object[1], $object[0], 'comments_parentId='.$threadId);
+		}
 	}
 
     }
