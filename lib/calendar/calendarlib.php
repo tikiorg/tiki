@@ -194,7 +194,7 @@ class CalendarLib extends TikiLib {
 		foreach ($tikiobj as $tik) {
 			switch ($tik) {
 			case "wiki":
-				$query = "select * from `tiki_actionlog` where (`lastModif`>? and `lastModif`<?)";
+				$query = "select * from `tiki_actionlog` where (`lastModif`>? and `lastModif`<?) and `objectType`='wiki page'";
 				$result = $this->query($query,array($tstart,$tstop));
 
 				while ($res = $result->fetchRow()) {
@@ -209,8 +209,8 @@ class CalendarLib extends TikiLib {
 						"time" => $tstart2,
 						"start" => $res['lastModif'],
 						"type" => "wiki",
-						"url" => "tiki-index.php?page=" . $res["pageName"],
-						"name" => $res["pageName"] . " " . tra($res["action"]),
+						"url" => "tiki-index.php?page=" . $res['object'],
+						"name" => $res['object'] . " " . tra($res["action"]),
 						"head" => "<b>" . date("H:i", $res["lastModif"]). "</b> " . tra("in"). " <b>".str_replace("\n|\r", "", addslashes($tik))."</b>",
 						"description" => str_replace("\n|\r", "", $quote)
 					);
@@ -230,7 +230,7 @@ class CalendarLib extends TikiLib {
 						"time" => $tstart,
 						"start" => $res['created'],
 						"type" => "wiki page",
-						"url" => "tiki-index.php?page=" . $res["pageName"]. "&amp;comzone=show#comments",
+						"url" => "tiki-index.php?page=" . urlencode($res["pageName"]). "&amp;comzone=show#comments",
 						"name" => $res["name"],
 						"head" => "<b>" . date("H:i", $res["created"]). "</b> " . tra("in"). " <b>" . $res["pageName"]. "</b>",
 						"description" => "<i>" . tra("by"). " " . $res["user"] . "</i>"
