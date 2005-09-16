@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.23 2005-05-18 10:58:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.24 2005-09-16 17:51:15 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -51,10 +51,9 @@ if (isset($_REQUEST["submit_mult"]) && isset($_REQUEST["checked"]) && $_REQUEST[
 	}
 
 	// permissions ok: go!
-	include_once ('lib/wiki/histlib.php');
 
 	foreach ($_REQUEST["checked"] as $deletepage) {
-		$histlib->remove_all_versions($deletepage);
+		$tikilib->remove_all_versions($deletepage);
 	}
 }
 
