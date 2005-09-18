@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib-debug.php,v 1.11 2005-05-18 10:59:49 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib-debug.php,v 1.12 2005-09-18 23:13:34 rabiddog Exp $
 //
 
 
@@ -60,6 +60,7 @@ function queryError( $query, &$error, $values = null, $numrows = -1,
     $numrows = intval($numrows);
     $offset = intval($offset);
     $this->convert_query($query);
+    $this->convert_query_table_prefixes($query);
     list($micro,$sec)=explode(' ',microtime());
     $query_start=$sec+$micro;
 
@@ -92,13 +93,14 @@ function queryError( $query, &$error, $values = null, $numrows = -1,
 }
 
 // Queries the database reporting an error if detected
-// 
+//
 function query($query, $values = null, $numrows = -1,
         $offset = -1, $reporterrors = true )
 {
     $numrows = intval($numrows);
     $offset = intval($offset);
     $this->convert_query($query);
+    $this->convert_query_table_prefixes($query);
 
     //echo "query: $query <br />";
     //echo "<pre>";
@@ -106,7 +108,7 @@ function query($query, $values = null, $numrows = -1,
     //echo "\n";
     list($micro,$sec)=explode(' ',microtime());
     $query_start=$sec+$micro;
-    
+
     if ($numrows == -1 && $offset == -1)
         $result = $this->db->Execute($query, $values);
     else
@@ -143,7 +145,7 @@ function query($query, $values = null, $numrows = -1,
 // Gets one column for the database.
 function getOne($query, $values = null, $reporterrors = true, $offset = 0) {
     $this->convert_query($query);
-
+    $this->convert_query_table_prefixes($query);
     //echo "<pre>";
     //echo "query: $query \n";
     //print_r($values);
@@ -196,10 +198,10 @@ function sql_error($query, $values, $result) {
     $outp = "<div class='simplebox'><b>".tra("An error occured in a database query!")."</b></div>";
     $outp.= "<br /><table class='form'>";
     $outp.= "<tr class='heading'><td colspan='2'>Context:</td></tr>";
-		$outp.= "<tr class='formcolor'><td>File</td><td>".$_SERVER['SCRIPT_NAME']."</td></tr>";
-		$outp.= "<tr class='formcolor'><td>Url</td><td>".$_SERVER['REQUEST_URI']."</td></tr>";
-		$outp.= "<tr class='heading'><td colspan='2'>Query:</td></tr>";
-		$outp.= "<tr class='formcolor'><td colspan='2'><tt>$query</tt></td></tr>";
+    $outp.= "<tr class='formcolor'><td>File</td><td>".$_SERVER['SCRIPT_NAME']."</td></tr>";
+    $outp.= "<tr class='formcolor'><td>Url</td><td>".$_SERVER['REQUEST_URI']."</td></tr>";
+    $outp.= "<tr class='heading'><td colspan='2'>Query:</td></tr>";
+    $outp.= "<tr class='formcolor'><td colspan='2'><tt>$query</tt></td></tr>";
     $outp.= "<tr class='heading'><td colspan='2'>Values:</td></tr>";
     foreach ($values as $k=>$v) {
       $outp.= "<tr class='formcolor'><td>$k</td><td>$v</td></tr>";
@@ -234,28 +236,28 @@ function convert_query(&$query) {
         case "oci8":
             $query = preg_replace("/`/", "\"", $query);
 
-        // convert bind variables - adodb does not do that 
-        $qe = explode("?", $query);
-        $query = '';
+            // convert bind variables - adodb does not do that
+            $qe = explode("?", $query);
+            $query = '';
 
-        $temp_max = sizeof($qe) - 1;
-        for ($i = 0; $i < $temp_max; $i++) {
-            $query .= $qe[$i] . ":" . $i;
-        }
+            $temp_max = sizeof($qe) - 1;
+            for ($i = 0; $i < $temp_max; $i++) {
+                $query .= $qe[$i] . ":" . $i;
+            }
 
-        $query .= $qe[$i];
+            $query .= $qe[$i];
         break;
 
         case "postgres7":
-            case "sybase":
+        case "sybase":
             $query = preg_replace("/`/", "\"", $query);
 
         break;
 
-	case "mssql":
-    	  $query = preg_replace("/`/","",$query);
-	  $query = preg_replace("/\?/","'?'",$query);
-	  break;
+        case "mssql":
+            $query = preg_replace("/`/","",$query);
+            $query = preg_replace("/\?/","'?'",$query);
+        break;
 
             case "sqlite":
             $query = preg_replace("/`/", "", $query);
@@ -293,16 +295,16 @@ function convert_sortmode($sort_mode) {
 
     switch ($ADODB_LASTDB) {
         case "postgres7":
-            case "oci8":
-            case "sybase":
-	case "mssql":
+        case "oci8":
+        case "sybase":
+        case "mssql":
             // Postgres needs " " around column names
             //preg_replace("#([A-Za-z]+)#","\"\$1\"",$sort_mode);
             $sort_mode = preg_replace("/_asc$/", "\" asc", $sort_mode);
-        $sort_mode = preg_replace("/_desc$/", "\" desc", $sort_mode);
-        $sort_mode = str_replace(",", "\",\"",$sort_mode);
+            $sort_mode = preg_replace("/_desc$/", "\" desc", $sort_mode);
+            $sort_mode = str_replace(",", "\",\"",$sort_mode);
 
-        $sort_mode = "\"" . $sort_mode;
+            $sort_mode = "\"" . $sort_mode;
         break;
 
         case "sqlite":
@@ -311,7 +313,7 @@ function convert_sortmode($sort_mode) {
             break;
 
         case "mysql3":
-            case "mysql":
+        case "mysql":
         default:
             $sort_mode = preg_replace("/_asc$/", "` asc", $sort_mode);
             $sort_mode = preg_replace("/_desc$/", "` desc", $sort_mode);
@@ -328,14 +330,14 @@ function convert_binary() {
 
     switch ($ADODB_LASTDB) {
         case "oci8":
-            case "postgres7":
-            case "sqlite":
+        case "postgres7":
+        case "sqlite":
             return;
 
         break;
 
         case "mysql3":
-            case "mysql":
+        case "mysql":
             return "binary";
 
         break;
@@ -358,6 +360,7 @@ function sql_cast($var,$type) {
                         break;
                 }
         break;
+
     default:
         return($var);
         break;
@@ -382,8 +385,9 @@ function debugger_log($query, $values)
                 $query = $tmp;
             }
         }
-    $debugger->msg($this->num_queries.': '.$query);
-}
+
+        $debugger->msg($this->num_queries.': '.$query);
+    }
 }
 
 
