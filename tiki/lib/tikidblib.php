@@ -1,12 +1,17 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.17 2005-05-18 10:59:49 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.18 2005-09-18 23:13:34 rabiddog Exp $
 //
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
+}
+
+$local_php = 'db/local.php';
+if (is_file($local_php)) {
+    require_once($local_php);
 }
 
 class TikiDB {
@@ -38,6 +43,7 @@ function queryError( $query, &$error, $values = null, $numrows = -1,
     $numrows = intval($numrows);
     $offset = intval($offset);
     $this->convert_query($query);
+    $this->convert_query_table_prefixes($query);
 
     if ($numrows == -1 && $offset == -1)
         $result = $this->db->Execute($query, $values);
@@ -58,18 +64,20 @@ function queryError( $query, &$error, $values = null, $numrows = -1,
 }
 
 // Queries the database reporting an error if detected
-// 
+//
 function query($query, $values = null, $numrows = -1,
         $offset = -1, $reporterrors = true )
 {
     $numrows = intval($numrows);
     $offset = intval($offset);
     $this->convert_query($query);
+    $this->convert_query_table_prefixes($query);
 
     //echo "query: $query <br />";
     //echo "<pre>";
     //print_r($values);
     //echo "\n";
+
     if ($numrows == -1 && $offset == -1)
         $result = $this->db->Execute($query, $values);
     else
@@ -77,6 +85,7 @@ function query($query, $values = null, $numrows = -1,
 
     //print_r($result);
     //echo "\n</pre>\n";
+
     if (!$result )
     {
         if ($reporterrors)
@@ -84,7 +93,6 @@ function query($query, $values = null, $numrows = -1,
             $this->sql_error($query, $values, $result);
         }
     }
-
 
     //count the number of queries made
     global $num_queries;
@@ -96,6 +104,7 @@ function query($query, $values = null, $numrows = -1,
 // Gets one column for the database.
 function getOne($query, $values = null, $reporterrors = true, $offset = 0) {
     $this->convert_query($query);
+    $this->convert_query_table_prefixes($query);
 
     //echo "<pre>";
     //echo "query: $query \n";
@@ -119,7 +128,7 @@ function getOne($query, $values = null, $reporterrors = true, $offset = 0) {
     $num_queries++;
     //$this->debugger_log($query, $values);
 
-    if ($res === false)
+    if ($res == false)
         return (NULL); //simulate pears behaviour
 
     list($key, $value) = each($res);
@@ -137,10 +146,10 @@ function sql_error($query, $values, $result) {
     $outp = "<div class='simplebox'><b>".tra("An error occured in a database query!")."</b></div>";
     $outp.= "<br /><table class='form'>";
     $outp.= "<tr class='heading'><td colspan='2'>Context:</td></tr>";
-		$outp.= "<tr class='formcolor'><td>File</td><td>".$_SERVER['SCRIPT_NAME']."</td></tr>";
-		$outp.= "<tr class='formcolor'><td>Url</td><td>".$_SERVER['REQUEST_URI']."</td></tr>";
-		$outp.= "<tr class='heading'><td colspan='2'>Query:</td></tr>";
-		$outp.= "<tr class='formcolor'><td colspan='2'><tt>$query</tt></td></tr>";
+    $outp.= "<tr class='formcolor'><td>File</td><td>".$_SERVER['SCRIPT_NAME']."</td></tr>";
+    $outp.= "<tr class='formcolor'><td>Url</td><td>".$_SERVER['REQUEST_URI']."</td></tr>";
+    $outp.= "<tr class='heading'><td colspan='2'>Query:</td></tr>";
+    $outp.= "<tr class='formcolor'><td colspan='2'><tt>$query</tt></td></tr>";
     $outp.= "<tr class='heading'><td colspan='2'>Values:</td></tr>";
     foreach ($values as $k=>$v) {
       $outp.= "<tr class='formcolor'><td>$k</td><td>$v</td></tr>";
@@ -175,34 +184,57 @@ function convert_query(&$query) {
         case "oci8":
             $query = preg_replace("/`/", "\"", $query);
 
-        // convert bind variables - adodb does not do that 
-        $qe = explode("?", $query);
-        $query = '';
+            // convert bind variables - adodb does not do that
+            $qe = explode("?", $query);
+            $query = '';
 
-        $temp_max = sizeof($qe) - 1;
-        for ($i = 0; $i < $temp_max; $i++) {
-            $query .= $qe[$i] . ":" . $i;
-        }
+            $temp_max = sizeof($qe) - 1;
+            for ($i = 0; $i < $temp_max; $i++) {
+                $query .= $qe[$i] . ":" . $i;
+            }
 
-        $query .= $qe[$i];
+            $query .= $qe[$i];
         break;
 
         case "postgres7":
-            case "sybase":
+        case "sybase":
             $query = preg_replace("/`/", "\"", $query);
-
         break;
 
-	case "mssql":
-    	  $query = preg_replace("/`/","",$query);
-	  $query = preg_replace("/\?/","'?'",$query);
-	  break;
+        case "mssql":
+            $query = preg_replace("/`/","",$query);
+            $query = preg_replace("/\?/","'?'",$query);
+        break;
 
-            case "sqlite":
+        case "sqlite":
             $query = preg_replace("/`/", "", $query);
-            break;
+        break;
     }
+}
 
+function convert_query_table_prefixes(&$query) {
+
+    $db_table_prefix = $GLOBALS["db_table_prefix"];
+    $common_tiki_users = $GLOBALS["common_tiki_users"];
+    $common_users_table_prefix = $GLOBALS["common_users_table_prefix"];
+
+    if ( isset($db_table_prefix) && !is_null($db_table_prefix) && !empty($db_table_prefix) ) {
+
+        //printf("convert_query_table_prefixes():\$db_table_prefix = %s<br/>\n", $db_table_prefix );
+
+        if( isset($common_users_table_prefix) && !is_null($common_users_table_prefix) && !empty($common_users_table_prefix) ) {
+            $query = str_replace("`users_", "`".$common_users_table_prefix."users_", $query);
+        } else {
+            $query = str_replace("`users_", "`".$db_table_prefix."users_", $query);
+        }
+
+        $query = str_replace("`tiki_", "`".$db_table_prefix."tiki_", $query);
+        $query = str_replace("`messu_", "`".$db_table_prefix."messu_", $query);
+        $query = str_replace("`sessions", "`".$db_table_prefix."sessions", $query);
+        $query = str_replace("`galaxia_", "`".$db_table_prefix."galaxia_", $query);
+
+        //printf("convert_query_table_prefixes():\$query = %s<br/>\n", $query );
+    }
 }
 
 function blob_encode(&$blob) {
@@ -234,16 +266,15 @@ function convert_sortmode($sort_mode) {
 
     switch ($ADODB_LASTDB) {
         case "postgres7":
-            case "oci8":
-            case "sybase":
-	case "mssql":
+        case "oci8":
+        case "sybase":
+        case "mssql":
             // Postgres needs " " around column names
             //preg_replace("#([A-Za-z]+)#","\"\$1\"",$sort_mode);
             $sort_mode = preg_replace("/_asc$/", "\" asc", $sort_mode);
-        $sort_mode = preg_replace("/_desc$/", "\" desc", $sort_mode);
-        $sort_mode = str_replace(",", "\",\"",$sort_mode);
-
-        $sort_mode = "\"" . $sort_mode;
+            $sort_mode = preg_replace("/_desc$/", "\" desc", $sort_mode);
+            $sort_mode = str_replace(",", "\",\"",$sort_mode);
+            $sort_mode = "\"" . $sort_mode;
         break;
 
         case "sqlite":
@@ -252,7 +283,7 @@ function convert_sortmode($sort_mode) {
             break;
 
         case "mysql3":
-            case "mysql":
+        case "mysql":
         default:
             $sort_mode = preg_replace("/_asc$/", "` asc", $sort_mode);
             $sort_mode = preg_replace("/_desc$/", "` desc", $sort_mode);
@@ -269,16 +300,14 @@ function convert_binary() {
 
     switch ($ADODB_LASTDB) {
         case "oci8":
-            case "postgres7":
-            case "sqlite":
+        case "postgres7":
+        case "sqlite":
             return;
-
         break;
 
         case "mysql3":
-            case "mysql":
+        case "mysql":
             return "binary";
-
         break;
     }
 }
@@ -299,6 +328,7 @@ function sql_cast($var,$type) {
                         break;
                 }
         break;
+
     default:
         return($var);
         break;
@@ -323,9 +353,9 @@ function debugger_log($query, $values)
                 $query = $tmp;
             }
         }
-    $debugger->msg($this->num_queries.': '.$query);
-}
-}
 
+        $debugger->msg($this->num_queries.': '.$query);
+    }
+}
 
 ?>
