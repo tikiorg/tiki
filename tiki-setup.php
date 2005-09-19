@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.282 2005-09-08 14:47:57 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.283 2005-09-19 20:03:17 michael_davey Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1213,6 +1213,8 @@ $smarty->assign('feature_siteidentity', $feature_siteidentity);
 
 $site_crumb_seper='>';
 $smarty->assign('site_crumb_seper', $site_crumb_seper);
+$site_nav_seper='|';
+$smarty->assign('site_nav_seper', $site_nav_seper);
 
 $feature_sitemycode='n';
 $sitemycode='<div align="center"><b>{tr}Here you can (as an admin) place a piece of custom XHTML and/or Smarty code. Be careful and properly close all the tags before you choose to publish ! (Javascript, applets and object tags are stripped out.){/tr}</b></div>'; // must be max. 250 chars now unless it'll change in tiki_prefs db table field value from VARCHAR(250) to BLOB by default
@@ -1337,11 +1339,15 @@ $smarty->assign('https_port', $https_port);
 $https_prefix = $tikilib->get_preference('https_prefix', '/');
 $smarty->assign('https_prefix', $https_prefix);
 
+$base_url = 'http://' . $feature_server_name;
 $login_url = 'tiki-login.php';
 $login_scr = 'tiki-login_scr.php';
+$register_url = 'tiki-register.php';
 $error_url = 'tiki-error.php';
+$smarty->assign('base_url', $base_url );
 $smarty->assign('login_url', $login_url);
 $smarty->assign('login_scr', $login_scr);
+$smarty->assign('register_url', $register_url);
 $smarty->assign('error_url', $error_url);
 
 if ($https_login == 'y' || $https_login_required == 'y') {
