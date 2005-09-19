@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.18 2005-09-18 23:13:34 rabiddog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.19 2005-09-19 12:45:09 sylvieg Exp $
 //
 
 //this script may only be included - so its better to die if called directly.
@@ -214,9 +214,9 @@ function convert_query(&$query) {
 
 function convert_query_table_prefixes(&$query) {
 
-    $db_table_prefix = $GLOBALS["db_table_prefix"];
-    $common_tiki_users = $GLOBALS["common_tiki_users"];
-    $common_users_table_prefix = $GLOBALS["common_users_table_prefix"];
+    $db_table_prefix = isset($GLOBALS["db_table_prefix"])?$GLOBALS["db_table_prefix"]:'' ;
+    $common_tiki_users = isset($GLOBALS["common_tiki_users"])?$GLOBALS["common_tiki_users"]:'';
+    $common_users_table_prefix = isset($GLOBALS["common_users_table_prefix"])?$GLOBALS["common_users_table_prefix"]:'';
 
     if ( isset($db_table_prefix) && !is_null($db_table_prefix) && !empty($db_table_prefix) ) {
 
