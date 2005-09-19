@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.43 2005-08-12 13:02:11 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.44 2005-09-19 20:03:17 michael_davey Exp $ *}
 
 <script type="text/javascript">
 {literal}
@@ -390,10 +390,23 @@
 					<td>
 						<div style="float: left"><input type="text" name="site_crumb_seper" id="site_crumb_seper" value="{$site_crumb_seper}" size="5" maxlength="8" /></div>
 						<div>
-							&nbsp; <small><em>{tr}Example{/tr}</em>: &nbsp; &raquo; &nbsp; / &nbsp; &gt; &nbsp; : &nbsp; -> &nbsp; &#8594;</small>
+							&nbsp; <small><em>{tr}Examples{/tr}</em>: &nbsp; &raquo; &nbsp; / &nbsp; &gt; &nbsp; : &nbsp; -> &nbsp; &#8594;</small>
 						</div>
 					</td>
 				</tr>
+                                <tr>
+                                        <td class="form"><label for="site_nav_se
+per">{tr}Choices separator{/tr}:</label></td>
+                                        <td>
+                                                <div style="float: left"><input
+type="text" name="site_nav_seper" id="site_nav_seper" value="{$site_nav_seper}"
+size="5" maxlength="8" /></div>
+                                                <div>
+                                                        &nbsp; <small><em>{tr}Ex
+amples{/tr}</em>: &nbsp; | &nbsp; / &nbsp; &brvbar; &nbsp; : </small>
+                                                </div>
+                                        </td>
+                                </tr>
 			
       <tr>
         <td class="button" colspan='2'>
