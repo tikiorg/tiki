@@ -88,9 +88,9 @@ class Base extends Observable {
 
     function convert_query_table_prefixes(&$query) {
 
-        $db_table_prefix = $GLOBALS["db_table_prefix"];
-        $common_tiki_users = $GLOBALS["common_tiki_users"];
-        $common_users_table_prefix = $GLOBALS["common_users_table_prefix"];
+        $db_table_prefix = isset($GLOBALS["db_table_prefix"])?$GLOBALS["db_table_prefix"]:'' ;
+        $common_tiki_users = isset($GLOBALS["common_tiki_users"])?$GLOBALS["common_tiki_users"]:'';
+        $common_users_table_prefix = isset($GLOBALS["common_users_table_prefix"])?$GLOBALS["common_users_table_prefix"]:'';
 
         if ( isset($db_table_prefix) && !is_null($db_table_prefix) && !empty($db_table_prefix) ) {
 
