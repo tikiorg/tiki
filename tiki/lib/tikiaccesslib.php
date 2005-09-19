@@ -30,7 +30,7 @@ class TikiAccessLib extends TikiLib {
             $smarty->display("error.tpl");
             die;
         	} else {
-        		header("location: $tikiIndex");
+        		$this->redirect("$tikiIndex");
         		die;
         	}
         }
@@ -50,7 +50,7 @@ class TikiAccessLib extends TikiLib {
             }
             die;
         	} else {
-        		header ("location: $tikiIndex");
+        		$this->redirect("$tikiIndex");
         		die;
         	}
         }
@@ -81,7 +81,7 @@ class TikiAccessLib extends TikiLib {
                 $smarty->display("error.tpl");
                 die;
             	} else {
-            		header("location: $tikiIndex");
+            		$this->redirect("$tikiIndex");
             		die;
             	}
             }
@@ -142,7 +142,7 @@ class TikiAccessLib extends TikiLib {
       global $smarty, $feature_usability, $feature_redirect_on_error, $tikiIndex;
       if (strpos($scriptname,$page) !== FALSE) {
       	if ($feature_redirect_on_error == 'y') {
-      		header ("location: $tikiIndex");
+      		$this->redirect("$tikiIndex");
       		die;
       	} else {
         if( !isset($feature_usability) || $feature_usability == 'n' ) {
@@ -170,7 +170,7 @@ class TikiAccessLib extends TikiLib {
             $likepages = $wikilib->get_like_pages($page);
             /* if we have exactly one match, redirect to it */
             if(count($likepages) == 1 ) {
-                header("Location: tiki-index.php?page=$likepages[0]");
+                $this->redirect("tiki-index.php?page=$likepages[0]");
                 die;
             }
             $smarty->assign_by_ref('likepages', $likepages);
@@ -210,6 +210,33 @@ class TikiAccessLib extends TikiLib {
         }
         return $page;
     }
+
+    /**
+     * Utility function redirect the browser location to another url
+     *
+     * @param string The target web address
+     * @param string an optional message to display
+     */
+    function redirect( $url='', $msg='' ) {
+        global $tikiIndex;
+        if( $url == '' ) $url = $tikiIndex;
+        if (trim( $msg )) {
+                if (strpos( $url, '?' )) {
+                        $url .= '&msg=' . urlencode( $msg );
+                } else {
+                        $url .= '?msg=' . urlencode( $msg );
+                }
+        }
+
+        if (headers_sent()) {
+                echo "<script>document.location.href='$url';</script>\n";
+        } else {
+                @ob_end_clean(); // clear output buffer
+                header( "Location: $url" );
+        }
+        exit();
+    }
+
 }
 
 $access = new TikiAccessLib($dbTiki);
