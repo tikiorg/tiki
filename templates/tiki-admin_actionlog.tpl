@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.1 2005-09-14 21:45:41 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.2 2005-09-19 13:57:01 sylvieg Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Admin Action Log{/tr}</a></h1>
 <a name="Setting" />
@@ -12,6 +12,7 @@
 {/section}
 <tr><td colspan="3" class="button"><input type="submit" name="setConf" value="{tr}Set{/tr}" /></td></tr>
 </table>
+<div class="rbox">{tr}Wiki page actions except viewed will always be recorded but can be not reported{/tr}</div>
 </form>
 
 <a name="Report">
@@ -58,6 +59,7 @@
 <th class="heading">{tr}type{/tr}</th>
 <th class="heading">{tr}object{/tr}</th>
 {if !$reportCateg and $showCateg eq 'y'}<th class="heading">{tr}category{/tr}</th>{/if}
+<th class="heading">{tr}bytes{/tr}</th>
 </tr>
 {cycle values="even,odd" print=false}
 {section name=ix loop=$actionlogs}
@@ -67,7 +69,8 @@
 <td class="{cycle advance=false}">{$actionlogs[ix].action}</td>
 <td class="{cycle advance=false}">{$actionlogs[ix].objectType}</td>
 <td class="{cycle advance=false}">{if $actionlogs[ix].link}<a href="{$actionlogs[ix].link}" title="{tr}view{/tr}">{$actionlogs[ix].object|escape}</a>{else}{$actionlogs[ix].object|escape}{/if}</td>
-{if !$reportCateg and $showCateg eq 'y'}<td class="{cycle}">{$actionlogs[ix].categName|escape}</td>{/if}
+{if !$reportCateg and $showCateg eq 'y'}<td class="{cycle advance=false}">{$actionlogs[ix].categName|escape}</td>{/if}
+<td class="{cycle}">{if $actionlogs[ix].bytes}{$actionlogs[ix].bytes}{else}&nbsp;{/if}</td>
 </tr>
 {/section}
 </table>

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.1 2005-09-14 21:45:38 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.2 2005-09-19 13:57:01 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -76,6 +76,8 @@ if (isset($_REQUEST['list'])) {
 	for ($i = 0; $i < sizeof($actions); ++$i) {
 		if ($actions[$i]['categId'])
 			$actions[$i]['categName'] = $categNames[$actions[$i]['categId']];
+		if ($bytes = $logslib->get_volume_action($actions[$i]))
+			$actions[$i]['bytes'] = $bytes;
 		switch ($actions[$i]['objectType']) {
 		case 'wiki page':
 			$actions[$i]['link'] = 'tiki-index.php?page='.$actions[$i]['object'];

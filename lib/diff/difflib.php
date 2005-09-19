@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/diff/difflib.php,v 1.11 2005-05-18 11:00:35 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/diff/difflib.php,v 1.12 2005-09-19 13:57:01 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -93,6 +93,9 @@ function diff2($page1, $page2, $type='sidediff') {
 		} else if ($type == 'minsidediff') {
 			require_once('renderer_sidebyside.php');
 			$renderer = new Text_Diff_Renderer_sidebyside(2);
+		} else if ($type == 'bytes') {
+			require_once('renderer_bytes.php');
+			$renderer = new Text_Diff_Renderer_bytes();
 		} else {
 			require_once('renderer_sidebyside.php');
 			$renderer = new Text_Diff_Renderer_sidebyside(sizeof($page1));
@@ -105,15 +108,17 @@ function diff2($page1, $page2, $type='sidediff') {
  * @param $orig array list lines in the original version
  * @param $final array the same lines in the final version
  */
-function diffChar($orig, $final) {
+function diffChar($orig, $final, $function='character') {
+print_r($orig); print_r($final);echo "EEE<br>";
 	$line1 = preg_split('//', implode("<br />", $orig), -1, PREG_SPLIT_NO_EMPTY);
 	$line2 = preg_split('//', implode("<br />", $final), -1, PREG_SPLIT_NO_EMPTY);
 	$z = new Text_Diff($line1, $line2);
 	if ($z->isEmpty())
 		return array($orig[0], $final[0]);
 //echo "<pre>";print_r($z);echo "</pre>";
-	require_once('renderer_character.php');
-	$renderer = new Text_Diff_Renderer_character(sizeof($line1));
+	require_once("renderer_$function.php");
+      $new = "Text_Diff_Renderer_$function";
+	$renderer = new $new(sizeof($line1));
 	return $renderer->render($z);
 }
 

@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.610 2005-09-14 21:45:38 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.611 2005-09-19 13:57:02 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2962,6 +2962,12 @@ function add_pageview() {
     /*shared*/
     function remove_all_versions($page, $comment = '') {
 	global $dbTiki, $user;
+	global $feature_actionlog;
+	if ($feature_actionlog == 'y') {
+		$info= $this->get_page_info($page);
+		$params = 'bytes=-'.strlen($info['data']);
+	} else
+		$params = '';
 	global $multilinguallib;
 	if (!is_object($multilinguallib)) {
 		include_once('lib/multilingual/multilinguallib.php');// must be done even in feature_multilingual not set
@@ -2983,7 +2989,7 @@ function add_pageview() {
 	$query = "delete from `tiki_links` where `fromPage` = ?";
 	$result = $this->query($query, array( $page ) );
 	global $logslib; include_once('lib/logs/logslib.php');
-	$logslib->add_action('Removed', $page, 'wiki page', $comment);
+	$logslib->add_action('Removed', $page, 'wiki page', $params);
 	//get_strings tra("Removed");
 	$query = "update `users_groups` set `groupHome`=? where `groupHome`=?";
 	$this->query($query, array(NULL, $page));
@@ -3220,7 +3226,7 @@ function add_pageview() {
     function last_major_pages($maxRecords = -1) {
         global $user;
 	$query = "select distinct(tp.`pageName`),tp.`lastModif`,tp.`user` from `tiki_pages` tp left join `tiki_actionlog` ta
-	    on tp.`pageName`=ta.`object` where ta.`action`!='' and ta.`objectType`= 'wiki page' order by tp.".$this->convert_sortmode('lastModif_desc');
+	    on tp.`pageName`= ta.`object` and ta.`objectType`= 'wiki page' where ta.`action`!='' and ta.`objectType`= 'wiki page' order by tp.".$this->convert_sortmode('lastModif_desc');
 	$result = $this->query($query,array(),$maxRecords,0);
 	$ret = array();
 	while ($res = $result->fetchRow()) {
@@ -3666,7 +3672,7 @@ function add_pageview() {
 	// Update the log
 	if (strtolower($name) != 'sandbox') {
 	    global $logslib; include_once("lib/logs/logslib.php");
-	    $logslib->add_action("Created", $name, 'wiki page', $comment, $user, $ip, '', $lastModif);
+	    $logslib->add_action("Created", $name, 'wiki page', 'bytes=+'.strlen($data));
 	    //get_strings tra("Created");
 
 	    //  Deal with mail notifications.
@@ -5679,7 +5685,9 @@ if (!$simple_wiki) {
 	// Update the log
 	if (strtolower($pageName) != 'sandbox' && !$minor) {
 	    global $logslib; include_once('lib/logs/logslib.php');
-	    $logslib->add_action('Updated', $pageName, 'wiki page', $edit_comment, $edit_user, $edit_ip, '', $t); 
+	    include_once('lib/diff/difflib.php');
+	    $bytes = diff2($data , $edit_data, 'bytes');
+	    $logslib->add_action('Updated', $pageName, 'wiki page', 'bytes='.$bytes, $edit_user, $edit_ip, '', $t);
 	    //get_strings tra("Updated")
 	    $maxversions = $this->get_preference("maxVersions", 0);
 

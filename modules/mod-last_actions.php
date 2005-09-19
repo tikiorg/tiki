@@ -32,7 +32,7 @@ if ($user) {
 	$showdate = isset($module_params["showdate"]) ? $module_params["showdate"] : 'n';
 	
 	while ($res = $result->fetchRow()) {
-		$res["action"] = $res["action"]." ".$res["pageName"];
+		$res["action"] = $res["action"]." ".$res['objectType'].':'.$res["object"];
 		if ($showdate=='y') { $res["action"] = $res["action"]." ".tra("at")." ".htmlspecialchars($tikilib->iso_8601($res["lastModif"])); }
 		if ($showuser=='y') { $res["action"] = $res["user"].": ".$res["action"]; }
 		$ret[] = $res;
