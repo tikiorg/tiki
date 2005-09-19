@@ -151,6 +151,18 @@ class RegistrationLib extends TikiLib {
     return $Return;
   }
 
+
+  function get_customfields() {
+    $query = "select `id`, `field` as `value`, `name` as `prefName` from `tiki_registration_fields`";
+    $result = $this->query($query);
+    $ret = array();
+                
+    while ($res = $result->fetchRow()) {
+      $ret[] = $res;
+    }
+    return $ret;
+  }       
+
   /**
    *  Default TikiWiki 'user_registers' callback
    *  validates data and creates a new user in the database on user registration
