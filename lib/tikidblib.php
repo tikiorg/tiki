@@ -1,13 +1,9 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.19 2005-09-19 12:45:09 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.20 2005-09-19 21:22:31 michael_davey Exp $
 //
 
-//this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
-}
+// $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 $local_php = 'db/local.php';
 if (is_file($local_php)) {
@@ -17,7 +13,8 @@ if (is_file($local_php)) {
 class TikiDB {
 // Database access functions
 
-var $db; // The ADODB db object used to access the database
+var $db;   // The ADODB db object used to access the database
+var $_sql; // Internal variable to store the query string
 
 function TikiDB($db)
 {
@@ -64,10 +61,13 @@ function queryError( $query, &$error, $values = null, $numrows = -1,
 }
 
 // Queries the database reporting an error if detected
-//
-function query($query, $values = null, $numrows = -1,
+// 
+function query($query = null, $values = null, $numrows = -1,
         $offset = -1, $reporterrors = true )
 {
+    if ( $query == null ) {
+        $query = $this->_sql;
+    }
     $numrows = intval($numrows);
     $offset = intval($offset);
     $this->convert_query($query);
@@ -98,7 +98,18 @@ function query($query, $values = null, $numrows = -1,
     global $num_queries;
     $num_queries++;
     //$this->debugger_log($query, $values);
+    $this->_sql = null;
     return $result;
+}
+
+/**
+ * Sets the SQL query string for later execution.
+ *
+ * @param string The SQL query
+ * @param string The common table prefix
+ */
+function setQuery( $sql ) {
+    $this->_sql = $sql;
 }
 
 // Gets one column for the database.
