@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.8 2005-09-14 21:45:41 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.9 2005-09-19 13:57:01 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -87,7 +87,10 @@ class LogsLib extends TikiLib {
 	*/
 	function add_action($action, $object, $objectType='wiki page', $param='', $who='', $ip='', $client='', $date='') {
 		global $user, $feature_categories;
-		$logObject = $this->action_must_be_logged($action, $objectType);
+		if ($objectType == 'wiki page' && $action != 'Viewed')
+			$logObject = true; // to have the tiki_my_edit, history and mod-last_modif_pages
+		else
+			$logObject = $this->action_must_be_logged($action, $objectType);
 		$logCateg = $feature_categories == 'y'? $this->action_must_be_logged('*', 'category'): false;
 		if (!$logObject && !$logCateg)
 			return false;
@@ -124,8 +127,6 @@ class LogsLib extends TikiLib {
 		global $feature_actionlog;
 		if ($feature_actionlog != 'y')
 			return true; // for previous compatibility - the new action are added with a if ($feature..)
-		if ($objectType == 'wiki page' && ($action == 'Updated' || $action == 'Created'))
-			return true; // to have the tiki_my_edit, history and some modules to work
 		$logActions = $this->get_all_actionlog_conf();
 		foreach ($logActions as $conf) {
 			if ($conf['action'] == $action && $conf['objectType'] == $objectType && $conf['status'] == 'y')
@@ -213,11 +214,13 @@ class LogsLib extends TikiLib {
 				$bindvars[] = $categId;
 			}
 		}
+		$amid[] = "a.`action` = c.`action` and a.`objectType` = c.`objectType` and c.`status` = 'y'";
+
 		if (count($amid)) {
 			$mid = " where ".implode(" and ",$amid)." ";
 		}
-		$query = "select * ";
-		$query.= " from `tiki_actionlog` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select a.* ";
+		$query.= " from `tiki_actionlog` a ,`tiki_actionlog_conf` c $mid order by ".$this->convert_sortmode($sort_mode);
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
@@ -260,16 +263,22 @@ class LogsLib extends TikiLib {
 				$logTimes[$action['user']]['time'] = $endDate - $startDate;
 			}
 		}
-	foreach ($logTimes as $user=>$login) {
-		$nbMin = floor($login['time']/60);
-		$nbHour = floor($nbMin/60);
-		$nbDay = floor($nbHour/24);
-		$logTimes[$user]['secs'] = $login['time'] - $nbMin*60;
-		$logTimes[$user]['mins'] = $nbMin - $nbHour*60;
-		$logTimes[$user]['hours'] = $nbHour - $nbDay*24;
-		$logTimes[$user]['days'] = $nbDay;
-	}
+		foreach ($logTimes as $user=>$login) {
+			$nbMin = floor($login['time']/60);
+			$nbHour = floor($nbMin/60);
+			$nbDay = floor($nbHour/24);
+			$logTimes[$user]['secs'] = $login['time'] - $nbMin*60;
+			$logTimes[$user]['mins'] = $nbMin - $nbHour*60;
+			$logTimes[$user]['hours'] = $nbHour - $nbDay*24;
+			$logTimes[$user]['days'] = $nbDay;
+		}
 	return $logTimes;
+	}
+	function get_volume_action($action) {
+	if (preg_match("/^bytes=([0-9\-+]+)/", $action['comment'], $matches))
+		return $matches[1];
+	else
+		return(0);
 	}
 	function get_action_stat_user($actions) {
 		$stats = array();
