@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib-debug.php,v 1.12 2005-09-18 23:13:34 rabiddog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib-debug.php,v 1.13 2005-09-19 22:05:38 rabiddog Exp $
 //
 
 
@@ -264,6 +264,31 @@ function convert_query(&$query) {
             break;
     }
 
+}
+
+function convert_query_table_prefixes(&$query) {
+
+    $db_table_prefix = isset($GLOBALS["db_table_prefix"])?$GLOBALS["db_table_prefix"]:'' ;
+    $common_tiki_users = isset($GLOBALS["common_tiki_users"])?$GLOBALS["common_tiki_users"]:'';
+    $common_users_table_prefix = isset($GLOBALS["common_users_table_prefix"])?$GLOBALS["common_users_table_prefix"]:'';
+
+    if ( isset($db_table_prefix) && !is_null($db_table_prefix) && !empty($db_table_prefix) ) {
+
+        //printf("convert_query_table_prefixes():\$db_table_prefix = %s<br/>\n", $db_table_prefix );
+
+        if( isset($common_users_table_prefix) && !is_null($common_users_table_prefix) && !empty($common_users_table_prefix) ) {
+            $query = str_replace("`users_", "`".$common_users_table_prefix."users_", $query);
+        } else {
+            $query = str_replace("`users_", "`".$db_table_prefix."users_", $query);
+        }
+
+        $query = str_replace("`tiki_", "`".$db_table_prefix."tiki_", $query);
+        $query = str_replace("`messu_", "`".$db_table_prefix."messu_", $query);
+        $query = str_replace("`sessions", "`".$db_table_prefix."sessions", $query);
+        $query = str_replace("`galaxia_", "`".$db_table_prefix."galaxia_", $query);
+
+        //printf("convert_query_table_prefixes():\$query = %s<br/>\n", $query );
+    }
 }
 
 function blob_encode(&$blob) {
