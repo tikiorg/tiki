@@ -288,12 +288,24 @@ class Comments extends TikiLib {
 		continue;
 	    }
 
-	    if (!isset($aux["From"]))
+	    if (!isset($aux['From']))
 	    {
-		$aux['From'] = $aux['Return-path'];
+	    	if( isset($aux['Return-path']) )
+		{
+		    $aux['From'] = $aux['Return-path'];
+		} else {
+		    $aux['From'] = "";
+		    $aux['Return-path'] = "";
+		}
 	    }
 
 	    preg_match('/<?([-!#$%&\'*+\.\/0-9=?A-Z^_`a-z{|}~]+@[-!#$%&\'*+\/0-9=?A-Z^_`a-z{|}~]+\.[-!#$%&\'*+\.\/0-9=?A-Z^_`a-z{|}~]+)>?/',$aux["From"],$mail);
+
+	    // If we don't actually have a mail, try again
+	    if( ! array_key_exists( 1, $mail ) )
+	    {
+	    	continue;
+	    }
 
 	    $email = $mail[1];
 			
