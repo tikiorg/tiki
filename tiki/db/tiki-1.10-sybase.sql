@@ -2,8 +2,8 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2005-09-07 21:02:44 $
--- $Author: rlpowell $
+-- $Date: 2005-09-20 10:50:33 $
+-- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -404,12 +404,16 @@ go
 
 
 CREATE TABLE "tiki_actionlog" (
+  "actionId" numeric(8 ,0) identity,
   "action" varchar(255) default '' NOT NULL,
   "lastModif" numeric(14,0) default NULL NULL,
-  "pageName" varchar(200) default NULL NULL,
+  "object" varchar(255) default NULL NULL,
+  "objectType" varchar(32) default '' NOT NULL,
   "user" varchar(200) default NULL NULL,
   "ip" varchar(15) default NULL NULL,
-  "comment" varchar(200) default NULL
+  "comment" varchar(200) default NULL NULL,
+  "categId" numeric(12,0) default '0' NOT NULL,
+  PRIMARY KEY ("actionId")
 ) 
 go
 
@@ -3348,6 +3352,10 @@ go
 
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Security Admin','tiki-admin_security.php',1250,'','tiki_p_admin','')
+go
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Action Log','tiki-admin_actionlog.php',1255,'feature_actionlog','tiki_p_admin','')
 go
 
 
@@ -8202,6 +8210,19 @@ go
 
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_protect_email', 'n')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_1like_redirection', 'y')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_actionlog', 'y')
+go
+
+
+
 -- Dynamic variables
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_dynvar', 'Can edit dynamic variables', 'editors', 'wiki')
 go
@@ -8804,6 +8825,100 @@ CREATE TABLE `tiki_registration_fields` (
   `size` varchar(10) default '10',
   PRIMARY KEY ("`id`")
 ) 
+go
+
+
+
+-- DROP TABLE `tiki_actionlog_conf`
+go
+
+
+CREATE TABLE `tiki_actionlog_conf` (
+ `action` varchar(32) default '' NOT NULL,
+ `objectType`varchar(32) default '' NOT NULL,
+ `status` char(1) default '',
+PRIMARY KEY (`action`, `objectType`)
+) 
+go
+
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Created', 'wiki page', 'y')
+go
+
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Updated', 'wiki page', 'y')
+go
+
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Removed', 'wiki page', 'y')
+go
+
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Viewed', 'wiki page', 'n')
+go
+
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Viewed', 'forum', 'n')
+go
+
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Posted', 'forum', 'n')
+go
+
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Replied', 'forum', 'n')
+go
+
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Updated', 'forum', 'n')
+go
+
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Viewed', 'file gallery', 'n')
+go
+
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Viewed', 'image gallery', 'n')
+go
+
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Uploaded', 'file gallery', 'n')
+go
+
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Uploaded', 'image gallery', 'n')
+go
+
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('*', 'category', 'n')
+go
+
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('*', 'login', 'n')
+go
+
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Posted', 'message', 'n')
+go
+
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Replied', 'message', 'n')
+go
+
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Viewed', 'message', 'n')
+go
+
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Removed version', 'wiki page', 'n')
+go
+
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Removed last version', 'wiki page', 'n')
+go
+
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Rollback', 'wiki page', 'n')
 go
 
 
