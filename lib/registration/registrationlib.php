@@ -426,7 +426,7 @@ class RegistrationLib extends TikiLib {
 	 */
 	function callback_tikimail_user_registers($raisedBy, $data) {
 		global $notificationlib, $smarty;
-		include_once("lib/notifications/notificationemaillib.php");
+		include_once("lib/notifications/notificationlib.php");
                 $emails = $notificationlib->get_mail_events('user_registers','*');
                 if (count($emails)) {
                         $smarty->assign('mail_user',$data['user']);
