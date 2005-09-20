@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2005-09-07 21:02:44 $
-# $Author: rlpowell $
+# $Date: 2005-09-20 10:50:33 $
+# $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -313,12 +313,16 @@ CREATE TABLE sessions(
 
 DROP TABLE IF EXISTS tiki_actionlog;
 CREATE TABLE tiki_actionlog (
+  actionId int(8) NOT NULL auto_increment,
   action varchar(255) NOT NULL default '',
   lastModif int(14) default NULL,
-  pageName varchar(200) default NULL,
+  object varchar(255) default NULL,
+  objectType varchar(32) NOT NULL default '',
   user varchar(200) default NULL,
   ip varchar(15) default NULL,
-  comment varchar(200) default NULL
+  comment varchar(200) default NULL,
+  categId int(12) NOT NULL default '0',
+  PRIMARY KEY  (actionId)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -2201,6 +2205,7 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin mods','tiki-mods.php',1240,'','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Tiki Logs','tiki-syslog.php',1245,'','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Security Admin','tiki-admin_security.php',1250,'','tiki_p_admin','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Action Log','tiki-admin_actionlog.php',1255,'feature_actionlog','tiki_p_admin','');
 # --------------------------------------------------------
 
 #
@@ -4652,6 +4657,10 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('messu_mailbox_size','0'
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('messu_archive_size','200');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('messu_sent_size','200');
 
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_protect_email', 'n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_1like_redirection', 'y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_actionlog', 'y');
+
 # Dynamic variables
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_dynvar', 'Can edit dynamic variables', 'editors', 'wiki');
 
@@ -4982,5 +4991,33 @@ CREATE TABLE `tiki_registration_fields` (
   `size` varchar(10) default '10',
   PRIMARY KEY  (`id`)
 ) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS `tiki_actionlog_conf`;
+CREATE TABLE `tiki_actionlog_conf` (
+ `action` varchar(32) NOT NULL default '',
+ `objectType`varchar(32) NOT NULL default '',
+ `status` char(1) default '',
+PRIMARY KEY (`action`, `objectType`)
+) TYPE=MyISAM;
+INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Created', 'wiki page', 'y');
+INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Updated', 'wiki page', 'y');
+INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Removed', 'wiki page', 'y');
+INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Viewed', 'wiki page', 'n');
+INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Viewed', 'forum', 'n');
+INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Posted', 'forum', 'n');
+INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Replied', 'forum', 'n');
+INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Updated', 'forum', 'n');
+INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Viewed', 'file gallery', 'n');
+INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Viewed', 'image gallery', 'n');
+INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Uploaded', 'file gallery', 'n');
+INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Uploaded', 'image gallery', 'n');
+INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('*', 'category', 'n');
+INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('*', 'login', 'n');
+INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Posted', 'message', 'n');
+INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Replied', 'message', 'n');
+INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Viewed', 'message', 'n');
+INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Removed version', 'wiki page', 'n');
+INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Removed last version', 'wiki page', 'n');
+INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Rollback', 'wiki page', 'n');
 
 # --------------------------------------------------------
