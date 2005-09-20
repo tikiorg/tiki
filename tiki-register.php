@@ -26,11 +26,11 @@ if(isset($_REQUEST["register"])) {
     /* fake the callbacks using a hard-coded default sequence */
     include_once('lib/registration/registrationlib.php');
     if ( true && 
-      // $registrationlib->callback_tikiwiki_setup_custom_fields( $data, "tiki-register.php" ) &&
-      $registrationlib->callback_tikiwiki_save_registration( $data, "tiki-register.php" ) &&
-      $registrationlib->callback_logslib_user_registers( $data, "tiki-register.php" ) &&
-      $registrationlib->callback_tikiwiki_send_email( $data, "tiki-register.php" ) &&
-      $registrationlib->callback_tikimail_user_registers( $data, "tiki-register.php" )
+      // $registrationlib->callback_tikiwiki_setup_custom_fields("tiki-register.php", $data) &&
+      $registrationlib->callback_tikiwiki_save_registration("tiki-register.php", $data) &&
+      $registrationlib->callback_logslib_user_registers("tiki-register.php", $data) &&
+      $registrationlib->callback_tikiwiki_send_email("tiki-register.php", $data ) &&
+      $registrationlib->callback_tikimail_user_registers("tiki-register.php", $data )
     ) { /*success*/ } // endif: true...
   } else {
       /* TikiSignal is enabled - raise an event */
