@@ -175,7 +175,7 @@ class HistLib extends TikiLib {
 			$bindvars[] = $toTime;
 		}
 
-		$query = "select ta.`action`, ta.`lastModif`, ta.`user`, ta.`ip`, ta.`pageName`,ta.`comment`, th.`version` as version, tp.`version` as versionlast from `tiki_actionlog` ta 
+		$query = "select ta.`action`, ta.`lastModif`, ta.`user`, ta.`ip`, ta.`object`,ta.`comment`, th.`version` as version, tp.`version` as versionlast from `tiki_actionlog` ta 
 			left join `tiki_history` th on  ta.`object`=th.`pageName` and ta.`lastModif`=th.`lastModif` and ta.`objectType`='wiki page'
 			left join `tiki_pages` tp on ta.`object`=tp.`pageName` and ta.`lastModif`=tp.`lastModif` " . $where . " order by ta.".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_actionlog` ta 
@@ -188,7 +188,7 @@ class HistLib extends TikiLib {
 		$retval = array();
 		while ($res = $result->fetchRow()) {
 		   //WYSIWYCA hack: the $limit will not be respected
-		   if($this->user_has_perm_on_object($user,$res["pageName"],'wiki page','tiki_p_view')) {
+		   if($this->user_has_perm_on_object($user,$res['object'],'wiki page','tiki_p_view')) {
 			$ret[] = $res;
 		   }
 		}
