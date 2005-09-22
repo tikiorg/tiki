@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.72 2005-08-29 03:14:43 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.73 2005-09-22 17:34:43 michael_davey Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -203,7 +203,7 @@ if (isset($_REQUEST['chgadmin'])) {
 	if (!empty($_REQUEST["pass1"])) {
 
 	    if ($_REQUEST["pass1"] != $_REQUEST["pass2"]) {
-		$smarty->assign('msg', tra("The passwords did not match"));
+		$smarty->assign('msg', tra("The passwords do not match"));
 		
 		$smarty->display("error.tpl");
 		die;
