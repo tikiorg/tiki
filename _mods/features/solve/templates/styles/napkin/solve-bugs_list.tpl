@@ -1,4 +1,4 @@
-{* @version $Id: solve-bugs_list.tpl,v 1.1 2005-09-21 21:13:00 michael_davey Exp $ *}
+{* @version $Id: solve-bugs_list.tpl,v 1.2 2005-09-22 09:03:00 michael_davey Exp $ *}
 
 {breadcrumbs type="trail" loc="page" crumbs=$crumbs}{breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs}
 <br />
@@ -100,7 +100,7 @@
                 <td>{$column.inputWidget}</td>
               {/if}
             {/foreach}
-            <td><a href="{$base_url2}&task=edit&caseID={$item.id}">View</a></td>
+            <td><a href="{$base_url2}/edit/{$item.id}">View</a></td>
           </tr>
         {/foreach}
       </table>

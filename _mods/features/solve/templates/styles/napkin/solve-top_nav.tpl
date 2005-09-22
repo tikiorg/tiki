@@ -1,4 +1,4 @@
-{* @version $Id: solve-top_nav.tpl,v 1.1 2005-09-21 21:13:00 michael_davey Exp $ *}
+{* @version $Id: solve-top_nav.tpl,v 1.2 2005-09-22 08:59:39 michael_davey Exp $ *}
 
     {* top nav *}
     <table width='100%'>
@@ -6,11 +6,11 @@
         <td style="width:60%" valign="middle" align='left'>
           <span class="buttonheading">
             <a href="{$base_url2}">List</a> {$nav_separator}
-            <a href="{$base_url2}&task=new">New...</a> {$nav_separator}
-            <a href="{$base_url2}&task=search">Search</a>
+            <a href="{$base_url2}/new">New...</a> {$nav_separator}
+            <a href="{$base_url2}/search">Search</a>
             <?php
             {if $isHome}
-                {$nav_separator} <a href="{$base_url2}&task=refresh">Refresh</a> 
+                {$nav_separator} <a href="{$base_url2}/refresh">Refresh</a> 
             {/if}
           </span>
         </td>
