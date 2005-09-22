@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: solve.php,v 1.2 2005-09-22 08:42:03 michael_davey Exp $
+ * @version $Id: solve.php,v 1.3 2005-09-22 13:25:55 michael_davey Exp $
  * @package TikiWiki
  * @subpackage Solve
  * @copyright (C) 2005 the Tiki community
@@ -44,7 +44,7 @@ $smarty->assign('trail', $crumbs);
 $cur_template = "styles/napkin";
 
         if ($path = $sh->_getPath( $option, '.' )) {
-            $access->check_page($user, 'feature_sugar');
+            $access->check_page($user, 'feature_crm');
             require_once( $path );
         } else {
             header ("Status: 402 Found"); /* PHP3 */
