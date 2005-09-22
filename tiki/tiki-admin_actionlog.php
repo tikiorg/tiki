@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.2 2005-09-19 13:57:01 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.3 2005-09-22 10:39:40 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -9,6 +9,7 @@ require_once ('tiki-setup.php');
 include_once('lib/logs/logslib.php');
 include_once('lib/userslib.php');
 include_once('lib/commentslib.php');
+include_once('lib/categories/categlib.php');
 $commentslib = new Comments($dbTiki);
 
 if ($tiki_p_admin != 'y') {
