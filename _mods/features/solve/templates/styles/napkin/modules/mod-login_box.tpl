@@ -1,8 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/_mods/features/solve/templates/styles/napkin/modules/mod-login_box.tpl,v 1.1 2005-09-21 21:13:00 michael_davey Exp $ *}
+{* $Id: mod-login_box.tpl,v 1.2 2005-09-22 08:55:17 michael_davey Exp $ *}
+
 {tikimodule title="{tr}Login{/tr}" name="login_box" flip=$module_params.flip decorations=$module_params.decorations}
 
+    <div align="left" style="margin: 6px;">
     {if $user}
-      <div align="left" style="margin: 6px;">
       <p>{tr}You are currently logged in to the private area of this site{/tr}</p>
       {tr}logged as{/tr}: {$user}<br />
       <a class="linkmodule" href="tiki-logout.php">{tr}Logout{/tr}</a><br />
@@ -15,12 +16,11 @@
         <input type="submit" name="actsu" value="{tr}set{/tr}" />
         </form>
       {/if}
-	{elseif $auth_method eq 'cas' && $showloginboxes neq 'y'}
-		<b><a class="linkmodule" href="tiki-login.php">{tr}Login through CAS{/tr}</a></b>
-		{if $cas_skip_admin eq 'y'}
-		<br /><a class="linkmodule" href="tiki-login_scr.php?user=admin">{tr}Login as admin{/tr}</a>
-		{/if}
-      </div>
+    {elseif $auth_method eq 'cas' && $showloginboxes neq 'y'}
+      <b><a class="linkmodule" href="tiki-login.php">{tr}Login through CAS{/tr}</a></b>
+      {if $cas_skip_admin eq 'y'}
+        <br /><a class="linkmodule" href="tiki-login_scr.php?user=admin">{tr}Login as admin{/tr}</a>
+      {/if}
     {else}
      <form name="loginbox" action="{$login_url}" method="post" {if $feature_challenge eq 'y'}onsubmit="doChallengeResponse()"{/if}> 
      {if $feature_challenge eq 'y'}
@@ -112,4 +112,5 @@
       {/if}
       </form>
     {/if}
+    </div>
 {/tikimodule}
