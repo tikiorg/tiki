@@ -1,30 +1,25 @@
 <?php
 /**
-* @version $Id: solve.php,v 1.1 2005-09-21 21:18:45 michael_davey Exp $
-* @package TikiWiki
-* @copyright (C) 2005 TikiWiki
-* @license http://www.gnu.org/copyleft/lgpl.html GNU/LGPL
-*/
+ * @version $Id: solve.php,v 1.2 2005-09-22 08:42:03 michael_davey Exp $
+ * @package TikiWiki
+ * @subpackage Solve
+ * @copyright (C) 2005 the Tiki community
+ * @license http://www.gnu.org/copyleft/lgpl.html GNU/LGPL
+ */
 
 // Initialization
 require_once ('tiki-setup.php');
+require_once( 'lib/db/tikitable.php' );
 
-include_once( 'globals.php' );
-require_once( 'lib/solve/database.php' );
 require_once( 'lib/solve/solvelib.php' );
+require_once( 'lib/solve/configuration.php' );
+require_once( 'lib/solve/presentation.php' );
 
-
-/** retrieve some expected url (or form) arguments */
-if (array_key_exists("PATH_INFO",$_REQUEST)) {
-  $option = trim(substr(($_REQUEST["PATH_INFO"]),1));
-} else {
-  $option ='';
-}
-
-$database = new SolveDB($dbTiki);
+/** which section are we in? */
+$option = solve_get_param($_REQUEST, 'option');
 
 /** SolveLib - a helper class */
-$sh = new SolveLib( $database, $option, '.' );
+$sh = new SolveLib( $dbTiki, $option, '.' );
 
 // loads english language file by default
 include_once ( 'language/english.php' );
@@ -55,7 +50,7 @@ $cur_template = "styles/napkin";
             header ("Status: 402 Found"); /* PHP3 */
             header ("HTTP/1.0 402 Found"); /* PHP4 */
             header("Location: $base_url/tiki-index.php?page=$option");
-            die;
+            die('found');
             exit;
         }
 
