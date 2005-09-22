@@ -1,15 +1,16 @@
 <?php
 /**
- * @version $Id: solvebugs.php,v 1.1 2005-09-21 21:18:45 michael_davey Exp $
- * @package Solve
+ * @version $Id: solvebugs.php,v 1.2 2005-09-22 09:35:00 michael_davey Exp $
+ * @package TikiWiki
+ * @subpackage Solve
  * @copyright (C) 2005 the Tiki community
  * @license http://www.gnu.org/copyleft/lgpl.html GNU/LGPL
  */
 
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
-require_once ( 'lib/vtiger/db/vtiger_portal_configuration.php' );
-require_once ( "lib/vtiger/db/vtiger_portal_bug_fields.php" );
+require_once ( 'lib/solve/db/vtiger_portal_configuration.php' );
+require_once ( "lib/solve/db/vtiger_portal_bug_fields.php" );
 
 define('_MYNAMEIS', 'bugs');
 
@@ -22,11 +23,13 @@ $presentation = new TikiPresentation();
 // we already have $option from solve.php global section
 $task = solve_get_param( $_REQUEST, 'task' );
 $sortBy = solve_get_param( $_REQUEST, 'order_by' );
-$config = new SolveConfiguration( 'TikiWiki', $presentation, $option, $task, $sortBy );
+$dbtable = new VtigerBugFields();
+$config = new SolveConfiguration( 'TikiWiki', $presentation, $option, $task, $sortBy, $dbtable );
 
 $bugApp = new VtigerAppBug($config, $user);
 
 $caseID = solve_get_param( $_REQUEST, 'caseID' );
+$caseID = $caseID == null ? 0 : $caseID;
 
 $bugApp->login();
 
@@ -43,14 +46,14 @@ switch( $task ) {
     case "new":
         $access->check_page($user, array('feature_crm'), array('vtiger_p_create_bugs'));
 
-        $columns = getColumnData($bugApp);
+        $columns = $dbtable->getColumnData($bugApp);
         
         $presentation->Render($columns,null,null,'bugs');
         break;
     case "search":
         $access->check_page($user, array('feature_crm'), array('vtiger_p_search_bugs'));
 
-        $columnData = getColumnData($bugApp);
+        $columnData = $dbtable->getColumnData($bugApp);
         $columns = $columnData['selected'];
         $searchcolumns = array();
         foreach($columns as $column) {
@@ -69,7 +72,7 @@ switch( $task ) {
         break;
     case "edit":
         $access->check_page($user, array('feature_crm'), array('vtiger_p_edit_bugs'));
-        $columns = getColumnData($bugApp);
+        $columns = $dbtable->getColumnData($bugApp);
         
         if(isset($caseID) && ! $caseID) {
             $presentation->Render($columns,null,null,'bugs');
@@ -88,9 +91,9 @@ switch( $task ) {
         // broke error checking
         if($bugApp->SoapError) {
             //echo $Comm->getErrorText();
-            $access->redirect("solve/" . _MYNAMEIS . "?task=edit&caseID={$_POST['caseID']}",'There was an error processing your request.');
+            $access->redirect("solve/" . _MYNAMEIS . "/edit/{$_POST['caseID']}",'There was an error processing your request.');
         }
-        $access->redirect("solve/" . _MYNAMEIS . "?task=edit&caseID={$_POST['caseID']}",'Note saved!');
+        $access->redirect("solve/" . _MYNAMEIS . "/edit/{$_POST['caseID']}",'Note saved!');
         break;
     case "error":
         echo $config->getBrokeMessage();
@@ -100,7 +103,7 @@ switch( $task ) {
         if( $_POST['button']=='Save' ) {
 			$_POST['release'] = $_POST['release_name'];
             $cases = $bugApp->modify($_POST);
-            $access->redirect("solve/" . _MYNAMEIS . "?task=edit&caseID={$cases['id']}",'Bug saved!');
+            $access->redirect("solve/" . _MYNAMEIS . "/edit/{$cases['id']}",'Bug saved!');
         } else {
             $access->redirect("solve/$option", "New bug is cancelled.");
         }
@@ -110,7 +113,7 @@ switch( $task ) {
         if( $_POST['button']=='Save' ) {
 			$_POST['release'] = $_POST['release_name'];
             $cases = $bugApp->create($_POST);
-            $access->redirect("solve/option" . _MYNAMEIS . "?task=edit&caseID={$cases['id']}",'Bug saved!');
+            $access->redirect("solve/option" . _MYNAMEIS . "/edit/{$cases['id']}",'Bug saved!');
         } else {
             $access->redirect("solve/$option", "New bug is cancelled.");
         }
@@ -147,7 +150,7 @@ switch( $task ) {
         $access->check_page($user, array('feature_crm'), array('vtiger_p_list_bugs'));
         $bugs = $bugApp->getAll();
         
-        $columns = getColumnData($bugApp);
+        $columns = $dbtable->getColumnData($bugApp);
         
       
         
@@ -156,22 +159,6 @@ switch( $task ) {
 }
 
 $bugApp->logout();
-
-function getColumnData(&$bugApp) {
-    $database = $bugApp->config->database;
-    $columnData = $bugApp->getAvailableFields();
-    
-    $database->setQuery("SELECT * FROM vtiger_portal_bug_fields");
-    $results = $database->query();
-    
-    while ($result = $results->fetchRow() ) {
-		$columns['selected'][] = $result;
-	}
-
-    $columns['data'] = $columnData;
-    
-    return $columns;
-}
 
 // Session management function
 function startCrmSession(&$bugApp) {

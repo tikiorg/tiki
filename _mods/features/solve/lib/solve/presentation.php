@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: presentation.php,v 1.1 2005-09-21 21:18:45 michael_davey Exp $
+ * @version $Id: presentation.php,v 1.2 2005-09-22 09:35:00 michael_davey Exp $
  * @package Solve
  * @copyright (C) 2005 the Tiki community
  * @license http://www.gnu.org/copyleft/lgpl.html GNU/LGPL
@@ -251,7 +251,7 @@ class TikiPresentation {
                 $note = &$notes[$key];
                 $note['htmlfilename'] = '(No Attachment)';
                 if(!empty($note['filename'])){
-                        $note['htmlfilename'] = '<a href="solve/'. _MYNAMEIS . '?task=download&noteid='.$note["id"].'&moduleid='.$itemID.'">'.$note["filename"] .'</a>';
+                        $note['htmlfilename'] = '<a href="solve/'. _MYNAMEIS . '/download?noteid='.$note["id"].'&moduleid='.$itemID.'">'.$note["filename"] .'</a>';
                 }
             }
         }
@@ -330,7 +330,7 @@ if ( $task == 'search' ) {
                 if($task == 'search') {
                     $column['onClick'] = 'onclick="javascript: set_order_by_and_submit(document.SearchForm, \'' . $orderby . '\');"';
                 } else {
-                    $column['href'] = 'href="'.$this->_getBaseUrl().'&task=' . $task . '&order_by=' . $orderby . '"';
+                    $column['href'] = 'href="'.$this->_getBaseUrl().'/' . $task . '?order_by=' . $orderby . '"';
                 }
             }
         }
