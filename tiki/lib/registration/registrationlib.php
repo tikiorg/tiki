@@ -211,7 +211,7 @@ class RegistrationLib extends TikiLib {
 
   check_ticket('register');
   if($novalidation != 'yes' and ($_REQUEST["pass"] <> $_REQUEST["passAgain"])) {
-    $smarty->assign('msg',tra("The passwords don't match"));
+    $smarty->assign('msg',tra("The passwords do not match"));
     $smarty->display("error.tpl");
     die;
   }

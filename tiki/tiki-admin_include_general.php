@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.43 2005-09-19 20:03:17 michael_davey Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.44 2005-09-23 08:19:45 michael_davey Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -123,7 +123,7 @@ elseif (isset($_REQUEST["prefs"])) {
 elseif (isset($_REQUEST["newadminpass"])) {
 	check_ticket('admin-inc-general');
     if ($_REQUEST["adminpass"] <> $_REQUEST["again"]) {
-        $msg = tra("The passwords don't match");
+        $msg = tra("The passwords do not match");
         $access->display_error(basename(__FILE__), $msg);
     }
 

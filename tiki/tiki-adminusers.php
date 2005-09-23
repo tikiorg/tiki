@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.52 2005-09-01 18:39:12 rv540 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.53 2005-09-23 08:19:45 michael_davey Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -99,7 +99,7 @@ if (isset($_REQUEST["newuser"])) {
 	} else {
 		// Check if the user already exists
 		if ($_REQUEST["pass"] != $_REQUEST["pass2"]) {
-			$tikifeedback[] = array('num'=>1,'mes'=>tra("The passwords don't match"));
+			$tikifeedback[] = array('num'=>1,'mes'=>tra("The passwords do not match"));
 		} else {
 			list($cant, $uu) = $userlib->other_user_exists_case_insensitive($_REQUEST["name"]);
 			if ($cant != 0) {
@@ -327,7 +327,7 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 		}
 		if (isset($_POST['pass']) &&  $_POST["pass"]) {
 			if ($_POST["pass"] != $_POST["pass2"]) {
-				$smarty->assign('msg', tra("The passwords dont match"));
+				$smarty->assign('msg', tra("The passwords do not match"));
 				$smarty->display("error.tpl");
 				die;
 			} 
