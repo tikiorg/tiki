@@ -3,7 +3,7 @@
 require_once('tiki-setup.php');
 // require_once('lib/tikilib.php'); # httpScheme()
 // include_once('lib/webmail/tikimaillib.php');
-include_once('lib/userprefs/userprefslib.php');
+include_once('lib/registration/registrationlib.php');
 
 // Permission: needs p_register
 if($allowRegister != 'y') {
@@ -16,7 +16,7 @@ $smarty->assign('showmsg','n');
 
 //get custom fields
 $customfields = array();
-$customfields = $userprefslib->get_userprefs('CustomFields');
+$customfields = $registrationlib->get_customfields();
 $smarty->assign_by_ref('customfields', $customfields);
 		
 
