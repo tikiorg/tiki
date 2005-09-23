@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-change_password.php,v 1.16 2005-08-16 14:44:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-change_password.php,v 1.17 2005-09-23 08:19:45 michael_davey Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -27,7 +27,7 @@ $smarty->assign('oldpass', $_REQUEST["oldpass"]);
 if (isset($_REQUEST["change"])) {
 	check_ticket('change-password');
 	if ($_REQUEST["pass"] != $_REQUEST["pass2"]) {
-		$smarty->assign('msg', tra("The passwords didn't match"));
+		$smarty->assign('msg', tra("The passwords do not match"));
 
 		$smarty->display("error.tpl");
 		die;
