@@ -1,7 +1,5 @@
 <?php
-
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.74 2005-09-23 08:35:04 michael_davey Exp $
-
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.75 2005-09-23 10:39:16 michael_davey Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -29,11 +27,6 @@ if (!$user) {
 
 $userwatch = $user;
 
-// Custom fields
-$customfields = array();
-$customfields = $registrationlib->get_customfields();
-$smarty->assign_by_ref('customfields', $customfields);
-
 if (isset($_REQUEST["view_user"])) {
 	if ($_REQUEST["view_user"] <> $user) {
 		if ($tiki_p_admin == 'y') {
@@ -48,6 +41,11 @@ if (isset($_REQUEST["view_user"])) {
 		$userwatch = $user;
 	}
 }
+
+// Custom fields
+$customfields = array();
+$customfields = $registrationlib->get_customfields($userwatch);
+$smarty->assign_by_ref('customfields', $customfields);
 
 $smarty->assign('userwatch', $userwatch);
 
@@ -127,13 +125,6 @@ if (isset($_REQUEST["prefs"])) {
 
 	$tikilib->set_user_preference($userwatch, 'mailCharset', $_REQUEST['mailCharset']);
 
-	// Custom fields
-	foreach ($customfields as $custpref=>$prefvalue ) {
-		//print $customfields[$custpref]['prefName'];
-		//print $_REQUEST[$customfields[$custpref]['prefName']];
-		$tikilib->set_user_preference($userwatch, $customfields[$custpref]['prefName'], $_REQUEST[$customfields[$custpref]['prefName']]);
-	}
-
 	header ("location: tiki-user_preferences.php?view_user=$userwatch");
 	die;
 }
@@ -168,6 +159,13 @@ if (isset($_REQUEST['info'])) {
 		$smarty->assign('lon', $lon);
 		$tikilib->set_user_preference($userwatch, 'lon', $lon);
 	}
+
+        // Custom fields
+        foreach ($customfields as $custpref=>$prefvalue ) {
+                // print $customfields[$custpref]['prefName'];
+                // print $_REQUEST[$customfields[$custpref]['prefName']];
+                $tikilib->set_user_preference($userwatch, $customfields[$custpref]['prefName'], $_REQUEST[$customfields[$custpref]['prefName']]);
+        }
 
 	$tikilib->set_user_preference($userwatch, 'country', $_REQUEST["country"]);
 

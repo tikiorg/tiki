@@ -22,7 +22,9 @@
 
   {* Custom fields *}
   {section name=ir loop=$customfields}
-    <tr><td class="form">{tr}{$customfields[ir].prefName}{/tr}:</td><td>{$customfields[ir].value}</td></tr>
+  {if $customfields[ir].show}
+    <tr><td class="form">{tr}{$customfields[ir].label}{/tr}:</td><td>{$customfields[ir].value}</td></tr>
+  {/if}
   {/section}
 
   <tr><td class="form">{tr}Avatar{/tr}:</td><td>{$avatar}</td></tr>

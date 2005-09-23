@@ -16,7 +16,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-require_once('lib/tikilib.php'); # httpScheme()
+require_once('lib/tikilib.php'); # httpScheme(), get_user_preference
 require_once('lib/webmail/tikimaillib.php');
 
 if (!isset($Debug)) $Debug = false;
@@ -152,15 +152,19 @@ class RegistrationLib extends TikiLib {
   }
 
 
-  function get_customfields() {
-    $query = "select `id`, `field` as `value`, `name` as `prefName` from `tiki_registration_fields`";
-    $result = $this->query($query);
-    $ret = array();
+  function get_customfields($user=false) {
+      global $tikilib;
+      $query = "select `id`, `field` as `prefName`, `name` as `label`, `type`, `show`, `size` from `tiki_registration_fields`";
+      $result = $this->query($query);
+      $ret = array();
                 
-    while ($res = $result->fetchRow()) {
-      $ret[] = $res;
-    }
-    return $ret;
+      while ($res = $result->fetchRow()) {
+          if ($user) {
+              $res['value'] = $tikilib->get_user_preference($user, $res['prefName'], '');
+          }
+          $ret[] = $res;
+      }
+      return $ret;
   }       
 
   /**
