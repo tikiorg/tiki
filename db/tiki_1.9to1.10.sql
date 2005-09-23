@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.42 2005-09-20 13:35:05 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.43 2005-09-23 08:53:35 michael_davey Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -78,10 +78,14 @@ CREATE TABLE `tiki_registration_fields` (
   `field` varchar(255) NOT NULL default '',
   `name` varchar(255) default NULL,
   `type` varchar(255) NOT NULL default 'text',
-  `show` tinyint(1) NOT NULL default '0',
+  `show` tinyint(1) NOT NULL default '1',
   `size` varchar(10) default '10',
   PRIMARY KEY  (`id`)
 ) TYPE=MyISAM;
+
+# 2005-09-22: mdavey: move custom fields to new table
+INSERT IGNORE INTO `tiki_registration_fields` (field, name) SELECT prefName as field, value as name FROM `tiki_user_preferences` WHERE user='CustomFields';
+DELETE FROM  `tiki_user_preferences` WHERE user='CustomFields';
 
 # 2005-09-07: rlpowell: These changes make a *huge* difference to speed of retrieval of forum threads.
 ALTER TABLE tiki_comments MODIFY COLUMN `message_id` varchar(128) default NULL;
