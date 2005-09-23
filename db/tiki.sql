@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2005-09-15 14:52:33 $
+# $Date: 2005-09-23 21:34:25 $
 # $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -4659,6 +4659,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('messu_sent_size','200')
 
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_protect_email', 'n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_1like_redirection', 'y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_show_hide_before', 'n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_actionlog', 'y');
 
 # Dynamic variables

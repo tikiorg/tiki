@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.611 2005-09-19 13:57:02 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.612 2005-09-23 21:34:23 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3668,6 +3668,8 @@ function add_pageview() {
 	foreach ($pages as $a_page) {
 	    $this->replace_link($name, $a_page);
 	}
+	
+
 
 	// Update the log
 	if (strtolower($name) != 'sandbox') {
@@ -4243,7 +4245,7 @@ function add_pageview() {
 	$replacements[] = "\\1<a $attrib href=\"http://www.\\2.\\3\\4\">www.\\2.\\3\\4$ext_icon</a>";
 	$patterns[] = "#([\n ])([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i";
 	if ($feature_wiki_protect_email == 'y')
-		$replacements[] = "\\1<script language=\"Javascript\" type=\"text/javascript\">protectEmail('\\2', '\\3', '@');</script><noscript>\\2@\\3</noscript>";
+		$replacements[] = "\\1<script language=\"Javascript\" type=\"text/javascript\">protectEmail('\\2', '\\3', '@');</script><noscript>\\2 ".tra("at")." \\3</noscript>";
 	else
 		$replacements[] = "\\1<a class='wiki' href=\"mailto:\\2@\\3\">\\2@\\3</a>";
 	$patterns[] = "#([\n ])magnet\:\?([^, \n\r]+)#i";
@@ -5426,6 +5428,7 @@ if (!$simple_wiki) {
 			// OK. Parse headers here...
 			$anchor = '';
 			$aclose = '';
+			$aclose2 = '';
 			$addremove = 0;
 
 			// May be special signs present after '!'s?
@@ -5434,7 +5437,7 @@ if (!$simple_wiki) {
 			    // OK. Must insert flipper after HEADER, and then open new div...
 			    $thisid = 'id' . microtime() * 1000000;
 			    $aclose = '<a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($divstate == '-' ? '+' : '-') . ']</a>';
-			    $aclose .= '<div id="' . $thisid . '" style="display:' . ($divstate == '+' ? 'block' : 'none') . ';">';
+			    $aclose2 = '<div id="' . $thisid . '" class="showhide_heading" style="display:' . ($divstate == '+' ? 'block' : 'none') . ';">';
 			    array_unshift($divdepth, $hdrlevel);
 			    $addremove = 1;
 			}
@@ -5445,11 +5448,14 @@ if (!$simple_wiki) {
 			    $thisid = 'id' . microtime() * 1000000;
 			    $pageNumLink = ($pageNum >= 2)? "tiki-index.php?page=$page&amp;pagenum=$pageNum": "";
 			    array_push($anch, str_repeat("*", $hdrlevel). " <a href='$pageNumLink#$thisid' class='link'>" . substr($line, $hdrlevel + $addremove). '</a>');
-			    $anchor = "<a id='$thisid'>";
-			    $aclose = '</a>' . $aclose;
+			    $anchor = "<a id='$thisid' />";
 			}
 			// Use $hdrlevel + 1 because the page title is H1, so none of the other headers should be.
-			$line = $anchor . "<h" . ($hdrlevel+1) . ">" . substr($line, $hdrlevel + $addremove). "</h".($hdrlevel+1).">" . $aclose;
+			global $feature_wiki_show_hide_before;
+			if ($feature_wiki_show_hide_before == 'y')
+			$line = $anchor . "<h" . ($hdrlevel+1) . ' class="showhide_heading">' . $aclose." ". substr($line, $hdrlevel + $addremove). "</h".($hdrlevel+1).">" .$aclose2;
+			else
+			$line = $anchor . "<h" . ($hdrlevel+1) . ' class="showhide_heading">' . substr($line, $hdrlevel + $addremove). "</h".($hdrlevel+1).">" . $aclose.$aclose2;
 		    } elseif (!strcmp($line, $GLOBALS['PAGE_SEP'])) {
 			// Close open paragraph, lists, and div's
 			$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 1);
