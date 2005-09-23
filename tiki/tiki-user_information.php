@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.31 2005-09-23 08:35:04 michael_davey Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.32 2005-09-23 10:39:16 michael_davey Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -30,11 +30,7 @@ $smarty->assign('userwatch', $userwatch);
 
 // Custom fields
 $customfields = array();
-$customfields = $registrationlib->get_customfields();
-
-foreach ($customfields as $custpref=>$prefvalue ) {
-	$customfields[$custpref]['value'] = $tikilib->get_user_preference($userwatch, $customfields[$custpref]['prefName'], $customfields[$custpref]['value']);
-}
+$customfields = $registrationlib->get_customfields($userwatch);
 
 $smarty->assign_by_ref('customfields', $customfields);
 

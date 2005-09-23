@@ -94,9 +94,11 @@
 
   {* Custom fields *}
   {section name=ir loop=$customfields}
-    <tr><td class="form">{$customfields[ir].prefName}:</td>
-        <td class="form"><input type="text" name="{$customfields[ir].prefName}" value="{$customfields[ir].value}" /></td>
+  {if $customfields[ir].show}
+    <tr><td class="form">{$customfields[ir].label}:</td>
+        <td class="form"><input type="{$customfields[ir].type}" name="{$customfields[ir].prefName}" value="{$customfields[ir].value}" size="{$customfields[ir].size}" /></td>
     </tr>
+  {/if}
   {/section}
 
   <tr><td colspan="2" class="button"><input type="submit" name="info" value="{tr}Change information{/tr}" /></td></tr>
