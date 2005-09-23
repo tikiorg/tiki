@@ -2,7 +2,7 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2005-09-20 10:50:33 $
+-- $Date: 2005-09-23 21:44:30 $
 -- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
@@ -8215,6 +8215,10 @@ go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_1like_redirection', 'y')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_show_hide_before', 'n')
 go
 
 
