@@ -18,6 +18,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 require_once('lib/tikilib.php'); # httpScheme(), get_user_preference
 require_once('lib/webmail/tikimaillib.php');
+require_once( 'lib/db/tikitable.php' );
+require_once( 'lib/db/tiki_registration_fields.php' );
 
 if (!isset($Debug)) $Debug = false;
 
@@ -153,19 +155,14 @@ class RegistrationLib extends TikiLib {
 
 
   function get_customfields($user=false) {
-      global $tikilib;
-      $query = "select `id`, `field` as `prefName`, `name` as `label`, `type`, `show`, `size` from `tiki_registration_fields`";
-      $result = $this->query($query);
-      $ret = array();
-                
-      while ($res = $result->fetchRow()) {
-          if ($user) {
-              $res['value'] = $tikilib->get_user_preference($user, $res['prefName'], '');
-          }
-          $ret[] = $res;
-      }
-      return $ret;
+      $table = new TikiRegistrationFields();
+      return $table->getVisibleFields2($user);
   }       
+
+  function get_hiddenfields() {
+      $table = new TikiRegistrationFields();
+      return $table->getHiddenFields();
+  }
 
   /**
    *  Default TikiWiki 'user_registers' callback
@@ -335,8 +332,10 @@ class RegistrationLib extends TikiLib {
 		}
                 // Custom fields
                 foreach ($customfields as $custpref=>$prefvalue ) {
-                    //print $_REQUEST[$customfields[$custpref]['prefName']];
-                    $tikilib->set_user_preference($_REQUEST["name"], $customfields[$custpref]['prefName'], $_REQUEST[$customfields[$custpref]['prefName']]);
+                    if( $customfields[$custpref]['show'] ) {
+                        //print $_REQUEST[$customfields[$custpref]['prefName']];
+                        $tikilib->set_user_preference($_REQUEST["name"], $customfields[$custpref]['prefName'], $_REQUEST[$customfields[$custpref]['prefName']]);
+                    }
                 }
 	}
 	return true;
