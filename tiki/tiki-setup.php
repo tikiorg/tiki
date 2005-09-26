@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.283 2005-09-19 20:03:17 michael_davey Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.284 2005-09-26 12:48:28 michael_davey Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -791,6 +791,8 @@ $feature_clear_passwords = 'n';
 $smarty->assign('feature_clear_passwords', 'n');
 $feature_challenge = 'n';
 $smarty->assign('feature_challenge', 'n');
+$min_user_length = 1;
+$smarty->assign('min_user_length', $min_user_length);
 $min_pass_length = 1;
 $smarty->assign('min_pass_length', $min_pass_length);
 $pass_chr_num = 'n';
