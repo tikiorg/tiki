@@ -21,12 +21,12 @@
       </td>
       {/if}
       <td id="centercolumn"><div id="tiki-center">
-      <br />
       {if ($errortype eq "402")}
       <center>
       {include file=tiki-login.tpl}
       </center>
       {else}
+        <br />
         <div class="cbox">
         <div class="cbox-title">
         {$errortitle|default:"{tr}Error{/tr}"}
