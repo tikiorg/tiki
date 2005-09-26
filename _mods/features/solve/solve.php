@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: solve.php,v 1.3 2005-09-22 13:25:55 michael_davey Exp $
+ * @version $Id: solve.php,v 1.4 2005-09-26 14:04:23 michael_davey Exp $
  * @package TikiWiki
  * @subpackage Solve
  * @copyright (C) 2005 the Tiki community
@@ -20,9 +20,6 @@ $option = solve_get_param($_REQUEST, 'option');
 
 /** SolveLib - a helper class */
 $sh = new SolveLib( $dbTiki, $option, '.' );
-
-// loads english language file by default
-include_once ( 'language/english.php' );
 
 if ($option == '' ) {
 	require_once('tiki-login_scr.php');
