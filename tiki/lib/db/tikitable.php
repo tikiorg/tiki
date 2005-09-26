@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: tikitable.php,v 1.1 2005-09-19 21:49:40 michael_davey Exp $
+* @version $Id: tikitable.php,v 1.2 2005-09-26 12:12:33 michael_davey Exp $
 * @package TikiWiki
 * @subpackage db
 * @copyright (C) 2005 the Tiki community
@@ -57,6 +57,17 @@ class TikiDBTable {
 			$this->$k = $iFilter->process( $this->$k );
 		}
 	}
+
+        function setQuery($query) {
+            $this->_db->setQuery($query);
+        }
+
+        function query($query=null) {
+            $result = $this->_db->query($query);
+            // print_r($result);
+            return $result;
+        }
+
 	/**
 	 *	@return string Returns the error message
 	 */
@@ -146,11 +157,11 @@ class TikiDBTable {
 		}
 
 
-		$this->_db->setQuery( "SELECT $this->_tbl_key, ordering FROM $this->_tbl"
+		$this->setQuery( "SELECT $this->_tbl_key, ordering FROM $this->_tbl"
 		. ($where ? "\nWHERE $where" : '')
 		. "\nORDER BY ordering"
 		);
-		if (!($orders = $this->_db->loadObjectList())) {
+		if (!($orders = $this->loadObjectList())) {
 			$this->_error = $this->_db->getErrorMsg();
 			return false;
 		}
@@ -178,154 +189,47 @@ class TikiDBTable {
 		for ($i=0, $n=count( $orders ); $i < $n; $i++) {
 			if ($orders[$i]->ordering >= 0) {
 				$orders[$i]->ordering = $i+1;
-				$this->_db->setQuery( "UPDATE $this->_tbl"
+				$this->setQuery( "UPDATE $this->_tbl"
 				. "\nSET ordering='".$orders[$i]->ordering."' WHERE $k='".$orders[$i]->$k."'"
 				);
-				$this->_db->query();
-	//echo '<br />'.$this->_db->getQuery();
+				$this->query();
+	//echo '<br />'.$this->getQuery();
 			}
 		}
 
 		// if we didn't reorder the current record, make it last
 		if ($shift == 0) {
 			$order = $n+1;
-			$this->_db->setQuery( "UPDATE $this->_tbl"
+			$this->setQuery( "UPDATE $this->_tbl"
 			. "\nSET ordering='$order' WHERE $k='".$this->$k."'"
 			);
-			$this->_db->query();
-	//echo '<br />'.$this->_db->getQuery();
+			$this->query();
+	//echo '<br />'.$this->getQuery();
 		}
 		return true;
 	}
 
-
-	/**
-	*	Default delete method
-	*
-	*	can be overloaded/supplemented by the child class
-	*	@return true if successful otherwise returns and error message
-	*/
-	function xxxdelete( $oid=null ) {
-		$k = $this->_tbl_key;
-		if ($oid) {
-			$this->$k = intval( $oid );
-		}
-
-		$this->_db->setQuery( "DELETE FROM $this->_tbl WHERE $this->_tbl_key = '".$this->$k."'" );
-
-		if ($this->_db->query()) {
-			return true;
-		} else {
-			$this->_error = $this->_db->getErrorMsg();
-			return false;
-		}
-	}
-
-	function xxxcheckout( $who, $oid=null ) {
-		if (!array_key_exists( 'checked_out', get_class_vars( strtolower(get_class( $this )) ) )) {
-			$this->_error = "WARNING: ".strtolower(get_class( $this ))." does not support checkouts.";
-			return false;
-		}
-		$k = $this->_tbl_key;
-		if ($oid !== null) {
-			$this->$k = $oid;
-		}
-		$time = date( "%Y-%m-%d H:i:s" );
-		if (intval( $who )) {
-			// new way of storing editor, by id
-			$this->_db->setQuery( "UPDATE $this->_tbl"
-			. "\nSET checked_out='$who', checked_out_time='$time'"
-			. "\nWHERE $this->_tbl_key='".$this->$k."'"
-			);
-		} else {
-			// old way of storing editor, by name
-			$this->_db->setQuery( "UPDATE $this->_tbl"
-			. "\nSET checked_out='1', checked_out_time='$time', editor='".$who."' "
-			. "\nWHERE $this->_tbl_key='".$this->$k."'"
-			);
-		}
-		return $this->_db->query();
-	}
-
-	function xxxcheckin( $oid=null ) {
-		if (!array_key_exists( 'checked_out', get_class_vars( strtolower(get_class( $this )) ) )) {
-			$this->_error = "WARNING: ".strtolower(get_class( $this ))." does not support checkin.";
-			return false;
-		}
-		$k = $this->_tbl_key;
-		if ($oid !== null) {
-			$this->$k = $oid;
-		}
-		$time = date("H:i:s");
-		$this->_db->setQuery( "UPDATE $this->_tbl"
-		. "\nSET checked_out='0', checked_out_time='0000-00-00 00:00:00'"
-		. "\nWHERE $this->_tbl_key='".$this->$k."'"
-		);
-		return $this->_db->query();
-	}
-
-	function xxxhit( $oid=null ) {
-		$k = $this->_tbl_key;
-		if ($oid !== null) {
-			$this->$k = intval( $oid );
-		}
-		$this->_db->setQuery( "UPDATE $this->_tbl SET hits=(hits+1) WHERE $this->_tbl_key='$this->id'" );
-		$this->_db->query();
-	}
-
-	/**
-	* Generic save function
-	* @param array Source array for binding to class vars
-	* @param string Filter for the order updating
-	* @returns TRUE if completely successful, FALSE if partially or not succesful.
-	*/
-	function save( $source, $order_filter ) {
-		if (!$this->bind( $_POST )) {
-			return false;
-		}
-		if (!$this->check()) {
-			return false;
-		}
-		if (!$this->store()) {
-			return false;
-		}
-		if (!$this->checkin()) {
-			return false;
-		}
-		$filter_value = $this->$order_filter;
-		$this->updateOrder( $order_filter ? "`$order_filter`='$filter_value'" : "" );
-		$this->_error = '';
-		return true;
-	}
-
-	/**
-	* Generic Publish/Unpublish function
-	* @param array An array of id numbers
-	* @param integer 0 if unpublishing, 1 if publishing
-	* @param integer The id of the user performnig the operation
-	*/
-	function publish_array( $cid=null, $publish=1, $myid=0 ) {
-		if (!is_array( $cid ) || count( $cid ) < 1) {
-			$this->_error = "No items selected.";
-			return false;
-		}
-
-		$cids = implode( ',', $cid );
-
-		$this->_db->setQuery( "UPDATE $this->_tbl SET published='$publish'"
-		. "\nWHERE $this->_tbl_key IN ($cids) AND (checked_out=0 OR (checked_out='$myid'))"
-		);
-		if (!$this->_db->query()) {
-			$this->_error = $this->_db->getErrorMsg();
-			return false;
-		}
-
-		if (count( $cid ) == 1) {
-			$this->checkin( $cid[0] );
-		}
-		$this->_error = '';
-		return true;
-	}
+        /**
+        * Load a list of database objects
+        * @param string The field name of a primary key
+        * @return array If <var>key</var> is empty as sequential list of returned records.
+        * If <var>key</var> is not empty then the returned array is indexed by the value
+        * the database key.  Returns <var>null</var> if the query fails.
+        */
+        function loadObjectList( $key='' ) {
+                if (!($cur = $this->query())) {
+                        return null;
+                }
+                $array = array();
+                while ($row = $cur->fetchRow() ) {
+                        if ($key) {
+                                $array[$row->$key] = $row;
+                        } else {
+                                $array[] = $row;
+                        }
+                }
+                return $array;
+        }
 
 	/**
 	* Export item list to xml
