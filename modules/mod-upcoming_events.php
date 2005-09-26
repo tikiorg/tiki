@@ -7,6 +7,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 include_once ('lib/calendar/calendarlib.php');
+global $calendarlib;
 
 //$events = $calendarlib->last_modif_events($module_rows, isset($module_params["calendarId"]) ? $module_params["calendarId"] : 0);
 $events = $calendarlib->upcoming_events($module_rows, 
