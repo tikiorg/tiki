@@ -1,4 +1,7 @@
 <div align="center">
-{include file=modules/mod-login_box.tpl}
-{include file=modules/mod-join_box.tpl}
+{if !$user}
+Your public content here!
+{else}
+Your member content here!
+{/if}
 </div>
