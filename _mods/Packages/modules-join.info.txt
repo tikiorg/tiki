@@ -1,0 +1,23 @@
+contributor:
+$Author: michael_davey $
+
+revision: 
+$Revision: 1.1 $
+
+lastmodif:
+$Date: 2005-09-26 13:55:30 $
+
+files: 
+modules/join/templates/modules/mod-join_box.tpl templates/modules/mod-join_now.tpl
+
+author:
+mdavey
+
+licence:
+Public Domain (no license)
+
+Description: 
+A simple "join now" box
+
+ChangeLog
+1.1 Initial Module
