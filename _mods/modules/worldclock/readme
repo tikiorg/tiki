@@ -1,15 +1,12 @@
-Clock Module
+WorldClock Module
 =================
 
-Very cool little javascript ticking clock to sit in your left or right column
-without a module frame as well for added coolness, or with world mode displays a large analog and digital world clock in border
+Very cool little javascript ticking world clock to sit in your left or right column
+displays a large analog and digital world clock in border
 
 Params are:
   mode: default | world
      default: damian's 1-row and status bar version
      world - an anlog and digital world clock (doesn't support DST)
 
-Enjoy :)
-
-Damian
-$Header: /cvsroot/tikiwiki/_mods/modules/worldclock/readme,v 1.1 2005-09-08 10:40:45 damosoft Exp $
+$Header: /cvsroot/tikiwiki/_mods/modules/worldclock/readme,v 1.2 2005-09-26 21:32:05 michael_davey Exp $
