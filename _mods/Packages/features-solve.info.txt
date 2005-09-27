@@ -1,0 +1,85 @@
+contributor:
+$Author: michael_davey $
+
+revision:
+$Revision: 1.1 $
+
+lastmodif:
+$Date: 2005-09-27 12:51:46 $
+
+files: 
+features/solve/solve.php solve.php
+features/solve/styles/napkin.css styles/napkin.css
+features/solve/styles/napkin/images/napkin.jpg styles/napkin/images/napkin.jpg
+features/solve/templates/styles/napkin/header.tpl templates/styles/napkin/header.tpl
+features/solve/templates/styles/napkin/solve-bugs.tpl templates/styles/napkin/solve-bugs.tpl
+features/solve/templates/styles/napkin/solve-bugs_list.tpl templates/styles/napkin/solve-bugs_list.tpl
+features/solve/templates/styles/napkin/solve-cases.tpl templates/styles/napkin/solve-cases.tpl
+features/solve/templates/styles/napkin/solve-cases_list.tpl templates/styles/napkin/solve-cases_list.tpl
+features/solve/templates/styles/napkin/solve-top_nav.tpl templates/styles/napkin/solve-top_nav.tpl
+features/solve/templates/styles/napkin/tiki-login.tpl templates/styles/napkin/tiki-login.tpl
+features/solve/templates/styles/napkin/tiki-register.tpl templates/styles/napkin/tiki-register.tpl
+features/solve/templates/styles/napkin/tiki-remind_password.tpl templates/styles/tiki-remind_password.tpl
+features/solve/templates/styles/napkin/modules/mod-login_box.tpl templates/styles/napkin/modules/mod-login_box.tpl
+features/solve/templates/styles/napkin/modules/mod-join_box.tpl templates/styles/napkin/modules/mod-join_box.tpl
+features/solve/lib/solve/configuration.php lib/solve/configuration.php
+features/solve/lib/solve/presentation.php lib/solve/presentation.php
+features/solve/lib/solve/solvelib.php lib/solve/solvelib.php
+features/solve/lib/solve/solvebugs.php lib/solve/solvebugs.php
+features/solve/lib/solve/solvecases.php lib/solve/solvecases.php
+features/solve/lib/vtigerregistrationlib.php lib/registration/vtigerregistrationlib.php
+features/solve/db/vtiger_portal_bug_fields.php lib/solve/db/vtiger_portal_bug_fields.php
+features/solve/db/vtiger_portal_case_fields.php lib/solve/db/vtiger_portal_case_fields.php
+features/solve/db/vtiger_portal_configuration.php lib/solve/db/vtiger_portal_configuration.php
+
+author:
+mdavey
+
+licence:
+GNU/LGPL
+
+Description: 
+Tiki Helpdesk/CRM portal
+
+Changelog:
+1 initial package
+
+sql-install:
+INSERT INTO `users_permissions` ( `permName` , `permDesc` , `level` , `type` )
+VALUES (
+'vtiger_p_list_bugs', 'Can see a list of their own vtiger bugs, 'registered', 'vtiger'
+), (
+'vtiger_p_list_cases', 'Can see a list of their own sugar cases, 'registered', 'sugar'
+), (
+'vtiger_p_view_bugs', 'Can view details of own sugar bug', 'registered', 'sugar'
+), (
+'vtiger_p_view_cases', 'Can view details of own sugar case', 'registered', 'sugar'
+), (
+'vtiger_p_search_bugs', 'Can search own sugar bugs', 'registered', 'sugar'
+), (
+'vtiger_p_search_cases', 'Can search own sugar cases', 'registered', 'sugar'
+), (
+'vtiger_p_create_bugs', 'Can create sugar bugs', 'registered', 'sugar'
+), (
+'vtiger_p_create_cases', 'Can create sugar cases', 'registered', 'sugar'
+), (
+'vtiger_p_edit_bugs', 'Can edit own sugar bugs', 'registered', 'sugar'
+), (
+'vtiger_p_edit_cases', 'Can edit own sugar cases', 'registered', 'sugar'
+);
+INSERT INTO `tiki_preferences` ( `name` , `value` )
+VALUES (
+'feature_crm', 'y'
+);
+INSERT INTO `tiki_events` ( `callback_type` , `order` , `event` , `object` , `method` )
+VALUES (
+'1', '50', 'user_registers', 'vtigeregistrationlib', 'callback_vtiger_registration'
+);
+NSERT INTO `tiki_events` ( `callback_type` , `order` , `event` , `object` , `method` )
+VALUES (
+'3', '80', 'user_registers', 'vtigeregistrationlib', 'callback_vtiger_save_registration'
+);
+
+sql-remove:
+DELETE FROM tiki_preferences` WHERE name =  'feature_crm';
+DELETE FROM  `tiki_events` WHERE object =  'vtigerregistrationlib';
