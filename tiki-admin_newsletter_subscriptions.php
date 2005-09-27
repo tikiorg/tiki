@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_newsletter_subscriptions.php,v 1.15 2005-05-18 10:58:54 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_newsletter_subscriptions.php,v 1.16 2005-09-27 22:05:23 wesleywillians Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -117,6 +117,28 @@ if (isset($_REQUEST["add"]) && isset($_REQUEST["addall"]) && $_REQUEST["addall"]
 if (isset($_REQUEST["add"]) && isset($_REQUEST['group']) && $_REQUEST['group'] != "") {
 	check_ticket('admin-nl-subsriptions');
 	$nllib->add_group_users($_REQUEST["nlId"], $_REQUEST['group'], $confirmEmail, $addEmail);
+}
+if (isset($_REQUEST["addbatch"]) && isset($_FILES['batch_subscription']) && $tiki_p_batch_subscribe_email == 'y' && $tiki_p_subscribe_email == 'y') {
+    check_ticket('admin-nl-subscription');
+
+    // array with success and errors
+    $ok = array();
+    $error = array();
+
+    if (!$emails = file($_FILES['batch_subscription']['tmp_name'])) {
+	$smarty->assign('msg', tra("Error opening uploaded file"));
+	$smarty->display("error.tpl");
+	die;
+    }
+
+    for ($i = 0; $i<sizeof($emails); $i++) {
+	$email = $emails[$i];
+	if ($nllib->newsletter_subscribe($_REQUEST["nlId"], $email, 'n', '', 'y')) {
+	    $ok[] = $email;
+	} else {
+	    $error[] = $email;
+	}
+    }
 }
 if (isset($_REQUEST["addgroup"]) && isset($_REQUEST['group']) && $_REQUEST['group'] != ""){
 	check_ticket('admin-nl-subsriptions');
