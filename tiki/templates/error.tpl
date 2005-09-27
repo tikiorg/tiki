@@ -34,6 +34,7 @@
         <div class="cbox-data">
         <br />
         {if ($errortype eq "404")}
+          {if $feature_likePages eq 'y'}
           {tr}Perhaps you were looking for:{/tr}
           <ul>
           {section name=back loop=$likepages}
@@ -43,6 +44,7 @@
           {/section}
           </ul>
           <br />
+          {/if}
           {include
             file="tiki-searchindex.tpl"
             searchNoResults="true"                 

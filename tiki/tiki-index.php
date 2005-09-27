@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.147 2005-09-14 21:45:38 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.148 2005-09-27 21:33:38 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -139,15 +139,17 @@ if (!$info)
 
 // If the page doesn't exist then display an error
 if(empty($info)) {
-  $likepages = $wikilib->get_like_pages($page);
-  /* if we have exactly one match, redirect to it */
-  if(count($likepages) == 1 && $feature_wiki_1like_redirection == 'y') {
-    header ("Status: 402 Found"); /* PHP3 */
-    header ("HTTP/1.0 402 Found"); /* PHP4 */
-    header("Location: tiki-index.php?page=$likepages[0]");
-    die;
+  if ($feature_likePages == 'y') {
+     $likepages = $wikilib->get_like_pages($page);
+     /* if we have exactly one match, redirect to it */
+     if(count($likepages) == 1 && $feature_wiki_1like_redirection == 'y') {
+       header ("Status: 402 Found"); /* PHP3 */
+       header ("HTTP/1.0 402 Found"); /* PHP4 */
+       header("Location: tiki-index.php?page=$likepages[0]");
+       die;
+     }
+     $smarty->assign_by_ref('likepages', $likepages);
   }
-  $smarty->assign_by_ref('likepages', $likepages);
   $smarty->assign('msg',tra("Page cannot be found"));
   header ("Status: 404 Not Found"); /* PHP3 */
   header ("HTTP/1.0 404 Not Found"); /* PHP4 */
