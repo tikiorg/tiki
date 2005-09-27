@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.2 2005-08-26 00:51:14 luciash Exp $
+// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.3 2005-09-27 16:47:50 michael_davey Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -160,7 +160,10 @@ function create_dirs($domain=''){
 		if (!is_dir($dir)) {
 			$ret .= "The directory '$docroot/$dir' does not exist.\n";
 		} else if (!is_writeable($dir)) {
-			$ret .= "The directory '$docroot/$dir' is not writeable.\n";
+			@chmod($dir,02777);
+			if (!is_writeable($dir)) {
+				$ret .= "The directory '$docroot/$dir' is not writeable.\n";
+			}
 		}
 	}
 	return $ret;
