@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: solvebugs.php,v 1.3 2005-09-27 13:27:28 michael_davey Exp $
+ * @version $Id: solvebugs.php,v 1.4 2005-09-27 16:24:12 michael_davey Exp $
  * @package TikiWiki
  * @subpackage Solve
  * @copyright (C) 2005 the Tiki community
@@ -14,7 +14,7 @@ require_once ( "lib/solve/db/vtiger_portal_bug_fields.php" );
 
 define('_MYNAMEIS', 'bugs');
 
-if ((!include( 'lib/vtiger/vtiger.php' ))) {
+if ((!@include( 'lib/vtiger/vtiger.php' ))) {
     $smarty->assign('msg', 'vtiger ' . tra("modular extension (mod) not present: please contact the administrator."));
     $smarty->display("error.tpl");
     die;
