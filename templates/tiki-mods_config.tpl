@@ -8,7 +8,7 @@
 </div>
 <form action="tiki-mods.php" method="post">
 <input type="hidden" name="action" value="configuration" />
-<input type="hidden" name="package" value="{$package}" />
+<input type="hidden" name="package" value="{$type}-{$package}" />
 <input type="hidden" name="type" value="{$type}" />
 <table class="formcolor">
 {foreach key=k item=i from=$info.configuration}
