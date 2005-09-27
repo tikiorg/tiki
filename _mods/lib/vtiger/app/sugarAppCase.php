@@ -1,5 +1,5 @@
 <?php
-/* @version $Id: sugarAppCase.php,v 1.1 2005-09-27 12:46:30 michael_davey Exp $ */
+/* @version $Id: sugarAppCase.php,v 1.2 2005-09-27 13:49:48 michael_davey Exp $ */
 
 /*********************************************************************************
  * The contents of this file are subject to the SugarCRM Public License Version
@@ -117,3 +117,4 @@ class VtigerAppCase extends sugarApp {
         return $this->sugarComm->getSome($filter,$this->sortBy);
     }
 }
+?>
