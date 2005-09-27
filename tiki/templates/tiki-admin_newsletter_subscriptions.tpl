@@ -46,9 +46,19 @@
 <tr><td class="formcolor">{tr}Don't send confirmation mail{/tr}</td><td colspan="2" class="formcolor"><input type="checkbox" name="confirmEmail"></td></tr>
 {/if}
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor" colspan="2"><i>{tr}The user email will be refreshed at each newsletter sending{/tr}</i></td></tr>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor" colspan="2"><input type="submit" name="add" value="{tr}add{/tr}" /></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor" colspan="2"><input type="submit" name="addgroup" value="{tr}add{/tr}" /></td></tr>
 </table>
 </form>
+{if $tiki_p_batch_subscribe_email eq "y" && $tiki_p_subscribe_email eq "y"}
+<h2>{tr}Batch e-mail subscribe{/tr}</h2>
+<form action="tiki-admin_newsletter_subscriptions.php" method="post" enctype="multipart/form-data">
+<input type="hidden" name="nlId" value="{$nlId|escape}" />
+<table class="normal">
+<tr><td class="formcolor" width="30%">{tr}File{/tr}:</td><td class="formcolor" colspan="2"><input type="file" name="batch_subscription" /><br /><i>{tr}txt file, one e-mail per line{/tr}</td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor" colspan="2"><input type="submit" name="addbatch" value="{tr}add{/tr}" /></td></tr>
+</table>
+</form>
+{/if}
 <h2>{tr}Subscribe group{/tr}</h2>
 <form action="tiki-admin_newsletter_subscriptions.php" method="post">
 <input type="hidden" name="nlId" value="{$nlId|escape}" />
