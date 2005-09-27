@@ -1,14 +1,14 @@
 contributor:
-$Author: damosoft $
+$Author: michael_davey $
 
 revision: 
-$Revision: 1.1 $
+$Revision: 1.2 $
 
 lastmodif:
-$Date: 2005-09-08 10:53:49 $
+$Date: 2005-09-27 12:50:36 $
 
 files: 
-modules/clock/mod-worldclock.tpl templates/modules/mod-worldclock.tpl
+modules/worldclock/mod-worldclock.tpl templates/modules/mod-worldclock.tpl
 
 author:
 mdavey
