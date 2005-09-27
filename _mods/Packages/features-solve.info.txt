@@ -2,10 +2,10 @@ contributor:
 $Author: michael_davey $
 
 revision:
-$Revision: 1.1 $
+$Revision: 1.2 $
 
 lastmodif:
-$Date: 2005-09-27 12:51:46 $
+$Date: 2005-09-27 13:29:38 $
 
 files: 
 features/solve/solve.php solve.php
@@ -42,44 +42,15 @@ Description:
 Tiki Helpdesk/CRM portal
 
 Changelog:
-1 initial package
+1.1 initial package
+1.2 dependency checking
 
 sql-install:
-INSERT INTO `users_permissions` ( `permName` , `permDesc` , `level` , `type` )
-VALUES (
-'vtiger_p_list_bugs', 'Can see a list of their own vtiger bugs, 'registered', 'vtiger'
-), (
-'vtiger_p_list_cases', 'Can see a list of their own sugar cases, 'registered', 'sugar'
-), (
-'vtiger_p_view_bugs', 'Can view details of own sugar bug', 'registered', 'sugar'
-), (
-'vtiger_p_view_cases', 'Can view details of own sugar case', 'registered', 'sugar'
-), (
-'vtiger_p_search_bugs', 'Can search own sugar bugs', 'registered', 'sugar'
-), (
-'vtiger_p_search_cases', 'Can search own sugar cases', 'registered', 'sugar'
-), (
-'vtiger_p_create_bugs', 'Can create sugar bugs', 'registered', 'sugar'
-), (
-'vtiger_p_create_cases', 'Can create sugar cases', 'registered', 'sugar'
-), (
-'vtiger_p_edit_bugs', 'Can edit own sugar bugs', 'registered', 'sugar'
-), (
-'vtiger_p_edit_cases', 'Can edit own sugar cases', 'registered', 'sugar'
-);
-INSERT INTO `tiki_preferences` ( `name` , `value` )
-VALUES (
-'feature_crm', 'y'
-);
-INSERT INTO `tiki_events` ( `callback_type` , `order` , `event` , `object` , `method` )
-VALUES (
-'1', '50', 'user_registers', 'vtigeregistrationlib', 'callback_vtiger_registration'
-);
-NSERT INTO `tiki_events` ( `callback_type` , `order` , `event` , `object` , `method` )
-VALUES (
-'3', '80', 'user_registers', 'vtigeregistrationlib', 'callback_vtiger_save_registration'
-);
+INSERT IGNORE INTO `users_permissions` ( `permName` , `permDesc` , `level` , `type` ) VALUES ( 'vtiger_p_list_bugs', 'Can see a list of their own vtiger bugs', 'registered', 'vtiger'), ( 'vtiger_p_list_cases', 'Can see a list of their own sugar cases', 'registered', 'sugar'), ( 'vtiger_p_view_bugs', 'Can view details of own sugar bug', 'registered', 'sugar'), ( 'vtiger_p_view_cases', 'Can view details of own sugar case', 'registered', 'sugar'), ( 'vtiger_p_search_bugs', 'Can search own sugar bugs', 'registered', 'sugar'), ( 'vtiger_p_search_cases', 'Can search own sugar cases', 'registered', 'sugar'), ( 'vtiger_p_create_bugs', 'Can create sugar bugs', 'registered', 'sugar'), ( 'vtiger_p_create_cases', 'Can create sugar cases', 'registered', 'sugar'), ( 'vtiger_p_edit_bugs', 'Can edit own sugar bugs', 'registered', 'sugar'), ( 'vtiger_p_edit_cases', 'Can edit own sugar cases', 'registered', 'sugar');
+INSERT INTO `tiki_preferences` ( `name` , `value` ) VALUES ( 'feature_crm', 'y');
+INSERT INTO `tiki_events` ( `callback_type` , `order` , `event` , `object` , `method` ) VALUES ( '1', '50', 'user_registers', 'vtigeregistrationlib', 'callback_vtiger_registration');
+INSERT INTO `tiki_events` ( `callback_type` , `order` , `event` , `object` , `method` ) VALUES ( '3', '80', 'user_registers', 'vtigeregistrationlib', 'callback_vtiger_save_registration');
 
 sql-remove:
-DELETE FROM tiki_preferences` WHERE name =  'feature_crm';
+DELETE FROM `tiki_preferences` WHERE name =  'feature_crm';
 DELETE FROM  `tiki_events` WHERE object =  'vtigerregistrationlib';
