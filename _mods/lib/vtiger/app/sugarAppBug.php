@@ -1,5 +1,5 @@
 <?php
-/* @version $Id: sugarAppBug.php,v 1.2 2005-09-27 13:49:48 michael_davey Exp $ */
+/* @version $Id: sugarAppBug.php,v 1.3 2005-09-27 16:22:25 michael_davey Exp $ */
 
 /*********************************************************************************
  * The contents of this file are subject to the SugarCRM Public License Version
@@ -38,7 +38,7 @@ class VtigerAppBug extends sugarApp {
     }
     
     function login() {
-        global $sugar_p_use_portal, $smarty;
+        global $vtiger_p_use_portal, $smarty;
         if( $this->sugarComm->createSession() ) {
             $this->sugarSessionID = $this->sugarComm->getCrmSessionID();
             $this->sugarContact->setCrmSessionID($this->sugarSessionID);
@@ -48,23 +48,23 @@ class VtigerAppBug extends sugarApp {
 
             $this->contactFlags = $contactFlags;
 
-            $sugar_p_use_portal = true;
+            $vtiger_p_use_portal = true;
         } else {
             // do error handling here
-            $sugar_p_use_portal = false;
-            $smarty->assign('msg', tra("You do not have permission to use this feature").": sugar_p_use_portal");
+            $vtiger_p_use_portal = false;
+            $smarty->assign('msg', tra("You do not have permission to use this feature").": vtiger_p_use_portal");
             $smarty->display("error.tpl");
             die;
         }    
     }
     
     function logout() {
-        global $sugar_p_use_portal;
+        global $vtiger_p_use_portal;
         $this->sugarSessionID = false;
         $this->sugarContact->closeSession();
         $this->sugarComm->setCrmSessionID(false);
         $this->contactFlags = false;
-        $sugar_p_use_portal = false;
+        $vtiger_p_use_portal = false;
     }
     
     function create($record) {

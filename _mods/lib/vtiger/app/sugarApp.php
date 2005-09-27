@@ -1,5 +1,5 @@
 <?php
-/* @version $Id: sugarApp.php,v 1.1 2005-09-27 12:46:30 michael_davey Exp $ */
+/* @version $Id: sugarApp.php,v 1.2 2005-09-27 16:22:25 michael_davey Exp $ */
 /*********************************************************************************
  * The contents of this file are subject to the SugarCRM Public License Version
  * 1.1.2 ("License"); You may not use this file except in compliance with the
@@ -19,8 +19,8 @@
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 // This class is the base class that stores all the application logic of the component
-global $sugar_p_use_portal;
-$sugar_p_use_portal = false;
+global $vtiger_p_use_portal;
+$vtiger_p_use_portal = false;
 
 class sugarApp {
     var $request = null;
