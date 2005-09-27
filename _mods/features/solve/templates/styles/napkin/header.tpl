@@ -9,7 +9,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 {* can be needed for sefurls with tiki not installed at the root server *}
-{if $feature_server_name}<base href="http://intraweb/tiki-registration/" />{/if}
+{if $feature_server_name}<base href="{$feature_server_name}/" />{/if}
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 {if $metatag_keywords ne ''}<meta name="keywords" content="{$metatag_keywords}" />
 {/if}
@@ -50,9 +50,9 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 </title>
 
 {if $transition_style ne '' and $transition_style ne 'none' }
-<link rel="StyleSheet"  href="http://intraweb/tiki-registration/styles/transitions/{$transition_style}" type="text/css" />
+<link rel="StyleSheet"  href="{$feature_server_name}/styles/transitions/{$transition_style}" type="text/css" />
 {/if}
-<link rel="StyleSheet"  href="http://intraweb/tiki-registration/styles/{$style}" type="text/css" />
+<link rel="StyleSheet"  href="{$feature_server_name}/styles/{$style}" type="text/css" />
 {if $favicon}<link rel="icon" href="{$favicon}" />{/if}
 {* --- jscalendar block --- *}
 {if $feature_jscalendar eq 'y' and $uses_jscalendar eq 'y'}
