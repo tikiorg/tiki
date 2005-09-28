@@ -14,6 +14,11 @@ if($allowRegister != 'y') {
 
 $smarty->assign('showmsg','n');
 
+//get hidden fields
+$hiddenfields = array();
+$hiddenfields = $registrationlib->get_hiddenfields();
+$smarty->assign_by_ref('hiddenfields', $hiddenfields);
+
 //get custom fields
 $customfields = array();
 $customfields = $registrationlib->get_customfields();
@@ -21,8 +26,10 @@ $smarty->assign_by_ref('customfields', $customfields);
 		
 
 if(isset($_REQUEST["register"])) {
-    $data = array('user'=> $_REQUEST["name"], 'mail_site'=>$_SERVER["SERVER_NAME"]);
-  if (!isset($feature_signal) || $feature_signal != 'y') {
+    $data = $_POST;
+    $data['user'] = $_REQUEST["name"];
+    $data['mail_site'] = $_SERVER["SERVER_NAME"];
+  if ((!isset($feature_signal)) || $feature_signal != 'y') {
     /* fake the callbacks using a hard-coded default sequence */
     include_once('lib/registration/registrationlib.php');
     if ( true && 
@@ -42,6 +49,12 @@ if(isset($_REQUEST["register"])) {
   $registrationlib->registration_form();
 }
 
+$_VALID = tra("Please enter a valid %s.  No spaces, more than %d characters and contain %s");
+
+$smarty->assign('_PROMPT_UNAME', sprintf($_VALID, tra("username"), $min_user_length, "0-9,a-z,A-Z") );
+$smarty->assign('_PROMPT_PASS', sprintf($_VALID, tra("password"), $min_pass_length, "0-9,a-z,A-Z") );
+$smarty->assign('min_user_length', $min_user_length);
+$smarty->assign('min_pass_length', $min_pass_length);
 $smarty->assign('mid','tiki-register.tpl');
 $smarty->display("tiki.tpl");
 
