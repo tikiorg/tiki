@@ -1,12 +1,14 @@
 <?php
 /**
- * @version $Id: configuration.php,v 1.1 2005-09-22 09:35:00 michael_davey Exp $
+ * @version $Id: configuration.php,v 1.2 2005-09-28 09:36:32 michael_davey Exp $
  * @package Solve
  * @copyright (C) 2005 the Tiki community
  * @license http://www.gnu.org/copyleft/lgpl.html GNU/LGPL
  */
 
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
+
+require_once( 'lib/solve/db/vtiger_portal_configuration.php' );
 
 class SolveConfiguration {
     /**
@@ -40,7 +42,7 @@ class SolveConfiguration {
     var $availableFields = array();  // Fields available to Contacts and Leads in the vtiger database
                         
     // class constructor
-    function SolveConfiguration($appname, $presentation, $option=_MYNAMEIS, $task='', $sortBy = array('number'=>'desc'), $dbtable=null ) {
+    function SolveConfiguration($appname, $presentation=false, $option=_MYNAMEIS, $task='', $sortBy='number,desc', $dbtable=null ) {
         global $tmpDir;
 
         if( $dbtable ) {
