@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: vtigerregistrationlib.php,v 1.3 2005-09-28 12:10:39 michael_davey Exp $
+ * @version $Id: vtigerregistrationlib.php,v 1.4 2005-09-28 13:33:08 michael_davey Exp $
  * @package TikiWiki
  * @subpackage Solve
  * @copyright (C) 2005 the Tiki community
@@ -36,7 +36,11 @@ class vtigerRegistrationLib {
 function callback_vtiger_registration( $raisedBy, &$data) {
 	global $allowRegister;
 
-print "vtiger::save_reg";
+        if ($allowRegister != 'y') {
+            header("location: index.php");
+            exit;
+            die;
+        }
 
 	$lead = new VtigerLead($this->_config);
 	if( $lead->err ) {
@@ -44,12 +48,6 @@ print "vtiger::save_reg";
             exit();
         }
         $this->_config->availableFields = $lead->getAvailableFields();
-
-	if ($allowRegister != 'y') {
-            header("location: index.php");
-            exit;
-            die;
-	}
 
     $this->_db->setQuery("SELECT * FROM tiki_registration_fields WHERE `show`=1");
     $rows = $this->_db->loadObjectList();
@@ -102,7 +100,7 @@ print "vtiger::save_reg";
 
 /**
  *  This is a callback from tikisignal event handler. 
- *  It is called before the tiki user is created.
+ *  It is called after the tiki user is created.
  */
 function callback_vtiger_save_registration($raisedBy, &$data) {
     global $userlib;
@@ -113,11 +111,20 @@ function callback_vtiger_save_registration($raisedBy, &$data) {
     $lead =& $data['comm'];
     $lead->createSession();
     
+    $contact =& $data['contact'];
+
+    // Setup vtiger fields
+    $contact['lead_source'] = "Web Site";
+    $contact['portal_name'] = $data['name'];
+    if( !array_key_exists('email1', $contact) ) {
+        $contact['email1'] = $data['email'];
+    }
+
     // Get new record's ID
-    $data['contactid'] = $userlib->get_user_id($data['user']);
+    $data['contactid'] = $userlib->get_user_id($data['name']);
 
     // Set the new username
-    $lead->setPortalUser($data['user']);
+    $lead->setPortalUser($data['name']);
     
     // Create the lead
     $newLead = $lead->createNewLead($data['contact']);
