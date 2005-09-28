@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: vtigerregistrationlib.php,v 1.1 2005-09-27 12:24:44 michael_davey Exp $
+ * @version $Id: vtigerregistrationlib.php,v 1.2 2005-09-28 10:18:04 michael_davey Exp $
  * @package TikiWiki
  * @subpackage Solve
  * @copyright (C) 2005 the Tiki community
@@ -114,7 +114,7 @@ function callback_vtiger_save_registration($raisedBy, &$data) {
     $lead->createSession();
     
     // Get new record's ID
-    $data['contactid'] = $userlib->get_users_id($user);
+    $data['contactid'] = $userlib->get_user_id($user);
 
     // Set the new username
     $lead->setPortalUser($user);
