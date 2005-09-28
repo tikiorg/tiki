@@ -1,5 +1,5 @@
 <?php
-/* @version $Id: sugarLeads.php,v 1.1 2005-09-27 12:46:30 michael_davey Exp $ */
+/* @version $Id: sugarLeads.php,v 1.2 2005-09-28 12:16:10 michael_davey Exp $ */
 
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
@@ -43,7 +43,7 @@ class VtigerLead extends sugarCommunication {
         }
         
         $tmpLead['portal_name'] = $this->portal_user;
-        $tmpLead['portal_app'] = $this->appName;
+        $tmpLead['portal_app'] = $this->sugarConf->getAppName();
         
         //$this->_showDebug($tmpLead);
         
