@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: vtigerregistrationlib.php,v 1.2 2005-09-28 10:18:04 michael_davey Exp $
+ * @version $Id: vtigerregistrationlib.php,v 1.3 2005-09-28 12:10:39 michael_davey Exp $
  * @package TikiWiki
  * @subpackage Solve
  * @copyright (C) 2005 the Tiki community
@@ -55,10 +55,10 @@ print "vtiger::save_reg";
     $rows = $this->_db->loadObjectList();
 
     $contact = array();
-    
+
     foreach($rows as $row) {
-        if( in_array($row->field, $lead->availableFields) ) {
-			$contact[$row->field] = $data[$row->field];
+        if( in_array($row['field'], $lead->availableFields) ) {
+			$contact[$row['field']] = $data[$row['field']];
 		}
 	}	
     $firstname = '';
@@ -114,10 +114,10 @@ function callback_vtiger_save_registration($raisedBy, &$data) {
     $lead->createSession();
     
     // Get new record's ID
-    $data['contactid'] = $userlib->get_user_id($user);
+    $data['contactid'] = $userlib->get_user_id($data['user']);
 
     // Set the new username
-    $lead->setPortalUser($user);
+    $lead->setPortalUser($data['user']);
     
     // Create the lead
     $newLead = $lead->createNewLead($data['contact']);
