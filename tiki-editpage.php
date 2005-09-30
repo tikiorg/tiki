@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.119 2005-09-08 17:40:25 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.120 2005-09-30 14:11:51 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -574,6 +574,11 @@ if(isset($_REQUEST["edit"])) {
   }
 }
 
+if ($feature_likePages == 'y' and $edit_data == '' && !$tikilib->page_exists($page)) {
+	$likepages = $wikilib->get_like_pages($page);
+	$smarty->assign_by_ref('likepages', $likepages);
+}
+	
 if (isset($wiki_feature_copyrights) && $wiki_feature_copyrights == 'y') {
   if (isset($_REQUEST['copyrightTitle'])) {
     $smarty->assign('copyrightTitle', $_REQUEST["copyrightTitle"]);
