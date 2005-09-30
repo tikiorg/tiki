@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.67 2005-08-25 18:46:53 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.68 2005-09-30 14:11:51 sylvieg Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -17,6 +17,28 @@
 {tr}The SandBox is a page where you can practice your editing skills, use the preview feature to preview the appearance of the page, no versions are stored for this page.{/tr}
 </div>
 {/if}
+
+{if $likepages}
+<div>
+{tr}Perhaps you are looking for:{/tr}
+{if $likepages|@count < 0}
+<ul>
+{section name=back loop=$likepages}
+<li><a  href="tiki-index.php?page={$likepages[back]|escape:"url"}" class="wiki">{$likepages[back]}</a></li>
+{/section}
+</ul>
+{else}
+<table class="normal"><tr>
+{cycle name=table values=',,,,</tr><tr>' print=false advance=false}
+{section name=back loop=$likepages}
+<td><a  href="tiki-index.php?page={$likepages[back]|escape:"url"}" class="wiki">{$likepages[back]}</a></td>{cycle name=table}
+{/section}
+</tr></table>
+{/if}
+</div>
+<br />
+{/if}
+
 {if $preview}
 {include file="tiki-preview.tpl"}
 {/if}
