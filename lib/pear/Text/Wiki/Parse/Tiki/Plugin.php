@@ -11,7 +11,7 @@
  * @author     Justin Patrin <papercrane@reversefold.com>
  * @author     Paul M. Jones <pmjones@php.net>
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @version    CVS: $Id: Plugin.php,v 1.1 2005-07-30 14:37:15 toggg Exp $
+ * @version    CVS: $Id: Plugin.php,v 1.2 2005-09-30 20:19:44 toggg Exp $
  * @link       http://pear.php.net/package/Text_Wiki
  */
 
@@ -49,7 +49,7 @@ class Text_Wiki_Parse_Plugin extends Text_Wiki_Parse {
      * @access public
      * @var string
      */
-    var $regexArgs =  '#(\w+?)=>?("[^"]+"|\'[^\']+\'|[^"\'][^,]+)#';
+    var $regexArgs = '#(\w+?)=(?:>|&gt;)?([^"\'][^,]+?|"[^"]+"|\'[^\']+\')#';
 
     /**
     *
