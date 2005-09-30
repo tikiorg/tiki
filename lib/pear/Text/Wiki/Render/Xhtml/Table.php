@@ -9,7 +9,7 @@
  * @package    Text_Wiki
  * @author     Paul M. Jones <pmjones@php.net>
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @version    CVS: $Id: Table.php,v 1.2 2005-09-06 21:03:16 toggg Exp $
+ * @version    CVS: $Id: Table.php,v 1.3 2005-09-30 15:27:14 toggg Exp $
  * @link       http://pear.php.net/package/Text_Wiki
  */
 
@@ -50,6 +50,7 @@ class Text_Wiki_Render_Xhtml_Table extends Text_Wiki_Render {
     function token($options)
     {
         // make nice variable names (type, attr, span)
+        $span = $rowspan = 1;
         extract($options);
 
         // free format
