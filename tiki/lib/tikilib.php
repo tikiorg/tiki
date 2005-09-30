@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.612 2005-09-23 21:34:23 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.613 2005-09-30 13:29:36 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -5448,7 +5448,7 @@ if (!$simple_wiki) {
 			    $thisid = 'id' . microtime() * 1000000;
 			    $pageNumLink = ($pageNum >= 2)? "tiki-index.php?page=$page&amp;pagenum=$pageNum": "";
 			    array_push($anch, str_repeat("*", $hdrlevel). " <a href='$pageNumLink#$thisid' class='link'>" . substr($line, $hdrlevel + $addremove). '</a>');
-			    $anchor = "<a id='$thisid' />";
+			    $anchor = "<a name='$thisid'></a>";
 			}
 			// Use $hdrlevel + 1 because the page title is H1, so none of the other headers should be.
 			global $feature_wiki_show_hide_before;
