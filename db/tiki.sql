@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2005-09-27 22:05:25 $
-# $Author: wesleywillians $
+# $Date: 2005-10-01 13:58:30 $
+# $Author: michael_davey $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -4957,7 +4957,7 @@ CREATE TABLE `tiki_stats` (
 # Table structure for table tiki_events
 #
 # Creation: Aug 26, 2005 at 06:59 AM - mdavey
-# Last update: Aug 26, 2005 at 06:59 AM - mdavey
+# Last update: Sep 31, 2005 at 12:29 PM - mdavey
 #
 
 DROP TABLE IF EXISTS `tiki_events`;
@@ -4965,16 +4965,17 @@ CREATE TABLE `tiki_events` (
   `callback_type` int(1) NOT NULL default '3',
   `order` int(2) NOT NULL default '50',
   `event` varchar(200) NOT NULL default '',
+  `file` varchar(200) NOT NULL default '',  
   `object` varchar(200) NOT NULL default '',
   `method` varchar(200) NOT NULL default '',
   PRIMARY KEY  (`callback_type`,`order`)
 ) TYPE=MyISAM;
 
-INSERT IGNORE INTO tiki_events(`callback_type`,`order`,`event`,`object`,`method`) VALUES ('1', '20', 'user_registers', 'registrationlib', 'callback_tikiwiki_setup_custom_fields');
-INSERT IGNORE INTO tiki_events(`event`,`object`,`method`) VALUES ('user_registers', 'registrationlib', 'callback_tikiwiki_save_registration');
-INSERT IGNORE INTO tiki_events(`callback_type`,`order`,`event`,`object`,`method`) VALUES ('5', '20', 'user_registers', 'registrationlib', 'callback_logslib_user_registers');
-INSERT IGNORE INTO tiki_events(`callback_type`,`order`,`event`,`object`,`method`) VALUES ('5', '25', 'user_registers', 'registrationlib', 'callback_tikiwiki_send_email');
-INSERT IGNORE INTO tiki_events(`callback_type`,`order`,`event`,`object`,`method`) VALUES ('5', '30', 'user_registers', 'registrationlib', 'callback_tikimail_user_registers');
+INSERT IGNORE INTO tiki_events(`callback_type`,`order`,`event`,`file`,`object`,`method`) VALUES ('1', '20', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikiwiki_setup_custom_fields');
+INSERT IGNORE INTO tiki_events(`event`,`file`,`object`,`method`) VALUES ('user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikiwiki_save_registration');
+INSERT IGNORE INTO tiki_events(`callback_type`,`order`,`event`,`file`,`object`,`method`) VALUES ('5', '20', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_logslib_user_registers');
+INSERT IGNORE INTO tiki_events(`callback_type`,`order`,`event`,`file`,`object`,`method`) VALUES ('5', '25', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikiwiki_send_email');
+INSERT IGNORE INTO tiki_events(`callback_type`,`order`,`event`,`file`,`object`,`method`) VALUES ('5', '30', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikimail_user_registers');
 
 #
 # Table structure for table `tiki_registration_fields`
