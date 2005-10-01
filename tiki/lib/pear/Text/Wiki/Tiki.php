@@ -12,7 +12,7 @@
  * @author     Bertrand Gugger <bertrand@toggg.com>
  * @author     Paul M. Jones <pmjones@php.net>
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @version    CVS: $Id: Tiki.php,v 1.1 2005-07-29 09:20:26 toggg Exp $
+ * @version    CVS: $Id: Tiki.php,v 1.2 2005-10-01 15:56:29 toggg Exp $
  * @link       http://pear.php.net/package/Text_Wiki
  */
 
@@ -39,10 +39,10 @@ class Text_Wiki_Tiki extends Text_Wiki {
         'Delimiter',
         'Code',
         'Plugin',
-        'Function',
+//        'Function',
         'Html',
-        'Raw',
-        'Preformatted',
+        'Raw',    // Now Parsed in Plugin
+        'Preformatted',    // Now Parsed in Plugin
         'Include',
         'Embed',
         'Page',
@@ -58,7 +58,7 @@ class Text_Wiki_Tiki extends Text_Wiki {
         'Table',
         'Box',
         'Image',
-        'Phplookup',
+//        'Phplookup',
         'Center',
         'Newline',
         'Paragraph',
