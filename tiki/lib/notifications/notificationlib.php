@@ -16,8 +16,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-include_once('lib/registration/registrationlib.php'); // kludge - need to work out how to do reflection
-
 // callback_type is 1, 3 or 5 - all other values are reserved
 define ("TIKI_CALLBACK_EARLY", 1);
 define ("TIKI_CALLBACK_STANDARD", 3);
@@ -154,6 +152,7 @@ class NotificationLib extends TikiLib {
 
 		$continue = true;
                 while ($continue && $res = $result->fetchRow()) {
+			include_once( $res['file'] );
                         $class = $res['object'];
 			global $$class;
                         $method = $res['method'];
