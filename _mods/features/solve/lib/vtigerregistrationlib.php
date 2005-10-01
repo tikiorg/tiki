@@ -1,12 +1,13 @@
 <?php
 /**
- * @version $Id: vtigerregistrationlib.php,v 1.4 2005-09-28 13:33:08 michael_davey Exp $
+ * @version $Id: vtigerregistrationlib.php,v 1.5 2005-10-01 15:32:42 michael_davey Exp $
  * @package TikiWiki
  * @subpackage Solve
  * @copyright (C) 2005 the Tiki community
  * @license http://www.gnu.org/copyleft/lgpl.html GNU/LGPL
  */
 
+global $access;
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 require_once ('tiki-setup.php');
@@ -146,6 +147,7 @@ function callback_vtiger_save_registration($raisedBy, &$data) {
 
 } // class
 
+global $dbTiki;
 $vtigerregistrationlib = new VtigerRegistrationLib($dbTiki);
 
 ?>
