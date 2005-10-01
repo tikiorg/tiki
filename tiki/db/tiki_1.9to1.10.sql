@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.45 2005-09-27 22:05:25 wesleywillians Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.46 2005-10-01 13:58:30 michael_davey Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -56,21 +56,33 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_mytiki_work
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_tasks_maxRecords', '10');
 
 
-# 2005-08-26: mdavey: new table tiki_events for notificationlib / tikisignal
+# 2005-08-26 / 2005-09-31: mdavey: new table tiki_events for notificationlib / tikisignal
 CREATE TABLE `tiki_events` (
   `callback_type` int(1) NOT NULL default '3',
   `order` int(2) NOT NULL default '50',
   `event` varchar(200) NOT NULL default '',
+  `file` varchar(200) NOT NULL default '',
   `object` varchar(200) NOT NULL default '',
   `method` varchar(200) NOT NULL default '',
   PRIMARY KEY  (`callback_type`,`order`)
 ) TYPE=MyISAM;
 
-INSERT IGNORE INTO tiki_events(`callback_type`,`order`,`event`,`object`,`method`) VALUES ('1', '20', 'user_registers', 'registrationlib', 'callback_tikiwiki_setup_custom_fields');
-INSERT IGNORE INTO tiki_events(`event`,`object`,`method`) VALUES ('user_registers', 'registrationlib', 'callback_tikiwiki_save_registration');
-INSERT IGNORE INTO tiki_events(`callback_type`,`order`,`event`,`object`,`method`) VALUES ('5', '20', 'user_registers', 'registrationlib', 'callback_logslib_user_registers');
-INSERT IGNORE INTO tiki_events(`callback_type`,`order`,`event`,`object`,`method`) VALUES ('5', '25', 'user_registers', 'registrationlib', 'callback_tikiwiki_send_email');
-INSERT IGNORE INTO tiki_events(`callback_type`,`order`,`event`,`object`,`method`) VALUES ('5', '30', 'user_registers', 'registrationlib', 'callback_tikimail_user_registers');
+# 2005-09-31: mdavey: make sure developers are using the 6-column version of tiki_events
+ALTER TABLE `tiki_events` ADD `file` varchar(200) NOT NULL default '' AFTER `event`;
+
+# 2005-08-26 / 2005-09-31: mdavey: new table tiki_events for notificationlib / tikisignal
+INSERT IGNORE INTO tiki_events(`callback_type`,`order`,`event`,`file`,`object`,`method`) VALUES ('1', '20', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikiwiki_setup_custom_fields');
+INSERT IGNORE INTO tiki_events(`event`,`file`,`object`,`method`) VALUES ('user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikiwiki_save_registration');
+INSERT IGNORE INTO tiki_events(`callback_type`,`order`,`event`,`file`,`object`,`method`) VALUES ('5', '20', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_logslib_user_registers');
+INSERT IGNORE INTO tiki_events(`callback_type`,`order`,`event`,`file`,`object`,`method`) VALUES ('5', '25', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikiwiki_send_email');
+INSERT IGNORE INTO tiki_events(`callback_type`,`order`,`event`,`file`,`object`,`method`) VALUES ('5', '30', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikimail_user_registers');
+
+# 2005-09-31: mdavey: make sure developers are using the 6-column version of tiki_events
+UPDATE `tiki_events` SET `file` = 'lib/registration/registrationlib.php' WHERE `callback_type` = '1' AND `order` = '20';
+UPDATE `tiki_events` SET `file` = 'lib/registration/registrationlib.php' WHERE `callback_type` = '3' AND `order` = '50';
+UPDATE `tiki_events` SET `file` = 'lib/registration/registrationlib.php' WHERE `callback_type` = '5' AND `order` = '20';
+UPDATE `tiki_events` SET `file` = 'lib/registration/registrationlib.php' WHERE `callback_type` = '5' AND `order` = '25';
+UPDATE `tiki_events` SET `file` = 'lib/registration/registrationlib.php' WHERE `callback_type` = '5' AND `order` = '30';
 
 # 2005-08-31: mdavey: new table tiki_registration_fields
 CREATE TABLE `tiki_registration_fields` (
