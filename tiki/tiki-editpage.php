@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.120 2005-09-30 14:11:51 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.121 2005-10-02 19:37:04 michael_davey Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,13 +13,8 @@ include_once ('lib/wiki/wikilib.php');
 include_once ('lib/structures/structlib.php');
 include_once ('lib/notifications/notificationlib.php');
 
-
-if ($feature_wiki != 'y') {
-  $smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
-
-  $smarty->display("error.tpl");
-  die;
-}
+$access->check_feature('feature_wiki');
+$access->check_permission('tiki_p_edit');
 
 // Anti-bot feature: if enabled, anon user must type in a code displayed in an image
 if (isset($_REQUEST['save']) && (!$user || $user == 'anonymous') && $feature_antibot == 'y') {
