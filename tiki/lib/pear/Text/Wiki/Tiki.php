@@ -12,7 +12,7 @@
  * @author     Bertrand Gugger <bertrand@toggg.com>
  * @author     Paul M. Jones <pmjones@php.net>
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @version    CVS: $Id: Tiki.php,v 1.2 2005-10-01 15:56:29 toggg Exp $
+ * @version    CVS: $Id: Tiki.php,v 1.3 2005-10-03 16:58:28 toggg Exp $
  * @link       http://pear.php.net/package/Text_Wiki
  */
 
@@ -58,6 +58,7 @@ class Text_Wiki_Tiki extends Text_Wiki {
         'Table',
         'Box',
         'Image',
+        'Smiley',
 //        'Phplookup',
         'Center',
         'Newline',
