@@ -1,14 +1,10 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.41 2005-08-12 13:01:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.42 2005-10-03 17:21:43 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-
-//
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.41 2005-08-12 13:01:58 sylvieg Exp $
-//
 
 // Initialization
 require_once('tiki-setup.php');
@@ -331,7 +327,7 @@ $smarty->assign_by_ref('polls', $polls["data"]);
 $blogs = $tikilib->list_blogs(0, -1, 'title_asc', $find_objects);
 $smarty->assign_by_ref('blogs', $blogs["data"]);
 
-$pages = $tikilib->list_pages(0, -1, 'pageName_asc', $find_objects);
+$pages = $tikilib->list_pageNames(0, -1, 'pageName_asc', $find_objects);
 $smarty->assign_by_ref('pages', $pages["data"]);
 
 $faqs = $tikilib->list_faqs(0, -1, 'title_asc', $find_objects);

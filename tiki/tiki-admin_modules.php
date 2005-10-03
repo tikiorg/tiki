@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.41 2005-09-07 12:35:38 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.42 2005-10-03 17:21:43 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -157,10 +157,12 @@ if (isset($_REQUEST["preview"])) {
 	if ($tikilib->is_user_module($_REQUEST["assign_name"])) {
 		$info = $tikilib->get_user_module($_REQUEST["assign_name"]);
 		$smarty->assign_by_ref('user_title', $info["title"]);
-		if ($info["parse"] == "y")
-			$smarty->assign_by_ref('user_data', $tikilib->parse_data($info["data"]));
-		else
+		if ($info["parse"] == "y") {
+			$parse_data = $tikilib->parse_data($info["data"]);
+			$smarty->assign_by_ref('user_data', $parse_data);
+		} else {
 			$smarty->assign_by_ref('user_data', $info["data"]);
+		}
 		$data = $smarty->fetch('modules/user_module.tpl');
 	} else {
 		$phpfile = 'modules/mod-' . $_REQUEST["assign_name"] . '.php';

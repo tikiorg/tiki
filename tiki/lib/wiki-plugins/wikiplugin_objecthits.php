@@ -1,9 +1,9 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_objecthits.php,v 1.2 2005-08-12 13:02:09 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_objecthits.php,v 1.3 2005-10-03 17:21:46 sylvieg Exp $
 
-// Wiki plugin to display a browser client information
-// damian aka damosoft May 2004
+// Wiki plugin to display the number of hits per object
+// Franck Martin 2005
 
 function wikiplugin_objecthits_help() {
         return tra("Displays object hit info by object and days").":<br :>~np~{OBJECTHITS(object=>,type=>,days=>)/}~/np~";

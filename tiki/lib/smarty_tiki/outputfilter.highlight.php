@@ -1,5 +1,5 @@
 <?php
-// $Id: outputfilter.highlight.php,v 1.9 2005-08-29 03:14:44 mose Exp $
+// $Id: outputfilter.highlight.php,v 1.10 2005-10-03 17:21:45 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -46,67 +46,44 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
                         return $source;
     }
 
-   // Pull out the head block
-   preg_match_all("!<head>.*?</head>!is", $source, $match);
-   $_head_blocks = $match[0];
-   $source = preg_replace("!<head>.*?</head>!is", '@@@==:==@@@', $source);
-
-   // Pull out the div with nohightlight
-   preg_match_all("!<div[^>]*nohighlight.*?</div>\{\*nohighlight!is", $source, $match);
-   $_div_blocks = $match[0];
-   $source = preg_replace("!<div[^>]*nohighlight.*?</div>\{\*nohighlight!is", '@@@=:=@@@', $source);
-
-    // Pull out the script blocks
-    preg_match_all("!<script[^>]+>.*?</script>!is", $source, $match);
-    $_script_blocks = $match[0];
-    $source = preg_replace("!<script[^>]+>.*?</script>!is", '@@@=====@@@', $source);
-
-    //pull out the onmouseover (for the user popup)
-    preg_match_all('!onmouseover=("[^"]*"|\'[^\']*\')!is', $source, $match);
-    $_mouse_blocks = $match[0];
-    $source = preg_replace('!onmouseover=("[^"]*"|\'[^\']*\')!is', '@@@ONMOUSEOVER@@@', $source);
-
-    // pull out all html tags
-    preg_match_all("'<[\/\!]*?[^<>]*?>'si", $source, $match);
-    $_tag_blocks = $match[0];
-    $source = preg_replace("'<[\/\!]*?[^<>]*?>'si", '@@@:=====:@@@', $source);
-
-    // This array is used to choose colors for supplied highlight terms
-    $colorArr = array('#ffff66','#ff9999','#A0FFFF','#ff66ff','#99ff99');
-
-    // Wrap all the highlight words with tags bolding them and changing
-    // their background colors
-    $i = 0;
-    $wordArr = split('(%20)|[\+ ]',$highlight); // htmlentities is safe but it would be better to do strip_tags() only the performance hit is too great -> htmlentities is not safe with accent
-    foreach($wordArr as $word) {
-			$word = preg_quote($word, '~');
-			$source = preg_replace('~('.$word.')~si', '<span style=\\"color:black;background-color:'.$colorArr[$i].';">$1</span>', $source);
-			$i++;
-    }
-
-    foreach($_tag_blocks as $curr_block) {
-			$source = preg_replace("!@@@:=====:@@@!",$curr_block,$source,1);
-    }
-
-    foreach($_mouse_blocks as $curr_block) {
-			$source = preg_replace("!@@@ONMOUSEOVER@@@!",$curr_block,$source,1);
-    }
-
-    foreach($_script_blocks as $curr_block) {
-			$source = preg_replace("!@@@=====@@@!",$curr_block,$source,1);
-    }
-
-
-    foreach($_div_blocks as $curr_block) {
-    			$source = preg_replace("!@@@=:=@@@!",$curr_block,$source,1);
-   }
-
-    foreach($_head_blocks as $curr_block) {
-    			$source = preg_replace("!@@@==:==@@@!",$curr_block,$source,1);
-   }
+   $source = preg_replace_callback(
+      '~(?:<head>.*?</head>                          # head blocks
+      |<div[^>]*nohighlight.*?</div>\{\*nohighlight  # div with nohightlight
+      |<script[^>]+>.*?</script>                     # script blocks
+      |onmouseover=(?:"[^"]*"|\'[^\']*\')            # onmouseover (user popup)
+      |<[^>]*?>                                      # all html tags
+      |(' . _enlightColor($highlight) . '))~xsi',
+      '_enlightColor',  $source);
 
     return $source;
  }
+
+function _enlightColor($matches) {
+    static $colword = array();
+    if (is_string($matches)) { // just to set the color array
+        // This array is used to choose colors for supplied highlight terms
+        $colorArr = array('#ffff66','#ff9999','#A0FFFF','#ff66ff','#99ff99');
+
+        // Wrap all the highlight words with tags bolding them and changing
+        // their background colors
+        $i = 0;
+        $seaword = $seasep = '';
+        $wordArr = preg_split('~%20|\+|\s+~', $matches);
+        foreach($wordArr as $word) {
+            $seaword .= $seasep.preg_quote($word, '~');
+            $seasep ='|';
+            $colword[strtolower($word)] = $colorArr[$i%5];
+			$i++;
+        }
+        return $seaword;
+    }
+    // actual replacement callback
+    if (isset($matches[1])) {
+        return '<span style="color:black; background-color:'
+            . $colword[strtolower($matches[1])] . ';">' . $matches[1] . '</span>';
+    }
+    return $matches[0];
+}
 
  // helper function
  // q= for Google, p= for Yahoo

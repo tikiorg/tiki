@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.35 2005-08-29 03:14:45 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.36 2005-10-03 17:21:46 sylvieg Exp $
  *
  * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye
  * Enables font re-sizing in all browsers, aims to be WCAG 1.0 compatible (not yet), one simple css file.
@@ -59,7 +59,6 @@ table.galtable {
 }
 
 table.normal td.heading {
- text-align: left;
  background-color: #abcdef;
  font-size: 1em;
  width: 15px;
@@ -69,7 +68,7 @@ table.email td.closeButton {
  width: 100%;
 }
 table.email td.closeButton form {
- text-align: right;
+ text-align: end;
 }
 
 table.email {
@@ -88,7 +87,6 @@ small {
 form {
 	margin: 0;
 	padding: 0;
-	text-align: left;
 }
 
 /* Horizontal lines */
@@ -155,7 +153,6 @@ textarea {
 }
 
 #mainmenu {
-	text-align: left;
 }
 #mainmenu br { /* do not display line breaks in main menu when we later set links to display: block */
 	display: none;
@@ -193,7 +190,6 @@ textarea {
 }
 
 #mod-assistant {
-	text-align: left;
 }
 
 /* TikiIntegrator: By default copy rules dialog not shown */
@@ -221,18 +217,17 @@ textarea {
  float: left; width: 80%;
 }
 .maincontent {
- float: right; text-align: center; width: 75%;
+ float: right; width: 75%;
  overflow: auto;
 }
 .maincontent div {
-	text-align: center;
 }
 .maincontent div div, .maincontent ul, .maincontent h2, .maincontent h3, .maincontent div.wikitext {
-	text-align: left;
+	text-align: start;
 }
 .maincontent table {
  width: 98%; margin: auto;
- margin-bottom: 0.2em; text-align: left;
+ margin-bottom: 0.2em; text-align: start;
 }
 
 .leftcolonlywrapper {
@@ -281,7 +276,6 @@ div.box-title table {
  _overflow: hidden; /* MSIE workaround */
  _overflow-x: auto; /* MSIE workaround */
  padding-bottom: 0.2em;
- text-align: center;
  _width: 100%; /* MSIE workaround to make overflow work */
 }
 .box-data a {
@@ -298,6 +292,7 @@ div.box-title table {
 	margin-top: 0.1em;
 	margin-bottom: 0.2em;
 	padding: 0.2em;
+	text-align: start;
 }
 .box-data a.linkmenu:hover {
  background-color: #fff;
@@ -310,12 +305,15 @@ div.box-title table {
 	margin-bottom: 0.1em;
 	padding: 0.2em;
 }
+.box-data form {
+	text-align: center;
+}
 
 /* custom menus */
 .box-data .option, .box-data .separatorline {
 	font-size: 0.9em;
 	height: 1.2em;
-	text-align: left;
+	text-align: start;
 }
 .box-data .option a.linkmenu {
 	display: inline;
@@ -328,7 +326,7 @@ div.box-title table {
 	color: #000;
 }
 .box-data .separator {
-	text-align: left;
+	text-align: start;
 }
 
 /* tables in modules */
@@ -337,13 +335,13 @@ div.box-title table {
 }
 .box-data table td {
  padding: 0.2em;
- text-align: left;
+ text-align: start;
 }
 
 /* lists in modules */
 .box-data li {
  padding: 0.2em;
- text-align: left;
+ text-align: start;
 }
 
 /*
@@ -398,14 +396,12 @@ a:hover.removemod {
  * common module tables
  */
 .box-data table tr td.module {
-	text-align: left;
 }
 
 /*
  * calendar module table
  */
 .box-data table tr td {
-	text-align: center;
 }
 .box-data td a.nav { /* navigation links */
 	padding: 0.1em;
@@ -428,7 +424,6 @@ a:hover.removemod {
  * shoutbox messages for both: mod and shoutbox page too
  */
 .shoutboxmodmsg, div.shoutboxmsg {
-	text-align: left;
 }
 textarea.tshoutbox { /* correct width for shoutboxmod textarea only (needed by msie5) */
 	width: auto;
@@ -438,7 +433,6 @@ textarea.tshoutbox { /* correct width for shoutboxmod textarea only (needed by m
  * user (messu) messages
  */
 div.messureadbody {
-	text-align: left;
 }
 
 /*
@@ -477,11 +471,9 @@ div.messureadbody {
  */
 .normal .even { /* table with class normal, even cells */
 	background-color: #f0f9ff;
-	text-align: left;
 }
 .normal .odd { /* table with class normal, odd cells */
 	background-color: #def;
-	text-align: left;
 }
 .simplebox { /* simple box wiki syntax */
 	background-color: #f0f9ff;
@@ -502,7 +494,6 @@ div.messureadbody {
 	border-bottom: 1px solid #000;
 	margin: 0;
 	padding: 0.2em;
-	text-align: center;
 }
 
 .wikitext {
@@ -528,7 +519,6 @@ div.messureadbody {
  font-size: x-small;
 }
 div.articlebody {
-	text-align: left;
 }
 /*
  * blogs
@@ -537,7 +527,6 @@ div.articlebody {
 	font-size: large;
 }
 .postbody {
-	text-align: left;
 }
 /*
  * image galleries
@@ -622,7 +611,6 @@ div.articlebody {
 
 .mdkitem {
 	position: relative;
-	text-align: left;
 	white-space: nowrap;
 	font-size: 10px;
 	font-weight: bold;
@@ -759,7 +747,7 @@ div.articlebody {
 
 /* wiki diff styles */
 .diffheader {background-color:#a9b8c2; font-weight: bold;}
-.diff div {text-align: left; border-top: 1px solid #abcdef; }
+.diff div {border-top: 1px solid #abcdef; }
 .diffadded {background-color: #ccffcc;}
 .diffdeleted {background-color: #ffcccc;}
 .diffchar {color: red;}

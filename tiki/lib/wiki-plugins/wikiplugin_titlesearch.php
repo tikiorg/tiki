@@ -1,4 +1,8 @@
 <?php
+
+function wikiplugin_titlesearch_help() {
+	return tra("Search the titles of all pages in this wiki").":<br />~np~{TITLESEARCH(search=>Admin,info=>hits|user,exclude=>HomePage|SandBox,noheader=>0)}{TITLESEARCH}~/np~";
+}
     /**
     * Include the library {@link PluginsLib}
     */
@@ -17,7 +21,7 @@
     * @package TikiWiki
     * @subpackage TikiPlugins
     * @author Claudio Bustos
-    * @version $Revision: 1.19 $
+    * @version $Revision: 1.20 $
     */
     function wikiplugin_titlesearch_help() {
         return tra("Search the titles of all pages in this wiki").":<br />~np~{TITLESEARCH(search=>Admin,info=>hits|user,exclude=>HomePage|SandBox,noheader=>0)}{TITLESEARCH}~/np~";
@@ -40,7 +44,7 @@
         }
         function getVersion() {
             return preg_replace("/[Revision: $]/", '',
-                "\$Revision: 1.19 $");
+                "\$Revision: 1.20 $");
         }
         function run ($data, $params) {
             global $wikilib;

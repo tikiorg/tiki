@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.50 2005-08-25 20:50:04 michael_davey Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.51 2005-10-03 17:21:43 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -112,7 +112,7 @@ for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
 			} else {
 				if ($tikilib->is_user_module($mod_reference["name"])) {
 					$info = $tikilib->get_user_module($mod_reference["name"]);
-					$smarty->assign_by_ref('user_title', tra($info["title"]));
+					$smarty->assign('user_title', tra($info["title"]));
 					if (isset($info['parse']) && $info["parse"] == 'y')
 						$info["data"] = $tikilib->parse_data($info["data"]);
 					$smarty->assign_by_ref('user_data', $info["data"]);

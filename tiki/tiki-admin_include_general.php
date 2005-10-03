@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.44 2005-09-23 08:19:45 michael_davey Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.45 2005-10-03 17:21:43 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -148,7 +148,8 @@ elseif (isset($_REQUEST["newadminpass"])) {
     $smarty->assign('pagetop_msg', tra("Your admin password has been changed"));
 }
 
-$smarty->assign_by_ref( "styles", $tikilib->list_styles());
+$llist = $tikilib->list_styles();
+$smarty->assign_by_ref( "styles", $llist);
 
 // Get list of available slideshow styles
 $slide_styles = array();

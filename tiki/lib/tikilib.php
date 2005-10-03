@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.614 2005-10-03 16:58:28 toggg Exp $
+// CVS: $Id: tikilib.php,v 1.615 2005-10-03 17:21:44 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3237,8 +3237,12 @@ function add_pageview() {
 	}
 	return $ret;
     }
+    // use this function to speed up when pagename is only needed (the 3 getOne can killed tikiwith more that 3000 pages)
+    function list_pageNames($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '') {
+	return $this->list_pages($offset, $maxRecords, $sort_mode, $find, '', true, true);
+   }
 
-    function list_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '', $initial = '', $exact_match = true) {
+    function list_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '', $initial = '', $exact_match = true, $onlyName=false) {
 
 	if ($sort_mode == 'size_desc') {
 	    $sort_mode = 'page_size_desc';
@@ -3312,20 +3316,22 @@ function add_pageview() {
 		if ($add) {
 		    $aux = array();
 		    $aux["pageName"] = $res["pageName"];
-		    $page = $aux["pageName"];
-		    $aux["hits"] = $res["hits"];
-		    $aux["lastModif"] = $res["lastModif"];
-		    $aux["user"] = $res["user"];
-		    $aux["ip"] = $res["ip"];
-		    $aux["len"] = $res["len"];
-		    $aux["comment"] = $res["comment"];
-		    $aux["creator"] = $res["creator"];
-		    $aux["version"] = $res["version"];
-		    $aux["flag"] = $res["flag"] == 'L' ? 'locked' : 'unlocked';
-		    $aux["versions"] = $this->getOne("select count(*) from `tiki_history` where `pageName`=?",array($page));
-		    $aux["links"] = $this->getOne("select count(*) from `tiki_links` where `fromPage`=?",array($page));
-		    $aux["backlinks"] = $this->getOne("select count(*) from `tiki_links` where `toPage`=?",array($page));
-		    $aux["description"] = $res["description"];
+		    if ($onlyName) {
+			$page = $aux["pageName"];
+			$aux["hits"] = $res["hits"];
+			$aux["lastModif"] = $res["lastModif"];
+			$aux["user"] = $res["user"];
+			$aux["ip"] = $res["ip"];
+			$aux["len"] = $res["len"];
+			$aux["comment"] = $res["comment"];
+			$aux["creator"] = $res["creator"];
+			$aux["version"] = $res["version"];
+			$aux["flag"] = $res["flag"] == 'L' ? 'locked' : 'unlocked';
+			$aux["versions"] = $this->getOne("select count(*) from `tiki_history` where `pageName`=?",array($page));
+			$aux["links"] = $this->getOne("select count(*) from `tiki_links` where `fromPage`=?",array($page));
+			$aux["backlinks"] = $this->getOne("select count(*) from `tiki_links` where `toPage`=?",array($page));
+			$aux["description"] = $res["description"];
+		    }
 		    $ret[] = $aux;
 		}
 	}
@@ -4026,6 +4032,9 @@ function add_pageview() {
 	     */
 
 	    // Extract the plugin data
+		if ($pos_end === false) {
+			$pos_end = strlen($data);
+		}
 	    $plugin_data_len = $pos_end - $pos - strlen($plugins[0]);
 	    $plugin_data = substr($data, $pos + strlen($plugin_start), $plugin_data_len);
 
@@ -4034,7 +4043,7 @@ function add_pageview() {
 	       print "<pre>end: :".htmlspecialchars( $plugin_end ) .":</pre>";
 	     */
 
-	    if( $plugin_data && preg_match( "/^ *&lt;[pP][rR][eE]&gt;|^ *~pp~|^ *~np~/", $plugin_start ) )
+	    if( preg_match( "/^ *&lt;[pP][rR][eE]&gt;|^ *~pp~|^ *~np~/", $plugin_start ) )
 		// ~pp~ type "plugins"
 	    {
 		$key = md5($this->genPass());
@@ -4907,13 +4916,13 @@ function add_pageview() {
 	if (!$simple_wiki&&$feature_wikiwords == 'y') {
 	    // The first part is now mandatory to prevent [Foo|MyPage] from being converted!
 	    if ($feature_wikiwords_usedash == 'y') {
-		preg_match_all("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-\x80-\xFF]+[A-Z][a-z0-9_\-\x80-\xFF]+[A-Za-z0-9\-_\x80-\xFF]*)($|[ \n\t\r\,\;\.])/", $data, $pages);
+		preg_match_all("/(?<=[ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-\x80-\xFF]+[A-Z][a-z0-9_\-\x80-\xFF]+[A-Za-z0-9\-_\x80-\xFF]*)(?=$|[ \n\t\r\,\;\.])/", $data, $pages);
 	    } else {
-		preg_match_all("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9\x80-\xFF]+[A-Z][a-z0-9\x80-\xFF]+[A-Za-z0-9\x80-\xFF]*)($|[ \n\t\r\,\;\.])/", $data, $pages);
+		preg_match_all("/(?<=[ \n\t\r\,\;]|^)([A-Z][a-z0-9\x80-\xFF]+[A-Z][a-z0-9\x80-\xFF]+[A-Za-z0-9\x80-\xFF]*)(?=$|[ \n\t\r\,\;\.])/", $data, $pages);
 	    }
 	    //TODO to have a real utf8 Wikiword where the capitals can be a utf8 capital
 	    $words = $this->get_hotwords();
-	    foreach (array_unique($pages[2])as $page_parse) {
+	    foreach (array_unique($pages[1])as $page_parse) {
 		if (!array_key_exists($page_parse, $words)) {
 		    if ($desc = $this->page_exists_desc($page_parse)) {
 			//$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
@@ -4941,7 +4950,7 @@ function add_pageview() {
 			$repl = $page_parse.'<a href="tiki-editpage.php?page=' . urlencode($page_parse). '"  title="'.tra("Create page:").' '.urlencode($page_parse).'" class="wiki wikinew">?</a>';
 		    }
 
-		    $data = preg_replace("/([ \n\t\r\,\;]|^)$page_parse($|[ \n\t\r\,\;\.])/", "$1" . "$repl" . "$2", $data);
+		    $data = preg_replace("/(?<=[ \n\t\r\,\;]|^)$page_parse(?=$|[ \n\t\r\,\;\.])/", "$1" . "$repl" . "$2", $data);
 		    //$data = str_replace($page_parse,$repl,$data);
 		}
 	    }

@@ -174,12 +174,19 @@ class AdminLib extends TikiLib {
 		$pictures = array();
 
 		while ($res = $result->fetchRow()) {
-			preg_match_all("/\{picture file=([^\}]+)\}/", $res["data"], $pics);
+			preg_match_all("/\{(picture |img )([^\}]+)\}/ixs", $res['data'], $pics); // to be fixed: pick also the picture into ~np~
 
-			foreach (array_unique($pics[1])as $pic) {
-				$pictures[] = $pic;
+			foreach (array_unique($pics[2])as $pic) {
+				if (preg_match("/(src|file)=\"([^\"]+)\"/xis", $pic, $matches))
+					$pictures[] = $matches[2];
+				if (preg_match("/(src|file)=&quot;([^&]+)&quot;/xis", $pic, $matches))
+					$pictures[] = $matches[2];
+				if (preg_match("/(src|file)=([^&\"\s,]+)/xis", $pic, $matches))
+					$pictures[] = $matches[2];
+				
 			}
 		}
+		$pictures = array_unique($pictures);
 
 		$path = "img/wiki_up";
 		if ($tikidomain) {
@@ -188,7 +195,7 @@ class AdminLib extends TikiLib {
 		$h = opendir($path);
 
 		while (($file = readdir($h)) !== false) {
-			if (is_file("$path/$file") && ($file != 'license.txt')) {
+			if (is_file("$path/$file") && $file != 'license.txt' && $file != 'index.php' && $file != '.cvsignore' && $file != 'README') {
 				$filename = "$path/$file";
 
 				if (!in_array($filename, $pictures)) {

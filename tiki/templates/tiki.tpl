@@ -33,7 +33,7 @@
       {$left_modules[homeix].data}
       {/section}
           {if $feature_left_column eq 'user'}
-            <img src="blank.gif" width="100%" height="0px">
+            <img src="blank.gif" width="100%" height="0" />
             {literal}
               <script language="Javascript" type="text/javascript">
                 setfolderstate("leftcolumn");
@@ -54,9 +54,9 @@
       {$right_modules[homeix].data}
       {/section}
           {if $feature_right_column eq 'user'}
-            <img src="blank.gif" width="100%" height="0px">
+            <img src="blank.gif" width="100%" height="0" />
             {literal}
-              <script language="Javascript" type="text/javascript"> 
+              <script language="Javascript" type="text/javascript">
                 setfolderstate("rightcolumn");
               </script>
             {/literal}

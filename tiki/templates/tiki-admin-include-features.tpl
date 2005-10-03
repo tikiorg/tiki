@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.68 2005-09-19 14:47:49 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.69 2005-10-03 17:21:46 sylvieg Exp $ *}
 
 {* this is the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
@@ -144,7 +144,6 @@
       <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}TikiMap" target="tikihelp" class="tikihelp" title="{tr}Maps{/tr}">{/if} {tr}Maps{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
       {* here is the categories option *}      </tr>
   {* Calendar option on left side of first row of table*}
-
   <tr>
     <td><input type="checkbox" name="feature_categories"
                 {if $feature_categories eq 'y'}checked="checked"{/if}/></td>

@@ -1,4 +1,8 @@
 <?php
+
+function wikiplugin_backlinks_help() {
+	return tra("List all pages which link to specific pages").":<br />~np~{BACKLINKS(info=>hits|user,exclude=>HomePage|SandBox,include_self=>1,noheader=>0,page=>HomePage)}{BACKLINKS}~/np~";
+}
     /**
     * Include the library {@link PluginsLib}
     */
@@ -20,7 +24,7 @@
     * @package TikiWiki
     * @subpackage TikiPlugins
     * @author Claudio Bustos
-    * @version $Revision: 1.13 $
+    * @version $Revision: 1.14 $
     */
     function wikiplugin_backlinks_help() {
         return tra("List all pages which link to specific pages").":<br />~np~{BACKLINKS(info=>hits|user,exclude=>HomePage|SandBox,include_self=>1,noheader=>0,page=>HomePage)}{BACKLINKS}~/np~";
@@ -42,7 +46,7 @@
         }
         function getVersion() {
             return preg_replace("/[Revision: $]/", '',
-                "\$Revision: 1.13 $");
+                "\$Revision: 1.14 $");
         }
         function run ($data, $params) {
             global $wikilib;
@@ -109,7 +113,7 @@
         }
     }
     function wikiplugin_backlinks($data, $params) {
-        $plugin = new WikiPluginBackLinks();
+        $plugin = new wikipluginbacklinks();
         return $plugin->run($data, $params);
     }
 ?>

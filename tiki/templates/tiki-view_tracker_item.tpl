@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker_item.tpl,v 1.87 2005-08-29 03:14:45 mose Exp $ *}
+{* $Id: tiki-view_tracker_item.tpl,v 1.88 2005-10-03 17:21:46 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -175,7 +175,11 @@
 </span>
 
 {elseif $cur_field.type eq 'i'}
+{if $cur_field.value ne ''}
 <img src="{$cur_field.value}" alt="n/a" width="{$cur_field.options_array[2]}" height="{$cur_field.options_array[3]}" >
+{else}
+<img border="0" src="img/icons/na_pict.gif" alt="n/a" />
+{/if}
 
 {else}
 {$cur_field.value|default:"&nbsp;"}
@@ -311,7 +315,7 @@ src="img/icons/edit.gif" border="0" alt="{tr}edit{/tr}"  hspace="2" vspace="0" /
 {if $tracker_info.showStatus eq 'y' or $tiki_p_admin_trackers eq 'y'}
 <tr class="formcolor"><td>{tr}Status{/tr}</td>
 <td>
-<select name="status">
+<select name="edstatus">
 {foreach key=st item=stdata from=$status_types}
 <option value="{$st}"{if $item_info.status eq $st} selected="selected"{/if}
 style="background-image:url('{$stdata.image}');background-repeat:no-repeat;padding-left:17px;">{$stdata.label}</option>
@@ -436,7 +440,13 @@ style="background-image:url('img/flags/{$flag}.gif');background-repeat:no-repeat
 </select>
 
 {elseif $cur_field.type eq 'i'}
-<input type="file" name="ins_{$cur_field.id}" />
+<input type="file" name="ins_{$cur_field.id}" /><br/>
+{if $cur_field.value ne ''}
+<img src="{$cur_field.value}" alt="n/a" width="{$cur_field.options_array[2]}" height="{$cur_field.options_array[3]}" ><br />
+<a href="tiki-view_tracker_item.php?trackerId={$trackerId}&itemId={$itemId}&fieldId={$cur_field.id}&fieldName={$cur_field.name}&removeImage">{tr}remove image{/tr}</a>
+{else}
+<img border="0" src="img/icons/na_pict.gif" alt="n/a" />
+{/if}
 
 {elseif $cur_field.type eq 'j'}
 <input type="hidden" name="ins_{$cur_field.id}" value="{$cur_field.value|default:$smarty.now}" id="ins_{$cur_field.id}" />

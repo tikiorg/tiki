@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.72 2005-09-07 12:35:41 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.73 2005-10-03 17:21:46 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
@@ -20,6 +20,22 @@
 
 {if $tikifeedback}
 <br /><div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">{section name=n loop=$tikifeedback}{$tikifeedback[n].mes}<br />{/section}</div>
+{/if}
+<br />
+{if $added != "" or $discarded != ""}
+<div class="simplebox">
+<h2>{tr}Batch Upload Results{/tr}</h2>
+{tr}Added users{/tr}: {$added}
+{if $discarded != ""}
+- {tr}Rejected users{/tr}: {$discarded}<br /><br />
+<table class="normal">
+<tr><td class="heading">{tr}Username{/tr}</td><td class="heading">{tr}Reason{/tr}</td></tr>
+{section name=reject loop=$discardlist}
+<tr><td class="odd">{$discardlist[reject].login}</td><td class="odd">{$discardlist[reject].reason}</td></tr>
+{/section}
+</table>
+{/if}
+</div>
 {/if}
 
 <br /><br />
@@ -218,7 +234,7 @@ title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
 <input type="hidden" name="edituser" value="1" />
 <input type="submit" name="submit" value="{tr}Save{/tr}" />
 {else}
-<tr class="formcolor"><td>{tr}Batch upload (CSV file<a {popup text='login,password,email'}><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>){/tr}:</td><td><input type="file" name="csvlist"/><br />{tr}Overwrite{/tr}: <input type="checkbox" name="overwrite" checked="checked" /></td></tr>
+<tr class="formcolor"><td>{tr}Batch upload (CSV file<a {popup text='login,password,email,groups<br />user1,password1,email1,&quot;group1,group2&quot;<br />user2, password2,email2'}><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>){/tr}:</td><td><input type="file" name="csvlist"/><br />{tr}Overwrite{/tr}: <input type="checkbox" name="overwrite" checked="checked" /></td></tr>
 <tr class="formcolor"><td>&nbsp;</td><td>
 <input type="hidden" name="newuser" value="1" />
 <input type="submit" name="submit" value="{tr}Add{/tr}" />
@@ -240,19 +256,5 @@ title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
 <a class="link" href="javascript:genPass('genepass','pass','pass2');">{tr}Generate a password{/tr}</a></td>
 <td><input id='genepass' type="text" /></td></tr>
 </table>
-<br />
-{if $added != "" or $discarded != ""}
-<h2>{tr}Batch Upload Results{/tr}</h2>
-{tr}Added users{/tr}: {$added}
-{if $discarded != ""}
-- {tr}Rejected users{/tr}: {$discarded}<br /><br />
-<table class="normal">
-<tr><td class="heading">{tr}Username{/tr}</td><td class="heading">{tr}Reason{/tr}</td></tr>
-{section name=reject loop=$discardlist}
-<tr><td class="odd">{$discardlist[reject].login}</td><td class="odd">{$discardlist[reject].reason}</td></tr>
-{/section}
-</table>
-{/if}
-{/if}
 </div>
 

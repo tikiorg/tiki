@@ -1,14 +1,65 @@
 // functions to be used in the TikiMaps feature
 
+
+// xGetElementById, Copyright 2001-2005 Michael Foster (Cross-Browser.com)
+// Part of X, a Cross-Browser Javascript Library, Distributed under the terms of the GNU LGPL
+
+function xGetElementById(e)
+{
+  if(typeof(e)!='string') return e;
+  if(document.getElementById) e=document.getElementById(e);
+  else if(document.all) e=document.all[e];
+  else e=null;
+  return e;
+}
+// xDef, Copyright 2001-2005 Michael Foster (Cross-Browser.com)
+// Part of X, a Cross-Browser Javascript Library, Distributed under the terms of the GNU LGPL
+
+function xDef()
+{
+  for(var i=0; i<arguments.length; ++i){if(typeof(arguments[i])=='undefined') return false;}
+  return true;
+}
+// xPageY, Copyright 2001-2005 Michael Foster (Cross-Browser.com)
+// Part of X, a Cross-Browser Javascript Library, Distributed under the terms of the GNU LGPL
+
+function xPageY(e)
+{
+  if (!(e=xGetElementById(e))) return 0;
+  var y = 0;
+  while (e) {
+    if (xDef(e.offsetTop)) y += e.offsetTop;
+    e = xDef(e.offsetParent) ? e.offsetParent : null;
+  }
+//  if (xOp7Up) return y - document.body.offsetTop; // v3.14, temporary hack for opera bug 130324 (reported 1nov03)
+  return y;
+}
+// xPageX, Copyright 2001-2005 Michael Foster (Cross-Browser.com)
+// Part of X, a Cross-Browser Javascript Library, Distributed under the terms of the GNU LGPL
+
+function xPageX(e)
+{
+  if (!(e=xGetElementById(e))) return 0;
+  var x = 0;
+  while (e) {
+    if (xDef(e.offsetLeft)) x += e.offsetLeft;
+    e = xDef(e.offsetParent) ? e.offsetParent : null;
+  }
+  return x;
+}
+
 function map_mousemove(e) {
   var X = (e.pageX)   ? e.pageX   : e.clientX;
 	var Y = (e.pageY)   ? e.pageY   : e.clientY;
-	var imagex=document.getElementById('map').offsetLeft
-	var imagey=document.getElementById('map').offsetTop
-	var posx=X-imagex;
-	var posy=Y-imagey;
-	status="x= "+posx+", y= "+posy+" image XY "+imagex+" "+imagey;
-//  document.getElementById("stat").innerHTML = status;
+
+	obj=xGetElementById('map');
+	var imagex = xPageX(obj);
+	var imagey = xPageY(obj); 
+
+	var posx=((X-imagex)*(maxx-minx)/(xsize))+minx;
+	var posy=((ysize-Y+imagey)*(maxy-miny)/(ysize))+miny;
+	status="x= "+posx+", y= "+posy;
+  document.getElementById("stat").innerHTML = status;
 }
 
 function selectimgzoom(x)

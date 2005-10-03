@@ -4,33 +4,37 @@
 <small><a href="http://tikiwiki.org" title="TikiWiki">{tr}Powered by{/tr} TikiWiki</a> the ultimate CMS engine.
 </div>
 	<div id="rss" style="text-align: center">
-		{if $rss_wiki eq 'y'}
-				<a href="tiki-wiki_rss.php?ver={$rssfeed_default_version}"><img alt="rss" style="border: 0" src="img/rss.png" /></a>
+		{if $feature_wiki eq 'y' and $rss_wiki eq 'y'}
+				<a title="{tr}Wiki RSS{/tr}" href="tiki-wiki_rss.php?ver={$rssfeed_default_version}"><img alt="RSS" style="border: 0; vertical-align: text-bottom;" src="img/rss.png" /></a>
 				<small>{tr}Wiki{/tr}</small>
 		{/if}
-		{if $rss_blogs eq 'y'}
-				<a href="tiki-blogs_rss.php?ver={$rssfeed_default_version}"><img alt="rss" style="border: 0" src="img/rss.png" /></a>
+		{if $feature_blogs eq 'y' and $rss_blogs eq 'y'}
+				<a title="{tr}Blogs RSS{/tr}" href="tiki-blogs_rss.php?ver={$rssfeed_default_version}"><img alt="RSS" style="border: 0; vertical-align: text-bottom;" src="img/rss.png" /></a>
 				<small>{tr}Blogs{/tr}</small>
 		{/if}
-		{if $rss_articles eq 'y'}
-				<a href="tiki-articles_rss.php?ver={$rssfeed_default_version}"><img alt="rss" style="border: 0" src="img/rss.png" /></a>
+		{if $feature_articles eq 'y' and $rss_articles eq 'y'}
+				<a title="{tr}Articles RSS{/tr}" href="tiki-articles_rss.php?ver={$rssfeed_default_version}"><img alt="rss" style="border: 0; vertical-align: text-bottom;" src="img/rss.png" /></a>
 				<small>{tr}Articles{/tr}</small>
 		{/if}
-		{if $rss_image_galleries eq 'y'}
-				<a href="tiki-image_galleries_rss.php?ver={$rssfeed_default_version}"><img alt="rss" style="border: 0" src="img/rss.png" /></a>
-				<small>{tr}Image galleries{/tr}</small>
+		{if $feature_galleries eq 'y' and $rss_image_galleries eq 'y'}
+				<a title="{tr}Image Galleries RSS{/tr}" href="tiki-image_galleries_rss.php?ver={$rssfeed_default_version}"><img alt="RSS" style="border: 0; vertical-align: text-bottom;" src="img/rss.png" /></a>
+				<small>{tr}Image Galleries{/tr}</small>
 		{/if}
-		{if $rss_file_galleries eq 'y'}
-				<a href="tiki-file_galleries_rss.php?ver={$rssfeed_default_version}"><img alt="rss" style="border: 0" src="img/rss.png" /></a>
-				<small>{tr}File galleries{/tr}</small>
+		{if $feature_file_galleries eq 'y' and $rss_file_galleries eq 'y'}
+				<a title="{tr}File Galleries RSS{/tr}" href="tiki-file_galleries_rss.php?ver={$rssfeed_default_version}"><img alt="RSS" style="border: 0; vertical-align: text-bottom;" src="img/rss.png" /></a>
+				<small>{tr}File Galleries{/tr}</small>
 		{/if}
-		{if $rss_forums eq 'y'}
-				<a href="tiki-forums_rss.php?ver={$rssfeed_default_version}"><img alt="rss" style="border: 0" src="img/rss.png" /></a>
+		{if $feature_forums eq 'y' and $rss_forums eq 'y'}
+				<a title="{tr}Forums RSS{/tr}" href="tiki-forums_rss.php?ver={$rssfeed_default_version}"><img alt="RSS" style="border: 0; vertical-align: text-bottom;" src="img/rss.png" /></a>
 				<small>{tr}Forums{/tr}</small>
 		{/if}
-		{if $rss_mapfiles eq 'y'}
-				<a href="tiki-map_rss.php?ver={$rssfeed_default_version}"><img alt="rss" style="border: 0" src="img/rss.png" /></a>
+		{if $feature_maps eq 'y' and $rss_mapfiles eq 'y'}
+				<a title="{tr}Maps RSS{/tr}" href="tiki-map_rss.php?ver={$rssfeed_default_version}"><img alt="RSS" style="border: 0; vertical-align: text-bottom;" src="img/rss.png" /></a>
 				<small>{tr}Maps{/tr}</small>
+		{/if}
+		{if $feature_directory eq 'y' and $rss_directories eq 'y'}
+				<a href="tiki-directories_rss.php?ver={$rssfeed_default_version}"><img alt="rss" style="border: 0; vertical-align: text-bottom;" src="img/rss.png" /></a>
+				<small>{tr}Directories{/tr}</small>
 		{/if}
 	</div>
 

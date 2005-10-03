@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.82 2005-08-29 03:14:43 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.83 2005-10-03 17:21:43 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -30,14 +30,16 @@ if (!isset($_REQUEST['trackerId']) && $userTracker == 'y') {
 			$addit['data'][0]['value'] = $user;
 			$i = 1;
 			if ($f = $trklib->get_field_id_from_type($_REQUEST['trackerId'], "u", 1)) {
+			    if ($f != $utid['usersFieldId']) {
 				$addit['data'][1]['fieldId'] = $f;
 				$addit['data'][1]['value'] = $user;
 				++$i;
+			    }
 			}
 			if ($f = $trklib->get_field_id_from_type($_REQUEST['trackerId'], "g", 1)) {
 				$addit['data'][$i]['fieldId'] = $f;
 				$addit['data'][$i]['value'] = $group;
-			}				
+			}
 			$_REQUEST['itemId'] = $trklib->replace_item($_REQUEST["trackerId"], 0, $addit, 'c');
 		}
 		$smarty->assign('special',' user');
@@ -65,6 +67,10 @@ if (!isset($_REQUEST['trackerId']) && $groupTracker == 'y') {
 		$_REQUEST["trackerId"] = $gtid['groupTrackerId'];
 		$_REQUEST["itemId"] = $trklib->get_item_id($_REQUEST['trackerId'],$gtid['groupFieldId'],$_REQUEST["grouptracker"]);
 	}
+}
+if ((!isset($_REQUEST["trackerId"]) || !$_REQUEST["trackerId"]) && $_REQUEST["itemId"]) {
+	$item_info = $trklib->get_tracker_item($_REQUEST["itemId"]);
+	$_REQUEST['trackerId'] = $item_info['trackerId'];	
 }
 if (!isset($_REQUEST["trackerId"]) || !$_REQUEST["trackerId"]) {
 	$smarty->assign('msg', tra("No tracker indicated"));
@@ -127,6 +133,7 @@ if (isset($_REQUEST["move"])) {
     }
 	if (isset($trymove["data"][0]["itemId"])) {
     	$_REQUEST["itemId"] = $trymove["data"][0]["itemId"];
+	unset($item_info);
     	$urlquery['reloff'] = $tryreloff;
 	} elseif ($move > 0) {
         	$smarty->assign('nextmsg', tra("Last page"));
@@ -139,7 +146,8 @@ $smarty->assign_by_ref('urlquery', $urlquery);
 //*********** that's all for prev/next *****************
 
 $smarty->assign('itemId', $_REQUEST["itemId"]);
-$item_info = $trklib->get_tracker_item($_REQUEST["itemId"]);
+if (!isset($item_info))
+	$item_info = $trklib->get_tracker_item($_REQUEST["itemId"]);
 $smarty->assign('item_info', $item_info);
 
 $smarty->assign('individual', 'n');
@@ -361,7 +369,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 					$ins_fields["data"][$i]["value"] = $data;
 					
 					//$ins_fields["data"][$i]["value"] = $_FILES["$ins_id"]['name'];					
-					$ins_fields["data"][$i]["file_type"] = mime_content_type( $_FILES["$ins_id"]['tmp_name'] );
+					$ins_fields["data"][$i]["file_type"] = $_FILES["$ins_id"]['type'];//mime_content_type( $_FILES["$ins_id"]['tmp_name'] );
 					$ins_fields["data"][$i]["file_size"] = $_FILES["$ins_id"]['size'];
 					$ins_fields["data"][$i]["file_name"] = $_FILES["$ins_id"]['name'];
 				}
@@ -428,10 +436,10 @@ if ($tiki_p_admin_trackers == 'y') {
 if ($tiki_p_modify_tracker_items == 'y') {
 	if (isset($_REQUEST["save"]) || isset($_REQUEST["save_return"])) {
 		check_ticket('view-trackers-items');
-		if (!isset($_REQUEST["status"]) or ($tracker_info["showStatus"] != 'y' and $tiki_p_admin_trackers != 'y')) {
-			$_REQUEST["status"] = $tracker_info["modItemStatus"];
+		if (!isset($_REQUEST["edstatus"]) or ($tracker_info["showStatus"] != 'y' and $tiki_p_admin_trackers != 'y')) {
+			$_REQUEST["edstatus"] = $tracker_info["modItemStatus"];
 		}
-		$trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $_REQUEST["status"]);
+		$trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $_REQUEST["edstatus"]);
 		$mainfield = $ins_fields["data"][$mainfield]["value"];
 		$_REQUEST['show']  = 'view';
 		$temp_max = count($fields["data"]);
@@ -466,6 +474,15 @@ if ($tiki_p_modify_tracker_items == 'y') {
 		}
 	}
 }
+
+// remove image from an image field
+if (isset($_REQUEST["removeImage"])) {
+	$img_field = array('data' => array());
+	$img_field['data'][] = array('fieldId' => $_REQUEST["fieldId"], 'type' => 'i', 'name' => $_REQUEST["fieldName"], 'value' => 'blank');
+	$trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $img_field);
+	$_REQUEST['show'] = "mod";
+}
+
 // ************* return to list ***************************
 if(isset($_REQUEST["returntracker"]) || isset($_REQUEST["save_return"])) {
 	$urlreturn = "tiki-view_tracker.php?trackerId={$_REQUEST['trackerId']}&sort_mode={$_REQUEST['sort_mode']}&offset={$_REQUEST['offset']}";
@@ -744,6 +761,7 @@ if (isset($_REQUEST['show'])) {
 		if ($tracker_info["useComments"] == 'y') $tabi = 3;	
 	}
 }
+
 setcookie("tab","$tabi");
 $smarty->assign('cookietab',$tabi);
 

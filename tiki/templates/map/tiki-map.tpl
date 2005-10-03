@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.29 2005-09-07 12:35:41 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.30 2005-10-03 17:21:46 sylvieg Exp $ *}
 
 <script src="lib/map/map.js"></script>
 
@@ -18,14 +18,20 @@
 		  alt="{tr}click on the map to zoom or pan, do not drag{/tr}" 
 		  title="{tr}click on the map to zoom or pan, do not drag{/tr}" />
 		  <script language="JavaScript">	
+		    var minx={$minx};
+		    var miny={$miny};
+		    var maxx={$maxx};
+		    var maxy={$maxy};
+		    var xsize={$xsize}
+		    var ysize={$ysize}
 		  	document.getElementById('map').onmousemove = map_mousemove;
 				if (document.getElementById('map').captureEvents) document.getElementById('map').captureEvents(Event.MOUSEMOVE);
 			</script>
-		  <div id="stat">
-			</div>
 		  </td></tr>
 		  <tr><td align="center">
 		 	<img id="scale" src="{$image_scale_url}" border="0" alt="{tr}Scale{/tr}" title="{tr}Scale{/tr}" />
+		 	<div id="stat">
+			</div>
 		  </td></tr>
 		  <tr><td align="center">	
 			{if $zoom eq -4}
