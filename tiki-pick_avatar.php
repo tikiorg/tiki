@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pick_avatar.php,v 1.23 2005-05-18 10:58:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pick_avatar.php,v 1.24 2005-10-03 17:21:43 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -125,7 +125,7 @@ while ($file = readdir($h)) {
 
 closedir ($h);
 $smarty->assign_by_ref('avatars', $avatars);
-$smarty->assign_by_ref('numav', count($avatars));
+$smarty->assign('numav', count($avatars));
 $smarty->assign('yours', rand(0, count($avatars)));
 
 include_once ('tiki-mytiki_shared.php');

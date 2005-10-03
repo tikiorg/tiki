@@ -1,4 +1,8 @@
 <?php
+
+function wikiplugin_pluginmanager_help() {
+	return tra("Provides a list of plugins on this wiki.").":<br />~np~{PLUGINMANAGER(info=>version|description|arguments)}{PLUGINMANAGER}~/np~";
+}
     /**
     * Include the library {@link PluginsLib}
     */
@@ -16,7 +20,7 @@
     * @package TikiWiki
     * @subpackage TikiPlugins
     * @author Claudio Bustos
-    * @version $Revision: 1.8 $
+    * @version $Revision: 1.9 $
     */
     function wikiplugin_pluginmanager_help() {
         return tra("Provides a list of plugins on this wiki.").":<br />~np~{PLUGINMANAGER(info=>version|description|arguments)}{PLUGINMANAGER}~/np~";
@@ -31,7 +35,7 @@
         }
         function getVersion() {
             return preg_replace("/[Revision: $]/", '',
-                "\$Revision: 1.8 $");
+                "\$Revision: 1.9 $");
         }
         function getDescription() {
             return wikiplugin_pluginmanager_help();

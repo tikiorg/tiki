@@ -1,5 +1,5 @@
 <?php
-// $Id: searchlib.php,v 1.28 2005-08-29 03:14:44 mose Exp $
+// $Id: searchlib.php,v 1.29 2005-10-03 17:21:45 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -251,67 +251,67 @@ class SearchLib extends TikiLib {
 			if ($feature_wiki == 'y' && $tiki_p_view == 'y') {
 				$wikiresults=$this->find_part_wiki($words,$offset, $maxRecords);
 			} else {
-				$wikiresults['data'] = NULL;
+				$wikiresults['data'] = array();
 				$wikiresults['cant'] = 0;
 			}
 			if ($feature_articles == 'y' && $tiki_p_read_article == 'y') {
 				$artresults=$this->find_part_articles($words,$offset, $maxRecords);
 			} else {
-				$artresults['data'] = NULL;
+				$artresults['data'] = array();
 				$artresults['cant'] = 0;
 			}
 			if ($feature_forums == 'y' && $tiki_p_forum_read == 'y') {
 				$forumresults=$this->find_part_forums($words,$offset, $maxRecords);
 			} else {
-				$forumresults['data'] = NULL;
+				$forumresults['data'] = array();
 				$forumresults['cant'] = 0;
 			}
 			if ($feature_blogs == 'y' && $tiki_p_read_blog == 'y') {
 				$blogresults=$this->find_part_blogs($words,$offset, $maxRecords);
 			} else {
-				$blogresults['data'] = NULL;
+				$blogresults['data'] = array();
 				$blogresults['cant'] = 0;
 			}
 			if ($feature_blogs == 'y' && $tiki_p_read_blog == 'y') {
 				$blogpostsresults=$this->find_part_blog_posts($words,$offset, $maxRecords);
 			} else {
-				$blogpostsresults['data'] = NULL;
+				$blogpostsresults['data'] = array();
 				$blogpostsresults['cant'] = 0;
 			}
 			if ($feature_faqs == 'y' && $tiki_p_view_faqs == 'y') {
 				$faqresults=$this->find_part_faqs($words,$offset, $maxRecords);
 			} else {
-				$faqresults['data'] = NULL;
+				$faqresults['data'] = array();
 				$faqresults['cant'] = 0;
 			}
 			if ($feature_directory == 'y' && $tiki_p_view_directory == 'y') {
 				$dirresults=$this->find_part_directory($words,$offset, $maxRecords);
 			} else {
-				$dirresults['data'] = NULL;
+				$dirresults['data'] = array();
 				$dirresults['cant'] = 0;
 			}
 			if ($feature_galleries == 'y' && $tiki_p_view_image_gallery == 'y') {
 				$imggalsresults=$this->find_part_imggals($words,$offset, $maxRecords);
 			} else {
-				$imggalsresults['data'] = NULL;
+				$imggalsresults['data'] = array();
 				$imggalsresults['cant'] = 0;
 			}
 			if ($feature_galleries == 'y' && $tiki_p_view_image_gallery == 'y') {
 				$imgresults=$this->find_part_img($words,$offset, $maxRecords);
 			} else {
-				$imgresults['data'] = NULL;
+				$imgresults['data'] = array();
 				$imgresults['cant'] = 0;
 			}
 			if ($feature_trackers == 'y' && $tiki_p_view_trackers == 'y') {
 				$trackerresults=$this->find_part_trackers($words,$offset, $maxRecords);
 			} else {
-				$trackerresults['data'] = NULL;
+				$trackerresults['data'] = array();
 				$trackerresults['cant'] = 0;
 			}
 			if ($feature_file_galleries == 'y' && $tiki_p_download_files == 'y') {
 				$fileresults=$this->find_part_files($words,$offset, $maxRecords);
 			} else {
-				$fileresults['data'] = NULL;
+				$fileresults['data'] = array();
 				$fileresults['cant'] = 0;
 			}
 
@@ -399,68 +399,68 @@ class SearchLib extends TikiLib {
 		if ($feature_wiki == 'y' && $tiki_p_view == 'y') {
 			$wikiresults=$this->find_exact_wiki($words,$offset, $maxRecords);
 		} else {
-			$wikiresults['data'] = NULL;
+			$wikiresults['data'] = array();
 			$wikiresults['cant'] = 0;
 		}
 		if ($feature_articles == 'y' && $tiki_p_read_article == 'y') {
 			$artresults=$this->find_exact_articles($words,$offset, $maxRecords);
 		} else {
-			$artresults['data'] = NULL;
+			$artresults['data'] = array();
 			$artresults['cant'] = 0;
 		}
 		if ($feature_forums == 'y' && $tiki_p_forum_read == 'y') {
 			$forumresults=$this->find_exact_forums($words,$offset, $maxRecords);
 		} else {
-			$forumresults['data'] = NULL;
+			$forumresults['data'] = array();
 			$forumresults['cant'] = 0;
 		}
 		if ($feature_blogs == 'y' && $tiki_p_read_blog == 'y') {
 			$blogresults=$this->find_exact_blogs($words,$offset, $maxRecords);
 		} else {
-			$blogresults['data'] = NULL;
+			$blogresults['data'] = array();
 			$blogresults['cant'] = 0;
 		}
 		if ($feature_blogs == 'y' && $tiki_p_read_blog == 'y') {
 			$blogpostsresults=$this->find_exact_blog_posts($words,$offset, $maxRecords);
 		} else {
-			$blogpostsresults['data'] = NULL;
+			$blogpostsresults['data'] = array();
 			$blogpostsresults['cant'] = 0;
 		}
 		if ($feature_faqs == 'y' && $tiki_p_view_faqs == 'y') {
 			$faqresults=$this->find_exact_faqs($words,$offset, $maxRecords);
 		} else {
-			$faqresults['data'] = NULL;
+			$faqresults['data'] = array();
 			$faqresults['cant'] = 0;
 		}
 		if ($feature_directory == 'y' && $tiki_p_view_directory == 'y') {
 			$dirresults=$this->find_exact_directory($words,$offset, $maxRecords);
 		} else {
-			$dirresults['data'] = NULL;
+			$dirresults['data'] = array();
 			$dirresults['cant'] = 0;
 		}
 		if ($feature_galleries == 'y' && $tiki_p_view_image_gallery == 'y') {
 			$imggalsresults=$this->find_exact_imggals($words,$offset, $maxRecords);
 		} else {
-			$imggalsresults['data'] = NULL;
+			$imggalsresults['data'] = array();
 			$imggalsresults['cant'] = 0;
 		}
 		if ($feature_galleries == 'y' && $tiki_p_view_image_gallery == 'y') {
 			$imgresults=$this->find_exact_img($words,$offset, $maxRecords);
 		} else {
-			$imgresults['data'] = NULL;
+			$imgresults['data'] = array();
 			$imgresults['cant'] = 0;
 		}
 		if ($feature_trackers == 'y' && $tiki_p_view_trackers == 'y') {
 			$trackerresults=$this->find_exact_trackers($words,$offset, $maxRecords);
 		} else {
-			$trackerresults['data'] = NULL;
+			$trackerresults['data'] = array();
 			$trackerresults['cant'] = 0;
 		}
 		if ($feature_file_galleries == 'y' && $tiki_p_download_files == 'y') {
-			$trackerresults=$this->find_exact_files($words,$offset, $maxRecords);
+			$fileresults=$this->find_exact_files($words,$offset, $maxRecords);
 		} else {
-			$trackerresults['data'] = NULL;
-			$trackerresults['cant'] = 0;
+			$fileresults['data'] = array();
+			$fileresults['cant'] = 0;
 		}
 
 	  /* // should check if feature is enabled before searching
@@ -481,12 +481,14 @@ class SearchLib extends TikiLib {
 	  		$blogresults["data"],$faqresults["data"],
 			$blogpostsresults["data"],$forumresults["data"],
 			$dirresults["data"],$imggalsresults["data"],
-			$imgresults["data"],$trackerresults["data"]);
+			$imgresults["data"],$trackerresults["data"],
+			$fileresults["data"]);
 	  $res["cant"]=$wikiresults["cant"]+$artresults["cant"]+
 	  		$blogresults["cant"]+$faqresults["cant"]+
 			$blogpostsresults["cant"]+$forumresults["cant"]+
 			$dirresults["cant"]+$imggalsresults["cant"]+
-			$imgresults["cant"]+$trackerresults["cant"];
+			$imgresults["cant"]+$trackerresults["cant"]+
+			$fileresults["cant"];
 	  return ($res);
 	}
 

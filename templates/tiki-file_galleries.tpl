@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.34 2005-06-16 20:11:07 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.35 2005-10-03 17:21:46 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-file_galleries.php?galleryId={$galleryId}">{tr}File Galleries{/tr}</a>
 
@@ -110,25 +110,33 @@
 </table>
 <table class="normal">
 <tr>
+{assign var='cntcol' value=1}
 {if $fgal_list_name eq 'y'}
+	{assign var='cntcol' value=$cntcol+1}
 	<td class="heading"><a class="tableheading" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
 {/if}
 {if $fgal_list_description eq 'y'}
+	{assign var='cntcol' value=$cntcol+1}
 	<td class="heading"><a class="tableheading" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a></td>
 {/if}
 {if $fgal_list_created eq 'y'}
+	{assign var='cntcol' value=$cntcol+1}
 	<td class="heading"><a class="tableheading" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a></td>
 {/if}
 {if $fgal_list_lastmodif eq 'y'}
+	{assign var='cntcol' value=$cntcol+1}
 	<td class="heading"><a class="tableheading" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}Last modified{/tr}</a></td>
 {/if}
 {if $fgal_list_user eq 'y'}
+	{assign var='cntcol' value=$cntcol+1}
 	<td class="heading"><a class="tableheading" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></td>
 {/if}
 {if $fgal_list_files eq 'y'}	
+	{assign var='cntcol' value=$cntcol+1}
 	<td style="text-align:right;" class="heading">{tr}Files{/tr}</td>
 {/if}
 {if $fgal_list_hits eq 'y'}
+	{assign var='cntcol' value=$cntcol+1}
 	<td style="text-align:right;"  class="heading"><a class="tableheading" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a></td>
 {/if}
 <td  class="heading">{tr}Actions{/tr}</td>
@@ -207,9 +215,8 @@
 	</td>
 </tr>
 {/if}
-
 {sectionelse}
-<tr><td class="odd" colspan="7">
+<tr><td class="odd" colspan="{$cntcol}">
 <b>{tr}No records found{/tr}</b>
 </td></tr>
 {/section}

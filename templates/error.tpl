@@ -35,16 +35,19 @@
         <br />
         {if ($errortype eq "404")}
           {if $feature_likePages eq 'y'}
+           {if $likepages}
           {tr}Perhaps you were looking for:{/tr}
           <ul>
           {section name=back loop=$likepages}
           <li><a  href="tiki-index.php?page={$likepages[back]|escape:"url"}" class="wiki">{$likepages[back]}</a></li>
-          {sectionelse}
-          <li>{tr}There are no wiki pages similar to '{$page}'{/tr}</li>
           {/section}
           </ul>
           <br />
+          {else}
+          {tr}There are no wiki pages similar to '{$page}'{/tr}
+          <br /><br />
           {/if}
+
           {include
             file="tiki-searchindex.tpl"
             searchNoResults="true"                 

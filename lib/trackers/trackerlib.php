@@ -557,7 +557,15 @@ class TrackerLib extends TikiLib {
 				if ( isset($ins_fields["data"][$i]["type"]) and $ins_fields["data"][$i]["type"] == 'i') {					
 						
 					$itId = $itemId ? $itemId : $new_itemId;
-					if( $ins_fields["data"][$i]['value'] != ''
+					$old_file = $this->get_item_value($trackerId, $itemId, $ins_fields["data"][$i]['fieldId']);
+					
+					if($ins_fields["data"][$i]["value"] == 'blank') {
+						if(file_exists($old_file)) {
+							unlink($old_file);
+						}
+						$ins_fields["data"][$i]["value"] = '';
+					}
+					elseif( $ins_fields["data"][$i]['value'] != ''
 						&& $ins_fields["data"][$i]['file_size'] <= $this->imgMaxSize 
 						&& $this->check_image_type( $ins_fields["data"][$i]['file_type'] ) ) {		
 						
@@ -571,8 +579,7 @@ class TrackerLib extends TikiLib {
 						fclose($fw);
 						
 						$ins_fields['data'][$i]['value'] = $file_name;
-						
-						$old_file = $this->get_item_value($trackerId, $itemId, $ins_fields["data"][$i]['fieldId']);
+												
 						if(file_exists($old_file) && $old_file != $file_name) {
 							unlink($old_file);
 						}

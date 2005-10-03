@@ -170,6 +170,9 @@ class SurveyLib extends TikiLib {
 		while ($res = $result->fetchRow()) {
 			$questionId = $res["questionId"];
 
+			// save user options
+			$options = explode( ",", $res["options"] );
+			
 			$res["options"] = $this->getOne("select count(*) from `tiki_survey_question_options` where `questionId`=?",array((int)$res["questionId"]));
 			$query2 = "select * from `tiki_survey_question_options` where `questionId`=?";
 
@@ -183,6 +186,12 @@ class SurveyLib extends TikiLib {
 			$ret2 = array();
 			$votes = 0;
 			$total_votes = $this->getOne("select sum(`votes`) from `tiki_survey_question_options` where `questionId`=?",array((int)$questionId));
+			
+			// store user defined options indices
+			$opts = array();
+			for( $cpt = 0;  $cpt < count($options); $cpt++  ) {
+				$opts[$options[$cpt]] = $cpt; 
+			}
 
 			while ($res2 = $result2->fetchRow()) {
 				if ($total_votes) {
@@ -194,7 +203,15 @@ class SurveyLib extends TikiLib {
 				$votes += $res2["votes"];
 				$res2["average"] = $average;
 				$res2["width"] = $average * 2;
-				$ret2[] = $res2;
+				
+				// when question with multiple options
+				// we MUST respect the user defined order
+				if( in_array($res['type'], array('m', 'c'))  ) {
+					$ret2[$opts[$res2['qoption']]] = $res2;
+				}
+				else {
+					$ret2[] = $res2;
+				}
 			}
 
 			$res["qoptions"] = $ret2;

@@ -149,8 +149,9 @@ class ArtLib extends TikiLib {
 			$result = $this->query($query,array($title,$authorName,(int) $topicId,$useImage,$imgname,(int) $imgsize,$imgtype,
 	$imgdata,(int) $publishDate,(int) $expireDate, (int) $now,$heading,$body,$hash,$user,0,0,0,(int) $size,$topicName,(int) $image_x,
 	(int) $image_y,$type,(float) $rating,$isfloat,$topline, $subtitle, $linkto, $image_caption, $lang));
-			$query = "select `subId` from `tiki_submissions` where `subId`=last_insert_id()";
-			$id = $this->getOne($query);
+			// Fixed query. -edgar
+			$query = "select max(`subId`) from `tiki_submissions` where `created` = ? and `title`=? and `hash`=?";
+			$id = $this->getOne($query, array( (int) $now, $title, $hash ) );
 		}
 
 		$emails = $notificationlib->get_mail_events('article_submitted', '*');

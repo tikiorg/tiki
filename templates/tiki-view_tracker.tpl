@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker.tpl,v 1.99 2005-08-29 03:14:45 mose Exp $ *}
+{* $Id: tiki-view_tracker.tpl,v 1.100 2005-10-03 17:21:46 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -193,7 +193,7 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
  and $items[user].field_values[ix].options_array[2]}<span class="formunit">&nbsp;{$items[user].field_values[ix].options_array[2]}</span>{/if}
 
 {if $items[user].field_values[ix].type eq 'f'}
-{$items[user].field_values[ix].value|tiki_short_datetime|truncate:255:"..."|default:"&nbsp;"}
+{if $items[user].field_values[ix].value}{$items[user].field_values[ix].value|tiki_short_datetime|truncate:255:"..."|default:"&nbsp;"}{else}&nbsp;{/if}
 
 {elseif $items[user].field_values[ix].type eq 'c'}
 {$items[user].field_values[ix].value|replace:"y":"Yes"|replace:"n":"No"|replace:"on":"Yes"}
@@ -204,7 +204,11 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 {elseif $items[user].field_values[ix].type eq 'i'}
 {assign var=width value=$items[user].field_values[ix].options_array[0]}
 {assign var=height value=$items[user].field_values[ix].options_array[1]}
-<img border="0" src="{$items[user].field_values[ix].value}" width="{$width}" height="{$height}" alt="n/a" />
+{if $items[user].field_values[ix].value ne ''}
+<img border="0" src="{$items[user].field_values[ix].value}"  width="{$width}" height="{$height}" alt="n/a" />
+{else}
+<img border="0" src="img/icons/na_pict.gif" alt="n/a" />
+{/if}
 
 {elseif $items[user].field_values[ix].type eq 'm'}
 {$items[user].field_values[ix].value|default:"&nbsp;"}
@@ -253,7 +257,7 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 </td>
 {elseif $items[user].field_values[ix].type eq 'f' or $items[user].field_values[ix].type eq 'j'}
 <td class="auto">
-{$items[user].field_values[ix].value|tiki_short_datetime|default:"&nbsp;"}
+{if $items[user].field_values[ix].value}{$items[user].field_values[ix].value|tiki_short_datetime|default:"&nbsp;"}{else}&nbsp;{/if}
 </td>
 {elseif $items[user].field_values[ix].type eq 'a'}
 <td class="auto">
@@ -267,7 +271,11 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 <td class="auto">
 {assign var=width value=$items[user].field_values[ix].options_array[0]}
 {assign var=height value=$items[user].field_values[ix].options_array[1]}
+{if $items[user].field_values[ix].value ne ''}
 <img border="0" src="{$items[user].field_values[ix].value}" width="{$width}" height="{$height}" alt="n/a" />
+{else}
+<img border="0" src="img/icons/na_pict.gif" alt="n/a" />
+{/if}
 </td>
 {elseif $items[user].field_values[ix].type eq 'y'}
 <td class="auto">

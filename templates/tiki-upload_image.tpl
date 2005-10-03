@@ -1,5 +1,5 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.29 2005-05-18 11:03:21 mose Exp $ *}
-<h1><a href="tiki-upload_image.php?galleryId={$galleryId}" class="pagetitle">{tr}Upload Image{/tr}</a>
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.30 2005-10-03 17:21:46 sylvieg Exp $ *}
+<h1><a href="tiki-upload_image.php{if $galleryId}?galleryId={$galleryId}{/if}" class="pagetitle">{tr}Upload Image{/tr}</a>
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Image+Galleries" target="tikihelp" class="tikihelp" title="{tr}Image Gallery{/tr}">
@@ -22,7 +22,7 @@
 {tr}Browse gallery{/tr}</a></span>
   {if $feature_gal_batch eq "y" and $tiki_p_batch_upload_image_dir eq 'y'}
     {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'}
-      <span class="button2"><a href="tiki-batch_upload.php?galleryId={$galleryId}" class="linkbut">{tr}Directory batch{/tr}</a></span>
+      <span class="button2"><a href="tiki-batch_upload.php{if $galleryId}?galleryId={$galleryId}{/if}" class="linkbut">{tr}Directory batch{/tr}</a></span>
     {/if}
   {/if}
 <br /><br />

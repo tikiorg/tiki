@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.121 2005-10-02 19:37:04 michael_davey Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.122 2005-10-03 17:21:43 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -81,11 +81,11 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
   $name = $_FILES['userfile1']['name'];
 
   $output = mime::decode($data);
-  unset ($parts);
-
+  $parts = array();
+  parse_output($output, $parts, 0);
   $last_part = '';
   $last_part_ver = 0;
-  usort($output['parts'], 'compare_import_versions');
+  usort($parts, 'compare_import_versions');
 
   foreach ($parts as $part) {
     if ($part["version"] > $last_part_ver) {
@@ -630,7 +630,7 @@ if (isset($_REQUEST["lang"])) {
 }
 $smarty->assign('lang', $pageLang);
 
-$smarty->assign_by_ref('pagedata',htmldecode($edit_data));
+$smarty->assign('pagedata',htmldecode($edit_data));
 
 // apply the optional post edit filters before preview
 if(isset($_REQUEST["preview"]) || ($wiki_spellcheck == 'y' && isset($_REQUEST["spellcheck"]) && $_REQUEST["spellcheck"] == 'on')) {
@@ -666,17 +666,16 @@ function htmldecode($string) {
    return $string;
 }
 
-/*
+
 function parse_output(&$obj, &$parts,$i) {
-  if(!empty($obj->parts)) {
-    for($i=0; $i<count($obj->parts); $i++)
-      parse_output($obj->parts[$i], $parts,$i);
+  if(!empty($obj['parts'])) {
+    for($i=0; $i<count($obj['parts']); $i++)
+      parse_output($obj['parts'][$i], $parts,$i);
   }else{
-    $ctype = $obj->ctype_primary.'/'.$obj->ctype_secondary;
-    switch($ctype) {
+    switch($obj['type']) {
       case 'application/x-tikiwiki':
-         $aux["body"] = $obj->body;
-         $ccc=$obj->headers["content-type"];
+         $aux["body"] = $obj['body'];
+         $ccc=$obj['header']["content-type"];
          $items = split(';',$ccc);
          foreach($items as $item) {
            $portions = split('=',$item);
@@ -691,7 +690,7 @@ function parse_output(&$obj, &$parts,$i) {
     }
   }
 }
-*/
+
 // Pro
 // Check if the page has changed
 
@@ -816,6 +815,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 
 if ($feature_wiki_templates == 'y' && $tiki_p_use_content_templates == 'y') {
   $templates = $tikilib->list_templates('wiki', 0, -1, 'name_asc', '');
+  $smarty->assign_by_ref('templates', $templates["data"]);
 }
 
 if ($feature_polls =='y' and $feature_wiki_ratings == 'y' && $tiki_p_wiki_admin_ratings == 'y') {
@@ -845,8 +845,6 @@ if ($feature_polls =='y' and $feature_wiki_ratings == 'y' && $tiki_p_wiki_admin_
 	}
 	$smarty->assign('listpolls',$listpolls['data']);
 }
-
-$smarty->assign_by_ref('templates', $templates["data"]);
 
 if ($feature_multilingual == 'y') {
 	$languages = array();

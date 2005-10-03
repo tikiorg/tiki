@@ -76,7 +76,7 @@ function wikiplugin_catorphans($data, $params) {
 
 	// currently only supports display of wiki pages
 	if ($objects == 'wiki') {
-		$listpages = $tikilib->list_pages(0, -1, 'pageName_asc', '');
+		$listpages = $tikilib->list_pageNames(0, -1, 'pageName_asc', '');
 
 		foreach ($listpages['data'] as $page) {
 			if (!$categlib->is_categorized('wiki page', $page['pageName'])) {

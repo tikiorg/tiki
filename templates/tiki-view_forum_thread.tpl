@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.66 2005-09-07 22:46:39 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.67 2005-10-03 17:21:46 sylvieg Exp $ *}
 
 <h1><a href="tiki-view_forum.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forum_info.forumId}" class="pagetitle">{tr}Forum{/tr}: {$forum_info.name}</a></h1>
 
@@ -71,6 +71,12 @@ a moderator approves it.{/tr}</small>
 			<a href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forumId}&amp;comments_parentId={$comments_parentId}&amp;watch_event=forum_post_thread&amp;watch_object={$comments_parentId}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this forum{/tr}' title='{tr}stop monitoring this topic{/tr}' src='img/icons/icon_unwatch.png' /></a>
 		{/if}
 	  {/if}
+	  
+	  
+	{if $tiki_p_forum_post eq 'y'}
+		<a class="linkbut" href="#form">{tr}reply{/tr}</a>
+	{/if}
+
   </td>
 </tr>
 <tr>
@@ -113,7 +119,7 @@ a moderator approves it.{/tr}</small>
 	  <tr>
   	  <td style="font-size:8pt;"><b>{tr}on{/tr}</b>: {$thread_info.commentDate|tiki_short_datetime}</td>
 	    {if $forum_info.vote_threads eq 'y'}
-	    <td style="font-size:8pt;"><b>{tr}score{/tr}</b>: {$thread_info.points}</td>
+	    <td style="font-size:8pt;"><b>{tr}score{/tr}</b>: {$thread_info.points}</td>	    
 	    {if $tiki_p_admin_forum eq 'y' or $tiki_p_forum_vote eq 'y'}<td style="font-size:8pt;">
 			  <b>{tr}Vote{/tr}</b>: 
 			  <a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}{$comments_threshold_param}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=1&amp;comments_offset={$comments_offset}{$comments_sort_mode_param}{$comments_maxComments_param}&amp;comments_parentId={$comments_parentId}">1</a>
@@ -121,12 +127,13 @@ a moderator approves it.{/tr}</small>
 			  <a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}{$comments_threshold_param}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=3&amp;comments_offset={$comments_offset}{$comments_sort_mode_param}{$comments_maxComments_param}&amp;comments_parentId={$comments_parentId}">3</a>
 			  <a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}{$comments_threshold_param}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=4&amp;comments_offset={$comments_offset}{$comments_sort_mode_param}{$comments_maxComments_param}&amp;comments_parentId={$comments_parentId}">4</a>
 			  <a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}{$comments_threshold_param}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=5&amp;comments_offset={$comments_offset}{$comments_sort_mode_param}{$comments_maxComments_param}&amp;comments_parentId={$comments_parentId}">5</a>
+			  
   	  </td>
   		{/if}
   		{/if}
   		<td style="font-size:8pt;">
-  		{tr}reads{/tr}: {$thread_info.hits}
-  		</td>
+  		{tr}reads{/tr}: {$thread_info.hits}		
+  		</td>		
   	</tr>
   </table>
   </td>

@@ -546,7 +546,8 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 			$qFid = "select `type` from `tiki_tracker_fields` where `fieldId`=$fid";
 			$ftype = $this->getOne($qFid);
 		}
-		
+	
+		$result = array();
 		while ($res = $midResult->fetchRow()) {
 			if(isset($ftype) && isset($colId)) { // if we need sort
 				$res['value'] = $res[$colId];

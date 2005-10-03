@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-my_tiki.php,v 1.21 2005-09-07 12:35:39 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-my_tiki.php,v 1.22 2005-10-03 17:21:43 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -101,7 +101,9 @@ while ($file = readdir($h)) {
 closedir ($h);*/
 
 //Is this needed?
-$smarty->assign_by_ref('styles', $tikilib->list_styles());
+
+$styles = $tikilib->list_styles();
+$smarty->assign_by_ref('styles', $list_styles);
 
 $languages = array();
 if (is_dir("lang/")) {

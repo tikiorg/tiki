@@ -8,7 +8,7 @@
 {tr}Please follow the steps below to have your password properly reset:
 
 1. Click the following link to confirm you wish to reset your password:
-{$mail_machine}?user={$mail_user|escape:'url'}&actpass={$mail_apass}
+{$mail_machine}/tiki-remind_password.php?user={$mail_user|escape:'url'}&actpass={$mail_apass}
 
 2. Click the following link to go to the screen where you must enter a new "permanent" password. Please pick a password only you will know, and don't share it with anyone else.
 {$mail_machine}/tiki-change_password.php?user={$mail_user}&oldpass={$mail_pass}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.44 2005-09-19 20:03:17 michael_davey Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.45 2005-10-03 17:21:46 sylvieg Exp $ *}
 
 <script type="text/javascript">
 {literal}
@@ -333,6 +333,11 @@
       </tr><tr>
         <td class="form"><label for="general-helpurl">{tr}Help URL{/tr}:</label></td>
         <td><input type="text" name="helpurl" id="general-helpurl" value="{$helpurl|escape}" size="40" /></td>
+
+      </tr><tr>
+        <td class="form"></td>
+        <td>Please expect not found help-pages with the default-URL.<br />
+	    Any help with the documentation is welcome.</td>
 
       </tr></table>
       <table class="admin"><tr>

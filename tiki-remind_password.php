@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-remind_password.php,v 1.24 2005-08-18 16:23:05 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-remind_password.php,v 1.25 2005-10-03 17:21:43 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -66,7 +66,8 @@ if (isset($_REQUEST["remind"])) {
 
 		// Now check if the user should be notified by email
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
-		$machine = $tikilib->httpPrefix(). $foo["path"];
+		$machine = $tikilib->httpPrefix(). dirname($foo["path"]);
+		$machine = preg_replace("!/$!", "", $machine); // just incase
 		$smarty->assign('mail_machine', $machine);
 
 		$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);

@@ -11,6 +11,11 @@ if (!function_exists('ms_newMapObj')) {
 $access->check_feature('feature_maps');
 $access->check_permission(array('tiki_p_map_view'), tra("View maps"));
 
+//handling the layer manager menu: visible by default if never used before
+if (getCookie('layermenu', "menu") != 'o' && getCookie('layermenu', "menu") != 'c') {
+	$smarty->assign('mnu_layermenu', 'display:block;');
+}
+
 $smarty->assign('tiki_p_map_edit',$tiki_p_map_edit);
 
 if (isset($_REQUEST['mapfile'])) {
@@ -101,15 +106,16 @@ if($tikilib->page_exists($page))
 $smarty->assign("pagelink",$pagelink);
  
 $layerbol=FALSE;
+if (isset($_REQUEST['oldsize'])) {
+	$layerbol=TRUE;
+}
 
 if(isset($_REQUEST['size'])&&is_numeric($_REQUEST['size'])&&($_REQUEST['size']>0)&&($_REQUEST['size']<2000))
 {
     $xsize=floor($_REQUEST['size']);
     $ysize=floor(($_REQUEST['size']*$map->height/$map->width));
-    $layerbol=TRUE;
     $size = $_REQUEST['size'];
-}
-else {
+} else {
     $xsize = $map->width;
     $ysize = $map->height;
     $size = $map->width;
@@ -130,39 +136,39 @@ $view_values[]=0;
 
 
 for($i=1;$i<$number_of_views;$i++)
- {
-   $viewdata=$map->getMetaData("VIEW".$i);
-   if(!empty($viewdata)){
+{
+	$viewdata=$map->getMetaData("VIEW".$i);
+  if(!empty($viewdata)){
 	
-	$v_data=explode(',',$viewdata,5);
-	$view_name[$i]=$v_data[0];
-	$v_minx=$v_data[1];
-	$v_miny=$v_data[2];
-	$v_maxx=$v_data[3];
-	$v_maxy=$v_data[4];
+		$v_data=explode(',',$viewdata,5);
+		$view_name[$i]=$v_data[0];
+		$v_minx=$v_data[1];
+		$v_miny=$v_data[2];
+		$v_maxx=$v_data[3];
+		$v_maxy=$v_data[4];
 	
      $view_values[$i]=array($v_minx,$v_miny,$v_maxx,$v_maxy);
      $counter++;
   }
 }
- $smarty->assign('view_name',$view_name);
- $smarty->assign('view_values',$view_values);
+$smarty->assign('view_name',$view_name);
+$smarty->assign('view_values',$view_values);
 
 if (isset($_REQUEST['minx']) && isset($_REQUEST['miny'])&& isset($_REQUEST['maxx']) && isset($_REQUEST['maxy']))
 {	 			 
 
-if(isset($_REQUEST['Go']))
-	 {
-	         if(empty($map_view)||!(in_array($_REQUEST['view'],$view_name))||empty($_REQUEST['view'])){
+	if(isset($_REQUEST['Go']))
+	{
+         if(empty($map_view)||!(in_array($_REQUEST['view'],$view_name))||empty($_REQUEST['view'])){
                       $my_extent = ms_newrectObj();
                       $my_extent->setextent($map->extent->minx,$map->extent->miny,$map->extent->maxx,$map->extent->maxy);
-	         }else{
+	       } else {
 	         //set view extents
                  for($view_count=1;$view_count<$counter+1;$view_count++){
                     if($_REQUEST['view']==$view_name[$view_count]){
                             $j=$view_count;
                             
-			    $view_minx=$view_values[$j][0];
+			    									$view_minx=$view_values[$j][0];
                             $view_miny=$view_values[$j][1];
                             $view_maxx=$view_values[$j][2];
                             $view_maxy=$view_values[$j][3];
@@ -171,13 +177,12 @@ if(isset($_REQUEST['Go']))
                              $view=$_REQUEST['view'];
                       }
                    }//end of for loop
-                 }//end of if else loop
-        }else{
+          }//end of if else loop
+    } else {
 		$my_extent = ms_newrectObj();
 		$my_extent->setextent($_REQUEST['minx'],$_REQUEST['miny'],$_REQUEST['maxx'],$_REQUEST['maxy']);	 
 	}
-}else
-{
+} else {
 	if(isset($_REQUEST['view'])&& in_array($_REQUEST['view'],$view_name)){
 		//set view extents
 		for($view_count=1;$view_count<$counter+1;$view_count++){
@@ -193,11 +198,10 @@ if(isset($_REQUEST['Go']))
 			$view=$_REQUEST['view'];
 		  }
 		}//end of for loop
-	}else{
-        $my_extent = ms_newrectObj();
-        $my_extent->setextent($map->extent->minx,$map->extent->miny,$map->extent->maxx,$map->extent->maxy);
+	} else {
+    $my_extent = ms_newrectObj();
+    $my_extent->setextent($map->extent->minx,$map->extent->miny,$map->extent->maxx,$map->extent->maxy);
 	}
-	
 }
 
 $query=FALSE;
@@ -211,19 +215,21 @@ if (isset($_REQUEST['zoom']))
   
   if (isset($_REQUEST['x']) && isset($_REQUEST['y']) && $zoom!=0)
   { 
- 	$my_point->setXY(floor($_REQUEST['x']*$size/$_REQUEST['oldsize']),floor($_REQUEST['y']*$size/$_REQUEST['oldsize']));
- }
- else{
-	$my_point->setXY(($map->width)/2,($map->height)/2);
-
- }
+  	if (isset($_REQUEST['oldsize'])) {
+		 	$my_point->setXY(floor($_REQUEST['x']*$size/$_REQUEST['oldsize']),floor($_REQUEST['y']*$size/$_REQUEST['oldsize']));
+		} else {
+		 	$my_point->setXY(floor($_REQUEST['x']),floor($_REQUEST['y']));	
+		}
+  } else{
+		$my_point->setXY(($map->width)/2,($map->height)/2);
+  }
 
   if($zoom==0){  // It is a query 
     
-   $map->zoompoint(1,$my_point,$map->width,$map->height,$my_extent);
+  	$map->zoompoint(1,$my_point,$map->width,$map->height,$my_extent);
     
-   if (isset($_REQUEST['x']) && isset($_REQUEST['y']))
-   {
+   	if (isset($_REQUEST['x']) && isset($_REQUEST['y']))
+   	{
       //get the real world coordinates
       $x=$_REQUEST['x'];
       $y=$_REQUEST['y'];
@@ -243,13 +249,11 @@ if (isset($_REQUEST['zoom']))
       $query_point->setXY($corx,$cory);
       $map_querymsg.='<tr><td class="heading" colspan="2">'.tra('Query point:').' <b>'.$corx.' / '.$cory.'</b></td><tr>';
       $query=TRUE;
-    }
-  }else  
-  {
+   	}
+  }	else {
     $map->zoompoint($zoom,$my_point,$map->width,$map->height,$my_extent);
   }
-}
-else{
+} else {
   $zoom=1;
 }
 $count_group=0;
@@ -280,7 +284,7 @@ for ($j=0;$j<$map->numlayers;$j++)
   {
   	$layer_label[$j]="On";
   	if (isset($_REQUEST[str_replace(" ","_",$my_layer->name)."_label"]))
-	{
+		{
   	   $my_layers_label_checked[$j]="checked";
   	} else
   	{

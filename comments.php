@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.53 2005-09-14 21:45:38 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.54 2005-10-03 17:21:43 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -151,7 +151,9 @@ $comments_objectId = $comments_prefix_var . $_REQUEST["$comments_object_var"];
 $message_id = '';
 $in_reply_to = '';
 // Process a post form here 
-if ($tiki_p_post_comments == 'y') {
+if ( ($tiki_p_post_comments == 'y' && isset($forum_mode) && $forum_mode != 'y') 
+	|| ($tiki_p_forum_post == 'y' && isset($forum_mode) && $forum_mode == 'y') ) {
+	
     if (isset($_REQUEST["comments_postComment"])) {
 	$comments_show = 'y';
 

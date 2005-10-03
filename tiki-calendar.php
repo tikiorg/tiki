@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.47 2005-06-16 20:10:49 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.48 2005-10-03 17:21:43 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -831,7 +831,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 				$smarty->assign_by_ref('cellname', $le["name"]);
 				$smarty->assign_by_ref('cellurl', $le["url"]);
 				$smarty->assign_by_ref('cellid', $le["calitemId"]);
-				$smarty->assign_by_ref('celldescription', $tikilib->parse_data($le["description"]));
+				$smarty->assign('celldescription', $tikilib->parse_data($le["description"]));
 				$smarty->assign_by_ref('cellmodif', $le['modifiable']);
 				$leday["{$le['time']}$e"]["over"] = $smarty->fetch("tiki-calendar_box.tpl");
 				$e++;
