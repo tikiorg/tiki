@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.54 2005-09-23 13:43:20 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.55 2005-10-03 21:45:47 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -51,35 +51,56 @@ function batchImportUsers() {
 	}
 	$added = 0;
 	foreach ($userrecs as $u) {
+		$exist = false;
 		if (empty($u['login'])) {
-			$discarded[] = discardUser($u, tra("User login is required"));
+			if (!empty($u['password']) || !empty($u['email']))  // not empty line
+				$discarded[] = discardUser($u, tra("User login is required"));
+			continue;
 		} elseif (empty($u['password'])) {
 			$discarded[] = discardUser($u, tra("Password is required"));
+			continue;
 		} elseif (empty($u['email'])) {
 			$discarded[] = discardUser($u, tra("Email is required"));
-		} elseif ($userlib->user_exists($u['login'])and (!isset($_REQUEST['overwrite']))) {
-			$discarded[] = discardUser($u, tra("User is duplicated"));
+			continue;
+		} elseif ($userlib->user_exists($u['login'])) {
+			 if ($_REQUEST['overwrite'] == 'n') {
+				$discarded[] = discardUser($u, tra("User is duplicated"));
+				continue;
+			}
+			$exist = true;
 		} else {
 			list($cant, $uu) = $userlib->other_user_exists_case_insensitive($u['login']);
+			if ($cant != 0)
+				$exist = true;
 			if ($cant == 0) {
-				$userlib->add_user($u['login'], $u['password'], $u['email']);
-				$logslib->add_log('users',sprintf(tra("Created account %s <%s>"),$u["login"], $u["email"]));
+				$userlib->add_user($uu, $u['password'], $u['email']);
+				$logslib->add_log('users',sprintf(tra("Created account %s <%s>"),$uu, $u['email']));
+			} else if ($_REQUEST['overwrite'] == 'y') {
+				$userlib->change_login($uu, $u['login']);
+			} else if ($_REQUEST['overwrite'] == 'y') {
+				$u['login'] = $uu;
+			} else if ($_REQUEST['overwrite'] == 'n') {
+				$discarded[] = discardUser($u, tra("User is duplicated").': '.$uu);
+				continue;
 			}
+		}
+		$userlib->set_user_fields($u);
 
-			$userlib->set_user_fields($u);
-
-			if (@$u['groups']) {
-				$grps = explode(",", $u['groups']);
-
-				foreach ($grps as $grp) {
-					if ($userlib->group_exists($grp)) {
-						$userlib->assign_user_to_group($u['login'], $grp);
-						$logslib->add_log('perms',sprintf(tra("Assigned %s in group %s"),$u["login"], $grp));
-					}
+		if ($exist && isset($_REQUEST['overwriteGroup'])) {
+			$userlib->remove_user_from_all_groups($u['login']);
+		}
+		if (@$u['groups']) {
+			$grps = explode(",", $u['groups']);
+			foreach ($grps as $grp) {
+				if ($userlib->group_exists($grp)) {
+					$userlib->assign_user_to_group($u['login'], $grp);
+					$logslib->add_log('perms',sprintf(tra("Assigned %s in group %s"),$u["login"], $grp));
+				} else {
+					$discarded[] = discardUser($u, tra("Unknown group").": ".$grp);
 				}
 			}
-			$added++;
 		}
+		$added++;
 	}
 	$smarty->assign('added', $added);
 	if (@is_array($discarded)) {

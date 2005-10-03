@@ -953,6 +953,12 @@ function get_included_groups($group) {
 	$result = $this->query($query, array($userid, $group));
     }
 
+    function remove_user_from_all_groups($user) {
+	$userid = $this->get_user_id($user);
+	$query = "delete from `users_usergroups` where `userId` = ?";
+	$result = $this->query($query, array($userid));
+    }
+
     function get_groups($offset = 0, $maxRecords = -1, $sort_mode = 'groupName_desc', $find = '', $initial = '', $details="y") {
 
 	$mid = "";
