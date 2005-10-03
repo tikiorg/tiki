@@ -47,6 +47,7 @@
           {tr}There are no wiki pages similar to '{$page}'{/tr}
           <br /><br />
           {/if}
+          {/if}
 
           {include
             file="tiki-searchindex.tpl"
