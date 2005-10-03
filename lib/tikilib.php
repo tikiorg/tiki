@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.613 2005-09-30 13:29:36 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.614 2005-10-03 16:58:28 toggg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4382,6 +4382,8 @@ function add_pageview() {
             $wiki->setRenderConf('xhtml', 'table', 'css_td', 'wikicell');
             $wiki->setRenderConf('xhtml', 'image', 'base', '');
             $wiki->setRenderConf('xhtml', 'image', 'url_base', '');
+            $wiki->setRenderConf('xhtml', 'smiley', 'prefix', 'img/smiles/icon_');
+            $wiki->setRenderConf('xhtml', 'smiley', 'extension', '.gif');
 
             $wiki->setParseConf('image', 'popupLinks', $this->get_preference('popupLinks', 'n'));
 
