@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: solvecases.php,v 1.4 2005-09-27 16:24:12 michael_davey Exp $
+ * @version $Id: solvecases.php,v 1.5 2005-10-04 10:51:48 michael_davey Exp $
  * @package TikiWiki
  * @subpackage Solve
  * @copyright (C) 2005 the Tiki community
@@ -159,7 +159,7 @@ header( 'Expires: Mon, 26 Jul 1997 05:00:00 GMT' );
             //return true;
         //}
         
-        $presentation->RenderList($bugs, null, $columns, 'home');
+        $presentation->RenderList($bugs, array(), $columns, 'home');
         break;
 }
 
