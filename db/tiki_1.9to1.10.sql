@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.46 2005-10-01 13:58:30 michael_davey Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.47 2005-10-04 11:58:05 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -158,3 +158,6 @@ INSERT IGNORE INTO tiki_preferences(`name`,`value`) VALUES ('feature_wiki_show_h
 
 #2005-09-27 brazilian tiki study group
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_batch_subscribe_email', 'Can subscribe many e-mails at once (requires tiki_p_subscribe email)', 'editors', 'newsletters');
+
+#2005-10-04 sylvieg
+DELETE FROM tiki_logs where logmessage='timeout' and loguser='Anonymous';
