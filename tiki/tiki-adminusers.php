@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.55 2005-10-03 21:45:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.56 2005-10-04 10:53:34 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -50,21 +50,27 @@ function batchImportUsers() {
 		die;
 	}
 	$added = 0;
+	$discards = 0;
 	foreach ($userrecs as $u) {
 		$exist = false;
 		if (empty($u['login'])) {
-			if (!empty($u['password']) || !empty($u['email']))  // not empty line
+			if (!empty($u['password']) || !empty($u['email'])) { // not empty line
 				$discarded[] = discardUser($u, tra("User login is required"));
+				++$discards;
+			}
 			continue;
 		} elseif (empty($u['password'])) {
 			$discarded[] = discardUser($u, tra("Password is required"));
+			++$discards;
 			continue;
 		} elseif (empty($u['email'])) {
 			$discarded[] = discardUser($u, tra("Email is required"));
+			++$discards;
 			continue;
 		} elseif ($userlib->user_exists($u['login'])) {
 			 if ($_REQUEST['overwrite'] == 'n') {
 				$discarded[] = discardUser($u, tra("User is duplicated"));
+				++$discards;
 				continue;
 			}
 			$exist = true;
@@ -81,6 +87,7 @@ function batchImportUsers() {
 				$u['login'] = $uu;
 			} else if ($_REQUEST['overwrite'] == 'n') {
 				$discarded[] = discardUser($u, tra("User is duplicated").': '.$uu);
+				++$discards;
 				continue;
 			}
 		}
@@ -103,10 +110,10 @@ function batchImportUsers() {
 		$added++;
 	}
 	$smarty->assign('added', $added);
-	if (@is_array($discarded)) {
-		$smarty->assign('discarded', count($discarded));
-	}
-	@$smarty->assign('discardlist', $discarded);
+	if ($discards > 0) 
+		$smarty->assign('discarded', $discards);
+	if (count($discarded) > 0)
+		$smarty->assign('discardlist', $discarded);
 }
 
 $cookietab = "1";
