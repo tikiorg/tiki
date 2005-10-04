@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.616 2005-10-04 10:56:07 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.617 2005-10-04 12:08:14 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2588,10 +2588,10 @@ function add_pageview() {
 		if ($cant == 0)
 			$logslib->add_log("login", "back", $user, '', '', $now);
 	}
-	$query = "select * from `tiki_sessions` where `timestamp`<? and `sessionId`!=?";
-	$result = $this->query($query, array($oldy, $sessionId));
+	$query = "select * from `tiki_sessions` where `timestamp`<?";
+	$result = $this->query($query, array($oldy));
 	while ($res = $result->fetchRow()) {
-		if ($res['user'])
+		if ($res['user'] && $res['user'] != $user)
 			$logslib->add_log('login', 'timeout', $res['user'], '', '', $res['timestamp']+ $delay);
 	}
 	$query = "delete from `tiki_sessions` where `sessionId`=? or `timestamp`<?";
