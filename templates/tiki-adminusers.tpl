@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.74 2005-10-03 21:45:48 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.75 2005-10-04 10:53:34 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
@@ -22,12 +22,13 @@
 <br /><div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">{section name=n loop=$tikifeedback}{$tikifeedback[n].mes}<br />{/section}</div>
 {/if}
 <br />
-{if $added != "" or $discarded != ""}
+{if $added != "" or $discarded != "" or $discardlist != ''}
 <div class="simplebox">
 <h2>{tr}Batch Upload Results{/tr}</h2>
 {tr}Updated users{/tr}: {$added}
-{if $discarded != ""}
-- {tr}Rejected users{/tr}: {$discarded}<br /><br />
+{if $discarded != ""}- {tr}Rejected users{/tr}: {$discarded}{/if}
+<br /><br />
+{if $discardlist != ''}
 <table class="normal">
 <tr><td class="heading">{tr}Username{/tr}</td><td class="heading">{tr}Reason{/tr}</td></tr>
 {section name=reject loop=$discardlist}
