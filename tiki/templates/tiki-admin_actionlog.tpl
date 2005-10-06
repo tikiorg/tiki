@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.3 2005-10-06 17:19:50 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.4 2005-10-06 17:32:08 sylvieg Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Admin Action Log{/tr}</a></h1>
 <a name="Setting" />
@@ -152,7 +152,7 @@
 <tr>
 <td class="{cycle advance=false}">{$vol.category}</td>
 {foreach  key=a item=list from=$volCateg[$categId]}
-{if $a ne 'category'}<td class="{cycle advance=false}">{$list.add}</td><td class="{cycle advance=false}">{$list.del}</td><td class="{cycle advance=false}">{$list.dif}</td>{/if}
+{if $a ne 'category'}<td class="{cycle advance=false}">{math equation="round(a/b)" a=$list.add b=1024}</td><td class="{cycle advance=false}">{math equation="round(a/b)" a=$list.del b=1024}</td><td class="{cycle advance=false}">{math equation="round(a/b)" a=$list.dif b=1024}</td>{/if}
 {/foreach}
 <!-- {cycle} -->
 </tr>
