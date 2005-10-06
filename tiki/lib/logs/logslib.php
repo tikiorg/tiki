@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.9 2005-09-19 13:57:01 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.10 2005-10-06 17:19:50 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -307,11 +307,11 @@ class LogsLib extends TikiLib {
 		$stats = array();
 		$actionlogConf = $this->get_all_actionlog_conf();
 		foreach ($actions as $action) {
-			if ($action['categId'] == 0)
-				continue;
+			//if ($action['categId'] == 0) print also stat for non categ object
+			//	continue;
 			$key = $action['categId'];
 			if (!array_key_exists($key, $stats)) {
-				$stats[$key]['category'] = $categNames[$action['categId']];
+				$stats[$key]['category'] = $key? $categNames[$key]: '';
 				foreach ($actionlogConf as $conf) {
 					if ($conf['action'] != '*')// don't take category
 						$stats[$key][$conf['action'].'/'.$conf['objectType']] = 0;
@@ -319,8 +319,48 @@ class LogsLib extends TikiLib {
 			}
 			++$stats[$key][$action['action'].'/'.$action['objectType']];
 		}
-		sort($stats); //sort on the first field category	
+		sort($stats); //sort on the first field category
 		return $stats;
+	}
+	function get_action_vol_categ($actions, $categNames) {
+		$stats = array();
+		$actionlogConf = $this->get_all_actionlog_conf();
+		foreach ($actions as $action) {
+			//if ($action['categId'] == 0) print also stat for non categ object
+			//	continue;
+			if (!($bytes = $this->get_volume_action($action)))
+				continue;
+			$key = $action['categId'];
+			if (!array_key_exists($key, $stats))
+				$stats[$key]['category'] = $key? $categNames[$key]: '';
+			if (!isset($stats[$key][$action['objectType']]['add'])) {
+				$stats[$key][$action['objectType']]['add'] = 0;
+				$stats[$key][$action['objectType']]['del'] = 0;
+				$stats[$key][$action['objectType']]['dif'] = 0;
+			}
+			$dif = 0;
+			if (preg_match("/\+([0-9]+)/", $bytes, $matches)) {
+				$stats[$key][$action['objectType']]['add'] += $matches[1];
+				$dif = $matches[1];
+			}
+			if (preg_match("/\-([0-9]+)/", $bytes, $matches)) {
+				$stats[$key][$action['objectType']]['del'] += $matches[1];
+				$dif -= $matches[1];
+			}
+			$stats[$key][$action['objectType']]['dif'] += $dif;
+		}
+		sort($stats); //sort on the first field category
+		return $stats;
+	}
+	function get_action_vol_type($vols) {
+		$types = array();
+		foreach ($vols as $vol) {
+			foreach ($vol as $key=>$value) {
+				if ($key != 'category' && $key != 'user' && !in_array($key, $types))
+					$types[] = $key;
+			}
+		}
+		return $types;
 	}
 	function get_action_stat_user_categ($actions, $categNames) {
 		$stats = array();

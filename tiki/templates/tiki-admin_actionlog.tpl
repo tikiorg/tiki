@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.2 2005-09-19 13:57:01 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.3 2005-10-06 17:19:50 sylvieg Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Admin Action Log{/tr}</a></h1>
 <a name="Setting" />
 <h2>{tr}Setting{/tr}</h2>
 <form method="post" action="tiki-admin_actionlog.php">
-<table class="normal">
+<table class="smallnormal">
 <tr><th class="heading">{tr}status{/tr}</th><th class="heading">{tr}action{/tr}</th><th class="heading">{tr}type{/tr}</th></tr>
 {cycle values="even,odd" print=false}
 {section name=ix loop=$actionlogConf}
@@ -15,11 +15,11 @@
 <div class="rbox">{tr}Wiki page actions except viewed will always be recorded but can be not reported{/tr}</div>
 </form>
 
-<a name="Report">
+<a name="Report" />
 <h2>{tr}Report{/tr}</h2>
 <form method="post" action="tiki-admin_actionlog.php#Report">
 <h3>{tr}Filter{/tr}</h3>
-<table class="normal">
+<table class="smallnormal">
 <tr>
 <td>{tr}User:{/tr}</td>
 <td><select name="user">
@@ -49,9 +49,12 @@
 </table>
 </form>
 
+{if $actionlogs}<a href="#Statistic" class="buttom">See Statictics</a>{/if}
+
 <a name="List" />
 <h3>{tr}List{/tr}{if $reportUser ne '' and $reportUser ne 'Anonymous' and $reportUser ne 'Registered'} &mdash; {tr}User:{/tr} {$reportUser}{/if}{if $reportCateg ne ''} &mdash; {tr}Category:{/tr} {$reportCateg}{/if}</h3>
-<table class="normal">
+{if $actionlogs}
+<table class="smallnormal">
 <tr>
 {if $reportUser eq '' or $reportUser eq 'Registered'}<th class="heading">{tr}user{/tr}</th>{/if}
 <th class="heading">{tr}date{/tr}</th>
@@ -64,7 +67,7 @@
 {cycle values="even,odd" print=false}
 {section name=ix loop=$actionlogs}
 <tr>
-{if $reportUser eq '' or $reportUser eq 'Registered'}<td class="{cycle advance=false}">{$actionlogs[ix].user}</td>{/if}
+{if $reportUser eq '' or $reportUser eq 'Registered'}<td class="{cycle advance=false}">{if $actionlogs[ix].user}{$actionlogs[ix].user}{else}Anonymous{/if}</td>{/if}
 <td class="{cycle advance=false}">{$actionlogs[ix].lastModif|tiki_short_datetime}</td>
 <td class="{cycle advance=false}">{$actionlogs[ix].action}</td>
 <td class="{cycle advance=false}">{$actionlogs[ix].objectType}</td>
@@ -74,12 +77,13 @@
 </tr>
 {/section}
 </table>
+{/if}
 
 <a name="Statistic" />
 <h3>{tr}Statistic{/tr}{if $reportUser ne '' and $reportUser ne 'Anonymous' and $reportUser ne 'Registered'} &mdash; {tr}User:{/tr} {$reportUser}{/if}{if $reportCateg ne ''} &mdash; {tr}Category:{/tr} {$reportCateg}{/if}</h3>
 
 {if $showLogin eq 'y'}
-<table class="normal">
+<table class="smallnormal">
 <tr>
 <th class="heading">{tr}user{/tr}</th>
 <th class="heading">{tr}connection time{/tr}</th>
@@ -97,6 +101,7 @@
 </table>
 {/if}
 
+{if $stat}
 <table class="normal">
 <tr>
 <th class="heading">{tr}user{/tr}</th>
@@ -115,6 +120,7 @@
 </tr>
 {/foreach}
 </table>
+{/if}
 
 {if $showCateg eq 'y'}
 <table class="normal">
@@ -134,6 +140,25 @@
 </tr>
 {/foreach}
 </table>
+
+<table class="smallnormal">
+<tr>
+<th class="heading">{tr}category{/tr}</th>
+{foreach  item=type from=$typeVol}
+<th class="heading">{$type} (+{tr}KB{/tr})</th><th class="heading">{$type} (-{tr}KB{/tr})</th><th class="heading">{$type} ({tr}KB{/tr})</th>
+{/foreach}
+</tr>
+{foreach key=categId item=vol from=$volCateg}
+<tr>
+<td class="{cycle advance=false}">{$vol.category}</td>
+{foreach  key=a item=list from=$volCateg[$categId]}
+{if $a ne 'category'}<td class="{cycle advance=false}">{$list.add}</td><td class="{cycle advance=false}">{$list.del}</td><td class="{cycle advance=false}">{$list.dif}</td>{/if}
+{/foreach}
+<!-- {cycle} -->
+</tr>
+{/foreach}
+</table>
+
 {/if}
 
 {if $showCateg eq 'y'}

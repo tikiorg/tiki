@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.3 2005-09-22 10:39:40 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.4 2005-10-06 17:19:49 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -71,6 +71,10 @@ if (isset($_REQUEST['list'])) {
 	if ($showCateg) {
 		$statCateg = $logslib->get_action_stat_categ($actions, $categNames);
 		$smarty->assign_by_ref('statCateg', $statCateg);
+		$volCateg = $logslib->get_action_vol_categ($actions, $categNames);
+		$smarty->assign_by_ref('volCateg', $volCateg);
+		$typeVol = $logslib->get_action_vol_type($volCateg);
+		$smarty->assign_by_ref('typeVol', $typeVol);
 		$statUserCateg = $logslib->get_action_stat_user_categ($actions, $categNames);
 		$smarty->assign_by_ref('statUserCateg', $statUserCateg);
 	}
@@ -126,7 +130,8 @@ if (isset($_REQUEST['list'])) {
 		}
 	}
 	if ($showLogin) {
-		$logins = $logslib->list_logs('login', $_REQUEST['user'], 0, -1, 'logtime_asc', '', $startDate, $endDate, $actions);
+		$uu = ($_REQUEST['user'] == "Registered")? '':  $_REQUEST['user'];
+		$logins = $logslib->list_logs('login', $uu, 0, -1, 'logtime_asc', '', $startDate, $endDate, $actions);
 		$logTimes = $logslib->get_login_time($logins['data'], $startDate, $endDate, $actions);
 		$smarty->assign_by_ref('logTimes', $logTimes);
 		foreach ($logins['data'] as $log) { // merge logs table in action table
