@@ -42,11 +42,11 @@
   <div class="cbox-data">
   <form action="tiki-user_preferences.php" method="post">
   <input type="hidden" name="view_user" value="{$userwatch|escape}" />
-  <input type="hidden" name="user" value="{$userwatch|escape}" /> 
+  <input type="hidden" name="user" value="{$userwatch|escape}" />
   <table class="admin">
   <tr><td class="form">{tr}Name{/tr}:</td><td class="form">{$userinfo.login}</td></tr>
   <tr><td class="form">{tr}Real Name{/tr}:</td><td class="form"><input type="text" name="realName" value="{$realName|escape}" /></td></tr>
-	{if $feature_user_gender eq 'y'}
+
   <tr><td class="form">{tr}Gender{/tr}:</td>
   <td class="form">
   <input type="radio" name="gender" value="Male" {if $gender eq 'Male'}checked="checked"{/if}/> {tr}Male{/tr}
@@ -54,7 +54,7 @@
   <input type="radio" name="gender" value="Hidden" {if $gender ne 'Male' and $gender ne 'Female'}checked="checked"{/if}/> {tr}Hidden{/tr}
   </td>
   </tr>
-	{/if}
+
   <tr><td class="form">{tr}Country{/tr}:</td><td class="form">
   {if $country == "None"}
   <img src="img/flags/Other.gif" border="0" width="20" height="13" alt='{tr}flag{/tr}' title='{tr}flag{/tr}'>
@@ -76,11 +76,11 @@
   <tr><td class="form">{tr}Longitude (WGS84/decimal degrees){/tr}:</td><td class="form"><input type="text" name="lon" value="{$lon|escape}" /></td></tr>
   <tr><td class="form">{tr}Latitude (WGS84/decimal degrees){/tr}:</td><td class="form"><input type="text" name="lat" value="{$lat|escape}" /></td></tr>
   {/if}
-	 
+
   <tr><td class="form">{tr}Avatar{/tr}:</td><td class="form">{$avatar} <a href="tiki-pick_avatar.php" class="link">{tr}Pick user Avatar{/tr}</a></td></tr>
   <tr><td class="form">{tr}HomePage{/tr}:</td><td class="form"><input type="text" size="40" name="homePage" value="{$homePage|escape}" /></td></tr>
   {if $feature_wiki eq 'y' and $feature_wiki_userpage eq 'y'}
-  <tr><td class="form">{tr}Your personal Wiki Page{/tr}:</td><td class="form"><a class="link" href="tiki-index.php?page={$feature_wiki_userpage_prefix}{$userinfo.login}">{$feature_wiki_userpage_prefix}{$userinfo.login}</a> 
+  <tr><td class="form">{tr}Your personal Wiki Page{/tr}:</td><td class="form"><a class="link" href="tiki-index.php?page={$feature_wiki_userpage_prefix}{$userinfo.login}">{$feature_wiki_userpage_prefix}{$userinfo.login}</a>
 	(<a class="link" href="tiki-editpage.php?page={$feature_wiki_userpage_prefix}{$userinfo.login}">{tr}edit{/tr}</a>)</td></tr>
   {/if}
 	{if $userTracker eq 'y' && $usertrackerId}
@@ -117,7 +117,7 @@
   <div class="cbox-data">
   <form action="tiki-user_preferences.php" method="post">
   <input type="hidden" name="view_user" value="{$userwatch|escape}" />
-  <input type="hidden" name="user" value="{$userwatch|escape}" /> 
+  <input type="hidden" name="user" value="{$userwatch|escape}" />
   <table class="admin">
   <tr><td class="form">{tr}Last login{/tr}:</td><td class="form">{$userinfo.lastLogin|tiki_short_datetime}</td></tr>
   <tr><td class="form">{tr}Is email public? (uses scrambling to prevent spam){/tr}</td><td class="form">
@@ -164,7 +164,7 @@
       {/if}
     {/section}
         </select></td></tr>
-  {/if}      
+  {/if}
   <tr><td class="form">{tr}Number of visited pages to remember{/tr}:</td><td class="form">
   <select name="userbreadCrumb">
   <option value="1" {if $userbreadCrumb eq 1}selected="selected"{/if}>1</option>
