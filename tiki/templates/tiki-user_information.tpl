@@ -19,6 +19,9 @@
   <tr><td class="form">{tr}Theme{/tr}:</td><td>{$user_style}</td></tr>
   <tr><td  class="form">{tr}Language{/tr}:</td><td>{$user_language}</td></tr>
   <tr><td class="form">{tr}Real Name{/tr}:</td><td>{$realName}</td></tr>
+{if $gender neq 'Hidden'}
+  <tr><td>{tr}Gender{/tr}:</td><td>{tr}{$gender}{/tr}</td></tr>
+{/if}
 
   {* Custom fields *}
   {section name=ir loop=$customfields}
