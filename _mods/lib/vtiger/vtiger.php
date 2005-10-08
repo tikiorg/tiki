@@ -1,5 +1,5 @@
 <?php
-/* @version $Id: vtiger.php,v 1.1 2005-09-27 12:46:30 michael_davey Exp $ */
+/* @version $Id: vtiger.php,v 1.2 2005-10-08 16:27:57 michael_davey Exp $ */
 
 /*********************************************************************************
  * The contents of this file are subject to the SugarCRM Public License Version
