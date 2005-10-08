@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: presentation.php,v 1.2 2005-09-22 09:35:00 michael_davey Exp $
+ * @version $Id: presentation.php,v 1.3 2005-10-08 22:24:03 michael_davey Exp $
  * @package Solve
  * @copyright (C) 2005 the Tiki community
  * @license http://www.gnu.org/copyleft/lgpl.html GNU/LGPL
@@ -314,7 +314,7 @@ if ( $task == 'search' ) {
         }
 } else {
         $columns = $columnData['selected'];
-        foreach(array_keys($columnData['data']) as $key) {
+        if( $columnData['data'] ) foreach(array_keys($columnData['data']) as $key) {
             $bcolumn = &$columnData['data'][$key];
             $tmpData[$bcolumn['name']] = $bcolumn;
         }

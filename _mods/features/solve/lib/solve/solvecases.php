@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: solvecases.php,v 1.5 2005-10-04 10:51:48 michael_davey Exp $
+ * @version $Id: solvecases.php,v 1.6 2005-10-08 22:24:03 michael_davey Exp $
  * @package TikiWiki
  * @subpackage Solve
  * @copyright (C) 2005 the Tiki community
@@ -76,6 +76,8 @@ switch( $task ) {
         $access->check_page($user, array('feature_crm'), array('vtiger_p_edit_cases'));
         $columns = $dbtable->getColumnData($caseApp);
         
+        $msg = solve_get_param( $_REQUEST, 'msg' );
+        $smarty->assign( 'msg', $msg );
         if(isset($caseID) && ! $caseID) {
             $presentation->Render($columns,null,null,'cases');
         } else {
@@ -93,9 +95,9 @@ switch( $task ) {
         // broke error checking
         if($caseApp->SoapError) {
             //echo $Comm->getErrorText();
-            $access->redirect("solve/" . _MYNAMEIS . "/edit/{$_POST['caseID']}",'There was an error processing your request.');
+            $access->redirect($feature_server_name . "solve/" . _MYNAMEIS . "/edit/{$_POST['caseID']}",'There was an error processing your request.');
         }
-        $access->redirect("solve/" . _MYNAMEIS . "/edit/{$_POST['caseID']}",'Note saved!');
+        $access->redirect($feature_server_name . "solve/" . _MYNAMEIS . "/edit/{$_POST['caseID']}",'Note saved!');
         break;
     case "error":
         echo $config->getBrokeMessage();
@@ -104,18 +106,18 @@ switch( $task ) {
         $access->check_page($user, array('feature_crm'), array('vtiger_p_edit_cases'));
         if( $_POST['button']=='Save' ) {
             $cases = $caseApp->modify($_POST);
-            $access->redirect("solve/" . _MYNAMEIS . "/edit/{$cases['id']}",'Case saved!');
+            $access->redirect($feature_server_name . "solve/" . _MYNAMEIS . "/edit/{$cases['id']}",'Case saved!');
         } else {
-            $access->redirect("solve/$option", "New case is cancelled.");
+            $access->redirect($feature_server_name . "solve/$option", "Edit case is cancelled.");
         }
         break;
     case "savenew":
         $access->check_page($user, array('feature_crm'), array('vtiger_p_create_cases'));
         if( $_POST['button']=='Save' ) {
             $cases = $caseApp->create($_POST);
-            $access->redirect("solve/" . _MYNAMEIS . "/edit/{$cases['id']}",'Case saved!');
+            $access->redirect($feature_server_name . "solve/" . _MYNAMEIS . "/edit/{$cases['id']}",'Case saved!');
         } else {
-            $access->redirect("solve/$option", "New case is cancelled.");
+            $access->redirect($feature_server_name . "solve/$option", "New case is cancelled.");
         }
         break;
     case "download":
@@ -138,7 +140,7 @@ switch( $task ) {
 			echo $file;
             die();
 		} else {
-            $access->redirect("solve/$option", "No File To Download.");
+            $access->redirect($feature_server_name . "solve/$option", "No File To Download.");
         }
         break;
     case "refresh":
@@ -147,8 +149,6 @@ switch( $task ) {
         break;
 	case "home":
     default:
-header( 'Expires: Mon, 26 Jul 1997 05:00:00 GMT' );
-
         $access->check_page($user, array('feature_crm'), array('vtiger_p_list_cases'));
         $bugs = $caseApp->getAll();
         

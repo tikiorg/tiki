@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: solvebugs.php,v 1.5 2005-10-04 10:51:48 michael_davey Exp $
+ * @version $Id: solvebugs.php,v 1.6 2005-10-08 22:24:03 michael_davey Exp $
  * @package TikiWiki
  * @subpackage Solve
  * @copyright (C) 2005 the Tiki community
@@ -78,6 +78,8 @@ switch( $task ) {
         $access->check_page($user, array('feature_crm'), array('vtiger_p_edit_bugs'));
         $columns = $dbtable->getColumnData($bugApp);
         
+        $msg = solve_get_param( $_REQUEST, 'msg' );
+        $smarty->assign( 'msg', $msg );
         if(isset($caseID) && ! $caseID) {
             $presentation->Render($columns,null,null,'bugs');
         } else {
@@ -95,9 +97,9 @@ switch( $task ) {
         // broke error checking
         if($bugApp->SoapError) {
             //echo $Comm->getErrorText();
-            $access->redirect("solve/" . _MYNAMEIS . "/edit/{$_POST['caseID']}",'There was an error processing your request.');
+            $access->redirect($feature_server_name . "solve/" . _MYNAMEIS . "/edit/{$_POST['caseID']}",'There was an error processing your request.');
         }
-        $access->redirect("solve/" . _MYNAMEIS . "/edit/{$_POST['caseID']}",'Note saved!');
+        $access->redirect($feature_server_name . "solve/" . _MYNAMEIS . "/edit/{$_POST['caseID']}",'Note saved!');
         break;
     case "error":
         echo $config->getBrokeMessage();
@@ -107,19 +109,19 @@ switch( $task ) {
         if( $_POST['button']=='Save' ) {
 			$_POST['release'] = $_POST['release_name'];
             $cases = $bugApp->modify($_POST);
-            $access->redirect("solve/" . _MYNAMEIS . "/edit/{$cases['id']}",'Bug saved!');
+            $access->redirect($feature_server_name . "solve/" . _MYNAMEIS . "/edit/{$cases['id']}",'Bug saved!');
         } else {
-            $access->redirect("solve/$option", "New bug is cancelled.");
+            $access->redirect($feature_server_name . "solve/$option", "Edit bug is cancelled.");
         }
         break;
     case "savenew":
         $access->check_page($user, array('feature_crm'), array('vtiger_p_create_bugs'));
         if( $_POST['button']=='Save' ) {
-			$_POST['release'] = $_POST['release_name'];
+            $_POST['release'] = $_POST['release_name'];
             $cases = $bugApp->create($_POST);
-            $access->redirect("solve/option" . _MYNAMEIS . "/edit/{$cases['id']}",'Bug saved!');
+            $access->redirect($feature_server_name . "solve/" . _MYNAMEIS . "/edit/{$cases['id']}",'Bug saved!');
         } else {
-            $access->redirect("solve/$option", "New bug is cancelled.");
+            $access->redirect($feature_server_name . "solve/$option", "New bug is cancelled.");
         }
         break;
     case "download":
@@ -142,7 +144,7 @@ switch( $task ) {
 			echo $file;
             die();
 		} else {
-            $access->redirect("solve/$option", "No File To Download.");
+            $access->redirect($feature_server_name . "solve/$option", "No File To Download.");
         }
         break;
     case "refresh":
