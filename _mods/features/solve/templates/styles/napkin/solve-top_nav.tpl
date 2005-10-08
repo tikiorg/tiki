@@ -1,4 +1,4 @@
-{* @version $Id: solve-top_nav.tpl,v 1.2 2005-09-22 08:59:39 michael_davey Exp $ *}
+{* @version $Id: solve-top_nav.tpl,v 1.3 2005-10-08 20:14:16 michael_davey Exp $ *}
 
     {* top nav *}
     <table width='100%'>
@@ -8,7 +8,6 @@
             <a href="{$base_url2}">List</a> {$nav_separator}
             <a href="{$base_url2}/new">New...</a> {$nav_separator}
             <a href="{$base_url2}/search">Search</a>
-            <?php
             {if $isHome}
                 {$nav_separator} <a href="{$base_url2}/refresh">Refresh</a> 
             {/if}
@@ -16,9 +15,7 @@
         </td>
         <td style="text-align: right;" valign="middle">
         {if $task ne 'search'}
-            <form method="get" action="solve">
-                <input type="hidden" name="option" value="{$option}" />
-                <input type="hidden" name="task" value="search" />
+            <form method="get" action="{$base_url2}/search">
                 <input type="hidden" name="number" value="" />
                 <input type="hidden" name="priority" value="" />
                 <input type="hidden" name="status" value="" />

@@ -1,4 +1,4 @@
-{* @version $Id: solve-cases.tpl,v 1.1 2005-09-21 21:13:00 michael_davey Exp $ *}
+{* @version $Id: solve-cases.tpl,v 1.2 2005-10-08 20:14:16 michael_davey Exp $ *}
 
 {breadcrumbs type="trail" loc="page" crumbs=$crumbs}{breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs}
 <br />
@@ -65,7 +65,7 @@
             <td class='contentheading'>New Note</td>
           </tr>
         </table>
-        <form name="NewView" enctype="multipart/form-data" method="POST" action="solve">
+        <form name="NewView" enctype="multipart/form-data" method="POST" action="{$base_url2}">
             <!-- MAX_FILE_SIZE must precede the file input field -->
             <input type="hidden" name="MAX_FILE_SIZE" value="2097152" />
             <input type="hidden" name="task" value="newnote" />
