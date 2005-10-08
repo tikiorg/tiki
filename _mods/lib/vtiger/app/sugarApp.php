@@ -1,5 +1,5 @@
 <?php
-/* @version $Id: sugarApp.php,v 1.2 2005-09-27 16:22:25 michael_davey Exp $ */
+/* @version $Id: sugarApp.php,v 1.3 2005-10-08 10:52:25 michael_davey Exp $ */
 /*********************************************************************************
  * The contents of this file are subject to the SugarCRM Public License Version
  * 1.1.2 ("License"); You may not use this file except in compliance with the
