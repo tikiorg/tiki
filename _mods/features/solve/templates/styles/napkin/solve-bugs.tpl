@@ -1,4 +1,4 @@
-{* @version $Id: solve-bugs.tpl,v 1.2 2005-10-08 20:14:16 michael_davey Exp $ *}
+{* @version $Id: solve-bugs.tpl,v 1.3 2005-10-08 22:18:41 michael_davey Exp $ *}
 
 {breadcrumbs type="trail" loc="page" crumbs=$crumbs}{breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs}
 <br />
@@ -17,8 +17,7 @@
             <td class='contentheading'>{$item_title}</td>
           </tr>
         </table>
-        <form name="NewView" method="post" action="{$base_url2}">
-          <input type="hidden" name="task" value="{$savetype}">
+        <form name="NewView" method="post" action="{$base_url2}/{$savetype}">
           <table class="contentpaneopen">
             <tr>
               <td style="padding-bottom: 2px;">
@@ -65,10 +64,9 @@
             <td class='contentheading'>New Note</td>
           </tr>
         </table>
-        <form name="NewView" enctype="multipart/form-data" method="POST" action="{$base_url2}">
+        <form name="NewView" enctype="multipart/form-data" method="POST" action="{$base_url2}/newnote">
             <!-- MAX_FILE_SIZE must precede the file input field -->
             <input type="hidden" name="MAX_FILE_SIZE" value="2097152" />
-            <input type="hidden" name="task" value="newnote" />
             <input type="hidden" name="caseID" value="{$itemID}" />
         <table class="contentpaneopen">
           <tr>

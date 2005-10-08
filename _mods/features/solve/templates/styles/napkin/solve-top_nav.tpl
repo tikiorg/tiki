@@ -1,5 +1,9 @@
-{* @version $Id: solve-top_nav.tpl,v 1.3 2005-10-08 20:14:16 michael_davey Exp $ *}
-
+{* @version $Id: solve-top_nav.tpl,v 1.4 2005-10-08 22:18:41 michael_davey Exp $ *}
+{if $msg}
+<font color="red">{$msg}</font>
+<br />
+<br />
+{/if}
     {* top nav *}
     <table width='100%'>
       <tr>
