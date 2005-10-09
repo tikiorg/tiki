@@ -1,5 +1,5 @@
 <?php
-/* @version $Id: sugarCommunication.php,v 1.2 2005-10-08 10:23:15 michael_davey Exp $ */
+/* @version $Id: sugarCommunication.php,v 1.3 2005-10-09 19:04:33 michael_davey Exp $ */
 
 /*********************************************************************************
  * The contents of this file are subject to the SugarCRM Public License Version
@@ -255,6 +255,15 @@ class sugarCommunication {
         
         // portal_set_entry is executed on the sugar server and should return
         // the contact ID on success
+
+        // check that vtiger server is accepting SOAP portal method calls
+        if ( ! method_exists($this->sugarClientProxy, "portal_get_entry_list") ) {
+            global $smarty;
+            $smarty->assign('msg', tra("vtiger server not accepting portal conenctions: please contact the administrator."));
+            $smarty->display("error.tpl");
+            die;
+        }
+
         $result = $this->sugarClientProxy->portal_get_entry_list($this->sessionID, $this->module, $where, $orderBy,$selectFields);
         
         if ($this->_noError($result['error']) ) {
