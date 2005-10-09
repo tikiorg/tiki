@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: solvebugs.php,v 1.6 2005-10-08 22:24:03 michael_davey Exp $
+ * @version $Id: solvebugs.php,v 1.7 2005-10-09 18:55:23 michael_davey Exp $
  * @package TikiWiki
  * @subpackage Solve
  * @copyright (C) 2005 the Tiki community
@@ -37,7 +37,7 @@ $caseID = $caseID == null ? 0 : $caseID;
 
 $bugApp->login();
 
-if(isset($SoapError) && isset( $bugApp->$SoapError) &&  $bugApp->$SoapError )
+if(isset($SoapError) && isset( $bugApp->$soapError) &&  $bugApp->$soapError )
     $task = "error";
 
 $bugApp->setSessionStartCallback('startCrmSession');
@@ -49,14 +49,12 @@ $bugApp->startSession();
 switch( $task ) {
     case "new":
         $access->check_page($user, array('feature_crm'), array('vtiger_p_create_bugs'));
-
         $columns = $dbtable->getColumnData($bugApp);
         
         $presentation->Render($columns,null,null,'bugs');
         break;
     case "search":
         $access->check_page($user, array('feature_crm'), array('vtiger_p_search_bugs'));
-
         $columnData = $dbtable->getColumnData($bugApp);
         $columns = $columnData['selected'];
         $searchcolumns = array();
@@ -95,11 +93,11 @@ switch( $task ) {
         //echo $cases . "<br />";
 
         // broke error checking
-        if($bugApp->SoapError) {
+        if($bugApp->soapError) {
             //echo $Comm->getErrorText();
-            $access->redirect($feature_server_name . "solve/" . _MYNAMEIS . "/edit/{$_POST['caseID']}",'There was an error processing your request.');
+            $access->redirect($feature_server_name . "/solve/" . _MYNAMEIS . "/edit/" . $_POST['caseID'], 'There was an error processing your request.');
         }
-        $access->redirect($feature_server_name . "solve/" . _MYNAMEIS . "/edit/{$_POST['caseID']}",'Note saved!');
+        $access->redirect($feature_server_name . "/solve/" . _MYNAMEIS . "/edit/" . $_POST['caseID'], 'Note saved!');
         break;
     case "error":
         echo $config->getBrokeMessage();
@@ -109,9 +107,9 @@ switch( $task ) {
         if( $_POST['button']=='Save' ) {
 			$_POST['release'] = $_POST['release_name'];
             $cases = $bugApp->modify($_POST);
-            $access->redirect($feature_server_name . "solve/" . _MYNAMEIS . "/edit/{$cases['id']}",'Bug saved!');
+            $access->redirect($feature_server_name . "/solve/" . _MYNAMEIS . "/edit/" . $cases['id'], 'Bug saved!');
         } else {
-            $access->redirect($feature_server_name . "solve/$option", "Edit bug is cancelled.");
+            $access->redirect($feature_server_name . "/solve/$option", "Edit bug is cancelled.");
         }
         break;
     case "savenew":
@@ -119,9 +117,9 @@ switch( $task ) {
         if( $_POST['button']=='Save' ) {
             $_POST['release'] = $_POST['release_name'];
             $cases = $bugApp->create($_POST);
-            $access->redirect($feature_server_name . "solve/" . _MYNAMEIS . "/edit/{$cases['id']}",'Bug saved!');
+            $access->redirect($feature_server_name . "/solve/" . _MYNAMEIS . "/edit/" . $cases['id'], 'Bug saved!');
         } else {
-            $access->redirect($feature_server_name . "solve/$option", "New bug is cancelled.");
+            $access->redirect($feature_server_name . "/solve/$option", "New bug is cancelled.");
         }
         break;
     case "download":
@@ -144,7 +142,7 @@ switch( $task ) {
 			echo $file;
             die();
 		} else {
-            $access->redirect($feature_server_name . "solve/$option", "No File To Download.");
+            $access->redirect($feature_server_name . "/solve/$option", "No File To Download.");
         }
         break;
     case "refresh":
@@ -156,9 +154,9 @@ switch( $task ) {
         $access->check_page($user, array('feature_crm'), array('vtiger_p_list_bugs'));
         $bugs = $bugApp->getAll();
         
+        $msg = solve_get_param( $_REQUEST, 'msg' );
+        $smarty->assign( 'msg', $msg );
         $columns = $dbtable->getColumnData($bugApp);
-        
-      
         
         $presentation->RenderList($bugs, array(), $columns, 'home');
         break;
