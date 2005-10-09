@@ -2,10 +2,10 @@ contributor:
 $Author: michael_davey $
 
 revision:
-$Revision: 1.6 $
+$Revision: 1.7 $
 
 lastmodif:
-$Date: 2005-10-01 15:44:25 $
+$Date: 2005-10-09 12:32:24 $
 
 files: 
 features/solve/solve.php solve.php
@@ -53,6 +53,7 @@ Changelog:
 1.4 mods configuration
 1.5 add and remove permissions
 1.6 additional column for tiki_events
+1.7 tweak bugs.release_name not searchable
 
 sql-install:
 INSERT IGNORE INTO `users_permissions` ( `permName` , `permDesc` , `level` , `type` ) VALUES ( 'vtiger_p_list_bugs', 'Can see a list of their own vtiger bugs', 'registered', 'vtiger'), ( 'vtiger_p_list_cases', 'Can see a list of their own vtiger cases', 'registered', 'vtiger'), ( 'vtiger_p_view_bugs', 'Can view details of own vtiger bug', 'registered', 'vtiger'), ( 'vtiger_p_view_cases', 'Can view details of own vtiger case', 'registered', 'vtiger'), ( 'vtiger_p_search_bugs', 'Can search own vtiger bugs', 'registered', 'vtiger'), ( 'vtiger_p_search_cases', 'Can search own vtiger cases', 'registered', 'vtiger'), ( 'vtiger_p_create_bugs', 'Can create vtiger bugs', 'registered', 'vtiger'), ( 'vtiger_p_create_cases', 'Can create vtiger cases', 'registered', 'vtiger'), ( 'vtiger_p_edit_bugs', 'Can edit own vtiger bugs', 'registered', 'vtiger'), ( 'vtiger_p_edit_cases', 'Can edit own vtiger cases', 'registered', 'vtiger');
@@ -73,7 +74,7 @@ INSERT INTO `vtiger_portal_bug_fields` VALUES (62, 'priority', 'Priority', 'enum
 INSERT INTO `vtiger_portal_bug_fields` VALUES (63, 'status', 'Status', 'enum', 1, 1, '30', 1, 'New', 1, NULL);
 INSERT INTO `vtiger_portal_bug_fields` VALUES (64, 'resolution', 'Resolution', 'enum', 1, 1, '30', 1, '', 1, NULL);
 INSERT INTO `vtiger_portal_bug_fields` VALUES (65, 'type', 'Type', 'enum', 1, 1, '30', 1, 'Defect', 1, NULL);
-INSERT INTO `vtiger_portal_bug_fields` VALUES (66, 'release_name', 'Release Name', 'relate', 1, 1, '40', 1, '', 1, NULL);
+INSERT INTO `vtiger_portal_bug_fields` VALUES (66, 'release_name', 'Release Name', 'relate', 1, 1, '40', 1, '', 0, NULL);
 INSERT INTO `vtiger_portal_bug_fields` VALUES (67, 'description', 'Description', 'text', 1, 0, '50', 1, '', 0, NULL);
 INSERT INTO `vtiger_portal_bug_fields` VALUES (68, 'created_by', 'Created By', 'assigned_user_name', 0, 0, '10', 0, '', 0, NULL);
 INSERT INTO `vtiger_portal_bug_fields` VALUES (69, 'modified_user_id', 'Modified User Id', 'assigned_user_name', 0, 0, '10', 0, '', 0, NULL);
