@@ -1,5 +1,5 @@
 <?php
-/* @version $Id: sugarNote.php,v 1.2 2005-10-08 10:23:15 michael_davey Exp $ */
+/* @version $Id: sugarNote.php,v 1.3 2005-10-09 19:05:28 michael_davey Exp $ */
 
 /*********************************************************************************
  * The contents of this file are subject to the SugarCRM Public License Version
@@ -106,7 +106,7 @@ class sugarNote extends sugarCommunication {
     // returns false on failure, true on success
     function createRelatedNote($module, $note, $modID, $files=false) {
     	$result = $this->createNote($note);
-        if ($this->_noError($result['error'])) {
+        if (!array_key_exists('error',$result) || $this->_noError($result['error'])) {
             if( $this->relateNote($result['id'], $module, $modID) ) {
                 // The next two statements handle files
                 if( isset($files) && $files != false) {
@@ -127,7 +127,7 @@ class sugarNote extends sugarCommunication {
     	$result = $this->sugarClientProxy->portal_relate_note_to_module($this->sessionID, $noteID, $module, $modID);	
         $this->_showErrors();
         
-        if ($this->_noError($result['error'])) {
+        if (!array_key_exists('error',$result) || $this->_noError($result['error'])) {
             return true;	
     	}
     	return false;
