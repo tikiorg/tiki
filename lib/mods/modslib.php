@@ -401,8 +401,8 @@ class ModsLib {
 			if (is_file($path.'/Installed/'.$type.'-'.$package.'.conf.txt')) {
 				unlink($path.'/Installed/'.$type.'-'.$package.'.conf.txt');
 			}
+			return $info['revision'][0];
 		}
-		return $info['revision'][0];
 	}
 
 	function upgrade($path,$type,$package) {
