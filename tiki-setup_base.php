@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.91 2005-09-07 12:35:39 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.92 2005-10-10 17:45:53 michael_davey Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -107,6 +107,7 @@ if ( false ) { // if pre-PHP 4.1 compatibility is not required
 // mose : simulate strong var type checking for http vars
 $patterns['int']   = "/^[0-9]*$/"; // *Id
 $patterns['intSign']   = "/^[-+]?[0-9]*$/"; // *offset,
+$patterns['hex']   = "/^[-0-9a-fA-F]*$/";
 $patterns['char']  = "/^[-,_a-zA-Z0-9]*$/"; // sort_mode, 
 $patterns['string']  = "/^[^<>\";#]*$/"; // find, and such extended chars
 $patterns['vars']  = "/^[-_a-zA-Z0-9]*$/"; // for variable keys
@@ -151,6 +152,7 @@ function varcheck($array) {
         if (is_array($rv)) {
           varcheck($rv);
         } elseif ((((substr($rq,-2,2) == 'Id' and $rq != 'reqId') or (isset($vartype["$rq"]) and $vartype["$rq"] == 'int')) and !preg_match($patterns['int'],$rv))
+          or ((isset($vartype["$rq"]) and $vartype["$rq"] == 'hex')  and  !preg_match($patterns['hex'],$rv))
           or ((isset($vartype["$rq"]) and $vartype["$rq"] == 'char') and  !preg_match($patterns['char'],$rv))
           or ((isset($vartype["$rq"]) and $vartype["$rq"] == 'hash') and  !preg_match($patterns['hash'],$rv))
           or ((isset($vartype["$rq"]) and $vartype["$rq"] == 'string') and  !preg_match($patterns['string'],$rv))) {
