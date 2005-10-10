@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.92 2005-10-10 17:45:53 michael_davey Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.93 2005-10-10 17:49:57 michael_davey Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -143,7 +143,7 @@ if (!$rc) {
 $language = $tikilib->get_preference('language', 'en');// varcheck use tra
 
 function varcheck($array) {
-  global $patterns,$vartype;
+  global $patterns,$vartype, $access;
   if (isset($array) and is_array($array)) {
     foreach ($array as $rq=>$rv) {
       if (!preg_match($patterns['vars'],$rq)) {
@@ -156,7 +156,9 @@ function varcheck($array) {
           or ((isset($vartype["$rq"]) and $vartype["$rq"] == 'char') and  !preg_match($patterns['char'],$rv))
           or ((isset($vartype["$rq"]) and $vartype["$rq"] == 'hash') and  !preg_match($patterns['hash'],$rv))
           or ((isset($vartype["$rq"]) and $vartype["$rq"] == 'string') and  !preg_match($patterns['string'],$rv))) {
-          die(tra("Invalid variable value : "). "$rq = ". htmlspecialchars($rv));
+          $msg = tra("Invalid variable value : "). "$rq = ". htmlspecialchars($rv);
+          $access->redirect($feature_server_name . "tiki-error.php", $msg);
+          die;
         }
       }
     }
