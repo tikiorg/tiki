@@ -50,7 +50,7 @@
 <img src="tiki-random_num_img.php" alt='{tr}Random Image{/tr}'/>
 {/if}
 <form action="tiki-register.php" method="post" name="registrationForm">
-<p>{tr}Thank you for your interest in joining the Artimi Partner Connection. Please complete the following form to create your Partner Account.{/tr}</p>
+<p>{tr}Thank you for your interest in joining. Please complete the following form to create your account.{/tr}</p>
 {tr}Fields marked with a * are mandatory.{/tr}<br /><br />
 <table class="normal">
 <tr><td class="formcolor">{tr}Username{/tr}: *</td><td class="formcolor"><input type="text" name="name" /></td></tr>
