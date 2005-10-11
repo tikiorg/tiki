@@ -152,10 +152,10 @@ class NotificationLib extends TikiLib {
 
 		$continue = true;
                 while ($continue && $res = $result->fetchRow()) {
-			include_once( $res['file'] );
-                        $class = $res['object'];
+			$class = $res['object'];
+			$method = $res['method'];
 			global $$class;
-                        $method = $res['method'];
+                        include_once( $res['file'] );
 			if ($Debug) print $class . "=>" . $method ."<br/>";
 			if ( is_callable(array(get_class($$class), $method)) ) {
 				if ($Debug) print $class . "=>" . $method . "<br/>";
