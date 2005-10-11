@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: configuration.php,v 1.2 2005-09-28 09:36:32 michael_davey Exp $
+ * @version $Id: configuration.php,v 1.3 2005-10-11 23:21:24 michael_davey Exp $
  * @package Solve
  * @copyright (C) 2005 the Tiki community
  * @license http://www.gnu.org/copyleft/lgpl.html GNU/LGPL
