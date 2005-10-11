@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: solvebugs.php,v 1.8 2005-10-11 13:10:45 michael_davey Exp $
+ * @version $Id: solvebugs.php,v 1.9 2005-10-11 23:23:36 michael_davey Exp $
  * @package TikiWiki
  * @subpackage Solve
  * @copyright (C) 2005 the Tiki community
@@ -29,6 +29,7 @@ $task = solve_get_param( $_REQUEST, 'task' );
 $sortBy = solve_get_param( $_REQUEST, 'order_by' );
 $dbtable = new VtigerBugFields();
 $config = new SolveConfiguration( 'TikiWiki', $presentation, $option, $task, $sortBy, $dbtable );
+$presentation->setConfig( $config );
 
 $bugApp = new VtigerAppBug($config, $user);
 

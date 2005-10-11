@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: presentation.php,v 1.5 2005-10-11 14:15:17 michael_davey Exp $
+ * @version $Id: presentation.php,v 1.6 2005-10-11 23:23:36 michael_davey Exp $
  * @package Solve
  * @copyright (C) 2005 the Tiki community
  * @license http://www.gnu.org/copyleft/lgpl.html GNU/LGPL
@@ -9,13 +9,15 @@
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 class TikiPresentation {
-    var $sortBy = '';
-    var $sortcolumn = null;
-    var $sortorder = null;
+    var $_config = null;
 
     function Initialize() {
     }
     
+    function setConfig( $config ) {
+        $this->_config = $config;
+    }
+
     /**
      * @param columns the columns to display
      * @param item (optional) the item (bug|case) to render
@@ -33,15 +35,13 @@ class TikiPresentation {
         $this->_renderSearchForm($bugs, $queryfields, $columns, $task);
     }
 
+    // retreive sortcolumn/sortorder key/value pair
     function _getOrderBy() {
-        $sortcolumn = "";
+        $sortcolumn = '';
         $sortorder = '';
-        if( is_array($this->sortBy) ) {
-            foreach($this->sortBy as $key=>$value) {
-                $sortcolumn = $key;
-                $sortorder = $value;
-                break;
-            }
+
+        foreach(($this->_config->getSortBy()) as $sortcolumn=>$sortorder) {
+            break;
         }
         return array($sortcolumn, $sortorder);
     }
@@ -398,7 +398,7 @@ if ( $task == 'search' ) {
                                                  true );
            $tmplfields[$field]['label'] = $tmpData[$field]['label'];
         }
-      // }
+      // } // end if $items
 
         global $site_nav_seper, $vtiger_p_edit_bugs, $vtiger_p_edit_cases, $vtiger_p_view_bugs, $vtiger_p_view_cases;
         if( _MYNAMEIS == 'bugs' ) {
