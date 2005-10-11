@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: solvecases.php,v 1.7 2005-10-09 18:55:23 michael_davey Exp $
+ * @version $Id: solvecases.php,v 1.8 2005-10-11 13:10:45 michael_davey Exp $
  * @package TikiWiki
  * @subpackage Solve
  * @copyright (C) 2005 the Tiki community
@@ -47,12 +47,6 @@ $caseApp->setSessionStopCallback('stopCrmSession');
 $caseApp->startSession();
 
 switch( $task ) {
-    case "new":
-        $access->check_page($user, array('feature_crm'), array('vtiger_p_create_cases'));
-        $columns = $dbtable->getColumnData($caseApp);
-        
-        $presentation->Render($columns,null,null,'cases');
-        break;
     case "search":
         $access->check_page($user, array('feature_crm'), array('vtiger_p_search_cases'));
         $columnData = $dbtable->getColumnData($caseApp);
@@ -72,18 +66,25 @@ switch( $task ) {
         
         $presentation->RenderList($bugs, $searchcolumns, $columnData);
         break;
+    case "new":
+        $caseID = false;
+        $task = "edit";
+        // fall-through
+    case "view":
     case "edit":
-        $access->check_page($user, array('feature_crm'), array('vtiger_p_edit_cases'));
+        if( !isset($caseID) || ! $caseID) {
+            $caseID = false;
+            $access->check_page($user, array('feature_crm'), array('vtiger_p_create_cases'));
+        } else {
+            $access->check_page($user, array('feature_crm'), array("vtiger_p_".$task."_cases"));
+        }
         $columns = $dbtable->getColumnData($caseApp);
         
         $msg = solve_get_param( $_REQUEST, 'msg' );
         $smarty->assign( 'msg', $msg );
-        if(isset($caseID) && ! $caseID) {
-            $presentation->Render($columns,null,null,'cases');
-        } else {
-            list($thisbug,$notes) = $caseApp->get($caseID);
-            $presentation->Render($columns, $thisbug, $notes, 'cases');
-        }
+
+        list($thisbug,$notes) = $caseApp->get($caseID);
+        $presentation->Render($columns, $thisbug, $notes, 'cases', $task);
         break;
     case "newnote":
         $access->check_page($user, array('feature_crm'), array('vtiger_p_edit_cases'));

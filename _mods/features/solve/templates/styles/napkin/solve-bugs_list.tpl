@@ -1,4 +1,4 @@
-{* @version $Id: solve-bugs_list.tpl,v 1.2 2005-09-22 09:03:00 michael_davey Exp $ *}
+{* @version $Id: solve-bugs_list.tpl,v 1.3 2005-10-11 13:10:45 michael_davey Exp $ *}
 
 {breadcrumbs type="trail" loc="page" crumbs=$crumbs}{breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs}
 <br />
@@ -100,7 +100,13 @@
                 <td>{$column.inputWidget}</td>
               {/if}
             {/foreach}
-            <td><a href="{$base_url2}/edit/{$item.id}">View</a></td>
+              {if $editbutton}
+                <td><a href="{$base_url2}/edit/{$item.id}">Edit</a></td>
+              {/if}
+              {if $editbutton && $viewbutton}<td>{$nav_separator}</td>{/if}
+              {if $viewbutton}
+                <td><a href="{$base_url2}/view/{$item.id}">View</a></td>
+              {/if}
           </tr>
         {/foreach}
       </table>

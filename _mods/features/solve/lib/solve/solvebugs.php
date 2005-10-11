@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: solvebugs.php,v 1.7 2005-10-09 18:55:23 michael_davey Exp $
+ * @version $Id: solvebugs.php,v 1.8 2005-10-11 13:10:45 michael_davey Exp $
  * @package TikiWiki
  * @subpackage Solve
  * @copyright (C) 2005 the Tiki community
@@ -47,12 +47,6 @@ $bugApp->setSessionStopCallback('stopCrmSession');
 $bugApp->startSession();
 
 switch( $task ) {
-    case "new":
-        $access->check_page($user, array('feature_crm'), array('vtiger_p_create_bugs'));
-        $columns = $dbtable->getColumnData($bugApp);
-        
-        $presentation->Render($columns,null,null,'bugs');
-        break;
     case "search":
         $access->check_page($user, array('feature_crm'), array('vtiger_p_search_bugs'));
         $columnData = $dbtable->getColumnData($bugApp);
@@ -72,18 +66,25 @@ switch( $task ) {
         
         $presentation->RenderList($bugs, $searchcolumns, $columnData);
         break;
+    case "new":
+        $caseID = false;
+        $task = "edit";
+        // fall-through
+    case "view":
     case "edit":
-        $access->check_page($user, array('feature_crm'), array('vtiger_p_edit_bugs'));
+        if( !isset($caseID) || ! $caseID) {
+            $caseID = false;
+            $access->check_page($user, array('feature_crm'), array('vtiger_p_create_bugs'));
+        } else {
+            $access->check_page($user, array('feature_crm'), array("vtiger_p_".$task."_bugs"));
+        }
         $columns = $dbtable->getColumnData($bugApp);
         
         $msg = solve_get_param( $_REQUEST, 'msg' );
         $smarty->assign( 'msg', $msg );
-        if(isset($caseID) && ! $caseID) {
-            $presentation->Render($columns,null,null,'bugs');
-        } else {
-            list($thisbug,$notes) = $bugApp->get($caseID);
-            $presentation->Render($columns, $thisbug, $notes, 'bugs');
-        }
+
+        list($thisbug,$notes) = $bugApp->get($caseID);
+        $presentation->Render($columns, $thisbug, $notes, 'bugs', $task);
         break;
     case "newnote":
         $access->check_page($user, array('feature_crm'), array('vtiger_p_edit_bugs'));

@@ -1,4 +1,4 @@
-{* @version $Id: solve-cases.tpl,v 1.3 2005-10-08 22:18:41 michael_davey Exp $ *}
+{* @version $Id: solve-cases.tpl,v 1.4 2005-10-11 13:10:45 michael_davey Exp $ *}
 
 {breadcrumbs type="trail" loc="page" crumbs=$crumbs}{breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs}
 <br />
@@ -17,12 +17,20 @@
           <td class='contentheading'>{$item_title}</td>
         </tr>
       </table>
+      {if $task eq 'edit'}
       <form name="NewView" method="post" action="{$base_url2}/{$savetype}">
+      {else}
+      <form name="NewView" method="post" action="{$base_url2}">
+      {/if}
         <table class="contentpaneopen">
             <tr>
               <td style="padding-bottom: 2px;">
+              {if $task eq 'edit'}
                 <input class="button" type="submit" name="button" value="Save" >
                 <input class="button" type="submit" name="button" value="Cancel">
+              {else}
+                <input class="button" type="submit" name="button" value="Return">
+              {/if}
                 <input type="hidden" name="id" value="{$tmpCase.id}" />
               </td>
             </tr>
@@ -59,6 +67,7 @@
         {else}
           <p>No notes at this time.</p>
         {/if}
+        {if $task eq 'edit'}
         <table class="contentpaneopen">
           <tr>
             <td class='contentheading'>New Note</td>
@@ -99,6 +108,7 @@
           </tr>
         </table>
         </form>
+        {/if}
     {/if}
     {* /notes *}
 
@@ -106,4 +116,3 @@
     </tr>
   </table>
 </div>
-

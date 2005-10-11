@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: presentation.php,v 1.3 2005-10-08 22:24:03 michael_davey Exp $
+ * @version $Id: presentation.php,v 1.4 2005-10-11 13:10:45 michael_davey Exp $
  * @package Solve
  * @copyright (C) 2005 the Tiki community
  * @license http://www.gnu.org/copyleft/lgpl.html GNU/LGPL
@@ -16,9 +16,17 @@ class TikiPresentation {
     function Initialize() {
     }
     
-    function Render($columns, $bug=null, $notes=false, $task) {
+    /**
+     * @param columns the columns to display
+     * @param item (optional) the item (bug|case) to render
+     * @param notes (optional) collection of notes objects
+     * @param section bugs | cases
+     * @param task edit | new | view ...
+     */
+    function Render($columns, $item=null, $notes=false, $section, $task) {
         $this->_renderTopNav('bug', false);
-        $this->_renderAppForm($columns, $bug, $notes);    }
+        $this->_renderAppForm($columns, $item, $notes, $task);
+    }
 
     function RenderList($bugs, $queryfields, $columns, $task='search') {
         $this->_renderTopNav($task, false);
@@ -200,7 +208,7 @@ class TikiPresentation {
         $smarty->assign('option', _MYNAMEIS);
     }
 
-    function _renderAppForm($columns, $item = null, $notes ) {
+    function _renderAppForm($columns, $item = null, $notes, $task ) {
         global $smarty, $short_date_format, $short_time_format;
 
         $smarty->assign('datetimeformat', $short_date_format.' '.$short_time_format);
@@ -236,6 +244,7 @@ class TikiPresentation {
         foreach(array_keys($columns['selected']) as $key) {
             $column = &$columns['selected'][$key];
             $column['showme'] = false;
+            if ( $task == 'view' ) $column['canedit'] = false;
             if (isset($tmpData[$column['field']]['type']) && 
                     isset($tmpCase[$column['field']])) {
             list($column['inputWidget'],$column['showme']) = $this->_getAppropriateFormfield(
@@ -271,6 +280,7 @@ class TikiPresentation {
             break;
         }
         $smarty->assign('base_url2', $this->_getBaseUrl() );
+        $smarty->assign('task', $task);
         $smarty->assign('savetype', $savetype);
         $smarty->assign_by_ref('tmpCase', $tmpCase);
         $smarty->assign('item', $item);
@@ -375,6 +385,16 @@ if ( $task == 'search' ) {
         }
       // }
 
+        global $site_nav_seper, $vtiger_p_edit_bugs, $vtiger_p_edit_cases, $vtiger_p_view_bugs, $vtiger_p_view_cases;
+        if( _MYNAMEIS == 'bugs' ) {
+            if( $vtiger_p_edit_bugs ) $smarty->assign( 'editbutton', true );
+            if( $vtiger_p_view_bugs ) $smarty->assign( 'viewbutton', true );
+        }
+        if( _MYNAMEIS == 'cases' ) {
+            if( $vtiger_p_edit_cases ) $smarty->assign( 'editbutton', true );
+            if( $vtiger_p_view_cases ) $smarty->assign( 'viewbutton', true );
+        }
+        $smarty->assign('nav_separator', $site_nav_seper);
         $smarty->assign('task', $task);
         if( isset($tmplfields) ) {
             $smarty->assign('queryfields', $tmplfields);

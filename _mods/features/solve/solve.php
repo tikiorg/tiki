@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: solve.php,v 1.4 2005-09-26 14:04:23 michael_davey Exp $
+ * @version $Id: solve.php,v 1.5 2005-10-11 13:10:44 michael_davey Exp $
  * @package TikiWiki
  * @subpackage Solve
  * @copyright (C) 2005 the Tiki community
@@ -64,11 +64,13 @@ $smarty->assign('show_page_bar','n');
 // xdebug_dump_function_profile(XDEBUG_PROFILER_CPU);
 // debug: print all objects
 
+if (! headers_sent() ) {
 header( 'Expires: Mon, 26 Jul 1997 05:00:00 GMT' );
 header( 'Last-Modified: ' . gmdate( 'D, d M Y H:i:s' ) . ' GMT' );
 header( 'Cache-Control: no-store, no-cache, must-revalidate' );
 header( 'Cache-Control: post-check=0, pre-check=0', false );
 header( 'Pragma: no-cache' );
+}
 
 $smarty->display("tiki.tpl");
 echo "<!-- ".time()." -->";
