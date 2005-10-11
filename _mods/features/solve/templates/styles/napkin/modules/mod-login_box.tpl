@@ -1,4 +1,4 @@
-{* $Id: mod-login_box.tpl,v 1.2 2005-09-22 08:55:17 michael_davey Exp $ *}
+{* $Id: mod-login_box.tpl,v 1.3 2005-10-11 10:00:20 michael_davey Exp $ *}
 
 {tikimodule title="{tr}Login{/tr}" name="login_box" flip=$module_params.flip decorations=$module_params.decorations}
 
@@ -74,7 +74,7 @@
           {/if}
           <tr>
           {if $forgotPass eq 'y' and $allowRegister eq 'y' and $change_password eq 'y'}
-            <td  class="module" valign="bottom">{*<a class="linkmodule" href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}register{/tr}</a>*}<a class="linkmodule" href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my pass{/tr}</a></td>
+            <td  class="module" valign="bottom"><a class="linkmodule" href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}register{/tr}</a><a class="linkmodule" href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my pass{/tr}</a></td>
           {/if}
           {if $forgotPass eq 'y' and $allowRegister ne 'y' and $change_password eq 'y'}
             <td  class="module" valign="bottom"><a class="linkmodule" href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my pass{/tr}</a></td>
