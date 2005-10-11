@@ -1,5 +1,5 @@
 <?php
-/* @version $Id: sugarAppBug.php,v 1.3 2005-09-27 16:22:25 michael_davey Exp $ */
+/* @version $Id: sugarAppBug.php,v 1.4 2005-10-11 12:31:41 michael_davey Exp $ */
 
 /*********************************************************************************
  * The contents of this file are subject to the SugarCRM Public License Version
@@ -26,6 +26,7 @@ class VtigerAppBug extends sugarApp {
     var $sugarContact = null;
     // The sugar session to be shared among all communication objects
     var $sugarSessionID = null;
+    var $username = null;
 	
     function VtigerAppBug($request = false, $pusername = '') {
         $this->Initialize($request);
@@ -64,6 +65,7 @@ class VtigerAppBug extends sugarApp {
         $this->sugarContact->closeSession();
         $this->sugarComm->setCrmSessionID(false);
         $this->contactFlags = false;
+        $this->sugarAuthorizedPortalUser = false;
         $vtiger_p_use_portal = false;
     }
     
@@ -76,10 +78,13 @@ class VtigerAppBug extends sugarApp {
     }
     
     function get($recordID) {
-        $bug = $this->sugarComm->getOne($recordID);
-		$bug['release_name'] = $bug['release'];
-        $notes = $this->getNotes($recordID);
+        if( !isset($recordID) || !$recordID ) {
+            return array(null,null);
+        }
         
+        $bug = $this->sugarComm->getOne($recordID);
+	$bug['release_name'] = $bug['release'];
+        $notes = $this->getNotes($recordID);
         return array($bug,$notes);
     }
     
@@ -91,18 +96,18 @@ class VtigerAppBug extends sugarApp {
         return $sugNote->getAllNotes($this->sugarComm->module,$recordID, $selectFields);
     }
 
-	function getNoteAttachment($bugID, $noteID) {
-		$sugNote = new sugarNote($this->sugarConf, $this->username);
+    function getNoteAttachment($bugID, $noteID) {
+        $sugNote = new sugarNote($this->sugarConf, $this->username);
         $throwAway = $this->getAll();
 
-		$sugNote->setCrmSessionID($this->sugarSessionID);
+        $sugNote->setCrmSessionID($this->sugarSessionID);
 
-		//$theNote = $sugNote->getOneNote($noteID);
-		$fileContents = $sugNote->getNoteAttachment("Bugs", $bugID, $noteID);
+        //$theNote = $sugNote->getOneNote($noteID);
+        $fileContents = $sugNote->getNoteAttachment("Bugs", $bugID, $noteID);
 
-		$retArray = $fileContents;
-		return $retArray;
-	}
+        $retArray = $fileContents;
+        return $retArray;
+    }
 
     function createNote($recordID, $note, $files) {
         $sugNote = new sugarNote($this->sugarConf, $this->username);

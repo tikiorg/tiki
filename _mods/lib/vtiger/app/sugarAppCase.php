@@ -1,5 +1,5 @@
 <?php
-/* @version $Id: sugarAppCase.php,v 1.2 2005-09-27 13:49:48 michael_davey Exp $ */
+/* @version $Id: sugarAppCase.php,v 1.3 2005-10-11 12:31:41 michael_davey Exp $ */
 
 /*********************************************************************************
  * The contents of this file are subject to the SugarCRM Public License Version
@@ -26,7 +26,7 @@ class VtigerAppCase extends sugarApp {
     var $sugarContact = null;
     // The sugar session to be shared among all communication objects
     var $sugarSessionID = null;
-	var $username = null;
+    var $username = null;
     
     function VtigerAppCase($request = false, $pusername = '') {
         $this->Initialize($request);
@@ -78,10 +78,12 @@ class VtigerAppCase extends sugarApp {
     }
     
     function get($recordID) {
-        $bug = $this->sugarComm->getOne($recordID);
+        if( !isset($recordID) || !$recordID ) {
+            return array(null,null);
+        }
 
+        $bug = $this->sugarComm->getOne($recordID);
         $notes = $this->getNotes($recordID);
-        
         return array($bug,$notes);
     }
     
@@ -93,17 +95,17 @@ class VtigerAppCase extends sugarApp {
         return $sugNote->getAllNotes($this->sugarComm->module,$recordID, $selectFields);
     }
 
-	function getNoteAttachment($bugID, $noteID) {
-		$sugNote = new sugarNote($this->sugarConf, $this->username);
+    function getNoteAttachment($bugID, $noteID) {
+        $sugNote = new sugarNote($this->sugarConf, $this->username);
         $throwAway = $this->getAll();
 
-		$sugNote->setCrmSessionID($this->sugarSessionID);
+        $sugNote->setCrmSessionID($this->sugarSessionID);
 
-		$fileContents = $sugNote->getNoteAttachment("Cases", $bugID, $noteID);
+        $fileContents = $sugNote->getNoteAttachment("Cases", $bugID, $noteID);
 
-		$retArray = $fileContents;
-		return $retArray;
-	}
+        $retArray = $fileContents;
+        return $retArray;
+    }
 
     function createNote($recordID, $note, $files) {
         $sugNote = new sugarNote($this->sugarConf, $this->username);
