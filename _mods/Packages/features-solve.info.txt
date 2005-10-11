@@ -2,10 +2,10 @@ contributor:
 $Author: michael_davey $
 
 revision:
-$Revision: 1.7 $
+$Revision: 1.8 $
 
 lastmodif:
-$Date: 2005-10-09 12:32:24 $
+$Date: 2005-10-11 13:18:15 $
 
 files: 
 features/solve/solve.php solve.php
@@ -21,7 +21,6 @@ features/solve/templates/styles/napkin/tiki-login.tpl templates/styles/napkin/ti
 features/solve/templates/styles/napkin/tiki-register.tpl templates/styles/napkin/tiki-register.tpl
 features/solve/templates/styles/napkin/tiki-remind_password.tpl templates/styles/tiki-remind_password.tpl
 features/solve/templates/styles/napkin/modules/mod-login_box.tpl templates/styles/napkin/modules/mod-login_box.tpl
-features/solve/templates/styles/napkin/modules/mod-join_box.tpl templates/styles/napkin/modules/mod-join_box.tpl
 features/solve/lib/solve/configuration.php lib/solve/configuration.php
 features/solve/lib/solve/presentation.php lib/solve/presentation.php
 features/solve/lib/solve/solvelib.php lib/solve/solvelib.php
@@ -54,6 +53,7 @@ Changelog:
 1.5 add and remove permissions
 1.6 additional column for tiki_events
 1.7 tweak bugs.release_name not searchable
+1.8 remove join box
 
 sql-install:
 INSERT IGNORE INTO `users_permissions` ( `permName` , `permDesc` , `level` , `type` ) VALUES ( 'vtiger_p_list_bugs', 'Can see a list of their own vtiger bugs', 'registered', 'vtiger'), ( 'vtiger_p_list_cases', 'Can see a list of their own vtiger cases', 'registered', 'vtiger'), ( 'vtiger_p_view_bugs', 'Can view details of own vtiger bug', 'registered', 'vtiger'), ( 'vtiger_p_view_cases', 'Can view details of own vtiger case', 'registered', 'vtiger'), ( 'vtiger_p_search_bugs', 'Can search own vtiger bugs', 'registered', 'vtiger'), ( 'vtiger_p_search_cases', 'Can search own vtiger cases', 'registered', 'vtiger'), ( 'vtiger_p_create_bugs', 'Can create vtiger bugs', 'registered', 'vtiger'), ( 'vtiger_p_create_cases', 'Can create vtiger cases', 'registered', 'vtiger'), ( 'vtiger_p_edit_bugs', 'Can edit own vtiger bugs', 'registered', 'vtiger'), ( 'vtiger_p_edit_cases', 'Can edit own vtiger cases', 'registered', 'vtiger');
