@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: presentation.php,v 1.4 2005-10-11 13:10:45 michael_davey Exp $
+ * @version $Id: presentation.php,v 1.5 2005-10-11 14:15:17 michael_davey Exp $
  * @package Solve
  * @copyright (C) 2005 the Tiki community
  * @license http://www.gnu.org/copyleft/lgpl.html GNU/LGPL
@@ -200,6 +200,21 @@ class TikiPresentation {
 
     function _renderTopNav($task, $isHome=false) {
         global $smarty, $site_nav_seper;
+        global $vtiger_p_list_bugs, $vtiger_p_list_cases, $vtiger_p_search_bugs, $vtiger_p_search_cases;
+        global $vtiger_p_create_bugs, $vtiger_p_create_cases, $vtiger_p_refresh_bugs, $vtiger_p_refresh_cases;
+
+        if( _MYNAMEIS == 'bugs' ) {
+            if( $vtiger_p_list_bugs == 'y') $smarty->assign( 'listbutton', true );
+            if( $vtiger_p_create_bugs == 'y') $smarty->assign( 'newbutton', true );
+            if( $vtiger_p_search_bugs == 'y') $smarty->assign( 'searchbutton', true );
+            if( $vtiger_p_refresh_bugs == 'y') $smarty->assign( 'refreshbutton', true );
+        }
+        if( _MYNAMEIS == 'cases' ) {
+            if( $vtiger_p_list_cases == 'y') $smarty->assign( 'listbutton', true );
+            if( $vtiger_p_create_cases == 'y') $smarty->assign( 'newbutton', true );
+            if( $vtiger_p_search_cases == 'y') $smarty->assign( 'searchbutton', true );
+            if( $vtiger_p_refresh_cases == 'y') $smarty->assign( 'refreshbutton', true );
+        }
 
         $smarty->assign('is_home', $isHome);
         $smarty->assign('base_url2', $this->_getBaseUrl());
@@ -387,12 +402,12 @@ if ( $task == 'search' ) {
 
         global $site_nav_seper, $vtiger_p_edit_bugs, $vtiger_p_edit_cases, $vtiger_p_view_bugs, $vtiger_p_view_cases;
         if( _MYNAMEIS == 'bugs' ) {
-            if( $vtiger_p_edit_bugs ) $smarty->assign( 'editbutton', true );
-            if( $vtiger_p_view_bugs ) $smarty->assign( 'viewbutton', true );
+            if( $vtiger_p_edit_bugs == 'y') $smarty->assign( 'editbutton', true );
+            if( $vtiger_p_view_bugs == 'y') $smarty->assign( 'viewbutton', true );
         }
         if( _MYNAMEIS == 'cases' ) {
-            if( $vtiger_p_edit_cases ) $smarty->assign( 'editbutton', true );
-            if( $vtiger_p_view_cases ) $smarty->assign( 'viewbutton', true );
+            if( $vtiger_p_edit_cases == 'y') $smarty->assign( 'editbutton', true );
+            if( $vtiger_p_view_cases == 'y') $smarty->assign( 'viewbutton', true );
         }
         $smarty->assign('nav_separator', $site_nav_seper);
         $smarty->assign('task', $task);
