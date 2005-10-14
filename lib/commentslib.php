@@ -1607,6 +1607,45 @@ class Comments extends TikiLib {
 	return $retval;
     }
 
+	/* administrative functions to get all the comments of some types + enlarge find
+	 *  no perms checked as it is only for admin */
+	function get_all_comments($type, $offset = 0, $maxRecords = -1, $sort_mode = 'commentDate_asc', $find = '') {
+		if (is_array($type)) {
+			$mid = '`objectType`in ('.implode(',', array_fill(0, count($type),'?')).')';
+			$bindvars = $type;
+		} else {
+			$mid = '`objectType`=?';
+			$bindvars[] = $type;
+		}
+		if ($find) {
+			$find = "%$find%";
+			$mid .= ' and (`title` like ? or `data` like ? or `userName` like ? or  `user_ip` like ?)';
+			$bindvars[] = $find;
+			$bindvars[] = $find;
+			$bindvars[] = $find;
+			$bindvars[] = $find;
+		}
+		$query = "select * from `tiki_comments` where $mid order by ".$this->convert_sortmode($sort_mode);
+		$result = $this->query($query, $bindvars, $maxRecords, $offset);
+		$query = "select count(*) from `tiki_comments` where $mid";
+		$cant = $this->getOne($query, $bindvars);
+		$ret = array();
+		while ($res = $result->fetchRow()) {
+			switch ($res['objectType']) {
+				case 'wiki page': $res['href'] = 'tiki-index.php?page='.$res['object'].'&amp;comzone=show#threadId'.$res['threadId']; break;
+				case 'article': $res['href'] = 'tiki-read_article.php?articleId='.$res['object'].'&amp;comzone=show#threadId'.$res['threadId']; break;
+				case 'faq': $res['href'] = 'tiki-view_faq.php?faqId='.$res['object'].'&amp;comzone=show#threadId'.$res['threadId']; break;
+				case 'blog': $res['href'] = 'tiki-view_blog.php?blogId='.$res['object'].'&amp;comzone=show#threadId'.$res['threadId']; break;
+				case 'post': $res['href'] = 'tiki-view_blog_post.php?postId='.$res['object'].'&amp;comzone=show#threadId'.$res['threadId']; break;
+				case 'forum': $res['href'] = 'tiki-view_forum_thread.php?forumId='.$res['object'].'&amp;comzone=show#threadId'.$res['threadId']; break;
+				case 'file gallery': $res['href'] = 'tiki-list_file_gallery.php?galleryId='.$res['object'].'&amp;comzone=show#threadId'.$res['threadId']; break;
+				case 'image gallery': $res['href'] = 'tiki-browse_gallery.php?galleryId='.$res['object'].'&amp;comzone=show#threadId'.$res['threadId']; break;
+			}
+			$ret[] = $res;
+		}
+		return array('cant'=>$cant, 'data'=>$ret);
+	}
+
 	/* @brief: gets the comments of the thread and of all its fathers (ex cept first one for forum)
  	*/
 	function get_comments_fathers($threadId, $ret = null, $message_id = null) {
