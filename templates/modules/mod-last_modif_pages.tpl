@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_modif_pages.tpl,v 1.21 2005-09-07 12:35:42 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_modif_pages.tpl,v 1.22 2005-10-14 18:06:44 sylvieg Exp $ *}
 
 {if $feature_wiki eq 'y'}
 {if $nonums eq 'y'}
@@ -17,17 +17,17 @@
 		{if $absurl == 'y'}
           <a class="linkmodule" href="{$feature_server_name}tiki-index.php?page={$modLastModif[ix].pageName|escape:"url"}" title="{$modLastModif[ix].lastModif|tiki_short_datetime}, {tr}by{/tr} {if $modLastModif[ix].user ne ''}{$modLastModif[ix].user}{else}{tr}Anonymous{/tr}{/if}{if (strlen($modLastModif[ix].pageName) > $maxlen) && ($maxlen > 0)}, {$modLastModif[ix].pageName}{/if}">
         {if $maxlen > 0}{* 0 is default value for maxlen eq to 'no truncate' *}
-         {$modLastModif[ix].pageName|truncate:$maxlen:"...":true}
+         {$modLastModif[ix].pageName|escape|truncate:$maxlen:"...":true}
         {else}
-         {$modLastModif[ix].pageName}
+         {$modLastModif[ix].pageName|escape}
         {/if}
           </a>
 		  {else}
        <a class="linkmodule" href="tiki-index.php?page={$modLastModif[ix].pageName|escape:"url"}" title="{$modLastModif[ix].lastModif|tiki_short_datetime}, {tr}by{/tr} {if $modLastModif[ix].user ne ''}{$modLastModif[ix].user}{else}{tr}Anonymous{/tr}{/if}{if (strlen($modLastModif[ix].pageName) > $maxlen) && ($maxlen > 0)}, {$modLastModif[ix].pageName}{/if}">
         {if $maxlen > 0}{* 0 is default value for maxlen eq to 'no truncate' *}
-         {$modLastModif[ix].pageName|truncate:$maxlen:"...":true}
+         {$modLastModif[ix].pageName|escape|truncate:$maxlen:"...":true}
         {else}
-         {$modLastModif[ix].pageName}
+         {$modLastModif[ix].pageName|escape}
         {/if}
        </a>
 	   {/if}
