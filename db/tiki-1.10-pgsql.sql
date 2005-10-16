@@ -1,6 +1,6 @@
 -- $Rev$
--- $Date: 2005-10-01 13:58:30 $
--- $Author: michael_davey $
+-- $Date: 2005-10-16 17:11:58 $
+-- $Author: lfagundes $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -5981,6 +5981,41 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image', '{img src= width= height= align= desc= link= }', 'images/ed_image.gif', 'newsletters');
 
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('bold','__text__','images/ed_format_bold.gif','trackers');
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('italic','\'\'text\'\'','images/ed_format_italic.gif','trackers');
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('underline','===text===','images/ed_format_underline.gif','trackers');
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('table','||r1c1|r1c2||r2c1|r2c2||','images/insert_table.gif','trackers');
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('table new','||r1c1|r1c2\nr2c1|r2c2||','images/insert_table.gif','trackers');
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('external link','[http://example.com|text]','images/ed_link.gif','trackers');
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('wiki link','((text))','images/ed_copy.gif','trackers');
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('heading1','!text','images/ed_custom.gif','trackers');
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('title bar','-=text=-','images/fullscreen_maximize.gif','trackers');
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('box','^text^','images/ed_about.gif','trackers');
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('rss feed','{rss id= }','images/ico_link.gif','trackers');
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic content','{content id= }','images/book.gif','trackers');
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('tagline','{cookie}','images/footprint.gif','trackers');
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('hr','---','images/ed_hr.gif','trackers');
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('center text','::text::','images/ed_align_center.gif','trackers');
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('colored text','~~--FF0000:text~~','images/fontfamily.gif','trackers');
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic variable','%text%','images/book.gif','trackers');
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','{img src= width= height= align= desc= link= }','images/ed_image.gif','trackers');
 
 --
 -- Homework tables start
@@ -6291,5 +6326,39 @@ INSERT INTO "tiki_actionlog_conf" ("action","objectType","status") VALUES ('Roll
 
 
 -- --------------------------------------------------------
+
+
+-- Table structure for folksonomy tables
+--
+-- Creation: Out 16, 2005 - batawata
+-- Last update: Out 16, 2005 - batawata
+-- 
+
+DROP TABLE "tiki_freetags";
+
+CREATE TABLE "tiki_freetags" (
+  "tagId" bigserial,
+  "tag" varchar(30) NOT NULL default '',
+  "raw_tag" varchar(50) NOT NULL default '',
+  PRIMARY KEY ("tagId")
+) ;
+
+
+DROP TABLE "tiki_freetagged_objects";
+
+CREATE TABLE "tiki_freetagged_objects" (
+  "tagId" bigserial,
+  "type" varchar(50) default NULL,
+  "objId" varchar(255) default NULL,
+  "user" varchar(40) default NULL,
+  "tagged_on" bigint NOT NULL default '0',
+  PRIMARY KEY ("tagId","user","type","objId"),
+  KEY (tagId),
+  KEY (user),
+  KEY (objId,type)
+) ;
+
+
+
 ;
 

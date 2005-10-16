@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2005-10-16 14:35:09 $
-# $Author: mose $
+# $Date: 2005-10-16 17:11:58 $
+# $Author: lfagundes $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -5041,3 +5041,33 @@ INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUE
 INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Rollback', 'wiki page', 'n');
 
 # --------------------------------------------------------
+
+
+# Table structure for folksonomy tables
+#
+# Creation: Out 16, 2005 - batawata
+# Last update: Out 16, 2005 - batawata
+# 
+
+DROP TABLE IF EXISTS `tiki_freetags`;
+CREATE TABLE `tiki_freetags` (
+  `tagId` int(10) unsigned NOT NULL auto_increment,
+  `tag` varchar(30) NOT NULL default '',
+  `raw_tag` varchar(50) NOT NULL default '',
+  PRIMARY KEY  (`tagId`)
+) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS `tiki_freetagged_objects`;
+CREATE TABLE `tiki_freetagged_objects` (
+  `tagId` int(12) NOT NULL auto_increment,
+  `type` varchar(50) default NULL,
+  `objId` varchar(255) default NULL,
+  `user` varchar(40) default NULL,
+  `tagged_on` int(14) NOT NULL default '0',
+  PRIMARY KEY  (`tagId`,`user`,`type`,`objId`),
+  KEY (`tagId`),
+  KEY (`user`),
+  KEY (`objId`,`type`)
+) TYPE=MyISAM;
+
+

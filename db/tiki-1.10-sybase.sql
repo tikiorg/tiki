@@ -2,8 +2,8 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2005-10-01 13:58:30 $
--- $Author: michael_davey $
+-- $Date: 2005-10-16 17:11:58 $
+-- $Author: lfagundes $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -8501,6 +8501,77 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('bold','__text__','images/ed_format_bold.gif','trackers')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('italic','\'\'text\'\'','images/ed_format_italic.gif','trackers')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('underline','===text===','images/ed_format_underline.gif','trackers')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('table','||r1c1|r1c2||r2c1|r2c2||','images/insert_table.gif','trackers')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('table new','||r1c1|r1c2\nr2c1|r2c2||','images/insert_table.gif','trackers')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('external link','[http://example.com|text]','images/ed_link.gif','trackers')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('wiki link','((text))','images/ed_copy.gif','trackers')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('heading1','!text','images/ed_custom.gif','trackers')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('title bar','-=text=-','images/fullscreen_maximize.gif','trackers')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('box','^text^','images/ed_about.gif','trackers')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('rss feed','{rss id= }','images/ico_link.gif','trackers')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic content','{content id= }','images/book.gif','trackers')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('tagline','{cookie}','images/footprint.gif','trackers')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('hr','---','images/ed_hr.gif','trackers')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('center text','::text::','images/ed_align_center.gif','trackers')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('colored text','~~--FF0000:text~~','images/fontfamily.gif','trackers')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic variable','%text%','images/book.gif','trackers')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','{img src= width= height= align= desc= link= }','images/ed_image.gif','trackers')
+go
+
 
 --
 -- Homework tables start
@@ -8933,6 +9004,48 @@ go
 
 
 -- --------------------------------------------------------
+
+
+-- Table structure for folksonomy tables
+--
+-- Creation: Out 16, 2005 - batawata
+-- Last update: Out 16, 2005 - batawata
+-- 
+
+-- DROP TABLE `tiki_freetags`
+go
+
+
+CREATE TABLE `tiki_freetags` (
+  `tagId numeric(10 ,0) identity,
+  `tag` varchar(30) default '' NOT NULL,
+  `raw_tag` varchar(50) default '' NOT NULL,
+  PRIMARY KEY ("`tagId`")
+) 
+go
+
+
+
+-- DROP TABLE `tiki_freetagged_objects`
+go
+
+
+CREATE TABLE `tiki_freetagged_objects` (
+  `tagId numeric(12 ,0) identity,
+  `type` varchar(50) default NULL NULL,
+  `objId` varchar(255) default NULL NULL,
+  `user` varchar(40) default NULL NULL,
+  `tagged_on` numeric(14,0) default '0' NOT NULL,
+  PRIMARY KEY ("`tagId`","`user`","`type`","`objId`")
+  KEY (`tagId`),
+  KEY (`user`),
+  KEY (`objId`,`type`)
+) 
+go
+
+
+
+
 
 go
 
