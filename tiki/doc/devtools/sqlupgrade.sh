@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/sqlupgrade.sh,v 1.7 2005-07-14 13:59:52 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/sqlupgrade.sh,v 1.8 2005-10-16 14:35:09 mose Exp $
 # that script runs the last sql upgrade
 # It reads db/local.php to find proper mysql info
 # mose@tikiwiki.org
@@ -18,7 +18,7 @@ fi
 
 for loc in `$FIND db/ -name local.php -follow`; do
 	echo -n "Upgrading from $loc ... "
-	eval `sed -e '/[\?#]/d' -e "s/\$\([-_a-z]*\)[[:space:]]*=[[:space:]]*\([-_a-zA-Z0-9\"'\.]*\);/\\1=\\2/" $loc`
+	eval `sed -e '/[\?#]/d' -e "s/\$\([-_a-z]*\)[[:space:]]*=[[:space:]]*\([-_a-zA-Z0-9\"'\.:]*\);/\\1=\\2/" $loc`
 	LDBHOST=${host_tiki:-'localhost'}
 	LDBNAME=${dbs_tiki:-'tikiwiki'}
 	LDBUSER=${user_tiki:-'root'}

@@ -81,7 +81,7 @@
 </tr>
 <tr>
   <td class="formcolor">{tr}Password{/tr}</td>
-  <td class="formcolor"><input type="text" name="password" value="{$info.password|escape}" /></td>
+  <td class="formcolor"><input type="password" name="password" value="{$info.password|escape}" /></td>
 </tr>
 <tr>
   <td class="formcolor">&nbsp;</td>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.93 2005-10-10 17:49:57 michael_davey Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.94 2005-10-16 14:35:09 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -115,12 +115,16 @@ $patterns['hash'] = "/^[a-z0-9]*$/"; // for hash reqId in live support
 $patterns['url'] = "/^https?:\/\/[^<>\"']*$/"; // needed for the htmlpage inclusion in tiki-editpage
 
 $vartype['id'] = 'int';
+$vartype['forumId'] = 'int';
 $vartype['offset'] = 'intSign';
 $vartype['thresold'] = 'int';
 $vartype['sort_mode'] = 'char';
 $vartype['comments_offset'] = 'int';
 $vartype['comments_thresold'] = 'int';
+$vartype['comments_parentId'] = 'int';
 $vartype['comments_sort_mode'] = 'char';
+$vartype['topics_offset'] = 'int';
+$vartype['topics_sort_mode'] = 'char';
 $vartype['priority'] = 'int';
 $vartype['theme'] = 'string';
 $vartype['flag'] = 'char';

@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.68 2005-09-06 16:42:42 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.69 2005-10-16 14:35:09 mose Exp $
 var feature_no_cookie = 'n';
 
 function browser() {
@@ -279,7 +279,13 @@ function show(foo,f,section) {
 function hide(foo,f, section) {
 	if (document.getElementById(foo)) {
 		document.getElementById(foo).style.display = "none";
-		if (f) { setCookie(foo, "c", section); }
+		if (f) {
+			var wasnot = getCookie(foo, section, 'x') == 'x';
+			setCookie(foo, "c", section);
+			if (wasnot) {
+				history.go(0);
+			}
+		}
 	}
 }
 
@@ -339,7 +345,7 @@ function tikitabs(focus,max) {
 }
 
 function setfoldericonstate(foo) {
-	if (getCookie(foo, "menu") == "o") {
+	if (getCookie(foo, "menu", "o") == "o") {
 		src = "ofo.gif";
 	} else {
 		src = "fo.gif";
@@ -351,7 +357,7 @@ function setfoldericonstate(foo) {
  * the menu is collapsed function of its cookie: if no cookie is set, the def is used
  */
 function setfolderstate(foo, def) {
-	var status = getCookie(foo, "menu");
+	var status = getCookie(foo, "menu", "o");
         img = "fo.gif";
 	if (status == "o") {
 		show(foo);
@@ -368,7 +374,7 @@ function setfolderstate(foo, def) {
 }
 
 function setsectionstate(foo, def, img) {
-	var status = getCookie(foo, "menu");
+	var status = getCookie(foo, "menu", "o");
 	if (status == "o") {
 		show(foo);
 		if (img) src = "o" + img;
@@ -509,17 +515,17 @@ function setCookieBrowser(name, value, section, expires, path, domain, secure) {
 // name - name of the desired cookie
 // section - name of group of cookies or null
 // * return string containing value of specified cookie or null if cookie does not exist
-function getCookie(name, section) {
+function getCookie(name, section, defval) {
 	if( feature_no_cookie == 'y' && (window.XMLHttpRequest || window.ActiveXObject) && typeof tiki_cookie_jar != "undefined" && tiki_cookie_jar.length > 0) {
 		if (typeof tiki_cookie_jar[name] == "undefined")
-			return null;
+			return defval;
 		return tiki_cookie_jar[name];
 	}
 	else {
-		return getCookieBrowser(name, section);
+		return getCookieBrowser(name, section, defval);
 	}
 }
-function getCookieBrowser(name, section) {
+function getCookieBrowser(name, section, defval) {
 	if (section) {
 		valSection = getCookieBrowser(section);
 		if (valSection) {
@@ -529,9 +535,10 @@ function getCookieBrowser(name, section) {
 				return unescape(val[1]);
 			else
 				return null;
+		} else {
+			return defval;
 		}
-	}
-	else {
+	} else {
 		var dc = document.cookie;
 
 		var prefix = name + "=";

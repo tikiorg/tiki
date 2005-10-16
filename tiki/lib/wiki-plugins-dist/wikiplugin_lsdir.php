@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins-dist/wikiplugin_lsdir.php,v 1.3 2005-05-18 11:02:01 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins-dist/wikiplugin_lsdir.php,v 1.4 2005-10-16 14:35:10 mose Exp $
  *
  * TikiWiki LSDIR plugin: lists files in a directory
  * 
@@ -26,7 +26,7 @@ function wikiplugin_lsdir($data, $params) {
 	$tmp_array = array();
 	$ret = '';
 
-	extract ($params);
+	extract ($params, EXTR_SKIP);
 	
 	// make sure document_root has no trailing slash
 	if (!empty($_SERVER['DOCUMENT_ROOT'])) {

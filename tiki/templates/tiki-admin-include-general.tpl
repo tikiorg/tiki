@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.45 2005-10-03 17:21:46 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.46 2005-10-16 14:35:10 mose Exp $ *}
 
 <script type="text/javascript">
 {literal}
@@ -52,6 +52,8 @@
             {/section}
             </select>
         </td>
+	</tr><tr>
+	<td class="form" >&nbsp;</td><td>{if $feature_editcss eq 'y' and $tiki_p_create_css eq 'y'}<a href="tiki-edit_css.php" class="link" title="{tr}Edit CSS{/tr}">{tr}Edit CSS{/tr}</a>{/if}</td>
       </tr>
       
       <tr><td colspan="2"><hr/></td></tr>      

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.285 2005-10-03 17:21:43 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.286 2005-10-16 14:35:09 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1988,7 +1988,8 @@ function getCookie($name, $section=null, $default=null) {
 }
 function setDisplayMenu($name) {
 	global $smarty;
-	if (getCookie($name, "menu") == 'o') {
+	if (getCookie($name, 'menu',
+			isset($_COOKIE['menu']) ? null : 'o') == 'o') {
 		$smarty->assign('mnu_'.$name, 'display:block;');
 		$smarty->assign('icn_'.$name, 'o');
 }

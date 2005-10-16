@@ -152,6 +152,7 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 				<li>structure_fix_1.7to1.8.sql use only once!</li>
 				<li>tiki_1.8to1.9.sql - can be run more than once if errors occur</li>
 				<li>tiki_1.9to1.9.1.sql - can be run more than once if errors occur</li>
+				<li>tiki_1.9.1to1.9.2.sql - can be run more than once if errors occur</li>
 			</ol>
 			We recommend that you <b>backup your database</b> with mysqldump or phpmyadmin.
 		</td></tr>

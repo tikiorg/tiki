@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_gallery.php,v 1.20 2005-09-14 21:45:38 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_gallery.php,v 1.21 2005-10-16 14:35:09 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -25,7 +25,7 @@ if ($tiki_p_admin_galleries != 'y') {
 	die;
 }
 
-if (empty($_REQUEST["galleryId"])) {
+if (empty($_REQUEST["galleryId"]) && $_REQUEST["galleryId"]!='0') {
 	$smarty->assign('msg', tra("No gallery indicated"));
 
 	$smarty->display("error.tpl");

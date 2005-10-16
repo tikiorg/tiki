@@ -3,7 +3,7 @@
 // HAWHAW: HTML and WML hybrid adapted webserver
 // PHP class library
 // Copyright (C) 2005 Norbert Huffschmid
-// Last modified: 15. August 2005
+// Last modified: 8. October 2005
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -20,13 +20,9 @@
 //
 // For further information about this library and its license terms please visit:
 // http://www.hawhaw.de/
-//
-// changes against V5.10:
-// - optimization: set height and overflow attribute for classic display div (Firefox issue)
-// - optimization: inhibit notice warning due to uninitialized size variable in HAW_banner
 
 // miscellaneous constants
-define("HAW_VERSION", "HAWHAW V5.11B");
+define("HAW_VERSION", "HAWHAW V5.11");
 define("HAW_COPYRIGHT", "(C) Norbert Huffschmid");
 
 // constants for markup languages
@@ -1150,10 +1146,14 @@ class HAW_deck
 
   /**
     Enables mobile specific session support. <br>
-    Note: Applications for mobile devices require special session handling: As cookies
-    are often not supported, URL rewriting has to be done. As XML does not allow unescaped
-    '&amp;' characters, the arg-separator has to be modified. And as WML/VoiceXML defines tags
-    which are not defined in HTML, the PHP predefined url_rewriter tags have to be adapted.<br>
+    Note: Session handling for mobile devices is a little bit tricky. Cookies sometimes are
+    not supported by devices/gateways and transient session ID's are to be considered as
+    potential security issue. It is up to the programmer to decide which way to go by setting
+    the according control flags in php.ini. <br>
+    This function is helpful in case that trans_sid session handling applies: <br>
+    As XML does not allow unescaped '&amp;' characters, the arg-separator has to be modified.
+    And as WML/VoiceXML defines tags which are not defined in HTML, the PHP predefined
+    url_rewriter tags have to be adapted. <br>
     Important: This function has be called before any session handling is done! Due to some
     bugs in previous PHP versions, it is highly recommended to use PHP version 4.1.1 or
     higher.
@@ -1161,8 +1161,10 @@ class HAW_deck
   function enable_session()
   {
     // set session server options
-    ini_set('session.use_cookies', 0);         // do not use cookies
-    ini_set('session.use_trans_sid', 1);       // use transient sid support
+
+    //ini_set('session.use_cookies', 0);         // do not use cookies
+    //ini_set('session.use_trans_sid', 1);       // use transient sid support
+
     ini_set('arg_separator.output', '&amp;');  // '&' is not allowed in WML (XML)
 
     // url rewriter tags are dependent from markup language
@@ -2689,6 +2691,7 @@ class HAW_form
 
     $i = 0;
     $varnames = null;
+    reset($this->element); //set the array pointer to first element
     while (list($key, $val) = each($this->element))
     {
       switch ($val->get_elementtype())

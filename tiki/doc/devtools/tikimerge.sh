@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/tikimerge.sh,v 1.10 2005-06-26 14:28:32 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/tikimerge.sh,v 1.11 2005-10-16 14:35:09 mose Exp $
 #
 # NOTE: Since 1.9 release, merge only concerns BRANCH-1-9 to HEAD
 #
@@ -33,6 +33,8 @@ fi
 echo "# Start of block you can just copy-paste"
 echo "# or adapt (especially comment of commit)"
 echo "# NOTE: Since 1.9 release, merge only concerns BRANCH-1-9 to HEAD"
+echo ""
+echo "# the merge should be done on tiki and not tikiwiki"
 echo ""
 
 echo "cvs -q up -d -r BRANCH-1-9 $FILES"

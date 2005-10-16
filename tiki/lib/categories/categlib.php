@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.70 2005-09-07 12:35:39 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.71 2005-10-16 14:35:09 mose Exp $
  *
  * \brief Categories support class
  *
@@ -783,7 +783,8 @@ class CategLib extends TikiLib {
 	function get_link_categories($link) {
 		$ret=array();
 		$parsed=parse_url($link);
-		$parsed["path"]=end(split("/",$parsed["path"]));
+		$urlPath = split("/",$parsed["path"]);
+		$parsed["path"]=end($urlPath);
 		if(!isset($parsed["query"])) return($ret);
 		/* not yet used. will be used to get the "base href" of a page
 		$params=array();

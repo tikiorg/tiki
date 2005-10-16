@@ -16,18 +16,22 @@
 
 <table class="normal">
 <tr>
+{if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y'))}
+	<td class="heading auto" style="width:20px;">&nbsp;</td>
+{/if}
+
 {foreach key=jx item=ix from=$fields}
 {if $ix.isPublic eq 'y' and $ix.isHidden ne 'y' and $ix.type ne 'x' and $ix.type ne 'h'}
 {if $ix.type eq 'l'}
 <td class="heading auto">{$ix.name|default:"&nbsp;"}</td>
-{elseif $ix.type eq 's' and $ix.name eq "{tr}Rating{/tr}"}
+{elseif $ix.type eq 's' and $ix.name eq "Rating"}
 {if $tiki_p_tracker_view_ratings eq 'y'}
 <td class="heading auto"{if $tiki_p_tracker_vote_ratings eq 'y'} colspan="2"{/if}>
 <a class="tableheading" href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}{else}?{/if}{if $tr_offset}&amp;tr_offset={$tr_offset}{/if}&amp;tr_sort_mode=f_{if 
 	$tr_sort_mode eq 'f_'|cat:$ix.fieldId|cat:'_asc'}{$ix.fieldId}_desc{else}{$ix.fieldId}_asc{/if}">{$ix.name|default:"&nbsp;"}</a></td>
 {/if}
 {else}
-<td class="heading auto"{if $ix.type eq 's' and $ix.name eq "{tr}Rating{/tr}"} colspan="2"{/if}>
+<td class="heading auto"{if $ix.type eq 's' and $ix.name eq "Rating"} colspan="2"{/if}>
 <a class="tableheading" href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}{else}?{/if}{if $tr_offset}&amp;tr_offset={$tr_offset}{/if}&amp;tr_sort_mode=f_{if 
 	$tr_sort_mode eq 'f_'|cat:$ix.fieldId|cat:'_asc'}{$ix.fieldId}_desc{else}{$ix.fieldId}_asc{/if}">{$ix.name|default:"&nbsp;"}</a></td>
 {/if}
@@ -53,6 +57,11 @@
 {section name=user loop=$items}
 <tr class="{cycle}">
 
+{if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y'))}<td class="auto" style="width:20px;">
+{assign var=ustatus value=$items[user].status|default:"c"}
+{html_image file=$status_types.$ustatus.image title=$status_types.$ustatus.label alt=$status_types.$ustatus.label}
+</td>
+{/if}
 {section name=ix loop=$items[user].field_values}
 
 {if $items[user].field_values[ix].isPublic eq 'y' and $items[user].field_values[ix].isHidden ne 'y' and $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h'}
@@ -99,7 +108,7 @@
 {$items[user].field_values[ix].value|replace:"y":"{tr}Yes{/tr}"|replace:"n":"{tr}No{/tr}"|default:"{tr}No{/tr}"}
 </td>
 
-{elseif $items[user].field_values[ix].type eq 's' and $items[user].field_values[ix].name eq "{tr}Rating{/tr}" and $tiki_p_tracker_view_ratings eq 'y'}
+{elseif $items[user].field_values[ix].type eq 's' and $items[user].field_values[ix].name eq "Rating" and $tiki_p_tracker_view_ratings eq 'y'}
 <td class="auto">
 <b title="{tr}Rating{/tr}: {$items[user].field_values[ix].value|default:"-"}, {tr}Number of voices{/tr}: {$items[user].field_values[ix].numvotes|default:"-"}, {tr}Average{/tr}: {$items[user].field_values[ix].voteavg|default:"-"}">&nbsp;{$items[user].field_values[ix].value|default:"-"}&nbsp;</b></td>
 {if $tiki_p_tracker_vote_ratings eq 'y'}

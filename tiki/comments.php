@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.54 2005-10-03 17:21:43 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.55 2005-10-16 14:35:09 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -151,9 +151,8 @@ $comments_objectId = $comments_prefix_var . $_REQUEST["$comments_object_var"];
 $message_id = '';
 $in_reply_to = '';
 // Process a post form here 
-if ( ($tiki_p_post_comments == 'y' && isset($forum_mode) && $forum_mode != 'y') 
+if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'))
 	|| ($tiki_p_forum_post == 'y' && isset($forum_mode) && $forum_mode == 'y') ) {
-	
     if (isset($_REQUEST["comments_postComment"])) {
 	$comments_show = 'y';
 
@@ -388,7 +387,7 @@ if ($_REQUEST["comments_threadId"] > 0) {
     $smarty->assign('comment_data', '');
 }
 
-if ($tiki_p_remove_comments == 'y') {
+if ($tiki_p_remove_comments == 'y' || (isset($forum_mode) && $forum_mode =='y' && $tiki_p_admin_forum == 'y')) {
     if (isset($_REQUEST["comments_remove"]) && isset($_REQUEST["comments_threadId"])) {
 	$area = 'delcomment';
 	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {

@@ -1,17 +1,16 @@
-<h1>{tr}Edit Translation:{/tr}&nbsp;
-{if $type == "wiki page"}
-	<a href="tiki-index.php?page={$name|escape:url}" title="{tr}view{/tr}">{$name}</a>
-	{assign var="title" value="{tr}Pages{/tr}"}
-{else}
-	<a href="tiki-read_article.php?articleId={$id}" title="{tr}view{/tr}">{$name}</a>
-	{assign var="title" value="{tr}Articles{/tr}"}
-{/if}
-</h1>
+<h1><a href="{$smarty.server.REQUEST_URI}">{tr}Edit Translation:{/tr}&nbsp;{$name}</a>
 {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=TranslationDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}edit translations{/tr}"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>
+<a href="http://tikiwiki.org/tiki-index.php?page=Internationalization" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}edit translations{/tr}"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>
 {/if}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-edit_translation.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}edit translations template{/tr}"><img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit template{/tr}'></a>
+{/if}
+</h1>
+
+{if $type == "wiki page"}
+	<a href="tiki-index.php?page={$name|escape:url}" class="linkbut" title="{tr}view{/tr}">{tr}View page{/tr}</a>
+{else}
+	<a href="tiki-read_article.php?articleId={$id}" class="linkbut" title="{tr}view{/tr}">{tr}View{/tr}</a>
 {/if}
 
 {if $error}
@@ -75,9 +74,9 @@
 	<table><tr><td>
 
 	{if $articles}
-		<select name="srcId">{section name=ix loop=$articles}<option value="{$articles[ix].articleId|escape}" {if $articles[ix].articleId == $srcId}chacked="checked"{/if}>{$articles[ix].title|truncate:40:"(...)":true}</option>{/section}</select>
+		<select name="srcId">{section name=ix loop=$articles}<option value="{$articles[ix].articleId|escape}" {if $articles[ix].articleId == $srcId}checked="checked"{/if}>{$articles[ix].title|truncate:40:"(...)":true}</option>{/section}</select>
 	{else}
-		<input name="srcName" size="60" type="text" value="{$srcName}" />
+		<select name="srcName">{section name=ix loop=$pages}<option value="{$pages[ix].pageName|escape}" {if $pages[ix].pageName == $srcId}checked="checked"{/if}>{$pages[ix].pageName|truncate:40:"(...)":true}</option>{/section}</select>
 	{/if}
 	&nbsp;<input type="submit" class="wikiaction"  value="{tr}add to the set{/tr}"/>
 	</td></tr></table>
@@ -90,7 +89,8 @@
 	{else}
 		<p>{tr}Enter the name of the page for which the current page is the translation.{/tr}</p>
 		{tr}Translation of:{/tr}&nbsp;
-		<input name="srcName" size="60" type="text" value="{$srcName}" />
+		<select name="srcName">{section name=ix loop=$pages}<option value="{$pages[ix].pageName|escape}">{$pages[ix].pageName|truncate:40:"(...)":true}</option>{/section}</select>
+
 	{/if}
 	&nbsp;<input type="submit" class="wikiaction"  value="{tr}go{/tr}"/>
 {/if}

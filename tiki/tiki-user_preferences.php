@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.76 2005-10-03 17:21:43 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.77 2005-10-16 14:35:09 mose Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -186,12 +186,12 @@ if (isset($_REQUEST['chgadmin'])) {
 	    list($ok, $userwatch, $error) = $userlib->validate_user($userwatch, $pass, '', '');
 	    if (!$ok) {
 		$smarty->assign('msg', tra("Invalid password.  Your current password is required to change administrative information"));
-		
+
 		$smarty->display("error.tpl");
 		die;
 	    }
 	}
-	
+
 	if (!empty($_REQUEST['email'])) {
 		$userlib->change_user_email($userwatch, $_REQUEST['email'], $pass);
 		$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("Email is set to %s"),$_REQUEST['email']));
@@ -201,8 +201,7 @@ if (isset($_REQUEST['chgadmin'])) {
 	if (!empty($_REQUEST["pass1"])) {
 
 	    if ($_REQUEST["pass1"] != $_REQUEST["pass2"]) {
-		$smarty->assign('msg', tra("The passwords do not match"));
-		
+		$smarty->assign('msg', tra("The passwords did not match"));
 		$smarty->display("error.tpl");
 		die;
 	    }
@@ -210,7 +209,7 @@ if (isset($_REQUEST['chgadmin'])) {
 	    //Validate password here
 	    if (strlen($_REQUEST["pass1"]) < $min_pass_length) {
 		$smarty->assign('msg', tra("Password should be at least"). ' ' . $min_pass_length . ' ' . tra("characters long"));
-		
+
 		$smarty->display("error.tpl");
 		die;
 	    }
@@ -219,7 +218,7 @@ if (isset($_REQUEST['chgadmin'])) {
 	    if ($pass_chr_num == 'y') {
 		if (!preg_match_all("/[0-9]+/", $_REQUEST["pass1"], $foo) || !preg_match_all("/[A-Za-z]+/", $_REQUEST["pass1"], $foo)) {
 		    $smarty->assign('msg', tra("Password must contain both letters and numbers"));
-		    
+
 		    $smarty->display("error.tpl");
 		    die;
 		}
@@ -385,8 +384,6 @@ $lat = $tikilib->get_user_preference($userwatch, 'lat', '');
 $smarty->assign('lat', $lat);
 $lon = $tikilib->get_user_preference($userwatch, 'lon', '');
 $smarty->assign('lon', $lon);
-$gender = $tikilib->get_user_preference($userwatch, 'gender', '');
-$smarty->assign('gender', $gender);
 $anonpref = $tikilib->get_preference('userbreadCrumb', 4);
 $userbreadCrumb = $tikilib->get_user_preference($userwatch, 'userbreadCrumb', $anonpref);
 $smarty->assign_by_ref('realName', $realName);

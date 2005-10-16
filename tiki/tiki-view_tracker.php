@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.84 2005-08-29 03:14:43 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.85 2005-10-16 14:35:09 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -296,6 +296,14 @@ for ($i = 0; $i < $temp_max; $i++) {
 				$textarea_options = true;
 			} 
 			
+		} elseif($fields["data"][$i]["type"] == 's') { // rating
+			if (isset($_REQUEST["$ins_id"])) {
+				$newItemRate = $_REQUEST["$ins_id"];
+				$newItemRateField = $fields["data"]["$i"]["fieldId"];
+			} else {
+				$newItemRate = NULL;
+			}
+		
 		} elseif(  $fields["data"][$i]["type"] == 'y' ) { // country list
 			if (isset($_REQUEST["$ins_id"])) {		
 				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];	
@@ -450,6 +458,10 @@ while (list($postVar, $postVal) = each($_REQUEST))
 				$categlib->categorize($catObjectId, $cats);
 			}
 		}
+		if (isset($newItemRate)) {
+			$trackerId = $_REQUEST["trackerId"];
+			$trklib->replace_rating($trackerId,$itemid,$newItemRateField,$user,$newItemRate);
+		}
 		if(isset($_REQUEST["viewitem"])) {
 			header("location: ".preg_replace('#[\r\n]+#', '',"tiki-view_tracker_item.php?trackerId=".$_REQUEST["trackerId"]."&itemId=".$itemid));
 			die;
@@ -536,6 +548,17 @@ if (!isset($_REQUEST["status"]))
 
 $smarty->assign('status', $_REQUEST["status"]);
 
+// this isn't too beautiful, but works and doesn't break anything existing - amette
+if (isset($_REQUEST["trackerId"])) $trackerId = $_REQUEST["trackerId"];
+if (isset($_REQUEST["rateitemId"])) $rate_itemId = $_REQUEST["rateitemId"];
+if (isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y' 
+		and $user and isset($_REQUEST['rateitemId']) and isset($_REQUEST["rate_$trackerId"])
+		and isset($_REQUEST['fieldId']) and isset($_REQUEST["trackerId"])
+		and in_array($_REQUEST["rate_$trackerId"],split(',',$tracker_info['ratingOptions']))) {
+	if ($_REQUEST["rate_$trackerId"] == 'NULL') $_REQUEST["rate_$trackerId"] = NULL;
+	$trklib->replace_rating($trackerId,$rate_itemId,$_REQUEST['fieldId'],$user,$_REQUEST["rate_$trackerId"]);
+}
+
 $items = $trklib->list_items($_REQUEST["trackerId"], $offset, $maxRecords, $sort_mode, $listfields, $filterfield, $filtervalue, $_REQUEST["status"],$initial,$exactvalue,$numsort);
 //var_dump($items);die();
 $urlquery['status'] = $_REQUEST["status"];
@@ -592,6 +615,10 @@ foreach ($fields['data'] as $it) {
 		break;
 	}
 }
+}
+
+foreach ($items['data'] as $f=>$v) {
+	$items['data'][$f]['my_rate'] = $tikilib->get_user_vote("tracker.".$_REQUEST["trackerId"].'.'.$items['data'][$f]['itemId'],$user);
 }
 
 setcookie('tab',$cookietab);

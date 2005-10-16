@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pdf.php,v 1.12 2005-08-18 16:23:05 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pdf.php,v 1.13 2005-10-16 14:35:09 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -80,7 +80,7 @@ if (empty($info["user"])) {
 
 // Parse the Data into PDF format (:TODO:)
 // 
-include_once ("lib/class.ezpdf.php");
+include_once ("lib/pdflib/class.ezpdf.php");
 $pdf = &new Cezpdf();
 $pdf->selectFont('lib/fonts/Helvetica');
 $pdf->ezText("Hello world", 14);
