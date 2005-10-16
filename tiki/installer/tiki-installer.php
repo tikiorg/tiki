@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.3 2005-09-27 16:47:50 michael_davey Exp $
+// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.4 2005-10-16 03:51:06 amette Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -541,7 +541,9 @@ $logged = false;
 if (empty($_SERVER['PATH_TRANSLATED'])) {
 	// in PHP5, $_SERVER['PATH_TRANSLATED'] is no longer set
 	// the following is hopefully a good workaround
-	$_SERVER['PATH_TRANSLATED'] = array_shift(get_included_files());
+	// nope, it wasn't - PHP5 doesn't allow pass-by-reference
+	$myFooVarForIncludeFiles = get_included_files();
+	$_SERVER['PATH_TRANSLATED'] = array_shift($myFooVarForIncludeFiles);
 }
 $docroot = dirname($_SERVER['PATH_TRANSLATED']);
 
