@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_articles.php,v 1.29 2005-05-18 10:59:00 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_articles.php,v 1.30 2005-10-16 14:35:09 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -122,7 +122,7 @@ if ($feature_multilingual == 'y') {
 
 $temp_max = count($listpages["data"]);
 for ($i = 0; $i < $temp_max; $i++) {
-	$listpages["data"][$i]["parsed_heading"] = $tikilib->parse_data($listpages["data"][$i]["heading"]);
+	$listpages["data"][$i]["parsed_heading"] = $tikilib->parse_data(htmlspecialchars($listpages["data"][$i]["heading"]));
 	$comments_prefix_var='article:';
 	$comments_object_var=$listpages["data"][$i]["articleId"];
 	$comments_objectId = $comments_prefix_var.$comments_object_var;

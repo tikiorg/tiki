@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login_validate.php,v 1.16 2005-08-16 14:44:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login_validate.php,v 1.17 2005-10-16 14:35:09 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -16,18 +16,24 @@ if (isset($_REQUEST["user"])) {
 	}
 }	
 if ($isvalid) {
-	//session_register("user",$_REQUEST["user"]); 
-	$userlib->confirm_user($_REQUEST['user']);
+	$user = $_REQUEST['user'];
+	$userlib->confirm_user($user);
 	if ($tikilib->get_preference('validateRegistration','n') == 'y') {
+		$foo = parse_url($_SERVER["REQUEST_URI"]);
+		$foo1 = str_replace('tiki-login_validate','tiki-login_scr',$foo['path']);
+		$machine =$tikilib->httpPrefix().$foo1;
+		$smarty->assign('mail_machine',$machine);
+		$smarty->assign('mail_site',$_SERVER['SERVER_NAME']);
+		$smarty->assign('mail_user',$user);
 		$email = $userlib->get_user_email($user);
 		include_once("lib/webmail/tikimaillib.php");
 		$mail = new TikiMail();
-		$mail->setText($smarty->fetch('mail/moderate_validation_mail.tpl'));					
-		$mail->setSubject($smarty->fetch('mail/moderate_validation_mail_subject.tpl'));					
+		$mail->setText($smarty->fetch('mail/moderate_activation_mail.tpl'));					
+		$mail->setSubject($smarty->fetch('mail/moderate_activation_mail_subject.tpl'));					
 		$mail->send(array($email));
 		$logslib->add_log('register','validated account '.$user);
 	} else {
-		$_SESSION["$user_cookie_site"] = $_REQUEST["user"];
+		$_SESSION["$user_cookie_site"] = $user;
 	}
 	$smarty->assign('msg', tra("Account validated successfully."));
 	$smarty->display("information.tpl");

@@ -52,12 +52,8 @@
   <div class="wikitext">
   {eval var="$info.data"}
   </div>
-{elseif $smarty.request.parse_mode eq 'wiki'}
-  <div class="wikitext">
-  {$info.parsed}
-  </div>
 {else}
   <div class="wikitext">
-  {$info.data}
+  {$info.parsed}
   </div>
 {/if}

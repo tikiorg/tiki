@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.48 2005-08-16 14:44:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.49 2005-10-16 14:35:09 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.48 2005-08-16 14:44:45 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.49 2005-10-16 14:35:09 mose Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -115,7 +115,7 @@ if ($isvalid) {
 		if (($url == $tikiIndex || basename($url) == $tikiIndex || urldecode(basename($url)) == $tikiIndex || basename($url) == "tiki-login_scr.php" || $limitedGoGroupHome == "n") && $useGroupHome == 'y') { /* go to the group page only if the loginfrom is the default page */
 			$groupHome = $userlib->get_user_default_homepage($user);
     			if ($groupHome) {
-                    $url = strpos($groupHome,'http://')===0 ? $groupHome : "tiki-index.php?page=".$groupHome;
+                    $url = preg_match('#^https?://#', $groupHome) ? $groupHome : "tiki-index.php?page=".$groupHome;
     			}
 		}
 		//unset session variable in case user su's

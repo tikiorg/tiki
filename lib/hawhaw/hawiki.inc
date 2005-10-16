@@ -590,17 +590,6 @@ class HAWIKI_page
           break;
         }
 
-        case HAWIKI_TOKEN_WIKIVOICE:
-        {
-          if ($this->debugflags & HAWIKI_DEBUG_PARSER)
-            printf("<b>WikiVoice-Plugin:</b> cmd: %s, data: %s<br>\n", $po["params"]["cmd"], $po["data"]);
-
-          include_once($po["php_name"]);
-          $this = $po["func_name"]($po["data"], $po["params"], $this);
-
-          break;
-        }
-
         default:
         {
           if ($this->debugflags & HAWIKI_DEBUG_PARSER)

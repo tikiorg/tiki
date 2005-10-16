@@ -1,7 +1,7 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.22 2005-05-18 11:02:00 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.23 2005-10-16 14:35:10 mose Exp $
  * 
  * \brief {SPLIT} wiki plugin implementation
  * Usage:
@@ -77,7 +77,7 @@ function wikiplugin_split($data, $params) {
 		$tdsize=array_fill(0,$maxcols,$columnSize);	
 	}
 	
-	$result = '<table border="0"'.($fixedsize ? ' width="100%"' : '').'>';
+	$result = '<table border="0" cellpadding="0" cellspacing="0" '.($fixedsize ? ' width="100%"' : '').'>';
 
     // Attention: Dont forget to remove leading empty line in section ...
     //            it should remain from previous '---' line...

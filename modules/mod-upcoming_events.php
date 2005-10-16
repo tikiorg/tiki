@@ -10,6 +10,7 @@ include_once ('lib/calendar/calendarlib.php');
 global $calendarlib;
 
 //$events = $calendarlib->last_modif_events($module_rows, isset($module_params["calendarId"]) ? $module_params["calendarId"] : 0);
+if (!isset($calendarlib)) global $calendarlib;
 $events = $calendarlib->upcoming_events($module_rows, 
 					isset($module_params["calendarId"]) ? $module_params["calendarId"] : 0, 
 					isset($module_params["maxDays"]) ? $module_params["maxDays"] : 365);

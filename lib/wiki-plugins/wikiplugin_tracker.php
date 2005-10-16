@@ -213,8 +213,17 @@ function wikiplugin_tracker($data, $params) {
 	} else {
 		$back = "No such id in trackers.";
 	}
-	if (isset($_REQUEST["ok"]) && $_REQUEST["ok"]  == "y")
-		return "<div>$data</div>";
+	if (isset($_REQUEST["ok"]) && $_REQUEST["ok"]  == "y") {
+		$back = '';
+		if ($showtitle == 'y') {
+			$back.= '<div class="titlebar">'.$tracker["name"].'</div>';
+		}
+		if ($showdesc == 'y') {
+			$back.= '<div class="wikitext">'.$tracker["description"].'</div><br />';
+		}
+		$back.= '<div>'.$data.'</div>';
+		return $back;
+	}
 	else
 		return $back;
 }

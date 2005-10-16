@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.87 2005-09-14 21:45:38 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.88 2005-10-16 14:35:09 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -620,7 +620,7 @@ if (isset($_REQUEST["comments_remove"]) && isset($_REQUEST["comments_threadId"])
                     $user,
                     $_REQUEST["comments_threadId"]
                     )
-                && $tiki_p_forum_post == 'y')
+                && $tiki_p_forum_post_topic == 'y')
        ) {
 			$area = 'delforumcomm';
 		  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {

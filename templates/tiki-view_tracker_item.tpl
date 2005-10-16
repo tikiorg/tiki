@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker_item.tpl,v 1.88 2005-10-03 17:21:46 sylvieg Exp $ *}
+{* $Id: tiki-view_tracker_item.tpl,v 1.89 2005-10-16 14:35:10 mose Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -32,10 +32,10 @@
 <div id="page-bar">
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}View{/tr}</a></span>
 {if $tracker_info.useComments eq 'y'}
-<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Comments{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Comments{/tr} ({$commentCount})</a></span>
 {/if}
 {if $tracker_info.useAttachments eq 'y'}
-<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Attachments{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Attachments{/tr} ({$attCount})</a></span>
 {/if}
 {if $tiki_p_modify_tracker_items eq 'y'}
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Edit{/tr}</a></span>
@@ -162,17 +162,36 @@
 {$cur_field.value|escape|default:"&nbsp;"}
 {/if}
 
-{elseif $fields[ix].type eq 's' and $fields[ix].name eq "{tr}Rating{/tr}"}
-{$cur_field.value|default:"<i>{tr}Not rated yet{/tr}</i>"}
-<span class="button2">
-{section name=i loop=$fields[ix].options_array}
-{if $fields[ix].options_array[i] eq $my_rate}
-<b class="linkbut highlight">{$fields[ix].options_array[i]}</b>
-{else}
-<a href="{$smarty.server.REQUEST_URI}&amp;fieldId={$fields[ix].fieldId}&amp;rate={$fields[ix].options_array[i]}" class="linkbut">{$fields[ix].options_array[i]}</a>
-{/if}
-{/section}
-</span>
+{elseif $cur_field.type eq 's' and $cur_field.name eq "Rating" and $tiki_p_tracker_view_ratings eq 'y'}
+		<b title="{tr}Rating{/tr}: {$cur_field.value|default:"-"}, {tr}Number of voices{/tr}: {$cur_field.numvotes|default:"-"}, {tr}Average{/tr}: {$cur_field.voteavg|default:"-"}">
+			&nbsp;{$cur_field.value|default:"-"}&nbsp;
+		</b>
+	{if $tiki_p_tracker_vote_ratings eq 'y'}
+			<span class="button2">
+			{if $my_rate eq NULL}
+				<b class="linkbut highlight">-</b>
+			{else}
+				<a href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}{else}?{/if}
+					trackerId={$trackerId}
+					&amp;itemId={$itemId}
+					&amp;fieldId={$cur_field.fieldId}
+					&amp;rate=NULL"
+					class="linkbut">-</a>
+			{/if}
+				{section name=i loop=$cur_field.options_array}
+					{if $cur_field.options_array[i] eq $my_rate}
+						<b class="linkbut highlight">{$cur_field.options_array[i]}</b>
+					{else}
+						<a href="{$smarty.server.PHP_SELF}?
+						trackerId={$trackerId}
+						&amp;itemId={$itemId}
+						&amp;fieldId={$cur_field.fieldId}
+						&amp;rate={$cur_field.options_array[i]}"
+						class="linkbut">{$cur_field.options_array[i]}</a>
+					{/if}
+				{/section}
+			</span>
+	{/if}
 
 {elseif $cur_field.type eq 'i'}
 {if $cur_field.value ne ''}
@@ -326,6 +345,30 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 
 {foreach from=$ins_fields key=ix item=cur_field}
 {if $cur_field.isHidden ne 'y' or $tiki_p_admin_trackers eq 'y'}
+
+{if $cur_field.type eq 's' and $cur_field.name eq "Rating" and ($tiki_p_tracker_view_ratings eq 'y' || $tiki_p_tracker_vote_ratings eq 'y')}
+	<tr class="formcolor">
+		<td>
+			{$cur_field.name}
+		</td>
+			{if $tiki_p_tracker_view_ratings eq 'y' and $tiki_p_tracker_vote_ratings neq 'y'}
+				<td>
+					{$cur_field.value}
+				</td>
+			{elseif $tiki_p_tracker_vote_ratings eq 'y'}
+				<td>
+					{section name=i loop=$cur_field.options_array}
+						{if $cur_field.options_array[i] eq $my_rate}
+							<input name="newItemRate" checked="checked" type="radio" value="{$cur_field.options_array[i]|escape}">{$cur_field.options_array[i]}</option>
+						{else}
+							<input name="newItemRate" type="radio" value="{$cur_field.options_array[i]|escape}">{$cur_field.options_array[i]}</option>
+						{/if}
+					{/section}
+				</td>
+			{/if}
+		</tr>
+{/if}
+
 {if $cur_field.type ne 'x' and $cur_field.type ne 's'}
 {if $cur_field.type eq 'h'}
 </table>

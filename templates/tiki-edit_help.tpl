@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.39 2005-09-06 02:50:28 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.40 2005-10-16 14:35:10 mose Exp $ *}
 {* Show wiki syntax and plugins help *}
 {* TODO: Add links to add samples to edit form *}
 
@@ -63,7 +63,7 @@
 <tr><td><strong>{tr}Direction{/tr}:</strong></td><td>"{literal}{r2l}{/literal}", "{literal}{l2r}{/literal}", "{literal}{rm}{/literal}", "{literal}{lm}{/literal}" Insert resp. right-to-left and left-to-right text direction DIV (up to end of text) and markers for langages as arabic or hebrew.</td></tr>
 <tr><td><strong>{tr}Table of contents{/tr}</strong></td><td>{tr}"{literal}{toc}{/literal}", "{literal}{maketoc}{/literal}" prints out a table of contents for the current page based on structures (toc) or ! headings (maketoc){/tr}</td></tr>
 <tr><td><strong>{tr}Special Characters{/tr}</strong></td><td>{tr}The following special character codes can be used: ~bs~ is backslash, ~hs~ is a non-breaking space, ~amp~ is an ampersand, ~ldq~ is a left oriented double quote, ~rdq~ is a right oriented double quote, ~lsq~ and ~rsq~ are the same for single quotes, ~c~ is a copyright symbol, ~--~ or " -- " is a medium dash, ~lt~ is a less than sign, ~gt~ is a greater than sign, and placing numbers between tildes constructs an arbitrary HTML entity.{/tr}</td></tr>
-<tr><td><strong>{tr}Misc{/tr}:</strong></td><td>"{literal}{cookie}{/literal}"</td></tr>
+<tr><td><strong>{tr}Misc{/tr}:</strong></td><td>"{literal}{cookie}, {poll}{/literal}"</td></tr>
 </table>
 </div>
 

@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.617 2005-10-04 12:08:14 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.618 2005-10-16 14:35:09 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3317,7 +3317,7 @@ function add_pageview() {
 		if ($add) {
 		    $aux = array();
 		    $aux["pageName"] = $res["pageName"];
-		    if ($onlyName) {
+		    if (!$onlyName) {
 			$page = $aux["pageName"];
 			$aux["hits"] = $res["hits"];
 			$aux["lastModif"] = $res["lastModif"];
@@ -4406,7 +4406,6 @@ function add_pageview() {
             $wiki->setRenderConf('xhtml', 'interwiki', 'sites', $extwiki);
             return $wiki->transform($data, 'Xhtml');
         }
-
 
 	global $page_regex;
 
@@ -6647,8 +6646,44 @@ if (!function_exists('file_get_contents')) {
 			return false;
 		}
 	}
+}
+/**
+ * Replace html_entity_decode()
+ *
+ * Borrowed from PEAR:PHP_Compat
+ * @author      David Irvine <dave@codexweb.co.za>
+ * @author      Aidan Lister <aidan@php.net>
+ * @internal    Setting the charset will not do anything
+ */
+if (!function_exists('html_entity_decode')) {
+    function html_entity_decode($string, $quote_style = ENT_COMPAT, $charset = null)
+    {
+        $trans_tbl = get_html_translation_table(HTML_ENTITIES);
+        $trans_tbl = array_flip($trans_tbl);
 
+        // Add single quote to translation table;
+        $trans_tbl['&#039;'] = '\'';
 
+        // Not translating double quotes
+        if ($quote_style & ENT_NOQUOTES) {
+            // Remove double quote from translation table
+            unset($trans_tbl['&quot;']);
+        }
+
+        return strtr($string, $trans_tbl);
+    }
 }
 
+/**
+ * Replace floatval()
+ *
+ * Borrowed from PEAR:PHP_Compat
+ * @author      David Irvine <dave@codexweb.co.za>
+ * @author      Aidan Lister <aidan@php.net>
+ */
+if (!function_exists('floatval')) {
+	function floatval($var) {
+		return (float) $var;
+	}
+}
 ?>

@@ -7,7 +7,7 @@
 require_once "lib/wiki/pluginslib.php";
 
 function wikiplugin_wantedpages_help() {
-        return tra("Lists ''wanted'' Wiki pages").":<br />~np~{WANTEDPAGES(ignore=>IgnoreThisPage,IgnoreAnotherPage)}{WANTEDPAGES}~/np~";
+        return tra("Lists ''wanted'' Wiki pages").":<br />~np~{WANTEDPAGES(ignore=>IgnoreThisPage+IgnoreAnotherPage+...)}{WANTEDPAGES}~/np~";
 }
 
 function wikiplugin_wantedpages($data, $params) {
@@ -20,9 +20,9 @@ class WikiPluginWantedPages extends PluginsLib {
   function wantedpages($data, $params) {
 
     // Grab and handle our Tiki parameters...
-    extract($params);
+    extract($params, EXTR_SKIP);
     if(!isset($ignore)) $ignore = '';
-    $ignorepages = explode(',',$ignore);
+    $ignorepages = explode('+',$ignore);
 
     // Currently we only look in wiki pages.
     // Wiki links in articles, blogs, etc are ignored.

@@ -51,6 +51,7 @@ function since_last_visit_new($user) {
     {
       switch($res["objectType"]){
       	case "forum":
+		$perm = 'tiki_p_forum_read';
           $ret["items"]["comments"]["list"][$count]["href"]
             = "tiki-view_forum_thread.php?forumId=" . $res["object"] . "&comments_parentId=";
 	  if ($res["parentId"]) {
@@ -61,26 +62,32 @@ function since_last_visit_new($user) {
 	  }
 	  break;
         case "article":
+		$perm = 'tiki_p_read_article';
           $ret["items"]["comments"]["list"][$count]["href"]
             = "tiki-read_article.php?articleId=" . $res["object"];
           break;
         case "post":
+		$perm = 'tiki_p_read_blog';
           $ret["items"]["comments"]["list"][$count]["href"]
             = "tiki-view_blog_post.php?postId=" . $res["object"];
           break;
         case "blog":
+		$perm = 'tiki_p_read_blog';
           $ret["items"]["comments"]["list"][$count]["href"]
             = "tiki-view_blog.php?blogId=" . $res["object"];
           break;
         case "faq":
+		$perm = 'tiki_p_view_faq';
           $ret["items"]["comments"]["list"][$count]["href"]
             = "tiki-view_faq.php?faqId=" . $res["object"];
           break;
         case "file gallery":
+		$perm = 'tiki_p_view_file_gallery';
           $ret["items"]["comments"]["list"][$count]["href"]
             = "tiki-list_file_gallery.php?galleryId=" . $res["object"];
           break;
         case "image_gallery":
+		$perm = 'tiki_p_view_image_gallery';
           $ret["items"]["comments"]["list"][$count]["href"]
             = "tiki-browse_gallery.php?galleryId=" . $res["object"];
           break;
@@ -89,13 +96,16 @@ function since_last_visit_new($user) {
             = "tiki-poll_results.php?pollId=" . $res["object"];
           break;
         case "wiki page":
+		$perm = 'tiki_p_view';
           $ret["items"]["comments"]["list"][$count]["href"]
             = "tiki-index.php?page=" . urlencode($res["object"]);
           break;
       }
-      $ret["items"]["comments"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["commentDate"]) ." ". tra("by") ." ". $res["userName"];
-      $ret["items"]["comments"]["list"][$count]["label"] = $res["title"]; 
-      $count++;
+	if (!isset($perm) || $userlib->user_has_perm_on_object($user,$res['object'], $res['objectType'], $perm)) {
+      	$ret["items"]["comments"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["commentDate"]) ." ". tra("by") ." ". $res["userName"];
+      	$ret["items"]["comments"]["list"][$count]["label"] = $res["title"]; 
+      	$count++;
+	}
     }
     $ret["items"]["comments"]["count"] = $count;
   }
@@ -110,10 +120,12 @@ function since_last_visit_new($user) {
     $count = 0;
     while ($res = $result->fetchRow())
     {
-        $ret["items"]["pages"]["list"][$count]["href"]  = "tiki-index.php?page=" . urlencode($res["pageName"]);
-        $ret["items"]["pages"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["lastModif"]) ." ". tra("by") ." ". $res["user"];
-        $ret["items"]["pages"]["list"][$count]["label"] = $res["pageName"]; 
-        $count++;
+        if ($userlib->user_has_perm_on_object($user,$res['pageName'], 'wiki page', 'tiki_p_view')) {
+           $ret["items"]["pages"]["list"][$count]["href"]  = "tiki-index.php?page=" . urlencode($res["pageName"]);
+           $ret["items"]["pages"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["lastModif"]) ." ". tra("by") ." ". $res["user"];
+           $ret["items"]["pages"]["list"][$count]["label"] = $res["pageName"]; 
+           $count++;
+       }
     }
     $ret["items"]["pages"]["count"] = $count;
   }
@@ -134,10 +146,12 @@ function since_last_visit_new($user) {
     $count = 0;
     while ($res = $result->fetchRow())
     {
-        $ret["items"]["articles"]["list"][$count]["href"]  = "tiki-read_article.php?articleId=" . $res["articleId"];
-        $ret["items"]["articles"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["publishDate"]) ." ". tra("by") ." ". $res["authorName"];
-        $ret["items"]["articles"]["list"][$count]["label"] = $res["title"]; 
-        $count++;
+        if ($userlib->user_has_perm_on_object($user,$res['articleId'], 'article', 'tiki_p_read_article')) {
+           $ret["items"]["articles"]["list"][$count]["href"]  = "tiki-read_article.php?articleId=" . $res["articleId"];
+           $ret["items"]["articles"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["publishDate"]) ." ". tra("by") ." ". $res["authorName"];
+           $ret["items"]["articles"]["list"][$count]["label"] = $res["title"]; 
+           $count++;
+        }
     }
     $ret["items"]["articles"]["count"] = $count;
   }
@@ -152,10 +166,12 @@ function since_last_visit_new($user) {
     $count = 0;
     while ($res = $result->fetchRow())
     {
-        $ret["items"]["faqs"]["list"][$count]["href"]  = "tiki-view_faq.php?faqId=" . $res["faqId"];
-        $ret["items"]["faqs"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["created"]);
-        $ret["items"]["faqs"]["list"][$count]["label"] = $res["title"]; 
-        $count++;
+        if ($userlib->user_has_perm_on_object($user,$res['faqId'], 'faq', 'tiki_p_view_faq')) {
+           $ret["items"]["faqs"]["list"][$count]["href"]  = "tiki-view_faq.php?faqId=" . $res["faqId"];
+           $ret["items"]["faqs"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["created"]);
+           $ret["items"]["faqs"]["list"][$count]["label"] = $res["title"]; 
+           $count++;
+        }
     }
     $ret["items"]["faqs"]["count"] = $count;
   }
@@ -170,10 +186,12 @@ function since_last_visit_new($user) {
     $count = 0;
     while ($res = $result->fetchRow())
     {
-        $ret["items"]["blogs"]["list"][$count]["href"]  = "tiki-view_blog.php?blogId=" . $res["blogId"];
-        $ret["items"]["blogs"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["created"]) ." ". tra("by") ." ". $res["user"];
-        $ret["items"]["blogs"]["list"][$count]["label"] = $res["title"]; 
-        $count++;
+        if ($userlib->user_has_perm_on_object($user,$res['blogId'], 'blog', 'tiki_p_read_blog')) {
+           $ret["items"]["blogs"]["list"][$count]["href"]  = "tiki-view_blog.php?blogId=" . $res["blogId"];
+           $ret["items"]["blogs"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["created"]) ." ". tra("by") ." ". $res["user"];
+           $ret["items"]["blogs"]["list"][$count]["label"] = $res["title"]; 
+           $count++;
+       }
     }
 
     $ret["items"]["blogs"]["count"] = $count;
@@ -187,10 +205,12 @@ function since_last_visit_new($user) {
     $count = 0;
     while ($res = $result->fetchRow())
     {
-        $ret["items"]["blogPosts"]["list"][$count]["href"]  = "tiki-view_blog_post.php?blogId=" . $res["blogId"] . "&postId=" . $res["postId"];
-        $ret["items"]["blogPosts"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["created"]) ." ". tra("by") ." ". $res["user"];
-        $ret["items"]["blogPosts"]["list"][$count]["label"] = $res["title"]; 
-        $count++;
+        if ($userlib->user_has_perm_on_object($user,$res['blogId'], 'blog', 'tiki_p_read_blog')) {
+           $ret["items"]["blogPosts"]["list"][$count]["href"]  = "tiki-view_blog_post.php?blogId=" . $res["blogId"] . "&postId=" . $res["postId"];
+           $ret["items"]["blogPosts"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["created"]) ." ". tra("by") ." ". $res["user"];
+           $ret["items"]["blogPosts"]["list"][$count]["label"] = $res["title"]; 
+           $count++;
+       }
     }
     $ret["items"]["blogPosts"]["count"] = $count;
   }
@@ -205,10 +225,12 @@ function since_last_visit_new($user) {
     $count = 0;
     while ($res = $result->fetchRow())
     {
-        $ret["items"]["imageGalleries"]["list"][$count]["href"]  = "tiki-browse_gallery.php?galleryId=" . $res["galleryId"];
-        $ret["items"]["imageGalleries"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["created"]) ." ". tra("by") ." ". $res["user"];
-        $ret["items"]["imageGalleries"]["list"][$count]["label"] = $res["name"]; 
-        $count++;
+        if ($userlib->user_has_perm_on_object($user,$res['galleryId'], 'image gallery', 'tiki_p_view_image_gallery')) {
+           $ret["items"]["imageGalleries"]["list"][$count]["href"]  = "tiki-browse_gallery.php?galleryId=" . $res["galleryId"];
+           $ret["items"]["imageGalleries"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["created"]) ." ". tra("by") ." ". $res["user"];
+           $ret["items"]["imageGalleries"]["list"][$count]["label"] = $res["name"]; 
+           $count++;
+       }
     }
     $ret["items"]["imageGalleries"]["count"] = $count;
 
@@ -221,10 +243,12 @@ function since_last_visit_new($user) {
     $count = 0;
     while ($res = $result->fetchRow())
     {
-        $ret["items"]["images"]["list"][$count]["href"]  = "tiki-browse_image.php?galleryId=" . $res["galleryId"]. "&imageId=" .$res["imageId"];
-        $ret["items"]["images"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["created"]) ." ". tra("by") ." ". $res["user"];
-        $ret["items"]["images"]["list"][$count]["label"] = $res["name"]; 
-        $count++;
+        if ($userlib->user_has_perm_on_object($user,$res['galleryId'], 'image gallery', 'tiki_p_view_image_gallery')) {
+           $ret["items"]["images"]["list"][$count]["href"]  = "tiki-browse_image.php?galleryId=" . $res["galleryId"]. "&imageId=" .$res["imageId"];
+           $ret["items"]["images"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["created"]) ." ". tra("by") ." ". $res["user"];
+           $ret["items"]["images"]["list"][$count]["label"] = $res["name"]; 
+           $count++;
+       }
     }
     $ret["items"]["images"]["count"] = $count;
   }
@@ -239,10 +263,12 @@ function since_last_visit_new($user) {
     $count = 0;
     while ($res = $result->fetchRow())
     {
-        $ret["items"]["fileGalleries"]["list"][$count]["href"]  = "tiki-list_file_gallery.php?galleryId=" . $res["galleryId"];
-        $ret["items"]["fileGalleries"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["created"]) ." ". tra("by") ." ". $res["user"];
-        $ret["items"]["fileGalleries"]["list"][$count]["label"] = $res["name"]; 
-        $count++;
+        if ($userlib->user_has_perm_on_object($user,$res['galleryId'], 'file gallery', 'tiki_p_view_file_gallery')) {
+           $ret["items"]["fileGalleries"]["list"][$count]["href"]  = "tiki-list_file_gallery.php?galleryId=" . $res["galleryId"];
+           $ret["items"]["fileGalleries"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["created"]) ." ". tra("by") ." ". $res["user"];
+           $ret["items"]["fileGalleries"]["list"][$count]["label"] = $res["name"]; 
+           $count++;
+        }
     }
     $ret["items"]["fileGalleries"]["count"] = $count;
 
@@ -255,10 +281,12 @@ function since_last_visit_new($user) {
     $count = 0;
     while ($res = $result->fetchRow())
     {
-        $ret["items"]["files"]["list"][$count]["href"]  = "tiki-list_file_gallery.php?galleryId=" . $res["galleryId"];
-        $ret["items"]["files"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["created"]) ." ". tra("by") ." ". $res["user"];
-        $ret["items"]["files"]["list"][$count]["label"] = $res["name"]. " (".$res["filename"].")"; 
-        $count++;
+        if ($userlib->user_has_perm_on_object($user,$res['galleryId'], 'file gallery', 'tiki_p_view_file_gallery')) {
+           $ret["items"]["files"]["list"][$count]["href"]  = "tiki-list_file_gallery.php?galleryId=" . $res["galleryId"];
+           $ret["items"]["files"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["created"]) ." ". tra("by") ." ". $res["user"];
+           $ret["items"]["files"]["list"][$count]["label"] = $res["name"]. " (".$res["filename"].")"; 
+           $count++;
+        }
     }
     $ret["items"]["files"]["count"] = $count;
   }

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.62 2005-09-07 22:46:39 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.63 2005-10-16 14:35:10 mose Exp $ *}
 
 {if $forum_mode eq 'y'}
     <tr><td>
@@ -277,7 +277,7 @@
 	<input type="hidden" name="cols" value="{$cols}"/>
       </td>
     </tr>
-	{if $forum_mode == "y" and (($forum_info.att eq 'att_all') or ($forum_info.att eq 'att_admin' and $tiki_p_admin_form eq 'y') or ($forum_info.att eq 'att_perm' and $tiki_p_forum_attach eq 'y'))}
+	{if $forum_mode == "y" and (($forum_info.att eq 'att_all') or ($forum_info.att eq 'att_admin' and ($tiki_p_admin_forum eq 'y'  or $forum_info.moderator == $user)) or ($forum_info.att eq 'att_perm' and $tiki_p_forum_attach eq 'y'))}
 	<tr>
 		<td class="formcolor">{tr}Attach file{/tr}</td>
 		<td class="formcolor">

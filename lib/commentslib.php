@@ -828,46 +828,17 @@ class Comments extends TikiLib {
 
 	$query = "select * from `tiki_forums` $mid order by `section` asc,".$this->convert_sortmode($sort_mode);
 	$query_cant = "select count(*) from `tiki_forums` $mid";
-	$result = $this->query($query,$bindvars,$maxRecords,$offset);
+	$result = $this->query($query,$bindvars);
 	$cant = $this->getOne($query_cant,$bindvars);
 	$now = date("U");
 	$ret = array();
-
-	while ($res = $result->fetchRow()) {
-
-	    $add = TRUE;
-	    global $feature_categories;
-	    global $userlib;
+	$count = 0;
+	$off = 0;
+	while (($res = $result->fetchRow()) && ($maxRecords == -1 || $count < $maxRecords)) {
 	    global $user;
-	    global $tiki_p_admin;
-
-	    if ($tiki_p_admin != 'y' && $userlib->object_has_one_permission($res['forumId'], 'forum')) {
-	    // forum permissions override category permissions
-			if (!$userlib->object_has_permission($user, $res['forumId'], 'forum', 'tiki_p_forum_read')) {
-			    $add = FALSE;
-			}
-	    } elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
-	    	// no forum permissions so now we check category permissions
-	    	global $categlib;
-			if (!is_object($categlib)) {
-				include_once('lib/categories/categlib.php');
-			}
-			unset($tiki_p_view_categories); // unset this var in case it was set previously
-	    	$perms_array = $categlib->get_object_categories_perms($user, 'forum', $res['forumId']);
-	    	if ($perms_array) {
-	    		$is_categorized = TRUE;
-		    	foreach ($perms_array as $perm => $value) {
-		    		$$perm = $value;
-		    	}
-	    	} else {
-	    		$is_categorized = FALSE;
-	    	}
-
-	    	if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
-	    		$add = FALSE;
-	    	}
-	    }
-		if ($add) {
+	    if ($this->user_has_perm_on_object($user, $res['forumId'], 'forum', 'tiki_p_forum_read')) {
+		    if ($off++ < $offset)
+			continue;
 		    $forum_age = ceil(($now - $res["created"]) / (24 * 3600));
 
 		    $res["age"] = $forum_age;
@@ -898,6 +869,7 @@ class Comments extends TikiLib {
 		    $res2 = $result2->fetchRow();
 		    $res["lastPostData"] = $res2;
 		    $ret[] = $res;
+		    ++$count;
 		}
 	}
 

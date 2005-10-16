@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker.tpl,v 1.100 2005-10-03 17:21:46 sylvieg Exp $ *}
+{* $Id: tiki-view_tracker.tpl,v 1.101 2005-10-16 14:35:10 mose Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -129,6 +129,15 @@ class="prevnext">{tr}All{/tr}</a>
 {section name=ix loop=$fields}
 {if $fields[ix].type eq 'l' and $fields[ix].isTblVisible eq 'y'}
 <td class="heading auto">{$fields[ix].name|default:"&nbsp;"}</td>
+{elseif $fields[ix].type eq 's' and $fields[ix].name eq "Rating"}
+	<td class="heading auto"{if $tiki_p_tracker_vote_ratings eq 'y'} colspan="2"{/if}>
+		<a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}trackerId={$trackerId}
+		&amp;offset={$offset}&amp;sort_mode=f_{if $sort_mode eq 'f_'|cat:$fields[ix].fieldId|cat:'_asc'}
+		{$fields[ix].fieldId|escape:"url"}_desc{else}{$fields[ix].fieldId|escape:"url"}_asc{/if}">
+			{$fields[ix].name|truncate:255:"..."|default:"&nbsp;"}
+		</a>
+	</td>
+	{assign var=rateFieldId value=$fields[ix].fieldId}
 {elseif $fields[ix].isTblVisible eq 'y' and $fields[ix].type ne 'x' and $fields[ix].type ne 'h'}
 <td class="heading auto"><a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode=f_{if $sort_mode eq
 'f_'|cat:$fields[ix].fieldId|cat:'_asc'}{$fields[ix].fieldId|escape:"url"}_desc{else}{$fields[ix].fieldId|escape:"url"}_asc{/if}">{$fields[ix].name|truncate:255:"..."|default:"&nbsp;"}</a></td>
@@ -284,6 +293,42 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 {if $o_opt eq '0'}&nbsp;{/if}
 {if $o_opt eq '0' or $o_opt eq 1}{tr}{$items[user].field_values[ix].value}{/tr}{/if}
 </td>
+
+{elseif $items[user].field_values[ix].type eq 's' and $items[user].field_values[ix].name eq "Rating" and $tiki_p_tracker_view_ratings eq 'y'}
+	<td class="auto">
+		<b title="{tr}Rating{/tr}: {$items[user].field_values[ix].value|default:"-"}, {tr}Number of voices{/tr}: {$items[user].field_values[ix].numvotes|default:"-"}, {tr}Average{/tr}: {$items[user].field_values[ix].voteavg|default:"-"}">
+			&nbsp;{$items[user].field_values[ix].value|default:"-"}&nbsp;
+		</b>
+	</td>
+	{if $tiki_p_tracker_vote_ratings eq 'y'}
+		<td class="auto" nowrap="nowrap">
+			<span class="button2">
+			{if $items[user].my_rate eq NULL}
+				<b class="linkbut highlight">-</b>
+			{else}
+				<a href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}{else}?{/if}
+					trackerId={$items[user].trackerId}
+					&amp;rateitemId={$items[user].itemId}
+					&amp;fieldId={$rateFieldId}
+					&amp;rate_{$items[user].trackerId}=NULL"
+					class="linkbut">-</a>
+			{/if}
+				{section name=i loop=$items[user].field_values[ix].options_array}
+					{if $items[user].field_values[ix].options_array[i] eq $items[user].my_rate}
+						<b class="linkbut highlight">{$items[user].field_values[ix].options_array[i]}</b>
+					{else}
+						<a href="{$smarty.server.PHP_SELF}?
+						trackerId={$items[user].trackerId}
+						&amp;rateitemId={$items[user].itemId}
+						&amp;fieldId={$rateFieldId}
+						&amp;rate_{$items[user].trackerId}={$items[user].field_values[ix].options_array[i]}"
+						class="linkbut">{$items[user].field_values[ix].options_array[i]}</a>
+					{/if}
+				{/section}
+			</span>
+		</td>
+	{/if}
+
 {elseif $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h'}
 <td class="auto">
 {if  ($items[user].field_values[ix].type eq 't' or $items[user].field_values[ix].type eq 'n' or $items[user].field_values[ix].type eq 'c') 
@@ -370,6 +415,12 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {/if}
 </td><td colspan="3" nowrap="nowrap">
 {/if}
+{/if}
+
+{if $fields[ix].type eq 's' and $fields[ix].name eq "Rating" and $tiki_p_tracker_vote_ratings eq 'y'}
+	{section name=i loop=$fields[ix].options_array}
+		<input name="{$fields[ix].ins_id}" type="radio" value="{$fields[ix].options_array[i]|escape}">{$fields[ix].options_array[i]}</option>
+	{/section}
 {/if}
 
 {if $fields[ix].type eq 'u'}

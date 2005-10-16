@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.83 2005-10-03 17:21:43 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.84 2005-10-16 14:35:09 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -215,8 +215,9 @@ for ($i = 0; $i < $temp_max; $i++) {
 	}
 
 	if ($xfields["data"][$i]['type'] == 's') {
-		//$ins_fields["data"][$i] = $xfields["data"][$i];
-		$fields["data"][$i] = $xfields["data"][$i];
+		$ins_fields["data"][$i] = $xfields["data"][$i];
+		$rateFieldId = $fid;
+		//$fields["data"][$i] = $xfields["data"][$i];
 	} elseif ($xfields["data"][$i]['isHidden'] == 'n' or $tiki_p_admin_trackers == 'y') {
 		$ins_fields["data"][$i] = $xfields["data"][$i];
 		$fields["data"][$i] = $xfields["data"][$i];
@@ -422,7 +423,7 @@ if (!isset($mainfield)) {
 
 if ($textarea_options) {
 	include_once ('lib/quicktags/quicktagslib.php');
-	$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','');
+	$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','trackers');
 	$smarty->assign('quicktags', $quicktags["data"]);
 }
 
@@ -440,6 +441,9 @@ if ($tiki_p_modify_tracker_items == 'y') {
 			$_REQUEST["edstatus"] = $tracker_info["modItemStatus"];
 		}
 		$trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $_REQUEST["edstatus"]);
+		if (isset($_REQUEST["newItemRate"])) {
+			$trklib->replace_rating($_REQUEST["trackerId"],$_REQUEST["itemId"],$rateFieldId,$user,$_REQUEST["newItemRate"]);
+		}
 		$mainfield = $ins_fields["data"][$mainfield]["value"];
 		$_REQUEST['show']  = 'view';
 		$temp_max = count($fields["data"]);
@@ -567,7 +571,7 @@ if ($_REQUEST["itemId"]) {
 					$ins_fields["data"][$i]["value"] = $info["$fid"];
 				} elseif ($fields["data"][$i]["type"] == 'a') {
 					$ins_fields["data"][$i]["value"] = $info["$fid"];
-					$ins_fields["data"][$i]["pvalue"] = $tikilib->parse_data($info["$fid"]);
+					$ins_fields["data"][$i]["pvalue"] = $tikilib->parse_data(htmlspecialchars($info["$fid"]));
 				} else {
 					$ins_fields["data"][$i]["value"] = $info["$fid"];
 				}
@@ -662,6 +666,7 @@ if ($tracker_info["useComments"] == 'y') {
 	}
 	$comments = $trklib->list_item_comments($_REQUEST["itemId"], 0, -1, 'posted_desc', '');
 	$smarty->assign_by_ref('comments', $comments["data"]);
+	$smarty->assign_by_ref('commentCount', $comments["cant"]);
 }
 
 if ($tracker_info["useAttachments"] == 'y') {
@@ -743,6 +748,7 @@ if ($tracker_info["useAttachments"] == 'y') {
 	$attfields = split(',',strtok($tracker_info["orderAttachments"],'|'));
 	$atts = $trklib->list_item_attachments($_REQUEST["itemId"], 0, -1, 'comment_asc', '');
 	$smarty->assign('atts', $atts["data"]);
+	$smarty->assign('attCount', $atts["cant"]);
 	$smarty->assign('attfields', $attfields);
 	$smarty->assign('attextra', $attextra);
 }

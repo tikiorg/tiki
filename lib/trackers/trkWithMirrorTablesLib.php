@@ -951,12 +951,12 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 			}
 		
 			// -------------------
-			$ratingId = $this->get_field_id($trackerId,tra('Rating'));
+			$ratingId = $this->get_field_id($trackerId,'Rating');
 			if ($rating) {
 				if (!$ratingId) $ratingId = 0;
 				if (!isset($ratingoptions)) $ratingoptions = '';
 				if (!isset($showratings)) $showratings = 'n';
-				$this->replace_tracker_field($trackerId,$ratingId,tra('Rating'),'s','-','-',$showratings,'y','-','-',0,$ratingoptions);
+				$this->replace_tracker_field($trackerId,$ratingId,'Rating','s','-','-',$showratings,'y','-','-',0,$ratingoptions);
 			} else {
 				$this->query('delete from `tiki_tracker_fields` where `fieldId`=?',array((int)$ratingId));
 			}

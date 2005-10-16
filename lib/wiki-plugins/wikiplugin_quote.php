@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_quote.php,v 1.6 2005-05-18 11:02:00 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_quote.php,v 1.7 2005-10-16 14:35:10 mose Exp $
  *
  * TikiWiki QUOTE plugin.
  * 
@@ -24,7 +24,7 @@ function wikiplugin_quote($data, $params) {
 	// trim space/returns from beginning and end
 	$data = trim($data);
     
-	extract ($params);
+	extract ($params, EXTR_SKIP);
 	if (!empty($replyto)) {
 		$caption = $replyto . tra(' wrote:');
 	} else {

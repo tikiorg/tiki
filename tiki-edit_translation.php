@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.7 2005-06-16 20:10:49 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.8 2005-10-16 14:35:09 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -65,13 +65,11 @@ else if ($_REQUEST['id']) {
 			$smarty->display("error.tpl");
 			die;
 		}
-		$smarty->assign_by_ref('articles', $articles["data"]);
 		$name = $info['title'];
 		$type = "article";
 		$objId = $_REQUEST['id'];
 		$langpage = $info['lang'];
-		$find_objects = '';
-		$articles = $tikilib->list_articles(0, -1, 'title_asc', $find_objects, '', $user);
+		$articles = $tikilib->list_articles(0, -1, 'title_asc', '', '', $user);
 		$smarty->assign_by_ref('articles', $articles["data"]);
 	}
 }
@@ -82,6 +80,8 @@ if ($type == "wiki page") {
 		$smarty->display("error.tpl");
 		die;
 	}
+	$pages = $tikilib->list_pageNames(0, -1, 'pageName_asc');
+	$smarty->assign_by_ref('pages', $pages["data"]);
 }
 else if ($type == "article") {
 	if ($tiki_p_edit_article != 'y') {

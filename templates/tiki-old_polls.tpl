@@ -26,7 +26,11 @@
 <td class="odd">&nbsp;{$listpages[changes].votes}&nbsp;</td>
 <td class="odd">
 <a class="link" href="tiki-poll_results.php?pollId={$listpages[changes].pollId}">{tr}Results{/tr}</a>
-<a class="link" href="tiki-poll_form.php?pollId={$listpages[changes].pollId}">{tr}Vote{/tr}</a>
+{if $tiki_p_vote_poll ne 'n'}
+	<a class="link" href="tiki-poll_form.php?pollId={$listpages[changes].pollId}">{tr}Vote{/tr}</a>
+{else}
+	<a class="link" href="tiki-poll_form.php?pollId={$listpages[changes].pollId}">{tr}Preview Poll{/tr}</a>
+{/if}
 </td>
 {else}
 <td class="even">&nbsp;{$listpages[changes].title}&nbsp;</td>
@@ -34,7 +38,11 @@
 <td class="even">&nbsp;{$listpages[changes].votes}&nbsp;</td>
 <td class="even">
 <a class="link" href="tiki-poll_results.php?pollId={$listpages[changes].pollId}">{tr}Results{/tr}</a>
-<a class="link" href="tiki-poll_form.php?pollId={$listpages[changes].pollId}">{tr}Vote{/tr}</a>
+{if $tiki_p_vote_poll ne 'n'}
+	<a class="link" href="tiki-poll_form.php?pollId={$listpages[changes].pollId}">{tr}Vote{/tr}</a>
+{else}
+	<a class="link" href="tiki-poll_form.php?pollId={$listpages[changes].pollId}">{tr}Preview Poll{/tr}</a>
+{/if}
 </td>
 {/if}
 </tr>
