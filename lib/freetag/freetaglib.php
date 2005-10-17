@@ -129,7 +129,7 @@ class FreetagLib extends TikiLib {
 	$query      .= $query_end;
 	$query_cant .= $query_end;
 	
-	$result = $this->query($sql, $bindvals, $maxRecords, $offset);
+	$result = $this->query($query, $bindvals, $maxRecords, $offset);
 	
 	$ret = array();
 	while ($row = $result->fetchRow()) {
@@ -200,7 +200,7 @@ class FreetagLib extends TikiLib {
 	$query      .= $query_end;
 	$query_cant .= $query_end;
 	
-	$result = $this->query($sql, $bindvals, $maxRecords, $offset);
+	$result = $this->query($query, $bindvals, $maxRecords, $offset);
 	
 	$ret = array();
 	while ($row = $result->fetchRow()) {
@@ -256,7 +256,7 @@ class FreetagLib extends TikiLib {
 	$query      .= $query_end;
 	$query_cant .= $query_end;
 
-	$result = $this->query($sql, $bindvals, $maxRecords, $offset);
+	$result = $this->query($query, $bindvals, $maxRecords, $offset);
 
 	$ret = array();
 	while ($row = $result->fetchRow()) {
@@ -292,7 +292,7 @@ class FreetagLib extends TikiLib {
     function get_tags_on_object($objId, $type, $offset = 0, $maxRecords = -1, $user = NULL) {
 	if (!isset($objId) || !isset($type) || empty($objId) || empty($type)) {
 	    return false;
-	}		
+	}
 
 	$bindvals = array($objId, $type);
 
@@ -303,13 +303,13 @@ class FreetagLib extends TikiLib {
 	    $mid = "";
 	}
 	    
-	$query = "SELECT DISTINCT `tag`, `raw_tag`, `user` ";
+	$query = "SELECT DISTINCT t.`tagId`, `tag`, `raw_tag`, `user` ";
 	$query_cant = "SELECT COUNT(*) ";
 
 	$query_end = "
 			FROM `tiki_freetagged_objects` o, 
                              `tiki_freetags` t
-			WHERE t.`tagId` = o.`tagId`
+			WHERE t.`tagId` = o.`tagId` AND
                               o.`objId` = ? AND
                               o.`type` = ?
  			      $mid
@@ -318,7 +318,7 @@ class FreetagLib extends TikiLib {
 	$query      .= $query_end;
 	$query_cant .= $query_end;
 	    
-	$result = $this->query($sql, $bindvals, $maxRecords, $offset);
+	$result = $this->query($query, $bindvals, $maxRecords, $offset);
 	    
 	$ret = array();
 	while ($row = $result->fetchRow()) {
@@ -356,7 +356,7 @@ class FreetagLib extends TikiLib {
 	    
 	    
 	$normalized_tag = $this->normalize_tag($tag);
-	$bindvals[] = array($objId, $type, $normalized_tag);
+	$bindvals = array($objId, $type, $normalized_tag);
 	    
 	// First, check for duplicate of the normalized form of the tag on this object.
 	// Dynamically switch between allowing duplication between users on the
@@ -386,7 +386,7 @@ class FreetagLib extends TikiLib {
 			WHERE `raw_tag` = ?
 			";
 	    
-	$result = $this->execute($query, array($tag));
+	$result = $this->query($query, array($tag));
 	    
 	if ($row = $result->fetchRow()) {
 	    $tagId = $row['tagId'];
@@ -466,7 +466,6 @@ class FreetagLib extends TikiLib {
 	    die("delete_object_tag argument missing");
 	    return false;
 	}
-	    
 
 	$tagId = $this->get_raw_tag_id($tag);
 
@@ -602,7 +601,7 @@ class FreetagLib extends TikiLib {
 	    die("No tags found in tag_object");
 	    return true;
 	}
-		
+	
 	// Perform tag parsing
 	if(get_magic_quotes_gpc()) {
 	    $query = stripslashes(trim($tag_string));
@@ -677,7 +676,7 @@ class FreetagLib extends TikiLib {
 			ORDER BY count DESC, tag ASC
 			";
 
-	$result = $this->query($sql, $bindvals, $maxRecords, $offset);
+	$result = $this->query($query, $bindvals, $maxRecords, $offset);
 	    
 	$ret = array();
 	while ($row = $result->fetchRow()) {
@@ -747,7 +746,7 @@ class FreetagLib extends TikiLib {
 			ORDER BY quantity DESC
 			";
 
-	$result = $this->query($sql, array(), $max, 0);
+	$result = $this->query($query, array(), $max, 0);
 	    
 	$ret = array();
 	while ($row = $result->fetchRow()) {
@@ -805,7 +804,7 @@ class FreetagLib extends TikiLib {
 	    
 	$bindvals = array($tag, $tag);
 	    
-	$result = $this->query($sql, array(), $max, 0);
+	$result = $this->query($query, array(), $max, 0);
 	    
 	$ret = array();
 	while ($row = $result->fetchRow()) {
