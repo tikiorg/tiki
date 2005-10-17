@@ -11,7 +11,7 @@
  * @author     Justin Patrin <papercrane@reversefold.com>
  * @author     Paul M. Jones <pmjones@php.net>
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @version    CVS: $Id: Plugin.php,v 1.3 2005-10-01 15:54:35 toggg Exp $
+ * @version    CVS: $Id: Plugin.php,v 1.4 2005-10-17 14:20:18 sylvieg Exp $
  * @link       http://pear.php.net/package/Text_Wiki
  */
 
@@ -63,9 +63,10 @@ class Text_Wiki_Parse_Plugin extends Text_Wiki_Parse {
     */
 
     // var $regex = '/\{([A-Z]+?)\((.*?)\)}((?:(?R)|.)*?)\{\1}/msi';
-    var $regex = '#(?:\{([A-Z]+?)\((.*?)\)}|(~pp~)|(~np~)|(&lt;pre&gt;))
+    var $regex = '#(?:(?:\{([A-Z]+?)\((.*?)\)}|(~pp~)|(~np~)|(&lt;pre&gt;))
                   ((?:(?R)|.)*?)
-                  (?(1)\{\1})(?(3)~/pp~)(?(4)~/np~)(?(5)&lt;/pre&gt;)#mixs';
+                  (?(1)\{\1})(?(3)~/pp~)(?(4)~/np~)(?(5)&lt;/pre&gt;))|
+                  \{([A-Z]+?)\((.*?)\)\\/}#mixs';
 
     /**
     *
@@ -85,16 +86,20 @@ class Text_Wiki_Parse_Plugin extends Text_Wiki_Parse {
     function process(&$matches)
     {
         // preparsed area
-        if (isset($matches[3]) || isset($matches[5])) {
+        if (!empty($matches[3]) || !empty($matches[5])) {
             return $this->wiki->addToken('Preformatted',
                                          array('text' => $matches[6]));
         }
         // non parsed area
-        if (isset($matches[4])) {
+        if (!empty($matches[4])) {
             return $this->wiki->addToken('Raw',
                                          array('text' => $matches[6]));
         }
         // plugin
+        if (!empty($matches[7])) { // plugin closed in the opening
+             $matches[1] = $matches[7];
+             $matches[2] = $matches[8];
+        }
         $func = $this->getConf('file_prefix') . strtolower($matches[1]);
         if (!function_exists($func)) {
             $file = $func . $this->getConf('file_extension');
