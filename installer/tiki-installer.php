@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.4 2005-10-16 03:51:06 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.5 2005-10-18 12:08:46 toggg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -430,7 +430,7 @@ function load_sql_scripts() {
 	//echo $dbversion_tiki . "---";
 
 	while ($file = readdir($h)) {
-        	if (preg_match('#1\..to1\..*\.sql$#',$file) || preg_match('#secdb#',$file)) {
+        	if (preg_match('#1\..*to1\..*\.sql$#',$file) || preg_match('#secdb#',$file)) {
                 	$files[] = $file;
         	}
 	}
