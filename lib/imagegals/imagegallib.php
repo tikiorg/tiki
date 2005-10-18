@@ -760,14 +760,21 @@ class ImageGalsLib extends TikiLib {
 		if ($imageId == -1) {
 			//gallery mode
 			//mysql does'nt have subqueries. Bad.
-			$query1 = "select `imageId` from `tiki_images` where `galleryId`=?";
+			$query1 = "select `imageId`,`path` from `tiki_images` where `galleryId`=?";
 
 			$result1 = $this->query($query1,array((int)$galleryId));
 
 			while ($res = $result1->fetchRow()) {
-				$query2 = "delete from `tiki_images_data` where `ImageId`=? and not `type`=?";
+			        $query3 = 'select `xsize`,`ysize` from `tiki_images_data` where `imageId`=? and not (`type`=?';
+				$query2 = "delete from `tiki_images_data` where `imageId`=? and not (`type`=?)";
 
 				$result2 = $this->query($query2,array((int)$res["imageId"],'o'));
+				if(!empty($res['path']) {
+				   /* todo: make it work
+				   if($res['type']=='s') { $ext = ".scaled_" . $this->xsize . "x" . $this->ysize}
+				   @unlink($gal_use_dir. $ext = ".scaled_" . $this->xsize . "x" . $this->ysize;
+				   */
+				}
 			}
 		} else {
 			//image mode
@@ -1982,31 +1989,35 @@ class ImageGalsLib extends TikiLib {
 	}
 
   // function to move images from one store to another (fs to db or db to fs)
-  function move_image_store($ImageId,$direction='to_fs')
+  function move_image_store($imageId,$direction='to_fs')
   {
     global $gal_use_db;
     global $gal_use_dir;
+    $this->clear_class_vars(); //cleanup
 
     if($direction!='to_fs' && $direction!='to_db') {
       return(false);
     }
 
     // get the storage location
-    $query='select `path` from `tiki_images` where `ImageId`=?';
-    $path=$this->getOne($query,array($ImageId),false);
-    if($path===false) { // ImageId not found
+    $query='select `path` from `tiki_images` where `imageId`=?';
+    $path=$this->getOne($query,array($imageId),false);
+    if($path===false) { // imageId not found
       return(false);
     }
 
     if((empty($path) && $direction=='to_fs') || (!empty($path) && $direction=='to_db')) {
       // move image
-      $this->get_image($ImageId);
-      $this->store_image_data(true);
-      $query='update `tiki_images` set `path`=? where `ImageId`=?';
+      // load image
+      $this->get_image($imageId);
+      $query='update `tiki_images` set `path`=? where `imageId`=?';
       if($direction=='to_fs') {
+	 $this->path=md5(uniqid($this->filename));
         // store_image data did already overwrite the "data" field in tiki_images_data
-        $this->query($query,array(md5(uniqid($this->filename)),$imageId));
+        $this->query($query,array($this->path,$imageId));
       }
+      // write image
+      $this->store_image_data(true);
       if($direction=='to_db') {
         // remove image in fs
         if(!@unlink($gal_use_dir.$this->path)) {
@@ -2014,11 +2025,71 @@ class ImageGalsLib extends TikiLib {
         }
         $this->query($query,array('',$imageId));
       }
+      return(1);
 
     }
-
+    return(0);
   }
 
+  function move_gallery_store($galId,$direction='to_fs')
+  {
+    $met=ini_get('max_execution_time');
+    $st=time();
+    $n=0;
+    $errors=0;
+    $timeout=false;
+    if($direction!='to_fs' && $direction!='to_db') {
+      return(false);
+    }
+
+    // remove all scales. They will be rebuild on access
+    $this->rebuild_scales($galId);
+
+    // move images store
+    if($galId==-1) {
+      $query='select `imageId` from `tiki_images`';
+      $result=$this->query($query,array());
+    } else {
+      $query='select `imageId` from `tiki_images` where `galleryId`=?';
+      $result=$this->query($query,array($galId));
+    }
+    while ($res = $result->fetchRow()) {
+      $r=$this->move_image_store($res['imageId'],$direction);
+      if($r!==false) {
+        $n+=$r;
+      } else {
+	$errors++;
+      }
+      if($met-time()+$st < 3) { // avoid timeouts so that we dont end with broken images
+	 $timeout=true;
+	 break;
+      }
+    }
+    $resultarray=array('moved_images'=>$n,'timeout'=>$timeout,'errors'=>$errors);
+    return($resultarray);
+  }
+
+  function clear_class_vars()
+  { // function to clear loaded data. Usable for mass changes
+     unset($this->imageId);
+     unset($this->galleryId);
+     unset($this->name);
+     unset($this->description);
+     unset($this->lat);
+     unset($this->lon);
+     unset($this->created);
+     unset($this->user); 
+     unset($this->hits);
+     unset($this->path);
+     unset($this->xsize);
+     unset($this->ysize);
+     unset($this->type);
+     unset($this->filesize);
+     unset($this->filetype);
+     unset($this->filename);
+     unset($this->etag);
+     unset($this->image);
+  }
 
 
 }
