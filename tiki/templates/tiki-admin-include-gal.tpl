@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.19 2005-10-18 15:08:29 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.20 2005-10-18 23:59:06 redflo Exp $ *}
 {if $feature_help eq "y"}
 <div class="rbox" style="margin-top: 10px;">
 <div class="rbox-title" style="background-color: #eeee99; font-weight : bold; display : inline; padding : 0 10px;">{tr}Tip{/tr}</div>  
@@ -91,7 +91,7 @@
 {if $gal_use_db eq 'n'}
 <tr class="form">
 <td><label>{tr}Move images from old filesystem store to new directory{/tr}
-<input type="hidden" name="mvimg" value="to_newdir"></label>
+<input type="hidden" name="newdir" value="to_newdir"></label>
 <td>
 <input type="text" name="gal_use_dir" value="{$gal_use_dir|escape}" size="50" />
 <td><input type="submit" name="button" value="{tr}Move{/tr}" /></td></tr>
