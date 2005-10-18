@@ -13,7 +13,7 @@
 * 
 * @license LGPL
 * 
-* @version $Id: Code.php,v 1.1 2005-07-30 14:37:15 toggg Exp $
+* @version $Id: Code.php,v 1.2 2005-10-18 12:38:04 sylvieg Exp $
 * 
 */
 
@@ -51,7 +51,7 @@ class Text_Wiki_Parse_Code extends Text_Wiki_Parse {
     * 
     */
     
-    var $regex = '/^{CODE\((.+)?\)}\n(.+)\n{CODE}(\s|$)/Umsi';
+    var $regex = '/^{CODE\((.+)?\)}(.+){CODE}(\s|$)/Umsi';
     
     
     /**
