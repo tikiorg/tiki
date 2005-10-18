@@ -11,7 +11,7 @@
  * @author     Justin Patrin <papercrane@reversefold.com>
  * @author     Paul M. Jones <pmjones@php.net>
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @version    CVS: $Id: Plugin.php,v 1.4 2005-10-17 14:20:18 sylvieg Exp $
+ * @version    CVS: $Id: Plugin.php,v 1.5 2005-10-18 18:33:05 toggg Exp $
  * @link       http://pear.php.net/package/Text_Wiki
  */
 
@@ -49,7 +49,7 @@ class Text_Wiki_Parse_Plugin extends Text_Wiki_Parse {
      * @access public
      * @var string
      */
-    var $regexArgs = '#(\w+?)=(?:>|&gt;)?([^"\'][^,]+?|"[^"]+"|\'[^\']+\')#';
+    var $regexArgs = '#(\w+?)=(?:>|&gt;)?([^"\'][^,]*?|"[^"]+"|\'[^\']+\')#';
 
     /**
     *
@@ -63,10 +63,11 @@ class Text_Wiki_Parse_Plugin extends Text_Wiki_Parse {
     */
 
     // var $regex = '/\{([A-Z]+?)\((.*?)\)}((?:(?R)|.)*?)\{\1}/msi';
-    var $regex = '#(?:(?:\{([A-Z]+?)\((.*?)\)}|(~pp~)|(~np~)|(&lt;pre&gt;))
+    var $regex = array (
+                '#\{([A-Z]+?)\((.*?)\)/}#mixs',
+    			'#(?:\{([A-Z]+?)\((.*?)\)}|(~pp~)|(~np~)|(&lt;pre&gt;))
                   ((?:(?R)|.)*?)
-                  (?(1)\{\1})(?(3)~/pp~)(?(4)~/np~)(?(5)&lt;/pre&gt;))|
-                  \{([A-Z]+?)\((.*?)\)\\/}#mixs';
+                  (?(1)(\{\1}))(?(3)~/pp~)(?(4)~/np~)(?(5)&lt;/pre&gt;)#mixs');
 
     /**
     *
@@ -96,9 +97,8 @@ class Text_Wiki_Parse_Plugin extends Text_Wiki_Parse {
                                          array('text' => $matches[6]));
         }
         // plugin
-        if (!empty($matches[7])) { // plugin closed in the opening
-             $matches[1] = $matches[7];
-             $matches[2] = $matches[8];
+        if (empty($matches[7])) {
+            $matches[6] = '';
         }
         $func = $this->getConf('file_prefix') . strtolower($matches[1]);
         if (!function_exists($func)) {
@@ -127,7 +127,8 @@ class Text_Wiki_Parse_Plugin extends Text_Wiki_Parse {
             }
         }
 
-        // executes the plugin with data and pameters then recursive re-parse for nested or produced plugins
+        // executes the plugin with data and parameters
+        // then recursive re-parse for nested or produced plugins
         $res = $func($matches[6], $attr);
         return preg_replace_callback(
                 $this->regex,
