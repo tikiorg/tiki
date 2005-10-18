@@ -1980,6 +1980,47 @@ class ImageGalsLib extends TikiLib {
 			return $ret;
 		}
 	}
+
+  // function to move images from one store to another (fs to db or db to fs)
+  function move_image_store($ImageId,$direction='to_fs')
+  {
+    global $gal_use_db;
+    global $gal_use_dir;
+
+    if($direction!='to_fs' && $direction!='to_db') {
+      return(false);
+    }
+
+    // get the storage location
+    $query='select `path` from `tiki_images` where `ImageId`=?';
+    $path=$this->getOne($query,array($ImageId),false);
+    if($path===false) { // ImageId not found
+      return(false);
+    }
+
+    if((empty($path) && $direction=='to_fs') || (!empty($path) && $direction=='to_db')) {
+      // move image
+      $this->get_image($ImageId);
+      $this->store_image_data(true);
+      $query='update `tiki_images` set `path`=? where `ImageId`=?';
+      if($direction=='to_fs') {
+        // store_image data did already overwrite the "data" field in tiki_images_data
+        $this->query($query,array(md5(uniqid($this->filename)),$imageId));
+      }
+      if($direction=='to_db') {
+        // remove image in fs
+        if(!@unlink($gal_use_dir.$this->path)) {
+          $errstr="unlink failed";
+        }
+        $this->query($query,array('',$imageId));
+      }
+
+    }
+
+  }
+
+
+
 }
 
 global $imagegallib;
