@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.18 2005-05-18 11:02:54 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.19 2005-10-18 15:08:29 redflo Exp $ *}
 {if $feature_help eq "y"}
 <div class="rbox" style="margin-top: 10px;">
 <div class="rbox-title" style="background-color: #eeee99; font-weight : bold; display : inline; padding : 0 10px;">{tr}Tip{/tr}</div>  
@@ -32,7 +32,8 @@
     <tr class="form"><td><label>{tr}Rankings{/tr}:</label></td><td><input type="checkbox" name="feature_gal_rankings" {if $feature_gal_rankings eq 'y'}checked="checked"{/if}/></td></tr>
     <tr class="form"><td><label>{tr}Comments{/tr}:</label></td><td><input type="checkbox" name="feature_image_galleries_comments" {if $feature_image_galleries_comments eq 'y'}checked="checked"{/if}/></td></tr>
     <tr class="form"><td><label>{tr}Use database to store images{/tr}:</label></td><td><input type="radio" name="gal_use_db" value="y" {if $gal_use_db eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr class="form"><td><label>{tr}Use a directory to store images{/tr}:</label></td><td><input type="radio" name="gal_use_db" value="n" {if $gal_use_db eq 'n'}checked="checked"{/if}/> <label>{tr}Directory path{/tr}:</label><br /><input type="text" name="gal_use_dir" value="{$gal_use_dir|escape}" size="50" /> </td></tr>
+    <tr class="form"><td><label>{tr}Use a directory to store images{/tr}:</label></td><td><input type="radio" name="gal_use_db" value="n" {if $gal_use_db eq 'n'}checked="checked"{/if}/> <label>{tr}Directory path{/tr}:</label><br /><input type="text" name="gal_use_dir" value="{$gal_use_dir|escape}" size="50" /><br />
+       ({tr}Note: if you change this directory, you have to move the contents to the new directory. You can also use the "Mover" below.{/tr})</td></tr>
     <tr class="form"><td><label>{tr}Library to use for processing images{/tr}:</label></td><td><input type="radio" name="gal_use_lib" value="gd" {if $gal_use_lib ne 'imagick'}checked="checked"{/if}/>GD: {$gdlib}</td></tr>
     <tr class="form"><td></td><td><input type="radio" name="gal_use_lib" value="imagick" {if $gal_use_lib eq 'imagick'}checked="checked"{/if}/>Imagick: {$imagicklib}</td></tr>
     <tr class="form"><td><label>{tr}Uploaded image names must match regex{/tr}:</label></td><td><input type="text" name="gal_match_regex" value="{$gal_match_regex|escape}"/></td></tr>
@@ -60,6 +61,47 @@
 <input type="hidden" name="rmvorphimg" value="1"></td><!--/tr>
 <tr><td colspan="2" class="button"--><td><input type="submit" name="button" value="{tr}Remove{/tr}" /></td></tr>
 </table>                 
+</form>
+</div>
+</div>
+
+<div class="cbox">
+  <div class="cbox-title">{tr}Mover{/tr}</div>
+    <div class="cbox-data">
+    <form action="tiki-admin.php?page=gal" method="post">
+    <table class="admin">
+    <tr class="form"><td><label>
+{if $gal_use_db eq 'n'}
+{tr}Move images from database storage to filesystem storage{/tr}
+</label>
+<input type="hidden" name="mvimg" value="to_fs"></td>
+{else}
+{tr}Move images from filesystem storage to database storage{/tr}
+</label>
+<input type="hidden" name="mvimg" value="to_db"></td>
+{/if}
+<td>
+<select name="move_gallery">
+<option value="-1">{tr}All galleries{/tr}</option>
+{section name=ix loop=$galleries}
+<option value="{$galleries[ix].galleryId|escape}">{$galleries[ix].name|truncate:20:"...":true}</option>
+{/section}
+</select></td>
+<td><input type="submit" name="button" value="{tr}Move{/tr}" /></td></tr>
+{if $gal_use_db eq 'n'}
+<tr class="form">
+<td><label>{tr}Move images from old filesystem store to new directory{/tr}
+<input type="hidden" name="mvimg" value="to_newdir"></label>
+<td>
+<input type="text" name="gal_use_dir" value="{$gal_use_dir|escape}" size="50" />
+<td><input type="submit" name="button" value="{tr}Move{/tr}" /></td></tr>
+{/if}
+{if $movedimgs}
+<tr class="form">
+<td colspan="3">{tr}Moved{/tr} {$movedimgs} {tr}images{/tr}</td>
+</tr>
+{/if}
+</table>
 </form>
 </div>
 </div>
