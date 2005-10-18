@@ -27,10 +27,10 @@
  * @author Monte Ohrt <monte at ohrt dot com>
  * @author Andrei Zmievski <andrei@php.net>
  * @package Smarty
- * @version 2.6.7
+ * @version 2.6.10
  */
 
-/* $Id: Smarty.class.php,v 1.6 2005-05-18 11:01:41 mose Exp $ */
+/* $Id: Smarty.class.php,v 1.7 2005-10-18 15:41:45 mose Exp $ */
 
 /**
  * DIR_SEP isn't used anymore, but third party apps might
@@ -232,7 +232,7 @@ class Smarty
                                                                'isset', 'empty',
                                                                'count', 'sizeof',
                                                                'in_array', 'is_array',
-                                                               'true','false'),
+                                                               'true', 'false', 'null'),
                                     'INCLUDE_ANY'     => false,
                                     'PHP_TAGS'        => false,
                                     'MODIFIER_FUNCS'  => array('count'),
@@ -464,7 +464,7 @@ class Smarty
      *
      * @var string
      */
-    var $_version              = '2.6.7';
+    var $_version              = '2.6.10';
 
     /**
      * current template inclusion depth
@@ -1889,7 +1889,7 @@ class Smarty
 
         if ($this->_cache_including) {
             /* return next set of cache_attrs */
-            $_return =& current($_cache_attrs);
+            $_return = current($_cache_attrs);
             next($_cache_attrs);
             return $_return;
 
