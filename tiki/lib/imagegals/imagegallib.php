@@ -1605,10 +1605,12 @@ class ImageGalsLib extends TikiLib {
       // stores md5 based etag in the tables
       // this function assumes that the $this->imageId and other
       // are loaded before (through $this->get_image() or similar)
-      $etag=md5($this->image);
-      $query='update `tiki_images_data` set `etag`=? where `imageId`=? and `xsize`=? and `ysize`=? and `type`=?';
-      $bindvars=array($etag,(int) $this->imageId,(int) $this->xsize,(int) $this->ysize,$this->type);
-      $this->query($query,$bindvars);
+      if(isset($this->image)) {//avoid broken images through warning
+        $etag=md5($this->image);
+        $query='update `tiki_images_data` set `etag`=? where `imageId`=? and `xsize`=? and `ysize`=? and `type`=?';
+        $bindvars=array($etag,(int) $this->imageId,(int) $this->xsize,(int) $this->ysize,$this->type);
+        $this->query($query,$bindvars);
+      }
 
    }
 
