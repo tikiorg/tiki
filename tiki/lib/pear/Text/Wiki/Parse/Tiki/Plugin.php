@@ -11,7 +11,7 @@
  * @author     Justin Patrin <papercrane@reversefold.com>
  * @author     Paul M. Jones <pmjones@php.net>
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @version    CVS: $Id: Plugin.php,v 1.5 2005-10-18 18:33:05 toggg Exp $
+ * @version    CVS: $Id: Plugin.php,v 1.6 2005-10-19 16:40:35 toggg Exp $
  * @link       http://pear.php.net/package/Text_Wiki
  */
 
@@ -63,11 +63,11 @@ class Text_Wiki_Parse_Plugin extends Text_Wiki_Parse {
     */
 
     // var $regex = '/\{([A-Z]+?)\((.*?)\)}((?:(?R)|.)*?)\{\1}/msi';
-    var $regex = array (
-                '#\{([A-Z]+?)\((.*?)\)/}#mixs',
-    			'#(?:\{([A-Z]+?)\((.*?)\)}|(~pp~)|(~np~)|(&lt;pre&gt;))
-                  ((?:(?R)|.)*?)
-                  (?(1)(\{\1}))(?(3)~/pp~)(?(4)~/np~)(?(5)&lt;/pre&gt;)#mixs');
+    var $regex =
+                //     1          2         3   4    5      6      7
+    			'#(?:\{([A-Z]+?)\((.*?)\)(?:(})|(/))|(~pp~)|(~np~)|(&lt;pre&gt;))
+                  (?(4)}|(?:((?:(?R)|.)*?)
+                  (?(3)(\{\1}))(?(5)~/pp~)(?(6)~/np~)(?(7)&lt;/pre&gt;)))#mixs';
 
     /**
     *
@@ -87,18 +87,18 @@ class Text_Wiki_Parse_Plugin extends Text_Wiki_Parse {
     function process(&$matches)
     {
         // preparsed area
-        if (!empty($matches[3]) || !empty($matches[5])) {
+        if (!empty($matches[7]) || !empty($matches[5])) {
             return $this->wiki->addToken('Preformatted',
-                                         array('text' => $matches[6]));
+                                         array('text' => $matches[8]));
         }
         // non parsed area
-        if (!empty($matches[4])) {
+        if (!empty($matches[6])) {
             return $this->wiki->addToken('Raw',
-                                         array('text' => $matches[6]));
+                                         array('text' => $matches[8]));
         }
         // plugin
-        if (empty($matches[7])) {
-            $matches[6] = '';
+        if (empty($matches[3])) {
+            $matches[8] = '';
         }
         $func = $this->getConf('file_prefix') . strtolower($matches[1]);
         if (!function_exists($func)) {
@@ -129,7 +129,7 @@ class Text_Wiki_Parse_Plugin extends Text_Wiki_Parse {
 
         // executes the plugin with data and parameters
         // then recursive re-parse for nested or produced plugins
-        $res = $func($matches[6], $attr);
+        $res = $func($matches[8], $attr);
         return preg_replace_callback(
                 $this->regex,
                 array(&$this, 'process'),
