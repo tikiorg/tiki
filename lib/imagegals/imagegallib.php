@@ -753,28 +753,40 @@ class ImageGalsLib extends TikiLib {
 	}
 
 	function rebuild_scales($galleryId, $imageId = -1) {
-		// doesn't really rebuild, it deletes the schales and thumbs for 
+		// doesn't really rebuild, it deletes the scales and thumbs for 
 		// automatic rebuild
 		// give either a galleryId for rebuild complete gallery or
 		// a imageId for a image rebuild
+    global $gal_use_dir;
 		if ($imageId == -1) {
 			//gallery mode
 			//mysql does'nt have subqueries. Bad.
-			$query1 = "select `imageId`,`path` from `tiki_images` where `galleryId`=?";
+      $bindvars=array();
+			$query1 = "select `imageId`,`path` from `tiki_images`";
+      if($galleryId>-1) { // if galleryid == -1 then all galleries
+        $query1 .= ' where `galleryId`=?';
+        $bindvars=array((int)$galleryId);
+      }
 
-			$result1 = $this->query($query1,array((int)$galleryId));
+			$result1 = $this->query($query1,$bindvars);
 
 			while ($res = $result1->fetchRow()) {
-			        $query3 = 'select `xsize`,`ysize` from `tiki_images_data` where `imageId`=? and not (`type`=?';
-				$query2 = "delete from `tiki_images_data` where `imageId`=? and not (`type`=?)";
+			  $query2 = 'select `xsize`,`ysize`,`type` from `tiki_images_data` where `imageId`=? and not (`type`=?)';
+				$query3 = "delete from `tiki_images_data` where `imageId`=? and not (`type`=?)";
+        $bindvars2=array((int)$res["imageId"],'o');
 
-				$result2 = $this->query($query2,array((int)$res["imageId"],'o'));
-				if(!empty($res['path']) {
-				   /* todo: make it work
-				   if($res['type']=='s') { $ext = ".scaled_" . $this->xsize . "x" . $this->ysize}
-				   @unlink($gal_use_dir. $ext = ".scaled_" . $this->xsize . "x" . $this->ysize;
-				   */
+				$result2 = $this->query($query2,$bindvars2);
+        while($res2=$result2->fetchRow()) {
+				  if(!empty($res['path'])) {
+				    if($res2['type']=='s') { $ext = ".scaled_" . $res2['xsize'] . "x" . $res2['ysize'];}
+				    if($res2['type']=='t') { $ext = ".thumb";}
+            if($res2['type']=='s' || $res2['type']=='t') { // in case we add other types later
+              @unlink($gal_use_dir. $ext );
+            }
+          }
 				}
+        // delete images_data entries
+				$result3 = $this->query($query3,$bindvars2);
 			}
 		} else {
 			//image mode
