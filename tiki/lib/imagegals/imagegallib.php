@@ -781,7 +781,7 @@ class ImageGalsLib extends TikiLib {
 				    if($res2['type']=='s') { $ext = ".scaled_" . $res2['xsize'] . "x" . $res2['ysize'];}
 				    if($res2['type']=='t') { $ext = ".thumb";}
             if($res2['type']=='s' || $res2['type']=='t') { // in case we add other types later
-              @unlink($gal_use_dir. $ext );
+              @unlink($gal_use_dir.$res['path'].$ext );
             }
           }
 				}
@@ -2096,7 +2096,9 @@ class ImageGalsLib extends TikiLib {
      unset($this->hits);
      unset($this->path);
      unset($this->xsize);
+     unset($this->oldxsize);
      unset($this->ysize);
+     unset($this->oldysize);
      unset($this->type);
      unset($this->filesize);
      unset($this->filetype);
