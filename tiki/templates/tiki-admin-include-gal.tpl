@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.20 2005-10-18 23:59:06 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.21 2005-10-20 22:44:44 redflo Exp $ *}
 {if $feature_help eq "y"}
 <div class="rbox" style="margin-top: 10px;">
 <div class="rbox-title" style="background-color: #eeee99; font-weight : bold; display : inline; padding : 0 10px;">{tr}Tip{/tr}</div>  
@@ -83,6 +83,7 @@
 <td>
 <select name="move_gallery">
 <option value="-1">{tr}All galleries{/tr}</option>
+<option value="0">{tr}System gallery{/tr}</option>
 {section name=ix loop=$galleries}
 <option value="{$galleries[ix].galleryId|escape}">{$galleries[ix].name|truncate:20:"...":true}</option>
 {/section}
