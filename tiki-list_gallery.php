@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_gallery.php,v 1.21 2005-10-16 14:35:09 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_gallery.php,v 1.22 2005-10-20 23:07:02 redflo Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -32,6 +32,12 @@ if (empty($_REQUEST["galleryId"]) && $_REQUEST["galleryId"]!='0') {
 	die;
 }
 
+if ($_REQUEST["galleryId"]!='0' && $imagegallib->get_gallery($_REQUEST["galleryId"])===false) {
+	$smarty->assign('msg', tra("This gallery does not exist"));
+	$smarty->display("error.tpl");
+	die;
+}
+   
 $smarty->assign('individual', 'n');
 
 if ($userlib->object_has_one_permission($_REQUEST["galleryId"], 'image gallery')) {
