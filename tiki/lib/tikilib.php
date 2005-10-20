@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.618 2005-10-16 14:35:09 mose Exp $
+// CVS: $Id: tikilib.php,v 1.619 2005-10-20 23:29:41 rlpowell Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -6483,6 +6483,7 @@ if (!$simple_wiki) {
 		$fp = fopen($tmp_dest, "rb");
 		$data = '';
 		$fhash = '';
+		$chunk = '';
 		if ($store_type == 'dir') {
 			$fhash = md5($name = $file_name);    
 			$fw = fopen($w_use_dir.$fhash, "wb");
@@ -6490,12 +6491,13 @@ if (!$simple_wiki) {
 			    return array("ok"=>false, "error"=>tra('Cannot write to this file:').$fhash);
 		}
 		while(!feof($fp)) {
+			$chunk = fread($fp, 8192*16);
+
 			if ($store_type == 'dir') {
-				$data .= fread($fp, 8192*16);
-				fwrite($fw, $data);
-			} else {
-				$data = fread($fp, 8192*16);
+				fwrite($fw, $chunk);
 			}
+
+			$data .= $chunk;
 		}
 		fclose($fp);
 		unlink($tmp_dest);
