@@ -1,5 +1,5 @@
 <?php
-// $Id: notificationemaillib.php,v 1.12 2005-08-29 03:14:44 mose Exp $
+// $Id: notificationemaillib.php,v 1.13 2005-10-21 17:00:39 sylvieg Exp $
 /** \brief send the email notifications dealing with the forum changes to
   * \brief outbound address + admin notification addresses / forum admin email + watching users addresses
   * \param $event = 'forum_post_topic' or 'forum_post_thread'
@@ -264,7 +264,7 @@ return $sent;
 function activeErrorEmailNotivation() {
 	set_error_handler("sendErrorEmailNotification");
 }
-function sendErrorEmailNotification($errno, $errstr, $errfile='?', $errline= '?') { echo "EEEE".$errno.$errno & error_reporting();
+function sendErrorEmailNotification($errno, $errstr, $errfile='?', $errline= '?') {
 	global $tikilib;
 	if (($errno & error_reporting()) == 0) /* ignore error */
 		return;
