@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.4 2005-10-06 17:32:08 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.5 2005-10-21 20:20:39 sylvieg Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Admin Action Log{/tr}</a></h1>
 <a name="Setting" />
@@ -33,7 +33,19 @@
 </td>
 <td>{tr}Start date:{/tr}</td>
 <td>{html_select_date time=$startDate prefix="startDate_" end_year="-10" field_order=DMY}</td>
-</tr><tr>
+</tr>
+<tr>
+<td>&nbsp;{*{tr}Group:{/tr}*}</td>
+<td>&nbsp;{*<select multiple="multiple" name="groups[]">
+{section name=ix loop=$groups}
+<option value="{$groups[ix]|escape}">{$groups[ix]|escape}</option>
+{/section}
+</select>*}
+</td>
+<td>{tr}End date:{/tr}</td>
+<td>{html_select_date time=$endDate prefix="endDate_" end_year="-10" field_order=DMY}</td>
+</tr>
+<tr>
 <td>{tr}Category:{/tr}</td>
 <td><select name="categId">
 <option value="" {if $reportCateg eq  '' or reportCateg eq 0}selected="selected"{/if}>* {tr}All{/tr} *</option>
@@ -42,9 +54,7 @@
 {/section}
 </select>
 </td>
-<td>{tr}End date:{/tr}</td>
-<td>{html_select_date time=$endDate prefix="endDate_" end_year="-10" field_order=DMY}</td>
-</tr>
+<td>&nbsp;</td></tr>
 <tr><td colspan="4" class="button"><input type="submit" name="list" value="{tr}Report{/tr}" /></td></tr>
 </table>
 </form>
@@ -151,8 +161,8 @@
 {foreach key=categId item=vol from=$volCateg}
 <tr>
 <td class="{cycle advance=false}">{$vol.category}</td>
-{foreach  key=a item=list from=$volCateg[$categId]}
-{if $a ne 'category'}<td class="{cycle advance=false}">{math equation="round(a/b)" a=$list.add b=1024}</td><td class="{cycle advance=false}">{math equation="round(a/b)" a=$list.del b=1024}</td><td class="{cycle advance=false}">{math equation="round(a/b)" a=$list.dif b=1024}</td>{/if}
+{foreach item=type from=$typeVol}
+<td class="{cycle advance=false}">{$vol[$type].add}-{$vol[$type].del}-{$vol[$type].dif}****{math equation="round(a/b)" a=$vol[$type].add b=1024}</td><td class="{cycle advance=false}">{math equation="round(a/b)" a=$vol[$type].del b=1024}</td><td class="{cycle advance=false}">{math equation="round(a/b)" a=$vol[$type].dif b=1024}</td>
 {/foreach}
 <!-- {cycle} -->
 </tr>

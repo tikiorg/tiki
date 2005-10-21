@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.4 2005-10-06 17:19:49 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.5 2005-10-21 20:20:39 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -38,6 +38,8 @@ $smarty->assign_by_ref('actionlogConf', $confs);
 
 $users = $userlib->list_all_users();
 $smarty->assign_by_ref('users', $users);
+$groups = $userlib->list_all_groups();
+$smarty->assign_by_ref('groups', $groups);
 $categories = $categlib->list_categs();
 $smarty->assign_by_ref('categories', $categories);
 foreach ($categories as $categ) {
@@ -92,7 +94,10 @@ if (isset($_REQUEST['list'])) {
 			$actions[$i]['object'] = $categNames[$actions[$i]['object']];
 			break;
 		case 'forum':
-			$actions[$i]['link'] = 'tiki-view_forum_thread.php?forumId='.$actions[$i]['object'].'&'.$actions[$i]['comment'];
+			if ($actions[$i]['action'] == 'Removed')
+				$actions[$i]['link'] = 'tiki-view_forum.php?forumId='.$actions[$i]['object'].'&'.$actions[$i]['comment'];// threadId dded for debug info
+			else
+				$actions[$i]['link'] = 'tiki-view_forum_thread.php?forumId='.$actions[$i]['object'].'&'.$actions[$i]['comment'];
 			if (!isset($forumNames)) {
 				$objects = $commentslib->list_forums(0, -1, 'name_asc', '');
 				$forumNames = array();

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.10 2005-10-06 17:19:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.11 2005-10-21 20:20:40 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -275,7 +275,7 @@ class LogsLib extends TikiLib {
 	return $logTimes;
 	}
 	function get_volume_action($action) {
-	if (preg_match("/^bytes=([0-9\-+]+)/", $action['comment'], $matches))
+	if (preg_match("/bytes=([0-9\-+]+)/", $action['comment'], $matches))
 		return $matches[1];
 	else
 		return(0);
