@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-print_pages.php,v 1.13 2005-10-03 17:21:43 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-print_pages.php,v 1.14 2005-10-21 08:36:08 atooni Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -60,12 +60,23 @@ if (isset($_REQUEST["clearpages"])) {
 	$printpages = array();
 }
 
+if (isset($_REQUEST["addstructure"])) {
+	$struct = $structlib->get_subtree($_REQUEST["structureId"]);
+	foreach($struct as $struct_page) {
+		// Handle dummy last entry
+		if ($struct_page["pos"] != '' && $struct_page["last"] == 1) continue;
+		$printpages[] = $struct_page["pageName"];
+	}
+}
+
 $smarty->assign('printpages', $printpages);
 $form_printpages = urlencode(serialize($printpages));
 $smarty->assign('form_printpages', $form_printpages);
 
 $pages = $tikilib->list_pageNames(0, -1, 'pageName_asc', $find);
 $smarty->assign_by_ref('pages', $pages["data"]);
+$structures = $structlib->list_structures(0, -1, 'pageName_asc', 0);
+$smarty->assign_by_ref('structures', $structures["data"]);
 $section = 'wiki';
 include_once ('tiki-section_options.php');
 
