@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2005-10-16 17:11:58 $
-# $Author: lfagundes $
+# $Date: 2005-10-21 20:20:39 $
+# $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -2448,7 +2448,8 @@ CREATE TABLE tiki_pages (
   UNIQUE KEY pageName (pageName),
   KEY data (data(255)),
   KEY pageRank (pageRank),
-  FULLTEXT KEY ft (pageName,description,data)
+  FULLTEXT KEY ft (pageName,description,data),
+  KEY lastModif(lastModif)
 ) TYPE=MyISAM AUTO_INCREMENT=1;
 # --------------------------------------------------------
 
@@ -5039,7 +5040,7 @@ INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUE
 INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Removed version', 'wiki page', 'n');
 INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Removed last version', 'wiki page', 'n');
 INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Rollback', 'wiki page', 'n');
-
+INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Removed', 'forum', 'n');
 # --------------------------------------------------------
 
 

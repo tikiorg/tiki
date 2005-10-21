@@ -1678,21 +1678,22 @@ class Comments extends TikiLib {
     }
 
     function update_comment($threadId, $title, $comment_rating, $data, $type = 'n', $summary = '', $smiley = '', $objectId='') {
+	global $feature_actionlog;
+	if ($feature_actionlog == 'y') {
+		$object = explode( ":", $objectId, 2);
+		if ($object[0] == 'forum') {
+			$comment= $this->get_comment($threadId);
+			include_once('lib/diff/difflib.php');
+			$bytes = diff2($comment['data'] , $data, 'bytes');
+			global $logslib; include_once('lib/logs/logslib.php');
+			$logslib->add_action('Updated', $object[1], $object[0], "comments_parentId=$threadId&bytes=$bytes#threadId$threadId");
+		}
+	}
 	$query = "update `tiki_comments` set `title`=?, `comment_rating`=?,
 	`data`=?, `type`=?, `summary`=?, `smiley`=?
 	    where `threadId`=?";
 	$result = $this->query($query, array( $title, (int) $comment_rating, $data, $type,
 		    $summary, $smiley, (int) $threadId ) );
-
-	global $feature_actionlog;
-	if ($feature_actionlog == 'y') {
-		$object = explode( ":", $objectId, 2);
-		if ($object[0] == 'forum') {
-			global $logslib; include_once('lib/logs/logslib.php');
-			$logslib->add_action('Updated', $object[1], $object[0], 'comments_parentId='.$threadId);
-		}
-	}
-
     }
 
     function post_new_comment($objectId, $parentId, $userName,
@@ -1827,7 +1828,7 @@ class Comments extends TikiLib {
 	global $feature_actionlog;
 	if ($feature_actionlog == 'y' && $object[0] == 'forum') {
 		global $logslib; include_once('lib/logs/logslib.php');
-		$logslib->add_action(($parentId == 0)? 'Posted': 'Replied', $object[1], $object[0], 'comments_parentId='.$threadId);
+		$logslib->add_action(($parentId == 0)? 'Posted': 'Replied', $object[1], $object[0], 'comments_parentId='.$threadId.'&amp;bytes=+'.strlen($data));
 	}
 
 	return $threadId;
@@ -1847,7 +1848,19 @@ class Comments extends TikiLib {
     function remove_comment($threadId) {
 	if ($threadId == 0)
 		return false;
+	global $feature_actionlog;
+	if ($feature_actionlog == 'y') {
+		global $logslib; include_once('lib/logs/logslib.php');
+		$query = "select * from `tiki_comments` where `threadId`=? or `parentId`=?";
+		$result = $this->query($query, array((int)$threadId, (int)$threadId));
+		while ($res = $result->fetchRow()) {
+			if ($res['objectType'] != 'forum')
+				break;
+			$logslib->add_action('Removed', $res['object'], 'forum', "comments_parentId=$threadId&bytes=-".strlen($res['data']));
+		}
+	}
 	$query = "delete from `tiki_comments` where `threadId`=? or `parentId`=?";
+//TODO in a forum, when the reply to a post (not a topic) id deletd, the replies to this post are not deleted
 
 	$result = $this->query($query, array( (int) $threadId, (int) $threadId ) );
 	$query = "delete from `tiki_forum_attachments` where `threadId`=?";
