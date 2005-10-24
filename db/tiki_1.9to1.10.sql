@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.48 2005-10-21 20:20:39 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.49 2005-10-24 20:51:27 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -165,3 +165,7 @@ DELETE FROM tiki_logs where logmessage='timeout' and loguser='Anonymous';
 #2005-10-21 sylvieg
 INSERT INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Removed', 'forum', 'n');
 CREATE INDEX lastModif on tiki_pages (lastModif);
+
+#2005-10-24 sylvieg to boost tiki_stats and tiki_orphan
+CREATE INDEX toPage on tiki_links (toPage);
+CREATE INDEX page_id on tiki_structures (page_id);

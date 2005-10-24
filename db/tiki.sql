@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2005-10-21 20:20:39 $
+# $Date: 2005-10-24 20:51:27 $
 # $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -1769,7 +1769,8 @@ DROP TABLE IF EXISTS tiki_links;
 CREATE TABLE tiki_links (
   fromPage varchar(160) NOT NULL default '',
   toPage varchar(160) NOT NULL default '',
-  PRIMARY KEY  (fromPage,toPage)
+  PRIMARY KEY  (fromPage,toPage),
+  KEY toPage (toPage)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -3045,7 +3046,8 @@ CREATE TABLE tiki_structures (
   page_alias varchar(240) NOT NULL default '',
   pos int(4) default NULL,
   PRIMARY KEY  (page_ref_id),
-  KEY pidpaid (page_id,parent_id)
+  KEY pidpaid (page_id,parent_id),
+  KEY page_id (page_id)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
 
