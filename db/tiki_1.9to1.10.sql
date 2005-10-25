@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.49 2005-10-24 20:51:27 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.50 2005-10-25 19:05:56 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -169,3 +169,6 @@ CREATE INDEX lastModif on tiki_pages (lastModif);
 #2005-10-24 sylvieg to boost tiki_stats and tiki_orphan
 CREATE INDEX toPage on tiki_links (toPage);
 CREATE INDEX page_id on tiki_structures (page_id);
+
+#2005-10-25 sylvieg sped up refresh index
+CREATE INDEX locationPage on tiki_searchindex (location, page);
