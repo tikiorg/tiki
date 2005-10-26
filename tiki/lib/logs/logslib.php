@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.11 2005-10-21 20:20:40 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.12 2005-10-26 20:20:23 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -49,9 +49,16 @@ class LogsLib extends TikiLib {
 			$bindvars[] = $type;
 		}
 		if ($user) {
-			$amid[] = "`loguser` = ?";
-			$bindvars[] = $user;
+			if (is_array($user)) {
+				$amid[] = '`loguser` in ('.implode(',',array_fill(0,count($user),'?')).')';
+				foreach ($user as $u)
+					$bindvars[] = $u;
+			} else {
+				$amid[] = "`loguser` = ?";
+				$bindvars[] = $user ;
+			}
 		}
+
 		if ($min) {
 			$amid[] = "`logtime` > ?";
 			$bindvars[] = $min;
@@ -165,6 +172,7 @@ class LogsLib extends TikiLib {
 		return split('_', str_replace('0', ' ', $conf));
 	}
 	function list_actions($action='', $objectType='',$user='',$offset=0,$maxRecords=-1,$sort_mode='lastModif_desc',$find='',$start=0,$end=0, $categId='') {
+
 		$bindvars = array();
 		$amid = array();
 		$mid = '';
@@ -189,8 +197,9 @@ class LogsLib extends TikiLib {
 			$bindvars[] = '' ;
 		} else if ($user) {
 			if (is_array($user)) {
-				$amid[] = "`user` in (?)";
-				$bindvars[] = implode(",", $user);
+				$amid[] = '`user` in ('.implode(',',array_fill(0,count($user),'?')).')';
+				foreach ($user as $u)
+					$bindvars[] = $u;
 			} else {
 				$amid[] = "`user` = ?";
 				$bindvars[] = $user ;
