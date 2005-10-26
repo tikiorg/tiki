@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.49 2005-10-17 20:46:43 sampaioprimo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.50 2005-10-26 15:11:03 amette Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -599,7 +599,7 @@ setcookie('tab',$cookietab);
 $smarty->assign('cookietab',$cookietab);
 
 include_once ('lib/quicktags/quicktagslib.php');
-$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','wiki');
+$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','calendar');
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
 include_once("textareasize.php");
 

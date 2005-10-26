@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.85 2005-10-16 14:35:09 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.86 2005-10-26 15:11:03 amette Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -383,7 +383,7 @@ if (!isset($mainfield) and isset($fields["data"][0]["fieldId"]) and isset($field
 }
 if ($textarea_options) {
 	include_once ('lib/quicktags/quicktagslib.php');
-	$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','');
+	$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','trackers');
 	$smarty->assign_by_ref('quicktags', $quicktags["data"]);
 }
 

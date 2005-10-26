@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_quicktags.php,v 1.10 2005-05-18 10:58:54 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_quicktags.php,v 1.11 2005-10-26 15:11:01 amette Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -109,6 +109,10 @@ if ($offset > 0) {
 $icon_path = array("images","img/icons","img/icn");
 $list_icons = $quicktagslib->list_icons($icon_path);
 $smarty->assign_by_ref('list_icons', $list_icons);
+
+//Need a method to find out, which quicktags are used in Tiki
+$list_categories = array('wiki', 'newsletters', 'maps', 'trackers', 'calendar', 'blogs', 'articles', 'faqs', 'forums');
+$smarty->assign_by_ref('list_categories', $list_categories);
 
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
 
