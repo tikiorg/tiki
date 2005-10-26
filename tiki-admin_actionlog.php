@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.5 2005-10-21 20:20:39 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.6 2005-10-26 20:20:21 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -48,9 +48,32 @@ foreach ($categories as $categ) {
 $smarty->assign_by_ref('categNames', $categNames);
 
 if (isset($_REQUEST['list'])) {
-	if (!isset($_REQUEST['user']))
-		$_REQUEST['user'] = '';
-	$smarty->assign('reportUser', $_REQUEST['user']);
+	$selectedUsers = array();
+	if (isset($_REQUEST['selectedUsers'])) {
+		foreach ($users as $key=>$user) {
+			if (in_array($user, $_REQUEST['selectedUsers']))
+				$selectedUsers[$key] = 'y';
+			else
+				$selectedUsers[$key] = 'n';
+		}
+	}
+	$smarty->assign('selectedUsers', $selectedUsers);
+	if (isset($_REQUEST['selectedGroups']) && !(sizeof($_REQUEST['selectedGroups']) == 1 && $_REQUEST['selectedGroups'][0] == '')) {
+		$selectedGroups = array();
+		foreach ($groups as $key=>$group) {
+			if (in_array($group, $_REQUEST['selectedGroups'])) {
+				$selectedGroups[$key] = 'y';
+				$members = $userlib->get_group_users($group);
+				foreach ($members as $m)
+					$_REQUEST['selectedUsers'][] = $m;
+			} else {
+				$selectedGroups[$key] = 'n';
+			}
+		}
+		$smarty->assign_by_ref('selectedGroups', $selectedGroups);
+	}
+	if (!isset($_REQUEST['selectedUsers']) || (sizeof($_REQUEST['selectedUsers']) == 1 && $_REQUEST['selectedUsers'][0] == ''))
+		$_REQUEST['selectedUsers'] = '';
 	if (!isset($_REQUEST['categId']) || $_REQUEST['categId'] == 0)
 		$_REQUEST['categId']='';
 	else
@@ -66,7 +89,7 @@ if (isset($_REQUEST['list'])) {
 	$endDate = mktime(23, 59, 59, $_REQUEST["endDate_Month"], $_REQUEST["endDate_Day"], $_REQUEST["endDate_Year"]);
 	$smarty->assign('endDate', $endDate);
 
-	$actions = $logslib->list_actions('', '', $_REQUEST['user'], 0, -1, 'lastModif_desc', '', $startDate, $endDate, $_REQUEST['categId']);
+	$actions = $logslib->list_actions('', '', $_REQUEST['selectedUsers'], 0, -1, 'lastModif_desc', '', $startDate, $endDate, $_REQUEST['categId']);
 
 	$statUser = $logslib->get_action_stat_user($actions);
 	$smarty->assign_by_ref('statUser', $statUser);
@@ -135,8 +158,7 @@ if (isset($_REQUEST['list'])) {
 		}
 	}
 	if ($showLogin) {
-		$uu = ($_REQUEST['user'] == "Registered")? '':  $_REQUEST['user'];
-		$logins = $logslib->list_logs('login', $uu, 0, -1, 'logtime_asc', '', $startDate, $endDate, $actions);
+		$logins = $logslib->list_logs('login', $_REQUEST['selectedUsers'], 0, -1, 'logtime_asc', '', $startDate, $endDate, $actions);
 		$logTimes = $logslib->get_login_time($logins['data'], $startDate, $endDate, $actions);
 		$smarty->assign_by_ref('logTimes', $logTimes);
 		foreach ($logins['data'] as $log) { // merge logs table in action table

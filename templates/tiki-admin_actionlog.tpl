@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.5 2005-10-21 20:20:39 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.6 2005-10-26 20:20:21 sylvieg Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Admin Action Log{/tr}</a></h1>
 <a name="Setting" />
@@ -22,12 +22,10 @@
 <table class="smallnormal">
 <tr>
 <td>{tr}User:{/tr}</td>
-<td><select name="user">
-<option value="" {if $reportUser eq  ''}selected="selected"{/if}>* {tr}All{/tr} *</option>
-<option value="Anonymous" {if $reportUser eq  'Anonymous'}selected="selected"{/if}>* {tr}Anonymous{/tr} *</option>
-<option value="Registered" {if $reportUser eq  'Registered'}selected="selected"{/if}>* {tr}Registered{/tr} *</option>
-{foreach key=userId item=login from=$users}
-<option value="{$login|escape}" {if $reportUser eq  $login}selected="selected"{/if}>{$login|escape}</option>
+<td><select multiple="multiple" size="5" name="selectedUsers[]">
+<option value="">&nbsp;</option>
+{foreach  key=ix item=user from=$users}
+<option value="{$user|escape}" {if $selectedUsers[$ix] eq 'y'}selected="selected"{/if}>{$user|escape}</option>
 {/foreach}
 </select>
 </td>
@@ -35,12 +33,13 @@
 <td>{html_select_date time=$startDate prefix="startDate_" end_year="-10" field_order=DMY}</td>
 </tr>
 <tr>
-<td>&nbsp;{*{tr}Group:{/tr}*}</td>
-<td>&nbsp;{*<select multiple="multiple" name="groups[]">
+<td>{tr}Group:{/tr}</td>
+<td><select multiple="multiple" size="5" name="selectedGroups[]">
+<option value="">&nbsp;</option>
 {section name=ix loop=$groups}
-<option value="{$groups[ix]|escape}">{$groups[ix]|escape}</option>
+<option value="{$groups[ix]|escape}" {if $selectedGroups[ix] eq 'y'}selected="selected"{/if}>{$groups[ix]|escape}</option>
 {/section}
-</select>*}
+</select>
 </td>
 <td>{tr}End date:{/tr}</td>
 <td>{html_select_date time=$endDate prefix="endDate_" end_year="-10" field_order=DMY}</td>
@@ -62,11 +61,15 @@
 {if $actionlogs}<a href="#Statistic" class="buttom">See Statictics</a>{/if}
 
 <a name="List" />
-<h3>{tr}List{/tr}{if $reportUser ne '' and $reportUser ne 'Anonymous' and $reportUser ne 'Registered'} &mdash; {tr}User:{/tr} {$reportUser}{/if}{if $reportCateg ne ''} &mdash; {tr}Category:{/tr} {$reportCateg}{/if}</h3>
+<h3>{tr}List{/tr}
+{if $selectedUsers}&nbsp;&mdash;&nbsp;{tr}User:{/tr}{foreach  key=ix item=user from=$users}{if $selectedUsers[$ix] eq 'y'} {$user|escape}{/if}{/foreach}{/if}
+{if $selectedGroups}&nbsp;&mdash;&nbsp;{tr}Group:{/tr}{foreach  key=ix item=group from=$groups}{if $selectedGroups[$ix] eq 'y'} {$group|escape}{/if}{/foreach}{/if}
+{if $reportCategory}&nbsp;&mdash;&nbsp;{tr}Category:{/tr} {$reportCateg}{/if}
+</h3>
 {if $actionlogs}
 <table class="smallnormal">
 <tr>
-{if $reportUser eq '' or $reportUser eq 'Registered'}<th class="heading">{tr}user{/tr}</th>{/if}
+<th class="heading">{tr}user{/tr}</th>
 <th class="heading">{tr}date{/tr}</th>
 <th class="heading">{tr}action{/tr}</th>
 <th class="heading">{tr}type{/tr}</th>
@@ -77,7 +80,7 @@
 {cycle values="even,odd" print=false}
 {section name=ix loop=$actionlogs}
 <tr>
-{if $reportUser eq '' or $reportUser eq 'Registered'}<td class="{cycle advance=false}">{if $actionlogs[ix].user}{$actionlogs[ix].user}{else}Anonymous{/if}</td>{/if}
+<td class="{cycle advance=false}">{if $actionlogs[ix].user}{$actionlogs[ix].user}{else}{tr}Anonymous{/tr}{/if}</td>
 <td class="{cycle advance=false}">{$actionlogs[ix].lastModif|tiki_short_datetime}</td>
 <td class="{cycle advance=false}">{$actionlogs[ix].action}</td>
 <td class="{cycle advance=false}">{$actionlogs[ix].objectType}</td>
@@ -90,9 +93,13 @@
 {/if}
 
 <a name="Statistic" />
-<h3>{tr}Statistic{/tr}{if $reportUser ne '' and $reportUser ne 'Anonymous' and $reportUser ne 'Registered'} &mdash; {tr}User:{/tr} {$reportUser}{/if}{if $reportCateg ne ''} &mdash; {tr}Category:{/tr} {$reportCateg}{/if}</h3>
+<h3>{tr}Statistic{/tr}
+{if $selectedUsers}&nbsp;&mdash;&nbsp;{tr}User:{/tr}{foreach  key=ix item=user from=$users}{if $selectedUsers[$ix] eq 'y'} {$user|escape}{/if}{/foreach}{/if}
+{if $selectedGroups}&nbsp;&mdash;&nbsp;{tr}Group:{/tr}{foreach  key=ix item=group from=$groups}{if $selectedGroups[$ix] eq 'y'} {$group|escape}{/if}{/foreach}{/if}
+{if $reportCategory}&nbsp;&mdash;&nbsp;{tr}Category:{/tr} {$reportCateg}{/if}
+</h3>
 
-{if $showLogin eq 'y'}
+{if $showLogin eq 'y' and $logTimes|@count ne 0}
 <table class="smallnormal">
 <tr>
 <th class="heading">{tr}user{/tr}</th>
@@ -111,7 +118,27 @@
 </table>
 {/if}
 
-{if $stat}
+{if $showCateg eq 'y' and $volCateg|@count ne 0}
+<table class="smallnormal">
+<tr>
+<th class="heading">{tr}category{/tr}</th>
+{foreach  item=type from=$typeVol}
+<th class="heading">{$type} (+{tr}KB{/tr})</th><th class="heading">{$type} (-{tr}KB{/tr})</th><th class="heading">{$type} ({tr}KB{/tr})</th>
+{/foreach}
+</tr>
+{foreach key=categId item=vol from=$volCateg}
+<tr>
+<td class="{cycle advance=false}">{$vol.category}</td>
+{foreach item=type from=$typeVol}
+<td class="{cycle advance=false}">{* {$vol[$type].add}-{$vol[$type].del}-{$vol[$type].dif}*** *}{math equation="round(a/b)" a=$vol[$type].add b=1024}</td><td class="{cycle advance=false}">{math equation="round(a/b)" a=$vol[$type].del b=1024}</td><td class="{cycle advance=false}">{math equation="round(a/b)" a=$vol[$type].dif b=1024}</td>
+{/foreach}
+<!-- {cycle} -->
+</tr>
+{/foreach}
+</table>
+{/if}
+
+{if $statUser|@count ne 0}
 <table class="normal">
 <tr>
 <th class="heading">{tr}user{/tr}</th>
@@ -150,28 +177,9 @@
 </tr>
 {/foreach}
 </table>
-
-<table class="smallnormal">
-<tr>
-<th class="heading">{tr}category{/tr}</th>
-{foreach  item=type from=$typeVol}
-<th class="heading">{$type} (+{tr}KB{/tr})</th><th class="heading">{$type} (-{tr}KB{/tr})</th><th class="heading">{$type} ({tr}KB{/tr})</th>
-{/foreach}
-</tr>
-{foreach key=categId item=vol from=$volCateg}
-<tr>
-<td class="{cycle advance=false}">{$vol.category}</td>
-{foreach item=type from=$typeVol}
-<td class="{cycle advance=false}">{$vol[$type].add}-{$vol[$type].del}-{$vol[$type].dif}****{math equation="round(a/b)" a=$vol[$type].add b=1024}</td><td class="{cycle advance=false}">{math equation="round(a/b)" a=$vol[$type].del b=1024}</td><td class="{cycle advance=false}">{math equation="round(a/b)" a=$vol[$type].dif b=1024}</td>
-{/foreach}
-<!-- {cycle} -->
-</tr>
-{/foreach}
-</table>
-
 {/if}
 
-{if $showCateg eq 'y'}
+{if $showCateg eq 'y' && $statUserCateg|@count ne 0}
 <table class="normal">
 <tr>
 <th class="heading">{tr}category{/tr}</th>
