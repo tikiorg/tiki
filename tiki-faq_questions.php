@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-faq_questions.php,v 1.23 2005-05-18 10:58:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-faq_questions.php,v 1.24 2005-10-26 15:11:02 amette Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -148,7 +148,7 @@ $suggested = $faqlib->list_suggested_questions(0, -1, 'created_desc', '', $_REQU
 $smarty->assign_by_ref('suggested', $suggested["data"]);
 
 include_once ('lib/quicktags/quicktagslib.php');
-$quicktags = $quicktagslib->list_quicktags(0,20,'taglabel_desc','','wiki');
+$quicktags = $quicktagslib->list_quicktags(0,20,'taglabel_desc','','faqs');
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
 $section = 'faqs';
 include_once ('tiki-section_options.php');
