@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-compose.php,v 1.29 2005-09-15 14:52:33 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-compose.php,v 1.30 2005-10-27 20:12:31 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -37,10 +37,10 @@ if ($tiki_p_messages != 'y') {
 	die;
 }
 
-if ($tikilib->get_user_preference($user, 'allowMsgs', 'n') != 'y') {
-	$smarty->assign('msg', tra("You have to be able to receive messages in order to send them. Goto your user preferences and enable 'Allow messages from other users'"));
-	$smarty->display("error.tpl");
-	die;
+if ($tikilib->get_user_preference($user, 'allowMsgs', 'y') != 'y') {
+$smarty->assign('msg', tra("You have to be able to receive messages in order to send them. Goto your user preferences and enable 'Allow messages from other users'"));
+$smarty->display("error.tpl");
+die;
 }
 
 if (($messu_sent_size>0) && ($messulib->count_messages($user, 'sent')>=$messu_sent_size) ) {

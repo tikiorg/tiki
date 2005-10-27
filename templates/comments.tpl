@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.63 2005-10-16 14:35:10 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.64 2005-10-27 20:12:33 sylvieg Exp $ *}
 
 {if $forum_mode eq 'y'}
     <tr><td>
@@ -120,11 +120,13 @@
   </table>
  
     <table class="normal">
+{if $comments_style != 'commentStyle_plain'}
 <tr>
 <td class="odd">
+{/if}
   {section name=rep loop=$comments_coms}
   {include file="comment.tpl"  comment=$comments_coms[rep]}
-<br />
+{if $comments_style != 'commentStyle_plain'}<br />{/if}
   {/section}
 </td>
 </tr>

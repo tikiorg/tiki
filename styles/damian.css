@@ -181,6 +181,10 @@ div.box_right {
 }
 
 /* Boxes are divided in title and data, this is the title */
+div.box-title a, span.box-titletext a {
+  color: white;
+}
+
 div.box-title {
 	border-bottom:   1px solid #9F9F9F;
 	background: #26334D;

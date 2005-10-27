@@ -19,8 +19,13 @@
 <tr class="formcolor"><td>{tr}Insert (use 'text' for figuring the selection){/tr}:</td>
 
 <td><textarea maxlength="255" cols ="50" rows="5" name="taginsert">{$info.taginsert|escape}</textarea></td></tr>
-<tr class="formcolor"><td>{tr}Category: wiki, trackers, etc.{/tr}:</td>
-<td><input type="text" maxlength="255" size="10" name="tagcategory" value="{$info.tagcategory|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}Category{/tr}:</td><td>
+<select name="tagcategory">
+{section name=ct loop=$list_categories}
+<option {if $info.tagcategory eq $list_categories[ct]} selected="selected"{/if}>{$list_categories[ct]}</option>
+{/section}
+</select>
+</td></tr>
 <tr class="formcolor"><td>{tr}Path to the tag icon{/tr}:</td><td>
 <select name="tagicon">
 {section name=it loop=$list_icons}

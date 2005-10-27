@@ -25,8 +25,13 @@ class MultilingualLib extends TikiLib {
 		if (!$srcTrads && !$objTrads) {
 			$query = "insert into `tiki_translated_objects` (`type`,`objId`,`lang`) values (?,?,?)";
 			$this->query($query, array($type, $srcId, $srcLang));
-			$query = "insert into `tiki_translated_objects` (`type`,`objId`,`traId`,`lang`) values (?,?,last_insert_id(),?)";
-			$this->query($query, array($type, $objId, $objLang));
+			$query = "select max(`traId`) from `tiki_translated_objects` where `type`=? and `objId`=?";
+			$tmp_traId = $this->getOne($query, array( $type, $srcId ) );
+			$query = "insert into `tiki_translated_objects` (`type`,`objId`,`traId`,`lang`) values (?,?,?,?)";
+			$this->query($query, array($type, $objId, $tmp_traId, $objLang));
+			//last_insert_id is not postgres compatible
+			//$query = "insert into `tiki_translated_objects` (`type`,`objId`,`traId`,`lang`) values (?,?,last_insert_id(),?)";
+			//$this->query($query, array($type, $objId, $objLang));
 			return  null;
 		}
 		elseif (!$srcTrads) {
@@ -91,11 +96,10 @@ class MultilingualLib extends TikiLib {
 	 */
 	function getTranslations($type, $objId, $objName, $objLang, $long=false) {
 		if ($type == 'wiki page') {
-			//$query = "select t2.`objId`, t2.`lang`, p.`pageName`as objName from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2, `tiki_pages` as p where t1.`traId`=t2.`traId` and t2.`objId`!= t1.`objId` and t1.`type`=? and  t1.`objId`=? and p.`page_id`=t2.`objId";
-			$query = "select t2.`objId`, t2.`lang`, p.`pageName`as objName from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2 LEFT JOIN `tiki_pages` p ON p.`page_id`=t2.`objId` where t1.`traId`=t2.`traId` and t2.`objId`!= t1.`objId` and t1.`type`=? and  t1.`objId`=?";
+			$query = "select t2.`objId`, t2.`lang`, p.`pageName`as `objName` from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2 LEFT JOIN `tiki_pages` p ON p.`page_id`=t2.`objId` where t1.`traId`=t2.`traId` and t2.`objId`!= t1.`objId` and t1.`type`=? and  t1.`objId`=?";
 		}
 		elseif ($long) {
-			$query = "select t2.`objId`, t2.`lang`, a.`title` as objName from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2, `tiki_articles` as a where t1.`traId`=t2.`traId` and t2.`objId`!= t1.`objId` and t1.`type`=? and  t1.`objId`=? and a.`articleId`=t2.`objId`";
+			$query = "select t2.`objId`, t2.`lang`, a.`title` as `objName` from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2, `tiki_articles` as a where t1.`traId`=t2.`traId` and t2.`objId`!= t1.`objId` and t1.`type`=? and  t1.`objId`=? and a.`articleId`=t2.`objId`";
 		}
 		else {
 			$query = "select t2.`objId`, t2.`lang` from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2 where t1.`traId`=t2.`traId` and t2.`objId`!= t1.`objId` and t1.`type`=? and  t1.`objId`=?";

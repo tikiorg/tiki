@@ -31,36 +31,15 @@ function since_last_visit_new($user) {
   //if (!isset($_SESSION["slvn_last_login"])) $_SESSION["slvn_last_login"] = $last;
   //$last = strtotime ("-2 week");
 
-  if ($userlib->user_has_permission($user, "tiki_p_read_comments") &&
-     ($tikilib->get_preference("feature_article_comments")         == 'y' ||
-      $tikilib->get_preference("feature_blogposts_comments")       == 'y' ||
-      $tikilib->get_preference("feature_blog_comments")            == 'y' ||
-      $tikilib->get_preference("feature_faq_comments")             == 'y' ||
-      $tikilib->get_preference("feature_file_galleries_comments")  == 'y' ||
-      $tikilib->get_preference("feature_image_galleries_comments") == 'y' ||
-      $tikilib->get_preference("feature_poll_comments")            == 'y' ||
-      $tikilib->get_preference("feature_wiki_comments")            == 'y' ))
-  {
     $ret["items"]["comments"]["label"] = tra("new comments");
     $ret["items"]["comments"]["cname"] = "slvn_comments_menu";
-    $query = "select `object`,`objectType`,`title`,`commentDate`,`userName`,`threadId`, `parentId` from `tiki_comments` where `commentDate`>? order by `commentDate` desc";
+    $query = "select `object`,`objectType`,`title`,`commentDate`,`userName`,`threadId`, `parentId` from `tiki_comments` where `commentDate`>? and `objectType` != 'forum' order by `commentDate` desc";
     $result = $tikilib->query($query, array((int)$last));
 
     $count = 0;
     while ($res = $result->fetchRow())
     {
       switch($res["objectType"]){
-      	case "forum":
-		$perm = 'tiki_p_forum_read';
-          $ret["items"]["comments"]["list"][$count]["href"]
-            = "tiki-view_forum_thread.php?forumId=" . $res["object"] . "&comments_parentId=";
-	  if ($res["parentId"]) {
-          	$ret["items"]["comments"]["list"][$count]["href"].=$res["parentId"];
-	  } else {
-          	$ret["items"]["comments"]["list"][$count]["href"].=$res["threadId"];
-	    # threadId gives the link to the particular comment, parentId gives the thread of the forum, I prefer this one 
-	  }
-	  break;
         case "article":
 		$perm = 'tiki_p_read_article';
           $ret["items"]["comments"]["list"][$count]["href"]
@@ -100,17 +79,46 @@ function since_last_visit_new($user) {
           $ret["items"]["comments"]["list"][$count]["href"]
             = "tiki-index.php?page=" . urlencode($res["object"]);
           break;
+         default:
+            $perm = 'tiki_p_read_comment';
+            break;
       }
 	if (!isset($perm) || $userlib->user_has_perm_on_object($user,$res['object'], $res['objectType'], $perm)) {
+            if ($ret["items"]["comments"]["list"][$count]["href"])
+                  $ret["items"]["comments"]["list"][$count]["href"] .= '&amp;comments_show=y#threadId'.$res['threadId'];
       	$ret["items"]["comments"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["commentDate"]) ." ". tra("by") ." ". $res["userName"];
       	$ret["items"]["comments"]["list"][$count]["label"] = $res["title"]; 
       	$count++;
 	}
     }
     $ret["items"]["comments"]["count"] = $count;
-  }
 
-  if ($tikilib->get_preference("feature_wiki") == 'y' && $userlib->user_has_permission($user, "tiki_p_view")) {
+ if ($tikilib->get_preference('feature_forums') == 'y') {
+    $ret["items"]["posts"]["label"] = tra("new posts");
+    $ret["items"]["posts"]["cname"] = "slvn_posts_menu";
+    $query = "select `object`,`objectType`,`title`,`commentDate`,`userName`,`threadId`, `parentId` from `tiki_comments` where `commentDate`>? and `objectType` = 'forum' order by `commentDate` desc";
+    $result = $tikilib->query($query, array((int)$last));
+
+    $count = 0;
+    while ($res = $result->fetchRow())
+    {
+       if ($userlib->user_has_perm_on_object($user,$res['object'], $res['objectType'], 'tiki_p_forum_read')) {
+          $ret["items"]["posts"]["list"][$count]["href"]
+            = "tiki-view_forum_thread.php?forumId=" . $res["object"] . "&comments_parentId=";
+	  if ($res["parentId"]) {
+          	$ret["items"]["posts"]["list"][$count]["href"].=$res["parentId"].'#threadId'.$res['threadId'];
+	  } else {
+          	$ret["items"]["posts"]["list"][$count]["href"].=$res["threadId"];
+	  }
+      	$ret["items"]["posts"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["commentDate"]) ." ". tra("by") ." ". $res["userName"];
+      	$ret["items"]["posts"]["list"][$count]["label"] = $res["title"]; 
+        ++$count;	
+	 }
+    }
+    $ret["items"]["posts"]["count"] = $count;
+ }
+
+  if ($tikilib->get_preference("feature_wiki") == 'y') {
     // && $tikilib->getOne("select count(*) from `tiki_pages` where `lastModif`>?",array((int)$last))!=0) {    
     $ret["items"]["pages"]["label"] = tra("wiki pages changed");
     $ret["items"]["pages"]["cname"] = "slvn_pages_menu";
@@ -130,7 +138,7 @@ function since_last_visit_new($user) {
     $ret["items"]["pages"]["count"] = $count;
   }
 
-  if ($tikilib->get_preference("feature_articles") == 'y' && $userlib->user_has_permission($user, "tiki_p_read_article")) {    
+  if ($tikilib->get_preference("feature_articles") == 'y' ) {    
     $ret["items"]["articles"]["label"] = tra("new articles");
     $ret["items"]["articles"]["cname"] = "slvn_articles_menu";
 
@@ -156,7 +164,7 @@ function since_last_visit_new($user) {
     $ret["items"]["articles"]["count"] = $count;
   }
 
-  if ($tikilib->get_preference("feature_faqs") == 'y' && $userlib->user_has_permission($user, "tiki_p_view_faqs")) {    
+  if ($tikilib->get_preference("feature_faqs") == 'y') {    
     $ret["items"]["faqs"]["label"] = tra("new FAQs");
     $ret["items"]["faqs"]["cname"] = "slvn_faqs_menu";
 
@@ -176,7 +184,7 @@ function since_last_visit_new($user) {
     $ret["items"]["faqs"]["count"] = $count;
   }
 
-  if ($tikilib->get_preference("feature_blogs") == 'y' && $userlib->user_has_permission($user, "tiki_p_read_blog")) {    
+  if ($tikilib->get_preference("feature_blogs") == 'y') {    
     $ret["items"]["blogs"]["label"] = tra("new blogs");
     $ret["items"]["blogs"]["cname"] = "slvn_blogs_menu";
 
@@ -215,7 +223,7 @@ function since_last_visit_new($user) {
     $ret["items"]["blogPosts"]["count"] = $count;
   }
 
-  if ($tikilib->get_preference("feature_galleries") == 'y' && $userlib->user_has_permission($user, "tiki_p_view_image_gallery")) {
+  if ($tikilib->get_preference("feature_galleries") == 'y') {
     //image galleries
     $ret["items"]["imageGalleries"]["label"] = tra("new image galleries");
     $ret["items"]["imageGalleries"]["cname"] = "slvn_imageGalleries_menu";
@@ -253,7 +261,7 @@ function since_last_visit_new($user) {
     $ret["items"]["images"]["count"] = $count;
   }
 
-  if ($tikilib->get_preference("feature_file_galleries") == 'y' && $userlib->user_has_permission($user, "tiki_p_view_file_gallery")) {
+  if ($tikilib->get_preference("feature_file_galleries") == 'y') {
     //file galleries
     $ret["items"]["fileGalleries"]["label"] = tra("new file galleries");
     $ret["items"]["fileGalleries"]["cname"] = "slvn_fileGalleries_menu";
@@ -291,7 +299,7 @@ function since_last_visit_new($user) {
     $ret["items"]["files"]["count"] = $count;
   }
 
-  if ($tikilib->get_preference("feature_polls") == 'y' && $userlib->user_has_permission($user, "tiki_p_view_polls")) {
+  if ($tikilib->get_preference("feature_polls") == 'y') {
     $ret["items"]["polls"]["label"] = tra("new polls");
     $ret["items"]["polls"]["cname"] = "slvn_polls_menu";
 

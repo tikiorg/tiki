@@ -15,7 +15,7 @@ class StatsLib extends TikiLib {
 		$this->db = $db;
 	}
 
-	function list_orphan_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '') {
+	function list_orphan_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '', $onlyName=false) {
 	        global $user;
 
 		if ($sort_mode == 'size_desc') {
@@ -46,7 +46,7 @@ class StatsLib extends TikiLib {
 		}
 		$bindvars = array();
 		if ($find) {
-			$mid = " where `pageName` like ? ";
+			$mid = " and `pageName` like ? ";
 			$bindvars[] = "%$find%";
 		} else {
 			$mid = "";
@@ -55,10 +55,8 @@ class StatsLib extends TikiLib {
 		// If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
 		// If sort mode is links then offset is 0, maxRecords is -1 (again) and sort_mode is nil
 		// If sort mode is backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-		$query = "select `pageName`, `hits`, `page_size` as `len` ,`lastModif`, `user`, `ip`, `comment`, `version`, `flag` from `tiki_pages` $mid order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_pages` $mid";
+		$query = "select `pageName`, `hits`, `page_size` as `len` ,`lastModif`, `user`, `ip`, `comment`, `version`, `flag` from `tiki_pages` tp left join `tiki_links` tl on tp.`pageName` = tl.`toPage` left join `tiki_structures` ts on  tp.`page_id`= ts.`page_id`where tl.`toPage` IS NULL and  `ts`.page_id IS NULL $mid order by ".$this->convert_sortmode($sort_mode);
 		$result = $this->query($query,$bindvars,-1,0);
-		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 		$num_or = 0;
 
@@ -66,12 +64,6 @@ class StatsLib extends TikiLib {
 		   //WYSIWYCA
 		   if($this->user_has_perm_on_object($user,$res["pageName"],'wiki page','tiki_p_view')) {
 			$pageName = $res["pageName"];
-			$queryc = "select count(*) from `tiki_links` where `toPage`=?";
-			$cant = $this->getOne($queryc,array($pageName));
-			$queryc = "select count(*) from `tiki_structures` ts, `tiki_pages` tp where ts.`page_id`=tp.`page_id` and tp.`pageName`=?";
-			$cant += $this->getOne($queryc,array($pageName));
-
-			if ($cant == 0) {
 				$num_or++;
 				$aux = array();
 				$aux["pageName"] = $pageName;
@@ -85,11 +77,12 @@ class StatsLib extends TikiLib {
 				$aux["comment"] = $res["comment"];
 				$aux["version"] = $res["version"];
 				$aux["flag"] = $res["flag"] == 'L' ? tra('locked') : tra('unlocked');
-				$aux["versions"] = $this->getOne("select count(*) from `tiki_history` where `pageName`=?",array($page_as));
-				$aux["links"] = $this->getOne("select count(*) from `tiki_links` where `fromPage`=?",array($page_as));
-				$aux["backlinks"] = $this->getOne("select count(*) from `tiki_links` where `toPage`=?",array($page_as));
+				if (!$onlyName) {
+					$aux["versions"] = $this->getOne("select count(*) from `tiki_history` where `pageName`=?",array($page_as));
+					$aux["links"] = $this->getOne("select count(*) from `tiki_links` where `fromPage`=?",array($page_as));
+					$aux["backlinks"] = $this->getOne("select count(*) from `tiki_links` where `toPage`=?",array($page_as));
+				}
 				$ret[] = $aux;
-			}
 		    }
 		}
 
@@ -147,7 +140,7 @@ class StatsLib extends TikiLib {
 			$stats["vpp"] = 0;
 		}
 		$stats["visits"] = $this->getOne("select sum(`hits`) from `tiki_pages`",array());
-		$or = $this->list_orphan_pages(0, -1, 'pageName_desc', '');
+		$or = $this->list_orphan_pages(0, -1, 'pageName_desc', '', true);
 		$stats["orphan"] = $or["cant"];
 		$links = $this->getOne("select count(*) from `tiki_links`",array());
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.86 2005-10-26 15:11:03 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.87 2005-10-27 20:12:31 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -193,7 +193,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 	}
 	if (($xfields["data"][$i]['isTblVisible'] == 'y' or $xfields["data"][$i]['isSearchable'] == 'y') 
 //		and ($xfields["data"][$i]['isPublic'] == 'y' or $tiki_p_admin_trackers == 'y') ispublic is for tracker plugin not normal view
-		and ($xfields["data"][$i]['isHidden'] == 'n' or $tiki_p_admin_trackers == 'y')
+		and ($xfields["data"][$i]['isHidden'] != 'y' or $tiki_p_admin_trackers == 'y')
 		) {
 		
 		$listfields[$fid]['type'] = $xfields["data"][$i]["type"];
@@ -206,7 +206,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 		$listfields[$fid]['isSearchable'] = $xfields["data"][$i]["isSearchable"];
 	}
 	
-	if ($xfields["data"][$i]['isHidden'] == 'n' or $tiki_p_admin_trackers == 'y') {
+	if ($xfields["data"][$i]['isHidden'] != 'y' or $tiki_p_admin_trackers == 'y') {
 		$ins_fields["data"][$i] = $xfields["data"][$i];
 		$fields["data"][$i] = $xfields["data"][$i];
 		if ($fields["data"][$i]["type"] == 'f') { // date and time

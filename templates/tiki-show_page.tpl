@@ -1,6 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.89 2005-06-26 14:28:34 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.90 2005-10-27 20:12:33 sylvieg Exp $ *}
 
-{breadcrumbs type="trail" loc="page" crumbs=$crumbs}{breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs}
+{breadcrumbs type="trail" loc="page" crumbs=$crumbs}
+{if $feature_page_title eq 'y'}
+{breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs}
+{/if}
 
 <div class="wikitopline">
 <table><tr>

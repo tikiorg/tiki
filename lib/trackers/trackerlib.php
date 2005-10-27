@@ -600,9 +600,9 @@ class TrackerLib extends TikiLib {
 				if (isset($ins_fields["data"][$i]["isHidden"]) && $ins_fields["data"][$i]["isHidden"] == 'n') { // TODO: on perm control
 					if (isset($ins_fields["data"][$i]["type"]) and ($ins_fields["data"][$i]["type"] == 'f' or $ins_fields["data"][$i]["type"] == 'j')) {
 						$human_value = date('r',$ins_fields["data"][$i]["value"]);
-						$the_data .= "  $name = $human_value\n";
+						$the_data .= "$name".":\n   $human_value\n\n";
 					} else {
-						$the_data .= "  $name = $value\n";
+						$the_data .= "$name".":\n   $value\n\n";
 					}
 				}
 
@@ -664,8 +664,8 @@ class TrackerLib extends TikiLib {
 				$smarty->assign('mail_user', $user);
 				if ($itemId) {
 					$mail_action = "\r\n".tra('Item Modification')."\r\n\r\n";
-					$mail_action.= tra('Tracker').': '.$trackerName."\r\n";
-					$mail_action.= tra('Item').': '.$itemId;
+					$mail_action.= tra('Tracker').":\n   ".$trackerName."\r\n";
+					$mail_action.= tra('Item').":\n   ".$itemId;
 				} else {
 					$mail_action = "\r\n".tra('Item creation')."\r\n\r\n";
 					$mail_action.= tra('Tracker').': '.$trackerName;
@@ -710,16 +710,16 @@ class TrackerLib extends TikiLib {
 			    $subject='['.$trackerName.'] '.tra('Tracker was modified at '). $_SERVER["SERVER_NAME"];
 
 			    // Try to find a Subject in $the_data
-			    $subject_test = preg_match( '/^  Subject = .*$/m', $the_data, $matches );
+			    $subject_test = preg_match( '/^Subject:\n   .*$/m', $the_data, $matches );
 
 			    if( $subject_test == 1 )
 			    {
-				$subject = preg_replace( '/^  Subject = /m', '', $matches[0] );
+				$subject = preg_replace( '/^Subject:\n   /m', '', $matches[0] );
 				// Remove the subject from $the_data
-				$the_data = preg_replace( '/^  Subject = .*$/m', '', $the_data );
+				$the_data = preg_replace( '/^Subject:\n   .*$/m', '', $the_data );
 			    }
 
-			    $the_data = preg_replace( '/^  [A-Za-z]+ = /m', '', $the_data );
+			    $the_data = preg_replace( '/^.+:\n   /m', '', $the_data );
 
 			    //outbound email ->  will be sent in utf8 - from sender_email
 			    include_once('lib/webmail/tikimaillib.php');
