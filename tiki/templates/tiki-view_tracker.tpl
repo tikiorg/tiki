@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker.tpl,v 1.101 2005-10-16 14:35:10 mose Exp $ *}
+{* $Id: tiki-view_tracker.tpl,v 1.102 2005-10-27 20:12:33 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -129,8 +129,8 @@ class="prevnext">{tr}All{/tr}</a>
 {section name=ix loop=$fields}
 {if $fields[ix].type eq 'l' and $fields[ix].isTblVisible eq 'y'}
 <td class="heading auto">{$fields[ix].name|default:"&nbsp;"}</td>
-{elseif $fields[ix].type eq 's' and $fields[ix].name eq "Rating"}
-	<td class="heading auto"{if $tiki_p_tracker_vote_ratings eq 'y'} colspan="2"{/if}>
+{elseif $fields[ix].type eq 's' and $fields[ix].name eq "Rating" and $fields[ix].isTblVisible eq 'y'}
+	<td class="heading auto"{if $tiki_p_tracker_vote_ratings eq 'y' and $user ne ''} colspan="2"{/if}>
 		<a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}trackerId={$trackerId}
 		&amp;offset={$offset}&amp;sort_mode=f_{if $sort_mode eq 'f_'|cat:$fields[ix].fieldId|cat:'_asc'}
 		{$fields[ix].fieldId|escape:"url"}_desc{else}{$fields[ix].fieldId|escape:"url"}_asc{/if}">

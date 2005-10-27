@@ -76,7 +76,7 @@
 				</td>
 				{/if} {* if ($tiki_p_vote_comments eq 'y' ... *}
 				<td align="right">
-					{if $tiki_p_remove_comments eq 'y' || ($tiki_p_admin_forum eq 'y' and $forum_mode eq 'y')}
+					{if ($tiki_p_remove_comments eq 'y' && $forum_mode ne 'y') || ($tiki_p_admin_forum eq 'y' and $forum_mode eq 'y')}
 					  &nbsp;&nbsp;<a title="{tr}delete{/tr}" class="link" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_threadId={$comment.threadId}&amp;comments_remove=1&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}&amp;comments_style={$comments_style}"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt='{tr}Remove{/tr}'></a>
 					{/if}
 					{if $tiki_p_edit_comments eq 'y' || $user == $comment.userName || ($tiki_p_admin_forum eq 'y' and $forum_mode eq 'y')}

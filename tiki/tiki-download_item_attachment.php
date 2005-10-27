@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-download_item_attachment.php,v 1.11 2005-06-16 20:10:49 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-download_item_attachment.php,v 1.12 2005-10-27 20:12:31 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -42,7 +42,7 @@ header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 header("Pragma: public");
 
 if ($info["path"]) {
-	header("Content-Length: ". filesize( $fgal_use_dir.$info["path"] ) );
+	header("Content-Length: ". filesize( $t_use_dir.$info["path"] ) );
 	readfile ($t_use_dir . $info["path"]);
 } else {
 	header("Content-Length: ". $info[ "filesize" ] );

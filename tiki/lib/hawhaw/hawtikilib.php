@@ -6,7 +6,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/hawhaw/hawtikilib.php,v 1.17 2005-08-18 16:23:05 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/hawhaw/hawtikilib.php,v 1.18 2005-10-27 20:12:32 sylvieg Exp $
 
 // HAWHAW function library for TikiWiki
 
@@ -529,9 +529,9 @@ function HAWTIKI_deck_init(&$deck)
   }
 
   if (isset($_SESSION['haw_skin']))
-    $deck->use_simulator("/lib/hawhaw/skin/" . $_SESSION['haw_skin'] . "/skin.css");
+    $deck->use_simulator("lib/hawhaw/skin/" . $_SESSION['haw_skin'] . "/skin.css");
 
-  $banner = new HAW_banner("/img/tiki/tikibutton2.png",
+  $banner = new HAW_banner("img/tiki/tikibutton2.png",
 "http://mobile.tikiwiki.org/", "Powered by MobileTiki");
   $deck->add_banner($banner);
   

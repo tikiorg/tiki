@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.77 2005-10-16 14:35:09 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.78 2005-10-27 20:12:31 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -124,6 +124,14 @@ if (isset($_REQUEST["prefs"])) {
 	$tikilib->set_user_preference($userwatch, 'email is public', $email_isPublic);
 
 	$tikilib->set_user_preference($userwatch, 'mailCharset', $_REQUEST['mailCharset']);
+
+	// Custom fields
+	foreach ($customfields as $custpref=>$prefvalue ) {
+		//print $customfields[$custpref]['prefName'];
+		//print $_REQUEST[$customfields[$custpref]['prefName']];
+		if (isset($_REQUEST[$customfields[$custpref]['prefName']]))
+			$tikilib->set_user_preference($userwatch, $customfields[$custpref]['prefName'], $_REQUEST[$customfields[$custpref]['prefName']]);
+	}
 
 	header ("location: tiki-user_preferences.php?view_user=$userwatch");
 	die;

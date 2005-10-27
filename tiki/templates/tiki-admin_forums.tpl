@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.47 2005-05-18 11:02:56 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.48 2005-10-27 20:12:33 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_forums.php">{tr}Admin Forums{/tr}</a>
 
  
@@ -313,9 +313,9 @@
 {if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
    <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;forumId={$channels[user].forumId}"><img src="img/icons/config.gif" border="0" width="16" height="16" alt='{tr}Configure/Options{/tr}'></a>
    {if $channels[user].individual eq 'y'}
-   	<a class="link" href="tiki-objectpermissions.php?objectName=Forum+{$channels[user].name}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}"><img src='img/icons/key_active.gif' border='0' width="17" height="16" alt='{tr}Assign Permissions (Active){/tr}'></a>
+   	<a class="link" href="tiki-objectpermissions.php?objectName=Forum+{$channels[user].name|escape}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}"><img src='img/icons/key_active.gif' border='0' width="17" height="16" alt='{tr}Assign Permissions (Active){/tr}'></a>
    {else}
-   	<a class="link" href="tiki-objectpermissions.php?objectName=Forum+{$channels[user].name}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}"><img src='img/icons/key.gif' border='0' width="17" height="16" alt='{tr}Assign Permissions{/tr}'></a>
+   	<a class="link" href="tiki-objectpermissions.php?objectName=Forum+{$channels[user].name|escape}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}"><img src='img/icons/key.gif' border='0' width="17" height="16" alt='{tr}Assign Permissions{/tr}'></a>
    {/if}
    &nbsp;&nbsp;<a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].forumId}" title="{tr}Click here to delete this forum{/tr}"><img src='img/icons2/delete.gif' border='0' width="16" height="16" alt='{tr}Remove{/tr}'></a>
 {/if}

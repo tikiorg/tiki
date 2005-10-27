@@ -18,7 +18,7 @@
 // |          Tomas V.V.Cox <cox@idecnet.com>                             |
 // +----------------------------------------------------------------------+
 //
-// $Id: PEAR.php,v 1.2 2003-06-19 21:03:23 awcolley Exp $
+// $Id: PEAR.php,v 1.3 2005-10-27 20:12:32 sylvieg Exp $
 //
 
 define('PEAR_ERROR_RETURN',   1);
@@ -420,10 +420,11 @@ class PEAR
             $ec = 'PEAR_Error';
         }
         if ($skipmsg) {
-            return new $ec($code, $mode, $options, $userinfo);
+            $back = new $ec($code, $mode, $options, $userinfo);
         } else {
-            return new $ec($message, $code, $mode, $options, $userinfo);
+            $back = new $ec($message, $code, $mode, $options, $userinfo);
         }
+				return $back;
     }
 
     // }}}

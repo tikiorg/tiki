@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.55 2005-10-16 14:35:09 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.56 2005-10-27 20:12:31 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -195,7 +195,9 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 		$smarty->assign("comments_reply_threadId", 0); // without the flag
 	    } else {
 		$qId = $_REQUEST["comments_threadId"];
-		if ($tiki_p_edit_comments == 'y') {
+		if (($tiki_p_edit_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'))
+			|| (($tiki_p_forum_post == 'y' || $tiki_p_admin_forum == 'y') && isset($forum_mode) && $forum_mode == 'y' )
+			|| ($commentslib->user_can_edit_post($user, $_REQUEST["comments_threadId"]))) {
 		    $commentslib->update_comment($_REQUEST["comments_threadId"], $_REQUEST["comments_title"],
 			    $_REQUEST["comment_rating"], $_REQUEST["comments_data"], 'n', '', '', $comments_objectId);
 		}
@@ -344,6 +346,22 @@ if ($tiki_p_vote_comments == 'y') {
     }
 }
 
+if (($tiki_p_remove_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'))
+	|| (isset($forum_mode) && $forum_mode =='y' && $tiki_p_admin_forum == 'y' ) ) {
+    if (isset($_REQUEST["comments_remove"]) && isset($_REQUEST["comments_threadId"])) {
+	$area = 'delcomment';
+	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+	    key_check($area);
+	    $comments_show = 'y';
+	    $commentslib->remove_comment($_REQUEST["comments_threadId"]);
+	    $_REQUEST["comments_threadId"] = 0;
+	    $smarty->assign('comments_threadId', 0);
+	} else {
+	    key_get($area);
+	}
+    }
+}
+
 if ($_REQUEST["comments_threadId"] > 0) {
     $comment_info = $commentslib->get_comment($_REQUEST["comments_threadId"]);
 
@@ -387,19 +405,6 @@ if ($_REQUEST["comments_threadId"] > 0) {
     $smarty->assign('comment_data', '');
 }
 
-if ($tiki_p_remove_comments == 'y' || (isset($forum_mode) && $forum_mode =='y' && $tiki_p_admin_forum == 'y')) {
-    if (isset($_REQUEST["comments_remove"]) && isset($_REQUEST["comments_threadId"])) {
-	$area = 'delcomment';
-	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-	    key_check($area);
-	    $comments_show = 'y';
-	    $commentslib->remove_comment($_REQUEST["comments_threadId"]);
-	} else {
-	    key_get($area);
-	}
-    }
-}
-
 $smarty->assign('comment_preview', 'n');
 
 if (isset($_REQUEST["comments_previewComment"])) {
@@ -418,7 +423,7 @@ if (!isset($_REQUEST["comments_maxComments"])) {
     $smarty->assign('comments_maxComments_param', NULL);
 } else {
 	$comments_maxComments_param = 'comments_maxComments=' . $_REQUEST["comments_maxComments"];
-	$smarty->assign('comments_maxComments_param', htmlspecialchars($comments_maxComments_param));
+	$smarty->assign('comments_maxComments_param', '&amp;'.htmlspecialchars($comments_maxComments_param));
     $comments_show = 'y';
 }
 
@@ -547,7 +552,7 @@ $smarty->assign('comments_coms', $comments_coms["data"] );
 // Grab the parent comment to show.  -rlpowell
 if (isset($_REQUEST["comments_parentId"]) &&
 	$_REQUEST["comments_parentId"] > 0 && 
-	($tiki_p_post_comments == 'y') &&
+	(($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n')) ||($tiki_p_forum_post == 'y' && isset($forum_mode) && $forum_mode == 'y')) &&
 	(isset($_REQUEST['comments_previewComment']) ||
 	 isset($_REQUEST['post_reply']))) {
     $parent_com = $commentslib->get_comment($_REQUEST["comments_parentId"]);

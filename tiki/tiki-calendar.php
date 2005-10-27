@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.50 2005-10-26 15:11:03 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.51 2005-10-27 20:12:31 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -91,6 +91,18 @@ if ($viewOneCal != 'y') {
 	$smarty->assign('msg', tra("Permission denied you cannot view the calendar"));
 	$smarty->display("error.tpl");
 	die;
+}
+if (isset($_REQUEST['calitemId'])) {
+	$info = $calendarlib->get_item($_REQUEST["calitemId"]);
+	if (!$userlib->user_has_perm_on_object($user,$info['calendarId'], 'calendar', 'tiki_p_admin_calendar')) {
+		if ((isset($_REQUEST['delete']) && !$userlib->user_has_perm_on_object($user,$info['calendarId'], 'calendar', 'tiki_p_change_events'))
+		|| ((isset($_REQUEST['copy']) || isset($_REQUEST['save'])) && !$userlib->user_has_perm_on_object($user,$info['calendarId'], 'calendar', 'tiki_p_add_events'))
+		|| !$userlib->user_has_perm_on_object($user,$info['calendarId'], 'calendar', 'tiki_p_view_calendar')) {
+			$smarty->assign('msg', tra("Permission denied you cannot view the calendar"));
+			$smarty->display("error.tpl");
+			die;
+		}
+	}
 }
 
 $listcals = $bufid;

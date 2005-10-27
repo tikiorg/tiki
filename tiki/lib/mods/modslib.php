@@ -241,39 +241,41 @@ class ModsLib {
 	
 	function read_list($file,$type=false,$find='',$field=false) {
 		$out = array();
-		$fp = fopen($file,'r');
-		while (!feof($fp)) {
-			$line = fgets($fp,1024);
-			if (trim($line) and substr(trim($line),0,1) == "'") {
-				$str = split("','",substr($line,1,strlen($line)-3));
-				if (isset($str[4]) and $str[0] and $str[1] and $str[2] and $str[3] and $str[4]) {
-					$this->types["{$str[0]}"] = true;
-					if ((!$type or $str[0] == $type) and (!$find or strpos($str[1],$find))) {
-						$out["{$str[0]}"]["{$str[1]}"] = array(
-							'modname' => $str[0] .'-'. stripslashes($str[1]),
-							'name' => stripslashes($str[1]),
-							'revision' => $str[2],
-							'rev_major' => strtok($str[2],'.'),
-							'rev_minor' => strtok('.'),
-							'rev_subminor' => strtok('.'),
-							'description' => stripslashes($str[3]),
-							'licence' => stripslashes($str[4]),
-							'literal' => stripslashes($line)
-							);
-						if (isset($str[5])) {
-							$out["{$str[0]}"]["{$str[1]}"]['version'] = stripslashes($str[5]);
-							if (isset($str[6])) {
-								$out["{$str[0]}"]["{$str[1]}"]['md5'] = stripslashes($str[6]);
+		$fp = @ fopen($file,'r');
+		if ($fp) {
+			while (!feof($fp)) {
+				$line = fgets($fp,1024);
+				if (trim($line) and substr(trim($line),0,1) == "'") {
+					$str = split("','",substr($line,1,strlen($line)-3));
+					if (isset($str[4]) and $str[0] and $str[1] and $str[2] and $str[3] and $str[4]) {
+						$this->types["{$str[0]}"] = true;
+						if ((!$type or $str[0] == $type) and (!$find or strpos($str[1],$find))) {
+							$out["{$str[0]}"]["{$str[1]}"] = array(
+								'modname' => $str[0] .'-'. stripslashes($str[1]),
+								'name' => stripslashes($str[1]),
+								'revision' => $str[2],
+								'rev_major' => strtok($str[2],'.'),
+								'rev_minor' => strtok('.'),
+								'rev_subminor' => strtok('.'),
+								'description' => stripslashes($str[3]),
+								'licence' => stripslashes($str[4]),
+								'literal' => stripslashes($line)
+								);
+							if (isset($str[5])) {
+								$out["{$str[0]}"]["{$str[1]}"]['version'] = stripslashes($str[5]);
+								if (isset($str[6])) {
+									$out["{$str[0]}"]["{$str[1]}"]['md5'] = stripslashes($str[6]);
+								}
 							}
-						}
-						if ($field and isset($out["{$str[0]}"]["{$str[1]}"][$field])) {
-							$out[] = $out["{$str[0]}"]["{$str[1]}"][$field];
+							if ($field and isset($out["{$str[0]}"]["{$str[1]}"][$field])) {
+								$out[] = $out["{$str[0]}"]["{$str[1]}"][$field];
+							}
 						}
 					}
 				}
 			}
+			fclose($fp);
 		}
-		fclose($fp);
 		return $out;
 	}
 
