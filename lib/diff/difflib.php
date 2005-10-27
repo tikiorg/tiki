@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/diff/difflib.php,v 1.12 2005-09-19 13:57:01 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/diff/difflib.php,v 1.13 2005-10-27 16:16:05 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -109,7 +109,6 @@ function diff2($page1, $page2, $type='sidediff') {
  * @param $final array the same lines in the final version
  */
 function diffChar($orig, $final, $function='character') {
-print_r($orig); print_r($final);echo "EEE<br>";
 	$line1 = preg_split('//', implode("<br />", $orig), -1, PREG_SPLIT_NO_EMPTY);
 	$line2 = preg_split('//', implode("<br />", $final), -1, PREG_SPLIT_NO_EMPTY);
 	$z = new Text_Diff($line1, $line2);
