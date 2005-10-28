@@ -1,7 +1,7 @@
 <?php
 // Initialization
 include_once("lib/init/initlib.php");
-require_once('tiki-setup_base.php');
+require_once('tiki-setup.php');
 include_once ('lib/stats/statslib.php');
 /*
 if($feature_file_galleries != 'y') {
@@ -82,7 +82,7 @@ $content=&$info["data"];
 $statslib->stats_hit($file,"file",$_REQUEST["fileId"]);
 if ($feature_actionlog == 'y') {
 	include_once('lib/logs/logslib.php');
-	$logslib->add_action('Viewed', $_REQUEST['galleryId'], 'file gallery');
+	$logslib->add_action('Downloaded', $_REQUEST['galleryId'], 'file gallery', 'fileId='.$_REQUEST["fileId"]);
 }
 // close the session in case of large downloads to enable further browsing
 session_write_close();
