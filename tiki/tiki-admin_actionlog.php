@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.6 2005-10-26 20:20:21 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.7 2005-10-28 15:44:44 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -145,7 +145,10 @@ if (isset($_REQUEST['list'])) {
 			$actions[$i]['object'] = $imageGalleryNames[$actions[$i]['object']];
 			break;
 		case 'file gallery':
-			$actions[$i]['link'] = 'tiki-list_file_gallery.php?galleryId='.$actions[$i]['object'];
+			if ($actions[$i]['action'] == 'Uploaded' || $actions[$i]['action'] == 'Downloaded')
+				$actions[$i]['link'] = 'tiki-upload_file.php?galleryId='.$actions[$i]['object'].'&'.$actions[$i]['comment'];
+			else
+				$actions[$i]['link'] = 'tiki-list_file_gallery.php?galleryId='.$actions[$i]['object'];
 			if (!isset($fileGalleryNames)) {
 				include_once('lib/filegals/filegallib.php');
 				$objects = $filegallib->list_file_galleries(0, -1, 'name_asc', 'admin', '');

@@ -78,7 +78,7 @@ class FileGalLib extends TikiLib {
 		global $feature_actionlog;
 		if ($feature_actionlog == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
-			$logslib->add_action('Uploaded', $galleryId, 'file gallery');
+			$logslib->add_action('Uploaded', $galleryId, 'file gallery', "fileId=$fileId&amp;bytes=+$size");
 		}
 
 		//Watches
