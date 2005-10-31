@@ -1,14 +1,14 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.33 2005-05-18 10:58:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.34 2005-10-31 17:25:51 mashmorgan Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== FALSE) {
-  header("location: index.php");
+if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== FALSE) {
+  header('location: index.php');
   exit;
 	die();
 }
@@ -20,17 +20,17 @@ require_once ( 'lib/smarty/libs/Smarty.class.php');
 
 class Smarty_TikiWiki extends Smarty {
 	
-	function Smarty_TikiWiki($tikidomain = "") {
+	function Smarty_TikiWiki($tikidomain = '') {
 		if ($tikidomain) { $tikidomain.= '/'; }
 		$this->template_dir = 'templates/';
 		$this->compile_dir = "templates_c/$tikidomain";
-		$this->config_dir = "configs/";
+		$this->config_dir = 'configs/';
 		$this->cache_dir = "templates_c/$tikidomain";
 		$this->caching = 0;
 		$this->assign('app_name', 'TikiWiki');
 		$this->plugins_dir = array(	// the directory order must be like this to overload a plugin
-			dirname(dirname(SMARTY_DIR))."/smarty_tiki",
-			SMARTY_DIR."plugins"
+			dirname(dirname(SMARTY_DIR)).'/smarty_tiki',
+			SMARTY_DIR.'plugins'
 		);
 		// we cannot use subdirs in safe mode
 		if(ini_get('safe_mode')) {
@@ -105,7 +105,7 @@ class Smarty_TikiWiki extends Smarty {
 			include ("lang/$language/language.php");
 		}
 
-		return ereg_replace("^[ \t]*", "", $res);
+		return ereg_replace("^[ \t]*", '', $res);
 	}
 	function is_cached($_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null) {
 		global $language, $style, $style_base, $tikidomain;

@@ -1,8 +1,8 @@
 <?php
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  header("location: index.php");
+if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
+  header('location: index.php');
   exit;
 }
 
@@ -131,7 +131,7 @@ if (!@$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
 }
 
 if ($db_tiki == 'sybase') {
-	$dbTiki->Execute("set quoted_identifier on");
+	$dbTiki->Execute('set quoted_identifier on');
 }
 
 // set db version
