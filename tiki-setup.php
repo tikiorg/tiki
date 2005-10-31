@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.286 2005-10-16 14:35:09 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.287 2005-10-31 16:50:49 mashmorgan Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,8 +14,8 @@
 */
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],"tiki-setup.php")!=FALSE) {
-  header("location: index.php");
+if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
+  header('location: index.php');
   exit;
 }
 
@@ -24,7 +24,7 @@ header('Content-Type: text/html; charset=utf-8');
 
 
 // include_once("lib/init/setup_inc.php");
-include_once("lib/init/initlib.php");
+include_once('lib/init/initlib.php');
 
 class TikiSetup extends TikiInit {
 
@@ -44,7 +44,7 @@ class TikiSetup extends TikiInit {
 
         $errors = '';
         
-        if (strpos($_SERVER["SERVER_SOFTWARE"],"IIS")==TRUE){
+        if (strpos($_SERVER['SERVER_SOFTWARE'],'IIS')==TRUE){
 		if (array_key_exists('PATH_TRANSLATED', $_SERVER)) {
         	$docroot = dirname($_SERVER['PATH_TRANSLATED']);
 		} else {
@@ -237,7 +237,7 @@ $tikifeedback = array();
 
 $feature_referer_highlight = 'n';
 
-include_once ("tiki-setup_base.php");
+include_once ('tiki-setup_base.php');
 TikiSetup::check($tikidomain);
 //print("tiki-setup: before rest of tiki-setup:".$tiki_timer->elapsed()."<br />");
 
@@ -282,26 +282,26 @@ if ($load = @file('/proc/loadavg')) {
 }
 
 // The votes array stores the votes the user has made
-if (!isset($_SESSION["votes"])) {
+if (!isset($_SESSION['votes'])) {
     $votes = array();
 
     //session_register("votes");
-    $_SESSION["votes"] = $votes;
+    $_SESSION['votes'] = $votes;
 }
 
-$appname = "tiki";
+$appname = 'tiki';
 
-if (!isset($_SESSION["appname"])) {
+if (!isset($_SESSION['appname'])) {
     //session_register("appname");
-    $_SESSION["appname"] = $appname;
+    $_SESSION['appname'] = $appname;
 }
 
-$smarty->assign("appname", $appname);
+$smarty->assign('appname', $appname);
 
 
-if (isset($_REQUEST["PHPSESSID"])) {
-    $tikilib->update_session($_REQUEST["PHPSESSID"]);
-} elseif (function_exists("session_id")) {
+if (isset($_REQUEST['PHPSESSID'])) {
+    $tikilib->update_session($_REQUEST['PHPSESSID']);
+} elseif (function_exists('session_id')) {
     $tikilib->update_session(session_id());
 }
 
@@ -554,8 +554,8 @@ $wiki_cache = 0;
 $smarty->assign('wiki_cache', $wiki_cache);
 $feature_file_galleries = 'n';
 $feature_file_galleries_rankings = 'n';
-if (!empty($_SESSION["language"]))
-	$saveLanguage = $_SESSION["language"]; // if register_globals is on variable and _SESSION are the same
+if (!empty($_SESSION['language']))
+	$saveLanguage = $_SESSION['language']; // if register_globals is on variable and _SESSION are the same
 $language = 'en';
 $lang_use_db = 'n';
 if (isset($_SESSION['style']))
@@ -597,9 +597,9 @@ $smarty->assign('system_os', $system_os);
 // default: 1. report eveything to admin only
 $error_reporting_level = (int)($tikilib->get_preference('error_reporting_level', 2047));
 if ($error_reporting_level == 1)
-	$error_reporting_level = ($tiki_p_admin == "y") ? E_ALL: 0;
+	$error_reporting_level = ($tiki_p_admin == 'y') ? E_ALL: 0;
 error_reporting($error_reporting_level);
-$default_mail_charset="utf-8";
+$default_mail_charset='utf-8';
 
 $rememberme = $tikilib->get_preference('rememberme', 'disabled');
 $smarty->assign('rememberme', $rememberme);
@@ -899,10 +899,10 @@ $smarty->assign('metatag_geoplacename', $metatag_geoplacename);
 $smarty->assign('metatag_robots', $metatag_robots);
 $smarty->assign('metatag_revisitafter', $metatag_revisitafter);
 
-$smarty->assign("rssfeed_default_version", $tikilib->get_preference("rssfeed_default_version","9"));
-$smarty->assign("rssfeed_language", $tikilib->get_preference("rssfeed_language","en-us"));
-$smarty->assign("rssfeed_editor", $tikilib->get_preference("rssfeed_editor",""));
-$smarty->assign("rssfeed_webmaster", $tikilib->get_preference("rssfeed_webmaster",""));
+$smarty->assign('rssfeed_default_version', $tikilib->get_preference('rssfeed_default_version','9'));
+$smarty->assign('rssfeed_language', $tikilib->get_preference('rssfeed_language','en-us'));
+$smarty->assign('rssfeed_editor', $tikilib->get_preference('rssfeed_editor',''));
+$smarty->assign('rssfeed_webmaster', $tikilib->get_preference('rssfeed_webmaster',''));
 
 $smarty->assign('fgal_use_db', $fgal_use_db);
 $smarty->assign('fgal_use_dir', $fgal_use_dir);
@@ -997,11 +997,11 @@ $smarty->assign('feature_submissions', $feature_submissions);
 $smarty->assign('feature_blogs', $feature_blogs);
 
 $smarty->assign('feature_maps',$feature_maps);
-$map_path = $tikilib->get_preference("map_path",'');
-$default_map = $tikilib->get_preference("default_map",'');
-$map_help = $tikilib->get_preference("map_help",'MapsHelp');
-$map_comments = $tikilib->get_preference("map_comments",'MapsComments');
-$gdaltindex = $tikilib->get_preference("gdaltindex",'');
+$map_path = $tikilib->get_preference('map_path','');
+$default_map = $tikilib->get_preference('default_map','');
+$map_help = $tikilib->get_preference('map_help','MapsHelp');
+$map_comments = $tikilib->get_preference('map_comments','MapsComments');
+$gdaltindex = $tikilib->get_preference('gdaltindex','');
 
 $smarty->assign('feature_wiki_comments', $feature_wiki_comments);
 $smarty->assign('wiki_comments_default_ordering', $wiki_comments_default_ordering);
@@ -1043,8 +1043,8 @@ $wiki_3d_width = 500;
 $wiki_3d_height = 500;
 $wiki_3d_navigation_depth = 1;
 $wiki_3d_feed_animation_interval = 500;
-$wiki_3d_existing_page_color = "#00CC55";
-$wiki_3d_missing_page_color = "#FF5555";
+$wiki_3d_existing_page_color = '#00CC55';
+$wiki_3d_missing_page_color = '#FF5555';
 
 $smarty->assign('wiki_feature_3d', $wiki_feature_3d);
 $smarty->assign('wiki_3d_width', $wiki_3d_width);
@@ -1088,27 +1088,27 @@ $smarty->assign('feature_community_friends_permission',$feature_community_friend
 $smarty->assign('feature_community_friends_permission_dep',$feature_community_friends_permission_dep);
 
 // Other preferences
-$popupLinks = $tikilib->get_preference("popupLinks", 'n');
-$anonCanEdit = $tikilib->get_preference("anonCanEdit", 'n');
-$modallgroups = $tikilib->get_preference("modallgroups", 'y');
-$modseparateanon = $tikilib->get_preference("modseparateanon", 'n');
-$change_language = $tikilib->get_preference("change_language", 'y');
-$change_theme = $tikilib->get_preference("change_theme", 'y');
+$popupLinks = $tikilib->get_preference('popupLinks', 'n');
+$anonCanEdit = $tikilib->get_preference('anonCanEdit', 'n');
+$modallgroups = $tikilib->get_preference('modallgroups', 'y');
+$modseparateanon = $tikilib->get_preference('modseparateanon', 'n');
+$change_language = $tikilib->get_preference('change_language', 'y');
+$change_theme = $tikilib->get_preference('change_theme', 'y');
 //$tikiIndex = $tikilib->get_preference("tikiIndex", 'tiki-index.php');
-$cachepages = $tikilib->get_preference("cachepages", 'y');
-$cacheimages = $tikilib->get_preference("cacheimages", 'y');
-$allowRegister = $tikilib->get_preference("allowRegister", 'n');
-$eponymousGroups = $tikilib->get_preference("eponymousGroups", 'n');
-$useRegisterPasscode = $tikilib->get_preference("useRegisterPasscode", 'n');
-$registerPasscode = $tikilib->get_preference("registerPasscode", '');
-$useUrlIndex = $tikilib->get_preference("useUrlIndex", 'n');
-$urlIndex = $tikilib->get_preference("urlIndex", '');
-$use_proxy = $tikilib->get_preference("use_proxy", 'n');
-$proxy_host = $tikilib->get_preference("proxy_host", '');
-$proxy_port = $tikilib->get_preference("proxy_port", '');
-$session_db = $tikilib->get_preference("session_db", 'n');
-$session_lifetime = $tikilib->get_preference("session_lifetime", 0);
-$wikiHomePage = $tikilib->get_preference("wikiHomePage", 'HomePage');
+$cachepages = $tikilib->get_preference('cachepages', 'y');
+$cacheimages = $tikilib->get_preference('cacheimages', 'y');
+$allowRegister = $tikilib->get_preference('allowRegister', 'n');
+$eponymousGroups = $tikilib->get_preference('eponymousGroups', 'n');
+$useRegisterPasscode = $tikilib->get_preference('useRegisterPasscode', 'n');
+$registerPasscode = $tikilib->get_preference('registerPasscode', '');
+$useUrlIndex = $tikilib->get_preference('useUrlIndex', 'n');
+$urlIndex = $tikilib->get_preference('urlIndex', '');
+$use_proxy = $tikilib->get_preference('use_proxy', 'n');
+$proxy_host = $tikilib->get_preference('proxy_host', '');
+$proxy_port = $tikilib->get_preference('proxy_port', '');
+$session_db = $tikilib->get_preference('session_db', 'n');
+$session_lifetime = $tikilib->get_preference('session_lifetime', 0);
+$wikiHomePage = $tikilib->get_preference('wikiHomePage', 'HomePage');
 $smarty->assign('wikiHomePage', $wikiHomePage);
 
 $wiki_page_regex = $tikilib->get_preference('wiki_page_regex', 'strict');
@@ -1138,52 +1138,52 @@ if ($wiki_page_regex == 'strict') {
 }
 
 // PEAR::Auth support
-$auth_method = "tiki";
+$auth_method = 'tiki';
 $smarty->assign('auth_method', $auth_method);
-$auth_pear = "tiki";
+$auth_pear = 'tiki';
 $smarty->assign('auth_pear', $auth_pear);
-$auth_create_user_tiki = "n";
+$auth_create_user_tiki = 'n';
 $smarty->assign('auth_create_user_tiki', $auth_create_user_tiki);
-$auth_create_user_auth = "n";
+$auth_create_user_auth = 'n';
 $smarty->assign('auth_create_user_auth', $auth_create_user_auth);
-$auth_skip_admin = "y";
+$auth_skip_admin = 'y';
 $smarty->assign('auth_skip_admin', $auth_skip_admin);
-$auth_ldap_url = "";
+$auth_ldap_url = '';
 $smarty->assign('auth_ldap_url', $auth_ldap_url);
-$auth_ldap_host = "localhost";
+$auth_ldap_host = 'localhost';
 $smarty->assign('auth_ldap_host', $auth_ldap_host);
-$auth_ldap_port = "389";
+$auth_ldap_port = '389';
 $smarty->assign('auth_ldap_port', $auth_ldap_port);
-$auth_ldap_scope = "sub";
+$auth_ldap_scope = 'sub';
 $smarty->assign('auth_ldap_scope', $auth_ldap_scope);
-$auth_ldap_basedn = "";
+$auth_ldap_basedn = '';
 $smarty->assign('auth_ldap_basedn', $auth_ldap_basedn);
-$auth_ldap_userdn = "";
+$auth_ldap_userdn = '';
 $smarty->assign('auth_ldap_userdn', $auth_ldap_userdn);
-$auth_ldap_userattr = "uid";
+$auth_ldap_userattr = 'uid';
 $smarty->assign('auth_ldap_userattr', $auth_ldap_userattr);
-$auth_ldap_useroc = "inetOrgPerson";
+$auth_ldap_useroc = 'inetOrgPerson';
 $smarty->assign('auth_ldap_useroc', $auth_ldap_useroc);
-$auth_ldap_groupdn = "";
+$auth_ldap_groupdn = '';
 $smarty->assign('auth_ldap_groupdn', $auth_ldap_groupdn);
-$auth_ldap_groupattr = "cn";
+$auth_ldap_groupattr = 'cn';
 $smarty->assign('auth_ldap_groupattr', $auth_ldap_groupattr);
-$auth_ldap_groupoc = "groupOfUniqueNames";
+$auth_ldap_groupoc = 'groupOfUniqueNames';
 $smarty->assign('auth_ldap_groupoc', $auth_ldap_groupoc);
-$auth_ldap_memberattr = "uniqueMember";
+$auth_ldap_memberattr = 'uniqueMember';
 $smarty->assign('auth_ldap_memberattr', $auth_ldap_memberattr);
-$auth_ldap_memberisdn = "y";
+$auth_ldap_memberisdn = 'y';
 $smarty->assign('auth_ldap_memberisdn', $auth_ldap_memberisdn);
-$auth_ldap_adminuser = "";
+$auth_ldap_adminuser = '';
 $smarty->assign('auth_ldap_adminuser', $auth_ldap_adminuser);
-$auth_ldap_adminpass = "";
+$auth_ldap_adminpass = '';
 $smarty->assign('auth_ldap_adminpass', $auth_ldap_adminpass);
 
-$validateUsers = $tikilib->get_preference("validateUsers", 'n');
-$forgotPass = $tikilib->get_preference("forgotPass", 'n');
-$title = $tikilib->get_preference("title", "");
-$maxRecords = $tikilib->get_preference("maxRecords", 10);
-$maxArticles = $tikilib->get_preference("maxArticles", 10);
+$validateUsers = $tikilib->get_preference('validateUsers', 'n');
+$forgotPass = $tikilib->get_preference('forgotPass', 'n');
+$title = $tikilib->get_preference('title', '');
+$maxRecords = $tikilib->get_preference('maxRecords', 10);
+$maxArticles = $tikilib->get_preference('maxArticles', 10);
 
 $smarty->assign('useUrlIndex', $useUrlIndex);
 $smarty->assign('urlIndex', $urlIndex);
@@ -1286,11 +1286,11 @@ $smarty->assign('wiki_extras', 'n');
 if (!isset($_SERVER['SERVER_NAME'])) {
 	$_SERVER['SERVER_NAME'] = $_SERVER['HTTP_HOST'];
 }
-$feature_server_name = $tikilib->get_preference('feature_server_name', $_SERVER["SERVER_NAME"]);
+$feature_server_name = $tikilib->get_preference('feature_server_name', $_SERVER['SERVER_NAME']);
 
 //print($_SERVER["REQUEST_URI"]);
 $smarty->assign('feature_server_name', $feature_server_name);
-$_SERVER["SERVER_NAME"] = $feature_server_name;
+$_SERVER['SERVER_NAME'] = $feature_server_name;
 
 // Fix IIS servers not setting what they should set (ay ay IIS, ay ay)
 if (!isset($_SERVER['QUERY_STRING']))
@@ -1363,7 +1363,7 @@ if ($https_login == 'y' || $https_login_required == 'y') {
     if (SID)
         $http_login_url .= '?' . SID;
 
-    $edit_data = htmlentities(isset($_REQUEST["edit"]) ? $_REQUEST["edit"] : '', ENT_QUOTES);
+    $edit_data = htmlentities(isset($_REQUEST['edit']) ? $_REQUEST['edit'] : '', ENT_QUOTES);
 
     $https_login_url = 'https://' . $https_domain;
 
@@ -1465,18 +1465,18 @@ if (isset($GLOBALS['pear_wiki_parser']) && $GLOBALS['pear_wiki_parser'] == 'y') 
 }
 $GLOBALS['PAGE_SEP'] = $GLOBALS['pear_wiki_parser'] == 'y' ? 'PAGE MARKER HERE*&^%$#^$%*PAGEMARKERHERE' : '...page...';
 
-if ($feature_polls == 'y' and isset($_REQUEST["pollVote"])) {
-	if ($tiki_p_vote_poll == 'y' && isset($_REQUEST["polls_optionId"])) {
+if ($feature_polls == 'y' and isset($_REQUEST['pollVote'])) {
+	if ($tiki_p_vote_poll == 'y' && isset($_REQUEST['polls_optionId'])) {
 		if( $feature_poll_anonymous == 'y' || $user ) {
 			if (!isset($polllib) or !is_object($polllib)) { 
 				include_once('lib/polls/polllib_shared.php'); 
 			}
-			$polllib->poll_vote($user, $_REQUEST["polls_pollId"], $_REQUEST["polls_optionId"]);
+			$polllib->poll_vote($user, $_REQUEST['polls_pollId'], $_REQUEST['polls_optionId']);
 			// Poll vote must go first, or the new vote will be seen as the previous one.
-			$tikilib->register_user_vote($user, 'poll' . $_REQUEST["polls_pollId"], $_REQUEST["polls_optionId"]);
+			$tikilib->register_user_vote($user, 'poll' . $_REQUEST['polls_pollId'], $_REQUEST['polls_optionId']);
 		}
 	}
-	$pollId = $_REQUEST["polls_pollId"];
+	$pollId = $_REQUEST['polls_pollId'];
 	if (!isset($_REQUEST['wikipoll'])) {
 		header ("location: tiki-poll_results.php?pollId=$pollId");
 	}
@@ -1486,12 +1486,12 @@ if ($feature_polls == 'y' and isset($_REQUEST["pollVote"])) {
 if($feature_mailin == 'y' && $mailin_autocheck == 'y')
 {
   if((time() - $mailin_autocheckLast)/60 > $mailin_autocheckFreq){
-    $tikilib->set_preference("mailin_autocheckLast", time());
-    include_once("tiki-mailin-code.php");
+    $tikilib->set_preference('mailin_autocheckLast', time());
+    include_once('tiki-mailin-code.php');
   }
 }
 
-if ($feature_detect_language == "y") {
+if ($feature_detect_language == 'y') {
     $browser_language = detect_browser_language();
     if (!empty($browser_language)) {
 	$language = $browser_language;
@@ -1499,9 +1499,9 @@ if ($feature_detect_language == "y") {
     }
 }
 
-$useGroupHome = $tikilib->get_preference("useGroupHome",'n');
-$limitedGoGroupHome = $tikilib->get_preference("limitedGoGroupHome",'n');
-$tikiIndex = $tikilib->get_preference("tikiIndex",'tiki-index.php');
+$useGroupHome = $tikilib->get_preference('useGroupHome','n');
+$limitedGoGroupHome = $tikilib->get_preference('limitedGoGroupHome','n');
+$tikiIndex = $tikilib->get_preference('tikiIndex','tiki-index.php');
 $group = '';
 
 $group = $userlib->get_user_default_group($user);
@@ -1511,7 +1511,7 @@ if($useGroupHome == 'y') {
 	if (strpos($groupHome,'http://') === 0) {
 		$tikiIndex = $groupHome;
 	} else {
-		$tikiIndex = "tiki-index.php?page=".$groupHome;
+		$tikiIndex = 'tiki-index.php?page='.$groupHome;
 		$wikiHomePage = $groupHome;
 		$smarty->assign('wikiHomePage',$wikiHomePage);
 	}
@@ -1524,8 +1524,8 @@ $smarty->assign('tikiIndex',$tikiIndex);
 $user_dbl = 'y';
 $diff_versions = 'n';
 
-$user_style = $site_style = $tikilib->get_preference("style", 'tikineat.css');
-$transition_style = $tikilib->get_preference("transition_style", 'none');
+$user_style = $site_style = $tikilib->get_preference('style', 'tikineat.css');
+$transition_style = $tikilib->get_preference('transition_style', 'none');
 
 if( isset($_COOKIE['tiki-theme']) )
 {
@@ -1576,7 +1576,7 @@ if ($feature_userPreferences == 'y') {
 }
 
 if (!(is_file("styles/$style") or is_file("styles/$tikidomain/$style"))) {
-	$style = "tikineat.css";
+	$style = 'tikineat.css';
 }
 
 if (!$user) {
@@ -1603,7 +1603,7 @@ if ($tikidomain and is_file("styles/$tikidomain/$style")) {
 }
 $smarty->assign('style', $style);
 include_once("csslib.php");
-$transition_style = $csslib->transition_css("styles/".$style);
+$transition_style = $csslib->transition_css('styles/'.$style);
 $smarty->assign('transition_style', $transition_style);
 
 $messu_mailbox_size = $tikilib->get_preference('messu_mailbox_size', '0');
@@ -1645,41 +1645,41 @@ $smarty->assign('maxRecords', $maxRecords);
 
 // If we are processing a login then do not generate the challenge
 // if we are in any other case then yes.
-if (!strstr($_SERVER["REQUEST_URI"], 'tiki-login')) {
+if (!strstr($_SERVER['REQUEST_URI'], 'tiki-login')) {
     if ($feature_challenge == 'y') {
         $chall = $userlib->generate_challenge();
 
-        $_SESSION["challenge"] = $chall;
+        $_SESSION['challenge'] = $chall;
         $smarty->assign('challenge', $chall);
     }
 }
 
-setDisplayMenu("nlmenu");
-setDisplayMenu("evmenu");
-setDisplayMenu("chartmenu");
-setDisplayMenu("ephmenu");
-setDisplayMenu("mymenu");
-setDisplayMenu("wfmenu");
-setDisplayMenu("usrmenu");
-setDisplayMenu("friendsmenu");
-setDisplayMenu("wikimenu");
-setDisplayMenu("homeworkmenu");
-setDisplayMenu("srvmenu");
-setDisplayMenu("trkmenu");
-setDisplayMenu("jukeboxmenu");
-setDisplayMenu("quizmenu");
-setDisplayMenu("formenu");
-setDisplayMenu("dirmenu");
-setDisplayMenu("admmnu");
-setDisplayMenu("faqsmenu");
-setDisplayMenu("galmenu");
-setDisplayMenu("cmsmenu");
-setDisplayMenu("blogmenu");
-setDisplayMenu("filegalmenu");
-setDisplayMenu("mapsmenu");
-setDisplayMenu("layermenu");
-setDisplayMenu("shtmenu");
-setDisplayMenu("prjmenu");
+setDisplayMenu('nlmenu');
+setDisplayMenu('evmenu');
+setDisplayMenu('chartmenu');
+setDisplayMenu('ephmenu');
+setDisplayMenu('mymenu');
+setDisplayMenu('wfmenu');
+setDisplayMenu('usrmenu');
+setDisplayMenu('friendsmenu');
+setDisplayMenu('wikimenu');
+setDisplayMenu('homeworkmenu');
+setDisplayMenu('srvmenu');
+setDisplayMenu('trkmenu');
+setDisplayMenu('jukeboxmenu');
+setDisplayMenu('quizmenu');
+setDisplayMenu('formenu');
+setDisplayMenu('dirmenu');
+setDisplayMenu('admmnu');
+setDisplayMenu('faqsmenu');
+setDisplayMenu('galmenu');
+setDisplayMenu('cmsmenu');
+setDisplayMenu('blogmenu');
+setDisplayMenu('filegalmenu');
+setDisplayMenu('mapsmenu');
+setDisplayMenu('layermenu');
+setDisplayMenu('shtmenu');
+setDisplayMenu('prjmenu');
 
 if ($user && $feature_usermenu == 'y') {
     if (!isset($_SESSION['usermenu'])) {
@@ -1695,7 +1695,7 @@ if ($user && $feature_usermenu == 'y') {
     }
 }
 
-include_once ("tiki-modules.php");
+include_once ('tiki-modules.php');
 
 if ($feature_warn_on_edit == 'y') {
     
@@ -1719,7 +1719,7 @@ if ($feature_warn_on_edit == 'y') {
 	    } else {
 	    	$chkpage = NULL;
 	    }
-	    if (!empty($chkpage) && ($chkpage != "sandbox" || $chkpage == "sandbox" && $tiki_p_admin == 'y')) {
+	    if (!empty($chkpage) && ($chkpage != 'sandbox' || $chkpage == 'sandbox' && $tiki_p_admin == 'y')) {
 	        if ($current_page == 'tiki-index' && $tikilib->semaphore_is_set($chkpage, $warn_on_edit_time * 60)) {
 		        $smarty->assign('semUser', $tikilib->get_semaphore_user($chkpage));
 		        $smarty->assign('beingEdited', 'y');
@@ -1755,15 +1755,15 @@ if ($feature_warn_on_edit == 'y') {
 	$smarty->assign('editpageconflict', 'n');
 }
 
-$ownurl = $tikilib->httpPrefix(). $_SERVER["REQUEST_URI"];
-$parsed = parse_url($_SERVER["REQUEST_URI"]);
+$ownurl = $tikilib->httpPrefix(). $_SERVER['REQUEST_URI'];
+$parsed = parse_url($_SERVER['REQUEST_URI']);
 
-if (!isset($parsed["query"])) {
-    $parsed["query"] = '';
+if (!isset($parsed['query'])) {
+    $parsed['query'] = '';
 }
 
-parse_str($parsed["query"], $query);
-$father = $tikilib->httpPrefix(). $parsed["path"];
+parse_str($parsed['query'], $query);
+$father = $tikilib->httpPrefix(). $parsed['path'];
 
 if (count($query) > 0) {
     $first = 1;
@@ -1825,8 +1825,8 @@ if ($feature_referer_stats == 'y') {
     if (isset($_SERVER['HTTP_REFERER'])) {
         $pref = parse_url($_SERVER['HTTP_REFERER']);
 
-        if (isset($pref["host"]) && !strstr($_SERVER["SERVER_NAME"], $pref["host"])) {
-            $tikilib->register_referer($pref["host"]);
+        if (isset($pref['host']) && !strstr($_SERVER['SERVER_NAME'], $pref['host'])) {
+            $tikilib->register_referer($pref['host']);
         }
     }
 }
@@ -1873,7 +1873,7 @@ if (ini_get('zlib.output_compression') == 1) {
 } elseif ($feature_obzip == 'y') {
 	// tiki compression is enabled, then let activate the handler
 	if ($feature_obzip == 'y') {
-	    ob_start ("ob_gzhandler");
+	    ob_start ('ob_gzhandler');
 			$smarty->assign('gzip_handler','tiki');
     	$smarty->assign('gzip','Enabled');
 	}
@@ -1894,10 +1894,10 @@ $favicon = $tikilib->get_preference('favicon','favicon.png');
 $favicon_type = $tikilib->get_preference('favicon_type','image/png');
 if (is_file("styles/$tikidomain/$favicon")) {
 	$smarty->assign('favicon',"styles/$tikidomain/$favicon");
-	$smarty->assign('favicon_type',"$favicon_type");
-} elseif (is_file("$favicon")) {
-	$smarty->assign('favicon',"$favicon");
-	$smarty->assign('favicon_type',"$favicon_type");
+	$smarty->assign('favicon_type',$favicon_type);
+} elseif (is_file($favicon)) {
+	$smarty->assign('favicon',$favicon);
+	$smarty->assign('favicon_type',$favicon_type);
 } else {
 	$smarty->assign('favicon',false);
 }
@@ -1924,8 +1924,8 @@ if ($feature_integrator == 'y')
  */
 
 if ($feature_search == 'y') {
-  include_once("lib/search/refresh.php");
-  register_shutdown_function("refresh_search_index");
+  include_once('lib/search/refresh.php');
+  register_shutdown_function('refresh_search_index');
 }
 
 /*
@@ -1956,7 +1956,7 @@ if (is_file('.lastup') and is_readable('.lastup')) {
 // ------------------------------------------------------
 // setup initial breadcrumb
 $crumbs = array();
-$crumbs[] = new Breadcrumb($siteTitle,"Home",$tikiIndex);
+$crumbs[] = new Breadcrumb($siteTitle,'Home',$tikiIndex);
 $smarty->assign_by_ref('crumbs', $crumbs);
 
 
