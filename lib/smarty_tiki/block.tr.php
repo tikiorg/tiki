@@ -10,8 +10,8 @@
  */
  
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  header("location: index.php");
+if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
+  header('location: index.php');
   exit;
 }
 
@@ -35,20 +35,20 @@ function smarty_block_tr($params, $content, &$smarty)
   } else {
     global $tikilib;
     global $language;
-    $query="select `tran` from `tiki_language` where `source`=? and `lang`=?";
+    $query='select `tran` from `tiki_language` where `source`=? and `lang`=?';
     $result=$tikilib->query($query,array($content,$language));
     $res=$result->fetchRow();
     if(!$res) { echo $content ; return; }
     if(!isset($res["tran"])) {
       global $record_untranslated;
       if ($record_untranslated=='y') {
-        $query="insert into `tiki_untranslated` (`source`,`lang`) values(?,?)";
+        $query='insert into `tiki_untranslated` (`source`,`lang`) values(?,?)';
         //No eror checking here
         $tikilib->query($query,array($content,$language),-1,-1,false);
         }
       echo $content;
     }
-    echo $res["tran"];
+    echo $res['tran'];
   }
 }
 ?>
