@@ -1,21 +1,22 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.23 2005-10-16 14:35:10 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.24 2005-11-01 17:30:11 sylvieg Exp $
  * 
  * \brief {SPLIT} wiki plugin implementation
  * Usage:
  *
- *  {SPLIT(joincols=>[y|n|0|1],fixedsize=>[y|n|0|1],colsize=>size1|size2|...)}
+ *  {SPLIT(joincols=>[y|n|0|1],fixedsize=>[y|n|0|1],colsize=>size1|size2|...,first=>[col|line])}
  *
  * If `joincols' eq true (yes) 'colspan' attribute will be generated if column missed.
  * If `fixedsize' eq true (yes) 'width' attribute will be generated for TDs.
  * Both paramaters have default value 'y'
- *
+ * first='col': r1c1---r2c1---r3c1@@@r1c2---r2c2 (the editorial way)
+ * first='line' (default): r1c1---r1c2@@@r2c1---r2c2 (the html table way)
  */
 
 function wikiplugin_split_help() {
-	return tra("Split a page into rows and columns").":<br />~np~{SPLIT(joincols=>[y|n|0|1],fixedsize=>[y|n|0|1],colsize=>size1|size2|...)}".tra("row1col1")."---".tra("row1col2")."@@@".tra("row2col1")."---".tra("row2col2")."{SPLIT}~/np~";
+	return tra("Split a page into rows and columns").":<br />~np~{SPLIT(joincols=>[y|n|0|1],fixedsize=>[y|n|0|1],colsize=>size1|size2|...,first=>[col|line])}".tra("row1col1")."---".tra("row1col2")."@@@".tra("row2col1")."---".tra("row2col2")."{SPLIT}~/np~";
 }
 
 /*
@@ -82,28 +83,41 @@ function wikiplugin_split($data, $params) {
     // Attention: Dont forget to remove leading empty line in section ...
     //            it should remain from previous '---' line...
     // Attention: origianl text must be placed between \n's!!!
-    foreach ($rows as $r)
-    {
-        $result .= "<tr>";
-        $idx = 1;
-	    foreach ($r as $i)
-        {
-					// Remove first <ENTER> if exists
-					if (substr($i, 0, 2) == "\r\n") $i = substr($i, 2);
+    if (!isset($first) || $first != 'col') {
+       foreach ($rows as $r) {
+          $result .= "<tr>";
+          $idx = 1;
+          foreach ($r as $i) {
+				// Remove first <ENTER> if exists
+             if (substr($i, 0, 2) == "\r\n") $i = substr($i, 2);
             // Generate colspan for last element if needed
             $colspan = ((count($r) == $idx) && (($maxcols - $idx) > 0) ? ' colspan="'.($maxcols - $idx + 1).'"' : '');
             $idx++;
             // Add cell to table
-    		$result .= '<td valign="top"'.($fixedsize ? ' width="'.$tdsize[$idx-2].'%"' : '').$colspan.'>'
+    		   $result .= '<td valign="top"'.($fixedsize ? ' width="'.$tdsize[$idx-2].'%"' : '').$colspan.'>'
 				// Insert "\n" at data begin (so start-of-line-sensitive syntaxes will be parsed OK)
 				."\n"
 				// now prepend any carriage return and newline char with br
 				.preg_replace("/\\r\\n/", "<br />\r\n", $i)
                      . '</td>';
-        }
+         }
         
-        $result .= "</tr>";
-    }
+         $result .= "</tr>";
+       }
+   } else {
+       $result .= '<tr>';
+       foreach ($rows as $r) {
+          $idx = 0;
+          $result .= '<td valign="top" '.($fixedsize ? ' width="'.$tdsize[$idx].'%"' : '').'>';
+          foreach ($r as $i) {
+                if (substr($i, 0, 2) == "\r\n")
+                     $i = substr($i, 2);
+                $result .= '<div class="split">'.preg_replace("/\\r\\n/", "<br />\r\n", $i).'</div>';
+          }
+          $result .= '</td>';
+       }
+       $result .= '</tr>';
+   }
     // Close HTML table (no \n at end!)
 	$result .= "</table>";
 
