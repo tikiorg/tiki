@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-compose.php,v 1.30 2005-10-27 20:12:31 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-compose.php,v 1.31 2005-11-02 18:23:32 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -211,9 +211,9 @@ if (isset($_REQUEST['send'])) {
 	if ($feature_actionlog == 'y') {
 		include_once('lib/logs/logslib.php');
 		if (isset($_REQUEST['reply']) && $_REQUEST['reply'] == 'y')
-			$logslib->add_action('Replied', '', 'message');
+			$logslib->add_action('Replied', '', 'message', 'add='.strlen($_REQUEST['body']));
 		else
-			$logslib->add_action('Posted', '', 'message');
+			$logslib->add_action('Posted', '', 'message', 'add='.strlen($_REQUEST['body']));
 	}
 }
 $allowMsgs = $messulib->get_user_preference($user, 'allowMsgs', 'y');

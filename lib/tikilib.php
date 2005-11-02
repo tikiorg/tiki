@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.620 2005-10-27 20:12:32 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.621 2005-11-02 18:23:32 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2967,7 +2967,7 @@ function add_pageview() {
 	global $feature_actionlog;
 	if ($feature_actionlog == 'y') {
 		$info= $this->get_page_info($page);
-		$params = 'bytes=-'.strlen($info['data']);
+		$params = 'del='.strlen($info['data']);
 	} else
 		$params = '';
 	global $multilinguallib;
@@ -3682,7 +3682,7 @@ function add_pageview() {
 	// Update the log
 	if (strtolower($name) != 'sandbox') {
 	    global $logslib; include_once("lib/logs/logslib.php");
-	    $logslib->add_action("Created", $name, 'wiki page', 'bytes=+'.strlen($data));
+	    $logslib->add_action("Created", $name, 'wiki page', 'add='.strlen($data));
 	    //get_strings tra("Created");
 
 	    //  Deal with mail notifications.
@@ -5705,7 +5705,7 @@ if (!$simple_wiki) {
 	    global $logslib; include_once('lib/logs/logslib.php');
 	    include_once('lib/diff/difflib.php');
 	    $bytes = diff2($data , $edit_data, 'bytes');
-	    $logslib->add_action('Updated', $pageName, 'wiki page', 'bytes='.$bytes, $edit_user, $edit_ip, '', $t);
+	    $logslib->add_action('Updated', $pageName, 'wiki page', $bytes, $edit_user, $edit_ip, '', $t);
 	    //get_strings tra("Updated")
 	    $maxversions = $this->get_preference("maxVersions", 0);
 

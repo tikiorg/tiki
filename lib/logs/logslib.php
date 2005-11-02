@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.12 2005-10-26 20:20:23 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.13 2005-11-02 18:23:33 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -136,7 +136,18 @@ class LogsLib extends TikiLib {
 			return true; // for previous compatibility - the new action are added with a if ($feature..)
 		$logActions = $this->get_all_actionlog_conf();
 		foreach ($logActions as $conf) {
-			if ($conf['action'] == $action && $conf['objectType'] == $objectType && $conf['status'] == 'y')
+			if ($conf['action'] == $action && $conf['objectType'] == $objectType && ($conf['status'] == 'y' || $conf['status'] == 'v'))
+				return true;
+		}
+		return false;
+	}
+	function action_is_viewed($action, $objectType) {
+		global $feature_actionlog;
+		if ($feature_actionlog != 'y')
+			return true; // for previous compatibility - the new action are added with a if ($feature..)
+		$logActions = $this->get_all_actionlog_conf();
+		foreach ($logActions as $conf) {
+			if ($conf['action'] == $action && $conf['objectType'] == $objectType && $conf['status'] == 'v')
 				return true;
 		}
 		return false;
@@ -223,7 +234,7 @@ class LogsLib extends TikiLib {
 				$bindvars[] = $categId;
 			}
 		}
-		$amid[] = "a.`action` = c.`action` and a.`objectType` = c.`objectType` and c.`status` = 'y'";
+		$amid[] = "a.`action` = c.`action` and a.`objectType` = c.`objectType` and (c.`status` = 'y' or c.`status` = 'v')";
 
 		if (count($amid)) {
 			$mid = " where ".implode(" and ",$amid)." ";
@@ -233,7 +244,8 @@ class LogsLib extends TikiLib {
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
-			$ret[] = $res;
+			if ($this->action_is_viewed($res['action'], $res['objectType']))
+				$ret[] = $res;
 		}
 		return $ret;
 	}
@@ -284,10 +296,19 @@ class LogsLib extends TikiLib {
 	return $logTimes;
 	}
 	function get_volume_action($action) {
-	if (preg_match("/bytes=([0-9\-+]+)/", $action['comment'], $matches))
-		return $matches[1];
-	else
-		return(0);
+		$bytes = array();
+		if (preg_match('/bytes=([0-9\-+]+)/', $action['comment'], $matches)) {//old syntax
+			if (preg_match('/\+([0-9]+)/', $matches[1], $m))
+				$bytes['add'] = $m[1];
+			if (preg_match('/\-([0-9]+)/', $matches[1], $m))
+				$bytes['del'] = $m[1];
+		} else {
+			if (preg_match('/add=([0-9\-+]+)/', $action['comment'], $matches))
+				$bytes['add'] = $matches[1];
+			if (preg_match('/del=([0-9\-+]+)/', $action['comment'], $matches))
+				$bytes['del'] = $matches[1];
+		}
+		return $bytes;
 	}
 	function get_action_stat_user($actions) {
 		$stats = array();
@@ -348,13 +369,13 @@ class LogsLib extends TikiLib {
 				$stats[$key][$action['objectType']]['dif'] = 0;
 			}
 			$dif = 0;
-			if (preg_match("/\+([0-9]+)/", $bytes, $matches)) {
-				$stats[$key][$action['objectType']]['add'] += $matches[1];
-				$dif = $matches[1];
+			if (isset($bytes['add'])) {
+				$stats[$key][$action['objectType']]['add'] += $bytes['add'];
+				$dif = $bytes['add'];
 			}
-			if (preg_match("/\-([0-9]+)/", $bytes, $matches)) {
-				$stats[$key][$action['objectType']]['del'] += $matches[1];
-				$dif -= $matches[1];
+			if (isset($bytes['del'])) {
+				$stats[$key][$action['objectType']]['del'] += $bytes['del'];
+				$dif -= $bytes['del'];
 			}
 			$stats[$key][$action['objectType']]['dif'] += $dif;
 		}
