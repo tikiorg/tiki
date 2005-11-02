@@ -1,14 +1,17 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.7 2005-11-02 14:53:01 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.8 2005-11-02 18:24:04 sylvieg Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Admin Action Log{/tr}</a></h1>
 <a name="Setting" />
 <h2>{tr}Setting{/tr}</h2>
 <form method="post" action="tiki-admin_actionlog.php">
 <table class="smallnormal">
-<tr><th class="heading">{tr}status{/tr}</th><th class="heading">{tr}action{/tr}</th><th class="heading">{tr}type{/tr}</th></tr>
+<tr><th class="heading">{tr}recorded{/tr}</th><th class="heading">{tr}viewed{/tr}</th><th class="heading">{tr}action{/tr}</th><th class="heading">{tr}type{/tr}</th></tr>
 {cycle values="even,odd" print=false}
 {section name=ix loop=$actionlogConf}
-<tr><td class="{cycle advance=false}"><input type="checkbox" name="{$actionlogConf[ix].code}" {if $actionlogConf[ix].status eq 'y'}checked="checked"{/if} /></td><td class="{cycle advance=false}">{tr}{$actionlogConf[ix].action}{/tr}</td><td class="{cycle}">{tr}{$actionlogConf[ix].objectType}{/tr}</td></tr>
+<tr><td class="{cycle advance=false}"><input type="checkbox" name="{$actionlogConf[ix].code}" {if $actionlogConf[ix].status eq 'y' or $actionlogConf[ix].status eq 'v'}checked="checked"{/if} /></td>
+<td class="{cycle advance=false}"><input type="checkbox" name="view_{$actionlogConf[ix].code}" {if $actionlogConf[ix].status eq 'v'}checked="checked"{/if} /></td>
+<td class="{cycle advance=false}">{tr}{$actionlogConf[ix].action}{/tr}</td>
+<td class="{cycle}">{tr}{$actionlogConf[ix].objectType}{/tr}</td></tr>
 {/section}
 <tr><td colspan="3" class="button"><input type="submit" name="setConf" value="{tr}Set{/tr}" /></td></tr>
 </table>
@@ -75,7 +78,8 @@
 <th class="heading">{tr}type{/tr}</th>
 <th class="heading">{tr}object{/tr}</th>
 {if !$reportCateg and $showCateg eq 'y'}<th class="heading">{tr}category{/tr}</th>{/if}
-<th class="heading">{tr}bytes{/tr}</th>
+<th class="heading">{tr}+bytes{/tr}</th>
+<th class="heading">{tr}-bytes{/tr}</th>
 </tr>
 {cycle values="even,odd" print=false}
 {section name=ix loop=$actionlogs}
@@ -86,7 +90,8 @@
 <td class="{cycle advance=false}">{$actionlogs[ix].objectType}</td>
 <td class="{cycle advance=false}">{if $actionlogs[ix].link}<a href="{$actionlogs[ix].link}" title="{tr}view{/tr}">{$actionlogs[ix].object|escape}</a>{else}{$actionlogs[ix].object|escape}{/if}</td>
 {if !$reportCateg and $showCateg eq 'y'}<td class="{cycle advance=false}">{$actionlogs[ix].categName|escape}</td>{/if}
-<td class="{cycle}">{if $actionlogs[ix].bytes}{$actionlogs[ix].bytes}{else}&nbsp;{/if}</td>
+<td class="{cycle advance=false}">{if $actionlogs[ix].add}+{$actionlogs[ix].add}{else}&nbsp;{/if}</td>
+<td class="{cycle}">{if $actionlogs[ix].del}-{$actionlogs[ix].del}{else}&nbsp;{/if}</td>
 </tr>
 {/section}
 </table>
