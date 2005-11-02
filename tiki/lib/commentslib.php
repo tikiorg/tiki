@@ -1686,7 +1686,7 @@ class Comments extends TikiLib {
 			include_once('lib/diff/difflib.php');
 			$bytes = diff2($comment['data'] , $data, 'bytes');
 			global $logslib; include_once('lib/logs/logslib.php');
-			$logslib->add_action('Updated', $object[1], $object[0], "comments_parentId=$threadId&amp;bytes=$bytes#threadId$threadId");
+			$logslib->add_action('Updated', $object[1], $object[0], "comments_parentId=$threadId&amp;$bytes#threadId$threadId");
 		}
 	}
 	$query = "update `tiki_comments` set `title`=?, `comment_rating`=?,
@@ -1828,7 +1828,7 @@ class Comments extends TikiLib {
 	global $feature_actionlog;
 	if ($feature_actionlog == 'y' && $object[0] == 'forum') {
 		global $logslib; include_once('lib/logs/logslib.php');
-		$logslib->add_action(($parentId == 0)? 'Posted': 'Replied', $object[1], $object[0], 'comments_parentId='.$threadId.'&amp;bytes=+'.strlen($data));
+		$logslib->add_action(($parentId == 0)? 'Posted': 'Replied', $object[1], $object[0], 'comments_parentId='.$threadId.'&amp;add='.strlen($data));
 	}
 
 	return $threadId;
@@ -1856,7 +1856,7 @@ class Comments extends TikiLib {
 		while ($res = $result->fetchRow()) {
 			if ($res['objectType'] != 'forum')
 				break;
-			$logslib->add_action('Removed', $res['object'], 'forum', "comments_parentId=$threadId&amp;bytes=-".strlen($res['data']));
+			$logslib->add_action('Removed', $res['object'], 'forum', "comments_parentId=$threadId&amp;del=".strlen($res['data']));
 		}
 	}
 	$query = "delete from `tiki_comments` where `threadId`=? or `parentId`=?";

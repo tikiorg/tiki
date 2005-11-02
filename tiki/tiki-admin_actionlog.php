@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.7 2005-10-28 15:44:44 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.8 2005-11-02 18:23:32 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -25,7 +25,10 @@ if ($feature_actionlog != 'y') {
 $confs = $logslib->get_all_actionlog_conf();
 if (isset($_REQUEST['setConf'])) { 
 	for ($i = 0; $i < sizeof($confs); ++$i) {
-		if (isset($_REQUEST[$confs[$i]['code']]) && $_REQUEST[$confs[$i]['code']] == 'on') {
+		if (isset($_REQUEST['view_'.$confs[$i]['code']]) && $_REQUEST['view_'.$confs[$i]['code']] == 'on') {//viewed and reported
+			$logslib->set_actionlog_conf($confs[$i]['action'], $confs[$i]['objectType'], 'v');
+			$confs[$i]['status'] = 'v';
+		} elseif (isset($_REQUEST[$confs[$i]['code']]) && $_REQUEST[$confs[$i]['code']] == 'on') {
 			$logslib->set_actionlog_conf($confs[$i]['action'], $confs[$i]['objectType'], 'y');
 			$confs[$i]['status'] = 'y';
 		} else {
@@ -79,9 +82,9 @@ if (isset($_REQUEST['list'])) {
 	else
 		$smarty->assign('reportCateg', $categNames[$_REQUEST['categId']]);
 
-	$showCateg = $logslib->action_must_be_logged('*', 'category');
+	$showCateg = $logslib->action_is_viewed('*', 'category');
 	$smarty->assign('showCateg', $showCateg?'y':'n');
-	$showLogin = $logslib->action_must_be_logged('*', 'login');
+	$showLogin = $logslib->action_is_viewed('*', 'login');
 	$smarty->assign('showLogin', $showLogin?'y':'n');
 
 	$startDate = mktime(0, 0, 0, $_REQUEST["startDate_Month"], $_REQUEST["startDate_Day"], $_REQUEST["startDate_Year"]);
@@ -106,8 +109,12 @@ if (isset($_REQUEST['list'])) {
 	for ($i = 0; $i < sizeof($actions); ++$i) {
 		if ($actions[$i]['categId'])
 			$actions[$i]['categName'] = $categNames[$actions[$i]['categId']];
-		if ($bytes = $logslib->get_volume_action($actions[$i]))
-			$actions[$i]['bytes'] = $bytes;
+		if ($bytes = $logslib->get_volume_action($actions[$i])) {
+			if (isset($bytes['add'] ))
+				$actions[$i]['add'] = $bytes['add'];
+			if (isset($bytes['del']))
+				$actions[$i]['del'] = $bytes['del'];
+		}
 		switch ($actions[$i]['objectType']) {
 		case 'wiki page':
 			$actions[$i]['link'] = 'tiki-index.php?page='.$actions[$i]['object'];
