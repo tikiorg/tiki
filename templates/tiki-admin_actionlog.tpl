@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.6 2005-10-26 20:20:21 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.7 2005-11-02 14:53:01 sylvieg Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Admin Action Log{/tr}</a></h1>
 <a name="Setting" />
@@ -130,7 +130,7 @@
 <tr>
 <td class="{cycle advance=false}">{$vol.category}</td>
 {foreach item=type from=$typeVol}
-<td class="{cycle advance=false}">{* {$vol[$type].add}-{$vol[$type].del}-{$vol[$type].dif}*** *}{math equation="round(a/b)" a=$vol[$type].add b=1024}</td><td class="{cycle advance=false}">{math equation="round(a/b)" a=$vol[$type].del b=1024}</td><td class="{cycle advance=false}">{math equation="round(a/b)" a=$vol[$type].dif b=1024}</td>
+<td class="{cycle advance=false}">{* {$vol[$type].add}-{$vol[$type].del}-{$vol[$type].dif}*** *}{if $vol[$type].add}{math equation="round(a/b)" a=$vol[$type].add b=1024}{else}0{/if}</td><td class="{cycle advance=false}">{if $vol[$type].del}{math equation="round(a/b)" a=$vol[$type].del b=1024}{else}0{/if}</td><td class="{cycle advance=false}">{if $vol[$type].dif}{math equation="round(a/b)" a=$vol[$type].dif b=1024}{else}0{/if}</td>
 {/foreach}
 <!-- {cycle} -->
 </tr>
