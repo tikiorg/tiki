@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.8 2005-11-02 18:24:04 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.9 2005-11-04 16:47:53 sylvieg Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Admin Action Log{/tr}</a></h1>
 <a name="Setting" />
@@ -56,7 +56,7 @@
 {/section}
 </select>
 </td>
-<td>&nbsp;</td></tr>
+<td>{tr}bytes{/tr}<input type="radio" name="unit" value="bytes"{if $unit ne 'kb'} checked="checked"{/if}> {tr}kb{/tr}<input type="radio" name="unit" value="kb"{if $unit eq 'kb'} checked="checked"{/if}></td></tr>
 <tr><td colspan="4" class="button"><input type="submit" name="list" value="{tr}Report{/tr}" /></td></tr>
 </table>
 </form>
@@ -78,8 +78,8 @@
 <th class="heading">{tr}type{/tr}</th>
 <th class="heading">{tr}object{/tr}</th>
 {if !$reportCateg and $showCateg eq 'y'}<th class="heading">{tr}category{/tr}</th>{/if}
-<th class="heading">{tr}+bytes{/tr}</th>
-<th class="heading">{tr}-bytes{/tr}</th>
+<th class="heading">+{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</th>
+<th class="heading">-{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</th>
 </tr>
 {cycle values="even,odd" print=false}
 {section name=ix loop=$actionlogs}
@@ -90,8 +90,8 @@
 <td class="{cycle advance=false}">{$actionlogs[ix].objectType}</td>
 <td class="{cycle advance=false}">{if $actionlogs[ix].link}<a href="{$actionlogs[ix].link}" title="{tr}view{/tr}">{$actionlogs[ix].object|escape}</a>{else}{$actionlogs[ix].object|escape}{/if}</td>
 {if !$reportCateg and $showCateg eq 'y'}<td class="{cycle advance=false}">{$actionlogs[ix].categName|escape}</td>{/if}
-<td class="{cycle advance=false}">{if $actionlogs[ix].add}+{$actionlogs[ix].add}{else}&nbsp;{/if}</td>
-<td class="{cycle}">{if $actionlogs[ix].del}-{$actionlogs[ix].del}{else}&nbsp;{/if}</td>
+<td class="{cycle advance=false}{if $actionlogs[ix].add} diffadded{/if}">{if $actionlogs[ix].add or $actionlogs[ix].add eq '0'}{$actionlogs[ix].add}{else}&nbsp;{/if}</td>
+<td class="{cycle}{if $actionlogs[ix].del} diffdeleted{/if}">{if $actionlogs[ix].del or $actionlogs[ix].del eq '0'}{$actionlogs[ix].del}{else}&nbsp;{/if}</td>
 </tr>
 {/section}
 </table>
@@ -128,14 +128,40 @@
 <tr>
 <th class="heading">{tr}category{/tr}</th>
 {foreach  item=type from=$typeVol}
-<th class="heading">{$type} (+{tr}KB{/tr})</th><th class="heading">{$type} (-{tr}KB{/tr})</th><th class="heading">{$type} ({tr}KB{/tr})</th>
+<th class="heading">{$type} (+{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if})</th><th class="heading">{$type} (-{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if})</th><th class="heading">{$type} ({if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if})</th>
 {/foreach}
 </tr>
 {foreach key=categId item=vol from=$volCateg}
 <tr>
 <td class="{cycle advance=false}">{$vol.category}</td>
-{foreach item=type from=$typeVol}
-<td class="{cycle advance=false}">{* {$vol[$type].add}-{$vol[$type].del}-{$vol[$type].dif}*** *}{if $vol[$type].add}{math equation="round(a/b)" a=$vol[$type].add b=1024}{else}0{/if}</td><td class="{cycle advance=false}">{if $vol[$type].del}{math equation="round(a/b)" a=$vol[$type].del b=1024}{else}0{/if}</td><td class="{cycle advance=false}">{if $vol[$type].dif}{math equation="round(a/b)" a=$vol[$type].dif b=1024}{else}0{/if}</td>
+{foreach item=type from=$typeVol} {* math equation="round(a/b)" a=$vol[$type].del b=1024 *}
+<td class="{cycle advance=false}{if $vol[$type].add} diffadded{/if}">{if $vol[$type].add}{$vol[$type].add}{else}0{/if}</td>
+<td class="{cycle advance=false}{if $vol[$type].del} diffdeleted{/if}">{if $vol[$type].del}{$vol[$type].del}{else}0{/if}</td>
+<td class="{cycle advance=false}{if $vol[$type].dif > 0} diffadded{elseif $vol[$type].dif < 0} diffdeleted{/if}">{if $vol[$type].dif}{$vol[$type].dif}{else}0{/if}</td>
+{/foreach}
+<!-- {cycle} -->
+</tr>
+{/foreach}
+</table>
+{/if}
+
+{if $showCateg eq 'y' and $volUserCateg|@count ne 0}
+<table class="smallnormal">
+<tr>
+<th class="heading">{tr}category{/tr}</th>
+<th class="heading">{tr}user{/tr}</th>
+{foreach  item=type from=$typeVol}
+<th class="heading">{$type} (+{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if})</th><th class="heading">{$type} (-{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if})</th><th class="heading">{$type} ({if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if})</th>
+{/foreach}
+</tr>
+{foreach key=categId item=vol from=$volUserCateg}
+<tr>
+<td class="{cycle advance=false}">{$vol.category}</td>
+<td class="{cycle advance=false}">{$vol.user}</td>
+{foreach item=type from=$typeVol} {* math equation="round(a/b)" a=$vol[$type].del b=1024 *}
+<td class="{cycle advance=false}{if $vol[$type].add} diffadded{/if}">{if $vol[$type].add}{$vol[$type].add}{else}0{/if}</td>
+<td class="{cycle advance=false}{if $vol[$type].del} diffdeleted{/if}">{if $vol[$type].del}{$vol[$type].del}{else}0{/if}</td>
+<td class="{cycle advance=false}{if $vol[$type].dif > 0} diffadded{elseif $vol[$type].dif < 0} diffdeleted{/if}">{if $vol[$type].dif}{$vol[$type].dif}{else}0{/if}</td>
 {/foreach}
 <!-- {cycle} -->
 </tr>
