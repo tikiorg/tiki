@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.8 2005-11-02 18:23:32 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.9 2005-11-04 16:47:53 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -100,7 +100,13 @@ if (isset($_REQUEST['list'])) {
 		$statCateg = $logslib->get_action_stat_categ($actions, $categNames);
 		$smarty->assign_by_ref('statCateg', $statCateg);
 		$volCateg = $logslib->get_action_vol_categ($actions, $categNames);
+		if (isset($_REQUEST['unit']) && $_REQUEST['unit'] == 'kb')
+			$volCateg = $logslib->in_kb($volCateg);
 		$smarty->assign_by_ref('volCateg', $volCateg);
+		$volUserCateg = $logslib->get_action_vol_user_categ($actions, $categNames);
+		if (isset($_REQUEST['unit']) && $_REQUEST['unit'] == 'kb')
+			$volUserCateg = $logslib->in_kb($volUserCateg);
+		$smarty->assign_by_ref('volUserCateg', $volUserCateg);
 		$typeVol = $logslib->get_action_vol_type($volCateg);
 		$smarty->assign_by_ref('typeVol', $typeVol);
 		$statUserCateg = $logslib->get_action_stat_user_categ($actions, $categNames);
@@ -182,9 +188,18 @@ if (isset($_REQUEST['list'])) {
 		}
 		usort($actions, array($logslib, 'sort_by_date'));
 	}
+	if (isset($_REQUEST['unit']) && $_REQUEST['unit'] == 'kb') {
+		for ($i = count($actions) -1; $i >= 0; --$i) {
+			if (isset($actions[$i]['add']))
+				$actions[$i]['add'] = round($actions[$i]['add']/1024);
+			if (isset($actions[$i]['del']))
+				$actions[$i]['del'] = round($actions[$i]['del']/1024);
+		}
+	}
 	$smarty->assign_by_ref('actionlogs', $actions);
 }
-
+if (isset($_REQUEST['unit']))
+	$smarty->assign('unit', $_REQUEST['unit']);
 // Display the template
 $smarty->assign('mid', 'tiki-admin_actionlog.tpl');
 $smarty->display("tiki.tpl");

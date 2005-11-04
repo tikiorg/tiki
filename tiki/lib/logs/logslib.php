@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.13 2005-11-02 18:23:33 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.14 2005-11-04 16:47:53 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -382,6 +382,38 @@ class LogsLib extends TikiLib {
 		sort($stats); //sort on the first field category
 		return $stats;
 	}
+	function get_action_vol_user_categ($actions, $categNames) {
+		$stats = array();
+		$actionlogConf = $this->get_all_actionlog_conf();
+		foreach ($actions as $action) {
+			//if ($action['categId'] == 0) print also stat for non categ object
+			//	continue;
+			if ($action['user'] == '' || !($bytes = $this->get_volume_action($action)))
+				continue;
+			$key = $action['categId'].'/'.$action['user'];
+			if (!array_key_exists($key, $stats)) {
+				$stats[$key]['category'] = $action['categId']? $categNames[$action['categId']]: '';
+				$stats[$key]['user'] = $action['user'];
+			}
+			if (!isset($stats[$key][$action['objectType']]['add'])) {
+				$stats[$key][$action['objectType']]['add'] = 0;
+				$stats[$key][$action['objectType']]['del'] = 0;
+				$stats[$key][$action['objectType']]['dif'] = 0;
+			}
+			$dif = 0;
+			if (isset($bytes['add'])) {
+				$stats[$key][$action['objectType']]['add'] += $bytes['add'];
+				$dif = $bytes['add'];
+			}
+			if (isset($bytes['del'])) {
+				$stats[$key][$action['objectType']]['del'] += $bytes['del'];
+				$dif -= $bytes['del'];
+			}
+			$stats[$key][$action['objectType']]['dif'] += $dif;
+		}
+		sort($stats); //sort on the first field category
+		return $stats;
+	}
 	function get_action_vol_type($vols) {
 		$types = array();
 		foreach ($vols as $vol) {
@@ -412,6 +444,19 @@ class LogsLib extends TikiLib {
 		sort($stats); // sort on the first fields categ , then user
 		return $stats;
 	}
+	function in_kb($vol) {
+		for ($i = count($vol) -1; $i >= 0; --$i) {
+			foreach ($vol[$i] as $k=>$v) {
+				if ($k != 'category' && $k != 'user') {
+					$vol[$i][$k]['add'] = round($vol[$i][$k]['add']/1024);
+					$vol[$i][$k]['del'] = round($vol[$i][$k]['del']/1024);
+					$vol[$i][$k]['dif'] = round($vol[$i][$k]['dif']/1024);
+				}
+			}
+		}
+		return $vol;
+	}
+
 }
 
 $logslib = new LogsLib($dbTiki);
