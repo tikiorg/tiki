@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.9 2005-11-04 16:47:53 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.10 2005-11-04 19:23:04 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -51,12 +51,14 @@ foreach ($categories as $categ) {
 $smarty->assign_by_ref('categNames', $categNames);
 
 if (isset($_REQUEST['list'])) {
+	$url = '';
 	$selectedUsers = array();
 	if (isset($_REQUEST['selectedUsers'])) {
 		foreach ($users as $key=>$user) {
-			if (in_array($user, $_REQUEST['selectedUsers']))
+			if (in_array($user, $_REQUEST['selectedUsers'])) {
+				$url .= "&amp;selectedUsers[]=$user";
 				$selectedUsers[$key] = 'y';
-			else
+			} else
 				$selectedUsers[$key] = 'n';
 		}
 	}
@@ -65,6 +67,7 @@ if (isset($_REQUEST['list'])) {
 		$selectedGroups = array();
 		foreach ($groups as $key=>$group) {
 			if (in_array($group, $_REQUEST['selectedGroups'])) {
+				$url .= "&amp;selectedGroups[]=$group";
 				$selectedGroups[$key] = 'y';
 				$members = $userlib->get_group_users($group);
 				foreach ($members as $m)
@@ -79,17 +82,27 @@ if (isset($_REQUEST['list'])) {
 		$_REQUEST['selectedUsers'] = '';
 	if (!isset($_REQUEST['categId']) || $_REQUEST['categId'] == 0)
 		$_REQUEST['categId']='';
-	else
+	else {
+		$url .= '&amp;categId='. $_REQUEST['categId'];
 		$smarty->assign('reportCateg', $categNames[$_REQUEST['categId']]);
+	}
 
 	$showCateg = $logslib->action_is_viewed('*', 'category');
 	$smarty->assign('showCateg', $showCateg?'y':'n');
 	$showLogin = $logslib->action_is_viewed('*', 'login');
 	$smarty->assign('showLogin', $showLogin?'y':'n');
 
-	$startDate = mktime(0, 0, 0, $_REQUEST["startDate_Month"], $_REQUEST["startDate_Day"], $_REQUEST["startDate_Year"]);
+	if (isset($_REQUEST['startDate_Month'])) {
+		$startDate = mktime(0, 0, 0, $_REQUEST['startDate_Month'], $_REQUEST['startDate_Day'], $_REQUEST['startDate_Year']);
+		$url .= "&amp;start=$startDate";
+	} else
+		$startDate = mktime(0, 0, 0, date('n'), date('d'), date('Y'));
 	$smarty->assign('startDate', $startDate);
-	$endDate = mktime(23, 59, 59, $_REQUEST["endDate_Month"], $_REQUEST["endDate_Day"], $_REQUEST["endDate_Year"]);
+	if (isset($_REQUEST['endDate_Month'])) {
+		$endDate = mktime(23, 59, 59, $_REQUEST['endDate_Month'], $_REQUEST['endDate_Day'], $_REQUEST['endDate_Year']);
+		$url .= "&amp;end=$endDate";
+	} else
+		$endDate = mktime(23, 59, 59, date('n'), date('d'), date('Y'));
 	$smarty->assign('endDate', $endDate);
 
 	$actions = $logslib->list_actions('', '', $_REQUEST['selectedUsers'], 0, -1, 'lastModif_desc', '', $startDate, $endDate, $_REQUEST['categId']);
@@ -196,7 +209,18 @@ if (isset($_REQUEST['list'])) {
 				$actions[$i]['del'] = round($actions[$i]['del']/1024);
 		}
 	}
+	if (isset($_REQUEST['sort_mode'])) {
+		list($col, $order) = split('_', $_REQUEST['sort_mode']);
+		$sort = array();
+		foreach ($actions as $a)
+			$sort[] = $a[$col];
+		array_multisort($sort, ($order == 'desc')?SORT_DESC: SORT_ASC, $actions);
+		$smarty->assign('sort_mode', $_REQUEST['sort_mode']);
+	}
 	$smarty->assign_by_ref('actionlogs', $actions);
+	if (isset($_REQUEST['unit']))
+		$url .= '&amp;unit='. $_REQUEST['unit'];
+	$smarty->assign('url', "&amp;list=y$url#Report");
 }
 if (isset($_REQUEST['unit']))
 	$smarty->assign('unit', $_REQUEST['unit']);
