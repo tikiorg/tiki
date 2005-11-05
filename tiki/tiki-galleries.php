@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.42 2005-08-12 13:01:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.43 2005-11-05 22:27:19 amette Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -116,7 +116,7 @@ $smarty->assign('galleryimage','first');
 $galleries_list=$imagegallib->list_galleries(0,-1,'name_desc',$user);
 $smarty->assign_by_ref('galleries_list',$galleries_list['data']);
 $smarty->assign('defaultscale','o');
-$smarty->assign('parentagllery',-1);
+$smarty->assign('parentgallery',-1);
 
 // If we are editing an existing gallery prepare smarty variables
 if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
