@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.10 2005-11-04 19:23:04 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.11 2005-11-07 18:04:45 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -183,6 +183,20 @@ if (isset($_REQUEST['list'])) {
 				}
 			}
 			$actions[$i]['object'] = $fileGalleryNames[$actions[$i]['object']];
+			break;
+		case 'comment':
+			preg_match('/type=([^&]*)(&.*)/', $actions[$i]['comment'], $matches);
+			switch ($matches[1]) {
+			case 'wiki page': case 'wiki+page': case 'wiki%20page':
+				$actions[$i]['link'] = 'tiki-index.php?page='.$actions[$i]['object'].$matches[2];
+				break;
+			case 'file gallery':
+				$actions[$i]['link'] = 'tiki-list_file_gallery.php?galleryId='.$actions[$i]['object'].$matches[2];
+				break;
+			case 'image gallery':
+				$actions[$i]['link'] = 'tiki-browse_gallery.php?galleryId='.$actions[$i]['object'].$matches[2];
+				break;
+			}
 			break;
 		}
 	}

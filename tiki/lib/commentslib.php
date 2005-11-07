@@ -1681,13 +1681,14 @@ class Comments extends TikiLib {
 	global $feature_actionlog;
 	if ($feature_actionlog == 'y') {
 		$object = explode( ":", $objectId, 2);
-		if ($object[0] == 'forum') {
-			$comment= $this->get_comment($threadId);
-			include_once('lib/diff/difflib.php');
-			$bytes = diff2($comment['data'] , $data, 'bytes');
-			global $logslib; include_once('lib/logs/logslib.php');
+		$comment= $this->get_comment($threadId);
+		include_once('lib/diff/difflib.php');
+		$bytes = diff2($comment['data'] , $data, 'bytes');
+		global $logslib; include_once('lib/logs/logslib.php');
+		if ($object[0] == 'forum')
 			$logslib->add_action('Updated', $object[1], $object[0], "comments_parentId=$threadId&amp;$bytes#threadId$threadId");
-		}
+		else
+			$logslib->add_action('Updated', $object[1], 'comment', "type=".urlencode($object[0])."&amp;$bytes#threadId$threadId");
 	}
 	$query = "update `tiki_comments` set `title`=?, `comment_rating`=?,
 	`data`=?, `type`=?, `summary`=?, `smiley`=?
@@ -1826,9 +1827,13 @@ class Comments extends TikiLib {
 	refresh_index_comments( $threadId );
 
 	global $feature_actionlog;
-	if ($feature_actionlog == 'y' && $object[0] == 'forum') {
+	if ($feature_actionlog == 'y') {
 		global $logslib; include_once('lib/logs/logslib.php');
-		$logslib->add_action(($parentId == 0)? 'Posted': 'Replied', $object[1], $object[0], 'comments_parentId='.$threadId.'&amp;add='.strlen($data));
+		if ($object[0] == 'forum')
+			$logslib->add_action(($parentId == 0)? 'Posted': 'Replied', $object[1], $object[0], 'comments_parentId='.$threadId.'&amp;add='.strlen($data));
+		else
+			$logslib->add_action(($parentId == 0)? 'Posted': 'Replied', $object[1], 'comment', 'type='.urlencode($object[0]).'&amp;add='.strlen($data).'#threadId'.$threadId);
+
 	}
 
 	return $threadId;
@@ -1854,9 +1859,10 @@ class Comments extends TikiLib {
 		$query = "select * from `tiki_comments` where `threadId`=? or `parentId`=?";
 		$result = $this->query($query, array((int)$threadId, (int)$threadId));
 		while ($res = $result->fetchRow()) {
-			if ($res['objectType'] != 'forum')
-				break;
-			$logslib->add_action('Removed', $res['object'], 'forum', "comments_parentId=$threadId&amp;del=".strlen($res['data']));
+			if ($res['objectType'] == 'forum')
+				$logslib->add_action('Removed', $res['object'], 'forum', "comments_parentId=$threadId&amp;del=".strlen($res['data']));
+			else
+				$logslib->add_action('Removed', $res['object'], 'comment', 'type='.urlencode($res['objectType']).'&amp;del='.strlen($res['data'])."threadId#$threadId");
 		}
 	}
 	$query = "delete from `tiki_comments` where `threadId`=? or `parentId`=?";
