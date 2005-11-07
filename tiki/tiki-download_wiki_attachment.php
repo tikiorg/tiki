@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-download_wiki_attachment.php,v 1.11 2005-09-04 01:20:28 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-download_wiki_attachment.php,v 1.12 2005-11-07 14:47:41 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -39,7 +39,11 @@ header ("Content-type: $type");
 // If people want the old behaviour, the right thing is probably to add an argument to 
 // tiki-download_wiki_attachment.php, such as "&download", and then code in the attachment
 // plugin, but the old behaviour really seems like The Wrong Thing to me.  -rlpowell
-header ("Content-Disposition: filename=\"$file\"");
+// --> added a choice for compatibility issue
+if (isset($_REQUEST['download']))
+	header ("Content-Disposition: attachment; filename=\"$file\"");
+else
+	header ("Content-Disposition: filename=\"$file\"");
 
 // Added March04 Damian, Akira123 reported test
 header ("Expires: 0");

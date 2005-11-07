@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.24 2005-08-15 15:32:52 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.25 2005-11-07 14:47:41 sylvieg Exp $ *}
 
 <a name="attachments"></a>
 {* Don't even generate DIV if no any needed rights *}
@@ -21,6 +21,7 @@
   <td class="heading">&nbsp;</td><td class="heading"><a class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'attId_desc'}attId_asc{else}attId_desc{/if}&amp;atts_show=y#attachments">{tr}id{/tr}</a></td>
   <td class="heading">
    <a class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'filename_desc'}filename_asc{else}filename_desc{/if}&amp;atts_show=y#attachments">{tr}name{/tr}</a>
+  </td><td class="heading">&nbsp;
   </td><td class="heading">
    <a class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'comment_desc'}comment_asc{else}comment_desc{/if}&amp;atts_show=y#attachments">{tr}desc{/tr}</a>
   </td><td class="heading">
@@ -38,10 +39,13 @@
 <td class="{cycle advance=false}">{$atts[ix].attId}</td>
 <td class="{cycle advance=false}">
  {$atts[ix].filename|iconify}
- <a class="tablename" href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}">{$atts[ix].filename}</a>
+ <a class="tablename" href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}" title="{tr}view{/tr}">{$atts[ix].filename}</a>
+ </td><td class="{cycle advance=false}">
  {if $tiki_p_wiki_admin_attachments eq 'y' or ($user and ($atts[ix].user eq $user))}
-  &nbsp;&nbsp;<a title="{tr}delete{/tr}" class="link" href="tiki-index.php?page={$page|escape:"url"}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}"><img src="img/icons2/delete2.gif" border="0" width="8" height="8" alt='{tr}Remove{/tr}'></a>&nbsp;&nbsp;
+  <a title="{tr}delete{/tr}" class="link" href="tiki-index.php?page={$page|escape:"url"}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}"><img src="img/icons2/delete.gif" border="0" alt='{tr}Remove{/tr}'></a>&nbsp;&nbsp;
  {/if}
+  <a title="{tr}view{/tr}" href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}"><img src="img/icons/edit.gif" border="0" alt="{tr}View{/tr}" /></a>&nbsp;&nbsp;
+  <a title="{tr}download{/tr}" href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}&amp;download=y"><img src="img/icons2/upload.gif" border="0" alt="{tr}Download{/tr}" /></a>
  </td>
  <td class="{cycle advance=false}"><small>{$atts[ix].comment}</small></td>
  <td class="{cycle advance=false}"><small>{$atts[ix].created|tiki_short_datetime}{if $atts[ix].user} {tr}by{/tr} {$atts[ix].user}{/if}</small></td>
