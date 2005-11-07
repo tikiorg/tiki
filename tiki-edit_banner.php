@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_banner.php,v 1.20 2005-05-18 10:58:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_banner.php,v 1.21 2005-11-07 21:42:29 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -49,14 +49,16 @@ if (isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"] > 0) {
 		die;
 	}
 
+	$fromTime = substr($info["hourFrom"], 0, 2).":".substr($info["hourFrom"], 2, 2);
+	$toTime = substr($info["hourTo"], 0 , 2).":".substr($info["hourTo"], 2, 2);
 	$smarty->assign('bannerId', $info["bannerId"]);
 	$smarty->assign('client', $info["client"]);
 	$smarty->assign('maxImpressions', $info["maxImpressions"]);
 	$smarty->assign('fromDate', $info["fromDate"]);
 	$smarty->assign('toDate', $info["toDate"]);
 	$smarty->assign('useDates', $info["useDates"]);
-	$smarty->assign("fromTime", $info["hourFrom"]);
-	$smarty->assign("toTime", $info["hourTo"]);
+	$smarty->assign("fromTime", $fromTime);
+	$smarty->assign("toTime", $toTime);
 	$smarty->assign("Dmon", $info["mon"]);
 	$smarty->assign("Dtue", $info["tue"]);
 	$smarty->assign("Dwed", $info["wed"]);
@@ -91,14 +93,13 @@ if (isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"] > 0) {
 
 } else {
 	$smarty->assign('client', '');
-
 	$smarty->assign('maxImpressions', 1000);
 	$now = date("U");
 	$smarty->assign('fromDate', $now);
 	$smarty->assign('toDate', $now + (365 * 24 * 3600));
 	$smarty->assign('useDates', 'n');
-	$smarty->assign('fromTime', '0000');
-	$smarty->assign('toTime', '2359');
+	$smarty->assign('fromTime', '00:00');
+	$smarty->assign('toTime', '23:59');
 	// Variables for dates are fromDate_ and toDate_ plus fromTime_ and toTime_
 	$smarty->assign('Dmon', 'y');
 	$smarty->assign('Dtue', 'y');
@@ -134,14 +135,13 @@ if (isset($_REQUEST["removeZone"])) {
 if (isset($_REQUEST["save"]) || isset($_REQUEST["create_zone"])) {
 	check_ticket('edit-banner');
 	$fromDate = mktime(0, 0, 0, $_REQUEST["fromDate_Month"], $_REQUEST["fromDate_Day"], $_REQUEST["fromDate_Year"]);
-
 	$toDate = mktime(0, 0, 0, $_REQUEST["toDate_Month"], $_REQUEST["toDate_Day"], $_REQUEST["toDate_Year"]);
-	$fromTime = $_REQUEST["fromTimeHour"] . $_REQUEST["fromTimeMinute"];
-	$toTime = $_REQUEST["toTimeHour"] . $_REQUEST["toTimeMinute"];
+	$fromTime = ''.$_REQUEST["fromTimeHour"].$_REQUEST["fromTimeMinute"].'';
+	$toTime = ''.$_REQUEST["toTimeHour"].$_REQUEST["toTimeMinute"].'';
 	$smarty->assign('fromDate', $fromDate);
 	$smarty->assign('toDate', $toDate);
-	$smarty->assign('fromTime', $fromTime);
-	$smarty->assign('toTime', $toTime);
+	$smarty->assign('fromTime', $_REQUEST["fromTimeHour"].':'.$_REQUEST["fromTimeMinute"]);
+	$smarty->assign('toTime', $_REQUEST["toTimeHour"].':'.$_REQUEST["toTimeMinute"]);
 	$smarty->assign('client', $_REQUEST["client"]);
 	$smarty->assign('maxImpressions', $_REQUEST["maxImpressions"]);
 	$smarty->assign('HTMLData', $_REQUEST["HTMLData"]);

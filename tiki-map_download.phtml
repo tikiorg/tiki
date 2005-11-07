@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_download.phtml,v 1.11 2005-05-18 10:58:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_download.phtml,v 1.12 2005-11-07 21:42:29 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -104,6 +104,8 @@ $extension = array_pop(explode('.', basename($file)));
 closedir ($h);
 $smarty->assign('nodownload', $nodownload);
 
+$DSEP=DIRECTORY_SEPARATOR;
+
 if (!$nodownload) {
 	$h = opendir($file_path);
 	while (($file = readdir($h)) !== false) {
@@ -111,7 +113,7 @@ if (!$nodownload) {
 	  if (substr(basename($file), 0,"-" . (strlen($extension) + 1))==$file_name)
 	  {
 	    $files[] = $file;
-	    copy($file_path."/".$file,"files/".$tempfile.".".$extension);
+	    copy($file_path.$DSEP.$file,"files".$DSEP.$tempfile.".".$extension);
 	    $dfiles[]=$tempfile.".".$extension;
 	  }
 	}	
@@ -125,7 +127,7 @@ while (($file = readdir($h)) !== false) {
   if (substr($file,0,2)=="TM") {
     $filedate=substr($file,2,14);
     if ($filedate<=date("YmdHis",mktime (0,0,0,date("m"),date("d")-2,date("Y")))) {
-      unlink("files/".$file);
+      unlink("files".$DSEP.$file);
     }
   }
 }

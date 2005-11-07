@@ -1,14 +1,14 @@
 <?php
 
-// Displays the user Avatar
+// Displays an inline map
 // Use:
 // {MAP()}
-//  (mapfile=>)         Avatar is a link to "some"
-//  (extents=>)  Avatar is floated to left or right
+//  (mapfile=>) 
+//  (extents=>)
 
 
 function wikiplugin_map_help() {
-	return tra("Displays a map").":<br />~np~{MAP(mapfile=>,extents=>,size=>) /}~/np~";
+	return tra("Displays a map").":<br />~np~{MAP(mapfile=>,extents=>,size=>,width=>,height=>) /}~/np~";
 }
 
 function wikiplugin_map($data, $params) {
@@ -38,10 +38,19 @@ function wikiplugin_map($data, $params) {
 	if (isset($size)) {
 		$sizedata="size=".intval($size)."&";
 	}
+	$widthdata="";
+	if (isset($width)) {
+		$widthdata='width="'.intval($width).'"';
+	}
+	$heightdata="";
+	if (isset($height)) {
+		$heightdata='height="'.intval($height).'"';
+	}	
 	if(@$feature_maps != 'y') {
 		$map=tra("Feature disabled");
 	} else {
-		$map='<a href="tiki-map.phtml?'.$mapdata.$extdata.$sizedata.'"><img src="tiki-map.phtml?'.$mapdata.$extdata.$sizedata.'maponly=yes"/></a>';
+		$map='<object border="0" hspace="0" vspace="0" type="text/html" data="tiki-map.phtml?'.$mapdata.$extdata.$sizedata.'maponly=frame" '.$widthdata.' '.$heightdata.'><a href="tiki-map.phtml?'.$mapdata.$extdata.$sizedata.'"><img src="tiki-map.phtml?'.$mapdata.$extdata.$sizedata.'maponly=yes"/></a></object>';
+
 	}
 	return $map;
 }

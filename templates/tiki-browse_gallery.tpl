@@ -42,6 +42,18 @@
     | <span class="sortoption"><a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></span>
     | <span class="sortoption"><a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'filesize_desc'}filesize_asc{else}filesize_desc{/if}">{tr}Size{/tr}</a></span> ]
 
+<br /><br />
+<div align="center">
+<div class="mini">
+      {if $prev_offset >= 0}
+        [<a  class="galprevnext" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;&nbsp;
+      {/if}
+      {tr}Page{/tr}: {$actual_page}/{$cant_pages}
+      {if $next_offset >= 0}
+      &nbsp;&nbsp;[<a class="galprevnext" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+      {/if}
+  </div>
+</div>
 
   <div class="thumbnails">
     <table class="galtable"  cellpadding="0" cellspacing="0">

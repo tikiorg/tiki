@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.85 2005-10-27 20:12:31 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.86 2005-11-07 21:42:29 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,7 +13,7 @@ include_once ('lib/trackers/trackerlib.php');
 include_once ('lib/notifications/notificationlib.php');
 
 if ($feature_trackers != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
+	$smarty->assign('msg', tra("This feature is disabled").": feature_trackers");
 	$smarty->display("error.tpl");
 	die;
 }
@@ -571,7 +571,7 @@ if ($_REQUEST["itemId"]) {
 					$ins_fields["data"][$i]["value"] = $info["$fid"];
 				} elseif ($fields["data"][$i]["type"] == 'a') {
 					$ins_fields["data"][$i]["value"] = $info["$fid"];
-					$ins_fields["data"][$i]["pvalue"] = $tikilib->parse_data(htmlspecialchars($info["$fid"]));
+					$ins_fields["data"][$i]["pvalue"] = $tikilib->parse_data($info["$fid"]);
 				} else {
 					$ins_fields["data"][$i]["value"] = $info["$fid"];
 				}

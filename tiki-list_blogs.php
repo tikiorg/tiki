@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_blogs.php,v 1.25 2005-05-18 10:58:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_blogs.php,v 1.26 2005-11-07 21:42:29 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -154,7 +154,7 @@ $smarty->assign_by_ref('listpages', $listpages["data"]);
 $section = 'blogs';
 include_once ('tiki-section_options.php');
 
-if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
+if ($feature_mobile =='y' && isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
 	include_once ("lib/hawhaw/hawtikilib.php");
 
 	HAWTIKI_list_blogs($listpages, $tiki_p_read_blog);

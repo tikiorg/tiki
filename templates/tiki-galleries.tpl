@@ -118,6 +118,23 @@
    </td>
 </tr>
 </table>
+
+<div>
+<form action="tiki-galleries.php" method="get">
+<select name="filter">
+<option value="">{tr}Choose a filter{/tr}</option>
+<option value="topgal">{tr}Top{/tr}</option>
+<option value="parentgal">{tr}Parent gallery{/tr}</option>
+{*foreach key=fid item=field from=$listfields}
+{if $field.isSearchable eq 'y' and $field.type ne 'f' and $field.type ne 'j' and $field.type ne 'i'}
+<option value="{$fid}"{if $fid eq $filterfield} selected="selected"{/if}>{$field.name|truncate:65:"..."}</option>
+{/if}
+{/foreach*}
+</select>
+<input type="submit" value="{tr}filter{/tr}" />
+</form>
+</div>
+
 <table class="normal">
 <tr>
 {if $gal_list_name eq 'y'}
@@ -148,7 +165,10 @@
 {if $galleries[changes].visible eq 'y' or $tiki_p_admin_galleries eq 'y'}
 <tr>
 {if $gal_list_name eq 'y'}
-  <td class="{cycle advance=false}"><a class="galname" href="tiki-browse_gallery.php?galleryId={$galleries[changes].id}">{$galleries[changes].name}</a></td>
+  <td class="{cycle advance=false}"><a class="galname" href="tiki-browse_gallery.php?galleryId={$galleries[changes].id}">{$galleries[changes].name}</a><br />
+  {if $galleries[changes].topgal eq 'y'}<i>{tr}Top{/tr}</i><br />{/if}
+  {if $galleries[changes].parentgal eq 'y'}<i>{tr}Parent gallery{/tr}</i>{/if}
+  </td>
 {/if}
 {if $gal_list_description eq 'y'}  
   <td class="{cycle advance=false}">{$galleries[changes].description}</td>

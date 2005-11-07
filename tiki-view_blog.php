@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.47 2005-10-16 14:35:09 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.48 2005-11-07 21:42:29 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -186,7 +186,7 @@ $listpages = $bloglib->list_blog_posts($_REQUEST["blogId"], $offset, $blog_data[
 
 $temp_max = count($listpages["data"]);
 for ($i = 0; $i < $temp_max; $i++) {
-	$listpages["data"][$i]["parsed_data"] =preg_replace("/&#([0-9]+);/me", "chr('\\1')", strtr($tikilib->parse_data(htmlspecialchars($bloglib->get_page($listpages["data"][$i]["data"], 1))), array_flip(get_html_translation_table(HTML_ENTITIES)))) ;
+	$listpages["data"][$i]["parsed_data"] =preg_replace("/&#([0-9]+);/me", "chr('\\1')", strtr($tikilib->parse_data($bloglib->get_page($listpages["data"][$i]["data"], 1)), array_flip(get_html_translation_table(HTML_ENTITIES)))) ;
 
 //print(htmlspecialchars($listpages["data"][$i]["parsed_data"]));
 }
@@ -259,7 +259,8 @@ if ($feature_user_watches == 'y') {
 	}
 }
 
-if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
+
+if ($feature_mobile == 'y' && isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
 	include_once ("lib/hawhaw/hawtikilib.php");
 
 	HAWTIKI_view_blog($listpages, $blog_data);

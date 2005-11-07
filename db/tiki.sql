@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2005-11-07 18:04:45 $
+# $Date: 2005-11-07 21:42:29 $
 # $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -2020,6 +2020,7 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Categories','tiki-browse_categories.php',25,'feature_categories','tiki_p_view_categories','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Games','tiki-list_games.php',30,'feature_games','tiki_p_play_games','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Calendar','tiki-calendar.php',35,'feature_calendar','tiki_p_view_calendar','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Mobile','tiki-mobile.php',37,'feature_mobile','','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','(debug)','javascript:toggle("debugconsole")',40,'feature_debug_console','tiki_p_admin','');
 
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','MyTiki','tiki-my_tiki.php',50,'','','Registered');
@@ -2143,7 +2144,7 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin newsletters','tiki-admin_newsletters.php',910,'feature_newsletters','tiki_p_admin_newsletters','');
 
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Ephemerides','tiki-eph.php',950,'feature_eph','','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin','tiki-eph_admin.php',955,'feature_eph','tiki_p_eph_admin','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin ephemerides','tiki-eph_admin.php',955,'feature_eph','tiki_p_eph_admin','');
 
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Charts','tiki-charts.php',1000,'feature_charts','','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin charts','tiki-admin_charts.php',1005,'feature_charts','tiki_p_admin_charts','');
@@ -2942,8 +2943,8 @@ DROP TABLE IF EXISTS tiki_sessions;
 CREATE TABLE tiki_sessions (
   sessionId varchar(32) NOT NULL default '',
   user varchar(40) default NULL,
-  tikihost varchar(200) default NULL,
   timestamp int(14) default NULL,
+  tikihost varchar(200) default NULL,
   PRIMARY KEY  (sessionId)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
@@ -3082,6 +3083,8 @@ CREATE TABLE tiki_submissions (
   publishDate int(14) default NULL,
   expireDate int(14) default NULL,
   created int(14) default NULL,
+  bibliographical_references text,
+  resume text,
   heading text,
   body text,
   hash varchar(32) default NULL,
@@ -4654,6 +4657,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_top_bar','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_uses_slides','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_wikisyntax_in_html','full');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('default_wiki_diff_style', 'old');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('limitedGoGroupHome','y');
 
 # default sizes for mailbox, read box and mail archive
 # in messages per user and box (0=unlimited)

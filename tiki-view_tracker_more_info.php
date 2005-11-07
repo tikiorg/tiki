@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_more_info.php,v 1.6 2005-05-18 10:59:01 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_more_info.php,v 1.7 2005-11-07 21:42:29 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,7 +10,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/trackers/trackerlib.php');
 
 if ($feature_trackers != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
+	$smarty->assign('msg', tra("This feature is disabled").": feature_trackers");
 	$smarty->display("error.tpl");
 	die;
 }
