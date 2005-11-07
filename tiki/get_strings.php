@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.44 2005-05-18 10:58:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.45 2005-11-07 16:20:21 damosoft Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -170,7 +170,7 @@ if($tiki_p_admin != 'y') {
   die("You need to be admin to run this script");
 }
 
-echo "Initialization time: ", $tiki_timer->elapsed(), " seconds<br/>\n";
+echo "Initialization time: ", $tiki_timer->elapsed(), " seconds<br />\n";
 $tiki_timer->start("files");
 
 $comments = isset ($_REQUEST['comments']);
@@ -228,7 +228,7 @@ if (!isset($_REQUEST["sort"]) || $_REQUEST["sort"] != 'n') {
 	echo "Sorting files...";
 	flush();
 	sort($files);
-	echo count($files), " items done.<br/>\nTiki directory parsed in: ", $tiki_timer->stop("files"), " seconds<br/>\n<br/>\n";
+	echo count($files), " items done.<br />\nTiki directory parsed in: ", $tiki_timer->stop("files"), " seconds<br />\n<br />\n";
 	flush();
 }
 $tiki_timer->start("processing");
@@ -587,7 +587,7 @@ foreach ($languages as $sel) {
   }
 }
 
-echo "Processing time: ", $tiki_timer->stop("processing"), " seconds<br/>\n";
-echo "Total time spent: ", $tiki_timer->elapsed(), " seconds<br/>\n";
+echo "Processing time: ", $tiki_timer->stop("processing"), " seconds<br />\n";
+echo "Total time spent: ", $tiki_timer->elapsed(), " seconds<br />\n";
 
 ?>

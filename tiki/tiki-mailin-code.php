@@ -41,7 +41,7 @@ function mailin_check_attachments(&$output, &$out, $page, $user) {
     }
   }
   $out .= $cnt;
-  $out .= " attachment(s) added<br/>";
+  $out .= " attachment(s) added<br />";
 }
 function mailin_get_body($output) {
 	if (isset($output['text'][0]))

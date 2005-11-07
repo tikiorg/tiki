@@ -22,7 +22,7 @@ if (version_compare(phpversion(), '5.0') === -1 && !function_exists('clone')) {
     }');
 }
 
-// $Id: Toc.php,v 1.1 2005-07-30 08:15:26 toggg Exp $
+// $Id: Toc.php,v 1.2 2005-11-07 16:20:31 damosoft Exp $
 
 class Text_Wiki_Render_Xhtml_Toc extends Text_Wiki_Render {
     
@@ -83,12 +83,12 @@ class Text_Wiki_Render_Xhtml_Toc extends Text_Wiki_Render {
             $start = strpos($this->wiki->source, $this->wiki->delim.$heading['start']['id'].$this->wiki->delim)
                 + strlen($this->wiki->delim.$heading['start']['id'].$this->wiki->delim);
             $end = strpos($this->wiki->source, $this->wiki->delim.$heading['end']['id'].$this->wiki->delim);
-            /*//echo htmlentities($this->wiki->source).'<br/><br/>';
-            echo $heading['start']['id'].' '.$heading['end']['id'].'<br/>';
-            echo $start.' '.$end.'<br/>';
-            echo substr($this->wiki->source, $start, 5).'<br/>';
-            echo substr($this->wiki->source, $end - 5, 5).'<br/>';
-            echo substr($this->wiki->source, $start, $end - $start).'<br/>';*/
+            /*//echo htmlentities($this->wiki->source).'<br /><br />';
+            echo $heading['start']['id'].' '.$heading['end']['id'].'<br />';
+            echo $start.' '.$end.'<br />';
+            echo substr($this->wiki->source, $start, 5).'<br />';
+            echo substr($this->wiki->source, $end - 5, 5).'<br />';
+            echo substr($this->wiki->source, $start, $end - $start).'<br />';*/
             $text = substr($this->wiki->source, $start, $end - $start);
 
             $wiki = clone($this->wiki);

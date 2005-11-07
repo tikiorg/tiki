@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker_item.tpl,v 1.89 2005-10-16 14:35:10 mose Exp $ *}
+{* $Id: tiki-view_tracker_item.tpl,v 1.90 2005-11-07 16:20:31 damosoft Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -483,7 +483,7 @@ style="background-image:url('img/flags/{$flag}.gif');background-repeat:no-repeat
 </select>
 
 {elseif $cur_field.type eq 'i'}
-<input type="file" name="ins_{$cur_field.id}" /><br/>
+<input type="file" name="ins_{$cur_field.id}" /><br />
 {if $cur_field.value ne ''}
 <img src="{$cur_field.value}" alt="n/a" width="{$cur_field.options_array[2]}" height="{$cur_field.options_array[3]}" ><br />
 <a href="tiki-view_tracker_item.php?trackerId={$trackerId}&itemId={$itemId}&fieldId={$cur_field.id}&fieldName={$cur_field.name}&removeImage">{tr}remove image{/tr}</a>

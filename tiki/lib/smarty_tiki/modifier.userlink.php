@@ -68,7 +68,7 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set')
 			    if ($feature_community_mouseover_name == 'y') {
 				$line .= $userlib->get_user_preference($other_user, "realName");
 				if ($line) {
-				    $content .= $line."<br/>";
+				    $content .= $line."<br />";
 				}
 			    }
 			    if ($feature_community_mouseover_friends == 'y' && $feature_friends == 'y') {
@@ -78,36 +78,36 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set')
 			    if ($feature_community_mouseover_score == 'y') {
 				$content .= $star . $info['score'];
 			    }
-			    if ($feature_community_mouseover_score == 'y' || $feature_community_mouseover_friends == 'y') $content .= "<br/>";
+			    if ($feature_community_mouseover_score == 'y' || $feature_community_mouseover_friends == 'y') $content .= "<br />";
 
 			    if ($feature_community_mouseover_country == 'y') {
 				$country = $tikilib->get_user_preference($other_user, "country", "");
 				if ($country && $country != "Other") {
-				   $content .= "<img src='img/flags/$country.gif' /> ".tra($country) . "<br/>";
+				   $content .= "<img src='img/flags/$country.gif' /> ".tra($country) . "<br />";
 				}
 					}
 					if ($feature_community_mouseover_distance == 'y') {
 				$distance = $tikilib->get_userdistance($other_user,$user);
 				if (!is_null($distance)) {
-				   $content .= $distance." ".tra("km") . "<br/>";
+				   $content .= $distance." ".tra("km") . "<br />";
 				}
 			    }
 			    if($feature_community_mouseover_email == 'y') {
 				$email_isPublic = $tikilib->get_user_preference($other_user, "email is public");
 				if ($email_isPublic != 'n') {
 				    include_once ('lib/userprefs/scrambleEmail.php');
-				    $content .= scrambleEmail($info['email'], $email_isPublic) . "<br/>";
+				    $content .= scrambleEmail($info['email'], $email_isPublic) . "<br />";
 				} elseif (!empty($friend)) {
-				    $content .= $info['email'] . "<br/>";
+				    $content .= $info['email'] . "<br />";
 				}	    
 			    }
 			    if ($feature_community_mouseover_lastlogin == 'y') {
 				$content .= tra("Last seen on ") . $tikilib->get_short_datetime($info['lastLogin']);
-				$content .= "<br/>";
+				$content .= "<br />";
 			    }
 
 			    if (is_numeric($idletime)) {
-				$content .= sprintf(tra("(idle for %s seconds)"), $idletime) . "<br/>";
+				$content .= sprintf(tra("(idle for %s seconds)"), $idletime) . "<br />";
 			    }
 
 			    if ($feature_community_mouseover_picture == 'y') {

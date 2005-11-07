@@ -20,7 +20,7 @@ while(!feof($fp)) {
   echo ".";
 }
 fclose($fp);
-echo "<br/>\n";
+echo "<br />\n";
 
 
 // split into statements

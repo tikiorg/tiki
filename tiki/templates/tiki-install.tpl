@@ -114,8 +114,8 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 	  {if $dbdone eq 'n'}
 		  {if $logged eq 'y'}
 		    {* we are logged if no admin account is found or if he user logged in*}
-		    <b>Welcome to the installation script!</b><br/>
-		    You can now create a new database or update your current database<br/><br/>
+		    <b>Welcome to the installation script!</b><br />
+		    You can now create a new database or update your current database<br /><br />
 		    <form method="post" action="tiki-install.php">
 				{if $multi}<input type="hidden" name="multi" value="{$multi}" />{/if}
 		    <table>
@@ -157,13 +157,13 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 			We recommend that you <b>backup your database</b> with mysqldump or phpmyadmin.
 		</td></tr>
 		    </table>
-		    </form><br/>
+		    </form><br />
 			<a href="tiki-index.php" class="link">Do nothing and enter Tiki</a><br />
 			<a href="tiki-install.php?reset=yes" class="link">Reset database connection settings</a>
 		  {else}
 			{* we are not logged then no admin account found and user not logged*}
-			<b>This site has an admin account configured</b><br/>
-		    Please enter your admin password to continue<br/><br/>
+			<b>This site has an admin account configured</b><br />
+		    Please enter your admin password to continue<br /><br />
 
      <form name="loginbox" action="tiki-install.php" method="post"> 
 			{if $multi}<input type="hidden" name="multi" value="{$multi}" />{/if}
@@ -178,27 +178,27 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 
 		  {/if}
     	{else}
-    		<b>Print operations executed successfully</b><br/>
+    		<b>Print operations executed successfully</b><br />
     		<textarea rows="15" cols="80">
     		{section loop=$succcommands name=ix}
     		{$succcommands[ix]}
     		{/section}
-    		</textarea><br/><br/>
-    		<b>Print operations failed</b><br/>
+    		</textarea><br /><br />
+    		<b>Print operations failed</b><br />
     		<textarea rows="15" cols="80">
     		{section loop=$failedcommands name=ix}
     		{$failedcommands[ix]}
     		{/section}
-    		</textarea><br/><br/>
+    		</textarea><br /><br />
     		Your database has been configured and Tikiwiki is ready to run! If
     		this is your first install, your admin password is 'admin'. You can
     		now log in into Tikiwiki as user 'admin' and start configuring
-    		the application.<br/>
+    		the application.<br />
     		<b>Note:</b> This installer script may be potentially harmful so we strongly
     		recommend you to disable the script and then proceed into Tiki. If
     		you now decide to disable the script by <strong>renaming</strong>, the installer will try to
     		rename itself to tiki-installer.done and it will stay available in the installer/ folder for later use. If
-    		you decide to <strong>remove</strong> the script <strong>it will be completely deleted!</strong><br/><br/>
+    		you decide to <strong>remove</strong> the script <strong>it will be completely deleted!</strong><br /><br />
     		<a href="tiki-install.php?kill" class="link">Click here to <b>disable the installer script by renaming it for later use</b> and proceed into Tikiwiki</a><br /><br />
     		<a href="tiki-install.php?kill&amp;remove" class="link">Click here to <b>disable the installer script by deleting it completely</b> and proceed into Tikiwiki</a><br /><br />
     		<a href="tiki-index.php" class="link">Click here to proceed into Tikiwiki without disabling the script</a><br /><br />

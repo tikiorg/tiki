@@ -211,7 +211,7 @@
 	<tr>
 		<td class="formcolor">{tr}Info{/tr}</td>
 		<td colspan="3" class="formcolor">
-			{tr}This message will be send to users if you are makeing changes of assigned tasks{/tr}<br/>
+			{tr}This message will be send to users if you are makeing changes of assigned tasks{/tr}<br />
 			<textarea style="width:98%;" rows="2" cols="80" name="task_info_message">{$info.info|escape}</textarea>
 			<input checked="checked" type="checkbox" name="task_send_changes_message" />{tr}Send message with changes{/tr}
 		</td>

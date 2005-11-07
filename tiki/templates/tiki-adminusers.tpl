@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.76 2005-10-29 11:49:00 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.77 2005-11-07 16:20:31 damosoft Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
@@ -87,7 +87,7 @@
 </table>
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 </form>
-<br/>
+<br />
 </div>
 
 {if $cant_pages > 1}

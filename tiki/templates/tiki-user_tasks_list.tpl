@@ -163,7 +163,7 @@
 <a class="prevnext" href="tiki-user_tasks.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
-{/if}<br/>
+{/if}<br />
 {$cant} {tr}Tasks{/tr}
 </div>
 <br />

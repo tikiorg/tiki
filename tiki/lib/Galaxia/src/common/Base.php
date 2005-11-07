@@ -94,7 +94,7 @@ class Base extends Observable {
 
         if ( isset($db_table_prefix) && !is_null($db_table_prefix) && !empty($db_table_prefix) ) {
 
-            //printf("convert_query_table_prefixes():\$db_table_prefix = %s<br/>\n", $db_table_prefix );
+            //printf("convert_query_table_prefixes():\$db_table_prefix = %s<br />\n", $db_table_prefix );
 
             if( isset($common_users_table_prefix) && !is_null($common_users_table_prefix) && !empty($common_users_table_prefix) ) {
                 $query = str_replace("`users_", "`".$common_users_table_prefix."users_", $query);
@@ -107,7 +107,7 @@ class Base extends Observable {
             $query = str_replace("`sessions", "`".$db_table_prefix."sessions", $query);
             $query = str_replace("`galaxia_", "`".$db_table_prefix."galaxia_", $query);
 
-            //printf("convert_query_table_prefixes():\$query = %s<br/>\n", $query );
+            //printf("convert_query_table_prefixes():\$query = %s<br />\n", $query );
         }
     }
 

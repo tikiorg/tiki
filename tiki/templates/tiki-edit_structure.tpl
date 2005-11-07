@@ -8,7 +8,7 @@
 <li><a class="link" href="tiki-edit_structure.php?page_ref_id={$removepage}&amp;rremove={$removepage}">{tr}Remove only from structure{/tr}</a></li>
 <li><a class="link" href="tiki-edit_structure.php?page_ref_id={$removepage}&amp;sremove={$removepage}">{tr}Remove from structure and remove page too{/tr}</a></li>
 </ul>
-<br/>
+<br />
 {/if}
 
 <form action="tiki-edit_structure.php" method="post">

@@ -39,7 +39,7 @@ settimeleft(itid);
   {/section}
 </div>  
 {if $questions[ix].type eq "f" }
-<br/>
+<br />
 <div class="quizupload">
 Supporting Documentation: <input name="question_upload_{$questions[ix].questionId}" type="file">
 </div>

@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.20 2005-09-19 21:22:31 michael_davey Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.21 2005-11-07 16:20:29 damosoft Exp $
 //
 
 // $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
@@ -151,7 +151,7 @@ function getOne($query, $values = null, $reporterrors = true, $offset = 0) {
 function sql_error($query, $values, $result) {
     global $ADODB_LASTDB, $smarty;
 
-    trigger_error($ADODB_LASTDB . " error:  " . $this->db->ErrorMsg(). " in query:<br/><pre>\n" . $query . "\n</pre><br/>", E_USER_WARNING);
+    trigger_error($ADODB_LASTDB . " error:  " . $this->db->ErrorMsg(). " in query:<br /><pre>\n" . $query . "\n</pre><br />", E_USER_WARNING);
     // only for debugging.
     //trigger_error($ADODB_LASTDB . " error:  " . $this->db->ErrorMsg(). " in query:<br />" . $query . "<br />", E_USER_WARNING);
     $outp = "<div class='simplebox'><b>".tra("An error occured in a database query!")."</b></div>";
@@ -231,7 +231,7 @@ function convert_query_table_prefixes(&$query) {
 
     if ( isset($db_table_prefix) && !is_null($db_table_prefix) && !empty($db_table_prefix) ) {
 
-        //printf("convert_query_table_prefixes():\$db_table_prefix = %s<br/>\n", $db_table_prefix );
+        //printf("convert_query_table_prefixes():\$db_table_prefix = %s<br />\n", $db_table_prefix );
 
         if( isset($common_users_table_prefix) && !is_null($common_users_table_prefix) && !empty($common_users_table_prefix) ) {
             $query = str_replace("`users_", "`".$common_users_table_prefix."users_", $query);
@@ -244,7 +244,7 @@ function convert_query_table_prefixes(&$query) {
         $query = str_replace("`sessions", "`".$db_table_prefix."sessions", $query);
         $query = str_replace("`galaxia_", "`".$db_table_prefix."galaxia_", $query);
 
-        //printf("convert_query_table_prefixes():\$query = %s<br/>\n", $query );
+        //printf("convert_query_table_prefixes():\$query = %s<br />\n", $query );
     }
 }
 

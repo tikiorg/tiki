@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/vidiki/tiki-page_bar.tpl,v 1.3 2005-05-18 11:03:59 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/vidiki/tiki-page_bar.tpl,v 1.4 2005-11-07 16:20:31 damosoft Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -128,7 +128,7 @@
 
 </ul>
 </div>
-<br/>
+<br />
 {if $wiki_extras eq 'y' && $feature_wiki_attachments eq 'y' and $tiki_p_wiki_view_attachments eq 'y'}
 {include file=attachments.tpl}
 {/if}

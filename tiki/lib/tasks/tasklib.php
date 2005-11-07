@@ -153,7 +153,7 @@ class TaskLib extends TikiLib {
 		foreach ($values as $key => $value) {
 			$entries[$key] =  $value;
 			$count_values++;
-			//echo("$key: $value<br/>");
+			//echo("$key: $value<br />");
 		}
 		
 		if ($entries['percentage'] == NULL){
@@ -179,9 +179,9 @@ class TaskLib extends TikiLib {
 				$query_values.= "$comma ?";
 				$comma  = ', ';
 				$count_entries++;
-				//echo("entries.$key: $value<br/>");
+				//echo("entries.$key: $value<br />");
 			}
-			//echo("$query<br/>");
+			//echo("$query<br />");
 			$query .= $query_values . ")";
 			$this->query($query,$entries);
 		}
@@ -402,7 +402,7 @@ class TaskLib extends TikiLib {
 		
 		$list_tasks_end = microtime();
 		$list_tasks_time = $list_tasks_end - $list_tasks_start;
-		//echo("list_task in $list_tasks_time seconds<br/>");
+		//echo("list_task in $list_tasks_time seconds<br />");
 		return $retval;
 	}
 
