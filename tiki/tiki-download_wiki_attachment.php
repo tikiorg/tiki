@@ -1,16 +1,17 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-download_wiki_attachment.php,v 1.12 2005-11-07 14:47:41 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-download_wiki_attachment.php,v 1.13 2005-11-07 15:16:57 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
-include_once("lib/init/initlib.php");
-require_once ('tiki-setup_base.php');
+require_once ('tiki-setup.php');
 
 if ($tiki_p_wiki_view_attachments != 'y' && $tiki_p_wiki_admin_attachments != 'y') {
+	$smarty->assign('msg', tra("You do not have permission to use this feature"));
+	$smarty->display("error.tpl");
 	die;
 }
 
