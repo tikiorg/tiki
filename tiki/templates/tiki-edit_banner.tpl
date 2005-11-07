@@ -53,15 +53,15 @@
 
 
 <div class="simplebox">
-<table with="100%">
+<table width="100%">
 <tr><td colspan="2" class="form">{tr}Show the banner only in this hours{/tr}:</td></tr>
-<tr><td class="form">{tr}from{/tr}:</td><td class="form">{html_select_time time=$fromTime display_seconds=false prefix=fromTime}</td></tr>
-<tr><td class="form">{tr}to{/tr}:</td><td class="form">{html_select_time time=$toTime display_seconds=false prefix=toTime}</td></tr>
+<tr><td class="form">{tr}from{/tr}:</td><td class="form">{html_select_time time=$fromTime display_seconds=false prefix='fromTime'}</td></tr>
+<tr><td class="form">{tr}to{/tr}:</td><td class="form">{html_select_time time=$toTime display_seconds=false prefix='toTime'}</td></tr>
 </table>
 </div>
 
 <div class="simplebox">
-<table with="100%">
+<table width="100%">
 <tr><td colspan="7" class="form">{tr}Show the banner only on{/tr}:</td></tr>
 <tr>
 <td class="form">{tr}Mon{/tr}:<input type="checkbox" name="Dmon" {if $Dmon eq 'y'}checked="checked"{/if} /></td>

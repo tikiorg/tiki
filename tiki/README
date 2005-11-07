@@ -8,8 +8,10 @@ DOCUMENTATION
 * http://tikiwiki.org/InstallTiki for a setup guide
 * http://tikiwiki.org/InstallTikiHelp for what to do in case of problems
 * It might also be helpful to look into the official Manual. Last released
-  documentation, in pdf format (350 pages) (outdated at the time of this writing):
-  http://tikiwiki.org/tiki.pdf (version 1.6 but with many valuable help)
+  documentation, in pdf format (350 pages) is outdated at the time of this
+  writing (version 1.6 but with many valuable help). But you can get a
+  reasonably current PDF-snapshot of doc.tikiwiki.org:
+  http://sourceforge.net/project/showfiles.php?group_id=64258&package_id=68737
 
 * The documentation for 1.9 version is maintained on http://doc.tikiwiki.org.
   You're encouraged to contribute.

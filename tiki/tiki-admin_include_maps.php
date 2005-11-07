@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_maps.php,v 1.13 2005-05-18 10:58:54 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_maps.php,v 1.14 2005-11-07 21:42:29 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -68,20 +68,37 @@ if (($_REQUEST["map_path"]=='') || ($_REQUEST["default_map"]=='')
 } 
 
 if (isset($_REQUEST["gdaltindex"])) {
-	if (is_executable($_REQUEST["gdaltindex"])) {
-		$tikilib->set_preference('gdaltindex', $_REQUEST["gdaltindex"]);
-	} else {
-		$map_error=tra("No valid gdaltindex executable");
+	if (function_exists("is_executable")) {  //linux
+		if (is_executable($_REQUEST["gdaltindex"])) {
+			$tikilib->set_preference('gdaltindex', $_REQUEST["gdaltindex"]);
+		} else {
+			$map_error=tra("No valid gdaltindex executable");
+		}
+	} else {  //windows
+		if (is_file($_REQUEST["gdaltindex"])) {
+			$tikilib->set_preference('gdaltindex', $_REQUEST["gdaltindex"]);
+		} else {
+			$map_error=tra("No valid gdaltindex executable");
+		}	
 	}
 	$smarty->assign('gdaltindex', $_REQUEST["gdaltindex"]);
 }
 if (isset($_REQUEST["ogr2ogr"])) {
-	if (is_executable($_REQUEST["ogr2ogr"])) {
-  		$tikilib->set_preference('ogr2ogr', $_REQUEST["ogr2ogr"]);
-	} else {
-		$map_error=tra("No valid ogr2ogr executable");
+	if (function_exists("is_executable")) {  //linux
+		if (is_executable($_REQUEST["ogr2ogr"])) {
+	  		$tikilib->set_preference('ogr2ogr', $_REQUEST["ogr2ogr"]);
+		} else {
+			$map_error=tra("No valid ogr2ogr executable");
+		}
+
+	} else { //windows
+			if (is_file($_REQUEST["ogr2ogr"])) {
+	  		$tikilib->set_preference('ogr2ogr', $_REQUEST["ogr2ogr"]);
+		} else {
+			$map_error=tra("No valid ogr2ogr executable");
+		}
 	}
-  	$smarty->assign('ogr2ogr', $_REQUEST["ogr2ogr"]);
+	$smarty->assign('ogr2ogr', $_REQUEST["ogr2ogr"]);
 }
 
 $smarty->assign('map_error', $map_error);

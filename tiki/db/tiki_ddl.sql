@@ -850,17 +850,6 @@ CREATE TABLE tiki_featured_links (
 ) TYPE=MyISAM;
 
 
-DROP TABLE IF EXISTS tiki_features;
-CREATE TABLE tiki_features (
-  featureId INT NOT NULL AUTO_INCREMENT ,
-  Name VARCHAR( 200 ) NOT NULL ,
-  Description text,
-  Helplink VARCHAR( 200 ) NOT NULL ,
-  Variable VARCHAR( 200 ) NOT NULL ,
-  PRIMARY KEY ( featureId )
-) TYPE=MyISAM;
-
-
 DROP TABLE IF EXISTS tiki_file_galleries;
 CREATE TABLE tiki_file_galleries (
   galleryId int(14) NOT NULL auto_increment,

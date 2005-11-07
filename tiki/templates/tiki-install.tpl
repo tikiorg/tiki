@@ -145,14 +145,18 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 			<input type="submit" name="update" value="update" />
 		    </td></tr>
 		    <tr><td colspan="2">
+			For database update from 1.8 or later:
+			<ol>
+				<li>If you upgrade from 1.8.x you <b>MUST</b> run tiki_1.8to1.9 and don't need an additional script</li>
+				<li>If you upgrade from a previous 1.9.x version, you can speed up the upgrade by running only tiki_1.9to1.9.2</li>
+			</ol>
+		    <tr><td colspan="2">
 		    	For database update from 1.7 you should use this order:
 			<ol>
 				<li>tiki_1.7to1.8.sql - can be run more than once if errors occur</li>
 				<li>comments_fix_1.7to1.8.sql - use only once!</li>
-				<li>structure_fix_1.7to1.8.sql use only once!</li>
+				<li>structure_fix_1.7to1.8.sql - use only once!</li>
 				<li>tiki_1.8to1.9.sql - can be run more than once if errors occur</li>
-				<li>tiki_1.9to1.9.1.sql - can be run more than once if errors occur</li>
-				<li>tiki_1.9.1to1.9.2.sql - can be run more than once if errors occur</li>
 			</ol>
 			We recommend that you <b>backup your database</b> with mysqldump or phpmyadmin.
 		</td></tr>
@@ -199,7 +203,7 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
     		you now decide to disable the script by <strong>renaming</strong>, the installer will try to
     		rename itself to tiki-installer.done and it will stay available in the installer/ folder for later use. If
     		you decide to <strong>remove</strong> the script <strong>it will be completely deleted!</strong><br /><br />
-    		<a href="tiki-install.php?kill" class="link">Click here to <b>disable the installer script by renaming it for later use</b> and proceed into Tikiwiki</a><br /><br />
+    		<a href="tiki-install.php?kill=1" class="link">Click here to <b>disable the installer script by renaming it for later use</b> and proceed into Tikiwiki</a><br /><br />
     		<a href="tiki-install.php?kill&amp;remove" class="link">Click here to <b>disable the installer script by deleting it completely</b> and proceed into Tikiwiki</a><br /><br />
     		<a href="tiki-index.php" class="link">Click here to proceed into Tikiwiki without disabling the script</a><br /><br />
     		<a href="tiki-install.php?reset=yes{if $multi}&amp;multi={$multi}{/if}" class="link">Reset database connection settings</a><br /><br />

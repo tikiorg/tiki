@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_upload.php,v 1.15 2005-05-18 10:58:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_upload.php,v 1.16 2005-11-07 21:42:29 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -27,6 +27,9 @@ if (!is_dir($map_path)) {
 	die;
 }
 
+
+$DSEP=DIRECTORY_SEPARATOR;
+
 $max_file_size=ini_get("upload_max_filesize");
 $smarty->assign('max_file_size', $max_file_size);
 
@@ -48,22 +51,22 @@ if (isset($_REQUEST["dir"])) {
 	$_REQUEST["dir"] = preg_replace('~/+~','/',$_REQUEST["dir"]);
 	$directory_path = inpath($map_path.$_REQUEST["dir"],$map_path."data");
 	if ($directory_path) {
-		$dir = "/data".substr($directory_path,strlen($map_path)+4);
+		$dir = $DSEP."data".substr($directory_path,strlen($map_path)+4);
 	} else {
-	  $dir="/data";
-		$directory_path=$map_path."/data";
+	  $dir=$DSEP."data";
+		$directory_path=$map_path.$DSEP."data";
 	}
 	$basedir = dirname($_REQUEST["dir"]);
 
-  if (substr($dir,0,5) != "/data") {
-    $directory_path = $map_path."/data";
-    $dir = "/data";
-		$basedir = '/';
+  if (substr($dir,0,5) != $DSEP."data") {
+    $directory_path = $map_path.$DSEP."data";
+    $dir = $DSEP."data";
+		$basedir = $DSEP;
   }
 } else {
-  $directory_path=$map_path."/data";
-  $dir="/data";
-	$basedir = '/';
+  $directory_path=$map_path.$DSEP."data";
+  $dir=$DSEP."data";
+	$basedir = $DSEP;
 }
 $smarty->assign('dir', $dir);	
 $smarty->assign('basedir', $basedir);	
@@ -72,7 +75,7 @@ $smarty->assign('basedir', $basedir);
 if (isset($_REQUEST["upload"])) {
   for ($i = 1; $i <= 6; $i++) {
     if(isset($_FILES["userfile$i"]) && is_uploaded_file($_FILES["userfile$i"]['tmp_name'])) {
-      if(!move_uploaded_file($_FILES["userfile$i"]['tmp_name'], $directory_path."/".$_FILES["userfile$i"]['name'])) {
+      if(!@move_uploaded_file($_FILES["userfile$i"]['tmp_name'], $directory_path.$DSEP.$_FILES["userfile$i"]['name'])) {
         $smarty->assign('msg',tra("Could not upload the file"));
         $smarty->display("error.tpl");
         die;
@@ -88,14 +91,14 @@ if (isset($_REQUEST["action"]) && isset($_REQUEST["file"])) {
 		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 					
-         if (is_file($directory_path."/".$_REQUEST["file"]) &&
+         if (is_file($directory_path.$DSEP.$_REQUEST["file"]) &&
         		!preg_match("/^\./", $_REQUEST["file"])) {
       		if ($tiki_p_map_delete !='y') {
         			$smarty->assign('msg',tra("You do not have permissions to delete a file"));
         			$smarty->display("error.tpl");
         			die;      
       		}
-      		unlink($directory_path."/".$_REQUEST["file"]);
+      		unlink($directory_path.$DSEP.$_REQUEST["file"]);
 
     		} else {
         		$smarty->assign('msg',tra("File not found"));
@@ -117,7 +120,7 @@ if (isset($_REQUEST["action"]) && isset($_REQUEST["directory"])) {
         $smarty->display("error.tpl");
         die;      
       }
-      if(!@mkdir($directory_path."/".$_REQUEST["directory"])) {
+      if(!@mkdir($directory_path.$DSEP.$_REQUEST["directory"])) {
         $smarty->assign('msg',tra("The Directory is not empty"));
         $smarty->display("error.tpl");
         die;      
@@ -140,7 +143,7 @@ if (isset($_REQUEST["action"]) && isset($_REQUEST["directory"])) {
     	    $smarty->display("error.tpl");
     	    die;      
     	  }
-    	  if(!@rmdir($directory_path."/".$_REQUEST["directory"])) {
+    	  if(!@rmdir($directory_path.$DSEP.$_REQUEST["directory"])) {
     	    $smarty->assign('msg',tra("The Directory is not empty"));
     	    $smarty->display("error.tpl");
     	    die;      
@@ -179,11 +182,11 @@ if (isset($_REQUEST["action"]) && isset($_REQUEST["indexfile"])
         die;      
       }				
       
-      $indexfile=inpath(dirname($directory_path."/".$_REQUEST["indexfile"]),$directory_path);
-      $filestoindex=inpath(dirname($directory_path."/".$_REQUEST["filestoindex"]),$directory_path);
+      $indexfile=inpath(dirname($directory_path.$DSEP.$_REQUEST["indexfile"]),$directory_path);
+      $filestoindex=inpath(dirname($directory_path.$DSEP.$_REQUEST["filestoindex"]),$directory_path);
       if ($indexfile && $filestoindex && is_file($gdaltindex)) {
-        $indexfile=escapeshellarg($indexfile."/".basename($_REQUEST["indexfile"]));
-        $filestoindex=escapeshellarg($filestoindex."/".basename($_REQUEST["filestoindex"]));
+        $indexfile=escapeshellarg($indexfile.$DSEP.basename($_REQUEST["indexfile"]));
+        $filestoindex=escapeshellarg($filestoindex.$DSEP.basename($_REQUEST["filestoindex"]));
 	      $command=$gdaltindex." ".$indexfile." ".$filestoindex;
 	      $return=shell_exec($command);
 	      if ($return<>0) {
@@ -209,7 +212,7 @@ while (($file = readdir($h)) !== false) {
   // Ignore hidden files
   if(!preg_match("/^(\.|CVS)/", $file)){
     // Put dirs in $dirs[] and files in $files[]
-    if(is_dir($directory_path."/".$file)){
+    if(is_dir($directory_path.$DSEP.$file)){
       $dirs[] = $file;
     }else{
       $files[] = $file;

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_attach.php,v 1.15 2005-09-20 20:50:56 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_attach.php,v 1.16 2005-11-07 21:42:30 sylvieg Exp $
 // Displays an attachment or a list of attachments
 // Currently works with wiki pages and tracker items.
 // Parameters:
@@ -66,24 +66,21 @@ function wikiplugin_attach($data, $params) {
 	}
 
 	# See if we're being called from a wiki page.
-	if( strstr( $_REQUEST["SCRIPT_NAME"], "tiki-index.php" ) || strstr( $_REQUEST["SCRIPT_NAME"], "tiki-editpage.php" ) || strstr( $_REQUEST["SCRIPT_NAME"], 'tiki-pagehistory.php') )
-	{
+	if( strstr( $_REQUEST["SCRIPT_NAME"], "tiki-index.php" ) || strstr( $_REQUEST["SCRIPT_NAME"], "tiki-editpage.php" ) || strstr( $_REQUEST["SCRIPT_NAME"], 'tiki-pagehistory.php') ) {
 	    $atts_item_name = $_REQUEST["page"];
-
 	    $atts = $wikilib->list_wiki_attachments($atts_item_name,0,-1,'created_desc','');
 	}
     }
 
     # Save for restoration before this script ends
     $old_atts = $atts;
+    $url = '';
 
-    if( isset( $page ) )
-    {
-	if($tikilib->user_has_perm_on_object($user,$page,'wiki page','tiki_p_wiki_view_attachments'))
-	{
-
+    if( isset( $page ) ) {
+	if($tikilib->user_has_perm_on_object($user,$page,'wiki page','tiki_p_wiki_view_attachments') || $tikilib->user_has_perm_on_object($user, $_REQUEST['page'], 'wiki page', 'tiki_p_wiki_admin_attachments')) {
 	    $atts = $wikilib->list_wiki_attachments($page,0,-1,'created_desc','');
-	}
+          $url = "&amp;page=$page";
+ 	}
     }
 
     if( isset( $all ) )
@@ -148,7 +145,7 @@ function wikiplugin_attach($data, $params) {
 
 	    if(isset($image) and $image )
 	    {
-		$link.= '<img src="tiki-download_wiki_attachment.php?attId='.$atts['data'][$n]['attId'].'" class="wiki"';
+		$link = '<img src="tiki-download_wiki_attachment.php?attId='.$atts['data'][$n]['attId'].$url.'" class="wiki"';
 		$link.= ' alt="';
 		if (isset($showdesc)) {
 		    $link.= $atts['data'][$n]['filename'];
@@ -160,7 +157,7 @@ function wikiplugin_attach($data, $params) {
 		}
 		$link.= '"/>';
 	    } else {
-		$link.= '<a href="tiki-download_wiki_attachment.php?attId='.$atts['data'][$n]['attId'].'" class="wiki"';
+		$link = '<a href="tiki-download_wiki_attachment.php?attId='.$atts['data'][$n]['attId'].$url.'" class="wiki"';
 		$link.= ' title="';
 
 		if (isset($showdesc)) {

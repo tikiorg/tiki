@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-notepad_read.php,v 1.14 2005-05-18 10:58:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-notepad_read.php,v 1.15 2005-11-07 21:42:29 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -88,7 +88,7 @@ if ($_REQUEST['parse_mode'] == 'raw') {
 }
 
 if ($_REQUEST['parse_mode'] == 'wiki') {
-	$info['parsed'] = $tikilib->parse_data($info['data']);
+	$info['parsed'] = $tikilib->parse_data(htmlspecialchars($info['data']));
 }
 
 $notepadlib->set_note_parsing($user, $_REQUEST['noteId'], $_REQUEST['parse_mode']);

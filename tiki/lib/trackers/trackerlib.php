@@ -289,7 +289,7 @@ class TrackerLib extends TikiLib {
 			return false;
 
 		$res = $result->fetchrow();
-		$query = "select * from `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf where ttif.`fieldid`=ttf.`fieldid` and `itemId`=?";
+		$query = "select * from `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf where ttif.`fieldId`=ttf.`fieldId` and `itemId`=?";
 		$result = $this->query($query,array((int) $itemid));
 		$fields = array();
 

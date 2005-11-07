@@ -82,7 +82,7 @@ DIV#tiki-top {
 	background-color: #AECE80;
 	color:   white;
 	padding-right:   0px;
-	height: 164px;
+	height: 130px;
 	background-image:url('brtiki/background_repeat.jpg');
 	
 }
@@ -99,11 +99,11 @@ DIV#brtikilogo {
 	background-repeat:no-repeat;
 	float:left;
 	width:213px;
-	height:164px;;
+	height:130px;;
 }
 
 .tikilogo {
-	padding-top:145px;
+	padding-top:111px;
 	padding-left:27px;
 	font-family: Verdana, Arial, sans-serif;
 	font-size:11px;

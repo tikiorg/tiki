@@ -6,7 +6,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/hawhaw/hawtikilib.php,v 1.18 2005-10-27 20:12:32 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/hawhaw/hawtikilib.php,v 1.19 2005-11-07 21:42:30 sylvieg Exp $
 
 // HAWHAW function library for TikiWiki
 
@@ -346,6 +346,61 @@ function HAWTIKI_view_blog($listpages, $blog_data)
   $blog->set_smiley_dir("img/smiles");
   $blog->set_hawimconv("lib/hawhaw/hawimconv.php");
   $blog->display();
+
+  die;
+}
+
+function HAWTIKI_view_blog_post($blog_post_data)
+{
+  // determine title and url switch for navigation links
+  if (isset($_REQUEST['frame']) && $_REQUEST['frame'] == 'no')
+  {
+    $framearg = '&frame=no';
+    $title = '';
+  }
+  else
+  {
+    $framearg = '';
+    $title = $blog_post_data['title'];
+  }
+
+  // determine url switch for jingle playing at links
+  if (isset($_REQUEST['jingle']) && $_REQUEST['jingle'] == 'no')
+    $jinglearg = '&jingle=no';
+  else
+    $jinglearg = '';
+
+  $nonparsed_text = "";
+
+  // post title
+  if ($blog_post_data['title'])
+    $nonparsed_text .= "!" . $blog_post_data['title'] . "\n";
+
+  // post header
+  $nonparsed_text .= sprintf("__%s ~np~%s~/np~__\n__%s ~np~%s~/np~__\n",
+    hawtra("posted on"), date(HAWIKI_DATETIME_LONG, $blog_post_data['created']),
+    hawtra("by"), $blog_post_data['user']);
+
+  // post body
+  $nonparsed_text .= $blog_post_data['data'];
+
+  $blogpost = new HAWIKI_page($nonparsed_text, "tiki-index.php?mode=mobile$framearg$jinglearg&page=", $title, "");
+
+  if (!isset($_REQUEST['frame']) || $_REQUEST['frame'] != 'no')
+  {
+    // create standard hawiki deck with title and navigation links
+    $blogpost->set_navlink(tra('Blog'), "tiki-view_blog.php?blogId=".$blog_post_data['blogId']."&mode=mobile", HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
+  }
+
+  if (!isset($_REQUEST['jingle']) || $_REQUEST['jingle'] != 'no')
+  {
+    // play standard jingle before link text is spoken
+    $blogpost->set_link_jingle("lib/hawhaw/link.wav");
+  }
+
+  $blogpost->set_smiley_dir("img/smiles");
+  $blogpost->set_hawimconv("lib/hawhaw/hawimconv.php");
+  $blogpost->display();
 
   die;
 }

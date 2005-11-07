@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.43 2005-11-05 22:27:19 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.44 2005-11-07 21:42:29 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -339,10 +339,32 @@ global $imagegallib;
 if (!is_object($imagegallib)) {
 	require_once('lib/imagegals/imagegallib.php');
 }
+
 $galleries = $imagegallib->list_galleries($offset, $maxRecords, $sort_mode, 'admin', $find);
+
+$smarty->assign('filter', $_REQUEST["filter"]);
 
 $temp_max = count($galleries["data"]);
 for ($i = 0; $i < $temp_max; $i++) {
+
+	// check if top gallery (has no parents)
+	$info = $imagegallib->get_gallery_info($galleries["data"][$i]["galleryId"]);
+	/*$subgals = $imagegallib->get_subgalleries($top_offset = 1, $maxImages, $sort_mode, '', $galleries["data"][$i]["galleryId"]);*/
+	if ($info['parentgallery'] == -1) {
+		$galleries["data"][$i]["topgal"] = 'y';
+	} else {
+		$galleries["data"][$i]["topgal"] = 'n';
+	}
+
+	// check if has subgalleries (parent of any children)
+	$maxImages = 1;
+	$subgals = $imagegallib->get_subgalleries($offset, $maxImages, $sort_mode, '', $galleries["data"][$i]["galleryId"]);
+	if (count($subgals['data']) > 0) {
+		$galleries["data"][$i]["parentgal"] = 'y';
+	} else {
+		$galleries["data"][$i]["parentgal"] = 'n';
+	}
+
 	if ($userlib->object_has_one_permission($galleries["data"][$i]["galleryId"], 'image gallery')) {
 		$galleries["data"][$i]["individual"] = 'y';
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.89 2005-10-26 15:11:01 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.90 2005-11-07 21:42:29 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -796,7 +796,7 @@ if ($feature_forum_parse == "y") {
 	$smarty->assign_by_ref('quicktags', $quicktags["data"]);
 }
 
-if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
+if ($feature_mobile =='y' && isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
 	include_once ("lib/hawhaw/hawtikilib.php");
 
 	HAWTIKI_view_forum($forum_info['name'], $comments_coms, $tiki_p_forum_read, $comments_offset, $comments_maxRecords, $comments_cant);

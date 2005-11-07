@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.56 2005-05-18 11:02:58 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.57 2005-11-07 21:42:30 sylvieg Exp $ *}
 { *TODO: Must fix even/odd table rows detection byusing Smarty 'cycle' *}
 
 
@@ -48,11 +48,12 @@
 <input type="submit" name="allper" value="{tr}update{/tr}" />
 </form>
 <br />
+<a name="assign" />
 <h2>{tr}Assign Permissions{/tr}</h2>
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
 <td class="findtable">
-<form method="post" action="tiki-assignpermission.php" name="permselects">
+<form method="post" action="tiki-assignpermission.php#assign" name="permselects">
 <input type="text" name="find" value="{$find|escape}" />
 <input type="submit" value="{tr}find{/tr}" name="search" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />

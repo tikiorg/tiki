@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.71 2005-10-16 14:35:09 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.72 2005-11-07 21:42:30 sylvieg Exp $
  *
  * \brief Categories support class
  *
@@ -295,20 +295,10 @@ class CategLib extends TikiLib {
 		$permMap = $this->map_object_type_to_permission();
 		$groupList = $this->get_user_groups($user);
 
-		// $allowField will return true if user has individual permission on object, in case object has
-		// individual permissions. It it has not, $allowField will return null, but in this case 'perms'
-		// will return 0 and we won't check $allowField (that's aliased 'allow' in sql query)
-		$allowField = " MAX((";
-		$bindAllow = array();
-		
-		// 'perms' field in result is the number of individual permissions object has
-		// $sqlHaving will restrict results considering number of individual permissions 'perms',
-		// individual permission for user 'allow', and global permissions.
-		// The condition perms=0 is equivalent to allow is null, but the first one is more didatic, otherwise
-		// we wouldn't need counting. Does counting reduce performance?
-		$sqlHaving = " HAVING ((perms=0 AND (o.`type` IN (''";
-		$bindHaving = array();
+		$where .= " AND (( u.`objectId` IS NULL AND (o.`type` IN (''";
 
+		$allowField = '';
+		$bindAllow = array();
 		$addTrackerItem = false;
 		foreach ($permMap as $objType => $permName) {
 		  if (empty($type) || $type == $objType || ($type == "trackerItem" && $objType == "tracker")) {
@@ -323,21 +313,19 @@ class CategLib extends TikiLib {
 		    
 		    global $$permName;
 		    if ($$permName == 'y' && (empty($type) || $type != "trackerItem")) {
-			$sqlHaving .= ",?";
-			$bindHaving[] = $objType;
+			$where .= ",?";
+			$bindWhere[] = $objType;
 		    }
 		    if ($objType == "tracker" && $$permName == 'y') {
 			$addTrackerItem = true;
 		    }
 		  }
 		}
-		$sqlHaving .= ")";
+		$where .= ")";
 		if ($addTrackerItem) {
-			$sqlHaving .= " OR o.`type` like ?";
-			$bindHaving[] .= "tracker %";
+			$where .= " OR o.`type` like ?";
+			$bindWhere[] .= "tracker %";
 		}
-		
-		$sqlHaving .= ")) OR allow=1) ";
 
 		$allowField = preg_replace("/OR $/",") ",$allowField);
 		$allowField .= " AND u.`groupName` IN (''";
@@ -346,9 +334,9 @@ class CategLib extends TikiLib {
 		    $bindAllow[] = $grp;
 		    $allowField .= ",?";
 		}
-		$allowField .= ")) ";
+		$where .= ")) OR (($allowField )))";
 
-		$bindVars = array_merge($bindAllow, $bindWhere, $bindHaving);
+		$bindVars = array_merge($bindWhere, $bindAllow);
 
 		$orderBy = '';
 		if ($sort_mode) {
@@ -357,7 +345,7 @@ class CategLib extends TikiLib {
 			}
 		}
 
-		$query_cant = "SELECT c.*, o.*, count(u.`objectId`) as perms, $allowField as allow FROM `tiki_category_objects` c,`tiki_categorized_objects` o LEFT JOIN `users_objectpermissions` u ON u.`objectId`=MD5(".$this->db->concat("o.`type`","LOWER(o.`objId`)").") AND u.`objectType`=o.`type` WHERE c.`catObjectId`=o.`catObjectId` $where GROUP BY o.`type`, o.`objId` $sqlHaving";
+		$query_cant = "SELECT DISTINCT c.*, o.* FROM `tiki_category_objects` c,`tiki_categorized_objects` o LEFT JOIN `users_objectpermissions` u ON u.`objectId`=MD5(".$this->db->concat("o.`type`","LOWER(o.`objId`)").") AND u.`objectType`=o.`type` WHERE c.`catObjectId`=o.`catObjectId` $where";
 		$query = $query_cant . $orderBy;
 		$result = $this->query($query,$bindVars,$maxRecords,$offset);
 		$resultCant = $this->query($query_cant,$bindVars);

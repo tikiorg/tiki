@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.621 2005-11-02 18:23:32 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.622 2005-11-07 21:42:29 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4093,6 +4093,7 @@ function add_pageview() {
 		$params_string = str_replace('&gt;', '>', $params_string);
 		$params_string = str_replace('&lt;', '<', $params_string);
 		$params_string = str_replace('&quot;', '"', $params_string);
+		$params_string = str_replace('&amp;', '&', $params_string);
 
 		// Construct argument list array
 		$params = $this->quotesplit(',', trim($params_string) );

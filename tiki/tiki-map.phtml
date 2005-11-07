@@ -337,12 +337,18 @@ $map_querymsg.="</table>";
 
 $smarty->assign('map_querymsg',$map_querymsg);
 
+if (@$_REQUEST['maponly']=='frame') {
+  $scalebar=$map->scalebar;
+  $scalebar->set("status",MS_EMBED);
+  $scalebar->set("transparent",TRUE);
+}
+
 $image = $map->drawquery();
 $image_url = $image->saveWebImage();
 
 
 //the user wants an image only
-if (isset($_REQUEST['maponly']))
+if (isset($_REQUEST['maponly']) && $_REQUEST['maponly']=='yes')
 {
   header("Content-type: image/png");
   $image_file=str_replace($image->imageurl,$image->imagepath,$image_url);
@@ -350,12 +356,15 @@ if (isset($_REQUEST['maponly']))
   die;
 }
 
-$image_ref = $map->drawReferenceMap();
-$image_ref_url = $image_ref->saveWebImage();
-$image_leg = $map->drawLegend();
-$image_leg_url = $image_leg->saveWebImage();
-$image_scale = $map->drawScaleBar();
-$image_scale_url = $image_scale->saveWebImage();
+if (@$_REQUEST['maponly']!='frame') {
+	$image_ref = $map->drawReferenceMap();
+	$image_ref_url = $image_ref->saveWebImage();
+	$image_leg = $map->drawLegend();
+	$image_leg_url = $image_leg->saveWebImage();
+	$image_scale = $map->drawScaleBar();
+	$image_scale_url = $image_scale->saveWebImage();
+}
+
 
 $minx=$map->extent->minx;
 $miny=$map->extent->miny;
@@ -365,10 +374,11 @@ $maxy=$map->extent->maxy;
 $smarty->assign('mapfile',$mapfile);
 
 $smarty->assign('image_url',$image_url);
-$smarty->assign('image_ref_url',$image_ref_url);
-$smarty->assign('image_leg_url',$image_leg_url);
-$smarty->assign('image_scale_url',$image_scale_url);
- 
+if (@$_REQUEST['maponly']!='frame') {
+	$smarty->assign('image_ref_url',$image_ref_url);
+	$smarty->assign('image_leg_url',$image_leg_url);
+	$smarty->assign('image_scale_url',$image_scale_url);
+} 
 $smarty->assign('minx',$minx);
 $smarty->assign('miny',$miny);
 $smarty->assign('maxx',$maxx);
@@ -460,8 +470,8 @@ $smarty->assign('userwatch',$userwatch);
   	    $zoom_display[]='zoom out '.$i.'x';
 		    break;
 		  case "0":
-		    $zoom_values[]=$i;
-		    $zoom_display[]='query';
+		    	$zoom_values[]=$i;
+		    	$zoom_display[]='query';
        break;
 		  case "1":
 		    $zoom_values[]=$i;
@@ -515,6 +525,11 @@ $smarty->assign('mapstats', $mapstats);
 $smarty->assign('mapstats7days', $mapstats7days);
 
 //display the template
-$smarty->assign('mid','map/tiki-map.tpl');
-$smarty->display("tiki.tpl");
+if (@$_REQUEST['maponly']!='frame') {
+	$smarty->assign('mid','map/tiki-map.tpl');
+	$smarty->display("tiki.tpl");
+} else {
+	$smarty->assign("maponly","frame");
+	$smarty->display('map/tiki-map_frame.tpl');
+}
 ?>

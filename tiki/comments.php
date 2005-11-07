@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.56 2005-10-27 20:12:31 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.57 2005-11-07 21:42:29 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -75,6 +75,8 @@ $smarty->assign_by_ref('comments_request_data', $comments_aux);
 
 if (!isset($_REQUEST['comments_threshold'])) {
     $_REQUEST['comments_threshold'] = 0;
+} else {
+   $smarty->assign('comments_threshold_param', '&amp;comments_threshold='.$_REQUEST['comments_threshold']);
 }
 
 $smarty->assign('comments_threshold', $_REQUEST['comments_threshold']);
@@ -189,10 +191,12 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 			$_REQUEST["comments_title"],
 			$_REQUEST["comments_data"],
 			$message_id, $in_reply_to );
-		if ($object[0] != "forum")
+		if ($object[0] != "forum") {
 			$smarty->assign("comments_parentId", 0); // to display all the comments
-		$_REQUEST["comments_reply_threadId"] = 0;
-		$smarty->assign("comments_reply_threadId", 0); // without the flag
+			$_REQUEST["comments_parentId"] = 0;
+		}
+		$_REQUEST["comments_reply_threadId"] = $_REQUEST["comments_parentId"]; // to have the right re:
+		$smarty->assign("comments_reply_threadId", $_REQUEST["comments_parentId"]); // without the flag
 	    } else {
 		$qId = $_REQUEST["comments_threadId"];
 		if (($tiki_p_edit_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'))
@@ -431,12 +435,14 @@ if (!isset($_REQUEST["comments_style"])) {
     // TODO: Make this an option.
     $_REQUEST["comments_style"] = 'commentStyle_threaded';
 } else {
+    $smarty->assign('comments_style_param', '&amp;comments_style='.$_REQUEST['comments_style']);
     $comments_show = 'y';
 }
 
 if (!isset($_REQUEST["comments_sort_mode"])) {
     $_REQUEST["comments_sort_mode"] = $comments_default_ordering;
 } else {
+    $smarty->assign('comments_sort_mode_param', '&amp;comments_sort_mode='.$_REQUEST['comments_sort_mode']);
     $comments_show = 'y';
 }
 

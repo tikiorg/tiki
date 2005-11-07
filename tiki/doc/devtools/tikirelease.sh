@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: tikirelease.sh,v 1.11 2005-08-29 03:14:44 mose Exp $
+# $Id: tikirelease.sh,v 1.12 2005-11-07 21:42:29 sylvieg Exp $
 # written and maintained by mose@tikiwiki.org
 #
 # HOWTO release TikiWiki ?
@@ -7,14 +7,15 @@
 #
 # 
 # pre/
-#    update changelog.txt (from CVS commit logs)
-#    update INSTALL
-#    run doc/devtools/diffsql.sh to make sure tiki.sql and upgrade script from 
-#    previous version give the same db structure 
-#    run db/convertscripts/convertsqls.sh
-#    update templates/tiki-top_bar.tpl (including templates/styles/*/tiki-top_bar.tpl)
-#    update templates/tiki-install.tpl
-#    create the checksum file: copy doc/devtools/tiki-create_md5.php in tiki root and execute it
+#    - update changelog.txt (from CVS commit logs)
+#    - update copyright.txt (we _need_ a way to automate this - it was omitted for 1.9.2 release)
+#    - update INSTALL
+#    - update README
+#    - run doc/devtools/diffsql.sh to make sure tiki.sql and upgrade script from 
+#       previous version give the same db structure 
+#    - run db/convertscripts/convertsqls.sh
+#    - commit your changes
+#    - create the checksum file: copy doc/devtools/tiki-create_md5.php in tiki root and execute it
 #
 # 0/ Setup the lines in the configuration section just below with your own
 #    identity and settings (note that the script could be used on other projects)

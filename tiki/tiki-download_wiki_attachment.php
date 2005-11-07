@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-download_wiki_attachment.php,v 1.13 2005-11-07 15:16:57 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-download_wiki_attachment.php,v 1.14 2005-11-07 21:42:29 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,7 +9,8 @@
 // Initialization
 require_once ('tiki-setup.php');
 
-if ($tiki_p_wiki_view_attachments != 'y' && $tiki_p_wiki_admin_attachments != 'y') {
+if ((isset($_REQUEST['page']) && !$tikilib->user_has_perm_on_object($user, $_REQUEST['page'], 'wiki page', 'tiki_p_wiki_view_attachments') && !$tikilib->user_has_perm_on_object($user, $_REQUEST['page'], 'wiki page', 'tiki_p_wiki_admin_attachments'))
+  || (!isset($_REQUEST['page']) && $tiki_p_wiki_view_attachments != 'y' && $tiki_p_wiki_admin_attachments != 'y')) {
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;

@@ -22,9 +22,9 @@
 <tr class="formcolor"><td>{tr}Name{/tr}:</td><td><input type="text" name="name" value="{$name|escape}" /></td></tr>
 <tr class="formcolor"><td>{tr}Type{/tr}:
 {assign var=fld value="z"}
-{foreach key=fk item=fi from=$field_types}
+{foreach key=fk item=fi from=$field_types name=foreachname}
 {if $fi.opt}
-<div id='{$fk}' {if $type eq $fk}style="display:block;font-style:italic;"{else}style="display:none;font-style:italic;"{/if}>{$fi.help}</div>
+<div id='{$fk}' {if $type eq $fk or (($type eq 'o' or $type eq '') and $smarty.foreach.foreachname.first)}style="display:block;font-style:italic;"{else}style="display:none;font-style:italic;"{/if}>{$fi.help}</div>
 {assign var=fld value=$fld|cat:$fk}
 {/if}
 {/foreach}

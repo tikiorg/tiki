@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.123 2005-10-16 14:35:09 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.124 2005-11-07 21:42:29 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -426,9 +426,6 @@ if (strtolower($_REQUEST["page"]) == 'sandbox' && $feature_sandbox != 'y') {
 if (!isset($_REQUEST["comment"])) {
   $_REQUEST["comment"] = '';
 }
-
-include_once ("tiki-pagesetup.php");
-
 
 // Get page data
 $info = $tikilib->get_page_info($page);
