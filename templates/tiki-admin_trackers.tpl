@@ -99,7 +99,7 @@ src='img/icons/key.gif' border='0' alt="{tr}permissions{/tr}" /></a>{/if}</td>
 
 {if $trk_with_mirror_tables eq 'y'}
 <tr class="formcolor"><td class="auto" colspan="2">
-{tr}Use "explicit" names in the mirror table{/tr}<br/>
+{tr}Use "explicit" names in the mirror table{/tr}<br />
 <em>{tr}tracker name must be unique, field names must be unique 
 for a tracker and they must be valid in SQL{/tr}</em>
 </td><td class="auto">

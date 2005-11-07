@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_blog_posts.tpl,v 1.15 2005-05-18 11:03:29 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_blog_posts.tpl,v 1.16 2005-11-07 16:20:31 damosoft Exp $ *}
 
 {if $feature_blogs eq 'y'}
 {if $nonums eq 'y'}
@@ -13,7 +13,7 @@
        {if $nonums != 'y'}<td class="module" valign="top">{$smarty.section.ix.index_next})</td>{/if}
        <td class="module">
          <a class="linkmodule" href="tiki-view_blog.php?blogId={$modLastBlogPosts[ix].blogId}">
-           <b>{$modLastBlogPosts[ix].blogTitle}</b>: {$modLastBlogPosts[ix].title}<br/>
+           <b>{$modLastBlogPosts[ix].blogTitle}</b>: {$modLastBlogPosts[ix].title}<br />
            {if $modLastBlogPostsTitle eq "title" and $modLastBlogPosts[ix].title}
              {$modLastBlogPosts[ix].title}
            {else}

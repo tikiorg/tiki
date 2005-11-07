@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_modif_events.tpl,v 1.4 2005-05-18 11:03:29 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_modif_events.tpl,v 1.5 2005-11-07 16:20:31 damosoft Exp $ *}
 
 {if $feature_calendar eq 'y'}
 {if $nonums eq 'y'}
@@ -13,7 +13,7 @@
       {if $nonums != 'y'}
         <td class="module" valign="top">{$smarty.section.ix.index_next})</td>
       {/if}
-      <td class="module">&nbsp;{$modLastEvents[ix].start|tiki_short_datetime}<br/>
+      <td class="module">&nbsp;{$modLastEvents[ix].start|tiki_short_datetime}<br />
        <a class="linkmodule" href="tiki-calendar.php?todate={$modLastEvents[ix].start}" title="{$modLastEvents[ix].lastModif|tiki_short_datetime}, {tr}by{/tr} {if $modLastEvents[ix].user ne ''}{$modLastEvents[ix].user}{else}{tr}Anonymous{/tr}{/if}">
         {if $maxlen > 0}{* 0 is default value for maxlen eq to 'no truncate' *}
          {$modLastEvents[ix].name|truncate:$maxlen:"...":true}

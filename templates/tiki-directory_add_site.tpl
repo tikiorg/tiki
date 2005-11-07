@@ -4,7 +4,7 @@
 <br /><br />
 
 {if $categs[0] eq ''}
-{tr}You cannot add sites until Directory Categories are setup.{/tr}<br/>
+{tr}You cannot add sites until Directory Categories are setup.{/tr}<br />
 {tr}Please contact the Site Administrator{/tr}
 {else}
 {if $save eq 'y'}

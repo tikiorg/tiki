@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/db/convertscripts/mysql3topgsql72.php,v 1.15 2005-06-16 20:10:53 mose Exp $ */
+/* $Header: /cvsroot/tikiwiki/tiki/db/convertscripts/mysql3topgsql72.php,v 1.16 2005-11-07 16:20:22 damosoft Exp $ */
 
 $tikiversion='1.9';
 if(!isset($_GET['version'])) {
@@ -22,7 +22,7 @@ while(!feof($fp)) {
   echo ".";
 }
 fclose($fp);
-echo "<br/>\n";
+echo "<br />\n";
 
 
 // split into statements

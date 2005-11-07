@@ -12,7 +12,7 @@ if (isset($_REQUEST['debug']) and $_REQUEST['debug'] == 'n')
 	$debug = 'n';
 else {
 	$debug = 'y';
-	echo "Debug mode: to run the program give the parameter debug=n<br/>";
+	echo "Debug mode: to run the program give the parameter debug=n<br />";
 }
 if ($tiki_p_admin !="y") {
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));

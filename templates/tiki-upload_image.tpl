@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.30 2005-10-03 17:21:46 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.31 2005-11-07 16:20:31 damosoft Exp $ *}
 <h1><a href="tiki-upload_image.php{if $galleryId}?galleryId={$galleryId}{/if}" class="pagetitle">{tr}Upload Image{/tr}</a>
 
 {if $feature_help eq 'y'}
@@ -33,7 +33,7 @@
 	<tr>
 	<td class="formcolor">{tr}Image Name{/tr}:</td>
 	<td class="formcolor">
-	<input type="text" size ="50" name="name" /><br/>{tr}or use filename{/tr}: <input type="checkbox" name="use_filename" />
+	<input type="text" size ="50" name="name" /><br />{tr}or use filename{/tr}: <input type="checkbox" name="use_filename" />
 	</td>
 	</tr>
   {if $feature_maps eq 'y' && $geogallery eq 'y'}

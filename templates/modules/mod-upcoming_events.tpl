@@ -13,7 +13,7 @@
 			{if $nonums != 'y'}
 				<td class="module" valign="top">{$smarty.section.ix.index_next})</td>
 			{/if}
-			<td class="module">&nbsp;{$modUpcomingEvents[ix].start|tiki_short_datetime}<br/>
+			<td class="module">&nbsp;{$modUpcomingEvents[ix].start|tiki_short_datetime}<br />
 				<a class="linkmodule" href="tiki-calendar.php?editmode=details&calitemId={$modUpcomingEvents[ix].calitemId}" title="{$modUpcomingEvents[ix].lastModif|tiki_short_datetime}, {tr}by{/tr} {if $modUpcomingEvents[ix].user ne ''}{$modUpcomingEvents[ix].user}{else}{tr}Anonymous{/tr}{/if}">
 					{if $maxlen > 0}{* 0 is default value for maxlen eq to 'no truncate' *}
 						{$modUpcomingEvents[ix].name|truncate:$maxlen:"...":true}

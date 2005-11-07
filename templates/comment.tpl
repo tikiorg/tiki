@@ -115,7 +115,7 @@
 				{if $tiki_p_admin_forum eq 'y'}
 					<a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_find={$smarty.request.topics_find}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;comments_offset={$smarty.request.topics_offset}&amp;comments_sort_mode={$smarty.request.topics_sort_mode}&amp;comments_threshold={$smarty.request.topics_threshold}&amp;comments_find={$smarty.request.topics_find}&amp;forumId={$forum_info.forumId}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}&amp;remove_attachment={$comment.attachments[ix].attId}"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt='{tr}Remove{/tr}'></a>					
 			{/if}
-		<br/>
+		<br />
 	{/section}
   {/if}
 		</td>

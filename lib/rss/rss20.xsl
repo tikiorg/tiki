@@ -62,13 +62,13 @@ moz();
 <xsl:attribute name="src"><xsl:value-of select="image/url"/></xsl:attribute>
 <xsl:attribute name="alt"><xsl:value-of select="image/description"/></xsl:attribute>
 <xsl:attribute name="title"><xsl:value-of select="image/title"/></xsl:attribute>
-</img></a><br/>
+</img></a><br />
 </xsl:if>
 <p />
 <!-- ** kinrowan.end	-->
 
-Feed Title: <xsl:value-of select="title"/><br/>
-Updated on: <xsl:value-of select="lastBuildDate"/><br/>
+Feed Title: <xsl:value-of select="title"/><br />
+Updated on: <xsl:value-of select="lastBuildDate"/><br />
 <xsl:choose>
 <xsl:when test="count(item) = 1">
 There is only 1 post shown in this feed.
@@ -135,12 +135,12 @@ To see the underlying XML tags please select the "View Source" command in your b
     </td>
   </tr>
   </table>
-  <br/>
+  <br />
   <div>
   <xsl:attribute name="id">d_<xsl:value-of select="position()"/></xsl:attribute>
 
   <xsl:value-of disable-output-escaping="yes" select="description"/>
-  </div><br/>
+  </div><br />
   </td></tr>
 
 </xsl:for-each>

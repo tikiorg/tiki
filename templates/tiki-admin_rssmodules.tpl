@@ -15,7 +15,7 @@
 {if $preview eq 'y'}
 <div class="simplebox">
 <h2>{tr}Content for the feed{/tr}</h2>
-<br/>
+<br />
 {if $feedtitle ne ''}
 <h3>{$feedtitle.title}</h3>
 {/if}

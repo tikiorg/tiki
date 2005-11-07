@@ -27,7 +27,7 @@ class BlogLib extends TikiLib {
 		$parts = explode("...page...", $data);
 
 		$ret = $parts[$i - 1];
-		if (substr($parts[$i - 1], 1, 5) == "<br/>") $ret = substr($parts[$i - 1], 6);
+		if (substr($parts[$i - 1], 1, 5) == "<br />") $ret = substr($parts[$i - 1], 6);
 		if (substr($parts[$i - 1], 1, 6) == "<br />") $ret = substr($parts[$i - 1], 7);
 
 		return $ret;

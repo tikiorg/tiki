@@ -38,7 +38,7 @@
 {if $txt}<div class="wikitext">{$txt}</div>{/if}
 {/if}
 
-<br/>
+<br />
 {* --- tab headers --- *}
 {if $feature_tabs eq 'y'}
 {cycle name=tabs values="1,2,3,4" print=false advance=false}
