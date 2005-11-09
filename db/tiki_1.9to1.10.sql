@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.53 2005-11-07 18:04:45 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.54 2005-11-09 15:16:46 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -405,3 +405,10 @@ INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUE
 INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Replied', 'comment', 'n');
 INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Updated', 'comment', 'n');
 INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Removed', 'comment', 'n');
+
+#2005-11-09 sylvieg
+DELETE FROM tiki_preferences WHERE name='users_prefs_language';
+DELETE FROM tiki_preferences WHERE name='users_prefs_theme';
+DELETE FROM tiki_preferences WHERE name='users_prefs_mailCharset';
+DELETE FROM tiki_user_preferences WHERE prefName='users_prefs_language' and value='global';
+DELETE FROM tiki_user_preferences WHERE prefName='users_prefs_theme' and value='global';
