@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.35 2005-07-20 11:56:47 rv540 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.36 2005-11-09 15:16:46 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -537,7 +537,7 @@ if (isset($_REQUEST['users_defaults'])) {
 // Get list of available languages
 $languages = array();
 $languages = $tikilib->list_languages();
-$smarty->assign_by_ref("languages", $languages);
+$smarty->assign_by_ref('languages', $languages);
 
 $smarty->assign("styles", $tikilib->list_styles());
 
@@ -568,12 +568,6 @@ $smarty->assign("listgroups", $listgroups = $userlib->list_all_groups());
 // Users Defaults
 $mailCharsets = array('utf-8', 'iso-8859-1');
 $smarty->assign_by_ref('mailCharsets', $mailCharsets);
-
-$smarty->assign_by_ref('languages', array_merge(array( array('value' => 'global', 'name' => 'global') ), $tikilib->list_languages()));
-$smarty->assign("available_languages", unserialize($tikilib->get_preference("available_languages")));
-
-$smarty->assign_by_ref('styles', array_merge('global', $tikilib->list_styles()));
-$smarty->assign("available_styles", unserialize($tikilib->get_preference("available_styles")));
 
 ask_ticket('admin-inc-login');
 ?>

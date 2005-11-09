@@ -1734,17 +1734,8 @@ function get_included_groups($group) {
     
 	$users_prefs = $this->get_preferences('users_prefs_%');
 	foreach( $users_prefs as $pref => $value ) {
-	
 		$pref_name = substr( $pref, 12 );
-		if($value == 'global') {
-			if($pref == 'users_prefs_theme') {
-				$value = $this->get_preference('style');
-			}
-			else {
-				$value = $this->get_preference($pref_name);
-			}
-		}
-		elseif($pref == 'users_prefs_email_is_public') {
+		if($pref == 'users_prefs_email_is_public') {
 			$pref_name = 'email is public';
 		}
 		$this->set_user_preference($user, $pref_name, $value);

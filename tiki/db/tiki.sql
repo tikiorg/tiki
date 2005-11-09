@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2005-11-07 21:42:29 $
+# $Date: 2005-11-09 15:16:46 $
 # $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -4588,16 +4588,13 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('user_list_order','score
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('userfiles_quota','30');
 
 # user defaults
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_theme', 'global');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_userbreadCrumb', '4');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_language', 'global');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_display_timezone', 'Local');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_user_information', 'private');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_user_dbl', 'n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_diff_versions', 'n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_show_mouseover_user_info', 'n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_email_is_public', 'n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_mailCharset', 'utf-8');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_realName', '');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_homePage', '');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_lat', '0');
