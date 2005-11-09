@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.622 2005-11-07 21:42:29 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.623 2005-11-09 16:31:12 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -6508,6 +6508,15 @@ if (!$simple_wiki) {
 			$data = "";
 		}
 		return array("ok"=>true, "data"=>$data, "fhash"=>$fhash);
+	}
+	/* to get the length of a data without the quoted part (very approximative)  */
+	function strlen_quoted($data) {
+		global $feature_use_quoteplugin;
+		$data = preg_replace('/{QUOTE\([^\)]*\)}.*{QUOTE}/Ui', '', $data);
+		if ($feature_use_quoteplugin != 'y') {
+			$data = preg_replace('/^>.*\\n/m', '', $data);
+		}
+		return strlen($data);
 	}
 
 }

@@ -1794,13 +1794,12 @@ class Comments extends TikiLib {
 		"@" . $_SERVER["SERVER_NAME"];
 	}
 
+	// Break out the type and object parameters.
+	$object = explode( ":", $objectId, 2);
 	// If this post was not already found.
 	if (!$result->numRows())
 	{
 	    $now = (int) date("U");
-
-	    // Break out the type and object parameters.
-	    $object = explode( ":", $objectId, 2);
 
 	    $query = "insert into
 		`tiki_comments`(`objectType`, `object`,
@@ -1829,10 +1828,15 @@ class Comments extends TikiLib {
 	global $feature_actionlog;
 	if ($feature_actionlog == 'y') {
 		global $logslib; include_once('lib/logs/logslib.php');
-		if ($object[0] == 'forum')
-			$logslib->add_action(($parentId == 0)? 'Posted': 'Replied', $object[1], $object[0], 'comments_parentId='.$threadId.'&amp;add='.strlen($data));
+		global $tikilib;
+		if ($parentId == 0)
+			$l = strlen($data);
 		else
-			$logslib->add_action(($parentId == 0)? 'Posted': 'Replied', $object[1], 'comment', 'type='.$object[0].'&amp;add='.strlen($data).'#threadId'.$threadId);
+			$l = $tikilib->strlen_quoted($data);
+		if ($object[0] == 'forum')
+			$logslib->add_action(($parentId == 0)? 'Posted': 'Replied', $object[1], $object[0], 'comments_parentId='.$threadId.'&amp;add='.$l);
+		else
+			$logslib->add_action(($parentId == 0)? 'Posted': 'Replied', $object[1], 'comment', 'type='.$object[0].'&amp;add='.$l.'#threadId'.$threadId);
 
 	}
 
