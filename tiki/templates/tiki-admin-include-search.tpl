@@ -7,6 +7,17 @@
     <form action="tiki-admin.php?page=search" method="post">
       <table class="admin">
 	<tr>
+          <td class="form">
+        {if $feature_help eq 'y'}<a href="{$helpurl}Referer+Search+Highlighting" target="tikihelp" class="tikihelp" title="{tr}Referer Search Highlighting{/tr}">{/if}
+                {tr}Referer Search Highlighting{/tr}
+                {if $feature_help eq 'y'}</a>{/if}
+                :</td>
+        <td><input type="checkbox" name="feature_referer_highlight"
+                {if $feature_referer_highlight eq 'y'}checked="checked"{/if}/></td>
+        </tr>
+<tr><td class="heading" colspan="2" align="center">{tr}Database search{/tr}</td></tr>
+
+	<tr>
           <td class="heading" colspan="2">{tr}Search features{/tr}</td>
         </tr><tr>
 	  <td class="form">
@@ -16,33 +27,7 @@
 	        :</td>
           <td><input type="checkbox" name="feature_search_fulltext"
                 {if $feature_search_fulltext eq 'y'}checked="checked"{/if}/></td>
-        </tr><tr>
-	<td class="form">
-{if $feature_help eq 'y'}<a href="{$helpurl}Search+Stats" target="tikihelp" class="tikihelp" title="{tr}SearchStats{/tr}">{/if}
-                        {tr}Search stats{/tr}
-                        {if $feature_help eq 'y'}</a>{/if}
-                        :</td>
-        <td><input type="checkbox" name="feature_search_stats"
-            {if $feature_search_stats eq 'y'}checked="checked"{/if}/>
-	</td>
-	</tr>
-	<tr>
-          <td class="form">
-        {if $feature_help eq 'y'}<a href="{$helpurl}Referer+Search+Highlighting" target="tikihelp" class="tikihelp" title="{tr}Referer Search Highlighting{/tr}">{/if}
-                {tr}Referer Search Highlighting{/tr}
-                {if $feature_help eq 'y'}</a>{/if}
-                :</td>
-        <td><input type="checkbox" name="feature_referer_highlight"
-                {if $feature_referer_highlight eq 'y'}checked="checked"{/if}/></td>
         </tr>
-	{if $refresh_index_now neq 'y'}
-	<tr>
-	<td>
-<a href="tiki-admin.php?page=search&refresh_index_now=y" class="link" title="{tr}Refresh wiki search index now{/tr}">
-                        {tr}Refresh wiki search index now{/tr}</a></td>
-    <td>&nbsp;</td>
-	</tr>
-	{/if}
 	<tr>
           <td class="heading" colspan="2">{tr}Performance issues{/tr}</td>
         </tr><tr>
@@ -61,7 +46,27 @@
 	        :</td>
           <td><input type="checkbox" name="feature_search_show_forbidden_cat"
                 {if $feature_search_show_forbidden_cat eq 'y'}checked="checked"{/if}/></td>
+        </tr><tr><td class="heading" colspan="2" align="center">{tr}Database independant search or Tiki search{/tr}</td></tr>
+	{if $refresh_index_now neq 'y'}
+	<tr>
+	<td>
+<a href="tiki-admin.php?page=search&refresh_index_now=y" class="link" title="{tr}Refresh wiki search index now{/tr}">
+                        {tr}Refresh wiki search index now{/tr}</a></td>
+    <td>&nbsp;</td>
+	</tr>
+	{/if}
+      <tr><td class="heading" colspan="2">{tr}Search features{/tr}</td>
         </tr><tr>
+	<td class="form">
+{if $feature_help eq 'y'}<a href="{$helpurl}Search+Stats" target="tikihelp" class="tikihelp" title="{tr}SearchStats{/tr}">{/if}
+                        {tr}Search stats{/tr}
+                        {if $feature_help eq 'y'}</a>{/if}
+                        :</td>
+        <td><input type="checkbox" name="feature_search_stats"
+            {if $feature_search_stats eq 'y'}checked="checked"{/if}/>
+	</td>
+	</tr>
+<tr>
           <td class="heading" colspan="2">{tr}Settings for searching content{/tr}</td>
         </tr><tr>
           <td class="form"><label for="search-refresh">{tr}Search refresh rate{/tr}:</label></td>
