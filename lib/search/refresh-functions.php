@@ -231,6 +231,7 @@ function refresh_index_wiki($page) {
   $info = $tikilib->get_page_info($page);
   $pdata=$tikilib->parse_data($info["data"]);
   $pdata.=" ".$tikilib->parse_data($info["description"]);
+  $pdata .= ' '.$page;
   $words=&search_index($pdata);
   insert_index($words,'wiki',$page);
 }
