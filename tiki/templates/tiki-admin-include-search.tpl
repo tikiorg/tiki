@@ -35,6 +35,7 @@
         <td><input type="checkbox" name="feature_referer_highlight"
                 {if $feature_referer_highlight eq 'y'}checked="checked"{/if}/></td>
         </tr>
+	<tr><td class="form">{if $feature_help eq 'y'}<a href="{$helpurl}Search+Admin" target="tikihelp" class="tikihelp" title="{tr}Tiki search refresh{/tr}">{/if}{tr}Tiki search refresh{/tr}{if $feature_help eq 'y'}</a>{/if}</td><td><input type="checkbox" name="feature_search_tiki_refresh"{if $feature_search_tiki_refresh eq 'y'} checked="checked"{/if}/></td></tr>
 	{if $refresh_index_now neq 'y'}
 	<tr>
 	<td>
