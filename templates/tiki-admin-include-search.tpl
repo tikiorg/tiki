@@ -35,7 +35,6 @@
         <td><input type="checkbox" name="feature_referer_highlight"
                 {if $feature_referer_highlight eq 'y'}checked="checked"{/if}/></td>
         </tr>
-	<tr><td class="form">{if $feature_help eq 'y'}<a href="{$helpurl}Search+Admin" target="tikihelp" class="tikihelp" title="{tr}Tiki search refresh{/tr}">{/if}{tr}Tiki search refresh{/tr}{if $feature_help eq 'y'}</a>{/if}</td><td><input type="checkbox" name="feature_search_tiki_refresh"{if $feature_search_tiki_refresh eq 'y'} checked="checked"{/if}/></td></tr>
 	{if $refresh_index_now neq 'y'}
 	<tr>
 	<td>
@@ -67,7 +66,7 @@
         </tr><tr>
           <td class="form"><label for="search-refresh">{tr}Search refresh rate{/tr}:</label></td>
 	  <td><input size="5" type="text" name="search_refresh_rate" id="search-refresh"
-	      value="{$search_refresh_rate|escape}" /></td>
+	      value="{$search_refresh_rate|escape}" />{tr}0 for no refresh{/tr}</td>
         </tr><tr>
           <td class="form"><label for="search-min_length">{tr}Minimum length of search word{/tr}: </label></td>
           <td><input size="5" type="text" name="search_min_wordlength" id="search-min_length"
