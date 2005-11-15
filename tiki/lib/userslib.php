@@ -1267,6 +1267,19 @@ function get_included_groups($group) {
 		}
 		return $home;
 	}
+	function get_user_default_homepage2($user) {
+		global $useGroupHome, $wikiHomePage;
+		if ($useGroupHome == 'y') {
+			$groupHome = $this->get_user_default_homepage($user);
+			if ($groupHome)
+				$p = $groupHome;
+ 			else
+				$p = $wikiHomePage;
+		} else {
+			$p = $wikiHomePage;
+		}
+		return $p;
+	}
 
     //modified get_user_groups() to know if the user is part of the group directly or through groups inclusion
         function get_user_groups_inclusion($user) {

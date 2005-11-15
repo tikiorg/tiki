@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.149 2005-10-31 16:28:45 mashmorgan Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.150 2005-11-15 18:51:44 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -39,16 +39,7 @@ if (isset($_REQUEST['page_id'])) {
 $use_best_language = false;
 
 if (!isset($_REQUEST['page']) || $_REQUEST['page'] == '') {
-    if ($useGroupHome == 'y') { 
-        $groupHome = $userlib->get_user_default_homepage($user);
-        if ($groupHome) {
-            $_REQUEST['page'] = $groupHome;
-        } else {
-            $_REQUEST['page'] = $wikiHomePage;
-        }
-    } else {
-        $_REQUEST['page'] = $wikiHomePage;
-    }
+	$_REQUEST['page'] = $userHomePage = $userlib->get_user_default_homepage2($user);
     // Create the HomePage if it doesn't exist
     if(!$tikilib->page_exists($wikiHomePage)) {
         $tikilib->create_page($wikiHomePage,0,'',date('U'),'Tiki initialization');
@@ -71,6 +62,16 @@ if ($feature_multilingual == 'y' && $use_best_language) { // chose the best lang
 		$page = $tikilib->get_page_name_from_id($bestLangPageId);
 //TODO: introduce a get_info_from_id to save a sql request
 		$info = null;
+	} elseif ($info['lang'] != $language && $feature_homePage_if_bl_missing == 'y') {
+		if (!isset($userPageName))
+			$userPageName = $userlib->get_user_default_homepage2($user);
+		$page = $userPageName;
+		$info = $tikilib->get_page_info($page);
+		$bestLangPageId = $multilinguallib->selectLangObj('wiki page', $info['page_id']);
+		if ($info['page_id'] != $bestLangPageId) {
+			$page = $tikilib->get_page_name_from_id($bestLangPageId);
+			$info = null;
+		}
 	}
 }
 
@@ -627,7 +628,7 @@ $smarty->assign('categorypath',$feature_categorypath);
 $smarty->assign('categoryobjects',$feature_categoryobjects);
 $smarty->assign('feature_wiki_pageid', $feature_wiki_pageid);
 $smarty->assign('page_id',$info['page_id']);
-$smarty->display('tiki.tpl');
+$smarty->display("tiki.tpl");
 
 // xdebug_dump_function_profile(XDEBUG_PROFILER_CPU);
 // debug: print all objects

@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.57 2005-11-14 22:22:38 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.58 2005-11-15 18:51:45 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -422,4 +422,4 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 
 #2005-11-14 sylvieg
 CREATE INDEX positionType ON tiki_modules (position, type);
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_search_tiki_refresh','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_homePage_if_bl_missing', 'n');
