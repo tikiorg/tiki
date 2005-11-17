@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.150 2005-11-15 18:51:44 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.151 2005-11-17 12:26:34 lfagundes Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -49,6 +49,10 @@ if (!isset($_REQUEST['page']) || $_REQUEST['page'] == '') {
     }
 }
 $page = $_REQUEST['page'];
+
+if (!$tikilib->page_exists($page) && $tikilib->page_exists(utf8_encode($page))) {
+    $page = $_REQUEST["page"] = utf8_encode($page);
+}
 
 $use_best_language = $use_best_language || isset($_REQUEST['bl']) || isset($_REQUEST['best_lang']);
 
