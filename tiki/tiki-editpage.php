@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.124 2005-11-07 21:42:29 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.125 2005-11-17 16:20:49 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,7 +14,6 @@ include_once ('lib/structures/structlib.php');
 include_once ('lib/notifications/notificationlib.php');
 
 $access->check_feature('feature_wiki');
-$access->check_permission('tiki_p_edit');
 
 // Anti-bot feature: if enabled, anon user must type in a code displayed in an image
 if (isset($_REQUEST['save']) && (!$user || $user == 'anonymous') && $feature_antibot == 'y') {
