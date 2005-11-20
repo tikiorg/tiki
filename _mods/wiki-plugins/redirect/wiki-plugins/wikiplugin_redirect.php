@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/redirect/wiki-plugins/wikiplugin_redirect.php,v 1.6 2005-11-20 09:51:16 ang23 Exp $
+// $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/redirect/wiki-plugins/wikiplugin_redirect.php,v 1.7 2005-11-20 09:54:17 ang23 Exp $
 
 // Wiki plugin to redirect to another page.
 // damian aka damosoft 30 March 2004
@@ -24,7 +24,7 @@ function wikiplugin_redirect($data, $params) {
 			exit;
 		}
 		if (isset($url)) {
-			header("Location: $url&redirectpage=".$_REQUEST['page']);
+			header("Location: $url");
 			exit;
 		}
 	}
