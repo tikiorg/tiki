@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.44 2005-11-07 21:42:29 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.45 2005-11-23 12:38:59 lfagundes Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -271,6 +271,7 @@ if (isset($_REQUEST["edit"])) {
 	$cat_name = $_REQUEST["name"];
 	$cat_href = "tiki-browse_gallery.php?galleryId=" . $cat_objid;
 	include_once ("categorize.php");
+	include_once ("freetag_apply.php");
 
 	$smarty->assign('edit_mode', 'n');
 }
@@ -418,6 +419,7 @@ $smarty->assign_by_ref('galleries', $galleries["data"]);
 $cat_type = 'image gallery';
 $cat_objid = $_REQUEST["galleryId"];
 include_once ("categorize_list.php");
+include_once ("freetag_list.php");
 
 $section = 'galleries';
 include_once ('tiki-section_options.php');
