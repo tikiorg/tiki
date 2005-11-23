@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-my_tiki.php,v 1.22 2005-10-03 17:21:43 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-my_tiki.php,v 1.23 2005-11-23 21:47:13 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -15,6 +15,7 @@ include_once ('lib/tasks/tasklib.php');
 
 if (!$user) {
 	$smarty->assign('msg', tra("You are not logged in"));
+	$smarty->assign('errortype', '402');
 	$smarty->display("error.tpl");
 	die;
 }
