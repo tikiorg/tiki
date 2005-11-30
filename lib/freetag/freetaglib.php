@@ -361,7 +361,7 @@ class FreetagLib extends TikiLib {
 	// First, check for duplicate of the normalized form of the tag on this object.
 	// Dynamically switch between allowing duplication between users on the
 	// constructor param 'block_multiuser_tag_on_object'.
-	if ($this->_block_multiuser_tag_on_object) {
+	if (!$this->_block_multiuser_tag_on_object) {
 	    $mid = " AND user = ?";
 	    $bindvals[] = $user;
 	}
@@ -576,7 +576,6 @@ class FreetagLib extends TikiLib {
 	$query = "SELECT `tagId` FROM `tiki_freetags`
 			WHERE 
 			`raw_tag` = ?
-			LIMIT 1
 			";
 
 	return $this->getOne($query, array($tag));
@@ -603,6 +602,36 @@ class FreetagLib extends TikiLib {
 	}
 	
 	// Perform tag parsing
+	$tagArray = $this->_parse_tag($tag_string);
+	
+	$this->_tag_object_array($user, $objId, $type, $tagArray);
+	    
+	return true;
+    }
+
+    function update_tags($user, $objId, $type, $tag_string) {
+	if($tag_string == '') {
+	    die("No tags found in tag_object");
+	    return true;
+	}
+
+	// Perform tag parsing
+	$tagArray = $this->_parse_tag($tag_string);
+ 	
+	$oldTags = $this->get_tags_on_object($objId, $type, 0, -1, $user);
+
+	foreach ($oldTags['data'] as $tag) {
+	    if (!in_array($tag['raw_tag'], $tagArray)) {
+		$this->delete_object_tag($user, $objId, $type, $tag['raw_tag']);
+	    }
+	}
+
+	$this->_tag_object_array($user, $objId, $type, $tagArray);
+	    
+	return true;
+    }
+
+    function _parse_tag($tag_string) {
 	if(get_magic_quotes_gpc()) {
 	    $query = stripslashes(trim($tag_string));
 	} else {
@@ -623,8 +652,12 @@ class FreetagLib extends TikiLib {
 		    $newwords = array_merge($newwords, preg_split('/\s+/', $word, -1, PREG_SPLIT_NO_EMPTY));
 		}
 	    }
-	$tagArray = $newwords;
-	    
+
+	return $newwords;
+    }
+    
+    function _tag_object_array($user, $objId, $type, $tagArray) {
+
 	foreach($tagArray as $tag) {
 	    $tag = trim($tag);
 	    if(($tag != '') && (strlen($tag) <= $this->_MAX_TAG_LENGTH)) {
@@ -634,8 +667,6 @@ class FreetagLib extends TikiLib {
 		$this->safe_tag($user, $objId, $type, $tag);
 	    }
 	}
-	    
-	return true;
     }
 
     /**

@@ -1,5 +1,5 @@
 <?php 
-// $Header: /cvsroot/tikiwiki/tiki/freetag_apply.php,v 1.1 2005-10-17 00:04:56 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/freetag_apply.php,v 1.2 2005-11-30 14:14:45 lfagundes Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -26,7 +26,7 @@ if ($feature_freetags == 'y') {
     $old_tags = $freetaglib->get_tags_on_object($cat_objid, $cat_type);
 
     global $user;
-    $freetaglib->tag_object($user, $cat_objid, $cat_type, $tag_string);
+    $freetaglib->update_tags($user, $cat_objid, $cat_type, $tag_string);
 
 }
 
