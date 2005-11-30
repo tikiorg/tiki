@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
-# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/add1tiki2multi.py,v 1.9 2005-05-18 10:59:14 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/add1tiki2multi.py,v 1.10 2005-11-30 19:41:27 ggeller Exp $
 
 # Copyright (c) 2004 George G. Geller
-# All Rights Reserved. See copyright.txt for details and a complete list of au\thors.
-# Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for de\tails.
+# All Rights Reserved. See copyright.txt for details and a complete list of authors.
+# Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 
 # NOTICE:
@@ -13,20 +13,13 @@
 #    For background material see:
 #     http://tikiwiki.org/tiki-index.php?page=RecipeMultiTiki
 #     http://tikiwiki.org/tiki-index.php?page=RecipeMultiTiki2
-# 3. You must edit this script before it can run (see below).
 
-# invoke as       ./add1tiki2multi.py <mysql-root-password> <new-tiki-url>
-# something like: ./add1tiki2multi.py password new.wikiplanet.com
+# invoke as       ./add1tiki2multi.py -p <mysql-root-password> <new-tiki-url>
+# something like: ./add1tiki2multi.py -p password new.wikiplanet.com
 
 import os
 import sys
 import re
-
-
-# THIS SCRIPT IS DISABLED BY DEFAULT TO MINIMIZE THE SECURITY RISK FOR NAIVE
-#  TIKI ADMINS!
-# YOU MUST COMMENT OUT THE FOLLOWING LINE FOR THIS SCRIPT TO FUNCTION!!!!
-# sys.exit(0)
 
 
 def usage():
@@ -82,14 +75,14 @@ if not re.search(r'[a-z]$',sNewDomain):
     print sys.argv[0]+":", "Your new domain name must end with a letter. Exiting."
     sys.exit(-1)
 
-# check for /www
-if not os.path.exists("/www"):
-    print sys.argv[0]+":", "/www does not exist.  Exiting."
-    sys.exit(status)
+# check for /var/www
+if not os.path.exists("/var/www"):
+    print sys.argv[0]+":", "/var/www does not exist.  Exiting."
+    sys.exit(-1)
 
-# check for sNewDomain already in /www
-if os.path.exists("/www/" + sNewDomain + ""):
-    print sys.argv[0]+":", "file /www/" + sNewDomain + " already exists.  Exiting."
+# check for sNewDomain already in /var/www
+if os.path.exists("/var/www/" + sNewDomain + ""):
+    print sys.argv[0]+":", "file /var/www/" + sNewDomain + " already exists.  Exiting."
     sys.exit(status)
 
 # sPrefix should be someting like new from new.wikiplanet.com
@@ -177,7 +170,7 @@ if not bFound:
 #
 # Check db/local.php
 #
-f = open("/www/tikiwiki/db/local.php","r")
+f = open("/var/www/tikiwiki/db/local.php","r")
 lines = f.readlines()
 f.close
 
@@ -204,11 +197,11 @@ if found:
 #  system.  Now it is time to:
 #  1. Create the new database
 #  2. Add the right mysql permission to the database
-#  3. Load the database from tikiwiki/db/tiki.sql
-#  4. Create the new symbolic link in /www
-#  5. Create the new directories in /www/tikiwiki
+#  3. Load the database from /var/www/tikiwiki/db/tiki.sql
+#  4. Create the new symbolic link in /var/www
+#  5. Create the new directories in /var/www/tikiwiki
 #  6. Create the .vh file in /etc/httpd/conf.d
-#  7. Modify db/local.php
+#  7. Modify /var/www/tikiwiki/db/local.php
 #  8. Restart apache
 
 # The data we already have:
@@ -240,22 +233,22 @@ if status:
 os.system("rm -f " + sTmpOutFileName)
 
 #  3. Load the database from tikiwiki/db/tiki.sql
-sCommand = "mysql -uroot -p" + sMySQLPassword + " "  + sDBName + " < /www/tikiwiki/db/tiki.sql"
+sCommand = "mysql -uroot -p" + sMySQLPassword + " "  + sDBName + " < /var/www/tikiwiki/db/tiki.sql"
 status = os.system(sCommand)
 if status:
     print sys.argv[0]+":", sCommand, "failed.  Exiting."
     sys.exit(status)
 
-#  4. Create the new symbolic link in /www
-os.chdir("/www")
+#  4. Create the new symbolic link in /var/www
+os.chdir("/var/www")
 sCommand = "ln -s tikiwiki " + sNewDomain
 status = os.system(sCommand)
 if status:
     print sys.argv[0]+":", sCommand, "failed.  Exiting."
     sys.exit(status)
-os.chdir("/www/tikiwiki")
+os.chdir("/var/www/tikiwiki")
 
-#  5. Create the new directories in /www/tikiwiki
+#  5. Create the new directories in /var/www/tikiwiki
 sApacheGID = sApacheUID = 48 # FIXME This need to be generalized
 # FIXME The following lines need error checking
 # FIXME Should maybe set the permission on the new directories
@@ -265,12 +258,22 @@ os.mkdir("./db/" + sNewDomain)
 os.chown("./db/" + sNewDomain, sApacheUID, sApacheGID)
 os.mkdir("./dump/" + sNewDomain)
 os.chown("./dump/" + sNewDomain, sApacheUID, sApacheGID)
+os.mkdir("./files/" + sNewDomain)
+os.chown("./files/" + sNewDomain, sApacheUID, sApacheGID)
+os.mkdir("./img/trackers/" + sNewDomain)
+os.chown("./img/trackers/" + sNewDomain, sApacheUID, sApacheGID)
 os.mkdir("./img/wiki/" + sNewDomain)
 os.chown("./img/wiki/" + sNewDomain, sApacheUID, sApacheGID)
 os.mkdir("./img/wiki_up/" + sNewDomain)
 os.chown("./img/wiki_up/" + sNewDomain, sApacheUID, sApacheGID)
+os.mkdir("./installer/" + sNewDomain)
+os.chown("./installer/" + sNewDomain, sApacheUID, sApacheGID)
 os.mkdir("./lib/Galaxia/processes/" + sNewDomain)
 os.chown("./lib/Galaxia/processes/" + sNewDomain, sApacheUID, sApacheGID)
+os.mkdir("./maps/" + sNewDomain)
+os.chown("./maps/" + sNewDomain, sApacheUID, sApacheGID)
+os.mkdir("./mods/" + sNewDomain)
+os.chown("./mods/" + sNewDomain, sApacheUID, sApacheGID)
 os.mkdir("./modules/cache/" + sNewDomain)
 os.chown("./modules/cache/" + sNewDomain, sApacheUID, sApacheGID)
 os.mkdir("./styles/" + sNewDomain)
@@ -283,12 +286,8 @@ os.mkdir("./templates/" + sNewDomain)
 os.chown("./templates/" + sNewDomain, sApacheUID, sApacheGID)
 os.mkdir("./templates_c/" + sNewDomain)
 os.chown("./templates_c/" + sNewDomain, sApacheUID, sApacheGID)
-os.mkdir("./var/" + sNewDomain)
-os.chown("./var/" + sNewDomain, sApacheUID, sApacheGID)
-os.mkdir("./var/log/" + sNewDomain)
-os.chown("./var/log/" + sNewDomain, sApacheUID, sApacheGID)
-os.mkdir("./var/log/irc/" + sNewDomain)
-os.chown("./var/log/irc/" + sNewDomain, sApacheUID, sApacheGID)
+os.mkdir("./whelp/" + sNewDomain)
+os.chown("./whelp/" + sNewDomain, sApacheUID, sApacheGID)
 
 #  6. Create the .vh file in /etc/httpd/conf.d
 sDomainLastPart = sNewDomain[sNewDomain.find(".")+1:] # something like "wikiplanet.com"
@@ -297,7 +296,7 @@ f = open(sVHFileName, "w");
 # These need to be generalized
 f.write("<VirtualHost *:80>\n");
 f.write("  ServerAdmin webmaster@" + sDomainLastPart + "\n");
-f.write("  DocumentRoot /www/" + sNewDomain + "\n");
+f.write("  DocumentRoot /var/www/" + sNewDomain + "\n");
 f.write("  ServerName " + sNewDomain + "\n");
 f.write("  ErrorLog logs/" + sNewDomain + "-error_log\n");
 f.write("  CustomLog logs/" + sNewDomain + "-access_log common\n");
@@ -307,7 +306,7 @@ f.close();
 #  7. Modify db/local.php
 # insert three lines at the correct place
 
-f = open("/www/tikiwiki/db/local.php","r")
+f = open("/var/www/tikiwiki/db/local.php","r")
 lines = f.readlines()
 f.close
 
