@@ -304,7 +304,10 @@ class RegistrationLib extends TikiLib {
         }
       }
     }
-    return true;
+    if ($email_valid == 'no')
+       return false;
+    else
+       return true;
   }
 
 
