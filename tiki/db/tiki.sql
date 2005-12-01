@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2005-11-15 18:51:45 $
-# $Author: sylvieg $
+# $Date: 2005-12-01 01:17:25 $
+# $Author: lfagundes $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -5169,9 +5169,9 @@ CREATE TABLE `tiki_freetags` (
 DROP TABLE IF EXISTS `tiki_freetagged_objects`;
 CREATE TABLE `tiki_freetagged_objects` (
   `tagId` int(12) NOT NULL auto_increment,
-  `type` varchar(50) default NULL,
-  `objId` varchar(255) default NULL,
-  `user` varchar(40) default NULL,
+  `type` varchar(50) NOT NULL default '',
+  `objId` varchar(255) NOT NULL default '',
+  `user` varchar(40) NOT NULL default '',
   `tagged_on` int(14) NOT NULL default '0',
   PRIMARY KEY  (`tagId`,`user`,`type`,`objId`),
   KEY (`tagId`),
