@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.5 2005-08-12 13:02:10 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.6 2005-12-02 18:52:02 lfagundes Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -1240,6 +1240,16 @@ td.categobjectsdataodd {
 .catlists a.link:hover {
 	color : #000000;
 }
+
+/***************************************************** FREETAGS **************************************************************/
+
+a.freetag_1 { text-decoration: none; font-size: 6px; }
+a.freetag_2 { text-decoration: none; font-size: 8px; }
+a.freetag_3 { text-decoration: none; font-size: 10px; }
+a.freetag_4 { text-decoration: none; font-size: 12px; }
+a.freetag_5 { text-decoration: none; font-size: 14px; }
+a.freetag_6 { text-decoration: none; font-size: 16px; }
+a.freetag_7 { text-decoration: none; font-size: 18px; }
 
 /***************************************************** FAQS **************************************************************/
 div.faqlistquestions {

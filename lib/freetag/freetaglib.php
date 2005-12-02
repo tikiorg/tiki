@@ -73,6 +73,13 @@ class FreetagLib extends TikiLib {
      * @param string The file path to the installation of ADOdb used.
      */ 
     var $_ADODB_DIR = 'adodb/';
+
+    /**
+     * @access public
+     * @param int The number of size degrees for tags in cloud. There should be correspondent classes in css.
+     */
+    var $max_cloud_text_size = 7;
+     
     
     /**
      * FreetagLib
@@ -357,7 +364,9 @@ class FreetagLib extends TikiLib {
 	    
 	$normalized_tag = $this->normalize_tag($tag);
 	$bindvals = array($objId, $type, $normalized_tag);
-	    
+	 
+	$mid = '';
+
 	// First, check for duplicate of the normalized form of the tag on this object.
 	// Dynamically switch between allowing duplication between users on the
 	// constructor param 'block_multiuser_tag_on_object'.
@@ -689,6 +698,15 @@ class FreetagLib extends TikiLib {
 
     function get_most_popular_tags($user = '', $offset = 0, $maxRecords = 25) {
 
+	// get top tag popularity
+	$query = "SELECT COUNT(*) as count
+			FROM `tiki_freetagged_objects` o
+			GROUP BY tagId
+			ORDER BY count DESC
+			";
+
+	$top = $this->getOne($query);
+
 	$bindvals = array();
 
 	if (isset($user) && (!empty($user))) {
@@ -711,11 +729,18 @@ class FreetagLib extends TikiLib {
 	    
 	$ret = array();
 	while ($row = $result->fetchRow()) {
+	    $size[] = $row['size'] = ceil($this->max_cloud_text_size * $row['count'] / $top);
+	    $tag[] = $row['tag'];
+	    $count[] = $row['count'];
+
 	    $ret[] = $row;
 	}
+
+	array_multisort($tag, SORT_ASC, $count, SORT_DESC, $ret);
 	    
 	return $ret;
     }
+	
 
     /**
      * count_tags
