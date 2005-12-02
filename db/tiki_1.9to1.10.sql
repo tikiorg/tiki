@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.58 2005-11-15 18:51:45 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.59 2005-12-02 17:04:50 amette Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -423,3 +423,26 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 #2005-11-14 sylvieg
 CREATE INDEX positionType ON tiki_modules (position, type);
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_homePage_if_bl_missing', 'n');
+
+#2005-12-02 amette
+
+DROP TABLE IF EXISTS `tiki_freetags`;
+CREATE TABLE `tiki_freetags` (
+  `tagId` int(10) unsigned NOT NULL auto_increment,
+  `tag` varchar(30) NOT NULL default '',
+  `raw_tag` varchar(50) NOT NULL default '',
+  PRIMARY KEY  (`tagId`)
+) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS `tiki_freetagged_objects`;
+CREATE TABLE `tiki_freetagged_objects` (
+  `tagId` int(12) NOT NULL auto_increment,
+  `type` varchar(50) NOT NULL default '',
+  `objId` varchar(255) NOT NULL default '',
+  `user` varchar(40) NOT NULL default '',
+  `tagged_on` int(14) NOT NULL default '0',
+  PRIMARY KEY  (`tagId`,`user`,`type`,`objId`),
+  KEY (`tagId`),
+  KEY (`user`),
+  KEY (`objId`,`type`)
+) TYPE=MyISAM;
