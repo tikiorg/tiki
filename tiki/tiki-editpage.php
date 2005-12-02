@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.125 2005-11-17 16:20:49 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.126 2005-12-02 18:49:22 lfagundes Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -711,6 +711,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
   $cat_href="tiki-index.php?page=".urlencode($cat_objid);
   include_once("categorize.php");
   include_once("poll_categorize.php");
+  include_once("freetag_apply.php");
 
   if ((($feature_wiki_description == 'y')
     && (md5($info["description"]) != md5($_REQUEST["description"])))
@@ -851,6 +852,7 @@ if ($feature_multilingual == 'y') {
 $cat_type = 'wiki page';
 $cat_objid = $_REQUEST["page"];
 include_once ("categorize_list.php");
+include_once ("freetag_list.php");
 
 if ($feature_theme_control == 'y') {
   include ('tiki-tc.php');
