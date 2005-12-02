@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.68 2005-09-30 14:11:51 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.69 2005-12-02 18:49:22 lfagundes Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -192,6 +192,9 @@ or use
 </table>
 </td></tr>
 {/if}
+{/if}
+{if $feature_freetags eq 'y'}
+  {include file=freetag.tpl}
 {/if}
 {if $feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y'}
 <tr class="formcolor"><td>{tr}Allow HTML{/tr}: </td><td><input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/></td></tr>
