@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2005-12-01 01:17:25 $
+# $Date: 2005-12-02 20:34:43 $
 # $Author: lfagundes $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -5172,7 +5172,7 @@ CREATE TABLE `tiki_freetagged_objects` (
   `type` varchar(50) NOT NULL default '',
   `objId` varchar(255) NOT NULL default '',
   `user` varchar(40) NOT NULL default '',
-  `tagged_on` int(14) NOT NULL default '0',
+  `created` int(14) NOT NULL default '0',
   PRIMARY KEY  (`tagId`,`user`,`type`,`objId`),
   KEY (`tagId`),
   KEY (`user`),

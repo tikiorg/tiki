@@ -111,21 +111,26 @@ class FreetagLib extends TikiLib {
      *
      * @return An array of Object ID numbers that reference your original objects.
      */ 
-    function get_objects_with_tag($tag, $user='', $offset = 0, $maxRecords = -1) {
+    function get_objects_with_tag($tag, $type, $user='', $offset = 0, $maxRecords = -1) {
 	if(!isset($tag)) {
 	    return false;
 	}		
 	
 	$bindvals = array($tag);
 	
+	$mid = '';
+
 	if(isset($user) && (!empty($user))) {
-	    $mid = "AND `user` = ?";
+	    $mid .= " AND `user` = ?";
 	    $bindvals[] = $user;
-	} else {
-	    $mid = '';
+	}
+
+	if (isset($type) && !empty($type)) {
+	    $mid .= " AND `type` = ?";
+	    $bindvals[] = $type;
 	}
 	
-	$query = "SELECT DISTINCT `type`,`objId`,`user`,`tagged_on` ";
+	$query = "SELECT DISTINCT `type`,`objId`,`user`,`created` ";
 	$query_cant = "SELECT COUNT(*) ";
 	
 	$query_end = "FROM `tiki_freetagged_objects` o, `tiki_freetags` t WHERE o.`tagId`=t.`tagId` 
@@ -414,7 +419,7 @@ class FreetagLib extends TikiLib {
 	}
 	    
 	$query = "INSERT INTO `tiki_freetagged_objects`
-			(`tagId`, `user`, `objId`, `type`, `tagged_on`)
+			(`tagId`, `user`, `objId`, `type`, `created`)
 			VALUES (?,?,?,?,?)
 			";
 	$bindvals = array($tagId, $user, $objId, $type, time());
@@ -740,7 +745,7 @@ class FreetagLib extends TikiLib {
 	    
 	return $ret;
     }
-	
+
 
     /**
      * count_tags
