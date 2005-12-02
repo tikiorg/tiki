@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.45 2005-11-23 12:38:59 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.46 2005-12-02 17:49:42 lfagundes Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -342,6 +342,10 @@ if (!is_object($imagegallib)) {
 }
 
 $galleries = $imagegallib->list_galleries($offset, $maxRecords, $sort_mode, 'admin', $find);
+
+if (!isset($_REQUEST['filter'])) {
+    $_REQUEST['filter'] = '';
+}
 
 $smarty->assign('filter', $_REQUEST["filter"]);
 
