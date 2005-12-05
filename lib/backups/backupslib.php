@@ -16,6 +16,7 @@ class BackupLib extends TikiLib {
 	}
 
 	function restore_database($filename) {
+//ini_set('max_execution_time', 3000);
 		// Get the password before it's too late
 		$query = "select `hash` from `users_users` where `login`=?";
 		$pwd = $this->getOne($query,array("admin"));
@@ -33,7 +34,7 @@ class BackupLib extends TikiLib {
 		}
 
 		// Create all the tables
-		preg_match_all("/create table ([^;]+);/i", $data, $reqs);
+		preg_match_all("/[^\# *]create table ([^;]+);/i", $data, $reqs);
 
 		foreach ($reqs[0] as $query) {
 			//print("q: $query<br />");
@@ -143,10 +144,10 @@ class BackupLib extends TikiLib {
 						if ($first) {
 							$sentence .= "'" . addslashes($value). "'";
 							$first = 0;
-							$fields = '(' . $field;
+							$fields = "(`$field`";
 						} else {
 							$sentence .= ",'" . addslashes($value). "'";
-							$fields .= ",$field";
+							$fields .= ",`$field`";
 						}
 					}
 
