@@ -7,7 +7,7 @@
 // topic=>topicId
 
 function wikiplugin_articles_help() {
-	return tra("~np~{~/np~ARTICLES(max=>3,topic=>topicName)}{ARTICLES} Insert articles into a wikipage");
+	return tra("~np~{~/np~ARTICLES(max=>3,topic=>topicName,sort=>columnName_asc|columnName_desc)}{ARTICLES} Insert articles into a wikipage");
 }
 
 function wikiplugin_articles($data,$params) {
@@ -33,13 +33,14 @@ function wikiplugin_articles($data,$params) {
 	} else {
 		$topic = $tikilib->fetchtopicId($topic);
 	}
-
+	if (!isset($sort))
+		$sort = 'publishDate_desc';
 	$now = date("U");
 	
 	include_once("lib/commentslib.php");
 	$commentslib = new Comments($dbTiki);
 	
-	$listpages = $tikilib->list_articles($start, $max, 'publishDate_desc', '', $now, 'admin', '', $topic);
+	$listpages = $tikilib->list_articles($start, $max, $sort, '', $now, 'admin', '', $topic);
  	if ($feature_multilingual == 'y') {
 		global $multilinguallib;
 		include_once("lib/multilingual/multilinguallib.php");
