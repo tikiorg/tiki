@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2005-12-02 20:34:43 $
+# $Date: 2005-12-06 18:08:04 $
 # $Author: lfagundes $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -719,22 +719,32 @@ CREATE TABLE tiki_categories (
 # Table structure for table tiki_categorized_objects
 #
 # Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 13, 2003 at 01:09 AM
+# Last update: Dec 06, 2005 
 #
 
-DROP TABLE IF EXISTS tiki_categorized_objects;
-CREATE TABLE tiki_categorized_objects (
-  catObjectId int(12) NOT NULL auto_increment,
+DROP TABLE IF EXISTS tiki_objects;
+CREATE TABLE tiki_objects (
+  objectId int(12) NOT NULL auto_increment,
   type varchar(50) default NULL,
-  objId varchar(255) default NULL,
+  itemId varchar(255) default NULL,
   description text,
   created int(14) default NULL,
   name varchar(200) default NULL,
   href varchar(200) default NULL,
   hits int(8) default NULL,
-  PRIMARY KEY  (catObjectId)
+  PRIMARY KEY  (objectId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
+
+# Table structure for table `tiki_categorized_objects`
+#
+
+DROP TABLE IF EXISTS `tiki_categorized_objects`;
+CREATE TABLE `tiki_categorized_objects` (
+  `catObjectId` int(11) NOT NULL default '0',
+  PRIMARY KEY  (`catObjectId`)
+) TYPE=MyISAM ;
+
 
 #
 # Table structure for table tiki_category_objects
