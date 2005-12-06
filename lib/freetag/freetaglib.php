@@ -44,7 +44,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class FreetagLib extends TikiLib {
+require_once("lib/objectlib.php");
+
+class FreetagLib extends ObjectLib {
 
     // The fields below should be tiki preferences
     
@@ -130,10 +132,10 @@ class FreetagLib extends TikiLib {
 	    $bindvals[] = $type;
 	}
 	
-	$query = "SELECT DISTINCT `type`,`objId`,`user`,`created` ";
+	$query = "SELECT DISTINCT o.* ";
 	$query_cant = "SELECT COUNT(*) ";
 	
-	$query_end = "FROM `tiki_freetagged_objects` o, `tiki_freetags` t WHERE o.`tagId`=t.`tagId` 
+	$query_end = "FROM `tiki_objects` o, `tiki_freetagged_objects` fto, `tiki_freetags` t WHERE fto.`tagId`=t.`tagId` AND o.`objectId` = fto.`objectId`
 			      WHERE `tag` = ?
                               $mid
 			      ";
@@ -196,16 +198,18 @@ class FreetagLib extends TikiLib {
 	// We must adjust for duplicate normalized tags appearing multiple times in the join by 
 	// counting only the distinct tags. It should also work for an individual user.
 	
-	$query = "SELECT o.`objId`, o.`type`, t.`tag`, COUNT(DISTINCT `tag`) AS uniques ";
+	$query = "SELECT o.*, t.`tag`, COUNT(DISTINCT t.`tag`) AS uniques ";
 	$query_cant = "SELECT COUNT(*) ";
 	
 	$query_end = "
-			FROM `tiki_freetagged_objects` o,
+			FROM `tiki_objects` o,
+                             `tiki_freetagged_objects` fto,
 			     `tiki_freetags` t
-			WHERE t.`tag` IN ($tag_sql)
-                              o.`tagId` = t.`tagId`
+			WHERE t.`tag` IN ($tag_sql) AND
+                              fto.`tagId` = t.`tagId` AND
+                              fto.`objectId` = o.`objectId`                              
                         $mid
-			GROUP BY o.`objId`,o.`type`
+			GROUP BY o.`objectId`
 			HAVING uniques = ?
 			";
 	
@@ -256,12 +260,12 @@ class FreetagLib extends TikiLib {
 	    $mid = "";
 	}
 	
-	$query = "SELECT DISTINCT `objId`, `type` ";
+	$query = "SELECT DISTINCT o.* ";
 	$query_cant = "SELECT COUNT(*) ";
 	
 	$query_end = "  
-			FROM `tiki_freetagged_objects` o, `tiki_freetags` t
-			WHERE t.`tagId` = ?
+			FROM `tiki_freetagged_objects` fto, `tiki_freetags` t, `tiki_objects` o
+			WHERE t.`tagId` = ? AND fto.`tagId`=t.`tagId` AND o.`objectId`=fto.`objectId`
                         $mid
 			";
 
@@ -301,12 +305,12 @@ class FreetagLib extends TikiLib {
      *	 - 'raw_tag' => The raw-form tag
      *	 - 'user' => The unique ID of the person who tagged the object with this tag.
      */ 
-    function get_tags_on_object($objId, $type, $offset = 0, $maxRecords = -1, $user = NULL) {
-	if (!isset($objId) || !isset($type) || empty($objId) || empty($type)) {
+    function get_tags_on_object($itemId, $type, $offset = 0, $maxRecords = -1, $user = NULL) {
+	if (!isset($itemId) || !isset($type) || empty($itemId) || empty($type)) {
 	    return false;
 	}
 
-	$bindvals = array($objId, $type);
+	$bindvals = array($itemId, $type);
 
 	if (isset($user) && (!empty($user))) {
 	    $mid = "AND `user` = ?"; 
@@ -319,10 +323,12 @@ class FreetagLib extends TikiLib {
 	$query_cant = "SELECT COUNT(*) ";
 
 	$query_end = "
-			FROM `tiki_freetagged_objects` o, 
+			FROM `tiki_objects` o,
+                             `tiki_freetagged_objects` fto, 
                              `tiki_freetags` t
-			WHERE t.`tagId` = o.`tagId` AND
-                              o.`objId` = ? AND
+			WHERE t.`tagId` = fto.`tagId` AND
+                              fto.`objectId` = o.`objectId` AND 
+                              o.`itemId` = ? AND
                               o.`type` = ?
  			      $mid
 			";
@@ -359,16 +365,16 @@ class FreetagLib extends TikiLib {
      * @return Returns true if successful, false otherwise. Does not operate as a transaction.
      */ 
 
-    function safe_tag($user, $objId, $type, $tag) {
-	if (!isset($user) || !isset($objId) || !isset($type) || !isset($tag) ||
-	    empty($user) || empty($objId) || empty($type) || empty($tag)) {
+    function safe_tag($user, $itemId, $type, $tag) {
+	if (!isset($user) || !isset($itemId) || !isset($type) || !isset($tag) ||
+	    empty($user) || empty($itemId) || empty($type) || empty($tag)) {
 	    die("safe_tag argument missing");
 	    return false;
 	}
 	    
 	    
 	$normalized_tag = $this->normalize_tag($tag);
-	$bindvals = array($objId, $type, $normalized_tag);
+	$bindvals = array($itemId, $type, $normalized_tag);
 	 
 	$mid = '';
 
@@ -381,12 +387,14 @@ class FreetagLib extends TikiLib {
 	}
 	    
 	$query = "SELECT COUNT(*)
-			FROM `tiki_freetagged_objects` o,
-                              `tiki_freetags` t 
-			WHERE o.`tagId` = t.`tagId`
-			AND `objId` = ?
-                        AND `type` = ?
-			AND `tag` = ?
+			FROM `tiki_objects` o,
+                             `tiki_freetagged_objects` fto,
+                             `tiki_freetags` t 
+			WHERE fto.`tagId` = t.`tagId`
+                        AND fto.`objectId` = o.`objectId`
+			AND o.`itemId` = ?
+                        AND o.`type` = ?
+			AND t.`tag` = ?
 			$mid
 			";
 	    
@@ -417,12 +425,14 @@ class FreetagLib extends TikiLib {
 	if(!($tagId > 0)) {
 	    return false;
 	}
-	    
+
+	$objectId = $this->add_object($type, $itemId);
+
 	$query = "INSERT INTO `tiki_freetagged_objects`
-			(`tagId`, `user`, `objId`, `type`, `created`)
-			VALUES (?,?,?,?,?)
+			(`tagId`, `objectId`, `user`, `created`)
+			VALUES (?,?,?,?)
 			";
-	$bindvals = array($tagId, $user, $objId, $type, time());
+	$bindvals = array($tagId, $objectId, $user, time());
 	    
 	$this->query($query, $bindvals);
 	    
@@ -474,9 +484,9 @@ class FreetagLib extends TikiLib {
      *
      * @return string Returns the tag in normalized form.
      */ 
-    function delete_object_tag($user, $objId, $type, $tag) {
-	if (!isset($user) || !isset($objId) || !isset($type) || !isset($tag) ||
-	    empty($user) || empty($objId) || empty($type) || empty($tag)) {
+    function delete_object_tag($user, $itemId, $type, $tag) {
+	if (!isset($user) || !isset($itemId) || !isset($type) || !isset($tag) ||
+	    empty($user) || empty($itemId) || empty($type) || empty($tag)) {
 	    die("delete_object_tag argument missing");
 	    return false;
 	}
@@ -486,15 +496,16 @@ class FreetagLib extends TikiLib {
 	if ( !($tagId > 0)) {
 	    return false;
 	} else {
+
+	    $objectId = $this->get_object_id($type, $itemId);
 		
 	    $query = "DELETE FROM `tiki_freetagged_objects`
 			WHERE `user` = ?
-			AND `objId` = ?
-                        AND `type` = ?
+			AND `objectId` = ?
 			AND `tagId` = ?
 			LIMIT 1
-			";	
-	    $bindvals = array($user, $objId, $type, $tagId);
+			";
+	    $bindvals = array($user, $objectId, $tagId);
 
 	    $this->query($query, $bindvals);
 		
@@ -517,24 +528,26 @@ class FreetagLib extends TikiLib {
      *
      * @return string Returns the tag in normalized form.
      */ 
-    function delete_all_object_tags_for_user($user, $objId, $type) {
-	if(!isset($user) || !isset($objId) || !isset($type)
-	   || empty($user) || empty($objId) || empty($type)) {
+    function delete_all_object_tags_for_user($user, $itemId, $type) {
+	if(!isset($user) || !isset($itemId) || !isset($type)
+	   || empty($user) || empty($itemId) || empty($type)) {
 	    die("delete_all_object_tags_for_user argument missing");
 	    return false;
 	}
 	    
 	    
-	if ( !($objId > 0)) {
+	if ( !($itemId > 0)) {
 	    return false;
 	} else {
-		
+
+	    $objectId = $this->get_object_id($type, $itemId);
+
 	    $query = "DELETE FROM `tiki_freetagged_objects`
 				WHERE `user` = ?
-				AND `objId` = ?
-                                AND `type` = ?
+                                  AND `objectId` = ?
 				";
-	    $bindvals = array($$user, $objId, $type);
+
+	    $bindvals = array($$user, $objectId);
 		
 	    $this->query($query, $bindvals);
 		
@@ -609,38 +622,36 @@ class FreetagLib extends TikiLib {
      *
      * @return string Returns the tag in normalized form.
      */
-    function tag_object($user, $objId, $type, $tag_string) {
+    function tag_object($user, $itemId, $type, $tag_string) {
 	if($tag_string == '') {
-	    die("No tags found in tag_object");
 	    return true;
 	}
 	
 	// Perform tag parsing
 	$tagArray = $this->_parse_tag($tag_string);
 	
-	$this->_tag_object_array($user, $objId, $type, $tagArray);
+	$this->_tag_object_array($user, $itemId, $type, $tagArray);
 	    
 	return true;
     }
 
-    function update_tags($user, $objId, $type, $tag_string) {
+    function update_tags($user, $itemId, $type, $tag_string) {
 	if($tag_string == '') {
-	    die("No tags found in tag_object");
 	    return true;
 	}
 
 	// Perform tag parsing
 	$tagArray = $this->_parse_tag($tag_string);
  	
-	$oldTags = $this->get_tags_on_object($objId, $type, 0, -1, $user);
+	$oldTags = $this->get_tags_on_object($itemId, $type, 0, -1, $user);
 
 	foreach ($oldTags['data'] as $tag) {
 	    if (!in_array($tag['raw_tag'], $tagArray)) {
-		$this->delete_object_tag($user, $objId, $type, $tag['raw_tag']);
+		$this->delete_object_tag($user, $itemId, $type, $tag['raw_tag']);
 	    }
 	}
 
-	$this->_tag_object_array($user, $objId, $type, $tagArray);
+	$this->_tag_object_array($user, $itemId, $type, $tagArray);
 	    
 	return true;
     }
@@ -670,7 +681,7 @@ class FreetagLib extends TikiLib {
 	return $newwords;
     }
     
-    function _tag_object_array($user, $objId, $type, $tagArray) {
+    function _tag_object_array($user, $itemId, $type, $tagArray) {
 
 	foreach($tagArray as $tag) {
 	    $tag = trim($tag);
@@ -678,7 +689,7 @@ class FreetagLib extends TikiLib {
 		if(get_magic_quotes_gpc()) {
 		    $tag = addslashes($tag);
 		}
-		$this->safe_tag($user, $objId, $type, $tag);
+		$this->safe_tag($user, $itemId, $type, $tag);
 	    }
 	}
     }
@@ -731,8 +742,11 @@ class FreetagLib extends TikiLib {
 			";
 
 	$result = $this->query($query, $bindvals, $maxRecords, $offset);
-	    
+
 	$ret = array();
+	$tag = array();
+	$count = array();
+
 	while ($row = $result->fetchRow()) {
 	    $size[] = $row['size'] = ceil($this->max_cloud_text_size * $row['count'] / $top);
 	    $tag[] = $row['tag'];
@@ -799,7 +813,7 @@ class FreetagLib extends TikiLib {
 
     function silly_list($max = 100) {
 		
-	$query = "SELECT `tag`, COUNT(`objId`) AS quantity
+	$query = "SELECT `tag`, COUNT(`objectId`) AS quantity
 			FROM `tiki_freetags` t, 
                              `tiki_freetagged_objects` o,
 			WHERE t.`tagId` = o.`tagId`
@@ -853,10 +867,10 @@ class FreetagLib extends TikiLib {
 	// additional performance and are running MySQL 4.X, you might want to try a 
 	// subselect and compare perf numbers.
 	    
-	$query = "SELECT t1.`tag`, COUNT( o1.`objId` ) AS quantity
+	$query = "SELECT t1.`tag`, COUNT( o1.`objectId` ) AS quantity
 			FROM `tiki_freetagged_objects` o1
 			INNER JOIN `tiki_freetags` t1 ON ( t1.`tagId` = o1.`tagId` )
-			INNER JOIN `tiki_freetagged_objects` o2 ON ( o1.`objId` = o2.`objId` )
+			INNER JOIN `tiki_freetagged_objects` o2 ON ( o1.`objectId` = o2.`objectId` )
 			INNER JOIN `tiki_freetags` t2 ON ( t2.`tagId` = o2.`tagId` )
 			WHERE t2.`tag` = ? AND t1.`tag` != ?
 			GROUP BY o1.`tagId`
