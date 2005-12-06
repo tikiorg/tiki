@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2005-12-06 18:08:04 $
+# $Date: 2005-12-06 20:10:54 $
 # $Author: lfagundes $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -5179,14 +5179,13 @@ CREATE TABLE `tiki_freetags` (
 DROP TABLE IF EXISTS `tiki_freetagged_objects`;
 CREATE TABLE `tiki_freetagged_objects` (
   `tagId` int(12) NOT NULL auto_increment,
-  `type` varchar(50) NOT NULL default '',
-  `objId` varchar(255) NOT NULL default '',
+  `objectId` int(11) NOT NULL default 0,
   `user` varchar(40) NOT NULL default '',
   `created` int(14) NOT NULL default '0',
-  PRIMARY KEY  (`tagId`,`user`,`type`,`objId`),
+  PRIMARY KEY  (`tagId`,`user`,`objectId`),
   KEY (`tagId`),
   KEY (`user`),
-  KEY (`objId`,`type`)
+  KEY (`objectId`)
 ) TYPE=MyISAM;
 
 
