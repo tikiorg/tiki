@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.60 2005-12-02 20:34:43 lfagundes Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.61 2005-12-06 15:24:57 amette Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -426,7 +426,6 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_homePage_if_bl_
 
 #2005-12-02 amette
 
-DROP TABLE IF EXISTS `tiki_freetags`;
 CREATE TABLE `tiki_freetags` (
   `tagId` int(10) unsigned NOT NULL auto_increment,
   `tag` varchar(30) NOT NULL default '',
@@ -434,7 +433,6 @@ CREATE TABLE `tiki_freetags` (
   PRIMARY KEY  (`tagId`)
 ) TYPE=MyISAM;
 
-DROP TABLE IF EXISTS `tiki_freetagged_objects`;
 CREATE TABLE `tiki_freetagged_objects` (
   `tagId` int(12) NOT NULL auto_increment,
   `type` varchar(50) NOT NULL default '',
