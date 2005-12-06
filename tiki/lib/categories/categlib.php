@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.72 2005-11-07 21:42:30 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.73 2005-12-06 18:08:05 lfagundes Exp $
  *
  * \brief Categories support class
  *
@@ -12,7 +12,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class CategLib extends TikiLib {
+require_once("lib/objectlib.php");
+
+class CategLib extends ObjectLib {
 
 	function CategLib($db) {
 		# this is probably unneeded now
@@ -185,30 +187,27 @@ class CategLib extends TikiLib {
 		return $id;
 	}
 
-	function is_categorized($type, $objId) {
-		$query = "select `catObjectId` from `tiki_categorized_objects` where `type`=? and `objId`=?";
-		$bindvars=array($type,$objId);
+	function is_categorized($type, $itemId) {
+		$query = "select o.`objectId` from `tiki_categorized_objects` c, `tiki_objects` o where c.`catObjectId`=o.`objectId` and o.`type`=? and o.`itemId`=?";
+		$bindvars=array($type,$itemId);
 		settype($bindvars["1"],"string");
 		$result = $this->query($query,$bindvars);
 		if ($result->numRows()) {
 			$res = $result->fetchRow();
-			return $res["catObjectId"];
+			return $res["objectId"];
 		} else {
 			return 0;
 		}
 	}
 
-	function add_categorized_object($type, $objId, $description, $name, $href) {
+	function add_categorized_object($type, $itemId, $description, $name, $href) {
 		global $cachelib;
 
-		$description = strip_tags($description);
-		$name = strip_tags($name);
-		$now = date("U");
-		$query = "insert into `tiki_categorized_objects`(`type`,`objId`,`description`,`name`,`href`,`created`,`hits`)
-    values(?,?,?,?,?,?,?)";
-		$result = $this->query($query,array($type,(string) $objId,$description,$name,$href,(int) $now,0));
-		$query = "select `catObjectId` from `tiki_categorized_objects` where `created`=? and `type`=? and `objId`=?";
-		$id = $this->getOne($query,array((int) $now,$type,(string) $objId));
+		$id = $this->add_object($type, $itemId, $description, $name, $href);
+		
+		$query = "insert into `tiki_categorized_objects` (`catObjectId`) values (?)";
+
+		$this->query($query, array($id));
 		$cachelib->invalidate('allcategs');
 		return $id;
 	}
@@ -345,7 +344,7 @@ class CategLib extends TikiLib {
 			}
 		}
 
-		$query_cant = "SELECT DISTINCT c.*, o.* FROM `tiki_category_objects` c,`tiki_categorized_objects` o LEFT JOIN `users_objectpermissions` u ON u.`objectId`=MD5(".$this->db->concat("o.`type`","LOWER(o.`objId`)").") AND u.`objectType`=o.`type` WHERE c.`catObjectId`=o.`catObjectId` $where";
+		$query_cant = "SELECT DISTINCT c.*, o.* FROM `tiki_category_objects` c,`tiki_objects` o, `tiki_categorized_objects` co LEFT JOIN `users_objectpermissions` u ON u.`objectId`=MD5(".$this->db->concat("o.`type`","LOWER(o.`itemId`)").") AND u.`objectType`=o.`type` WHERE c.`catObjectId`=o.`objectId` AND o.`objectId`=co.`catObjectId` $where";
 		$query = $query_cant . $orderBy;
 		$result = $this->query($query,$bindVars,$maxRecords,$offset);
 		$resultCant = $this->query($query_cant,$bindVars);
@@ -373,12 +372,12 @@ class CategLib extends TikiLib {
 	}
 
 	// get the parent categories of an object
-	function get_object_categories($type, $objId) {
+	function get_object_categories($type, $itemId) {
 
-		$query = "select `categId` from `tiki_category_objects` tco, `tiki_categorized_objects` tto
-    where tco.`catObjectId`=tto.`catObjectId` and `type`=? and `objId`=?";
-		//settype($objId,"string"); //objId is defined as varchar
-		$bindvars=array($type,$objId);
+		$query = "select `categId` from `tiki_category_objects` tco, `tiki_categorized_objects` tto, `tiki_objects` o
+    where tco.`catObjectId`=tto.`catObjectId` and o.`objectId`=tto.`catObjectId` and `type`=? and `itemId`=?";
+		//settype($itemId,"string"); //itemId is defined as varchar
+		$bindvars=array($type,$itemId);
 		settype($bindvars["1"],"string");
 		$result = $this->query($query,$bindvars);
 		$ret = array();
@@ -391,14 +390,14 @@ class CategLib extends TikiLib {
 	}
 	
 	// get the permissions assigned to the parent categories of an object
-	function get_object_categories_perms($user, $type, $objId) {		
-		$is_categorized = $this->is_categorized("$type",$objId);
+	function get_object_categories_perms($user, $type, $itemId) {		
+		$is_categorized = $this->is_categorized("$type",$itemId);
 		if ($is_categorized) {
 			global $cachelib;
 			global $userlib;
 			global $tiki_p_admin;
 			
-			$parents = $this->get_object_categories("$type", $objId);
+			$parents = $this->get_object_categories("$type", $itemId);
 			$return_perms = array(); // initialize array for storing perms to be returned
 
 			if (!$cachelib->isCached("categories_permission_names")) {
@@ -458,7 +457,7 @@ class CategLib extends TikiLib {
 
 	function get_category_objects($categId) {
 		// Get all the objects in a category
-		$query = "select * from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 where tbl1.`catObjectId`=tbl2.`catObjectId` and `categId`=?";
+		$query = "select * from `tiki_category_objects` c,`tiki_categorized_objects` co, `tiki_objects` o where c.`catObjectId`=co.`catObjectId` and co.`catObjectId`=o.`objectId` and c.`categId`=?";
 
 		$result = $this->query($query,array((int) $categId));
 		$ret = array();
@@ -782,7 +781,7 @@ class CategLib extends TikiLib {
 			$params[htmlspecialchars(urldecode($b[0]))]=htmlspecialchars(urldecode($b[1]));
 		}
 		*/
-		$query="select distinct co.`categId` from `tiki_categorized_objects` cdo, `tiki_category_objects` co  where cdo.`href`=? and cdo.`catObjectId`=co.`catObjectId`";
+		$query="select distinct co.`categId` from `tiki_objects` o, `tiki_categorized_objects` cdo, `tiki_category_objects` co  where o.`href`=? and cdo.`catObjectId`=co.`catObjectId` and o.`objectId` = cdo.`catObjectId`";
 		$result=$this->query($query,array($parsed["path"]."?".$parsed["query"]));
 		while ($res = $result->fetchRow()) {
 		  $ret[]=$res["categId"];
@@ -795,12 +794,12 @@ class CategLib extends TikiLib {
 	function get_related($categories,$maxRows=10) {
 		if(count($categories)==0) return (array());
 		$quarr=implode(",",array_fill(0,count($categories),'?'));
-		$query="select distinct cdo.`type`, cdo.`description`, cdo.`objId`,cdo.`href` from `tiki_categorized_objects` cdo, `tiki_category_objects` co  where co.`categId` in (".$quarr.") and co.`catObjectId`=cdo.`catObjectId`";
+		$query="select distinct o.`type`, o.`description`, o.`itemId`,o.`href` from `tiki_objects` o, `tiki_categorized_objects` cdo, `tiki_category_objects` co  where co.`categId` in (".$quarr.") and co.`catObjectId`=cdo.`catObjectId` and o.`objectId`=cdo.`catObjectId`";
 		$result=$this->query($query,$categories);
 		$ret=array();
 		while ($res = $result->fetchRow()) {
 			if (empty($res["description"])) {
-				$ret[$res["href"]]=$res["type"].": ".$res["objId"];
+				$ret[$res["href"]]=$res["type"].": ".$res["itemId"];
 			} else {
 				$ret[$res["href"]]=$res["type"].": ".$res["description"];
 			}
@@ -824,7 +823,7 @@ class CategLib extends TikiLib {
 	// Moved from tikilib.php
 	function uncategorize_object($type, $id) {
 		// Fixed query. -rlpowell
-		$query = "select `catObjectId`  from `tiki_categorized_objects` where `type`=? and `objId`=?";
+		$query = "select `catObjectId` from `tiki_categorized_objects` c, `tiki_objects` o where o.`objectId`=c.`catObjectId` and o.`type`=? and o.`itemId`=?";
 		$catObjectId = $this->getOne($query, array((string) $type,(string) $id));
 
 		if ($catObjectId) {
@@ -980,8 +979,7 @@ class CategLib extends TikiLib {
 		    $bindvars[] = $type;
 		}
 		$sort_mode = "created_desc";
-		$query = "select tbl1.`catObjectId`,`categId`,`type`,`name`,`href` from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 ";
-		$query.= " where tbl1.`catObjectId`=tbl2.`catObjectId` $mid order by tbl2.".$this->convert_sortmode($sort_mode);
+		$query = "select co.`catObjectId`, `categId`, `type`, `name`, `href` from `tiki_category_objects` co, `tiki_categorized_objects` cdo, `tiki_objects` o where co.`catObjectId`=cdo.`catObjectId` and o.`objectId`=cdo.`catObjectId` $mid order by o.".$this->convert_sortmode($sort_mode);
 		$result = $this->query($query,$bindvars,$maxRecords,0);
 
 		$ret = array('data'=>array());
