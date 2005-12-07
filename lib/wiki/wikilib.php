@@ -206,8 +206,8 @@ class WikiLib extends TikiLib {
 
 		// in tiki_categorized_objects update objId
 		$newcathref = 'tiki-index.php?page=' . urlencode($newName);
-		$query = "update `tiki_categorized_objects` set `objId`=?,`name`=?,`href`=? where `objId`=?";
-		$this->query($query, array( $newName, $newName, $newcathref, $oldName));
+		$query = "update `tiki_objects` set `itemId`=?,`name`=?,`href`=? where `itemId`=? and `type`=?";
+		$this->query($query, array( $newName, $newName, $newcathref, $oldName, 'wiki page'));
 
 		// old code that doesn't seem to be working
 		//	$query = "update tiki_categorized_objects set objId='$newId' where objId='$oldId'";
