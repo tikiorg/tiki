@@ -100,7 +100,7 @@ class PollLibShared extends TikiLib {
 	}
   
 	function get_rating($cat_type,$cat_objid) {
-		$catObjectId = $this->getOne("select `catObjectId` from `tiki_categorized_objects` where `type`=? and `objId`=?",array($cat_type,$cat_objid));
+		$catObjectId = $this->getOne("select `objectId` from `tiki_objects` where `type`=? and `itemId`=?",array($cat_type,$cat_objid));
     if ($catObjectId and $catObjectId > 0) {
       $result = $this->query("select * from `tiki_poll_objects` where `catObjectId`=?",array((int)$catObjectId));
       $res = $result->fetchRow();
@@ -122,7 +122,7 @@ class PollLibShared extends TikiLib {
   }
 
 	function get_catObjectId($cat_type,$cat_objid) {
-		return $this->getOne("select `catObjectId` from `tiki_categorized_objects` where `type`=? and `objId`=?",array($cat_type,$cat_objid));
+		return $this->getOne("select `objectId` from `tiki_objects` where `type`=? and `itemId`=?",array($cat_type,$cat_objid));
 	}
 
   function has_object_polls($catObjectId) {

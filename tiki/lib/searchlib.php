@@ -158,7 +158,8 @@ class SearchLib extends TikiLib {
 
 		if ($chkCatPerm) {
 
-		    $sqlJoin .= " LEFT JOIN `tiki_categorized_objects` co ON co.`type`=? AND co.`objId`=$objKeyCat ";
+		    $sqlJoin .= " LEFT JOIN `tiki_objects` o ON o.`type`=? AND o.`itemId`=$objKeyCat ";
+		    $sqlJoin .= " LEFT JOIN `tiki_categorized_objects` co ON co.`catObjectId`=o.`objectId` ";
 		    $sqlJoin .= " LEFT JOIN `tiki_category_objects` cat ON co.`catObjectId`=cat.`catObjectId` ";
 
 		    $bindJoin[] = $objType;
@@ -170,7 +171,7 @@ class SearchLib extends TikiLib {
 		    }
                     if( $forbiddenCatStr == "" ) $forbiddenCatStr = '\'\'';
 
-		    $sqlFields .= ', co.`objId` IS NOT NULL as categorized, MAX(cat.`categId` IN ('.$forbiddenCatStr.')) as forbidden ';
+		    $sqlFields .= ', o.`itemId` IS NOT NULL as categorized, MAX(cat.`categId` IN ('.$forbiddenCatStr.')) as forbidden ';
 		    $bindFields = array_merge($bindFields, $forbiddenCatList);
 
 		    $sqlGroup = " GROUP BY $objKeyGroup ";
