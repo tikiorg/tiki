@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.63 2005-12-06 20:10:54 lfagundes Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.64 2005-12-07 15:03:55 lfagundes Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -463,6 +463,13 @@ CREATE TABLE `tiki_freetagged_objects` (
   KEY (`user`),
   KEY (`objectId`)
 ) TYPE=MyISAM;
+
+#2005-12-07 lfagundes
+
+CREATE TABLE `tiki_categorized_objects` (
+  `catObjectId` int(11) NOT NULL default '0',
+  PRIMARY KEY  (`catObjectId`)
+) TYPE=MyISAM ;
 
 
 
