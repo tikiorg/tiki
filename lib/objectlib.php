@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: objectlib.php,v 1.2 2005-12-06 20:10:53 lfagundes Exp $
+// CVS: $Id: objectlib.php,v 1.3 2005-12-08 19:30:04 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -8,6 +8,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 // this is an abstract class
 class ObjectLib extends TikiLib {
+	function ObjectLib($db) {
+		$this->db = $db;
+	}
 
     function add_object($type, $itemId, $description = '', $name = '', $href = '') {
 	$description = strip_tags($description);
@@ -39,4 +42,83 @@ class ObjectLib extends TikiLib {
 	return $this->getOne($query, array($type, $itemId));
     }
 
+	function get_needed_perm($objectType, $action) {
+		switch ($objectType) {
+		case 'wiki page': case 'wiki':
+			switch ($action) {
+			case 'view': case 'read': return 'tiki_p_view';
+			case 'edit': return 'tiki_p_edit';
+			}
+		case 'article':
+			switch ($action) {
+			case 'view': case 'read': return 'tiki_p_read_article';
+			case 'edit': return 'tiki_p_edit_article';
+			}
+		case 'post':
+			switch ($action) {
+			case 'view': case 'read': return 'tiki_p_read_blog';
+			case 'edit': return 'tiki_p_create_blog';
+			}
+		case 'blog':
+			switch ($action) {
+			case 'view': case 'read': return 'tiki_p_read_blog';
+			case 'edit': return 'tiki_p_create_blog';
+			}
+		case 'faq':
+			switch ($action) {
+			case 'view': case 'read': return 'tiki_p_view_faqs';
+			case 'edit': return 'tiki_p_admin_faqs';
+			}
+		case 'file gallery':
+			switch ($action) {
+			case 'view': case 'read': return 'tiki_p_view_file_gallery';
+			case 'edit': return 'tiki-admin_file_galleries';
+			}
+		case 'image gallery':
+			switch ($action) {
+			case 'view': case 'read': return 'tiki_p_view_image_gallery';
+			case 'edit': return 'tiki_p_admin_galleries';
+			}
+		case 'poll':
+			switch ($action) {
+			case 'view': case 'read': return 'tiki_p_vote_poll';
+			case 'edit': return 'tiki_p_admin';
+			}
+		case  'comment': case 'comments':
+			switch ($action) {
+			case 'view': case 'read': return 'tiki_p_read_comments';
+			case 'edit': return 'tiki_p_edit_comments';
+			}
+		default : return '';
+		}	
+	}
+	function get_info($objectType, $object) {
+		switch ($objectType) {
+			case 'wiki': case 'wiki page':
+				global $tikilib; include_once('lib/tikilib.php');
+				$info = $tikilib->get_page_info($object);
+				return (array('title'=>$object, 'data'=>$info['data'], 'is_html'=>$info['is_html']));
+			case 'article':
+				global $tikilib; include_once('lib/tikilib.php');
+				$info = $artlib->$tikilib->get_article($object);
+				return (array('title'=>$info['title'], 'data'=>$info['body']));
+		}
+		return (array('error'=>'true'));
+	}
+	function set_data($objectType, $object, $data) {
+		switch ($objectType) {
+			case 'wiki': case 'wiki page':
+				global $tikilib; include_once('lib/tikilib.php');
+				global $user;
+				$tikilib->update_page($object, $data, tra('section edit'), $user, $_SERVER["REMOTE_ADDR"]);
+				break;
+			case 'article':
+				global $artlib; include_once('lib/articles/artlib.php');
+				$artlib->replace_article();
+				break;
+		}
+	}
 }
+global $dbTiki;
+$objectlib = new ObjectLib($dbTiki);
+?>

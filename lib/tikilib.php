@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.623 2005-11-09 16:31:12 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.624 2005-12-08 19:30:04 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3954,7 +3954,7 @@ function add_pageview() {
     }
 
     // This recursive function handles pre- and no-parse sections and plugins
-    function parse_first(&$data, &$preparsed, &$noparsed) {
+    function parse_first(&$data, &$preparsed, &$noparsed, $real_start_diff='0') {
 	global $dbTiki;
 
 	if( strlen( $data ) <= 1 )
@@ -4141,9 +4141,9 @@ function add_pageview() {
 
 		    } else {
 			// Handle nested plugins.
-			$this->parse_first($plugin_data, $preparsed, $noparsed);
+			$this->parse_first($plugin_data, $preparsed, $noparsed, $real_start_diff + $pos+strlen($plugin_start));
 
-			$ret = $func_name($plugin_data, $arguments);
+			$ret = $func_name($plugin_data, $arguments, $real_start_diff + $pos+strlen($plugin_start));
 		    }
 		} else {
 		    // Handle nested plugins.
@@ -4158,7 +4158,7 @@ function add_pageview() {
 
 		// Replace plugin section with its output in data
 		$data = substr_replace($data, $ret, $pos, $pos_end - $pos + strlen($plugin_end));
-
+		$real_start_diff -= strlen($ret) - $pos_end - $pos + strlen($plugin_end);
 	    }
 
 	    // Find the plugins
