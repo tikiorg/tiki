@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.64 2005-12-07 15:03:55 lfagundes Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.65 2005-12-09 20:40:06 lfagundes Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -433,26 +433,12 @@ CREATE TABLE `tiki_freetags` (
   PRIMARY KEY  (`tagId`)
 ) TYPE=MyISAM;
 
-CREATE TABLE `tiki_freetagged_objects` (
-  `tagId` int(12) NOT NULL auto_increment,
-  `type` varchar(50) NOT NULL default '',
-  `objId` varchar(255) NOT NULL default '',
-  `user` varchar(40) NOT NULL default '',
-  `created` int(14) NOT NULL default '0',
-  PRIMARY KEY  (`tagId`,`user`,`type`,`objId`),
-  KEY (`tagId`),
-  KEY (`user`),
-  KEY (`objId`,`type`)
-) TYPE=MyISAM;
-
 #2005-12-06 lfagundes
 
 ALTER TABLE `tiki_categorized_objects` rename to `tiki_objects`;
 ALTER TABLE `tiki_objects` CHANGE `catObjectId` `objectId` int(12) not null;
 ALTER TABLE `tiki_objects` CHANGE `objId` `itemId` varchar(255);
 
-#sorry, didnt find other way :-(
-DROP TABLE `tiki_freetagged_objects`;
 CREATE TABLE `tiki_freetagged_objects` (
   `tagId` int(12) NOT NULL auto_increment,
   `objectId` int(11) NOT NULL default 0,
@@ -470,6 +456,11 @@ CREATE TABLE `tiki_categorized_objects` (
   `catObjectId` int(11) NOT NULL default '0',
   PRIMARY KEY  (`catObjectId`)
 ) TYPE=MyISAM ;
+
+
+#2005-12-09 lfagundes
+INSERT INTO `tiki_categorized_objects` SELECT `objectId` FROM `tiki_objects`;
+
 
 
 
