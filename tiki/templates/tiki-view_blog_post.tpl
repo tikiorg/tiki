@@ -18,6 +18,11 @@
 {else}
 	<h3>{$post_info.created|tiki_short_datetime}</h3>
 {/if}
+<div class="freetaglist">
+  {foreach from=$tags.data item=tag}
+	  <a class="freetag" href="tiki-freetags_browse.php?tag={$tag.tag}">{$tag.tag}</a> 
+  {/foreach}
+</div>
 <table ><tr><td align="left">
 <span class="posthead">
 {if $blog_data.use_title eq 'y'}
