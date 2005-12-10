@@ -63,7 +63,7 @@
 </div>
 <div class="freetaglist">
   {foreach from=$listpages[ix].freetags.data item=taginfo}
-	  <a class="freetag" href="tiki-freetags_browse.php?tag={$taginfo.tag}">{$taginfo.tag}</a> 
+	  <a class="freetag" href="tiki-freetag_list_objects.php?tag={$taginfo.tag}">{$taginfo.tag}</a> 
   {/foreach}
 </div>
 <div class="postinfo">
