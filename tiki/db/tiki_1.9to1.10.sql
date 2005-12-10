@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.65 2005-12-09 20:40:06 lfagundes Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.66 2005-12-10 15:00:36 amette Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -436,7 +436,7 @@ CREATE TABLE `tiki_freetags` (
 #2005-12-06 lfagundes
 
 ALTER TABLE `tiki_categorized_objects` rename to `tiki_objects`;
-ALTER TABLE `tiki_objects` CHANGE `catObjectId` `objectId` int(12) not null;
+ALTER TABLE `tiki_objects` CHANGE `catObjectId` `objectId` int(12) not null auto_increment;
 ALTER TABLE `tiki_objects` CHANGE `objId` `itemId` varchar(255);
 
 CREATE TABLE `tiki_freetagged_objects` (
