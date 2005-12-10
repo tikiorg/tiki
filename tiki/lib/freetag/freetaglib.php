@@ -113,7 +113,7 @@ class FreetagLib extends ObjectLib {
      *
      * @return An array of Object ID numbers that reference your original objects.
      */ 
-    function get_objects_with_tag($tag, $type, $user='', $offset = 0, $maxRecords = -1) {
+    function get_objects_with_tag($tag, $type='', $user='', $offset = 0, $maxRecords = -1) {
 	if(!isset($tag)) {
 	    return false;
 	}		
