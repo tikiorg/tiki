@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.49 2005-12-10 12:13:41 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.50 2005-12-10 14:02:23 amette Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,6 +10,11 @@
 require_once ('tiki-setup.php');
 
 include_once ('lib/blogs/bloglib.php');
+
+if ($feature_freetags == 'y') {
+	include_once('lib/freetag/freetaglib.php');
+}
+
 if ($feature_categories == 'y') {
 	global $categlib;
 	if (!is_object($categlib)) {
@@ -187,8 +192,10 @@ $listpages = $bloglib->list_blog_posts($_REQUEST["blogId"], $offset, $blog_data[
 $temp_max = count($listpages["data"]);
 for ($i = 0; $i < $temp_max; $i++) {
 	$listpages["data"][$i]["parsed_data"] =preg_replace("/&#([0-9]+);/me", "chr('\\1')", strtr($tikilib->parse_data($bloglib->get_page($listpages["data"][$i]["data"], 1)), array_flip(get_html_translation_table(HTML_ENTITIES)))) ;
-	// And get the Tags for the posts
-	$listpages["data"][$i]["freetags"] = $freetaglib->get_tags_on_object($listpages["data"][$i]["postId"], "blog post");
+
+	if ($feature_freetags == 'y') {     // And get the Tags for the posts
+		$listpages["data"][$i]["freetags"] = $freetaglib->get_tags_on_object($listpages["data"][$i]["postId"], "blog post");
+	}
 
 //print(htmlspecialchars($listpages["data"][$i]["parsed_data"]));
 }
