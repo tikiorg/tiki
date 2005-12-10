@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.40 2005-10-26 15:11:00 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.41 2005-12-10 12:13:41 amette Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,6 +10,7 @@
 require_once ('tiki-setup.php');
 
 include_once ('lib/blogs/bloglib.php');
+
 
 if ($feature_blogs != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_blogs");
@@ -115,6 +116,9 @@ if ($postId) {
 
 	$post_images = $bloglib->get_post_images($postId);
 	$smarty->assign_by_ref('post_images', $post_images);
+	$cat_type = 'blog post';
+	$cat_objid = $postId;
+	include ('freetag_list.php');
 }
 
 $smarty->assign('preview', 'n');
@@ -164,6 +168,7 @@ if (isset($_REQUEST["preview"])) {
 	} else {
 		$smarty->assign('blogpriv', 'n');
 	}
+	$smarty->assign('taglist',$_REQUEST["freetag_string"]);
 	$smarty->assign('title', isset($_REQUEST["title"]) ? $_REQUEST['title'] : '');
 	$smarty->assign('parsed_data', $parsed_data);
 	$smarty->assign('preview', 'y');
@@ -238,11 +243,20 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) {
 	$title = isset($_REQUEST['title']) ? $_REQUEST['title'] : '';
 	if ($_REQUEST["postId"] > 0) {
 		$bloglib->update_post($_REQUEST["postId"], $_REQUEST["blogId"], $edit_data, $user, $title, $_REQUEST['trackback']);
+		$postid = $_REQUEST["postId"];
 	} else {
 		$postid = $bloglib->blog_post($_REQUEST["blogId"], $edit_data, $user, $title, $_REQUEST['trackback']);
 
 		$smarty->assign('postId', $postid);
 	}
+
+	// TAG Stuff
+	$cat_type = 'blog post';
+	$cat_objid = $postid;
+	$cat_desc = substr($edit_data,0,200);
+	$cat_name = $title;
+	$cat_href="tiki-view_blog_post.php?postId=".urlencode($postid);
+	include_once ("freetag_apply.php");
 
 	if (isset($_REQUEST['save_exit'])) {
 		header ("location: tiki-view_blog.php?blogId=$blogId");
@@ -260,6 +274,7 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) {
         } else {
                 $smarty->assign('blogpriv', 'n');
         }
+	$smarty->assign('taglist',$_REQUEST["freetag_string"]);
 	$smarty->assign('title', isset($_REQUEST["title"]) ? $_REQUEST['title'] : '');
 	$smarty->assign('trackbacks_to', explode(',', $_REQUEST['trackback']));
 	$smarty->assign('parsed_data', $parsed_data);
