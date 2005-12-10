@@ -22,12 +22,13 @@
 {/if}
 </div>
 
+{if $feature_freetags eq 'y'}
 <div class="freetaglist">
   {foreach from=$tags.data item=tag}
 	  <a class="freetag" href="tiki-freetag_list_objects.php?tag={$tag.tag}">{$tag.tag}</a> 
   {/foreach}
 </div>
-
+{/if}
 <div class="postinfo">
 {if $blog_data.use_title eq 'y'}
 	<small> {tr}posted by{/tr} {$post_info.user} {tr}on{/tr} {$post_info.created|tiki_short_datetime}</small>

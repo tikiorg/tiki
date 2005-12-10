@@ -61,11 +61,13 @@
 <a title="{tr}Save to notepad{/tr}" href="tiki-view_blog.php?blogId={$blogId}&amp;savenotepad={$listpages[ix].postId}">{html_image file='img/icons/ico_save.gif' border='0' alt='{tr}save{/tr}'}</a>
 {/if}
 </div>
+{if $feature_freetag eq 'y'}
 <div class="freetaglist">
   {foreach from=$listpages[ix].freetags.data item=taginfo}
 	  <a class="freetag" href="tiki-freetag_list_objects.php?tag={$taginfo.tag}">{$taginfo.tag}</a> 
   {/foreach}
 </div>
+{/if}
 <div class="postinfo">
 {if $use_title eq 'y'}
 	<small> {tr}posted by{/tr} {$listpages[ix].user|userlink}  
