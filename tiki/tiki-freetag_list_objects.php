@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-freetag_list_objects.php,v 1.1 2005-12-10 14:52:50 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-freetag_list_objects.php,v 1.2 2005-12-10 15:21:30 amette Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-freetag_list_objects.php,v 1.1 2005-12-10 14:52:50 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-freetag_list_objects.php,v 1.2 2005-12-10 15:21:30 amette Exp $
 //
 
 // Initialization
@@ -61,7 +61,7 @@ if (isset($_REQUEST["user_only"]) && $_REQUEST["user_only"] == 'on') {
 
 $smarty->assign('tag', $_REQUEST['tag']);
 
-$objects = $freetaglib->get_objects_with_tag($_REQUEST['tag'], $view_user($type), $offset, $maxRecords); //, $sort_mode, $find);
+$objects = $freetaglib->get_objects_with_tag($_REQUEST['tag'], $type, $view_user, $offset, $maxRecords); //, $sort_mode, $find);
 
 $smarty->assign_by_ref('objects', $objects["data"]);
 $smarty->assign_by_ref('cantobjects', $objects["cant"]);

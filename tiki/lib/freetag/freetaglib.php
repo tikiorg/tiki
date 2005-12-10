@@ -136,7 +136,7 @@ class FreetagLib extends ObjectLib {
 	$query_cant = "SELECT COUNT(*) ";
 	
 	$query_end = "FROM `tiki_objects` o, `tiki_freetagged_objects` fto, `tiki_freetags` t WHERE fto.`tagId`=t.`tagId` AND o.`objectId` = fto.`objectId`
-			      WHERE `tag` = ?
+			      AND `tag` = ?
                               $mid
 			      ";
 	
