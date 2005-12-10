@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-freetag_list_objects.php,v 1.2 2005-12-10 15:21:30 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-freetag_list_objects.php,v 1.3 2005-12-10 17:02:50 amette Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-freetag_list_objects.php,v 1.2 2005-12-10 15:21:30 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-freetag_list_objects.php,v 1.3 2005-12-10 17:02:50 amette Exp $
 //
 
 // Initialization
@@ -23,7 +23,7 @@ if ($feature_freetags != 'y') {
 }
 
 if (!isset($_REQUEST['tag'])) {
-    header('Location: tiki-freetags_browse.php');
+    header('Location: tiki-freetag_list_objects.php');
     exit;
 }
 
