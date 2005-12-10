@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog_post.php,v 1.31 2005-12-10 12:13:41 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog_post.php,v 1.32 2005-12-10 14:02:23 amette Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -227,9 +227,11 @@ if (isset($_REQUEST['show_comments']) && $_REQUEST['show_comments'] == 1) {
         $smarty->assign('show_comments', 1);
 }
 
-// Get Tags
-$tags = $freetaglib->get_tags_on_object($postId, "blog post");
-$smarty->assign('tags', $tags);
+if ($feature_freetags == 'y') {
+	// Get Tags
+	$tags = $freetaglib->get_tags_on_object($postId, "blog post");
+	$smarty->assign('tags', $tags);
+}
 
 ask_ticket('view-blog-post');
 

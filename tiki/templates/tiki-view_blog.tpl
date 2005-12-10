@@ -80,11 +80,13 @@
 {/if}
 </td></tr></table>
 </div>
+{if $feature_freetag eq 'y'}
 <div class="freetaglist">
   {foreach from=$listpages[ix].freetags.data item=taginfo}
 	  <a class="freetag" href="tiki-freetags_browse.php?tag={$taginfo.tag}">{$taginfo.tag}</a> 
   {/foreach}
 </div>
+{/if}
 <div class="postbody">
 {$listpages[ix].parsed_data}
 {if $listpages[ix].pages > 1}
