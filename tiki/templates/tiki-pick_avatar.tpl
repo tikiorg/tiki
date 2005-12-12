@@ -1,12 +1,13 @@
 <h1><a class="pagetitle" href="tiki-pick_avatar.php">{tr}Pick your avatar{/tr}</a></h1>
 {include file=tiki-mytiki_bar.tpl}
 <br /><br />
+<h2>{tr}Your current avatar{/tr}</h2>
 <table class="normal">
 <tr>
-  <td class="formcolor">{tr}Your current avatar{/tr}:</td>
-  <td class="formcolor">
-    {$avatar}
-  </td>
+  <td class="formcolor">{if $avatar}{$avatar}{else}{tr}no avatar{/tr}{/if}</td>
+{if sizeof($avatars) eq 0 and $avatar}
+ <td class="formcolor"><a class="link" href="tiki-pick_avatar.php?reset=y" title="{tr}reset{/tr}"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt='{tr}reset{/tr}'></a></td>
+{/if}
 </tr>
 </table>
 

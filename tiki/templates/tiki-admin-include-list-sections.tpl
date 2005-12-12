@@ -242,8 +242,17 @@
 	   {/if}
 	   <br />{tr}Site Identity{/tr}</a>
       </td>
-      <td style="text-align:center;">&nbsp;</td>
-      <td style="text-align:center;">&nbsp;</td>
+      <td style="text-align:center;">
+          <a href="tiki-admin.php?page=intertiki"
+     	   title="{tr}InterTiki{/tr}"
+	   class="link">
+	   {if $feature_intertiki eq 'y'}
+	     <img border="0" src="img/icons/admin_intertiki.png" alt="icon" />
+	   {else}
+	     <img border="0" src="img/icons/admin_intertiki_grey.png" alt="icon" />
+	   {/if}
+	   <br />{tr}InterTiki{/tr}</a>
+      </td>
     </tr>
    </table>
   </div>

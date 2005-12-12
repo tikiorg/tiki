@@ -56,7 +56,7 @@ function since_last_visit_new($user) {
             = "tiki-view_blog.php?blogId=" . $res["object"];
           break;
         case "faq":
-		$perm = 'tiki_p_view_faq';
+		$perm = 'tiki_p_view_faqs';
           $ret["items"]["comments"]["list"][$count]["href"]
             = "tiki-view_faq.php?faqId=" . $res["object"];
           break;
@@ -65,7 +65,7 @@ function since_last_visit_new($user) {
           $ret["items"]["comments"]["list"][$count]["href"]
             = "tiki-list_file_gallery.php?galleryId=" . $res["object"];
           break;
-        case "image_gallery":
+        case "image gallery":
 		$perm = 'tiki_p_view_image_gallery';
           $ret["items"]["comments"]["list"][$count]["href"]
             = "tiki-browse_gallery.php?galleryId=" . $res["object"];
@@ -80,12 +80,13 @@ function since_last_visit_new($user) {
             = "tiki-index.php?page=" . urlencode($res["object"]);
           break;
          default:
-            $perm = 'tiki_p_read_comment';
+            $perm = 'tiki_p_read_comments';
             break;
       }
 	if (!isset($perm) || $userlib->user_has_perm_on_object($user,$res['object'], $res['objectType'], $perm)) {
-            if ($ret["items"]["comments"]["list"][$count]["href"])
-                  $ret["items"]["comments"]["list"][$count]["href"] .= '&amp;comments_show=y#threadId'.$res['threadId'];
+				if (isset($ret["items"]["comments"]["list"][$count]["href"])) {
+					$ret["items"]["comments"]["list"][$count]["href"] .= '&amp;comments_show=y#threadId'.$res['threadId'];
+				}
       	$ret["items"]["comments"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["commentDate"]) ." ". tra("by") ." ". $res["userName"];
       	$ret["items"]["comments"]["list"][$count]["label"] = $res["title"]; 
       	$count++;

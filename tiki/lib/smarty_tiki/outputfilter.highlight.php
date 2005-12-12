@@ -1,5 +1,5 @@
 <?php
-// $Id: outputfilter.highlight.php,v 1.10 2005-10-03 17:21:45 sylvieg Exp $
+// $Id: outputfilter.highlight.php,v 1.11 2005-12-12 15:18:51 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -70,6 +70,8 @@ function _enlightColor($matches) {
         $seaword = $seasep = '';
         $wordArr = preg_split('~%20|\+|\s+~', $matches);
         foreach($wordArr as $word) {
+		if ($word == '')
+			continue;
             $seaword .= $seasep.preg_quote($word, '~');
             $seasep ='|';
             $colword[strtolower($word)] = $colorArr[$i%5];

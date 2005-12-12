@@ -28,7 +28,7 @@
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
 <tr>
-<td class="{cycle advance=false}"><a class="link" href="{$url}?nlId={$channels[user].nlId}&amp;{$cur}_offset={$offset}&amp;{$bak}_offset={$offset_bak}&amp;{$cur}_sort_mode={$sort_mode}&amp;{$bak}_sort_mode={$sort_mode_bak}&amp;remove={$channels[user].editionId}&amp;cookietab={$tab}" title="{tr}remove{/tr}"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt='{tr}remove{/tr}'></a></td>
+<td class="{cycle advance=false}">{if $channels[user].tiki_p_admin_newsletters eq 'y'}<a class="link" href="{$url}?nlId={$channels[user].nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;nlId={$channels[user].nlId}&amp;remove={$channels[user].editionId}" title="{tr}remove{/tr}"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt='{tr}remove{/tr}'></a>{else}&nbsp;{/if}</td>
 <td class="{cycle advance=false}">{$channels[user].name}</td>
 <td class="{cycle advance=false}">{$channels[user].subject}</td>
 {if $view_editions eq 'y'}
@@ -36,8 +36,8 @@
 <td class="{cycle advance=false}">{$channels[user].sent|tiki_short_datetime}</td>
 {/if}
 <td class="{cycle}">
-{if $url == "tiki-newsletter_archives.php"}<a class="link" href="{$url}?{if $nl_info}nlId={$channels[user].nlId}&amp;{/if}{$cur}_offset={$offset}&amp;{$bak}_offset={$offset_bak}&amp;{$cur}_sort_mode={$sort_mode}&amp;{$bak}_sort_mode={$sort_mode_bak}&amp;editionId={$channels[user].editionId}&amp;cookietab={$tab}">{tr}view{/tr}</a>&nbsp;{/if}
-<a class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}&amp;{$cur}_offset={$offset}&amp;{$bak}_offset={$offset_bak}&amp;{$cur}_sort_mode={$sort_mode}&amp;{$bak}_sort_mode={$sort_mode_bak}&amp;editionId={$channels[user].editionId}&amp;cookietab=1">{tr}use{/tr}</a>
+{if $url == "tiki-newsletter_archives.php"}<a class="link" href="{$url}?{if $nl_info}nlId={$channels[user].nlId}&amp;{/if}offset={$offset}&amp;sort_mode={$sort_mode}&amp;editionId={$channels[user].editionId}">{tr}view{/tr}</a>&nbsp;{/if}
+{if $channels[user].tiki_p_send_newsletters eq 'y'}<a class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}&amp;editionId={$channels[user].editionId}">{tr}use{/tr}{else}&nbsp;{/if}</a>
 </td>
 </tr>
 {/section}

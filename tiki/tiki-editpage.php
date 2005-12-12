@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.126 2005-12-02 18:49:22 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.127 2005-12-12 15:18:46 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -163,7 +163,8 @@ if (($feature_wiki_pictures == 'y') && (isset($tiki_p_upload_picture)) && ($tiki
     $picname = $_FILES['picfile1']['name'];
 
 		if (preg_match('/\.(gif|png|jpe?g)$/i',$picname)) { 
-    	move_uploaded_file($_FILES['picfile1']['tmp_name'], "$wiki_up/$picname");
+			move_uploaded_file($_FILES['picfile1']['tmp_name'], "$wiki_up/$picname");
+			chmod("$wiki_up/$picname", 0755); // seems necessary on some system (see move_uploaded_file doc on php.net
 		}
     //is done in js... $_REQUEST["edit"] = $_REQUEST["edit"] . "{img src=\"img/wiki_up/$tikidomain$picname\"}";
   }
@@ -444,7 +445,7 @@ if (strtolower($page) != 'sandbox') {
 	// Permissions
 	// if this page has at least one permission then we apply individual group/page permissions
 	// if not then generic permissions apply
-	if ($tiki_p_admin != 'y' && !$tikilib->user_has_perm_on_object($user, $page, 'wiki page', 'tiki_p_edit')) {
+	if (!($tiki_p_admin == 'y' || $tiki_p_admin_wiki== 'y' || $tikilib->user_has_perm_on_object($user, $page, 'wiki page', 'tiki_p_edit') || ($wiki_creator_admin == 'y' && $user && $info['creator'] == $user))) {
 		$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
 		$smarty->display("error.tpl");
 		die;

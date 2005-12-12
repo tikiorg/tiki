@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_add_site.php,v 1.17 2005-05-18 10:58:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_add_site.php,v 1.18 2005-12-12 15:18:46 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -29,7 +29,12 @@ if ($tiki_p_submit_link != 'y') {
 if (!isset($_REQUEST["parent"]))
 	$_REQUEST["parent"] = 0;
 
+// If no site category then the site category is -1
+if (!isset($_REQUEST["addtocat"]))
+	$_REQUEST["addtocat"] = -1;
+
 $smarty->assign('parent', $_REQUEST["parent"]);
+$smarty->assign('addtocat', $_REQUEST["addtocat"]); // tells directory_add_site which category to select in menu list
 $all = 0;
 
 if ($_REQUEST["parent"] == 0) {

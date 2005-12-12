@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2005-12-06 20:10:54 $
-# $Author: lfagundes $
+# $Date: 2005-12-12 15:18:47 $
+# $Author: mose $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -318,7 +318,7 @@ CREATE TABLE tiki_actionlog (
   lastModif int(14) default NULL,
   object varchar(255) default NULL,
   objectType varchar(32) NOT NULL default '',
-  user varchar(200) default NULL,
+  user varchar(40) default NULL,
   ip varchar(15) default NULL,
   comment varchar(200) default NULL,
   categId int(12) NOT NULL default '0',
@@ -2112,7 +2112,7 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin forums','tiki-admin_forums.php',515,'feature_forums','tiki_p_forum_read,tiki_p_admin_forum','');
 
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Directory','tiki-directory_browse.php',550,'feature_directory','tiki_p_view_directory','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Submit a new link','tiki-directory_add_site.php',555,'feature_directory','tiki_p_view_directory','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Submit a new link','tiki-directory_add_site.php',555,'feature_directory','tiki_p_submit_link','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Browse directory','tiki-directory_browse.php',560,'feature_directory','tiki_p_view_directory','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin directory','tiki-directory_admin.php',565,'feature_directory','tiki_p_view_directory,tiki_p_admin_directory_cats','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin directory','tiki-directory_admin.php',565,'feature_directory','tiki_p_view_directory,tiki_p_admin_directory_sites','');
@@ -2863,8 +2863,7 @@ CREATE TABLE tiki_searchindex(
   count int(11) NOT NULL default '1',
   last_update int(11) NOT NULL default '0',
   PRIMARY KEY  (searchword,location,page(80)),
-  KEY last_update (last_update),
-  KEY locationPage  (location, page)
+  KEY last_update (last_update)
 ) TYPE=MyISAM;
 
 # LRU (last recently used) list for searching parts of words
@@ -3740,7 +3739,7 @@ DROP TABLE IF EXISTS tiki_user_tasks;
 CREATE TABLE tiki_user_tasks (
   taskId integer(14) NOT NULL auto_increment,        -- task id
   last_version integer(4) NOT NULL DEFAULT 0,        -- last version of the task starting with 0
-  user varchar(40) NOT NULL,                        -- task user
+  user varchar(40) NOT NULL DEFAULT '',              -- task user
   creator varchar(200) NOT NULL,                     -- username of creator
   public_for_group varchar(30) DEFAULT NULL,         -- this group can also view the task, if it is null it is not public
   rights_by_creator char(1) DEFAULT NULL,            -- null the user can delete the task, 
@@ -4905,101 +4904,16 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('colored text','~~#FF0000:text~~','images/fontfamily.gif','forums');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('dynamic variable','%text%','images/book.gif','forums');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('image','{img src= width= height= align= desc= link= }','images/ed_image.gif','forums');
-
-#
-# Homework tables start
-#
-# Created Feb 22, 2004
-# Revised May 04, 2004
-#
-
-# DROP TABLE IF EXISTS hw_actionlog;
-# DROP TABLE IF EXISTS tiki_hw_actionlog;
-# CREATE TABLE tiki_hw_actionlog (
-#   action varchar(255) NOT NULL default '',
-#   lastModif int(14) NOT NULL default '0',
-#   pageId int(14) default NULL,
-#   user varchar(200) default NULL,
-#   ip varchar(15) default NULL,
-#   comment varchar(200) default NULL,
-#   PRIMARY KEY  (lastModif)
-# ) TYPE=MyISAM;
-
-# DROP TABLE IF EXISTS hw_assignments;
-# DROP TABLE IF EXISTS tiki_hw_assignments;
-# CREATE TABLE tiki_hw_assignments (
-#   assignmentId int(8) NOT NULL auto_increment,
-#   title varchar(80) default NULL,
-#   teacherName varchar(40) NOT NULL default '',
-#   created int(14) NOT NULL default '0',
-#   dueDate int(14) default NULL,
-#   modified int(14) NOT NULL default '0',
-#   heading text,
-#   body text,
-#   deleted tinyint(4) NOT NULL default '0',
-#   PRIMARY KEY  (assignmentId),
-#   KEY dueDate (dueDate)
-# ) TYPE=MyISAM;
-
-# DROP TABLE IF EXISTS hw_grading_queue;
-# DROP TABLE IF EXISTS tiki_hw_grading_queue;
-# CREATE TABLE tiki_hw_grading_queue (
-#   id int(14) NOT NULL auto_increment,
-#   status int(4) default NULL,
-#   submissionDate int(14) default NULL,
-#   userLogin varchar(40) NOT NULL default '',
-#   userIp varchar(15) default NULL,
-#   pageId int(14) default NULL,
-#   pageDate int(14) default NULL,
-#   pageVersion int(14) default NULL,
-#   assignmentId int(14) default NULL,
-#   PRIMARY KEY  (id)
-# ) TYPE=MyISAM;
-
-# DROP TABLE IF EXISTS hw_history;
-# DROP TABLE IF EXISTS tiki_hw_history;
-# CREATE TABLE tiki_hw_history (
-#   id int(14) NOT NULL default '0',
-#   version int(8) NOT NULL default '0',
-#   lastModif int(14) NOT NULL default '0',
-#   user varchar(200) NOT NULL default '',
-#   ip varchar(15) NOT NULL default '',
-#   comment varchar(200) default NULL,
-#   data text,
-#   PRIMARY KEY  (id,version)
-# ) TYPE=MyISAM;
-
-# DROP TABLE IF EXISTS hw_pages;
-# DROP TABLE IF EXISTS tiki_hw_pages;
-# CREATE TABLE tiki_hw_pages (
-#   id int(14) NOT NULL auto_increment,
-#   assignmentId int(14) NOT NULL default '0',
-#   studentName varchar(200) NOT NULL default '',
-#   data text,
-#   description varchar(200) default NULL,
-#   lastModif int(14) default NULL,
-#   user varchar(200) default NULL,
-#   comment varchar(200) default NULL,
-#   version int(8) NOT NULL default '0',
-#   ip varchar(15) default NULL,
-#   flag char(1) default NULL,
-#   points int(8) default NULL,
-#   votes int(8) default NULL,
-#   cache text,
-#   wiki_cache int(10) default '0',
-#   cache_timestamp int(14) default NULL,
-#   page_size int(10) unsigned default '0',
-#   lockUser varchar(200) default NULL,
-#   lockExpires int(14) default '0',
-#   PRIMARY KEY  (studentName,assignmentId),
-#   KEY id (id),
-#   KEY assignmentId (assignmentId),
-#   KEY studentName (studentName)
-# ) TYPE=MyISAM;
-
-#
-# Homework tables end
-#
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New wms Metadata','METADATA\r\n		\"wms_name\" \"myname\"\r\n		\"wms_srs\" \"EPSG:4326\"\r\n	\"wms_server_version\" \" \"\r\n	\"wms_layers\" \"mylayers\"\r\n	\"wms_request\" \"myrequest\"\r\n	\"wms_format\" \" \"\r\n	\"wms_time\" \" \"\r\n END','img/icons/admin_metatags.png','maps');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Class','CLASS\r\n EXPRESSION ()\r\n SYMBOL 0\r\n OUTLINECOLOR\r\n COLOR\r\n  NAME \"myclass\"\r\nEND #end of class','img/icons/mini_triangle.gif','maps');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Query','#\r\n#Start of query definitions\r\n QUERYMAP\r\n STATUS ON\r\n STYLE HILITE\r\nEND','img/icons/question.gif','maps');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Scalebar','#\r\n#start of scalebar\r\nSCALEBAR\r\n IMAGECOLOR 255 255 255\r\n STYLE 1\r\n SIZE 400 2\r\n COLOR 0 0 0\r\n  UNITS KILOMETERS\r\n INTERVALS 5\r\n STATUS ON\r\nEND','img/icons/desc_lenght.gif','maps');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Layer','LAYER\r\n NAME \"mylayer\"\r\n TYPE\r\n STATUS ON\r\n DATA \"mydata\"\r\nEND #end of layer','img/ed_copy.gif','maps');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Label','LABEL\r\n  COLOR\r\n ANGLE\r\n FONT arial\r\n TYPE TRUETYPE\r\n  POSITION\r\n  PARTIALS TRUE\r\n  SIZE 6\r\n  BUFFER 0\r\n OUTLINECOLOR\r\nEND #end of label','img/icons/fontfamily.gif','maps');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Reference','#\r\n#start of reference\r\nREFERENCE\r\n SIZE 120 60\r\n STATUS ON\r\n  EXTENT -180 -90 182 88\r\n OUTLINECOLOR 255 0 0\r\n IMAGE \"myimagedata\"\r\nCOLOR -1 -1 -1\r\nEND','images/ed_image.gif','maps');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Legend','#\r\n#start of legend\r\n#\r\nLEGENDr\n KEYSIZE 18 12\r\n POSTLABELCACHE TRUE\r\n STATUS ON\r\nEND','images/ed_about.gif','maps');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Web','#\r\n#Start of web interface definition\r\n#\r\nWEB\r\n TEMPLATE \"myfile/url\"\r\n MINSCALE 1000\r\n MAXSCALE 40000\r\n IMAGEPATH \"myimagepath\"\r\n IMAGEURL \"mypath\"\r\nEND','img/icons/ico_link.gif','maps');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Mapfile','#\r\n#Start of mapfile\r\n#\r\nNAME MYMAPFILE\r\n STATUS ON\r\nSIZE \r\nEXTENT\r\n UNITS\r\nSHAPEPATH \" \"\r\nIMAGETYPE \" \"\r\nFONTSET \" \"\r\nIMAGECOLOR -1 -1 -1\r\n\r\n#remove this text and add objects here\r\n\r\nEND # end of mapfile','img/icons/global.gif','maps');
 
 #translated objects table
 DROP TABLE IF EXISTS tiki_translated_objects;

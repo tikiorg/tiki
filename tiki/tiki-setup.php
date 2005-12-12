@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.290 2005-11-23 12:47:45 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.291 2005-12-12 15:18:47 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1270,6 +1270,22 @@ $smarty->assign('feature_sitedesc', $feature_sitedesc);
  * End of Site identity initial default settings
  */
 
+// intertiki stuff
+$feature_intertiki = 'n';
+$smarty->assign('feature_intertiki', $feature_intertiki);
+$feature_intertiki_server = 'n';
+$smarty->assign('feature_intertiki_server', $feature_intertiki_server);
+$interlist = serialize(array(''));
+$smarty->assign_by_ref('interlist', $interlist);
+$known_hosts = serialize(array(''));
+$smarty->assign_by_ref('known_hosts', $known_hosts);
+$tiki_key = '';
+$smarty->assign('tiki_key', $tiki_key);
+$intertiki_logfile = '';
+$smarty->assign('intertiki_logfile', $intertiki_logfile);
+$intertiki_errfile = '';
+$smarty->assign('intertiki_errfile', $intertiki_errfile);
+
 //$smarty->assign('tikiIndex', $tikiIndex);
 $smarty->assign('maxArticles', $maxArticles);
 $smarty->assign('popupLinks', $popupLinks);
@@ -1413,46 +1429,16 @@ if ($https_login == 'y' || $https_login_required == 'y') {
     $smarty->assign('stay_in_ssl_mode', $stay_in_ssl_mode);
 }
 
-// removal of preferences.php file suggested and patched by Lee Essen
-/* 
-if (!file_exists("templates_c/" . $tikidomain . "preferences.php")) {
-    $prefs = $tikilib->get_all_preferences();
-
-    $fw = @fopen("templates_c/$tikidomain/preferences.php", "wb");
-
-    if (!$fw) {
-        if (isset($php_errormsg)) {
-            die ($php_errormsg);
-        }
-
-        fopen("templates_c/" . $tikidomain . "preferences.php", "wb");
-        die;
-    }
-
-    fwrite($fw, '<?php' . "\n");
-
-    foreach ($prefs as $name => $val) {
-        $$name = $val;
-
-        fwrite($fw, '$' . $name . "=\"" . $val . "\";");
-        fwrite($fw, '$smarty->assign("' . $name . '","' . '$' . $name . '");');
-        fwrite($fw, "\n");
-        $smarty->assign("$name", $val);
-    }
-
-    fwrite($fw, '?>');
-    fclose ($fw);
-} else {
-    include_once ("templates_c/" . $tikidomain . "preferences.php");
-}
-*/
-// end of preferences.php removal
+// ******************************************************************************************
 // start of replacement : get all prefs from db once
 $tikilib->get_all_preferences();
 foreach ($preferences as $name => $val) {
 	$$name = $val;
 	$smarty->assign("$name", $val);
 }
+// ******************************************************************************************
+
+$interlist = unserialize($interlist);
 
 if (isset($GLOBALS['pear_wiki_parser']) && $GLOBALS['pear_wiki_parser'] == 'y') {
     if (isset($_REQUEST['tikiParser'])) {

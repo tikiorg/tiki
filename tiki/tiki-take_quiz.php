@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-take_quiz.php,v 1.19 2005-05-18 10:58:59 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-take_quiz.php,v 1.20 2005-12-12 15:18:47 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -173,15 +173,13 @@ if (isset($_REQUEST["timeleft"])) {
 			}
 
 			// TAKE CARE OF FILE UPLOADS FOR QUESTIONS
-			if($_FILES["question_upload_$qid"]) {
-	
-				$tmp_file = $_FILES["question_upload_$qid"]['tmp_name'];
+			if(isset($_FILES["question_upload_$qid"]) && ($tmp_file = $_FILES["question_upload_$qid"]['tmp_name'])) {
 				$filename = $_FILES["question_upload_$qid"]['name'];
 				$filetype = $_FILES["question_upload_$qid"]['type'];
 				$filesize = $_FILES["question_upload_$qid"]['size'];
 
 				$binFile = $_FILES["question_upload_$qid"]['tmp_name'];
-    			$data = addslashes(fread(fopen($binFile, "r"), filesize($binFile)));
+				$data = addslashes(fread(fopen($binFile, "r"), filesize($binFile)));
 				$quizlib->register_user_quiz_answer_upload($userResultId, $qid, $filename, $filetype, $filesize, $tmp_file);
 
 			}

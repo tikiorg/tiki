@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_code.php,v 1.19 2005-09-07 12:35:41 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_code.php,v 1.20 2005-12-12 15:18:52 mose Exp $
 // Displays a snippet of code
 // Parameters: ln => line numbering (default false)
 // Example:
@@ -53,13 +53,13 @@ function wikiplugin_code($data, $params) {
 		}
 		if (isset($wrap) && $wrap == 1) {
 			if (isset($wiki) && $wiki == 1) {
-				$out.= "<div class='codelisting'>\n".$code."\n</div>";
+				$out.= "<div class='codelisting'>". $code."</div>";
 			} else {
 				$out.= "<div class='codelisting'>~np~".$code."~/np~</div>";
 			}
 		} else {
 			if (isset($wiki) && $wiki == 1) {
-				$out.= "<pre class='codelisting'>\n".$code."\n</pre>";
+				$out.= "<pre class='codelisting'>". $code."</pre>";
 			} else {
 				$out.= "<pre class='codelisting'>~np~".$code."~/np~</pre>";
 			}

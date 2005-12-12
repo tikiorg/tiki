@@ -1,4 +1,5 @@
 <?php
+// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.43 2005-12-12 15:18:50 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -378,17 +379,20 @@ print_r($ret);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
+			$res['tiki_p_admin_newsletters'] = $this->user_has_perm_on_object($user, $res['nlId'], 'newsletter', 'tiki_p_admin_newsletters')? 'y': 'n';
+			$res['tiki_p_send_newsletters'] = $this->user_has_perm_on_object($user, $res['nlId'], 'newsletter', 'tiki_p_send_newsletters')? 'y': 'n';
+			$res['tiki_p_subscribe_newsletters'] = $this->user_has_perm_on_object($user, $res['nlId'], 'newsletter', 'tiki_p_subscribe_newsletters')? 'y': 'n';
 			if (!empty($perms)) {
 				$hasPerm = false;
 				if (is_array($perms)) {
 					foreach ($perms as $perm) {
-			 			if ($this->user_has_perm_on_object($user,$res['nlId'],'newsletter',$perm)) {
+			 			if ($res[$perm] == 'y') {
 							$hasPerm = true;
 							break;
 						}
 					}
 				} else {
-					$hasPerm = $this->user_has_perm_on_object($user,$res['nlId'],'newsletter',$perms);
+					$hasPerm = $res[$perm];
 				}
 				if (!$hasPerm)
 					continue;
@@ -419,12 +423,16 @@ print_r($ret);
 		return $res;
 	}
 
-	function list_editions($nlId, $offset, $maxRecords, $sort_mode, $find, $drafts=false) {
+	function list_editions($nlId, $offset, $maxRecords, $sort_mode, $find, $drafts=false, $perm='') {
+		global $user;
 		$bindvars = array();
 		$mid = "";
 		
 		if ($nlId) {
 			$mid.= " and tn.`nlId`=". intval($nlId);
+			$tiki_p_admin_newsletters = $this->user_has_perm_on_object($user, $nlId, 'newsletter', 'tiki_p_admin_newsletters')? 'y': 'n';
+			$tiki_p_send_newsletters = $this->user_has_perm_on_object($user, $nlId, 'newsletter', 'tiki_p_send_newsletters')? 'y': 'n';
+			$tiki_p_subscribe_newsletters = $this->user_has_perm_on_object($user, $nlId, 'newsletter', 'tiki_p_subscribe_newsletters')? 'y': 'n';
 		}
 		
 		if ($find) {
@@ -442,13 +450,26 @@ print_r($ret);
 
 		$query = "select tsn.`editionId`,tn.`nlId`,`subject`,`data`,tsn.`users`,`sent`,`name` from `tiki_newsletters` tn, `tiki_sent_newsletters` tsn ";
 		$query.= " where tn.`nlId`=tsn.`nlId` $mid order by ".$this->convert_sortmode("$sort_mode");
-		$query_cant = "select count(*) from `tiki_newsletters` tn, `tiki_sent_newsletters` tsn where tn.`nlId`=tsn.`nlId` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
+		$cant = 0;
 
 		while ($res = $result->fetchRow()) {
+			if ($nlId) {
+				if ($perm && $$perm == 'n')
+					continue;
+				$res['tiki_p_admin_newsletters'] = $tiki_p_admin_newsletters;
+				$res['tiki_p_send_newsletters'] = $tiki_p_send_newsletters;
+				$res['tiki_p_subscribe_newsletters'] = $tiki_p_subscribe_newsletters;
+			} else {
+				$res['tiki_p_admin_newsletters'] = $this->user_has_perm_on_object($user, $res['nlId'], 'newsletter', 'tiki_p_admin_newsletters')? 'y': 'n';
+				$res['tiki_p_send_newsletters'] = $this->user_has_perm_on_object($user, $res['nlId'], 'newsletter', 'tiki_p_send_newsletters')? 'y': 'n';
+				$res['tiki_p_subscribe_newsletters'] = $this->user_has_perm_on_object($user, $res['nlId'], 'newsletter', 'tiki_p_subscribe_newsletters')? 'y': 'n';
+				if ($perm && $res[$perm] == 'n')
+					continue;
+			}
 			$ret[] = $res;
+			++$cant;
 		}
 
 		$retval = array();

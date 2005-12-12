@@ -3,7 +3,7 @@
 // HAWHAW: HTML and WML hybrid adapted webserver
 // PHP class library
 // Copyright (C) 2005 Norbert Huffschmid
-// Last modified: 8. October 2005
+// Last modified: 13. November 2005
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -22,7 +22,7 @@
 // http://www.hawhaw.de/
 
 // miscellaneous constants
-define("HAW_VERSION", "HAWHAW V5.11");
+define("HAW_VERSION", "HAWHAW V5.12");
 define("HAW_COPYRIGHT", "(C) Norbert Huffschmid");
 
 // constants for markup languages
@@ -510,7 +510,7 @@ class HAW_deck
   var $red_url;
   var $disable_cache = false;
   var $ml;
-  var $element;
+  var $element = array();
   var $number_of_elements;
   var $number_of_forms;
   var $number_of_linksets;
@@ -739,6 +739,7 @@ class HAW_deck
 
     if (strstr(strtolower($HTTP_USER_AGENT), "docomo") ||
         strstr(strtolower($HTTP_USER_AGENT), "portalmmm") ||
+        strstr(strtolower($HTTP_USER_AGENT), "o2imode") ||
         strstr(strtolower($HTTP_USER_AGENT), "opera ") ||
         strstr(strtolower($HTTP_USER_AGENT), "reqwirelessweb") ||
         strstr(strtolower($HTTP_ACCEPT), "vnd.wap.xhtml"))
@@ -822,7 +823,8 @@ class HAW_deck
       $this->display_banners = false;
     }
     elseif (strstr(strtolower($HTTP_USER_AGENT), "docomo") ||
-            strstr(strtolower($HTTP_USER_AGENT), "portalmmm"))
+            strstr(strtolower($HTTP_USER_AGENT), "portalmmm") ||
+            strstr(strtolower($HTTP_USER_AGENT), "o2imode"))
     {
       // i-mode browser detected
       $this->iModestyle = true;
@@ -2302,12 +2304,19 @@ class HAW_deck
       // create VoiceXML page end
 
       // set redirection timeout
-      if ($this->timeout > 0)
+      if ($this->red_url && ($this->timeout == 0))
+      {
+        // special handling for timeout value 0 in VoiceXML:
+        // go immediately to next page after all text has been spoken
+        // should be used for pure voice apps only!!!
+        printf("<block><goto next=\"%s\" /></block>\n", HAW_specchar($this->red_url, $this));
+      }
+      elseif ($this->timeout > 0)
       {
         // redirect after <timout> to another URL
         // (define dummy grammar in case that no other grammar is active)
-        printf("<field><grammar>[(hawhaw really rocks)]</grammar><prompt timeout=\"%ds\"/><noinput><goto next=\"%s\"/></noinput></field>\n",
-               $this->timeout, $this->red_url);
+        printf("<field><grammar>[(hawhaw really rocks)]</grammar><prompt timeout=\"%ds\"/><noinput><goto next=\"%s\"/></noinput><nomatch /></field>\n",
+               $this->timeout, HAW_specchar($this->red_url, $this));
       }
       elseif($this->voice_timeout > 0)
       {
@@ -3624,7 +3633,7 @@ class HAW_input
     Constructor
     @param name Variable in which the input is sent to the destination URL.
     @param value Initial value (string!) that will be presented in the input field.
-    @param label Describes your input field on the surfer's screen/display.
+    @param label Describes your input field on the visitors's screen/display.
     @param format (optional, default: "*M")<br>
        Input format code according to the WAP standard.
        Allows the WAP user client e.g. to input only digits and no characters.
@@ -4028,7 +4037,7 @@ class HAW_textarea
     Constructor
     @param name Variable in which the input is sent to the destination URL.
     @param value Initial value (string!) that will be presented in the textarea.
-    @param label Describes your textarea on the surfer's screen/display.
+    @param label Describes your textarea on the visitor's screen/display.
     @param rows Rows (optional, default: 3)
     @param cols Columns (optional, default: 16)
   */
@@ -4101,6 +4110,8 @@ class HAW_textarea
     {
       if ($deck->iModestyle)
         $mode = sprintf(" istyle=\"%d\"", $this->mode);
+      else
+        $mode = "";
 
       if ($deck->MMLstyle)
       {
@@ -4116,6 +4127,8 @@ class HAW_textarea
 
       if (!$deck->iModestyle && !$deck->MMLstyle)
         $wrap = sprintf(" wrap=\"virtual\"");
+      else
+        $wrap = "";
 
       // create HTML input
       printf("%s<br /><textarea name=\"%s\" rows=\"%s\" cols=\"%s\"%s%s>%s</textarea> ",
@@ -4209,7 +4222,7 @@ class HAW_select
 
   /**
     Adds one option to a HAW_select object.
-    @param label Describes the option on the surfer's screen/display.
+    @param label Describes the option on the visitor's screen/display.
     @param value Value (string!) sent in the "name" variable, if this option is selected.
     @param is_selected (optional)<br>Allowed values are HAW_SELECTED or HAW_NOTSELECTED
        (default).<br>Note: Setting to "selected" will overwrite previous "selected"
@@ -4480,7 +4493,7 @@ class HAW_radio
 
   /**
     Adds one radio button to a HAW_radio object.
-    @param label Describes the radiobutton on the surfer's screen/display.
+    @param label Describes the radiobutton on the visitor's screen/display.
     @param value Value (string!) sent in the "name" variable, if this button is selected.
     @param is_checked (optional)<br>Allowed values are HAW_CHECKED or HAW_NOTCHECKED
        (default).<br>Note: Setting to "checked" will overwrite previous "checked"
@@ -4723,9 +4736,14 @@ class HAW_checkbox
   /**
     Constructor
     @param name Variable in which "value" is sent to the destination URL, in case that
-       the box is checked.
+       the box is checked.<br>
+       Note: Some browsers send empty name parameters like
+       <i>&apos;...&amp;name=&amp;...&apos;</i>
+       for non-selected checkbox elements. Therefore for the receiving script it is not
+       sufficient to check the presence of the name parameter only! The value must be
+       checked too!
     @param value See name.
-    @param label Describes the checkbox on the surfer's screen/display.
+    @param label Describes the checkbox on the visitor's screen/display.
     @param state (optional)<br>Allowed values are HAW_CHECKED or HAW_NOTCHECKED
        (default).
   */
@@ -4907,7 +4925,7 @@ class HAW_checkbox
       HAW_voice_eventhandler("help",    $this->voice_help,    $deck);
       HAW_voice_eventhandler("noinput", $this->voice_noinput, $deck);
       HAW_voice_eventhandler("nomatch", $this->voice_nomatch, $deck);
-  
+
       echo "</field>\n";
     }
   }
@@ -5196,7 +5214,7 @@ class HAW_link
 
   /**
     Constructor
-    @param label Describes the link on the surfer's screen/display.
+    @param label Describes the link on the visitor's screen/display.
     @param url Next destination address.
     @param title (optional)<br>If a string is provided here, it will be displayed
        by means of the title option on bigscreen browsers, respectively somewhere
@@ -5389,15 +5407,15 @@ class HAW_link
 
       elseif ($deck->ml == HAW_VXML)
       {
-        // remove http:// from link label, as voice browsers complain about :
-        //        (and users can't speak complete url anyway)
-        $label = ereg_replace("^http://", "", strtolower(HAW_specchar($this->label, $deck)));
+        // GSL allows only lower case words
+        $label = strtolower($this->label);
 
-        // * / ? and = are not allowed in GSL grammar???
-        $label = ereg_replace("[\*\/\?=]", "", $label);
+        // remove all invalid GSL characters (according Nuance Grammar Developer's Guide)
+        $label = ereg_replace("[^0-9a-zA-Z@_'\.\-]", " ", $label);
 
-        // ampersand not allowed in GSL grammar???
-        $label = ereg_replace("&amp;", "", $label);
+        // make it VoiceXML compliant
+        $label = HAW_specchar($label, $deck);
+
 
         if ($this->accesskey != HAW_NO_ACCESSKEY)
           $dtmf = sprintf(" dtmf=\"%s\"", $this->accesskey);
@@ -5405,7 +5423,7 @@ class HAW_link
           $dtmf = "";
 
         // prepare tag for VoiceXML link (will be written at form end)
-        $deck->voice_links .= sprintf("<link next=\"%s\"%s><grammar>[%s]</grammar></link>\n",
+        $deck->voice_links .= sprintf("<link next=\"%s\"%s><grammar>[(%s)]</grammar></link>\n",
                                        HAW_specchar($this->url, $deck), $dtmf, $label);
 
         if ($this->voice_text || $this->voice_audio_src)
@@ -5514,6 +5532,10 @@ class HAW_phone
         // create tel: link for MML
         printf("[<a href=\"tel:%s\">%s</a>]<br>\n",
                 $this->number, HAW_specchar($this->label, $deck));
+      elseif ($deck->pureHTML)
+        // create callto: link for bigscreen browsers
+        printf("[<a href=\"callto:%s\"%s>%s</a>]<br />\n",
+                ereg_replace("[- ]", "", $this->label), $title_option, $this->label);
       else
         // create wtai: link for all other HTML browsers
         // (they will at least throw an error message if a click on it does not work)
@@ -5558,9 +5580,28 @@ class HAW_phone
 
         echo "<block><prompt>";
 
-        HAW_voice_audio(HAW_specchar($this->voice_text, $deck),
-                        $this->voice_audio_src, HAW_VOICE_PAUSE, $deck);
-  
+        if ((strcmp($this->voice_text, $this->label) == 0) &&
+            !ereg("[a-zA-Z]", $this->label))
+        {
+          // no manipulation by set_voice_text() done and no characters found
+          // read digits more user-friendly ...
+          // do not rely on VoiceXML elements like <say-as> !!!
+          // plus digits, long numbers etc. make the whole thing finally fail ...
+
+          if ($deck->supportsVXMLBreakTag)
+            $break = "<break time=\"500ms\"/>"; // make significant pause between each digit
+          else
+            $break = "";
+
+          for ($i=0; $i<strlen($this->number); $i++)
+            echo substr($this->number, $i, 1) . " " . $break;
+        }
+        else
+        {
+          HAW_voice_audio(HAW_specchar($this->voice_text, $deck),
+                          $this->voice_audio_src, HAW_VOICE_PAUSE, $deck);
+        }
+
         echo "</prompt></block>\n";
       }
     }
@@ -5617,9 +5658,6 @@ class HAW_linkset
     $this->number_of_elements = 0;
     $this->voice_text = HAW_VOICE_ENUMERATE;
     $this->voice_audio_src = "";
-    $this->voice_help = array();
-    $this->voice_noinput = array();
-    $this->voice_nomatch = array();
   }
 
 
@@ -5638,7 +5676,7 @@ class HAW_linkset
       // number of possible access keys not exhausted
 
       $accesskey = $this->number_of_elements + 1;   // start with key 1
-  
+
       if ($accesskey == 12)
         $accesskey = "#";
       elseif ($accesskey == 11)
@@ -5656,7 +5694,7 @@ class HAW_linkset
 
   /**
     Sets text to be spoken by voice browsers. <br>
-    @param text Some alternative text that replaces the enumeration of link &lt;label&gt;s.
+    @param text Some alternative text that precedes the enumeration of link &lt;label&gt;s.
     @param audio_src Some audio file (e.g. *.wav file) to play (optional).
   */
   function set_voice_text($text, $audio_src="")
@@ -5666,60 +5704,6 @@ class HAW_linkset
 
     $this->voice_text = $text;
     $this->voice_audio_src = $audio_src;
-  }
-
-  /**
-    Sets help text for voice browsers. <br>
-    @param text Some helpful information concerning this linkset.
-    @param audio_src Some audio file (e.g. *.wav file) to play (optional).
-    @param url Some other voice deck to go to (optional).
-  */
-  function set_voice_help($text, $audio_src="", $url="")
-  {
-    if (!is_string($text))
-      die("invalid argument in set_voice_help()");
-
-    $arr["text"] = $text;
-    $arr["src"]  = $audio_src;
-    $arr["url"]  = $url;
-
-    $this->voice_help[] = $arr;
-  }
-
-  /**
-    Sets noinput text for voice browsers. <br>
-    @param text Some text to inform the user that no input has been received.
-    @param audio_src Some audio file (e.g. *.wav file) to play (optional).
-    @param url Some other voice deck to go to (optional).
-  */
-  function set_voice_noinput($text, $audio_src="", $url="")
-  {
-    if (!is_string($text))
-      die("invalid argument in set_voice_noinput()");
-
-    $arr["text"] = $text;
-    $arr["src"]  = $audio_src;
-    $arr["url"]  = $url;
-
-    $this->voice_noinput[] = $arr;
-  }
-
-  /**
-    Sets nomatch text for voice browsers. <br>
-    @param text Some text to complain that user input was not recognized.
-    @param audio_src Some audio file (e.g. *.wav file) to play (optional).
-    @param url Some other voice deck to go to (optional).
-  */
-  function set_voice_nomatch($text, $audio_src="", $url="")
-  {
-    if (!is_string($text))
-      die("invalid argument in set_voice_nomatch()");
-
-    $arr["text"] = $text;
-    $arr["src"]  = $audio_src;
-    $arr["url"]  = $url;
-
-    $this->voice_nomatch[] = $arr;
   }
 
   function get_elementtype()
@@ -5782,12 +5766,12 @@ class HAW_linkset
           {
             if ($val->get_title())
               $title = " title=\"" . HAW_specchar($val->get_title(), $deck) . "\"";
-     
+
             printf("<option onpick=\"%s\"%s>%s</option>\n",
                    HAW_specchar($val->get_url(), $deck), $title,
                    HAW_specchar($val->get_label(), $deck));
           }
-  
+
           echo "</select>\n";
         }
         else
@@ -5808,52 +5792,22 @@ class HAW_linkset
       {
         // create linkset for VoiceXML
 
-        echo "<field name=\"haw_menu_item\">\n";
-  
         if ($this->voice_text || $this->voice_audio_src)
         {
           if ($this->voice_text != HAW_VOICE_ENUMERATE)
           {
-            echo "<prompt>";
-  
+            echo "<block><prompt>";
+
             HAW_voice_audio(HAW_specchar($this->voice_text, $deck),
                             $this->voice_audio_src, 0, $deck);
-  
-            echo "</prompt>\n";
+
+            echo "</prompt></block>\n";
           }
         }
 
         while (list($key, $val) = each($this->element))
-        {
-          if ($val->get_url())
-          {
-            // inhibit "empty" links
+          $val->create($deck);
 
-            if ($val->get_accesskey() != HAW_NO_ACCESSKEY)
-              $dtmf = sprintf(" dtmf=\"%s\"", $val->get_accesskey());
-            else
-              $dtmf = "";
-
-            if ($deck->supportsVXMLBreakTag)
-              $breakTag = sprintf("<break time=\"%dms\"/>", HAW_VOICE_PAUSE);
-            else
-              $breakTag = "";
-  
-            printf("<prompt>%s%s</prompt>\n", HAW_specchar($val->get_label(), $deck), $breakTag);
-  
-            printf("<option%s value=\"%s\">%s</option>\n",
-                   $dtmf, HAW_specchar($val->get_url(), $deck),
-                   ereg_replace("[\?!]"," ",strtolower(HAW_specchar($val->get_label(), $deck))));
-          }
-        }
-
-        // create event handlers
-        HAW_voice_eventhandler("help",    $this->voice_help,    $deck);
-        HAW_voice_eventhandler("noinput", $this->voice_noinput, $deck);
-        HAW_voice_eventhandler("nomatch", $this->voice_nomatch, $deck);
-  
-        echo "</field>\n";
-        echo "<filled><submit expr=\"haw_menu_item\"/></filled>\n";
       }
     }
   }
@@ -5874,7 +5828,7 @@ class HAW_raw
 
   /**
     Constructor
-    @param ml Markup language (HAW_HTML, HAW_WML, HAW_HDML).
+    @param ml Markup language (HAW_HTML, HAW_WML, HAW_HDML, HAW_VXML).
     @param code Some markup code to be inserted for the selected markup language<br>
                 Note: Using this class is for meant for test purposes only. Inproper usage
                 can result in highly incompatible applications.

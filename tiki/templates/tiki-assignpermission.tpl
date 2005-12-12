@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.57 2005-11-07 21:42:30 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.58 2005-12-12 15:18:57 mose Exp $ *}
 { *TODO: Must fix even/odd table rows detection byusing Smarty 'cycle' *}
 
 
@@ -30,7 +30,7 @@
 <form method="post" action="tiki-assignpermission.php">
 <input type="hidden" name="group" value="{$group|escape}" />
 <input type="hidden" name="type" value="{$type|escape}" />
-{tr}Create level{/tr}:<input type="text" name="level" /><input type="submit" name="createlevel" value="{tr}create{/tr}" />
+{tr}Create level{/tr}: <input type="text" name="level" /><input type="submit" name="createlevel" value="{tr}create{/tr}" />
 </form>
 <br />
 <br />
@@ -59,9 +59,11 @@
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <select name="type" onchange="permselects.submit()">
 <option value="">{tr}all{/tr}</a>
+{sortlinks}
 {section name=v loop=$types}
 <option value="{$types[v]}"{if $type eq $types[v]} selected="selected"{/if}>{tr}{$types[v]}{/tr}</a>
 {/section}
+{/sortlinks}
 </select>
 <select name="group" onchange="permselects.submit()">
 {section name=v loop=$groups}

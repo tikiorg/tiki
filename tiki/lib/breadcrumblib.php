@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/lib/breadcrumblib.php,v 1.3 2005-05-18 10:59:48 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/breadcrumblib.php,v 1.4 2005-12-12 15:18:49 mose Exp $
  * Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -187,7 +187,7 @@ class Breadcrumb {
     function breadcrumb_getTitle($crumbs, $loc) {
         global $feature_siteidentity, $feature_wiki_description, $print_page, $info, $feature_siteloc, $feature_breadcrumbs;
         global $feature_page_title;
-        
+
         if ((($feature_siteidentity == 'n') ||  $feature_breadcrumbs == 'n' ) && ($feature_wiki_description == 'y' && $info)) {
             return _breadcrumb_getTitle($crumbs, $loc);
         } else if ($feature_breadcrumbs == 'n' && $loc == "admin") {
@@ -200,7 +200,9 @@ class Breadcrumb {
             }
         } else if ($loc == "admin") {
             return _breadcrumb_getTitle($crumbs, 'page');
-        }
+         } else if ($feature_breadcrumbs != 'y' && $loc == "page" && $feature_page_title == 'y') {// for previous compatibility
+            return _breadcrumb_getTitle($crumbs, 'page');
+       }
         return;
     }
 

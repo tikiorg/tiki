@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/debug/debug-command_sql.php,v 1.3 2003-08-07 04:34:03 rossta Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/debug/debug-command_sql.php,v 1.4 2005-12-12 15:18:49 mose Exp $
  *
  * \brief Exec SQL query on Tiki DB
  *
@@ -36,8 +36,8 @@ class DbgSQLQuery extends DebuggerCommand {
 	/// Execute command with given set of arguments.
 	function execute($params) {
 		//
-		// FUCK! Due limitations of STUPID Smarty I forced to use 
-		// HTML_RESULT... DAMN!
+		// Due to limitations of Smarty, I am forced to use 
+		// HTML_RESULT... (not fun!)
 		//
 		$this->set_result_type(HTML_RESULT);
 

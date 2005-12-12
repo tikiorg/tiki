@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.86 2005-11-07 21:42:29 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.87 2005-12-12 15:18:47 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -169,7 +169,8 @@ if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
 }
 
 $tracker_info = $trklib->get_tracker($_REQUEST["trackerId"]);
-$tracker_info = array_merge($tracker_info,$trklib->get_tracker_options($_REQUEST["trackerId"]));
+if ($t = $trklib->get_tracker_options($_REQUEST["trackerId"]))
+	$tracker_info = array_merge($tracker_info,$t);
 $smarty->assign('tracker_info', $tracker_info);
 if (!isset($tracker_info["writerCanModify"]) or (isset($utid) and ($_REQUEST['trackerId'] != $utid['usersTrackerId']))) {
 	$tracker_info["writerCanModify"] = 'n';
@@ -436,42 +437,67 @@ if ($tiki_p_admin_trackers == 'y') {
 
 if ($tiki_p_modify_tracker_items == 'y') {
 	if (isset($_REQUEST["save"]) || isset($_REQUEST["save_return"])) {
-		check_ticket('view-trackers-items');
-		if (!isset($_REQUEST["edstatus"]) or ($tracker_info["showStatus"] != 'y' and $tiki_p_admin_trackers != 'y')) {
-			$_REQUEST["edstatus"] = $tracker_info["modItemStatus"];
-		}
-		$trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $_REQUEST["edstatus"]);
-		if (isset($_REQUEST["newItemRate"])) {
-			$trklib->replace_rating($_REQUEST["trackerId"],$_REQUEST["itemId"],$rateFieldId,$user,$_REQUEST["newItemRate"]);
-		}
-		$mainfield = $ins_fields["data"][$mainfield]["value"];
-		$_REQUEST['show']  = 'view';
-		$temp_max = count($fields["data"]);
-		for ($i = 0; $i < $temp_max; $i++) {
-			if (isset($fields["data"][$i])) {
-				$fid = $fields["data"][$i]["fieldId"];
-				$ins_id = 'ins_' . $fid;
-				$ins_fields["data"][$i]["value"] = '';
+
+		// Check field values for each type and presence of mandatory ones
+		$mandatory_missing = array();
+		$err_fields = array();
+		$field_errors = $trklib->check_field_values($ins_fields);
+		$smarty->assign('err_mandatory', $field_errors['err_mandatory']);
+		$smarty->assign('err_value', $field_errors['err_value'])
+
+		// values are OK, then lets save the item
+		if (count($field_errors['err_mandatory']) == 0  && count($field_errors['err_value']) == 0 ) {
+
+			$smarty->assign('input_err', '0'); // no warning to display
+	
+			check_ticket('view-trackers-items');
+			if (!isset($_REQUEST["edstatus"]) or ($tracker_info["showStatus"] != 'y' and $tiki_p_admin_trackers != 'y')) {
+				$_REQUEST["edstatus"] = $tracker_info["modItemStatus"];
 			}
-		}
-		$item_info = $trklib->get_tracker_item($_REQUEST["itemId"]);
-		$smarty->assign('item_info', $item_info);
-		
-		if (count($ins_categs)) {
-			$cat_type = "tracker ".$_REQUEST["trackerId"];
-			$cat_objid = $_REQUEST["itemId"];
-			$cat_desc = "";
-			$cat_name = $mainfield;
-			$cat_href = "tiki-view_tracker_item.php?trackerId=".$_REQUEST["trackerId"]."&amp;itemId=".$_REQUEST["itemId"];
-			$categlib->uncategorize_object($cat_type, $cat_objid);
-			foreach ($ins_categs as $cats) {
-				$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
-				if (!$catObjectId) {
-					$catObjectId = $categlib->add_categorized_object($cat_type, $cat_objid, $cat_desc, $cat_name, $cat_href);
+			$trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $_REQUEST["edstatus"]);
+			if (isset($_REQUEST["newItemRate"])) {
+				$trklib->replace_rating($_REQUEST["trackerId"],$_REQUEST["itemId"],$rateFieldId,$user,$_REQUEST["newItemRate"]);
+			}
+			$mainfield = $ins_fields["data"][$mainfield]["value"];
+			$_REQUEST['show']  = 'view';
+			$temp_max = count($fields["data"]);
+			for ($i = 0; $i < $temp_max; $i++) {
+				if (isset($fields["data"][$i])) {
+					$fid = $fields["data"][$i]["fieldId"];
+					$ins_id = 'ins_' . $fid;
+					$ins_fields["data"][$i]["value"] = '';
 				}
-				$categlib->categorize($catObjectId, $cats);
+			}
+			$item_info = $trklib->get_tracker_item($_REQUEST["itemId"]);
+			$smarty->assign('item_info', $item_info);
+		
+			if (count($ins_categs)) {
+				$cat_type = "tracker ".$_REQUEST["trackerId"];
+				$cat_objid = $_REQUEST["itemId"];
+				$cat_desc = "";
+				$cat_name = $mainfield;
+				$cat_href = "tiki-view_tracker_item.php?trackerId=".$_REQUEST["trackerId"]."&amp;itemId=".$_REQUEST["itemId"];
+				$categlib->uncategorize_object($cat_type, $cat_objid);
+				foreach ($ins_categs as $cats) {
+					$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
+					if (!$catObjectId) {
+						$catObjectId = $categlib->add_categorized_object($cat_type, $cat_objid, $cat_desc, $cat_name, $cat_href);
+					}
+					$categlib->categorize($catObjectId, $cats);
+				}
 			}
 		}
+		else {
+			$cookietab = "2";
+			$smarty->assign('input_err', '1'); // warning to display
+
+			// can't go back if there are errors
+			if(isset($_REQUEST['save_return'])) {
+				$_REQUEST['save'] = 'save';
+				unset($_REQUEST['save_return']);
+			}
+		}
+		
 		if (isset($_REQUEST['from'])) {
 			header('Location: tiki-index.php?page='.urlencode($_REQUEST['from']));
 			exit;

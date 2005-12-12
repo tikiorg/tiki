@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.624 2005-12-08 19:30:04 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.625 2005-12-12 15:18:49 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1240,10 +1240,18 @@ function add_pageview() {
 
     /*shared*/
     function get_user_groups($user) {
+		global $feature_intertiki,$interlist;
 	if (!$user) {
 		$ret = array();
 		$ret[] = "Anonymous";
 		return $ret;
+	} elseif ($feature_intertiki == 'y' and strstr($user,'@')) {
+		$realm = substr($user,strpos($user,'@')+1);
+		$user = substr($user,0,strpos($user,'@'));
+		if (isset($interlist[$realm])) {
+			$groups = $interlist[$realm]['groups'].',Anonymous';
+			return split(',',$interlist[$realm]['groups']);
+		}
 	} elseif (!isset($this->usergroups_cache[$user])) {
 	    $userid = $this->get_user_id($user);
 	    $query = "select `groupName`  from `users_usergroups` where `userId`=?";
@@ -1255,6 +1263,7 @@ function add_pageview() {
 		$ret = array_merge($ret, $included);
 	    }
 	    $ret[] = "Registered";
+	    $ret[] = "Anonymous";
 	    $ret = array_unique($ret);
 	    $this->usergroups_cache[$user] = $ret;
 	    return $ret;
@@ -4251,16 +4260,16 @@ function add_pageview() {
 	// match prefix://suffix, www.prefix.suffix/optionalpath, prefix@suffix
 	$patterns = array();
 	$replacements = array();
-	$patterns[] = "#([\n ])([a-z0-9]+?)://([^, \n\r]+)#i";
+	$patterns[] = "#([\n ])([a-z0-9]+?)://([^<, \n\r]+)#i";
 	$replacements[] = "\\1<a $attrib href=\"\\2://\\3\">\\2://\\3$ext_icon</a>";
-	$patterns[] = "#([\n ])www\.([a-z0-9\-]+)\.([a-z0-9\-.\~]+)((?:/[^, \n\r]*)?)#i";
+	$patterns[] = "#([\n ])www\.([a-z0-9\-]+)\.([a-z0-9\-.\~]+)((?:/[^,< \n\r]*)?)#i";
 	$replacements[] = "\\1<a $attrib href=\"http://www.\\2.\\3\\4\">www.\\2.\\3\\4$ext_icon</a>";
 	$patterns[] = "#([\n ])([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i";
 	if ($feature_wiki_protect_email == 'y')
 		$replacements[] = "\\1<script language=\"Javascript\" type=\"text/javascript\">protectEmail('\\2', '\\3', '@');</script><noscript>\\2 ".tra("at")." \\3</noscript>";
 	else
 		$replacements[] = "\\1<a class='wiki' href=\"mailto:\\2@\\3\">\\2@\\3</a>";
-	$patterns[] = "#([\n ])magnet\:\?([^, \n\r]+)#i";
+	$patterns[] = "#([\n ])magnet\:\?([^,< \n\r]+)#i";
 	$replacements[] = "\\1<a class='wiki' href=\"magnet:?\\2\">magnet:?\\2</a>";
 	$text = preg_replace($patterns, $replacements, $text);
 	// strip the space we added
@@ -4762,14 +4771,13 @@ function add_pageview() {
 	    $temp_max = count($dcs[0]);
 	    for ($i = 0; $i < $temp_max; $i++) {
 		$repl = $this->get_actual_content($dcs[1][$i]);
-
 		$data = str_replace($dcs[0][$i], $repl, $data);
 	    }
 	}
 
 	// Replace Dynamic content with random selection
 	if (preg_match_all("/\{rcontent +id=([0-9]+)\}/", $data, $dcs)) {
-	    include_once("dcs/dcslib.php");
+	    global $dcslib; include_once("dcs/dcslib.php");
 	    $temp_max = count($dcs[0]);
 	    for ($i = 0; $i < $temp_max; $i++) {
 		$repl = $dcslib->get_random_content($dcs[1][$i]);
@@ -4878,7 +4886,7 @@ function add_pageview() {
 	// New syntax for wiki pages ((name)) Where name can be anything
 	preg_match_all("/\(\( *($page_regex) *\)\)/", $data, $pages);
 
-	foreach (array_unique($pages[1])as $page_parse) {
+	foreach (array_unique($pages[1]) as $page_parse) {
 	    $repl2 = true;
 
 	    if (strstr($page_parse, ':')) {
@@ -6292,6 +6300,7 @@ if (!$simple_wiki) {
 						else
 							$formatted[] = array('value' => $lc, 'name' => $lc);
 					}
+					usort($formatted, array('TikiLib', 'formatted_language_compare'));
 					return $formatted;
 				}
 			    foreach ($languages as $lc) {

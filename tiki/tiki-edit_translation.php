@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.8 2005-10-16 14:35:09 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.9 2005-12-12 15:18:46 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -109,9 +109,11 @@ if (isset($_REQUEST['langpage']) && !empty($_REQUEST['langpage']) && $_REQUEST['
 $smarty->assign('langpage', $langpage);
 
 if (isset($_REQUEST['detach'])) { // detach from a translation set
+	check_ticket('edit-translation');
 	$multilinguallib->detachTranslation($type, $_REQUEST['srcId']);
 }
 else if (isset($_REQUEST['srcName']) && $_REQUEST['srcName']) { // attach to a translation set
+	check_ticket('edit-translation');
 	if (empty($langpage) || $langpage == "NULL") {
 		$error = "traLang";
 		$smarty->assign('error', $error);
@@ -138,6 +140,7 @@ else if (isset($_REQUEST['srcName']) && $_REQUEST['srcName']) { // attach to a t
 	$smarty->assign('srcName', $_REQUEST['srcName']);
 }
 else if  (isset($_REQUEST['srcId']) && $_REQUEST['srcId']) {
+	check_ticket('edit-translation');
 	if (empty($langpage) || $langpage == "NULL") {
 		$error = "traLang";
 		$smarty->assign('error', $error);
@@ -171,7 +174,7 @@ $languages = $tikilib->list_languages();
 $available_languages = unserialize($tikilib->get_preference("available_languages"));
 $smarty->assign_by_ref('languages', $languages);
 $smarty->assign_by_ref('available_languages', $available_languages);
-
+ask_ticket('edit-translation');
 // Display the template
 $smarty->assign('mid', 'tiki-edit_translation.tpl');
 $smarty->display("tiki.tpl");

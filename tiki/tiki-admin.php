@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.106 2005-05-18 10:58:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.107 2005-12-12 15:18:46 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -203,6 +203,10 @@ if (isset($_REQUEST["page"])) {
 		$admintitle = "Calendar";//get_strings tra("Calendar")
 		$description = "Calendar settings";//get_strings tra("Calendar settings")
 		include_once ('tiki-admin_include_calendar.php');
+	} else if ($adminPage == "intertiki") {
+		$admintitle = "Intertiki";//get_strings tra("Intertiki")
+		$description = "Intertiki settings";//get_strings tra("Intertiki settings")
+		include_once ('tiki-admin_include_intertiki.php');
 	}
 	$url = 'tiki-admin.php'.'?page='.$adminPage;
 	if (!$helpUrl) {$helpUrl = ucfirst($adminPage)."+Config";}

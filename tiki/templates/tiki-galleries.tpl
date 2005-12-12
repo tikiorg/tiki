@@ -1,5 +1,5 @@
 <h1><a href="tiki-galleries.php" class="pagetitle">{tr}Galleries{/tr}</a>
-  
+
       {if $feature_help eq 'y'}
 <a href="{$helpurl}Image+Galleries" target="tikihelp" class="tikihelp" title="{tr}Image Gallery{/tr}">
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
@@ -30,8 +30,8 @@
 <table class="normal">
 <tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}"/></td></tr>
 <tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="description">{$description|escape}</textarea></td></tr>
-{if $tiki_p_admin_galleries eq 'y'}       
-<tr><td class="formcolor">{tr}Gallery is visible to non-admin users?{/tr}</td><td class="formcolor"><input type="checkbox" name="visible" {if $visible eq 'y'}checked="checked"{/if} /></td></tr>       
+{if $tiki_p_admin_galleries eq 'y'}
+<tr><td class="formcolor">{tr}Gallery is visible to non-admin users?{/tr}</td><td class="formcolor"><input type="checkbox" name="visible" {if $visible eq 'y'}checked="checked"{/if} /></td></tr>
 {* If a user can create a gallery, but doesn't have tiki_p_admin_galleries the new gallery needs to be visible. *}
 {else}
 <input type="hidden" name="visible" value="on" />
@@ -42,7 +42,7 @@
 <tr><td class="formcolor">{tr}Max Rows per page{/tr}:</td><td class="formcolor"><input type="text" name="maxRows" value="{$maxRows|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Images per row{/tr}:</td><td class="formcolor"><input type="text" name="rowImages" value="{$rowImages|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Thumbnails size X{/tr}:</td><td class="formcolor"><input type="text" name="thumbSizeX" value="{$thumbSizeX|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Thumbnails size Y{/tr}:</td><td class="formcolor"><input type="text" name="thumbSizeY" value="{$thumbSizeY|escape}" /></td></tr>      
+<tr><td class="formcolor">{tr}Thumbnails size Y{/tr}:</td><td class="formcolor"><input type="text" name="thumbSizeY" value="{$thumbSizeY|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Default sort order{/tr}:</td><td class="formcolor"><select name="sortorder">
 {foreach from=$options_sortorder key=key item=item}
 <option value="{$item}" {if $sortorder == $item} selected="selected"{/if}>{$key}</option>
@@ -124,8 +124,8 @@
 <form action="tiki-galleries.php" method="get">
 <select name="filter">
 <option value="">{tr}Choose a filter{/tr}</option>
-<option value="topgal">{tr}Top{/tr}</option>
-<option value="parentgal">{tr}Parent gallery{/tr}</option>
+<option value="topgal"{if $filter eq 'topgal'} selected="selected"{/if}>{tr}Top{/tr}</option>
+<option value="parentgal"{if $filter eq 'parentgal'} selected="selected"{/if}>{tr}Parent gallery{/tr}</option>
 {*foreach key=fid item=field from=$listfields}
 {if $field.isSearchable eq 'y' and $field.type ne 'f' and $field.type ne 'j' and $field.type ne 'i'}
 <option value="{$fid}"{if $fid eq $filterfield} selected="selected"{/if}>{$field.name|truncate:65:"..."}</option>
@@ -140,6 +140,7 @@
 <tr>
 {if $gal_list_name eq 'y'}
 <td class="heading"><a class="tableheading" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
+<td class="heading">{tr}Parent{/tr}</td>
 {/if}
 {if $gal_list_description eq 'y'}
 <td class="heading"><a class="tableheading" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a></td>
@@ -147,82 +148,91 @@
 {if $gal_list_created eq 'y'}
 <td class="heading"><a class="tableheading" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a></td>
 {/if}
-{if $gal_list_lastmodif eq 'y'} 
+{if $gal_list_lastmodif eq 'y'}
 <td class="heading"><a class="tableheading" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}Last modified{/tr}</a></td>
 {/if}
-{if $gal_list_user eq 'y'} 
+{if $gal_list_user eq 'y'}
 <td class="heading"><a class="tableheading" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></td>
 {/if}
-{if $gal_list_imgs eq 'y'}   
-<td style="text-align:right;"  class="heading">{* not done on a computed field<a class="tableheading" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'images_desc'}images_asc{else}images_desc{/if}">*}{tr}Imgs{/tr}{*</a>*}</td>
+{if $gal_list_imgs eq 'y'}
+<td style="text-align:right;"  class="heading"><a class="tableheading" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'images_desc'}images_asc{else}images_desc{/if}">{tr}Imgs{/tr}</a></td>
 {/if}
-{if $gal_list_visits eq 'y'}   
+{if $gal_list_visits eq 'y'}
 <td style="text-align:right;"  class="heading"><a class="tableheading" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Visits{/tr}</a></td>
 {/if}
 <td  class="heading">{tr}Actions{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=changes loop=$galleries}
+{if ($filter eq 'topgal' and $galleries[changes].parentgallery eq -1) or ($filter eq 'parentgal' and $galleries[changes].parentgal eq 'y') or ($filter eq '')}
 {if $galleries[changes].visible eq 'y' or $tiki_p_admin_galleries eq 'y'}
 <tr>
 {if $gal_list_name eq 'y'}
+<<<<<<< tiki-galleries.tpl
   <td class="{cycle advance=false}"><a class="galname" href="tiki-browse_gallery.php?galleryId={$galleries[changes].id}">{$galleries[changes].name}</a><br />
   {if $galleries[changes].topgal eq 'y'}<i>{tr}Top{/tr}</i><br />{/if}
   {if $galleries[changes].parentgal eq 'y'}<i>{tr}Parent gallery{/tr}</i>{/if}
   </td>
+=======
+  <td class="{cycle advance=false}"><a class="galname" href="tiki-browse_gallery.php?galleryId={$galleries[changes].galleryId}">{$galleries[changes].name}</a></td><td class="{cycle advance=false}">
+  {if $galleries[changes].parentgallery ne -1 }<a class="galname" href="tiki-browse_gallery.php?galleryId={$galleries[changes].parentgallery}">{$galleries[changes].parentgalleryName}</a>{/if}
+  {if $galleries[changes].parentgal eq 'y'}<i>{tr}Parent{/tr}</i>{/if}
+  </td>
+>>>>>>> 1.29.2.32
 {/if}
-{if $gal_list_description eq 'y'}  
+{if $gal_list_description eq 'y'}
   <td class="{cycle advance=false}">{$galleries[changes].description}</td>
 {/if}
-{if $gal_list_created eq 'y'}  
+{if $gal_list_created eq 'y'}
   <td class="{cycle advance=false}">{$galleries[changes].created|tiki_short_datetime}</td>
 {/if}
-{if $gal_list_lastmodif eq 'y'} 
+{if $gal_list_lastmodif eq 'y'}
   <td class="{cycle advance=false}">{$galleries[changes].lastModif|tiki_short_datetime}</td>
-{/if}  
-{if $gal_list_user eq 'y'}   
+{/if}
+{if $gal_list_user eq 'y'}
   <td class="{cycle advance=false}">{$galleries[changes].user}</td>
-{/if}  
-{if $gal_list_imgs eq 'y'}   
+{/if}
+{if $gal_list_imgs eq 'y'}
   <td style="text-align:right;" class="{cycle advance=false}">{$galleries[changes].images}</td>
 {/if}
-{if $gal_list_visits eq 'y'}     
+{if $gal_list_visits eq 'y'}
   <td style="text-align:right;" class="{cycle advance=false}">{$galleries[changes].hits}</td>
-{/if}  
+{/if}
   <td class="{cycle}" nowrap="nowrap">
   {if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
   {if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_create_galleries eq 'y' ) }
-    <a class="gallink" title="{tr}edit{/tr}" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;galleryId={$galleries[changes].id}">{html_image file='img/icons/edit.gif' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' border='0'}</a>
+    <a class="gallink" title="{tr}edit{/tr}" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;galleryId={$galleries[changes].galleryId}">{html_image file='img/icons/edit.gif' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' border='0'}</a>
   {/if}
   {/if}
   {if $tiki_p_upload_images eq 'y'}
   {if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_upload_images eq 'y' ) }
   {if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user) or $galleries[changes].public eq 'y'}
-    <a class="gallink" href="tiki-upload_image.php?galleryId={$galleries[changes].id}"><img src='img/icons2/upload.gif' border='0' height="16" width="16" alt='{tr}Upload{/tr}' title='{tr}Upload{/tr}' /></a>
+    <a class="gallink" href="tiki-upload_image.php?galleryId={$galleries[changes].galleryId}"><img src='img/icons2/upload.gif' border='0' height="16" width="16" alt='{tr}Upload{/tr}' title='{tr}Upload{/tr}' /></a>
   {if ($galleries[changes].geographic eq 'y')}
-    <a class="gallink" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;make_map=1&amp;galleryId={$galleries[changes].id}"><img src='img/icons/config.gif' alt='{tr}Make Map{/tr}' title='{tr}Make Map{/tr}' height="16" width="16" border='0' /></a>
+    <a class="gallink" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;make_map=1&amp;galleryId={$galleries[changes].galleryId}"><img src='img/icons/config.gif' alt='{tr}Make Map{/tr}' title='{tr}Make Map{/tr}' height="16" width="16" border='0' /></a>
   {/if}
   {/if}
   {/if}
   {/if}
   {if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_view_image_gallery eq 'y' ) }
-  <a class="gallink" href="tiki-list_gallery.php?galleryId={$galleries[changes].id}"><img border='0' height="16" width="18" src='img/icons/ico_table.gif' title='{tr}List{/tr}' alt='{tr}List{/tr}' /></a>
+  <a class="gallink" href="tiki-list_gallery.php?galleryId={$galleries[changes].galleryId}"><img border='0' height="16" width="18" src='img/icons/ico_table.gif' title='{tr}List{/tr}' alt='{tr}List{/tr}' /></a>
   {/if}
   {if $tiki_p_admin eq 'y'}
     {if $galleries[changes].individual eq 'y'}
-	<a class="gallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=image+gallery&amp;permType=image+galleries&amp;objectId={$galleries[changes].id}"><img src='img/icons/key_active.gif' alt='{tr}active perms{/tr}' title='{tr}active perms{/tr}' height="16" width="17" border='0' /></a>
+	<a class="gallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=image+gallery&amp;permType=image+galleries&amp;objectId={$galleries[changes].galleryId}"><img src='img/icons/key_active.gif' alt='{tr}active perms{/tr}' title='{tr}active perms{/tr}' height="16" width="17" border='0' /></a>
     {else}
-	<a class="gallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=image+gallery&amp;permType=image+galleries&amp;objectId={$galleries[changes].id}"><img src='img/icons/key.gif' alt='{tr}perms{/tr}' title='{tr}perms{/tr}' height="16" width="17" border='0' /></a>
+	<a class="gallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=image+gallery&amp;permType=image+galleries&amp;objectId={$galleries[changes].galleryId}"><img src='img/icons/key.gif' alt='{tr}perms{/tr}' title='{tr}perms{/tr}' height="16" width="17" border='0' /></a>
     {/if}
   {/if}
 {if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
   {if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_create_galleries eq 'y' ) }
-    &nbsp;&nbsp;<a class="gallink" title="{tr}delete{/tr}" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removegal={$galleries[changes].id}"><img src='img/icons2/delete.gif' height="16" width="16" border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' /></a>
+    &nbsp;&nbsp;<a class="gallink" title="{tr}delete{/tr}" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removegal={$galleries[changes].galleryId}"><img src='img/icons2/delete.gif' height="16" width="16" border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' /></a>
   {/if}
   {/if}
 
   </td>
 </tr>
+{/if}
 {/if}
 {sectionelse}
 <tr><td class="odd" colspan="8">

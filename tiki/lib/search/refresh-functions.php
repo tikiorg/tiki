@@ -320,7 +320,7 @@ function refresh_index_files() {
   global $tikilib;
   $result = $tikilib->query("select * from `tiki_files`", array());
   while ($info = $result->fetchRow()) {
-      $words=&search_index($info["data"]." ".$info["description"]." ".$info["name"]);
+      $words=&search_index($info['data'].' '.$info['description']." ".$info['name'], ' '.$info['search_data']);
       insert_index($words,"file",$info["fileId"]);
   }
 }

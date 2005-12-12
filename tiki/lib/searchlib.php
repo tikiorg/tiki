@@ -203,6 +203,7 @@ class SearchLib extends TikiLib {
 			$vwords = split(' ', $words);
 			foreach ($vwords as $aword) {
 				//$aword = $this->db->quote('[[:<:]]' . strtoupper($aword) . '[[:>:]]');
+				$aword = preg_replace('/([\*\.\?\^\$\+\(\]\|])/', '\\\\\1', $aword);
 				$aword = $this->db->quote('.*' . strtoupper($aword). '.*');
 
 				$sqlWhere .= ' AND (';

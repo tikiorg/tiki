@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.46 2005-12-02 17:49:42 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.47 2005-12-12 15:18:46 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -343,11 +343,9 @@ if (!is_object($imagegallib)) {
 
 $galleries = $imagegallib->list_galleries($offset, $maxRecords, $sort_mode, 'admin', $find);
 
-if (!isset($_REQUEST['filter'])) {
-    $_REQUEST['filter'] = '';
-}
+if (!empty($_REQUEST['filter']))
+	$smarty->assign('filter', $_REQUEST["filter"]);
 
-$smarty->assign('filter', $_REQUEST["filter"]);
 
 $temp_max = count($galleries["data"]);
 for ($i = 0; $i < $temp_max; $i++) {
@@ -369,6 +367,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 	} else {
 		$galleries["data"][$i]["parentgal"] = 'n';
 	}
+
 
 	if ($userlib->object_has_one_permission($galleries["data"][$i]["galleryId"], 'image gallery')) {
 		$galleries["data"][$i]["individual"] = 'y';

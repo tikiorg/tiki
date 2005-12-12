@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.103 2005-11-07 21:42:29 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.104 2005-12-12 15:18:48 mose Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -1255,3 +1255,5 @@ ALTER TABLE users_groups DROP groupHomeLocalized;
 # missing field in primary key:
 ALTER TABLE `users_objectpermissions` DROP PRIMARY KEY , ADD PRIMARY KEY ( `objectId` , `objectType` , `groupName` ( 30 ), `permName` ) ;
 
+# 2005-05-03 - amette - correct perm for submitting link - WYSIWYCA
+UPDATE tiki_menu_options SET perm="tiki_p_submit_link" WHERE url="tiki-directory_add_site.php";

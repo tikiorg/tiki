@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.49 2005-10-16 14:35:09 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.50 2005-12-12 15:18:46 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.49 2005-10-16 14:35:09 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.50 2005-12-12 15:18:46 mose Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -85,6 +85,50 @@ $response = isset($_REQUEST['response']) ? $_REQUEST['response'] : false;
 $isvalid = false;
 $isdue = false;
 
+if (strstr($user,'@')) {
+	$_REQUEST['intertiki'] = substr($user,strpos($user,'@')+1);
+	$user = substr($user,0,strpos($user,'@'));
+}
+if ($feature_intertiki == 'y' and isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'],array_keys($interlist)) and $user and $pass) {
+	include_once('XML/RPC.php');
+  function intervalidate($remote,$user,$pass) {
+    global $tiki_key;
+    $client = new XML_RPC_Client($remote['path'], $remote['host'], $remote['port']);
+    $client->setDebug(0);
+    $msg = new XML_RPC_Message(
+      'intertiki.validate',
+      array(
+        new XML_RPC_Value($tiki_key, 'string'),
+        new XML_RPC_Value($user, 'string'),
+        new XML_RPC_Value($pass, 'string')
+      ));
+      $result = $client->send($msg);
+      return $result;
+  }
+  $rpcauth = intervalidate($interlist[$_REQUEST['intertiki']],$user,$pass);
+	if (!$rpcauth) {
+		$logslib->add_log('login','intertiki : '.$user.'@'.$_REQUEST['intertiki'].': Failed');
+		$smarty->assign('msg',tra('Unable to contact remote server.'));
+		$smarty->display('error.tpl');
+		exit;
+	} else {
+		if ($rpcauth->faultCode()) {
+			$msg = tra('XMLRPC Error: ') . $rpcauth->faultCode() . ' - ' . tra($rpcauth->faultString());
+			$logslib->add_log('login','intertiki : '.$user.'@'.$_REQUEST['intertiki'].': '.$msg);
+			$smarty->assign('msg',$msg);
+			$smarty->display('error.tpl');
+			exit;
+		} else {
+			$logslib->add_log('login','intertiki : '.$user.'@'.$_REQUEST['intertiki']);
+			$user = $user.'@'.$_REQUEST['intertiki'];
+			$isvalid = true;
+			$isdue = false;
+			$feature_userPreferences = 'n';
+			$smarty->assign('feature_userPreferences',$feature_userPreferences);
+		}
+	}
+} else {
+
 // Verify user is valid
 list($isvalid, $user, $error) = $userlib->validate_user($user, $pass, $challenge, $response);
 
@@ -95,6 +139,8 @@ if ($isvalid) {
 	$isdue = $userlib->is_due($user);
 }
 //}
+}
+
 if ($isvalid) {
 	if ($isdue) {
 		// Redirect the user to the screen where he must change his password.

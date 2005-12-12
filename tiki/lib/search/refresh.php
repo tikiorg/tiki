@@ -19,7 +19,7 @@ function refresh_search_index() {
     ///iprint "<pre>rate: $search_refresh_rate.</pre>\n";
   list($usec, $sec) = explode(" ",microtime());
   srand (ceil($sec+100*$usec));
-  if(rand(1,$search_refresh_rate)==1) {
+  if($search_refresh_rate > 0 && rand(1,$search_refresh_rate)==1) {
     // print "<pre>refreshing</pre>\n";
 
     require_once(dirname(__FILE__).'/refresh-functions.php');

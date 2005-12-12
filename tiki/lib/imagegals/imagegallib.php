@@ -976,8 +976,10 @@ class ImageGalsLib extends TikiLib {
 
         function get_subgalleries($offset, $maxRecords, $sort_mode, $find, $galleryId = -1) {
 		
-		//filesize is for listing images. equivalent is numimages
-		$sort_mode=preg_replace('/(filesize_)/','numimages_',$sort_mode);
+		if ($sort_mode == '')
+			$sort_mode = 'name_asc';
+		else		//filesize is for listing images. equivalent is numimages
+			$sort_mode=preg_replace('/(filesize_)/','numimages_',$sort_mode);
 
                 if ($find) {
                         $findesc = '%' . $find . '%';
@@ -1197,14 +1199,14 @@ class ImageGalsLib extends TikiLib {
 	    $old_sort_mode = '';
 
 	    if (in_array($sort_mode, array(
-			    'images desc',
-			    'images asc'
+			    'images_desc',
+			    'images_asc'
 			    ))) {
 		$old_offset = $offset;
 
 		$old_maxRecords = $maxRecords;
 		$old_sort_mode = $sort_mode;
-		$sort_mode = 'user desc';
+		$sort_mode = 'name_desc';
 		$offset = 0;
 		$maxRecords = -1;
 	    }
@@ -1214,7 +1216,7 @@ class ImageGalsLib extends TikiLib {
 		$whuser = "";
 		$bindvars=array();
 	    } else {
-		$whuser = "where `user`=? or public=?";
+		$whuser = "where g.`user`=? or g.public=?";
 		$bindvars=array($user,'y');
 	    }
 
@@ -1222,10 +1224,10 @@ class ImageGalsLib extends TikiLib {
 		$findesc = '%' . $find . '%';
 
 		if (empty($whuser)) {
-		    $whuser = "where `name` like ? or `description` like ?";
+		    $whuser = "where g.`name` like ? or g.`description` like ?";
 		    $bindvars=array($findesc,$findesc);
 		} else {
-		    $whuser .= " and `name` like ? or `description` like ?";
+		    $whuser .= " and g.`name` like ? or g.`description` like ?";
 		    $bindvars[]=$findesc;
 		    $bindvars[]=$findesc;
 		}
@@ -1234,8 +1236,8 @@ class ImageGalsLib extends TikiLib {
 	    // If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
 	    // If sort mode is links then offset is 0, maxRecords is -1 (again) and sort_mode is nil
 	    // If sort mode is backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-	    $query = "select * from `tiki_galleries` $whuser order by ".$this->convert_sortmode($sort_mode);
-	    $query_cant = "select count(*) from `tiki_galleries` $whuser";
+	    $query = "select g.*, a.`name` as parentgalleryName from `tiki_galleries` g left join `tiki_galleries` a on g.`parentgallery` = a.`galleryId` $whuser order by ".$this->convert_sortmode($sort_mode);
+	    $query_cant = "select count(*) from `tiki_galleries` g $whuser";
 	    $result = $this->query($query,$bindvars,$maxRecords,$offset);
 	    $cant = $this->getOne($query_cant,$bindvars);
 	    $ret = array();
@@ -1276,37 +1278,22 @@ class ImageGalsLib extends TikiLib {
 		}
 
 		if ($add) {
-		    $aux = array();
-
-		    $aux["name"] = $res["name"];
-		    $gid = $res["galleryId"];
-		    $aux["visible"] = $res["visible"];
-		    $aux["id"] = $gid;
-		    $aux["galleryId"] = $res["galleryId"];
-		    $aux["description"] = $res["description"];
-		    $aux["created"] = $res["created"];
-		    $aux["lastModif"] = $res["lastModif"];
-		    $aux["user"] = $res["user"];
-		    $aux["hits"] = $res["hits"];
-		    $aux["public"] = $res["public"];
-		    $aux["theme"] = $res["theme"];
-				$aux["geographic"] = $res["geographic"];
-		    $aux["images"] = $this->getOne("select count(*) from `tiki_images` where `galleryId`=?",array($gid));
-		    $ret[] = $aux;
+		    $res['images'] = $this->getOne("select count(*) from `tiki_images` where `galleryId`=?",array($res['galleryId']));
+		    $ret[] = $res;
 		}
 	    }
 
-	    if ($old_sort_mode == 'images asc') {
+	    if ($old_sort_mode == 'images_asc') {
 		usort($ret, 'compare_images');
 	    }
 
-	    if ($old_sort_mode == 'images desc') {
+	    if ($old_sort_mode == 'images_desc') {
 		usort($ret, 'r_compare_images');
 	    }
 
 	    if (in_array($old_sort_mode, array(
-			    'images desc',
-			    'images asc'
+			    'images_desc',
+			    'images_asc'
 			    ))) {
 		$ret = array_slice($ret, $old_offset, $old_maxRecords);
 	    }
