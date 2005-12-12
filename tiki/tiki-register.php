@@ -4,6 +4,7 @@ require_once('tiki-setup.php');
 // require_once('lib/tikilib.php'); # httpScheme()
 // include_once('lib/webmail/tikimaillib.php');
 include_once('lib/registration/registrationlib.php');
+include_once('lib/notifications/notificationlib.php');
 
 // Permission: needs p_register
 if($allowRegister != 'y') {
@@ -13,6 +14,12 @@ if($allowRegister != 'y') {
 }
 
 $smarty->assign('showmsg','n');
+// novalidation is set to yes if a user confirms his email is correct after tiki fails to validate it
+if (!isset($_REQUEST['novalidation'])) {
+	$novalidation = '';
+} else {
+	$novalidation = $_REQUEST['novalidation'];
+}
 
 //get hidden fields
 $hiddenfields = array();
@@ -126,7 +133,9 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
 			$foo1=str_replace("tiki-register","tiki-login_validate",$foo["path"]);
 			$machine =$tikilib->httpPrefix().$foo1;
 			$userlib->add_user($_REQUEST["name"],$apass,$_REQUEST["email"],$_REQUEST["pass"]);
-			
+			if (isset($_REQUEST['group']) && $userlib->get_registrationChoice($_REQUEST['group']) == 'y') {
+				$userlib->assign_user_to_group($_REQUEST['name'], $_REQUEST['group']);
+			}			
 			
 			$logslib->add_log('register','created account '.$_REQUEST["name"]);
 			$smarty->assign('mail_machine',$machine);
@@ -219,6 +228,15 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
 	}
 
 }
+
+$listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
+foreach ($listgroups['data'] as $gr) {
+	if ($gr['registrationChoice'] == 'y') {
+		$smarty->assign('listgroups', $listgroups['data'] );
+		break;
+	}
+}
+ask_ticket('register');
 
 $_VALID = tra("Please enter a valid %s.  No spaces, more than %d characters and contain %s");
 
