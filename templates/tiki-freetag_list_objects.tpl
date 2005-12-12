@@ -1,4 +1,5 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-freetag_list_objects.tpl,v 1.2 2005-12-10 17:25:58 amette Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-freetag_list_objects.tpl,v 1.3 2005-12-12 20:40:33 lfagundes Exp $ *}
+
 <h1><a class="pagetitle" href="tiki-freetag_list_objects.php">{tr}Tags{/tr}</a></h1>
 {tr}Show objects tagged with{/tr} <b>{$tag}</b> {tr}in{/tr}:<br />
 <a class="linkbut" href="tiki-freetag_list_objects.php?tag={$tag}">{tr}All{/tr}</a>
@@ -43,16 +44,7 @@
 {/if}
 <br />
 
-<table width="100%">
-<tr><td>
-<div class="tree">
-{$tree}
-</div>
-</td
-<td width="20">&nbsp;</td>
-<td>
-
-<h3>{tr}Objects{/tr} ({$cantobjects})</h3>
+<h3>{$cantobjects} {tr}results found{/tr}</h3>
 {if $cantobjects > 0}
 <table class="normal">
 {cycle values="odd,even" print=false}
@@ -87,4 +79,3 @@
  </div>
 </div>
 {/if}
-</td></tr></table>
