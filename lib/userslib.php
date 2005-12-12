@@ -979,25 +979,21 @@ function get_included_groups($group) {
 			$mbindvars = $bindvars;
 	}
 
-	$query = "select `groupName` , `groupDesc` from `users_groups` $mid order by ".$this->convert_sortmode($sort_mode);
+	$query = "select `groupName` , `groupDesc`, `registrationChoice` from `users_groups` $mid order by ".$this->convert_sortmode($sort_mode);
 	$query_cant = "select count(*) from `users_groups` $mmid";
 	$result = $this->query($query, $bindvars, $maxRecords, $offset);
 	$cant = $this->getOne($query_cant, $mbindvars);
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
-	    $aux = array();
-
-	    $aux["groupName"] = $res["groupName"];
-	    $aux["groupDesc"] = $res["groupDesc"];
 	    if ($details == "y") {
-	    	$perms = $this->get_group_permissions($aux["groupName"]);
-	    	$aux["perms"] = $perms;
-		$aux["permcant"] = count($perms);
-	    	$groups = $this->get_included_groups($aux["groupName"]);
-	    	$aux["included"] = $groups;
+	    	$perms = $this->get_group_permissions($res['groupName']);
+	    	$res['perms'] = $perms;
+		$res['permcant'] = count($perms);
+	    	$groups = $this->get_included_groups($res['groupName']);
+	    	$res['included'] = $groups;
 	    }
-	    $ret[] = $aux;
+	    $ret[] = $res;
 	}
 	
 	$retval = array();
@@ -2125,6 +2121,25 @@ function get_included_groups($group) {
 		$ret = array();
 		while ($res = $result->fetchRow()) { $ret[] = $res['type']; }
 		return $ret;									
+	}
+
+	function set_registrationChoice($groups, $flag) {
+		$bindvars = array();
+		$bindvars[] = $flag;
+		if (is_array($groups)) {
+			$mid = implode(',',array_fill(0,count($groups),'?'));
+			$bindvars = array_merge($bindvars, $groups);
+		} else {
+			$bindvars[] = $groups;
+			$mid = 'like ?';
+		}
+		$query = "update `users_groups` set `registrationChoice`= ? where `groupName` in ($mid)";
+		$result = $this->query($query, $bindvars);
+	}
+
+	function get_registrationChoice($group) {
+		$query = "select `registrationChoice` from `users_groups` where `groupName` = ?";
+		return ($this->getOne($query, array($group)));
 	}
 
 }

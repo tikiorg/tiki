@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.36 2005-11-09 15:16:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.37 2005-12-12 18:24:37 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -285,6 +285,24 @@ if (isset($_REQUEST["loginprefs"])) {
 	$v = isset($_REQUEST['highlight_group']) ? $_REQUEST['highlight_group'] : '';
 	$tikilib->set_preference('highlight_group', $v);
 	$smarty->assign('highlight_group', $v);
+
+	if (isset($_REQUEST['registration_choices'])) {
+		$listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
+		$in = array();
+		$out = array();
+		foreach ($listgroups['data'] as $gr) {
+			if ($gr['groupName'] == 'Registered' || $gr['groupName'] == 'Anonymous')
+				continue;
+			if ($gr['registrationChoice'] == 'y' && !in_array($gr['groupName'], $_REQUEST['registration_choices'])) // deselect
+				$out[] = $gr['groupName'];
+			elseif ($gr['registrationChoice'] != 'y' && in_array($gr['groupName'], $_REQUEST['registration_choices'])) //select
+				$in[] = $gr['groupName'];
+		}
+		if (count($in))
+			$userlib->set_registrationChoice($in, 'y');
+		if (count($out))
+			$userlib->set_registrationChoice($out, NULL);
+	}
 }
 
 if (isset($_REQUEST["auth_pear"])) {
@@ -563,7 +581,9 @@ $smarty->assign("validateUsers", $tikilib->get_preference("validateUsers", 'n'))
 $smarty->assign("validateEmail", $tikilib->get_preference("validateEmail", 'n'));
 $smarty->assign("forgotPass", $tikilib->get_preference("forgotPass", 'n'));
 $smarty->assign("highlight_group", $tikilib->get_preference("highlight_group", ''));
-$smarty->assign("listgroups", $listgroups = $userlib->list_all_groups());
+$listgroups = $userlib->get_groups(0, -1, 'groupName_desc', '', '', 'n');
+$smarty->assign("listgroups", $listgroups['data']);
+
 
 // Users Defaults
 $mailCharsets = array('utf-8', 'iso-8859-1');

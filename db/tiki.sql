@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2005-12-12 15:18:47 $
-# $Author: mose $
+# $Date: 2005-12-12 18:24:37 $
+# $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -3981,6 +3981,7 @@ CREATE TABLE users_groups (
   groupTrackerId int(11),
   usersFieldId int(11),
   groupFieldId int(11),
+  registrationChoice char(1) default NULL,
   PRIMARY KEY  (groupName(30))
 ) TYPE=MyISAM;
 # --------------------------------------------------------
@@ -4246,6 +4247,7 @@ CREATE TABLE users_users (
   avatarType char(1) default NULL,
   score int(11) NOT NULL default 0,
   PRIMARY KEY  (userId),
+  KEY login (login),
   KEY score (score)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------

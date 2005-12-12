@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.66 2005-12-10 15:00:36 amette Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.67 2005-12-12 18:24:37 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -457,9 +457,13 @@ CREATE TABLE `tiki_categorized_objects` (
   PRIMARY KEY  (`catObjectId`)
 ) TYPE=MyISAM ;
 
-
 #2005-12-09 lfagundes
+
 INSERT INTO `tiki_categorized_objects` SELECT `objectId` FROM `tiki_objects`;
+
+#2005-12-12 sylvieg
+ALTER TABLE users_groups ADD registrationChoice CHAR(1) DEFAULT NULL;
+CREATE INDEX login ON users_users (login);
 
 
 
