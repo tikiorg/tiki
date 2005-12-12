@@ -32,7 +32,7 @@
  * @author     Martin Jansen <mj@php.net>
  * @author     Daniel Convissor <danielc@php.net>
  * @copyright  1999-2001 Edd Dumbill, 2001-2005 The PHP Group
- * @version    CVS: $Id: Server.php,v 1.2 2005-08-18 16:23:06 mose Exp $
+ * @version    CVS: $Id: Server.php,v 1.3 2005-12-12 15:18:51 mose Exp $
  * @link       http://pear.php.net/package/XML_RPC
  */
 
@@ -543,7 +543,7 @@ class XML_RPC_Server
                 $plist .= "$i - " . var_export($XML_RPC_xh[$parser]['params'][$i], true) . " \n";
                 $m->addParam($XML_RPC_xh[$parser]['params'][$i]);
             }
-            XML_RPC_Server_debugmsg($plist);
+						if ($this->debug) XML_RPC_Server_debugmsg($plist);
 
             // now to deal with the method
             $methName = $XML_RPC_xh[$parser]['method'];

@@ -1,6 +1,5 @@
 <?php 
-var_dump($HTTP_RAW_POST_DATA);
-# $Header: /cvsroot/tikiwiki/tiki/xmlrpc.php,v 1.25 2005-08-18 16:23:05 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/xmlrpc.php,v 1.26 2005-12-12 15:18:47 mose Exp $
 include_once("lib/init/initlib.php");
 require_once('db/tiki-db.php');
 require_once('lib/tikilib.php');

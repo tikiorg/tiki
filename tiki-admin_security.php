@@ -76,13 +76,13 @@ $smarty->assign_by_ref('phpsettings',$phpsettings);
 
 $tikisettings=array();
 
-if($feature_file_galleries='y' && !empty($fgal_use_dir) && 
+if($feature_file_galleries=='y' && !empty($fgal_use_dir) && 
     substr($fgal_use_dir,0,1)!='/') { // todo: check if absolute path is in tiki root
   $tikisettings['fgal_use_dir']=array('risk' => tra('unsafe'),'setting' => $fgal_use_dir,
      'message' => tra('The Path to store files in the filegallery should be outside the tiki root directory'));
 }
 
-if($feature_galleries='y' && !empty($gal_use_dir) && 
+if($feature_galleries=='y' && !empty($gal_use_dir) && 
     substr($gal_use_dir,0,1)!='/') {
   $tikisettings['gal_use_dir']=array('risk' => tra('unsafe'),'setting' => $gal_use_dir,
      'message' => tra('The Path to store files in the imagegallery should be outside the tiki root directory'));
@@ -112,6 +112,7 @@ if(file_exists('lib/wiki-plugins/wikiplugin_bloglist.php')) {
    $tikisettings['wikiplugin_bloglist']=array('risk' => tra('unsafe'),'setting' => tra('installed'),
      'message' => tra('The "Bloglist Wikiplugin" is installed. It can be used by wiki editors to disclose private blog posts.'));
 }
+
 ksort($tikisettings);
 $smarty->assign_by_ref('tikisettings',$tikisettings);
 

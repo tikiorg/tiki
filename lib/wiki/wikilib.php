@@ -508,11 +508,14 @@ class WikiLib extends TikiLib {
 	return ($info["flag"] == 'L')? $info["user"] : null;
     }
     function is_editable($page, $user, $info=null) {
-	global $tiki_p_admin, $tiki_p_admin_wiki;
+	global $tiki_p_admin, $tiki_p_admin_wiki, $feature_wiki_userpage, $feature_wiki_userpage_prefix;
       if ($tiki_p_admin == 'y' || $tiki_p_admin_wiki == 'y')
             return true;
-      else
+      else {
+		if ($feature_wiki_userpage == 'y' and strcasecmp(substr($page, 0, strlen($feature_wiki_userpage_prefix)), $feature_wiki_userpage_prefix) == 0 and strcasecmp($page, $feature_wiki_userpage_prefix.$user) != 0)
+			return false;
             return ($this->is_locked($page, $info) == null || $user == $this->is_locked($page, $info))? true : false;
+	}
     }
 
     function lock_page($page) {

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.55 2005-08-29 03:14:45 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.56 2005-12-12 15:18:57 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-calendar.php">{tr}Calendar{/tr}</a></h1>
@@ -7,7 +7,7 @@
 {/if}
 {if $feature_tabs ne 'y'}
 <span class="button2"><a href="#filter" class="linkbut">{tr}filter{/tr}</a></span>
-{if $modifTab or $modifTab eq "0"}
+{if $modifTab}
 <span class="button2"><a href="#add"class="linkbut">{tr}add item{/tr}</a></span>
 {/if}
 {/if}
@@ -18,7 +18,7 @@
 <div id="page-bar">
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Calendar{/tr}</a></span>
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Filter{/tr}</a></span>
-{if $modifTab or $modifTab eq "0"}
+{if $modifTab}
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Edit/Create{/tr}</a></span>
 {/if}
 </div>
@@ -267,7 +267,7 @@ class="linkmenu">{$cell[w][d].items[items].name|truncate:$trunc:".."|default:"..
 
 <a name="add" id="add"/>
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
-{if $modifTab or $modifTab eq "0"}
+{if $modifTab}
 
 {* ................................................................................... *}
 {if (($calitemId > 0 and $modifiable eq 'y') or ($tiki_p_add_events eq 'y' and $calitemId == 0)) && $editmode ne "details"}

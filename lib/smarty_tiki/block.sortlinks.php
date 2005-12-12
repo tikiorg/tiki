@@ -1,14 +1,13 @@
-<?php 
+<?php
+// $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/block.sortlinks.php,v 1.5 2005-12-12 15:18:51 mose Exp $
 /* 
 * Smarty plugin 
 * ------------------------------------------------------------- 
-* File: block.repeat.php 
-* Type: block 
-* Name: repeat 
-* Purpose: repeat a template block a given number of times 
-* Parameters: count [required] - number of times to repeat 
-* assign [optional] - variable to collect output 
-* Author: Scott Matthewman <scott@matthewman.net> 
+* File: block.sortlinks.php 
+* Type: block
+* Name: sortlinks
+* Purpose: sort a list of options or links lines on the value of the line. Each line has the form <..>value</...>
+* inspiration : block repeat - Scott Matthewman <scott@matthewman.net> 
 * ------------------------------------------------------------- 
 */ 
 
@@ -25,7 +24,8 @@ if ($content) {
   $links=split("\n",$content);
   $links2=array();
   foreach ($links as $value) {
-    $splitted=preg_split("/[<>]/",$value,-1,PREG_SPLIT_NO_EMPTY);
+	preg_match('/.*(<[^>]*>)(.*)(<\/[^¨>]*>)/U', $value, $splitted);
+//    $splitted=preg_split("/[<>]/",$value,-1,PREG_SPLIT_NO_EMPTY);
 		if (isset($splitted[2])) {
     	$links2[$splitted[2]]=$value;
 		}

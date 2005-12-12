@@ -73,4 +73,18 @@ ALTER TABLE `tiki_user_taken_quizzes` DROP PRIMARY KEY , ADD PRIMARY KEY ( `user
 ALTER TABLE `tiki_user_votings` DROP PRIMARY KEY , ADD PRIMARY KEY ( `user` , `id` ( 100 ) ) ;
 ALTER TABLE `tiki_user_watches` DROP PRIMARY KEY , ADD PRIMARY KEY ( `user` , `event` , `object` ( 100 ) ) ;
 
+# 2005-10-30: ohertel - added Tiki Mobile to the menu
+INSERT IGNORE INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Mobile','tiki-mobile.php',37,'feature_mobile','','');
 
+# not needed anymore, so drop it:
+# -- no you don't. NO destructive action should EVER occur in this file
+#DROP TABLE IF EXISTS tiki_features;
+#DROP TABLE IF EXISTS users_score;
+ALTER TABLE users_users DROP KEY score_2;
+ALTER TABLE users_groups DROP groupHomeLocalized;
+
+# missing field in primary key:
+ALTER TABLE `users_objectpermissions` DROP PRIMARY KEY , ADD PRIMARY KEY ( `objectId` , `objectType` , `groupName` ( 30 ), `permName` ) ;
+
+# 2005-05-03 - amette - correct perm for submitting link - WYSIWYCA
+UPDATE tiki_menu_options SET perm="tiki_p_submit_link" WHERE url="tiki-directory_add_site.php";

@@ -13,6 +13,11 @@ Use the following tags to distinguish changes :
 
 Please wrap your lines at 80 characters and indent them with spaces only.
 
+Version 1.10
+<http://tikiwiki.org/ReleaseProcess110>
+- 2005/05/18 : http://dev.tikiwiki.org/RefreshHEAD
+
+
 Version 1.9.2
 <http://tikiwiki.org/ReleaseProcess192>
 - 10/30/2005
@@ -243,6 +248,8 @@ ohertel
 [FIX] more translated strings in Czech - luciash
 [FIX] multiple Wiki-parsing erros fixed in several features - amette, mose
 
+
+
 Version 1.9.1.1
 <http://tikiwiki.org/ReleaseProcess1911>
 
@@ -250,13 +257,7 @@ Version 1.9.1.1
 * [MOD] Improved Tiki Security Admin
 * [FIX] tweaks to fixperms.sh, /img/tracker included
 
-Version 1.10
-<http://tikiwiki.org/ReleaseProcess110>
 
-- 2005/05/18 : http://dev.tikiwiki.org/RefreshHEAD
-
-
-=======
 Version 1.9.1
 <http://tikiwiki.org/ReleaseProcess19>
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.50 2005-12-10 14:02:23 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.51 2005-12-12 15:18:47 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -197,7 +197,6 @@ for ($i = 0; $i < $temp_max; $i++) {
 		$listpages["data"][$i]["freetags"] = $freetaglib->get_tags_on_object($listpages["data"][$i]["postId"], "blog post");
 	}
 
-//print(htmlspecialchars($listpages["data"][$i]["parsed_data"]));
 }
 
 $maxRecords = $blog_data["maxPosts"];

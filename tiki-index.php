@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.151 2005-11-17 12:26:34 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.152 2005-12-12 15:18:46 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -144,6 +144,10 @@ if (!$info)
 
 // If the page doesn't exist then display an error
 if(empty($info)) {
+  if ($user && $feature_wiki_userpage == 'y' && strcasecmp($feature_wiki_userpage_prefix, $page) == 0) {
+    header("Location: tiki-index.php?page=$feature_wiki_userpage_prefix$user");
+    die;
+  }
   if ($feature_likePages == 'y') {
      $likepages = $wikilib->get_like_pages($page);
      /* if we have exactly one match, redirect to it */

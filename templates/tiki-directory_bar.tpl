@@ -12,7 +12,7 @@
 <td><div  class="button2"><a href="tiki-directory_ranking.php?sort_mode=hits_desc" class="linkbut">{tr}cool sites{/tr}</a></div></td>
 {/if}
 {if $tiki_p_submit_link eq 'y' or $tiki_p_autosubmit_link eq 'y'}
-<td><div  class="button2"><a href="tiki-directory_add_site.php" class="linkbut">{tr}add a site{/tr}</a></div></td>
+<td><div  class="button2"><a href="tiki-directory_add_site.php{if $addtocat > 0}?addtocat={$addtocat}{/if}" class="linkbut">{tr}add a site{/tr}</a></div></td>
 {if $tiki_p_admin_directory_cats eq 'y'}
 <td><div  class="button2"><a href="tiki-directory_admin_categories.php" class="linkbut">{tr}add a category{/tr}</a></div></td>
 {/if}

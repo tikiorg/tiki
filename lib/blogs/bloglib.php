@@ -218,8 +218,8 @@ class BlogLib extends TikiLib {
 		if ($find) {
 			$findesc = '%' . $find . '%';
 
-			$mid = " where `blogId`=? and (`data` like ?) ";
-			$bindvars = array((int)$blogId,$findesc);
+			$mid = " where `blogId`=? and (`data` like ? or `title` like ?) ";
+			$bindvars = array((int)$blogId,$findesc, $findesc);
 		} else {
 			$mid = " where `blogId`=? ";
 			$bindvars = array((int) $blogId);
@@ -500,6 +500,20 @@ class BlogLib extends TikiLib {
 		// Purge old activity
 		$query = "delete from `tiki_blog_activity` where `day`<?";
 		$result = $this->query($query,array((int) $day2));
+/* this code enables you to reset blog activity if activity too old at each blog post
+		$query = "select b.`blogId` from `tiki_blogs` b left join `tiki_blog_activity`a on a.`blogId`= b.`blogId` where b.`activity` > 0 and a.`blogId` is null";
+		$result = $this->query($query);
+		$dead = '';
+		while ($res = $result->fetchRow()) {
+			if ($dead)
+				$dead .= ',';
+			$dead .= $res['blogId'];
+		}
+		if ($dead) {
+			$query = "update `tiki_blogs` set `activity`=NULL where `blogId` in (?)"; 
+			$result = $this->query($query, array($dead));
+		}
+*/
 		// Register new activity
 		$query = "select count(*) from `tiki_blog_activity` where `blogId`=? and `day`=?";
 		$result = $this->getOne($query,array((int) $blogId,(int)$today));

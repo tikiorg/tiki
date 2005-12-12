@@ -204,32 +204,31 @@ class TrackerLib extends TikiLib {
 		$emails = $notificationlib->get_mail_events('tracker_modified', $trackerId);
 		$emails2 = $notificationlib->get_mail_events('tracker_item_modified', $itemId);
 		$emails = array_merge($emails, $emails2);
-		$smarty->assign('mail_date', date("U"));
-		$smarty->assign('mail_user', $user);
-		$smarty->assign('mail_action', 'New comment added for item:' . $itemId . ' at tracker ' . $trackerName);
-		$smarty->assign('mail_data', $title . "\n\n" . $data);
-		$smarty->assign('mail_itemId', $itemId);
-		$smarty->assign('mail_trackerId', $trackerId);
-		$smarty->assign('mail_trackerName', $trackerName);
-		$foo = parse_url($_SERVER["REQUEST_URI"]);
-		$machine = $this->httpPrefix(). $foo["path"];
-		$smarty->assign('mail_machine', $machine);
-		$parts = explode('/', $foo['path']);
-		if (count($parts) > 1)
-			unset ($parts[count($parts) - 1]);
-		$smarty->assign('mail_machine_raw', $this->httpPrefix(). implode('/', $parts));
-		
-		include_once ('lib/mail/maillib.php');
-
-		if (!isset($_SERVER["SERVER_NAME"])) {
-			$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
-		}
-
-		foreach ($emails as $email) {
+		if (count($emails > 0)) {
+			$smarty->assign('mail_date', date("U"));
+			$smarty->assign('mail_user', $user);
+			$smarty->assign('mail_action', 'New comment added for item:' . $itemId . ' at tracker ' . $trackerName);
+			$smarty->assign('mail_data', $title . "\n\n" . $data);
+			$smarty->assign('mail_itemId', $itemId);
+			$smarty->assign('mail_trackerId', $trackerId);
+			$smarty->assign('mail_trackerName', $trackerName);
+			$foo = parse_url($_SERVER["REQUEST_URI"]);
+			$machine = $this->httpPrefix(). $foo["path"];
+			$smarty->assign('mail_machine', $machine);
+			$parts = explode('/', $foo['path']);
+			if (count($parts) > 1)
+				unset ($parts[count($parts) - 1]);
+			$smarty->assign('mail_machine_raw', $this->httpPrefix(). implode('/', $parts));
+			if (!isset($_SERVER["SERVER_NAME"])) {
+				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
+			}
+			include_once ('lib/webmail/tikimaillib.php');
+			$mail = new TikiMail();
+			$mail->setSubject(tra('Tracker was modified at '). $_SERVER["SERVER_NAME"]);
 			$mail_data = $smarty->fetch('mail/tracker_changed_notification.tpl');
-
-			mail($email, encode_headers(tra('Tracker was modified at '). $_SERVER["SERVER_NAME"],'utf-8'), $mail_data,
-				"From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
+			$mail->setText($mail_data);
+			$mail->setHeader("From", $sender_email);
+			$mail->send($emails);
 		}
 
 		return $commentId;
@@ -656,7 +655,6 @@ class TrackerLib extends TikiLib {
 		}
 
 		$trackerName = $this->getOne("select `name` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
-
 		if (count($emails) > 0) {
 			if( $simpleEmail == "n" )
 			{
@@ -690,14 +688,12 @@ class TrackerLib extends TikiLib {
 
 				$mail_data = $smarty->fetch('mail/tracker_changed_notification.tpl');
 
-				include_once ('lib/mail/maillib.php');
-
-				foreach ($emails as $email) {
-					//var_dump($email);
-					//var_dump($mail_data);
-					mail($email, encode_headers('['.$trackerName.'] '.tra('Tracker was modified at '). $_SERVER["SERVER_NAME"], 'utf-8'), $mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8");
-					//echo "$email, ";
-				}
+				include_once ('lib/webmail/tikimaillib.php');
+				$mail = new TikiMail();
+				$mail->setSubject(tra('Tracker was modified at '). $_SERVER["SERVER_NAME"]);
+				$mail->setText($mail_data);
+				$mail->setHeader("From", $sender_email);
+				$mail->send($emails);
 			} else {
 			    // Use simple email
 
@@ -742,6 +738,52 @@ class TrackerLib extends TikiLib {
 
 		if (!$itemId) $itemId = $new_itemId;
 		return $itemId;
+	}
+
+	// check the validity of each field values of a tracker item
+	// and the presence of mandatory fields
+	function check_field_values($ins_fields) {
+
+		$mandatory_fields = array();
+		$erroneous_values = array();
+
+		foreach($ins_fields['data'] as $f) {
+
+			if ($f['isMandatory'] == 'y' && isset($f['value']) && $f['value'] == '') {
+
+				$mandatory_fields[] = $f;
+			}
+			elseif(isset($f['value'])) {
+
+				switch ($f['type']) {
+				// numeric
+				case 'n':
+					if(!is_numeric($f['value'])) {
+						$f['error'] = tra('field is not numeric');
+						$erroneous_values[] = $f;
+					}
+					break;
+
+				// email
+				case 'm':
+					global $registrationlib, $dbTiki, $sender_email;
+					if(!isset($registrationlib)) {
+						require_once('lib/registration/registrationlib.php');
+					}
+					$res = $registrationlib->SnowCheckMail($f['value'], $sender_email, false);
+					if($res[0] == false) {
+						$res[1];
+						$erroneous_values[] = $f;
+					}
+					break;
+				}
+			}
+		}
+
+		$res = array();
+		$res['err_mandatory'] = $mandatory_fields;
+		$res['err_value'] = $erroneous_values;
+		return $res;
 	}
 
 	function remove_tracker_item($itemId) {
@@ -1048,7 +1090,7 @@ class TrackerLib extends TikiLib {
 		$type['a'] = array(
 			'label'=>tra('textarea'),      
 			'opt'=>true,  
-			'help'=>tra('Textarea options: quicktags,width,height,max - Use Quicktags is 1 or 0, width is indicated in chars, height is indicated in lines, max is the maximum number of characters that can be saved.'));
+			'help'=>tra('Textarea options: quicktags,width,height,max,listmax - Use Quicktags is 1 or 0, widthis indicated in chars, height is indicated in lines, max is the maximum number of characters that can be saved, listmax isthe maximum number of characters that are displayed in list mode.'));
 		$type['c'] = array(
 			'label'=>tra('checkbox'),      
 			'opt'=>true,  

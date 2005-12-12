@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker_item.tpl,v 1.90 2005-11-07 16:20:31 damosoft Exp $ *}
+{* $Id: tiki-view_tracker_item.tpl,v 1.91 2005-12-12 15:18:57 mose Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -25,8 +25,22 @@
 {if $nextmsg}<span class="attention">{$nextmsg}</span>{else}
 <a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}&amp;move=next">{tr}next{/tr} -></a>{/if}</span>
 </div>
-<br /><br />
+<br /><br />{*
 
+***  Display warnings about incorrect values and missing mandatory fields ***
+
+*}{if count($err_mandatory) > 0}<div class="simplebox highlight">
+{tr}Following mandatory fields are missing{/tr}&nbsp;:<br/>
+	{section name=ix loop=$err_mandatory}
+{$err_mandatory[ix].name}{if !$smarty.section.ix.last},&nbsp;{/if}
+	{/section}
+</div><br />{/if}
+{if count($err_value) > 0}<div class="simplebox highlight">
+{tr}Following fields are incorrect{/tr}&nbsp;:<br/>
+	{section name=ix loop=$err_value}
+{$err_value[ix].name}{if !$smarty.section.ix.last},&nbsp;{/if}
+	{/section}
+</div><br />{/if}
 {if $feature_tabs eq 'y'}
 {cycle name=tabs values="1,2,3,4,5" print=false advance=false}
 <div id="page-bar">
@@ -376,11 +390,11 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 <table class="normal">
 {else}
 {if ($cur_field.type eq 'c' or $$cur_field.type eq 't' or $$cur_field.type eq 'n') and $$cur_field.options_array[0] eq '1'}
-<tr class="formcolor"><td class="formlabel">{$cur_field.name}</td><td nowrap="nowrap">
+<tr class="formcolor"><td class="formlabel">{$cur_field.name}{if $cur_field.isMandatory eq 'y'} *{/if}</td><td nowrap="nowrap">
 {elseif $stick eq 'y'}
-<td class="formlabel right">{$cur_field.name}</td><td nowrap="nowrap">
+<td class="formlabel right">{$cur_field.name}{if $cur_field.isMandatory eq 'y'} *{/if}</td><td nowrap="nowrap">
 {else}
-<tr class="formcolor"><td class="formlabel">{$cur_field.name}
+<tr class="formcolor"><td class="formlabel">{$cur_field.name}{if $cur_field.isMandatory eq 'y'} *{/if}
 {if $cur_field.type eq 'a' and $cur_field.options_array[0] eq 1}
 <br />
 {include file=tiki-edit_help_tool.tpl qtnum=$cur_field.id area_name="area_"|cat:$cur_field.id}
@@ -557,6 +571,7 @@ align       : "bR"
 <h2>{tr}Special Operations{/tr}</h2>
 {$trkact}
 {/if}
+<br /><em>{tr}fields marked with a * are mandatory{/tr}</em>
 </div>{*nohighlight - important comment to delimit the zone not to highlight in a search result*}
 {/if}
 

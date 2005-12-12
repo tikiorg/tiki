@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-newsletter_archives.php,v 1.4 2005-08-10 15:56:00 rv540 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-newsletter_archives.php,v 1.5 2005-12-12 15:18:46 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -18,13 +18,18 @@ if ($feature_newsletters != 'y') {
 	die;
 }
 
-if (isset($_REQUEST["nlId"])) {
+if (!empty($_REQUEST['nlId'])) {
 	$smarty->assign('nlId', $_REQUEST["nlId"]);
 	$nl_info = $nllib->get_newsletter($_REQUEST["nlId"]);
 	$smarty->assign_by_ref('nl_info', $nl_info);
 }
 
-if (isset($_REQUEST["remove"])) {
+if (isset($_REQUEST['remove']) && !empty($_REQUEST['nlId'])) {
+	if (!$tikilib->user_has_perm_on_object($user, $_REQUEST['nlId'], 'newsletter', 'tiki_p_admin_newsletters')) {
+		$smarty->assign('msg', tra("You do not have permission to use this feature"));
+		$smarty->display("error.tpl");
+		die;
+	}
 	$area = 'delnewsletter';
 	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
@@ -57,11 +62,11 @@ if (isset($_REQUEST["ed_find"])) {
 $smarty->assign('ed_find', $ed_find);
 
 $smarty->assign_by_ref('ed_sort_mode', $ed_sort_mode);
-if (isset($_REQUEST["nlId"])) 
-	$channels = $nllib->list_editions($_REQUEST["nlId"], $ed_offset, $maxRecords, $ed_sort_mode, $ed_find);
-else
-	$channels = $nllib->list_editions(0, $ed_offset, $maxRecords, $ed_sort_mode, $ed_find);
-
+if (isset($_REQUEST["nlId"])) {
+	$channels = $nllib->list_editions($_REQUEST["nlId"], $ed_offset, $maxRecords, $ed_sort_mode, $ed_find,'tiki_p_subscribe_newsletters');
+} else {
+	$channels = $nllib->list_editions(0, $ed_offset, $maxRecords, $ed_sort_mode, $ed_find, 'tiki_p_subscribe_newsletters');
+}
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
 $smarty->assign('actual_page', 1 + ($ed_offset / $maxRecords));

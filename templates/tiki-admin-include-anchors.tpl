@@ -88,3 +88,7 @@
 <a href="tiki-admin.php?page=calendar" title="{tr}Calendar{/tr}" class="link"><img border="0"
    src="img/icons/admin_calendar.png" alt="{tr}Site Calendar{/tr}" /></a>
 {/if}
+{if $feature_intertiki and $feature_intertiki eq 'y'}
+<a href="tiki-admin.php?page=intertiki" title="{tr}Intertiki{/tr}" class="link"><img border="0"
+   src="img/icons/admin_intertiki.png" alt="{tr}InterTiki{/tr}" /></a>
+{/if}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.31 2005-11-07 16:20:31 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.32 2005-12-12 15:18:57 mose Exp $ *}
 <h1><a href="tiki-upload_image.php{if $galleryId}?galleryId={$galleryId}{/if}" class="pagetitle">{tr}Upload Image{/tr}</a>
 
 {if $feature_help eq 'y'}
@@ -46,7 +46,7 @@
 	<select name="galleryId">
 	{section name=idx loop=$galleries}
 	{if ($galleries[idx].individual eq 'n') or ($galleries[idx].individual_tiki_p_upload_images eq 'y')}
-	<option  value="{$galleries[idx].id|escape}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].name}</option>
+	<option  value="{$galleries[idx].galleryId|escape}" {if $galleries[idx].gallerId eq $galleryId}selected="selected"{/if}>{$galleries[idx].name}</option>
 	{/if}
 	{/section}
 	</select>

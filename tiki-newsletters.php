@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-newsletters.php,v 1.23 2005-08-12 13:01:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-newsletters.php,v 1.24 2005-12-12 15:18:46 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -144,26 +144,6 @@ $smarty->assign('find', $find);
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $channels = $nllib->list_newsletters($offset, $maxRecords, $sort_mode, $find, '', array("tiki_p_subscribe_newsletters", "tiki_p_admin_newsletters", "tiki_p_send_newsletters"));
-
-$temp_max = count($channels["data"]);
-for ($i = 0; $i < $temp_max; $i++) {
-	if ($userlib->object_has_one_permission($channels["data"][$i]["nlId"], 'newsletters')) {
-		$channels["data"][$i]["individual"] = 'y';
-
-		if ($userlib->object_has_permission($user, $channels["data"][$i]["nlId"], 'newsletter', 'tiki_p_subscribe_newsletters')) {
-			$channels["data"][$i]["individual_tiki_p_subscribe_newsletters"] = 'y';
-		} else {
-			$channels["data"][$i]["individual_tiki_p_subscribe_newsletters"] = 'n';
-		}
-
-		if ($tiki_p_admin == 'y'
-			|| $userlib->object_has_permission($user, $channels["data"][$i]["nlId"], 'newsletter', 'tiki_p_admin_newsletters')) {
-			$channels["data"][$i]["individual_tiki_p_subscribe_newsletters"] = 'y';
-		}
-	} else {
-		$channels["data"][$i]["individual"] = 'n';
-	}
-}
 
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);

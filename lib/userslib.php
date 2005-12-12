@@ -1196,28 +1196,6 @@ function get_included_groups($group) {
 	return true;
     }
 
-	function get_user_groups($user) {
-		$enuser = urlencode($user);
-		if (!isset($this->usergroups_cache[$enuser])) {
-			$userid = $this->get_user_id($user);
-	    $query = "select `groupName` from `users_usergroups` where `userId`=?";
-	    $result = $this->query($query, array((int)$userid));
-	    $ret = array();
-	    while ($res = $result->fetchRow()) {
-				$ret[] = $res["groupName"];
-				$included = $this->get_included_groups($res["groupName"]);
-				$ret = array_merge($ret, $included);
-	    }
-	    $ret[] = "Anonymous";
-	    $ret = array_unique($ret);
-	    // cache it
-	    $this->usergroups_cache[$enuser] = $ret;
-	    return $ret;
-		} else {
-			return $this->usergroups_cache[$enuser];
-		}
-	}
-
 	function get_user_default_group($user) {
   	        if (!isset($user)) {
 		    return 'Anonymous';

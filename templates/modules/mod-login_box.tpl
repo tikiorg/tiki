@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.32 2005-05-18 11:03:30 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.33 2005-12-12 15:18:57 mose Exp $ *}
 {tikimodule title="{tr}Login{/tr}" name="login_box" flip=$module_params.flip decorations=$module_params.decorations}
 
     {if $user}
@@ -106,6 +106,15 @@
       {if $show_stay_in_ssl_mode ne 'y'}
         <input type="hidden" name="stay_in_ssl_mode" value="{$stay_in_ssl_mode|escape}" />
       {/if}
+			{if $use_intertiki_auth eq 'y'}
+				<select name='intertiki'>
+					<option value="">{tr}local account{/tr}</option>
+					<option value="">-----------</option>
+					{foreach key=k item=i from=$intertiki}
+					<option value="{$k}">{$k}</option>
+					{/foreach}
+				</select>
+			{/if}
       </form>
     {/if}
 {/tikimodule}

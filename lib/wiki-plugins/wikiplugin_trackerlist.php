@@ -33,7 +33,8 @@ function wikiplugin_trackerlist($data, $params) {
 		}
 
 		$tracker_info = $trklib->get_tracker($trackerId);
-		$tracker_info = array_merge($tracker_info,$trklib->get_tracker_options($trackerId));
+		if ($t = $trklib->get_tracker_options($trackerId))
+			$tracker_info = array_merge($tracker_info, $t);
 		$smarty->assign_by_ref('tracker_info', $tracker_info);
 		
 		$query_array = array();
