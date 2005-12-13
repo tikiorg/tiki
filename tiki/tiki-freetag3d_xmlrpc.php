@@ -50,7 +50,7 @@ function getSubGraph($params) {
 	    $base_url = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 	    $base_url = preg_replace('/\/tiki-freetag3d_xmlrpc.php.*$/','',$base_url);
 
-	    $actionUrl = "javascript:carregaLista('$nodeName');";
+	    $actionUrl = "javascript:listObjects('$nodeName');";
 	    $color = '#0000FF';
 
 	    $node['neighbours'] = new XML_RPC_Value($neighbours, "array");
