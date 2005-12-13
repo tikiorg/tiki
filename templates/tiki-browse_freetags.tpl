@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.3 2005-12-13 06:35:41 lfagundes Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.4 2005-12-13 08:41:01 lfagundes Exp $ *}
 
 <script src="lib/cpaint/cpaint2.inc.compressed.js" type="text/javascript"></script>
 <script src="lib/freetag/freetag_ajax.js" type="text/javascript"></script>
 
 <h1>{tr}Tags{/tr}</h1>
-{tr}Show objects tagged with{/tr} <b>{$tag}</b> {tr}in{/tr}:<br />
+{tr}Show objects tagged with{/tr} <b><span id="currentTag">{$tag}</span></b> {tr}in{/tr}:<br />
 <a class="linkbut {if $type eq ''} highlight{/if}"  href="javascript:setObjectType('','typeAll');" id="typeAll">{tr}All{/tr}</a>
 {if $feature_wiki eq 'y'}
 <a class="linkbut {if $type eq "wiki page"} highlight{/if}"  href="javascript:setObjectType('wiki page','typeWikiPage');" id="typeWikiPage">{tr}Wiki pages{/tr}</a>
