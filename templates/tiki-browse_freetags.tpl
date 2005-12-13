@@ -1,6 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.1 2005-12-12 22:45:06 lfagundes Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.2 2005-12-13 01:53:24 lfagundes Exp $ *}
 
-<h1><a class="pagetitle" href="tiki-freetag_list_objects.php">{tr}Tags{/tr}</a></h1>
+<script src="lib/cpaint/cpaint2.inc.compressed.js" type="text/javascript"></script>
+<script src="lib/freetag/freetag_ajax.js" type="text/javascript"></script>
+
+<h1>{tr}Tags{/tr}</h1>
 {tr}Show objects tagged with{/tr} <b>{$tag}</b> {tr}in{/tr}:<br />
 <a class="linkbut" href="tiki-freetag_list_objects.php?tag={$tag}">{tr}All{/tr}</a>
 {if $feature_wiki eq 'y'}
@@ -75,38 +78,5 @@
 
 </applet>
 
-<h3>{$cantobjects} {tr}results found{/tr}</h3>
-{if $cantobjects > 0}
-<table class="normal">
-{cycle values="odd,even" print=false}
-{section name=ix loop=$objects}
-<tr class="{cycle}" >
-<td>{tr}{$objects[ix].type|replace:"wiki page":"Wiki"|replace:"article":"Article"|regex_replace:"/tracker [0-9]*/":"tracker item"}{/tr}</td>
-<td><a href="{$objects[ix].href}" class="catname">{$objects[ix].name}</a></td>
-<td>{$objects[ix].description}&nbsp;</td>
-</tr>
-{/section}
-</table>
-<br />
-
-<div align="center">
-  <div class="mini">
-    {if $prev_offset >= 0}
-      [<a class="prevnext" href="tiki-freetag_list_objects.php?find={$find}&amp;type={$type}&amp;offset={$prev_offset}">{tr}prev{/tr}</a>]&nbsp;
-    {/if}
-    {tr}Page{/tr}: {$actual_page}/{$cant_pages}
-    {if $next_offset >= 0}
-      &nbsp;[<a class="prevnext" href="tiki-freetag_list_objects.php?find={$find}&amp;type={$type}&amp;offset={$next_offset}">{tr}next{/tr}</a>]
-    {/if}
-    {if $direct_pagination eq 'y'}
-      <br />
-      {section loop=$cant_pages name=foo}
-        {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
-        <a class="prevnext" href="tiki-freetag_list_objects.php?find={$find}&amp;type={$type}&amp;offset={$selector_offset}">
-          {$smarty.section.foo.index_next}
-        </a>&nbsp;
-      {/section}
-    {/if}
- </div>
-</div>
-{/if}
+<div id="objectList"></div>
+<script language="JavaScript">listObjects('{$tag}');</script>
