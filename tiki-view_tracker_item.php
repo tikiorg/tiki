@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.87 2005-12-12 15:18:47 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.88 2005-12-13 12:12:45 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -443,7 +443,7 @@ if ($tiki_p_modify_tracker_items == 'y') {
 		$err_fields = array();
 		$field_errors = $trklib->check_field_values($ins_fields);
 		$smarty->assign('err_mandatory', $field_errors['err_mandatory']);
-		$smarty->assign('err_value', $field_errors['err_value'])
+		$smarty->assign('err_value', $field_errors['err_value']);
 
 		// values are OK, then lets save the item
 		if (count($field_errors['err_mandatory']) == 0  && count($field_errors['err_value']) == 0 ) {
