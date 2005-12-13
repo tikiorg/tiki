@@ -2,8 +2,11 @@
 //cp.set_persistent_connection('yes');
 
 var objectType = '';
+var currentTag = '';
+var selectedElement = false;
 
 function listObjects(tag) {
+    currentTag = tag;
     var cp = new cpaint();
     cp.set_response_type('XML');
     //cp.set_debug(2);
@@ -13,6 +16,11 @@ function listObjects(tag) {
 function renderObjectList(result) {
     var objects = result.getElementsByTagName('object');
     
+    if (!objects.length) {
+	document.getElementById('objectList').innerHTML = '';
+	return;
+    }
+
     var href = objects.item(0).getElementsByTagName('href');
 
     var data = new Array();
@@ -40,7 +48,16 @@ function renderObjectList(result) {
     document.getElementById('objectList').innerHTML = content;    
 }
 
-function setObjectType(type) {
+function setObjectType(type, button) {
     objectType = type;
+    if (!selectedElement) 
+	selectedElement = document.getElementById('typeAll');
+    selectedElement.className = 'linkbut';
+    button = document.getElementById(button);
+    button.className= 'linkbut highlight';
+    selectedElement = button;
+    listObjects(currentTag);
 }
+
+
 
