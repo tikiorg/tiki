@@ -45,6 +45,8 @@ function renderObjectList(result) {
 	content += '</div>';
     }
 
+    if (currentTag)
+	document.getElementById('currentTag').innerHTML = currentTag;
     document.getElementById('objectList').innerHTML = content;    
 }
 
