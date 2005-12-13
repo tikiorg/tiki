@@ -46,7 +46,8 @@ function renderObjectList(result) {
     }
 
     if (currentTag)
-	document.getElementById('currentTag').innerHTML = currentTag;
+	document.getElementById('currentTag1').innerHTML = currentTag;
+	document.getElementById('currentTag2').innerHTML = currentTag;
     document.getElementById('objectList').innerHTML = content;    
 }
 
