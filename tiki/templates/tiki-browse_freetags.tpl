@@ -1,11 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.5 2005-12-13 21:03:37 amette Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.6 2005-12-13 22:15:42 amette Exp $ *}
 
 <script src="lib/cpaint/cpaint2.inc.compressed.js" type="text/javascript"></script>
 <script src="lib/freetag/freetag_ajax.js" type="text/javascript"></script>
 
-<div class="pageheading">
-	<h1>{tr}Browse related tags{/tr}</h1>
-</div>
+<h1>{tr}Browse related tags{/tr}</h1>
 
 <div class="morcego_embedded">
 <h2>{tr}Network of Tags related to{/tr}: <span id="currentTag1">{$tag}</span></h2>
