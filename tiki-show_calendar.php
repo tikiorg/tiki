@@ -43,6 +43,9 @@ $smarty->assign('focusdate', $focusdate);
 $smarty->assign('focuscell', $focuscell);
 $now = mktime(date('G'), date('i'), date('s'), date('n'), date('d'), date('Y')); /* server date */
 $smarty->assign('now', $now); /* server date */
+if (!isset($dc->getDisplayDateFromServerDate)) {
+    $dc = $tikilib->get_date_converter($user);
+}
 $smarty->assign('nowUser', $dc->getDisplayDateFromServerDate($now)); /* user time */
 
 
