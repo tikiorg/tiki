@@ -1,49 +1,49 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.2 2005-12-13 01:53:24 lfagundes Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.3 2005-12-13 06:35:41 lfagundes Exp $ *}
 
 <script src="lib/cpaint/cpaint2.inc.compressed.js" type="text/javascript"></script>
 <script src="lib/freetag/freetag_ajax.js" type="text/javascript"></script>
 
 <h1>{tr}Tags{/tr}</h1>
 {tr}Show objects tagged with{/tr} <b>{$tag}</b> {tr}in{/tr}:<br />
-<a class="linkbut" href="tiki-freetag_list_objects.php?tag={$tag}">{tr}All{/tr}</a>
+<a class="linkbut {if $type eq ''} highlight{/if}"  href="javascript:setObjectType('','typeAll');" id="typeAll">{tr}All{/tr}</a>
 {if $feature_wiki eq 'y'}
-<a class="linkbut" href="tiki-freetag_list_objects.php?tag={$tag}&amp;type=wiki+page">{if $type eq 'wiki page'}<span class="highlight">{/if}{tr}Wiki pages{/tr}{if $type eq 'wiki page'}</span>{/if}</a>
+<a class="linkbut {if $type eq "wiki page"} highlight{/if}"  href="javascript:setObjectType('wiki page','typeWikiPage');" id="typeWikiPage">{tr}Wiki pages{/tr}</a>
 {/if}
 {if $feature_galleries eq 'y'}
-<a class="linkbut" href="tiki-freetag_list_objects.php?tag={$tag}&amp;type=image+gallery">{if $type eq 'image gallery'}<span class="highlight">{/if}{tr}Image galleries{/tr}{if $type eq 'image gallery'}</span>{/if}</a>
+<a class="linkbut {if $type eq 'image gallery'} highlight{/if}"  href="javascript:setObjectType('image gallery','typeImageGalleries');" id="typeImageGalleries">{tr}Image galleries{/tr}</a>
 {/if}
 {if $feature_galleries eq 'y'}
-<a class="linkbut" href="tiki-freetag_list_objects.php?tag={$tag}&amp;type=image">{if $type eq 'image'}<span class="highlight">{/if}{tr}Images{/tr}{if $type eq image}</span>{/if}</a>
+<a class="linkbut {if $type eq "image"} highlight{/if}"  href="javascript:setObjectType('image','typeImage');" id="typeImage">{tr}Images{/tr}</a>
 {/if}
 {if $feature_file_galleries eq 'y'}
-<a class="linkbut" href="tiki-freetag_list_objects.php?tag={$tag}&amp;type=file+gallery">{if $type eq 'file gallery'}<span class="highlight">{/if}{tr}File galleries{/tr}{if $type eq 'file gallery'}</span>{/if}</a>
+<a class="linkbut {if $type eq "file gallery"} highlight{/if}"  href="javascript:setObjectType('file gallery','typeFileGallery');" id="typeFileGallery">{tr}File galleries{/tr}</a>
 {/if}
 {if $feature_blogs eq 'y'}
-<a class="linkbut" href="tiki-freetag_list_objects.php?tag={$tag}&amp;type=blog+post">{if $type eq 'blog'}<span class="highlight">{/if}{tr}Blogs{/tr}{if $type eq 'blog'}</span>{/if}</a>
+<a class="linkbut {if $type eq "blog post"} highlight{/if}"  href="javascript:setObjectType('blog post','typeBlogPost');" id="typeBlogPost">{tr}Blogs{/tr}</a>
 {/if}
 {if $feature_trackers eq 'y'}
-<a class="linkbut" href="tiki-freetag_list_objects.php?tag={$tag}&amp;type=tracker">{if $type eq 'tracker'}<span class="highlight">{/if}{tr}Trackers{/tr}{if $type eq 'tracker'}</span>{/if}</a>
-{/if}<a class="linkbut" href="tiki-freetag_list_objects.php?tag={$tag}&amp;type=trackerItem">{if $type eq 'trackerItem'}<span class="highlight">{/if}{tr}Trackers Items{/tr}{if $type eq 'trackerItem'}</span>{/if}</a>
+<a class="linkbut {if $type eq "tracker"} highlight{/if}"  href="javascript:setObjectType('tracker','typeTracker');" id="typeTracker">{tr}Trackers{/tr}</a>
+{/if}<a class="linkbut {if $type eq "tracker item"} highlight{/if}"  href="javascript:setObjectType('tracker item','typeTrackerItem');" id="typeTrackerItem">{tr}Trackers Items{/tr}</a>
 {if $feature_quizzes eq 'y'}
-<a class="linkbut" href="tiki-freetag_list_objects.php?tag={$tag}&amp;type=quiz">{if $type eq 'quiz'}<span class="highlight">{/if}{tr}Quizzes{/tr}{if $type eq 'quiz'}</span>{/if}</a>
+<a class="linkbut {if $type eq "quizz"} highlight{/if}"  href="javascript:setObjectType('quizz','typeQuiz');" id="typeQuiz">{tr}Quizzes{/tr}</a>
 {/if}
 {if $feature_polls eq 'y'}
-<a class="linkbut" href="tiki-freetag_list_objects.php?tag={$tag}&amp;type=poll">{if $type eq 'poll'}<span class="highlight">{/if}{tr}Polls{/tr}{if $type eq 'poll'}</span>{/if}</a>
+<a class="linkbut {if $type eq "poll"} highlight{/if}"  href="javascript:setObjectType('poll','typePoll');" id="typePoll">{tr}Polls{/tr}</a>
 {/if}
 {if $feature_surveys eq 'y'}
-<a class="linkbut" href="tiki-freetag_list_objects.php?tag={$tag}&amp;type=survey">{if $type eq 'survey'}<span class="highlight">{/if}{tr}Surveys{/tr}{if $type eq 'survey'}</span>{/if}</a>
+<a class="linkbut {if $type eq "survey"} highlight{/if}"  href="javascript:setObjectType('survey','typeSurvey');" id="typeSurvey">{tr}Surveys{/tr}</a>
 {/if}
 {if $feature_directory eq 'y'}
-<a class="linkbut" href="tiki-freetag_list_objects.php?tag={$tag}&amp;type=directory">{if $type eq 'directory'}<span class="highlight">{/if}{tr}Directory{/tr}{if $type eq 'directory'}</span>{/if}</a>
+<a class="linkbut {if $type eq "directory"} highlight{/if}"  href="javascript:setObjectType('directory','typeDirectory');" id="typeDirectory">{tr}Directory{/tr}</a>
 {/if}
 {if $feature_faqs eq 'y'}
-<a class="linkbut" href="tiki-freetag_list_objects.php?tag={$tag}&amp;type=faq">{if $type eq 'faq'}<span class="highlight">{/if}{tr}FAQs{/tr}{if $type eq 'faq'}</span>{/if}</a>
+<a class="linkbut {if $type eq "faq"} highlight{/if}"  href="javascript:setObjectType('faq','typeFaq');" id="typeFaq">{tr}FAQs{/tr}</a>
 {/if}
 {if $feature_sheet eq 'y'}
-<a class="linkbut" href="tiki-freetag_list_objects.php?tag={$tag}&amp;type=sheet">{if $type eq 'sheet'}<span class="highlight">{/if}{tr}Sheets{/tr}{if $type eq 'sheet'}</span>{/if}</a>
+<a class="linkbut {if $type eq "sheet"} highlight{/if}"  href="javascript:setObjectType('sheet','typeSheet');" id="typeSheet">{tr}Sheets{/tr}</a>
 {/if}
 {if $feature_articles eq 'y'}
-<a class="linkbut" href="tiki-freetag_list_objects.php?tag={$tag}&amp;type=article">{if $type eq 'article'}<span class="highlight">{/if}{tr}Articles{/tr}{if $type eq 'article'}</span>{/if}</a>
+<a class="linkbut {if $type eq "article"} highlight{/if}"  href="javascript:setObjectType('article','typeArticle');" id="typeArticle">{tr}Articles{/tr}</a>
 {/if}
 
 <applet codebase="./lib/wiki3d" archive="morcego-0.4.0.jar" code="br.arca.morcego.Morcego" width="{$wiki_3d_width}" height="{$wiki_3d_height}">
