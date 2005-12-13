@@ -872,14 +872,14 @@ class FreetagLib extends ObjectLib {
 			INNER JOIN `tiki_freetags` t1 ON ( t1.`tagId` = o1.`tagId` )
 			INNER JOIN `tiki_freetagged_objects` o2 ON ( o1.`objectId` = o2.`objectId` )
 			INNER JOIN `tiki_freetags` t2 ON ( t2.`tagId` = o2.`tagId` )
-			WHERE t2.`tag` = ? AND t1.`tag` != ?
+			WHERE t2.`tag` = ? AND t1.`tag` <> ?
 			GROUP BY o1.`tagId`
 			ORDER BY quantity DESC
 			";
 	    
 	$bindvals = array($tag, $tag);
 	    
-	$result = $this->query($query, array(), $max, 0);
+	$result = $this->query($query, $bindvals, $max, 0);
 	    
 	$ret = array();
 	while ($row = $result->fetchRow()) {
