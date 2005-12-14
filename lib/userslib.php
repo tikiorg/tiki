@@ -1981,6 +1981,41 @@ function get_included_groups($group) {
         return $rv[$group];
     }
 
+    function related_users($user, $max=10, $type='wiki') {
+	if(!isset($user) || empty($user)) {
+	    return array();
+	}
+	
+	// This query was written using a double join for PHP. If you're trying to eke
+	// additional performance and are running MySQL 4.X, you might want to try a 
+	// subselect and compare perf numbers.
+
+	if ($type == 'wiki') {
+	    $query = "SELECT u1.`login`, COUNT( p1.`pageName` ) AS quantity
+			FROM `tiki_history` p1
+			INNER JOIN `users_users` u1 ON ( u1.`login` = p1.`user` )
+			INNER JOIN `tiki_history` p2 ON ( p1.`pageName` = p2.`pageName` )
+			INNER JOIN `users_users` u2 ON ( u2.`login` = p2.`user` )
+			WHERE u2.`login` = ? AND u1.`login` <> ?
+			GROUP BY p1.`pageName`
+			ORDER BY quantity DESC
+			";
+	} else {
+	    return array();
+	}
+
+	$bindvals = array($user, $user);
+	    
+	$result = $this->query($query, $bindvals, $max, 0);
+	    
+	$ret = array();
+	while ($row = $result->fetchRow()) {
+	    $ret[] = $row;
+	}
+	    
+	return $ret;
+    }
+
     // Friends methods
     // TODO: if there's already a friendship request from friend to user, accept it
     function request_friendship($user, $friend)
