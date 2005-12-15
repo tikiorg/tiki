@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.6 2005-12-02 18:52:02 lfagundes Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.7 2005-12-15 16:58:57 lfagundes Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -1250,6 +1250,28 @@ a.freetag_4 { text-decoration: none; font-size: 12px; }
 a.freetag_5 { text-decoration: none; font-size: 14px; }
 a.freetag_6 { text-decoration: none; font-size: 16px; }
 a.freetag_7 { text-decoration: none; font-size: 18px; }
+
+div.freetagObjectOdd {
+	margin: 2px;
+	background-color : #F7F9FA;
+	position: relative;
+}
+
+div.freetagObjectEven {
+	margin: 2px;
+	background-color : #E7E9EA;
+	position: relative;
+}
+
+div.freetagObjectName a {
+	text-decoration: none;
+}
+
+div.freetagObjectType {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+}
 
 /***************************************************** FAQS **************************************************************/
 div.faqlistquestions {
