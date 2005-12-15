@@ -1,7 +1,7 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.25 2005-12-08 19:30:04 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.26 2005-12-15 19:01:44 sylvieg Exp $
  * 
  * \brief {SPLIT} wiki plugin implementation
  * Usage:
@@ -30,7 +30,7 @@ function wikiplugin_split_help() {
  *		$pos is the position in the object where the non-parsed data begins
  */
 function wikiplugin_split($data, $params, $pos) {
-	global $tikilib, $tiki_p_admin_wiki;
+	global $tikilib, $tiki_p_admin_wiki, $tiki_p_admin;
 	global $replacement;
 
     // Remove first <ENTER> if exists...
