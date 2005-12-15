@@ -254,6 +254,18 @@
 	   <br />{tr}InterTiki{/tr}</a>
       </td>
     </tr>
+    <tr>
+      <td style="text-align:center;">
+           <a href="tiki-admin.php?page=freetags"
+           title="{tr}Freetags{/tr}"
+           class="link"><img border="0" src="img/smiles/icon_cool.gif"
+           alt="icon" /><br />{tr}Freetags{/tr}</a>
+      </td>
+      <td style="text-align:center;">
+      </td>
+      <td style="text-align:center;">
+      </td>
+    </tr>
    </table>
   </div>
 </div>

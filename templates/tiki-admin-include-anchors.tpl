@@ -92,3 +92,7 @@
 <a href="tiki-admin.php?page=intertiki" title="{tr}Intertiki{/tr}" class="link"><img border="0"
    src="img/icons/admin_intertiki.png" alt="{tr}InterTiki{/tr}" /></a>
 {/if}
+{if $feature_freetags and $feature_freetags eq 'y'}
+<a href="tiki-admin.php?page=freetags" title="{tr}Freetags{/tr}" class="link"><img border="0"
+   src="img/smiles/icon_cool.gif" alt="{tr}Freetags{/tr}" /></a>
+{/if}
