@@ -1,4 +1,4 @@
-﻿<?php // -*- coding:utf-8 -*-
+<?php // -*- coding:utf-8 -*-
 // parameters:
 // lang=xx    : only tranlates language 'xx',
 //              if not given all languages are translated
@@ -5215,5 +5215,7 @@ $lang=Array(
 "Last pages" => "Páginas recentes",
 "Tiki RSS feed for the wiki pages" => "Fonte RSS para páginas wiki",
 "Last modifications to the Wiki." => "Últimas modificações no wiki.",
+"Folksonomy Tags" => "Tags",
+"Put tags separated by spaces. For tags with more than one word, use no spaces and put words together.","Coloque as tags separadas por espaços. Para tags com mais de uma palavra, junte as palavras sem espaço.",
 "###end###"=>"###end###");
 ?>
