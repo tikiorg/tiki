@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/freetag_list.php,v 1.1 2005-10-17 00:04:56 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/freetag_list.php,v 1.2 2005-12-15 16:42:51 lfagundes Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -28,6 +28,10 @@ if ($feature_freetags == 'y') {
     }
 
     $smarty->assign('taglist',$taglist);
+
+    $suggestion = $freetaglib->get_tag_suggestion($taglist,10);
+
+    $smarty->assign('tag_suggestion',$suggestion);
 
 }
 

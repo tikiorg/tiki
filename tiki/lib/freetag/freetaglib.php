@@ -754,12 +754,43 @@ class FreetagLib extends ObjectLib {
 
 	    $ret[] = $row;
 	}
-
+	
+	// this should get out of here, function should return in order of
+	// popularity
 	array_multisort($tag, SORT_ASC, $count, SORT_DESC, $ret);
 	    
 	return $ret;
     }
 
+    /**
+     * get_tag_suggestion
+     *
+     * This function returns the a set of tags to suggest to user.
+     * While it will statistically retrieve most popular more often,
+     * it has a random factor for new patterns to emerge.
+     * 
+     * @param string A string containing all tags object has, to be avoided
+     * @param int The number of tags to return in the result set.
+     *
+     * @return array Returns a PHP array with tags ordered randomly
+     */
+
+    function get_tag_suggestion($exclude = '', $max = 10) {
+	$query = "select t.* from `tiki_freetags` t, `tiki_freetagged_objects` o where t.`tagId`=o.`tagId` order by rand()";
+	$result = $this->query($query);
+
+	$tags = array();
+	$index = array();
+	while (sizeof($tags) < $max && $row = $result->fetchRow()) {
+	    $tag = $row['tag'];
+	    if (!isset($index[$tag]) && !preg_match("/$tag/",$exclude)) {
+		$tags[] = $tag;
+		$index[$tag] = 1;
+	    }
+	}
+
+	return $tags;
+    }
 
     /**
      * count_tags
