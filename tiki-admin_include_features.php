@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.42 2005-12-12 15:18:46 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.43 2005-12-15 19:09:20 lfagundes Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -11,6 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 $features_toggles = array(
+	"feature_ajax",
 	"feature_articles",
 	"feature_autolinks",
 	"feature_babelfish",
@@ -94,6 +95,7 @@ $features_toggles = array(
 	"feature_view_tpl",
 	"feature_webmail",
 	"feature_wiki",
+	"feature_wiki3d",
 	"feature_workflow",
 	"feature_xmlrpc",
 	"layout_section",
