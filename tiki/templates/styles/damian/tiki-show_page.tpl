@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/damian/tiki-show_page.tpl,v 1.16 2005-07-26 06:14:57 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/damian/tiki-show_page.tpl,v 1.17 2005-12-15 21:02:49 lfagundes Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -32,7 +32,7 @@
 	{if !$lock and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y'}
 	  <a title="{tr}edit{/tr}" href="tiki-editpage.php?page={$page|escape:"url"}"><img src="img/icons/edit.gif" border="0"  width="20" height="16" alt='{tr}edit{/tr}' /></a>
 	{/if}
-	{if $wiki_feature_3d eq 'y'}
+	{if $feature_morcego eq "y" && $wiki_feature_3d eq "y"}
 		<a title="{tr}3d browser{/tr}" href="javascript:wiki3d_open('{$page|escape}',{$wiki_3d_width}, {$wiki_3d_height})"><img src="img/icons/ico_wiki3d.gif" border="0" width="13" height="16" alt='{tr}3d browser{/tr}' /></a>
 	{/if}
 	{if $cached_page eq 'y'}

@@ -15,7 +15,7 @@
 <span class="tabbut"><a title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;savenotepad=1" class="tablink">{tr}save{/tr}</a></span>
 {/if}
 
-{if $wiki_feature_3d eq 'y'}
+{if $feature_morcego eq "y" && $wiki_feature_3d eq "y"}
 <span class="tabbut"><a title="{tr}3d browser{/tr}" href="javascript:wiki3d_open('{$page|escape}',{$wiki_3d_width}, {$wiki_3d_height})" class="tablink">{tr}3d browser{/tr}</a></span>
 {/if}
 
