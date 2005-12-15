@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.291 2005-12-12 15:18:47 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.292 2005-12-15 21:56:20 amette Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1055,6 +1055,22 @@ $smarty->assign('wiki_3d_navigation_depth', $wiki_3d_navigation_depth);
 $smarty->assign('wiki_3d_feed_animation_interval', $wiki_3d_feed_animation_interval);
 $smarty->assign('wiki_3d_existing_page_color', $wiki_3d_existing_page_color);
 $smarty->assign('wiki_3d_missing_page_color', $wiki_3d_missing_page_color);
+
+$freetags_feature_3d = 'n';
+$freetags_3d_width = 500;
+$freetags_3d_height = 500;
+$freetags_3d_navigation_depth = 1;
+$freetags_3d_feed_animation_interval = 500;
+$freetags_3d_existing_page_color = '#00CC55';
+$freetags_3d_missing_page_color = '#FF5555';
+
+$smarty->assign('freetags_feature_3d', $freetags_feature_3d);
+$smarty->assign('freetags_3d_width', $freetags_3d_width);
+$smarty->assign('freetags_3d_height', $freetags_3d_height);
+$smarty->assign('freetags_3d_navigation_depth', $freetags_3d_navigation_depth);
+$smarty->assign('freetags_3d_feed_animation_interval', $freetags_3d_feed_animation_interval);
+$smarty->assign('freetags_3d_existing_page_color', $freetags_3d_existing_page_color);
+$smarty->assign('freetags_3d_missing_page_color', $freetags_3d_missing_page_color);
 
 // Tiki Projects
 $feature_project_group_prefix_admin = 'prj_admin_';
