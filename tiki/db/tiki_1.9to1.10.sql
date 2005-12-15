@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.67 2005-12-12 18:24:37 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.68 2005-12-15 20:21:55 amette Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -465,6 +465,5 @@ INSERT INTO `tiki_categorized_objects` SELECT `objectId` FROM `tiki_objects`;
 ALTER TABLE users_groups ADD registrationChoice CHAR(1) DEFAULT NULL;
 CREATE INDEX login ON users_users (login);
 
-
-
-
+#2005-12-15 amette
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_ajax','n');
