@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_wiki_section.php,v 1.1 2005-12-08 19:30:03 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_wiki_section.php,v 1.2 2005-12-15 19:29:54 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -39,8 +39,8 @@ if (isset($_REQUEST['save'])) {
 		die;
 	}
 	list($real_start, $real_len) = wikiplugin_split_cell($info['data'], $_REQUEST['pos'], $_REQUEST['cell']); 
-	$data = substr($info['data'], 0, $real_start).$_REQUEST['data'].substr($info['data'], $real_start + $real_len);
-//echo $_REQUEST['pos']."-".$_REQUEST['len']."<br>".$info['data']."<br>".$data;
+	$data = substr($info['data'], 0, $real_start)."\r\n".$_REQUEST['data'].substr($info['data'], $real_start + $real_len);
+//echo $_REQUEST['pos']."-".$_REQUEST['cell']."->".$real_start."-".$real_len."<br>".$info['data']."<br>".$data;die;
 	$objectlib->set_data($_REQUEST['type'], $_REQUEST['object'], $data);
 	header('Location:'.$_REQUEST['referer']);
 	die;
