@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2005-12-15 20:21:55 $
+# $Date: 2005-12-15 20:52:11 $
 # $Author: amette $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -4406,6 +4406,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_messages','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_minical','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_mobile', 'n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_modulecontrols', 'n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_morcego', 'n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_newsletters','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_newsreader','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_notepad','n');

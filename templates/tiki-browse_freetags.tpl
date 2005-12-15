@@ -1,11 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.7 2005-12-15 19:09:23 lfagundes Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.8 2005-12-15 20:52:10 amette Exp $ *}
 
 {if $feature_ajax eq 'y'}
 <script src="lib/cpaint/cpaint2.inc.compressed.js" type="text/javascript"></script>
 <script src="lib/freetag/freetag_ajax.js" type="text/javascript"></script>
 {/if}
 
-{if $feature_wiki3d eq 'y'}
+{if $feature_morcego eq 'y'}
 <h1>{tr}Browse related tags{/tr}</h1>
 
 <div class="morcego_embedded">

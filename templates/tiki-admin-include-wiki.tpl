@@ -258,7 +258,7 @@
     </form>
     </div>
   </div>
-
+{if $feature_morcego eq 'y'}
   <div class="cbox">
     <div class="cbox-title">
     {tr}Wiki 3D Browser Configuration{/tr}
@@ -363,7 +363,7 @@
     </form>
     </div>
   </div>
-
+{/if}
   <div class="cbox">
     <div class="cbox-title">
     {tr}HTML in Wiki Pages{/tr}
