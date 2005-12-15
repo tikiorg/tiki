@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.68 2005-12-15 20:21:55 amette Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.69 2005-12-15 23:46:13 amette Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -467,3 +467,8 @@ CREATE INDEX login ON users_users (login);
 
 #2005-12-15 amette
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_ajax','n');
+
+#2005-12-15 amette - Freetag permissions and menu item
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_freetags', 'Can browse freetags', 'basic', 'freetags');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_freetags_tag', 'Can tag objects', 'registered', 'freetags');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Freetags','tiki-browse_freetags.php',27,'feature_freetags','tiki_p_view_freetags','');
