@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.3 2005-12-15 20:52:10 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.4 2005-12-15 22:41:29 amette Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.3 2005-12-15 20:52:10 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.4 2005-12-15 22:41:29 amette Exp $
 //
 
 // Initialization
@@ -23,10 +23,14 @@ if ($feature_freetags != 'y') {
 }
 
 if (!isset($_REQUEST['tag'])) {
-	$smarty->assign('msg', tra("No tag specified"));
-
-	$smarty->display("error.tpl");
-	die;
+	$tag = $freetaglib->get_tag_suggestion('', 1);
+	if ($tag) {
+		header("Location: tiki-browse_freetags.php?tag=$tag[0]");
+	} else {
+		$smarty->assign('msg', tra("Nothing tagged yet").'.');
+		$smarty->display("error.tpl");
+		die;
+	}
 }
 
 if (!isset($_REQUEST["sort_mode"])) {
