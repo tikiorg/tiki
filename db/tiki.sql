@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2005-12-12 18:24:37 $
-# $Author: sylvieg $
+# $Date: 2005-12-15 20:21:55 $
+# $Author: amette $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -4331,6 +4331,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('display_timezone','EST'
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('eponymousGroups','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('faq_comments_default_ordering','points_desc');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('faq_comments_per_page','10');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_ajax','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_article_comments','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_articles','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_autolinks','y');
