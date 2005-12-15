@@ -25,7 +25,7 @@
 {if $feature_freetags eq 'y'}
 <div class="freetaglist">
   {foreach from=$tags.data item=tag}
-	  <a class="freetag" href="tiki-freetag_list_objects.php?tag={$tag.tag}">{$tag.tag}</a> 
+	  <a class="freetag" href="tiki-browse_freetags.php?tag={$tag.tag}">{$tag.tag}</a> 
   {/foreach}
 </div>
 {/if}

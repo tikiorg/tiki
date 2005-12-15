@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.91 2005-12-12 22:13:38 lfagundes Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.92 2005-12-15 19:51:51 lfagundes Exp $ *}
 
 {breadcrumbs type="trail" loc="page" crumbs=$crumbs}
 {if $feature_page_title eq 'y'}
@@ -87,7 +87,7 @@
 {if $freetags.data[0] and $feature_freetags eq 'y'}
 <div class="freetaglist">
   {foreach from=$freetags.data item=taginfo}
-	  <a class="freetag" href="tiki-freetag_list_objects.php?tag={$taginfo.tag}">{$taginfo.tag}</a> 
+	  <a class="freetag" href="tiki-browse_freetags.php?tag={$taginfo.tag}">{$taginfo.tag}</a> 
   {/foreach}
 </div>
 {/if}
