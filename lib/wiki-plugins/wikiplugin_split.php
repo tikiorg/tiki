@@ -1,7 +1,7 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.26 2005-12-15 19:01:44 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.27 2005-12-15 21:59:56 sylvieg Exp $
  * 
  * \brief {SPLIT} wiki plugin implementation
  * Usage:
@@ -138,14 +138,16 @@ function wikiplugin_split($data, $params, $pos) {
 				$i = substr($i, 2);
 				$ind += 2;
 			}
-			$result .= '<div class="split">';
 			if ($edit == 'y' && $perm) {
+				$result .= '<div class="split">';
  				$result .= '<a href="tiki-edit_wiki_section.php?object='.$object.'&amp;type='.$type.'&amp;pos='.$pos.'&amp;cell='.$idx.'">'
-  	                                 .'<img src="img/icons/edit.gif" alt="'.tra('edit').'" title="'.tra('edit').'" align="right" /></a>';
+  	                                 .'<img src="img/icons/edit.gif" alt="'.tra('edit').'" title="'.tra('edit').'" align="right" border="0" /></a>';
  				$ind += strlen($i);
 				while (isset($data[$ind]) && ($data[$ind] == '-' || $data[$ind] == '@'))
 					++$ind;
 			}
+			else
+				$result .= '<div>';
 			$result .= preg_replace("/\\r\\n/", "<br />\r\n", $i). '</div>';
 			++$idx;
 		}
