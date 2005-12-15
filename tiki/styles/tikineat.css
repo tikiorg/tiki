@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.7 2005-12-15 16:58:57 lfagundes Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.8 2005-12-15 21:59:55 sylvieg Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -1950,6 +1950,10 @@ border-width: 0px 1px 1px 1px;
 border-style: solid;
 color: black;
 background-color: #edeeef;
+}
+div.split {
+border: 1px dashed #A9B8C2;
+clear:both;
 }
 
 /* end of css file */
