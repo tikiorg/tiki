@@ -1,6 +1,6 @@
 -- $Rev$
--- $Date: 2005-10-26 15:11:03 $
--- $Author: amette $
+-- $Date: 2005-12-15 16:12:20 $
+-- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -70,7 +70,7 @@ CREATE TABLE "galaxia_instance_activities" (
   "activityId" number(14) default '0' NOT NULL,
   "started" number(14) default '0' NOT NULL,
   "ended" number(14) default '0' NOT NULL,
-  "user" varchar(200) default NULL,
+  "user" varchar(40) default NULL,
   "status" varchar(11) default NULL CHECK ("status" IN ('running','completed')),
   PRIMARY KEY ("instanceId","activityId")
 ) ;
@@ -88,7 +88,7 @@ CREATE SEQUENCE "galaxia_instance_comments_sequ" INCREMENT BY 1 START WITH 1;
 CREATE TABLE "galaxia_instance_comments" (
   "cId" number(14) NOT NULL,
   "instanceId" number(14) default '0' NOT NULL,
-  "user" varchar(200) default NULL,
+  "user" varchar(40) default NULL,
   "activityId" number(14) default NULL,
   "hash" varchar(32) default NULL,
   "title" varchar(250) default NULL,
@@ -212,7 +212,7 @@ CREATE SEQUENCE "galaxia_user_roles_sequ" INCREMENT BY 1 START WITH 1;
 CREATE TABLE "galaxia_user_roles" (
   "pId" number(14) default '0' NOT NULL,
   "roleId" number(14) NOT NULL,
-  "user" varchar(200) default '' NOT NULL,
+  "user" varchar(40) default '' NOT NULL,
   PRIMARY KEY ("roleId","user")
 )   ;
 
@@ -239,7 +239,7 @@ CREATE TABLE "galaxia_workitems" (
   "properties" blob,
   "started" number(14) default NULL,
   "ended" number(14) default NULL,
-  "user" varchar(200) default NULL,
+  "user" varchar(40) default NULL,
   PRIMARY KEY ("itemId")
 )   ;
 
@@ -260,7 +260,7 @@ DROP TABLE "messu_messages";
 CREATE SEQUENCE "messu_messages_sequ" INCREMENT BY 1 START WITH 1;
 CREATE TABLE "messu_messages" (
   "msgId" number(14) NOT NULL,
-  "user" varchar(200) default '' NOT NULL,
+  "user" varchar(40) default '' NOT NULL,
   "user_from" varchar(200) default '' NOT NULL,
   "user_to" clob,
   "user_cc" clob,
@@ -295,8 +295,8 @@ DROP TABLE "messu_archive";
 CREATE SEQUENCE "messu_archive_sequ" INCREMENT BY 1 START WITH 1;
 CREATE TABLE "messu_archive" (
   "msgId" number(14) NOT NULL,
-  "user" varchar(200) default '' NOT NULL,
-  "user_from" varchar(200) default '' NOT NULL,
+  "user" varchar(40) default '' NOT NULL,
+  "user_from" varchar(40) default '' NOT NULL,
   "user_to" clob,
   "user_cc" clob,
   "user_bcc" clob,
@@ -330,8 +330,8 @@ DROP TABLE "messu_sent";
 CREATE SEQUENCE "messu_sent_sequ" INCREMENT BY 1 START WITH 1;
 CREATE TABLE "messu_sent" (
   "msgId" number(14) NOT NULL,
-  "user" varchar(200) default '' NOT NULL,
-  "user_from" varchar(200) default '' NOT NULL,
+  "user" varchar(40) default '' NOT NULL,
+  "user_from" varchar(40) default '' NOT NULL,
   "user_to" clob,
   "user_cc" clob,
   "user_bcc" clob,
@@ -380,7 +380,7 @@ CREATE TABLE "tiki_actionlog" (
   "lastModif" number(14) default NULL,
   "object" varchar(255) default NULL,
   "objectType" varchar(32) default '' NOT NULL,
-  "user" varchar(200) default NULL,
+  "user" varchar(40) default NULL,
   "ip" varchar(15) default NULL,
   "comment" varchar(200) default NULL,
   "categId" number(12) default '0' NOT NULL,
@@ -552,7 +552,7 @@ CREATE TABLE "tiki_banning" (
   "ip2" char(3) default NULL,
   "ip3" char(3) default NULL,
   "ip4" char(3) default NULL,
-  "user" varchar(200) default NULL,
+  "user" varchar(40) default NULL,
   "date_from" timestamp(3) NOT NULL,
   "date_to" timestamp(3) NOT NULL,
   "use_dates" char(1) default NULL,
@@ -614,7 +614,7 @@ CREATE TABLE "tiki_blog_posts" (
   "data" clob,
   "data_size" number(11) default '0' NOT NULL,
   "created" number(14) default NULL,
-  "user" varchar(200) default NULL,
+  "user" varchar(40) default NULL,
   "priv" varchar(1) default NULL,
   "trackbacks_to" clob,
   "trackbacks_from" clob,
@@ -673,7 +673,7 @@ CREATE TABLE "tiki_blogs" (
   "lastModif" number(14) default NULL,
   "title" varchar(200) default NULL,
   "description" clob,
-  "user" varchar(200) default NULL,
+  "user" varchar(40) default NULL,
   "public" char(1) default NULL,
   "posts" number(8) default NULL,
   "maxPosts" number(8) default NULL,
@@ -858,29 +858,39 @@ END;
 -- Table structure for table tiki_categorized_objects
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 13, 2003 at 01:09 AM
+-- Last update: Dec 06, 2005 
 --
-DROP TABLE "tiki_categorized_objects";
+DROP TABLE "tiki_objects";
 
-CREATE SEQUENCE "tiki_categorized_objects_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "tiki_categorized_objects" (
-  "catObjectId" number(12) NOT NULL,
+CREATE SEQUENCE "tiki_objects_sequ" INCREMENT BY 1 START WITH 1;
+CREATE TABLE "tiki_objects" (
+  "objectId" number(12) NOT NULL,
   "type" varchar(50) default NULL,
-  "objId" varchar(255) default NULL,
+  "itemId" varchar(255) default NULL,
   "description" clob,
   "created" number(14) default NULL,
   "name" varchar(200) default NULL,
   "href" varchar(200) default NULL,
   "hits" number(8) default NULL,
-  PRIMARY KEY ("catObjectId")
+  PRIMARY KEY ("objectId")
 )   ;
 
-CREATE TRIGGER "tiki_categorized_objects_trig" BEFORE INSERT ON "tiki_categorized_objects" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
+CREATE TRIGGER "tiki_objects_trig" BEFORE INSERT ON "tiki_objects" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
-SELECT "tiki_categorized_objects_sequ".nextval into :NEW."catObjectId" FROM DUAL;
+SELECT "tiki_objects_sequ".nextval into :NEW."objectId" FROM DUAL;
 END;
 /
 -- --------------------------------------------------------
+-- Table structure for table `tiki_categorized_objects`
+--
+DROP TABLE `tiki_categorized_objects`;
+
+CREATE TABLE `tiki_categorized_objects` (
+  `catObjectId` number(11) default '0' NOT NULL,
+  PRIMARY KEY ("`catObjectId`")
+)  ;
+
+
 --
 -- Table structure for table tiki_category_objects
 --
@@ -1021,7 +1031,7 @@ CREATE TABLE "tiki_charts_rankings" (
 DROP TABLE "tiki_charts_votes";
 
 CREATE TABLE "tiki_charts_votes" (
-  "user" varchar(200) default '' NOT NULL,
+  "user" varchar(40) default '' NOT NULL,
   "itemId" number(14) default '0' NOT NULL,
   "timestamp" number(14) default NULL,
   "chartId" number(14) default NULL,
@@ -1240,7 +1250,7 @@ CREATE TABLE "tiki_copyrights" (
   "year" number(11) default NULL,
   "authors" varchar(200) default NULL,
   "copyright_order" number(11) default NULL,
-  "userName" varchar(200) default NULL,
+  "userName" varchar(40) default NULL,
   PRIMARY KEY ("copyrightId")
 )   ;
 
@@ -1342,7 +1352,7 @@ CREATE TABLE "tiki_drawings" (
   "filename_draw" varchar(250) default NULL,
   "filename_pad" varchar(250) default NULL,
   "timestamp" number(14) default NULL,
-  "user" varchar(200) default NULL,
+  "user" varchar(40) default NULL,
   PRIMARY KEY ("drawId")
 )   ;
 
@@ -1528,7 +1538,7 @@ CREATE TABLE "tiki_file_galleries" (
   "created" number(14) default NULL,
   "visible" char(1) default NULL,
   "lastModif" number(14) default NULL,
-  "user" varchar(200) default NULL,
+  "user" varchar(40) default NULL,
   "hits" number(14) default NULL,
   "votes" number(8) default NULL,
   "points" decimal(8,2) default NULL,
@@ -1571,7 +1581,7 @@ CREATE TABLE "tiki_files" (
   "filesize" number(14) default NULL,
   "filetype" varchar(250) default NULL,
   "data" blob,
-  "user" varchar(200) default NULL,
+  "user" varchar(40) default NULL,
   "downloads" number(14) default NULL,
   "votes" number(8) default NULL,
   "points" decimal(8,2) default NULL,
@@ -1634,7 +1644,7 @@ END;
 DROP TABLE "tiki_forum_reads";
 
 CREATE TABLE "tiki_forum_reads" (
-  "user" varchar(200) default '' NOT NULL,
+  "user" varchar(40) default '' NOT NULL,
   "threadId" number(14) default '0' NOT NULL,
   "forumId" number(14) default NULL,
   "timestamp" number(14) default NULL,
@@ -1653,7 +1663,7 @@ DROP TABLE "tiki_forums";
 CREATE SEQUENCE "tiki_forums_sequ" INCREMENT BY 1 START WITH 1;
 CREATE TABLE "tiki_forums" (
   "forumId" number(8) NOT NULL,
-  "name" varchar(200) default NULL,
+  "name" varchar(40) default NULL,
   "description" clob,
   "created" number(14) default NULL,
   "lastPost" number(14) default NULL,
@@ -1729,7 +1739,7 @@ CREATE TABLE "tiki_forums_queue" (
   "parentId" number(14) default NULL,
   "forumId" number(14) default NULL,
   "timestamp" number(14) default NULL,
-  "user" varchar(200) default NULL,
+  "user" varchar(40) default NULL,
   "title" varchar(240) default NULL,
   "data" clob,
   "type" varchar(60) default NULL,
@@ -1758,7 +1768,7 @@ CREATE TABLE "tiki_forums_reported" (
   "threadId" number(12) default '0' NOT NULL,
   "forumId" number(12) default '0' NOT NULL,
   "parentId" number(12) default '0' NOT NULL,
-  "user" varchar(200) default NULL,
+  "user" varchar(40) default NULL,
   "timestamp" number(14) default NULL,
   "reason" varchar(250) default NULL,
   PRIMARY KEY ("threadId")
@@ -1784,7 +1794,7 @@ CREATE TABLE "tiki_galleries" (
   "visible" char(1) default NULL,
   "geographic" char(1) default NULL,
   "theme" varchar(60) default NULL,
-  "user" varchar(200) default NULL,
+  "user" varchar(40) default NULL,
   "hits" number(14) default NULL,
   "maxRows" number(10) default NULL,
   "rowImages" number(10) default NULL,
@@ -1879,7 +1889,7 @@ CREATE TABLE "tiki_history" (
   "version_minor" number(8) default '0' NOT NULL,
   "lastModif" number(14) default NULL,
   "description" varchar(200) default NULL,
-  "user" varchar(200) default NULL,
+  "user" varchar(40) default NULL,
   "ip" varchar(15) default NULL,
   "comment" varchar(200) default NULL,
   "data" blob,
@@ -1955,7 +1965,7 @@ CREATE TABLE "tiki_images" (
   "lat" float default NULL,
   "lon" float default NULL,
   "created" number(14) default NULL,
-  "user" varchar(200) default NULL,
+  "user" varchar(40) default NULL,
   "hits" number(14) default NULL,
   "path" varchar(255) default NULL,
   PRIMARY KEY ("imageId")
@@ -2135,7 +2145,7 @@ CREATE TABLE "tiki_live_support_messages" (
   "msgId" number(12) NOT NULL,
   "data" clob,
   "timestamp" number(14) default NULL,
-  "user" varchar(200) default NULL,
+  "user" varchar(40) default NULL,
   "username" varchar(200) default NULL,
   "priority" number(2) default NULL,
   "status" char(1) default NULL,
@@ -2198,7 +2208,7 @@ INSERT INTO tiki_live_support_modules(name) VALUES('charts');
 DROP TABLE "tiki_live_support_operators";
 
 CREATE TABLE "tiki_live_support_operators" (
-  "user" varchar(200) default '' NOT NULL,
+  "user" varchar(40) default '' NOT NULL,
   "accepted_requests" number(10) default NULL,
   "status" varchar(20) default NULL,
   "longest_chat" number(10) default NULL,
@@ -2223,7 +2233,7 @@ DROP TABLE "tiki_live_support_requests";
 
 CREATE TABLE "tiki_live_support_requests" (
   "reqId" varchar(32) default '' NOT NULL,
-  "user" varchar(200) default NULL,
+  "user" varchar(40) default NULL,
   "tiki_user" varchar(200) default NULL,
   "email" varchar(200) default NULL,
   "operator" varchar(200) default NULL,
@@ -2253,7 +2263,7 @@ CREATE TABLE "tiki_logs" (
   "logId" number(8) NOT NULL,
   "logtype" varchar(20) NOT NULL,
   "logmessage" clob NOT NULL,
-  "loguser" varchar(200) NOT NULL,
+  "loguser" varchar(40) NOT NULL,
   "logip" varchar(200) NOT NULL,
   "logclient" clob NOT NULL,
   "logtime" number(14) NOT NULL,
@@ -2294,7 +2304,7 @@ DROP TABLE "tiki_mailin_accounts";
 CREATE SEQUENCE "tiki_mailin_accounts_sequ" INCREMENT BY 1 START WITH 1;
 CREATE TABLE "tiki_mailin_accounts" (
   "accountId" number(12) NOT NULL,
-  "user" varchar(200) default '' NOT NULL,
+  "user" varchar(40) default '' NOT NULL,
   "account" varchar(50) default '' NOT NULL,
   "pop" varchar(255) default NULL,
   "port" number(4) default NULL,
@@ -2381,6 +2391,8 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Games','tiki-list_games.php',30,'feature_games','tiki_p_play_games','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Calendar','tiki-calendar.php',35,'feature_calendar','tiki_p_view_calendar','');
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Mobile','tiki-mobile.php',37,'feature_mobile','','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','(debug)','javascript:toggle("debugconsole")',40,'feature_debug_console','tiki_p_admin','');
 
@@ -2534,7 +2546,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Directory','tiki-directory_browse.php',550,'feature_directory','tiki_p_view_directory','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Submit a new link','tiki-directory_add_site.php',555,'feature_directory','tiki_p_view_directory','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Submit a new link','tiki-directory_add_site.php',555,'feature_directory','tiki_p_submit_link','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Browse directory','tiki-directory_browse.php',560,'feature_directory','tiki_p_view_directory','');
 
@@ -2609,7 +2621,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Ephemerides','tiki-eph.php',950,'feature_eph','','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin','tiki-eph_admin.php',955,'feature_eph','tiki_p_eph_admin','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin ephemerides','tiki-eph_admin.php',955,'feature_eph','tiki_p_eph_admin','');
 
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Charts','tiki-charts.php',1000,'feature_charts','','');
@@ -2735,6 +2747,21 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Action Log','tiki-admin_actionlog.php',1255,'feature_actionlog','tiki_p_admin','');
 
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_wiki_comments','tiki_p_admin','');
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_article_comments','tiki_p_admin','');
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_blog_comments','tiki_p_admin','');
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_file_galleries_comments','tiki_p_admin','');
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_image_galleries_comments','tiki_p_admin','');
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_poll_comments','tiki_p_admin','');
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_faq_comments','tiki_p_admin','');
+
 -- --------------------------------------------------------
 --
 -- Table structure for table tiki_menus
@@ -2772,7 +2799,7 @@ DROP TABLE "tiki_minical_events";
 
 CREATE SEQUENCE "tiki_minical_events_sequ" INCREMENT BY 1 START WITH 1;
 CREATE TABLE "tiki_minical_events" (
-  "user" varchar(200) default NULL,
+  "user" varchar(40) default NULL,
   "eventId" number(12) NOT NULL,
   "title" varchar(250) default NULL,
   "description" clob,
@@ -2801,7 +2828,7 @@ DROP TABLE "tiki_minical_topics";
 
 CREATE SEQUENCE "tiki_minical_topics_sequ" INCREMENT BY 1 START WITH 1;
 CREATE TABLE "tiki_minical_topics" (
-  "user" varchar(200) default NULL,
+  "user" varchar(40) default NULL,
   "topicId" number(12) NOT NULL,
   "name" varchar(250) default NULL,
   "filename" varchar(200) default NULL,
@@ -2923,7 +2950,7 @@ END;
 DROP TABLE "tiki_newsreader_marks";
 
 CREATE TABLE "tiki_newsreader_marks" (
-  "user" varchar(200) default '' NOT NULL,
+  "user" varchar(40) default '' NOT NULL,
   "serverId" number(12) default '0' NOT NULL,
   "groupName" varchar(255) default '' NOT NULL,
   "timestamp" number(14) default '0' NOT NULL,
@@ -2941,7 +2968,7 @@ DROP TABLE "tiki_newsreader_servers";
 
 CREATE SEQUENCE "tiki_newsreader_servers_sequ" INCREMENT BY 1 START WITH 1;
 CREATE TABLE "tiki_newsreader_servers" (
-  "user" varchar(200) default '' NOT NULL,
+  "user" varchar(40) default '' NOT NULL,
   "serverId" number(12) NOT NULL,
   "server" varchar(250) default NULL,
   "port" number(4) default NULL,
@@ -2966,7 +2993,7 @@ END;
 DROP TABLE "tiki_page_footnotes";
 
 CREATE TABLE "tiki_page_footnotes" (
-  "user" varchar(200) default '' NOT NULL,
+  "user" varchar(40) default '' NOT NULL,
   "pageName" varchar(250) default '' NOT NULL,
   "data" clob,
   PRIMARY KEY ("user","pageName")
@@ -2992,7 +3019,7 @@ CREATE TABLE "tiki_pages" (
   "lastModif" number(14) default NULL,
   "comment" varchar(200) default NULL,
   "version" number(8) default '0' NOT NULL,
-  "user" varchar(200) default NULL,
+  "user" varchar(40) default NULL,
   "ip" varchar(15) default NULL,
   "flag" char(1) default NULL,
   "points" number(8) default NULL,
@@ -3478,7 +3505,6 @@ CREATE TABLE "tiki_searchindex"(
   "count" number(11) default '1' NOT NULL,
   "last_update" number(11) default '0' NOT NULL,
   PRIMARY KEY ("searchword","location","page")
-  KEY locationPage  (location, page)
 ) ;
 
 CREATE  INDEX "tiki_searchindex_last_update" ON "tiki_searchindex"("last_update");
@@ -3546,7 +3572,7 @@ DROP TABLE "tiki_semaphores";
 
 CREATE TABLE "tiki_semaphores" (
   "semName" varchar(250) default '' NOT NULL,
-  "user" varchar(200) default NULL,
+  "user" varchar(40) default NULL,
   "timestamp" number(14) default NULL,
   PRIMARY KEY ("semName")
 ) ;
@@ -3587,9 +3613,9 @@ DROP TABLE "tiki_sessions";
 
 CREATE TABLE "tiki_sessions" (
   "sessionId" varchar(32) default '' NOT NULL,
-  "user" varchar(200) default NULL,
-  "tikihost" varchar(200) default NULL,
+  "user" varchar(40) default NULL,
   "timestamp" number(14) default NULL,
+  "tikihost" varchar(200) default NULL,
   PRIMARY KEY ("sessionId")
 ) ;
 
@@ -3656,7 +3682,7 @@ CREATE TABLE "tiki_shoutbox" (
   "msgId" number(10) NOT NULL,
   "message" varchar(255) default NULL,
   "timestamp" number(14) default NULL,
-  "user" varchar(200) default NULL,
+  "user" varchar(40) default NULL,
   "hash" varchar(32) default NULL,
   PRIMARY KEY ("msgId")
 )   ;
@@ -3759,6 +3785,8 @@ CREATE TABLE "tiki_submissions" (
   "publishDate" number(14) default NULL,
   "expireDate" number(14) default NULL,
   "created" number(14) default NULL,
+  "bibliographical_references" clob,
+  "resume" clob,
   "heading" clob,
   "body" clob,
   "hash" varchar(32) default NULL,
@@ -3793,7 +3821,7 @@ CREATE TABLE "tiki_suggested_faq_questions" (
   "question" clob,
   "answer" clob,
   "created" number(14) default NULL,
-  "user" varchar(200) default NULL,
+  "user" varchar(40) default NULL,
   PRIMARY KEY ("sfqId")
 )   ;
 
@@ -3897,7 +3925,7 @@ CREATE TABLE "tiki_tags" (
   "lastModif" number(14) default NULL,
   "comment" varchar(200) default NULL,
   "version" number(8) default '0' NOT NULL,
-  "user" varchar(200) default NULL,
+  "user" varchar(40) default NULL,
   "ip" varchar(15) default NULL,
   "flag" char(1) default NULL,
   PRIMARY KEY ("tagName","pageName")
@@ -4024,7 +4052,7 @@ CREATE TABLE "tiki_tracker_item_attachments" (
   "filename" varchar(80) default NULL,
   "filetype" varchar(80) default NULL,
   "filesize" number(14) default NULL,
-  "user" varchar(200) default NULL,
+  "user" varchar(40) default NULL,
   "data" blob,
   "longdesc" blob,
   "path" varchar(255) default NULL,
@@ -4053,7 +4081,7 @@ CREATE SEQUENCE "tiki_tracker_item_comments_sequ" INCREMENT BY 1 START WITH 1;
 CREATE TABLE "tiki_tracker_item_comments" (
   "commentId" number(12) NOT NULL,
   "itemId" number(12) default '0' NOT NULL,
-  "user" varchar(200) default NULL,
+  "user" varchar(40) default NULL,
   "data" clob,
   "title" varchar(200) default NULL,
   "posted" number(14) default NULL,
@@ -4204,17 +4232,23 @@ CREATE TABLE "tiki_user_answers" (
 --
 DROP TABLE "tiki_user_answers_uploads";
 
-CREATE TABLE `tiki_user_answers_uploads` (
-  `answerUploadId` number(4) NOT NULL auto_increment,
-  `userResultId` number(11) default '0' NOT NULL,
-  `questionId` number(11) default '0' NOT NULL,
-  `filename` varchar(255) default '' NOT NULL,
-  `filetype` varchar(64) default '' NOT NULL,
-  `filesize` varchar(255) default '' NOT NULL,
-  `filecontent` blob NOT NULL,
-  PRIMARY KEY ("`answerUploadId`")
+CREATE SEQUENCE "tiki_user_answers_uploads_sequ" INCREMENT BY 1 START WITH 1;
+CREATE TABLE "tiki_user_answers_uploads" (
+  "answerUploadId" number(4) NOT NULL,
+  "userResultId" number(11) default '0' NOT NULL,
+  "questionId" number(11) default '0' NOT NULL,
+  "filename" varchar(255) default '' NOT NULL,
+  "filetype" varchar(64) default '' NOT NULL,
+  "filesize" varchar(255) default '' NOT NULL,
+  "filecontent" blob NOT NULL,
+  PRIMARY KEY ("answerUploadId")
 ) ;
 
+CREATE TRIGGER "tiki_user_answers_uploads_trig" BEFORE INSERT ON "tiki_user_answers_uploads" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
+BEGIN
+SELECT "tiki_user_answers_uploads_sequ".nextval into :NEW."answerUploadId" FROM DUAL;
+END;
+/
 
 --
 -- Table structure for table tiki_user_assigned_modules
@@ -4229,7 +4263,7 @@ CREATE TABLE "tiki_user_assigned_modules" (
   "position" char(1) default NULL,
   "ord" number(4) default NULL,
   "type" char(1) default NULL,
-  "user" varchar(200) default '' NOT NULL,
+  "user" varchar(40) default '' NOT NULL,
   PRIMARY KEY ("name","user")
 ) ;
 
@@ -4246,7 +4280,7 @@ CREATE SEQUENCE "tiki_user_bookmarks_folders_sequ" INCREMENT BY 1 START WITH 1;
 CREATE TABLE "tiki_user_bookmarks_folders" (
   "folderId" number(12) NOT NULL,
   "parentId" number(12) default NULL,
-  "user" varchar(200) default '' NOT NULL,
+  "user" varchar(40) default '' NOT NULL,
   "name" varchar(30) default NULL,
   PRIMARY KEY ("user","folderId")
 )   ;
@@ -4273,7 +4307,7 @@ CREATE TABLE "tiki_user_bookmarks_urls" (
   "data" blob,
   "lastUpdated" number(14) default NULL,
   "folderId" number(12) default '0' NOT NULL,
-  "user" varchar(200) default '' NOT NULL,
+  "user" varchar(40) default '' NOT NULL,
   PRIMARY KEY ("urlId")
 )   ;
 
@@ -4294,7 +4328,7 @@ DROP TABLE "tiki_user_mail_accounts";
 CREATE SEQUENCE "tiki_user_mail_accounts_sequ" INCREMENT BY 1 START WITH 1;
 CREATE TABLE "tiki_user_mail_accounts" (
   "accountId" number(12) NOT NULL,
-  "user" varchar(200) default '' NOT NULL,
+  "user" varchar(40) default '' NOT NULL,
   "account" varchar(50) default '' NOT NULL,
   "pop" varchar(255) default NULL,
   "current" char(1) default NULL,
@@ -4324,7 +4358,7 @@ DROP TABLE "tiki_user_menus";
 
 CREATE SEQUENCE "tiki_user_menus_sequ" INCREMENT BY 1 START WITH 1;
 CREATE TABLE "tiki_user_menus" (
-  "user" varchar(200) default '' NOT NULL,
+  "user" varchar(40) default '' NOT NULL,
   "menuId" number(12) NOT NULL,
   "url" varchar(250) default NULL,
   "name" varchar(40) default NULL,
@@ -4369,7 +4403,7 @@ DROP TABLE "tiki_user_notes";
 
 CREATE SEQUENCE "tiki_user_notes_sequ" INCREMENT BY 1 START WITH 1;
 CREATE TABLE "tiki_user_notes" (
-  "user" varchar(200) default '' NOT NULL,
+  "user" varchar(40) default '' NOT NULL,
   "noteId" number(12) NOT NULL,
   "created" number(14) default NULL,
   "name" varchar(255) default NULL,
@@ -4395,7 +4429,7 @@ END;
 DROP TABLE "tiki_user_postings";
 
 CREATE TABLE "tiki_user_postings" (
-  "user" varchar(200) default '' NOT NULL,
+  "user" varchar(40) default '' NOT NULL,
   "posts" number(12) default NULL,
   "last" number(14) default NULL,
   "first" number(14) default NULL,
@@ -4413,7 +4447,7 @@ CREATE TABLE "tiki_user_postings" (
 DROP TABLE "tiki_user_preferences";
 
 CREATE TABLE "tiki_user_preferences" (
-  "user" varchar(200) default '' NOT NULL,
+  "user" varchar(40) default '' NOT NULL,
   "prefName" varchar(40) default '' NOT NULL,
   "value" varchar(250) default NULL,
   PRIMARY KEY ("user","prefName")
@@ -4430,7 +4464,7 @@ DROP TABLE "tiki_user_quizzes";
 
 CREATE SEQUENCE "tiki_user_quizzes_sequ" INCREMENT BY 1 START WITH 1;
 CREATE TABLE "tiki_user_quizzes" (
-  "user" varchar(100) default NULL,
+  "user" varchar(40) default NULL,
   "quizId" number(10) default NULL,
   "timestamp" number(14) default NULL,
   "timeTaken" number(14) default NULL,
@@ -4456,7 +4490,7 @@ END;
 DROP TABLE "tiki_user_taken_quizzes";
 
 CREATE TABLE "tiki_user_taken_quizzes" (
-  "user" varchar(200) default '' NOT NULL,
+  "user" varchar(40) default '' NOT NULL,
   "quizId" varchar(255) default '' NOT NULL,
   PRIMARY KEY ("user","quizId")
 ) ;
@@ -4503,7 +4537,7 @@ DROP TABLE "tiki_user_tasks";
 CREATE TABLE "tiki_user_tasks" (
   "taskId" integer(14) NOT NULL auto_increment,        -- task id
   "last_version" integer(4) DEFAULT 0 NOT NULL,        -- last version of the task starting with 0
-  "user" varchar(200) NOT NULL,                        -- task user
+  "user" varchar(40) DEFAULT '' NOT NULL,              -- task user
   "creator" varchar(200) NOT NULL,                     -- username of creator
   "public_for_group" varchar(30) DEFAULT NULL,         -- this group can also view the task, if it is null it is not public
   "rights_by_creator" char(1) DEFAULT NULL,            -- null the user can delete the task, 
@@ -4527,7 +4561,7 @@ CREATE TABLE "tiki_user_tasks" (
 DROP TABLE "tiki_user_votings";
 
 CREATE TABLE "tiki_user_votings" (
-  "user" varchar(200) default '' NOT NULL,
+  "user" varchar(40) default '' NOT NULL,
   "id" varchar(255) default '' NOT NULL,
   "optionId" number(10) default 0 NOT NULL,
   PRIMARY KEY ("user","id")
@@ -4543,7 +4577,7 @@ CREATE TABLE "tiki_user_votings" (
 DROP TABLE "tiki_user_watches";
 
 CREATE TABLE "tiki_user_watches" (
-  "user" varchar(200) default '' NOT NULL,
+  "user" varchar(40) default '' NOT NULL,
   "event" varchar(40) default '' NOT NULL,
   "object" varchar(200) default '' NOT NULL,
   "hash" varchar(32) default NULL,
@@ -4565,7 +4599,7 @@ DROP TABLE "tiki_userfiles";
 
 CREATE SEQUENCE "tiki_userfiles_sequ" INCREMENT BY 1 START WITH 1;
 CREATE TABLE "tiki_userfiles" (
-  "user" varchar(200) default '' NOT NULL,
+  "user" varchar(40) default '' NOT NULL,
   "fileId" number(12) NOT NULL,
   "name" varchar(200) default NULL,
   "filename" varchar(200) default NULL,
@@ -4594,7 +4628,7 @@ END;
 DROP TABLE "tiki_userpoints";
 
 CREATE TABLE "tiki_userpoints" (
-  "user" varchar(200) default NULL,
+  "user" varchar(40) default NULL,
   "points" decimal(8,2) default NULL,
   "voted" number(8) default NULL
 ) ;
@@ -4609,7 +4643,7 @@ CREATE TABLE "tiki_userpoints" (
 DROP TABLE "tiki_users";
 
 CREATE TABLE "tiki_users" (
-  "user" varchar(200) default '' NOT NULL,
+  "user" varchar(40) default '' NOT NULL,
   "password" varchar(40) default NULL,
   "email" varchar(200) default NULL,
   "lastLogin" number(14) default NULL,
@@ -4632,7 +4666,7 @@ CREATE TABLE "tiki_webmail_contacts" (
   "lastName" varchar(80) default NULL,
   "email" varchar(250) default NULL,
   "nickname" varchar(200) default NULL,
-  "user" varchar(200) default '' NOT NULL,
+  "user" varchar(40) default '' NOT NULL,
   PRIMARY KEY ("contactId")
 )   ;
 
@@ -4653,7 +4687,7 @@ DROP TABLE "tiki_webmail_messages";
 CREATE TABLE "tiki_webmail_messages" (
   "accountId" number(12) default '0' NOT NULL,
   "mailId" varchar(255) default '' NOT NULL,
-  "user" varchar(200) default '' NOT NULL,
+  "user" varchar(40) default '' NOT NULL,
   "isRead" char(1) default NULL,
   "isReplied" char(1) default NULL,
   "isFlagged" char(1) default NULL,
@@ -4676,7 +4710,7 @@ CREATE TABLE "tiki_wiki_attachments" (
   "filename" varchar(80) default NULL,
   "filetype" varchar(80) default NULL,
   "filesize" number(14) default NULL,
-  "user" varchar(200) default NULL,
+  "user" varchar(40) default NULL,
   "data" blob,
   "path" varchar(255) default NULL,
   "downloads" number(10) default NULL,
@@ -4773,6 +4807,7 @@ CREATE TABLE "users_groups" (
   "groupTrackerId" number(11),
   "usersFieldId" number(11),
   "groupFieldId" number(11),
+  "registrationChoice" char(1) default NULL,
   PRIMARY KEY ("groupName")
 ) ;
 
@@ -5222,6 +5257,7 @@ BEGIN
 SELECT "users_users_sequ".nextval into :NEW."userId" FROM DUAL;
 END;
 /
+CREATE  INDEX "users_users_login" ON "users_users"("login");
 CREATE  INDEX "users_users_score" ON "users_users"("score");
 -- --------------------------------------------------------
 ------ Administrator account
@@ -5490,8 +5526,6 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_gal_imgcache','
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_games','n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_history','y');
-
--- INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_homework','n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_hotwords','y');
 
@@ -5931,11 +5965,7 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('userfiles_quota','30');
 
 
 -- user defaults
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_theme', 'global');
-
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_userbreadCrumb', '4');
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_language', 'global');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_display_timezone', 'Local');
 
@@ -5948,8 +5978,6 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_diff_versio
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_show_mouseover_user_info', 'n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_email_is_public', 'n');
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_mailCharset', 'utf-8');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('users_prefs_realName', '');
 
@@ -6068,6 +6096,8 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('wiki_wikisyntax_in_html
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('default_wiki_diff_style', 'old');
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('limitedGoGroupHome','y');
+
 
 -- default sizes for mailbox, read box and mail archive
 -- in messages per user and box (0=unlimited)
@@ -6085,6 +6115,8 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_1like_redi
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_show_hide_before', 'n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_actionlog', 'y');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_homePage_if_bl_missing', 'n');
 
 
 -- Dynamic variables
@@ -6484,133 +6516,27 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','{img src= width= height= align= desc= link= }','images/ed_image.gif','forums');
 
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New wms Metadata','METADATA\r\n		\"wms_name\" \"myname\"\r\n		\"wms_srs\" \"EPSG:4326\"\r\n	\"wms_server_version\" \" \"\r\n	\"wms_layers\" \"mylayers\"\r\n	\"wms_request\" \"myrequest\"\r\n	\"wms_format\" \" \"\r\n	\"wms_time\" \" \"\r\n END','img/icons/admin_metatags.png','maps');
 
---
--- Homework tables start
---
--- Created Feb 22, 2004
--- Revised May 04, 2004
---
--- DROP TABLE "hw_actionlog";
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Class','CLASS\r\n EXPRESSION ()\r\n SYMBOL 0\r\n OUTLINECOLOR\r\n COLOR\r\n  NAME \"myclass\"\r\nEND --end of class','img/icons/mini_triangle.gif','maps');
 
--- DROP TABLE "tiki_hw_actionlog";
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Query','--\r\n--Start of query definitions\r\n QUERYMAP\r\n STATUS ON\r\n STYLE HILITE\r\nEND','img/icons/question.gif','maps');
 
--- CREATE TABLE "tiki_hw_actionlog" (
---   action varchar(255) default '' NOT NULL,
---   lastModif number(14) default '0' NOT NULL,
---   pageId number(14) default NULL,
---   user varchar(200) default NULL,
---   ip varchar(15) default NULL,
---   comment varchar(200) default NULL,
---   PRIMARY KEY  (lastModif)
--- ) ;
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Scalebar','--\r\n--start of scalebar\r\nSCALEBAR\r\n IMAGECOLOR 255 255 255\r\n STYLE 1\r\n SIZE 400 2\r\n COLOR 0 0 0\r\n  UNITS KILOMETERS\r\n INTERVALS 5\r\n STATUS ON\r\nEND','img/icons/desc_lenght.gif','maps');
 
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Layer','LAYER\r\n NAME \"mylayer\"\r\n TYPE\r\n STATUS ON\r\n DATA \"mydata\"\r\nEND --end of layer','img/ed_copy.gif','maps');
 
--- DROP TABLE "hw_assignments";
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Label','LABEL\r\n  COLOR\r\n ANGLE\r\n FONT arial\r\n TYPE TRUETYPE\r\n  POSITION\r\n  PARTIALS TRUE\r\n  SIZE 6\r\n  BUFFER 0\r\n OUTLINECOLOR\r\nEND --end of label','img/icons/fontfamily.gif','maps');
 
--- DROP TABLE "tiki_hw_assignments";
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Reference','--\r\n--start of reference\r\nREFERENCE\r\n SIZE 120 60\r\n STATUS ON\r\n  EXTENT -180 -90 182 88\r\n OUTLINECOLOR 255 0 0\r\n IMAGE \"myimagedata\"\r\nCOLOR -1 -1 -1\r\nEND','images/ed_image.gif','maps');
 
-CREATE SEQUENCE "tiki_hw_assignments_sequ" INCREMENT BY 1 START WITH 1;
--- CREATE TABLE "tiki_hw_assignments" (
---   assignmentId number(8) NOT NULL,
---   title varchar(80) default NULL,
---   teacherName varchar(40) default '' NOT NULL,
---   created number(14) default '0' NOT NULL,
---   dueDate number(14) default NULL,
---   modified number(14) default '0' NOT NULL,
---   heading text,
---   body text,
---   deleted number(4) default '0' NOT NULL,
---   PRIMARY KEY  (assignmentId),
---   KEY dueDate (dueDate)
--- ) ;
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Legend','--\r\n--start of legend\r\n--\r\nLEGENDr\n KEYSIZE 18 12\r\n POSTLABELCACHE TRUE\r\n STATUS ON\r\nEND','images/ed_about.gif','maps');
 
-CREATE TRIGGER "tiki_hw_assignments_trig" BEFORE INSERT ON "tiki_hw_assignments" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_hw_assignments_sequ".nextval into :NEW."assignmentId" FROM DUAL;
-END;
-/
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Web','--\r\n--Start of web interface definition\r\n--\r\nWEB\r\n TEMPLATE \"myfile/url\"\r\n MINSCALE 1000\r\n MAXSCALE 40000\r\n IMAGEPATH \"myimagepath\"\r\n IMAGEURL \"mypath\"\r\nEND','img/icons/ico_link.gif','maps');
 
--- DROP TABLE "hw_grading_queue";
-
--- DROP TABLE "tiki_hw_grading_queue";
-
-CREATE SEQUENCE "tiki_hw_grading_queue_sequ" INCREMENT BY 1 START WITH 1;
--- CREATE TABLE "tiki_hw_grading_queue" (
---   id number(14) NOT NULL,
---   status number(4) default NULL,
---   submissionDate number(14) default NULL,
---   userLogin varchar(40) default '' NOT NULL,
---   userIp varchar(15) default NULL,
---   pageId number(14) default NULL,
---   pageDate number(14) default NULL,
---   pageVersion number(14) default NULL,
---   assignmentId number(14) default NULL,
---   PRIMARY KEY  (id)
--- ) ;
-
-CREATE TRIGGER "tiki_hw_grading_queue_trig" BEFORE INSERT ON "tiki_hw_grading_queue" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_hw_grading_queue_sequ".nextval into :NEW."id" FROM DUAL;
-END;
-/
-
--- DROP TABLE "hw_history";
-
--- DROP TABLE "tiki_hw_history";
-
--- CREATE TABLE "tiki_hw_history" (
---   id number(14) default '0' NOT NULL,
---   version number(8) default '0' NOT NULL,
---   lastModif number(14) default '0' NOT NULL,
---   user varchar(200) default '' NOT NULL,
---   ip varchar(15) default '' NOT NULL,
---   comment varchar(200) default NULL,
---   data text,
---   PRIMARY KEY  (id,version)
--- ) ;
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Mapfile','--\r\n--Start of mapfile\r\n--\r\nNAME MYMAPFILE\r\n STATUS ON\r\nSIZE \r\nEXTENT\r\n UNITS\r\nSHAPEPATH \" \"\r\nIMAGETYPE \" \"\r\nFONTSET \" \"\r\nIMAGECOLOR -1 -1 -1\r\n\r\n--remove this text and add objects here\r\n\r\nEND -- end of mapfile','img/icons/global.gif','maps');
 
 
--- DROP TABLE "hw_pages";
-
--- DROP TABLE "tiki_hw_pages";
-
-CREATE SEQUENCE "tiki_hw_pages_sequ" INCREMENT BY 1 START WITH 1;
--- CREATE TABLE "tiki_hw_pages" (
---   id number(14) NOT NULL,
---   assignmentId number(14) default '0' NOT NULL,
---   studentName varchar(200) default '' NOT NULL,
---   data text,
---   description varchar(200) default NULL,
---   lastModif number(14) default NULL,
---   user varchar(200) default NULL,
---   comment varchar(200) default NULL,
---   version number(8) default '0' NOT NULL,
---   ip varchar(15) default NULL,
---   flag char(1) default NULL,
---   points number(8) default NULL,
---   votes number(8) default NULL,
---   cache text,
---   wiki_cache number(10) default '0',
---   cache_timestamp number(14) default NULL,
---   page_size number(10) default '0',
---   lockUser varchar(200) default NULL,
---   lockExpires number(14) default '0',
---   PRIMARY KEY  (studentName,assignmentId),
---   KEY id (id),
---   KEY assignmentId (assignmentId),
---   KEY studentName (studentName)
--- ) ;
-
-CREATE TRIGGER "tiki_hw_pages_trig" BEFORE INSERT ON "tiki_hw_pages" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "tiki_hw_pages_sequ".nextval into :NEW."id" FROM DUAL;
-END;
-/
-
---
--- Homework tables end
---
 --translated objects table
 DROP TABLE "tiki_translated_objects";
 
@@ -6790,6 +6716,8 @@ INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Uploaded', 'file
 
 INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Uploaded', 'image gallery', 'n');
 
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Downloaded', 'file gallery', 'n');
+
 INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('*', 'category', 'n');
 
 INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('*', 'login', 'n');
@@ -6807,6 +6735,14 @@ INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Removed last ver
 INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Rollback', 'wiki page', 'n');
 
 INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Removed', 'forum', 'n');
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Posted', 'comment', 'n');
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Replied', 'comment', 'n');
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Updated', 'comment', 'n');
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Removed', 'comment', 'n');
 
 -- --------------------------------------------------------
 -- Table structure for folksonomy tables
@@ -6828,14 +6764,13 @@ DROP TABLE `tiki_freetagged_objects`;
 
 CREATE TABLE `tiki_freetagged_objects` (
   `tagId` number(12) NOT NULL auto_increment,
-  `type` varchar(50) default NULL,
-  `objId` varchar(255) default NULL,
-  `user` varchar(40) default NULL,
-  `tagged_on` number(14) default '0' NOT NULL,
-  PRIMARY KEY ("`tagId`","`user`","`type`","`objId`")
+  `objectId` number(11) default 0 NOT NULL,
+  `user` varchar(40) default '' NOT NULL,
+  `created` number(14) default '0' NOT NULL,
+  PRIMARY KEY ("`tagId`","`user`","`objectId`")
   KEY (`tagId`),
   KEY (`user`),
-  KEY (`objId`,`type`)
+  KEY (`objectId`)
 ) ;
 
 
