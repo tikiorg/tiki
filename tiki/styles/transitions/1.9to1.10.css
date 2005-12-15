@@ -1,0 +1,11 @@
+/*
+$Header: /cvsroot/tikiwiki/tiki/styles/transitions/1.9to1.10.css,v 1.1 2005-12-15 21:57:08 sylvieg Exp $
+
+The following CSS classes were added to Tiki between v1.9 and v1.10
+They should be added to themes (possibly with tweaks) to make the theme v1.10 ready
+*/
+/* editable wiki section */
+div.split {
+border: 1px dashed #A9B8C2;
+clear:both;
+}
