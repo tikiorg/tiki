@@ -55,7 +55,7 @@
 <a title="{tr}backlinks{/tr}" href="tiki-backlinks.php?page={$page|escape:"url"}">{html_image file='img/icons/ico_link.gif' border='0' alt='{tr}backlinks{/tr}'}</a>
 {/if}
 
-{if $wiki_feature_3d eq 'y'}
+{if $feature_morcego eq "y" && $wiki_feature_3d eq "y"}
 <a title="{tr}3d browser{/tr}" href="javascript:wiki3d_open('{$page|escape}',{$wiki_3d_width}, {$wiki_3d_height})"><img src="img/icons/ico_wiki3d.gif" border="0" width="13" height="16" alt='{tr}3d browser{/tr}' /></a>
 {/if}
 

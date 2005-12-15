@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-show_page.tpl,v 1.13 2005-05-18 11:03:35 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-show_page.tpl,v 1.14 2005-12-15 21:02:50 lfagundes Exp $ *}
 
 {if $feature_page_title eq 'y'}
 <h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
@@ -133,7 +133,7 @@
 {/if}
 {/if}
 	
-{if $wiki_feature_3d eq 'y'}
+{if $feature_morcego eq "y" && $wiki_feature_3d eq "y"}
 <a title="{tr}3d browser{/tr}" href="javascript:wiki3d_open('{$page|escape}',{$wiki_3d_width}, {$wiki_3d_height})"><img src="img/icons/ico_wiki3d.gif" border="0" width="13" height="16" alt='{tr}3d browser{/tr}' /></a>
 {/if}
 
