@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.71 2005-12-12 15:18:56 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.72 2005-12-15 19:09:23 lfagundes Exp $ *}
 
 {* this is the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
@@ -230,6 +230,13 @@
     <td>&nbsp;</td>
     <td><input type="checkbox" name="feature_intertiki" {if $feature_intertiki eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}InterTiki" target="tikihelp" class="tikihelp" title="{tr}tikiwiki.org help{/tr}: {tr}Intertiki{/tr}">{/if} {tr}Intertiki{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="feature_wiki3d" {if $feature_wiki3d eq 'y'}checked="checked"{/if}/></td>
+    <td class="form">{if $feature_help eq 'y'}<a href="{$helpurl}Morcego3D" target="tikihelp" class="tikihelp" title="{tr}tikiwiki.org help{/tr}: {tr}Morcego 3D browser{/tr}">{/if}{tr}Morcego 3D browser{/tr}{if $feature_help eq 'y'}</a>{/if}</td>
+    <td>&nbsp;</td>
+    <td><input type="checkbox" name="feature_ajax" {if $feature_ajax eq 'y'}checked="checked"{/if}/></td>
+    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Ajax" target="tikihelp" class="tikihelp" title="{tr}tikiwiki.org help{/tr}: {tr}Ajax{/tr}">{/if} {tr}Ajax{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
   </tr>
 {if $feature_experimental eq 'y'}
   <tr>

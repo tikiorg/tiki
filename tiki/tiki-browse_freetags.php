@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.1 2005-12-12 22:45:05 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.2 2005-12-15 19:09:22 lfagundes Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.1 2005-12-12 22:45:05 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.2 2005-12-15 19:09:22 lfagundes Exp $
 //
 
 // Initialization
@@ -23,7 +23,7 @@ if ($feature_freetags != 'y') {
 }
 
 if (!isset($_REQUEST['tag'])) {
-    header('Location: tiki-freetag_list_objects.php');
+    header('Location: tiki-freetag_list.php');
     exit;
 }
 
@@ -86,7 +86,6 @@ if ($offset > 0) {
 $base_url = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 $base_url = preg_replace('/\/tiki-browse_freetags.php.+$/','',$base_url);
 $smarty->assign('base_url',$base_url);
-$smarty->assign('related_tags',$freetaglib->similar_tags($_REQUEST['tag'],5));
 
 $section = 'freetags';
 include_once ('tiki-section_options.php');
