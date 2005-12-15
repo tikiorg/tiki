@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/transitions/1.9to1.10.css,v 1.1 2005-12-15 21:57:08 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/transitions/1.9to1.10.css,v 1.2 2005-12-15 22:04:08 amette Exp $
 
 The following CSS classes were added to Tiki between v1.9 and v1.10
 They should be added to themes (possibly with tweaks) to make the theme v1.10 ready
@@ -8,4 +8,23 @@ They should be added to themes (possibly with tweaks) to make the theme v1.10 re
 div.split {
 border: 1px dashed #A9B8C2;
 clear:both;
+}
+
+a.freetag_1 { text-decoration: none; font-size: 8px; }
+a.freetag_2 { text-decoration: none; font-size: 10px; }
+a.freetag_3 { text-decoration: none; font-size: 12px; }
+a.freetag_4 { text-decoration: none; font-size: 14px; }
+a.freetag_5 { text-decoration: none; font-size: 16px; }
+a.freetag_6 { text-decoration: none; font-size: 18px; }
+a.freetag_7 { text-decoration: none; font-size: 20px; }
+
+.freetaglist {
+        background-color: #EEF5EE;
+}
+.freetaglist a {
+        text-decoration: none;
+}
+.morcego_embedded {
+        border: 1px solid;
+        text-align: center;
 }
