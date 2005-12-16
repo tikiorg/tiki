@@ -776,7 +776,7 @@ class FreetagLib extends ObjectLib {
      */
 
     function get_tag_suggestion($exclude = '', $max = 10) {
-	$query = "select t.* from `tiki_freetags` t, `tiki_freetagged_objects` o where t.`tagId`=o.`tagId` order by rand()";
+	$query = "select t.* from `tiki_freetags` t, `tiki_freetagged_objects` o where t.`tagId`=o.`tagId` order by " . $this->convert_sortmode('random');
 	$result = $this->query($query);
 
 	$tags = array();
