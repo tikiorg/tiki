@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.8 2005-12-15 21:59:55 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.9 2005-12-16 18:33:41 lfagundes Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -1955,6 +1955,21 @@ div.split {
 border: 1px dashed #A9B8C2;
 clear:both;
 }
+
+/* AJAX */
+
+div#ajaxLoading {
+	display: none;
+	background-color: #BB5555;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	border: 1px solid #000000;
+	padding: 3px;
+	font-family: Verdana;
+	font-size: 10px;
+}
+
 
 /* end of css file */
 

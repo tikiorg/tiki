@@ -4,6 +4,9 @@
 <div dir="rtl">
 {/if}
 <div id="tiki-main">
+  {if $feature_ajax eq 'y'}
+  <div id="ajaxLoading">{tr}Loading...{/tr}</div>
+  {/if}
   {if $feature_top_bar eq 'y'}
   <div id="tiki-top">
     {include file="tiki-top_bar.tpl"}
