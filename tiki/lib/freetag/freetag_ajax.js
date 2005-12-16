@@ -10,6 +10,9 @@ function listObjects(tag) {
     var cp = new cpaint();
     cp.set_response_type('XML');
     //cp.set_debug(2);
+
+    document.getElementById('ajaxLoading').style.display = 'block';
+
     cp.call('tiki-freetag_list_objects_ajax.php', 'list_objects', renderObjectList, tag, objectType);
 }
 
@@ -52,6 +55,8 @@ function renderObjectList(result) {
 	document.getElementById('currentTag2').innerHTML = currentTag;
     }
     document.getElementById('objectList').innerHTML = content;    
+
+    document.getElementById('ajaxLoading').style.display = 'none';
 }
 
 function setObjectType(type, button) {
