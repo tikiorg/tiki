@@ -1,7 +1,7 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.28 2005-12-16 17:20:51 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.29 2005-12-16 18:28:10 sylvieg Exp $
  * 
  * \brief {SPLIT} wiki plugin implementation
  * Usage:
@@ -81,14 +81,18 @@ function wikiplugin_split($data, $params, $pos) {
 		  $tdsize[$i]=floor($tdsize[$i]/$tdtotal*100);
 		}		
 		$tdtotaltd=floor($tdtotal/100*100);
+		if ($tdtotald == 100) // avoir IE to do to far
+			$class = 'class="normal split"';
+		else
+			$class = 'class="split" width="'.$tdtotaltd.'%"';
 	} else {
 		$tdsize=array_fill(0,$maxcols,$columnSize);
-		$tdtotaltd = 100;	
+		$class = 'class="normal split"';	
 	}
 
 	if (!isset($edit)) $edit = 'n';
 	
-	$result = '<table border="0" cellpadding="0" cellspacing="0" '.($fixedsize ? ' width="'.$tdtotaltd.'%"' : '').' class="split">';
+	$result = '<table border="0" cellpadding="0" cellspacing="0" '.$class.'>';
 
     // Attention: Dont forget to remove leading empty line in section ...
     //            it should remain from previous '---' line...
