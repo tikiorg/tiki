@@ -53,13 +53,13 @@
 	<td><input type="text" name="freetags_3d_spring_size" value="{$freetags_3d_spring_size|default:"100"}" size="3" /></td>
       </tr>
       <tr>
-        <td class="form">{tr}Existing page node color{/tr}: </td>
+        <td class="form">{tr}Node color{/tr}: </td>
 	<td><input type="text" name="freetags_3d_existing_page_color" value="{$freetags_3d_existing_page_color|escape}" size="7" /></td>
       </tr>
       <tr>
-        <td class="form">{tr}Missing page node color{/tr}: </td>
+{*        <td class="form">{tr}Missing page node color{/tr}: </td>
 	<td><input type="text" name="freetags_3d_missing_page_color" value="{$freetags_3d_missing_page_color|escape}" size="7" /></td>
-      </tr>
+      </tr> *}
       <tr>
         <td colspan="2" class="heading">Camera settings</td>
      </tr>

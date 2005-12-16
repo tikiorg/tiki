@@ -15,7 +15,7 @@ $map = array ("getSubGraph" => array( "function" => "getSubGraph" ) );
 $server = new XML_RPC_Server( $map );
 
 function getSubGraph($params) {
-    global $freetaglib;
+    global $freetaglib, $dbTiki;
 
     $nodeName = $params->getParam(0); $nodeName = $nodeName->scalarVal();
     $depth = $params->getParam(1); $depth = $depth->scalarVal();
@@ -25,6 +25,9 @@ function getSubGraph($params) {
     $passed = array($nodeName => true);
     $queue = array($nodeName);
     $i = 0;
+
+    $tikilib = new TikiLib($dbTiki);
+    $color = $tikilib->get_preference("freetags_3d_existing_page_color", '#0000FF');
 
     while ($i <= $depth && sizeof($queue) > 0) {
 	$nextQueue = array();
@@ -51,7 +54,6 @@ function getSubGraph($params) {
 	    $base_url = preg_replace('/\/tiki-freetag3d_xmlrpc.php.*$/','',$base_url);
 
 	    $actionUrl = "javascript:listObjects('$nodeName');";
-	    $color = '#0000FF';
 
 	    $node['neighbours'] = new XML_RPC_Value($neighbours, "array");
 	    if (!empty($color)) {
