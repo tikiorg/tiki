@@ -18,7 +18,7 @@
 {else}
 	<h3>{$post_info.created|tiki_short_datetime}</h3>
 {/if}
-{if $feature_freetags eq 'y'}
+{if $feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
 <div class="freetaglist">
   {foreach from=$tags.data item=tag}
 	  <a class="freetag" href="tiki-browse_freetags.php?tag={$tag.tag}">{$tag.tag}</a> 

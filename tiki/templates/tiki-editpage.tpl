@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.69 2005-12-02 18:49:22 lfagundes Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.70 2005-12-16 00:05:46 amette Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -193,7 +193,7 @@ or use
 </td></tr>
 {/if}
 {/if}
-{if $feature_freetags eq 'y'}
+{if $feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
   {include file=freetag.tpl}
 {/if}
 {if $feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y'}

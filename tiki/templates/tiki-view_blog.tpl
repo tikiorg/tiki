@@ -80,7 +80,7 @@
 {/if}
 </td></tr></table>
 </div>
-{if $feature_freetag eq 'y'}
+{if $feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
 <div class="freetaglist">
   {foreach from=$listpages[ix].freetags.data item=taginfo}
 	  <a class="freetag" href="tiki-browse_freetags.php?tag={$taginfo.tag}">{$taginfo.tag}</a> 
