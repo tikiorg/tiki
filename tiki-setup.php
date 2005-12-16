@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.292 2005-12-15 21:56:20 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.293 2005-12-16 12:51:57 lfagundes Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -368,6 +368,8 @@ $feature_categories = 'n';
 $feature_categorypath = 'n';
 $feature_categoryobjects = 'n';
 $feature_freetags = 'n';
+$feature_ajax = 'n';
+$feature_morcego = 'n';
 $feature_faqs = 'n';
 $feature_shoutbox = 'n';
 $shoutbox_autolink = 'n';
@@ -972,6 +974,8 @@ $smarty->assign('feature_categories', $feature_categories);
 $smarty->assign('feature_categorypath', $feature_categorypath);
 $smarty->assign('feature_categoryobjects', $feature_categoryobjects);
 $smarty->assign('feature_freetags', $feature_freetags);
+$smarty->assign('feature_morcego', $feature_morcego);
+$smarty->assign('feature_ajax', $feature_ajax);
 $smarty->assign('feature_faqs', $feature_faqs);
 $smarty->assign('feature_shoutbox', $feature_shoutbox);
 $smarty->assign('shoutbox_autolink', $shoutbox_autolink);
