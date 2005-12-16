@@ -1,7 +1,7 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.27 2005-12-15 21:59:56 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.28 2005-12-16 17:20:51 sylvieg Exp $
  * 
  * \brief {SPLIT} wiki plugin implementation
  * Usage:
@@ -129,8 +129,10 @@ function wikiplugin_split($data, $params, $pos) {
 		}
        }
 	$ind = 0;
+	$icell = 0;
 	$result .= '<tr>';
 	foreach ($rows as $r) {
+		++$icell;
 		$idx = 0;
 		$result .= '<td valign="top" '.($fixedsize ? ' width="'.$tdsize[$idx].'%"' : '').'>';
 		foreach ($r as $i) {
@@ -140,7 +142,7 @@ function wikiplugin_split($data, $params, $pos) {
 			}
 			if ($edit == 'y' && $perm) {
 				$result .= '<div class="split">';
- 				$result .= '<a href="tiki-edit_wiki_section.php?object='.$object.'&amp;type='.$type.'&amp;pos='.$pos.'&amp;cell='.$idx.'">'
+ 				$result .= '<a href="tiki-edit_wiki_section.php?object='.$object.'&amp;type='.$type.'&amp;pos='.$pos.'&amp;cell='.$icell.'">'
   	                                 .'<img src="img/icons/edit.gif" alt="'.tra('edit').'" title="'.tra('edit').'" align="right" border="0" /></a>';
  				$ind += strlen($i);
 				while (isset($data[$ind]) && ($data[$ind] == '-' || $data[$ind] == '@'))
