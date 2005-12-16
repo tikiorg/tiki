@@ -21,10 +21,10 @@
         <td class="form">{tr}Enable freetags 3D browser{/tr}:</td>
         <td><input type="checkbox" name="freetags_feature_3d" {if $freetags_feature_3d eq 'y'}checked="checked"{/if}/></td>
       </tr>
-      <tr>
+{*      <tr>
         <td class="form">{tr}Load page on navigation{/tr}: </td>
 	<td><input type="checkbox" name="freetags_3d_autoload" value="true" {if $freetags_3d_missing_page_color eq 'true'}checked{/if} /></td>
-      </tr>
+      </tr> *}
       <tr>
         <td class="form">{tr}Browser width{/tr}: </td>
 	<td><input type="text" name="freetags_3d_width" value="{$freetags_3d_width|escape}" size="3" /></td>
