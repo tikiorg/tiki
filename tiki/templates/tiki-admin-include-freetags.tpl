@@ -65,7 +65,7 @@
      </tr>
       <tr>
         <td class="form">{tr}Camera distance adjusted relative to nearest node{/tr}: </td>
-	<td><input type="checkbox" name="freetags_3d_adjust_camera" value="true" {if $freetags_3d_adjust_camera eq 'true'}checked{/if} /></td>
+	<td><input type="checkbox" name="freetags_3d_adjust_camera" {if $freetags_3d_adjust_camera eq 'true'}checked="checked"{/if} /></td>
       </tr>
       <tr>
         <td class="form">{tr}Camera distance{/tr}: </td>
