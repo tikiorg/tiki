@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/freetag_list.php,v 1.2 2005-12-15 16:42:51 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/freetag_list.php,v 1.3 2005-12-16 00:05:45 amette Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,8 +12,9 @@ require_once('tiki-setup.php');
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 global $feature_freetags;
+global $tiki_p_view_freetags;
 
-if ($feature_freetags == 'y') {
+if ($feature_freetags == 'y' and $tiki_p_view_freetags == 'y') {
 
     global $freetaglib;
     if (!is_object($freetaglib)) {
