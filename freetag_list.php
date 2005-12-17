@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/freetag_list.php,v 1.3 2005-12-16 00:05:45 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/freetag_list.php,v 1.4 2005-12-17 19:32:50 lfagundes Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -21,19 +21,23 @@ if ($feature_freetags == 'y' and $tiki_p_view_freetags == 'y') {
 	include_once('lib/freetag/freetaglib.php');
     }
 
-    $tags = $freetaglib->get_tags_on_object($cat_objid, $cat_type);
+    if (isset($cat_objid)) {
 
-    $taglist = '';
-    for ($i=0; $i<sizeof($tags['data']); $i++) {
-	$taglist .= $tags['data'][$i]['tag'] . ' ';
+	$tags = $freetaglib->get_tags_on_object($cat_objid, $cat_type);
+	
+	$taglist = '';
+	for ($i=0; $i<sizeof($tags['data']); $i++) {
+	    $taglist .= $tags['data'][$i]['tag'] . ' ';
+	}
+
+	$smarty->assign('taglist',$taglist);
+    } else {
+	$taglist = '';
     }
-
-    $smarty->assign('taglist',$taglist);
 
     $suggestion = $freetaglib->get_tag_suggestion($taglist,10);
 
     $smarty->assign('tag_suggestion',$suggestion);
-
 }
 
 ?>
