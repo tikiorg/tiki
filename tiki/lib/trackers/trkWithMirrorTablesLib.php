@@ -820,7 +820,10 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 				foreach ($emails as $email) {
 					//var_dump($email);
 					//var_dump($mail_data);
-					mail($email, encode_headers('['.$trackerName.'] '.tra('Tracker was modified at '). $_SERVER["SERVER_NAME"], 'utf-8'), $mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8");
+					if ($email!='')
+					{
+						mail($email, encode_headers('['.$trackerName.'] '.tra('Tracker was modified at '). $_SERVER["SERVER_NAME"], 'utf-8'), $mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8");
+					}
 					//echo "$email, ";
 				}
 			} else {
