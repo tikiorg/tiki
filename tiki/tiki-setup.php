@@ -1,13 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.294 2005-12-19 17:27:12 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.295 2005-12-19 17:44:34 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //xdebug_start_profiling();
-
 
 /*!
     \static
@@ -1703,8 +1702,6 @@ if ($user && $feature_usermenu == 'y') {
     }
 }
 
-include_once ('tiki-modules.php');
-
 if ($feature_warn_on_edit == 'y') {
     
     if (strstr($_SERVER['REQUEST_URI'], 'tiki-editpage')) {
@@ -1935,6 +1932,7 @@ if ($feature_search == 'y') {
   include_once('lib/search/refresh.php');
   register_shutdown_function('refresh_search_index');
 }
+register_shutdown_function('close_connection');
 
 /*
  * Whether to show comments zone on page load by default

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/modules/mod-categories.php,v 1.3 2005-08-24 22:23:56 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/modules/mod-categories.php,v 1.4 2005-12-19 17:44:34 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -13,6 +13,7 @@ if (!function_exists("categories_help")) {
 	}
 }
 
+global $feature_categories, $tiki_p_view_categories, $feature_phplayers;
 
 if ($feature_categories != 'y') {
 	$smarty->assign('module_error', tra("This feature is disabled").": feature_categories");
@@ -34,9 +35,9 @@ if ($feature_categories != 'y') {
 	else
 		$deep= 'on';
 	$urlEnd .= "&amp;deep=$deep";
+	$name = "";
 	if (isset($module_params['categId'])) {
 		$categId = $module_params['categId'];
-		$name = "";
 		foreach ($categories as $cat) {
 			if ($cat['categId'] == $categId)
 				$name = $cat['name'];
