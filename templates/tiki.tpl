@@ -45,7 +45,7 @@
           {/if}
       </td>
       {/if}
-      <td id="centercolumn" valign="top"><div id="tiki-center">{include file=$mid}
+      <td id="centercolumn" valign="top"><div id="tiki-center">{* {include file=$mid} *}{$mid_data}
       {if $show_page_bar eq 'y'}
       {include file="tiki-page_bar.tpl"}
       {/if}

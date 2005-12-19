@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.52 2005-12-19 17:27:12 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.53 2005-12-19 17:44:34 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -7,7 +7,7 @@
 
 //this script may only be included - so its better to die if called directly.
 //smarty is not there - we need setup
-require_once('tiki-setup.php');
+global $access; require_once('tiki-setup.php');
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 global $usermoduleslib; include_once ('lib/usermodules/usermoduleslib.php');

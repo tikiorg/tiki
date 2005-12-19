@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.34 2005-10-31 17:25:51 mashmorgan Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.35 2005-12-19 17:44:34 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -138,6 +138,16 @@ class Smarty_TikiWiki extends Smarty {
 		$_smarty_cache_id = $language . $_smarty_cache_id;
 		$_smarty_compile_id = $language . $_smarty_compile_id;
 		return parent::clear_cache($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, $_smarty_exp_time);
+	}
+	function display($resource_name, $cache_id=null, $compile_id = null) {
+		if (($tpl = $this->get_template_vars('mid')) && $resource_name == 'tiki.tpl') {
+			$data = $this->fetch($tpl, $cache_id, $compile_id);//must get the mid because the modules can overwrite smarty variables
+			$this->assign('mid_data', $data);
+			include_once('tiki-modules.php');
+		} elseif ($resource_name == 'confirm.tpl' || $resource_name == 'error.tpl' || $resource_name == 'information.tpl' || $resource_name == 'error_ticket.tpl' || $resource_name == 'error_simple.tpl') {
+			include_once('tiki-modules.php');
+		}
+		return parent::display($resource_name, $cache_id, $compile_id);
 	}
 }
 
