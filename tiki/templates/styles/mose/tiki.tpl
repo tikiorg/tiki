@@ -3,6 +3,9 @@
 {if $feature_bidi eq 'y'}
 <table dir="rtl" ><tr><td>
 {/if}
+{if $feature_ajax eq 'y'}
+  <div id="ajaxLoading">{tr}Loading...{/tr}</div>
+{/if}
   {if $feature_top_bar eq 'y'}
     {include file="tiki-top_bar.tpl" mytikivis="show"}
   {/if}

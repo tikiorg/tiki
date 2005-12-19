@@ -1,10 +1,13 @@
 {include file="header.tpl"}{* This must be included as the first thing in a document to be XML compliant *}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki.tpl,v 1.6 2005-05-18 11:03:55 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki.tpl,v 1.7 2005-12-19 03:54:38 amette Exp $ *}
 {* Index we display a wiki page here *}
 
 {if $feature_bidi eq 'y'}<table dir="rtl" ><tr><td>{/if}
 
 <div id="tiki-main">
+{if $feature_ajax eq 'y'}
+  <div id="ajaxLoading">{tr}Loading...{/tr}</div>
+{/if}
   {if $feature_top_bar eq 'y'}
   <div id="tiki-top">
     {include file="tiki-top_bar.tpl"}

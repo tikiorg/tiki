@@ -4,6 +4,9 @@
 <table dir="rtl" ><tr><td>
 {/if}
 <div id="tiki-main">
+{if $feature_ajax eq 'y'}
+  <div id="ajaxLoading">{tr}Loading...{/tr}</div>
+{/if}
   {if $user}
 	  <div id="tiki-top-menu">
 			{if $tiki_p_admin eq 'y' and $feature_debug_console eq 'y'}
