@@ -1,7 +1,7 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.30 2005-12-16 19:10:00 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.31 2005-12-19 13:53:57 sylvieg Exp $
  * 
  * \brief {SPLIT} wiki plugin implementation
  * Usage:
@@ -136,7 +136,6 @@ function wikiplugin_split($data, $params, $pos) {
 	$icell = 0;
 	$result .= '<tr>';
 	foreach ($rows as $r) {
-		++$icell;
 		$idx = 0;
 		$result .= '<td valign="top" '.($fixedsize ? ' width="'.$tdsize[$idx].'%"' : '').'>';
 		foreach ($r as $i) {
@@ -156,6 +155,7 @@ function wikiplugin_split($data, $params, $pos) {
 				$result .= '<div>';
 			$result .= preg_replace("/\\r\\n/", "<br />\r\n", $i). '</div>';
 			++$idx;
+			++$icell;
 		}
 		$result .= '</td>';
 	}
