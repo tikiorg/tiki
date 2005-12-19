@@ -198,7 +198,7 @@ class ChatLib extends TikiLib {
 		return true;
 	}
 }
-
+global $dbTiki;
 $chatlib = new ChatLib($dbTiki);
 
 ?>

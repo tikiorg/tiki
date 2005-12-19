@@ -949,6 +949,9 @@ class ImageGalsLib extends TikiLib {
 			$bindvars[]=(int) $galleryId;
 			$midcant = "where `galleryId`=? ";
 			$cantvars[]=(int) $galleryId;
+		} else if ($galleryId == -1) {//don't show system gallery
+			$mid .= 'and i.`galleryId`!=? ';
+			$bindvars[] = 0;
 		}
 
 		$query = "select i.`path` ,i.`imageId`,i.`name`,i.`description`,i.`created`,
@@ -2096,7 +2099,7 @@ class ImageGalsLib extends TikiLib {
 
 
 }
-
+global $dbTiki;
 global $imagegallib;
 $imagegallib = new ImageGalsLib($dbTiki);
 

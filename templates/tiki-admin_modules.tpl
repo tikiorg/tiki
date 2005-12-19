@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.37 2005-09-07 12:35:41 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.38 2005-12-19 17:27:25 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
 {* the help link info *}
@@ -122,6 +122,7 @@ from Admin->General
 <td class="heading">{tr}order{/tr}</td>
 <td class="heading">{tr}cache{/tr}</td>
 <td class="heading">{tr}rows{/tr}</td>
+<td class="heading">{tr}parameters{/tr}</td>
 <td class="heading">{tr}groups{/tr}</td>
 <td class="heading">{tr}action{/tr}</td>
 </tr>
@@ -132,12 +133,13 @@ from Admin->General
 <td class="{cycle advance=false}">{$left[user].ord}</td>
 <td class="{cycle advance=false}">{$left[user].cache_time}</td>
 <td class="{cycle advance=false}">{$left[user].rows}</td>
+<td class="{cycle advance=false}">{$left[user].params}</td>
 <td class="{cycle advance=false}">{$left[user].module_groups}</td>
 <td class="{cycle}">
-             <a class="link" href="tiki-admin_modules.php?edit_assign={$left[user].name}#assign">{tr}edit{/tr}</a>
-             <a class="link" href="tiki-admin_modules.php?modup={$left[user].name}">{tr}up{/tr}</a>
-             <a class="link" href="tiki-admin_modules.php?moddown={$left[user].name}">{tr}down{/tr}</a>
-             <a class="link" href="tiki-admin_modules.php?unassign={$left[user].name}#leftmod">{tr}x{/tr}</a></td>
+             <a class="link" href="tiki-admin_modules.php?edit_assign={$left[user].name|escape:url}#assign">{tr}edit{/tr}</a>
+             <a class="link" href="tiki-admin_modules.php?modup={$left[user].name|escape:url}#leftmod">{tr}up{/tr}</a>
+             <a class="link" href="tiki-admin_modules.php?moddown={$left[user].name|escape:url}#leftmod">{tr}down{/tr}</a>
+             <a class="link" href="tiki-admin_modules.php?unassign={$left[user].name|escape:url}#leftmod">{tr}x{/tr}</a></td>
 </tr>
 {sectionelse}
 <tr><td colspan="6">
@@ -155,6 +157,7 @@ from Admin->General
 <td class="heading">{tr}order{/tr}</td>
 <td class="heading">{tr}cache{/tr}</td>
 <td class="heading">{tr}rows{/tr}</td>
+<td class="heading">{tr}parameters{/tr}</td>
 <td class="heading">{tr}groups{/tr}</td>
 <td class="heading">{tr}action{/tr}</td>
 </tr>
@@ -165,12 +168,13 @@ from Admin->General
 <td class="{cycle advance=false}">{$right[user].ord}</td>
 <td class="{cycle advance=false}">{$right[user].cache_time}</td>
 <td class="{cycle advance=false}">{$right[user].rows}</td>
+<td class="{cycle advance=false}">{$right[user].params}</td>
 <td class="{cycle advance=false}">{$right[user].module_groups}</td>
 <td class="{cycle}">
-             <a class="link" href="tiki-admin_modules.php?edit_assign={$right[user].name}#assign">{tr}edit{/tr}</a>
-             <a class="link" href="tiki-admin_modules.php?modup={$right[user].name}">{tr}up{/tr}</a>
-             <a class="link" href="tiki-admin_modules.php?moddown={$right[user].name}">{tr}down{/tr}</a>
-             <a class="link" href="tiki-admin_modules.php?unassign={$right[user].name}#rightmod">{tr}x{/tr}</a></td>
+             <a class="link" href="tiki-admin_modules.php?edit_assign={$right[user].name|escape:url}#assign">{tr}edit{/tr}</a>
+             <a class="link" href="tiki-admin_modules.php?modup={$right[user].name|escape:url}#rightmod">{tr}up{/tr}</a>
+             <a class="link" href="tiki-admin_modules.php?moddown={$right[user].name|escape:url}#rightmod">{tr}down{/tr}</a>
+             <a class="link" href="tiki-admin_modules.php?unassign={$right[user].name|escape:url}#rightmod">{tr}x{/tr}</a></td>
 </tr>
 {sectionelse}
 <tr><td colspan="6">

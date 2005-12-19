@@ -171,7 +171,7 @@ class ThemeControlLib extends TikiLib {
 		$this->query($query,array($objId));
 	}
 }
-
+global $dbTiki;
 $tcontrollib = new ThemeControlLib($dbTiki);
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-module_controls.php,v 1.14 2005-05-18 10:58:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-module_controls.php,v 1.15 2005-12-19 17:27:12 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,10 +9,9 @@
 // Initialization
 require_once ('tiki-setup.php');
 
-include_once ('lib/usermodules/usermoduleslib.php');
-//include_once ('lib/debug/debugger.php');
+global $usermoduleslib; include_once ('lib/usermodules/usermoduleslib.php');
 
-global $smarty;
+global $smarty, $tiki_p_configure_modules, $user_assigned_modules, $user;
 
 $check_req = (isset($_REQUEST["mc_unassign"])
            || isset($_REQUEST["mc_up"])

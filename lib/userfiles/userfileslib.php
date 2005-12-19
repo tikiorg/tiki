@@ -83,7 +83,7 @@ class UserFilesLib extends TikiLib {
 		$this->query($query,array($user,(int) $fileId));
 	}
 }
-
+global $dbTiki;
 $userfileslib = new UserFilesLib($dbTiki);
 
 ?>

@@ -74,7 +74,7 @@ class TagLineLib extends TikiLib {
 		$result = $this->query($query,array());
 	}
 }
-
+global $dbTiki;
 $taglinelib = new TagLineLib($dbTiki);
 
 ?>

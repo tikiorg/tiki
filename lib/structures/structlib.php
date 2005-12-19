@@ -804,7 +804,7 @@ function list_structures($offset, $maxRecords, $sort_mode, $find) {
   return $pages;
   }
 }
-
+global $dbTiki;
 $structlib = new StructLib($dbTiki);
 
 ?>

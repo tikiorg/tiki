@@ -766,7 +766,7 @@ class TrackerLib extends TikiLib {
 
 				// email
 				case 'm':
-					global $registrationlib, $dbTiki, $sender_email;
+					global $registrationlib,$dbTiki, $sender_email;
 					if(!isset($registrationlib)) {
 						require_once('lib/registration/registrationlib.php');
 					}
@@ -1168,6 +1168,7 @@ class TrackerLib extends TikiLib {
 	}
 }
 
+global $dbTiki;
 //if(isset($trk_with_mirror_tables) && $trk_with_mirror_tables == 'y') {
 if($tikilib->get_preference('trk_with_mirror_tables') == 'y') {
 	include_once ("trkWithMirrorTablesLib.php");

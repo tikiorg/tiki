@@ -151,7 +151,7 @@ class DrawLib extends TikiLib {
 		return $retval;
 	}
 }
-
+global $dbTiki;
 $drawlib = new DrawLib($dbTiki);
 
 ?>

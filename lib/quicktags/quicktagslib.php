@@ -92,6 +92,6 @@ class QuickTagsLib extends TikiLib {
 	}
 
 }
-
+global $dbTiki;
 $quicktagslib = new QuickTagsLib($dbTiki);
 ?>

@@ -6,7 +6,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-include_once ('lib/live_support/lslib.php');
+global $lslib; include_once ('lib/live_support/lslib.php');
 
 $smarty->assign('modsupport', $lslib->operators_online());
 

@@ -9,6 +9,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 // in wikipages, add params like this:    ,trackerId=...,name=...
 // in module list, add params like this in params fiels:  trackerId=...&name=...
 // name is the name of the tracker field to be displayed (should be descriptive)
+global $feature_trackers;
 
 if ($feature_trackers == 'y') {
 	$smarty->assign('modlmifn', $module_params["name"]);

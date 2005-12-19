@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.30 2005-05-18 11:01:56 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.31 2005-12-19 17:27:24 sylvieg Exp $
  *
  * \brief Manage user assigned modules
  */
@@ -247,7 +247,7 @@ class UserModulesLib extends TikiLib {
 		}
 	} 
 }
-
+global $dbTiki;
 $usermoduleslib = new UserModulesLib($dbTiki);
 
 ?>

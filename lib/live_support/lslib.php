@@ -197,7 +197,7 @@ class Lslib extends TikiLib {
 		return $this->getOne("select count(*) from `tiki_live_support_operators` where `status`=?",array('online'));
 	}
 }
-
+global $dbTiki;
 $lslib = new Lslib($dbTiki);
 
 ?>

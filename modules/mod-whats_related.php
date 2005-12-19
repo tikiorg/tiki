@@ -6,7 +6,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-require_once ('lib/categories/categlib.php');
+global $categlib; require_once ('lib/categories/categlib.php');
 
 //test
 $WhatsRelated=$categlib->get_link_related($_SERVER["REQUEST_URI"]);

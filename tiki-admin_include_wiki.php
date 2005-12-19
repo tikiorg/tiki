@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.55 2005-12-12 15:18:46 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.56 2005-12-19 17:27:12 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -740,9 +740,12 @@ if (isset($_REQUEST["wikiset3d"])) {
 	}
 
 	/* new fields */
-	if (isset($_REQUEST["wiki_3d_autoload"])) {
-		$tikilib->set_preference("wiki_3d_autoload", $_REQUEST["wiki_3d_autoload"]);
-		$smarty->assign('wiki_3d_autoload', $_REQUEST["wiki_3d_autoload"]);
+	if (isset($_REQUEST["wiki_3d_autoload"]) && $_REQUEST["wiki_3d_autoload"] == "on") {
+	    $tikilib->set_preference("wiki_3d_autoload", 'true');
+	    $smarty->assign("wiki_3d_autoload", 'true');
+	} else {
+	    $tikilib->set_preference("wiki_3d_autoload", 'false');
+	    $smarty->assign("wiki_3d_autoload", 'false');
 	}
 
 	if (isset($_REQUEST["wiki_3d_camera_distance"])) {
@@ -750,9 +753,12 @@ if (isset($_REQUEST["wikiset3d"])) {
 		$smarty->assign('wiki_3d_camera_distance', $_REQUEST["wiki_3d_camera_distance"]);
 	}
 
-	if (isset($_REQUEST["wiki_3d_adjust_camera"])) {
-		$tikilib->set_preference("wiki_3d_adjust_camera", $_REQUEST["wiki_3d_adjust_camera"]);
-		$smarty->assign('wiki_3d_adjust_camera', $_REQUEST["wiki_3d_adjust_camera"]);
+	if (isset($_REQUEST["wiki_3d_adjust_camera"]) && $_REQUEST["wiki_3d_adjust_camera"] == "on") {
+	    $tikilib->set_preference("wiki_3d_adjust_camera", 'true');
+	    $smarty->assign("wiki_3d_adjust_camera", 'true');
+	} else {
+	    $tikilib->set_preference("wiki_3d_adjust_camera", 'false');
+	    $smarty->assign("wiki_3d_adjust_camera", 'false');
 	}
 
 	if (isset($_REQUEST["wiki_3d_fov"])) {

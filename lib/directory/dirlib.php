@@ -646,7 +646,7 @@ class DirLib extends TikiLib {
 	}
 
 }
-
+global $dbTiki;
 $dirlib = new DirLib($dbTiki);
 
 function compare_paths($p1, $p2) {

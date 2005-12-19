@@ -791,7 +791,7 @@ class CalendarLib extends TikiLib {
 		return $ret;
 	}
 }
-
+global $dbTiki;
 $calendarlib = new CalendarLib($dbTiki);
 
 ?>

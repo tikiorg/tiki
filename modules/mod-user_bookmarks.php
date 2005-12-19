@@ -8,8 +8,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 require_once ('lib/tikilib.php'); # httpScheme()
 
-include_once ('lib/bookmarks/bookmarklib.php');
-include_once ("lib/imagegals/imagegallib.php");
+global $bookmarklib; include_once ('lib/bookmarks/bookmarklib.php');
+global $imagegallib; include_once ("lib/imagegals/imagegallib.php");
+global $user, $feature_user_bookmarks, $tiki_p_create_bookmarks;
 
 $setup_parsed_uri = parse_url($_SERVER["REQUEST_URI"]);
 

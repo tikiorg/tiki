@@ -173,7 +173,7 @@ class cssLib extends TikiLib {
 		return $cssversion."to".$dbversion_tiki.".css";
 	}
 }
-
+global $dbTiki;
 $csslib = new cssLib($dbTiki);
 
 ?>

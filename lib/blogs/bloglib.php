@@ -537,7 +537,7 @@ class BlogLib extends TikiLib {
 		$result = $this->query($query,array($activity,(int) $blogId));
 	}
 }
-
+global $dbTiki;
 $bloglib = new BlogLib($dbTiki);
 
 ?>

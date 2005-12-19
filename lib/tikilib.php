@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.625 2005-12-12 15:18:49 mose Exp $
+// CVS: $Id: tikilib.php,v 1.626 2005-12-19 17:27:14 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1721,6 +1721,7 @@ function add_pageview() {
 		    $i++;
 		}
 		$i--;
+		include_once('lib/smarty_tiki/function.menu.php');
 		usort($section, "compare_menu_options");
 		$sorted_channels = array_merge($sorted_channels, $section);
 	    }
@@ -2151,10 +2152,9 @@ function add_pageview() {
 	    $bindvars=array();
 	}
 	$query = "select * from `tiki_blogs` $mid order by ".$this->convert_sortmode($sort_mode);
-	$query_cant = "select count(*) from `tiki_blogs` $mid";
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
-	$cant = $this->getOne($query_cant,$bindvars);
 	$ret = array();
+	$cant = 0;
 
 	while ($res = $result->fetchRow()) {
 
@@ -2162,6 +2162,7 @@ function add_pageview() {
 	    $add=$this->user_has_perm_on_object($user,$res['blogId'],'blog','tiki_p_read_blog');
 		if ($add) {
 	    	$ret[] = $res;
+		++$cant;
 	    }
 	}
 	$retval = array();

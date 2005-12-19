@@ -579,7 +579,7 @@ class RSSLib extends TikiLib {
 		return $xmlstr;
 	}
 }
-
+global $dbTiki;
 $rsslib = new RSSLib($dbTiki);
 
 ?>

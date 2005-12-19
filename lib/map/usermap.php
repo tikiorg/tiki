@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/map/usermap.php,v 1.8 2005-05-18 11:01:02 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/map/usermap.php,v 1.9 2005-12-19 17:27:20 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -259,7 +259,7 @@ class MapsLib extends TikiLib {
 		return (tra("Image Map Generated in:").$map_path."data/".$tdo.".shp");
 	}
 }
-
+global $dbTiki;
 global $mapslib;
 $mapslib = new MapsLib($dbTiki);
 ?>

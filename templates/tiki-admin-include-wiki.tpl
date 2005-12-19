@@ -318,6 +318,9 @@
       <tr>
         <td class="form">{tr}Camera distance adjusted relative to nearest node{/tr}: </td>
 	<td><input type="checkbox" name="wiki_3d_adjust_camera" value="true" {if $wiki_3d_adjust_camera eq 'true'}checked{/if} /></td>
+	</tr><tr>
+        <td class="form">{tr}Load page on navigation{/tr}: </td>
+	<td><input type="checkbox" name="wiki_3d_autoload" {if $wiki_3d_autoload eq 'true'}checked="checked"{/if} /></td>
       </tr>
       <tr>
         <td class="form">{tr}Camera distance{/tr}: </td>

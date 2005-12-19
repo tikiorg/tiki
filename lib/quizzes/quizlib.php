@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/quizzes/quizlib.php,v 1.38 2005-05-18 11:01:17 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/quizzes/quizlib.php,v 1.39 2005-12-19 17:27:22 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, 
 //                          George G. Geller et. al.
@@ -643,7 +643,7 @@ class QuizLib extends TikiLib {
   }
 // Function for Quizzes end ////
 }
-
+global $dbTiki;
 $quizlib = new QuizLib($dbTiki);
 
 

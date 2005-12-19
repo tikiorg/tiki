@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.51 2005-10-03 17:21:43 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.52 2005-12-19 17:27:12 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,10 +10,10 @@
 require_once('tiki-setup.php');
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
-include_once ('lib/usermodules/usermoduleslib.php');
+global $usermoduleslib; include_once ('lib/usermodules/usermoduleslib.php');
 include_once('tiki-module_controls.php');
-global $modseparateanon;
-global $language;
+global $modseparateanon, $user, $userlib, $user_assigned_modules, $tiki_p_configure_modules;
+global $language, $modallgroups, $smarty, $tikidomain, $tikilib, $section;
 
 clearstatcache();
 $now = date("U");
@@ -49,11 +49,14 @@ foreach ( array('left_modules', 'right_modules') as $these_modules_name ) {
 $these_modules =& $$these_modules_name;
 $temp_max = count($these_modules);
 for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
+
 	$mod_reference = &$these_modules[$mod_counter];
 	parse_str($mod_reference["params"], $module_params);
 	$pass = 'y';
 	if (isset($module_params["lang"]) && ((gettype($module_params["lang"]) == "array" && !in_array($language, $module_params["lang"])) ||  (gettype($module_params["lang"]) == "string" && $module_params["lang"] != $language))) {
 		$pass="n";
+	} elseif (isset($module_params['section']) && (!isset($section) || $section != $module_params['section'])) {
+		$pass = 'n';
 	}
 	elseif ($modallgroups != 'y') {
 		if ($mod_reference["groups"]) {

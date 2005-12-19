@@ -117,7 +117,7 @@ class EphLib extends TikiLib {
 		return $retval;
 	}
 }
-
+global $dbTiki;
 $ephlib = new EphLib($dbTiki);
 
 ?>

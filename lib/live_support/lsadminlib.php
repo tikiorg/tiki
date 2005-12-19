@@ -176,7 +176,7 @@ class LsAdminlib extends TikiLib {
 		return $ret;
 	}
 }
-
+global $dbTiki;
 $lsadminlib = new LsAdminlib($dbTiki);
 
 ?>

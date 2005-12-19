@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index_p.php,v 1.19 2005-05-18 10:58:57 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index_p.php,v 1.20 2005-12-19 17:27:12 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -265,6 +265,7 @@ include_once('tiki-section_options.php');
 $smarty->assign('wiki_extras', 'y');
 $smarty->assign('structure', 'n');
 
+/* broken since nov 18 2003
 if ($structlib->page_is_in_structure($page)) {
 	$smarty->assign('structure', 'y');
 	if (isset($_REQUEST["structID"]))	{
@@ -275,6 +276,7 @@ if ($structlib->page_is_in_structure($page)) {
 	} 	
 	$smarty->assign('struct_prev_next', $prev_next_pages);
 }
+*/
 
 if ($feature_theme_control == 'y') {
 	$cat_type = 'wiki page';

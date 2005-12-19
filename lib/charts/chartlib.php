@@ -510,7 +510,7 @@ class ChartLib extends TikiLib {
 		return $retval;
 	}
 }
-
+global $dbTiki;
 $chartlib = new ChartLib($dbTiki);
 
 ?>

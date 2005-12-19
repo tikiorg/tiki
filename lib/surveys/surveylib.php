@@ -276,7 +276,7 @@ class SurveyLib extends TikiLib {
 		return true;
 	}
 }
-
+global $dbTiki;
 $srvlib = new SurveyLib($dbTiki);
 
 ?>

@@ -117,7 +117,7 @@ class Newslib extends TikiLib {
 		return $this->nntp->getGroups();
 	}
 }
-
+global $dbTiki;
 $newslib = new Newslib($dbTiki);
 
 ?>

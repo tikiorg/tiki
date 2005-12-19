@@ -136,7 +136,7 @@ class CommLib extends TikiLib {
 
 // Functions for the communication center end ////
 }
-
+global $dbTiki;
 $commlib = new CommLib($dbTiki);
 
 ?>

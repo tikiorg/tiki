@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.43 2005-12-12 15:18:50 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.44 2005-12-19 17:27:21 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -592,7 +592,7 @@ print_r($ret);
 		return $tpls;
 	}
 }
-
+global $dbTiki;
 $nllib = new NlLib($dbTiki);
 
 ?>

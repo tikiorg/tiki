@@ -88,7 +88,7 @@ class TemplatesLib extends TikiLib {
 		return true;
 	}
 }
-
+global $dbTiki;
 $templateslib = new TemplatesLib($dbTiki);
 
 ?>
