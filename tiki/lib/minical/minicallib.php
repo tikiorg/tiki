@@ -214,7 +214,7 @@ class MiniCalLib extends TikiLib {
 		$this->query($query,array($user,(int)$pdate));
 	}
 }
-
+global $dbTiki;
 $minicallib = new MiniCalLib($dbTiki);
 
 ?>

@@ -268,7 +268,7 @@ class BannerLib extends TikiLib {
 		return true;
 	}
 }
-
+global $dbTiki;
 $bannerlib = new BannerLib($dbTiki);
 
 ?>

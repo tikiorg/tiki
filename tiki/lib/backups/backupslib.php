@@ -166,7 +166,7 @@ class BackupLib extends TikiLib {
 		return true;
 	}
 }
-
+global $dbTiki;
 $backuplib = new BackupLib($dbTiki);
 
 ?>

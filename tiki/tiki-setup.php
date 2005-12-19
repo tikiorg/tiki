@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.293 2005-12-16 12:51:57 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.294 2005-12-19 17:27:12 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1961,6 +1961,10 @@ if (is_file('.lastup') and is_readable('.lastup')) {
 	$smarty->assign('lastup',$lastup[0]);
 }
 
+if ($feature_wiki_discuss == 'y') {
+	$wiki_discussion_string = tra ("Use this thread to discuss the page:", $tikilib->get_preference('language', 'en'));
+	$smarty->assign('wiki_discussion_string', $wiki_discussion_string);
+}
 // ------------------------------------------------------
 // setup initial breadcrumb
 $crumbs = array();

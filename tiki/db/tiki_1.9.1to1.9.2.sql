@@ -86,5 +86,5 @@ ALTER TABLE users_groups DROP groupHomeLocalized;
 # missing field in primary key:
 ALTER TABLE `users_objectpermissions` DROP PRIMARY KEY , ADD PRIMARY KEY ( `objectId` , `objectType` , `groupName` ( 30 ), `permName` ) ;
 
-# 2005-05-03 - amette - correct perm for submitting link - WYSIWYCA
+# 2005-12-11 - amette - correct perm for submitting link - WYSIWYCA
 UPDATE tiki_menu_options SET perm="tiki_p_submit_link" WHERE url="tiki-directory_add_site.php";

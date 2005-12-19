@@ -7,7 +7,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
-global $tiki_p_admin;
+global $tiki_p_admin, $user;
 
 if ($user) {
 	// admin gets ALL actions, user only his own.

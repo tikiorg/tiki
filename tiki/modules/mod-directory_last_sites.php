@@ -8,6 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 // Parameter absurl set if the directory_last url is absolute or not [y|n].
 // If not set, default = relative
+global $feature_directory;
 
 if ($feature_directory == 'y') {
 	$ranking = $tikilib->dir_list_all_valid_sites2(0, $module_rows, 'created_desc', '');

@@ -228,7 +228,7 @@
 {/if}
 {/if}
 {sectionelse}
-<tr><td class="odd" colspan="8">
+<tr><td class="odd" colspan="9">
 {tr}No records found{/tr}
 </td></tr>
 {/section}

@@ -59,7 +59,7 @@ class HotwordsLib extends TikiLib {
 		$result = $this->query($query,array($word));
 	}
 }
-
+global $dbTiki;
 $hotwordlib = new HotwordsLib($dbTiki);
 
 ?>

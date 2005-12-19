@@ -111,7 +111,7 @@ class UserMenuLib extends TikiLib {
 		$this->query($query,array($user,$menuId));
 	}
 }
-
+global $dbTiki;
 $usermenulib = new UserMenuLib($dbTiki);
 
 ?>

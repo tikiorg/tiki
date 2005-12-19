@@ -8,7 +8,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 require_once ('lib/tikilib.php'); # httpScheme()
 
-include_once ('lib/shoutbox/shoutboxlib.php');
+global $shoutboxlib;include_once ('lib/shoutbox/shoutboxlib.php');
+global $feature_shoutbox, $tiki_p_view_shoutbox, $tiki_p_admin_shoutbox, $tiki_p_post_shoutbox, $feature_ticketlib2;
 
 if ($feature_shoutbox == 'y' && $tiki_p_view_shoutbox == 'y') {
 	$setup_parsed_uri = parse_url($_SERVER["REQUEST_URI"]);

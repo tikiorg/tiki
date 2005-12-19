@@ -1,12 +1,12 @@
 <?php
-// CVS: $Id: mod-eph.php,v 1.7 2005-08-29 03:14:45 mose Exp $
+// CVS: $Id: mod-eph.php,v 1.8 2005-12-19 17:27:25 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
-include_once ("lib/ephemerides/ephlib.php");
+global $ephlib; include_once ("lib/ephemerides/ephlib.php");
 
 if (isset($_SESSION['thedate'])) {
 	$modephpdate = $_SESSION['thedate'];

@@ -6,7 +6,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-include_once('lib/tasks/tasklib.php');
+global $tasklib; include_once('lib/tasks/tasklib.php');
+global $user;
 
 if ($user && isset($feature_tasks) && $feature_tasks == 'y' && isset($tiki_p_tasks) && $tiki_p_tasks == 'y') {
 	if (isset($_SESSION['thedate'])) {

@@ -9,7 +9,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 // Parameter absurl set if the last_topics url is absolute or not [y|n].
 // If not set, default = relative
 
-include_once ('lib/rankings/ranklib.php');
+global $ranklib; include_once ('lib/rankings/ranklib.php');
 
 $ranking = $ranklib->forums_ranking_last_topics($module_rows);
 $smarty->assign('modForumsLastTopics', $ranking["data"]);

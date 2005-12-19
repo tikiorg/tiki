@@ -459,6 +459,7 @@ class RegistrationLib extends TikiLib {
     }
 }
   
+global $dbTiki;
 $registrationlib= new RegistrationLib($dbTiki);
 
 ?>

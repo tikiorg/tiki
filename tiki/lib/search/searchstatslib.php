@@ -46,7 +46,7 @@ class SearchStatsLib extends TikiLib {
 		return $retval;
 	}
 }
-
+global $dbTiki;
 $searchstatslib = new SearchStatsLib($dbTiki);
 
 ?>

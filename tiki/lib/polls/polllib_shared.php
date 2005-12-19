@@ -176,7 +176,7 @@ class PollLibShared extends TikiLib {
   }
 
 }
-
+global $dbTiki;
 $polllib = new PollLibShared($dbTiki);
 
 ?>

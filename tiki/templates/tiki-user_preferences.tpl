@@ -80,8 +80,9 @@
   <tr><td class="form">{tr}Avatar{/tr}:</td><td class="form">{$avatar} <a href="tiki-pick_avatar.php" class="link">{tr}Pick user Avatar{/tr}</a></td></tr>
   <tr><td class="form">{tr}HomePage{/tr}:</td><td class="form"><input type="text" size="40" name="homePage" value="{$homePage|escape}" /></td></tr>
   {if $feature_wiki eq 'y' and $feature_wiki_userpage eq 'y'}
-  <tr><td class="form">{tr}Your personal Wiki Page{/tr}:</td><td class="form"><a class="link" href="tiki-index.php?page={$feature_wiki_userpage_prefix}{$userinfo.login}">{$feature_wiki_userpage_prefix}{$userinfo.login}</a>
-	(<a class="link" href="tiki-editpage.php?page={$feature_wiki_userpage_prefix}{$userinfo.login}">{tr}edit{/tr}</a>)</td></tr>
+  <tr><td class="form">{tr}Your personal Wiki Page{/tr}:</td><td class="form">{if $userPageExists eq 'y'}<a class="link" href="tiki-index.php?page={$feature_wiki_userpage_prefix}{$userinfo.login}" title="{tr}view{/tr}">{$feature_wiki_userpage_prefix}{$userinfo.login}</a> 
+	(<a class="link" href="tiki-editpage.php?page={$feature_wiki_userpage_prefix}{$userinfo.login}">{tr}edit{/tr}</a>)
+{else}{$feature_wiki_userpage_prefix}{$userinfo.login} (<a class="link" href="tiki-editpage.php?page={$feature_wiki_userpage_prefix}{$userinfo.login}">{tr}create{/tr}</a>){/if}</td></tr>
   {/if}
 	{if $userTracker eq 'y' && $usertrackerId}
   <tr><td class="form">{tr}Your personal tracker information{/tr}:</td><td class="form">

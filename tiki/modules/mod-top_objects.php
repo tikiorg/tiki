@@ -5,7 +5,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
-include_once ('lib/stats/statslib.php');
+global $statslib; include_once ('lib/stats/statslib.php');
 
 $best_objects_stats = $statslib->best_overall_object_stats($module_rows);
 

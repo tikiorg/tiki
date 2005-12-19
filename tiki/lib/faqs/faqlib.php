@@ -236,7 +236,7 @@ class FaqLib extends TikiLib {
 		return $res;
 	}
 }
-
+global $dbTiki;
 $faqlib = new FaqLib($dbTiki);
 
 ?>

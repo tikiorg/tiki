@@ -100,7 +100,7 @@ class MailinLib extends TikiLib {
 		return $res;
 	}
 }
-
+global $dbTiki;
 $mailinlib = new MailinLib($dbTiki);
 
 ?>

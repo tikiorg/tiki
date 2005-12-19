@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.14 2005-11-04 16:47:53 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.15 2005-12-19 17:27:20 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -458,7 +458,7 @@ class LogsLib extends TikiLib {
 	}
 
 }
-
+global $dbTiki;
 $logslib = new LogsLib($dbTiki);
 
 ?>

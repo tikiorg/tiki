@@ -48,7 +48,7 @@ class RefererLib extends TikiLib {
 		return $retval;
 	}
 }
-
+global $dbTiki;
 $refererlib = new RefererLib($dbTiki);
 
 ?>

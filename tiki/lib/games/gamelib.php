@@ -48,7 +48,7 @@ class GameLib extends TikiLib {
 		return $hits;
 	}
 }
-
+global $dbTiki;
 $gamelib = new GameLib($dbTiki);
 
 ?>
