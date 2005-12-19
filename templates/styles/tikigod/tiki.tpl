@@ -22,7 +22,7 @@
       <div align="center"><a href="https://sourceforge.net/projects/tikiwiki" title="TikiWiki"><img alt="{tr}Powered by{/tr} TikiWiki" src="img/tiki/tikibutton2.png" /></a></div>
       </td>
       {/if}
-      <td id="centercolumn"><div id="tiki-center">{include file=$mid}
+      <td id="centercolumn"><div id="tiki-center">{$mid_data}
       {if $show_page_bar eq 'y'}
       {include file="tiki-page_bar.tpl"}
       {/if}

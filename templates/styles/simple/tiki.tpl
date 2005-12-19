@@ -1,5 +1,5 @@
 {include file="header.tpl"}{* This must be included as the first thing in a document to be XML compliant *}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki.tpl,v 1.10 2005-12-19 03:54:38 amette Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki.tpl,v 1.11 2005-12-19 17:59:14 sylvieg Exp $ *}
 {* Main template for TikiWiki layout *}
 {if $feature_bidi eq 'y'}<table dir="rtl" ><tr><td>{/if}
 <div id="main">
@@ -53,7 +53,7 @@
     {* Display main content in center column *}    
     <div class="{$wrapper}">
       <div id="maincontent" class="{$maincontent}">
-        {include file=$mid}
+        {$mid_data}
         {if $show_page_bar eq 'y'}
           {include file="tiki-page_bar.tpl"}
         {/if}

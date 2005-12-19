@@ -76,7 +76,7 @@
       
       </td>
       {/if}
-      <td id="centercolumn"><div id="tiki-center">{include file=$mid}
+      <td id="centercolumn"><div id="tiki-center">{$mid_data}
       </div>
       </td>
       {if $feature_right_column ne 'n'}

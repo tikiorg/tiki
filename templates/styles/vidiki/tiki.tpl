@@ -29,7 +29,7 @@
  <div id="shadow"></div></div> 
  {/if}
 
-      <div class="content">{include file=$mid}
+      <div class="content">{$mid_data}
       {if $show_page_bar eq 'y'}
       {include file="tiki-page_bar.tpl"}
 
