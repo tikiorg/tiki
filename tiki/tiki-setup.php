@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.295 2005-12-19 17:44:34 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.296 2005-12-19 20:43:15 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1932,7 +1932,6 @@ if ($feature_search == 'y') {
   include_once('lib/search/refresh.php');
   register_shutdown_function('refresh_search_index');
 }
-register_shutdown_function('close_connection');
 
 /*
  * Whether to show comments zone on page load by default
