@@ -86,7 +86,7 @@
 <span class="pagetop_msg">{$pagetop_msg}</span>
 {/if}
 <!-- content -->
-{include file=$mid}
+{$mid_data}
 <!-- end of content -->
 </div>
 </td>

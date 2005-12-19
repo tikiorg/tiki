@@ -34,7 +34,7 @@
 <td>
 <table cellpadding="10" cellspacing="0">
 <tr><td valign="top">
-{include file=$mid}
+{$mid_data}
 {if $show_page_bar eq 'y'}
 {include file="tiki-page_bar.tpl"}
 {/if}

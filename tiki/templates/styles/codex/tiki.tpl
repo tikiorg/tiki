@@ -32,7 +32,7 @@
 		<td id="page23"><img src="styles/codex/page_0.gif" width="7" height="1" alt="" border="0" /></td>
 		<td id="page24" >
 			<div id="tiki-center">
-			{include file=$mid}
+			{$mid_data}
 			{if $show_page_bar eq 'y'}
 			{include file="tiki-page_bar.tpl"}
 			{/if}

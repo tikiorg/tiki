@@ -1,5 +1,5 @@
 {include file="header.tpl"}{* This must be included as the first thing in a document to be XML compliant *}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki.tpl,v 1.7 2005-12-19 03:54:38 amette Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki.tpl,v 1.8 2005-12-19 17:59:20 sylvieg Exp $ *}
 {* Index we display a wiki page here *}
 
 {if $feature_bidi eq 'y'}<table dir="rtl" ><tr><td>{/if}
@@ -45,7 +45,7 @@
     {* Display center column *}
 
     <div id="tiki-center" {$add_style}>
-      {include file=$mid}
+      {$mid_data}
       {if $show_page_bar eq 'y'}
         {include file="tiki-page_bar.tpl"}
       {/if}
