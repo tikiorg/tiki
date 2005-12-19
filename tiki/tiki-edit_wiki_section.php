@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_wiki_section.php,v 1.2 2005-12-15 19:29:54 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_wiki_section.php,v 1.3 2005-12-19 13:53:57 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 require_once ('tiki-setup.php');
-include_once('lib/objectlib.php');
+global $objectlib; include_once('lib/objectlib.php');
 include_once('lib/wiki-plugins/wikiplugin_split.php');
 
 if (isset($_REQUEST['page']))
