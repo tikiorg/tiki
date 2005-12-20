@@ -728,7 +728,13 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 				} else {
 					$name = $this->getOne("select `name` from `tiki_tracker_fields` where `fieldId`=?",array((int)$fieldId));
 				}
-				$value = $ins_fields["data"][$i]["value"];
+				if (isset($ins_fields["data"][$i]["value"]))
+				{
+				  $value = $ins_fields["data"][$i]["value"];
+				} else
+				{
+				  $value = '';
+        }
 				if (isset($ins_fields["data"][$i]["type"]) and ($ins_fields["data"][$i]["type"] == 'f' or $ins_fields["data"][$i]["type"] == 'j')) {
 					$human_value = date('r',$ins_fields["data"][$i]["value"]);
 					$the_data .= "  $name = $human_value\n";
