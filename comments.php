@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.57 2005-11-07 21:42:29 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.58 2005-12-22 18:43:56 rlpowell Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -268,7 +268,7 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 		// Deal with mail notifications.
 		include_once('lib/notifications/notificationemaillib.php');
 		sendForumEmailNotification('forum_post_thread',
-			$_REQUEST['comments_parentId'], $forum_info,
+			$qId, $forum_info,
 			$_REQUEST["comments_title"], $_REQUEST["comments_data"], $user,
 			$thread_info['title'], $message_id, $in_reply_to, 
 			$_REQUEST['comments_parentId'], 
