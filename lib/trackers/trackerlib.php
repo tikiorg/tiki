@@ -596,7 +596,11 @@ class TrackerLib extends TikiLib {
 					$name = $this->getOne("select `name` from `tiki_tracker_fields` where `fieldId`=?",array((int)$fieldId));
 				}
 				$value = $ins_fields["data"][$i]["value"];
-				if (isset($ins_fields["data"][$i]["isHidden"]) && $ins_fields["data"][$i]["isHidden"] == 'n') { // TODO: on perm control
+				if(
+					(isset($ins_fields["data"][$i]["isHidden"]) && $ins_fields["data"][$i]["isHidden"] == 'n')
+					||
+					( ! isset($ins_fields["data"][$i]["isHidden"]) )
+				  ) { // TODO: on perm control
 					if (isset($ins_fields["data"][$i]["type"]) and ($ins_fields["data"][$i]["type"] == 'f' or $ins_fields["data"][$i]["type"] == 'j')) {
 						$human_value = date('r',$ins_fields["data"][$i]["value"]);
 						$the_data .= "$name".":\n   $human_value\n\n";
