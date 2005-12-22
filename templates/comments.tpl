@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.64 2005-10-27 20:12:33 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.65 2005-12-22 18:32:15 rlpowell Exp $ *}
 
 {if $forum_mode eq 'y'}
     <tr><td>
@@ -173,7 +173,7 @@
 	<div>
     <h2 style="text-align: left">
     {if $forum_mode eq 'y'}
-    {if $comments_threadId > 0}{tr}Editing reply{/tr}{elseif $parent_com}{tr}Reply to the selected post{/tr}{else}{tr}Post new reply{/tr}{/if}
+    {if $comments_threadId > 0}{tr}Editing reply{/tr}{elseif $parent_com}{tr}Reply to the selected post{/tr}{else}{tr}Post new message{/tr}{/if}
     {else}
     {if $comments_threadId > 0}{tr}Editing comment{/tr}{elseif $parent_com}{tr}Comment on the selected post{/tr}{else}{tr}Post new comment{/tr}{/if}
     {/if}
