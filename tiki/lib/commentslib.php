@@ -389,9 +389,12 @@ class Comments extends TikiLib {
 			'forum:' . $forumId, 0,
 			$userName, $title, 
 			sprintf(tra("Use this thread to discuss the %s page."), "[tiki-index.php?page=$title|$title]"),
-			$temp_msid
+			$temp_msid, $in_reply_to
 			);
 	        $this->register_forum_post($forumId,0);
+
+		// First post is in reply to this one
+		$in_reply_to = $temp_msid;
 	    }
 
 	    // post
