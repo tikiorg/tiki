@@ -6,7 +6,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-global $imagegallib; iinclude_once ("lib/imagegals/imagegallib.php");
+global $imagegallib; include_once ("lib/imagegals/imagegallib.php");
 
 if (isset($module_params["galleryId"])) {
 	$galleryId = $module_params["galleryId"];
