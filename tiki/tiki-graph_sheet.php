@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-graph_sheet.php,v 1.3 2005-12-26 19:55:38 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-graph_sheet.php,v 1.4 2005-12-26 20:02:25 lphuberdeau Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -19,7 +19,7 @@ require_once ('lib/graph-engine/graph.multiline.php');
 function handle_series( $serie, &$sheet )
 {
 	if( !$range = $sheet->getRange( $serie ) )
-		$range = explode( ', ', $serie );
+		$range = array_map( 'trim', explode( ',', $serie ) );
 
 	if( !is_array( $range ) )
 		return array();
