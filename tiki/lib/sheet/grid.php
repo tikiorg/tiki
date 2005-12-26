@@ -1522,6 +1522,100 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 	}
 } // }}}1
 
+/** TikiSheetLabeledOutputHandler {{{1
+ * Class to output the data sheet as a standard HTML table.
+ * Importing is not supported.
+ */
+class TikiSheetLabeledOutputHandler extends TikiSheetDataHandler
+{
+	/** Constructor {{{2
+	 */
+	function TikiSheetLabeledOutputHandler()
+	{
+	}
+	
+	// _save {{{2
+	function _save( &$sheet )
+	{
+		echo "<table class=\"default\">\n";
+
+		echo "	<thead>\n";
+		echo "		<tr><th></th>\n";
+		
+		$prev = 'A';
+		for( $j = 0; $sheet->getColumnCount() > $j; $j++ )
+		{
+			echo "			<th>$prev</th>\n";
+			$prev = $sheet->increment( $prev );
+		}
+			
+		echo "		</tr>\n";
+		echo "	</thead>\n";
+
+		echo "	<tbody>\n";
+		$this->drawRows( $sheet, 0, $sheet->getRowCount() );
+		echo "	</tbody>\n";
+		
+		echo "</table>\n";
+
+		return true;
+	}
+
+	/** drawRows {{{2
+	 * Draws out a defined set of rows from the sheet.
+	 * @param $sheet The data container.
+	 * @param $begin The index of the begining row. (included)
+	 * @param $end The index of the end row (excluded)
+	 */
+	function drawRows( &$sheet, $begin, $end )
+	{
+		for( $i = $begin; $end > $i; $i++ )
+		{
+			echo "		<tr><th>" . ($i + 1) . "</th>\n";
+
+			for( $j = 0; $sheet->getColumnCount() > $j; $j++ )
+			{
+				$width = $height = "";
+				extract( $sheet->cellInfo[$i][$j] );
+				$append = "";
+
+				if( empty( $width ) || empty( $height ) || $width == 0 || $height == 0 )
+					continue;
+
+				if( $width > 1 )
+					$append .= " colspan='{$width}'";
+
+				if( $height > 1 )
+					$append .= " rowspan='{$height}'";
+
+				if( isset( $sheet->dataGrid[$i][$j] ) )
+					$data = $sheet->dataGrid[$i][$j];
+				else
+					$data = '';
+
+				$format = $sheet->cellInfo[$i][$j]['format'];
+				if( !empty( $format ) )
+					$data = TikiSheetDataFormat::$format( $data );
+				echo "			<td$append>$data</td>\n";
+			}
+			
+			echo "		</tr>\n";
+		}
+	}
+
+	// supports {{{2
+	function supports( $type )
+	{
+		return ( ( TIKISHEET_SAVE_DATA | TIKISHEET_SAVE_CELL | TIKISHEET_SAVE_FORMAT ) & $type ) > 0;
+	}
+
+	// version {{{2
+	function version()
+	{
+		return "1.0";
+	}
+} // }}}1
+
 // TikiWiki Sheet Library {{{1
 
 class SheetLib extends TikiLib
