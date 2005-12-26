@@ -101,5 +101,6 @@
 		<td class="formcolor" colspan="2"><input type="submit" value="{tr}show{/tr}" /></td>
 	</tr>
 </table>
+{$dataGrid}
 </form>
 {/if}

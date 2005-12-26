@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-graph_sheet.php,v 1.2 2005-05-18 10:58:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-graph_sheet.php,v 1.3 2005-12-26 19:55:38 lphuberdeau Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -82,13 +82,13 @@ $smarty->assign('page_mode', 'form' );
 
 $grid = &new TikiSheet;
 
+$sheetId = $_REQUEST['sheetId'];
+
+$handler = &new TikiSheetDatabaseHandler( $sheetId );
+$grid->import( $handler );
+
 if( isset( $_REQUEST['title'] ) )
 {
-	$sheetId = $_REQUEST['sheetId'];
-
-	$handler = &new TikiSheetDatabaseHandler( $sheetId );
-	$grid->import( $handler );
-
 	if( !in_array( $_REQUEST['graphic'], $valid_graphs ) )
 		die( "Unknown Graphic." );
 
@@ -175,6 +175,12 @@ else
 		$smarty->assign( 'series', $series );
 		$smarty->assign( 'graph', $graph );
 		$smarty->assign( 'renderer', $_GET['renderer'] );
+
+		ob_start();
+		$grid->export( new TikiSheetLabeledOutputHandler );
+		$dataGrid = ob_get_contents();
+		ob_end_clean();
+		$smarty->assign( 'dataGrid', $dataGrid );
 
 		if( function_exists( 'pdf_new' ) )
 		{
