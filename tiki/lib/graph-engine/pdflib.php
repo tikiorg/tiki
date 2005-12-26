@@ -175,7 +175,7 @@ class PDFLib_GRenderer extends GRenderer // {{{1
 
 		header( "Content-type: application/pdf" );
 		header( "Content-Length: $len" );
-		header( "Content-Disposition: inline; filename=$name" );
+		header( "Content-Disposition: inline; filename=chart.pdf" );
 		echo $buf;
 
 		pdf_delete( $this->pdf );
