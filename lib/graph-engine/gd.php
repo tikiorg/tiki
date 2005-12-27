@@ -129,16 +129,31 @@ class GD_GRenderer extends GRenderer // {{{1
 		return $this->styles[$name] = $this->_findStyle( $name );
 	}
 
-	function httpOutput( $filename ) // {{{2
+	function httpHeaders( $filename ) // {{{2
 	{
 		switch( $this->format )
 		{
 		case 'png':
 			header("Content-type: image/png");
-			imagepng( $this->gd );
 			break;
 		case 'jpg':
 			header("Content-type: image/jpeg");
+			break;
+		default:
+			echo "Unknown Format: {$this->format}\n";
+		}
+	}
+	
+	function httpOutput( $filename ) // {{{2
+	{
+		$this->httpHeaders( $filename );
+
+		switch( $this->format )
+		{
+		case 'png':
+			imagepng( $this->gd );
+			break;
+		case 'jpg':
 			imagejpeg( $this->gd );
 			break;
 		default:

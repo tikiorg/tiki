@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-graph_sheet.php,v 1.5 2005-12-27 00:47:50 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-graph_sheet.php,v 1.6 2005-12-27 08:11:50 lphuberdeau Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -93,6 +93,8 @@ if( isset( $_REQUEST['title'] ) )
 	if( !in_array( $_REQUEST['graphic'], $valid_graphs ) )
 		die( "Unknown Graphic." );
 
+	$cache_file = "temp/cache/tsge_" . md5( $_SERVER['REQUEST_URI'] );
+
 	if( !isset( $_REQUEST['renderer'] ) )
 		$_REQUEST['renderer'] = null;
 	switch( $_REQUEST['renderer'] )
@@ -111,13 +113,20 @@ if( isset( $_REQUEST['title'] ) )
 		break;
 	case 'PS':
 		$renderer = &new PS_GRenderer( $_REQUEST['format'], $_REQUEST['orientation'] );
-		$ext = 'pdf';
+		$ext = 'ps';
 		break;
 	default:
 		$smarty->assign('msg', tra("You must select a renderer."));
 
 		$smarty->display("error.tpl");
 		die;
+	}
+
+	if( file_exists( $cache_file ) && time() - filemtime( $cache_file ) < 3600 )
+	{
+		$renderer->httpHeaders( "graph.$ext" );
+		readfile( $cache_file );
+		exit;
 	}
 
 	$graph = $_REQUEST['graphic'];
@@ -153,7 +162,12 @@ if( isset( $_REQUEST['title'] ) )
 
 	$graph->draw( $renderer );
 
+	ob_start();
 	$renderer->httpOutput( "graph.$ext" );
+	$content = ob_get_contents();
+	ob_end_flush();
+
+	file_put_contents( $cache_file, $content );
 
 	exit;
 }

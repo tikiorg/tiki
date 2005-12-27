@@ -167,7 +167,13 @@ class PS_GRenderer extends GRenderer // {{{1
 		return $this->styles[$name] = $this->_findStyle( $name );
 	}
 
-	function httpOutput( $filename ) // {{{2
+	function httpHeaders( $filename ) // {{{2
+	{
+		header( "Content-type: application/ps" );
+		header( "Content-Disposition: inline; filename=$filename" );
+	}
+	
+	function httpOutput( $filename = 'chart.ps' ) // {{{2
 	{
 		ps_end_page( $this->ps );
 		ps_close( $this->ps );
@@ -175,9 +181,7 @@ class PS_GRenderer extends GRenderer // {{{1
 		$buf = ps_get_buffer( $this->ps );
 		$len = strlen( $buf );
 
-		header( "Content-type: application/ps" );
-		header( "Content-Length: $len" );
-		header( "Content-Disposition: inline; filename=chart.ps" );
+		$this->httpHeaders( $filename );
 		echo $buf;
 
 		ps_delete( $this->ps );

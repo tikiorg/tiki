@@ -61,6 +61,11 @@ class GRenderer // {{{1
 		return null;
 	}
 
+	function httpHeaders( $filename ) // {{{2
+	{
+		die( "Abstract Function Call" );
+	}
+	
 	function httpOutput( $filename ) // {{{2
 	{
 		die( "Abstract Function Call" );
