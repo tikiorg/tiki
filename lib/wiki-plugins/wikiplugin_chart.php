@@ -71,6 +71,8 @@ function wikiplugin_chart($data, $params) {
 	}
 	elseif( function_exists( 'pdf_new' ) )
 		$disp = tra( "Chart as PDF" );
+	elseif( function_exists( 'ps_new' ) )
+		$disp = tra( "Chart as PostScript" );
 	else
 		return "<b>no valid renderer for plugin</b><br />";
 
@@ -80,6 +82,13 @@ function wikiplugin_chart($data, $params) {
 		$params['orientation'] = isset( $orientation ) ? $orientation : 'landscape';
 
 		$disp = '<a href="' . _wikiplugin_chart_uri( $params, 'PDF' ) . '">' . $disp . '</a>';
+	}
+	elseif( function_exists( 'ps_new' ) )
+	{
+		$params['format'] = isset( $format ) ? $format : 'A4';
+		$params['orientation'] = isset( $orientation ) ? $orientation : 'landscape';
+
+		$disp = '<a href="' . _wikiplugin_chart_uri( $params, 'PS' ) . '">' . $disp . '</a>';
 	}
 
 	return $disp;

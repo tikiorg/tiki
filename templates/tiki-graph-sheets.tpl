@@ -20,7 +20,7 @@
 	<td><label for="g_stack"><img src="img/graph/graph.barstack.png" alt="Bar Stack"/>
 </tr>
 </table>
-{if $haspdflib}
+{if $haspdflib or $hasps}
 <div>
 	<select name="format">
 		<option>Letter</option>
@@ -32,7 +32,12 @@
 		<option value="landscape">{tr}Landscape{/tr}</option>
 		<option value="portrait">{tr}Portrait{/tr}</option>
 	</select>
+{if $haspdflib}
 	<input type="submit" name="renderer" value="PDF"/>
+{/if}
+{if $hasps}
+	<input type="submit" name="renderer" value="PS"/>
+{/if}
 </div>
 {/if}
 {if $hasgd}

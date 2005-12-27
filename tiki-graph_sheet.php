@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-graph_sheet.php,v 1.4 2005-12-26 20:02:25 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-graph_sheet.php,v 1.5 2005-12-27 00:47:50 lphuberdeau Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -12,6 +12,7 @@ require_once ('tiki-setup.php');
 require_once ('lib/sheet/grid.php');
 require_once ('lib/graph-engine/gd.php');
 require_once ('lib/graph-engine/pdflib.php');
+require_once ('lib/graph-engine/ps.php');
 require_once ('lib/graph-engine/graph.pie.php');
 require_once ('lib/graph-engine/graph.bar.php');
 require_once ('lib/graph-engine/graph.multiline.php');
@@ -108,6 +109,10 @@ if( isset( $_REQUEST['title'] ) )
 		$renderer = &new PDFLib_GRenderer( $_REQUEST['format'], $_REQUEST['orientation'] );
 		$ext = 'pdf';
 		break;
+	case 'PS':
+		$renderer = &new PS_GRenderer( $_REQUEST['format'], $_REQUEST['orientation'] );
+		$ext = 'pdf';
+		break;
 	default:
 		$smarty->assign('msg', tra("You must select a renderer."));
 
@@ -201,6 +206,7 @@ else
 		$smarty->assign( 'mode', 'graph' );
 		$smarty->assign( 'hasgd', function_exists( 'imagepng' ) && function_exists( 'imagejpeg' ) );
 		$smarty->assign( 'haspdflib', function_exists( 'pdf_new' ) );
+		$smarty->assign( 'hasps', function_exists( 'ps_new' ) );
 	}
 }
 
