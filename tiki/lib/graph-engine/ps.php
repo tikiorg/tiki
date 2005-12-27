@@ -30,10 +30,11 @@ class PS_GRenderer extends GRenderer // {{{1
 			$this->height = $size[1];
 			
 			$this->ps = ps_new();
+			ps_set_parameter($this->ps, "FontAFM", "Foobar=lib/pdflib/fonts/Helvetica.afm");
 			ps_open_file( $this->ps, '' );
 			ps_begin_page( $this->ps, $this->width, $this->height );
 
-			$this->font = ps_findfont( $this->ps, 'Helvetica', '', 0 );
+			$this->font = ps_findfont( $this->ps, 'Foobar', '', 0 );
 		}
 	}
 	
@@ -176,7 +177,7 @@ class PS_GRenderer extends GRenderer // {{{1
 
 		header( "Content-type: application/ps" );
 		header( "Content-Length: $len" );
-		header( "Content-Disposition: inline; filename=$name" );
+		header( "Content-Disposition: inline; filename=chart.ps" );
 		echo $buf;
 
 		ps_delete( $this->ps );
@@ -255,6 +256,9 @@ class PS_GRenderer extends GRenderer // {{{1
 			break;
 		case 'Text':
 			$style['fill'] = $this->_getColor( 'Black' );
+			if( !isset( $parts[1] ) )
+				$parts[1] = '';
+
 			switch( $parts[1] )
 			{
 			case 'Center':
