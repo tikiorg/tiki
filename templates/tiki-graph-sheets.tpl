@@ -51,7 +51,56 @@
 </form>
 {/if}
 {if ($mode eq 'param')}
-<form method="get" action="tiki-graph_sheet.php">
+<script language="JavaScript">
+{literal}
+function renderWikiPlugin()
+{
+	var div = document.getElementById( 'plugin-desc' );
+
+	var params = [
+		_renVal( 'id', 'sheetId' ),
+		_renVal( 'type', 'graphic' ),
+		_renVal( 'format', 'format' ),
+		_renVal( 'orientation', 'orientation' ),
+{/literal}
+{if $showgridparam}
+		_renValRad( 'independant', 'independant' ),
+		_renValRad( 'vertical', 'vertical' ),
+		_renValRad( 'horizontal', 'horizontal' ),
+{/if}
+{section name=i loop=$series}
+		_renVal( '{$series[i]}', 'series[{$series[i]}]' ),
+{/section}
+{literal}
+		_renVal( 'width', 'width' ),
+		_renVal( 'height', 'height' )
+	];
+
+	div.innerHTML = "{CHART(" + params.join( ", " ) + ")}" + document.chartParam.title.value + "{CHART}";
+}
+
+function _renVal( dest, control )
+{
+	var val = document.chartParam[control].value;
+	
+	if( val.indexOf( "," ) != -1 )
+		return dest + '=>"' + val + '"';
+	else
+		return dest + '=>' + val;
+}
+
+function _renValRad( name )
+{
+	var rads = document.chartParam[name];
+
+	for( i = 0; rads.length > i; i++ )
+		if( rads[i].checked )
+			return name + '=>' + rads[i].value;
+}
+{/literal}
+</script>
+
+<form name="chartParam" method="get" action="tiki-graph_sheet.php">
 <input type="hidden" name="sheetId" value="{$sheetId}"/>
 <input type="hidden" name="graphic" value="{$graph}"/>
 <input type="hidden" name="renderer" value="{$renderer}"/>
@@ -62,33 +111,33 @@
 <table class="normal">
 	<tr>
 		<td class="formcolor">{tr}Title{/tr}:</td>
-		<td class="formcolor"><input type="text" name="title" value="{$title}"/></td>
+		<td class="formcolor"><input type="text" name="title" value="{$title}" onChange="renderWikiPlugin()"/></td>
 	</tr>
 {if $showgridparam}
 	<tr>
 		<td class="formcolor">{tr}Independant Scale{/tr}:</td>
 		<td class="formcolor">
-			<input type="radio" name="independant" value="horizontal" id="ind_ori_hori" checked="checked" />
+			<input type="radio" name="independant" value="horizontal" id="ind_ori_hori" checked="checked" onChange="renderWikiPlugin()" />
 			<label for="ind_ori_hori">{tr}Horizontal{/tr}</label>
-			<input type="radio" name="independant" value="vertical" id="ind_ori_verti" />
+			<input type="radio" name="independant" value="vertical" id="ind_ori_verti" onChange="renderWikiPlugin()" />
 			<label for="ind_ori_verti">{tr}Vertical{/tr}</label>
 		</td>
 	</tr>
 	<tr>
 		<td class="formcolor">{tr}Horizontal Scale{/tr}:</td>
 		<td class="formcolor">
-			<input type="radio" name="horizontal" value="bottom" id="hori_pos_bottom" checked="checked" />
+			<input type="radio" name="horizontal" value="bottom" id="hori_pos_bottom" checked="checked" onChange="renderWikiPlugin()" />
 			<label for="hori_pos_bottom">{tr}Bottom{/tr}</label>
-			<input type="radio" name="horizontal" value="top" id="hori_pos_top" />
+			<input type="radio" name="horizontal" value="top" id="hori_pos_top" onChange="renderWikiPlugin()" />
 			<label for="hori_pos_top">{tr}Top{/tr}</label>
 		</td>
 	</tr>
 	<tr>
 		<td class="formcolor">{tr}Vertical Scale{/tr}:</td>
 		<td class="formcolor">
-			<input type="radio" name="vertical" value="left" id="verti_pos_left" checked="checked" />
+			<input type="radio" name="vertical" value="left" id="verti_pos_left" checked="checked" onChange="renderWikiPlugin()" />
 			<label for="verti_pos_left">{tr}Left{/tr}</label>
-			<input type="radio" name="vertical" value="right" id="verti_pos_right" />
+			<input type="radio" name="vertical" value="right" id="verti_pos_right" onChange="renderWikiPlugin()" />
 			<label for="verti_pos_right">{tr}Right{/tr}</label>
 		</td>
 	</tr>
@@ -99,7 +148,7 @@
 {section name=i loop=$series}
 	<tr>
 		<td class="formcolor">{$series[i]}</td>
-		<td class="formcolor"><input type="text" name="series[{$series[i]}]"/>
+		<td class="formcolor"><input type="text" name="series[{$series[i]}]" onChange="renderWikiPlugin()"/></td>
 	</tr>
 {/section}
 	<tr>
@@ -108,4 +157,6 @@
 </table>
 {$dataGrid}
 </form>
+<h2>{tr}Wiki plug-in{/tr}</h2>
+<div id="plugin-desc"></div>
 {/if}
