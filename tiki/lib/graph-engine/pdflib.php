@@ -165,7 +165,13 @@ class PDFLib_GRenderer extends GRenderer // {{{1
 		return $this->styles[$name] = $this->_findStyle( $name );
 	}
 
-	function httpOutput( $filename ) // {{{2
+	function httpHeaders( $filename ) // {{{2
+	{
+		header( "Content-type: application/pdf" );
+		header( "Content-Disposition: inline; filename=$filename" );
+	}
+
+	function httpOutput( $filename = 'chart.pdf' ) // {{{2
 	{
 		pdf_end_page( $this->pdf );
 		pdf_close( $this->pdf );
@@ -173,9 +179,7 @@ class PDFLib_GRenderer extends GRenderer // {{{1
 		$buf = pdf_get_buffer( $this->pdf );
 		$len = strlen( $buf );
 
-		header( "Content-type: application/pdf" );
-		header( "Content-Length: $len" );
-		header( "Content-Disposition: inline; filename=chart.pdf" );
+		$this->httpHeaders( $filename );
 		echo $buf;
 
 		pdf_delete( $this->pdf );
