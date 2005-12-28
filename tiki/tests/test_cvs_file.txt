@@ -1,3 +1,5 @@
+Test from Laurent
+
 amette: Wanting to know if my new setup with Eclipse works.... 
 
 test what happens on branches when i commit to HEAD, luci
