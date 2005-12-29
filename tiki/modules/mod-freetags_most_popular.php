@@ -7,6 +7,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 require_once("lib/freetag/freetaglib.php");
+global $freetaglib;
 
 $most_popular_tags = $freetaglib->get_most_popular_tags('', 0, $module_rows);
 
