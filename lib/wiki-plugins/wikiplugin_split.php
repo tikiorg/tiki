@@ -1,7 +1,7 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.31 2005-12-19 13:53:57 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.32 2005-12-29 19:17:25 amette Exp $
  * 
  * \brief {SPLIT} wiki plugin implementation
  * Usage:
@@ -81,7 +81,7 @@ function wikiplugin_split($data, $params, $pos) {
 		  $tdsize[$i]=floor($tdsize[$i]/$tdtotal*100);
 		}		
 		$tdtotaltd=floor($tdtotal/100*100);
-		if ($tdtotald == 100) // avoir IE to do to far
+		if ($tdtotaltd == 100) // avoir IE to do to far
 			$class = 'class="normal split"';
 		else
 			$class = 'class="split" width="'.$tdtotaltd.'%"';
