@@ -9,21 +9,21 @@
 <span style="float:right;">
 		{if $tiki_p_blog_post eq "y"}
 		{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y" or $public eq "y"}
-		<a class="bloglink" href="tiki-blog_post.php?blogId={$blogId}"><img src='img/icons/edit.gif' border='0' alt='{tr}Post{/tr}' title='{tr}post{/tr}' /></a>
+		<a class="bloglink" href="tiki-blog_post.php?blogId={$blogId}"><img src='img/icons/edit.gif' style="border:0;" alt='{tr}Post{/tr}' title='{tr}post{/tr}' /></a>
 		{/if}
 		{/if}
 		{if $rss_blog eq "y"}
-		<a class="bloglink" href="tiki-blog_rss.php?blogId={$blogId}"><img src='img/rss.png' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' /></a>
+		<a class="bloglink" href="tiki-blog_rss.php?blogId={$blogId}"><img src='img/rss.png' style="border:0;" alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' /></a>
 		{/if}
 		{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y"}
-		<a class="bloglink" href="tiki-edit_blog.php?blogId={$blogId}"><img src='img/icons/config.gif' border='0' alt='{tr}Edit blog{/tr}' title='{tr}Edit blog{/tr}' /></a>
+		<a class="bloglink" href="tiki-edit_blog.php?blogId={$blogId}"><img src='img/icons/config.gif' style="border:0;" alt='{tr}Edit blog{/tr}' title='{tr}Edit blog{/tr}' /></a>
 		{/if}
 		
 		{if $user and $feature_user_watches eq 'y'}
 		{if $user_watching_blog eq 'n'}
-		<a href="tiki-view_blog.php?blogId={$blogId}&amp;watch_event=blog_post&amp;watch_object={$blogId}&amp;watch_action=add"><img border='0' alt='{tr}monitor this blog{/tr}' title='{tr}monitor this blog{/tr}' src='img/icons/icon_watch.png' /></a>
+		<a href="tiki-view_blog.php?blogId={$blogId}&amp;watch_event=blog_post&amp;watch_object={$blogId}&amp;watch_action=add"><img style="border:0;" alt='{tr}monitor this blog{/tr}' title='{tr}monitor this blog{/tr}' src='img/icons/icon_watch.png' /></a>
 		{else}
-		<a href="tiki-view_blog.php?blogId={$blogId}&amp;watch_event=blog_post&amp;watch_object={$blogId}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this blog{/tr}' title='{tr}stop monitoring this blog{/tr}' src='img/icons/icon_unwatch.png' /></a>
+		<a href="tiki-view_blog.php?blogId={$blogId}&amp;watch_event=blog_post&amp;watch_object={$blogId}&amp;watch_action=remove"><img style="border:0;" alt='{tr}stop monitoring this blog{/tr}' title='{tr}stop monitoring this blog{/tr}' src='img/icons/icon_unwatch.png' /></a>
 		{/if}
 		{/if}
 </span>
@@ -33,9 +33,11 @@
 {if $use_find eq 'y'}
 <div class="blogtools">
 <form action="tiki-view_blog.php" method="get">
+<div>
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <input type="hidden" name="blogId" value="{$blogId|escape}" />
 {tr}Find:{/tr} <input type="text" name="find" /> <input type="submit" name="search" value="{tr}find{/tr}" />
+</div>
 </form>
 <!--
 	{tr}Sort posts by:{/tr}
@@ -54,20 +56,18 @@
 </div>
 <div style="float:right">
 {if ($ownsblog eq 'y') or ($user and $listpages[ix].user eq $user) or $tiki_p_blog_admin eq 'y'}
-<a class="blogt" href="tiki-blog_post.php?blogId={$listpages[ix].blogId}&amp;postId={$listpages[ix].postId}"><img border='0' src='img/icons/edit.gif' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
-<a class="blogt" href="tiki-view_blog.php?blogId={$blogId}&amp;remove={$listpages[ix].postId}"><img src='img/icons2/delete.gif' alt='{tr}Remove{/tr}' border='0' title='{tr}Remove{/tr}' /></a>
+<a class="blogt" href="tiki-blog_post.php?blogId={$listpages[ix].blogId}&amp;postId={$listpages[ix].postId}"><img style="border:0;" src='img/icons/edit.gif' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
+<a class="blogt" href="tiki-view_blog.php?blogId={$blogId}&amp;remove={$listpages[ix].postId}"><img src='img/icons2/delete.gif' alt='{tr}Remove{/tr}' style="border:0;" title='{tr}Remove{/tr}' /></a>
 {/if}
 {if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
-<a title="{tr}Save to notepad{/tr}" href="tiki-view_blog.php?blogId={$blogId}&amp;savenotepad={$listpages[ix].postId}">{html_image file='img/icons/ico_save.gif' border='0' alt='{tr}save{/tr}'}</a>
+<a title="{tr}Save to notepad{/tr}" href="tiki-view_blog.php?blogId={$blogId}&amp;savenotepad={$listpages[ix].postId}">{html_image file='img/icons/ico_save.gif' style="border:0;" alt='{tr}save{/tr}'}</a>
 {/if}
 </div>
-{if $feature_freetag eq 'y'}
 <div class="freetaglist">
   {foreach from=$listpages[ix].freetags.data item=taginfo}
 	  <a class="freetag" href="tiki-browse_freetags.php?tag={$taginfo.tag}">{$taginfo.tag}</a> 
   {/foreach}
 </div>
-{/if}
 <div class="postinfo">
 {if $use_title eq 'y'}
 	<small> {tr}posted by{/tr} {$listpages[ix].user|userlink}  
@@ -98,13 +98,13 @@
  [<a class="link" href="tiki-view_blog_post.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}&amp;show_comments=1">{tr}view comments{/tr}</a>]
 {/if}
 </small>
-<a href='tiki-print_blog_post.php?postId={$listpages[ix].postId}'><img src='img/icons/ico_print.gif' border='0' alt='{tr}print{/tr}' title='{tr}print{/tr}' /></a>
-<a href='tiki-send_blog_post.php?postId={$listpages[ix].postId}'><img src='img/icons/email.gif' border='0' alt='{tr}email this post{/tr}' title='{tr}email this post{/tr}' /></a>
+<a href='tiki-print_blog_post.php?postId={$listpages[ix].postId}'><img src='img/icons/ico_print.gif' style="border:0;" alt='{tr}print{/tr}' title='{tr}print{/tr}' /></a>
+<a href='tiki-send_blog_post.php?postId={$listpages[ix].postId}'><img src='img/icons/email.gif' style="border:0;" alt='{tr}email this post{/tr}' title='{tr}email this post{/tr}' /></a>
 </div>
 </div>
 {/section}
 <br />
-<div align="center">
+<div style="align:center">
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="blogprevnext" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]
