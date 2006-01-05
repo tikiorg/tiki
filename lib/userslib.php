@@ -10,7 +10,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 // This lib uses pear so the constructor requieres
 // a pear DB object
 
-// some definitions for helping with authentication
+// some defiitions for helping with authentication
 define("USER_VALID", 2);
 
 define("SERVER_ERROR", -1);
@@ -1863,23 +1863,23 @@ function get_included_groups($group) {
 			return true;
     }
 
-	function add_group($group, $desc, $home, $utracker=0, $gtracker=0) {
+	function add_group($group, $desc, $home, $utracker=0, $gtracker=0, $rufields='') {
 		global $cachelib;  
 		if ($this->group_exists($group))
 			return false;
-		$query = "insert into `users_groups`(`groupName`, `groupDesc`, `groupHome`,`usersTrackerId`,`groupTrackerId`) values(?,?,?,?,?)";
-		$result = $this->query($query, array($group, $desc, $home, (int)$utracker, (int)$gtracker) );
+		$query = "insert into `users_groups`(`groupName`, `groupDesc`, `groupHome`,`usersTrackerId`,`groupTrackerId`, `registrationUsersFieldIds`) values(?,?,?,?,?,?)";
+		$result = $this->query($query, array($group, $desc, $home, (int)$utracker, (int)$gtracker, $rufields) );
 		$cachelib->invalidate('grouplist');
 		return true;
 	}
 
-	function change_group($olgroup,$group,$desc,$home,$utracker=0,$gtracker=0,$ufield=0,$gfield=0) {
+	function change_group($olgroup,$group,$desc,$home,$utracker=0,$gtracker=0,$ufield=0,$gfield=0,$rufields='') {
 		global $cachelib;  
 		if (!$this->group_exists($olgroup))
 			return $this->add_group($group, $desc, $home,$utracker,$gtracker);
 		$query = "update `users_groups` set `groupName`=?, `groupDesc`=?, `groupHome`=?, ";
-		$query.= " `usersTrackerId`=?, `groupTrackerId`=?, `usersFieldId`=?, `groupFieldId`=? where `groupName`=?";
-		$result = $this->query($query, array($group, $desc, $home, (int)$utracker, (int)$gtracker, (int)$ufield, (int)$gfield, $olgroup));
+		$query.= " `usersTrackerId`=?, `groupTrackerId`=?, `usersFieldId`=?, `groupFieldId`=? , `registrationUsersFieldIds`=? where `groupName`=?";
+		$result = $this->query($query, array($group, $desc, $home, (int)$utracker, (int)$gtracker, (int)$ufield, (int)$gfield, $rufields, $olgroup));
 		$query = "update `users_usergroups` set `groupName`=? where `groupName`=?";
 		$result = $this->query($query, array($group, $olgroup));
 		$query = "update `users_grouppermissions` set `groupName`=? where `groupName`=?";

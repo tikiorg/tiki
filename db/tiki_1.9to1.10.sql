@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.70 2005-12-16 12:45:58 lfagundes Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.71 2006-01-05 17:59:27 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -476,3 +476,5 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 #2005-12-16 lfagundes
 ALTER TABLE `tiki_history` ADD KEY(`user`);
 
+#2006-01-05 sg
+ALTER TABLE users_groups ADD registrationUsersFieldIds text;

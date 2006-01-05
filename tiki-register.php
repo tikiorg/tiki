@@ -125,6 +125,18 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
       }
     }
 
+  if ($email_valid != 'no'&& $userTracker == 'y') {
+		$re = $userlib->get_group_info(isset($_REQUEST['group'])? $_REQUEST['group']: 'Registered');
+		if (!empty($re['usersTrackerId']) && !empty($re['registrationUsersFieldIds'])) {
+			include_once('lib/wiki-plugins/wikiplugin_tracker.php');
+			$userTrackerData = wikiplugin_tracker('', array('trackerId'=>$re['usersTrackerId'], 'fields'=>$re['registrationUsersFieldIds'], 'showdesc'=>'y', 'showmandatory'=>'y', 'embedded'=>'n'));
+			$smarty->assign('userTrackerData', $userTrackerData);
+			if (!isset($_REQUEST['trackit']) || (isset($_REQUEST['error']) && $_REQUEST['error'] == 'y')) {
+				$email_valid = 'no';// first pass or error
+			}
+		}
+  }
+
   if($email_valid != 'no') {
 		if($validateUsers == 'y') {
 			//$apass = addslashes(substr(md5($tikilib->genPass()),0,25));
@@ -174,6 +186,9 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
 			$smarty->assign('showmsg','y');
 		} else {
 			$userlib->add_user($_REQUEST["name"],$_REQUEST["pass"],$_REQUEST["email"],'');
+			if (isset($_REQUEST['group']) && $userlib->get_registrationChoice($_REQUEST['group']) == 'y') {
+				$userlib->assign_user_to_group($_REQUEST['name'], $_REQUEST['group']);
+			}			
 			$logslib->add_log('register','created account '.$_REQUEST["name"]);
 
 			$smarty->assign('msg',$smarty->fetch('mail/user_welcome_msg.tpl'));
@@ -213,7 +228,8 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
 		// Custom fields
 		foreach ($customfields as $custpref=>$prefvalue ) {
 		    //print $_REQUEST[$customfields[$custpref]['prefName']];
-		    $tikilib->set_user_preference($_REQUEST["name"], $customfields[$custpref]['prefName'], $_REQUEST[$customfields[$custpref]['prefName']]);
+		    if (isset($_REQUEST[$customfields[$custpref]['prefName']]))
+				$tikilib->set_user_preference($_REQUEST["name"], $customfields[$custpref]['prefName'], $_REQUEST[$customfields[$custpref]['prefName']]);
 		}
 
 		$emails = $notificationlib->get_mail_events('user_registers','*');

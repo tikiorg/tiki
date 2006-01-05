@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.52 2006-01-05 17:16:37 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.53 2006-01-05 17:59:27 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -19,7 +19,7 @@ if ($user != 'admin') {
 }
 
 $cookietab = "1";
-list($trackers,$ag_utracker,$ag_ufield,$ag_gtracker,$ag_gfield) = array(array(),0,0,0,0);
+list($trackers,$ag_utracker,$ag_ufield,$ag_gtracker,$ag_gfield,$ag_rufields) = array(array(),0,0,0,0,'');
 
 if (isset($groupTracker) and $groupTracker == 'y') {
 	$trackerlist = $tikilib->list_trackers(0, -1, 'name_asc', '');
@@ -39,6 +39,9 @@ if (isset($userTracker) and $userTracker == 'y') {
 		$ag_utracker = $_REQUEST["userstracker"];
 		if (isset($_REQUEST["usersfield"]) and $_REQUEST["usersfield"]) {
 			$ag_ufield = $_REQUEST["usersfield"];
+		}
+		if (!empty($_REQUEST['registrationUsersFieldIds'])) {
+			$ag_rufields = $_REQUEST['registrationUsersFieldIds'];
 		}
 	}
 }
@@ -72,7 +75,7 @@ if (isset($_REQUEST["newgroup"]) and $_REQUEST["name"]) {
 // modification
 if (isset($_REQUEST["save"]) and isset($_REQUEST["olgroup"]) and !empty($_REQUEST["name"])) {
 	check_ticket('admin-groups');
-	$userlib->change_group($_REQUEST["olgroup"],$_REQUEST["name"],$_REQUEST["desc"],$ag_home,$ag_utracker,$ag_gtracker,$ag_ufield,$ag_gfield);
+	$userlib->change_group($_REQUEST["olgroup"],$_REQUEST["name"],$_REQUEST["desc"],$ag_home,$ag_utracker,$ag_gtracker,$ag_ufield,$ag_gfield, $ag_rufields);
 	$userlib->remove_all_inclusions($_REQUEST["name"]);
 	if (isset($_REQUEST["include_groups"]) and is_array($_REQUEST["include_groups"])) {		
 		foreach ($_REQUEST["include_groups"] as $include) {
@@ -177,6 +180,8 @@ if (isset($_REQUEST["group"])and $_REQUEST["group"]) {
 				$smarty->assign('usersfieldid',$usersfieldid);
 			}
 		}
+		if (isset($re['registrationUsersFieldIds']))
+			$smarty->assign('registrationUsersFieldIds', $re['registrationUsersFieldIds']);
 	}
 
 	if ($groupTracker == 'y') {	
