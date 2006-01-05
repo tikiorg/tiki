@@ -146,11 +146,11 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 {/foreach}
 </select>
 </td></tr>
-<tr><td class="form">{tr}User can choose their group at registration time{/tr}:</td>
+<tr><td class="form">{tr}User can choose beyond these groups at registration time{/tr}:</td>
 <td><select name="registration_choices[]" multiple="multiple" size="5">
 <option value="">&nbsp;</option>
 {foreach key=g item=gr from=$listgroups}
-{if $gr.groupName ne 'Registered' and $gr.groupName ne 'Anonymous'} 
+{if $gr.groupName ne 'Anonymous'} 
 <option value="{$gr.groupName|escape}" {if $gr.registrationChoice eq 'y'} selected="selected"{/if}>{$gr.groupName|truncate:"52":" ..."}</option>
 {/if}
 {/foreach}
