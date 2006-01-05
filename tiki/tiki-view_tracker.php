@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.88 2005-12-12 15:18:47 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.89 2006-01-05 17:16:37 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -74,7 +74,10 @@ if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
 	}
 }
 
-$cookietab = "1";
+if (!($tiki_p_view_trackers == 'y' || $tiki_p_admin == 'y' || $tiki_p_admin_trackers == 'y') && $tiki_p_create_tracker_items  == 'y')
+	$cookietab = "2";
+else
+	$cookietab = "1";
 $defaultvalues = array();
 
 if (isset($_REQUEST['vals']) and is_array($_REQUEST['vals'])) {
@@ -648,9 +651,10 @@ foreach ($fields['data'] as $it) {
 	}
 }
 }
-
-foreach ($items['data'] as $f=>$v) {
-	$items['data'][$f]['my_rate'] = $tikilib->get_user_vote("tracker.".$_REQUEST["trackerId"].'.'.$items['data'][$f]['itemId'],$user);
+if ($items['data']) {
+	foreach ($items['data'] as $f=>$v) {
+		$items['data'][$f]['my_rate'] = $tikilib->get_user_vote("tracker.".$_REQUEST["trackerId"].'.'.$items['data'][$f]['itemId'],$user);
+	}
 }
 
 setcookie('tab',$cookietab);

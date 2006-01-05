@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.88 2005-12-13 12:12:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.89 2006-01-05 17:16:37 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -459,6 +459,7 @@ if ($tiki_p_modify_tracker_items == 'y') {
 				$trklib->replace_rating($_REQUEST["trackerId"],$_REQUEST["itemId"],$rateFieldId,$user,$_REQUEST["newItemRate"]);
 			}
 			$mainfield = $ins_fields["data"][$mainfield]["value"];
+
 			$_REQUEST['show']  = 'view';
 			$temp_max = count($fields["data"]);
 			for ($i = 0; $i < $temp_max; $i++) {
@@ -605,6 +606,8 @@ if ($_REQUEST["itemId"]) {
 					$last[$fid] = $ins_fields["data"][$i]["value"];
 				}
 			}
+			if ($fields['data'][$i]['isMain'] == 'y')
+				$smarty->assign('tracker_item_main_value', $ins_fields['data'][$i]['value']);			
 		}
 	}
 /* **************** seems it is only 1.8

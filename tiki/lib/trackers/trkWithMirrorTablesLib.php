@@ -728,13 +728,11 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 				} else {
 					$name = $this->getOne("select `name` from `tiki_tracker_fields` where `fieldId`=?",array((int)$fieldId));
 				}
-				if (isset($ins_fields["data"][$i]["value"]))
-				{
+				if (isset($ins_fields["data"][$i]["value"]))	{
 				  $value = $ins_fields["data"][$i]["value"];
-				} else
-				{
+				} else {
 				  $value = '';
-        }
+				}
 				if (isset($ins_fields["data"][$i]["type"]) and ($ins_fields["data"][$i]["type"] == 'f' or $ins_fields["data"][$i]["type"] == 'j')) {
 					$human_value = date('r',$ins_fields["data"][$i]["value"]);
 					$the_data .= "  $name = $human_value\n";
@@ -826,11 +824,9 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 				foreach ($emails as $email) {
 					//var_dump($email);
 					//var_dump($mail_data);
-					if ($email!='')
-					{
+					if ($email!='') {
 						mail($email, encode_headers('['.$trackerName.'] '.tra('Tracker was modified at '). $_SERVER["SERVER_NAME"], 'utf-8'), $mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8");
 					}
-					//echo "$email, ";
 				}
 			} else {
 			    // Use simple email

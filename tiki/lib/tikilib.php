@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.626 2005-12-19 17:27:14 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.627 2006-01-05 17:16:37 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1164,6 +1164,7 @@ class TikiLib extends TikiDB {
 
 function add_pageview() {
     $dayzero = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
+//echo "PAGEVIEW:".date('r', $dayzero).'<br>';
     $cant = $this->getOne("select count(*) from `tiki_pageviews` where `day`=?",array((int)$dayzero));
 
     if ($cant) {
@@ -2380,7 +2381,7 @@ function add_pageview() {
 		$mid2 = " and ";
 	else
 		$mid2 = " where ";
-	$mid2 .= "  `tiki_articles`.`type` = `tiki_article_types`.`type`and `tiki_articles`.`author` = `users_users`.`login`";
+	$mid2 .= "  `tiki_articles`.`type` = `tiki_article_types`.`type`";
 
 	$query = "select `tiki_articles`.*,
 				`users_users`.`avatarLibName`,
@@ -2402,11 +2403,10 @@ function add_pageview() {
 				`tiki_article_types`.`show_image_caption`,
 				`tiki_article_types`.`show_lang`,
 				`tiki_article_types`.`creator_edit`
-	    	from `tiki_articles`, `tiki_article_types`, `users_users`
+	    	from `tiki_articles`, `tiki_article_types` left join `users_users` on `tiki_articles`.`author` = `users_users`.`login`
 	    	$mid $mid2 order by ".$this->convert_sortmode($sort_mode);
-	$query_cant = "select count(*) from  `tiki_articles`, `tiki_article_types`,  `users_users` $mid $mid2";
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
-	$cant = $this->getOne($query_cant,$bindvars);
+	$cant = 0;
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
@@ -2418,6 +2418,7 @@ function add_pageview() {
 		$add = $this->user_has_perm_on_object($user, $res['articleId'],'article', 'tiki_p_read_article');
 	    // no need to do all of the following if we are not adding this article to the array
 	    if ($add) {
+		    ++$cant;
 		    $res["entrating"] = floor($res["rating"]);
 		    if (empty($res["body"])) {
 				$res["isEmpty"] = 'y';
@@ -2504,7 +2505,7 @@ function add_pageview() {
     }
 
     function get_article($articleId) {
-	$mid = " where `tiki_articles`.`type` = `tiki_article_types`.`type` and `tiki_articles`.`author` = `users_users`.`login` ";
+	$mid = " where `tiki_articles`.`type` = `tiki_article_types`.`type` ";
 	$query = "select `tiki_articles`.*,
 	`users_users`.`avatarLibName`,
 	`tiki_article_types`.`use_ratings`,
@@ -2526,7 +2527,7 @@ function add_pageview() {
 	`tiki_article_types`.`show_image_caption`,
 	`tiki_article_types`.`show_lang`,
 	`tiki_article_types`.`creator_edit`
-	    from `tiki_articles`, `tiki_article_types`, `users_users` $mid and `tiki_articles`.`articleId`=?";
+	    from `tiki_articles`, `tiki_article_types`left join `users_users` on `tiki_articles`.`author` = `users_users`.`login`  $mid and `tiki_articles`.`articleId`=?";
 	//$query = "select * from `tiki_articles` where `articleId`=?";
 	$result = $this->query($query,array((int)$articleId));
 	if ($result->numRows()) {
@@ -5346,6 +5347,7 @@ if (!$simple_wiki) {
 	    $line = preg_replace("/-\+(.*?)\+-/", "<code>$1</code>", $line);
 	    // Replace bold text
 	    $line = preg_replace("/__(.*?)__/", "<b>$1</b>", $line);
+	    // Replace italic text
 	    $line = preg_replace("/\'\'(.*?)\'\'/", "<i>$1</i>", $line);
 	    // Replace definition lists
 	    $line = preg_replace("/^;([^:]*):([^\/\/].*)/", "<dl><dt>$1</dt><dd>$2</dd></dl>", $line);

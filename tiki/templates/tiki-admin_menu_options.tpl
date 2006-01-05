@@ -154,7 +154,7 @@
 </tr>
 
 {section name=user loop=$channels}
-{if $channels[user].type eq 's'}
+{if $channels[user].type eq 's' or $channels[user].type eq 'r'}
 <tr class="odd">
 <td>{$channels[user].optionId}</td>
 <td><a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}" 

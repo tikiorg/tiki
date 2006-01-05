@@ -1,6 +1,4 @@
-Test from Laurent
-
-amette: Wanting to know if my new setup with Eclipse works.... 
+test from Laurent
 
 test what happens on branches when i commit to HEAD, luci
 I'm testing too!

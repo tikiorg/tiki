@@ -44,6 +44,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {elseif $forum_info.name ne ''} : {$forum_info.name}
 {elseif $categ_info.name ne ''} : {$categ_info.name}
 {elseif $userinfo.login ne ''} : {$userinfo.login}
+{elseif $tracker_item_main_value ne ''} : {$tracker_item_main_value}
 {/if}
 {/if}
 </title>
