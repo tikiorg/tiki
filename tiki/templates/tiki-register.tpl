@@ -15,6 +15,8 @@
 <input type="hidden" name="novalidation" value="yes"/>
 <input type="submit" name="register" value="{tr}register{/tr}" />
 </form>
+{elseif $userTrackerData}
+{$userTrackerData}
 {else}
 {if $rnd_num_reg eq 'y'}
 <small>{tr}Your registration code:{/tr}</small>

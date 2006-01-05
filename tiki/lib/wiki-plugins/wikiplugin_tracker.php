@@ -9,8 +9,8 @@ function wikiplugin_tracker_help() {
 	return $help;
 }
 function wikiplugin_tracker($data, $params) {
-	global $tikilib, $trklib, $userlib, $dbTiki, $notificationlib, $user, $group, $page;
-	//var_dump($_REQUEST);
+	global $tikilib, $trklib, $userlib, $dbTiki, $notificationlib, $user, $group, $page, $userTracker;
+	//var_dump($_
 	extract ($params,EXTR_SKIP);
 	if (!isset($embedded)) {
 		$embedded = "n";
@@ -56,8 +56,7 @@ function wikiplugin_tracker($data, $params) {
 					// isn't fully filled.
 					if(isset($_REQUEST['track'][$fl['fieldId']])) {
 						$flds['data'][$cpt]['value'] = $_REQUEST['track'][$fl['fieldId']];
-					}
-					else {
+					} else {
 						$flds['data'][$cpt]['value'] = '';
 					}
 					$full_fields[$fl['fieldId']] = $fl;
@@ -73,12 +72,13 @@ function wikiplugin_tracker($data, $params) {
 					$ins_fields["data"][] = array_merge(array('value' => $val), $full_fields[$fld]);
 				}
 				if (isset($_REQUEST['authorfieldid']) and $_REQUEST['authorfieldid']) {
-					$ins_fields["data"][] = array('fieldId' => $_REQUEST['authorfieldid'], 'value' => $user, 'type' => 'u', 'options' => 1);
+					$val = $user? $user: $_REQUEST['name']? $_REQUEST['name']: '';
+					$ins_fields["data"][] = array('fieldId' => $_REQUEST['authorfieldid'], 'value' => $val, 'type' => 'u', 'options' => 1);
 				}
 				if (isset($_REQUEST['authorgroupfieldid']) and $_REQUEST['authorgroupfieldid']) {
 					$ins_fields["data"][] = array('fieldId' => $_REQUEST['authorgroupfieldid'], 'value' => $group, 'type' => 'g', 'options' => 1);
 				}
-				if ($embedded == 'y') {
+				if ($embedded == 'y' && isset($_REQUEST['page'])) {
 					$ins_fields["data"][] = array('fieldId' => $embeddedId, 'value' => $_REQUEST['page']);
 				}
 
@@ -88,9 +88,13 @@ function wikiplugin_tracker($data, $params) {
 				// values are OK, then lets add a new item
 				if( count($field_errors['err_mandatory']) == 0  && count($field_errors['err_value']) == 0 ) {
 					$rid = $trklib->replace_item($trackerId,0,$ins_fields,$tracker['newItemStatus']);
-					header("Location: tiki-index.php?page=".urlencode($page)."&ok=y");
-					die;
+					if (!empty($page)) {
+						header("Location: tiki-index.php?page=".urlencode($page)."&ok=y");
+						die;
 					// return "<div>$data</div>";
+					} else {
+						return '';
+					}
 				}
 			}
 			// initialize fields with blank values
@@ -124,6 +128,7 @@ function wikiplugin_tracker($data, $params) {
 					$back.= --$coma_cpt > 0 ? ',&nbsp;' : '';
 				}
 				$back.= '</div><br />';
+				$_REQUEST['error'] = 'y';
 			}
 
 			if(count($field_errors['err_value']) > 0) {
@@ -135,15 +140,34 @@ function wikiplugin_tracker($data, $params) {
 					$back.= --$coma_cpt > 0 ? ',&nbsp;' : '';
 				}
 				$back.= '</div><br />';
+				$_REQUEST['error'] = 'y';
 			}
-				
-			$back.= '~np~<form><input type="hidden" name="trackit" value="'.$trackerId.'" />';
-			$back.= '<input type="hidden" name="page" value="'.$_REQUEST["page"].'" />';
+
+			if (!empty($page))
+				$back .= '~np~';
+			$back.= '<form method="post"><input type="hidden" name="trackit" value="'.$trackerId.'" />';
 			$back.= '<input type="hidden" name="refresh" value="1" />';
+			if (isset($_REQUEST['page']))
+				$back.= '<input type="hidden" name="page" value="'.$_REQUEST["page"].'" />';
+			 // for registration
+			if (isset($_REQUEST['name']))
+				$back.= '<input type="hidden" name="name" value="'.$_REQUEST["name"].'" />';
+			if (isset($_REQUEST['pass'])) {
+				$back.= '<input type="hidden" name="pass" value="'.$_REQUEST["pass"].'" />';
+				$back.= '<input type="hidden" name="passAgain" value="'.$_REQUEST["pass"].'" />';
+			}
+			if (isset($_REQUEST['email']))
+				$back.= '<input type="hidden" name="email" value="'.$_REQUEST["email"].'" />';
+			if (isset($_REQUEST['regcode']))
+				$back.= '<input type="hidden" name="regcode" value="'.$_REQUEST["regcode"].'" />';
+			if (isset($_REQUEST['group']))
+				$back.= '<input type="hidden" name="group" value="'.$_REQUEST["group"].'" />';
+			if (isset($_REQUEST['register']))
+				$back.= '<input type="hidden" name="register" value="'.$_REQUEST["register"].'" />';
 			if ($showtitle == 'y') {
 				$back.= '<div class="titlebar">'.$tracker["name"].'</div>';
 			}
-			if ($showdesc == 'y') {
+			if ($showdesc == 'y' && $tracker['description']) {
 				$back.= '<div class="wikitext">'.$tracker["description"].'</div><br />';
 			}
 
@@ -264,7 +288,9 @@ function wikiplugin_tracker($data, $params) {
 			}
 			$back.= "</td></tr>";
 			$back.= "</table>";
-			$back.= "</form>~/np~";
+			$back.= '</form>';
+			if (!empty($page))
+				$back .= '~/np~';
 		} else {
 			$back = "No such id in trackers.";
 		}

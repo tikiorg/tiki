@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.59 2005-05-18 11:02:58 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.60 2006-01-05 17:59:27 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -180,6 +180,8 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}remove{/tr}" src="img/icons2/de
 {/if}
 <span class="button2"><a href="{if $grouptrackerid}tiki-admin_tracker_fields.php?trackerId={$userstrackerid}{else}tiki-admin_trackers.php{/if}" class="linkbut">{tr}admin{/tr} {$ugr}</a>
 </td></tr>
+<tr class="formcolor"><td>{tr}Users Information Tracker Fields Asked at Registration Time<br />(fieldIds separated with :){/tr}</td>
+<td><input type="text" size="40" name="registrationUsersFieldIds" value="{$registrationUsersFieldIds|escape}" /></td></tr>
 {/if}
 {if $group ne ''}
 <tr class="formcolor"><td>&nbsp;
