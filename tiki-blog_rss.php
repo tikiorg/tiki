@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_rss.php,v 1.28 2005-05-18 10:58:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_rss.php,v 1.29 2006-01-05 17:16:37 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -15,15 +15,47 @@ if ($rss_blog != 'y') {
         require_once ('tiki-rss_error.php');
 }
 
+if (!isset($_REQUEST["blogId"])) {
+        $errmsg=tra("No blogId specified");
+        require_once ('tiki-rss_error.php');
+}
+
+$smarty->assign('individual', 'n');
+
+if ($userlib->object_has_one_permission($_REQUEST["blogId"], 'blog')) {
+	$smarty->assign('individual', 'y');
+
+	if ($tiki_p_admin != 'y') {
+		// Now get all the permissions that are set for this type of permissions 'image gallery'
+		$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'blogs');
+
+		foreach ($perms["data"] as $perm) {
+			$permName = $perm["permName"];
+
+			if ($userlib->object_has_permission($user, $_REQUEST["blogId"], 'blog', $permName)) {
+				$$permName = 'y';
+
+				$smarty->assign("$permName", 'y');
+			} else {
+				$$permName = 'n';
+
+				$smarty->assign("$permName", 'n');
+			}
+		}
+	}
+}
+
+if ($tiki_p_blog_admin == 'y') {
+	$tiki_p_read_blog = 'y';
+	$smarty->assign('tiki_p_read_blog', 'y');
+}
+
 if ($tiki_p_read_blog != 'y') {
         $errmsg=tra("Permission denied you cannot view this section");
         require_once ('tiki-rss_error.php');
 }
 
-if (!isset($_REQUEST["blogId"])) {
-        $errmsg=tra("No blogId specified");
-        require_once ('tiki-rss_error.php');
-}
+
 
 $feed = "blog";
 $id = "blogId";
@@ -35,7 +67,7 @@ $descId = "data";
 $dateId = "created";
 $authorId = "user";
 $titleId = "title";
-$readrepl = "tiki-view_blog_post.php?$id=%s";
+$readrepl = "tiki-view_blog_post.php?$id=%s&postId=%s";
 $uniqueid = "$feed.$id=".$_REQUEST["$id"];
 
 $tmp = $tikilib->get_preference('title_rss_'.$feed, '');
@@ -51,7 +83,7 @@ foreach ($changes["data"] as $data)  {
 }
 $changes["data"] = $tmp;
 $tmp = null;
-$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, '', $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
+$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, 'postId', $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
 
 header("Content-type: ".$output["content-type"]);
 print $output["data"];

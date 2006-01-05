@@ -367,8 +367,10 @@ class TrackerLib extends TikiLib {
 					return (array("cant"=>0, "data"=>''));
 				} elseif (sizeof($status > 1)) {
 					$sts = preg_split('//', $status, -1, PREG_SPLIT_NO_EMPTY);
-					$mid.= " and (".implode('=? or ',array_fill(0,count($sts),'`status`'))."=?) ";
-					$bindvars = array_merge($bindvars,$sts);
+					if (count($sts)) {
+						$mid.= " and (".implode('=? or ',array_fill(0,count($sts),'`status`'))."=?) ";
+						$bindvars = array_merge($bindvars,$sts);
+					}
 				} else {
 					$mid.= " and tti.`status`=? ";
 					$bindvars[] = $status;
@@ -596,10 +598,8 @@ class TrackerLib extends TikiLib {
 					$name = $this->getOne("select `name` from `tiki_tracker_fields` where `fieldId`=?",array((int)$fieldId));
 				}
 				$value = $ins_fields["data"][$i]["value"];
-				if(
-					(isset($ins_fields["data"][$i]["isHidden"]) && $ins_fields["data"][$i]["isHidden"] == 'n')
-					||
-					( ! isset($ins_fields["data"][$i]["isHidden"]) )
+				if((isset($ins_fields["data"][$i]["isHidden"]) && $ins_fields["data"][$i]["isHidden"] == 'n')
+					||( ! isset($ins_fields["data"][$i]["isHidden"]) )
 				  ) { // TODO: on perm control
 					if (isset($ins_fields["data"][$i]["type"]) and ($ins_fields["data"][$i]["type"] == 'f' or $ins_fields["data"][$i]["type"] == 'j')) {
 						$human_value = date('r',$ins_fields["data"][$i]["value"]);
@@ -753,11 +753,11 @@ class TrackerLib extends TikiLib {
 
 		foreach($ins_fields['data'] as $f) {
 
-			if ($f['isMandatory'] == 'y' && isset($f['value']) && $f['value'] == '') {
+			if (isset($f['isMandatory']) && $f['isMandatory'] == 'y' && isset($f['value']) && $f['value'] == '') {
 
 				$mandatory_fields[] = $f;
 			}
-			elseif(isset($f['value'])) {
+			elseif(isset($f['value']) && isset($f['type'])) {
 
 				switch ($f['type']) {
 				// numeric

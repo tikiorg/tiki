@@ -9,8 +9,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 /**
 * Filename.......: class.html.mime.mail.inc
 * Project........: HTML Mime mail class
-* Last Modified..: $Date: 2005-05-18 11:01:57 $
-* CVS Revision...: $Revision: 1.13 $
+* Last Modified..: $Date: 2006-01-05 17:16:38 $
+* CVS Revision...: $Revision: 1.14 $
 * Copyright......: 2001, 2002 Richard Heyes
 */
 
@@ -399,7 +399,8 @@ class htmlMimeMail {
 		if (is_object($obj)) {
 			return $obj->addSubpart($text, $params);
 		} else {
-			return new Mail_mimePart($text, $params);
+			$result = new Mail_mimePart($text, $params);
+			return $result;
 		}
 	}
 
@@ -415,7 +416,8 @@ class htmlMimeMail {
 		if (is_object($obj)) {
 			return $obj->addSubpart($this->html, $params);
 		} else {
-			return new Mail_mimePart($this->html, $params);
+			$n = new Mail_mimePart($this->html, $params);
+			return $n;
 		}
 	}
 
@@ -424,8 +426,8 @@ class htmlMimeMail {
 	*/
 	function &_addMixedPart() {
 		$params['content_type'] = 'multipart/mixed';
-
-		return new Mail_mimePart('', $params);
+		$n = new Mail_mimePart('', $params);
+		return $n;
 	}
 
 	/**
@@ -450,7 +452,8 @@ class htmlMimeMail {
 		if (is_object($obj)) {
 			return $obj->addSubpart('', $params);
 		} else {
-			return new Mail_mimePart('', $params);
+			$n = new Mail_mimePart('', $params);
+			return $n;
 		}
 	}
 
@@ -885,7 +888,7 @@ class htmlMimeMail {
 *    re-build the message.
 *
 * @author  Richard Heyes <richard@phpguru.org>
-* @version $Revision: 1.13 $
+* @version $Revision: 1.14 $
 * @package Mail
 */
 class Mail_mimePart {
@@ -1175,7 +1178,7 @@ class Mail_mimePart {
 *
 * @author  Richard Heyes <richard@phpguru.org>
 * @author  Chuck Hagenbuch <chuck@horde.org>
-* @version $Revision: 1.13 $
+* @version $Revision: 1.14 $
 * @package Mail
 */
 class Mail_RFC822 {

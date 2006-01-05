@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.56 2005-12-12 15:18:57 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.57 2006-01-05 17:16:38 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-calendar.php">{tr}Calendar{/tr}</a></h1>
@@ -128,7 +128,7 @@ firstDay : {$firstDayofWeek}
 <td><a href="tiki-calendar.php?todate={$listevents[w].startUser}" title="{tr}change focus{/tr}">{$listevents[w].start|tiki_short_date}</a><br />{$listevents[w].start|tiki_short_time}</a></td>
 <td>{if $listevents[w].start|tiki_short_date ne $listevents[w].end|tiki_short_date}<a href="tiki-calendar.php?todate={$listevents[w].endUser}" title="{tr}change focus{/tr}">{$listevents[w].end|tiki_short_date}</a>{/if}<br />{if $listevents[w].start ne $listevents[w].end}{$listevents[w].end|tiki_short_time}{/if}</td>
 <td>
-<a class="link" href="tiki-calendar.php?calitemId={$listevents[w].calitemId}&amp;editmode=add{if $feature_tabs ne 'y'}#add{/if}" title="{tr}edit{/tr}">{$listevents[w].name}</a><br />
+<a class="link" href="tiki-calendar.php?calitemId={$listevents[w].calitemId}&amp;editmode=add#details" title="{tr}view{/tr}">{$listevents[w].name}</a><br />
 <span style= "font-style:italic">{$listevents[w].parsedDescription}</span>
 {if $listevents[w].web}
 <br /><a href="{$listevents[w].web}" target="_other" class="calweb" title="{$listevents[w].web}"><img src="img/icons/external_link.gif" width="7" height="7" alt=">" /></a>

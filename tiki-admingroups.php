@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.51 2005-06-16 20:10:49 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.52 2006-01-05 17:16:37 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -94,6 +94,7 @@ if (isset($_REQUEST["action"])) {
 			key_check($area);
 			$userlib->remove_group($_REQUEST["group"]);
 			$logslib->add_log('admingroups','removed group '.$_REQUEST["group"]);
+			unset($_REQUEST['group']);
 		} else {
 			key_get($area);
 		}

@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker.tpl,v 1.103 2005-12-12 15:18:57 mose Exp $ *}
+{* $Id: tiki-view_tracker.tpl,v 1.104 2006-01-05 17:16:38 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -391,6 +391,7 @@ title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
 </table>
 {include file="tiki-pagination.tpl"}
 </div>
+{else}<!-- {cycle name=content assign=focustab} -->
 {/if}
 
 {* --------------------------------------------------------------------------------- tab with edit --- *}
