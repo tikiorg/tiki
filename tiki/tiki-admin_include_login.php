@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.37 2005-12-12 18:24:37 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.38 2006-01-05 15:54:18 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -291,7 +291,7 @@ if (isset($_REQUEST["loginprefs"])) {
 		$in = array();
 		$out = array();
 		foreach ($listgroups['data'] as $gr) {
-			if ($gr['groupName'] == 'Registered' || $gr['groupName'] == 'Anonymous')
+			if ($gr['groupName'] == 'Anonymous')
 				continue;
 			if ($gr['registrationChoice'] == 'y' && !in_array($gr['groupName'], $_REQUEST['registration_choices'])) // deselect
 				$out[] = $gr['groupName'];
