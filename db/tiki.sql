@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2006-01-05 17:59:27 $
+# $Date: 2006-01-06 14:56:52 $
 # $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -3308,6 +3308,7 @@ CREATE TABLE tiki_tracker_fields (
   isPublic char(1) NOT NULL default 'n',
   isHidden char(1) NOT NULL default 'n',
   isMandatory char(1) NOT NULL default 'n',
+  description text,
   PRIMARY KEY  (fieldId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------

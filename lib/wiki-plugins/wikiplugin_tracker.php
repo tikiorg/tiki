@@ -279,6 +279,8 @@ function wikiplugin_tracker($data, $params) {
 						$back .= '</td><td><input type="checkbox" name="track['.$f["fieldId"].']" value="y" '.$checked.'/>';
 					} else {
 					}
+					if (!empty($f['description']))
+						$back .= '<br /><i>'.$f['description'].'</i>';
 					$back.= "</td></tr>";
 				}
 			}

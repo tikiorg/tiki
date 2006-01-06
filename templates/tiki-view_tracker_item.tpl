@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker_item.tpl,v 1.91 2005-12-12 15:18:57 mose Exp $ *}
+{* $Id: tiki-view_tracker_item.tpl,v 1.92 2006-01-06 14:56:53 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -520,6 +520,9 @@ singleClick : true,
 align       : "bR"
 {literal} } );{/literal}
 </script>
+{/if}
+{if $cur_field.description}
+<br /><em>{$cur_field.description}</em>
 {/if}
 {if (($cur_field.type eq 'c' or $cur_field.type eq 't' or $cur_field.type eq 'n') and $cur_field.options_array[0] eq '1') and $stick ne 'y'}
 </td>{assign var=stick value="y"}
