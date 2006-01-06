@@ -13,6 +13,7 @@
 <input type="hidden" name="name" value="{$login}"/>
 <input type="hidden" name="pass" value="{$password}"/>
 <input type="hidden" name="novalidation" value="yes"/>
+{if $group}<input type="hidden" name="group" value="{$group}" />{/if}
 <input type="submit" name="register" value="{tr}register{/tr}" />
 </form>
 {elseif $userTrackerData}

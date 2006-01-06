@@ -109,19 +109,13 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
     if($validateUsers=='y') {
       $ret = $registrationlib->SnowCheckMail($_REQUEST["email"],$sender_email,$novalidation);
       if(!$ret[0]) {
-      	if($ret[1] == 'not_recognized') {
-			$smarty->assign('notrecognized','y');
-			$smarty->assign('email',$_REQUEST['email']);
-			$smarty->assign('login',$_REQUEST['name']);
-			$smarty->assign('password',$_REQUEST['pass']);
-			$email_valid = 'no';
-      	} else {
-//			$smarty->assign('msg',"$ret[1]");
-	        $smarty->assign('msg',tra("Invalid email address. You must enter a valid email address"));
-	        $smarty->display("error.tpl");
-	        $email_valid = 'no';
-	        die;
-      	}
+		$smarty->assign('notrecognized','y');
+		$smarty->assign('email',$_REQUEST['email']);
+		$smarty->assign('login',$_REQUEST['name']);
+		$smarty->assign('password',$_REQUEST['pass']);
+		if (isset($_REQUEST['group']))
+			$smarty->assign('group',$_REQUEST['group']);
+		$email_valid = 'no';
       }
     }
 
