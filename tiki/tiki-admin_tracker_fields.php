@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.34 2005-10-16 14:35:09 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.35 2006-01-06 14:56:53 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -67,6 +67,7 @@ if ($_REQUEST["fieldId"]) {
 	$info["isPublic"] = 'n';
 	$info["isHidden"] = 'n';
 	$info["isMandatory"] = 'n';
+	$info['description'] = '';
 }
 
 $smarty->assign('name', $info["name"]);
@@ -79,6 +80,7 @@ $smarty->assign('isTblVisible', $info["isTblVisible"]);
 $smarty->assign('isPublic', $info["isPublic"]);
 $smarty->assign('isHidden', $info["isHidden"]);
 $smarty->assign('isMandatory', $info["isMandatory"]);
+$smarty->assign('description', $info["description"]);
 
 
 if (isset($_REQUEST["remove"]) and ($tracker_info['useRatings'] != 'y' or $info['name'] != 'Rating')) {
@@ -136,7 +138,7 @@ function replace_tracker_from_request( $tracker_info )
 
     //$_REQUEST["name"] = str_replace(' ', '_', $_REQUEST["name"]);
     $trklib->replace_tracker_field($_REQUEST["trackerId"], $_REQUEST["fieldId"], $_REQUEST["name"], $_REQUEST["type"], $isMain, $isSearchable,
-	    $isTblVisible, $isPublic, $isHidden, $isMandatory, $_REQUEST["position"], $_REQUEST["options"]);
+	    $isTblVisible, $isPublic, $isHidden, $isMandatory, $_REQUEST["position"], $_REQUEST["options"], $_REQUEST['description']);
     $logslib->add_log('admintrackerfields','changed or created tracker field '.$_REQUEST["name"].' in tracker '.$tracker_info['name']);
     $smarty->assign('fieldId', 0);
     $smarty->assign('name', '');
@@ -148,6 +150,7 @@ function replace_tracker_from_request( $tracker_info )
     $smarty->assign('isPublic', $isPublic);
     $smarty->assign('isHidden', $isHidden);
     $smarty->assign('isMandatory', $isMandatory);
+    $smarty->assign('description', '');
     $smarty->assign('position', $trklib->get_last_position($_REQUEST["trackerId"])+1);
 }
 

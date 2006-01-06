@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker.tpl,v 1.104 2006-01-05 17:16:38 sylvieg Exp $ *}
+{* $Id: tiki-view_tracker.tpl,v 1.105 2006-01-06 14:56:53 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -565,7 +565,9 @@ style="background-image:url('img/flags/{$flag}.gif');background-repeat:no-repeat
 </select>
 
 {/if}
-
+{if $fields[ix].description}
+<br /><em>{$fields[ix].description}</em>
+{/if}
 {if (($fields[ix].type eq 'c' or $fields[ix].type eq 't' or $fields[ix].type eq 'n') and $fields[ix].options_array[0]) eq '1' and $stick ne 'y'}
 </td>{assign var=stick value="y"}
 {else}
