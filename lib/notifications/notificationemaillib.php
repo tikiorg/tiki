@@ -1,5 +1,5 @@
 <?php
-// $Id: notificationemaillib.php,v 1.13 2005-10-21 17:00:39 sylvieg Exp $
+// $Id: notificationemaillib.php,v 1.14 2006-01-08 07:50:25 rlpowell Exp $
 /** \brief send the email notifications dealing with the forum changes to
   * \brief outbound address + admin notification addresses / forum admin email + watching users addresses
   * \param $event = 'forum_post_topic' or 'forum_post_thread'
@@ -15,7 +15,7 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 	// Per-forum From address overrides global default.
 	if( $forum_info['outbound_from'] )
 	{
-	    $my_sender = $forum_info['outbound_from'];
+	    $my_sender = '"' . "$author" . '" <' . $forum_info['outbound_from'] . '>';
 	} else {
 	    $my_sender = $sender_email;
 	}
