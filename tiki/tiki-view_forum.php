@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.91 2005-12-22 18:45:42 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.92 2006-01-08 22:27:34 rlpowell Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -370,8 +370,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 
 			// Check if the thread/topic already exist
 			$threadId = $commentslib->check_for_topic(
-				$_REQUEST["comments_title"],
-				$_REQUEST["comments_data"]
+				$_REQUEST["comments_title"]
 				);
 
 			// The thread/topic does not already exist
@@ -556,8 +555,7 @@ if (isset($_REQUEST["comments_postComment"]))
 {
     // Check if the thread/topic already existis
     $threadId = $commentslib->check_for_topic(
-	    $_REQUEST["comments_title"],
-	    $_REQUEST["comments_data"]
+	    $_REQUEST["comments_title"]
 	    );
 
     // If it does, send the user there with no delay.
