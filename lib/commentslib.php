@@ -1849,12 +1849,10 @@ class Comments extends TikiLib {
     }
 
     // Check if a particular topic exists.
-    function check_for_topic( $title, $data )
+    function check_for_topic( $title )
     {
-	$hash = md5($title . $data);
-
 	$threadId = $this->getOne("select `threadId` from
-		`tiki_comments` where `hash`=?", array( $hash ) );
+		`tiki_comments` where `title`=?", array( $title ) );
 	return $threadId;
     }
 
