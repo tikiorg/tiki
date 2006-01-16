@@ -484,6 +484,15 @@
     <tr><td class="form">{tr}Protect email against spam{/tr}</td><td><input type="checkbox" name="feature_wiki_protect_email" {if $feature_wiki_protect_email eq 'y'}checked="checked"{/if}/></td></tr> 
     <tr><td class="form">{tr}When viewing a page, if it doesn't exist and has one like page, automatic redirection to this like page{/tr}</td><td><input type="checkbox" name="feature_wiki_1like_redirection" {if $feature_wiki_1like_redirection eq 'y'}checked="checked"{/if}/></td></tr>
      <tr><td class="form">{tr}Show/hide heading icon displayed before the heading{/tr}</td><td><input type="checkbox" name="feature_wiki_show_hide_before" {if $feature_wiki_show_hide_before eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Mandatory category in the category tree{/tr}</td>
+    <td class="form"><select name="feature_wiki_mandatory_category">
+	<option value="-1" {if $feature_wiki_mandatory_category eq -1 or $feature_wiki_mandatory_category eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
+	<option value="0" {if $feature_wiki_mandatory_category eq 0}selected="selected"{/if}>{tr}All{/tr}</option>
+	{section name=ix loop=$catree}
+	<option value="{$catree[ix].categId|escape}" {if $catree[ix].categId eq $feature_wiki_mandatory_category}selected="selected"{/if}>{$catree[ix].categpath}</option>
+	{/section}
+	</select>
+</td></tr>
     <tr><td colspan="2" class="button"><input type="submit" name="wikifeatures" value="{tr}Set features{/tr}" /></td></tr>
     </table>
     </form>

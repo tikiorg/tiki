@@ -1,5 +1,5 @@
 <?php 
-// $Header: /cvsroot/tikiwiki/tiki/categorize.php,v 1.18 2005-08-25 20:50:04 michael_davey Exp $
+// $Header: /cvsroot/tikiwiki/tiki/categorize.php,v 1.19 2006-01-16 12:31:27 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -47,7 +47,10 @@ if ($feature_categories == 'y') {
 	}
 	
 	$cats = $categlib->get_object_categories($cat_type, $cat_objid);
-	$categories = $categlib->list_categs();
+	if (isset($section) && $section == 'wiki' && $feature_wiki_mandatory_category > 0)
+		$categories = $categlib->list_categs($feature_wiki_mandatory_category);
+	else
+		$categories = $categlib->list_categs();
 	$num_categories = count($categories);
 	for ($i = 0; $i < $num_categories; $i++) {
 		if (in_array($categories[$i]["categId"], $cats)) {

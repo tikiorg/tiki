@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.56 2005-12-19 17:27:12 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.57 2006-01-16 12:31:27 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -625,6 +625,10 @@ if (isset($_REQUEST["wikifeatures"])) {
 		$tikilib->set_preference("feature_wiki_show_hide_before", 'n');
 		$smarty->assign("feature_wiki_show_hide_before", 'n');
 	}
+	if (isset($_REQUEST['feature_wiki_mandatory_category'])) {
+		$tikilib->set_preference('feature_wiki_mandatory_category', $_REQUEST['feature_wiki_mandatory_category']);
+		$smarty->assign('feature_wiki_mandatory_category', $_REQUEST['feature_wiki_mandatory_category']);
+	}
 }
 
 if (isset($_REQUEST["wikisetprefs"])) {
@@ -838,6 +842,11 @@ if ($feature_forums == 'y') {
 	$commentslib = new Comments($dbTiki);
 	$all_forums = $commentslib->list_forums(0, -1, 'name_asc', '');
 	$smarty->assign_by_ref("all_forums", $all_forums["data"]);
+}
+if ($feature_categories == 'y') {
+	include_once('lib/categories/categlib.php');
+	$catree = $categlib->get_all_categories();
+	$smarty->assign('catree', $catree);
 }
 
 $tags = $adminlib->get_tags();

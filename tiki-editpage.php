@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.127 2005-12-12 15:18:46 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.128 2006-01-16 12:31:27 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -117,7 +117,10 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
       //print(strlen($part["body"]));
       $msg = '';
 
-      if (isset($_REQUEST["save"])) {
+ 	if (isset($_REQUEST['save']) && $feature_categories == 'y' && $feature_wiki_mandatory_category >=0 && (empty($_REQUEST['cat_categories']) || count($_REQUEST['cat_categories']) <= 0)) {
+		$category_needed = true;
+		$smarty->assign('category_needed', 'y');
+	} elseif (isset($_REQUEST["save"])) {
         if (strtolower($pagename) != 'sandbox' || $tiki_p_admin == 'y') {
         	make_clean($description);
         	if ($tikilib->page_exists($pagename)) {
@@ -694,7 +697,10 @@ function parse_output(&$obj, &$parts,$i) {
 $cat_type='wiki page';
 $cat_objid = $_REQUEST["page"];
 
-if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $tiki_p_admin == 'y')) {
+if (isset($_REQUEST['save']) && $feature_categories == 'y' && $feature_wiki_mandatory_category >=0 && (empty($_REQUEST['cat_categories']) || count($_REQUEST['cat_categories']) <= 0)) {
+	$category_needed = true;
+	$smarty->assign('category_needed', 'y');
+} elseif (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $tiki_p_admin == 'y')) {
   check_ticket('edit-page');
   // Check if all Request values are delivered, and if not, set them
   // to avoid error messages. This can happen if some features are
@@ -852,6 +858,7 @@ if ($feature_multilingual == 'y') {
 
 $cat_type = 'wiki page';
 $cat_objid = $_REQUEST["page"];
+$section = 'wiki';
 include_once ("categorize_list.php");
 include_once ("freetag_list.php");
 
@@ -859,7 +866,6 @@ if ($feature_theme_control == 'y') {
   include ('tiki-tc.php');
 }
 
-$section = 'wiki';
 include_once ('tiki-section_options.php');
 
 // 27-Jun-2003, by zaufi
