@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.70 2005-12-16 00:05:46 amette Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.71 2006-01-16 12:31:28 sylvieg Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -16,6 +16,9 @@
 <div class="wikitext">
 {tr}The SandBox is a page where you can practice your editing skills, use the preview feature to preview the appearance of the page, no versions are stored for this page.{/tr}
 </div>
+{/if}
+{if $category_needed eq 'y'}
+<div class="error">{tr}A category is mandatory{/tr}</div>
 {/if}
 
 {if $likepages}

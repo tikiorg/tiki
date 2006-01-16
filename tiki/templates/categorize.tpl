@@ -2,9 +2,13 @@
 <tr class="formcolor">
  <td>{tr}Categorize{/tr}</td>
  <td{if $cols} colspan="{$cols}"{/if}>
+{if $section eq 'wiki' and $feature_wiki_mandatory_category >= 0}
+  <div id="categorizator">
+{else}
   [ <a class="link" href="javascript:show('categorizator');">{tr}show categories{/tr}</a>
   | <a class="link" href="javascript:hide('categorizator');">{tr}hide categories{/tr}</a> ]
   <div id="categorizator" {if $cat_categorize eq 'n' and $categ_checked ne 'y'}style="display:none;"{else}style="display:block;"{/if}>
+{/if}
 {if $feature_help eq 'y'}
 	<div class="simplebox">{tr}Tip: hold down CTRL to select multiple categories{/tr}</div>
 {/if}
@@ -14,11 +18,15 @@
     <option value="{$categories[ix].categId|escape}" {if $categories[ix].incat eq 'y'}selected="selected"{/if}>{$categories[ix].categpath}</option>
    {/section}
    </select><br />
+  {if $section eq 'wiki' and $feature_wiki_mandatory_category >=0}
+    <input type="hidden" name="cat_categorize" value="on" />
+  {else}
    <label for="cat-check">{tr}categorize this object{/tr}:</label>
     <input type="checkbox" name="cat_categorize" id="cat-check" {if $cat_categorize eq 'y' or $categ_checked eq 'y'}checked="checked"{/if}/><br />
 {if $feature_help eq 'y'}
     <div class="simplebox">{tr}Tip: uncheck the above checkbox to uncategorize this page/object{/tr}</div>
 {/if}
+   {/if}
   {else}
     {tr}No categories defined{/tr} <br />
   {/if}

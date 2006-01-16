@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.73 2005-12-06 18:08:05 lfagundes Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.74 2006-01-16 12:31:29 sylvieg Exp $
  *
  * \brief Categories support class
  *
@@ -25,9 +25,9 @@ class CategLib extends ObjectLib {
 		$this->db = $db;
 	}
 
-	function list_categs() {
+	function list_categs($categId=0) {
 		global $cachelib;
-		if (!$cachelib->isCached("allcategs")) {
+		if (!$cachelib->isCached('allcategs')) {
 			$query = "select * from `tiki_categories`";
 			$result = $this->query($query,array());
 			$ret = array();
@@ -44,10 +44,24 @@ class CategLib extends ObjectLib {
 			}
 			ksort($ret);
 			$back = array_values($ret);
-			$cachelib->cacheItem("allcategs",serialize($back));
-			return $back;
+			$cachelib->cacheItem('allcategs',serialize($back));
 		} else {
-			return unserialize($cachelib->getCached("allcategs"));
+			$back = unserialize($cachelib->getCached('allcategs'));
+		}
+		if ($categId > 0) {
+			$path = '';
+			$back2 = array();
+			foreach ($back as $cat) {
+				if ($cat['categId'] == $categId)
+					$path = $cat['categpath'].'::';
+				else if ($path != '' && strpos($cat['categpath'], $path) === 0) {
+					$cat['categpath'] = substr($cat['categpath'] , strlen($path));
+					$back2[] = $cat;
+				}
+			}
+			return $back2;
+		} else {
+			return $back;
 		}
 	}
 	
@@ -165,6 +179,7 @@ class CategLib extends ObjectLib {
 			$this->remove_category($res["categId"]);
 		}
 		$cachelib->invalidate('allcategs');
+		$cachelib->invalidate("allcategs$categId");
 		return true;
 	}
 
