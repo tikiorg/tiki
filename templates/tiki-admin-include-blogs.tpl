@@ -52,7 +52,19 @@
               <option value="hits_desc" {if $blog_list_order eq 'hits_desc'}selected="selected"{/if}>{tr}Visits (desc){/tr}</option>
               <option value="activity_desc" {if $blog_list_order eq 'activity_desc'}selected="selected"{/if}>{tr}Activity (desc){/tr}</option>
               </select></td>
-        </tr><tr>
+        </tr>
+       {if $feature_categories eq 'y'}
+    	  <tr><td class="form">{tr}Mandatory category in the category tree{/tr}</td>
+        <td class="form"><select name="feature_blog_mandatory_category">
+        <option value="-1" {if $feature_blog_mandatory_category eq -1 or $feature_blog_mandatory_category eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
+        <option value="0" {if $feature_blog_mandatory_category eq 0}selected="selected"{/if}>{tr}All{/tr}</option>
+        {section name=ix loop=$catree}
+        <option value="{$catree[ix].categId|escape}" {if $catree[ix].categId eq $feature_blog_mandatory_category}selected="selected"{/if}>{$catree[ix].categpath}</option>
+        {/section}
+        </select>
+        </td></tr>
+        {/if}
+        <tr>
           <td colspan="2" class="button"><input type="submit" name="blogfeatures"
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>

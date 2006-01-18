@@ -17,6 +17,9 @@
 <a class="linkbut" href="tiki-list_blogs.php">{tr}list blogs{/tr}</a>
 <a class="linkbut" href="tiki-view_blog.php?blogId={$blogId}">{tr}view blog{/tr}</a>
 </div>
+{if $category_needed eq 'y'}
+<div class="error">{tr}A category is mandatory{/tr}</div>
+{/if}
 <h2>{tr}Current heading{/tr}</h2>
 {if strlen($heading) > 0}
 {eval var=$heading}

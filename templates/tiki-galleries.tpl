@@ -21,6 +21,10 @@
 {else}
 <h2>{tr}Edit this gallery:{/tr} {$name}</h2>
 {/if}
+{if $category_needed eq 'y'}
+<div class="error">{tr}A category is mandatory{/tr}</div>
+{/if}
+
 <div align="center">
 {if $individual eq 'y'}
 <a class="gallink" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=image+gallery&amp;permType=image+galleries&amp;objectId={$galleryId}">{tr}There are individual permissions set for this gallery{/tr}</a>

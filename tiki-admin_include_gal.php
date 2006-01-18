@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.16 2005-10-18 23:59:05 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.17 2006-01-18 14:45:47 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -46,7 +46,8 @@ if (isset($_REQUEST["galfeatures"])) {
 	"gal_match_regex",
 	"gal_nmatch_regex",
 	"gal_batch_dir",
-	"gal_imgcache_dir"
+	"gal_imgcache_dir",
+	'feature_image_gallery_mandatory_category',
 	);
 
 	foreach ($pref_simple_values as $svitem) {
@@ -110,6 +111,12 @@ if($imagegallib->haveimagick) {
 
 $smarty->assign('gdlib',$gdlib);
 $smarty->assign('imagicklib',$imagicklib);
+
+if ($feature_categories == 'y') {
+	include_once('lib/categories/categlib.php');
+	$catree = $categlib->get_all_categories();
+	$smarty->assign('catree', $catree);
+}
 
 $galleries = $tikilib->list_visible_galleries(0, -1, 'name_desc', 'admin', '');
 $smarty->assign_by_ref('galleries', $galleries["data"]);

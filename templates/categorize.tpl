@@ -2,7 +2,7 @@
 <tr class="formcolor">
  <td>{tr}Categorize{/tr}</td>
  <td{if $cols} colspan="{$cols}"{/if}>
-{if $section eq 'wiki' and $feature_wiki_mandatory_category >= 0}
+{if $mandatory_category >= 0}
   <div id="categorizator">
 {else}
   [ <a class="link" href="javascript:show('categorizator');">{tr}show categories{/tr}</a>
@@ -18,7 +18,7 @@
     <option value="{$categories[ix].categId|escape}" {if $categories[ix].incat eq 'y'}selected="selected"{/if}>{$categories[ix].categpath}</option>
    {/section}
    </select><br />
-  {if $section eq 'wiki' and $feature_wiki_mandatory_category >=0}
+  {if $mandatory_category >=0}
     <input type="hidden" name="cat_categorize" value="on" />
   {else}
    <label for="cat-check">{tr}categorize this object{/tr}:</label>

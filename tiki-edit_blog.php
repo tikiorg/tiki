@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.27 2005-05-18 10:58:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.28 2006-01-18 14:45:46 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -131,19 +131,11 @@ if (isset($_REQUEST["blogId"]) && $_REQUEST["blogId"] > 0) {
 	$smarty->assign('heading', $data["heading"]);
 }
 
-if (isset($_REQUEST['preview'])) {
-	$smarty->assign('title', $_REQUEST["title"]);
-
-	$smarty->assign('description', $_REQUEST["description"]);
-	$smarty->assign('public', isset($_REQUEST["public"]) ? 'y' : 'n');
-	$smarty->assign('use_find', isset($_REQUEST["use_find"]) ? 'y' : 'n');
-	$smarty->assign('use_title', isset($_REQUEST["use_title"]) ? 'y' : 'n');
-	$smarty->assign('allow_comments', isset($_REQUEST["allow_comments"]) ? 'y' : 'n');
-	$smarty->assign('maxPosts', $_REQUEST["maxPosts"]);
-	$smarty->assign('heading', $heading);
-}
-
-if (isset($_REQUEST["save"])) {
+$category_needed = false;
+if (isset($_REQUEST["save"]) && $feature_categories == 'y' && $feature_blog_mandatory_category >=0 && (empty($_REQUEST['cat_categories']) || count($_REQUEST['cat_categories']) <= 0)) {
+		$category_needed = true;
+		$smarty->assign('category_needed', 'y');
+} elseif (isset($_REQUEST["save"])) {
 	check_ticket('edit-blog');
 	if (isset($_REQUEST["public"]) && $_REQUEST["public"] == 'on') {
 		$public = 'y';
@@ -176,6 +168,20 @@ if (isset($_REQUEST["save"])) {
 	die;
 }
 
+if (isset($_REQUEST['preview']) || $category_needed) {
+	$smarty->assign('title', $_REQUEST["title"]);
+
+	$smarty->assign('description', $_REQUEST["description"]);
+	$smarty->assign('public', isset($_REQUEST["public"]) ? 'y' : 'n');
+	$smarty->assign('use_find', isset($_REQUEST["use_find"]) ? 'y' : 'n');
+	$smarty->assign('use_title', isset($_REQUEST["use_title"]) ? 'y' : 'n');
+	$smarty->assign('allow_comments', isset($_REQUEST["allow_comments"]) ? 'y' : 'n');
+	$smarty->assign('maxPosts', $_REQUEST["maxPosts"]);
+	$smarty->assign('heading', $heading);
+}
+
+
+$sections = 'blogs';
 $cat_type = 'blog';
 $cat_objid = $blogId;
 include_once ("categorize_list.php");
