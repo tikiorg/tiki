@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.21 2005-10-20 22:44:44 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.22 2006-01-18 14:45:47 sylvieg Exp $ *}
 {if $feature_help eq "y"}
 <div class="rbox" style="margin-top: 10px;">
 <div class="rbox-title" style="background-color: #eeee99; font-weight : bold; display : inline; padding : 0 10px;">{tr}Tip{/tr}</div>  
@@ -44,6 +44,17 @@
     <tr class="form"><td><label>{tr}Batch loading directory{/tr}:</label></td><td><input type="text" name="gal_batch_dir" value="{$gal_batch_dir|escape}" size="50" /></td></tr>
     <tr class="form"><td><label>{tr}Enable cache images to all galleries{/tr}:</label></td><td><input type="checkbox" name="feature_gal_imgcache" {if $feature_gal_imgcache eq 'y'}checked="checked"{/if}/></td></tr>
      <tr class="form"><td><label>{tr}Images cache directory{/tr}:</label></td><td><input type="text" name="gal_imgcache_dir" value="{$gal_imgcache_dir|escape}" size="50" /></td></tr>
+{if $feature_categories eq 'y'}
+    <tr><td class="form">{tr}Mandatory category in the category tree{/tr}</td>
+    <td class="form"><select name="feature_image_gallery_mandatory_category">
+	<option value="-1" {if $feature_image_gallery_mandatory_category eq -1 or $feature_image_gallery_mandatory_category eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
+	<option value="0" {if $feature_image_gallery_mandatory_category eq 0}selected="selected"{/if}>{tr}All{/tr}</option>
+	{section name=ix loop=$catree}
+	<option value="{$catree[ix].categId|escape}" {if $catree[ix].categId eq $feature_image_gallery_mandatory_category}selected="selected"{/if}>{$catree[ix].categpath}</option>
+	{/section}
+	</select>
+</td></tr>
+{/if}
     <tr><td colspan="2" class="button"><input type="submit" name="galfeatures" value="{tr}Set features{/tr}" /></td></tr>
     </table>
     </form>

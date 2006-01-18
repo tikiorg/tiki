@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.47 2005-12-12 15:18:46 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.48 2006-01-18 14:45:47 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -165,7 +165,11 @@ if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
 }
 
 // Process the insertion or modification of a gallery here
-if (isset($_REQUEST["edit"])) {
+$category_needed = false;
+if (isset($_REQUEST["edit"]) && $feature_categories == 'y' && $feature_image_gallery_mandatory_category >=0 && (empty($_REQUEST['cat_categories']) || count($_REQUEST['cat_categories']) <= 0)) {
+		$category_needed = true;
+		$smarty->assign('category_needed', 'y');
+} elseif (isset($_REQUEST["edit"])) {
 	check_ticket('galleries');
 	// Saving information
 	// If the user is not gallery admin
@@ -190,58 +194,22 @@ if (isset($_REQUEST["edit"])) {
 			}
 		}
 	}
-
-	// Everything is ok so we proceed to edit the gallery
-	$smarty->assign('edit_mode', 'y');
-	//$smarty->assign_by_ref('theme',$_REQUEST["theme"]);
-	$smarty->assign_by_ref('name', $_REQUEST["name"]);
-	$smarty->assign_by_ref('description', $_REQUEST["description"]);
-	$smarty->assign_by_ref('maxRows', $_REQUEST["maxRows"]);
-	$smarty->assign_by_ref('rowImages', $_REQUEST["rowImages"]);
-	$smarty->assign_by_ref('thumbSizeX', $_REQUEST["thumbSizeX"]);
-	$smarty->assign_by_ref('thumbSizeY', $_REQUEST["thumbSizeY"]);
-        $smarty->assign('sortorder',$_REQUEST['sortorder']);
-	$smarty->assign('sortdirection',$_REQUEST['sortdirection']);
-	$smarty->assign('galleryimage',$_REQUEST['galleryimage']);
-	$smarty->assign('parentgallery',$_REQUEST['parentgallery']);
-	$smarty->assign('defaultscale',$_REQUEST['defaultscale']);
-	$auxarray=array('showname','showimageid','showdescription','showcreated','showuser','showhits','showxysize','showfilesize','showfilename');
-	foreach($auxarray as $key => $item) {
-		if(!isset($_REQUEST[$item])) {
-			$_REQUEST[$item]='n';
-		}
-        	$smarty->assign($item,$_REQUEST[$item]);
-	}
-
-
-
 	if (isset($_REQUEST["visible"]) && $_REQUEST["visible"] == "on") {
-		$smarty->assign('visible', 'y');
 		$visible = 'y';
 	} else {
 		$visible = 'n';
 	}
-
-	$smarty->assign_by_ref('visible', $visible);
-	
-		if (isset($_REQUEST["geographic"]) && $_REQUEST["geographic"] == "on") {
-		$smarty->assign('geographic', 'y');
+	if (isset($_REQUEST["geographic"]) && $_REQUEST["geographic"] == "on") {
 		$geographic = 'y';
 	} else {
 		$geographic = 'n';
 	}
-
-	$smarty->assign_by_ref('geographic', $geographic);
-
 	if (isset($_REQUEST["public"]) && $_REQUEST["public"] == "on") {
-		$smarty->assign('public', 'y');
-
 		$public = 'y';
 	} else {
 		$public = 'n';
 	}
 
-	$smarty->assign_by_ref('public', $public);
 	$gid = $imagegallib->replace_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"],
 		'', $user, $_REQUEST["maxRows"], $_REQUEST["rowImages"], $_REQUEST["thumbSizeX"], $_REQUEST["thumbSizeY"], $public,
 		$visible,$_REQUEST['sortorder'],$_REQUEST['sortdirection'],$_REQUEST['galleryimage'],$_REQUEST['parentgallery'],
@@ -274,6 +242,48 @@ if (isset($_REQUEST["edit"])) {
 	include_once ("freetag_apply.php");
 
 	$smarty->assign('edit_mode', 'n');
+}
+
+if ($category_needed) {
+	$smarty->assign_by_ref('name', $_REQUEST["name"]);
+	$smarty->assign_by_ref('description', $_REQUEST["description"]);
+	$smarty->assign_by_ref('maxRows', $_REQUEST["maxRows"]);
+	$smarty->assign_by_ref('rowImages', $_REQUEST["rowImages"]);
+	$smarty->assign_by_ref('thumbSizeX', $_REQUEST["thumbSizeX"]);
+	$smarty->assign_by_ref('thumbSizeY', $_REQUEST["thumbSizeY"]);
+        $smarty->assign('sortorder',$_REQUEST['sortorder']);
+	$smarty->assign('sortdirection',$_REQUEST['sortdirection']);
+	$smarty->assign('galleryimage',$_REQUEST['galleryimage']);
+	$smarty->assign('parentgallery',$_REQUEST['parentgallery']);
+	$smarty->assign('defaultscale',$_REQUEST['defaultscale']);
+	$auxarray=array('showname','showimageid','showdescription','showcreated','showuser','showhits','showxysize','showfilesize','showfilename');
+	foreach($auxarray as $key => $item) {
+		if(!isset($_REQUEST[$item])) {
+			$_REQUEST[$item]='n';
+		}
+        	$smarty->assign($item,$_REQUEST[$item]);
+	}
+	if (isset($_REQUEST["visible"]) && $_REQUEST["visible"] == "on") {
+		$visible = 'y';
+	} else {
+		$visible = 'n';
+	}
+	$smarty->assign_by_ref('visible', $visible);
+	
+		if (isset($_REQUEST["geographic"]) && $_REQUEST["geographic"] == "on") {
+		$geographic = 'y';
+	} else {
+		$geographic = 'n';
+	}
+	$smarty->assign_by_ref('geographic', $geographic);
+
+	if (isset($_REQUEST["public"]) && $_REQUEST["public"] == "on") {
+		$public = 'y';
+	} else {
+		$public = 'n';
+	}
+	$smarty->assign_by_ref('public', $public);
+	$smarty->assign('edit_mode', 'y');
 }
 
 if (isset($_REQUEST["removegal"])) {
