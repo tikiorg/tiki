@@ -123,7 +123,7 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
 		$re = $userlib->get_group_info(isset($_REQUEST['group'])? $_REQUEST['group']: 'Registered');
 		if (!empty($re['usersTrackerId']) && !empty($re['registrationUsersFieldIds'])) {
 			include_once('lib/wiki-plugins/wikiplugin_tracker.php');
-			$userTrackerData = wikiplugin_tracker('', array('trackerId'=>$re['usersTrackerId'], 'fields'=>$re['registrationUsersFieldIds'], 'showdesc'=>'y', 'showmandatory'=>'y', 'embedded'=>'n'));
+			$userTrackerData = $tikilib->parse_data(wikiplugin_tracker('', array('trackerId'=>$re['usersTrackerId'], 'fields'=>$re['registrationUsersFieldIds'], 'showdesc'=>'y', 'showmandatory'=>'y', 'embedded'=>'n')));
 			$smarty->assign('userTrackerData', $userTrackerData);
 			if (!isset($_REQUEST['trackit']) || (isset($_REQUEST['error']) && $_REQUEST['error'] == 'y')) {
 				$email_valid = 'no';// first pass or error
@@ -140,7 +140,7 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
 			$machine =$tikilib->httpPrefix().$foo1;
 			$userlib->add_user($_REQUEST["name"],$apass,$_REQUEST["email"],$_REQUEST["pass"]);
 			if (isset($_REQUEST['group']) && $userlib->get_registrationChoice($_REQUEST['group']) == 'y') {
-				$userlib->assign_user_to_group($_REQUEST['name'], $_REQUEST['group']);
+				$userlib->set_default_group($_REQUEST['name'], $_REQUEST['group']);
 			}			
 			
 			$logslib->add_log('register','created account '.$_REQUEST["name"]);
@@ -181,7 +181,7 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
 		} else {
 			$userlib->add_user($_REQUEST["name"],$_REQUEST["pass"],$_REQUEST["email"],'');
 			if (isset($_REQUEST['group']) && $userlib->get_registrationChoice($_REQUEST['group']) == 'y') {
-				$userlib->assign_user_to_group($_REQUEST['name'], $_REQUEST['group']);
+				$userlib->set_default_group($_REQUEST['name'], $_REQUEST['group']);
 			}			
 			$logslib->add_log('register','created account '.$_REQUEST["name"]);
 
