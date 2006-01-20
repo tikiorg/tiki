@@ -667,18 +667,7 @@ class TrackerLib extends TikiLib {
 				$the_data .= "\n";
 
 			    } else {
-/* check this block merge 01/20/06 */
-				if((isset($ins_fields["data"][$i]["isHidden"]) && $ins_fields["data"][$i]["isHidden"] == 'n')
-					||( ! isset($ins_fields["data"][$i]["isHidden"]) )
-				  ) { // TODO: on perm control
-					if (isset($ins_fields["data"][$i]["type"]) and ($ins_fields["data"][$i]["type"] == 'f' or $ins_fields["data"][$i]["type"] == 'j')) {
-						$human_value = date('r',$ins_fields["data"][$i]["value"]);
-						$the_data .= "$name".":\n   $human_value\n\n";
-					} else {
-						$the_data .= "$name".":\n   $value\n\n";
-					}
-				}
-/* end problematic bloc */
+
 				$is_date = (isset($ins_fields["data"][$i]["type"]) and ($ins_fields["data"][$i]["type"] == 'f' or $ins_fields["data"][$i]["type"] == 'j'));
 				$is_visible = !isset($ins_fields["data"][$i]["isHidden"]) || $ins_fields["data"][$i]["isHidden"] == 'n';
 
