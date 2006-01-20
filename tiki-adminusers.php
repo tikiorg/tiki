@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.58 2006-01-20 10:13:26 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.59 2006-01-20 10:22:18 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -329,9 +329,6 @@ if (isset($_REQUEST["filterEmail"])) {
 }
 $smarty->assign('filterEmail', $filterEmail);
 
-
-$groups = $userlib->get_groups(0, $maxRecords, 'groupName_asc', '', '');
-$smarty->assign('groups', $groups['data']);
 
 //$users = $userlib->get_users($offset, $numrows, $sort_mode, $find, $initial, true);
 $users = $userlib->get_users($offset, $numrows, $sort_mode, $find, $initial, true, $filterGroup, $filterEmail);
