@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.89 2006-01-05 17:16:37 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.90 2006-01-20 09:54:53 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -208,6 +208,12 @@ for ($i = 0; $i < $temp_max; $i++) {
 		$listfields[$fid]['isTblVisible'] = $xfields["data"][$i]["isTblVisible"];
 		$listfields[$fid]['isHidden'] = $xfields["data"][$i]["isHidden"];
 		$listfields[$fid]['isSearchable'] = $xfields["data"][$i]["isSearchable"];
+
+		if ($listfields[$fid]['type'] == 'e') { //category
+		    $parentId = $listfields[$fid]["options"];
+		    $listfields[$fid]['categories'] = $categlib->get_child_categories($parentId);
+		}
+
 	}
 	
 	if ($xfields["data"][$i]['isHidden'] != 'y' or $tiki_p_admin_trackers == 'y') {
@@ -222,14 +228,20 @@ for ($i = 0; $i < $temp_max; $i++) {
 			} else {
 				$ins_fields["data"][$i]["value"] = date("U");
 			}
-		
 		} elseif ($fields["data"][$i]["type"] == 'e') { // category
 			include_once('lib/categories/categlib.php');
-			$k = $fields["data"][$i]["options"];
-			$fields["data"][$i]["$k"] = $categlib->get_child_categories($k);
-			$categId = "ins_cat_$k";
-			if (isset($_REQUEST[$categId]) and is_array($_REQUEST[$categId])) {
-				$ins_categs = array_merge($ins_categs,$_REQUEST[$categId]);
+			$parentId = $fields["data"][$i]["options"];
+			$fields["data"][$i]['categories'] = $categlib->get_child_categories($parentId);
+			$categId = "ins_cat_$fid";
+			if (isset($_REQUEST[$categId])) {
+				if (is_array($_REQUEST[$categId])) {
+					foreach ($_REQUEST[$categId] as $c)
+						$fields["data"][$i]['cat'][$c] = 'y';
+					$ins_categs = array_merge($ins_categs, $_REQUEST[$categId]);
+				} else {
+					$fields["data"][$i]['cat'][$_REQUEST[$categId]] = 'y';
+					$ins_categs[] = $_REQUEST[$categId];
+				}
 			}
 			$ins_fields["data"][$i]["value"] = '';
 
@@ -440,7 +452,16 @@ if (isset($_REQUEST["save"])) {
 		// Check field values for each type and presence of mandatory ones
 		$mandatory_missing = array();
 		$err_fields = array();
-		$field_errors = $trklib->check_field_values($ins_fields);
+		$ins_categs = array();
+		$categorized_fields = array();
+		while (list($postVar, $postVal) = each($_REQUEST)) {
+			if(preg_match("/^ins_cat_([0-9]+)/", $postVar, $m)) {
+    				foreach ($postVal as $v)
+					$ins_categs[] = $v;
+				$categorized_fields[] = $m[1];
+			}
+ 		}
+		$field_errors = $trklib->check_field_values($ins_fields, $categorized_fields);
 		$smarty->assign('err_mandatory', $field_errors['err_mandatory']);
 		$smarty->assign('err_value', $field_errors['err_value']);
 
@@ -453,34 +474,10 @@ if (isset($_REQUEST["save"])) {
 			if (!isset($_REQUEST["status"]) or ($tracker_info["showStatus"] != 'y' and $tiki_p_admin_trackers != 'y')) {
 				$_REQUEST["status"] = '';
 			}
-			$itemid = $trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $_REQUEST['status']);
+			$itemid = $trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $_REQUEST['status'], $ins_categs);
 			$cookietab = "1";
 			$smarty->assign('itemId', '');
-			// Monchofix 2005. Vamo lo pibeh.	
-			$ins_categs = array();
-			while (list($postVar, $postVal) = each($_REQUEST))
-			{
-				if(preg_match("/^ins_cat_[0-9]+/", $postVar))
-    				{
-    					$ins_categs[] = $postVal[0];
-    				}
- 			 }
-			if (count($ins_categs) > 0) {
-				$cat_type = "tracker ".$_REQUEST["trackerId"];
-				$cat_objid = $_REQUEST["itemId"];
-				$cat_desc = "";
-				$cat_name = $mainfield;
-				$cat_href = "tiki-view_tracker_item.php?trackerId=".$_REQUEST["trackerId"]."&amp;itemId=".$_REQUEST["itemId"];
-	                        if (isset($itemid)){$cat_objid = $itemid;}
-				$categlib->uncategorize_object($cat_type, $cat_objid);
-				foreach ($ins_categs as $cats) {
-					$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
-					if (!$catObjectId) {
-						$catObjectId = $categlib->add_categorized_object($cat_type, $cat_objid, $cat_desc, $cat_name, $cat_href);
-					}
-					$categlib->categorize($catObjectId, $cats);
-				}
-			}
+			$trklib->categorized_item($_REQUEST["trackerId"], $itemid, $mainfield, $ins_categs);
 			if (isset($newItemRate)) {
 				$trackerId = $_REQUEST["trackerId"];
 				$trklib->replace_rating($trackerId,$itemid,$newItemRateField,$user,$newItemRate);

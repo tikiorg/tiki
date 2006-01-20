@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-poll_form.php,v 1.15 2005-05-18 10:58:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-poll_form.php,v 1.16 2006-01-20 09:54:53 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -21,6 +21,13 @@ if ($feature_polls != 'y') {
 
 	$smarty->display("error.tpl");
 	die;
+}
+
+// Now check permissions to access this page
+if($tiki_p_vote_poll != 'y') {
+  $smarty->assign('msg',tra("Permission denied you cannot view this page"));
+  $smarty->display("error.tpl");
+  die;  
 }
 
 if (!isset($_REQUEST["pollId"])) {

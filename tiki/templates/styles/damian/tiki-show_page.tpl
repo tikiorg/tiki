@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/damian/tiki-show_page.tpl,v 1.17 2005-12-15 21:02:49 lfagundes Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/damian/tiki-show_page.tpl,v 1.18 2006-01-20 09:54:57 sylvieg Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -38,7 +38,9 @@
 	{if $cached_page eq 'y'}
 	  <a title="{tr}refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1"><img src="img/icons/ico_redo.gif" border="0" height="16" width="16"  alt='{tr}refresh{/tr}'></a>
 	{/if}
+	{if $feature_wiki_print eq 'y'}
 	<a title="{tr}print{/tr}" href="tiki-print.php?page={$page|escape:"url"}"><img src="img/icons/ico_print.gif" border="0"  width="16" height="16" alt='{tr}print{/tr}' /></a>
+	{/if}
 	{if $feature_wiki_pdf eq 'y'}
 	  <a title="{tr}create pdf{/tr}" href="tiki-config_pdf.php?{if $home_info && $home_info.page_ref_id}page_ref_id={$home_info.page_ref_id}{else}page={$page|escape:"url"}{/if}"><img src="img/icons/ico_pdf.gif" border="0"  width="16" height="16" alt='{tr}pdf{/tr}'></a>
 	{/if}

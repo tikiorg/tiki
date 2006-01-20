@@ -106,7 +106,7 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
   
 
     $email_valid = 'yes';
-    if($validateUsers=='y') {
+    if($validateEmail=='y') {
       $ret = $registrationlib->SnowCheckMail($_REQUEST["email"],$sender_email,$novalidation);
       if(!$ret[0]) {
 		$smarty->assign('notrecognized','y');

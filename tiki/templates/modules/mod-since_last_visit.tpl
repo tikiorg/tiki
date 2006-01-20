@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-since_last_visit.tpl,v 1.10 2005-05-18 11:03:31 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-since_last_visit.tpl,v 1.11 2006-01-20 09:54:57 sylvieg Exp $ *}
 
 {if $user}
 {tikimodule title="{tr}Since your last visit{/tr}" name="since_last_visit" flip=$module_params.flip decorations=$module_params.decorations}
@@ -8,6 +8,7 @@
 {$nvi_info.pages} {tr}wiki pages changed{/tr}<br />
 {$nvi_info.files} {tr}new files{/tr}<br />
 {$nvi_info.comments} {tr}new comments{/tr}<br />
+{$nvi_info.trackers} {tr}new tracker items{/tr}<br />
 {$nvi_info.users} {tr}new users{/tr}<br />
 {/tikimodule}
 {/if}

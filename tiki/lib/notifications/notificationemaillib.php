@@ -1,5 +1,5 @@
 <?php
-// $Id: notificationemaillib.php,v 1.14 2006-01-08 07:50:25 rlpowell Exp $
+// $Id: notificationemaillib.php,v 1.15 2006-01-20 09:54:55 sylvieg Exp $
 /** \brief send the email notifications dealing with the forum changes to
   * \brief outbound address + admin notification addresses / forum admin email + watching users addresses
   * \param $event = 'forum_post_topic' or 'forum_post_thread'
@@ -9,7 +9,7 @@
   * \param $topicName name of the parent topic
   */
 
-function sendForumEmailNotification($event, $object, $forum_info, $title, $data, $author, $topicName, $messageId='', $inReplyTo='', $threadId='', $parentId='') {
+function sendForumEmailNotification($event, $object, $forum_info, $title, $data, $author, $topicName, $messageId='', $inReplyTo='', $threadId, $parentId ) {
 	global $tikilib, $feature_user_watches, $smarty, $userlib, $sender_email;
 
 	// Per-forum From address overrides global default.
@@ -27,10 +27,11 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 		$mail->setSubject($title);
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 		$machine = $tikilib->httpPrefix() . dirname( $foo["path"] );
-		$reply_link="\n\n----\n\nReply Link: <" . $machine . "/"
+		$reply_link="\n\n----\n\nReply Link: <" . $machine
 		. "tiki-view_forum_thread.php?forumId=" .
 		$forum_info['forumId'] .
-		"&comments_reply_threadId=$object&comments_parentId=$parentId&post_reply=1#form>\n";
+		"&comments_reply_threadId=$object&comments_parentId=$threadId&post_reply=1#form>\n";
+
 		if( array_key_exists( 'outbound_mails_reply_link', $forum_info )
 		    && $forum_info['outbound_mails_reply_link'] )
 		{
@@ -47,6 +48,20 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 		{
 		    $mail->setHeader("In-Reply-To", "<".$inReplyTo.">");
 		}
+
+		global $commentslib;
+		$attachments = $commentslib->get_thread_attachments( $object, 0 );
+
+		if( count( $attachments ) > 0 )
+		{
+		    foreach ( $attachments as $att )
+		    {
+			$att_data = $commentslib->get_thread_attachment( $att['attId'] );
+			$file = $mail->getFile( $att_data['dir'].$att_data['path'] );
+			$mail->addAttachment( $file, $att_data['filename'], $att_data['filetype'] );
+		    }
+		}
+
 
 		$mail->buildMessage();
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.128 2006-01-16 12:31:27 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.129 2006-01-20 09:54:53 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -26,16 +26,7 @@ if (isset($_REQUEST['save']) && (!$user || $user == 'anonymous') && $feature_ant
 
 // Get the page from the request var or default it to HomePage
 if (!isset($_REQUEST["page"]) || $_REQUEST["page"] == '') { 
-        if ($useGroupHome == 'y') {
-                $groupHome = $userlib->get_user_default_homepage($user);
-                if ($groupHome) {
-                        $_REQUEST["page"] = $groupHome;
-                } else {
-                        $_REQUEST["page"] = $wikiHomePage;
-                }
-        } else {
-                $_REQUEST["page"] = $wikiHomePage;
-        }
+	$_REQUEST['page'] = $wikilib->get_default_wiki_page();
 }
 $page = $_REQUEST["page"];
 $smarty->assign_by_ref('page', $_REQUEST["page"]);
@@ -437,7 +428,7 @@ if(isset($info['wiki_cache'])) {
   $smarty->assign('wiki_cache',$wiki_cache);
 }
 
-if ($info["flag"] == 'L') {
+if ($info["flag"] == 'L' && !$wikilib->is_editable($page, $user, $info)) {
   $smarty->assign('msg', tra("Cannot edit page because it is locked"));
 
   $smarty->display("error.tpl");
@@ -861,6 +852,18 @@ $cat_objid = $_REQUEST["page"];
 $section = 'wiki';
 include_once ("categorize_list.php");
 include_once ("freetag_list.php");
+
+if (isset($_SERVER['HTTP_REFERER']) && strstr($_SERVER['HTTP_REFERER'], 'tiki-index.php') && !$tikilib->page_exists($_REQUEST["page"])) { // default the categs the page you come from for a new page
+	if (preg_match('/page=([^\&]+)/', $_SERVER['HTTP_REFERER'], $ms))
+		$p = $ms[1];
+	else
+		$p = $wikilib->get_default_wiki_page();
+	$cs = $categlib->get_object_categories('wiki page', $p);
+	for ($i = count($categories) - 1; $i >= 0; --$i) {
+		if (in_array($categories[$i]['categId'], $cs))
+			$categories[$i]['incat'] = 'y';
+	}
+}
 
 if ($feature_theme_control == 'y') {
   include ('tiki-tc.php');

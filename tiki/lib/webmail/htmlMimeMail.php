@@ -9,8 +9,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 /**
 * Filename.......: class.html.mime.mail.inc
 * Project........: HTML Mime mail class
-* Last Modified..: $Date: 2006-01-05 17:16:38 $
-* CVS Revision...: $Revision: 1.14 $
+* Last Modified..: $Date: 2006-01-20 09:54:56 $
+* CVS Revision...: $Revision: 1.15 $
 * Copyright......: 2001, 2002 Richard Heyes
 */
 
@@ -479,7 +479,8 @@ class htmlMimeMail {
 		$params['encoding'] = $value['encoding'];
 		$params['disposition'] = 'attachment';
 		$params['dfilename'] = $value['name'];
-		$obj->addSubpart($value['body'], $params);
+		$ret = $obj->addSubpart($value['body'], $params);
+		return $ret;
 	}
 
 	/**
@@ -888,7 +889,7 @@ class htmlMimeMail {
 *    re-build the message.
 *
 * @author  Richard Heyes <richard@phpguru.org>
-* @version $Revision: 1.14 $
+* @version $Revision: 1.15 $
 * @package Mail
 */
 class Mail_mimePart {
@@ -1178,7 +1179,7 @@ class Mail_mimePart {
 *
 * @author  Richard Heyes <richard@phpguru.org>
 * @author  Chuck Hagenbuch <chuck@horde.org>
-* @version $Revision: 1.14 $
+* @version $Revision: 1.15 $
 * @package Mail
 */
 class Mail_RFC822 {

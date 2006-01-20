@@ -47,7 +47,7 @@
 <td >
 	<select name="filter_activity">
 	<option {if '' eq $smarty.request.filter_activity}selected="selected"{/if} value="">{tr}All{/tr}</option>
-    {foreach from=$all_procs item=proc}
+    {foreach from=$all_acts item=proc}
 	<option {if $proc.activityId eq $smarty.request.filter_activity}selected="selected"{/if} value="{$proc.activityId|escape}">{$proc.name}</option>
 	{/foreach}
 	</select>

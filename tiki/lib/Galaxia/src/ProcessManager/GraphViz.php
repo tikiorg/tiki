@@ -13,7 +13,7 @@
 // | license@php.net so we can mail you a copy immediately.               |
 // +----------------------------------------------------------------------+
 //
-// $Id: GraphViz.php,v 1.7 2004-01-25 02:12:37 halon Exp $
+// $Id: GraphViz.php,v 1.8 2006-01-20 09:54:54 sylvieg Exp $
 //
 
 /**
@@ -156,14 +156,25 @@ class Process_GraphViz {
         if ($file = $this->saveParsedGraph()) {
             $outputfile = $file . '.' . $format;
             $outputfile2 = $file . '.' . 'map';
+			
+			if (substr(php_uname(), 0, 7) == "Windows") {
+				$src = '"' . $file . '"';
+				$outputfile  = '"' . $outputfile   . '"';
+				$outputfile2 = '"' . $outputfile2  . '"';
+			} else {
+				$src = $file;
+			}
+			
             if(!isset($this->graph['directed'])) $this->graph['directed']=true;
+			
             $command  = $this->graph['directed'] ? $this->dotCommand : $this->neatoCommand;
-            $command .= " -T$format -o $outputfile $file";
+            $command .= " -T$format -o $outputfile $src";			
             @`$command`;
 
             $command = $this->dotCommand;
-            $command.= " -Tcmap -o $outputfile2 $file";
+            $command.= " -Tcmap -o $outputfile2 $src";			
             @`$command`;
+						
             @unlink($file);
             return true;
         }

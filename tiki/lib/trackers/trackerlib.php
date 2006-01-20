@@ -357,8 +357,10 @@ class TrackerLib extends TikiLib {
 	/* experimental shared */
 	function list_items($trackerId, $offset, $maxRecords, $sort_mode, $listfields, $filterfield='', $filtervalue='', $status = '', $initial = '',$exactvalue='',$numsort=false) {		
 		global $tiki_p_view_trackers_pending,$tiki_p_view_trackers_closed,$tiki_p_admin_trackers;
+		$cat_table = '';
+		$trackerId = (int) $trackerId;
 		$mid = " where tti.`trackerId`=? ";
-		$bindvars = array((int) $trackerId);
+		$bindvars = array($trackerId);
 
 		if ($status) {
 				if ($tiki_p_view_trackers_pending != 'y') $status = str_replace('p','',$status);
@@ -393,6 +395,17 @@ class TrackerLib extends TikiLib {
 				$csort_mode = $filterfield;
 				$corder = "asc";
 			} elseif ($filtervalue) {
+			    $filter = $this->get_tracker_field($filterfield);
+			    if ($filter['type'] == 'e') { //category
+				$cat_table = ', tiki_categorized_objects tob, tiki_category_objects tco ';
+				$mid .= " and tob.catObjectId=tco.catObjectId and tob.`type`='tracker $trackerId' and tob.`objId`=tti.`itemId` and tco.`categId` in ( 0 ";
+				
+				foreach ($filtervalue as $catId) {
+				    $bindvars[] = $catId;
+				    $mid .= ',?';
+				}
+				$mid .= " ) ";
+			    } else {
 				$mid.= "and ttif.`value` like ?";
 				if (substr($filtervalue,0,1) == '*') {
 					$bindvars[] = '%'. substr($filtervalue,1);
@@ -401,8 +414,14 @@ class TrackerLib extends TikiLib {
 				} else {
 					$bindvars[] = '%'.$filtervalue.'%';
 				}
-				$csort_mode = $filterfield;
-				$corder = "asc";
+			    }
+
+				if (!$sort_mode) {
+				    $csort_mode = $filterfield;
+				    $corder = "asc";
+				} else {
+				    list($a,$csort_mode,$corder) = split('_',$sort_mode);
+				}
 			} else {
 				list($a,$csort_mode,$corder) = split('_',$sort_mode);
 			}
@@ -411,13 +430,13 @@ class TrackerLib extends TikiLib {
 			}
 			$bindvars[] = $csort_mode;
 			if ($numsort) { 
-				$query = "select tti.*, ttif.`value`,ttf.`type`, right(lpad(ttif.`value`,40,'0'),40) as ok from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf  ";
-				$query.= " $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` and ttif.`fieldId`=? order by ".$this->convert_sortmode('ok_'.$corder);
+				$query = "select tti.*, ttif.`value`,ttf.`type`, right(lpad(ttif.`value`,40,'0'),40) as ok from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf $cat_table ";
+				$query.= " $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` and ttif.`fieldId`=? group by tti.`itemId` order by ".$this->convert_sortmode('ok_'.$corder);
 			} else {
-				$query = "select tti.*, ttif.`value`,ttf.`type` from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf  ";
-				$query.= " $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` and ttif.`fieldId`=? order by ttif.".$this->convert_sortmode('value_'.$corder);
+				$query = "select tti.*, ttif.`value`,ttf.`type` from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf $cat_table ";
+				$query.= " $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` and ttif.`fieldId`=? group by tti.`itemId` order by ttif.".$this->convert_sortmode('value_'.$corder);
 			}
-			$query_cant = "select count(*) from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf  ";
+			$query_cant = "select count(*) from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf  $cat_table ";
 			$query_cant.= " $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` and ttif.`fieldId`=? ";
 		} else {
 			$query = "select * from `tiki_tracker_items` tti $mid order by ".$this->convert_sortmode($sort_mode);
@@ -471,7 +490,7 @@ class TrackerLib extends TikiLib {
 					} else $voteavg = '0';
 					$fopt["voteavg"] = $voteavg;
 				} elseif ($fopt["type"] == 'e') {
-					global $categlib;
+				        global $categlib;
 					$mycats = $categlib->get_child_categories($fopt['options']);
 					$zcats = $categlib->get_object_categories("tracker ".$trackerId,$res["itemId"]);
 					$cats = array();
@@ -521,16 +540,18 @@ class TrackerLib extends TikiLib {
 	}
 
 
-	function replace_item($trackerId, $itemId, $ins_fields, $status = '') {
+	function replace_item($trackerId, $itemId, $ins_fields, $status = '', $ins_categs = array()) {
 		global $user;
 		global $smarty;
 		global $notificationlib;
 		global $sender_email;
 		global $cachelib;
+		global $categlib;
 		$now = date("U");
 		
 		if ($itemId) {
 			if ($status) {
+			        $oldStatus = $this->getOne("select `status` from `tiki_tracker_items` where `itemId`=?", array($itemId));
 				$query = "update `tiki_tracker_items` set `status`=?,`lastModif`=? where `itemId`=?";
 				$result = $this->query($query,array($status,(int) $now,(int) $itemId));
 			} else {
@@ -546,16 +567,28 @@ class TrackerLib extends TikiLib {
 			$result = $this->query($query,array((int) $trackerId,(int) $now,(int) $now,$status));
 			$new_itemId = $this->getOne("select max(`itemId`) from `tiki_tracker_items` where `created`=? and `trackerId`=?",array((int) $now,(int) $trackerId));
 		}
-		$the_data = '';
+
+		$old_categs = $categlib->get_object_categories("tracker $trackerId", $itemId ? $itemId : $new_itemId);
+		
+		$new_categs = array_diff($ins_categs, $old_categs);
+		$del_categs = array_diff($old_categs, $ins_categs);
+		$remain_categs = array_diff($old_categs, $new_categs, $del_categs);
+
+		$the_data = tra('Status:').' ';
+		$statusTypes = $this->status_types();
+		if (isset($oldStatus) && $oldStatus != $status) {
+		    $the_data .= $statusTypes[$oldStatus]['label'] . ' -> ';
+		}
+		$the_data .= $statusTypes[$status]['label'] . "\n\n";
 
 		for ($i = 0; $i < count($ins_fields["data"]); $i++) {
-			if (isset($ins_fields["data"][$i]["type"]) and ( $ins_fields["data"][$i]["type"] == 'e' || $ins_fields["data"][$i]["type"] == 's' )) {
-				
-			} elseif (isset($ins_fields["data"][$i]["fieldId"])) {
+			if (!isset($ins_fields["data"][$i]["type"]) or $ins_fields["data"][$i]["type"] == 's' ) {
+			    // system type, do nothing
+			} else {
 				
 				// -----------------------------
 				// save image on disk
-				if ( isset($ins_fields["data"][$i]["type"]) and $ins_fields["data"][$i]["type"] == 'i') {					
+				if ( $ins_fields["data"][$i]["type"] == 'i') {					
 						
 					$itId = $itemId ? $itemId : $new_itemId;
 					$old_file = $this->get_item_value($trackerId, $itemId, $ins_fields["data"][$i]['fieldId']);
@@ -598,6 +631,43 @@ class TrackerLib extends TikiLib {
 					$name = $this->getOne("select `name` from `tiki_tracker_fields` where `fieldId`=?",array((int)$fieldId));
 				}
 				$value = $ins_fields["data"][$i]["value"];
+				
+			    if ($ins_fields["data"][$i]["type"] == 'e') {
+			    // category type
+
+				$my_categs = $categlib->get_child_categories($ins_fields['data'][$i]["options"]);
+				$aux = array();
+				foreach ($my_categs as $cat) {
+				    $aux[] = $cat['categId'];
+				}
+				$my_categs = $aux;
+
+				$my_new_categs = array_intersect($new_categs, $my_categs);
+				$my_del_categs = array_intersect($del_categs, $my_categs);
+				$my_remain_categs = array_intersect($remain_categs, $my_categs);
+				
+				if (sizeof($my_new_categs) + sizeof($my_del_categs) == 0) {
+				    $the_data .= "$name ".tra('(unchanged)') . ":\n";
+				} else {
+				    $the_data .= "$name :\n";
+				}
+
+				if (sizeof($my_new_categs) > 0) {
+				    $the_data .= "  " . tra("Added:") . "\n";
+				    $the_data .= $this->_describe_category_list($my_new_categs);
+				}
+				if (sizeof($my_del_categs) > 0) {
+				    $the_data .= "  " . tra("Removed:") . "\n";
+				    $the_data .= $this->_describe_category_list($my_del_categs);
+				}
+				if (sizeof($my_remain_categs) > 0) {
+				    $the_data .= "  " . tra("Remaining:") . "\n";
+				    $the_data .= $this->_describe_category_list($my_remain_categs);
+				}
+				$the_data .= "\n";
+
+			    } else {
+/* check this block merge 01/20/06 */
 				if((isset($ins_fields["data"][$i]["isHidden"]) && $ins_fields["data"][$i]["isHidden"] == 'n')
 					||( ! isset($ins_fields["data"][$i]["isHidden"]) )
 				  ) { // TODO: on perm control
@@ -608,16 +678,52 @@ class TrackerLib extends TikiLib {
 						$the_data .= "$name".":\n   $value\n\n";
 					}
 				}
+/* end problematic bloc */
+				$is_date = (isset($ins_fields["data"][$i]["type"]) and ($ins_fields["data"][$i]["type"] == 'f' or $ins_fields["data"][$i]["type"] == 'j'));
+				$is_visible = !isset($ins_fields["data"][$i]["isHidden"]) || $ins_fields["data"][$i]["isHidden"] == 'n';
 
 				if ($itemId) {
-					if ($this->getOne('select count(*) from `tiki_tracker_item_fields` where `itemId`=? and `fieldId`=?',array((int) $itemId,(int) $fieldId)) > 0) {
-						$query = "update `tiki_tracker_item_fields` set `value`=? where `itemId`=? and `fieldId`=?";
-						$this->query($query,array($value,(int) $itemId,(int) $fieldId));
+				        $result = $this->query('select `value` from `tiki_tracker_item_fields` where `itemId`=? and `fieldId`=?',array((int) $itemId,(int) $fieldId));
+     				        if ($row = $result->fetchRow()) {
+					    if ($is_visible) {
+					        $old_value = $row['value'];
+						if ($is_date) {
+						    $old_value = date('r',$old_value);
+						    $new_value = date('r',$value);
+						} else {
+						    $new_value = $value;
+						}
+					        if ($old_value != $new_value) {
+						    $the_data .= "$name" . ":\n ".tra("Old:")." $old_value\n ".tra("New:")." $new_value\n\n";
+						} else {
+						    $the_data .= "$name ".tra('(unchanged)') . ":\n $value\n\n";
+						}
+					    }
+
+					    $query = "update `tiki_tracker_item_fields` set `value`=? where `itemId`=? and `fieldId`=?";
+					    $this->query($query,array($value,(int) $itemId,(int) $fieldId));
 					} else {
-						$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
-						$this->query($query,array((int) $itemId,(int) $fieldId,$value));
+					    if ($is_visible) {
+						if ($is_date) {
+						    $new_value = date('r',$value);
+						} else {
+						    $new_value = $value;
+						}
+						$the_data .= "$name".":\n   $value\n\n";
+					    }
+					    $query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
+					    $this->query($query,array((int) $itemId,(int) $fieldId,$value));
 					}
 				} else {
+				        if ($is_visible) {
+					    if ($is_date) {
+						$new_value = date('r',$value);
+					    } else {
+						$new_value = $value;
+					    }
+					    $the_data .= "$name".":\n   $value\n\n";
+					}
+
 					$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
 					$this->query($query,array((int) $new_itemId,(int) $fieldId,$value));
 				}
@@ -628,6 +734,7 @@ class TrackerLib extends TikiLib {
 				$cachelib->invalidate(md5('trackerfield'.$fieldId.'oc'));
 				$cachelib->invalidate(md5('trackerfield'.$fieldId.'pc'));
 				$cachelib->invalidate(md5('trackerfield'.$fieldId.'opc'));
+			    }
 			}
 		}
 
@@ -659,6 +766,7 @@ class TrackerLib extends TikiLib {
 		}
 
 		$trackerName = $this->getOne("select `name` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
+
 		if (count($emails) > 0) {
 			if( $simpleEmail == "n" )
 			{
@@ -741,23 +849,42 @@ class TrackerLib extends TikiLib {
 		$result = $this->query($query,array((int)$cant_items,(int) $now,(int) $trackerId));
 
 		if (!$itemId) $itemId = $new_itemId;
+
+		global $cachelib;
+		require_once('lib/cache/cachelib.php');
+		$cachelib->invalidate('trackerItemLabel'.$itemId);
+
 		return $itemId;
+	}
+
+
+	function _describe_category_list($categs) {
+	    global $categlib;
+	    $res = '';
+	    foreach ($categs as $cid) {
+		$info = $categlib->get_category($cid);
+		$res .= '    ' . $info['name'] . "\n";
+	    }
+	    return $res;
 	}
 
 	// check the validity of each field values of a tracker item
 	// and the presence of mandatory fields
-	function check_field_values($ins_fields) {
-
+	function check_field_values($ins_fields, $categorized_fields='') {
 		$mandatory_fields = array();
 		$erroneous_values = array();
 
 		foreach($ins_fields['data'] as $f) {
 
-			if (isset($f['isMandatory']) && $f['isMandatory'] == 'y' && isset($f['value']) && $f['value'] == '') {
-
-				$mandatory_fields[] = $f;
+			if (isset($f['isMandatory']) && $f['isMandatory'] == 'y') {
+				if (isset($f['type']) &&  $f['type'] == 'e') {
+					if (!in_array($f['fieldId'], $categorized_fields))
+						$mandatory_fields[] = $f;
+				} else if (empty($f['value'])) {
+					$mandatory_fields[] = $f;
+				}
 			}
-			elseif(isset($f['value']) && isset($f['type'])) {
+			if (!empty($f['value']) && isset($f['type'])) {
 
 				switch ($f['type']) {
 				// numeric
@@ -823,6 +950,11 @@ class TrackerLib extends TikiLib {
 				unlink( $img );
 			}
 		}
+
+		global $cachelib;
+		require_once('lib/cache/cachelib.php');
+		$cachelib->invalidate('trackerItemLabel'.$itemId);
+
 		return true;
 	}
 
@@ -886,7 +1018,20 @@ class TrackerLib extends TikiLib {
 		} else {
 			$this->query('delete from `tiki_tracker_fields` where `fieldId`=?',array((int)$ratingId));
 		}
+		$this->clear_tracker_cache($trackerId);
 		return $trackerId;
+	}
+
+	function clear_tracker_cache($trackerId) {
+		$query = "select `itemId` from `tiki_tracker_items` where `trackerId`=?";
+		$result = $this->query($query,array((int)$trackerId));
+
+		global $cachelib;
+		require_once('lib/cache/cachelib.php');
+
+		while ($res = $result->fetchRow()) {
+		    $cachelib->invalidate('trackerItemLabel'.$res['itemId']);
+		}
 	}
 
 
@@ -925,6 +1070,7 @@ class TrackerLib extends TikiLib {
 				$this->query($query2,array((int) $itemId,(int) $fieldId,''));
 			}
 		}
+		$this->clear_tracker_cache($trackerId);
 		return $fieldId;
 	}
 
@@ -988,6 +1134,8 @@ class TrackerLib extends TikiLib {
 		
 		$this->remove_object('tracker', $trackerId);
 		
+		$this->clear_tracker_cache($trackerId);
+
 		return true;
 	}
 
@@ -1014,6 +1162,8 @@ class TrackerLib extends TikiLib {
 		$cachelib->invalidate(md5('trackerfield'.$fieldId.'pc'));
 		$cachelib->invalidate(md5('trackerfield'.$fieldId.'opc'));
 		
+		$this->clear_tracker_cache($trackerId);
+
 		return true;
 	}
 
@@ -1165,14 +1315,34 @@ class TrackerLib extends TikiLib {
 		$status['c'] = array('label'=>tra('closed'),'perm'=>'tiki_p_view_trackers_closed','image'=>'img/icons2/status_closed.gif');
 		return $status;
 	}
+
 	function get_isMain_value($trackerId, $itemId) {
 		$query = "select i.`value` from `tiki_tracker_item_fields` i, `tiki_tracker_fields` f where f.`trackerId`=? and i.`itemId`=? and f.`fieldId` = i.`fieldId` and f.`isMain`=?";
 		$result = $this->getOne($query, array((int)$trackerId, (int)$itemId, "y"));
 		return $result;
 	}
+	function categorized_item($trackerId, $itemId, $mainfield, $ins_categs) {
+		global $categlib; include_once('lib/categories/categlib.php');
+		if (count($ins_categs) <= 0)
+			return;
+		$cat_type = "tracker $trackerId";
+		$cat_objid = $itemId;
+		$cat_desc = '';
+		$cat_name = $mainfield;
+		$cat_href = "tiki-view_tracker_item.php?trackerId=$trackerId&amp;itemId=$itemId";
+		$categlib->uncategorize_object($cat_type, $cat_objid);
+		foreach ($ins_categs as $cats) {
+			$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
+			if (!$catObjectId) {
+				$catObjectId = $categlib->add_categorized_object($cat_type, $cat_objid, $cat_desc, $cat_name, $cat_href);
+			}
+			$categlib->categorize($catObjectId, $cats);
+		}
+	}
+		
 }
 
-global $dbTiki;
+global $dbTiki, $tikilib;
 //if(isset($trk_with_mirror_tables) && $trk_with_mirror_tables == 'y') {
 if($tikilib->get_preference('trk_with_mirror_tables') == 'y') {
 	include_once ("trkWithMirrorTablesLib.php");

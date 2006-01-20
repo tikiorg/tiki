@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.78 2005-12-12 15:18:57 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.79 2006-01-20 09:54:57 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
@@ -35,6 +35,12 @@
 <tr><td class="odd">{$discardlist[reject].login}</td><td class="odd">{$discardlist[reject].reason}</td></tr>
 {/section}
 </table>
+{/if}
+{if $errors}
+<br />
+{section name=ix loop=$errors}
+{$errors[ix]}<br />
+{/section}
 {/if}
 </div>
 {/if}

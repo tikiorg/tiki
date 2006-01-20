@@ -1,3 +1,4 @@
+# for an installation in a subdirectory, you have to copy this file in your root of your domain and add  /subdir/ on each line
 User-agent: *
 Disallow: /CVS/
 Disallow: /lib/
@@ -20,9 +21,13 @@ Disallow: /temp/
 Disallow: /tests/
 Disallow: /tikimovies/
 Disallow: /tiki-install.php
-Disallow: /tiki-admin
+Disallow: /tiki-admin.php
 Disallow: /tiki-editpage.php
 Disallow: /tiki-print.php
+Disallow: /tiki-print_article.php
+Disallow: /tiki-print_blog_post.php
+Disallow: /tiki-print_multi_pages.php
+Disallow: /tiki-print_pages.php
 Disallow: /tiki-pagehistory.php
 Disallow: /tiki-backlinks.php
 Disallow: /tiki-likepages.php
@@ -56,9 +61,13 @@ Disallow: temp/
 Disallow: tests/
 Disallow: tikimovies/
 Disallow: tiki-install.php
-Disallow: tiki-admin
+Disallow: tiki-admin.php
 Disallow: tiki-editpage.php
 Disallow: tiki-print.php
+Disallow: tiki-print_article.php
+Disallow: tiki-print_blog_post.php
+Disallow: tiki-print_multi_pages.php
+Disallow: tiki-print_pages.php
 Disallow: tiki-pagehistory.php
 Disallow: tiki-backlinks.php
 Disallow: tiki-likepages.php

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-show_page.tpl,v 1.8 2005-12-15 21:02:56 lfagundes Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-show_page.tpl,v 1.9 2006-01-20 09:54:58 sylvieg Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle" title="{tr}Refresh{/tr}">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -49,7 +49,9 @@
 	{if $feature_morcego eq "y" && $wiki_feature_3d eq "y"}
 	<a title="{tr}3d browser{/tr}" href="javascript:wiki3d_open('{$page|escape}',{$wiki_3d_width}, {$wiki_3d_height})"><img src="img/icons/ico_wiki3d.gif" border="0" width="13" height="16" alt='{tr}3d browser{/tr}' /></a>
 	{/if}
+	{if $feature_wiki_print eq 'y'}
 	<a title="{tr}print{/tr}" href="tiki-print.php?page={$page|escape:"url"}"><img src="img/icons/ico_print.gif" border="0"  width="16" height="16" alt='{tr}print{/tr}' /></a>
+	{/if}
 	{if $feature_wiki_pdf eq 'y'}
 	<a title="{tr}create pdf{/tr}" href="tiki-config_pdf.php?{if $home_info && $home_info.page_ref_id}page_ref_id={$home_info.page_ref_id}{else}page={$page|escape:"url"}{/if}"><img src="img/icons/ico_pdf.gif" border="0"  width="16" height="16" alt='{tr}pdf{/tr}'></a>
 	{/if}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.28 2006-01-18 14:45:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.29 2006-01-20 09:54:53 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -83,26 +83,13 @@ $rss_version = $tikilib->get_preference("rssfeed_default_version","2");
 if (isset($_REQUEST["heading"])and $tiki_p_edit_templates) {
 	$heading = $_REQUEST["heading"];
 } else {
-	$heading = '<div class="blogtitle">{tr}Blog{/tr}: {$title}</div>' . "\n";
-	$heading .= '<div class="bloginfo">' . "\n";
-	$heading .= '{tr}Created by{/tr} {$creator|userlink}{tr} on {/tr}{$created|tiki_short_datetime}<br />' . "\n";
-	$heading .= '{tr}Last modified{/tr} {$lastModif|tiki_short_datetime}<br /><br />' . "\n";
-	$heading .= '<table><tr><td>' . "\n";
-	$heading .= '({$posts} {tr}posts{/tr} | {$hits} {tr}visits{/tr} | {tr}Activity={/tr}{$activity|string_format:"%.2f"})</td>' . "\n";
-	$heading .= '<td style="text-align:right;">' . "\n";
-	$heading .= '{if $tiki_p_blog_post eq "y"}' . "\n";
-	$heading .= '{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y" or $public eq "y"}' . "\n";
-	$heading .= '<a class="bloglink" href="tiki-blog_post.php?blogId={$blogId}"><img src="img/icons/edit.gif" border="0" alt="{tr}Post{/tr}" title="{tr}post{/tr}" /></a>{/if}{/if}' . "\n";
-	$heading .= '{if $rss_blog eq "y"}' . "\n";
-	$heading .= '<a class="bloglink" href="tiki-blog_rss.php?blogId={$blogId}&amp;ver='.$rss_version.'"><img src="img/rss.png" border="0" alt="{tr}RSS feed{/tr}" title="{tr}RSS feed{/tr}" /></a>{/if}' . "\n";
-	$heading .= '{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y"}' . "\n";
-	$heading .= '<a class="bloglink" href="tiki-edit_blog.php?blogId={$blogId}"><img src="img/icons/config.gif" border="0" alt="{tr}Edit blog{/tr}" title="{tr}Edit blog{/tr}" /></a>{/if}' . "\n";
-	$heading .= '{if $user and $feature_user_watches eq "y"}' . "\n";
-	$heading .= '{if $user_watching_blog eq "n"}' . "\n";
-	$heading .= '<a href="tiki-view_blog.php?blogId={$blogId}&amp;watch_event=blog_post&amp;watch_object={$blogId}&amp;watch_action=add"><img border="0" alt="{tr}monitor this blog{/tr}" title="{tr}monitor this blog{/tr}" src="img/icons/icon_watch.png" /></a>' . "\n";
-	$heading .= '{else}<a href="tiki-view_blog.php?blogId={$blogId}&amp;watch_event=blog_post&amp;watch_object={$blogId}&amp;watch_action=remove"><img border="0" alt="{tr}stop monitoring this blog{/tr}" title="{tr}stop monitoring this blog{/tr}" src="img/icons/icon_unwatch.png" /></a>' . "\n";
-	$heading .= '{/if}{/if}</td></tr></table></div>' . "\n";
-	$heading .= '<div class="blogdesc">{tr}Description:{/tr} {$description}</div>';
+	$n = $smarty->get_filename('blog-heading.tpl', 'r');
+	@$fp = fopen($n, 'r');
+	if ($fp) {
+		$heading = fread($fp, filesize($n));
+		@fclose($fp);
+	} else
+		$heading = '';
 }
 
 $smarty->assign_by_ref('heading', $heading);
@@ -164,7 +151,7 @@ if (isset($_REQUEST["save"]) && $feature_categories == 'y' && $feature_blog_mand
 	$cat_href = "tiki-view_blog.php?blogId=" . $cat_objid;
 	include_once ("categorize.php");
 
-	header ("location: tiki-list_blogs.php");
+	header ("location: tiki-list_view_blogs.php?blogId=$bid");
 	die;
 }
 
@@ -185,6 +172,10 @@ $sections = 'blogs';
 $cat_type = 'blog';
 $cat_objid = $blogId;
 include_once ("categorize_list.php");
+
+$defaultRows = 5;
+include_once("textareasize.php");
+
 ask_ticket('edit-blog');
 
 // Display the Index Template

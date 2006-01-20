@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.25 2005-12-12 15:18:57 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.26 2006-01-20 09:54:57 sylvieg Exp $ *}
 
 <h1><a href="tiki-assignuser.php?assign_user={$assign_user|escape:url}" class="pagetitle">{tr}Assign user{/tr} {$assign_user} {tr}to groups{/tr}</a></h1>
 <a href="tiki-adminusers.php" class="linkbut">{tr}Admin users{/tr}</a>
@@ -55,7 +55,7 @@
 {section name=user loop=$users}
 <tr>
 <td class="{cycle advance=false}">{$users[user].groupName}
-(<a class="link" href="tiki-assignpermission.php?group={$users[user].groupName|escape:url}">{tr}assign perms to this group{/tr}</a>)</td>
+{if $tiki_p_admin eq 'y'}(<a class="link" href="tiki-assignpermission.php?group={$users[user].groupName|escape:url}">{tr}assign perms to this group{/tr}</a>){/if}</td>
 <td class="{cycle advance=false}">{tr}{$users[user].groupDesc}{/tr}</td>
 <td class="{cycle}">
 {if $users[user].groupName != 'Anonymous'}

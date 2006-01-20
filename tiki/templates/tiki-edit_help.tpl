@@ -1,8 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.40 2005-10-16 14:35:10 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.41 2006-01-20 09:54:57 sylvieg Exp $ *}
 {* Show wiki syntax and plugins help *}
 {* TODO: Add links to add samples to edit form *}
-
-<span class="button2"><a href="#" onclick="javascript:flip('edithelpzone'); return false;" class="linkbut">{tr}wiki help{/tr}</a></span>
 
 <div class="wiki-edithelp"  id='edithelpzone' >
 <div id="wikihelp-tab">

@@ -1,16 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.296 2005-12-19 20:43:15 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.297 2006-01-20 09:54:53 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //xdebug_start_profiling();
-
-/*!
-    \static
-*/
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
@@ -402,6 +398,7 @@ $feature_search_fulltext = 'y';
 $feature_search_show_forbidden_obj = 'n';
 $feature_search_show_forbidden_cat = 'n';
 $feature_sandbox = 'y';
+$feature_wiki_print = 'y';
 $feature_userPreferences = 'n';
 $feature_userVersions = 'y';
 $feature_galleries = 'y';
@@ -737,8 +734,6 @@ $smarty->assign('feature_wiki_notepad',$feature_wiki_notepad);
 */
 $feature_minical = 'n';
 $smarty->assign('feature_minical', $feature_minical);
-$feature_jukebox = 'n';
-$smarty->assign('feature_jukebox', $feature_jukebox);
 
 $feature_notepad = 'n';
 $smarty->assign('feature_notepad', $feature_notepad);
@@ -992,6 +987,7 @@ $smarty->assign('feature_search_fulltext', $feature_search_fulltext);
 $smarty->assign('feature_search_show_forbidden_obj', $feature_search_show_forbidden_obj);
 $smarty->assign('feature_search_show_forbidden_cat', $feature_search_show_forbidden_cat);
 $smarty->assign('feature_sandbox', $feature_sandbox);
+$smarty->assign('feature_wiki_print', $feature_wiki_print);
 $smarty->assign('feature_userPreferences', $feature_userPreferences);
 $smarty->assign('feature_userVersions', $feature_userVersions);
 $smarty->assign('feature_galleries', $feature_galleries);
@@ -1739,7 +1735,7 @@ if ($feature_warn_on_edit == 'y') {
 	        	if ($current_page == 'tiki-editpage' && $tikilib->semaphore_is_set($chkpage, $warn_on_edit_time * 60) && $tikilib->get_semaphore_user($chkpage) != $user) {
 		            $smarty->assign('editpageconflict', 'y');
 		            $editpageconflict = 'y';
-	        	} else {
+			} elseif ($tiki_p_edit == 'y') {
 	        		//Lock the page that is being edited
 		            $_SESSION["edit_lock_$chkpage"] = $tikilib->semaphore_set($chkpage);
 	        	}

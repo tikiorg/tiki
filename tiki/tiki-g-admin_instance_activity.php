@@ -1,7 +1,7 @@
 <?php
 
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_instance_activity.php,v 1.3 2005-05-18 10:58:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_instance_activity.php,v 1.4 2006-01-20 09:54:53 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -46,8 +46,6 @@ $smarty->assign('aid', $_REQUEST['aid']);
 // Get workitems and list the workitems with an option to edit workitems for
 // this instance
 if (isset($_REQUEST['save'])) {
-	echo "caquita13";
-	echo $_REQUEST['owner'];
 	$instanceManager->set_instance_user($_REQUEST['iid'],$_REQUEST['aid'],$_REQUEST['owner']);
 }
 

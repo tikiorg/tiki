@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-page_bar.tpl,v 1.9 2005-05-18 11:03:35 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-page_bar.tpl,v 1.10 2006-01-20 09:54:57 sylvieg Exp $ *}
 
 <div id="page-bar">
 
@@ -54,7 +54,9 @@ class="linkbut">{if $beingEdited eq 'y'}<span class="highlight">{tr}edit{/tr}</s
 <div class="button2"><a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}" class="linkbut">{tr}export{/tr}</a></div>
 {/if}
 
+{if $feature_wiki_print eq 'y'}
 <div class="button2"><a href="tiki-print.php?page={$page|escape:"url"}" class="linkbut">{tr}print{/tr}</a></div>
+{/if}
 
 {if $feature_wiki_pdf eq 'y'}
 <div class="button2"><a href="tiki-config_pdf.php?page={$page|escape:"url"}" class="linkbut">{tr}pdf{/tr}</a></div>

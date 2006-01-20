@@ -13,7 +13,9 @@
 <a title="{tr}3d browser{/tr}" href="javascript:wiki3d_open('{$page|escape}',{$wiki_3d_width}, {$wiki_3d_height})" class="linkbuttop">{tr}3d browser{/tr}</a>
 {/if}
 
+{if $feature_wiki_print eq 'y'}
 <a title="{tr}print{/tr}" href="tiki-print.php?page={$page}" class="linkbuttop">{tr}print{/tr}</a>
+{/if}
 
 {if $feature_wiki_pdf eq 'y'}
 <a title="{tr}create pdf{/tr}" href="tiki-config_pdf.php?page={$page}" class="linkbuttop">{tr}pdf{/tr}</a>

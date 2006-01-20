@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.57 2006-01-05 17:16:38 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.58 2006-01-20 09:54:57 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-calendar.php">{tr}Calendar{/tr}</a></h1>
@@ -169,7 +169,7 @@ firstDay : {$firstDayofWeek}
 <div {if $hrows[$h][hr].calname ne ""}class="Cal{$hrows[$h][hr].type}"{/if} style="clear:both">
 {$hours[$h]}:{$hrows[$h][hr].mins} : {if $hrows[$h][hr].calname eq ""}{$hrows[$h][hr].type} : {/if}
 <a href="{$hrows[$h][hr].url}" class="linkmenu">{$hrows[$h][hr].name}</a>
-{if $hrows[$h][hr].calname ne ""}{$hrows[$h][hr].parsedDescription}{else}{$hrows[$h][hr].description}{/if}{if ($calendar_view_tab eq "y" or $tiki_p_change_events eq "y") and $hrows[$h][hr].calname ne ""}<span  style="float:right;">{if $calendar_view_tab eq "y"}<a href="tiki-calendar.php?calitemId={$hrows[$h][hr].calitemId}&amp;editmode=details"{if $feature_tabs ne 'y'}#details{/if}" title="{tr}details{/tr}"><img src="img/icons/zoom.gif" border="0" width="16" height="16" alt="{tr}zoom{/tr}" /></a>&nbsp;{/if}{if $hrows[$h][hr].modifiable eq "y"}<a href="tiki-calendar.php?calitemId={$hrows[$h][hr].calitemId}&amp;editmode=1{if $feature_tabs ne 'y'}#add{/if}" title="{tr}edit{/tr}"><img src="img/icons/edit.gif" border="0"  width="20" height="16" alt="{tr}edit{/tr}" /></a><a href="tiki-calendar.php?calitemId={$hrows[$h][hr].calitemId}&amp;delete=1"  title="{tr}remove{/tr}" /><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt="{tr}remove{/tr}" /></a>{/if}</span>{/if}
+{if $hrows[$h][hr].calname ne ""}{$hrows[$h][hr].parsedDescription}{else}{$hrows[$h][hr].description}{/if}{if ($calendar_view_tab eq "y" or $tiki_p_change_events eq "y") and $hrows[$h][hr].calname ne ""}<span  style="float:right;">{if $calendar_view_tab eq "y"}<a href="tiki-calendar.php?calitemId={$hrows[$h][hr].calitemId}&amp;editmode=details"{if $feature_tabs ne "y"}#details{/if} title="{tr}details{/tr}"><img src="img/icons/zoom.gif" border="0" width="16" height="16" alt="{tr}zoom{/tr}" /></a>&nbsp;{/if}{if $hrows[$h][hr].modifiable eq "y"}<a href="tiki-calendar.php?calitemId={$hrows[$h][hr].calitemId}&amp;editmode=1{if $feature_tabs ne 'y'}#add{/if}" title="{tr}edit{/tr}"><img src="img/icons/edit.gif" border="0"  width="20" height="16" alt="{tr}edit{/tr}" /></a><a href="tiki-calendar.php?calitemId={$hrows[$h][hr].calitemId}&amp;delete=1"  title="{tr}remove{/tr}" /><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt="{tr}remove{/tr}" /></a>{/if}</span>{/if}
 </div>
 {/section}
 </td></tr>
@@ -286,6 +286,13 @@ class="linkmenu">{$cell[w][d].items[items].name|truncate:$trunc:".."|default:"..
 <h3>{tr}Preview{/tr}</h3>
 <div class="wikitext">{$parsedDescription}</div>
 {/if}
+
+{* 
+   ############################################################
+              ----- FORM BEGIN
+   ############################################################
+*}
+
 <form enctype="multipart/form-data" method="post" action="tiki-calendar.php" id="editcalitem" name="formAddItem" style="display:block;">
 <input type="hidden" name="editmode" value="in">
 {if $tiki_p_change_events and $calitemId}
@@ -489,6 +496,13 @@ timeFormat : {$timeFormat12_24}
 </td></tr>
 </table>
 </form>
+
+{* 
+   ############################################################
+              ----- FORM END
+   ############################################################
+*}
+
 {/if}{/if} {* modifTab *}
 {if $calitemId}
 <a name="details" />

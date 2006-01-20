@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.48 2006-01-18 14:45:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.49 2006-01-20 09:54:53 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -433,6 +433,9 @@ $cat_type = 'image gallery';
 $cat_objid = $_REQUEST["galleryId"];
 include_once ("categorize_list.php");
 include_once ("freetag_list.php");
+
+$defaultRows = 5;
+include_once("textareasize.php");
 
 $section = 'galleries';
 include_once ('tiki-section_options.php');

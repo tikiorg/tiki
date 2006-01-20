@@ -66,7 +66,7 @@ Errors:<br />
   		{if $act_info.isInteractive eq 'y'}
 			{literal}
   			<a class="link" href="javascript:setSomeElement('src','$instance->complete();');">{tr}Complete{/tr}</a><hr/>
-  			<a class="link" href="javascript:setSomeElement('src','if(isset($_REQUEST[\'save\']){\n  $instance->complete();\n}');">{tr}Process form{/tr}</a><hr/>
+  			<a class="link" href="javascript:setSomeElement('src','if(isset($_REQUEST[\'save\'])){\n  $instance->complete();\n}');">{tr}Process form{/tr}</a><hr/>
 			{/literal}
   		{/if}
   		{if $act_info.type eq 'switch'}

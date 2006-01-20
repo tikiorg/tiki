@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-remind_password.php,v 1.25 2005-10-03 17:21:43 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-remind_password.php,v 1.26 2006-01-20 09:54:53 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -23,9 +23,10 @@ $isvalid = false;
 if (isset($_REQUEST["user"])) {
 	// this is a 'new password activation':
 	if (isset($_REQUEST["actpass"])) {
-		$isvalid = $userlib->activate_password($_REQUEST["user"], $_REQUEST["actpass"]);
-		if ($isvalid) {
-			header ("location: $tikiIndex");
+		$oldPass = $userlib->activate_password($_REQUEST["user"], $_REQUEST["actpass"]);
+		if ($oldPass) {
+			header ("location: tiki-change_password.php?user=".$_REQUEST["user"].
+				"&oldpass=".$oldPass);
 			die;
 		}
 		$smarty->assign('msg', tra("Invalid username or activation code. Maybe this code has already been used."));
@@ -63,7 +64,7 @@ if (isset($_REQUEST["remind"])) {
 		}
 
 		$languageEmail = $tikilib->get_user_preference($_REQUEST["username"], "language", $language);
-
+		
 		// Now check if the user should be notified by email
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 		$machine = $tikilib->httpPrefix(). dirname($foo["path"]);

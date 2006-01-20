@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.108 2005-12-15 21:41:44 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.109 2006-01-20 09:54:53 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -178,10 +178,6 @@ if (isset($_REQUEST["page"])) {
 		$admintitle = "Search";//get_strings tra("Search")
 		$description = "Search settings";//get_strings tra("Search settings")
 		include_once ('tiki-admin_include_search.php');
-	} else if ($adminPage == "jukebox") {
-		$admintitle = "Jukebox";//get_strings tra("Jukebox")
-		$description = "Jukebox preferences";//get_strings tra("Jukebox preference")
-		include_once ('tiki-admin_include_jukebox.php');
 	} else if ($adminPage == "score") {
 		$admintitle = "Score";//get_strings tra("Score")
 		$description = "Score settings";//get_strings tra("Score settings")

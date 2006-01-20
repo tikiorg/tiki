@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.56 2005-10-04 10:53:34 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.57 2006-01-20 09:54:53 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -22,7 +22,7 @@ function discardUser($u, $reason) {
 }
 
 function batchImportUsers() {
-	global $userlib, $smarty, $logslib;
+	global $userlib, $smarty, $logslib, $tiki_p_admin, $user;
 
 	$fname = $_FILES['csvlist']['tmp_name'];
 	$fhandle = fopen($fname, "r");
@@ -50,7 +50,10 @@ function batchImportUsers() {
 		die;
 	}
 	$added = 0;
+	$errors = array();
 	$discards = 0;
+	if ($tiki_p_admin != 'y')
+		$userGroups = $userlib->get_user_groups_inclusion($user);
 	foreach ($userrecs as $u) {
 		$exist = false;
 		if (empty($u['login'])) {
@@ -96,24 +99,38 @@ function batchImportUsers() {
 		if ($exist && isset($_REQUEST['overwriteGroup'])) {
 			$userlib->remove_user_from_all_groups($u['login']);
 		}
-		if (@$u['groups']) {
-			$grps = explode(",", $u['groups']);
-			foreach ($grps as $grp) {
-				if ($userlib->group_exists($grp)) {
-					$userlib->assign_user_to_group($u['login'], $grp);
-					$logslib->add_log('perms',sprintf(tra("Assigned %s in group %s"),$u["login"], $grp));
-				} else {
-					$discarded[] = discardUser($u, tra("Unknown group").": ".$grp);
+
+			if (@$u['groups']) {
+				$grps = explode(",", $u['groups']);
+
+				foreach ($grps as $grp) {
+					$grp = preg_replace("/^ *(.*) *$/u", "$1", $grp);
+					if (!$userlib->group_exists($grp)) {
+						$err = tra("Unknown").": $grp";
+						if (!in_array($err, $errors))
+								$errors[] = $err;
+					} elseif ($tiki_p_admin != 'y' &&  !array_key_exists($grp, $userGroups)) {
+						$err = tra("Permission denied").": $grp";
+						if (!in_array($err, $errors))
+								$errors[] = $err;
+					} else {
+						$userlib->assign_user_to_group($u['login'], $grp);
+						$logslib->add_log('perms',sprintf(tra("Assigned %s in group %s"),$u["login"], $grp));
+					}
 				}
 			}
 		}
 		$added++;
 	}
 	$smarty->assign('added', $added);
-	if ($discards > 0) 
-		$smarty->assign('discarded', $discards);
-	if (count($discarded) > 0)
-		$smarty->assign('discardlist', $discarded);
+	if (@is_array($discarded)) {
+		$smarty->assign('discarded', count($discarded));
+	}
+	@$smarty->assign('discardlist', $discarded);
+	if (count($errors)) {
+		array_unique($errors);
+		$smarty->assign_by_ref('errors', $errors);
+	}
 }
 
 $cookietab = "1";
@@ -197,8 +214,11 @@ if (isset($_REQUEST["newuser"])) {
 		$offset = 0;
 		$initial = '';
 		$find = '';
-
-		$groups = $userlib->get_groups($offset, $numrows, $sort_mode, $find, $initial);
+		if ($tiki_p_admin != 'y')
+			$userGroups = $userlib->get_user_groups_inclusion($user);
+		else
+			$userGroups = '';
+		$groups = $userlib->get_groups($offset, $numrows, $sort_mode, $find, $initial, 'n', $userGroups);
 		$smarty->assign('groups', $groups['data']);
 	} elseif ($_REQUEST['submit_mult'] == 'set_default_groups') {
 		$set_default_groups_mode = TRUE;
@@ -208,8 +228,11 @@ if (isset($_REQUEST["newuser"])) {
 		$offset = 0;
 		$initial = '';
 		$find = '';
-
-		$groups = $userlib->get_groups($offset, $numrows, $sort_mode, $find, $initial);
+		if ($tiki_p_admin != 'y')
+			$userGroups = $userlib->get_user_groups_inclusion($user);
+		else
+			$userGroups = '';
+		$groups = $userlib->get_groups($offset, $numrows, $sort_mode, $find, $initial, 'n', $userGroups);
 		$smarty->assign('groups', $groups['data']);
 	}
 	if (isset($tikifeedback[0]['msg'])) {
@@ -217,10 +240,14 @@ if (isset($_REQUEST["newuser"])) {
 	}					
 } elseif (!empty($_REQUEST['group_management']) && $_REQUEST['group_management'] == 'add') {
 	if (!empty($_REQUEST["checked_groups"]) && !empty($_REQUEST["checked"])) {
+		if ($tiki_p_admin != 'y')
+			$userGroups = $userlib->get_user_groups_inclusion($user);
 		foreach ($_REQUEST['checked'] as $user) {
 			foreach ($_REQUEST["checked_groups"] as $group) {
-				$userlib->assign_user_to_group($user, $group);
-				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s <b>%s</b> assigned to %s <b>%s</b>."),tra("user"),$user,tra("group"),$group));
+				if ($tiki_p_admin == 'y' || array_key_exists($group, $userGroups)) {
+					$userlib->assign_user_to_group($user, $group);
+					$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s <b>%s</b> assigned to %s <b>%s</b>."),tra("user"),$user,tra("group"),$group));
+				}
 			}
 		}
 	}

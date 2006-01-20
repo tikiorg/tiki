@@ -45,6 +45,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {elseif $categ_info.name ne ''} : {$categ_info.name}
 {elseif $userinfo.login ne ''} : {$userinfo.login}
 {elseif $tracker_item_main_value ne ''} : {$tracker_item_main_value}
+{elseif $tracker_info.name ne ''} : {$tracker_info.name}
 {/if}
 {/if}
 </title>
@@ -107,7 +108,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 <link rel="alternate" type="application/xml" title="{tr}RSS Image Galleries{/tr}" href="tiki-image_galleries_rss.php?ver={$rssfeed_default_version}" />
 {/if}
 {if $feature_file_galleries eq 'y' and $rss_file_galleries eq 'y'}
-<link rel="alternate" type="application/xml" title="{tr}RSS File Galleries{/tr}" href="tiki-file_galleries_rss.php?{$rssfeed_default_version}" />
+<link rel="alternate" type="application/xml" title="{tr}RSS File Galleries{/tr}" href="tiki-file_galleries_rss.php?ver={$rssfeed_default_version}" />
 {/if}
 {if $feature_forums eq 'y' and $rss_forums eq 'y'}
 <link rel="alternate" type="application/xml" title="{tr}RSS Forums{/tr}" href="tiki-forums_rss.php?ver={$rssfeed_default_version}" />

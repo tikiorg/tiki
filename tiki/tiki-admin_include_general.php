@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.45 2005-10-03 17:21:43 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.46 2006-01-20 09:54:53 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -52,8 +52,8 @@ elseif (isset($_REQUEST["prefs"])) {
         "site_crumb_seper",
         "site_nav_seper",
         "contact_user",
-        "favicon",
-        "favicon_type",
+        "site_favicon",
+        "site_favicon_type",
         "feature_server_name",
         "maxRecords",
         "sender_email",
@@ -182,8 +182,8 @@ $smarty->assign_by_ref("timezone_server", $timezone_server);
 // Set defaults
 $smarty->assign("language", $tikilib->get_preference("language", "en"));
 $smarty->assign("feature_detect_language", $tikilib->get_preference("feature_detect_language", 'n'));
-$smarty->assign("favicon", $tikilib->get_preference("favicon", 'favicon.png'));
-$smarty->assign("favicon_type", $tikilib->get_preference("favicon_type", 'image/png'));
+$smarty->assign("site_favicon", $tikilib->get_preference("site_favicon", 'favicon.png'));
+$smarty->assign("site_favicon_type", $tikilib->get_preference("site_favicon_type", 'image/png'));
 $smarty->assign("lang_use_db", $tikilib->get_preference("lang_use_db", 'n'));
 $smarty->assign("useUrlIndex", $tikilib->get_preference("useUrlIndex", 'n'));
 $smarty->assign("urlIndex", $tikilib->get_preference("urlIndex", ''));

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki-show_page.tpl,v 1.54 2005-12-15 21:02:52 lfagundes Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki-show_page.tpl,v 1.55 2006-01-20 09:54:57 sylvieg Exp $ *}
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
     {$page_info.page_alias}
@@ -60,7 +60,9 @@
 <a title="{tr}refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1">{html_image file='img/icons/ico_redo.gif' border='0' alt='{tr}refresh{/tr}'}</a>
 {/if}
 
+{if $feature_wiki_print eq 'y'}
 <a title="{tr}print{/tr}" href="tiki-print.php?page={$page|escape:"url"}">{html_image file='img/icons/ico_print.gif' border='0' alt='{tr}print{/tr}'}</a>
+{/if}
 
 {if $feature_wiki_pdf eq 'y'}
 <a title="{tr}create pdf{/tr}" href="tiki-config_pdf.php?page={$page|escape:"url"}">{html_image file='img/icons/ico_pdf.gif' border='0' alt='{tr}pdf{/tr}'}</a>

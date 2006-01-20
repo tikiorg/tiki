@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_templates.php,v 1.17 2005-05-18 10:58:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_templates.php,v 1.18 2006-01-20 09:54:53 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -42,12 +42,12 @@ if (isset($_REQUEST["template"])) {
 
 if (isset($_REQUEST["save"])) {
 	check_ticket('edit-templates');
-  if (isset($tikidomain) and is_file($smarty->template_dir.'/'.$tikidomain.'/'.$style_base.'/'.$_REQUEST["template"])) {
-    $fp = fopen($smarty->template_dir.'/'.$tikidomain.'/'.$style_base.'/'.$_REQUEST["template"], "w");
-  } elseif (isset($tikidomain) and is_dir($smarty->template_dir.'/'.$tikidomain)) {
+  if (!empty($tikidomain) and is_file($smarty->template_dir.'/'.$tikidomain.'/styles/'.$style_base.'/'.$_REQUEST["template"])) {
+    $fp = fopen($smarty->template_dir.'/'.$tikidomain.'/styles/'.$style_base.'/'.$_REQUEST["template"], "w");
+  } elseif (!empty($tikidomain) and is_dir($smarty->template_dir.'/'.$tikidomain)) {
     $fp = fopen($smarty->template_dir.'/'.$tikidomain.'/'.$_REQUEST["template"], "w");
-  } elseif (isset($tikidomain) and is_file($smarty->template_dir.'/'.$style_base.'/'.$_REQUEST["template"])) {
-		$fp = fopen($smarty->template_dir.'/'.$style_base.'/'.$_REQUEST["template"], "w");
+  } elseif (is_file($smarty->template_dir.'/styles/'.$style_base.'/'.$_REQUEST["template"])) {
+		$fp = fopen($smarty->template_dir.'/styles/'.$style_base.'/'.$_REQUEST["template"], "w");
   } else {
     $fp = fopen($smarty->template_dir.$_REQUEST["template"], "w");
   }
@@ -63,15 +63,16 @@ if (isset($_REQUEST["save"])) {
 
 if (isset($_REQUEST["template"])) {
 	$mode = 'editing';
-	if (isset($tikidomain) and is_file($smarty->template_dir.'/'.$tikidomain.'/'.$style_base.'/'.$_REQUEST["template"])) {
-		$file = $smarty->template_dir.'/'.$tikidomain.'/'.$style_base.'/'.$_REQUEST["template"];
-	} elseif (isset($tikidomain) and is_file($smarty->template_dir.'/'.$tikidomain.'/'.$_REQUEST["template"])) {
+	if (!empty($tikidomain) and is_file($smarty->template_dir.'/'.$tikidomain.'/styles/'.$style_base.'/'.$_REQUEST["template"])) {
+		$file = $smarty->template_dir.'/'.$tikidomain.'/styles/'.$style_base.'/'.$_REQUEST["template"];
+	} elseif (!empty($tikidomain) and is_file($smarty->template_dir.'/'.$tikidomain.'/'.$_REQUEST["template"])) {
 		$file = $smarty->template_dir.'/'.$tikidomain.'/'.$_REQUEST["template"];
-	} elseif (is_file($smarty->template_dir.'/'.$style_base.'/'.$_REQUEST["template"])) {
-		$file = $smarty->template_dir.'/'.$style_base.'/'.$_REQUEST["template"];
+	} elseif (is_file($smarty->template_dir.'/styles/'.$style_base.'/'.$_REQUEST["template"])) {
+		$file = $smarty->template_dir.'/styles/'.$style_base.'/'.$_REQUEST["template"];
 	} else {
 		$file = $smarty->template_dir.$_REQUEST["template"];
 	}
+echo $smarty->template_dir.'/'.$style_base.'/'.$_REQUEST["template"];
 	$fp = fopen($file,'r');
 	if (!$fp) {
 		$smarty->assign('msg', tra("You do not have permission to read the template"));
