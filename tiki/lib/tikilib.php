@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.628 2006-01-20 09:54:53 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.629 2006-01-20 11:53:01 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3649,7 +3649,7 @@ function add_pageview() {
 	return true;
     }
 
-    function create_page($name, $hits, $data, $lastModif, $comment, $user = 'admin', $ip = '0.0.0.0', $description = '', $lang='', $is_html = false) {
+    function create_page($name, $hits, $data, $lastModif, $comment, $user = 'admin', $ip = '0.0.0.0', $description = '', $lang='', $is_html = false, $lock_it='') {
 	global $smarty;
 	global $dbTiki;
 	global $sender_email;
@@ -3676,14 +3676,26 @@ function add_pageview() {
 	    return false;
 
 	$html=$is_html?1:0;
-	if ($lang) {	// not sure it is necessary
-		$query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`,`lang`,`is_html`,`created`) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		$result = $this->query($query, array($name, (int)$hits, $data, (int)$lastModif, $comment, 1, $user, $ip, $description, $user, (int)strlen($data), $lang, $html, mktime()));
+	$mid = ''; $midvar = '';
+	$bindvars = array($name, (int)$hits, $data, (int)$lastModif, $comment, 1, $user, $ip, $description, $user, (int)strlen($data), $html, mktime());
+	if ($lang) {
+		$mid .= ',`lang`';
+		$midvar .= ',?';
+		$bindvars[] = $lang;
 	}
-	else  {
-		$query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`,`is_html`,`created`) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		$result = $this->query($query, array($name, (int)$hits, $data, (int)$lastModif, $comment, 1, $user, $ip, $description, $user, (int)strlen($data), $html,mktime()));
-	}
+	if ($lock_it == 'y' || $lock_it == 'on') {
+		$mid .= ',`flag`,`lockedby`';
+		$midvar .= ',?,?';
+		$bindvars[] = 'L';
+		$bindvars[] = $user;
+	} else if ($lock_it == 'n') {
+		$mid .= ',`flag`,`lockedby`';
+		$midvar .= ',?,?';
+		$bindvars[] = '';
+		$bindvars[] = '';
+	}		
+	$query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`,`is_html`,`created`$mid) values(?,?,?,?,?,?,?,?,?,?,?,?,? $midvar)";
+	$result = $this->query($query, $bindvars);
 
 	$this->clear_links($name);
 
@@ -5659,7 +5671,7 @@ if (!$simple_wiki) {
 	$this->query($query, array(0,$page) );
     }
 
-    function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $description = '', $minor = false, $lang='', $is_html=false) {
+    function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $description = '', $minor = false, $lang='', $is_html=false, $lock_it='') {
 	global $smarty;
 
 	global $dbTiki;
@@ -5700,13 +5712,25 @@ if (!$simple_wiki) {
 	$version = $old_version + 1;
 
 	$html=$is_html?1:0;
-	if ($lang) {// not sure it is necessary
-		$query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `page_size`=?, `lang`=?, `is_html`=?  where `pageName`=?";
-		$result = $this->query($query,array($description,$edit_data,$edit_comment,(int) $t,$version,$edit_user,$edit_ip,(int)strlen($data),$lang,$html,$pageName));
-	} else {
-		$query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `page_size`=?, `is_html`=? where `pageName`=?";
-		$result = $this->query($query,array($description,$edit_data,$edit_comment,(int) $t,$version,$edit_user,$edit_ip,(int)strlen($data),$html,$pageName));
+	$mid = '';
+	$bindvars = array($description,$edit_data,$edit_comment,(int) $t,$version,$edit_user,$edit_ip,(int)strlen($data),$html);
+	if ($lang) {
+		$mid .= ' `lang`=? ';
+		$bindvars[] = $lang;
 	}
+	if ($lock_it == 'y' || $lock_it == 'on') {
+		$bindvars[] = 'L';
+		$bindvars[] = $user;
+	} else if ($lock_it == 'n') {
+		$mid .= ', `flag`=?, `lockedby`=? ';
+		$bindvars[] = '';
+		$bindvars[] = '';
+	}		
+
+
+	$bindvars[] = $pageName;
+	$query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `page_size`=?, `is_html`=?  $mid where `pageName`=?";
+	$result = $this->query($query,$bindvars);
 
 	// Parse edit_data updating the list of links from this page
 	$this->clear_links($pageName);

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.71 2006-01-16 12:31:28 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.72 2006-01-20 11:53:01 sylvieg Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -279,6 +279,9 @@ or use
 {if $wikiSubmitNotice neq ""}
 <tr class="formcolor"><td>{tr}Important{/tr}:</td><td><b>{tr}{$wikiSubmitNotice}{/tr}</b></td>
 {/if}
+{/if}
+{if $feature_wiki_usrlock eq 'y' && ($tiki_p_lock eq 'y' || $tiki_p_admin_wiki eq 'y')}
+<tr class="formcolor"><td>{tr}Lock this page{/tr}</td><td><input type="checkbox" name="lock_it" {if $lock_it eq 'y'}checked="checked"{/if}/></td></tr>
 {/if}
 {if $page|lower neq 'sandbox' or $tiki_p_admin eq 'y'}
 <tr class="formcolor"><td>&nbsp;</td><td>
