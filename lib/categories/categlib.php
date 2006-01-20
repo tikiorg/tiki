@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.74 2006-01-16 12:31:29 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.75 2006-01-20 09:54:54 sylvieg Exp $
  *
  * \brief Categories support class
  *
@@ -455,7 +455,7 @@ class CategLib extends ObjectLib {
 										// break out of one FOR loop and one FOREACH loop
 									}
 								} else { /* no special perm on cat  so general perm: (to see the categ panel as anonymous */ 
-									$return_perms["$perm"] = 'y';
+									$return_perms[$perm] = $GLOBALS[$perm];
 								}
 
 							}
@@ -674,9 +674,10 @@ class CategLib extends ObjectLib {
 	// FUNCTIONS TO CATEGORIZE SPECIFIC OBJECTS END ////
 	function get_child_categories($categId) {
 		global $cachelib;
+		if (!$categId) $categId = "0"; // avoid wrong cache
 		if (!$cachelib->isCached("childcategs$categId")) {
 			$ret = array();
-			$query = "select * from `tiki_categories` where `parentId`=?";
+			$query = "select * from `tiki_categories` where `parentId`=? order by name";
 			$result = $this->query($query,array($categId));
 			while ($res = $result->fetchRow()) {
 				$id = $res["categId"];

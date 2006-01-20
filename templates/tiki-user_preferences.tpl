@@ -278,11 +278,11 @@
   <td class="form">{tr}Send me an email for messages with priority equal or greater than{/tr}:</td>
   <td class="form">
     <select name="minPrio">
-      <option value="1" {if $minPrio eq 1}selected="selected"{/if}>1</option>
-      <option value="2" {if $minPrio eq 2}selected="selected"{/if}>2</option>
-      <option value="3" {if $minPrio eq 3}selected="selected"{/if}>3</option>
-      <option value="4" {if $minPrio eq 4}selected="selected"{/if}>4</option>
-      <option value="5" {if $minPrio eq 5}selected="selected"{/if}>5</option>
+      <option value="1" {if $minPrio eq 1}selected="selected"{/if}>1 -{tr}Lowest{/tr}-</option>
+      <option value="2" {if $minPrio eq 2}selected="selected"{/if}>2 -{tr}Low{/tr}-</option>
+      <option value="3" {if $minPrio eq 3}selected="selected"{/if}>3 -{tr}Normal{/tr}-</option>
+      <option value="4" {if $minPrio eq 4}selected="selected"{/if}>4 -{tr}High{/tr}-</option>
+      <option value="5" {if $minPrio eq 5}selected="selected"{/if}>5 -{tr}Very High{/tr}-</option>
       <option value="6" {if $minPrio eq 6}selected="selected"{/if}>{tr}none{/tr}</option>
     </select>
   </td>

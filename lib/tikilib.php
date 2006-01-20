@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.627 2006-01-05 17:16:37 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.628 2006-01-20 09:54:53 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1038,6 +1038,7 @@ class TikiLib extends TikiDB {
 	$ret["files"] = $this->getOne("select count(*) from `tiki_files` where `created`>?",array((int)$last));
 	$ret["comments"] = $this->getOne("select count(*) from `tiki_comments` where `commentDate`>?",array((int)$last));
 	$ret["users"] = $this->getOne("select count(*) from `users_users` where `registrationDate`>?",array((int)$last));
+	$ret["trackers"] = $this->getOne("select count(*) from `tiki_tracker_items` where `lastModif`>?",array((int)$last));
 	return $ret;
     }
 
@@ -2406,7 +2407,8 @@ function add_pageview() {
 	    	from `tiki_articles`, `tiki_article_types` left join `users_users` on `tiki_articles`.`author` = `users_users`.`login`
 	    	$mid $mid2 order by ".$this->convert_sortmode($sort_mode);
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
-	$cant = 0;
+	$query_cant = "select count(*) from  `tiki_articles`, `tiki_article_types` left join `users_users` on `tiki_articles`.`author` = `users_users`.`login` $mid $mid2";
+	$cant = $this->getOne($query_cant,$bindvars);
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
@@ -2418,7 +2420,6 @@ function add_pageview() {
 		$add = $this->user_has_perm_on_object($user, $res['articleId'],'article', 'tiki_p_read_article');
 	    // no need to do all of the following if we are not adding this article to the array
 	    if ($add) {
-		    ++$cant;
 		    $res["entrating"] = floor($res["rating"]);
 		    if (empty($res["body"])) {
 				$res["isEmpty"] = 'y';
@@ -2505,6 +2506,9 @@ function add_pageview() {
     }
 
     function get_article($articleId) {
+	global $user;
+	if (!$this->user_has_perm_on_object($user, $articleId, 'article','tiki_p_read_article'))
+		return false;
 	$mid = " where `tiki_articles`.`type` = `tiki_article_types`.`type` ";
 	$query = "select `tiki_articles`.*,
 	`users_users`.`avatarLibName`,

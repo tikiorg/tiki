@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.52 2005-10-26 15:11:03 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.53 2006-01-20 09:54:53 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -385,7 +385,7 @@ if (isset($_REQUEST["save"])) {
 	$cat_href = "tiki-read_article.php?articleId=" . $cat_objid;
 	include_once ("categorize.php");
 
-	header ("location: tiki-list_articles.php");
+	header ("location: tiki-read_article.php?articleId=$artid");
 }
 
 // Set date to today before it's too late

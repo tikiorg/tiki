@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.46 2005-10-16 14:35:10 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.47 2006-01-20 09:54:57 sylvieg Exp $ *}
 
 <script type="text/javascript">
 {literal}
@@ -374,16 +374,16 @@
 				</tr>
 				<tr>
 				<tr>
-					<td class="form"><label for="favicon">{tr}Favicon icon file name:{/tr}</label></td>
-					<td><input type="text" name="favicon" id="favicon" value="{$favicon}" size="12" maxlength="32" /></td>
+					<td class="form"><label for="site_favicon">{tr}Favicon icon file name:{/tr}</label></td>
+					<td><input type="text" name="site_favicon" id="site_favicon" value="{$site_favicon}" size="12" maxlength="32" /></td>
 				</tr>
 				<tr>
-					<td class="form"><label for="favicon_type">{tr}Favicon icon MIME type:{/tr}</label></td>
+					<td class="form"><label for="site_favicon_type">{tr}Favicon icon MIME type:{/tr}</label></td>
 					<td>
-						<select name="favicon_type" id="favicon_type">
-							<option value="image/png" {if $favicon_type eq 'image/png'}selected="selected"{/if}>{tr}image/png{/tr}</option>
-							<option value="image/bmp" {if $favicon_type eq 'image/bmp'}selected="selected"{/if}>{tr}image/bmp{/tr}</option>
-							<option value="image/x-icon" {if $favicon_type eq 'image/x-icon'}selected="selected"{/if}>{tr}image/x-icon{/tr}</option>
+						<select name="site_favicon_type" id="site_favicon_type">
+							<option value="image/png" {if $site_favicon_type eq 'image/png'}selected="selected"{/if}>{tr}image/png{/tr}</option>
+							<option value="image/bmp" {if $site_favicon_type eq 'image/bmp'}selected="selected"{/if}>{tr}image/bmp{/tr}</option>
+							<option value="image/x-icon" {if $site_favicon_type eq 'image/x-icon'}selected="selected"{/if}>{tr}image/x-icon{/tr}</option>
 						</select>
 					</td>
 				</tr>

@@ -20,6 +20,7 @@ class BaseActivity extends Base {
   var $pId;
   var $activityId;
   var $type;
+  var $expirationTime = 0;
   
   function setDb($db)
   {

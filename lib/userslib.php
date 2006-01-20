@@ -959,30 +959,36 @@ function get_included_groups($group) {
 	$result = $this->query($query, array($userid));
     }
 
-    function get_groups($offset = 0, $maxRecords = -1, $sort_mode = 'groupName_desc', $find = '', $initial = '', $details="y") {
+    function get_groups($offset = 0, $maxRecords = -1, $sort_mode = 'groupName_desc', $find = '', $initial = '', $details="y", $inGroups='') {
 
 	$mid = "";
-	$mmid = "";
 	$bindvars = array();
-	$mbindvars = array();
 	if ($find) {
 	    $mid = " where `groupName` like ?";
 	    $bindvars[] = "%" . $find . "%";
-			$mmid = $mid;
-			$mbindvars = $bindvars;
 	}
 
 	if ($initial) {
 	    $mid = " where `groupName` like ?";
 	    $bindvars = array($initial . "%");
-			$mmid = $mid;
-			$mbindvars = $bindvars;
+	}
+	if ($inGroups) {
+		$mid = $mid? ' and ': ' where ';
+		$mid .= '`groupName` in (';
+		$cpt = 0;
+		foreach ($inGroups as $grp=>$value) {
+			if ($cpt++)
+				$mid .= ',';
+			$mid .= '?';
+			$bindvars[] = $grp;
+		}
+		$mid .= ')';
 	}
 
 	$query = "select `groupName` , `groupDesc`, `registrationChoice` from `users_groups` $mid order by ".$this->convert_sortmode($sort_mode);
-	$query_cant = "select count(*) from `users_groups` $mmid";
+	$query_cant = "select count(*) from `users_groups` $mid";
 	$result = $this->query($query, $bindvars, $maxRecords, $offset);
-	$cant = $this->getOne($query_cant, $mbindvars);
+	$cant = $this->getOne($query_cant, $bindvars);
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
@@ -1730,6 +1736,11 @@ function get_included_groups($group) {
     }
 
     function change_user_email($user, $email, $pass) {
+    // Need to change the email-address for notifications, too
+    include_once('lib/notifications/notificationlib.php');
+    $oldMail = $this->get_user_email($user);
+    $notificationlib->update_mail_address($oldMail, $email);
+    
 	$query = "update `users_users` set `email`=? where " . $this->convert_binary(). " `login`=?";
 
 	$result = $this->query($query, array(
@@ -1830,9 +1841,9 @@ function get_included_groups($group) {
 		if (($pass <> '') && ($actpass == md5($pass))) {
 			$hash = md5($user . $pass);
 			$now = date("U");
-			$query = "update `users_users` set `password`=?, `hash`=?, `provpass`=?, `pass_due`=? where " . $this->convert_binary() . " `login`=?";
-			$result = $this->query($query, array("", $hash, "", (int)$now, $user));
-			return true;
+			$query = "update `users_users` set `password`=?, `hash`=?, `pass_due`=? where " . $this->convert_binary() . " `login`=?";
+			$result = $this->query($query, array("", $hash, (int)$now, $user));
+			return $pass;
 		}
 		return false;
     }
@@ -1841,10 +1852,12 @@ function get_included_groups($group) {
 	global $pass_due;
 
 	global $feature_clear_passwords;
+	/*anybody know what this is for? thenano 2006-01-18
 	$query = "select `email` from `users_users` where `login` = ?";
 	$email = $this->getOne($query, array($user));
 	$email=trim($email);
 	//$hash = md5($user . $pass . $email);
+	**********/
 	$hash = md5($user . $pass);
 	$now = date("U");
 	$new_pass_due = $now + (60 * 60 * 24 * $pass_due);
@@ -1853,11 +1866,12 @@ function get_included_groups($group) {
 	    $pass = '';
 	}
 
-	$query = "update `users_users` set `hash`=? ,`password`=? ,`pass_due`=? where " . $this->convert_binary(). " `login`=?";
+	$query = "update `users_users` set `hash`=? ,`password`=? ,`pass_due`=?, `provpass`=? where " . $this->convert_binary(). " `login`=?";
 	$result = $this->query($query, array(
 		    $hash,
 		    $pass,
 		    $new_pass_due,
+		    "",
 		    $user
 		    ));
 			return true;

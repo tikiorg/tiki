@@ -333,8 +333,44 @@ function since_last_visit_new($user) {
       $count++;
   }
   $ret["items"]["users"]["count"] = $count;
-  
+
+  if ($tikilib->get_preference("feature_trackers") == 'y') {    
+    $ret["items"]["trackers"]["label"] = tra("new tracker items");
+    $ret["items"]["trackers"]["cname"] = "slvn_trackers_menu";
+
+    $query = "select `itemId`, `trackerId`, `created`, `lastModif`  from `tiki_tracker_items` where `lastModif`>? order by `lastModif` desc";
+    $result = $tikilib->query($query, array((int)$last));
+
+    $count = 0;
+    global $cachelib;
+    require_once('lib/cache/cachelib.php');
+    while ($res = $result->fetchRow())
+    {
+        if ($userlib->user_has_perm_on_object($user,$res['trackerId'], 'trackers', 'tiki_p_view_trackers')) {
+           $ret["items"]["trackers"]["list"][$count]["href"]  = "tiki-view_tracker_item.php?itemId=" . $res["itemId"];
+           $ret["items"]["trackers"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["lastModif"]);
+	   
+	   //routine to verify field in tracker that should appear as label
+	   $cacheKey = 'trackerItemLabel'.$res['itemId'];
+	   if (!$cachelib->isCached($cacheKey)) {
+	       $query = "select `fieldId` from `tiki_tracker_fields` where `isMain` = ? and `trackerId` = ? order by `position`";
+	       $fieldId = $tikilib->getOne($query, array('y',$res['trackerId']));
+	       $query = "select `value` from `tiki_tracker_item_fields` where `fieldId` = ? and `itemId` = ?";
+	       $label = $tikilib->getOne($query, array($fieldId,$res['itemId']));
+
+	       $cachelib->cacheItem($cacheKey, $label);
+	   } else {
+	       $label = $cachelib->getCached($cacheKey);
+	   }
+	   $ret["items"]["trackers"]["list"][$count]["label"] = $label;
+           $count++;
+        }
+    }
+    $ret["items"]["trackers"]["count"] = $count;
+  }
+
   return $ret;
+
 }
 }
    

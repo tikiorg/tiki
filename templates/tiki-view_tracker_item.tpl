@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker_item.tpl,v 1.92 2006-01-06 14:56:53 sylvieg Exp $ *}
+{* $Id: tiki-view_tracker_item.tpl,v 1.93 2006-01-20 09:54:57 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -209,7 +209,7 @@
 
 {elseif $cur_field.type eq 'i'}
 {if $cur_field.value ne ''}
-<img src="{$cur_field.value}" alt="n/a" width="{$cur_field.options_array[2]}" height="{$cur_field.options_array[3]}" >
+<img src="{$cur_field.value}" alt="" {if $cur_field.options_array[2]} width="{$cur_field.options_array[2]}"{/if}{if $cur_field.options_array[3]} height="{$cur_field.options_array[3]}"{/if} />
 {else}
 <img border="0" src="img/icons/na_pict.gif" alt="n/a" />
 {/if}
@@ -447,7 +447,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 <table width="100%"><tr>{cycle name="2_$fca" values=",</tr><tr>" advance=false print=false}
 {foreach key=ku item=iu from=$cur_field.$fca}
 {assign var=fcat value=$iu.categId }
-<td width="50%" nowrap="nowrap"><input type="checkbox" name="ins_cat_{$fca}[]" value="{$fcat}" {if $cur_field.cat.$fcat eq 'y'}checked="checked"{/if}/>{$iu.name}</td>
+<td width="50%" nowrap="nowrap"><input type="checkbox" name="ins_cat_{$cur_field.fieldId}[]" value="{$fcat}" {if $cur_field.cat.$fcat eq 'y'}checked="checked"{/if}/>{$iu.name}</td>
 {cycle name="2_$fca"}
 {/foreach}
 </table>

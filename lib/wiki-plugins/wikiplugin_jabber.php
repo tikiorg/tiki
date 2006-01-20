@@ -14,7 +14,7 @@
 
 */
 function wikiplugin_jabber($data,$params) {
-  global $tikilib;
+  global $userlib;
   global $user;
   extract($params,EXTR_SKIP);
 

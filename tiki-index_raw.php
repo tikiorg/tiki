@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index_raw.php,v 1.21 2005-05-18 10:58:57 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index_raw.php,v 1.22 2006-01-20 09:54:53 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,15 +34,11 @@ if (!isset($_SESSION["thedate"])) {
 
 // Get the page from the request var or default it to HomePage
 if (!isset($_REQUEST["page"])) {
-	$_REQUEST["page"] = $wikiHomePage;
-
-	$page = $wikiHomePage;
-	$smarty->assign('page', $wikiHomePage);
-} else {
-	$page = $_REQUEST["page"];
-
-	$smarty->assign_by_ref('page', $_REQUEST["page"]);
+	$_REQUEST["page"] = $wikilib->get_default_wiki_page();
 }
+$page = $_REQUEST['page'];
+$smarty->assign('page', $page);
+
 
 require_once ('tiki-pagesetup.php');
 

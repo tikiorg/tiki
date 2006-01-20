@@ -116,6 +116,71 @@ class Comments extends TikiLib {
 	return $this->getOne("select count(*) from `tiki_forum_reads` where `user`=? and `threadId`=?",array($user,$threadId));
     }
 
+    function add_thread_attachment( $forum_info, $threadId, $fp = '', $data = '', $name, $type, $size )
+    {
+	global $smarty;
+
+	// Deal with attachment
+	if( $forum_info['att'] == 'att_all'
+		    || ($forum_info['att'] == 'att_admin' && $tiki_p_admin_forum == 'y')
+		    || ($forum_info['att'] == 'att_perm' && $tiki_p_forum_attach == 'y') )
+	{
+	print "In if.\n";
+
+	    $fhash = '';
+
+	    if ($forum_info['att_store'] == 'dir') {
+		$fhash = md5(uniqid('.'));
+		// Just in case the directory doesn't have the trailing slash
+		if (substr($forum_info['att_store_dir'], strlen($forum_info['att_store_dir']) - 1, 1) == '\\') {
+		    $forum_info['att_store_dir'] = substr($forum_info['att_store_dir'],
+			    0, strlen($forum_info['att_store_dir']) - 1). '/';
+		} elseif (
+			substr($forum_info['att_store_dir'], strlen($forum_info['att_store_dir']) - 1, 1) != '/') {
+		    $forum_info['att_store_dir'] .= '/';
+		}
+
+		@$fw = fopen($forum_info['att_store_dir'] . $fhash, "wb");
+		if (!$fw) {
+		    $smarty->assign('msg', tra('Cannot write to this file: '). $forum_info['att_store_dir'] . $fhash);
+		    $smarty->display("error.tpl");
+		    die;
+		}
+	    }
+	    if( $fp )
+	    {
+		while (!feof($fp)) {
+		    if ($forum_info['att_store'] == 'db') {
+			$data .= fread($fp, 8192 * 16);
+		    } else {
+			$data = fread($fp, 8192 * 16);
+			fwrite($fw, $data);
+		    }
+		}
+		fclose ($fp);
+	    } else {
+		fwrite($fw, $data);
+	    }
+
+	    if ($forum_info['att_store'] == 'dir') {
+		fclose ($fw);
+		$data = '';
+	    }
+
+	    if ($size > $forum_info['att_max_size']) {
+		$smarty->assign('msg', tra('Cannot upload this file maximum upload size exceeded'));
+		$smarty->display("error.tpl");
+		die;
+	    }
+
+	    return $this->attach_file($threadId, 0, $name, $type, $size, $data,
+		    $fhash, $forum_info['att_store_dir'], $_REQUEST['forumId']);
+	/* attachment */
+	} else {
+	    return false;
+	}
+    }
+
     function attach_file($threadId, $qId, $name, $type, $size, $data, $fhash, $dir, $forumId) {
 	$now = time();
 
@@ -404,6 +469,29 @@ class Comments extends TikiLib {
 		    $message_id, $in_reply_to);
 
 	    $this->register_forum_post($forumId,$parentId);
+
+	    // Process attachments
+	    if( count( $output['parts'] ) > 1 )
+	    {
+		foreach( $output['parts'] as $part )
+		{
+		    if( $part['disposition'] == "attachment" )
+		    {
+			if( strlen( $part['d_parameters']['filename'] ) > 0 )
+			{
+			    $part_name = $part['d_parameters']['filename'];
+			} else {
+			    $part_name = "Unnamed File";
+			}
+
+			$forum_info = $this->get_forum( $forumId );
+			$this->add_thread_attachment(
+				$forum_info, $threadid, '', $part['body'],
+				$part_name, $part['type'],
+				strlen( $part['body'] ) );
+		    }
+		}
+	    }
 
 	    // Deal with mail notifications.
 	    if( array_key_exists( 'outbound_mails_reply_link', $info )

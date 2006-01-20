@@ -166,6 +166,7 @@ class GUI extends Base {
     
     $query = "select distinct(gi.instanceId),                     
                      gi.started,
+					 gi.name as iname,
                      gi.owner,
                      gia.user,
                      gia.started as iastarted,	             
@@ -173,7 +174,7 @@ class GUI extends Base {
                      gia.status as actstatus,
                      ga.name,
                      ga.type,
-	             ga.expirationTime as exptime,
+					 ga.expirationTime as exptime,
                      gp.name as procname, 
                      ga.isInteractive,
                      ga.isAutoRouted,

@@ -475,6 +475,7 @@ class WikiLib extends TikiLib {
 
     // Like pages are pages that share a word in common with the current page
     function get_like_pages($page) {
+	global $user, $tikilib;
 	preg_match_all("/([A-Z])([a-z]+)/", $page, $words);
 
 	// Add support to ((x)) in either strict or full modes
@@ -493,7 +494,8 @@ class WikiLib extends TikiLib {
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
-	    $ret[] = $res["pageName"];
+		if ($tikilib->user_has_perm_on_object($user, $page, 'wiki page', 'tiki_p_view'))
+	    		$ret[] = $res["pageName"];
 	}
 
 	return $ret;
@@ -541,14 +543,16 @@ class WikiLib extends TikiLib {
 
     // Returns backlinks for a given page
     function get_backlinks($page) {
+	global $user;
 	$query = "select `fromPage` from `tiki_links` where `toPage` = ?";
 	$result = $this->query($query, array( $page ));
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
-	    $aux["fromPage"] = $res["fromPage"];
-
-	    $ret[] = $aux;
+	 	if ($this->user_has_perm_on_object($user, $res['fromPage'], 'wiki page', 'tiki_p_view')) {
+			$aux["fromPage"] = $res["fromPage"];
+			$ret[] = $aux;
+		}
 	}
 
 	return $ret;
@@ -602,6 +606,18 @@ class WikiLib extends TikiLib {
 				$ret[] = $res;
 		}
 		return $ret;
+	}
+	function get_default_wiki_page() {
+		global $user, $wikiHomePage, $useGroupHome;
+	 	if ($useGroupHome == 'y') {
+			global $user;
+			global $userlib; include_once('lib/userslib.php');
+			if ($groupHome = $userlib->get_user_default_homepage($user))
+				return $groupHome;
+			else
+ 				return $wikiHomePage;
+		}
+		return $wikiHomePage;
 	}
 
 }

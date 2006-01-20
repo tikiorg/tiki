@@ -44,10 +44,6 @@
 <a href="tiki-admin.php?page=trackers" title="{tr}Trackers{/tr}" class="link"><img border="0"
    src="img/icons/admin_trackers.png" alt="{tr}Trackers{/tr}" /></a>
 {/if}
-{if $feature_jukebox and $feature_jukebox eq 'y' and $feature_experimental}
-<a href="tiki-admin.php?page=jukebox" title="{tr}Jukebox{/tr}" class="link"><img border="0"
-   src="img/icons/admin_jukebox.png" alt="{tr}Jukebox{/tr}" /></a>
-{/if}
 {if $feature_userfiles and $feature_userfiles eq 'y'}
 <a href="tiki-admin.php?page=userfiles" title="{tr}User files{/tr}" class="link"><img border="0"
    src="img/icons/admin_userfiles.png" alt="{tr}User files{/tr}" /></a>

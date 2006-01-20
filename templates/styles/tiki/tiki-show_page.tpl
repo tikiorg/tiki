@@ -5,7 +5,9 @@
 <span class="tabbut"><a title="{tr}refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1" class="tablink">{tr}refresh{/tr}</a></span>
 {/if}
 
+{if $feature_wiki_print eq 'y'}
 <span class="tabbut"><a title="{tr}print{/tr}" href="tiki-print.php?page={$page|escape:"url"}" class="tablink">{tr}print{/tr}</a></span>
+{/if}
 
 {if $feature_wiki_pdf eq 'y'}
 <span class="tabbut"><a title="{tr}create pdf{/tr}" href="tiki-config_pdf.php?page={$page|escape:"url"}" class="tablink">{tr}pdf{/tr}</a></span>

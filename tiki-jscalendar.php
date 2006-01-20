@@ -9,6 +9,7 @@ if (isset($feature_jscalendar) and $feature_jscalendar == 'y') {
 	$jslang['en'] = "en";
 	$jslang['fr'] = "fr-utf8";
 	$jslang['pt-br'] = "br-utf8";
+	$jslang['es'] = "es-utf8";
   $smarty->assign('uses_jscalendar', 'y'); 
   $smarty->assign('feature_jscalendar', 'y'); 
 	if (isset($language) and isset($jslang["$language"])) {

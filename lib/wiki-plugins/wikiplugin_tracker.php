@@ -47,6 +47,7 @@ function wikiplugin_tracker($data, $params) {
 			$embeddedId = false;
 			$onemandatory = false;
 			$full_fields = array();
+			$mainfield = '';
 
 			if (isset($_REQUEST['trackit']) and $_REQUEST['trackit'] == $trackerId) {
 				$cpt = 0;
@@ -64,6 +65,8 @@ function wikiplugin_tracker($data, $params) {
 					if ($embedded == 'y' and $fl['name'] == 'page') {
 						$embeddedId = $fl['fieldId'];
 					}
+					if ($fl['isMain'] == 'y')
+						$mainfield = $flds['data'][$cpt]['value'];
 					$cpt++;
 				}
 			
@@ -81,13 +84,20 @@ function wikiplugin_tracker($data, $params) {
 				if ($embedded == 'y' && isset($_REQUEST['page'])) {
 					$ins_fields["data"][] = array('fieldId' => $embeddedId, 'value' => $_REQUEST['page']);
 				}
+				$ins_categs = array();
+				while (list($postVar, $postVal) = each($_REQUEST)) {
+					if(preg_match("/^ins_cat_[0-9]+/", $postVar)) {
+ 	   					$ins_categs[] = $postVal[0];
+					}
+		 		}
 
 				// Check field values for each type and presence of mandatory ones
-				$field_errors = $trklib->check_field_values($ins_fields);
+				$field_errors = $trklib->check_field_values($ins_fields, $ins_categs);
 			
 				// values are OK, then lets add a new item
 				if( count($field_errors['err_mandatory']) == 0  && count($field_errors['err_value']) == 0 ) {
 					$rid = $trklib->replace_item($trackerId,0,$ins_fields,$tracker['newItemStatus']);
+					$trklib->categorized_item($trackerId, $rid, $mainfield, $ins_categs);
 					if (!empty($page)) {
 						header("Location: tiki-index.php?page=".urlencode($page)."&ok=y");
 						die;
@@ -142,10 +152,11 @@ function wikiplugin_tracker($data, $params) {
 				$back.= '</div><br />';
 				$_REQUEST['error'] = 'y';
 			}
-
 			if (!empty($page))
 				$back .= '~np~';
 			$back.= '<form method="post"><input type="hidden" name="trackit" value="'.$trackerId.'" />';
+			if (!empty($_REQUEST['page']))
+				$back.= '<input type="hidden" name="page" value="'.$_REQUEST["page"].'" />';
 			$back.= '<input type="hidden" name="refresh" value="1" />';
 			if (isset($_REQUEST['page']))
 				$back.= '<input type="hidden" name="page" value="'.$_REQUEST["page"].'" />';
@@ -265,9 +276,10 @@ function wikiplugin_tracker($data, $params) {
 						$k = $f["options_array"][0];
 						global $categlib; include_once('lib/categories/categlib.php');
 						$cats = $categlib->get_child_categories($k);
+						$i = 0;
 						foreach ($cats as $cat) {
 							$checked = $f['value'] == $cat['categId'] ? 'checked="checked"' : '';
-							$back .= '<input type="checkbox" name="track['.$f["fieldId"].']" value="'.$cat["categId"].'" '.$checked.'>'.$cat['name'].'</input>';
+							$back .= '<input type="checkbox" name="ins_cat_'.$i++.$f['fieldId'].'[]" value="'.$cat["categId"].'" '.$checked.'>'.$cat['name'].'</input>';
 						}
 					} elseif ($f['type'] == 'c') {
 						$back .="<tr><td>".$f['name'];

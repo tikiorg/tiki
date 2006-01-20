@@ -63,7 +63,9 @@
 <a title="{tr}refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1">{html_image file='img/icons/ico_redo.gif' border='0' alt='{tr}refresh{/tr}'}</a>
 {/if}
 
+{if $feature_wiki_print eq 'y'}
 <a title="{tr}print{/tr}" href="tiki-print.php?page={$page|escape:"url"}">{html_image file='img/icons/ico_print.gif' border='0' alt='{tr}print{/tr}'}</a>
+{/if}
 
 {if $feature_wiki_pdf eq 'y'}
 <a title="{tr}create pdf{/tr}" href="tiki-config_pdf.php?page={$page|escape:"url"}">{html_image file='img/icons/ico_pdf.gif' border='0' alt='{tr}pdf{/tr}'}</a>
