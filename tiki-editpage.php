@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.129 2006-01-20 09:54:53 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.130 2006-01-20 11:53:00 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -603,6 +603,16 @@ if($is_html) {
 } else {
   $smarty->assign('allowhtml','n');
 }
+$lock_it = 'n';
+if (isset($_REQUEST['lock_it'])) {
+	if ($_REQUEST['lock_it'] =='on') {
+		$smarty->assign('lock_it','y');
+		$lock_it = 'y';
+	}
+} elseif (!(isset($_REQUEST['save']) || isset($_REQUEST['preview'])) && isset($info) && $info['flag'] == 'L') {
+	 $smarty->assign('lock_it','y');
+	$lock_it = 'y';
+}
 if (isset($_REQUEST["lang"])) {
   if ($feature_multilingual == 'y' && isset($info["lang"]) && $info['lang'] != $_REQUEST["lang"]) {
 	include_once("lib/multilingual/multilinguallib.php");
@@ -711,10 +721,6 @@ if (isset($_REQUEST['save']) && $feature_categories == 'y' && $feature_wiki_mand
   include_once("poll_categorize.php");
   include_once("freetag_apply.php");
 
-  if ((($feature_wiki_description == 'y')
-    && (md5($info["description"]) != md5($_REQUEST["description"])))
-    || (md5($info["data"]) != md5($_REQUEST["edit"])) || $info["lang"] != $_REQUEST["lang"] || $info["is_html"] != $is_html) {
-
     $page = $_REQUEST["page"];
 
     if($is_html) {
@@ -757,7 +763,7 @@ if (isset($_REQUEST['save']) && $feature_categories == 'y' && $feature_wiki_mand
       $tikilib->cache_links($cachedlinks);
       */
       $t = date("U");
-      $tikilib->create_page($_REQUEST["page"], 0, $edit, $t, $_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description, $pageLang, $is_html);
+      $tikilib->create_page($_REQUEST["page"], 0, $edit, $t, $_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description, $pageLang, $is_html, $lock_it);
       if ($wiki_watch_author == 'y') {
         $tikilib->add_user_watch($user,"wiki_page_changed",$_REQUEST["page"],'Wiki page',$page,"tiki-index.php?page=$page");
       }
@@ -771,9 +777,8 @@ if (isset($_REQUEST['save']) && $feature_categories == 'y' && $feature_wiki_mand
       } else {
         $minor=false;
       }
-      $tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description,$minor,$pageLang, $is_html);
+      $tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description,$minor,$pageLang, $is_html, $lock_it);
     }
-  }
 
   //Page may have been inserted from a structure page view
   if (isset($_REQUEST['current_page_id']) ) {
