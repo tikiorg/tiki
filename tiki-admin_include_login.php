@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.38 2006-01-05 15:54:18 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.39 2006-01-22 21:45:08 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -303,6 +303,7 @@ if (isset($_REQUEST["loginprefs"])) {
 		if (count($out))
 			$userlib->set_registrationChoice($out, NULL);
 	}
+	simple_set_toggle('feature_display_my_to_others');
 }
 
 if (isset($_REQUEST["auth_pear"])) {
