@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.32 2005-09-23 10:39:16 michael_davey Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.33 2006-01-22 21:45:08 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,6 +12,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/messu/messulib.php');
 include_once ('lib/userprefs/scrambleEmail.php');
 include_once('lib/registration/registrationlib.php');
+include_once ('lib/wiki/wikilib.php');
 
 if (isset($_REQUEST['view_user'])) {
 	$userwatch = $_REQUEST['view_user'];
@@ -130,6 +131,15 @@ $smarty->assign_by_ref('email_isPublic',$email_isPublic);
 $userPage = $feature_wiki_userpage_prefix.$userinfo['login'];
 $exist = $tikilib->page_exists($userPage);
 $smarty->assign("userPage_exists", $exist);
+
+if ($feature_display_my_to_others == 'y') {
+	$user_pages = $wikilib->get_user_all_pages($userwatch, 'pageName_asc');
+	$smarty->assign_by_ref('user_pages', $user_pages);
+	$user_blogs = $tikilib->list_user_blogs($userwatch,false);
+	$smarty->assign_by_ref('user_blogs', $user_blogs);
+	$user_galleries = $tikilib->get_user_galleries($userwatch, -1);
+	$smarty->assign_by_ref('user_galleries', $user_galleries);
+}
 
 ask_ticket('user-information');
 

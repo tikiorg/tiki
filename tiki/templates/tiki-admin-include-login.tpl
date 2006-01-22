@@ -156,6 +156,8 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 {/foreach}
 </select>
 </td></tr>
+<tr><td class="form">{tr}Displays user's contribution in the user information page{/tr}:</td>
+<td><input type="checkbox" name="feature_display_my_to_others" {if $feature_display_my_to_others eq 'y'}checked="checked"{/if}/></td></tr>
 
 <tr><td colspan="2" class="button"><input type="submit" name="loginprefs" value="{tr}Change preferences{/tr}" /></td></tr>
 </table>
