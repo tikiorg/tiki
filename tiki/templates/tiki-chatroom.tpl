@@ -11,8 +11,8 @@
   <iframe width="100%" frameborder="0" height="200" scrolling="auto" marginwidth="0" marginheight="0"  src="tiki-chat_users.php?channelId={$channelId}"></iframe>
   </td>
   <td class="chatarea" valign="top" >
-  <iframe name="chatdata" scrolling="auto" frameborder="0" height="360" src="tiki-chat_center.html">{tr}Browser not supported{/tr}</iframe>
-  <iframe width='0' height='0' frameborder="0" src="tiki-chat_loader.php?refresh={$refresh}&amp;enterTime={$now}&amp;nickname={$nickname}&amp;channelId={$channelId}">{tr}Browser not supported{/tr}</iframe>
+  <!-- <iframe name="chatdata" scrolling="auto" frameborder="0" height="360" src="tiki-chat_center.html">{tr}Browser not supported{/tr}</iframe> -->
+  <iframe name="chatdata" width="100%" scrolling="auto" frameborder="0" height="360" src="tiki-chat_loader.php?refresh={$refresh}&amp;enterTime={$now}&amp;nickname={$nickname}&amp;channelId={$channelId}">{tr}Browser not supported{/tr}</iframe>
   </td>
   <!--
   <td  valign="top">

@@ -114,10 +114,18 @@ class ChatLib extends TikiLib {
 			$aux["messageId"] = $res["messageId"];
 			$ret[] = $aux;
 		}
-		$query = "delete from `tiki_private_messages` where `toNickname`=?";
-		$result = $this->query($query,array($user));
 		$num = count($ret);
 		return $ret;
+	}
+
+	function purge_private_messages($user, $minutes) {
+		// :TODO: pass old messages to the message log table
+		$secs = $minutes * 60;
+		$last = date("U") - $secs;
+		$query = "delete from `tiki_private_messages` where `toNickname`=? and `timestamp`<?";
+		$result = $this->query($query,array($user, (int)$last));
+		// :TODO: delete from modMessages y privateMessages
+		return true;
 	}
 
 	function purge_messages($minutes) {
