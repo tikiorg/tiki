@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.630 2006-01-24 05:42:06 rlpowell Exp $
+// CVS: $Id: tikilib.php,v 1.631 2006-01-24 22:16:38 rlpowell Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -5715,7 +5715,7 @@ if (!$simple_wiki) {
 	$mid = '';
 	$bindvars = array($description,$edit_data,$edit_comment,(int) $t,$version,$edit_user,$edit_ip,(int)strlen($data),$html);
 	if ($lang) {
-		$mid .= ' `lang`=? ';
+		$mid .= ', `lang`=? ';
 		$bindvars[] = $lang;
 	}
 	if ($lock_it == 'y' || $lock_it == 'on') {
