@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-chat_loader.php,v 1.16 2006-01-24 05:43:19 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-chat_loader.php,v 1.17 2006-01-24 06:11:52 rlpowell Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -26,7 +26,7 @@ if ($tiki_p_chat != 'y') {
 //refresh_user($user);
 // :TODO: use a preference here instead of 1440 minutes = 1 day
 $chatlib->purge_messages(1440);
-$chatlib->purge_private_messages(1440);
+$chatlib->purge_private_messages($_REQUEST["nickname"], 1440);
 
 if (isset($_REQUEST["refresh"])) {
 	$refresh = $_REQUEST["refresh"];
