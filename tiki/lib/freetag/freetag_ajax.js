@@ -21,6 +21,7 @@ function renderObjectList(result) {
     
     if (!objects.length) {
 	document.getElementById('objectList').innerHTML = '';
+	document.getElementById('ajaxLoading').style.display = 'none';
 	return;
     }
 
@@ -69,6 +70,3 @@ function setObjectType(type, button) {
     selectedElement = button;
     listObjects(currentTag);
 }
-
-
-
