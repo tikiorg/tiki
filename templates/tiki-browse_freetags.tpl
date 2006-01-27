@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.10 2006-01-27 16:12:17 amette Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.11 2006-01-27 16:22:34 amette Exp $ *}
 
 {if $feature_ajax eq 'y'}
 <script src="lib/cpaint/cpaint2.inc.compressed.js" type="text/javascript"></script>
@@ -163,7 +163,7 @@
         <br />
         {section loop=$cant_pages name=foo}
           {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
-          <a class="prevnext" href="tiki-browse_freetags.php?find={$find}&amp;type={$type}&amp;offset={$selector_offset}">
+          <a class="prevnext" href="tiki-browse_freetags.php?tag={$tag}&find={$find}&amp;type={$type}&amp;offset={$selector_offset}">
             {$smarty.section.foo.index_next}
           </a>&nbsp;
         {/section}
