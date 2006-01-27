@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.12 2006-01-27 17:14:55 amette Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.13 2006-01-27 20:58:57 amette Exp $ *}
 
 {if $feature_ajax eq 'y'}
 <script src="lib/cpaint/cpaint2.inc.compressed.js" type="text/javascript"></script>
@@ -90,6 +90,13 @@
 {/if}
 </div>
 
+<form action="" method="">
+	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+	<input type="hidden" name="tag" value="{$tag|escape}" />
+	{tr}Find:{/tr} <input type="text" name="find" />
+	<input type="submit" onClick="setFilter(this.form.find.value);return false;"/>
+</form>
+
 <div id="objectList"></div>
 <script language="JavaScript">listObjects('{$tag}');</script>
 
@@ -141,7 +148,8 @@
   <form action="tiki-browse_freetags.php" method="get">
   <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
   <input type="hidden" name="tag" value="{$tag|escape}" />
-  {tr}Find:{/tr} <input type="text" name="find" /> <input type="submit" />
+  {tr}Find:{/tr} <input type="text" name="find" />
+  <input type="submit" />
   </form>
     <table class="normal">
   {cycle values="odd,even" print=false}
