@@ -28,6 +28,7 @@ function getSubGraph($params) {
 
     $tikilib = new TikiLib($dbTiki);
     $color = $tikilib->get_preference("freetags_3d_existing_page_color", '#0000FF');
+    $feature_ajax = $tikilib->get_preference('feature_ajax', 'n');
 
     while ($i <= $depth && sizeof($queue) > 0) {
 	$nextQueue = array();
