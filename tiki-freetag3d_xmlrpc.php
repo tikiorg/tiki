@@ -53,7 +53,11 @@ function getSubGraph($params) {
 	    $base_url = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 	    $base_url = preg_replace('/\/tiki-freetag3d_xmlrpc.php.*$/','',$base_url);
 
-	    $actionUrl = "javascript:listObjects('$nodeName');";
+	    if ($feature_ajax == 'y') {
+		$actionUrl = "javascript:listObjects('$nodeName');";
+	    } else {
+		$actionUrl = "$base_url".'/tiki-browse_freetags.php?tag='."$nodeName";
+	    }
 
 	    $node['neighbours'] = new XML_RPC_Value($neighbours, "array");
 	    if (!empty($color)) {
