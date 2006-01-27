@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.11 2006-01-27 16:22:34 amette Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.12 2006-01-27 17:14:55 amette Exp $ *}
 
 {if $feature_ajax eq 'y'}
 <script src="lib/cpaint/cpaint2.inc.compressed.js" type="text/javascript"></script>
@@ -138,7 +138,12 @@
  
   <h3>{$cantobjects} {tr}results found{/tr}</h3>
   {if $cantobjects > 0}
-  <table class="normal">
+  <form action="tiki-browse_freetags.php" method="get">
+  <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+  <input type="hidden" name="tag" value="{$tag|escape}" />
+  {tr}Find:{/tr} <input type="text" name="find" /> <input type="submit" />
+  </form>
+    <table class="normal">
   {cycle values="odd,even" print=false}
   {section name=ix loop=$objects}
   <tr class="{cycle}" >
