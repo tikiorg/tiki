@@ -113,7 +113,7 @@ class FreetagLib extends ObjectLib {
      *
      * @return An array of Object ID numbers that reference your original objects.
      */ 
-    function get_objects_with_tag($tag, $type='', $user='', $offset = 0, $maxRecords = -1) {
+    function get_objects_with_tag($tag, $type='', $user='', $offset = 0, $maxRecords = -1, $find) {
 	if(!isset($tag)) {
 	    return false;
 	}		
@@ -130,6 +130,12 @@ class FreetagLib extends ObjectLib {
 	if (isset($type) && !empty($type)) {
 	    $mid .= " AND `type` = ?";
 	    $bindvals[] = $type;
+	}
+
+	if (isset($find) && !empty($find)) {
+		$findesc = '%' . $find . '%';
+		$mid .= " AND (o.`name` like ? OR o.`description` like ?)";
+		$bindvals = array_merge($bindvals, array($findesc, $findesc));
 	}
 	
 	$query = "SELECT DISTINCT o.* ";

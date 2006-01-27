@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.5 2005-12-15 23:46:12 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.6 2006-01-27 17:14:53 amette Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.5 2005-12-15 23:46:12 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.6 2006-01-27 17:14:53 amette Exp $
 //
 
 // Initialization
@@ -45,6 +45,12 @@ if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
 
+if (isset($_REQUEST["find"])) {
+	$find = $_REQUEST["find"];
+} else {
+	$find = '';
+}
+
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 
 if (!isset($_REQUEST["offset"])) {
@@ -73,7 +79,7 @@ if (isset($_REQUEST["user_only"]) && $_REQUEST["user_only"] == 'on') {
 
 $smarty->assign('tag', $_REQUEST['tag']);
 
-$objects = $freetaglib->get_objects_with_tag($_REQUEST['tag'], $type, $view_user, $offset, $maxRecords); //, $sort_mode, $find);
+$objects = $freetaglib->get_objects_with_tag($_REQUEST['tag'], $type, $view_user, $offset, $maxRecords, $find); //, $sort_mode);
 
 $smarty->assign_by_ref('objects', $objects["data"]);
 $smarty->assign_by_ref('cantobjects', $objects["cant"]);
