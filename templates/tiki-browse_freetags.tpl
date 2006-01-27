@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.9 2005-12-15 21:56:18 amette Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.10 2006-01-27 16:12:17 amette Exp $ *}
 
 {if $feature_ajax eq 'y'}
 <script src="lib/cpaint/cpaint2.inc.compressed.js" type="text/javascript"></script>
@@ -153,11 +153,11 @@
   <div align="center">
     <div class="mini">
       {if $prev_offset >= 0}
-        [<a class="prevnext" href="tiki-browse_freetags.php?find={$find}&amp;type={$type}&amp;offset={$prev_offset}">{tr}prev{/tr}</a>]&nbsp;
+        [<a class="prevnext" href="tiki-browse_freetags.php?tag={$tag}&find={$find}&amp;type={$type}&amp;offset={$prev_offset}">{tr}prev{/tr}</a>]&nbsp;
       {/if}
       {tr}Page{/tr}: {$actual_page}/{$cant_pages}
       {if $next_offset >= 0}
-        &nbsp;[<a class="prevnext" href="tiki-browse_freetags.php?find={$find}&amp;type={$type}&amp;offset={$next_offset}">{tr}next{/tr}</a>]
+        &nbsp;[<a class="prevnext" href="tiki-browse_freetags.php?tag={$tag}&find={$find}&amp;type={$type}&amp;offset={$next_offset}">{tr}next{/tr}</a>]
       {/if}
       {if $direct_pagination eq 'y'}
         <br />
