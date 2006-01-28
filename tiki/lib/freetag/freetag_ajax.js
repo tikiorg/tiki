@@ -43,7 +43,24 @@ function renderObjectList(result) {
 	data[i] = item;
     }
 
-    var content = '';
+	for (var i=0; i<data.length; i++) {
+		var item = data[i];
+		document.getElementById('freetagObjectLink_' + (i) ).href = item['href'];
+		document.getElementById('freetagObjectLink_' + (i) ).innerHTML = item['name'];
+		document.getElementById('freetagObjectType_' + (i) ).innerHTML = item['type'];
+		document.getElementById('freetagObjectDescription_' + (i) ).innerHTML = item['description'];
+	}
+
+	if (data.length < maxRecords) { // Need to wipe out the rest
+		for (var i=data.length; i<maxRecords; i++) {
+			document.getElementById('freetagObjectLink_' + (i) ).href = '';
+			document.getElementById('freetagObjectLink_' + (i) ).innerHTML = '';
+			document.getElementById('freetagObjectType_' + (i) ).innerHTML = '';
+			document.getElementById('freetagObjectDescription_' + (i) ).innerHTML = '';
+		}
+	}
+
+    /*var content = '';
     for (var i=0; i<data.length; i++) {
 	var item = data[i];
 	content += '<div class="freetagObject' + (i%2 ? 'Odd' : 'Even') + '">';
@@ -53,7 +70,7 @@ function renderObjectList(result) {
 	content += '  <div class="freetagObjectType">'+item['type']+'</div>';
 	content += '  <div class="freetagObjectDescription">'+item['description']+'</div>';
 	content += '</div>';
-    }
+    }*/
 
     var pageLink = '';
     for (var i=0; i<cant_pages; i++) {
@@ -67,7 +84,7 @@ function renderObjectList(result) {
     if (currentTag && document.getElementById('currentTag2')) {    
 	document.getElementById('currentTag2').innerHTML = currentTag;
     }
-    document.getElementById('objectList').innerHTML = content;    
+    //document.getElementById('objectList').innerHTML = content;    
 
     document.getElementById('cant_pages').innerHTML = cant_pages;
 
@@ -75,6 +92,8 @@ function renderObjectList(result) {
 }
 
 function setObjectType(type, button) {
+    offset = 0;
+    document.getElementById('actual_page').innerHTML = 1;
     objectType = type;
     if (!selectedElement) 
 	selectedElement = document.getElementById('typeAll');
