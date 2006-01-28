@@ -57,10 +57,9 @@ function renderObjectList(result) {
 
     var pageLink = '';
     for (var i=0; i<cant_pages; i++) {
-    	pageLink += '<a href="javascript:setOffset(i*offset)";>'+(i+1)+'&nbsp;'+'</a>';
+    	pageLink += '<a href="javascript:setOffset('+( i * maxRecords - offset ) +')";>'+(i+1)+'&nbsp;'+'</a>';
 	}
 	document.getElementById('direct_pagination').innerHTML = pageLink;
-
 
     if (currentTag && document.getElementById('currentTag1')) {
 	document.getElementById('currentTag1').innerHTML = currentTag;
