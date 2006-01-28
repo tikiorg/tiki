@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.16 2006-01-28 18:20:34 amette Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.17 2006-01-28 20:51:09 amette Exp $ *}
 
 {if $feature_ajax eq 'y'}
 <script src="lib/cpaint/cpaint2.inc.compressed.js" type="text/javascript"></script>
@@ -107,8 +107,6 @@
   <div id="freetagObjectDescription_{$smarty.section.i.index}" class="freetagObjectDescription"></div>
 </div>
 {/section}
-
-{*<div id="objectList"></div>*}
 
 <script type="text/javascript">listObjects('{$tag}');</script>
 
