@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.13 2006-01-27 20:58:57 amette Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.14 2006-01-28 00:49:04 amette Exp $ *}
 
 {if $feature_ajax eq 'y'}
 <script src="lib/cpaint/cpaint2.inc.compressed.js" type="text/javascript"></script>
@@ -99,6 +99,24 @@
 
 <div id="objectList"></div>
 <script language="JavaScript">listObjects('{$tag}');</script>
+
+  <div align="center">
+    <div class="mini">
+        [<a class="prevnext" href="javascript:setOffset(-{$maxRecords});">{tr}prev{/tr}</a>]&nbsp;
+      {tr}Page{/tr}: <span id="actual_page">1</span>/<span id="cant_pages"></span>
+        &nbsp;[<a class="prevnext" href="javascript:setOffset({$maxRecords});">{tr}next{/tr}</a>]
+
+      {if $direct_pagination eq 'y'}
+        <br />
+        {section loop=$cant_pages name=foo}
+          {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+          <a class="prevnext" href="tiki-browse_freetags.php?tag={$tag}&find={$find}&amp;type={$type}&amp;offset={$selector_offset}">
+            {$smarty.section.foo.index_next}
+          </a>&nbsp;
+        {/section}
+      {/if}
+   </div>
+  </div>
 
 {else}
 
