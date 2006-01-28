@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.15 2006-01-28 16:29:20 amette Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.16 2006-01-28 18:20:34 amette Exp $ *}
 
 {if $feature_ajax eq 'y'}
 <script src="lib/cpaint/cpaint2.inc.compressed.js" type="text/javascript"></script>
@@ -98,7 +98,18 @@
 	<input type="submit" onClick="setFilter(this.form.find.value);return false;"/>
 </form>
 
-<div id="objectList"></div>
+{section name="i" start=0 loop=$maxRecords step=1}
+<div class="freetagObject {if $smarty.section.i.index is even}odd{else}even{/if}">
+  <div id="freetagObjectName_{$smarty.section.i.index}" class="freetagObjectName">
+    <a id="freetagObjectLink_{$smarty.section.i.index}" href=""></a>
+  </div>
+  <div id="freetagObjectType_{$smarty.section.i.index}" class="freetagObjectType"></div>
+  <div id="freetagObjectDescription_{$smarty.section.i.index}" class="freetagObjectDescription"></div>
+</div>
+{/section}
+
+{*<div id="objectList"></div>*}
+
 <script type="text/javascript">listObjects('{$tag}');</script>
 
   <div align="center">
