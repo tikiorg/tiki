@@ -55,7 +55,7 @@ function getSubGraph($params) {
 	    $base_url = preg_replace('/\/tiki-freetag3d_xmlrpc.php.*$/','',$base_url);
 
 	    if ($feature_ajax == 'y') {
-		$actionUrl = "javascript:listObjects('$nodeName');";
+		$actionUrl = "javascript:browseToTag('$nodeName');";
 	    } else {
 		$actionUrl = "$base_url".'/tiki-browse_freetags.php?tag='."$nodeName";
 	    }
