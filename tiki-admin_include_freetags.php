@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_freetags.php,v 1.3 2005-12-16 01:32:37 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_freetags.php,v 1.4 2006-01-29 04:04:01 amette Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,6 +13,18 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 if (isset($_REQUEST["freetagsset3d"])) {
         check_ticket('admin-inc-freetags');
+	if (isset($_REQUEST["freetags_browse_show_cloud"]) && $_REQUEST["freetags_browse_show_cloud"] == "y") {
+	    $tikilib->set_preference("freetags_browse_show_cloud", 'y');
+	    $smarty->assign("freetags_browse_show_cloud", 'y');
+	} else {
+	    $tikilib->set_preference("freetags_browse_show_cloud", 'n');
+	    $smarty->assign("freetags_browse_show_cloud", 'n');
+	}
+	if (isset($_REQUEST["freetags_browse_amount_tags_in_cloud"])) {
+		$tikilib->set_preference("freetags_browse_amount_tags_in_cloud", $_REQUEST["freetags_browse_amount_tags_in_cloud"]);
+		$smarty->assign('freetags_browse_amount_tags_in_cloud', $_REQUEST["freetags_browse_amount_tags_in_cloud"]);
+	}
+
 	if (isset($_REQUEST["freetags_feature_3d"]) && $_REQUEST["freetags_feature_3d"] == "on") {
 	    $tikilib->set_preference("freetags_feature_3d", 'y');
 	    $smarty->assign("freetags_feature_3d", 'y');
