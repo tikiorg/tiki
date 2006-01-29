@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.297 2006-01-20 09:54:53 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.298 2006-01-29 04:04:01 amette Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1055,6 +1055,8 @@ $smarty->assign('wiki_3d_feed_animation_interval', $wiki_3d_feed_animation_inter
 $smarty->assign('wiki_3d_existing_page_color', $wiki_3d_existing_page_color);
 $smarty->assign('wiki_3d_missing_page_color', $wiki_3d_missing_page_color);
 
+$freetags_browse_show_cloud = 'y';
+$freetags_browse_amount_tags_in_cloud = '100';
 $freetags_feature_3d = 'n';
 $freetags_3d_width = 500;
 $freetags_3d_height = 500;
@@ -1063,6 +1065,8 @@ $freetags_3d_feed_animation_interval = 500;
 $freetags_3d_existing_page_color = '#00CC55';
 $freetags_3d_missing_page_color = '#FF5555';
 
+$smarty->assign('freetags_browse_show_cloud', $freetags_browse_show_cloud);
+$smarty->assign('freetags_browse_amount_tags_in_cloud', $freetags_browse_amount_tags_in_cloud);
 $smarty->assign('freetags_feature_3d', $freetags_feature_3d);
 $smarty->assign('freetags_3d_width', $freetags_3d_width);
 $smarty->assign('freetags_3d_height', $freetags_3d_height);

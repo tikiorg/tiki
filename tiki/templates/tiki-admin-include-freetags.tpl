@@ -6,13 +6,34 @@
 <br />
 {/if}
 
+  <div class="cbox">
+    <div class="cbox-title">
+    {tr}Freetag Browsing{/tr}
+    </div>
+    <div class="cbox-data">
+    <form action="tiki-admin.php?page=freetags" method="post">
+    <table class="admin">
+      <tr>
+        <td colspan="2" class="heading">General</td>
+      </tr>
+      <tr>
+        <td class="form">{tr}Show Tag Cloud{/tr}: </td>
+	<td><input type="checkbox" name="freetags_browse_show_cloud" value="y" {if $freetags_browse_show_cloud eq 'y'}checked{/if} /></td>
+      </tr>
+      <tr>
+        <td class="form">{tr}Number of Tags to show in Cloud{/tr}: </td>
+	<td><input type="text" name="freetags_browse_amount_tags_in_cloud" value="{$freetags_browse_amount_tags_in_cloud|escape}" size="3" /></td>
+      </tr>
+</table>
+</div>
+</div>
+
 {if $feature_morcego eq "y"}
   <div class="cbox">
     <div class="cbox-title">
     {tr}Freetag 3D Browser Configuration{/tr}
     </div>
     <div class="cbox-data">
-    <form action="tiki-admin.php?page=freetags" method="post">
     <table class="admin">
       <tr>
         <td colspan="2" class="heading">General</td>

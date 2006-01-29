@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.20 2006-01-29 03:04:09 amette Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.21 2006-01-29 04:04:01 amette Exp $ *}
 
 {if $feature_ajax eq 'y'}
 <script src="lib/cpaint/cpaint2.inc.compressed.js" type="text/javascript"></script>
@@ -9,9 +9,11 @@
 
 <h1>{tr}Browse related tags{/tr}</h1>
 
+{if $freetags_browse_show_cloud eq 'y'}
 {foreach from=$most_popular_tags item=popular_tag}
 <a class="freetag_{$popular_tag.size}" href="tiki-browse_freetags.php?tag={$popular_tag.tag}">{$popular_tag.tag}</a> 
 {/foreach}
+{/if}
 
 {if $feature_morcego eq 'y' and $freetags_feature_3d eq 'y'}
 
