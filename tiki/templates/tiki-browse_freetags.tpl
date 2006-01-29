@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.19 2006-01-29 00:51:38 amette Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.20 2006-01-29 03:04:09 amette Exp $ *}
 
 {if $feature_ajax eq 'y'}
 <script src="lib/cpaint/cpaint2.inc.compressed.js" type="text/javascript"></script>
@@ -7,8 +7,13 @@
 <script src="lib/freetag/freetag_ajax.js" type="text/javascript"></script>
 {/if}
 
-{if $feature_morcego eq 'y' and $freetags_feature_3d eq 'y'}
 <h1>{tr}Browse related tags{/tr}</h1>
+
+{foreach from=$most_popular_tags item=popular_tag}
+<a class="freetag_{$popular_tag.size}" href="tiki-browse_freetags.php?tag={$popular_tag.tag}">{$popular_tag.tag}</a> 
+{/foreach}
+
+{if $feature_morcego eq 'y' and $freetags_feature_3d eq 'y'}
 
 <div class="morcego_embedded">
 <h2>{tr}Network of Tags related to{/tr}: <span id="currentTag1">{$tag}</span></h2>
