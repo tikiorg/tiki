@@ -2,48 +2,36 @@
 /**
 * CPAINT - Cross-Platform Asynchronous INterface Toolkit
 *
-* http://cpaint.sourceforge.net
+* http://sf.net/projects/cpaint
 * 
 * released under the terms of the LGPL
 * see http://www.fsf.org/licensing/licenses/lgpl.txt for details
 *
-* $Id: cpaint2.inc.php,v 1.1 2005-12-13 01:42:09 lfagundes Exp $
-* $Log: not supported by cvs2svn $
-* Revision 1.27  2005/09/03 16:40:21  saloon12yrd
-* 2.0.1 RC1
-* - improved AJAX capability check
-* - taking use_cpaint_api == false into account in cpaint_call.call_proxy()
-* - updated versions
-* - updated changelog
-* - added text changelog to release branch
-*
-* Revision 1.24  2005/08/17 15:52:53  saloon12yrd
-* cleaner approach to ?api_query
-*
-* Revision 1.20  2005/08/08 15:20:18  wiley14
-* Added replacement character for greater than sign in cpaint_transformer
-*
-* Revision 1.9  2005/07/17 18:02:15  wiley14
-* Fixed problem in get_name function (diff to see changes)
-*
-* Revision 1.8  2005/07/17 17:31:23  wiley14
-* Fixed problem in set_name function (diff to see changes)
-*
-* Revision 1.7  2005/07/14 17:14:21  saloon12yrd
-* added support for arbitrary XML attributes
-*
-* Revision 1.3  2005/07/10 22:18:03  wiley14
-* Added id setter function for compatibility with ASP
-*
-* Revision 1.2  2005/07/10 00:49:30  wiley14
-* no message
-*
 * @package    CPAINT
 * @author     Paul Sullivan <wiley14@gmail.com>
 * @author     Dominique Stender <dstender@st-webdevelopment.de>
-* @copyright  Copyright (c) 2005 Paul Sullivan, Dominique Stender - http://cpaint.sourceforge.net
+* @copyright  Copyright (c) 2005-2006 Paul Sullivan, Dominique Stender - http://sf.net/projects/cpaint
+* @version    $Id: cpaint2.inc.php,v 1.2 2006-01-29 20:53:31 amette Exp $
 */
+  
+//---- includes ----------------------------------------------------------------
+  /**
+  * @include JSON
+  */
+  require_once(dirname(__FILE__) . '/json.php');
+	
+  /**
+  *	@include config
+  */
+  require_once("cpaint2.config.php");
 
+//---- variables ---------------------------------------------------------------
+  $GLOBALS['__cpaint_json'] = new JSON();
+
+//---- error reporting ---------------------------------------------------------
+	error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+
+//---- classes -----------------------------------------------------------------
   /**
   * cpaint base class.
   *
@@ -51,8 +39,8 @@
   * @access     public
   * @author     Paul Sullivan <wiley14@gmail.com>
   * @author     Dominique Stender <dstender@st-webdevelopment.de>
-  * @copyright  Copyright (c) 2005 Paul Sullivan, Dominique Stender - http://cpaint.sourceforge.net
-  * @version    2.0.1
+  * @copyright  Copyright (c) 2005-2006 Paul Sullivan, Dominique Stender - http://sf.net/projects/cpaint
+  * @version    2.0.2
   */
   class cpaint {
     /**
@@ -61,7 +49,7 @@
     * @access private
     * @var    string $version
     */
-    var $version = '2.0.1';
+    var $version = '2.0.2';
     
     /**
     * response type.
@@ -88,6 +76,22 @@
     var $api_functions;
     
     /**
+    * list of registered complex types used in the CPAINT API
+    *
+    * @access protected
+    * @var    array $api_datatypes
+    */
+    var $api_datatypes;
+    
+    /**
+    * whether or not the CPAINT API generates a WSDL when called with ?wsdl querystring
+    *
+    * @access private
+    * @var    boolean $use_wsdl
+    */
+    var $use_wsdl;
+    
+    /**
     * PHP4 constructor.
     *
     * @access   public
@@ -102,6 +106,7 @@
     *
     * @access   public
     * @return   void
+    * @todo -o"Dominique Stender" -ccpaint implement a better debugging
     */
     function __construct() {
       // initialize properties
@@ -112,17 +117,59 @@
       
       $this->response_type  = 'TEXT';
       $this->api_functions  = array();
+      $this->api_datatypes  = array();
+      $this->use_wsdl       = true;
       
-      // open output buffer so no output is sent back to the client
-      ob_start();
+      $this->complex_type(array(
+          'name'      => 'cpaintResponseType',
+          'type'      => 'restriction',   // (restriction|complex|list)
+          'base_type' => 'string',        // scalar type of all values, e.g. 'string', for type = (restriction|list) only
+          'values'    => array(           // for type = 'restriction' only: list of allowed values
+            'XML', 'TEXT', 'OBJECT', 'E4X', 'JSON',
+          ),
+        )
+      );
+      $this->complex_type(array(
+          'name'      => 'cpaintDebugLevel',
+          'type'      => 'restriction',
+          'base_type' => 'long',
+          'values'    => array(
+            -1, 0, 1, 2
+          ),
+        )
+      );
+      $this->complex_type(array(
+          'name'      => 'cpaintDebugMessage',
+          'type'      => 'list',
+          'base_type' => 'string',
+        )
+      );
+      
+      $this->complex_type(array(
+          'name'      => 'cpaintRequestHead',
+          'type'      => 'complex',
+          'struct'    => array(
+            0 => array('name' => 'functionName',  'type' => 'string'),
+            1 => array('name' => 'responseType',  'type' => 'cpaintResponseType'),
+            2 => array('name' => 'debugLevel',    'type' => 'cpaintDebugLevel'),
+          ),
+        )
+      );
+      
+      $this->complex_type(array(
+          'name'      => 'cpaintResponseHead',
+          'type'      => 'complex',
+          'struct'    => array(
+            0 => array('name' => 'success',  'type' => 'boolean'),
+            1 => array('name' => 'debugger', 'type' => 'cpaintDebugMessage'),
+          ),
+        )
+      );
       
       // determine response type
-      if (isset($_GET['cpaint_response_type'])) {
-        $this->response_type = (string) $_GET['cpaint_response_type'];
-        
-      } elseif (isset($_POST['cpaint_response_type'])) {
-        $this->response_type = (string) $_POST['cpaint_response_type'];
-      }
+      if (isset($_REQUEST['cpaint_response_type'])) {
+        $this->response_type = strtoupper((string) $_REQUEST['cpaint_response_type']);
+      } // end: if
     }
 
     /**
@@ -137,19 +184,26 @@
       $arguments      = array();
       
       // work only if there is no API version request
-      if (!isset($_GET['api_query']) && !isset($_POST['api_query'])) {
+      if (!isset($_REQUEST['api_query'])
+        && !isset($_REQUEST['wsdl'])) {
         $this->basenode->set_encoding($input_encoding);
         
-        if ($_GET['cpaint_function'] != '') {
-          $user_function  = $_GET['cpaint_function'];
-          $arguments      = $_GET['cpaint_argument'];
-  
-        } elseif ($_POST['cpaint_function'] != '') {
-          $user_function  = $_POST['cpaint_function'];
-          $arguments      = $_POST['cpaint_argument'];
+        if ($_REQUEST['cpaint_function'] != '') {
+          $user_function  = $_REQUEST['cpaint_function'];
+          $arguments      = $_REQUEST['cpaint_argument'];
         }
   
         // perform character conversion on every argument
+        foreach ($arguments as $key => $value) {
+          
+          if (get_magic_quotes_gpc() == true) {
+            $value = stripslashes($value);
+          } // end: if
+          
+          // convert from JSON string
+          $arguments[$key] = $GLOBALS['__cpaint_json']->parse($value);
+        } // end: foreach
+        
         $arguments = cpaint_transformer::decode_array($arguments, $this->basenode->get_encoding());
   
         if (is_array($this->api_functions[$user_function])
@@ -157,10 +211,9 @@
           // a valid API function is to be called
           call_user_func_array($this->api_functions[$user_function]['call'], $arguments);
         
-        } else {
+        } else if ($user_function != '') {
           // desired function is not registered as API function
-          // @todo -o"Dominique Stender" -ccpaint implement a better debugging
-          $this->basenode->set_data('A function name was passed that is not allowed to execute on this server.');
+          $this->basenode->set_data('[CPAINT] A function name was passed that is not allowed to execute on this server.');
         }
       } // end: if
     }
@@ -172,28 +225,33 @@
     * @return  void
     */
     function return_data() {
-      // delete output buffer
-      ob_end_clean();
-      
       // send appropriate headers to avoid caching
-      header ('Expires: Fri, 14 Mar 1980 20:53:00 GMT');
-      header ('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
-      header ('Cache-Control: no-cache, must-revalidate');
-      header ('Pragma: no-cache'); 
+      header('Expires: Fri, 14 Mar 1980 20:53:00 GMT');
+      header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+      header('Cache-Control: no-cache, must-revalidate');
+      header('Pragma: no-cache'); 
+      header('X-Powered-By: CPAINT v' . $this->version . '/PHP v' . phpversion());
       
       // work only if there is no API version request
       
-      if (!isset($_GET['api_query']) && !isset($_POST['api_query'])) {
+      if (!isset($_REQUEST['api_query']) 
+        && !isset($_REQUEST['wsdl'])) {
         // trigger generation of response
-        switch (trim(strtoupper($this->response_type))) {
+        switch (trim($this->response_type)) {
   
-          case 'TEXT': 
+          case 'TEXT':
             header('Content-type: text/plain; charset=' . cpaint_transformer::find_output_charset($this->basenode->get_encoding()));
             echo cpaint_transformer::toString($this->basenode);
             break;
-            
+          
+          case 'JSON':
+            header('Content-type: text/plain; charset=' . cpaint_transformer::find_output_charset($this->basenode->get_encoding()));
+            echo cpaint_transformer::toJSON($this->basenode);
+            break;
+               
           case 'OBJECT':
-          case 'XML': 
+          case 'E4X':
+          case 'XML':
             header('Content-type:  text/xml; charset=' . cpaint_transformer::find_output_charset($this->basenode->get_encoding()));
             echo '<?xml version="1.0" encoding="' . cpaint_transformer::find_output_charset($this->basenode->get_encoding()) . '"?>' 
                 . cpaint_transformer::toXML($this->basenode);
@@ -203,10 +261,36 @@
             echo 'ERROR: invalid response type \'' . $this->response_type . '\'';
         } // end: switch
       
-      } else {
+      } elseif (isset($_REQUEST['api_query'])) {
         // API version request
         header('Content-type: text/plain; charset=ISO-8859-1');
         echo 'CPAINT v' . $this->version . '/PHP v' . phpversion();
+      
+      } elseif ($this->use_wsdl == true
+        && isset($_REQUEST['wsdl'])) {
+        
+        if (is_file(dirname(__FILE__) . '/cpaint2.wsdl.php')
+          && is_readable(dirname(__FILE__) . '/cpaint2.wsdl.php')) {
+          
+          require_once(dirname(__FILE__) . '/cpaint2.wsdl.php');
+          
+          if (class_exists('cpaint_wsdl')) {
+            // create new instance of WSDL library
+            $wsdl = new cpaint_wsdl();
+
+            // build WSDL info
+            header('Content-type: text/xml; charset=UTF-8');
+            echo $wsdl->generate($this->api_functions, $this->api_datatypes);
+
+          } else {
+            header('Content-type: text/plain; charset=ISO-8859-1');
+            echo 'WSDL generator is unavailable';
+          } // end: if
+        
+        } else {
+          header('Content-type: text/plain; charset=ISO-8859-1');
+          echo 'WSDL generator is unavailable';
+        } // end: if
       } // end: if
     }
     
@@ -217,22 +301,26 @@
     * @param  mixed     $func     function name, array(&$object, 'function_name') or array('class', 'function_name')
     * @param  array     $input    function input parameters (not yet used by CPAINT and subject to change)
     * @param  array     $output   function output format (not yed used by CPAINT and subject to change)
+    * @param  string    $comment  description of the functionality
     * @return boolean
     */
-    function register($func, $input = array(), $output = array()) {
+    function register($func, $input = array(), $output = array(), $comment = '') {
       $return_value = false;
-      $input        = (array) $input;
-      $output       = (array) $output;
+      $input        = (array)   $input;
+      $output       = (array)   $output;
+      $comment      = (string)  $comment;
       
       if (is_array($func)
         && (is_object($func[0]) || is_string($func[0]))
         && is_string($func[1])
         && is_callable($func)) {
+        
         // calling a method of an object
         $this->api_functions[$func[1]] = array(
           'call'    => $func,
           'input'   => $input,
           'output'  => $output,
+          'comment' => $comment,
         );
         $return_value = true;
         
@@ -242,11 +330,70 @@
           'call'    => $func,
           'input'   => $input,
           'output'  => $output,
+          'comment' => $comment,
         );
         $return_value = true;
       } // end: if
       
       return $return_value;
+    }
+    
+    
+    
+    /**
+    * unregisters a function that is currently part of the CPAINT API.
+    *     
+    * proves useful when the same set of functions is to be used in the
+    * frontend and in some kind of administration environment. you might
+    * want to unregister a few (admin) functions for the frontend in this
+    * case.
+    *
+    * @access public
+    * @param  string     $func     function name
+    * @return boolean
+    */
+    function unregister($func) {
+      $retval = false;
+      
+      if (is_array($this->api_functions[$func])) {
+        unset($this->api_functions[$func]);
+      } // end: if
+    
+      return $retval;
+    }
+    
+    
+    
+    /**
+    * registers a complex data type
+    *
+    * @access public
+    * @param  array     $schema     schema definition for the complex type
+    * @return boolean
+    */
+    function complex_type($schema) {
+      $return_value = false;
+      $schema       = (array)   $schema;
+      
+      if ($schema['name'] != ''
+        && in_array($schema['type'], array('restriction', 'complex', 'list'))) {
+        
+        $this->api_datatypes[] = $schema;
+        $return_value          = true;
+      } // end: if
+    
+      return $return_value;
+    }
+    
+    /**
+    * switches the generation of WSDL on/off. default is on
+    *
+    * @access public
+    * @param  boolean   $state      state of WSDL generation
+    * @return void
+    */
+    function use_wsdl($state) {
+      $this->use_wsdl = (boolean) $state;
     }
     
     /**
@@ -267,7 +414,7 @@
     * assigns textual data to the basenode.
     *
     * @access   public
-    * @param    string    $data    data to assign to this node
+    * @param    mixed    $data    data to assign to this node
     * @return   void
     */
     function set_data($data) {
@@ -278,7 +425,7 @@
     * returns the data assigned to the basenode.
     *
     * @access   public
-    * @return   string
+    * @return   mixed
     */
     function get_data() {
       return $this->basenode->get_data();
@@ -350,6 +497,19 @@
     function get_name() {
       return $this->basenode->get_name();
     }
+    
+    
+    
+    /**
+    * returns the response type as requested by the client
+    *
+    * @access public
+    * @return string
+    */
+    function get_response_type() {
+      return $this->response_type;
+    }
+    
   }
   
   /**
@@ -359,7 +519,7 @@
   * @access    public
   * @author    Dominique Stender <dstender@st-webdevelopment.de>
   * @copyright 2005 (Dominique Stender); All rights reserved
-  * @version   2.0.0
+  * @version   2.0.2
   */
   class cpaint_node {
     /**
@@ -456,18 +616,18 @@
     * assigns textual data to this node.
     *
     * @access   public
-    * @param    string    $data    data to assign to this node
+    * @param    mixed    $data    data to assign to this node
     * @return   void
     */
     function set_data($data) {
-      $this->data = (string) $data;
+      $this->data = $data;
     }
     
     /**
     * returns the textual data assigned to this node.
     *
     * @access   public
-    * @return   string
+    * @return   mixed
     */
     function get_data() {
       return $this->data;
@@ -571,7 +731,7 @@
   * @access    public
   * @author    Dominique Stender <dstender@st-webdevelopment.de>
   * @copyright 2002-2005 (Dominique Stender); All rights reserved
-  * @version   2.0.0
+  * @version   2.0.2
   */
   class cpaint_transformer {
     /**
@@ -603,31 +763,58 @@
     * @return   string
     */
     function toXML(&$node) {
-      $return_value = '<' . cpaint_transformer::encode($node->get_name(), $node->get_encoding());
+      $return_value = '<' . $node->get_name();
       
       // handle attributes
       foreach ($node->attributes as $name => $value) {
         if ($value != '') {
-          $return_value .= ' ' 
-                        . cpaint_transformer::encode($name, $node->get_encoding()) 
-                        . '="' 
-                        . cpaint_transformer::encode($node->get_attribute($name), $node->get_encoding()) 
-                        . '"';
+          $return_value .= ' ' . $name . '="' . $node->get_attribute($name) . '"';
         }
       } // end: foreach
       
       $return_value .= '>';
 
+      // handle subnodes    
       foreach ($node->composites as $composite) {
         $return_value .= cpaint_transformer::toXML($composite);
       }
 
       $return_value .= cpaint_transformer::encode($node->get_data(), $node->get_encoding())
-                    . '</' 
-                    . cpaint_transformer::encode($node->get_name(), $node->get_encoding()) 
-                    . '>';
+                    . '</' . $node->get_name() . '>';
 
       return $return_value;
+    }
+    
+    /**
+    * JSON response generator.
+    * will perform character transformation according to parameters.
+    *
+    * @access   public
+    * @param    object    $node               a cpaint_node object
+    * @return   string
+    */
+    function toJSON($node) {
+      $return_value = '';
+      $JSON_node    = new stdClass();
+
+      // handle attributes
+      $JSON_node->attributes = $node->attributes;      
+
+      // handle subnodes    
+      foreach ($node->composites as $composite) {
+        
+        if (!is_array($JSON_node->{$composite->nodename})) {
+          $JSON_node->{$composite->nodename} = array();
+        } // end: if
+        
+        // we need to parse the JSON object again to avoid multiple encoding
+        $JSON_node->{$composite->nodename}[] = $GLOBALS['__cpaint_json']->parse(cpaint_transformer::toJSON($composite));
+      }
+
+      // handle data
+      $JSON_node->data = $node->data;
+      
+      return $GLOBALS['__cpaint_json']->stringify($JSON_node);
     }
     
     /**
@@ -677,18 +864,25 @@
     */
     function decode($data, $encoding) {
       // convert string
-      if (function_exists('iconv')) {
-        // iconv is by far the most flexible approach, try this first
-        $return_value = iconv('UTF-8', $encoding, $data);
-
-      } elseif ($encoding == 'ISO-8859-1') {
-        // for ISO-8859-1 we can use utf8-decode()
-        $return_value = utf8_decode($data);
-
+      
+      if (is_string($data)) {
+        if (function_exists('iconv')) {
+          // iconv is by far the most flexible approach, try this first
+          $return_value = iconv('UTF-8', $encoding, $data);
+  
+        } elseif ($encoding == 'ISO-8859-1') {
+          // for ISO-8859-1 we can use utf8-decode()
+          $return_value = utf8_decode($data);
+  
+        } else {
+          // give up. if data was supplied in the correct format everything is fine!
+          $return_value = $data;
+        } // end: if
+      
       } else {
-        // give up. if data was supplied in the correct format everything is fine!
+        // non-string value
         $return_value = $data;
-      } /* end: if */
+      } // end: if
       
       return $return_value;
     }
@@ -736,11 +930,10 @@
 
       } else {
         $return_value = $encoding;
-      } /* end: if */
+      } // end: if
       
       return $return_value;
     }
-    
   }
  
 ?>
