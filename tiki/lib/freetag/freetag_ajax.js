@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/freetag/freetag_ajax.js,v 1.15 2006-01-28 21:04:13 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/freetag/freetag_ajax.js,v 1.16 2006-01-29 00:46:13 amette Exp $
 
 //var maxRecords gets defined in the template !
 var objectType = '';
@@ -100,7 +100,6 @@ function resetOffset() {
 	document.getElementById('actual_page').innerHTML = 1;
 }
 
-
 function wipeList(start) {
 	for (var i=start; i<maxRecords; i++) {
 		document.getElementById('freetagObjectLink_' + (i) ).href = '';
@@ -109,15 +108,18 @@ function wipeList(start) {
 		document.getElementById('freetagObjectDescription_' + (i) ).innerHTML = '';
 	}
 }
+
 function updatePageCount(result) {
 	count = result.getElementsByTagName('cant').item(0).firstChild.data;
 	var cant_pages = Math.ceil(count / maxRecords);
 	var pageLink = '';
-	for (var i=0; i<cant_pages; i++) {
-		pageLink += '<a href="javascript:setOffset('+( i * maxRecords - offset ) +')";>'+(i+1)+'&nbsp;'+'</a>';
-	}
-	document.getElementById('direct_pagination').innerHTML = pageLink;
 	document.getElementById('cant_pages').innerHTML = cant_pages;
 	curPage = 1 + (offset / maxRecords);
 	document.getElementById('actual_page').innerHTML = curPage;
+	if (directPagination == 'y') {
+		for (var i=0; i<cant_pages; i++) {
+			pageLink += '<a href="javascript:setOffset('+( i * maxRecords - offset ) +')";>'+(i+1)+'&nbsp;'+'</a>';
+		}
+		document.getElementById('direct_pagination').innerHTML = pageLink;
+	}
 }
