@@ -13,10 +13,11 @@ if ($feature_freetags != 'y') {
 require_once('lib/cpaint/cpaint2.inc.php');
 require_once ('lib/freetag/freetaglib.php');
 
-function list_objects($tag, $type, $find='') {
+function list_objects($tag, $type, $offset, $find='') {
     global $freetaglib, $cp;
-    
-    $objects = $freetaglib->get_objects_with_tag($tag, $type, '', 0, -1, $find);
+    global $maxRecords;
+
+    $objects = $freetaglib->get_objects_with_tag($tag, $type, '', $offset, $maxRecords, $find);
 
     for ($i=0; $i < sizeof($objects['data']); $i++) {
 	$obj = $objects['data'][$i];
@@ -29,6 +30,8 @@ function list_objects($tag, $type, $find='') {
 	    $r->set_data($obj[$f]);
 	}
     }
+    $ajaxObj =& $cp->add_node('cant');
+    $ajaxObj->set_data($objects['cant']);
 }
 
 $cp = new cpaint();
