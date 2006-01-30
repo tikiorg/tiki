@@ -1,34 +1,7 @@
 {if strlen($heading) > 0}
 {eval var=$heading}
 {else}
-<div class="blogtitle">{tr}Blog{/tr}: {$title}</div>
-<div class="blogdesc">{tr}Description:{/tr} {$description}</div>
-<div class="bloginfo">
-{tr}Created by{/tr} {$creator|userlink}{tr} on {/tr}{$created|tiki_short_datetime}<br />
-{tr}Last modified{/tr} {$lastModif|tiki_short_datetime}<br />
-<span style="float:right;">
-		{if $tiki_p_blog_post eq "y"}
-		{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y" or $public eq "y"}
-		<a class="bloglink" href="tiki-blog_post.php?blogId={$blogId}"><img src='img/icons/edit.gif' style="border:0;" alt='{tr}Post{/tr}' title='{tr}post{/tr}' /></a>
-		{/if}
-		{/if}
-		{if $rss_blog eq "y"}
-		<a class="bloglink" href="tiki-blog_rss.php?blogId={$blogId}"><img src='img/rss.png' style="border:0;" alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' /></a>
-		{/if}
-		{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y"}
-		<a class="bloglink" href="tiki-edit_blog.php?blogId={$blogId}"><img src='img/icons/config.gif' style="border:0;" alt='{tr}Edit blog{/tr}' title='{tr}Edit blog{/tr}' /></a>
-		{/if}
-		
-		{if $user and $feature_user_watches eq 'y'}
-		{if $user_watching_blog eq 'n'}
-		<a href="tiki-view_blog.php?blogId={$blogId}&amp;watch_event=blog_post&amp;watch_object={$blogId}&amp;watch_action=add"><img style="border:0;" alt='{tr}monitor this blog{/tr}' title='{tr}monitor this blog{/tr}' src='img/icons/icon_watch.png' /></a>
-		{else}
-		<a href="tiki-view_blog.php?blogId={$blogId}&amp;watch_event=blog_post&amp;watch_object={$blogId}&amp;watch_action=remove"><img style="border:0;" alt='{tr}stop monitoring this blog{/tr}' title='{tr}stop monitoring this blog{/tr}' src='img/icons/icon_unwatch.png' /></a>
-		{/if}
-		{/if}
-</span>
-({$posts} {tr}posts{/tr} | {$hits} {tr}visits{/tr} | {tr}Activity={/tr}{$activity|string_format:"%.2f"})
-</div>
+{include file="blog-heading.tpl"}
 {/if}
 {if $use_find eq 'y'}
 <div class="blogtools">
