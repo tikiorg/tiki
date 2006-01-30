@@ -265,7 +265,10 @@ function wikiplugin_tracker($data, $params) {
 							$back.= '<input type="hidden" name="track['.$f["fieldId"].']" value="'.$user.'" />';
 						}
 					} elseif ($f['type'] == 'h') {
-						$back .= "</td></tr></table><h2>".$f['name']."</h2><table><tr><td>";
+						$back .= "</td></tr></table><h2>".$f['name']."</h2>";
+						if (!empty($f['description']))
+							$back .= '<i>'.$f['description'].'</i>';
+						$back .= "<table><tr><td>";
 					} elseif ($f['type'] == 'e') {
 						$back .="<tr><td>".$f['name'];
 						if ($f['isMandatory'] == 'y') {
@@ -291,7 +294,7 @@ function wikiplugin_tracker($data, $params) {
 						$back .= '</td><td><input type="checkbox" name="track['.$f["fieldId"].']" value="y" '.$checked.'/>';
 					} else {
 					}
-					if (!empty($f['description']))
+					if (!empty($f['description']) && $f['type'] != 'h')
 						$back .= '<br /><i>'.$f['description'].'</i>';
 					$back.= "</td></tr>";
 				}
