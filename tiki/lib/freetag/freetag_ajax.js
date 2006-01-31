@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/freetag/freetag_ajax.js,v 1.19 2006-01-30 15:24:23 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/freetag/freetag_ajax.js,v 1.20 2006-01-31 00:32:52 amette Exp $
 
 //var maxRecords gets defined in the template !
 var objectType = '';
@@ -7,6 +7,7 @@ var filter = '';
 var offset = 0;
 var count = 0;
 var selectedElement = false;
+var sort_mode = 'type_asc';
 
 function browseToTag(tag) {
 	resetOffset();
@@ -25,6 +26,19 @@ function setObjectType(type, button) {
 	listObjects(currentTag);
 }
 
+function setSortMode(sortmode) {
+	resetOffset();
+	sort_mode = sortmode;
+	var sort_stuff = sortmode.split("_");
+	if ( sort_stuff[1] == 'desc') {
+		sort_stuff[1] = 'asc'
+	} else {
+		sort_stuff[1] = 'desc'
+	}
+	document.getElementById('freetagObject' + sort_stuff[0] + 'Header').href = "javascript:setSortMode('" + sort_stuff[0] + "_" + sort_stuff[1] + "')";
+	listObjects(currentTag)
+}
+
 function setFilter(find) {
 	resetOffset();
 	filter = find;
@@ -38,7 +52,7 @@ function listObjects(tag) {
 
 	document.getElementById('ajaxLoading').style.display = 'block';
 
-	cp.call('tiki-freetag_list_objects_ajax.php', 'list_objects', renderObjectList, tag, objectType, offset, filter);
+	cp.call('tiki-freetag_list_objects_ajax.php', 'list_objects', renderObjectList, tag, objectType, offset, sort_mode, filter);
 }
 
 function renderObjectList(result) {

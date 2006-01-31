@@ -113,10 +113,10 @@ class FreetagLib extends ObjectLib {
      *
      * @return An array of Object ID numbers that reference your original objects.
      */ 
-    function get_objects_with_tag($tag, $type='', $user='', $offset = 0, $maxRecords = -1, $find) {
+    function get_objects_with_tag($tag, $type='', $user='', $offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '') {
 	if(!isset($tag)) {
 	    return false;
-	}		
+	}
 	
 	$bindvals = array($tag);
 	
@@ -141,10 +141,9 @@ class FreetagLib extends ObjectLib {
 	$query = "SELECT DISTINCT o.* ";
 	$query_cant = "SELECT COUNT(*) ";
 	
-	$query_end = "FROM `tiki_objects` o, `tiki_freetagged_objects` fto, `tiki_freetags` t WHERE fto.`tagId`=t.`tagId` AND o.`objectId` = fto.`objectId`
-			      AND `tag` = ?
-                              $mid
-			      ";
+	$query_end = "FROM `tiki_objects` o, `tiki_freetagged_objects` fto, `tiki_freetags` t WHERE fto.`tagId`=t.`tagId` AND o.`objectId` = fto.`objectId` AND `tag` = ? $mid ORDER BY o.". $this->convert_sortmode($sort_mode);
+
+	
 	
 	$query      .= $query_end;
 	$query_cant .= $query_end;

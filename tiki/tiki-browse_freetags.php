@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.8 2006-01-29 04:04:01 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.9 2006-01-31 00:32:53 amette Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.8 2006-01-29 04:04:01 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.9 2006-01-31 00:32:53 amette Exp $
 //
 
 // Initialization
@@ -81,8 +81,8 @@ $smarty->assign('tag', $_REQUEST['tag']);
 
 $most_popular_tags = $freetaglib->get_most_popular_tags('', 0, $freetags_browse_amount_tags_in_cloud);
 $smarty->assign('most_popular_tags', $most_popular_tags);
-
-$objects = $freetaglib->get_objects_with_tag($_REQUEST['tag'], $type, $view_user, $offset, $maxRecords, $find); //, $sort_mode);
+$sort_mode = 'created_desc';
+$objects = $freetaglib->get_objects_with_tag($_REQUEST['tag'], $type, $view_user, $offset, $maxRecords, $sort_mode, $find); //, $sort_mode);
 
 $smarty->assign_by_ref('objects', $objects["data"]);
 $smarty->assign_by_ref('cantobjects', $objects["cant"]);
