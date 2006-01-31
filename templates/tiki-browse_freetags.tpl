@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.21 2006-01-29 04:04:01 amette Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.22 2006-01-31 00:32:53 amette Exp $ *}
 
 {if $feature_ajax eq 'y'}
 <script src="lib/cpaint/cpaint2.inc.compressed.js" type="text/javascript"></script>
@@ -106,6 +106,25 @@
 	<input type="submit" onClick="setFilter(this.form.find.value);return false;"/>
 </form>
 
+{* Table-based layout - table headings make it easy to play with sort-mode *}
+<table>
+<tr>
+	<th><a href="javascript:setSortMode('type_desc')" id="freetagObjecttypeHeader">Type</a></th>
+	<th><a href="javascript:setSortMode('name_desc')" id="freetagObjectnameHeader">Name</a></th>
+	<th><a href="javascript:setSortMode('description_desc')" id="freetagObjectdescriptionHeader">Description</a></th>
+</tr>
+{section name="i" start=0 loop=$maxRecords step=1}
+<tr class="freetagObject {if $smarty.section.i.index is even}odd{else}even{/if}">
+  <td id="freetagObjectType_{$smarty.section.i.index}" class="freetagObjectType"></td>
+  <td id="freetagObjectName_{$smarty.section.i.index}" class="freetagObjectName">
+    <a id="freetagObjectLink_{$smarty.section.i.index}" href=""></a>
+  </td>
+  <td id="freetagObjectDescription_{$smarty.section.i.index}" class="freetagObjectDescription"></td>
+</tr>
+{/section}
+</table>
+
+{* This was the former layout - much nicer - but not so easy for playing around with sort-mode
 {section name="i" start=0 loop=$maxRecords step=1}
 <div class="freetagObject {if $smarty.section.i.index is even}odd{else}even{/if}">
   <div id="freetagObjectName_{$smarty.section.i.index}" class="freetagObjectName">
@@ -115,7 +134,7 @@
   <div id="freetagObjectDescription_{$smarty.section.i.index}" class="freetagObjectDescription"></div>
 </div>
 {/section}
-
+*}
 <script type="text/javascript">listObjects('{$tag}');</script>
 
   <div align="center">
