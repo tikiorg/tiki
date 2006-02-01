@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_sidebyside.php,v 1.9 2005-05-18 11:00:35 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_sidebyside.php,v 1.10 2006-02-01 21:06:13 jdrexler Exp $
 
 /**
  * "Side-by-Side" diff renderer.
@@ -10,10 +10,11 @@
  */
 class Text_Diff_Renderer_sidebyside extends Tiki_Text_Diff_Renderer {
 
-    function Text_Diff_Renderer_sidebyside($context_lines = 4)
+    function Text_Diff_Renderer_sidebyside($context_lines = 4, $words = 1)
     {
         $this->_leading_context_lines = $context_lines;
         $this->_trailing_context_lines = $context_lines;
+	$this->_words = $words;
     }
     
     function _startDiff()
@@ -109,7 +110,7 @@ class Text_Diff_Renderer_sidebyside extends Tiki_Text_Diff_Renderer {
 
     function _changed($orig, $final)
     {
-        $lines = diffChar($orig, $final);
+        $lines = diffChar($orig, $final, $this->_words);
         $this->_deleted(array($lines[0]), TRUE);
         $this->_added(array($lines[1]), TRUE);
 /* switch with these lines for no character diff

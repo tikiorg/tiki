@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/diff/difflib.php,v 1.13 2005-10-27 16:16:05 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/diff/difflib.php,v 1.14 2006-02-01 21:06:13 jdrexler Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -86,19 +86,32 @@ function diff2($page1, $page2, $type='sidediff') {
 	if ($z->isEmpty()) {
 		$html = '';
 	} else {
+		$context=2;
+		$words=1;
+		if (strstr($type,"-")) {
+			list($type,$opt) = explode("-", $type, 2);
+			if (strstr($opt,"full")) {
+				$context=sizeof($page1);
+			}
+			if (strstr($opt,"char")) {
+				$words=0;
+			}
+		}
 //echo "<pre>";print_r($z);echo "</pre>";
 		if ($type == 'unidiff') {
 			require_once('renderer_unified.php');
-			$renderer = new Text_Diff_Renderer_unified(2);
-		} else if ($type == 'minsidediff') {
+			$renderer = new Text_Diff_Renderer_unified($context);
+		} else if ($type == 'inlinediff') {
+			require_once('renderer_inline.php');
+			$renderer = new Text_Diff_Renderer_inline($context, $words);
+		} else if ($type == 'sidediff') {
 			require_once('renderer_sidebyside.php');
-			$renderer = new Text_Diff_Renderer_sidebyside(2);
+			$renderer = new Text_Diff_Renderer_sidebyside($context, $words);
 		} else if ($type == 'bytes') {
 			require_once('renderer_bytes.php');
 			$renderer = new Text_Diff_Renderer_bytes();
 		} else {
-			require_once('renderer_sidebyside.php');
-			$renderer = new Text_Diff_Renderer_sidebyside(sizeof($page1));
+			return "";
 		}
 		$html = $renderer->render($z);
 	}
@@ -108,9 +121,16 @@ function diff2($page1, $page2, $type='sidediff') {
  * @param $orig array list lines in the original version
  * @param $final array the same lines in the final version
  */
-function diffChar($orig, $final, $function='character') {
-	$line1 = preg_split('//', implode("<br />", $orig), -1, PREG_SPLIT_NO_EMPTY);
-	$line2 = preg_split('//', implode("<br />", $final), -1, PREG_SPLIT_NO_EMPTY);
+function diffChar($orig, $final, $words=0, $function='character') {
+	if ($words) {
+		preg_match_all("/\w+\s+(?=\w)|\w+|\W/", implode("<br />", $orig), $matches);
+		$line1 = $matches[0];
+		preg_match_all("/\w+\s+(?=\w)|\w+|\W/", implode("<br />", $final), $matches);
+		$line2 = $matches[0];
+	} else {
+		$line1 = preg_split('//', implode("<br />", $orig), -1, PREG_SPLIT_NO_EMPTY);
+		$line2 = preg_split('//', implode("<br />", $final), -1, PREG_SPLIT_NO_EMPTY);
+	}
 	$z = new Text_Diff($line1, $line2);
 	if ($z->isEmpty())
 		return array($orig[0], $final[0]);
