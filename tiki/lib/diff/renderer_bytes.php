@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_bytes.php,v 1.4 2005-11-03 17:28:15 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_bytes.php,v 1.5 2006-02-01 21:06:13 jdrexler Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -44,7 +44,7 @@ class Text_Diff_Renderer_bytes extends Text_Diff_Renderer {
             $this->_delBytes += count($orig);
             return;
        }
-       $change= diffChar($orig, $final, 'bytes');
+       $change= diffChar($orig, $final, 0, 'bytes');
        preg_match("/add=([0-9]*)&amp;del=([0-9]*)/", $change, $matches);
        $this->_addBytes += $matches[1];
        $this->_delBytes += $matches[2];

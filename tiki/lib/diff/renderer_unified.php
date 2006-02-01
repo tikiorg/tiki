@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_unified.php,v 1.8 2005-05-18 11:00:35 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_unified.php,v 1.9 2006-02-01 21:06:13 jdrexler Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -57,7 +57,7 @@ class Text_Diff_Renderer_unified extends Tiki_Text_Diff_Renderer {
 
     function _changed($orig, $final)
     {
-        $lines = diffChar($orig, $final);
+        $lines = diffChar($orig, $final, 0);
         $this->_deleted(array($lines[0]));
         $this->_added(array($lines[1]));
     }
