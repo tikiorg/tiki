@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_inline.php,v 1.1 2006-02-01 21:06:13 jdrexler Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_inline.php,v 1.2 2006-02-01 21:41:01 jdrexler Exp $
 /**
  * "Inline" diff renderer.
  *
@@ -19,50 +19,7 @@ class Text_Diff_Renderer_inline extends Text_Diff_Renderer_sidebyside {
         $this->_trailing_context_lines = $context_lines;
 	$this->_words = $words;
     }
-/*    
-    function _startDiff()
-    {
-        ob_start();
-    }
 
-    function _endDiff()
-    {
-        echo '</table>';
-        $val = ob_get_contents();
-        ob_end_clean();
-        return $val;
-    }
-
-    function _blockHeader($xbeg, $xlen, $ybeg, $ylen)
-    {
-        return "$xbeg,$xlen,$ybeg,$ylen";
-    }
-
-    function _startBlock($header)
-    {
-        $h = split(",", $header);
-        echo '<tr class="diffheader"><td colspan="2">';
-        if ($h[1] == 1)
-           echo tra('Line:')."&nbsp;".$h[0];
-        else {
-           $h[1] = $h[0]+$h[1]-1;
-           echo tra('Lines:')."&nbsp;".$h[0].'-'.$h[1];
-        }
-        echo '</td><td>';
-        if ($h[3] == 1)
-           echo tra('Line:')."&nbsp;".$h[2];
-        else {
-           $h[3] = $h[2]+$h[3]-1;
-           echo tra('Lines:')."&nbsp;".$h[2].'-'.$h[3];
-        }
-
-        echo '</td></tr>';
-    }
-
-    function _endBlock()
-    {
-    }
-*/
     function _block($xbeg, $xlen, $ybeg, $ylen, &$edits)
     {
 	$this->_startBlock($this->_blockHeader($xbeg, $xlen, $ybeg, $ylen));

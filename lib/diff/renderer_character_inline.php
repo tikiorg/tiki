@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_character_inline.php,v 1.1 2006-02-01 21:06:13 jdrexler Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_character_inline.php,v 1.2 2006-02-01 21:41:01 jdrexler Exp $
 /**
  * "Inline" character diff renderer.
  *
@@ -53,7 +53,7 @@ class Text_Diff_Renderer_character_inline extends Tiki_Text_Diff_Renderer {
     	} elseif ($type == 'added' || $type == 'change-added') {
 		$t = $this->_getChange($lines);
 	        if (!empty($t))
-	            $this->diff .= "<span class='diffeadded'>$t</span>";
+	            $this->diff .= "<span class='diffadded'>$t</span>";
     	} elseif ($type == 'deleted' || $type == 'change-deleted') {
 		$t = $this->_getChange($lines);
 	        if (!empty($t))
