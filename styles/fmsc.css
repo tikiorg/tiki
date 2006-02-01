@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/fmsc.css,v 1.3 2005-08-12 13:02:10 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/fmsc.css,v 1.4 2006-02-01 21:20:23 jdrexler Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -1090,6 +1090,10 @@ div.tocnav {
 }
 .diffdeleted {
 	background-color : #FFCCCC;
+}
+.diffinldel {
+	background-color : #FFCCCC;
+	text-decoration  : line-through;
 }
 .diffbody {
 	background-color : #F2F4F5;

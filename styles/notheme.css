@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme.css,v 1.22 2005-08-12 13:02:10 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme.css,v 1.23 2006-02-01 21:20:23 jdrexler Exp $
  *
  * My second theme :)
  * The main feature of this theme -- NO COLORS AND BACKGROUNDS AT ALL :)
@@ -114,6 +114,7 @@
 .diffheader{background-color:#a9b8c2; font-weight: bold;}
 .diffadded {background-color:#ccffcc;}
 .diffdeleted {background-color:#ffcccc;}
+.diffinldel {background-color:#ffcccc; text-decoration: line-through;}
 .diffbody{background-color:#F2F4F5}
 .diffchar {color: red;}
 

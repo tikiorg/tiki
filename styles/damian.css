@@ -2588,6 +2588,7 @@ table.diff{border: 1px solid #8CACBB}
 .diffheader{background-color:#a9b8c2; font-weight: bold;}
 .diffadded {background-color:#ccffcc;}
 .diffdeleted {background-color:#ffcccc;}
+.diffinldel {background-color:#ffcccc; text-decoration: line-through;}
 .diffbody{}
 .diffchar{color: red;}
 

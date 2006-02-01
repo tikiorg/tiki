@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/transitions/1.8to1.9.css,v 1.4 2005-08-12 13:02:11 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/transitions/1.8to1.9.css,v 1.5 2006-02-01 21:20:24 jdrexler Exp $
 
 The following CSS classes were added to Tiki between v1.8.5 and v1.9.0
 They should be added to themes (possibly with tweaks) to make the theme v1.9 ready
@@ -21,6 +21,10 @@ They should be added to themes (possibly with tweaks) to make the theme v1.9 rea
 }
 .diffdeleted {
   background-color : #FFCCCC;
+}
+.diffinldel {
+	background-color : #FFCCCC;
+	text-decoration  : line-through;
 }
 .diffbody {
   background-color : #F2F4F5;

@@ -1,5 +1,5 @@
 /*
-$Id: trollparty.css,v 1.41 2005-08-12 13:02:10 sylvieg Exp $
+$Id: trollparty.css,v 1.42 2006-02-01 21:20:24 jdrexler Exp $
 made by mose@trollparty.org
 
 background: #000000;
@@ -2698,6 +2698,7 @@ float : right;
 .diffheader{background-color:#222222; font-weight: bold;}
 .diffadded {background-color:#ccffcc;}
 .diffdeleted {background-color:#ffcccc;}
+.diffinldel {background-color:#ffcccc; text-decoration: line-through;}
 .diffbody{background-color:#121212;}
 .diffchar {color: red;}
 
