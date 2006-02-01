@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.65 2005-08-12 13:02:10 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.66 2006-02-01 21:20:23 jdrexler Exp $
 2003 - created and maintained by mose@tikiwiki.org
 
 colorset:
@@ -2898,6 +2898,7 @@ float : right;
 .diffheader{background-color:#5a4a39; font-weight: bold;color:white;}
 .diffadded {background-color:#ccffcc;}
 .diffdeleted {background-color:#ffcccc;}
+.diffinldel {background-color:#ffcccc; text-decoration: line-through;}
 .diffbody{background-color:#EFEeE5}
 .diffchar {color: red;}
 

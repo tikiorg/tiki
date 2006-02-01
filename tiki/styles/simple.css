@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.36 2005-10-03 17:21:46 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.37 2006-02-01 21:20:24 jdrexler Exp $
  *
  * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye
  * Enables font re-sizing in all browsers, aims to be WCAG 1.0 compatible (not yet), one simple css file.
@@ -750,6 +750,7 @@ div.articlebody {
 .diff div {border-top: 1px solid #abcdef; }
 .diffadded {background-color: #ccffcc;}
 .diffdeleted {background-color: #ffcccc;}
+.diffinldel {background-color:#ffcccc; text-decoration: line-through;}
 .diffchar {color: red;}
 
 /* QUOTE plugin */

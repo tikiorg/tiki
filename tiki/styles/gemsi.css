@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/gemsi.css,v 1.42 2005-08-12 13:02:10 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/gemsi.css,v 1.43 2006-02-01 21:20:23 jdrexler Exp $
 That style is made for http://gmsih.fr by mose@mose.fr
 and is contributed to the tikiwiki project by the  GMSIH,
 (Groupement pour la Modernisation du Syst�me d'Information Hospitalier)
@@ -1925,6 +1925,7 @@ float : right;
 .diffheader{background-color:#1c60a8; font-weight: bold; color: #ddd7c6;}
 .diffadded {background-color:#eee7d6;}
 .diffdeleted {background-color:#ddd7c6;}
+.diffinldel {background-color:#ddd7c6; text-decoration: line-through;}
 .diffbody{background-color:#FFF7E6;}
 .diffchar {color: red;}
 

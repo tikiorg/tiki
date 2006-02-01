@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.21 2005-08-12 13:02:10 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.22 2006-02-01 21:20:24 jdrexler Exp $
 
 Smarty style by mose@tikiwiki.org
 
@@ -2015,6 +2015,7 @@ float : right;
 .diffheader{background-color:#a9b8c2; font-weight: bold;}
 .diffadded {background-color:#ccffcc;}
 .diffdeleted {background-color:#ffcccc;}
+.diffinldel {background-color:#ffcccc; text-decoration: line-through;}
 .diffbody{background-color:#F2F4F5}
 .diffchar {color: red;}
 

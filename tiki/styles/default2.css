@@ -1,5 +1,5 @@
 /* 
-  $Header: /cvsroot/tikiwiki/tiki/styles/default2.css,v 1.56 2005-08-12 13:02:10 sylvieg Exp $
+  $Header: /cvsroot/tikiwiki/tiki/styles/default2.css,v 1.57 2006-02-01 21:20:23 jdrexler Exp $
   default2.css
   (This theme is based on the) default2 style for Tiki 1.2
   If you want  a short-version CSS template, start by copying default2
@@ -3000,6 +3000,7 @@ float : right;
 .diffheader{background:#a9b8c2; font-weight: bold;}
 .diffadded {background:#ccffcc;}
 .diffdeleted {background:#ffcccc;}
+.diffinldel {background:#ffcccc; text-decoration: line-through;}
 .diffbody{background:#F2F4F5}
 .diffchar {color: red;}
 

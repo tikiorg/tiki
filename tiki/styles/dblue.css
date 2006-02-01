@@ -2962,6 +2962,7 @@ float : right;
 .diffheader{background-color:#a9b8c2; font-weight: bold;}
 .diffadded {background-color:#ccffcc;}
 .diffdeleted {background-color:#ffcccc;}
+.diffinldel {background-color:#ffcccc; text-decoration: line-through;}
 .diffbody{background-color:#F2F4F5}
 .diffchar {color: red;}
 
