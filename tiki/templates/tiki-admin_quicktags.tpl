@@ -1,3 +1,11 @@
+{if $feature_ajax eq 'y'}
+<script src="lib/cpaint/cpaint2.inc.compressed.js" type="text/javascript"></script>
+<script type="text/javascript">var maxRecords = {$maxRecords};</script>
+<script type="text/javascript">var directPagination = '{$direct_pagination}';</script>
+<script src="lib/cpaint/tiki-ajax_quicktags.js" type="text/javascript"></script>
+<script src="lib/cpaint/tiki-ajax.js" type="text/javascript"></script>
+{/if}
+
 <h1><a class="pagetitle" href="tiki-admin_quicktags.php">{tr}Admin Quicktags{/tr}</a>
 
 {if $feature_help eq 'y'}
@@ -39,6 +47,7 @@
 
 <h2>{tr}QuickTags{/tr}</h2>
 
+{if $feature_ajax ne 'y'}
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'taglabel_desc'}taglabel_asc{else}taglabel_desc{/if}">{tr}Label{/tr}</a></td>
@@ -80,5 +89,37 @@
 {/if}
 </div>
 </div>
+{else}
 
+<table>
+<tr>
+	<th><a href="javascript:setSortMode('taglabel_desc')" id="freetagObjecttypeHeader">Label</a></th>
+	<th><a href="javascript:setSortMode('taginsert_desc')" id="freetagObjectnameHeader">Insert</a></th>
+	<th><a href="javascript:setSortMode('tagicon_desc')" id="freetagObjectdescriptionHeader">Icon</a></th>
+	<th><a href="javascript:setSortMode('tagcategory_desc')" id="freetagObjectdescriptionHeader">Category</a></th>
+</tr>
+{section name="i" start=0 loop=$maxRecords step=1}
+<tr class="quicktagObject {if $smarty.section.i.index is even}odd{else}even{/if}">
+  <td id="quicktagLabel_{$smarty.section.i.index}" class="quicktagLabel"></td>
+  <td id="quicktagInsert_{$smarty.section.i.index}" class="quicktagInsert"></td>
+  <td><img src="" id="quicktagIcon_{$smarty.section.i.index}" /></td>
+  <td id="quicktagCategory_{$smarty.section.i.index}" class="quicktagCategory"></td>
+</tr>
+{/section}
+</table>
 
+<script type="text/javascript">listObjects('');</script>
+
+  <div align="center">
+    <div class="mini">
+        [<a class="prevnext" href="javascript:setOffset(-{$maxRecords});">{tr}prev{/tr}</a>]&nbsp;
+      {tr}Page{/tr}: <span id="actual_page">1</span>/<span id="cant_pages"></span>
+        &nbsp;[<a class="prevnext" href="javascript:setOffset({$maxRecords});">{tr}next{/tr}</a>]
+
+      {if $direct_pagination eq 'y'}
+	<br />
+	<div class="prevnext" id="direct_pagination"></div>
+      {/if}
+   </div>
+  </div>
+{/if}
