@@ -1,10 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.22 2006-01-31 00:32:53 amette Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.23 2006-02-02 23:24:37 amette Exp $ *}
 
 {if $feature_ajax eq 'y'}
 <script src="lib/cpaint/cpaint2.inc.compressed.js" type="text/javascript"></script>
 <script type="text/javascript">var maxRecords = {$maxRecords};</script>
 <script type="text/javascript">var directPagination = '{$direct_pagination}';</script>
 <script src="lib/freetag/freetag_ajax.js" type="text/javascript"></script>
+<script src="lib/cpaint/tiki-ajax.js" type="text/javascript"></script>
 {/if}
 
 <h1>{tr}Browse related tags{/tr}</h1>
