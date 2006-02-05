@@ -4,7 +4,7 @@
 {/if}
 <table width="77%" border="0" cellspacing="0" cellpadding="0" align="center"><tr><td>
 <div id="tiki-main">
-	{if $feature_top_bar eq 'y'}
+         	{if $feature_top_bar eq 'y'}
           	<div id="tiki-top">
 	  	<table border="0" cellspacing="0" cellpadding="0" width="100%">
 	    		<tr>
@@ -22,14 +22,15 @@
 	        		<table width="100%" cellspacing="0" cellpadding="0" height="26" background="/styles/planetfall/silver_bg.jpg"><tr>
 	  				<td align="left"><div id="horiz_menu">{phplayers id=43 type=horiz}</div></td>
 	  				<td id="tiki-top_bar_td">
-	           			<div id="tiki-top_bar">{include file="tiki-top_bar.tpl"}</div></td></tr>
+	           				<div id="tiki-top_bar">{include file="tiki-top_bar.tpl"}</div></td>
+	           		</tr>
 	        		</table>
 	     		</td>
 	     		</tr>
 	 	 </table>
-	  	</div>{* end tiki-top *} 
+	  	</div>
 	    	{/if}
-	    	 
+	    	{* end tiki-top *}  
 	   {*  {if $feature_right_column eq 'user'}
 	              <span style="float: left"><a class="flip" href="javascript:icntoggle('rightcolumn');">
 	              <img name="rightcolumnicn" class="colflip" src="img/icons/ofo.gif" border="0" alt="+/-" />&nbsp;{tr}Show/Hide Column{/tr}&nbsp;</a>
@@ -37,10 +38,10 @@
 	        {/if}
 	        *}
 	      
-	 <div id="tiki-mid">
+	    <div id="tiki-mid">
 	    <table id="tiki-midtbl" border="0" cellpadding="0" cellspacing="0" width="100%"  valign="top">
 	    
-	 {*  {if $feature_left_column eq 'user' or $feature_right_column eq 'user'}
+	  {* {if $feature_left_column eq 'user' or $feature_right_column eq 'user'}
 	      <tr><td id="tiki-columns" colspan="0" width="100%">
 	       {if $feature_left_column eq 'user'}
 	          <span style="float: left"><a class="flip" href="javascript:icntoggle('leftcolumn');">
@@ -51,15 +52,15 @@
 	         </td></tr>
 	    {/if}*}
 	      <tr>
-		<td id="centercolumn" valign="top">
-			<div id="tiki-center">{include file=$mid}
-			{if $show_page_bar eq 'y'}
-			{include file="tiki-page_bar.tpl"}
-			{/if}
-			</div>
+	      <td id="centercolumn" valign="top">
+	     <div id="tiki-center">{include file=$mid}
+	            {if $show_page_bar eq 'y'}
+	            {include file="tiki-page_bar.tpl"}
+	        {/if}
+	      </div>
 	        </td>
-	        <td id="sidecolumns" valign="top">
 	        {if $feature_left_column ne 'n'}
+	        <td id="leftcolumn" valign="top" width="180">
 	        {section name=homeix loop=$left_modules}
 	        {$left_modules[homeix].data}
 	        {/section}
@@ -71,8 +72,10 @@
 	                </script>
 	              {/literal}
 	            {/if}*}
+	        </td>
 	        {/if}
-		{if $feature_right_column ne 'n'}
+	       {if $feature_right_column ne 'n'}
+	              <td id="rightcolumn" valign="top"width="180">
 	              {section name=homeix loop=$right_modules}
 	              {$right_modules[homeix].data}
 	              {/section}
@@ -84,11 +87,15 @@
 	                      </script>
 	                    {/literal}
 	                  {/if}*}
-		{/if}
+	              </td>
+	        {/if}
+	        
+	        </div>
 	        </td>
-	        </tr>
+	        
+	      </tr>
 	      </table>
-		</div>        
+  </div>        
           {if $feature_bot_bar eq 'y'}
 	    <div id="tiki-bot">
 	      {include file="tiki-bot_bar.tpl"}
