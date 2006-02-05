@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_quicktags.tpl,v 1.17 2006-02-05 01:08:01 amette Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_quicktags.tpl,v 1.18 2006-02-05 16:10:07 amette Exp $ *}
 {if $feature_ajax eq 'y'}
 {include file='tiki-ajax_header.tpl'}
 <script src="lib/cpaint/tiki-ajax_quicktags.js" type="text/javascript"></script>
@@ -89,35 +89,7 @@
 </div>
 {else}
 
-<table>
-<tr>
-	<th><a href="javascript:setSortMode('taglabel_desc')" id="freetagObjecttypeHeader">Label</a></th>
-	<th><a href="javascript:setSortMode('taginsert_desc')" id="freetagObjectnameHeader">Insert</a></th>
-	<th><a href="javascript:setSortMode('tagicon_desc')" id="freetagObjecticonHeader">Icon</a></th>
-	<th><a href="javascript:setSortMode('tagcategory_desc')" id="freetagObjectdescriptionHeader">Category</a></th>
-</tr>
-{section name="i" start=0 loop=$maxRecords step=1}
-<tr class="quicktagObject {if $smarty.section.i.index is even}odd{else}even{/if}">
-  <td id="quicktagLabel_{$smarty.section.i.index}" class="quicktagLabel"></td>
-  <td id="quicktagInsert_{$smarty.section.i.index}" class="quicktagInsert"></td>
-  <td><img src="" id="quicktagIcon_{$smarty.section.i.index}" /></td>
-  <td id="quicktagCategory_{$smarty.section.i.index}" class="quicktagCategory"></td>
-</tr>
-{/section}
-</table>
-
+{include file="tiki-ajax_table.tpl"}
 <script type="text/javascript">listObjects('');</script>
 
-  <div align="center">
-    <div class="mini">
-        [<a class="prevnext" href="javascript:setOffset(-{$maxRecords});">{tr}prev{/tr}</a>]&nbsp;
-      {tr}Page{/tr}: <span id="actual_page">1</span>/<span id="cant_pages"></span>
-        &nbsp;[<a class="prevnext" href="javascript:setOffset({$maxRecords});">{tr}next{/tr}</a>]
-
-      {if $direct_pagination eq 'y'}
-	<br />
-	<div class="prevnext" id="direct_pagination"></div>
-      {/if}
-   </div>
-  </div>
 {/if}

@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.24 2006-02-05 01:08:01 amette Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.25 2006-02-05 16:10:07 amette Exp $ *}
 
 {if $feature_ajax eq 'y'}
-{include file='tiki-ajax_header.tpl'}
+{include file='tiki-ajax_header.tpl' test=$test}
 <script src="lib/freetag/freetag_ajax.js" type="text/javascript"></script>
 {/if}
 
@@ -97,56 +97,8 @@
 {/if}
 </div>
 
-<form action="" method="">
-	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-	<input type="hidden" name="tag" value="{$tag|escape}" />
-	{tr}Find:{/tr} <input type="text" name="find" />
-	<input type="submit" onClick="setFilter(this.form.find.value);return false;"/>
-</form>
-
-{* Table-based layout - table headings make it easy to play with sort-mode *}
-<table>
-<tr>
-	<th><a href="javascript:setSortMode('type_desc')" id="freetagObjecttypeHeader">Type</a></th>
-	<th><a href="javascript:setSortMode('name_desc')" id="freetagObjectnameHeader">Name</a></th>
-	<th><a href="javascript:setSortMode('description_desc')" id="freetagObjectdescriptionHeader">Description</a></th>
-</tr>
-{section name="i" start=0 loop=$maxRecords step=1}
-<tr class="freetagObject {if $smarty.section.i.index is even}odd{else}even{/if}">
-  <td id="freetagObjectType_{$smarty.section.i.index}" class="freetagObjectType"></td>
-  <td id="freetagObjectName_{$smarty.section.i.index}" class="freetagObjectName">
-    <a id="freetagObjectLink_{$smarty.section.i.index}" href=""></a>
-  </td>
-  <td id="freetagObjectDescription_{$smarty.section.i.index}" class="freetagObjectDescription"></td>
-</tr>
-{/section}
-</table>
-
-{* This was the former layout - much nicer - but not so easy for playing around with sort-mode
-{section name="i" start=0 loop=$maxRecords step=1}
-<div class="freetagObject {if $smarty.section.i.index is even}odd{else}even{/if}">
-  <div id="freetagObjectName_{$smarty.section.i.index}" class="freetagObjectName">
-    <a id="freetagObjectLink_{$smarty.section.i.index}" href=""></a>
-  </div>
-  <div id="freetagObjectType_{$smarty.section.i.index}" class="freetagObjectType"></div>
-  <div id="freetagObjectDescription_{$smarty.section.i.index}" class="freetagObjectDescription"></div>
-</div>
-{/section}
-*}
+{include file="tiki-ajax_table.tpl"}
 <script type="text/javascript">listObjects('{$tag}');</script>
-
-  <div align="center">
-    <div class="mini">
-        [<a class="prevnext" href="javascript:setOffset(-{$maxRecords});">{tr}prev{/tr}</a>]&nbsp;
-      {tr}Page{/tr}: <span id="actual_page">1</span>/<span id="cant_pages"></span>
-        &nbsp;[<a class="prevnext" href="javascript:setOffset({$maxRecords});">{tr}next{/tr}</a>]
-
-      {if $direct_pagination eq 'y'}
-	<br />
-	<div class="prevnext" id="direct_pagination"></div>
-      {/if}
-   </div>
-  </div>
 
 {else}
 
@@ -232,5 +184,4 @@
    </div>
   </div>
   {/if}
-
 {/if $feature_ajax}
