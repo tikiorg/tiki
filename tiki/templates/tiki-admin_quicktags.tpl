@@ -1,9 +1,7 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_quicktags.tpl,v 1.17 2006-02-05 01:08:01 amette Exp $ *}
 {if $feature_ajax eq 'y'}
-<script src="lib/cpaint/cpaint2.inc.compressed.js" type="text/javascript"></script>
-<script type="text/javascript">var maxRecords = {$maxRecords};</script>
-<script type="text/javascript">var directPagination = '{$direct_pagination}';</script>
+{include file='tiki-ajax_header.tpl'}
 <script src="lib/cpaint/tiki-ajax_quicktags.js" type="text/javascript"></script>
-<script src="lib/cpaint/tiki-ajax.js" type="text/javascript"></script>
 {/if}
 
 <h1><a class="pagetitle" href="tiki-admin_quicktags.php">{tr}Admin Quicktags{/tr}</a>
