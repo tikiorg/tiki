@@ -95,7 +95,7 @@
 <tr>
 	<th><a href="javascript:setSortMode('taglabel_desc')" id="freetagObjecttypeHeader">Label</a></th>
 	<th><a href="javascript:setSortMode('taginsert_desc')" id="freetagObjectnameHeader">Insert</a></th>
-	<th><a href="javascript:setSortMode('tagicon_desc')" id="freetagObjectdescriptionHeader">Icon</a></th>
+	<th><a href="javascript:setSortMode('tagicon_desc')" id="freetagObjecticonHeader">Icon</a></th>
 	<th><a href="javascript:setSortMode('tagcategory_desc')" id="freetagObjectdescriptionHeader">Category</a></th>
 </tr>
 {section name="i" start=0 loop=$maxRecords step=1}
