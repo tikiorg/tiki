@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.33 2005-12-12 15:18:57 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.34 2006-02-05 00:44:43 mcfarland Exp $ *}
 {tikimodule title="{tr}Login{/tr}" name="login_box" flip=$module_params.flip decorations=$module_params.decorations}
 
     {if $user}
@@ -13,7 +13,7 @@
         </form>
       {/if}
 	{elseif $auth_method eq 'cas' && $showloginboxes neq 'y'}
-		<b><a class="linkmodule" href="tiki-login.php">{tr}Login through CAS{/tr}</a></b>
+		<b><a class="linkmodule" href="tiki-login.php?user">{tr}Login through CAS{/tr}</a></b>
 		{if $cas_skip_admin eq 'y'}
 		<br /><a class="linkmodule" href="tiki-login_scr.php?user=admin">{tr}Login as admin{/tr}</a>
 		{/if}

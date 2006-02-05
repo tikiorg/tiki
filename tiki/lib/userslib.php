@@ -240,7 +240,7 @@ class UsersLib extends TikiLib {
 		$cas_path = $tikilib->get_preference('cas_path');
 		
 		// import phpCAS lib
-		include_once('phpcas/CAS.php');
+		require_once('phpcas/source/CAS/CAS.php');
 
 		phpCAS::setDebug();
 
@@ -581,7 +581,7 @@ class UsersLib extends TikiLib {
 		$cas_path = $tikilib->get_preference('cas_path');
 		
 		// import phpCAS lib
-		include_once('phpcas/CAS.php');
+		require_once('phpcas/source/CAS/CAS.php');
 
 		phpCAS::setDebug();
 
@@ -589,7 +589,7 @@ class UsersLib extends TikiLib {
 		phpCAS::client($cas_version, "$cas_hostname", (int) $cas_port, "$cas_path");
 
 		// check CAS authentication
-		phpCAS::authenticateIfNeeded();
+		phpCAS::forceAuthentication();
 
 		// at this step, the user has been authenticated by the CAS server
 		// and the user's login name can be read with phpCAS::getUser().
