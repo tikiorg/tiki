@@ -38,3 +38,16 @@ function updatePageCount(result) {
 		document.getElementById('direct_pagination').innerHTML = pageLink;
 	}
 }
+
+function setSortMode(sortmode) {
+	resetOffset();
+	sort_mode = sortmode;
+	var sort_stuff = sortmode.split("_");
+	if ( sort_stuff[1] == 'desc') {
+		sort_stuff[1] = 'asc'
+	} else {
+		sort_stuff[1] = 'desc'
+	}
+	document.getElementById('freetagObject' + sort_stuff[0] + 'Header').href = "javascript:setSortMode('" + sort_stuff[0] + "_" + sort_stuff[1] + "')";
+	listObjects(currentTag)
+}
