@@ -1,9 +1,6 @@
 {include file="header.tpl"}
 
 {if $feature_bidi eq 'y'}<table dir="rtl" ><tr><td>{/if}
-{if $feature_ajax eq 'y'}
-  <div id="ajaxLoading">{tr}Loading...{/tr}</div>
-  {/if}
 
 {* Index we display a wiki page here *}
 

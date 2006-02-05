@@ -12,9 +12,6 @@
 {assign var=rcol value="y"}
 {/if}
 <table {if $feature_bidi eq 'y'}dir="rtl"{/if} cellpadding="0" cellspacing="0" border="0" width="100%">
-{if $feature_ajax eq 'y'}
-  <div id="ajaxLoading">{tr}Loading...{/tr}</div>
-{/if}
 {if $feature_top_bar eq 'y'}
 <tr><td {if $cols gt 1}colspan="{$cols}"{/if}>
 <div id="tiki-top">{include file="tiki-top_tiki_bar.tpl"}</div>

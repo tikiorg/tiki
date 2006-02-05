@@ -2,9 +2,6 @@
 {* Index we display a wiki page here *}
 {if $feature_bidi eq 'y'}<table dir="rtl" ><tr><td>{/if}
 <div id="tiki-main">
-{if $feature_ajax eq 'y'}
-  <div id="ajaxLoading">{tr}Loading...{/tr}</div>
-{/if}
 {if $feature_top_bar eq 'y'}
 <div id="tiki-top">
 {include file="tiki-top_bar.tpl"}
