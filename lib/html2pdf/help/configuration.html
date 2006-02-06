@@ -1,0 +1,274 @@
+<html>
+<head>
+<title>html2ps/html2pdf configuration files and options</title>
+<link rel="stylesheet" type="text/css" medial="all" title="Default" href="css/help.css"/>
+</head>
+<body>
+<h1>html2ps/pdf configuration files and options</h1>
+<p><a href="index.html">Back to table of contents</a></p>
+
+<p>Currently, configuration is done both via configuration file (<tt>.html2ps.config</tt>) 
+  and configuration constants inside the source files. We're planning to eventually 
+  move all user-configurable data to a external configuration file, so you'll 
+  not need to modify the script source.
+<p>Please note that the configuration file is a so-called &quot;dot-file&quot; 
+  -- it will behave as hidden file on most Unix-like systems. If you're missing 
+  it, please check your system settings and make it show &quot;hidden&quot; files 
+  (it is hightly dependent on which software you're using, so we won't give any 
+  concrete suggestions here). 
+<h2><a name="common"></a>Common configuration</h2>
+<table class="description_table">
+  <caption><p>Common directives in <tt>.html2ps.config<br>
+  </tt></p></caption>
+  <tr class="odd"> 
+    <th style="width: 10%;">Option</th>
+    <th style="width: 10%;">Appears&nbsp;at</th>
+    <th style="width: 90%;">Description</th>
+  </tr>
+  <tr class="even"> 
+    <td><tt>media</tt></td>
+    <td>Top level</td>
+    <td> Defines the output media size. This tag should have three arguments: 
+      <ul>
+        <li><tt>name</tt> -- media name; you'll be able to refer to this media 
+          by name while calling the script;</li>
+        <li><tt>width</tt> -- media width in millimetres;</li>
+        <li><tt>height</tt> -- media height in millimetres.</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+<table class="description_table">
+  <caption><p><br>
+  Common constants<br>
+  </p></caption>
+  <tr class="odd"> 
+    <th>Name</th>
+    <th>File</th>
+    <th>Description</th>
+  </tr>
+  <tr class="even"> 
+    <td>MAX_REDIRECTS</td>
+    <td>fetcher.class.php</td>
+    <td> Maximum number of HTTP redirects to follow when fetching an HTML page. 
+      This prevents an infinite loop on HTML pages redirecting to themselves. 
+      Default value is 10; it is unlikely you'll need to increase this value. 
+    </td>
+  </tr>
+  <tr class="odd"> 
+    <td>OUTPUT_FILE_ALLOWED</td>
+    <td>output.class.php</td>
+    <td> Enables or disables the local file output mode (&quot;Destination: File 
+      on server&quot;). Default value is 'true'. Disable it if you're limited 
+      in disk space because these files are never removed automatically.</td>
+  </tr>
+  <tr class="even"> 
+    <td>OUTPUT_FILE_DIRECTORY</td>
+    <td>output.class.php</td>
+    <td>Name of directory (relative to script file) where generated files will 
+      be placed (if OUTPUT_FILE_ALLOWED is enabled and users chooses &quot;Destination: 
+      File on server&quot;)</td>
+  </tr>
+  <tr class="odd"> 
+    <td>OUTPUT_DEFAULT_NAME</td>
+    <td>output.class.php</td>
+    <td>Default name to assign to the generated file in case no filename could 
+      be guessed using the TITLE file tag. Default value is 'unnamed'. Note that 
+      appropriate extension depending on the output file type will be appended 
+      to this name.</td>
+  </tr>
+  <tr class="even"> 
+    <td>WRITER_TEMPDIR</td>
+    <td>writer.class.php</td>
+    <td>Path to directory where temporary script files will be created. Set it 
+      to your system temporary directory. Default value is to use script local 
+      temporary dir, like './temp/'</td>
+  </tr>
+  <tr class="odd"> 
+    <td>WRITER_FILE_PREFIX</td>
+    <td>writer.class.php</td>
+    <td>Prefix that will be appended to temporary file names used by the script. 
+      Default is 'ps_'. It is unlikely you need to modify this value.</td>
+  </tr>
+  <tr class="even"> 
+    <td>PDFLIB_UPR_PATH</td>
+    <td>writer.class.php</td>
+    <td>Path to your PDFLIB configuration path containing information about the 
+      additional fonts and encodings supported by PDFLIB</td>
+  </tr>
+  <tr class="odd"> 
+    <td>CACHE_DIR</td>
+    <td>image.class.php</td>
+    <td>Path to directory containing temporary image cache files.</td>
+  </tr>
+  <tr class="even"> 
+    <td>PDFLIB_TTF_FONTS_REPOSITORY</td>
+    <td>writer.class.php</td>
+    <td>Path to directory containing TrueType fonts used by PDFLIB.</td>
+  </tr>
+</table>
+
+<h2><a name="postscript"></a>Postscript and Ghotscript configuration</h2>
+<table class="description_table">
+  <caption><p>Postscript-specific directives in <tt>.html2ps.config<br></tt></p>
+  </caption>
+  <tr class="odd"> 
+    <th style="width: 10%;">Option</th>
+    <th style="width: 10%;">Appears&nbsp;at</th>
+    <th style="width: 90%;">Description</th>
+  </tr>
+  <tr class="even"> 
+    <td><tt>fonts</tt></td>
+    <td>Top level</td>
+    <td>Contains information about font-family value to Postscript font name mappings. 
+      See descrripton of nested directives.</td>
+  </tr>
+  <tr class="odd"> 
+    <td><tt>family</tt></td>
+    <td>/fonts</td>
+    <td>Contains information about particular font-family value mapping. Attributes: 
+      <ul>
+        <li><tt>name</tt> -- value of 'font-family' property being mapped.</li>
+      </ul>
+    </td>
+  </tr>
+  <tr class="even"> 
+    <td><tt>encoding-override</tt></td>
+    <td>/fonts, /fonts/family</td>
+    <td>Contains information about exceptions in font-family mappings. Attributes: 
+      <ul>
+        <li><tt>name</tt> -- comma-separated list of encodings to apply this rule 
+          for.</li>
+      </ul>
+      For example, normally 'times' family is mapped to /Times-Roman font. On 
+      the other hand, this standard font does not contain cyrillic symbols, so 
+      when one of the cyrillic encodings is met, 'times' will be mapped to /TimesCyr-Medium.</td>
+  </tr>
+  <tr class="odd"> 
+    <td><tt>alias</tt></td>
+    <td>/fonts</td>
+    <td>List of font-family aliases. Attributes: 
+      <ul>
+        <li><tt>alias</tt> -- font family alias to be translated</li>
+        <li><tt>family</tt> -- real font family name for this alias</li>
+      </ul>
+      Note that alias resolving is done once, so there's not much use of constructions 
+      similar to 
+      <pre>
+  &lt;alias alias=&quot;verdana&quot; family=&quot;arial&quot;/&gt;
+  &lt;alias alias=&quot;arial&quot; family=&quot;helvetica&quot;/&gt;
+</pre>
+    </td>
+  </tr>
+  <tr class="even"> 
+    <td><tt>normal</tt></td>
+    <td>/fonts/family, /fonts/family/encoding-override, /encoding-override</td>
+    <td>System font names for normal font variant. Attributes: 
+      <ul>
+        <li><tt>normal</tt> -- font name for roman (non-italic) font</li>
+        <li><tt>italic</tt> -- font name for italic font</li>
+        <li><tt>oblique</tt> -- font name for oblique font</li>
+      </ul>
+    </td>
+  </tr>
+  <tr class="odd"> 
+    <td><tt>bold</tt></td>
+    <td>/fonts/family, /fonts/family/encoding-override, /encoding-override</td>
+    <td>System font names for bold font variant. Attributes: 
+      <ul>
+        <li><tt>normal</tt> -- font name for bold roman (non-italic) font</li>
+        <li><tt>italic</tt> -- font name for bold italic font</li>
+        <li><tt>oblique</tt> -- font name for bold oblique font</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+<table class="description_table">
+  <caption> 
+  <p>Postscript-specific constants</p>
+  </caption>
+  <tr class="odd"> 
+    <th>Name</th>
+    <th>File</th>
+    <th>Description</th>
+  </tr>
+  <tr class="even"> 
+    <td>GS_PATH</td>
+    <td>writer.class.php</td>
+    <td> 
+      <p>Path to your Ghostscript executable (including executable name). Required 
+        for PS2PDF conversion. If you have your system path set properly, you'll 
+        be happy with the default value <tt>gs</tt>; otherwise try <tt>/usr/bin/gs</tt> 
+        or <tt>/usr/local/bin/gs</tt>. If this doesn't work, ask your system administrator. 
+      <p><em>Windows</em> users, please note you need to provide the path to the 
+        <em>console</em> version of Ghostscript (usually named <tt>gswin32c.exe</tt>), 
+        <em>NOT </em>GUI version (usually named <tt>gswin32.exe</tt>). GUI version 
+        will cause a script to hang during PS2PDF conversion (it happens as GUI 
+        version waits for user input after completing commands, causing script 
+        to wait for its termination forever). 
+    </td>
+  </tr>
+  <tr class="odd"> 
+    <td>IMAGEMAGICK_ CONVERT_EXECUTABLE</td>
+    <td>ps.image.encoder. imagemagick.inc.php</td>
+    <td>Path to <tt>convert</tt> executable file from the ImageMagick package, 
+      including the executable name. If you have set it properly, you may get 
+      a small increase in image processing.</td>
+  </tr>
+</table>
+
+
+<h2><a name="pdflib"></a>PDFLIB configuration</h2>
+<table class="description_table">
+<caption><p>PDFLIB-specific directives in <tt>.html2ps.config</tt></p></caption>
+<tr class="odd">
+<th style="width: 10%;">Option</th>
+<th style="width: 10%;">Appears&nbsp;at</th>
+<th style="width: 90%;">Description</th>
+</tr>
+
+<tr class="even">
+<td><tt>fonts-pdf</tt></td>
+<td>Top level</td>
+    <td>Contains information about font-family value to PDF font name mappings. 
+      Note that nested directives and their meanings are the same as for the <tt>fonts</tt> 
+      directive, except that they're applied when PDFLIB is used.</td>
+</tr>
+
+<tr class="odd">
+<td><tt>ttf</tt></td>
+<td>fonts-pdf</td>
+<td>Defines mapping of typefaces to available TrueType fonts. Attributes:
+<ul>
+        <li><tt>typeface</tt> -- typeface name (refers to the ones used in <tt>normal</tt>, 
+          <tt>italic</tt> and <tt>oblique</tt> attributes)</li>
+        <li><tt>file</tt> -- name of the TTF file (searched in PDFLIB_TTF_FONTS_REPOSITORY 
+          directory) 
+      </ul>
+</td>
+</tr>
+</table>
+
+<table class="description_table">
+<caption><p>PDFLIB-specific constants</p></caption>
+<tr class="odd">
+<th>Name</th>
+<th>File</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>PDFLIB_DL_PATH</td>
+<td>writer.class.php</td>
+    <td>Path to pdflib PHP extension library (pdflib.so, for example) if you need 
+      to load it dynamically. Note that your PHP configuration should allow <tt>dl</tt> 
+      function calls in this case. You don't need this constant if you have PDFLIB 
+      enabled in your <tt>php.ini</tt>.</td>
+</tr>
+
+</table>
+
+</body>
+</html>              
