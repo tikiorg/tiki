@@ -1,0 +1,501 @@
+<html>
+<head>
+<title>API description</title>
+<link rel="stylesheet" type="text/css" medial="all" title="Default" href="css/help.css"/>
+<style type="text/css">
+div.note {
+  margin: 0.5em 0;
+}
+
+div.class {
+  margin: 0.5em 0 0.5em 2em;
+}
+
+div.interface {
+  margin: 1em 0 0.5em 0;
+  padding: 2px 5px;
+  background-color: #f0f0f0;
+}
+
+span.interface_name {
+  font-weight: bold;
+}
+
+span.method_name {
+  font-weight: bold;
+}
+</style>
+</head>
+<body>
+
+<h1>Minimal code</h1>
+<h2>Using the default pipeline</h2>
+<pre class="code">
+require_once('pipeline.class.php');
+parse_config_file('./.html2ps.config');
+
+$g_config = array(
+                  'cssmedia'     => 'screen',
+                  'renderimages' => true,
+                  'renderforms'  => false,
+                  'renderlinks'  => true,
+                  'mode'         => 'html',
+                  'debugbox'     => false,
+                  'draw_page_border' => false
+                  );
+
+$media = Media::predefined('A4');
+$media->set_landscape(false);
+$media->set_margins(array('left'   => 0,
+                          'right'  => 0,
+                          'top'    => 0,
+                          'bottom' => 0));
+$media->set_pixels(1024);
+
+$g_px_scale = mm2pt($media->width() - $media->margins['left'] - $media->margins['right']) / $media->pixels;
+$g_pt_scale = $g_px_scale * 1.43; 
+
+$pipeline = PipelineFactory::create_default_pipeline("","");
+$pipeline->process('http://www.google.com', $media); 
+</pre>
+
+<h2>Building your own conversion pipeline</h2>
+<pre class="code">
+require_once('pipeline.class.php');
+parse_config_file('./.html2ps.config');
+
+$g_config = array(
+                  'cssmedia'     => 'screen',
+                  'renderimages' => true,
+                  'renderforms'  => false,
+                  'renderlinks'  => true,
+                  'mode'         => 'html',
+                  'debugbox'     => false,
+                  'draw_page_border' => false
+                  );
+
+$media = Media::predefined('A4');
+$media->set_landscape(false);
+$media->set_margins(array('left'   => 0,
+                          'right'  => 0,
+                          'top'    => 0,
+                          'bottom' => 0));
+$media->set_pixels(1024);
+
+$g_px_scale = mm2pt($media->width() - $media->margins['left'] - $media->margins['right']) / $media->pixels;
+$g_pt_scale = $g_px_scale * 1.43; 
+
+$pipeline = new Pipeline;
+$pipeline->fetchers[]     = new FetcherURL;
+$pipeline->fetchers[]     = new FetcherLocalFile('./input');
+$pipeline->data_filters[] = new DataFilterHTML2XHTML;
+$pipeline->parser         = new ParserXHTML;
+$pipeline->layout_engine  = new LayoutEngineDefault;
+$pipeline->output_driver  = new OutputDriverFPDF($media);
+$pipeline->destination    = new DestinationBrowser;
+
+$pipeline->process('http://www.yahoo.com');
+</pre>
+
+<h1>Conversion pipeline</h1>
+<div>
+<b>PipelineFactory</b> is a simple factory class simplifying building of <b>Pipeline</b> instances; 
+<b>create_default_pipeline()</b> will build a simple ready-to-run conversion pipeline. The usage of 
+<b>PipelineFactory</b> is not required; you may create the <b>Pipeline</b> object and fill 
+the appropriate fields manually.
+
+<pre class="code">
+class PipelineFactory {
+  function create_default_pipeline();
+}
+</pre>
+</div>
+
+<div>
+<b>Pipeline</b> class describe the process of conversion as a whole; it contains references to classes, described 
+above and is responsible for calling them in correct order and error handling.
+<pre class="code">
+class Pipeline {
+  var $fetchers;
+  var $data_filters;
+  var $parser;
+  var $pre_tree_filters;
+  var $layout_engine;
+  var $post_tree_filters;
+  var $output_driver;
+  var $output_filter;
+  var $destination;
+
+  function Pipeline();
+  
+  function process($data_id);
+  function error_message();
+}
+</pre>
+</div>
+
+</div>
+
+<h1>Description of interfaces and classes</h1>
+
+<div class="note">
+Almost all interfaces described below include 
+<span class="method_name">error_message</span> method. 
+It should return the user-readable description of 
+the error. This description MAY contain HTML tags, but should remain
+readable in case tags are removed.
+</div>
+
+<div class="interface">
+<p><span class="interface_name">Fetcher</span> interface provides a method of 
+fetching the data required 
+to build a document tree. Normally, classes implementing this interface would 
+fetch an HTML/XHTML string from somewhere (e.g. from remove HTTP server, 
+local file or database). Nevertheless, it MAY fetch ANY data provided that 
+this data will be understood by parser. The pipeline object may contain
+several fetcher objects; in this case they're used one-by-one until 
+one of them return non-null value.</p>
+
+<p>It is assumed that if you need to get data from non-standard places (e.g. from template engine or database), you 
+should implement <span class="interface_name">Fetcher</span> in your own class.</p>
+
+<p>
+Note that the <b>get_data</b> method returns the <b>FetchedData</b> object (or one of its descendants) instead of 
+HTML string!
+</p>
+</div>
+
+<pre class="code">
+class Fetcher {
+  function get_data($data_id); 
+  function error_message();
+}
+</pre>
+</div>
+
+<div class="class">
+<b>FetcherURL</b> is an implementation of the <b>Fetcher</b> interface.
+Takes the URL and fetches the HTML page using http or https protocol. 
+Other protocols considered as an error.
+
+<pre class="code">
+class FetcherURL {
+  function FetcherURL();
+
+  function get_data($url);   // fetches the URL and returns the HTML/XHTML content
+  function error_message(); 
+}
+</pre>
+</div>
+
+<div class="class">
+<b>FetcherLocalFile</b> is an implementation of the <b>Fetcher</b> interface;
+it reads the contents of local file. As, in general, showing contents of local
+files to user is insecure, we introduce the simple security measure: 
+it can fetch only the files inside some predefined directory.
+
+<pre class="code">
+class FetcherLocalFile {
+  function FetcherLocalFile($restrict_path);
+
+  function get_data($path);
+  function error_message();
+}
+</pre>
+</div>
+
+<div class="interface">
+<B>DataFilter</b> interface describes the filters modifying the raw input data.
+The main purpose of these filters is to fix the raw data so that it can be 
+processed by parser without errors.
+
+<pre class="code">
+class DataFilter {
+  function process($data);  // returns modified ("filtered") data
+  function error_message();
+}
+</pre>
+</div>
+
+<div class="class">
+<b>DataFilterHTML2PSCommands</b> is an implementation of <b>DataFilter</b>.
+It converts the special HTML2PS commands (stricly speaking, the only one &ndash;
+page breaking command, which can be recorded as &lt;!--NewPage--&gt; or 
+<?NewPage?>) to HTML "tag" &ndash; &lt;pagebreak/&gt; so that 
+XML parser will add this command to the document tree.
+
+<pre class="code">
+class DataFilterHTML2PSCommands {
+  function DataFilterHTML2PSCommands();
+
+  function process($data);  // returns modified ("filtered") data
+  function error_message();
+}
+</pre>
+</div>
+
+<div class="class">
+<b>DataFilterHTML2XHTML</b> is an implementation of <b>DataFilter</b>. 
+The precide description of this filter actions are beyoud the scope of this 
+document. In general, it makes the input document a wellformed XML document
+(possibly throwing out invalid parts, by the way). Note that it is achieved 
+by extensive use of regular expressions; no XML/HTML parsers involved 
+in conversion at this stage.
+
+<pre class="code">
+class DataFilterHTML2XHTML {
+  function DataFilterHTML2XHTML();
+
+  function process($data);  // returns modified ("filtered") data
+  function error_message();
+}
+</pre>
+</div>
+
+<div class="interface">
+<b>Parser</b> interface provides a method of building the DOM tree from the 
+filtered data.
+
+<pre class="code">
+class Parser {
+  function process($data);  // returns DOM tree object
+  function error_message();
+}
+</pre>
+</div>
+
+<div class="class">
+<b>ParserXHTML</b>
+
+Implementation of <b>Parser</b> interface; takes an XHTML string as an input
+and returns the dom tree object.
+
+<pre class="code">
+class ParserXHTML {
+  function ParserXHTML();
+
+  function process($xhtml); // returns a reference to an object implementing the 
+                            // DOMTree interface
+}
+</pre>
+</div>
+
+<div class="interface">
+<b>PreTreeFilter</b> interface describes a procedure of document tree transformation executed before 
+the layout engine starts.
+No classes implementing the <b>PreTreeFilter</b> will be included in the distribution
+<pre class="code">
+class PreTreeFilter {
+  function process(&$tree); // Processes tree IN-PLACE
+}
+</pre>
+</div>
+
+<div class="class">
+<b>PreTreeFilterHTML2PSFields</b> implements <b>PostTreeFilter</b> and describes the processing
+of special fields (such a date, page count, page number, etc.). 
+<pre class="code">
+class PostTreeFilterHTML2PSFields {
+  function PostTreeFilterHTML2PSFields($filename, $filesize, $timestamp);
+
+  function process(&$tree); // Processes tree IN-PLACE
+}
+</pre>
+</div>
+
+
+<div class="interface">
+<b>LayoutEngine</b> interface of a class processing 
+of the document tree and calculating positions of page elements. In theory, different implementations 
+of this interface will allow us to use &quot;lightweight&quot; layout engines in case we do 
+not need full HTML/CSS support.
+<pre class="code">
+class LayoutEngine {
+  function process(&$tree, &$media); // Processes tree IN-PLACE
+}
+</pre>
+</div>
+
+<div class="class">
+<b>LayoutEngineDefault</b> - a standard layout engine HTML2PS uses.
+<pre class="code">
+class LayoutEngineDefault {
+  function LayoutEngineDefault();
+
+  function process(&$tree, &$media); // Processes tree IN-PLACE
+}
+</pre>
+</div>
+
+<div class="interface">
+<b>PostTreeFilter</b> interface describes a procedure of document tree transformation executed after 
+the layout engine completes.
+<pre class="code">
+class PostTreeFilter {
+  function process(&$tree); // Processes tree IN-PLACE
+}
+</pre>
+</div>
+
+<div class="interface"
+<b>OutputDriver</b> interface contains device-specific functions - drawing, movement, fonts selection, etc. 
+In general, description of this interface is beyond the scope of this document, as users are not intended
+to implement this interface themselves. Instead, they would use pre-defined output drivers described below.
+<pre class="code">
+class OutputDriver {
+  ...
+}
+</pre>
+</div>
+
+<div class="class">
+<b>OutputDriverPDFLIB</b> implements <b>OutputDriver</b> using PDFLIB.
+<pre class="code">
+class OutputDriverPDFLIB {
+  function OutputDriverPDFLIB(&$media, $pdf_version);
+
+  ...
+}
+</pre>
+</div>
+
+<div class="class">
+<b>OutputDriverFPDF</b> implements <b>OutputDriver</b> using FPDF
+<pre class="code">
+class OutputDriverFPDF {
+  function OutputDriverFPDF(&$media, $pdf_version);
+
+  ...
+}
+</pre>
+</div>
+
+<div class="class">
+<b>OutputDriverCompactPS</b> implements <b>OutputDriver</b> for Postscript output.
+<pre class="code">
+class OutputDriverCompactPS {
+  function OutputDriverCompactPS(&$media);
+
+  ...
+}
+</pre>
+</div>
+
+<div class="interface">
+<b>OutputFilter</b> interface describes the filter applied to generated PS or PDF file.
+<pre class="code">
+class OutputFilter {
+  function process($temp_filename); // Possibly creates new file and returns its name
+}
+</pre>
+</div>
+
+<div class="class">
+<b>OutputFilterPS2PDF</b> implements <b>OutputFilter</b>. Run the PS2PDF utitity on the generated file.
+<pre class="code">
+class OutputFilterPS2PDF {
+  function OutputFilterPS2PDF();
+
+  function process($temp_filename);
+}
+</pre>
+</div>
+
+<div class="class">
+<b>OutputFilterGZIP</b> implements <b>OutputFilter</b>. Compresses generated file using ZLIB.
+<pre class="code">
+class OutputFilterGZIP {
+  function OutputFilterGZIP();
+
+  function process($temp_filename);
+}
+</pre>
+</div>
+
+<div class="interface">
+<b>Destination</b> interface describes the &quot;channel&quot; object which determines where the final output file
+should be placed. 
+<pre class="code">
+class Destination {
+  function process($temp_file_name);
+}
+</pre>
+</div>
+
+<div class="class">
+<b>DestinationBrowser</b> implements <b>Destination</b> and outputs the generated file directly to the browser.
+<pre class="code">
+class DestinationBrowser {
+  function DestinationBrowser($filename = "");
+
+  function process($temp_file_name);
+}
+</pre>
+</div>
+
+<div class="class">
+<b>DestinationDownload</b> implements <b>Destination</b> and outputs the generated file directly to the browser.
+Unlike <b>DestinationBrowser</b>, this class send headers preventing the file from being opened directly 
+in the browser window.
+<pre class="code">
+class DestinationDownload {
+  function DestinationDownload($filename = "");
+
+  function process($temp_file_name);
+}
+</pre>
+</div>
+
+<div class="class">
+<b>DestinationLocalFile</b>  implements <b>Destination</b> and saves generated file on the server side.
+<pre class="code">
+class DestinationLocalFile {
+  function DestinationLocalFile($dir, $filename = "");
+  function process($temp_file_name);
+}
+</pre>
+</div>
+
+<h2>Implementing your own fetcher class</h2>
+Sometimes you may need to convert HTML code taken from database or from other non-standard sources.
+In this case you should implement <b>Fetcher</b> interface yourself, returning the string to be converted 
+from the <span class="method_name">get_data</span> method. Additional parameters (like database connection settings,
+template variables, etc) may be specified either as globals (not recommended, though), passed as a parameters 
+to constructor of fetcher object or as $dataId parameter of <span class="method_name">get_data</span> method.
+
+<pre>
+class TestFetcher extends Fetcher {
+  var $content;
+  var $url;
+
+  function get_data($dumb) {
+    return new FetchedDataURL($this->content, array(), "");
+  }
+  
+  function set_content($content) {
+    $this->content = $content;
+  }
+}
+</pre>
+
+<h1>Class dependencies</h1>
+The pipeline object contains the following:
+<ul>
+<li>one or more objects implementing <b>Fetcher</b> interface;</li>
+<li>zero or more objects implementing <b>DataFilter</b> interface;</li>
+<li>one object implementing <b>Parser</b> interface;</li>
+<li>zero or more objects implementing <b>PreTreeFilter</b> interface;</li>
+<li>one object implementing <b>LayoutEngine</b> interface;</li>
+<li>zero or more objects implementing <b>PostTreeFilter</b> interface;</li>
+<li>one object implementing <b>OutputDriver</b> interface;</li>
+<li>one object implementing <b>Destination</b> interface;</li>
+</ul>
+
+No other dependencies between class in interfaces (except &quot;implements&quot;).
+
+Note that order of filters is important; imagine you're using some king of tree filter which adds header block
+containing HTML2PS-specific fields. In this case you must add this filter before PostTreeFilterHTML2PSFields, or 
+you'll get raw field codes in generated output.
+
+</body>
+</html>
