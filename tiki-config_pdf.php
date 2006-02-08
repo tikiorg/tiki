@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-config_pdf.php,v 1.12 2005-05-18 10:58:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-config_pdf.php,v 1.13 2006-02-08 11:54:44 nikchankov Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -33,36 +33,63 @@ if ($feature_wiki_pdf != 'y') {
 }
 
 //defaults
-if (!isset($_REQUEST["font"])) {
-	$_REQUEST["font"] = "Helvetica";
+if (!isset($_REQUEST["page_ref_id"])) {
+	$_REQUEST["page_ref_id"] = '';
 }
 
-if (!isset($_REQUEST["textheight"])) {
-	$_REQUEST["textheight"] = 10;
+if (!isset($_REQUEST["media"])) {
+	$_REQUEST["media"] = 'A4';
 }
 
-if (!isset($_REQUEST["h1height"])) {
-	$_REQUEST["h1height"] = 16;
+if (!isset($_REQUEST["scalepoints"])) {
+	if(!$_POST){
+		$_REQUEST["scalepoints"] = '1';
+	} else {
+		$_REQUEST["scalepoints"] = '0';
+	}
 }
 
-if (!isset($_REQUEST["h2height"])) {
-	$_REQUEST["h2height"] = 14;
+if (!isset($_REQUEST["renderimages"])) {
+	if(!$_POST){
+		$_REQUEST["renderimages"] = '1';
+	} else {
+		$_REQUEST["renderimages"] = '0';
+	}
+}
+if (!isset($_REQUEST["renderlinks"])) {
+	if(!$_POST){
+		$_REQUEST["renderlinks"] = '1';
+	} else {
+		$_REQUEST["renderlinks"] = '0';
+	}
 }
 
-if (!isset($_REQUEST["h3height"])) {
-	$_REQUEST["h3height"] = 12;
+if (!isset($_REQUEST["leftmargin"])) {
+	$_REQUEST["leftmargin"] = '15';
 }
-
-if (!isset($_REQUEST["tbheight"])) {
-	$_REQUEST["tbheight"] = 14;
+if (!isset($_REQUEST["rightmargin"])) {
+	$_REQUEST["rightmargin"] = '15';
 }
-
-if (!isset($_REQUEST["imagescale"])) {
-	$_REQUEST["imagescale"] = 0.4;
+if (!isset($_REQUEST["topmargin"])) {
+	$_REQUEST["topmargin"] = '15';
 }
-
-if (!isset($_REQUEST["autobreak"])) {
-	$_REQUEST["autobreak"] = 'off';
+if (!isset($_REQUEST["bottommargin"])) {
+	$_REQUEST["bottommargin"] = '15';
+}
+if (!isset($_REQUEST["landscape"])) {
+	$_REQUEST["landscape"] = '0';
+}
+if (!isset($_REQUEST["pageborder"])) {
+	$_REQUEST["pageborder"] = '0';
+}
+if (!isset($_REQUEST["encoding"])) {
+	$_REQUEST["encoding"] = '';
+}
+if (!isset($_REQUEST["method"])) {
+	$_REQUEST["method"] = 'fpdf';
+}
+if (!isset($_REQUEST["pdfversion"])) {
+	$_REQUEST["pdfversion"] = '1.3';
 }
 
 if (!isset($_REQUEST["convertpages"])) {
@@ -75,7 +102,7 @@ if (!isset($_REQUEST["convertpages"])) {
 			if ($struct_page["pos"] != '' && $struct_page["last"] == 1) continue;
 			$convertpages[] = $struct_page["pageName"];
 		}
-	}elseif (isset($_REQUEST["page"]) && $tikilib->page_exists($_REQUEST["page"])) {
+	} elseif (isset($_REQUEST["page"]) && $tikilib->page_exists($_REQUEST["page"])) {
 		$convertpages[] = $_REQUEST["page"];
 	}
 } else {
@@ -89,14 +116,26 @@ if (isset($_REQUEST["find"])) {
 }
 
 // assign to smarty
-$smarty->assign('font', $_REQUEST["font"]);
-$smarty->assign('textheight', $_REQUEST["textheight"]);
-$smarty->assign('h1height', $_REQUEST["h1height"]);
-$smarty->assign('h2height', $_REQUEST["h2height"]);
-$smarty->assign('h3height', $_REQUEST["h3height"]);
-$smarty->assign('tbheight', $_REQUEST["tbheight"]);
-$smarty->assign('imagescale', $_REQUEST["imagescale"]);
-$smarty->assign('autobreak', $_REQUEST["autobreak"]);
+$smarty->assign('media', $_REQUEST["media"]);
+$smarty->assign('scalepoints', $_REQUEST["scalepoints"]);
+$smarty->assign('renderimages', $_REQUEST["renderimages"]);
+$smarty->assign('renderlinks', $_REQUEST["renderlinks"]);
+$smarty->assign('leftmargin', $_REQUEST["leftmargin"]);
+$smarty->assign('rightmargin', $_REQUEST["rightmargin"]);
+$smarty->assign('topmargin', $_REQUEST["topmargin"]);
+$smarty->assign('bottommargin', $_REQUEST["bottommargin"]);
+$smarty->assign('landscape', $_REQUEST["landscape"]);
+$smarty->assign('pageborder', $_REQUEST["pageborder"]);
+$smarty->assign('encoding', $_REQUEST["encoding"]);
+$smarty->assign('method', $_REQUEST["method"]);
+$smarty->assign('pdfversion', $_REQUEST["pdfversion"]);
+$smarty->assign('page_ref_id', $_REQUEST["page_ref_id"]);
+
+
+//Format dropdown
+$smarty->assign('format_options', array("Letter","Legal","Executive","A0Oversize","A0","A1","A2","A3","A4","A5","B5","Folio","A6","A7","A8","A9","A10"));
+
+
 $smarty->assign('find', $find);
 
 //add pages
