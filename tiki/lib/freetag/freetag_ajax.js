@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/freetag/freetag_ajax.js,v 1.22 2006-02-05 00:39:37 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/freetag/freetag_ajax.js,v 1.23 2006-02-11 15:00:25 amette Exp $
 
 //var maxRecords gets defined in the template !
 var objectType = '';
@@ -35,6 +35,7 @@ function setFilter(find) {
 function listObjects(tag) {
 	currentTag = tag;
 	var cp = new cpaint();
+	cp.set_use_cpaint_api(true);
 	//cp.set_debug(2);
 
 	document.getElementById('ajaxLoading').style.display = 'block';
@@ -44,6 +45,7 @@ function listObjects(tag) {
 
 function renderObjectList(result) {
 	var objects = result.ajaxResponse[0].object;
+	document.getElementById('ajaxDebug').innerHTML = result;
 
 	if (!objects) {
 		wipeList(0);
@@ -53,10 +55,15 @@ function renderObjectList(result) {
 	}
 
 	for (i=0; i < objects.length; i++) {
-		document.getElementById('freetagObjectLink_' + (i) ).href = objects[i].href[0].data
-		document.getElementById('freetagObjectLink_' + (i) ).innerHTML = objects[i].name[0].data;
-		document.getElementById('freetagObjectType_' + (i) ).innerHTML = objects[i].type[0].data;
-		document.getElementById('freetagObjectDescription_' + (i) ).innerHTML = objects[i].description[0].data;
+		for (var j=0; j<ajax_cols.length; j++) {
+		name = ajax_cols[j][0];
+		id = ajax_cols[j][0] + '_' + i;
+		if ( ajax_cols[j][1] == 'innerHTML' ) {
+		document.getElementById( id ).innerHTML = objects[i].find_item_by_id(name, id).data;
+		} else if ( ajax_cols[j][1] == 'a' ) {
+		document.getElementById( id ).innerHTML = objects[i].find_item_by_id(name, id).data;
+		document.getElementById( id ).href = objects[i].find_item_by_id(name, id).data;
+		}
 	}
 
 	if (objects.length < maxRecords) { // Need to wipe out the rest

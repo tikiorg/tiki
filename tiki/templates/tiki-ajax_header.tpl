@@ -1,11 +1,19 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-ajax_header.tpl,v 1.2 2006-02-05 16:10:07 amette Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-ajax_header.tpl,v 1.3 2006-02-11 15:00:25 amette Exp $ *}
 {if $feature_ajax eq 'y'}
 <script type="text/javascript">var maxRecords = {$maxRecords};</script>
 <script type="text/javascript">var directPagination = '{$direct_pagination}';</script>
 <script type="text/javascript">
 	var ajax_cols = new Array()
-	{section name=ix start=0 loop=$ajax_cols}
-		ajax_cols[{$smarty.section.ix.index}] = '{$ajax_cols[ix]}'
+	{section name=i start=0 loop=$ajax_cols}
+		ajax_data_{$smarty.section.i.index} = new Array();
+	{/section}
+	{section name=i start=0 loop=$ajax_cols}
+		ajax_cols[{$smarty.section.i.index}] = ajax_data_{$smarty.section.i.index}
+	{/section}
+	{section name=i start=0 loop=$ajax_cols}
+		{section name=j start=0 loop=$ajax_cols[i]}
+		ajax_data_{$smarty.section.i.index}[{$smarty.section.j.index}] = '{$ajax_cols[i][j]}'
+		{/section}
 	{/section}
 </script>
 <div id="ajaxLoading">{tr}Loading...{/tr}</div>
