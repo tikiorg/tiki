@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_quicktags.php,v 1.12 2006-02-05 16:10:07 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_quicktags.php,v 1.13 2006-02-11 17:04:45 amette Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -117,7 +117,11 @@ $smarty->assign_by_ref('list_categories', $list_categories);
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
 
 if ($feature_ajax = 'y') {
-	$ajax_cols = array('taglabel', 'tagicon', 'tagcategory', 'taginsert');
+	$ajax_col1 = array('taglabel', 'innerHTML');
+	$ajax_col2 = array('tagicon', 'innerHTML');
+	$ajax_col3 = array('tagcategory', 'innerHTML');
+	$ajax_col4 = array('taginsert', 'innerHTML');
+	$ajax_cols = array($ajax_col1, $ajax_col2, $ajax_col3, $ajax_col4);
 	$smarty->assign('ajax_cols', $ajax_cols);
 }
 
