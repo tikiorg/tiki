@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.10 2006-02-05 16:10:06 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.11 2006-02-11 15:00:24 amette Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.10 2006-02-05 16:10:06 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.11 2006-02-11 15:00:24 amette Exp $
 //
 
 // Initialization
@@ -112,8 +112,12 @@ $section = 'freetags';
 include_once ('tiki-section_options.php');
 ask_ticket('browse-freetags');
 
-if ($feature_ajax = 'y') {
-	$ajax_cols = array('type', 'name', 'href', 'description');
+if ($feature_ajax == 'y') {
+	$ajax_col1 = array('type', 'innerHTML');
+	$ajax_col2 = array('name', 'innerHTML');
+	$ajax_col3 = array('href', 'a');
+	$ajax_col4 = array('description', 'innerHTML');
+	$ajax_cols = array($ajax_col1, $ajax_col2, $ajax_col3, $ajax_col4);
 	$smarty->assign('ajax_cols', $ajax_cols);
 }
 
