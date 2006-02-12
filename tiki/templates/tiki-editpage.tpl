@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.72 2006-01-20 11:53:01 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.73 2006-02-12 22:24:19 sylvieg Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -18,7 +18,7 @@
 </div>
 {/if}
 {if $category_needed eq 'y'}
-<div class="error">{tr}A category is mandatory{/tr}</div>
+<div class="simplebox highlight">{tr}A category is mandatory{/tr}</div>
 {/if}
 
 {if $likepages}
