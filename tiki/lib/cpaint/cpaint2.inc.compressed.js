@@ -11,9 +11,10 @@
 * @copyright    Copyright (c) 2005-2006 Paul Sullivan, Dominique Stender - http://sf.net/projects/cpaint
 * @author       Paul Sullivan <wiley14@gmail.com>
 * @author       Dominique Stender <dstender@st-webdevelopment.de>
-* @version      $Id: cpaint2.inc.compressed.js,v 1.2 2006-01-29 20:53:31 amette Exp $
+* @version      2.0.3
 */
-function cpaint(){this.version='2.0.2';var config=new Array();config['debugging']=0;config['proxy_url']='';config['transfer_mode']='GET';config['async']=true;config['response_type']='OBJECT';config['persistent_connection']=false;config['use_cpaint_api']=true;var stack_count=0;this.capable=test_ajax_capability();this.set_debug=function(){if(typeof arguments[0]=='boolean'){if(arguments[0]===true){config['debugging']=1;}else{config['debugging']=0;}}else if(typeof arguments[0]=='number'){config['debugging']=Math.round(arguments[0]);}}
+
+function cpaint(){this.version='2.0.3';var config=new Array();config['debugging']=-1;config['proxy_url']='';config['transfer_mode']='GET';config['async']=true;config['response_type']='OBJECT';config['persistent_connection']=false;config['use_cpaint_api']=true;var stack_count=0;this.capable=test_ajax_capability();this.set_debug=function(){if(typeof arguments[0]=='boolean'){if(arguments[0]===true){config['debugging']=1;}else{config['debugging']=0;}}else if(typeof arguments[0]=='number'){config['debugging']=Math.round(arguments[0]);}}
 this.set_proxy_url=function(){if(typeof arguments[0]=='string'){config['proxy_url']=arguments[0];}}
 this.set_transfer_mode=function(){if(arguments[0].toUpperCase()=='GET'||arguments[0].toUpperCase()=='POST'){config['transfer_mode']=arguments[0].toUpperCase();}}
 this.set_async=function(){if(typeof arguments[0]=='boolean'){config['async']=arguments[0];}}
@@ -52,8 +53,7 @@ httpobj.setRequestHeader('X-Powered-By','CPAINT v'+version);httpobj.onreadystate
 if(config['async']==false){callback();}}
 this.test_ajax_capability=function(){return get_connection_object();}
 var get_connection_object=function(){var return_value=false;var new_connection=false;if(config['persistent_connection']==false){debug('Using new connection object',1);new_connection=true;}else{debug('Using shared connection object.',1);if(typeof httpobj!='object'){debug('Getting new persistent connection object.',1);new_connection=true;}}
-if(new_connection==true){try{httpobj=new ActiveXObject('Msxml2.XMLHTTP');}catch(e){try{httpobj=new ActiveXObject('Microsoft.XMLHTTP');}catch(oc){httpobj=null;}}
-if(!httpobj&&typeof XMLHttpRequest!='undefined'){httpobj=new XMLHttpRequest();}
+if(new_connection==true){try{httpobj=new XMLHttpRequest();}catch(e1){try{httpobj=new ActiveXObject('Msxml2.XMLHTTP');}catch(e){try{httpobj=new ActiveXObject('Microsoft.XMLHTTP');}catch(oc){httpobj=null;}}}
 if(!httpobj){debug('Could not create connection object',0);}else{return_value=true;}}
 if(httpobj.readyState!=4){httpobj.abort();}
 return return_value;}
