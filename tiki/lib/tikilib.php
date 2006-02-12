@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.631 2006-01-24 22:16:38 rlpowell Exp $
+// CVS: $Id: tikilib.php,v 1.632 2006-02-12 22:19:31 lfagundes Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2058,6 +2058,24 @@ function add_pageview() {
 	return $retval;
 
     }
+    function list_online_friends($user)
+    {
+	global $userlib;
+
+	$bindvars=array($user);
+
+	// TODO: same as list_users
+	$query = "select u.*, p.`value` as realName from `tiki_friends` as f, `users_users` as u, `tiki_sessions` s left join `tiki_user_preferences` p on u.`login`=p.`user` and p.`prefName` = 'realName' where u.`login`=f.`friend` and s.`user`=u.`login` and f.`user`=? and f.`user` <> f.`friend`";
+
+	$result = $this->query($query,$bindvars);
+
+	$ret = Array();
+	while ($res = $result->fetchRow()) {
+	    $ret[] = $res;
+	}
+	return $ret;
+    }
+
 
     function verify_friendship($user, $friend)
     {

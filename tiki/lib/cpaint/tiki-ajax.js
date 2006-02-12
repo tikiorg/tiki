@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/cpaint/tiki-ajax.js,v 1.4 2006-02-12 17:02:33 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/cpaint/tiki-ajax.js,v 1.5 2006-02-12 22:19:33 lfagundes Exp $
 
 /*
  * This function is intended to be used to extract an array of associative arrays
@@ -10,6 +10,8 @@
  */
 function ajaxExtractArray(result, name, fields) {
     var objects = result.ajaxResponse[0][name];
+
+    if (!objects) { return new Array(); }
 
     var jslist = new Array();
 
