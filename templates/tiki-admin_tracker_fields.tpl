@@ -43,7 +43,7 @@
 <tr class="formcolor"><td>{tr}Field is hidden? (visible by admin only){/tr}</td><td><input type="checkbox" name="isHidden" {if $isHidden eq 'y'}checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td>{tr}Field is mandatory?{/tr}</td><td><input type="checkbox" name="isMandatory" {if $isMandatory eq 'y'}checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td>{tr}Order{/tr}</td><td><input type="text" size="5" name="position" value="{$position}" /></td></tr>
-<tr class="formcolor"><td>{tr}Description{/tr}</td><td><input type="text"  size="50" name="description" value="{$description}" /></td></tr>
+<tr class="formcolor"><td>{tr}Description{/tr}</td><td><input type="text"  size="50" name="description" value="{$description|escape}" /></td></tr>
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
