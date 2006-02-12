@@ -57,7 +57,7 @@ class ChatLib extends TikiLib {
 		//$log = fopen("logs/${name}.txt","a");
 		//fwrite($log,"$posterName: $data\n");
 		//fclose($log);
-		$query = "insert into `tiki_private_messages`(`poster`,`timestamp`,`data`,`toNickname`) values(?,?,?,?)";
+		$query = "insert into `tiki_private_messages`(`poster`,`timestamp`,`message`,`toNickname`) values(?,?,?,?)";
 		$result = $this->query($query,array($user,(int)$now,$data,$toNickname));
 		return true;
 	}
@@ -103,18 +103,15 @@ class ChatLib extends TikiLib {
 	}
 
 	function get_private_messages($user) {
-		$query = "select `messageId`, `poster`, `data` from `tiki_private_messages` where `toNickname`=? order by ".$this->convert_sortmode("timestamp_asc");
+		$query = "select `messageId`, `poster`, `message`, `timestamp` from `tiki_private_messages` where not `received` and `toNickname`=? order by ".$this->convert_sortmode("timestamp_asc");
 		$result = $this->query($query,array($user));
 		$ret = array();
 		while ($res = $result->fetchRow()) {
-			$aux = array();
-			$aux["poster"] = $res["poster"];
-			$aux["posterName"] = $res["poster"];
-			$aux["data"] = $res["data"];
-			$aux["messageId"] = $res["messageId"];
-			$ret[] = $aux;
+		    $ret[] = $res;
 		}
-		$num = count($ret);
+		
+		$this->query("update `tiki_private_messages` set `received`=1 where `toNickname`=?",array($user));
+		
 		return $ret;
 	}
 

@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.75 2006-01-22 21:45:09 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.76 2006-02-12 17:02:32 lfagundes Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -484,3 +484,13 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_mandatory_
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_blog_mandatory_category',-1);
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_image_gallery_mandatory_category',-1);
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_display_my_to_others', 'n');
+
+#2006-02-11 lfagundes
+alter table tiki_private_messages add `received` tinyint(1) not null default 0;
+alter table tiki_private_messages add key(`received`); 
+alter table tiki_private_messages add key(`timestamp`); 
+
+# "data" is reserved word in cpaint
+alter table tiki_private_messages add `message` varchar(255);
+update tiki_private_messages set `message`=`data`;
+alter table `tiki_private_messages` drop `data`;
