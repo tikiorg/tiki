@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2006-01-22 21:45:09 $
-# $Author: sylvieg $
+# $Date: 2006-02-12 17:02:32 $
+# $Author: lfagundes $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -2564,9 +2564,12 @@ DROP TABLE IF EXISTS tiki_private_messages;
 CREATE TABLE tiki_private_messages (
   messageId int(8) NOT NULL auto_increment,
   toNickname varchar(200) NOT NULL default '',
-  data varchar(255) default NULL,
+  message varchar(255) default NULL,
   poster varchar(200) NOT NULL default 'anonymous',
   timestamp int(14) default NULL,
+  received tinyint(1) not null default 0,
+  key(received),
+  key(timestamp),
   PRIMARY KEY  (messageId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
