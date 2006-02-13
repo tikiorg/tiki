@@ -11,7 +11,7 @@
 * @author     Paul Sullivan <wiley14@gmail.com>
 * @author     Dominique Stender <dstender@st-webdevelopment.de>
 * @copyright  Copyright (c) 2005-2006 Paul Sullivan, Dominique Stender - http://sf.net/projects/cpaint
-* @version    $Id: cpaint2.inc.php,v 1.2 2006-01-29 20:53:31 amette Exp $
+* @version    2.0.3
 */
   
 //---- includes ----------------------------------------------------------------
@@ -40,7 +40,7 @@
   * @author     Paul Sullivan <wiley14@gmail.com>
   * @author     Dominique Stender <dstender@st-webdevelopment.de>
   * @copyright  Copyright (c) 2005-2006 Paul Sullivan, Dominique Stender - http://sf.net/projects/cpaint
-  * @version    2.0.2
+  * @version    2.0.3
   */
   class cpaint {
     /**
@@ -49,7 +49,7 @@
     * @access private
     * @var    string $version
     */
-    var $version = '2.0.2';
+    var $version = '2.0.3';
     
     /**
     * response type.
@@ -168,7 +168,7 @@
       
       // determine response type
       if (isset($_REQUEST['cpaint_response_type'])) {
-        $this->response_type = strtoupper((string) $_REQUEST['cpaint_response_type']);
+        $this->response_type = htmlentities(strip_tags(strtoupper((string) $_REQUEST['cpaint_response_type'])));
       } // end: if
     }
 
@@ -518,8 +518,8 @@
   * @package   CPAINT
   * @access    public
   * @author    Dominique Stender <dstender@st-webdevelopment.de>
-  * @copyright 2005 (Dominique Stender); All rights reserved
-  * @version   2.0.2
+  * @copyright 2005-2006 (Dominique Stender); All rights reserved
+  * @version   2.0.3
   */
   class cpaint_node {
     /**
@@ -730,8 +730,8 @@
   * @package   CPAINT
   * @access    public
   * @author    Dominique Stender <dstender@st-webdevelopment.de>
-  * @copyright 2002-2005 (Dominique Stender); All rights reserved
-  * @version   2.0.2
+  * @copyright 2003-2006 (Dominique Stender); All rights reserved
+  * @version   2.0.3
   */
   class cpaint_transformer {
     /**
