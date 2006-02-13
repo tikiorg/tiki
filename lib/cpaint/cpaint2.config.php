@@ -7,7 +7,7 @@
 * released under the terms of the GPL
 * see http://www.fsf.org/licensing/licenses/gpl.txt for details
 * 
-* $Id: cpaint2.config.php,v 1.1 2006-01-29 20:53:31 amette Exp $
+* $Id: cpaint2.config.php,v 1.2 2006-02-13 02:11:51 amette Exp $
 * $Log: not supported by cvs2svn $
 * 
 * Configuration file for backend scripts, including proxy
@@ -16,7 +16,7 @@
 * @author     Paul Sullivan <wiley14@gmail.com>
 * @author     Dominique Stender <dstender@st-webdevelopment.de>
 * @copyright  Copyright (c) 2005-2006 Paul Sullivan, Dominique Stender - http://sf.net/projects/cpaint
-* @version 		2.0.2
+* @version 	  2.0.3
 */
 
 //---- proxy settings ----------------------------------------------------------

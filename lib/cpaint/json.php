@@ -12,7 +12,7 @@
 * @copyright    Copyright (c) 2005-2006 Dominique Stender - http://sf.net/projects/cpaint
 * @license      http://www.crockford.com/JSON/license.html
 * @author       Dominique Stender <dstender@st-webdevelopment.de>
-* @version      $Id: json.php,v 1.1 2006-01-29 20:53:31 amette Exp $
+* @version      1.0.1
 */
 
   
