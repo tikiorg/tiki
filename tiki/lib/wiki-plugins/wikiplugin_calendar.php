@@ -5,22 +5,20 @@ function wikiplugin_calendar_help() {
 }
 
 function wikiplugin_calendar($data, $params) {
-	global $smarty;
-	global $tikilib;
-	global $feature_calendar;
-	global $tiki_p_admin;
-	global $tiki_p_view_calendar;
-	global $dbTiki;
-	global $dc;
+    global $smarty, $tikilib, $feature_calendar, $tiki_p_admin, $tiki_p_view_calendar;
+    global $dbTiki, $dc, $user, $calendarlib;
 
-	extract ($params,EXTR_SKIP);
-	include_once("tiki-show_calendar.php");
-	
+    require_once("lib/calendar/calendarlib.php");
 
-	if(!isset($calendarId))
+    extract ($params,EXTR_SKIP);
+    include("tiki-calendar_setup.php");
+    include("tiki-show_calendar.php");
+    
+    
+    if(!isset($calendarId))
 	$calendarId = 1;
-
-	return $smarty->fetch('tiki-show_calendar.tpl');
+    
+    return $smarty->fetch('tiki-show_calendar.tpl');
 
 }
 
