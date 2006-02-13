@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.51 2005-10-27 20:12:31 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.52 2006-02-13 20:55:30 lfagundes Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -232,45 +232,9 @@ foreach ($_SESSION['CalendarViewTikiCals'] as $calt) {
 	$tikical["$calt"] = 1;
 }
 
-$trunc = "12"; // put in a pref, number of chars displayed in cal cells
 $smarty->assign('tikical', $tikical);
-$dc = $tikilib->get_date_converter($user);
 
-if (isset($_REQUEST["todate"]) && $_REQUEST['todate']) {
-	$_SESSION['CalendarFocusDate'] = $_REQUEST['todate'];
-} elseif (isset($_SESSION['CalendarFocusDate']) && $_SESSION['CalendarFocusDate']) {
-	$_REQUEST["todate"] = $_SESSION['CalendarFocusDate'];
-} else {
-	$focusdate = $dc->getDisplayDateFromServerDate(mktime(date('G'),date('i'),date('s'), date('m'), date('d'), date('Y'))); /* user date */
-	$_SESSION['CalendarFocusDate'] = $focusdate;
-	$_REQUEST["todate"] = $_SESSION['CalendarFocusDate'];
-}
-
-$focusdate = $_REQUEST['todate'];
-list($focus_day, $focus_month, $focus_year) = array(
-	date("d", $focusdate),
-	date("m", $focusdate),
-	date("Y", $focusdate)
-);
-
-$focuscell = mktime(0,0,0,$focus_month,$focus_day,$focus_year); /* server date */
-$focusdate = mktime(date('G'),date('i'),date('s'),$focus_month,$focus_day,$focus_year); /* server date */
-
-if (isset($_REQUEST["viewmode"]) and $_REQUEST["viewmode"]) {
-	$_SESSION['CalendarViewMode'] = $_REQUEST["viewmode"];
-}
-
-if (!isset($_SESSION['CalendarViewMode']) or !$_SESSION['CalendarViewMode']) {
-	$_SESSION['CalendarViewMode'] = 'week';
-}
-$smarty->assign_by_ref('viewmode', $_SESSION['CalendarViewMode']);
-
-if (isset($_REQUEST["viewlist"])) {
-	$viewlist = $_REQUEST["viewlist"];
-	$_SESSION['CalendarViewList'] = $viewlist;
-} else
-	$viewlist = "";
-$smarty->assign_by_ref('viewlist', $_SESSION['CalendarViewList']);
+include_once("tiki-calendar_setup.php");
 
 if (isset($_REQUEST["delete"])and ($_REQUEST["delete"]) and isset($_REQUEST["calitemId"])) {
   $area = 'delcalevent';
@@ -594,11 +558,6 @@ if (isset($_REQUEST['day']) && !empty($_REQUEST['day'])) {
 if (isset($_REQUEST['year']) && !empty($_REQUEST['year'])) {
 	$request_year = $_REQUEST['year'];
 }
-
-$calendarViewMode = $_SESSION['CalendarViewMode'];
-$calendarViewGroups = $_SESSION['CalendarViewGroups'];
-$calendarViewTikiCals = $_SESSION['CalendarViewTikiCals'];
-$calendarViewList = $_SESSION['CalendarViewList'];
 
 if (isset($_REQUEST['sort_mode'])) $sort_mode = $_REQUEST['sort_mode'];
 

@@ -1,5 +1,16 @@
 <?php
 
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
+  header('location: index.php');
+  exit;
+}
+
+$calendarViewMode = $_SESSION['CalendarViewMode'];
+$calendarViewGroups = $_SESSION['CalendarViewGroups'];
+$calendarViewTikiCals = $_SESSION['CalendarViewTikiCals'];
+$calendarViewList = $_SESSION['CalendarViewList'];
+
 $z = date("z");
 
 if (($firstDayofWeek = $tikilib->get_user_preference($user, "")) == "") { /* 0 for Sundays, 1 for Mondays */
