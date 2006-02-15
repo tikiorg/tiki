@@ -10,7 +10,7 @@ include_once('lib/map/map_query.php');
   $cp->start();
   $cp->return_data();
   
-  function cp_map_query($mapfile,$corx,$cory,$layers) {
+  function cp_map_query($mapfile,$corx,$cory,$minx,$maxx,$miny,$maxy,$xsize,$ysize,$layers,$labels) {
   	global $cp;
   	global $map_path;
 
@@ -34,10 +34,28 @@ include_once('lib/map/map_query.php');
 	    } else {
     		$my_layer->Set("status",MS_OFF);
     	}
+    	if (!$labels[$j]) {
+	     	$my_layer->Set("labelmaxscale",0);
+	    }
     }
-  	
-  	$result=map_query($map,$corx,$cory);
 
+    $map->Set("width",$xsize);
+		$map->Set("height",$ysize);
+		
+		$my_point = ms_newpointObj();
+		$my_point->setXY(($map->width)/2,($map->height)/2);
+		
+		$my_extent = ms_newrectObj();
+    $my_extent->setextent($minx,$miny,$maxx,$maxy);
+    
+    $map->zoompoint(1,$my_point,$map->width,$map->height,$my_extent);
+    
+  	$result=map_query($map,$corx,$cory);
+  	$image = $map->drawquery();
+		$image_url = $image->saveWebImage();
+
+		$result=$image_url."\n".$result;
+		
   	$cp->set_data($result);
   }
 
