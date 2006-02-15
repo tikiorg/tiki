@@ -1,6 +1,12 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.31 2005-11-07 21:42:30 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.32 2006-02-15 05:22:13 franck Exp $ *}
 
+<script src="lib/x/x_core.js"></script>
+<script src="lib/x/x_event.js"></script>
+<script src="lib/x/x_dom.js"></script>
+<script src='lib/x/x_slide.js'></script>
+<script src='lib/x/x_misc.js'></script>
 <script src="lib/map/map.js"></script>
+<script src="lib/cpaint/cpaint2.inc.js"></script>
 
 <h1>{$pagelink}</h1>
 <div align="center">
@@ -22,10 +28,46 @@
 		    var miny={$miny};
 		    var maxx={$maxx};
 		    var maxy={$maxy};
-		    var xsize={$xsize}
-		    var ysize={$ysize}
+		    var xsize={$xsize};
+		    var ysize={$ysize};
+		    var mapfile='{$mapfile}';
+		    var layers= new Array();
+		    {section name=j loop=$my_layers}
+		    {if $my_layers_checked[j] eq "checked"}
+		    	layers[{$smarty.section.j.index}]=true;
+		    {else}
+		    	layers[{$smarty.section.j.index}]=false;
+		    {/if}
+		    {/section}
 				xAddEventListener(xGetElementById('map'),'mousemove',map_mousemove,false);
+				xAddEventListener(xGetElementById('map'),'click',map_mouseclick,true);
 			</script>
+			
+			<div id="queryWindow" style="position:absolute; top:0px; left:0px; visibility:hidden;">
+				<div id="outerBox" style="position:absolute; top:0px; left:0px;
+					height:150px; width:220px; overflow:hidden; border-top:4px solid #ffffff;
+					border-left:4px solid #ffffff; border-right:4px solid #666666;
+					border-bottom:4px solid #666666; background-color:#ffffff">
+					<div id="innerBox" style="position:absolute; top:0px; left:0px; padding:5px;
+						width:200px; font:10px Arial, Helvetical, sans-serif">
+						<p>{tr}Querying{/tr}...</p>
+					</div>
+					<img id="queryClose" src="img/icons/close.gif" height="13" width="13" alt="{tr}Scroll Up{/tr}"
+						style="position:absolute; top:0px; left:207px" />
+					<img id="queryUp" src="img/icons2/up.gif" height="8" width="10" alt="{tr}Scroll Up{/tr}"
+						style="position:absolute; top:15px; left:210px" />
+					<img id="queryDown" src="img/icons2/down.gif" height="8" width="10" alt="{tr}Scroll Down{/tr}"
+						style="position:absolute; top:138px; left:210px" />
+				  <script language="JavaScript">
+				  	xAddEventListener(xGetElementById('queryClose'),'click',query_close,true);
+				  	xAddEventListener(xGetElementById('queryUp'),'mousemove',query_up,true);
+				  	xAddEventListener(xGetElementById('queryUp'),'mouseout',query_scroll_stop,true);
+				  	xAddEventListener(xGetElementById('queryDown'),'mousemove',query_down,true);
+				  	xAddEventListener(xGetElementById('queryDown'),'mouseout',query_scroll_stop,true);
+				  </script>
+				</div>
+			</div>
+				
 		  </td></tr>
 		  <tr><td align="center">
 		 	<img id="scale" src="{$image_scale_url}" border="0" alt="{tr}Scale{/tr}" title="{tr}Scale{/tr}" />
@@ -111,7 +153,7 @@
 			<a href="tiki-index.php?page={$map_help}"><small>{tr}Help{/tr}</small></a>&nbsp;
 			<a href="tiki-index.php?page={$map_comments}"><small>{tr}Comments{/tr}</small></a><br />
 		</td></tr>
-	<tr><td>{$map_querymsg}</td></tr>	
+	<tr><td><div id="resultBox">{$map_querymsg}</div></td></tr>	
 		</table>
 		<p class="editdate">{tr}Last modification date{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} <a class="link" href="tiki-user_information.php?view_user={$lastUser}">{$lastUser}</a> ({$ip})-{tr}Hits{/tr}:{$mapstats}({$mapstats7days})</p>
 	     
