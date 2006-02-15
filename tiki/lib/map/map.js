@@ -25,7 +25,9 @@ function map_mouseclick(evt) {
     //cp.set_debug(2);
     cp.set_response_type('TEXT');
     cp.call('lib/map/map_cp.php', 'cp_map_query', query_results, 
-    	mapfile ,xGetElementById('xx').value, xGetElementById('yy').value, layers);
+    	mapfile ,xGetElementById('xx').value, xGetElementById('yy').value, 
+    	minx, maxx, miny, maxy,
+    	xsize, ysize, layers, labels);
 		return false;
 	} else {
 		return true;
@@ -35,10 +37,15 @@ function map_mouseclick(evt) {
 }
 
 function query_results(result) {
+  imgurl=result.substring(0,result.indexOf('\n'));
+ 	result=result.substring(result.indexOf('\n'));
+	result=result.substring(result.indexOf('\n'));
 	innerBox=xGetElementById('innerBox');
 	xInnerHtml(innerBox,result);
 	resultBox=xGetElementById('resultBox');
 	xInnerHtml(resultBox,result);
+	map=xGetElementById('map');
+	map.src=imgurl;
 }
 
 function query_close(evt) {

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.32 2006-02-15 05:22:13 franck Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.33 2006-02-15 06:25:07 franck Exp $ *}
 
 <script src="lib/x/x_core.js"></script>
 <script src="lib/x/x_event.js"></script>
@@ -37,6 +37,14 @@
 		    	layers[{$smarty.section.j.index}]=true;
 		    {else}
 		    	layers[{$smarty.section.j.index}]=false;
+		    {/if}
+		    {/section}
+		    var labels= new Array();
+		    {section name=j loop=$my_layers}
+		    {if $my_layers_label_checked[j] eq "checked"}
+		    	labels[{$smarty.section.j.index}]=true;
+		    {else}
+		    	labels[{$smarty.section.j.index}]=false;
 		    {/if}
 		    {/section}
 				xAddEventListener(xGetElementById('map'),'mousemove',map_mousemove,false);
