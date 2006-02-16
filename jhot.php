@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/jhot.php,v 1.11 2005-05-18 10:58:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/jhot.php,v 1.12 2006-02-16 17:42:44 xavidp Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/jhot.php,v 1.11 2005-05-18 10:58:52 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/jhot.php,v 1.12 2006-02-16 17:42:44 xavidp Exp $
 include_once ('tiki-setup.php');
 
 include_once ('lib/drawings/drawlib.php');
@@ -62,6 +62,8 @@ if (isset($_FILES['filepath']) && is_uploaded_file($_FILES['filepath']['tmp_name
 	fclose ($fp);
 	fclose ($fw);
 	fclose ($fw2);
+	chmod("img/wiki/$hash", 0755); // seems necessary on some systems
+	chmod("img/wiki/$name", 0755); // seems necessary on some systems
 }
 
 ?>
