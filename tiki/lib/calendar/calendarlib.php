@@ -14,7 +14,7 @@ class CalendarLib extends TikiLib {
 		}
 		$this->db = $db;
 	}
-
+ 
 	function list_calendars($offset = 0, $maxRecords = -1, $sort_mode = 'name_asc', $find = '') {
 		$mid = '';
 		$res = array();
@@ -103,19 +103,26 @@ class CalendarLib extends TikiLib {
 	function list_raw_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode='start_asc', $find='') {
 		global $user, $tikilib;
 		$dc = $tikilib->get_date_converter($user);
+
+		if (sizeOf($calIds) == 0) {
+		    return array();
+		}
+
 		$tstart = $dc->getServerDateFromDisplayDate($tstart);/* user time -> server time */;
 		$tstop = $dc->getServerDateFromDisplayDate($tstop);
+		
 		$where = array();
 		$bindvars=array();
 		$time = new timer;
 		$time->start();
 		foreach ($calIds as $calendarId) {
-			$where[] = "i.`calendarId`=?";
-			$bindvars[] = (int)$calendarId;
+		    $where[] = "i.`calendarId`=?";
+		    $bindvars[] = (int)$calendarId;
 		}
 
-		$cond = "(" . implode(" or ", $where). ")";
-		$cond .= " and ((i.`start` > ? and i.`end` < ?) or (i.`start` < ? and i.`end` > ?))";
+		$cond = "(" . implode(" or ", $where). ") and ";
+		$cond .= " ((i.`start` > ? and i.`end` < ?) or (i.`start` < ? and i.`end` > ?))";
+
 		$bindvars[] = (int)$tstart;
 		$bindvars[] = (int)$tstop;
 		$bindvars[] = (int)$tstop;
@@ -774,12 +781,10 @@ class CalendarLib extends TikiLib {
 		if($maxDays > 0)
 		{
 			$maxSeconds = ($maxDays * 24 * 60 * 60);
-			$cond .= " and `start` < (unix_timestamp(now()) + ?)";
-			$bindvars += array($maxSeconds);
+			$cond .= " and `end` < (unix_timestamp(now())) +".$maxSeconds;
 		}
-		
 		$query = "select `start`, `name`, `calitemId`, `calendarId`, `user`, `lastModif` from `tiki_calendar_items` where 1=1 ".$cond." order by ".$this->convert_sortmode($order);
-		
+
 		$result = $this->query($query,$bindvars,$maxrows,0);
 			
 		$ret = array();
@@ -787,7 +792,7 @@ class CalendarLib extends TikiLib {
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
-			
+	
 		return $ret;
 	}
 }

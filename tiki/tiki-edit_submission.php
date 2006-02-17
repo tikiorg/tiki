@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.47 2005-10-26 15:11:03 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.48 2006-02-17 15:10:31 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -382,18 +382,18 @@ if (isset($_REQUEST["save"])) {
   $cachedlinks = array_diff($links, $notcachedlinks);
   $tikilib->cache_links($cachedlinks); 
 */
+	$cat_type = 'submission';
+	$cat_objid = $subid;
+	$cat_desc = substr($_REQUEST["heading"], 0, 200);
+	$cat_name = $_REQUEST["title"];
+	$cat_href = "tiki-edit_submission.php?subId=" . $cat_objid;
+	include_once ("categorize.php");
 	if ($tiki_p_autoapprove_submission == 'y') {
 		$artlib->approve_submission($subid);
 
 		header ("location: tiki-view_articles.php");
 		die;
 	}
-	$cat_type = 'article';
-	$cat_objid = $subId;
-	$cat_desc = substr($_REQUEST["heading"], 0, 200);
-	$cat_name = $_REQUEST["title"];
-	$cat_href = "tiki-read_article.php?articleId=" . $cat_objid;
-	include_once ("categorize.php");
 
 	header ("location: tiki-list_submissions.php");
 	die;
@@ -421,7 +421,7 @@ if ($feature_multilingual == 'y') {
 	$smarty->assign_by_ref('languages', $languages);
 }
 
-$cat_type = 'article';
+$cat_type = 'submission';
 $cat_objid = $subId;
 include_once ("categorize_list.php");
 

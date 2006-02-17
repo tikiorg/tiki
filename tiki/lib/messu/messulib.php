@@ -52,7 +52,7 @@ class Messu extends TikiLib {
 	 * Send a message to a user
 	 */
 	function post_message($user, $from, $to, $cc, $subject, $body, $priority, $replyto_hash='') {
-		global $smarty, $userlib, $sender_email, $language, $tikilib;
+		global $smarty, $userlib, $sender_email, $language, $tikilib, $sender_email;
 
 		$subject = strip_tags($subject);
 		$body = strip_tags($body, '<a><b><img><i>');
@@ -62,7 +62,7 @@ class Messu extends TikiLib {
 		if ($this->getOne("select count(*) from `messu_messages` where `user`=? and `user_from`=? and `hash`=?",array($user,$from,$hash))) {
 			return false;
 		}
-
+		
 		$now = date('U');
 		$query = "insert into `messu_messages`(`user`,`user_from`,`user_to`,`user_cc`,`subject`,`body`,`date`,`isRead`,`isReplied`,`isFlagged`,`priority`,`hash`,`replyto_hash`) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		$this->query($query,array($user,$from,$to,$cc,$subject,$body,(int) $now,'n','n','n',(int) $priority,$hash,$replyto_hash));
@@ -70,7 +70,6 @@ class Messu extends TikiLib {
 		// Now check if the user should be notified by email
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 		$machine = $tikilib->httpPrefix(). $foo["path"];
-
 		if ($this->get_user_preference($user, 'minPrio', 6) <= $priority) {
 			if (!isset($_SERVER["SERVER_NAME"])) {
 				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
@@ -91,6 +90,16 @@ class Messu extends TikiLib {
 				$mail->setSubject(sprintf($s, $_SERVER["SERVER_NAME"]));
 				$mail_data = $smarty->fetchLang($lg, 'mail/messu_message_notification.tpl');
 				$mail->setText($mail_data);
+
+				$local_sender_email = $userlib->get_user_email($from);
+
+				if( strlen( $sender_email ) < 1 )
+				{
+				    $local_sender_email = $sender_email;
+				}
+
+				$mail->setHeader("Reply-To", $local_sender_email);
+				$mail->setHeader("From", $local_sender_email);
 				if (!$mail->send(array($email), 'mail'))
 					return false; //TODO echo $mail->errors;
 			}

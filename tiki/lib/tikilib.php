@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.632 2006-02-12 22:19:31 lfagundes Exp $
+// CVS: $Id: tikilib.php,v 1.633 2006-02-17 15:10:33 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -374,7 +374,7 @@ class TikiLib extends TikiDB {
     function get_online_users() {
 	if(!isset($this->online_users_cache)) {
 	$this->online_users_cache=array();
-	$query = "select `user` ,`timestamp`, `tikihost` from `tiki_sessions` where `user`<>?";
+	$query = "select s.`user`, p.`value` as 'realName', `timestamp`, `tikihost` from `tiki_sessions` s left join `tiki_user_preferences` p on s.`user`<>? and s.user = p.user and p.prefName = 'realName' where s.user is not null;";
 	$result = $this->query($query,array(''));
 	$ret = array();
 	while ($res = $result->fetchRow()) {
@@ -683,8 +683,15 @@ class TikiLib extends TikiDB {
 	if (substr($sort_mode,0,2) == "f_") {
 	    list($a,$csort_mode,$corder) = split('_',$sort_mode);
 	}
-	$mid = " where tti.`trackerId`=? ";
-	$bindvars = array((int) $trackerId);
+
+	$trackerId = (int) $trackerId;	
+	if ($trackerId == -1) {
+	  $mid = " where 1=1 ";
+	  $bindvars = array();
+	} else {
+	  $mid = " where tti.`trackerId`=? ";
+	  $bindvars = array($trackerId);
+	}
 
 	if ($status) {
 	    $mid.= " and tti.`status`=? ";
@@ -3550,40 +3557,6 @@ function add_pageview() {
 	return true;
     }
 
-    function load_user_cache($login, $all=false) {
-	global $user_details;
-	global $user_preferences;
-
-	if ( !is_array($login) ) {
-	    $login = array($login);
-	}
-
-	$query  = 'SELECT `login` , `userId` , `email` , `lastLogin` , `currentLogin` , `registrationDate` , `created` ,  `avatarName` , `avatarSize` , `avatarFileType` , `avatarLibName` , `avatarType` FROM `users_users`';
-	$query .= ' WHERE ' . str_repeat('`login` = ? OR ', count($login)-1) . '`login` = ?';
-	$result = $this->query($query, $login);
-
-	while ( $row = $result->fetchRow() ) {
-	    $alogin = $row['login'];
-	    unset($row['login']);
-	    $user_details[$alogin] = $row;
-	}
-
-	$query  = 'SELECT `user` , `prefName` , `value` FROM `tiki_user_preferences`';
-	if ( $all ) {
-	    $query .= ' WHERE ' . str_repeat('`user` = ? OR ', count($login)-1) . '`user` = ?';
-	    $result = $this->query($query, $login);
-	} else {
-	    $query .= ' WHERE ( `prefName` = ? OR `prefName` = ? ) AND ( ' . str_repeat('`user` = ? OR ', count($login)-1) . '`user` = ? )';
-	    $result = $this->query($query, array_merge( array('user_information', 'country'), $login));
-	}
-
-	while ( $row = $result->fetchRow() ) {
-	    $alogin = $row['user'];
-	    unset($row['login']);
-	    $user_preferences[$row['user']][$row['prefName']] = $row['value'];
-	}
-    }
-
     function get_user_preference($user, $name, $default = '') {
 	global $user_preferences;
 
@@ -3603,7 +3576,11 @@ function add_pageview() {
     }
 
     function set_user_preference($user, $name, $value) {
-	global $user_preferences;
+	global $user_preferences, $cachelib;
+
+	require_once("lib/cache/cachelib.php");
+	$cachelib->invalidate('user_details_'.$user);
+
 	$user_preferences[$user][$name] = $value;
 	$query = "delete from `tiki_user_preferences` where `user`=? and `prefName`=?";
 	$bindvars=array($user,$name);
@@ -3611,6 +3588,28 @@ function add_pageview() {
 	$query = "insert into `tiki_user_preferences`(`user`,`prefName`,`value`) values(?, ?, ?)";
 	$bindvars[]=$value;
 	$result = $this->query($query, $bindvars);
+
+	return true;
+    }
+
+    // similar to set_user_preference, but set all at once.
+    function set_user_preferences($user, $preferences) {
+	global $user_preferences, $cachelib;
+
+	require_once("lib/cache/cachelib.php");
+	$cachelib->invalidate('user_details_'.$user);
+
+	$user_preferences = $preferences;
+	
+	$query = "delete from `tiki_user_preferences` where `user`=?";
+
+	$result = $this->query($query, array($user), -1,-1,false);
+
+	foreach ($preferences as $prefName => $value) {
+	    $query = "insert into `tiki_user_preferences`(`user`,`prefName`,`value`) values(?, ?, ?)";
+	    $result = $this->query($query, array($user,$prefName,$value));
+	}
+
 	return true;
     }
 
@@ -5500,13 +5499,17 @@ if (!$simple_wiki) {
 			    $addremove = 1;
 			}
 
+			// create stable anchors for all headers
+			// use header but replace non-word character sequences
+			// with one underscore (for XHTML 1.0 compliance)
+			$thisid=ereg_replace("[^a-zA-Z0-9]+","_",substr($line,$hdrlevel+$addremove));
+			$anchor="<a name='$thisid'></a>";
+
 			// Is any {maketoc} present on page?
 			if (count($tocs[0]) > 0) {
-			    // OK. Must insert <a id=...> before HEADER and collect TOC entry
-			    $thisid = 'id' . microtime() * 1000000;
-			    $pageNumLink = ($pageNum >= 2)? "tiki-index.php?page=$page&amp;pagenum=$pageNum": "";
+			    // OK. Must collect TOC entry
+			    $pageNumLink = ($pageNum >= 2)? "tiki-index.php?page=$page&pagenum=$pageNum": "";
 			    array_push($anch, str_repeat("*", $hdrlevel). " <a href='$pageNumLink#$thisid' class='link'>" . substr($line, $hdrlevel + $addremove). '</a>');
-			    $anchor = "<a name='$thisid'></a>";
 			}
 			// Use $hdrlevel + 1 because the page title is H1, so none of the other headers should be.
 			global $feature_wiki_show_hide_before;
@@ -6533,6 +6536,13 @@ if (!$simple_wiki) {
 			'charts'
 		);
 	}
+	function other_value_in_tab_line($tab, $valField1, $field1, $field2) {
+		foreach ($tab as $line) {
+			if ($line[$field1] == $valField1)
+				return $line[$field2];
+		}
+	}
+		
 
 	function attach_file($file_name, $file_tmp_name, $store_type) {
 		global $tmpDir;

@@ -16,7 +16,7 @@
 
 </h1>
 {include file=tiki-g-user_bar.tpl}
-<h2>{tr}List of processes{/tr} ({$cant})</h2>
+<h2>{tr}List of activities{/tr} ({$cant})</h2>
 
 {* FILTERING FORM *}
 <form action="tiki-g-user_activities.php" method="post" id='fform'>

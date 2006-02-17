@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.15 2005-07-30 11:34:05 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.16 2006-02-17 15:10:47 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-browse_categories.php">{if $parentId ne 0}{tr}Category{/tr} {$p_info.name}{else}{tr}Categories{/tr}{/if}</a></h1>
 {if $parentId and $p_info.description}<div class="description">{$p_info.description}</div>{/if}
 {if $tiki_p_admin_categories eq 'y'}
-<div="navbar"><a class="linkbut" href="tiki-admin_categories.php?parentId={$parentId}" title="{tr}admin the category system{/tr}">{tr}admin category{/tr}</a></div>
+<div class="navbar"><a class="linkbut" href="tiki-admin_categories.php?parentId={$parentId}" title="{tr}admin the category system{/tr}">{tr}admin category{/tr}</a></div>
 {/if}
 {tr}Browse in{/tr}:<br />
 <a class="linkbut" href="tiki-browse_categories.php?find={$find|escape}&amp;deep={$deep}&amp;parentId={$parentId}&amp;sort_mode={$sort_mode}">{tr}All{/tr}</a>
@@ -62,7 +62,7 @@
 <a class="link" href="tiki-browse_categories.php?find={$find|escape}&amp;type={$type|escape}&amp;deep=on&amp;parentId={$parentId}&amp;sort_mode={$sort_mode}">{tr}Show subcategories objects{/tr}</a>
 {/if}
 <br /><br />
-<div class="treetitle">{tr}Current category{/tr}: 
+<div class="treetitle">{tr}Current category{/tr}:
 <a href="tiki-browse_categories.php?parentId=0&amp;deep={$deep}&amp;type={$type|escape}" class="categpath">{tr}Top{/tr}</a>
 {section name=x loop=$path}
 &nbsp;::&nbsp;
@@ -81,7 +81,7 @@
 <div class="tree">
 {$tree}
 </div>
-</td
+</td>
 <td width="20">&nbsp;</td>
 <td>
 
@@ -91,6 +91,7 @@
 {cycle values="odd,even" print=false}
 {section name=ix loop=$objects}
 <tr class="{cycle}" >
+{if $deep eq 'on'}<td>{$objects[ix].categName}</td>{/if}
 <td>{tr}{$objects[ix].type|replace:"wiki page":"Wiki"|replace:"article":"Article"|regex_replace:"/tracker [0-9]*/":"tracker item"}{/tr}</td>
 <td><a href="{$objects[ix].href}" class="catname">{$objects[ix].name}</a></td>
 <td>{$objects[ix].description}&nbsp;</td>
@@ -98,7 +99,12 @@
 {/section}
 </table>
 <br />
+{/if}
 
+</td></tr></table>
+
+
+{if $cantobjects > 0}
 <div align="center">
   <div class="mini">
     {if $prev_offset >= 0}
@@ -119,6 +125,5 @@
     {/if}
  </div>
 </div>
-{/if}
-</td></tr></table>
 
+{/if}

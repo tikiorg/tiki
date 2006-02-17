@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.298 2006-01-29 04:04:01 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.299 2006-02-17 15:10:31 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -236,10 +236,6 @@ include_once ('tiki-setup_base.php');
 TikiSetup::check($tikidomain);
 //print("tiki-setup: before rest of tiki-setup:".$tiki_timer->elapsed()."<br />");
 
-if ( $user ) { // load users_users and user_preferences cache for logged-in user
-    $tikilib->load_user_cache($user, 'all');
-}
-
 // patch for Case-sensitivity perm issue
 $case_patched = $tikilib->get_preference('case_patched','n');
 if ($case_patched == 'n') {
@@ -418,6 +414,7 @@ $feature_chat = 'n';
 $feature_polls = 'n';
 $feature_menusfolderstyle = 'n';
 $feature_calendar = 'n';
+$feature_cal_manual_time = 'n';
 $feature_editcss = 'n';
 $feature_wiki_monosp = 'y';
 $feature_maps = 'n';
@@ -658,6 +655,8 @@ $rss_image_gallery = 'n';
 $rss_file_gallery = 'n';
 $rss_blog = 'n';
 $rss_tracker = 'n';
+$rss_trackers = 'n';
+$rss_calendar = 'n';
 
 $count_admin_pvs = 'y';
 
@@ -685,6 +684,8 @@ $max_rss_file_gallery = 10;
 $max_rss_blog = 10;
 $max_rss_mapfiles = 10;
 $max_rss_tracker = 10;
+$max_rss_trackers = 10;
+$max_rss_calendar = 10;
 
 $metatag_keywords = '';
 $metatag_description = '';
@@ -875,6 +876,8 @@ $smarty->assign('rss_image_gallery', $rss_image_gallery);
 $smarty->assign('rss_file_gallery', $rss_file_gallery);
 $smarty->assign('rss_blog', $rss_blog);
 $smarty->assign('rss_tracker', $rss_tracker);
+// where do other variables come from? this is undefined - batawata
+//$smarty->assign('rss_calendars', $rss_calendars);
 
 $smarty->assign('max_rss_directories', $max_rss_directories);
 $smarty->assign('max_rss_articles', $max_rss_articles);
@@ -886,6 +889,7 @@ $smarty->assign('max_rss_image_gallery', $max_rss_image_gallery);
 $smarty->assign('max_rss_file_gallery', $max_rss_file_gallery);
 $smarty->assign('max_rss_blog', $max_rss_blog);
 $smarty->assign('max_rss_tracker', $max_rss_tracker);
+//$smarty->assign('max_rss_calendars', $max_rss_calendars);
 
 $smarty->assign('metatag_keywords', $metatag_keywords);
 $smarty->assign('metatag_description', $metatag_description);
@@ -1296,6 +1300,12 @@ $feature_intertiki_server = 'n';
 $smarty->assign('feature_intertiki_server', $feature_intertiki_server);
 $interlist = serialize(array(''));
 $smarty->assign_by_ref('interlist', $interlist);
+$feature_intertiki_mymaster = '';
+$smarty->assign_by_ref('feature_intertiki_mymaster', $feature_intertiki_mymaster);
+$feature_intertiki_import_preferences = 'n';
+$smarty->assign_by_ref('feature_intertiki_import_preferences', $feature_intertiki_import_preferences);
+$feature_intertiki_import_groups = 'n';
+$smarty->assign_by_ref('feature_intertiki_import_groups', $feature_intertiki_import_groups);
 $known_hosts = serialize(array(''));
 $smarty->assign_by_ref('known_hosts', $known_hosts);
 $tiki_key = '';
@@ -1457,6 +1467,7 @@ foreach ($preferences as $name => $val) {
 }
 // ******************************************************************************************
 
+// @TODO: bug here, serialized val being broken at char 250 that's max size of preference
 $interlist = unserialize($interlist);
 
 if (isset($GLOBALS['pear_wiki_parser']) && $GLOBALS['pear_wiki_parser'] == 'y') {
@@ -1543,6 +1554,18 @@ if (isset($_REQUEST['switchLang'])) {
 		|| !preg_match("/[a-zA-Z-_]*$/", $_REQUEST['switchLang'])
 		|| !file_exists('lang/'.$_REQUEST['switchLang'].'/language.php')
 		|| ($available_languages && !in_array($_REQUEST['switchLang'], unserialize($available_languages))) ) {
+			unset($_REQUEST['switchLang']);
+	}
+}
+
+if (isset($_REQUEST['switchLang'])) {
+	if ($change_language != 'y'
+		|| !preg_match("/[a-zA-Z-_]*$/", $_REQUEST['switchLang'])
+		|| !file_exists('lang/'.$_REQUEST['switchLang'].'/language.php'))
+		unset($_REQUEST['switchLang']);
+	elseif ($available_languages) {
+		$a = unserialize($available_languages);
+		if (count($a) >= 1 && !in_array($_REQUEST['switchLang'], $a))
 			unset($_REQUEST['switchLang']);
 	}
 }
@@ -2013,5 +2036,4 @@ if ($language == 'ar' || $language == 'he' || $language == 'fa') {
 	$feature_bidi='y';
 	$smarty->assign('feature_bidi', $feature_bidi);
 }
-
 ?>

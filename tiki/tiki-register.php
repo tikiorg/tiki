@@ -6,8 +6,8 @@ require_once('tiki-setup.php');
 include_once('lib/registration/registrationlib.php');
 include_once('lib/notifications/notificationlib.php');
 
-// Permission: needs p_register
-if($allowRegister != 'y') {
+// Permission: needs p_register and not to be a slave
+if ($allowRegister != 'y' || ($feature_intertiki == 'y' && !empty($feature_intertiki_mymaster))) {
   header("location: index.php");
   exit;
   die;
@@ -132,7 +132,7 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
   }
 
   if($email_valid != 'no') {
-		if($validateUsers == 'y') {
+		if($validateUsers == 'y' || (isset($validateRegistration) && $validateRegistration == 'y')) {
 			//$apass = addslashes(substr(md5($tikilib->genPass()),0,25));
 			$apass = addslashes(md5($tikilib->genPass()));
 			$foo = parse_url($_SERVER["REQUEST_URI"]);

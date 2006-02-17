@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.33 2006-01-05 17:16:38 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.34 2006-02-17 15:10:47 sylvieg Exp $ *}
 <h1><a href="tiki-upload_image.php{if $galleryId}?galleryId={$galleryId}{/if}" class="pagetitle">{tr}Upload Image{/tr}</a>
 
 {if $feature_help eq 'y'}
@@ -56,14 +56,13 @@
 	<td  class="formcolor" colspan="2"><b>{tr}Now enter the image URL{/tr}{tr} or upload a local image from your disk{/tr}</td></tr>
 	<tr><td class="formcolor">URL:</td><td class="formcolor"><input size="50" type="text" name="url" /></td></tr>
 	<tr>
-	<td class="formcolor">{tr}Upload from disk{/tr}:</td><td class="formcolor">
+	<td class="formcolor">{tr}Upload from disk{/tr} / {tr}Batch upload{/tr}:</td><td class="formcolor">
 	<input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
 	<input size="50" name="userfile1" type="file" />
 	</td></tr>
 	<tr><td class="formcolor">{tr}Thumbnail (optional, overrides automatic thumbnail generation){/tr}:</td><td class="formcolor">
 	<input name="userfile2" size ="50" type="file" />
 	</td></tr>
-	<tr><td class="formcolor" colspan="2"><b>{tr}Batch upload{/tr}</b></td></tr>
 	<tr><td class="formcolor">{tr}Upload from disk{/tr}:</td><td class="formcolor">
 	<input name="userfile3" type="file" />
 	<input name="userfile4" type="file" /><br />

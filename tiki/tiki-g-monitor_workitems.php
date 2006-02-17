@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-monitor_workitems.php,v 1.11 2005-05-18 10:58:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-monitor_workitems.php,v 1.12 2006-02-17 15:10:31 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -31,7 +31,7 @@ $where = '';
 $wheres = array();
 
 if (isset($_REQUEST['filter_instance']) && $_REQUEST['filter_instance'])
-	$wheres[] = "instanceId=" . $_REQUEST['filter_instance'] . "";
+	$wheres[] = "gw.instanceId=" . $_REQUEST['filter_instance'] . "";
 
 if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process'])
 	$wheres[] = "gp.pId=" . $_REQUEST['filter_process'] . "";

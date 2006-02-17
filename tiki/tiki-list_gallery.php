@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_gallery.php,v 1.22 2005-10-20 23:07:02 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_gallery.php,v 1.23 2006-02-17 15:10:31 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,13 +13,6 @@ include_once ("lib/imagegals/imagegallib.php");
 
 if ($feature_galleries != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_galleries");
-
-	$smarty->display("error.tpl");
-	die;
-}
-
-if ($tiki_p_admin_galleries != 'y') {
-	$smarty->assign('msg', tra("Permission denied you cannot access this gallery"));
 
 	$smarty->display("error.tpl");
 	die;
@@ -74,7 +67,7 @@ if ($tiki_p_admin_galleries == 'y') {
 }
 
 if ($tiki_p_view_image_gallery != 'y') {
-	$smarty->assign('msg', tra("Permission denied you can not view this section"));
+	$smarty->assign('msg', tra("Permission denied you cannot access this gallery"));
 
 	$smarty->display("error.tpl");
 	die;

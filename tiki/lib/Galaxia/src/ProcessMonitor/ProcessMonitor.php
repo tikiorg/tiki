@@ -371,10 +371,17 @@ class ProcessMonitor extends Base {
       $findesc = $this->qstr('%'.$find.'%');
       $mid.=" and (`properties` like $findesc)";
     }
-// TODO: retrieve instance status as well
-    $query = "select `itemId`,`ended`-`started` as duration,ga.`isInteractive`, ga.`type`,gp.`name` as procname,gp.`version`,ga.`name` as actname,";
-    $query.= "ga.`activityId`,`instanceId`,`orderId`,`properties`,`started`,`ended`,`user` from `".GALAXIA_TABLE_PREFIX."workitems` gw,`".GALAXIA_TABLE_PREFIX."activities` ga,`".GALAXIA_TABLE_PREFIX."processes` gp ";
-    $query.= "where gw.`activityId`=ga.`activityId` and ga.`pId`=gp.`pId` $mid order by gp.`pId` desc,".$this->convert_sortmode($sort_mode);
+
+    $query  = "SELECT `itemId`, DATEDIFF(FROM_UNIXTIME(gw.`ended`), FROM_UNIXTIME(gw.`started`)) AS duration, ";
+	$query .= "ga.`isInteractive`, ga.`type`, gp.`name` AS procname, gp.`version`, ga.`name` AS actname, ";
+	$query .= "ga.`activityId`, gw.`instanceId`, gi.`name` AS iname, `orderId`, gw.`properties`, gw.`started`, ";
+	$query .= "gi.`status`, gw.`ended`, `user` FROM ";
+	$query .= "`" . GALAXIA_TABLE_PREFIX . "workitems` gw, `" . GALAXIA_TABLE_PREFIX . "activities` ga, ";
+	$query .= "`" . GALAXIA_TABLE_PREFIX . "processes` gp, `" . GALAXIA_TABLE_PREFIX . "instances` gi ";
+	$query .= "WHERE gw.`activityId` = ga.`activityId` AND ga.`pId` = gp.`pId` ";
+	$query .= "AND gw.`instanceId` = gi.`instanceId` $mid ORDER BY gp.`pId` DESC, ";
+	$query .= $this->convert_sortmode($sort_mode);
+
     $query_cant = "select count(*) from `".GALAXIA_TABLE_PREFIX."workitems` gw,`".GALAXIA_TABLE_PREFIX."activities` ga,`".GALAXIA_TABLE_PREFIX."processes` gp where gw.`activityId`=ga.`activityId` and ga.`pId`=gp.`pId` $mid";
     $result = $this->query($query,$wherevars,$maxRecords,$offset);
     $cant = $this->getOne($query_cant,$wherevars);

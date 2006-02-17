@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.52 2006-02-13 20:55:30 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.53 2006-02-17 15:10:31 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -446,8 +446,8 @@ $smarty->assign('calitemId', $info["calitemId"]);
 $smarty->assign('organizers', $info["organizers"]);
 $smarty->assign('participants', $info["participants"]);
 $smarty->assign('calname', $info["calname"]);
-$smarty->assign('start', $dc->getDisplayDateFromServerDate($info["start"])); /* user time */
-$smarty->assign('end', $dc->getDisplayDateFromServerDate($info["end"]));
+$smarty->assign('start', $info["start"]); /* user time */
+$smarty->assign('end', $info["end"]);
 $smarty->assign('locationId', $info["locationId"]);
 $smarty->assign('locationName', $info["locationName"]);
 $smarty->assign('categoryId', $info["categoryId"]);
@@ -578,6 +578,11 @@ ask_ticket('calendar');
 
 include_once('tiki-jscalendar.php');
 $smarty->assign('uses_tabs', 'y');
-$smarty->assign('mid', 'tiki-calendar.tpl');
+if(isset($_REQUEST['editmode']) && ($_REQUEST['editmode'] == 'add' || $_REQUEST['editmode'] == 'edit')) {
+  $smarty->assign('mid', 'tiki-calendar_add_event.tpl');
+}
+else {
+  $smarty->assign('mid', 'tiki-calendar.tpl');
+}
 $smarty->display("tiki.tpl");
 ?>

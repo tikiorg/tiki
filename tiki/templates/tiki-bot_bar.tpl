@@ -49,6 +49,10 @@
 				<a href="tiki-directories_rss.php?ver={$rssfeed_default_version}"><img alt="rss" style="border: 0; vertical-align: text-bottom;" src="img/rss.png" /></a>
 				<small>{tr}Directories{/tr}</small>
 		{/if}
+		{if $feature_calendar eq 'y' and $rss_calendar eq 'y'}
+				<a href="tiki-calendars_rss.php?ver={$rssfeed_default_version}"><img alt="rss" style="border: 0; vertical-align: text-bottom;" src="img/rss.png" /></a>
+				<small>{tr}Calendars{/tr}</small>
+		{/if}
 	</div>
 
 {include file="babelfish.tpl"}

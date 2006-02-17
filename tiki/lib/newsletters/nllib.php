@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.44 2005-12-19 17:27:21 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.45 2006-02-17 15:10:41 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -116,13 +116,21 @@ class NlLib extends TikiLib {
 			if (!in_array($email, $inEmail) && !in_array($email, $out))
 				$ret[] = array("login"=>$res["email"], "email"=>$email, "code"=>$res["code"]);
 		}
+
+                $query = "select * from tiki_newsletter_subscriptions where isUser=? and valid=?";
+		$result = $this->query($query, array('g', 'x'));
+		$unsub_groupusers = array();
+		while($res = $result->fetchRow()) {
+			$unsub_groupusers[] = $res['email'];
+		}
+		
 			/* potential users */
 		if (count($groups) > 0) {
 			$mid = " and (".implode(" or ",array_fill(0,count($groups),"`groupName`=?")).")";
 			$query = "select  distinct uu.`login`, uu.`email` from `users_users` uu, `users_usergroups` ug where uu.`userId`=ug.`userId` ".$mid; 
 			$result = $this->query($query, $groups);
 			while ($res = $result->fetchRow()) {
-				if (!in_array($res["login"], $in) && !in_array($res["login"], $out) && !in_array($res["email"], $inEmail)) {
+				if (!in_array($res["login"], $in) && !in_array($res["login"], $out) && !in_array($res["email"], $inEmail) && !in_array($res['login'], $unsub_groupusers)) {
 					if ($genUnsub == "y") {
 						$query = "insert into `tiki_newsletter_subscriptions`(`nlId`,`email`,`code`,`valid`,`subscribed`,`isUser`) values(?,?,?,?,?,?)";
 						$code = $this->genRandomString($res["login"]);

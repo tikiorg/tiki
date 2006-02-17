@@ -88,3 +88,7 @@ ALTER TABLE `users_objectpermissions` DROP PRIMARY KEY , ADD PRIMARY KEY ( `obje
 
 # 2005-12-11 - amette - correct perm for submitting link - WYSIWYCA
 UPDATE tiki_menu_options SET perm="tiki_p_submit_link" WHERE url="tiki-directory_add_site.php";
+
+# fixed a missing alter
+ALTER TABLE sessions ADD expireref varchar(64) after expiry;
+

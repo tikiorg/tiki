@@ -33,7 +33,7 @@
 <input type="hidden" name="galleryId" value="{$galleryId|escape}" />
 <table class="normal">
 <tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}"/></td></tr>
-<tr><td class="formcolor">{tr}Description{/tr}:<br />{include file="textareasize.tpl" area_name='gal-desc' formId='gal-edit-form'}</td><td class="formcolor"><textarea   rows="{$rows}" cols="{$cols} name="description" id="gal-desc">{$description|escape}</textarea></td></tr>
+<tr><td class="formcolor">{tr}Description{/tr}:<br />{include file="textareasize.tpl" area_name='gal-desc' formId='gal-edit-form'}</td><td class="formcolor"><textarea   rows="{$rows}" cols="{$cols}" name="description" id="gal-desc">{$description|escape}</textarea></td></tr>
 {if $tiki_p_admin_galleries eq 'y'}
 <tr><td class="formcolor">{tr}Gallery is visible to non-admin users?{/tr}</td><td class="formcolor"><input type="checkbox" name="visible" {if $visible eq 'y'}checked="checked"{/if} /></td></tr>
 {* If a user can create a gallery, but doesn't have tiki_p_admin_galleries the new gallery needs to be visible. *}
@@ -90,6 +90,7 @@
 {tr}Original image is default scale{/tr}<input type="radio" name="defaultscale" value="o" {if $defaultscale=='o'}checked="checked"{/if} />
 </td></tr>
 <tr><td class="formcolor">{tr}Add scaled images with bounding box of square size{/tr}:</td><td class="formcolor"><input type="text" name="scaleSize" size=4 />{tr}pixels{/tr}</td></tr>
+<tr><td class="formcolor">{tr}Owner of the gallery{/tr}:</td><td class="formcolor"><input type="text" name="owner" value="{$owner|escape}"/></td></tr>
 {include file=categorize.tpl}
 {include file=freetag.tpl}
 <tr><td class="formcolor">{tr}Other users can upload images to this gallery{/tr}:</td><td class="formcolor"><input type="checkbox" name="public" {if $public eq 'y'}checked="checked"{/if}/></td></tr>

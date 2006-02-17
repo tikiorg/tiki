@@ -61,7 +61,7 @@ class TikiDate extends Date {
 	 * returns: UTC timestamp.
 	 */
 	function getUTCFromDisplayDate($_timestamp) {
-		return $_timestamp - $this->display_offset;
+	        return $_timestamp - $this->display_offset;
 	}
 
 	/**
@@ -79,7 +79,7 @@ class TikiDate extends Date {
 	 * returns: UTC timestamp.
 	 */
 	function getUTCFromServerDate($_timestamp) {
-		return $_timestamp - $this->server_offset;
+	        return $_timestamp - $this->server_offset;
 	}
 
 	/**

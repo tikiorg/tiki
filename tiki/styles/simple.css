@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.37 2006-02-01 21:20:24 jdrexler Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.38 2006-02-17 15:10:45 sylvieg Exp $
  *
  * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye
  * Enables font re-sizing in all browsers, aims to be WCAG 1.0 compatible (not yet), one simple css file.
@@ -13,132 +13,162 @@
  */
 
 body {
- /* setting up the background. the color, then bg image and its form of repeating. */
- background: #ffffff url('simple/bg.png') top center repeat-y;
- /* shorthand for default font setting. size in percentage and font-family here */
- font-family: 'Trebuchet MS', 'Luxi Sans', 'Lucida Grande', Tahoma, helvetica, sans-serif;
- font-size: 75%;
- /* size of 75% here prevents unreadable microscopic font size in MSIE when using em for further elements sizes */
- margin: 0; /* zero margins for body */
- padding: 0; /* and padding */
+  /* setting up the background. the color, then bg image and its form of repeating. */
+  background: #ffffff url("simple/bg.png") top center repeat-y;
+  /* shorthand for default font setting. size in percentage and font-family here */
+  font-family: "Trebuchet MS", "Luxi Sans", "Lucida Grande", Tahoma, helvetica, sans-serif;
+  font-size: 75%;
+  /* size of 75% here prevents unreadable microscopic font size in MSIE when using em for further elements sizes */
+  margin: 0; /* zero margins for body */
+  padding: 0; /* and padding */
 }
 
 /* default font size for all text in divs. works together with 75% font-size for body */
 div {
- font-size: 1em;
- padding: 0.2em;
+  font-size: 1em;
+  padding: 0.2em;
 }
 
 /* default color for links */
 a {
- color: #0077cc;
+  color: #0077cc;
 }
 
 /* default color for hovered links */
 a:hover {
- color: #0099ee;
+  color: #0099ee;
 }
 
 /* headings */
 h1 {
- text-align: center;
+  text-align: center;
 }
 
 /* images have no border by default */
 img {
- border: 0;
+  border: 0;
 }
 
 /* tables */
 table {
- border: dashed 1px #69c;
- font-size: 1em;
+  border: dashed 1px #69c;
+  font-size: 1em;
 }
+
 table.galtable {
-	border-collapse: collapse;
+  border-collapse: collapse;
 }
 
 table.normal td.heading {
- background-color: #abcdef;
- font-size: 1em;
- width: 15px;
+  background-color: #abcdef;
+  font-size: 1em;
+  width: 15px;
 }
 
 table.email td.closeButton {
- width: 100%;
+  width: 100%;
 }
 table.email td.closeButton form {
- text-align: end;
+  text-align: right;
 }
-
 table.email {
- border:solid 1px #abcdef;
+  border:solid 1px #abcdef;
 }
 table.email td.body {
- border: dashed 1px #69c;
+  border: dashed 1px #69c;
 }
 
 /* Description on wiki pages */
 small {
-	font-size: 0.8em;
+  font-size: 0.8em;
 }
 
 /* Prevent forms from generating unwanted padding or margins, aligns content to left */
 form {
-	margin: 0;
-	padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 /* Horizontal lines */
 hr {
-	border-top: none;
-	border-bottom: solid 0.2em #abcdef;
-	border-left: none;
-	border-right: none;
-	height: 1px;
+  border-top: none;
+  border-bottom: solid 0.2em #abcdef;
+  border-left: none;
+  border-right: none;
+  height: 1px;
 }
 
 /* All input elements */
 input {
-	border: solid 1px #abcdef;
-	padding: 0.1em;
-	vertical-align: middle;
+  border: solid 1px #abcdef;
+  line-height: 1.6em;
+  padding: 0.1em;
+  margin-left: 2px;
+  margin-right: 2px;
+  vertical-align: middle;
 }
 
 /* Set font size for one-line text input fields and password fields */
-input[type='text'], input[type='password'] {
-	font-size: 1em;
+input[type="text"], input[type="password"] {
+  font-size: 1em;
 }
 /* Same border for them and for textarea too */
-input[type='text'], input[type='password'], textarea {
-	border: solid 1px #abcdef;
+input[type="text"], input[type="password"], textarea {
+  border: solid 1px #abcdef;
 }
 /* Try to have same look for submit buttons, file chooser fields and select dropdowns too */
-input[type='submit'], input[type='file'], select {
-	border: solid 1px #abcdef;
-	background: #f0f9ff;
-	color: #000;
-	font-size: 0.9em;
-	height: 2em;
-	vertical-align: middle;
+input[type="submit"], input[type="file"], select {
+  border: solid 1px #abcdef;
+  background: #f0f9ff;
+  color: #000;
+  font-size: 0.9em;
+  height: 2em;
+  vertical-align: middle;
 }
+
+
+button {
+  border-style: solid;
+  border-width: 1px;
+  border-top-color: #99ccff;
+  border-right-color: #99ccff;
+  border-bottom-color: #99ccff;
+  border-left-color: #99ccff;
+  background: #f6f9fc url("simple/button_bg.png") center center repeat-x;
+  color: #0066cc;
+  font-family: "Trebuchet MS", "Luxi Sans", "Lucida Grande", Tahoma, helvetica, sans-serif;
+  font-size: 0.8em;
+  line-height: 1.6em;
+  margin-left: 2px;
+  margin-right: 2px;
+  padding: 1px;
+  vertical-align: middle;
+}
+button:hover {
+  border-top-color: #000;
+  border-right-color: #000;
+  border-bottom-color: #000;
+  border-left-color: #000;
+  color: #000;
+}
+
 
 /* All select elements, NOTE: text-align: start is RTL languages compatible */
 select {
-	_font-size: 1em; /* MSIE workaround for simmilar height like input and submit */
-	text-align: start;
-	_vertical-align: top; /* MSIE workaround for simmilar height like input and submit */
+  _font-size: 1em; /* MSIE workaround for simmilar height like input and submit */
+  text-align: start;
+  _vertical-align: top; /* MSIE workaround for simmilar height like input and submit */
 }
-/*select[name='lang'], select[name='language'] {
-	height: 2em;
+/*select[name="lang"], select[name="language"] {
+  height: 2em;
 }*/
 select[multiple] {
-	height: 10em;
+  height: 10em;
 }
 
 textarea {
-	padding: 0.1em;
-	width: 98%;
+  padding: 0.1em;
+  width: 98%;
 }
 
 /*
@@ -155,38 +185,38 @@ textarea {
 #mainmenu {
 }
 #mainmenu br { /* do not display line breaks in main menu when we later set links to display: block */
-	display: none;
+  display: none;
 }
 
 /* hide attachments, comments and their form */
 #attzone, #comzone {
- display: none;
+  display: none;
 }
 
 /* main calendar table */
 #caltable {
-	border-left: solid 1px #abcdef;
-	border-top: solid 1px #abcdef;
-	border-right: none;
-	border-bottom: none;
+  border-left: solid 1px #abcdef;
+  border-top: solid 1px #abcdef;
+  border-right: none;
+  border-bottom: none;
 }
 /* main calendar table cells */
 #caltable td {
-	background: #fff;
-	border-right: solid 1px #abcdef;
-	border-bottom: solid 1px #abcdef;
-	padding: 0.1em;
-	vertical-align: top;
+  background: #fff;
+  border-right: solid 1px #abcdef;
+  border-bottom: solid 1px #abcdef;
+  padding: 0.1em;
+  vertical-align: top;
 }
 #caltable .calfocuson { /* calendar today */
-	background-color: #fc0;
-	border: solid 1px #000;
+  background-color: #fc0;
+  border: solid 1px #000;
 }
 #caltable .calfocuson a { /* calendar focus date links */
-	color: #000;
+  color: #000;
 }
 #caltable .calfocus a, #caltable .calfocuson a { /* calendar focus date links */
-	text-decoration: none;
+  text-decoration: none;
 }
 
 #mod-assistant {
@@ -194,21 +224,21 @@ textarea {
 
 /* TikiIntegrator: By default copy rules dialog not shown */
 #rules-copy-panel {
-	display: none;
+  display: none;
 }
 
 /* ASSORTED  */
 
 #clear {
-	clear:both;
-	}
-	
+  clear:both;
+  }
+  
 
 /*
  ***** Here we define classes *****
  */
 .hidden {
- display: none;
+ position: absolute; left: -10000px; top: 0px; width: 1px; height: 1px; overflow: hidden;
 }
 /*
  ** These are classes for main parts of the layout, depending what's switched on/off **
@@ -223,7 +253,7 @@ textarea {
 .maincontent div {
 }
 .maincontent div div, .maincontent ul, .maincontent h2, .maincontent h3, .maincontent div.wikitext {
-	text-align: start;
+  text-align: start;
 }
 .maincontent table {
  width: 98%; margin: auto;
@@ -279,54 +309,54 @@ div.box-title table {
  _width: 100%; /* MSIE workaround to make overflow work */
 }
 .box-data a {
-	text-decoration: none;
+  text-decoration: none;
 }
 .box-data a:hover {
-	color: #000;
+  color: #000;
 }
 .box-data a.linkmenu {
-	display: block;
-	background-color: #f0f9ff;
-	border: solid 1px #abcdef;
-	color: #3f3f6f;
-	margin-top: 0.1em;
-	margin-bottom: 0.2em;
-	padding: 0.2em;
-	text-align: start;
+  display: block;
+  background-color: #f0f9ff;
+  border: solid 1px #abcdef;
+  color: #3f3f6f;
+  margin-top: 0.1em;
+  margin-bottom: 0.2em;
+  padding: 0.2em;
+  text-align: start;
 }
 .box-data a.linkmenu:hover {
  background-color: #fff;
  border: solid 1px #000;
-	color: #000;
+ color: #000;
 }
 .box-data a.separator {
-	font-weight: bold;
-	margin-top: 0.1em;
-	margin-bottom: 0.1em;
-	padding: 0.2em;
+  font-weight: bold;
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+  padding: 0.2em;
 }
 .box-data form {
-	text-align: center;
+  text-align: center;
 }
 
 /* custom menus */
 .box-data .option, .box-data .separatorline {
-	font-size: 0.9em;
-	height: 1.2em;
-	text-align: start;
+  font-size: 0.9em;
+  height: 1.2em;
+  text-align: start;
 }
 .box-data .option a.linkmenu {
-	display: inline;
-	background-color: transparent;
-	border: none;
-	color: #07c;
-	font-weight: bold;
+  display: inline;
+  background-color: transparent;
+  border: none;
+  color: #07c;
+  font-weight: bold;
 }
 .box-data .option a.linkmenu:hover {
-	color: #000;
+  color: #000;
 }
 .box-data .separator {
-	text-align: start;
+  text-align: start;
 }
 
 /* tables in modules */
@@ -365,31 +395,31 @@ div.box-title table {
 }
 
 .movemodup {
- background: transparent url('simple/up_out.png') no-repeat center;
+ background: transparent url("simple/up_out.png") center center no-repeat;
 }
 a:hover.movemodup {
- background: transparent url('simple/up.png') no-repeat center;
+ background: transparent url("simple/up.png") center center no-repeat;
 }
 
 .movemoddown {
- background: transparent url('simple/down_out.png') no-repeat center;
+ background: transparent url("simple/down_out.png") center center no-repeat;
 }
 a:hover.movemoddown {
- background: transparent url('simple/down.png') no-repeat center;
+ background: transparent url("simple/down.png") center center no-repeat;
 }
 
 .movemodopside {
- background: transparent url('simple/move_out.png') no-repeat center;
+ background: transparent url("simple/move_out.png") center center no-repeat;
 }
 a:hover.movemodopside {
- background: transparent url('simple/move.png') no-repeat center;
+ background: transparent url("simple/move.png") center center no-repeat;
 }
 
 .removemod {
- background: transparent url('simple/close_out.png') no-repeat center;
+ background: transparent url("simple/close_out.png") center center no-repeat;
 }
 a:hover.removemod {
- background: transparent url('simple/close.png') no-repeat center;
+ background: transparent url("simple/close.png") center center no-repeat;
 }
 
 /*
@@ -404,20 +434,20 @@ a:hover.removemod {
 .box-data table tr td {
 }
 .box-data td a.nav { /* navigation links */
-	padding: 0.1em;
-	text-decoration: none;
+  padding: 0.1em;
+  text-decoration: none;
 }
 .box-data td.fc { /* fc cells */
-	padding: 0;
+  padding: 0;
 }
 .box-data td.fc a { /* calendar dates links */
-	display: block;
-	padding: 0.1em;
-	text-decoration: none;
+  display: block;
+  padding: 0.1em;
+  text-decoration: none;
 }
 .box-data td.fc a.today { /* calendar today link */
-	background-color: #fc0;
-	border: solid 1px #000;
+  background-color: #fc0;
+  border: solid 1px #000;
 }
 
 /*
@@ -426,7 +456,7 @@ a:hover.removemod {
 .shoutboxmodmsg, div.shoutboxmsg {
 }
 textarea.tshoutbox { /* correct width for shoutboxmod textarea only (needed by msie5) */
-	width: auto;
+  width: auto;
 }
 
 /*
@@ -456,7 +486,7 @@ div.messureadbody {
  * calendar
  */
 .opaque { /* onmouseover info box */
-	background-color: #fff;
+  background-color: #fff;
 }
 
 /*
@@ -470,44 +500,44 @@ div.messureadbody {
  * wiki pages
  */
 .normal .even { /* table with class normal, even cells */
-	background-color: #f0f9ff;
+  background-color: #f0f9ff;
 }
 .normal .odd { /* table with class normal, odd cells */
-	background-color: #def;
+  background-color: #def;
 }
 .simplebox { /* simple box wiki syntax */
-	background-color: #f0f9ff;
-	border: 1px solid #9cf;
+  background-color: #f0f9ff;
+  border: 1px solid #9cf;
 }
 
 .wikitable { /* wiki table syntax */
-	border-left: 1px solid #000;
-	border-top: 1px solid #000;
-	border-right: none;
-	border-bottom: none;
-	margin: auto;
-	padding: 0;
-	width: 90%;
+  border-left: 1px solid #000;
+  border-top: 1px solid #000;
+  border-right: none;
+  border-bottom: none;
+  margin: auto;
+  padding: 0;
+  width: 90%;
 }
 .wikitable td {
-	border-right: 1px solid #000;
-	border-bottom: 1px solid #000;
-	margin: 0;
-	padding: 0.2em;
+  border-right: 1px solid #000;
+  border-bottom: 1px solid #000;
+  margin: 0;
+  padding: 0.2em;
 }
 
 .wikitext {
-	background-color: transparent;
-	overflow: auto;
-	clip: rect(0,100%,100%,0);
+  background-color: transparent;
+  overflow: auto;
+  clip: rect(0,100%,100%,0);
 }
 
 .wikitopline {
-	border: 1px dashed #abcdef;
-	background-color: #f0f9ff;
+  border: 1px dashed #abcdef;
+  background-color: #f0f9ff;
 }
 .wiki-edithelp {
-	display: none;
+  display: none;
 }
 /*
  * articles
@@ -524,7 +554,7 @@ div.articlebody {
  * blogs
  */
 .blogtitle {
-	font-size: large;
+  font-size: large;
 }
 .postbody {
 }
@@ -538,7 +568,7 @@ div.articlebody {
 
 /* Warning color */
 .attention {
-	color: #c00;
+  color: #c00;
 }
 
 /*
@@ -549,77 +579,77 @@ div.articlebody {
  * PHP Layers Menus
  */
 .mdkhorbar {
-	color: black;
-	background-color: #def;
-	border: 1px outset #525252;
+  color: black;
+  background-color: #def;
+  border: 1px outset #525252;
 }
 
 .horbar {
-	margin-left: 0;
+  margin-left: 0;
 }
 
 .horbaritem a {
-	font-size: 1em;
-	text-decoration: none;
+  font-size: 1em;
+  text-decoration: none;
 }
 
 .mdkhorbaritem {
-	float: left;
-	white-space: nowrap;
-	font-size: 1em;
+  float: left;
+  white-space: nowrap;
+  font-size: 1em;
 }
 
 .mdkhorbaritem a {
-	display: block;
-	text-decoration: none;
+  display: block;
+  text-decoration: none;
 }
 
 .mdkhorbaritem a:link {
-	color: #000000;
+  color: #000000;
 }
 
 .mdkhorbaritem a:visited {
-	color: #000000;
+  color: #000000;
 }
 
 .mdkhorbaritem a:hover  {
-	background-color: #abcdef;
+  background-color: #abcdef;
 }
 
 .mdkhorbaritem a:active {
-	color: #ff0000;
+  color: #ff0000;
 }
 
 .mdkverbar {
-	color: black;
-	border: 1px solid #fdfefd;
+  color: black;
+  border: 1px solid #fdfefd;
 }
 
 .mdksubmenu {
-	position: absolute;
-	left: 0;
-	top: 0;
-	visibility: hidden;
+  position: absolute;
+  left: 0;
+  top: 0;
+  visibility: hidden;
 }
 
 .mdksubframe {
-	position: relative;
-	display: block;
-	background-color: #def;
-	border: 1px solid #fdfefd;
+  position: relative;
+  display: block;
+  background-color: #def;
+  border: 1px solid #fdfefd;
 }
 
 .mdkitem {
-	position: relative;
-	white-space: nowrap;
-	font-size: 10px;
-	font-weight: bold;
+  position: relative;
+  white-space: nowrap;
+  font-size: 10px;
+  font-weight: bold;
 }
 
 .mdkitem a {
-	position: relative;
-	display: block;
-	text-decoration: none;
+  position: relative;
+  display: block;
+  text-decoration: none;
 }
 
 .mdkitem a:link {
@@ -629,120 +659,120 @@ div.articlebody {
 }
 
 .mdkitem a:hover {
-	color: #000;
-	background-color: #abcdef;
+  color: #000;
+  background-color: #abcdef;
 }
 
 .mdkitem a:active {
-	color: #ff0000;
+  color: #ff0000;
 }
 
 .mdkitem .mdkfwdarr {
-	position: absolute;
-	top: 5px;
-	right: 12px;
+  position: absolute;
+  top: 5px;
+  right: 12px;
 }
 
 
 /* tiki tabs */
 
 .tabmark {
-	display: inline;
-	font-size: 85%;
-	background-color: #abcdef;
-	border: 1px solid #abcdef;
-	margin: 0px;
-	margin-right: 5px;
-	padding: 1px 0px 1px 0px;
+  display: inline;
+  font-size: 85%;
+  background-color: #abcdef;
+  border: 1px solid #abcdef;
+  margin: 0px;
+  margin-right: 5px;
+  padding: 1px 0px 1px 0px;
 }
 .tabmark a { 
-	border-bottom : 0;
-	color: #000;
-	padding: 1px 5px 1px 5px;
-	text-decoration: none;
+  border-bottom : 0;
+  color: #000;
+  padding: 1px 5px 1px 5px;
+  text-decoration: none;
 }
 .tabmark a:active {
-	background-color: #fff;
-	color: red;
+  background-color: #fff;
+  color: red;
 }
 .tabmark a:hover {
-	color: black;
-	background-color: #f0f9ff;
+  color: black;
+  background-color: #f0f9ff;
 }
 
 .tabcontent {
-	z-index : 200;
-	position: relative;
-	border: 1px solid #abcdef;
-	padding: 6px 2px 2px 2px;
-	margin-bottom: 25px;
-	background-color: #f0f9ff;
+  z-index : 200;
+  position: relative;
+  border: 1px solid #abcdef;
+  padding: 6px 2px 2px 2px;
+  margin-bottom: 25px;
+  background-color: #f0f9ff;
 }
 
 /* trackers specific style */
 
 .statuson {
-	padding: 1px;
-	margin: 1px;
-	border: 1px inset #666666;
-	vertical-align: middle;
-	background-color: #bbaa99;
+  padding: 1px;
+  margin: 1px;
+  border: 1px inset #666666;
+  vertical-align: middle;
+  background-color: #bbaa99;
 }
 .statusoff {
-	padding: 1px;
-	margin: 2px;
-	vertical-align: middle;
+  padding: 1px;
+  margin: 2px;
+  vertical-align: middle;
 }
 
 .normal {
-	border: solid 1px #abcdef;
+  border: solid 1px #abcdef;
 }
 
 .categpath {
-	font-size: x-small;
+  font-size: x-small;
 }
 
 /* CODE plugin */
 .codelisting {
-	font-family : monospace;
-	padding: 2ex;
-	background-color: #ddeeff;
-	margin: 1ex;
-	border: 1px dashed #adacaf;
+  font-family : monospace;
+  padding: 2ex;
+  background-color: #ddeeff;
+  margin: 1ex;
+  border: 1px dashed #adacaf;
 }
 
 /* VERSION plugin */
 .versions {
-	border-top: 1px dashed #999999;
-	border-bottom: 1px dashed #999999;
-	min-height: 142px;
+  border-top: 1px dashed #999999;
+  border-bottom: 1px dashed #999999;
+  min-height: 142px;
 }
 .versionav {
-	display: inline;
-	float: right;
-	border-left: 1px dashed #999999;
+  display: inline;
+  float: right;
+  border-left: 1px dashed #999999;
 }
 .versionav .button2 {
-	display: block;
-	border: 0;
-	border-bottom: 1px dashed #999999;
-	background-color: transparent;
+  display: block;
+  border: 0;
+  border-bottom: 1px dashed #999999;
+  background-color: transparent;
 }
 .versionav .button2 .linkbut {
-	border: 0;
-	background-color: inherit;
-	padding: 0 10px;
+  border: 0;
+  background-color: inherit;
+  padding: 0 10px;
 }
 .versionav .highlight {
-	background-color: #cccccc;
-	font-weight: bold;
+  background-color: #cccccc;
+  font-weight: bold;
 }
 .versiontitle {
-	font-weight: bold;
-	border-bottom: 1px dashed #999999;
-	border-left: 1px dashed #999999;
-	padding: 2px 30px;
-	float: right;
+  font-weight: bold;
+  border-bottom: 1px dashed #999999;
+  border-left: 1px dashed #999999;
+  padding: 2px 30px;
+  float: right;
 }
 
 /* wiki diff styles */
@@ -755,24 +785,28 @@ div.articlebody {
 
 /* QUOTE plugin */
 .quoteheader {
-	margin: 10px 5px 0px 5px;
-	padding: 4px;
-	border-width: 1px 1px 0px 1px;
-	border-style: solid;
-	border-color: #A9B8C2;
-	color: black;
-	font-weight: bold;
-	background-color: #A9B8C2;
-	font-size: 8pt;
+  margin: 10px 5px 0px 5px;
+  padding: 4px;
+  border-width: 1px 1px 0px 1px;
+  border-style: solid;
+  border-color: #A9B8C2;
+  color: black;
+  font-weight: bold;
+  background-color: #A9B8C2;
+  font-size: 8pt;
 }
 .quotebody {
-	margin: 0px 5px 10px 5px;
-	padding: 5px;
-	border-color: #A9B8C2;
-	border-width: 0px 1px 1px 1px;
-	border-style: solid;
-	color: black;
-	background-color: #edeeef;
+  margin: 0px 5px 10px 5px;
+  padding: 5px;
+  border-color: #A9B8C2;
+  border-width: 0px 1px 1px 1px;
+  border-style: solid;
+  color: black;
+  background-color: #edeeef;
 }
+
+/* floating ul/ol lists */
+.floatlist {clear: left; list-style-type: none; margin: 0; padding-left: 0}
+.floatlist li {float: left}
 
 /* end of css file */

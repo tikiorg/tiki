@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.29 2006-01-20 09:54:53 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.30 2006-02-17 15:10:31 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -151,7 +151,7 @@ if (isset($_REQUEST["save"]) && $feature_categories == 'y' && $feature_blog_mand
 	$cat_href = "tiki-view_blog.php?blogId=" . $cat_objid;
 	include_once ("categorize.php");
 
-	header ("location: tiki-list_view_blogs.php?blogId=$bid");
+	header ("location: tiki-list_blogs.php?blogId=$bid");
 	die;
 }
 

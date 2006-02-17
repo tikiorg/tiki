@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-tracker_rss.php,v 1.2 2005-05-18 10:58:59 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-tracker_rss.php,v 1.3 2006-02-17 15:10:31 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -39,8 +39,8 @@ $tmp = $tikilib->get_preference('desc_rss_'.$feed, '');
 if ($tmp<>'') $desc = $tmp;
 
 $id = "trackerId";
-$titleId = "Subject";
-$descId = ""; // "description";
+$titleId = "rss_subject";
+$descId = "rss_description";
 $authorId = ""; // "user";
 $dateId = "created";
 $urlparam = "itemId";
@@ -49,24 +49,37 @@ $uniqueid = "$feed.id=".$_REQUEST["trackerId"];
 
 $tmp = $tikilib->list_tracker_items($_REQUEST["trackerId"], 0, $max_rss_tracker, $dateId.'_desc', '', '');
 foreach ($tmp["data"] as $data) {
-	$data[$titleId]='';
+	$data[$titleId] = tra('Tracker item:').' #'.$data["itemId"];
+	$data[$descId] = '';
+	$first_text_field = null;
+	$aux_subject = null;
 	foreach ($data["field_values"] as $data2) {
 		if (isset($data2["name"])) {
-			$data2["name"]=strtolower($data2["name"]);
-			if ($data2["name"]=="subject") {
-				$data[$titleId] = $data2["value"];
-				break; // found a subject
+			if ($data2["type"] != "e") {
+				if ($data2["value"] == "") $data2["value"] = "(".tra('empty').")";
+				$data[$descId] .= $data2["name"].": ".$data2["value"]."<br />";
 			}
-			// alternative names for subject field:
-			if ($data[$titleId]=="") {
-				if (($data2["name"]=="summary") ||
-				    ($data2["name"]=="name") ||
-				    ($data2["name"]=="title") ||
-				    ($data2["name"]=="topic")) $data[$titleId] = $data2["value"];
-				// no break here because we still might find a field called 'subject'
-			}			
+			$field_name_check = strtolower($data2["name"]);
+			if ($field_name_check=="subject") {
+				$aux_subject = " - ".$data2["value"];
+			} elseif (!isset($aux_subject)) {
+			        // alternative names for subject field:
+				if (($field_name_check=="summary") ||
+						($field_name_check=="name") ||
+						($field_name_check=="title") ||
+						($field_name_check=="topic")) {
+						$aux_subject = " - ".$data2["value"];
+				} elseif ($data2["type"] == 't' && !isset($first_text_field)) {
+					$first_text_field = " - ".$data2["name"].": ".$data2["value"];
+				}
+			}	
 		}
 	}
+	if (!isset($aux_subject) && isset($first_text_field))
+	  $data[$titleId] .= $first_text_field;
+	elseif (isset($aux_subject))
+	  $data[$titleId] .= $aux_subject;
+
 	$data["id"]=$_REQUEST["trackerId"];
 	$data["field_values"]=null;
 
@@ -74,6 +87,7 @@ foreach ($tmp["data"] as $data) {
 	$data=null;
 }
 $tmp=null;
+$changes["data"] = array_reverse($changes["data"]);
 
 $output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, $urlparam, $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
 $changes=null;

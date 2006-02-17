@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker_item.tpl,v 1.93 2006-01-20 09:54:57 sylvieg Exp $ *}
+{* $Id: tiki-view_tracker_item.tpl,v 1.94 2006-02-17 15:10:47 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -142,7 +142,7 @@
 
 {elseif $cur_field.type eq 't' or $cur_field.type eq 'n'}
 {if $cur_field.options_array[2]}<span class="formunit">{$cur_field.options_array[2]|escape}&nbsp;</span>{/if}
-{$cur_field.value|default:"&nbsp;"}
+{$cur_field.value|escape:"html"|default:"&nbsp;"}
 {if $cur_field.options_array[3]}<span class="formunit">&nbsp;{$cur_field.options_array[3]|escape}</span>{/if}
 
 {if $cur_field.options_array[0] eq '1' and $stick ne 'y'}

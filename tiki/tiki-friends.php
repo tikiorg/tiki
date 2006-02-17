@@ -19,16 +19,18 @@ if($feature_friends != 'y') {
 // TODO: all messages should be translated to receiver language, not sender.
 if (isset($_REQUEST['request_friendship'])) {
     $friend = $_REQUEST['request_friendship'];
-
+    
     if ($userlib->user_exists($friend)) {
 	if (!$tikilib->verify_friendship($friend,$user)) {
 	    $userlib->request_friendship($user,$friend);
 	    $lg = $tikilib->get_user_preference($friend, "language", $language);
 	    $smarty->assign('msg',sprintf(tra("Friendship request sent to %s"), $friend));
-	// About to make this templated - Damian
-	    $messulib->post_message($friend, $user, $friend, '',
-				    tra("You're invited to join my network of friends!", $lg),
-				    tra('Go to your <a href="tiki-friends.php">friendship network</a> to accept or refuse this request', $lg),
+	    $foo = parse_url($_SERVER["REQUEST_URI"]);
+	    $machine = $tikilib->httpPrefix(). $foo["path"];
+	    $smarty->assign('server_name',$machine);
+	    $messulib->post_message($friend, $user, $friend, '', 
+				    $smarty->fetchLang($lg,'mail/new_friend_invitation_subject.tpl'),
+				    $smarty->fetchLang($lg,'mail/new_friend_invitation.tpl'),
 				    3);
 
 	} else {

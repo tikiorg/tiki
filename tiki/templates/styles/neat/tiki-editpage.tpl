@@ -155,12 +155,12 @@
 </td></tr>
 {if $feature_wiki_footnotes eq 'y'}
 {if $user}
-<tr><td class="formcolor">{tr}Footnotes{/tr}:</td><td class="formcolor"><textarea name="footnote" rows="8" cols="80">{$footnote|escape}</textarea></td>
+<tr><td class="formcolor">{tr}My Footnotes{/tr}:</td><td class="formcolor"><textarea name="footnote" rows="8" cols="80">{$footnote|escape}</textarea></td>
 {/if}
 {/if}
 
 {if $page|lower ne 'sandbox'}
-<tr><td class="formcolor">{tr}Comment{/tr}:</td><td class="formcolor"><input size="80" class="wikitext" type="text" name="comment" value="{$commentdata|escape}" /></td>
+<tr><td class="formcolor">{tr}Edit Summary{/tr}:</td><td class="formcolor"><input size="80" class="wikitext" type="text" name="comment" value="{$commentdata|escape}" /></td>
 {/if}
 {if $wiki_feature_copyrights  eq 'y'}
 <tr><td class="formcolor">{tr}Copyright{/tr}:</td><td class="formcolor">

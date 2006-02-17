@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.36 2006-01-20 09:54:53 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.37 2006-02-17 15:10:30 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -154,7 +154,7 @@ class Smarty_TikiWiki extends Smarty {
 		global $tikidomain, $style_base;
 		if (!empty($tikidomain) && is_file($this->template_dir.'/'.$tikidomain.'/styles/'.$style_base.'/'.$template)) {
     			$file = "/$tikidomain/styles/$style_base/";
-  		} elseif (!empty($tikidomain) && is_file($this->template_dir.'/'.$tikidomain)) {
+  		} elseif (!empty($tikidomain) && is_file($this->template_dir.'/'.$tikidomain.'/'.$template)) {
     			$file = "/$tikidomain/";
   		} elseif (is_file($this->template_dir.'/styles/'.$style_base.'/'.$template)) {
 			$file = "/styles/$style_base/";

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_templates.php,v 1.18 2006-01-20 09:54:53 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_templates.php,v 1.19 2006-02-17 15:10:31 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,14 +10,14 @@
 require_once ('tiki-setup.php');
 
 // if any of the two rights is not set, yell!
-if ($feature_view_tpl != 'y' || $feature_edit_templates != 'y' ) {
+if ($feature_edit_templates != 'y' ) {
 	$smarty->assign('msg', tra("Feature disabled"));
 
 	$smarty->display("error.tpl");
 	die;
 }
 
-if ($tiki_p_edit_templates != 'y' && isset($_REQUEST["save"])) { // no tiki_p_view_tpl
+if ($tiki_p_edit_templates != 'y' && (isset($_REQUEST["save"]) || isset($_REQUEST['saveTheme']) || isset($_REQUEST['delete']))) { // no tiki_p_view_tpl
 	$smarty->assign('msg', tra("You don't have permission to use this feature"));
 
 	$smarty->display("error.tpl");
@@ -40,20 +40,25 @@ if (isset($_REQUEST["template"])) {
 	}
 }
 
-if (isset($_REQUEST["save"])) {
+if ((isset($_REQUEST["save"]) || isset($_REQUEST['saveTheme'])) && !empty($_REQUEST['template'])) {
 	check_ticket('edit-templates');
-  if (!empty($tikidomain) and is_file($smarty->template_dir.'/'.$tikidomain.'/styles/'.$style_base.'/'.$_REQUEST["template"])) {
-    $fp = fopen($smarty->template_dir.'/'.$tikidomain.'/styles/'.$style_base.'/'.$_REQUEST["template"], "w");
-  } elseif (!empty($tikidomain) and is_dir($smarty->template_dir.'/'.$tikidomain)) {
-    $fp = fopen($smarty->template_dir.'/'.$tikidomain.'/'.$_REQUEST["template"], "w");
-  } elseif (is_file($smarty->template_dir.'/styles/'.$style_base.'/'.$_REQUEST["template"])) {
-		$fp = fopen($smarty->template_dir.'/styles/'.$style_base.'/'.$_REQUEST["template"], "w");
-  } else {
-    $fp = fopen($smarty->template_dir.$_REQUEST["template"], "w");
-  }
+	if (isset($_REQUEST['saveTheme'])) {
+		if (!empty($tikidomain)) {
+			if (!is_dir($smarty->template_dir.'/'.$tikidomain.'/styles/'.$style_base))
+				mkdir($smarty->template_dir.'/'.$tikidomain.'/styles/'.$style_base);
+			$file = $smarty->template_dir.'/'.$tikidomain.'/styles/'.$style_base.'/'.$_REQUEST['template'];
+		} else {
+			if (!is_dir($smarty->template_dir.'/styles/'.$style_base))
+				mkdir($smarty->template_dir.'/styles/'.$style_base);
+			$file = $smarty->template_dir.'/styles/'.$style_base.'/'.$_REQUEST['template'];
+		}
+	} else {
+		$file = $smarty->get_filename($_REQUEST['template']);
+	}
+	@$fp = fopen($file, 'w');
 	if (!$fp) {
-		$smarty->assign('msg', tra("You do not have permission to write the template"));
-		$smarty->display("error.tpl");
+		$smarty->assign('msg', tra("You do not have permission to write the template".': '.$file));
+		$smarty->display('error.tpl');
 		die;
 	}
 	$_REQUEST["data"] = str_replace("\r\n","\n",$_REQUEST["data"]);
@@ -61,18 +66,25 @@ if (isset($_REQUEST["save"])) {
 	fclose ($fp);
 }
 
+if (isset($_REQUEST['delete']) && !empty($_REQUEST['template'])) {
+	$area = 'deltpl';
+	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+    		key_check($area);
+		$file = $smarty->get_filename($_REQUEST['template']);
+		unlink($file);
+		unset($_REQUEST['template']);
+	} else {
+		 key_get($area);
+	}
+}
+
 if (isset($_REQUEST["template"])) {
 	$mode = 'editing';
-	if (!empty($tikidomain) and is_file($smarty->template_dir.'/'.$tikidomain.'/styles/'.$style_base.'/'.$_REQUEST["template"])) {
-		$file = $smarty->template_dir.'/'.$tikidomain.'/styles/'.$style_base.'/'.$_REQUEST["template"];
-	} elseif (!empty($tikidomain) and is_file($smarty->template_dir.'/'.$tikidomain.'/'.$_REQUEST["template"])) {
-		$file = $smarty->template_dir.'/'.$tikidomain.'/'.$_REQUEST["template"];
-	} elseif (is_file($smarty->template_dir.'/styles/'.$style_base.'/'.$_REQUEST["template"])) {
-		$file = $smarty->template_dir.'/styles/'.$style_base.'/'.$_REQUEST["template"];
-	} else {
-		$file = $smarty->template_dir.$_REQUEST["template"];
-	}
-echo $smarty->template_dir.'/'.$style_base.'/'.$_REQUEST["template"];
+	$file = $smarty->get_filename($_REQUEST["template"]);
+	if (strstr($file, '/styles/'))
+		$style_local = 'y';
+	else
+		$style_local = 'n';
 	$fp = fopen($file,'r');
 	if (!$fp) {
 		$smarty->assign('msg', tra("You do not have permission to read the template"));
@@ -83,38 +95,28 @@ echo $smarty->template_dir.'/'.$style_base.'/'.$_REQUEST["template"];
 	fclose ($fp);
 	$smarty->assign('data', $data);
 	$smarty->assign('template', $_REQUEST["template"]);
+	$smarty->assign('style_local', $style_local);
 }
 
+
+if ($mode == 'listing') {
+	// Get templates from the templates directory
+	$where = array('', 'modules/', 'mail/', 'map/');
+	$files = array();
+	foreach ($where as $w) {
+		$h = opendir($smarty->template_dir.$w);
+		while (($file = readdir($h)) !== false) {
+			if (substr($file,-4,4) == '.tpl') {
+				$files[] = $w.$file;
+			}
+		}
+		closedir ($h);
+	}
+	sort ($files);
+	$smarty->assign('files', $files);
+}
 $smarty->assign('mode', $mode);
 
-// Get templates from the templates directory
-$files = array();
-$h = opendir($smarty->template_dir);
-while (($file = readdir($h)) !== false) {
-	if (substr($file,-4,4) == '.tpl') {
-		$files[] = $file;
-	}
-}
-closedir ($h);
-
-$h = opendir($smarty->template_dir."modules/");
-while (($file = readdir($h)) !== false) {
-	if (substr($file,-4,4) == '.tpl') {
-		$files[] = "modules/" . $file;
-	}
-}
-closedir ($h);
-
-$h = opendir($smarty->template_dir."mail/");
-while (($file = readdir($h)) !== false) {
-	if (substr($file,-4,4) == '.tpl') {
-		$files[] = "mail/" . $file;
-	}
-}
-closedir ($h);
-
-sort ($files);
-$smarty->assign('files', $files);
 ask_ticket('edit-templates');
 
 // Get templates from the templates/modules directori

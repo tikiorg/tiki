@@ -70,7 +70,7 @@
 			{if $showimageid=='y'}{tr}ID{/tr}: {$item.galleryId}<br />{/if}
 			{if $showdescription=='y'}{$item.description}<br />{/if}
 			{if $showcreated=='y'}{tr}Created{/tr}: {$item.created|tiki_short_date}<br />{/if}
-			{if $showuser=='y'}{tr}User{/tr}: {$item.user}<br />{/if}
+			{if $showuser=='y'}{tr}User{/tr}: <a href="tiki-user_information.php?user={$item.user|escape}">{$item.user}</a><br />{/if}
 			{if $showxysize=='y' || $showfilesize=='y'}({$item.numimages} Images){/if}
 			{if $showhits=='y'}[{$item.hits} {if $item.hits == 1}{tr}hit{/tr}{else}{tr}hits{/tr}{/if}]<br />{/if}
                         </small>
@@ -95,7 +95,7 @@
 		{if $showimageid=='y'}{tr}ID{/tr}: {$item.imageId}<br />{/if}
 		{if $showdescription=='y'}{$item.description}<br />{/if}
 		{if $showcreated=='y'}{tr}Created{/tr}: {$item.created|tiki_short_date}<br />{/if}
-		{if $showuser=='y'}{tr}User{/tr}: {$item.user}<br />{/if}
+		{if $showuser=='y'}{tr}User{/tr}: <a href="tiki-user_information.php?user={$item.user|escape}">{$item.user}</a><br />{/if}
 		{if $showxysize=='y'}({$item.xsize}x{$item.ysize}){/if}
 		{if $showfilesize=='y'}({$item.filesize} Bytes){/if}
 		{if $showhits=='y'}[{$item.hits} {if $item.hits == 1}{tr}hit{/tr}{else}{tr}hits{/tr}{/if}]{/if}

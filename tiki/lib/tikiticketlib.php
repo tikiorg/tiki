@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/lib/tikiticketlib.php,v 1.16 2005-08-18 16:23:05 mose Exp $
+/* $Header: /cvsroot/tikiwiki/tiki/lib/tikiticketlib.php,v 1.17 2006-02-17 15:10:38 sylvieg Exp $
 
 Tikiwiki CSRF protection.
 also called Sea-Surfing
@@ -59,9 +59,14 @@ function key_get($area, $confirmation_text = '', $confirmaction='') {
 		if (empty($confirmationaction)) {
 			$confirmationaction = $_SERVER['REQUEST_URI'];
 		}
+// Display the confirmation in the main tiki.tpl template
+		$smarty->assign('dblclickedit','n');
+		$smarty->assign('print_page','n');
 		$smarty->assign('confirmation_text', $confirmation_text);
 		$smarty->assign('confirmaction', $confirmaction);
-		$smarty->display("confirm.tpl");
+		$smarty->assign('mid','confirm.tpl');
+		$smarty->assign('show_page_bar','n');
+		$smarty->display("tiki.tpl");
 		die();
 	}
 }

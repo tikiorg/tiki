@@ -111,7 +111,7 @@ Yes, you may use slideshow.js under the LGPL.
 <!--
 
 /*==================================================*
- $Id: tiki-browse_image.tpl,v 1.37 2005-11-07 21:42:30 sylvieg Exp $
+ $Id: tiki-browse_image.tpl,v 1.38 2006-02-17 15:10:47 sylvieg Exp $
  Copyright 2000-2003 Patrick Fitzgerald
  http://slideshow.barelyfitz.com/
 
@@ -946,8 +946,13 @@ if (document.images) {
       {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
         <tr><td class="even">{tr}Move image{/tr}:</td><td class="odd">
         <form action="tiki-browse_image.php" method="post">
+				{if $itype eq 's'}
+				<input type="hidden" name="scaled" value="1" />
+				<input type="hidden" name="scalesize" value="{$scalesize}" />
+				{/if}
         <input type="hidden" name="imageId" value="{$imageId|escape}"/>
         <input type="hidden" name="galleryId" value="{$galleryId|escape}"/>
+				<input type="text" name="newname" value="{$name}" />
         <select name="newgalleryId">
           {section name=idx loop=$galleries}
             <option value="{$galleries[idx].id|escape}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].name}</option>

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.79 2005-12-19 17:27:12 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.80 2006-02-17 15:10:31 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -20,7 +20,7 @@ if ($feature_userPreferences != 'y' && $user != 'admin') {
 
 if (!$user) {
 	$smarty->assign('msg', tra("You are not logged in"));
-
+	$smarty->assign('errortype', '402');
 	$smarty->display("error.tpl");
 	die;
 }

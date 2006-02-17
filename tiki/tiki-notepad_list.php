@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-notepad_list.php,v 1.18 2005-05-18 10:58:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-notepad_list.php,v 1.19 2006-02-17 15:10:31 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -19,7 +19,7 @@ if ($feature_notepad != 'y') {
 
 if (!$user) {
 	$smarty->assign('msg', tra("Must be logged to use this feature"));
-
+	$smarty->assign('errortype', '402');
 	$smarty->display("error.tpl");
 	die;
 }
