@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_intertiki.php,v 1.2 2005-12-12 15:18:46 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_intertiki.php,v 1.3 2006-02-17 15:10:30 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -45,6 +45,10 @@ if (isset($_REQUEST["intertikiclient"])) {
 	$_REQUEST['interlist'] = serialize($_REQUEST['interlist']);
 	simple_set_value('interlist');
 	simple_set_value('tiki_key');
+	simple_set_value('feature_intertiki_mymaster');
+
+	simple_set_toggle('feature_intertiki_import_preferences');
+	simple_set_toggle('feature_intertiki_import_groups');
 }
 
 if (isset($_REQUEST["intertikiserver"])) {

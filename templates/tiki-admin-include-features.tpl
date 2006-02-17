@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.74 2006-01-20 09:54:57 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.75 2006-02-17 15:10:47 sylvieg Exp $ *}
 
 {* this is the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
@@ -178,9 +178,8 @@
     <td>&nbsp;</td>
     <td><input type="checkbox" name="feature_calendar"
 					{if $feature_calendar eq 'y'}checked="checked"{/if}/></td>
-    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Calendar" target="tikihelp" class="tikihelp" title="{tr}Calendar{/tr}">{/if} {tr}Tiki Calendar{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
-    </tr>
-  <tr>
+    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Calendar" target="tikihelp" class="tikihelp" title="{tr}Calendar{/tr}">{/if} {tr}Tiki Calendar{/tr} {if $feature_help eq 'y'}</a>{/if}</td></tr>
+    <tr>
     <td><input type="checkbox" name="feature_mailin"
 				{if $feature_mailin eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Mailin" target="tikihelp" class="tikihelp" title="{tr}Mail-in{/tr}">{/if} {tr}Mail-in{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
@@ -238,6 +237,11 @@
     <td><input type="checkbox" name="feature_ajax" {if $feature_ajax eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Ajax" target="tikihelp" class="tikihelp" title="{tr}tikiwiki.org help{/tr}: {tr}Ajax{/tr}">{/if} {tr}Ajax{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
   </tr>
+  <tr><td><input type="checkbox" name="feature_cal_manual_time"
+					{if $feature_cal_manual_time eq 'y'}checked="checked"{/if}/></td>
+    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Calendar manual selection of time/date" target="tikihelp" class="tikihelp" title="{tr}Calendar manual selection of time/date{/tr}">{/if} {tr}Calendar manual selection of time/date{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
+  </tr>
+
 
 </table>    
 

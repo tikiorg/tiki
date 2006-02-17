@@ -425,27 +425,37 @@ class ActivityManager extends BaseManager {
   /*!
    Lists activities at a per-process level
   */
-  function list_activities($pId,$offset,$maxRecords,$sort_mode,$find,$where='')
+  function list_activities($pId, $offset, $maxRecords, $sort_mode, $find, $where = '')
   {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
+    $sort_mode = str_replace("_", " ", $sort_mode);
+    if ($find) {
       $findesc = '%'.$find.'%';
-      $mid=" where pId=? and ((name like ?) or (description like ?))";
-      $bindvars = array($pId,$findesc,$findesc);
+      $mid = " where pId=? and ((name like ?) or (description like ?))";
+      $bindvars = array($pId, $findesc, $findesc);
     } else {
-      $mid=" where pId=? ";
+      $mid = " where pId=? ";
       $bindvars = array($pId);
     }
-    if($where) {
-      $mid.= " and ($where) ";
+
+    if ($where) {
+      $mid .= " and ($where) ";
     }
-    $query = "select * from ".GALAXIA_TABLE_PREFIX."activities $mid order by $sort_mode";
-    $query_cant = "select count(*) from ".GALAXIA_TABLE_PREFIX."activities $mid";
+
+    $query = "select * from " . GALAXIA_TABLE_PREFIX . "activities $mid order by $sort_mode";
+    $query_cant  = "select count(*) from " . GALAXIA_TABLE_PREFIX . "activities $mid";
+	$query_roles = "select gr.roleId, gr.name from " . GALAXIA_TABLE_PREFIX . "activity_roles gar inner join
+					" . GALAXIA_TABLE_PREFIX . "roles gr on gar.roleId = gr.roleId where gar.activityId = ?";
+
     $result = $this->query($query,$bindvars,$maxRecords,$offset);
     $cant = $this->getOne($query_cant,$bindvars);
     $ret = Array();
     while($res = $result->fetchRow()) {
-      $res['roles'] = $this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."activity_roles where activityId=?",array($res['activityId']));
+      $res['rolecount'] = $this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."activity_roles where activityId=?",array($res['activityId']));
+	  $res['roles'] = array();
+	  $resultroles = $this->query($query_roles, array($res['activityId']));
+	  while($resroles = $resultroles->fetchRow()) {
+		array_push($res['roles'], $resroles);
+	  }
       $ret[] = $res;
     }
     $retval = Array();

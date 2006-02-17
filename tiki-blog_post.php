@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.42 2005-12-10 14:02:23 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.43 2006-02-17 15:10:30 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -172,6 +172,7 @@ if (isset($_REQUEST["preview"])) {
 		$smarty->assign('blogpriv', 'n');
 	}
 	$smarty->assign('taglist',$_REQUEST["freetag_string"]);
+	$smarty->assign('trackbacks_to', explode(',', $_REQUEST['trackback']));
 	$smarty->assign('title', isset($_REQUEST["title"]) ? $_REQUEST['title'] : '');
 	$smarty->assign('parsed_data', $parsed_data);
 	$smarty->assign('preview', 'y');

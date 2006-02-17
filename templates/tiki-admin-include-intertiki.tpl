@@ -11,8 +11,43 @@
 <div class="cbox-data">
 <form action="tiki-admin.php?page=intertiki" method="post" name="intertiki">
 <table class="admin">
-<tr><td class="form">Tiki Unique key</td><td><input type="text" name="tiki_key" value="{$tiki_key}" size="32" />
-</td></tr>
+<tr><td class="form">Tiki Unique key</td><td><input type="text" name="tiki_key" value="{$tiki_key}" size="32" /></td></tr>
+<tr>
+  <td class="form">
+    {tr}InterTiki Slave mode{/tr}<br />
+    <small>{tr}Warning: overrides manually registered local users{/tr}</small>
+  </td>
+  <td>
+
+  {literal}
+    <script language="JavaScript">
+      function check_server_visibility(sel) {
+        if (sel.selectedIndex == 0) {
+	  document.getElementById('admin-server-options').style.display = 'block';
+	  document.getElementById('admin-slavemode-options').style.display = 'none';
+        } else {
+	  document.getElementById('admin-server-options').style.display = 'none';
+	  document.getElementById('admin-slavemode-options').style.display = 'block';
+        }
+      }	
+    </script>
+  {/literal}
+
+    <select name="feature_intertiki_mymaster" onChange="check_server_visibility(this);">
+      <option value="">{tr}No{/tr}</option>
+  {foreach from=$interlist key=k item=i}
+      <option value="{$k|escape:'url'}"{if $feature_intertiki_mymaster eq $k} selected{/if}>{$i.name} {tr} as master{/tr}</option>
+  {/foreach}
+    </select>
+    <div id="admin-slavemode-options" style="display: {if $feature_intertiki_mymaster eq ''}none{else}block{/if}">
+      <input type="checkbox" name="feature_intertiki_import_preferences" {if $feature_intertiki_import_preferences eq 'y'}checked="checked"{/if}/>
+      {tr}Import user preferences{/tr}<br />
+
+      <input type="checkbox" name="feature_intertiki_import_groups" {if $feature_intertiki_import_groups eq 'y'}checked="checked"{/if}/>
+      {tr}Import user groups{/tr}<br />
+    </div>
+  </td>
+</tr>
 {if $interlist}
 {foreach key=k item=i from=$interlist}
 <tr><td class="button" colspan="2">
@@ -38,7 +73,7 @@
 </div>
 </div>
 
-<div class="cbox">
+<div class="cbox" id="admin-server-options" style="display: {if $feature_intertiki_mymaster eq ''}block{else}none{/if}">
 <div class="cbox-title">
   {tr}Intertiki server{/tr}
 </div>

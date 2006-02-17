@@ -70,7 +70,7 @@
 {sectionelse}
 <tr>
 	<td class="{cycle advance=false}" colspan="3">
-	{tr}No processes defined yet{/tr}
+	{tr}No processes defined or activated yet{/tr}
 	</td>
 </tr>	
 {/section}

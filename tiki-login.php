@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.50 2005-12-12 15:18:46 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.51 2006-02-17 15:10:31 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.50 2005-12-12 15:18:46 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.51 2006-02-17 15:10:31 sylvieg Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -85,48 +85,102 @@ $response = isset($_REQUEST['response']) ? $_REQUEST['response'] : false;
 $isvalid = false;
 $isdue = false;
 
-if (strstr($user,'@')) {
+if (strstr($user,'@') && $feature_intertiki == 'y' ) {
 	$_REQUEST['intertiki'] = substr($user,strpos($user,'@')+1);
 	$user = substr($user,0,strpos($user,'@'));
+} elseif ($feature_intertiki == 'y' && !empty($feature_intertiki_mymaster)) {
+    $_REQUEST['intertiki'] = $feature_intertiki_mymaster;
 }
+
+if ($user == 'admin') {
+    // admin is always local
+    $feature_intertiki = 'n';
+    unset($_REQUEST['intertiki']);
+}
+
+
 if ($feature_intertiki == 'y' and isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'],array_keys($interlist)) and $user and $pass) {
-	include_once('XML/RPC.php');
-  function intervalidate($remote,$user,$pass) {
-    global $tiki_key;
-    $client = new XML_RPC_Client($remote['path'], $remote['host'], $remote['port']);
-    $client->setDebug(0);
-    $msg = new XML_RPC_Message(
-      'intertiki.validate',
-      array(
-        new XML_RPC_Value($tiki_key, 'string'),
-        new XML_RPC_Value($user, 'string'),
-        new XML_RPC_Value($pass, 'string')
-      ));
-      $result = $client->send($msg);
-      return $result;
-  }
-  $rpcauth = intervalidate($interlist[$_REQUEST['intertiki']],$user,$pass);
-	if (!$rpcauth) {
-		$logslib->add_log('login','intertiki : '.$user.'@'.$_REQUEST['intertiki'].': Failed');
-		$smarty->assign('msg',tra('Unable to contact remote server.'));
-		$smarty->display('error.tpl');
-		exit;
+
+    include_once('XML/RPC.php');
+    
+    function intervalidate($remote,$user,$pass,$get_info = false) {
+	global $tiki_key;
+	$remote['path'] = preg_replace("/^\/?/","/",$remote['path']);
+	$client = new XML_RPC_Client($remote['path'], $remote['host'], $remote['port']);
+	$client->setDebug(0);
+	$msg = new XML_RPC_Message(
+				   'intertiki.validate',
+				   array(
+					 new XML_RPC_Value($tiki_key, 'string'),
+					 new XML_RPC_Value($user, 'string'),
+					 new XML_RPC_Value($pass, 'string'),
+					 new XML_RPC_Value($get_info, 'boolean')
+					 ));
+	$result = $client->send($msg);
+	return $result;
+    }
+
+    $rpcauth = intervalidate($interlist[$_REQUEST['intertiki']],$user,$pass,!empty($feature_intertiki_mymaster)? true : false);
+
+    if (!$rpcauth) {
+	$logslib->add_log('login','intertiki : '.$user.'@'.$_REQUEST['intertiki'].': Failed');
+	$smarty->assign('msg',tra('Unable to contact remote server.'));
+	$smarty->display('error.tpl');
+	exit;
+    } else {
+	if ($faultCode = $rpcauth->faultCode()) {
+	    if ($faultCode == 102) {
+		$faultCode = 101; // disguise inexistent user
+		$userlib->remove_user($user);
+	    }
+
+	    $user_msg = tra('XMLRPC Error: ') . $faultCode . ' - ' . tra($rpcauth->faultString());
+	    $log_msg = tra('XMLRPC Error: ') . $rpcauth->faultCode() . ' - ' . tra($rpcauth->faultString());
+	    $logslib->add_log('login','intertiki : '.$user.'@'.$_REQUEST['intertiki'].': '.$log_msg);
+	    $smarty->assign('msg',$user_msg);
+	    $smarty->display('error.tpl');
+	    exit;
 	} else {
-		if ($rpcauth->faultCode()) {
-			$msg = tra('XMLRPC Error: ') . $rpcauth->faultCode() . ' - ' . tra($rpcauth->faultString());
-			$logslib->add_log('login','intertiki : '.$user.'@'.$_REQUEST['intertiki'].': '.$msg);
-			$smarty->assign('msg',$msg);
-			$smarty->display('error.tpl');
-			exit;
-		} else {
-			$logslib->add_log('login','intertiki : '.$user.'@'.$_REQUEST['intertiki']);
-			$user = $user.'@'.$_REQUEST['intertiki'];
-			$isvalid = true;
-			$isdue = false;
-			$feature_userPreferences = 'n';
-			$smarty->assign('feature_userPreferences',$feature_userPreferences);
+	    $isvalid = true;
+	    $isdue = false;
+
+	    $logslib->add_log('login','intertiki : '.$user.'@'.$_REQUEST['intertiki']);
+
+	    if (!empty($feature_intertiki_mymaster)) {
+		
+		// this is slave intertiki site
+		$response_value = $rpcauth->value();
+		$user_details = unserialize($response_value->scalarval());
+		
+		if (!$userlib->user_exists($user)) {
+		    $userlib->add_user($user, '', $user_details['info']['email']);
+		    $userlib->set_user_fields($user_details['info']);
+		} else { 
+		    $userlib->set_user_fields($user_details['info']);
+		    $userlib->update_lastlogin($user);
 		}
+		
+		if ($feature_userPreferences == 'y' && $feature_intertiki_import_preferences == 'y') {
+		    $userlib->set_user_preferences($user, $user_details['preferences']);
+		}
+
+		if ($feature_intertiki_import_groups == 'y') {
+		    $userlib->assign_user_to_groups($user, $user_details['groups']);
+		} else {
+		    $groups = preg_split('/\s*,\s*/',$interlist[$feature_intertiki_mymaster]['groups']);
+		    foreach ($groups as $group) {
+			$userlib->assign_user_to_group($user, $group);
+		    }
+		}
+
+	    } else {
+		$user = $user.'@'.$_REQUEST['intertiki'];
+		$feature_userPreferences = 'n';
+		$smarty->assign('feature_userPreferences',$feature_userPreferences);
+	    }
+
 	}
+    }
 } else {
 
 // Verify user is valid
@@ -158,8 +212,9 @@ if ($isvalid) {
 //	this code doesn't work
 //                if (($url == $tikiIndex || substr($tikiIndex, strlen($tikiIndex)-strlen($url)-1) == '/'.$url) 
 //		     && $useGroupHome == 'y') { /* go to the group page only if the loginfrom is the default page */
-		if (($url == $tikiIndex || basename($url) == $tikiIndex || urldecode(basename($url)) == $tikiIndex || basename($url) == "tiki-login_scr.php" || $limitedGoGroupHome == "n") && $useGroupHome == 'y') { /* go to the group page only if the loginfrom is the default page */
+		if (($url == $tikiIndex || basename($url) == $tikiIndex || urldecode(basename($url)) == $tikiIndex || $limitedGoGroupHome == "n") && $useGroupHome == 'y') { /* go to the group page only if the loginfrom is the default page */
 			$groupHome = $userlib->get_user_default_homepage($user);
+			$groupHome = $tikilib->get_user_preference($user, 'homePage', $groupHome);
     			if ($groupHome) {
                     $url = preg_match('#^https?://#', $groupHome) ? $groupHome : "tiki-index.php?page=".$groupHome;
     			}

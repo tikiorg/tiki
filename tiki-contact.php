@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-contact.php,v 1.21 2005-09-07 22:23:21 michael_davey Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-contact.php,v 1.22 2006-02-17 15:10:31 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,6 +10,8 @@
 require_once ('tiki-setup.php');
 
 include_once ('lib/messu/messulib.php');
+include_once ('lib/userprefs/scrambleEmail.php');
+
 
 $access->check_feature('feature_contact');
 if ($contact_anon != 'y') {
@@ -19,6 +21,8 @@ if ($contact_anon != 'y') {
 $smarty->assign('mid', 'tiki-contact.tpl');
 
 $email = $userlib->get_admin_email();
+$email = scrambleEmail($email,'strtr');
+
 $smarty->assign('email', $email);
 
 if ($user == '' and $contact_anon == 'y') {

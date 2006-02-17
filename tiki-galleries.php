@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.49 2006-01-20 09:54:53 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.50 2006-02-17 15:10:31 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -74,6 +74,19 @@ $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo["path"] = str_replace("tiki-galleries", "tiki-browse_gallery", $foo["path"]);
 $smarty->assign('url', $tikilib->httpPrefix(). $foo["path"]);
 
+if (isset($_REQUEST['edit']) || isset($_REQUEST['preview']) || $_REQUEST["galleryId"] == 0) {
+	if (!isset($_REQUEST['description'])) $_REQUEST['description'] = '';
+	if (!isset($_REQUEST['maxRows'])) $_REQUEST['maxRows'] = 10;
+	if (!isset($_REQUEST['rowImages'])) $_REQUEST['rowImages'] = 6;
+	if (!isset($_REQUEST['thumbSizeX'])) $_REQUEST['thumbSizeX'] = 80;
+	if (!isset($_REQUEST['thumbSizeY'])) $_REQUEST['thumbSizeY'] = 80;
+	if (!isset($_REQUEST['sortorder'])) $_REQUEST['sortorder'] = 'created';
+	if (!isset($_REQUEST['sortdirection'])) $_REQUEST['sortdirection'] = 'desc';
+	if (!isset($_REQUEST['galleryimage'])) $_REQUEST['galleryimage'] = 'first';
+	if (!isset($_REQUEST['parentgallery'])) $_REQUEST['parentgallery'] = -1;
+	if (!isset($_REQUEST['defaultscale'])) $_REQUEST['defaultscale'] = 'o';
+}
+
 // Init smarty variables to blank values
 //$smarty->assign('theme','');
 $smarty->assign('name', '');
@@ -85,6 +98,7 @@ $smarty->assign('thumbSizeY', 80);
 $smarty->assign('public', 'n');
 $smarty->assign('edited', 'n');
 $smarty->assign('visible', 'y');
+$smarty->assign('owner', $user);
 $smarty->assign('geographic', 'n');
 $smarty->assign('edit_mode', 'n');
 $options_sortorder=array(tra('id') => 'imageId',
@@ -144,6 +158,7 @@ if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
 		$smarty->assign_by_ref('thumbSizeY', $info["thumbSizeY"]);
 		$smarty->assign_by_ref('public', $info["public"]);
 		$smarty->assign_by_ref('visible', $info["visible"]);
+		$smarty->assign_by_ref('owner', $info["user"]);
 		$smarty->assign('sortorder',$info['sortorder']);
 		$smarty->assign('sortdirection',$info['sortdirection']);
 		$smarty->assign('galleryimage',$info['galleryimage']);
@@ -194,6 +209,32 @@ if (isset($_REQUEST["edit"]) && $feature_categories == 'y' && $feature_image_gal
 			}
 		}
 	}
+
+	// Everything is ok so we proceed to edit the gallery
+	$smarty->assign('edit_mode', 'y');
+	//$smarty->assign_by_ref('theme',$_REQUEST["theme"]);
+	$smarty->assign_by_ref('name', $_REQUEST["name"]);
+	$smarty->assign_by_ref('owner', $_REQUEST["owner"]);
+	$smarty->assign_by_ref('description', $_REQUEST["description"]);
+	$smarty->assign_by_ref('maxRows', $_REQUEST["maxRows"]);
+	$smarty->assign_by_ref('rowImages', $_REQUEST["rowImages"]);
+	$smarty->assign_by_ref('thumbSizeX', $_REQUEST["thumbSizeX"]);
+	$smarty->assign_by_ref('thumbSizeY', $_REQUEST["thumbSizeY"]);
+        $smarty->assign('sortorder',$_REQUEST['sortorder']);
+	$smarty->assign('sortdirection',$_REQUEST['sortdirection']);
+	$smarty->assign('galleryimage',$_REQUEST['galleryimage']);
+	$smarty->assign('parentgallery',$_REQUEST['parentgallery']);
+	$smarty->assign('defaultscale',$_REQUEST['defaultscale']);
+	$auxarray=array('showname','showimageid','showdescription','showcreated','showuser','showhits','showxysize','showfilesize','showfilename');
+	foreach($auxarray as $key => $item) {
+		if(!isset($_REQUEST[$item])) {
+			$_REQUEST[$item]='n';
+		}
+        	$smarty->assign($item,$_REQUEST[$item]);
+	}
+
+
+
 	if (isset($_REQUEST["visible"]) && $_REQUEST["visible"] == "on") {
 		$visible = 'y';
 	} else {
@@ -211,7 +252,7 @@ if (isset($_REQUEST["edit"]) && $feature_categories == 'y' && $feature_image_gal
 	}
 
 	$gid = $imagegallib->replace_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"],
-		'', $user, $_REQUEST["maxRows"], $_REQUEST["rowImages"], $_REQUEST["thumbSizeX"], $_REQUEST["thumbSizeY"], $public,
+		'', $_REQUEST["owner"], $_REQUEST["maxRows"], $_REQUEST["rowImages"], $_REQUEST["thumbSizeX"], $_REQUEST["thumbSizeY"], $public,
 		$visible,$_REQUEST['sortorder'],$_REQUEST['sortdirection'],$_REQUEST['galleryimage'],$_REQUEST['parentgallery'],
 		$_REQUEST['showname'],$_REQUEST['showimageid'],$_REQUEST['showdescription'],$_REQUEST['showcreated'],
 		$_REQUEST['showuser'],$_REQUEST['showhits'],$_REQUEST['showxysize'],$_REQUEST['showfilesize'],$_REQUEST['showfilename'],$_REQUEST['defaultscale'],$geographic);

@@ -1,19 +1,14 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-switch_lang2.tpl,v 1.3 2005-05-18 11:03:57 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-switch_lang2.tpl,v 1.4 2006-02-17 15:10:48 sylvieg Exp $ *}
 
 {tikimodule title="{tr}Language{/tr}: `$language`" name="switch_lang2"}
-<table border="0" cellpadding="0" cellspacing="0">
-<tr>
+<ul class='floatlist'>
+{capture}{$languages|@sort}{/capture}{* use php sort() as modifier for the array and do not print the '1' *}
 {section name=ix loop=$languages}
-  <td align="center">
+  <li>
     <a title="{$languages[ix].name|escape}" class="linkmodule" href="tiki-switch_lang.php?language={$languages[ix].value|escape}">
       {$languages[ix].display|escape}
     </a>
-  </td>
-  {if not ($smarty.section.ix.rownum mod 3)}
-    {if not $smarty.section.ix.last}
-      </tr><tr>
-    {/if}
-  {/if}
+  </li>
 {/section}
-</tr></table>
+</ul>
 {/tikimodule}

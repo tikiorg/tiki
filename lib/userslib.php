@@ -284,8 +284,13 @@ class UsersLib extends TikiLib {
 		);
     }
 
-    function validate_user($user, $pass, $challenge, $response) {
-	global $tikilib, $sender_email;
+    function validate_user(&$user, $pass, $challenge, $response) {
+	global $tikilib, $sender_email, $feature_intertiki, $feature_intertiki_mymaster;
+
+	if ($user != 'admin' && $feature_intertiki == 'y' && !empty($feature_intertiki_mymaster)) {
+	    // slave intertiki sites should never check passwords locally, just for admin
+	    return false;
+	}
 
 	// these will help us keep tabs of what is going on
 	$userTiki = false;
@@ -946,6 +951,10 @@ function get_included_groups($group) {
 }
 
     function remove_user_from_group($user, $group) {
+	global $cachelib;
+	require_once("lib/cache/cachelib.php");
+	$cachelib->invalidate('user_details_'.$user);
+
 	$userid = $this->get_user_id($user);
 
 	$query = "delete from `users_usergroups` where `userId` = ? and
@@ -1315,21 +1324,52 @@ function get_included_groups($group) {
 	return $res;
     }
     
-// Moved from tikilib
-    function get_user_details($item, $login) {
-		global $user_details;
+    // this is not being used anywhere until now in remote.php
+    // refactoring to use new cachelib instead of global var in memory - batawata 2006-02-07
+    function get_user_details($login, $item = false) {
+	global $cachelib;
+	require_once("lib/cache/cachelib.php");
 
-		if (!isset($user_details[$login])) {
-		    $this->load_user_cache($login);
-		}
+	$cacheKey = 'user_details_'.$login;
 
-		if ( isset($user_details[$login][$item]) ) {
-		    return $user_details[$login][$item];
-		} else {
-		    return false;
+	$user_details = array();
+
+	if ($cachelib->isCached($cacheKey)) {
+	    return unserialize($cachelib->getCached($cacheKey));
+	} else {
+	    $query  = 'SELECT `userId` , `login`, `email` , `lastLogin` , `currentLogin` , `registrationDate` , `created` ,  `avatarName` , `avatarSize` , `avatarFileType` , `avatarLibName` , `avatarType` FROM `users_users` WHERE `login` = ?';
+	    
+	    $result = $this->query($query, array($login));
+	    
+	    $user_details['info'] = $result->fetchRow();
+	    
+	    $query  = 'SELECT `prefName` , `value` FROM `tiki_user_preferences` WHERE `user` = ?';
+	    $result = $this->query($query, array($login));
+	    
+	    $user_details['preferences'] = array();
+	    $aUserPrefs = array('realName','homePage','country');
+	    while ( $row = $result->fetchRow() ) {
+		$user_details['preferences'][$row['prefName']] = $row['value'];
+
+		// atention: this is redundant, for intertiki slave mode
+		// we insert, delete and insert again this information, 
+		// because of nature of user information as being preferences
+		if (in_array($row['prefName'], $aUserPrefs)) {
+		    $user_details['info'][$row['prefName']] = $row['value'];
 		}
+		
+	    }
+
+	    $user_details['groups'] = $this->get_user_groups($login);
+
+	    $cachelib->cacheItem($cacheKey, serialize($user_details));
+
+	    global $user_preferences;
+	    $user_preferences[$login] = $user_details['preferences'];
+
+	    return $user_details;
+	}
     }
-
 
     function set_default_group($user,$group) {
     	// if user is not in group, assign user to group before setting default group
@@ -1637,6 +1677,9 @@ function get_included_groups($group) {
     }
 
     function assign_user_to_group($user, $group) {
+	global $cachelib;
+	require_once("lib/cache/cachelib.php");
+	$cachelib->invalidate('user_details_'.$user);
 
 	$group_ret = false;
 	$userid = $this->get_user_id($user);
@@ -1650,6 +1693,22 @@ function get_included_groups($group) {
 	    $group_ret = true;
 	}
 	return $group_ret;
+    }
+
+    function assign_user_to_groups($user, $groups) {
+	global $cachelib;
+	require_once("lib/cache/cachelib.php");
+	$cachelib->invalidate('user_details_'.$user);
+
+	$userid = $this->get_user_id($user);
+
+	$query = "delete from `users_usergroups` where `userId`=?";
+	$this->query($query, array($userid));
+
+	foreach ($groups as $grp) {
+	    $this->assign_user_to_group($user, $grp);
+	}
+	    
     }
 
     function confirm_user($user) {
@@ -1958,19 +2017,29 @@ function get_included_groups($group) {
 	    $bindvars[] = strip_tags($u['email']);
 	}
 
-	$query = "update `users_users` set " . implode(",", $q). " where " .
+	if (sizeof($q) > 0) {
+	    $query = "update `users_users` set " . implode(",", $q). " where " .
 		$this->convert_binary(). " `login` = ?";
-	$bindvars[] = $u['login'];
-	$result = $this->query($query, $bindvars);
+	    $bindvars[] = $u['login'];
+	    $result = $this->query($query, $bindvars);
+	}
+
 
 	$aUserPrefs = array('realName','homePage','country');
 	foreach ($aUserPrefs as $pref){
 		if (@$u[$pref]) {
 		    $bindvars = array();
-			$query = "INSERT INTO`tiki_user_preferences` (user,prefName,value) VALUES (?,?,?)";
-			$bindvars[] = $u['login'];
-			$bindvars[] = $pref;
-			$bindvars[] = strip_tags($u[$pref]);
+
+		    $bindvars[] = strip_tags($u[$pref]);
+		    $bindvars[] = $u['login'];
+		    $bindvars[] = $pref;
+
+		    if ($this->getOne("select `user` from `tiki_user_preferences` where `user`=? and `prefName`=?",array($u['login'],$pref))) {
+			$query = "UPDATE `tiki_user_preferences` set `value`=? where `user`=? and `prefName`=?";
+		    } else {
+			$query = "INSERT INTO `tiki_user_preferences` (`value`,`user`,`prefName`) VALUES (?,?,?)";
+		    }
+		    $this->query($query, $bindvars);
 		}
 	}
 

@@ -30,8 +30,8 @@
 
 {if $feature_articles eq 'y'}
  <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=articles">{tr}articles{/tr}</a>
-<br /><br />
 {/if}
+<br /><br />
 {tr}Found{/tr} "{$words}" {tr}in{/tr} {$cant_results} {$where2}
 {/if}
 <form class="forms" method="get" action="tiki-searchresults.php">

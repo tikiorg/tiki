@@ -71,6 +71,7 @@ class ChatLib extends TikiLib {
 	}
 
 	function get_chat_users($channelId) {
+		global $tikilib;
 		$now = date("U") - (5 * 60);
 		$query = "delete from `tiki_chat_users` where `timestamp` < ?";
 		$result = $this->query($query,array((int)$now));
@@ -78,12 +79,22 @@ class ChatLib extends TikiLib {
 		$result = $this->query($query,array((int)$channelId));
 		$ret = array();
 		while ($res = $result->fetchRow()) {
+			$realName = $tikilib->getOne( "select `value` from `tiki_user_preferences` where `user`=? and prefName = 'realName'", array( $res["nickname"] ) );
+			if( $realName )
+			{
+				$res["displayName"] = $realName;
+			} else {
+				# This is here so @ can be added to
+				# the names as displayed
+				$res["displayName"] = $res["nickname"];
+			}
 			$ret[] = $res;
 		}
 		return $ret;
 	}
 
 	function get_messages($channelId, $last, $from) {
+		global $tikilib;
 		$query = "select `messageId`, `poster`, `data` from `tiki_chat_messages` ";
 		$query.= " where `timestamp`>? and `channelId`=? and `messageId`>? order by ".$this->convert_sortmode("timestamp_asc");
 		$result = $this->query($query,array((int)$from,(int)$channelId,(int)$last));
@@ -95,6 +106,11 @@ class ChatLib extends TikiLib {
 			$aux["posterName"] = $res["poster"];
 			$aux["data"] = $res["data"];
 			$aux["messageId"] = $res["messageId"];
+			$realName = $tikilib->getOne( "select `value` from `tiki_user_preferences` where `user`=? and prefName = 'realName'", array( $res["poster"] ) );
+			if( $realName )
+			{
+				$aux["posterName"] = $realName;
+			}
 			$ret[] = $aux;
 		}
 

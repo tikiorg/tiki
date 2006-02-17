@@ -83,10 +83,12 @@
 <td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'itemId_desc'}{sameurl sort_mode='itemId_asc'}{else}{sameurl sort_mode='itemId_desc'}{/if}">{tr}Id{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'procname_desc'}{sameurl sort_mode='procname_asc'}{else}{sameurl sort_mode='procname_desc'}{/if}">{tr}Process{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'actname_desc'}{sameurl sort_mode='actname_asc'}{else}{sameurl sort_mode='actname_desc'}{/if}">{tr}Activity{/tr}</a></td>
-<td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'instanceId_desc'}{sameurl sort_mode='instanceId_asc'}{else}{sameurl sort_mode='instanceId_desc'}{/if}">{tr}Ins{/tr}</a></td>
+<td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'iname_desc'}{sameurl sort_mode='iname_asc'}{else}{sameurl sort_mode='iname_desc'}{/if}">{tr}Instance Id{/tr}</a></td>
+<td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'instanceId_desc'}{sameurl sort_mode='instanceId_asc'}{else}{sameurl sort_mode='instanceId_desc'}{/if}">{tr}Instance Name{/tr}</a></td>
+<td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'status_desc'}{sameurl sort_mode='status_asc'}{else}{sameurl sort_mode='status_desc'}{/if}">{tr}Instance Status{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'orderId_desc'}{sameurl sort_mode='orderId_asc'}{else}{sameurl sort_mode='orderId_desc'}{/if}">{tr}#{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'started_desc'}{sameurl sort_mode='started_asc'}{else}{sameurl sort_mode='started_desc'}{/if}">{tr}Start{/tr}</a></td>
-<td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'duration_desc'}{sameurl sort_mode='duration_asc'}{else}{sameurl sort_mode='duration_desc'}{/if}">{tr}time{/tr}</a></td>
+<td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'duration_desc'}{sameurl sort_mode='duration_asc'}{else}{sameurl sort_mode='duration_desc'}{/if}">{tr}Elapsed time{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'user_desc'}{sameurl sort_mode='user_asc'}{else}{sameurl sort_mode='user_desc'}{/if}">{tr}User{/tr}</a></td>
 </tr>
 {cycle values="odd,even" print=false}
@@ -105,13 +107,19 @@
 	  <a class="link" href="tiki-g-admin_instance.php?iid={$workitem.instanceId}">{$workitem.instanceId}</a>
 	</td>
 	<td class="{cycle advance=false}">
+	  <a class="link" href="tiki-g-admin_instance.php?iid={$workitem.instanceId}">{$workitem.iname}</a>
+	</td>
+	<td class="{cycle advance=false}">
+	  {$workitem.status}
+	</td>
+	<td class="{cycle advance=false}">
 	  {$workitem.orderId}
 	</td>
 	<td class="{cycle advance=false}">
 	  {$workitem.started|tiki_short_datetime}
 	</td>
 	<td class="{cycle advance=false}">
-	  {$workitem.duration|duration}
+	  {$workitem.duration} day(s)
 	</td>
 	<td class="{cycle}">
 	  {$workitem.user}

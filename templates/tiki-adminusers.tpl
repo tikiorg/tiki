@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.79 2006-01-20 09:54:57 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.80 2006-02-17 15:10:47 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
-  
+
       {if $feature_help eq 'y'}
 <a href="{$helpurl}UserAdministrationScreen" target="tikihelp" class="tikihelp" title="{tr}admin users{/tr}">
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
@@ -18,6 +18,10 @@
 <span class="button2"><a href="tiki-adminusers.php?add=1" class="linkbut">{tr}Add a new user{/tr}</a></span>
 {/if}
 
+{if !empty($feature_intertiki_mymaster)}
+  <br /><br /><b>{tr}Warning: since this tiki site is in slave mode, all user information you enter manually will be automatically overriden by other site's data, including users permissions{/tr}</b>
+{/if}
+  
 {if $tikifeedback}
 <br /><div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">{section name=n loop=$tikifeedback}{$tikifeedback[n].mes}<br />{/section}</div>
 {/if}
@@ -111,7 +115,7 @@ class="prevnext">{tr}All{/tr}</a>
 </div>
 {/if}
 
-<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}">
+<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}{if $group_management_mode ne  'y' and $set_default_groups_mode ne 'y'}#multiple{/if}">
 <table class="normal">
 <tr>
 <td class="heading auto">&nbsp;</td>
@@ -158,7 +162,7 @@ title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
   //-->                     
   </script>
 </table>
-  <p align="left"> {*on the left to have it close to the checkboxes*}
+  <a name="multiple"></a><p align="left"> {*on the left to have it close to the checkboxes*}
   {if $group_management_mode neq 'y' && $set_default_groups_mode neq 'y'}
   {tr}Perform action with checked:{/tr}
   <select name="submit_mult">
@@ -173,22 +177,26 @@ title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
   	<option value="add">{tr}Assign selected to{/tr}</option>
   	<option value="remove">{tr}Remove selected from{/tr}</option>
   </select>
-  {tr}the following groups:{/tr}
+  {tr}the following groups:{/tr}<br />
+  <select name="checked_groups[]" multiple="multiple" size="20">
   {section name=ix loop=$groups}
-  	<br /><input type="checkbox" name="checked_groups[]" value="{$groups[ix].groupName}" /> <a class="link" href="tiki-admingroups.php?group={$groups[ix].groupName|escape:"url"}" title="{tr}edit{/tr}">{$groups[ix].groupName}</a>
+  	<option value="{$groups[ix].groupName}">{$groups[ix].groupName}</option>
   {/section}
-  <br /><input type="submit" value="{tr}ok{/tr}" />
+  </select><br /><input type="submit" value="{tr}ok{/tr}" /><div class="simplebox">{tr}Tip: hold down CTRL to select multiple{/tr}</div>
   {elseif $set_default_groups_mode eq 'y'}
-  {tr}Set the default group of the selected users to{/tr}:
+  {tr}Set the default group of the selected users to{/tr}:<br />
+  <select name="checked_group" size="20">
   {section name=ix loop=$groups}
-  	<br /><input type="radio" name="checked_group" value="{$groups[ix].groupName}" /> <a class="link" href="tiki-admingroups.php?group={$groups[ix].groupName|escape:"url"}" title="{tr}edit{/tr}">{$groups[ix].groupName}</a>
+  	<option value="{$groups[ix].groupName|escape}" />{$groups[ix].groupName}</option>
   {/section}
-  <br /><input type="submit" value="{tr}ok{/tr}" />
+  </select><br /><input type="submit" value="{tr}ok{/tr}" />
   <input type="hidden" name="set_default_groups" value="{$set_default_groups_mode}" />
   {/if}
   </p>
 <input type="hidden" name="find" value="{$find|escape}" />
 <input type="hidden" name="numrows" value="{$numrows|escape}">
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+<input type="hidden" name="offset" value="{$offset|escape}" />
 </form>
 
 {if $cant_pages > 1}
@@ -226,7 +234,15 @@ title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
 {/if}
 <form action="tiki-adminusers.php" method="post" enctype="multipart/form-data">
 <table class="normal">
-<tr class="formcolor"><td>{tr}User{/tr}:</td><td><input type="text" name="name"  value="{$userinfo.login|escape}" />{if $userinfo.userId}<i>{tr}Warning: changing the username will require the user to change his password{/tr}</i>{/if}</td></tr>
+<tr class="formcolor"><td>{tr}User{/tr}:</td><td><input type="text" name="name"  value="{$userinfo.login|escape}" /><br />
+{if $userinfo.userId}
+  {if $feature_intertiki_server eq 'y'}
+    <i>{tr}Warning: changing the username will require the user to change his password and will mess with slave intertiki sites that use this one as master{/tr}</i>
+  {else}
+    <i>{tr}Warning: changing the username will require the user to change his password{/tr}</i>
+  {/if}
+{/if}
+</td></tr>
 <tr class="formcolor"><td>{tr}Pass{/tr}:</td><td><input type="password" name="pass" id="pass" /></td></tr>
 <tr class="formcolor"><td>{tr}Again{/tr}:</td><td><input type="password" name="pass2" id="pass2" /></td></tr>
 <tr class="formcolor"><td>{tr}Email{/tr}:</td><td><input type="text" name="email" size="30"  value="{$userinfo.email|escape}" /></td></tr>

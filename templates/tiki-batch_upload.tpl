@@ -26,7 +26,7 @@ function disableOthers(all) {
     if(els[i].type == "checkbox" && els[i].name == "imgs[]" && els[i].value != "ALL" && all.checked) {
       els[i].disabled = true;
     } else {
-      els[i].disabled = false;    
+      els[i].disabled = false;
     }
   }
 }
@@ -61,11 +61,11 @@ function disableOthers(all) {
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {tr}eg. from "misc/screenshots/digicam0001.jpg" a description misc/screenshots will be created{/tr}<br />
 <br />
 {/if}
-&nbsp;&nbsp;&nbsp;&nbsp; {tr}Select a Gallery{/tr}  
+&nbsp;&nbsp;&nbsp;&nbsp; {tr}Select a Gallery{/tr}
 <select name="galleryId">
 {section name=idx loop=$galleries}
 {if ($galleries[idx].individual eq 'n') or ($galleries[idx].individual_tiki_p_batch_upload_image_dir eq 'y')}
-<option  value="{$galleries[idx].id|escape}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].name}</option>
+<option  value="{$galleries[idx].galleryId}" {if $galleries[idx].galleryId eq $galleryId}selected="selected"{/if}>{$galleries[idx].name}</option>
 {/if}
 {/section}
 </select>

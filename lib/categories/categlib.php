@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.75 2006-01-20 09:54:54 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.76 2006-02-17 15:10:39 sylvieg Exp $
  *
  * \brief Categories support class
  *
@@ -277,7 +277,7 @@ class CategLib extends ObjectLib {
 			 // by now they're not showing, list_category_objects needs support for ignoring permissions
 			 // for a type.
 			 'article' => 'tiki_p_read_article',
-			 'image' => '',
+			 'image' => 'tiki_p_view_image_gallery',
 			 
 			 // newsletters can't be categorized, although there's some code in tiki-admin_newsletters.php
 			 // 'newsletter' => ?,
@@ -1036,6 +1036,11 @@ class CategLib extends ObjectLib {
 	}
 	return $forbidden;
     }
+	function approve_submission($subId, $articleId) {
+		$query = "update `tiki_categorized_objects` set `type`= ?, `objId`= ?, `href`=? where `objId` = ?";
+		$this->query($query, array('article', (int)$articleId, "tiki-read_article.php?articleId=$articleId", (int)$subId));
+	}
+		
 
 }
 

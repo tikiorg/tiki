@@ -6,7 +6,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set') {
+function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set', $fullname='') {
     global $tikilib, $userlib, $cachelib, $user, $feature_score, $feature_friends, $highlight_group,
 	$feature_community_mouseover, $feature_community_mouseover_name,$feature_community_mouseover_picture,
 	$feature_community_mouseover_friends,$feature_community_mouseover_score,$feature_community_mouseover_country,
@@ -20,9 +20,9 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set')
 	$tikilib->verify_friendship($user, $other_user);
     
     if( $show_mouseover || $show_friends ) {
-        $cacheItem = "userlink.".$user.".".$other_user;
+        $cacheItem = "userlink.".$user.".".$other_user.$fullname;
     } else {
-        $cacheItem = "userlink.".$other_user;
+        $cacheItem = "userlink.".$other_user.$fullname;
     }
     $cacheDate = $cachelib->getCachedDate($cacheItem);
     if( $cacheDate ) {
@@ -55,10 +55,15 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set')
         $friend = '&nbsp;<img src="img/icons/ico_friend.gif" width="7" height="10" alt="'.tra("Friend").'" />&nbsp;';
     }
 
-    $ou = $other_user;
+    if( $fullname )
+    {
+        $ou = $fullname;
+    } else {
+        $ou = $other_user;
+    }
     if($userlib->user_exists($other_user)&&(!empty($friend) || $tikilib->get_user_preference($other_user,'user_information','public')=='public')) {
 			if (isset($info) and $highlight_group and in_array($highlight_group,$info['groups'])) { 
-			    $ou = '<i class="highlightgroup"><b>'.$other_user.'</b></i>';
+			    $ou = '<i class="highlightgroup"><b>'.$ou.'</b></i>';
 			}
 			
 			$mouseover = '';
@@ -132,11 +137,11 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set')
 
 
 		if (is_numeric($idletime) && empty($mouseover)) {
-		    $ret = "<a class='$class' href='tiki-user_information.php?view_user=".urlencode($other_user)."' title='".tra("More info about $other_user")." ".tra("(idle for $idletime seconds)")."'>$ou</a>$friend$star";
+		    $ret = "<a class='$class' target='_top' href='tiki-user_information.php?view_user=".urlencode($other_user)."' title='".tra("More info about $other_user")." ".tra("(idle for $idletime seconds)")."'>$ou</a>$friend$star";
                     $cachelib->cacheItem($cacheItem, $ret);
                     return $ret;
 		} else {
-                    $ret = "<a class='$class' $mouseover href='tiki-user_information.php?view_user=".urlencode($other_user)."' >$ou</a>$friend$star";
+                    $ret = "<a class='$class' $mouseover target='_top' href='tiki-user_information.php?view_user=".urlencode($other_user)."' >$ou</a>$friend$star";
                     $cachelib->cacheItem($cacheItem, $ret);
                     return $ret;
 		}

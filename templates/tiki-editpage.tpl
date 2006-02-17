@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.73 2006-02-12 22:24:19 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.74 2006-02-17 15:10:47 sylvieg Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -180,12 +180,39 @@ or use
 </td></tr>
 {if $feature_wiki_footnotes eq 'y'}
 {if $user}
-<tr class="formcolor"><td>{tr}Footnotes{/tr}:</td><td><textarea name="footnote" rows="8" cols="42" style="width:95%;" >{$footnote|escape}</textarea></td></tr>
+<tr class="formcolor"><td>{tr}My Footnotes{/tr}:</td><td><textarea name="footnote" rows="8" cols="42" style="width:95%;" >{$footnote|escape}</textarea></td></tr>
 {/if}
 {/if}
 
+<script type="text/javascript">
+{literal}
+function searchrep() {
+  c = document.getElementById('caseinsens')
+  s = document.getElementById('search')
+  r = document.getElementById('replace')
+  t = document.getElementById('editwiki')
+
+  var opt = 'g';
+  if (c.checked == true) {
+    opt += 'i'
+  }
+  var str = t.value
+  var re = new RegExp(s.value,opt)
+  t.value = str.replace(re,r.value)
+}
+{/literal}
+</script>
+
+<tr class="formcolor"><td>{tr}Search {/tr}:</td><td>
+<input style="width:100;" class="wikitext" type="text" id="search"/>
+Replace to:
+<input style="width:100;" class="wikitext" type="text" id="replace"/>
+<input type="checkbox" id="caseinsens">{tr}Case Insensitivity{/tr}
+<input type="button" value="{tr}replace{/tr}" onclick="javascript:searchrep();">
+</td></tr>
+
 {if $page|lower neq 'sandbox'}
-<tr class="formcolor"><td>{tr}Comment{/tr}:</td><td><input style="width:90%;" class="wikitext" type="text" name="comment" value="{$commentdata|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}Edit Summary{/tr}:</td><td><input style="width:90%;" class="wikitext" type="text" name="comment" value="{$commentdata|escape}" /></td></tr>
 {if $wiki_feature_copyrights  eq 'y'}
 <tr class="formcolor"><td>{tr}Copyright{/tr}:</td><td>
 <table border="0">

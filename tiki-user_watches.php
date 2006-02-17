@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_watches.php,v 1.14 2005-05-18 10:59:00 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_watches.php,v 1.15 2006-02-17 15:10:31 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,7 +9,7 @@ include_once ('tiki-setup.php');
 
 if (!$user) {
 	$smarty->assign('msg', tra("You must log in to use this feature"));
-
+	$smarty->assign('errortype', '402');
 	$smarty->display("error.tpl");
 	die;
 }

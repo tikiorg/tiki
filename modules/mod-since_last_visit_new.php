@@ -266,7 +266,7 @@ function since_last_visit_new($user) {
     //file galleries
     $ret["items"]["fileGalleries"]["label"] = tra("new file galleries");
     $ret["items"]["fileGalleries"]["cname"] = "slvn_fileGalleries_menu";
-    $query = "select `galleryId`,`name`,`created`,`user` from `tiki_galleries` where `created`>? order by `created` desc";
+    $query = "select `galleryId`,`name`,`created`,`user` from `tiki_file_galleries` where `created`>? order by `created` desc";
     $result = $tikilib->query($query, array((int)$last));
 
     $count = 0;

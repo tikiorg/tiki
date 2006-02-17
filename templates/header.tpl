@@ -119,6 +119,9 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {if $feature_directory eq 'y' and $rss_directories eq 'y'}
 <link rel="alternate" type="application/xml" title="{tr}RSS Directories{/tr}" href="tiki-directories_rss.php?ver={$rssfeed_default_version}" />
 {/if}
+{if $feature_trackers eq 'y' and $rss_tracker eq 'y'}
+<link rel="alternate" type="application/xml" title="{tr}RSS Trackers{/tr}" href="tiki-tracker_rss.php?ver={$rssfeed_default_version}" />
+{/if}
 {* ---- END ---- *}
 
 {$trl}

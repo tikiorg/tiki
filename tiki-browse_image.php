@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.34 2005-09-14 21:45:38 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.35 2006-02-17 15:10:30 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -122,8 +122,6 @@ if (!isset($_REQUEST["scaled"])) {
 	$scalesize = 0;
 } else {
 	$itype = 's';
-
-	$scalesize = $_REQUEST["scalesize"];
 }
 
 $smarty->assign_by_ref('itype', $itype);
@@ -245,6 +243,11 @@ if (isset($_REQUEST["move_image"])) {
 		die;
 	}
 
+	if (isset($_REQUEST["newname"]) and $_REQUEST["newname"] != $info["name"]) {
+		if ($imagegallib->edit_image($_REQUEST['imageId'], $_REQUEST['newname'], $info['description'],$info['lat'],$info['lon'])) {
+			$info['name'] = $_REQUEST['newname'];
+		}
+	}
 	$imagegallib->move_image($_REQUEST["imageId"], $_REQUEST["newgalleryId"]);
 }
 

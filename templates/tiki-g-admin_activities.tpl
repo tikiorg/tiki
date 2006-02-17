@@ -151,6 +151,9 @@ Errors:<br />
 		{tr}Routing{/tr}
 	</td>
 	<td>
+		{tr}Role{/tr}
+	</td>
+	<td>
 		&nbsp;
 	</td>
 </tr>			
@@ -182,6 +185,14 @@ Errors:<br />
 		<option value="">{tr}all{/tr}</option>
 		<option value="y">{tr}Auto routed{/tr}</option>
 		<option value="n">{tr}Manual{/tr}</option>
+		</select>
+	</td>
+	<td>
+		<select name="filter_role">
+		<option value="">{tr}all{/tr}</option>
+		{section loop=$all_roles name=ix}
+		<option value="{$all_roles[ix].roleId|escape}">{$all_roles[ix].name}</option>
+		{/section}
 		</select>
 	</td>
 	<td>

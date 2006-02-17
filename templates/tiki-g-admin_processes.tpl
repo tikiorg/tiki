@@ -136,12 +136,13 @@
 	</td>
 
 	<td class="{cycle}">
-	  <a class="link" href="tiki-g-admin_processes.php?find={$find}&amp;where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;newminor={$items[ix].pId}">{tr}new minor{/tr}</a><br />
-	  <a class="link" href="tiki-g-admin_processes.php?find={$find}&amp;where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;newmajor={$items[ix].pId}">{tr}new major{/tr}</a><br />
 	  <a class="link" href="tiki-g-admin_activities.php?pid={$items[ix].pId}">{tr}activities{/tr}</a><br />
 	  <a class="link" href="tiki-g-admin_shared_source.php?pid={$items[ix].pId}">{tr}code{/tr}</a><br />
-	  <a class="link" href="tiki-g-save_process.php?pid={$items[ix].pId}">{tr}save{/tr}</a><br />
+	  <a class="link" href="tiki-g-admin_graph.php?pid={$items[ix].pId}">{tr}graph{/tr}</a><br />
 	  <a class="link" href="tiki-g-admin_roles.php?pid={$items[ix].pId}">{tr}roles{/tr}</a><br />
+	  <a class="link" href="tiki-g-save_process.php?pid={$items[ix].pId}">{tr}export{/tr}</a><br />
+	  <a class="link" href="tiki-g-admin_processes.php?find={$find}&amp;where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;newminor={$items[ix].pId}">{tr}new minor{/tr}</a><br />
+	  <a class="link" href="tiki-g-admin_processes.php?find={$find}&amp;where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;newmajor={$items[ix].pId}">{tr}new major{/tr}</a><br />
 	</td>
 </tr>
 {sectionelse}

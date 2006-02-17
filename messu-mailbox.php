@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-mailbox.php,v 1.17 2005-09-08 01:45:05 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-mailbox.php,v 1.18 2006-02-17 15:10:30 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -15,6 +15,7 @@ if (!$user) {
 		die;
 	} else {
 	$smarty->assign('msg', tra("You are not logged in"));
+	$smarty->assign('errortype', '402');
 	$smarty->display("error.tpl");
 	die;
 	}

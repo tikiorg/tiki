@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/remote.php,v 1.2 2005-12-12 15:18:46 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/remote.php,v 1.3 2006-02-17 15:10:30 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -17,7 +17,10 @@ include_once("lib/init/initlib.php");
 include 'tiki-setup_base.php';
 require_once("XML/Server.php");
 
-if ($tikilib->get_preference('feature_intertiki') != 'y' or $tikilib->get_preference('feature_intertiki') != 'y') {
+if ($tikilib->get_preference('feature_intertiki') != 'y' ||
+    $tikilib->get_preference('feature_intertiki_server') != 'y' ||
+    $tikilib->get_preference('feature_intertiki_mymaster')) {
+
 	echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<methodResponse><fault><value><struct><member><name>faultCode</name><value><int>403</int></value></member>";
 	echo "<member><name>faultString</name><value><string>Server is not configured</string></value></member></struct></value></fault></methodResponse>";
 	exit;
@@ -50,9 +53,12 @@ $s = new XML_RPC_Server($map);
 
 function validate($params) {
 	global $tikilib,$userlib,$known_hosts,$intertiki_errfile,$intertiki_logfile,$logslib;
+
 	$key = $params->getParam(0); $key = $key->scalarval(); 
 	$login = $params->getParam(1); $login = $login->scalarval(); 
 	$pass = $params->getParam(2); $pass = $pass->scalarval(); 
+	$slave = $params->getParam(3); $slave = $slave->scalarval();
+	
 	if (!isset($known_hosts[$key]) or $known_hosts[$key]['ip'] != $_SERVER['REMOTE_ADDR']) {
 		$msg = tra('Invalid server key');
 		if ($intertiki_errfile) logit($intertiki_errfile,$msg,$key,INTERTIKI_BADKEY,$known_hosts[$key]['name']);
@@ -63,11 +69,26 @@ function validate($params) {
 		$msg = tra('Invalid username or password');
 		if ($intertiki_errfile) logit($intertiki_errfile,$msg,$login,INTERTIKI_BADUSER,$known_hosts[$key]['name']);
 		$logslib->add_log('intertiki',$msg.' from '.$known_hosts[$key]['name'],$login);
-		return new XML_RPC_Response(0, 101, $msg);
+		if (!$userlib->user_exists($login)) {
+		    // slave client is supposed to disguise 102 code as 101 not to show
+		    // crackers that user does not exists. 102 is required for telling slave
+		    // to delete user there
+		    return new XML_RPC_Response(0, 102, $msg);
+		} else {
+		    return new XML_RPC_Response(0, 101, $msg);
+		}
 	} 
 	if ($intertiki_logfile) logit($intertiki_logfile,"logged",$login,INTERTIKI_OK,$known_hosts[$key]['name']);
-	$logslib->add_log('intertiki','auth granted from '.$known_hosts[$key]['name'],$login);
-	return new XML_RPC_Response(new XML_RPC_Value(1, "boolean"));
+	
+	if ($slave) {
+	    $logslib->add_log('intertiki','auth granted from '.$known_hosts[$key]['name'],$login);
+	    global $userlib;
+	    $user_details = $userlib->get_user_details($login);
+	    return new XML_RPC_Response(new XML_RPC_Value(serialize($user_details), "string"));
+	} else {
+	    $logslib->add_log('intertiki','auth granted from '.$known_hosts[$key]['name'],$login);
+	    return new XML_RPC_Response(new XML_RPC_Value(1, "boolean"));
+	}
 }
 
 function get_version($params) {

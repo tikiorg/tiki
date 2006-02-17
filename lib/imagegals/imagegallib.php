@@ -1695,10 +1695,10 @@ class ImageGalsLib extends TikiLib {
                 `lastModif`=?, `public`=?, `sortorder`=?, `sortdirection`=?, `galleryimage`=?,
 		`parentgallery`=?,`showname`=?,`showimageid`=?,`showdescription`=?,
 		`showcreated`=?,`showuser`=?,`showhits`=?,`showxysize`=?,`showfilesize`=?,
-		`showfilename`=?,`defaultscale`=?
+		`showfilename`=?,`defaultscale`=?, `user`=?
 	       	where `galleryId`=?";
 
-			$result = $this->query($query,array($name,$visible,$geographic,(int)$maxRows,(int)$rowImages,(int)$thumbSizeX,(int)$thumbSizeY,$description,$theme,(int)$now,$public,$sortorder,$sortdirection,$galleryimage,(int)$parentgallery,$showname,$showimageid,$showdescription,$showcreated,$showuser,$showhits,$showxysize,$showfilesize,$showfilename,$defaultscale,(int)$galleryId));
+			$result = $this->query($query,array($name,$visible,$geographic,(int)$maxRows,(int)$rowImages,(int)$thumbSizeX,(int)$thumbSizeY,$description,$theme,(int)$now,$public,$sortorder,$sortdirection,$galleryimage,(int)$parentgallery,$showname,$showimageid,$showdescription,$showcreated,$showuser,$showhits,$showxysize,$showfilesize,$showfilename,$defaultscale,$user,(int)$galleryId));
 		} else {
 			// Create a new record
 			$query = "insert into `tiki_galleries`(`name`,`description`,`theme`,`created`,`user`,`lastModif`,`maxRows`,`rowImages`,`thumbSizeX`,`thumbSizeY`,`public`,`hits`,`visible`,`sortorder`,`sortdirection`,`galleryimage`,`parentgallery`,`showname`,`showimageid`,`showdescription`,`showcreated`,`showuser`,`showhits`,`showxysize`,`showfilesize`,`showfilename`,`defaultscale`,`geographic`) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";

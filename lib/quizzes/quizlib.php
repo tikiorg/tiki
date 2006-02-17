@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/quizzes/quizlib.php,v 1.39 2005-12-19 17:27:22 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/quizzes/quizlib.php,v 1.40 2006-02-17 15:10:41 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, 
 //                          George G. Geller et. al.
@@ -695,7 +695,7 @@ function TextToQuestions($text){
 
 	for ($i = 0; $i < count($text); $i++){
 		$text[$i] = trim($text[$i]);
-		if (!ctype_print($text[$i])){
+		if ($text[$i] and !ctype_print($text[$i])){
 			quizlib_error_exit("lib/quizzes/quizlib.php line ".__LINE__.": Your text has invalid character(s) near line $i where it says:\n  $text[$i]");
 		}
 	}

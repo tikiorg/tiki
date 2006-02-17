@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.59 2006-01-20 10:22:18 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.60 2006-02-17 15:10:30 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -208,30 +208,26 @@ if (isset($_REQUEST["newuser"])) {
 	} elseif ($_REQUEST['submit_mult'] == 'assign_groups') {
 		$group_management_mode = TRUE;
 		$smarty->assign('group_management_mode', 'y');
-		$numrows = $maxRecords;
 		$sort_mode = 'groupName_asc';
-		$offset = 0;
 		$initial = '';
 		$find = '';
 		if ($tiki_p_admin != 'y')
 			$userGroups = $userlib->get_user_groups_inclusion($user);
 		else
 			$userGroups = '';
-		$groups = $userlib->get_groups($offset, $numrows, $sort_mode, $find, $initial, 'n', $userGroups);
+		$groups = $userlib->get_groups(0, -1, $sort_mode, $find, $initial, 'n', $userGroups);
 		$smarty->assign('groups', $groups['data']);
 	} elseif ($_REQUEST['submit_mult'] == 'set_default_groups') {
 		$set_default_groups_mode = TRUE;
 		$smarty->assign('set_default_groups_mode', 'y');
-		$numrows = $maxRecords;
 		$sort_mode = 'groupName_asc';
-		$offset = 0;
 		$initial = '';
 		$find = '';
 		if ($tiki_p_admin != 'y')
 			$userGroups = $userlib->get_user_groups_inclusion($user);
 		else
 			$userGroups = '';
-		$groups = $userlib->get_groups($offset, $numrows, $sort_mode, $find, $initial, 'n', $userGroups);
+		$groups = $userlib->get_groups(0, -1, $sort_mode, $find, $initial, 'n', $userGroups);
 		$smarty->assign('groups', $groups['data']);
 	}
 	if (isset($tikifeedback[0]['msg'])) {

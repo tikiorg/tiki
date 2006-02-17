@@ -116,7 +116,7 @@ class Comments extends TikiLib {
 	return $this->getOne("select count(*) from `tiki_forum_reads` where `user`=? and `threadId`=?",array($user,$threadId));
     }
 
-    function add_thread_attachment( $forum_info, $threadId, $fp = '', $data = '', $name, $type, $size )
+    function add_thread_attachment( $forum_info, $threadId, $fp = '', $data = '', $name, $type, $size, $inbound_mail = 0 )
     {
 	global $smarty;
 
@@ -125,7 +125,6 @@ class Comments extends TikiLib {
 		    || ($forum_info['att'] == 'att_admin' && $tiki_p_admin_forum == 'y')
 		    || ($forum_info['att'] == 'att_perm' && $tiki_p_forum_attach == 'y') )
 	{
-	print "In if.\n";
 
 	    $fhash = '';
 
@@ -141,7 +140,7 @@ class Comments extends TikiLib {
 		}
 
 		@$fw = fopen($forum_info['att_store_dir'] . $fhash, "wb");
-		if (!$fw) {
+		if (!$fw && ! $inbound_mail ) {
 		    $smarty->assign('msg', tra('Cannot write to this file: '). $forum_info['att_store_dir'] . $fhash);
 		    $smarty->display("error.tpl");
 		    die;
@@ -167,7 +166,7 @@ class Comments extends TikiLib {
 		$data = '';
 	    }
 
-	    if ($size > $forum_info['att_max_size']) {
+	    if ($size > $forum_info['att_max_size'] && ! $inbound_mail ) {
 		$smarty->assign('msg', tra('Cannot upload this file maximum upload size exceeded'));
 		$smarty->display("error.tpl");
 		die;
@@ -471,11 +470,11 @@ class Comments extends TikiLib {
 	    $this->register_forum_post($forumId,$parentId);
 
 	    // Process attachments
-	    if( count( $output['parts'] ) > 1 )
+	    if( array_key_exists( 'parts', $output ) && count( $output['parts'] ) > 1 )
 	    {
 		foreach( $output['parts'] as $part )
 		{
-		    if( $part['disposition'] == "attachment" )
+		    if( array_key_exists( 'disposition', $part ) && $part['disposition'] == "attachment" )
 		    {
 			if( strlen( $part['d_parameters']['filename'] ) > 0 )
 			{
@@ -488,7 +487,8 @@ class Comments extends TikiLib {
 			$this->add_thread_attachment(
 				$forum_info, $threadid, '', $part['body'],
 				$part_name, $part['type'],
-				strlen( $part['body'] ) );
+				strlen( $part['body'] ),
+				1 );
 		    }
 		}
 	    }
@@ -1539,12 +1539,14 @@ class Comments extends TikiLib {
 
 	    $query = "select tc1.`threadId`, tc1.`object`, tc1.`objectType`, tc1.`parentId`, tc1.`userName`, tc1.`commentDate`, tc1.`hits`, tc1.`type`, tc1.`points`, tc1.`votes`, tc1.`average`, tc1.`title`, tc1.`data`, tc1.`hash`, tc1.`user_ip`, tc1.`summary`, tc1.`smiley`, tc1.`message_id`, tc1.`in_reply_to`, tc1.`comment_rating`  from `tiki_comments` as tc1
 		left outer join `tiki_comments` as tc2 on tc1.`in_reply_to` = tc2.`message_id`
+		and tc1.`parentId` = ?
+		and tc2.`parentId` = ?
 		$mid 
 		and (tc1.`in_reply_to` = ?
 		or (tc2.`in_reply_to` = \"\" or tc2.`in_reply_to` is null or tc2.message_id is null or tc2.parentid = 0))
 		$time_cond order by tc1.".$this->convert_sortmode($sort_mode).",tc1.`threadId`";
 		$bind_mid_cant = $bind_mid;
-		$bind_mid = array_merge($bind_mid, array($parent_message_id));
+		$bind_mid = array_merge(array($parentId,$parentId), $bind_mid, array($parent_message_id));
 
 		$query_cant = "select count(*) from `tiki_comments` as tc1 $mid $time_cond";
 	} else {
