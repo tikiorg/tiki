@@ -1,6 +1,8 @@
 /*
 Planetfall for TikiCMS is based on Rhuk Planetfall theme originally done for Mambo CMS
 and released under the GPL license. Accordingly, this Planetfall adaptation is GPL-licensed.
+Version 1.01.
+Changes from Ver. 1.0: div.tocnav and .tocnavlink styles given orange-on-darkblue treatment.
 See http://zukakakina.com or http://themes.tikiwiki.org for further information about  and upgrades for 
 this theme.
 */
@@ -1429,37 +1431,32 @@ div.cachedpage {
 /*************************************************** WIKI TOCS ***************************************************/
 /* Style for structure-created nav icons at top of wikitext */
 div.tocnav {
-	font-size: 9px;
+	font-size: 10px;
 	background: #293C43;
 	border: 1px solid #8CACBB;
-	color: black;
+	color: #CCCCCC;
 	padding-bottom: 2px;
 	padding-top: 2px;
 	width: 100%;  
-	background-color: #ededed;
 	margin-bottom: 16px;
-}
-
-.tocnav table {
-	background-color: #ffffff;
 }
 
 .tocnavlink,
 .tocnavlink:link {
-	color:black;
-	text-decoration: underline;
+	color: #ff6600;
+	text-decoration: none;
 	font-size: 10px;
 }
 
 .tocnavlink:hover {
 	font-size: 10px;
-	color: black;
+	color: #8CACBB;
 	text-decoration: underline;
 }
 
 .tocnav a {
-	font-size: 90%;
-	color: #424242;
+	font-size: 10px;
+	color: #ff6600;
 }
 
 /* Styles the list formed by the maketoc tag. In structures_toc.tpl: <ul class="toc"> */
