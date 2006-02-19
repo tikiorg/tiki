@@ -1,0 +1,41 @@
+contributor:
+$Author: mose $
+
+revision:
+$Revision: 1.1 $
+
+lastmodif:
+$Date: 2006-02-19 06:05:18 $
+
+files: 
+themes/planetfall/README-FIRST.txt styles/planetfall/README-FIRST.txt
+themes/planetfall/theme_details-planetfall.txt styles/planetfall/theme_details-planetfall.txt
+themes/planetfall/header_logo_original.png styles/planetfall/header_logo_original.png
+themes/planetfall/theme/styles/planetfall.css styles/planetfall.css
+themes/planetfall/theme/styles/planetfall/back_fade.jpg styles/planetfall/back_fade.jpg
+themes/planetfall/theme/styles/planetfall/header_bg.jpg styles/planetfall/header_bg.jpg
+themes/planetfall/theme/styles/planetfall/header_logo.png styles/planetfall/header_logo.png
+themes/planetfall/theme/styles/planetfall/indent1.png styles/planetfall/indent1.png
+themes/planetfall/theme/styles/planetfall/menu1_fade.jpg styles/planetfall/menu1_fade.jpg
+themes/planetfall/theme/styles/planetfall/menu2_fade.jpg styles/planetfall/menu2_fade.jpg
+themes/planetfall/theme/styles/planetfall/menu_bullet_hover.gif styles/planetfall/menu_bullet_hover.gif
+themes/planetfall/theme/styles/planetfall/menu_bullet_link.gif styles/planetfall/menu_bullet_link.gif
+themes/planetfall/theme/styles/planetfall/silver_bg.jpg styles/planetfall/silver_bg.jpg
+themes/planetfall/theme/styles/planetfall/title_bg.png styles/planetfall/title_bg.png
+themes/planetfall/theme/styles/planetfall/top_bar.jpg styles/planetfall/top_bar.jpg
+themes/planetfall/theme/templates/styles/planetfall/error.tpl templates/styles/planetfall/error.tpl
+themes/planetfall/theme/templates/styles/planetfall/tiki-show_page.tpl templates/styles/planetfall/tiki-show_page.tpl
+themes/planetfall/theme/templates/styles/planetfall/tiki-top_bar.tpl templates/styles/planetfall/tiki-top_bar.tpl
+themes/planetfall/theme/templates/styles/planetfall/tiki.tpl templates/styles/planetfall/tiki.tpl
+
+author:
+Gary Cunningham-Lee (chibaguy)
+
+licence:
+GNU/GPL
+
+Description: 
+This is a Tiki adaptation of the Planetfall theme (http://mambo.rhuk.net/) originally done by rhuk for the Mambo CMS (now Joomla). It's been tested with Tiki 1.9.2. Maintained by Gary Cunningham-Lee (chibaguy). For the latest information on and updates of the Planetfall theme for TikiCMS, visit http://zukakakina.com or http://themes.tikiwiki.org.
+
+Changelog:
+1 initial package
