@@ -1,5 +1,5 @@
 {include file="header.tpl"}{* This must be included as the first thing in a document to be XML compliant *}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki.tpl,v 1.12 2006-02-05 01:07:06 amette Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki.tpl,v 1.13 2006-02-26 21:01:49 amette Exp $ *}
 {* Main template for TikiWiki layout *}
 {if $feature_bidi eq 'y'}<table dir="rtl" ><tr><td>{/if}
 <div id="main">
@@ -30,6 +30,13 @@
       {php}
 				$wrapper='rightcolonlywrapper';
 				$maincontent='rightcolonlymaincontent';
+				$add_style2=' 100%;'
+			{/php}
+    {/if}
+    {if $feature_left_column eq 'n' and $feature_right_column eq 'n'}
+      {php}
+				$wrapper='nocolwrapper';
+				$maincontent='nocolmaincontent';
 				$add_style2=' 100%;'
 			{/php}
     {/if}

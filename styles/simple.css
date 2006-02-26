@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.38 2006-02-17 15:10:45 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.39 2006-02-26 21:01:48 amette Exp $
  *
  * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye
  * Enables font re-sizing in all browsers, aims to be WCAG 1.0 compatible (not yet), one simple css file.
@@ -274,6 +274,12 @@ textarea {
  float: none; width: 100%;
 }
 
+.nocolwrapper {
+ float: left; width: 100%;
+}
+.nocolmaincontent {
+ float: none; width: 99%;
+}
 
 /* we use this e.g. for <br /> to clear all instead of <br clear="all" /> */
 .clear {
