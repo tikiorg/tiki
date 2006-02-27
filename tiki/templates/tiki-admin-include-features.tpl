@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.75 2006-02-17 15:10:47 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.76 2006-02-27 02:13:25 amette Exp $ *}
 
 {* this is the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
@@ -392,20 +392,18 @@
             {if $user_assigned_modules eq 'y'}checked="checked"{/if}/>
     </div></td>
     <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Users+Configure+Modules" target="tikihelp" class="tikihelp" title="{tr}Users can Configure Modules{/tr}">{/if} {tr}Users can Configure Modules{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
-    <td>&nbsp;</td>
   </tr>
   <tr>
     <td><input type="checkbox" name="feature_user_bookmarks"
             {if $feature_user_bookmarks eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}User+Bookmarks" target="tikihelp" class="tikihelp" title="{tr}User Bookmarks{/tr}">{/if} {tr}User Bookmarks{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
     <td>&nbsp;</td>
-    <td><select name="user_flip_modules">
+    <td style="text-align:right"><select name="user_flip_modules">
       <option value="y" {if $user_flip_modules eq 'y'}selected="selected"{/if}>{tr}always{/tr}</option>
       <option value="module" {if $user_flip_modules eq 'module'}selected="selected"{/if}>{tr}module decides{/tr}</option>
       <option value="n" {if $user_flip_modules eq 'n'}selected="selected"{/if}>{tr}never{/tr}</option>
     </select></td>
     <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Users+Shade+Modules" target="tikihelp" class="tikihelp" title="{tr}Users can Shade Modules{/tr}">{/if} {tr}Users can Shade Modules{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
-    <td>&nbsp;</td>
   </tr>
   <tr>
     <td><input type="checkbox" name="feature_user_watches"
@@ -417,7 +415,6 @@
             {if $feature_user_watches_translations eq 'y'}checked="checked"{/if}/>
     </div></td>
     <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}User+Watches+translations" target="tikihelp" class="tikihelp" title="{tr}User Watches Translations{/tr}">{/if} {tr}User Watches Translations{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
-    <td>&nbsp;</td>
   </tr>
   <tr>
     <td><input type="checkbox" name="feature_usermenu"
@@ -429,7 +426,6 @@
             {if $feature_tasks eq 'y'}checked="checked"{/if}/>
     </div></td>
     <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}User+Tasks" target="tikihelp" class="tikihelp" title="{tr}User Tasks{/tr}">{/if} {tr}User Tasks{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
-    <td>&nbsp;</td>
   </tr>
   <tr>
     <td><input type="checkbox" name="feature_messages"
@@ -441,13 +437,11 @@
             {if $feature_userfiles eq 'y'}checked="checked"{/if}/>
     </div></td>
     <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}User+Files" target="tikihelp" class="tikihelp" title="{tr}User Files{/tr}">{/if} {tr}User Files{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
-    <td>&nbsp;</td>
   </tr>
   <tr>
     <td><input type="checkbox" name="feature_notepad"
             {if $feature_notepad eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}User+Notepad" target="tikihelp" class="tikihelp" title="{tr}User Notepad{/tr}">{/if} {tr}User Notepad{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
-    <td>&nbsp;</td>
   </tr>
 </table>
 {* --- General Layout options --- *}
