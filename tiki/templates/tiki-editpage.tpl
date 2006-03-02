@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.74 2006-02-17 15:10:47 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.75 2006-03-02 15:15:50 sylvieg Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -309,6 +309,9 @@ Replace to:
 {/if}
 {if $feature_wiki_usrlock eq 'y' && ($tiki_p_lock eq 'y' || $tiki_p_admin_wiki eq 'y')}
 <tr class="formcolor"><td>{tr}Lock this page{/tr}</td><td><input type="checkbox" name="lock_it" {if $lock_it eq 'y'}checked="checked"{/if}/></td></tr>
+{if $feature_contribution}
+{include file="contribution.tpl"}
+{/if}
 {/if}
 {if $page|lower neq 'sandbox' or $tiki_p_admin eq 'y'}
 <tr class="formcolor"><td>&nbsp;</td><td>

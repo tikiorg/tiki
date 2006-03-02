@@ -1,0 +1,64 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_contribution.tpl,v 1.1 2006-03-02 15:15:50 sylvieg Exp $ *}
+<h1><a  class="pagetitle" href="tiki-admin_contribution.php">{tr}Admin Contributions{/tr}</a>
+{if $feature_help eq 'y'}
+<a href="{$helpurl}Contribution" target="tikihelp" class="tikihelp" title="{tr}Contribution{/tr}">
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
+{if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=tiki-admin_contributions.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}">
+<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit{/tr}'></a>{/if}</h1>
+
+{if $contribution}
+<h2>{tr}Edit the contribution:{/tr} {$contribution.name|escape}</h2>
+<form enctype="multipart/form-data" action="tiki-admin_contribution.php" method="post">
+<input type="hidden" name="contributionId" value="{$contribution.contributionId}" />
+ <table class="normal">
+<tr><td class="formcolor">{tr}Name{/tr}</td><td class="formcolor"><input type="text" name="name"{if $contribution.name} value="{$contribution.name|escape}"{/if} /></td></tr>
+<tr><td class="formcolor">{tr}Description{/tr}</td><td class="formcolor"><input type="text" name="description" size="80" maxlength="250"{if $contribution.description} value="{$contribution.description|escape}"{/if} /></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="replace" value="{tr}save{/tr}" /></td></tr>
+</table>
+</form>
+{/if}
+
+<h2>{tr}Settings{/tr}</h2>
+<form action="tiki-admin_contribution.php?page=features" method="post">
+<table class="normal">
+<tr><td class="formcolor">{tr}Contributions are mandatory{/tr}</td>
+<td class="formcolor"><input type="checkbox" name="feature_contribution_mandatory" {if $feature_contribution_mandatory eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="setting" value="{tr}save{/tr}" /></td></tr>
+</table>
+</form>
+
+
+<h2>{tr}Create a new contribution{/tr}</h2>
+
+<form enctype="multipart/form-data" action="tiki-admin_contribution.php" method="post">
+ <table class="normal">
+<tr><td class="formcolor">{tr}Name{/tr}</td><td class="formcolor"><input type="text" name="name" /></td></tr>
+<tr><td class="formcolor">{tr}Description{/tr}</td><td class="formcolor"><input type="text" name="description" size="80" maxlength="250" /></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="add" value="{tr}add{/tr}" /></td></tr>
+</table>
+</form>
+
+<h2>{tr}List of contributions{/tr}</h2>
+<table class="normal">
+<tr>
+<td class="heading">{tr}Name{/tr}</td>
+<td class="heading">{tr}Description{/tr}</td>
+<td class="heading">{tr}Actions{/tr}</td>
+</tr>
+{cycle print=false values="even,odd"}
+{section name=ix loop=$contributions}
+<tr>
+<td class="{cycle advance=false}">{$contributions[ix].name}</a></td>
+<td class="{cycle advance=false}">{$contributions[ix].description|truncate|escape}</a></td>
+<td class="{cycle}">
+<a class="link" href="tiki-admin_contribution.php?remove={$contributions[ix].contributionId}"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt='{tr}remove{/tr}'></a>
+ <a class="link" href="tiki-admin_contribution.php?contributionId={$contributions[ix].contributionId}"><img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit{/tr}'></a>
+</td>
+</tr>
+{sectionelse}
+<tr>
+<td colspan="3" class="odd">{tr}No records found{/tr}</td>
+</tr>
+{/section}
+</table>

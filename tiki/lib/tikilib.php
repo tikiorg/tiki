@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.633 2006-02-17 15:10:33 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.634 2006-03-02 15:15:51 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1562,11 +1562,12 @@ function add_pageview() {
 
     /*shared*/
     function remove_object($type, $id) {
-    	global $categlib, $dbTiki;
+	global $categlib, $dbTiki;
 
 		if (!is_object($categlib)) {
 		    require_once ("lib/categories/categlib.php");
 		}
+	global $objectlib;require_once('lib/objectlib.php');
 	$categlib->uncategorize_object($type, $id);
 	// Now remove comments
 	$object = $type . $id;
@@ -1575,6 +1576,8 @@ function add_pageview() {
 	// Remove individual permissions for this object if they exist
 	$query = "delete from `users_objectpermissions` where `objectId`=? and `objectType`=?";
 	$result = $this->query($query,array(md5($object),$type));
+	// remove object
+	$objectlib->delete_object($type, $id);
 	return true;
     }
 
@@ -3003,7 +3006,7 @@ function add_pageview() {
     // Removes all the versions of a page and the page itself
     /*shared*/
     function remove_all_versions($page, $comment = '') {
-	global $dbTiki, $user;
+	global $dbTiki, $user, $feature_contribution;
 	global $feature_actionlog;
 	if ($feature_actionlog == 'y') {
 		$info= $this->get_page_info($page);
@@ -3026,6 +3029,10 @@ function add_pageview() {
 	}
 	$query = "delete from `tiki_pages` where `pageName` = ?";
 	$result = $this->query($query, array( $page ) );
+	if ($feature_contribution == 'y') {
+		global $contributionlib; include_once('lib/contribution/contributionlib.php');
+		$contributionlib->remove_page($page);
+	}
 	$query = "delete from `tiki_history` where `pageName` = ?";
 	$result = $this->query($query, array( $page ) );
 	$query = "delete from `tiki_links` where `fromPage` = ?";
@@ -5694,7 +5701,7 @@ if (!$simple_wiki) {
 
     function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $description = '', $minor = false, $lang='', $is_html=false, $lock_it='') {
 	global $smarty;
-
+	global $feature_contribution;
 	global $dbTiki;
 	global $feature_user_watches;
 	global $wiki_watch_author;
@@ -5776,7 +5783,7 @@ if (!$simple_wiki) {
 
 		$now = date("U");
 		$oktodel = $now - ($keep * 24 * 3600);
-		$query = "select `pageName` ,`version` from `tiki_history` where `pageName`=? and `lastModif`<=? order by `lastModif` asc";
+		$query = "select `pageName` ,`version`, `historyId` from `tiki_history` where `pageName`=? and `lastModif`<=? order by `lastModif` asc";
 		$result = $this->query($query,array($pageName,$oktodel),$nb - $maxversions);
 		$toelim = $result->numRows();
 
@@ -5786,6 +5793,10 @@ if (!$simple_wiki) {
 		    $version = $res["version"];
 		    $query = "delete from `tiki_history` where `pageName`=? and `version`=?";
 		    $this->query($query,array($pageName,$version));
+		    if ($feature_contribution == 'y') {
+			global $contributionlib; include_once('lib/contribution/contributionlib.php');
+			$contributionlib->remove_history($res['historyId']);
+		    }
 		}
 	    }
 	}
@@ -5797,6 +5808,12 @@ if (!$simple_wiki) {
 		    values(?,?,?,?,?,?,?,?)";
 # echo "<pre>";print_r(get_defined_vars());echo "</pre>";die();
 		$result = $this->query($query,array($pageName,(int) $old_version,(int) $lastModif,$user,$ip,$comment,$data,$description));
+		if ($feature_contribution == 'y') {
+			global $contributionlib; include_once('lib/contribution/contributionlib.php');
+			$query = 'select max(`historyId`) from `tiki_history`where `pageName`=? and `version`=?';
+			$historyId = $this->getOne($query, array($pageName,(int) $old_version));
+			$contributionlib->change_assigned_contributions($pageName, 'wiki page', $historyId, 'history', '', $pageName.'/'.$old_version, "tiki-pagehistory.php?page=$pageName&preview=$old_version");
+		}
 		/* the following doesn't work because tiki dies if the above query fails
 		if (!$result) {
 			$query2 = "delete from `tiki_history` where `pageName`=? and `version`=?";

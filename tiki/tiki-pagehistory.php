@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.29 2005-08-25 20:50:04 michael_davey Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.30 2006-03-02 15:15:51 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -47,6 +47,12 @@ if (isset($_REQUEST["delete"]) && isset($_REQUEST["hist"])) {
 
 $info = $tikilib->get_page_info($page);
 $smarty->assign_by_ref('info', $info);
+
+if ($feature_contribution == 'y') {
+	global $contributionlib; include_once('lib/contribution/contributionlib.php');
+	$contributions = $contributionlib->get_assigned_contributions($page, 'wiki page');
+	$smarty->assign_by_ref('contributions', $contributions);
+}
 
 $smarty->assign('source', false);
 if (isset($_REQUEST['source'])) {
