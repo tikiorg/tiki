@@ -1,5 +1,5 @@
 -- $Rev$
--- $Date: 2005-12-15 16:12:20 $
+-- $Date: 2006-03-02 20:24:13 $
 -- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
@@ -1735,6 +1735,7 @@ CREATE TABLE "tiki_group_inclusion" (
 DROP TABLE "tiki_history";
 
 CREATE TABLE "tiki_history" (
+  "historyId" bigserial,
   "pageName" varchar(160) NOT NULL default '',
   "version" integer NOT NULL default '0',
   "version_minor" integer NOT NULL default '0',
@@ -1744,7 +1745,9 @@ CREATE TABLE "tiki_history" (
   "ip" varchar(15) default NULL,
   "comment" varchar(200) default NULL,
   "data" bytea,
-  PRIMARY KEY ("pageName","version")
+  "type" varchar(50) default NULL,
+  PRIMARY KEY ("pageName","version"),
+  KEY(historyId)
 ) ;
 
 -- --------------------------------------------------------
@@ -2219,6 +2222,8 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Categories','tiki-browse_categories.php',25,'feature_categories','tiki_p_view_categories','');
 
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Freetags','tiki-browse_freetags.php',27,'feature_freetags','tiki_p_view_freetags','');
+
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Games','tiki-list_games.php',30,'feature_games','tiki_p_play_games','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Calendar','tiki-calendar.php',35,'feature_calendar','tiki_p_view_calendar','');
@@ -2492,6 +2497,8 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'feature_integrator','tiki_p_admin_integrator','');
 
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_contribution','');
+
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin home','tiki-admin.php',1051,'','tiki_p_admin','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Live support','tiki-live_support_admin.php',1055,'feature_live_support','tiki_p_live_support_admin','');
@@ -2592,6 +2599,8 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_poll_comments','tiki_p_admin','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_faq_comments','tiki_p_admin','');
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Contribution','tiki-admin_contribution.php',1265,'feature_contribution','tiki_p_admin_contribution','');
 
 -- --------------------------------------------------------
 
@@ -2966,9 +2975,12 @@ DROP TABLE "tiki_private_messages";
 CREATE TABLE "tiki_private_messages" (
   "messageId" serial,
   "toNickname" varchar(200) NOT NULL default '',
-  "data" varchar(255) default NULL,
+  "message" varchar(255) default NULL,
   "poster" varchar(200) NOT NULL default 'anonymous',
   "timestamp" bigint default NULL,
+  "received" smallint not null default 0,
+  "key"(received),
+  "key"(timestamp),
   PRIMARY KEY ("messageId")
 )   ;
 
@@ -3788,6 +3800,7 @@ CREATE TABLE "tiki_tracker_fields" (
   "isPublic" char(1) NOT NULL default 'n',
   "isHidden" char(1) NOT NULL default 'n',
   "isMandatory" char(1) NOT NULL default 'n',
+  "description" text,
   PRIMARY KEY ("fieldId")
 )   ;
 
@@ -4535,6 +4548,7 @@ CREATE TABLE "users_groups" (
   "usersFieldId" bigint,
   "groupFieldId" bigint,
   "registrationChoice" char(1) default NULL,
+  "registrationUsersFieldIds" text,
   PRIMARY KEY ("groupName")
 ) ;
 
@@ -4929,6 +4943,7 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_tasks_admin', 'Can admin public tasks', 'admin', 'user');
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_contribution', 'Can admin contributions', 'admin', 'contribution');
 
 -- --------------------------------------------------------
 
@@ -5146,6 +5161,8 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('faq_comments_default_or
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('faq_comments_per_page','10');
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_ajax','n');
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_article_comments','n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_articles','n');
@@ -5293,6 +5310,8 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_minical','n');
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_mobile', 'n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_modulecontrols', 'n');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_morcego', 'n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_newsletters','n');
 
@@ -5848,6 +5867,16 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_show_hide_
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_actionlog', 'y');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_homePage_if_bl_missing', 'n');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_mandatory_category',-1);
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_blog_mandatory_category',-1);
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_image_gallery_mandatory_category',-1);
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_display_my_to_others', 'n');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_contribution', 'n');
 
 
 -- Dynamic variables
@@ -6492,6 +6521,27 @@ CREATE TABLE "tiki_freetagged_objects" (
 ) ;
 
 
+-- Freetag permissions - amette 2005-12-15
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_freetags', 'Can browse freetags', 'basic', 'freetags');
 
-;
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_freetags_tag', 'Can tag objects', 'registered', 'freetags');
+
+
+DROP TABLE "tiki_contributions";
+
+CREATE TABLE "tiki_contributions" (
+  "contributionId" bigserial,
+  "name" varchar(100) default NULL,
+  "description" varchar(250) default NULL,
+  PRIMARY KEY ("contributionId")
+)   ;
+
+
+DROP TABLE "tiki_contributions_assigned";
+
+CREATE TABLE "tiki_contributions_assigned" (
+  "contributionId" bigint NOT NULL,
+  "objectId" bigint NOT NULL,
+  PRIMARY KEY ("objectId","contributionId")
+) ;;
 
