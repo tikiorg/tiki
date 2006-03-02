@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.76 2006-02-27 02:13:25 amette Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.77 2006-03-02 15:15:50 sylvieg Exp $ *}
 
 {* this is the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
@@ -240,6 +240,9 @@
   <tr><td><input type="checkbox" name="feature_cal_manual_time"
 					{if $feature_cal_manual_time eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Calendar manual selection of time/date" target="tikihelp" class="tikihelp" title="{tr}Calendar manual selection of time/date{/tr}">{/if} {tr}Calendar manual selection of time/date{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
+	<td>&nbsp;</td>
+	<td><input type="checkbox" name="feature_contribution"{if $feature_contribution eq 'y'} checked="checked"{/if}/></td>
+    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Contribution" target="tikihelp" class="tikihelp" title="{tr}Contribution{/tr}">{/if} {tr}Contribution{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
   </tr>
 
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.131 2006-02-17 15:10:31 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.132 2006-03-02 15:15:51 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -779,6 +779,10 @@ if (isset($_REQUEST['save']) && $feature_categories == 'y' && $feature_wiki_mand
       }
       $tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description,$minor,$pageLang, $is_html, $lock_it);
     }
+		if ($feature_contribution == 'y' && isset($_REQUEST['contributions'])) {
+			global $contributionlib; include_once('lib/contribution/contributionlib.php');
+			$contributionlib->assign_contributions($_REQUEST['contributions'], $_REQUEST['page'], 'wiki page', $description, $_REQUEST['page'], "tiki-index.php?page=".urlencode($_REQUEST['page']));
+		}
 
   //Page may have been inserted from a structure page view
   if (isset($_REQUEST['current_page_id']) ) {
@@ -919,7 +923,9 @@ $smarty->assign('feature_antibot', "$feature_antibot");
 if (!$user or $user == 'anonymous') {
 	$smarty->assign('anon_user', 'y');
 }
-
+if ($feature_contribution == 'y') {
+	include_once('contribution.php');
+}
 ask_ticket('edit-page');
 
 // Display the Index Template

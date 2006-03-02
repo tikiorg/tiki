@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: objectlib.php,v 1.3 2005-12-08 19:30:04 sylvieg Exp $
+// CVS: $Id: objectlib.php,v 1.4 2006-03-02 15:15:52 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -13,20 +13,26 @@ class ObjectLib extends TikiLib {
 	}
 
     function add_object($type, $itemId, $description = '', $name = '', $href = '') {
-	$description = strip_tags($description);
-	$name = strip_tags($name);
-	$now = date("U");
 
-	$query = "select `objectId` from `tiki_objects` where `type`=? and `itemId`=?";
-	$objectId = $this->getOne($query, array($type, $itemId));
+	$objectId = $this->get_object_id($type, $itemId);
 
 	if ($objectId) {
 	    if (!empty($description) || !empty($name) || !empty($href)) {
+		$description = strip_tags($description);
+		$name = strip_tags($name);
 		$query = "update `tiki_objects` set `description`=?,`name`=?,`href`=? where `objectId`=?";
 		$this->query($query,array($description,$name,$href,$objectId));
 	    }
-	    return $objectId;
 	} else {
+	    $objectId = $this->insert_object($type, $itemId, $description, $name, $href);
+	}
+    return $objectId;
+    }
+
+    function insert_object($type, $itemId, $description = '', $name = '', $href = '') {
+		$description = strip_tags($description);
+		$name = strip_tags($name);
+		$now = date("U");
 	
 	    $query = "insert into `tiki_objects`(`type`,`itemId`,`description`,`name`,`href`,`created`,`hits`)
     values(?,?,?,?,?,?,?)";
@@ -34,7 +40,6 @@ class ObjectLib extends TikiLib {
 	    $query = "select `objectId` from `tiki_objects` where `created`=? and `type`=? and `itemId`=?";
 	    $objectId = $this->getOne($query,array((int) $now,$type,(string) $itemId));
 	    return $objectId;
-	}
     }
 
     function get_object_id($type, $itemId) {
@@ -117,6 +122,10 @@ class ObjectLib extends TikiLib {
 				$artlib->replace_article();
 				break;
 		}
+	}
+	function delete_object($type, $itemId) {
+		$query = 'delete from `tiki_objects` where `itemId`=?  and `type`=?';
+		$this->query($query, array($itemId, $type));
 	}
 }
 global $dbTiki;

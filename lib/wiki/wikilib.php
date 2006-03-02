@@ -464,7 +464,12 @@ class WikiLib extends TikiLib {
 		}
 
 	    $histlib->use_version($res["pageName"], $res["version"]);
-	    $histlib->remove_version($res["pageName"], $res["version"]);
+	    if ($feature_contribution == 'y') {
+		global $contributionlib; include_once('lib/contribution/contributionlib.php');
+		$info = $tikilib->get_page_info($res['pageName']);
+		$contributionlib->change_assigned_contributions($res['historyId'], 'history', $res['pageName'], 'wiki page', $info['description'], $res['pageName'], "tiki-index.php?page".urlencode($res['pageName']));
+	    }
+	    $histlib->remove_version($res['pageName'], $res['version']);
 	} else {
 	    $this->remove_all_versions($page);
 	}

@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.76 2006-02-12 17:02:32 lfagundes Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.77 2006-03-02 15:15:54 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -494,3 +494,26 @@ alter table tiki_private_messages add key(`timestamp`);
 alter table tiki_private_messages add `message` varchar(255);
 update tiki_private_messages set `message`=`data`;
 alter table `tiki_private_messages` drop `data`;
+
+# sylvieg 3/2/06
+CREATE TABLE tiki_contributions (
+  contributionId int(12) NOT NULL auto_increment,
+  name varchar(100) default NULL,
+  description varchar(250) default NULL,
+  PRIMARY KEY  (contributionId)
+) TYPE=MyISAM AUTO_INCREMENT=1;
+
+CREATE TABLE tiki_contributions_assigned (
+  contributionId int(12) NOT NULL,
+  objectId int(12) NOT NULL,
+  PRIMARY KEY  (objectId, contributionId)
+) TYPE=MyISAM;
+
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_contribution', 'n');
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='r' and name='Admin' and url='tiki-admin.php' and position='1150' and section='' and perm='tiki_p_admin_contribution' and groupname='' ;
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_contribution','');
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Contribution' and url='tiki-admin_contribution.php' and position='1265' and section='feature_contribution' and perm='tiki_p_admin_contribution' and groupname='' ;
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Contribution','tiki-admin_contribution.php',1265,'feature_contribution','tiki_p_admin_contribution','');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_contribution_mandatory', 'n');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_contribution', 'Can admin contributions', 'admin', 'contribution');
+ALTER TABLE `tiki_history` ADD `historyId` int(12) NOT NULL auto_increment FIRST, ADD  KEY (`historyId`);

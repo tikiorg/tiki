@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2006-02-12 17:02:32 $
-# $Author: lfagundes $
+# $Date: 2006-03-02 15:15:54 $
+# $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -1599,6 +1599,7 @@ CREATE TABLE tiki_group_inclusion (
 
 DROP TABLE IF EXISTS tiki_history;
 CREATE TABLE tiki_history (
+  historyId int(12) NOT NULL auto_increment,
   pageName varchar(160) NOT NULL default '',
   version int(8) NOT NULL default '0',
   version_minor int(8) NOT NULL default '0',
@@ -1608,7 +1609,9 @@ CREATE TABLE tiki_history (
   ip varchar(15) default NULL,
   comment varchar(200) default NULL,
   data longblob,
-  PRIMARY KEY  (pageName,version)
+  type varchar(50) default NULL,
+  PRIMARY KEY  (pageName,version),
+  KEY(historyId)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -2176,6 +2179,7 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_live_support_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin','tiki-admin.php',1050,'','user_is_operator','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin','tiki-admin.php',1050,'feature_integrator','tiki_p_admin_integrator','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_contribution','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin home','tiki-admin.php',1051,'','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Live support','tiki-live_support_admin.php',1055,'feature_live_support','tiki_p_live_support_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Live support','tiki-live_support_admin.php',1055,'feature_live_support','user_is_operator','');
@@ -2227,6 +2231,7 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_image_galleries_comments','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_poll_comments','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_faq_comments','tiki_p_admin','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Contribution','tiki-admin_contribution.php',1265,'feature_contribution','tiki_p_admin_contribution','');
 # --------------------------------------------------------
 
 #
@@ -4202,7 +4207,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES('tiki_p_a
 INSERT INTO users_permissions (permName, permDesc, level,type) VALUES ('tiki_p_tasks_send', 'Can send tasks to other users', 'registered', 'user');
 INSERT INTO users_permissions (permName, permDesc, level,type) VALUES ('tiki_p_tasks_receive', 'Can  receive tasks from other users', 'registered', 'user');
 INSERT INTO users_permissions (permName, permDesc, level,type) VALUES ('tiki_p_tasks_admin', 'Can admin public tasks', 'admin', 'user');
-
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_contribution', 'Can admin contributions', 'admin', 'contribution');
 # --------------------------------------------------------
 
 #
@@ -4698,6 +4703,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_mandatory_
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_blog_mandatory_category',-1);
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_image_gallery_mandatory_category',-1);
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_display_my_to_others', 'n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_contribution', 'n');
 
 # Dynamic variables
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_dynvar', 'Can edit dynamic variables', 'editors', 'wiki');
@@ -5119,3 +5125,18 @@ CREATE TABLE `tiki_freetagged_objects` (
 # Freetag permissions - amette 2005-12-15
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_freetags', 'Can browse freetags', 'basic', 'freetags');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_freetags_tag', 'Can tag objects', 'registered', 'freetags');
+
+DROP TABLE IF EXISTS tiki_contributions;
+CREATE TABLE tiki_contributions (
+  contributionId int(12) NOT NULL auto_increment,
+  name varchar(100) default NULL,
+  description varchar(250) default NULL,
+  PRIMARY KEY  (contributionId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+
+DROP TABLE IF EXISTS tiki_contributions_assigned;
+CREATE TABLE tiki_contributions_assigned (
+  contributionId int(12) NOT NULL,
+  objectId int(12) NOT NULL,
+  PRIMARY KEY  (objectId, contributionId)
+) TYPE=MyISAM;

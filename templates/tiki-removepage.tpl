@@ -4,5 +4,6 @@
 <p><label for="all">{tr}Remove all versions of this page{/tr}:</label> <input type="checkbox" id="all" name="all" /></p>
 <input type="hidden" name="page" value="{$page|escape}" />
 <input type="hidden" name="version" value="{$version|escape}" />
+<input type="hidden" name="historyId" value="{$historyId|escape}" />
 <input type="submit" name="remove" value="{tr}remove{/tr}" />
 </form>
