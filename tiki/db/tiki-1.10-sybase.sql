@@ -2,7 +2,7 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2005-12-15 16:12:20 $
+-- $Date: 2006-03-02 20:24:13 $
 -- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
@@ -2080,6 +2080,7 @@ go
 
 
 CREATE TABLE "tiki_history" (
+  "historyId" numeric(12 ,0) identity,
   "pageName" varchar(160) default '' NOT NULL,
   "version" numeric(8,0) default '0' NOT NULL,
   "version_minor" numeric(8,0) default '0' NOT NULL,
@@ -2089,7 +2090,9 @@ CREATE TABLE "tiki_history" (
   "ip" varchar(15) default NULL NULL,
   "comment" varchar(200) default NULL NULL,
   "data" image default '',
+  "type" varchar(50) default NULL NULL,
   PRIMARY KEY ("pageName","version")
+  KEY(historyId)
 ) 
 go
 
@@ -2684,6 +2687,10 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 go
 
 
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Freetags','tiki-browse_freetags.php',27,'feature_freetags','tiki_p_view_freetags','')
+go
+
+
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Games','tiki-list_games.php',30,'feature_games','tiki_p_play_games','')
 go
 
@@ -3209,6 +3216,10 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 go
 
 
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_contribution','')
+go
+
+
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin home','tiki-admin.php',1051,'','tiki_p_admin','')
 go
 
@@ -3407,6 +3418,10 @@ go
 
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_faq_comments','tiki_p_admin','')
+go
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Contribution','tiki-admin_contribution.php',1265,'feature_contribution','tiki_p_admin_contribution','')
 go
 
 
@@ -3862,9 +3877,12 @@ go
 CREATE TABLE "tiki_private_messages" (
   "messageId" numeric(8 ,0) identity,
   "toNickname" varchar(200) default '' NOT NULL,
-  "data" varchar(255) default NULL NULL,
+  "message" varchar(255) default NULL NULL,
   "poster" varchar(200) default 'anonymous' NOT NULL,
   "timestamp" numeric(14,0) default NULL NULL,
+  "received" numeric(1,0) default 0 not null,
+  "key"(received),
+  "key"(timestamp),
   PRIMARY KEY ("messageId")
 )   
 go
@@ -4848,6 +4866,7 @@ CREATE TABLE "tiki_tracker_fields" (
   "isPublic" char(1) default 'n' NOT NULL,
   "isHidden" char(1) default 'n' NOT NULL,
   "isMandatory" char(1) default 'n' NOT NULL,
+  "description" text default '',
   PRIMARY KEY ("fieldId")
 )   
 go
@@ -5745,6 +5764,7 @@ CREATE TABLE "users_groups" (
   "usersFieldId" numeric(11,0) default NULL NULL,
   "groupFieldId" numeric(11,0) default NULL NULL,
   "registrationChoice" char(1) default NULL NULL,
+  "registrationUsersFieldIds" text default '',
   PRIMARY KEY ("groupName")
 ) 
 go
@@ -6499,6 +6519,9 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_contribution', 'Can admin contributions', 'admin', 'contribution')
+go
+
 
 -- --------------------------------------------------------
 
@@ -6882,6 +6905,10 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('faq_comments_per_page',
 go
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_ajax','n')
+go
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_article_comments','n')
 go
 
@@ -7175,6 +7202,10 @@ go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_modulecontrols', 'n')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_morcego', 'n')
 go
 
 
@@ -8281,6 +8312,26 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_homePage_if_bl_
 go
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_mandatory_category',-1)
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_blog_mandatory_category',-1)
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_image_gallery_mandatory_category',-1)
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_display_my_to_others', 'n')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_contribution', 'n')
+go
+
+
 
 -- Dynamic variables
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_dynvar', 'Can edit dynamic variables', 'editors', 'wiki')
@@ -9379,8 +9430,39 @@ go
 
 
 
+-- Freetag permissions - amette 2005-12-15
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_freetags', 'Can browse freetags', 'basic', 'freetags')
+go
 
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_freetags_tag', 'Can tag objects', 'registered', 'freetags')
+go
+
+
+
+-- DROP TABLE "tiki_contributions"
+go
+
+
+CREATE TABLE "tiki_contributions" (
+  "contributionId" numeric(12 ,0) identity,
+  "name" varchar(100) default NULL NULL,
+  "description" varchar(250) default NULL NULL,
+  PRIMARY KEY ("contributionId")
+)   
+go
+
+
+
+-- DROP TABLE "tiki_contributions_assigned"
+go
+
+
+CREATE TABLE "tiki_contributions_assigned" (
+  "contributionId" numeric(12,0) NOT NULL,
+  "objectId" numeric(12,0) NOT NULL,
+  PRIMARY KEY ("objectId","contributionId")
+) ;
 go
 
 
