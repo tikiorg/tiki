@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_watches.php,v 1.15 2006-02-17 15:10:31 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_watches.php,v 1.16 2006-03-02 11:34:11 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -32,9 +32,20 @@ if (isset($_REQUEST['hash'])) {
 }
 
 if (isset($_REQUEST["add"])) {
-	$watch_object = "*";
-	$tikilib->add_user_watch($user, $_REQUEST['event'], $watch_object, 'article',  "*", "tiki-view_articles.php");
-	$_REQUEST['event'] = '';
+	if (isset($_REQUEST['event'])) {
+		$watch_object = "*";
+		$tikilib->add_user_watch($user, $_REQUEST['event'], $watch_object, 'article',  "*", "tiki-view_articles.php");
+		$_REQUEST['event'] = '';
+	} else {
+		foreach ($_REQUEST['cat_categories'] as $cat) {
+			if ($cat > 0)
+				$tikilib->add_user_watch($user, 'new_in_category', $cat, 'category', "tiki-browse_category.php?parentId=$cat");
+			else {
+				$tikilib->remove_user_watch($user, 'new_in_category', '*');
+				$tikilib->add_user_watch($user, 'new_in_category', '*', 'category', "tiki-browse_category.php");
+			}
+		}
+	}
 }
 
 if (isset($_REQUEST["delete"]) && isset($_REQUEST['watch'])) {
@@ -65,6 +76,26 @@ $watches = $tikilib->get_user_watches($user, $_REQUEST['event']);
 $smarty->assign('watches', $watches);
 // this was never needed here, was it ? -- luci
 //include_once ('tiki-mytiki_shared.php');
+if ($feature_categories) {
+	include_once('lib/categories/categlib.php');
+	$watches = $tikilib->get_user_watches($user, 'new_in_category');
+	$categories = $categlib->list_categs();
+	$nb = count($categories);
+	foreach ($watches as $watch) {
+		if ($watch['object'] == '*') {
+			$smarty->assign('all', 'y');
+			break;
+		}
+		for ($i = 0; $i < $nb; ++$i) {
+			if ($watch['object'] == $categories[$i]['categId']) {
+				$categories[$i]['incat'] = 'y';
+				break;
+			}
+		}
+	}
+	$smarty->assign('categories', $categories);
+}
+
 
 ask_ticket('user-watches');
 
