@@ -1,5 +1,5 @@
 <?php
-//$Header: /cvsroot/tikiwiki/tiki/tiki-admin_contribution.php,v 1.1 2006-03-02 15:15:51 sylvieg Exp $
+//$Header: /cvsroot/tikiwiki/tiki/tiki-admin_contribution.php,v 1.2 2006-03-02 20:21:33 sylvieg Exp $
 require_once('tiki-setup.php');
 
 if ($feature_contribution != 'y') {
@@ -16,7 +16,13 @@ if ($tiki_p_admin != 'y' && $tiki_p_admin_contribution != 'y') {
 }
 if (isset($_REQUEST['setting'])) {
 	check_ticket('admin_contribution');
-	simple_set_toggle ('feature_contribution_mandatory');
+	if (isset($_REQUEST['feature_contribution_mandatory']) && $_REQUEST['feature_contribution_mandatory'] == "on") {
+		$tikilib->set_preference('feature_contribution_mandatory', 'y');
+		$smarty->assign('feature_contribution_mandatory', 'y');
+	} else {
+		$tikilib->set_preference('feature_contribution_mandatory', 'n');
+		$smarty->assign('feature_contribution_mandatory', 'n');
+	}
 }
 if (isset($_REQUEST['add']) && isset($_REQUEST['name'])) {
 	check_ticket('admin_contribution');
