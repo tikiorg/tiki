@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.15 2005-12-19 17:27:20 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.16 2006-03-03 14:09:29 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -455,6 +455,23 @@ class LogsLib extends TikiLib {
 			}
 		}
 		return $vol;
+	}
+	function export($actionlogs, $unit = 'b') {
+	$csv = "user,date,action,type,object,category,unit,+,-<br />";
+	foreach ($actionlogs as $action) {
+		if (!isset($action['object']))
+			$action['object'] = '';
+		if (!isset($action['category']))
+			$action['category'] = '';
+		if (!isset($action['add']))
+			$action['add'] = '';
+		if (!isset($action['del']))
+			$action['del'] = '';
+
+		$csv.= '"'.$action['user'].'","'.$action['lastModif'].'","'.$action['action'].'","'.$action['objectType'].'","'.$action['object'].'","'
+			.$action['category'].'","'.$unit.'","'.$action['add'].'","'.$action['del'].'<br />';
+	}
+	return $csv;
 	}
 
 }
