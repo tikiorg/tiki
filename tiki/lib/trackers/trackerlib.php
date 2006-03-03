@@ -1385,7 +1385,7 @@ class TrackerLib extends TikiLib {
 		$type['e'] = array(
 			'label'=>tra('category'), 
 			'opt'=>true, 
-			'help'=>tra('Category options: parentId') );
+			'help'=>tra('Category options: parentId,radio|checkbox(default)') );
 		$type['r'] = array(
 			'label'=>tra('item link'),  
 			'opt'=>true,
