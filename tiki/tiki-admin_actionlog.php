@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.11 2005-11-07 18:04:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.12 2006-03-03 14:09:29 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -50,7 +50,7 @@ foreach ($categories as $categ) {
 }
 $smarty->assign_by_ref('categNames', $categNames);
 
-if (isset($_REQUEST['list'])) {
+if (isset($_REQUEST['list']) || isset($_REQUEST['export'])) {
 	$url = '';
 	$selectedUsers = array();
 	if (isset($_REQUEST['selectedUsers'])) {
@@ -235,6 +235,10 @@ if (isset($_REQUEST['list'])) {
 	if (isset($_REQUEST['unit']))
 		$url .= '&amp;unit='. $_REQUEST['unit'];
 	$smarty->assign('url', "&amp;list=y$url#Report");
+	if (isset($_REQUEST['export'])) {
+		$csv = $logslib->export($actions);
+		$smarty->assign('csv', $csv);
+	}
 }
 if (isset($_REQUEST['unit']))
 	$smarty->assign('unit', $_REQUEST['unit']);

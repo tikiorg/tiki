@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.10 2005-11-04 19:23:04 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.11 2006-03-03 14:09:29 sylvieg Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Admin Action Log{/tr}</a></h1>
 <a name="Setting" />
@@ -58,7 +58,8 @@
 </select>
 </td>
 <td>{tr}bytes{/tr}<input type="radio" name="unit" value="bytes"{if $unit ne 'kb'} checked="checked"{/if}> {tr}kb{/tr}<input type="radio" name="unit" value="kb"{if $unit eq 'kb'} checked="checked"{/if}></td></tr>
-<tr><td colspan="4" class="button"><input type="submit" name="list" value="{tr}Report{/tr}" /></td></tr>
+<tr><td colspan="4" class="button"><input type="submit" name="list" value="{tr}Report{/tr}" /><br />
+<input type="submit" name="export" value="{tr}Export{/tr}" /></td></tr>
 </table>
 </form>
 
@@ -231,4 +232,10 @@
 </tr>
 {/foreach}
 </table>
+{/if}
+
+<a name="#csv"></a>
+{if $csv}
+<a name="#csv"></a>
+<div class="cbox">{$csv}</div>
 {/if}
