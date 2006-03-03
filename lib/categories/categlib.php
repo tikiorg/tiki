@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.76 2006-02-17 15:10:39 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.77 2006-03-03 14:56:08 sylvieg Exp $
  *
  * \brief Categories support class
  *
@@ -12,7 +12,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-require_once("lib/objectlib.php");
+global $objectlib;require_once("lib/objectlib.php");
 
 class CategLib extends ObjectLib {
 
