@@ -348,7 +348,8 @@ function wikiplugin_tracker($data, $params) {
 						$i = 0;
 						foreach ($cats as $cat) {
 							$checked = $f['value'] == $cat['categId'] ? 'checked="checked"' : '';
-							$back .= '<input type="checkbox" name="ins_cat_'.$i++.$f['fieldId'].'[]" value="'.$cat["categId"].'" '.$checked.'>'.$cat['name'].'</input>';
+							$t = $f["options_array"][1] == 'radio'? 'radio': 'checkbox';
+							$back .= '<input type="'.$t.'" name="ins_cat_'.$i++.$f['fieldId'].'[]" value="'.$cat["categId"].'" '.$checked.'>'.$cat['name'].'</input>';
 						}
 					} elseif ($f['type'] == 'c') {
 						$back .="<tr><td>".wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors);
