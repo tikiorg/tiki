@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/hec.css,v 1.5 2006-02-01 21:20:23 jdrexler Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/hec.css,v 1.6 2006-03-06 20:18:25 xavidp Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -2103,6 +2103,56 @@ div#loadstats {
 	padding : 2px 30px;
 	float : right;
 }
+
+
+/* TikiSheet Default Style {{{1 */
+table.default	thead	td,	table.default	tfoot	td
+{
+	font-weight:		bold;
+	text-align:			center;
+	background-color: #E5E5E5;
+}
+
+table.default	td
+{
+	border-style:		solid;
+	border-width:		1px;
+	border-color:		#C88FAF;
+	background-color: #FFFFFF;
+}
+/* }}}1 */
+
+/* on the {maketoc} global ul
+.toc {}
+*/
+
+/**** coloration for QUOTE plugin *****/
+.quoteheader {
+margin: 10px 5px 0px 5px;
+padding: 4px;
+border-width: 1px 1px 0px 1px;
+border-style: solid;
+border-color: #A9B8C2;
+color: black;
+font-weight: bold;
+background-color: #A9B8C2;
+font-size: 8pt;
+}
+.quotebody {
+margin: 0px 5px 10px 5px;
+padding: 5px;
+border-color: #A9B8C2;
+border-width: 0px 1px 1px 1px;
+border-style: solid;
+color: black;
+background-color: #edeeef;
+}
+
+div.split {
+border: 1px dashed #A9B8C2;
+clear:both;
+}
+
 /* end of css file */
 b {
 	color: #042D56;
