@@ -1,5 +1,5 @@
 -- $Rev$
--- $Date: 2006-03-02 20:24:13 $
+-- $Date: 2006-03-06 14:31:15 $
 -- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
@@ -6153,6 +6153,9 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_display_my_to_o
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_contribution', 'n');
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_contribution_mandatory', 'n');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_contribution_display_in_comment', 'y');
 
 -- Dynamic variables
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_dynvar', 'Can edit dynamic variables', 'editors', 'wiki');

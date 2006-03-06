@@ -62,6 +62,7 @@
   	  	</td>
 	    	<td style="font-size:8pt;">
 					<b>{tr}score{/tr}</b>: {$comment.average|string_format:"%.2f"}
+
 	    	</td>
 
 	    	{if $comments_style != 'commentStyle_headers'}
@@ -97,6 +98,7 @@
 				{/if} {* if $comments_style != 'commentStyle_headers' *}
 
 			</tr>
+			{if $feature_contribution eq 'y' and $feature_contribution_display_in_comment eq 'y'}<tr><td align="right" style="font-size:8pt;" colspan={if $comments_style != 'commentStyle_headers'}{if (($tiki_p_vote_comments eq 'y' and $forum_mode ne 'y') or ($tiki_p_forum_vote eq 'y' and $forum_mode eq 'y')) and $comment.userName ne $user}"4"{else}"3"{/if}{else}"2"{/if}>{section name=ix loop=$comment.contributions} {$comment.contributions[ix].name|escape}{/section}</td></tr>{/if}
 			</table>
 		</td>
   </tr>
@@ -135,6 +137,7 @@
 	  {/if} {* if $comment.replies_info.numReplies > 0 && $comment.replies_info.numReplies != '' *}
 	</td>
   </tr>
+
 {if $comments_style != 'commentStyle_plain' }
 </table>
 {/if}

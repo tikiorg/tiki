@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_contribution.tpl,v 1.1 2006-03-02 15:15:50 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_contribution.tpl,v 1.2 2006-03-06 14:31:17 sylvieg Exp $ *}
 <h1><a  class="pagetitle" href="tiki-admin_contribution.php">{tr}Admin Contributions{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Contribution" target="tikihelp" class="tikihelp" title="{tr}Contribution{/tr}">
@@ -24,7 +24,8 @@
 <table class="normal">
 <tr><td class="formcolor">{tr}Contributions are mandatory{/tr}</td>
 <td class="formcolor"><input type="checkbox" name="feature_contribution_mandatory" {if $feature_contribution_mandatory eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="setting" value="{tr}save{/tr}" /></td></tr>
+<tr><td class="formcolor">{tr}Contributions are displayed in the comment/post{/tr}</td>
+<td class="formcolor"><input type="checkbox" name="feature_contribution_display_in_comment" {if $feature_contribution_display_in_comment eq 'y'}checked="checked"{/if}/></td></tr><tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="setting" value="{tr}save{/tr}" /></td></tr>
 </table>
 </form>
 

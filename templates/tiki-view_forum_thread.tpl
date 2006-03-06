@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.70 2005-11-07 21:42:30 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.71 2006-03-06 14:31:17 sylvieg Exp $ *}
 
 <h1><a href="tiki-view_forum.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forum_info.forumId}" class="pagetitle">{tr}Forum{/tr}: {$forum_info.name}</a></h1>
 
@@ -134,6 +134,7 @@ a moderator approves it.{/tr}</small>
   		{tr}reads{/tr}: {$thread_info.hits}		
   		</td>		
   	</tr>
+	{if $feature_contribution eq 'y' and $feature_contribution_display_in_comment eq 'y'}<tr><td colspan={if $forum_info.vote_threads eq 'y'}{if $tiki_p_admin_forum eq 'y' or $tiki_p_forum_vote eq 'y'}"4"{else}"3"{/if}{else}"2"{/if} align="right" style="font-size:8pt;">{section name=ix loop=$thread_info.contributions} {$thread_info.contributions[ix].name|escape}{/section}</td></tr>{/if}
   </table>
   </td>
 </tr>

@@ -48,14 +48,16 @@ class ContributionLib extends TikiLib {
 	function assign_contributions($contributions, $itemId, $objectType, $description, $name, $href) {
 		global $objectlib; include_once('lib/objectlib.php');
 		if (($objectId = $objectlib->get_object_id($objectType, $itemId)) == 0)
-			$objectId = $this->insert_object($objectType, $itemId, $description, $name, $href);
+			$objectId = $objectlib->insert_object($objectType, $itemId, $description, $name, $href);
 		else {
 			$query = 'delete from `tiki_contributions_assigned` where `objectId`=?';
 			$this->query($query, array((int)$objectId));
 		}
 		$query = 'insert `tiki_contributions_assigned` (`contributionId`, `objectId`) values(?,?)';
-		foreach ($contributions as $contribution) {
-			$this->query($query, array((int)$contribution, (int)$objectId));
+		if (!empty($contributions)) {
+			foreach ($contributions as $contribution) {
+				$this->query($query, array((int)$contribution, (int)$objectId));
+			}
 		}
 	}
 	function get_assigned_contributions($itemId, $objectType) {

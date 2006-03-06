@@ -1216,6 +1216,7 @@ class Comments extends TikiLib {
 	    // this function adds some extras to the referenced array. 
 	    // This array should already contain the contents of the tiki_comments table row
 	    // used in $this->get_comment and $this->get_comments
+	    global $feature_contribution;
 
 	    $res["parsed"] = $this->parse_comment_data($res["data"]);
 
@@ -1240,6 +1241,10 @@ class Comments extends TikiLib {
 	    $res['user_online'] = 'n';
 	    if ($res['userName']) {
 		$res['user_online'] = $this->is_user_online($res['userName'])? 'y' : 'n';
+	    }
+	    if ($feature_contribution == 'y') {
+		global $contributionlib; include_once('lib/contribution/contributionlib.php');
+		$res['contributions'] = $contributionlib->get_assigned_contributions($res['threadId'], 'comment');
 	    }
     }
 
