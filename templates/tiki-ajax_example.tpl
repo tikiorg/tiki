@@ -40,19 +40,19 @@
   {literal}
 
     function handle_test_scalar(result) {
-        alert(result);
+				document.getElementById('scalarbox').innerHTML=': '+result;
     }
 
   {/literal}
   </script>
 
-  <input name="phrase" size="30">
-  <input name="lang" size="5" value="pt-br">
+  <input name="phrase" size="30" onblur="javascript:load('test_scalar', document.f.phrase.value, document.f.lang.value)">
+  <input name="lang" size="5" value="pt-br" onblur="javascript:load('test_scalar', document.f.phrase.value, document.f.lang.value)">
   <a href="javascript:load('test_scalar', document.f.phrase.value, document.f.lang.value)">
     translate
   </a>
 
-</div><br><hr><br>
+<span id="scalarbox">: </span></div><br><hr><br>
 
 <div>
   The second example ilustrates the "item" type.
