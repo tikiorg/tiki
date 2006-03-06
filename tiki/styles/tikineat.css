@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.10 2006-02-01 21:20:24 jdrexler Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.11 2006-03-06 20:34:31 xavidp Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -1959,6 +1959,22 @@ div.split {
 border: 1px dashed #A9B8C2;
 clear:both;
 }
+
+/* TikiSheet Default Style {{{1 */
+table.default	thead	td,	table.default	tfoot	td
+{
+	font-weight:		bold;
+	text-align:			center;
+}
+
+table.default	td
+{
+	border-style:		solid;
+	border-width:		1px;
+	border-color:		#000000;
+}
+/* }}}1 */
+
 
 /* AJAX */
 
