@@ -107,6 +107,20 @@
 </div><br><hr><br>
 
 <div>
+  Tiki ajax framework also supports client side translation. For that, you can use the
+  js function tra(str). To do so, the function first checks a local cache, and if there's
+  no translation, it returns the untranslated string inside a <span> tag, while it asks
+  the server for a translation. When it gets the server answer, the untranslated string is
+  substituted. If you use a non-english language, next time you load this page note below
+  that the string changes after a small time.
+  <br><br>
+
+  <center>
+    <script>document.write(tra('Home'));</script>
+  </center>
+</div><br><hr><br>
+
+<div>
   And now, the big magic. The earlier examples show how to transfer data structures
   that needs a javascript callback function for each one. The following example loads
   html code in a very simple way:<br><br>
