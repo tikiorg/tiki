@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.133 2006-03-02 20:21:33 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.134 2006-03-06 14:31:14 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -797,9 +797,9 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
       }
       $tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description,$minor,$pageLang, $is_html, $lock_it);
     }
-		if ($feature_contribution == 'y' && isset($_REQUEST['contributions'])) {
+		if ($feature_contribution == 'y') {
 			global $contributionlib; include_once('lib/contribution/contributionlib.php');
-			$contributionlib->assign_contributions($_REQUEST['contributions'], $_REQUEST['page'], 'wiki page', $description, $_REQUEST['page'], "tiki-index.php?page=".urlencode($_REQUEST['page']));
+			$contributionlib->assign_contributions(isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '', $_REQUEST['page'], 'wiki page', $description, $_REQUEST['page'], "tiki-index.php?page=".urlencode($_REQUEST['page']));
 		}
 
   //Page may have been inserted from a structure page view

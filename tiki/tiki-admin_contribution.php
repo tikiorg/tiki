@@ -1,5 +1,5 @@
 <?php
-//$Header: /cvsroot/tikiwiki/tiki/tiki-admin_contribution.php,v 1.2 2006-03-02 20:21:33 sylvieg Exp $
+//$Header: /cvsroot/tikiwiki/tiki/tiki-admin_contribution.php,v 1.3 2006-03-06 14:31:14 sylvieg Exp $
 require_once('tiki-setup.php');
 
 if ($feature_contribution != 'y') {
@@ -23,6 +23,14 @@ if (isset($_REQUEST['setting'])) {
 		$tikilib->set_preference('feature_contribution_mandatory', 'n');
 		$smarty->assign('feature_contribution_mandatory', 'n');
 	}
+	if (isset($_REQUEST['feature_contribution_display_in_comment']) && $_REQUEST['feature_contribution_display_in_comment'] == "on") {
+		$tikilib->set_preference('feature_contribution_display_in_comment', 'y');
+		$smarty->assign('feature_contribution_display_in_comment', 'y');
+	} else {
+		$tikilib->set_preference('feature_contribution_display_in_comment', 'n');
+		$smarty->assign('feature_contribution_display_in_comment', 'n');
+	}
+	
 }
 if (isset($_REQUEST['add']) && isset($_REQUEST['name'])) {
 	check_ticket('admin_contribution');

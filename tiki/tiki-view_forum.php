@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.93 2006-01-20 09:54:53 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.94 2006-03-06 14:31:14 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -337,6 +337,10 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 				// Deal with mail notifications.
 				include_once('lib/notifications/notificationemaillib.php');
 				sendForumEmailNotification('forum_post_topic', $_REQUEST['forumId'], $forum_info, $_REQUEST["comments_title"], $_REQUEST["comments_data"], $user, $_REQUEST["comments_title"], $message_id, '', $threadId, $_REQUEST["comments_parentId"] );
+				if ($feature_contribution == 'y') {
+					global $contributionlib; include_once('lib/contribution/contributionlib.php');
+					$contributionlib->assign_contributions(isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '', $threadId, 'comment', $_REQUEST['comments_title'], '', '');
+				}
 			    }
 			}
 
@@ -357,6 +361,10 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 		    } elseif ($tiki_p_admin_forum == 'y' || $commentslib->user_can_edit_post($user, $_REQUEST["comments_threadId"])) {
 			    $commentslib->update_comment($_REQUEST["comments_threadId"], $_REQUEST["comments_title"], '', ($_REQUEST["comments_data"]), $_REQUEST["comment_topictype"], $_REQUEST['comment_topicsummary'], $_REQUEST['comment_topicsmiley'], 'forum:'.$_REQUEST["forumId"]);
 
+				if ($feature_contribution == 'y') {
+					global $contributionlib; include_once('lib/contribution/contributionlib.php');
+					$contributionlib->assign_contributions(isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '', $_REQUEST["comments_threadId"], 'comment', $_REQUEST['comments_title'], '', '');
+				}
 			    // PROCESS ATTACHMENT HERE
 			    if( $threadId && isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name']) )
 			    {
@@ -637,6 +645,9 @@ if ($feature_mobile =='y' && isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'm
 	include_once ("lib/hawhaw/hawtikilib.php");
 
 	HAWTIKI_view_forum($forum_info['name'], $comments_coms, $tiki_p_forum_read, $comments_offset, $comments_maxRecords, $comments_cant);
+}
+if ($feature_contribution == 'y') {
+		include_once('contribution.php');
 }
 
 ask_ticket('view-forum');

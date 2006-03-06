@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.59 2006-01-20 09:54:53 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.60 2006-03-06 14:31:14 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -206,6 +206,11 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 			    $_REQUEST["comment_rating"], $_REQUEST["comments_data"], 'n', '', '', $comments_objectId);
 		}
 	    }
+		if ($feature_contribution == 'y') {
+			global $contributionlib; include_once('lib/contribution/contributionlib.php');
+			$contributionlib->assign_contributions(isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '', $qId, 'comment', $_REQUEST['comments_title'], '', '');
+		}
+
 	    $object = explode(':', $comments_objectId );
 
 	    if( $object[0] == 'forum' )
@@ -570,6 +575,10 @@ if (!empty($_REQUEST['post_reply'])) {
 	$smarty->assign('post_reply', $_REQUEST['post_reply']);
 } elseif (!empty($_REQUEST['edit_reply'])) {
 	$smarty->assign('edit_reply', $_REQUEST['edit_reply']);
+}
+
+if ($feature_contribution == 'y') {
+	include_once('contribution.php');
 }
 
 ?>
