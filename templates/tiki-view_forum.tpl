@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.67 2006-03-06 14:31:17 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.68 2006-03-09 16:28:30 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -85,6 +85,12 @@ a moderator approves it.{/tr}</small>
   {if $warning eq 'y'}
   <br /><br />
   <div class="commentsedithelp"><br /><b>{tr}You have to enter a title and text{/tr}!</b><br /><br />
+  </div>
+  <br />
+  {/if}
+{if $contribution_needed eq 'y'}
+  <br /><br />
+  <div class="commentsedithelp"><br /><b>{tr}A contribution is mandatory{/tr}</b><br /><br />
   </div>
   <br />
   {/if}

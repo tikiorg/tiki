@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_contribution.tpl,v 1.2 2006-03-06 14:31:17 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_contribution.tpl,v 1.3 2006-03-09 16:28:30 sylvieg Exp $ *}
 <h1><a  class="pagetitle" href="tiki-admin_contribution.php">{tr}Admin Contributions{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Contribution" target="tikihelp" class="tikihelp" title="{tr}Contribution{/tr}">
@@ -22,8 +22,12 @@
 <h2>{tr}Settings{/tr}</h2>
 <form action="tiki-admin_contribution.php?page=features" method="post">
 <table class="normal">
-<tr><td class="formcolor">{tr}Contributions are mandatory{/tr}</td>
+<tr><td class="formcolor">{tr}Contributions are mandatory in wiki pages{/tr}</td>
 <td class="formcolor"><input type="checkbox" name="feature_contribution_mandatory" {if $feature_contribution_mandatory eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="formcolor">{tr}Contributions are mandatory in forums{/tr}</td>
+<td class="formcolor"><input type="checkbox" name="feature_contribution_mandatory_forum" {if $feature_contribution_mandatory_forum eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="formcolor">{tr}Contributions are mandatory in comments{/tr}</td>
+<td class="formcolor"><input type="checkbox" name="feature_contribution_mandatory_comment" {if $feature_contribution_mandatory_comment eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="formcolor">{tr}Contributions are displayed in the comment/post{/tr}</td>
 <td class="formcolor"><input type="checkbox" name="feature_contribution_display_in_comment" {if $feature_contribution_display_in_comment eq 'y'}checked="checked"{/if}/></td></tr><tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="setting" value="{tr}save{/tr}" /></td></tr>
 </table>

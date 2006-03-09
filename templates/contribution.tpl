@@ -4,7 +4,7 @@
 <td class="formcolor">
    <select name="contributions[]" multiple="multiple" size="3">
    {section name=ix loop=$contributions}
-    <option value="{$contributions[ix].contributionId|escape}">{$contributions[ix].name|escape}</option>
+    <option value="{$contributions[ix].contributionId|escape}"{if $contributions[ix].selected eq 'y'} selected="selected"{/if} >{$contributions[ix].name|escape}</option>
    {/section}
    </select>
 </td></tr>
