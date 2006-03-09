@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.94 2006-03-06 14:31:14 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.95 2006-03-09 16:28:30 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -254,7 +254,7 @@ $smarty->assign('warning', 'n');
 
 if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
     if (isset($_REQUEST["comments_postComment"])) {
-	if ((!empty($_REQUEST["comments_title"])) && (!empty($_REQUEST["comments_data"]))) {
+	if ((!empty($_REQUEST["comments_title"])) && (!empty($_REQUEST["comments_data"])) && !($feature_contribution == 'y' && $feature_contribution_mandatory_forum == 'y' && empty($_REQUEST['contributions']))) {
 	    if ($tiki_p_admin_forum == 'y' || $commentslib->user_can_post_to_forum($user, $_REQUEST["forumId"])) {
 		//Replace things between square brackets by links
 		// no need to strip, & replaced by &lt; on display anyway
@@ -390,7 +390,10 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 	    // give him a chance to correct this
 	    $smarty->assign('openpost', 'y');
 
-	    $smarty->assign('warning', 'y');
+	    if (empty($_REQUEST["comments_title"]) || empty($_REQUEST["comments_data"]))
+		$smarty->assign('warning', 'y');
+	   if ($feature_contribution == 'y' && $feature_contribution_mandatory_forum == 'y' && empty($_REQUEST['contributions']))
+		$smarty->assign('contribution_needed', 'y');
 	}
     }
 }

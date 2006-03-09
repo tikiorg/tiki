@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/contribution.php,v 1.1 2006-03-02 15:15:51 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/contribution.php,v 1.2 2006-03-09 16:28:30 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -19,6 +19,12 @@ require_once('tiki-setup.php');
 if ($feature_contribution == 'y') {
 	global $contributionlib; include_once('lib/contribution/contributionlib.php');
 	$contributions = $contributionlib->list_contributions();
+	if (!empty($_REQUEST['contributions'])) {
+		for ($i = $contributions['cant'] - 1; $i >= 0; -- $i) {
+			if (in_array($contributions['data'][$i]['contributionId'], $_REQUEST['contributions']))
+				$contributions['data'][$i]['selected'] = 'y';
+		}
+	}
 	$smarty->assign_by_ref('contributions', $contributions['data']);
 }
 ?>

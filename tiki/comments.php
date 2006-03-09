@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.60 2006-03-06 14:31:14 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.61 2006-03-09 16:28:30 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -158,7 +158,7 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
     if (isset($_REQUEST["comments_postComment"])) {
 	$comments_show = 'y';
 
-	if ((!empty($_REQUEST["comments_title"])) && (!empty($_REQUEST["comments_data"]))) {
+	if (!empty($_REQUEST["comments_title"]) && !empty($_REQUEST["comments_data"]) && !($feature_contribution == 'y' && ((isset($forum_mode) && $forum_mode == 'y' && $feature_contribution_mandatory_forum == 'y') || ((empty($forum_mode) || $forum_mode == 'n') && $feature_contribution_mandatory_comment == 'y')) && empty($_REQUEST['contributions']))) {
 	    if (empty($_REQUEST["comments_parentId"])) {
 		$_REQUEST["comments_parentId"] = 0;
 	    }
@@ -334,8 +334,16 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 	    }
 
 	} else {
-	    $msg = tra("Missing title or body when trying to post a comment");
-	    $access->display_error(basename(__FILE__), $msg);
+	    $msg = '';
+	    if (empty($_REQUEST["comments_title"]) || empty($_REQUEST["comments_data"])) {
+			$msg = tra("Missing title or body when trying to post a comment");
+	    }
+	    if ($feature_contribution == 'y' && empty($_REQUEST['contributions'])) {
+			if ($msg)
+				$msg .= '<br />';
+			$msg .= tra("A contribution is mandatory");
+		}
+		$access->display_error(basename(__FILE__), $msg);
 	}
     }
 }
