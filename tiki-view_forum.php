@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.95 2006-03-09 16:28:30 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.96 2006-03-09 19:52:26 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -251,7 +251,6 @@ $comments_objectId = $comments_prefix_var.$_REQUEST["$comments_object_var"];
 // Process a post form here 
 $smarty->assign('warning', 'n');
 
-
 if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
     if (isset($_REQUEST["comments_postComment"])) {
 	if ((!empty($_REQUEST["comments_title"])) && (!empty($_REQUEST["comments_data"])) && !($feature_contribution == 'y' && $feature_contribution_mandatory_forum == 'y' && empty($_REQUEST['contributions']))) {
@@ -392,8 +391,10 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 
 	    if (empty($_REQUEST["comments_title"]) || empty($_REQUEST["comments_data"]))
 		$smarty->assign('warning', 'y');
-	   if ($feature_contribution == 'y' && $feature_contribution_mandatory_forum == 'y' && empty($_REQUEST['contributions']))
+	   if ($feature_contribution == 'y' && $feature_contribution_mandatory_forum == 'y' && empty($_REQUEST['contributions'])) {
 		$smarty->assign('contribution_needed', 'y');
+		unset($_REQUEST['comments_postComment']);// not to go in the topic redirection
+	   }
 	}
     }
 }
@@ -447,10 +448,10 @@ if ($user) {
 if ($_REQUEST["comments_threadId"] > 0) {
     $comment_info = $commentslib->get_comment($_REQUEST["comments_threadId"]);
 
-    $smarty->assign('comment_title', $comment_info["title"]);
-    $smarty->assign('comment_data', $comment_info["data"]);
-    $smarty->assign('comment_topictype', $comment_info["type"]);
-    $smarty->assign('comment_topicsummary', $comment_info["summary"]);
+    $smarty->assign('comment_title', isset($_REQUEST['comments_title']) ? $_REQUEST['comments_title'] : $comment_info['title']);
+    $smarty->assign('comment_data', isset($_REQUEST['comments_data']) ? $_REQUEST['comments_data'] : $comment_info['data']);
+    $smarty->assign('comment_topictype', isset($_REQUEST['comment_topictype']) ? $_REQUEST['comment_topictype'] : $comment_info["type"]);
+    $smarty->assign('comment_topicsummary', isset($_REQUEST["comment_topicsummary"]) ? $_REQUEST["comment_topicsummary"] : $comment_info["summary"]);
     $smarty->assign('comment_topicsmiley', $comment_info["smiley"]);
 } else {
     $smarty->assign('comment_title', isset($_REQUEST["comments_title"]) ? $_REQUEST["comments_title"] : '');
