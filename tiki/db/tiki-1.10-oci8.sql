@@ -1,5 +1,5 @@
 -- $Rev$
--- $Date: 2006-03-06 14:31:15 $
+-- $Date: 2006-03-09 16:33:22 $
 -- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
@@ -6154,6 +6154,10 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_display_my_to_o
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_contribution', 'n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_contribution_mandatory', 'n');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_contribution_mandatory_forum', 'n');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_contribution_mandatory_comment', 'n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_contribution_display_in_comment', 'y');
 

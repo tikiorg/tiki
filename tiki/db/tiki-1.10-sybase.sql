@@ -2,7 +2,7 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2006-03-06 14:31:15 $
+-- $Date: 2006-03-09 16:33:22 $
 -- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
@@ -8333,6 +8333,14 @@ go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_contribution_mandatory', 'n')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_contribution_mandatory_forum', 'n')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_contribution_mandatory_comment', 'n')
 go
 
 
