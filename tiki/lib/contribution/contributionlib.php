@@ -88,15 +88,21 @@ class ContributionLib extends TikiLib {
 		$query = 'select * from `tiki_history` where `pageName` = ?';
 		$result = $this->query($query, array($page));
 		while ($res = $result->fetchRow()) {
-			$this->remove_assigned_contributions($res['historyId'], 'history');
-			$obejctlib->delete_object('history', $res['historyId']);
+			$this->remove_history($res['historyId']);
 		}
-			$this->remove_assigned_contributions($page, 'wiki page');
+		$this->remove_assigned_contributions($page, 'wiki page');
 	}
 	function remove_history($historyId) {
+			//history object only created for contribution yet. You can remove object
 		global $objectlib; include_once('lib/objectlib.php');
 		$this->remove_assigned_contributions($historyId, 'history');
 		$objectlib->delete_object('history', $historyId);
+	}
+	function remove_comment($commentId) {
+			//history object only created for contribution yet. You can remove object
+		global $objectlib; include_once('lib/objectlib.php');
+		$this->remove_assigned_contributions($commentId, 'comment');
+		$objectlib->delete_object('comment', $commentId);
 	}
 }
 global $dbTiki;
