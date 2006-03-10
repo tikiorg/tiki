@@ -1777,7 +1777,7 @@ class Comments extends TikiLib {
     }
 
     function update_comment($threadId, $title, $comment_rating, $data, $type = 'n', $summary = '', $smiley = '', $objectId='') {
-	global $feature_actionlog;
+	global $feature_actionlog, $feature_contribution;
 	if ($feature_actionlog == 'y') {
 		$object = explode( ":", $objectId, 2);
 		$comment= $this->get_comment($threadId);
@@ -1954,7 +1954,7 @@ class Comments extends TikiLib {
     function remove_comment($threadId) {
 	if ($threadId == 0)
 		return false;
-	global $feature_actionlog;
+	global $feature_actionlog, $feature_contribution;
 	if ($feature_actionlog == 'y') {
 		global $logslib; include_once('lib/logs/logslib.php');
 		$query = "select * from `tiki_comments` where `threadId`=? or `parentId`=?";
@@ -1965,6 +1965,10 @@ class Comments extends TikiLib {
 			else
 				$logslib->add_action('Removed', $res['object'], 'comment', 'type='.$res['objectType'].'&amp;del='.strlen($res['data'])."threadId#$threadId");
 		}
+	}
+	if ($feature_contribution == 'y') {
+		global $contributionlib;require_once('lib/contribution/contributionlib.php');
+		$contributionlib->remove_comment($threadId);
 	}
 	$query = "delete from `tiki_comments` where `threadId`=? or `parentId`=?";
 //TODO in a forum, when the reply to a post (not a topic) id deletd, the replies to this post are not deleted
