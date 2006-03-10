@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.61 2006-03-09 16:28:30 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.62 2006-03-10 15:24:02 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -209,6 +209,8 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 		if ($feature_contribution == 'y') {
 			global $contributionlib; include_once('lib/contribution/contributionlib.php');
 			$contributionlib->assign_contributions(isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '', $qId, 'comment', $_REQUEST['comments_title'], '', '');
+			if (isset($_REQUEST['contributions']))
+				unset($_REQUEST['contributions']);
 		}
 
 	    $object = explode(':', $comments_objectId );
@@ -586,6 +588,7 @@ if (!empty($_REQUEST['post_reply'])) {
 }
 
 if ($feature_contribution == 'y') {
+	$contributionItemId = $_REQUEST["comments_threadId"];
 	include_once('contribution.php');
 }
 
