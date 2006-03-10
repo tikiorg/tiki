@@ -54,7 +54,7 @@ function SUM( list )
 // SUMIF {{{1
 function SUMIF( ifList, tests, sumList )
 {
-	var testArray = isArray(tests);
+	var testArray = tests.constructor.toString().indexOf( 'Array' ) != -1;
 	var total = 0;
 
 	for (var index = 0; index < sumList.length && index < ifList.length; index++) {
@@ -73,7 +73,7 @@ function SUMIF( ifList, tests, sumList )
 			{
 				addValue = (tests == ifList[index]);
 			}
-			
+
 			if (addValue)
 			{
 				total += sumList[index];
