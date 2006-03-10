@@ -56,7 +56,8 @@ class ContributionLib extends TikiLib {
 		$query = 'insert `tiki_contributions_assigned` (`contributionId`, `objectId`) values(?,?)';
 		if (!empty($contributions)) {
 			foreach ($contributions as $contribution) {
-				$this->query($query, array((int)$contribution, (int)$objectId));
+				if ($contribution)
+					$this->query($query, array((int)$contribution, (int)$objectId));
 			}
 		}
 	}

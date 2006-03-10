@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.96 2006-03-09 19:52:26 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.97 2006-03-10 15:24:02 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -651,6 +651,7 @@ if ($feature_mobile =='y' && isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'm
 	HAWTIKI_view_forum($forum_info['name'], $comments_coms, $tiki_p_forum_read, $comments_offset, $comments_maxRecords, $comments_cant);
 }
 if ($feature_contribution == 'y') {
+		$contributionItemId = $_REQUEST['comments_threadId'];
 		include_once('contribution.php');
 }
 

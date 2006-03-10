@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.68 2006-03-09 16:28:30 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.69 2006-03-10 15:24:02 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -415,7 +415,7 @@ a moderator approves it.{/tr}</small>
 	{cycle values="odd,even" print=false}
 	<table class="normal">
 	<tr>
-	 	<td class="heading">{tr}Last{/tr} {$forum_info.forum_last_n} {tr}topics in this forum{/tr}</td>
+	 	<td class="heading">{tr}Last{/tr} {$forum_info.forum_last_n} {tr}posts in this forum{/tr}</td>
 	 	{section name=ix loop=$last_comments}
 	 	<tr>
 	 		<td class="{cycle}">
