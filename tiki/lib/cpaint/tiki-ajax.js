@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/cpaint/tiki-ajax.js,v 1.8 2006-03-06 06:19:13 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/cpaint/tiki-ajax.js,v 1.9 2006-03-11 20:45:24 lfagundes Exp $
 
 function load() {
 
@@ -6,6 +6,7 @@ function load() {
 
     var cp = new cpaint();
     cp.set_persistent_connection(false);
+    //    cp.set_debug(2);
 
     var cmd = 'cp.call("tiki-ajax.php","handle",_handleLoadResult';
     for (var i=0; i<arguments.length; i++) {
@@ -18,21 +19,11 @@ function load() {
 
 function _handleLoadResult(result) {
 
-    var metadata = _ajaxExtractItem(result, 'metaData');
+    var metadata = _ajaxExtract(result, 'metaData');
 
     var func = metadata['function'];
-    var type = metadata['type'];
 
-    var res;
-    if (metadata['type'] == 'list') {
-	res = _ajaxExtractList(result, 'tikiResult');
-    } else if (metadata['type'] == 'item') {
-	res = _ajaxExtractItem(result, 'tikiResult');
-    } else if (metadata['type'] == 'scalar') {
-	res = _ajaxExtractScalar(result, 'tikiResult');
-    } else {
-	return false;
-    }
+    var res = _ajaxExtract(result, 'tikiResult');
 
     if (metadata['cant'] != null) {
 	res.cant = metadata['cant'];
@@ -61,47 +52,47 @@ function loadContent() {
 }
 
 function _handleLoadContentResult(result) {
-    var metadata = _ajaxExtractItem(result, 'metaData');
+    var metadata = _ajaxExtract(result, 'metaData');
 
     var func = metadata['function'];
 
-    var content = _ajaxExtractScalar(result, 'tikiResult');
+    var content = _ajaxExtract(result, 'tikiResult');
 
     document.getElementById(metadata['containerId']).innerHTML = content;
 
     document.getElementById('ajaxLoading').style.display = 'none';
 }
 
-function _ajaxExtractList(result, name) {
+function _ajaxExtract(result, name) {
 
     var objects = result.ajaxResponse[0][name];
 
-    if (!objects) { return new Array(); }
+    if (!objects) { return false; }
 
-    var jslist = new Array();
+    return _ajaxExtractItem(objects[0]);
+}
 
-    for (var i=0; i < objects.length; i++) {
+function _ajaxExtractItem(obj) {
+    var type = obj.get_attribute('type');
 
-	jslist[i] = new Array();
-	
-	for (var key in objects[i]) {
-	    if (Array.prototype.isPrototypeOf(objects[i][key])) {
-		jslist[i][key] = objects[i][key][0]['data'];
-	    }
+    if (type == 'scalar') {
+
+	return obj['data'];
+
+    } else if (type == 'array') {
+
+	var res = new Array();
+	var list = obj['item'];
+
+	for (var i=0; i<list.length; i++) {
+	    var key = list[i].get_attribute('key');
+	    res[key] = _ajaxExtractItem(list[i]);
 	}
 
+	return res;
+    } else {
+	alert('bug');
     }
-
-    return jslist;
-}
-
-function _ajaxExtractItem(result, name) {
-    var result = _ajaxExtractList(result, name);
-    return result[0];
-}
-
-function _ajaxExtractScalar(result, name) {
-    return result.ajaxResponse[0][name][0]['data'];
 }
 
 /* Translation */

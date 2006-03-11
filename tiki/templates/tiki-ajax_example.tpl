@@ -11,27 +11,28 @@
 <form name="f">
 
 <div>
-  Ajax framework uses three main datatypes.
-  These are the common result of functions in tiki:<br>
+  Ajax framework uses two main client-side functions:
   <ul>
-    <li>scalar: non-array values, like integers or strings</li>
-    <li>item: an associative array, tipically a row in a database table</li>
-    <li>list: an array of associative arrays, tipically many rows from a db table
-        <br>
-	<small>
-	   note: list type can be returned either as a (data => $res, cant => $cant)
-	   array or just the data, the client-side result will be the same
-	 </small>
+    <li>load(func, arg1,...,argx): calls php function func and passes all
+        arguments, the result will be passed to js function handle_func.
+
+    <li>loadContent(containerId, func, arg1,...,argx): calls php function
+        func with arguments. You don't need to declare a js function, the
+        result will go directly to innerHTML of html element with id
+        containerId.
     </li>
   </ul>
 
   This page shows how client-side framework works.
+  By now, each php function must be declared inside a file with same
+  name in ajax/ dir (there's a controverse in this, will probably be changed).
   Check ajax/test_*.php files to see backend.
 
 </div><br><hr><br>
 
 <div>
-  This first example shows how the "scalar" datatype is handled.
+  This first example shows the funcionality of a function that returns a
+  simple string.
   Type a phrase and choose a language, and you'll see the tiki
   translation for that phrase (copy it from somewhere around this page).
   <br>
@@ -55,7 +56,7 @@
 <span id="scalarbox">: </span></div><br><hr><br>
 
 <div>
-  The second example ilustrates the "item" type.
+  The second example ilustrates the use of an associative array.
   By clicking below, this script will fetch your 
   user information and display to you.
 
@@ -80,7 +81,7 @@
 </div><br><hr><br>
 
 <div>
-  Click below to see the "list" type.
+  Next one shows a list of associative arrays, a tipical select in database.
 
   <script language="JavaScript">
   {literal}
