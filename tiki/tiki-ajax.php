@@ -67,7 +67,12 @@ function _loadFunction($function) {
 
     $function = 'ajax_' . $function;
 
+    // use output buffer so that linebreaks at end of file won't silently kill
+    // cpaint client
+    ob_start();
     require_once($filename);
+    $trash = ob_get_contents();
+    ob_end_clean();
 
     if (!function_exists($function)) { return false; }
 
