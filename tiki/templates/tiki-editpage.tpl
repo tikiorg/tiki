@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.78 2006-03-12 19:50:04 lfagundes Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.79 2006-03-12 21:02:32 lfagundes Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -17,6 +17,12 @@
 {/if}
 
 <h1>{tr}Edit{/tr}: {$page|escape}{if $pageAlias ne ''}&nbsp;({$pageAlias|escape}){/if}</h1>
+{if $data.draft}
+  {tr}Draft writen on{/tr} {$data.draft.lastModif|tiki_long_time}<br/>
+  {if $data.draft.lastModif < $data.lastModif}
+    <b>{tr}Warning: new versions of this page have been made after this draft{/tr}</b>
+  {/if}
+{/if}
 {if $page|lower eq 'sandbox'}
 <div class="wikitext">
 {tr}The SandBox is a page where you can practice your editing skills, use the preview feature to preview the appearance of the page, no versions are stored for this page.{/tr}

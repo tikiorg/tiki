@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.134 2006-03-06 14:31:14 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.135 2006-03-12 21:02:31 lfagundes Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -562,11 +562,13 @@ if(isset($_REQUEST["edit"])) {
   }
 
 } else {
-  if (isset($info["data"])) {
-    $edit_data = $info["data"];
-  } else {
-    $edit_data = '';
-  }
+    if (isset($info['draft'])) {
+	$edit_data = $info['draft']['data'];
+    } elseif (isset($info["data"])) {
+	$edit_data = $info["data"];
+    } else {
+	$edit_data = '';
+    }
 }
 
 if ($feature_likePages == 'y' and $edit_data == '' && !$tikilib->page_exists($page)) {
@@ -588,16 +590,22 @@ if (isset($wiki_feature_copyrights) && $wiki_feature_copyrights == 'y') {
   }
 }
 
-$smarty->assign('commentdata', '');
-
 if (isset($_REQUEST["comment"])) {
   $smarty->assign_by_ref('commentdata', $_REQUEST["comment"]);
+} elseif (isset($info['draft'])) {
+    $smarty->assign_by_ref('commentdata',$info['draft']['data']);
+} else {
+    $smarty->assign('commentdata', '');
 }
 
 if (isset($info["description"])) {
-  $smarty->assign('description', $info["description"]);
+    if ($info['draft']) {
+	$info['description'] = $info['draft']['description'];
+    }
+    $smarty->assign('description', $info["description"]);
 
-  $description = $info["description"];
+    $description = $info["description"];
+
 } else {
   $smarty->assign('description', '');
 

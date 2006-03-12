@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.634 2006-03-02 15:15:51 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.635 2006-03-12 21:02:35 lfagundes Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3796,11 +3796,24 @@ function add_pageview() {
 
 	$result = $this->query($query, array($pageName));
 
-	if (!$result->numRows())
+	if (!$result->numRows()) {
 	    return false;
-	else
-	    return $result->fetchRow();
+	} else {
+	    $res = $result->fetchRow();
+	    
+	    global $user;
+	    if ($user) {
+		$query = "select * from `tiki_page_drafts` where `user`=? and `pageName`=?";
+		$result = $this->query($query, array($user, $pageName));
+		if ($result->numRows()) {
+		    $res['draft'] = $result->fetchRow();
+		}
+	    }
+
+	    return $res;
+	}
     }
+
     function get_page_info_from_id($page_id) {
 	$query = "select * from `tiki_pages` where `page_id`=?";
 
@@ -5835,6 +5848,9 @@ if (!$simple_wiki) {
 			$diff = diff2($old["data"] , $edit_data, "unidiff");
 			sendWikiEmailNotification('wiki_page_changed', $pageName, $edit_user, $edit_comment, $old_version, $edit_data, $machine, $diff, $minor);
 		}
+
+		$query = "delete from `tiki_page_drafts` where `user`=? and `pageName`=?";
+		$this->query($query, array($user, $pageName));
 
 		global $feature_score;
 	        if ($feature_score == 'y') {
