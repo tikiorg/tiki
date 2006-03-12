@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.77 2006-03-06 13:24:43 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.78 2006-03-12 19:50:04 lfagundes Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -9,6 +9,11 @@
 	alert("{tr}This page is being edited by{/tr} {$semUser}. {tr}Proceed at your own peril{/tr}.")
 //End Hide Script -->
 </script>
+{/if}
+
+{if $feature_ajax == 'y'}
+  {include file="tiki-ajax_header.tpl"}
+  <script language="JavaScript" src="lib/cpaint/tiki-ajax_wiki.js"></script>
 {/if}
 
 <h1>{tr}Edit{/tr}: {$page|escape}{if $pageAlias ne ''}&nbsp;({$pageAlias|escape}){/if}</h1>
@@ -322,6 +327,9 @@ Replace to:
 <input type="checkbox" name="isminor" value="on" />{tr}Minor{/tr}
 {/if}
 <input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /> &nbsp;&nbsp;
+{if $feature_ajax eq 'y'}
+<input type="button" class="wikiaction" value="{tr}save draft{/tr}" onclick="save_draft()">
+{/if}
 {if $page|lower ne 'sandbox'}
 <input type="submit" class="wikiaction" name="cancel_edit" value="{tr}cancel edit{/tr}" />
 {/if}

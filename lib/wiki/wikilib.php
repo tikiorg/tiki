@@ -612,6 +612,7 @@ class WikiLib extends TikiLib {
 		}
 		return $ret;
 	}
+
 	function get_default_wiki_page() {
 		global $user, $wikiHomePage, $useGroupHome;
 	 	if ($useGroupHome == 'y') {
@@ -623,6 +624,20 @@ class WikiLib extends TikiLib {
  				return $wikiHomePage;
 		}
 		return $wikiHomePage;
+	}
+
+	function save_draft($pageName, $pageDesc, $pageData, $pageComment) {
+	    global $user;
+
+	    if (!$user) return false;
+
+	    $query = "delete from `tiki_page_drafts` where `user`=? and `pageName`=?";
+	    $this->query($query, array($user, $pageName));
+
+	    $query = "insert into `tiki_page_drafts` (`user`,`pageName`,`data`,`description`,`comment`) values (?,?,?,?,?)";
+	    $bindvals = array($user, $pageName, $pageData, $pageDesc, $pageComment);
+
+	    return $this->query($query, $bindvals) ? true : false;
 	}
 
 }
