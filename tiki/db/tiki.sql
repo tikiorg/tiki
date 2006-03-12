@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2006-03-09 16:28:30 $
-# $Author: sylvieg $
+# $Date: 2006-03-12 19:50:05 $
+# $Author: lfagundes $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -2477,6 +2477,23 @@ CREATE TABLE tiki_pages (
   FULLTEXT KEY ft (pageName,description,data),
   KEY lastModif(lastModif)
 ) TYPE=MyISAM AUTO_INCREMENT=1;
+# --------------------------------------------------------
+
+#
+# Table structure for table tiki_page_drafts
+#
+# Creation: March 12, 2006 at 
+#
+
+DROP TABLE IF EXISTS tiki_page_drafts;
+CREATE TABLE tiki_page_drafts (
+  user varchar(40) NOT NULL,
+  pageName varchar(255) NOT NULL,
+  data mediumtext,
+  description varchar(200) default NULL,
+  comment varchar(200) default NULL,
+  PRIMARY KEY  (pageName, user)
+) TYPE=MyISAM;
 # --------------------------------------------------------
 
 #

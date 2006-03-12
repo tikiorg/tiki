@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.79 2006-03-09 16:28:30 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.80 2006-03-12 19:50:06 lfagundes Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -521,3 +521,14 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_contribution_di
 
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_contribution_mandatory_forum', 'n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_contribution_mandatory_comment', 'n');
+
+#2006-03-12 lfagundes
+DROP TABLE IF EXISTS tiki_page_drafts;
+CREATE TABLE tiki_page_drafts (
+  user varchar(40) NOT NULL,
+  pageName varchar(255) NOT NULL,
+  data mediumtext,
+  description varchar(200) default NULL,
+  comment varchar(200) default NULL,
+  PRIMARY KEY  (pageName, user)
+) TYPE=MyISAM;
