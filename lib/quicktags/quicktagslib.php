@@ -20,7 +20,7 @@ class QuickTagsLib extends TikiLib {
 		$bindvars=array();
 		if ($find) {
 			$findesc = '%' . $find . '%';
-			$mid = " where (`tagname` like ?)";
+			$mid = " where (`taglabel` like ?)";
 			$bindvars[]=$findesc;
 		} else {
 			$mid = "";
