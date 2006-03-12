@@ -634,8 +634,8 @@ class WikiLib extends TikiLib {
 	    $query = "delete from `tiki_page_drafts` where `user`=? and `pageName`=?";
 	    $this->query($query, array($user, $pageName));
 
-	    $query = "insert into `tiki_page_drafts` (`user`,`pageName`,`data`,`description`,`comment`) values (?,?,?,?,?)";
-	    $bindvals = array($user, $pageName, $pageData, $pageDesc, $pageComment);
+	    $query = "insert into `tiki_page_drafts` (`user`,`pageName`,`data`,`description`,`comment`,`lastModif`) values (?,?,?,?,?,?)";
+	    $bindvals = array($user, $pageName, $pageData, $pageDesc, $pageComment, time());
 
 	    return $this->query($query, $bindvals) ? true : false;
 	}

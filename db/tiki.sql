@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2006-03-12 19:50:05 $
+# $Date: 2006-03-12 21:02:32 $
 # $Author: lfagundes $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -2492,6 +2492,7 @@ CREATE TABLE tiki_page_drafts (
   data mediumtext,
   description varchar(200) default NULL,
   comment varchar(200) default NULL,
+  lastModif int(14) default NULL,
   PRIMARY KEY  (pageName, user)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
