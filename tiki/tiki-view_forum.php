@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.98 2006-03-13 13:48:37 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.99 2006-03-13 14:13:41 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -335,7 +335,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 			    {
 				// Deal with mail notifications.
 				include_once('lib/notifications/notificationemaillib.php');
-				sendForumEmailNotification('forum_post_topic', $_REQUEST['forumId'], $forum_info, $_REQUEST["comments_title"], $_REQUEST["comments_data"], $user, $_REQUEST["comments_title"], $message_id, '', $threadId, $_REQUEST["comments_parentId"] );
+				sendForumEmailNotification('forum_post_topic', $_REQUEST['forumId'], $forum_info, $_REQUEST['comments_title'], $_REQUEST['comments_data'], $user, $_REQUEST['comments_title'], $message_id, '', $threadId, isset($_REQUEST['comments_parentId'])?$_REQUEST['comments_parentId']: 0 );
 				if ($feature_contribution == 'y') {
 					global $contributionlib; include_once('lib/contribution/contributionlib.php');
 					$contributionlib->assign_contributions(isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '', $threadId, 'comment', $_REQUEST['comments_title'], '', '');
