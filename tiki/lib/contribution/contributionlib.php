@@ -80,8 +80,11 @@ class ContributionLib extends TikiLib {
 		}
 	}
 	function remove_assigned_contributions($itemId, $objectType) {
-		$query = 'delete tca from `tiki_contributions_assigned` tca left join `tiki_objects`tob on tob.`objectId`=tca.`objectId` where tob.`itemId`= ? and tob.`type`= ?';
-		$this->query($query, array($itemId, $objectType));
+		// works only if mysql> 4 $query = 'delete tca from `tiki_contributions_assigned` tca left join `tiki_objects`tob on tob.`objectId`=tca.`objectId` where tob.`itemId`= ? and tob.`type`= ?';
+		global $objectlib; include_once('lib/objectlib.php');
+		$objectId = $objectlib->get_object_id($objectType, $itemId);
+		$query = 'delete from `tiki_contributions_assigned` where `objectId`= ?';
+		$this->query($query, array($objectId));
 	}
 	function remove_page($page) {
 		global $objectlib; include_once('lib/objectlib.php');
