@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.135 2006-03-12 21:02:31 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.136 2006-03-13 13:59:29 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -599,7 +599,7 @@ if (isset($_REQUEST["comment"])) {
 }
 
 if (isset($info["description"])) {
-    if ($info['draft']) {
+    if (isset($info['draft'])) {
 	$info['description'] = $info['draft']['description'];
     }
     $smarty->assign('description', $info["description"]);
