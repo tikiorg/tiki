@@ -2,7 +2,7 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2006-03-09 16:33:22 $
+-- $Date: 2006-03-13 13:56:00 $
 -- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
@@ -3752,6 +3752,30 @@ CREATE  INDEX "tiki_pages_ft" ON "tiki_pages"("pageName","description","data")
 go
 CREATE UNIQUE INDEX "tiki_pages_pageName" ON "tiki_pages"("pageName")
 go
+-- --------------------------------------------------------
+
+--
+-- Table structure for table tiki_page_drafts
+--
+-- Creation: March 12, 2006 at 
+--
+
+-- DROP TABLE "tiki_page_drafts"
+go
+
+
+CREATE TABLE "tiki_page_drafts" (
+  "user" varchar(40) NOT NULL,
+  "pageName" varchar(255) NOT NULL,
+  "data" mediumtext,
+  "description" varchar(200) default NULL NULL,
+  "comment" varchar(200) default NULL NULL,
+  "lastModif" numeric(14,0) default NULL NULL,
+  PRIMARY KEY ("pageName","user")
+) 
+go
+
+
 -- --------------------------------------------------------
 
 --
