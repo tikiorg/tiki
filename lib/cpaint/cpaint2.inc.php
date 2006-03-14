@@ -98,7 +98,7 @@
     * @return   void
     */
     function cpaint() {
-      $this->__construct();
+      cpaint::__construct();
     }
     
     /**
@@ -170,6 +170,7 @@
       if (isset($_REQUEST['cpaint_response_type'])) {
         $this->response_type = htmlentities(strip_tags(strtoupper((string) $_REQUEST['cpaint_response_type'])));
       } // end: if
+
     }
 
     /**

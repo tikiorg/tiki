@@ -13,103 +13,13 @@
 require_once("tiki-setup.php");
 
 require_once('lib/cpaint/cpaint2.inc.php');
+require_once('lib/cpaint/ajaxlib.php');
 
-$cp = new cpaint();
+$ajax = new TikiAjax();
 
-$cp->register('handle');
-$cp->register('handleContent');
+$ajax->start();
+$ajax->return_data();
 
-$cp->start();
-$cp->return_data();
-
-function handle() {
-
-    $arguments = func_get_args();
-    
-    $function = (string) array_shift($arguments);
-
-    if (!_loadFunction($function)) return false;
-
-    $metadata = array('function' => $function);
-
-    $result = _call($function, $arguments);
-
-    if (is_array($result) && isset($result['data']) && isset($result['cant']) && sizeof($result) == 2) {
-	$metadata['cant'] = $result['cant'];
-	$result = $result['data'];
-    }
-
-    _send('tikiResult', $result);
-    _send('metaData',   $metadata);
-}
-
-function handleContent() {
-    $arguments = func_get_args();
-    
-    $containerId = (string) array_shift($arguments);
-    $function = (string) array_shift($arguments);
-
-    if (!_loadFunction($function)) return false;
-
-    $metadata = array('function' => $function,
-		      'containerId' => $containerId);
-
-    $result = (string) _call($function, $arguments);
-
-    _send('tikiResult', $result);
-    _send('metaData',   $metadata);
-}
-
-function _loadFunction($function) {
-    $filename = "ajax/".$function.".php";
-
-    if (!file_exists($filename)) return false;
-
-    $function = 'ajax_' . $function;
-
-    // use output buffer so that linebreaks at end of file won't silently kill
-    // cpaint client
-    ob_start();
-    require_once($filename);
-    $trash = ob_get_contents();
-    ob_end_clean();
-
-    if (!function_exists($function)) { return false; }
-
-    return true;
-}
-
-function _call($function, $arguments) {
-    return call_user_func_array('ajax_' . $function, $arguments);
-}
-
-function _send($name, $value) {
-    global $cp;
-    $node =& $cp->add_node($name);
-    _send_item($node, $value);
-}
-
-function _send_item(&$node, $var) {
-
-    if (!is_array($var) && !is_object($var)) {
-
-	$node->set_data($var);
-	$node->set_attribute('type','scalar');
-
-    } elseif (is_array($var)) {
-
-	$node->set_attribute('type','array');
-
-	foreach ($var as $key => $value) {
-	    $subNode =& $node->add_node('item');
-	    $subNode->set_attribute('key',$key);
-	    _send_item($subNode, $value);		
-	}
-	
-    } elseif (is_object($var)) {
-	// not supported yet
-    }
-}
 
 ?>
 

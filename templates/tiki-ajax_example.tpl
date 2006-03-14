@@ -13,19 +13,20 @@
 <div>
   Ajax framework uses two main client-side functions:
   <ul>
-    <li>load(func, arg1,...,argx): calls php function func and passes all
-        arguments, the result will be passed to js function handle_func.
+    <li>load(file, func, arg1,...,argx): calls php function func, declared in file,
+        and passes all arguments, the result will be passed to js function handle_func.
 
-    <li>loadContent(containerId, func, arg1,...,argx): calls php function
-        func with arguments. You don't need to declare a js function, the
-        result will go directly to innerHTML of html element with id
+    <li>loadContent(file, containerId, func, arg1,...,argx): calls php function
+        func, declared in file, with arguments. You don't need to declare a js 
+	function, the result will go directly to innerHTML of html element with id
         containerId.
     </li>
+
   </ul>
 
   This page shows how client-side framework works.
-  By now, each php function must be declared inside a file with same
-  name in ajax/ dir (there's a controverse in this, will probably be changed).
+  Each function have to be declared inside a file in ajax/ dir, this file
+  is passed as argument to load() and loadContent() functions
   Check ajax/test_*.php files to see backend.
 
 </div><br><hr><br>
@@ -47,9 +48,9 @@
   {/literal}
   </script>
 
-  <input name="phrase" size="30" onblur="javascript:load('test_scalar', document.f.phrase.value, document.f.lang.value)">
-  <input name="lang" size="5" value="pt-br" onblur="javascript:load('test_scalar', document.f.phrase.value, document.f.lang.value)">
-  <a href="javascript:load('test_scalar', document.f.phrase.value, document.f.lang.value)">
+  <input name="phrase" size="30" onblur="javascript:load('test.php','test_scalar', document.f.phrase.value, document.f.lang.value)">
+  <input name="lang" size="5" value="pt-br" onblur="javascript:load('test.php','test_scalar', document.f.phrase.value, document.f.lang.value)">
+  <a href="javascript:load('test.php','test_scalar', document.f.phrase.value, document.f.lang.value)">
     translate
   </a>
 
@@ -73,7 +74,7 @@
 
   <br><br>
   <center>
-    <a href="javascript:load('test_item')">
+    <a href="javascript:load('test.php','test_item')">
       who am i?
     </a>
   </center>
@@ -100,13 +101,14 @@
 
   <br><br>
   <center>
-    <a href="javascript:load('test_list',0,10)">
+    <a href="javascript:load('test.php','test_list',0,10)">
       list system permissions
     </a>
   </center>
 
 </div><br><hr><br>
 
+{*
 <div>
   Tiki ajax framework also supports client side translation. For that, you can use the
   js function tra(str). To do so, the function first checks a local cache, and if there's
@@ -120,6 +122,7 @@
     <script>document.write(tra('Home'));</script>
   </center>
 </div><br><hr><br>
+*}
 
 <div>
   And now, the big magic. The earlier examples show how to transfer data structures
@@ -143,5 +146,6 @@
   </div>
 
 </div><br><hr><br>
+
 
 </form>
