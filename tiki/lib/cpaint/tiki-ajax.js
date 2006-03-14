@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/cpaint/tiki-ajax.js,v 1.10 2006-03-12 13:16:52 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/cpaint/tiki-ajax.js,v 1.11 2006-03-14 22:59:02 lfagundes Exp $
 
 function load() {
 
@@ -6,7 +6,7 @@ function load() {
 
     var cp = new cpaint();
     cp.set_persistent_connection(false);
-    //    cp.set_debug(2);
+    //cp.set_debug(2);
 
     var cmd = 'cp.call("tiki-ajax.php","handle",_handleLoadResult';
     for (var i=0; i<arguments.length; i++) {
@@ -107,7 +107,7 @@ function tra(str) {
     }
     var id = traId++;
     traIdTable[str] = id;
-    load('tra',str);
+    load('tra.php','tra',str);
     return '<span id="ajax-tra-'+id+'">'+str+'</span>';
 }
 
