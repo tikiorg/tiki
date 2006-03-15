@@ -98,7 +98,7 @@
     * @return   void
     */
     function cpaint() {
-      cpaint::__construct();
+	$this->__construct();
     }
     
     /**

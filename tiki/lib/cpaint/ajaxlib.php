@@ -19,7 +19,7 @@ class TikiAjax extends cpaint {
     * @return   void
     */
     function __construct() {
-	parent::cpaint();
+	parent::__construct();
 
 	$this->register('handle');
 	$this->register('handleContent');
