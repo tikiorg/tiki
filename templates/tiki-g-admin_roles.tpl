@@ -101,7 +101,7 @@ Errors:<br />
 		  	<tr>
 		  		<td class="formcolor" >
 					<select name="user[]" multiple="multiple" size="10">
-					<option value="">"{tr}Anonymous{/tr}"</option>
+					<option value="Anonymous">"{tr}Anonymous{/tr}"</option>
 					{section name=ix loop=$users}
 					<option value="{$users[ix].user|escape}">{$users[ix].user|adjust:30}</option>
 					{/section}
@@ -159,15 +159,17 @@ Errors:<br />
 			<option value="remove">{tr}remove{/tr}</option>
 			</select>
 		</td>
-		
+
 		<td class="formcolor">
 			<select name="group">
 			{section name=ix loop=$groups}
+			{if $groups[ix] != "Anonymous"}
 			<option value="{$groups[ix]|escape}">{$groups[ix]}</option>
+			{/if}
 			{/section}
 			</select>
 		</td>
-		
+
 		<td class="formcolor">
 			<select name="role">
 			{section name=ix loop=$roles}
@@ -178,7 +180,7 @@ Errors:<br />
 		<td class="formcolor">
 			<input type="submit" name="mapg" value="{tr}go{/tr}" />
 		</td>
-		
+
 	</tr>
 	</table>
 	</form>

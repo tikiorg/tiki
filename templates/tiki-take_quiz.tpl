@@ -35,13 +35,13 @@ settimeleft(itid);
 <div class="quizquestion">{$questions[ix].question}</div>
 <div class="quizoptions">
   {section name=jx loop=$questions[ix].options}
-  <input type="radio" value="{$questions[ix].options[jx].optionId|escape}" name="question_{$questions[ix].questionId}">{$questions[ix].options[jx].optionText}<br />
+  <input type="radio" value="{$questions[ix].options[jx].optionId|escape}" name="question_{$questions[ix].questionId}" />{$questions[ix].options[jx].optionText}<br />
   {/section}
 </div>  
 {if $questions[ix].type eq "f" }
 <br />
 <div class="quizupload">
-Supporting Documentation: <input name="question_upload_{$questions[ix].questionId}" type="file">
+Supporting Documentation: <input name="question_upload_{$questions[ix].questionId}" type="file" />
 </div>
 {/if}
 </div>  

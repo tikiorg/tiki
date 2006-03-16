@@ -1,15 +1,15 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.80 2006-02-17 15:10:47 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.81 2006-03-16 13:43:12 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
 
       {if $feature_help eq 'y'}
 <a href="{$helpurl}UserAdministrationScreen" target="tikihelp" class="tikihelp" title="{tr}admin users{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-adminusers.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin users template{/tr}">
-<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit{/tr}'></a>{/if}
+<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>{/if}
 </h1>
 
 <span class="button2"><a href="tiki-admingroups.php" class="linkbut">{tr}Admin groups{/tr}</a></span>
@@ -76,7 +76,7 @@
 <td><input type="text" name="find" value="{$find|escape}" /></td>
 <td><input type="submit" value="{tr}find{/tr}" name="search" /></td>
 <td>{tr}Number of displayed rows{/tr}</td>
-<td><input type="text" size="4" name="numrows" value="{$numrows|escape}"><td>
+<td><input type="text" size="4" name="numrows" value="{$numrows|escape}" /><td>
 </tr>
 <tr><td colspan="2"></td><td colspan="3"><a href="javascript:toggleBlock('search')" class="link"><img src="img/icons/plus.gif" border='0' alt='+' />&nbsp;{tr}more criteria{/tr}</a></td></tr>
 </table>
@@ -148,7 +148,7 @@ title="{tr}edit account settings{/tr}: {$users[user].user}"><img border="0" alt=
 {/if}
 {/foreach}
 <td  class="thin">{if $users[user].user ne 'admin'}<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;user={$users[user].user|escape:url}"
-title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}'></a>{/if}
+title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>{/if}
 </td>
 </tr>
 {/section}
@@ -194,7 +194,7 @@ title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
   {/if}
   </p>
 <input type="hidden" name="find" value="{$find|escape}" />
-<input type="hidden" name="numrows" value="{$numrows|escape}">
+<input type="hidden" name="numrows" value="{$numrows|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <input type="hidden" name="offset" value="{$offset|escape}" />
 </form>
@@ -224,7 +224,7 @@ title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
 </div>
 
 {* ---------------------- tab with form -------------------- *}
-<a name="2" />
+<a name="2" ></a>
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 {if $userinfo.userId}
 <h2>{tr}Edit user{/tr}: {$userinfo.login}</h2>
@@ -253,7 +253,7 @@ title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
 {/if}
 {if $userinfo.userId}
 <tr class="formcolor"><td>&nbsp;</td><td>
-<input type="hidden" name="user" value="{$userinfo.userId|escape}">
+<input type="hidden" name="user" value="{$userinfo.userId|escape}" />
 <input type="hidden" name="edituser" value="1" />
 <input type="submit" name="submit" value="{tr}Save{/tr}" />
 {else}

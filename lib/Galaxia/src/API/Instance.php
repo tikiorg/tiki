@@ -23,11 +23,11 @@ class Instance extends Base {
   var $instanceId = 0;
   /// An array of workitem ids
   var $workitems = Array(); 
-  
+
   function Instance($db) {
     $this->db = $db;
   }
-  
+
   /*!
   Method used to load an instance data from the database.
   */
@@ -291,7 +291,7 @@ class Instance extends Base {
   }
   
   /*!
-  Gets the Unix timstamp of the starting time for the given activity.
+  Gets the Unix timestamp of the starting time for the given activity
   */
   function getActivityStarted($activityId) {
     for($i=0;$i<count($this->activities);$i++) {
@@ -363,92 +363,110 @@ class Instance extends Base {
   the engine does automatically complete automatic activities after
   executing them.
   */
-  function complete($activityId=0,$force=false,$addworkitem=true) {
+  function complete($activityId = 0, $force = false, $addworkitem = true) {
     global $user;
     global $__activity_completed;
     
     $__activity_completed = true;
-  
-    if(empty($user)) {$theuser='*';} else {$theuser=$user;}
-    
-    if($activityId==0) {
-      $activityId=$_REQUEST['activityId'];
+
+	$isInteractive = $this->getOne("SELECT `isInteractive` FROM `" . GALAXIA_TABLE_PREFIX . "activities` WHERE `activityId`=?", array((int)$activityId));
+
+    if ($isInteractive == 'n') {
+		$theuser = 'Not Interactive';
+	} else {
+		$theuser = (empty($user)) ? '*' : $user;
+	}
+
+    if ($activityId == 0) {
+		$activityId = $_REQUEST['activityId'];
     }  
-    // If we are completing a start activity then the instance must 
-    // be created first!
-    $type = $this->getOne("select `type` from `".GALAXIA_TABLE_PREFIX."activities` where `activityId`=?",array((int)$activityId));    
-    if($type=='start') {
-      $this->_createNewInstance((int)$activityId,$theuser);
+
+    // If we are completing a start activity then the instance must be created first!
+    $type = $this->getOne("SELECT `type` FROM `" . GALAXIA_TABLE_PREFIX . "activities` WHERE `activityId`=?", array((int)$activityId));
+
+	if($type == 'start') {
+		$this->_createNewInstance((int)$activityId, $theuser);
     }
+
+	// Now that we have an instance, we can set $activityId as 'completed'
     $now = date("U");
-    $query = "update `".GALAXIA_TABLE_PREFIX."instance_activities` set `ended`=? where `activityId`=? and `instanceId`=?";
-    $this->query($query,array((int)$now,(int)$activityId,(int)$this->instanceId));
-    
+    $query = "UPDATE `" . GALAXIA_TABLE_PREFIX . "instance_activities` SET `ended`=?, `user`=? WHERE `activityId`=? AND `instanceId`=?";
+    $this->query($query, array((int)$now, $theuser, (int)$activityId, (int)$this->instanceId));
+
     //Add a workitem to the instance 
     $iid = $this->instanceId;
-    if($addworkitem) {
-      $max = $this->getOne("select max(`orderId`) from `".GALAXIA_TABLE_PREFIX."workitems` where `instanceId`=?",array((int)$iid));
-      if(!$max) {
-        $max=1;
-      } else {
-        $max++;
-      }
-      $act = $this->_get_instance_activity($activityId);
-      if(!$act) {
-        //Then this is a start activity ending
-        $started = $this->getStarted();
-        $putuser = $this->getOwner();
-      } else {
-        $started=$act['started'];
-        $putuser = $act['user'];
-      }
-      $ended = date("U");
-      $properties = serialize($this->properties);
-      $query="insert into `".GALAXIA_TABLE_PREFIX."workitems`(`instanceId`,`orderId`,`activityId`,`started`,`ended`,`properties`,`user`) values(?,?,?,?,?,?,?)";    
-      $this->query($query,array((int)$iid,(int)$max,(int)$activityId,(int)$started,(int)$ended,$properties,$putuser));
+
+    if ($addworkitem) {
+		$max = $this->getOne("SELECT MAX(`orderId`) FROM `".GALAXIA_TABLE_PREFIX."workitems` WHERE `instanceId`=?", array((int)$iid));
+
+		if (!$max) {
+			$max = 1;
+		} else {
+			$max++;
+		}
+
+		$act = $this->_get_instance_activity($activityId);
+
+		if(!$act) {
+			//Then this is a start activity ending
+			$started = $this->getStarted();
+			$putuser = $this->getOwner();
+		} else {
+			$started = $act['started'];
+			$putuser = $act['user'];
+		}
+
+		$ended = date("U");
+		$properties = serialize($this->properties);
+		$query = "INSERT INTO `" . GALAXIA_TABLE_PREFIX . "workitems` (`instanceId`, `orderId`, `activityId`, `started`, `ended`, `properties`, `user`) VALUES (?,?,?,?,?,?,?)";
+		$this->query($query, array((int)$iid, (int)$max, (int)$activityId, (int)$started, (int)$ended, $properties, $theuser));
     }
     
-    //Set the status for the instance-activity to completed
-    $this->setActivityStatus($activityId,'completed');
+    //Set the status for the instance-activity to 'completed'
+    $this->setActivityStatus($activityId, 'completed');
     
-    //If this and end actt then terminate the instance
-    if($type=='end') {
-      $this->terminate();
-      return;
+    //If this an end activity then terminate the instance
+    if ($type == 'end') {
+		$this->terminate();
+		return;
     }
     
-    //If the activity ending is autorouted then send to the
-    //activity
+    //If the activity ending is autorouted then send to the next activity
     if ($type != 'end') {
-      if (($force) || ($this->getOne("select `isAutoRouted` from `".GALAXIA_TABLE_PREFIX."activities` where `activityId`=?",array($activityId)) == 'y'))   {
-        // Now determine where to send the instance
-        $query = "select `actToId` from `".GALAXIA_TABLE_PREFIX."transitions` where `actFromId`=?";
-        $result = $this->query($query,array((int)$activityId));
-        $candidates = Array();
-        while ($res = $result->fetchRow()) {
-          $candidates[] = $res['actToId'];
-        }  
-        if($type == 'split') {
-          $first = true;
-          foreach ($candidates as $cand) {
-            $this->sendTo($activityId,$cand,$first);
-            $first = false;
-          }
-        } elseif($type == 'switch') {
-          if (in_array($this->nextActivity,$candidates)) {
-            $this->sendTo((int)$activityId,(int)$this->nextActivity);
-          } else {
-            trigger_error(tra('Fatal error: nextActivity does not match any candidate in autorouting switch activity'),E_USER_WARNING);
-          }
-        } else {
-          if (count($candidates)>1) {
-            trigger_error(tra('Fatal error: non-deterministic decision for autorouting activity'),E_USER_WARNING);
-          } else {
-            $this->sendTo((int)$activityId,(int)$candidates[0]);
-          }
-        }
-      }
+		if (($force) || ($this->getOne("SELECT `isAutoRouted` FROM `" . GALAXIA_TABLE_PREFIX . "activities` WHERE `activityId`=?", array($activityId)) == 'y')) {
+			// Now determine where to send the instance
+			$query = "SELECT `actToId` FROM `" . GALAXIA_TABLE_PREFIX . "transitions` WHERE `actFromId`=?";
+			$result = $this->query($query, array((int)$activityId));
+
+			$candidates = Array();
+
+			while ($res = $result->fetchRow()) {
+				$candidates[] = $res['actToId'];
+			}  
+
+			if ($type == 'split') {
+				$first = true;
+
+				foreach ($candidates as $cand) {
+					$this->sendTo($activityId, $cand, $first);
+					$first = false;
+				}
+			} elseif ($type == 'switch') {
+				if (in_array($this->nextActivity, $candidates)) {
+					$this->sendTo((int)$activityId, (int)$this->nextActivity);
+				} else {
+					trigger_error(tra('Fatal error: nextActivity does not match any candidate in autorouting switch activity'), E_USER_WARNING);
+				}
+			} else {
+				if (count($candidates) > 1) {
+					trigger_error(tra('Fatal error: non-deterministic decision for autorouting activity'), E_USER_WARNING);
+				} else {
+					$this->sendTo((int)$activityId, (int)$candidates[0]);
+				}
+			}
+		}
     }
+
     return $this->instanceId;
   }
   
@@ -536,34 +554,33 @@ class Instance extends Base {
   function sendTo($from, $activityId, $split = false) {
     //1: if we are in a join check if this instance is also in other activity
 	//if so do nothing
-    $type = $this->getOne("select `type` from `" . GALAXIA_TABLE_PREFIX . "activities` where `activityId`=?", array((int)$activityId));
-    
-    //Verify the existance of a transition
-    if (!$this->getOne("select count(*) from `" . GALAXIA_TABLE_PREFIX . "transitions` where `actFromId`=? and `actToId`=?",array($from,(int)$activityId))) {
-      trigger_error(tra('Fatal error: trying to send an instance to an activity but no transition found'), E_USER_WARNING);
+    $type = $this->getOne("SELECT `type` FROM `" . GALAXIA_TABLE_PREFIX . "activities` WHERE `activityId`=?", array((int)$activityId));
+
+    // Verify the existance of a transition
+    if (!$this->getOne("SELECT count(*) FROM `" . GALAXIA_TABLE_PREFIX . "transitions` WHERE `actFromId`=? AND `actToId`=?",array($from, (int)$activityId))) {
+		trigger_error(tra('Fatal error: trying to send an instance to an activity but no transition found'), E_USER_WARNING);
     }
-    
-    //try to determine the user or *
+
     //Use the nextUser
     if ($this->nextUser) {
-      $putuser = $this->nextUser;
+		$putuser = $this->nextUser;
     } else {
-      $candidates = Array();
-      $query = "select `roleId` from `" . GALAXIA_TABLE_PREFIX . "activity_roles` where `activityId`=?";
-      $result = $this->query($query,array((int)$activityId));
-      while ($res = $result->fetchRow()) {
-        $roleId = $res['roleId'];
-        $query2 = "select `user` from `" . GALAXIA_TABLE_PREFIX . "user_roles` where `roleId`=?";
-        $result2 = $this->query($query2, array((int)$roleId)); 
-        while ($res2 = $result2->fetchRow()) {
-          $candidates[] = $res2['user'];
-        }
-      }
-      if (count($candidates) == 1) {
-        $putuser = $candidates[0];
-      } else {
-        $putuser = '*';
-      }
+		//Try to determine the user or *
+		$candidates = Array();
+		$query = "SELECT `roleId` FROM `" . GALAXIA_TABLE_PREFIX . "activity_roles` WHERE `activityId`=?";
+		$result = $this->query($query, array((int)$activityId));
+
+		while ($res = $result->fetchRow()) {
+			$roleId = $res['roleId'];
+			$query2 = "SELECT `user` FROM `" . GALAXIA_TABLE_PREFIX . "user_roles` WHERE `roleId`=?";
+			$result2 = $this->query($query2, array((int)$roleId)); 
+
+			while ($res2 = $result2->fetchRow()) {
+				$candidates[] = $res2['user'];
+			}
+		}
+
+		$putuser = (count($candidates) == 1) ? $candidates[0] : '*';
     }        
 
 	$now = date("U");
@@ -571,39 +588,61 @@ class Instance extends Base {
 	
 	// Test if the join activity has preceding activities that are not completed yet
 	if ($type == 'join') {
-		$querycant = "SELECT
-					     (SELECT COUNT(*) FROM `" . GALAXIA_TABLE_PREFIX . "transitions` WHERE actToId = ?)
-                         -
-						 (SELECT COUNT(*) FROM `" . GALAXIA_TABLE_PREFIX . "transitions` tr " . "INNER JOIN "
-		                 . GALAXIA_TABLE_PREFIX . "instance_activities gia ON tr.actFromId=gia.activityId "
-                         . "where tr.pid=? and tr.actToId=? and gia.instanceId=? and gia.status = ?)
-					  AS Pending";
+		// Calculate 1)how many incoming transitions the activity has, and 2)how many of those are completed
+		$querycant = "SELECT COUNT(*) FROM `" . GALAXIA_TABLE_PREFIX . "transitions` WHERE actToId = ?";
+		$querycomp = "SELECT COUNT(*) FROM `" . GALAXIA_TABLE_PREFIX . "transitions` tr " . "INNER JOIN "
+		             . GALAXIA_TABLE_PREFIX . "instance_activities gia ON tr.actFromId=gia.activityId
+                     WHERE tr.pid=? AND tr.actToId=? AND gia.instanceId=? AND gia.status = ?";
+
+		$transcant = $this->getone($querycant, array($activityId));
+		$transcomp = $this->getone($querycomp, array($this->pId, $activityId, $iid, 'completed'));
 
 		// if there are still preceding activities not completed, STOP
-		if ($nb = $this->getone($querycant, array($activityId, $this->pId, $activityId, $iid, 'completed'))) {
+		if ($nb = $transcant - $transcomp) {
 			//echo 'Pending preceding activities = ' . $nb;
 			return;
 		}
 	}
 	
-    $query = "delete from `" . GALAXIA_TABLE_PREFIX . "instance_activities` where `instanceId`=? and `activityId`=?";
-    $this->query($query, array((int)$iid,(int)$activityId));
-    $query = "insert into `" . GALAXIA_TABLE_PREFIX . "instance_activities`(`instanceId`,`activityId`,`user`,`status`,`started`) values(?,?,?,?,?)";
-    $this->query($query,array((int)$iid,(int)$activityId, $putuser, 'running',(int)$now));
-    
-    //if the activity is not interactive then
-    //execute the code for the activity and
-    //complete the activity
-    $isInteractive = $this->getOne("select `isInteractive` from `" . GALAXIA_TABLE_PREFIX . "activities` where `activityId`=?",array((int)$activityId));
-	
-    if ($isInteractive == 'n') {
-      // Now execute the code for the activity (function defined in lib/Galaxia/config.php)
-      galaxia_execute_activity($activityId, $iid, 1);
+    $query = "DELETE FROM `" . GALAXIA_TABLE_PREFIX . "instance_activities` WHERE `instanceId`=? AND `activityId`=?";
+    $this->query($query, array((int)$iid, (int)$activityId));
 
-      // Reload in case the activity did some change
-      $this->getInstance($this->instanceId);
-      $this->complete($activityId);
-    }
+    $query = "INSERT INTO `" . GALAXIA_TABLE_PREFIX . "instance_activities` (`instanceId`, `activityId`, `user`, `status`, `started`) VALUES (?,?,?,?,?)";
+    $this->query($query, array((int)$iid, (int)$activityId, $putuser, 'running', (int)$now));
+
+	// Check whether the activity we're sending the instance to is interactive
+	$isInteractive = $this->getOne("SELECT `isInteractive` FROM `" . GALAXIA_TABLE_PREFIX . "activities` WHERE `activityId`=?", array((int)$activityId));
+
+    //if the activity is not interactive then execute its code and complete it
+    if ($isInteractive == 'n') {
+		// These are necessary to determine if the activity needs to be recompiled
+		$proc = new Process($this->db);
+		$proc->getProcess($this->pId);
+		$baseact = new BaseActivity($this->db);
+		$act = $baseact->getActivity($activityId);
+
+		// Get paths for original and compiled activity code
+		$origcode = 'lib/Galaxia/processes/' . $proc->getNormalizedName(). '/code/activities/' . $act->getNormalizedName() . '.php';
+		$compcode = 'lib/Galaxia/processes/' . $proc->getNormalizedName() . '/compiled/' . $act->getNormalizedName(). '.php';
+
+		// Check whether the activity code is newer than its compiled counterpart,
+		// i.e. check if the source code was changed; if so, we need to recompile
+		if (filemtime($origcode) > filemtime($compcode)) {
+			// Recompile
+			include_once('lib/Galaxia/src/ProcessManager/ActivityManager.php');
+			include_once('lib/Galaxia/src/ProcessManager/ProcessManager.php');
+			$am = new ActivityManager($this->db);
+			$am->compile_activity($this->pId, $activityId);
+		}
+
+		// Now execute the code for the activity (function galaxia_execute_activity
+		// is defined in lib/Galaxia/config.php)
+		galaxia_execute_activity($activityId, $iid, 1);
+
+		// Reload in case the activity did some change
+		$this->getInstance($this->instanceId);
+		$this->complete($activityId);
+	}
   }
   
   /*! 

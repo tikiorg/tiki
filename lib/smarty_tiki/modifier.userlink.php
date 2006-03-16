@@ -77,7 +77,7 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
 				}
 			    }
 			    if ($feature_community_mouseover_friends == 'y' && $feature_friends == 'y') {
-				$content .= "<img src='img/icons/ico_friend.gif'>&nbsp;";
+				$content .= "<img src='img/icons/ico_friend.gif' />&nbsp;";
 				$content .= $tikilib->get_friends_count($other_user) . '&nbsp;&nbsp;&nbsp;';
 			    }
 			    if ($feature_community_mouseover_score == 'y') {

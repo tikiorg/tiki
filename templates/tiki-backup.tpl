@@ -2,11 +2,11 @@
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}Backups" target="tikihelp" class="tikihelp" title="{tr}admin backups{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-backup.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin admin tpl{/tr}">
-<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}</h1>
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}</h1>
 
 <h2>{tr}List of available backups{/tr}</h2>
 
@@ -64,8 +64,8 @@
 <form enctype="multipart/form-data" action="tiki-backup.php" method="post">
 <table class="normalnoborder">
 <tr><td class="form">{tr}Upload backup{/tr}:</td><td class="form">
-<input type="hidden" name="MAX_FILE_SIZE" value="10000000000">
-<input name="userfile1" type="file"></td></tr>
+<input type="hidden" name="MAX_FILE_SIZE" value="10000000000" />
+<input name="userfile1" type="file" /></td></tr>
 <tr><td class="form">&nbsp;</td><td class="form"><input type="submit" name="upload" value="{tr}upload{/tr}" /></td></tr>
 </table>
 </form>

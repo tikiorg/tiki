@@ -137,7 +137,7 @@
 {if $offset}<input type="hidden" name="offset" value="{$offset|escape}" />{/if}
 {if $sort_mode}<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />{/if}
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
-<input type="hidden" name="import" value="1">
+<input type="hidden" name="import" value="1" />
 <textarea name="rawmeat" cols="62" rows="32" wrap="soft">
 {section name=user loop=$channels}
 {if $tracker_info.useRatings ne 'y' or $channels[user].name ne "Rating"}

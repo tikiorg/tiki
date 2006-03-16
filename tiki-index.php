@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.155 2006-01-20 09:54:53 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.156 2006-03-16 13:43:09 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -175,6 +175,11 @@ if(empty($info) && !($user && $feature_wiki_userpage == 'y' && strcasecmp($featu
   die;
 }
 
+
+if (empty($info) && $user && $feature_wiki_userpage == 'y' && (strcasecmp($feature_wiki_userpage_prefix.$user, $page) == 0 || strcasecmp($feature_wiki_userpage_prefix, $page) == 0 )) {
+	header("Location: tiki-editpage.php?page=$feature_wiki_userpage_prefix$user");
+    	die;
+}
 
 /*Wiki SECURITY warning to optimizers : Although get_page_info is currently
 called even if permission is denied, we must still get page's real name

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-user_instances.php,v 1.12 2006-01-20 09:54:53 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-user_instances.php,v 1.13 2006-03-16 13:43:09 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -23,6 +23,9 @@ if ($tiki_p_use_workflow != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
+
+// When $user is null, it means an anonymous user is trying to use Galaxia
+$user = is_null($user) ? "Anonymous" : $user;
 
 $smarty->assign('tiki_p_abort_instance',$tiki_p_abort_instance);
 $smarty->assign('tiki_p_exception',$tiki_p_exception_instance);

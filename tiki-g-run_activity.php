@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-run_activity.php,v 1.15 2005-05-18 10:58:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-run_activity.php,v 1.16 2006-03-16 13:43:09 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -38,6 +38,9 @@ if (!isset($_REQUEST['activityId'])) {
 	die;
 }
 
+// When $user is null, it means an anonymous user is trying to use Galaxia
+$user = is_null($user) ? "Anonymous" : $user;
+
 $activity = $baseActivity->getActivity($_REQUEST['activityId']);
 $process->getProcess($activity->getProcessId());
 
@@ -73,18 +76,38 @@ foreach ($act_role_names as $role) {
 		$$name = 'n';
 	}
 }
+
 if (!isset($_REQUEST['__post'])) {
-$source = 'lib/Galaxia/processes/' . $process->getNormalizedName(). '/compiled/' . $activity->getNormalizedName(). '.php';
-$shared = 'lib/Galaxia/processes/' . $process->getNormalizedName(). '/code/shared.php';
+	// Existing variables here:
+	// $process, $activity, $instance (if not standalone)
 
-// Existing variables here:
-// $process, $activity, $instance (if not standalone)
-// Include the shared code
-include_once ($shared);
+	// Get paths for original and compiled activity code
+	$origcode = 'lib/Galaxia/processes/' . $process->getNormalizedName(). '/code/activities/' . $activity->getNormalizedName() . '.php';
+	$compcode = 'lib/Galaxia/processes/' . $process->getNormalizedName() . '/compiled/' . $activity->getNormalizedName(). '.php';
 
-// Now do whatever you have to do in the activity
-include_once ($source);
+	// Now get paths for original and compiled template
+	$origtmpl = 'lib/Galaxia/processes/' . $process->getNormalizedName(). '/code/templates/'  . $activity->getNormalizedName() . '.tpl';
+	$comptmpl = 'templates/' . $process->getNormalizedName() . '/' . $activity->getNormalizedName(). '.tpl';
+
+	// Check whether the activity code or template are newer than their compiled counterparts,
+	// i.e. check if the source code or template were changed; if so, we need to recompile
+	if ((filemtime($origcode) > filemtime($compcode)) or (filemtime($origtmpl) > filemtime($comptmpl))) {
+		// Recompile the activity
+		include_once ('lib/Galaxia/ProcessManager.php');
+		$activityManager->compile_activity($activity->getProcessId(), $activity->getActivityId());
+	}
+
+	// Get paths for shared code and activity
+	$shared = 'lib/Galaxia/processes/' . $process->getNormalizedName(). '/code/shared.php';
+	$source = $compcode;
+
+	// Include the shared code
+	include_once ($shared);
+
+	// Now do whatever you have to do in the activity
+	include_once ($source);
 }
+
 // Process comments
 if (isset($_REQUEST['__removecomment'])) {
 	$__comment = $instance->get_instance_comment($_REQUEST['__removecomment']);

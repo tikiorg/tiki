@@ -37,7 +37,7 @@
 <td valign="top" id="leftcolumn">
 <div>{section name=homeix loop=$left_modules}{$left_modules[homeix].data}{/section}
           {if $feature_left_column eq 'user'}
-            <img src="images/none.gif" width="100%" height="0px">
+            <img src="images/none.gif" width="100%" height="0" />
             {literal}
               <script language="Javascript" type="text/javascript">
                 setfolderstate("leftcolumn");
@@ -56,7 +56,7 @@
 <td valign="top" id="rightcolumn">
 <div>{section name=homeix loop=$right_modules}{$right_modules[homeix].data}{/section}
           {if $feature_right_column eq 'user'}
-            <img src="images/none.gif" width="100%" height="0px">
+            <img src="images/none.gif" width="100%" height="0" />
             {literal}
               <script language="Javascript" type="text/javascript"> 
                 setfolderstate("rightcolumn");

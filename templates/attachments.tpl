@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.26 2005-11-07 21:42:30 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.27 2006-03-16 13:43:12 sylvieg Exp $ *}
 
 <a name="attachments"></a>
 {* Don't even generate DIV if no any needed rights *}
@@ -42,7 +42,7 @@
  <a class="tablename" href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}&amp;page={$page|escape:"url"}">{$atts[ix].filename}</a>
  </td><td class="{cycle advance=false}">
  {if $tiki_p_wiki_admin_attachments eq 'y' or ($user and ($atts[ix].user eq $user))}
-  <a title="{tr}delete{/tr}" class="link" href="tiki-index.php?page={$page|escape:"url"}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}"><img src="img/icons2/delete.gif" border="0" alt='{tr}Remove{/tr}'></a>&nbsp;&nbsp;
+  <a title="{tr}delete{/tr}" class="link" href="tiki-index.php?page={$page|escape:"url"}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}"><img src="img/icons2/delete.gif" border="0" alt='{tr}Remove{/tr}' /></a>&nbsp;&nbsp;
  {/if}
   <a title="{tr}view{/tr}" href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}"><img src="img/icons/edit.gif" border="0" alt="{tr}View{/tr}" /></a>&nbsp;&nbsp;
   <a title="{tr}download{/tr}" href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}&amp;download=y"><img src="img/icons2/upload.gif" border="0" alt="{tr}Download{/tr}" /></a>

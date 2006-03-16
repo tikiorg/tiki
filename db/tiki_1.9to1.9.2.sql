@@ -177,3 +177,7 @@ UPDATE tiki_menu_options SET perm="tiki_p_submit_link" WHERE url="tiki-directory
 # fixed a missing alter
 ALTER TABLE sessions ADD expireref varchar(64) after expiry;
 
+# fixed reserved word use in mysql 
+alter table `tiki_articles` change `reads` `nbreads` int(14) default NULL ;
+alter table `tiki_submissions` change `reads` `nbreads` int(14) default NULL ;
+

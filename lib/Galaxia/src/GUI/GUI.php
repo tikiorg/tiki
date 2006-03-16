@@ -27,12 +27,14 @@ class GUI extends Base {
 
     $mid = "where gp.isActive=? and gur.user=?";
     $bindvars = array('y',$user);
+
     if($find) {
       $findesc = '%'.$find.'%';
       $mid .= " and ((gp.name like ?) or (gp.description like ?))";
       $bindvars[] = $findesc;
       $bindvars[] = $findesc;
     }
+
     if($where) {
       $mid.= " and ($where) ";
     }
@@ -85,65 +87,71 @@ class GUI extends Base {
   }
 
 
-  function gui_list_user_activities($user,$offset,$maxRecords,$sort_mode,$find,$where='')
+  function gui_list_user_activities($user, $offset, $maxRecords, $sort_mode, $find, $where = '')
   {
     // FIXME: this doesn't support multiple sort criteria
     //$sort_mode = $this->convert_sortmode($sort_mode);
-    $sort_mode = str_replace("_"," ",$sort_mode);
 
-    $mid = "where gp.isActive=? and gur.user=?";
-    $bindvars = array('y',$user);
-    if($find) {
-      $findesc = '%'.$find.'%';
-      $mid .= " and ((ga.name like ?) or (ga.description like ?))";
-      $bindvars[] = $findesc;
-      $bindvars[] = $findesc;
+	// FIXME: If the user has more than 10 available activities, MySQL may return wrong result sets,
+	// so we fix $sort_mode. See case #2 at http://dev.mysql.com/doc/refman/4.1/en/limit-optimization.html
+	//$sort_mode  = str_replace("_", " ", $sort_mode);
+	$sort_mode  = "ga.flowNum ASC, ga.activityId ASC";
+
+    $mid = " AND gp.isActive=? and gur.user=? ";
+    $bindvars = array('y', $user);
+
+    if ($find) {
+		$findesc = '%' . $find . '%';
+		$mid .= " AND ((ga.name LIKE ?) OR (ga.description LIKE ?))";
+		$bindvars[] = $findesc;
+		$bindvars[] = $findesc;
     }
-    if($where) {
-      $mid.= " and ($where) ";
+
+    if ($where) {
+		$mid .= " AND ($where) ";
     }
     
-    $query = "select distinct(ga.activityId),                     
-                     ga.name,
-                     ga.type,
-                     gp.name as procname, 
-                     ga.isInteractive,
-                     ga.isAutoRouted,
-                     ga.activityId,
-                     gp.version as version,
-                     gp.pId,
-                     gp.isActive
-              from ".GALAXIA_TABLE_PREFIX."processes gp
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."activities ga ON gp.pId=ga.pId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gar.activityId=ga.activityId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."roles gr ON gr.roleId=gar.roleId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gur.roleId=gr.roleId
-              $mid order by $sort_mode";
-    $query_cant = "select count(distinct(ga.activityId))
-              from ".GALAXIA_TABLE_PREFIX."processes gp
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."activities ga ON gp.pId=ga.pId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gar.activityId=ga.activityId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."roles gr ON gr.roleId=gar.roleId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gur.roleId=gr.roleId
-              $mid";
-    $result = $this->query($query,$bindvars,$maxRecords,$offset);
-    $cant = $this->getOne($query_cant,$bindvars);
+    $query = "SELECT DISTINCT(ga.activityId), ga.name, ga.type, gp.name AS procname, ga.isInteractive,
+                     ga.isAutoRouted, gp.version AS version, gp.pId, gp.isActive
+              FROM " . GALAXIA_TABLE_PREFIX . "activities ga, " . GALAXIA_TABLE_PREFIX . "processes gp, "
+				. GALAXIA_TABLE_PREFIX . "activity_roles gar, " . GALAXIA_TABLE_PREFIX . "roles gr, "
+				. GALAXIA_TABLE_PREFIX . "user_roles gur
+			  WHERE gp.pId=ga.pId AND 
+                    gar.activityId=ga.activityId AND 
+                    gr.roleId=gar.roleId AND 
+                    gur.roleId=gr.roleId 
+              $mid ORDER BY $sort_mode";
+
+    $query_cant = "SELECT COUNT(DISTINCT(ga.activityId))
+              FROM " . GALAXIA_TABLE_PREFIX . "processes gp
+                INNER JOIN " . GALAXIA_TABLE_PREFIX . "activities ga ON gp.pId=ga.pId
+                INNER JOIN " . GALAXIA_TABLE_PREFIX . "activity_roles gar ON gar.activityId=ga.activityId
+                INNER JOIN " . GALAXIA_TABLE_PREFIX . "roles gr ON gr.roleId=gar.roleId
+                INNER JOIN " . GALAXIA_TABLE_PREFIX . "user_roles gur ON gur.roleId=gr.roleId
+              $mid ORDER BY $sort_mode";
+
+	$result = $this->query($query, $bindvars, $maxRecords, $offset);
+    $cant = $this->getOne($query_cant, $bindvars);
     $ret = Array();
-    while($res = $result->fetchRow()) {
-      // Get instances per activity
-      $res['instances']=$this->getOne("select count(distinct(gi.instanceId))
-              from ".GALAXIA_TABLE_PREFIX."instances gi
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."instance_activities gia ON gi.instanceId=gia.instanceId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gia.activityId=gar.activityId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gar.roleId=gur.roleId
-              where gia.activityId=? and gia.status <> ? and ((gia.user=?) or (gia.user=? and gur.user=?))",
-              array($res['activityId'],'completed',$user,'*',$user));
-      $ret[] = $res;
+
+    while ($res = $result->fetchRow()) {
+		// Get instances per activity
+		$query = "SELECT COUNT(DISTINCT(gi.instanceId))
+              FROM " . GALAXIA_TABLE_PREFIX . "instances gi
+                INNER JOIN " . GALAXIA_TABLE_PREFIX . "instance_activities gia ON gi.instanceId=gia.instanceId
+                INNER JOIN " . GALAXIA_TABLE_PREFIX . "activity_roles gar ON gia.activityId=gar.activityId
+                INNER JOIN " . GALAXIA_TABLE_PREFIX . "user_roles gur ON gar.roleId=gur.roleId
+              WHERE gia.activityId=? AND gia.status <> ? AND ((gia.user=?) OR (gia.user=? AND gur.user=?))";
+
+		$res['instances'] = $this->getOne($query, array($res['activityId'], 'completed', $user, '*', $user));
+		$ret[] = $res;
     }
+
     $retval = Array();
     $retval["data"] = $ret;
     $retval["cant"] = $cant;
-    return $retval;
+
+	return $retval;
   }
 
   function gui_list_user_instances($user,$offset,$maxRecords,$sort_mode,$find,$where='')

@@ -42,7 +42,7 @@ function disableOthers(all) {
 {cycle print=false values="even,odd"}
 {foreach key=k item=it from=$imgstring}
 <tr class="{cycle}">
-<td><input type="checkbox" name="imgs[]" value="{$it[0]}" id="box_{$k}"></td>
+<td><input type="checkbox" name="imgs[]" value="{$it[0]}" id="box_{$k}" /></td>
 <td><label for="box_{$k}">{$it[0]}</label></td>
 <td>{$it[1]}</td>
 <td>{$it[2]}</td>
@@ -51,13 +51,13 @@ function disableOthers(all) {
 {/foreach}
 </table>
 <br />
-&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="removeExt" value="true" id="removeExt"> {tr}remove file extension from image name{/tr}<br />
+&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="removeExt" value="true" id="removeExt" /> {tr}remove file extension from image name{/tr}<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {tr}eg. from "digicam0001.jpg" then name digicam0001 will be used for the name field{/tr}<br />
-&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="subdirToSubgal" value="true" id="subdirToSubgal"> {tr}convert sub directories to sub galleries{/tr}<br />
+&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="subdirToSubgal" value="true" id="subdirToSubgal" /> {tr}convert sub directories to sub galleries{/tr}<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {tr}eg. from "misc/screenshots/digicam0001.jpg" a gallery named screenshots will be created{/tr}<br />
 <br />
 {if $permAddGallery eq "y" || $user ne "admin"}
-&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="subToDesc" value="true" id="subToDesc"> {tr}use sub directory names as description{/tr}<br />
+&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="subToDesc" value="true" id="subToDesc" /> {tr}use sub directory names as description{/tr}<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {tr}eg. from "misc/screenshots/digicam0001.jpg" a description misc/screenshots will be created{/tr}<br />
 <br />
 {/if}

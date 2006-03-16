@@ -372,7 +372,7 @@ class ProcessMonitor extends Base {
       $mid.=" and (`properties` like $findesc)";
     }
 
-    $query  = "SELECT `itemId`, DATEDIFF(FROM_UNIXTIME(gw.`ended`), FROM_UNIXTIME(gw.`started`)) AS duration, ";
+    $query  = "SELECT `itemId`, (TO_DAYS(FROM_UNIXTIME(gw.`ended`)) - TO_DAYS(FROM_UNIXTIME(gw.`started`))) AS duration, ";
 	$query .= "ga.`isInteractive`, ga.`type`, gp.`name` AS procname, gp.`version`, ga.`name` AS actname, ";
 	$query .= "ga.`activityId`, gw.`instanceId`, gi.`name` AS iname, `orderId`, gw.`properties`, gw.`started`, ";
 	$query .= "gi.`status`, gw.`ended`, `user` FROM ";

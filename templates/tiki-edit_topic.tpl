@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_topic.tpl,v 1.7 2005-05-18 11:03:16 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_topic.tpl,v 1.8 2006-03-16 13:43:12 sylvieg Exp $ *}
 
 <h1><a  class="pagetitle" href="tiki-admin_topics.php">{tr}Admin Topics{/tr}</a>
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Articles" target="tikihelp" class="tikihelp" title="{tr}Admin Topics{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'>
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' />
 </a>{/if}
 </h1>
 
@@ -20,8 +20,8 @@
 </tr>
 <tr><td class="formcolor">{tr}Upload Image{/tr}</td>
     <td class="formcolor">
-      <input type="hidden" name="MAX_FILE_SIZE" value="1000000">
-      <input name="userfile1" type="file">
+      <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
+      <input name="userfile1" type="file" />
     </td>
 </tr>
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="edittopic" value="{tr}edit{/tr}" /></td></tr>

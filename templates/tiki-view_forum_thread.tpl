@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.71 2006-03-06 14:31:17 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.72 2006-03-16 13:43:12 sylvieg Exp $ *}
 
 <h1><a href="tiki-view_forum.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forum_info.forumId}" class="pagetitle">{tr}Forum{/tr}: {$forum_info.name}</a></h1>
 
@@ -86,7 +86,7 @@ a moderator approves it.{/tr}</small>
   {if count($thread_info.attachments) > 0}
 	{section name=ix loop=$thread_info.attachments}
 		<a class="link" href="tiki-download_forum_attachment.php?attId={$thread_info.attachments[ix].attId}">
-		<img src="img/icons/attachment.gif" border="0" width="10" height= "13" alt='{tr}attachment{/tr}'>
+		<img src="img/icons/attachment.gif" border="0" width="10" height= "13" alt='{tr}attachment{/tr}' />
 		{$thread_info.attachments[ix].filename} ({$thread_info.attachments[ix].filesize|kbsize})</a>
 		{if $tiki_p_admin_forum eq 'y'}
 			<a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_find_param}{$topics_threshold_param}&amp;comments_offset={$smarty.request.topics_offset}{$comments_sort_mode_param}&amp;comments_threshold={$smarty.request.topics_threshold}{$comments_find_param}&amp;forumId={$forum_info.forumId}{$comments_maxComments_param}&amp;comments_parentId={$comments_parentId}&amp;remove_attachment={$thread_info.attachments[ix].attId}"><img src='img/icons2/delete.gif' border='0' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' /></a>					
@@ -107,9 +107,9 @@ a moderator approves it.{/tr}</small>
 		{/if}
 	    {if $thread_info.userName and $forum_info.ui_online eq 'y'}
 	    	{if $thread_info.user_online eq 'y'}
-	  			<img src="img/icons/online.gif" border="0" width="16" height="16" alt='{tr}user online{/tr}' title='{tr}user online{/tr}'>
+	  			<img src="img/icons/online.gif" border="0" width="16" height="16" alt='{tr}user online{/tr}' title='{tr}user online{/tr}' />
 	  		{elseif $thread_info.user_online eq 'n'}
-	  			<img src="img/icons/offline.gif" border="0" width="16" height="16" alt='{tr}user offline{/tr}' title='{tr}user offline{/tr}'>
+	  			<img src="img/icons/offline.gif" border="0" width="16" height="16" alt='{tr}user offline{/tr}' title='{tr}user offline{/tr}' />
 	  		{/if}
 	  	{/if}
   </td>

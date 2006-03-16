@@ -10,12 +10,12 @@
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Articles" target="tikihelp" class="tikihelp" title="{tr}Help on Articles{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-edit_submission.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}edit submissions tpl{/tr}">
-<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}'></a>
+<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}' /></a>
 {/if}</h1>
 
 <a class="linkbut" href="tiki-list_submissions.php">{tr}list submissions{/tr}</a>
@@ -84,8 +84,8 @@
 <option value="0.5" {if $rating eq "0.5"}selected="selected"{/if}>0.5</option>
 </select>
 </td></tr>
-<tr id='show_image_1' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Own Image{/tr} *</td><td><input type="hidden" name="MAX_FILE_SIZE" value="1000000">
-<input name="userfile1" type="file"></td></tr>
+<tr id='show_image_1' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Own Image{/tr} *</td><td><input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
+<input name="userfile1" type="file" /></td></tr>
 {if $hasImage eq 'y'}
   <tr class="formcolor"><td>{tr}Own Image{/tr}</td><td>{$image_name} [{$image_type}] ({$image_size} bytes)</td></tr>
   {if $tempimg ne 'n'}

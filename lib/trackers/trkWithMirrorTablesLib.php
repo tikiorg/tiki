@@ -818,6 +818,7 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 
 
 				$mail_data = $smarty->fetch('mail/tracker_changed_notification.tpl');
+				$mail_subject = $smarty->fetch('mail/tracker_changed_notification_subject.tpl');
 
 				include_once ('lib/mail/maillib.php');
 
@@ -825,7 +826,7 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 					//var_dump($email);
 					//var_dump($mail_data);
 					if ($email!='') {
-						mail($email, encode_headers('['.$trackerName.'] '.tra('Tracker was modified at '). $_SERVER["SERVER_NAME"], 'utf-8'), $mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8");
+						mail($email, encode_headers('['.$trackerName.'] '.$mail_subject, 'utf-8'), $mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8");
 					}
 				}
 			} else {
@@ -835,9 +836,10 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 
 			    $user_email = $userlib->get_user_email($user);
 			    $my_sender = $user_email;
-
+			    $smarty->assign('mail_data', $the_data);
+			    $mail_subject = $smarty->fetch('mail/tracker_changed_notification_subject.tpl');
 			    // Default subject
-			    $subject='['.$trackerName.'] '.tra('Tracker was modified at '). $_SERVER["SERVER_NAME"];
+			    $subject='['.$trackerName.'] '.$mail_subject. $_SERVER["SERVER_NAME"];
 
 			    // Try to find a Subject in $the_data
 			    $subject_test = preg_match( '/^  Subject = .*$/m', $the_data, $matches );

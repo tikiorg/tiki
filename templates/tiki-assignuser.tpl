@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.27 2006-02-17 15:10:47 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.28 2006-03-16 13:43:12 sylvieg Exp $ *}
 
 <h1><a href="tiki-assignuser.php?assign_user={$assign_user|escape:url}" class="pagetitle">{tr}Assign user{/tr} {$assign_user} {tr}to groups{/tr}</a></h1>
 <a href="tiki-adminusers.php" class="linkbut">{tr}Admin users{/tr}</a>
@@ -28,7 +28,7 @@
 <option value="{$name}" {if $name eq $user_info.default_group}selected="selected"{/if}>{$name}</option>
 {/foreach}
 </select>
-<input type="hidden" value="{$user_info.login}" name="login">
+<input type="hidden" value="{$user_info.login}" name="login" />
 <input type="submit" value="{tr}set{/tr}" name="set_default" />
 </form>
 </td></tr>

@@ -13,8 +13,8 @@
 {/if}
 <img src="show_image.php?id={$imageId}" alt="{tr}image{/tr}" /><br /><br />
 <form enctype="multipart/form-data" action="tiki-edit_image.php" method="post">
-<input type="hidden" name="edit" value="{$imageId|escape}">
-<input type="hidden" name="galleryId" value="{$galleryId|escape}">
+<input type="hidden" name="edit" value="{$imageId|escape}" />
+<input type="hidden" name="galleryId" value="{$galleryId|escape}" />
 <table class="normal">
 <tr><td class="formcolor">{tr}Image Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Image Description{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="description">{$description|escape}</textarea></tr></td>

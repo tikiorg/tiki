@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_upload.tpl,v 1.12 2005-05-18 11:03:27 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_upload.tpl,v 1.13 2006-03-16 13:43:12 sylvieg Exp $ *}
 
 <a class="pagetitle" href="tiki-map_upload.php">Layer Management</a><br /><br />
 <a class="link" href="tiki-map_upload.php?dir={$dir}">
@@ -79,33 +79,33 @@
 <br />
 {if $tiki_p_map_create eq 'y'}
 <form enctype="multipart/form-data" action="tiki-map_upload.php" method="post">
-<input type="hidden" name="dir" value="{$dir}">
-<input type="hidden" name="upload" value="true">
+<input type="hidden" name="dir" value="{$dir}" />
+<input type="hidden" name="upload" value="true" />
 {tr}Upload From Disk:{/tr}<br />
-<input name="userfile1" type="file">
-<input name="userfile2" type="file">
+<input name="userfile1" type="file" />
+<input name="userfile2" type="file" />
 <br />
-<input name="userfile3" type="file">
-<input name="userfile4" type="file">
+<input name="userfile3" type="file" />
+<input name="userfile4" type="file" />
 <br />
-<input name="userfile5" type="file">
-<input name="userfile6" type="file">
+<input name="userfile5" type="file" />
+<input name="userfile6" type="file" />
 <br />
 <input type="submit" value="{tr}Upload Files{/tr}"> ({$max_file_size}{tr}Bytes maximum{/tr})
 </form>
 <br />
 <form action="tiki-map_upload.php" method="get">
-<input type="hidden" name="dir" value="{$dir}">
-<input type="hidden" name="action" value="createdir">
-{tr}Create Directory:{/tr} <input name="directory" type="text">
+<input type="hidden" name="dir" value="{$dir}" />
+<input type="hidden" name="action" value="createdir" />
+{tr}Create Directory:{/tr} <input name="directory" type="text" />
 <input type="submit" value="{tr}Create{/tr}">
 </form>
 <br />
 <form action="tiki-map_upload.php" method="get">
-<input type="hidden" name="dir" value="{$dir}">
-<input type="hidden" name="action" value="createindex">
-{tr}index file (.shp):{/tr} <input name="indexfile" type="text">
-{tr}files to index (regexp):{/tr} <input name="filestoindex" type="text">
+<input type="hidden" name="dir" value="{$dir}" />
+<input type="hidden" name="action" value="createindex" />
+{tr}index file (.shp):{/tr} <input name="indexfile" type="text" />
+{tr}files to index (regexp):{/tr} <input name="filestoindex" type="text" />
 <input type="submit" value="{tr}Create{/tr}">
 </form>
 {/if}

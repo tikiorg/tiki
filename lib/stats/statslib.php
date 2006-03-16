@@ -205,7 +205,7 @@ class StatsLib extends TikiLib {
 		$stats = array();
 
 		$stats["articles"] = $this->getOne("select count(*) from `tiki_articles`",array());
-		$stats["reads"] = $this->getOne("select sum(`reads`) from `tiki_articles`",array());
+		$stats["reads"] = $this->getOne("select sum(`nbreads`) from `tiki_articles`",array());
 		$stats["rpa"] = ($stats["articles"] ? $stats["reads"] / $stats["articles"] : 0);
 		$stats["size"] = $this->getOne("select sum(`size`) from `tiki_articles`",array());
 		$stats["bpa"] = ($stats["articles"] ? $stats["size"] / $stats["articles"] : 0);

@@ -2,7 +2,7 @@
   
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Trackers" target="tikihelp" class="tikihelp" title="{tr}Trackers{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_trackers.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin Trackers tpl{/tr}">
@@ -212,7 +212,7 @@ for a tracker and they must be valid in SQL{/tr}</em>
 
 <form action="tiki-admin_trackers.php" method="post">
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
-<input type="hidden" name="import" value="1">
+<input type="hidden" name="import" value="1" />
 <textarea name="rawmeat" cols="62" rows="32" wrap="soft">
 {if $trackerId}
 [TRACKER]

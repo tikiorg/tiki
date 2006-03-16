@@ -61,8 +61,8 @@ or use the image URL to include images using the WYSIWYG editor. {/tr}</small></
 {if $postId > 0}
 	<tr><td class="editblogform">{tr}Upload image for this post{/tr}</td>
 	<td class="editblogform">
-	<input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
-	<input name="userfile1" type="file">
+	<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
+	<input name="userfile1" type="file" />
 	</td></tr>
 	{if count($post_images) > 0}
 		<tr><td class="editblogform">{tr}Images{/tr}</td>

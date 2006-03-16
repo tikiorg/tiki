@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.22 2006-01-18 14:45:47 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.23 2006-03-16 13:43:12 sylvieg Exp $ *}
 {if $feature_help eq "y"}
 <div class="rbox" style="margin-top: 10px;">
 <div class="rbox-title" style="background-color: #eeee99; font-weight : bold; display : inline; padding : 0 10px;">{tr}Tip{/tr}</div>  
@@ -69,7 +69,7 @@
 <tr class="form"><td><label>
 {tr}Remove images in the system gallery not being used in Wiki pages, articles or blog posts{/tr}
 </label>
-<input type="hidden" name="rmvorphimg" value="1"></td><!--/tr>
+<input type="hidden" name="rmvorphimg" value="1" /></td><!--/tr>
 <tr><td colspan="2" class="button"--><td><input type="submit" name="button" value="{tr}Remove{/tr}" /></td></tr>
 </table>                 
 </form>

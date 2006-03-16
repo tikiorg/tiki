@@ -24,7 +24,7 @@
 {/section}
 </td></tr></table>
 </td>
-<td class="vertline"><img src="styles/smarty/spacer.gif" width="2" height="2" border="0" alt="" ></td>
+<td class="vertline"><img src="styles/smarty/spacer.gif" width="2" height="2" border="0" alt="" /></td>
 {/if}
 
 <td>
@@ -39,7 +39,7 @@
 </td>
 
 {if $feature_right_column ne 'n'  and count($right_modules)}
-<td class="vertline"><img src="styles/smarty/spacer.gif" width="2" height="2" border="0" alt="" ></td>
+<td class="vertline"><img src="styles/smarty/spacer.gif" width="2" height="2" border="0" alt="" /></td>
 <td bgcolor="#f0ead8" width="170" >
 <table width="170" cellpadding="4" cellspacing="0">
 <tr valign="top">

@@ -48,12 +48,12 @@
 {if $feature_friends eq 'y' && $user ne $userwatch && $user}
   {if $friend}
   <tr><td class="form">&nbsp;</td><td class="form">
-    <img src="img/icons/ico_friend.gif" width="7" height="10"> {tr}This user is your friend{/tr}
-  </td></tr>
+    <img src="img/icons/ico_friend.gif" width="7" height="10" /> {tr}This user is your friend{/tr}
+  </td></tr>  
   {else}
   <tr><td class="form">&nbsp;</td><td class="form">
-    <img src="img/icons/ico_not_friend.png"> <a class="link" href="tiki-friends.php?request_friendship={$userinfo.login}">{tr}Request friendship from this user{/tr}</a>
-  </td></tr>
+    <img src="img/icons/ico_not_friend.png" /> <a class="link" href="tiki-friends.php?request_friendship={$userinfo.login}">{tr}Request friendship from this user{/tr}</a>
+  </td></tr>  
   {/if}
 {/if}
   </table>
