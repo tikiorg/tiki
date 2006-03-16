@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.66 2006-03-06 14:31:17 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.67 2006-03-16 15:58:31 sylvieg Exp $ *}
 
 {if $forum_mode eq 'y'}
     <tr><td>
@@ -179,6 +179,10 @@
     {/if}
     </h2>
 	</div>
+
+{if $msgError}
+	<a name="msgError"></a><div class="simplebox highlight">{$msgError}</div>
+{/if}
 
   {if $comment_preview eq 'y'}
   <b>{tr}Preview{/tr}</b>

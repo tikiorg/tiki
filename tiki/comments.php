@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.62 2006-03-10 15:24:02 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.63 2006-03-16 15:58:31 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -336,16 +336,19 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 	    }
 
 	} else {
-	    $msg = '';
+	    $msgError = '';
 	    if (empty($_REQUEST["comments_title"]) || empty($_REQUEST["comments_data"])) {
-			$msg = tra("Missing title or body when trying to post a comment");
+			$msgError = tra("Missing title or body when trying to post a comment");
 	    }
 	    if ($feature_contribution == 'y' && empty($_REQUEST['contributions'])) {
-			if ($msg)
-				$msg .= '<br />';
-			$msg .= tra("A contribution is mandatory");
+			if ($msgError)
+				$msgError .= '<br />';
+			$msgError .= tra("A contribution is mandatory");
 		}
-		$access->display_error(basename(__FILE__), $msg);
+		if ($msgError)
+			$msgError = tra('Your post has not been posted').'<br />'.$msgError;
+		$smarty->assign('msgError', $msgError);
+		//$access->display_error(basename(__FILE__), $msgError);
 	}
     }
 }
@@ -427,14 +430,15 @@ if ($_REQUEST["comments_threadId"] > 0) {
 
 $smarty->assign('comment_preview', 'n');
 
-if (isset($_REQUEST["comments_previewComment"])) {
+if (isset($_REQUEST["comments_previewComment"]) || isset($msgError)) {
     $smarty->assign('comments_preview_title', $_REQUEST["comments_title"]);
 
     $smarty->assign('comments_preview_data', $commentslib->parse_comment_data(strip_tags($_REQUEST["comments_data"])));
     $smarty->assign('comment_title', $_REQUEST["comments_title"]);
     $smarty->assign('comment_rating', $_REQUEST["comment_rating"]);		
     $smarty->assign('comment_data', $_REQUEST["comments_data"]);
-    $smarty->assign('comment_preview', 'y');
+    if (isset($_REQUEST["comments_previewComment"]))
+        $smarty->assign('comment_preview', 'y');
 }
 
 // Check for settings
