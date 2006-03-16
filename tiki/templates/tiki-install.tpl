@@ -102,7 +102,7 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 			
 <tr class="formcolor">
 <td>&nbsp;</td>
-<td><input type="hidden" name="resetdb" value="{$resetdb}">
+<td><input type="hidden" name="resetdb" value="{$resetdb}" />
 <input type="submit" name="dbinfo" /></td>
 <td>&nbsp;</td>
 </tr>

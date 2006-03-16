@@ -24,13 +24,13 @@
 *}
 
 <form enctype="multipart/form-data" method="post" action="tiki-calendar.php" id="editcalitem" name="formAddItem" style="display:block;">
-<input type="hidden" name="editmode" value="in">
+<input type="hidden" name="editmode" value="in" />
 {if $tiki_p_change_events and $calitemId}
-<input type="hidden" name="calitemId" value="{$calitemId}">
-<input type="hidden" name="created" value="{$created}">
-<input type="hidden" name="lastModif" value="{$lastModif}">
-<input type="hidden" name="lastUser" value="{$lastUser}">
-<input type="hidden" name="calname" value="{$calname}">
+<input type="hidden" name="calitemId" value="{$calitemId}" />
+<input type="hidden" name="created" value="{$created}" />
+<input type="hidden" name="lastModif" value="{$lastModif}" />
+<input type="hidden" name="lastUser" value="{$lastUser}" />
+<input type="hidden" name="calname" value="{$calname}" />
 {/if}
 
 <table class="normal">
@@ -54,7 +54,7 @@
 {/section}
 </select>
 {tr}or create a new category{/tr} 
-<input type="text" name="newcat" value="">
+<input type="text" name="newcat" value="" />
 </td></tr>
 {/if}
 
@@ -68,18 +68,18 @@
 {/section}
 </select>
 {tr}or create a new location{/tr} 
-<input type="text" name="newloc" value="">
+<input type="text" name="newloc" value="" />
 </td></tr>
 {/if}
 
 {if $customparticipants eq 'y'}
 <tr><td class="formcolor">{tr}Organized by{/tr}</td><td class="formcolor">
-<input type="text" name="organizers" value="{$organizers|escape}" id="organizers">
+<input type="text" name="organizers" value="{$organizers|escape}" id="organizers" />
 {tr}comma separated usernames{/tr}
 </td></tr>
 
 <tr><td class="formcolor">{tr}Participants{/tr}</td><td class="formcolor">
-<input type="text" name="participants" value="{$participants|escape}" id="participants">
+<input type="text" name="participants" value="{$participants|escape}" id="participants" />
 {tr}comma separated username:role{/tr} 
 {tr}with roles{/tr} {tr}Chair{/tr}:0, {tr}Required{/tr}:1, {tr}Optional{/tr}:2, {tr}None{/tr}:3
 </td></tr>
@@ -106,8 +106,8 @@ timeFormat : {$timeFormat12_24}
 {else}
 {if $feature_cal_manual_time eq 'y'}
 {if $start_freeform_error eq 'y'}<span class="attention">{tr}Syntax error{/tr}</span><br />{/if}
-<input type="text" name="start_freeform" value="{$start_freeform}">
-<a {popup text="{tr}Format: mm/dd/yyyy hh:mm<br />...{/tr} {tr}See strtotime php function{/tr}"}><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>
+<input type="text" name="start_freeform" value="{$start_freeform}" />
+<a {popup text="{tr}Format: mm/dd/yyyy hh:mm<br />...{/tr} {tr}See strtotime php function{/tr}"}><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
 {tr}or{/tr}
 {/if}
 {html_select_date time=$start prefix="start_" end_year="+4" field_order=DMY}
@@ -136,8 +136,8 @@ timeFormat : {$timeFormat12_24}
 {else}
 {if $feature_cal_manual_time eq 'y'}
 {if $end_freeform_error eq 'y'}<span class="attention">{tr}Syntax error{/tr}</span><br />{/if}
-<input type="text" name="end_freeform" value="{$end_freeform}">
-<a {popup text="{tr}Format: mm/dd/yyy hh:mm<br />...{/tr} {tr}See strtotime php function{/tr}"}><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>
+<input type="text" name="end_freeform" value="{$end_freeform}" />
+<a {popup text="{tr}Format: mm/dd/yyy hh:mm<br />...{/tr} {tr}See strtotime php function{/tr}"}><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
  {tr}or{/tr}
 {/if}
 {html_select_date time=$end prefix="end_" end_year="+4" field_order=DMY}
@@ -213,7 +213,7 @@ timeFormat : {$timeFormat12_24}
 {/if}
 
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor">
-<span  style="float:right;"><a href="tiki-calendar.php?calitemId={$calitemId}&amp;delete=1"  title="{tr}remove{/tr}" /><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt="{tr}remove{/tr}" /></a></span>
+<span  style="float:right;"><a href="tiki-calendar.php?calitemId={$calitemId}&amp;delete=1"  title="{tr}remove{/tr}"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt="{tr}remove{/tr}" /></a></span>
 <input type="submit" name="save" value="{tr}save{/tr}" />
 {if $calitemId and $tiki_p_change_events}
 <input type="submit" name="copy" value="{tr}duplicate{/tr}" />

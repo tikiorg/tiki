@@ -7,7 +7,7 @@
 
 {if $feature_view_tpl eq 'y'}
   <a href="tiki-edit_templates.php?template=tiki-admin_mailin.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin mailin template{/tr}">
-  <img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit{/tr}'></a>
+  <img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>
 {/if}</h1>
 
 <table class="normal">
@@ -38,7 +38,7 @@
 {/if}
 <br />
 
-<a name="add" /><h2>{if $accountId eq 0}{tr}Add new Mail-in account{/tr}{else}{tr}Edit Mail-in account{/tr}: <i>{$info.account}</i>{/if}</h2>
+<a name="add" ></a><h2>{if $accountId eq 0}{tr}Add new Mail-in account{/tr}{else}{tr}Edit Mail-in account{/tr}: <i>{$info.account}</i>{/if}</h2>
 <form action="tiki-admin_mailin.php" method="post">
   <input type="hidden" name="accountId" value="{$accountId|escape}" />
   <table class="normal">
@@ -148,7 +148,7 @@
 </form>
 
 
-<a name="check" /><h2><a href="tiki-mailin.php#check">{tr}Check Mail-in accounts{/tr}</a></h2>
+<a name="check" ></a><h2><a href="tiki-mailin.php#check">{tr}Check Mail-in accounts{/tr}</a></h2>
 <form action="tiki-admin_mailin.php" method="post">
   <table class="normal">
     <tr class="formcolor">

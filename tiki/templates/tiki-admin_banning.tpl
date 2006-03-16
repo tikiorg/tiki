@@ -2,11 +2,11 @@
 
       {if $feature_help eq 'y'}
 <a href="{$helpurl}Banning+System" target="tikihelp" class="tikihelp" title="{tr}Help on Banning System{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_banning.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin banning tpl{/tr}">
-<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit template{/tr}'></a>{/if}</h1>
+<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>{/if}</h1>
 
 <h2>{tr}Add or edit a rule{/tr}</h2>
 <form action="tiki-admin_banning.php" method="post">
@@ -139,7 +139,7 @@
 </td>
 <td class="{cycle}">
 &nbsp;&nbsp;<a title="{tr}delete{/tr}" href="tiki-admin_banning.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$items[user].banId}" class="link" 
-><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}'></a>&nbsp;&nbsp;
+><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>&nbsp;&nbsp;
 </td>
 </tr>
 {sectionelse}
@@ -151,18 +151,18 @@
 <div class="mini">
 <div align="center">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-admin_banning.php?offset={$prev_offset}&amp;find={$find}">{tr}prev{/tr}</a>] 
+[<a class="prevnext" href="tiki-admin_banning.php?offset={$prev_offset}&amp;find={$find}">{tr}prev{/tr}</a>]
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
- [<a class="prevnext" href="tiki-admin_banning.php?offset={$next_offset}&amp;find={$find}">{tr}next{/tr}</a>]
+[<a class="prevnext" href="tiki-admin_banning.php?offset={$next_offset}&amp;find={$find}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
-<a class="prevnext" href="tiki-admin_banning.php offset=$selector_offset">
-{$smarty.section.foo.index_next}</a> 
+<a class="prevnext" href="tiki-admin_banning.php?offset={$selector_offset}&amp;find={$find}">
+{$smarty.section.foo.index_next}</a>
 {/section}
 {/if}
 </div>

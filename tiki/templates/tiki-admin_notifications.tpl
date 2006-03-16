@@ -2,11 +2,11 @@
 
       {if $feature_help eq 'y'}
 <a href="{$helpurl}EmailNotificationsAdmin" target="tikihelp" class="tikihelp" title="{tr}admin Email Notifications{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_notifications.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin notifications template{/tr}">
-<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit{/tr}'></a>{/if}</h1>
+<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>{/if}</h1>
 
 <h2>{tr}Add notification{/tr}</h2>
 <table class="normal">

@@ -6,13 +6,13 @@
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}GalaxiaAdminProcesses" target="tikihelp" class="tikihelp" title="{tr}Galaxia Admin Processes{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
 
 
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-g-admin_processes.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Galaxia Admin Processes tpl{/tr}">
-<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}
 
 </h1>
 {include file=tiki-g-monitor_bar.tpl}
@@ -111,7 +111,11 @@
 {section name=ix loop=$items}
 <tr>
 	<td style="text-align:center;" class="{cycle advance=false}">
+		{if $items[ix].isActive eq 'y'}
+		*
+		{else}
 		<input type="checkbox" name="process[{$items[ix].pId}]" />
+		{/if}
 	</td>
 	<td class="{cycle advance=false}">
 	  <a class="link" href="tiki-g-admin_processes.php?find={$find}&amp;where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;pid={$items[ix].pId}">{$items[ix].name}</a>
@@ -154,6 +158,12 @@
 {/section}
 </table>
 </form>
+
+{if $cant > 0}
+<div class="wikitext">
+*Note: It is not possible to delete an active process. To delete a process, deactivate it first.
+</div>
+{/if}
 
 <div class="mini">
 <div align="center">

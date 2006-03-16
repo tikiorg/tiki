@@ -3,7 +3,7 @@
 <table class="pollresults">
 {section name=ix loop=$options}
 <tr><td class="pollr">{$options[ix].title}</td>
-    <td class="pollr"><img src="img/leftbar.gif" alt="<" /><img src="img/mainbar.gif" alt="-" height="14" width="{$options[ix].width}" /><img src="img/rightbar.gif" alt=">" />  {$options[ix].percent}% ({$options[ix].votes})</td></tr>
+    <td class="pollr"><img src="img/leftbar.gif" alt="&lt;" /><img src="img/mainbar.gif" alt="-" height="14" width="{$options[ix].width}" /><img src="img/rightbar.gif" alt="&gt;" />  {$options[ix].percent}% ({$options[ix].votes})</td></tr>
 {/section}
 </table>
 <br />

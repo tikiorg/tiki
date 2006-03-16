@@ -2,11 +2,11 @@
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}CacheDoc" target="tikihelp" class="tikihelp" title="{tr}admin cache{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-list_cache.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin cache tpl{/tr}">
-<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}</h1>
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}</h1>
 
 <table class="findtable">
 <tr><td class="findtitle">{tr}Find{/tr}</td>

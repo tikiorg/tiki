@@ -145,13 +145,16 @@ function wikiplugin_tracker($data, $params) {
 					$ins_fields["data"][] = array('fieldId' => $embeddedId, 'value' => $_REQUEST['page']);
 				}
 				$ins_categs = array();
+				$categorized_fields = array();
 				while (list($postVar, $postVal) = each($_REQUEST)) {
-					if(preg_match("/^ins_cat_[0-9]+/", $postVar)) {
- 	   					$ins_categs[] = $postVal[0];
+					if(preg_match("/^ins_cat_([0-9]+)/", $postVar, $m)) {
+						foreach ($postVal as $v)
+ 	   						$ins_categs[] = $v;
+						$categorized_fields[] = $m[1];
 					}
 		 		}
 				// Check field values for each type and presence of mandatory ones
-				$field_errors = $trklib->check_field_values($ins_fields, $ins_categs);
+				$field_errors = $trklib->check_field_values($ins_fields, $categorized_fields);
 			
 				// values are OK, then lets add a new item
 				if( count($field_errors['err_mandatory']) == 0  && count($field_errors['err_value']) == 0 ) {

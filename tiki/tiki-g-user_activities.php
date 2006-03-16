@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-user_activities.php,v 1.11 2005-05-18 10:58:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-user_activities.php,v 1.12 2006-03-16 13:43:09 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -23,10 +23,11 @@ if ($tiki_p_use_workflow != 'y') {
 	die;
 }
 
-// Filtering data to be received by request and
-// used to build the where part of a query
-// filter_active, filter_valid, find, sort_mode,
-// filter_process
+// When $user is null, it means an anonymous user is trying to use Galaxia
+$user = is_null($user) ? "Anonymous" : $user;
+
+// Filtering data to be received by request and used to build the where part of a query
+// filter_active, filter_valid, find, sort_mode, filter_process
 $where = '';
 $wheres = array();
 
@@ -39,11 +40,11 @@ if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process'])
 
 $where = implode(' and ', $wheres);
 
-if (!isset($_REQUEST["sort_mode"])) {
+//if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'flowNum_asc';
-} else {
-	$sort_mode = $_REQUEST["sort_mode"];
-}
+//} else {
+//	$sort_mode = $_REQUEST["sort_mode"];
+//}
 
 if (!isset($_REQUEST["offset"])) {
 	$offset = 0;

@@ -9,7 +9,7 @@
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_shoutbox_words.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin shoutbox words template{/tr}">
-<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}'></a>{/if}</h1>
+<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}' /></a>{/if}</h1>
 
 
 
@@ -17,7 +17,7 @@
 
 <form method="post" action="tiki-admin_shoutbox_words.php">
 <table class="normal">
-<tr><td class="formcolor">{tr}Word{/tr}</td><td class="formcolor"><input type="text" name="word"></td></tr>
+<tr><td class="formcolor">{tr}Word{/tr}</td><td class="formcolor"><input type="text" name="word" /></td></tr>
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="add" value="{tr}Add{/tr}" /></td></tr>
 </table>
 </form>
@@ -47,7 +47,7 @@
 <td class="odd">
 &nbsp;&nbsp;<a class="link" href="tiki-admin_shoutbox_words.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$words[user].word}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this word?{/tr}')" 
-title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}'></a>&nbsp;&nbsp;
+title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>&nbsp;&nbsp;
 </td>
 </tr>
 {else}
@@ -56,7 +56,7 @@ title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
 <td class="even">
 &nbsp;&nbsp;<a class="link" href="tiki-admin_shoutbox_words.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$words[user].word}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this word?{/tr}')" 
-title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}'></a>&nbsp;&nbsp;
+title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>&nbsp;&nbsp;
 </td>
 </tr>
 {/if}

@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.635 2006-03-12 21:02:35 lfagundes Exp $
+// CVS: $Id: tikilib.php,v 1.636 2006-03-16 13:43:10 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1201,7 +1201,7 @@ function add_pageview() {
 	$data['ydata'][] = $this->getOne('select sum(`timesTaken`) from `tiki_quiz_stats_sum`',array());
 
 	$data['xdata'][] = tra('arts');
-	$data['ydata'][] = $this->getOne('select sum(`reads`) from `tiki_articles`',array());
+	$data['ydata'][] = $this->getOne('select sum(`nbreads`) from `tiki_articles`',array());
 
 	$data['xdata'][] = tra('blogs');
 	$data['ydata'][] = $this->getOne('select sum(`hits`) from `tiki_blogs`',array());
@@ -2182,17 +2182,20 @@ function add_pageview() {
 	    $bindvars=array();
 	}
 	$query = "select * from `tiki_blogs` $mid order by ".$this->convert_sortmode($sort_mode);
-	$result = $this->query($query,$bindvars,$maxRecords,$offset);
+	$result = $this->query($query,$bindvars);
 	$ret = array();
 	$cant = 0;
-
+	$nb = 0;
+	$i = 0;
 	while ($res = $result->fetchRow()) {
-
 	    global $user;
-	    $add=$this->user_has_perm_on_object($user,$res['blogId'],'blog','tiki_p_read_blog');
-		if ($add) {
-	    	$ret[] = $res;
-		++$cant;
+	    if ($this->user_has_perm_on_object($user,$res['blogId'],'blog','tiki_p_read_blog')) {
+		    ++$cant;
+			if ($maxRecords == - 1 || ($i >= $offset && $nb < $maxRecords)) {
+				$ret[] = $res;
+				++$nb;
+			}
+			++$i;
 	    }
 	}
 	$retval = array();
@@ -2432,10 +2435,10 @@ function add_pageview() {
 				`tiki_article_types`.`show_image_caption`,
 				`tiki_article_types`.`show_lang`,
 				`tiki_article_types`.`creator_edit`
-	    	from `tiki_articles`, `tiki_article_types` left join `users_users` on `tiki_articles`.`author` = `users_users`.`login`
+	    	from (`tiki_articles`, `tiki_article_types`) left join `users_users`  on `tiki_articles`.`author` = `users_users`.`login`
 	    	$mid $mid2 order by ".$this->convert_sortmode($sort_mode);
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
-	$query_cant = "select count(*) from  `tiki_articles`, `tiki_article_types` left join `users_users` on `tiki_articles`.`author` = `users_users`.`login` $mid $mid2";
+	$query_cant = "select count(*) from  (`tiki_articles`, `tiki_article_types`) left join `users_users` on `tiki_articles`.`author` = `users_users`.`login` $mid $mid2";
 	$cant = $this->getOne($query_cant,$bindvars);
 	$ret = array();
 

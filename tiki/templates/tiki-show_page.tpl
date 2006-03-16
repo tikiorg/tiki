@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.96 2006-01-20 09:54:57 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.97 2006-03-16 13:43:12 sylvieg Exp $ *}
 
 {breadcrumbs type="trail" loc="page" crumbs=$crumbs}
 {if $feature_page_title eq 'y'}
@@ -33,7 +33,7 @@
 	{/if}
 
 	{if $feature_wiki_pdf eq 'y'}
-		<a title="{tr}create pdf{/tr}" href="tiki-config_pdf.php?{if $home_info && $home_info.page_ref_id}page_ref_id={$home_info.page_ref_id}{else}page={$page|escape:"url"}{/if}"><img src="img/icons/ico_pdf.gif" border="0"  width="16" height="16" alt="{tr}pdf{/tr}"></a>
+		<a title="{tr}create pdf{/tr}" href="tiki-config_pdf.php?{if $home_info && $home_info.page_ref_id}page_ref_id={$home_info.page_ref_id}{else}page={$page|escape:"url"}{/if}"><img src="img/icons/ico_pdf.gif" border="0"  width="16" height="16" alt="{tr}pdf{/tr}" /></a>
 	{/if}
 	{if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
 		<a title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;savenotepad=1"><img src="img/icons/ico_save.gif" border="0"  width="16" height="16" alt="{tr}save{/tr}" /></a>

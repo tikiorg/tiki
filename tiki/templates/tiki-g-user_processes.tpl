@@ -5,12 +5,12 @@
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}GalaxiaUserProcesses" target="tikihelp" class="tikihelp" title="{tr}Galaxia User Processes{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
 
 
 
       {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-g-user_processes.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Galaxia User Processes tpl{/tr}"><img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}
+<a href="tiki-edit_templates.php?template=tiki-g-user_processes.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Galaxia User Processes tpl{/tr}"><img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}
 
 </h1>
 {include file=tiki-g-user_bar.tpl}

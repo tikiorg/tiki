@@ -465,7 +465,7 @@ class SearchLib extends TikiLib {
 			'from' => '`tiki_articles` a',
 			'name' => 'a.`title`',
 			'data' => 'a.`heading`',
-			'hits' => 'a.`reads`',
+			'hits' => 'a.`nbreads`',
 			'lastModif' => 'a.`publishDate`',
 			'href' => 'tiki-read_article.php?articleId=%d',
 			'id' => array('a.`articleId`'),

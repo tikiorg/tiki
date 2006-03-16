@@ -2,11 +2,11 @@
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}Referer+Stats" target="tikihelp" class="tikihelp" title="{tr}admin Referer stats{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-referer_stats.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin Referer stats tpl{/tr}">
-<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}</h1>
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}</h1>
 
 <a class="linkbut" href="tiki-referer_stats.php?clear=1">{tr}clear stats{/tr}</a><br /><br />
 

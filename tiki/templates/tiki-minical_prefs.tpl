@@ -2,12 +2,12 @@
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}User+Calendar" target="tikihelp" class="tikihelp" title="{tr}User Calendar Doc{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-minical_prefs.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}User Calendar Preferences Doc tpl{/tr}">
-<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}'></a>
+<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}' /></a>
 {/if}</h1>
 
 {include file=tiki-mytiki_bar.tpl}

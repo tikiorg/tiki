@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.79 2006-03-12 21:02:32 lfagundes Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.80 2006-03-16 13:43:12 sylvieg Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -221,7 +221,7 @@ function searchrep() {
 <input style="width:100;" class="wikitext" type="text" id="search"/>
 Replace to:
 <input style="width:100;" class="wikitext" type="text" id="replace"/>
-<input type="checkbox" id="caseinsens">{tr}Case Insensitivity{/tr}
+<input type="checkbox" id="caseinsens" />{tr}Case Insensitivity{/tr}
 <input type="button" value="{tr}replace{/tr}" onclick="javascript:searchrep();">
 </td></tr>
 

@@ -6,7 +6,7 @@
 <tr>
   <td class="formcolor">{if $avatar}{$avatar}{else}{tr}no avatar{/tr}{/if}</td>
 {if sizeof($avatars) eq 0 and $avatar}
- <td class="formcolor"><a class="link" href="tiki-pick_avatar.php?reset=y" title="{tr}reset{/tr}"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt='{tr}reset{/tr}'></a></td>
+ <td class="formcolor"><a class="link" href="tiki-pick_avatar.php?reset=y" title="{tr}reset{/tr}"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt='{tr}reset{/tr}' /></a></td>
 {/if}
 </tr>
 </table>
@@ -84,8 +84,8 @@ function subavt() {
 <form enctype="multipart/form-data" action="tiki-pick_avatar.php" method="post">
 <table class="normal">
 <tr><td class="formcolor">{tr}File{/tr}:</td><td class="formcolor">
-<input type="hidden" name="MAX_FILE_SIZE" value="10000000">
-<input name="userfile1" type="file">
+<input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
+<input name="userfile1" type="file" />
 </td></tr>
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="upload" value="{tr}upload{/tr}" /></td></tr>
 </table>

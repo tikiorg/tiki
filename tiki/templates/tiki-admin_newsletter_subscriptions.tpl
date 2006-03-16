@@ -31,9 +31,9 @@
 </select>
 </td>
 <td class="formcolor" rowspan="3" valign="middle">
-<table border="0" cellspacing="0" cellpadding="0"><tr><td>{tr}Add email:{/tr}</td><td><input type="radio" name="addemail" value="y"></td></tr><tr><td>{tr}Add user:{/tr}</td><td><input type="radio" name="addemail" value="n" checked="checked"></td></tr></table>
+<table border="0" cellspacing="0" cellpadding="0"><tr><td>{tr}Add email:{/tr}</td><td><input type="radio" name="addemail" value="y" /></td></tr><tr><td>{tr}Add user:{/tr}</td><td><input type="radio" name="addemail" value="n" checked="checked" /></td></tr></table>
 </td></tr>
-<tr><td class="formcolor">{tr}All users{/tr}:</td><td class="formcolor"><input type="checkbox" name="addall"></td></tr>
+<tr><td class="formcolor">{tr}All users{/tr}:</td><td class="formcolor"><input type="checkbox" name="addall" /></td></tr>
 <tr><td class="formcolor">{tr}Group users{/tr}:</td><td class="formcolor">
 <select name="group">
 <option value="">---</option>
@@ -43,7 +43,7 @@
 </select><br /><i>{tr}Group subscription also subscribes included groups{/tr}</i>
 </td></tr>
 {if $nl_info.validateAddr eq "y"}
-<tr><td class="formcolor">{tr}Don't send confirmation mail{/tr}</td><td colspan="2" class="formcolor"><input type="checkbox" name="confirmEmail"></td></tr>
+<tr><td class="formcolor">{tr}Don't send confirmation mail{/tr}</td><td colspan="2" class="formcolor"><input type="checkbox" name="confirmEmail" /></td></tr>
 {/if}
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor" colspan="2"><i>{tr}The user email will be refreshed at each newsletter sending{/tr}</i></td></tr>
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor" colspan="2"><input type="submit" name="addgroup" value="{tr}add{/tr}" /></td></tr>
@@ -99,7 +99,7 @@
 {section name=ix loop=$groups_g}
 <tr>
 <td class="{cycle advance=false}">{$groups_g[ix].groupName|escape}</td>
-<td class="{cycle}"><a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$groups_g[ix].nlId}&amp;group={$groups_g[ix].groupName}"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt='{tr}remove{/tr}'></a>
+<td class="{cycle}"><a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$groups_g[ix].nlId}&amp;group={$groups_g[ix].groupName}"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt='{tr}remove{/tr}' /></a>
 </tr>
 {/section}
 </div>
@@ -134,7 +134,7 @@
 {else}{tr}yes{/tr}{/if}</td>
 <td class="{cycle advance=false}">{$channels[user].subscribed|tiki_short_datetime}</td>
 <td class="{cycle}">
-   <a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].nlId}&amp;{if $channels[user].isUser eq "y"}user{else}email{/if}={$channels[user].email}"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt='{tr}remove{/tr}'></a>
+   <a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].nlId}&amp;{if $channels[user].isUser eq "y"}user{else}email{/if}={$channels[user].email}"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt='{tr}remove{/tr}' /></a>
 </td>
 </tr>
 {/section}

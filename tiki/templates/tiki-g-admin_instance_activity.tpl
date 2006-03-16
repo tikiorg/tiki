@@ -3,8 +3,8 @@
 <h1><a class="pagetitle" href="tiki-g-admin_instance.php?iid={$iid}">{tr}Admin instance{/tr}</a>
 </h1>
 {include file=tiki-g-monitor_bar.tpl}
-<h3>{tr}Process:{/tr} {$proc_info.name} {$proc_info.version}<br>
-{tr}Instance{/tr}: {$ins_info.name} <br>
+<h3>{tr}Process:{/tr} {$proc_info.name} {$proc_info.version}<br />
+{tr}Instance{/tr}: {$ins_info.name} <br />
 {tr}Activity{/tr}: {$acts.name} {if $acts.actstatus eq 'running'}<a href="tiki-g-run_activity.php?iid={$iid}&amp;activityId={$aid}"><img border='0' title='{tr}run instance{/tr}' alt='{tr}run instance{/tr}' src='lib/Galaxia/img/icons/next.gif' /></a>{/if}</h3>
 <form method="POST" action="tiki-g-admin_instance_activity.php?iid={$iid}&amp;aid={$aid}">
 <input type="hidden" name="iid" value="{$iid|escape}" />
@@ -53,16 +53,16 @@
 		<td class="formcolor">{$comments[ix].user|capitalize:true}</td>
       	        <td class="closeButton">
 		    <form method="POST" target="email" action="tiki-g-view_comment.php">
-		    	  <input type="hidden" name="__user" value="{$comments[ix].user}">
-			  <input type="hidden" name="__title" value="{$comments[ix].title}">
-			  <input type="hidden" name="__comment" value="{$comments[ix].comment}">
-			  <input type="hidden" name="__timestamp" value="{$comments[ix].timestamp}">
+		    	  <input type="hidden" name="__user" value="{$comments[ix].user}" />
+			  <input type="hidden" name="__title" value="{$comments[ix].title}" />
+			  <input type="hidden" name="__comment" value="{$comments[ix].comment}" />
+			  <input type="hidden" name="__timestamp" value="{$comments[ix].timestamp}" />
 	      	    	  <input type="submit" name="view" title="{tr}Pop-up{/tr}" tiki-g-view_comment.php','email','HEIGHT=400,width=400,resizable=0,menubar=no,location=no,scrollbars=1')" value="&#164">
 		    </form>
 		</td>
 		<td class="closeButton">    
 	      	    <form method="POST" action="tiki-g-admin_instance_activity.php?iid={$iid}&aid={$aid}">
-		    	  <input type="hidden" name="__removecomment" value="{$comments[ix].cId}">
+		    	  <input type="hidden" name="__removecomment" value="{$comments[ix].cId}" />
 	      	    	  <input type="submit" name="eraser" value="X" title="{tr}erase{/tr}">
 	      	    </form>
 		</td>
@@ -88,7 +88,7 @@
 
 	<tr>
 	    	<td class="heading">{tr}Subject{/tr}:</td>
-	    	<td class="formcolor"><input type="text" name="__title"></td>
+	    	<td class="formcolor"><input type="text" name="__title" /></td>
 	</tr>
 	<tr>
 		<td class="heading">{tr}Body{/tr}:</td>

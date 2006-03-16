@@ -1,15 +1,15 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.24 2005-05-18 11:02:58 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.25 2006-03-16 13:43:12 sylvieg Exp $ *}
 
 <h1><a  class="pagetitle" href="tiki-article_types.php">{tr}Admin Article Types{/tr}</a>
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Articles" target="tikihelp" class="tikihelp" title="{tr}Admin Article Types{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
 
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-article_types.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Article Types tpl{/tr}">
-<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}</h1>
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}</h1>
 <div class="wiki-edithelp">
 <b>{tr}Name{/tr}</b> - {tr}Shows up in the drop down list of article types{/tr}<br />
 <b>{tr}Rate{/tr}</b> - {tr}Allow ratings by the author{/tr}<br />

@@ -36,9 +36,9 @@
 <input {if $tasklist[task_i].disabled} disabled = "disabled" {/if}  type="checkbox" name="task[{$tasklist[task_i].taskId}]" />
 {if $tasklist[task_i].deleted} 
 	{if $tasklist[task_i].creator ne $user}
-		<img src='img/icons2/delete_all.gif' width='16' height='16' border='0' alt='{tr}delete{/tr}'>
+		<img src='img/icons2/delete_all.gif' width='16' height='16' border='0' alt='{tr}delete{/tr}' />
 	{else}
-		<img src='img/icons/trash.gif' width='16' height='16' border='0' alt='{tr}trash{/tr}'>
+		<img src='img/icons/trash.gif' width='16' height='16' border='0' alt='{tr}trash{/tr}' />
 	{/if}
 {/if}
 {if (($tasklist[task_i].creator eq $tasklist[task_i].user) and ($tasklist[task_i].user eq $user)) }
@@ -48,15 +48,15 @@
 		{*recived task*}
 		&gt;&gt;
 		{if (($tasklist[task_i].accepted_creator eq 'n') or ($tasklist[task_i].accepted_user eq 'n')) }
-			<img src="{$img_not_accepted}" height="{$img_not_accepted_height}" width="{$img_not_accepted_width}" title='{tr}not accepted by one user{/tr}'  border='0' alt='{tr}not accepted user{/tr}'>
+			<img src="{$img_not_accepted}" height="{$img_not_accepted_height}" width="{$img_not_accepted_width}" title='{tr}not accepted by one user{/tr}'  border='0' alt='{tr}not accepted user{/tr}' />
 		{else}
 			{if ($tasklist[task_i].accepted_user eq '')}
-				<img src="{$img_me_waiting}" height="{$img_me_waiting_height}" width="{$img_me_waiting_width}" title='{tr}waiting for me{/tr}' border='0' alt='{tr}waiting for me{/tr}'>
+				<img src="{$img_me_waiting}" height="{$img_me_waiting_height}" width="{$img_me_waiting_width}" title='{tr}waiting for me{/tr}' border='0' alt='{tr}waiting for me{/tr}' />
 			{else}
 				{if ($tasklist[task_i].accepted_creator eq 'y')} 
-					<img src="{$img_accepted}" height="{$img_accepted_height}" width="{$img_accepted_width}" title='{tr}accepted by task user and creator{/tr}' border='0' alt='{tr}accepted user and creator{/tr}'>
+					<img src="{$img_accepted}" height="{$img_accepted_height}" width="{$img_accepted_width}" title='{tr}accepted by task user and creator{/tr}' border='0' alt='{tr}accepted user and creator{/tr}' />
 				{else}
-					<img src="{$img_he_waiting}"  height="{$img_he_waiting_height}" width="{$img_he_waiting_width}" border='0' alt='{tr}waiting for other user{/tr}' title='{tr}waiting for other user{/tr}'>
+					<img src="{$img_he_waiting}"  height="{$img_he_waiting_height}" width="{$img_he_waiting_width}" border='0' alt='{tr}waiting for other user{/tr}' title='{tr}waiting for other user{/tr}' />
 				{/if}
 			{/if}
 		{/if}
@@ -64,19 +64,19 @@
 		{*submitted task*}
 		&lt;&lt;
 		{if (($tasklist[task_i].accepted_creator eq 'n') or ($tasklist[task_i].accepted_user eq 'n')) }
-			<img src="{$img_not_accepted}" height="{$img_not_accepted_height}" width="{$img_not_accepted_width}" title='{tr}not accepted by one user{/tr}'  border='0' alt='{tr}not accepted user{/tr}'>
+			<img src="{$img_not_accepted}" height="{$img_not_accepted_height}" width="{$img_not_accepted_width}" title='{tr}not accepted by one user{/tr}'  border='0' alt='{tr}not accepted user{/tr}' />
 		{else}
 			{if ($tasklist[task_i].accepted_user eq '')}
 				{if ($tasklist[task_i].accepted_creator eq 'y')}
-					 <img src="{$img_he_waiting}"  height="{$img_he_waiting_height}" width="{$img_he_waiting_width}" border='0' alt='{tr}waiting for other user{/tr}' title='{tr}waiting for other user{/tr}'>
+					 <img src="{$img_he_waiting}"  height="{$img_he_waiting_height}" width="{$img_he_waiting_width}" border='0' alt='{tr}waiting for other user{/tr}' title='{tr}waiting for other user{/tr}' />
 				{else}
-					<img src="{$img_me_waiting}" height="{$img_me_waiting_height}" width="{$img_me_waiting_width}" title='{tr}waiting for me{/tr}' border='0' alt='{tr}waiting for me{/tr}'>
+					<img src="{$img_me_waiting}" height="{$img_me_waiting_height}" width="{$img_me_waiting_width}" title='{tr}waiting for me{/tr}' border='0' alt='{tr}waiting for me{/tr}' />
 				{/if}
 			{else}
 				{if ($tasklist[task_i].accepted_creator eq 'y')}
-					<img src="{$img_accepted}" height="{$img_accepted_height}" width="{$img_accepted_width}" title='{tr}accepted by task user and creator{/tr}' border='0' alt='{tr}accepted user and creator{/tr}'>
+					<img src="{$img_accepted}" height="{$img_accepted_height}" width="{$img_accepted_width}" title='{tr}accepted by task user and creator{/tr}' border='0' alt='{tr}accepted user and creator{/tr}' />
 				{else}
-					<img src="{$img_me_waiting}" height="{$img_me_waiting_height}" width="{$img_me_waiting_width}" title='{tr}waiting for me{/tr}' border='0' alt='{tr}waiting for me{/tr}'>
+					<img src="{$img_me_waiting}" height="{$img_me_waiting_height}" width="{$img_me_waiting_width}" title='{tr}waiting for me{/tr}' border='0' alt='{tr}waiting for me{/tr}' />
 				{/if}
 			{/if}
 		{/if}

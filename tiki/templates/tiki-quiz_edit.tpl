@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_edit.tpl,v 1.18 2005-06-16 20:11:13 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_edit.tpl,v 1.19 2006-03-16 13:43:12 sylvieg Exp $ *}
 
 {* Copyright (c) 2004 George G. Geller et. al. *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -8,7 +8,7 @@
 
 <h1><a class="pagetitle" href="tiki-quiz_edit.php?quizId={$quiz->id}">{tr}Edit quiz{/tr}: {$quiz->name}</a>
 {if $feature_help}
-&nbsp &nbsp &nbsp<a title="{tr}help{/tr}" href="http://tikiwiki.org/tiki-index.php?page=QuizEdit" target="help"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>
+&nbsp &nbsp &nbsp<a title="{tr}help{/tr}" href="http://tikiwiki.org/tiki-index.php?page=QuizEdit" target="help"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
 {/if}
 </h1>
 <a class="linkbut" href="tiki-list_quizzes.php">{tr}list quizzes{/tr}</a>
@@ -62,11 +62,11 @@
 					<table class="normal">
 						<tr class="formcolor">
 							<td><label for="quiz-name">{tr}Name:{/tr}</label></td>
-							<td><input type="text" name=quiz.name id="quiz-name" value="{$quiz->name|escape}" size="60"></td>
+							<td><input type="text" name=quiz.name id="quiz-name" value="{$quiz->name|escape}" size="60" /></td>
 						</tr>
 						<tr class="formcolor">
 							<td><label for="quiz-desc">Description:</label></td>
-							<td><input type="text" name=quiz.description id="quiz-desc" value="{$quiz->description|escape}" size="60"></td>
+							<td><input type="text" name=quiz.description id="quiz-desc" value="{$quiz->description|escape}" size="60" /></td>
 						</tr>
 						<tr class="formcolor">
       				<td>{tr}Publication Date{/tr}</td>
@@ -159,7 +159,7 @@
 					</table>
 					<table class="normal">
 						<tr>
-							<td class="formcolor"><input type="checkbox" name="quiz.forum" id="forum" {if $quiz->forum eq 'y'}checked="checked"{/if} /><label>{tr}Link quiz to forum named: {/tr}</label><input type="text" name="quiz.forumName" value="{$quiz->nameForum|escape}" size="40"></td>
+							<td class="formcolor"><input type="checkbox" name="quiz.forum" id="forum" {if $quiz->forum eq 'y'}checked="checked"{/if} /><label>{tr}Link quiz to forum named: {/tr}</label><input type="text" name="quiz.forumName" value="{$quiz->nameForum|escape}" size="40" /></td>
 						</tr>
 				  </table>
 			  </div>

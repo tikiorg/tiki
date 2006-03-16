@@ -2,12 +2,12 @@
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}Friendship+Network" target="tikihelp" class="tikihelp" title="{tr}Friendship Network{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
 
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-friends.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}friends tpl{/tr}">
-<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}
 
 </h1>
 
@@ -79,7 +79,7 @@
   <a class="userlistlogin{cycle advance=false}" href="tiki-user_information.php?view_user={$listpages[changes].login}">{$listpages[changes].login|userlink}</a>{if $feature_score eq 'y'}{$listpages[changes].score|star}{/if}
   </td>
   <td class="userlist{cycle advance=false}"><a class="userlistlogin{cycle advance=false}" href="tiki-user_information.php?view_user={$listpages[changes].login}">{$listpages[changes].realname}</a></td>
-  <td class="userlist{cycle advance=true}"><a class="userlistlogin{cycle advance=false}" href="?break={$listpages[changes].login}"><img src="img/icons2/delete.gif" alt="{tr}break friendship{/tr}" border="0"></a></td>
+  <td class="userlist{cycle advance=true}"><a class="userlistlogin{cycle advance=false}" href="?break={$listpages[changes].login}"><img src="img/icons2/delete.gif" alt="{tr}break friendship{/tr}" border="0" /></a></td>
 </tr>
 {sectionelse}
 <tr><td colspan="6" class="odd">

@@ -8,7 +8,7 @@
 <! -- link to tpl -->
 
      {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?=tiki-quiz_result_stats.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}edit quiz stats tpl{/tr}"><img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>
+<a href="tiki-edit_templates.php?=tiki-quiz_result_stats.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}edit quiz stats tpl{/tr}"><img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>
 {/if}
 
 

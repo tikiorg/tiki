@@ -20,33 +20,31 @@ class InstanceManager extends BaseManager {
     $this->db = $db;  
   }
   
-  function get_instance_activities($iid,$aid = "")
+  function get_instance_activities($iid, $aid = "")
   {
-  	if ($aid == "") {
-  		$and = "";
-  	}
-  	else {
-  		$and = "and ga.activityId = $aid";
-  	}
-    $query  = "select ga.activityId,ga.type,ga.type,ga.isInteractive,ga.isInteractive,ga.isAutoRouted,gi.pId,ga.activityId,ga.name,";
-    $query .= "gi.instanceId,gi.status,ga.expirationTime as exptime,gia.activityId,gia.user,";
-    $query .= "gi.started,gia.status as actstatus,gia.started as iaStarted,gia.ended from ";
-    $query .= GALAXIA_TABLE_PREFIX."activities ga,".GALAXIA_TABLE_PREFIX."instances gi,";
-    $query .= GALAXIA_TABLE_PREFIX."instance_activities gia where ga.activityId=gia.activityId ";
-    $query .= "and gi.instanceId=gia.instanceId and gi.instanceId=$iid ".$and." order by gia.started";
+  	$and = ($aid == "") ? "" : "and ga.activityId = $aid";
+
+    $query  = "SELECT ga.activityId, ga.type, ga.type, ga.isInteractive, ga.isInteractive, ga.isAutoRouted,";
+	$query .= "gi.pId,ga.activityId,ga.name, gi.instanceId, gi.status, ga.expirationTime AS exptime,";
+	$query .= "gia.activityId,gia.user, gi.started, gia.status AS actstatus, gia.started AS iaStarted,";
+	$query .= "gia.ended FROM " . GALAXIA_TABLE_PREFIX . "activities ga, " . GALAXIA_TABLE_PREFIX . "instances gi,";
+	$query .= GALAXIA_TABLE_PREFIX . "instance_activities gia WHERE ga.activityId=gia.activityId ";
+    $query .= "AND gi.instanceId=gia.instanceId AND gi.instanceId=$iid " . $and . " ORDER BY gia.started";
     $result = $this->query($query);
+	
     $ret = Array();
+
     if ($and == "") {
     	while($res = $result->fetchRow()) {
     		// Number of active instances
-    		$res['exptime'] = $this->make_ending_date($res['iaStarted'],$res['exptime']);
+    		$res['exptime'] = $this->make_ending_date($res['iaStarted'], $res['exptime']);
     		$ret[] = $res;
     	}
     	return $ret;
     }
     else {
     	$res = $result->fetchRow();
-    	$res['exptime'] = $this->make_ending_date($res['iaStarted'],$res['exptime']);
+    	$res['exptime'] = $this->make_ending_date($res['iaStarted'], $res['exptime']);
     	return $res;
     }
   }
@@ -93,10 +91,13 @@ class InstanceManager extends BaseManager {
   
   function set_instance_destination($iid,$activityId)
   {
-    $query = "delete from ".GALAXIA_TABLE_PREFIX."instance_activities where instanceId=$iid";
+	//This avoids duplicate keys in instance_activities
+    $query = "DELETE FROM " . GALAXIA_TABLE_PREFIX . "instance_activities WHERE instanceId=$iid";
     $this->query($query);
-    $query = "insert into ".GALAXIA_TABLE_PREFIX."instance_activities(instanceId,activityId,user,status)
-    values($iid,$activityId,'*','running')";
+
+	//Now let's insert the info about the activity we're sending the instance to
+    $query  = "INSERT INTO " . GALAXIA_TABLE_PREFIX . "instance_activities (instanceId, activityId, user, status)";
+	$query .= " VALUES ($iid, $activityId, '*', 'running')";
     $this->query($query);
   }
   

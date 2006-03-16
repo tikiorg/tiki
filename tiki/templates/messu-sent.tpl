@@ -2,11 +2,11 @@
 <h1><a class="pagetitle" href="messu-sent.php">{tr}Sent Messages{/tr}</a>
 
 {if $feature_help eq 'y'}
-<a href="{$helpurl}UserMessagesDoc" target="tikihelp" class="tikihelp" title="{tr}Messages{/tr}"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>
+<a href="{$helpurl}UserMessagesDoc" target="tikihelp" class="tikihelp" title="{tr}Messages{/tr}"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=messu-sent.tpl" target="tikihelp" class="tikihelp"><img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit template{/tr}'></a>
+<a href="tiki-edit_templates.php?template=messu-sent.tpl" target="tikihelp" class="tikihelp"><img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}</h1>
 
 {include file=tiki-mytiki_bar.tpl}
@@ -76,7 +76,7 @@
   {section name=user loop=$items}
   <tr>
     <td class="prio{$items[user].priority}"><input type="checkbox" name="msg[{$items[user].msgId}]" /></td>
-    <td class="prio{$items[user].priority}">{if $items[user].isFlagged eq 'y'}<img src="img/flagged.gif" border="0" width="16" height="16" alt='{tr}flagged{/tr}'>{/if}</td>
+    <td class="prio{$items[user].priority}">{if $items[user].isFlagged eq 'y'}<img src="img/flagged.gif" border="0" width="16" height="16" alt='{tr}flagged{/tr}' />{/if}</td>
     <td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}">{$items[user].user_to}</td>
     <td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}"><a class="readlink" href="messu-read_sent.php?offset={$offset}&amp;flag={$flag}&amp;priority={$items[user].priority}&amp;flagval={$flagval}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;msgId={$items[user].msgId}">{$items[user].subject}</a></td>
     <td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}">{$items[user].date|tiki_short_datetime}</td><!--date_format:"%d %b %Y [%H:%I]"-->

@@ -33,7 +33,7 @@
 	{/if}
 </tr>
 </table>
-<INPUT type="hidden" name="iid" value="{$iid}">
-<INPUT type="hidden" name="__post" value="y">
-<INPUT type="hidden" name="activityId" value="{$actid}">
+<input type="hidden" name="iid" value="{$iid}" />
+<input type="hidden" name="__post" value="y" />
+<input type="hidden" name="activityId" value="{$actid}" />
 </form>

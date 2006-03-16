@@ -408,7 +408,7 @@ class RankLib extends TikiLib {
 
 	function cms_ranking_top_articles($limit) {
 		global $user;
-		$query = "select * from `tiki_articles` order by `reads` desc";
+		$query = "select * from `tiki_articles` order by `nbreads` desc";
 
 		$result = $this->query($query,array(),$limit,0);
 		$ret = array();
@@ -416,7 +416,7 @@ class RankLib extends TikiLib {
 		while ($res = $result->fetchRow()) {
 			if ($this->user_has_perm_on_object($user, $res['articleId'], 'article', 'tiki_p_read_article')) {
 				$aux["name"] = $res["title"];
-				$aux["hits"] = $res["reads"];
+				$aux["hits"] = $res["nbreads"];
 				$aux["href"] = 'tiki-read_article.php?articleId=' . $res["articleId"];
 				$ret[] = $aux;
 			}

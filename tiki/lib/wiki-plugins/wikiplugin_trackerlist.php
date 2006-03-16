@@ -37,10 +37,10 @@ function wikiplugin_trackerlist($data, $params) {
 			$tracker_info = array_merge($tracker_info, $t);
 		$smarty->assign_by_ref('tracker_info', $tracker_info);
 		
-		$query_array = array();
-		$quarray = array();
-		parse_str($_SERVER['QUERY_STRING'],$query_array);
-		
+		//$query_array = array();
+		//$quarray = array();
+		//parse_str($_SERVER['QUERY_STRING'],$query_array);
+
 		if (!isset($showtitle)) {
 			$showtitle = "n";
 		}
@@ -81,7 +81,7 @@ function wikiplugin_trackerlist($data, $params) {
 		}
 		
 		if (isset($_REQUEST['tr_sort_mode'])) {
-			$query_array['tr_sort_mode'] = $_REQUEST['tr_sort_mode'];
+		  //$query_array['tr_sort_mode'] = $_REQUEST['tr_sort_mode'];
 			$sort_mode = $_REQUEST['tr_sort_mode'];
 		} elseif (!isset($sort_mode)) {
 			if (isset($tracker_info['defaultOrderKey'])) {
@@ -103,11 +103,11 @@ function wikiplugin_trackerlist($data, $params) {
 		}
 
 		if (isset($_REQUEST['tr_offset'])) {
-			$query_array['tr_offset'] = $_REQUEST['tr_offset'];
+		  //$query_array['tr_offset'] = $_REQUEST['tr_offset'];
 			$tr_offset = $_REQUEST['tr_offset'];
 		} else {
 			$tr_offset = 0;
-			$query_array['tr_offset'] = 0;
+			//$query_array['tr_offset'] = 0;
 		}
 		$smarty->assign_by_ref('tr_offset',$tr_offset);
 
@@ -115,7 +115,7 @@ function wikiplugin_trackerlist($data, $params) {
 		$tr_initial = '';
 		if ($showinitials == 'y') {
 			if (isset($_REQUEST["tr_initial"])) {
-				$query_array['tr_initial'] = $_REQUEST['tr_initial'];
+			  //$query_array['tr_initial'] = $_REQUEST['tr_initial'];
 				$tr_initial = $_REQUEST["tr_initial"];
 			}
 			$smarty->assign('initials', split(' ','a b c d e f g h i j k l m n o p q r s t u v w x y z'));
@@ -185,7 +185,7 @@ function wikiplugin_trackerlist($data, $params) {
 			$smarty->assign('daformat', $tikilib->get_long_date_format()." ".tra("at")." %H:%M"); 
 			
 			$tracker = $tikilib->get_tracker($trackerId,0,-1);
-			foreach ($query_array as $k=>$v) {
+			/*foreach ($query_array as $k=>$v) {
 				if (!is_array($v)) { //only to avoid an error: eliminate the params that are not simple (ex: if you have in the same page a tracker list plugin and a tracker plugin, filling the tracker plugin interfers with the tracker list. In any case this is buggy if two tracker list plugins in the same page and if one needs the query value....
 					$quarray[] = urlencode($k) ."=". urlencode($v);
 				}
@@ -196,7 +196,7 @@ function wikiplugin_trackerlist($data, $params) {
 				$quering_string = '';
 			}
 			$smarty->assign('query_string', $query_string);
-			
+			*/
 			if (!$tracker) {
 				$smarty->assign('msg', tra("Error in tracker ID"));
 				return "~np~".$smarty->fetch("error_simple.tpl")."~/np~";

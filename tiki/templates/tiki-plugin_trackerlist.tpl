@@ -7,10 +7,10 @@
 {if $tr_initial and $initials[ini] eq $tr_initial}
 <span class="button2"><span class="linkbuton">{$initials[ini]|capitalize}</span></span> . 
 {else}
-<a href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}&amp;{else}?{/if}tr_initial={$initials[ini]}{if $tr_sort_mode}&amp;tr_sort_mode={$tr_sort_mode}{/if}&amp;tr_offset=0" class="prevnext">{$initials[ini]}</a> . 
+<a href="{$smarty.server.PHP_SELF}?tr_initial={$initials[ini]}{if $tr_sort_mode}&amp;tr_sort_mode={$tr_sort_mode}{/if}&amp;tr_offset=0" class="prevnext">{$initials[ini]}</a> . 
 {/if}
 {/section}
-<a href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}&amp;{else}?{/if}tr_initial={if $tr_sort_mode}&amp;tr_sort_mode={$tr_sort_mode}{/if}&amp;tr_offset=0" class="prevnext">{tr}All{/tr}</a>
+<a href="{$smarty.server.PHP_SELF}?tr_initial={if $tr_sort_mode}&amp;tr_sort_mode={$tr_sort_mode}{/if}&amp;tr_offset=0" class="prevnext">{tr}All{/tr}</a>
 </div>
 {/if}
 
@@ -27,23 +27,23 @@
 {elseif $ix.type eq 's' and $ix.name eq "Rating"}
 {if $tiki_p_tracker_view_ratings eq 'y'}
 <td class="heading auto"{if $tiki_p_tracker_vote_ratings eq 'y'} colspan="2"{/if}>
-<a class="tableheading" href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}{else}?{/if}{if $tr_offset}&amp;tr_offset={$tr_offset}{/if}&amp;tr_sort_mode=f_{if 
-	$tr_sort_mode eq 'f_'|cat:$ix.fieldId|cat:'_asc'}{$ix.fieldId}_desc{else}{$ix.fieldId}_asc{/if}">{$ix.name|default:"&nbsp;"}</a></td>
+<a class="tableheading" href="{$smarty.server.PHP_SELF}?tr_sort_mode=f_{if 
+	$tr_sort_mode eq 'f_'|cat:$ix.fieldId|cat:'_asc'}{$ix.fieldId}_desc{else}{$ix.fieldId}_asc{/if}{if $tr_offset}&amp;tr_offset={$tr_offset}{/if}{if $tr_initial}&amp;tr_initial={$tr_initial}{/if}">{$ix.name|default:"&nbsp;"}</a></td>
 {/if}
 {else}
 <td class="heading auto"{if $ix.type eq 's' and $ix.name eq "Rating"} colspan="2"{/if}>
-<a class="tableheading" href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}{else}?{/if}{if $tr_offset}&amp;tr_offset={$tr_offset}{/if}&amp;tr_sort_mode=f_{if 
-	$tr_sort_mode eq 'f_'|cat:$ix.fieldId|cat:'_asc'}{$ix.fieldId}_desc{else}{$ix.fieldId}_asc{/if}">{$ix.name|default:"&nbsp;"}</a></td>
+<a class="tableheading" href="{$smarty.server.PHP_SELF}?tr_sort_mode=f_{if 
+	$tr_sort_mode eq 'f_'|cat:$ix.fieldId|cat:'_asc'}{$ix.fieldId}_desc{else}{$ix.fieldId}_asc{/if}{if $tr_offset}&amp;tr_offset={$tr_offset}{/if}{if $tr_initial}&amp;tr_initial={$tr_initial}{/if}">{$ix.name|default:"&nbsp;"}</a></td>
 {/if}
 {/if}
 {/foreach}
 {if $tracker_info.showCreated eq 'y'}
-<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}{else}?{/if}{if $tr_offset}&amp;tr_offset={$tr_offset}{/if}&amp;tr_sort_mode={if 
-	$tr_sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}created{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?tr_sort_mode={if 
+	$tr_sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}{if $tr_offset}&amp;tr_offset={$tr_offset}{/if}{if $tr_initial}&amp;tr_initial={$tr_initial}{/if}">{tr}created{/tr}</a></td>
 {/if}
 {if $tracker_info.showLastModif eq 'y'}
-<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}{else}?{/if}{if $tr_offset}&amp;tr_offset={$tr_offset}{/if}&amp;tr_sort_mode={if 
-	$tr_sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}lastModif{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?tr_sort_mode={if 
+	$tr_sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}{if $tr_offset}&amp;tr_offset={$tr_offset}{/if}{if $tr_initial}&amp;tr_initial={$tr_initial}{/if}">{tr}lastModif{/tr}</a></td>
 {/if}
 {if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y'}
 <td class="heading" width="5%">{tr}coms{/tr}</td>
@@ -117,14 +117,14 @@
 {if $items[user].my_rate eq NULL}
 <b class="linkbut highlight">-</b>
 {else}
-<a href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}{else}?{/if}&amp;trackerId={$items[user].trackerId}&amp;itemId={$items[user].itemId}&amp;fieldId={$items[user].field_values[ix].fieldId}&amp;rate_{$items[user].trackerId}=NULL" 
+<a href="{$smarty.server.PHP_SELF}?trackerId={$items[user].trackerId}&amp;itemId={$items[user].itemId}&amp;fieldId={$items[user].field_values[ix].fieldId}&amp;rate_{$items[user].trackerId}=NULL" 
 class="linkbut">-</a>
 {/if}
 {section name=i loop=$items[user].field_values[ix].options_array}
 {if $items[user].field_values[ix].options_array[i] eq $items[user].my_rate}
 <b class="linkbut highlight">{$items[user].field_values[ix].options_array[i]}</b>
 {else}
-<a href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}{else}?{/if}&amp;trackerId={$items[user].trackerId}&amp;itemId={$items[user].itemId}&amp;fieldId={$items[user].field_values[ix].fieldId}&amp;rate_{$items[user].trackerId}={$items[user].field_values[ix].options_array[i]}" 
+<a href="{$smarty.server.PHP_SELF}?trackerId={$items[user].trackerId}&amp;itemId={$items[user].itemId}&amp;fieldId={$items[user].field_values[ix].fieldId}&amp;rate_{$items[user].trackerId}={$items[user].field_values[ix].options_array[i]}" 
 class="linkbut">{$items[user].field_values[ix].options_array[i]}</a>
 {/if}
 {/section}
@@ -164,30 +164,25 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" border="0" al
 <br />
 <div align="center" class="mini">
 {if $tr_prev_offset >= 0}
-[<a class="prevnext" href="{$smarty.server.PHP_SELF}{
-	if $query_string}?{$query_string}&amp;{else}?{/if}{
-	if $tr_initial}tr_initial={$tr_initial}{/if}{
-	if $tr_prev_offset}&amp;tr_offset={$tr_prev_offset}{/if}{
-	if $tr_sort_mode}&amp;tr_sort_mode=f_{$tr_sort_mode}{/if}"
+[<a class="prevnext" href="{$smarty.server.PHP_SELF}?tr_offset={$tr_prev_offset}{
+	if $tr_initial}&amp;tr_initial={$tr_initial}{/if}{
+	if $tr_sort_mode}&amp;tr_sort_mode={$tr_sort_mode}{/if}"
 >{tr}prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $tr_next_offset >= 0}
-&nbsp;[<a class="prevnext" href="{$smarty.server.PHP_SELF}{
-	if $query_string}?{$query_string}&amp;{else}?{/if}{
-	if $tr_initial}tr_initial={$tr_initial}{/if}{
-	if $tr_next_offset}&amp;tr_offset={$tr_next_offset}{/if}{
-	if $tr_sort_mode}&amp;tr_sort_mode=f_{$tr_sort_mode}{/if}"
+&nbsp;[<a class="prevnext" href="{$smarty.server.PHP_SELF}?tr_offset={$tr_next_offset}{
+	if $tr_initial}&amp;tr_initial={$tr_initial}{/if}{
+	if $tr_sort_mode}&amp;tr_sort_mode={$tr_sort_mode}{/if}"
 >{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
-<a class="prevnext" href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}&amp;{else}?{/if}{
-	if $tr_initial}tr_initial={$tr_initial}{/if}
-	&amp;tr_offset={$selector_offset}{
-	if $tr_sort_mode}&amp;tr_sort_mode={$sort_mode}{/if}">
+<a class="prevnext" href="{$smarty.server.PHP_SELF}?tr_offset={$selector_offset}{
+	if $tr_initial}&amp;tr_initial={$tr_initial}{/if}{
+	if $tr_sort_mode}&amp;tr_sort_mode={$tr_sort_mode}{/if}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
 {/if}

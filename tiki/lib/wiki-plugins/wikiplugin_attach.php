@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_attach.php,v 1.17 2005-12-12 15:18:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_attach.php,v 1.18 2006-03-16 13:43:12 sylvieg Exp $
 // Displays an attachment or a list of attachments
 // Currently works with wiki pages and tracker items.
 // Parameters:
@@ -187,7 +187,7 @@ function wikiplugin_attach($data, $params) {
 		    }
 		}
 
-		if (isset($showdesc)) {
+		if (isset($showdesc) && !empty($atts['data'][$n]['comment'])) {
 		    $link.= strip_tags($atts['data'][$n]['comment']);
 		} else if( isset( $inline ) ) {
 		    $link.= $data;

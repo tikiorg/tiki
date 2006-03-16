@@ -1,5 +1,5 @@
 <?php
-// $Id: searchlib.php,v 1.29 2005-10-03 17:21:45 sylvieg Exp $
+// $Id: searchlib.php,v 1.30 2006-03-16 13:43:11 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -717,11 +717,11 @@ class SearchLib extends TikiLib {
 	  global $user;
 	  if ($feature_articles  == 'y'  && count($words) >0) {
 	    $query="select distinct s.`page`, s.`location`, s.`last_update`, s.`count`,
-	    	a.`heading`,a.`reads`,a.`publishDate`,a.`title` from
+	    	a.`heading`,a.`nbreads`,a.`publishDate`,a.`title` from
 		`tiki_searchindex` s, `tiki_articles` a where `searchword` in
 		(".implode(',',array_fill(0,count($words),'?')).") and
 		s.`location`='article' and
-		".$this->sql_cast("s.`page`","int")."=a.`articleId` order by `reads` desc";
+		".$this->sql_cast("s.`page`","int")."=a.`articleId` order by `nbreads` desc";
 	    $result=$this->query($query,$words,$maxRecords,$offset);
 	    $cant=0;
 	    $ret=array();
@@ -733,10 +733,10 @@ class SearchLib extends TikiLib {
 	        'pageName' => $res["title"],
 	        'location' => tra("Article"),
 		'data' => substr($res["heading"],0,250),
-		'hits' => $res["reads"],
+		'hits' => $res["nbreads"],
 		'lastModif' => $res["publishDate"],
 		'href' => $href,
-		'relevance' => $res["reads"]
+		'relevance' => $res["nbreads"]
               );
 	     }
 	    }

@@ -15,11 +15,21 @@ function wikiplugin_group($data, $params) {
 
 	$userGroups = $userlib->get_user_groups($user);
 
+	if ($params['groups'] == 'Anonymous') {
+	    $userGroups = array_shift($userGroups);
+	}
+
+	if ((sizeof($userGroups) == 1) && (sizeof($groups) == 1)) {
+	    $tgroups = implode('',$groups);
+	    if ($tgroups == $userGroups) {
+		return $data;
+	    }
+	} else {
 	foreach ($userGroups as $grp) {
 	    if (in_array($grp, $groups))
 		return $data;
 	}
-
+	}
 	return '';
 }
 

@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker_item.tpl,v 1.95 2006-03-03 18:13:49 sylvieg Exp $ *}
+{* $Id: tiki-view_tracker_item.tpl,v 1.96 2006-03-16 13:43:12 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -136,7 +136,7 @@
 
 {elseif $cur_field.type eq 'y'}
 {assign var=o_opt value=$cur_field.options_array[0]}
-{if $o_opt ne '1'}<img border="0" src="img/flags/{$cur_field.value}.gif">{/if}
+{if $o_opt ne '1'}<img border="0" src="img/flags/{$cur_field.value}.gif" />{/if}
 {if $o_opt ne '1' and $o_opt ne '2'}&nbsp;{/if}
 {if $o_opt ne '2'}{tr}{$cur_field.value}{/tr}{/if}
 
@@ -244,8 +244,8 @@
 <h2>{tr}Comments{/tr}</h2>
 {section name=ix loop=$comments}
 <b>{$comments[ix].title}</b> {if $comments[ix].user}{tr}by{/tr} {$comments[ix].user}{/if}
-  {if $tiki_p_admin_trackers eq 'y'}[<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;commentId={$comments[ix].commentId}" title="{tr}edit{/tr}"><img src="img/icons/edit.gif" border="0" width="20" height="16"  alt='{tr}edit{/tr}'></a>|&nbsp;&nbsp;<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;remove_comment={$comments[ix].commentId}"
-title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}'></a>&nbsp;&nbsp;]{/if}
+  {if $tiki_p_admin_trackers eq 'y'}[<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;commentId={$comments[ix].commentId}" title="{tr}edit{/tr}"><img src="img/icons/edit.gif" border="0" width="20" height="16"  alt='{tr}edit{/tr}' /></a>|&nbsp;&nbsp;<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;remove_comment={$comments[ix].commentId}"
+title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>&nbsp;&nbsp;]{/if}
 <br />
 <small>{tr}posted on{/tr}: {$comments[ix].posted|tiki_short_datetime}</small><br />
 {$comments[ix].parsed}
@@ -373,9 +373,9 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 				<td>
 					{section name=i loop=$cur_field.options_array}
 						{if $cur_field.options_array[i] eq $my_rate}
-							<input name="newItemRate" checked="checked" type="radio" value="{$cur_field.options_array[i]|escape}">{$cur_field.options_array[i]}</option>
+							<input name="newItemRate" checked="checked" type="radio" value="{$cur_field.options_array[i]|escape}" />{$cur_field.options_array[i]}</option>
 						{else}
-							<input name="newItemRate" type="radio" value="{$cur_field.options_array[i]|escape}">{$cur_field.options_array[i]}</option>
+							<input name="newItemRate" type="radio" value="{$cur_field.options_array[i]|escape}" />{$cur_field.options_array[i]}</option>
 						{/if}
 					{/section}
 				</td>
@@ -499,7 +499,7 @@ style="background-image:url('img/flags/{$flag}.gif');background-repeat:no-repeat
 {elseif $cur_field.type eq 'i'}
 <input type="file" name="ins_{$cur_field.id}" /><br />
 {if $cur_field.value ne ''}
-<img src="{$cur_field.value}" alt="n/a" width="{$cur_field.options_array[2]}" height="{$cur_field.options_array[3]}" ><br />
+<img src="{$cur_field.value}" alt="n/a" width="{$cur_field.options_array[2]}" height="{$cur_field.options_array[3]}" /><br />
 <a href="tiki-view_tracker_item.php?trackerId={$trackerId}&itemId={$itemId}&fieldId={$cur_field.id}&fieldName={$cur_field.name}&removeImage">{tr}remove image{/tr}</a>
 {else}
 <img border="0" src="img/icons/na_pict.gif" alt="n/a" />

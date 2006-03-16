@@ -47,7 +47,7 @@
 <td style="text-align:right;">
 {if $print_page ne 'y'}
 {if !$lock and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y'}
-<a title="{tr}edit{/tr}" href="tiki-editpage.php?page={$page|escape:"url"}"><img src="img/icons/edit.gif" border="0" width="20" height="16"  alt='{tr}edit{/tr}'></a>
+<a title="{tr}edit{/tr}" href="tiki-editpage.php?page={$page|escape:"url"}"><img src="img/icons/edit.gif" border="0" width="20" height="16"  alt='{tr}edit{/tr}' /></a>
 {/if}
 
 
@@ -349,7 +349,7 @@
 <form enctype="multipart/form-data" action="tiki-index.php?page={$page}" method="post">
 <table class="normal">
 <tr>
- <td class="formcolor">{tr}Upload file{/tr}:<input type="hidden" name="MAX_FILE_SIZE" value="1000000000"><input  style="font-size:9px;" size="16" name="userfile1" type="file">
+ <td class="formcolor">{tr}Upload file{/tr}:<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" /><input  style="font-size:9px;" size="16" name="userfile1" type="file" />
  {tr}comment{/tr}: <input  style="font-size:9px;"  type="text" name="attach_comment" maxlength="250" />
  <input style="font-size:9px;" type="submit" name="attach" value="{tr}attach{/tr}" />
  </td>

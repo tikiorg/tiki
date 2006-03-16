@@ -2,11 +2,11 @@
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}Hotwords" target="tikihelp" class="tikihelp" title="{tr}admin hotwords{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_hotwords.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin hotwords template{/tr}">
-<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}'></a>{/if}</h1>
+<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}' /></a>{/if}</h1>
 
 
 
@@ -14,7 +14,7 @@
 
 <form method="post" action="tiki-admin_hotwords.php">
 <table class="normal">
-<tr><td class="formcolor">{tr}Word{/tr}</td><td class="formcolor"><input type="text" name="word"></td></tr>
+<tr><td class="formcolor">{tr}Word{/tr}</td><td class="formcolor"><input type="text" name="word" /></td></tr>
 <tr><td class="formcolor">{tr}URL{/tr}</td><td class="formcolor"><input type="text" name="url" /></td></tr>
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="add" value="{tr}Add{/tr}" /></td></tr>
 </table>
@@ -47,7 +47,7 @@
 <td class="odd">{$words[user].url}</td>
 <td class="odd">
 &nbsp;&nbsp;<a class="link" href="tiki-admin_hotwords.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$words[user].word}" 
-title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}'></a>&nbsp;&nbsp;
+title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>&nbsp;&nbsp;
 </td>
 </tr>
 {else}
@@ -56,7 +56,7 @@ title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
 <td class="even">{$words[user].url}</td>
 <td class="even">
 &nbsp;&nbsp;<a class="link" href="tiki-admin_hotwords.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$words[user].word}" 
-title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}'></a>&nbsp;&nbsp;
+title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>&nbsp;&nbsp;
 </td>
 </tr>
 {/if}

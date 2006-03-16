@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_activities.php,v 1.15 2006-02-17 15:10:31 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_activities.php,v 1.16 2006-03-16 13:43:09 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -251,11 +251,10 @@ if (isset($_REQUEST['filter'])) {
 	}
 
 	if ($_REQUEST['filter_role']) {
-		$wheres[] = " activityId IN (SELECT activityId FROM " . GALAXIA_TABLE_PREFIX . 
-			"activity_roles WHERE roleId=" . $_REQUEST['filter_role'] . ")";
+		$wheres[] = " ga.activityId = gar.activityId AND gar.roleId=" . $_REQUEST['filter_role'];
 	}
 
-	$where = implode('and', $wheres);
+	$where = implode('AND', $wheres);
 }
 
 if (!isset($_REQUEST['sort_mode']))

@@ -1,10 +1,10 @@
 <h1><a class="pagetitle" href="tiki-admin_security.php">{tr}Security Admin{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="{$helpurl}SecurityAdmin" target="tikihelp" class="tikihelp" title="{tr}security admin{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_security.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}security admin tpl{/tr}">
-<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}
 </h1>
 
 <table class="normal">

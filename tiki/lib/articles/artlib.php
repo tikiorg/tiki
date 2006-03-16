@@ -63,7 +63,7 @@ class ArtLib extends TikiLib {
 		global $user;
 
 		if ($count_admin_pvs == 'y' || $user != 'admin') {
-			$query = "update `tiki_articles` set `reads`=`reads`+1 where `articleId`=?";
+			$query = "update `tiki_articles` set `nbreads`=`nbreads`+1 where `articleId`=?";
 
 			$result = $this->query($query,array($articleId));
 		}
@@ -147,7 +147,7 @@ class ArtLib extends TikiLib {
 		} else {
 			// Insert the article
 			$query = "insert into `tiki_submissions`(`title`,`authorName`,`topicId`,`useImage`,`image_name`,`image_size`,
-	`image_type`,`image_data`,`publishDate`,`expireDate`,`created`,`heading`,`body`,`hash`,`author`,`reads`,`votes`,`points`,
+	`image_type`,`image_data`,`publishDate`,`expireDate`,`created`,`heading`,`body`,`hash`,`author`,`nbreads`,`votes`,`points`,
 	`size`,`topicName`,`image_x`,`image_y`,`type`,`rating`,`isfloat`,`topline`, `subtitle`, `linkto`,`image_caption`, `lang`)
                          values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
@@ -215,7 +215,7 @@ class ArtLib extends TikiLib {
 		    // Fixed query. -rlpowell
 		    // Insert the article
 		    $query = "insert into `tiki_articles` (`title`, `authorName`, `topicId`, `useImage`, `image_name`, `image_size`, `image_type`, `image_data`, ";
-		    $query.= " `publishDate`, `expireDate`, `created`, `heading`, `body`, `hash`, `author`, `reads`, `votes`, `points`, `size`, `topicName`, ";
+		    $query.= " `publishDate`, `expireDate`, `created`, `heading`, `body`, `hash`, `author`, `nbreads`, `votes`, `points`, `size`, `topicName`, ";
 		    $query.= " `image_x`, `image_y`, `type`, `rating`, `isfloat`,`topline`, `subtitle`, `linkto`,`image_caption`, `lang`) ";
 		    $query.= " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	

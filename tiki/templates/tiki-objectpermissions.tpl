@@ -8,7 +8,7 @@
 {section  name=pg loop=$page_perms}
 <tr><td class="{cycle advance=false}">{$page_perms[pg].groupName}</td>
 <td class="{cycle advance=false}">{$page_perms[pg].permName}</td>
-<td class="{cycle advance=true}"><a class="link" href="tiki-objectpermissions.php?referer={$referer|escape:"url"}&amp;action=remove&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;page={$page|escape:"url"}&amp;perm={$page_perms[pg].permName}&amp;group={$page_perms[pg].groupName}" title="{tr}Delete{/tr}"><img src="img/icons2/delete.gif" width="12" height="12" alt="{tr}delete{/tr}" border="0"></a></td></tr>
+<td class="{cycle advance=true}"><a class="link" href="tiki-objectpermissions.php?referer={$referer|escape:"url"}&amp;action=remove&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;page={$page|escape:"url"}&amp;perm={$page_perms[pg].permName}&amp;group={$page_perms[pg].groupName}" title="{tr}Delete{/tr}"><img src="img/icons2/delete.gif" width="12" height="12" alt="{tr}delete{/tr}" border="0" /></a></td></tr>
 {sectionelse}
 <tr><td colspan="3" class="odd">{tr}No individual permissions global permissions apply{/tr}</td></tr>
 {/section}

@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker.tpl,v 1.107 2006-03-03 18:13:49 sylvieg Exp $ *}
+{* $Id: tiki-view_tracker.tpl,v 1.108 2006-03-16 13:43:12 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -15,7 +15,7 @@
 <span class="button2"><a href="tiki-admin_tracker_fields.php?trackerId={$trackerId}" class="linkbut">{tr}Edit fields{/tr}</a></span>
 {/if}
 {if $rss_tracker eq "y"}
-<span class="button2"><a href="tiki-tracker_rss.php?trackerId={$trackerId}" class="linkbut"><img src='img/rss.png' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' /></a>
+<span class="button2"><a href="tiki-tracker_rss.php?trackerId={$trackerId}" class="linkbut"><img src='img/rss.png' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' /></a></span>
 {/if}
 </div>
 <br />
@@ -170,24 +170,24 @@ class="prevnext">{tr}All{/tr}</a>
 <td class="heading auto">{$fields[ix].name|default:"&nbsp;"}</td>
 {elseif $fields[ix].type eq 's' and $fields[ix].name eq "Rating" and $fields[ix].isTblVisible eq 'y'}
 	<td class="heading auto"{if $tiki_p_tracker_vote_ratings eq 'y' and $user ne ''} colspan="2"{/if}>
-		<a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}trackerId={$trackerId}
-		&amp;offset={$offset}&amp;sort_mode=f_{if $sort_mode eq 'f_'|cat:$fields[ix].fieldId|cat:'_asc'}
+		<a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}{if $initial}initial={$initial}&amp;{/if}trackerId={$trackerId}
+	        &amp;offset={$offset}&amp;sort_mode=f_{if $sort_mode eq 'f_'|cat:$fields[ix].fieldId|cat:'_asc'}
 		{$fields[ix].fieldId|escape:"url"}_desc{else}{$fields[ix].fieldId|escape:"url"}_asc{/if}">
 			{$fields[ix].name|truncate:255:"..."|default:"&nbsp;"}
 		</a>
 	</td>
 	{assign var=rateFieldId value=$fields[ix].fieldId}
 {elseif $fields[ix].isTblVisible eq 'y' and $fields[ix].type ne 'x' and $fields[ix].type ne 'h'}
-<td class="heading auto"><a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode=f_{if $sort_mode eq
+<td class="heading auto"><a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}{if $initial}initial={$initial}&amp;{/if}trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode=f_{if $sort_mode eq
 'f_'|cat:$fields[ix].fieldId|cat:'_asc'}{$fields[ix].fieldId|escape:"url"}_desc{else}{$fields[ix].fieldId|escape:"url"}_asc{/if}{if $filterfield}&amp;filterfield={$filterfield}&amp;filtervalue={$filtervalue}{/if}">{$fields[ix].name|truncate:255:"..."|default:"&nbsp;"}</a></td>
 {/if}
 {/section}
 {if $tracker_info.showCreated eq 'y'}
-<td class="heading"><a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}{if $find}find={$find}&amp;{/if}trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={if 
+<td class="heading"><a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}{if $initial}initial={$initial}&amp;{/if}{if $find}find={$find}&amp;{/if}trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={if 
 $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}created{/tr}</a></td>
 {/if}
 {if $tracker_info.showLastModif eq 'y'}
-<td class="heading"><a class="tableheading" href="tiki-view_tracker.php?status={$status}&amp;find={$find}&amp;trackerId={$trackerId}&amp;offset={$offset}{section 
+<td class="heading"><a class="tableheading" href="tiki-view_tracker.php?status={$status}&amp;{if $initial}initial={$initial}&amp;{/if}find={$find}&amp;trackerId={$trackerId}&amp;offset={$offset}{section 
 name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].value}{/if}{/section}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}lastModif{/tr}</a></td>
 {/if}
 {if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y'}
@@ -269,7 +269,7 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 
 {elseif $items[user].field_values[ix].type eq 'y'}
 {assign var=o_opt value=$items[user].field_values[ix].options_array[0]}
-{if $o_opt ne '1'}<img border="0" src="img/flags/{$items[user].field_values[ix].value}.gif">{/if}
+{if $o_opt ne '1'}<img border="0" src="img/flags/{$items[user].field_values[ix].value}.gif" />{/if}
 {if $o_opt ne '1' and $o_opt ne '2'}&nbsp;{/if}
 {if $o_opt ne '2'}{tr}{$items[user].field_values[ix].value}{/tr}{/if}
 
@@ -335,7 +335,7 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 {elseif $items[user].field_values[ix].type eq 'y'}
 <td class="auto">
 {assign var=o_opt value=$items[user].field_values[ix].options_array[0]}
-{if $o_opt eq '0' or $o_opt eq 2}<img border="0" src="img/flags/{$items[user].field_values[ix].value}.gif">{/if}
+{if $o_opt eq '0' or $o_opt eq 2}<img border="0" src="img/flags/{$items[user].field_values[ix].value}.gif" />{/if}
 {if $o_opt eq '0'}&nbsp;{/if}
 {if $o_opt eq '0' or $o_opt eq 1}{tr}{$items[user].field_values[ix].value}{/tr}{/if}
 </td>
@@ -406,7 +406,7 @@ link="{tr}list attachments{/tr}"><img src="img/icons/folderin.gif" border="0" al
 {/if}
 {if $tiki_p_admin_trackers eq 'y'}
 <td><a class="link" href="tiki-view_tracker.php?status={$status}&amp;trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{section name=mix loop=$fields}{if $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&amp;remove={$items[user].itemId}" 
-title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}'></a></td>
+title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a></td>
 {/if}
 </tr>
 {assign var=itemoff value=$itemoff+1}
@@ -466,7 +466,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {* -------------------- system -------------------- *}
 {if $fields[ix].type eq 's' and $fields[ix].name eq "Rating" and $tiki_p_tracker_vote_ratings eq 'y'}
 	{section name=i loop=$fields[ix].options_array}
-		<input name="{$fields[ix].ins_id}" type="radio" value="{$fields[ix].options_array[i]|escape}">{$fields[ix].options_array[i]}</option>
+		<input name="{$fields[ix].ins_id}" type="radio" value="{$fields[ix].options_array[i]|escape}" />{$fields[ix].options_array[i]}
 	{/section}
 {/if}
 

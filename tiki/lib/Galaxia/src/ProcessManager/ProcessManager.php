@@ -295,6 +295,15 @@ class ProcessManager extends BaseManager {
     foreach ($actids as $name => $actid) {
       $am->compile_activity($pid,$actid);
     }
+
+	// Check whether the uploaded process is valid.
+	$valid = $am->validate_process_activities($pid);
+
+	//As roles have yet to be mapped, it isn't. So let's deactivate the uploaded process.
+	if (!$valid) {
+		$this->deactivate_process($pid);
+	}
+
     // create a graph for the new process
     $am->build_process_graph($pid);
     unset($am);
@@ -476,11 +485,28 @@ class ProcessManager extends BaseManager {
     }
 
     // Remove process roles
-    $query = "delete from ".GALAXIA_TABLE_PREFIX."roles where pId=$pId";
+    $query = "DELETE FROM " . GALAXIA_TABLE_PREFIX . "roles WHERE pId = $pId";
     $this->query($query);
-    $query = "delete from ".GALAXIA_TABLE_PREFIX."user_roles where pId=$pId";
+
+    $query = "DELETE FROM " . GALAXIA_TABLE_PREFIX . "user_roles WHERE pId = $pId";
     $this->query($query);
-    
+
+	// Remove all instance data
+	$query  = "DELETE FROM " . GALAXIA_TABLE_PREFIX . "workitems USING ";
+	$query .= GALAXIA_TABLE_PREFIX . "workitems gw , " . GALAXIA_TABLE_PREFIX . "instances gi ";
+	$query .= "WHERE gw.instanceId = gi.instanceId AND gi.pId = $pId";
+
+	$query  = "DELETE FROM " . GALAXIA_TABLE_PREFIX . "instance_activities USING ";
+	$query .= GALAXIA_TABLE_PREFIX . "instance_activities gia , " . GALAXIA_TABLE_PREFIX . "instances gi ";
+	$query .= "WHERE gia.instanceId = gi.instanceId AND gi.pId = $pId";
+
+	$query  = "DELETE FROM " . GALAXIA_TABLE_PREFIX . "instance_comments USING ";
+	$query .= GALAXIA_TABLE_PREFIX . "instance_comments gic , " . GALAXIA_TABLE_PREFIX . "instances gi ";
+	$query .= "WHERE gic.instanceId = gi.instanceId AND gi.pId = $pId";
+
+	$query  = "DELETE FROM " . GALAXIA_TABLE_PREFIX . "instances WHERE pId = $pId";
+	$this->query($query);
+
     // Remove the directory structure
     if (!empty($name) && is_dir(GALAXIA_PROCESSES."/$name")) {
       $this->_remove_directory(GALAXIA_PROCESSES."/$name",true);

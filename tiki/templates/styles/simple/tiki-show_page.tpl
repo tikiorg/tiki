@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-show_page.tpl,v 1.9 2006-01-20 09:54:58 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-show_page.tpl,v 1.10 2006-03-16 13:43:13 sylvieg Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle" title="{tr}Refresh{/tr}">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -19,7 +19,7 @@
 {if $feature_wiki_pageid eq 'y'}
 	<div style="float: left"><small><a class="link" href="tiki-index.php?page_id={$page_id}">{tr}page id{/tr}: {$page_id}</a></small></div>
 {/if}
-{if $cached_page eq 'y'}<div style="float: right"><small>({tr}cached{/tr})</small>	<a title="{tr}refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1"><img src="img/icons/ico_redo.gif" border="0" height="16" width="16"  alt='{tr}refresh{/tr}'></a></div>{/if}
+{if $cached_page eq 'y'}<div style="float: right"><small>({tr}cached{/tr})</small>	<a title="{tr}refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1"><img src="img/icons/ico_redo.gif" border="0" height="16" width="16"  alt='{tr}refresh{/tr}' /></a></div>{/if}
 
 <div class="wikitopline" style="clear: both;">
 {if $feature_multilingual == 'y'}
@@ -53,7 +53,7 @@
 	<a title="{tr}print{/tr}" href="tiki-print.php?page={$page|escape:"url"}"><img src="img/icons/ico_print.gif" border="0"  width="16" height="16" alt='{tr}print{/tr}' /></a>
 	{/if}
 	{if $feature_wiki_pdf eq 'y'}
-	<a title="{tr}create pdf{/tr}" href="tiki-config_pdf.php?{if $home_info && $home_info.page_ref_id}page_ref_id={$home_info.page_ref_id}{else}page={$page|escape:"url"}{/if}"><img src="img/icons/ico_pdf.gif" border="0"  width="16" height="16" alt='{tr}pdf{/tr}'></a>
+	<a title="{tr}create pdf{/tr}" href="tiki-config_pdf.php?{if $home_info && $home_info.page_ref_id}page_ref_id={$home_info.page_ref_id}{else}page={$page|escape:"url"}{/if}"><img src="img/icons/ico_pdf.gif" border="0"  width="16" height="16" alt='{tr}pdf{/tr}' /></a>
 	{/if}
 	{if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
 	<a title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;savenotepad=1"><img src="img/icons/ico_save.gif" border="0"  width="16" height="16" alt='{tr}save{/tr}' /></a>
