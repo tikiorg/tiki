@@ -2,8 +2,8 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2006-03-13 13:56:00 $
--- $Author: sylvieg $
+-- $Date: 2006-03-17 18:45:02 $
+-- $Author: sampaioprimo $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -459,7 +459,7 @@ CREATE TABLE "tiki_articles" (
   "body" text default '',
   "hash" varchar(32) default NULL NULL,
   "author" varchar(200) default NULL NULL,
-  "reads" numeric(14,0) default NULL NULL,
+  "nbreads" numeric(14,0) default NULL NULL,
   "votes" numeric(8,0) default NULL NULL,
   "points" numeric(14,0) default NULL NULL,
   "type" varchar(50) default NULL NULL,
@@ -476,7 +476,7 @@ CREATE  INDEX "tiki_articles_heading" ON "tiki_articles"("heading")
 go
 CREATE  INDEX "tiki_articles_body" ON "tiki_articles"("body")
 go
-CREATE  INDEX "tiki_articles_reads" ON "tiki_articles"("reads")
+CREATE  INDEX "tiki_articles_nbreads" ON "tiki_articles"("nbreads")
 go
 CREATE  INDEX "tiki_articles_author" ON "tiki_articles"("author")
 go
@@ -4629,7 +4629,7 @@ CREATE TABLE "tiki_submissions" (
   "body" text default '',
   "hash" varchar(32) default NULL NULL,
   "author" varchar(200) default NULL NULL,
-  "reads" numeric(14,0) default NULL NULL,
+  "nbreads" numeric(14,0) default NULL NULL,
   "votes" numeric(8,0) default NULL NULL,
   "points" numeric(14,0) default NULL NULL,
   "type" varchar(50) default NULL NULL,
@@ -6838,6 +6838,10 @@ go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('calendar_view_tab','n')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('calendar_view_mode','week')
 go
 
 
