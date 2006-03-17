@@ -29,13 +29,14 @@ list($focus_day, $focus_month, $focus_year) = array(
 $focuscell = mktime(0,0,0,$focus_month,$focus_day,$focus_year); /* server date */
 $focusdate = mktime(date('G'),date('i'),date('s'),$focus_month,$focus_day,$focus_year); /* server date */
 
+if (!isset($_SESSION['CalendarViewMode']) or !$_SESSION['CalendarViewMode']) {
+	$_SESSION['CalendarViewMode'] = $tikilib->get_preference('calendar_view_mode', 'week');
+}
+
 if (isset($_REQUEST["viewmode"]) and $_REQUEST["viewmode"]) {
 	$_SESSION['CalendarViewMode'] = $_REQUEST["viewmode"];
 }
 
-if (!isset($_SESSION['CalendarViewMode']) or !$_SESSION['CalendarViewMode']) {
-	$_SESSION['CalendarViewMode'] = 'week';
-}
 $smarty->assign_by_ref('viewmode', $_SESSION['CalendarViewMode']);
 
 if (isset($_REQUEST["viewlist"])) {

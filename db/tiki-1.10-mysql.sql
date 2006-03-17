@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2006-03-13 13:55:59 $
-# $Author: sylvieg $
+# $Date: 2006-03-17 18:45:02 $
+# $Author: sampaioprimo $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -362,7 +362,7 @@ CREATE TABLE tiki_articles (
   body text,
   hash varchar(32) default NULL,
   author varchar(200) default NULL,
-  reads int(14) default NULL,
+  nbreads int(14) default NULL,
   votes int(8) default NULL,
   points int(14) default NULL,
   type varchar(50) default NULL,
@@ -372,7 +372,7 @@ CREATE TABLE tiki_articles (
   KEY title (title),
   KEY heading (heading(255)),
   KEY body (body(255)),
-  KEY reads (reads),
+  KEY nbreads (nbreads),
   KEY author (author(32)),
   FULLTEXT KEY ft (title,heading,body)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
@@ -3133,7 +3133,7 @@ CREATE TABLE tiki_submissions (
   body text,
   hash varchar(32) default NULL,
   author varchar(200) default NULL,
-  reads int(14) default NULL,
+  nbreads int(14) default NULL,
   votes int(8) default NULL,
   points int(14) default NULL,
   type varchar(50) default NULL,
@@ -4338,6 +4338,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('cacheimages','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('cachepages','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('calendar_sticky_popup','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('calendar_view_tab','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('calendar_view_mode','week');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('change_language','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('change_password','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('change_theme','y');

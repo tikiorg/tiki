@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.80 2006-03-12 19:50:06 lfagundes Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.81 2006-03-17 18:45:02 sampaioprimo Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -532,3 +532,6 @@ CREATE TABLE tiki_page_drafts (
   comment varchar(200) default NULL,
   PRIMARY KEY  (pageName, user)
 ) TYPE=MyISAM;
+
+#2006-03-16 sampaioprimo
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('calendar_view_mode','week');

@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2006-03-16 13:43:09 $
-# $Author: sylvieg $
+# $Date: 2006-03-17 18:45:02 $
+# $Author: sampaioprimo $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -4338,6 +4338,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('cacheimages','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('cachepages','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('calendar_sticky_popup','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('calendar_view_tab','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('calendar_view_mode','week');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('change_language','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('change_password','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('change_theme','y');

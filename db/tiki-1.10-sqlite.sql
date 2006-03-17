@@ -1,6 +1,6 @@
 -- $Rev$
--- $Date: 2006-03-13 13:56:00 $
--- $Author: sylvieg $
+-- $Date: 2006-03-17 18:45:02 $
+-- $Author: sampaioprimo $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -393,7 +393,7 @@ CREATE TABLE "tiki_articles" (
   "body" text,
   "hash" varchar(32) default NULL,
   "author" varchar(200) default NULL,
-  "reads" bigint default NULL,
+  "nbreads" bigint default NULL,
   "votes" integer default NULL,
   "points" bigint default NULL,
   "type" varchar(50) default NULL,
@@ -405,7 +405,7 @@ CREATE TABLE "tiki_articles" (
 CREATE  INDEX "tiki_articles_title" ON "tiki_articles"("title");
 CREATE  INDEX "tiki_articles_heading" ON "tiki_articles"("heading");
 CREATE  INDEX "tiki_articles_body" ON "tiki_articles"("body");
-CREATE  INDEX "tiki_articles_reads" ON "tiki_articles"("reads");
+CREATE  INDEX "tiki_articles_nbreads" ON "tiki_articles"("nbreads");
 CREATE  INDEX "tiki_articles_author" ON "tiki_articles"("author");
 CREATE  INDEX "tiki_articles_ft" ON "tiki_articles"("title","heading","body");
 -- --------------------------------------------------------
@@ -3609,7 +3609,7 @@ CREATE TABLE "tiki_submissions" (
   "body" text,
   "hash" varchar(32) default NULL,
   "author" varchar(200) default NULL,
-  "reads" bigint default NULL,
+  "nbreads" bigint default NULL,
   "votes" integer default NULL,
   "points" bigint default NULL,
   "type" varchar(50) default NULL,
@@ -5146,6 +5146,8 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('cachepages','n');
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('calendar_sticky_popup','n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('calendar_view_tab','n');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('calendar_view_mode','week');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('change_language','y');
 
