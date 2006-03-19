@@ -72,6 +72,14 @@ sXml+="<e><k>"+key+"</k><v>"+value+"</v></e>";}
 catch(e){if(xajaxDebug)this.DebugMessage(e.name+": "+e.message);}
 }
 sXml+="</xjxobj>";return sXml;}
+this._nodeToObject=function(node){if(node.nodeName=='#cdata-section'){var data="";for(var j=0;j<node.parentNode.childNodes.length;j++){data+=node.parentNode.childNodes[j].data;}
+return data;}else if(node.nodeName=='xjxobj'){var data=new Array();for(var j=0;j<node.childNodes.length;j++){var child=node.childNodes[j];var key;var value;if(child.nodeName=='e'){for(var k=0;k<child.childNodes.length;k++){if(child.childNodes[k].nodeName=='k'){key=child.childNodes[k].firstChild.data;}else if(child.childNodes[k].nodeName=='v'){value=this._nodeToObject(child.childNodes[k].firstChild);}
+}
+if(key!=null&&value!=null){data[key]=value;key=value=null;}
+}
+}
+return data;}
+}
 this.loadingFunction=function(){};this.doneLoadingFunction=function(){};var loadingTimeout;this.call=function(sFunction,aArgs,sRequestType){var i,r,postData;if(document.body&&xajaxWaitCursor)
 document.body.style.cursor='wait';if(xajaxStatusMessages==true)window.status='Sending Request...';clearTimeout(loadingTimeout);loadingTimeout=setTimeout("xajax.loadingFunction();",400);if(xajaxDebug)this.DebugMessage("Starting xajax...");if(sRequestType==null){var xajaxRequestType=xajaxDefinedPost;}
 else{var xajaxRequestType=sRequestType;}
@@ -94,14 +102,14 @@ errorString+="\nYou have whitespace in your response.";alert(errorString);docume
 else{var errorString="Error: the server returned the following HTTP status: "+r.status;errorString+="\nReceived:\n"+r.responseText;alert(errorString);document.body.style.cursor='default';if(xajaxStatusMessages==true)window.status='Invalid XML response error';}
 delete r;r=null;}
 if(xajaxDebug)this.DebugMessage("Calling "+sFunction+" uri="+uri+" (post:"+postData+")");r.send(postData);if(xajaxStatusMessages==true)window.status='Waiting for data...';delete r;return true;}
-this.getBrowserHTML=function(html){tmpXajax=this.$(this.workId);if(tmpXajax==null){tmpXajax=document.createElement("div");tmpXajax.setAttribute('id',this.workId);tmpXajax.style.display="none";tmpXajax.style.visibility="hidden";document.body.appendChild(tmpXajax);}
+this.getBrowserHTML=function(html){tmpXajax=this.$(this.workId);if(!tmpXajax){tmpXajax=document.createElement("div");tmpXajax.setAttribute('id',this.workId);tmpXajax.style.display="none";tmpXajax.style.visibility="hidden";document.body.appendChild(tmpXajax);}
 tmpXajax.innerHTML=html;var browserHTML=tmpXajax.innerHTML;tmpXajax.innerHTML='';return browserHTML;}
 this.willChange=function(element,attribute,newData){if(!document.body){return true;}
 if(attribute=="innerHTML"){newData=this.getBrowserHTML(newData);}
 elementObject=this.$(element);if(elementObject){var oldData;eval("oldData=this.$('"+element+"')."+attribute);if(newData!==oldData)
 return true;}
 return false;}
-this.viewSource=function(){return document.body.parentElement.outerHTML;}
+this.viewSource=function(){return "<html>"+document.getElementsByTagName("HTML")[0].innerHTML+"</html>";}
 this.processResponse=function(xml){clearTimeout(loadingTimeout);this.doneLoadingFunction();if(xajaxStatusMessages==true)window.status='Processing...';var tmpXajax=null;xml=xml.documentElement;if(xml==null)
 return;for(var i=0;i<xml.childNodes.length;i++){if(xml.childNodes[i].nodeName=="cmd"){var cmd;var id;var property;var data;var search;var type;var before;for(var j=0;j<xml.childNodes[i].attributes.length;j++){if(xml.childNodes[i].attributes[j].name=="n"){cmd=xml.childNodes[i].attributes[j].value;}
 else if(xml.childNodes[i].attributes[j].name=="t"){id=xml.childNodes[i].attributes[j].value;}
@@ -110,6 +118,7 @@ else if(xml.childNodes[i].attributes[j].name=="c"){type=xml.childNodes[i].attrib
 }
 if(xml.childNodes[i].childNodes.length > 1&&xml.childNodes[i].firstChild.nodeName=="#cdata-section"){data="";for(var j=0;j<xml.childNodes[i].childNodes.length;j++){data+=xml.childNodes[i].childNodes[j].data;}
 }
+else if(xml.childNodes[i].firstChild.nodeName=='xjxobj'){data=this._nodeToObject(xml.childNodes[i].firstChild);}
 else if(xml.childNodes[i].childNodes.length > 1){for(var j=0;j<xml.childNodes[i].childNodes.length;j++){if(xml.childNodes[i].childNodes[j].childNodes.length > 1&&xml.childNodes[i].childNodes[j].firstChild.nodeName=="#cdata-section"){var internalData="";for(var k=0;k<xml.childNodes[i].childNodes[j].childNodes.length;k++){internalData+=xml.childNodes[i].childNodes[j].childNodes[k].nodeValue;}
 }else{var internalData=xml.childNodes[i].childNodes[j].firstChild.nodeValue;}
 if(xml.childNodes[i].childNodes[j].nodeName=="s"){search=internalData;}
@@ -120,6 +129,9 @@ else if(xml.childNodes[i].firstChild)
 data=xml.childNodes[i].firstChild.nodeValue;else
 data="";var objElement=this.$(id);var cmdFullname;try{if(cmd=="al"){cmdFullname="addAlert";alert(data);}
 else if(cmd=="js"){cmdFullname="addScript/addRedirect";eval(data);}
+else if(cmd=="jc"){cmdFullname="addScriptCall";var scr=id+'(';if(data[0]!=null){scr+='data[0]';for(var l=1;l<data.length;l++){scr+=',data['+l+']';}
+}
+scr+=');';eval(scr);}
 else if(cmd=="in"){cmdFullname="addIncludeScript";this.include(data);}
 else if(cmd=="as"){cmdFullname="addAssign/addClear";if(this.willChange(id,property,data)){eval("objElement."+property+"=data;");}
 }
