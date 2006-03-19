@@ -341,6 +341,40 @@ function Xajax()
 		return sXml;
 	}
 	
+	// unserializes data structure from xajaxResponse::_buildObjXml()
+	this._nodeToObject = function(node) {
+	    // parentNode here is weird, have to tune
+	    if (node.nodeName == '#cdata-section') {
+		var data = "";
+		for (var j=0; j<node.parentNode.childNodes.length; j++)
+		{
+		    data += node.parentNode.childNodes[j].data;
+		}
+		return data;
+	    } else if (node.nodeName == 'xjxobj') {
+		var data = new Array();
+		for (var j=0; j<node.childNodes.length; j++) {
+		    var child = node.childNodes[j];
+		    var key;
+		    var value;
+		    if (child.nodeName == 'e') {
+			for (var k=0; k<child.childNodes.length; k++) {
+			    if (child.childNodes[k].nodeName == 'k') {
+				key = child.childNodes[k].firstChild.data;
+			    } else if (child.childNodes[k].nodeName == 'v') {
+				value = this._nodeToObject(child.childNodes[k].firstChild);
+			    }
+			}
+			if (key != null && value != null) {
+			    data[key] = value;
+			    key = value = null;
+			}
+		    }
+		}
+		return data;
+	    } 	    
+	}
+	
 	this.loadingFunction = function(){};
 	this.doneLoadingFunction = function(){};
 	var loadingTimeout;
@@ -458,7 +492,7 @@ function Xajax()
 	this.getBrowserHTML = function(html)
 	{
 		tmpXajax = this.$(this.workId);
-		if (tmpXajax == null)
+		if (!tmpXajax)
 		{
 			tmpXajax = document.createElement("div");
 			tmpXajax.setAttribute('id',this.workId);
@@ -498,7 +532,7 @@ function Xajax()
 	//Returns the source code of the page after it's been modified by xajax
 	this.viewSource = function()
 	{
-		return document.body.parentElement.outerHTML;
+		return "<html>"+document.getElementsByTagName("HTML")[0].innerHTML+"</html>";
 	}
 	
 	//Process XML xajaxResponses returned from the request
@@ -550,6 +584,9 @@ function Xajax()
 						data += xml.childNodes[i].childNodes[j].data;
 					}
 				}
+				else if (xml.childNodes[i].firstChild.nodeName == 'xjxobj') { 
+				    data = this._nodeToObject(xml.childNodes[i].firstChild);
+				}
 				else if (xml.childNodes[i].childNodes.length > 1)
 				{
 					for (var j=0; j<xml.childNodes[i].childNodes.length; j++)
@@ -593,6 +630,19 @@ function Xajax()
 					{
 						cmdFullname = "addScript/addRedirect";
 						eval(data);
+					}
+					else if (cmd=="jc")
+					{
+					        cmdFullname = "addScriptCall";
+						var scr = id + '(';
+						if (data[0] != null) {
+						    scr += 'data[0]';
+						    for (var l=1; l<data.length; l++) {
+							scr += ',data['+l+']';
+						    }
+						}
+						scr += ');';
+						eval(scr);
 					}
 					else if (cmd=="in")
 					{
