@@ -3,6 +3,7 @@
 
 $file = $ARGV;
 $file =~ s/\.tpl$/\.php/;
+$file =~ s|^.+/||;
 $template = 'tiki-admin_quicktags_content.tpl';
 $htmlelement = 'quicktags-content';
 
