@@ -15,7 +15,7 @@ function smarty_block_ajax_href($params, $content, &$smarty)
     $htmlelement = $params['htmlelement'];
 
     if ($feature_ajax != 'y') {
-	return " href=\"$url\" ";
+	return " href=\"sasquatch:$url\" ";
     } else {
 	return " href=\"#\" onclick=\"loadComponent('$url','$template','$htmlelement');\" ";
     }
