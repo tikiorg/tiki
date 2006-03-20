@@ -1,27 +1,18 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-ajax_header.tpl,v 1.4 2006-03-20 04:45:53 lfagundes Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-ajax_header.tpl,v 1.5 2006-03-20 06:15:12 lfagundes Exp $ *}
 {if $feature_ajax eq 'y'}
 
 {$xajax_js}
 
-<script type="text/javascript">
-  var maxRecords = {$maxRecords};
-  var directPagination = '{$direct_pagination}';
-
-  {literal}
-  function loadComponent(url, template, htmlelement) {
-      xajaxRequestUri = url;
-      xajax_loadComponent(template, htmlelement);      
-  }
-  {/literal}
-
-</script>
-
+<script type="text/javascript" src="lib/ajax/tiki-ajax.js"></script>
 
 <div id="ajaxLoading">{tr}Loading...{/tr}</div>
 <div id="ajaxDebug"></div>
 {/if}
 
 {* <script type="text/javascript">
+  var maxRecords = {$maxRecords};
+  var directPagination = '{$direct_pagination}';
+
 	var ajax_cols = new Array()
 	{section name=i start=0 loop=$ajax_cols}
 		ajax_data_{$smarty.section.i.index} = new Array();

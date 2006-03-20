@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/ajax/tiki-ajax.php,v 1.1 2006-03-20 04:45:53 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/ajax/tiki-ajax.php,v 1.2 2006-03-20 06:15:11 lfagundes Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -37,7 +37,7 @@ global $xajax;
 $xajax = new xajax();
 
 $xajax->registerFunction("loadComponent");
-
+//$xajax->debugOn();
 $smarty->assign("xajax_js",$xajax->getJavascript('','lib/ajax/xajax_js/xajax.js'));
 
 /* vim: set expandtab: */

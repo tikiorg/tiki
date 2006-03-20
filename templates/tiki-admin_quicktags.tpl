@@ -1,8 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_quicktags.tpl,v 1.19 2006-03-16 13:43:12 sylvieg Exp $ *}
-{if $feature_ajax eq 'y'}
-{include file='tiki-ajax_header.tpl'}
-<script src="lib/cpaint/tiki-ajax_quicktags.js" type="text/javascript"></script>
-{/if}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_quicktags.tpl,v 1.20 2006-03-20 06:15:12 lfagundes Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_quicktags.php">{tr}Admin Quicktags{/tr}</a>
 
@@ -45,51 +41,8 @@
 
 <h2>{tr}QuickTags{/tr}</h2>
 
-{if $feature_ajax ne 'y'}
-<table class="normal">
-<tr>
-<td class="heading"><a class="tableheading" href="tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'taglabel_desc'}taglabel_asc{else}taglabel_desc{/if}">{tr}Label{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'taginsert_desc'}taginsert_asc{else}taginsert_desc{/if}">{tr}Insert{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'tagicon_desc'}tagicon_asc{else}tagicon_desc{/if}">{tr}Icon{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'tagcategory_desc'}tagcategory_asc{else}tagcategory_desc{/if}">{tr}Category{/tr}</a></td>
-<td class="heading">{tr}action{/tr}</td>
-</tr>
-{cycle values="odd,even" print=false}
-{section name=tag loop=$quicktags}
-<tr>
-<td class="{cycle advance=false}">{$quicktags[tag].taglabel}</td>
-<td class="{cycle advance=false}">{$quicktags[tag].taginsert}</td>
-<td class="{cycle advance=false}">{html_image file=$quicktags[tag].tagicon} {$quicktags[tag].iconpath}</td>
-<td class="{cycle advance=false}">{$quicktags[tag].tagcategory}</td>
-<td class="{cycle}">
-   <a class="link" href="tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$quicktags[tag].tagId}">{tr}delete{/tr}</a>
-   <a class="link" href="tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;tagId={$quicktags[tag].tagId}">{tr}edit{/tr}</a>
-</td>
-</tr>
-{/section}
-</table>
-<div align="center">
-<div class="mini">
-{if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-admin_quicktags.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
-{/if}
-{tr}Page{/tr}: {$actual_page}/{$cant_pages}
-{if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-admin_quicktags.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
-{/if}
-{if $direct_pagination eq 'y'}
-<br />
-{section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
-<a class="prevnext" href="tiki-admin_quicktags.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
-{$smarty.section.foo.index_next}</a>&nbsp;
-{/section}
-{/if}
-</div>
-</div>
-{else}
+<div id="quicktags-content">
 
-{include file="tiki-ajax_table.tpl"}
-<script type="text/javascript">listObjects('');</script>
+{include file="tiki-admin_quicktags_content.tpl"}
 
-{/if}
+</div>
