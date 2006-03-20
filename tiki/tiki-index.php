@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.156 2006-03-16 13:43:09 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.157 2006-03-20 21:39:18 lfagundes Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,6 +11,7 @@ require_once('tiki-setup.php');
 include_once('lib/structures/structlib.php');
 include_once('lib/wiki/wikilib.php');
 include_once('lib/stats/statslib.php');
+include_once('lib/ajax/ajaxlib.php');
 
 if ($feature_freetags == 'y') {
 	include_once('lib/freetag/freetaglib.php');
@@ -641,6 +642,8 @@ if ($feature_actionlog == 'y') {
 	include_once('lib/logs/logslib.php');
 	$logslib->add_action('Viewed', $page);
 }
+
+$ajaxlib->processRequests();
 
 // Display the Index Template
 $smarty->assign('dblclickedit','y');

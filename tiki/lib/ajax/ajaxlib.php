@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: ajaxlib.php,v 1.1 2006-03-20 16:36:13 lfagundes Exp $
+// CVS: $Id: ajaxlib.php,v 1.2 2006-03-20 21:39:19 lfagundes Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -97,7 +97,7 @@ if ($feature_ajax == 'y') {
     }
 }
 
-global $ajaxlib, $smarty;
+global $ajaxlib;
 $ajaxlib = new TikiAjax();
 $ajaxlib->registerFunction("loadComponent");
 
