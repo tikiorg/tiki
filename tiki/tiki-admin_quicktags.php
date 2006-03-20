@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_quicktags.php,v 1.15 2006-03-20 07:03:37 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_quicktags.php,v 1.16 2006-03-20 16:36:07 lfagundes Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,7 +10,7 @@
 require_once ('tiki-setup.php');
 
 include_once ('lib/quicktags/quicktagslib.php');
-require_once("lib/ajax/tiki-ajax.php");
+require_once("lib/ajax/ajaxlib.php");
 
 if ($tiki_p_admin != 'y') {
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
@@ -117,7 +117,9 @@ $smarty->assign_by_ref('list_categories', $list_categories);
 
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
 
-$xajax->processRequests();
+$ajaxlib->registerTemplate('tiki-admin_quicktags_content.tpl');
+$ajaxlib->registerTemplate('tiki-admin_quicktags_edit.tpl');
+$ajaxlib->processRequests();
 
 // Display the template
 $smarty->assign('mid', 'tiki-admin_quicktags.tpl');

@@ -1,6 +1,6 @@
 <?php
 
-$xajax->registerFunction('save_draft');
+$ajaxlib->registerFunction('save_draft');
 
 function save_draft($pageId, $pageDesc, $pageData, $pageComment) {
     global $wikilib;

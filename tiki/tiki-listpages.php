@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.26 2006-03-20 07:03:37 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.27 2006-03-20 16:36:10 lfagundes Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,7 +8,7 @@
 
 // Initialization
 require_once ('tiki-setup.php');
-require_once("lib/ajax/tiki-ajax.php");
+require_once("lib/ajax/ajaxlib.php");
 
 if ($feature_wiki != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
@@ -130,7 +130,8 @@ $smarty->assign_by_ref('listpages', $listpages["data"]);
 //print_r($listpages["data"]);
 ask_ticket('list-pages');
 
-$xajax->processRequests();
+$ajaxlib->registerTemplate('tiki-listpages_content.tpl');
+$ajaxlib->processRequests();
 
 // Display the template
 $smarty->assign('mid', 'tiki-listpages.tpl');

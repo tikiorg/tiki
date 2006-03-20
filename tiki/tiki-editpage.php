@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.137 2006-03-20 07:03:37 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.138 2006-03-20 16:36:08 lfagundes Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,9 +12,8 @@ require_once ('tiki-setup.php');
 include_once ('lib/wiki/wikilib.php');
 include_once ('lib/structures/structlib.php');
 include_once ('lib/notifications/notificationlib.php');
-
-require_once("lib/ajax/tiki-ajax.php");
-require_once("lib/wiki/wiki-ajax.php");
+require_once ("lib/ajax/ajaxlib.php");
+require_once ("lib/wiki/wiki-ajax.php");
 
 $access->check_feature('feature_wiki');
 
@@ -957,7 +956,7 @@ if ($feature_contribution == 'y') {
 }
 ask_ticket('edit-page');
 
-$xajax->processRequests();
+$ajaxlib->processRequests();
 
 // Display the Index Template
 $smarty->assign('mid', 'tiki-editpage.tpl');
