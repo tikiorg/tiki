@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.299 2006-02-17 15:10:31 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.300 2006-03-20 04:45:52 lfagundes Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1974,6 +1974,9 @@ if (isset($_REQUEST['comzone'])) {
 		if ($show_comzone=='y') $smarty->assign('show_comzone', 'y');
 	}
 }
+
+/* setup ajax stuff */
+require_once("lib/ajax/tiki-ajax.php");
 
 /* trick for use with doc/devtools/cvsup.sh */
 if (is_file('.lastup') and is_readable('.lastup')) {

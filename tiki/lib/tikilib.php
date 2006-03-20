@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.636 2006-03-16 13:43:10 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.637 2006-03-20 04:45:52 lfagundes Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -5853,7 +5853,7 @@ if (!$simple_wiki) {
 		}
 
 		$query = "delete from `tiki_page_drafts` where `user`=? and `pageName`=?";
-		$this->query($query, array($user, $pageName));
+		$this->query($query, array($GLOBALS['user'], $pageName));
 
 		global $feature_score;
 	        if ($feature_score == 'y') {

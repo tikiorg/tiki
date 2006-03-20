@@ -1,8 +1,27 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-ajax_header.tpl,v 1.3 2006-02-11 15:00:25 amette Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-ajax_header.tpl,v 1.4 2006-03-20 04:45:53 lfagundes Exp $ *}
 {if $feature_ajax eq 'y'}
-<script type="text/javascript">var maxRecords = {$maxRecords};</script>
-<script type="text/javascript">var directPagination = '{$direct_pagination}';</script>
+
+{$xajax_js}
+
 <script type="text/javascript">
+  var maxRecords = {$maxRecords};
+  var directPagination = '{$direct_pagination}';
+
+  {literal}
+  function loadComponent(url, template, htmlelement) {
+      xajaxRequestUri = url;
+      xajax_loadComponent(template, htmlelement);      
+  }
+  {/literal}
+
+</script>
+
+
+<div id="ajaxLoading">{tr}Loading...{/tr}</div>
+<div id="ajaxDebug"></div>
+{/if}
+
+{* <script type="text/javascript">
 	var ajax_cols = new Array()
 	{section name=i start=0 loop=$ajax_cols}
 		ajax_data_{$smarty.section.i.index} = new Array();
@@ -15,9 +34,7 @@
 		ajax_data_{$smarty.section.i.index}[{$smarty.section.j.index}] = '{$ajax_cols[i][j]}'
 		{/section}
 	{/section}
-</script>
-<div id="ajaxLoading">{tr}Loading...{/tr}</div>
-<script src="lib/cpaint/cpaint2.inc.compressed.js" type="text/javascript"></script>
-<script src="lib/cpaint/tiki-ajax.js" type="text/javascript"></script>
-<div id="ajaxDebug"></div>
-{/if}
+
+</script> *}
+
+

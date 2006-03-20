@@ -5,7 +5,7 @@
 {/if}
 <div id="tiki-main">
   {if $feature_ajax eq 'y'}
-  <div id="ajaxLoading">{tr}Loading...{/tr}</div>
+    {include file="tiki-ajax_header.tpl"}
   {/if}
   {if $feature_top_bar eq 'y'}
   <div id="tiki-top">
