@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.46 2005-12-19 17:27:25 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.47 2006-03-20 21:39:19 lfagundes Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -9,7 +9,7 @@
 {if ($editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox')) or $tiki_p_admin_wiki eq 'y'}
     <td>
       <div class="button2" >
-      <a title="{$semUser}" href="tiki-editpage.php?page={$page|escape:"url"}{if $page_ref_id}&amp;page_ref_id={$page_ref_id}{/if}" class="linkbut">
+      <a title="{$semUser}" {ajax_href template="tiki-editpage.tpl" htmlelement="tiki-center"}tiki-editpage.php?page={$page|escape:"url"}{if $page_ref_id}&amp;page_ref_id={$page_ref_id}{/if}{/ajax_href} class="linkbut">
         {if $beingEdited eq 'y'}
           <span class="highlight">{tr}edit{/tr}</span>
         {else}
