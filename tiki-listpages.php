@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.24 2005-09-16 17:51:15 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.25 2006-03-20 04:45:52 lfagundes Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -104,7 +104,6 @@ if (isset($_REQUEST["exact_match"])) {
 }                 
 
 $smarty->assign('initials', split(' ','a b c d e f g h i j k l m n o p q r s t u v w x y z'));
-
 // Get a list of last changes to the Wiki database
 $listpages = $tikilib->list_pages($offset, $maxRecords, $sort_mode, $find, $initial, $exact_match);
 // If there're more records then assign next_offset
@@ -129,6 +128,8 @@ if ($offset > 0) {
 $smarty->assign_by_ref('listpages', $listpages["data"]);
 //print_r($listpages["data"]);
 ask_ticket('list-pages');
+
+$xajax->processRequests();
 
 // Display the template
 $smarty->assign('mid', 'tiki-listpages.tpl');
