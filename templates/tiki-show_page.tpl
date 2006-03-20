@@ -1,4 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.98 2006-03-20 21:39:19 lfagundes Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.99 2006-03-20 21:47:11 lfagundes Exp $ *}
+
+{if $feature_ajax == 'y'}
+  <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
+{/if}
 
 {breadcrumbs type="trail" loc="page" crumbs=$crumbs}
 {if $feature_page_title eq 'y'}

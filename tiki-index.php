@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.157 2006-03-20 21:39:18 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.158 2006-03-20 21:47:09 lfagundes Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,6 +12,7 @@ include_once('lib/structures/structlib.php');
 include_once('lib/wiki/wikilib.php');
 include_once('lib/stats/statslib.php');
 include_once('lib/ajax/ajaxlib.php');
+require_once ("lib/wiki/wiki-ajax.php");
 
 if ($feature_freetags == 'y') {
 	include_once('lib/freetag/freetaglib.php');

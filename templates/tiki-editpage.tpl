@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.81 2006-03-20 07:03:38 lfagundes Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.82 2006-03-20 21:47:11 lfagundes Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -12,7 +12,6 @@
 {/if}
 
 {if $feature_ajax == 'y'}
-  {include file="tiki-ajax_header.tpl"}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
 
