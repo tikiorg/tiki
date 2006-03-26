@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.16 2006-03-03 14:09:29 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.17 2006-03-26 15:56:38 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -183,6 +183,7 @@ class LogsLib extends TikiLib {
 		return split('_', str_replace('0', ' ', $conf));
 	}
 	function list_actions($action='', $objectType='',$user='',$offset=0,$maxRecords=-1,$sort_mode='lastModif_desc',$find='',$start=0,$end=0, $categId='') {
+		global $feature_contribution; include_once('lib/contribution/contributionlib.php');
 
 		$bindvars = array();
 		$amid = array();
@@ -244,8 +245,15 @@ class LogsLib extends TikiLib {
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
-			if ($this->action_is_viewed($res['action'], $res['objectType']))
+			if ($this->action_is_viewed($res['action'], $res['objectType'])) {
+				if ($feature_contribution == 'y' && ($res['action'] == 'Created' || $res['action'] == 'Updated' || $res['action'] == 'Posted' || $res['action'] == 'Replied')) {
+					if ($id = $this->get_comment_action($res))
+						$res['contributions'] = $contributionlib->get_assigned_contributions($id, 'comment');
+					else
+						$res['contributions'] = $contributionlib->get_assigned_contributions($res['object'], $res['objectType']); // todo: do a left join
+				}
 				$ret[] = $res;
+			}
 		}
 		return $ret;
 	}
@@ -309,6 +317,14 @@ class LogsLib extends TikiLib {
 				$bytes['del'] = $matches[1];
 		}
 		return $bytes;
+	}
+	function get_comment_action($action) {
+		if (preg_match('/comments_parentId=([0-9\-+]+)/', $action['comment'], $matches))
+			return $matches[1];
+		elseif (preg_match('/#threadId([0-9\-+]+)/', $action['comment'], $matches))
+			return $matches[1];
+		else
+			return '';
 	}
 	function get_action_stat_user($actions) {
 		$stats = array();
