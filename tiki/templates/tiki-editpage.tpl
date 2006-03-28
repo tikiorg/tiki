@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.82 2006-03-20 21:47:11 lfagundes Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.83 2006-03-28 07:41:46 sampaioprimo Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -197,6 +197,7 @@ or use
 {/if}
 {/if}
 
+{if $feature_wiki_replace eq 'y'}
 <script type="text/javascript">
 {literal}
 function searchrep() {
@@ -223,6 +224,7 @@ Replace to:
 <input type="checkbox" id="caseinsens" />{tr}Case Insensitivity{/tr}
 <input type="button" value="{tr}replace{/tr}" onclick="javascript:searchrep();">
 </td></tr>
+{/if}
 
 {if $page|lower neq 'sandbox'}
 <tr class="formcolor"><td>{tr}Edit Summary{/tr}:</td><td><input style="width:90%;" class="wikitext" type="text" name="comment" value="{$commentdata|escape}" /></td></tr>

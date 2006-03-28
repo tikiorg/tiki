@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.82 2006-03-20 04:45:53 lfagundes Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.83 2006-03-28 07:41:46 sampaioprimo Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -539,3 +539,5 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('calendar_view_mode','we
 #2006-03-19 lfagundes
 alter table `tiki_page_drafts` add `lastModif` int(14); 
 
+#2006-03-28
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_replace', 'n');
