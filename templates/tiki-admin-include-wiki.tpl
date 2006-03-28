@@ -494,6 +494,7 @@
 	</select>
 </td></tr>
     <tr><td class="form">{tr}Print Page{/tr}:</td><td><input type="checkbox" name="feature_wiki_print" {if $feature_wiki_print eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Search and replace{/tr}:</td><td><input type="checkbox" name="feature_wiki_replace" {if $feature_wiki_replace eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td colspan="2" class="button"><input type="submit" name="wikifeatures" value="{tr}Set features{/tr}" /></td></tr>
     </table>
     </form>

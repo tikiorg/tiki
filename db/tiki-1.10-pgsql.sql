@@ -1,5 +1,5 @@
 -- $Rev$
--- $Date: 2006-03-17 18:45:02 $
+-- $Date: 2006-03-28 07:41:45 $
 -- $Author: sampaioprimo $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
@@ -5448,6 +5448,8 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_pictures',
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_rankings','y');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_ratings','n');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_replace','n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_tables','old');
 
