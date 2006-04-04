@@ -1776,7 +1776,7 @@ class Comments extends TikiLib {
 	$this->query($query, array( (int) $threadId ) );
     }
 
-    function update_comment($threadId, $title, $comment_rating, $data, $type = 'n', $summary = '', $smiley = '', $objectId='') {
+    function update_comment($threadId, $title, $comment_rating, $data, $type = 'n', $summary = '', $smiley = '', $objectId='', $contributions='') {
 	global $feature_actionlog, $feature_contribution;
 	if ($feature_actionlog == 'y') {
 		$object = explode( ":", $objectId, 2);
@@ -1785,20 +1785,24 @@ class Comments extends TikiLib {
 		$bytes = diff2($comment['data'] , $data, 'bytes');
 		global $logslib; include_once('lib/logs/logslib.php');
 		if ($object[0] == 'forum')
-			$logslib->add_action('Updated', $object[1], $object[0], "comments_parentId=$threadId&amp;$bytes#threadId$threadId");
+			$logslib->add_action('Updated', $object[1], $object[0], "comments_parentId=$threadId&amp;$bytes#threadId$threadId", '', '', '', '',  $contributions);
 		else
-			$logslib->add_action('Updated', $object[1], 'comment', "type=".$object[0]."&amp;$bytes#threadId$threadId");
+			$logslib->add_action('Updated', $object[1], 'comment', "type=".$object[0]."&amp;$bytes#threadId$threadId", '', '', '', '', $contributions);
 	}
 	$query = "update `tiki_comments` set `title`=?, `comment_rating`=?,
 	`data`=?, `type`=?, `summary`=?, `smiley`=?
 	    where `threadId`=?";
 	$result = $this->query($query, array( $title, (int) $comment_rating, $data, $type,
 		    $summary, $smiley, (int) $threadId ) );
+	if ($feature_contribution == 'y') {
+		global $contributionlib; include_once('lib/contribution/contributionlib.php');
+		$contributionlib->assign_contributions($contributions, $threadId, 'comment', $title, '', '');
+	}
     }
 
     function post_new_comment($objectId, $parentId, $userName,
 	    $title, $data, &$message_id, $in_reply_to = '', $type = 'n',
-	    $summary = '', $smiley = ''
+	    $summary = '', $smiley = '', $contributions = ''
 	    )
     {
 	if (!$userName) {
@@ -1933,10 +1937,14 @@ class Comments extends TikiLib {
 		else
 			$l = $tikilib->strlen_quoted($data);
 		if ($object[0] == 'forum')
-			$logslib->add_action(($parentId == 0)? 'Posted': 'Replied', $object[1], $object[0], 'comments_parentId='.$threadId.'&amp;add='.$l);
+			$logslib->add_action(($parentId == 0)? 'Posted': 'Replied', $object[1], $object[0], 'comments_parentId='.$threadId.'&amp;add='.$l, '', '', '', '', $contributions);
 		else
-			$logslib->add_action(($parentId == 0)? 'Posted': 'Replied', $object[1], 'comment', 'type='.$object[0].'&amp;add='.$l.'#threadId'.$threadId);
-
+			$logslib->add_action(($parentId == 0)? 'Posted': 'Replied', $object[1], 'comment', 'type='.$object[0].'&amp;add='.$l.'#threadId'.$threadId, '', '', '', '', $contributions);
+	}
+	global $feature_contribution;
+	if ($feature_contribution == 'y') {
+		global $contributionlib; include_once('lib/contribution/contributionlib.php');
+		$contributionlib->assign_contributions($contributions, $threadId, 'comment', $title, '', '');
 	}
 
 	return $threadId;

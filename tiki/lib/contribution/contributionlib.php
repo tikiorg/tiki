@@ -47,22 +47,23 @@ class ContributionLib extends TikiLib {
 	}
 	function assign_contributions($contributions, $itemId, $objectType, $description, $name, $href) {
 		global $objectlib; include_once('lib/objectlib.php');
-		if (($objectId = $objectlib->get_object_id($objectType, $itemId)) == 0)
+		if (($objectId = $objectlib->get_object_id($objectType, $itemId)) == 0) {
 			$objectId = $objectlib->insert_object($objectType, $itemId, $description, $name, $href);
-		else {
+		} else {
 			$query = 'delete from `tiki_contributions_assigned` where `objectId`=?';
 			$this->query($query, array((int)$objectId));
 		}
-		$query = 'insert `tiki_contributions_assigned` (`contributionId`, `objectId`) values(?,?)';
 		if (!empty($contributions)) {
+			$query = 'insert `tiki_contributions_assigned` (`contributionId`, `objectId`) values(?,?)';
 			foreach ($contributions as $contribution) {
 				if ($contribution)
 					$this->query($query, array((int)$contribution, (int)$objectId));
 			}
 		}
 	}
+
 	function get_assigned_contributions($itemId, $objectType) {
-		$query = 'select tc.* from `tiki_contributions` tc, `tiki_contributions_assigned` tca, `tiki_objects` tob where tob.`itemId`=? and tob.`type`=?  and tca.`objectId`=tob.`objectId` and tca.`contributionId`= tc.`contributionId` order by tc.`name` asc';
+		$query = "select tc.* from `tiki_contributions` tc, `tiki_contributions_assigned` tca, `tiki_objects` tob where tob.`itemId`=? and tob.`type`=? and tca.`objectId`=tob.`objectId` and tca.`contributionId`= tc.`contributionId` order by tob.`type`desc, tc.`name` asc";
 		$result = $this->query($query, array($itemId, $objectType));
 		$ret = array();
 		while ($res = $result->fetchRow()) {

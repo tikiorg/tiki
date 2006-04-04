@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.63 2006-03-16 15:58:31 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.64 2006-04-04 22:16:07 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -190,7 +190,7 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 			$user,
 			$_REQUEST["comments_title"],
 			$_REQUEST["comments_data"],
-			$message_id, $in_reply_to );
+			$message_id, 'n', '', '', $in_reply_to, isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '');
 		if ($object[0] != "forum") {
 			$smarty->assign("comments_parentId", 0); // to display all the comments
 			$_REQUEST["comments_parentId"] = 0;
@@ -203,15 +203,11 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 			|| (($tiki_p_forum_post == 'y' || $tiki_p_admin_forum == 'y') && isset($forum_mode) && $forum_mode == 'y' )
 			|| ($commentslib->user_can_edit_post($user, $_REQUEST["comments_threadId"]))) {
 		    $commentslib->update_comment($_REQUEST["comments_threadId"], $_REQUEST["comments_title"],
-			    $_REQUEST["comment_rating"], $_REQUEST["comments_data"], 'n', '', '', $comments_objectId);
+			    $_REQUEST["comment_rating"], $_REQUEST["comments_data"], 'n', '', '', $comments_objectId, isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '');
 		}
 	    }
-		if ($feature_contribution == 'y') {
-			global $contributionlib; include_once('lib/contribution/contributionlib.php');
-			$contributionlib->assign_contributions(isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '', $qId, 'comment', $_REQUEST['comments_title'], '', '');
-			if (isset($_REQUEST['contributions']))
-				unset($_REQUEST['contributions']);
-		}
+		if (isset($_REQUEST['contributions']))
+			unset($_REQUEST['contributions']);
 
 	    $object = explode(':', $comments_objectId );
 

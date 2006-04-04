@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2006-03-28 07:41:45 $
-# $Author: sampaioprimo $
+# $Date: 2006-04-04 22:16:06 $
+# $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -323,6 +323,14 @@ CREATE TABLE tiki_actionlog (
   comment varchar(200) default NULL,
   categId int(12) NOT NULL default '0',
   PRIMARY KEY  (actionId)
+) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS tiki_actionlog_params;
+CREATE TABLE tiki_actionlog_params (
+  actionId int(8) NOT NULL,
+  name varchar(40) NOT NULL,
+  value text,
+  KEY  (actionId)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -1447,6 +1455,7 @@ CREATE TABLE tiki_forums (
   topics_list_author char(1) default NULL,
   vote_threads char(1) default NULL,
   forum_last_n int(2) default 0,
+  mandatory_contribution char(1) default NULL,
   PRIMARY KEY  (forumId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -2140,7 +2149,7 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Quiz stats','tiki-quiz_stats.php',760,'feature_quizzes','tiki_p_view_quiz_stats','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin quiz','tiki-edit_quiz.php',765,'feature_quizzes','tiki_p_admin_quizzes','');
 
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','TikiSheet','tiki-sheets.php',780,'feature_sheet','','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','TikiSheet','tiki-sheets.php',780,'feature_sheet','tiki_p_view_sheet','');
 
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Trackers','tiki-list_trackers.php',800,'feature_trackers','tiki_p_view_trackers','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','List trackers','tiki-list_trackers.php',805,'feature_trackers','tiki_p_view_trackers','');
