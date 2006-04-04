@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.99 2006-03-13 14:13:41 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.100 2006-04-04 22:16:07 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -327,7 +327,8 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 					'', // in_reply_to
 					$_REQUEST["comment_topictype"],
 					$_REQUEST["comment_topicsummary"],
-					$_REQUEST['comment_topicsmiley']
+					$_REQUEST['comment_topicsmiley'],
+					isset($_REQUEST['contributions'])? $_REQUEST['contributions']: ''
 					);
 
 			    // The thread *WAS* successfully created.
@@ -336,10 +337,6 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 				// Deal with mail notifications.
 				include_once('lib/notifications/notificationemaillib.php');
 				sendForumEmailNotification('forum_post_topic', $_REQUEST['forumId'], $forum_info, $_REQUEST['comments_title'], $_REQUEST['comments_data'], $user, $_REQUEST['comments_title'], $message_id, '', $threadId, isset($_REQUEST['comments_parentId'])?$_REQUEST['comments_parentId']: 0 );
-				if ($feature_contribution == 'y') {
-					global $contributionlib; include_once('lib/contribution/contributionlib.php');
-					$contributionlib->assign_contributions(isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '', $threadId, 'comment', $_REQUEST['comments_title'], '', '');
-				}
 			    }
 			}
 
@@ -358,12 +355,8 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 			//END ATTACHMENT PROCESSING
 			$commentslib->register_forum_post($_REQUEST["forumId"], 0);
 		    } elseif ($tiki_p_admin_forum == 'y' || $commentslib->user_can_edit_post($user, $_REQUEST["comments_threadId"])) {
-			    $commentslib->update_comment($_REQUEST["comments_threadId"], $_REQUEST["comments_title"], '', ($_REQUEST["comments_data"]), $_REQUEST["comment_topictype"], $_REQUEST['comment_topicsummary'], $_REQUEST['comment_topicsmiley'], 'forum:'.$_REQUEST["forumId"]);
+			    $commentslib->update_comment($_REQUEST["comments_threadId"], $_REQUEST["comments_title"], '', ($_REQUEST["comments_data"]), $_REQUEST["comment_topictype"], $_REQUEST['comment_topicsummary'], $_REQUEST['comment_topicsmiley'], 'forum:'.$_REQUEST["forumId"], isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '');
 
-				if ($feature_contribution == 'y') {
-					global $contributionlib; include_once('lib/contribution/contributionlib.php');
-					$contributionlib->assign_contributions(isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '', $_REQUEST["comments_threadId"], 'comment', $_REQUEST['comments_title'], '', '');
-				}
 			    // PROCESS ATTACHMENT HERE
 			    if( !empty($threadId) && isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name']) )
 			    {

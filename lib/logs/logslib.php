@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.17 2006-03-26 15:56:38 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.18 2006-04-04 22:16:05 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -91,8 +91,9 @@ class LogsLib extends TikiLib {
 
 	/* action = "Updated", "Created", "Removed", "Viewed", "Removed version $version", "Changed actual version to $version"
 	 * type = 'wiki page', 'category', 'article', 'image gallery', 'tracker', 'forum thread'
+	 * TODO: merge $param and $contributions together into a hash and but everything in actionlog_params
 	*/
-	function add_action($action, $object, $objectType='wiki page', $param='', $who='', $ip='', $client='', $date='') {
+	function add_action($action, $object, $objectType='wiki page', $param='', $who='', $ip='', $client='', $date='', $contributions='') {
 		global $user, $feature_categories;
 		if ($objectType == 'wiki page' && $action != 'Viewed')
 			$logObject = true; // to have the tiki_my_edit, history and mod-last_modif_pages
@@ -100,7 +101,7 @@ class LogsLib extends TikiLib {
 			$logObject = $this->action_must_be_logged($action, $objectType);
 		$logCateg = $feature_categories == 'y'? $this->action_must_be_logged('*', 'category'): false;
 		if (!$logObject && !$logCateg)
-			return false;
+			return 0;
 		if ($date == '')
 			$date = date('U');
 		if ($who == '')
@@ -127,8 +128,15 @@ class LogsLib extends TikiLib {
 				$this->query($query, array($action, $object, (int)$date, $who, $ip, $param, $objectType));
 			}
 		}
-		
-		return  true;
+		$query = "select `actionId` from `tiki_actionlog` where `action`=? and `object`=? and `lastModif`=? and `user`=? and `ip`=?";
+		$actionId = $this->getOne($query, array($action, $object, (int)$date, $who, $ip));
+		if ($contributions) {
+			$query = "insert into `tiki_actionlog_params` (`actionId`, `name`, `value`) values(?,?,?)";
+			foreach ($contributions as $contribution) {
+				$this->query($query, array($actionId, 'contribution', $contribution));			
+			}
+		}
+		return  $actionId;
 	}
 	function action_must_be_logged($action, $objectType) {
 		global $feature_actionlog;
@@ -247,9 +255,9 @@ class LogsLib extends TikiLib {
 		while ($res = $result->fetchRow()) {
 			if ($this->action_is_viewed($res['action'], $res['objectType'])) {
 				if ($feature_contribution == 'y' && ($res['action'] == 'Created' || $res['action'] == 'Updated' || $res['action'] == 'Posted' || $res['action'] == 'Replied')) {
-					if ($id = $this->get_comment_action($res))
-						$res['contributions'] = $contributionlib->get_assigned_contributions($id, 'comment');
-					else
+					if ($id = $this->get_comment_action($res)) {
+						$res['contributions'] = $this->get_action_contributions($res['actionId']);
+					} else
 						$res['contributions'] = $contributionlib->get_assigned_contributions($res['object'], $res['objectType']); // todo: do a left join
 				}
 				$ret[] = $res;
@@ -488,6 +496,24 @@ class LogsLib extends TikiLib {
 			.$action['category'].'","'.$unit.'","'.$action['add'].'","'.$action['del'].'<br />';
 	}
 	return $csv;
+	}
+	function get_action_params($actionId, $name) {
+		$query = "select `value` from `tiki_actionlog_params` where `actionId`=? and `name`=?";
+		$result = $this->query($query, array($actionId, $name));
+		$ret = array();
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res['value'];
+		}
+		return $ret;
+	}
+	function get_action_contributions($actionId) {
+		$query = "select tc.`name` from `tiki_contributions` tc, `tiki_actionlog_params` tp where tp.`actionId`=? and tp.`name`=? and tp.`value`=tc.`contributionId`";
+		$result = $this->query($query, array($actionId, 'contribution'));
+		$ret = array();
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res['name'];
+		}
+		return $ret;
 	}
 
 }
