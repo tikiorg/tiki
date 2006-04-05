@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.19 2006-04-05 20:45:28 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.20 2006-04-05 21:49:20 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -481,7 +481,7 @@ class LogsLib extends TikiLib {
 		return $vol;
 	}
 	function export($actionlogs, $unit = 'b') {
-	$csv = "user,date,time,action,type,object,category,unit,+,-<br />";
+	$csv = "user,date,time,action,type,object,category,unit,+,-,contribution<br />";
 	foreach ($actionlogs as $action) {
 		if (!isset($action['object']))
 			$action['object'] = '';
@@ -492,8 +492,17 @@ class LogsLib extends TikiLib {
 		if (!isset($action['del']))
 			$action['del'] = '';
 
-		$csv.= '"'.$action['user'].'","'.date("ymd",$action['lastModif']).'"'.date("H:i",$action['lastModif']).'","'.$action['action'].'","'.$action['objectType'].'","'.$action['object'].'","'
-			.$action['category'].'","'.$unit.'","'.$action['add'].'","'.$action['del'].'<br />';
+		$csv.= '"'.$action['user'].'","'.date("ymd",$action['lastModif']).'","'.date("H:i",$action['lastModif']).'","'.$action['action'].'","'.$action['objectType'].'","'.$action['object'].'","'
+			.$action['category'].'","'.$unit.'","'.$action['add'].'","'.$action['del'].'","';
+		if (isset($action['contributions'])) {
+			$i = 0;
+			foreach ($action['contributions'] as $contribution) {
+				if ($i++)
+					$csv .= ',';
+				$csv .= $contribution;
+			}
+		}
+		$csv .= '"<br />';
 	}
 	return $csv;
 	}
