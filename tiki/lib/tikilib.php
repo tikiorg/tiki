@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.637 2006-03-20 04:45:52 lfagundes Exp $
+// CVS: $Id: tikilib.php,v 1.638 2006-04-05 15:53:25 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -6618,7 +6618,7 @@ if (!$simple_wiki) {
 		global $feature_use_quoteplugin;
 		$data = preg_replace('/{QUOTE\([^\)]*\)}.*{QUOTE}/Ui', '', $data);
 		if ($feature_use_quoteplugin != 'y') {
-			$data = preg_replace('/^>.*\\n/m', '', $data);
+			$data = preg_replace('/^>.*\\n?/m', '', $data);
 		}
 		return strlen($data);
 	}
