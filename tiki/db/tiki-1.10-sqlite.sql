@@ -1,6 +1,6 @@
 -- $Rev$
--- $Date: 2006-03-28 07:41:45 $
--- $Author: sampaioprimo $
+-- $Date: 2006-04-05 15:58:34 $
+-- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -352,6 +352,16 @@ CREATE TABLE "tiki_actionlog" (
   "comment" varchar(200) default NULL,
   "categId" bigint NOT NULL default '0',
   PRIMARY KEY ("actionId")
+) ;
+
+
+DROP TABLE "tiki_actionlog_params";
+
+CREATE TABLE "tiki_actionlog_params" (
+  "actionId" integer NOT NULL,
+  "name" varchar(40) NOT NULL,
+  "value" text,
+  KEY  (actionId)
 ) ;
 
 -- --------------------------------------------------------
@@ -1578,6 +1588,7 @@ CREATE TABLE "tiki_forums" (
   "topics_list_author" char(1) default NULL,
   "vote_threads" char(1) default NULL,
   "forum_last_n" smallint default 0,
+  "mandatory_contribution" char(1) default NULL,
   PRIMARY KEY ("forumId")
 )   ;
 
@@ -2434,7 +2445,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin quiz','tiki-edit_quiz.php',765,'feature_quizzes','tiki_p_admin_quizzes','');
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','TikiSheet','tiki-sheets.php',780,'feature_sheet','','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','TikiSheet','tiki-sheets.php',780,'feature_sheet','tiki_p_view_sheet','');
 
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Trackers','tiki-list_trackers.php',800,'feature_trackers','tiki_p_view_trackers','');

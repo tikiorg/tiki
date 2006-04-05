@@ -2,8 +2,8 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2006-03-28 07:41:45 $
--- $Author: sampaioprimo $
+-- $Date: 2006-04-05 15:58:34 $
+-- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -414,6 +414,20 @@ CREATE TABLE "tiki_actionlog" (
   "comment" varchar(200) default NULL NULL,
   "categId" numeric(12,0) default '0' NOT NULL,
   PRIMARY KEY ("actionId")
+) 
+go
+
+
+
+-- DROP TABLE "tiki_actionlog_params"
+go
+
+
+CREATE TABLE "tiki_actionlog_params" (
+  "actionId" numeric(8,0) NOT NULL,
+  "name" varchar(40) NOT NULL,
+  "value" text default '',
+  KEY  (actionId)
 ) 
 go
 
@@ -1882,6 +1896,7 @@ CREATE TABLE "tiki_forums" (
   "topics_list_author" char(1) default NULL NULL,
   "vote_threads" char(1) default NULL NULL,
   "forum_last_n" numeric(2,0) default 0,
+  "mandatory_contribution" char(1) default NULL NULL,
   PRIMARY KEY ("forumId")
 )   
 go
@@ -3078,7 +3093,7 @@ go
 
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','TikiSheet','tiki-sheets.php',780,'feature_sheet','','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','TikiSheet','tiki-sheets.php',780,'feature_sheet','tiki_p_view_sheet','')
 go
 
 
