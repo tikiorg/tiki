@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.64 2006-04-04 22:16:07 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.65 2006-04-05 20:09:06 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -190,7 +190,7 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 			$user,
 			$_REQUEST["comments_title"],
 			$_REQUEST["comments_data"],
-			$message_id, 'n', '', '', $in_reply_to, isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '');
+			$message_id, $in_reply_to, 'n', '', '', isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '');
 		if ($object[0] != "forum") {
 			$smarty->assign("comments_parentId", 0); // to display all the comments
 			$_REQUEST["comments_parentId"] = 0;
