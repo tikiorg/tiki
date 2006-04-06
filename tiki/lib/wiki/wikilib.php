@@ -252,6 +252,11 @@ class WikiLib extends TikiLib {
 		$query = "update `users_objectpermissions` set `objectId`=? where `objectId`=?";
 		$this->query($query, array( $newId, $oldId ) );
 
+		global $feature_actionlog;
+		if ($feature_actionlog == 'y') {
+			global $logslib; include_once('lib/logs/logslib.php');
+			$logslib->add_action('Renamed', $newName, 'wiki page', 'old='.$oldName);
+		}
 		return true;
 	}
 

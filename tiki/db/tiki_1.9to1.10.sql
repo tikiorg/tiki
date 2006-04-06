@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.84 2006-04-04 22:16:06 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.85 2006-04-06 12:46:27 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -549,3 +549,5 @@ CREATE TABLE tiki_actionlog_params (
   value text,
   KEY  (actionId)
 ) TYPE=MyISAM;
+#2006-04-06
+INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Renamed', 'wiki page', 'n');

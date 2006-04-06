@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2006-04-04 22:16:06 $
+# $Date: 2006-04-06 12:46:27 $
 # $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -5125,6 +5125,7 @@ INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUE
 INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Replied', 'comment', 'n');
 INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Updated', 'comment', 'n');
 INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Removed', 'comment', 'n');
+INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Renamed', 'wiki page', 'n');
 # --------------------------------------------------------
 
 
