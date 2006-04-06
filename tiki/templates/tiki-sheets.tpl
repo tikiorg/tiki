@@ -9,13 +9,15 @@
 <img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}
 </h1>
 
-{if $tiki_p_edit_sheet eq 'y' or $tiki_p_admin_sheet eq 'y' or $tiki_p_admin eq 'y'}
+{if $tiki_p_edit_sheet eq 'y'}
 {if $edit_mode eq 'y'}
 {if $sheetId eq 0}
 <h2>{tr}Create a sheet{/tr}</h2>
 {else}
 <h2>{tr}Edit this sheet:{/tr} {$title}</h2>
+{if $tiki_p_edit_sheet eq 'y'}
 <a class="linkbut" href="tiki-sheets.php?edit_mode=1&amp;sheetId=0">{tr}create new sheet{/tr}</a>
+{/if}
 {/if}
 <div align="center">
 {if $individual eq 'y'}
@@ -39,6 +41,7 @@
 <a href="tiki-sheets.php?edit_mode=edit&sheetId=0" class="linkbut">{tr}Create new Sheet{/tr}</a>
 {/if}
 {/if}
+
 {if $sheetId > 0}
 {if $edited eq 'y'}
 <div class="wikitext">
@@ -76,16 +79,25 @@
   {if $chart_enabled eq 'y'}
     <a class="gallink" href="tiki-graph_sheet.php?sheetId={$sheets[changes].sheetId}"><img src='img/icons2/icn_budgetgraph.gif' border='0' alt='{tr}Graph{/tr}' title='{tr}Graph{/tr}' /></a>
   {/if}
-  {if ( $tiki_p_admin_sheet eq 'y' or ($author and $sheets[changes].author eq $author) or $tiki_p_admin eq 'y' or $tiki_p_view_sheet_history eq 'y') }
+  {if $tiki_p_view_sheet_history eq 'y'}
     <a class="gallink" href="tiki-history_sheets.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;sheetId={$sheets[changes].sheetId}"><img src='img/icons/history_layer.gif' alt='{tr}History{/tr}' title='{tr}History{/tr}' border='0' /></a>
   {/if}
     <a class="gallink" href="tiki-export_sheet.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;sheetId={$sheets[changes].sheetId}"><img src='img/icons/export.gif' alt='{tr}Export{/tr}' title='{tr}Export{/tr}' border='0' /></a>
-  {if $tiki_p_admin_sheet eq 'y' or ($author and $sheets[changes].author eq $author) or ($tiki_p_admin eq 'y') }
+  {if $sheets[changes].tiki_p_edit_sheet eq 'y'}
     <a class="gallink" href="tiki-import_sheet.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;sheetId={$sheets[changes].sheetId}"><img src='img/icons/import.gif' alt='{tr}Import{/tr}' title='{tr}Import{/tr}' border='0' /></a>
   {/if}
-  {if $tiki_p_admin_sheet eq 'y' or ($author and $sheets[changes].author eq $author) or ($tiki_p_admin eq 'y') }
+  {if $tiki_p_admin_sheet eq 'y'}
+     <a class="gallink" href="tiki-objectpermissions.php?objectName={$sheets[changes].title|escape:"url"}&amp;objectType=sheet&amp;permType=sheet&amp;objectId={$sheets[changes].sheetId}">
+    {if $sheets[changes].individual eq 'y'}
+	<img src='img/icons/key_active.gif' alt='{tr}active perms{/tr}' title='{tr}active perms{/tr}' height="16" width="17" border='0' />
+    {else}
+	<img src='img/icons/key.gif' alt='{tr}perms{/tr}' title='{tr}perms{/tr}' height="16" width="17" border='0' />
+    {/if}
+    </a>
+  {/if}
+  {if $sheets[changes].tiki_p_edit_sheet eq 'y'}
     <a class="gallink" href="tiki-sheets.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;sheetId={$sheets[changes].sheetId}"><img src='img/icons/config.gif' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' border='0' /></a>
-    <a class="gallink" href="tiki-sheets.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removesheet={$sheets[changes].sheetId}"><img src='img/icons2/delete.gif' border='0' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' /></a>
+    <a class="gallink" href="tiki-sheets.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removesheet=y&amp;sheetId={$sheets[changes].sheetId}"><img src='img/icons2/delete.gif' border='0' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' /></a>
   {/if}
   </td>
 </tr>
