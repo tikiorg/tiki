@@ -1636,6 +1636,7 @@ class SheetLib extends TikiLib
 	
 	function list_sheets( $offset = 0, $maxRecord = -1, $sort_mode = 'title_desc', $find = '' ) // {{{2
 	{
+	global $user, $tikilib, $userlib;
 		switch( $sort_mode )
 		{
 			case "author_asc":
@@ -1663,8 +1664,14 @@ class SheetLib extends TikiLib
 
 		$result = $this->query( "SELECT * FROM `tiki_sheets`  ORDER BY $sort", array(), $maxRecord, $offset );
 
-		while( $row = $result->fetchRow() )
-			$results['data'][] = $row;
+		while( $row = $result->fetchRow() ) {
+			if ($tikilib->user_has_perm_on_object($user, $row['sheetId'], 'sheet', 'tiki_p_view_sheet')) {
+				if ($userlib->object_has_one_permission($row['sheetId'], 'sheet'))
+					$row['individual'] = 'y';
+				$row['tiki_p_edit_sheet'] = ($user && $user == $row['author']) || $tikilib->user_has_perm_on_object($user, $row['sheetId'], 'sheet', 'tiki_p_edit_sheet')?'y': 'n';
+				$results['data'][] = $row;
+			}
+		}
 
 		$results['cant'] = $this->getOne( "SELECT COUNT(*) FROM `tiki_sheets`", array() );
 

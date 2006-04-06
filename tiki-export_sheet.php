@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-export_sheet.php,v 1.5 2005-05-18 10:58:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-export_sheet.php,v 1.6 2006-04-06 16:06:19 sylvieg Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -11,15 +11,6 @@
 require_once ('tiki-setup.php');
 require_once ('lib/sheet/grid.php');
 
-// Now check permissions to access this page
-/*
-if($tiki_p_view != 'y') {
-  $smarty->assign('msg',tra("Permission denied you cannot view pages like this page"));
-  $smarty->display("error.tpl");
-  die;  
-}
-*/
-
 if ($feature_sheet != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_sheets");
 
@@ -27,7 +18,7 @@ if ($feature_sheet != 'y') {
 	die;
 }
 
-if ($tiki_p_view_sheet != 'y' && $tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y') {
+if ($tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y' && !$tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_view_sheet')) {
 	$smarty->assign('msg', tra("Access Denied").": feature_sheets");
 
 	$smarty->display("error.tpl");

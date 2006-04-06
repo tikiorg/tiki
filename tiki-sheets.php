@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-sheets.php,v 1.9 2005-05-18 10:58:59 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-sheets.php,v 1.10 2006-04-06 16:06:19 sylvieg Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -11,14 +11,6 @@
 require_once ('tiki-setup.php');
 require_once ('lib/sheet/grid.php');
 
-// Now check permissions to access this page
-/*
-if($tiki_p_view != 'y') {
-  $smarty->assign('msg',tra("Permission denied you cannot view pages like this page"));
-  $smarty->display("error.tpl");
-  die;  
-}
-*/
 if ($feature_sheet != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_sheets");
 
@@ -26,7 +18,29 @@ if ($feature_sheet != 'y') {
 	die;
 }
 
-if ($tiki_p_view_sheet != 'y' && $tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y') {
+if (!isset($_REQUEST["sheetId"])) {
+	$_REQUEST["sheetId"] = 0;
+	$info = array();
+} else {
+	$info = $sheetlib->get_sheet_info($_REQUEST["sheetId"]);
+	if ($tiki_p_admin == 'y' || $tiki_p_admin_sheet == 'y' || $tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_view_sheet'))
+		$tiki_p_view_sheet = 'y';
+	else
+		$tiki_p_view_sheet = 'n';
+	$smarty->assign('tiki_p_view_sheet', $tiki_p_view_sheet);
+	if ($tiki_p_admin == 'y' || $tiki_p_admin_sheet == 'y' || ($user && $user == $info['author']) || $tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_edit_sheet'))
+		$tiki_p_edit_sheet = 'y';
+	else
+		$tiki_p_edit_sheet = 'n';
+	$smarty->assign('tiki_p_edit_sheet', $tiki_p_edit_sheet);
+	if ($tiki_p_admin == 'y' || $tiki_p_admin_sheet == 'y' || ($user && $user == $info['author']) || $tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_view_sheet_history'))
+		$tiki_p_view_sheet_history = 'y';
+	else
+		$tiki_p_view_sheet_history = 'n';
+	$smarty->assign('tiki_p_view_sheet_history', $tiki_p_view_sheet_history);
+}
+
+if ($tiki_p_view_sheet != 'y') {
 	$smarty->assign('msg', tra("Access Denied").": feature_sheets");
 
 	$smarty->display("error.tpl");
@@ -41,41 +55,7 @@ if (isset($_REQUEST["find"])) {
 
 $smarty->assign('find', $find);
 
-if (!isset($_REQUEST["sheetId"])) {
-	$_REQUEST["sheetId"] = 0;
-}
-
 $smarty->assign('sheetId', $_REQUEST["sheetId"]);
-
-// Individual permissions are checked because we may be trying to edit the gallery
-
-// Check here for indivdual permissions the objectType is 'image galleries' and the id is galleryId
-/*
-$smarty->assign('individual', 'n');
-
-if ($userlib->object_has_one_permission($_REQUEST["sheetId"], 'image gallery')) {
-	$smarty->assign('individual', 'y');
-
-	if ($tiki_p_admin != 'y') {
-		// Now get all the permissions that are set for this type of permissions 'image gallery'
-		$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'image galleries');
-
-		foreach ($perms["data"] as $perm) {
-			$permName = $perm["permName"];
-
-			if ($userlib->object_has_permission($user, $_REQUEST["sheetId"], 'image gallery', $permName)) {
-				$$permName = 'y';
-
-				$smarty->assign("$permName", 'y');
-			} else {
-				$$permName = 'n';
-
-				$smarty->assign("$permName", 'n');
-			}
-		}
-	}
-}
-*/
 
 // Init smarty variables to blank values
 //$smarty->assign('theme','');
@@ -86,14 +66,18 @@ $smarty->assign('chart_enabled', (function_exists('imagepng') || function_exists
 
 // If we are editing an existing gallery prepare smarty variables
 if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
+	if ($tiki_p_edit_sheet != 'y') {
+		$smarty->assign('msg', tra("Access Denied").": feature_sheets");
+
+		$smarty->display("error.tpl");
+		die;
+	}		
 	check_ticket('sheet');
 
 	// Get information about this galleryID and fill smarty variables
 	$smarty->assign('edit_mode', 'y');
 
 	if ($_REQUEST["sheetId"] > 0) {
-		$info = $sheetlib->get_sheet_info($_REQUEST["sheetId"]);
-
 		$smarty->assign('title', $info["title"]);
 		$smarty->assign('description', $info["description"]);
 
@@ -113,31 +97,13 @@ if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
 
 // Process the insertion or modification of a gallery here
 if (isset($_REQUEST["edit"])) {
+	if ($tiki_p_edit_sheet != 'y') {
+		$smarty->assign('msg', tra("Access Denied").": feature_sheets");
+
+		$smarty->display("error.tpl");
+		die;
+	}		
 	check_ticket('sheet');
-	// Saving information
-	// If the user is not gallery admin
-	if ($tiki_p_admin_sheet != 'y' && $tiki_p_admin != 'y') {
-		if ($tiki_p_edit_sheet != 'y') {
-			// If you can't create a gallery then you can't edit a gallery because you can't have a gallery
-			$smarty->assign('msg', tra("Permission denied you cannot create galleries and so you cant edit them"));
-
-			$smarty->display("error.tpl");
-			die;
-		}
-
-		/* No direct permission yet
-		// If the user can create a gallery then check if he can edit THIS gallery
-		if ($_REQUEST["sheetId"] > 0) {
-			$info = $imagegallib->get_gallery_info($_REQUEST["galleryId"]);
-
-			if (!$user || $info["user"] != $user) {
-				$smarty->assign('msg', tra("Permission denied you cannot edit this gallery"));
-
-				$smarty->display("error.tpl");
-				die;
-			}
-		}*/
-	}
 
 	// Everything is ok so we proceed to edit the gallery
 	$smarty->assign('edit_mode', 'y');
@@ -163,9 +129,9 @@ if (isset($_REQUEST["edit"])) {
 }
 
 if (isset($_REQUEST["removesheet"])) {
-	if ($tiki_p_admin_sheet != 'y' && $tiki_p_admin != 'y') {
+	if ($tiki_p_edit_sheet != 'y') {
 
-		$smarty->assign('msg', tra("Permission denied you cannot remove this gallery"));
+		$smarty->assign('msg', tra("Permission denied you cannot remove this sheet"));
 
 		$smarty->display("error.tpl");
 		die;
@@ -173,7 +139,7 @@ if (isset($_REQUEST["removesheet"])) {
   $area = 'delsheet';
   if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
-		$sheetlib->remove_sheet($_REQUEST["removesheet"]);
+		$sheetlib->remove_sheet($_REQUEST["sheetId"]);
   } else {
     key_get($area);
   }
@@ -202,7 +168,6 @@ $smarty->assign_by_ref('offset', $offset);
 // GET ALL GALLERIES SINCE ALL GALLERIES ARE BROWSEABLE
 $sheets = $sheetlib->list_sheets($offset, $maxRecords, $sort_mode, $find);
 
-// If there're more records then assign next_offset
 $cant_pages = ceil($sheets["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
 $smarty->assign('actual_page', 1 + ($offset / $maxRecords));
