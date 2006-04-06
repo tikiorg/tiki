@@ -18,12 +18,16 @@ function wikiplugin_sheet_help() {
 	return tra("TikiSheet").":<br />~np~{SHEET(id=>)}".tra("Sheet Heading")."{SHEET}~/np~";
 }
 function wikiplugin_sheet($data, $params) {
-	global $dbTiki, $tikilib, $tiki_p_edit_sheet, $tiki_p_admin_sheet, $tiki_p_admin;
+	global $dbTiki, $tikilib, $tiki_p_edit_sheet, $tiki_p_admin_sheet, $tiki_p_admin, $feature_sheet;
 	extract ($params,EXTR_SKIP);
 	$tikilib = &new TikiLib( $dbTiki );
 
 	if (!isset($id)) {
 		return ("<b>missing id parameter for plugin</b><br />");
+	}
+
+	if ($feature_sheet != 'y') {
+		return ("<b>feature_sheet disabled.</b><br />");
 	}
 
 	if( !class_exists( 'TikiSheet' ) )
