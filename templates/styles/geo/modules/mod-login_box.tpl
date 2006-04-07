@@ -1,5 +1,4 @@
-  {tikimodule title="{tr}login{/tr}" name="login-box"}
-{tr}Login{/tr}
+  {tikimodule title="{tr}Login{/tr}" name="login-box"}
     {if $user}
       {tr}logged as{/tr}: {$user}<br />
       <a class="linkmodule" href="tiki-logout.php">{tr}Logout{/tr}</a><br />
