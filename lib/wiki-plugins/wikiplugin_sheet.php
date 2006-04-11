@@ -47,7 +47,7 @@ function wikiplugin_sheet($data, $params) {
 	$ret = ob_get_contents();
 	ob_end_clean();
 
-	if( $tiki_p_edit_sheet == 'y' || $tiki_p_admin_sheet == 'y' || $tiki_p_admin )
+	if( $tiki_p_edit_sheet == 'y' || $tiki_p_admin_sheet == 'y' || $tiki_p_admin == 'y')
 		$ret .= "<a href='tiki-view_sheets.php?sheetId=$id&readdate=" . time() . "&mode=edit' class='linkbut'>" . tra("Edit Sheet") . "</a>";
 	
 	return $ret;
