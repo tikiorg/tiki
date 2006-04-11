@@ -55,7 +55,7 @@ function wikiplugin_articles($data,$params) {
 		$listpages["data"][$i]["comments_cant"] = $commentslib->count_comments($comments_objectId);
 		//print_r($listpages["data"][$i]['title']);
 	}
-	require_once ('lib/articles/artlib.php');
+	global $artlib; require_once ('lib/articles/artlib.php');
 
 // Unsure of reasoning, but Ive added a isset around here for when Articles plugin is called
 // multiple times on a page. - Damian aka Damosoft
