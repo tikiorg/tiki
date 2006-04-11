@@ -370,9 +370,9 @@ class ModsLib {
 					$fp = fopen($path.'/'.$f[0],"w");
 					fputs($fp,$text);
 					fclose($fp);
-					if (!rename($path.'/'.$f[0],$f[1])) die("$f[0] to $f[1] impossible to copy");
+					if (!(rename($path.'/'.$f[0],$f[1]) && chmod($f[1], 0644))) die("$f[0] to $f[1] impossible to copy");
 				} else {
-					if (!copy($path.'/'.$f[0],$f[1])) die("$f[0] to $f[1] impossible to copy");
+					if (!(copy($path.'/'.$f[0],$f[1]) && chmod($f[1], 0644))) die("$f[0] to $f[1] impossible to copy");
 				}
 			}
 		}
