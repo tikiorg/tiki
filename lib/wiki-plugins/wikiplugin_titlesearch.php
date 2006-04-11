@@ -17,7 +17,7 @@
     * @package TikiWiki
     * @subpackage TikiPlugins
     * @author Claudio Bustos
-    * @version $Revision: 1.21 $
+    * @version $Revision: 1.22 $
     */
     function wikiplugin_titlesearch_help() {
         return tra("Search the titles of all pages in this wiki").":<br />~np~{TITLESEARCH(search=>Admin,info=>hits|user,exclude=>HomePage|SandBox,noheader=>0)}{TITLESEARCH}~/np~";
@@ -40,10 +40,11 @@
         }
         function getVersion() {
             return preg_replace("/[Revision: $]/", '',
-                "\$Revision: 1.21 $");
+                "\$Revision: 1.22 $");
         }
         function run ($data, $params) {
-            global $wikilib;
+            global $wikilib; include_once('lib/wiki/wikilib.php');
+		global $tikilib;
             $aInfoPreset = array_keys($this->aInfoPresetNames);
             $params = $this->getParams($params, true);
             extract ($params,EXTR_SKIP);
@@ -77,7 +78,7 @@
             /////////////////////////////////
             //
             $sOutput = "";
-            $aPages = $wikilib->list_pages(0, -1, 'pageName_desc', $search);
+            $aPages = $tikilib->list_pages(0, -1, 'pageName_desc', $search);
             foreach($aPages["data"] as $idPage => $aPage) {
                 if (in_array($aPage["pageName"], $exclude)) {
                     unset($aPages["data"][$idPage]);
