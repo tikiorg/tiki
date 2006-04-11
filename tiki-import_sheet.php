@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-import_sheet.php,v 1.5 2006-04-06 16:06:19 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-import_sheet.php,v 1.6 2006-04-11 17:33:45 sylvieg Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -27,7 +27,7 @@ $smarty->assign('sheetId', $_REQUEST["sheetId"]);
 
 $info = $sheetlib->get_sheet_info( $_REQUEST["sheetId"] );
 
-if ($tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y' && $user && $info['author'] != $user && !$tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_edit_sheet')) {
+if ($tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y' && !($user && $info['author'] == $user) && !$tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_edit_sheet')) {
 	$smarty->assign('msg', tra("Access Denied").": feature_sheets");
 
 	$smarty->display("error.tpl");
