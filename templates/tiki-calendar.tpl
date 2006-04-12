@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.61 2006-03-16 13:43:12 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.62 2006-04-12 20:39:31 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-calendar.php">{tr}Calendar{/tr}</a></h1>
@@ -183,7 +183,7 @@ class="linkmenu">{$cell[w][d].items[items].name|truncate:$trunc:".."|default:"..
 <a name="add" id="add"></a>
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 {* ......................................................................... *}
-{if $editmode eq 'add' or $feature_tabs eq 'y'}
+{if $preview eq 'y' or $editmode eq 'add' or $feature_tabs eq 'y'}
 {include file=tiki-calendar_add_event.tpl}
 {/if}
 {* ......................................................................... *}

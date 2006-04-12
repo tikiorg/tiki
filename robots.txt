@@ -22,6 +22,7 @@ Disallow: /tests/
 Disallow: /tikimovies/
 Disallow: /tiki-install.php
 Disallow: /tiki-admin.php
+Disallow: /tiki-admin
 Disallow: /tiki-editpage.php
 Disallow: /tiki-print.php
 Disallow: /tiki-print_article.php
@@ -62,6 +63,7 @@ Disallow: tests/
 Disallow: tikimovies/
 Disallow: tiki-install.php
 Disallow: tiki-admin.php
+Disallow: tiki-admin
 Disallow: tiki-editpage.php
 Disallow: tiki-print.php
 Disallow: tiki-print_article.php

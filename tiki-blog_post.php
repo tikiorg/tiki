@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.43 2006-02-17 15:10:30 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.44 2006-04-12 20:39:29 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -23,7 +23,7 @@ if ($feature_blogs != 'y') {
 }
 
 // Now check permissions to access this page
-if ($tiki_p_blog_post != 'y') {
+if ((empty($_REQUEST['blogId']) && $tiki_p_blog_post != 'y') || (!empty($_REQUEST["blogId"]) && !$tikilib->user_has_perm_on_object($user, $_REQUEST['blogId'], 'blog', 'tiki_p_blog_post'))) {
 	$smarty->assign('msg', tra("Permission denied you cannot post"));
 
 	$smarty->display("error.tpl");
@@ -289,7 +289,7 @@ if ($tiki_p_blog_admin == 'y') {
 
 	$blogs = $blogsd['data'];
 } else {
-	$blogs = $bloglib->list_user_blogs($user, 1);
+	$blogs = $bloglib->list_blogs_user_can_post($user, 1);
 }
 
 if (count($blogs) == 0) {

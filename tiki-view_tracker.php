@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.90 2006-01-20 09:54:53 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.91 2006-04-12 20:39:29 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -176,6 +176,7 @@ $usecategs = false;
 $ins_categs = array();
 $textarea_options = false;
 
+$counter=0;
 $temp_max = count($xfields["data"]);
 for ($i = 0; $i < $temp_max; $i++) {
 	$fid = $xfields["data"][$i]["fieldId"];
@@ -395,7 +396,8 @@ for ($i = 0; $i < $temp_max; $i++) {
 	// store values to have them available when there is 
 	// an error in the values typed by an user for a field type.
 	if(isset($ins_fields['data'][$i]['value'])) {
-		$fields['data'][$i]['value'] = $ins_fields['data'][$i]['value'];
+		$fields['data'][$counter]['value'] = $ins_fields['data'][$i]['value'];
+		$counter++;
 	}
 }
 if (!isset($mainfield) and isset($fields["data"][0]["fieldId"]) and isset($fields["data"][0]["value"])) {

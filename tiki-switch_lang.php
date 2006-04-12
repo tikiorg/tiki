@@ -10,9 +10,14 @@ if (isset($_SERVER['HTTP_REFERER']))
 else
 	$orig_url = $tikiIndex;
 
-// change the strings
-if (isset($_REQUEST['language']) || isset($_REQUEST['swithcLang'])) {
-	$language = isset($_REQUEST['language'])? $_REQUEST['language']: $_REQUEST['swithcLang'];
+if (!preg_match('/(\?|&)bl=/', $orig_url)) {
+	if (strstr($orig_url, 'tiki-index.php?'))
+		$orig_url .= '&bl=y';
+	else if (strstr($orig_url, 'tiki-index.php'))
+		$orig_url .= '?bl=y';
+}
+if(isset($_REQUEST['language'])|| isset($_REQUEST['switchLang'])) {
+	$language = isset($_REQUEST['language'])? $_REQUEST['language']: $_REQUEST['switchLang'];
 	if($feature_userPreferences == 'y' && $user && $change_language == 'y')  {
 		$tikilib->set_user_preference($user, 'language', $language);
 	}

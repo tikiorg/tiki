@@ -19,8 +19,8 @@ class bablotron extends TikiLib {
 		}
 
 		$this->db = $db;
-		$this->lan = $lan;
-    $this->tbl = 'babl_words_' . $this->lan;
+		$this->lan = preg_replace('/-/','_',$lan);
+		$this->tbl = 'babl_words_' . $this->lan;
 	}
 
 	function spellcheck_text($text, $threshold = 5) {

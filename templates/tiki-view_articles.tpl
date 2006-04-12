@@ -20,7 +20,7 @@
 {tr}expires:{/tr} {$listpages[ix].expireDate|tiki_short_datetime}&nbsp;
 {/if}
 {if $listpages[ix].show_reads eq 'y'}
-({$listpages[ix].reads} {tr}reads{/tr})
+({$listpages[ix].nbreads} {tr}reads{/tr})
 {/if}
 </span><br />
 {/if}

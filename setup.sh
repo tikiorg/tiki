@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/setup.sh,v 1.38 2005-08-26 00:16:50 luciash Exp $
+# $Header: /cvsroot/tikiwiki/tiki/setup.sh,v 1.39 2006-04-12 20:39:29 sylvieg Exp $
 
 # Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 # All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -35,6 +35,11 @@ if [ -f /etc/gentoo-release ]; then
 	AGROUP=apache
 fi
 
+if [ -f /etc/SuSE-release ]; then
+        AUSER=wwwrun
+        AGROUP=www
+fi
+
 if [ "$UNAME" = "CYGWIN" ]; then
 	AUSER=SYSTEM
 	AGROUP=SYSTEM
@@ -66,14 +71,20 @@ Be aware, that you probably have to do a
 
 if your tiki runs in a PHP-safe-mode environment.
 
-If you can't become root, and are not a member of the apache group, then type:
+If you can't become root, and are not a member of the apache group, but if
+your system uses ACL's (check with "mount | grep acl"), then type:
+
+  $0 -acl $USER $AGROUP
+
+If you can't become root, and are not a member of the apache group, and
+your system does not support ACL's then type:
 
   $0 $USER yourgroup 02777
 
 Replace yourgroup with your default group.
 
-NOTE: If you do execute this last command, you will not be able to delete 
-certain files created by apache, and will need to ask your system
+NOTE: If you do execute on of the two last commands, you will not be able 
+to delete certain files created by apache, and will need to ask your system
 administrator to delete them for you if needed.
 
 To use Tiki's multi-site capability (virtual hosts from a single DocumentRoot)
@@ -98,6 +109,13 @@ Remember to run the perms setup again when mods installer use if done.
 
 EOF
 	exit 1
+fi
+
+if [ "$1" == "-acl" ]; then
+	ACL=1
+	shift
+else
+	ACL=0
 fi
 
 if [ -n "$1" ]; then
@@ -143,18 +161,25 @@ done
 chown -R $AUSER *
 
 if [ -n "$AGROUP" ]; then
-	chgrp -R $AGROUP $DIRS
-        chgrp $AGROUP robots.txt
+	if [ $ACL == 1 ] ; then
+		setfacl -R -m g:${AGROUP}:rwx $DIRS
+		setfacl -m g:${AGROUP}:rwx robots.txt
+	else
+		chgrp -R $AGROUP $DIRS
+        	chgrp $AGROUP robots.txt
+	fi
 fi
 
-chmod -R $RIGHTS $DIRS
+if [ $ACL == 0 ] ; then
+	chmod -R $RIGHTS $DIRS
+	chmod $RIGHTS robots.txt
+	chmod $RIGHTS tiki-install.php
+fi
 
 chown $AUSER robots.txt
-chmod $RIGHTS robots.txt
 
 # by setting the rights to tiki-install.php file, tiki-installer can be used in most cases to disable execution of the script
 chown $AUSER tiki-install.php
-chmod $RIGHTS tiki-install.php
 
 exit 0
 

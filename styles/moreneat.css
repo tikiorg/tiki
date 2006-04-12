@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.76 2006-02-01 21:20:23 jdrexler Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.77 2006-04-12 20:39:31 sylvieg Exp $
 
 MoreNeat theme
 */
@@ -353,12 +353,13 @@ TD.formbor
 { border: 1px solid #8CACBB; color: black;   background: #C7D0D9; font-size: 10px; vertical-align: top; text-align: left;}
 
 /* The table */
-table.listgallery, table.creategalform,TABLE.normal,table.gallerylisting, table.bloglist, table.editblogform,
+table.listgallery, table.creategalform,TABLE.normal,TABLE.sortable,table.gallerylisting, table.bloglist, table.editblogform,
 table.editfgalform, table.listfgal, table.listfiles, table.listarticles,table.forumstable,table.forumformtable,
 table.viewthread, table.jukeboxlist, table.userlist
 {  padding:0px; margin: 0px; border-collapse: collapse; width: 100%;}
 
 .normal table { width: 100% !important; }
+.sortable a { text-decoration: none; }
 
 TABLE.normalnoborder {  width: 97%;}
 
@@ -2036,5 +2037,39 @@ border-style: solid;
 color: black;
 background-color: #edeeef;
 }
+
+table.toc {
+  font: x-small sans-serif;
+  border-width: 1px;
+  border-style: solid;
+  color: black;
+  background-color: #E9ECEF;
+  width: 500px;
+  margin-top: 10px;
+}
+
+.toclink {
+  font: x-small sans-serif;
+  color: black;
+  background-color: #E9ECEF;
+}
+
+.toclink:hover {
+  color: white;
+  background-color: #595791;
+}
+
+span.toctoggle {
+  font-size: smaller;
+}
+
+ul li.toclevel-1 { margin-left: 0px; }
+ul li.toclevel-2 { margin-left: 25px; }
+ul li.toclevel-3 { margin-left: 50px; }
+ul li.toclevel-4 { margin-left: 75px; }
+ul li.toclevel-5 { margin-left: 100px; }
+ul li.toclevel-6 { margin-left: 125px; }
+ul li.toclevel-7 { margin-left: 150px; }
+ul li.toclevel-8 { margin-left: 175px; }
 
 /* end of css file */

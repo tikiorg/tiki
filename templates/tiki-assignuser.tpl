@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.28 2006-03-16 13:43:12 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.29 2006-04-12 20:39:31 sylvieg Exp $ *}
 
 <h1><a href="tiki-assignuser.php?assign_user={$assign_user|escape:url}" class="pagetitle">{tr}Assign user{/tr} {$assign_user} {tr}to groups{/tr}</a></h1>
-<a href="tiki-adminusers.php" class="linkbut">{tr}Admin users{/tr}</a>
+<a href="tiki-adminusers.php" class="linkbut">{tr}Admin users{/tr}</a> <a href="tiki-admingroups.php" class="linkbut">{tr}Admin groups{/tr}</a>
 <br />
 
 {if !empty($feature_intertiki_mymaster)}

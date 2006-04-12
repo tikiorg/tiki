@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-assignpermission.php,v 1.24 2005-05-18 10:58:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-assignpermission.php,v 1.25 2006-04-12 20:39:29 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -104,7 +104,7 @@ if (isset($_REQUEST["find"])) {
 $smarty->assign('find', $find);
 
 if (!isset($_REQUEST["type"])) {
-	$_REQUEST["type"] = 'tiki';
+	$_REQUEST["type"] = '';
 }
 
 $smarty->assign('type', $_REQUEST["type"]);
