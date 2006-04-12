@@ -86,7 +86,7 @@ function wikiplugin_sql($data, $params) {
 
 	while ($sql_oke && $res = $result->fetchRow()) {
 		if ($first) {
-			$ret .= "<div align='center'><table class='normal'><tr>";
+			$ret .= "<div align='center'><table class='sortable'><tr>";
 
 			$first = false;
 

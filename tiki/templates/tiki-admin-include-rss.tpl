@@ -1,10 +1,9 @@
-{if $feature_help eq 'y'}
+
 <div class="rbox" style="margin-top: 10px;">
 <div class="rbox-title" style="background-color: #eeee99; font-weight : bold; display : inline; padding : 0 10px;">{tr}Tip{/tr}</div>
 <div class="rbox-data" style="padding: 2px 10px; background-color: #eeee99;">{tr}This page is to configure settings of RSS feeds generated/exported by Tiki. To read/import RSS feeds, look for "RSS modules" on the application menu, or{/tr} <a class="link" href="tiki-admin_rssmodules.php">{tr}click here{/tr}</a>.</div>
 </div>
 <br />
-{/if}
 
 
 <div class="cbox">

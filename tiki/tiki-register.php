@@ -54,7 +54,8 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
   }
   
   // VALIDATE NAME HERE
-  if(strtolower($_REQUEST["name"])=='admin') {
+  $n = strtolower($_REQUEST['name']);
+  if($n =='admin' || $n == 'anonymous' || $n == 'registered' || $n == strtolower(tra('Anonymous')) || $n == strtolower(tra('Registered'))) {
     $smarty->assign('msg',tra("Invalid username"));
     $smarty->display("error.tpl");
     die;
@@ -184,7 +185,6 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
 				$userlib->set_default_group($_REQUEST['name'], $_REQUEST['group']);
 			}			
 			$logslib->add_log('register','created account '.$_REQUEST["name"]);
-
 			$smarty->assign('msg',$smarty->fetch('mail/user_welcome_msg.tpl'));
 			$smarty->assign('showmsg','y');
 		}

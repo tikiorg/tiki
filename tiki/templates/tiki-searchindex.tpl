@@ -73,6 +73,7 @@
 {/if}
     <input type="submit" class="wikiaction" name="search" value="{tr}go{/tr}"/>
 </form>
+<div class="searchresults">
 {if !($searchNoResults) }
 <br /><br />
 {section  name=search loop=$results}
@@ -94,7 +95,7 @@
 {sectionelse}
 {tr}No pages matched the search criteria{/tr}
 {/section}
-
+</div>
 <div align="center">
 <div class="mini">
 {if $prev_offset >= 0}

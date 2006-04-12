@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/hec.css,v 1.6 2006-03-06 20:18:25 xavidp Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/hec.css,v 1.7 2006-04-12 20:39:31 sylvieg Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -2161,4 +2161,7 @@ p{
 	text-align: left;
 	margin-right: 10px;
 	margin-left: 10px;
+}
+.searchresults {
+	text-align: left;
 }

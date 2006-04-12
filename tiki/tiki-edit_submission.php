@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.48 2006-02-17 15:10:31 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.49 2006-04-12 20:39:29 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -95,7 +95,7 @@ if (isset($_REQUEST["subId"])) {
 	$smarty->assign('image_type', $article_data["image_type"]);
 	$smarty->assign('image_size', $article_data["image_size"]);
 	$smarty->assign('image_data', urlencode($article_data["image_data"]));
-	$smarty->assign('reads', $article_data["reads"]);
+	$smarty->assign('reads', $article_data["nbreads"]);
 	$smarty->assign('image_x', $article_data["image_x"]);
 	$smarty->assign('image_y', $article_data["image_y"]);
 	$smarty->assign('type', $article_data["type"]);

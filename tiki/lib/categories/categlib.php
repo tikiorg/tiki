@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.77 2006-03-03 14:56:08 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.78 2006-04-12 20:39:30 sylvieg Exp $
  *
  * \brief Categories support class
  *
@@ -946,6 +946,7 @@ class CategLib extends ObjectLib {
 			$acats = $andcat = array();
 			foreach ($objectcat["data"] as $obj) {
 				$type = $obj["type"];
+				if (substr($type,0,7) == 'tracker') $type = 'tracker';
 				if (($types == '*') || in_array($type,$typesallowed)) {
 					if ($split or !$firstpassed) {
 						$listcat["$type"][] = $obj;

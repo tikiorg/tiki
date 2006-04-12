@@ -1,10 +1,10 @@
-{if $feature_help eq "y"}
+
 <div class="rbox" style="margin-top: 10px;">
 <div class="rbox-title" style="background-color: #eeee99; font-weight : bold; display : inline; padding : 0 10px;">{tr}Tip{/tr}</div>
 <div class="rbox-data" style="padding: 2px 10px; background-color: #eeee99;">{tr}Look under "Articles" on the application menu for links to{/tr} "<a class="link" href="tiki-admin_topics.php">{tr}Admin topics{/tr}</a>" {tr}and{/tr} "<a class="link" href="tiki-article_types.php">{tr}Admin types{/tr}</a>".</div>
 </div>
 <br />
-{/if}
+
 <div class="cbox">
   <div class="cbox-title">{tr}CMS features{/tr}</div>
   <div class="cbox-data">

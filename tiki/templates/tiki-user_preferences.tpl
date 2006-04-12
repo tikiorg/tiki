@@ -251,6 +251,7 @@
   <div class="cbox-title">{tr}User Messages{/tr}</div>
   <div class="cbox-data">
         <form action="tiki-user_preferences.php" method="post">
+        <input type="hidden" name="view_user" value="{$userwatch|escape}" />
 <table class="admin">
 <tr>
   <td class="form">{tr}Messages per page{/tr}</td>
@@ -320,6 +321,7 @@
   <div class="cbox-title">{tr}User Tasks{/tr}</div>
   <div class="cbox-data">
         <form action="tiki-user_preferences.php" method="post">
+        <input type="hidden" name="view_user" value="{$userwatch|escape}" />
 <table class="admin">
 <tr>
   <td class="form">{tr}Tasks per page{/tr}</td>
@@ -354,6 +356,7 @@
   <div class="cbox-data">
 
         <form action="tiki-user_preferences.php" method="post">
+        <input type="hidden" name="view_user" value="{$userwatch|escape}" />
 <table class="admin">
 
 {if $feature_wiki eq 'y'}

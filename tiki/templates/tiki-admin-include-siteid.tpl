@@ -1,11 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-siteid.tpl,v 1.4 2005-05-18 11:02:56 mose Exp $ *}
-{if $feature_help eq 'y'}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-siteid.tpl,v 1.5 2006-04-12 20:39:31 sylvieg Exp $ *}
+
 <div class="rbox" style="margin-top: 10px;">
 <div class="rbox-title" style="background-color: #eeee99; font-weight : bold; display : inline; padding : 0 10px;">{tr}Tip{/tr}</div>
 <div class="rbox-data" style="padding: 2px 10px; background-color: #eeee99;">{tr}Don't forget: to use feature you will need to enable it on{/tr} <a href="tiki-admin.php?page=features">{tr}Admin->Features{/tr}</a></div>
 </div>
 <br />
-{/if}
+
 <div class="cbox">
     <div class="cbox-title">
         {tr}{$crumbs[$crumb]->description}{/tr}

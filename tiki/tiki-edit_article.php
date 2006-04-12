@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.53 2006-01-20 09:54:53 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.54 2006-04-12 20:39:29 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -94,7 +94,7 @@ if (isset($_REQUEST["articleId"]) and $_REQUEST["articleId"] > 0) {
 	$smarty->assign('image_data', urlencode($article_data["image_data"]));
 	$smarty->assign('image_x', $article_data["image_x"]);
 	$smarty->assign('image_y', $article_data["image_y"]);
-	$smarty->assign('reads', $article_data["reads"]);
+	$smarty->assign('reads', $article_data["nbreads"]);
 	$smarty->assign('type', $article_data["type"]);
 	$smarty->assign('author', $article_data["author"]);
 	$smarty->assign('creator_edit', $article_data["creator_edit"]);

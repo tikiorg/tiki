@@ -1,12 +1,9 @@
-{*
-{if $feature_help eq 'y'}
-<div class="rbox" style="margin-top: 10px;">
-<div class="rbox-title" style="background-color: #CCCCDD; font-weight : bold; display : inline; padding : 0 10px;" name="note">{tr}Note{/tr}</div>
-<div class="rbox-data" style="padding: 2px 10px; background-color: #CCCCDD;" name="note">{tr}This feature does not currently have any web administration configuration{/tr}</div>
-</div>
 <br />
-{/if}
-*}
+<br />
+<div class="highlight">{tr}Tip{/tr}: {tr}To add/remove calendars, look for "Calendar" under "Admin" on the application menu, or{/tr} <a class="link"
+href="tiki-admin_calendars.php">{tr}click here{/tr}</a>.</div>
+<br />
+
 <div class="cbox">
 <div class="cbox-title">
   {tr}{$crumbs[$crumb]->description}{/tr}

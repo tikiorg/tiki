@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.638 2006-04-05 15:53:25 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.639 2006-04-12 20:39:30 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2241,6 +2241,18 @@ function add_pageview() {
 	return $ret;
     }
 
+    function list_blogs_user_can_post($user, $include_public = false) {
+	$query = "select * from `tiki_blogs` order by `title` asc";
+	$result = $this->query($query);
+	$ret = array();
+
+	while ($res = $result->fetchRow()) {
+		if ($res['user'] == $user || ($include_public && $res['public'] == 'y') || $this->user_has_perm_on_object($user, $res['blogId'], 'blog', 'tiki_p_blog_post'))
+			$ret[] = $res;
+	}
+	return $ret;
+    }
+
     function list_posts($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $filterByBlogId = -1) {
 
 	if ($filterByBlogId >= 0) {
@@ -2416,7 +2428,6 @@ function add_pageview() {
 	$mid2 .= "  `tiki_articles`.`type` = `tiki_article_types`.`type`";
 
 	$query = "select `tiki_articles`.*,
-				`users_users`.`avatarLibName`,
 				`tiki_article_types`.`use_ratings`,
 				`tiki_article_types`.`show_pre_publ`,
 				`tiki_article_types`.`show_post_expire`,
@@ -2435,10 +2446,10 @@ function add_pageview() {
 				`tiki_article_types`.`show_image_caption`,
 				`tiki_article_types`.`show_lang`,
 				`tiki_article_types`.`creator_edit`
-	    	from (`tiki_articles`, `tiki_article_types`) left join `users_users`  on `tiki_articles`.`author` = `users_users`.`login`
+	    	from `tiki_articles`, `tiki_article_types`
 	    	$mid $mid2 order by ".$this->convert_sortmode($sort_mode);
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
-	$query_cant = "select count(*) from  (`tiki_articles`, `tiki_article_types`) left join `users_users` on `tiki_articles`.`author` = `users_users`.`login` $mid $mid2";
+	$query_cant = "select count(*) from  `tiki_articles`, `tiki_article_types` $mid $mid2";
 	$cant = $this->getOne($query_cant,$bindvars);
 	$ret = array();
 
@@ -5288,13 +5299,13 @@ if (!$simple_wiki) {
 	//
 	// {maketoc} --> create TOC from '!', '!!', '!!!' in current document
 	//
-	preg_match_all("/\{maketoc\}/", $data, $tocs);
+	preg_match_all("/\{maketoc.*?\}/", $data, $tocs);
 	$anch = array();
 	$pageNum = 1;
 
 	// 08-Jul-2003, by zaufi
 	// HotWords will be replace only in ordinal text
-	// It looks __realy__ goofy in Headers or Titles
+	// It looks __really__ goofy in Headers or Titles
 
 	// Get list of HotWords
 	$words = $this->get_hotwords();
@@ -5600,6 +5611,7 @@ if (!$simple_wiki) {
 	// Replace {maketoc} from collected list of headers
 	$html = '';
 
+	// replacement for {maketoc}
 	foreach ($anch as $tocentry) {
 	    $html .= $tocentry . "\n";
 	}
@@ -5608,6 +5620,43 @@ if (!$simple_wiki) {
 	    $html = $this->parse_data($html);
 		$html= preg_replace("/^<ul>/", '<ul class="toc">', $html);
 	}
+	$data = str_replace("{maketoc}", $html, $data);
+
+	$html = '';
+
+	// replacement for {maketoc:box}
+    $html .= "<table id='toc' class='toc' summary='".tra("index")."'>\n";
+    $html .= "<tr>";
+    $html .= "<td>";
+    $html .= "<div id='toctitle'>";
+    $html .= "<h3>".tra("index")."</h3>";
+    $html .= "</div>";
+    $html .= "<ul>\n";
+ 
+    foreach ($anch as $tocentry) {
+		$tocdepth=0;
+		while (substr($tocentry,0,1)=="*") {
+			$tocdepth++;
+			$tocentry = substr($tocentry,1);
+		}
+		$html .= "<li class='toclevel-".$tocdepth."'>".$tocentry."</li>\n";
+	}
+ 
+	if (count($anch)) {
+		$html = $this->parse_data($html);
+		$html= preg_replace("'link'", "'toclink'", $html);
+    }
+    $html .= "</ul>";
+    $html .= "</td>";
+    $html .= "</tr>";
+    $html .= "</table>\n";
+    $html .= "<p><script type='text/javascript'>\n";
+    $html .= "//<![CDATA[\n";
+    $html .= " if (window.showTocToggle) { var tocShowText = '".tra("show")."'; var tocHideText = '".tra("hide")."'; showTocToggle(); }\n"; 
+    $html .= "//]]>;\n";
+    $html .= "</script></p>\n";    
+    
+	$data = str_replace("{maketoc:box}", $html, $data);
 
 	$data = str_replace("{maketoc}", "<h2>".tra("Table Of Contents")."</h2>" . $html, $data);
 // closing if ($simple_wiki){

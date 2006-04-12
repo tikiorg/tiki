@@ -8,9 +8,7 @@
 <a href="tiki-edit_templates.php?template=tiki-admin_rssmodules.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin RSSmodules template{/tr}">
 <img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>{/if}</h1>
 
-{if $feature_help eq "y"}
 <div class="highlight">{tr}Tip{/tr}: {tr}This page is to configure settings of RSS feeds read/imported by Tiki. To generate/export RSS feeds, look for "RSS feeds" on the admin panel, or{/tr} <a class="link" href="tiki-admin.php?page=rss">{tr}click here{/tr}</a>.</div><br />
-{/if}
 
 {if $preview eq 'y'}
 <div class="simplebox">

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.26 2005-08-10 15:56:00 rv540 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.27 2006-04-12 20:39:29 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,6 +10,8 @@
 require_once ('tiki-setup.php');
 
 include_once ('lib/newsletters/nllib.php');
+
+$sender_email = $userlib->get_user_email($user);
 
 if ($feature_newsletters != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_newsletters");

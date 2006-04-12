@@ -103,7 +103,8 @@
 <td>{$channels[user].isMandatory}</td>
 <td>{$channels[user].description|truncate:14:"..."}</td>
 <td>{if $tracker_info.useRatings ne 'y' or $channels[user].name ne "Rating"}
-<a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}{if $max and $max ne $maxRecords}&amp;max={$max}{/if}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].fieldId}">{tr}remove{/tr}</a>
+<a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}{if $max and $max ne $maxRecords}&amp;max={$max}{/if}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].fieldId}"><img src="img/icons2/delete.gif" border="0" alt="{tr}remove{/tr}" /></a> 
+<a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;fieldId={$channels[user].fieldId}&amp;up=1{if $offset > 1}&amp;offset={$offset}{/if}{if $max and $max ne $maxRecords}&amp;max={$max}{/if}"><img src="img/icons2/down.gif" border="0" alt="{tr}down{/tr}" title="{tr}down{/tr}" /></a>
 {/if}</td>
 </tr>
 {/section}
