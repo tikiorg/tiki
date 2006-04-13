@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.12 2006-03-03 14:09:29 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.13 2006-04-13 17:38:45 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -49,7 +49,6 @@ foreach ($categories as $categ) {
 	$categNames[$categ['categId']] = $categ['name'];
 }
 $smarty->assign_by_ref('categNames', $categNames);
-
 if (isset($_REQUEST['list']) || isset($_REQUEST['export'])) {
 	$url = '';
 	$selectedUsers = array();
@@ -196,6 +195,19 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export'])) {
 			case 'image gallery':
 				$actions[$i]['link'] = 'tiki-browse_gallery.php?galleryId='.$actions[$i]['object'].$matches[2];
 				break;
+			}
+			break;
+		case 'sheet':
+			if (!isset($sheetNames)) {
+				global $sheetlib; include_once('lib/sheet/grid.php');
+				$objects = $sheetlib->list_sheets();
+				foreach ($objects['data'] as $object) {
+					$sheetNames[$object['sheetId']] = $object['title'];
+				}
+			}
+			if (isset($sheetNames[$actions[$i]['object']])) {
+				$actions[$i]['link'] = 'tiki-view_sheets.php?sheetId='.$actions[$i]['object'];
+				$actions[$i]['object'] = $sheetNames[$actions[$i]['object']];
 			}
 			break;
 		}

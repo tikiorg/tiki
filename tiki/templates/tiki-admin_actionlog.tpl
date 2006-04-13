@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.13 2006-04-04 22:16:07 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.14 2006-04-13 17:38:45 sylvieg Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Admin Action Log{/tr}</a></h1>
 <a name="Setting" />
@@ -99,7 +99,7 @@
 <td class="{cycle advance=false}">
 {section name=iy loop=$actionlogs[ix].contributions}
 {if !$smarty.section.iy.first}, {/if}
-{$actionlogs[ix].contributions[iy]}
+{$actionlogs[ix].contributions[iy].name}
 {/section}
 </td>
 {/if}

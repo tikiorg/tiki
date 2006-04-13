@@ -141,6 +141,8 @@ class TikiSheet
 	var $usedCol;
 
 	var $errorFlag;
+
+	var $contributions;
 	// }}}2
 	
 	/** getHandlerList {{{2
@@ -1030,7 +1032,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 	{
 		global $tikilib;
 		
-		$result = $tikilib->query( "SELECT `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format` FROM `tiki_sheet_values` WHERE `sheetId` = ? AND ? >= `begin` AND ( `end` IS NULL OR `end` > ? )", array( $this->sheetId, (int)$this->readDate, (int)$this->readDate ) );
+		$result = $tikilib->query( "SELECT `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format`, `user` FROM `tiki_sheet_values` WHERE `sheetId` = ? AND ? >= `begin` AND ( `end` IS NULL OR `end` > ? )", array( $this->sheetId, (int)$this->readDate, (int)$this->readDate ) );
 
 		while( $row = $result->fetchRow() )
 		{
@@ -1057,7 +1059,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 	// _save {{{2
 	function _save( &$sheet )
 	{
-		global $tikilib;
+		global $tikilib, $user, $feature_actionlog;
 		// Load the current database state {{{3
 		$current = &new TikiSheet;
 		$handler = &new TikiSheetDatabaseHandler( $this->sheetId );
@@ -1079,6 +1081,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 		$inserts = array();
 		$updates = array();
 		$updates[] = $stamp;
+		$updates[] = $user;
 		$updates[] = $this->sheetId;
 
 		// Update the database {{{3
@@ -1098,7 +1101,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 				$updates[] = $col;
 
 				if( !$sheet->isEmpty( $row, $col ) )
-					$inserts[] = array( (int)$this->sheetId, $stamp, $row, $col, $value, $calc, $width, $height, $format );
+					$inserts[] = array( (int)$this->sheetId, $stamp, $row, $col, $value, $calc, $width, $height, $format, $user );
 
 			}
 		}
@@ -1107,14 +1110,34 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 		$updates[] = $sheet->getColumnCount();
 
 		$conditions = str_repeat( "( rowIndex = ? AND columnIndex = ? ) OR ", ( sizeof($updates) - 4 ) / 2 );
+		if ($feature_actionlog == 'y') { // must keep the previous value to do the difference
+			$query = "SELECT `rowIndex`, `columnIndex`, `value` FROM `tiki_sheet_values` WHERE `sheetId` = ? AND  `end` IS NULL";
+			$result = $tikilib->query($query, array($this->sheetId));
+			$old = array();
+			while( $row = $result->fetchRow() ) {
+				$old[$row['rowIndex'].'-'.$row['columnIndex']] = $row['value'];
+			}
+		}
 			
-		$tikilib->query( "UPDATE `tiki_sheet_values` SET `end` = ? WHERE `sheetId` = ? AND `end` IS NULL AND ( {$conditions}`rowIndex` >= ? OR `columnIndex` >= ? )", $updates );
+		$tikilib->query( "UPDATE `tiki_sheet_values` SET `end` = ? , `user`= ? WHERE `sheetId` = ? AND `end` IS NULL AND ( {$conditions}`rowIndex` >= ? OR `columnIndex` >= ? )", $updates );
 
 		if( sizeof( $inserts ) > 0 )
 			foreach( $inserts as $values )
 			{
-				$tikilib->query( "INSERT INTO `tiki_sheet_values` (`sheetId`, `begin`, `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format` ) VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ? )", $values );
+				$tikilib->query( "INSERT INTO `tiki_sheet_values` (`sheetId`, `begin`, `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format`, `user` ) VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )", $values );
 			}
+
+		if ($feature_actionlog == 'y') {
+			global $logslib; include_once('lib/logs/logslib.php');
+			$add = 0;
+			$del = 0;
+			foreach( $inserts as $values ) {
+				$add += strlen($values[4]);
+				if (!empty($old[$values[2].'-'.$values[3]]))
+					$del += strlen($old[$values[2].'-'.$values[3]]);
+			}
+			$logslib->add_action('Updated', $this->sheetId, 'sheet', "add=$add&amp;del=$del");
+		}
 
 		// }}}3
 
@@ -1683,22 +1706,35 @@ class SheetLib extends TikiLib
 		$this->query( "DELETE FROM `tiki_sheets` WHERE `sheetId` = ?", array( $sheetId ) );
 		$this->query( "DELETE FROM `tiki_sheet_values` WHERE `sheetId` = ?", array( $sheetId ) );
 		$this->query( "DELETE FROM `tiki_sheet_layout` WHERE `sheetId` = ?", array( $sheetId ) );
+
+		global $feature_actionlog;
+		if ($feature_actionlog == 'y') {
+			global $logslib; include_once('lib/logs/logslib.php');
+			$logslib->add_action('Removed', $sheetId, 'sheet');
+		}
 	}
 
 	function replace_sheet( $sheetId, $title, $description, $author ) // {{{2
 	{
+		global $feature_actionlog;
+
 		if( $sheetId == 0 )
 		{
 			$this->query( "INSERT INTO `tiki_sheets` ( `title`, `description`, `author` ) VALUES( ?, ?, ? )", array( $title, $description, $author ) );
 
-			return $this->getOne( "SELECT MAX(`sheetId`) FROM `tiki_sheets` WHERE `author` = ?", array( $author ) );
+			$sheetId = $this->getOne( "SELECT MAX(`sheetId`) FROM `tiki_sheets` WHERE `author` = ?", array( $author ) );
+			if ($feature_actionlog == 'y') {
+				global $logslib; include_once('lib/logs/logslib.php');
+				$query = 'select `sheetId` from `tiki_sheets` where `title`=? and `description`= ? and `author`=?';
+				$id = $this->getOne($query, array($title, $description, $author ) );
+				$logslib->add_action('Created', $id, 'sheet');
+			}
 		}
 		else
 		{
 			$this->query( "UPDATE `tiki_sheets` SET `title` = ?, `description` = ?, `author` = ? WHERE `sheetId` = ?", array( $title, $description, $author, $sheetId ) );
-
-			return $sheetId;
 		}
+		return $sheetId;
 	}
 
 	function replace_layout( $sheetId, $className, $headerRow, $footerRow ) // {{{2
