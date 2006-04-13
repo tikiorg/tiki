@@ -2,7 +2,7 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2006-04-05 15:58:34 $
+-- $Date: 2006-04-13 17:39:46 $
 -- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
@@ -3097,6 +3097,10 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 go
 
 
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','List TikiSheets','tiki-sheets.php',782,'feature_sheet','tiki_p_view_sheet','')
+go
+
+
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Trackers','tiki-list_trackers.php',800,'feature_trackers','tiki_p_view_trackers','')
 go
@@ -4487,7 +4491,8 @@ CREATE TABLE "tiki_sheet_values" (
   "calculation" varchar(255) default NULL NULL,
   "width" numeric(4,0) default '1' NOT NULL,
   "height" numeric(4,0) default '1' NOT NULL,
-  "format" varchar(255) default NULL NULL
+  "format" varchar(255) default NULL NULL,
+  "user" varchar(40) default NULL NULL
 ) 
 go
 
@@ -9448,6 +9453,26 @@ go
 
 
 INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Removed', 'comment', 'n')
+go
+
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Renamed', 'wiki page', 'n')
+go
+
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Created', 'sheet', 'n')
+go
+
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Updated', 'sheet', 'n')
+go
+
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Removed', 'sheet', 'n')
+go
+
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Viewed', 'sheet', 'n')
 go
 
 
