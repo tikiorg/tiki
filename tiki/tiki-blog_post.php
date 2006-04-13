@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.44 2006-04-12 20:39:29 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.45 2006-04-13 15:48:59 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -81,7 +81,7 @@ if (isset($_REQUEST["postId"]) && $_REQUEST["postId"] > 0) {
 	}
 
 	if ($data["user"] != $user || !$user) {
-		if ($tiki_p_blog_admin != 'y') {
+		if ($tiki_p_blog_admin != 'y' && !$tikilib->user_has_perm_on_object($user, $_REQUEST['blogId'], 'blog', 'tiki_p_blog_admin')) {
 			$smarty->assign('msg', tra("Permission denied you cannot edit this post"));
 
 			$smarty->display("error.tpl");
