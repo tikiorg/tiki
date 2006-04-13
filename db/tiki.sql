@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2006-04-11 17:05:11 $
+# $Date: 2006-04-13 17:38:45 $
 # $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -3027,6 +3027,7 @@ CREATE TABLE tiki_sheet_values (
   width int(4) NOT NULL default '1',
   height int(4) NOT NULL default '1',
   format varchar(255) default NULL,
+  user varchar(40) default NULL,
   UNIQUE KEY sheetId (sheetId,begin,rowIndex,columnIndex),
   KEY sheetId_2 (sheetId,rowIndex,columnIndex)
 ) TYPE=MyISAM;
@@ -5127,6 +5128,10 @@ INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUE
 INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Updated', 'comment', 'n');
 INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Removed', 'comment', 'n');
 INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Renamed', 'wiki page', 'n');
+INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Created', 'sheet', 'n');
+INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Updated', 'sheet', 'n');
+INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Removed', 'sheet', 'n');
+INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Viewed', 'sheet', 'n');
 # --------------------------------------------------------
 
 
