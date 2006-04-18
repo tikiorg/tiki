@@ -15,6 +15,12 @@
 			<option value="{$handlers[key].class}">{$handlers[key].name} V. {$handlers[key].version}</option>
 {/section}
 		</select>
+		{tr}Charset encoding{/tr};
+		<select name="encoding">
+			<option value="">{tr}Autodetect{/tr}</option>
+		{section name=key loop=$charsets}
+			<option value="{$charsets[key]}">{$charsets[key]}</option>
+		{/section}
 		<input type="submit" value="Export" />
 	</form>
 {/if}

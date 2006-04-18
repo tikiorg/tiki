@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-import_sheet.php,v 1.6 2006-04-11 17:33:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-import_sheet.php,v 1.7 2006-04-18 10:11:39 marcmont Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -49,6 +49,7 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' )
 
 	$sheetId = $_REQUEST['sheetId'];
 	$handler = $_REQUEST['handler'];
+    $encoding = $_REQUEST['encoding'];
 	
 	// Instanciate the handler
 	switch( $handler )
@@ -63,8 +64,8 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' )
 			$smarty->display("error.tpl");
 			die;
 		}
-
-		$handler = &new $handler( $_FILES['file']['tmp_name'] );
+        
+       	$handler = &new $handler( $_FILES['file']['tmp_name'] , $encoding, 'UTF-8');
 	}
 
 	if( !$grid->import( $handler ) )
@@ -85,8 +86,10 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' )
 	ob_end_clean();
 }
 else
-{
+{   
 	$list = array();
+    $encoding = new Encoding ();
+    $charsetList = $encoding->get_input_supported_encodings();
 
 	$handlers = TikiSheet::getHandlerList();
 	
@@ -104,6 +107,7 @@ else
 	}
 
 	$smarty->assign_by_ref( "handlers", $list );
+    $smarty->assign_by_ref( "charsets", $charsetList );
 }
 
 $cat_type = 'sheet';
