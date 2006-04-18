@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-export_sheet.php,v 1.6 2006-04-06 16:06:19 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-export_sheet.php,v 1.7 2006-04-18 10:11:39 marcmont Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -34,6 +34,10 @@ $smarty->assign('sheetId', $_REQUEST["sheetId"]);
 
 $info = $sheetlib->get_sheet_info( $_REQUEST["sheetId"] );
 
+$encoding = new Encoding ();
+$charsetList = $encoding->get_input_supported_encodings();
+$smarty->assign_by_ref( "charsets", $charsetList );
+
 $smarty->assign('title', $info['title']);
 $smarty->assign('description', $info['description']);
 
@@ -48,6 +52,7 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' )
 	$smarty->assign('page_mode', 'submit' );
 
 	$sheetId = $_REQUEST['sheetId'];
+    $encoding = $_REQUEST['encoding'];
 
 	$handler = &new TikiSheetDatabaseHandler( $sheetId );
 	$grid->import( $handler );
@@ -62,7 +67,7 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' )
 		die;
 	}
 
-	$handler = &new $handler( "php://stdout" );
+	$handler = &new $handler( "php://stdout" , 'UTF-8', $encoding );
 	$grid->export( $handler );
 
 	exit;
