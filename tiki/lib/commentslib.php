@@ -118,7 +118,7 @@ class Comments extends TikiLib {
 
     function add_thread_attachment( $forum_info, $threadId, $fp = '', $data = '', $name, $type, $size, $inbound_mail = 0 )
     {
-	global $smarty;
+	global $smarty, $tiki_p_admin_forum, $tiki_p_forum_attach;
 
 	// Deal with attachment
 	if( $forum_info['att'] == 'att_all'
