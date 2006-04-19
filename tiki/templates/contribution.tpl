@@ -9,6 +9,6 @@
 {assign var="help" value=$help|cat:$contributions[ix].name|cat:": "|cat:$contributions[ix].description|cat:"<br />"}
    {/section}
    </select>
-<a {popup text=$help width=500}><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<a {popup text=$help|replace:'"':"'" width=500}><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
 </td></tr>
 {/if}
