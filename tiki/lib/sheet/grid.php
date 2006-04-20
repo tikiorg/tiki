@@ -23,6 +23,7 @@ require_once( "lib/sheet/ole/pps/file.php" );
 require_once( "lib/sheet/ole.php" );
 require_once( "lib/sheet/excel/writer.php" );
 //require_once( "lib/sheet/conf/config.inc.php" );
+require_once( "lib/encoding/lib-encoding.php" );
 
 // Constants {{{1
 
@@ -817,9 +818,10 @@ class TikiSheetSerializeHandler extends TikiSheetDataHandler
 	 * Initializes the the serializer on a file.
 	 * @param $file The file path to save or load from.
 	 */
-	function TikiSheetSerializeHandler( $file = "php://stdout" )
+	function TikiSheetSerializeHandler( $file = "php://stdout", $inputEncoding = '', $outputEncoding = '' )
 	{
 		$this->file = $file;
+        $this->encoding = new Encoding ($inputEncoding, $outputEncoding);
 	}
 
 	// _load {{{2
@@ -907,10 +909,11 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 	 * Initializes the the serializer on a file.
 	 * @param $file The file path to save or load from.
 	 */
-	function TikiSheetCSVHandler( $file = "php://stdout", $lineLen = 1024 )
+	function TikiSheetCSVHandler( $file = "php://stdout", $inputEncoding = '', $outputEncoding = '', $lineLen = 1024 )
 	{
 		$this->file = $file;
 		$this->lineLen = $lineLen;
+        $this->encoding = new Encoding ($inputEncoding, $outputEncoding);
 	}
 
 	// _load {{{2
@@ -950,6 +953,8 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 
 		if( is_array( $total ) )
 			$total = implode( "\n", $total );
+            
+        $total = $this->encoding->convert_encoding ($total);
 
 		if( $this->file == "php://stdout" )
 		{
@@ -1179,9 +1184,10 @@ class TikiSheetExcelHandler extends TikiSheetDataHandler
 	 * Initializes the the serializer on a file.
 	 * @param $file The file path to save or load from.
 	 */
-	function TikiSheetExcelHandler( $file = "php://stdout" )
+	function TikiSheetExcelHandler( $file = "php://stdout" , $inputEncoding = '', $outputEncoding = '' )
 	{
 		$this->file = $file;
+        $this->encoding = new Encoding ($inputEncoding, $outputEncoding);
 	}
 
 	// _load {{{2
@@ -1214,7 +1220,7 @@ class TikiSheetExcelHandler extends TikiSheetDataHandler
 						else
 							$width = $info['colspan'];
 
-						$sheet->setValue( utf8_encode( $value ) );
+						$sheet->setValue( $this->encoding->convert_encoding ( $value ) );
 						$sheet->setSize( $width, $height );
 					}
 			}
@@ -1246,7 +1252,7 @@ class TikiSheetExcelHandler extends TikiSheetDataHandler
 						$out->writeFormula( $row, $col, utf8_decode( $formula ) );
 					}
 					else
-						$out->write( $row, $col, utf8_decode( $value ) );
+						$out->write( $row, $col, $this->encoding->convert_encoding ( $value ) );
 
 					$width = $height = 1;
 					if( is_array( $sheet->cellInfo[$row][$col] ) )
