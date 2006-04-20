@@ -22,6 +22,6 @@
 			<option value="{$charsets[key]}">{$charsets[key]}</option>
 		{/section}
 		</select>
-		<input type="submit" value="Export" />
+		<input type="submit" value="{tr}Export{/tr}" />
 	</form>
 {/if}
