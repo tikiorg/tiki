@@ -21,6 +21,7 @@
 		{section name=key loop=$charsets}
 			<option value="{$charsets[key]}">{$charsets[key]}</option>
 		{/section}
+		</select>
 		<input type="submit" value="Export" />
 	</form>
 {/if}
