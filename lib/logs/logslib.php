@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.20 2006-04-05 21:49:20 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.21 2006-04-21 18:11:15 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -499,7 +499,7 @@ class LogsLib extends TikiLib {
 			foreach ($action['contributions'] as $contribution) {
 				if ($i++)
 					$csv .= ',';
-				$csv .= $contribution;
+				$csv .= $contribution['name'];
 			}
 		}
 		$csv .= '"<br />';
@@ -520,7 +520,7 @@ class LogsLib extends TikiLib {
 		$result = $this->query($query, array($actionId, 'contribution'));
 		$ret = array();
 		while ($res = $result->fetchRow()) {
-			$ret[] = $res['name'];
+			$ret[]['name'] = $res['name'];
 		}
 		return $ret;
 	}
