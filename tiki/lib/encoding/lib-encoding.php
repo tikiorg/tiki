@@ -65,7 +65,8 @@ class Encoding {
             $outputEncoding = $this->get_output_encoding();
        }  
         
-       $returnStr = mb_convert_encoding ($str, $outputEncoding, $inputEncoding);
+       // $returnStr = mb_convert_encoding ($str, $outputEncoding, $inputEncoding);
+       $returnStr = iconv($inputEncoding, $outputEncoding."//TRANSLIT", $str);
        // print $outputEncoding.' - '.$inputEncoding.' - '.$returnStr.'<br>'; 
        return $returnStr;   
     }
