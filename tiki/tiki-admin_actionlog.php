@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.13 2006-04-13 17:38:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.14 2006-04-21 10:53:47 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -139,7 +139,8 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export'])) {
 			break;
 		case 'category':
 			$actions[$i]['link'] = 'tiki-browse_categories.php?parentId='.$actions[$i]['object'];
-			$actions[$i]['object'] = $categNames[$actions[$i]['object']];
+			if (!empty($categNames[$actions[$i]['object']]))
+				$actions[$i]['object'] = $categNames[$actions[$i]['object']];
 			break;
 		case 'forum':
 			if ($actions[$i]['action'] == 'Removed')
@@ -153,7 +154,8 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export'])) {
 					$forumNames[$object['forumId']] = $object['name'];
 				}
 			}
-			$actions[$i]['object'] = $forumNames[$actions[$i]['object']];
+			if (!empty($forumNames[$actions[$i]['object']]))
+				$actions[$i]['object'] = $forumNames[$actions[$i]['object']];
 			break;
 		case 'image gallery':
 			if ($actions[$i]['action'] == 'Uploaded')
@@ -167,7 +169,8 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export'])) {
 					$imageGalleryNames[$object['galleryId']] = $object['name'];
 				}
 			}
-			$actions[$i]['object'] = $imageGalleryNames[$actions[$i]['object']];
+			if (!empty($imageGalleryNames[$actions[$i]['object']]))
+				$actions[$i]['object'] = $imageGalleryNames[$actions[$i]['object']];
 			break;
 		case 'file gallery':
 			if ($actions[$i]['action'] == 'Uploaded' || $actions[$i]['action'] == 'Downloaded')
@@ -181,7 +184,8 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export'])) {
 					$fileGalleryNames[$object['galleryId']] = $object['name'];
 				}
 			}
-			$actions[$i]['object'] = $fileGalleryNames[$actions[$i]['object']];
+			if (!empty($fileGalleryNames[$actions[$i]['object']]))
+				$actions[$i]['object'] = $fileGalleryNames[$actions[$i]['object']];
 			break;
 		case 'comment':
 			preg_match('/type=([^&]*)(&.*)/', $actions[$i]['comment'], $matches);
@@ -205,10 +209,9 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export'])) {
 					$sheetNames[$object['sheetId']] = $object['title'];
 				}
 			}
-			if (isset($sheetNames[$actions[$i]['object']])) {
-				$actions[$i]['link'] = 'tiki-view_sheets.php?sheetId='.$actions[$i]['object'];
+			if (!empty($sheetNames[$actions[$i]['object']]))
 				$actions[$i]['object'] = $sheetNames[$actions[$i]['object']];
-			}
+			$actions[$i]['link'] = 'tiki-view_sheets.php?sheetId='.$actions[$i]['object'];
 			break;
 		}
 	}
