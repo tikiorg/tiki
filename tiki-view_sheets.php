@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_sheets.php,v 1.11 2006-04-06 16:06:20 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_sheets.php,v 1.12 2006-04-21 17:54:31 sylvieg Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -58,6 +58,12 @@ $smarty->assign('page_mode', 'view' );
 
 $grid = &new TikiSheet;
 
+if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'edit' && $tiki_p_edit_sheet != 'y' && $tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y') {
+	$smarty->assign('msg', tra("Access Denied").": feature_sheets");
+	$smarty->display("error.tpl");
+	die;
+}
+
 if( $_SERVER['REQUEST_METHOD'] == 'POST' )
 {
 	if ($tiki_p_edit_sheet != 'y' && $tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y') {
@@ -74,6 +80,9 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' )
 
 	// Save the changes
 	$handler = &new TikiSheetDatabaseHandler( $_REQUEST["sheetId"] );
+	if (isset($_REQUEST['contributions'])) {
+		$grid->set('contribution', $_REQUEST['contributions']);
+	}
 	$grid->export( $handler );
 
 	// Load the layout settings from the database
@@ -118,6 +127,10 @@ else
 		ob_end_clean();
 
 		$smarty->assign('page_mode', 'edit' );
+		if ($feature_contribution == 'y') {
+			$contributionItemId = $_REQUEST['sheetId'];
+			include_once('contribution.php');
+		}
 	}
 	else
 	{
