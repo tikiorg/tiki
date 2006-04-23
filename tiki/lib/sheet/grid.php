@@ -751,6 +751,9 @@ class TikiSheetFormHandler extends TikiSheetDataHandler
 					echo "		cell.changeSize( {$height}, {$width} );\n";
 			}
 		}
+
+		// Contributions
+		//echo "		g.addContribution( 1, 'foo' );\n";
 	   
 		echo "		g.draw();\n";
 		echo "		g.refresh();\n";
