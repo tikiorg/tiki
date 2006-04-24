@@ -1237,7 +1237,7 @@ Grid.prototype.drawContribution = function()
 	if( this.contributions.length > 0 )
 	{
 		var key;
-		data = "<select name='contributions[]' multiple>";
+		data = "<select name='contributions[]' multiple='multiple' size='3'>";
 		
 		for( key in this.contributions )
 			data += "<option value=\"" + this.contributions[key].id + "\">" + this.contributions[key].name + "</option>";

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/contribution.php,v 1.4 2006-03-10 15:24:02 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/contribution.php,v 1.5 2006-04-24 15:03:09 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -7,6 +7,8 @@
 // the script uses the var $_REQUEST['contributions'] = the list of selected contributions to preselect the contributions
 //						$contributionItemId = the commentId if the object exists and you want to preselect  the comment contribuions
 //						$section: to know where you are
+
+// param: $contributionItemId: id of the comment if in coment/forum
 
 if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== FALSE) {
   //smarty is not there - we need setup
@@ -17,6 +19,7 @@ if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== FALSE) {
 }
 
 require_once('tiki-setup.php'); 
+global $feature_contribution;
 
 if ($feature_contribution == 'y') {
 	global $contributionlib; include_once('lib/contribution/contributionlib.php');
