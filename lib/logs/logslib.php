@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.21 2006-04-21 18:11:15 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.22 2006-04-24 15:03:09 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -257,8 +257,9 @@ class LogsLib extends TikiLib {
 				if ($feature_contribution == 'y' && ($res['action'] == 'Created' || $res['action'] == 'Updated' || $res['action'] == 'Posted' || $res['action'] == 'Replied')) {
 					if ($id = $this->get_comment_action($res)) {
 						$res['contributions'] = $this->get_action_contributions($res['actionId']);
-					} else
+					} else {
 						$res['contributions'] = $contributionlib->get_assigned_contributions($res['object'], $res['objectType']); // todo: do a left join
+					}
 				}
 				$ret[] = $res;
 			}
@@ -330,6 +331,8 @@ class LogsLib extends TikiLib {
 		if (preg_match('/comments_parentId=([0-9\-+]+)/', $action['comment'], $matches))
 			return $matches[1];
 		elseif (preg_match('/#threadId([0-9\-+]+)/', $action['comment'], $matches))
+			return $matches[1];
+		elseif (preg_match('/sheetId=([0-9]+)/', $action['comment'], $matches))
 			return $matches[1];
 		else
 			return '';
