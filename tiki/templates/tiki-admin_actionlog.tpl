@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.14 2006-04-13 17:38:45 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.15 2006-04-24 16:06:32 sylvieg Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Admin Action Log{/tr}</a></h1>
 <a name="Setting" />
@@ -89,8 +89,8 @@
 <tr>
 <td class="{cycle advance=false}">{if $actionlogs[ix].user}{$actionlogs[ix].user}{else}{tr}Anonymous{/tr}{/if}</td>
 <td class="{cycle advance=false}">{$actionlogs[ix].lastModif|tiki_short_datetime}</td>
-<td class="{cycle advance=false}">{$actionlogs[ix].action}</td>
-<td class="{cycle advance=false}">{$actionlogs[ix].objectType}</td>
+<td class="{cycle advance=false}">{tr}{$actionlogs[ix].action}{/tr}</td>
+<td class="{cycle advance=false}">{tr}{$actionlogs[ix].objectType}{/tr}</td>
 <td class="{cycle advance=false}">{if $actionlogs[ix].link}<a href="{$actionlogs[ix].link}" title="{tr}view{/tr}">{$actionlogs[ix].object|escape}</a>{else}{$actionlogs[ix].object|escape}{/if}</td>
 {if !$reportCateg and $showCateg eq 'y'}<td class="{cycle advance=false}">{$actionlogs[ix].categName|escape}</td>{/if}
 <td class="{cycle advance=false}{if $actionlogs[ix].add} diffadded{/if}">{if $actionlogs[ix].add or $actionlogs[ix].add eq '0'}{$actionlogs[ix].add}{else}&nbsp;{/if}</td>
