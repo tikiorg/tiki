@@ -1,0 +1,260 @@
+contributor:
+$Author: jreyesg $
+
+revision:
+$Revision: 1.1 $
+
+lastmodif:
+$Date: 2006-04-25 18:33:56 $
+
+files:
+features/aulawiki/aulawiki-assignments_admin.php aulawiki-assignments_admin.php
+features/aulawiki/aulawiki-objectpermissions.php aulawiki-objectpermissions.php
+features/aulawiki/aulawiki-get_resource.php aulawiki-get_resource.php
+features/aulawiki/aulawiki-include_category.php aulawiki-include_category.php
+features/aulawiki/aulawiki-myworkspaces.php aulawiki-myworkspaces.php
+features/aulawiki/aulawiki-print.php aulawiki-print.php
+features/aulawiki/aulawiki-remove_resource.php aulawiki-remove_resource.php
+features/aulawiki/aulawiki-roles.php aulawiki-roles.php
+features/aulawiki/aulawiki-subjects.php aulawiki-subjects.php
+features/aulawiki/aulawiki-view_gradebook.php aulawiki-view_gradebook.php
+features/aulawiki/aulawiki-view_gradebook_xml.php aulawiki-view_gradebook_xml.php
+features/aulawiki/aulawiki-view_module.php aulawiki-view_module.php
+features/aulawiki/aulawiki-view_structure.php aulawiki-view_structure.php
+features/aulawiki/aulawiki-workspaces.php aulawiki-workspaces.php 
+features/aulawiki/aulawiki-workspace_desktop.php aulawiki-workspace_desktop.php
+features/aulawiki/aulawiki-workspace_modules.php aulawiki-workspace_modules.php
+features/aulawiki/aulawiki-workspace_types.php aulawiki-workspace_types.php
+features/aulawiki/aulawiki-workspace_types_resources.php aulawiki-workspace_types_resources.php
+features/aulawiki/aulawiki-ws_assigned_modules.php aulawiki-ws_assigned_modules.php
+features/aulawiki/images/aulawiki/degrada.gif images/aulawiki/degrada.gif
+features/aulawiki/images/aulawiki/degrada2.gif images/aulawiki/degrada2.gif
+features/aulawiki/images/aulawiki/degrada2gris.gif images/aulawiki/degrada2gris.gif
+features/aulawiki/images/aulawiki/degrada2verde.gif images/aulawiki/degrada2verde.gif
+features/aulawiki/images/aulawiki/degrada3.gif images/aulawiki/degrada3.gif
+features/aulawiki/images/aulawiki/edu_article.gif images/aulawiki/edu_article.gif
+features/aulawiki/images/aulawiki/edu_assignments.gif images/aulawiki/edu_assignments.gif
+features/aulawiki/images/aulawiki/edu_blog.gif images/aulawiki/edu_blog.gif
+features/aulawiki/images/aulawiki/edu_calendar.gif images/aulawiki/edu_calendar.gif
+features/aulawiki/images/aulawiki/edu_faq.gif images/aulawiki/edu_faq.gif
+features/aulawiki/images/aulawiki/edu_filegallery.gif images/aulawiki/edu_filegallery.gif
+features/aulawiki/images/aulawiki/edu_folder.png images/aulawiki/edu_folder.png
+features/aulawiki/images/aulawiki/edu_folder_closed.png images/aulawiki/edu_folder_closed.png
+features/aulawiki/images/aulawiki/edu_folder_dim.png images/aulawiki/edu_folder_dim.png
+features/aulawiki/images/aulawiki/edu_folder_open.png images/aulawiki/edu_folder_open.png
+features/aulawiki/images/aulawiki/edu_forum.gif images/aulawiki/edu_forum.gif
+features/aulawiki/images/aulawiki/edu_group.gif images/aulawiki/edu_group.gif
+features/aulawiki/images/aulawiki/edu_group.jpg images/aulawiki/edu_group.jpg
+features/aulawiki/images/aulawiki/edu_group_add.gif images/aulawiki/edu_group_add.gif
+features/aulawiki/images/aulawiki/edu_group_new.gif images/aulawiki/edu_group_new.gif
+features/aulawiki/images/aulawiki/edu_group_remove.gif images/aulawiki/edu_group_remove.gif
+features/aulawiki/images/aulawiki/edu_imagegallery.gif images/aulawiki/edu_imagegallery.gif
+features/aulawiki/images/aulawiki/edu_nav_down.gif images/aulawiki/edu_nav_down.gif
+features/aulawiki/images/aulawiki/edu_nav_left.gif images/aulawiki/edu_nav_left.gif
+features/aulawiki/images/aulawiki/edu_nav_right.gif images/aulawiki/edu_nav_right.gif
+features/aulawiki/images/aulawiki/edu_nav_up.gif images/aulawiki/edu_nav_up.gif
+features/aulawiki/images/aulawiki/edu_paste.gif images/aulawiki/edu_paste.gif
+features/aulawiki/images/aulawiki/edu_quiz.gif images/aulawiki/edu_quiz.gif
+features/aulawiki/images/aulawiki/edu_stop.gif images/aulawiki/edu_stop.gif
+features/aulawiki/images/aulawiki/edu_structure.gif images/aulawiki/edu_structure.gif
+features/aulawiki/images/aulawiki/edu_user_new.gif images/aulawiki/edu_user_new.gif
+features/aulawiki/images/aulawiki/edu_wikipage.gif images/aulawiki/edu_wikipage.gif
+features/aulawiki/images/aulawiki/edu_workspace.gif images/aulawiki/edu_workspace.gif
+features/aulawiki/images/aulawiki/edu_workspace.png images/aulawiki/edu_workspace.png
+features/aulawiki/images/aulawiki/edu_workspaceActive.png images/aulawiki/edu_workspaceActive.png
+features/aulawiki/images/aulawiki/edu_workspaceActiveFOLDER.png images/aulawiki/edu_workspaceActiveFOLDER.png
+features/aulawiki/images/aulawiki/edu_workspaceFOLDER.png images/aulawiki/edu_workspaceFOLDER.png
+features/aulawiki/images/aulawiki/edu_workspaceInactive.png images/aulawiki/edu_workspaceInactive.png
+features/aulawiki/images/aulawiki/edu_workspaces.png images/aulawiki/edu_workspaces.png
+features/aulawiki/images/aulawiki/edu_workspace_grey.png images/aulawiki/edu_workspace_grey.png
+features/aulawiki/images/aulawiki/edu_workspace_inactive.png images/aulawiki/edu_workspace_inactive.png
+features/aulawiki/images/aulawiki/user_blue.gif images/aulawiki/user_blue.gif
+features/aulawiki/images/aulawiki/user_red.gif images/aulawiki/user_red.gif
+features/aulawiki/images/aulawiki/page.gif images/aulawiki/page.gif
+features/aulawiki/images/aulawiki/pageNueva.gif images/aulawiki/pageNueva.gif
+features/aulawiki/lib/aulawiki/assignmentslib.php lib/aulawiki/assignmentslib.php
+features/aulawiki/lib/aulawiki/categutillib.php lib/aulawiki/categutillib.php
+features/aulawiki/lib/aulawiki/eduuserlib.php lib/aulawiki/eduuserlib.php
+features/aulawiki/lib/aulawiki/periodslib.php lib/aulawiki/periodslib.php
+features/aulawiki/lib/aulawiki/printlib.php lib/aulawiki/printlib.php
+features/aulawiki/lib/aulawiki/roleslib.php lib/aulawiki/roleslib.php
+features/aulawiki/lib/aulawiki/studieslib.php lib/aulawiki/studieslib.php
+features/aulawiki/lib/aulawiki/subjectlib.php lib/aulawiki/subjectlib.php
+features/aulawiki/lib/aulawiki/workspacelib.php lib/aulawiki/workspacelib.php
+features/aulawiki/lib/aulawiki/workspacemoduleslib.php lib/aulawiki/workspacemoduleslib.php
+features/aulawiki/lib/aulawiki/wstypeslib.php lib/aulawiki/wstypeslib.php
+features/aulawiki/lib/smarty_tiki/function.edumenu.php lib/smarty_tiki/function.edumenu.php
+features/aulawiki/styles/aulawiki.css styles/aulawiki.css
+features/aulawiki/templates/aulawiki-blog.tpl templates/aulawiki-blog.tpl
+features/aulawiki/templates/aulawiki-objectpermissions.tpl templates/aulawiki-objectpermissions.tpl
+features/aulawiki/templates/aulawiki-assignments_admin.tpl templates/aulawiki-assignments_admin.tpl
+features/aulawiki/templates/aulawiki-blog_workspace_history.tpl templates/aulawiki-blog_workspace_history.tpl
+features/aulawiki/templates/aulawiki-copy_to_clipboard.tpl templates/aulawiki-copy_to_clipboard.tpl
+features/aulawiki/templates/aulawiki-list_resources.tpl templates/aulawiki-list_resources.tpl
+features/aulawiki/templates/aulawiki-myworkspaces.tpl templates/aulawiki-myworkspaces.tpl
+features/aulawiki/templates/aulawiki-print.tpl templates/aulawiki-print.tpl
+features/aulawiki/templates/aulawiki-print_page.tpl templates/aulawiki-print_page.tpl
+features/aulawiki/templates/aulawiki-print_structure.tpl templates/aulawiki-print_structure.tpl
+features/aulawiki/templates/aulawiki-resource_types.tpl templates/aulawiki-resource_types.tpl
+features/aulawiki/templates/aulawiki-roles.tpl templates/aulawiki-roles.tpl
+features/aulawiki/templates/aulawiki-structure_tree.tpl templates/aulawiki-structure_tree.tpl
+features/aulawiki/templates/aulawiki-subjects.tpl templates/aulawiki-subjects.tpl
+features/aulawiki/templates/aulawiki-view_gradebook.tpl templates/aulawiki-view_gradebook.tpl
+features/aulawiki/templates/aulawiki-view_gradebook_xml.tpl templates/aulawiki-view_gradebook_xml.tpl
+features/aulawiki/templates/aulawiki-view_module.tpl templates/aulawiki-view_module.tpl
+features/aulawiki/templates/aulawiki-view_structure.tpl templates/aulawiki-view_structure.tpl
+features/aulawiki/templates/aulawiki-workspaces.tpl templates/aulawiki-workspaces.tpl
+features/aulawiki/templates/aulawiki-workspace_desktop.tpl templates/aulawiki-workspace_desktop.tpl
+features/aulawiki/templates/aulawiki-workspace_types.tpl templates/aulawiki-workspace_types.tpl
+features/aulawiki/templates/aulawiki-workspace_types_resources.tpl templates/aulawiki-workspace_types_resources.tpl
+features/aulawiki/templates/aulawiki-workspace_zones.tpl templates/aulawiki-workspace_zones.tpl
+features/aulawiki/templates/aulawiki-ws_assigned_modules.tpl templates/aulawiki-ws_assigned_modules.tpl
+features/aulawiki/templates/aulawiki-module_error.tpl templates/aulawiki-module_error.tpl
+features/aulawiki/templates/modules/mod-aulawiki_assistant.tpl templates/modules/mod-aulawiki_assistant.tpl
+features/aulawiki/templates/modules/mod-aulawiki_assignments.tpl templates/modules/mod-aulawiki_assignments.tpl
+features/aulawiki/templates/modules/mod-aulawiki_calendar.tpl templates/modules/mod-aulawiki_calendar.tpl
+features/aulawiki/templates/modules/mod-aulawiki_calendar.tpl.nocache templates/modules/mod-aulawiki_calendar.tpl.nocache
+features/aulawiki/templates/modules/mod-aulawiki_child_workspaces.tpl templates/modules/mod-aulawiki_child_workspaces.tpl
+features/aulawiki/templates/modules/mod-aulawiki_clipboard.tpl templates/modules/mod-aulawiki_clipboard.tpl
+features/aulawiki/templates/modules/mod-aulawiki_clipboard.tpl.nocache templates/modules/mod-aulawiki_clipboard.tpl.nocache
+features/aulawiki/templates/modules/mod-aulawiki_last_blog_posts.tpl templates/modules/mod-aulawiki_last_blog_posts.tpl
+features/aulawiki/templates/modules/mod-aulawiki_last_blog_posts.tpl.nocache templates/modules/mod-aulawiki_last_blog_posts.tpl.nocache
+features/aulawiki/templates/modules/mod-aulawiki_last_files.tpl templates/modules/mod-aulawiki_last_files.tpl
+features/aulawiki/templates/modules/mod-aulawiki_last_image.tpl templates/modules/mod-aulawiki_last_image.tpl
+features/aulawiki/templates/modules/mod-aulawiki_list_resources.tpl templates/modules/mod-aulawiki_list_resources.tpl
+features/aulawiki/templates/modules/mod-aulawiki_myworkspaces.tpl templates/modules/mod-aulawiki_myworkspaces.tpl
+features/aulawiki/templates/modules/mod-aulawiki_myworkspaces.tpl.nocache templates/modules/mod-aulawiki_myworkspaces.tpl.nocache
+features/aulawiki/templates/modules/mod-aulawiki_resources.tpl templates/modules/mod-aulawiki_resources.tpl
+features/aulawiki/templates/modules/mod-aulawiki_resources.tpl.nocache templates/modules/mod-aulawiki_resources.tpl.nocache
+features/aulawiki/templates/modules/mod-aulawiki_user_groups.tpl templates/modules/mod-aulawiki_user_groups.tpl
+features/aulawiki/templates/modules/mod-aulawiki_user_groups.tpl.nocache templates/modules/mod-aulawiki_user_groups.tpl.nocache
+features/aulawiki/templates/modules/mod-aulawiki_user_workspaces.tpl templates/modules/mod-aulawiki_user_workspaces.tpl
+features/aulawiki/templates/modules/mod-aulawiki_user_workspaces.tpl.nocache templates/modules/mod-aulawiki_user_workspaces.tpl.nocache
+features/aulawiki/templates/modules/mod-aulawiki_viewpage.tpl templates/modules/mod-aulawiki_viewpage.tpl
+features/aulawiki/templates/modules/mod-aulawiki_viewstructure.tpl templates/modules/mod-aulawiki_viewstructure.tpl
+features/aulawiki/templates/modules/mod-aulawiki_view_assignment.tpl templates/modules/mod-aulawiki_view_assignment.tpl
+features/aulawiki/templates/modules/mod-aulawiki_who_is_there.tpl templates/modules/mod-aulawiki_who_is_there.tpl
+features/aulawiki/templates/modules/mod-aulawiki_who_is_there.tpl.nocache templates/modules/mod-aulawiki_who_is_there.tpl.nocache
+features/aulawiki/templates/styles/aulawiki/index.php templates/styles/aulawiki/index.php
+features/aulawiki/templates/styles/aulawiki/module.tpl templates/styles/aulawiki/module.tpl
+features/aulawiki/templates/styles/aulawiki/tiki-show_page.tpl templates/styles/aulawiki/tiki-show_page.tpl
+features/aulawiki/templates/styles/aulawiki/tiki-user_edumenu.tpl templates/styles/aulawiki/tiki-user_edumenu.tpl
+features/aulawiki/templates/styles/aulawiki/tiki-user_information.tpl templates/styles/aulawiki/tiki-user_information.tpl
+features/aulawiki/templates/styles/aulawiki/tiki-user_menu.tpl templates/styles/aulawiki/tiki-user_menu.tpl
+features/aulawiki/templates/styles/aulawiki/tiki-user_preferences.tpl templates/styles/aulawiki/tiki-user_preferences.tpl
+features/aulawiki/templates/styles/aulawiki/tiki.tpl templates/styles/aulawiki/tiki.tpl
+features/aulawiki/templates/styles/aulawiki/modules/index.php templates/styles/aulawiki/modules/index.php
+features/aulawiki/templates/styles/aulawiki/modules/mod-application_menu.tpl templates/styles/aulawiki/modules/mod-application_menu.tpl
+features/aulawiki/modules/mod-aulawiki_assignments.php modules/mod-aulawiki_assignments.php
+features/aulawiki/modules/mod-aulawiki_calendar.php modules/mod-aulawiki_calendar.php
+features/aulawiki/modules/mod-aulawiki_child_workspaces.php modules/mod-aulawiki_child_workspaces.php
+features/aulawiki/modules/mod-aulawiki_clipboard.php modules/mod-aulawiki_clipboard.php
+features/aulawiki/modules/mod-aulawiki_last_blog_posts.php modules/mod-aulawiki_last_blog_posts.php
+features/aulawiki/modules/mod-aulawiki_last_files.php modules/mod-aulawiki_last_files.php
+features/aulawiki/modules/mod-aulawiki_last_image.php modules/mod-aulawiki_last_image.php
+features/aulawiki/modules/mod-aulawiki_list_resources.php modules/mod-aulawiki_list_resources.php
+features/aulawiki/modules/mod-aulawiki_myworkspaces.php modules/mod-aulawiki_myworkspaces.php
+features/aulawiki/modules/mod-aulawiki_resources.php modules/mod-aulawiki_resources.php
+features/aulawiki/modules/mod-aulawiki_user_groups.php modules/mod-aulawiki_user_groups.php
+features/aulawiki/modules/mod-aulawiki_user_workspaces.php modules/mod-aulawiki_user_workspaces.php
+features/aulawiki/modules/mod-aulawiki_viewpage.php modules/mod-aulawiki_viewpage.php
+features/aulawiki/modules/mod-aulawiki_viewstructure.php modules/mod-aulawiki_viewstructure.php
+features/aulawiki/modules/mod-aulawiki_view_assignment.php modules/mod-aulawiki_view_assignment.php
+features/aulawiki/modules/mod-aulawiki_who_is_there.php modules/mod-aulawiki_who_is_there.php
+
+Configuration:
+
+author:
+jreyes (SF: jreyesg )
+
+licence:
+GNU/LGPL
+
+Description: 
+AulaWiki offers team collaboration environments (workspaces), allowing you to manage sets of Tiki resources in an easy way.
+
+Changelog:
+0.1 initial package
+0.2 fixed some bugs
+0.3 fixed some bugs
+0.4 TikiWiki 1.10 support
+
+sql-install:
+CREATE TABLE `aulawiki_assignment` (`assignmentId` int(14) NOT NULL auto_increment,`workspaceId` int(14) NOT NULL default '0',`periodId` int(14) NOT NULL default '0',`gradeWeight` int(5) NOT NULL default '0',`name` varchar(150) NOT NULL default '',`description` varchar(250) NOT NULL default '',`wikipage` varchar(100) NOT NULL default '',`createdby` varchar(100) NOT NULL default '',`creationDate` int(14) NOT NULL default '0',`startDate` int(14) NOT NULL default '0',`uid` varchar(100) NOT NULL default '',`type` int(11) NOT NULL default '0',`endDate` int(14) NOT NULL default '0', PRIMARY KEY  (`assignmentId`)) TYPE=MyISAM;
+CREATE TABLE `aulawiki_gradebook` (`assignmentId` int(14) NOT NULL default '0',`userId` varchar(100) NOT NULL default '',`comment` varchar(250) NOT NULL default '',`grade` int(4) NOT NULL default '0') TYPE=MyISAM;
+CREATE TABLE `aulawiki_period` (`periodId` int(5) NOT NULL auto_increment,`periodTypeId` int(5) default '0',`name` varchar(100) NOT NULL default '',`description` varchar(100) default '',`startDate` int(11) NOT NULL default '0',`endDate` int(14) NOT NULL default '0',`uid` varchar(100) NOT NULL default '',`gradeWeight` int(14) NOT NULL default '50', PRIMARY KEY  (`periodId`)) TYPE=MyISAM;
+CREATE TABLE `aulawiki_period_type` (`periodTypeId` int(14) NOT NULL auto_increment,`name` varchar(100) NOT NULL default '',`description` varchar(250) NOT NULL default '', PRIMARY KEY  (`periodTypeId`)) TYPE=MyISAM;
+CREATE TABLE `aulawiki_role_wstype` (`roleName` varchar(250) NOT NULL default '0',`typeId` int(14) NOT NULL default '0', PRIMARY KEY  (`typeId`,`roleName`)) TYPE=MyISAM;
+CREATE TABLE `aulawiki_roles` (`name` varchar(100) NOT NULL default '',`uid` varchar(100) NOT NULL default '',`levels` text NOT NULL,`description` varchar(250) NOT NULL default '', PRIMARY KEY  (`name`)) TYPE=MyISAM;
+CREATE TABLE `aulawiki_studies` (`id` int(14) NOT NULL auto_increment,`name` varchar(255) NOT NULL default '',`description` varchar(255) NOT NULL default '',`parentId` int(14) NOT NULL default '0',`code` varchar(250) NOT NULL default '',`uid` varchar(100) NOT NULL default '',`type` varchar(250) NOT NULL default '', PRIMARY KEY  (`id`)) TYPE=MyISAM;
+CREATE TABLE `aulawiki_subjects` (`subjectId` int(14) NOT NULL auto_increment,`code` varchar(250) NOT NULL default '',`name` varchar(255) NOT NULL default '',`description` varchar(100) NOT NULL default '',`workspaceId` int(14) NOT NULL default '0',`studieId` int(14) NOT NULL default '0',`uid` varchar(100) NOT NULL default '0', PRIMARY KEY  (`subjectId`)) TYPE=MyISAM;
+CREATE TABLE `aulawiki_workspace` (`workspaceId` int(14) NOT NULL auto_increment, `code` varchar(100) NOT NULL default '',`name` varchar(100) NOT NULL default '',`description` varchar(250) default '',`created` int(14) default '0',`startDate` int(14) default '0',`endDate` int(14) default '0',`closed` char(1) NOT NULL default 'y',`type` int(14) NOT NULL default '0',`parentId` int(14) NOT NULL default '0',`uid` varchar(100) NOT NULL default '',`owner` varchar(100) default '',`isuserws` char(1) NOT NULL default '',`hide` char(1) NOT NULL default '',`categoryId` int(12) NOT NULL default '0', PRIMARY KEY  (`workspaceId`)) TYPE=MyISAM;
+CREATE TABLE `aulawiki_workspace_modules` (`moduleId` int(10) NOT NULL auto_increment,`name` varchar(200) NOT NULL default '',`position` char(1) default NULL,`ord` int(4) default NULL,`type` varchar(50) NOT NULL default '',`workspaceId` int(14) NOT NULL default '0',`title` varchar(255) default NULL,`cache_time` int(14) default NULL,`rows` int(4) default NULL,`params` text,`groups` text,`uid` varchar(100) NOT NULL default '', PRIMARY KEY  (`moduleId`)) TYPE=MyISAM;
+CREATE TABLE `aulawiki_workspace_types` (`id` int(14) NOT NULL auto_increment,`code` varchar(100) NOT NULL default '',`name` varchar(100) NOT NULL default '',`description` varchar(100) NOT NULL default '',`uid` varchar(100) NOT NULL default '',`menuid` int(8) NOT NULL default '0',`resources` text NOT NULL,`userwstype` int(14) NOT NULL default '0',`hide` char(1) NOT NULL default '',`anonymous` char(1) NOT NULL default '',`registered` char(1) NOT NULL default '',`active` char(1) NOT NULL default '', PRIMARY KEY  (`id`)) TYPE=MyISAM; 
+INSERT INTO aulawiki_period VALUES (1,1,'First Quarter','First Quarter',2323213,21321323,'32434222',50);
+INSERT INTO aulawiki_period VALUES (2,1,'Second Quarter','Second Quarter',23324,324234,'324342',50);
+INSERT INTO aulawiki_period_type VALUES (1,'Period','Period');
+INSERT INTO aulawiki_roles VALUES ('Owner','2e47905c93db0107ccb8d2f6fa04ae8f','a:4:{i:0;s:5:\"admin\";i:1;s:5:\"basic\";i:2;s:7:\"editors\";i:3;s:10:\"registered\";}','Portfolio owner');
+INSERT INTO aulawiki_roles VALUES ('Teacher','d2c29581e067edc678889a13f5e9acdc','a:4:{i:0;s:5:\"admin\";i:1;s:5:\"basic\";i:2;s:7:\"editors\";i:3;s:10:\"registered\";}','Teacher');
+INSERT INTO aulawiki_roles VALUES ('Student','3c5d89e8b27fe36850e8312880f685e5','a:3:{i:0;s:5:\"basic\";i:1;s:7:\"editors\";i:2;s:10:\"registered\";}','Student');
+INSERT INTO users_permissions VALUES ('aulawiki_p_admin_wstypes','Can admin workspace types','admin','aulawiki');
+INSERT INTO users_permissions VALUES ('aulawiki_p_admin_roles','Can admin roles','admin','aulawiki');
+INSERT INTO users_permissions VALUES ('aulawiki_p_admin_workspaces','Can admin workspaces','admin','aulawiki');
+INSERT INTO users_permissions VALUES ('aulawiki_p_admin_assignments','Can admin assignments','admin','assignments');
+INSERT INTO users_permissions VALUES ('aulawiki_p_view_assignments','Can view assignments','basic','assignments');
+INSERT INTO users_permissions VALUES ('aulawiki_p_edit_assignments','Can edit existing assignments','editors','assignments');
+INSERT INTO users_permissions VALUES ('aulawiki_p_create_assignments','Can create new assignments','editors','assignments');
+INSERT INTO users_permissions VALUES ('aulawiki_p_remove_assignments','Can remove assignments','admin','assignments');
+INSERT INTO users_permissions VALUES ('aulawiki_p_view_workspace','Can view a workspace','basic','workspace');
+INSERT INTO users_permissions VALUES ('aulawiki_p_admin_workspace','Can admin a workspace','admin','workspace');
+INSERT INTO users_permissions VALUES ('aulawiki_p_create_resources','Can create new workspace resources','editors','workspace');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','AulaWiki','./aulawiki-workspaces.php',1500,'','aulawiki_p_admin_workspaces','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin Workspaces','./aulawiki-workspaces.php',1515,'','aulawiki_p_admin_workspaces','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Workspace Types','./aulawiki-workspace_types.php',1510,'','aulawiki_p_admin_wstypes','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin Roles','./aulawiki-roles.php',1505,'','aulawiki_p_admin_roles','');
+INSERT INTO tiki_menus VALUES (100,'Workspace menu','Sample AulaWiki workspace menu','d');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (100,'o','Gradebook','./aulawiki-view_gradebook.php',1,'','','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (100,'o','Users/Groups','./aulawiki-view_module.php?module=aulawiki_user_groups',10,'','','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (100,'o','Assignments','./aulawiki-assignments_admin.php',41,'','','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (100,'o','Resources','./aulawiki-view_module.php?module=aulawiki_resources',52,'','','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (100,'o','Blogs list','aulawiki-view_module.php?module=aulawiki_list_resources&type=blog',60,'','','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (100,'o','Img galeries','aulawiki-view_module.php?module=aulawiki_list_resources&type=image gallery',70,'','','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (100,'o','File galleries','aulawiki-view_module.php?module=aulawiki_list_resources&type=file gallery',71,'','','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (100,'o','Wiki Pages','aulawiki-view_module.php?module=aulawiki_list_resources&type=wiki page',72,'','','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (100,'o','Forums','aulawiki-view_module.php?module=aulawiki_list_resources&type=forum',73,'','','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (100,'o','Calendars','aulawiki-view_module.php?module=aulawiki_list_resources&type=calendar',74,'','','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (100,'o','History','./aulawiki-get_resource.php?name=History',80,'','','');
+INSERT INTO tiki_preferences (name,value) VALUES ( 'feature_aulawiki', 'y');
+INSERT INTO aulawiki_workspace_types VALUES (1,'PORTFOLIO','Portfolio','','f6dfa6643939c4887a68710a5b8c27b5',100,'a:2:{i:0;a:3:{s:4:\"name\";s:6:\"MyBlog\";s:4:\"desc\";s:7:\"My Blog\";s:4:\"type\";s:4:\"blog\";}i:1;a:3:{s:4:\"name\";s:4:\"Home\";s:4:\"desc\";s:19:\"Home portfolio page\";s:4:\"type\";s:9:\"wiki page\";}}',0,'n','y','y','y');
+INSERT INTO aulawiki_workspace_types VALUES (2,'COURSE','Course','Sample course type','bcff9b0c6b65e3d060685650d3e6b6e1',100,'a:4:{i:0;a:3:{s:4:\"name\";s:4:\"Home\";s:4:\"desc\";s:16:\"Home course page\";s:4:\"type\";s:9:\"wiki page\";}i:1;a:3:{s:4:\"name\";s:7:\"History\";s:4:\"desc\";s:12:\"History blog\";s:4:\"type\";s:4:\"blog\";}i:2;a:3:{s:4:\"name\";s:5:\"Files\";s:4:\"desc\";s:0:\"\";s:4:\"type\";s:12:\"file gallery\";}i:3;a:3:{s:4:\"name\";s:6:\"Images\";s:4:\"desc\";s:0:\"\";s:4:\"type\";s:13:\"image gallery\";}}',3,'n','y','y','y');
+INSERT INTO aulawiki_workspace_types VALUES (3,'PERSONAL','Personal workspace type','Sample personal workspace','dcd9e72f70d04fa9399db80a3fa056d8',100,'a:2:{i:0;a:3:{s:4:\"name\";s:7:\"History\";s:4:\"desc\";s:12:\"History blog\";s:4:\"type\";s:4:\"blog\";}i:1;a:3:{s:4:\"name\";s:4:\"Home\";s:4:\"desc\";s:18:\"Personal home page\";s:4:\"type\";s:9:\"wiki page\";}}',0,'y','y','y','y');
+INSERT INTO aulawiki_workspace_types VALUES (4,'FOLDER','Folder','','9e39b5e9a566a61ce60417a9429ff0f0',0,'a:1:{i:0;s:8:\"wikipage\";}',0,'','','','y');
+INSERT INTO aulawiki_workspace_modules VALUES (1,'aulawiki_last_blog_posts','r',3,'workspace type',1,'My Blog',0,0,'name=MyBlog','','68809e75ced4d1f52bec9eb73bc32cdc');
+INSERT INTO aulawiki_workspace_modules VALUES (2,'aulawiki_viewpage','r',1,'workspace type',1,'Portfolio Home',0,0,'name=Home','','6ac0bc2518a0c836de87662defbada90');
+INSERT INTO aulawiki_workspace_modules VALUES (3,'aulawiki_who_is_there','l',1,'workspace type',2,'Course users',0,0,'','','cbbbb0122cb4aca6c83859cda85bdecd');
+INSERT INTO aulawiki_workspace_modules VALUES (4,'aulawiki_viewpage','r',1,'workspace type',2,'Home',0,0,'name=Home','','740162e20ce6179bcac27015475a839d');
+INSERT INTO aulawiki_workspace_modules VALUES (5,'aulawiki_last_blog_posts','r',5,'workspace type',2,'Course History',0,0,'name=History','','da1d338b0fb3d87256341b4154ba96c5');
+INSERT INTO aulawiki_workspace_modules VALUES (6,'aulawiki_viewpage','r',1,'workspace type',3,'Home page',0,0,'name=Home','','1f1b76a1f4dff160d31ae36a11170ede');
+INSERT INTO aulawiki_workspace_modules VALUES (7,'aulawiki_last_blog_posts','r',5,'workspace type',3,'History',0,0,'name=History','','ae744c4a52b38e5386c99ddc43edc8be');
+INSERT INTO aulawiki_role_wstype VALUES ('Owner',1);
+INSERT INTO aulawiki_role_wstype VALUES ('Student',2);
+INSERT INTO aulawiki_role_wstype VALUES ('Teacher',2);
+INSERT INTO aulawiki_role_wstype VALUES ('Owner',3);
+INSERT INTO aulawiki_role_wstype VALUES ('Teacher',3);
+
+sql-remove:
+DELETE FROM tiki_menu_options WHERE url LIKE '%aulawiki%';
+DELETE FROM tiki_menus WHERE menuid=100 AND description LIKE '%AulaWiki%';
+DELETE FROM `users_permissions` WHERE `permName` LIKE 'aulawiki_p_%';
+DELETE FROM `tiki_preferences` WHERE name = 'feature_aulawiki';
+DROP TABLE `aulawiki_assignment`;
+DROP TABLE `aulawiki_gradebook`;
+DROP TABLE `aulawiki_period`;
+DROP TABLE `aulawiki_period_type`;
+DROP TABLE `aulawiki_role_wstype`;
+DROP TABLE `aulawiki_roles`;
+DROP TABLE `aulawiki_studies`;
+DROP TABLE `aulawiki_subjects`;
+DROP TABLE `aulawiki_workspace`;
+DROP TABLE `aulawiki_workspace_modules`;
+DROP TABLE `aulawiki_workspace_types`;
