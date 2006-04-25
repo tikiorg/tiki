@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-export_pdf.php,v 1.16 2006-02-08 11:54:44 nikchankov Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-export_pdf.php,v 1.17 2006-04-25 10:14:15 xavidp Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -148,9 +148,11 @@ if (fwrite($fp, $data) === FALSE) {
 	die();
 }
 fclose($fp);
+chmod("temp/$filename", 0644); // seems necessary on some systems with suphp security module from apache installed
+
 
 //Getting url for parsing
-$g_baseurl = "http://".$_REQUEST["HTTP_HOST"].str_replace("tiki-export_pdf.php","",$_REQUEST["SCRIPT_NAME"])."/tiki-export_pdf_reader.php?file=".$filename;
+$g_baseurl = "http://".$_REQUEST["HTTP_HOST"].str_replace("tiki-export_pdf.php","",$_REQUEST["SCRIPT_NAME"])."tiki-export_pdf_reader.php?file=".$filename;
 
 //
 // HTML2PDF
