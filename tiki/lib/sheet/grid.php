@@ -1154,11 +1154,14 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 					$del += strlen($old[$values[2].'-'.$values[3]]);
 			}
 			global $feature_contribution;
-			if ($feature_contribution == 'y') {
+			if ($feature_contribution == 'y' && isset($_REQUEST['contributions'])) {
 				global $contributionlib; include_once('lib/contribution/contributionlib.php');
 				$contributionlib->assign_contributions($_REQUEST['contributions'], $this->sheetId, 'sheet', '', '', '');
 			}			
-			$logslib->add_action('Updated', $this->sheetId, 'sheet', "add=$add&amp;del=$del&amp;sheetId=".$this->sheetId, '', '', '', '',  $_REQUEST['contributions']);
+			if (isset($_REQUEST['contributions']))
+				$logslib->add_action('Updated', $this->sheetId, 'sheet', "add=$add&amp;del=$del&amp;sheetId=".$this->sheetId, '', '', '', '',  $_REQUEST['contributions']);
+			else
+				$logslib->add_action('Updated', $this->sheetId, 'sheet', "add=$add&amp;del=$del&amp;sheetId=".$this->sheetId);
 		}
 
 		// }}}3
