@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.45 2006-02-17 15:10:41 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.46 2006-04-26 13:58:09 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -454,9 +454,10 @@ print_r($ret);
 			$mid.= ' and tsn.`sent`=-1';
 		} else {
 			$mid.= ' and tsn.`sent`<>-1';
+			
 		}
 
-		$query = "select tsn.`editionId`,tn.`nlId`,`subject`,`data`,tsn.`users`,`sent`,`name` from `tiki_newsletters` tn, `tiki_sent_newsletters` tsn ";
+		$query = "select tsn.`editionId`,tn.`nlId`,`subject`,`data`,tsn.`users`,`sent`,`name` from `tiki_newsletters` tn, `tiki_sent_newsletters` tsn";
 		$query.= " where tn.`nlId`=tsn.`nlId` $mid order by ".$this->convert_sortmode("$sort_mode");
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$ret = array();
@@ -476,10 +477,10 @@ print_r($ret);
 				if ($perm && $res[$perm] == 'n')
 					continue;
 			}
+			$res['nbErrors'] = $this->get_edition_nb_errors($res['editionId']);
 			$ret[] = $res;
 			++$cant;
 		}
-
 		$retval = array();
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;
@@ -574,6 +575,7 @@ print_r($ret);
 		$result = $this->query($query,array((int)$editionId),-1, -1, false);
 		$query = "update `tiki_newsletters` set `editions`= `editions`- 1 where `nlId`=?";
 		$result = $this->query($query,array((int)$nlId));
+		$this->remove_edition_errors($editionId);
 	}
 
 	function valid_subscription($nlId, $email, $isUser) {
@@ -598,6 +600,37 @@ print_r($ret);
 			}
 		}
 		return $tpls;
+	}
+	function memo_subscribers_edition($editionId, $users) {
+		$query = 'insert into `tiki_sent_newsletters_errors` (`editionId`, `email`, `login`) values(?,?,?)';
+		foreach ($users as $user) {
+			$result = $this->query($query, array((int)$editionId, $user['email'], $user['login']));
+		}
+	}
+	function delete_edition_subscriber($editionId, $user) {
+		$query = 'delete from `tiki_sent_newsletters_errors` where `editionId`=? and `email`=? and `login`=?';
+		$this->query($query, array((int)$editionId, $user['email'], $user['login']));
+	}
+	function mark_edition_subscriber($editionId, $user) {
+		$query = 'update `tiki_sent_newsletters_errors` set `error`= ? where `editionId`=? and `email`=? and `login`=?';
+		$this->query($query, array('y', (int)$editionId, $user['email'], $user['login']));
+	}
+	function get_edition_errors($editionId) {
+		$query = 'select * from `tiki_sent_newsletters_errors` where `editionId`=?';
+		$result = $this->query($query, array((int)$editionId));
+		$ret = array();
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res;
+		}
+		return $ret;
+	}
+	function get_edition_nb_errors($editionId) {
+		$query = 'select count(*) from `tiki_sent_newsletters_errors` where `editionId`=?';
+		return $this->getOne($query, array((int)$editionId));
+	}
+	function remove_edition_errors($editionId) {
+		$query = 'delete from `tiki_sent_newsletters_errors` where `editionId`=?';
+		$this->query($query, array((int)$editionId));
 	}
 }
 global $dbTiki;
