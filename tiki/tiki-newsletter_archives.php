@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-newsletter_archives.php,v 1.5 2005-12-12 15:18:46 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-newsletter_archives.php,v 1.6 2006-04-26 13:47:22 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -38,6 +38,15 @@ if (isset($_REQUEST['remove']) && !empty($_REQUEST['nlId'])) {
 		key_get($area);
 	}
 }
+if (!empty($_REQUEST['error'])) {
+	$edition_errors = $nllib->get_edition_errors($_REQUEST['error']);
+	$edition_info = $nllib->get_edition($_REQUEST['error']);
+	$smarty->assign_by_ref('edition_errors', $edition_errors);
+	$smarty->assign_by_ref('edition_info', $edition_info);
+}
+if (!empty($_REQUEST['deleteError'])) {
+	$edition_errors = $nllib->remove_edition_errors($_REQUEST['deleteError']);
+}
 
 if (!isset($_REQUEST["ed_sort_mode"])) {
 	$ed_sort_mode = 'sent_desc';
@@ -63,9 +72,9 @@ $smarty->assign('ed_find', $ed_find);
 
 $smarty->assign_by_ref('ed_sort_mode', $ed_sort_mode);
 if (isset($_REQUEST["nlId"])) {
-	$channels = $nllib->list_editions($_REQUEST["nlId"], $ed_offset, $maxRecords, $ed_sort_mode, $ed_find,'tiki_p_subscribe_newsletters');
+	$channels = $nllib->list_editions($_REQUEST["nlId"], $ed_offset, $maxRecords, $ed_sort_mode, $ed_find, false, 'tiki_p_subscribe_newsletters');
 } else {
-	$channels = $nllib->list_editions(0, $ed_offset, $maxRecords, $ed_sort_mode, $ed_find, 'tiki_p_subscribe_newsletters');
+	$channels = $nllib->list_editions(0, $ed_offset, $maxRecords, $ed_sort_mode, $ed_find, false, 'tiki_p_subscribe_newsletters');
 }
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
