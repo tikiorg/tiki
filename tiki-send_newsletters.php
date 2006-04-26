@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.27 2006-04-12 20:39:29 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.28 2006-04-26 13:58:08 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -150,7 +150,10 @@ if (isset($_REQUEST["send"])) {
 	$errors =  array();
 
 	$users = $nllib->get_all_subscribers($_REQUEST["nlId"], $nl_info["unsubMsg"]);
+	$editionId = $nllib->replace_edition($_REQUEST["nlId"], $_REQUEST["subject"], $_REQUEST["data"], $sent, $_REQUEST['editionId']);
+	$nllib->memo_subscribers_edition($editionId, $users);
 	foreach ($users as $us) {
+echo "rrr";if ($sent >= 1) die;
 		$userEmail  = $us["login"];
 		$email = $us["email"];
 		if ($email == "") {
@@ -173,18 +176,19 @@ if (isset($_REQUEST["send"])) {
 			$msg = $html;
 		$mail->setHtml($msg, $txt.strip_tags($unsubmsg));
 		$mail->buildMessage();
-		if ($mail->send(array($email)))
+		if ($mail->send(array($email))) {
 			$sent++;
-		else
+			$nllib->delete_edition_subscriber($editionId, $us);
+		} else {
 			$errors[] = array("user"=>$userEmail, "email"=>$email);
+			$nllib->mark_edition_subscriber($editionId, $us);
+		}
 	}
 
 	$smarty->assign('sent', $sent);
 	$smarty->assign('emited', 'y');
 	if (count($errors) > 0)
 		$smarty->assign_by_ref('errors', $errors);
-	$nllib->replace_edition($_REQUEST["nlId"], $_REQUEST["subject"], $_REQUEST["data"], $sent, $_REQUEST['editionId']);
-	//$nllib->replace_edition($_REQUEST["nlId"], $_REQUEST["subject"], $_REQUEST["data"], $sent);
 }
 
 if (isset($_REQUEST["save_only"])) {

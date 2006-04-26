@@ -32,3 +32,15 @@
 {assign var=find value=$ed_find}
 {assign var=find_bak value=''}
 {include file=sent_newsletters.tpl }
+
+{if $edition_errors}
+<h2>{tr}Errors:{/tr} {$edition_info.subject} / {$edition_info.sent|tiki_short_datetime}</h2>
+<a href="tiki-newsletter_archives.php?deleteError={$edition_info.editionId}" title="{tr}Delete errors{/tr}"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt='{tr}remove{/tr}' /></a>
+<table class="normal">
+<tr><th>{tr}Email{/tr}</th><th>{tr}User{/tr}</th><th>{tr}Status{/tr}</th></tr>
+{cycle values="odd,even" print=false}
+{section name=ix loop=$edition_errors}
+<tr><td class="{cycle advance=false}">{$edition_errors[ix].email}</td><td class="{cycle advance=false}">{$edition_errors[ix].login}</td><td class="{cycle}">{if {$edition_errors[ix].error eq 'y'}{tr}Error{/tr}{else}{tr}Not sent{/tr}{/if}</td></tr>
+{/section}
+</table>
+{/if}

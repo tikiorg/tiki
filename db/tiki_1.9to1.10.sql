@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.87 2006-04-13 17:38:45 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.88 2006-04-26 13:58:08 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -551,7 +551,6 @@ CREATE TABLE tiki_actionlog_params (
 ) TYPE=MyISAM;
 #2006-04-06
 INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Renamed', 'wiki page', 'n');
-
 #2006-04-11
 DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='List TikiSheets' and url='tiki-sheets.php' and position='782' and section='feature_sheet' and perm='tiki_p_view_sheet' and groupname='' ;
 INSERT IGNORE INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','List TikiSheets','tiki-sheets.php',782,'feature_sheet','tiki_p_view_sheet','');
@@ -560,3 +559,11 @@ INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUE
 INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Removed', 'sheet', 'n');
 INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Viewed', 'sheet', 'n');
 ALTER TABLE `tiki_sheet_values` ADD `user` varchar(40) NULL default '' AFTER `format`;
+#2006-04-25
+CREATE TABLE tiki_sent_newsletters_errors (
+  editionId int(12),
+  email varchar(255),
+  login varchar(40) default '',
+  error char(1) default '',
+  KEY  (editionId)
+) TYPE=MyISAM ;
