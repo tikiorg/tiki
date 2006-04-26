@@ -46,7 +46,7 @@
 <tr><td class="formcolor">{tr}Don't send confirmation mail{/tr}</td><td colspan="2" class="formcolor"><input type="checkbox" name="confirmEmail" /></td></tr>
 {/if}
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor" colspan="2"><i>{tr}The user email will be refreshed at each newsletter sending{/tr}</i></td></tr>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor" colspan="2"><input type="submit" name="addgroup" value="{tr}add{/tr}" /></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor" colspan="2"><input type="submit" name="add" value="{tr}add{/tr}" /></td></tr>
 </table>
 </form>
 {if $tiki_p_batch_subscribe_email eq "y" && $tiki_p_subscribe_email eq "y"}
