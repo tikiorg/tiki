@@ -758,7 +758,7 @@ class TikiSheetFormHandler extends TikiSheetDataHandler
 			global $contributionlib; include_once('lib/contribution/contributionlib.php');
 			$contributions = $contributionlib->list_contributions();
 			for ($i = $contributions['cant'] - 1; $i >= 0; -- $i) {
-				$name = $contributions['data'][$i]['name'];
+				$name = str_replace("'", "\\'", $contributions['data'][$i]['name']);
 				$j = $contributions['data'][$i]['contributionId'];
 				echo "		g.addContribution($j, '$name');\n";
 			}
