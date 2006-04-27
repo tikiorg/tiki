@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_sheets.php,v 1.13 2006-04-27 13:50:12 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_sheets.php,v 1.14 2006-04-27 20:22:38 sylvieg Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -80,9 +80,6 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' )
 
 	// Save the changes
 	$handler = &new TikiSheetDatabaseHandler( $_REQUEST["sheetId"] );
-	if (isset($_REQUEST['contributions'])) {
-		$grid->set('contribution', $_REQUEST['contributions']);
-	}
 	$grid->export( $handler );
 
 	// Load the layout settings from the database
