@@ -6,6 +6,13 @@
 </div>
 
 {if $page_mode eq 'edit'}
+	{if $editconflict eq 'y'}
+		<script language='Javascript' type='text/javascript'>
+		<!-- //Hide Script
+		alert("{tr}This page is being edited by{/tr} {$semUser}. {tr}Proceed at your own peril{/tr}.")
+		//End Hide Script -->
+		</script>
+	{/if}
 	<div id="panel">
 		<menu>
 			<li><a href="#" onClick="insertRowClick()" class="linkbut">{tr}Insert Row{/tr}</a></li>
@@ -20,7 +27,10 @@
 		<div id="detail"></div>
 	</div>
 	<form method="post" action="tiki-view_sheets.php?mode=edit&sheetId={$sheetId}" id="Grid"></form>
-	<div class='submit'><input type="submit" onclick='g.target.style.visibility = "hidden"; g.prepareSubmit(); g.target.submit();' value="{tr}Save{/tr}" /></div>
+	<div class='submit'>
+		<input type="submit" onclick='g.target.style.visibility = "hidden"; g.prepareSubmit(); g.target.submit();' value="{tr}Save{/tr}" />
+		<a class="linkbut" href="tiki-view_sheets.php?sheetId={$sheetId}">{tr}Cancel{/tr}</a>
+	</div>
 	<script language="JavaScript" type="text/javascript" src="lib/sheet/grid.js"></script>
 	<script language="JavaScript" type="text/javascript" src="lib/sheet/control.js"></script>
 	<script language="JavaScript" type="text/javascript" src="lib/sheet/formula.js"></script>
@@ -51,7 +61,11 @@
 <a href="tiki-sheets.php" class="linkbut">{tr}list sheets{/tr}</a>
 {/if}
 {if $tiki_p_edit_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
-<a href="tiki-view_sheets.php?sheetId={$sheetId}&readdate={$read_date}&mode=edit" class="linkbut">{tr}edit{/tr}</a>
+{if $editconflict eq 'y'}
+	<a href="tiki-view_sheets.php?sheetId={$sheetId}&readdate={$read_date}&mode=edit" class="linkbut" title="{$semUser}" ><span class="highlight">{tr}edit{/tr}</span></a>
+{else}
+	<a href="tiki-view_sheets.php?sheetId={$sheetId}&readdate={$read_date}&mode=edit" class="linkbut">{tr}edit{/tr}</a>
+{/if}
 {/if}
 {if $tiki_p_view_sheet_history eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
 <a href="tiki-history_sheets.php?sheetId={$sheetId}" class="linkbut">{tr}history{/tr}</a>
