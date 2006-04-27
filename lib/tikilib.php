@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.640 2006-04-27 13:50:12 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.641 2006-04-27 14:51:40 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1986,7 +1986,21 @@ function add_pageview() {
     // Semaphore functions ////
     function get_semaphore_user($semName, $objectType='wiki page') {
 	global $user;
-	return $this->getOne("select `user` from `tiki_semaphores` where `semName`=? and `objectType`=? and `user`!=?",array($semName, $objectType, $user));
+	// the old semaphores have been deleted by semaphore_is_set - this function must be called before
+	$query = "select `user` from `tiki_semaphores` where `semName`=? and `objectType`=?";
+	$result = $this->query($query, array($semName, $objectType));
+	$user_is_in = false;
+	while ($res = $result->fetchRow()) {
+		if ($res['user'] != $user || (!$user && $res['user'] == 'anonymous')) {
+			return $res['user']; // return the other users if exist
+		} else {
+			$user_is_in = true;
+		}
+	}
+	if ($user_is_in)
+		return $user;
+	else
+		return '';
     }
 
     function semaphore_is_set($semName, $limit, $objectType='wiki page') {

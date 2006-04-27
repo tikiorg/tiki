@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.301 2006-03-20 07:03:37 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.302 2006-04-27 14:51:40 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1747,8 +1747,9 @@ if ($feature_warn_on_edit == 'y') {
 	    } else {
 	    	$chkpage = NULL;
 	    }
+	    $u = $user? $user: 'anonymous';
 	    if (!empty($chkpage) && ($chkpage != 'sandbox' || $chkpage == 'sandbox' && $tiki_p_admin == 'y')) {
-	        if ($current_page == 'tiki-index' && $tikilib->semaphore_is_set($chkpage, $warn_on_edit_time * 60)) {
+	        if ($current_page == 'tiki-index' && $tikilib->semaphore_is_set($chkpage, $warn_on_edit_time * 60) && $tikilib->get_semaphore_user($chkpage) != $u) {
 		        $smarty->assign('semUser', $tikilib->get_semaphore_user($chkpage));
 		        $smarty->assign('beingEdited', 'y');
 		        $beingedited = 'y';
@@ -1759,7 +1760,7 @@ if ($feature_warn_on_edit == 'y') {
 	        	}
 	        } elseif ($current_page == 'tiki-editpage' && !isset($_REQUEST['save'])) {
 	        	//When tiki-editpage.php is loading, check to see if there is an editing conflict
-	        	if ($current_page == 'tiki-editpage' && $tikilib->semaphore_is_set($chkpage, $warn_on_edit_time * 60) && $tikilib->get_semaphore_user($chkpage) != $user) {
+	        	if ($current_page == 'tiki-editpage' && $tikilib->semaphore_is_set($chkpage, $warn_on_edit_time * 60) && $tikilib->get_semaphore_user($chkpage) != $u) {
 		            $smarty->assign('editpageconflict', 'y');
 		            $editpageconflict = 'y';
 			} elseif ($tiki_p_edit == 'y') {
