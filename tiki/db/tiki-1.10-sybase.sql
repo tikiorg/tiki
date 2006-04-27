@@ -2,7 +2,7 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2006-04-13 17:39:46 $
+-- $Date: 2006-04-27 13:51:54 $
 -- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
@@ -4401,6 +4401,7 @@ go
 
 CREATE TABLE "tiki_semaphores" (
   "semName" varchar(250) default '' NOT NULL,
+  "objectType" varchar(20) default 'wiki page',
   "user" varchar(40) default NULL NULL,
   "timestamp" numeric(14,0) default NULL NULL,
   PRIMARY KEY ("semName")
@@ -4434,6 +4435,27 @@ go
 
 
 -- --------------------------------------------------------
+
+--
+-- Table structure for table tiki_sent_newsletters_errors
+--
+
+-- DROP TABLE "tiki_sent_newsletters_errors"
+go
+
+
+CREATE TABLE "tiki_sent_newsletters_errors" (
+  "editionId" numeric(12,0) default NULL NULL,
+  "email" varchar(255) default '',
+  "login" varchar(40) default '',
+  "error" char(1) default '',
+  KEY  (editionId)
+)  
+go
+
+
+-- --------------------------------------------------------
+
 
 --
 -- Table structure for table tiki_sessions

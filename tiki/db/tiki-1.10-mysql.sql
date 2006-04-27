@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2006-04-13 17:39:45 $
+# $Date: 2006-04-27 13:51:53 $
 # $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -2961,6 +2961,7 @@ CREATE TABLE tiki_secdb(
 DROP TABLE IF EXISTS tiki_semaphores;
 CREATE TABLE tiki_semaphores (
   semName varchar(250) NOT NULL default '',
+  objectType varchar(20) default 'wiki page',
   user varchar(40) default NULL,
   timestamp int(14) default NULL,
   PRIMARY KEY  (semName)
@@ -2985,6 +2986,21 @@ CREATE TABLE tiki_sent_newsletters (
   PRIMARY KEY  (editionId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
+
+#
+# Table structure for table tiki_sent_newsletters_errors
+#
+
+DROP TABLE IF EXISTS tiki_sent_newsletters_errors;
+CREATE TABLE tiki_sent_newsletters_errors (
+  editionId int(12),
+  email varchar(255),
+  login varchar(40) default '',
+  error char(1) default '',
+  KEY  (editionId)
+) TYPE=MyISAM ;
+# --------------------------------------------------------
+
 
 #
 # Table structure for table tiki_sessions
