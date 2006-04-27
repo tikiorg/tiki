@@ -1,5 +1,5 @@
 -- $Rev$
--- $Date: 2006-04-13 17:39:46 $
+-- $Date: 2006-04-27 13:51:53 $
 -- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
@@ -3621,6 +3621,7 @@ DROP TABLE "tiki_semaphores";
 
 CREATE TABLE "tiki_semaphores" (
   "semName" varchar(250) default '' NOT NULL,
+  "objectType" varchar(20) default 'wiki page',
   "user" varchar(40) default NULL,
   "timestamp" number(14) default NULL,
   PRIMARY KEY ("semName")
@@ -3651,6 +3652,20 @@ BEGIN
 SELECT "tiki_sent_newsletters_sequ".nextval into :NEW."editionId" FROM DUAL;
 END;
 /
+-- --------------------------------------------------------
+--
+-- Table structure for table tiki_sent_newsletters_errors
+--
+DROP TABLE "tiki_sent_newsletters_errors";
+
+CREATE TABLE "tiki_sent_newsletters_errors" (
+  "editionId" number(12),
+  "email" varchar(255),
+  "login" varchar(40) default '',
+  "error" char(1) default '',
+  KEY  (editionId)
+)  ;
+
 -- --------------------------------------------------------
 --
 -- Table structure for table tiki_sessions
