@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2006-04-26 13:58:08 $
+# $Date: 2006-04-27 13:50:11 $
 # $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -2961,6 +2961,7 @@ CREATE TABLE tiki_secdb(
 DROP TABLE IF EXISTS tiki_semaphores;
 CREATE TABLE tiki_semaphores (
   semName varchar(250) NOT NULL default '',
+  objectType varchar(20) default 'wiki page',
   user varchar(40) default NULL,
   timestamp int(14) default NULL,
   PRIMARY KEY  (semName)

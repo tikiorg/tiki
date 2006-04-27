@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.88 2006-04-26 13:58:08 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.89 2006-04-27 13:50:12 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -567,3 +567,5 @@ CREATE TABLE tiki_sent_newsletters_errors (
   error char(1) default '',
   KEY  (editionId)
 ) TYPE=MyISAM ;
+#2006-04-27
+ALTER TABLE `tiki_semaphores` ADD `objectType` varchar(20) default 'wiki page' AFTER `semName`;

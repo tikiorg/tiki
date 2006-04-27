@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.639 2006-04-12 20:39:30 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.640 2006-04-27 13:50:12 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1984,21 +1984,22 @@ function add_pageview() {
     }
 
     // Semaphore functions ////
-    function get_semaphore_user($semName) {
-	return $this->getOne("select `user` from `tiki_semaphores` where `semName`=?",array($semName));
+    function get_semaphore_user($semName, $objectType='wiki page') {
+	global $user;
+	return $this->getOne("select `user` from `tiki_semaphores` where `semName`=? and `objectType`=? and `user`!=?",array($semName, $objectType, $user));
     }
 
-    function semaphore_is_set($semName, $limit) {
+    function semaphore_is_set($semName, $limit, $objectType='wiki page') {
 	$now = date("U");
 	$lim = $now - $limit;
-	$query = "delete from `tiki_semaphores` where `semName`=? and `timestamp`<?";
-	$result = $this->query($query,array($semName,(int)$lim));
-	$query = "select `semName`  from `tiki_semaphores` where `semName`=?";
-	$result = $this->query($query,array($semName));
+	$query = "delete from `tiki_semaphores` where `timestamp`<?"; // clean all the old semaphores even if it is not on the object
+	$result = $this->query($query,array((int)$lim));
+	$query = "select `semName`  from `tiki_semaphores` where `semName`=? and `objectType`=?";
+	$result = $this->query($query,array($semName, $objectType));
 	return $result->numRows();
     }
 
-    function semaphore_set($semName) {
+    function semaphore_set($semName, $objectType='wiki page') {
 	global $user;
 
 	if ($user == '') {
@@ -2007,16 +2008,16 @@ function add_pageview() {
 
 	$now = date("U");
 	//  $cant=$this->getOne("select count(*) from `tiki_semaphores` where `semName`='$semName'");
-	$query = "delete from `tiki_semaphores` where `semName`=?";
-	$this->query($query,array($semName));
-	$query = "insert into `tiki_semaphores`(`semName`,`timestamp`,`user`) values(?,?,?)";
-	$result = $this->query($query,array($semName,(int)$now,$user));
+	$query = "delete from `tiki_semaphores` where `semName`=? and `objectType`=?";
+	$this->query($query,array($semName, $objectType));
+	$query = "insert into `tiki_semaphores`(`semName`,`timestamp`,`user`, `objectType`) values(?,?,?,?)";
+	$result = $this->query($query,array($semName,(int)$now,$user,$objectType));
 	return $now;
     }
 
-    function semaphore_unset($semName, $lock) {
-	$query = "delete from `tiki_semaphores` where `semName`=? and `timestamp`=?";
-	$result = $this->query($query,array($semName,(int)$lock));
+    function semaphore_unset($semName, $lock, $objectType='wiki page') {
+	$query = "delete from `tiki_semaphores` where `semName`=? and `timestamp`=? and `objectType`=?";
+	$result = $this->query($query,array($semName,(int)$lock, $objectType));
     }
 
     // Hot words methods ////

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_sheets.php,v 1.12 2006-04-21 17:54:31 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_sheets.php,v 1.13 2006-04-27 13:50:12 sylvieg Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -140,6 +140,21 @@ else
 		$grid->export( $handler );
 		$smarty->assign( 'grid_content', ob_get_contents() );
 		ob_end_clean();
+	}
+}
+if ($feature_warn_on_edit == 'y') {
+	if ($tikilib->semaphore_is_set($_REQUEST['sheetId'], $warn_on_edit_time * 60, 'sheet') && ($semUser = $tikilib->get_semaphore_user($_REQUEST['sheetId'], 'sheet')) != $user) {
+		$editconflict = 'y';
+		$smarty->assign('editconflict', 'y');
+		$smarty->assign('semUser', $semUser);
+	} else {
+		$editconflict = 'n';
+	}
+	if (isset( $_REQUEST['mode'] ) && $_REQUEST['mode'] == 'edit') {
+		$_SESSION['edit_lock_sheet'.$_REQUEST['sheetId']] = $tikilib->semaphore_set($_REQUEST['sheetId'], 'sheet');
+	} elseif (isset($_SESSION['edit_lock_sheet'.$_REQUEST['sheetId']])) {
+		$tikilib->semaphore_unset($_REQUEST['sheetId'], $_SESSION['edit_lock_sheet'.$_REQUEST['sheetId']]);
+		unset($_SESSION['edit_lock_sheet'.$_REQUEST['sheetId']]);
 	}
 }
 
