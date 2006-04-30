@@ -1,6 +1,6 @@
 -- $Rev$
--- $Date: 2006-04-27 13:51:53 $
--- $Author: sylvieg $
+-- $Date: 2006-04-30 00:44:22 $
+-- $Author: sampaioprimo $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -5613,6 +5613,8 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('long_date_format','%A %
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('long_time_format','%H:%M:%S %Z');
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('lowercase_username','n');
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('mail_crlf','LF');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('map_path','/var/www/html/map/');
@@ -5650,6 +5652,10 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('max_rss_wiki','10');
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('max_rss_tracker','10');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('min_pass_length','1');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('min_username_length','1');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('max_username_length','50');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('modallgroups','y');
 

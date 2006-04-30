@@ -29,7 +29,7 @@
 
 <tr><td class="formcolor">{tr}Username{/tr}:</td><td class="formcolor">
 <input style="float:left" type="text" name="name" id="name" {if $feature_ajax eq 'y'}onKeyUp="return check_name()"{/if}/>
-{if $feature_ajax eq'y'}<div id="checkfield" style="float:left"></div>{/if}</td></tr>
+{if $feature_ajax eq'y'}<div id="checkfield" style="float:left"></div>{/if} {if $lowercase_username eq 'y'}({tr}lowercase only{/tr}){/if}</td></tr>
 
 
 {if $useRegisterPasscode eq 'y'}

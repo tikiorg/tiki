@@ -72,7 +72,28 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
     $smarty->display("error.tpl");
     die; 	
   }
-  
+
+  if($lowercase_username == 'y') {
+    if(ereg("[[:upper:]]", $_REQUEST["name"])) {
+      $smarty->assign('msg',tra("Username cannot contain uppercase letters"));
+      $smarty->display("error.tpl");
+      die;
+    }
+  }
+
+  //FALTA DEFINIR VALORES PADRÕES PARA AS DUAS VARIÁVEIS!!!
+  if(strlen($_REQUEST["name"])<$min_username_length) {
+    $smarty->assign('msg',tra("Username must be at least").' '.$min_username_length.' '.tra("characters long"));
+    $smarty->display("error.tpl");
+    die; 	
+  }
+
+  if(strlen($_REQUEST["name"])>$max_username_length) {
+    $smarty->assign('msg',tra("Username cannot contain more than").' '.$max_username_length.' '.tra("characters"));
+    $smarty->display("error.tpl");
+    die; 	
+  }
+
   //Validate password here
   if(strlen($_REQUEST["pass"])<$min_pass_length) {
     $smarty->assign('msg',tra("Password should be at least").' '.$min_pass_length.' '.tra("characters long"));

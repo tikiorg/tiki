@@ -98,6 +98,9 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 <tr><td class="form">{tr}Maximum mail archive size (messages, 0=unlimited){/tr}:</td><td><input type="text" name="messu_archive_size" value="{$messu_archive_size|escape}" /></td></tr>
 <tr><td class="form">{tr}Maximum sent box size (messages, 0=unlimited){/tr}:</td><td><input type="text" name="messu_sent_size" value="{$messu_sent_size|escape}" /></td></tr>
 
+<tr><td class="form">{tr}Minimum username length{/tr}:</td><td><input type="text" name="min_username_length" value="{$min_username_length|escape}" /></td></tr>
+<tr><td class="form">{tr}Maximum username length{/tr}:</td><td><input type="text" name="max_username_length" value="{$max_username_length|escape}" /></td></tr>
+<tr><td class="form">{tr}Force lowercase username{/tr}:</td><td><input type="checkbox" name="lowercase_username" {if $lowercase_username eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Use challenge/response authentication{/tr}:</td><td><input type="checkbox" name="feature_challenge" {if $feature_challenge eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Force to use chars and nums in passwords{/tr}:</td><td><input type="checkbox" name="pass_chr_num" {if $pass_chr_num eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Minimum password length{/tr}:</td><td><input type="text" name="min_pass_length" value="{$min_pass_length|escape}" /></td></tr>

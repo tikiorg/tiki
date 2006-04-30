@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.89 2006-04-27 13:50:12 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.90 2006-04-30 00:44:22 sampaioprimo Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -545,6 +545,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_replace', 
 UPDATE tiki_menu_options SET perm='tiki_p_view_sheet' where url='tiki-sheets.php';
 CREATE TABLE tiki_actionlog_params (
   actionId int(8) NOT NULL,
+
   name varchar(40) NOT NULL,
   value text,
   KEY  (actionId)
@@ -569,3 +570,9 @@ CREATE TABLE tiki_sent_newsletters_errors (
 ) TYPE=MyISAM ;
 #2006-04-27
 ALTER TABLE `tiki_semaphores` ADD `objectType` varchar(20) default 'wiki page' AFTER `semName`;
+
+#2006-04-29 sampaioprimo
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('min_username_length','1');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_username_length','50');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('lowercase_username','n');
+

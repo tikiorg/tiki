@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2006-04-27 13:50:11 $
-# $Author: sylvieg $
+# $Date: 2006-04-30 00:44:22 $
+# $Author: sampaioprimo $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -4587,6 +4587,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('language','en');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('layout_section','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('long_date_format','%A %d of %B, %Y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('long_time_format','%H:%M:%S %Z');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('lowercase_username','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('mail_crlf','LF');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('map_path','/var/www/html/map/');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('maxArticles','10');
@@ -4606,6 +4607,8 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_mapfiles','10')
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_wiki','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_tracker','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('min_pass_length','1');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('min_username_length','1');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_username_length','50');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('modallgroups','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('pass_chr_num','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('pass_due','999');
