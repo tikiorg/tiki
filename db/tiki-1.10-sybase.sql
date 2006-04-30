@@ -2,8 +2,8 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2006-04-27 13:51:54 $
--- $Author: sylvieg $
+-- $Date: 2006-04-30 00:44:22 $
+-- $Author: sampaioprimo $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -7771,6 +7771,10 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('long_time_format','%H:%
 go
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('lowercase_username','n')
+go
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('mail_crlf','LF')
 go
 
@@ -7844,6 +7848,14 @@ go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('min_pass_length','1')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('min_username_length','1')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('max_username_length','50')
 go
 
 

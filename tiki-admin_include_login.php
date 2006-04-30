@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.39 2006-01-22 21:45:08 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.40 2006-04-30 00:44:22 sampaioprimo Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -133,6 +133,12 @@ if (isset($_REQUEST["loginprefs"])) {
     $tikilib->set_preference("registerPasscode", $_REQUEST["registerPasscode"]);
     $smarty->assign('registerPasscode', $_REQUEST["registerPasscode"]);
 
+    $tikilib->set_preference("min_username_length", $_REQUEST["min_username_length"]);
+    $smarty->assign('min_username_length', $_REQUEST["min_username_length"]);
+
+    $tikilib->set_preference("max_username_length", $_REQUEST["max_username_length"]);
+    $smarty->assign('max_username_length', $_REQUEST["max_username_length"]);
+
     $tikilib->set_preference("min_pass_length", $_REQUEST["min_pass_length"]);
     $smarty->assign('min_pass_length', $_REQUEST["min_pass_length"]);
 
@@ -178,6 +184,16 @@ if (isset($_REQUEST["loginprefs"])) {
 	$tikilib->set_preference("pass_chr_num", 'n');
 
 	$smarty->assign('pass_chr_num', 'n');
+    }
+
+    if (isset($_REQUEST["lowercase_username"]) && $_REQUEST["lowercase_username"] == "on") {
+	$tikilib->set_preference("lowercase_username", 'y');
+
+	$smarty->assign('lowercase_username', 'y');
+    } else {
+	$tikilib->set_preference("lowercase_username", 'n');
+
+	$smarty->assign('lowercase_username', 'n');
     }
 
     if (isset($_REQUEST["feature_challenge"]) && $_REQUEST["feature_challenge"] == "on") {
