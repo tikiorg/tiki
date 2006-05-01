@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.302 2006-04-27 14:51:40 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.303 2006-05-01 04:51:12 franck Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1007,6 +1007,8 @@ $default_map = $tikilib->get_preference('default_map','');
 $map_help = $tikilib->get_preference('map_help','MapsHelp');
 $map_comments = $tikilib->get_preference('map_comments','MapsComments');
 $gdaltindex = $tikilib->get_preference('gdaltindex','');
+$ogr2ogr = $tikilib->get_preference('ogr2ogr','');
+$mapzone = $tikilib->get_preference('mapzone','');
 
 $smarty->assign('feature_wiki_comments', $feature_wiki_comments);
 $smarty->assign('wiki_comments_default_ordering', $wiki_comments_default_ordering);

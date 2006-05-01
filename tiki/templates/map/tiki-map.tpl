@@ -1,10 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.34 2006-03-16 13:43:12 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.35 2006-05-01 04:51:14 franck Exp $ *}
 
 <script src="lib/x/x_core.js"></script>
 <script src="lib/x/x_event.js"></script>
 <script src="lib/x/x_dom.js"></script>
 <script src='lib/x/x_slide.js'></script>
 <script src='lib/x/x_misc.js'></script>
+<script src='lib/x/x_drag.js'></script>
 <script src="lib/map/map.js"></script>
 <script src="lib/cpaint/cpaint2.inc.js"></script>
 
@@ -53,25 +54,33 @@
 			
 			<div id="queryWindow" style="position:absolute; top:0px; left:0px; visibility:hidden;">
 				<div id="outerBox" style="position:absolute; top:0px; left:0px;
-					height:150px; width:220px; overflow:hidden; border-top:4px solid #ffffff;
+					height:200px; width:275px; overflow:hidden; border-top:4px solid #ffffff;
 					border-left:4px solid #ffffff; border-right:4px solid #666666;
 					border-bottom:4px solid #666666; background-color:#ffffff">
-					<div id="innerBox" style="position:absolute; top:0px; left:0px; padding:5px;
-						width:200px; font:10px Arial, Helvetical, sans-serif">
+					<div id="queryBar" style="position:absolute; top:0px; left:0px; padding:1px;
+						font:8px Arial, Helvetical, sans-serif; font-weight:bold; z-Index:200;
+						background-color: #FFFFFF; width:255px; cursor: move">{tr}Query Results{/tr}</div>
+					<div id="innerBox" style="position:absolute; top:12px; left:2px; padding:5px;
+						height:160px; width:245px; font:12px Arial, Helvetical, sans-serif; z-Index:150;
+						overflow:hidden">
+					<div id="innerBoxContent" style="position:relative; top:0px">
 						<p>{tr}Querying{/tr}...</p>
 					</div>
+					</div>
 					<img id="queryClose" src="img/icons/close.gif" height="13" width="13" alt="{tr}Scroll Up{/tr}"
-						style="position:absolute; top:0px; left:207px" />
+						style="position:absolute; top:0px; left:257px" />
 					<img id="queryUp" src="img/icons2/up.gif" height="8" width="10" alt="{tr}Scroll Up{/tr}"
-						style="position:absolute; top:15px; left:210px" />
+						style="position:absolute; top:15px; left:257px" />
 					<img id="queryDown" src="img/icons2/down.gif" height="8" width="10" alt="{tr}Scroll Down{/tr}"
-						style="position:absolute; top:138px; left:210px" />
+						style="position:absolute; top:188px; left:257px" />
 				  <script language="JavaScript">
+				  	var scrollActive = false, scrollStop = true, scrollIncrement = 10, scrollInterval = 60;
 				  	xAddEventListener(xGetElementById('queryClose'),'click',query_close,true);
 				  	xAddEventListener(xGetElementById('queryUp'),'mousemove',query_up,true);
 				  	xAddEventListener(xGetElementById('queryUp'),'mouseout',query_scroll_stop,true);
 				  	xAddEventListener(xGetElementById('queryDown'),'mousemove',query_down,true);
 				  	xAddEventListener(xGetElementById('queryDown'),'mouseout',query_scroll_stop,true);
+				  	xEnableDrag(xGetElementById('queryBar'), queryOnDragStart, queryOnDrag, null);
 				  </script>
 				</div>
 			</div>
@@ -101,11 +110,19 @@
 			{/if}
 			{if $zoom eq 0}
 			<img id="imgzoom3" src="img/icons/info.gif" onclick="zoomin(3)" alt="Q" title="{tr}Query{/tr}" border="1" />
+			<script language="JavaScript">
+  			var map=xGetElementById('map');
+  			map.style.cursor='help';
+			</script>
 			{else}
 			<img id="imgzoom3" src="img/icons/info.gif" onclick="zoomin(3)" alt="Q" title="{tr}Query{/tr}" />
 			{/if}
 			{if $zoom eq 1}
 			<img id="imgzoom4" src="img/icons/move.gif" onclick="zoomin(4)" alt="P" title="{tr}Pan{/tr}" border="1" />
+			<script language="JavaScript">
+  			var map=xGetElementById('map');
+  			map.style.cursor='move';
+			</script>
 			{else}
 			<img id="imgzoom4" src="img/icons/move.gif" onclick="zoomin(4)" alt="P" title="{tr}Pan{/tr}" />
 			{/if}
