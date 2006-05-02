@@ -1,0 +1,42 @@
+-=Theme details=-
+* __Name:__ Tikipedia
+* __CreationDate:__ May 2, 2006
+* __Author and maintainer:__ Gary Cunningham-Lee
+* __Copyright:__ This theme is released under the GNU/GPL License.
+* __AuthorEmail:__ gary_c@cunningham-lee.com
+* __AuthorUrl:__ [http://www.zukakakina.com]
+* __Version:__ 1.0 (Tested with Tiki 1.9.2 and 1.9.3.1)
+* __License:__ GPL
+* __Description:__ This is an original theme for Tiki CMS (http://tikiwiki.org) based in part on the GPLed Monobook theme for Mediawiki.
+
+-=Template Files=-
+* templates/styles/tikipedia/error.tpl
+* templates/styles/tikipedia/mod-toolbox.tpl
+* templates/styles/tikipedia/tiki.tpl
+* templates/styles/tikipedia/tiki-bot_bar.tpl
+* templates/styles/tikipedia/tiki-browse_gallery.tpl
+* templates/styles/tikipedia/tiki-file_gallery.tpl
+* templates/styles/tikipedia/tiki-list_file_gallery.tpl
+* templates/styles/tikipedia/tiki-page_bar_tabs.tpl
+* templates/styles/tikipedia/tiki-show_page.tpl
+* templates/styles/tikipedia/tiki-top_bar.tpl
+* templates/styles/tikipedia/tiki-top_menu.tpl
+* templates/styles/tikipedia/tiki-view_tracker.tpl
+* templates/styles/tikipedia/translated-lang.tpl
+
+-=Image Files=-
+* styles/tikipedia/headbg.jpg
+* styles/tikipedia/bullet.gif
+* styles/tikipedia/logo-indexed.gif
+* styles/tikipedia/logo.png
+* styles/tikipedia/user.gif
+
+-=CSS File=-
+* styles/tikipedia.css
+
+-=Associated Wiki Plugins=-
+* lib/wiki-plugins/wikiplugin_maketocbox.php
+* lib/wiki-plugins/wikiplugin_thumbdiv.php
+* lib/wiki-plugins/wikiplugin_twocolortitlebox.php
+
+(All file paths from Tiki root directory.)
