@@ -4,6 +4,7 @@
 * @date: 27/01/2006
 * @copyright (C) 2006 Javier Reyes Gomez (eScire.com)
 * @license http://www.gnu.org/copyleft/lgpl.html GNU/LGPL
+*
 */
 require_once ('tiki-setup.php');
 include_once ('lib/aulawiki/workspacemoduleslib.php');
