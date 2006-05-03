@@ -1,5 +1,5 @@
 <?php
-// $Id: notificationemaillib.php,v 1.16 2006-05-03 10:41:54 xavidp Exp $
+// $Id: notificationemaillib.php,v 1.17 2006-05-03 11:37:52 sylvieg Exp $
 /** \brief send the email notifications dealing with the forum changes to
   * \brief outbound address + admin notification addresses / forum admin email + watching users addresses
   * \param $event = 'forum_post_topic' or 'forum_post_thread'
@@ -9,7 +9,7 @@
   * \param $topicName name of the parent topic
   */
 
-function sendForumEmailNotification($event, $object, $forum_info, $title, $data, $author, $topicName, $messageId='', $inReplyTo='', $threadId, $parentId ) {
+function sendForumEmailNotification($event, $object, $forum_info, $title, $data, $author, $topicName, $messageId='', $inReplyTo='', $threadId, $parentId, $contributions='' ) {
 	global $tikilib, $feature_user_watches, $smarty, $userlib, $sender_email;
 
 	// Per-forum From address overrides global default.
@@ -101,7 +101,8 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 		$smarty->assign('mail_date', date("U"));
 		$smarty->assign('mail_message', $data);
 		$smarty->assign('mail_author', $author);
-		$smarty->assign('mail_contributions', $contributions);
+		global $contributionlib; include_once('lib/contribution/contributionlib.php');
+		$smarty->assign('mail_contributions', $contributionlib->print_contributions($contributions));
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 		$machine = $tikilib->httpPrefix() . dirname( $foo["path"] );
 		$machine = preg_replace("!/$!", "", $machine); // just incase

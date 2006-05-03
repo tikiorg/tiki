@@ -108,6 +108,16 @@ class ContributionLib extends TikiLib {
 		$this->remove_assigned_contributions($commentId, 'comment');
 		$objectlib->delete_object('comment', $commentId);
 	}
+	function print_contributions($contributions) {
+		$print = '';
+		for ($i = 0; $i < count($contributions); $i++) {
+			if ($i > 0)
+				$print.= ',';
+			$res = $this->get_contribution($contributions[$i]);
+			$print .= $res['name'];
+		}
+		return $print;
+	}
 }
 global $dbTiki;
 $contributionlib = new ContributionLib($dbTiki);
