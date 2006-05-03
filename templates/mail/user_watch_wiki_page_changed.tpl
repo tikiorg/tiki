@@ -3,6 +3,7 @@
 
 {if $mail_comment}{tr}Comment:{/tr} {$mail_comment}
 {/if}
+{if $mail_contributions}{tr}Contribution{/tr}: {$mail_contributions}{/if}
 
 {tr}You can view the page by following this link:{/tr}
 {$mail_machine_raw}/tiki-index.php?page={$mail_page|escape:"url"}
