@@ -1,5 +1,5 @@
 <?php
-// $Id: notificationemaillib.php,v 1.20 2006-05-03 15:13:56 sylvieg Exp $
+// $Id: notificationemaillib.php,v 1.21 2006-05-03 15:28:42 sylvieg Exp $
 /** \brief send the email notifications dealing with the forum changes to
   * \brief outbound address + admin notification addresses / forum admin email + watching users addresses
   * \param $event = 'forum_post_topic' or 'forum_post_thread'
@@ -10,7 +10,7 @@
   */
 
 function sendForumEmailNotification($event, $object, $forum_info, $title, $data, $author, $topicName, $messageId='', $inReplyTo='', $threadId, $parentId, $contributions='' ) {
-	global $tikilib, $feature_user_watches, $smarty, $userlib, $sender_email;
+	global $tikilib, $feature_user_watches, $smarty, $userlib, $sender_email, $feature_contribution;
 
 	// Per-forum From address overrides global default.
 	if( $forum_info['outbound_from'] )
@@ -101,7 +101,7 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 		$smarty->assign('mail_date', date("U"));
 		$smarty->assign('mail_message', $data);
 		$smarty->assign('mail_author', $author);
-		if (!empty($contributions)) {
+		if ($feature_contribution == 'y' && !empty($contributions)) {
 			global $contributionlib; include_once('lib/contribution/contributionlib.php');
 			$smarty->assign('mail_contributions', $contributionlib->print_contributions($contributions));
 		}
@@ -144,7 +144,7 @@ function testEmailInList($nots, $email) {
   * \$event: 'wiki_page_created'|'wiki_page_changed'
   */
 function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment, $oldver, $edit_data, $machine, $diff='', $minor=false, $contributions='') {
-	global $tikilib, $notificationlib, $feature_user_watches, $smarty, $userlib, $wiki_watch_editor;
+	global $tikilib, $notificationlib, $feature_user_watches, $smarty, $userlib, $wiki_watch_editor, $feature_contribution;
 	$nots = array();
 	$defaultLanguage = $tikilib->get_preference("language", "en");
 
@@ -209,7 +209,7 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 	    $foo = parse_url($_SERVER["REQUEST_URI"]);
 	    $machine = $tikilib->httpPrefix(). dirname( $foo["path"] );
 	    $smarty->assign('mail_machine', $machine);
-		if (!empty($contributions)) {
+		if ($feature_contribution == 'y' && !empty($contributions)) {
 			global $contributionlib; include_once('lib/contribution/contributionlib.php');
 			$smarty->assign('mail_contributions', $contributionlib->print_contributions($contributions));
 		}
