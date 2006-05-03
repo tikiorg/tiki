@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.45 2006-04-13 15:48:59 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.46 2006-05-03 09:34:48 xavidp Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -171,7 +171,9 @@ if (isset($_REQUEST["preview"])) {
 	} else {
 		$smarty->assign('blogpriv', 'n');
 	}
+	if ($feature_freetags == 'y') {
 	$smarty->assign('taglist',$_REQUEST["freetag_string"]);
+	}
 	$smarty->assign('trackbacks_to', explode(',', $_REQUEST['trackback']));
 	$smarty->assign('title', isset($_REQUEST["title"]) ? $_REQUEST['title'] : '');
 	$smarty->assign('parsed_data', $parsed_data);
@@ -278,7 +280,9 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) {
         } else {
                 $smarty->assign('blogpriv', 'n');
         }
-	$smarty->assign('taglist',$_REQUEST["freetag_string"]);
+	if ($feature_freetags == 'y') {
+	$smarty->assign('taglist',$_REQUEST["freetag_string"]);	
+	}
 	$smarty->assign('title', isset($_REQUEST["title"]) ? $_REQUEST['title'] : '');
 	$smarty->assign('trackbacks_to', explode(',', $_REQUEST['trackback']));
 	$smarty->assign('parsed_data', $parsed_data);
