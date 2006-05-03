@@ -9,3 +9,5 @@
 {tr}Message{/tr}:
 
 {$mail_message}
+
+{$mail_contributions}
