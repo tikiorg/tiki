@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.642 2006-05-03 15:04:29 xavidp Exp $
+// CVS: $Id: tikilib.php,v 1.643 2006-05-03 15:13:56 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3777,7 +3777,7 @@ function add_pageview() {
 	    //  }
 	    $foo = parse_url($_SERVER["REQUEST_URI"]);
 	    $machine = $this->httpPrefix(). dirname( $foo["path"] );
-	    sendWikiEmailNotification('wiki_page_created', $name, $user, $comment, 1, $data, $machine, isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '');
+	    sendWikiEmailNotification('wiki_page_created', $name, $user, $comment, 1, $data, $machine, '', false, isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '');
 	}
 
 	//if there are links to this page, clear cache to avoid linking to edition
@@ -5913,7 +5913,7 @@ if (!$simple_wiki) {
 			$machine = $this->httpPrefix(). dirname( $foo["path"] );
 			require_once('lib/diff/difflib.php');
 			$diff = diff2($old["data"] , $edit_data, "unidiff");
-			sendWikiEmailNotification('wiki_page_changed', $pageName, $edit_user, $edit_comment, $old_version, $edit_data, $machine, isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '', $diff, $minor);
+			sendWikiEmailNotification('wiki_page_changed', $pageName, $edit_user, $edit_comment, $old_version, $edit_data, $machine, '', false, isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '', $diff, $minor);
 		}
 
 		$query = "delete from `tiki_page_drafts` where `user`=? and `pageName`=?";
