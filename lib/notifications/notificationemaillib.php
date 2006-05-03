@@ -1,5 +1,5 @@
 <?php
-// $Id: notificationemaillib.php,v 1.15 2006-01-20 09:54:55 sylvieg Exp $
+// $Id: notificationemaillib.php,v 1.16 2006-05-03 10:41:54 xavidp Exp $
 /** \brief send the email notifications dealing with the forum changes to
   * \brief outbound address + admin notification addresses / forum admin email + watching users addresses
   * \param $event = 'forum_post_topic' or 'forum_post_thread'
@@ -101,6 +101,7 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 		$smarty->assign('mail_date', date("U"));
 		$smarty->assign('mail_message', $data);
 		$smarty->assign('mail_author', $author);
+		$smarty->assign('mail_contributions', $contributions);
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 		$machine = $tikilib->httpPrefix() . dirname( $foo["path"] );
 		$machine = preg_replace("!/$!", "", $machine); // just incase
