@@ -1,5 +1,5 @@
 <?php
-// $Id: notificationemaillib.php,v 1.18 2006-05-03 13:32:33 sylvieg Exp $
+// $Id: notificationemaillib.php,v 1.19 2006-05-03 15:04:29 xavidp Exp $
 /** \brief send the email notifications dealing with the forum changes to
   * \brief outbound address + admin notification addresses / forum admin email + watching users addresses
   * \param $event = 'forum_post_topic' or 'forum_post_thread'
@@ -143,7 +143,7 @@ function testEmailInList($nots, $email) {
   * admin notification addresses + watching users addresses (except editor is configured)
   * \$event: 'wiki_page_created'|'wiki_page_changed'
   */
-function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment, $oldver, $edit_data, $machine, $diff='', $minor=false) {
+function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment, $oldver, $edit_data, $machine, $contributions='', $diff='', $minor=false) {
 	global $tikilib, $notificationlib, $feature_user_watches, $smarty, $userlib, $wiki_watch_editor;
 	$nots = array();
 	$defaultLanguage = $tikilib->get_preference("language", "en");
@@ -209,6 +209,10 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 	    $foo = parse_url($_SERVER["REQUEST_URI"]);
 	    $machine = $tikilib->httpPrefix(). dirname( $foo["path"] );
 	    $smarty->assign('mail_machine', $machine);
+		if (!empty($contributions)) {
+			global $contributionlib; include_once('lib/contribution/contributionlib.php');
+			$smarty->assign('mail_contributions', $contributionlib->print_contributions($contributions));
+		}
 	    $parts = explode('/', $foo['path']);
 	    if (count($parts) > 1)
 		unset ($parts[count($parts) - 1]);
