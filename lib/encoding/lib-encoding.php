@@ -2,9 +2,9 @@
 
 class Encoding {
 	
-    var $_inputSupportedEncodings = array ('ISO-8859-1','UTF-8');
-    var $_ouputSupportedEncodings = array ('ISO-8859-1','UTF-8',);
-    var $_supportedEncodings = 'UTF-8,ISO-8859-1';
+    var $_inputSupportedEncodings = array ('ISO-8859-1','ISO-8859-15','UTF-8');
+    var $_ouputSupportedEncodings = array ('ISO-8859-1','ISO-8859-15','UTF-8',);
+    var $_supportedEncodings = 'UTF-8,ISO-8859-1,ISO-8859-15';
         
     // Class constructor
     function Encoding ($inputEncoding = 'ISO-8859-1',$outputEncoding = 'UTF-8') {

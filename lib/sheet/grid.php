@@ -157,6 +157,7 @@ class TikiSheet
 		return array(
 			'TikiSheetSerializeHandler',
 			'TikiSheetCSVHandler',
+            'TikiSheetCSVExcelHandler',
 			'TikiSheetExcelHandler'
 		);
 	}// }}}2
@@ -939,7 +940,7 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 				foreach( $data as $col=>$value )
 				{
 					$sheet->initCell( $row, $col );
-					$sheet->setValue( $value );
+					$sheet->setValue( $this->encoding->convert_encoding ( $value ) );
 					$sheet->setSize( 1, 1 );
 				}
 
@@ -1012,6 +1013,113 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 	{
 		return "1.0-test";
 	}
+ } // }}}1
+ 
+ /** TikiSheetCSVExcelHandler {{{1
+ * Class that stores the sheet representation in a
+ * standard text file as a serialized PHP object. The difference
+ * betwen this and standard CSV is that fields here are separarated by ';'
+ */
+class TikiSheetCSVExcelHandler extends TikiSheetDataHandler
+{
+    var $file;
+    var $lineLen;
+    
+    /** Constructor {{{2
+     * Initializes the the serializer on a file.
+     * @param $file The file path to save or load from.
+     */
+    function TikiSheetCSVExcelHandler( $file = "php://stdout", $inputEncoding = '', $outputEncoding = '', $lineLen = 1024 )
+    {
+        $this->file = $file;
+        $this->lineLen = $lineLen;
+        $this->encoding = new Encoding ($inputEncoding, $outputEncoding);
+    }
+
+    // _load {{{2
+    function _load( &$sheet )
+    {
+        if( $file = @fopen( $this->file, "r" ) )
+        {
+            $row = 0;
+            while( $data = @fgetcsv( $file, $this->lineLen , ";", '"') )
+            {
+                foreach( $data as $col=>$value )
+                {
+                    $sheet->initCell( $row, $col );
+                    $sheet->setValue( $this->encoding->convert_encoding ( $value ) );
+                    $sheet->setSize( 1, 1 );
+                }
+
+                $row++;
+            }
+
+            @fclose( $file );
+
+            return true;
+        }
+        else
+            return false;
+    }
+
+    // _save {{{2
+    function _save( &$sheet )
+    {
+        $total = array();
+
+        foreach( $sheet->dataGrid as $row )
+            if( is_array( $row ) )
+                $total[] = implode( ",", $row );
+
+        if( is_array( $total ) )
+            $total = implode( "\n", $total );
+            
+        $total = $this->encoding->convert_encoding ($total);
+
+        if( $this->file == "php://stdout" )
+        {
+            header("Content-type: text/comma-separated-values");
+            header("Content-Disposition: attachment; filename=export.csv");
+            header("Expires: 0");
+            header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
+            header("Pragma: public");
+            
+            echo $total;
+
+            return true;
+        }
+        else
+        {
+            if( $file = @fopen( $this->file, "w" ) )
+            {
+                if( !@fwrite( $file, $total ) )
+                    return false;
+
+                @fclose( $file );
+                return true;
+            }
+            else
+                return false;
+        }
+    }
+
+    // name {{{2
+    function name()
+    {
+        return "CSV-Excel File";
+    }
+
+    // supports {{{2
+    function supports( $type )
+    {
+        return ( ( TIKISHEET_SAVE_DATA | TIKISHEET_LOAD_DATA ) & $type ) > 0;
+    }
+
+    // version {{{2
+    function version()
+    {
+        return "0.1-test";
+    }
  } // }}}1
 
 /** TikiSheetDatabaseHandler {{{1
