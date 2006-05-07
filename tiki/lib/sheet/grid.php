@@ -1069,7 +1069,7 @@ class TikiSheetCSVExcelHandler extends TikiSheetDataHandler
 
         foreach( $sheet->dataGrid as $row )
             if( is_array( $row ) )
-                $total[] = implode( ",", $row );
+                $total[] = $this->fputcsvexcel( $row ,';','"');
 
         if( is_array( $total ) )
             $total = implode( "\n", $total );
@@ -1120,6 +1120,29 @@ class TikiSheetCSVExcelHandler extends TikiSheetDataHandler
     {
         return "0.1-test";
     }
+    
+    function fputcsvexcel($dataArray, $delimiter, $enclosure){ 
+     // $dataArray = the data to write out
+     // $delimeter = the field separator
+    
+     // Build the string
+     $string = "";
+     $writeDelimiter = FALSE;
+     foreach($dataArray as $dataElement){
+       if($writeDelimiter) $string .= $delimiter;
+       $string .= $enclosure . $dataElement . $enclosure;
+       $writeDelimiter = TRUE;
+       } // end foreach($dataArray as $dataElement)
+    
+     // Append new line
+     $string .= "\n";
+    
+     // Write the string to the file
+     return $string;
+    
+     } // end function fputcsvexcel
+    
+    
  } // }}}1
 
 /** TikiSheetDatabaseHandler {{{1
