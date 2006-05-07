@@ -37,7 +37,7 @@
 		</select>
 		{tr}Charset encoding{/tr};
 		<select name="encoding">
-			<option value="">{tr}Autodetect{/tr}</option>
+			<!--<option value="">{tr}Autodetect{/tr}</option>-->
 		{section name=key loop=$charsets}
 			<option value="{$charsets[key]}">{$charsets[key]}</option>
 		{/section}
