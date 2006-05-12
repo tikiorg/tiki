@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.643 2006-05-03 15:13:56 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.644 2006-05-12 18:27:07 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3702,8 +3702,8 @@ function add_pageview() {
 	return true;
     }
 
-    function create_page($name, $hits, $data, $lastModif, $comment, $user = 'admin', $ip = '0.0.0.0', $description = '', $lang='', $is_html = false, $lock_it='') {
-	global $smarty;
+    function create_page($name, $hits, $data, $lastModif, $comment, $user = 'admin', $ip = '0.0.0.0', $description = '', $lang='', $is_html = false, $lock_it='', $contributions) {
+	global $smarty, $feature_contribution;
 	global $dbTiki;
 	global $sender_email;
 	include_once ("lib/commentslib.php");
@@ -3762,7 +3762,7 @@ function add_pageview() {
 	// Update the log
 	if (strtolower($name) != 'sandbox') {
 	    global $logslib; include_once("lib/logs/logslib.php");
-	    $logslib->add_action("Created", $name, 'wiki page', 'add='.strlen($data));
+	    $logslib->add_action("Created", $name, 'wiki page', 'add='.strlen($data), '', '', '', '', $contributions);
 	    //get_strings tra("Created");
 
 	    //  Deal with mail notifications.
@@ -3777,7 +3777,11 @@ function add_pageview() {
 	    //  }
 	    $foo = parse_url($_SERVER["REQUEST_URI"]);
 	    $machine = $this->httpPrefix(). dirname( $foo["path"] );
-	    sendWikiEmailNotification('wiki_page_created', $name, $user, $comment, 1, $data, $machine, '', false, isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '');
+	    sendWikiEmailNotification('wiki_page_created', $name, $user, $comment, 1, $data, $machine, '', false, $contributions);
+		if ($feature_contribution == 'y') {
+			global $contributionlib; include_once('lib/contribution/contributionlib.php');
+			$contributionlib->assign_contributions($contributions, $name, 'wiki page', $description, $name, "tiki-index.php?page=".urlencode($name));
+		}
 	}
 
 	//if there are links to this page, clear cache to avoid linking to edition
@@ -5779,7 +5783,7 @@ if (!$simple_wiki) {
 	$this->query($query, array(0,$page) );
     }
 
-    function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $description = '', $minor = false, $lang='', $is_html=false, $lock_it='') {
+    function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $description = '', $minor = false, $lang='', $is_html=false, $lock_it='', $contributions='') {
 	global $smarty;
 	global $feature_contribution;
 	global $dbTiki;
@@ -5848,13 +5852,7 @@ if (!$simple_wiki) {
 	    $this->replace_link($pageName, $page);
 	}
 
-	// Update the log
 	if (strtolower($pageName) != 'sandbox' && !$minor) {
-	    global $logslib; include_once('lib/logs/logslib.php');
-	    include_once('lib/diff/difflib.php');
-	    $bytes = diff2($data , $edit_data, 'bytes');
-	    $logslib->add_action('Updated', $pageName, 'wiki page', $bytes, $edit_user, $edit_ip, '', $t);
-	    //get_strings tra("Updated")
 	    $maxversions = $this->get_preference("maxVersions", 0);
 
 	    if ($maxversions && ($nb = $histlib->get_nb_history($pageName)) > $maxversions) {
@@ -5888,12 +5886,13 @@ if (!$simple_wiki) {
 		    values(?,?,?,?,?,?,?,?)";
 # echo "<pre>";print_r(get_defined_vars());echo "</pre>";die();
 		$result = $this->query($query,array($pageName,(int) $old_version,(int) $lastModif,$user,$ip,$comment,$data,$description));
-		if ($feature_contribution == 'y') {
+		if ($feature_contribution == 'y') {// transfer page contributions to the history
 			global $contributionlib; include_once('lib/contribution/contributionlib.php');
 			$query = 'select max(`historyId`) from `tiki_history`where `pageName`=? and `version`=?';
 			$historyId = $this->getOne($query, array($pageName,(int) $old_version));
 			$contributionlib->change_assigned_contributions($pageName, 'wiki page', $historyId, 'history', '', $pageName.'/'.$old_version, "tiki-pagehistory.php?page=$pageName&preview=$old_version");
 		}
+
 		/* the following doesn't work because tiki dies if the above query fails
 		if (!$result) {
 			$query2 = "delete from `tiki_history` where `pageName`=? and `version`=?";
@@ -5902,6 +5901,16 @@ if (!$simple_wiki) {
 		}
 		*/
 	    }
+		if (strtolower($pageName) != 'sandbox') {
+		    global $logslib; include_once('lib/logs/logslib.php');
+		    include_once('lib/diff/difflib.php');
+		    $bytes = diff2($data , $edit_data, 'bytes');
+		    $logslib->add_action('Updated', $pageName, 'wiki page', $bytes, $edit_user, $edit_ip, '', $t, $contributions);
+		    if ($feature_contribution == 'y') {
+			global $contributionlib; include_once('lib/contribution/contributionlib.php');
+			$contributionlib->assign_contributions($contributions, $pageName, 'wiki page', $description, $pageName, "tiki-index.php?page=".urlencode($pageName));
+		   }
+		}
 
 		global $feature_user_watches;
 		if ($feature_user_watches == 'y') {
@@ -5913,7 +5922,7 @@ if (!$simple_wiki) {
 			$machine = $this->httpPrefix(). dirname( $foo["path"] );
 			require_once('lib/diff/difflib.php');
 			$diff = diff2($old["data"] , $edit_data, "unidiff");
-			sendWikiEmailNotification('wiki_page_changed', $pageName, $edit_user, $edit_comment, $old_version, $edit_data, $machine, '', false, isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '', $diff, $minor);
+			sendWikiEmailNotification('wiki_page_changed', $pageName, $edit_user, $edit_comment, $old_version, $edit_data, $machine, $diff, $minor, $contributions);
 		}
 
 		$query = "delete from `tiki_page_drafts` where `user`=? and `pageName`=?";
