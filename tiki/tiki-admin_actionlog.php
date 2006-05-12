@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.14 2006-04-21 10:53:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.15 2006-05-12 18:27:07 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -38,6 +38,42 @@ if (isset($_REQUEST['setConf'])) {
 	}
 }
 $smarty->assign_by_ref('actionlogConf', $confs);
+
+if (!empty($_REQUEST['actionId'])) {
+	$action = $logslib->get_info_action($_REQUEST['actionId']);
+	if (empty($action)) {
+		$smarty->assign('msg', tra('Must specify actionId'));
+		$smarty->display("error.tpl");
+		die;
+	}
+	$smarty->assign_by_ref('action', $action);
+	if (isset($_REQUEST['saveAction'])) {
+		$logslib->delete_params($_REQUEST['actionId']);
+		if (isset($_REQUEST['contributions']))
+			$logslib->insert_params($_REQUEST['actionId'], 'contribution', $_REQUEST['contributions']);
+	} else {
+		if  ($action['objectType'] == 'wiki page') {
+			$contributions = $logslib->get_action_contributions($action['actionId']);
+		} elseif ($id = $logslib->get_comment_action($action)) {
+			$contributions = $this->get_action_contributions($action['actionId']);
+		} else {
+			$contributions = $contributionlib->get_assigned_contributions($action['object'], $action['objectType']); // todo: do a left join
+		}
+		$cont = array();
+		foreach ($contributions as $contribution) {
+			$cont[] = $contribution['contributionId'];
+		}
+		$section = $action['objectType'];
+		$_REQUEST['contributions'] = $cont;
+		include('contribution.php');
+		$contributions['data'][] = array('contributionId'=>0, 'name'=>'');
+print_r($contributions);
+		if (!empty($_REQUEST['startDate']))
+			$smarty->assign('startDate', $_REQUEST['startDate']);
+		if (!empty($_REQUEST['endDate']))
+		$smarty->assign('endDate', $_REQUEST['endDate']);
+	}
+}
 
 $users = $userlib->list_all_users();
 $smarty->assign_by_ref('users', $users);
@@ -136,6 +172,8 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export'])) {
 		switch ($actions[$i]['objectType']) {
 		case 'wiki page':
 			$actions[$i]['link'] = 'tiki-index.php?page='.$actions[$i]['object'];
+			if ($actions[$i]['action'] == 'Renamed' && preg_match("/old=(.*)/", $actions[$i]['comment'], $matches))
+				$actions[$i]['object'] = $matches[1];
 			break;
 		case 'category':
 			$actions[$i]['link'] = 'tiki-browse_categories.php?parentId='.$actions[$i]['object'];

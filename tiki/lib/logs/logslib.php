@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.22 2006-04-24 15:03:09 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.23 2006-05-12 18:27:07 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -93,7 +93,7 @@ class LogsLib extends TikiLib {
 	 * type = 'wiki page', 'category', 'article', 'image gallery', 'tracker', 'forum thread'
 	 * TODO: merge $param and $contributions together into a hash and but everything in actionlog_params
 	*/
-	function add_action($action, $object, $objectType='wiki page', $param='', $who='', $ip='', $client='', $date='', $contributions='') {
+	function add_action($action, $object, $objectType='wiki page', $param='', $who='', $ip='', $client='', $date='', $contributions='', $hash='') {
 		global $user, $feature_categories;
 		if ($objectType == 'wiki page' && $action != 'Viewed')
 			$logObject = true; // to have the tiki_my_edit, history and mod-last_modif_pages
@@ -130,10 +130,16 @@ class LogsLib extends TikiLib {
 		}
 		$query = "select `actionId` from `tiki_actionlog` where `action`=? and `object`=? and `lastModif`=? and `user`=? and `ip`=?";
 		$actionId = $this->getOne($query, array($action, $object, (int)$date, $who, $ip));
-		if ($contributions) {
+		if (!empty($contributions)) {
 			$query = "insert into `tiki_actionlog_params` (`actionId`, `name`, `value`) values(?,?,?)";
 			foreach ($contributions as $contribution) {
 				$this->query($query, array($actionId, 'contribution', $contribution));			
+			}
+		}
+		if (!empty($hash)) {
+			$query = "insert into `tiki_actionlog_params` (`actionId`, `name`, `value`) values(?,?,?)";
+			foreach ($hash as $param=>$val) {
+				$this->query($query, array($actionId, $param, $val));
 			}
 		}
 		return  $actionId;
@@ -191,7 +197,8 @@ class LogsLib extends TikiLib {
 		return split('_', str_replace('0', ' ', $conf));
 	}
 	function list_actions($action='', $objectType='',$user='',$offset=0,$maxRecords=-1,$sort_mode='lastModif_desc',$find='',$start=0,$end=0, $categId='') {
-		global $feature_contribution; include_once('lib/contribution/contributionlib.php');
+		global $feature_contribution;
+		global $contributionlib;include_once('lib/contribution/contributionlib.php');
 
 		$bindvars = array();
 		$amid = array();
@@ -206,7 +213,7 @@ class LogsLib extends TikiLib {
 			$bindvars[] = $action;
 		}
 		if ($objectType) {
-			$amid[] = "`objectType` = ?";
+			$amid[] = "c.`objectType` = ?";
 			$bindvars[] = $objectType;
 		}
 		if ($user == 'Anonymous') {
@@ -255,7 +262,9 @@ class LogsLib extends TikiLib {
 		while ($res = $result->fetchRow()) {
 			if ($this->action_is_viewed($res['action'], $res['objectType'])) {
 				if ($feature_contribution == 'y' && ($res['action'] == 'Created' || $res['action'] == 'Updated' || $res['action'] == 'Posted' || $res['action'] == 'Replied')) {
-					if ($id = $this->get_comment_action($res)) {
+					if  ($res['objectType'] == 'wiki page') {
+						$res['contributions'] = $this->get_action_contributions($res['actionId']);
+					} elseif ($id = $this->get_comment_action($res)) {
 						$res['contributions'] = $this->get_action_contributions($res['actionId']);
 					} else {
 						$res['contributions'] = $contributionlib->get_assigned_contributions($res['object'], $res['objectType']); // todo: do a left join
@@ -519,15 +528,41 @@ class LogsLib extends TikiLib {
 		return $ret;
 	}
 	function get_action_contributions($actionId) {
-		$query = "select tc.`name` from `tiki_contributions` tc, `tiki_actionlog_params` tp where tp.`actionId`=? and tp.`name`=? and tp.`value`=tc.`contributionId`";
+		$query = "select tc.* from `tiki_contributions` tc, `tiki_actionlog_params` tp where tp.`actionId`=? and tp.`name`=? and tp.`value`=tc.`contributionId`";
 		$result = $this->query($query, array($actionId, 'contribution'));
 		$ret = array();
 		while ($res = $result->fetchRow()) {
-			$ret[]['name'] = $res['name'];
+			$ret[] = $res;
 		}
 		return $ret;
 	}
-
+	function rename($objectType, $oldName, $newName) {
+		$query = "update `tiki_actionlog`set `object`=? where `object`=? and `objectType`=?";
+		$this->query($query, array($newName, $oldName, $objectType));
+	}
+	function get_info_action($actionId) {
+		$query = "select * from `tiki_actionlog`where `actionId`= ?";
+		$result = $this->query($query, array($actionId));
+		if ($res = $result->fetchRow())
+			return $res;
+		else
+			return NULL;
+	}
+	function delete_params($actionId, $name='') {
+		$bindvars = array($actionId);
+		if (!empty($name)) {
+			$mid = 'and `name`= ?';
+			$bindvars[] = $name;
+		}
+		$query = "delete from `tiki_actionlog_params` where `actionId`=?";
+		$this->query($query, $bindvars);
+	}
+	function insert_params($actionId, $param, $values) {
+		$query = "insert into `tiki_actionlog_params` (`actionId`, `name`, `value`) values(?,?,?)";
+		foreach ($values as $val) {
+			$this->query($query, array($actionId, $param, $val));
+		}
+	}
 }
 global $dbTiki;
 $logslib = new LogsLib($dbTiki);
