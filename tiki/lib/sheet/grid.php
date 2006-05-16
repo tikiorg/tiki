@@ -959,10 +959,14 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 	function _save( &$sheet )
 	{
 		$total = array();
-
+        
+        ksort ($sheet->dataGrid);
 		foreach( $sheet->dataGrid as $row )
 			if( is_array( $row ) )
+            {
+                ksort ($row);
 				$total[] = implode( ",", $row );
+            }
 
 		if( is_array( $total ) )
 			$total = implode( "\n", $total );
@@ -1066,10 +1070,17 @@ class TikiSheetCSVExcelHandler extends TikiSheetDataHandler
     function _save( &$sheet )
     {
         $total = array();
-
-        foreach( $sheet->dataGrid as $row )
-            if( is_array( $row ) )
+        
+        ksort ($sheet->dataGrid);
+        
+        foreach( $sheet->dataGrid as $row ) 
+        {
+            if( is_array( $row ) ) 
+            {
+                ksort($row);
                 $total[] = $this->fputcsvexcel( $row ,';','"');
+            }
+        }
 
         if( is_array( $total ) )
             $total = implode( "\n", $total );
@@ -1118,31 +1129,25 @@ class TikiSheetCSVExcelHandler extends TikiSheetDataHandler
     // version {{{2
     function version()
     {
-        return "0.1-test";
+        return "1.0";
     }
     
-    function fputcsvexcel($dataArray, $delimiter, $enclosure){ 
-     // $dataArray = the data to write out
-     // $delimeter = the field separator
+    function fputcsvexcel( $row, $fd=';', $quot='"')
+    {
+       $str='';
+       foreach ($row as $cell) {
+           str_replace(Array($quot,        "\n"),
+                       Array($quot.$quot,  ''),
+                       $cell);
+           if (strchr($cell, $fd)) {
+               $str.=$quot.$cell.$quot.$fd;
+           } else {
+               $str.=$cell.$fd;
+           }
+       }
     
-     // Build the string
-     $string = "";
-     $writeDelimiter = FALSE;
-     foreach($dataArray as $dataElement){
-       if($writeDelimiter) $string .= $delimiter;
-       $string .= $enclosure . $dataElement . $enclosure;
-       $writeDelimiter = TRUE;
-       } // end foreach($dataArray as $dataElement)
-    
-     // Append new line
-     $string .= "\n";
-    
-     // Write the string to the file
-     return $string;
-    
-     } // end function fputcsvexcel
-    
-    
+       return  $str;
+    }    
  } // }}}1
 
 /** TikiSheetDatabaseHandler {{{1
