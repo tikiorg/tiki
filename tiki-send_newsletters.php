@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.28 2006-04-26 13:58:08 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.29 2006-05-16 10:18:19 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -153,7 +153,6 @@ if (isset($_REQUEST["send"])) {
 	$editionId = $nllib->replace_edition($_REQUEST["nlId"], $_REQUEST["subject"], $_REQUEST["data"], $sent, $_REQUEST['editionId']);
 	$nllib->memo_subscribers_edition($editionId, $users);
 	foreach ($users as $us) {
-echo "rrr";if ($sent >= 1) die;
 		$userEmail  = $us["login"];
 		$email = $us["email"];
 		if ($email == "") {
