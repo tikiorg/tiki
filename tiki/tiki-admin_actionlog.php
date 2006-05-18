@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.15 2006-05-12 18:27:07 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.16 2006-05-18 12:48:10 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -10,6 +10,8 @@ include_once('lib/logs/logslib.php');
 include_once('lib/userslib.php');
 include_once('lib/commentslib.php');
 include_once('lib/categories/categlib.php');
+
+include_once('lib/contribution/contributionlib.php');
 $commentslib = new Comments($dbTiki);
 
 if ($tiki_p_admin != 'y') {
@@ -47,15 +49,20 @@ if (!empty($_REQUEST['actionId'])) {
 		die;
 	}
 	$smarty->assign_by_ref('action', $action);
-	if (isset($_REQUEST['saveAction'])) {
-		$logslib->delete_params($_REQUEST['actionId']);
-		if (isset($_REQUEST['contributions']))
-			$logslib->insert_params($_REQUEST['actionId'], 'contribution', $_REQUEST['contributions']);
+	if (isset($_REQUEST['saveAction']) && $feature_contribution == 'y') {
+		if ($contributionlib->update($action, empty($_REQUEST['contributions']) ? '': $_REQUEST['contributions'])) {
+			$logslib->delete_params($_REQUEST['actionId']);
+			if (isset($_REQUEST['contributions'])) {
+				$logslib->insert_params($_REQUEST['actionId'], 'contribution', $_REQUEST['contributions']);
+			}
+		} else {
+			$smarty->assign('error', 'found more than one object that can correspond');
+		}
 	} else {
 		if  ($action['objectType'] == 'wiki page') {
 			$contributions = $logslib->get_action_contributions($action['actionId']);
 		} elseif ($id = $logslib->get_comment_action($action)) {
-			$contributions = $this->get_action_contributions($action['actionId']);
+			$contributions = $logslib->get_action_contributions($action['actionId']);
 		} else {
 			$contributions = $contributionlib->get_assigned_contributions($action['object'], $action['objectType']); // todo: do a left join
 		}
@@ -67,7 +74,6 @@ if (!empty($_REQUEST['actionId'])) {
 		$_REQUEST['contributions'] = $cont;
 		include('contribution.php');
 		$contributions['data'][] = array('contributionId'=>0, 'name'=>'');
-print_r($contributions);
 		if (!empty($_REQUEST['startDate']))
 			$smarty->assign('startDate', $_REQUEST['startDate']);
 		if (!empty($_REQUEST['endDate']))
