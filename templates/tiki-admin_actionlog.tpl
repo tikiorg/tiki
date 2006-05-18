@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.15 2006-04-24 16:06:32 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.16 2006-05-18 12:48:10 sylvieg Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Admin Action Log{/tr}</a></h1>
 <a name="Setting" />
@@ -82,7 +82,7 @@
 {if !$reportCateg and $showCateg eq 'y'}<th class="heading"><a href="tiki-admin_actionlog.php?sort_mode=categName_{if $sort_mode eq 'categName_desc'}asc{else}desc{/if}{$url}">{tr}category{/tr}</a></th>{/if}
 <th class="heading"><a href="tiki-admin_actionlog.php?sort_mode=add_{if $sort_mode eq 'add_desc'}asc{else}desc{/if}{$url}">+{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</a></th>
 <th class="heading"><a href="tiki-admin_actionlog.php?sort_mode=del_{if $sort_mode eq 'del_desc'}asc{else}desc{/if}{$url}">-{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</a></th>
-{if $feature_contribution eq 'y'}<th class="heading">{tr}contribution{/tr}</th>{/if}
+{if $feature_contribution eq 'y'}<th class="heading">{tr}contribution{/tr}</th><th class="heading">&nbsp;</th>{/if}
 </tr>
 {cycle values="even,odd" print=false}
 {section name=ix loop=$actionlogs}
@@ -102,11 +102,30 @@
 {$actionlogs[ix].contributions[iy].name}
 {/section}
 </td>
+{if $feature_contribution eq 'y'}<td class="{cycle advance=false}">{if $actionlogs[ix].actionId}<a class="link" href="tiki-admin_actionlog.php?actionId={$actionlogs[ix].actionId}&amp;startDate={$startDate}&amp;endDate={$endDate}#action" title="{tr}edit contribution{/tr}"><img src="img/icons/edit.gif" alt="{tr}edit{/tr}"></a>{else}&nbsp;{/if}</td>{/if}
 {/if}
 <!-- {cycle} -->
 </tr>
 {/section}
 </table>
+{/if}
+
+{if $action}
+<a name="action">
+<h3>{tr}Edit action{/tr}</h3>
+<form method="post" action="tiki-admin_actionlog.php">
+<input type="hidden" name="actionId" value="{$action.actionId}" />
+<input type="hidden" name="list" value="y" />
+{if $selectedUsers}<input type="hidden" name="selectedUsers" value="{$selectedUsers}" />{/if}
+{if $selectedGroups}<input type="hidden" name="selectedGroups" value="{$selectedGroups}" />{/if}
+{if $startDate}<input type="hidden" name="startDate" value="{$startDate}" />{/if}
+{if $endDate}<input type="hidden" name="endDate" value="{$endDate}" />{/if}
+{$action.action} / {$action.objectType} / {$action.object} 
+<table class="normal">
+{include file="contribution.tpl"}
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="saveAction" value="{tr}Save Action{/tr}" /></td></tr>
+</table>
+</form>
 {/if}
 
 <a name="Statistic" />

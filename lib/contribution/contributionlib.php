@@ -45,7 +45,7 @@ class ContributionLib extends TikiLib {
 		$retval["cant"] = $cant;
 		return $retval;		
 	}
-	function assign_contributions($contributions, $itemId, $objectType, $description, $name, $href) {
+	function assign_contributions($contributions, $itemId, $objectType, $description='', $name='', $href='') {
 		global $objectlib; include_once('lib/objectlib.php');
 		if (($objectId = $objectlib->get_object_id($objectType, $itemId)) == 0) {
 			$objectId = $objectlib->insert_object($objectType, $itemId, $description, $name, $href);
@@ -117,6 +117,37 @@ class ContributionLib extends TikiLib {
 			$print .= $res['name'];
 		}
 		return $print;
+	}
+	function update($action, $contributions, $delay=15) {
+		global $tikilib;
+		global $logslib; include_once('lib/logs/logslib.php');
+
+		if ($action['objectType'] == 'wiki page') {
+			// try to find an history
+			$query = "select * from `tiki_history` where `pageName`=? and `lastModif` <=? and `lastModif` >= ? and `user`=?";
+			$result = $tikilib->query($query,array($action['object'], $action['lastModif']+$delay, $action['lastModif'], $action['user']));
+			if (($nb = $result->numRows()) == 1) {
+				$res = $result->fetchRow();
+				$this->assign_contributions($contributions, $res['historyId'], 'history');
+			} elseif ($nb == 0) {
+				$info = $tikilib->get_page_info($action['object']);
+				if ($info['lastModif'] <= $action['lastModif']) { //it is the page
+					$this->assign_contributions($contributions, $info['pageName'], 'wiki page');
+				} else
+					return false;
+			} else
+				return false;
+		} else {
+			if ($action['objectType'] == 'comment' || $action['objectType'] == 'forum' )
+				if ($commentId = $logslib->get_comment_action($action)) {
+					$this->assign_contributions($contributions, $commentId, 'comment');
+				} else {
+					return false;
+				}
+			else
+				$this->assign_contributions($contributions, $action['object'], $action['objectType']);
+		}
+		return true;
 	}
 }
 global $dbTiki;
