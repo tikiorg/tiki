@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_div.php,v 1.7 2006-05-19 22:54:21 amette Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_div.php,v 1.8 2006-05-19 23:03:48 amette Exp $
  *
  * DIV plugin. Creates a division block for the content. Forces the content 
  * to be aligned (left by deafault).
@@ -13,7 +13,7 @@
  * 
  */
 function wikiplugin_div_help() {
-	return tra("Insert a division block on wiki page").":<br />~np~{DIV([class=>class][, type=>div|span|pre|i|b|tt|blockquote][, align=>left|right|center][, bg=>color][, width=>num[%]][, float=>left|right])}".tra("text")."{DIV}~/np~";
+	return tra("Insert a division block on wiki page").":<br />~np~{DIV([class=>class][, type=>div|span|pre|i|b|tt|blockquote][, align=>left|right|center][, bg=>color][, width=>num[%]][, float=>left|right][, clear=>left|right|both])}".tra("text")."{DIV}~/np~";
 }
 
 function wikiplugin_div($data, $params) {
