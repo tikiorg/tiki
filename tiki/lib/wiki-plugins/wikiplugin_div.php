@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_div.php,v 1.6 2006-05-19 22:49:53 amette Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_div.php,v 1.7 2006-05-19 22:54:21 amette Exp $
  *
  * DIV plugin. Creates a division block for the content. Forces the content 
  * to be aligned (left by deafault).
@@ -28,7 +28,7 @@ function wikiplugin_div($data, $params) {
 	$fl   = (isset($float) && ($float == 'left' || $float == 'right')) ? " float: $float;"  : " float: none;";
 	$cl   = (isset($clear) && ($clear == 'left' || $clear == 'right' || $clear == 'both')) ? " clear: $clear;"  : " clear: none;";
 
-	$begin  = "<$t style=\"$bg$al$w$fl$cl\">";
+	$begin  = "<$t style=\"$bg$al$w$fl$cl\"$c>";
 	$end = "</$t>";
 	return $begin . $data . $end;
 }
