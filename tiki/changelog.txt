@@ -18,6 +18,166 @@ Version 1.10
 - 2005/05/18 : http://dev.tikiwiki.org/RefreshHEAD
 
 
+Version 1.9.3.1
+<http://tikiwiki.org/ReleaseProcess193>
+- 04/30/2006
+------------------
+
+[FIX] PHP Notice: Only variable references should be returned by reference
+      in /lib/adodb/adodb.inc.php on line 2797 - ohertel
+[FIX] basic profile: Notice: unserialize(): Error at offset 23 of 27 bytes
+      in /tikiwiki-1.9.3/tiki-modules.php on line 67 - ohertel
+[FIX] MD5 values for tiki secdb - ohertel
+[FIX] What-you-see-is-what-you-can-access fix: a not accessable feature is
+      hidden - marclaporte
+[FIX] trackers: get the right number of items - sylvie
+[MOD] update fr translation - sylvie
+[MOD] trackers: give the possibility to move the fields more
+      than 1 step - sylvie
+[MOD] another crosslink feature -> documentation - marclaporte
+[MOD] default_wiki_diff_style: minsidediff - marclaporte
+[MOD] some features disabled by default: feature_wiki_export,
+      feature_galleries, feature_help, feature_multilingual,
+      feature_user_watches_translations, feature_dump,
+      feature_view_tpl - marclaporte
+
+Version 1.9.3
+<http://tikiwiki.org/ReleaseProcess193>
+- 04/29/2006
+------------------
+[FIX] fix of multiple layout and translation issues - various authors
+[FIX] '... but need admin validation:' must work even if 'Validate users
+      by email:' is not checked - sylvie
+[FIX] admin user: multiple actions on a page other than the first
+      one - sylvie
+[FIX] article: category kept at approval - sylvie
+[FIX] blog: blog pagination - sylvie
+[FIX] blog: find now finds also in post title - sylvie
+[FIX] blog: reset blog activity if activity too old at each blog post - sylvie
+[FIX] bookmark: replace split space in link with <br /> - sylvie
+[FIX] category: anon can edit categorized pages - redflo
+[FIX] category: browse category on image show up images - sylvie
+[FIX] category: display category name for a deep category browse - sylvie
+[FIX] cleanups for php 5 compatibility - various authors
+[FIX] comment: all comments shown after a post - sylvie
+[FIX] forum: new post subject set after a post - sylvie
+[FIX] gallery: check object perm - sylvie
+[FIX] group: a non admin user can also assign a user to one of his groups if
+      he has tiki_p_admin_users - sylvie
+[FIX] group: can use username or groupname with the character & in
+      assign group - sylvie
+[FIX] group: respect perm in tiki_p_admin_user and not tiki_p_admin on
+      multiple actions in admin user - sylvie
+[FIX] image: current gallery selected in the gallery choice - sylvie
+[FIX] image: system gallery images are not shown in last_images modules if
+      no gallery is selected - sylvie
+[FIX] jscalendar: spanish utf8 calendar - sylvie
+[FIX] login: user home page considered at login - sylvie
+[FIX] module since_last_visit_new: faqs are displayed - sylvie
+[FIX] module since_last_visit_new: fix list index unknown for a comment in
+      image gallery - sylvie
+[FIX] multilingual: switch lang on default homepage (+bl param with
+      value) - sylvie
+[FIX] neat.css: upload image in a page - sylvie
+[FIX] newsletter: cleanup outgoing newsletter templates - marclaporte
+[FIX] newsletter: more perm checking on archived newsletters - sylvie
+[FIX] parsing: to be able to have plugin param with a & - sylvie
+[FIX] plugin article: respect perms - sylvie
+[FIX] plugin wantedpages: accept site settings for dashes in WikiWords.
+      Possible filtering of output to get rid of
+      "rubbish page names" - markusvk
+[FIX] prefer get_user_default_homepage to get_user_preference homePage - ang23
+[FIX] quiz: avoid some notices if store quiz results on + error if attachment
+      empty - (sylvie)
+[FIX] search: do no search if no search words are given - sylvie
+[FIX] securing adodb for postgres - mose
+[FIX] setup.sh: Use filesystem acls instead of sgid or 777 mode is much
+      more safe - redflo
+[FIX] template: anon can view/edit templates - ohertel
+[FIX] template: can edit in some case + can save only for the style - sylvie
+[FIX] tiki search: include wiki page name like in fulltext search and the file
+      data extracted by the command associated to the type - sylvie
+[FIX] tiki search: when refreshing fix an undefined dcslib + attach
+      warning - sylvie
+[FIX] tracker plugin: category - sylvie
+[FIX] tracker plugin: highlight name of fields with error - sylvie
+[FIX] tracker: better support for special character or string (ex: xml) in
+      textarea field - sylvie
+[FIX] tracker: mandatory category - sylvie
+[FIX] tracker: fix notification message header for gmail server for long
+      update notif and comment notificaton - sylvie
+[FIX] tracker: fixed bugged for () loop that prevented non-admin users from
+      updating certain fields values - lorfds
+[FIX] tracker: image in tracker plugin - sylvie
+[FIX] tracker: main item value displayed in the window title - sylvie
+[FIX] tracker: mandatory fields in trackers - rv540
+[FIX] tracker: sort the country names in a country field - sylvie
+[FIX] tracker: to be able to have 2 category fields in a tracker - sylvie
+[FIX] user: admin can change prefs of the third tab - sylvie
+[FIX] user: batch load can not add a user to a group the current user has
+      if only tiki_p_admin_user and not tiki_p_admin perm is set - sylvie
+[FIX] wiki: backlink: respect perms - sylvie
+[FIX] wiki: don't show edit buttom if looking at a user page of
+      another user - sylvie
+[FIX] wiki: don't show the edit buttom when looking at another user's
+      userpage - sylvie
+[FIX] wiki: download wiki file respects individual perms on a page - sylvie
+[FIX] wiki: force server readable perm for img upload - sylvie
+[FIX] wiki: highlight name of fields with error - sylvie
+[FIX] wiki: if 'display the title' is on and breadcrumb feature off, the
+      title must be displayed - sylvie
+[FIX] wiki: if ask for a userpage is not yet created go to tiki-editpage
+      instead of displaying an invalid page - sylvie
+[FIX] wiki: likepage: respect perms - sylvie
+[FIX] wiki: page creators are admin of their pages + tiki_p_admin_wiki
+      back for editpage - sylvie
+[FIX] wiki: watch on 'page change' works again - ohertel
+[FIX] wiki: the page named UserPage redirects to the user's UserPage if
+      possible - sylvie
+[FIX] wiki: wiki discussion now redirects to the same thread for 2 users
+      with different languages - sylvie
+[FIX] xhtml: <br/> transformed into <br /> - damian
+[MOD] added &reg; to special character table - sylvieg
+[MOD] added link to [http://dev.tikiwiki.org/tiki-index.php
+      ?page=Features|evaluation of each feature] to inform about
+      maturity of features - ohertel
+[MOD] CAS: note about a required lib installtion on admin/login - ohertel
+[MOD] cleanup and improvement of robots.txt - various authors
+[MOD] groups/permissions: 'levels' hidden by default - ohertel
+[MOD] groups/permissions: show all permissions by default - marclaporte
+[MOD] install: added some notes to the installation page tiki-install about
+      memory reqirements and more
+[MOD] lang: nearly complete finnish translation - hartsa
+[MOD] lang: several updates to de/ca/fr - ohertel/xavidp/sylvie/jmaspons
+[MOD] many new 'tip' boxed on several pages - marclaporte/ohertel
+[MOD] mods: hacked to allow chmodding files to 644 on servers with suphp
+      security installed (for instance: ourproject.org, where edu.tw.o is
+      installed) - xavidp
+[MOD] most admin pages are accessable from tiki-admin.php
+      now - marclaporte/ohertel
+[MOD] note in tiki-backup section that it's better to use mysqldump or
+      phpmyadmin - ohertel
+[MOD] param my to last_image_galleries module to limit the
+      user's gallery - sylvie
+[MOD] removing users from groups -> directly from user listing.
+      dev.two #503 - marclaporte
+[MOD] tracker: a button to increment the field position from a field
+      to the end - sylvie
+[MOD] tracker: added tracker filter for category plugin - mose
+[MOD] wiki: page renames are monitored with watch on page change - ohertel
+[NEW] calendar: RSS feed for upcoming events from calendar:
+      [tiki-calendars_rss.php?ver=2] - ohertel 
+[NEW] intertiki: use the user db of one tiki for several tiki
+      installations - mose
+[NEW] perl script to recover wiki data from google cache in case you
+      lose data - lfagundes
+[NEW] plugin: html tag plugin TAG - sylvie
+[NEW] smarty: simple smarty plugin function.count.php for return the
+      count of a var - mose
+[NEW] switchlang param in the url changes the language - sylvie
+[NEW] wiki: new table of contents, wikipedia style: {maketoc:table} - ohertel
+[NEW] wiki: search & replace feature - sampaioprimo
+
 Version 1.9.2
 <http://tikiwiki.org/ReleaseProcess192>
 - 10/30/2005

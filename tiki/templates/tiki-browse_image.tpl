@@ -111,7 +111,7 @@ Yes, you may use slideshow.js under the LGPL.
 <!--
 
 /*==================================================*
- $Id: tiki-browse_image.tpl,v 1.38 2006-02-17 15:10:47 sylvieg Exp $
+ $Id: tiki-browse_image.tpl,v 1.39 2006-05-22 17:09:14 mose Exp $
  Copyright 2000-2003 Patrick Fitzgerald
  http://slideshow.barelyfitz.com/
 
@@ -948,8 +948,10 @@ if (document.images) {
         <form action="tiki-browse_image.php" method="post">
 				{if $itype eq 's'}
 				<input type="hidden" name="scaled" value="1" />
-				<input type="hidden" name="scalesize" value="{$scalesize}" />
+				<input type="hidden" name="scalesize" value="{$scalesize|escape}" />
 				{/if}
+        <input type="hidden" name="desp" value="{$desp|escape}"/>
+        <input type="hidden" name="sort_mode" value="{$sort_mode|escape}"/>
         <input type="hidden" name="imageId" value="{$imageId|escape}"/>
         <input type="hidden" name="galleryId" value="{$galleryId|escape}"/>
 				<input type="text" name="newname" value="{$name}" />
@@ -992,8 +994,8 @@ if (document.images) {
     <small>
     {tr}You can include the image in a tiki page using one of these lines{/tr}:<br /><br />
     {if $itype eq 'o'}
-    {literal}{{/literal}img src={$url_show}?id={$imageId} {literal}}{/literal}<br />
-    {literal}{{/literal}img src={$url_show}?name={$name|escape} {literal}}{/literal}<br />
+    {literal}{{/literal}img src=show_image.php?id={$imageId} {literal}}{/literal}<br />
+    {literal}{{/literal}img src=show_image.php?name={$name|escape} {literal}}{/literal}<br />
     {else}
     {literal}{{/literal}img src={$url_show}?id={$imageId}&amp;scaled&amp;scalesize={$scalesize} {literal}}{/literal}<br />
     {literal}{{/literal}img src={$url_show}?name={$name|escape}&amp;scaled&amp;scalesize={$scalesize} {literal}}{/literal}<br />

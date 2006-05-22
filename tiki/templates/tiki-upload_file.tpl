@@ -64,7 +64,8 @@
 	</div>
 	{/if}
 {else}
-	{tr}You have to create a gallery first!{/tr}
+	<a class="linkbut" href="tiki-file_galleries.php">{tr}You have to 
+create a gallery first!{/tr}</a>
 {/if}
 
 

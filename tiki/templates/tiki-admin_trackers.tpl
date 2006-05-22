@@ -15,7 +15,7 @@
 <br /><br />
 
 {if $feature_tabs eq 'y'}
-{cycle name=tabs values="1,2,3,4" print=false advance=false}
+{cycle name=tabs values="1,2,3,4" print=false advance=false reset=true}
 <div class="tabs">
 <span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Trackers{/tr}</a></span>
 {if $trackerId}
@@ -27,7 +27,7 @@
 </div>
 {/if}
 
-{cycle name=content values="1,2,3,4" print=false advance=false}
+{cycle name=content values="1,2,3,4" print=false advance=false reset=true}
 {* --- tab with list --- *}
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}Trackers{/tr}</h2>

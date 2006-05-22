@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker.tpl,v 1.108 2006-03-16 13:43:12 sylvieg Exp $ *}
+{* $Id: tiki-view_tracker.tpl,v 1.109 2006-05-22 17:09:16 mose Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -13,6 +13,7 @@
 <span class="button2"><a href="tiki-admin_trackers.php" class="linkbut">{tr}Admin trackers{/tr}</a></span>
 <span class="button2"><a href="tiki-admin_trackers.php?trackerId={$trackerId}" class="linkbut">{tr}Edit this tracker{/tr}</a></span>
 <span class="button2"><a href="tiki-admin_tracker_fields.php?trackerId={$trackerId}" class="linkbut">{tr}Edit fields{/tr}</a></span>
+<span class="button2"><a href="{$smarty.request.REQUEST_URI|replace:'tiki-view_tracker':'tiki-export_tracker'}" class="linkbut">{tr}Export in CSV{/tr}</a></span>
 {/if}
 {if $rss_tracker eq "y"}
 <span class="button2"><a href="tiki-tracker_rss.php?trackerId={$trackerId}" class="linkbut"><img src='img/rss.png' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' /></a></span>
@@ -40,7 +41,7 @@
 	{/section}
 </div><br />{/if}
 {if $feature_tabs eq 'y'}
-{cycle name=tabs values="1,2,3" print=false advance=false}
+{cycle name=tabs values="1,2,3" print=false advance=false reset=true}
 <div id="page-bar">
 {if $tiki_p_view_trackers eq 'y'}
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Tracker{/tr} <i>{$tracker_info.name}</i></a></span>
@@ -51,7 +52,7 @@
 </div>
 {/if}
 
-{cycle name=content values="1,2,3" print=false advance=false}
+{cycle name=content values="1,2,3" print=false advance=false reset=true}
 {* -------------------------------------------------- tab with list --- *}
 {if $tiki_p_view_trackers eq 'y'}
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>

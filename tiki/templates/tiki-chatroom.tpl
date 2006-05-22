@@ -1,7 +1,12 @@
 <h2>{tr}Chatroom{/tr}: {$channelName}</h2>
 <table class="chatroom">
 <tr>
-  <td class="chatchannels"  valign="top">
+
+  <td class="chatarea" valign="top" >
+  <!-- <iframe name="chatdata" scrolling="auto" frameborder="0" height="360" src="tiki-chat_center.html">{tr}Browser not supported{/tr}</iframe> -->
+  <iframe name="chatdata" width="50%" scrolling="auto" frameborder="0" height="360" src="tiki-chat_loader.php?refresh={$refresh}&amp;enterTime={$now}&amp;nickname={$nickname}&amp;channelId={$channelId}">{tr}Browser not supported{/tr}</iframe>
+  </td>
+  <td class="chatchannels"  valign="top" width="180">
   <div class="chattitle">{tr}Active Channels{/tr}:</div>
   {section name=chan loop=$channels}
     <a class="link" href="tiki-chatroom.php?nickname={$nickname}&amp;channelId={$channels[chan].channelId}">{$channels[chan].name}</a><br />
@@ -9,10 +14,6 @@
   <br />
   <div class="chattitle">{tr}Users in this channel{/tr}:</div>
   <iframe width="100%" frameborder="0" height="200" scrolling="auto" marginwidth="0" marginheight="0"  src="tiki-chat_users.php?channelId={$channelId}"></iframe>
-  </td>
-  <td class="chatarea" valign="top" >
-  <!-- <iframe name="chatdata" scrolling="auto" frameborder="0" height="360" src="tiki-chat_center.html">{tr}Browser not supported{/tr}</iframe> -->
-  <iframe name="chatdata" width="100%" scrolling="auto" frameborder="0" height="360" src="tiki-chat_loader.php?refresh={$refresh}&amp;enterTime={$now}&amp;nickname={$nickname}&amp;channelId={$channelId}">{tr}Browser not supported{/tr}</iframe>
   </td>
   <!--
   <td  valign="top">

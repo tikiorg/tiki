@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.32 2006-03-16 13:43:12 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.33 2006-05-22 17:09:16 mose Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-list_articles.php">{tr}Articles{/tr}</a>
 
@@ -73,7 +73,9 @@
 	<td class="heading"><a class="tableheading" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'authorName_desc'}authorName_asc{else}authorName_desc{/if}">{tr}AuthorName{/tr}</a></td>
 {/if}
 {if $art_list_reads eq 'y'}
-	<td style="text-align:right;" class="heading"><a class="tableheading" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'reads_desc'}reads_asc{else}reads_desc{/if}">{tr}Reads{/tr}</a></td>
+	<td style="text-align:right;" class="heading"><a class="tableheading" 
+href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if 
+$sort_mode eq 'nbreads_desc'}nbreads_asc{else}nbreads_desc{/if}">{tr}Reads{/tr}</a></td>
 {/if}
 {if $art_list_size eq 'y'}
 	<td style="text-align:right;" class="heading"><a class="tableheading" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">{tr}Size{/tr}</a></td>
@@ -117,7 +119,7 @@
 	<td class="{cycle advance=false}">{$listpages[changes].authorName}</td>
 {/if}
 {if $art_list_reads eq 'y'}
-	<td style="text-align:right;" class="{cycle advance=false}">{$listpages[changes].reads}</td>
+	<td style="text-align:right;" class="{cycle advance=false}">{$listpages[changes].nbreads}</td>
 {/if}
 {if $art_list_size eq 'y'}
 	<td style="text-align:right;" class="{cycle advance=false}">{$listpages[changes].size|kbsize}</td>

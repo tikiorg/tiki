@@ -54,14 +54,16 @@ or HTTP_HOST
 
 */
 
-$local_php = 'db/local.php';
+if (!isset($local_php)) $local_php = 'db/local.php';
 if (is_file('db/virtuals.inc')) {
-	if (isset($_SERVER['TIKI_VIRTUAL']) and is_file('db/'.$_SERVER['TIKI_VIRTUAL'].'/local.php')) {
-		$multi = $_SERVER['TIKI_VIRTUAL'];
-	} elseif (isset($_SERVER['SERVER_NAME']) and is_file('db/'.$_SERVER['SERVER_NAME'].'/local.php')) {
-		$multi = $_SERVER['SERVER_NAME'];
-	} elseif (isset($_SERVER['HTTP_HOST']) and is_file('db/'.$_SERVER['HTTP_HOST'].'/local.php')) {
-		$multi = $_SERVER['HTTP_HOST'];
+	if (!isset($multi)) {
+		if (isset($_SERVER['TIKI_VIRTUAL']) and is_file('db/'.$_SERVER['TIKI_VIRTUAL'].'/local.php')) {
+			$multi = $_SERVER['TIKI_VIRTUAL'];
+		} elseif (isset($_SERVER['SERVER_NAME']) and is_file('db/'.$_SERVER['SERVER_NAME'].'/local.php')) {
+			$multi = $_SERVER['SERVER_NAME'];
+		} elseif (isset($_SERVER['HTTP_HOST']) and is_file('db/'.$_SERVER['HTTP_HOST'].'/local.php')) {
+			$multi = $_SERVER['HTTP_HOST'];
+		}
 	}
 	if (isset($multi)) {
 		$local_php = "db/$multi/local.php";

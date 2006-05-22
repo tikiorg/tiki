@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.35 2006-03-16 13:43:12 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.36 2006-05-22 17:09:16 mose Exp $ *}
 <h1><a href="tiki-upload_image.php{if $galleryId}?galleryId={$galleryId}{/if}" class="pagetitle">{tr}Upload Image{/tr}</a>
 
 {if $feature_help eq 'y'}
@@ -106,7 +106,8 @@
 	</table>
 	{/if}
 {else}
-	{tr}You have to create a gallery first!{/tr}
+	<a class="linkbut" href="tiki-galleries.php">{tr}You have to 
+create a gallery first!{/tr}</a>
 {/if}
 
 

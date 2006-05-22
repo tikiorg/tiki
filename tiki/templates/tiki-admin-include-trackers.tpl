@@ -1,6 +1,7 @@
-<div class="rbox" style="margin-top: 10px;">
-<div class="rbox-title" style="background-color: #eeee99; font-weight : bold; display : inline; padding : 0 10px;">{tr}Tip{/tr}</div>
-<div class="rbox-data" style="padding: 2px 10px; background-color: #eeee99;">{tr}To configure your trackers, look for "Admin trackers" under "Trackers" on the application menu, or{/tr} <a class="link" href="tiki-admin_trackers.php">{tr}click here{/tr}</a>.</div>
+
+<div class="rbox" name="tip">
+<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+<div class="rbox-data" name="tip">{tr}To configure your trackers, look for "Admin trackers" under "Trackers" on the application menu, or{/tr} <a class="rbox-link" href="tiki-admin_trackers.php">{tr}click here{/tr}</a>.</div>
 </div>
 <br />
 <div class="cbox">

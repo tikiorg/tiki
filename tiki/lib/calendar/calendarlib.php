@@ -135,7 +135,7 @@ class CalendarLib extends TikiLib {
 		$query .= "i.`url` as `url`, i.`status` as `status`, i.`priority`  as `priority`, c.`name` as `calname`, i.`calendarId` as `calendarId`, ";
 		$query .= "i.`locationID` as `locationID`, i.`categoryID` as `categoryID`, i.`nlId` as `nlId`  ";
 		$query .= "from `tiki_calendar_items` as i left join `tiki_calendars` as c on i.`calendarId`=c.`calendarId` where ($cond)  order by ".$this->convert_sortmode("$sort_mode");
-		$result = $this->query($query,$bindvars);
+		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 			$ret[]=$this->get_item($res["calitemId"]);

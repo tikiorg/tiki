@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.62 2006-04-12 20:39:31 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.63 2006-05-22 17:09:14 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-calendar.php">{tr}Calendar{/tr}</a></h1>
@@ -14,7 +14,7 @@
 <br /><br />
 
 {if $feature_tabs eq 'y'}
-{cycle name=tabs values="1,2,3" print=false advance=false}
+{cycle name=tabs values="1,2,3" print=false advance=false reset=true}
 <div id="page-bar">
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Calendar{/tr}</a></span>
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Filter{/tr}</a></span>
@@ -24,8 +24,8 @@
 </div>
 {/if}
 
-
-{cycle name=content values="1,2,3" print=false advance=false}
+{* ----------------------------------- *}
+{cycle name=content values="1,2,3" print=false advance=false reset=true}
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 {include file="tiki-show_calendar.tpl"}
 </div>

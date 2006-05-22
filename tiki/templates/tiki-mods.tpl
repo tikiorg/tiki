@@ -1,10 +1,17 @@
+<div class="rbox" name="tip">
+<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+<div class="rbox-data" name="tip">{tr}To learn more about <a class="rbox-link" target="tikihelp" href="http://mods.tikiwiki.org">mods</a>.{/tr}
+</div>
+</div>
+<br />
+
 <style>
 {literal}
 .focus { background-color : #eeee77; }
 {/literal}
 </style>
 <h1><a href="tiki-mods.php" class="pagetitle">{tr}TikiWiki Mods{/tr}</a></h1>
-<span class="button2"><a href="tiki-mods_admin.php" class="linkbut">Mods Configuration</a></span>
+<span class="button2"><a href="tiki-mods_admin.php" class="linkbut">{tr}Mods Configuration{/tr}</a></span>
 <span class="button2"><a href="tiki-mods.php?reload=1{$findarg}{$typearg}" class="linkbut">{tr}Update remote index{/tr}</a></span>
 <span class="button2"><a href="tiki-mods.php?rebuild=1{$findarg}{$typearg}" class="linkbut">{tr}Rebuild local list{/tr}</a></span>
 {if $feature_mods_provider eq 'y'}

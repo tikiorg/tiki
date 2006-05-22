@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-user_activities.php,v 1.12 2006-03-16 13:43:09 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-user_activities.php,v 1.13 2006-05-22 17:09:07 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -114,7 +114,7 @@ if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process']) {
                         $url = "tiki-g-user_instances.php?filter_process=".$info['pId'];
                         $mapline = preg_replace('/href=".*?activityId/', 'href="' . $url . '&amp;filter_activity', $mapline);
                         $map .= $mapline;
-                    } elseif ($item['isInteractive'] == 'y' && ($item['type'] == 'start' || $item['type'] == 'standalone')) {
+                    } elseif ($item['isInteractive'] == 'y' && $item['type'] == 'standalone') {
                         $url = "tiki-g-run_activity.php?";
                         $mapline = preg_replace('/href=".*?activityId/', 'href="' . $url . '&amp;activityId', $mapline);
                         $map .= $mapline;

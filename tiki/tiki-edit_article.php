@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.54 2006-04-12 20:39:29 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.55 2006-05-22 17:09:07 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -39,7 +39,7 @@ if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0) {
 	$_REQUEST["body"] = $template_data["content"];
 }
 
-$smarty->assign('allowhtml', 'y');
+$smarty->assign('allowhtml', 'on');
 $publishDate = date("U");
 $cur_time = getdate();
 $expireDate = mktime ($cur_time["hours"], $cur_time["minutes"], 0, $cur_time["mon"], $cur_time["mday"]+365, $cur_time["year"]);

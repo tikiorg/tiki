@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.51 2006-02-17 15:10:31 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.52 2006-05-22 17:09:07 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.51 2006-02-17 15:10:31 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.52 2006-05-22 17:09:07 mose Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -24,7 +24,7 @@ if (ini_get('session.use_cookies') == 1) {
 		die;
 	}
 }
-	
+
 //Remember where user is logging in from and send them back later; using session variable for those of us who use WebISO services
 if (!(isset($_SESSION['loginfrom']))) {
 	if (isset($_SERVER['HTTP_REFERER'])) {
@@ -102,7 +102,7 @@ if ($user == 'admin') {
 if ($feature_intertiki == 'y' and isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'],array_keys($interlist)) and $user and $pass) {
 
     include_once('XML/RPC.php');
-    
+
     function intervalidate($remote,$user,$pass,$get_info = false) {
 	global $tiki_key;
 	$remote['path'] = preg_replace("/^\/?/","/",$remote['path']);
@@ -147,19 +147,19 @@ if ($feature_intertiki == 'y' and isset($_REQUEST['intertiki']) and in_array($_R
 	    $logslib->add_log('login','intertiki : '.$user.'@'.$_REQUEST['intertiki']);
 
 	    if (!empty($feature_intertiki_mymaster)) {
-		
+
 		// this is slave intertiki site
 		$response_value = $rpcauth->value();
 		$user_details = unserialize($response_value->scalarval());
-		
+
 		if (!$userlib->user_exists($user)) {
 		    $userlib->add_user($user, '', $user_details['info']['email']);
 		    $userlib->set_user_fields($user_details['info']);
-		} else { 
+		} else {
 		    $userlib->set_user_fields($user_details['info']);
 		    $userlib->update_lastlogin($user);
 		}
-		
+
 		if ($feature_userPreferences == 'y' && $feature_intertiki_import_preferences == 'y') {
 		    $userlib->set_user_preferences($user, $user_details['preferences']);
 		}
@@ -210,11 +210,11 @@ if ($isvalid) {
 		$url = $_SESSION['loginfrom'];
 		$logslib->add_log('login','logged from '.$url);
 //	this code doesn't work
-//                if (($url == $tikiIndex || substr($tikiIndex, strlen($tikiIndex)-strlen($url)-1) == '/'.$url) 
+//                if (($url == $tikiIndex || substr($tikiIndex, strlen($tikiIndex)-strlen($url)-1) == '/'.$url)
 //		     && $useGroupHome == 'y') { /* go to the group page only if the loginfrom is the default page */
 		if (($url == $tikiIndex || basename($url) == $tikiIndex || urldecode(basename($url)) == $tikiIndex || $limitedGoGroupHome == "n") && $useGroupHome == 'y') { /* go to the group page only if the loginfrom is the default page */
-			$groupHome = $userlib->get_user_default_homepage($user);
 			$groupHome = $tikilib->get_user_preference($user, 'homePage', $groupHome);
+			$groupHome = $userlib->get_user_default_homepage($user);
     			if ($groupHome) {
                     $url = preg_match('#^https?://#', $groupHome) ? $groupHome : "tiki-index.php?page=".$groupHome;
     			}
@@ -235,7 +235,7 @@ if ($isvalid) {
 				$cookie_path = $tikilib->get_preference('cookie_path', '/');
 				$cookie_domain = $tikilib->get_preference('cookie_domain', $tikilib->get_preference('http_domain', $_SERVER['SERVER_NAME']));
 				setcookie($user_cookie_site, $hash, time() + $remembertime, $cookie_path, $cookie_domain);
-				$logslib->add_log('login',"got a cookie for $remembertime seconds");		
+				$logslib->add_log('login',"got a cookie for $remembertime seconds");
 			}
 		}
 	}

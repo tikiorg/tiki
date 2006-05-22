@@ -150,6 +150,8 @@ onchange="handleListChange(this)">
               <option value=";"> ; </option>
               <option value=":"> : </option>
               <option value="&amp;"> & </option>
+		  <option value="&reg;"> ® </option>
+		  <option value="&trade;"> &trade; </option>
              </select>
           </td>
         </tr>

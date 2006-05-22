@@ -26,7 +26,7 @@
  * Define the IP address you want to accept requests from 
  * as a security measure. If blank we accept anyone promisciously!
  */
-$ACCEPTIP = '';
+$ACCEPTIP = 'DISABLED - ENABLE IF YOU KNOW WHAT YOU ARE DOING';
 
 /*
  * Connection parameters

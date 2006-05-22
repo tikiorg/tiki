@@ -84,9 +84,9 @@ class WikiLib extends TikiLib {
      *  the returned array does not contain the last editor/contributor
      */
     function get_contributors($page, $last) {
-	$notus = "`user` not like 'system' and `user` not like '$last'";
+				$notus = "`user` not like 'system' and `user` not like ?";
         $query = "select `user` from `tiki_history` where ($notus) and `pageName`=? order by `version` desc";
-        $result = $this->query($query,array($page), 10);
+        $result = $this->query($query,array($last,$page), 10);
         $ret = array();
         $seen = array();
         //$seen = array("system", "admin", $last); // would it be more efficient to put admin and system in here rather than in the where clause, above?
@@ -223,10 +223,6 @@ class WikiLib extends TikiLib {
 		$query = "update `tiki_mail_events` set `object`=? where `object`=?";
 		$this->query($query, array( $newId, $oldId ) );
 
-		// user watches
-		$query = "update `tiki_user_watches` set `object`=?, `title`=? where `object`=? and `type` = 'Page Wiki'";
-		$this->query($query, array( $newName, $newName, $oldName ) );
-
 		// theme_control_objects(objId,name)
 		$oldId = md5('wiki page' . $oldName);
 		$newId = md5('wiki page' . $newName);
@@ -257,6 +253,43 @@ class WikiLib extends TikiLib {
 			global $logslib; include_once('lib/logs/logslib.php');
 			$logslib->add_action('Renamed', $newName, 'wiki page', 'old='.$oldName);
 		}
+		global $feature_user_watches;
+		global $user;
+		global $tikilib;
+		global $smarty;
+
+		// first get all watches for this page ...
+		if ($feature_user_watches == 'y') {
+			$nots = $tikilib->get_event_watches('wiki_page_changed', $oldName);
+		}
+
+		// ... then update the watches table
+		// user watches
+		$query = "update `tiki_user_watches` set `object`=?, `title`=?, `url`=? where `object`=? and `type` = 'wiki page'";
+		$this->query($query, array( $newName, $newName, 'tiki-index.php?page='.$newName, $oldName ) );
+
+		// now send notification email to all on the watchlist:
+		if ($feature_user_watches == 'y') {
+			if (!isset($_SERVER["SERVER_NAME"])) {
+				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
+			}
+			if (count($nots)) {
+				include_once("lib/notifications/notificationemaillib.php");
+				$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
+				$smarty->assign('mail_oldname', $oldName);
+				$smarty->assign('mail_newname', $newName);
+				$smarty->assign('mail_date', date("U"));
+				$smarty->assign('mail_user', $user);
+				$foo = parse_url($_SERVER["REQUEST_URI"]);
+				$machine = $tikilib->httpPrefix(). $foo["path"];
+				$smarty->assign('mail_machine', $machine);
+				$parts = explode('/', $foo['path']);
+				if (count($parts) > 1)
+					unset ($parts[count($parts) - 1]);
+				$smarty->assign('mail_machine_raw', $tikilib->httpPrefix(). implode('/', $parts));
+				sendEmailNotification($nots, "watch", "user_watch_wiki_page_renamed_subject.tpl", $_SERVER["SERVER_NAME"], "user_watch_wiki_page_renamed.tpl");
+			}
+		}
 		return true;
 	}
 
@@ -265,7 +298,7 @@ class WikiLib extends TikiLib {
 		$this->query($query, array( $cache, $page));
 	}
 
-	// huho why that fuction is empty ??
+	// TODO: huho why that function is empty ?
 	function save_notepad($user, $title, $data) {
 	}
 
@@ -423,8 +456,13 @@ class WikiLib extends TikiLib {
     }
 
     function remove_footnote($user, $page) {
-	$query = "delete from `tiki_page_footnotes` where `user`=? and `pageName`=?";
-	$this->query($query,array($user,$page));
+	if (empty($user)) {
+		$query = "delete from `tiki_page_footnotes` where `pageName`=?";
+		$this->query($query,array($page));
+	} else {
+		$query = "delete from `tiki_page_footnotes` where `user`=? and `pageName`=?";
+		$this->query($query,array($user,$page));
+	}
     }
 
     function wiki_link_structure() {
@@ -499,16 +537,20 @@ class WikiLib extends TikiLib {
 	}
 
 	$exp = implode(" or ", $exps);
-	$query = "select `pageName` from `tiki_pages` where $exp";
-	$result = $this->query($query,$bindvars);
-	$ret = array();
+	if ($exp) {
+		$query = "select `pageName` from `tiki_pages` where $exp";
+		$result = $this->query($query,$bindvars);
+		$ret = array();
 
-	while ($res = $result->fetchRow()) {
-		if ($tikilib->user_has_perm_on_object($user, $page, 'wiki page', 'tiki_p_view'))
-	    		$ret[] = $res["pageName"];
+		while ($res = $result->fetchRow()) {
+			if ($tikilib->user_has_perm_on_object($user, $page, 'wiki page', 'tiki_p_view'))
+						$ret[] = $res["pageName"];
+		}
+
+		return $ret;
+	} else {
+		return array();
 	}
-
-	return $ret;
     }
 
     function is_locked($page, $info=null) {

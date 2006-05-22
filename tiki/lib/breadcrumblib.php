@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/lib/breadcrumblib.php,v 1.4 2005-12-12 15:18:49 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/breadcrumblib.php,v 1.5 2006-05-22 17:09:09 mose Exp $
  * Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -240,7 +240,7 @@ class Breadcrumb {
         $ret .= tra($crumbs[$len-1]->title).'</a>';
         $ret .= help_doclink(array(crumb=>$crumbs[$len-1]));
         if( $info['flag'] == 'L' && $print_page != 'y' ) {
-            $ret .= '<img src="img/icons/lock_topic.gif" height="19" width="19" alt="'.tra('locked').'" title="'.tra('locked by').' '.$info['user'].'" />';
+            $ret .= ' <img src="img/icons2/lock.gif" height="16" width="16" alt="'.tra('locked').'" title="'.tra('locked by').' '.$info['user'].'" />';
         }
         if( ($feature_siteidentity == 'n' || $feature_breadcrumbs == 'n') || $feature_sitetitle == 'title' ) {
             $ret .= '</h1>';          

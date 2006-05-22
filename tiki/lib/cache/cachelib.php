@@ -43,11 +43,14 @@ class Cachelib {
 	
   function getCached($key) {
 		$key = md5($key);
+	if ( filesize($this->folder."/$key") == 0 ) { 	
+			return ´´;
+		} 
 		$fw = fopen($this->folder."/$key","r");
 		$data = fread($fw,filesize($this->folder."/$key"));
 		fclose($fw);
 		return $data;
-  }
+}
 	
   /** gets the timestamp of item insertion in cache,
    *  returns false if key doesn't exist

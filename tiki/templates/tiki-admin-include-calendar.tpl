@@ -1,7 +1,8 @@
 <br />
-<br />
-<div class="highlight">{tr}Tip{/tr}: {tr}To add/remove calendars, look for "Calendar" under "Admin" on the application menu, or{/tr} <a class="link"
-href="tiki-admin_calendars.php">{tr}click here{/tr}</a>.</div>
+<div class="rbox" name="tip">
+<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+<div class="rbox-data" name="tip">{tr}To add/remove calendars, look for "Calendar" under "Admin" on the application menu, or{/tr} <a class="rbox-link" href="tiki-admin_calendars.php">{tr}click here{/tr}</a>.</div>
+</div>
 <br />
 
 <div class="cbox">
@@ -31,6 +32,15 @@ href="tiki-admin_calendars.php">{tr}click here{/tr}</a>.</div>
   <option value="semester" {if $calendar_view_mode eq 'semester'}selected="selected"{/if}>{tr}Semester{/tr}</option>
   <option value="year" {if $calendar_view_mode eq 'year'}selected="selected"{/if}>{tr}Year{/tr}</option>
 </select></td>
+</tr>
+
+<tr class="form">
+<td><label>{tr}Calendar manual selection of time/date{/tr}</label></td>
+<td><input type="checkbox" name="feature_cal_manual_time" {if $feature_cal_manual_time eq 'y'}checked="checked"{/if}/></td>
+</tr>
+<tr class="form">
+<td><label>{tr}JsCalendar{/tr}</label></td>
+<td><input type="checkbox" name="feature_jscalendar" {if $feature_jscalendar eq 'y'}checked="checked"{/if}/></td>
 </tr>
 
 <tr>

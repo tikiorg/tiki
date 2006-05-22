@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.644 2006-05-12 18:27:07 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.645 2006-05-22 17:09:09 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2588,7 +2588,7 @@ function add_pageview() {
 	`tiki_article_types`.`show_image_caption`,
 	`tiki_article_types`.`show_lang`,
 	`tiki_article_types`.`creator_edit`
-	    from `tiki_articles`, `tiki_article_types`left join `users_users` on `tiki_articles`.`author` = `users_users`.`login`  $mid and `tiki_articles`.`articleId`=?";
+	 from `tiki_article_types`, `tiki_articles` left join `users_users` on `tiki_articles`.`author` = `users_users`.`login`  $mid and `tiki_articles`.`articleId`=?";
 	//$query = "select * from `tiki_articles` where `articleId`=?";
 	$result = $this->query($query,array((int)$articleId));
 	if ($result->numRows()) {
@@ -3040,8 +3040,10 @@ function add_pageview() {
 	if ($feature_actionlog == 'y') {
 		$info= $this->get_page_info($page);
 		$params = 'del='.strlen($info['data']);
-	} else
+	} else {
 		$params = '';
+	}
+	global $wikilib; include_once('lib/wiki/wikilib.php');
 	global $multilinguallib;
 	if (!is_object($multilinguallib)) {
 		include_once('lib/multilingual/multilinguallib.php');// must be done even in feature_multilingual not set
@@ -3076,6 +3078,8 @@ function add_pageview() {
 
 	$query = "delete from `tiki_user_watches` where `event`=? and `object`=?";
 	$this->query($query,array('wiki_page_changed', $page));
+
+	$wikilib->remove_footnote('', $page);
 
 	return true;
     }
@@ -3464,14 +3468,13 @@ function add_pageview() {
   // - category permission
   // if O.K. this function shall replace similar constructs in list_pages and other functions above.
   // $categperm is the category permission that should grant $perm. if none, pass 0
-  function user_has_perm_on_object($user,$object,$objtype,$perm,$categperm='tiki_p_view_categories') {
+  function user_has_perm_on_object($user,$object,$objtype,$perm,$categperm='') {
             global $feature_categories;
             global $userlib;
             // superadmin
 	    if($userlib->user_has_permission($user, 'tiki_p_admin')) {
 	       return(TRUE);
 	    }
-
             if ($userlib->object_has_one_permission($object, $objtype)) {
             // wiki permissions override category permissions
 	          //handle multiple permissions
@@ -3507,11 +3510,11 @@ function add_pageview() {
                         $is_categorized = FALSE;
                 }
 
-		if ($is_categorized && $$categperm != 'y') {
-                        return(FALSE);
+		if ($is_categorized && !empty($categperm) && $$categperm == 'y') {
+                        return(TRUE);
                 }
-                if ($is_categorized)
-                       return(TRUE);
+				// if it has no category perms or the user does not have
+                // the perms, continue to check individual perms!
 	     }
 		// no individual and no category perms. So has the user the perm itself?
 		if (is_array($perm)) {
@@ -5951,9 +5954,9 @@ if (!$simple_wiki) {
 
 	$t = date("U");
 	$query = "delete from `tiki_history` where `pageName`=? and `version`=?";
-	$result = $this->query($query, array( $pageName,(int) $version) );
+	$result = $this->query($query, array($pageName,(int) $version));
 	$query = "insert into `tiki_history`(pageName, version, lastModif, user, ip, comment, data,description) values(?,?,?, ?,?,?, ?,?)";
-	$result = $this->query($query, array($pageName,(int)$version,(int)$lastModif, $edit_user,$edit_ip,$edit_comment, $edit_data,$description)
+	$result = $this->query($query, array($pageName,(int) $version, (int) $lastModif, $edit_user, $edit_ip, $edit_comment, $edit_data, $description)
 		);
 
 	//print("version: $version<br />");
@@ -5963,10 +5966,10 @@ if (!$simple_wiki) {
 	if ($version >= $info["version"]) {
 	    if ($lang) { // not sure it is necessary
 		    $query = "update `tiki_pages` set `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `description`=?,`page_size`=?,`lang`=?  where `pageName`=?";
-		    $result = $this->query($query, array($edit_data, $edit_comment, (int) $t, (int) $version, $edit_user, $edit_ip, $description, (int) strlen($data), $lang, $pageName));
+		    $result = $this->query($query, array($edit_data, $edit_comment, (int) $t, (int) $version, $edit_user, $edit_ip, $description, (int) strlen($edit_data), $lang, $pageName));
 	    } else {
 		    $query = "update `tiki_pages` set `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `description`=?,`page_size`=? where `pageName`=?";
-		    $result = $this->query($query, array($edit_data, $edit_comment, (int) $t, (int) $version, $edit_user, $edit_ip, $description, (int) strlen($data), $pageName));
+		    $result = $this->query($query, array($edit_data, $edit_comment, (int) $t, (int) $version, $edit_user, $edit_ip, $description, (int) strlen($edit_data), $pageName));
 	    }
 	    // Parse edit_data updating the list of links from this page
 	    $this->clear_links($pageName);

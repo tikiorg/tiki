@@ -101,6 +101,7 @@ REPLACE INTO users_grouppermissions VALUES ('admins','tiki_p_edit_html_pages',''
 REPLACE INTO users_grouppermissions VALUES ('admins','tiki_p_edit_structures','');
 REPLACE INTO users_grouppermissions VALUES ('admins','tiki_p_edit_submission','');
 REPLACE INTO users_grouppermissions VALUES ('admins','tiki_p_edit_templates','');
+REPLACE INTO users_grouppermissions VALUES ('admins','tiki_p_view_templates','');
 REPLACE INTO users_grouppermissions VALUES ('admins','tiki_p_eph_admin','');
 REPLACE INTO users_grouppermissions VALUES ('admins','tiki_p_forum_post','');
 REPLACE INTO users_grouppermissions VALUES ('admins','tiki_p_forum_post_topic','');

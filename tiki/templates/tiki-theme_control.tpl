@@ -9,6 +9,15 @@
 <a href="tiki-edit_templates.php?template=tiki-theme_control.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}ThemeControl tpl{/tr}">
 <img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}</h1>
 
+<div class="rbox" name="tip">
+<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+<div class="rbox-data" name="tip">{tr}To learn more about <a class="rbox-link" target="tikihelp" href="http://themes.tikiwiki.org">themes</a>.{/tr}
+
+</div>
+</div>
+<br />
+
+
 <div class="simplebox">
 <b>{tr}Theme is selected as follows{/tr}:</b><br />
 1. {tr}If a theme is assigned to the individual object that theme is used.{/tr}<br />

@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.104 2005-12-12 15:18:48 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.105 2006-05-22 17:09:08 mose Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -103,7 +103,10 @@ ALTER TABLE `tiki_trackers` CHANGE `name` `name` VARCHAR( 255 ) DEFAULT NULL ;
 # added on 2004-02-11 by mose for yet-another-perm
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_trackers_closed', 'Can view trackers pending items', 'registered', 'trackers');
 
-
+#added on 2006-05-12 by wesleywillians
+INSERT INTO users_permissions (permName,permDesc,level,type) values ('tiki_p_admin_rssmodules','Can admin rss modules', 'admin', 'tiki');
+insert into users_permissions (permName,permDesc,level,type) values ('tiki_p_admin_polls','Can admin polls', 'admin', 'tiki');
+insert into users_permissions (permName,permDesc,level,type) values ('tiki_p_admin_objects','Can edit object permissions', 'admin', 'tiki');
 
 #
 # Score and karma tables start
@@ -1257,3 +1260,16 @@ ALTER TABLE `users_objectpermissions` DROP PRIMARY KEY , ADD PRIMARY KEY ( `obje
 
 # 2005-05-03 - amette - correct perm for submitting link - WYSIWYCA
 UPDATE tiki_menu_options SET perm="tiki_p_submit_link" WHERE url="tiki-directory_add_site.php";
+
+# 2006-04-13 fixing Typo - amette
+UPDATE `users_permissions` SET `permDesc`='Can create user bookmarks' WHERE `permName`='tiki_p_create_bookmarks';
+
+# 2006-04-26 security issue, split template edit perm into edit and view perms
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_templates', 'Can view site templates', 'admin', 'tiki');
+
+# fixed reserved word use in mysql
+ALTER TABLE `tiki_articles` change `reads` `nbreads` int(14) default NULL ;
+ALTER TABLE `tiki_submissions` change `reads` `nbreads` int(14) default NULL ;
+ALTER TABLE `tiki_articles` DROP INDEX `reads`, ADD INDEX `nbreads` ( `nbreads` ) ;
+ALTER TABLE `tiki_submissions` DROP INDEX `reads`, ADD INDEX `nbreads` ( `nbreads` ) ;
+

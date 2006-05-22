@@ -11,7 +11,7 @@
 <div class="cbox-data">
 <form action="tiki-admin.php?page=intertiki" method="post" name="intertiki">
 <table class="admin">
-<tr><td class="form">Tiki Unique key</td><td><input type="text" name="tiki_key" value="{$tiki_key}" size="32" /></td></tr>
+<tr><td class="form">{tr}Tiki Unique key{/tr}</td><td><input type="text" name="tiki_key" value="{$tiki_key}" size="32" /></td></tr>
 <tr>
   <td class="form">
     {tr}InterTiki Slave mode{/tr}<br />
@@ -53,19 +53,19 @@
 <tr><td class="button" colspan="2">
 <a href="tiki-admin.php?page=intertiki&amp;del={$k|escape:'url'}"><img src="img/icons2/delete.gif" width="16" height="16" border="0" alt="{tr}delete{/tr}" /></a>
 {tr}InterTiki Server{/tr} <b>{$k}</b></td></tr>
-<tr><td class="form">name</td><td><input type="text" name="interlist[{$k}][name]" value="{$i.name}" /></td></tr>
-<tr><td class="form">host</td><td><input type="text" name="interlist[{$k}][host]" value="{$i.host}" /></td></tr>
-<tr><td class="form">port</td><td><input type="text" name="interlist[{$k}][port]" value="{$i.port}" /></td></tr>
-<tr><td class="form">path</td><td><input type="text" name="interlist[{$k}][path]" value="{$i.path}" /></td></tr>
-<tr><td class="form">groups</td><td><input type="text" name="interlist[{$k}][groups]" value="{foreach item=g from=$i.groups name=f}{$g}{if !$smarty.foreach.f.last},{/if}{/foreach}" /></td></tr>
+<tr><td class="form">{tr}name{/tr}</td><td><input type="text" name="interlist[{$k}][name]" value="{$i.name}" /></td></tr>
+<tr><td class="form">{tr}host{/tr}</td><td><input type="text" name="interlist[{$k}][host]" value="{$i.host}" /></td></tr>
+<tr><td class="form">{tr}port{/tr}</td><td><input type="text" name="interlist[{$k}][port]" value="{$i.port}" /></td></tr>
+<tr><td class="form">{tr}path{/tr}</td><td><input type="text" name="interlist[{$k}][path]" value="{$i.path}" /></td></tr>
+<tr><td class="form">{tr}groups{/tr}</td><td><input type="text" name="interlist[{$k}][groups]" value="{foreach item=g from=$i.groups name=f}{$g}{if !$smarty.foreach.f.last},{/if}{/foreach}" /></td></tr>
 {/foreach}
 {/if}
 <tr><td class="button" colspan="2">{tr}Add new server{/tr}</td></tr>
-<tr><td class="form">name</td><td><input type="text" name="new[name]" value="" /></td></tr>
-<tr><td class="form">host</td><td><input type="text" name="new[host]" value="" /></td></tr>
-<tr><td class="form">port</td><td><input type="text" name="new[port]" value="" /></td></tr>
-<tr><td class="form">path</td><td><input type="text" name="new[path]" value="" /></td></tr>
-<tr><td class="form">groups</td><td><input type="text" name="new[groups]" value="" /></td></tr>
+<tr><td class="form">{tr}name{/tr}</td><td><input type="text" name="new[name]" value="" /></td></tr>
+<tr><td class="form">{tr}host{/tr}</td><td><input type="text" name="new[host]" value="" /></td></tr>
+<tr><td class="form">{tr}port{/tr}</td><td><input type="text" name="new[port]" value="" /></td></tr>
+<tr><td class="form">{tr}path{/tr}</td><td><input type="text" name="new[path]" value="" /></td></tr>
+<tr><td class="form">{tr}groups{/tr}</td><td><input type="text" name="new[groups]" value="" /></td></tr>
 
 <tr><td colspan="2" class="button"><input type="submit" name="intertikiclient" value="{tr}Save{/tr}" /></td></tr>
 </table>

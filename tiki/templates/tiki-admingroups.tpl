@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.62 2006-04-12 20:39:31 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.63 2006-05-22 17:09:14 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -20,7 +20,7 @@
 <br /><br />
 
 {if $feature_tabs eq 'y'}
-{cycle name=tabs values="1,2,3,4" print=false advance=false}
+{cycle name=tabs values="1,2,3,4" print=false advance=false reset=true}
 <div id="page-bar">
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $smarty.cookies.tab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}List{/tr}</a></span>
 {if $groupname}
@@ -32,7 +32,7 @@
 </div>
 {/if}
 
-{cycle name=content values="1,2,3,4" print=false advance=false}
+{cycle name=content values="1,2,3,4" print=false advance=false reset=true}
 {* ----------------------- tab with list --------------------------------------- *}
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}List of existing groups{/tr}</h2>

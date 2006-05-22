@@ -1312,6 +1312,11 @@ div.articleheadingtext {
 	display: inline;
 }
 
+/* The image topic */
+.articleimage {
+	margin-right : 10px;
+}
+
 /* The body */
 div.articlebody {
 	background:    white;

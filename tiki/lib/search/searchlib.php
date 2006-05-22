@@ -1,5 +1,5 @@
 <?php
-// $Id: searchlib.php,v 1.30 2006-03-16 13:43:11 sylvieg Exp $
+// $Id: searchlib.php,v 1.31 2006-05-22 17:09:12 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -43,7 +43,7 @@ class SearchLib extends TikiLib {
           if (count($part)) foreach ($part["data"] as $p) {
             $same = false;
             foreach ($exact["data"] as $e) {
-              if ($p["pageName"] == $e["pageName"] && $p["location"] == $e["location"]) {
+              if ($p["pageName"] == $e["pageName"] && $p["location"] == $e["location"] && $p['href'] == $e['href']) { // need to check also on href for img
                 $same = true;
                 break;
               }
@@ -612,17 +612,17 @@ class SearchLib extends TikiLib {
 	  global $user;
           if ($feature_galleries == 'y'  && count($words) >0) {
             $query="select distinct s.`page`, s.`location`, s.`last_update`, s.`count`,
-                g.`description`,g.`hits`,g.`created`,g.`name` from
-                `tiki_searchindex` s, `tiki_images` g where `searchword` in
+                g.`description`,g.`hits`,g.`created`,g.`name`, g.`galleryId` from
+                `tiki_searchindex` s, `tiki_images` g, `tiki_galleries` gal where `searchword` in
                 (".implode(',',array_fill(0,count($words),'?')).") and
-                s.`location`='img' and
+                s.`location`='img' and 
                 ".$this->sql_cast("s.`page`","int")."=g.`imageId` order by `hits` desc";
             $result=$this->query($query,$words,$maxRecords,$offset);
             $cant=0;
             $ret=array();
             while ($res = $result->fetchRow()) {
-	     // get imagegallery for that image first
-	     // if($this->user_has_perm_on_object($user,$res['page'],'image gallery','tiki_p_view_image_gallery')) {
+	     // gallery system are only for admin - img has the gallery perm
+	     if(($res['galleryId'] == 0 && $tiki_p_admin == 'y') || ($res['galleryId'] != 0 && $this->user_has_perm_on_object($user,$res['galleryId'],'image gallery','tiki_p_view_image_gallery'))) {
               ++$cant;
               $href = "tiki-browse_image.php?imageId=".urlencode($res["page"]);
               $ret[] = array(
@@ -634,7 +634,7 @@ class SearchLib extends TikiLib {
                 'href' => $href,
                 'relevance' => $res["hits"]
               );
-	     //}
+	     }
             }
             return array('data' => $ret,'cant' => $cant);
           } else {
@@ -834,7 +834,7 @@ class SearchLib extends TikiLib {
             $ret=array();
             while ($res = $result->fetchRow()) {
 	     // only permissions on directory - have to find out first?
-	     // if($this->user_has_perm_on_object($user,$res["page"],'directory','tiki_p_view_directory')) {
+	     if($this->user_has_perm_on_object($user,$res["page"],'directory','tiki_p_view_directory')) {
               ++$cant;
               $href = "tiki-directory_browse.php?parent=".urlencode($res["categId"]);
               $ret[] = array(
@@ -846,7 +846,7 @@ class SearchLib extends TikiLib {
                 'href' => $href,
                 'relevance' => $res["hits"]
               );
-	     //}
+	     }
             }
             $return = array('data' => $ret,'cant' => $cant);
           } else {
@@ -1011,7 +1011,7 @@ class SearchLib extends TikiLib {
 	  $cant = 0;
 	  $ret = array();
 	  while ($res = $result->fetchRow()) {
-	   if($this->user_has_perm_on_object($user,$res["page"],'file gallery','tiki_p_download_files')) {
+	   if($this->user_has_perm_on_object($user,$res["page"],'file gallery','tiki_p_download_files') && $this->user_has_perm_on_object($user,$res["page"],'file gallery','tiki_p_view_file_gallery')) {
 	    ++$cant;
 	    $href = "tiki-download_file.php?fileId=".urlencode($res["page"]);
 	    $ret[] = array(

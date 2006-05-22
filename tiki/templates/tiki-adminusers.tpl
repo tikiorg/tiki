@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.81 2006-03-16 13:43:12 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.82 2006-05-22 17:09:14 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
@@ -52,7 +52,7 @@
 <br /><br />
 
 {if $feature_tabs eq 'y'}
-{cycle name=tabs values="1,2,3,4" print=false advance=false}
+{cycle name=tabs values="1,2,3,4" print=false advance=false reset=true}
 <div id="page-bar">
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Users{/tr}</a></span>
 {if $userinfo.userId}
@@ -64,7 +64,7 @@
 </div>
 {/if}
 
-{cycle name=content values="1,2,3,4" print=false advance=false}
+{cycle name=content values="1,2,3,4" print=false advance=false reset=true}
 {* ---------------------- tab with list -------------------- *}
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}Users{/tr}</h2>
@@ -157,17 +157,19 @@ title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
   // check / uncheck all.
   // in the future, we could extend this to happen serverside as well for the convenience of people w/o javascript.
   // for now those people just have to check every single box
-  document.write("<tr><td><input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/></td>");
-  document.write("<td colspan=\"18\"><label for=\"clickall\">{tr}select all{/tr}</label></td></tr>");
+  document.write("<tr><td class=\"thin\"><input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/></td>");
+  document.write("<td class=\"form\" colspan=\"18\"><label for=\"clickall\">{tr}select all{/tr}</label></td></tr>");
   //-->                     
   </script>
-</table>
+  <tr>
+  <td class="form" colspan="18">
   <a name="multiple"></a><p align="left"> {*on the left to have it close to the checkboxes*}
   {if $group_management_mode neq 'y' && $set_default_groups_mode neq 'y'}
   {tr}Perform action with checked:{/tr}
   <select name="submit_mult">
     <option value="" selected>-</option>
     <option value="remove_users" >{tr}remove{/tr}</option>
+    {if $feature_wiki_userpage == 'y'}<option value="remove_users_with_page">{tr}remove users and their userpages{/tr}</option>{/if}
     <option value="assign_groups" >{tr}manage group assignments{/tr}</option>
     <option value="set_default_groups">{tr}set default groups{/tr}</option>
   </select>
@@ -193,6 +195,9 @@ title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
   <input type="hidden" name="set_default_groups" value="{$set_default_groups_mode}" />
   {/if}
   </p>
+  </td></tr>
+  </table>
+  
 <input type="hidden" name="find" value="{$find|escape}" />
 <input type="hidden" name="numrows" value="{$numrows|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />

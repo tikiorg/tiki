@@ -1,7 +1,7 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.32 2005-12-29 19:17:25 amette Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.33 2006-05-22 17:09:13 mose Exp $
  * 
  * \brief {SPLIT} wiki plugin implementation
  * Usage:
@@ -14,6 +14,10 @@
  * first='col': r1c1---r2c1---r3c1@@@r1c2---r2c2 (the editorial way)
  * first='line' (default): r1c1---r1c2@@@r2c1---r2c2 (the html table way)
  * if first=col,edit=y, each section of the split is editable
+ *
+ * If you set the style for class .wikiplugin-split you are able to alter
+ * the output of this plugin.
+ *
  */
 
 function wikiplugin_split_help() {
@@ -92,7 +96,7 @@ function wikiplugin_split($data, $params, $pos) {
 
 	if (!isset($edit)) $edit = 'n';
 	
-	$result = '<table border="0" cellpadding="0" cellspacing="0" '.$class.'>';
+	$result = '<table class="wikiplugin-split" border="0" cellpadding="0" cellspacing="0" '.$class.' '.($fixedsize ? ' class="normal"' : '').'>';
 
     // Attention: Dont forget to remove leading empty line in section ...
     //            it should remain from previous '---' line...

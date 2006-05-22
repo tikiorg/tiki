@@ -181,3 +181,5 @@ ALTER TABLE sessions ADD expireref varchar(64) after expiry;
 alter table `tiki_articles` change `reads` `nbreads` int(14) default NULL ;
 alter table `tiki_submissions` change `reads` `nbreads` int(14) default NULL ;
 
+# 2006-04-13 fixing Typo - amette
+UPDATE `users_permissions` SET `permDesc`='Can create user bookmarks' WHERE `permName`='tiki_p_create_bookmarks';

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.46 2006-05-03 09:34:48 xavidp Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.47 2006-05-22 17:09:07 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -138,7 +138,7 @@ if(isset($_REQUEST["data"])) {
 		and isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"]=="on")) {
 	$edit_data = $_REQUEST["data"];  
     } else {
-	$edit_data = htmlspecialchars($_REQUEST["data"]);
+	$edit_data = $_REQUEST["data"];
     }
 
 

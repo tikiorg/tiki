@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.91 2006-02-17 15:10:31 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.92 2006-05-22 17:09:07 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -201,8 +201,8 @@ $usecategs = false;
 $ins_categs = array();
 $textarea_options = false;
 
-$temp_max = count($xfields["data"]);
-for ($i = 0; $i < $temp_max; $i++) {
+
+foreach($xfields["data"] as $i=>$array) {
 	$fid = $xfields["data"][$i]["fieldId"];
 	
 	$ins_id = 'ins_' . $fid;
@@ -471,8 +471,8 @@ if ($tiki_p_modify_tracker_items == 'y') {
 			$mainfield = $ins_fields["data"][$mainfield]["value"];
 
 			$_REQUEST['show']  = 'view';
-			$temp_max = count($fields["data"]);
-			for ($i = 0; $i < $temp_max; $i++) {
+
+			foreach($fields["data"] as $i=>$array) {
 				if (isset($fields["data"][$i])) {
 					$fid = $fields["data"][$i]["fieldId"];
 					$ins_id = 'ins_' . $fid;
@@ -484,6 +484,7 @@ if ($tiki_p_modify_tracker_items == 'y') {
 			$trklib->categorized_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $mainfield, $ins_categs);
 		}
 		else {
+			$error = $ins_fields;
 			$cookietab = "2";
 			$smarty->assign('input_err', '1'); // warning to display
 
@@ -530,8 +531,8 @@ if ($_REQUEST["itemId"]) {
 	$info = $trklib->get_tracker_item($_REQUEST["itemId"]);
 	$last = array();
 	$lst = '';
-	$temp_max = count($xfields["data"]);
-	for ($i = 0; $i < $temp_max; $i++) {
+
+	foreach($xfields["data"] as $i=>$array) {
 		if ($xfields["data"][$i]['isHidden'] == 'n' or $tiki_p_admin_trackers == 'y') {
 			$fields["data"][$i] = $xfields["data"][$i];
 			if ($fields["data"][$i]["type"] != 'h') {
@@ -619,7 +620,12 @@ if ($_REQUEST["itemId"]) {
 	}
 ******************* */
 }
-
+//restore types values if there is an error
+if(isset($error)) {
+	foreach($ins_fields["data"] as $i=>$array) {
+		$ins_fields["data"][$i]["value"] = $error["data"][$i]["value"];
+	}
+}	
 $smarty->assign_by_ref('info', $info);
 $smarty->assign_by_ref('fields', $fields["data"]);
 $smarty->assign_by_ref('ins_fields', $ins_fields["data"]);

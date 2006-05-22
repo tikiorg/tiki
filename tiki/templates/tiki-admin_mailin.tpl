@@ -162,7 +162,7 @@
     </tr>
     <tr class="formcolor">
       <td>{tr}Frequency{/tr}</td>
-      <td><input type="text" name="mailin_autocheckFreq" size="6" value="{$mailin_autocheckFreq}" />&nbsp;mn</td>
+      <td><input type="text" name="mailin_autocheckFreq" size="6" value="{$mailin_autocheckFreq}" />&nbsp;{tr}mn{/tr}</td>
     </tr>
     <tr>
       <td>&nbsp;</td>

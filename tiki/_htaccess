@@ -31,6 +31,7 @@ RewriteRule ^trackers$             tiki-list_trackers.php                   [L]
 RewriteRule ^irc$                  tiki-irc_logs.php                        [L]
 RewriteRule ^mobile$               tiki-mobile.php                          [L]
 RewriteRule ^wml$                  tiki-mobile.php                          [L]
+RewriteRule ^sheets$               tiki-sheets.php                          [L]
 
 # access any object by its numeric identifier
 RewriteRule ^article([0-9]+)       tiki-read_article.php?articleId=$1       [QSA,L]
@@ -54,9 +55,12 @@ RewriteRule ^tracker([0-9]+)       tiki-view_tracker.php?trackerId=$1       [QSA
 RewriteRule ^wiki-([A-Za-z0-9]+)   tiki-index.php?page=$1                   [QSA,L]
 RewriteRule ^page-([A-Za-z0-9]+)   tiki-index.php?page=$1                   [QSA,L]
 RewriteRule ^irc([0-9]+)           tiki-irc_logs.php?focus=$1               [QSA,L]
+RewriteRule ^int([0-9]+)           tiki-integrator.php?repID=$1             [QSA,L]
+RewriteRule ^sheet([0-9]+)         tiki-view_sheets.php?sheetId=$1          [QSA,L]
 
 # todo add support for all characters allowed in a Wiki name
 # make sure this is the last rule!
+RewriteRule ^show:(~?)([-_\+A-Za-z0-9]+)$  tiki-slideshow.php?page=$1$2      [QSA,L]
 RewriteRule ^([-_\+A-Za-z0-9]+)$    tiki-index.php?page=$1                   [QSA,L]
 
 #for multi-byte char support use
