@@ -320,7 +320,7 @@ class UsersLib extends TikiLib {
 	$shib_skip_admin = ($tikilib->get_preference('shib_skip_admin', 'n') == 'y');
 
 	// first attempt a login via the standard Tiki system
-	if (!($auth_shib || !$auth_cas) || $user == 'admin') {
+	if (!($auth_shib || $auth_cas) || $user == 'admin') {
 		list($result, $user) = $this->validate_user_tiki($user, $pass, $challenge, $response);
 	} else {
 		$result = NULL;
