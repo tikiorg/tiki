@@ -314,8 +314,13 @@ class UsersLib extends TikiLib {
 	$cas_create_tiki = ($tikilib->get_preference('cas_create_user_tiki', 'n') == 'y');
 	$cas_skip_admin = ($tikilib->get_preference('cas_skip_admin', 'n') == 'y');
 
+	// see if we are to use Shibboleth
+	$auth_shib = ($tikilib->get_preference('auth_method', 'tiki') == 'shib');
+	$shib_create_tiki = ($tikilib->get_preference('shib_create_user_tiki', 'n') == 'y');
+	$shib_skip_admin = ($tikilib->get_preference('shib_skip_admin', 'n') == 'y');
+
 	// first attempt a login via the standard Tiki system
-	if (!$auth_cas || $user == 'admin') {
+	if (!($auth_shib || !$auth_cas) || $user == 'admin') {
 		list($result, $user) = $this->validate_user_tiki($user, $pass, $challenge, $response);
 	} else {
 		$result = NULL;
@@ -334,7 +339,7 @@ class UsersLib extends TikiLib {
 	}
 
 	// if we aren't using LDAP this will be quick
-	if ((!$auth_pear && !$auth_pam && !$auth_cas) || ((($auth_pear && $skip_admin) || ($auth_pam && $pam_skip_admin) || ($auth_cas && $cas_skip_admin)) && $user == "admin")) {
+	if ((!$auth_pear && !$auth_pam && !$auth_cas && !$auth_shib) || ((($auth_pear && $skip_admin) || ($auth_shib && $shib_skip_admin) || ($auth_pam && $pam_skip_admin) || ($auth_cas && $cas_skip_admin)) && $user == "admin")) {
 	    // if the user verified ok, log them in
 	    if ($userTiki)
 		return array($this->update_lastlogin($user), $user, $result);
@@ -459,6 +464,120 @@ class UsersLib extends TikiLib {
 	    // if the user was authenticated by CAS and found in Tiki (no password in Tiki user table necessary)
 	    elseif ($userCAS && $userTikiPresent)
 			return array($this->update_lastlogin($user), $user, $result);
+	}
+
+	// next see if we need to check Shibboleth
+	elseif ($auth_shib) {
+		if ($this->user_exists($user)) {
+			$userTikiPresent = true;
+		} else {
+			$userTikiPresent = false;
+		}
+
+		// Shibboleth login was not successful
+		if (!isset($_SERVER['HTTP_SHIB_IDENTITY_PROVIDER'])){
+			return false;
+		}
+		
+		// Collect the shibboleth related attributes.
+		$shibmail = $_SERVER['HTTP_MAIL'];
+		$shibaffiliation = $_SERVER['HTTP_SHIB_EP_UNSCOPEDAFFILIATION'];
+		$shibproviderid = $_SERVER['HTTP_SHIB_IDENTITY_PROVIDER'];
+
+		// Get the affiliation information to log in
+		$shibaffiliarray = split(";",strtoupper($shibaffiliation));
+		$validaffiliarray = split(",",strtoupper($tikilib->get_preference("shib_affiliation", "")));
+		$validafil=false;
+		foreach($shibaffiliarray as $affil){
+		   if(in_array($affil, $validaffiliarray)){
+			   $validafil=true;    
+		   }
+	   }
+
+    	// start off easy
+	    // if the user verified in Tiki and by Shibboleth, log in
+	    if ($userTikiPresent AND $validafil) {
+			return array($this->update_lastlogin($user), $user, USER_VALID);
+	    }
+	    else {
+			// see if we can create a new account
+			if ($shib_create_tiki) {
+			    
+				if(!(strlen($user) > 0 AND strlen($shibmail) > 0 AND strlen($shibaffiliation) > 0))
+				{
+					$errmsg = "User registration error: You do not have the required shibboleth attributes (";
+
+					if (strlen($user) == 0){
+						$errmsg = $errmsg . "User ";
+					}
+
+					if (strlen($shibmail) == 0){
+						$errmsg = $errmsg . "Mail ";
+					}
+
+					if (strlen($shibaffiliation) == 0){
+						$errmsg = $errmsg . "Affiliation ";
+					}
+
+					$errmsg = $errmsg . "). For further information on this error goto the ((ShibReg)) Page";
+
+					$url = 'tiki-error.php?error=' . $errmsg;
+					header("location: $url");
+					die;
+				}
+				else
+				{
+					
+					if($validafil)
+					{
+
+						// Create the user
+						// need to make this better! *********************************************************
+						$randompass = $this->genPass();
+						// in case Shibboleth auth is turned off accidentally;
+						// we don't want ppl to be able to login as any user with blank passwords
+						
+						$result = $this->add_user($user, $randompass, $shibmail);
+							
+						// if it worked ok, just log in
+						if ($result == USER_VALID){
+							// Add to the default Group
+							if ($tikilib->get_preference("shib_usegroup", "n") == "y"){
+								$result = $this->assign_user_to_group($user, $tikilib->get_preference("shib_group", "Shibboleth"));
+							}
+
+							// before we log in, update the login counter
+							return array($this->update_lastlogin($user), $user, $result);
+						}
+						// if the server didn't work, do something!
+						elseif ($result == SERVER_ERROR) {
+							// check the notification status for this type of error
+							return array(false, $user, $result);
+						}
+						// otherwise don't log in.
+						else{
+							return array(false, $user, $result);
+						}
+					}
+					else
+					{
+						foreach($validaffiliarray as $vaffil){
+							$vaffils = $vaffils  . $vaffil . ", ";
+						}
+						$vaffils = rtrim($vaffils,", ");
+						$url = "tiki-error.php?error=<H1 align=center>User login error</H1><BR/><BR/>You must have one of the following affiliations to get into this wiki.<BR/><BR/><B>" . $vaffils . "</B><BR><BR/><BR/>For further information on this error goto the <a href=./tiki-index.php?page=ShibReg>Shibreg</a> Page";
+						header("location: $url");
+						die;
+					}
+				}			
+			}
+			else{
+				header("location: tiki-error.php?error=The user [ " . $user . " ] is not registered with this wiki.");
+				die;
+			}
+			
+	    }
+
 	}
 
 	// next see if we need to check LDAP

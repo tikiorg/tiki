@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.40 2006-04-30 00:44:22 sampaioprimo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.41 2006-05-22 05:57:02 philwhipps Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -515,6 +515,59 @@ if (isset($_REQUEST['auth_cas'])) {
 		$tikilib->set_preference('cas_path', $_REQUEST['cas_path']);
 
 		$smarty->assign('cas_path', $_REQUEST['cas_path']);
+	}
+}
+
+if (isset($_REQUEST['auth_shib'])) {
+        check_ticket('admin-inc-login');
+    if (isset($_REQUEST['shib_create_user_tiki']) && $_REQUEST['shib_create_user_tiki'] ==  'on') {
+        $tikilib->set_preference('shib_create_user_tiki', 'y');
+
+        $smarty->assign('shib_create_user_tiki', 'y');
+    } else {
+        $tikilib->set_preference('shib_create_user_tiki', 'n');
+
+        $smarty->assign('shib_create_user_tiki', 'n');
+    }
+    if (isset($_REQUEST['shib_skip_admin']) && $_REQUEST['shib_skip_admin'] == 'on') {
+        $tikilib->set_preference('shib_skip_admin', 'y');
+
+        $smarty->assign('shib_skip_admin', 'y');
+    } else {
+        $tikilib->set_preference('shib_skip_admin', 'n');
+
+        $smarty->assign('shib_skip_admin', 'n');
+    }
+    if (isset($_REQUEST['shib_affiliation'])) {
+        $tikilib->set_preference('shib_affiliation', $_REQUEST['shib_affiliation']);
+
+		$smarty->assign('shib_affiliation', $_REQUEST['shib_affiliation']);
+    }
+	
+    if (isset($_REQUEST['shib_usegroup']) && $_REQUEST['shib_usegroup'] == 'on') {
+		$tikilib->set_preference('shib_usegroup', 'y');
+
+		$smarty->assign('shib_usegroup', 'y');
+		
+		if (isset($_REQUEST['shib_group']) && $_REQUEST['shib_group'] != '') 
+		{
+			$tikilib->set_preference('shib_group', $_REQUEST['shib_group']);
+		
+			$smarty->assign('shib_group', $_REQUEST['shib_group']);
+		}
+		else
+		{
+			$tikilib->set_preference('shib_group', 'Shibboleth');
+			$smarty->assign('shib_group', 'Shibboleth');
+		}
+	}
+	else
+	{
+		$tikilib->set_preference('shib_usegroup', 'n');
+		$smarty->assign('shib_usegroup', 'n');
+		$tikilib->set_preference('shib_group', '');
+		$smarty->assign('shib_group', '');
+
 	}
 }
 
