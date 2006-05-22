@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.34 2006-02-05 00:44:43 mcfarland Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.35 2006-05-22 05:55:24 philwhipps Exp $ *}
 {tikimodule title="{tr}Login{/tr}" name="login_box" flip=$module_params.flip decorations=$module_params.decorations}
 
     {if $user}
@@ -12,11 +12,16 @@
         <input type="submit" name="actsu" value="{tr}set{/tr}" />
         </form>
       {/if}
-	{elseif $auth_method eq 'cas' && $showloginboxes neq 'y'}
+      {elseif $auth_method eq 'cas' && $showloginboxes neq 'y'}
 		<b><a class="linkmodule" href="tiki-login.php?user">{tr}Login through CAS{/tr}</a></b>
 		{if $cas_skip_admin eq 'y'}
 		<br /><a class="linkmodule" href="tiki-login_scr.php?user=admin">{tr}Login as admin{/tr}</a>
-		{/if}
+      {/if}
+      {elseif $auth_method eq 'shib' && $showloginboxes neq 'y'}
+		<b><a class="linkmodule" href="tiki-login.php">{tr}Login through Shibboleth{/tr}</a></b>
+		{if $shib_skip_admin eq 'y'}
+		<br /><a class="linkmodule" href="tiki-login_scr.php?user=admin">{tr}Login as admin{/tr}</a>
+      {/if}
     {else}
      <form name="loginbox" action="{$login_url}" method="post" {if $feature_challenge eq 'y'}onsubmit="doChallengeResponse()"{/if}> 
      {if $feature_challenge eq 'y'}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.95 2006-03-16 13:43:09 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.96 2006-05-22 05:57:40 philwhipps Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -240,6 +240,14 @@ if (($auth_method == 'ws') and (isset($_SERVER['REMOTE_USER']))) {
 		// Check for the username without the domain name
 		$_SESSION["$user_cookie_site"] = substr($_SERVER['REMOTE_USER'], strpos($_SERVER['REMOTE_USER'], "\\") + 2);
 	}																						 
+}
+
+// Check for Shibboleth Login
+if ($auth_method == 'shib' and isset($_SERVER['REMOTE_USER'])){
+	// Validate the user (if not created create it)
+	if($userlib->validate_user($_SERVER['REMOTE_USER'],"","","")){
+		$_SESSION["$user_cookie_site"] = $_SERVER['REMOTE_USER'];
+	}
 }
 
 // if the username is already saved in the session, pull it from there
