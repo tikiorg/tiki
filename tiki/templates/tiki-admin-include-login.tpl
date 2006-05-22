@@ -23,6 +23,7 @@
 <option value="auth" {if $auth_method eq 'auth'} selected="selected"{/if}>{tr}Tiki and PEAR::Auth{/tr}</option>
 <option value="pam" {if $auth_method eq 'pam'} selected="selected"{/if}>{tr}Tiki and PAM{/tr}</option>
 <option value="cas" {if $auth_method eq 'cas'} selected="selected"{/if}>{tr}CAS (Central Authentication Service){/tr}</option>
+<option value="shib" {if $auth_method eq 'shib'} selected="selected"{/if}>{tr}Shibboleth{/tr}</option>
 <!--option value="http" {if $auth_method eq 'http'} selected="selected"{/if}>{tr}Tiki and HTTP Auth{/tr}</option-->
 </select></td></tr>
 <!--<tr><td class="form">{tr}Use WebServer authentication for Tiki{/tr}:</td><td><input type="checkbox" name="webserverauth" {if $webserverauth eq 'y'}checked="checked"{/if}/></td></tr>-->
@@ -247,6 +248,27 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 <tr><td class="form">{tr}CAS server port{/tr}:</td><td><input type="text" name="cas_port" size="5" value="{$cas_port|escape}" /></td></tr>
 <tr><td class="form">{tr}CAS server path{/tr}:</td><td><input type="text" name="cas_path" value="{$cas_path|escape}" size="50" /></td></tr>
 <tr><td colspan="2" class="button"><input type="submit" name="auth_cas" value="{tr}Change CAS preferences{/tr}" /></td></tr>
+</table>
+</form>
+</div>
+</div>
+
+
+<div class="cbox">
+<div class="cbox-title">
+  {tr}Shibboleth{/tr}
+  {help url="AuthShib" desc="{tr}Shibboleth Authentication {/tr}"}
+</div>
+<div class="cbox-data">
+
+<form action="tiki-admin.php?page=login" method="post">
+<table class="admin">
+<tr><td class="form">{tr}Create user if not in Tiki?{/tr}</td><td><input type="checkbox" name="shib_create_user_tiki" {if $shib_create_user_tiki eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="form">{tr}Just use Tiki auth for admin?{/tr}</td><td><input type="checkbox" name="shib_skip_admin" {if $shib_skip_admin eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="form">{tr}Valid Affiliations (seperated by commas){/tr}:</td><td><input type="text" name="shib_affiliation" value="{$shib_affiliation}" size="50" /></td></tr>
+<tr><td class="form">{tr}Create with default group?{/tr}</td><td><input type="checkbox" name="shib_usegroup" {if $shib_usegroup eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="form">{tr}Default group: {/tr}</td><td><input type="text" name="shib_group" value="{$shib_group}" size="30"/></td></tr>
+<tr><td colspan="2" class="button"><input type="submit" name="auth_shib" value="{tr}Change Shibboleth preferences{/tr}" /></td></tr>
 </table>
 </form>
 </div>
