@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.37 2006-04-12 20:39:29 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.38 2006-05-22 17:09:07 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -72,8 +72,10 @@ if ($_REQUEST["fieldId"]) {
 }
 
 if (isset($_REQUEST['up']) && $_REQUEST['fieldId']) {
-	$trklib->move_up_last_fields($_REQUEST['trackerId'], $info['position'], 1);
-	$info['position'] += 1;
+	if (empty($_REQUEST['delta']))
+		$_REQUEST['delta'] = 1;
+	$trklib->move_up_last_fields($_REQUEST['trackerId'], $info['position'], $_REQUEST['delta'] );
+	$info['position'] += $_REQUEST['delta'] ;
 }
 
 $smarty->assign('name', $info["name"]);

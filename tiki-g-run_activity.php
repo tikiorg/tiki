@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-run_activity.php,v 1.16 2006-03-16 13:43:09 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-run_activity.php,v 1.17 2006-05-22 17:09:07 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -49,6 +49,16 @@ $process->getProcess($activity->getProcessId());
 // Get activity roles
 $act_roles = $activity->getRoles();
 $user_roles = $activity->getUserRoles($user);
+
+// Only run a start activity if a name is set for the instance
+if ($activity->getType() == 'start') {
+	if (!isset($_REQUEST['name'])) {
+		$smarty->assign('msg', tra("A start activity requires a name for the instance"));
+
+		$smarty->display("error.tpl");
+		die;
+	}
+}
 
 // Only check roles if this is an interactive
 // activity

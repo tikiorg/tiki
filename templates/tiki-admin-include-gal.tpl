@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.24 2006-04-12 20:39:31 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.25 2006-05-22 17:09:14 mose Exp $ *}
 
-<div class="rbox" style="margin-top: 10px;">
-<div class="rbox-title" style="background-color: #eeee99; font-weight : bold; display : inline; padding : 0 10px;">{tr}Tip{/tr}</div>  
-<div class="rbox-data" style="padding: 2px 10px; background-color: #eeee99;">{tr}To add/remove image galleries, go to "Image Galleries" on the application menu, or{/tr} <a class="link" href="tiki-galleries.php">{tr}click here{/tr}</a>.</div>
-<div class="rbox-data" style="padding: 2px 10px; background-color: #eeee99;">{tr}You can upload images of a size of {/tr}{$max_img_upload_size|kbsize}. {tr}Alter the php.ini variables file_uploads, upload_max_filesize, post_max_size and database variables (max_allowed_packet for mysql) to change this value{/tr}.</div>
+<div class="rbox" name="tip">
+<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+<div class="rbox-data" name="tip">{tr}To add/remove image galleries, go to "Image Galleries" on the application menu, or{/tr} <a class="rbox-link" href="tiki-galleries.php">{tr}click here{/tr}</a>.</div>
+<div class="rbox-data" name="tip">{tr}You can upload images of a size of {/tr}{$max_img_upload_size|kbsize}. {tr}Alter the php.ini variables file_uploads, upload_max_filesize, post_max_size and database variables (max_allowed_packet for mysql) to change this value{/tr}.</div>
 </div>
 <br />
 

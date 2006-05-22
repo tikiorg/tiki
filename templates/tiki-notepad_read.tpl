@@ -1,7 +1,6 @@
 {*Smarty template*}
-<h1><a class="pagetitle" href="tiki-notepad_read.php?noteId={$noteId}">{tr}Reading note:{/tr} {$info.name}</a><br /><br />
+<h1><a class="pagetitle" href="tiki-notepad_read.php?noteId={$noteId}">{tr}Reading note:{/tr} {$info.name}</a></h1>
 {include file=tiki-mytiki_bar.tpl}
-</h1>
 [<a class="link" href="tiki-notepad_list.php">{tr}List notes{/tr}</a>]
 [<a class="link" href="tiki-notepad_write.php">{tr}Write note{/tr}</a>]
 <br /><br />

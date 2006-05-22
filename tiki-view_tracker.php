@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.91 2006-04-12 20:39:29 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.92 2006-05-22 17:09:07 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -601,7 +601,14 @@ $urlquery['trackerId'] = $_REQUEST["trackerId"];
 $urlquery['sort_mode'] = $sort_mode;
 $urlquery['exactvalue'] = $exactvalue;
 $urlquery['filterfield'] = $filterfield;
-$urlquery["filtervalue[".$filterfield."]"] = $filtervalue;
+
+if (is_array($filtervalue)) {
+	foreach ($filtervalue as $fil) {
+		$urlquery["filtervalue[".$filterfield."][]"] = $fil;
+	}
+} else {
+	$urlquery["filtervalue[".$filterfield."]"] = $filtervalue;
+}
 $smarty->assign_by_ref('urlquery', $urlquery);
 $cant = $items["cant"];
 include "tiki-pagination.php";
@@ -664,5 +671,5 @@ ask_ticket('view-trackers');
 // Display the template
 $smarty->assign('mid', 'tiki-view_tracker.tpl');
 $smarty->display("tiki.tpl");
-
+echo "<!-- ";var_dump($filtervalue); echo " -->";
 ?>

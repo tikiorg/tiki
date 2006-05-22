@@ -1,10 +1,16 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.77 2006-03-02 15:15:50 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.78 2006-05-22 17:09:13 mose Exp $ *}
 
 {* this is the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
  * there are five cells for every row, the middle cell is empty to keep feature and ckboxes separate
  *}
 
+<div class="rbox" name="tip">
+<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+<div class="rbox-data" name="tip">{tr}Please see the <a class="rbox-link" target="tikihelp" href="http://dev.tikiwiki.org/tiki-index.php?page=Features">evaluation of each feature</a> on Tiki's developer site.{/tr}</div>
+</div>
+<br /> 
+ 
 <form action="tiki-admin.php?page=features" method="post">
   <div class="cbox">
     <div class="cbox-title">
@@ -245,6 +251,12 @@
     <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Contribution" target="tikihelp" class="tikihelp" title="{tr}Contribution{/tr}">{/if} {tr}Contribution{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
   </tr>
 
+  </tr><tr>
+    <td><input type="checkbox" name="feature_gmap" {if $feature_gmap eq 'y'}checked="checked"{/if}/></td>
+    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Gmap" target="tikihelp" class="tikihelp" title="{tr}tikiwiki.org help{/tr}: {tr}Google Maps{/tr}">{/if} {tr}Google Maps{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class="form">&nbsp;</td>
 
 </table>    
 

@@ -1,6 +1,13 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.24 2005-05-18 11:02:57 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.25 2006-05-22 17:09:14 mose Exp $ *}
 
 <h1>{tr}Integrator{/tr}<h1>
+
+<div class="rbox" name="tip">
+<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+<div class="rbox-data" name="tip">{tr}An easier way to integrate content from another site into Tiki is via iframed links using Tiki's <a class="rbox-link" href="tiki-admin_links.php">featured links</a> feature.{/tr}</div>
+</div>
+<br />
+
 {if $repID > 0}
     <h2>{tr}Edit Repository:{/tr} {$name}</h2>
 {else}

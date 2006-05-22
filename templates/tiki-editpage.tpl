@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.83 2006-03-28 07:41:46 sampaioprimo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.84 2006-05-22 17:09:16 mose Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -191,11 +191,6 @@ or use
 <input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/>
 </td></tr>
-{if $feature_wiki_footnotes eq 'y'}
-{if $user}
-<tr class="formcolor"><td>{tr}My Footnotes{/tr}:</td><td><textarea name="footnote" rows="8" cols="42" style="width:95%;" >{$footnote|escape}</textarea></td></tr>
-{/if}
-{/if}
 
 {if $feature_wiki_replace eq 'y'}
 <script type="text/javascript">
@@ -224,6 +219,12 @@ Replace to:
 <input type="checkbox" id="caseinsens" />{tr}Case Insensitivity{/tr}
 <input type="button" value="{tr}replace{/tr}" onclick="javascript:searchrep();">
 </td></tr>
+{/if}
+
+{if $feature_wiki_footnotes eq 'y'}
+{if $user}
+<tr class="formcolor"><td>{tr}My Footnotes{/tr}:</td><td><textarea name="footnote" rows="8" cols="42" style="width:95%;" >{$footnote|escape}</textarea></td></tr>
+{/if}
 {/if}
 
 {if $page|lower neq 'sandbox'}
@@ -345,6 +346,6 @@ Replace to:
 </table>
 </form>
 <br />
-{if !$wysiwyg}
- {include file=tiki-edit_help.tpl}
+{if $wysiwyg ne 'y'}
+{include file=tiki-edit_help.tpl}
 {/if}

@@ -6,3 +6,5 @@ tiki-emptycache.php
 project.index
 ZendStudioServer
 dummy.php
+.htaccess
+.settings

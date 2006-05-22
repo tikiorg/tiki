@@ -26,6 +26,9 @@ class ArtLib extends TikiLib {
 		// Get slides
 		$parts = explode("...page...", $data);
 
+		if (!isset($parts[$i - 1])) {
+			$i = 1;
+		}
 		$ret = $parts[$i - 1];
 		if (substr($parts[$i - 1], 1, 5) == "<br/>") $ret = substr($parts[$i - 1], 6);
 		if (substr($parts[$i - 1], 1, 6) == "<br />") $ret = substr($parts[$i - 1], 7);

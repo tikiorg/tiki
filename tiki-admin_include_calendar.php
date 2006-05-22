@@ -41,9 +41,26 @@ if (isset($_REQUEST["calprefs"])) {
 		$calendar_view_mode = 'week'; 	 
 	}
  }
+ 	if (isset($_REQUEST["feature_cal_manual_time"]) && $_REQUEST["feature_cal_manual_time"] == "on") { 	 
+		$tikilib->set_preference('feature_cal_manual_time', 'y'); 	 
+		$feature_cal_manual_time = "y"; 	 
+	} else { 	 
+		$tikilib->set_preference('feature_cal_manual_time', 'n'); 	 
+		$feature_cal_manual_time = "n"; 	 
+	}	
+ 	if (isset($_REQUEST["feature_jscalendar"]) && $_REQUEST["feature_jscalendar"] == "on") { 	 
+		$tikilib->set_preference('feature_jscalendar', 'y'); 	 
+		$feature_jscalendar = "y"; 	 
+	} else { 	 
+		$tikilib->set_preference('feature_jscalendar', 'n'); 	 
+		$feature_jscalendar = "n"; 	 
+	}	
+}
   	 
  ask_ticket('admin-inc-cal'); 	 
 $smarty->assign("calendar_sticky_popup", $calendar_sticky_popup);
 $smarty->assign("calendar_view_tab", $calendar_view_tab);
 $smarty->assign("calendar_view_mode", $calendar_view_mode);
+$smarty->assign("feature_cal_manual_time", $feature_cal_manual_time);
+$smarty->assign("feature_jscalendar", $feature_jscalendar);
 ?>

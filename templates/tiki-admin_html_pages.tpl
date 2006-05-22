@@ -42,7 +42,7 @@
 </select>
 </td></tr>
 <tr class="formcolor"><td>{tr}Refresh rate (if dynamic) [secs]{/tr}:</td><td><input type="text" size="40" name="refresh" value="{$info.refresh|escape}" /></td></tr>
-<tr class="formcolor"><td>{tr}Content{/tr}: ({tr}Use {literal}{{/literal}ed id=name} or {literal}{{/literal}ted id=name} to insert dynamic zones{/tr})</td><td><textarea name="content" rows="25" cols="60">{$info.content|escape}</textarea></td></tr>
+<tr class="formcolor"><td>{tr}Content{/tr}: ({tr}Use {literal}{/literal}ed id=name} or {literal}{/literal}ted id=name} to insert dynamic zones{/tr})</td><td><textarea name="content" rows="25" cols="60">{$info.content|escape}</textarea></td></tr>
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="preview" value="{tr}Preview{/tr}" /></td></tr>
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>

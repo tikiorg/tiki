@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.67 2006-03-16 15:58:31 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.68 2006-05-22 17:09:13 mose Exp $ *}
 
 {if $forum_mode eq 'y'}
     <tr><td>
@@ -157,6 +157,7 @@
 </div>  
 
   {/if}
+ {/if} {* end read comment *}
 
 {* Post dialog *}	
 {if ($tiki_p_forum_post eq 'y' and $forum_mode eq 'y') or ($tiki_p_post_comments eq 'y' and $forum_mode ne 'y')}
@@ -323,7 +324,6 @@
 {* End of Post dialog *}
 
 
-  {/if}
 {if $forum_mode eq 'y'}
     </td></tr>
 {else}

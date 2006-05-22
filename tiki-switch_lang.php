@@ -5,7 +5,9 @@
 require_once('tiki-setup.php');
 include_once('lib/tikilib.php');
 
-if (isset($_SERVER['HTTP_REFERER']))
+if (isset($_GET['from'])) 
+	$orig_url = $_GET['from'];
+elseif (isset($_SERVER['HTTP_REFERER']))
 	$orig_url = $_SERVER['HTTP_REFERER'];
 else
 	$orig_url = $tikiIndex;

@@ -1,8 +1,8 @@
 /*
-$Id: trollparty.css,v 1.42 2006-02-01 21:20:24 jdrexler Exp $
+$Id: trollparty.css,v 1.43 2006-05-22 17:09:13 mose Exp $
 made by mose@trollparty.org
 
-background: #000000;
+background-color: #000000;
 foreground: #aeaeae;
 
 link:normal #dede98;
@@ -31,11 +31,11 @@ text-decoration: none;
 }
 a:hover {
 color: #ffffff;
-background: #131333;
+background-color: #131333;
 }
 a:active {
 color: #336699;
-background: #000000;
+background-color: #000000;
 }
 a:visited {
 color: #aea067;
@@ -74,21 +74,18 @@ TD#leftcolumn {
 vertical-align: top;
 width: 180px;
 border-right: 1px solid #003388;
-padding-right : 1px;
 }
 
 TD#rightcolumn {
 vertical-align: top;
 width: 180px;
 border-left: 1px solid #003388;
-padding-left : 1px;
 }
 
 TD#centercolumn {
 vertical-align: top;
 border-left: 1px solid #003388;
 border-right: 1px solid #003388;
-padding : 0 1px;
 }
 
 DIV#tiki-center {
@@ -128,7 +125,7 @@ Boxes used for modules
 */
 div.box 
 {
-/*background: #e1e2b9; */
+/*background-color: #e1e2b9; */
 padding-top: 3px;
 overflow: hidden;
 margin-top: 13px;
@@ -207,7 +204,7 @@ Now the boxes for the rest of Tiki (non-modules
 */
 div.cbox
 {
-background: #333333;
+background-color : #333333;
 margin-top: 4px;
 margin-bottom: 0px;
 padding-bottom: 10px;
@@ -370,7 +367,7 @@ padding-bottom: 2px;
 padding-right: 2px;
 color: #aeaeae;
 border: 1px solid #777750;
-background: #424242;
+background-color: #424242;
 }
 
 /* 
@@ -434,7 +431,7 @@ Cells in forms using a background color
 .comform td,
 .forumform td
 {
-background: #232323;
+background-color: #232323;
 vertical-align: top;
 text-align: left;
 }
@@ -944,7 +941,7 @@ THE WIKI
 
 div.titlebar
 {
-background: #222222;
+background-color: #222222;
 color: #aaaaaa;
 border-bottom: 1px solid #666666;
 padding: 0px 6px;
@@ -1099,7 +1096,7 @@ text-align: right;
 margin-top: 20px;
 padding: 0 10px;
 color: #999999;
-background: #121212;
+background-color: #121212;
 }
 #description {
   font-size : 10px !important;
@@ -1118,7 +1115,7 @@ The edit-help used to display the wiki
 syntax when editing a page 
 */
 div.wiki-edithelp {
-background: #121212;
+background-color: #121212;
 border: 1px solid #999999;
 font-size: smaller;
 padding: 10px;
@@ -1252,7 +1249,7 @@ The whole container for the browse image screen (may be useful for a fancy backg
 */
 div.browseimage
 {
-background: #EFEFE7;
+background-color: #EFEFE7;
 }
 
 div.imagetitle
@@ -1494,7 +1491,7 @@ color : black;
 .day:hover
 {
 color : black;
-background:#CCCCCC;
+background-color:#CCCCCC;
 text-decoration: none;
 }
 
@@ -1533,7 +1530,7 @@ text-decoration: none;
 color : black;
 text-decoration: none;
 font-weight : bold;
-background: #CCCCCC;
+background-color: #CCCCCC;
 }
 
 /* Links to change month, year or go to today */
@@ -1560,13 +1557,13 @@ text-decoration: none;
 color : black;
 text-decoration: none;
 font-weight : bold;
-background: #CCCCCC;
+background-color: #CCCCCC;
 }
 
 .changedate
 {
 font-size: 90%;
-background: white;
+background-color: white;
 color : black;
 font-weight : bold;
 }
@@ -1574,7 +1571,7 @@ font-weight : bold;
 .date
 {
 font-size: 90%;
-background: white;
+background-color: white;
 color : Black;
 font-weight : bold;
 }
@@ -1620,7 +1617,7 @@ margin-bottom: 10px;
 /* Help box*/
 div.commentsedithelp
 {
-background: white;
+background-color: white;
 border: 1px solid black;
 font-size: smaller;
 }
@@ -2300,7 +2297,7 @@ color: #996633;
 .calprio2 { color: #ffffff; background-color: #21262a; }
 .calprio3 { color: #ffffff; background-color: #212a31; }
 .calprio4 { color: #ffffff; background-color: #213136; }
-.calprio5 { color: #ffffff; background-color: #21364a; }
+.calprio5 { color: #ffffff; background-color: white; width:100%}
 .calprio6 { color: #ffffff; background-color: #213a51; font-weight: bold; }
 .calprio7 { color: #ffffff; background-color: #21415a; font-weight: bold; }
 .calprio8 { color: #ffffff; background-color: #214a61; font-weight: bold; }

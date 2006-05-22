@@ -8,6 +8,11 @@
 <a href="tiki-edit_templates.php?template=tiki-admin_cookies.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin FortuneCookie tpl{/tr}"><img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}</h1>
 
+<div class="rbox" name="tip">
+<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+<div class="rbox-data" name="tip">{tr}To use cookie in a text area (Wiki page, etc), a <a class="rbox-link" href="tiki-admin_modules.php">module</a> or a template, use {literal}{cookie}{/literal}.{/tr}</div>
+</div>
+<br />
 
 <h2>{tr}Create/edit cookies{/tr}</h2>
 <form action="tiki-admin_cookies.php" method="post">

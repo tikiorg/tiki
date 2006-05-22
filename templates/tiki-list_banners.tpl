@@ -8,6 +8,12 @@
 <a href="tiki-edit_templates.php?template=tiki-list_banners.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin Banners tpl{/tr}">
 <img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}</h1>
 
+<div class="rbox" name="tip">
+<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+<div class="rbox-data" name="tip">{tr}To use a banner in a <a class="rbox-link" href="tiki-admin_modules.php">module</a> or a template, use {literal}{banner zone=ABC}{/literal}, where ABC is the name of the zone.{/tr}</div>
+</div>
+<br />
+
 <a class="linkbut" href="tiki-edit_banner.php">{tr}Create banner{/tr}</a>
 <br /><br />
 <div align="center">

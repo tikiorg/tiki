@@ -8,6 +8,12 @@
 <a href="tiki-edit_templates.php?template=tiki-backup.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin admin tpl{/tr}">
 <img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}</h1>
 
+<div class="rbox" name="tip">
+<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+<div class="rbox-data" name="tip">{tr}Use of this feature is NOT recommended. Please use phpMyAdmin or mysqldump instead.{/tr}</div>
+</div>
+<br /> 
+
 <h2>{tr}List of available backups{/tr}</h2>
 
 <table class="normal">

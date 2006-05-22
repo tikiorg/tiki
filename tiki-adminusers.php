@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.60 2006-02-17 15:10:30 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.61 2006-05-22 17:09:07 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -188,12 +188,14 @@ if (isset($_REQUEST["newuser"])) {
 		$logslib->add_log('adminusers','',$tikifeedback[0]['msg']);
 	}					
 } elseif (!empty($_REQUEST["submit_mult"]) && !empty($_REQUEST["checked"])) {
-	if ($_REQUEST["submit_mult"] == "remove_users") {
+	if ($_REQUEST['submit_mult'] == 'remove_users' || $_REQUEST['submit_mult'] == 'remove_users_with_page') {
 		$area = 'batchdeluser';
 		if ($feature_ticketlib2 == 'n' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 			foreach ($_REQUEST["checked"] as $deleteuser) {
 				$userlib->remove_user($deleteuser);
+				if ($_REQUEST['submit_mult'] == 'remove_users_with_page')
+					$tikilib->remove_all_versions($feature_wiki_userpage_prefix.$deleteuser);
 				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s <b>%s</b> successfully deleted."),tra("user"),$deleteuser));
 			}
 		} elseif ( $feature_ticketlib2 == 'y') {
@@ -201,7 +203,7 @@ if (isset($_REQUEST["newuser"])) {
 			foreach ($_REQUEST['checked'] as $c) {
 				$ch .= "&amp;checked[]=".urlencode($c);
 			}
-			key_get($area, "", "tiki-adminusers.php?submit_mult=remove_users".$ch);
+			key_get($area, "", "tiki-adminusers.php?submit_mult=".$_REQUEST['submit_mult'].$ch);
 		} else {
 			key_get($area);
 		}

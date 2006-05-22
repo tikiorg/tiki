@@ -1,12 +1,19 @@
 <h1><a class="pagetitle" href="tiki-admin_dsn.php">{tr}Admin dsn{/tr}</a> 
   
       {if $feature_help eq 'y'}
-<a href="{$helpurl}Admin+DSN" target="tikihelp" class="tikihelp" title="{tr}Admin DSN{/tr}"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<a href="http://tikiwiki.org/tiki-index.php?page=AdminDSN" target="tikihelp" class="tikihelp" title="{tr}Admin DSN{/tr}"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
 {/if}
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_dsn.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}tiki-admin_dsn tpl{/tr}"><img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}</h1>
+
+<br />
+<div class="rbox" name="tip">
+<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+<div class="rbox-data" name="tip">{tr}Use Admin DSN to define the database to be used by the SQL plugin.{/tr}</div>
+</div>
+<br />
 
 <h2>{tr}Create/edit dsn{/tr}</h2>
 <form action="tiki-admin_dsn.php" method="post">

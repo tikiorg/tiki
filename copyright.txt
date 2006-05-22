@@ -1,9 +1,9 @@
 Tiki Copyright
 ----------------
-$Header: /cvsroot/tikiwiki/tiki/copyright.txt,v 1.10 2005-11-07 21:42:29 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/copyright.txt,v 1.11 2006-05-22 17:09:07 mose Exp $
 
 The following list gathers the copyrights holders for tikiwiki 
-at the state of 1.9.2 version. Each member of that list wrote at 
+at the state of 1.9.4 (CVS) version. Each member of that list wrote at 
 least one line, directly or indirectly, in tikiwiki code source. 
 The exact proportion of the contribution of each is not an issue, 
 as any copyright change will involve the agreement of everybody. 

@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: tikirelease.sh,v 1.12 2005-11-07 21:42:29 sylvieg Exp $
+# $Id: tikirelease.sh,v 1.13 2006-05-22 17:09:08 mose Exp $
 # written and maintained by mose@tikiwiki.org
 #
 # HOWTO release TikiWiki ?
@@ -15,6 +15,7 @@
 #       previous version give the same db structure 
 #    - run db/convertscripts/convertsqls.sh
 #    - commit your changes
+#    - update list of valid releases in tiki-admin_security.php: $tiki_versions=array(1=>'1.9.1',2=>'1.9.1.1',3=>'1.9.2',4=>'1.9.3.1');
 #    - create the checksum file: copy doc/devtools/tiki-create_md5.php in tiki root and execute it
 #
 # 0/ Setup the lines in the configuration section just below with your own
@@ -28,7 +29,7 @@
 #    from 3 different people
 # 
 # 3/ After testing, tag the release with instructions on http://tikiwiki.org/TikiCvsTags
-#    cvs -d:ext:mose@cvs.sf.net:/cvsroot/tikiwiki rtag -r BRANCH-1-9 REL-1-9-RC3 fulltiki
+#    cvs -d:ext:mose@tikiwiki.cvs.sf.net:/cvsroot/tikiwiki rtag -r BRANCH-1-9 REL-1-9-RC3 fulltiki
 #    
 # 4/ Uncomment the second "RELTAG=" line and the "grep -rl" line as instructed below
 #
@@ -63,7 +64,7 @@
 # start of configuration
 # change here what you need to fit your environment
 
-CVSROOT=":ext:$USER@cvs.sf.net:/cvsroot/tikiwiki"
+CVSROOT=":ext:$USER@tikiwiki.cvs.sf.net:/cvsroot/tikiwiki"
 WORKDIR="/home/$USER/tikipack"
 MODULE="tikiwiki"
 

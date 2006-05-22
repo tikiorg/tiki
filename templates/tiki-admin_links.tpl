@@ -8,6 +8,12 @@
 <a href="tiki-edit_templates.php?template=tiki-admin_links.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin featured links template{/tr}">
 <img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>{/if}</h1>
 
+<div class="rbox" name="tip">
+<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+<div class="rbox-data" name="tip">{tr}To use these links, you must assign the featured_links <a class="rbox-link" href="tiki-admin_modules.php"> module</a>.{/tr}</div>
+</div>
+<br />
+
 
 <a class="linkbut" href="tiki-admin_links.php?generate=1">{tr}Generate positions by hits{/tr}</a>
 <h2>{tr}List of featured links{/tr}</h2>

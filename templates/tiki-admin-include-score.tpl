@@ -1,10 +1,9 @@
 
-<div class="rbox" style="margin-top: 10px;">
-<div class="rbox-title" style="background-color: #eeee99; font-weight : bold; display : inline; padding : 0 10px;">{tr}Tip{/tr}</div>
-<div class="rbox-data" style="padding: 2px 10px; background-color: #eeee99;">{tr}You can see users rank by score in the module users_rank, for that go to{/tr} "<a class="link" href="tiki-admin_modules.php">{tr}Admin modules{/tr}</a>"</div>
+<div class="rbox" name="tip">
+<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+<div class="rbox-data" name="tip">{tr}You can see users rank by score in the module users_rank, for that go to{/tr} "<a class="rbox-link" href="tiki-admin_modules.php">{tr}Admin modules{/tr}</a>".</div>
 </div>
 <br />
-
 
 <div class="cbox">
   <div class="cbox-title">

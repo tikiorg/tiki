@@ -1,4 +1,4 @@
-{tr}New blog post: {$mail_title}: {$title} by {$mail_user} at {$mail_date|tiki_short_datetime}{/tr}
+{tr}New blog post: {$mail_title}, \"{\$mail_post_title}\", by {$mail_user} at {$mail_date|tiki_short_datetime}{/tr}
 
 {tr}View the blog at:{/tr}
 {$mail_machine_raw}/tiki-view_blog_post.php?blogId={$mail_blogid}&postId={$mail_postid}

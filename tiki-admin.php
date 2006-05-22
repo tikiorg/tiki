@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.109 2006-01-20 09:54:53 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.110 2006-05-22 17:09:07 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -207,6 +207,10 @@ if (isset($_REQUEST["page"])) {
 		$admintitle = "Freetags";//get_strings tra("Intertiki")
 		$description = "Freetags settings";//get_strings tra("Intertiki settings")
 		include_once ('tiki-admin_include_freetags.php');
+	} else if ($adminPage == "gmap") {
+		$admintitle = "Google Maps";//get_strings tra("Google Maps")
+		$description = "Google Maps";//get_strings tra("Google Maps")
+		include_once ('tiki-admin_include_gmap.php');
 	}
 	$url = 'tiki-admin.php'.'?page='.$adminPage;
 	if (!$helpUrl) {$helpUrl = ucfirst($adminPage)."+Config";}

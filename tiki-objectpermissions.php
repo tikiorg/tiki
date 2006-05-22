@@ -1,13 +1,14 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-objectpermissions.php,v 1.13 2005-10-16 14:35:09 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-objectpermissions.php,v 1.14 2006-05-22 17:09:07 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 include_once ("tiki-setup.php");
 
-if ($tiki_p_admin_calendar != 'y') {
+
+if ($tiki_p_admin_objects != 'y') {
 	$smarty->assign('msg', tra("Permission denied you cannot assign permissions for this page"));
 
 	$smarty->display("error.tpl");

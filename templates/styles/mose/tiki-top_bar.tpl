@@ -1,23 +1,43 @@
-<div id="tiki-top">
-<table cellpadding="0" cellspacing="0" border="0">
+<table cellpadding="0" cellspacing="0" border="0" id="topbar">
 <tr><td class="left">
 <a href="{if $http_domain}http://{$http_domain}{else}{$crumbs[0]->url}{/if}" title="{tr}back to homepage{/tr} {$siteTitle}" class="linkh">{$siteTitle}</a>
 </td>
-<td class="center">
-{if $user}
-{include file="tiki-mytiki_bar.tpl"}
-{else}
-{tr}Please{/tr} <a href="tiki-login_scr.php" class="link">{tr}log in{/tr}</a> {tr}to access full functionalities{/tr}
-{/if}
+<td>
+<table style="float:right;font-size:80%;"><tr><td>
+<form method="get" action="tiki-searchindex.php">
+Text Search <input type="hidden" name="where" value="wikis" />
+<input type="text" name="highlight" size="14" accesskey="s" />
+</form>
 </td>
-<td class="right"><div>
+<td style="text-align:right;">
+<form method="post" action="tiki-listpages.php">
+&nbsp;Page Search <input type="text" name="find" />
+</form>
+</td>
+<td style="text-align:right;">
+{if $user}
+<b>{$user}</a>
+<a href="tiki-logout.php">({tr}logout{/tr})</a>
+{else}
+<form action="tiki-login.php" method="post">
+{tr}Login{/tr}
+<input type="text" name="user" id="login-user" size="12" />
+<input type="password" name="pass" id="login-pass" size="12" />
+<input type="hidden" name="rme" value="on"/>
+<input type="submit" name="o" value="login" />
+</form>
+{/if}
+</td></tr></table>
+</td>
+<td class="right"><div style="font-size:80%">
 {if $feature_calendar eq 'y' and $tiki_p_view_calendar eq 'y'}
 <a href="tiki-calendar.php" class="link">{$smarty.now|tiki_short_datetime}</a>
 {else}
 {$smarty.now|tiki_short_datetime}
 {/if}
 </div></td></tr></table>
-</div>
 {if $feature_phplayers eq 'y' and $feature_siteidentity eq 'y' and $feature_sitemenu eq 'y'}
+<div id="plm_menu">
 {phplayers id=42 type=horiz}
+</div>
 {/if}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.303 2006-05-01 04:51:12 franck Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.304 2006-05-22 17:09:07 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1299,6 +1299,7 @@ $smarty->assign('feature_sitedesc', $feature_sitedesc);
 $feature_intertiki = 'n';
 $smarty->assign('feature_intertiki', $feature_intertiki);
 $feature_intertiki_server = 'n';
+$feature_intertiki_slavemode = 'n';
 $smarty->assign('feature_intertiki_server', $feature_intertiki_server);
 $interlist = serialize(array(''));
 $smarty->assign_by_ref('interlist', $interlist);

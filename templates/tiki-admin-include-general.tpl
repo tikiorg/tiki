@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.47 2006-01-20 09:54:57 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.48 2006-05-22 17:09:14 mose Exp $ *}
 
 <script type="text/javascript">
 {literal}
@@ -338,8 +338,8 @@
 
       </tr><tr>
         <td class="form"></td>
-        <td>Please expect not found help-pages with the default-URL.<br />
-	    Any help with the documentation is welcome.</td>
+        <td>{tr}Please expect not found help-pages with the default-URL.{/tr}<br />
+	    {tr}Any help with the documentation is welcome.{/tr}</td>
 
       </tr></table>
       <table class="admin"><tr>

@@ -2806,4 +2806,16 @@ color: black;
 background-color: #edeeef;
 }
 
+/*** style for 'advanced feature' divs ***/
+.advanced {
+  margin: 20px;
+  padding: 5px;
+  border-color: black;
+  border-width: 1px;
+  border-style: solid;
+  background-color: #e5f2f6;
+}
+
+.advanced:before { content:url(../img/icons/mini_blue_diamond.gif)" "; }
+
 /* end of css file */

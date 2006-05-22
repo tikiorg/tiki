@@ -3,9 +3,9 @@
  * there you"ll find attached a gimp image containing this page with icons in separated layers
  *}
 
-<div class="rbox" style="margin-top: 10px;">
-<div class="rbox-title" style="background-color: #eeee99; font-weight : bold; display : inline; padding : 0 10px;">{tr}Tip{/tr}</div>
-<div class="rbox-data" style="padding: 2px 10px; background-color: #eeee99;">{tr}Enable/disable Tiki features in {/tr} <a href="tiki-admin.php?page=features">{tr}Admin->Features{/tr}</a>{tr}, but configure them elsewhere{/tr}</div>
+<div class="rbox" name="tip">
+<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+<div class="rbox-data" name="tip">{tr}Enable/disable Tiki features in {/tr} <a class="rbox-link" href="tiki-admin.php?page=features">{tr}Admin->Features{/tr}</a>{tr}, but configure them elsewhere{/tr}</div>
 </div>
 <br />
 
@@ -266,6 +266,22 @@
       <td style="text-align:center;">
       </td>
     </tr>
+		<tr>
+<td style="text-align:center;">
+<a href="tiki-admin.php?page=gmap" title="{tr}Google Maps{/tr}" class="link">
+{if $feature_gmap eq 'y'}
+<img border="0" src="img/icons/admin_gmap.png" alt="icon" />
+{else}
+<img border="0" src="img/icons/admin_gmap_grey.png" alt="icon" />
+{/if}
+<br />{tr}Google Maps{/tr}</a>
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+		</tr>
    </table>
   </div>
 </div>
+

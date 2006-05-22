@@ -1,5 +1,13 @@
 {*Smarty template*}
 <h1><a class="pagetitle" href="tiki-g-admin_activities.php?pid={$pid}">{tr}Admin process activities{/tr}</a></h1>
+
+<div class="rbox" name="tip">
+<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>
+<div class="rbox-data" name="tip">{tr}To learn more about the <a class="rbox-link" target="tikihelp" href="http://workflow.tikiwiki.org">Galaxia workflow engine</a>{/tr}
+</div>
+</div>
+<br />
+
 {include file=tiki-g-proc_bar.tpl}
 
 {if count($errors) > 0}

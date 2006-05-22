@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.59 2006-03-16 13:43:12 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.60 2006-05-22 17:09:14 mose Exp $ *}
 { *TODO: Must fix even/odd table rows detection byusing Smarty 'cycle' *}
 
 
@@ -26,6 +26,14 @@
 </td></tr>
 </table>
 <br />
+<div class="advanced">{tr}advanced feature{/tr}: {tr}level configuration{/tr}:
+{if $advanced_features ne 'y'}
+<a href="tiki-assignpermission.php?find={$find}&amp;type={$type}&amp;group={$group}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;advanced_features=y">{tr}show{/tr}</a>
+{else}
+<a href="tiki-assignpermission.php?find={$find}&amp;type={$type}&amp;group={$group}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">{tr}hide{/tr}</a>
+{/if}<br /><br />
+
+<div {if $advanced_features ne 'y'}style="display:none;"{else}style="display:block;"{/if}>
 <h2>{tr}Create level{/tr}</h2>
 <form method="post" action="tiki-assignpermission.php">
 <input type="hidden" name="group" value="{$group|escape}" />
@@ -47,6 +55,8 @@
 </select>
 <input type="submit" name="allper" value="{tr}update{/tr}" />
 </form>
+</div>
+</div>
 <br />
 <a name="assign" ></a>
 <h2>{tr}Assign Permissions{/tr}</h2>
@@ -81,7 +91,7 @@
 <tr>
 <td class="heading">&nbsp;</td>
 <td class="heading"><a class="tableheading" href="tiki-assignpermission.php?type={$type}&amp;group={$group}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'permName_desc'}permName_asc{else}permName_desc{/if}">{tr}name{/tr}</a></td>
-<td class="heading">{tr}level{/tr}</td>
+<td class="heading" {if $advanced_features ne 'y'}style="display:none;"{else}style="display:block;"{/if}>{tr}level{/tr}</td>
 <td class="heading"><a class="tableheading" href="tiki-assignpermission.php?type={$type}&amp;group={$group}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">{tr}type{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-assignpermission.php?type={$type}&amp;group={$group}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupDesc_desc'}permDesc_asc{else}permDesc_desc{/if}">{tr}desc{/tr}</a></td>
 </tr>
@@ -91,7 +101,7 @@
 <tr>
 <td class="odd"><input type="checkbox" name="perm[{$perms[user].permName}]" {if $perms[user].hasPerm eq 'y'}checked="checked"{/if}/></td>
 <td class="odd">{$perms[user].permName}</td>
-<td class="odd"><select name="level[{$perms[user].permName}]">{html_options output=$levels values=$levels selected=$perms[user].level}</select></td>
+<td class="odd" {if $advanced_features ne 'y'}style="display:none;"{else}style="display:block;"{/if}><select name="level[{$perms[user].permName}]">{html_options output=$levels values=$levels selected=$perms[user].level}</select></td>
 <td class="odd">{tr}{$perms[user].type}{/tr}</td>
 <td class="odd">{tr}{$perms[user].permDesc}{/tr}</td>
 </tr>
@@ -99,7 +109,7 @@
 <tr>
 <td class="even"><input type="checkbox" name="perm[{$perms[user].permName}]" {if $perms[user].hasPerm eq 'y'}checked="checked"{/if}/></td>
 <td class="even">{$perms[user].permName}</td>
-<td class="even"><select name="level[{$perms[user].permName}]">{html_options output=$levels values=$levels selected=$perms[user].level}</select></td>
+<td class="even" {if $advanced_features ne 'y'}style="display:none;"{else}style="display:block;"{/if}><select name="level[{$perms[user].permName}]">{html_options output=$levels values=$levels selected=$perms[user].level}</select></td>
 <td class="even">{tr}{$perms[user].type}{/tr}</td>
 <td class="even">{tr}{$perms[user].permDesc}{/tr}</td>
 </tr>

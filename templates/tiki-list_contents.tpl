@@ -8,6 +8,12 @@
 <a href="tiki-edit_templates.php?template=tiki-list_contents.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin DynamicContent tpl{/tr}">
 <img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}</h1>
 
+<div class="rbox" name="tip">
+<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+<div class="rbox-data" name="tip">{tr}To use content blocks in a text area (Wiki page, etc), a <a class="rbox-link" href="tiki-admin_modules.php">module</a> or a template, use {literal}{content id=x}{/literal}, where x is the ID of the content block.{/tr}</div>
+</div>
+<br />
+
 <h2>{tr}Create or edit content block{/tr}</h2><a class="linkbut" href="tiki-list_contents.php">{tr}create new block{/tr}</a>
 <form action="tiki-list_contents.php" method="post">
 <input type="hidden" name="contentId" value="{$contentId|escape}" />

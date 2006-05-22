@@ -377,6 +377,7 @@ class BlogLib extends TikiLib {
 				$query = "select `title` from `tiki_blogs` where `blogId`=?";
 				$blogTitle = $this->getOne($query, array((int)$blogId));
 				$smarty->assign('mail_title', $blogTitle);
+				$smarty->assign('mail_post_title', $title);
 				$smarty->assign('mail_blogid', $blogId);
 				$smarty->assign('mail_postid', $id);
 				$smarty->assign('mail_date', date("U"));

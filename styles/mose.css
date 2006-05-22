@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.66 2006-02-01 21:20:23 jdrexler Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.67 2006-05-22 17:09:13 mose Exp $
 2003 - created and maintained by mose@tikiwiki.org
 
 colorset:
@@ -59,13 +59,14 @@ FORM {
 General form elements 
 */
 input, select {
+	font-family : monospace;
 	color:    #000000;
-	font:   normal 11px Verdana, Arial, Helvetica, sans-serif;
 }
 
 textarea {
 	color:    #000000;
-	font:   normal 12px fixed, courier, monospace;
+	font-family : monospace;
+	font-size : 90%;
 }
 
 input {
@@ -74,9 +75,8 @@ input {
 
 
 a {
-color: #000000;
+color: #430;
 text-decoration: none;
-border-bottom: 1px dashed #6A5A49;
 }
 a:hover {
 color: #772200;
@@ -100,14 +100,13 @@ DIV#tiki-main {
 	padding:   0;
 }
 #tiki-top {
-	font-size: 90%;
+	font-size: 80%;
 	color:   #7a6a59;
 	background-color:    #DED6C6;
-	width: 100%;
 }
 
-#tiki-top table {
-	width: 100%;
+#tiki-top table#topbar {
+	width:100%;
 }
 
 #tiki-top a.linkh {
@@ -171,7 +170,7 @@ And this is the footer
 */
 DIV#tiki-bot {
 	padding-top:    5px;
-	margin-top:   0px;
+	margin-top:   20px;
 	background:   #DED6C6;
 	padding-bottom:   0px;
 }
@@ -269,7 +268,6 @@ div.box-title {
 }
 
 div.box-title table {
-    width: 100%;
 }
 
 /* 
@@ -483,7 +481,7 @@ div.simplebox {
 	margin: 5px 1px 5px 1px;
 	padding:   2px;
 	color:   black;
-	border:   1px solid black;
+	border:   1px solid #dca;
 	background:   #EFEFE7;
 	font-size:   11px;
 }
@@ -507,12 +505,10 @@ The table
 table.listgallery, table.creategalform, TABLE.normal, table.gallerylisting, table.bloglist, table.editblogform, table.editfgalform,
 	table.listfgal, table.listfiles, table.listarticles, table.forumstable, table.forumformtable, table.viewthread, table.jukeboxlist {
 	border: 1px solid #5A4A39;
-	width: 100%;
 	border-spacing: 2px;
 }
 
 TABLE.normalnoborder {
-	width: 100%;
 }
 
 /* 
@@ -830,11 +826,11 @@ td.wikicell:first-child {
 Text in wiki pages is displayed using the following style 
 */
 div.wikitext {
-	background:    #f6f4f3;
+	line-height : 1.4em;
+	background:    #fff;
 	font-size:   12px;
-	border:   1px solid #B5A58C;
+	border:   1px dashed #dca;
 	padding:  3px 10px 3px 10px;
-	margin: 1px 0 1px 0;
 	clear:   both;
 }
 div.wikitext pre {
@@ -1003,7 +999,6 @@ The whole container for the browse image screen (may be useful for a fancy backg
 */
 div.browseimage {
 	background:    #EFEFE7;
-	width:   100%;
 }
 
 div.imagetitle {
@@ -1219,7 +1214,6 @@ div.articletrailer {
  MSIE inheritence pb + box model bug
 */
 div.articletrailer {
-	width: 100%;
 }
 .articletrailer{
 	font-size: 9px;
@@ -1391,7 +1385,6 @@ div.commentspost {
 	padding-top:   0px;
 	padding-bottom:   0px;
 	margin-bottom:   10px;
-	width:   99%;
 }
 
 /* Help box*/
@@ -1399,7 +1392,6 @@ div.commentsedithelp {
 	background:    white;
 	border:   1px solid black;
 	font-size:   smaller;
-	width:   99%;
 }
 
 /* The toolbar where the ordering number of comments and find box are found */
@@ -1917,7 +1909,6 @@ div.dirlistsites {
 	padding-bottom:   10px;
 	border:   0.5px solid black;
 	margin-top:   10px;
-	width:   100%;
 }
 
 /* each site in the list of sites */
@@ -2646,7 +2637,9 @@ div#rules-copy-panel {
 	font-weight:bold;
 }
 
-TABLE.admin { width: 100%; }
+TABLE.admin { 
+width: 100%; 
+}
 table.commentinfo { width: 100%; background-color: #FFF7E6; }
 div#loadstats {
 	background-color: #dedede;
@@ -2656,8 +2649,11 @@ div#loadstats {
 }
 
 /* phplayers style */
+#plm_menu {
+	border-top : 1px solid #666;
+	background-color : #fff !important;
+}
 .box-data table {
-	width: 100%;
 }
 
 .mdkhorbar      {

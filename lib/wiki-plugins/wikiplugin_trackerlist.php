@@ -13,7 +13,7 @@ function wikiplugin_trackerlist_help() {
 }
 
 function wikiplugin_trackerlist($data, $params) {
-	global $smarty, $trklib, $tikilib, $dbTiki, $userlib, $tiki_p_admin, $maxRecords, $_REQUEST, $tiki_p_view_trackers, $user, $page;
+	global $smarty, $trklib, $tikilib, $dbTiki, $userlib, $tiki_p_admin, $maxRecords, $_REQUEST, $tiki_p_view_trackers, $user, $page, $tiki_p_tracker_vote_ratings, $tiki_p_tracker_view_ratings;
 	global $notificationlib; //needed if plugin tracker after plugin trackerlist
 	extract ($params,EXTR_SKIP);
 

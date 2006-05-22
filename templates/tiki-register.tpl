@@ -46,6 +46,8 @@
 
 <tr><td class="formcolor">{tr}Email{/tr}:</td><td class="formcolor"><input style="float:left" type="text" id="email" name="email" {if $validateUsers eq 'y' and $feature_ajax eq 'y'}onKeyUp="return check_mail()"{/if}/>{if $feature_ajax eq'y'}<div id="checkmail" style="float:left"></div>{/if}
 {if $validateUsers eq 'y' and $validateEmail ne 'y'}<br /><div style="float:left">{tr}A valid email is mandatory to register{/tr}</div>{/if}</td></tr>
+{tr}NOTE: Make sure to whitelist this domain to prevent<br />registration emails being canned by your spam filter!{/tr}
+{/if}</td></tr>
 
 {* Custom fields *}
 {section name=ir loop=$customfields}

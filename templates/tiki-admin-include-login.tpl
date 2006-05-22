@@ -28,7 +28,7 @@
 </select></td></tr>
 <!--<tr><td class="form">{tr}Use WebServer authentication for Tiki{/tr}:</td><td><input type="checkbox" name="webserverauth" {if $webserverauth eq 'y'}checked="checked"{/if}/></td></tr>-->
 <tr><td class="form">{tr}Users can register{/tr}:</td><td><input type="checkbox" name="allowRegister" {if $allowRegister eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="form">{tr}... but need admin validation{/tr}:</td><td><input type="checkbox" name="validateRegistration" {if $validateRegistration eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}... but need admin validation{/tr}:</td><td><input type="checkbox" name="validateRegistration" {if $validateRegistration eq 'y'}checked="checked"{/if}/> <a href ="tiki-admin.php?page=features">{tr}User Messages{/tr}</a> {tr}must be turned on and notification is sent to the admin's{/tr} <a href="messu-mailbox.php">{tr}inter-user message inbox{/tr}</a></td></tr>
 <tr><td class="form">{tr}Create a group for each user <br />(with the same
 name as the user){/tr}:</td><td><input type="checkbox"
 name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td></tr>
@@ -231,6 +231,9 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 </div>
 <div class="cbox-data">
 
+<div class="rbox" name="tip"></div>
+<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>
+<div class="rbox-data" name="tip">{tr}You also need to upload the <a target="_blank" href="http://esup-phpcas.sourceforge.net/">phpCAS library</a> separately to lib/phpcas/.{/tr}</div>
 
 
 <form action="tiki-admin.php?page=login" method="post">

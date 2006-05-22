@@ -147,8 +147,8 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 		    <tr><td colspan="2">
 			For database update from 1.8 or later:
 			<ol>
-				<li>If you upgrade from 1.8.x you <b>MUST</b> run tiki_1.8to1.9 and don't need an additional script</li>
-				<li>If you upgrade from a previous 1.9.x version, you can speed up the upgrade by running only tiki_1.9to1.9.2</li>
+				<li>If you upgrade from 1.8.x you <b>MUST</b> run tiki_1.8to1.9 and don't need an additional script.</li>
+				<li>If you upgrade from a previous 1.9.x version, you use tiki_1.8to1.9, too.</li>
 			</ol>
 		    <tr><td colspan="2">
 		    	For database update from 1.7 you should use this order:
@@ -198,15 +198,38 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
     		this is your first install, your admin password is 'admin'. You can
     		now log in into Tikiwiki as user 'admin' and start configuring
     		the application.<br />
-    		<b>Note:</b> This installer script may be potentially harmful so we strongly
+    		Note: This install script may be potentially harmful so we strongly
     		recommend you to disable the script and then proceed into Tiki. If
-    		you now decide to disable the script by <strong>renaming</strong>, the installer will try to
-    		rename itself to tiki-installer.done and it will stay available in the installer/ folder for later use. If
-    		you decide to <strong>remove</strong> the script <strong>it will be completely deleted!</strong><br /><br />
-    		<a href="tiki-install.php?kill=1" class="link">Click here to <b>disable the installer script by renaming it for later use</b> and proceed into Tikiwiki</a><br /><br />
-    		<a href="tiki-install.php?kill&amp;remove" class="link">Click here to <b>disable the installer script by deleting it completely</b> and proceed into Tikiwiki</a><br /><br />
-    		<a href="tiki-index.php" class="link">Click here to proceed into Tikiwiki without disabling the script</a><br /><br />
-    		<a href="tiki-install.php?reset=yes{if $multi}&amp;multi={$multi}{/if}" class="link">Reset database connection settings</a><br /><br />
+    		you decide to reuse later, just follow the instructions in
+		tiki-install.php to restore.<br /><br />
+
+    		READ THE FOLLOWING NOTES BEFORE ENTERING TIKI USING THE LINKS BELOW!
+    		
+    		<div class="rbox" name="tip">
+            <div class="rbox-title" name="tip">Note</div>  
+            <div class="rbox-data" name="tip">Make sure tiki gets more than 8 MB of memory for script execution. 
+See file php.ini, the relevant key is memory_limit. Use something like memory_limit = 16M and restart your 
+webserver. Too little memory will cause blank pages!</div>
+            </div>
+            <br />
+
+    		<div class="rbox" name="tip">
+            <div class="rbox-title" name="tip">Note</div>  
+            <div class="rbox-data" name="tip">If this is a first time installation, go to tiki-admin.php after login to start configuring your new Tiki installation.</div>
+            </div>
+            <br />
+
+    		<div class="rbox" name="tip">
+            <div class="rbox-title" name="tip">Note</div>  
+            <div class="rbox-data" name="tip">If you did a Tiki upgrade, make sure to clean the caches (templates_c/) manually or by using the feature on admin / system.</div>
+            </div>
+            <br />
+
+            Now you may proceed by clicking one of these links:<br /><br />
+
+    		<a href="tiki-install.php?kill=1" class="link">Click here to disable the install script and proceed into tiki.</a><br /><br />
+    		<a href="tiki-index.php" class="link">Click here to proceed into tiki without disabling the script.</a><br /><br />
+    		<a href="tiki-install.php?reset=yes{if $multi}&amp;multi={$multi}{/if}" class="link">Reset database connection settings.</a><br /><br />
     		<a href="tiki-install.php{if $multi}?multi={$multi}{/if}" class="link">Go back and run another install/upgrade script</a> - do not use your Back button in your browser!<br /><br />
     	{/if}
 	{/if}

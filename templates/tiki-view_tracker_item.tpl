@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker_item.tpl,v 1.96 2006-03-16 13:43:12 sylvieg Exp $ *}
+{* $Id: tiki-view_tracker_item.tpl,v 1.97 2006-05-22 17:09:16 mose Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -42,7 +42,7 @@
 	{/section}
 </div><br />{/if}
 {if $feature_tabs eq 'y'}
-{cycle name=tabs values="1,2,3,4,5" print=false advance=false}
+{cycle name=tabs values="1,2,3,4,5" print=false advance=false reset=true}
 <div id="page-bar">
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}View{/tr}</a></span>
 {if $tracker_info.useComments eq 'y'}
@@ -57,7 +57,7 @@
 </div>
 {/if}
 
-{cycle name=content values="1,2,3,4,5" print=false advance=false}
+{cycle name=content values="1,2,3,4,5" print=false advance=false reset=true}
 {* --- tab with view --- *}
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}View item{/tr}</h2>

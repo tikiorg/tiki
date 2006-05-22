@@ -43,7 +43,9 @@
 	<select name="sendto">
 	  <option value="">{tr}Don't move{/tr}</option>
 	  {section loop=$activities name=ix}
+	  {if $activities[ix].type neq 'standalone' and $activities[ix].isInteractive eq 'y'}
 	  <option value="{$activities[ix].activityId|escape}">{$activities[ix].name}</option>
+	  {/if}
 	  {/section}
 	</select>
 	</td>
