@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2006-05-22 17:09:08 $
-# $Author: mose $
+# $Date: 2006-05-25 06:06:46 $
+# $Author: sampaioprimo $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -4020,6 +4020,7 @@ CREATE TABLE users_grouppermissions (
 insert into users_grouppermissions (groupName,permName) values('Anonymous','tiki_p_view');
 insert into users_grouppermissions (groupName,permName) values('Anonymous','tiki_p_wiki_view_history');
 insert into users_grouppermissions (groupName,permName) values('Anonymous','tiki_p_wiki_view_comments');
+insert into users_grouppermissions (groupName,permName) values('Anonymous','tiki_p_wiki_view_source');
 
 #
 # Table structure for table users_groups
@@ -4248,6 +4249,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_comments', 'Can view wiki comments', 'basic', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_history', 'Can view wiki history', 'basic', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_ratings', 'Can view rating of wiki pages', 'basic', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_source', 'Can view source of wiki pages', 'basic', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_vote_ratings', 'Can participate to rating of wiki pages', 'registered', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_admin_ratings', 'Can add and change ratings on wiki pages', 'admin', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES('tiki_p_admin_users', 'Can admin users', 'admin', 'user');
@@ -4492,6 +4494,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_search_stats','
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_sheet','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_shoutbox','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_smileys','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_source','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_stats','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_submissions','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_surveys','n');

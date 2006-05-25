@@ -1,5 +1,5 @@
 -- $Rev$
--- $Date: 2006-04-30 00:44:22 $
+-- $Date: 2006-05-25 06:06:46 $
 -- $Author: sampaioprimo $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
@@ -2724,6 +2724,8 @@ INSERT INTO "tiki_modules" ("name","position","ord","cache_time","groups") VALUE
 
 INSERT INTO "tiki_modules" ("name","position","ord","cache_time","params","groups") VALUES ('mnu_application_menu','l',1,0,'flip=y','a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}');
 
+INSERT INTO "tiki_modules" ("name","position","ord","cache_time","groups") VALUES ('quick_edit','l',2,0,'a:1:{i:0;s:10:"Registered";}');
+
 INSERT INTO "tiki_modules" ("name","position","ord","cache_time","groups") VALUES ('assistant','l',10,0,'a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}');
 
 -- --------------------------------------------------------
@@ -4591,6 +4593,8 @@ INSERT INTO "users_grouppermissions" ("groupName","permName") VALUES ('Anonymous
 
 INSERT INTO "users_grouppermissions" ("groupName","permName") VALUES ('Anonymous','tiki_p_wiki_view_comments');
 
+INSERT INTO "users_grouppermissions" ("groupName","permName") VALUES ('Anonymous','tiki_p_wiki_view_source');
+
 
 --
 -- Table structure for table users_groups
@@ -4757,7 +4761,7 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_create_blogs', 'Can create a blog', 'editors', 'blogs');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_create_bookmarks', 'Can create user bookmarksche user bookmarks', 'registered', 'user');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_create_bookmarks', 'Can create user bookmarks', 'registered', 'user');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_create_css', 'Can create new css suffixed with -user', 'registered', 'tiki');
 
@@ -4794,6 +4798,8 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_submission', 'Can edit submissions', 'editors', 'cms');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_templates', 'Can edit site templates', 'admin', 'tiki');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_templates', 'Can view site templates', 'admin', 'tiki');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_eph_admin', 'Can admin ephemerides', 'editors', 'tiki');
 
@@ -4993,6 +4999,8 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_wiki_view_ratings', 'Can view rating of wiki pages', 'basic', 'wiki');
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_wiki_view_source', 'Can view source of wiki pages', 'basic', 'wiki');
+
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_wiki_vote_ratings', 'Can participate to rating of wiki pages', 'registered', 'wiki');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_wiki_admin_ratings', 'Can add and change ratings on wiki pages', 'admin', 'wiki');
@@ -5006,6 +5014,12 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_tasks_admin', 'Can admin public tasks', 'admin', 'user');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_contribution', 'Can admin contributions', 'admin', 'contribution');
+
+INSERT INTO users_permissions (permName,permDesc,level,type) values ('tiki_p_admin_rssmodules','Can admin rss modules', 'admin', 'tiki');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES  ('tiki_p_admin_polls','Can admin polls', 'admin', 'tiki');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES  ('tiki_p_admin_objects','Can edit object permissions', 'admin', 'tiki');
 
 -- --------------------------------------------------------
 
@@ -5293,7 +5307,7 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_directory','n')
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_drawings','n');
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_dump','y');
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_dump','n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_dynamic_content','n');
 
@@ -5331,11 +5345,13 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_gal_rankings','
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_gal_batch','n');
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_galleries','y');
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_galleries','n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_gal_imgcache','n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_games','n');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_help','n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_history','y');
 
@@ -5376,6 +5392,8 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_mobile', 'n');
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_modulecontrols', 'n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_morcego', 'n');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_multilingual', 'n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_newsletters','n');
 
@@ -5419,6 +5437,8 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_shoutbox','n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_smileys','y');
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_source','y');
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_stats','n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_submissions','n');
@@ -5447,13 +5467,13 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_user_bookmarks'
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_user_watches','n');
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_user_watches_translations','y');
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_user_watches_translations','n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_userfiles','n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_usermenu','n');
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_view_tpl','y');
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_view_tpl','n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_warn_on_edit','n');
 
@@ -5470,6 +5490,8 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_comments',
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_description','n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_discuss','n');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_export','n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_footnotes','n');
 
@@ -5916,9 +5938,10 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('wiki_uses_slides','n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('wiki_wikisyntax_in_html','full');
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('default_wiki_diff_style', 'old');
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('default_wiki_diff_style', 'minsidediff');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('limitedGoGroupHome','y');
+
 
 
 -- default sizes for mailbox, read box and mail archive
@@ -6632,5 +6655,7 @@ CREATE TABLE "tiki_contributions_assigned" (
   "contributionId" bigint NOT NULL,
   "objectId" bigint NOT NULL,
   PRIMARY KEY ("objectId","contributionId")
-) ;;
+) ;
+
+;
 

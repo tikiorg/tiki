@@ -413,6 +413,7 @@
     <tr><td class="form">{tr}Export{/tr}:</td><td><input type="checkbox" name="feature_wiki_export" {if $feature_wiki_export eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Rating{/tr}:</td><td><input type="checkbox" name="feature_wiki_ratings" {if $feature_wiki_ratings eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}History{/tr}:</td><td><input type="checkbox" name="feature_history" {if $feature_history eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}View source{/tr}:</td><td><input type="checkbox" name="feature_source" {if $feature_source eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}List pages{/tr}:</td><td><input type="checkbox" name="feature_listPages" {if $feature_listPages eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Backlinks{/tr}:</td><td><input type="checkbox" name="feature_backlinks" {if $feature_backlinks eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Similar{/tr}:</td><td><input type="checkbox" name="feature_likePages" {if $feature_likePages eq 'y'}checked="checked"{/if}/></td></tr>

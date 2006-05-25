@@ -2,7 +2,7 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2006-04-30 00:44:22 $
+-- $Date: 2006-05-25 06:06:46 $
 -- $Author: sampaioprimo $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
@@ -3566,6 +3566,10 @@ INSERT INTO "tiki_modules" ("name","position","ord","cache_time","params","group
 go
 
 
+INSERT INTO "tiki_modules" ("name","position","ord","cache_time","groups") VALUES ('quick_edit','l',2,0,'a:1:{i:0;s:10:"Registered";}')
+go
+
+
 INSERT INTO "tiki_modules" ("name","position","ord","cache_time","groups") VALUES ('assistant','l',10,0,'a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}')
 go
 
@@ -5809,6 +5813,10 @@ INSERT INTO "users_grouppermissions" ("groupName","permName") VALUES ('Anonymous
 go
 
 
+INSERT INTO "users_grouppermissions" ("groupName","permName") VALUES ('Anonymous','tiki_p_wiki_view_source')
+go
+
+
 
 --
 -- Table structure for table users_groups
@@ -6089,7 +6097,7 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_create_bookmarks', 'Can create user bookmarksche user bookmarks', 'registered', 'user')
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_create_bookmarks', 'Can create user bookmarks', 'registered', 'user')
 go
 
 
@@ -6162,6 +6170,10 @@ go
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_templates', 'Can edit site templates', 'admin', 'tiki')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_templates', 'Can view site templates', 'admin', 'tiki')
 go
 
 
@@ -6561,6 +6573,10 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_wiki_view_source', 'Can view source of wiki pages', 'basic', 'wiki')
+go
+
+
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_wiki_vote_ratings', 'Can participate to rating of wiki pages', 'registered', 'wiki')
 go
 
@@ -6586,6 +6602,18 @@ go
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_contribution', 'Can admin contributions', 'admin', 'contribution')
+go
+
+
+INSERT INTO users_permissions (permName,permDesc,level,type) values ('tiki_p_admin_rssmodules','Can admin rss modules', 'admin', 'tiki')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES  ('tiki_p_admin_polls','Can admin polls', 'admin', 'tiki')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES  ('tiki_p_admin_objects','Can edit object permissions', 'admin', 'tiki')
 go
 
 
@@ -7111,7 +7139,7 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_drawings','n')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_dump','y')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_dump','n')
 go
 
 
@@ -7187,7 +7215,7 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_gal_batch','n')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_galleries','y')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_galleries','n')
 go
 
 
@@ -7196,6 +7224,10 @@ go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_games','n')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_help','n')
 go
 
 
@@ -7276,6 +7308,10 @@ go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_morcego', 'n')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_multilingual', 'n')
 go
 
 
@@ -7363,6 +7399,10 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_smileys','y')
 go
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_source','y')
+go
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_stats','n')
 go
 
@@ -7419,7 +7459,7 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_user_watches','
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_user_watches_translations','y')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_user_watches_translations','n')
 go
 
 
@@ -7431,7 +7471,7 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_usermenu','n')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_view_tpl','y')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_view_tpl','n')
 go
 
 
@@ -7464,6 +7504,10 @@ go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_discuss','n')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_export','n')
 go
 
 
@@ -8354,12 +8398,13 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('wiki_wikisyntax_in_html
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('default_wiki_diff_style', 'old')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('default_wiki_diff_style', 'minsidediff')
 go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('limitedGoGroupHome','y')
 go
+
 
 
 
@@ -9583,7 +9628,11 @@ CREATE TABLE "tiki_contributions_assigned" (
   "contributionId" numeric(12,0) NOT NULL,
   "objectId" numeric(12,0) NOT NULL,
   PRIMARY KEY ("objectId","contributionId")
-) ;
+) 
+go
+
+
+
 go
 
 

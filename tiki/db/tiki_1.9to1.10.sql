@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.90 2006-04-30 00:44:22 sampaioprimo Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.91 2006-05-25 06:06:46 sampaioprimo Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -576,3 +576,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('min_username_length','1
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_username_length','50');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('lowercase_username','n');
 
+#2006-05-25 sampaioprimo
+insert into users_grouppermissions (groupName,permName) values('Anonymous','tiki_p_wiki_view_source');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_source', 'Can view source of wiki pages', 'basic', 'wiki');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_source','y');

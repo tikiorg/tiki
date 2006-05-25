@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.30 2006-03-02 15:15:51 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.31 2006-05-25 06:06:46 sampaioprimo Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,7 +11,11 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/wiki/histlib.php');
 
-$access->check_feature(array('feature_wiki', 'feature_history'));
+if (!isset($_REQUEST["source"])) {
+    $access->check_feature(array('feature_wiki', 'feature_history'));
+} else {
+    $access->check_feature(array('feature_wiki', 'feature_source'));
+}
 
 // Get the page from the request var or default it to HomePage
 if (!isset($_REQUEST["page"])) {
@@ -28,11 +32,20 @@ if (!isset($_REQUEST["page"])) {
 include_once ("tiki-pagesetup.php");
 
 // Now check permissions to access this page
-if (!$tikilib->user_has_perm_on_object($user, $_REQUEST["page"],'wiki page','tiki_p_view')  || (isset($tiki_p_wiki_view_history) && $tiki_p_wiki_view_history != 'y') ) {
+if (!isset($_REQUEST["source"])) {
+    if (!$tikilib->user_has_perm_on_object($user, $_REQUEST["page"],'wiki page','tiki_p_view')  || (isset($tiki_p_wiki_view_history) && $tiki_p_wiki_view_history != 'y') ) {
 	$smarty->assign('msg', tra("Permission denied you cannot browse this page history"));
 
 	$smarty->display("error.tpl");
 	die;
+    }
+} else {
+    if (!$tikilib->user_has_perm_on_object($user, $_REQUEST["page"],'wiki page','tiki_p_view')  || (isset($tiki_p_wiki_view_source) && $tiki_p_wiki_view_source != 'y') ) {
+	$smarty->assign('msg', tra("Permission denied you cannot view the source of this page"));
+
+	$smarty->display("error.tpl");
+	die;
+    }
 }
 
 // If the page doesn't exist then display an error
@@ -62,12 +75,14 @@ if (isset($_REQUEST['source'])) {
 	if ($_REQUEST["source"] == $info["version"] || $_REQUEST["source"] == 0 ) {
 		$smarty->assign('sourced', nl2br($info["data"]));
 		$smarty->assign('source', $info['version']);
+
 	}
 	else {
 		$version = $histlib->get_version($page, $_REQUEST["source"]);
 		if ($version) {
 			$smarty->assign('sourced', nl2br($version["data"]));
 			$smarty->assign('source', $_REQUEST['source']);
+
 		}
 	}
 	if ($_REQUEST["source"] == 0) {
@@ -152,7 +167,7 @@ else
 	$smarty->assign('diff_style', '');
 
 if($info["flag"] == 'L')
-    $smarty->assign('lock',true);  
+    $smarty->assing('lock',true);  
 else
     $smarty->assign('lock',false);
 $smarty->assign('page_user',$info['user']);
