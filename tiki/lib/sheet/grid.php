@@ -1234,7 +1234,6 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 		$inserts = array();
 		$updates = array();
 		$updates[] = $stamp;
-		$updates[] = $user;
 		$updates[] = $this->sheetId;
 
 		// Update the database {{{3
@@ -1272,7 +1271,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 			}
 		}
 			
-		$tikilib->query( "UPDATE `tiki_sheet_values` SET `end` = ? , `user`= ? WHERE `sheetId` = ? AND `end` IS NULL AND ( {$conditions}`rowIndex` >= ? OR `columnIndex` >= ? )", $updates );
+		$tikilib->query( "UPDATE `tiki_sheet_values` SET `end` = ?  WHERE `sheetId` = ? AND `end` IS NULL AND ( {$conditions}`rowIndex` >= ? OR `columnIndex` >= ? )", $updates );
 
 		if( sizeof( $inserts ) > 0 )
 			foreach( $inserts as $values )
