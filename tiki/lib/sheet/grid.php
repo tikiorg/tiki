@@ -1845,8 +1845,16 @@ class SheetLib extends TikiLib
 				$sort = "`title` ASC";
 				break;
 		}
+		$bindvars = array();
+		$mid = '';
+		if (!empty($find)) {
+			$bindvars[] = "%$find%";
+			if (empty($mid))
+				$mid = ' WHERE ';
+			$mid .= ' `title` like ? ';
+		}
 
-		$result = $this->query( "SELECT * FROM `tiki_sheets`  ORDER BY $sort", array(), $maxRecord, $offset );
+		$result = $this->query( "SELECT * FROM `tiki_sheets`  $mid ORDER BY $sort", $bindvars, $maxRecord, $offset );
 
 		while( $row = $result->fetchRow() ) {
 			if ($tikilib->user_has_perm_on_object($user, $row['sheetId'], 'sheet', 'tiki_p_view_sheet')) {
@@ -1857,7 +1865,7 @@ class SheetLib extends TikiLib
 			}
 		}
 
-		$results['cant'] = $this->getOne( "SELECT COUNT(*) FROM `tiki_sheets`", array() );
+		$results['cant'] = $this->getOne( "SELECT COUNT(*) FROM `tiki_sheets` $mid", $bindvars );
 
 		return $results;
 	}
