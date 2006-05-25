@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.48 2006-05-22 17:09:16 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.49 2006-05-25 06:06:47 sampaioprimo Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -19,7 +19,7 @@
       </div>
     </td>
 {else}
-    {if $feature_history eq 'y' and $tiki_p_wiki_view_history eq 'y'}
+    {if $feature_source eq 'y' and $tiki_p_wiki_view_source eq 'y'}
     <td>
       <div class="button2" >
       <a href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;source=0" class="linkbut">
