@@ -13,6 +13,9 @@
 		"image gallery" => array(name=>"Image Gallery",selected=>""),
 		"quiz" => array(name=>"Quizze",selected=>""),
 		"structure" => array(name=>"Structure",selected=>""),
+		"sheet" => array(name=>"Sheet",selected=>""),
+		"survey" => array(name=>"Survey",selected=>""),
+		"tracker" => array(name=>"Tracker",selected=>""),
 		"wiki page" => array(name=>"Wiki Page",selected=>"")
 	);
 	/*
