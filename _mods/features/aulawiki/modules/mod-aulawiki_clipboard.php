@@ -25,6 +25,10 @@ if (isset ($_REQUEST["pasteIdCateg"]) && isset ($_REQUEST["pasteObjects"])) {
 	}
 }
 
+if (isset ($_REQUEST["ClipboardDeleteAll"])) {
+	$_SESSION["clipboard"]=null;
+}
+
 if (isset ($_REQUEST["copyIdObj"])) {
 	if (isset ($_REQUEST["copyType"])) {
 		$clipboardEntry["type"] = $_REQUEST["copyType"];

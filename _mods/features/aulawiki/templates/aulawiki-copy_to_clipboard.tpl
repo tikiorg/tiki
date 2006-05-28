@@ -11,4 +11,4 @@ $smarty->assign('rooturl', $url);
 <input name="copyDesc" type="hidden" id="copyDesc" value="{$copyDesc}"> 
 <input name="copyHref" type="hidden" id="copyHref" value="{$copyHref}"> 
 </form>
- <img src="img/icons/ico_copy.gif" onclick="document['copyForm-{$copyIdObj}'].submit();">
+ <img src="images/aulawiki/copy.gif" onclick="document['copyForm-{$copyIdObj}'].submit();">

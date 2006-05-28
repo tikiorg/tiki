@@ -22,6 +22,6 @@ Error: {$error}
        </tr>
        {/foreach}
        </table>
+<input class="edubutton" type="submit" name="ClipboardDeleteAll" value="{tr}Empty clipboard{/tr}">
 </form>
-
 {/tikimodule}
