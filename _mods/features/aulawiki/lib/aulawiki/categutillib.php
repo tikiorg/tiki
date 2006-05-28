@@ -95,6 +95,24 @@ class CategUtilLib extends TikiDB {
 		die;
 	}
 
+	function redirect_tracker($id, $name) {
+		global $tikilib;
+		header("location: ./tiki-admin_trackers.php?trackerId=".$id);
+		die;
+	}
+	
+	function redirect_survey($id, $name) {
+		global $tikilib;
+		header("location: ./tiki-admin_surveys.php?offset=0&sort_mode=created_desc&surveyId=".$id);
+		die;
+	}
+	
+	function redirect_sheet($id, $name) {
+		global $tikilib;
+		header("location: ./tiki-sheets.php?offset=0&sort_mode=title_desc&edit_mode=1&sheetId=".$id);
+		die;
+	}
+	
 	/******************************************************************/
 	/*                      Admin URLs                          */
 	/******************************************************************/
@@ -153,6 +171,19 @@ class CategUtilLib extends TikiDB {
 	function get_url_admin_faq($id, $name) {
 		return "./tiki-list_faqs.php?find=".$name."&search=find&faqId=".$id;
 	}
+	
+	function get_url_admin_tracker($id, $name) {
+		return "./tiki-admin_trackers.php?trackerId=".$id;
+	}
+	
+	function get_url_admin_survey($id, $name) {
+		return "./tiki-admin_surveys.php?offset=0&sort_mode=created_desc&surveyId=".$id;
+	}
+	
+	function get_url_admin_sheet($id, $name) {
+		return "./tiki-sheets.php?offset=0&sort_mode=title_desc&edit_mode=1&sheetId=".$id;
+	}
+
 	/******************************************************************/
 	/*                      Remove URLs                          */
 	/******************************************************************/
@@ -213,6 +244,18 @@ class CategUtilLib extends TikiDB {
 		return "./tiki-list_faqs.php?&remove=".$id;
 	}
 
+	function get_url_remove_tracker($id) {
+		return "./tiki-admin_trackers.php?offset=0&sort_mode=created_desc&remove=".$id;
+	}
+	
+	function get_url_remove_survey($id) {
+		return "./tiki-admin_surveys.php?offset=0&sort_mode=created_desc&remove=".$id;
+	}
+	
+	function get_url_remove_sheet($id) {
+		return "./tiki-sheets.php?offset=0&sort_mode=title_desc&removesheet=".$id;
+	}
+	
 	function create_resource($type, $name, $desc, $parentCategoryId, $resourceId = null) {
 		$type = str_replace(" ", "", $type);
 		$funcname = "create_".$type;
@@ -577,6 +620,68 @@ class CategUtilLib extends TikiDB {
 		}
 	}
 
+	function create_tracker($name, $desc, $parentCategoryId) {
+		global $categlib;
+		global $dbTiki;
+		global $tikilib;
+		include_once ('lib/trackers/trackerlib.php');
+
+		$tracker = $this->get_category_object($parentCategoryId, $name, "tracker");
+		if (isset ($tracker) && $tracker["name"] == $name) {
+			return $tracker["objId"];
+		}
+
+		$trackid = $trklib->replace_tracker(null, $name, $desc, null);
+
+		//Categorizar galeria de ficheros
+		$categlib->uncategorize_object("tracker", $trackid);
+		$idCatObj = $categlib->add_categorized_object("tracker", $trackid, $desc, $name, "tiki-view_tracker.php?trackerId=$trackid");
+		$categlib->categorize($idCatObj, $parentCategoryId);
+		return $trackid;
+	}
+	
+	function create_survey($name, $desc, $parentCategoryId) {
+		global $categlib;
+		global $dbTiki;
+		global $tikilib;
+		include_once ('lib/surveys/surveylib.php');
+
+		$survey = $this->get_category_object($parentCategoryId, $name, "survey");
+		if (isset ($survey) && $survey["name"] == $name) {
+			return $survey["objId"];
+		}
+
+		$sid = $srvlib->replace_survey(null, $name, $desc, "o");
+		//Categorizar galeria de ficheros
+		$categlib->uncategorize_object("survey", $sid);
+		$idCatObj = $categlib->add_categorized_object("survey", $sid, $desc, $name, "tiki-take_survey.php?surveyId=$sid");
+		$categlib->categorize($idCatObj, $parentCategoryId);
+		return $sid;
+	}
+	
+	function create_sheet($name, $desc, $parentCategoryId) {
+		global $categlib;
+		global $dbTiki;
+		global $tikilib;
+		include_once ('lib/sheet/grid.php');
+
+		$sheet = $this->get_category_object($parentCategoryId, $name, "sheet");
+		if (isset ($sheet) && $sheet["name"] == $name) {
+			return $sheet["objId"];
+		}
+		
+		global $user;
+		$gid = $sheetlib->replace_sheet(null, $name, $desc, $user );
+		$sheetlib->replace_layout($gid, 'default', 0, 0 );
+		
+		//Categorizar galeria de ficheros
+		$categlib->uncategorize_object("sheet", $gid);
+		$idCatObj = $categlib->add_categorized_object("sheet", $gid, $desc, $name, "tiki-view_sheets.php?sheetId=$gid");
+		$categlib->categorize($idCatObj, $parentCategoryId);
+		return $gid;
+	}
+	
+	
 	function get_category_objects($categId, $name = null, $type = "*") {
 			// Get all the objects in a category
 	/*$query = "select * from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 where tbl1.`catObjectId`=tbl2.`catObjectId` and `categId`=?";

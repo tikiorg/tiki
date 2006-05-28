@@ -323,6 +323,12 @@ class WorkspaceLib extends TikiDB {
 			case "file gallery" :
 				$permType = "file galleries";
 				break;
+			case "tracker" :
+				$permType = "trackers";
+				break;
+			case "survey" :
+				$permType = "surveys";
+				break;
 			default :
 				$permType = $objectType;
 		endswitch;
