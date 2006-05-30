@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.17 2006-05-29 12:47:12 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.18 2006-05-30 14:52:45 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -136,12 +136,16 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export'])) {
 	if (isset($_REQUEST['startDate_Month'])) {
 		$startDate = mktime(0, 0, 0, $_REQUEST['startDate_Month'], $_REQUEST['startDate_Day'], $_REQUEST['startDate_Year']);
 		$url .= "&amp;start=$startDate";
+	} elseif (isset($_REQUEST['startDate'])) {
+		$startDate = $_REQUEST['startDate'];
 	} else
 		$startDate = mktime(0, 0, 0, date('n'), date('d'), date('Y'));
 	$smarty->assign('startDate', $startDate);
 	if (isset($_REQUEST['endDate_Month'])) {
 		$endDate = mktime(23, 59, 59, $_REQUEST['endDate_Month'], $_REQUEST['endDate_Day'], $_REQUEST['endDate_Year']);
 		$url .= "&amp;end=$endDate";
+	} elseif (isset($_REQUEST['endDate'])) {
+		$endDate = $_REQUEST['endDate'];
 	} else
 		$endDate = mktime(23, 59, 59, date('n'), date('d'), date('Y'));
 	$smarty->assign('endDate', $endDate);
