@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.18 2006-05-30 14:52:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.19 2006-06-02 20:15:23 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -181,9 +181,10 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export'])) {
 		}
 		switch ($actions[$i]['objectType']) {
 		case 'wiki page':
-			$actions[$i]['link'] = 'tiki-index.php?page='.$actions[$i]['object'];
-			if ($actions[$i]['action'] == 'Renamed' && preg_match("/old=(.*)/", $actions[$i]['comment'], $matches))
-				$actions[$i]['object'] = $matches[1];
+			if (preg_match("/old=(.*)/", $actions[$i]['comment'], $matches))
+				$actions[$i]['link'] = 'tiki-index.php?page='.$actions[$i]['object'].'&amp;old='.$matches[1];
+			else
+				$actions[$i]['link'] = 'tiki-index.php?page='.$actions[$i]['object'];
 			break;
 		case 'category':
 			$actions[$i]['link'] = 'tiki-browse_categories.php?parentId='.$actions[$i]['object'];
@@ -239,7 +240,10 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export'])) {
 			preg_match('/type=([^&]*)(&.*)/', $actions[$i]['comment'], $matches);
 			switch ($matches[1]) {
 			case 'wiki page': case 'wiki+page': case 'wiki%20page':
-				$actions[$i]['link'] = 'tiki-index.php?page='.$actions[$i]['object'].$matches[2];
+				$actions[$i]['link'] = 'tiki-index.php?page='.$actions[$i]['object'];
+				if (preg_match("/old=(.*)&amp;/", $actions[$i]['comment'], $ms))
+					$actions[$i]['link'] .= '&amp;old='.$ms[1];
+				$actions[$i]['link'] .= $matches[2];
 				break;
 			case 'file gallery':
 				$actions[$i]['link'] = 'tiki-list_file_gallery.php?galleryId='.$actions[$i]['object'].$matches[2];
