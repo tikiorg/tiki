@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.12 2006-05-22 17:09:13 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.13 2006-06-07 16:12:02 xavidp Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -1965,13 +1965,15 @@ table.default	thead	td,	table.default	tfoot	td
 {
 	font-weight:		bold;
 	text-align:			center;
+	background-color: #E5EEF6;
 }
 
 table.default	td
 {
 	border-style:		solid;
 	border-width:		1px;
-	border-color:		#000000;
+	border-color:		#8CACBB;
+	background-color: #FFFFFF;
 }
 /* }}}1 */
 
