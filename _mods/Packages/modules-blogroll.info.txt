@@ -1,0 +1,27 @@
+contributor:
+$Author: amette $
+
+revision: 
+$Revision: 1.1 $
+
+lastmodif:
+$Date: 2006-06-08 21:24:10 $
+
+files: 
+modules/blogroll/modules/mod-blogroll.php modules/mod-blogroll.php
+modules/blogroll/templates/modules/mod-blogroll.tpl templates/modules/mod-blogroll.tpl
+
+author:
+amette
+
+licence:
+GNU/LGPL
+
+Description: 
+A module, that takes an OPML-file from your file-gallery and renders it as a blogroll
+
+ChangeLog
+1.0 Initial Module
+
+help:
+Upload your OPML-file to your file gallery and then use this module with module-params "fileId=x", where x is the Id of your OPML-file
