@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.46 2006-04-26 13:58:09 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.47 2006-06-19 20:50:04 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -33,7 +33,7 @@ class NlLib extends TikiLib {
 		if( $draft == false ) {
 			$now = date("U");
 			
-			if( $editionId > 0 && $this->getOne('select `sent` from `tiki_sent_newsletters` where `editionId`=?', array( (int)$editionId )) == -1 ) {
+			if( $editionId > 0) {
 				// save and send a draft
 				$query = "update `tiki_sent_newsletters` set `subject`=?, `data`=?, `sent`=?, `users`=? ";
 				$query.= "where editionId=? and nlId=?";
