@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.31 2006-06-19 20:50:04 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.32 2006-06-19 21:04:52 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -156,7 +156,7 @@ if (isset($_REQUEST["send"])) {
 		$users = $nllib->get_all_subscribers($_REQUEST["nlId"], $nl_info["unsubMsg"]);
 	}
 	
-	$editionId = $nllib->replace_edition($_REQUEST["nlId"], $_REQUEST["subject"], $_REQUEST["data"], $sent, $_REQUEST['editionId']);
+	$editionId = $nllib->replace_edition($_REQUEST["nlId"], $_REQUEST["subject"], $_REQUEST["data"], $sent, $_REQUEST['editionId'], true);
 	$nllib->memo_subscribers_edition($editionId, $users);
 	foreach ($users as $us) {
 		$userEmail  = $us["login"];

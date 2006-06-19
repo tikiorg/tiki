@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.47 2006-06-19 20:50:04 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.48 2006-06-19 21:04:52 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -39,8 +39,7 @@ class NlLib extends TikiLib {
 				$query.= "where editionId=? and nlId=?";
 				$result = $this->query($query,array($subject,$data, (int)$now, $users, (int)$editionId,(int)$nlId));
 				$query = "update `tiki_newsletters` set `editions`= `editions`+ 1 where `nlId`=? ";
-				$result = $this->query($query,array((int)$nlId));
-				
+				$result = $this->query($query,array((int)$nlId));				
 			}
 			else {
 				// save and send an edition				
@@ -51,7 +50,7 @@ class NlLib extends TikiLib {
 				$editionId = $this->getOne('select max(`editionId`) from `tiki_sent_newsletters`');				
 			}
 		} else {
-			if( $editionId > 0 && $this->getOne('select `sent` from `tiki_sent_newsletters` where `editionId`=?', array( (int)$editionId )) == -1 ) {
+			if( $editionId > 0 && $this->getOne('select `sent` from `tiki_sent_newsletters` where `editionId`=?', array( (int)$editionId )) >=0 ) {
 				// save an existing draft
 				$query = "update `tiki_sent_newsletters` set `subject`=?, `data`=?";
 				$query.= "where editionId=? and nlId=?";			
