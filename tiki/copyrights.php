@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/copyrights.php,v 1.10 2005-08-25 20:50:04 michael_davey Exp $
+// $Header: /cvsroot/tikiwiki/tiki/copyrights.php,v 1.11 2006-06-24 15:34:02 rischconsulting Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,7 +9,7 @@
 //this script may only be included - so its better to ierr & die if called directly.
 //smarty is not there - we need setup
 require_once('tiki-setup.php');  
-$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
+//$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 
 // This file sets up the information needed to display
@@ -18,7 +18,7 @@ require_once ('lib/tikilib.php');
 
 require_once ('tiki-setup.php');
 
-$access->check_feature($wiki_feature_copyrights, tra("Copyright management"));
+//$access->check_feature($wiki_feature_copyrights, tra("Copyright management"));
 $access->check_permission(array('tiki_p_edit_copyrights'), tra("Copyright management"));
 
 include_once ("lib/copyrights/copyrightslib.php");
