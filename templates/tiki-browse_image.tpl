@@ -1,5 +1,4 @@
 {if $popup ne ""}
-
   {if $slideshow_p ne ''}
     {if $previmg ne '' && $desp ne 0}
     <META HTTP-EQUIV="Refresh" CONTENT="{$slideshow_p};tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$previmg}{if $itype=='s'}&amp;scaled&amp;scalesize={$scalesize}{/if}&amp;popup={$popup}&amp;slideshow_p={$slideshow_p}">
@@ -10,8 +9,9 @@
     <META HTTP-EQUIV="Refresh" CONTENT="{$slideshow_n};tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$nextdesp}&amp;galleryId={$galleryId}&amp;imageId={$nextimg}{if $itype=='s'}&amp;scaled&amp;scalesize={$scalesize}{/if}&amp;popup={$popup}&amp;slideshow_n={$slideshow_n}">
     {/if}
   {/if}
-  
-
+  <script language='Javascript' type='text/javascript'>
+	window.resizeTo({$winx},{$winy});
+  </script>
 {/if}
 
 {if $popup eq ""}
@@ -83,7 +83,7 @@
 
   <div class="showimage" {if ($popup) }style="height: 400px"{/if}>
   
-  
+{* Slideshow commented out - just doesn't work!  
   
  {*	About LGPL:
 	
@@ -104,14 +104,14 @@ Patrick Fitzgerald
 	 More options	  Aug 26 
 Yes, you may use slideshow.js under the LGPL.
 
-*}
+*}{*
   {literal}
   
   <SCRIPT TYPE="text/javascript">
 <!--
 
 /*==================================================*
- $Id: tiki-browse_image.tpl,v 1.39 2006-05-22 17:09:14 mose Exp $
+ $Id: tiki-browse_image.tpl,v 1.40 2006-06-24 13:08:27 amette Exp $
  Copyright 2000-2003 Patrick Fitzgerald
  http://slideshow.barelyfitz.com/
 
@@ -894,9 +894,12 @@ if (document.images) {
     	<img src="show_image.php?id={$imageId}&amp;nocount=y" alt="{tr}image{/tr}" />
     {else}
 	    <a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$desp}&amp;galleryId={$galleryId}&amp;imageId={$imageId}&amp;scalesize={$scaleinfo.nextscale}&amp;scaled" title="{tr}Click to zoom{/tr}">
-	    <img src="show_image.php?id={$imageId}&amp;scaled&amp;scalesize={$scalesize}&amp;nocount=y" alt="{tr}image{/tr}" /></a>
-    {/if}
-    *}
+
+
+-- End of commenting out broken slideshow! *}
+
+	    <a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$desp}&amp;galleryId={$galleryId}&amp;imageId={$imageId}{if $scaleinfo.nexttype eq 's'}&amp;scalesize={$scaleinfo.nextscale}&amp;scaled{/if}" title="{tr}Click to zoom{/tr}: {if $scaleinfo.nexttype eq 's'}{$scaleinfo.nextscale}px{else}{tr}original size{/tr}{/if}">
+	    <img src="show_image.php?id={$imageId}{if $itype eq 's'}&amp;scaled&amp;scalesize={$scalesize}{/if}&amp;nocount=y" alt="{tr}image{/tr}" /></a>
   </div>
   
 {if $popup eq ""}

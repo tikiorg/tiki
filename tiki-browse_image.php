@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.35 2006-02-17 15:10:30 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.36 2006-06-24 13:08:27 amette Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -310,6 +310,7 @@ if ($feature_theme_control == 'y') {
 if (isset($_REQUEST['popup'])and ($_REQUEST['popup'])) {
 	$smarty->assign('popup', 'y');
 
+/* Comment out broken Slideshow-stuff
 	if (!isset($_REQUEST["sort_mode"])) {
 		if(isset($info['sortorder'])) {
 			// default sortorder from gallery settings
@@ -383,6 +384,8 @@ if (isset($_REQUEST['popup'])and ($_REQUEST['popup'])) {
 	$smarty->assign('slide_show',$images_slide);
 
 
+END Comment out
+*/
 	$smarty->assign('feature_top_bar', 'n');
 	$smarty->assign('feature_left_column', 'n');
 	$smarty->assign('feature_right_column', 'n');
