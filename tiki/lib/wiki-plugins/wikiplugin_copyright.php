@@ -1,6 +1,6 @@
 <?php
 
-//require_once ('lib/tikilib.php');
+//require_once  ('lib/tikilib.php');
 
 //require_once ('tiki-setup.php');
 require_once ("lib/copyrights/copyrightslib.php");
