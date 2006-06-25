@@ -1,6 +1,6 @@
 <?php
 
-//require_once  ('lib/tikilib.php');
+//require_once ('lib/tikilib.php');
 
 //require_once ('tiki-setup.php');
 require_once ("lib/copyrights/copyrightslib.php");
@@ -21,14 +21,14 @@ function wikiplugin_copyright($data, $params) {
 
 	$copyrightslib = new CopyrightsLib($dbTiki);
 
-	if (!isset($_REQUEST['copyrightpage'])) {
+	if (!isset($_REQUEST['page'])) {
 		return '';
 	}
 
 	//extract($params);
 	$result = '';
 
-	$copyrights = $copyrightslib->list_copyrights($_REQUEST['copyrightpage']);
+	$copyrights = $copyrightslib->list_copyrights($_REQUEST['page']);
 
 	for ($i = 0; $i < $copyrights['cant']; $i++) {
 		$notice = str_replace("~title~", $copyrights['data'][$i]['title'], $data);
@@ -41,7 +41,7 @@ function wikiplugin_copyright($data, $params) {
 	global $tiki_p_edit_copyrights;
 
 	if ((isset($tiki_p_edit_copyrights)) && ($tiki_p_edit_copyrights == 'y')) {
-		$result = $result . "\n<a href=\"copyrights.php?page=" . $_REQUEST['copyrightpage'] . "\">Edit copyrights</a> for ((" . $_REQUEST['copyrightpage'] . "))\n";
+		$result = $result . "\n<a href=\"copyrights.php?page=" . $_REQUEST['page'] . "\">Edit copyrights</a> for ((" . $_REQUEST['page'] . "))\n";
 	}
 
 	return $result;
