@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/copyrights.php,v 1.13 2006-06-25 21:18:20 rischconsulting Exp $
+// $Header: /cvsroot/tikiwiki/tiki/copyrights.php,v 1.14 2006-06-25 21:24:22 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -35,8 +35,9 @@ global $dbTiki;
 $copyrightslib = new CopyrightsLib($dbTiki);
 
 if (!isset($_REQUEST["page"])) {
-
-// redirect back to home page
+	$smarty->assign('msg', tra("No page indicated"));
+	$smarty->display("error.tpl");
+	die;
 }
 
 $smarty->assign('page', $_REQUEST["page"]);
