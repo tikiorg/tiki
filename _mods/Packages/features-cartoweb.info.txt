@@ -1,0 +1,55 @@
+contributor:
+$Author: tombombadilom $
+
+revision:
+0.0.1
+
+lastmodif:
+$Date: 2006-07-01 23:37:04 $
+
+files: 
+features/cartoweb/tiki-list_maps.php tiki-list_maps.php
+features/cartoweb/tiki-edit_map.php tiki-edit_map.php
+features/cartoweb/tiki-list_layers.php tiki-list_layers.php
+features/cartoweb/tiki-edit_layer.php tiki-edit_layer.php
+features/cartoweb/db/local2.php lib/db/local2.php
+features/cartoweb/lib/categories/categlib.php lib/categories/categlib.php
+features/cartoweb/lib/map/layer.php lib/map/layer.php
+features/cartoweb/lib/wiki-plugins/wiki-plugin_cartoweb.php lib/wiki-plugins/wiki-plugin_mapicon.php
+features/cartoweb/templates/tiki-edit_layer.tpl templates/tiki-edit_layer.tpl
+features/cartoweb/templates/tiki-edit_map.tpl templates/tiki-edit_map.tpl
+features/cartoweb/templates/tiki-list_layers.tpl templates/tiki-list_layers.tpl
+features/cartoweb/templates/tiki-list_maps.tpl templates/tiki-list_maps.tpl
+
+sql-install:
+DROP TABLE IF EXISTS `tiki_maps`;
+CREATE TABLE IF NOT EXISTS `tiki_maps` (`mapId` int(8) NOT NULL auto_increment,`created` int(14) NOT NULL,`modified` int(14) default NULL,`name` text,`projectName` text NOT NULL, `author` text, `type` text, `path` text, `copyright` text, `copyrightUrl` text, `gateway` text, `db` text, `description` text,  PRIMARY KEY  (`mapId`)) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+DROP TABLE IF EXISTS `tiki_map_layer`;
+CREATE TABLE IF NOT EXISTS `tiki_map_layer` (`layerId` int(8) NOT NULL auto_increment, `name` text, `mapId` int(8) NOT NULL, `author` text, `islayerGroup` tinyint(1) NOT NULL, `layerGroupId` int(8) NOT NULL, `layerRendering` text NOT NULL, `layerAggregate` text NOT NULL, `type` text, `config` text, `copyright` text, `copyrightUrl` text, `gateway` text NOT NULL, `db` text, `table` text, `description` text, `created` int(14) default NULL, `modified` int(14) default NULL, `maxitem` int(11) NOT NULL, PRIMARY KEY  (`layerId`)) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=102 ;
+INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`) VALUES ('tiki_p_layer_view', 'Can view layer', 'basic', 'layers');
+INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`) VALUES ('tiki_p_layer_edit', 'Can edit layer', 'editors', 'layers);
+INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`) VALUES ('tiki_p_layer_delete', 'Can delete layer', 'admin', 'layers');
+INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`) VALUES ('tiki_p_layer_create', 'Can create new layer', 'admin', 'layers');
+INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`) VALUES ('tiki_p_item_layer_view', 'Can view item_layer', 'basic', 'layers');
+INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`) VALUES ('tiki_p_item_layer_edit', 'Can edit item_layer', 'editors', 'layers');
+INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`) VALUES ('tiki_p_item_layer_delete', 'Can delete item_layer', 'admin', 'layers');
+INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`) VALUES ('tiki_p_item_layer_create', 'Can create new  item_layer', 'basic', 'layers');
+
+sql-remove:
+drop table if exists tiki_maps;
+drop table if exists tiki_map_layer;
+
+author:
+Tom Bouillut
+
+licence:
+GNU/LGPL
+
+devurl:
+http://dev.sigfreed.net/tiki-index.php?page_ref_id=1
+
+Description: 
+Cartowebs mod intend to add Postgis layer /table creation to add point / line / polygon to tikiwiki used with cartoweb GIS Framework 
+
+Changelog:
+
