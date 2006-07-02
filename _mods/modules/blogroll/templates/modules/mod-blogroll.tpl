@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/_mods/modules/blogroll/templates/modules/mod-blogroll.tpl,v 1.1 2006-06-08 21:24:11 amette Exp $ *}
+{* $Header: /cvsroot/tikiwiki/_mods/modules/blogroll/templates/modules/mod-blogroll.tpl,v 1.2 2006-07-02 03:32:14 amette Exp $ *}
 
 {if $feature_file_galleries eq 'y'}
 {eval var="{tr}Blogroll{/tr}" assign="tpl_module_title"}
@@ -12,8 +12,8 @@
 {section name=ix loop=$feeds}
 	{if $feeds[ix].type eq 'complete'}
 		<li>
-			<a href="{$feeds[ix].attributes.HTMLURL}" title="{$feeds[ix].attributes.DESCRIPTION}">{$feeds[ix].attributes.TITLE}</a>
-			<a href="{$feeds[ix].attributes.XMLURL}"><img alt="RSS" style="border: 0; vertical-align: text-bottom;" src="img/rss.png" /></a>
+			<a href="{$feeds[ix].attributes.HTMLURL|regex_replace:"/\"/":"'"}" title="{$feeds[ix].attributes.DESCRIPTION|regex_replace:"/\"/":"'"}">{$feeds[ix].attributes.TITLE|escape}</a>
+			<a href="{$feeds[ix].attributes.XMLURL|regex_replace:"/\"/":"'"}"><img alt="RSS" style="border: 0; vertical-align: text-bottom;" src="img/rss.png" /></a>
 		</li>
 	{elseif $feeds[ix].type eq 'open'}
 		<li>
