@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/_mods/modules/blogroll/templates/modules/mod-blogroll.tpl,v 1.2 2006-07-02 03:32:14 amette Exp $ *}
+{* $Header: /cvsroot/tikiwiki/_mods/modules/blogroll/templates/modules/mod-blogroll.tpl,v 1.3 2006-07-08 06:04:14 amette Exp $ *}
 
 {if $feature_file_galleries eq 'y'}
 {eval var="{tr}Blogroll{/tr}" assign="tpl_module_title"}
@@ -12,13 +12,12 @@
 {section name=ix loop=$feeds}
 	{if $feeds[ix].type eq 'complete'}
 		<li>
-			<a href="{$feeds[ix].attributes.HTMLURL|regex_replace:"/\"/":"'"}" title="{$feeds[ix].attributes.DESCRIPTION|regex_replace:"/\"/":"'"}">{$feeds[ix].attributes.TITLE|escape}</a>
-			<a href="{$feeds[ix].attributes.XMLURL|regex_replace:"/\"/":"'"}"><img alt="RSS" style="border: 0; vertical-align: text-bottom;" src="img/rss.png" /></a>
+			<a href="{$feeds[ix].attributes.HTMLURL|regex_replace:"/\"/":"'"|urlencode}" title="{$feeds[ix].attributes.DESCRIPTION|regex_replace:"/\"/":"'"}">{$feeds[ix].attributes.TITLE|escape}</a>
+			<a href="{$feeds[ix].attributes.XMLURL|regex_replace:"/\"/":"'"|urlencode}"><img alt="RSS" style="border: 0; vertical-align: text-bottom;" src="img/rss.png" /></a>
 		</li>
 	{elseif $feeds[ix].type eq 'open'}
 		<li>
 			{$feeds[ix].attributes.TEXT}
-		</li>
 		{if $nonums eq 'y'}
 			<ul>
 		{else}
@@ -27,6 +26,7 @@
 	{elseif $feeds[ix].type eq 'close'}
 		{if $nonums eq 'y'}
 			</ul>
+		</li>
 		{else}
 			</ol>
 		{/if}
