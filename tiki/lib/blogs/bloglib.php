@@ -107,6 +107,23 @@ class BlogLib extends TikiLib {
 		return true;
 	}
 
+	function remove_trackback_from($postId, $url) {
+		if (!$this->getOne("select count(*) from `tiki_blog_posts` where `postId`=?",array($postId)))
+			return false;
+
+		$tbs = $this->get_trackbacks_from($_REQUEST["postId"]);
+		$newtbs = array();
+		foreach ( $tbs as $key => $oldtbs ) {
+			if ( $key != $_REQUEST["deltrack"] ) {
+				$newtbs["$key"] = $oldtbs;
+			}
+		}
+		$st = serialize($newtbs);
+		$query = "update `tiki_blog_posts` set `trackbacks_from`=? where `postId`=?";
+		$this->query($query,array($st,$postId));
+		return true;
+	}
+
 	function get_trackbacks_from($postId) {
 		$st = $this->db->getOne("select `trackbacks_from` from `tiki_blog_posts` where `postId`=?",array($postId));
 
