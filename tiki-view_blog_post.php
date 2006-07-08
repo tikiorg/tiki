@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog_post.php,v 1.33 2005-12-11 15:27:04 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog_post.php,v 1.34 2006-07-08 05:47:40 amette Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -68,10 +68,46 @@ $parts = parse_url($_SERVER['REQUEST_URI']);
 
 $postId = $_REQUEST["postId"];
 $post_info = $bloglib->get_post($_REQUEST["postId"]);
+$_REQUEST["blogId"] = $post_info["blogId"];
+$blog_data = $tikilib->get_blog($_REQUEST["blogId"]);
+
+$ownsblog = 'n';
+
+if ($user && $user == $blog_data["user"]) {
+	$ownsblog = 'y';
+}
+
+$smarty->assign('ownsblog', $ownsblog);
+
+if ( isset($_REQUEST["deltrack"]) && ($_REQUEST["deltrack"] != '') ) {
+//var_dump($ownsblog);var_dump($user);var_dump($tiki_p_blog_admin);die;
+	if ($ownsblog == 'n') {
+		if (!$user || $blog_data["user"] != $user) {
+			if ($tiki_p_blog_admin != 'y') {
+				$smarty->assign('msg', tra("Permission denied you cannot remove trackbacks"));
+
+				$smarty->display("error.tpl");
+				die;
+			}
+		}
+	}
+		$area = 'delpost';
+		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+			key_check($area);
+			$bloglib->remove_trackback_from($_REQUEST["postId"], $_REQUEST["deltrack"]);
+			$post_info = $bloglib->get_post($_REQUEST["postId"]);
+	} else {
+		key_get($area);
+  	}
+}
+
+//var_dump($post_info["trackbacks_from"]);die;
+
+
+
 $post_info['data']=htmldecode($post_info['data']);
 $smarty->assign('post_info', $post_info);
 $smarty->assign('postId', $_REQUEST["postId"]);
-$_REQUEST["blogId"] = $post_info["blogId"];
 $blog_data = $bloglib->get_blog($_REQUEST['blogId']);
 $smarty->assign('blog_data', $blog_data);
 $smarty->assign('blogId', $_REQUEST["blogId"]);
@@ -167,15 +203,6 @@ if ($tiki_p_read_blog != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-
-$blog_data = $tikilib->get_blog($_REQUEST["blogId"]);
-$ownsblog = 'n';
-
-if ($user && $user == $blog_data["user"]) {
-	$ownsblog = 'y';
-}
-
-$smarty->assign('ownsblog', $ownsblog);
 
 if (!$blog_data) {
 	$smarty->assign('msg', tra("Blog not found"));

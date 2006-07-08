@@ -83,12 +83,18 @@
 	<td class="heading">{tr}Title{/tr}</td>
 	<td class="heading">{tr}URI{/tr}</td>
 	<td class="heading">{tr}Blog name{/tr}</td>
+{if ($ownsblog eq 'y') or ($user and $post_info.user eq $user) or $tiki_p_blog_admin eq 'y'}
+	<td class="heading">{tr}Action{/tr}</td>
+{/if}
 </tr>
 {foreach from=$post_info.trackbacks_from key=key item=item}
 <tr>
   <td  class="{cycle advance=false}">{$item.title}</td>
   <td  class="{cycle advance=false}"><a href="{$key}" class="link" title="{$key}" target="_blank">{$key|truncate:"40"}</td>
   <td  class="{cycle}">{$item.blog_name}</td>
+  {if ($ownsblog eq 'y') or ($user and $post_info.user eq $user) or $tiki_p_blog_admin eq 'y'}
+    <td  class="{cycle advance=false}"><a href="tiki-view_blog_post.php?postId={$postId}&amp;deltrack={$key|urlencode}"><img border='0' src='img/icons2/delete.gif' title='{tr}Remove{/tr}' alt='{tr}Remove{/tr}' /></a></td>
+  {/if}
 </tr>
 {/foreach}
 </table>
