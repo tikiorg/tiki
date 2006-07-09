@@ -11,6 +11,7 @@ require_once("lib/freetag/freetaglib.php");
 //instantiating the object(like on the next line) helped. I'm unsure about this one - please check it!
 //Initial problem was, "Call to a member-function on a non-object"
 //Probably related to evaluating modules first - dunno.
+global $dbTiki;
 $freetaglib = new FreetagLib($dbTiki);
 
 $most_popular_tags = $freetaglib->get_most_popular_tags('', 0, $module_rows);
