@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.645 2006-05-22 17:09:09 mose Exp $
+// CVS: $Id: tikilib.php,v 1.646 2006-07-13 14:30:29 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3705,7 +3705,7 @@ function add_pageview() {
 	return true;
     }
 
-    function create_page($name, $hits, $data, $lastModif, $comment, $user = 'admin', $ip = '0.0.0.0', $description = '', $lang='', $is_html = false, $lock_it='', $contributions) {
+    function create_page($name, $hits, $data, $lastModif, $comment, $user = 'admin', $ip = '0.0.0.0', $description = '', $lang='', $is_html = false, $lock_it='', $contributions=null) {
 	global $smarty, $feature_contribution;
 	global $dbTiki;
 	global $sender_email;
