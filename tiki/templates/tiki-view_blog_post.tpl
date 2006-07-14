@@ -1,4 +1,4 @@
-<!-- $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_blog_post.tpl,v 1.24 2006-07-14 11:00:58 sylvieg Exp $ -->
+<!-- $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_blog_post.tpl,v 1.25 2006-07-14 11:08:13 amette Exp $ -->
 {if $feature_blogposts_pings == 'y'
   && ($blog_data.allow_comments == 'y' or $blog_data.allow_comments == 't')
   && $feature_trackbackpings  == 'y'}
@@ -26,7 +26,7 @@
 {if $feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
 <div class="freetaglist">
   {foreach from=$tags.data item=tag}
-	  <a class="freetag" href="tiki-browse_freetags.php?tag={$tag.tag}">{$tag.tag}</a> 
+	<a class="freetag" href="tiki-browse_freetags.php?tag={$tag.tag}">{$tag.tag}</a> 
   {/foreach}
 </div>
 {/if}
@@ -94,9 +94,9 @@
 </tr>
 {foreach from=$post_info.trackbacks_from key=key item=item}
 <tr>
-  <td  class="{cycle advance=false}">{$item.title|escape}</td>
-  <td  class="{cycle advance=false}"><a href="{$key}" class="link" title="{$key}" target="_blank">{$key|truncate:"40"|escape}</a></td>
-  <td  class="{cycle}">{$item.blog_name|escape}</td>
+  <td  class="{cycle advance=false}">{$item.title|htmlentities}</td>
+  <td  class="{cycle advance=false}"><a href="{$key}" class="link" title="{$key}" target="_blank">{$key|truncate:"40"|htmlentities}</a></td>
+  <td  class="{cycle}">{$item.blog_name|htmlentities}</td>
   {if ($ownsblog eq 'y') or ($user and $post_info.user eq $user) or $tiki_p_blog_admin eq 'y'}
     <td  class="{cycle advance=false}"><a href="tiki-view_blog_post.php?postId={$postId}&amp;deltrack={$key|urlencode}"><img border='0' src='img/icons2/delete.gif' title='{tr}Remove{/tr}' alt='{tr}Remove{/tr}' /></a></td>
   {/if}
