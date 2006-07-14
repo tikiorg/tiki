@@ -158,7 +158,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 			<div id="col1">
 				<div class="colwrapper">
 					<div class="content{if $feature_left_column ne 'n'} marginleft{/if}{if $feature_right_column ne 'n'} marginright{/if}">
-      {include file=$mid}
+      {$mid_data}
       {if $show_page_bar eq 'y'}
         {include file="tiki-page_bar.tpl"}
       {/if}
