@@ -10,14 +10,62 @@ Use the following tags to distinguish changes :
 * [NEW] apply if something new was added in tikiwiki
 * [MOD] is an enhancement; not really new but makes things work better
 * [FIX] can be used for bug fixes of any sort
+* [SEC] (new in 1.9.4) for security fix operations
+* -[DB] (new in 1.9.4) for changes in the database
 
 Please wrap your lines at 80 characters and indent them with spaces only.
 
-Version 1.10
+<Version 1.10
 <http://tikiwiki.org/ReleaseProcess110>
-- 2005/05/18 : http://dev.tikiwiki.org/RefreshHEAD
+------------------
+
+Version 1.9.5
+<http://tikiwiki.org/ReleaseProcess195>
+------------------
+
+[MOD] imagegal: added in admin panel a way to move images from db to filesystem
+[MOD] users: added an option to have new users accept internal messages by default
+[FIX] tiki-index_p.php: typo feature_wiki_usrlock
+[FIX] Trackback pings for blog posts accepted only if the feature blog is enabled
+[MOD] Blogs trackback pings considered as comments so depend on their settings / perms (temporary, should be separated on own settings )
+[MOD] View blogs post refactored
+[FIX] wikiplugin snarf : don't change line feeds in <br />
+[FIX] wikiplugin code : uses proper <br />
+[FIX] mk_profile.sh : accepts optionals backticks around table names , better autodoc
 
 
+Version 1.9.4
+<http://tikiwiki.org/ReleaseProcess194>
+------------------
+
+[MOD] cms: added an option for availability of print option in cms
+[NEW] google-map: new feature, used for usermap and self-location
+[FIX] polls: changed polls admin access permission to be distinct from admin one
+[MOD] user: added an option to remove all pages from user when deleting user
+[NEW] trackers: new export page in csv format
+[FIX] trackers: made filter work with categ field type
+[FIX] trackers: fixed trackers to accept zero when a numeric field type is mandatory
+[FIX] galaxia: added a check for name of start activity
+[FIX] maps: freeing now image memory after request to avoid bloating
+[FIX] cms: fixed db commpat for print view (reads->nbreads)
+[FIX] newsletter: set up the from address to default from when sending newsletter
+[MOD] multi: added $local_php and $multi optional vars for geeks only
+[SEC] several vars added to sanitization to avoid cross-site scripting
+[FIX] devtools: improved sqlupgrade script for when password includes a quote 
+[MOD] lang: major improvement of finnish translation
+[MOD] lang: update of de, fr, it
+[MOD] wiki: changed lock icon
+[FIX] wiki: made sorting respect find filter
+[MOD] pear: replaced clone() by cloneNode() because reserved in some recent php
+[MOD] styles: improvement of mose.css style
+[MOD] styles: improvement of trollparty.css style
+[FIX] html: made alternate link displayed only if perms ok
+[FIX] tabs: fixed cycle with a reset
+-[DB] added 3 perms and 1 pref
+[FIX] Enables download of file galery 's files bigger than 2MB
+
+
+>>>>>>> 1.157.2.37
 Version 1.9.3.1
 <http://tikiwiki.org/ReleaseProcess193>
 - 04/30/2006

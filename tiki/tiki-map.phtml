@@ -323,16 +323,21 @@ if (isset($_REQUEST['maponly']) && $_REQUEST['maponly']=='yes')
   header("Content-type: image/png");
   $image_file=str_replace($image->imageurl,$image->imagepath,$image_url);
   readfile($image_file);
+  $image->free();
   die;
 }
+$image->free();
 
 if (@$_REQUEST['maponly']!='frame') {
 	$image_ref = $map->drawReferenceMap();
 	$image_ref_url = $image_ref->saveWebImage();
+	$image_ref->free();
 	$image_leg = $map->drawLegend();
 	$image_leg_url = $image_leg->saveWebImage();
+	$image_leg->free();
 	$image_scale = $map->drawScaleBar();
 	$image_scale_url = $image_scale->saveWebImage();
+	$image_scale->free();
 }
 
 

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-stats.tpl,v 1.26 2005-10-03 17:21:46 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-stats.tpl,v 1.27 2006-07-14 11:00:55 sylvieg Exp $ *}
 
 <h1><a href="tiki-stats.php" class="pagetitle">{tr}Stats{/tr}</a></h1>
 
@@ -27,12 +27,12 @@
 {* Site stats *}
 <tr><td colspan="2"><a name="site_stats"></a></td></tr>
 <tr><td class="heading" colspan="2">{tr}Site Stats{/tr}</td></tr>
-<tr><td class="even">{tr}Started{/tr}</td><td class="even" style="text-align:right;">{$site_stats.started|tiki_short_date}</td></tr>
+<tr><td class="even">{tr}Started{/tr}</td><td class="even" style="text-align:right;">{$site_stats.started|tiki_long_date}</td></tr>
 <tr><td class="odd">{tr}Days online{/tr}</td><td class="odd" style="text-align:right;">{$site_stats.days}</td></tr>
 <tr><td class="even">{tr}Total pageviews{/tr}</td><td class="even" style="text-align:right;">{$site_stats.pageviews}</td></tr>
 <tr><td class="odd">{tr}Average pageviews per day{/tr}</td><td class="odd" style="text-align:right;">{$site_stats.ppd|string_format:"%.2f"}</td></tr>
-<tr><td class="even">{tr}Best day{/tr}</td><td class="even" style="text-align:right;">{$site_stats.bestday|tiki_short_date} ({$site_stats.bestpvs} {tr}pvs{/tr})</td></tr>
-<tr><td class="odd">{tr}Worst day{/tr}</td><td class="odd" style="text-align:right;">{$site_stats.worstday|tiki_short_date} ({$site_stats.worstpvs} {tr}pvs{/tr})</td></tr>
+<tr><td class="even">{tr}Best day{/tr}</td><td class="even" style="text-align:right;">{$site_stats.bestday|tiki_long_date} ({$site_stats.bestpvs} {tr}pvs{/tr})</td></tr>
+<tr><td class="odd">{tr}Worst day{/tr}</td><td class="odd" style="text-align:right;">{$site_stats.worstday|tiki_long_date} ({$site_stats.worstpvs} {tr}pvs{/tr})</td></tr>
 {* Site stats *}
 
 {* Wiki Stats *}

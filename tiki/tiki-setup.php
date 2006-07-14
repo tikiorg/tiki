@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.304 2006-05-22 17:09:07 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.305 2006-07-14 11:00:44 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -799,6 +799,8 @@ $pass_due = 999;
 $smarty->assign('pass_due', $pass_due);
 $rnd_num_reg = 'n';
 $smarty->assign('rnd_num_reg', $rnd_num_reg);
+$allowmsg_by_default = 'n';
+$smarty->assign('allowmsg_by_default', $allowmsg_by_default);
 
 $smarty->assign('feature_page_title', $feature_page_title);
 $smarty->assign('w_use_db', $w_use_db);
@@ -1317,6 +1319,8 @@ $intertiki_logfile = '';
 $smarty->assign('intertiki_logfile', $intertiki_logfile);
 $intertiki_errfile = '';
 $smarty->assign('intertiki_errfile', $intertiki_errfile);
+$feature_gmap = 'n';
+$smarty->assign('feature_gmap', $feature_gmap);
 
 //$smarty->assign('tikiIndex', $tikiIndex);
 $smarty->assign('maxArticles', $maxArticles);

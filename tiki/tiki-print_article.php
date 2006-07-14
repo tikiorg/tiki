@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-print_article.php,v 1.10 2006-05-22 17:09:07 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-print_article.php,v 1.11 2006-07-14 11:00:44 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,6 +10,13 @@
 require_once ('tiki-setup.php');
 
 include_once ('lib/articles/artlib.php');
+
+if ($feature_cms_print != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled").": feature_cms_print");
+
+	$smarty->display("error.tpl");
+	die;
+}
 
 if (!isset($_REQUEST["articleId"])) {
 	$smarty->assign('msg', tra("No article indicated"));

@@ -13,6 +13,12 @@
    4) substitute the name of your local jabber server for 'jabber.org' in the example avobe and put it into a wiki page.
 
 */
+
+function wikiplugin_jabber_help() {
+	return tra("Runs a Java applet to access a local Jabber service").":<br />~np~{JABBER(height=>200,width=>200,xmlhostname=>jabber.org,defaultColor=>255,255,255)}{JABBER}~/np~. See lib/wiki-plugins/wikiplugin_jabber.php to make this plugin work";
+}
+
+
 function wikiplugin_jabber($data,$params) {
   global $userlib;
   global $user;

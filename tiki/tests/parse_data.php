@@ -1,13 +1,14 @@
 <?php
-
-function file_get_contents($file) {
-  $data = '';
-  $fp = fopen($file,'r');
-  while(!feof($fp)) {
-          $data .= fread($fp,4096);
-  }
-  fclose($fp);
-  return $data;
+if (!function_exists('file_get_contents')) {
+    function file_get_contents($file) {
+      $data = '';
+      $fp = fopen($file,'r');
+      while(!feof($fp)) {
+              $data .= fread($fp,4096);
+      }
+      fclose($fp);
+      return $data;
+    }
 }
 
 class ParseDataTest extends PHPUnit_TestCase {

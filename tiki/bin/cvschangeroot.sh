@@ -1,9 +1,9 @@
 #!/bin/sh
-# $Id: cvschangeroot.sh,v 1.2 2004-05-12 13:15:28 damosoft Exp $
+# $Id: cvschangeroot.sh,v 1.3 2006-07-14 11:00:45 sylvieg Exp $
 
 if [ "$1" = "" ]; then
 	echo "Usage:   $0 CVSROOT"
-	echo "Example: $0 :ext:${USER}@cvs.sourceforge.net:/cvsroot/tikiwiki"
+	echo "Example: $0 :ext:${USER}@tikiwiki.cvs.sourceforge.net:/cvsroot/tikiwiki"
 	exit 1
 fi
 

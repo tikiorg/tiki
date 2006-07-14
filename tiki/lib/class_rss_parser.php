@@ -47,7 +47,6 @@ class RSS_parser {
   var $item_properties=Array();
   var $channel_image=Array();
   var $channel_textinput=Array();
-  var $item_properties=Array();
 
   function get_channel_data() {
     // Return channel properties

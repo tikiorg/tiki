@@ -1,15 +1,20 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.39 2006-02-26 21:01:48 amette Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.40 2006-07-14 11:00:53 sylvieg Exp $
  *
- * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye
- * Enables font re-sizing in all browsers, aims to be WCAG 1.0 compatible (not yet), one simple css file.
+ * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye !
+ * Enables font re-sizing in all browsers, aims to be standards compliant and WCAG 1.0 compatible (not yet).
+ * Uses *lite - an ultimate source ordered layout solution by luci as a base.
+ * Comments/suggestions e-mail to luci[-at-]sh.ground.cz
+ * For more info feel free to visit http://www.ground.cz/luci/css/lite
  * We also try to make better templates (*.tpl files in templates/styles/simple) towards xhtml 1.0 strict validity.
  * For proper CSS2 syntax and possible values see e.g. http://www.zvon.org/xxl/CSS2Reference/Output/
  *
  */
 
-/*
- * the first there are going common html elements; here we start with styling the body
+@import "lite/lite.css"; /* here we import *lite as the base */
+
+/* 
+ * redefine the base CSS -- needs to be adjusted for our own style which comes next
  */
 
 body {
@@ -23,10 +28,68 @@ body {
   padding: 0; /* and padding */
 }
 
+#wrapper {
+	background-color: transparent;
+}
+
+#wrapper
+	#col1 {
+		background-color: transparent;
+	}
+
+#wrapper
+	#col1
+		div.content {
+			background-color: transparent;
+		}
+
+#wrapper
+	#col1
+		div.marginleft {
+			margin-left: 180px;/* change this in your stylesheet too when you change the width of #col2 */
+		}
+
+#wrapper
+	#col1
+		div.marginright {
+			margin-right: 180px;/* change this in your stylesheet too when you change the width of #col3 */
+		}
+
+#wrapper
+	#col2 {
+		background-color: transparent;
+		overflow: hidden;/* prevent overflowing of the content out of the column */
+		width: 180px;
+	}
+
+#col3 {
+	background-color: transparent;
+	overflow: hidden;/* prevent overflowing of the content out of the column */
+	width: 180px;
+}
+
+#footer {background-color: transparent}
+.footerbgtrap {background-color: transparent; color: #000}/* this is needed as a little workaround because MSIE tends to display the footer partly without the background specified */
+
+.content {padding: 1em;}/* this takes care of all the content default appearance */
+
+/*div {border-width: 1px; border-style: solid; padding: 10px; margin: 5px}*/ /* <- if you want to debug with outlines, put this at the bottom of your stylesheet  */
+
+/*
+ * end of redefining the base layout 
+ */
+
+
+
+/*** next comes the own styling fun ***/
+
+/*
+ * the first there are going common html elements
+ */
+
 /* default font size for all text in divs. works together with 75% font-size for body */
 div {
   font-size: 1em;
-  padding: 0.2em;
 }
 
 /* default color for links */
@@ -53,6 +116,7 @@ img {
 table {
   border: dashed 1px #69c;
   font-size: 1em;
+  width: 100%;
 }
 
 table.galtable {
@@ -171,19 +235,16 @@ textarea {
   width: 98%;
 }
 
-/*
- ***** Here we define IDs *****
- */
-/*** These are main parts of the layout ***/
-#maincontent {
-}
-#modules1 {
-}
-#modules2 {
+/* by default align items in lists to the left */
+ul, ol {
+	text-align: left;
 }
 
-#mainmenu {
-}
+/*
+ ***** Here we define some IDs *****
+ */
+ 
+/*** These are main parts of the layout ***/
 #mainmenu br { /* do not display line breaks in main menu when we later set links to display: block */
   display: none;
 }
@@ -240,45 +301,12 @@ textarea {
 .hidden {
  position: absolute; left: -10000px; top: 0px; width: 1px; height: 1px; overflow: hidden;
 }
-/*
- ** These are classes for main parts of the layout, depending what's switched on/off **
- */
-.wrapper {
- float: left; width: 80%;
-}
-.maincontent {
- float: right; width: 75%;
- overflow: auto;
-}
-.maincontent div {
-}
 .maincontent div div, .maincontent ul, .maincontent h2, .maincontent h3, .maincontent div.wikitext {
   text-align: start;
 }
 .maincontent table {
  width: 98%; margin: auto;
  margin-bottom: 0.2em; text-align: start;
-}
-
-.leftcolonlywrapper {
- float: none; width: 100%;
-}
-.leftcolonlymaincontent {
- float: right; width: 80%;
-}
-
-.rightcolonlywrapper {
- float: left; width: 75%;
-}
-.rightcolonlymaincontent {
- float: none; width: 100%;
-}
-
-.nocolwrapper {
- float: left; width: 100%;
-}
-.nocolmaincontent {
- float: none; width: 99%;
 }
 
 /* we use this e.g. for <br /> to clear all instead of <br clear="all" /> */
@@ -293,7 +321,11 @@ textarea {
  background-color: #def;
  border: none;
  margin: 0.2em;
+ overflow: auto;
+ _overflow: hidden; /* MSIE workaround */
+ _overflow-x: auto; /* MSIE workaround */
  padding: 0;
+ _width: auto; /* MSIE workaround to make overflow work */
 }
 div.box-title {
  background: #abcdef;
@@ -308,11 +340,7 @@ div.box-title table {
  border-bottom: dashed 0.2em #abcdef;
  border-left: dashed 0.2em #abcdef;
  border-right: dashed 0.2em #abcdef;
- overflow: auto;
- _overflow: hidden; /* MSIE workaround */
- _overflow-x: auto; /* MSIE workaround */
  padding-bottom: 0.2em;
- _width: 100%; /* MSIE workaround to make overflow work */
 }
 .box-data a {
   text-decoration: none;
@@ -534,8 +562,8 @@ div.messureadbody {
 
 .wikitext {
   background-color: transparent;
-  overflow: auto;
-  clip: rect(0,100%,100%,0);
+  /*overflow: auto;
+  clip: rect(0,100%,100%,0);*/
 }
 
 .wikitopline {
@@ -576,6 +604,11 @@ div.articlebody {
 .attention {
   color: #c00;
 }
+/* Highlight color */
+.highlight {
+	background-color: #fc0;
+	padding: 0 2px 0 2px;
+}
 
 /*
  ***** JS related stuff *****
@@ -587,11 +620,16 @@ div.articlebody {
 .mdkhorbar {
   color: black;
   background-color: #def;
-  border: 1px outset #525252;
+  border: 0px outset #525252;
 }
 
 .horbar {
   margin-left: 0;
+  border: 0px solid #000000;
+}
+
+.horbar table {
+  border: 0px solid #000000;
 }
 
 .horbaritem a {
@@ -632,45 +670,50 @@ div.articlebody {
 }
 
 .mdksubmenu {
+  display: table;
+  z-index: 999;
   position: absolute;
   left: 0;
   top: 0;
+  background-color: #FFFFFF;
   visibility: hidden;
 }
+.mdksubmenu table {
+  width: auto;
+}
 
-.mdksubframe {
+.mdksubframe  {
+  z-index: 1000;
   position: relative;
   display: block;
-  background-color: #def;
-  border: 1px solid #fdfefd;
+  border: 0px solid #000000;
 }
 
-.mdkitem {
+.mdkitem  {
+  border-top: 1px solid #aaccee;
   position: relative;
+  text-align: left;
   white-space: nowrap;
-  font-size: 10px;
-  font-weight: bold;
 }
 
-.mdkitem a {
+.mdkitem a  {
+  background-color: #f0f9ff;
+  padding: 2px 5px 2px 5px;
   position: relative;
   display: block;
   text-decoration: none;
 }
 
-.mdkitem a:link {
+.mdkitem a:visited  {
 }
 
-.mdkitem a:visited {
-}
-
-.mdkitem a:hover {
-  color: #000;
-  background-color: #abcdef;
+.mdkitem a:hover  {
+  background-color: #fff;
+  padding: 2px 5px 2px 5px;
 }
 
 .mdkitem a:active {
-  color: #ff0000;
+  color: #000;
 }
 
 .mdkitem .mdkfwdarr {

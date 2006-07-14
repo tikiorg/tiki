@@ -1,3 +1,19 @@
+{* $Id: tiki-admin_banning.tpl,v 1.23 2006-07-14 11:00:55 sylvieg Exp $ *}
+
+{* this script (un/)checks all checkboxes with id 'banning-section' *}
+<script type="text/javascript">
+{literal}<!--
+	function CheckAll() {
+		for (var i = 0; i < document.banningform.elements.length; i++) {
+			var e = document.banningform.elements[i];
+			if (e.type == 'checkbox' && e.id == 'banning-section' && e.name != 'checkall') {
+				e.checked = document.banningform.checkall.checked;
+			}
+		}
+	}
+//-->{/literal}
+</script>
+
 <h1><a class="pagetitle" href="tiki-admin_banning.php">{tr}Banning system{/tr}</a>
 
       {if $feature_help eq 'y'}
@@ -9,7 +25,7 @@
 <img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>{/if}</h1>
 
 <h2>{tr}Add or edit a rule{/tr}</h2>
-<form action="tiki-admin_banning.php" method="post">
+<form action="tiki-admin_banning.php" name="banningform" method="post">
 <input type="hidden" name="banId" value="{$banId|escape}" />
 <table class="normal">
 <tr>
@@ -38,6 +54,10 @@
 <tr>
 	<td class="formcolor">{tr}Banned from sections{/tr}:</td>
 	<td class="formcolor">
+		<div class="toggle">
+			<input type="checkbox" name="checkall" onclick="CheckAll();" />
+			<label for="sectionswitch">{tr}check / uncheck all{/tr}</label>
+		</div>
 
 		<table><tr>
 		{section name=ix loop=$sections}

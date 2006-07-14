@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.92 2006-05-22 17:09:07 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.93 2006-07-14 11:00:45 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -23,26 +23,31 @@ $smarty->assign('special',false);
 if (!isset($_REQUEST['trackerId']) && $userTracker == 'y') {
 	if (isset($_REQUEST['view']) and $_REQUEST['view'] == ' user') {
 		$utid = $userlib->get_usertrackerid($group);
-		$_REQUEST['trackerId'] = $utid['usersTrackerId'];
-		$_REQUEST["itemId"] = $trklib->get_item_id($_REQUEST['trackerId'],$utid['usersFieldId'],$user);
-		if ($_REQUEST['itemId'] == NULL) {
-			$addit['data'][0]['fieldId'] = $utid['usersFieldId'];
-			$addit['data'][0]['value'] = $user;
-			$i = 1;
-			if ($f = $trklib->get_field_id_from_type($_REQUEST['trackerId'], "u", 1)) {
-			    if ($f != $utid['usersFieldId']) {
-				$addit['data'][1]['fieldId'] = $f;
-				$addit['data'][1]['value'] = $user;
-				++$i;
-			    }
+		if($utid['usersTrackerId']) {
+			$_REQUEST['trackerId'] = $utid['usersTrackerId'];
+			$_REQUEST["itemId"] = $trklib->get_item_id($_REQUEST['trackerId'],$utid['usersFieldId'],$user);
+			if ($_REQUEST['itemId'] == NULL) {
+				$addit['data'][0]['fieldId'] = $utid['usersFieldId'];
+				$addit['data'][0]['type'] = 'u';
+				$addit['data'][0]['value'] = $user;
+				$i = 1;
+				if ($f = $trklib->get_field_id_from_type($_REQUEST['trackerId'], "u", 1)) {
+				    if ($f != $utid['usersFieldId']) {
+					$addit['data'][1]['fieldId'] = $f;
+					$addit['data'][1]['type'] = 'u';
+					$addit['data'][1]['value'] = $user;
+					++$i;
+			    	   }
+				}
+				if ($f = $trklib->get_field_id_from_type($_REQUEST['trackerId'], "g", 1)) {
+					$addit['data'][$i]['fieldId'] = $f;
+					$addit['data'][$i]['type'] = 'g';
+					$addit['data'][$i]['value'] = $group;
+				}
+				$_REQUEST['itemId'] = $trklib->replace_item($_REQUEST["trackerId"], 0, $addit, 'o');
 			}
-			if ($f = $trklib->get_field_id_from_type($_REQUEST['trackerId'], "g", 1)) {
-				$addit['data'][$i]['fieldId'] = $f;
-				$addit['data'][$i]['value'] = $group;
-			}
-			$_REQUEST['itemId'] = $trklib->replace_item($_REQUEST["trackerId"], 0, $addit, 'c');
+			$smarty->assign('special',' user');
 		}
-		$smarty->assign('special',' user');
 	} elseif (isset($_REQUEST["usertracker"]) and $tiki_p_admin == 'y') {
 		$thatgroup = $userlib->get_user_default_group($_REQUEST["usertracker"]);
 		$utid = $userlib->get_usertrackerid($thatgroup);
@@ -54,14 +59,17 @@ if (!isset($_REQUEST['trackerId']) && $userTracker == 'y') {
 if (!isset($_REQUEST['trackerId']) && $groupTracker == 'y') {
 	if (isset($_REQUEST['view']) and $_REQUEST['view'] == ' group') {
 		$gtid = $userlib->get_grouptrackerid($group);
-		$_REQUEST["trackerId"] = $gtid['groupTrackerId'];
-		$_REQUEST["itemId"] = $trklib->get_item_id($_REQUEST['trackerId'],$gtid['groupFieldId'],$group);
-		if ($_REQUEST['itemId'] == NULL) {
-			$addit['data'][0]['fieldId'] = $gtid['groupFieldId'];
-			$addit['data'][0]['value'] = $group;
-			$_REQUEST['itemId'] = $trklib->replace_item($_REQUEST["trackerId"], 0, $addit, 'c');
+		if($gtid['groupTrackerId']) {
+			$_REQUEST["trackerId"] = $gtid['groupTrackerId'];
+			$_REQUEST["itemId"] = $trklib->get_item_id($_REQUEST['trackerId'],$gtid['groupFieldId'],$group);
+			if ($_REQUEST['itemId'] == NULL) {
+				$addit['data'][0]['fieldId'] = $gtid['groupFieldId'];
+				$addit['data'][0]['type'] = 'g';
+				$addit['data'][0]['value'] = $group;
+				$_REQUEST['itemId'] = $trklib->replace_item($_REQUEST["trackerId"], 0, $addit, 'o');
+			}
+			$smarty->assign('special',' group');
 		}
-		$smarty->assign('special',' group');
 	} elseif (isset($_REQUEST["grouptracker"]) and $tiki_p_admin == 'y') {
 		$gtid = $userlib->get_grouptrackerid($_REQUEST["grouptracker"]);
 		$_REQUEST["trackerId"] = $gtid['groupTrackerId'];
@@ -529,6 +537,17 @@ if (isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y' an
 
 if ($_REQUEST["itemId"]) {
 	$info = $trklib->get_tracker_item($_REQUEST["itemId"]);
+	if (!isset($info['trackerId'])) $info['trackerId'] = $_REQUEST['trackerId'];
+	if ((isset($info['status']) and $info['status'] == 'p' && $tiki_p_view_trackers_pending != 'y') 
+	||  (isset($info['status']) and $info['status'] == 'c' && $tiki_p_view_trackers_pending != 'y')
+	||  (!$tikilib->user_has_perm_on_object($user, $info['trackerId'], 'tracker', 'tiki_p_view_trackers') &&
+	  (!isset($utid) || $_REQUEST['trackerId'] != $utid['usersTrackerId']) &&
+		(!isset($gtid) || $_REQUEST['trackerId'] != $utid['groupTrackerId'])
+	) ) {
+		$smarty->assign('msg', tra('Permission denied'));
+		$smarty->display('error.tpl');
+		die;
+	}
 	$last = array();
 	$lst = '';
 

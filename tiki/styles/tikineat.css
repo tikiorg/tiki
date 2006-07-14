@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.13 2006-06-07 16:12:02 xavidp Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.14 2006-07-14 11:00:53 sylvieg Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -1815,6 +1815,7 @@ div#loadstats {
 	padding : 2px 5px;
 	position : relative;
 	display : block;
+	text-decoration: none;
 }
 .mdkitem a:visited  {
 }
@@ -1992,6 +1993,23 @@ div#ajaxLoading {
 	font-size: 10px;
 }
 
+
+/* TikiSheet Default Style {{{1 */
+table.default	thead	td,	table.default	tfoot	td
+{
+	font-weight:		bold;
+	text-align:			center;
+	background-color: #E5EEF6;
+}
+
+table.default	td
+{
+	border-style:		solid;
+	border-width:		1px;
+	border-color:		#8CACBB;
+	background-color: #FFFFFF;
+}
+/* }}}1 */
 
 /*** style for 'advanced feature' divs ***/
 .advanced {

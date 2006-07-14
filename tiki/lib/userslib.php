@@ -1620,16 +1620,18 @@ function get_included_groups($group) {
 
 	function get_usertrackerid($group) {
 		$res = $this->query("select `usersTrackerId`,`usersFieldId` from `users_groups` where `groupName`=?",array($group));
-		if (!$res) {
+		$ret = $res->fetchRow();
+		if (!$ret['usersTrackerId'] or !$ret['usersFieldId']) {
 			$groups = $this->get_included_groups($group);
 			foreach ($groups as $gr) {
 				$res = $this->query("select `usersTrackerId`,`usersFieldId` from `users_groups` where `groupName`=?",array($gr));
-				if ($res) {
-					return $res->fetchRow();
+				$ret = $res->fetchRow();
+				if ($ret['usersTrackerId'] and $ret['usersFieldId']) {
+					return $ret;
 				}
 			}
 		} else {
-			return $res->fetchRow();
+			return $ret;
 		}
 		return false;
 	}

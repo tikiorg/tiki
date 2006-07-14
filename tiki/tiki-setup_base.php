@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.96 2006-05-22 05:57:40 philwhipps Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.97 2006-07-14 11:00:44 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -134,7 +134,22 @@ $vartype['switchLang'] = 'char';
 $vartype['language'] = 'char';
 $vartype['page'] = 'string';
 $vartype['edit_mode'] = 'char';
+$vartype['find'] = 'string';
+$vartype['initial'] = 'char';
+$vartype['username'] = 'string';
+$vartype['realName'] = 'string';
+$vartype['homePage'] = 'string';
+$vartype['to'] = 'string';
+$vartype['cc'] = 'string';
+$vartype['bcc'] = 'string';
+$vartype['subject'] = 'string';
+$vartype['name'] = 'string';
 $vartype['reqId'] = 'hash';
+$vartype['days'] = 'int';
+$vartype['max'] = 'int';
+$vartype['numrows'] = 'int';
+$vartype['rows'] = 'int';
+$vartype['cols'] = 'int';
 
 // if we get an error while reading language from prefs, assume the db
 // is not yet set up and give a message
@@ -158,6 +173,8 @@ function varcheck($array) {
           varcheck($rv);
         } elseif ((((substr($rq,-2,2) == 'Id' and $rq != 'reqId') or (isset($vartype["$rq"]) and $vartype["$rq"] == 'int')) and !preg_match($patterns['int'],$rv))
           or ((isset($vartype["$rq"]) and $vartype["$rq"] == 'hex')  and  !preg_match($patterns['hex'],$rv))
+          or ((isset($vartype["$rq"]) and $vartype["$rq"] == 'intSign') and  !preg_match($patterns['intSign'],$rv))
+          or ((isset($vartype["$rq"]) and $vartype["$rq"] == 'url') and  !preg_match($patterns['url'],$rv))
           or ((isset($vartype["$rq"]) and $vartype["$rq"] == 'char') and  !preg_match($patterns['char'],$rv))
           or ((isset($vartype["$rq"]) and $vartype["$rq"] == 'hash') and  !preg_match($patterns['hash'],$rv))
           or ((isset($vartype["$rq"]) and $vartype["$rq"] == 'string') and  !preg_match($patterns['string'],$rv))) {

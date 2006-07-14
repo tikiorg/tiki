@@ -47,7 +47,7 @@ function wikiplugin_snarf($data, $params)
 
 	//print("<pre>BODY: " . htmlspecialchars( $snarf ) . "</pre>"); 
 
-	$ret = "{CODE(wrap=>1,caption=>" . $data . ")}" . $snarf . "{CODE}";
+	$ret = "{CODE(wrap=>1,wiki=>1,caption=>" . $data . ")}" . $snarf . "{CODE}";
     } else {
 	$ret = "<p>You need php-curl for the SNARF plugin!</p>\n";
     }

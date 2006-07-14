@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.646 2006-07-13 14:30:29 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.647 2006-07-14 11:00:47 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2563,8 +2563,8 @@ function add_pageview() {
     }
 
     function get_article($articleId) {
-	global $user;
-	if (!$this->user_has_perm_on_object($user, $articleId, 'article','tiki_p_read_article'))
+	global $user, $tiki_p_admin_cms;
+	if ($tiki_p_admin_cms != 'y' && !$this->user_has_perm_on_object($user, $articleId, 'article','tiki_p_read_article'))
 		return false;
 	$mid = " where `tiki_articles`.`type` = `tiki_article_types`.`type` ";
 	$query = "select `tiki_articles`.*,
@@ -2588,7 +2588,7 @@ function add_pageview() {
 	`tiki_article_types`.`show_image_caption`,
 	`tiki_article_types`.`show_lang`,
 	`tiki_article_types`.`creator_edit`
-	 from `tiki_article_types`, `tiki_articles` left join `users_users` on `tiki_articles`.`author` = `users_users`.`login`  $mid and `tiki_articles`.`articleId`=?";
+	    from (`tiki_articles`, `tiki_article_types`) left join `users_users` on `tiki_articles`.`author` = `users_users`.`login`  $mid and `tiki_articles`.`articleId`=?";
 	//$query = "select * from `tiki_articles` where `articleId`=?";
 	$result = $this->query($query,array((int)$articleId));
 	if ($result->numRows()) {
@@ -3468,7 +3468,7 @@ function add_pageview() {
   // - category permission
   // if O.K. this function shall replace similar constructs in list_pages and other functions above.
   // $categperm is the category permission that should grant $perm. if none, pass 0
-  function user_has_perm_on_object($user,$object,$objtype,$perm,$categperm='') {
+  function user_has_perm_on_object($user,$object,$objtype,$perm,$categperm='tiki_p_view_categories') {
             global $feature_categories;
             global $userlib;
             // superadmin
@@ -3510,10 +3510,10 @@ function add_pageview() {
                         $is_categorized = FALSE;
                 }
 
-		if ($is_categorized && !empty($categperm) && $$categperm == 'y') {
-                        return(TRUE);
-                }
-				// if it has no category perms or the user does not have
+		if ($is_categorized && !empty($categperm) && $$categperm != 'y') {
+			return (FALSE);
+		}
+                // if it has no category perms or the user does not have
                 // the perms, continue to check individual perms!
 	     }
 		// no individual and no category perms. So has the user the perm itself?
@@ -4320,9 +4320,10 @@ function add_pageview() {
 	if ($feature_hotwords == 'y') {
 	    foreach ($words as $word => $url) {
 		// \b is a word boundary, \s is a space char
-		$line = preg_replace("/(=(\"|')[^\"']*[ \n\t\r\,\;'])$word([ \n\t\r\,\;][^\"']*(\"|'))/i","$1:::::$word,:::::$3",$line);
-		$line = preg_replace("/([ \n\t\r\,\;']|^)$word($|[ \n\t\r\,\;])/i","$1<a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$2",$line);
-		$line = preg_replace("/:::::$word,:::::/i","$word",$line);
+		$pregword = preg_replace("/\//","\/",$word);
+		$line = preg_replace("/(=(\"|')[^\"']*[ \n\t\r\,\;'])$pregword([ \n\t\r\,\;][^\"']*(\"|'))/i","$1:::::$word,:::::$3",$line);
+		$line = preg_replace("/([ \n\t\r\,\;']|^)$pregword($|[ \n\t\r\,\;])/i","$1<a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$2",$line);
+		$line = preg_replace("/:::::$pregword,:::::/i","$word",$line);
 	    }
 	}
 	return $line;
@@ -5081,6 +5082,7 @@ function add_pageview() {
 	    $imgdata["imalign"] = '';
           $imgdata["alt"] = '';
           $imgdata["usemap"] = '';
+          $imgdata["class"] = '';
 	    $imgdata = $this->split_assoc_array( $parts, $imgdata);
 
 			if ($tikidomain) {
@@ -5100,7 +5102,10 @@ function add_pageview() {
           if ($imgdata["usemap"]) {
 		$repl .= ' usemap="#'.$imgdata["usemap"].'"';
           }
-
+          if ($imgdata["class"]) {
+		$repl .= ' class="'.$imgdata["class"].'"';
+          }
+          
 	    $repl .= ' />';
 
 	    if ($imgdata["link"]) {

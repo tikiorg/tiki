@@ -110,7 +110,9 @@ border="0" src="topic_image.php?id={$listpages[ix].topicId}" /></a>
 {if $tiki_p_edit_article eq 'y' or ($listpages[ix].author eq $user and $listpages[ix].creator_edit eq 'y')}
   <a class="trailer" href="tiki-edit_article.php?articleId={$listpages[ix].articleId}"><img src='img/icons/edit.gif' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
 {/if}
+{if $feature_cms_print eq 'y'}
   <a class="trailer" href="tiki-print_article.php?articleId={$listpages[ix].articleId}"><img src='img/icons/ico_print.gif' border='0' alt='{tr}Print{/tr}' title='{tr}Print{/tr}' /></a>
+{/if}
 {if $feature_multilingual eq 'y' and $tiki_p_edit_article eq 'y'}
 <a class="trailer" href="tiki-edit_translation.php?id={$listpages[ix].articleId}&amp;type=article"><img src='img/icons2/translation.gif' border='0' alt='{tr}Translation{/tr}' title='{tr}Translation{/tr}' /></a>
 {/if}

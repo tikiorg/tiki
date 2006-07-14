@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.78 2006-05-22 17:09:13 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.79 2006-07-14 11:00:54 sylvieg Exp $ *}
 
 {* this is the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
@@ -255,8 +255,8 @@
     <td><input type="checkbox" name="feature_gmap" {if $feature_gmap eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Gmap" target="tikihelp" class="tikihelp" title="{tr}tikiwiki.org help{/tr}: {tr}Google Maps{/tr}">{/if} {tr}Google Maps{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
     <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td class="form">&nbsp;</td>
+    <td><input type="checkbox" name="feature_trackbackpings" {if $feature_trackbackpings eq 'y'}checked="checked"{/if}/></td>
+    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Tracbacks+Pings" target="tikihelp" class="tikihelp" title="{tr}tikiwiki.org help{/tr}: {tr}Tracbacks Pings{/tr}">{/if} {tr}Tracbacks Pings{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
 
 </table>    
 

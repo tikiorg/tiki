@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.51 2006-04-12 20:39:29 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.52 2006-07-14 11:00:44 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -56,7 +56,7 @@ if (!isset($_REQUEST["articleId"])) {
 		die;
 	}
 
-	if ($tiki_p_admin != 'y' && $userlib->object_has_one_permission($article_data["topicId"], 'topic')) {
+	if ($tiki_p_admin != 'y' && $tiki_p_admin_cms != 'y' && $userlib->object_has_one_permission($article_data["topicId"], 'topic')) {
 		if (!$userlib->object_has_permission($user, $article_data["topicId"], 'topic', 'tiki_p_topic_read')) {
 			$smarty->assign('msg', tra("Permision denied"));
 
@@ -73,7 +73,7 @@ if (!isset($_REQUEST["articleId"])) {
 	   	} else {
 	   		$is_categorized = FALSE; // this var is used below
 	   	}
-		if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+		if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y' && $tiki_p_admin_cms != 'y') {
 			if (!isset($user)){
 				$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
 				$smarty->assign('errortitle',tra("Please login"));
@@ -85,7 +85,7 @@ if (!isset($_REQUEST["articleId"])) {
 		}
 	}
 
-	if (($article_data["publishDate"] > date("U")) && ($tiki_p_admin != 'y') && ($article_data["type"] != 'Event')) {
+	if (($article_data["publishDate"] > date("U")) && ($tiki_p_admin != 'y' && $tiki_p_admin_cms !='y') && ($article_data["type"] != 'Event')) {
 		$smarty->assign('msg', tra("Article is not published yet"));
 
 		$smarty->display("error.tpl");

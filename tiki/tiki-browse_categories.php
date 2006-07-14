@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.27 2006-02-17 15:10:30 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.28 2006-07-14 11:00:43 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.27 2006-02-17 15:10:30 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.28 2006-07-14 11:00:43 sylvieg Exp $
 //
 
 // Initialization
@@ -75,21 +75,25 @@ if (isset($_REQUEST["deep"]) && $_REQUEST["deep"] == 'on') {
 	$smarty->assign('deep', 'off');
 }
 
-// If the parent category is not zero get the category path
-if ($_REQUEST["parentId"]) {
-	$path = $categlib->get_category_path($_REQUEST["parentId"]);
-
-	$p_info = $categlib->get_category($_REQUEST["parentId"]);
-	$father = $p_info["parentId"];
-	$smarty->assign_by_ref('p_info', $p_info);
+if (is_array($_REQUEST['parentId'])) {
+	foreach ($_REQUEST['parentId'] as $p) {
+		$paths[] = $categlib->get_category_path($p);
+	}
+	$smarty->assign('paths', $paths);
 } else {
-	$path = tra("TOP");
-
-	$father = 0;
+// If the parent category is not zero get the category path
+	if ($_REQUEST["parentId"]) {
+		$path = $categlib->get_category_path($_REQUEST["parentId"]);
+		$p_info = $categlib->get_category($_REQUEST["parentId"]);
+		$father = $p_info["parentId"];
+		$smarty->assign_by_ref('p_info', $p_info);
+	} else {
+		$path = tra("TOP");
+		$father = 0;
+	}
+	$smarty->assign('path', $path);
+	$smarty->assign('father', $father);
 }
-
-$smarty->assign('path', $path);
-$smarty->assign('father', $father);
 
 $ctall = $categlib->get_all_categories_respect_perms($user, 'tiki_p_view_categories');
 
@@ -115,7 +119,7 @@ if ($feature_phplayers == 'y') {
 	$smarty->assign('tree', $res);
 }
 
-$objects = $categlib->list_category_objects($_REQUEST["parentId"], $offset, $maxRecords, $sort_mode, $type, $find, $deep=='on');
+$objects = $categlib->list_category_objects($_REQUEST["parentId"], $offset, $maxRecords, $sort_mode, $type, $find, $deep=='on', (!empty($_REQUEST['and']))?true:false);
 if ($deep == 'on') {
 	for ($i = count($objects["data"]) - 1; $i >=0; --$i)
 		$objects['data'][$i]['categName'] = $tikilib->other_value_in_tab_line($ctall, $objects['data'][$i]['categId'], 'categId', 'name');

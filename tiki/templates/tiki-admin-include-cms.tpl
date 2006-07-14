@@ -35,6 +35,10 @@
           <td><input type="checkbox" name="feature_cms_templates" id="articles-templates"
               {if $feature_cms_templates eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
+          <td class="form"><label for="articles-print">{tr}Print article{/tr}:</label></td>
+          <td><input type="checkbox" name="feature_cms_print" id="articles-print"
+              {if $feature_cms_print eq 'y'}checked="checked"{/if} /></td>
+        </tr><tr>
           <td colspan="2" class="button"><input type="submit" name="cmsfeatures"
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>

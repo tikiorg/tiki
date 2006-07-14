@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog_post.php,v 1.34 2006-07-08 05:47:40 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog_post.php,v 1.35 2006-07-14 11:00:44 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,22 +11,95 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/blogs/bloglib.php');
 
+// first of all , we just die if blogs feature is not set
+if ($feature_blogs != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled").": feature_blogs");
+
+	$smarty->display("error.tpl");
+	die;
+}
+
 if (!isset($_REQUEST['blogId']) && !isset($_REQUEST['postId'])) {
 	$parts = parse_url($_SERVER['REQUEST_URI']);
-
 	$paths = explode('/', $parts['path']);
-	$blogId = $paths[count($paths) - 2];
+//	$blogId = $paths[count($paths) - 2];
 	$postId = $paths[count($paths) - 1];
-	// So this is to process a trackback ping
-	if (isset($_REQUEST['__mode'])) {
-		// Build RSS listing trackback_from
-		$pings = $bloglist->get_trackbacks_from($postId);
-	}
+} else if (empty($_REQUEST["postId"])) {
+    $smarty->assign('msg', tra('No post indicated'));
+    $smarty->display('error.tpl');
+    die;
+} else {
+    $postId = $_REQUEST['postId'];
+}
 
-	if (isset($_REQUEST['url'])) {
+$post_info = $bloglib->get_post($postId);
+$blogId = $post_info['blogId'];
+$blog_data = $bloglib->get_blog($blogId);
+
+if (!$blog_data) {
+	$smarty->assign('msg', tra("Blog not found"));
+	$smarty->display("error.tpl");
+	die;
+}
+
+$smarty->assign('individual', 'n');
+
+if ($userlib->object_has_one_permission($blogId, 'blog')) {
+	$smarty->assign('individual', 'y');
+
+	if ($tiki_p_admin != 'y') {
+		// Now get all the permissions that are set for this type of permissions 'image gallery'
+		$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'blogs');
+
+		foreach ($perms["data"] as $perm) {
+			$permName = $perm["permName"];
+
+			if ($userlib->object_has_permission($user, $blogId, 'blog', $permName)) {
+				$$permName = 'y';
+
+				$smarty->assign("$permName", 'y');
+			} else {
+				$$permName = 'n';
+
+				$smarty->assign("$permName", 'n');
+			}
+		}
+	}
+}
+
+if ($tiki_p_blog_admin == 'y') {
+	$tiki_p_create_blogs = 'y';
+
+	$smarty->assign('tiki_p_create_blogs', 'y');
+	$tiki_p_blog_post = 'y';
+	$smarty->assign('tiki_p_blog_post', 'y');
+	$tiki_p_read_blog = 'y';
+	$smarty->assign('tiki_p_read_blog', 'y');
+}
+
+if ($tiki_p_read_blog != 'y') {
+	$smarty->assign('msg', tra("Permission denied you can not view this section"));
+
+	$smarty->display("error.tpl");
+	die;
+}
+
+
+
+
+if (!isset($_REQUEST['blogId']) && !isset($_REQUEST['postId'])) {
+	// So this is to process a trackback ping
+//	if (isset($_REQUEST['__mode'])) {
+		// Build RSS listing trackback_from
+//		$pings = $bloglist->get_trackbacks_from($postId);
+//	}
+
+	if (isset($_REQUEST['url'])
+     && $feature_trackbackpings == 'y'
+     && $feature_blogposts_pings == 'y'
+     && ($blog_data['allow_comments'] == 'y' || $blog_data['allow_comments'] == 't')) {
 		// Add a trackback ping to the list of trackback_from
 		$title = isset($_REQUEST['title']) ? $_REQUEST['title'] : '';
-
 		$excerpt = isset($_REQUEST['excerpt']) ? $_REQUEST['excerpt'] : '';
 		$blog_name = isset($_REQUEST['blog_name']) ? $_REQUEST['blog_name'] : '';
 
@@ -44,22 +117,7 @@ if (!isset($_REQUEST['blogId']) && !isset($_REQUEST['postId'])) {
 			print ('<message>Error trying to add ping for post</message>');
 			print ('</response>');
 		}
-
-		die;
 	}
-}
-
-if ($feature_blogs != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_blogs");
-
-	$smarty->display("error.tpl");
-	die;
-}
-
-if (!isset($_REQUEST["postId"])) {
-	$smarty->assign('msg', tra("No post indicated"));
-
-	$smarty->display("error.tpl");
 	die;
 }
 
@@ -110,10 +168,12 @@ $smarty->assign('post_info', $post_info);
 $smarty->assign('postId', $_REQUEST["postId"]);
 $blog_data = $bloglib->get_blog($_REQUEST['blogId']);
 $smarty->assign('blog_data', $blog_data);
-$smarty->assign('blogId', $_REQUEST["blogId"]);
+$smarty->assign('blogId', $blogId);
 
-$uri = $tikilib->httpPrefix(). $parts['path'] . '?blogId=' . $_REQUEST['blogId'] . '&postId=' . $_REQUEST['postId'];
-$uri2 = $tikilib->httpPrefix(). $parts['path'] . '/' . $_REQUEST['blogId'] . '/' . $_REQUEST['postId'];
+//Build absolute URI for this
+$parts = parse_url($_SERVER['REQUEST_URI']);
+$uri = $tikilib->httpPrefix(). $parts['path'] . '?blogId=' . $blogId . '&postId=' . $postId;
+$uri2 = $tikilib->httpPrefix(). $parts['path'] . '/' . $blogId . '/' . $postId;
 $smarty->assign('uri', $uri);
 $smarty->assign('uri2', $uri2);
 
@@ -162,20 +222,6 @@ $smarty->assign('pagenum', $_REQUEST['page']);
 
 $smarty->assign('parsed_data', $parsed_data);
 
-$smarty->assign('individual', 'n');
-
-if ($userlib->object_has_one_permission($_REQUEST["blogId"], 'blog')) {
-	$smarty->assign('individual', 'y');
-
-	if ($tiki_p_admin != 'y') {
-		// Now get all the permissions that are set for this type of permissions 'image gallery'
-		$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'blogs');
-
-		foreach ($perms["data"] as $perm) {
-			$permName = $perm["permName"];
-
-			if ($userlib->object_has_permission($user, $_REQUEST["blogId"], 'blog', $permName)) {
-				$$permName = 'y';
 
 				$smarty->assign("$permName", 'y');
 			} else {
@@ -234,7 +280,7 @@ include_once ('tiki-section_options.php');
 if ($feature_theme_control == 'y') {
 	$cat_type = 'blog';
 
-	$cat_objid = $_REQUEST['blogId'];
+	$cat_objid = $blogId;
 	include ('tiki-tc.php');
 }
 

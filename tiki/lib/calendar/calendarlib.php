@@ -773,7 +773,14 @@ class CalendarLib extends TikiLib {
 	function upcoming_events($maxrows = -1, $calendarId = 0, $maxDays = -1, $order = 'start_asc') {
 		$cond = '';
 		$bindvars = array();
-		if($calendarId > 0){
+		if(is_array($calendarId) && count($calendarId) > 0) {
+			$cond = $cond."and (0=1";
+			foreach($calendarId as $id) {
+				$cond = $cond." or `calendarId` = ? ";
+			}
+			$cond = $cond.")";
+			$bindvars += $calendarId;
+		} elseif (!is_array($calendarId) and $calendarId > 0) {
 			$cond = $cond." and `calendarId` = ? ";
 			$bindvars += array($calendarId);
 		}

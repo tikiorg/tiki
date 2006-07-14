@@ -1308,7 +1308,7 @@ class ImageGalsLib extends TikiLib {
 	}
 
 	function list_visible_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user, $find) {
-	    global $tiki_p_admin_galleries;
+	    global $tiki_p_admin_galleries, $tikilib;
 	    // If $user is admin then get ALL galleries, if not only user galleries are shown
 
 	    $old_sort_mode = '';
@@ -1358,6 +1358,9 @@ class ImageGalsLib extends TikiLib {
 	    $ret = array();
 
 	    while ($res = $result->fetchRow()) {
+		if (!$tikilib->user_has_perm_on_object($user, $res['galleryId'], 'image gallery', 'tiki_p_view_image_gallery')) {
+			continue;
+		}
 		$aux = array();
 
 		$aux["name"] = $res["name"];
@@ -2096,7 +2099,6 @@ class ImageGalsLib extends TikiLib {
      unset($this->etag);
      unset($this->image);
   }
-
 
 }
 global $dbTiki;

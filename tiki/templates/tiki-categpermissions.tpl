@@ -15,8 +15,8 @@
   <td class="{cycle advance=false}">{$category_perms[pg].groupName}</td>
   <td class="{cycle advance=false}">{$category_perms[pg].permName}</td>
   <td class="{cycle}">
-    (<a class="link" href="tiki-categpermissions.php?referer={$referer}&amp;action=remove_all&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;categId={$categId}&amp;perm={$category_perms[pg].permName}&amp;group={$category_perms[pg].groupName}">{tr}remove from this category &amp; all its children{/tr}</a>)
-    (<a class="link" href="tiki-categpermissions.php?referer={$referer}&amp;action=remove&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;categId={$categId}&amp;perm={$category_perms[pg].permName}&amp;group={$category_perms[pg].groupName}">{tr}remove from this category only{/tr}</a>)
+    (<a class="link" href="tiki-categpermissions.php?referer={$referer}&amp;action=remove_all&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;categId={$catId}&amp;perm={$category_perms[pg].permName}&amp;group={$category_perms[pg].groupName}">{tr}remove from this category &amp; all its children{/tr}</a>)
+    (<a class="link" href="tiki-categpermissions.php?referer={$referer}&amp;action=remove&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;categId={$catId}&amp;perm={$category_perms[pg].permName}&amp;group={$category_perms[pg].groupName}">{tr}remove from this category only{/tr}</a>)
   </td></tr>
 {sectionelse}
 <tr><td>{tr}No individual permissions global permissions apply{/tr}</td></tr>
@@ -25,7 +25,7 @@
 <h2>{tr}Assign permissions{/tr}</h2>
 <form method="post" action="tiki-categpermissions.php" class="form">
 {tr}assign{/tr}
-<input type="hidden" name="categId" value="{$categId|escape}" />
+<input type="hidden" name="categId" value="{$catId|escape}" />
 <select name="perm">
 {section name=prm loop=$perms}
 <option value="{$perms[prm].permName|escape}">{$perms[prm].permName}</option>

@@ -230,7 +230,7 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
 		$tikilib->set_user_preference($_REQUEST["name"], 'mess_archiveAfter', 0);
 		$tikilib->set_user_preference($_REQUEST["name"], 'mess_sendReadStatus', 'n');
 		$tikilib->set_user_preference($_REQUEST["name"], 'minPrio', 6);
-		$tikilib->set_user_preference($_REQUEST["name"], 'allowMsgs', 'n');
+		$tikilib->set_user_preference($_REQUEST["name"], 'allowMsgs', (($allowmsg_by_default == 'y')?'y':'n'));
 		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_pages', 'n');
 		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_blogs', 'n');
 		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_gals', 'n');

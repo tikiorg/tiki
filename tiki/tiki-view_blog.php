@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.51 2005-12-12 15:18:47 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.52 2006-07-14 11:00:44 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -134,7 +134,7 @@ $smarty->assign('activity', $blog_data["activity"]);
 if (isset($_REQUEST["remove"])) {
 	$data = $bloglib->get_post($_REQUEST["remove"]);
 
-	if (!$ownsblog) {
+	if ($ownsblog == 'n') {
 		if (!$user || $data["user"] != $user) {
 			if ($tiki_p_blog_admin != 'y') {
 				$smarty->assign('msg', tra("Permission denied you cannot remove the post"));

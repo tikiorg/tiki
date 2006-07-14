@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.67 2006-05-22 17:09:13 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.68 2006-07-14 11:00:52 sylvieg Exp $
 2003 - created and maintained by mose@tikiwiki.org
 
 colorset:
@@ -114,8 +114,8 @@ DIV#tiki-main {
 	font-weight:   bold;
 	letter-spacing:   2px;
 	text-decoration:   none;
-	padding-left:   4px;
-	padding-right:   4px;
+	padding: 0 4px;
+	font-size : 140%;
 }
 #tiki-top a.linkh:hover {
 	background-color : #000000;
@@ -394,16 +394,11 @@ div.separator:hover {
 } 
 /* style for rss lists in modules or in wiki */
 .rsslist {
-	background-color: #ffffff;
 	margin: 0;
-	margin-right: 10px;
 	padding: 1px;
-	border: 1px solid #dadac9;
 }
 .rssitem {
-	padding: 1px 6px 1px 6px;
 	border-top: 1px dashed #dadac9;
-  margin-left: 15px;
 }
 .rssitem:first-child {
 	border-top: 0;
@@ -506,6 +501,7 @@ table.listgallery, table.creategalform, TABLE.normal, table.gallerylisting, tabl
 	table.listfgal, table.listfiles, table.listarticles, table.forumstable, table.forumformtable, table.viewthread, table.jukeboxlist {
 	border: 1px solid #5A4A39;
 	border-spacing: 2px;
+	width : 100%;
 }
 
 TABLE.normalnoborder {

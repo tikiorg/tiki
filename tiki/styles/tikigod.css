@@ -2621,6 +2621,7 @@ div#loadstats {
   padding: 2px 5px 2px 5px;
   position: relative;
   display: block;
+  text-decoration: none;
 }
 
 .mdkitem a:visited  {

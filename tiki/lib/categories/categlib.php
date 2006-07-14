@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.78 2006-04-12 20:39:30 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.79 2006-07-14 11:00:49 sylvieg Exp $
  *
  * \brief Categories support class
  *
@@ -285,16 +285,35 @@ class CategLib extends ObjectLib {
 			 );
 	}
 
-	function list_category_objects($categId, $offset, $maxRecords, $sort_mode='pageName_asc', $type='', $find='', $deep=false) {
+	function list_category_objects($categId, $offset, $maxRecords, $sort_mode='pageName_asc', $type='', $find='', $deep=false, $and=false) {
 	    
 	    // Build the condition to restrict which categories objects must be in to be returned.
-	    if ($deep) {
-		$bindWhere = $this->get_category_descendants($categId);
-		$bindWhere[] = $categId;
-		$where = " AND c.`categId` IN (".str_repeat("?,",count($bindWhere)-1)."?)";
+	    $join = '';
+	    if (is_array($categId) && $and) {
+			$i = count($categId);
+			$bindWhere = $categId;
+			foreach ($categId as $c) {
+				if (--$i)
+					$join .= " INNER JOIN tiki_category_objects tco$i on (tco$i.`catObjectId`=o.`catObjectId` and tco$i.`categId`=?) ";
+			}
+			$where = ' AND c.`categId`=? ';
+	   } elseif (is_array($categId)) {
+			$bindWhere = $categId;
+			if ($deep) {
+				foreach ($categId as $c) {
+					$bindWhere = array_merge($bindWhere, $this->get_category_descendants($c));
+				}				
+			}
+			$where = " AND c.`categId` IN (".str_repeat("?,",count($bindWhere)-1)."?)";
 	    } else {
-		$bindWhere = array($categId);
-		$where = ' AND c.`categId`=? ';
+		if ($deep) {
+			$bindWhere = $this->get_category_descendants($categId);
+			$bindWhere[] = $categId;
+			$where = " AND c.`categId` IN (".str_repeat("?,",count($bindWhere)-1)."?)";
+		} else {
+			$bindWhere = array($categId);
+			$where = ' AND c.`categId`=? ';
+		}
 	    }
 
 	        // Restrict results by keyword

@@ -10,7 +10,7 @@
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-<div class="rbox-data" name="tip">{tr}To use menus in a <a class="rbox-link" href="tiki-admin_modules.php">module</a> or a template, use {literal}{menu id=x}{/literal}, where x is the ID of the menu. To use <a class="rbox-link" target="tikihelp" href="http://phplayersmenu.sourceforge.net/">phplayersmenu</a>, you can use one of the three following syntaxes:{/tr} 
+<div class="rbox-data" name="tip">{tr}To use menus in a <a class="rbox-link" href="tiki-admin_modules.php">module</a>, <a class="rbox-link" href="tiki-admin.php?page=siteid">Site identity</a> or a template, use {literal}{menu id=x}{/literal}, where x is the ID of the menu. To use <a class="rbox-link" target="tikihelp" href="http://phplayersmenu.sourceforge.net/">phplayersmenu</a>, you can use one of the three following syntaxes:{/tr} 
 {literal}{phplayers id=47}{/literal},
 {literal}{phplayers id=47 type=horiz}{/literal},
 {literal}{phplayers id=47 type=vert}{/literal}.

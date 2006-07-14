@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.105 2006-05-22 17:09:08 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.106 2006-07-14 11:00:46 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -1273,3 +1273,9 @@ ALTER TABLE `tiki_submissions` change `reads` `nbreads` int(14) default NULL ;
 ALTER TABLE `tiki_articles` DROP INDEX `reads`, ADD INDEX `nbreads` ( `nbreads` ) ;
 ALTER TABLE `tiki_submissions` DROP INDEX `reads`, ADD INDEX `nbreads` ( `nbreads` ) ;
 
+# 2006-05-26 new preference eq 'y' to keep the default - sampaioprimo
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_cms_print','y');
+
+# 2006-07-05 new preferences eq 'y' to keep the default - toggg
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_trackbackpings','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_blogposts_pings','y');

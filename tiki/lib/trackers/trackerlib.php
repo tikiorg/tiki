@@ -403,7 +403,7 @@ class TrackerLib extends TikiLib {
 				if ($tiki_p_view_trackers_closed != 'y') $status = str_replace('c','',$status);
 				if (!$status) {
 					return (array("cant"=>0, "data"=>''));
-				} elseif (sizeof($status > 1)) {
+				} elseif (strlen($status) > 1) {
 					$sts = preg_split('//', $status, -1, PREG_SPLIT_NO_EMPTY);
 					if (count($sts)) {
 						$mid.= " and (".implode('=? or ',array_fill(0,count($sts),'`status`'))."=?) ";
@@ -446,6 +446,9 @@ class TrackerLib extends TikiLib {
 				$cat_table .= ', `tiki_categorized_objects` tob, `tiki_category_objects` tco ';
 				$mid .= " and tob.`catObjectId`=tco.`catObjectId` and tob.`type`='tracker $trackerId' and tob.`objId`=tti.`itemId` and tco.`categId` in ( 0 ";
 
+				if(!is_array($filtervalue) && $filtervalue != '') {
+					$filtervalue = array($filtervalue);
+				} 
 				foreach ($filtervalue as $catId) {
 				    $bindvars[] = $catId;
 				    $mid .= ',?';
@@ -477,8 +480,8 @@ class TrackerLib extends TikiLib {
 			$query_cant.= " $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` and ttif.`fieldId`=? ";
 		} else {
 
-			$query = "select tti.*, ttif.`value` from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif $mid and tti.`itemId`=ttif.`itemId` order by ".$this->convert_sortmode($sort_mode);
-			$query_cant = "select count(distinct ttif.`itemId`) from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif $mid and tti.`itemId`=ttif.`itemId`";
+			$query = "select tti.*, ttif.`value` from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif $mid and tti.`itemId`=ttif.`itemId` group by tti.`itemId` order by ".$this->convert_sortmode($sort_mode);
+			$query_cant = "select count(distinct ttif.`itemId`) from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif $mid and tti.`itemId`=ttif.`itemId` group by tti.`itemId`";
 		}
 		if ($dbg) {
 			header('Content-type: text/plain');
@@ -1022,7 +1025,7 @@ class TrackerLib extends TikiLib {
 				if (isset($f['type']) &&  $f['type'] == 'e') {
 					if (!in_array($f['fieldId'], $categorized_fields))
 						$mandatory_fields[] = $f;
-				} else if (empty($f['value'])) {
+				} elseif (!isset($f['value']) or strlen($f['value']) == 0) {
 					$mandatory_fields[] = $f;
 				}
 			}

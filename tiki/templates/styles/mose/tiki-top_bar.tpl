@@ -1,9 +1,17 @@
 <table cellpadding="0" cellspacing="0" border="0" id="topbar">
-<tr><td class="left">
-<a href="{if $http_domain}http://{$http_domain}{else}{$crumbs[0]->url}{/if}" title="{tr}back to homepage{/tr} {$siteTitle}" class="linkh">{$siteTitle}</a>
+<tr><td class="left" rowspan="2" valign="middle">
+<a href="{if $http_domain}http://{$http_domain}{$http_prefix}{else}{$crumbs[0]->url}{/if}" title="{tr}back to homepage{/tr} {$siteTitle}" class="linkh">{$siteTitle}</a>
 </td>
 <td>
-<table style="float:right;font-size:80%;"><tr><td>
+<table style="float:right;font-size:80%;"><tr>
+{if $tiki_p_edit eq 'y'}
+<td>
+<form method="get" action="tiki-editpage.php">
+<input type="text" size="{$size}" name="page" />
+</form>
+</td>
+{/if}
+<td>
 <form method="get" action="tiki-searchindex.php">
 Text Search <input type="hidden" name="where" value="wikis" />
 <input type="text" name="highlight" size="14" accesskey="s" />
@@ -35,9 +43,12 @@ Text Search <input type="hidden" name="where" value="wikis" />
 {else}
 {$smarty.now|tiki_short_datetime}
 {/if}
-</div></td></tr></table>
+</div></td></tr>
+<tr>
+<td colspan="2">
 {if $feature_phplayers eq 'y' and $feature_siteidentity eq 'y' and $feature_sitemenu eq 'y'}
 <div id="plm_menu">
 {phplayers id=42 type=horiz}
 </div>
 {/if}
+</td></tr></table>

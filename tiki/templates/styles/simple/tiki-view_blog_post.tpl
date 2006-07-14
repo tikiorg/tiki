@@ -1,3 +1,7 @@
+<!-- $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-view_blog_post.tpl,v 1.7 2006-07-14 11:00:59 sylvieg Exp $ -->
+{if $feature_blogposts_pings == 'y'
+  && ($blog_data.allow_comments == 'y' or $blog_data.allow_comments == 't')
+  && $feature_trackbackpings  == 'y'}
 <!--
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
          xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -9,6 +13,7 @@
     trackback:ping="{$uri2}" />
 </rdf:RDF>
 -->
+{/if}
 <div class="description">
 <h1>{tr}Viewing blog post{/tr}</h1>
 </div>
@@ -87,9 +92,9 @@
 </tr>
 {foreach from=$post_info.trackbacks_from key=key item=item}
 <tr>
-  <td  class="{cycle advance=false}">{$item.title}</td>
-  <td  class="{cycle advance=false}"><a href="{$key}" class="link" title="{$key}" target="_blank">{$key|truncate:"40"}</td>
-  <td  class="{cycle}">{$item.blog_name}</td>
+  <td  class="{cycle advance=false}">{$item.title|escape}</td>
+  <td  class="{cycle advance=false}"><a href="{$key}" class="link" title="{$key}" target="_blank">{$key|truncate:"40"|escape}</td>
+  <td  class="{cycle}">{$item.blog_name|escape}</td>
   {if ($ownsblog eq 'y') or ($user and $post_info.user eq $user) or $tiki_p_blog_admin eq 'y'}
     <td  class="{cycle advance=false}"><a href="tiki-view_blog_post.php?postId={$postId}&amp;deltrack={$key|urlencode}"><img border='0' src='img/icons2/delete.gif' title='{tr}Remove{/tr}' alt='{tr}Remove{/tr}' /></a></td>
   {/if}
@@ -99,7 +104,7 @@
 {/if}
 
 {if $feature_blogposts_comments == 'y'
-  && $blog_data.allow_comments == 'y'
+  && ($blog_data.allow_comments == 'y' or $blog_data.allow_comments == 'c')
   && (($tiki_p_read_comments  == 'y'
   && $comments_cant != 0)
   ||  $tiki_p_post_comments  == 'y'

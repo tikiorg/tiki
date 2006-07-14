@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gmap.php,v 1.2 2006-05-22 17:09:07 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gmap.php,v 1.3 2006-07-14 11:00:43 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -33,7 +33,7 @@ if (isset($_REQUEST["gmapsetup"])) {
 	simple_set_value ("gmap_defaulty");
 	simple_set_value ("gmap_defaultz");
 }
-if (strlen($gmap_key) == '86') {
+if (isset($gmap_key) and strlen($gmap_key) == '86') {
 	$smarty->assign('show_map','y');
 } else {
 	$smarty->assign('show_map','n');
