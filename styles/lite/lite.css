@@ -1,0 +1,88 @@
+/*
+ * *lite - "like a KISS ? - lite is that easy !" is an ultimate source ordered layout solution by luci, comments/suggestions e-mail to luci[-at-]sh.ground.cz
+ * this is the base layout which should remain untouched. it is meant to be imported only at the top of your stylesheet using @import "lite.css";
+ * for more info see the homepage: http://www.ground.cz/luci/css/lite
+ * license: LGPL
+ * enjoy !
+ */
+
+body {
+	background: silver; color: black;
+	display: table;/* keep "display: table" here to push the right column to the right when some unwrappable stuff appears in the center col */
+	font-family: sans-serif;
+	font-size: 75%;
+	margin: 0px; padding: 0px;
+	width: 100%;/* this is needed to keep the width to the maximum available */
+}
+
+/* *** THE MAIN LAYOUT *** */
+#header {
+	background-color: white; color: black;
+}
+
+#wrapper {
+	background-color: #6F6F6F; color: black;
+	border-color: #6F0;
+	display: block;/* keep "display: block" here to prevent layout breakage (mostly in Firefox) */
+	float: right;
+	_float: left;/* underscore hack here because in MSIE it works only when it is floated the other way */
+	width: 100%;
+}
+
+#wrapper
+	#col1 {
+		background-color: #909090; color: black;
+		border-color: #F00;
+		float: right;
+		width: 100%;
+	}
+
+#wrapper
+	#col1
+		div.content {
+			background-color: #F0F0F0; color: black;
+			border-color: #000;
+		}
+
+#wrapper
+	#col1
+		div.marginleft {
+			margin-left: 180px;/* change this in your stylesheet too when you change the width of #col2 */
+		}
+
+#wrapper
+	#col1
+		div.marginright {
+			margin-right: 180px;/* change this in your stylesheet too when you change the width of #col3 */
+		}
+
+#wrapper
+	#col2 {
+		background-color: #C0C0C0; color: black;
+		border-color: #0c0;
+		float: left;
+		_float: right;/* underscore hack here because MSIE likes it floated the opposite way again */
+		margin-right: -100%;/* this way we set the position of the second column (appears visually as first column) in all browsers */
+		overflow: hidden;/* prevent overflowing of the content out of the column */
+		width: 180px;
+	}
+
+#col3 {
+	background-color: #9f9f9f; color: black;
+	border-color: #00009f;
+	float: right;
+	_float: left;/* underscore hack here because MSIE likes it floated the opposite way again */
+	_margin-left: -180px;/* once more MSIE underscore hack to display the 3rd column; change this if you change the width too */
+	margin-right: -100%;/* ... and this way we display the third column in all other browsers than MSIE */
+	_margin-right: 0;/* and last one just to be sure it will not break in the future when margin-right: -100% will become nomore ignored by MSIE here */
+	overflow: hidden;/* prevent overflowing of the content out of the column */
+	width: 180px;
+}
+
+#footer {background-color: #606060; border-color: #066; color: white; clear: both;}
+.footerbgtrap {background-color: #606060; color: white;}/* this is needed as a little workaround because MSIE tends to display the footer partly without the background specified */
+
+.colwrapper {}/* the colwrappers are optional allow extended styling such as graphical borders etc. (the extra divs are commented out by default in the xhtml source) */
+.content {padding: 1em;}/* this takes care of all the content default appearance */
+
+/*div {border-width: 1px; border-style: solid; padding: 10px; margin: 5px}*/ /* <- if you want to debug with outlines, put this at the bottom of your stylesheet  */

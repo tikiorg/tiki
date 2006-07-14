@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.55 2006-05-22 17:09:07 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.56 2006-07-14 11:00:43 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -133,7 +133,7 @@ if (isset($_REQUEST["articleId"]) and $_REQUEST["articleId"] > 0) {
 
 // Now check permissions to access this page
 // echo $tiki_p_edit_article.$article_data["author"].$article_data["creator_edit"];
-if ($tiki_p_edit_article != 'y' and ($article_data["author"] != $user or $article_data["creator_edit"] != 'y')) {
+if ($tiki_p_admin_cms != 'y' && !$tikilib->user_has_perm_on_object($user, $articleId, 'article', 'tiki_p_edit_article') and ($article_data["author"] != $user or $article_data["creator_edit"] != 'y')) {
 	$smarty->assign('msg', tra("Permission denied you cannot edit this article"));
 
 	$smarty->display("error.tpl");

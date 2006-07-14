@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index_p.php,v 1.21 2006-01-20 09:54:53 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index_p.php,v 1.22 2006-07-14 11:00:44 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -140,7 +140,7 @@ $info = $tikilib->get_page_info($page);
 $smarty->assign('page_user', $info['user']);
 
 if (($tiki_p_admin_wiki == 'y')
-	|| ($user and ($user == $info['user']) and ($tiki_p_lock == 'y') and ($feature_wiki_userlock == 'y'))) {
+	|| ($user and ($user == $info['user']) and ($tiki_p_lock == 'y') and ($feature_wiki_usrlock == 'y'))) {
 	if (isset($_REQUEST["action"])) {
 		check_ticket('index-p');
 		if ($_REQUEST["action"] == 'unlock') {

@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker_item.tpl,v 1.97 2006-05-22 17:09:16 mose Exp $ *}
+{* $Id: tiki-view_tracker_item.tpl,v 1.98 2006-07-14 11:00:58 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -243,13 +243,15 @@
 {/if}
 <h2>{tr}Comments{/tr}</h2>
 {section name=ix loop=$comments}
+<div class="commentbloc">
 <b>{$comments[ix].title}</b> {if $comments[ix].user}{tr}by{/tr} {$comments[ix].user}{/if}
   {if $tiki_p_admin_trackers eq 'y'}[<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;commentId={$comments[ix].commentId}" title="{tr}edit{/tr}"><img src="img/icons/edit.gif" border="0" width="20" height="16"  alt='{tr}edit{/tr}' /></a>|&nbsp;&nbsp;<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;remove_comment={$comments[ix].commentId}"
 title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>&nbsp;&nbsp;]{/if}
 <br />
 <small>{tr}posted on{/tr}: {$comments[ix].posted|tiki_short_datetime}</small><br />
 {$comments[ix].parsed}
-<hr/>
+<hr />
+</div>
 {/section}
 </div>
 {/if}
@@ -418,7 +420,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 <select name="ins_{$cur_field.id}">
 <option value="">{tr}None{/tr}</option>
 {foreach key=id item=one from=$users}
-<option value="{$one|escape}" {if $cur_field.value eq $one}selected="selected"{/if}>{$one}</option>
+<option value="{$one|escape}" {if $cur_field.value eq $one or $one eq $user}selected="selected"{/if}>{$one}</option>
 {/foreach}
 </select>
 {elseif $cur_field.options}

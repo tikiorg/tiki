@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 * 
 * @module APIC
 * @package core
-* @update $Date: 2005-05-18 11:01:38 $
+* @update $Date: 2006-07-14 11:00:50 $
 * @version 1.0
 * @author diogène MOULRON <logiciel@apicnet.net>
 * @see ErrorManager.php
@@ -112,7 +112,7 @@ class Object{
 	 * @access	public
 	 * @return	mixed
 	 */
-	function clone(){	return $this;}
+	function cloneNode(){	return $this;}
 	
 	/**
 	 * Object::hashValue()

@@ -18,7 +18,7 @@
 // |          Michele Manzato <michele.manzato@verona.miz.it>             |
 // +----------------------------------------------------------------------+
 //
-// $Id: Node.php,v 1.1 2004-01-10 12:55:33 gongo Exp $
+// $Id: Node.php,v 1.2 2006-07-14 11:00:50 sylvieg Exp $
 //
 
 /**
@@ -111,13 +111,13 @@ class XML_Tree_Node {
     * @return object    Reference to the cloned copy.
     * @access public
     */
-    function &clone()
+    function &cloneNode()
     {
         $clone = new XML_Tree_Node($this->name,$this->content,$this->attributes);
 
         $max_child=count($this->children);
         for($i=0;$i<$max_child;$i++) {
-            $clone->children[]=$this->children[$i]->clone();
+            $clone->children[]=$this->children[$i]->cloneNode();
         }
 
         /* for future use....

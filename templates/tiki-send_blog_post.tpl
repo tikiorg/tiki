@@ -1,4 +1,8 @@
 {include file='header.tpl'}
+<!-- $Header: /cvsroot/tikiwiki/tiki/templates/tiki-send_blog_post.tpl,v 1.8 2006-07-14 11:00:55 sylvieg Exp $ -->
+{if $feature_blogposts_pings == 'y'
+  && ($blog_data.allow_comments == 'y' or $blog_data.allow_comments == 't')
+  && $feature_trackbackpings  == 'y'}
 <!--
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
          xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -10,6 +14,7 @@
     trackback:ping="{$uri2}" />
 </rdf:RDF>
 -->
+{/if}
 <h2>{tr}Send blog post{/tr}</h2>
 {if $sent eq 'y'}
 <h3>{tr}A link to this post was sent to the following addresses:{/tr}</h3>

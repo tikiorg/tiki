@@ -1,5 +1,5 @@
 /* 
-  $Header: /cvsroot/tikiwiki/tiki/styles/default2.css,v 1.57 2006-02-01 21:20:23 jdrexler Exp $
+  $Header: /cvsroot/tikiwiki/tiki/styles/default2.css,v 1.58 2006-07-14 11:00:52 sylvieg Exp $
   default2.css
   (This theme is based on the) default2 style for Tiki 1.2
   If you want  a short-version CSS template, start by copying default2
@@ -2764,7 +2764,7 @@ div#loadstats {
 
 .horbaritem a:hover {
   background: gray;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .mdkhorbaritem  {

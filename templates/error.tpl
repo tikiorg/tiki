@@ -48,7 +48,8 @@
           <br /><br />
           {/if}
           {/if}
-
+		  
+		  {if $feature_search eq 'y'}
           {include
             file="tiki-searchindex.tpl"
             searchNoResults="true"                 
@@ -56,7 +57,9 @@
             searchOrientation="horiz"
             words="$page"
           }
-          <br />
+          {/if}
+		  
+		  <br />
         {else}
         {$msg}
         <br /><br />

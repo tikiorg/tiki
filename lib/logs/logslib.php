@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.25 2006-06-02 20:15:25 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.26 2006-07-14 11:00:50 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -8,11 +8,11 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class LogsLib extends TikiLib {
-	
+
 	function LogsLib($db) {
 		$this->db = $db;
 	}
-	
+
 	function add_log($type,$message,$who='',$ip='',$client='',$time='') {
 		global $user;
 		if (!$who) {
@@ -26,7 +26,11 @@ class LogsLib extends TikiLib {
 			$ip = $_SERVER['REMOTE_ADDR'];
 		}
 		if (!$client) {
-			$client = $_SERVER['HTTP_USER_AGENT'];
+			if (!$_SERVER['HTTP_USER_AGENT']) {
+				$client = 'NO USER AGENT';
+			} else {
+				$client = $_SERVER['HTTP_USER_AGENT'];
+			}
 		}
 		if (!$time) {
 			$time = date("U");

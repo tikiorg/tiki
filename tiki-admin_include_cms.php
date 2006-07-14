@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_cms.php,v 1.13 2005-05-18 10:58:53 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_cms.php,v 1.14 2006-07-14 11:00:43 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -63,6 +63,16 @@ if (isset($_REQUEST["cmsfeatures"])) {
 		$tikilib->set_preference("feature_cms_templates", 'n');
 
 		$smarty->assign("feature_cms_templates", 'n');
+	}
+
+	if (isset($_REQUEST["feature_cms_print"]) && $_REQUEST["feature_cms_print"] == "on") {
+		$tikilib->set_preference("feature_cms_print", 'y');
+
+		$smarty->assign("feature_cms_print", 'y');
+	} else {
+		$tikilib->set_preference("feature_cms_print", 'n');
+
+		$smarty->assign("feature_cms_print", 'n');
 	}
 }
 

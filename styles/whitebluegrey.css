@@ -1,5 +1,5 @@
 /* 
-  $Header: /cvsroot/tikiwiki/tiki/styles/whitebluegrey.css,v 1.45 2006-02-01 21:20:24 jdrexler Exp $
+  $Header: /cvsroot/tikiwiki/tiki/styles/whitebluegrey.css,v 1.46 2006-07-14 11:00:53 sylvieg Exp $
   whitebluegrey.css
   This theme is based on the default2 style for Tiki 1.2
   If you want  a short-version CSS template, start by copying default2
@@ -2619,7 +2619,7 @@ div#loadstats {
   color: white;
 }
 
-.harbaritem a:visited {
+.horbaritem a:visited {
   text-decoration: underline;
 }
 
@@ -2686,13 +2686,14 @@ div#loadstats {
   padding: 2px 5px 2px 5px;
   position: relative;
   display: block;
+  text-decoration: none;
 }
 
 .mdkitem a:visited  {
 }
 
 .mdkitem a:hover  {
-  text-decoration: underline;
+  text-decoration: none;
   background: #eee;
 }
 

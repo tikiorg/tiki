@@ -6,12 +6,44 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-global $calendarlib;
+global $calendarlib, $userlib, $tiki_p_admin, $tiki_p_view_calendar;
 include_once ('lib/calendar/calendarlib.php');
 
-//$events = $calendarlib->last_modif_events($module_rows, isset($module_params["calendarId"]) ? $module_params["calendarId"] : 0);
+$rawcals = $calendarlib->list_calendars();
+$calIds = array();
+$viewable = array();
+
+foreach ($rawcals["data"] as $cal_id=>$cal_data) {
+	$calIds[] = $cal_id;
+	if ($tiki_p_admin == 'y') {
+		$canView = 'y';
+	} elseif ($cal_data["personal"] == "y") {
+		if ($user) {
+			$canView = 'y';
+		} else {
+			$canView = 'n';
+		}
+	} else {
+		if ($userlib->object_has_one_permission($cal_id,'calendar')) {
+			if ($userlib->object_has_permission($user, $cal_id, 'calendar', 'tiki_p_view_calendar')) {
+				$canView = 'y';
+			} else {
+				$canView = 'n';
+			}		
+			if ($userlib->object_has_permission($user, $cal_id, 'calendar', 'tiki_p_admin_calendar')) {
+				$canView = 'y';
+			}
+		} else {
+			$canView = $tiki_p_view_calendar;
+		}
+	}
+	if ($canView == 'y') {
+		$viewable[] = $cal_id;
+	}
+}
+
 $events = $calendarlib->upcoming_events($module_rows,
-    isset($module_params["calendarId"]) ? $module_params["calendarId"] : 0,
+    array_intersect(isset($module_params["calendarId"]) ? array($module_params["calendarId"]) : $calIds, $viewable),
     isset($module_params["maxDays"]) ? $module_params["maxDays"] : 365);
 $smarty->assign('modUpcomingEvents', $events);
 $smarty->assign('maxlen', isset($module_params["maxlen"]) ? $module_params["maxlen"] : 0);

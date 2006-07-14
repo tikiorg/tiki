@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-batch_upload.php,v 1.5 2006-04-12 20:39:29 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-batch_upload.php,v 1.6 2006-07-14 11:00:43 sylvieg Exp $
 
 require_once ('tiki-setup.php');
 include_once ('lib/imagegals/imagegallib.php');
@@ -85,6 +85,7 @@ function buildImageList() {
 	global $a_img;
 	global $a_path;
 	global $imgdir, $smarty;
+	global $imgstring;
 
 	getDirContent('');
 	
@@ -189,7 +190,7 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['imgs']) and is_array($
 			// remove possible path from filename
 			$tmpName = substr($tmpName,strrpos($tmpName, "/")+1,999);
 			// save filename without path
-			$imgArray[$x] = $tmpname;
+			$imgArray[$x] = $tmpName;
 
 			// remove extension from name field
 			if (isset($_REQUEST["removeExt"])) {

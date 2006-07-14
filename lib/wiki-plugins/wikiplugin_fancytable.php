@@ -4,18 +4,19 @@
 //
 // Parameters:
 //   head -- the column header row
+//   headclass -- css class to apply on head row
 //
 // Usage:
 //   The data (and the head paramter) is given one row per line, with columns
 //   separated by ~|~.
 //
 // Example:
-// {FANCYTABLE( head => header column 1 ~|~ header column 2 ~|~ header column 3 )}
+// {FANCYTABLE( head => header column 1 ~|~ header column 2 ~|~ header column 3, headclass=>xx )}
 // row 1 column 1 ~|~ row 1 column 2 ~|~ row 1 column 3
 // row 2 column 1 ~|~ row 2 column 2 ~|~ row 2 column 3
 // {FANCYTABLE}
 function wikiplugin_fancytable_help() {
-	return tra("Displays the data using the TikiWiki odd/even table style").":<br />~np~{FANCYTABLE(head=>)}".tra("cells")."{FANCYTABLE}~/np~ - ''".tra("heads and cells separated by ~|~")."''";
+	return tra("Displays the data using the TikiWiki odd/even table style").":<br />~np~{FANCYTABLE(head=>,headclass=>)}".tra("cells")."{FANCYTABLE}~/np~ - ''".tra("heads and cells separated by ~|~")."''";
 }
 
 function wikiplugin_fancytable($data, $params) {
@@ -24,13 +25,19 @@ function wikiplugin_fancytable($data, $params) {
 	// Start the table
 	$wret = "<table class=\"normal\">";
 
-	$tdhdr = "<td class=\"heading\">";
 	$tdend = "</td>";
 	$trbeg = "<tr>";
 	$trend = "</tr>";
 
 	// Parse the parameters
 	extract ($params,EXTR_SKIP);
+
+	if (isset($headclass)) {
+		if (strpos($headclass,'"')) $headclass = str_replace('"',"'",$class);
+		$tdhdr = "<td class=\"heading $headclass\">";
+	} else {
+		$tdhdr = "<td class=\"heading\">";
+	}
 
 	if (isset($head)) {
 		$parts = explode("~|~", $head);

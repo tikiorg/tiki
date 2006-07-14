@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.16 2006-02-17 15:10:47 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.17 2006-07-14 11:00:55 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-browse_categories.php">{if $parentId ne 0}{tr}Category{/tr} {$p_info.name}{else}{tr}Categories{/tr}{/if}</a></h1>
 {if $parentId and $p_info.description}<div class="description">{$p_info.description}</div>{/if}
@@ -62,6 +62,7 @@
 <a class="link" href="tiki-browse_categories.php?find={$find|escape}&amp;type={$type|escape}&amp;deep=on&amp;parentId={$parentId}&amp;sort_mode={$sort_mode}">{tr}Show subcategories objects{/tr}</a>
 {/if}
 <br /><br />
+{if $path}
 <div class="treetitle">{tr}Current category{/tr}:
 <a href="tiki-browse_categories.php?parentId=0&amp;deep={$deep}&amp;type={$type|escape}" class="categpath">{tr}Top{/tr}</a>
 {section name=x loop=$path}
@@ -74,6 +75,15 @@
 <div class="treenode">
 <a class="catname" href="tiki-browse_categories.php?parentId={$father}&amp;deep={$deep}&amp;type={$type}" title="{tr}Upper level{/tr}">..</a>
 </div>
+{/if}
+{elseif $paths}
+{section name=x loop=$paths}
+{section name=y loop=$paths[x]}
+&nbsp;::&nbsp;
+<a class="categpath" href="tiki-browse_categories.php?parentId={$paths[x][y].categId}&amp;deep={$deep}&amp;type={$type|escape}">{$paths[x][y].name}</a>
+{/section}
+<br />
+{/section}
 {/if}
 
 <table width="100%">

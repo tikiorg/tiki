@@ -1,4 +1,5 @@
 <?php
+// CVS: $Id: tiki-download_file.php,v 1.23 2006-07-14 11:00:43 sylvieg Exp $
 // Initialization
 include_once("lib/init/initlib.php");
 require_once('tiki-setup.php');
@@ -10,6 +11,33 @@ if($feature_file_galleries != 'y') {
   die;
 }
 */
+/*
+Borrowed from http://php.net/manual/en/function.readfile.php#54295
+to come over the 2MB readfile() limitation
+*/
+function readfile_chunked($filename,$retbytes=true) {
+   $chunksize = 1*(1024*1024); // how many bytes per chunk
+   $buffer = '';
+   $cnt =0;
+   $handle = fopen($filename, 'rb');
+   if ($handle === false) {
+       return false;
+   }
+   while (!feof($handle)) {
+       $buffer = fread($handle, $chunksize);
+       echo $buffer;
+       ob_flush();
+       flush();
+       if ($retbytes) {
+           $cnt += strlen($buffer);
+       }
+   }
+       $status = fclose($handle);
+   if ($retbytes && $status) {
+       return $cnt; // return num. bytes delivered like readfile() does.
+   }
+   return $status;
+}
 
 if(!isset($_REQUEST["fileId"])) {
   die;
@@ -110,7 +138,7 @@ header("Expires: 0");
 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 header("Pragma: public");
 if($info["path"]) {
-  readfile($fgal_use_dir.$info["path"]);
+  readfile_chunked($fgal_use_dir.$info["path"]);
 } else {
   echo "$content";
 }

@@ -90,6 +90,9 @@
 {elseif $items[user].field_values[ix].type eq 'i'}
 <img src="{$items[user].field_values[ix].value}" alt="" />
 
+{elseif $items[user].field_values[ix].type eq 'e'}
+{foreach item=ii from=$items[user].field_values[ix].categs}{$ii.name}<br />{/foreach}
+
 {else}
 {$items[user].field_values[ix].value|default:"&nbsp;"}
 
@@ -131,6 +134,11 @@ class="linkbut">{$items[user].field_values[ix].options_array[i]}</a>
 </span>
 </td>
 {/if}
+
+{elseif $items[user].field_values[ix].type eq 'e'}
+<td class="auto">
+{foreach item=ii from=$items[user].field_values[ix].categs}{$ii.name}<br />{/foreach}
+</td>
 
 {elseif $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h'}
 <td class="auto">

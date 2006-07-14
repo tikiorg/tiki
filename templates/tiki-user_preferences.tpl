@@ -8,7 +8,17 @@
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-user_preferences.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}UserPreferences tpl{/tr}">
 <img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}' /></a>
-{/if}</h1>
+{/if}
+
+{if $tiki_p_admin_users eq 'y'}
+<a class="link" href="tiki-assignuser.php?assign_user={$userinfo.login}" title="{tr}Assign Group{/tr}"><img 
+border="0" 
+alt="{tr}Assign Group{/tr}" src="img/icons/key.gif" /></a>
+{/if}
+
+</h1>
+
+
 
 {if $userwatch eq $user or $userwatch eq ""}{include file=tiki-mytiki_bar.tpl}{/if}
 <br />

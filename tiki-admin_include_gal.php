@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.17 2006-01-18 14:45:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.18 2006-07-14 11:00:43 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -97,6 +97,21 @@ if (isset($_REQUEST["imagegalcomprefs"])) {
 	simple_set_value ("image_galleries_comments_per_page");
 	simple_set_value ("image_galleries_comments_default_order");
 }
+
+if (isset($_REQUEST['mvimg']) && isset($_REQUEST['move_gallery'])) {
+   check_ticket('admin-inc-gal');
+   if(($_REQUEST['mvimg']=='to_fs' && $gal_use_db=='n') ||
+      ($_REQUEST['mvimg']=='to_db' && $gal_use_db=='y')) {
+
+     $mvresult=$imagegallib->move_gallery_store($_REQUEST['move_gallery'],$_REQUEST['mvimg']);
+     $mvmsg=sprintf(tra('moved %d images, %d errors occured.'),$mvresult['moved_images'],$mvresult['errors']);
+     if($mvresult['timeout']) {
+				$mvmsg.=' '.tra('a timeout occured. Hit the reload button to move the rest');
+     }
+     $tikifeedback[]['mes']=$mvmsg;
+  }
+}
+
 
 if($imagegallib->havegd) {
 	$gdlib=tra('Detected, Version:').' '.$imagegallib->gdversion;

@@ -2910,7 +2910,7 @@ div#loadstats {
   color:   #333366;
   padding-left: 7px;
   margin-right: 0;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .mdkitem a:active {

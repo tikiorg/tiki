@@ -19,7 +19,7 @@
 // |          Michele Manzato <michele.manzato@verona.miz.it>             |
 // +----------------------------------------------------------------------+
 //
-// $Id: Tree.php,v 1.1 2004-01-10 12:55:32 gongo Exp $
+// $Id: Tree.php,v 1.2 2006-07-14 11:00:50 sylvieg Exp $
 //
 
 require_once 'XML/Parser.php';
@@ -330,11 +330,11 @@ class XML_Tree extends XML_Parser
     * @return object XML_Tree copy of this node.
     * @access public
     */
-    function clone()
+    function cloneNode()
     {
         $clone = new XML_Tree($this->filename, $this->version);
         if (!is_null($this->root)) {
-            $clone->root = $this->root->clone();
+            $clone->root = $this->root->cloneNode();
         }
 
         // clone all other vars

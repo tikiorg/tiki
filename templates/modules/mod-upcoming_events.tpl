@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-upcoming_events.tpl,v 1.1.2.2 2005/02/23 15:18:33 michael_davey Exp $ *}
+{* $Header$ *}
 
 {if $feature_calendar eq 'y'}
 	{if $nonums eq 'y'}
-		{eval var="{tr}Upcoming `$module_rows` modified events{/tr}" assign="tpl_module_title"}
+		{eval var="{tr}Upcoming `$module_rows` events{/tr}" assign="tpl_module_title"}
 	{else}
 		{eval var="{tr}Upcoming events{/tr}" assign="tpl_module_title"}
 	{/if}

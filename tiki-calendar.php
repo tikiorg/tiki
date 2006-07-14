@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.53 2006-02-17 15:10:31 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.54 2006-07-14 11:00:43 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -10,7 +10,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/calendar/calendarlib.php');
 include_once ('lib/newsletters/nllib.php');
 
-# perms are 
+# perms are
 # 	$tiki_p_view_calendar
 # 	$tiki_p_admin_calendar
 # 	$tiki_p_change_events
@@ -112,15 +112,17 @@ $smarty->assign('infocals', $infocals["data"]);
 $smarty->assign('listcals', $listcals);
 $smarty->assign('modifTab', $modifTab);
 
-// set up list of groups 
+// set up list of groups
 if (isset($_REQUEST["calIds"])and is_array($_REQUEST["calIds"])and count($_REQUEST["calIds"])) {
-	$_SESSION['CalendarViewGroups'] = $_REQUEST["calIds"];
+	$_SESSION['CalendarViewGroups'] = array_intersect($_REQUEST["calIds"], $listcals);
 } elseif (isset($_REQUEST["calIds"])and !is_array($_REQUEST["calIds"])) {
-	$_SESSION['CalendarViewGroups'] = array($_REQUEST["calIds"]);
+	$_SESSION['CalendarViewGroups'] = array_intersect(array($_REQUEST["calIds"]), $listcals);
 } elseif (!isset($_SESSION['CalendarViewGroups'])) {
 	$_SESSION['CalendarViewGroups'] = $listcals;
 } elseif (isset($_REQUEST["refresh"])and !isset($_REQUEST["calIds"])) {
 	$_SESSION['CalendarViewGroups'] = array();
+} else {
+	$_SESSION['CalendarViewGroups'] = array_intersect($_SESSION['CalendarViewGroups'], $listcals);
 }
 
 // setup list of tiki items displayed

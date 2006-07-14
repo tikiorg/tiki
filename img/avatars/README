@@ -1,8 +1,11 @@
 Tiki Avatars
 ============
 
-The tiki avatars have been removed from the default installation.
+Avatars are 45x45 pictures used to personalize users.
+The tiki avatars have been removed from the default installation
+for licence reasons.
 
-They can downloaded from http://mods.tikiwiki.org/project6
+Some can now downloaded from http://mods.tikiwiki.org
 
-You can also copy and gif style avatar pack or images into this folder.
+Any picture you copy in this folder will appear in the list of available 
+avatars without extra effort.

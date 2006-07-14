@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-export_tracker.php,v 1.2 2006-05-22 17:09:07 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-export_tracker.php,v 1.3 2006-07-14 11:00:43 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -393,9 +393,9 @@ if (is_array($sorts) and isset($sorts[1]) and isset($listfields["{$sorts[1]}"]['
 }
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 
-if ($my and $writerfield) {
+if (isset($my) and $my and $writerfield) {
 	$filterfield = $writerfield;
-} elseif ($ours and $writergroupfield) {
+} elseif (isset($ours) and $ours and $writergroupfield) {
 	$filterfield = $writergroupfield;
 } else {
 	if (isset($_REQUEST["filterfield"])) {
@@ -406,11 +406,11 @@ if ($my and $writerfield) {
 }
 $smarty->assign('filterfield', $filterfield);
 
-if ($my and $writerfield) {
+if (isset($my) and $my and $writerfield) {
 	$exactvalue = $my;
 	$filtervalue = '';
 	$_REQUEST['status'] = 'opc';
-} elseif ($ours and $writergroupfield) {
+} elseif (isset($ours) and $ours and $writergroupfield) {
 	$exactvalue = $ours;
 	$filtervalue = '';
 	$_REQUEST['status'] = 'opc';
@@ -431,7 +431,7 @@ if (!isset($_REQUEST["status"]))
 
 $smarty->assign('status', $_REQUEST["status"]);
 
-$items = $trklib->list_items($_REQUEST["trackerId"], $offset, $maxRecords, $sort_mode, $listfields, $filterfield, $filtervalue, $_REQUEST["status"],$initial,$exactvalue,$numsort);
+$items = $trklib->list_items($_REQUEST["trackerId"], $offset, $maxRecords, $sort_mode, $listfields, $filterfield, $filtervalue, $_REQUEST["status"],'',$exactvalue,$numsort);
 $smarty->assign_by_ref('items', $items["data"]);
 $smarty->assign_by_ref('item_count', $items['cant']);
 $smarty->assign_by_ref('listfields', $listfields);

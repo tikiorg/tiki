@@ -1,10 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-usergroup_tracker.tpl,v 1.4 2005-05-18 11:03:32 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-usergroup_tracker.tpl,v 1.5 2006-07-14 11:00:59 sylvieg Exp $ *}
 
 {if $user}
 {tikimodule title="{tr}Login{/tr}" name="login_infos" flip=$module_params.flip decorations=$module_params.decorations}
 
 <div><a class="linkmodule" href="tiki-logout.php">{tr}Logout{/tr}</a></div>
 
+{if $userTracker eq 'y'}
 <div>{tr}User informations{/tr}: </div>
 <div class="">
 {if $userTracker}
@@ -13,8 +14,10 @@
 {$user}
 {/if}
 </div>
+{/if}
 
-{if $group}
+
+{if $groupTracker eq 'y'}
 <div>{tr}Group informations{/tr}:</div>
 <div class="box-data">
 {if $groupTracker}
@@ -27,3 +30,8 @@
 
 {/tikimodule}
 {/if}
+
+{if $groupTracker eq 'n' and $userTracker eq 'n' }
+<a href="tiki-admin.php?page=login" class="linkmodule">{tr}You need to activate user and/or group trackers{/tr}</a>
+{/if}
+

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.36 2006-06-24 13:08:27 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.37 2006-07-14 11:00:43 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -401,7 +401,11 @@ if ($feature_actionlog == 'y') {
 }
 
 // Display the template
-$smarty->assign('mid', 'tiki-browse_image.tpl');
-$smarty->display("tiki.tpl");
+if (isset($_REQUEST['popup'])and ($_REQUEST['popup'])) {
+	$smarty->display("tiki-browse_image.tpl");
+} else {
+	$smarty->assign('mid', 'tiki-browse_image.tpl');
+	$smarty->display("tiki.tpl");
+}
 
 ?>

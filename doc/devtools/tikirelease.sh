@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: tikirelease.sh,v 1.13 2006-05-22 17:09:08 mose Exp $
+# $Id: tikirelease.sh,v 1.14 2006-07-14 11:00:46 sylvieg Exp $
 # written and maintained by mose@tikiwiki.org
 #
 # HOWTO release TikiWiki ?
@@ -9,14 +9,15 @@
 # pre/
 #    - update changelog.txt (from CVS commit logs)
 #    - update copyright.txt (we _need_ a way to automate this - it was omitted for 1.9.2 release)
-#    - update INSTALL
 #    - update README
 #    - run doc/devtools/diffsql.sh to make sure tiki.sql and upgrade script from 
-#       previous version give the same db structure 
-#    - run db/convertscripts/convertsqls.sh
+#        previous version give the same db structure 
+#    - cd db/convertscripts and run convertsqls.sh
 #    - commit your changes
-#    - update list of valid releases in tiki-admin_security.php: $tiki_versions=array(1=>'1.9.1',2=>'1.9.1.1',3=>'1.9.2',4=>'1.9.3.1');
-#    - create the checksum file: copy doc/devtools/tiki-create_md5.php in tiki root and execute it
+#    - update list of valid releases in tiki-admin_security.php: 
+#        $tiki_versions=array(1=>'1.9.1',2=>'1.9.1.1',3=>'1.9.2',4=>'1.9.3.1');
+#    - create the checksum file: copy doc/devtools/tiki-create_md5.php in tiki root 
+#        and load that page in your browser
 #
 # 0/ Setup the lines in the configuration section just below with your own
 #    identity and settings (note that the script could be used on other projects)
@@ -68,7 +69,7 @@ CVSROOT=":ext:$USER@tikiwiki.cvs.sf.net:/cvsroot/tikiwiki"
 WORKDIR="/home/$USER/tikipack"
 MODULE="tikiwiki"
 
-# when creating pre-release packages, change RELTAG to the correct branch (ex:REL-1-9-DR4)
+# when creating pre-release packages, change RELTAG to the correct branch (ex:BRANCH-1-9)
 # comment this line when ready to release (step 3)
 RELTAG="BRANCH-1-9"
 
@@ -118,6 +119,7 @@ rm -rf $MODULE-$VER/templates_c/%*
 # or that one for the pre-release test tarball
 # grep -rl ' (CVS)' $MODULE-$VER/templates | xargs -- perl -pi -e "s/ \(CVS\)/ (pre-release)/"
 chmod 775 $MODULE-$VER/setup.sh
+cd $MODULE-$VER && ./setup.sh && cd ..
 
 tar -czf $MODULE-$VER.tar.gz $MODULE-$VER
 tar -cjf $MODULE-$VER.tar.bz2 $MODULE-$VER

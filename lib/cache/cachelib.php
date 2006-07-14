@@ -44,7 +44,7 @@ class Cachelib {
   function getCached($key) {
 		$key = md5($key);
 	if ( filesize($this->folder."/$key") == 0 ) { 	
-			return ´´;
+			return serialize(false);
 		} 
 		$fw = fopen($this->folder."/$key","r");
 		$data = fread($fw,filesize($this->folder."/$key"));

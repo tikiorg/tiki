@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.45 2005-11-07 16:20:21 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.46 2006-07-14 11:00:43 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -580,7 +580,7 @@ foreach ($languages as $sel) {
 
   if ($group_w) {
     // chmod the file to be writeable also by group for users that do not
-    // have root acces
+    // have root access
     chmod ("lang/$sel/language.php", 0664); 
 
     umask($old_umask); // Reset umask back to original value

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.41 2006-05-22 05:57:02 philwhipps Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.42 2006-07-14 11:00:43 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -163,6 +163,14 @@ if (isset($_REQUEST["loginprefs"])) {
         $tikilib->set_preference("validateEmail", 'n');
 
         $smarty->assign('validateEmail', 'n');
+    }
+
+    if (isset($_REQUEST["allowmsg_by_default"]) && $_REQUEST["allowmsg_by_default"] == "on") {
+        $tikilib->set_preference("allowmsg_by_default", 'y');
+        $smarty->assign('allowmsg_by_default', 'y');
+    } else {
+        $tikilib->set_preference("allowmsg_by_default", 'n');
+        $smarty->assign('allowmsg_by_default', 'n');
     }
 
 

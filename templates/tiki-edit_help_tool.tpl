@@ -2,15 +2,17 @@
 {literal}
 <script language="javascript" type="text/javascript">
 <!--
-function taginsert($area_name,$tagid)
+function taginsert(area_name,tagid)
 {
-//fill variables{/literal}
+//fill variables
+{/literal}
   var tag = new Array();
   {section name=qtg loop=$quicktags}
   tag[{$quicktags[qtg].tagId}]='{$quicktags[qtg].taginsert|escape:"javascript"}';
   {/section}
-//done{literal}  
-  insertAt($area_name,tag[$tagid]);
+//done
+{literal}  
+  insertAt(area_name,tag[tagid]);
 }
 -->
 </script>
