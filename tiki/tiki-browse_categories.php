@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.28 2006-07-14 11:00:43 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.29 2006-07-18 18:28:04 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.28 2006-07-14 11:00:43 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.29 2006-07-18 18:28:04 sylvieg Exp $
 //
 
 // Initialization
@@ -102,6 +102,8 @@ if ($feature_phplayers == 'y') {
 	$urlEnd = "&amp;deep=$deep";
 	if ($type)
 		$urlEnd .= "&amp;type=$type";
+	if (isset($_REQUEST['expanded']))
+		$urlEnd .= "||||1";
 	$urlEnd .= "\n";
 	list($itall, $count) = $tikiphplayers->mkCatEntry(0, ".", '', $ctall, $urlEnd, 'browsedcategory.tpl');
 	$smarty->assign('tree', $tikiphplayers->mkmenu($itall, 'treecategories', 'tree'));
