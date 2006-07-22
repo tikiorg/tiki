@@ -3,13 +3,16 @@
 /**
  * Parse structured wiki text and render into arbitrary formats such as XHTML.
  *
+ * >>> Tikiwiki users :
+ * >>> you need now to install the official pear Text_Wiki_Tiki on top of your tw
+ *
  * PHP versions 4 and 5
  *
  * @category   Text
  * @package    Text_Wiki
  * @author     Paul M. Jones <pmjones@php.net>
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @version    CVS: $Id: Wiki.php,v 1.1 2005-07-29 08:46:11 toggg Exp $
+ * @version    CVS: $Id: Wiki.php,v 1.2 2006-07-22 17:20:00 toggg Exp $
  * @link       http://pear.php.net/package/Text_Wiki
  */
 
