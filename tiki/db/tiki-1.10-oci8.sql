@@ -1,6 +1,6 @@
 -- $Rev$
--- $Date: 2006-05-25 06:06:46 $
--- $Author: sampaioprimo $
+-- $Date: 2006-07-23 22:43:05 $
+-- $Author: mose $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
