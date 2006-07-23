@@ -1,6 +1,6 @@
 -- $Rev$
--- $Date: 2006-05-25 06:06:46 $
--- $Author: sampaioprimo $
+-- $Date: 2006-07-23 22:43:05 $
+-- $Author: mose $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -1072,7 +1072,7 @@ CREATE  INDEX "tiki_comments_object" ON "tiki_comments"("object");
 CREATE  INDEX "tiki_comments_hits" ON "tiki_comments"("hits");
 CREATE  INDEX "tiki_comments_tc_pi" ON "tiki_comments"("parentId");
 CREATE  INDEX "tiki_comments_threaded" ON "tiki_comments"("message_id","in_reply_to","parentId");
-CREATE UNIQUE INDEX "tiki_comments_no_repeats" ON "tiki_comments"("parentId","userName","title","commentDate","message_id","in_reply_to");
+CREATE UNIQUE INDEX "tiki_comments_no_repeats" ON "tiki_comments"("parentId","userName",substr("title", 0, 40),",substrcommentDate",substr("message_id", 0, 40)substr("in_reply_to", 0, 40));
 -- --------------------------------------------------------
 
 --
