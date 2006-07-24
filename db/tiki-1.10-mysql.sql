@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2006-07-23 22:43:05 $
-# $Author: mose $
+# $Date: 2006-07-24 00:44:22 $
+# $Author: niclone $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -84,7 +84,7 @@ CREATE TABLE galaxia_instance_comments (
   instanceId int(14) NOT NULL default '0',
   user varchar(40) default NULL,
   activityId int(14) default NULL,
-  hash varchar(32) default NULL,
+  hash varchar(34) default NULL,
   title varchar(250) default NULL,
   comment text,
   activity varchar(80) default NULL,
@@ -4423,6 +4423,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_cms_rankings','
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_cms_templates','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_comm','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_contact','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_crypt_passwords','tikihash');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_custom_home','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_debug_console','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_debugger_console','n');

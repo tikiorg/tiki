@@ -42,7 +42,16 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 <tr><td class="form">{tr}Users accept internal messages by default{/tr}:</td><td><input type="checkbox" name="allowmsg_by_default" {if $allowmsg_by_default eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Remind passwords by email (if "Store plaintext passwords" is activated.) Else, Reset passwords by email{/tr}:</td><td><input type="checkbox" name="forgotPass" {if $forgotPass ne 'n'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Store plaintext passwords{/tr}:</td><td><input type="checkbox" name="feature_clear_passwords" {if $feature_clear_passwords eq 'y'}checked="checked"{/if}/></td></tr>
-
+<tr>
+  <td class="form">{tr}Crypt passwords method{/tr}:</td>
+  <td>
+    <select name="feature_crypt_passwords">
+      <option value='crypt-md5' {if $feature_crypt_passwords eq 'crypt-md5'}selected="selected"{/if}>crypt-md5</option>
+      <option value='crypt-des' {if $feature_crypt_passwords eq 'crypt-des'}selected="selected"{/if}>crypt-des</option>
+      <option value='tikihash' {if $feature_crypt_passwords eq 'tikihash'}selected="selected"{/if}>tikihash (old)</option>
+    </select>
+  </td>
+</tr>
 <tr>
   <td class="form">{tr}Reg users can change password{/tr}:</td>
   <td><input type="checkbox" name="change_password" {if $change_password eq 'y'}checked="checked"{/if}/></td>
