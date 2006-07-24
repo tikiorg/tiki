@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.42 2006-07-14 11:00:43 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.43 2006-07-24 00:44:22 niclone Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -222,6 +222,12 @@ if (isset($_REQUEST["loginprefs"])) {
 	$tikilib->set_preference("feature_clear_passwords", 'n');
 
 	$smarty->assign('feature_clear_passwords', 'n');
+    }
+
+    if (isset($_REQUEST["feature_crypt_passwords"])) {
+	$tikilib->set_preference('feature_crypt_passwords', $_REQUEST['feature_crypt_passwords']);
+
+	$smarty->assign('feature_crypt_passwords', $_REQUEST['feature_crypt_passwords']);
     }
 
     if (isset($_REQUEST["forgotPass"]) && $_REQUEST["forgotPass"] == "on") {

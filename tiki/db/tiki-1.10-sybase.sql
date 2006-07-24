@@ -2,8 +2,8 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2006-07-23 22:43:05 $
--- $Author: mose $
+-- $Date: 2006-07-24 00:44:22 $
+-- $Author: niclone $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -108,7 +108,7 @@ CREATE TABLE "galaxia_instance_comments" (
   "instanceId" numeric(14,0) default '0' NOT NULL,
   "user" varchar(40) default NULL NULL,
   "activityId" numeric(14,0) default NULL NULL,
-  "hash" varchar(32) default NULL NULL,
+  "hash" varchar(34) default NULL NULL,
   "title" varchar(250) default NULL NULL,
   "comment" text default '',
   "activity" varchar(80) default NULL NULL,
@@ -7112,6 +7112,10 @@ go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_contact','n')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_crypt_passwords','tikihash')
 go
 
 

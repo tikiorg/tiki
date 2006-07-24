@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.305 2006-07-14 11:00:44 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.306 2006-07-24 00:44:22 niclone Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -787,6 +787,8 @@ $smarty->assign('webmail_max_attachment', $webmail_max_attachment);
 
 $feature_clear_passwords = 'n';
 $smarty->assign('feature_clear_passwords', 'n');
+$feature_crypt_passwords = 'tikihash';
+$smarty->assign('feature_crypt_passwords', 'tikihash');
 $feature_challenge = 'n';
 $smarty->assign('feature_challenge', 'n');
 $min_user_length = 1;

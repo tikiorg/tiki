@@ -44,7 +44,7 @@ class UsersLib extends TikiLib {
 
 	$query = "select `email` from `users_users` where `login` = ?";
 	$email = $this->getOne($query, array('admin'));
-	$hash = md5("admin" . $pass);
+	$hash = $this->hash_pass("admin", $pass);
 
 	if ($feature_clear_passwords == 'n')
 	    $pass = '';
@@ -794,47 +794,19 @@ class UsersLib extends TikiLib {
 
 	$res = $result->fetchRow();
 	$user = $res['login'];
-	$hash=md5($user.$pass.trim($res['email']));
-	$hash2 = md5($user.$pass);
-	$hash3 = md5($pass);
 
-	// next verify the password with 2 hashes methods, the old one (pass?)) and the new one (login.pass;email)
+	// next verify the password with every hashes methods
 	if ($feature_challenge == 'n' || empty($response)) {
-	    $query
-		= "select `login` from `users_users` where " . $this->convert_binary(). " `login` = ? and (`hash`=? or `hash`=? or `hash`=?)";
-
-	    $result = $this->query($query, array(
-			$user,
-			$hash,
-			$hash2,
-			$hash3
-			));
-
-	    if ($result->numRows()) {
-//		$t = date("U");
-//
-		// Check
-//		$current = $this->getOne("select `currentLogin` from `users_users` where `login`=?", array($user));
-//
-//		if (is_null($current)) {
-//		    // First time
-//		    $current = $t;
-//		}
-
-//		$query = "update `users_users` set `lastLogin`=? where `login`=?";
-//		$result = $this->query($query, array(
-//			    (int)$current,
-//			    $user
-//			    ));
-		// check
-//		$query = "update `users_users` set `currentLogin`=? where `login`=?";
-//		$result = $this->query($query, array(
-//			    (int)$t,
-//			    $user
-//			    ));
-
+	    if ($res['hash'] == md5($pass)) // old old method md5(pass), for compatibility
 		return array(true, $user);
-	    }
+ 
+	    if ($res['hash'] == md5($user.$pass.trim($res['email']))) // old method md5(user.pass.email), for compatibility
+ 		return array(true, $user);
+
+	    if ($this->hash_pass($user, $pass, $res['hash']) == $res['hash']) // new method (crypt-md5) and tikihash method (md5(user.pass))
+		return array(true, $user);
+
+	    return array(PASSWORD_INCORRECT, $user);
 	} else {
 	    // Use challenge-reponse method
 	    // Compare pass against md5(user,challenge,hash)
@@ -1832,14 +1804,61 @@ function get_included_groups($group) {
 	    
     }
 
+    function hash_pass($user, $pass, $salt = NULL) {
+	global $feature_crypt_passwords;
+
+	$hashmethod=$feature_crypt_passwords;
+
+	if (!is_null($salt)) {
+	    $len=strlen($salt);
+	    if ($len == 13) { // CRYPT_STD_DES
+		$hashmethod='crypt-des';
+	    } else if ($len == 34) { // CRYPT_MD5
+		$hashmethod='crypt-md5';
+	    } else if ($len == 32) { // md5()
+		$hashmethod='tikihash';
+	    } else {
+		die("Unknown password format");
+	    }
+	}
+
+	switch($hashmethod) {
+	    
+	case 'crypt':
+	    return crypt($pass);
+	    
+	case 'crypt-des':
+	    if (CRYPT_STD_DES != 1) die("CRYPT_STD_DES not implemented on this system");
+	    if (is_null($salt)) {
+		$letters="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./";
+		$salt='';
+		for ($i=0; $i<2; $i++) $salt.=$letters[rand(0, strlen($letters) - 1)];
+	    }
+	    return crypt($pass, $salt);
+	    
+	case 'crypt-md5':
+	    if (CRYPT_MD5 != 1) die("CRYPT_MD5 not implemented on this system");
+	    if (is_null($salt)) {
+		$letters="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./";
+		$salt='$1$';
+		for ($i=0; $i<8; $i++) $salt.=$letters[rand(0, strlen($letters) - 1)];
+		$salt.='$';
+	    }
+	    return crypt($pass, $salt);
+	    
+	case 'tikihash':
+	default:
+	    return md5($user.$pass);
+	}
+    }
+
     function confirm_user($user) {
 	global $feature_clear_passwords,$cachelib;
 
 	$query = "select `provpass`, `login` from `users_users` where `login`=?";
 	$result = $this->query($query, array($user));
 	$res = $result->fetchRow();
-	// $hash = md5($res["login"] . $res["provpass"] . $res["email"]);
-	$hash = md5($res["login"] . $res["provpass"]);
+	$hash = $this->hash_pass($res['login'],  $res['provpass']);
 	$provpass = $res["provpass"];
 
 	if ($feature_clear_passwords == 'n') {
@@ -1853,21 +1872,21 @@ function get_included_groups($group) {
 		    '',
 		    $user
 		    ));
-			$cachelib->invalidate('userslist');
+	$cachelib->invalidate('userslist');
     }
 
     function add_user($user, $pass, $email, $provpass = '') {
 	global $pass_due, $tikilib, $cachelib;
 	global $feature_clear_passwords;
-	// Generate a unique hash; this is also done below in set_user_fields()
-	//$hash = md5($user . $pass . $email);
-	$hash = md5($user . $pass);
-
-	if ($feature_clear_passwords == 'n')
-	    $pass = '';
 
 	if ($this->user_exists($user) || empty($user))
 	    return false;
+
+	// Generate a unique hash; this is also done below in set_user_fields()
+	$hash = $this->hash_pass($user, $pass);
+
+	if ($feature_clear_passwords == 'n')
+	    $pass = '';
 
 	$now = date("U");
 	$new_pass_due = $now + (60 * 60 * 24 * $pass_due);
@@ -1932,7 +1951,7 @@ function get_included_groups($group) {
 	// lfagundes - only if pass is provided, admin doesn't need it
 	// is this still necessary?
 	if (!empty($pass)) {
-	    $hash = md5($user . $pass);
+	    $hash = $this->hash_pass($user, $pass);
 	    $query = "update `users_users` set `hash`=?  where " . $this->convert_binary(). " `login`=?";
 	    $result = $this->query($query, array(
 						 $hash,
@@ -2019,7 +2038,7 @@ function get_included_groups($group) {
 		$query = "select `provpass`  from `users_users` where " . $this->convert_binary() . " `login`=?";
 		$pass = $this->getOne($query, array($user));
 		if (($pass <> '') && ($actpass == md5($pass))) {
-			$hash = md5($user . $pass);
+			$hash = $this->hash_pass($user, $pass);
 			$now = date("U");
 			$query = "update `users_users` set `password`=?, `hash`=?, `pass_due`=? where " . $this->convert_binary() . " `login`=?";
 			$result = $this->query($query, array("", $hash, (int)$now, $user));
@@ -2032,13 +2051,8 @@ function get_included_groups($group) {
 	global $pass_due;
 
 	global $feature_clear_passwords;
-	/*anybody know what this is for? thenano 2006-01-18
-	$query = "select `email` from `users_users` where `login` = ?";
-	$email = $this->getOne($query, array($user));
-	$email=trim($email);
-	//$hash = md5($user . $pass . $email);
-	**********/
-	$hash = md5($user . $pass);
+
+	$hash = $this->hash_pass($user, $pass);
 	$now = date("U");
 	$new_pass_due = $now + (60 * 60 * 24 * $pass_due);
 
@@ -2128,7 +2142,7 @@ function get_included_groups($group) {
 
 	    // I don't think there are currently cases where login and email are undefined
 	    //$hash = md5($u['login'] . $u['password'] . $u['email']);
-	    $hash = md5($u['login'] . $u['password']);
+	    $hash = $this->hash_pass($u['login'], $u['password']);
 	    $q[] = "`hash` = ?";
 	    $bindvars[] = $hash;
 	}
@@ -2383,4 +2397,9 @@ function get_included_groups($group) {
 
 }
 
+/* For the emacs weenies in the crowd.
+Local Variables:
+   c-basic-offset: 4
+End:
+*/
 ?>

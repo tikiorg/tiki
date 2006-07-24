@@ -18,6 +18,7 @@ Please wrap your lines at 80 characters and indent them with spaces only.
 <Version 1.10
 <http://tikiwiki.org/ReleaseProcess110>
 ------------------
+[MOD] added crypt-md5 and crypt-des support
 
 Version 1.9.5
 <http://tikiwiki.org/ReleaseProcess195>
