@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog_post.php,v 1.35 2006-07-14 11:00:44 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog_post.php,v 1.36 2006-07-27 06:50:13 toggg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -121,14 +121,6 @@ if (!isset($_REQUEST['blogId']) && !isset($_REQUEST['postId'])) {
 	die;
 }
 
-//Build absolute URI for this
-$parts = parse_url($_SERVER['REQUEST_URI']);
-
-$postId = $_REQUEST["postId"];
-$post_info = $bloglib->get_post($_REQUEST["postId"]);
-$_REQUEST["blogId"] = $post_info["blogId"];
-$blog_data = $tikilib->get_blog($_REQUEST["blogId"]);
-
 $ownsblog = 'n';
 
 if ($user && $user == $blog_data["user"]) {
@@ -152,8 +144,8 @@ if ( isset($_REQUEST["deltrack"]) && ($_REQUEST["deltrack"] != '') ) {
 		$area = 'delpost';
 		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
-			$bloglib->remove_trackback_from($_REQUEST["postId"], $_REQUEST["deltrack"]);
-			$post_info = $bloglib->get_post($_REQUEST["postId"]);
+			$bloglib->remove_trackback_from($postId, $_REQUEST["deltrack"]);
+			$post_info = $bloglib->get_post($postId);
 	} else {
 		key_get($area);
   	}
@@ -165,8 +157,7 @@ if ( isset($_REQUEST["deltrack"]) && ($_REQUEST["deltrack"] != '') ) {
 
 $post_info['data']=htmldecode($post_info['data']);
 $smarty->assign('post_info', $post_info);
-$smarty->assign('postId', $_REQUEST["postId"]);
-$blog_data = $bloglib->get_blog($_REQUEST['blogId']);
+$smarty->assign('postId', $postId);
 $smarty->assign('blog_data', $blog_data);
 $smarty->assign('blogId', $blogId);
 
@@ -221,41 +212,6 @@ $smarty->assign('last_page', $pages);
 $smarty->assign('pagenum', $_REQUEST['page']);
 
 $smarty->assign('parsed_data', $parsed_data);
-
-
-				$smarty->assign("$permName", 'y');
-			} else {
-				$$permName = 'n';
-
-				$smarty->assign("$permName", 'n');
-			}
-		}
-	}
-}
-
-if ($tiki_p_blog_admin == 'y') {
-	$tiki_p_create_blogs = 'y';
-
-	$smarty->assign('tiki_p_create_blogs', 'y');
-	$tiki_p_blog_post = 'y';
-	$smarty->assign('tiki_p_blog_post', 'y');
-	$tiki_p_read_blog = 'y';
-	$smarty->assign('tiki_p_read_blog', 'y');
-}
-
-if ($tiki_p_read_blog != 'y') {
-	$smarty->assign('msg', tra("Permission denied you can not view this section"));
-
-	$smarty->display("error.tpl");
-	die;
-}
-
-if (!$blog_data) {
-	$smarty->assign('msg', tra("Blog not found"));
-
-	$smarty->display("error.tpl");
-	die;
-}
 
 if ($feature_blogposts_comments == 'y') {
 	$comments_per_page = $blog_comments_per_page;
