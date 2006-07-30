@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: ajaxlib.php,v 1.2 2006-03-20 21:39:19 lfagundes Exp $
+// CVS: $Id: ajaxlib.php,v 1.3 2006-07-30 15:14:36 lfagundes Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -19,6 +19,7 @@ if ($feature_ajax == 'y') {
 	 * @var    array $aTemplates
 	 */
 	var $aTemplates;
+	var $deniedFunctions;
 	
 	
 	/**
@@ -41,6 +42,7 @@ if ($feature_ajax == 'y') {
 	    xajax::xajax();
 	    
 	    $this->aTemplates = array();
+	    $this->deniedFunctions = array();
 
 	    $this->waitCursorOn();
 	}
@@ -58,6 +60,21 @@ if ($feature_ajax == 'y') {
 	}
 
 	/**
+         * Sets access permission for a given function.
+         * Permission MUST be set before registering the function.
+	 *
+	 * @access  public
+	 * @param   string $functionName
+	 * @param   boolean $hasPermission
+	 * @return  void
+         */
+	function setPermission($functionName, $hasPermission) {
+	    if (!$hasPermission) {
+			$this->deniedFunctions[$functionName] = 1;
+	    }
+	}
+
+	/**
 	 * Checks if a given template is registered
 	 *
 	 * @access  public
@@ -69,6 +86,43 @@ if ($feature_ajax == 'y') {
 	}
 
 	/**
+         * 
+         * 
+         */
+	function registerFunction($mFunction, $sRequestType=XAJAX_POST) {
+		$functionName = is_array($mFunction) ? $mFunction[0] : $mFunction;
+	    if (isset($this->deniedFunctions[$functionName])) {
+			if (is_array($mFunction)) {
+			    if (method_exists($mFunction[1], $mFunction[2] . 'Error')) {
+					$mFunction[2] .= 'Error';
+			    } else {
+					$mFunction[1] &= $this;
+					$mFunction[2] = 'accessDenied';
+			    }
+			} else {
+			    if (function_exists($mFunction . 'Error')) {
+					$mFunction .= 'Error';
+			    } else {
+					$mFunction = array($mFunction, &$this, 'accessDenied');
+			    } 
+			} 
+	    }
+	    xajax::registerFunction($mFunction, $sRequestType);
+	}
+	
+	/*
+	 * Returns default access denied error
+	 * 
+	 * @access public
+	 * @return xajaxResponse object
+	 */
+	 function accessDenied() {
+	 	$objResponse = new xajaxResponse();
+		$objResponse->addAlert(tra("Permission denied"));
+	 	return $objResponse;
+	 }
+
+	/**
 	 * Assigns xajax javascript to smarty just before processing requests.
 	 * this way developer can register functions in php code and don't have
          * to manually assign xajax_js.
@@ -78,7 +132,9 @@ if ($feature_ajax == 'y') {
 	 */
 	function processRequests() {
 	    global $smarty;
-	    $smarty->assign("xajax_js",$this->getJavascript('','lib/ajax/xajax_js/xajax.js'));
+	    if (isset($smarty)) {
+		$smarty->assign("xajax_js",$this->getJavascript('','lib/ajax/xajax_js/xajax.js'));
+	    }
 
 	    xajax::processRequests();
 	}
