@@ -85,15 +85,12 @@
     {if $itype eq 'o' or $xsize < $scalesize}
     	<img src="show_image.php?id={$imageId}&amp;nocount=y" alt="{tr}image{/tr}" />
     {else}
-	    <a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$desp}&amp;galleryId={$galleryId}&amp;imageId={$imageId}&amp;scalesize={$scaleinfo.nextscale}&amp;scaled" title="{tr}Click to zoom{/tr}">
-
-
--- End of commenting out broken slideshow! *}
-
-	    <a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$desp}&amp;galleryId={$galleryId}&amp;imageId={$imageId}{if $scaleinfo.nexttype eq 's'}&amp;scalesize={$scaleinfo.nextscale}&amp;scaled{/if}" title="{tr}Click to zoom{/tr}: {if $scaleinfo.nexttype eq 's'}{$scaleinfo.nextscale}px{else}{tr}original size{/tr}{/if}">
-	    <img src="show_image.php?id={$imageId}{if $itype eq 's'}&amp;scaled&amp;scalesize={$scalesize}{/if}&amp;nocount=y" alt="{tr}image{/tr}" /></a>
+    <a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$desp}&amp;galleryId={$galleryId}&amp;imageId={$imageId}{if $scaleinfo.nexttype eq 's'}&amp;scalesize={$scaleinfo.nextscale}&amp;scaled{/if}" title="{tr}Click to zoom{/tr}: {if $scaleinfo.nexttype eq 's'}{$scaleinfo.nextscale}px{else}{tr}original size{/tr}{/if}">
+	<img src="show_image.php?id={$imageId}{if $itype eq 's'}&amp;scaled&amp;scalesize={$scalesize}{/if}&amp;nocount=y" alt="{tr}image{/tr}" />
+    </a>
+    {/if}
   </div>
-  
+
 {if $popup eq ""}
 	<div align="center" >
 			{if $imageId ne $firstId}
