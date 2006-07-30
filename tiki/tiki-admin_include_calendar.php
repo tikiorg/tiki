@@ -40,7 +40,7 @@ if (isset($_REQUEST["calprefs"])) {
 		$tikilib->set_preference('calendar_view_mode', 'week'); 	 
 		$calendar_view_mode = 'week'; 	 
 	}
- }
+
  	if (isset($_REQUEST["feature_cal_manual_time"]) && $_REQUEST["feature_cal_manual_time"] == "on") { 	 
 		$tikilib->set_preference('feature_cal_manual_time', 'y'); 	 
 		$feature_cal_manual_time = "y"; 	 
