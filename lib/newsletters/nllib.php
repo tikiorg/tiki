@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.48 2006-06-19 21:04:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.49 2006-07-31 13:05:16 hangerman Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -13,38 +13,54 @@ class NlLib extends TikiLib {
 		parent::TikiLib($db);
 	}
 
-	function replace_newsletter($nlId, $name, $description, $allowUserSub, $allowAnySub, $unsubMsg, $validateAddr) {
+	function replace_newsletter($nlId, $name, $description, $allowUserSub, $allowAnySub, $unsubMsg, $validateAddr,$allowTxt) {
+	
+		$query="select count(`allowTxt`) from `tiki_newsletters`";
+	        $result=$this->query($query,"",-1,-1,false);
+		if (!$result) {
+		     $query="ALTER TABLE `tiki_newsletters` ADD `allowTxt` varchar(1) ";
+	             $result=$this->query($query,"");
+		}
 		if ($nlId) {
-			$query = "update `tiki_newsletters` set `name`=?, `description`=?, `allowUserSub`=?, `allowAnySub`=?, `unsubMsg`=?, `validateAddr`=?  where `nlId`=?";
-			$result = $this->query($query, array($name,$description,$allowUserSub,$allowAnySub,$unsubMsg,$validateAddr,(int)$nlId));
+			$query = "update `tiki_newsletters` set `name`=?, `description`=?, `allowUserSub`=?, `allowAnySub`=?, `unsubMsg`=?, `validateAddr`=? , `allowTxt`=? where `nlId`=?";
+			$result = $this->query($query, array($name,$description,$allowUserSub,$allowAnySub,$unsubMsg,$validateAddr,$allowTxt,(int)$nlId));
 		} else {
 			$now = date("U");
-			$query = "insert into `tiki_newsletters`(`name`,`description`,`allowUserSub`,`allowAnySub`,`unsubMsg`,`validateAddr`,`lastSent`,`editions`,`users`,`created`) ";
-      $query.= " values(?,?,?,?,?,?,?,?,?,?)";
-			$result = $this->query($query, array($name,$description,$allowUserSub,$allowAnySub,$unsubMsg,$validateAddr,(int)$now,0,0,(int)$now));
+			$query = "insert into `tiki_newsletters`(`name`,`description`,`allowUserSub`,`allowAnySub`,`unsubMsg`,`validateAddr`,`lastSent`,`editions`,`users`,`created`,`allowTxt`) ";
+      			$query.= " values(?,?,?,?,?,?,?,?,?,?,?)";
+			$result = $this->query($query, array($name,$description,$allowUserSub,$allowAnySub,$unsubMsg,$validateAddr,(int)$now,0,0,(int)$now,$allowTxt));
 			$queryid = "select max(`nlId`) from `tiki_newsletters` where `created`=?";
 			$nlId = $this->getOne($queryid, array((int)$now));
 		}
 		return $nlId;
 	}
+	function replace_edition($nlId, $subject, $data, $users, $editionId=0, $draft=false,$datatxt='') {
+		//Check the extra field for text msg
+		//Has to be removed in prod
+		$query="select count(`datatxt`) from `tiki_sent_newsletters`";
 
-	function replace_edition($nlId, $subject, $data, $users, $editionId=0, $draft=false) {
+	        $result=$this->query($query,"",-1,-1,false);
+		if (!$result) {
+		     $query="ALTER TABLE `tiki_sent_newsletters` ADD `datatxt` longblob AFTER data";
+	             $result=$this->query($query,"");
+		}
+		
 		
 		if( $draft == false ) {
 			$now = date("U");
 			
 			if( $editionId > 0) {
 				// save and send a draft
-				$query = "update `tiki_sent_newsletters` set `subject`=?, `data`=?, `sent`=?, `users`=? ";
+				$query = "update `tiki_sent_newsletters` set `subject`=?, `data`=?, `sent`=?, `users`=? , `datatxt`=? ";
 				$query.= "where editionId=? and nlId=?";
-				$result = $this->query($query,array($subject,$data, (int)$now, $users, (int)$editionId,(int)$nlId));
+				$result = $this->query($query,array($subject,$data, (int)$now, $users,$datatxt, (int)$editionId,(int)$nlId));
 				$query = "update `tiki_newsletters` set `editions`= `editions`+ 1 where `nlId`=? ";
 				$result = $this->query($query,array((int)$nlId));				
 			}
 			else {
 				// save and send an edition				
-				$query = "insert into `tiki_sent_newsletters`(`nlId`,`subject`,`data`,`sent`,`users`) values(?,?,?,?,?)";
-				$result = $this->query($query,array((int)$nlId,$subject,$data,(int)$now,$users));
+				$query = "insert into `tiki_sent_newsletters`(`nlId`,`subject`,`data`,`sent`,`users` ,`datatxt`) values(?,?,?,?,?,?)";
+				$result = $this->query($query,array((int)$nlId,$subject,$data,(int)$now,$users,$datatxt));
 				$query = "update `tiki_newsletters` set `editions`= `editions`+ 1 where `nlId`=?";
 				$result = $this->query($query,array((int)$nlId));
 				$editionId = $this->getOne('select max(`editionId`) from `tiki_sent_newsletters`');				
@@ -58,8 +74,8 @@ class NlLib extends TikiLib {
 				
 			} else {
 				// save a new draft
-				$query = "insert into `tiki_sent_newsletters`(`nlId`,`subject`,`data`,`sent`,`users`) values(?,?,?,?,?)";
-				$result = $this->query($query,array((int)$nlId,$subject,$data,-1,0));
+				$query = "insert into `tiki_sent_newsletters`(`nlId`,`subject`,`data`,`sent`,`users`,`datatxt`) values(?,?,?,?,?,?)";
+				$result = $this->query($query,array((int)$nlId,$subject,$data,-1,0,$datatxt));
 				$editionId = $this->getOne('select max(`editionId`) from `tiki_sent_newsletters`');				
 			}
 		}
