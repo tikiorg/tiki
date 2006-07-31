@@ -24,17 +24,28 @@
 <input type="hidden" name="data" value="{$data|escape}" />
 <input type="hidden" name="dataparsed" value="{$dataparsed|escape}" />
 <input type="hidden" name="cookietab" value="3" />
+<input type="hidden" name="datatxt" value="{$datatxt|escape}" />
 <input type="submit" name="send" value="{tr}send{/tr}" />
 <input type="submit" name="preview" value="{tr}cancel{/tr}" />
 </form>
 <h2>{tr}Preview{/tr}</h2>
 <div class="wikitext">{$subject}</div>
+<h3>{tr}HTML version{/tr}</h3>
 <div class="wikitext">{$dataparsed}</div>
+{if $allowTxt eq 'y' }
+<h3>{tr}Text version{/tr}</h3>
+<div class="wikitext">{$datatxt}</div>
+{/if}
 {else}
 {if $preview eq 'y'}
 <h2>{tr}Preview{/tr}</h2>
 <div class="wikitext">{$info.subject}</div>
+<h3>{tr}HTML version{/tr}</h3>
 <div class="wikitext">{$info.dataparsed}</div>
+{if $allowTxt eq 'y' }
+<h3>{tr}Text version{/tr}</h3>
+<div class="wikitext" >{$info.datatxt}</div>
+{/if}
 {if $txt}<div class="wikitext">{$txt}</div>{/if}
 {/if}
 
@@ -87,11 +98,18 @@
 </select>
 </td></tr>
 {/if}
-<tr><td class="formcolor">{tr}Data{/tr}:<br /><br />{include file="textareasize.tpl" area_name='editnl' formId='editpageform'}<br /><br />{include file=tiki-edit_help_tool.tpl}</td>
+
+<tr><td class="formcolor">{tr}Data HTML{/tr}:<br /><br />{include file="textareasize.tpl" area_name='editnl' formId='editpageform'}<br /><br />{include file=tiki-edit_help_tool.tpl}</td>
 <td class="formcolor"><textarea id='editnl' name="data" rows="{$rows}" cols="{$cols}">{$info.data|escape}</textarea>
 <input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/>
 </td></tr>
+{if $allowTxt eq 'y' }
+<tr>  
+    <TD class="formcolor">{tr}Data Txt{/tr}:<br /><br />{include file="textareasize.tpl" area_name='editnltxt' formId='editpageform'}</TD>
+    <td class="formcolor"><textarea id='editnltxt' name="datatxt" rows="{$rows}" cols="{$cols}">{$info.datatxt|escape}</textarea>
+</td></tr>
+{/if}
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}Preview{/tr}" />&nbsp;<input type="submit" name="save_only" value="{tr}Save as draft{/tr}" /></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td>&nbsp;<input type="submit" name="save" value="{tr}Send Newsletters{/tr}" /></td></tr>
 </table>

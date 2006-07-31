@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.32 2006-06-19 21:04:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.33 2006-07-31 13:04:53 hangerman Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -50,6 +50,7 @@ if ($_REQUEST["nlId"]) {
 	} else {
 		$info = array();
 		$info["data"] = '';
+		$info["datatxt"] = '';
 		$info["subject"] = '';
 		$info["editionId"] = 0;
 	}
@@ -90,6 +91,15 @@ if (isset($_REQUEST["preview"])) {
 	} else {
 		$info["data"] = '';
 	}
+   	if (isset($_REQUEST["datatxt"])) {
+ 		$info["datatxt"] = $_REQUEST["datatxt"];
+		//For the hidden input
+		$smarty->assign('datatxt',$_REQUEST["datatxt"]);
+		//For the display
+		$info["datatxt"] = preg_replace ( "/\n/", "<br>", $info["datatxt"] );
+	} else {
+		$info["datatxt"] = '';
+	}
 	if (!empty($_REQUEST["usedTpl"])) {
 		$smarty->assign('dataparsed', $tikilib->parse_data($info["data"]));
 		$smarty->assign('subject', $info["subject"]);
@@ -114,6 +124,7 @@ if (isset($_REQUEST["save"])) {
 	$subscribers = $nllib->get_all_subscribers($_REQUEST["nlId"], "");
 	$smarty->assign('nlId', $_REQUEST["nlId"]);
 	$smarty->assign('data', $_REQUEST["data"]);
+        $smarty->assign('datatxt', $_REQUEST["datatxt"]);
 	$parsed = '';
 	if (!empty($_REQUEST["usedTpl"])) {
 		$smarty->assign('dataparsed', $tikilib->parse_data($_REQUEST["data"]));
@@ -133,14 +144,25 @@ if (isset($_REQUEST["save"])) {
 }
 
 $smarty->assign('emited', 'n');
+if (!empty($_REQUEST['datatxt']))
+   $txt = $_REQUEST['datatxt'];
+if (empty($txt)&&!empty($_REQUEST["data"]))
+	{
+		//No txt message is explicitely provided -> 
+		//Create one with the html Version & remove Wiki tags
+		$txt = strip_tags(str_replace(array("\r\n","&nbsp;") , array("\n"," ") , $_REQUEST["data"]));
+		$txt=ereg_replace("[^ a-zA-Z0-9]*!",'\n',$txt);
+		$txt=ereg_replace("!!",'\n',$txt);
+		$txt=ereg_replace("!!!",'\n',$txt);
+	}
+
 
 if (isset($_REQUEST["send"])) {
 	include_once ('lib/webmail/tikimaillib.php');
 	check_ticket('send-newsletter');
 	set_time_limit(0);
-
-	$mail = new TikiMail();
-	$txt = strip_tags(str_replace(array("\r\n","&nbsp;") , array("\n"," ") , $_REQUEST["data"]));
+$mail = new TikiMail();	
+	
 	if (stristr($_REQUEST["dataparsed"], "<body>") === false) {
 		$html = "<html><body>".$tikilib->parse_data($_REQUEST["dataparsed"])."</body></html>";
 	} else {
@@ -156,7 +178,7 @@ if (isset($_REQUEST["send"])) {
 		$users = $nllib->get_all_subscribers($_REQUEST["nlId"], $nl_info["unsubMsg"]);
 	}
 	
-	$editionId = $nllib->replace_edition($_REQUEST["nlId"], $_REQUEST["subject"], $_REQUEST["data"], $sent, $_REQUEST['editionId'], true);
+	$editionId = $nllib->replace_edition($_REQUEST["nlId"], $_REQUEST["subject"], $_REQUEST["data"], $sent, $_REQUEST['editionId'], true,$txt);
 	$nllib->memo_subscribers_edition($editionId, $users);
 	foreach ($users as $us) {
 		$userEmail  = $us["login"];
@@ -195,14 +217,14 @@ if (isset($_REQUEST["send"])) {
 	$smarty->assign('emited', 'y');
 	if (count($errors) > 0)
 		$smarty->assign_by_ref('errors', $errors);
-	$editionId = $nllib->replace_edition($_REQUEST["nlId"], $_REQUEST["subject"], $_REQUEST["data"], $sent, $editionId);
+	$editionId = $nllib->replace_edition($_REQUEST["nlId"], $_REQUEST["subject"], $_REQUEST["data"], $sent, $editionId, false, $txt);
 }
 
 if (isset($_REQUEST["save_only"])) {
 
 	$smarty->assign('nlId', $_REQUEST['nlId']);	
-	$editionId = $nllib->replace_edition($_REQUEST['nlId'], $_REQUEST['subject'], $_REQUEST['data'], -1, $_REQUEST['editionId'], true);
-	$info = $nllib->get_edition($editionId);	
+	$editionId = $nllib->replace_edition($_REQUEST['nlId'], $_REQUEST['subject'], $_REQUEST['data'], -1, $_REQUEST['editionId'], true,$txt);
+	$info = $nllib->get_edition($editionId);
 	$smarty->assign('info', $info);
 }
 
@@ -270,6 +292,8 @@ $smarty->assign_by_ref('editions', $editions["data"]);
 $smarty->assign_by_ref('drafts', $drafts["data"]);
 $smarty->assign_by_ref('cant_editions', $editions["cant"]);
 $smarty->assign_by_ref('cant_drafts', $drafts["cant"]);
+$smarty->assign('allowTxt', $nl_info["allowTxt"]);
+
 
 $smarty->assign('url', "tiki-send_newsletters.php");
 

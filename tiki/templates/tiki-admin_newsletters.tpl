@@ -28,6 +28,8 @@
 <input type="checkbox" name="unsubMsg" {if $info.unsubMsg eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Validate email addresses{/tr}</td><td class="formcolor">
 <input type="checkbox" name="validateAddr" {if $info.validateAddr eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="formcolor">{tr}Allow customized text message{/tr}</td><td class="formcolor">
+<input type="checkbox" name="allowTxt" {if $info.allowTxt eq 'y'}checked="checked"{/if} /></td></tr>
 {* <tr><td class="formcolor">{tr}Frequency{/tr}</td><td class="formcolor">
 <select name="frequency">
 {section name=ix loop=$freqs}

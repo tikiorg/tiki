@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_newsletters.php,v 1.14 2005-08-12 13:01:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_newsletters.php,v 1.15 2006-07-31 13:04:44 hangerman Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -67,6 +67,7 @@ if ($_REQUEST["nlId"]) {
 	$info["allowAnySub"] = 'n';
 	$info["unsubMsg"] = 'y';
 	$info["validateAddr"] = 'y';
+	$info["allowTxt"] = 'y';
 	$update = "y";
 }
 
@@ -107,8 +108,13 @@ if (isset($_REQUEST["save"])) {
 	} else {
 		$_REQUEST["validateAddr"] = 'n';
 	}
+	if (isset($_REQUEST["allowTxt"]) && $_REQUEST["allowTxt"] == 'on') {
+		$_REQUEST["allowTxt"] = 'y';
+	} else {
+		$_REQUEST["allowTxt"] = 'n';
+	}
 
-	$sid = $nllib->replace_newsletter($_REQUEST["nlId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["allowUserSub"], $_REQUEST["allowAnySub"], $_REQUEST["unsubMsg"], $_REQUEST["validateAddr"]);
+	$sid = $nllib->replace_newsletter($_REQUEST["nlId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["allowUserSub"], $_REQUEST["allowAnySub"], $_REQUEST["unsubMsg"], $_REQUEST["validateAddr"],$_REQUEST["allowTxt"]);
 	/*
 	$cat_type='newsletter';
 	$cat_objid = $sid;
@@ -123,6 +129,7 @@ if (isset($_REQUEST["save"])) {
 	$info["allowAnySub"] = 'n';
 	$info["unsubMsg"] = 'y';
 	$info["validateAddr"] = 'y';
+	$info["allowTxt"] = 'y';
 	//$info["frequency"] = 7 * 24 * 60 * 60;
 	$smarty->assign('nlId', 0);
 	$smarty->assign('info', $info);
