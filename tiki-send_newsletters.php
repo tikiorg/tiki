@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.33 2006-07-31 13:04:53 hangerman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.34 2006-07-31 21:10:19 hangerman Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -44,7 +44,7 @@ if ($_REQUEST["nlId"]) {
 	$nl_info = $nllib->get_newsletter($_REQUEST["nlId"]);
 
 	if (!isset($_REQUEST["editionId"])) $_REQUEST["editionId"] = 0;
-
+	$smarty->assign('allowTxt',$nl_info['allowTxt']);
 	if ($_REQUEST["editionId"]) {
 		$info = $nllib->get_edition($_REQUEST["editionId"]);
 	} else {
@@ -55,7 +55,39 @@ if ($_REQUEST["nlId"]) {
 		$info["editionId"] = 0;
 	}
 	$smarty->assign('info', $info);
+}else{
+	//No newsletter selected -> Check if the textarea for the first
+	//as to be displayed
+	$smarty->assign('allowTxt', $newsletters['data'][0]['allowTxt']);	
 }
+
+
+// Display to newsletter txtarea or not depending on the preferences
+$showBoxCheck="
+	<script type='text/javascript'>
+	<!--
+	function checkNewsletterTxtArea(){
+	browser();
+	if (document.getElementById('txtcol1').style.display=='none'){";
+  if (preg_match("/gecko/i",$_SERVER['HTTP_USER_AGENT'])){
+	$showBoxCheck.= "document.getElementById('txtcol1').style.display='table-cell';";
+	$showBoxCheck.= "document.getElementById('txtcol2').style.display='table-cell';";
+  }else{
+	$showBoxCheck.= "document.getElementById('txtcol1').style.display='inline';	";
+	$showBoxCheck.= "document.getElementById('txtcol2').style.display='inline';";
+  };
+  $showBoxCheck.="
+    	}else{
+	document.getElementById('txtcol1').style.display='none';
+	document.getElementById('txtcol2').style.display='none';
+    	}
+	}
+	-->
+	</script>
+	";
+$smarty->assign('showBoxCheck',$showBoxCheck);
+
+
 
 if (isset($_REQUEST["remove"])) {
 	$area = 'delnewsletter';
@@ -221,7 +253,7 @@ $mail = new TikiMail();
 }
 
 if (isset($_REQUEST["save_only"])) {
-
+	if (!isset($txt))$txt="";
 	$smarty->assign('nlId', $_REQUEST['nlId']);	
 	$editionId = $nllib->replace_edition($_REQUEST['nlId'], $_REQUEST['subject'], $_REQUEST['data'], -1, $_REQUEST['editionId'], true,$txt);
 	$info = $nllib->get_edition($editionId);
@@ -292,9 +324,6 @@ $smarty->assign_by_ref('editions', $editions["data"]);
 $smarty->assign_by_ref('drafts', $drafts["data"]);
 $smarty->assign_by_ref('cant_editions', $editions["cant"]);
 $smarty->assign_by_ref('cant_drafts', $drafts["cant"]);
-$smarty->assign('allowTxt', $nl_info["allowTxt"]);
-
-
 $smarty->assign('url', "tiki-send_newsletters.php");
 
 if ($tiki_p_use_content_templates == 'y') {

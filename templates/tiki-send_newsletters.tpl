@@ -1,3 +1,4 @@
+{$showBoxCheck}
 <h1><a class="pagetitle" href="tiki-send_newsletters.php">{tr}Send newsletters{/tr} {if $nlId ne '0'}{$nlName}{/if}</a></h1>
 {if $tiki_p_admin_newsletters eq "y"}<span class="button2"><a class="linkbut" href="tiki-admin_newsletters.php">{tr}admin newsletters{/tr}</a></span>{/if}<br />
 {assign var=area_name value="editnl"}
@@ -67,10 +68,10 @@
 <h2>{tr}Prepare a newsletter to be sent{/tr}</h2>
 <form action="tiki-send_newsletters.php" method="post" id='editpageform'>
 <input type="hidden" name="editionId" value="{$info.editionId}"/>
-<table class="normal">
+<table class="normal" id="newstable">
 <tr><td class="formcolor">{tr}Subject{/tr}:</td><td class="formcolor"><input type="text" maxlength="250" size="40" name="subject" value="{$info.subject|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Newsletter{/tr}:</td><td class="formcolor">
-<select name="nlId">
+<select name="nlId" onchange="checkNewsletterTxtArea();">
 {section loop=$newsletters name=ix}
 <option value="{$newsletters[ix].nlId|escape}" {if $newsletters[ix].nlId eq $nlId}selected="selected"{/if}>{$newsletters[ix].name}</option>
 {/section}
@@ -104,18 +105,16 @@
 <input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/>
 </td></tr>
-{if $allowTxt eq 'y' }
 <tr>  
-    <TD class="formcolor">{tr}Data Txt{/tr}:<br /><br />{include file="textareasize.tpl" area_name='editnltxt' formId='editpageform'}</TD>
-    <td class="formcolor"><textarea id='editnltxt' name="datatxt" rows="{$rows}" cols="{$cols}">{$info.datatxt|escape}</textarea>
+    <TD class="formcolor" id="txtcol1">{tr}Data Txt{/tr}:<br /><br />{include file="textareasize.tpl" area_name='editnltxt' formId='editpageform'}</TD>
+    <td class="formcolor" id="txtcol2" ><textarea id='editnltxt' name="datatxt" rows="{$rows}" cols="{$cols}">{$info.datatxt|escape}</textarea>
 </td></tr>
-{/if}
+
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}Preview{/tr}" />&nbsp;<input type="submit" name="save_only" value="{tr}Save as draft{/tr}" /></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td>&nbsp;<input type="submit" name="save" value="{tr}Send Newsletters{/tr}" /></td></tr>
 </table>
 </form>
 </div>
-
 {* --- tab with drafts --- *}
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 {assign var=channels value=$drafts}
@@ -160,3 +159,12 @@
 {include file=sent_newsletters.tpl }
 </div>
 {/if}
+{$allowTxt}
+<script type='text/javascript'>
+<!--
+{if $allowTxt eq 'n'}
+document.getElementById('txtcol1').style.display='none';
+document.getElementById('txtcol2').style.display='none';
+{/if}
+-->
+</script>
