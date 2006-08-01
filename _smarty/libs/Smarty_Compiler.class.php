@@ -26,7 +26,7 @@
  * @package Smarty
  */
 
-/* $Id: Smarty_Compiler.class.php,v 1.8 2005-10-18 15:41:45 mose Exp $ */
+/* $Id: Smarty_Compiler.class.php,v 1.9 2006-08-01 13:41:21 hangerman Exp $ */
 
 /**
  * Template compiling class
@@ -224,6 +224,23 @@ class Smarty_Compiler extends Smarty {
      */
     function _compile_file($resource_name, $source_content, &$compiled_content)
     {
+	
+ 	global $language,$user;
+	//When using the interactive translation mode, the string inside
+	//tags (ex: <a title="{tr}title{/tr}") can not be translated this way
+	//It has to be done twice because of some alt="{tr}aa{/tr}{tr}bb{/tr}"
+	if ((!empty($_SESSION['interactive_translation_mode'])&&($_SESSION['interactive_translation_mode']=='on'))){
+	//print_r($source_content);
+	$source_content=preg_replace("/alt=(.)\{tr\}([^\{]*)\{\/tr\}(.)/","alt=$1 $2 $3",$source_content);
+	$source_content=preg_replace("/alt=(.\[)\{tr\}([^\{]*)\{\/tr\}(\].)/","alt=$1 $2 $3",$source_content);
+	$source_content=preg_replace("/title=(.)\{tr\}([^\{]*)\{\/tr\}(.)/","title=$1 $2 $3",$source_content);
+	$source_content=preg_replace("/value=(.)\{tr\}([^\{]*)\{\/tr\}(.)/","value=$1 $2 $3",$source_content);
+	$source_content=str_replace("{tr}Error{/tr}","Error",$source_content);
+	$source_content=preg_replace("/alt=(.)\{tr\}([^\{]*)\{\/tr\}(.)/","alt=$1 $2 $3",$source_content);
+	$source_content=preg_replace("/title=(.)\{tr\}([^\{]*)\{\/tr\}(.)/","title=$1 $2 $3",$source_content);
+	$source_content=preg_replace("/value=(.)\{tr\}([^\{]*)\{\/tr\}(.)/","value=$1 $2 $3",$source_content);
+	$source_content=str_replace("{tr}Error{/tr}","Error",$source_content);
+	}
 
         if ($this->security) {
             // do not allow php syntax to be executed unless specified
@@ -427,13 +444,18 @@ class Smarty_Compiler extends Smarty {
         /* Matched comment. */
         if ($template_tag{0} == '*' && $template_tag{strlen($template_tag) - 1} == '*')
             return '';
-        
+
         /* Split tag into two three parts: command, command modifiers and the arguments. */
         if(! preg_match('~^(?:(' . $this->_num_const_regexp . '|' . $this->_obj_call_regexp . '|' . $this->_var_regexp
                 . '|\/?' . $this->_reg_obj_regexp . '|\/?' . $this->_func_regexp . ')(' . $this->_mod_regexp . '*))
                       (?:\s+(.*))?$
                     ~xs', $template_tag, $match)) {
-            $this->_syntax_error("unrecognized tag: $template_tag", E_USER_ERROR, __FILE__, __LINE__);
+	//In interactive translation mode
+	//Bypass error ;-)
+	if (empty($_SESSION['interactive_translation_mode'])||($_SESSION['interactive_translation_mode']!='on'))
+	       $this->_syntax_error("unrecognized tag: $template_tag", E_USER_ERROR, __FILE__, __LINE__);
+		else 
+		return "";
         }
         
         $tag_command = $match[1];
@@ -1504,7 +1526,8 @@ class Smarty_Compiler extends Smarty {
      */
     function _parse_attrs($tag_args)
     {
-
+	if (!empty($_SESSION['interactive_translation_mode'])&&($_SESSION['interactive_translation_mode']=='on'))
+		$tag_args=ereg_replace("<span[^>]*>.*</span>","",$tag_args);
         /* Tokenize tag attributes. */
         preg_match_all('~(?:' . $this->_obj_call_regexp . '|' . $this->_qstr_regexp . ' | (?>[^"\'=\s]+)
                          )+ |

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_languages.php,v 1.21 2005-07-19 01:07:12 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_languages.php,v 1.22 2006-08-01 13:39:08 hangerman Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -47,6 +47,22 @@ if (isset($_REQUEST["createlang"])) {
 		$smarty->assign('edit_language', $_REQUEST["cr_lang_short"]);
 	}
 }
+
+//Interactive translation mode
+//To be corrected 
+$tiki_p_interactive_trans=($user == 'admin');
+$smarty->assign('tiki_p_interactive_trans',$tiki_p_interactive_trans);
+
+if ((!empty ($_REQUEST['interactive_translation_mode']))&&($tiki_p_interactive_trans)){
+	require_once("lib/multilingual/multilinguallib.php");
+	$_SESSION['interactive_translation_mode']=$_REQUEST['interactive_translation_mode'];	
+	if ($_REQUEST['interactive_translation_mode']=='off')  
+		$cachelib->empty_full_cache();
+}
+if (!isset($_SESSION['interactive_translation_mode']))
+	$smarty->assign('interactive_translation_mode','off');
+else
+	$smarty->assign('interactive_translation_mode',$_SESSION['interactive_translation_mode']);
 
 //Editing things
 

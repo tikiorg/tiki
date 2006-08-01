@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/lib/breadcrumblib.php,v 1.5 2006-05-22 17:09:09 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/breadcrumblib.php,v 1.6 2006-08-01 13:39:49 hangerman Exp $
  * Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -232,7 +232,7 @@ class Breadcrumb {
         } else {
             $cnt = count($crumbs);                      
         }
-        $ret .= tra('refresh');
+        $ret .= 'refresh';
         $ret .= '" accesskey="'.($cnt);
         $ret .= '" href="'.$crumbs[$len-1]->url.'">';
         if ($feature_breadcrumbs == 'n' && $loc == "admin")

@@ -30,7 +30,7 @@
  * @version 2.6.10
  */
 
-/* $Id: Smarty.class.php,v 1.7 2005-10-18 15:41:45 mose Exp $ */
+/* $Id: Smarty.class.php,v 1.8 2006-08-01 13:40:50 hangerman Exp $ */
 
 /**
  * DIR_SEP isn't used anymore, but third party apps might
@@ -1085,6 +1085,7 @@ class Smarty
      */
     function trigger_error($error_msg, $error_type = E_USER_WARNING)
     {
+	//print_r(apd_callstack());
         trigger_error("Smarty error: $error_msg", $error_type);
     }
 
