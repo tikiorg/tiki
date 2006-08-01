@@ -290,6 +290,15 @@ class MultilingualLib extends TikiLib {
 		}
 		return $objId;
 	}
+	function getInteractiveTag($content){
+		
+		if (!isset($_SESSION['interactive_translation_mode'])||($_SESSION['interactive_translation_mode']=='off')|| (strlen($content)<2) )
+			return "";
+
+		$urcontent=urlencode($content);
+		$ret= "<span  onclick=\"window.open('tiki-interactive_trans.php?content=$urcontent','traduction','toolbar=no,location=no,scrollbars=yes,directories=no,status=no,menubar=no,resizable=no,copyhistory=no,width=600,height=300,left=10,top=10');return false;\">°</span>";
+		return $ret;
+	}
 }
 global $dbTiki;
 $multilinguallib = new MultilingualLib($dbTiki);

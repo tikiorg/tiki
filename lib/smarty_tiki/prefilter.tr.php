@@ -19,6 +19,7 @@ function _translate_lang($key) {
   global $language;
   global $lang;
   global $lang_use_db;
+
   if ($lang_use_db!='y') {
     include_once("lang/$language/language.php");
     if(isset($lang[$key[2]])) {
@@ -37,14 +38,15 @@ function _translate_lang($key) {
     }
    }
    else {
-    global $tikilib;
+    global $tikilib,$multilinguallib;
+    $tag=isset($multilinguallib)?$multilinguallib->getInteractiveTag($key[2]):"";
     $content = $key[2];
     $query="select `tran` from `tiki_language` where `source`=? and `lang`=?";
     $result=$tikilib->query($query,array($content,$language));
     $res=$result->fetchRow();
     if(isset($res["tran"])) {
 	if ($key[1] == "{tr}") {
-	    return $res["tran"];// no more possible translation in block.tr.php
+	    return $res["tran"].$tag;// no more possible translation in block.tr.php
 	} else {
 	    return $key[1].$res["tran"]."{/tr}";// perhaps variable substituion to do in block.tr.php
 	}
@@ -58,7 +60,7 @@ function _translate_lang($key) {
 	if (strstr($key[2], "{\$"))  {
 	    return $key[1].$content."{/tr}";
 	} else {
-	    return $key[2];
+	    return $key[2].$tag;
 	}
     }
    }

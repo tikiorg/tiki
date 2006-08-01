@@ -29,26 +29,30 @@ function smarty_block_tr($params, $content, &$smarty)
       if(isset($lang[$content])) {
         echo $lang[$content];  
       } else {
-        echo $content;        
+        echo $content;
       }
     }
   } else {
     global $tikilib;
-    global $language;
-    $query='select `tran` from `tiki_language` where `source`=? and `lang`=?';
+    global $language,$multilinguallib;
+    $tag=isset($multilinguallib)?$multilinguallib->getInteractiveTag($content):"";
+    $query="select `tran` from `tiki_language` where `source`=? and `lang`=?";
     $result=$tikilib->query($query,array($content,$language));
     $res=$result->fetchRow();
-    if(!$res) { echo $content ; return; }
+    if(!$res) { echo $content.$tag ; return; }
     if(!isset($res["tran"])) {
       global $record_untranslated;
       if ($record_untranslated=='y') {
-        $query='insert into `tiki_untranslated` (`source`,`lang`) values(?,?)';
+        $query="insert into `tiki_untranslated` (`sourcfile:///home/tiki_head/tikiwiki/lib/smarty_tiki/block.tr.phpe`,`lang`) values(?,?)";
         //No eror checking here
         $tikilib->query($query,array($content,$language),-1,-1,false);
         }
-      echo $content;
-    }
-    echo $res['tran'];
+      echo $content.$tag;
+    }else{ 
+	//To allow multiline translation
+	$res["tran"]=ereg_replace("&lt;br&gt;","<br>",$res["tran"]);
+    	echo $res["tran"].$tag;
+	}
   }
 }
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.97 2006-07-14 11:00:44 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.98 2006-08-01 13:39:37 hangerman Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -312,7 +312,6 @@ if (isset($_REQUEST['highlight']) || (isset($feature_referer_highlight) && $feat
 function tra($content, $lg='') {
     global $lang_use_db;
     global $language;
-
     if ($lang_use_db != 'y') {
         if ($lg == "" || $lg == $language) {
            global $lang;
@@ -328,14 +327,14 @@ function tra($content, $lg='') {
             }
         }
     } else {
-        global $tikilib;
-
+        global $tikilib,$multilinguallib;
+	$tag=isset($multilinguallib)?$multilinguallib->getInteractiveTag($content):"";
         $query = "select `tran` from `tiki_language` where `source`=? and `lang`=?";
         $result = $tikilib->query($query, array($content,$lg == ""? $language: $lg));
         $res = $result->fetchRow();
 
         if (!$res)
-            return $content;
+            return $content.$tag;
 
         if (!isset($res["tran"])) {
             global $record_untranslated;
@@ -347,10 +346,11 @@ function tra($content, $lg='') {
                 $tikilib->query($query, array($content,$language),-1,-1,false);
             }
 
-            return $content;
+            return $content.$tag;
         }
 
-        return $res["tran"];
+	
+        return $res["tran"].$tag;
     }
 }
 /* \brief  substr with a utf8 string - works only with $start and $length positive or nuls
