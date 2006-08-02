@@ -11,7 +11,19 @@ function smarty_prefilter_tr($source) {
 //  $return = preg_replace_callback('/\{tr[^\{]*\}([^\{]+)\{\/tr\}/', '_translate_lang', $source);
 // correction in order to match when a variable is inside {tr} tags. Example: {tr}The newsletter was sent to {$sent} email addresses{/tr}, and where there are parameters with {tr} 
 // take away the smarty comments {* *} in case they have tr tags
-  $return = preg_replace_callback('/(?s)(\{tr[^\}]*\})(.+?)\{\/tr\}/', '_translate_lang', preg_replace ('/(?s)\{\*.*?\*\}/', '', $source));
+$return=$source;
+if ((!empty($_SESSION['interactive_translation_mode'])&&($_SESSION['interactive_translation_mode']=='on'))){
+	$return=preg_replace("/alt=(.)\{tr\}([^\{]*)\{\/tr\}(.)/","alt=$1 $2 $1",$return);
+	$return=preg_replace("/alt=(.\[)\{tr\}([^\{]*)\{\/tr\}(\].)/","alt=$1 $2 $1",$return);
+	$return=preg_replace("/title=(.)\{tr\}([^\{]*)\{\/tr\}(.)/","title=$1 $2 $1",$return);
+	$return=preg_replace("/value=(.)\{tr\}([^\{]*)\{\/tr\}(.)/","value=$1 $2 $1",$return);
+	$return=str_replace("{tr}Error{/tr}","Error",$return);
+	$return=preg_replace("/alt=(.)\{tr\}([^\{]*)\{\/tr\}(.)/","alt=$1 $2 $1",$return);
+	$return=preg_replace("/title=(.)\{tr\}([^\{]*)\{\/tr\}(.)/","title=$1 $2 $1",$return);
+	$return=preg_replace("/value=(.)\{tr\}([^\{]*)\{\/tr\}(.)/","value=$1 $2 $1",$return);
+	$return=str_replace("{tr}Error{/tr}","Error",$return);
+}
+ $return = preg_replace_callback('/(?s)(\{tr[^\}]*\})(.+?)\{\/tr\}/', '_translate_lang', preg_replace ('/(?s)\{\*.*?\*\}/', '', $return));
   return $return;
 }
 
@@ -19,7 +31,6 @@ function _translate_lang($key) {
   global $language;
   global $lang;
   global $lang_use_db;
-
   if ($lang_use_db!='y') {
     include_once("lang/$language/language.php");
     if(isset($lang[$key[2]])) {
