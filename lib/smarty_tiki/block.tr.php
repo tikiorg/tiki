@@ -43,7 +43,7 @@ function smarty_block_tr($params, $content, &$smarty)
     if(!isset($res["tran"])) {
       global $record_untranslated;
       if ($record_untranslated=='y') {
-        $query="insert into `tiki_untranslated` (`sourcfile:///home/tiki_head/tikiwiki/lib/smarty_tiki/block.tr.phpe`,`lang`) values(?,?)";
+        $query="insert into `tiki_untranslated` (`source`,`lang`) values(?,?)";
         //No eror checking here
         $tikilib->query($query,array($content,$language),-1,-1,false);
         }
