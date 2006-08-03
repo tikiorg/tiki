@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.93 2006-07-31 13:05:05 hangerman Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.94 2006-08-03 15:41:45 hangerman Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -584,4 +584,4 @@ ALTER TABLE users_users MODIFY COLUMN `hash` varchar(34) default NULL;
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_crypt_passwords','tikihash');
 #2006-07-28 mkalbere
 ALTER TABLE `tiki_sent_newsletters` ADD `datatxt` longblob AFTER data;
-ALTER TABLE `tiki_newsletters` ADD `allowTxt` varchar(1) 
+ALTER TABLE `tiki_newsletters` ADD `allowTxt` varchar(1);
