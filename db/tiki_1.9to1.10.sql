@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.95 2006-08-10 18:23:02 jreyesg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.96 2006-08-13 14:28:44 mose Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -595,7 +595,6 @@ ALTER TABLE `tiki_newsletters` ADD `allowTxt` varchar(1);
 # Creation: Aug 10, 2006 - jreyesg
 # Last update: Aug 10, 2006 - jreyesg
 # 
-DROP TABLE IF EXISTS `tiki_workspace_role_wstype`;
 CREATE TABLE `tiki_workspace_role_wstype` (
   `roleName` varchar(250) NOT NULL default '0',
   `typeId` int(14) NOT NULL default '0',
@@ -603,7 +602,6 @@ CREATE TABLE `tiki_workspace_role_wstype` (
   PRIMARY KEY  (`typeId`,`roleName`)
 ) TYPE=MyISAM;
 
-DROP TABLE IF EXISTS `tiki_workspace_roles`;
 CREATE TABLE `tiki_workspace_roles` (
   `name` varchar(100) NOT NULL default '',
   `uid` varchar(100) NOT NULL default '',
@@ -612,7 +610,6 @@ CREATE TABLE `tiki_workspace_roles` (
   PRIMARY KEY  (`name`)
 ) TYPE=MyISAM;
 
-DROP TABLE IF EXISTS `tiki_workspaces`;
 CREATE TABLE `tiki_workspaces` (
   `workspaceId` int(14) NOT NULL auto_increment, 
   `code` varchar(100) NOT NULL default '',
@@ -632,7 +629,6 @@ CREATE TABLE `tiki_workspaces` (
   PRIMARY KEY  (`workspaceId`)
 ) TYPE=MyISAM;
 
-DROP TABLE IF EXISTS `tiki_workspace_modules`;
 CREATE TABLE `tiki_workspace_modules` (
   `moduleId` int(10) NOT NULL auto_increment,
   `name` varchar(200) NOT NULL default '',
@@ -650,7 +646,6 @@ CREATE TABLE `tiki_workspace_modules` (
   PRIMARY KEY  (`moduleId`)
 ) TYPE=MyISAM;
 
-DROP TABLE IF EXISTS `tiki_workspace_types`;
 CREATE TABLE `tiki_workspace_types` (
   `id` int(14) NOT NULL auto_increment,
   `code` varchar(100) NOT NULL default '',
@@ -665,14 +660,8 @@ CREATE TABLE `tiki_workspace_types` (
   PRIMARY KEY  (`id`)
 ) TYPE=MyISAM; 
 
-INSERT INTO `tiki_workspace_roles` VALUES ('Teacher', '2fd99c1c873d19ee003a5bde9b832607', 'RolePerms-Teacher', 'Teacher');
-INSERT INTO `tiki_workspace_roles` VALUES ('Student', '9d94a9b153bc6e7a162262b109ce3829', 'RolePerms-Student', 'Student');
-INSERT INTO `tiki_workspace_roles` VALUES ('Owner', 'cf658411eca2e230d90276c5a0235a1b', 'RolePerms-Owner', 'Portfolio owner');
 INSERT INTO `tiki_workspace_roles` VALUES ('Registered', 'a671a29eef794f7423ae567f7d964d42', 'Registered', 'Registered users');
 INSERT INTO `tiki_workspace_roles` VALUES ('Anonymous', '77f08d9b1ee1a29d11aabefbeca5d1e5', 'Anonymous', 'Anonymous users');
-INSERT INTO `users_groups` (groupName,groupDesc) VALUES ('RolePerms-Teacher', 'Teacher role permissions template');
-INSERT INTO `users_groups` (groupName,groupDesc) VALUES ('RolePerms-Student', 'Student role permissions template');
-INSERT INTO `users_groups` (groupName,groupDesc) VALUES ('RolePerms-Owner', 'Owner role permissions template');
 INSERT INTO users_permissions VALUES ('tiki_p_admin_workspaces_types','Can admin workspace types','admin','workspaces');
 INSERT INTO users_permissions VALUES ('tiki_p_admin_workspaces_roles','Can admin roles','admin','workspaces');
 INSERT INTO users_permissions VALUES ('tiki_p_admin_workspaces','Can admin workspaces','admin','workspaces');
@@ -684,10 +673,10 @@ INSERT INTO users_permissions VALUES ('tiki_p_remove_assignments','Can remove as
 INSERT INTO users_permissions VALUES ('tiki_p_view_workspace','Can view a workspace','basic','workspace');
 INSERT INTO users_permissions VALUES ('tiki_p_admin_workspace','Can admin a workspace','admin','workspace');
 INSERT INTO users_permissions VALUES ('tiki_p_create_workspace_resources','Can create new workspace resources','editors','workspace');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Workspaces','./tiki-workspaces.php',1500,'','tiki_p_admin_workspaces','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin Workspaces','./tiki-workspaces_admin.php',1515,'','tiki_p_admin_workspaces','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Workspace Types','./tiki-workspaces_types.php',1510,'','tiki_p_admin_workspaces_types','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin Roles','./tiki-workspaces_roles.php',1505,'','tiki_p_admin_workspaces_roles','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Workspaces','./tiki-workspaces.php',960,'feature_workspaces','tiki_p_admin_workspaces','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin Workspaces','./tiki-workspaces_admin.php',965,'feature_workspaces','tiki_p_admin_workspaces','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Workspace Types','./tiki-workspaces_types.php',970,'feature_workspaces','tiki_p_admin_workspaces_types','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin Roles','./tiki-workspaces_roles.php',975,'feature_workspaces','tiki_p_admin_workspaces_roles','');
 INSERT INTO tiki_menus VALUES (100,'Workspace menu','Sample workspace menu','d');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (100,'o','Users/Groups','./tiki-workspaces_view_module.php?module=workspaces_user_groups',10,'','','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (100,'o','Resources','./tiki-workspaces_view_module.php?module=workspaces_resources',52,'','','');
@@ -698,7 +687,7 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (100,'o','Forums','tiki-workspaces_view_module.php?module=workspaces_list_resources&type=forum',73,'','','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (100,'o','Calendars','tiki-workspaces_view_module.php?module=workspaces_list_resources&type=calendar',74,'','','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (100,'o','History','./tiki-workspaces_get_resource.php?name=History',80,'','','');
-INSERT INTO tiki_preferences (name,value) VALUES ( 'feature_workspaces', 'y');
+INSERT INTO tiki_preferences (name,value) VALUES ( 'feature_workspaces', 'n');
 INSERT INTO tiki_workspace_types VALUES ('1','PORTFOLIO','Portfolio','','f6dfa6643939c4887a68710a5b8c27b5','100','a:2:{i:0;a:3:{s:4:"name";s:6:"MyBlog";s:4:"desc";s:7:"My Blog";s:4:"type";s:4:"blog";}i:1;a:3:{s:4:"name";s:4:"Home";s:4:"desc";s:19:"Home portfolio page";s:4:"type";s:9:"wiki page";}}','0','n','y');
 INSERT INTO tiki_workspace_types VALUES ('2','COURSE','Course','Sample course type','bcff9b0c6b65e3d060685650d3e6b6e1','100','a:5:{i:0;a:3:{s:4:"name";s:4:"Home";s:4:"desc";s:16:"Home course page";s:4:"type";s:9:"wiki page";}i:1;a:3:{s:4:"name";s:7:"History";s:4:"desc";s:12:"History blog";s:4:"type";s:4:"blog";}i:2;a:3:{s:4:"name";s:5:"Files";s:4:"desc";s:12:"Course files";s:4:"type";s:12:"file gallery";}i:3;a:3:{s:4:"name";s:6:"Images";s:4:"desc";s:13:"Course images";s:4:"type";s:13:"image gallery";}i:4;a:3:{s:4:"name";s:5:"Forum";s:4:"desc";s:12:"Course forum";s:4:"type";s:5:"forum";}}','3','n','y');
 INSERT INTO tiki_workspace_types VALUES ('3','PERSONAL','Personal workspace type','Sample personal workspace','dcd9e72f70d04fa9399db80a3fa056d8','100','a:2:{i:0;a:3:{s:4:"name";s:7:"History";s:4:"desc";s:12:"History blog";s:4:"type";s:4:"blog";}i:1;a:3:{s:4:"name";s:4:"Home";s:4:"desc";s:18:"Personal home page";s:4:"type";s:9:"wiki page";}}','0','y','y');
