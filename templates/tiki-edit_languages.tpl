@@ -2,7 +2,7 @@
 [<a href="tiki-edit_languages.php" class="link">{tr}Edit and create Languages{/tr}</a>
 |<a href="tiki-imexport_languages.php" class="link">{tr}Im- Export Languages{/tr}</a>]
 {if $tiki_p_interactive_trans}
-|<a href="tiki-edit_languages.php?interactive_translation_mode={if $interactive_translation_mode eq 'on'}off{else}on{/if}" class="link">{tr}Toogle interactive translation{/tr}&nbsp;{if $interactive_translation_mode eq 'on' }{tr}off{/tr}{else}{tr}on{/tr}{/if} </a>
+|<a href="tiki-edit_languages.php?interactive_translation_mode={if $interactive_translation_mode eq 'on'}off{else}on{/if}" class="link">{tr}toggle interactive translation{/tr}&nbsp;{if $interactive_translation_mode eq 'on' }{tr}off{/tr}{else}{tr}on{/tr}{/if} </a>
 {/if}
 
 <table >
