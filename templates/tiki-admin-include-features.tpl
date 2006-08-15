@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.79 2006-07-14 11:00:54 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.80 2006-08-15 20:10:01 marclaporte Exp $ *}
 
 {* this is the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
@@ -257,6 +257,13 @@
     <td>&nbsp;</td>
     <td><input type="checkbox" name="feature_trackbackpings" {if $feature_trackbackpings eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Tracbacks+Pings" target="tikihelp" class="tikihelp" title="{tr}tikiwiki.org help{/tr}: {tr}Tracbacks Pings{/tr}">{/if} {tr}Tracbacks Pings{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
+	
+  </tr><tr>
+    <td><input type="checkbox" name="feature_workspaces" {if $feature_workspaces eq 'y'}checked="checked"{/if}/></td>
+    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Workspaces" target="tikihelp" class="tikihelp" title="{tr}tikiwiki.org help{/tr}: {tr}Workspaces{/tr}">{/if} {tr}Workspaces{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
+    <td>&nbsp;</td>
+    <td></td>
+    <td></td>	
 
 </table>    
 
