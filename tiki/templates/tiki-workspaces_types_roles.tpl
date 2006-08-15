@@ -25,8 +25,8 @@
 				<input name="permgroup" type="text" id="permgroup" value="" size="30" maxlength="100">
 			</div>
 			<div class="fieldHelp">Select a Tiki user group <a class="link" href="./tiki-admingroups.php">
-           <img src='images/workspaces/edu_group.gif' border='0' alt='{tr}Premissions{/tr}' title='{tr}Premissions{/tr}' /></a> as a permissions templeate for that role. If you left this filed blank, the permissions group asigned to the rol will be used. 
-			The permissions that you assign to that group will be applied to de diferent resources (wiki page, blog, file gallery...) of the workspaces that use that role.
+           <img src='images/workspaces/edu_group.gif' border='0' alt='{tr}Permissions{/tr}' title='{tr}Permissions{/tr}' /></a> as a permissions template for that role. If you left this field blank, the permissions group assigned to the role will be used. 
+			The permissions that you assign to that group will be applied to de different resources (wiki page, blog, file gallery...) of the workspaces that use that role.
 			</div>
 
       </td>
@@ -62,7 +62,7 @@
       {/if}
       </td>
       <td class="{$parImpar}"> <a class="link" href="tiki-assignpermission.php?group={if $role.wstypePermGroup==""}{$role.permgroup}{else}{$role.wstypePermGroup}{/if}">
-           <img src='images/workspaces/edu_group.gif' border='0' alt='{tr}Premissions{/tr}' title='{tr}Premissions{/tr}' /></a></td>
+           <img src='images/workspaces/edu_group.gif' border='0' alt='{tr}Permissions{/tr}' title='{tr}Permissions{/tr}' /></a></td>
         <td class="{$parImpar}"><a class="link" href="tiki-workspaces_types_roles.php?delete={$wstype.id}&wstypeId={$wstype.id}&roleName={$role.name}">
       	   <img src='img/icons2/delete.gif' border='0' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' /></a>
       </td>
