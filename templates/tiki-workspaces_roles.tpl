@@ -21,7 +21,7 @@
     	<td class="formcolor" ><label for="permgroup">{tr}Permission group{/tr}</label></td>
       <td class="formcolor">
 				<input name="permgroup" type="text" id="permgroup" value="{$role.permgroup}" size="30" maxlength="100"/>
-				{ws_help}Select a Tiki user group as a permissions templeate for that role.<br/> If you left this filed blank, a default group will be created.<br/>The permissions that you assign to that group will be applied to de diferent resources (wiki page, blog, file gallery...) of the workspaces that use that role.{/ws_help}
+				{ws_help}Select a Tiki user group as a permissions template for this role.<br/> If you leave this field blank, a default group will be created.<br/>The permissions that you assign to this group will be applied to the different ressources (wiki page, blog, file gallery...) of the workspaces that use that role.{/ws_help}
       </td>
      </tr>
     <tr> 
