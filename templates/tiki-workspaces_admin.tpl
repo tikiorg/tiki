@@ -197,7 +197,7 @@
       <td class="{$parImpar}"><a class="link" href="tiki-workspaces_admin.php?viewWS={$viewWS}&delete={$workspaces[i].workspaceId}">
       	   <img src='img/icons2/delete.gif' border='0' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' /></a>
       </td>
-      <td class="{$parImpar}"><a class="link" href="tiki-workspaces_assigned_modules.php?$wstypeId={$workspaces[i].workspaceId}&wsmodtype=workspace">
+      <td class="{$parImpar}"><a class="link" href="tiki-workspaces_assigned_modules.php?wstypeId={$workspaces[i].workspaceId}&wsmodtype=workspace">
       	   <img src='img/icons/mo.png' border='0' alt='{tr}Assigned modules{/tr}' title='{tr}Assigned modules{/tr}' /></a>
       </td>
       <td class="{$parImpar}"><a class="link" href="tiki-workspaces_view_module.php?module=workspaces_user_groups&workspaceId={$workspaces[i].workspaceId}">
