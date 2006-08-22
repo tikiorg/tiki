@@ -14,7 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 include_once ('lib/workspaces/workspacelib.php');
 include_once('lib/wiki/wikilib.php');
-
+include_once('lib/categories/categlib.php');
 global $dbTiki;
 global $userlib;
 $workspacesLib = new WorkspaceLib($dbTiki);
@@ -56,14 +56,19 @@ if (!$exit_module && isset($module_params["name"]) && $module_params["name"]!=""
 		   	if ($perms_array) {
 		   		$is_categorized = TRUE;
 		    	foreach ($perms_array as $perm => $value) {
+		    		echo $perm." ".$value." ";
 		    		$$perm = $value;
 		    	}
 		   	} else {
 		   		$is_categorized = FALSE;
 		   	}
-			if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y')
+
+			if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y'){
 				$exit_module = true;
+			}
+				
 		}
+		
 		if($tiki_p_admin != 'y' && $tiki_p_view != 'y') {
 			$exit_module = true;
 		}
