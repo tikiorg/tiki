@@ -64,7 +64,7 @@
       </td>
     </tr>
      <tr> 
-      <td class="formcolor" colspan="2"><center><input class="edubutton" type="submit" name="send" value="Guardar"></center></td>
+      <td class="formcolor" colspan="2"><center><input class="edubutton" type="submit" name="send" value="{tr}Save{/tr}"></center></td>
     </tr>
   </table>
 </form>

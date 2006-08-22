@@ -29,7 +29,7 @@ if (isset ($_REQUEST["send"])) {
 
 	$workspace["isuserws"] = "n";
 	if (isset ($_REQUEST["isuserws"])) {
-		$workspace["isuserws"] = "y";
+		$workspace["isuserws"] = $_REQUEST["isuserws"];
 	}
 
 	$workspace["hide"] = "n";

@@ -34,7 +34,24 @@ $now = date("U");
 
 $workspace = $workspacesLib->get_current_workspace();
 
-$modules = $wsmoduleslib->get_ws_assigned_modules_by_cols($workspaceId, $wsmodtype);
+$zones = $wsmoduleslib->get_zones($workspaceId, $wsmodtype);
+
+$activeZone = "";
+
+if (isset($_REQUEST["zoneId"]) && isset($zones[$_REQUEST["zoneId"]]) && $zones[$_REQUEST["zoneId"]]!=""){
+	$activeZone = $zones[$_REQUEST["zoneId"]];
+}elseif(isset($zones) && count($zones)>0){
+	$zonevalues = array_values($zones);
+	$activeZone = $zonevalues[0];
+}
+$smarty->assign_by_ref('zones',$zones);
+$smarty->assign_by_ref('activeZone',$activeZone);
+
+if (isset($activeZone) && $activeZone!=""){
+	$modules = $wsmoduleslib->get_ws_assigned_modules_by_cols($activeZone["zoneId"]);
+}else{
+	$modules = array();
+}
 
 $max_columns = array_pop(array_keys($modules));
 
@@ -196,7 +213,7 @@ foreach ($modules as $keycol => $column) {
 	}
 }
 $smarty->assign_by_ref("modulegroups", $modulegroups);
-
+$smarty->assign('title', $workspace["name"]." : ".$activeZone["name"]);
 /*$module_nodecorations = array('decorations' => 'n');
 $module_isflippable = array('flip' => 'y');
 $smarty->assign('module_nodecorations', $module_nodecorations);

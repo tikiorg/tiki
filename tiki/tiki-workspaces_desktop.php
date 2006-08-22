@@ -23,10 +23,16 @@ global $userlib;
 
 
 if ($tiki_p_admin != 'y' && $tiki_p_admin_workspaces!='y') {
-	if (!$userlib->object_has_permission($user, $workspace["workspaceId"], 'workspace', "tiki_p_view_workspace") && !$userlib->object_has_permission($user, $workspace["workspaceId"], 'workspace', "tiki_p_admin_workspace")) {
-		$smarty->assign('msg', tra("Permission denied you cannot view this page"));
-		$smarty->display("error.tpl");
-		die;
+	if ($userlib->object_has_one_permission($workspace["workspaceId"], 'workspace')) {
+		if (!$userlib->object_has_permission($user, $workspace["workspaceId"], 'workspace', "tiki_p_view_workspace") && !$userlib->object_has_permission($user, $workspace["workspaceId"], 'workspace', "tiki_p_admin_workspace")) {
+			$smarty->assign('msg', tra("Permission denied you cannot view this page"));
+			$smarty->display("error.tpl");
+			die;
+		}
+	}elseif($tiki_p_view_workspace != 'y'){
+			$smarty->assign('msg', tra("Permission denied you cannot view this page"));
+			$smarty->display("error.tpl");
+			die;
 	}
 	
 	$now = date("U");
@@ -41,7 +47,7 @@ $wstype = $workspace["type"];
 
 $workspaceId = $workspace["workspaceId"];
 $wsmodtype= "workspace";
-if (!$wsmoduleslib->workspace_has_assigned_modules($workspaceId,$wsmodtype)) {
+if (!$wsmoduleslib->workspace_has_assigned_zones($workspaceId,$wsmodtype)) {
 	$workspaceId = $wstype["id"];
 	$wsmodtype= "workspace type";
 }

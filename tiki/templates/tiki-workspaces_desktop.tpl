@@ -4,6 +4,17 @@
 @copyright (C) 2006 Javier Reyes Gomez (eScire.com)
 @license http://www.gnu.org/copyleft/lgpl.html GNU/LGPL
 *}
+{if $zones}
+	<div class="zoneTabs">
+	{foreach key=key item=zone from=$zones}
+		{if $activeZone.zoneId == $key}
+			<div class="activetabbut"><img src='images/workspaces/redarrow.gif' align="bottom" border='0'/><a href="tiki-workspaces_desktop.php?workspaceId={$workspace.workspaceId}&zoneId={$key}" class="activetablink"> {tr}{$zone.name}{/tr} </a></div>
+		{else}
+			<div class="noactivetabbut"><img src='images/workspaces/grayarrow.gif' align="bottom" border='0'/><a href="tiki-workspaces_desktop.php?workspaceId={$workspace.workspaceId}&zoneId={$key}" class="noactivetablink"> {tr}{$zone.name}{/tr} </a></div>
+		{/if}
+	{/foreach}
+	</div>
+{/if}
 <div class="workspace_desktop">
 <div class="desktopTitle">({$workspace.code}) {$workspace.name}</div>
 <div class="desktopDesc">
