@@ -601,28 +601,43 @@ div.resourceSelect{
 	margin-bottom : 5px;
 }
 
+div.zoneTabs{
+	width : 100%;
+	float: none;
+}
+
+div.test1 {
+	border: 1px solid #A0C1C9;
+	height:21px;
+	float: left;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;   
+  	background-image: url(../images/workspaces/degrada2.gif);
+}
+
 div.activetabbut {
 	border-top: 1px solid #A0C1C9;
 	border-left: 1px solid #A0C1C9;
 	border-right: 1px solid #A0C1C9;
 	color: #225566;
-	padding-left:2px;
-	padding-right: 2px;
+	margin-rigth:2px;
+	padding-left:4px;
+	padding-right: 5px;
 	padding-top: 2px;
 	background-color: #FFF;
 	height:21px;
 	float: left;
   	background-image: url(../images/workspaces/degrada2.gif);
 }
+
 div.noactivetabbut {
 	border-top: 1px solid lightgrey;
 	border-left: 1px solid lightgrey;
 	border-right: 1px solid lightgrey;
 	color: #225566;
-	margin-left:2px;
-	padding-left:2px;
-	padding-right: 2px;
-		padding-top: 2px;
+	margin-rigth:2px;
+	padding-left:4px;
+	padding-right: 5px;
+	padding-top: 2px;
 	background-color: #C7D0D9;
 	height:21px;
 	float: left;
@@ -743,8 +758,10 @@ div.wsbox.box-workspaces_viewpage {
 	width : 100%;
 }
 .workspace_desktop{  
-  background: #C7D0D9; 
-  border: 1px solid #8CACBB;
-  width: 100%;
+  	background: #aacad9; 
+	border: 1px solid #8CACBB;
+  	width: 100%;
+  	float: none;
+  	clear: both;
   }
 /* end of css file */

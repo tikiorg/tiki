@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2006-08-10 18:22:34 $
+# $Date: 2006-08-22 19:57:58 $
 # $Author: jreyesg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -5219,7 +5219,7 @@ CREATE TABLE tiki_contributions_assigned (
 # Table structure for workspaces tables
 #
 # Creation: Aug 10, 2006 - jreyesg
-# Last update: Aug 10, 2006 - jreyesg
+# Last update: Aug 22, 2006 - jreyesg
 # 
 DROP TABLE IF EXISTS `tiki_workspace_role_wstype`;
 CREATE TABLE `tiki_workspace_role_wstype` (
@@ -5264,8 +5264,7 @@ CREATE TABLE `tiki_workspace_modules` (
   `name` varchar(200) NOT NULL default '',
   `position` char(1) default NULL,
   `ord` int(4) default NULL,
-  `type` varchar(50) NOT NULL default '',
-  `workspaceId` int(14) NOT NULL default '0',
+  `zoneId` int(11) NOT NULL default '0',
   `title` varchar(255) default NULL,
   `cache_time` int(14) default NULL,
   `rows` int(4) default NULL,
@@ -5290,6 +5289,17 @@ CREATE TABLE `tiki_workspace_types` (
   `active` char(1) NOT NULL default '', 
   PRIMARY KEY  (`id`)
 ) TYPE=MyISAM; 
+
+CREATE TABLE tiki_workspace_zones (
+  `zoneId` int(11) NOT NULL auto_increment,
+  `name` varchar(100) NOT NULL default '',
+  `description` varchar(100) NOT NULL default '',
+  `workspaceId` varchar(100) NOT NULL default '',
+  `type` varchar(100) NOT NULL default '',
+  `ord` int(4) NOT NULL default '0',
+  `uid` varchar(100) NOT NULL default '',
+  PRIMARY KEY  (`zoneId`)
+) TYPE=MyISAM;
 
 INSERT INTO `tiki_workspace_roles` VALUES ('Teacher', '2fd99c1c873d19ee003a5bde9b832607', 'RolePerms-Teacher', 'Teacher');
 INSERT INTO `tiki_workspace_roles` VALUES ('Student', '9d94a9b153bc6e7a162262b109ce3829', 'RolePerms-Student', 'Student');
@@ -5330,23 +5340,27 @@ INSERT INTO tiki_workspace_types VALUES ('2','COURSE','Course','Sample course ty
 INSERT INTO tiki_workspace_types VALUES ('3','PERSONAL','Personal workspace type','Sample personal workspace','dcd9e72f70d04fa9399db80a3fa056d8','100','a:2:{i:0;a:3:{s:4:"name";s:7:"History";s:4:"desc";s:12:"History blog";s:4:"type";s:4:"blog";}i:1;a:3:{s:4:"name";s:4:"Home";s:4:"desc";s:18:"Personal home page";s:4:"type";s:9:"wiki page";}}','0','y','y');
 INSERT INTO tiki_workspace_types VALUES ('4','FOLDER','Folder','','9e39b5e9a566a61ce60417a9429ff0f0','0','a:1:{i:0;s:8:"wikipage";}','0','','y');
 INSERT INTO tiki_workspace_types VALUES ('5','GROUP','Student group','','b4a6f4eef0d1e1111d568b50195b45e0','100','a:2:{i:0;a:3:{s:4:"name";s:4:"Home";s:4:"desc";s:15:"Group home page";s:4:"type";s:9:"wiki page";}i:1;a:3:{s:4:"name";s:7:"History";s:4:"desc";s:10:"Group blog";s:4:"type";s:4:"blog";}}','0','y','y');
-INSERT INTO tiki_workspace_modules VALUES ('1','workspaces_last_blog_posts','2','3','workspace type','1','My Blog','0','0','name=%WSCODE%-MyBlog','','','','68809e75ced4d1f52bec9eb73bc32cdc');
-INSERT INTO tiki_workspace_modules VALUES ('2','workspaces_viewpage','1','1','workspace type','1','Portfolio Home','0','0','name=%WSCODE%-Home','','','','6ac0bc2518a0c836de87662defbada90');
-INSERT INTO tiki_workspace_modules VALUES ('3','workspaces_who_is_there','2','1','workspace type','2','Course users','0','0','','','','','cbbbb0122cb4aca6c83859cda85bdecd');
-INSERT INTO tiki_workspace_modules VALUES ('5','workspaces_last_blog_posts','1','3','workspace type','2','Course History','0','0','name=%WSCODE%-History&maxPosts=3&showBar=n','','','','da1d338b0fb3d87256341b4154ba96c5');
-INSERT INTO tiki_workspace_modules VALUES ('6','workspaces_viewpage','2','1','workspace type','3','Home page','0','0','name=%WSCODE%-Home','','','','1f1b76a1f4dff160d31ae36a11170ede');
-INSERT INTO tiki_workspace_modules VALUES ('7','workspaces_last_blog_posts','2','5','workspace type','3','History','0','0','name=%WSCODE%-History','','','','ae744c4a52b38e5386c99ddc43edc8be');
-INSERT INTO tiki_workspace_modules VALUES ('9','workspaces_last_files','3','11','workspace type','2','Course files','0','0','name=%WSCODE%-Files&maxFiles=3&showBar=y&','','','','ce32d51600a7f6b3f999be9ec467c5d7');
-INSERT INTO tiki_workspace_modules VALUES ('10','workspaces_break','1','5','workspace type','2','','0','0','','','','','781330d16d490e7a88237e2aa1983ce1');
-INSERT INTO tiki_workspace_modules VALUES ('19','workspaces_break','2','2','workspace type','1','','0','0','','','','','b0678bf202e5b4417bb6fdcae969626e');
-INSERT INTO tiki_workspace_modules VALUES ('17','workspaces_last_image','3','15','workspace type','2','Images','0','0','name=%WSCODE%-Images&maxImages=3&showBar=y&','','','','f73d1e5f2a56721284d38eba1da56de0');
-INSERT INTO tiki_workspace_modules VALUES ('15','workspaces_calendar','2','6','workspace type','2','Course calendar','0','0','','','','','7126d03da3815b92f80feef1e8598ddb');
-INSERT INTO tiki_workspace_modules VALUES ('14','workspaces_childs','2','5','workspace type','2','Child workspaces','0','0','','','','','e4604c1cea8879a11425ebcae8aab4d1');
-INSERT INTO tiki_workspace_modules VALUES ('16','workspaces_viewpage','1','10','workspace type','2','View page','0','0','name=%WSCODE%-Home&showBar=y','','','','a91e337ce2b81ce208523635e1471faa');
-INSERT INTO tiki_workspace_modules VALUES ('22','workspaces_owner','1','1','workspace type','3','Workspace owner','0','0','showName=y&showWorkspaces=y','','','','017e28f378066a9c8c6d2a66f435f3cd');
-INSERT INTO tiki_workspace_modules VALUES ('20','workspaces_owner','2','1','workspace type','1','Workspace owner','0','0','showName=y&showWorkspaces=y','','','','b162f68536c92a270150ae475bd8308f');
-INSERT INTO tiki_workspace_modules VALUES ('28','workspaces_viewpage','1','1','workspace type','5','View page','0','0','name=%WSCODE%-Home&showBar=y','','','','40ca0c9474d974dba3e73ff3fc9db3a7');
-INSERT INTO tiki_workspace_modules VALUES ('29','workspaces_last_blog_posts','1','2','workspace type','5','Blog','0','0','name=%WSCODE%-History&maxPosts=5&showBar=y&','','','','a8fa9590762ec2cceee9934378631b3b');
+INSERT INTO tiki_workspace_zones VALUES (1,'main','main zone','1','workspace type',1,'ade0ff330c3ebb57865e34c2ce476c39');
+INSERT INTO tiki_workspace_zones VALUES (2,'main','main zone','2','workspace type',1,'ade0ff330c3ebb57865e34c2ce476c40');
+INSERT INTO tiki_workspace_zones VALUES (3,'main','main zone','3','workspace type',1,'ade0ff330c3ebb57865e34c2ce476c41');
+INSERT INTO tiki_workspace_zones VALUES (5,'main','main zone','5','workspace type',1,'ade0ff330c3ebb57865e34c2ce476c43');
+INSERT INTO tiki_workspace_modules VALUES ('1','workspaces_last_blog_posts','2','3',1,'My Blog','0','0','name=%WSCODE%-MyBlog','','','','68809e75ced4d1f52bec9eb73bc32cdc');
+INSERT INTO tiki_workspace_modules VALUES ('2','workspaces_viewpage','1','1',1,'Portfolio Home','0','0','name=%WSCODE%-Home','','','','6ac0bc2518a0c836de87662defbada90');
+INSERT INTO tiki_workspace_modules VALUES ('3','workspaces_who_is_there','2','1',2,'Course users','0','0','','','','','cbbbb0122cb4aca6c83859cda85bdecd');
+INSERT INTO tiki_workspace_modules VALUES ('5','workspaces_last_blog_posts','1','3',2,'Course History','0','0','name=%WSCODE%-History&maxPosts=3&showBar=n','','','','da1d338b0fb3d87256341b4154ba96c5');
+INSERT INTO tiki_workspace_modules VALUES ('6','workspaces_viewpage','2','1',3,'Home page','0','0','name=%WSCODE%-Home','','','','1f1b76a1f4dff160d31ae36a11170ede');
+INSERT INTO tiki_workspace_modules VALUES ('7','workspaces_last_blog_posts','2','5',3,'History','0','0','name=%WSCODE%-History','','','','ae744c4a52b38e5386c99ddc43edc8be');
+INSERT INTO tiki_workspace_modules VALUES ('9','workspaces_last_files','3','11',2,'Course files','0','0','name=%WSCODE%-Files&maxFiles=3&showBar=y&','','','','ce32d51600a7f6b3f999be9ec467c5d7');
+INSERT INTO tiki_workspace_modules VALUES ('10','workspaces_break','1','5',2,'','0','0','','','','','781330d16d490e7a88237e2aa1983ce1');
+INSERT INTO tiki_workspace_modules VALUES ('19','workspaces_break','2','2',1,'','0','0','','','','','b0678bf202e5b4417bb6fdcae969626e');
+INSERT INTO tiki_workspace_modules VALUES ('17','workspaces_last_image','3','15',2,'Images','0','0','name=%WSCODE%-Images&maxImages=3&showBar=y&','','','','f73d1e5f2a56721284d38eba1da56de0');
+INSERT INTO tiki_workspace_modules VALUES ('15','workspaces_calendar','2','6',2,'Course calendar','0','0','','','','','7126d03da3815b92f80feef1e8598ddb');
+INSERT INTO tiki_workspace_modules VALUES ('14','workspaces_childs','2','5',2,'Child workspaces','0','0','','','','','e4604c1cea8879a11425ebcae8aab4d1');
+INSERT INTO tiki_workspace_modules VALUES ('16','workspaces_viewpage','1','10',2,'View page','0','0','name=%WSCODE%-Home&showBar=y','','','','a91e337ce2b81ce208523635e1471faa');
+INSERT INTO tiki_workspace_modules VALUES ('22','workspaces_owner','1','1',3,'Workspace owner','0','0','showName=y&showWorkspaces=y','','','','017e28f378066a9c8c6d2a66f435f3cd');
+INSERT INTO tiki_workspace_modules VALUES ('20','workspaces_owner','2','1',1,'Workspace owner','0','0','showName=y&showWorkspaces=y','','','','b162f68536c92a270150ae475bd8308f');
+INSERT INTO tiki_workspace_modules VALUES ('28','workspaces_viewpage','1','1',5,'View page','0','0','name=%WSCODE%-Home&showBar=y','','','','40ca0c9474d974dba3e73ff3fc9db3a7');
+INSERT INTO tiki_workspace_modules VALUES ('29','workspaces_last_blog_posts','1','2',5,'Blog','0','0','name=%WSCODE%-History&maxPosts=5&showBar=y&','','','','a8fa9590762ec2cceee9934378631b3b');
 INSERT INTO tiki_workspace_role_wstype VALUES ('Owner','1','');
 INSERT INTO tiki_workspace_role_wstype VALUES ('Student','2','');
 INSERT INTO tiki_workspace_role_wstype VALUES ('Teacher','2','');
