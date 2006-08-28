@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.47 2006-05-22 17:09:07 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.48 2006-08-28 19:56:54 hangerman Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -293,7 +293,7 @@ if ($tiki_p_blog_admin == 'y') {
 
 	$blogs = $blogsd['data'];
 } else {
-	$blogs = $bloglib->list_blogs_user_can_post($user, 1);
+	$blogs = $bloglib->list_blogs_user_can_post($user);
 }
 
 if (count($blogs) == 0) {
