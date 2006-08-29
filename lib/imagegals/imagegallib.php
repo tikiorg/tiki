@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.78 2006-08-29 20:19:09 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.79 2006-08-29 21:09:29 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -2251,6 +2251,7 @@ class ImageGalsLib extends TikiLib {
      unset($this->filename);
      unset($this->etag);
      unset($this->image);
+  }
   }
 
 }
