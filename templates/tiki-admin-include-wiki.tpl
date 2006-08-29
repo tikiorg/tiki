@@ -171,8 +171,8 @@
     
   <div class="cbox">
     <div class="cbox-title">
-    {tr}Wiki Page List Configuration{/tr}
-    </div>
+	<a href="tiki-listpages.php">{tr}Wiki Page List Configuration{/tr}</a>
+	</div>
     <div class="cbox-data">
     <form method="post" action="tiki-admin.php?page=wiki">
     <table class="admin">

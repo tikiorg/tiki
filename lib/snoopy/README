@@ -1,10 +1,10 @@
 NAME:
 
-	Snoopy - the PHP net client v1.0
+	Snoopy - the PHP net client v1.2.2
 	
 SYNOPSIS:
 
-	include "Snoopy.class.inc";
+	include "Snoopy.class.php";
 	$snoopy = new Snoopy;
 	
 	$snoopy->fetchtext("http://www.php.net/");
@@ -123,8 +123,8 @@ CLASS VARIABLES:	(default value in parenthesis)
 	$proxy_port		the proxy port to use, if any
 	$agent			the user agent to masqerade as (Snoopy v0.1)
 	$referer		referer information to pass, if any
-	$cookies		cookies pass if any
-	$rawheaders		any other header info to pass, if any
+	$cookies		cookies to pass if any
+	$rawheaders		other header info to pass, if any
 	$maxredirs		maximum redirects to allow. 0=none allowed. (5)
 	$offsiteok		whether or not to allow redirects off-site. (true)
 	$expandlinks	whether or not to expand links to fully qualified URLs (true)
@@ -140,6 +140,7 @@ CLASS VARIABLES:	(default value in parenthesis)
 	$timed_out		true if a read operation timed out (requires PHP 4 Beta 4+)
 	$maxframes		number of frames we will follow
 	$status			http status of fetch
+	$temp_dir		temp directory that the webserver can write to. (/tmp)
 	$curl_path		system path to cURL binary, set to false if none
 	
 
@@ -148,7 +149,7 @@ EXAMPLES:
 	Example: 	fetch a web page and display the return headers and
 				the contents of the page (html-escaped):
 	
-	include "Snoopy.class.inc";
+	include "Snoopy.class.php";
 	$snoopy = new Snoopy;
 	
 	$snoopy->user = "joe";
@@ -171,7 +172,7 @@ EXAMPLES:
 	Example:	submit a form and print out the result headers
 				and html-escaped page:
 
-	include "Snoopy.class.inc";
+	include "Snoopy.class.php";
 	$snoopy = new Snoopy;
 	
 	$submit_url = "http://lnk.ispi.net/texis/scripts/msearch/netsearch.html";
@@ -197,7 +198,7 @@ EXAMPLES:
 	Example:	showing functionality of all the variables:
 	
 
-	include "Snoopy.class.inc";
+	include "Snoopy.class.php";
 	$snoopy = new Snoopy;
 
 	$snoopy->proxy_host = "my.proxy.host";
@@ -232,7 +233,7 @@ EXAMPLES:
 
 	Example: 	fetched framed content and display the results
 	
-	include "Snoopy.class.inc";
+	include "Snoopy.class.php";
 	$snoopy = new Snoopy;
 	
 	$snoopy->maxframes = 5;
@@ -250,7 +251,7 @@ EXAMPLES:
 COPYRIGHT:
 	Copyright(c) 1999,2000 ispi. All rights reserved.
 	This software is released under the GNU General Public License.
-	Please read the disclaimer at the top of the Snoopy.class.inc file.
+	Please read the disclaimer at the top of the Snoopy.class.php file.
 
 
 THANKS:

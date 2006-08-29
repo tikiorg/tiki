@@ -19,7 +19,13 @@
 <option value='r' {if $info.type eq 'r'}selected=selected{/if}>{tr}Rate (1..5){/tr}</option>
 <option value='s' {if $info.type eq 's'}selected=selected{/if}>{tr}Rate (1..10){/tr}</option>
 </select></td></tr>
-<tr><td class="formcolor">{tr}Options (if apply){/tr}:</td><td class="formcolor"><input type="text" name="options" value="{$info.options|escape}" /></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor">
+<div class="rbox" name="tip">
+<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+<div class="rbox-data" name="tip">{tr}For a multiple answer question put the answers into the following field, separated by a comma. Example: one,two,many,lots{/tr}</a>.</div>
+</div>
+</td></tr>
+<tr><td class="formcolor">{tr}Options (if apply){/tr}:</td><td class="formcolor"><input type="text" name="options" value="{$info.options|escape}" size="80" /></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.35 2006-05-22 05:55:24 philwhipps Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.36 2006-08-29 20:19:14 sylvieg Exp $ *}
 {tikimodule title="{tr}Login{/tr}" name="login_box" flip=$module_params.flip decorations=$module_params.decorations}
 
     {if $user}
@@ -25,9 +25,9 @@
     {else}
      <form name="loginbox" action="{$login_url}" method="post" {if $feature_challenge eq 'y'}onsubmit="doChallengeResponse()"{/if}> 
      {if $feature_challenge eq 'y'}
-     <script language="javascript" type='text/javascript' src="lib/md5.js"></script>   
+     <script type='text/javascript' src="lib/md5.js"></script>   
      {literal}
-     <script language='Javascript' type='text/javascript'>
+     <script type='text/javascript'>
      <!--
      function doChallengeResponse() {
        hashstr = document.loginbox.user.value +

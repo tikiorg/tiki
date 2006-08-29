@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.110 2006-05-22 17:09:07 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.111 2006-08-29 20:19:01 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -96,14 +96,17 @@ if (isset($_REQUEST["page"])) {
 	if ($adminPage == "features") {
 		$admintitle = "Features"; //get_strings tra("Features")
                 $description = "Enable/disable Tiki features here, but configure them elsewhere"; //get_strings tra("Enable/disable Tiki features here, but configure them elsewhere") TODO FOR EACH DESCRIPTION
+				$helpUrl = "Features Admin";
 		include_once ('tiki-admin_include_features.php');
 	} else if ($adminPage == "general") {
 		$admintitle = "General";//get_strings tra("General")
                 $description = "General preferences and settings";//get_strings tra("General preferences and settings")
+				$helpUrl = "General Admin";
 		include_once ('tiki-admin_include_general.php');
 	} else if ($adminPage == "login") {
 		$admintitle = "Login";//get_strings tra("Login")
 		$description = "User registration, login and authentication";//get_strings tra("User registration, login and authentication")
+		$helpUrl = "Login Config";
 		include_once ('tiki-admin_include_login.php');
 	} else if ($adminPage == "wiki") {
 		$admintitle = "Wiki";//get_strings tra("Wiki")
@@ -211,6 +214,11 @@ if (isset($_REQUEST["page"])) {
 		$admintitle = "Google Maps";//get_strings tra("Google Maps")
 		$description = "Google Maps";//get_strings tra("Google Maps")
 		include_once ('tiki-admin_include_gmap.php');
+	} else if ($adminPage == "i18n") {
+		$admintitle = "i18n";//get_strings tra("i18n")
+		$description = "Internationalization";//get_strings tra("i18n")
+		$helpUrl = "Internationalization Admin";
+		include_once ('tiki-admin_include_i18n.php');		
 	}
 	$url = 'tiki-admin.php'.'?page='.$adminPage;
 	if (!$helpUrl) {$helpUrl = ucfirst($adminPage)."+Config";}

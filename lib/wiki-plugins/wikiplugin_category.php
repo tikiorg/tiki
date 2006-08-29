@@ -1,7 +1,7 @@
 <?php
 
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_category.php,v 1.15 2005-09-29 12:46:28 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_category.php,v 1.16 2006-08-29 20:19:11 sylvieg Exp $
  *
  * Tiki-Wiki CATEGORY plugin.
  * 
@@ -11,7 +11,7 @@
  *	id=>1+2+3,	 # defaults to current
  *	types=>article+blog+directory+faq+fgal+forum+igal+newsletter+event+poll+quiz+survey+tracker+wiki # list of types of objects, default * (all),
  *	sort=>[type|created|name|hits]_[asc|desc]	# default name_asc,
- *	sub=>y|n		# display items of subcategories # default is 'true';
+ *	sub=>true|false		# display items of subcategories # default is 'true';
  *	split=>y|n		# when displaying multiple categories, whether they should be split or not; defaults to yes
  *	one=>y|n		# when y displays one categoy per line
  * )}
@@ -19,7 +19,7 @@
  * 
   */
 function wikiplugin_category_help() {
-	return tra("Insert list of items for the current/given category into wiki page").":<br />~np~{CATEGORY(id=>1+2+3,types=>article+blog+faq+fgal+igal+newsletter+event+poll+quiz+survey+tracker+wiki+img,sort=>[type|created|name|hits|shuffle]_[asc|desc],sub=>y|n,split=>y|n)}{CATEGORY}~/np~";
+	return tra("Insert list of items for the current/given category into wiki page").":<br />~np~{CATEGORY(id=>1+2+3, types=>article+blog+faq+fgal+igal+newsletter+event+poll+quiz+survey+tracker+wiki+img, sort=>[type|created|name|hits|shuffle]_[asc|desc], sub=>true|false, split=>y|n)}{CATEGORY}~/np~";
 }
 
 function wikiplugin_category($data, $params) {

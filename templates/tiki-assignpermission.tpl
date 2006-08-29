@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.60 2006-05-22 17:09:14 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.61 2006-08-29 20:19:12 sylvieg Exp $ *}
 { *TODO: Must fix even/odd table rows detection byusing Smarty 'cycle' *}
 
 
@@ -95,25 +95,28 @@
 <td class="heading"><a class="tableheading" href="tiki-assignpermission.php?type={$type}&amp;group={$group}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">{tr}type{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-assignpermission.php?type={$type}&amp;group={$group}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupDesc_desc'}permDesc_asc{else}permDesc_desc{/if}">{tr}desc{/tr}</a></td>
 </tr>
+{cycle values="odd,even" print=false}
 {section name=user loop=$perms}
 <input type="hidden" name="permName[{$perms[user].permName}]" />
-{if $smarty.section.user.index % 2}
 <tr>
-<td class="odd"><input type="checkbox" name="perm[{$perms[user].permName}]" {if $perms[user].hasPerm eq 'y'}checked="checked"{/if}/></td>
-<td class="odd">{$perms[user].permName}</td>
-<td class="odd" {if $advanced_features ne 'y'}style="display:none;"{else}style="display:block;"{/if}><select name="level[{$perms[user].permName}]">{html_options output=$levels values=$levels selected=$perms[user].level}</select></td>
-<td class="odd">{tr}{$perms[user].type}{/tr}</td>
-<td class="odd">{tr}{$perms[user].permDesc}{/tr}</td>
+<td class="{cycle advance=false}"><input type="checkbox" name="perm[{$perms[user].permName}]" 
+{assign var=has_inherited_one_perm value='n'}
+{assign var=has_inherited_perm value=''}
+{foreach key=gr item=it from=$inherited_groups_perms}
+{if $it[user].hasPerm eq 'y'}{assign var=has_inherited_one_perm value='y'}{/if}
+{/foreach}
+{if $perms[user].hasPerm eq 'y' or $inherited_from_anon[user].hasPerm eq 'y'or $inherited_from_reg[user].hasPerm eq 'y' or $has_inherited_one_perm eq 'y'}checked="checked" {/if}
+{if $inherited_from_anon[user].hasPerm eq 'y' or $inherited_from_reg[user].hasPerm eq 'y' or $has_inherited_one_perm eq 'y'}disabled="disabled" {/if}/>
+</td>
+<td class="{cycle advance=false}">{$perms[user].permName}</td>
+<td class="{cycle advance=false}" {if $advanced_features ne 'y'}style="display:none;"{else}style="display:block;"{/if}><select name="level[{$perms[user].permName}]">{html_options output=$levels values=$levels selected=$perms[user].level}</select></td>
+<td class="{cycle advance=false}">{tr}{$perms[user].type}{/tr}</td>
+<td class="{cycle}">
+{if $inherited_from_anon[user].hasPerm eq 'y'}<span style="float:right;font-size:80%;padding:1px 5px;border:1px solid #999;color:#262;background-color:#ada;">{tr}inherited from{/tr}<a href="tiki-assignpermission.php?group=Anonymous"> Anonymous</a></span>{/if}
+{if $inherited_from_reg[user].hasPerm eq 'y'}<span style="float:right;font-size:80%;padding:1px 5px;border:1px solid #999;color:#258;background-color:#acd;">{tr}inherited from{/tr}<a href="tiki-assignpermission.php?group=Registered"> Registered</a></span>{/if}
+{if $has_inherited_one_perm eq 'y'}<span style="float:right;font-size:80%;padding:1px 5px;border:1px solid #999;color:#852;background-color:#dca;">{tr}inherited{/tr}</span>{/if}
+{tr}{$perms[user].permDesc}{/tr}</td>
 </tr>
-{else}
-<tr>
-<td class="even"><input type="checkbox" name="perm[{$perms[user].permName}]" {if $perms[user].hasPerm eq 'y'}checked="checked"{/if}/></td>
-<td class="even">{$perms[user].permName}</td>
-<td class="even" {if $advanced_features ne 'y'}style="display:none;"{else}style="display:block;"{/if}><select name="level[{$perms[user].permName}]">{html_options output=$levels values=$levels selected=$perms[user].level}</select></td>
-<td class="even">{tr}{$perms[user].type}{/tr}</td>
-<td class="even">{tr}{$perms[user].permDesc}{/tr}</td>
-</tr>
-{/if}
 {/section}
 </table>
 <input type="submit" name="update" value="{tr}update{/tr}" />

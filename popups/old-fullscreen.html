@@ -1,15 +1,16 @@
 <html>
+<!-- $Header: /cvsroot/tikiwiki/tiki/popups/old-fullscreen.html,v 1.4 2006-08-29 20:19:11 sylvieg Exp $ -->
 <head><title>Fullscreen Editor</title>
 <style type="text/css"> body {	margin: 0px; border: 0px; background-color: buttonface; } </style>
 
-<script language='Javascript' type='text/javascript'>
+<script type='text/javascript'>
 
 // if we pass the "window" object as a argument and then set opener to
 // equal that we can refer to dialogWindows and popupWindows the same way
 if (window.dialogArguments) { opener = window.dialogArguments; }
 
 var _editor_url = "../";
-document.write('<scr'+'ipt src="' +_editor_url+ 'editor.js" language="Javascript1.2"></scr'+'ipt>');
+document.write('<scr'+'ipt src="' +_editor_url+ 'editor.js" type="text/javascript"></scr'+'ipt>');
 
 var parent_objname = location.search.substring(1,location.search.length);  // parent editor objname
 var parent_config  = opener.document.all[parent_objname].config;
@@ -126,6 +127,6 @@ function update_parent() {
 
 <div style="margin: 0 0 0 0; border-width: 1; border-style: solid; border-color: threedshadow threedhighlight threedhighlight threedshadow; "></div>
 
-<textarea name="editor" style="width:100%; height:300px"></textarea><br>
+<textarea name="editor" style="width:100%; height:300px"></textarea><br />
 
 </body></html>

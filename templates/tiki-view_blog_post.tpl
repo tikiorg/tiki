@@ -1,4 +1,4 @@
-<!-- $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_blog_post.tpl,v 1.25 2006-07-14 11:08:13 amette Exp $ -->
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_blog_post.tpl,v 1.26 2006-08-29 20:19:13 sylvieg Exp $ *}
 {if $feature_blogposts_pings == 'y'
   && ($blog_data.allow_comments == 'y' or $blog_data.allow_comments == 't')
   && $feature_trackbackpings  == 'y'}
@@ -130,5 +130,5 @@
 {include file=comments.tpl}
 {/if}
 {if $show_comments}
-<script language="JavaScript">flip('comzone{if $comments_show eq 'y'}open{/if}');</script>
+<script type="text/javascript">flip('comzone{if $comments_show eq 'y'}open{/if}');</script>
 {/if}

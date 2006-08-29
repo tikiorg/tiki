@@ -97,7 +97,7 @@ ifFormat    : "%s",    // the date format
 displayArea : "start_date_display",       // ID of the span where the date is to be shown
 daFormat    : "{$daformat}",  // format of the displayed date
 showsTime   : true,
-singleClick : true,
+singleClick : false,
 align       : "bR",
 firstDay : {$firstDayofWeek},
 timeFormat : {$timeFormat12_24}

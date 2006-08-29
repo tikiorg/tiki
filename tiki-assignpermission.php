@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-assignpermission.php,v 1.26 2006-05-22 17:09:07 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-assignpermission.php,v 1.27 2006-08-29 20:19:02 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -153,6 +153,22 @@ if ($offset > 0) {
 	$smarty->assign('prev_offset', $offset - $maxRecords);
 } else {
 	$smarty->assign('prev_offset', -1);
+}
+
+if ($group != 'Anonymous') {
+	// Get the list of permissions for anony
+	$ifa = $userlib->get_permissions($offset, $maxRecords, $sort_mode, $find,$_REQUEST["type"],'Anonymous');
+	$smarty->assign_by_ref('inherited_from_anon', $ifa['data']);
+	if ($group != 'Registered') {
+		$ifr = $userlib->get_permissions($offset, $maxRecords, $sort_mode, $find,$_REQUEST["type"],'Registered');
+		$smarty->assign_by_ref('inherited_from_reg', $ifr['data']);
+		$incgroups = $userlib->get_included_groups($group);
+		foreach($incgroups as $ig) {
+			$ixr = $userlib->get_permissions($offset, $maxRecords, $sort_mode, $find,$_REQUEST["type"],$ig);
+			$back[$ig] = $ixr['data'];
+		}
+		$smarty->assign_by_ref('inherited_groups_perms',$back);
+	}
 }
 
 // Get the list of permissions

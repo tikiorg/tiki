@@ -1,3 +1,4 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki.tpl,v 1.22 2006-08-29 20:19:14 sylvieg Exp $ *}
 {include file="header.tpl"}
 {* Index we display a wiki page here *}
 {if $feature_bidi eq 'y'}
@@ -70,7 +71,7 @@
           {if $feature_left_column eq 'user'}
             <img src="images/none.gif" width="100%" height="0" />
             {literal}
-              <script language="Javascript" type="text/javascript">
+              <script type="text/javascript">
                 setfolderstate("leftcolumn");
               </script>
             {/literal}
@@ -95,7 +96,7 @@
           {if $feature_right_column eq 'user'}
             <img src="images/none.gif" width="100%" height="0" />
             {literal}
-              <script language="Javascript" type="text/javascript"> 
+              <script type="text/javascript"> 
                 setfolderstate("rightcolumn");
               </script>
             {/literal}

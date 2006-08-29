@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.68 2006-07-14 11:00:52 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.69 2006-08-29 20:19:12 sylvieg Exp $
 2003 - created and maintained by mose@tikiwiki.org
 
 colorset:
@@ -379,14 +379,7 @@ div.separator, div.separatorline {
 div.separator:hover {
 	background: #dada89;
 }
-.linkmenu, .rsslink {
-}
 
-.linkmenu:active, .rsslink:active {
-}
-
-.linkmenu:hover, .rsslink:hover {
-}
 .separatorline, .optionline {
   border-top: 1px solid #dedede;
   margin-top: 3px;
@@ -394,18 +387,32 @@ div.separator:hover {
 } 
 /* style for rss lists in modules or in wiki */
 .rsslist {
-	margin: 0;
-	padding: 1px;
+        margin-right : 4px;
+        padding : 0;
+        border : 1px solid #ccc;
 }
 .rssitem {
-	border-top: 1px dashed #dadac9;
+        list-style : none;
+        margin : 0;
+        padding : 2px;
+        border-bottom : 1px dashed #ccc;
 }
-.rssitem:first-child {
-	border-top: 0;
+.rsslist .rssitem:lastchild {
+        border-bottom : 0;
 }
 .rssdate {
-	color: #999999;
-	font-style: italic;
+        display : block;
+        font-size : 70%;
+        color : #999;
+}
+
+.daterow {
+        padding : 1px 10px;
+        border : 2px outset #666;
+}
+.daterow:hover {
+        cursor : pointer;
+        background-color : #abc;
 }
 
 

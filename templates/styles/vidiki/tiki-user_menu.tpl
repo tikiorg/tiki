@@ -44,7 +44,7 @@
 {/if}
 
 {if $menu_info.type eq 'e' or $menu_info.type eq 'd'}
-<script language='Javascript' type='text/javascript'>
+<script type='text/javascript'>
 {foreach key=pos item=chdata from=$channels}
 {if $chdata.type eq 's' or $chdata.type eq 'r'}
   {if $feature_menusfolderstyle eq 'y'}

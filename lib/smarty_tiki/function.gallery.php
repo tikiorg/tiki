@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/function.gallery.php,v 1.10 2005-05-18 11:01:44 mose Exp $ */
+/* $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/function.gallery.php,v 1.11 2006-08-29 20:19:10 sylvieg Exp $ */
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -22,10 +22,7 @@ function smarty_function_gallery($params, &$smarty)
     $img = $tikilib->get_random_image($id);
     print('<div style="text-align: center">');
     if ($hidelink != 1) {
-        print('<a href="tiki-browse_image.php?galleryId='.$img['galleryId'].'&amp;imageId='.$img['imageId'].'');
-		$scale = $imagegallib->get_gallery_next_scale($id);
-		if ($scale['xsize']!=0) print('&amp;scaled&amp;xsize='.$scale['xsize'].'&amp;ysize='.$scale['ysize'].'');
-        print('">');
+        print('<a href="tiki-browse_image.php?galleryId='.$img['galleryId'].'&amp;imageId='.$img['imageId'].'">');
      }
     print ('<img alt="thumbnail" class="athumb" src="show_image.php?id='.$img['imageId'].'&amp;thumb=1" />');
     if ($hidelink !=1) {

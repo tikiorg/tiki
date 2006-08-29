@@ -31,6 +31,9 @@
 {if $feature_articles eq 'y'}
  <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=articles">{tr}articles{/tr}</a>
 {/if}
+{if $feature_trackers eq 'y'}
+ <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=trackers">{tr}trackers{/tr}</a>
+{/if}
 <br /><br />
 {tr}Found{/tr} "{$words}" {tr}in{/tr} {$cant_results} {$where2}
 {/if}

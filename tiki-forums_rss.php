@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-forums_rss.php,v 1.20 2005-05-18 10:58:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-forums_rss.php,v 1.21 2006-08-29 20:19:02 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -24,12 +24,12 @@ $title = (!empty($title_rss_forums)) ? $title_rss_forums :  tra("Tiki RSS feed f
 $desc = (!empty($desc_rss_forums)) ? $desc_rss_forums : tra("Last topics in forums.");
 $now = date("U");
 $id = "forumId";
-$param = "parentId";
+$param = "threadId";
 $descId = "data";
 $dateId = "commentDate";
 $authorId = "userName";
 $titleId = "title";
-$readrepl = "tiki-view_forum_thread.php?$id=%s&comments_$param=%s";
+$readrepl = "tiki-view_forum_thread.php?$id=%s&comments_parentId=%s";
 $uniqueid = $feed;
 
 $tmp = $tikilib->get_preference('title_rss_'.$feed, '');

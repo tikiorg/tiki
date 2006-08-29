@@ -10,8 +10,8 @@ require_once "lib/wiki/pluginslib.php";
 function wikiplugin_wantedpages_help() {
 	$help = tra("Lists ''wanted'' Wiki pages: ")."\n";
 	$help .= "~np~{WANTEDPAGES(";
-	$help .= "ignore=>".tra("Page-Pattern")."'splitby'".tra("Page-Pattern").",splitby=>+,";
-	$help .= "skipext=>0|1,collect=>from|to,debug=>0|1,table=>sep|co|br,";
+	$help .= "ignore=>".tra("Page-Pattern")."'splitby'".tra("Page-Pattern").", splitby=>+, ";
+	$help .= "skipext=>0|1, collect=>from|to, debug=>0|1, table=>sep|co|br, ";
 	$help .= "level=>strict|full|complete|custom)}".tra("Custom-Level-Regex");
 	$help .= "{WANTEDPAGES}~/np~".tra("^Parameters: key=>value,...\n")."||\n";
 	$help .= tra("__key__ | __default__ | __comments__\n");
@@ -59,7 +59,7 @@ function getDescription () {
 
 function getVersion () {
 	return preg_replace("/[Revision: $]/", '',
-                "\$Revision: 1.4 $");
+                "\$Revision: 1.5 $");
 }
 
 function run($data, $params) {

@@ -10,6 +10,11 @@ function wikiplugin_group_help() {
 }
 function wikiplugin_group($data, $params) {
         global $user, $userlib;
+	$dataelse = '';
+	if (strpos($data,'{ELSE}')) {
+		$dataelse = substr($data,strpos($data,'{ELSE}')+6);
+		$data = substr($data,0,strpos($data,'{ELSE}'));
+	}
 
 	$groups = explode('|',$params['groups']);
 
@@ -30,7 +35,7 @@ function wikiplugin_group($data, $params) {
 		return $data;
 	}
 	}
-	return '';
+	return $dataelse;
 }
 
 ?>

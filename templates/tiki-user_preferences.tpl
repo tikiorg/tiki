@@ -97,11 +97,7 @@ alt="{tr}Assign Group{/tr}" src="img/icons/key.gif" /></a>
   {/if}
 	{if $userTracker eq 'y' && $usertrackerId}
   <tr><td class="form">{tr}Your personal tracker information{/tr}:</td><td class="form">
-	{if $useritemId}
-	<a class="link" href="tiki-view_tracker_item.php?trackerId={$usertrackerId}&amp;itemId={$useritemId}&amp;show=mod">{tr}Edit information{/tr}</a>
-	{else}
 	<a class="link" href="tiki-view_tracker_item.php?view=+user">{tr}View extra information{/tr}</a>
-	{/if}
 	{/if}
 
   {* Custom fields *}
@@ -278,10 +274,12 @@ alt="{tr}Assign Group{/tr}" src="img/icons/key.gif" /></a>
     </select>
   </td>
 </tr>
+{if $allowmsg_is_optional eq 'y'}
 <tr>
   <td class="form">{tr}Allow messages from other users{/tr}</td>
   <td class="form"><input type="checkbox" name="allowMsgs" {if $allowMsgs eq 'y'}checked="checked"{/if}/></td>
 </tr>
+{/if}
 <tr>
   <td class="form">{tr}Note author when reading his mail{/tr}</td>
   <td class="form"><input type="checkbox" name="mess_sendReadStatus" {if $mess_sendReadStatus eq 'y'}checked="checked"{/if}/></td>

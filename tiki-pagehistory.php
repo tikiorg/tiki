@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.32 2006-08-29 16:25:35 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.33 2006-08-29 20:19:02 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -67,89 +67,96 @@ if ($feature_contribution == 'y') {
 	$smarty->assign_by_ref('contributions', $contributions);
 }
 
+if (isset($_REQUEST['oldver'])) { $oldver=(int)$_REQUEST["oldver"]; } else $oldver=0;
+if (isset($_REQUEST['newver'])) { $newver=(int)$_REQUEST["newver"]; } else $newver=0;
+if (isset($_REQUEST['source'])) $source=$_REQUEST['source'];
+if (isset($_REQUEST['version'])) $rversion=$_REQUEST['version'];
+if (isset($_REQUEST['preview'])) $preview=$_REQUEST["preview"];
+
 $smarty->assign('source', false);
-if (isset($_REQUEST['source'])) {
-	if ($_REQUEST["source"] == '' && isset($_REQUEST['version'])) {
-		$_REQUEST["source"] = $_REQUEST['version'];
+if (isset($source)) {
+	if ($source == '' && isset($rversion)) {
+		$source = $rversion;
 	}
-	if ($_REQUEST["source"] == $info["version"] || $_REQUEST["source"] == 0 ) {
+	if ($source == $info["version"] || $source == 0 ) {
 		$smarty->assign('sourced', nl2br($info["data"]));
 		$smarty->assign('source', $info['version']);
 
 	}
 	else {
-		$version = $histlib->get_version($page, $_REQUEST["source"]);
+		$version = $histlib->get_version($page, $source);
 		if ($version) {
 			$smarty->assign('sourced', nl2br($version["data"]));
-			$smarty->assign('source', $_REQUEST['source']);
-
+			$smarty->assign('source', $source);
 		}
 	}
-	if ($_REQUEST["source"] == 0) {
+	if ($source == 0) {
 		$smarty->assign('noHistory', true);
 	}
 }
 
 $smarty->assign('preview', false);
-if (isset($_REQUEST["preview"])) {
-	if ($_REQUEST["preview"] == '' && isset($_REQUEST['version'])) {
-		$_REQUEST["preview"] = $_REQUEST['version'];
+if (isset($preview)) {
+	if ($preview == '' && isset($rversion)) {
+		$preview = $rversion;
 	}
-	if ($_REQUEST["preview"] == $info["version"] || $_REQUEST["preview"] == 0 ) {
+	if ($preview == $info["version"] || $preview == 0 ) {
 		$previewd = $tikilib->parse_data($info["data"]);
 		$smarty->assign_by_ref('previewd', $previewd);
 		$smarty->assign('preview', $info['version']);
 	}
 	else {
-		$version = $histlib->get_version($page, $_REQUEST["preview"]);
+		$version = $histlib->get_version($page, $preview);
 		if ($version) {
 			$previewd = $tikilib->parse_data($version["data"]);
 			$smarty->assign_by_ref('previewd', $previewd);
-			$smarty->assign('preview', $_REQUEST["preview"]);
+			$smarty->assign('preview', $preview);
 		}
 	}
-	if ($_REQUEST["preview"] == 0) {
+	if ($preview == 0) {
 		$smarty->assign('noHistory', true);
 	}
 }
 
-$history = $histlib->get_page_history($page);
+// fetch page history, but omit the actual page content (to save memory)
+$history = $histlib->get_page_history($page,false);
 $smarty->assign_by_ref('history', $history);
 
 if (isset($_REQUEST["diff2"])) { // previous compatibility
-	if ($_REQUEST["diff2"] == '' && isset($_REQUEST['version'])) {
-		$_REQUEST["diff2"] = $_REQUEST['version'];
+	if ($_REQUEST["diff2"] == '' && isset($rversion)) {
+		$_REQUEST["diff2"] = $rversion;
 	}
 	$_REQUEST["compare"] = "y";
-	$_REQUEST["oldver"] = $_REQUEST["diff2"];
+	$oldver = (int)$_REQUEST["diff2"];
 }
-if (!isset($_REQUEST["newver"])) {
-	$_REQUEST["newver"] = 0;
+if (!isset($newver)) {
+	$newver = 0;
 }
 
 if (isset($_REQUEST["compare"])) {
-	if ($_REQUEST["oldver"] == 0 || $_REQUEST["oldver"] == $info["version"]) {
+	if ($oldver == 0 || $oldver == $info["version"]) {
 		$old = & $info;
-		$smarty->assign_by_ref('new', $info);
+		$smarty->assign_by_ref('old', $info);
 	}
 	else {
-		foreach ($history as $old) {
-			if ($old["version"] == $_REQUEST["oldver"])
-				break;
+		// fetch the required page from history, including its content
+		if ($histlib->version_exists($page, $oldver)) {
+			$old = $histlib->get_page_from_history($page,$oldver,true);
+			$smarty->assign_by_ref('old', $old);
 		}
 	}
-	$smarty->assign_by_ref('old', $old);
-	if ($_REQUEST["newver"] == 0 || $_REQUEST["newver"] == $info["version"]) {
+	if ($newver == 0 || $newver == $info["version"]) {
 		$new =& $info;
 		$smarty->assign_by_ref('new', $info);
 	}
 	else {
-		foreach ($history as $new) {
-			if ($new["version"] == $_REQUEST["newver"])
-				break;
+		// fetch the required page from history, including its content
+		if ($histlib->version_exists($page, $newver)) {
+			$new = $histlib->get_page_from_history($page,$newver,true);
+			$smarty->assign_by_ref('new', $new);
 		}
-		$smarty->assign_by_ref('new', $new);
 	}
+
 	if (!isset($_REQUEST["diff_style"]) || $_REQUEST["diff_style"] == "old")
 		$_REQUEST["diff_style"] = 'unidiff';
 	$smarty->assign('diff_style', $_REQUEST["diff_style"]);

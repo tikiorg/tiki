@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.24 2006-07-14 11:00:53 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.25 2006-08-29 20:19:12 sylvieg Exp $
 
 Smarty style by mose@tikiwiki.org
 
@@ -1688,8 +1688,12 @@ td.middle {
 {
 	width: auto;
 }
+ /* hack for IE 
+http://www.wellstyled.com/css-underscore-hack.html */
 .calcontent {
 	min-height: 60px;
+	height: auto;
+	_height: 60px; 
 }
 .viewmodeon {
 	padding-left:   0px;
@@ -2057,6 +2061,39 @@ table.default	td
 	background-color: #FFFFFF;
 }
 /* }}}1 */
+
+/* rss module style */
+.rsslist {
+        margin-right : 4px;
+        padding : 0;
+        border : 1px solid #ccc;
+}
+.rssitem {
+        list-style : none;
+        margin : 0;
+        padding : 2px;
+        border-top : 1px dashed #ccc;
+}
+.rsslist .rssitem:first-child {
+        border-top : 0;
+}
+.rssdate {
+        display : block;
+        font-size : 70%;
+        color : #999;
+}
+
+.daterow {
+        padding : 1px 10px;
+        border : 2px outset #666;
+}
+.daterow:hover {
+        cursor : pointer;
+        background-color : #abc;
+}
+
+
+
 
 /* end of css file */
 

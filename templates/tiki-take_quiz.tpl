@@ -8,7 +8,7 @@
 
 {if $ans eq 'n'}
 {if $quiz_info.timeLimited eq 'y'}
-<script language='Javascript' type='text/javascript'>
+<script type='text/javascript'>
 {literal}
 var itid;
 function settimeleft() {

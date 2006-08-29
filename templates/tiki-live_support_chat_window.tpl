@@ -92,7 +92,7 @@
   	<input type="text" id="data" onKeyPress="javascript:if(event.keyCode == 13) {write_msg(document.getElementById('data').value,document.getElementById('role').value,document.getElementById('username').value);}" />
   	<input type="button" value="send" onclick="javascript:write_msg(document.getElementById('data').value,document.getElementById('role').value,document.getElementById('username').value);" />
   	{/literal}
-  	<script language='Javascript' type='text/javascript'>
+  	<script type='text/javascript'>
         /* Activate polling of requests */
         var last_event=0;
         event_poll();

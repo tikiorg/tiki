@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.119 2005-05-18 11:03:27 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.120 2006-08-29 20:19:13 sylvieg Exp $ *}
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip=$module_params.flip decorations=$module_params.decorations}
 &nbsp;<a href="{$tikiIndex}" class="linkmenu">{tr}Home{/tr}</a><br />
 {if $feature_chat eq 'y' and $tiki_p_chat eq 'y'}
@@ -370,7 +370,6 @@
   {if $tiki_p_admin_quizzes eq 'y'}
   &nbsp;<a href="tiki-edit_quiz.php" class="linkmenu">{tr}Admin quiz{/tr}</a><br />
   {/if}
-  &nbsp;<a href="tiki-list_courses.php" class="linkmenu">{tr}List Courses{/tr}</a><br />
   </div>
 {/if}
 

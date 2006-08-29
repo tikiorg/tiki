@@ -29,7 +29,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 //   The use of this software is at the risk of the user.
 //
 // --------------------------------------------------------------------------------
-// $Id: pclzip.lib.php,v 1.10 2005-05-18 10:59:48 mose Exp $
+// $Id: pclzip.lib.php,v 1.11 2006-08-29 20:19:04 sylvieg Exp $
 // --------------------------------------------------------------------------------
 
   // ----- Constants
@@ -244,7 +244,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
     // ----- Look for arguments
     if ($v_size > 1) {
       // ----- Get the arguments
-      $v_arg_list = &func_get_args();
+      $v_arg_list = func_get_args();
 
       // ----- Remove form the options list the first argument
       array_shift($v_arg_list);
@@ -400,7 +400,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
     // ----- Look for arguments
     if ($v_size > 1) {
       // ----- Get the arguments
-      $v_arg_list = &func_get_args();
+      $v_arg_list = func_get_args();
 
       // ----- Remove form the options list the first argument
       array_shift($v_arg_list);
@@ -634,7 +634,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
     // ----- Look for arguments
     if ($v_size > 0) {
       // ----- Get the arguments
-      $v_arg_list = &func_get_args();
+      $v_arg_list = func_get_args();
 
       // ----- Look for first arg
       if ((is_integer($v_arg_list[0])) && ($v_arg_list[0] > 77000)) {
@@ -787,7 +787,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
     // ----- Look for arguments
     if ($v_size > 1) {
       // ----- Get the arguments
-      $v_arg_list = &func_get_args();
+      $v_arg_list = func_get_args();
 
       // ----- Remove form the options list the first argument
       array_shift($v_arg_list);
@@ -935,7 +935,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
     }
 
     // ----- Get the arguments
-    $v_arg_list = &func_get_args();
+    $v_arg_list = func_get_args();
 
     // ----- Parse the options
     $v_result = $this->privParseOptions($v_arg_list, $v_size, $v_options,

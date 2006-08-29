@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_articles.php,v 1.31 2005-11-07 21:42:29 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_articles.php,v 1.32 2006-08-29 20:19:03 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -113,8 +113,17 @@ if (isset($_REQUEST["topic"])) {
 }
 $smarty->assign_by_ref('topic', $topic);
 
+if (isset($_REQUEST["categId"])) {
+	$categId = $_REQUEST["categId"];
+} else {
+	$categId = '';
+}
+$smarty->assign_by_ref('categId', $categId);
+
+
+
 // Get a list of last changes to the Wiki database
-$listpages = $tikilib->list_articles($offset, $maxArticles, $sort_mode, $find, $pdate, $user, $type, $topic, 'y');
+$listpages = $tikilib->list_articles($offset, $maxArticles, $sort_mode, $find, $pdate, $user, $type, $topic, 'y', '', $categId);
 if ($feature_multilingual == 'y') {
 	include_once("lib/multilingual/multilinguallib.php");
 	$listpages['data'] = $multilinguallib->selectLangList('article', $listpages['data']);

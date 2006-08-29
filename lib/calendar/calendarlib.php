@@ -93,9 +93,25 @@ class CalendarLib extends TikiLib {
 	}
 
 	function drop_calendar($calendarId) {
-		$query = "delete from `tiki_calendars` where `calendarId`=?";
-		$this->query($query,array($calendarId));
+		// find and remove roles for all calendar items:
+		$query = "select `calitemId` from `tiki_calendar_items` where `calendarId`=?";
+		$result = $this->query($query, array( $calendarId ) );
+		$allItemsFromCalendar = array();
+		while ($res = $result->fetchRow()) {
+			$allItemsFromCalendar[] = $res['calitemId'];
+		}
+		$query = "delete from `tiki_calendar_roles` where `calitemId` in (".implode(',', array_fill(0,count($allItemsFromCalendar),'?')).")";
+		$this->query($query,array($allItemsFromCalendar));
+
+		// remove calendar items, categories and locations:
 		$query = "delete from `tiki_calendar_items` where `calendarId`=?";
+		$this->query($query,array($calendarId));
+		$query = "delete from `tiki_calendar_categories` where `calendarId`=?";
+		$this->query($query,array($calendarId));
+		$query = "delete from `tiki_calendar_locations` where `calendarId`=?";
+		$this->query($query,array($calendarId));
+		// now remove the calendar itself:
+		$query = "delete from `tiki_calendars` where `calendarId`=?";
 		$this->query($query,array($calendarId));
 	}
 

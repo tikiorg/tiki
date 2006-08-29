@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_siteid.php,v 1.5 2005-08-25 20:50:04 michael_davey Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_siteid.php,v 1.6 2006-08-29 20:19:02 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -17,17 +17,7 @@ if (isset($_REQUEST["siteidentityset"])) {
  check_ticket('admin-inc-siteid');
  
  if (isset($_REQUEST["alter_tiki_prefs_table"])) {
-	 $alter_result=true;
-
-	// This needs moving to a lib!!! - Damosoft
-	 
-	 if (!$tikilib->query( "ALTER TABLE `tiki_preferences` MODIFY `value` BLOB", array())) {
-		 $alter_result=false;
-	 }
-	 if ($alter_result!=true) {
-         $msg = tra('Altering database table failed');
-         $access->display_error(basename(__FILE__), $msg);
-	 }
+	 $alter_result = alterprefs();
  }
 
  	$pref_toggles = array(

@@ -1,7 +1,8 @@
-<html style="width:300px; Height: 60px;">
+<html>
+<!-- $Header: /cvsroot/tikiwiki/tiki/popups/custom2.html,v 1.5 2006-08-29 20:19:11 sylvieg Exp $ -->
  <head>
   <title>Select Phrase</title>
-<script language="javascript">
+<script type="text/javascript">
 
 var myTitle = window.dialogArguments;
 document.title = myTitle;
@@ -17,10 +18,10 @@ function returnSelected() {
 
 </script>
 </head>
-<body bgcolor="#FFFFFF" topmargin=15 leftmargin=0>
+<body style="background-color: #FFFFFF; margin-tp: 15px; margin-left: 0; width: 300px; height: 60px;">
 
-<form method=get onsubmit="Set(document.all.ColorHex.value); return false;">
-<div align=center>
+<form method="get" onsubmit="Set(document.all.ColorHex.value); return false;">
+<div align="center">
 
 <select name="textPulldown">
 <option>The quick brown</option>
@@ -28,7 +29,7 @@ function returnSelected() {
 <option>the lazy dog.</option>
 </select>
 
-<input type="button" value=" Go " onclick="returnSelected()">
+<input type="button" value=" Go " onclick="returnSelected()" />
 
 </div>
 </form>

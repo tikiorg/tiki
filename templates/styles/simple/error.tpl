@@ -1,5 +1,5 @@
 {include file="header.tpl"}{* This must be included as the first thing in a document to be XML compliant *}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/error.tpl,v 1.5 2004-02-23 21:35:09 techtonik Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/error.tpl,v 1.6 2006-08-29 20:19:15 sylvieg Exp $ *}
 {* Main template for TikiWiki error page layout *}
 <div id="main">
   {if $feature_top_bar eq 'y'}

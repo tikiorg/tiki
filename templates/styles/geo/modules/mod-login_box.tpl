@@ -1,4 +1,5 @@
-  {tikimodule title="{tr}Login{/tr}" name="login-box"}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/geo/modules/mod-login_box.tpl,v 1.8 2006-08-29 20:19:14 sylvieg Exp $ *}
+  {tikimodule title="{tr}login{/tr}" name="login-box"}
     {if $user}
       {tr}logged as{/tr}: {$user}<br />
       <a class="linkmodule" href="tiki-logout.php">{tr}Logout{/tr}</a><br />
@@ -12,9 +13,9 @@
     {else}
      <form name="loginbox" action="{$login_url}" method="post" {if $feature_challenge eq 'y'}onsubmit="doChallengeResponse()"{/if}> 
      {if $feature_challenge eq 'y'}
-     <script language="javascript" type='text/javascript' src="lib/md5.js"></script>   
+     <script type='text/javascript' src="lib/md5.js"></script>   
      {literal}
-     <script language='Javascript' type='text/javascript'>
+     <script type='text/javascript'>
      <!--
      function doChallengeResponse() {
        document.loginbox.zoofoo.value=MD5(document.loginbox.pass.value);

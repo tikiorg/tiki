@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.93 2006-07-14 11:00:44 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.94 2006-08-29 20:19:03 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -198,7 +198,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 	}
 	if (($xfields["data"][$i]['isTblVisible'] == 'y' or $xfields["data"][$i]['isSearchable'] == 'y') 
 //		and ($xfields["data"][$i]['isPublic'] == 'y' or $tiki_p_admin_trackers == 'y') ispublic is for tracker plugin not normal view
-		and ($xfields["data"][$i]['isHidden'] != 'y' or $tiki_p_admin_trackers == 'y')
+		and ($xfields["data"][$i]['isHidden'] == 'n' or $tiki_p_admin_trackers == 'y')
 		) {
 		
 		$listfields[$fid]['type'] = $xfields["data"][$i]["type"];
@@ -216,8 +216,8 @@ for ($i = 0; $i < $temp_max; $i++) {
 		}
 
 	}
-	
-	if ($xfields["data"][$i]['isHidden'] != 'y' or $tiki_p_admin_trackers == 'y') {
+
+	if ($xfields["data"][$i]['isHidden'] == 'n' or $tiki_p_admin_trackers == 'y') {
 		$ins_fields["data"][$i] = $xfields["data"][$i];
 		$fields["data"][$i] = $xfields["data"][$i];
 		if ($fields["data"][$i]["type"] == 'f') { // date and time
@@ -383,10 +383,11 @@ for ($i = 0; $i < $temp_max; $i++) {
 					}
 					fclose ($fp);
 					$ins_fields["data"][$i]["value"] = $data;
-					$ins_fields["data"][$i]["file_type"] = mime_content_type( $_FILES["$ins_id"]['tmp_name'] );
-					
+					if (function_exists('mime_content_type'))
+						$ins_fields["data"][$i]["file_type"] = mime_content_type( $_FILES["$ins_id"]['tmp_name'] );
+					else
+						$ins_fields["data"][$i]["file_type"] = $_FILES["$ins_id"]['type'];
 					//$ins_fields["data"][$i]["value"] = $_FILES["$ins_id"]['name'];
-					//$ins_fields["data"][$i]["file_type"] = $_FILES["$ins_id"]['type'];
 					$ins_fields["data"][$i]["file_size"] = $_FILES["$ins_id"]['size'];
 					$ins_fields["data"][$i]["file_name"] = $_FILES["$ins_id"]['name'];
 				}
@@ -447,7 +448,13 @@ if ($user) {
 	}
 }
 
-if (isset($_REQUEST["save"])) {
+if (isset($_REQUEST['import'])) {
+	if (isset($_FILES['importfile']) && is_uploaded_file($_FILES['importfile']['tmp_name'])) {
+		$fp = fopen($_FILES['importfile']['tmp_name'], "rb");
+		$trklib->import_items($_REQUEST["trackerId"],$_REQUEST["indexfield"],$fp);
+		fclose($fp);
+	}
+} elseif (isset($_REQUEST["save"])) {
 	
 	if ($tiki_p_create_tracker_items == 'y') {
 
@@ -594,6 +601,8 @@ if (isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y'
 }
 
 $items = $trklib->list_items($_REQUEST["trackerId"], $offset, $maxRecords, $sort_mode, $listfields, $filterfield, $filtervalue, $_REQUEST["status"],$initial,$exactvalue,$numsort);
+//var_dump($_REQUEST["trackerId"], $offset, $maxRecords, $sort_mode, $listfields, $filterfield, $filtervalue, $_REQUEST["status"],$initial,$exactvalue,$numsort);
+//die;
 //var_dump($items);die();
 $urlquery['status'] = $_REQUEST["status"];
 $urlquery['initial'] = $initial;

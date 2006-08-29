@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.38 2006-05-22 17:09:07 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.39 2006-08-29 20:19:02 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -132,11 +132,17 @@ function replace_tracker_from_request( $tracker_info )
 	$isPublic = 'n';
     }
 
-    if (isset($_REQUEST["isHidden"]) && ( $_REQUEST["isHidden"] == 'on' || $_REQUEST["isHidden"] == 'y' )) {
-	$isHidden = 'y';
-    } else {
-	$isHidden = 'n';
-    }
+	if (isset($_REQUEST["isHidden"])) {
+		if ($_REQUEST["isHidden"] == 'y' ) {
+			$isHidden =	'y';
+		} elseif ($_REQUEST["isHidden"] == 'p' ) {
+			$isHidden =	'p';
+		} else {
+			$isHidden = 'n';
+		}
+	} else {
+		$isHidden = 'n';
+	}
 
     if (isset($_REQUEST["isMandatory"]) && ( $_REQUEST["isMandatory"] == 'on' || $_REQUEST["isMandatory"] == 'y' )) {
 	$isMandatory = 'y';

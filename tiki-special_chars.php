@@ -1,4 +1,5 @@
 <?php // -*- coding:utf-8 -*-
+/* $Header: /cvsroot/tikiwiki/tiki/tiki-special_chars.php,v 1.4 2006-08-29 20:19:03 sylvieg Exp $ */
 echo  '<?xml version="1.0" encoding="UTF-8"?>';
 ?>
 <!DOCTYPE html
@@ -10,7 +11,7 @@ echo  '<?xml version="1.0" encoding="UTF-8"?>';
 <title>Special Character Input</title>
 </head>
 <body style="background:#101070; color:white;">
-<script language="Javascript" type="text/javascript">
+<script type="text/javascript">
 var target;
 function handleListChange(theList) {
     var numSelected = theList.selectedIndex;
@@ -38,7 +39,7 @@ cellpadding="0">
           <td align="center">
             <select name="a"
 onchange="handleListChange(this)">
-              <option value="a" selected> a </option>
+              <option value="a" selected="selected"> a </option>
               <option value="À"> À </option>
               <option value="à"> à </option>
               <option value="Á"> Á </option>
@@ -56,7 +57,7 @@ onchange="handleListChange(this)">
           <td align="center">
             <select name="e"
 onchange="handleListChange(this)">
-              <option value="e" selected> e </option>
+              <option value="e" selected="selected"> e </option>
               <option value="È"> È </option>
               <option value="è"> è </option>
               <option value="É"> É </option>
@@ -70,7 +71,7 @@ onchange="handleListChange(this)">
           <td align="center">
             <select name="i"
 onchange="handleListChange(this)">
-              <option value="i" selected> i </option>
+              <option value="i" selected="selected"> i </option>
               <option value="Ì"> Ì </option>
               <option value="ì"> ì </option>
               <option value="Í"> Í </option>
@@ -84,7 +85,7 @@ onchange="handleListChange(this)">
           <td align="center">
             <select name="o"
 onchange="handleListChange(this)">
-              <option value="o" selected> o </option>
+              <option value="o" selected="selected"> o </option>
               <option value="Ò"> Ò </option>
               <option value="ò"> ò </option>
               <option value="Ó"> Ó </option>
@@ -100,7 +101,7 @@ onchange="handleListChange(this)">
           <td align="center">
             <select name="u"
 onchange="handleListChange(this)">
-              <option value="u" selected> u </option>
+              <option value="u" selected="selected"> u </option>
               <option value="Ù"> Ù </option>
               <option value="ù"> ù </option>
               <option value="Ú"> Ú </option>
@@ -114,7 +115,7 @@ onchange="handleListChange(this)">
           <td align="center">
             <select name="Other"
 onchange="handleListChange(this)">
-              <option value="misc" selected> Other
+              <option value="misc" selected="selected"> Other
 </option>
               <option value="¢"> ¢ </option>
               <option value="£"> £ </option>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.98 2006-08-01 13:39:37 hangerman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.99 2006-08-29 20:19:03 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -52,10 +52,8 @@ $userlib = new UsersLib($dbTiki);
 require_once("lib/tikiaccesslib.php");
 $access = new TikiAccessLib();
 
-// require_once("lib/tikiaccesslib.php");
 require_once("lib/breadcrumblib.php");
 //require_once("lib/tikihelplib.php");
-// $access = new TikiAccessLib();
 
 // ------------------------------------------------------
 // DEAL WITH XSS-TYPE ATTACKS AND OTHER REQUEST ISSUES
@@ -150,6 +148,12 @@ $vartype['max'] = 'int';
 $vartype['numrows'] = 'int';
 $vartype['rows'] = 'int';
 $vartype['cols'] = 'int';
+$vartype['topicname'] = 'string';
+$vartype['error'] = 'string';
+$vartype['editmode'] = 'char'; // from calendar
+$vartype['actpass'] = 'string'; // remind password page
+$vartype['user'] = 'string'; // remind password page
+$vartype['remind'] = 'string'; // remind password page
 
 // if we get an error while reading language from prefs, assume the db
 // is not yet set up and give a message
@@ -190,7 +194,9 @@ varcheck($_REQUEST);
 
 // rebuild $_REQUEST after sanity check
 unset($_REQUEST);
+unset($_COOKIE['offset']);
 $_REQUEST = array_merge($_COOKIE, $_POST, $_GET, $_ENV, $_SERVER);
+$_REQUEST['highlight'] = htmlspecialchars($_REQUEST['highlight']);
 
 // ---------------------------------------------------------------------
 if (isset($_SERVER["REQUEST_URI"])) {

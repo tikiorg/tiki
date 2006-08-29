@@ -277,9 +277,15 @@
 <br />{tr}Google Maps{/tr}</a>
 </td>
 <td style="text-align:center;">
+<a href="tiki-admin.php?page=i18n" title="{tr}i18n{/tr}" class="link">
+<img border="0" src="img/icons/admin_i18n.png" alt="icon" />
+<br />{tr}i18n{/tr}</a>
 </td>
 <td style="text-align:center;">
 </td>
+
+
+
 		</tr>
    </table>
   </div>

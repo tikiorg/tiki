@@ -160,7 +160,8 @@ class Text_Diff_Renderer {
 
     function _startBlock($header)
     {
-        echo $header . "\n";
+    	// TODO: What's this output for? It breaks XML pages
+        // echo $header . "\n";
     }
 
     function _endBlock()
@@ -197,3 +198,4 @@ class Text_Diff_Renderer {
     }
 
 }
+?>

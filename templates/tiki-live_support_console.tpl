@@ -37,7 +37,7 @@
     {if count($requests) > 0}
     <h3>{tr}Support requests{/tr}</h3>
     {if $new_requests eq 'y'}
-		<script language='Javascript' type='text/javascript'>
+		<script type='text/javascript'>
 			sound();
 		</script>
     {/if}
@@ -67,7 +67,7 @@
 		{/section}
 	</table>
 	{/if}
-    <script language='Javascript' type='text/javascript'>
+    <script type='text/javascript'>
         var last_req={$last};
     	console_poll();
     </script>

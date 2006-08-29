@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker.tpl,v 1.109 2006-05-22 17:09:16 mose Exp $ *}
+{* $Id: tiki-view_tracker.tpl,v 1.110 2006-08-29 20:19:13 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -13,7 +13,6 @@
 <span class="button2"><a href="tiki-admin_trackers.php" class="linkbut">{tr}Admin trackers{/tr}</a></span>
 <span class="button2"><a href="tiki-admin_trackers.php?trackerId={$trackerId}" class="linkbut">{tr}Edit this tracker{/tr}</a></span>
 <span class="button2"><a href="tiki-admin_tracker_fields.php?trackerId={$trackerId}" class="linkbut">{tr}Edit fields{/tr}</a></span>
-<span class="button2"><a href="{$smarty.request.REQUEST_URI|replace:'tiki-view_tracker':'tiki-export_tracker'}" class="linkbut">{tr}Export in CSV{/tr}</a></span>
 {/if}
 {if $rss_tracker eq "y"}
 <span class="button2"><a href="tiki-tracker_rss.php?trackerId={$trackerId}" class="linkbut"><img src='img/rss.png' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' /></a></span>
@@ -188,8 +187,7 @@ class="prevnext">{tr}All{/tr}</a>
 $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}created{/tr}</a></td>
 {/if}
 {if $tracker_info.showLastModif eq 'y'}
-<td class="heading"><a class="tableheading" href="tiki-view_tracker.php?status={$status}&amp;{if $initial}initial={$initial}&amp;{/if}find={$find}&amp;trackerId={$trackerId}&amp;offset={$offset}{section 
-name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].value}{/if}{/section}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}lastModif{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-view_tracker.php?status={$status}&amp;{if $initial}initial={$initial}&amp;{/if}find={$find}&amp;trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}lastModif{/tr}</a></td>
 {/if}
 {if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y'}
 <td class="heading" width="5%">{tr}coms{/tr}</td>
@@ -270,7 +268,7 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 
 {elseif $items[user].field_values[ix].type eq 'y'}
 {assign var=o_opt value=$items[user].field_values[ix].options_array[0]}
-{if $o_opt ne '1'}<img border="0" src="img/flags/{$items[user].field_values[ix].value}.gif" />{/if}
+{if $o_opt ne '1'}<img border="0" src="img/flags/{$items[user].field_values[ix].value}.gif" title="{$items[user].field_values[ix].value}" />{/if}
 {if $o_opt ne '1' and $o_opt ne '2'}&nbsp;{/if}
 {if $o_opt ne '2'}{tr}{$items[user].field_values[ix].value}{/tr}{/if}
 
@@ -336,7 +334,7 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 {elseif $items[user].field_values[ix].type eq 'y'}
 <td class="auto">
 {assign var=o_opt value=$items[user].field_values[ix].options_array[0]}
-{if $o_opt eq '0' or $o_opt eq 2}<img border="0" src="img/flags/{$items[user].field_values[ix].value}.gif" />{/if}
+{if $o_opt eq '0' or $o_opt eq 2}<img border="0" src="img/flags/{$items[user].field_values[ix].value}.gif"  title="{$items[user].field_values[ix].value}" />{/if}
 {if $o_opt eq '0'}&nbsp;{/if}
 {if $o_opt eq '0' or $o_opt eq 1}{tr}{$items[user].field_values[ix].value}{/tr}{/if}
 </td>
@@ -406,7 +404,7 @@ link="{tr}list attachments{/tr}"><img src="img/icons/folderin.gif" border="0" al
 {if $tiki_p_admin_trackers eq 'y'}<td  style="text-align:center;">{$items[user].downloads}</td>{/if}
 {/if}
 {if $tiki_p_admin_trackers eq 'y'}
-<td><a class="link" href="tiki-view_tracker.php?status={$status}&amp;trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{section name=mix loop=$fields}{if $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&amp;remove={$items[user].itemId}" 
+<td><a class="link" href="tiki-view_tracker.php?status={$status}&amp;trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$items[user].itemId}" 
 title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a></td>
 {/if}
 </tr>
@@ -444,6 +442,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {section name=ix loop=$fields}
 {assign var=fid value=$fields[ix].fieldId}
 
+{if $fields[ix].isHidden eq 'n' or $tiki_p_admin_trackers eq 'y'}
 {if $fields[ix].type ne 'x' and $fields[ix].type ne 'l'}
 {if $fields[ix].type eq 'h'}
 </table>
@@ -596,6 +595,7 @@ style="background-image:url('img/flags/{$flag}.gif');background-repeat:no-repeat
 </td>{assign var=stick value="y"}
 {else}
 </td></tr>{assign var=stick value="n"}
+{/if}
 {/if}
 {/if}
 {/section}

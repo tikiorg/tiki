@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.54 2006-07-14 11:00:43 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.55 2006-08-29 20:19:02 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -8,6 +8,7 @@
 require_once ('tiki-setup.php');
 
 include_once ('lib/calendar/calendarlib.php');
+include_once ('lib/categories/categlib.php');
 include_once ('lib/newsletters/nllib.php');
 
 # perms are
@@ -28,6 +29,11 @@ $cookietab = 1;
 $rawcals = $calendarlib->list_calendars();
 $viewOneCal = $tiki_p_view_calendar;
 $modifTab = 0;
+if ($feature_theme_control == 'y'	and isset($_REQUEST['calIds'])) {
+	$cat_type = "calendar";
+	$cat_objid = $_REQUEST['calIds'][0]; 
+	include('tiki-tc.php');
+}
 
 foreach ($rawcals["data"] as $cal_id=>$cal_data) {
 	if ($tiki_p_admin == 'y') {
@@ -63,6 +69,7 @@ foreach ($rawcals["data"] as $cal_id=>$cal_data) {
 			} else {
 				$cal_data["tiki_p_change_events"] = 'n';
 			}
+			$smarty->assign("tiki_p_change_events", $cal_data["tiki_p_change_events"] );
 			if ($userlib->object_has_permission($user, $cal_id, 'calendar', 'tiki_p_admin_calendar')) {
 				$cal_data["tiki_p_view_calendar"] = 'y';
 				$cal_data["tiki_p_add_events"] = 'y';
@@ -87,6 +94,30 @@ foreach ($rawcals["data"] as $cal_id=>$cal_data) {
 		$modifiable[] = $cal_id;
 	}
 }
+if ($feature_categories == 'y' and isset($_REQUEST['calIds'])) {
+	$is_categorized = FALSE;
+	foreach ($_REQUEST['calIds'] as $calId) {
+		$perms_array = $categlib->get_object_categories_perms($user, 'calendar', $calId);
+		if ($perms_array) {
+			foreach ($perms_array as $perm => $value) {
+				$$perm = $value;
+			}
+		} else {
+			$is_categorized = FALSE;
+		}
+		if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+			if (!isset($user)){
+				$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
+				$smarty->assign('errortitle',tra("Please login"));
+			} else {
+				$smarty->assign('msg',tra("Permission denied you cannot view this page"));
+			}
+			$smarty->display("error.tpl");
+			die;
+		}
+	}
+}
+
 if ($viewOneCal != 'y') {
 	$smarty->assign('msg', tra("Permission denied you cannot view the calendar"));
 	$smarty->display("error.tpl");

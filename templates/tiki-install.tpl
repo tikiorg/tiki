@@ -1,5 +1,5 @@
 <div style="margin-left:180px;margin-right:180px;">
-<h1>Tiki installer v1.10 (CVS) <a title='help' href='http://tikiwiki.org/InstallTiki' target="help"><img
+<h1>Tiki installer v1.10 (CVS) <a title='help' href='http://doc.tikiwiki.org/InstallTiki' target="help"><img
 border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a></h1>
 
 {if $tikifeedback}
@@ -36,7 +36,7 @@ To add a new virtual host run the setup.sh with the domain name of the new host 
 <td valign="top">
 {/if}
 
-<h2>{if $multi}(MultiTiki) {/if}{$multi|default:"default"}</h2>
+{if $multi} <h2> (MultiTiki) {$multi|default:"default"} </h2> {/if}
 {* / multitiki --------------------------- *}
 
 <a href="tiki-install.php?restart=1{if $multi}&amp;multi={$multi}{/if}" class="link">reload</a><br /><br />
@@ -114,13 +114,18 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 	  {if $dbdone eq 'n'}
 		  {if $logged eq 'y'}
 		    {* we are logged if no admin account is found or if he user logged in*}
-		    <b>Welcome to the installation script!</b><br />
-		    You can now create a new database or update your current database<br /><br />
+		    <b>Welcome to the installation & upgrade script!</b><br />
+		    <br /><br />
+			
 		    <form method="post" action="tiki-install.php">
 				{if $multi}<input type="hidden" name="multi" value="{$multi}" />{/if}
+				<hr>
 		    <table>
-		    <tr><td>
-			Create database with profile:
+		    <tr><td style="text-align: center;" colspan="2"
+ rowspan="1" height="26"><font size="5"><b>Install</b></font>
+ 			</td></tr>
+			<tr><td>
+			Create database (clean install) with profile:
 			</td><td>
 			<select name="profile">
 			{section name=ix loop=$profiles}
@@ -129,12 +134,21 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 			</select>
 			<input type="submit" name="scratch" value="create" />	    
 		    </td></tr>
-		    <tr><td>
-			</td><td>
+			<td height="100" valign="top">
+			</td><td height="100" valign="top">
 			<a target="_new" href="http://tikiwiki.org/tiki-index.php?page=TikiProfiles" class="link">Descriptions of the available profiles</a>
 			<p>
-		    </td></tr>
-		    <tr><td>
+		    </td>
+		    <tr><td colspan="2">
+
+			<hr>
+			<tr><td style="text-align: center;" colspan="2"
+ rowspan="1" height="26"><font size="5"><b>Upgrade</b></font>
+ 			</td></tr>
+		    <tr><td colspan="2">				
+			Important: <b>backup your database</b> with mysqldump or phpmyadmin before you proceed. <br>
+			</td></tr>
+		    <tr><td>			
 			Update database using script: 
 			</td><td>
 			<select name="file">
@@ -148,20 +162,26 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 			For database update from 1.8 or later:
 			<ol>
 				<li>If you upgrade from 1.8.x you <b>MUST</b> run tiki_1.8to1.9 and don't need an additional script.</li>
-				<li>If you upgrade from a previous 1.9.x version, you use tiki_1.8to1.9, too.</li>
+				<li>If you upgrade from a previous 1.9.x version, use tiki_1.8to1.9, too. (ex.: 1.9.2 to 1.9.5)</li>
 			</ol>
 		    <tr><td colspan="2">
-		    	For database update from 1.7 you should use this order:
-			<ol>
-				<li>tiki_1.7to1.8.sql - can be run more than once if errors occur</li>
-				<li>comments_fix_1.7to1.8.sql - use only once!</li>
-				<li>structure_fix_1.7to1.8.sql - use only once!</li>
-				<li>tiki_1.8to1.9.sql - can be run more than once if errors occur</li>
-			</ol>
-			We recommend that you <b>backup your database</b> with mysqldump or phpmyadmin.
+		    	For database update from 1.7.x, please visit <a target="help" href="http://tikiwiki.org/UpgradeTo18">Tiki database 1.7.x to 1.8x instructions</a>
+
+			
 		</td></tr>
+		    <tr><td colspan="2">
+		    	For information about tiki-secdb_*.sql files, please see <a target="help" href="http://tikiwiki.org/AdminSecurity">http://tikiwiki.org/AdminSecurity</a>
+
+			
+		</td></tr>		
+		
+		
+		
+		
 		    </table>
 		    </form><br />
+			<hr>
+			<br /><br /><br />
 			<a href="tiki-index.php" class="link">Do nothing and enter Tiki</a><br />
 			<a href="tiki-install.php?reset=yes" class="link">Reset database connection settings</a>
 		  {else}
@@ -211,6 +231,32 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 See file php.ini, the relevant key is memory_limit. Use something like memory_limit = 16M and restart your 
 webserver. Too little memory will cause blank pages!</div>
             </div>
+			
+	{if $php_memory_limit eq ''}
+		<div style="border-style: solid; border-width: 1; padding: 4">
+		  <p align="center">
+		  <span style="padding: 2px; background-color: #00FF00">
+		  Tiki has not detected your PHP memory_limit. This probably means you have no set limit (all is well). 
+		  </span>
+		</div>	
+	
+	{elseif $php_memory_limit eq '8M'}
+		<div style="border-style: solid; border-width: 1; padding: 4">
+		  <p align="center">
+		  <span style="text-decoration: blink; font-size: x-large; padding: 4px; background-color: #FF0000">
+		  Tiki has detected your PHP memory limit at only 8 Megs
+		  </span>
+		</div>
+
+	{else}
+		<div style="border-style: solid; border-width: 1; padding: 4">
+		  <p align="center">
+		  <span style="font-size: large; padding: 4px;">
+Tiki has detected your PHP memory_limit at: {$php_memory_limit}. 
+		  </span>
+		</div>	
+	{/if}			
+			
             <br />
 
     		<div class="rbox" name="tip">
@@ -224,7 +270,7 @@ webserver. Too little memory will cause blank pages!</div>
             <div class="rbox-data" name="tip">If you did a Tiki upgrade, make sure to clean the caches (templates_c/) manually or by using the feature on admin / system.</div>
             </div>
             <br />
-
+            <br />
             Now you may proceed by clicking one of these links:<br /><br />
 
     		<a href="tiki-install.php?kill=1" class="link">Click here to disable the install script and proceed into tiki.</a><br /><br />

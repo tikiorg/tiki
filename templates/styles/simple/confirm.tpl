@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/confirm.tpl,v 1.3 2006-03-16 13:43:13 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/confirm.tpl,v 1.4 2006-08-29 20:19:15 sylvieg Exp $ *}
 
 				<div class="cbox">
 					<div class="cbox-data">

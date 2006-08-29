@@ -1,4 +1,5 @@
 <?php
+/* $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/function.popup_init.php,v 1.3 2006-08-29 20:19:10 sylvieg Exp $ */
 /**
  * Smarty plugin
  * @package Smarty
@@ -40,8 +41,8 @@ function smarty_function_popup_init($params, &$smarty)
     
     if (!empty($params['src'])) {
         $popup_init_cache[$params['src']] = 1;
-        return '<div id="overDiv" style="position:absolute; visibility:hidden; z-index:'.$zindex.';"></div>' . "\n"
-         . '<script type="text/javascript" language="JavaScript" src="'.$params['src'].'"></script>' . "\n";
+        return '<div id="overDiv" style="position: absolute; visibility: hidden; z-index:'.$zindex.';"></div>' . "\n"
+         . '<script type="text/javascript" src="'.$params['src'].'"></script>' . "\n";
     } else {
         $smarty->trigger_error("popup_init: missing src parameter");
     }

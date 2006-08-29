@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.25 2006-05-22 17:09:14 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.26 2006-08-29 20:19:12 sylvieg Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -31,6 +31,7 @@
     <table class="admin">
     <tr class="form"><td><label>{tr}Rankings{/tr}:</label></td><td><input type="checkbox" name="feature_gal_rankings" {if $feature_gal_rankings eq 'y'}checked="checked"{/if}/></td></tr>
     <tr class="form"><td><label>{tr}Comments{/tr}:</label></td><td><input type="checkbox" name="feature_image_galleries_comments" {if $feature_image_galleries_comments eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr class="form"><td><label>{tr}Uses Slideshow{/tr}:</label></td><td><input type="checkbox" name="feature_gal_slideshow" {if $feature_gal_slideshow eq 'y'}checked="checked"{/if}/></td></tr>
     <tr class="form"><td><label>{tr}Use database to store images{/tr}:</label></td><td><input type="radio" name="gal_use_db" value="y" {if $gal_use_db eq 'y'}checked="checked"{/if}/></td></tr>
     <tr class="form"><td><label>{tr}Use a directory to store images{/tr}:</label></td><td><input type="radio" name="gal_use_db" value="n" {if $gal_use_db eq 'n'}checked="checked"{/if}/> <label>{tr}Directory path{/tr}:</label><br /><input type="text" name="gal_use_dir" value="{$gal_use_dir|escape}" size="50" /><br />
        ({tr}Note: if you change this directory, you have to move the contents to the new directory. You can also use the "Mover" below.{/tr})</td></tr>

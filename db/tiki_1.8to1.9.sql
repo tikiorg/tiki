@@ -1,7 +1,10 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.106 2006-07-14 11:00:46 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.107 2006-08-29 20:19:03 sylvieg Exp $
 
-# The following script will update a tiki database from verion 1.8 to 1.9
+# The following script will update a tiki database from version 1.8.x to 1.9.x
+# The following script will ALSO update from version 1.9.x to 1.9.y
 # 
+# Ex.: If you upgrading from Tiki 1.9.2 to 1.9.4, you NEED to run this script. 
+#
 # To execute this file do the following:
 #
 # $ mysql -f dbname < tiki_1.8to1.9.sql
@@ -1279,3 +1282,9 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_cms_print','y')
 # 2006-07-05 new preferences eq 'y' to keep the default - toggg
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_trackbackpings','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_blogposts_pings','y');
+
+# 2006-07-31 slideshow default enabled - toggg
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_gal_slideshow','y');
+
+#2006-08-14 sylvieg
+ALTER TABLE tiki_tracker_item_fields ADD FULLTEXT ft (value);

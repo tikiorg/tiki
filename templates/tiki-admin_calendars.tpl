@@ -97,6 +97,9 @@ title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
 <form action="tiki-admin_calendars.php" method="post">
 <input type="hidden" name="calendarId" value="{$calendarId|escape}" />
 <table class="normal">
+{if $tiki_p_view_categories eq 'y'}
+{include file=categorize.tpl}
+{/if}
 <tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea name="description" rows="5" wrap="virtual" style="width:100%;">{$description|escape}</textarea></td></tr>
 <tr><td class="formcolor">{tr}Custom Locations{/tr}:</td><td class="formcolor">

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-articles_rss.php,v 1.26 2005-05-18 10:58:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-articles_rss.php,v 1.27 2006-08-29 20:19:02 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -36,6 +36,9 @@ if (isset($_REQUEST["topic"])) {
     $topic = $_REQUEST["topic"];
     $uniqueid = $feed.".".$topic;
     $topic = (int) ereg_replace("[^0-9]","", $topic);
+} elseif (isset($_REQUEST['topicname'])) {
+	$topic = $tikilib->fetchtopicId($_REQUEST['topic']);
+	$uniqueid = $feed.".".$topic;
 } else {
     $uniqueid = $feed;
     $topic = "";
