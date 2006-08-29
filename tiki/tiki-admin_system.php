@@ -1,13 +1,11 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.25 2006-08-01 13:38:54 hangerman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.26 2006-08-29 16:21:26 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 require_once ('tiki-setup.php');
-
-
 
 $access->check_permission(array('tiki_p_admin'));
 
@@ -30,11 +28,11 @@ if (isset($_GET['do'])) {
 
 if (isset($_GET['compiletemplates'])) {
 	$ctempl = 'templates';
-	cache_templates($ctempl,$_GET['compiletemplates']);
+	$cachelib->cache_templates($ctempl,$_GET['compiletemplates']);
 	if ($tikidomain) {
 		$ctempl.= "/$tikidomain";
 	}
-	cache_templates($ctempl,$_GET['compiletemplates']);
+	$cachelib->cache_templates($ctempl,$_GET['compiletemplates']);
 	$logslib->add_log('system','compiled templates');
 }
 
