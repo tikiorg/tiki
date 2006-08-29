@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.31 2006-05-25 06:06:46 sampaioprimo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.32 2006-08-29 16:25:35 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -167,7 +167,7 @@ else
 	$smarty->assign('diff_style', '');
 
 if($info["flag"] == 'L')
-    $smarty->assing('lock',true);  
+    $smarty->assign('lock',true);  
 else
     $smarty->assign('lock',false);
 $smarty->assign('page_user',$info['user']);
