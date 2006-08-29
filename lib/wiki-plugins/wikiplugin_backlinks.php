@@ -1,8 +1,6 @@
 <?php
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_backlinks.php,v 1.15 2006-08-29 22:43:20 toggg Exp $
 
-function wikiplugin_backlinks_help() {
-	return tra("List all pages which link to specific pages").":<br />~np~{BACKLINKS(info=>hits|user,exclude=>HomePage|SandBox,include_self=>1,noheader=>0,page=>HomePage)}{BACKLINKS}~/np~";
-}
     /**
     * Include the library {@link PluginsLib}
     */
@@ -24,7 +22,7 @@ function wikiplugin_backlinks_help() {
     * @package TikiWiki
     * @subpackage TikiPlugins
     * @author Claudio Bustos
-    * @version $Revision: 1.14 $
+    * @version $Revision: 1.15 $
     */
     function wikiplugin_backlinks_help() {
         return tra("List all pages which link to specific pages").":<br />~np~{BACKLINKS(info=>hits|user,exclude=>HomePage|SandBox,include_self=>1,noheader=>0,page=>HomePage)}{BACKLINKS}~/np~";
@@ -46,7 +44,7 @@ function wikiplugin_backlinks_help() {
         }
         function getVersion() {
             return preg_replace("/[Revision: $]/", '',
-                "\$Revision: 1.14 $");
+                "\$Revision: 1.15 $");
         }
         function run ($data, $params) {
             global $wikilib;
