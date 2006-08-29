@@ -20,11 +20,8 @@ function wikiplugin_pluginmanager_help() {
     * @package TikiWiki
     * @subpackage TikiPlugins
     * @author Claudio Bustos
-    * @version $Revision: 1.9 $
+    * @version $Revision: 1.10 $
     */
-    function wikiplugin_pluginmanager_help() {
-        return tra("Provides a list of plugins on this wiki.").":<br />~np~{PLUGINMANAGER(info=>version|description|arguments)}{PLUGINMANAGER}~/np~";
-    }
     class WikiPluginPluginManager extends PluginsLib {
         var $expanded_params = array("info");
         function getDefaultArguments() {
@@ -35,7 +32,7 @@ function wikiplugin_pluginmanager_help() {
         }
         function getVersion() {
             return preg_replace("/[Revision: $]/", '',
-                "\$Revision: 1.9 $");
+                "\$Revision: 1.10 $");
         }
         function getDescription() {
             return wikiplugin_pluginmanager_help();
