@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.99 2006-08-29 20:19:03 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.100 2006-08-29 20:32:05 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -196,7 +196,8 @@ varcheck($_REQUEST);
 unset($_REQUEST);
 unset($_COOKIE['offset']);
 $_REQUEST = array_merge($_COOKIE, $_POST, $_GET, $_ENV, $_SERVER);
-$_REQUEST['highlight'] = htmlspecialchars($_REQUEST['highlight']);
+if (!empty($_REQUEST['highlight'])) 
+	$_REQUEST['highlight'] = htmlspecialchars($_REQUEST['highlight']);
 
 // ---------------------------------------------------------------------
 if (isset($_SERVER["REQUEST_URI"])) {
