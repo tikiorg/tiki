@@ -327,7 +327,7 @@ class ProcessManager extends BaseManager {
     if(!$proc_info) return false;
     // Now update the version
     $version = $this->_new_version($proc_info['version'],$minor);
-    while($this->getOne("select count(*) from `".GALAXIA_TABLE_PREFIX."processes` where `name`=? and `version`=?"),array($name,$version)) {
+    while($this->getOne("select count(*) from `".GALAXIA_TABLE_PREFIX."processes` where `name`=? and `version`=?",array($name,$version))) {
       $version = $this->_new_version($version,$minor);
     }
     // Make new versions unactive
@@ -574,7 +574,7 @@ class ProcessManager extends BaseManager {
       $name = $this->_normalize_name($vars['name'],$vars['version']);
       $this->_create_directory_structure($name);
       $query = "insert into `$TABLE_NAME`(`";
-      $query .=implode('`,`',array_keys($vars)."`) values(";
+      $query .=implode('`,`',array_keys($vars))."`) values(";
       foreach(array_values($vars) as $value) {
         $que[]= "?";
       } 
