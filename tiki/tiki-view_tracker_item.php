@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.93 2006-07-14 11:00:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.94 2006-08-29 20:19:03 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -76,7 +76,7 @@ if (!isset($_REQUEST['trackerId']) && $groupTracker == 'y') {
 		$_REQUEST["itemId"] = $trklib->get_item_id($_REQUEST['trackerId'],$gtid['groupFieldId'],$_REQUEST["grouptracker"]);
 	}
 }
-if ((!isset($_REQUEST["trackerId"]) || !$_REQUEST["trackerId"]) && $_REQUEST["itemId"]) {
+if ((!isset($_REQUEST["trackerId"]) || !$_REQUEST["trackerId"]) && isset($_REQUEST["itemId"])) {
 	$item_info = $trklib->get_tracker_item($_REQUEST["itemId"]);
 	$_REQUEST['trackerId'] = $item_info['trackerId'];	
 }
@@ -227,7 +227,7 @@ foreach($xfields["data"] as $i=>$array) {
 		$ins_fields["data"][$i] = $xfields["data"][$i];
 		$rateFieldId = $fid;
 		//$fields["data"][$i] = $xfields["data"][$i];
-	} elseif ($xfields["data"][$i]['isHidden'] == 'n' or $tiki_p_admin_trackers == 'y') {
+	} elseif ($xfields["data"][$i]['isHidden'] != 'y' or $tiki_p_admin_trackers == 'y') {
 		$ins_fields["data"][$i] = $xfields["data"][$i];
 		$fields["data"][$i] = $xfields["data"][$i];
 
@@ -552,7 +552,7 @@ if ($_REQUEST["itemId"]) {
 	$lst = '';
 
 	foreach($xfields["data"] as $i=>$array) {
-		if ($xfields["data"][$i]['isHidden'] == 'n' or $tiki_p_admin_trackers == 'y') {
+		if ($xfields["data"][$i]['isHidden'] != 'y' or $tiki_p_admin_trackers == 'y') {
 			$fields["data"][$i] = $xfields["data"][$i];
 			if ($fields["data"][$i]["type"] != 'h') {
 				$fid = $fields["data"][$i]["fieldId"];
@@ -616,6 +616,17 @@ if ($_REQUEST["itemId"]) {
 					$ins_fields["data"][$i]["pvalue"] = $tikilib->parse_data(htmlspecialchars($info["$fid"]));
 				} else {
 					$ins_fields["data"][$i]["value"] = $info["$fid"];
+				}
+				if ($fields['data'][$i]['type'] == 'i' && !empty($ins_fields["data"][$i]['options_array'][2]) && !empty($ins_fields['data'][$i]['value'])) {
+					global $imagegallib; include_once('lib/imagegals/imagegallib.php');
+					if ($imagegallib->readimagefromfile($ins_fields['data'][$i]['value'])) {
+						$imagegallib->getimageinfo();
+						if (!isset($ins_fields["data"][$i]['options_array'][3]))
+							$ins_fields["data"][$i]['options_array'][3] = 0;
+						$t = $imagegallib->ratio($imagegallib->xsize, $imagegallib->ysize, $ins_fields["data"][$i]['options_array'][2], $ins_fields["data"][$i]['options_array'][3] );
+						$ins_fields['data'][$i]['options_array'][2] = $t * $imagegallib->xsize;
+						$ins_fields['data'][$i]['options_array'][3] = $t * $imagegallib->ysize;
+					}
 				}
 				if (isset($ins_fields["data"][$i]["value"])) {
 					$last[$fid] = $ins_fields["data"][$i]["value"];

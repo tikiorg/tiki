@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.18 2006-07-14 11:00:43 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.19 2006-08-29 20:19:01 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -24,6 +24,7 @@ if (isset($_REQUEST["galfeatures"])) {
 	check_ticket('admin-inc-gal');
 	simple_set_toggle ("feature_gal_rankings");
 	simple_set_toggle ("feature_image_galleries_comments");
+	simple_set_toggle ("feature_gal_slideshow");
 	simple_set_toggle ("feature_gal_batch");
 	simple_set_toggle ("feature_gal_imgcache");
 

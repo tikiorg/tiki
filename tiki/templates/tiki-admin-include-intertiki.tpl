@@ -1,3 +1,4 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-intertiki.tpl,v 1.5 2006-08-29 20:19:12 sylvieg Exp $ *}
 <div class="cbox">
 <div class="cbox-title">{tr}InterTiki{/tr}
 {help url="Intertiki" desc="{tr}Intertiki exchange feature{/tr}"}
@@ -6,12 +7,32 @@
 
 <div class="cbox">
 <div class="cbox-title">
+  {tr}Important{/tr}
+</div>
+<div class="cbox-data">
+<form action="tiki-admin.php?page=intertiki" method="post" name="intertiki">
+<table class="admin">
+<tr>
+<td class="form" colspan="2"><label for="alter_tiki_prefs_table">
+{tr}Tiki preferences value field in db is set to be max. 250 characters long by default until now. That applies for the custom code content too. Check this field if you want to update your preferences database table to support more than 250 chars (although it was tested and works fine with mysql, it's recommended to backup your data manually before any database update){/tr}:</label> <input type="checkbox" name="alter_tiki_prefs_table" id="alter_tiki_prefs_table" /></td>
+</tr>
+<tr><td colspan="2" class="button"><input type="submit" name="intertikiclient" value="{tr}Save{/tr}" /></td></tr>
+</table>
+</form>
+</div>
+</div>
+
+
+
+
+<div class="cbox">
+<div class="cbox-title">
   {tr}Intertiki client{/tr}
 </div>
 <div class="cbox-data">
 <form action="tiki-admin.php?page=intertiki" method="post" name="intertiki">
 <table class="admin">
-<tr><td class="form">{tr}Tiki Unique key{/tr}</td><td><input type="text" name="tiki_key" value="{$tiki_key}" size="32" /></td></tr>
+	<tr><td class="form">{tr}Tiki Unique key{/tr}</td><td><input type="text" name="tiki_key" value="{$tiki_key}" size="32" /></td></tr>
 <tr>
   <td class="form">
     {tr}InterTiki Slave mode{/tr}<br />
@@ -20,7 +41,7 @@
   <td>
 
   {literal}
-    <script language="JavaScript">
+    <script type="text/javascript">
       function check_server_visibility(sel) {
         if (sel.selectedIndex == 0) {
 	  document.getElementById('admin-server-options').style.display = 'block';
@@ -45,6 +66,8 @@
 
       <input type="checkbox" name="feature_intertiki_import_groups" {if $feature_intertiki_import_groups eq 'y'}checked="checked"{/if}/>
       {tr}Import user groups{/tr}<br />
+			{tr}Limit group import (comma-separated list of imported groups, leave empty to avoid limitation){/tr}<br />
+			<input type="text" name="feature_intertiki_imported_groups" value="{$feature_intertiki_imported_groups}" />
     </div>
   </td>
 </tr>

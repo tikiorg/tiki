@@ -1,3 +1,4 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-batch_upload.tpl,v 1.7 2006-08-29 20:19:12 sylvieg Exp $ *}
 <h1><a href="tiki-batch_upload.php" class="pagetitle">{tr}Directory batch upload{/tr}</a></h1>
 <span class="button2">
 {if $galleryId ne ''}
@@ -17,7 +18,7 @@
 <tr>
 <td width="42" class="heading" nowrap="nowrap">
 <input type="checkbox" name="imgs[]" value="ALL" id="box_all" onclick="disableOthers(this);"/>
-<script type="text/javascript" language="javascript">
+<script type="text/javascript">
 {literal}
 <!--
 function disableOthers(all) {

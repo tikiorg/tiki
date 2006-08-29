@@ -29,8 +29,8 @@ class ProcessManager extends BaseManager {
   */
   function activate_process($pId)
   {
-    $query = "update ".GALAXIA_TABLE_PREFIX."processes set isActive='y' where pId=$pId";
-    $this->query($query);  
+    $query = "update ".GALAXIA_TABLE_PREFIX."processes set isActive='y' where pId=?";
+    $this->query($query, array($pId));  
     $msg = sprintf(tra('Process %d has been activated'),$pId);
     $this->notify_all(3,$msg);
   }
@@ -40,8 +40,8 @@ class ProcessManager extends BaseManager {
   */
   function deactivate_process($pId)
   {
-    $query = "update ".GALAXIA_TABLE_PREFIX."processes set isActive='n' where pId=$pId";
-    $this->query($query);  
+    $query = "update ".GALAXIA_TABLE_PREFIX."processes set isActive='n' where pId=?";
+    $this->query($query, array($pid));  
     $msg = sprintf(tra('Process %d has been deactivated'),$pId);
     $this->notify_all(3,$msg);
   }
@@ -327,7 +327,7 @@ class ProcessManager extends BaseManager {
     if(!$proc_info) return false;
     // Now update the version
     $version = $this->_new_version($proc_info['version'],$minor);
-    while($this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."processes where name='$name' and version='$version'")) {
+    while($this->getOne("select count(*) from `".GALAXIA_TABLE_PREFIX."processes` where `name`=? and `version`=?"),array($name,$version)) {
       $version = $this->_new_version($version,$minor);
     }
     // Make new versions unactive
@@ -337,16 +337,16 @@ class ProcessManager extends BaseManager {
     $pid = $this->replace_process(0, $proc_info, false);
     // And here copy all the activities & so
     $am = new ActivityManager($this->db);
-    $query = "select * from ".GALAXIA_TABLE_PREFIX."activities where pId=$oldpid";
-    $result = $this->query($query);
+    $query = "select * from `".GALAXIA_TABLE_PREFIX."activities` where `pId`=?";
+    $result = $this->query($query,array($oldpid));
     $newaid = array();
     while($res = $result->fetchRow()) {    
       $oldaid = $res['activityId'];
       $newaid[$oldaid] = $am->replace_activity($pid,0,$res);
     }
     // create transitions
-    $query = "select * from ".GALAXIA_TABLE_PREFIX."transitions where pId=$oldpid";
-    $result = $this->query($query);
+    $query = "select * from `".GALAXIA_TABLE_PREFIX."transitions` where `pId`=?";
+    $result = $this->query($query,array($oldpid));
     while($res = $result->fetchRow()) {    
       if (empty($newaid[$res['actFromId']]) || empty($newaid[$res['actToId']])) {
         continue;
@@ -355,8 +355,8 @@ class ProcessManager extends BaseManager {
     }
     // create roles
     $rm = new RoleManager($this->db);
-    $query = "select * from ".GALAXIA_TABLE_PREFIX."roles where pId=$oldpid";
-    $result = $this->query($query);
+    $query = "select * from `".GALAXIA_TABLE_PREFIX."roles` where `pId`=?";
+    $result = $this->query($query,array($oldpid));
     $newrid = array();
     while($res = $result->fetchRow()) {
       if(!$rm->role_name_exists($pid,$res['name'])) {
@@ -368,8 +368,8 @@ class ProcessManager extends BaseManager {
     }
     // map users to roles
     if (count($newrid) > 0) {
-      $query = "select * from ".GALAXIA_TABLE_PREFIX."user_roles where pId=$oldpid";
-      $result = $this->query($query);
+      $query = "select * from `".GALAXIA_TABLE_PREFIX."user_roles` where `pId`=?";
+      $result = $this->query($query,array($oldpid));
       while($res = $result->fetchRow()) {
         if (empty($newrid[$res['roleId']])) {
           continue;
@@ -379,8 +379,9 @@ class ProcessManager extends BaseManager {
     }
     // add roles to activities
     if (count($newaid) > 0 && count($newrid ) > 0) {
-      $query = "select * from ".GALAXIA_TABLE_PREFIX."activity_roles where activityId in (" . join(', ',array_keys($newaid)) . ")";
-      $result = $this->query($query);
+			foreach ($newaid as $ne) { $q[] = '?'; }
+      $query = "select * from `".GALAXIA_TABLE_PREFIX."activity_roles` where `activityId` in (" . join(',',$q) . ")";
+      $result = $this->query($query,array_keys($newaid));
       while($res = $result->fetchRow()) {
         if (empty($newaid[$res['activityId']]) || empty($newrid[$res['roleId']])) {
           continue;
@@ -409,7 +410,7 @@ class ProcessManager extends BaseManager {
   function process_name_exists($name,$version)
   {
     $name = addslashes($this->_normalize_name($name,$version));
-    return $this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."processes where normalized_name='$name'");
+    return $this->getOne("select count(*) from `".GALAXIA_TABLE_PREFIX."processes` where `normalized_name`=?",array($name));
   }
   
   
@@ -418,8 +419,8 @@ class ProcessManager extends BaseManager {
   */
   function get_process($pId)
   {
-    $query = "select * from ".GALAXIA_TABLE_PREFIX."processes where pId=$pId";
-    $result = $this->query($query);
+    $query = "select * from `".GALAXIA_TABLE_PREFIX."processes` where `pId`=?";
+    $result = $this->query($query, array($pId));
     if(!$result->numRows()) return false;
     $res = $result->fetchRow();
     return $res;
@@ -428,26 +429,30 @@ class ProcessManager extends BaseManager {
   /*!
    Lists processes (all processes)
   */
-  function list_processes($offset,$maxRecords,$sort_mode,$find,$where='')
+  function list_processes($offset,$maxRecords,$sort_mode,$find,$filtername='',$filteractive='')
   {
     $sort_mode = $this->convert_sortmode($sort_mode);
     if($find) {
       $findesc = '%'.$find.'%';
-      $mid=" where ((name like ?) or (description like ?))";
+      $amid[] = "((`name` like ?) or (`description` like ?))";
       $bindvars = array($findesc,$findesc);
     } else {
-      $mid="";
+			$amid = array();
       $bindvars = array();
     }
-    if($where) {
-      if($mid) {
-        $mid.= " and ($where) ";
-      } else {
-        $mid.= " where ($where) ";
-      }
-    }
-    $query = "select * from ".GALAXIA_TABLE_PREFIX."processes $mid order by $sort_mode";
-    $query_cant = "select count(*) from ".GALAXIA_TABLE_PREFIX."processes $mid";
+		if ($filtername) {
+			$amid[] = "`name`=?";
+			$bindvars[] = $filtername;
+		}
+		if ($filteactive) {
+			$amid[] = "`isActive`=?";
+			$bindvars[] = $filteractive;
+		}
+		if (count($amid)) {
+			$mid = " where ".implode(" and ",$amid);
+		}
+    $query = "select * from `".GALAXIA_TABLE_PREFIX."processes` $mid order by $sort_mode";
+    $query_cant = "select count(*) from `".GALAXIA_TABLE_PREFIX."processes` $mid";
     $result = $this->query($query,$bindvars,$maxRecords,$offset);
     $cant = $this->getOne($query_cant,$bindvars);
     $ret = Array();
@@ -465,8 +470,8 @@ class ProcessManager extends BaseManager {
   */
   function invalidate_process($pid)
   {
-    $query = "update ".GALAXIA_TABLE_PREFIX."processes set isValid='n' where pId=$pid";
-    $this->query($query);
+    $query = "update `".GALAXIA_TABLE_PREFIX."processes` set `isValid`='n' where `pId`=?";
+    $this->query($query,array($pId));
   }
   
   /*! 
@@ -478,33 +483,36 @@ class ProcessManager extends BaseManager {
     $name = $this->_get_normalized_name($pId);
     $aM = new ActivityManager($this->db);
     // Remove process activities
-    $query = "select activityId from ".GALAXIA_TABLE_PREFIX."activities where pId=$pId";
-    $result = $this->query($query);
+    $query = "select `activityId` from `".GALAXIA_TABLE_PREFIX."activities` where `pId`=?";
+    $result = $this->query($query,array($pId));
     while($res = $result->fetchRow()) {
       $aM->remove_activity($pId,$res['activityId']);
     }
 
     // Remove process roles
-    $query = "DELETE FROM " . GALAXIA_TABLE_PREFIX . "roles WHERE pId = $pId";
-    $this->query($query);
+    $query = "DELETE FROM `" . GALAXIA_TABLE_PREFIX . "roles` WHERE `pId`=?";
+    $this->query($query,array($pId));
 
-    $query = "DELETE FROM " . GALAXIA_TABLE_PREFIX . "user_roles WHERE pId = $pId";
-    $this->query($query);
+    $query = "DELETE FROM `" . GALAXIA_TABLE_PREFIX . "user_roles` WHERE `pId`=?";
+    $this->query($query,array($pId));
 
 	// Remove all instance data
-	$query  = "DELETE FROM " . GALAXIA_TABLE_PREFIX . "workitems USING ";
-	$query .= GALAXIA_TABLE_PREFIX . "workitems gw , " . GALAXIA_TABLE_PREFIX . "instances gi ";
-	$query .= "WHERE gw.instanceId = gi.instanceId AND gi.pId = $pId";
+	$query  = "DELETE FROM `" . GALAXIA_TABLE_PREFIX . "workitems` USING `";
+	$query .= GALAXIA_TABLE_PREFIX . "workitems` gw , `" . GALAXIA_TABLE_PREFIX . "instances` gi ";
+	$query .= "WHERE gw.`instanceId` = gi.`instanceId` AND gi.`pId` = ?";
+    $this->query($query,array($pId));
 
-	$query  = "DELETE FROM " . GALAXIA_TABLE_PREFIX . "instance_activities USING ";
-	$query .= GALAXIA_TABLE_PREFIX . "instance_activities gia , " . GALAXIA_TABLE_PREFIX . "instances gi ";
-	$query .= "WHERE gia.instanceId = gi.instanceId AND gi.pId = $pId";
+	$query  = "DELETE FROM `" . GALAXIA_TABLE_PREFIX . "instance_activities` USING `";
+	$query .= GALAXIA_TABLE_PREFIX . "instance_activities` gia , `" . GALAXIA_TABLE_PREFIX . "instances` gi ";
+	$query .= "WHERE gia.`instanceId` = gi.`instanceId` AND gi.`pId` = ?";
+    $this->query($query,array($pId));
 
-	$query  = "DELETE FROM " . GALAXIA_TABLE_PREFIX . "instance_comments USING ";
-	$query .= GALAXIA_TABLE_PREFIX . "instance_comments gic , " . GALAXIA_TABLE_PREFIX . "instances gi ";
-	$query .= "WHERE gic.instanceId = gi.instanceId AND gi.pId = $pId";
+	$query  = "DELETE FROM `" . GALAXIA_TABLE_PREFIX . "instance_comments` USING `";
+	$query .= GALAXIA_TABLE_PREFIX . "instance_comments` gic , `" . GALAXIA_TABLE_PREFIX . "instances` gi ";
+	$query .= "WHERE gic.`instanceId` = gi.`instanceId` AND gi.`pId` = ?";
+    $this->query($query,array($pId));
 
-	$query  = "DELETE FROM " . GALAXIA_TABLE_PREFIX . "instances WHERE pId = $pId";
+	$query  = "DELETE FROM `" . GALAXIA_TABLE_PREFIX . "instances` WHERE `pId` = ?";
 	$this->query($query);
 
     // Remove the directory structure
@@ -515,8 +523,8 @@ class ProcessManager extends BaseManager {
       $this->_remove_directory(GALAXIA_TEMPLATES."/$name",true);
     }
     // And finally remove the proc
-    $query = "delete from ".GALAXIA_TABLE_PREFIX."processes where pId=$pId";
-    $this->query($query);
+    $query = "delete from `".GALAXIA_TABLE_PREFIX."processes` where `pId`=?";
+    $this->query($query,array($pId));
     $msg = sprintf(tra('Process %s removed'),$name);
     $this->notify_all(5,$msg);
     
@@ -543,15 +551,14 @@ class ProcessManager extends BaseManager {
       // update mode
       $old_proc = $this->get_process($pId);
       $first = true;
-      $query ="update $TABLE_NAME set";
+      $query ="update `$TABLE_NAME` set";
       foreach($vars as $key=>$value) {
-        if(!$first) $query.= ',';
-        if(!is_numeric($value)||strstr($value,'.')) $value="'".$value."'";
-        $query.= " $key=$value ";
-        $first = false;
+        $que[]= "`$key`=?";
+				$bindvars[] = $value;
       }
-      $query .= " where pId=$pId ";
-      $this->query($query);
+      $query .= implode(',',$que)." where `pId`=? ";
+			$bindvars[] = $pId;
+      $this->query($query,$bindvars);
       // Note that if the name is being changed then
       // the directory has to be renamed!
       $oldname = $old_proc['normalized_name'];
@@ -566,23 +573,13 @@ class ProcessManager extends BaseManager {
       // insert mode
       $name = $this->_normalize_name($vars['name'],$vars['version']);
       $this->_create_directory_structure($name);
-      $first = true;
-      $query = "insert into $TABLE_NAME(";
-      foreach(array_keys($vars) as $key) {
-        if(!$first) $query.= ','; 
-        $query.= "$key";
-        $first = false;
-      } 
-      $query .=") values(";
-      $first = true;
+      $query = "insert into `$TABLE_NAME`(`";
+      $query .=implode('`,`',array_keys($vars)."`) values(";
       foreach(array_values($vars) as $value) {
-        if(!$first) $query.= ','; 
-        if(!is_numeric($value)||strstr($value,'.')) $value="'".$value."'";
-        $query.= "$value";
-        $first = false;
+        $que[]= "?";
       } 
-      $query .=")";
-      $this->query($query);
+      $query .=implode(',',$que).")";
+      $this->query($query,$vars);
       $pId = $this->getOne("select max(pId) from $TABLE_NAME where lastModif=$now"); 
       // Now automatically add a start and end activity 
       // unless importing ($create = false)

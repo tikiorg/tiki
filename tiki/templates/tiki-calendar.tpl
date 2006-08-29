@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.63 2006-05-22 17:09:14 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.64 2006-08-29 20:19:13 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-calendar.php">{tr}Calendar{/tr}</a></h1>
@@ -152,7 +152,7 @@ class="linkmenu">{$cell[w][d].items[items].name|truncate:$trunc:".."|default:"..
 <input type="submit" name="refresh" value="{tr}Refresh{/tr}"/><br />
 </td>
 
-{* si au moins qqle chose *}
+{* if at least something *}
 <td>
 <div class="caltitle">{tr}Group Calendars{/tr}</div>
 <div class="caltoggle"><input name="calswitch" id="calswitch" type="checkbox" onchange="switchCheckboxes(this.form,'calIds[]',this.checked);"/> <label for="calswitch">{tr}check / uncheck all{/tr}</label></div>
@@ -197,15 +197,11 @@ class="linkmenu">{$cell[w][d].items[items].name|truncate:$trunc:".."|default:"..
 <tr><td class="{cycle advance=false}">{tr}Name{/tr}</td><td class="{cycle}">{$name}</td></tr>
 <tr><td class="{cycle advance=false}">{tr}Calendar{/tr}</td><td class="{cycle}">{$calname}</td></tr>
 <tr><td class="{cycle advance=false}">{tr}Start{/tr}</td><td class="{cycle}">{$start|tiki_long_date}<br />{$start|tiki_short_time}</td></tr>
-{* pas pour Repex
 <tr><td class="{cycle advance=false}">{tr}End{/tr}</td><td class="{cycle}">{$end|tiki_long_date}<br />{$end|tiki_short_time}</td></tr>
-*}
 <tr><td class="{cycle advance=false}">{tr}Duration{/tr}</td><td class="{cycle}">{if $duration_hours > 1}{$duration_hours} {tr}hours{/tr}{elseif $duration_hours eq 1}1 {tr}hour{/tr}{/if}{if $duration_minutes > 0} - {$duration_minutes} {if $duration_minutes > 1}{tr}minutes{/tr}{else}{tr}minute{/tr}{/if}{/if}</td></tr>
 <tr><td class="{cycle advance=false}">{tr}Description{/tr}</td><td class="{cycle}">{$parsedDescription}</td></tr>
-{* pas pour Repex
 <tr><td class="{cycle advance=false}">{tr}Created{/tr}</td><td class="{cycle}">{$created|tiki_short_datetime}</td></tr>
 <tr><td class="{cycle advance=false}">{tr}Modified{/tr}</td><td class="{cycle}">{$lastModif|tiki_short_datetime}</td></tr>
-*}
 <tr><td class="{cycle advance=false}">{tr}by{/tr}</td><td class="{cycle}">{$lastUser}</td></tr>
 {if $customcategories eq 'y'}<tr><td class="{cycle advance=false}">{tr}Category{/tr}</td><td class="{cycle}">{$listcat[$categoryId].name}</td></tr>{/if}
 {if $customlocations eq 'y'}<tr><td class="{cycle advance=false}">{tr}Location{/tr}</td><td class="{cycle}">{$listloc[$locationId].name}</td></tr>{/if}

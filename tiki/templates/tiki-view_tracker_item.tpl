@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker_item.tpl,v 1.98 2006-07-14 11:00:58 sylvieg Exp $ *}
+{* $Id: tiki-view_tracker_item.tpl,v 1.99 2006-08-29 20:19:13 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -346,6 +346,7 @@ src="img/icons/edit.gif" border="0" alt="{tr}edit{/tr}"  hspace="2" vspace="0" /
 <input type="submit" name="save" value="{tr}save{/tr}" />
 {* --------------------------- to return to tracker list after saving --------- *}
 <input type="submit" name="save_return" value="{tr}save{/tr} & {tr}back{/tr} {tr}items list{/tr}" />
+{if $tiki_p_admin_trackers eq 'y'}<a class="link" href="tiki-view_tracker.php?trackerId={$trackerId}&amp;remove={$itemId}" title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>{/if}
 {* ------------------- *}
 {if $tracker_info.showStatus eq 'y' or $tiki_p_admin_trackers eq 'y'}
 <tr class="formcolor"><td>{tr}Status{/tr}</td>
@@ -360,7 +361,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {/if}
 
 {foreach from=$ins_fields key=ix item=cur_field}
-{if $cur_field.isHidden ne 'y' or $tiki_p_admin_trackers eq 'y'}
+{if $cur_field.isHidden eq 'n' or $tiki_p_admin_trackers eq 'y'}
 
 {if $cur_field.type eq 's' and $cur_field.name eq "Rating" and ($tiki_p_tracker_view_ratings eq 'y' || $tiki_p_tracker_vote_ratings eq 'y')}
 	<tr class="formcolor">
@@ -420,7 +421,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 <select name="ins_{$cur_field.id}">
 <option value="">{tr}None{/tr}</option>
 {foreach key=id item=one from=$users}
-<option value="{$one|escape}" {if $cur_field.value eq $one or $one eq $user}selected="selected"{/if}>{$one}</option>
+<option value="{$one|escape}" {if $cur_field.value}{if $cur_field.value eq $one}selected="selected"{/if}{/if}>{$one}</option>
 {/foreach}
 </select>
 {elseif $cur_field.options}

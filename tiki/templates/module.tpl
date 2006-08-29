@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.19 2005-10-16 14:35:10 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.20 2006-08-29 20:19:12 sylvieg Exp $ *}
 {* Module layout with controls *}
 
 <div class="box box-{$module_name|escape}">
@@ -44,7 +44,7 @@
 {$module_error}
 {if $module_flip eq 'y'}
 {literal}
-<script language="Javascript" type="text/javascript">
+<script type="text/javascript">
   setsectionstate('mod-{/literal}{$module_name|escape}{literal}','mo.png');
 </script>
 {/literal}

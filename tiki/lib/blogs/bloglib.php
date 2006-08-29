@@ -1,5 +1,5 @@
 <?php
-
+// $Header: /cvsroot/tikiwiki/tiki/lib/blogs/bloglib.php,v 1.48 2006-08-29 20:19:05 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -46,7 +46,7 @@ class BlogLib extends TikiLib {
 		$parts = parse_url($_SERVER['REQUEST_URI']);
 		$uri = $tikilib->httpPrefix(). str_replace('tiki-blog_post',
 			'tiki-view_blog_post', $parts['path']). '?postId=' . $id . '&amp;blogId=' . $post_info['blogId'];
-		include ("lib/snoopy/Snoopy.class.inc");
+		include ("lib/snoopy/Snoopy.class.php");
 		$snoopy = new Snoopy;
 
 		foreach ($tracks as $track) {

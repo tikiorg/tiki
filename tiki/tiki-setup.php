@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.307 2006-08-01 13:39:26 hangerman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.308 2006-08-29 20:19:02 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -696,6 +696,8 @@ $metatag_geoplacename = '';
 $metatag_robots = '';
 $metatag_revisitafter = '';
 
+$head_extra_js = array();
+
 $keep_versions = 1;
 
 $feature_custom_home = 'n';
@@ -801,6 +803,8 @@ $pass_due = 999;
 $smarty->assign('pass_due', $pass_due);
 $rnd_num_reg = 'n';
 $smarty->assign('rnd_num_reg', $rnd_num_reg);
+$allowmsg_is_optional = 'y';
+$smarty->assign('allowmsg_is_optional', $allowmsg_is_optional);
 $allowmsg_by_default = 'n';
 $smarty->assign('allowmsg_by_default', $allowmsg_by_default);
 
@@ -904,10 +908,12 @@ $smarty->assign('metatag_geoplacename', $metatag_geoplacename);
 $smarty->assign('metatag_robots', $metatag_robots);
 $smarty->assign('metatag_revisitafter', $metatag_revisitafter);
 
-$smarty->assign('rssfeed_default_version', $tikilib->get_preference('rssfeed_default_version','9'));
-$smarty->assign('rssfeed_language', $tikilib->get_preference('rssfeed_language','en-us'));
-$smarty->assign('rssfeed_editor', $tikilib->get_preference('rssfeed_editor',''));
-$smarty->assign('rssfeed_webmaster', $tikilib->get_preference('rssfeed_webmaster',''));
+$smarty->assign_by_ref('head_extra_js', $head_extra_js);
+
+$smarty->assign("rssfeed_default_version", $tikilib->get_preference("rssfeed_default_version","9"));
+$smarty->assign("rssfeed_language", $tikilib->get_preference("rssfeed_language","en-us"));
+$smarty->assign("rssfeed_editor", $tikilib->get_preference("rssfeed_editor",""));
+$smarty->assign("rssfeed_webmaster", $tikilib->get_preference("rssfeed_webmaster",""));
 
 $smarty->assign('fgal_use_db', $fgal_use_db);
 $smarty->assign('fgal_use_dir', $fgal_use_dir);
@@ -1535,7 +1541,7 @@ $group = $userlib->get_user_default_group($user);
 if($useGroupHome == 'y') {
     $groupHome = $userlib->get_user_default_homepage($user);
     if ($groupHome) {
-	if (strpos($groupHome,'http://') === 0) {
+	if (preg_match('#^https?:#', $groupHome)) {
 		$tikiIndex = $groupHome;
 	} else {
 		$tikiIndex = 'tiki-index.php?page='.$groupHome;
@@ -1733,6 +1739,14 @@ if ($user && $feature_usermenu == 'y') {
         $smarty->assign('usr_user_menus', $user_menus);
     }
 }
+
+// We set empty wiki page name as default here if not set (before including Tiki modules)
+if (empty($_REQUEST['page'])) {
+	$page = '';
+} else {
+	$page = $_REQUEST['page'];
+}
+$smarty->assign('page', $page);
 
 if ($feature_warn_on_edit == 'y') {
     

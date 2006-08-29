@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.77 2006-04-12 20:39:31 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.78 2006-08-29 20:19:11 sylvieg Exp $
 
 MoreNeat theme
 */
@@ -819,6 +819,8 @@ span.trailer {  font-size: 10px; }
 
 /******************************************************* CALENDAR **********************************************************/
 
+td.date { width:30px; }
+
 /* LINKS TO DAYS IN THE CALENDAR */
 .day {    font-size: 9px;  text-decoration: none;  color : black;}
 .day:hover {   font-size: 9px;  color : black; text-decoration: none; }
@@ -826,6 +828,18 @@ span.trailer {  font-size: 10px; }
 /* LINKS FOR TODAY */
 .today {    font-size: 9px;  text-decoration: none;  color : black;  font-weight : bold;  text-decoration: none; }
 .today:hover {   font-size: 9px;  color : black;  text-decoration: none;   font-weight : bold;}
+
+/* LINKS TO EVENTS IN THE CALENDAR */
+.event {    font-size: 9px;  text-decoration: none;  color : black; background-color: #C7D0D9; }
+.event:hover {   font-size: 9px;  color : black; text-decoration: none; background-color: #C7D0D9; }
+
+/* LINKS TO EVENTS IN THE CALENDAR */
+.todayevent {    font-size: 9px;  text-decoration: none;  color : black; font-weight : bold;  background-color: #C7D0D9; }
+.todayevent:hover {   font-size: 9px;  color : black; text-decoration: none; font-weight : bold;  background-color: #C7D0D9; }
+
+/* LINKS TO OLD EVENTS IN THE CALENDAR */
+.oldevent {    font-size: 9px;  text-decoration: none;  color : black; background-color: #E9ECEF; }
+.oldevent:hover {   font-size: 9px;  color : black; text-decoration: none; background-color: #E9ECEF; }
 
 /* Links to change month, year or go to today */
 .nav {    font-size: 9px;  text-decoration: none;  color : black;  font-weight : bold;   text-decoration: none; }

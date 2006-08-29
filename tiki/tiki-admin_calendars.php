@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_calendars.php,v 1.23 2005-08-29 03:14:43 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_calendars.php,v 1.24 2006-08-29 20:19:01 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -48,6 +48,25 @@ if (isset($_REQUEST["save"])) {
 		$userlib->assign_object_permission("Registered", $_REQUEST["calendarId"], "calendar", "tiki_p_view_calendar");
 		$userlib->assign_object_permission("Registered", $_REQUEST["calendarId"], "calendar", "tiki_p_add_events");
 		$userlib->assign_object_permission("Registered", $_REQUEST["calendarId"], "calendar", "tiki_p_change_events");
+	}
+	if ($feature_categories == 'y') {
+		$cat_type = 'calendar';
+		$cat_objid = $_REQUEST["calendarId"];
+		$cat_desc = $_REQUEST["description"];
+		$cat_name = $_REQUEST["name"];
+		$cat_href = "tiki-calendar.php?calIds[]=".$_REQUEST["calendarId"];
+		include_once("categorize.php");
+	}
+}
+if ($feature_categories == 'y') {
+	$cat_type = 'calendar';
+	$cat_objid = $_REQUEST["calendarId"];
+	include_once ("categorize_list.php");
+	$cs = $categlib->get_object_categories('calendar', $cat_objid);
+	for ($i = count($categories) - 1; $i >= 0; --$i) {
+		if (in_array($categories[$i]['categId'], $cs)) {
+			$categories[$i]['incat'] = 'y';
+		}
 	}
 }
 

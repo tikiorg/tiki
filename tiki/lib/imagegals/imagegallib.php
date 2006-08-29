@@ -1,4 +1,5 @@
 <?php
+// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.78 2006-08-29 20:19:09 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -320,10 +321,11 @@ class ImageGalsLib extends TikiLib {
 	// rescale Image, almost the same as resize, but keeps apect ratio
 	// bbx and bby give the boundary box
 	function rescaleImage($bbx, $bby) {
+		if (!$bbx || !$bby)
+			return true;
 		if (!isset($this->imagehandle)) {
 			$this->readimagefromstring();
 		}
-
 		if (!isset($this->xsize)) {
 			$this->getimageinfo();
 		}
@@ -811,6 +813,9 @@ class ImageGalsLib extends TikiLib {
 		global $gal_use_dir;
 		$name = strip_tags($name);
 		$description = strip_tags($description);
+		if ($t_data && is_string($t_data)) {
+			$t_data = array('data' => $t_data, 'xsize' => 0, 'ysize' => 0);
+		}
 		$now = date("U");
 		$path = '';
 
@@ -829,14 +834,14 @@ class ImageGalsLib extends TikiLib {
 			fwrite($fw, $data);
 			fclose ($fw);
 
-			if (sizeof($t_data) > 0) {
+			if ($t_data) {
 				@$fw = fopen($gal_use_dir . $fhash . '.thumb', "wb");
 
 				if (!$fw) {
 					return false;
 				}
 
-				fwrite($fw, $t_data);
+				fwrite($fw, $t_data['data']);
 				fclose ($fw);
 				$t_data = '';
 			}
@@ -858,13 +863,13 @@ class ImageGalsLib extends TikiLib {
 		$result = $this->query($query,array((int)$imageId,(int)$xsize,(int)$ysize,'o',(int)$size,$filetype,$filename,$data));
 
 		// insert thumb
-		if (sizeof($t_data) > 1) {
-			$this->blob_encode($t_data);
+		if ($t_data) {
+			$this->blob_encode($t_data['data']);
 			$query = "insert into `tiki_images_data`(`imageId`,`xsize`,`ysize`,
                                 `type`,`filesize`,`filetype`,`filename`,`data`)
                         values (?,?,?,?,?,?,?,?)";
 
-			$result = $this->query($query,array((int)$imageId,(int)$xsize,(int)$ysize,'t',(int)$size,$t_type,$filename,$t_data));
+			$result = $this->query($query,array((int)$imageId,(int)$t_data['xsize'],(int)$t_data['ysize'],'t',(int)$size,$t_type,$filename,$t_data['data']));
 		}
 
 		$query = "update `tiki_galleries` set `lastModif`=? where `galleryId`=?";
@@ -1026,7 +1031,7 @@ class ImageGalsLib extends TikiLib {
         }
 
 
-	function get_gallery_image($galleryId,$rule='') {
+	function get_gallery_image($galleryId,$rule='',$sort_mode = '') {
 		$query='select `imageId` from `tiki_images` where `galleryId`=? order by ';
 		$bindvars=array($galleryId);
 		switch($rule) {
@@ -1040,26 +1045,42 @@ class ImageGalsLib extends TikiLib {
 				$query.=$this->convert_sortmode('created_desc');
 				$imageId=$this->getOne($query,$bindvars);
 				break;
+			case 'all':
 			case 'first':
-				// first image in default gallery sortorder
-				$query2='select `sortorder`,`sortdirection` from `tiki_galleries` where `galleryId`=?';
-				$result=$this->query($query2,$bindvars);
-				$res = $result->fetchRow();
-				$sort_mode=$res['sortorder'].'_'.$res['sortdirection'];
+			    if (!$sort_mode) {
+    				// first image in default gallery sortorder
+    				$query2='select `sortorder`,`sortdirection` from `tiki_galleries` where `galleryId`=?';
+    				$result=$this->query($query2,$bindvars);
+    				$res = $result->fetchRow();
+    				$sort_mode=$res['sortorder'].'_'.$res['sortdirection'];
+				}
 				$query.=$this->convert_sortmode($sort_mode);
-				$imageId=$this->getOne($query,$bindvars);
+				if ($rule != 'all') {
+    				$imageId=$this->getOne($query,$bindvars);
+    				break;
+				}
+				$result=$this->query($query,$bindvars);
+				$imageId=array();
+    			while ($res = $result->fetchRow()) {
+    				$imageId[]=reset($res);
+    			}
 				break;
 			case 'last':
-				// last image in default gallery sortorder
-				$query2='select `sortorder`,`sortdirection` from `tiki_galleries` where `galleryId`=?';
-				$result=$this->query($query2,$bindvars);
-				$res = $result->fetchRow();
-				if($res['sortdirection'] == 'asc') {
-					$res['sortdirection']='desc';
-				} else {
-					$res['sortdirection']='asc';
+			    if ($sort_mode) {
+			        $invsor = explode('_', $sort_mode);
+			        $sort_mode = $invsor[0] . '_' . ($invsor[1] == 'asc' ? 'desc' : 'asc');
+			    } else {
+    				// last image in default gallery sortorder
+    				$query2='select `sortorder`,`sortdirection` from `tiki_galleries` where `galleryId`=?';
+    				$result=$this->query($query2,$bindvars);
+    				$res = $result->fetchRow();
+    				if($res['sortdirection'] == 'asc') {
+    					$res['sortdirection']='desc';
+    				} else {
+    					$res['sortdirection']='asc';
+    				}
+    				$sort_mode=$res['sortorder'].'_'.$res['sortdirection'];
 				}
-				$sort_mode=$res['sortorder'].'_'.$res['sortdirection'];
 				$query.=$this->convert_sortmode($sort_mode);
 				$imageId=$this->getOne($query,$bindvars);
 				break;
@@ -1952,7 +1973,7 @@ class ImageGalsLib extends TikiLib {
 		} // foreach
 		return $page_data;
 	}
-	function get_one_image_from_disk($userfile, $galleryId, $name, $description) {
+	function get_one_image_from_disk($userfile, $galleryId=0, $name='', $description='') {
 		global $tmpDir, $user;
 		$ret = array();
 		if (is_uploaded_file($_FILES[$userfile]['tmp_name'])) {
@@ -1976,22 +1997,154 @@ class ImageGalsLib extends TikiLib {
 				return $ret;
 			}
 			$fp = fopen($tmp_dest, "rb");
-			$data = fread($fp, filesize($tmp_dest));
+			$ret['data'] = fread($fp, filesize($tmp_dest));
 			fclose ($fp);
+			$imginfo = @getimagesize($tmp_dest);
 			unlink($tmp_dest);
+			if (!$ret['data'] || !$imginfo) {
+				$ret['msg'] = tra('Errors detected');
+				return $ret;
+			}
+			if (!$galleryId) { // was called just to get and check the file
+				$ret['xsize'] = $imginfo[0];
+				$ret['ysize'] = $imginfo[1];
+				$ret['filetype'] = $type;
+				$ret['filesize'] = $size;
+				return $ret;
+			}
 			if ($name == '')
 				$name = $file_name;
-			if (($imageId = $this->insert_image($galleryId, $name, $description, $file_name, $type, $data, $size, 0, 0, $user, '', ''))===false) {
+			if (($imageId = $this->insert_image($galleryId, $name, $description, $file_name, $type, $ret['data'], $size, 0, 0, $user, '', ''))===false) {
 				$ret['msg'] = tra('Upload was not successful');
-				return $ret;
 			} else {
 				$ret['imageId'] = $imageId;
-				return $ret;
 			}
 		} else {
 			$ret['msg'] = tra('Upload was not successful');
 			$ret['filename'] = $_FILES[$userfile]['tmp_name'];
-			return $ret;
+		}
+		unset($ret['data']);
+		return $ret;
+	}
+
+  // function to move images from one store to another (fs to db or db to fs)
+  function move_image_store($imageId,$direction='to_fs')
+  {
+    global $gal_use_db;
+    global $gal_use_dir;
+    $this->clear_class_vars(); //cleanup
+    
+    if($direction!='to_fs' && $direction!='to_db') {
+      return(false);
+    }
+    
+    // get the storage location
+    $query='select `path` from `tiki_images` where `imageId`=?';
+    $path=$this->getOne($query,array($imageId),false);
+    if($path===false) { // imageId not found
+      return(false);
+    }
+    
+    if((empty($path) && $direction=='to_fs') || (!empty($path) && $direction=='to_db')) {
+      // move image
+      // load image
+      $this->get_image($imageId);
+      $query='update `tiki_images` set `path`=? where `imageId`=?';
+      if($direction=='to_fs') {
+   $this->path=md5(uniqid($this->filename));
+        // store_image data did already overwrite the "data" field in tiki_images_data
+        $this->query($query,array($this->path,$imageId));
+      }
+      // write image
+      $this->store_image_data(true);
+      if($direction=='to_db') {
+        // remove image in fs 
+        if(!@unlink($gal_use_dir.$this->path)) {
+          $errstr="unlink failed";
+        }
+        $this->query($query,array('',$imageId));
+      }
+      return(1);
+
+    }
+    return(0);
+  } 
+
+  function move_gallery_store($galId,$direction='to_fs')
+  {
+    $met=ini_get('max_execution_time');
+    $st=time();
+    $n=0;
+    $errors=0;
+    $timeout=false;
+    if($direction!='to_fs' && $direction!='to_db') {
+      return(false);
+    }
+    
+    // remove all scales. They will be rebuild on access
+    $this->rebuild_scales($galId);
+    
+    // move images store
+    if($galId==-1) {
+      $query='select `imageId` from `tiki_images`';
+      $result=$this->query($query,array());
+    } else {
+      $query='select `imageId` from `tiki_images` where `galleryId`=?';
+      $result=$this->query($query,array($galId));
+    }
+    while ($res = $result->fetchRow()) {
+      $r=$this->move_image_store($res['imageId'],$direction);
+      if($r!==false) {
+        $n+=$r;
+      } else {
+  $errors++; 
+      }
+      if($met-time()+$st < 3) { // avoid timeouts so that we dont end with broken images
+   $timeout=true;
+   break;
+      }
+    }
+    $resultarray=array('moved_images'=>$n,'timeout'=>$timeout,'errors'=>$errors);
+    return($resultarray);
+  } 
+
+  function clear_class_vars()
+  { // function to clear loaded data. Usable for mass changes
+     unset($this->imageId);
+     unset($this->galleryId);
+     unset($this->name);
+     unset($this->description);
+     unset($this->lat);
+     unset($this->lon);
+     unset($this->created);
+     unset($this->user); 
+     unset($this->hits);
+     unset($this->path);
+     unset($this->xsize);
+     unset($this->oldxsize);
+     unset($this->ysize);
+     unset($this->oldysize);
+     unset($this->type);
+     unset($this->filesize);
+     unset($this->filetype);
+     unset($this->filename);
+     unset($this->etag);
+     unset($this->image);
+  }
+  /* compute the ratio the image $xsize,$size must have to go in the box */
+  function ratio($xsize, $ysize, $xbox=0, $ybox=0) {
+	if (empty($xbox) && empty($ybox))
+		return 1;
+	if ($xsize <= $xbox && $ysize <= $ybox)
+		return 1;
+	if (empty($xbox)) {
+		return $ybox/xsize;
+	} else {
+		$t = $xbox/$xsize;
+		if (!empty($ybox)) {
+			return $t;
+		} else {
+			return min($t, $ybox/$ysize);
 		}
 	}
 

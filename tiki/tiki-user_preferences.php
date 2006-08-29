@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.80 2006-02-17 15:10:31 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.81 2006-08-29 20:19:03 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -251,10 +251,12 @@ if (isset($_REQUEST['messprefs'])) {
 
 	$tikilib->set_user_preference($userwatch, 'minPrio', $_REQUEST['minPrio']);
 
-	if (isset($_REQUEST['allowMsgs']) && $_REQUEST['allowMsgs'] == 'on') {
-		$tikilib->set_user_preference($userwatch, 'allowMsgs', 'y');
-	} else {
-		$tikilib->set_user_preference($userwatch, 'allowMsgs', 'n');
+	if ($allowmsg_is_optional == 'y') {
+		if (isset($_REQUEST['allowMsgs']) && $_REQUEST['allowMsgs'] == 'on') {
+			$tikilib->set_user_preference($userwatch, 'allowMsgs', 'y');
+		} else {
+			$tikilib->set_user_preference($userwatch, 'allowMsgs', 'n');
+		}
 	}
 
 	$cookietab = 3;

@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.648 2006-08-28 19:56:54 hangerman Exp $
+// CVS: $Id: tikilib.php,v 1.649 2006-08-29 20:19:04 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1458,13 +1458,13 @@ function add_pageview() {
 			    $sug = $asugs[$i];
 
 			    // If you want to use the commented out line below, please remove the \ in <\/script>; it was breaking vim highlighting.  -rlpowell
-			    // $repl.="<script language='Javascript' type='text/javascript'>param_${word}_$i = new Array(\\\"$element\\\",\\\"$word\\\",\\\"$sug\\\");<\/script><a href=\\\"javascript:replaceLimon(param_${word}_$i);\\"."\">$sug</a><br />";
+			    // $repl.="<script type='text/javascript'>param_${word}_$i = new Array(\\\"$element\\\",\\\"$word\\\",\\\"$sug\\\");<\/script><a href=\\\"javascript:replaceLimon(param_${word}_$i);\\"."\">$sug</a><br />";
 			    $repl .= "<a href=\'javascript:param=doo_${word}_$i();replaceLimon(param);\'>".addslashes($sug)."</a><br />";
-			    $trl .= "<script language='Javascript' type='text/javascript'>function doo_${word}_$i(){ aux = new Array(\"$element\",\"$word\",\"$sug\"); return aux;}</script>";
+			    $trl .= "<script type='text/javascript'>function doo_${word}_$i(){ aux = new Array(\"$element\",\"$word\",\"$sug\"); return aux;}</script>";
 			}
 
-			//$popup_text = " <a title=\"".$sug."\" style=\"text-decoration:none; color:red;\" onClick='"."return overlib(".'"'.$repl.'"'.",STICKY,CAPTION,".'"'."SpellChecker suggestions".'"'.");'>".$word.'</a> ';
-			$popup_text = " <a title=\"Click for a list of spelling suggestions\" style=\"text-decoration: none; color:red;\" onClick=\"return overlib('$repl',STICKY,CAPTION,'Spellchecker suggestions');\">$word</a> ";
+			//$popup_text = " <a title=\"".$sug."\" style=\"text-decoration:none; color:red;\" onclick='"."return overlib(".'"'.$repl.'"'.",STICKY,CAPTION,".'"'."SpellChecker suggestions".'"'.");'>".$word.'</a> ';
+			$popup_text = " <a title=\"Click for a list of spelling suggestions\" style=\"text-decoration: none; color:red;\" onclick=\"return overlib('$repl',STICKY,CAPTION,'Spellchecker suggestions');\">$word</a> ";
 		    }
 
 		    //print("popup: <pre>".htmlentities($popup_text)."</pre><br />");
@@ -1976,13 +1976,6 @@ function add_pageview() {
 	return $retval;
     }
 
-    // \todo that function is used ?
-    function logui($line) {
-	$fw = fopen("log.txt", "a+");
-	fputs($fw, $line . "\n");
-	fclose ($fw);
-    }
-
     // Semaphore functions ////
     function get_semaphore_user($semName, $objectType='wiki page') {
 	global $user;
@@ -2327,11 +2320,13 @@ function add_pageview() {
     }
 
 /*shared*/
-    function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '', $user=false, $type = '', $topicId = '', $visible_only = 'y', $topic='') {
+    function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '', $user=false, $type = '', $topicId = '', $visible_only = 'y', $topic='', $categId='') {
         global $userlib, $user;
 
 	$mid = '';
 	$bindvars=array();
+	$fromSql = '';
+
 	if ($find) {
 	    $findesc = '%' . $find . '%';
 	    $mid = " where (`title` like ? or `heading` like ? or `body` like ?) ";
@@ -2442,6 +2437,10 @@ function add_pageview() {
 		$mid2 = " where ";
 	$mid2 .= "  `tiki_articles`.`type` = `tiki_article_types`.`type`";
 
+	if ($categId) {
+		global $categlib; require_once('lib/categories/categlib.php');
+		$categlib->getSqlJoin($categId, 'article', '`tiki_articles`.`articleId`', $fromSql, $mid2, $bindvars);
+	}
 	$query = "select `tiki_articles`.*,
 				`tiki_article_types`.`use_ratings`,
 				`tiki_article_types`.`show_pre_publ`,
@@ -2461,10 +2460,10 @@ function add_pageview() {
 				`tiki_article_types`.`show_image_caption`,
 				`tiki_article_types`.`show_lang`,
 				`tiki_article_types`.`creator_edit`
-	    	from `tiki_articles`, `tiki_article_types`
+	    	from `tiki_articles`, `tiki_article_types`$fromSql
 	    	$mid $mid2 order by ".$this->convert_sortmode($sort_mode);
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
-	$query_cant = "select count(*) from  `tiki_articles`, `tiki_article_types` $mid $mid2";
+	$query_cant = "select count(*) from  `tiki_articles`, `tiki_article_types` $fromSql $mid $mid2";
 	$cant = $this->getOne($query_cant,$bindvars);
 	$ret = array();
 
@@ -3687,7 +3686,7 @@ function add_pageview() {
 	$res = $result->fetchRow();
 
 	if (!$res["description"])
-	    $res["description"] = tra('no description');
+	    $res["description"] = $pageName;
 
 	return $res["description"];
     }
@@ -4797,13 +4796,13 @@ function add_pageview() {
 		    }
 		    if (file_exists("img/wiki/$name")) {
 			if ($tiki_p_edit_drawings == 'y' || $tiki_p_admin_drawings == 'y') {
-			    $repl = "<a href='#' onClick=\"javascript:window.open('tiki-editdrawing.php?page=" . urlencode($page). "&amp;path=$pars&amp;drawing={$id}','','menubar=no,width=252,height=25');\"><img border='0' src='img/wiki/$name' alt='click to edit' /></a>";
+			    $repl = "<a href='#' onclick=\"javascript:window.open('tiki-editdrawing.php?page=" . urlencode($page). "&amp;path=$pars&amp;drawing={$id}','','menubar=no,width=252,height=25');\"><img border='0' src='img/wiki/$name' alt='click to edit' /></a>";
 			} else {
 			    $repl = "<img border='0' src='img/wiki/$name' alt='a drawing' />";
 			}
 		    } else {
 			if ($tiki_p_edit_drawings == 'y' || $tiki_p_admin_drawings == 'y') {
-			    $repl = "<a class='wiki' href='#' onClick=\"javascript:window.open('tiki-editdrawing.php?page=" . urlencode($page). "&amp;path=$pars&amp;drawing={$id}','','menubar=no,width=252,height=25');\">click here to create draw $id</a>";
+			    $repl = "<a class='wiki' href='#' onclick=\"javascript:window.open('tiki-editdrawing.php?page=" . urlencode($page). "&amp;path=$pars&amp;drawing={$id}','','menubar=no,width=252,height=25');\">click here to create draw $id</a>";
 			} else {
 			    $repl = tra('drawing not found');
 			}
@@ -4848,7 +4847,7 @@ function add_pageview() {
 		$id = 'dyn_'.$dvar;
 
 		if(isset($tiki_p_edit_dynvar)&& $tiki_p_edit_dynvar=='y') {
-		    $span1 = "<span  style='display:inline;' id='dyn_".$dvar."_display'><a class='dynavar' onClick='javascript:toggle_dynamic_var(\"$dvar\");' title='".tra('Click to edit dynamic variable').": $dvar'>$value</a></span>";
+		    $span1 = "<span  style='display:inline;' id='dyn_".$dvar."_display'><a class='dynavar' onclick='javascript:toggle_dynamic_var(\"$dvar\");' title='".tra('Click to edit dynamic variable').": $dvar'>$value</a></span>";
 		    $span2 = "<span style='display:none;' id='dyn_".$dvar."_edit'><input type='text' name='dyn_".$dvar."' value='".$value."' />".'<input type="submit" name="_dyn_update" value="'.tra('Update variables').'"/></span>';
 		} else {
 		    $span1 = "<span class='dynavar' style='display:inline;' id='dyn_".$dvar."_display'>$value</span>";
@@ -4960,7 +4959,7 @@ function add_pageview() {
 			// check to see if desc is blank in ((page|desc))
 			if (strlen(trim($text[0])) > 0) {
 				$linktext = $text[0];
-			} elseif ($desc != tra('no description')) {
+			} elseif ($desc != $pages[1][$i]) {
 				// desc is blank; use the page description instead
 				$linktext = $pages[1][$i] . ': ' . $desc;
 			} else {
@@ -5343,9 +5342,11 @@ if (!$simple_wiki) {
 	// HotWords will be replace only in ordinal text
 	// It looks __really__ goofy in Headers or Titles
 
-	// Get list of HotWords
-	$words = $this->get_hotwords();
-
+	if ($feature_hotwords == 'y') {
+		// Get list of HotWords
+		$words = $this->get_hotwords();
+	}
+	
 	// Now tokenize the expression and process the tokens
 	// Use tab and newline as tokenizing characters as well  ////
 	$lines = explode("\n", $data);
@@ -5438,8 +5439,10 @@ if (!$simple_wiki) {
 		$line = '<tt>' . $line . '</tt>';
 	    }
 
-	    // Replace Hotwords before begin
-	    $line = $this->replace_hotwords($line, $words);
+		if ($feature_hotwords == 'y') {
+		    // Replace Hotwords before begin
+		    $line = $this->replace_hotwords($line, $words);
+		}
 
 	    // Make plain URLs clickable hyperlinks
 	    if ($feature_autolinks == 'y') {
@@ -5715,6 +5718,10 @@ if (!$simple_wiki) {
 
 		$rssdata = $rsslib->get_rss_module_content($id);
 		$items = $rsslib->parse_rss_data($rssdata, $id);
+		if (!$items) {
+			$data = str_replace($rsss[0][$i], 'Undefined rss id ' . $id, $data);
+			continue;
+		}
 
 		$repl="";
 		if (isset($items[0]) && $items[0]["isTitle"]=="y") {
@@ -6892,5 +6899,15 @@ if (!function_exists('floatval')) {
 	function floatval($var) {
 		return (float) $var;
 	}
+}
+
+function alterprefs() {
+	global $tikilib;
+	if (!$tikilib->query( "ALTER TABLE `tiki_preferences` MODIFY `value` BLOB", array())) {
+		$smarty->assign("msg", tra('Altering database table failed'));
+		$smarty->display("error.tpl");
+		die;
+	}	
+	return true;
 }
 ?>

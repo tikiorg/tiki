@@ -2,7 +2,7 @@
 <h1><a class="pagetitle" href="messu-archive.php">{tr}Message Archive{/tr}</a>
 
 {if $feature_help eq 'y'}
-<a href="{$helpurl}UserMessageArchiveDoc" target="tikihelp" class="tikihelp" title="{tr}Message Archive{/tr}"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<a href="{$helpurl}Inter-User Messages" target="tikihelp" class="tikihelp" title="{tr}Message Archive{/tr}"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}

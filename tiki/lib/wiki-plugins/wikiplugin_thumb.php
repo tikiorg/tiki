@@ -1,5 +1,5 @@
 <?php
-
+/* $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_thumb.php,v 1.5 2006-08-29 20:19:11 sylvieg Exp $ */
 function wikiplugin_thumb_help() {
 	return tra("Displays the thumbnail for an image").":<br />~np~{THUMB(image=>,max=>,float=>,url=>)}".tra("description")."{THUMB}~/np~";
 }
@@ -58,7 +58,7 @@ function wikiplugin_thumb($data, $params) {
 	$html = '';
 	if (!$smarty->get_template_vars('overlib_loaded')) {
 		$html = '<div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>';
-		$html.= '<script type="text/javascript" language="JavaScript" src="lib/overlib.js"></script>';
+		$html.= '<script type="text/javascript" src="lib/overlib.js"></script>';
 		$smarty->assign('overlib_loaded',1);
 	}
 	$html.= "<a href='$url' style='float:$float;$style' ";

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_intertiki.php,v 1.3 2006-02-17 15:10:30 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_intertiki.php,v 1.4 2006-08-29 20:19:02 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -11,6 +11,11 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
+if (isset($_REQUEST["alter_tiki_prefs_table"])) {
+	$alter_result = alterprefs();
+}
+
+
 if (!isset($_REQUEST['interlist'])) $_REQUEST['interlist']= array();
 if (!isset($_REQUEST['known_hosts'])) $_REQUEST['known_hosts']= array();
 
@@ -49,6 +54,7 @@ if (isset($_REQUEST["intertikiclient"])) {
 
 	simple_set_toggle('feature_intertiki_import_preferences');
 	simple_set_toggle('feature_intertiki_import_groups');
+	simple_set_value('feature_intertiki_imported_groups');
 }
 
 if (isset($_REQUEST["intertikiserver"])) {

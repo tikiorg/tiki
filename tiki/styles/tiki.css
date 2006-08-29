@@ -217,8 +217,7 @@ div.box {
 /* Boxes are divided in title and data, this is the title */
 div.box-title {
   background-image: url(tiki/mozilla-menubar.png);
-	padding: 0px 10px 1px 10px;
-	display: inline;
+	padding: 0px 1px 1px 10px;
 	background-color: #f3f6f9;
 	border: 1px solid #5a7a8a;
 	border-radius: 0px 0px 6px 6px;

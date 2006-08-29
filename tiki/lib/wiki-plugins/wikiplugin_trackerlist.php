@@ -8,7 +8,7 @@
 
 function wikiplugin_trackerlist_help() {
 	$help = tra("Displays the output of a tracker content, fields are indicated with numeric ids.").":\n";
-	$help.= "~np~{TRACKERLIST(trackerId=>1,fields=>2:4:5,showtitle=>y|n,showlinks=>y|n,showdesc=>y|n,showinitials=>y|n,showstatus=>y|n,status=>o|p|c|op|oc|pc|opc,sort_mode=>,max=>,filterfield=>,filtervalue=>,exactvalue=>)}Notice{TRACKERLIST}~/np~";
+	$help.= "~np~{TRACKERLIST(trackerId=>1,fields=>2:4:5, showtitle=>y|n, showlinks=>y|n, showdesc=>y|n, showinitials=>y|n, showstatus=>y|n, status=>o|p|c|op|oc|pc|opc, sort_mode=>, max=>, filterfield=>, filtervalue=>, exactvalue=>, checkbox=>fieldId/name/title/submit/action/tpl)}Notice{TRACKERLIST}~/np~";
 	return $help;
 }
 
@@ -71,7 +71,24 @@ function wikiplugin_trackerlist($data, $params) {
 		}
 		$tr_status = $status;
 		$smarty->assign_by_ref('tr_status', $tr_status);
-			
+		
+		if (isset($checkbox)) {
+			$cb = split('/', $checkbox);
+			if (isset($cb[0]))
+				$check['fieldId'] = $cb[0];
+			if (isset($cb[1]))
+				$check['name'] = $cb[1];
+			if (isset($cb[2]))
+				$check['title'] = $cb[2];
+			if (isset($cb[3]))
+				$check['submit'] = $cb[3];
+			if (isset($cb[4]))
+				$check['action'] = $cb[4];
+			if (isset($cb[5]))
+				$check['tpl'] = $cb[5];
+			$smarty->assign_by_ref('checkbox', $check);
+		}	
+
 		if (isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y' 
 				and $user and isset($_REQUEST['itemId']) and isset($_REQUEST["rate_$trackerId"]) and isset($_REQUEST['fieldId'])
 				and in_array($_REQUEST["rate_$trackerId"],split(',',$tracker_info['ratingOptions']))) {
@@ -84,7 +101,7 @@ function wikiplugin_trackerlist($data, $params) {
 		  //$query_array['tr_sort_mode'] = $_REQUEST['tr_sort_mode'];
 			$sort_mode = $_REQUEST['tr_sort_mode'];
 		} elseif (!isset($sort_mode)) {
-			if (isset($tracker_info['defaultOrderKey'])) {
+			if (!empty($tracker_info['defaultOrderKey'])) {
 				$sort_mode = 'f_'.$tracker_info['defaultOrderKey'];
 				if (isset($tracker_info['defaultOrderDir'])) {
 					$sort_mode.= "_".$tracker_info['defaultOrderDir'];
@@ -144,7 +161,13 @@ function wikiplugin_trackerlist($data, $params) {
 			if (in_array($allfields["data"][$i]['fieldId'],$listfields) and $allfields["data"][$i]['isPublic'] == 'y') {
 				$passfields["{$allfields["data"][$i]['fieldId']}"] = $allfields["data"][$i];
 			}
-			if ($allfields["data"][$i]['name'] == 'page') {
+			if (isset($check['fieldId']) && $allfields["data"][$i]['fieldId'] == $check['fieldId']) {
+				$passfields["{$allfields["data"][$i]['fieldId']}"] = $allfields["data"][$i];
+				if (!in_array($allfields["data"][$i]['fieldId'], $listfields))
+					$allfields["data"][$i]['isPublic'] == 'n'; //don't show it
+				$check['ix'] = sizeof($passfields) -1;
+			}
+			if ($allfields["data"][$i]['name'] == 'page' && empty($filterfield)) {
 				$filterfield = $allfields["data"][$i]['fieldId'];
 				$filtervalue = $_REQUEST['page'];
 			}
@@ -157,7 +180,7 @@ function wikiplugin_trackerlist($data, $params) {
 		$smarty->assign_by_ref('filterfield',$filtervalue);
 		$smarty->assign_by_ref('fields', $passfields);
 		$smarty->assign_by_ref('filterfield',$exactvalue);
-		
+
 		if (count($passfields)) {
 			$items = $trklib->list_items($trackerId, $tr_offset, $max, $tr_sort_mode, $passfields, $filterfield, $filtervalue, $tr_status, $tr_initial, $exactvalue);
 			

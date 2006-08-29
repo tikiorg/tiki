@@ -6,7 +6,7 @@ if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
   exit;
 }
 
-$trunc = "12"; // put in a pref, number of chars displayed in cal cells
+$trunc = "20"; // put in a pref, number of chars displayed in cal cells
 $dc = $tikilib->get_date_converter($user);
 
 if (isset($_REQUEST["todate"]) && $_REQUEST['todate']) {
@@ -35,6 +35,10 @@ if (!isset($_SESSION['CalendarViewMode']) or !$_SESSION['CalendarViewMode']) {
 
 if (isset($_REQUEST["viewmode"]) and $_REQUEST["viewmode"]) {
 	$_SESSION['CalendarViewMode'] = $_REQUEST["viewmode"];
+}
+
+if (!isset($_SESSION['CalendarViewMode']) or !$_SESSION['CalendarViewMode']) {
+	$_SESSION['CalendarViewMode'] = 'month';
 }
 
 $smarty->assign_by_ref('viewmode', $_SESSION['CalendarViewMode']);

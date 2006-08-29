@@ -15,7 +15,7 @@ Use the following tags to distinguish changes :
 
 Please wrap your lines at 80 characters and indent them with spaces only.
 
-<Version 1.10
+<<<Version 1.10
 <http://tikiwiki.org/ReleaseProcess110>
 ------------------
 [MOD] added crypt-md5 and crypt-des support
@@ -24,6 +24,17 @@ Version 1.9.5
 <http://tikiwiki.org/ReleaseProcess195>
 ------------------
 
+[MOD] Images galleries links simplyfied
+[MOD] Images galleries controls enhanced
+[FIX] Use gallery's default for image scale or sort order if none in browse and show images
+[FIX] Navigation in image browsing
+[FIX] Once image gallery saved , avoid double create link display
+[FIX] keep menus wide open if javascript or cookies not allowed
+[MOD] update to latest version of PhpLayersMenu (3.2.0-rc)
+[MOD] new files (copy for Tiki for modifications) to prevent overriding of original files of the PLM package
+[FIX] styles: Simple style fixes for PLM and other enhancements
+[MOD] calendar: added categories support for theme control purpose
+[MOD] users: added an option to make optional the optionality of recieving internal messages
 [MOD] imagegal: added in admin panel a way to move images from db to filesystem
 [MOD] users: added an option to have new users accept internal messages by default
 [FIX] tiki-index_p.php: typo feature_wiki_usrlock
@@ -66,7 +77,7 @@ Version 1.9.4
 [FIX] Enables download of file galery 's files bigger than 2MB
 
 
->>>>>>> 1.157.2.37
+>>>>>>> 1.157.2.41
 Version 1.9.3.1
 <http://tikiwiki.org/ReleaseProcess193>
 - 04/30/2006

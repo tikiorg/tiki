@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-chat_loader.php,v 1.17 2006-01-24 06:11:52 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-chat_loader.php,v 1.18 2006-08-29 20:19:02 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -45,14 +45,14 @@ if (!$lastMessage)
 
 print ('<html><head>');
 print ('
-<SCRIPT language="JavaScript">
+<script type="text/javascript">
 
 function chatdata_setup()
 {
 	self.scrollTo(0,10000);
 	window.setInterval(\'location.reload()\',' . $refresh . ');
 }
-</SCRIPT>
+</script>
 ');
 print ('</head>');
 
@@ -64,7 +64,7 @@ if (isset($_REQUEST["channelId"])) {
 	$messages = $chatlib->get_messages($_REQUEST["channelId"], 0, 0);
 
 	if (count($messages) > 0) {
-		//print ("<script language='Javascript' type='text/javascript'>");
+		//print ("<script type='text/javascript'>");
 
 		foreach ($messages as $msg) {
 			if ($msg["poster"] != $_REQUEST["nickname"]) {
@@ -97,7 +97,7 @@ if (isset($_REQUEST["channelId"])) {
 $messages = $chatlib->get_private_messages($_REQUEST["nickname"]);
 
 if (count($messages) > 0) {
-	//print ("<script language='Javascript' type='text/javascript'>");
+	//print ("<script type='text/javascript'>");
 
 	foreach ($messages as $msg) {
 		$classt = 'red';

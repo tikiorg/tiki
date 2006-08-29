@@ -1,3 +1,4 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/tiki/tiki.tpl,v 1.13 2006-08-29 20:19:15 sylvieg Exp $ *}
 {include file="header.tpl"}
 
 {assign var=cols value=1}
@@ -39,7 +40,7 @@
           {if $feature_left_column eq 'user'}
             <img src="images/none.gif" width="100%" height="0" />
             {literal}
-              <script language="Javascript" type="text/javascript">
+              <script type="text/javascript">
                 setfolderstate("leftcolumn");
               </script>
             {/literal}
@@ -58,7 +59,7 @@
           {if $feature_right_column eq 'user'}
             <img src="images/none.gif" width="100%" height="0" />
             {literal}
-              <script language="Javascript" type="text/javascript"> 
+              <script type="text/javascript"> 
                 setfolderstate("rightcolumn");
               </script>
             {/literal}

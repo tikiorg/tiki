@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.42 2005-10-03 17:21:43 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.43 2006-08-29 20:19:02 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -131,6 +131,16 @@ if (isset($_REQUEST["moddown"])) {
 
 /* Edit or delete a user module */
 if (isset($_REQUEST["um_update"])) {
+        if (empty($_REQUEST["um_name"])) {
+	    $smarty->assign('msg',tra("Cannot create or update module: You need to specify a name to the module"));
+	    $smarty->display("error.tpl");
+	    die;
+	}
+        if (empty($_REQUEST["um_data"])) {
+	    $smarty->assign('msg',tra("Cannot create or update module: You cannot leave the data field empty"));
+	    $smarty->display("error.tpl");
+	    die;
+	}
 	check_ticket('admin-modules');
 	$_REQUEST["um_update"] = urldecode($_REQUEST["um_update"]);
 

@@ -1,5 +1,7 @@
-<link rel="stylesheet" href="lib/sheet/style.css" type="text/css" />
-<h1><a href="tiki-view_sheets.php?sheetId={$sheetId}" class="pagetitle">{tr}{$title}{/tr}</a></h1>
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view-sheets.tpl,v 1.12 2006-08-29 20:19:13 sylvieg Exp $ *}
+<link rel="stylesheet" href="lib/sheet/style.css" type="text/css" />{* this shouldn't be here; links to CSS only allowed in head html tag !!! (luci) *}
+{* here is missing body tag when above link to CSS remains!!! (luci) *}
+<h1><a href="tiki-sheets.php?sheetId={$sheetId}" class="pagetitle">{tr}{$title}{/tr}</a></h1>
 
 <div>
 {$description}
@@ -31,10 +33,10 @@
 		<input type="submit" onclick='g.target.style.visibility = "hidden"; g.prepareSubmit(); g.target.submit();' value="{tr}Save{/tr}" />
 		<a class="linkbut" href="tiki-view_sheets.php?sheetId={$sheetId}">{tr}Cancel{/tr}</a>
 	</div>
-	<script language="JavaScript" type="text/javascript" src="lib/sheet/grid.js"></script>
-	<script language="JavaScript" type="text/javascript" src="lib/sheet/control.js"></script>
-	<script language="JavaScript" type="text/javascript" src="lib/sheet/formula.js"></script>
-	<script language="JavaScript">
+	<script type="text/javascript" src="lib/sheet/grid.js"></script>
+	<script type="text/javascript" src="lib/sheet/control.js"></script>
+	<script type="text/javascript" src="lib/sheet/formula.js"></script>
+	<script type="text/javascript">
 	var g;
 {$init_grid}
 

@@ -26,6 +26,7 @@ function smarty_function_phplayers($params, &$smarty) {
 	if (empty($type)) {
 		$type = 'tree';
 	}
+
 	if (!empty($id)) {
 		$output = $tikiphplayers->mkMenuEntry($id);
 	}

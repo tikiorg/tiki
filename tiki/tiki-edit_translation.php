@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.9 2005-12-12 15:18:46 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.10 2006-08-29 20:19:02 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -108,7 +108,7 @@ if (isset($_REQUEST['langpage']) && !empty($_REQUEST['langpage']) && $_REQUEST['
 }
 $smarty->assign('langpage', $langpage);
 
-if (isset($_REQUEST['detach'])) { // detach from a translation set
+if (isset($_REQUEST['detach']) && isset($_REQUEST['srcId'])) { // detach from a translation set
 	check_ticket('edit-translation');
 	$multilinguallib->detachTranslation($type, $_REQUEST['srcId']);
 }

@@ -1370,6 +1370,90 @@ span.trailer {
 	background-color: #CCCCCC;
 }
 
+/* LINKS FOR DAY WITH EVENT */
+.event {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	text-decoration: none;
+	color: black;
+	text-decoration: none;
+	background-color: #9cba00;
+}
+
+.event:active {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	text-decoration: none;
+	color: black;
+	text-decoration: none;
+	background-color: #9cba00;
+}
+
+.event:hover {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: black;
+	text-decoration: none;
+	background-color: #9cba00;
+}
+
+/* LINKS FOR DAY WITH EVENT */
+.todayevent {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	text-decoration: none;
+	color: black;
+	font-weight: bold;
+	text-decoration: none;
+	background-color: #9cba00;
+}
+
+.todayevent:active {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	text-decoration: none;
+	color: black;
+	font-weight: bold;
+	text-decoration: none;
+	background-color: #9cba00;
+}
+
+.todayevent:hover {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: black;
+	font-weight: bold;
+	text-decoration: none;
+	background-color: #9cba00;
+}
+
+/* LINKS FOR DAY WITH OUTDATED EVENT */
+.oldevent {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	text-decoration: none;
+	color: black;
+	text-decoration: none;
+	background-color: darkgrey;
+}
+
+.oldevent:active {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	text-decoration: none;
+	color: black;
+	text-decoration: none;
+	background-color: darkgrey;
+}
+
+.oldevent:hover {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: black;
+	text-decoration: none;
+	background-color: darkgrey;
+}
+
 /* Links to change month, year or go to today */
 .nav {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
@@ -2439,6 +2523,10 @@ padding: 0;
 }
 #caltable {
 	width: 100%;
+	margin-left: -5px;
+}
+.caltable {
+	margin-left: -5px;
 }
 
 /*

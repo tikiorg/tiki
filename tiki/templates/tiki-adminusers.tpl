@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.82 2006-05-22 17:09:14 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.83 2006-08-29 20:19:12 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
 
       {if $feature_help eq 'y'}
-<a href="{$helpurl}UserAdministrationScreen" target="tikihelp" class="tikihelp" title="{tr}admin users{/tr}">
+<a href="{$helpurl}Users Management" target="tikihelp" class="tikihelp" title="{tr}admin users{/tr}">
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
 
 {if $feature_view_tpl eq 'y'}
@@ -12,7 +12,9 @@
 <img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>{/if}
 </h1>
 
+{if $tiki_p_admin eq 'y'} {* only full admins can manage groups, not tiki_p_admin_users *}
 <span class="button2"><a href="tiki-admingroups.php" class="linkbut">{tr}Admin groups{/tr}</a></span>
+{/if}
 <span class="button2"><a href="tiki-adminusers.php" class="linkbut">{tr}Admin users{/tr}</a></span>
 {if $userinfo.userId}
 <span class="button2"><a href="tiki-adminusers.php?add=1" class="linkbut">{tr}Add a new user{/tr}</a></span>
@@ -152,7 +154,7 @@ title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
 </td>
 </tr>
 {/section}
-  <script language='Javascript' type='text/javascript'>
+  <script type='text/javascript'>
   <!--
   // check / uncheck all.
   // in the future, we could extend this to happen serverside as well for the convenience of people w/o javascript.

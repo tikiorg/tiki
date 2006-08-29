@@ -5,7 +5,7 @@
 
 function wikiplugin_tracker_help() {
 	$help = tra("Displays an input form for tracker submit").":\n";
-	$help.= "~np~{TRACKER(trackerId=>1,fields=>id1:id2:id3,action=>Name of submit button,showtitle=>y|n,showdesc=>y|n,showmandatory=>y|n,embedded=>y|n)}Notice{TRACKER}~/np~";
+	$help.= "~np~{TRACKER(trackerId=>1, fields=>id1:id2:id3, action=>Name of submit button, showtitle=>y|n, showdesc=>y|n, showmandatory=>y|n, embedded=>y|n)}Notice{TRACKER}~/np~";
 	return $help;
 }
 function wikiplugin_tracker_name($fieldId, $name, $field_errors) {

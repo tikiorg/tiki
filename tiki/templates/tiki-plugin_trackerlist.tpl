@@ -7,15 +7,18 @@
 {if $tr_initial and $initials[ini] eq $tr_initial}
 <span class="button2"><span class="linkbuton">{$initials[ini]|capitalize}</span></span> . 
 {else}
-<a href="{$smarty.server.PHP_SELF}?tr_initial={$initials[ini]}{if $tr_sort_mode}&amp;tr_sort_mode={$tr_sort_mode}{/if}&amp;tr_offset=0" class="prevnext">{$initials[ini]}</a> . 
+<a href="{$smarty.server.PHP_SELF}?{if $page}page={$page|escape:url}&amp;{/if}tr_initial={$initials[ini]}{if $tr_sort_mode}&amp;tr_sort_mode={$tr_sort_mode}{/if}&amp;tr_offset=0" class="prevnext">{$initials[ini]}</a> . 
 {/if}
 {/section}
-<a href="{$smarty.server.PHP_SELF}?tr_initial={if $tr_sort_mode}&amp;tr_sort_mode={$tr_sort_mode}{/if}&amp;tr_offset=0" class="prevnext">{tr}All{/tr}</a>
+<a href="{$smarty.server.PHP_SELF}?{if $page}page={$page|escape:url}&amp;{/if}tr_initial={if $tr_sort_mode}&amp;tr_sort_mode={$tr_sort_mode}{/if}&amp;tr_offset=0" class="prevnext">{tr}All{/tr}</a>
 </div>
 {/if}
 
+{if $checkbox && $items|@count gt 0}<form method="post" action="{$checkbox.action}">{/if}
+
 <table class="normal">
 <tr>
+{if $checkbox}<td class="heading">{$checkbox.title}</td>{/if}
 {if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y'))}
 	<td class="heading auto" style="width:20px;">&nbsp;</td>
 {/if}
@@ -27,22 +30,22 @@
 {elseif $ix.type eq 's' and $ix.name eq "Rating"}
 {if $tiki_p_tracker_view_ratings eq 'y'}
 <td class="heading auto"{if $tiki_p_tracker_vote_ratings eq 'y'} colspan="2"{/if}>
-<a class="tableheading" href="{$smarty.server.PHP_SELF}?tr_sort_mode=f_{if 
+<a class="tableheading" href="{$smarty.server.PHP_SELF}?{if $page}page={$page|escape:url}&amp;{/if}tr_sort_mode=f_{if 
 	$tr_sort_mode eq 'f_'|cat:$ix.fieldId|cat:'_asc'}{$ix.fieldId}_desc{else}{$ix.fieldId}_asc{/if}{if $tr_offset}&amp;tr_offset={$tr_offset}{/if}{if $tr_initial}&amp;tr_initial={$tr_initial}{/if}">{$ix.name|default:"&nbsp;"}</a></td>
 {/if}
 {else}
 <td class="heading auto"{if $ix.type eq 's' and $ix.name eq "Rating"} colspan="2"{/if}>
-<a class="tableheading" href="{$smarty.server.PHP_SELF}?tr_sort_mode=f_{if 
+<a class="tableheading" href="{$smarty.server.PHP_SELF}?{if $page}page={$page|escape:url}&amp;{/if}tr_sort_mode=f_{if 
 	$tr_sort_mode eq 'f_'|cat:$ix.fieldId|cat:'_asc'}{$ix.fieldId}_desc{else}{$ix.fieldId}_asc{/if}{if $tr_offset}&amp;tr_offset={$tr_offset}{/if}{if $tr_initial}&amp;tr_initial={$tr_initial}{/if}">{$ix.name|default:"&nbsp;"}</a></td>
 {/if}
 {/if}
 {/foreach}
 {if $tracker_info.showCreated eq 'y'}
-<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?tr_sort_mode={if 
+<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?{if $page}page={$page|escape:url}&amp;{/if}tr_sort_mode={if 
 	$tr_sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}{if $tr_offset}&amp;tr_offset={$tr_offset}{/if}{if $tr_initial}&amp;tr_initial={$tr_initial}{/if}">{tr}created{/tr}</a></td>
 {/if}
 {if $tracker_info.showLastModif eq 'y'}
-<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?tr_sort_mode={if 
+<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?{if $page}page={$page|escape:url}&amp;{/if}tr_sort_mode={if 
 	$tr_sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}{if $tr_offset}&amp;tr_offset={$tr_offset}{/if}{if $tr_initial}&amp;tr_initial={$tr_initial}{/if}">{tr}lastModif{/tr}</a></td>
 {/if}
 {if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y'}
@@ -56,7 +59,7 @@
 {cycle values="odd,even" print=false}
 {section name=user loop=$items}
 <tr class="{cycle}">
-
+{if $checkbox}<td><input type="checkbox" name="{$checkbox.name}[]" value="{$items[user].field_values[$checkbox.ix].value}" /></td>{/if}
 {if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y'))}<td class="auto" style="width:20px;">
 {assign var=ustatus value=$items[user].status|default:"c"}
 {html_image file=$status_types.$ustatus.image title=$status_types.$ustatus.label alt=$status_types.$ustatus.label}
@@ -94,7 +97,7 @@
 {foreach item=ii from=$items[user].field_values[ix].categs}{$ii.name}<br />{/foreach}
 
 {else}
-{$items[user].field_values[ix].value|default:"&nbsp;"}
+{$items[user].field_values[ix].value|truncate:255:"..."|default:"&nbsp;"}
 
 {/if}
 
@@ -120,14 +123,14 @@
 {if $items[user].my_rate eq NULL}
 <b class="linkbut highlight">-</b>
 {else}
-<a href="{$smarty.server.PHP_SELF}?trackerId={$items[user].trackerId}&amp;itemId={$items[user].itemId}&amp;fieldId={$items[user].field_values[ix].fieldId}&amp;rate_{$items[user].trackerId}=NULL" 
+<a href="{$smarty.server.PHP_SELF}?{if $page}page={$page|escape:url}&amp;{/if}trackerId={$items[user].trackerId}&amp;itemId={$items[user].itemId}&amp;fieldId={$items[user].field_values[ix].fieldId}&amp;rate_{$items[user].trackerId}=NULL" 
 class="linkbut">-</a>
 {/if}
 {section name=i loop=$items[user].field_values[ix].options_array}
 {if $items[user].field_values[ix].options_array[i] eq $items[user].my_rate}
 <b class="linkbut highlight">{$items[user].field_values[ix].options_array[i]}</b>
 {else}
-<a href="{$smarty.server.PHP_SELF}?trackerId={$items[user].trackerId}&amp;itemId={$items[user].itemId}&amp;fieldId={$items[user].field_values[ix].fieldId}&amp;rate_{$items[user].trackerId}={$items[user].field_values[ix].options_array[i]}" 
+<a href="{$smarty.server.PHP_SELF}?{if $page}page={$page|escape:url}&amp;{/if}trackerId={$items[user].trackerId}&amp;itemId={$items[user].itemId}&amp;fieldId={$items[user].field_values[ix].fieldId}&amp;rate_{$items[user].trackerId}={$items[user].field_values[ix].options_array[i]}" 
 class="linkbut">{$items[user].field_values[ix].options_array[i]}</a>
 {/if}
 {/section}
@@ -139,6 +142,20 @@ class="linkbut">{$items[user].field_values[ix].options_array[i]}</a>
 <td class="auto">
 {foreach item=ii from=$items[user].field_values[ix].categs}{$ii.name}<br />{/foreach}
 </td>
+
+{elseif $items[user].field_values[ix].type eq 'y'}
+<td class="auto">
+{assign var=o_opt value=$items[user].field_values[ix].options_array[0]}
+{if $o_opt ne '1'}<img border="0" src="img/flags/{$items[user].field_values[ix].value}.gif" title="{$items[user].field_values[ix].value}" />{/if}
+{if $o_opt ne '1' and $o_opt ne '2'}&nbsp;{/if}
+{if $o_opt ne '2'}{tr}{$items[user].field_values[ix].value}{/tr}{/if}
+</td>
+
+{elseif $items[user].field_values[ix].type eq 'a'}
+<td class="auto">
+{$items[user].field_values[ix].pvalue|default:"&nbsp;"}
+</td>
+
 
 {elseif $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h'}
 <td class="auto">
@@ -167,19 +184,26 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" border="0" al
 </tr>
 {/section}
 </table>
+{if $items|@count eq 0}
+{tr}No records found{/tr}
+{elseif $checkbox}
+<br />
+{if $checkbox.tpl}{include file=$checkbox.tpl}{/if}
+<input type="submit" name="{$checkbox.submit}" value="{tr}{$checkbox.title}{/tr}" /></form>
+{/if}
 
 {if $cant_pages > 1 or $tr_initial}
 <br />
 <div align="center" class="mini">
 {if $tr_prev_offset >= 0}
-[<a class="prevnext" href="{$smarty.server.PHP_SELF}?tr_offset={$tr_prev_offset}{
+[<a class="prevnext" href="{$smarty.server.PHP_SELF}?{if $page}page={$page|escape:url}&amp;{/if}tr_offset={$tr_prev_offset}{
 	if $tr_initial}&amp;tr_initial={$tr_initial}{/if}{
 	if $tr_sort_mode}&amp;tr_sort_mode={$tr_sort_mode}{/if}"
 >{tr}prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $tr_next_offset >= 0}
-&nbsp;[<a class="prevnext" href="{$smarty.server.PHP_SELF}?tr_offset={$tr_next_offset}{
+&nbsp;[<a class="prevnext" href="{$smarty.server.PHP_SELF}?{if $page}page={$page|escape:url}&amp;{/if}tr_offset={$tr_next_offset}{
 	if $tr_initial}&amp;tr_initial={$tr_initial}{/if}{
 	if $tr_sort_mode}&amp;tr_sort_mode={$tr_sort_mode}{/if}"
 >{tr}next{/tr}</a>]
@@ -188,7 +212,7 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" border="0" al
 <br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
-<a class="prevnext" href="{$smarty.server.PHP_SELF}?tr_offset={$selector_offset}{
+<a class="prevnext" href="{$smarty.server.PHP_SELF}?{if $page}page={$page|escape:url}&amp;{/if}tr_offset={$selector_offset}{
 	if $tr_initial}&amp;tr_initial={$tr_initial}{/if}{
 	if $tr_sort_mode}&amp;tr_sort_mode={$tr_sort_mode}{/if}">
 {$smarty.section.foo.index_next}</a>&nbsp;

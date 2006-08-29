@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.52 2006-05-22 17:09:07 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.53 2006-08-29 20:19:02 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.52 2006-05-22 17:09:07 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.53 2006-08-29 20:19:02 sylvieg Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -165,11 +165,20 @@ if ($feature_intertiki == 'y' and isset($_REQUEST['intertiki']) and in_array($_R
 		}
 
 		if ($feature_intertiki_import_groups == 'y') {
-		    $userlib->assign_user_to_groups($user, $user_details['groups']);
+				if ($feature_intertiki_imported_groups) {
+					$groups = preg_split('/\s*,\s*/',$feature_intertiki_imported_groups);
+					foreach ($groups as $group) {
+						if (in_array(trim($group),$user_details['groups'])) {
+							$userlib->assign_user_to_group($user, trim($group));
+						}
+					}
+				} else {
+		    	$userlib->assign_user_to_groups($user, $user_details['groups']);
+				}
 		} else {
 		    $groups = preg_split('/\s*,\s*/',$interlist[$feature_intertiki_mymaster]['groups']);
 		    foreach ($groups as $group) {
-			$userlib->assign_user_to_group($user, $group);
+			$userlib->assign_user_to_group($user, trim($group));
 		    }
 		}
 
@@ -216,7 +225,7 @@ if ($isvalid) {
 			$groupHome = $tikilib->get_user_preference($user, 'homePage', $groupHome);
 			$groupHome = $userlib->get_user_default_homepage($user);
     			if ($groupHome) {
-                    $url = preg_match('#^https?://#', $groupHome) ? $groupHome : "tiki-index.php?page=".$groupHome;
+                    $url = preg_match('#^https?:#', $groupHome) ? $groupHome : "tiki-index.php?page=".$groupHome;
     			}
 		}
 		//unset session variable in case user su's

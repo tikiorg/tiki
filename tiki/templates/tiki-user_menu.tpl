@@ -1,3 +1,4 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_menu.tpl,v 1.23 2006-08-29 20:19:13 sylvieg Exp $ *}
 {assign var=opensec value='n'}
 {assign var=sep value=''}
 
@@ -23,7 +24,7 @@
 {/if}
 </div>
 {assign var=opensec value='y'}
-<div {if $menu_info.type eq 'd'}style="display:none;"{else}style="display:block;"{/if} id='menu{$cname}'>
+<div {if $menu_info.type eq 'd' and $smarty.cookies.menu ne ''}style="display:none;"{else}style="display:block;"{/if} id='menu{$cname}'>
 {elseif $chdata.type eq 'o'}
 <div class="option{$sep}">&nbsp;<a href="{$chdata.url|escape}" class="linkmenu">{tr}{$chdata.name}{/tr}</a></div>
 {if $sep eq 'line'}{assign var=sep value=''}{/if}
@@ -53,7 +54,7 @@
 {/if}
 
 {if $menu_info.type eq 'e' or $menu_info.type eq 'd'}
-<script language='Javascript' type='text/javascript'>
+<script type='text/javascript'>
 {foreach key=pos item=chdata from=$channels}
 {if $chdata.type eq 's'}
   {if $feature_menusfolderstyle eq 'y'}

@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.79 2006-07-14 11:00:49 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.80 2006-08-29 20:19:08 sylvieg Exp $
  *
  * \brief Categories support class
  *
@@ -278,6 +278,7 @@ class CategLib extends ObjectLib {
 			 // for a type.
 			 'article' => 'tiki_p_read_article',
 			 'image' => 'tiki_p_view_image_gallery',
+			 'calendar' => 'tiki_p_view_calendar',
 			 
 			 // newsletters can't be categorized, although there's some code in tiki-admin_newsletters.php
 			 // 'newsletter' => ?,
@@ -690,6 +691,25 @@ class CategLib extends ObjectLib {
 
 		$this->categorize($catObjectId, $categId);
 	}
+	
+	function categorize_calendar($calendarId, $categId) {
+		global $calendarlib;
+		// Check if we already have this object in the tiki_categorized_objects page
+		$catObjectId = $this->is_categorized('calendar', $calendarId);
+		if (!$catObjectId) {
+			if (!is_object($calendarlib)) {
+				require_once('lib/calendar/calendarlib.php');
+			}
+			// The page is not cateorized
+			$info = $calendarlib->get_calendar($calendarId);
+
+			$href = 'tiki-calendar.php?calId=' . $calendarId;
+			$catObjectId = $this->add_categorized_object('calendar', $calendarId, $info["description"], $info["calname"], $href);
+		}
+
+		$this->categorize($catObjectId, $categId);
+	}
+
 	// FUNCTIONS TO CATEGORIZE SPECIFIC OBJECTS END ////
 	function get_child_categories($categId) {
 		global $cachelib;
@@ -908,9 +928,10 @@ class CategLib extends ObjectLib {
 			"survey" => "survey",
 			"tracker" => "tracker",
 			"wiki" => "wiki page",
+			"calendar" => "calendar",
 			"img" => "image"
 		);	//get_strings tra("article");tra("blog");tra("directory");tra("faq");tra("file gallery");tra("forum");tra("image gallery");tra("newsletter");
-			//get_strings tra("poll");tra("quiz");tra("survey");tra("tracker");tra("wiki page");tra("image")
+			//get_strings tra("poll");tra("quiz");tra("survey");tra("tracker");tra("wiki page");tra("image");tra("calendar");
 			
 		$typetitles = array(
 			"article" => "Articles",
@@ -926,6 +947,7 @@ class CategLib extends ObjectLib {
 			"survey" => "Surveys",
 			"tracker" => "Trackers",
 			"wiki page" => "Wiki",
+			"calendar" => "Calendar",
 			"image" => "Image"
 		);
 
@@ -1060,7 +1082,19 @@ class CategLib extends ObjectLib {
 		$query = "update `tiki_categorized_objects` set `type`= ?, `objId`= ?, `href`=? where `objId` = ?";
 		$this->query($query, array('article', (int)$articleId, "tiki-read_article.php?articleId=$articleId", (int)$subId));
 	}
-		
+	/* build the portion of list join if filter by category
+	 */
+	function getSqlJoin($categId, $objType, $sqlObj, &$fromSql, &$whereSql, &$bindVars) {
+		$fromSql .= ",`tiki_categorized_objects` co, `tiki_category_objects` cat ";
+		$whereSql .= " AND co.`type`=? AND co.`objId`= $sqlObj ";
+		$whereSql .= " AND co.`catObjectId`=cat.`catObjectId` ";
+		$whereSql .= " AND cat.`categId`= ? ";
+		$bind = array( $objType, $categId);
+		if (is_array($bindVars))
+			$bindVars = array_merge($bindVars, $bind);
+		else
+			$bindVars = $bind;
+	} 		
 
 }
 

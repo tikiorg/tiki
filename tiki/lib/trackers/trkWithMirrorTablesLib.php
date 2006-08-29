@@ -623,6 +623,7 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 					$fopt["voteavg"] = $voteavg;
 				} elseif ($fopt["type"] == 'e') {
 					global $categlib;
+					if (!is_object($categlib)) include_once 'lib/categories/categlib.php';
 					$mycats = $categlib->get_child_categories($fopt['options']);
 					$zcats = $categlib->get_object_categories("tracker ".$trackerId,$res["itemId"]);
 					$cats = array();

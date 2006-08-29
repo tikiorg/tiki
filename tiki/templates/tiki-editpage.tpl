@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.85 2006-08-29 16:24:32 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.86 2006-08-29 20:19:13 sylvieg Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
 {* Check to see if there is an editing conflict *}
 {if $editpageconflict == 'y'}
-<script language='Javascript' type='text/javascript'>
+<script type='text/javascript'>
 <!-- //Hide Script
 	alert("{tr}This page is being edited by{/tr} {$semUser}. {tr}Proceed at your own peril{/tr}.")
 //End Hide Script -->

@@ -134,7 +134,7 @@ class SearchLib extends TikiLib {
 
 		if ($chkObjPerm) {
 
-		    $sqlJoin .= " JOIN `users_objectpermissions` u ON u.`objectId` = md5(" . $this->db->concat("'$objType'", "lower($objKeyPerm)") . ") AND u.`objectType`=? ";
+		    $sqlJoin .= " JOIN `users_objectpermissions` u ON u.`objectId` = md5(" . $this->db->concat("'$objType'", "lower($objKeyPerm)") . ") AND u.`objectType`= ? ";
 		    $bindJoin[] = $objType;
 		      
 		    if ($globalPerm == 'y') {
@@ -228,7 +228,6 @@ class SearchLib extends TikiLib {
 
 		$result = $this->query($sql, $bindVars);
 		$cant = $result->numRows();
-
 
 		if (!$cant) { // no result
 			if ($fulltext && $words) // try a simple search
@@ -514,6 +513,38 @@ class SearchLib extends TikiLib {
 
 		return $this->_find($search_posts, $words, $offset, $maxRecords, $fulltext);
 	}
+	function find_trackers($words = '', $offset = 0, $maxRecords = -1, $fulltext = false) {
+		global $trklib; require_once('lib/trackers/trackerlib.php');
+		global $tiki_p_view_trackers_pending; global $tiki_p_view_trackers_closed;
+		static $search_trackers = array(
+			'from' => '`tiki_tracker_item_fields` ttif LEFT JOIN `tiki_tracker_items` tti ON (ttif.`itemId`=tti.`itemId`) LEFT JOIN `tiki_trackers` tt ON (tti.`trackerId`= tt.`trackerId`) LEFT JOIN `tiki_tracker_fields` ttf ON (ttf.`fieldId`= ttif.`fieldId`)',
+			'name' => 'ttif.`itemId`',
+			'data' => 'tt.`name`',
+			'hits' => 'tt.`trackerId`',
+			'lastModif' => 'tti.`lastModif`',
+			'href' => 'tiki-view_tracker_item.php?itemId=%d',
+			'id' => array('tti.`itemId`'),
+			'pageName' => 'tti.`itemId`',
+			'search' => array('`value`'),
+			'filter' => 'ttf.`isSearchable` = "y"',
+			'permName' => 'tiki_p_view_trackers',
+			'objectType' => 'tracker',
+			'objectKey' => 'tt.`trackerId`',
+			'objectKeyPerm' => 'tt.`trackerId`',
+			'objectKeyCat' => 'tt.`trackerId`',
+			'objectKeyGroup' => 'tt.`trackerId`',
+		);
+		if ($tiki_p_view_trackers_closed != 'y')
+			$search_trackers['filter'] .= " AND tti.`status` != 'c'";
+		if ($tiki_p_view_trackers_pending != 'y')
+			$search_trackers['filter'] .= " AND tti.`status` != 'p'";
+		$ret = $this->_find($search_trackers, $words, $offset, $maxRecords, $fulltext);
+		foreach ($ret['data'] as $i=>$res) {
+			$ret['data'][$i]['pageName'] = '(#'.$res['pageName'].')'.$trklib->get_isMain_value($res['hits'], $res['pageName']);
+			$ret['data'][$i]['hits'] = 'Unknown'; 
+		}
+		return $ret;
+	}
 
 	function find_pages($words = '', $offset = 0, $maxRecords = -1, $fulltext = false) {
 		$data = array();
@@ -521,8 +552,8 @@ class SearchLib extends TikiLib {
 		$cant = 0;
 		
 		global $feature_wiki, $feature_directory, $feature_galleries, $feature_file_galleries,
-				$feature_articles, $feature_forums, $feature_blogs, $feature_faqs;
-		global $tiki_p_view_directory, $tiki_p_read_article, $tiki_p_view_faqs;
+				$feature_articles, $feature_forums, $feature_blogs, $feature_faqs, $feature_trackers;
+		global $tiki_p_view_directory, $tiki_p_read_article, $tiki_p_view_faqs, $tiki_p_view_trackers;
 		
 		if ($feature_wiki == 'y') {
 		$rv = $this->find_wikis($words, $offset, $maxRecords, $fulltext);
@@ -638,6 +669,17 @@ class SearchLib extends TikiLib {
 			$a['type'] = tra('Directory');
 			$a['relevance'] *= 0.7; // decrease artifically the relevance because as description is shorter than a wiki data, a directory is returned before wiki page
 
+			array_push($data, $a);
+		}
+
+		$cant += $rv['cant'];
+		}
+
+		if ($feature_trackers == 'y' && $tiki_p_view_trackers == 'y') {
+		$rv = $this->find_trackers($words, $offset, $maxRecords, $fulltext);
+
+		foreach ($rv['data'] as $a) {
+			$a['type'] = tra('Tracker item');
 			array_push($data, $a);
 		}
 

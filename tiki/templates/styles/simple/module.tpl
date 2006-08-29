@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/module.tpl,v 1.3 2005-05-18 11:03:56 mose Exp $*}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/module.tpl,v 1.4 2006-08-29 20:19:15 sylvieg Exp $*}
 {* Module layout with controls *}
 
 <div class="box"><div class="box-title">

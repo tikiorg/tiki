@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-batch_upload.php,v 1.6 2006-07-14 11:00:43 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-batch_upload.php,v 1.7 2006-08-29 20:19:02 sylvieg Exp $
 
 require_once ('tiki-setup.php');
 include_once ('lib/imagegals/imagegallib.php');
@@ -60,22 +60,22 @@ function getDirContent($sub) {
 		$smarty->display("error.tpl");
 		die;
 	}
-	while((false!==($imgfile=readdir($dimg)))) {
-		// ignore . and ..
-		if ($imgfile != "." && $imgfile != "..") {
-			// check if we found a directory
-			if (is_dir( $tmp . "/" . $imgfile )) {
-				if ((substr($sub,-1)<>"/") &&
-					(substr($sub,-1)<>"\\")) $sub .= '/';
-				getDirContent($sub.$imgfile);
-			} else
-			// handle only valid image files
-			// check if string after last dot is valid image type
-			if (in_array(strtolower(substr($imgfile,-(strlen($imgfile)-strrpos($imgfile, ".")))),$allowed_types)) {
-				$a_img[] = $imgfile;
-				$a_path[] = $sub;
+	while((false!==($imgf=readdir($dimg)))) {
+		if ($imgf != "." && $imgf != "..") {
+			$allimg[] = $imgf;
+		}
+	}
+	sort($allimg);
+	foreach ($allimg as $imgfile) {
+		if (is_dir($tmp . "/" . $imgfile)) {
+			if ((substr($sub,-1)<>"/") && (substr($sub,-1)<>"\\")) {
+				$sub .= '/';
 			}
-		} 
+			getDirContent($sub.$imgfile);
+		} elseif (in_array(strtolower(substr($imgfile,-(strlen($imgfile)-strrpos($imgfile, ".")))),$allowed_types)) {
+			$a_img[] = $imgfile;
+			$a_path[] = $sub;
+		}
 	}
 	closedir($dimg);
 }

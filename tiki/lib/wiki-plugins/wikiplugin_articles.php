@@ -7,7 +7,7 @@
 // topic=>topicId
 
 function wikiplugin_articles_help() {
-	return tra("~np~{~/np~ARTICLES(max=>3,topic=>topicName,sort=>columnName_asc|columnName_desc)}{ARTICLES} Insert articles into a wikipage");
+	return tra("~np~{~/np~ARTICLES(max=>3,topic=>topicName,type=>type,categId=>Category parent ID,sort=>columnName_asc|columnName_desc)}{ARTICLES} Insert articles into a wikipage");
 }
 
 function wikiplugin_articles($data,$params) {
@@ -35,12 +35,21 @@ function wikiplugin_articles($data,$params) {
 	}
 	if (!isset($sort))
 		$sort = 'publishDate_desc';
+
+	// Adds filtering by type if type is passed
+	if(!isset($type)) 
+		$type='';
+
+	if (!isset($categId))
+		$categId = '';
+
 	$now = date("U");
 	
 	include_once("lib/commentslib.php");
 	$commentslib = new Comments($dbTiki);
 	
 	$listpages = $tikilib->list_articles($start, $max, $sort, '', $now, 'admin', '', $topic);
+	$listpages = $tikilib->list_articles($start, $max, 'publishDate_desc', '', $now, 'admin', $type, $topic, 'y', '', $categId);
  	if ($feature_multilingual == 'y') {
 		global $multilinguallib;
 		include_once("lib/multilingual/multilinguallib.php");
@@ -63,6 +72,10 @@ function wikiplugin_articles($data,$params) {
         $topics = $artlib->list_topics();
         $smarty->assign_by_ref('topics', $topics);}
 
+	If (isset($artlib)) {
+        $type = $artlib->list_types();
+        $smarty->assign_by_ref('type', $type);}		
+		
 	// If there're more records then assign next_offset
 	$smarty->assign_by_ref('listpages', $listpages["data"]);
 

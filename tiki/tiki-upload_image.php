@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_image.php,v 1.38 2005-05-18 10:58:59 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_image.php,v 1.39 2006-08-29 20:19:03 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -178,7 +178,11 @@ if (isset($_REQUEST["upload"])) {
 			$fp = fopen($tmp_dest, "rb");
 			$data = fread($fp, filesize($tmp_dest));
 			fclose ($fp);
+			$imginfo = @getimagesize($tmp_dest);
 			unlink($tmp_dest);
+			if (!$data || !$imginfo) { // Not in Image format
+				$error_msg = tra('The uploaded file ist not recognized as a image');
+	        }
 		} else {
 			$error_msg = tra("cannot process upload");
 		}
@@ -188,25 +192,11 @@ if (isset($_REQUEST["upload"])) {
 	$up_thumb = 0;
 
 	// If the thumbnail was uploaded
-	if (isset($_FILES['userfile2']) && is_uploaded_file($_FILES['userfile2']['tmp_name'])) {
-		$file_name = $_FILES['userfile2']['name'];	
-		$file_tmp_name = $_FILES['userfile2']['tmp_name'];
-		$tmp_dest = $tmpDir . '/' . $file_name.'.tmp';;
-		if (!move_uploaded_file($file_tmp_name, $tmp_dest)) {
-				$smarty->assign('msg', tra('Errors detected'));
-				$smarty->display("error.tpl");
-				die();
+	if (isset($_FILES['userfile2']) && !empty($_FILES['userfile2']['name'])) {
+		$thumb_data = $imagegallib->get_one_image_from_disk('userfile2');
+		if (isset($thumb_data['msg'])) {
+			$error_msg = $thumb_data['msg'];
 		}
-
-
-		$fp = fopen($tmp_dest, "rb");
-
-		$thumb_data = fread($fp, filesize($tmp_dest));
-		fclose ($fp);
-		unlink ($tmp_dest);
-		$thumb_type = $_FILES['userfile2']['type'];
-		$thumb_size = $_FILES['userfile2']['size'];
-		$thumb_name = $_FILES['userfile2']['name'];
 		$up_thumb = 1;
 	}
 
@@ -291,7 +281,7 @@ if (isset($_REQUEST["upload"])) {
 
 				$imageId
 					= $imagegallib->insert_image($_REQUEST["galleryId"], $name, $_REQUEST["description"], $filename, $type, $data,
-					$size, 0, 0, $user, '', '',$lat, $lon);
+					$size, $imginfo[0], $imginfo[1], $user, '', '',$lat, $lon);
 			}
 		} else {
 			if (function_exists("ImageCreateFromString") && (!strstr($type, "gif"))) {
@@ -306,13 +296,13 @@ if (isset($_REQUEST["upload"])) {
 				       die;
 			       }
 			} else {
-				$size_x = 0;
+				$size_x = $imginfo[0];
 
-				$size_y = 0;
+				$size_y = $imginfo[1];
 			}
 
 			$imageId = $imagegallib->insert_image($_REQUEST["galleryId"], $name, $_REQUEST["description"], $filename, $type, $data,
-				$size, $size_x, $size_y, $user, $thumb_data, $thumb_type, $lat, $lon);
+				$size, $size_x, $size_y, $user, $thumb_data, $thumb_data['filetype'], $lat, $lon);
 		}
 
 		if (!$imageId) {

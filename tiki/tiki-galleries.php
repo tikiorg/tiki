@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.50 2006-02-17 15:10:31 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.51 2006-08-29 20:19:02 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -283,6 +283,8 @@ if (isset($_REQUEST["edit"]) && $feature_categories == 'y' && $feature_image_gal
 	include_once ("freetag_apply.php");
 
 	$smarty->assign('edit_mode', 'n');
+	$smarty->assign('galleryId', '');
+	$_REQUEST["galleryId"] = 0;
 }
 
 if ($category_needed) {

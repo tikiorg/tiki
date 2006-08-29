@@ -58,7 +58,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {* --- jscalendar block --- *}
 {if $feature_jscalendar eq 'y' and $uses_jscalendar eq 'y'}
 <link rel="StyleSheet" href="lib/jscalendar/calendar-system.css" type="text/css"></link>
-<script language="JavaScript" type="text/javascript"><!--
+<script type="text/javascript"><!--
 {if $feature_phplayers eq 'y'}{php} include_once ("lib/phplayers/libjs/layersmenu-browser_detection.js"); {/php}{/if}
 // --></script>
 <script type="text/javascript" src="lib/jscalendar/calendar.js"></script>
@@ -74,14 +74,14 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {if $feature_phplayers eq 'y'}
 <link rel="StyleSheet" href="lib/phplayers/layerstreemenu.css" type="text/css"></link>
 <style type="text/css"><!-- @import url("lib/phplayers/layerstreemenu-hidden.css"); //--></style>
-<script language="JavaScript" type="text/javascript"><!--
+<script type="text/javascript"><!--
 {php} include_once ("lib/phplayers/libjs/layersmenu-browser_detection.js"); global $LayersMenu, $TreeMenu, $PHPTreeMenu, $PlainMenu;{/php}
 // --></script>
-<script language="JavaScript" type="text/javascript" src="lib/phplayers/libjs/layersmenu-library.js"></script>
-{*
-<script language="JavaScript" type="text/javascript" src="lib/phplayers/libjs/layersmenu.js"></script>
-*}
-<script language="JavaScript" type="text/javascript" src="lib/phplayers/libjs/layerstreemenu-cookies.js"></script>
+<script type="text/javascript" src="lib/phplayers/libjs/layersmenu-library.js"></script>
+{* lets try this *}
+<script type="text/javascript" src="lib/phplayers/libjs/layersmenu.js"></script>
+{* will it work now ? (luci) *}
+<script type="text/javascript" src="lib/phplayers/libjs/layerstreemenu-cookies.js"></script>
 {/if}
 
 {* --- Integrator block --- *}
@@ -124,7 +124,11 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 <link rel="alternate" type="application/rss+xml" title="{tr}RSS Calendars{/tr}" href="tiki-calendars_rss.php?ver={$rssfeed_default_version}" />
 {/if}
 
-
+{* extra javascript external files *}
+<!-- {$head_extra_js|@asort} -->
+{foreach key=extrajs item=fooprio from=$head_extra_js}
+	<script type="text/javascript" src="{$extrajs}"></script>
+{/foreach}
 
 {* ---- END ---- *}
 

@@ -39,6 +39,7 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 <tr><td class="form">{tr}Prevent automatic/robot registration{/tr}{php}if (!function_exists("gd_info")){ {/php} {tr} - Php GD library required{/tr}{php}}{/php}:</td><td><input type="checkbox" name="rnd_num_reg" {if $rnd_num_reg eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Validate users by email{/tr}:</td><td><input type="checkbox" name="validateUsers" {if $validateUsers eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Validate email address (may not work){/tr}:</td><td><input type="checkbox" name="validateEmail" {if $validateEmail eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Users can opt-out internal messages{/tr}:</td><td><input type="checkbox" name="allowmsg_is_optional" {if $allowmsg_is_optional eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Users accept internal messages by default{/tr}:</td><td><input type="checkbox" name="allowmsg_by_default" {if $allowmsg_by_default eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Remind passwords by email (if "Store plaintext passwords" is activated.) Else, Reset passwords by email{/tr}:</td><td><input type="checkbox" name="forgotPass" {if $forgotPass ne 'n'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Store plaintext passwords{/tr}:</td><td><input type="checkbox" name="feature_clear_passwords" {if $feature_clear_passwords eq 'y'}checked="checked"{/if}/></td></tr>
@@ -141,8 +142,11 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 <option value="3600" {if $remembertime eq 3600} selected="selected"{/if}>1 {tr}hour{/tr}</option>
 <option value="7200" {if $remembertime eq 7200} selected="selected"{/if}>2 {tr}hours{/tr}</option>
 <option value="36000" {if $remembertime eq 36000} selected="selected"{/if}>10 {tr}hours{/tr}</option>
-<option value="72000" {if $remembertime eq 72000} selected="selected"{/if}>1 {tr}day{/tr}</option>
-<option value="720000" {if $remembertime eq 720000} selected="selected"{/if}>1 {tr}week{/tr}</option>
+<option value="72000" {if $remembertime eq 72000} selected="selected"{/if}>20 {tr}hours{/tr}</option>
+<option value="86400" {if $remembertime eq 86400} selected="selected"{/if}>1 {tr}day{/tr}</option>
+<option value="604800" {if $remembertime eq 604800} selected="selected"{/if}>1 {tr}week{/tr}</option>
+<option value="2629743" {if $remembertime eq 2629743} selected="selected"{/if}>1 {tr}month{/tr}</option>
+<option value="31556926" {if $remembertime eq 31556926} selected="selected"{/if}>1 {tr}year{/tr}</option>
 </select>
 </td></tr>
 <tr><td class="form">{tr}Remember me name{/tr}:</td><td><input type="text" name="cookie_name" value="{$cookie_name|escape}" size="50" /></td></tr>

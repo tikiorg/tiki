@@ -1,3 +1,4 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-chat_box.tpl,v 1.6 2006-08-29 20:19:13 sylvieg Exp $ *}
 <!--<form onsubmit="javascript:top.document.frames[0].document.write('<span style=\'color:blue;\'>{$nickname}'+':'+getElementById('chatedit').value+'</span><br />');">-->
 <form name="dform">
 <input type="hidden" name="channelId" value="{$channelId|escape}" />
@@ -8,7 +9,7 @@
 </form>
 <!-- set focus in the input box every time to have user experience-->
 {literal}
- <script language="javascript">
+ <script type="text/javascript">
 	window.onLoad = initLoad();
 	function initLoad()
 	{

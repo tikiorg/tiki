@@ -92,3 +92,5 @@
 <a href="tiki-admin.php?page=freetags" title="{tr}Freetags{/tr}" class="link"><img border="0"
    src="img/smiles/icon_cool.gif" alt="{tr}Freetags{/tr}" /></a>
 {/if}
+<a href="tiki-admin.php?page=i18n" title="{tr}i18n{/tr}" class="link"><img border="0"
+   src="img/icons/admin_i18n.png" alt="{tr}i18n{/tr}" /></a>

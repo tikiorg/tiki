@@ -1,12 +1,11 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.29 2005-05-18 10:58:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.30 2006-08-29 20:19:01 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.29 2005-05-18 10:58:52 mose Exp $
 if (!isset($_REQUEST["nocache"]))
 	session_cache_limiter ('private_no_expire');
 
@@ -23,40 +22,79 @@ if ($feature_galleries != 'y') {
 	die;
 }
 
-if (!isset($_REQUEST["id"]) && !isset($_REQUEST["name"])) {
+$id = 0;
+if (isset($_REQUEST["name"])) {
+	$id=$imagegallib->get_imageid_byname($_REQUEST["name"]);
+} elseif (isset($_REQUEST["id"])) {
+	$id=$_REQUEST["id"];
+}
+
+if (!$id) {
    header("HTTP/1.0 404 Not Found");
 	die;
 }
 
-$feature_galleries = $tikilib->get_preference('feature_galleries', 'y');
+$galleryId = $imagegallib->get_gallery_from_image($id);
 
-// Die is galleries are disabled
-if($feature_galleries != 'y') {
-  die;
+if ($userlib->object_has_one_permission($galleryId, 'image gallery')) {
+	if ($tiki_p_admin != 'y') {
+		// Now get all the permissions that are set for this type of permissions 'image gallery'
+		$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'image galleries');
+
+		foreach ($perms["data"] as $perm) {
+			$permName = $perm["permName"];
+
+			if ($userlib->object_has_permission($user, $galleryId, 'image gallery', $permName)) {
+				$$permName = 'y';
+			} else {
+				$$permName = 'n';
+			}
+		}
+	}
+} elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+	global $categlib;
+	if (!is_object($categlib)) {
+		include_once('lib/categories/categlib.php');
+	}
+	$perms_array = $categlib->get_object_categories_perms($user, 'image gallery', $galleryId);
+   	if ($perms_array) {
+   		$is_categorized = TRUE;
+    	foreach ($perms_array as $perm => $value) {
+    		$$perm = $value;
+    	}
+   	} else {
+   		$is_categorized = FALSE;
+   	}
+	if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+        header("HTTP/1.0 404 Not Found");
+        die;
+	}
 }
 
-$gal_use_db = $tikilib->get_preference('gal_use_db', 'y');
-$gal_use_dir = $tikilib->get_preference('gal_use_dir', '');
+if ($tiki_p_view_image_gallery != 'y' && $tiki_p_admin_galleries != 'y') {
+    header("HTTP/1.0 404 Not Found");
+    die;
+}
 
 $scalesize = 0;
 
 if (isset($_REQUEST["thumb"])) {
 	$itype = 't';
-} elseif (isset($_REQUEST["scaled"])) {
-	$itype = 's';
-
-	if (isset($_REQUEST["scalesize"]) && is_numeric($_REQUEST["scalesize"])) {
-		$scalesize = $_REQUEST["scalesize"];
-	}
-
+} elseif (isset($_REQUEST["scalesize"])) {
+    if (is_numeric($_REQUEST["scalesize"]) && $_REQUEST["scalesize"] > 0) {
+    	$itype = 's';
+    	$scalesize = $_REQUEST["scalesize"];
+    } else {
+    	$itype = 'o';
+    }
 } else {
-	$itype = 'o';
-}
-
-if (isset($_REQUEST["name"])) {
-	$id=$imagegallib->get_imageid_byname($_REQUEST["name"]);
-} else {
-	$id=$_REQUEST["id"];
+	$galdef = $imagegallib->get_gallery_default_scale($galleryId);
+	if ($galdef =='o') {
+    	$itype = 'o';
+	} else {
+    	$itype = 's';
+    	$scalesize = $galdef;
+    }
 }
 
 if($imagegallib->get_etag($id, $itype, $scalesize)!==false) {
@@ -76,38 +114,6 @@ $imagegallib->get_image($id, $itype, $scalesize);
 if (!isset($imagegallib->image)) {
 	// cannot scale image. Get original
 	$imagegallib->get_image($id, 'o');
-}
-
-$galleryId = $imagegallib->galleryId;
-
-$smarty->assign('individual', 'n');
-
-if ($userlib->object_has_one_permission($galleryId, 'image gallery')) {
-	$smarty->assign('individual', 'y');
-
-	if ($tiki_p_admin != 'y') {
-		// Now get all the permissions that are set for this type of permissions 'image gallery'
-		$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'image galleries');
-
-		foreach ($perms["data"] as $perm) {
-			$permName = $perm["permName"];
-
-			if ($userlib->object_has_permission($user, $galleryId, 'image gallery', $permName)) {
-				$$permName = 'y';
-
-				$smarty->assign("$permName", 'y');
-			} else {
-				$$permName = 'n';
-
-				$smarty->assign("$permName", 'n');
-			}
-		}
-	}
-}
-
-if ($tiki_p_view_image_gallery!='y') {
-   header("HTTP/1.0 404 Not Found");
-	die;
 }
 
 // do not count if it is a thumbnail or parameter 'nocount' set

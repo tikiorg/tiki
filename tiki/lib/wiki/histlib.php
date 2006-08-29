@@ -116,7 +116,7 @@ class HistLib extends TikiLib {
 
 	// Returns all the versions for this page
 	// without the data itself
-	function get_page_history($page) {
+	function get_page_history($page, $fetchdata=true) {
 		global $feature_contribution;
 
 		$query = "select * from `tiki_history` where `pageName`=? order by `version` desc";
@@ -130,7 +130,7 @@ class HistLib extends TikiLib {
 			$aux["lastModif"] = $res["lastModif"];
 			$aux["user"] = $res["user"];
 			$aux["ip"] = $res["ip"];
-			$aux["data"] = $res["data"];
+			if ($fetchdata==true) $aux["data"] = $res["data"];
 			$aux["pageName"] = $res["pageName"];
 			$aux["description"] = $res["description"];
 			$aux["comment"] = $res["comment"];
@@ -143,6 +143,33 @@ class HistLib extends TikiLib {
 		}
 
 		return $ret;
+	}
+
+	// Returns one version of the page from the history
+	// without the data itself
+	function get_page_from_history($page,$version,$fetchdata=false) {
+
+		$query = "select `pageName`, `description`, `version`, `lastModif`, `user`, `ip`, `data`, `comment` from `tiki_history` where `pageName`=? and `version`=?";
+		$result = $this->query($query,array($page,$version));
+
+		$ret = array();
+
+		while ($res = $result->fetchRow()) {
+			$aux = array();
+
+			$aux["version"] = $res["version"];
+			$aux["lastModif"] = $res["lastModif"];
+			$aux["user"] = $res["user"];
+			$aux["ip"] = $res["ip"];
+			if ($fetchdata==true) $aux["data"] = $res["data"];
+			$aux["pageName"] = $res["pageName"];
+			$aux["description"] = $res["description"];
+			$aux["comment"] = $res["comment"];
+			//$aux["percent"] = levenshtein($res["data"],$actual);
+			$ret[] = $aux;
+		}
+
+		return $ret[0];
 	}
 	
 	function get_page_latest_version($page) {

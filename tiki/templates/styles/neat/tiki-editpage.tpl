@@ -2,7 +2,7 @@
 
 <!--Check to see if there is an editing conflict-->
 {if $editpageconflict == 'y'}
-<script language='Javascript' type='text/javascript'>
+<script type='text/javascript'>
 <!-- Hide Script
 	alert('{tr}This page is being edited by{/tr} {$semUser}. {tr}Proceed at your own peril{/tr}.')
 //End Hide Script-->

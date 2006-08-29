@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.48 2006-05-22 17:09:14 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.49 2006-08-29 20:19:12 sylvieg Exp $ *}
 
 <script type="text/javascript">
 {literal}
@@ -238,7 +238,8 @@
         </td>
       </tr><tr>
         <td class="form"><label for="general-gzip">
-        {if $feature_help eq 'y'}<a href="{$helpurl}Compression" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}:" >{/if}
+        {if $feature_help eq 'y'}<a href="http://tikiwiki.org/Compression" 
+target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}:" >{/if}
         {tr}Use gzipped output{/tr}
         {if $feature_help eq 'y'}</a>{/if}
         :</label>

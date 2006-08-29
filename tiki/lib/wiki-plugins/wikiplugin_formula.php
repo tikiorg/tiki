@@ -15,7 +15,7 @@
  * wiki page.
  */
 function wikiplugin_formula_help() {
-	return tra("Formula").":<br />~np~{FORMULA(width=>500,height=>400,paper=>letter,orientation=>landscape,steps=>150,min=0,max=100,y0=>,y1=>,...)}".tra("Title")."{FORMULA}~/np~";
+	return tra("Formula").":<br />~np~{FORMULA(width=>500, height=>400, paper=>letter, orientation=>landscape, steps=>150, min=0, max=100, y0=>, y1=>,...)}".tra("Title")."{FORMULA}~/np~";
 }
 function wikiplugin_formula($data, $params) {
 	global $dbTiki, $tikilib, $tiki_p_edit_sheet, $tiki_p_admin_sheet, $tiki_p_admin;

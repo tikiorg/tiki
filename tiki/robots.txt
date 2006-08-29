@@ -82,3 +82,5 @@ Disallow: tiki-view_cache.php
 Disallow: tiki-user_information.php
 Disallow: get_strings.php
 Disallow: tiki-index.php?page=SandBox
+Disallow: tiki-calendar.php
+Disallow: tiki-browse_categories.php

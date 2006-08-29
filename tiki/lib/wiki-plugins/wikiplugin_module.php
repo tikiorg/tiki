@@ -1,10 +1,10 @@
 <?php
-/* $Id: wikiplugin_module.php,v 1.28 2005-06-26 14:28:34 mose Exp $
+/* $Id: wikiplugin_module.php,v 1.29 2006-08-29 20:19:11 sylvieg Exp $
 Displays a module inlined in page
 
 Parameters
 module name : module=>lambda
-align : align=>(left|center|right)
+float : float=>(left|none|right)
 max : max=>20
 np : np=>(0|1) # (for non-parsed content)
 flip : flip=>(n|y)
@@ -12,12 +12,12 @@ decorations : decorations=>(y|n)
 module args : arg=>value (depends on module)
 
 Example:
-{MODULE(module=>last_modified_pages,align=>left,max=>3,maxlen=>22)}
+{MODULE(module=>last_modified_pages,float=>left,max=>3,maxlen=>22)}
 {MODULE}
 
 about module params : all params are passed in $module_params
-so if you need to use parmas just add them in MODULE()
-like the trackerId in the above example.
+so if you need to use params just add them in MODULE()
+
 */
 
 /**
@@ -28,7 +28,7 @@ like the trackerId in the above example.
  */
 
 function wikiplugin_module_help() {
-	return tra("Displays a module inlined in page").":<br />~np~{MODULE(module=>,align=>left|center|right,max=>,np=>0|1,args...)}{MODULE}~/np~";
+	return tra("Displays a module inlined in page").":<br />~np~{MODULE(module=>,float=>left|right|none,decorations=>y|n,flip=>y|n,max=>,np=>0|1,args...)}{MODULE}~/np~";
 }
 
 function wikiplugin_module($data, $params) {
@@ -38,8 +38,8 @@ function wikiplugin_module($data, $params) {
 	$out = '';
 	extract ($params,EXTR_SKIP);
 
-	if (!isset($align)) {
-		$align = 'nofloat';
+	if (!isset($float)) {
+		$float = 'nofloat';
 	}
 
     if (!isset($max)) {
@@ -118,12 +118,12 @@ function wikiplugin_module($data, $params) {
 //			fclose ($fp);
 //		}
 
-		$out = eregi_replace("\n", "", $out);
+//		$out = eregi_replace("\n", "", $out);
 	}
 
 	if ($out) {
-		if ($align != 'nofloat') {
-			$data = "<div style='float:$align;'>";
+		if ($float != 'nofloat') {
+			$data = "<div style='float: $float;'>";
 		} else {
 			$data = "<div>";
 		}	
@@ -133,8 +133,8 @@ function wikiplugin_module($data, $params) {
 			$data.= "$out</div>";
 		}
 	} else {
-        // \todo Baad practice to use hardcoded style!! ;]
-		$data = "<div style='float:$align;color:#AA2200;'>" . tra("Sorry no such module"). "<br /><b>$module</b></div>" . $data;
+        // Display error message
+		$data = "<div class=\"highlight\">" . tra("Sorry no such module"). "<br /><b>$module</b></div>" . $data;
 	}
 
 	return $data;

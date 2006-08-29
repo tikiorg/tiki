@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.35 2006-05-01 04:51:14 franck Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.36 2006-08-29 20:19:13 sylvieg Exp $ *}
 
 <script src="lib/x/x_core.js"></script>
 <script src="lib/x/x_event.js"></script>
@@ -24,7 +24,7 @@
 		  border="1"
 		  alt="{tr}click on the map to zoom or pan, do not drag{/tr}" 
 		  title="{tr}click on the map to zoom or pan, do not drag{/tr}" />
-		  <script language="JavaScript">	
+		  <script type="text/javascript">	
 		    var minx={$minx};
 		    var miny={$miny};
 		    var maxx={$maxx};

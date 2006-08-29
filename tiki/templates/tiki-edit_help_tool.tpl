@@ -1,6 +1,7 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help_tool.tpl,v 1.22 2006-08-29 20:19:13 sylvieg Exp $ *}
 <div class="quicktag">
 {literal}
-<script language="javascript" type="text/javascript">
+<script type="text/javascript">
 <!--
 function taginsert(area_name,tagid)
 {

@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.63 2006-05-22 17:09:14 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.64 2006-08-29 20:19:12 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
 {if $feature_help eq 'y'}
-<a href="{$helpurl}PermissionAdmin" target="tikihelp" class="tikihelp" title="{tr}admin groups{/tr}">
+<a href="{$helpurl}Permissions Settings" target="tikihelp" class="tikihelp" title="{tr}admin groups{/tr}">
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' />{/if}
 {if $feature_help eq 'y'}</a>{/if}
 
@@ -139,7 +139,8 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}remove{/tr}" src="img/icons2/de
 </select>
 </td></tr>
 <tr class="formcolor"><td><label for="groups_home">{tr}Group Homepage{/tr}:<br />
-({tr}Use wiki page name or full URL{/tr})
+({tr}Use wiki page name or full URL{/tr})<br />
+To use a relative link, use ex.: <i>http:tiki-forums.php</i>
 </label></td><td><input type="text" size="40" name="home" id="groups_home" value="{$grouphome|escape}" /></td></tr>
 {if $groupTracker eq 'y'}
 <tr class="formcolor"><td><label for="groupTracker">{tr}Group Information Tracker{/tr}</label></td><td>

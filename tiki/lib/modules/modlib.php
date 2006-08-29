@@ -19,7 +19,7 @@ class ModLib extends TikiLib {
 	}
 
 	function replace_user_module($name, $title, $data, $parse=NULL) {
-		if ((!empty($name)) && (!empty($title)) && (!empty($data))) {
+		if ((!empty($name)) && (!empty($data))) {
 			$query = "delete from `tiki_user_modules` where `name`=?";
 			$result = $this->query($query,array($name),-1,-1,false);
 			$query = "insert into `tiki_user_modules`(`name`,`title`,`data`, `parse`) values(?,?,?,?)";

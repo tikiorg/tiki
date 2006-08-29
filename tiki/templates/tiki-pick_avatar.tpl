@@ -22,7 +22,7 @@
 </div>
 {else} 
 
-<script language='Javascript' type='text/javascript'>
+<script type='text/javascript'>
 var avatars = new Array();
 {section name=ix loop=$avatars}
   avatars[{$smarty.section.ix.index}] = '{$avatars[ix]}';

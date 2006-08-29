@@ -1,15 +1,14 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_versions.php,v 1.8 2005-09-07 12:35:41 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_versions.php,v 1.9 2006-08-29 20:19:11 sylvieg Exp $
  *
- * Tiki-Wiki BOX plugin.
+ * Versions plugin: Split the text in parts visible only under some conditions:
  * 
  * Syntax:
+ * {VERSIONS(nav=>y| n, title=>y| n, default=>)}text{VERSIONS}
  * 
- *  {BOX([title=>Title],[bg=>color|#999fff],[width=>num[%]],[align=>left|right|center])}
- *   Content inside box
- *  {BOX}
- * 
+ * Documentation
+ * http://doc.tikiwiki.org/PluginVersions
  */
 function wikiplugin_versions_help() {
 	return tra("Split the text in parts visible only under some conditions").":<br />~np~{VERSIONS(nav=>y|n,title=>y|n,default=>)}".tra("text")."{VERSIONS}~/np~";

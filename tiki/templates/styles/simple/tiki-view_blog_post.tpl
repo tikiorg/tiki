@@ -1,4 +1,4 @@
-<!-- $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-view_blog_post.tpl,v 1.7 2006-07-14 11:00:59 sylvieg Exp $ -->
+<!-- $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-view_blog_post.tpl,v 1.8 2006-08-29 20:19:15 sylvieg Exp $ -->
 {if $feature_blogposts_pings == 'y'
   && ($blog_data.allow_comments == 'y' or $blog_data.allow_comments == 't')
   && $feature_trackbackpings  == 'y'}

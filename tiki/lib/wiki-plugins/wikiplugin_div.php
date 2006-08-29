@@ -1,19 +1,19 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_div.php,v 1.8 2006-05-19 23:03:48 amette Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_div.php,v 1.9 2006-08-29 20:19:11 sylvieg Exp $
  *
  * DIV plugin. Creates a division block for the content. Forces the content 
- * to be aligned (left by deafault).
+ * to be aligned (left by default).
  * 
  * Syntax:
  * 
- *  {DIV([align=>left|right|center][, bg=color][, width=>num[%]][, float=>left|right])}
+ *  {DIV([align=>left|right|center|justify][, bg=color][, width=>num[%]][, float=>left|right])}
  *   some content
  *  {DIV}
  * 
  */
 function wikiplugin_div_help() {
-	return tra("Insert a division block on wiki page").":<br />~np~{DIV([class=>class][, type=>div|span|pre|i|b|tt|blockquote][, align=>left|right|center][, bg=>color][, width=>num[%]][, float=>left|right][, clear=>left|right|both])}".tra("text")."{DIV}~/np~";
+	return tra("Insert a division block on wiki page").":<br />~np~{DIV(class=>class, type=>div|span|pre|i|b|tt|blockquote, align=>left|right|center|justify, bg=>color, width=>num[%], float=>left|right])}".tra("text")."{DIV}~/np~";
 }
 
 function wikiplugin_div($data, $params) {
@@ -24,7 +24,7 @@ function wikiplugin_div($data, $params) {
 	$c    = (isset($class)) ? " class='$class'"  : "";
 	$w    = (isset($width)) ? " width: $width;"  : "";
 	$bg   = (isset($bg))    ? " background: $bg;" : "";
-	$al   = (isset($align) && ($align == 'right' || $align == 'center')) ? " text-align: $align;" : " text-align: left;";
+	$al   = (isset($align) && ($align == 'right' || $align == "center" || $align == "justify")) ? " text-align: $align;" : " text-align: left;";
 	$fl   = (isset($float) && ($float == 'left' || $float == 'right')) ? " float: $float;"  : " float: none;";
 	$cl   = (isset($clear) && ($clear == 'left' || $clear == 'right' || $clear == 'both')) ? " clear: $clear;"  : " clear: none;";
 

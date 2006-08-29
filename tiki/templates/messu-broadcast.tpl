@@ -1,7 +1,7 @@
 <h1><a class="pagetitle" href="messu-broadcast.php">{tr}Broadcast message{/tr}</a>
 
 {if $feature_help eq 'y'}
-<a href="{$helpurl}User+Messages" target="tikihelp" class="tikihelp" title="{tr}Message Broadcast{/tr}">
+<a href="{$helpurl}Inter-User Messages" target="tikihelp" class="tikihelp" title="{tr}Message Broadcast{/tr}">
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
 {/if}
 

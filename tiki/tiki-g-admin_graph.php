@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_graph.php,v 1.4 2006-01-20 09:54:53 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_graph.php,v 1.5 2006-08-29 20:19:02 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -75,24 +75,18 @@ if (isset($_REQUEST['newmajor'])) {
 	$processManager->new_process_version($_REQUEST['newmajor'], false);
 }
 
-$where = '';
-$wheres = array();
+$filter_name = '';
+$filter_active = '';
 
 if (isset($_REQUEST['filter'])) {
-	if ($_REQUEST['filter_name']) {
-		$wheres[] = " name='" . $_REQUEST['filter_name'] . "'";
-	}
-
-	if ($_REQUEST['filter_active']) {
-		$wheres[] = " isActive='" . $_REQUEST['filter_active'] . "'";
-	}
-
-	$where = implode('and', $wheres);
-}
-
-if (isset($_REQUEST['where'])) {
-	$where = $_REQUEST['where'];
-}
+  if ($_REQUEST['filter_name']) {
+    $filter_name = $_REQUEST['filter_name'];
+  } 
+  
+  if ($_REQUEST['filter_active']) {
+    $filter_active = $_REQUEST['filter_active'];
+  } 
+} 
 
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'lastModif_desc';
@@ -115,10 +109,11 @@ if (isset($_REQUEST["find"])) {
 }
 
 $smarty->assign('find', $find);
-$smarty->assign('where', $where);
+$smarty->assign('filter_name', $filter_name);
+$smarty->assign('filter_active', $filter_active);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 
-$items = $processManager->list_processes($offset, $maxRecords, $sort_mode, $find, $where);
+$items = $processManager->list_processes($offset, $maxRecords, $sort_mode, $find, $filter_name, $filter_active);
 $smarty->assign('cant', $items['cant']);
 
 $cant_pages = ceil($items["cant"] / $maxRecords);

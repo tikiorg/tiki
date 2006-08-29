@@ -17,11 +17,13 @@ Text Search <input type="hidden" name="where" value="wikis" />
 <input type="text" name="highlight" size="14" accesskey="s" />
 </form>
 </td>
+{if $tiki_p_view eq 'y'}
 <td style="text-align:right;">
 <form method="post" action="tiki-listpages.php">
 &nbsp;Page Search <input type="text" name="find" />
 </form>
 </td>
+{/if}
 <td style="text-align:right;">
 {if $user}
 <b>{$user}</a>
