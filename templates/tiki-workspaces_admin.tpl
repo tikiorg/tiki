@@ -7,26 +7,26 @@
 <p class="pagetitle">{tr}Workspaces Administration{/tr}</p>
 {include file="tiki-workspaces_module_error.tpl" error=$page_error_msg}
 <form name="form1" method="post" action="tiki-workspaces_admin.php">
-  <input name="id" type="hidden" id="id" value="{$workspace.workspaceId}"> 
-  <input name="categoryId" type="hidden" id="categoryId" value="{$workspace.categoryId}"> 
-  <input name="viewWS" type="hidden" id="viewWS" value="{$viewWS}"> 
+  <input name="id" type="hidden" id="id" value="{$workspace.workspaceId}"/> 
+  <input name="categoryId" type="hidden" id="categoryId" value="{$workspace.categoryId}"/> 
+  <input name="viewWS" type="hidden" id="viewWS" value="{$viewWS}"/> 
   
   <table class="normal">
     <tr> 
       <td class="formcolor"><label for="code">{tr}Code{/tr}</label></td>
       <td class="formcolor">
       {if $workspace.workspaceId!=""}
-      	<input name="code" type="hidden" id="code" value="{$workspace.code}"> 
+      	<input name="code" type="hidden" id="code" value="{$workspace.code}"/> 
       	{$workspace.code}
       {else}
-	      <input name="code" type="text" id="code" value="{$workspace.code}" size="60" maxlength="100">
+	      <input name="code" type="text" id="code" value="{$workspace.code}" size="60" maxlength="100"/>
 	  {/if}
 	  	{ws_help}A sort unique identifier for the workspace{/ws_help}
       </td>
     </tr>
      <tr> 
       <td class="formcolor"><label for="name">{tr}Name{/tr}</label></td>
-      <td class="formcolor"><input name="name" type="text" id="name" value="{$workspace.name}" size="60" maxlength="100"></td>
+      <td class="formcolor"><input name="name" type="text" id="name" value="{$workspace.name}" size="60" maxlength="100"/></td>
     </tr>
     <tr> 
       <td class="formcolor" ><label for="desc">{tr}Description{/tr}</label></td>
@@ -104,7 +104,7 @@
     <tr> 
       <td class="formcolor" ><label for="closed">{tr}Closed{/tr}</label></td>
       <td class="formcolor">
-		  <input name="closed" id="closed" type="checkbox" value="y" {if $workspace.closed eq 'y'}checked{/if}>    
+		  <input name="closed" id="closed" type="checkbox" value="y" {if $workspace.closed eq 'y'}checked{/if}/>    
 		  {ws_help}If checked, only admin users can access to the workspace{/ws_help}
       </td>
     </tr>
@@ -121,28 +121,35 @@
       </td>
     </tr>
     <tr> 
-      <td class="formcolor" ><label for="isuserws">{tr}User workspace{/tr}</label></td>
-      <td class="formcolor">
-	  		<input name="isuserws" id="isuserws" type="checkbox" value="y" {if $workspace.isuserws eq 'y'}checked{/if}>    
-		  	{ws_help}{tr}If checked this is a personal workspace asociated to owner user{/tr}{/ws_help}
-      </td>
-    </tr>
-    <tr> 
       <td class="formcolor" ><label for="hide">{tr}Hide workspace{/tr}</label></td>
       <td class="formcolor">
-		  		<input name="hide" id="hide" type="checkbox" value="y" {if $workspace.hide eq 'y'}checked{/if}>    
+		  		<input name="hide" id="hide" type="checkbox" value="y" {if $workspace.hide eq 'y'}checked{/if}/>    
 		  		{ws_help}{tr}Hide workspace on the list of user assigned workspaces{/tr}{/ws_help}
       </td>
     </tr>
-     <tr> 
+    <tr> 
+      <td class="formcolor" ><label for="isuserws">{tr}Personal workspace{/tr}</label></td>
+      <td class="formcolor">
+      	{if $workspace.isuserws eq 'y'}{$workspace.owner}{else}{tr}no{/tr}{/if}
+      	<input name="isuserws" type="hidden" id="isuserws" value="{if $workspace.isuserws eq 'y'}y{else}n{/if}"/> 
+      	<input name="owner" type="hidden" id="owner" value="{$workspace.owner}"/> 
+      
+      </td>
+      {*<td class="formcolor">
+	  		<input name="isuserws" id="isuserws" type="checkbox" value="y" {if $workspace.isuserws eq 'y'}checked{/if}>    
+		  	{ws_help}{tr}If checked this is a personal workspace asociated to owner user{/tr}{/ws_help}
+      </td>
+      *}
+    </tr>
+{*    <tr> 
       <td class="formcolor"><label for="owner">{tr}Owner{/tr}</label></td>
       <td class="formcolor">
-      		<input name="owner" type="text" id="owner" value="{$workspace.owner}" size="30" maxlength="100">
+      		<input name="owner" type="text" id="owner" value="{$workspace.owner}" size="30" maxlength="100"/>
 		  		{ws_help}{tr}Workspace owner user{/tr}{/ws_help}
       </td>
-    </tr>
+    </tr>*}
      <tr> 
-      <td class="formcolor" colspan="2"><center><input type="submit" name="send" value="Guardar"></center></td>
+      <td class="formcolor" colspan="2"><center><input class="edubutton" type="submit" name="send" value="{tr}Save{/tr}"/></center></td>
     </tr>
   </table>
 </form>
@@ -159,7 +166,7 @@
    <td>
    <form method="get" action="tiki-workspaces_admin.php">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input class="edubutton" type="submit" value="{tr}find{/tr}" name="search" />
 		 {tr}Number of displayed rows{/tr}
 		 <input type="text" size="4" name="numrows" value="{$numrows|escape}">
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
