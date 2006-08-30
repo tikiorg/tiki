@@ -259,14 +259,19 @@ class WorkspaceLib extends TikiDB {
 	function create_workspace_groups($code, $wsType, $wsuser = null) {
 		global $userlib;
 		$roles = $wsType["roles"];
+		//print_r($roles);
 		$userlib->add_group("WSGRP".$code, $code." workspace members".$code, '');
 		foreach ($roles as $key => $rol) {
 			if ($key!="Registered" && $key!="Anonymous"){
 				$userlib->add_group("WSGRP".$code."-".$key, $code."-".$key." workspace members", '');
 				$userlib->remove_all_inclusions("WSGRP".$code."-".$key);
 				$userlib->group_inclusion("WSGRP".$code."-".$key, "WSGRP".$code);
-				//$userlib->group_inclusion("WSGRP".$code."-".$key, "RWSTYPEGRP".$key."-".$wsType["code"]);
-				$userlib->group_inclusion("WSGRP".$code."-".$key, "ROLEGRP".$key);
+				if (isset($rol["permgroup"]) && $rol["permgroup"]!=""){
+					$userlib->group_inclusion("WSGRP".$code."-".$key, $rol["permgroup"]);
+				}
+				if (isset($rol["wstypePermGroup"]) && $rol["wstypePermGroup"]!=""){
+					$userlib->group_inclusion("WSGRP".$code."-".$key, $rol["wstypePermGroup"]);
+				}
 				if ($key == "Owner" && $wsuser != null && isset ($wsType["userwstype"]) && $wsType["userwstype"] != "") {
 					$userlib->assign_user_to_group($wsuser, "WSGRP".$code."-".$key);
 				}
