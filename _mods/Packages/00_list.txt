@@ -60,3 +60,9 @@
 'taglines','rcogley','1.2','Tagline collection from Tiki developer rcogley','Unknown'
 'taglines','damian1','1.1','Tagline collection from Tiki developer Damian','Various Sources'
 'taglines','damian2','1.1','Another tagline collection from Tiki developer Damian','Various Sources'
+'modules','most_commented','1.1','Most commented objects', 'GNU/LGPL'
+'modules', 'top_commenters','1.1','Top objects commenters', 'GNU/LGPL'
+'modules', 'top_edited_pages', '1.1', 'Top edited pages', 'GNU/LGPL'
+'modules', 'top_page_editors', '1.1', 'Top page editors', 'GNU/LGPL'
+'modules', 'top_voted_comments', '1.1', 'Top voted comments', 'GNU/LGPL'
+
