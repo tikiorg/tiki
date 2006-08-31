@@ -1,4 +1,5 @@
 <!-- templates/tiki-preview.tpl start -->
+<div class="wikipreview">
 <h2>{tr}Preview{/tr}: {$page}</h2>
 {if $feature_wiki_description eq 'y'}
 <small>{$description}</small>
@@ -7,4 +8,5 @@
 {if $has_footnote}
 <div  class="wikitext">{$parsed_footnote}</div>
 {/if}
+</div>
 <!-- templates/tiki-preview.tpl end -->
