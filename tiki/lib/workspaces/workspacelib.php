@@ -266,12 +266,14 @@ class WorkspaceLib extends TikiDB {
 				$userlib->add_group("WSGRP".$code."-".$key, $code."-".$key." workspace members", '');
 				$userlib->remove_all_inclusions("WSGRP".$code."-".$key);
 				$userlib->group_inclusion("WSGRP".$code."-".$key, "WSGRP".$code);
-				if (isset($rol["permgroup"]) && $rol["permgroup"]!=""){
+				/*if (isset($rol["permgroup"]) && $rol["permgroup"]!=""){
 					$userlib->group_inclusion("WSGRP".$code."-".$key, $rol["permgroup"]);
 				}
 				if (isset($rol["wstypePermGroup"]) && $rol["wstypePermGroup"]!=""){
 					$userlib->group_inclusion("WSGRP".$code."-".$key, $rol["wstypePermGroup"]);
-				}
+				}*/
+				$userlib->group_inclusion("WSGRP".$code."-".$key, "ROLEGRP".$key);
+
 				if ($key == "Owner" && $wsuser != null && isset ($wsType["userwstype"]) && $wsType["userwstype"] != "") {
 					$userlib->assign_user_to_group($wsuser, "WSGRP".$code."-".$key);
 				}
