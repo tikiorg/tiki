@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.649 2006-08-29 20:19:04 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.650 2006-09-04 08:20:59 hangerman Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2751,6 +2751,9 @@ function add_pageview() {
 
     function get_links($data) {
 	$links = array();
+
+	//Prevent the substitution of link [] inside a <tag> ex: <input name="tracker[9]" ... >
+	$data=preg_replace("/<[^>]*>/","",$data);
 
 	// Match things like [...], but ignore things like [[foo].
 	// -Robin
