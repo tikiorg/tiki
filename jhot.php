@@ -1,16 +1,19 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/jhot.php,v 1.14 2006-09-04 10:47:33 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/jhot.php,v 1.15 2006-09-05 15:35:30 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/jhot.php,v 1.14 2006-09-04 10:47:33 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/jhot.php,v 1.15 2006-09-05 15:35:30 sylvieg Exp $
 include_once ('tiki-setup.php');
 
 include_once ('lib/drawings/drawlib.php');
 
+if (($tiki_p_admin_drawings != 'y') && ($tiki_p_edit_drawings != 'y') && ($feature_drawings != 'y')) {
+        die;
+}
 if (isset($_FILES['filepath']) && is_uploaded_file($_FILES['filepath']['tmp_name'])) {
 	$size = $_FILES['filepath']['size'];
 
