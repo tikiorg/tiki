@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.308 2006-08-29 20:19:02 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.309 2006-09-05 21:46:54 rlpowell Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1171,7 +1171,7 @@ if ($wiki_page_regex == 'strict') {
 } else {
     // This is just evil.  The middle section means "anything, as long
     // as it's not a | and isn't followed by ))".  -rlpowell
-    $page_regex = '([^|\(\)])([^|\(\)](?!\)\)))*?([^|\(\)])';
+    $page_regex = '([^\n|\(\)])([^\n|\(\)](?!\)\)))*?([^\n|\(\)])';
 }
 
 // PEAR::Auth support
