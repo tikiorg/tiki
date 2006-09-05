@@ -1,3 +1,273 @@
+2006-05-25  boots  <jayboots@yahoo.com>
+
+    * NEWS
+      libs/Smarty_Compiler.class.php:
+      un-hide hidden xml open tags
+
+2006-05-09  boots  <jayboots@yahoo.com>
+
+    * NEWS
+      libs/Smarty_Compiler.class.php:
+      separate handling of comment blocks from "special blocks"
+
+    * NEWS
+      libs/plugins/function.popup_init.php:
+      reverted {popup_init} as proposed change to insertion behviour was not BC
+
+2006-05-04  boots  <jayboots@yahoo.com>
+
+    * NEWS
+      libs/plugins/function.popup_init.php:
+      changed {popup_init} to only emit code once during a request
+      
+      Thanks to TGKnIght from forums
+
+2006-04-22  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/Smarty_Compiler.class.php:
+      fix handling of block-methods of registered objects
+      thanks to El Hombre Gris
+
+2006-04-04  Monte Ohrt  <monte@ohrt.com>
+
+    * libs/plugins/function.html_select_date.php:
+      fix typo
+
+2006-03-09  Monte Ohrt  <monte@ohrt.com>
+
+    * (Smarty_2_6_13)
+      NEWS:
+      update for release
+
+2006-03-08  Monte Ohrt  <monte@ohrt.com>
+
+    * libs/plugins/modifier.regex_replace.php:
+      remove delim quote
+
+    * libs/plugins/modifier.regex_replace.php:
+      fix delimiter issue
+
+2006-03-03  Monte Ohrt  <monte@ohrt.com>
+
+    * libs/plugins/modifier.regex_replace.php:
+      use preg_replace to cover any space chars
+
+    * libs/plugins/modifier.regex_replace.php:
+      fix problem with allowing "e" modifier
+
+2006-01-29  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/Smarty_Compiler.class.php:
+      removed possiblity for E_NOTICE on an undefined variable in
+      Smarty_Compiler::_compile_if_tag() - thanks to sbeh
+
+2006-01-18  Monte Ohrt  <monte@ohrt.com>
+
+    * libs/Config_File.class.php
+      libs/Smarty.class.php
+      libs/Smarty_Compiler.class.php:
+      update version numbers
+
+    * (Smarty_2_6_12)
+      NEWS:
+      commit 2.6.12 release
+
+2006-01-15  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/Smarty_Compiler.class.php:
+      fixed use of references $cache_attrs and $repeat in Smarty_Compiler.
+      
+      php does not allow to pass an assigned by reference to a function. since
+      php-5.1.2
+      the reference to the lval gets lost when passing an assignment.
+
+2005-12-31  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/Smarty.class.php:
+      fixed incompatible use of fread() in Smarty::_read_file()
+      it choke on php-5.1.1 and later.
+      thanks to andig for pointing this out.
+
+2005-12-21  boots  <jayboots@yahoo.com>
+
+    * NEWS
+      libs/Smarty_Compiler.class.php:
+      Fix improper tokenization of certain inline math expressions.
+      
+      Thanks to gerard at forums for reporting this.
+
+2005-12-19  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/plugins/function.math.php:
+      fixed problem with math in certain LC_NUMERIC locales.
+      thanks to wiebren for providing problem+solution.
+
+2005-12-14  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS:
+      fixed iso-latin1 special chars
+
+2005-12-14  Monte Ohrt  <monte@ohrt.com>
+
+    * libs/Config_File.class.php
+      libs/Smarty.class.php
+      libs/Smarty_Compiler.class.php:
+      update version numbers
+
+    * (Smarty_2_6_11)
+      NEWS:
+      commit NEWS file for 2.6.11
+
+2005-12-08  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * docs/de/getting-started.xml:
+      sync with en
+
+2005-11-29  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/Smarty_Compiler.class.php:
+      fixed code generation of non-cacheable blocks to play well with php's
+      "Alternative syntax" used for example in compiled {if}..{else}..{/if}
+      blocks.
+      
+      (see: http://php.net/manual/en/control-structures.alternative-syntax.php
+      on "Alternative syntax")
+      
+      thanks to kihara from the forum.
+
+2005-11-26  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS:
+      fixed handling of multiple identical calls to {insert}.
+      
+      the function was called multiple times, but all inserts where replaced
+      by the results of the first call to the insert function.
+
+    * libs/plugins/compiler.assign.php
+      libs/plugins/function.config_load.php:
+      added credits
+
+    * libs/plugins/function.popup.php:
+      added "closeclick" from
+      http://www.bosrup.com/web/overlib/?Command_Reference
+
+2005-11-23  boots  <jayboots@yahoo.com>
+
+    * NEWS
+      libs/Config_File.class.php
+      libs/Smarty.class.php
+      libs/Smarty_Compiler.class.php
+      libs/plugins/modifier.escape.php:
+      replace {} string access with equivalent substr() to avoid E_STRICT
+      warnings in PHP 5.1
+
+2005-11-09  boots  <jayboots@yahoo.com>
+
+    * NEWS
+      libs/Smarty.class.php:
+      return valid reference in get_config_vars() when given var is non-existant
+
+2005-10-11  Monte Ohrt  <monte@ohrt.com>
+
+    * libs/plugins/block.textformat.php
+      libs/plugins/compiler.assign.php
+      libs/plugins/function.assign_debug_info.php
+      libs/plugins/function.config_load.php
+      libs/plugins/function.counter.php
+      libs/plugins/function.eval.php
+      libs/plugins/function.fetch.php
+      libs/plugins/function.html_options.php
+      libs/plugins/function.html_select_date.php
+      libs/plugins/function.html_select_time.php
+      libs/plugins/function.math.php
+      libs/plugins/function.popup.php
+      libs/plugins/function.popup_init.php
+      libs/plugins/modifier.capitalize.php
+      libs/plugins/modifier.count_characters.php
+      libs/plugins/modifier.count_paragraphs.php
+      libs/plugins/modifier.count_sentences.php
+      libs/plugins/modifier.count_words.php
+      libs/plugins/modifier.date_format.php
+      libs/plugins/modifier.debug_print_var.php
+      libs/plugins/modifier.default.php
+      libs/plugins/modifier.escape.php
+      libs/plugins/modifier.indent.php
+      libs/plugins/modifier.lower.php
+      libs/plugins/modifier.regex_replace.php
+      libs/plugins/modifier.replace.php
+      libs/plugins/modifier.spacify.php
+      libs/plugins/modifier.string_format.php
+      libs/plugins/modifier.strip_tags.php
+      libs/plugins/modifier.truncate.php
+      libs/plugins/modifier.upper.php
+      libs/plugins/modifier.wordwrap.php
+      libs/plugins/shared.escape_special_chars.php
+      libs/plugins/shared.make_timestamp.php:
+      Added author title to plugins where they don't exist. I put my name where I
+      was the original or co-author. If there needs to be more credit given
+      somewhere, speak up!
+
+2005-10-10  Monte Ohrt  <monte@ohrt.com>
+
+    * NEWS
+      libs/plugins/function.html_image.php:
+      add path_prefix to html_image, fix incorrect secure_dir error when image
+      file is missing
+
+2005-10-04  Monte Ohrt  <monte@ohrt.com>
+
+    * demo/templates/index.tpl:
+      remove popup example, update section var syntax
+
+2005-09-16  Nuno Lopes  <nunoplopes@sapo.pt>
+
+    * docs/de/getting-started.xml:
+      more fixes
+
+    * docs/de/getting-started.xml:
+      fix php bug #34520: broken example display (de only)
+
+2005-08-30  Monte Ohrt  <monte@ohrt.com>
+
+    * libs/plugins/modifier.escape.php:
+      change default charset from utf8 to iso-8859-1
+
+    * NEWS
+      libs/plugins/modifier.escape.php:
+      add char_set param
+
+2005-08-17  Monte Ohrt  <monte@ohrt.com>
+
+    * NEWS:
+      fix notice in debug security check
+
+    * libs/Smarty.class.php:
+      fix typo
+
+    * NEWS
+      libs/Smarty.class.php:
+      return valid reference in get_template_vars() when given var is
+      non-existant
+
+2005-08-12  Monte Ohrt  <monte@ohrt.com>
+
+    * NEWS
+      libs/plugins/modifier.escape.php:
+      add "urlpathinfo" escape type to escape modifier. (apache does not like %2F
+      in the PATH_INFO)
+
+2005-08-05  Monte Ohrt  <monte@ohrt.com>
+
+    * NEWS
+      libs/Config_File.class.php
+      libs/Smarty.class.php
+      libs/Smarty_Compiler.class.php:
+      update version numbers
+
 2005-08-04  Monte Ohrt  <monte@ohrt.com>
 
     * NEWS:

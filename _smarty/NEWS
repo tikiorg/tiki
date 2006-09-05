@@ -1,3 +1,39 @@
+- un-hide hidden xml open tags (boots)
+- fix handling of block-methods of registered objects (El Hombre Gris,
+  messju)
+
+Version 2.6.13 (March 9th, 2006)
+--------------------------------
+
+ - update regex_replace, removing possible use of "e" modifier
+
+Version 2.6.12 (Jan 18th, 2006)
+-------------------------------
+
+ - fix improper use of references in the compiler handling cached
+   attributes and in compiled code handling block plugins (messju)
+ - make Smarty::_read_file() work on latest php (messju)
+ - fixed improper tokenization of certain inline math expressions (boots)
+
+Version 2.6.11 (Dec 14, 2005)
+-----------------------------
+
+ - fixed code generation of non-cacheable blocks to play well with php's
+   "Alternative syntax for control structures" (kihara, messju)
+ - fix handling of multiple identical inserts in one display()-call (messju)
+ - replace {} string access with equivalent substr() to avoid E_STRICT
+   warnings in PHP 5.1 (boots)
+ - return valid reference in get_config_vars() when given var is
+   non-existant (Thomas Schulz, boots)
+ - plugin html_image: fix incorrect secure_dir error when
+   file doesn't exist (monte)
+ - plugin html_image: add path_prefix param (monte)
+ - add char_set parameter to escape modifier (Loading, monte)
+ - fix notice in debug security check (Drakla, monte)
+ - return valid reference in get_template_vars() when given var is
+   non-existant (monte)
+ - add escape type "urlpathinfo" to escape modifier (monte)
+
 Version 2.6.10 (Aug 5, 2005)
 ----------------------------
 
