@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.80 2006-08-29 20:19:08 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.81 2006-09-05 01:36:25 rlpowell Exp $
  *
  * \brief Categories support class
  *
@@ -379,7 +379,7 @@ class CategLib extends ObjectLib {
 			}
 		}
 
-		$query_cant = "SELECT DISTINCT c.*, o.* FROM `tiki_category_objects` c,`tiki_objects` o, `tiki_categorized_objects` co LEFT JOIN `users_objectpermissions` u ON u.`objectId`=MD5(".$this->db->concat("o.`type`","LOWER(o.`itemId`)").") AND u.`objectType`=o.`type` WHERE c.`catObjectId`=o.`objectId` AND o.`objectId`=co.`catObjectId` $where";
+		$query_cant = "SELECT DISTINCT c.*, o.* FROM `tiki_category_objects` c, `tiki_categorized_objects` co, `tiki_objects` o LEFT JOIN `users_objectpermissions` u ON u.`objectId`=MD5(".$this->db->concat("o.`type`","LOWER(o.`itemId`)").") AND u.`objectType`=o.`type` WHERE c.`catObjectId`=o.`objectId` AND o.`objectId`=co.`catObjectId` $where";
 		$query = $query_cant . $orderBy;
 		$result = $this->query($query,$bindVars,$maxRecords,$offset);
 		$resultCant = $this->query($query_cant,$bindVars);
