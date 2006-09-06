@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_blog_post.tpl,v 1.26 2006-08-29 20:19:13 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_blog_post.tpl,v 1.27 2006-09-06 15:22:37 wesleywillians Exp $ *}
 {if $feature_blogposts_pings == 'y'
   && ($blog_data.allow_comments == 'y' or $blog_data.allow_comments == 't')
   && $feature_trackbackpings  == 'y'}
@@ -14,7 +14,7 @@
 </rdf:RDF>
 -->
 {/if}
-<h2>{tr}Viewing blog post{/tr}</h2>
+<h2>{tr}Viewing blog post{/tr} - {$blog_data.title}</h2>
 <a class="link" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">{tr}Return to blog{/tr}</a>
 <br /><br />
 <div class="posthead">
