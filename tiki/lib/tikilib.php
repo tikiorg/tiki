@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.650 2006-09-04 08:20:59 hangerman Exp $
+// CVS: $Id: tikilib.php,v 1.651 2006-09-07 18:29:19 fmathias Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -684,7 +684,7 @@ class TikiLib extends TikiDB {
 	    list($a,$csort_mode,$corder) = split('_',$sort_mode);
 	}
 
-	$trackerId = (int) $trackerId;	
+	$trackerId = (int) $trackerId;
 	if ($trackerId == -1) {
 	  $mid = " where 1=1 ";
 	  $bindvars = array();
@@ -3650,7 +3650,7 @@ function add_pageview() {
 	$cachelib->invalidate('user_details_'.$user);
 
 	$user_preferences = $preferences;
-	
+
 	$query = "delete from `tiki_user_preferences` where `user`=?";
 
 	$result = $this->query($query, array($user), -1,-1,false);
@@ -3760,7 +3760,7 @@ function add_pageview() {
 		$midvar .= ',?,?';
 		$bindvars[] = '';
 		$bindvars[] = '';
-	}		
+	}
 	$query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`,`is_html`,`created`$mid) values(?,?,?,?,?,?,?,?,?,?,?,?,? $midvar)";
 	$result = $this->query($query, $bindvars);
 
@@ -3770,7 +3770,7 @@ function add_pageview() {
 	foreach ($pages as $a_page) {
 	    $this->replace_link($name, $a_page);
 	}
-	
+
 
 
 	// Update the log
@@ -3847,7 +3847,7 @@ function add_pageview() {
 	    return false;
 	} else {
 	    $res = $result->fetchRow();
-	    
+
 	    global $user;
 	    if ($user) {
 		$query = "select * from `tiki_page_drafts` where `user`=? and `pageName`=?";
@@ -4695,19 +4695,20 @@ function add_pageview() {
 		$this->parse_htmlchar($data);
 
 	// Now replace a TOC
-	preg_match_all("/\{toc\s?(order=(desc|asc))?\s?(showdesc=(0|1))?\s?(shownum=(0|1))?\s?(type=(plain|fancy))?\s?\}/i", $data, $tocs);
+	preg_match_all("/\{toc\s?(order=(desc|asc))?\s?(showdesc=(0|1))?\s?(shownum=(0|1))?\s?(type=(plain|fancy))?\s?(structId=([a-z]+))?\s?\}/i", $data, $tocs);
 
-        // Loop over all the case-specific versions of {toc} used
-        // (if the user is consistent, this is a loop of count 1)
-        $temp_max = count($tocs[0]);
-        for ($i = 0; $i < $temp_max; $i++) {
+    // Loop over all the case-specific versions of {toc} used
+    // (if the user is consistent, this is a loop of count 1)
+    $temp_max = count($tocs[0]);
+    for ($i = 0; $i < $temp_max; $i++) {
 
 	//If there are instances of {toc} on this page
 	if (count($tocs[0]) > 0) {
 	    $order = 'asc';
 	    $showdesc = false;
 	    $shownum = false;
-            $type = 'plain';
+        $type = 'plain';
+        $structId = '';
 	    if ($tocs[2][$i] == 'desc') {
 		$order = 'desc';
 	    }
@@ -4717,10 +4718,15 @@ function add_pageview() {
 	    if ($tocs[6][$i] == 1) {
 		$shownum = true;
 	    }
-            if ($tocs[8][$i] == 'fancy') {
-                $type = 'fancy';
-            }
+        if ($tocs[8][$i] == 'fancy') {
+        $type = 'fancy';
+        }
+        if (isset($tocs[10][$i]) and !empty($tocs[10][$i])) {
+        $structId = $tocs[10][$i];
+        }
+
 	    include_once ("lib/structures/structlib.php");
+	    if ($structId == '') {
 	    //And we are currently viewing a structure
 	    $page_info = $structlib->s_get_page_info($page_ref_id);
 	    if (isset($page_info)) {
@@ -4729,6 +4735,10 @@ function add_pageview() {
 	    } else {
                 //Dont display the {toc} string for non structure pages
                 $data = str_replace($tocs[0][$i], '', $data);
+	    }
+	    } else {
+	      $html = $structlib->fetch_toc($structlib->build_subtree_toc($structId),$showdesc,$shownum,$type);
+	      $data = str_replace($tocs[0][$i], $html, $data);
 	    }
 	}
     }
@@ -5116,7 +5126,7 @@ function add_pageview() {
           if ($imgdata["class"]) {
 		$repl .= ' class="'.$imgdata["class"].'"';
           }
-          
+
 	    $repl .= ' />';
 
 	    if ($imgdata["link"]) {
@@ -5349,7 +5359,7 @@ if (!$simple_wiki) {
 		// Get list of HotWords
 		$words = $this->get_hotwords();
 	}
-	
+
 	// Now tokenize the expression and process the tokens
 	// Use tab and newline as tokenizing characters as well  ////
 	$lines = explode("\n", $data);
@@ -5674,7 +5684,7 @@ if (!$simple_wiki) {
     $html .= "<h3>".tra("index")."</h3>";
     $html .= "</div>";
     $html .= "<ul>\n";
- 
+
     foreach ($anch as $tocentry) {
 		$tocdepth=0;
 		while (substr($tocentry,0,1)=="*") {
@@ -5683,7 +5693,7 @@ if (!$simple_wiki) {
 		}
 		$html .= "<li class='toclevel-".$tocdepth."'>".$tocentry."</li>\n";
 	}
- 
+
 	if (count($anch)) {
 		$html = $this->parse_data($html);
 		$html= preg_replace("'link'", "'toclink'", $html);
@@ -5694,10 +5704,10 @@ if (!$simple_wiki) {
     $html .= "</table>\n";
     $html .= "<p><script type='text/javascript'>\n";
     $html .= "//<![CDATA[\n";
-    $html .= " if (window.showTocToggle) { var tocShowText = '".tra("show")."'; var tocHideText = '".tra("hide")."'; showTocToggle(); }\n"; 
+    $html .= " if (window.showTocToggle) { var tocShowText = '".tra("show")."'; var tocHideText = '".tra("hide")."'; showTocToggle(); }\n";
     $html .= "//]]>;\n";
-    $html .= "</script></p>\n";    
-    
+    $html .= "</script></p>\n";
+
 	$data = str_replace("{maketoc:box}", $html, $data);
 
 	$data = str_replace("{maketoc}", "<h2>".tra("Table Of Contents")."</h2>" . $html, $data);
@@ -5864,7 +5874,7 @@ if (!$simple_wiki) {
 		$mid .= ', `flag`=?, `lockedby`=? ';
 		$bindvars[] = '';
 		$bindvars[] = '';
-	}		
+	}
 
 
 	$bindvars[] = $pageName;
@@ -6678,7 +6688,7 @@ if (!$simple_wiki) {
 				return $line[$field2];
 		}
 	}
-		
+
 
 	function attach_file($file_name, $file_tmp_name, $store_type) {
 		global $tmpDir;
@@ -6691,7 +6701,7 @@ if (!$simple_wiki) {
 		$fhash = '';
 		$chunk = '';
 		if ($store_type == 'dir') {
-			$fhash = md5($name = $file_name);    
+			$fhash = md5($name = $file_name);
 			$fw = fopen($w_use_dir.$fhash, "wb");
 			if (!$fw)
 			    return array("ok"=>false, "error"=>tra('Cannot write to this file:').$fhash);
@@ -6910,7 +6920,7 @@ function alterprefs() {
 		$smarty->assign("msg", tra('Altering database table failed'));
 		$smarty->display("error.tpl");
 		die;
-	}	
+	}
 	return true;
 }
 ?>
