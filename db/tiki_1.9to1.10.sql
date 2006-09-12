@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.98 2006-09-12 10:13:40 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.99 2006-09-12 10:45:48 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -412,6 +412,7 @@ DELETE FROM tiki_preferences WHERE name='users_prefs_theme';
 DELETE FROM tiki_preferences WHERE name='users_prefs_mailCharset';
 DELETE FROM tiki_user_preferences WHERE prefName='users_prefs_language' and value='global';
 DELETE FROM tiki_user_preferences WHERE prefName='users_prefs_theme' and value='global';
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Comments' and url='tiki-list_comments.php' and position='1260' and perm='tiki_p_admin' and groupname='' ;
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_wiki_comments','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_article_comments','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_blog_comments','tiki_p_admin','');
@@ -471,6 +472,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_ajax','n');
 #2005-12-15 amette - Freetag permissions and menu item
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_freetags', 'Can browse freetags', 'basic', 'freetags');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_freetags_tag', 'Can tag objects', 'registered', 'freetags');
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Freetags' and url='tiki-browse_freetags.php' and position='27' and perm='tiki_p_view_freetags' and groupname='' ;
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Freetags','tiki-browse_freetags.php',27,'feature_freetags','tiki_p_view_freetags','');
 
 #2005-12-16 lfagundes
@@ -703,20 +705,33 @@ INSERT INTO users_permissions VALUES ('tiki_p_remove_assignments','Can remove as
 INSERT INTO users_permissions VALUES ('tiki_p_view_workspace','Can view a workspace','basic','workspace');
 INSERT INTO users_permissions VALUES ('tiki_p_admin_workspace','Can admin a workspace','admin','workspace');
 INSERT INTO users_permissions VALUES ('tiki_p_create_workspace_resources','Can create new workspace resources','editors','workspace');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Workspaces','./tiki-workspaces.php',1500,'','tiki_p_admin_workspaces','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin Workspaces','./tiki-workspaces_admin.php',1515,'','tiki_p_admin_workspaces','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Workspace Types','./tiki-workspaces_types.php',1510,'','tiki_p_admin_workspaces_types','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin Roles','./tiki-workspaces_roles.php',1505,'','tiki_p_admin_workspaces_roles','');
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Workspaces' and url='tiki-workspaces.php' and position='1500';
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Workspaces','tiki-workspaces.php',1500,'','tiki_p_admin_workspaces','');
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Admin Workspaces' and url='tiki-workspaces_admin.php' and position='1515';
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin Workspaces','tiki-workspaces_admin.php',1515,'','tiki_p_admin_workspaces','');
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Workspaces Types' and url='tiki-workspaces_types.php' and position='1510';
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Workspace Types','tiki-workspaces_types.php',1510,'','tiki_p_admin_workspaces_types','');
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Admin Roles' and url='tiki-workspaces_roles.php' and position='1505';
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin Roles','tiki-workspaces_roles.php',1505,'','tiki_p_admin_workspaces_roles','');
 INSERT INTO tiki_menus VALUES (100,'Workspace menu','Sample workspace menu','d');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (100,'o','Users/Groups','./tiki-workspaces_view_module.php?module=workspaces_user_groups',10,'','','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (100,'o','Resources','./tiki-workspaces_view_module.php?module=workspaces_resources',52,'','','');
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Users/Groups' and url='tiki-workspaces_view_module.php?module=workspaces_user_groups' and position='10';
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (100,'o','Users/Groups','tiki-workspaces_view_module.php?module=workspaces_user_groups',10,'','','');
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Resources' and url='tiki-workspaces_view_module.php?module=workspaces_resources' and position='52';
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (100,'o','Resources','tiki-workspaces_view_module.php?module=workspaces_resources',52,'','','');
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Blogs list' and url='' and position='60';
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (100,'o','Blogs list','tiki-workspaces_view_module.php?module=workspaces_list_resources&type=blog',60,'','','');
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Img galeries' and url='tiki-workspaces_view_module.php?module=workspaces_list_resources&type=image gallery' and position='70';
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (100,'o','Img galeries','tiki-workspaces_view_module.php?module=workspaces_list_resources&type=image gallery',70,'','','');
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='File galleries' and url='tiki-workspaces_view_module.php?module=workspaces_list_resources&type=file gallery' and position='71';
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (100,'o','File galleries','tiki-workspaces_view_module.php?module=workspaces_list_resources&type=file gallery',71,'','','');
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Wiki Pages' and url='tiki-workspaces_view_module.php?module=workspaces_list_resources&type=wiki page' and position='72';
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (100,'o','Wiki Pages','tiki-workspaces_view_module.php?module=workspaces_list_resources&type=wiki page',72,'','','');
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Blogs list' and url='tiki-workspaces_view_module.php?module=workspaces_list_resources&type=forum' and position='73';
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (100,'o','Forums','tiki-workspaces_view_module.php?module=workspaces_list_resources&type=forum',73,'','','');
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Calendars' and url='tiki-workspaces_view_module.php?module=workspaces_list_resources&type=calendar' and position='74';
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (100,'o','Calendars','tiki-workspaces_view_module.php?module=workspaces_list_resources&type=calendar',74,'','','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (100,'o','History','./tiki-workspaces_get_resource.php?name=History',80,'','','');
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='History' and url='tiki-workspaces_get_resource.php?name=History' and position='80';
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (100,'o','History','tiki-workspaces_get_resource.php?name=History',80,'','','');
 INSERT INTO tiki_preferences (name,value) VALUES ( 'feature_workspaces', 'y');
 INSERT INTO tiki_workspace_types VALUES ('1','PORTFOLIO','Portfolio','','f6dfa6643939c4887a68710a5b8c27b5','100','a:2:{i:0;a:3:{s:4:"name";s:6:"MyBlog";s:4:"desc";s:7:"My Blog";s:4:"type";s:4:"blog";}i:1;a:3:{s:4:"name";s:4:"Home";s:4:"desc";s:19:"Home portfolio page";s:4:"type";s:9:"wiki page";}}','0','n','y');
 INSERT INTO tiki_workspace_types VALUES ('2','COURSE','Course','Sample course type','bcff9b0c6b65e3d060685650d3e6b6e1','100','a:5:{i:0;a:3:{s:4:"name";s:4:"Home";s:4:"desc";s:16:"Home course page";s:4:"type";s:9:"wiki page";}i:1;a:3:{s:4:"name";s:7:"History";s:4:"desc";s:12:"History blog";s:4:"type";s:4:"blog";}i:2;a:3:{s:4:"name";s:5:"Files";s:4:"desc";s:12:"Course files";s:4:"type";s:12:"file gallery";}i:3;a:3:{s:4:"name";s:6:"Images";s:4:"desc";s:13:"Course images";s:4:"type";s:13:"image gallery";}i:4;a:3:{s:4:"name";s:5:"Forum";s:4:"desc";s:12:"Course forum";s:4:"type";s:5:"forum";}}','3','n','y');
