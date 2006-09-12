@@ -25,8 +25,12 @@ body {
 
 /* This div encloses the whole Tiki application */
 DIV#tiki-main {
-	height:    100%;
-	margin:   0px 0px 0px 0px;
+	height:   100%;
+	width:   100%;
+	margin-top:   0px;
+	margin-bottom:   0px;
+	margin-right:   0px;
+	margin-left:   0px;
 }
 
 /* This is the header */
@@ -70,6 +74,7 @@ TD#rightcolumn {
 }
 
 TD#centercolumn {
+	_padding-right:    2px;	
 	vertical-align: top;
 	width: 100%;
 }
@@ -80,8 +85,8 @@ DIV#tiki-center {
 	margin-right:   5px;
 	padding-left:   7px;
 	padding-right:   5px;
-	vertical-align: top;
-	width: 100%;
+	_vertical-align: top;
+	_width: 100%;
 }
 
 /* Lets build the book interface */
@@ -3085,7 +3090,6 @@ float : right;
 .diffheader{background-color:#a9b8c2; font-weight: bold;}
 .diffadded {background-color:#ccffcc;}
 .diffdeleted {background-color:#ffcccc;}
-.diffinldel {background-color:#ffcccc; text-decoration: line-through;}
 .diffbody{background-color:#F2F4F5}
 .diffchar {color: red;}
 
