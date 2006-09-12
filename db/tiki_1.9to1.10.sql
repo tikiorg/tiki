@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.97 2006-08-22 19:57:58 jreyesg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.98 2006-09-12 10:13:40 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -580,6 +580,15 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('lowercase_username','n'
 insert into users_grouppermissions (groupName,permName) values('Anonymous','tiki_p_wiki_view_source');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_source', 'Can view source of wiki pages', 'basic', 'wiki');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_source','y');
+
+# 2006-05-26 new preference eq 'y' to keep the default - sampaioprimo
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_cms_print','y');
+
+# 2006-06-07 sylvieg (merge from 1.9)
+insert into users_permissions (permName,permDesc,level,type) values ('tiki_p_admin_objects','Can edit object permissions', 'admin', 'tiki');
+insert into users_permissions (permName,permDesc,level,type) values ('tiki_p_admin_polls','Can admin polls', 'admin', 'tiki');
+ INSERT INTO users_permissions (permName,permDesc,level,type) values ('tiki_p_admin_rssmodules','Can admin rss modules', 'admin', 'tiki');
+
 ALTER TABLE users_users MODIFY COLUMN `hash` varchar(34) default NULL;
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_crypt_passwords','tikihash');
 #2006-07-28 mkalbere

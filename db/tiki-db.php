@@ -153,5 +153,8 @@ unset ($user_tiki);
 unset ($pass_tiki);
 unset ($dbs_tiki);
 
-
+function close_connection() {
+	global $dbTiki;
+	$dbTiki->Close();
+}
 ?>
