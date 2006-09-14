@@ -305,8 +305,8 @@ function wikiplugin_tracker($data, $params) {
 					} elseif ($f['type'] == 'u' and $f['options'] == '1') {
 						$back.= '<tr><td>'.wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors).'</td><td>'.$user;
 					// drop down, user selector or group selector
-					} elseif ($f['type'] == 'd' or $f['type'] == 'u' or $f['type'] == 'g' or $f['type'] == 'r') {
-						if ($f['type'] == 'd') {
+					} elseif ($f['type'] == 'd' or $f['type'] == 'u' or $f['type'] == 'g' or $f['type'] == 'r' or $f['type'] == 'R') {
+						if ($f['type'] == 'd' or $f['type'] == 'R') {
 							$list = split(',',$f['options']);
 						} elseif ($f['type'] == 'u') {
 							if ($f['options'] == 1 or $f['options'] == 2) {
