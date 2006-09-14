@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/blogs/bloglib.php,v 1.49 2006-09-14 14:28:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/blogs/bloglib.php,v 1.50 2006-09-14 15:00:25 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -400,6 +400,11 @@ class BlogLib extends TikiLib {
 				$smarty->assign('mail_date', date("U"));
 				$smarty->assign('mail_user', $user);
 				$smarty->assign('mail_data', $data);
+				global $feature_contribution;
+				if ($feature_contribution == 'y' && !empty($contributions)) {
+					global $contributionlib; include_once('lib/contribution/contributionlib.php');
+					$smarty->assign('mail_contributions', $contributionlib->print_contributions($contributions));
+				}
 				$foo = parse_url($_SERVER["REQUEST_URI"]);
 				$machine = $tikilib->httpPrefix(). $foo["path"];
 				$smarty->assign('mail_machine', $machine);
