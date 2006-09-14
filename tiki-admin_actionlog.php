@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.19 2006-06-02 20:15:23 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.20 2006-09-14 14:28:42 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -264,6 +264,18 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export'])) {
 			if (!empty($sheetNames[$actions[$i]['object']]))
 				$actions[$i]['object'] = $sheetNames[$actions[$i]['object']];
 			$actions[$i]['link'] = 'tiki-view_sheets.php?sheetId='.$actions[$i]['object'];
+			break;
+		case 'blog':
+
+			if (!isset($blogNames)) {
+				$objects = $tikilib->list_blogs();
+				foreach ($objects['data'] as $object) {
+					$blogNames[$object['blogId']] = $object['title'];
+				}
+		}
+			$actions[$i]['link'] = 'tiki-view_blog.php?'.$actions[$i]['comment'];
+			if (!empty($blogNames[$actions[$i]['object']]))
+				$actions[$i]['object'] = $blogNames[$actions[$i]['object']];
 			break;
 		}
 	}

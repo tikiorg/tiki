@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.26 2006-07-14 11:00:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.27 2006-09-14 14:28:47 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -346,6 +346,8 @@ class LogsLib extends TikiLib {
 		elseif (preg_match('/#threadId([0-9\-+]+)/', $action['comment'], $matches))
 			return $matches[1];
 		elseif (preg_match('/sheetId=([0-9]+)/', $action['comment'], $matches))
+			return $matches[1];
+		elseif (preg_match('/postId=([0-9]+)/', $action['comment'], $matches))
 			return $matches[1];
 		else
 			return '';
