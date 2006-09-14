@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker_item.tpl,v 1.99 2006-08-29 20:19:13 sylvieg Exp $ *}
+{* $Id: tiki-view_tracker_item.tpl,v 1.100 2006-09-14 16:38:13 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -487,6 +487,11 @@ rows="{if $cur_field.options_array[2] gt 1}{$cur_field.options_array[2]}{else}4{
 <option value="{$cur_field.options_array[jx]|escape}" {if $cur_field.value eq $cur_field.options_array[jx]}selected="selected"{/if}>{$cur_field.options_array[jx]}</option>
 {/section}
 </select>
+
+{elseif $cur_field.type eq 'R'}
+{section name=jx loop=$cur_field.options_array}
+<input type="radio" name="ins_{$cur_field.id}" value="{$cur_field.options_array[jx]|escape}" {if $cur_field.value eq $cur_field.options_array[jx]}checked="checked"{/if}>{$cur_field.options_array[jx]}</option>
+{/section}
 
 {elseif $cur_field.type eq 'c'}
 <input type="checkbox" name="ins_{$cur_field.id}" {if $cur_field.value eq 'y'}checked="checked"{/if}/>

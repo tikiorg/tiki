@@ -94,6 +94,21 @@ function wikiplugin_trackerfilter($data, $params) {
 			$opts[] = $opt;
 		}
 		break;
+	case 'R': // radio buttons
+		$res = split(',', $field['options']);
+		$opts = array();
+		foreach ($res as $val) {
+			$opt['id'] = $val;
+			$opt['name'] = $val;
+			if (!empty($_REQUEST['f_'.$fieldId]) && $_REQUEST['f_'.$fieldId][0] == $val) {
+				$opt['checked'] = 'y';
+				$selected = true;
+			} else {
+				$opt['checked'] = 'n';
+			}
+			$opts[] = $opt;
+		}
+		break;
 	case 'n':case 't': case 'a': case 'm': case 'y':
 		if (isset($status))
 			$res = $trklib->list_tracker_field_values($fieldId, $status);

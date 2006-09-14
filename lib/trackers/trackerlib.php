@@ -1481,6 +1481,10 @@ class TrackerLib extends TikiLib {
 			'label'=>tra('drop down'),
 			'opt'=>true,
 			'help'=>tra('Dropdown options: list of items separated with commas.') );
+		$type['R'] = array(
+			'label'=>tra('radio buttons'),
+			'opt'=>true,
+			'help'=>tra('Radio buttons options: list of items separated with commas.') );
 		$type['u'] = array(
 			'label'=>tra('user selector'),
 			'opt'=>true,
