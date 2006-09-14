@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.99 2006-09-12 10:45:48 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.100 2006-09-14 14:28:41 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -768,3 +768,10 @@ INSERT INTO tiki_workspace_role_wstype VALUES ('Teacher','5','');
 INSERT INTO tiki_workspace_role_wstype VALUES ('Student','5','');
 INSERT INTO tiki_workspace_role_wstype VALUES ('Registered','2','');
 INSERT INTO tiki_workspace_role_wstype VALUES ('Anonymous','2','');
+
+#sylvieg 9/13/06
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_contribution_mandatory_blog', 'n');
+INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Viewed', 'blog', 'n');
+INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Posted', 'blog', 'n');
+INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Updated', 'blog', 'n');
+INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Removed', 'blog', 'n');

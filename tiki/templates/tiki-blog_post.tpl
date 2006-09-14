@@ -5,6 +5,9 @@
 {else}
 <span class="button2"><a class="linkbut" href="tiki-blog_post.php?{if $blogId ne ''}blogId={$blogId}&amp;{/if}{if $postId ne ''}&amp;postId={$postId}{/if}&amp;wysiwyg=n">{tr}Use normal editor{/tr}</a></span>
 {/if}
+{if $contribution_needed eq 'y'}
+<div class="simplebox highlight">{tr}A contribution is mandatory{/tr}</div>
+{/if}
 {if $preview eq 'y'}
 	{include file=tiki-preview_post.tpl}
 {/if}
@@ -96,6 +99,9 @@ or use the image URL to include images using the WYSIWYG editor. {/tr}</small></
 {/if}
 {if $feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
   {include file=freetag.tpl}
+{/if}
+{if $feature_contribution eq 'y'}
+{include file="contribution.tpl"}
 {/if}
 <tr><td class="editblogform">&nbsp;</td><td class="editblogform"><input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" />
 <input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" />

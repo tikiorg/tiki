@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/blogs/bloglib.php,v 1.48 2006-08-29 20:19:05 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/blogs/bloglib.php,v 1.49 2006-09-14 14:28:47 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -358,10 +358,10 @@ class BlogLib extends TikiLib {
 		return $retval;
 	}
 
-	function blog_post($blogId, $data, $user, $title = '', $trackbacks = '') {
+	function blog_post($blogId, $data, $user, $title = '', $trackbacks = '', $contributions='') {
 		// update tiki_blogs and call activity functions
 		global $smarty;
-		global $tikilib;
+		global $tikilib, $feature_categories;
 
 		global $feature_user_watches;
 		global $sender_email;
@@ -416,6 +416,11 @@ class BlogLib extends TikiLib {
 		if ($feature_score == 'y') {
 		    $this->score_event($user, 'blog_post');
 		}
+		global $feature_actionlog;
+		if ($feature_actionlog == 'y') {
+			global $logslib; include_once('lib/logs/logslib.php');
+			$logslib->add_action('Posted', $blogId, 'blog', "blogId=$blogId&amp;postId=$id&amp;add=".strlen($data)."#postId$id", '', '', '', '', $contributions);
+		}
 
 		return $id;
 	}
@@ -427,14 +432,27 @@ class BlogLib extends TikiLib {
 		$query = "delete from `tiki_blog_posts` where `blogId`=?";
 		$result = $this->query($query,array((int) $blogId));
 		$this->remove_object('blog', $blogId);
+
 		return true;
 	}
 
 	function remove_post($postId) {
-		$query = "select `blogId` from `tiki_blog_posts` where `postId`=?";
+		$query = "select `blogId`, `data` from `tiki_blog_posts` where `postId`=?";
+		$result = $this->query($query,array((int) $postId));
+		if ($res = $result->fetchRow()) {
+			$blogId = $res['blogId'];
+		} else {
+			$blogId = 0;
+		}
 
-		$blogId = $this->getOne($query,array((int) $postId));
-
+		global $feature_actionlog;
+		if ($feature_actionlog == 'y') {
+			global $logslib; include_once('lib/logs/logslib.php');
+			$param = "blogId=$blogId&amp;postId=$postId";
+			if ($blogId)
+				$param .= "&amp;del=".strlen($res['data']);
+			$logslib->add_action('Removed', $blogId, 'blog', $param);
+		}
 		if ($blogId) {
 			$query = "delete from `tiki_blog_posts` where `postId`=?";
 
@@ -473,10 +491,17 @@ class BlogLib extends TikiLib {
 		return $res;
 	}
 
-	function update_post($postId, $blogId, $data, $user, $title = '', $trackbacks = '') {
+	function update_post($postId, $blogId, $data, $user, $title = '', $trackbacks = '', $contributions='', $old_data='') {
+		global $feature_actionlog;
 		$trackbacks = serialize($this->send_trackbacks($postId, $trackbacks));
 		$query = "update `tiki_blog_posts` set `blogId`=?,`trackbacks_to`=?,`data`=?,`user`=?,`title`=? where `postId`=?";
 		$result = $this->query($query,array($blogId,$trackbacks,$data,$user,$title,$postId));
+		if ($feature_actionlog == 'y') {
+			global $logslib; include_once('lib/logs/logslib.php');
+			include_once('lib/diff/difflib.php');
+		    $bytes = diff2($old_data , $data, 'bytes');
+			$logslib->add_action('Updated', $blogId, 'blog', "blogId=$blogId&amp;postId=$postId&amp;$bytes#postId$postId", '', '', '', '', $contributions);
+		}
 	}
 
 	function list_user_posts($user, $offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '') {

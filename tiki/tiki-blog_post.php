@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.48 2006-08-28 19:56:54 hangerman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.49 2006-09-14 14:28:46 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -181,7 +181,13 @@ if (isset($_REQUEST["preview"])) {
 }
 
 // remove images (permissions!)
-if (isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) {
+if ((isset($_REQUEST['save']) || isset($_REQUEST['save_exit']))&& $feature_contribution == 'y' && $feature_contribution_mandatory_blog == 'y' && (empty($_REQUEST['contributions']) || count($_REQUEST['contributions']) <= 0)) {
+	$contribution_needed = true;
+	$smarty->assign('contribution_needed', 'y');
+} else {
+	$contribution_needed = false;
+}
+if ((isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) && !$contribution_needed) {
 	include_once ("lib/imagegals/imagegallib.php");
 
 	$smarty->assign('individual', 'n');
@@ -248,10 +254,10 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) {
 	$edit_data = $imagegallib->capture_images($edit_data);
 	$title = isset($_REQUEST['title']) ? $_REQUEST['title'] : '';
 	if ($_REQUEST["postId"] > 0) {
-		$bloglib->update_post($_REQUEST["postId"], $_REQUEST["blogId"], $edit_data, $user, $title, $_REQUEST['trackback']);
+	  $bloglib->update_post($_REQUEST["postId"], $_REQUEST["blogId"], $edit_data, $user, $title, $_REQUEST['trackback'], isset($_REQUEST['contributions'])? $_REQUEST['contributions']:'', $data['data']);
 		$postid = $_REQUEST["postId"];
 	} else {
-		$postid = $bloglib->blog_post($_REQUEST["blogId"], $edit_data, $user, $title, $_REQUEST['trackback']);
+	  $postid = $bloglib->blog_post($_REQUEST["blogId"], $edit_data, $user, $title, $_REQUEST['trackback'], isset($_REQUEST['contributions'])? $_REQUEST['contributions']:'');
 
 		$smarty->assign('postId', $postid);
 	}
@@ -288,6 +294,15 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) {
 	$smarty->assign('parsed_data', $parsed_data);
 }
 
+if ($contribution_needed) {
+	$smarty->assign('title', $_REQUEST["title"]);
+	$smarty->assign('parsed_data', $tikilib->parse_data($_REQUEST['data']));
+	$smarty->assign('data', htmldecode( $_REQUEST['data'] ) );
+	$smarty->assign('trackbacks_to', explode(',', $_REQUEST['trackback']));
+	if ($feature_freetags == 'y') {
+		$smarty->assign('taglist',$_REQUEST["freetag_string"]);
+	}
+}
 if ($tiki_p_blog_admin == 'y') {
 	$blogsd = $bloglib->list_blogs(0, -1, 'created_desc', '');
 
@@ -327,6 +342,9 @@ include_once("textareasize.php");
 include_once ('lib/quicktags/quicktagslib.php');
 $quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','blogs');
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
+if ($feature_contribution == 'y') {
+	include_once('contribution.php');
+}
 ask_ticket('blog');
 // Display the Index Template
 $smarty->assign('mid', 'tiki-blog_post.tpl');

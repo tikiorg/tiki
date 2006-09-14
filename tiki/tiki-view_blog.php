@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.52 2006-07-14 11:00:44 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.53 2006-09-14 14:28:46 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -272,6 +272,10 @@ if ($feature_mobile == 'y' && isset($_REQUEST['mode']) && $_REQUEST['mode'] == '
 	include_once ("lib/hawhaw/hawtikilib.php");
 
 	HAWTIKI_view_blog($listpages, $blog_data);
+}
+if ($feature_actionlog == 'y') {
+	include_once('lib/logs/logslib.php');
+	$logslib->add_action('Viewed', $_REQUEST['blogId'], 'blog', '');
 }
 
 ask_ticket('blog');

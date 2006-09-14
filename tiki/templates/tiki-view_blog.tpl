@@ -20,6 +20,7 @@
 </div>
 {/if}
 {section name=ix loop=$listpages}
+<a name="postId{$listpages[ix].postId}"></a>
 <div class="blogpost">
 <div class="posthead">
 {if $use_title eq 'y'}
