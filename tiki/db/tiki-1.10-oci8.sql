@@ -1,5 +1,5 @@
 -- $Rev$
--- $Date: 2006-09-12 10:13:39 $
+-- $Date: 2006-09-14 14:36:26 $
 -- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
@@ -6242,6 +6242,8 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_contribution_ma
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_contribution_mandatory_comment', 'n');
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_contribution_mandatory_blog', 'n');
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_contribution_display_in_comment', 'y');
 
 -- Dynamic variables
@@ -6878,6 +6880,14 @@ INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Updated', 'sheet
 INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Removed', 'sheet', 'n');
 
 INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Viewed', 'sheet', 'n');
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Viewed', 'blog', 'n');
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Posted', 'blog', 'n');
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Updated', 'blog', 'n');
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Removed', 'blog', 'n');
 
 -- --------------------------------------------------------
 -- Table structure for folksonomy tables

@@ -2,7 +2,7 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2006-09-12 10:13:39 $
+-- $Date: 2006-09-14 14:36:26 $
 -- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
@@ -8481,6 +8481,10 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_contribution_ma
 go
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_contribution_mandatory_blog', 'n')
+go
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_contribution_display_in_comment', 'y')
 go
 
@@ -9558,6 +9562,22 @@ go
 
 
 INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Viewed', 'sheet', 'n')
+go
+
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Viewed', 'blog', 'n')
+go
+
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Posted', 'blog', 'n')
+go
+
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Updated', 'blog', 'n')
+go
+
+
+INSERT INTO "," ("`action`","`objectType`","`status`") VALUES ('Removed', 'blog', 'n')
 go
 
 
