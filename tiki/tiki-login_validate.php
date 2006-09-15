@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login_validate.php,v 1.17 2005-10-16 14:35:09 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login_validate.php,v 1.18 2006-09-15 19:53:23 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,7 +14,9 @@ if (isset($_REQUEST["user"])) {
 	if (isset($_REQUEST["pass"])) {
 		list($isvalid, $_REQUEST["user"], $error) = $userlib->validate_user($_REQUEST["user"], $_REQUEST["pass"],'','');
 	}
-}	
+} else {
+	$error = '';
+}  
 if ($isvalid) {
 	$user = $_REQUEST['user'];
 	$userlib->confirm_user($user);
