@@ -134,7 +134,7 @@
 </td></tr>
 {/section}
 {if $checkboxes_on eq 'y'}
-  <script language='Javascript' type='text/javascript'>
+  <script type='text/javascript'>
   <!--
   // check / uncheck all.
   // in the future, we could extend this to happen serverside as well for the convenience of people w/o javascript.
@@ -155,7 +155,7 @@
     {/if}
     {* add here e.g. <option value="categorize" >{tr}categorize{/tr}</option> *}
   </select>                
-  <script language='Javascript' type='text/javascript'>
+  <script type='text/javascript'>
   <!--
   // Fake js to allow the use of the <noscript> tag (so non-js-users can still submit)
   //-->
@@ -169,17 +169,17 @@
 <br />
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="prevnext" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}tiki-listpages.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}{if $initial}&amp;initial={$initial}{/if}{/ajax_href}>{tr}prev{/tr}</a>]
+[<a class="prevnext" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}tiki-listpages.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}{if $initial}&amp;initial={$initial}{/if}{if $find}&amp;find={$find|escape}{/if}{if $exact_match eq 'y'}&amp;exact_match=on{/if}{/ajax_href}>{tr}prev{/tr}</a>]
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-[<a class="prevnext" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}tiki-listpages.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}{if $initial}&amp;initial={$initial}{/if}{/ajax_href}>{tr}next{/tr}</a>]
+[<a class="prevnext" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}tiki-listpages.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}{if $initial}&amp;initial={$initial}{/if}{if $find}&amp;find={$find|escape}{/if}{if $exact_match eq 'y'}&amp;exact_match=on{/if}{/ajax_href}>{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
-<a class="prevnext" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}tiki-listpages.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}{if $initial}&amp;initial={$initial}{/if}{/ajax_href}>
+<a class="prevnext" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}tiki-listpages.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}{if $initial}&amp;initial={$initial}{/if}{if $find}&amp;find={$find|escape}{/if}{if $exact_match eq 'y'}&amp;exact_match=on{/if}{/ajax_href}>
 {$smarty.section.foo.index_next}</a>
 {/section}
 {/if}
