@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.53 2006-08-29 20:19:02 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.54 2006-09-15 20:09:39 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.53 2006-08-29 20:19:02 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.54 2006-09-15 20:09:39 sylvieg Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -236,6 +236,9 @@ if ($isvalid) {
 		if (preg_match("/tiki-register.php/",$url)) {
 		    $url = preg_replace("/tiki-register.php*$/","tiki-index.php",$url);
 		}
+		if (preg_match("/tiki-login_validate.php/",$url)) {
+		    $url = preg_replace("/tiki-login_validate.php*$/","tiki-index.php",$url);
+		}
 
 		// Now if the remember me feature is on and the user checked the rememberme checkbox then ...
 		if ($rememberme != 'disabled') {
@@ -262,6 +265,10 @@ if ($isvalid) {
 	else
 		$error= tra('Invalid username or password');
 	$url = 'tiki-error.php?error=' . urlencode($error);
+	// on a login error wait this long in seconds. slows down automated login attacks.
+    // regular users mistyping on login will experience the delay, too, but wrong logins
+    // shouldn't occur that often.
+	sleep(5);
 }
 
 if ($https_mode) {
