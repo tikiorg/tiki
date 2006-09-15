@@ -248,9 +248,15 @@ categories = {$catsdump}
 
 {if $trackerId}
 <h3>{tr}Import/Export CSV Data{/tr}</h3>
+<form action="tiki-export_tracker.php?trackerId={$trackerId}" method="post">
+<table class="normal">
+<tr class="formcolor"><td>{tr}Download CVS export{/tr}</td>
+<td>{tr}File: {/tr}{tr}tracker{/tr}_{$trackerId}.csv<br />{tr}Charset encoding:{/tr} <select name="encoding"><option value="UTF-8" selected="selected">{tr}UTF-8{/tr}</option><option value="ISO-8859-1">{tr}ISO-8859-1{/tr}</option></select>
+</td></tr>
+<tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="export" value="{tr}export{/tr}" /></td></tr>
+</table>
 <form action="tiki-import_tracker.php?trackerId={$trackerId}" method="post" enctype="multipart/form-data">
 <table class="normal">
-<tr class="formcolor"><td>{tr}Download CVS export{/tr}</td><td><a href="tiki-export_tracker.php?trackerId={$trackerId}" class="linkbut">{tr}tracker_{$trackerId}.csv{/tr}</a></td></tr>
 <tr class="formcolor"><td>{tr}Import file{/tr}</td><td><input name="importfile" type="file" /></td></tr>
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}save{/tr}" /></td></tr>
 </table>
