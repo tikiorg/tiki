@@ -1,5 +1,5 @@
 <?php
-// $Id: notificationemaillib.php,v 1.21 2006-05-03 15:28:42 sylvieg Exp $
+// $Id: notificationemaillib.php,v 1.22 2006-09-15 13:21:10 sylvieg Exp $
 /** \brief send the email notifications dealing with the forum changes to
   * \brief outbound address + admin notification addresses / forum admin email + watching users addresses
   * \param $event = 'forum_post_topic' or 'forum_post_thread'
@@ -27,10 +27,17 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 		$mail->setSubject($title);
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 		$machine = $tikilib->httpPrefix() . dirname( $foo["path"] );
-		$reply_link="\n\n----\n\nReply Link: <" . $machine
-		. "tiki-view_forum_thread.php?forumId=" .
-		$forum_info['forumId'] .
-		"&comments_reply_threadId=$object&comments_parentId=$threadId&post_reply=1#form>\n";
+		if ($event == 'forum_post_topic') {
+			$reply_link="\n\n----\n\nReply Link: <" . $machine
+			. "/tiki-view_forum_thread.php?forumId=" .
+			$forum_info['forumId'] .
+			"&comments_parentId=$threadId#form>\n";
+		} else {
+		  $reply_link="\n\n----\n\nReply Link: <" . $machine
+			. "/tiki-view_forum_thread.php?forumId=" .
+			$forum_info['forumId'] .
+			"&comments_reply_threadId=$object&comments_parentId=$threadId&post_reply=1#form>\n";
+		}
 
 		if( array_key_exists( 'outbound_mails_reply_link', $forum_info )
 		    && $forum_info['outbound_mails_reply_link'] )
