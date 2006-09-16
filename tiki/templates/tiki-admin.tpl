@@ -41,7 +41,7 @@ href="tiki-admin_shoutbox_words.php">{tr}Shoutbox Words{/tr}</a> {/if}
 {/if} *}
 {if $feature_games eq 'y'} <a href="tiki-list_games.php">{tr}Games{/tr}</a> {/if}
 {if $feature_contact eq 'y'} <a href="tiki-contact.php">{tr}Contact us{/tr}</a> {/if}
-<hr>
+<hr />
 
 {tr}Administration features{/tr}:<br />
 <a href="tiki-adminusers.php">{tr}Users{/tr}</a> 
@@ -54,25 +54,25 @@ href="tiki-admin_shoutbox_words.php">{tr}Shoutbox Words{/tr}</a> {/if}
 <a href="tiki-backup.php">{tr}Backups{/tr}</a>
 {if $feature_banning eq 'y'}<a href="tiki-admin_banning.php">{tr}Banning{/tr}</a> {/if}
 {if $lang_use_db eq 'y'}<a href="tiki-edit_languages.php">{tr}Edit languages{/tr}</a> {/if}
-<hr>
+<hr />
 
 {tr}Transversal features{/tr} ({tr}which apply to more than one section{/tr}):<br />
 <a href="tiki-admin_notifications.php">{tr}Mail notifications{/tr}</a> 
-<hr>
+<hr />
 
 {tr}Navigation features{/tr}:<br />
 <a href="tiki-admin_menus.php">{tr}Menus{/tr}</a> 
 <a href="tiki-admin_modules.php">{tr}Modules{/tr}</a>
 {if $feature_categories eq 'y'} <a href="tiki-admin_categories.php">{tr}Categories{/tr}</a> {/if}
 {if $feature_featuredLinks eq 'y'}<a href="tiki-admin_links.php">{tr}Links{/tr}</a>{/if}
-<hr>
+<hr />
 
 {tr}Look &amp; feel{/tr} ({tr}themes{/tr}):<br />
 {if $feature_theme_control eq 'y'} <a href="tiki-theme_control.php">{tr}Theme control{/tr}</a> {/if}
 {if $feature_edit_templates eq 'y'} <a href="tiki-edit_templates.php">{tr}Edit templates{/tr}</a> {/if}
 {if $feature_editcss eq 'y'} <a href="tiki-edit_css.php">{tr}Edit CSS{/tr}</a> {/if}
 {if $feature_mobile eq 'y'} <a href="tiki-mobile.php">{tr}Mobile{/tr}</a> {/if}
-<hr>
+<hr />
 
 {tr}Text area features{/tr} ({tr}features you can use in all text areas, like wiki pages, blogs, articles, forums, etc{/tr}):<br />
 <a href="tiki-admin_cookies.php">{tr}Cookies{/tr}</a> 
@@ -85,7 +85,7 @@ href="tiki-admin_shoutbox_words.php">{tr}Shoutbox Words{/tr}</a> {/if}
 {if $feature_dynamic_content eq 'y'}<a href="tiki-list_contents.php">{tr}Dynamic content{/tr}</a> {/if}
 <a href="tiki-admin_external_wikis.php">{tr}External wikis{/tr}</a> 
 {if $feature_mailin eq 'y'}<a href="tiki-admin_mailin.php">{tr}Mail-in{/tr}</a> {/if}
-<hr>
+<hr />
 
 {tr}Stats &amp; banners{/tr}:<br />
 {if $feature_stats eq 'y'} <a href="tiki-stats.php">{tr}Stats{/tr}</a> {/if}
