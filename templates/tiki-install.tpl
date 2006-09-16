@@ -119,7 +119,7 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 			
 		    <form method="post" action="tiki-install.php">
 				{if $multi}<input type="hidden" name="multi" value="{$multi}" />{/if}
-				<hr>
+				<hr />
 		    <table>
 		    <tr><td style="text-align: center;" colspan="2"
  rowspan="1" height="26"><font size="5"><b>Install</b></font>
@@ -141,7 +141,7 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 		    </td>
 		    <tr><td colspan="2">
 
-			<hr>
+			<hr />
 			<tr><td style="text-align: center;" colspan="2"
  rowspan="1" height="26"><font size="5"><b>Upgrade</b></font>
  			</td></tr>
@@ -180,7 +180,7 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 		
 		    </table>
 		    </form><br />
-			<hr>
+			<hr />
 			<br /><br /><br />
 			<a href="tiki-index.php" class="link">Do nothing and enter Tiki</a><br />
 			<a href="tiki-install.php?reset=yes" class="link">Reset database connection settings</a>
