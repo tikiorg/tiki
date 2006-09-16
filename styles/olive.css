@@ -223,6 +223,7 @@ div.cbox {
   margin-right: 8px; 
   margin-bottom: 0px;
   padding-bottom: 10px; 
+  overflow : hidden;
 }
 
 /* Boxes are divided in title and data, this is the title */
@@ -2904,5 +2905,13 @@ background-color: #edeeef;
 }
 
 .advanced:before { content:url(../img/icons/mini_blue_diamond.gif)" "; }
+
+/* tiki-admin menu */
+div.admbox {
+  border: 2px solid #9CBA00; height: 100px; width: 100px;
+  text-align: center; float: left; margin: 5px;
+}
+div.admbox:hover { background-color: #D2D6C5; color: black; }
+div.admbox img { margin-top: 20px; }
 
 /* end of css file */

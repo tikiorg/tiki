@@ -2863,4 +2863,12 @@ color: black;
 background-color: #edeeef;
 }
 
+/* tiki-admin menu */
+div.admbox {
+  border: 2px solid #E1E2B9; height: 100px; width: 100px;
+  text-align: center; float: left; margin: 5px;
+}
+div.admbox:hover { background-color: white; }
+div.admbox img { margin-top: 20px; }
+
 /* end of css file */

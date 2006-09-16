@@ -1,4 +1,4 @@
-/* $Header: /cvsroot/tikiwiki/tiki/styles/nornia.css,v 1.1 2004-09-15 03:52:13 mose Exp $ */
+/* $Header: /cvsroot/tikiwiki/tiki/styles/nornia.css,v 1.2 2006-09-16 14:22:42 ohertel Exp $ */
 
 body {
 	font-family: Helvetica, Arial, sans-serif;
@@ -173,6 +173,7 @@ color : white;
 	color: black;
 }
 div.cbox { 
+  overflow : hidden;
 }
 div.catlists {
 padding : 0;
@@ -1833,3 +1834,10 @@ padding : 2px 30px;
 float : right;
 }
 
+/* tiki-admin menu */
+div.admbox {
+  border: 2px solid #427852; height: 100px; width: 100px;
+  text-align: center; float: left; margin: 5px; font-size: 10pt;
+}
+div.admbox:hover { background-color: #DFE7DF; color: black; }
+div.admbox img { margin-top: 20px; }
