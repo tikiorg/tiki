@@ -228,9 +228,9 @@
     <a href="tiki-admin.php?page=freetags" title="{tr}Freetags{/tr}" class="link">
       <div class="admbox">
       {if $feature_freetags eq 'y'}
-      <img border="0" src="img/smiles/admin_freetags.png" alt="icon" />
+      <img border="0" src="img/icons/admin_freetags.png" alt="icon" />
       {else}
-      <img border="0" src="img/smiles/admin_freetags_grey.png" alt="icon" />
+      <img border="0" src="img/icons/admin_freetags_grey.png" alt="icon" />
       {/if}
       <br />{tr}Freetags{/tr}
       </div>
