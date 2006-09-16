@@ -4,6 +4,7 @@ var
 phpmyadmin
 tiki-emptycache.php
 project.index
+ZendPlatform
 ZendStudioServer
 dummy.php
 .htaccess
