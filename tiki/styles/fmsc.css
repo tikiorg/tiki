@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/fmsc.css,v 1.4 2006-02-01 21:20:23 jdrexler Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/fmsc.css,v 1.5 2006-09-16 14:22:42 ohertel Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -2320,3 +2320,12 @@ p{
 	margin-right: 10px;
 	margin-left: 10px;
 }
+
+/* tiki-admin menu */
+div.admbox {
+  border: 2px solid #B2221A; height: 100px; width: 100px;
+  text-align: center; float: left; margin: 5px;
+  background-color: white;
+}
+div.admbox:hover { background-color: #DA5C33; color: white;}
+div.admbox img { margin-top: 20px; }

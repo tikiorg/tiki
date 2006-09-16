@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/gemsi.css,v 1.43 2006-02-01 21:20:23 jdrexler Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/gemsi.css,v 1.44 2006-09-16 14:22:42 ohertel Exp $
 That style is made for http://gmsih.fr by mose@mose.fr
 and is contributed to the tikiwiki project by the  GMSIH,
 (Groupement pour la Modernisation du Syst�me d'Information Hospitalier)
@@ -198,6 +198,7 @@ TD.module {
 }
 div.cbox { 
   padding: 10px; 
+  overflow : hidden;
 }
 div.cbox-title {
 	border-bottom: 1px solid #cccccc;
@@ -1950,5 +1951,14 @@ border-style: solid;
 color: black;
 background-color: #edeeef;
 }
+
+/* tiki-admin menu */
+div.admbox {
+  border: 2px solid #2161A5; height: 100px; width: 100px;
+  text-align: center; float: left; margin: 5px; font-size: 8pt;
+  background-color: white;
+}
+div.admbox:hover { background-color: #CCCCCC; }
+div.admbox img { margin-top: 20px; }
 
 /* end of css file */

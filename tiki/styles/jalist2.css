@@ -1,5 +1,5 @@
 /* 
-  $Header: /cvsroot/tikiwiki/tiki/styles/jalist2.css,v 1.47 2006-02-01 21:20:23 jdrexler Exp $
+  $Header: /cvsroot/tikiwiki/tiki/styles/jalist2.css,v 1.48 2006-09-16 14:22:42 ohertel Exp $
   $RCSfile: jalist2.css,v $
   This theme is based on the default2 style for Tiki 1.2
   If you want  a short-version CSS template, start by copying default2
@@ -2744,5 +2744,13 @@ border-style: solid;
 color: black;
 background-color: #edeeef;
 }
+
+/* tiki-admin menu */
+div.admbox {
+  border: 2px solid #596070; height: 100px; width: 100px;
+  text-align: center; float: left; margin: 5px;
+}
+div.admbox:hover { background-color: #D0D0D0; }
+div.admbox img { margin-top: 20px; }
 
 /* end of css file */

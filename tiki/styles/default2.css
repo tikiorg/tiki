@@ -1,5 +1,5 @@
 /* 
-  $Header: /cvsroot/tikiwiki/tiki/styles/default2.css,v 1.58 2006-07-14 11:00:52 sylvieg Exp $
+  $Header: /cvsroot/tikiwiki/tiki/styles/default2.css,v 1.59 2006-09-16 14:22:42 ohertel Exp $
   default2.css
   (This theme is based on the) default2 style for Tiki 1.2
   If you want  a short-version CSS template, start by copying default2
@@ -3025,5 +3025,14 @@ border-style: solid;
 color: black;
 background-color: #edeeef;
 }
+
+/* tiki-admin menu */
+div.admbox {
+  border: 2px solid #B5A58C; height: 100px; width: 100px;
+  text-align: center; float: left; margin: 5px;
+  background-color: white;
+}
+div.admbox:hover { background-color: #DFDFDF; }
+div.admbox img { margin-top: 20px; }
 
 /* end of css file */

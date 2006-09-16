@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.25 2006-08-29 20:19:12 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.26 2006-09-16 14:22:42 ohertel Exp $
 
 Smarty style by mose@tikiwiki.org
 
@@ -2117,3 +2117,11 @@ table.default	td
 /* on the {maketoc} global ul
 .toc {}
 */
+
+/* tiki-admin menu */
+div.admbox {
+  border: 2px solid #F0C040; height: 100px; width: 100px;
+  text-align: center; float: left; margin: 5px; font-size: 8pt;
+}
+div.admbox:hover { background-color: #F0EAD8; }
+div.admbox img { margin-top: 20px; }

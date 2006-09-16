@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.41 2006-08-29 20:19:12 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.42 2006-09-16 14:22:42 ohertel Exp $
  *
  * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye !
  * Enables font re-sizing in all browsers, aims to be standards compliant and WCAG 1.0 compatible (not yet).
@@ -857,5 +857,13 @@ div.articlebody {
 /* floating ul/ol lists */
 .floatlist {clear: left; list-style-type: none; margin: 0; padding-left: 0}
 .floatlist li {float: left}
+
+/* tiki-admin menu */
+div.admbox {
+  border: 2px solid #ABCDEF; height: 100px; width: 100px;
+  text-align: center; float: left; margin: 5px;
+}
+div.admbox:hover { background-color: #DDEEFF; }
+div.admbox img { margin-top: 20px; }
 
 /* end of css file */
