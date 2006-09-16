@@ -53,6 +53,10 @@
 </table>
 {/if}
 <br />
+<div class="advanced">{tr}advanced feature{/tr}: {tr}Fix UTF-8 Errors in Tables{/tr}:
+<a href="javascript:toggle('fixutf8')">{tr}show{/tr}/{tr}hide{/tr}</a>
+<br /><br />
+<div id="fixutf8" {if $advanced_features ne 'y'}style="display:none;"{else}style="display:block;"{/if}>
 <h2>{tr}Fix UTF-8 Errors in Tables{/tr}</h2>
 <table class="normal">
 <tr><td class="form" colspan="4">{tr}Warning: Make a backup of your Database before using this function!{/tr}</td></tr>
@@ -77,3 +81,4 @@
 </tr>
 {/foreach}
 </table>
+</div>
