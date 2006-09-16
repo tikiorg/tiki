@@ -2303,7 +2303,7 @@ will not work with old library and conversely" => "WARNUNG: Alte und Neue Tracke
 "Newest first" => "Neueste zuerst",
 "Oldest first" => "&Auml;lteste zuerst",
 "Threshold" => "Schwellenwert",
-"Find" => "Finden",
+"Find" => "Suchen",
 "set" => "Ok",
 "replies" => "Antworten",
 "below your current threshold" => "unterhalb Ihres aktuellen Schwellenwerts",
@@ -3850,7 +3850,7 @@ will not work with old library and conversely" => "WARNUNG: Alte und Neue Tracke
 "admin Email Notifications" => "Mail-Benachrichtigungen verwalten",
 "Add notification" => "Benachrichtigung hinzuf&uuml;gen",
 "Event" => "Ereignis",
-"A user registers" => "Ein Benutzer registriert",
+"A user registers" => "Ein Benutzer registriert sich",
 "A user submits an article" => "Ein Benutzer reicht einen Artikel ein",
 "Any wiki page is changed, even minor changes" => "Eine Wiki-Seite hat sich ge&auml;ndert, auch kleine &Auml;nderungen",
 "Any wiki page is changed" => "Eine Wiki-Seite hat sich ge&auml;ndert",
@@ -5767,5 +5767,8 @@ will not work with old library and conversely" => "WARNUNG: Alte und Neue Tracke
 "Output" => "Ausgabe",
 "PDF compatilbility level" => "PDF Kompatibilit&auml;t",
 "Encoding" => "Formatierung",
+"A comment in a wiki page is posted or edited" => "Kommentar zu einer Wikiseite wird erstellt oder ge&auml;ndert",
+"Please see the <a class='rbox-link' target='tikihelp' href='http://doc.tikiwiki.org/tiki-index.php?page=Features'>evaluation of each feature</a> on Tiki's developer site." => "Bitte die <a class='rbox-link' target='tikihelp' href='http://doc.tikiwiki.org/tiki-index.php?page=Features'>Bewertung der Funktionen</a> auf der Tiki Entwicklerseite beachten.",
+
 "###end###"=>"###end###");
 ?>
