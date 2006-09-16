@@ -35,13 +35,19 @@
 </table>
 {if count($templates)}
 <br />
-<table class="normal">
-<tr><td colspan="3" class="heading">{tr}Templates compiler{/tr}</td></tr>
+{tr}Templates compiler{/tr}
+<table class="sortable" id="templatecompiler" width="100%">
+<tr>
+<th class="heading">{tr}Language{/tr}</th>
+<th class="heading">{tr}Compile{/tr}</th>
+<th class="heading">{tr}Pages{/tr}/{tr}Size{/tr}</th>
+</tr>
+{cycle values="even,odd" print=false}
 {foreach key=key item=item from=$templates}
 <tr class="form">
-<td><b>{$key}</b></td>
-<td><a href="tiki-admin_system.php?compiletemplates={$key}" class="link">{tr}Compile{/tr}</a></td>
-<td>({$item.cant} {tr}files{/tr} / {$item.total|kbsize})</td>
+<td class="{cycle advance=false}"><b>{$key}</b></td>
+<td class="{cycle advance=false}"><a href="tiki-admin_system.php?compiletemplates={$key}" class="link">{tr}Compile{/tr}</a></td>
+<td class="{cycle}">({$item.cant} {tr}files{/tr} / {$item.total|kbsize})</td>
 </tr>
 {/foreach}
 </table>
@@ -60,12 +66,14 @@
 {if isset($utf8ft)}
 <tr><td>{$utf8ft}</td><td>{$utf8ff}</td><td colspan="2">{$errc} {tr}UTF-8 Errors fixed{/tr}</td></tr>
 {/if}
-<tr><td class="heading">{tr}Table{/tr}</td><td class="heading">{tr}Field{/tr}</td><td class="heading">{tr}Investigate{/tr}</td><td class="heading">{tr}Fix it{/tr}</td></tr>
+</table>
+<table class="sortable" id="tablefix" width="100%">
+<tr><th class="heading">{tr}Table{/tr}</th><th class="heading">{tr}Field{/tr}</th><th class="heading">{tr}Investigate{/tr}</th><th class="heading">{tr}Fix it{/tr}</th></tr>
+{cycle values="even,odd" print=false}
 {foreach key=key item=item from=$tabfields}
-<tr><td class="form">{$item.table}</td><td class="form">{$item.field}</td>
-<td class="form"><a href="tiki-admin_system.php?utf8it={$item.table}&utf8if={$item.field}" class="link">{tr}Investigate{/tr}</a></td>
-<td class="form"><a href="tiki-admin_system.php?utf8ft={$item.table}&utf8ff={$item.field}" class="link">{tr}Fix it{/tr}</a></td>
+<tr><td class="{cycle advance=false}">{$item.table}</td><td class="{cycle advance=false}">{$item.field}</td>
+<td class="{cycle advance=false}"><a href="tiki-admin_system.php?utf8it={$item.table}&utf8if={$item.field}" class="link">{tr}Investigate{/tr}</a></td>
+<td class="{cycle}"><a href="tiki-admin_system.php?utf8ft={$item.table}&utf8ff={$item.field}" class="link">{tr}Fix it{/tr}</a></td>
 </tr>
 {/foreach}
-
 </table>
