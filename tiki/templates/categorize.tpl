@@ -10,7 +10,11 @@
   <div id="categorizator" {if $cat_categorize eq 'n' and $categ_checked ne 'y'}style="display:none;"{else}style="display:block;"{/if}>
 {/if}
 {if $feature_help eq 'y'}
-	<div class="simplebox">{tr}Tip: hold down CTRL to select multiple categories{/tr}</div>
+  <div class="rbox" name="tip">
+  <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+  <div class="rbox-data" name="tip">{tr}Hold down CTRL to select multiple categories{/tr}.</div>
+  </div>
+  <br />
 {/if}
   {if count($categories) gt 0}
    <select name="cat_categories[]" multiple="multiple" size="5">
@@ -24,7 +28,11 @@
    <label for="cat-check">{tr}categorize this object{/tr}:</label>
     <input type="checkbox" name="cat_categorize" id="cat-check" {if $cat_categorize eq 'y' or $categ_checked eq 'y'}checked="checked"{/if}/><br />
 {if $feature_help eq 'y'}
-    <div class="simplebox">{tr}Tip: uncheck the above checkbox to uncategorize this page/object{/tr}</div>
+  <div class="rbox" name="tip">
+  <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+  <div class="rbox-data" name="tip">{tr}Uncheck the above checkbox to uncategorize this page/object{/tr}.</div>
+  </div>
+  <br />
 {/if}
    {/if}
   {else}
