@@ -29,8 +29,7 @@
 <!--<tr><td class="form">{tr}Use WebServer authentication for Tiki{/tr}:</td><td><input type="checkbox" name="webserverauth" {if $webserverauth eq 'y'}checked="checked"{/if}/></td></tr>-->
 <tr><td class="form">{tr}Users can register{/tr}:</td><td><input type="checkbox" name="allowRegister" {if $allowRegister eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}... but need admin validation{/tr}:</td><td><input type="checkbox" name="validateRegistration" {if $validateRegistration eq 'y'}checked="checked"{/if}/> <a href ="tiki-admin.php?page=features">{tr}User Messages{/tr}</a> {tr}must be turned on and notification is sent to the admin's{/tr} <a href="messu-mailbox.php">{tr}inter-user message inbox{/tr}</a></td></tr>
-<tr><td class="form">{tr}Create a group for each user <br />(with the same
-name as the user){/tr}:</td><td><input type="checkbox"
+<tr><td class="form">{tr}Create a group for each user <br />(with the same name as the user){/tr}:</td><td><input type="checkbox"
 name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Use tracker for more user information{/tr}:</td><td><input type="checkbox" name="userTracker" {if $userTracker eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="form">{tr}Use tracker for more group information{/tr}:</td><td><input type="checkbox" name="groupTracker" {if $groupTracker eq 'y'}checked="checked"{/if} /></td></tr>
