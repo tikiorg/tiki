@@ -33,6 +33,9 @@ function wikiplugin_articles($data,$params) {
 	} else {
 		$topic = $tikilib->fetchtopicId($topic);
 	}
+	if(!isset($topicId))
+		$topicId='';
+
 	if (!isset($sort))
 		$sort = 'publishDate_desc';
 
@@ -49,7 +52,7 @@ function wikiplugin_articles($data,$params) {
 	$commentslib = new Comments($dbTiki);
 	
 	$listpages = $tikilib->list_articles($start, $max, $sort, '', $now, 'admin', '', $topic);
-	$listpages = $tikilib->list_articles($start, $max, 'publishDate_desc', '', $now, 'admin', $type, $topic, 'y', '', $categId);
+	$listpages = $tikilib->list_articles($start, $max, 'publishDate_desc', '', $now, 'admin', $type, $topicId, 'y', $topic, $categId);
  	if ($feature_multilingual == 'y') {
 		global $multilinguallib;
 		include_once("lib/multilingual/multilinguallib.php");
