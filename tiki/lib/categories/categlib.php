@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.81 2006-09-05 01:36:25 rlpowell Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.82 2006-09-17 13:01:59 ohertel Exp $
  *
  * \brief Categories support class
  *
@@ -1079,14 +1079,14 @@ class CategLib extends ObjectLib {
 	return $forbidden;
     }
 	function approve_submission($subId, $articleId) {
-		$query = "update `tiki_categorized_objects` set `type`= ?, `objId`= ?, `href`=? where `objId` = ?";
+		$query = "update `tiki_objects` set `type`= ?, `objectId`= ?, `href`=? where `objectId` = ?";
 		$this->query($query, array('article', (int)$articleId, "tiki-read_article.php?articleId=$articleId", (int)$subId));
 	}
 	/* build the portion of list join if filter by category
 	 */
 	function getSqlJoin($categId, $objType, $sqlObj, &$fromSql, &$whereSql, &$bindVars) {
-		$fromSql .= ",`tiki_categorized_objects` co, `tiki_category_objects` cat ";
-		$whereSql .= " AND co.`type`=? AND co.`objId`= $sqlObj ";
+		$fromSql .= ",`tiki_objects` co, `tiki_category_objects` cat ";
+		$whereSql .= " AND co.`type`=? AND co.`objectId`= $sqlObj ";
 		$whereSql .= " AND co.`catObjectId`=cat.`catObjectId` ";
 		$whereSql .= " AND cat.`categId`= ? ";
 		$bind = array( $objType, $categId);
