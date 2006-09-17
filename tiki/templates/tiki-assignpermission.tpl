@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.61 2006-08-29 20:19:12 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.62 2006-09-17 13:36:41 ohertel Exp $ *}
 { *TODO: Must fix even/odd table rows detection byusing Smarty 'cycle' *}
 
 
@@ -16,10 +16,10 @@
 <a href="tiki-admingroups.php" class="linkbut">{tr}Back to groups{/tr}</a><br />
 
 <h2>{tr}Group Information{/tr}</h2>
-<table class="normal">
+<table class="normal" id="groupinformation">
 <tr><td class="even">{tr}Name{/tr}:</td><td class="odd">{$group_info.groupName}</td></tr>
 <tr><td class="even">{tr}Desc{/tr}:</td><td class="odd">{$group_info.groupDesc}</td></tr>
-<tr><td class="even">{tr}Permissions{/tr}:</td><td class="odd">
+<tr><td class="even" style="vertical-align:top;">{tr}Permissions{/tr}:</td><td class="odd">
 {section name=grp loop=$group_info.perms}
 {$group_info.perms[grp]}{if $group_info.perms[grp] != "Anonymous"}(<a class="link" href="tiki-assignpermission.php?type={$type}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;permission={$group_info.perms[grp]}&amp;group={$group}&amp;action=remove">x</a>){/if}&nbsp;<br />
 {/section}
@@ -87,13 +87,13 @@
 <input type="hidden" name="group" value="{$group|escape}" />
 <input type="hidden" name="type" value="{$type|escape}" />
 <input type="submit" name="update" value="{tr}update{/tr}" /><br />
-<table class="normal">
+<table class="sortable" id="assignperms">
 <tr>
-<td class="heading">&nbsp;</td>
-<td class="heading"><a class="tableheading" href="tiki-assignpermission.php?type={$type}&amp;group={$group}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'permName_desc'}permName_asc{else}permName_desc{/if}">{tr}name{/tr}</a></td>
-<td class="heading" {if $advanced_features ne 'y'}style="display:none;"{else}style="display:block;"{/if}>{tr}level{/tr}</td>
-<td class="heading"><a class="tableheading" href="tiki-assignpermission.php?type={$type}&amp;group={$group}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">{tr}type{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-assignpermission.php?type={$type}&amp;group={$group}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupDesc_desc'}permDesc_asc{else}permDesc_desc{/if}">{tr}desc{/tr}</a></td>
+<th class="heading">&nbsp;</td>
+<th class="heading">{tr}name{/tr}</th>
+<th class="heading" {if $advanced_features ne 'y'}style="display:none;"{else}style="display:block;"{/if}>{tr}level{/tr}</th>
+<th class="heading">{tr}type{/tr}</th>
+<th class="heading">{tr}desc{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$perms}
