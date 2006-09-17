@@ -1,6 +1,14 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagepermissions.tpl,v 1.18 2005-05-18 11:03:19 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagepermissions.tpl,v 1.19 2006-09-17 15:33:38 ohertel Exp $ *}
 
 <h2>{tr}Assign permissions to page{/tr}: <a href="tiki-index.php?page={$page}">{$page}</a></h2>
+
+<br />
+<div class="rbox" name="tip">
+<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+<div class="rbox-data" name="tip">{tr}These permissions override any global permissions affecting this object. To edit global permissions {/tr} <a class="rbox-link" href="tiki-admingroups.php">{tr}click here{/tr}</a>.</div>
+</div>
+<br />
+
 <h3>{tr}Current permissions for this page{/tr}:</h3>
 <table class="normal">
 <tr><td class="heading">{tr}group{/tr}</td><td class="heading">{tr}permission{/tr}</td><td class="heading">{tr}action{/tr}</td></tr>
