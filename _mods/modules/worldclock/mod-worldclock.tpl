@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/_mods/modules/worldclock/mod-worldclock.tpl,v 1.2 2005-09-08 10:56:29 damosoft Exp $ 
+{* $Header: /cvsroot/tikiwiki/_mods/modules/worldclock/mod-worldclock.tpl,v 1.3 2006-09-17 21:04:50 illori Exp $ 
    TikiWiki ticking clock in a module
 *}
 {tikimodule title="{tr}World Clock{/tr}" name="worldclock" flip=$module_params.flip decorations=$module_params.decorations}
@@ -9,7 +9,7 @@
 position:absolute;top:0px;left:0px;
 }
 #theClockLayer{
-position:relative;height:180px;left:20px;text-align:center;
+position:relative;height:200px;left:20px;text-align:center;
 }
 .handsanddotsstyle{
 margin-top:10px;position:absolute;top:0px;left:0px;width:2px;height:2px;font-size:2px;background-color:#000000;
