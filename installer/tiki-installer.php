@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.6 2005-12-19 20:30:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.7 2006-09-17 13:37:34 damosoft Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -731,7 +731,7 @@ $smarty->assign_by_ref('tikifeedback', $tikifeedback);
 $mid_data = $smarty->fetch('tiki-install.tpl');
 $smarty->assign('mid_data', $mid_data);
 
-$smarty->display("tiki.tpl");
+// $smarty->display("tiki.tpl");
 
 //print "<hr>";
 //setup_help();
