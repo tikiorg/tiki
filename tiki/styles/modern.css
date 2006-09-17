@@ -244,7 +244,7 @@ img.externallink { margin-left: 2px; }
 .rssitem { margin-left: -25px; }
 .even { background-color: white; }
 .odd { background-color: #eeeeff; }
-td.heading a.link, .posthead a.link { color: white; }
+a.sortheader, td.heading a.link, th.heading a.link, .posthead a.link { color: white; }
 
 td.button {
   text-align: center; 
