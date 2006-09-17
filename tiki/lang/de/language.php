@@ -3132,7 +3132,7 @@ will not work with old library and conversely" => "WARNUNG: Alte und Neue Tracke
 "Record untranslated" => "Eintrag nicht &uuml;bersetzt",
 "OS" => "Betriebssystem",
 "Unknown/Other" => "unbekannt/anderes",
-"PHP error reporting level for non-admin:" => "PHP Fehler-Ausgabe f&uuml;r Nicht-Admins:",
+"PHP error reporting level for non-admin:" => "PHP Fehler Ausgabelevel:",
 "No error reporting" => "Keine Fehlerausgabe",
 "Report all PHP errors" => "Alle PHP Fehler ausgeben",
 "Report all errors except notices" => "Alle Fehler au&szlig;er Hinweisen ausgeben",
@@ -5782,5 +5782,12 @@ will not work with old library and conversely" => "WARNUNG: Alte und Neue Tracke
 "Search and replace" => "Suchen und ersetzen",
 "Use <a href='http://pear.php.net/package/text_Wiki'>PEAR::Text_Wiki</a> to parse Wiki-text" => "<a href='http://pear.php.net/package/text_Wiki'>PEAR::Text_Wiki</a> zum Parsen der Seiten benutzen",
 "experimental" => "experimentell",
+"must be turned on and notification is sent to the admin's" => "mu&szlig; aktiviert sein, Nachrichten an Admin geht an seine",
+"inter-user message inbox" => "Tiki Mailbox",
+"Please expect not found help-pages with the default-URL." => "Teilweise fehlen die Hilfeseiten noch.",
+"Any help with the documentation is welcome." => "Hilfe bei der Dokumentation ist willkommen.",
+"Examples" => "Beispiele",
+"Note: if you change this directory, you have to move the contents to the new directory. You can also use the 'Mover' below." => "Hinweis: wenn das Verzeichnis ge&auml;ndert wird, mu&szlig; auch der Inhalt im Filesystem entsprechend manuell verschoben werden. Oder Du kannst die Dateien in die Datenbank verlagern (s.u.)",
+"Mover" => "Dateien verlagern",
 "###end###"=>"###end###");
 ?>
