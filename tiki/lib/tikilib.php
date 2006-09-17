@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.651 2006-09-07 18:29:19 fmathias Exp $
+// CVS: $Id: tikilib.php,v 1.652 2006-09-17 13:58:25 ohertel Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -5868,6 +5868,7 @@ if (!$simple_wiki) {
 		$bindvars[] = $lang;
 	}
 	if ($lock_it == 'y' || $lock_it == 'on') {
+		$mid .= ', `flag`=?, `lockedby`=? ';
 		$bindvars[] = 'L';
 		$bindvars[] = $user;
 	} else if ($lock_it == 'n') {
@@ -5875,7 +5876,6 @@ if (!$simple_wiki) {
 		$bindvars[] = '';
 		$bindvars[] = '';
 	}
-
 
 	$bindvars[] = $pageName;
 	$query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `page_size`=?, `is_html`=?  $mid where `pageName`=?";
