@@ -790,6 +790,7 @@ $lang=Array(
 // "End date:" => "End date:",
 // "km" => "km", // ## CLOSE: "Kb" => "KB",
 "Last seen on" => "Zuletzt online am",
+"Last seen on " => "Zuletzt online am",
 "(idle for %s seconds)" => "(unt&auml;tig f&uuml;r %s Sekunden)",
 // "cannot be found" => "cannot be found",
 // "An error occured in a database query!" => "An error occured in a database query!",
