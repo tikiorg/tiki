@@ -1,4 +1,4 @@
-/* $Header$ */
+/* $Header$ /cvsroot/tikiwiki/tiki/styles/modern.css,v 1.2 2006/09/16 14:22:42 ohertel Exp $ */
 /* Modern Style for Tiki 1.9+ by Oliver Hertel */
 
 /* --- general layout --- */
@@ -97,7 +97,7 @@ h1, h2, h3, h4, h5, h6, p, .blogtitle, .separator, a.pagetitle
 .box-titletext, .titleb { color: white; font-weight: bold; padding: 1px; }
 
 div.box-title, .xxbox-title, .cbox-title, .articletitle, .tabmark, div.posthead, .heading {
-    background-image: url(yahoodev/bluebar.jpg);
+    background-image: url(modern/bluebar.jpg);
     color: white;
     font-weight: bold;
     margin-bottom: 1px;
