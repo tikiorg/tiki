@@ -71,7 +71,7 @@
         </tr><tr>
           <td class="form"><label for="search-refresh">{tr}Search refresh rate{/tr}:</label></td>
 	  <td><input size="5" type="text" name="search_refresh_rate" id="search-refresh"
-	      value="{$search_refresh_rate|escape}" />{tr}0 for no refresh{/tr}</td>
+	      value="{$search_refresh_rate|escape}" /> {tr}0 for no refresh{/tr}</td>
         </tr><tr>
           <td class="form"><label for="search-min_length">{tr}Minimum length of search word{/tr}: </label></td>
           <td><input size="5" type="text" name="search_min_wordlength" id="search-min_length"
