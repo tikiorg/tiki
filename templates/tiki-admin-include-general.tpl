@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.49 2006-08-29 20:19:12 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.50 2006-09-17 09:22:18 ohertel Exp $ *}
 
 <script type="text/javascript">
 {literal}
@@ -238,8 +238,7 @@
         </td>
       </tr><tr>
         <td class="form"><label for="general-gzip">
-        {if $feature_help eq 'y'}<a href="http://tikiwiki.org/Compression" 
-target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}:" >{/if}
+        {if $feature_help eq 'y'}<a href="http://tikiwiki.org/Compression" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}:" >{/if}
         {tr}Use gzipped output{/tr}
         {if $feature_help eq 'y'}</a>{/if}
         :</label>
@@ -403,15 +402,11 @@ target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}:" >{/if}
 					</td>
 				</tr>
                                 <tr>
-                                        <td class="form"><label for="site_nav_se
-per">{tr}Choices separator{/tr}:</label></td>
+                                        <td class="form"><label for="site_nav_seper">{tr}Choices separator{/tr}:</label></td>
                                         <td>
-                                                <div style="float: left"><input
-type="text" name="site_nav_seper" id="site_nav_seper" value="{$site_nav_seper}"
-size="5" maxlength="8" /></div>
+                                                <div style="float: left"><input type="text" name="site_nav_seper" id="site_nav_seper" value="{$site_nav_seper}" size="5" maxlength="8" /></div>
                                                 <div>
-                                                        &nbsp; <small><em>{tr}Ex
-amples{/tr}</em>: &nbsp; | &nbsp; / &nbsp; &brvbar; &nbsp; : </small>
+                                                        &nbsp; <small><em>{tr}Examples{/tr}</em>: &nbsp; | &nbsp; / &nbsp; &brvbar; &nbsp; : </small>
                                                 </div>
                                         </td>
                                 </tr>
