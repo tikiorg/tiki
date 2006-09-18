@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-export_tracker.php,v 1.5 2006-09-15 10:34:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-export_tracker.php,v 1.6 2006-09-18 14:22:00 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -160,11 +160,10 @@ for ($i = 0; $i < $temp_max; $i++) {
 	if (isset($tracker_info['defaultOrderKey']) and $tracker_info['defaultOrderKey'] == $xfields["data"][$i]['fieldId']) {
 		$orderkey = true;
 	}
-	if (($xfields["data"][$i]['isTblVisible'] == 'y' or $xfields["data"][$i]['isSearchable'] == 'y') 
-//		and ($xfields["data"][$i]['isPublic'] == 'y' or $tiki_p_admin_trackers == 'y') ispublic is for tracker plugin not normal view
-		and ($xfields["data"][$i]['isHidden'] != 'y' or ($tiki_p_admin == 'y' or $tiki_p_admin_trackers == 'y'))
+	if ( (($tiki_p_admin == 'y' or $tiki_p_admin_trackers == 'y') && (empty($_REQUEST['which']) || $_REQUEST['which'] == 'all'))
+		|| (($xfields["data"][$i]['isTblVisible'] == 'y' or $xfields["data"][$i]['isSearchable'] == 'y') && $_REQUEST['which'] == 'list')
+		|| ($xfields["data"][$i]['isHidden'] != 'y' && $_REQUEST['which'] == 'item')
 		) {
-		
 		$listfields[$fid]['type'] = $xfields["data"][$i]["type"];
 		$listfields[$fid]['name'] = $xfields["data"][$i]["name"];
 		$listfields[$fid]['options'] = $xfields["data"][$i]["options"];
