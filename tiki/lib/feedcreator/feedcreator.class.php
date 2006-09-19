@@ -29,6 +29,7 @@ Changelog:
 
 v1.7.2-tiki-1	09-19-06
 	RSS0.9 added (ohertel)
+	itunes podcast support (ohertel)
 
 v1.7.2	10-11-04
 	license changed to LGPL
@@ -186,7 +187,7 @@ class FeedItem extends HtmlDescribable {
 	/**
 	 * Optional attributes of an item.
 	 */
-	var $author, $authorEmail, $image, $category, $comments, $guid, $source, $creator;
+	var $author, $authorEmail, $image, $category, $comments, $guid, $source, $creator, $size, $duration;
 	
 	/**
 	 * Publishing date of an item. May be in one of the following formats:
@@ -386,6 +387,10 @@ class UniversalFeedCreator extends FeedCreator {
 				$this->_feed = new HTMLCreator();
 				break;
 			
+			case "PC1.0":
+				$this->_feed = new PodCastCreator10();
+				break;
+			
 			case "JS":
 				// fall through
 			case "JAVASCRIPT":
@@ -411,7 +416,7 @@ class UniversalFeedCreator extends FeedCreator {
 	 *
 	 * @see        FeedCreator::addItem()
 	 * @param    string    format    format the feed should comply to. Valid values are:
-	 *			"PIE0.1", "mbox", "RSS0.91", "RSS1.0", "RSS2.0", "OPML", "ATOM0.3", "HTML", "JS", "RSS0.9"
+	 *			"PIE0.1", "mbox", "RSS0.91", "RSS1.0", "RSS2.0", "OPML", "ATOM0.3", "HTML", "JS", "RSS0.9", "PC1.0"
 	 * @return    string    the contents of the feed.
 	 */
 	function createFeed($format = "RSS0.91") {
@@ -427,7 +432,7 @@ class UniversalFeedCreator extends FeedCreator {
 	 * @since 1.4
 	 * 
 	 * @param	string	format	format the feed should comply to. Valid values are:
-	 *			"PIE0.1" (deprecated), "mbox", "RSS0.91", "RSS1.0", "RSS2.0", "OPML", "ATOM", "ATOM0.3", "HTML", "JS", "RSS0.9"
+	 *			"PIE0.1" (deprecated), "mbox", "RSS0.91", "RSS1.0", "RSS2.0", "OPML", "ATOM", "ATOM0.3", "HTML", "JS", "RSS0.9", "PC1.0"
 	 * @param	string	filename	optional	the filename where a recent version of the feed is saved. If not specified, the filename is $_SERVER["PHP_SELF"] with the extension changed to .xml (see _generateFilename()).
 	 * @param	boolean	displayContents	optional	send the content of the file or not. If true, the file will be sent in the body of the response.
 	 */
@@ -445,7 +450,7 @@ class UniversalFeedCreator extends FeedCreator {
     * (web fetching, for example).
     *
     * @param   string   format   format the feed should comply to. Valid values are:
-    *       "PIE0.1" (deprecated), "mbox", "RSS0.91", "RSS1.0", "RSS2.0", "OPML", "ATOM0.3".
+	* 	       "PIE0.1" (deprecated), "mbox", "RSS0.91", "RSS1.0", "RSS2.0", "OPML", "ATOM", "ATOM0.3", "HTML", "JS", "RSS0.9", "PC1.0"
     * @param filename   string   optional the filename where a recent version of the feed is saved. If not specified, the filename is $_SERVER["PHP_SELF"] with the extension changed to .xml (see _generateFilename()).
     * @param timeout int      optional the timeout in seconds before a cached version is refreshed (defaults to 3600 = 1 hour)
     */
@@ -800,12 +805,84 @@ class FeedDate {
 
 
 /**
+ * PodCastCreator10 is a FeedCreator that implements itunes PodCast 1.0.
+ *
+ * @see http://www.apple.com/itunes/store/podcaststechspecs.html
+ * @since 1.7.2-tiki-1
+ * @author Oliver Hertel <ohertel@tikiwiki.org>
+ */
+class PodCastCreator10 extends FeedCreator {
+
+	/**
+	 * Builds the RSS feed's text.
+	 * The feed will contain all items previously added in the same order.
+	 * @return    string    the feed's complete text 
+	 */
+	function createFeed() {     
+		$feed = "<?xml version=\"1.0\" encoding=\"".$this->encoding."\"?>\n";
+		$feed.= $this->_createGeneratorComment();
+		$feed.= "<rss xmlns:itunes=\"http://www.itunes.com/dtds/podcast-1.0.dtd\" version=\"2.0\">\n";
+		$feed.= "<channel>\n";
+		$feed.= "<title>".htmlspecialchars($this->title)."</title>\n";
+		$feed.= "<link>".$this->link."</link>\n";
+		$feed.= "<description>".htmlspecialchars($this->description)."</description>\n";
+		if ($this->language!="") {
+			$feed.= "<language>".$this->language."</language>\n";
+		}
+		if ($this->copyright!="") {
+			$feed.= "<copyright>".FeedCreator::iTrunc(htmlspecialchars($this->copyright),100)."</copyright>\n";
+		}
+
+		/* TODO:
+			<itunes:subtitle>A show about everything</itunes:subtitle>
+			<itunes:author>John Doe</itunes:author>
+			<itunes:summary>All About Everything is a show about everything. Each week we dive into any subject known to man and talk about it as much as we can. Look for our Podcast in the iTunes Music Store</itunes:summary>
+			<itunes:owner>
+			<itunes:name>John Doe</itunes:name>
+			<itunes:email>john.doe@example.com</itunes:email>
+			</itunes:owner>
+			<itunes:image href="http://example.com/podcasts/everything/AllAboutEverything.jpg" />
+			<itunes:category text="Technology">
+			<itunes:category text="Gadgets"/>
+			<itunes:category>
+			<itunes:category text="TV &amp; Film"/>
+		*/
+
+		for ($i=0;$i<count($this->items);$i++) {
+			$feed.="<item>\n";
+			$feed.= "<title>".htmlspecialchars(strip_tags(strtr($this->items[$i]->title,"\n\r","  ")))."</title>\n";
+			if ($this->items[$i]->author!="") {
+				$feed.= "<itunes:author>".htmlspecialchars($this->items[$i]->author)."</itunes:author>\n";
+				$feed.= "<itunes:summary>".htmlspecialchars($this->items[$i]->description)."</itunes:summary>\n";
+				if ($this->items[$i]->date!=null) {
+					$itemDate = new FeedDate($this->items[$i]->date);
+					$feed.= "<pubDate>".htmlspecialchars($itemDate->iso8601())."</pubDate>\n";
+					$feed.= "<enclosure url=\"".htmlspecialchars($this->items[$i]->link)."\" length=\"".(int)$this->items[$i]->size."\" type=\"audio/mpeg\" />\n";
+					$feed.= "<guid>".htmlspecialchars($this->items[$i]->link)."</guid>\n";
+				}
+			}
+
+			/* TODO: 
+				<itunes:subtitle>Red + Blue != Purple</itunes:subtitle>
+				<itunes:duration>3:59</itunes:duration>
+				<itunes:keywords>politics, red, blue, state</itunes:keywords>
+			*/
+			$feed.= "</item>\n";
+		}
+		$feed.="</channel>\n";
+		$feed.="</rss>\n";
+		return $feed;
+	}
+}
+
+/**
  * RSSCreator10 is a FeedCreator that implements RDF Site Summary (RSS) 1.0.
  *
  * @see http://www.purl.org/rss/1.0/
  * @since 1.3
  * @author Kai Blankenhorn <kaib@bitfolge.de>
  */
+
 class RSSCreator10 extends FeedCreator {
 
 	/**

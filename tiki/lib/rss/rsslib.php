@@ -37,38 +37,41 @@ class RSSLib extends TikiLib {
 
 		$rss_version=$ver;
 		
-		// valid format strings are: RSS0.91, RSS1.0, RSS2.0, PIE0.1, MBOX, OPML, ATOM0.3, HTML, JS, RSS0.9
-		// valid format ids        :    9   ,   1   ,    2  ,   3   ,  4  ,   6 ,    5   ,  7  ,  8,   a
+		// valid format strings are: RSS0.91, RSS1.0, RSS2.0, PIE0.1, MBOX, OPML, ATOM0.3, HTML, JS, RSS0.9, itunespodcast1.0
+		// valid format ids        :    9   ,   1   ,    2  ,   3   ,  4  ,   6 ,    5   ,  7  ,  8,   a,           i
 		switch ($ver) {
-			case "RSS0.91":
-			   $rss_version=9;
-			   break;
-			case "RSS0.9":
-			   $rss_version="a";
-			   break;
-			case "RSS1.0":
-			   $rss_version=1;
-			   break;
-			case "RSS2.0":
-			   $rss_version=2;
-			   break;
-			case "PIE0.1":
-			   $rss_version=3;
-			   break;
-			case "MBOX":
-			   $rss_version=4;
-			   break;
 			case "ATOM0.3":
 			   $rss_version=5;
-			   break;
-			case "OPML":
-			   $rss_version=6;
 			   break;
 			case "HTML":
 			   $rss_version=7;
 			   break;
 			case "JS":
 			   $rss_version=8;
+			   break;
+			case "MBOX":
+			   $rss_version=4;
+			   break;
+			case "OPML":
+			   $rss_version=6;
+			   break;
+			case "PC1.0":
+			   $rss_version="i";
+			   break;
+			case "PIE0.1":
+			   $rss_version=3;
+			   break;
+			case "RSS0.9":
+			   $rss_version="a";
+			   break;
+			case "RSS0.91":
+			   $rss_version=9;
+			   break;
+			case "RSS1.0":
+			   $rss_version=1;
+			   break;
+			case "RSS2.0":
+			   $rss_version=2;
 			   break;
 		}
 		return $rss_version;
@@ -82,15 +85,9 @@ class RSSLib extends TikiLib {
 
 		$rss_version_name=$ver;
 
-		// valid format strings are: RSS0.91, RSS1.0, RSS2.0, PIE0.1, MBOX, OPML, ATOM0.3, HTML, JS, RSS0.9
-		// valid format ids        :    9   ,   1   ,    2  ,   3   ,  4  ,   6 ,    5   ,  7  ,  8,   a
+		// valid format strings are: RSS0.91, RSS1.0, RSS2.0, PIE0.1, MBOX, OPML, ATOM0.3, HTML, JS, RSS0.9, itunespodcast1.0
+		// valid format ids        :    9   ,   1   ,    2  ,   3   ,  4  ,   6 ,    5   ,  7  ,  8,   a,           i
 		switch ($ver) {
-			case "9":
-			   $rss_version_name="RSS0.91";
-			   break;
-			case "a":
-			   $rss_version_name="RSS0.9";
-			   break;
 			case "1":
 			   $rss_version_name="RSS1.0";
 			   break;
@@ -114,6 +111,15 @@ class RSSLib extends TikiLib {
 			   break;
 			case "8":
 			   $rss_version_name="JS";
+			   break;
+			case "9":
+			   $rss_version_name="RSS0.91";
+			   break;
+			case "a":
+			   $rss_version_name="RSS0.9";
+			   break;
+			case "i":
+			   $rss_version_name="PC1.0";
 			   break;
 		}
 		return $rss_version_name;
@@ -228,12 +234,12 @@ class RSSLib extends TikiLib {
 		$dirname = (dirname($urlarray["path"]) != "/" ? "/" : "");
 
 		$url = htmlspecialchars($this->httpPrefix().$_SERVER["REQUEST_URI"]);
-		$home = htmlspecialchars($this->httpPrefix().dirname( $urlarray["path"] ).$dirname.$tikiIndex);
-		$img = htmlspecialchars($this->httpPrefix().dirname( $urlarray["path"] ).$dirname."img/tiki.jpg");
+		$home = htmlspecialchars($this->httpPrefix().$urlarray["path"].$dirname.$tikiIndex);
+		$img = htmlspecialchars($this->httpPrefix().$urlarray["path"].$dirname."img/tiki.jpg");
 
 		$title = htmlspecialchars($title);
 		$desc = htmlspecialchars($desc);
-		$read = $this->httpPrefix().dirname($urlarray["path"]).$dirname.$itemurl;
+		$read = $this->httpPrefix().$urlarray["path"].$dirname.$itemurl;
 
 		// different stylesheets for atom and rss	
 		$cssStyleSheet = "";
@@ -242,8 +248,8 @@ class RSSLib extends TikiLib {
 		$encoding = "UTF-8";
 		$contenttype = "application/xml";
 
-		// valid format strings are: RSS0.91, RSS1.0, RSS2.0, PIE0.1, MBOX, OPML, ATOM0.3, HTML, JS, RSS0.9
-		// valid format ids        :    9   ,   1   ,    2  ,   3   ,  4  ,   6 ,    5   ,  7  ,  8,   a
+		// valid format strings are: RSS0.91, RSS1.0, RSS2.0, PIE0.1, MBOX, OPML, ATOM0.3, HTML, JS, RSS0.9,  itunespodcast1.0
+		// valid format ids        :    9   ,   1   ,    2  ,   3   ,  4  ,   6 ,    5   ,  7  ,  8,   a,            i
 
 		switch ($rss_version) {
 			case "1": // RSS 1.0
@@ -254,6 +260,7 @@ class RSSLib extends TikiLib {
 				$xslStyleSheet = $this->httpPrefix().dirname( $urlarray["path"] ).$dirname."lib/rss/rss20.xsl";
 			break;
 			case "3": // PIE 0.1
+				// plain RDF file
 			break;
 			case "4": // MBOX
 				$contenttype = "text/plain";
@@ -276,9 +283,11 @@ class RSSLib extends TikiLib {
 			case "a": // RSS 0.9
 				// plain RDF file
 			break;
+			case "i": // iTunes PodCast 1.0
+				// plain RDF file
+			break;
 		}
 
-	
 		$rss = new UniversalFeedCreator(); 
 		$rss->title = $title;
 		$rss->description = $desc;
@@ -327,6 +336,13 @@ class RSSLib extends TikiLib {
 				$item->description = $data["$descId"]; 
 			} else {
 				$item->description = ""; 
+			}
+
+			// for file galleries and podcasts
+			if (isset($data["filesize"])) {
+				$item->size = $data["filesize"]; 
+			} else {
+				$item->size = 0;
 			}
 	
 			//optional
