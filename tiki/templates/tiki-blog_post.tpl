@@ -16,9 +16,13 @@
 {/if}
 <span class="button2"><a class="linkbut" href="tiki-list_blogs.php">{tr}list blogs{/tr}</a></span>
 <br /><br />
-<div class="wikitext"><small>{tr}Note: if you want to use images please save the post first and you
-will be able to edit/post images. Use the &lt;img&gt; snippet to include uploaded images in the textarea editor
-or use the image URL to include images using the WYSIWYG editor. {/tr}</small></div>
+
+  <div class="rbox" name="tip">
+  <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+  <div class="rbox-data" name="tip">{tr}If you want to use images please save the post first and you will be able to edit/post images. Use the &lt;img&gt; snippet to include uploaded images in the textarea editor or use the image URL to include images using the WYSIWYG editor. {/tr}</div>
+  </div>
+  <br />
+
 <form enctype="multipart/form-data" name='blogpost' method="post" action="tiki-blog_post.php" id ='editpageform'>
 <input type="hidden" name="wysiwyg" value="{$wysiwyg|escape}" />
 <input type="hidden" name="postId" value="{$postId|escape}" />
