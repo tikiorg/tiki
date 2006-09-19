@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blogs_rss.php,v 1.29 2005-05-18 10:58:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blogs_rss.php,v 1.30 2006-09-19 16:33:14 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -21,32 +21,35 @@ if ($tiki_p_read_blog != 'y') {
 }
 
 $feed = "blogs";
-$title =  (!empty($title_rss_blogs)) ? $title_rss_blogs : tra("Tiki RSS feed for weblogs");
-$desc =  (!empty($desc_rss_blogs)) ? $desc_rss_blogs : tra("Last posts to weblogs.");
-$now = date("U");
-$id = "blogId";
-$descId = "data";
-$dateId = "created";
-$titleId = "title";
-$authorId = "user";
-$readrepl = "tiki-view_blog_post.php?$id=%s&postId=%s";
 $uniqueid = $feed;
+$output = $rsslib->get_from_cache($uniqueid);
 
-$tmp = $tikilib->get_preference('title_rss_'.$feed, '');
-if ($tmp<>'') $title = $tmp;
-$tmp = $tikilib->get_preference('desc_rss_'.$feed, '');
-if ($desc<>'') $desc = $tmp;
+if ($output["data"]=="EMPTY") {
+	$title =  (!empty($title_rss_blogs)) ? $title_rss_blogs : tra("Tiki RSS feed for weblogs");
+	$desc =  (!empty($desc_rss_blogs)) ? $desc_rss_blogs : tra("Last posts to weblogs.");
+	$now = date("U");
+	$id = "blogId";
+	$descId = "data";
+	$dateId = "created";
+	$titleId = "title";
+	$authorId = "user";
+	$readrepl = "tiki-view_blog_post.php?$id=%s&postId=%s";
 
-$changes = $bloglib -> list_all_blog_posts(0, $max_rss_blogs, $dateId.'_desc', '', $now);
-$tmp = array();
-foreach ($changes["data"] as $data)  {
-	$data["$descId"] = $tikilib->parse_data($data["$descId"]);
-	$tmp[] = $data;
+	$tmp = $tikilib->get_preference('title_rss_'.$feed, '');
+	if ($tmp<>'') $title = $tmp;
+	$tmp = $tikilib->get_preference('desc_rss_'.$feed, '');
+	if ($desc<>'') $desc = $tmp;
+	
+	$changes = $bloglib -> list_all_blog_posts(0, $max_rss_blogs, $dateId.'_desc', '', $now);
+	$tmp = array();
+	foreach ($changes["data"] as $data)  {
+		$data["$descId"] = $tikilib->parse_data($data["$descId"]);
+		$tmp[] = $data;
+	}
+	$changes["data"] = $tmp;
+	$tmp = null;
+	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, 'postId', $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
 }
-$changes["data"] = $tmp;
-$tmp = null;
-$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, 'postId', $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
-
 header("Content-type: ".$output["content-type"]);
 print $output["data"];
 

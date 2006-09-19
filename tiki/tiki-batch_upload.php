@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-batch_upload.php,v 1.7 2006-08-29 20:19:02 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-batch_upload.php,v 1.8 2006-09-19 16:33:14 ohertel Exp $
 
 require_once ('tiki-setup.php');
 include_once ('lib/imagegals/imagegallib.php');
@@ -283,6 +283,9 @@ $smarty->assign_by_ref('galleries', $galleries["data"]);
 
 $section = 'galleries';
 include_once ('tiki-section_options.php');
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 // Display the template
 $smarty->assign('mid', 'tiki-batch_upload.tpl');

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.100 2006-08-29 20:32:05 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.101 2006-09-19 16:33:18 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -154,6 +154,19 @@ $vartype['editmode'] = 'char'; // from calendar
 $vartype['actpass'] = 'string'; // remind password page
 $vartype['user'] = 'string'; // remind password page
 $vartype['remind'] = 'string'; // remind password page
+// galaxia
+$vartype['aid'] = 'int';
+$vartype['description'] = 'string';
+$vartype['filter_active'] = 'char';
+$vartype['filter_name'] = 'string';
+$vartype['newmajor'] = 'int';
+$vartype['newminor'] = 'int';
+$vartype['pid'] = 'int';
+$vartype['remove_role'] = 'int';
+$vartype['rolename'] = 'char';
+$vartype['type'] = 'int';
+$vartype['userole'] = 'int';
+
 
 // if we get an error while reading language from prefs, assume the db
 // is not yet set up and give a message
@@ -196,7 +209,7 @@ varcheck($_REQUEST);
 unset($_REQUEST);
 unset($_COOKIE['offset']);
 $_REQUEST = array_merge($_COOKIE, $_POST, $_GET, $_ENV, $_SERVER);
-if (!empty($_REQUEST['highlight'])) 
+if (!empty($_REQUEST['highlight']))
 	$_REQUEST['highlight'] = htmlspecialchars($_REQUEST['highlight']);
 
 // ---------------------------------------------------------------------

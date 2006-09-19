@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.33 2006-01-22 21:45:08 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.34 2006-09-19 16:33:18 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -142,6 +142,9 @@ if ($feature_display_my_to_others == 'y') {
 }
 
 ask_ticket('user-information');
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $smarty->display("tiki.tpl");
 

@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.82 2006-09-17 13:01:59 ohertel Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.83 2006-09-19 16:33:22 ohertel Exp $
  *
  * \brief Categories support class
  *
@@ -884,8 +884,7 @@ class CategLib extends ObjectLib {
 		if ($catObjectId) {
 		    $query = "delete from `tiki_category_objects` where `catObjectId`=?";
 		    $result = $this->query($query,array((int) $catObjectId));
-		    $query = "delete from `tiki_categorized_objects` where `catObjectId`=?";
-		    $result = $this->query($query,array((int) $catObjectId));
+			// must keep tiki_categorized object because poll or ... can use it
 		}
     }
 

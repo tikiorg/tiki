@@ -10,8 +10,8 @@ Use the following tags to distinguish changes :
 * [NEW] apply if something new was added in tikiwiki
 * [MOD] is an enhancement; not really new but makes things work better
 * [FIX] can be used for bug fixes of any sort
-* [SEC] (new in 1.9.4) for security fix operations
-* -[DB] (new in 1.9.4) for changes in the database
+* [SEC] (new since 1.9.4) for security fix operations
+* -[DB] (new since 1.9.4) for changes in the database
 
 Please wrap your lines at 80 characters and indent them with spaces only.
 
@@ -24,27 +24,109 @@ Version 1.9.5
 <http://tikiwiki.org/ReleaseProcess195>
 ------------------
 
-[MOD] Images galleries links simplyfied
+[SEC] Security: fix in tiki-editpage.php
+[SEC] Security: fixes in jhot.php
+[SEC] Security: Parameter highlight may not countain & , " , ' , < or >
+[SEC] Security: Script htaccess.sh for dis/enabling .htaccess files
+[FIX] Avoid some messages due to undefined variables
+[FIX] Tracker: fixed tracker data import when no status indicated in csv
+[FIX] Trackers: check we have a right image handle before taking its info
+[FIX] Avoid notice and insert message case id xxx does not exist in {rss id=xxx}
+[FIX] Optional 's' for $groupHome protocol as https://... ,correct the
+      https: goup home case for logout too
+[FIX] Installer shows memory limit warning
+[FIX] No more take offset from cookies
+[FIX] Image Gallery: Check we have a right image handle before taking its info
+[FIX] Image Gallery: Strengthen get_one_image_from_disk() to refuse non image data
+[FIX] Image Gallery: Check and get image sizes even if .gif or no
+      imagecreatefromstring()
+[FIX] Image Gallery: All files are now checked against being right images
+[FIX] Image Gallery: Double link to image gallery when returning from edit
+[FIX] Image Gallery: Get optional thumbnail image size so it works if same scale
+      as thumbs scale from gallery
+[FIX] Image Gallery: Double link to image gallery when returning from edit
+[FIX] Image Gallery: Use gallery's default for image scale or sort order
+      if none in browse and show images
+[FIX] Image Gallery: Image permissions
+[FIX] Image Gallery: Navigation / scale control in image browsing
+[FIX] Image Gallery: Once image gallery saved, avoid double create link display
+[FIX] Image Gallery: small change in images batch upload to respect name
+      order in batch
+[FIX] Keep menus wide open if javascript or cookies not allowed
+[FIX] Styles: Simple style fixes for PLM and other enhancements
+[FIX] Tiki-index_p.php: typo feature_wiki_usrlock
+[FIX] Blogs: Trackback pings for blog posts accepted only if the feature
+      blog is enabled
+[FIX] Blogs: Secured and fixed blogs trackback pings display
+[FIX] Wikiplugin snarf: don't change line feeds in <br />
+[FIX] Wikiplugin code: uses proper <br />
+[FIX] mk_profile.sh: accepts optionals backticks around table names,
+      better autodoc
+[FIX] Module quick_edit: fixed collision with edit article: 'heading'
+      used in both of them, thus preventing 'heading' showing up in
+      edit article, if you have quick_edit module activated
+[FIX] Admin/login: fixing 1 day bug & adding more options
+[FIX] pcllib: removed call by reference to functions
+[FIX] Broken links to documentation
+[FIX] Some fixes in display of country flag
+[FIX] Galaxia: conformed to db abstract
+[FIX] Wiki RSS Feed: avoid sql error, show whole file for new wiki pages,
+      cleanup of output in rss data
+[FIX] Wiki: fixed undefined 'index' variable in page history
+[FIX] Wikiplugin TrackerFilter: fix sort and pagination
+[FIX] Wikiplugin Trackerlist: several fixes
+[MOD] Smarty updated to 2.6.14
+[MOD] Modules allow user to create a module without title and display error
+      message if no name or data is given to a new module
+[MOD] Trackers: add the fulltext index for tracker search with mysql
+[MOD] Trackers: many fixes and enhancements
+[MOD] change in the message body messu-compose to messu-mailbox to be
+      directly in the mailbox when notification from the message box
+[MOD] Some clean up and organization on wiki help
+[MOD] Trackers: added a new optional behaviour for isHidden field
+      type, to make hidden fields only editable by tracker admin
+      but still visible to modifier
+[MOD] Admin survey questions: longer options field and hint box for
+      multiple answer questions where to places those answers
+[MOD] at least yahoo and google ignore our robots.txt entries completely,
+      so we set META ROBOTS tags on all pages we don't want indexed/followed.
+      Thats all admin/submit/print/rename/remove/send pages and pages that
+      will make search box go wild (categories, lengthy lists, calendar, ...)
+[MOD] Hide MultiTiki info when not in use 
+[MOD] lang/de, lang/ca, lang/pt-br, lang/fr updates
+[MOD] Edit article: allow to preselect categories when creating a new
+      article, like this:
+      /tiki-edit_article.php?cat_categories[]=1&cat_categorize=on for
+      category '1'
+[MOD] Plugins: Extended div wikiplugin to accept justify text align
+[MOD] Blogs: Possibility to delete blog post level trackback pings
+[MOD] Changed behaviour for description label when no desc is provided
+[MOD] Enables relative url for group home as http:tiki-xxx.php...
+      (no double slash after ":" )
+[MOD] Enables included php to ask extra external js
+[MOD] Image slideshow in page , controlled by feature slideshow in admin
+      image galleries
+[MOD] Images slideshow preloads images and works autonomous when
+      cycle complete
+[MOD] Images galleries links simplified, only scalesize controls the scale
+      (0=original size)
 [MOD] Images galleries controls enhanced
-[FIX] Use gallery's default for image scale or sort order if none in browse and show images
-[FIX] Navigation in image browsing
-[FIX] Once image gallery saved , avoid double create link display
-[FIX] keep menus wide open if javascript or cookies not allowed
-[MOD] update to latest version of PhpLayersMenu (3.2.0-rc)
-[MOD] new files (copy for Tiki for modifications) to prevent overriding of original files of the PLM package
-[FIX] styles: Simple style fixes for PLM and other enhancements
-[MOD] calendar: added categories support for theme control purpose
-[MOD] users: added an option to make optional the optionality of recieving internal messages
-[MOD] imagegal: added in admin panel a way to move images from db to filesystem
-[MOD] users: added an option to have new users accept internal messages by default
-[FIX] tiki-index_p.php: typo feature_wiki_usrlock
-[FIX] Trackback pings for blog posts accepted only if the feature blog is enabled
-[MOD] Blogs trackback pings considered as comments so depend on their settings / perms (temporary, should be separated on own settings )
-[MOD] View blogs post refactored
-[FIX] wikiplugin snarf : don't change line feeds in <br />
-[FIX] wikiplugin code : uses proper <br />
-[FIX] mk_profile.sh : accepts optionals backticks around table names , better autodoc
-
+[MOD] Update to latest version of PhpLayersMenu (3.2.0-rc)
+[MOD] New files (copy for Tiki for modifications) to prevent overriding
+      of original files of the PLM package
+[MOD] Calendar: added categories support for theme control purpose
+[MOD] Imagegal: added a way in admin panel to move images from db
+      to filesystem
+[MOD] Users: added an option to have new users accept internal messages
+      by default
+[MOD] Users: switch on receiving internal messages by default
+[MOD] Blogs: Added feature/allow blogs trackback pings enabling general and
+      on a blog basis
+[MOD] Blogs: View blogs post refactored
+[MOD] Clearer install & upgrade intructions. Moving 1.7.x stuff to a wiki
+      page. Add information about secdb
+[NEW] Plugins: Skype plugin to create a clickable link to call or chat
+      with a Skype user
 
 Version 1.9.4
 <http://tikiwiki.org/ReleaseProcess194>
@@ -52,15 +134,18 @@ Version 1.9.4
 
 [MOD] cms: added an option for availability of print option in cms
 [NEW] google-map: new feature, used for usermap and self-location
-[FIX] polls: changed polls admin access permission to be distinct from admin one
+[FIX] polls: changed polls admin access permission to be distinct from
+      admin one
 [MOD] user: added an option to remove all pages from user when deleting user
 [NEW] trackers: new export page in csv format
 [FIX] trackers: made filter work with categ field type
-[FIX] trackers: fixed trackers to accept zero when a numeric field type is mandatory
+[FIX] trackers: fixed trackers to accept zero when a numeric field type
+      is mandatory
 [FIX] galaxia: added a check for name of start activity
 [FIX] maps: freeing now image memory after request to avoid bloating
 [FIX] cms: fixed db commpat for print view (reads->nbreads)
-[FIX] newsletter: set up the from address to default from when sending newsletter
+[FIX] newsletter: set up the from address to default from when sending
+      newsletter
 [MOD] multi: added $local_php and $multi optional vars for geeks only
 [SEC] several vars added to sanitization to avoid cross-site scripting
 [FIX] devtools: improved sqlupgrade script for when password includes a quote 

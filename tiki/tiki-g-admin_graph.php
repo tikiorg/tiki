@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_graph.php,v 1.5 2006-08-29 20:19:02 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_graph.php,v 1.6 2006-09-19 16:33:16 ohertel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -163,6 +163,9 @@ $sameurl_elements = array(
 $all_procs = $items = $processManager->list_processes(0, -1, 'name_desc', '', '');
 $smarty->assign_by_ref('all_procs', $all_procs['data']);
 ask_ticket('g-admin-graph');
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $smarty->assign('mid', 'tiki-g-admin_graph.tpl');
 $smarty->display("tiki.tpl");

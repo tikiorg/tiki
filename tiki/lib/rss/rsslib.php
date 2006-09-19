@@ -12,7 +12,10 @@ include_once ('lib/feedcreator/feedcreator.class.php');
 
 $userslib = new Userslib($dbTiki);
 
+global $rss_cache_time;
+
 class RSSLib extends TikiLib {
+
 	function RSSLib($db) {
 		# this is probably uneeded now
 		if (!$db) {
@@ -22,6 +25,10 @@ class RSSLib extends TikiLib {
 		$this->db = $db;
 	}
 
+	// ------------------------------------
+	// functions for rss feeds we syndicate
+	// ------------------------------------
+
 	function get_rss_version($ver) {
 		if ($ver=='') {
 			// get default rss feed version from database or set to 0.91 if none in there
@@ -30,11 +37,14 @@ class RSSLib extends TikiLib {
 
 		$rss_version=$ver;
 		
-		// valid format strings are: RSS0.91, RSS1.0, RSS2.0, PIE0.1, MBOX, OPML, ATOM0.3, HTML, JS
-		// valid format ids        :    9   ,   1   ,    2  ,   3   ,  4  ,   6 ,    5   ,  7  ,  8
+		// valid format strings are: RSS0.91, RSS1.0, RSS2.0, PIE0.1, MBOX, OPML, ATOM0.3, HTML, JS, RSS0.9
+		// valid format ids        :    9   ,   1   ,    2  ,   3   ,  4  ,   6 ,    5   ,  7  ,  8,   a
 		switch ($ver) {
 			case "RSS0.91":
 			   $rss_version=9;
+			   break;
+			case "RSS0.9":
+			   $rss_version="a";
 			   break;
 			case "RSS1.0":
 			   $rss_version=1;
@@ -72,11 +82,14 @@ class RSSLib extends TikiLib {
 
 		$rss_version_name=$ver;
 
-		// valid format strings are: RSS0.91, RSS1.0, RSS2.0, PIE0.1, MBOX, OPML, ATOM0.3, HTML, JS
-		// valid format ids        :    9   ,   1   ,    2  ,   3   ,  4  ,   6 ,    5   ,  7  ,  8
+		// valid format strings are: RSS0.91, RSS1.0, RSS2.0, PIE0.1, MBOX, OPML, ATOM0.3, HTML, JS, RSS0.9
+		// valid format ids        :    9   ,   1   ,    2  ,   3   ,  4  ,   6 ,    5   ,  7  ,  8,   a
 		switch ($ver) {
 			case "9":
 			   $rss_version_name="RSS0.91";
+			   break;
+			case "a":
+			   $rss_version_name="RSS0.9";
 			   break;
 			case "1":
 			   $rss_version_name="RSS1.0";
@@ -106,61 +119,9 @@ class RSSLib extends TikiLib {
 		return $rss_version_name;
 	}
 
-	/* check for cached rss feed data */
-	function get_from_cache($uniqueid, $rss_version="9") {
-		global $user;
-		// caching rss data for anonymous users only		
-		if ($user<>"") return "EMPTY";
-		$now = date("U");
-		$query = "select * from `tiki_rss_feeds` where `name`=? and `rssVer`=?";
-		$bindvars=array($uniqueid, (int)$rss_version);
-		$result = $this->query($query, $bindvars);
-		
-		$changes = "";
-		$output = "EMPTY";
-		
-		if (!$result->numRows())
-		{
-		  // nothing found, then insert row for this feed+rss_ver
-		  $now = date("U");
-		  $query = "insert into `tiki_rss_feeds`(`name`,`rssVer`,`refresh`,`lastUpdated`,`cache`) values(?,?,?,?,?)";
-		  
-		  // default value for cache timeout is 300 (5 minutes)
-		  $bindvars=array($uniqueid,(int) $rss_version,(int) 300 ,(int) $now, $output);
-		  $result = $this->query($query, $bindvars);
-		}
-		else
-		{
-		  // entry found in db:
-		  $res = $result->fetchRow();
-		  $output = $res["cache"];
-		  $refresh = $res["refresh"];
-		  $lastUpdated = $res["lastUpdated"];
-		  // up to date? if not, then set trigger to reload data:
-		  if ($lastUpdated + $refresh < $now) { $output="EMPTY"; } // TODO: make timeout configurable (is 5 minutes now)
-		}
-		return $output;
-	}
-
-	/* put to cache */
-	function put_to_cache($uniqueid, $rss_version="9", $output) {
-		global $user;
-		// caching rss data for anonymous users only		
-		if ($user<>"") return;
-
-		if ($output == "") return;
-		// update cache with new generated data if data not empty
-		$now = date("U");
-		$query = "update `tiki_rss_feeds` set `cache`=?, `lastUpdated`=? where `name`=? and `rssVer`=?";
-		$bindvars = array($output, (int) $now, $uniqueid, (int) $rss_version);
-		$result = $this->query($query,$bindvars);
-	}
-
-	function generate_feed($feed, $uniqueid, $rss_version, $changes, $itemurl, $urlparam, $id, $title, $titleId, $desc, $descId, $dateId, $authorId) {
-
-		global $tikiIndex;
-		global $userslib;
-		
+	/* return the rss version we currently have to use (user param or default value) */
+	function get_current_rss_version() {
+		global $rss_version;
 		if ($rss_version=='') {
 			// override version if set as request parameter
 			if (isset($_REQUEST["ver"])) {
@@ -170,11 +131,80 @@ class RSSLib extends TikiLib {
 				$rss_version = 9; // default to RSS 0.91
 			}
 		} else $rss_version = $this->get_rss_version($rss_version);
+		return $rss_version;
+	}
 
-		$now = date("U");
-		$output = $this->get_from_cache($uniqueid, $rss_version);
-		if ($output<>"EMPTY") return $output;
+	/* check for cached rss feed data */
+	function get_from_cache($uniqueid, $rss_version="9") {
+		global $user;
+		global $rss_cache_time;
+
+		$rss_version=$this->get_current_rss_version();
 		
+		$output = array();
+		$output["content-type"] = "application/xml";
+		$output["encoding"] = "UTF-8";
+
+		$output["data"] = "EMPTY";
+        $now = date("U");
+
+		// caching rss data for anonymous users only
+		if (isset($user) && $user<>"") return $output;
+
+		$query = "select * from `tiki_rss_feeds` where `name`=? and `rssVer`=?";
+		$bindvars=array($uniqueid, $rss_version);
+		$result = $this->query($query, $bindvars);
+		if (!$result->numRows()) {
+		  // nothing found, then insert empty row for this feed+rss_ver
+		  $query = "insert into `tiki_rss_feeds`(`name`,`rssVer`,`refresh`,`lastUpdated`,`cache`) values(?,?,?,?,?)";
+		  $bindvars=array($uniqueid, $rss_version,(int) $rss_cache_time , 1, "-");
+		  $result = $this->query($query, $bindvars);
+		} else {
+		  // entry found in db:
+		  $res = $result->fetchRow();
+		  $output["data"] = $res["cache"];
+		  // $refresh = $res["refresh"]; // global cache time currently
+		  $refresh = $rss_cache_time; // global cache time currently
+		  $lastUpdated = $res["lastUpdated"];
+		  // up to date? if not, then set trigger to reload data:
+		  if ($now - $lastUpdated >= $refresh ) { $output["data"]="EMPTY"; }
+		}
+		return $output;
+	}
+
+	/* put to cache */
+	function put_to_cache($uniqueid, $rss_version="9", $output) {
+		global $user;
+		// caching rss data for anonymous users only		
+		if (isset($user) && $user<>"") return;
+		if ($output=="" || $output=="EMPTY") return;
+
+		$rss_version=$this->get_current_rss_version();
+
+		// update cache with new generated data if data not empty
+		$now = date("U");
+
+		$query = "update `tiki_rss_feeds` set `cache`=?, `lastUpdated`=? where `name`=? and `rssVer`=?";
+		$bindvars = array($output, (int) $now, $uniqueid, $rss_version);
+		$result = $this->query($query,$bindvars);
+	}
+
+	function generate_feed($feed, $uniqueid, $rss_version, $changes, $itemurl, $urlparam, $id, $title, $titleId, $desc, $descId, $dateId, $authorId, $fromcache=false) {
+		global $tikiIndex;
+		global $userslib;
+		global $rss_cache_time;
+		
+		$rss_version=$this->get_current_rss_version();
+
+		if ($rss_cache_time < 1) $fromcache=false;
+		$now = date("U");
+
+		// only get cache data if rss cache is enabled
+		if ($fromcache) {
+			$output = $this->get_from_cache($uniqueid, $rss_version);
+			if ($output["data"]<>"EMPTY") return $output;
+		}
+
 		$urlarray = parse_url($_SERVER["REQUEST_URI"]);
 
 		/* 
@@ -204,18 +234,16 @@ class RSSLib extends TikiLib {
 		$title = htmlspecialchars($title);
 		$desc = htmlspecialchars($desc);
 		$read = $this->httpPrefix().dirname($urlarray["path"]).$dirname.$itemurl;
-		
 
 		// different stylesheets for atom and rss	
 		$cssStyleSheet = "";
 		$xslStyleSheet = "";
 
-		$encoding = "ISO-8859-1";
 		$encoding = "UTF-8";
 		$contenttype = "application/xml";
 
-		// valid format strings are: RSS0.91, RSS1.0, RSS2.0, PIE0.1, MBOX, OPML, ATOM0.3, HTML, JS
-		// valid format ids        :    9   ,   1   ,    2  ,   3   ,  4  ,   6 ,    5   ,  7  ,  8
+		// valid format strings are: RSS0.91, RSS1.0, RSS2.0, PIE0.1, MBOX, OPML, ATOM0.3, HTML, JS, RSS0.9
+		// valid format ids        :    9   ,   1   ,    2  ,   3   ,  4  ,   6 ,    5   ,  7  ,  8,   a
 
 		switch ($rss_version) {
 			case "1": // RSS 1.0
@@ -244,6 +272,9 @@ class RSSLib extends TikiLib {
 			break;
 			case "9": // RSS 0.91
 				$cssStyleSheet = $this->httpPrefix().dirname( $urlarray["path"] ).$dirname."lib/rss/rss-style.css";
+			break;
+			case "a": // RSS 0.9
+				// plain RDF file
 			break;
 		}
 
@@ -327,13 +358,17 @@ class RSSLib extends TikiLib {
 			$rss->addItem($item); 
 		} 
 		$data = $rss->createFeed($this->get_rss_version_name($rss_version));
-		$this->put_to_cache($uniqueid, (int) $data, $rss_version);
+		$this->put_to_cache($uniqueid, $rss_version, $data);
 		$output = array();
 		$output["data"] = $data;
 		$output["content-type"] = $contenttype;
 		$output["encoding"] = $encoding;
 		return $output;
 	}
+
+	// --------------------------------------------
+	// functions for rss feeds syndicated by others
+	// --------------------------------------------
 	
 	/* get (a part of) the list of existing rss feeds from db */
 	function list_rss_modules($offset, $maxRecords, $sort_mode, $find) {
@@ -490,7 +525,7 @@ class RSSLib extends TikiLib {
 			}
 			$now = date("U");
 			$query = "update `tiki_rss_modules` set `content`=?, `lastUpdated`=? where `rssId`=?";
-			$result = $this->query($query,array((string)$data,(int) $now, (int) $rssId));
+			$result = $this->query($query,array((string)$data,(int) $now, $rssId));
 			return $data;
 		} else {
 			return false;

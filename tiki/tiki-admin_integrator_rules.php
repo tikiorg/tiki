@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.24 2005-05-18 10:58:54 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.25 2006-09-19 16:33:12 ohertel Exp $
  *
  * Admin interface for rules management
  *
@@ -195,6 +195,9 @@ $allreps = $integrator->list_repositories(false);
 $reps = array();
 foreach($allreps as $rep) $reps[$rep["repID"]] = $rep["name"];
 $smarty->assign_by_ref('reps', $reps);
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 // Display the template
 $smarty->assign('mid','tiki-admin_integrator_rules.tpl');

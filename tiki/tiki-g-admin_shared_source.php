@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_shared_source.php,v 1.10 2005-05-18 10:58:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_shared_source.php,v 1.11 2006-09-19 16:33:16 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -111,6 +111,9 @@ $smarty->assign('errors', $errors);
 $activities = $activityManager->list_activities($_REQUEST['pid'], 0, -1, 'name_asc', '');
 $smarty->assign_by_ref('items', $activities['data']);
 ask_ticket('g-admin-shared-source');
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $smarty->assign('mid', 'tiki-g-admin_shared_source.tpl');
 $smarty->display("tiki.tpl");

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-download_item_attachment.php,v 1.12 2005-10-27 20:12:31 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-download_item_attachment.php,v 1.13 2006-09-19 16:33:15 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -42,8 +42,14 @@ header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 header("Pragma: public");
 
 if ($info["path"]) {
-	header("Content-Length: ". filesize( $t_use_dir.$info["path"] ) );
-	readfile ($t_use_dir . $info["path"]);
+	if (!file_exists($t_use_dir.$info["path"])) {
+		$str = sprintf(tra("Error : The file %s doesn't exist."), $_REQUEST["attId"]). tra("Please contact the website administrator.");
+		 header("Content-Length: ". strlen($str));
+		echo $str;
+	} else {
+		header("Content-Length: ". filesize( $t_use_dir.$info["path"] ) );
+		readfile ($t_use_dir . $info["path"]);
+	}
 } else {
 	header("Content-Length: ". $info[ "filesize" ] );
 	echo "$content";

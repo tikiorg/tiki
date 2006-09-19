@@ -275,6 +275,10 @@ $smarty->assign('_PROMPT_UNAME', sprintf($_VALID, tra("username"), $min_user_len
 $smarty->assign('_PROMPT_PASS', sprintf($_VALID, tra("password"), $min_pass_length, "0-9,a-z,A-Z") );
 $smarty->assign('min_user_length', $min_user_length);
 $smarty->assign('min_pass_length', $min_pass_length);
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
+
 $smarty->assign('mid','tiki-register.tpl');
 $smarty->display("tiki.tpl");
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_import.php,v 1.2 2005-05-18 10:58:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_import.php,v 1.3 2006-09-19 16:33:14 ohertel Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -32,6 +32,9 @@ $smarty->assign_by_ref('calendars', $calendars['data']);
 
 $section = 'calendar';
 include_once ('tiki-section_options.php');
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 // Display the template
 $smarty->assign('mid', 'tiki-calendar_import.tpl');

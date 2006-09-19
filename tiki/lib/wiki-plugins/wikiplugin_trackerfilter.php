@@ -54,7 +54,7 @@ function wikiplugin_trackerfilter($data, $params) {
 	$field = $trklib->get_tracker_field($fieldId);
 	if ($trackerId) {
 		if ($field['trackerId'] != $trackerId) {
-			$smarty->assign('msg', tra('All fileds must be from the same tracker'));
+			$smarty->assign('msg', tra('All fields must be from the same tracker'));
 			return $dataRes.$smarty->fetch('error_simple.tpl');
 		}
 	} else {

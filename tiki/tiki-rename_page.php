@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-rename_page.php,v 1.15 2005-05-18 10:58:59 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-rename_page.php,v 1.16 2006-09-19 16:33:17 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -80,6 +80,9 @@ if (isset($_REQUEST["rename"])) {
 }
 
 ask_ticket('rename-page');
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $smarty->assign('mid', 'tiki-rename_page.tpl');
 $smarty->assign('show_page_bar', 'y');

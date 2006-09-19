@@ -596,8 +596,8 @@ class TrackerLib extends TikiLib {
 		global $feature_categories;
 		$filter = $this->get_tracker_field($filterfield);
 		if ($filter['type'] == 'e' && $feature_categories == 'y') { //category
-			$cat_table .= ', `tiki_categorized_objects` tob, `tiki_category_objects` tco ';
-			$mid .= " and tob.`catObjectId`=tco.`catObjectId` and tob.`type`='tracker $trackerId' and tob.`objId`=tti.`itemId` and tco.`categId` in ( 0 ";
+			$cat_table .= ", `tiki_categorized_objects` tob$filterfield, `tiki_category_objects` tco$filterfield";
+			$mid .= " and tob$filterfield.`catObjectId`=tco$filterfield.`catObjectId` and tob$filterfield.`type`='tracker $trackerId' and tob$filterfield.`objId`=tti.`itemId` and tco$filterfield.`categId` in ( 0 ";
 			$value = empty($filtervalue)? $exactvalue: $filtervalue;
 			if(!is_array($value) && $value != '') {
 					$value = array($value);

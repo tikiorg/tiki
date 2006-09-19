@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_polls.php,v 1.18 2006-05-22 17:09:07 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_polls.php,v 1.19 2006-09-19 16:33:13 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -129,7 +129,11 @@ $smarty->assign_by_ref('channels', $channels["data"]);
 $cat_type = 'poll';
 $cat_objid = $_REQUEST["pollId"];
 include_once ("categorize_list.php");
+
 ask_ticket('admin-polls');
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 // Display the template
 $smarty->assign('mid', 'tiki-admin_polls.tpl');

@@ -27,6 +27,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 Changelog:
 
+v1.7.2-tiki-1	09-19-06
+	RSS0.9 added (ohertel)
+
 v1.7.2	10-11-04
 	license changed to LGPL
 
@@ -348,6 +351,12 @@ class UniversalFeedCreator extends FeedCreator {
 				$this->_feed = new RSSCreator10();
 				break;
 			
+			case "0.9":
+				// fall through
+			case "RSS0.9":
+				$this->_feed = new RSSCreator09();
+				break;
+			
 			case "0.91":
 				// fall through
 			case "RSS0.91":
@@ -402,7 +411,7 @@ class UniversalFeedCreator extends FeedCreator {
 	 *
 	 * @see        FeedCreator::addItem()
 	 * @param    string    format    format the feed should comply to. Valid values are:
-	 *			"PIE0.1", "mbox", "RSS0.91", "RSS1.0", "RSS2.0", "OPML", "ATOM0.3", "HTML", "JS"
+	 *			"PIE0.1", "mbox", "RSS0.91", "RSS1.0", "RSS2.0", "OPML", "ATOM0.3", "HTML", "JS", "RSS0.9"
 	 * @return    string    the contents of the feed.
 	 */
 	function createFeed($format = "RSS0.91") {
@@ -418,7 +427,7 @@ class UniversalFeedCreator extends FeedCreator {
 	 * @since 1.4
 	 * 
 	 * @param	string	format	format the feed should comply to. Valid values are:
-	 *			"PIE0.1" (deprecated), "mbox", "RSS0.91", "RSS1.0", "RSS2.0", "OPML", "ATOM", "ATOM0.3", "HTML", "JS"
+	 *			"PIE0.1" (deprecated), "mbox", "RSS0.91", "RSS1.0", "RSS2.0", "OPML", "ATOM", "ATOM0.3", "HTML", "JS", "RSS0.9"
 	 * @param	string	filename	optional	the filename where a recent version of the feed is saved. If not specified, the filename is $_SERVER["PHP_SELF"] with the extension changed to .xml (see _generateFilename()).
 	 * @param	boolean	displayContents	optional	send the content of the file or not. If true, the file will be sent in the body of the response.
 	 */
@@ -1005,6 +1014,63 @@ class RSSCreator091 extends FeedCreator {
 	}
 }
 
+
+/**
+ * RSSCreator09 is a FeedCreator that implements RSS 0.9 Spec (for older applications)
+ * 
+ * @since 1.7.2-tiki-1
+ * @author Oliver Hertel <ohertel@tikiwiki.org>
+ */
+class RSSCreator09 extends FeedCreator {
+
+	/**
+	 * Stores this RSS feed's version number.
+	 * @access private
+	 */
+	var $RSSVersion;
+
+	function RSSCreator091() {
+		$this->_setRSSVersion("0.9");
+		$this->contentType = "application/rss+xml";
+	}
+	
+	/**
+	 * Sets this RSS feed's version number.
+	 * @access private
+	 */
+	function _setRSSVersion($version) {
+		$this->RSSVersion = $version;
+	}
+
+	/**
+	 * Builds the RSS feed's text. The feed will be compliant to RDF Site Summary (RSS) 0.9.
+	 * The feed will contain all items previously added in the same order.
+	 * @return    string    the feed's complete text 
+	 */
+	function createFeed() {
+		$feed = "<?xml version=\"1.0\" encoding=\"".$this->encoding."\"?>\n";
+		// $feed.= $this->_createGeneratorComment();
+		// $feed.= $this->_createStylesheetReferences();
+		$feed.= "<rdf:RDF\nxmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\nxmlns=\"http://my.netscape.com/rdf/simple/0.9/\">\n"; 
+		$feed.= "<channel>\n";
+		$feed.= "<title>".FeedCreator::iTrunc(htmlspecialchars($this->title),100)."</title>\n";
+		$feed.= "<link>".$this->link."</link>\n";
+		$this->descriptionTruncSize = 500;
+		$feed.= "<description>".$this->getDescription()."</description>\n";
+//		$now = new FeedDate();
+//		$feed.= "        <lastBuildDate>".htmlspecialchars($now->rfc822())."</lastBuildDate>\n";
+//		$feed.= "        <generator>".FEEDCREATOR_VERSION."</generator>\n";
+		$feed.= "</channel>\n";
+		for ($i=0;$i<count($this->items);$i++) {
+			$feed.= "<item>\n";
+			$feed.= "<title>".FeedCreator::iTrunc(htmlspecialchars(strip_tags($this->items[$i]->title)),100)."</title>\n";
+			$feed.= "<link>".htmlspecialchars($this->items[$i]->link)."</link>\n";
+			$feed.= "</item>\n";
+		}
+		$feed.= "</rdf:RDF>\n";
+		return $feed;
+	}
+}
 
 
 /**

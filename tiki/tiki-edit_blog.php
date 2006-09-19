@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.31 2006-07-14 11:00:43 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.32 2006-09-19 16:33:15 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -197,6 +197,9 @@ $defaultRows = 5;
 include_once("textareasize.php");
 
 ask_ticket('edit-blog');
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 // Display the Index Template
 $smarty->assign('mid', 'tiki-edit_blog.tpl');

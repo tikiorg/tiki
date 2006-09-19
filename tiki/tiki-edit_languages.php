@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_languages.php,v 1.22 2006-08-01 13:39:08 hangerman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_languages.php,v 1.23 2006-09-19 16:33:15 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -256,6 +256,9 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 	}
 }
 ask_ticket('edit-languages');
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $smarty->assign('mid', 'tiki-edit_languages.tpl');
 $smarty->display("tiki.tpl");

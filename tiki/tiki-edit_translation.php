@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.10 2006-08-29 20:19:02 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.11 2006-09-19 16:33:15 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -174,7 +174,12 @@ $languages = $tikilib->list_languages();
 $available_languages = unserialize($tikilib->get_preference("available_languages"));
 $smarty->assign_by_ref('languages', $languages);
 $smarty->assign_by_ref('available_languages', $available_languages);
+
 ask_ticket('edit-translation');
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
+
 // Display the template
 $smarty->assign('mid', 'tiki-edit_translation.tpl');
 $smarty->display("tiki.tpl");

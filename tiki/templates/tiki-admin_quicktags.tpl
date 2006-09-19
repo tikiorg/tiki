@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_quicktags.tpl,v 1.21 2006-03-20 07:03:38 lfagundes Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_quicktags.tpl,v 1.22 2006-09-19 16:33:24 ohertel Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_quicktags.php">{tr}Admin Quicktags{/tr}</a>
 
 {if $feature_help eq 'y'}
-<a href="{$helpurl}QuickTags" target="tikihelp" class="tikihelp" title="{tr}admin QuickTags{/tr}">
+<a href="http://tikiwiki.org/QuickTags" target="tikihelp" class="tikihelp" title="{tr}admin QuickTags{/tr}">
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
 
 {if $feature_view_tpl eq 'y'}

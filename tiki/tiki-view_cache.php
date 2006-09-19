@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_cache.php,v 1.11 2005-05-18 10:59:00 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_cache.php,v 1.12 2006-09-19 16:33:18 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -44,6 +44,9 @@ $ggcacheurl = 'http://google.com/search?q=cache:'.urlencode(strstr($info['url'],
 if (substr($info["url"], -4, 4) == ".txt") {
 	$info["data"] = "<pre>" . $info["data"] . "</pre>";
 }
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $smarty->assign('ggcacheurl', $ggcacheurl);
 $smarty->assign_by_ref('info', $info);

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.53 2006-01-05 17:59:27 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.54 2006-09-19 16:33:14 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -266,6 +266,10 @@ $smarty->assign('uses_tabs', 'y');
 
 // Assign the list of groups
 $smarty->assign_by_ref('users', $users["data"]);
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
+
 // Display the template for group administration
 $smarty->assign('mid', 'tiki-admingroups.tpl');
 $smarty->display("tiki.tpl");

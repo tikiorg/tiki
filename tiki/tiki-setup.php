@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.309 2006-09-05 21:46:54 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.310 2006-09-19 16:33:18 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -345,6 +345,8 @@ $gal_batch_dir = '';
 $feature_experimental = 'n'; /* hide experimental features */
 $smarty->assign('feature_experimental', $feature_experimental);
 $feature_gal_batch = 'n';
+$feature_gal_slideshow = 'n';
+$feature_trackbackpings = 'y';
 $feature_integrator = 'n';
 $feature_xmlrpc = 'n';
 $feature_drawings = 'n';
@@ -657,6 +659,7 @@ $rss_blog = 'n';
 $rss_tracker = 'n';
 $rss_trackers = 'n';
 $rss_calendar = 'n';
+$rss_cache_time = '0'; // 0 = disabled (default)
 
 $count_admin_pvs = 'y';
 
@@ -884,8 +887,8 @@ $smarty->assign('rss_image_gallery', $rss_image_gallery);
 $smarty->assign('rss_file_gallery', $rss_file_gallery);
 $smarty->assign('rss_blog', $rss_blog);
 $smarty->assign('rss_tracker', $rss_tracker);
-// where do other variables come from? this is undefined - batawata
-//$smarty->assign('rss_calendars', $rss_calendars);
+$smarty->assign('rss_cache_time', $rss_cache_time);
+$smarty->assign('rss_calendar', $rss_calendar);
 
 $smarty->assign('max_rss_directories', $max_rss_directories);
 $smarty->assign('max_rss_articles', $max_rss_articles);
@@ -897,7 +900,7 @@ $smarty->assign('max_rss_image_gallery', $max_rss_image_gallery);
 $smarty->assign('max_rss_file_gallery', $max_rss_file_gallery);
 $smarty->assign('max_rss_blog', $max_rss_blog);
 $smarty->assign('max_rss_tracker', $max_rss_tracker);
-//$smarty->assign('max_rss_calendars', $max_rss_calendars);
+$smarty->assign('max_rss_calendar', $max_rss_calendar);
 
 $smarty->assign('metatag_keywords', $metatag_keywords);
 $smarty->assign('metatag_description', $metatag_description);

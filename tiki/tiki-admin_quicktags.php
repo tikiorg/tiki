@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_quicktags.php,v 1.16 2006-03-20 16:36:07 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_quicktags.php,v 1.17 2006-09-19 16:33:13 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -120,6 +120,9 @@ $smarty->assign_by_ref('quicktags', $quicktags["data"]);
 $ajaxlib->registerTemplate('tiki-admin_quicktags_content.tpl');
 $ajaxlib->registerTemplate('tiki-admin_quicktags_edit.tpl');
 $ajaxlib->processRequests();
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 // Display the template
 $smarty->assign('mid', 'tiki-admin_quicktags.tpl');

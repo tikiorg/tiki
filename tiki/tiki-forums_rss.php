@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-forums_rss.php,v 1.21 2006-08-29 20:19:02 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-forums_rss.php,v 1.22 2006-09-19 16:33:16 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,26 +20,29 @@ if($tiki_p_admin_forum != 'y' && $tiki_p_forum_read != 'y') {
 }
 
 $feed = "forums";
-$title = (!empty($title_rss_forums)) ? $title_rss_forums :  tra("Tiki RSS feed for forums");
-$desc = (!empty($desc_rss_forums)) ? $desc_rss_forums : tra("Last topics in forums.");
-$now = date("U");
-$id = "forumId";
-$param = "threadId";
-$descId = "data";
-$dateId = "commentDate";
-$authorId = "userName";
-$titleId = "title";
-$readrepl = "tiki-view_forum_thread.php?$id=%s&comments_parentId=%s";
 $uniqueid = $feed;
+$output = $rsslib->get_from_cache($uniqueid);
 
-$tmp = $tikilib->get_preference('title_rss_'.$feed, '');
-if ($tmp<>'') $title = $tmp;
-$tmp = $tikilib->get_preference('desc_rss_'.$feed, '');
-if ($desc<>'') $desc = $tmp;
+if ($output["data"]=="EMPTY") {
+	$title = (!empty($title_rss_forums)) ? $title_rss_forums :  tra("Tiki RSS feed for forums");
+	$desc = (!empty($desc_rss_forums)) ? $desc_rss_forums : tra("Last topics in forums.");
+	$now = date("U");
+	$id = "forumId";
+	$param = "threadId";
+	$descId = "data";
+	$dateId = "commentDate";
+	$authorId = "userName";
+	$titleId = "title";
+	$readrepl = "tiki-view_forum_thread.php?$id=%s&comments_parentId=%s";
 
-$changes = $tikilib -> list_all_forum_topics(0, $max_rss_forums, $dateId.'_desc', '');
-$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, $param, $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
+	$tmp = $tikilib->get_preference('title_rss_'.$feed, '');
+	if ($tmp<>'') $title = $tmp;
+	$tmp = $tikilib->get_preference('desc_rss_'.$feed, '');
+	if ($desc<>'') $desc = $tmp;
 
+	$changes = $tikilib -> list_all_forum_topics(0, $max_rss_forums, $dateId.'_desc', '');
+	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, $param, $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
+}
 header("Content-type: ".$output["content-type"]);
 print $output["data"];
 

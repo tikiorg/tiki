@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.86 2006-08-29 20:19:13 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.87 2006-09-19 16:33:24 ohertel Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -58,7 +58,7 @@
 {if $preview}
 {include file="tiki-preview.tpl"}
 {/if}
-<form  enctype="multipart/form-data" method="post" action="tiki-editpage.php" id='editpageform'>
+<form  enctype="multipart/form-data" method="post" action="tiki-editpage.php" id='editpageform' name='editpageform'>
 {if $preview}
 <input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" />
 {if $page|lower neq 'sandbox'}
@@ -114,9 +114,9 @@
 {if $feature_wiki_ratings eq 'y' and $tiki_p_wiki_admin_ratings eq 'y'}
 <tr class="formcolor"><td>{tr}Use rating{/tr}:</td><td>
 {if $poll_rated.info}
+<input type="hidden" name="poll_title" value="{$poll_rated.info.title|escape}" />
 <a href="tiki-admin_poll_options.php?pollId={$poll_rated.info.pollId}">{$poll_rated.info.title}</a>
 <span class="button2"><a class="linkbut" href="tiki-editpage.php?page={$page|escape:"url"}&amp;removepoll={$poll_rated.info.pollId}">{tr}disable{/tr}</a>
-<input type="hidden" name="poll_template" value="{$poll_rated.info.pollId}" />
 {if $tiki_p_admin_poll eq 'y'}
 <span class="button2"><a class="linkbut" href="tiki-admin_polls.php">{tr}admin polls{/tr}</a></span>
 {/if}

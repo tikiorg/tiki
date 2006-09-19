@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-eph_admin.php,v 1.11 2005-05-18 10:58:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-eph_admin.php,v 1.12 2006-09-19 16:33:15 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -154,6 +154,9 @@ if ($offset > 0) {
 $smarty->assign_by_ref('channels', $channels["data"]);
 
 ask_ticket('admin-eph');
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $smarty->assign('mid', 'tiki-eph_admin.tpl');
 $smarty->display("tiki.tpl");

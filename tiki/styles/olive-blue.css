@@ -2828,4 +2828,6 @@ div.admbox {
 div.admbox:hover { background-color: #E5F2F6; color: black; }
 div.admbox img { margin-top: 20px; }
 
+.external { margin-right:2px; }
+
 /* end of css file */

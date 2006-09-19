@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-assignuser.php,v 1.20 2006-01-20 09:54:53 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-assignuser.php,v 1.21 2006-09-19 16:33:14 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -127,7 +127,11 @@ if ($offset > 0) {
 
 // Get users (list of users)
 $smarty->assign_by_ref('users', $users["data"]);
+
 ask_ticket('admin-assign-user');
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 // Display the template
 $smarty->assign('mid', 'tiki-assignuser.tpl');

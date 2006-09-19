@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_css.php,v 1.12 2005-05-18 10:58:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_css.php,v 1.13 2006-09-19 16:33:15 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-// $Id: tiki-edit_css.php,v 1.12 2005-05-18 10:58:56 mose Exp $
+// $Id: tiki-edit_css.php,v 1.13 2006-09-19 16:33:15 ohertel Exp $
 include_once ("tiki-setup.php");
 
 include_once ("lib/csslib.php");
@@ -137,7 +137,11 @@ if ($tikidomain and is_dir("$styledir/$tikidomain")) {
 	$list = array_unique(array_merge($list,$csslib->list_css("$styledir/$tikidomain")));
 }
 $smarty->assign('list', $list);
+
 ask_ticket('edit-css');
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $smarty->assign('mid', 'tiki-edit_css.tpl');
 $smarty->display("tiki.tpl");

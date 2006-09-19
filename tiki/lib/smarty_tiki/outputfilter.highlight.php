@@ -1,5 +1,5 @@
 <?php
-// $Id: outputfilter.highlight.php,v 1.11 2005-12-12 15:18:51 mose Exp $
+// $Id: outputfilter.highlight.php,v 1.12 2006-09-19 16:33:23 ohertel Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -47,12 +47,12 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
     }
 
    $source = preg_replace_callback(
-      '~(?:<head>.*?</head>                          # head blocks
-      |<div[^>]*nohighlight.*?</div>\{\*nohighlight  # div with nohightlight
-      |<script[^>]+>.*?</script>                     # script blocks
-      |onmouseover=(?:"[^"]*"|\'[^\']*\')            # onmouseover (user popup)
-      |<[^>]*?>                                      # all html tags
-      |(' . _enlightColor($highlight) . '))~xsi',
+      '~(?:<head>.*</head>                          # head blocks
+      |<div[^>]*nohighlight.*</div>\{\*nohighlight  # div with nohightlight
+      |<script[^>]+>.*</script>                     # script blocks
+      |<a[^>]*onmouseover.*onmouseout[^>]*>            # onmouseover (user popup)
+      |<[^>]*>                                      # all html tags
+      |(' . _enlightColor($highlight) . '))~xsiU',
       '_enlightColor',  $source);
 
     return $source;
@@ -81,8 +81,7 @@ function _enlightColor($matches) {
     }
     // actual replacement callback
     if (isset($matches[1])) {
-        return '<span style="color:black; background-color:'
-            . $colword[strtolower($matches[1])] . ';">' . $matches[1] . '</span>';
+        return '<span style="color:black;background-color:' . $colword[strtolower($matches[1])] . ';">' . $matches[1] . '</span>';
     }
     return $matches[0];
 }

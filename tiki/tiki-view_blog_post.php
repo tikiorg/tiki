@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog_post.php,v 1.36 2006-07-27 06:50:13 toggg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog_post.php,v 1.37 2006-09-19 16:33:18 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -84,7 +84,7 @@ if ($tiki_p_read_blog != 'y') {
 	die;
 }
 
-
+if (!isset($feature_trackbackpings)) $feature_trackbackpings='n';
 
 
 if (!isset($_REQUEST['blogId']) && !isset($_REQUEST['postId'])) {

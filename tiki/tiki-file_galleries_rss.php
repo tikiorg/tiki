@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries_rss.php,v 1.25 2005-05-18 10:58:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries_rss.php,v 1.26 2006-09-19 16:33:16 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,25 +20,28 @@ if ($tiki_p_view_file_gallery != 'y') {
 }
 
 $feed = "filegals";
-$title = (!empty($title_rss_file_galleries)) ? $title_rss_file_galleries : tra("Tiki RSS feed for file galleries");
-$desc = (!empty($desc_rss_file_galleries)) ? $desc_rss_file_galleries : tra("Last files uploaded to the file galleries.");
-$now = date("U");
-$id = "fileId";
-$descId = "description";
-$dateId = "created";
-$authorId = "user";
-$titleId = "filename";
-$readrepl = "tiki-download_file.php?$id=%s";
 $uniqueid = $feed;
+$output = $rsslib->get_from_cache($uniqueid);
 
-$tmp = $tikilib->get_preference('title_rss_'.$feed, '');
-if ($tmp<>'') $title = $tmp;
-$tmp = $tikilib->get_preference('desc_rss_'.$feed, '');
-if ($desc<>'') $desc = $tmp;
+if ($output["data"]=="EMPTY") {
+	$title = (!empty($title_rss_file_galleries)) ? $title_rss_file_galleries : tra("Tiki RSS feed for file galleries");
+	$desc = (!empty($desc_rss_file_galleries)) ? $desc_rss_file_galleries : tra("Last files uploaded to the file galleries.");
+	$now = date("U");
+	$id = "fileId";
+	$descId = "description";
+	$dateId = "created";
+	$authorId = "user";
+	$titleId = "filename";
+	$readrepl = "tiki-download_file.php?$id=%s";
 
-$changes = $tikilib->list_files(0, $max_rss_file_galleries, $dateId.'_desc', '');
-$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, '', $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
+	$tmp = $tikilib->get_preference('title_rss_'.$feed, '');
+	if ($tmp<>'') $title = $tmp;
+	$tmp = $tikilib->get_preference('desc_rss_'.$feed, '');
+	if ($desc<>'') $desc = $tmp;
 
+	$changes = $tikilib->list_files(0, $max_rss_file_galleries, $dateId.'_desc', '');
+	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, '', $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
+}
 header("Content-type: ".$output["content-type"]);
 print $output["data"];
 

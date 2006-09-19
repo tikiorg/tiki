@@ -70,25 +70,25 @@ class ShoutboxLib extends TikiLib {
 		foreach ($words["data"] as $word) {
 			if (preg_match("/".$word["word"]."/i", $message)) {
 				$badmsg = true;
+				break;
 			}
 		}
 	
 		//Die if badmsg with suitable error screen
-	
 		if ($badmsg) {
-			return;
-		} else {
+			return false;
+		}
 
 		// Back on track for normal shoutbox posting
 
-                $hash = md5($message);  // this checks for the same message already existing
-                $cant = $this->getOne("select count(*) from `tiki_shoutbox` where `hash`=? and `user`=?", array($hash,$user));
-                if ($cant) {
-                        return;
-                }
-
+		$hash = md5($message);  // this checks for the same message already existing
+		$cant = $this->getOne("select count(*) from `tiki_shoutbox` where `hash`=? and `user`=?", array($hash,$user));
+					
 		$now = date("U");
-		if ($msgId) {
+		if ($cant) { // at least update  the timestamp - can be convenient if message is thanks or hello - we can see the last post
+			$query = "update `tiki_shoutbox` set `timestamp`=? where `user`=? and `hash`=?";
+			$bindvars = array((int)$now, $user, $hash);
+		} else if ($msgId) {
 			$query = "update `tiki_shoutbox` set `user`=?, `message`=?, `hash`=? where `msgId`=?";
 			$bindvars = array($user,$message,$hash,(int)$msgId);
 		} else {
@@ -100,7 +100,6 @@ class ShoutboxLib extends TikiLib {
 		}
 
 		$result = $this->query($query,$bindvars);
-		} // Close my if $badmsg
 		return true;
 	}
 

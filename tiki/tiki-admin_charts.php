@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_charts.php,v 1.12 2005-05-18 10:58:53 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_charts.php,v 1.13 2006-09-19 16:33:06 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -176,6 +176,9 @@ $sameurl_elements = array(
 	'chartId'
 );
 ask_ticket('admin-charts'); 
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $smarty->assign('mid', 'tiki-admin_charts.tpl');
 $smarty->display("tiki.tpl");

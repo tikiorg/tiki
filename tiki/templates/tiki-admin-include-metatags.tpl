@@ -17,7 +17,7 @@
         <tr><td class="form">{tr}geo.region{/tr}:</td><td><input type="text" name="metatag_georegion" value="{$metatag_georegion}" size="50" /></td></tr>
         <tr><td class="form">{tr}geo.placename{/tr}:</td><td><input type="text" name="metatag_geoplacename" value="{$metatag_geoplacename}" size="50" /></td></tr>
         <tr><td class="heading" colspan="3" align="center">{tr}Robots{/tr}</td></tr>
-        <tr><td class="form">{tr}meta robots{/tr}:</td><td><input type="text" name="metatag_robots" value="{$metatag_robots}" size="50" /></td></tr>
+        <tr><td class="form">{tr}meta robots{/tr}:</td><td><input type="text" name="adm_metatag_robots" value="{$adm_metatag_robots}" size="50" /></td></tr>
         <tr><td class="form">{tr}revisit after{/tr}:</td><td><input type="text" name="metatag_revisitafter" value="{$metatag_revisitafter}" size="50" /></td></tr>
         <tr><td class="form" colspan="3">&nbsp;</td></tr>
         <tr><td colspan="3" class="button"><input type="submit" name="metatags" value="{tr}Change settings{/tr}" /></td></tr>

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_attach.php,v 1.18 2006-03-16 13:43:12 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_attach.php,v 1.19 2006-09-19 16:33:24 ohertel Exp $
 // Displays an attachment or a list of attachments
 // Currently works with wiki pages and tracker items.
 // Parameters:
@@ -183,7 +183,11 @@ function wikiplugin_attach($data, $params) {
 		    if (isset($mimeextensions["$ext"]) and (is_file("img/icn/".$mimeextensions["$ext"].".gif"))) {
 			$link.= '<img src="img/icn/'.$mimeextensions["$ext"].'.gif" border="0" />&nbsp;';
 		    } else {
-			$link.= '<img src="img/icn/else.gif" border="0" />&nbsp;';
+			$string = strtolower(substr($atts['data'][$n]['filename'], strlen($atts['data'][$n]['filename'])-3));
+			if (is_file("img/icn/".$string.".gif"))
+				$link.= '<img src="img/icn/'.$string.'.gif" border="0" />&nbsp;';
+			else
+				$link.= '<img src="img/icn/else.gif" border="0" />&nbsp;';
 		    }
 		}
 

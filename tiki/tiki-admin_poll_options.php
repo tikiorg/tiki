@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_poll_options.php,v 1.20 2006-07-14 11:00:43 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_poll_options.php,v 1.21 2006-09-19 16:33:13 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -71,7 +71,11 @@ $smarty->assign('votes', $info["votes"]);
 $channels = $polllib->list_poll_options($_REQUEST["pollId"]);
 $smarty->assign('ownurl', $tikilib->httpPrefix(). $_SERVER["REQUEST_URI"]);
 $smarty->assign_by_ref('channels', $channels);
+
 ask_ticket('admin-poll-options');
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 // Display the template
 $smarty->assign('mid', 'tiki-admin_poll_options.tpl');
