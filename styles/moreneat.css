@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.78 2006-08-29 20:19:11 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.79 2006-09-19 16:33:24 ohertel Exp $
 
 MoreNeat theme
 */
@@ -771,7 +771,7 @@ div.articleheading {
   padding-bottom: 0.5em;
   font-size: 10px;
   clear: both;
-  width: 100%;
+  width: 98%;
 }
 
 div.articleheading img {

@@ -51,10 +51,19 @@
         </td><td class="form" colspan="3">{tr}Specification{/tr} <a href="http://www.w3.org/TR/rdf-schema/" target="tikihelp" class="tikihelp" title="{tr}Specification{/tr}: RDF 1.0">RDF 1.0</a>,
         <a href="http://blogs.law.harvard.edu/tech/rss" target="tikihelp" class="tikihelp" title="{tr}Specification{/tr}: RDF 2.0">RDF 2.0</a>,
         <a href="http://bitworking.org/rfc/draft-gregorio-07.html" target="tikihelp" class="tikihelp" title="{tr}Specification{/tr}: Atom 0.3">Atom 0.3</a>
-        <tr><td class="form" colspan="4"><a href="http://blogs.law.harvard.edu/tech/rss#optionalChannelElements" target="tikihelp" class="tikihelp" title="{tr}Documentation{/tr}: RDF">{tr}Language{/tr}</a>:</td><td class="form"><input type="text" name="rssfeed_language" size="10" length="40" value="{$rssfeed_language|escape}" /></td></tr>
+        <tr><td class="form"><a href="http://blogs.law.harvard.edu/tech/rss#optionalChannelElements" target="tikihelp" class="tikihelp" title="{tr}Documentation{/tr}: RDF">{tr}Language{/tr}</a>:</td><td class="form" colspan="4"><input type="text" name="rssfeed_language" size="10" length="40" value="{$rssfeed_language|escape}" /></td></tr>
         <tr><td class="form" colspan="5">&nbsp;</td></tr>
         <tr><td class="form"><a href="http://blogs.law.harvard.edu/tech/rss#optionalChannelElements" target="tikihelp" class="tikihelp" title="{tr}Documentation{/tr}: RDF">{tr}Editor{/tr}</a>:</td><td colspan="4"><input type="text" name="rssfeed_editor" size="50" value="{$rssfeed_editor|escape}" /></td></tr>
         <tr><td class="form"><a href="http://blogs.law.harvard.edu/tech/rss#optionalChannelElements" target="tikihelp" class="tikihelp" title="{tr}Documentation{/tr}: RDF">{tr}Webmaster{/tr}</a>:</td><td colspan="4"><input type="text" name="rssfeed_webmaster" size="50" value="{$rssfeed_webmaster|escape}" /></td></tr>
+        <tr><td class="form">{tr}Caching time :{/tr}</td><td colspan="4"><input type="text" name="rss_cache_time" size="4" value="{$rss_cache_time}" /> {tr}seconds (0 = cache inactive){/tr}</td></tr>
+
+        <tr><td class="form">&nbsp;</td><td class="form" colspan="4">
+		<div class="rbox" name="tip">
+		<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+		<div class="rbox-data" name="tip">{tr}Only enable caching if all syndicated content is public (visible to everyone) or private documents might leak out. Cache ignores existing permissions.{/tr}</a></div>
+		</div>
+		</td></tr>
+		
         <tr><td colspan="5" class="button"><input type="submit" name="rss" value="{tr}Change preferences{/tr}" /></td></tr>
         </table>
         </form>

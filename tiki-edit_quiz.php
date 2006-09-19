@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz.php,v 1.18 2005-05-18 10:58:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz.php,v 1.19 2006-09-19 16:33:15 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -306,6 +306,9 @@ $smarty->assign('publishDate', $info['publishDate']);
 $smarty->assign('publishDateSite', $dc->getDisplayDateFromServerDate($info['publishDate']));
 $smarty->assign('expireDate', $info['expireDate']);
 $smarty->assign('expireDateSite', $dc->getDisplayDateFromServerDate($info['expireDate']));
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 // Display the template
 $smarty->assign('mid', 'tiki-edit_quiz.tpl');

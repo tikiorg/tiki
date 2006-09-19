@@ -225,7 +225,8 @@ if (isset($_REQUEST['check_files'])) {
 		3=>'1.9.2',
 		4=>'1.9.3.1',
 		5=>'1.9.3.2',
-		6=>'1.9.4'
+		6=>'1.9.4',
+		7=>'1.9.5'
 	); // all valid versions. Newer versions have a higher array index
   $result=array();
   md5_check_dir(".",$result);
@@ -234,6 +235,9 @@ if (isset($_REQUEST['check_files'])) {
   $smarty->assign('filecheck',true);
   $smarty->assign_by_ref('tikifiles',$result);
 }
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $smarty->assign('mid', 'tiki-admin_security.tpl');
 $smarty->display("tiki.tpl");

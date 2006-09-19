@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2006-09-14 14:28:41 $
-# $Author: sylvieg $
+# $Date: 2006-09-19 16:33:19 $
+# $Author: ohertel $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -105,7 +105,7 @@ CREATE TABLE galaxia_instances (
   instanceId int(14) NOT NULL auto_increment,
   pId int(14) NOT NULL default '0',
   started int(14) default NULL,
-  name varchar(200) default 'No Name',
+  name varchar(200) NOT NULL default 'No Name',
   owner varchar(200) default NULL,
   nextActivity int(14) default NULL,
   nextUser varchar(200) default NULL,
@@ -380,8 +380,8 @@ CREATE TABLE tiki_articles (
   KEY title (title),
   KEY heading (heading(255)),
   KEY body (body(255)),
-  KEY nbreads (nbreads),
   KEY author (author(32)),
+  KEY nbreads (nbreads),
   FULLTEXT KEY ft (title,heading,body)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -531,10 +531,10 @@ CREATE TABLE tiki_blog_posts (
   data_size int(11) unsigned NOT NULL default '0',
   created int(14) default NULL,
   user varchar(40) default NULL,
-  priv varchar(1) default NULL,
   trackbacks_to text,
   trackbacks_from text,
   title varchar(80) default NULL,
+  priv varchar(1) default NULL,
   PRIMARY KEY  (postId),
   KEY data (data(255)),
   KEY blogId (blogId),
@@ -630,6 +630,7 @@ CREATE TABLE tiki_calendar_items (
   end int(14) NOT NULL default '0',
   locationId int(14) default NULL,
   categoryId int(14) default NULL,
+  nlId int(12) NOT NULL default '0',
   priority enum('1','2','3','4','5','6','7','8','9') NOT NULL default '1',
   status enum('0','1','2') NOT NULL default '0',
   url varchar(255) default NULL,
@@ -637,7 +638,6 @@ CREATE TABLE tiki_calendar_items (
   name varchar(255) NOT NULL default '',
   description blob,
   user varchar(40) default NULL,
-  nlId int(12) default NULL,
   created int(14) NOT NULL default '0',
   lastmodif int(14) NOT NULL default '0',
   PRIMARY KEY  (calitemId),
@@ -1688,8 +1688,8 @@ CREATE TABLE tiki_images (
   galleryId int(14) NOT NULL default '0',
   name varchar(200) NOT NULL default '',
   description text,
-  lat float default NULL,
   lon float default NULL,
+  lat float default NULL,
   created int(14) default NULL,
   user varchar(40) default NULL,
   hits int(14) default NULL,
@@ -1722,8 +1722,8 @@ CREATE TABLE tiki_images_data (
   filesize int(14) default NULL,
   filetype varchar(80) default NULL,
   filename varchar(80) default NULL,
-  etag varchar(32) default NULL,
   data longblob,
+  etag varchar(32) default NULL,
   PRIMARY KEY  (imageId,xsize,ysize,type),
   KEY t_i_d_it (imageId,type)
 ) TYPE=MyISAM;
@@ -2480,8 +2480,8 @@ CREATE TABLE tiki_pages (
   page_size int(10) unsigned default '0',
   lang varchar(16) default NULL,
   lockedby varchar(200) default NULL,
-  created int(14),
   is_html tinyint(1) default 0,
+  created int(14),
   PRIMARY KEY  (page_id),
   UNIQUE KEY pageName (pageName),
   KEY data (data(255)),
@@ -3356,11 +3356,11 @@ CREATE TABLE tiki_tracker_fields (
   trackerId int(12) NOT NULL default '0',
   name varchar(255) default NULL,
   options text,
-  position int(4) default NULL,
   type char(1) default NULL,
   isMain char(1) default NULL,
   isTblVisible char(1) default NULL,
-  isSearchable char(1) default NULL,
+  position int(4) default NULL,
+  isSearchable char(1) NOT NULL default 'y',
   isPublic char(1) NOT NULL default 'n',
   isHidden char(1) NOT NULL default 'n',
   isMandatory char(1) NOT NULL default 'n',
@@ -3385,12 +3385,12 @@ CREATE TABLE tiki_tracker_item_attachments (
   filesize int(14) default NULL,
   user varchar(40) default NULL,
   data longblob,
-  longdesc blob,
   path varchar(255) default NULL,
   downloads int(10) default NULL,
-  version varchar(40) default NULL,
   created int(14) default NULL,
   comment varchar(250) default NULL,
+  longdesc blob,
+  version varchar(40) default NULL,
   PRIMARY KEY  (attId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -3426,7 +3426,8 @@ CREATE TABLE tiki_tracker_item_fields (
   itemId int(12) NOT NULL default '0',
   fieldId int(12) NOT NULL default '0',
   value text,
-  PRIMARY KEY  (itemId,fieldId)
+  PRIMARY KEY  (itemId,fieldId),
+  FULLTEXT KEY ft (value)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -3483,11 +3484,11 @@ CREATE TABLE tiki_trackers (
   showStatus char(1) default NULL,
   showLastModif char(1) default NULL,
   useComments char(1) default NULL,
-  showComments char(1) default NULL,
   useAttachments char(1) default NULL,
+  items int(10) default NULL,
+  showComments char(1) default NULL,
   showAttachments char(1) default NULL,
   orderAttachments varchar(255) NOT NULL default 'filename,created,filesize,downloads,desc',
-  items int(10) default NULL,
   PRIMARY KEY  (trackerId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -4370,6 +4371,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('blog_list_title','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('blog_list_user','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('blog_list_visits','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('blog_spellcheck','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_blogposts_pings','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('cacheimages','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('cachepages','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('calendar_sticky_popup','n');
@@ -4512,7 +4514,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_userPreferences
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_userVersions','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_user_bookmarks','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_user_watches','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_user_watches_translations','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_user_watches_translations','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_userfiles','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_usermenu','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_view_tpl','n');
@@ -4751,6 +4753,13 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_uses_slides','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_wikisyntax_in_html','full');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('default_wiki_diff_style', 'minsidediff');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('limitedGoGroupHome','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_gal_slideshow','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_galleries','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_ranking','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_trackbackpings','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_creator','');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_css','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_publisher','');
 
 
 # default sizes for mailbox, read box and mail archive
@@ -4842,8 +4851,8 @@ CREATE TABLE tiki_quicktags (
   tagicon varchar(255) default NULL,
   tagcategory varchar(255) default NULL,
   PRIMARY KEY  (tagId),
-  KEY taglabel (taglabel),
-  KEY tagcategory (tagcategory)
+  KEY tagcategory (tagcategory),
+  KEY taglabel (taglabel)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('bold','__text__','images/ed_format_bold.gif','wiki');
@@ -4864,7 +4873,7 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('colored text','~~#FF0000:text~~','images/fontfamily.gif','wiki');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('dynamic variable','%text%','images/book.gif','wiki');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('image','{img src= width= height= align= desc= link= }','images/ed_image.gif','wiki');
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New wms Metadata','METADATA\r\n		"wms_name" "myname"\r\n 	"wms_srs" "EPSG:4326"\r\n 	"wms_server_version" " "\r\n 	"wms_layers" "mylayers"\r\n 	"wms_request" "myrequest"\r\n 	"wms_format" " "\r\n 	"wms_time" " "\r\n END', 'img/icons/admin_metatags.png','maps');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New wms Metadata','METADATA\r\n		\"wms_name\" \"myname\"\r\n 	"wms_srs" "EPSG:4326"\r\n 	"wms_server_version" " "\r\n 	"wms_layers" "mylayers"\r\n 	"wms_request" "myrequest"\r\n 	"wms_format" " "\r\n 	"wms_time" " "\r\n END', 'img/icons/admin_metatags.png','maps');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Class', 'CLASS\r\n EXPRESSION ()\r\n SYMBOL 0\r\n OUTLINECOLOR\r\n COLOR\r\n NAME "myclass" \r\nEND #end of class', 'img/icons/mini_triangle.gif','maps');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Projection','PROJECTION\r\n "init=epsg:4326"\r\nEND','images/ico_mode.gif','maps');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Query','#\r\n# Start of query definitions\r\n#\r\n QUERYMAP\r\n STATUS ON\r\n STYLE HILITE\r\nEND','img/icons/questions.gif','maps');
@@ -5012,7 +5021,7 @@ CREATE TABLE tiki_translated_objects (
   objId varchar(255) NOT NULL,
   lang varchar(16) default NULL,
   PRIMARY KEY (type, objId),
-  KEY tradid (traId)
+  KEY traId ( traId )
 ) TYPE=MyISAM AUTO_INCREMENT=1;
 
 
@@ -5042,6 +5051,38 @@ CREATE TABLE tiki_score (
   expiration int(11) NOT NULL default '0',
   PRIMARY KEY  (event)
 ) TYPE=MyISAM;
+
+
+INSERT INTO tiki_score (event, score, expiration) VALUES ('login',1,0);
+INSERT INTO tiki_score (event, score, expiration) VALUES ('login_remain',2,60);
+INSERT INTO tiki_score (event, score, expiration) VALUES ('profile_fill',10,0);
+INSERT INTO tiki_score (event, score, expiration) VALUES ('profile_see',2,0);
+INSERT INTO tiki_score (event, score, expiration) VALUES ('profile_is_seen',1,0);
+INSERT INTO tiki_score (event, score, expiration) VALUES ('friend_new',10,0);
+INSERT INTO tiki_score (event, score, expiration) VALUES ('message_receive',1,0);
+INSERT INTO tiki_score (event, score, expiration) VALUES ('message_send',2,0);
+INSERT INTO tiki_score (event, score, expiration) VALUES ('article_read',2,0);
+INSERT INTO tiki_score (event, score, expiration) VALUES ('article_comment',5,0);
+INSERT INTO tiki_score (event, score, expiration) VALUES ('article_new',20,0);
+INSERT INTO tiki_score (event, score, expiration) VALUES ('article_is_read',1,0);
+INSERT INTO tiki_score (event, score, expiration) VALUES ('article_is_commented',2,0);
+INSERT INTO tiki_score (event, score, expiration) VALUES ('fgallery_new',10,0);
+INSERT INTO tiki_score (event, score, expiration) VALUES ('fgallery_new_file',10,0);
+INSERT INTO tiki_score (event, score, expiration) VALUES ('fgallery_download',5,0);
+INSERT INTO tiki_score (event, score, expiration) VALUES ('fgallery_is_downloaded',5,0);
+INSERT INTO tiki_score (event, score, expiration) VALUES ('igallery_new',10,0);
+INSERT INTO tiki_score (event, score, expiration) VALUES ('igallery_new_img',6,0);
+INSERT INTO tiki_score (event, score, expiration) VALUES ('igallery_see_img',3,0);
+INSERT INTO tiki_score (event, score, expiration) VALUES ('igallery_img_seen',1,0);
+INSERT INTO tiki_score (event, score, expiration) VALUES ('blog_new',20,0);
+INSERT INTO tiki_score (event, score, expiration) VALUES ('blog_post',5,0);
+INSERT INTO tiki_score (event, score, expiration) VALUES ('blog_read',2,0);
+INSERT INTO tiki_score (event, score, expiration) VALUES ('blog_comment',2,0);
+INSERT INTO tiki_score (event, score, expiration) VALUES ('blog_is_read',3,0);
+INSERT INTO tiki_score (event, score, expiration) VALUES ('blog_is_commented',3,0);
+INSERT INTO tiki_score (event, score, expiration) VALUES ('wiki_new',10,0);
+INSERT INTO tiki_score (event, score, expiration) VALUES ('wiki_edit',5,0);
+INSERT INTO tiki_score (event, score, expiration) VALUES ('wiki_attach_file',3,0);
 
 DROP TABLE IF EXISTS tiki_users_score;
 CREATE TABLE tiki_users_score (

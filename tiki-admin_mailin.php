@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_mailin.php,v 1.20 2005-06-16 20:10:49 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_mailin.php,v 1.21 2006-09-19 16:33:12 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -132,6 +132,9 @@ $smarty->assign_by_ref('types', $types);
 $smarty->assign_by_ref('tikifeedback', $tikifeedback);
 
 ask_ticket('admin-mailin');
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $smarty->assign('mid', 'tiki-admin_mailin.tpl');
 $smarty->display("tiki.tpl");

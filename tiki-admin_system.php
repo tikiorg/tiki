@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.26 2006-08-29 16:21:26 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.27 2006-09-19 16:33:13 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -81,6 +81,9 @@ if(isset($_REQUEST['utf8ft'])) {
    $smarty->assign('utf8ft',$_REQUEST['utf8ft']);
    $smarty->assign('utf8ff',$_REQUEST['utf8ff']);
 }
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $smarty->assign('mid', 'tiki-admin_system.tpl');
 $smarty->display("tiki.tpl");

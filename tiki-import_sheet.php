@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-import_sheet.php,v 1.7 2006-04-18 10:11:39 marcmont Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-import_sheet.php,v 1.8 2006-09-19 16:33:16 ohertel Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -116,7 +116,12 @@ include_once ("categorize_list.php");
 
 $section = 'sheet';
 include_once ('tiki-section_options.php');
+
 ask_ticket('sheet');
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
+
 // Display the template
 $smarty->assign('mid', 'tiki-import-sheets.tpl');
 $smarty->display("tiki.tpl");

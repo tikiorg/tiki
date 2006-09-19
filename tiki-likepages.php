@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-likepages.php,v 1.12 2005-05-18 10:58:57 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-likepages.php,v 1.13 2006-09-19 16:33:17 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -71,6 +71,9 @@ if (!$tikilib->page_exists($page)) {
 
 $smarty->assign_by_ref('likepages', $likepages);
 ask_ticket('likepages');
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 // Display the template
 $smarty->assign('mid', 'tiki-likepages.tpl');

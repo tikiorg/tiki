@@ -31,25 +31,28 @@ if (!isset($_REQUEST["parent"])) {
 }
 
 $feed = "directory";
-$title = tra("Tiki RSS feed for directory sites");
-$rc = $dirlib->dir_get_category($_REQUEST["parent"]);
-$desc = tra("Last sites of directory ".$rc["name"]." .");
-$now = date("U");
-$id = "siteId";
-$titleId = "name";
-$descId = "description";
-$dateId = "created";
-$readrepl = "tiki-directory_redirect.php?$id=%s";
 $uniqueid = $feed."?parent=".$_REQUEST["parent"];
+$output = $rsslib->get_from_cache($uniqueid);
 
-$tmp = $tikilib->get_preference('title_rss_'.$feed, '');
-if ($tmp<>'') $title = $tmp;
-$tmp = $tikilib->get_preference('desc_rss_'.$feed, '');
-if ($desc<>'') $desc = $tmp;
+if ($output["data"]=="EMPTY") {
+	$title = tra("Tiki RSS feed for directory sites");
+	$rc = $dirlib->dir_get_category($_REQUEST["parent"]);
+	$desc = tra("Last sites of directory ".$rc["name"]." .");
+	$now = date("U");
+	$id = "siteId";
+	$titleId = "name";
+	$descId = "description";
+	$dateId = "created";
+	$readrepl = "tiki-directory_redirect.php?$id=%s";
 
-$changes = $dirlib->dir_list_sites($_REQUEST["parent"], 0, $max_rss_directories, $dateId.'_desc', '', 'y');
-$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, '', $id, $title, $titleId, $desc, $descId, $dateId, '');
+	$tmp = $tikilib->get_preference('title_rss_'.$feed, '');
+	if ($tmp<>'') $title = $tmp;
+	$tmp = $tikilib->get_preference('desc_rss_'.$feed, '');
+	if ($desc<>'') $desc = $tmp;
 
+	$changes = $dirlib->dir_list_sites($_REQUEST["parent"], 0, $max_rss_directories, $dateId.'_desc', '', 'y');
+	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, '', $id, $title, $titleId, $desc, $descId, $dateId, '');
+}
 header("Content-type: ".$output["content-type"]);
 print $output["data"];
 

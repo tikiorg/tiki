@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-removepage.php,v 1.14 2006-03-02 15:15:51 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-removepage.php,v 1.15 2006-09-19 16:33:17 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -79,6 +79,9 @@ if (isset($_REQUEST["remove"])) {
 }
 
 ask_ticket('remove-page');
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $smarty->assign('mid', 'tiki-removepage.tpl');
 $smarty->assign('show_page_bar', 'y');

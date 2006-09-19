@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_templates.php,v 1.20 2006-05-22 17:09:07 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_templates.php,v 1.21 2006-09-19 16:33:15 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -133,6 +133,9 @@ $smarty->assign('mode', $mode);
 if ($tiki_p_edit_templates == 'y') {
 	ask_ticket('edit-templates');
 }
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 // Get templates from the templates/modules directory
 $smarty->assign('mid', 'tiki-edit_templates.tpl');

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-import_structuredtext.php,v 1.6 2005-05-18 10:58:57 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-import_structuredtext.php,v 1.7 2006-09-19 16:33:16 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -113,6 +113,9 @@ if (isset($_REQUEST["import"])) {
 	$smarty->assign('result', 'y');
 }
 ask_ticket('import-st');
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $smarty->assign('mid', 'tiki-import_structuredtext.tpl');
 $smarty->display("tiki.tpl");

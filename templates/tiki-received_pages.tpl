@@ -1,7 +1,7 @@
 <h1><a class="pagetitle" href="tiki-received_pages.php">{tr}Received pages{/tr}</a>
   
       {if $feature_help eq 'y'}
-<a href="{$helpurl}Communication+Center" target="tikihelp" class="tikihelp" title="{tr}Help on Communication Center{/tr}">
+<a href="http://tikiwiki.org/CommunicationsCenterDoc" target="tikihelp" class="tikihelp" title="{tr}Help on Communication Center{/tr}">
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
 
       {if $feature_view_tpl eq 'y'}

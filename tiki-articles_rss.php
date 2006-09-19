@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-articles_rss.php,v 1.27 2006-08-29 20:19:02 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-articles_rss.php,v 1.28 2006-09-19 16:33:14 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,18 +20,6 @@ if ($tiki_p_read_article != 'y') {
 }
 
 $feed = "articles";
-$tmp = tra("Tiki RSS feed for articles");
-$title = (!empty($title_rss_articles)) ? $title_rss_articles : $tmp;
-$tmp = tra("Last articles.");
-$desc = (!empty($desc_rss_articles)) ? $desc_rss_articles : $tmp;
-$now = date("U");
-$id = "articleId";
-$titleId = "title";
-$descId = "heading";
-$dateId = "publishDate";
-$authorId = "author";
-$readrepl = "tiki-read_article.php?$id=%s";
-
 if (isset($_REQUEST["topic"])) {
     $topic = $_REQUEST["topic"];
     $uniqueid = $feed.".".$topic;
@@ -43,24 +31,37 @@ if (isset($_REQUEST["topic"])) {
     $uniqueid = $feed;
     $topic = "";
 }
+$output = $rsslib->get_from_cache($uniqueid);
 
+if ($output["data"]=="EMPTY") {
+	$tmp = tra("Tiki RSS feed for articles");
+	$title = (!empty($title_rss_articles)) ? $title_rss_articles : $tmp;
+	$tmp = tra("Last articles.");
+	$desc = (!empty($desc_rss_articles)) ? $desc_rss_articles : $tmp;
+	$now = date("U");
+	$id = "articleId";
+	$titleId = "title";
+	$descId = "heading";
+	$dateId = "publishDate";
+	$authorId = "author";
+	$readrepl = "tiki-read_article.php?$id=%s";
 
-$tmp = $tikilib->get_preference('title_rss_'.$feed, '');
-if ($tmp<>'') $title = $tmp;
-$tmp = $tikilib->get_preference('desc_rss_'.$feed, '');
-if ($desc<>'') $desc = $tmp;
+	$tmp = $tikilib->get_preference('title_rss_'.$feed, '');
+	if ($tmp<>'') $title = $tmp;
+	$tmp = $tikilib->get_preference('desc_rss_'.$feed, '');
+	if ($desc<>'') $desc = $tmp;
 
-$changes = $tikilib -> list_articles(0, $max_rss_articles, $dateId.'_desc', '', $now, $user, '', $topic);
-$tmp = array();
-foreach ($changes["data"] as $data)  {
-	$data["$descId"] = $tikilib->parse_data($data["$descId"]);
-	$data["body"] = null;
-	$tmp[] = $data;
+	$changes = $tikilib -> list_articles(0, $max_rss_articles, $dateId.'_desc', '', $now, $user, '', $topic);
+	$tmp = array();
+	foreach ($changes["data"] as $data)  {
+		$data["$descId"] = $tikilib->parse_data($data["$descId"]);
+		$data["body"] = null;
+		$tmp[] = $data;
+	}
+	$changes["data"] = $tmp;
+	$tmp = null;
+	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, '', $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
 }
-$changes["data"] = $tmp;
-$tmp = null;
-$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, '', $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
-
 header("Content-type: ".$output["content-type"]);
 print $output["data"];
 

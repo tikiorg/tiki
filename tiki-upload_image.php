@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_image.php,v 1.39 2006-08-29 20:19:03 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_image.php,v 1.40 2006-09-19 16:33:18 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -411,6 +411,9 @@ include_once ('tiki-section_options.php');
 $smarty->assign("max_img_upload_size", $imagegallib->max_img_upload_size());
 
 ask_ticket('upload-image');
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 // Display the template
 $smarty->assign('mid', 'tiki-upload_image.tpl');

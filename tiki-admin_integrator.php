@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator.php,v 1.19 2005-05-18 10:58:54 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator.php,v 1.20 2006-09-19 16:33:10 ohertel Exp $
  *
  * Admin interface for repositories management
  *
@@ -96,6 +96,9 @@ if (isset($_REQUEST["action"]))
 // Fill list of repositories
 $repositories = $integrator->list_repositories(false);
 $smarty->assign_by_ref('repositories', $repositories);
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 // Display the template
 $smarty->assign('mid','tiki-admin_integrator.tpl');

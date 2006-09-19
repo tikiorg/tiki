@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-image_galleries_rss.php,v 1.26 2005-05-18 10:58:57 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-image_galleries_rss.php,v 1.27 2006-09-19 16:33:16 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -21,26 +21,29 @@ if ($tiki_p_view_image_gallery != 'y') {
 }
 
 $feed = "imggal";
-$title = (!empty($title_rss_image_galleries)) ? $title_rss_image_galleries : tra("Tiki RSS feed for image galleries");
-$desc = (!empty($desc_rss_image_galleries)) ? $desc_rss_image_galleries : tra("Last images uploaded to the image galleries.");
-
-$now = date("U");
-$id = "imageId";
-$titleId = "name";
-$descId = "description";
-$dateId = "created";
-$authorId = "user";
-$readrepl = "tiki-browse_image.php?imageId=%s";
 $uniqueid = $feed;
+$output = $rsslib->get_from_cache($uniqueid);
 
-$tmp = $tikilib->get_preference('title_rss_'.$feed, '');
-if ($tmp<>'') $title = $tmp;
-$tmp = $tikilib->get_preference('desc_rss_'.$feed, '');
-if ($desc<>'') $desc = $tmp;
-
-$changes = $imagegallib->list_images(0,$max_rss_image_galleries,$dateId.'_desc', '');
-$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, '', $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
-
+if ($output["data"]=="EMPTY") {
+	$title = (!empty($title_rss_image_galleries)) ? $title_rss_image_galleries : tra("Tiki RSS feed for image galleries");
+	$desc = (!empty($desc_rss_image_galleries)) ? $desc_rss_image_galleries : tra("Last images uploaded to the image galleries.");
+	
+	$now = date("U");
+	$id = "imageId";
+	$titleId = "name";
+	$descId = "description";
+	$dateId = "created";
+	$authorId = "user";
+	$readrepl = "tiki-browse_image.php?imageId=%s";
+	
+	$tmp = $tikilib->get_preference('title_rss_'.$feed, '');
+	if ($tmp<>'') $title = $tmp;
+	$tmp = $tikilib->get_preference('desc_rss_'.$feed, '');
+	if ($desc<>'') $desc = $tmp;
+	
+	$changes = $imagegallib->list_images(0,$max_rss_image_galleries,$dateId.'_desc', '');
+	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, '', $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
+}
 header("Content-type: ".$output["content-type"]);
 print $output["data"];
 

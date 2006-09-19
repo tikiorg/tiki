@@ -150,6 +150,9 @@ $sections = $tikilib->list_sections();
 $smarty->assign('sections', $sections);
 ask_ticket('admin-banning');
 
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
+
 $smarty->assign('mid', 'tiki-admin_banning.tpl');
 $smarty->display("tiki.tpl");
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-backlinks.php,v 1.11 2005-05-18 10:58:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-backlinks.php,v 1.12 2006-09-19 16:33:14 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -59,6 +59,9 @@ if (!$tikilib->page_exists($page)) {
 $backlinks = $wikilib->get_backlinks($page);
 $smarty->assign_by_ref('backlinks', $backlinks);
 ask_ticket('backlinks');
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 // Display the template
 $smarty->assign('mid', 'tiki-backlinks.tpl');

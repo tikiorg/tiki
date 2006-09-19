@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login_validate.php,v 1.18 2006-09-15 19:53:23 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login_validate.php,v 1.19 2006-09-19 16:33:17 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -17,6 +17,10 @@ if (isset($_REQUEST["user"])) {
 } else {
 	$error = '';
 }  
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
+
 if ($isvalid) {
 	$user = $_REQUEST['user'];
 	$userlib->confirm_user($user);

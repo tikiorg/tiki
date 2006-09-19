@@ -52,8 +52,10 @@ if(isset($_REQUEST["edittopic"])) {
 $section = 'cms';
 include_once ('tiki-section_options.php');
 
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
+
 $smarty->assign('mid','tiki-edit_topic.tpl');
 $smarty->display("tiki.tpl");
-
 
 ?>

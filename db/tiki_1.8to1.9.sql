@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.107 2006-08-29 20:19:03 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.108 2006-09-19 16:33:19 ohertel Exp $
 
 # The following script will update a tiki database from version 1.8.x to 1.9.x
 # The following script will ALSO update from version 1.9.x to 1.9.y
@@ -20,7 +20,7 @@
 
 # added on 2005-02-01 by kyori (new features for Galaxia Workflow)
 ALTER TABLE galaxia_instances ADD name varchar(200) default 'No Name' NOT NULL AFTER started;
-ALTER TABLE galaxia_activities ADD expirationTime int(6) unsigned default 0;
+ALTER TABLE galaxia_activities ADD expirationTime int(6) unsigned NOT NULL default 0;
 
 ALTER TABLE tiki_mailin_accounts ADD anonymous char(1) NOT NULL default 'y';
 
@@ -228,19 +228,19 @@ ALTER TABLE `tiki_submissions` ADD `image_caption` TEXT AFTER `image_name` ;
 ALTER TABLE `tiki_articles` ADD `lang` VARCHAR( 16 ) AFTER `linkto` ;
 ALTER TABLE `tiki_submissions` ADD `lang` VARCHAR( 16 ) AFTER `linkto` ;
 
-ALTER TABLE `tiki_article_types` ADD `show_topline` CHAR( 1 ) AFTER `show_size` ;
-ALTER TABLE `tiki_article_types` ADD `show_subtitle` CHAR( 1 ) AFTER `show_topline` ;
-ALTER TABLE `tiki_article_types` ADD `show_linkto` CHAR( 1 ) AFTER `show_subtitle` ;
-ALTER TABLE `tiki_article_types` ADD `show_image_caption` CHAR( 1 ) AFTER `show_linkto` ;
-ALTER TABLE `tiki_article_types` ADD `show_lang` CHAR( 1 ) AFTER `show_image_caption` ;
+ALTER TABLE `tiki_article_types` ADD `show_topline` CHAR( 1 ) DEFAULT 'n' AFTER `show_size` ;
+ALTER TABLE `tiki_article_types` ADD `show_subtitle` CHAR( 1 ) DEFAULT 'n' AFTER `show_topline` ;
+ALTER TABLE `tiki_article_types` ADD `show_linkto` CHAR( 1 ) DEFAULT 'n' AFTER `show_subtitle` ;
+ALTER TABLE `tiki_article_types` ADD `show_image_caption` CHAR( 1 ) DEFAULT 'n' AFTER `show_linkto` ;
+ALTER TABLE `tiki_article_types` ADD `show_lang` CHAR( 1 ) DEFAULT 'n' AFTER `show_image_caption` ;
 
 # added on 2004-04-10 by lphuberdeau - Permissions for tiki sheet
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_sheet', 'Can admin sheet', 'admin', 'sheet');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_sheet', 'Can create and edit sheets', 'editors', 'sheet');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_sheet', 'Can view sheet', 'basic', 'sheet');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_sheet_history', 'Can view sheet history', 'admin', 'sheet');
+INSERT INTO `users_permissions` (permName, permDesc, level, type) VALUES ('tiki_p_admin_sheet', 'Can admin sheet', 'admin', 'sheet');
+INSERT INTO `users_permissions` (permName, permDesc, level, type) VALUES ('tiki_p_edit_sheet', 'Can create and edit sheets', 'editors', 'sheet');
+INSERT INTO `users_permissions` (permName, permDesc, level, type) VALUES ('tiki_p_view_sheet', 'Can view sheet', 'basic', 'sheet');
+INSERT INTO `users_permissions` (permName, permDesc, level, type) VALUES ('tiki_p_view_sheet_history', 'Can view sheet history', 'admin', 'sheet');
 
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_sheet','n');
+INSERT IGNORE INTO `tiki_preferences` (name,value) VALUES ('feature_sheet','n');
 
 # added on 2004-04-11 by mose at dgd request
 ALTER TABLE `tiki_tracker_fields` CHANGE `name` `name` VARCHAR( 255 ) DEFAULT NULL ;
@@ -280,34 +280,32 @@ ALTER TABLE `tiki_quicktags` ADD `tagcategory` CHAR( 255 ) AFTER `tagicon` ;
 ALTER TABLE `tiki_quicktags` ADD INDEX `tagcategory` (`tagcategory`);
 ALTER TABLE `tiki_quicktags` ADD INDEX `taglabel` (`taglabel`);
 
-UPDATE `tiki_quicktags` set `tagcategory`='wiki' where `tagcategory`is NULL;
+UPDATE `tiki_quicktags` set `tagcategory`='wiki' where `tagcategory` is NULL;
 
-DELETE FROM tiki_quicktags WHERE taglabel='New wms Metadata' AND taginsert='METADATA\r\n		"wms_name" "myname"\r\n		"wms_srs" "EPSG:4326"\r\n	"wms_server_version" " "\r\n	"wms_layers" "mylayers"\r\n	"wms_request" "myrequest"\r\n	"wms_format" " "\r\n	"wms_time" " "\r\n END' AND tagicon='img/icons/admin_metatags.png' AND tagcategory='maps';
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New wms Metadata','METADATA\r\n		"wms_name" "myname"\r\n		"wms_srs" "EPSG:4326"\r\n	"wms_server_version" " "\r\n	"wms_layers" "mylayers"\r\n	"wms_request" "myrequest"\r\n	"wms_format" " "\r\n	"wms_time" " "\r\n END','img/icons/admin_metatags.png', 'maps');
-DELETE FROM tiki_quicktags WHERE taglabel='New Class' AND taginsert='CLASS\r\n EXPRESSION ()\r\n SYMBOL 0\r\n OUTLINECOLOR\r\n COLOR\r\n  NAME "myclass"\r\nEND #end of class' AND tagicon='img/icons/mini_triangle.gif' AND tagcategory='maps';
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Class','CLASS\r\n EXPRESSION ()\r\n SYMBOL 0\r\n OUTLINECOLOR\r\n COLOR\r\n  NAME "myclass"\r\nEND #end of class','img/icons/mini_triangle.gif', 'maps');
-DELETE FROM tiki_quicktags WHERE taglabel='New Projection' AND taginsert='PROJECTION\r\n "init=epsg:4326"\r\nEND' AND tagicon='images/ico_mode.gif' AND tagcategory='maps';
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Projection','PROJECTION\r\n "init=epsg:4326"\r\nEND','images/ico_mode.gif', 'maps');
-DELETE FROM tiki_quicktags WHERE taglabel='New Query' AND taginsert='#\r\n#Start of query definitions\r\n QUERYMAP\r\n STATUS ON\r\n STYLE HILITE\r\nEND' AND tagicon='img/icons/question.gif' AND tagcategory='maps';
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Query','#\r\n#Start of query definitions\r\n QUERYMAP\r\n STATUS ON\r\n STYLE HILITE\r\nEND','img/icons/question.gif', 'maps');
-DELETE FROM tiki_quicktags WHERE taglabel='New Scalebar' AND taginsert='#\r\n#start of scalebar\r\nSCALEBAR\r\n IMAGECOLOR 255 255 255\r\n STYLE 1\r\n SIZE 400 2\r\n COLOR 0 0 0\r\n  UNITS KILOMETERS\r\n INTERVALS 5\r\n STATUS ON\r\nEND' AND tagicon='img/icons/desc_lenght.gif' AND tagcategory='maps';
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Scalebar','#\r\n#start of scalebar\r\nSCALEBAR\r\n IMAGECOLOR 255 255 255\r\n STYLE 1\r\n SIZE 400 2\r\n COLOR 0 0 0\r\n  UNITS KILOMETERS\r\n INTERVALS 5\r\n STATUS ON\r\nEND','img/icons/desc_lenght.gif', 'maps');
-DELETE FROM tiki_quicktags WHERE taglabel='New Layer' AND taginsert='LAYER\r\n NAME "mylayer"\r\n TYPE\r\n STATUS ON\r\n DATA "mydata"\r\nEND #end of layer' AND tagicon='img/ed_copy.gif' AND tagcategory='maps';
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Layer', 'LAYER\r\n NAME "mylayer"\r\n TYPE\r\n STATUS ON\r\n DATA "mydata"\r\nEND #end of layer', 'img/ed_copy.gif', 'maps');
-DELETE FROM tiki_quicktags WHERE taglabel='New Label' AND taginsert='LABEL\r\n  COLOR\r\n ANGLE\r\n FONT arial\r\n TYPE TRUETYPE\r\n  POSITION\r\n  PARTIALS TRUE\r\n  SIZE 6\r\n  BUFFER 0\r\n OUTLINECOLOR\r\nEND #end of label' AND tagicon='img/icons/fontfamily.gif' AND tagcategory='maps';
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Label','LABEL\r\n  COLOR\r\n ANGLE\r\n FONT arial\r\n TYPE TRUETYPE\r\n  POSITION\r\n  PARTIALS TRUE\r\n  SIZE 6\r\n  BUFFER 0\r\n OUTLINECOLOR\r\nEND #end of label','img/icons/fontfamily.gif', 'maps');
-DELETE FROM tiki_quicktags WHERE taglabel='New Reference' AND taginsert='#\r\n#start of reference\r\nREFERENCE\r\n SIZE 120 60\r\n STATUS ON\r\n  EXTENT -180 -90 182 88\r\n OUTLINECOLOR 255 0 0\r\n IMAGE "myimagedata"\r\nCOLOR -1 -1 -1\r\nEND' AND tagicon='images/ed_image.gif' AND tagcategory='maps';
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Reference','#\r\n#start of reference\r\nREFERENCE\r\n SIZE 120 60\r\n STATUS ON\r\n  EXTENT -180 -90 182 88\r\n OUTLINECOLOR 255 0 0\r\n IMAGE "myimagedata"\r\nCOLOR -1 -1 -1\r\nEND','images/ed_image.gif', 'maps');
-DELETE FROM tiki_quicktags WHERE taglabel='New Legend' AND taginsert='#\r\n#start of legend\r\n#\r\nLEGENDr\n KEYSIZE 18 12\r\n POSTLABELCACHE TRUE\r\n STATUS ON\r\nEND' AND tagicon='images/ed_about.gif' AND tagcategory='maps';
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Legend','#\r\n#start of legend\r\n#\r\nLEGENDr\n KEYSIZE 18 12\r\n POSTLABELCACHE TRUE\r\n STATUS ON\r\nEND','images/ed_about.gif', 'maps');
-DELETE FROM tiki_quicktags WHERE taglabel='New Web' AND taginsert='#\r\n#Start of web interface definition\r\n#\r\nWEB\r\n TEMPLATE "myfile/url"\r\n MINSCALE 1000\r\n MAXSCALE 40000\r\n IMAGEPATH "myimagepath"\r\n IMAGEURL "mypath"\r\nEND' AND tagicon='img/icons/ico_link.gif' AND tagcategory='maps';
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Web','#\r\n#Start of web interface definition\r\n#\r\nWEB\r\n TEMPLATE "myfile/url"\r\n MINSCALE 1000\r\n MAXSCALE 40000\r\n IMAGEPATH "myimagepath"\r\n IMAGEURL "mypath"\r\nEND','img/icons/ico_link.gif', 'maps');
-DELETE FROM tiki_quicktags WHERE taglabel='New Outputformat' AND taginsert='OUTPUTFORMAT\r\n NAME\r\n DRIVER " "\r\n MIMETYPE "myimagetype"\r\n IMAGEMODE RGB\r\n EXTENSION "png"\r\nEND' AND tagicon='img/icons/opera.gif' AND tagcategory='maps';
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Outputformat','OUTPUTFORMAT\r\n NAME\r\n DRIVER " "\r\n MIMETYPE "myimagetype"\r\n IMAGEMODE RGB\r\n EXTENSION "png"\r\nEND','img/icons/opera.gif', 'maps');
-DELETE FROM tiki_quicktags WHERE taglabel='New Mapfile' AND taginsert='#\r\n#Start of mapfile\r\n#\r\nNAME MYMAPFILE\r\n STATUS ON\r\nSIZE \r\nEXTENT\r\n UNITS\r\nSHAPEPATH " "\r\nIMAGETYPE " "\r\nFONTSET " "\r\nIMAGECOLOR -1 -1 -1\r\n\r\n#remove this text and add objects here\r\n\r\nEND # end of mapfile' AND tagicon='img/icons/global.gif' AND tagcategory='maps';
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Mapfile','#\r\n#Start of mapfile\r\n#\r\nNAME MYMAPFILE\r\n STATUS ON\r\nSIZE \r\nEXTENT\r\n UNITS\r\nSHAPEPATH " "\r\nIMAGETYPE " "\r\nFONTSET " "\r\nIMAGECOLOR -1 -1 -1\r\n\r\n#remove this text and add objects here\r\n\r\nEND # end of mapfile', 'img/icons/global.gif', 'maps');
-
-
+DELETE FROM `tiki_quicktags` WHERE `taglabel`='New wms Metadata' AND `taginsert`='METADATA\r\n		\"wms_name\" \"myname\"\r\n		\"wms_srs\" \"EPSG:4326\"\r\n	\"wms_server_version\" \" \"\r\n	\"wms_layers\" \"mylayers\"\r\n	\"wms_request\" \"myrequest\"\r\n	\"wms_format\" \" \"\r\n	\"wms_time\" \" \"\r\n END' AND `tagicon`='img/icons/admin_metatags.png' AND `tagcategory`='maps';
+INSERT INTO `tiki_quicktags` (taglabel, taginsert, tagicon, tagcategory) VALUES ('New wms Metadata','METADATA\r\n		\"wms_name\" \"myname\"\r\n		\"wms_srs\" \"EPSG:4326\"\r\n	\"wms_server_version\" \" \"\r\n	\"wms_layers\" \"mylayers\"\r\n	\"wms_request\" \"myrequest\"\r\n	\"wms_format\" \" \"\r\n	\"wms_time\" \" \"\r\n END','img/icons/admin_metatags.png', 'maps');
+DELETE FROM `tiki_quicktags` WHERE `taglabel`='New Class' AND `taginsert`='CLASS\r\n EXPRESSION ()\r\n SYMBOL 0\r\n OUTLINECOLOR\r\n COLOR\r\n  NAME \"myclass\"\r\nEND #end of class' AND `tagicon`='img/icons/mini_triangle.gif' AND `tagcategory`='maps';
+INSERT INTO `tiki_quicktags` (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Class','CLASS\r\n EXPRESSION ()\r\n SYMBOL 0\r\n OUTLINECOLOR\r\n COLOR\r\n  NAME \"myclass\"\r\nEND #end of class','img/icons/mini_triangle.gif', 'maps');
+DELETE FROM `tiki_quicktags` WHERE `taglabel`='New Projection' AND `taginsert`='PROJECTION\r\n \"init=epsg:4326\"\r\nEND' AND `tagicon`='images/ico_mode.gif' AND `tagcategory`='maps';
+INSERT INTO `tiki_quicktags` (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Projection','PROJECTION\r\n \"init=epsg:4326\"\r\nEND','images/ico_mode.gif', 'maps');
+DELETE FROM `tiki_quicktags` WHERE `taglabel`='New Query' AND `taginsert`='#\r\n#Start of query definitions\r\n QUERYMAP\r\n STATUS ON\r\n STYLE HILITE\r\nEND' AND `tagicon`='img/icons/question.gif' AND `tagcategory`='maps';
+INSERT INTO `tiki_quicktags` (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Query','#\r\n#Start of query definitions\r\n QUERYMAP\r\n STATUS ON\r\n STYLE HILITE\r\nEND','img/icons/question.gif', 'maps');
+DELETE FROM `tiki_quicktags` WHERE `taglabel`='New Scalebar' AND `taginsert`='#\r\n#start of scalebar\r\nSCALEBAR\r\n IMAGECOLOR 255 255 255\r\n STYLE 1\r\n SIZE 400 2\r\n COLOR 0 0 0\r\n  UNITS KILOMETERS\r\n INTERVALS 5\r\n STATUS ON\r\nEND' AND `tagicon`='img/icons/desc_lenght.gif' AND `tagcategory`='maps';
+INSERT INTO `tiki_quicktags` (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Scalebar','#\r\n#start of scalebar\r\nSCALEBAR\r\n IMAGECOLOR 255 255 255\r\n STYLE 1\r\n SIZE 400 2\r\n COLOR 0 0 0\r\n  UNITS KILOMETERS\r\n INTERVALS 5\r\n STATUS ON\r\nEND','img/icons/desc_lenght.gif', 'maps');
+DELETE FROM `tiki_quicktags` WHERE `taglabel`='New Layer' AND `taginsert`='LAYER\r\n NAME \"mylayer\"\r\n TYPE\r\n STATUS ON\r\n DATA \"mydata\"\r\nEND #end of layer' AND `tagicon`='img/ed_copy.gif' AND `tagcategory`='maps';
+INSERT INTO `tiki_quicktags` (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Layer', 'LAYER\r\n NAME \"mylayer\"\r\n TYPE\r\n STATUS ON\r\n DATA \"mydata\"\r\nEND #end of layer', 'img/ed_copy.gif', 'maps');
+DELETE FROM `tiki_quicktags` WHERE `taglabel`='New Label' AND `taginsert`='LABEL\r\n  COLOR\r\n ANGLE\r\n FONT arial\r\n TYPE TRUETYPE\r\n  POSITION\r\n  PARTIALS TRUE\r\n  SIZE 6\r\n  BUFFER 0\r\n OUTLINECOLOR\r\nEND #end of label' AND `tagicon`='img/icons/fontfamily.gif' AND `tagcategory`='maps';
+INSERT INTO `tiki_quicktags` (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Label','LABEL\r\n  COLOR\r\n ANGLE\r\n FONT arial\r\n TYPE TRUETYPE\r\n  POSITION\r\n  PARTIALS TRUE\r\n  SIZE 6\r\n  BUFFER 0\r\n OUTLINECOLOR\r\nEND #end of label','img/icons/fontfamily.gif', 'maps');
+DELETE FROM `tiki_quicktags` WHERE `taglabel`='New Reference' AND `taginsert`='#\r\n#start of reference\r\nREFERENCE\r\n SIZE 120 60\r\n STATUS ON\r\n  EXTENT -180 -90 182 88\r\n OUTLINECOLOR 255 0 0\r\n IMAGE \"myimagedata\"\r\nCOLOR -1 -1 -1\r\nEND' AND `tagicon`='images/ed_image.gif' AND `tagcategory`='maps';
+INSERT INTO `tiki_quicktags` (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Reference','#\r\n#start of reference\r\nREFERENCE\r\n SIZE 120 60\r\n STATUS ON\r\n  EXTENT -180 -90 182 88\r\n OUTLINECOLOR 255 0 0\r\n IMAGE \"myimagedata\"\r\nCOLOR -1 -1 -1\r\nEND','images/ed_image.gif', 'maps');
+DELETE FROM `tiki_quicktags` WHERE `taglabel`='New Legend' AND `taginsert`='#\r\n#start of legend\r\n#\r\nLEGENDr\n KEYSIZE 18 12\r\n POSTLABELCACHE TRUE\r\n STATUS ON\r\nEND' AND `tagicon`='images/ed_about.gif' AND `tagcategory`='maps';
+INSERT INTO `tiki_quicktags` (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Legend','#\r\n#start of legend\r\n#\r\nLEGENDr\n KEYSIZE 18 12\r\n POSTLABELCACHE TRUE\r\n STATUS ON\r\nEND','images/ed_about.gif', 'maps');
+DELETE FROM `tiki_quicktags` WHERE `taglabel`='New Web' AND `taginsert`='#\r\n#Start of web interface definition\r\n#\r\nWEB\r\n TEMPLATE \"myfile/url\"\r\n MINSCALE 1000\r\n MAXSCALE 40000\r\n IMAGEPATH \"myimagepath\"\r\n IMAGEURL \"mypath\"\r\nEND' AND `tagicon`='img/icons/ico_link.gif' AND `tagcategory`='maps';
+INSERT INTO `tiki_quicktags` (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Web','#\r\n#Start of web interface definition\r\n#\r\nWEB\r\n TEMPLATE \"myfile/url\"\r\n MINSCALE 1000\r\n MAXSCALE 40000\r\n IMAGEPATH \"myimagepath\"\r\n IMAGEURL \"mypath\"\r\nEND','img/icons/ico_link.gif', 'maps');
+DELETE FROM `tiki_quicktags` WHERE `taglabel`='New Outputformat' AND `taginsert`='OUTPUTFORMAT\r\n NAME\r\n DRIVER \" \"\r\n MIMETYPE \"myimagetype\"\r\n IMAGEMODE RGB\r\n EXTENSION \"png\"\r\nEND' AND `tagicon`='img/icons/opera.gif' AND `tagcategory`='maps';
+INSERT INTO `tiki_quicktags` (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Outputformat','OUTPUTFORMAT\r\n NAME\r\n DRIVER \" \"\r\n MIMETYPE \"myimagetype\"\r\n IMAGEMODE RGB\r\n EXTENSION \"png\"\r\nEND','img/icons/opera.gif', 'maps');
+DELETE FROM `tiki_quicktags` WHERE `taglabel`='New Mapfile' AND `taginsert`='#\r\n#Start of mapfile\r\n#\r\nNAME MYMAPFILE\r\n STATUS ON\r\nSIZE \r\nEXTENT\r\n UNITS\r\nSHAPEPATH \" \"\r\nIMAGETYPE \" \"\r\nFONTSET \" \"\r\nIMAGECOLOR -1 -1 -1\r\n\r\n#remove this text and add objects here\r\n\r\nEND # end of mapfile' AND `tagicon`='img/icons/global.gif' AND `tagcategory`='maps';
+INSERT INTO `tiki_quicktags` (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Mapfile','#\r\n#Start of mapfile\r\n#\r\nNAME MYMAPFILE\r\n STATUS ON\r\nSIZE \r\nEXTENT\r\n UNITS\r\nSHAPEPATH \" \"\r\nIMAGETYPE \" \"\r\nFONTSET \" \"\r\nIMAGECOLOR -1 -1 -1\r\n\r\n#remove this text and add objects here\r\n\r\nEND # end of mapfile', 'img/icons/global.gif', 'maps');
 
 #added on 2004-04-19 lphuberdeau - Additional table for TikiSheet
 CREATE TABLE tiki_sheet_layout (
@@ -442,7 +440,7 @@ DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Last Ch
 # Homework tables end
 #
 
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_send_newsletters', 'Can send newsletters', 'admin', 'newsletters');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_send_newsletters', 'Can send newsletters', 'editors', 'newsletters');
 
 
 #
@@ -536,7 +534,7 @@ CREATE TABLE tiki_translated_objects (
   objId varchar(255) NOT NULL,
   lang varchar(16) default NULL,
   PRIMARY KEY (type, objId),
-  KEY ( traId)
+  KEY traId ( traId )
 ) TYPE=MyISAM AUTO_INCREMENT=1;
 
 
@@ -675,7 +673,7 @@ ALTER TABLE `tiki_images` ADD `lat` float default NULL AFTER `description`;
 ALTER TABLE `tiki_images` ADD `lon` float default NULL AFTER `description`;
 
 # added on 07 10 04 00:01:12 by mose
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_comments', 'Can view wiki coments', 'basic', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_comments', 'Can view wiki comments', 'basic', 'wiki');
 insert into users_grouppermissions (groupName,permName) values('Anonymous','tiki_p_wiki_view_comments');
 
 # added on 11 10 04 06:28:29 by more for registration validation by admin
@@ -726,7 +724,7 @@ ALTER TABLE  `tiki_pages` DROP column `lock`;
 
 #added on 2004-10-23 by sylvie
 UPDATE `tiki_user_watches` set `event`='article_submitted', `object`='*' where `event`='article_post';
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('default_wiki_diff_style','old');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('default_wiki_diff_style','minsidediff');
 
 #added on 2004-10-24 by redflo
 ALTER TABLE `tiki_images_data` ADD `etag` varchar(32) default NULL;
@@ -776,7 +774,7 @@ INSERT IGNORE INTO `tiki_user_modules`(name,title,data, parse)  VALUES ('mnu_app
 UPDATE `tiki_modules` set `name`='mnu_application_menu' where `name`='mod-application_menu' or `name`='application_menu';
 
 # added on 2005-02-24 by mdavey
-UPDATE `tiki_modules` set `params`='flip=y' where `name`='application_menu' and (`params` IS NULL or `params`='');
+UPDATE `tiki_modules` set `params`='flip=y' where `name`='mnu_application_menu' and (`params` IS NULL or `params`='');
 
 # added damian aka damosoft
 UPDATE `tiki_user_assigned_modules` set `name`='mnu_application_menu' where `name`='mod-application_menu' or `name`='application_menu';
@@ -895,6 +893,7 @@ ALTER TABLE tiki_user_tasks ADD status char(1) default NULL;
 ALTER TABLE tiki_user_tasks ADD priority int(2) default NULL;
 ALTER TABLE tiki_user_tasks ADD completed int(14) default NULL;
 ALTER TABLE tiki_user_tasks ADD percentage int(4) default NULL;
+ALTER TABLE tiki_user_tasks ADD UNIQUE KEY (creator,created);
 
 #2005-01-13 sir-b
 INSERT INTO users_permissions (permName, permDesc, level,type) VALUES ('tiki_p_tasks_send', 'Can send tasks to other users', 'registered', 'user');
@@ -1023,7 +1022,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_user_watches_tr
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('limitedGoGroupHome', 'y');
 
 #2005-03-22 noia
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_map_view_mapfiles', 'Can view mapfiles content', 'registered', 'maps');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_map_view_mapfiles', 'Can view contents of mapfiles', 'registered', 'maps');
 
 # 2005-03-26 marclaporte (this should have been optional since the beginning)
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_import_html', 'n');
@@ -1288,3 +1287,16 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_gal_slideshow',
 
 #2006-08-14 sylvieg
 ALTER TABLE tiki_tracker_item_fields ADD FULLTEXT ft (value);
+
+#2006-09-03 ohertel - missing on 1.8+update vs 1.9 diff
+INSERT INTO tiki_modules VALUES ('quick_edit','l',2,NULL,NULL,0,NULL,NULL,'a:1:{i:0;s:10:\"Registered\";}');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_help','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_multilingual','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_export','n');
+ALTER TABLE `tiki_quizzes` DROP PRIMARY KEY , ADD PRIMARY KEY ( `quizId` , `nVersion` );
+ALTER TABLE `tiki_trackers` ADD showAttachments char(1) default NULL AFTER useAttachments;
+INSERT IGNORE INTO users_grouppermissions (groupName,permName,value) VALUES ('Anonymous','tiki_p_view','');
+INSERT IGNORE INTO users_grouppermissions (groupName,permName,value) VALUES ('Anonymous','tiki_p_wiki_view_history','');
+
+
+

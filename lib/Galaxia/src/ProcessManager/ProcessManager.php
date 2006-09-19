@@ -41,7 +41,7 @@ class ProcessManager extends BaseManager {
   function deactivate_process($pId)
   {
     $query = "update ".GALAXIA_TABLE_PREFIX."processes set isActive='n' where pId=?";
-    $this->query($query, array($pid));  
+    $this->query($query, array($pId));  
     $msg = sprintf(tra('Process %d has been deactivated'),$pId);
     $this->notify_all(3,$msg);
   }
@@ -444,7 +444,7 @@ class ProcessManager extends BaseManager {
 			$amid[] = "`name`=?";
 			$bindvars[] = $filtername;
 		}
-		if ($filteactive) {
+		if ($filteractive) {
 			$amid[] = "`isActive`=?";
 			$bindvars[] = $filteractive;
 		}
@@ -471,7 +471,7 @@ class ProcessManager extends BaseManager {
   function invalidate_process($pid)
   {
     $query = "update `".GALAXIA_TABLE_PREFIX."processes` set `isValid`='n' where `pId`=?";
-    $this->query($query,array($pId));
+    $this->query($query,array($pid));
   }
   
   /*! 

@@ -87,6 +87,9 @@ for ($i = 0; $i < $temp_max; $i++) {
 $smarty->assign_by_ref('users', $ok_users);
 ask_ticket('ls-admin');
 
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
+
 // Display the template
 $smarty->assign('mid', 'tiki-live_support_admin.tpl');
 $smarty->display("tiki.tpl");

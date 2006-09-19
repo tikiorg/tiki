@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_processes.php,v 1.13 2006-08-29 20:19:02 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_processes.php,v 1.14 2006-09-19 16:33:16 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -83,7 +83,7 @@ if (isset($_REQUEST["delete"])) {
 	if (is_array($_REQUEST["process"])) {
 		check_ticket('g-admin-processes');
 		foreach (array_keys($_REQUEST["process"])as $item) {
-			$processManager->remove_process($item);
+			$processManager->remove_process((int)$item);
 		}
 	}
 }
@@ -223,6 +223,9 @@ $sameurl_elements = array(
 $all_procs = $items = $processManager->list_processes(0, -1, 'name_desc', '', '');
 $smarty->assign_by_ref('all_procs', $all_procs['data']);
 ask_ticket('g-admin-processes');
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $smarty->assign('mid', 'tiki-g-admin_processes.tpl');
 $smarty->display("tiki.tpl");

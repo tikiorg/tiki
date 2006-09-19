@@ -27,6 +27,19 @@ function smarty_function_phplayers($params, &$smarty) {
 		$type = 'tree';
 	}
 
+	include_once ("lib/phplayers/lib/PHPLIB.php");
+	include_once ("lib/phplayers_tiki/lib/layersmenu-common.inc.php"); // include Tiki's modified version of that file to keep original intact (luci)
+	include_once ("lib/phplayers/lib/layersmenu.inc.php");
+	include_once ("lib/phplayers/lib/".$types["$type"]);
+	// beware ! that below is a variable class declaration
+	$class = $classes["$type"];
+	$phplayers = new $class();
+	$phplayers->setDirrootCommon("lib/phplayers");
+	$phplayers->setLibjsdir("lib/phplayers/libjs/");
+	$phplayers->setImgdir("lib/phplayers/images/");
+	$phplayers->setImgwww("lib/phplayers/menuimages/");
+	$phplayers->setTpldirCommon("lib/phplayers/templates/");
+	
 	if (!empty($id)) {
 		$output = $tikiphplayers->mkMenuEntry($id);
 	}
