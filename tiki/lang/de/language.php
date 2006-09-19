@@ -2288,7 +2288,7 @@ $lang=Array(
 "Upload Image" => "Bild hochladen",
 "List of topics" => "Themenliste",
 "Active?" => "Aktiv?",
-"Articles (subs)" => "Artikel (Subs)",
+"Articles (subs)" => "Artikel (eingereicht)",
 "topic image" => "Themenlogo",
 "Remove with articles" => "Typ und zugeh&ouml;rige Artikel l&ouml;schen",
 "Activate" => "Aktivieren",
@@ -4092,5 +4092,7 @@ $lang=Array(
 "Caching time :" => "RSS Daten im Cache halten",
 "seconds (0 = cache inactive)" => "Sekunden (0 = Cache deaktiviert)",
 "Only enable caching if all syndicated content is public (visible to everyone) or private documents might leak out. Cache ignores existing permissions." => "Caching sollte nur f&uuml;r Inhalte aktiviert werden, die vollst&auml;ndig freigegeben sind, es k&ouml;nnten sonst private Dokumente verteilt werden. Bei Nutzung des Cache greifen die Rechteabfragen nicht.",
+"show help" => "Hilfe zeigen",
+"The file you are trying to upload is too big." => "Die hochgeladene Datei ist zu gro&szlig;.",
 "###end###"=>"###end###");
 ?>
