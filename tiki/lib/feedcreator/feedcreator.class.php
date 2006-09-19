@@ -856,9 +856,9 @@ class PodCastCreator10 extends FeedCreator {
 				$feed.= "<itunes:summary>".htmlspecialchars($this->items[$i]->description)."</itunes:summary>\n";
 				if ($this->items[$i]->date!=null) {
 					$itemDate = new FeedDate($this->items[$i]->date);
-					$feed.= "<pubDate>".htmlspecialchars($itemDate->iso8601())."</pubDate>\n";
-					$feed.= "<enclosure url=\"".htmlspecialchars($this->items[$i]->link)."\" length=\"".(int)$this->items[$i]->size."\" type=\"audio/mpeg\" />\n";
-					$feed.= "<guid>".htmlspecialchars($this->items[$i]->link)."</guid>\n";
+					$feed.= "<pubDate>".htmlspecialchars($itemDate->rfc822())."</pubDate>\n";
+					$feed.= "<enclosure url=\"".htmlspecialchars($this->items[$i]->link)."&amp;ext=.mp3\" length=\"".(int)$this->items[$i]->size."\" type=\"audio/mpeg\" />\n";
+					$feed.= "<guid>".htmlspecialchars($this->items[$i]->link)."&amp;ext=.mp3</guid>\n";
 				}
 			}
 
