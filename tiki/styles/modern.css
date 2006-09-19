@@ -96,13 +96,14 @@ h1, h2, h3, h4, h5, h6, p, .blogtitle, .separator, a.pagetitle
 
 .box-titletext, .titleb { color: white; font-weight: bold; padding: 1px; }
 
-div.box-title, .xxbox-title, .cbox-title, .articletitle, .tabmark, div.posthead, .heading {
+div.box-title, .xxbox-title, .cbox-title, .articletitle, .tabmark, div.posthead,
+.heading, div.blogtitle {
     background-image: url(modern/bluebar.jpg);
     color: white;
     font-weight: bold;
     margin-bottom: 1px;
-    padding: 1px;
-    text-align: center;
+    padding: 2px 0px 2px 0px;
+    text-align: left;
 }
 
 .box-title a, .tabmark a {
@@ -113,7 +114,8 @@ div.box-title, .xxbox-title, .cbox-title, .articletitle, .tabmark, div.posthead,
     text-align: center;
 }
 
-.box-data, .xxbox-data, .cbox-data, form.comments, .editdate, .subcomment, div#comzoneopen, div#pagebar, div#forumpostopen, div.mini, div#forumpost, form#editpageform {
+.box-data, .xxbox-data, .cbox-data, form.comments, .editdate, .subcomment, div#comzoneopen,
+div#pagebar, div#forumpostopen, div.mini, div#forumpost, form#editpageform, div.bloginfo {
     background-color: #eeeeff;
     /* color: black; */
     margin-bottom: 8px;
@@ -185,21 +187,21 @@ div.box-title, .xxbox-title, .cbox-title, .articletitle, .tabmark, div.posthead,
     padding: 2px;
 }
 
-.articletitle, .posthead {
+.articletitle, div.posthead {
     text-align: left;
     padding: 2px;
 }
 
 .posthead small { color: white; }
 
-.titlea, .posthead h3, .commentstitle {
+.titlea, .posthead h3, .commentstitle, div.blogtitle {
     color: white;
     font-size: 16px;
     font-weight: bold;
 }
 
-.articleheading, .postbody {
-    padding-top: 2px;
+.articleheading, .postbody, div.blogdesc {
+    padding: 4px 0px 4px 0px;
     text-align: left;
 }
 
