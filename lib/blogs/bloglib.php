@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/blogs/bloglib.php,v 1.50 2006-09-14 15:00:25 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/blogs/bloglib.php,v 1.51 2006-09-19 18:31:19 ohertel Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -358,7 +358,7 @@ class BlogLib extends TikiLib {
 		return $retval;
 	}
 
-	function blog_post($blogId, $data, $user, $title = '', $trackbacks = '', $contributions='') {
+	function blog_post($blogId, $data, $user, $title = '', $trackbacks = '', $contributions='', $priv='n') {
 		// update tiki_blogs and call activity functions
 		global $smarty;
 		global $tikilib, $feature_categories;
@@ -368,8 +368,8 @@ class BlogLib extends TikiLib {
 		$tracks = serialize(explode(',', $trackbacks));
 		$data = strip_tags($data, '<a><b><i><h1><h2><h3><h4><h5><h6><ul><li><ol><br><p><table><tr><td><img><pre>');
 		$now = date("U");
-		$query = "insert into `tiki_blog_posts`(`blogId`,`data`,`created`,`user`,`title`,`trackbacks_from`,`trackbacks_to`) values(?,?,?,?,?,?,?)";
-		$result = $this->query($query,array((int) $blogId,$data,(int) $now,$user,$title,serialize(array()),serialize(array())));
+		$query = "insert into `tiki_blog_posts`(`blogId`,`data`,`created`,`user`,`title`,`trackbacks_from`,`trackbacks_to`,`priv`) values(?,?,?,?,?,?,?,?)";
+		$result = $this->query($query,array((int) $blogId,$data,(int) $now,$user,$title,serialize(array()),serialize(array()),$priv));
 		$query = "select max(`postId`) from `tiki_blog_posts` where `created`=? and `user`=?";
 		$id = $this->getOne($query,array((int) $now,$user));
 		// Send trackbacks recovering only successful trackbacks
@@ -496,11 +496,11 @@ class BlogLib extends TikiLib {
 		return $res;
 	}
 
-	function update_post($postId, $blogId, $data, $user, $title = '', $trackbacks = '', $contributions='', $old_data='') {
+	function update_post($postId, $blogId, $data, $user, $title = '', $trackbacks = '', $contributions='', $old_data='', $priv='n') {
 		global $feature_actionlog;
 		$trackbacks = serialize($this->send_trackbacks($postId, $trackbacks));
-		$query = "update `tiki_blog_posts` set `blogId`=?,`trackbacks_to`=?,`data`=?,`user`=?,`title`=? where `postId`=?";
-		$result = $this->query($query,array($blogId,$trackbacks,$data,$user,$title,$postId));
+		$query = "update `tiki_blog_posts` set `blogId`=?,`trackbacks_to`=?,`data`=?,`user`=?,`title`=?, `priv`=? where `postId`=?";
+		$result = $this->query($query,array($blogId,$trackbacks,$data,$user,$title,$priv,$postId));
 		if ($feature_actionlog == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
 			include_once('lib/diff/difflib.php');

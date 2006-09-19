@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.51 2006-09-19 17:48:06 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.52 2006-09-19 18:31:19 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -97,6 +97,7 @@ if (isset($_REQUEST["postId"]) && $_REQUEST["postId"] > 0) {
 	$smarty->assign('trackbacks_to', $data["trackbacks_to"]);
 	$smarty->assign('created', $data["created"]);
 	$smarty->assign('parsed_data', $tikilib->parse_data($data["data"]));
+    $smarty->assign('blogpriv', $data["priv"]);
 }
 
 if ($postId) {
@@ -128,27 +129,35 @@ $smarty->assign('preview', 'n');
 
 if ($tiki_p_admin != 'y') {
     if ($tiki_p_use_HTML != 'y') {
-	$_REQUEST["allowhtml"] = 'off';
+		$_REQUEST["allowhtml"] = 'off';
     }
 }
 
+$blogpriv='n';
+$smarty->assign('blogpriv', 'n');
 if(isset($_REQUEST["data"])) {
-
     if (($feature_wiki_allowhtml == 'y' and $tiki_p_use_HTML == 'y' 
 		and isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"]=="on")) {
-	$edit_data = $_REQUEST["data"];  
+		$edit_data = $_REQUEST["data"];  
     } else {
-	$edit_data = $_REQUEST["data"];
+		$edit_data = $_REQUEST["data"];
     }
-
-
 } else {
     if (isset($data["data"])) {
-	$edit_data = $data["data"];
+		$edit_data = $data["data"];
     } else {
-	$edit_data = '';
+		$edit_data = '';
     }
+    if (isset($data["priv"])) {
+	    $smarty->assign('blogpriv', $data["priv"]);
+	    $blogpriv=$data["priv"];
+	}
 }
+if (isset($_REQUEST["blogpriv"]) && $_REQUEST["blogpriv"] == 'on') {
+    $smarty->assign('blogpriv', 'y');
+    $blogpriv='y';
+}
+
 
 if (isset($_REQUEST["preview"])) {
 	$parsed_data = $tikilib->apply_postedit_handlers($edit_data);
@@ -166,11 +175,6 @@ if (isset($_REQUEST["preview"])) {
 
 	$smarty->assign('data', htmldecode( $edit_data ) );
 
-	if (isset($_REQUEST["blogpriv"]) && $_REQUEST["blogpriv"] == 'on') {
-	        $smarty->assign('blogpriv', 'y');  // remember priv setting whilst in preview mode
-	} else {
-		$smarty->assign('blogpriv', 'n');
-	}
 	if ($feature_freetags == 'y') {
 	$smarty->assign('taglist',$_REQUEST["freetag_string"]);
 	}
@@ -186,12 +190,6 @@ if ((isset($_REQUEST['save']) || isset($_REQUEST['save_exit']))&& $feature_contr
 	$smarty->assign('contribution_needed', 'y');
 } else {
 	$contribution_needed = false;
-}
-
-if (isset($_REQUEST["blogpriv"]) && $_REQUEST["blogpriv"] == 'on') {
-        $smarty->assign('blogpriv', 'y');  // remember priv setting whilst in preview mode
-} else {
-        $smarty->assign('blogpriv', 'n');
 }
 
 if ((isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) && !$contribution_needed) {
@@ -211,11 +209,9 @@ if ((isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) && !$contributio
 
 				if ($userlib->object_has_permission($user, $_REQUEST["blogId"], 'blog', $permName)) {
 					$$permName = 'y';
-
 					$smarty->assign("$permName", 'y');
 				} else {
 					$$permName = 'n';
-
 					$smarty->assign("$permName", 'n');
 				}
 			}
@@ -234,7 +230,6 @@ if ((isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) && !$contributio
 
 	if ($tiki_p_blog_post != 'y') {
 		$smarty->assign('msg', tra("Permission denied you cannot post"));
-
 		$smarty->display("error.tpl");
 		die;
 	}
@@ -251,7 +246,6 @@ if ((isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) && !$contributio
 		if ($data["user"] != $user || !$user) {
 			if ($tiki_p_blog_admin != 'y') {
 				$smarty->assign('msg', tra("Permission denied you cannot edit this post"));
-
 				$smarty->display("error.tpl");
 				die;
 			}
@@ -261,11 +255,10 @@ if ((isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) && !$contributio
 	$edit_data = $imagegallib->capture_images($edit_data);
 	$title = isset($_REQUEST['title']) ? $_REQUEST['title'] : '';
 	if ($_REQUEST["postId"] > 0) {
-	  $bloglib->update_post($_REQUEST["postId"], $_REQUEST["blogId"], $edit_data, $user, $title, $_REQUEST['trackback'], isset($_REQUEST['contributions'])? $_REQUEST['contributions']:'', $data['data']);
+	  $bloglib->update_post($_REQUEST["postId"], $_REQUEST["blogId"], $edit_data, $user, $title, $_REQUEST['trackback'], isset($_REQUEST['contributions'])? $_REQUEST['contributions']:'', $data['data'], $blogpriv);
 		$postid = $_REQUEST["postId"];
 	} else {
-	  $postid = $bloglib->blog_post($_REQUEST["blogId"], $edit_data, $user, $title, $_REQUEST['trackback'], isset($_REQUEST['contributions'])? $_REQUEST['contributions']:'');
-
+	  $postid = $bloglib->blog_post($_REQUEST["blogId"], $edit_data, $user, $title, $_REQUEST['trackback'], isset($_REQUEST['contributions'])? $_REQUEST['contributions']:'', $blogpriv);
 		$smarty->assign('postId', $postid);
 	}
 
