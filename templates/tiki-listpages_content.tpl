@@ -74,7 +74,7 @@
 {if $wiki_list_name eq 'y'}
 	<td class="{cycle advance=false}"><a href="tiki-index.php?page={$listpages[changes].pageName|escape:"url"}" class="link" title="{$listpages[changes].pageName}">{$listpages[changes].pageName|truncate:40:"...":true}</a>
 	{if $tiki_p_edit eq 'y'}
-	<br />(<a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}">{tr}edit{/tr}</a>)
+	&nbsp;<a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}"><img border='0' title='{tr}edit{/tr}' alt='{tr}edit{/tr}' src='img/icons/edit.gif' /></a>
 	{/if}
 	</td>
 {/if}
