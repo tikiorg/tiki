@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.25 2006-03-16 13:43:12 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.26 2006-09-19 19:34:39 ohertel Exp $ *}
 
 <h1><a  class="pagetitle" href="tiki-article_types.php">{tr}Admin Article Types{/tr}</a>
 
@@ -10,7 +10,9 @@
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-article_types.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Article Types tpl{/tr}">
 <img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}</h1>
-<div class="wiki-edithelp">
+
+<a href="javascript:toggle('wiki-edithelp')">{tr}show help{/tr}</a>
+<div class="wiki-edithelp" id="wiki-edithelp" style="display:none;">
 <b>{tr}Name{/tr}</b> - {tr}Shows up in the drop down list of article types{/tr}<br />
 <b>{tr}Rate{/tr}</b> - {tr}Allow ratings by the author{/tr}<br />
 <b>{tr}Show before publish date{/tr}</b> - {tr}non-admins can view before the publish date{/tr}<br />
@@ -36,29 +38,29 @@
 <h2>{tr}List of types{/tr}</h2>
 <form enctype="multipart/form-data" action="tiki-article_types.php" method="post">
 <table class="normal">
-<tr class="heading">
-<td>{tr}Name{/tr}</td>
-<td>{tr}Rate{/tr}</td>
-<td>{tr}Show before publish date{/tr}</td>
-<td>{tr}Show after expire date{/tr}</td>
-<td>{tr}Heading only{/tr}</td>
-<td>{tr}Comments{/tr}</td>
-<td>{tr}Comment Can Rate Article{/tr}</td>
-<td>{tr}Show image{/tr}</td>
-<td>{tr}Show avatar{/tr}</td>
-<td>{tr}Show author{/tr}</td>
-<td>{tr}Show publish date{/tr}</td>
-<td>{tr}Show expire date{/tr}</td>
-<td>{tr}Show reads{/tr}</td>
-<td>{tr}Show size{/tr}</td>
-<td>{tr}Show topline{/tr}</td>
-<td>{tr}Show subtitle{/tr}</td>
-<td>{tr}Show source{/tr}</td>
-<td>{tr}Show Image Caption{/tr}</td>
-<td>{tr}Show lang{/tr}</td>
-<td>{tr}Creator can edit{/tr}</td>
-<td>{tr}Articles{/tr}</td>
-<td>{tr}Delete{/tr}</td>
+<tr>
+<td class="heading">{tr}Name{/tr}</td>
+<td class="heading">{tr}Rate{/tr}</td>
+<td class="heading">{tr}Show before publish date{/tr}</td>
+<td class="heading">{tr}Show after expire date{/tr}</td>
+<td class="heading">{tr}Heading only{/tr}</td>
+<td class="heading">{tr}Comments{/tr}</td>
+<td class="heading">{tr}Comment Can Rate Article{/tr}</td>
+<td class="heading">{tr}Show image{/tr}</td>
+<td class="heading">{tr}Show avatar{/tr}</td>
+<td class="heading">{tr}Show author{/tr}</td>
+<td class="heading">{tr}Show publish date{/tr}</td>
+<td class="heading">{tr}Show expire date{/tr}</td>
+<td class="heading">{tr}Show reads{/tr}</td>
+<td class="heading">{tr}Show size{/tr}</td>
+<td class="heading">{tr}Show topline{/tr}</td>
+<td class="heading">{tr}Show subtitle{/tr}</td>
+<td class="heading">{tr}Show source{/tr}</td>
+<td class="heading">{tr}Show Image Caption{/tr}</td>
+<td class="heading">{tr}Show lang{/tr}</td>
+<td class="heading">{tr}Creator can edit{/tr}</td>
+<td class="heading">{tr}Articles{/tr}</td>
+<td class="heading">{tr}Delete{/tr}</td>
 </tr>
 {cycle print=false values="even,odd"}
 {section name=user loop=$types}
