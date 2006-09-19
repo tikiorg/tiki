@@ -50,7 +50,7 @@
 <td class="odd">&nbsp;{$listpages[changes].user}&nbsp;</td>
 <td class="odd">
 <a class="link" href="tiki-list_posts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].postId}"><img border='0' title='{tr}remove{/tr}' alt='{tr}remove{/tr}' src='img/icons2/delete.gif' /></a>
-<a class="link" href="tiki-blog_post.php?postId={$listpages[changes].postId}"><img border='0' title='{tr}edit{/tr}' alt='{tr}edit{/tr}' src='img/icons/config.gif' /></a>
+<a class="link" href="tiki-blog_post.php?postId={$listpages[changes].postId}"><img border='0' title='{tr}edit{/tr}' alt='{tr}edit{/tr}' src='img/icons/edit.gif' /></a>
 </td>
 {else}
 <td class="even">&nbsp;{$listpages[changes].postId}&nbsp;</td>
@@ -60,7 +60,7 @@
 <td class="even">&nbsp;{$listpages[changes].user}&nbsp;</td>
 <td class="even">
 <a class="link" href="tiki-list_posts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].postId}"><img border='0' title='{tr}remove{/tr}' alt='{tr}remove{/tr}' src='img/icons2/delete.gif' /></a>
-<a class="link" href="tiki-blog_post.php?postId={$listpages[changes].postId}"><img border='0' title='{tr}edit{/tr}' alt='{tr}edit{/tr}' src='img/icons/config.gif' /></a>
+<a class="link" href="tiki-blog_post.php?postId={$listpages[changes].postId}"><img border='0' title='{tr}edit{/tr}' alt='{tr}edit{/tr}' src='img/icons/edit.gif' /></a>
 </td>
 {/if}
 </tr>
