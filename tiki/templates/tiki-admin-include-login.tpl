@@ -48,7 +48,7 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
     <select name="feature_crypt_passwords">
       <option value='crypt-md5' {if $feature_crypt_passwords eq 'crypt-md5'}selected="selected"{/if}>crypt-md5</option>
       <option value='crypt-des' {if $feature_crypt_passwords eq 'crypt-des'}selected="selected"{/if}>crypt-des</option>
-      <option value='tikihash' {if $feature_crypt_passwords eq 'tikihash'}selected="selected"{/if}>tikihash (old)</option>
+      <option value='tikihash' {if $feature_crypt_passwords eq 'tikihash'}selected="selected"{/if}>{tr}tikihash (old){/tr}</option>
     </select>
   </td>
 </tr>
