@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.50 2006-09-19 16:33:14 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.51 2006-09-19 17:48:06 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -187,6 +187,13 @@ if ((isset($_REQUEST['save']) || isset($_REQUEST['save_exit']))&& $feature_contr
 } else {
 	$contribution_needed = false;
 }
+
+if (isset($_REQUEST["blogpriv"]) && $_REQUEST["blogpriv"] == 'on') {
+        $smarty->assign('blogpriv', 'y');  // remember priv setting whilst in preview mode
+} else {
+        $smarty->assign('blogpriv', 'n');
+}
+
 if ((isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) && !$contribution_needed) {
 	include_once ("lib/imagegals/imagegallib.php");
 
@@ -281,11 +288,6 @@ if ((isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) && !$contributio
 
 	$smarty->assign('data', htmldecode( $edit_data ) );
 
-        if (isset($_REQUEST["blogpriv"]) && $_REQUEST["blogpriv"] == 'on') {
-                $smarty->assign('blogpriv', 'y');  // remember priv setting whilst in preview mode
-        } else {
-                $smarty->assign('blogpriv', 'n');
-        }
 	if ($feature_freetags == 'y') {
 	$smarty->assign('taglist',$_REQUEST["freetag_string"]);	
 	}
