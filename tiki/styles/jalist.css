@@ -1,5 +1,5 @@
 /* 
-  $Header: /cvsroot/tikiwiki/tiki/styles/jalist.css,v 1.52 2006-09-16 14:22:41 ohertel Exp $
+  $Header: /cvsroot/tikiwiki/tiki/styles/jalist.css,v 1.53 2006-09-20 01:01:27 illori Exp $
   $RCSfile: jalist.css,v $
   This theme is based on the default2 style for Tiki 1.2
   If you want  a short-version CSS template, start by copying default2
@@ -1673,6 +1673,7 @@ div.shoutboxmodmsg {
 	padding-top:   1px;
 	padding-bottom:   1px;
 	color:   #636363;
+	width: 95%;
 }
 
 textarea.tshoutbox {

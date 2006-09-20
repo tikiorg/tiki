@@ -1604,6 +1604,7 @@ div.shoutboxmsg {
 	padding-left:   2px;
 	padding-top:   1px;
 	padding-bottom:   1px;
+;
 }
 
 div.shoutboxmodmsg {
@@ -1614,6 +1615,7 @@ div.shoutboxmodmsg {
 	padding-top:   1px;
 	padding-bottom:   1px;
 	color:   white;
+	width: 95%
 }
 
 textarea.tshoutbox {
