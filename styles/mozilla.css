@@ -1,5 +1,5 @@
 /* 
-  $Header: /cvsroot/tikiwiki/tiki/styles/mozilla.css,v 1.46 2006-02-01 21:20:23 jdrexler Exp $
+  $Header: /cvsroot/tikiwiki/tiki/styles/mozilla.css,v 1.47 2006-09-20 01:01:27 illori Exp $
   mozilla.css
   This theme is based on the default2 style for Tiki 1.2
   If you want  a short-version CSS template, start with default2
@@ -1932,6 +1932,7 @@ div.shoutboxmodmsg {
 	padding-left:   2px;
 	padding-top:   1px;
 	padding-bottom:   1px;
+	width: 95%;
 }
 
 textarea.tshoutbox {

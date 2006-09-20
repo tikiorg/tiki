@@ -1602,6 +1602,7 @@ div.shoutboxmodmsg {
 	padding-left:   2px;
 	padding-top:   1px;
 	padding-bottom:   1px;
+	width: 95%;
 }
 
 textarea.tshoutbox {
