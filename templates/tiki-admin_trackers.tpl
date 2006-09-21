@@ -252,6 +252,9 @@ categories = {$catsdump}
 <table class="normal">
 <tr class="formcolor"><td>{tr}Download CVS export{/tr}</td>
 <td>{tr}File: {/tr}{tr}tracker{/tr}_{$trackerId}.csv<br />{tr}Charset encoding:{/tr} <select name="encoding"><option value="UTF-8" selected="selected">{tr}UTF-8{/tr}</option><option value="ISO-8859-1">{tr}ISO-8859-1{/tr}</option></select>
+<br /><input type="radio" name="which" value="list"/> {tr}Fields searchable and visible in items list{/tr}
+<br /><input type="radio" name="which" value="item"/> {tr}Fields visible in an item view{/tr} 
+<br /><input type="radio" name="which" value="all" checked="checked"/> {tr}All fields{/tr}
 </td></tr>
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="export" value="{tr}export{/tr}" /></td></tr>
 </table>
