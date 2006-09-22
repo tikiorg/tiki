@@ -231,9 +231,7 @@ class RSSLib extends TikiLib {
 
 		*/
 
-		$dirname = dirname($urlarray["path"]);
-		if ($dirname=="\\") $dirname="/";
-		if (substr($dirname,-1) <> "/") $dirname.="/";
+		$dirname = (dirname($urlarray["path"]) != "/" ? "/" : "");
 
 		$url = htmlspecialchars($this->httpPrefix().$_SERVER["REQUEST_URI"]);
 		$home = htmlspecialchars($this->httpPrefix().$dirname.$tikiIndex);
