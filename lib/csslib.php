@@ -168,7 +168,7 @@ class cssLib extends TikiLib {
 		global $dbversion_tiki;
 		$cssversion = $this->version_css($path);
 		// assume v1.8.x if no @version string
-		$cssversion = $cssversion ? $cssversion : "1.8";
+		$cssversion = $cssversion ? $cssversion : "1.9";
 		if( $dbversion_tiki == $cssversion ) { return ''; }
 		return $cssversion."to".$dbversion_tiki.".css";
 	}
