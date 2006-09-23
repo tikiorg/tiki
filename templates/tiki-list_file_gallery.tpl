@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.24 2005-05-18 11:03:17 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.25 2006-09-23 13:05:55 ohertel Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}">{tr}Listing Gallery{/tr}: {$name}</a></h1>
 
@@ -14,7 +14,13 @@
   <a href="tiki-upload_file.php?galleryId={$galleryId}" class="linkbut">{tr}upload file{/tr}</a>
 {/if}
 {if $rss_file_gallery eq 'y'}
-<a href="tiki-file_gallery_rss.php?galleryId={$galleryId}" class="linkbut">RSS</a>
+	{if $fgal_type eq "podcast" or $fgal_type eq "vidcast"}
+	<a href="tiki-file_gallery_rss.php?galleryId={$galleryId}&amp;ver=PODCAST">
+	<img src='img/rss_podcast_80_15.png' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' /></a>
+	{else}
+	<a href="tiki-file_gallery_rss.php?galleryId={$galleryId}">
+	<img src='img/rss.png' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' /></a>
+	{/if}
 {/if}<br /><br />
 {if $tiki_p_create_file_galleries eq 'y'}
 {if $edit_mode eq 'y'}
@@ -47,11 +53,22 @@
 	{/if}  
 
 </td></tr></table>
-       
+
+<table>
+<tr>
+{if $fgal_type eq "podcast"}
+<td width="50">
+<img src='img/icn/wav.gif' border='0' height='50' width='50' alt='{tr}podcast (video){/tr}' title='{tr}podcast (audio){/tr}' />
+{elseif $fgal_type eq "vidcast"}
+<img src='img/icn/mov.gif' border='0' height='50' width='50' alt='{tr}podcast (video){/tr}' title='{tr}podcast (video){/tr}' />
+</td>
+{/if}
+<td style="vertical-align:top; text-align:left;" width="100%">
 {if strlen($description) > 0}
     {$description}
     <br />
 {/if}
+&nbsp;</td></tr></table>
 
   <h2>{tr}Gallery Files{/tr}</h2>
 <div align="center">
@@ -149,7 +166,11 @@
 	{/if}
 	
 	{if $tiki_p_download_files eq 'y'}
+		{if $fgal_type eq "podcast" or $fgal_type eq "vidcast"}
+		<a class="fgalname" href="{$download_path}{$images[changes].path}">
+		{else}
 		<a class="fgalname" href="tiki-download_file.php?fileId={$images[changes].fileId}">
+		{/if}
 	{/if}
 	{if ($images[changes].name != "") and $gal_info.show_name ne 'f'}
 		{$images[changes].name}

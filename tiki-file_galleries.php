@@ -73,6 +73,7 @@
 	$smarty->assign('edited','n');
 	$smarty->assign('edit_mode','n');
 	$smarty->assign('visible','y');
+	$smarty->assign('fgal_type','default');
 	
 	// If we are editing an existing gallery prepare smarty variables
 	if(isset($_REQUEST["edit_mode"])&&$_REQUEST["edit_mode"]) {
@@ -94,7 +95,7 @@
 		$smarty->assign('show_created',$info['show_created']);
 		$smarty->assign('show_dl',$info['show_dl']);
 		$smarty->assign('max_desc',$info['max_desc']);
-	
+		$smarty->assign('fgal_type',$info['type']);
 	
 	    $smarty->assign_by_ref('maxRows',$info["maxRows"]);
 	    $smarty->assign_by_ref('public',$info["public"]);
@@ -139,8 +140,8 @@
 	  $smarty->assign('show_created',isset($_REQUEST['show_created'])?'y':'n');
 	  $smarty->assign('show_dl',isset($_REQUEST['show_dl'])?'y':'n');
 	  $smarty->assign('max_desc',($_REQUEST['max_desc']));
+	  $smarty->assign('fgal_type',($_REQUEST['type']));
 	
-	  
 	  $smarty->assign_by_ref('maxRows',$_REQUEST["maxRows"]);
 	  $smarty->assign_by_ref('rowImages',$_REQUEST["rowImages"]);
 	  $smarty->assign_by_ref('thumbSizeX',$_REQUEST["thumbSizeX"]);
@@ -165,7 +166,7 @@
 	  $_REQUEST['show_created']=isset($_REQUEST['show_created'])?'y':'n';
 	  $_REQUEST['show_dl']=isset($_REQUEST['show_dl'])?'y':'n';
 	  $_REQUEST['show_size']=isset($_REQUEST['show_size'])?'y':'n';
-	  $fgid = $filegallib->replace_file_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $user, $_REQUEST["maxRows"], $public, $visible,$_REQUEST['show_id'],$_REQUEST['show_icon'],$_REQUEST['show_name'],$_REQUEST['show_size'],$_REQUEST['show_description'],$_REQUEST['show_created'],$_REQUEST['show_dl'],$_REQUEST['max_desc']);
+	  $fgid = $filegallib->replace_file_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $user, $_REQUEST["maxRows"], $public, $visible,$_REQUEST['show_id'],$_REQUEST['show_icon'],$_REQUEST['show_name'],$_REQUEST['show_size'],$_REQUEST['show_description'],$_REQUEST['show_created'],$_REQUEST['show_dl'],$_REQUEST['max_desc'],$_REQUEST['fgal_type']);
 	  
 	  $cat_type='file gallery';
 	  $cat_objid = $fgid;

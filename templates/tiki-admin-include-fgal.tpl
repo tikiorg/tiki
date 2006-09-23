@@ -50,6 +50,11 @@
               {tr}Directory path{/tr}:<br /><input type="text" name="fgal_use_dir"
               value="{$fgal_use_dir|escape}" size="50" /></td>
         </tr><tr>
+        </tr><tr class="form">
+          <td>{tr}PodCast directory (must be web accessable):{/tr}</td>
+          <td>{tr}Directory path{/tr}:<br /><input type="text" name="fgal_podcast_dir"
+              value="{$fgal_podcast_dir|escape}" size="50" /> ({tr}required field for podcasts{/tr})</td>
+        </tr><tr>
           <td class="form">{tr}Uploaded filenames must match regex{/tr}:</td>
           <td><input type="text" name="fgal_match_regex"
                value="{$fgal_match_regex|escape}"/></td>

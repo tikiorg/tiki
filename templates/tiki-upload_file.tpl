@@ -1,11 +1,11 @@
 <h1><a href="tiki-upload_file.php?galleryId={$galleryId}" class="pagetitle">{if $editFileId}{tr}Edit File:{/tr} {$fileInfo.filename}{else}{tr}Upload File{/tr}{/if}</a></h1>
 {if count($galleries) > 0}
-	<a href="tiki-list_file_gallery.php?galleryId={$galleryId}" class="linkbut">{tr}Browse gallery{/tr}</a><br /><br />
+	<a href="tiki-list_file_gallery.php?galleryId={$galleryId}" class="linkbut">{tr}Browse file gallery{/tr}</a><br /><br />
 	<div align="center">
 	<form enctype="multipart/form-data" action="tiki-upload_file.php" method="post">
 	<table class="normal">
-	<tr><td class="formcolor">{tr}File Title{/tr}:</td><td class="formcolor"><input type="text" name="name" {if $fileInfo.name}value="{$fileInfo.name}"{/if}/></td></tr>
-	<tr><td class="formcolor">{tr}File Description{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="description">{if $fileInfo.description}{$fileInfo.description}{/if}</textarea></td></tr>
+	<tr><td class="formcolor">{tr}File Title{/tr}:</td><td class="formcolor"><input type="text" name="name" {if $fileInfo.name}value="{$fileInfo.name}"{/if}/> {if $fgal_type eq "podcast" or $fgal_type eq "vidcast"} ({tr}required field for podcasts{/tr}){/if}</td></tr>
+	<tr><td class="formcolor">{tr}File Description{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="description">{if $fileInfo.description}{$fileInfo.description}{/if}</textarea> {if $fgal_type eq "podcast" or $fgal_type eq "vidcast"} ({tr}required field for podcasts{/tr}){/if}</td></tr>
 	{if $editFileId}<input type="hidden" name="galleryId" value="{$galleryId}"/>
 	<input type="hidden" name="fileId" value="{$editFileId}"/>{else}
 	<tr><td class="formcolor">{tr}File Gallery{/tr}:</td><td class="formcolor"> 
@@ -51,8 +51,8 @@
 			<div align="center">
 				{$uploads[ix].name} ({$uploads[ix].size|kbsize})<br />
 				<div class="wikitext">
-					{tr}You can download this file using{/tr}: <a class="link" href="{$url_browse}?fileId={$uploads[ix].fileId}">{$url_browse}?fileId={$uploads[ix].fileId}</a><br /><br />
-					{tr}You can include the file in an HTML/Tiki page using{/tr}: <textarea cols="60" rows="2">&lt;a href="{$url_browse}?fileId={$uploads[ix].fileId}"&gt;{$uploads[ix].name} ({$uploads[ix].size|kbsize})&lt;/a&gt;</textarea>
+					{tr}You can download this file using{/tr}: <a class="link" href="{$uploads[ix].$dllink}">{$uploads[ix].dllink}</a><br /><br />
+					{tr}You can include the file in an HTML/Tiki page using{/tr}: <textarea cols="60" rows="5">&lt;a href="{$uploads[ix].dllink}"&gt;{$uploads[ix].name} ({$uploads[ix].size|kbsize})&lt;/a&gt;</textarea>
 				</div>
 			</div>
 		{/section}
