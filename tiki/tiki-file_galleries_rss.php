@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries_rss.php,v 1.26 2006-09-19 16:33:16 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries_rss.php,v 1.27 2006-09-23 10:41:37 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -29,7 +29,7 @@ if ($output["data"]=="EMPTY") {
 	$now = date("U");
 	$id = "fileId";
 	$descId = "description";
-	$dateId = "created";
+	$dateId = "lastModif";
 	$authorId = "user";
 	$titleId = "filename";
 	$readrepl = "tiki-download_file.php?$id=%s";
