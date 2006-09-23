@@ -16,14 +16,29 @@ class FileGalLib extends TikiLib {
 		$this->db = $db;
 	}
 
+	function isPodCastGallery($galleryId) {
+		$gal_info = $this->get_file_gallery_info((int)$galleryId);
+		if (($gal_info["type"]=="podcast") || ($gal_info["type"]=="vidcast")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	function remove_file($id, $galleryId, $name, $filename, $user) {
 	//function remove_file($id, $name, $galleryId, $user) {
-		global $fgal_use_dir, $smarty;
+		global $fgal_use_dir, $fgal_podcast_dir, $smarty;
+
+		if ($podCastGallery = $this->isPodCastGallery($galleryId)) {
+			$savedir=$fgal_podcast_dir;
+		} else {
+			$savedir=$fgal_use_dir;
+		}
 
 		$path = $this->getOne("select `path` from `tiki_files` where `fileId`=?",array($id));
 
 		if ($path) {
-			unlink ($fgal_use_dir . $path);
+			unlink ($savedir . $path);
 		}
 
 		$query = "delete from `tiki_files` where `fileId`=?";
@@ -35,15 +50,21 @@ class FileGalLib extends TikiLib {
 	}
 
 	function insert_file($galleryId, $name, $description, $filename, $data, $size, $type, $user, $path) {
-		global $fgal_use_db, $fgal_use_dir, $tikilib, $fgal_allow_duplicates, $smarty;
+		global $fgal_use_db, $fgal_use_dir, $fgal_podcast_dir, $tikilib, $fgal_allow_duplicates, $smarty;
 
 		$name = strip_tags($name);
 
-		if ($fgal_use_db == 'n') {
+		if ($podCastGallery = $this->isPodCastGallery($galleryId)) {
+			$savedir=$fgal_podcast_dir;
+		} else {
+			$savedir=$fgal_use_dir;
+		}
+
+		if (($fgal_use_db == 'n') || ($podCastGallery)) {
 			if (function_exists('md5_file')) {
-				$checksum = md5_file($fgal_use_dir . $path);
+				$checksum = md5_file($savedir . $path);
 			} else {
-				$checksum = md5(implode('', file($fgal_use_dir . $path)));
+				$checksum = md5(implode('', file($savedir . $path)));
 			}
 		} else {
 			$checksum = md5($data);
@@ -188,6 +209,7 @@ class FileGalLib extends TikiLib {
 				$aux["user"] = $res["user"];
 				$aux["hits"] = $res["hits"];
 				$aux["public"] = $res["public"];
+				$aux["type"] = $res["type"];
 // Only get the file count when necessary. Otherwise there are many excess db queries. GG
 				if ($maxRecords > -1) {
 				$aux["files"] = $this->getOne("select count(*) from `tiki_files` where `galleryId`=?",array($gid));
@@ -224,7 +246,13 @@ class FileGalLib extends TikiLib {
 	}
 
 	function remove_file_gallery($id) {
-		global $fgal_use_dir;
+		global $fgal_use_dir, $fgal_podcast_dir;
+
+		if ($podCastGallery = $this->isPodCastGallery($galleryId)) {
+			$savedir=$fgal_podcast_dir;
+		} else {
+			$savedir=$fgal_use_dir;
+		}
 
 		$query = "select `path` from `tiki_files` where `galleryId`=?";
 		$result = $this->query($query,array($id));
@@ -233,7 +261,7 @@ class FileGalLib extends TikiLib {
 			$path = $res["path"];
 
 			if ($path) {
-				@unlink ($fgal_use_dir . $path);
+				@unlink ($savedir . $path);
 			}
 		}
 
@@ -254,7 +282,7 @@ class FileGalLib extends TikiLib {
 	}
 
 	function replace_file_gallery($galleryId, $name, $description, $user, $maxRows, $public, $visible = 'y', $show_id, $show_icon,
-		$show_name, $show_size, $show_description, $show_created, $show_dl, $max_desc) {
+		$show_name, $show_size, $show_description, $show_created, $show_dl, $max_desc, $fgal_type='default') {
 		// if the user is admin or the user is the same user and the gallery exists then replace if not then
 		// create the gallary if the name is unused.
 		$name = strip_tags($name);
@@ -263,17 +291,17 @@ class FileGalLib extends TikiLib {
 		$now = date("U");
 
 		if ($galleryId > 0) {
-			$query = "update `tiki_file_galleries` set `name`=?, `maxRows`=?, `description`=?,`lastModif`=?, `public`=?, `visible`=?,`show_icon`=?,`show_id`=?,`show_name`=?,`show_description`=?,`show_size`=?,`show_created`=?,`show_dl`=?,`max_desc`=? where `galleryId`=?";
-			$bindvars=array($name,(int) $maxRows,$description,(int) $now,$public,$visible,$show_icon,$show_id,$show_name,$show_description,$show_size,$show_created,$show_dl,(int) $max_desc,(int) $galleryId);
+			$query = "update `tiki_file_galleries` set `name`=?, `maxRows`=?, `description`=?,`lastModif`=?, `public`=?, `visible`=?,`show_icon`=?,`show_id`=?,`show_name`=?,`show_description`=?,`show_size`=?,`show_created`=?,`show_dl`=?,`max_desc`=?,`type`=? where `galleryId`=?";
+			$bindvars=array($name,(int) $maxRows,$description,(int) $now,$public,$visible,$show_icon,$show_id,$show_name,$show_description,$show_size,$show_created,$show_dl,(int) $max_desc, $fgal_type,(int) $galleryId);
 
 			$result = $this->query($query,$bindvars);
 		} else {
 			// Create a new record
-			$query = "insert into `tiki_file_galleries`(`name`,`description`,`created`,`user`,`lastModif`,`maxRows`,`public`,`hits`,`visible`,`show_id`,`show_icon`,`show_name`,`show_description`,`show_created`,`show_dl`,`max_desc`)
+			$query = "insert into `tiki_file_galleries`(`name`,`description`,`created`,`user`,`lastModif`,`maxRows`,`public`,`hits`,`visible`,`show_id`,`show_icon`,`show_name`,`show_description`,`show_created`,`show_dl`,`max_desc`,`type`)
                                     values (?,?,?,?,?,?,?,?,?,
-                                    ?,?,?,?,?,?,?)";
+                                    ?,?,?,?,?,?,?,?)";
 			$bindvars=array($name,$description,(int) $now,$user,(int) $now,(int) $maxRows,$public,0,$visible,
-					$show_id,$show_icon,$show_name,$show_description,$show_created,$show_dl,(int) $max_desc);
+					$show_id,$show_icon,$show_name,$show_description,$show_created,$show_dl,(int) $max_desc, $fgal_type);
 
 			$result = $this->query($query,$bindvars);
 			$galleryId
@@ -293,6 +321,7 @@ class FileGalLib extends TikiLib {
 		global $fgal_nmatch_regex;
 		global $fgal_use_db;
 		global $fgal_use_dir;
+		global $fgal_podcast_dir;
 		include_once ('lib/pclzip.lib.php');
 		include_once ('lib/mime/mimelib.php');
 		$archive = new PclZip($file);
@@ -300,6 +329,11 @@ class FileGalLib extends TikiLib {
 		$files = array();
 		$h = opendir("temp");
 		$gal_info = $this->get_file_gallery_info($galleryId);
+		if ($podCastGallery = $this->isPodCastGallery($galleryId)) {
+			$savedir=$fgal_podcast_dir;
+		} else {
+			$savedir=$fgal_use_dir;
+		}
 
 		while (($file = readdir($h)) !== false) {
 			if ($file != '.' && $file != '..' && is_file("temp/$file") && $file != 'license.txt') {
@@ -322,10 +356,10 @@ class FileGalLib extends TikiLib {
 				$data = '';
 				$fhash = '';
 
-				if ($fgal_use_db == 'n') {
+				if (($fgal_use_db == 'n') || ($podCastGallery)) {
 					$fhash = md5($name = $file);
 
-					@$fw = fopen($fgal_use_dir . $fhash, "wb");
+					@$fw = fopen($savedir . $fhash, "wb");
 
 					if (!$fw) {
 						$smarty->assign('msg', tra('Cannot write to this file:'). $fhash);
@@ -336,7 +370,7 @@ class FileGalLib extends TikiLib {
 				}
 
 				while (!feof($fp)) {
-					if ($fgal_use_db == 'y') {
+					if (($fgal_use_db == 'y') && (!$podCastGallery)) {
 						$data .= fread($fp, 8192 * 16);
 					} else {
 						$data = fread($fp, 8192 * 16);
@@ -347,7 +381,7 @@ class FileGalLib extends TikiLib {
 
 				fclose ($fp);
 
-				if ($fgal_use_db == 'n') {
+				if (($fgal_use_db == 'n') || ($podCastGallery)) {
 					fclose ($fw);
 
 					$data = '';
@@ -398,16 +432,22 @@ class FileGalLib extends TikiLib {
 	}
 
 	function replace_file($id, $name, $description, $filename, $data, $size, $type, $user, $path) {
-		global $fgal_use_db, $fgal_use_dir, $tikilib;
+		global $fgal_use_db, $fgal_use_dir, $fgal_podcast_dir, $tikilib;
 
 		// Update the fields in the database
 		$name = strip_tags($name);
 
-		if ($fgal_use_db == 'n') {
+		if ($podCastGallery = $this->isPodCastGallery($galleryId)) {
+			$savedir=$fgal_podcast_dir;
+		} else {
+			$savedir=$fgal_use_dir;
+		}
+
+		if (($fgal_use_db == 'n') || ($podCastGallery)) {
 			if (function_exists('md5_file')) {
-				$checksum = md5_file($fgal_use_dir . $path);
+				$checksum = md5_file($savedir . $path);
 			} else {
-				$checksum = md5(implode('', file($fgal_use_dir . $path)));
+				$checksum = md5(implode('', file($savedir . $path)));
 			}
 		} else {
 			$checksum = md5($data);
@@ -430,7 +470,7 @@ class FileGalLib extends TikiLib {
 			return false;
 			
 		if (!empty($oldPath)) {
-			unlink($fgal_use_dir . $oldPath);
+			unlink($savedir . $oldPath);
 		}
 		
 		// Get the gallery id for the file and update the last modified field
@@ -500,10 +540,16 @@ class FileGalLib extends TikiLib {
 	}
 
 	function get_search_text_for_data($data,$path,$type) {
-		global $fgal_use_dir;
+		global $fgal_use_dir, $fgal_podcast_dir;
 		
 		if (!isset($data) && !isset($path)) {
 			return false;
+		}
+
+		if ($podCastGallery = $this->isPodCastGallery($galleryId)) {
+			$savedir=$fgal_podcast_dir;
+		} else {
+			$savedir=$fgal_use_dir;
 		}
 		
 		$fileParseApps = $this->get_file_handlers();
@@ -529,7 +575,7 @@ class FileGalLib extends TikiLib {
 			fclose($tmpFile);
 		}
 		else {
-			$tmpfname = $fgal_use_dir . $path;
+			$tmpfname = $savedir . $path;
 		}
 		
 		$cmd = str_replace('%1',$tmpfname,$parseApp);

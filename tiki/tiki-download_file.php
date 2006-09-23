@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tiki-download_file.php,v 1.23 2006-07-14 11:00:43 sylvieg Exp $
+// CVS: $Id: tiki-download_file.php,v 1.24 2006-09-23 13:05:56 ohertel Exp $
 // Initialization
 include_once("lib/init/initlib.php");
 require_once('tiki-setup.php');
@@ -46,7 +46,6 @@ $info = $tikilib->get_file($_REQUEST["fileId"]);
 
 $fgal_use_db=$tikilib->get_preference('fgal_use_db','y');
 $fgal_use_dir=$tikilib->get_preference('fgal_use_dir','');
-
 
 $_REQUEST["galleryId"] = $info["galleryId"];
 

@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2006-09-19 16:33:19 $
+# $Date: 2006-09-23 13:05:58 $
 # $Author: ohertel $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -1292,6 +1292,7 @@ DROP TABLE IF EXISTS tiki_file_galleries;
 CREATE TABLE tiki_file_galleries (
   galleryId int(14) NOT NULL auto_increment,
   name varchar(80) NOT NULL default '',
+  type varchar(20) NOT NULL default 'default',
   description text,
   created int(14) default NULL,
   visible char(1) default NULL,

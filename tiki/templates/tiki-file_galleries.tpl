@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.36 2006-03-16 13:43:12 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.37 2006-09-23 13:05:55 ohertel Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-file_galleries.php?galleryId={$galleryId}">{tr}File Galleries{/tr}</a>
 
@@ -23,7 +23,7 @@
 <h3>{tr}Create a file gallery{/tr}</h3>
 {else}
 <h3>{tr}Edit this file gallery:{/tr} {$name}</h3>
-<a class="linkbut" href="tiki-file_galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new gallery{/tr}</a>
+<a class="linkbut" href="tiki-file_galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new file gallery{/tr}</a>
 {/if}
 {if $individual eq 'y'}
 <a class="fgallink" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$galleryId}">{tr}There are individual permissions set for this file gallery{/tr}</a>
@@ -32,8 +32,17 @@
 <form action="tiki-file_galleries.php" method="post">
 <input type="hidden" name="galleryId" value="{$galleryId|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}"/></td></tr>
-<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="description">{$description|escape}</textarea></td></tr>
+<tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}"/> ({tr}required field for podcasts{/tr})</td></tr>
+<tr><td class="formcolor">{tr}Type{/tr}:</td><td class="formcolor">
+					<select name="fgal_type">
+						<!-- TODO: make this a configurable list read from database -->
+						<option value="default" {if $fgal_type eq 'default'}selected="selected"{/if}>{tr}any file{/tr}</option>
+						<option value="podcast" {if $fgal_type eq 'podcast'}selected="selected"{/if}>{tr}podcast (audio){/tr}</option>
+						<option value="vidcast" {if $fgal_type eq 'vidcast'}selected="selected"{/if}>{tr}podcast (video){/tr}</option>
+					</select>
+				</td>
+</tr>
+<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="description">{$description|escape}</textarea> ({tr}required field for podcasts{/tr})</td></tr>
 <!--<tr><td>{tr}Theme{/tr}:</td><td><select name="theme">
        <option value="default" {if $theme eq 'default'}selected="selected"{/if}>default</option>
        <option value="dark" {if $theme eq 'dark'}selected="selected"{/if}>dark</option>
@@ -94,7 +103,7 @@
 
 <h2>{tr}Available File Galleries{/tr}</h2>
 {if $tiki_p_create_file_galleries eq 'y'}
-<a class="linkbut" href="tiki-file_galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new gallery{/tr}</a><br /><br />
+<a class="linkbut" href="tiki-file_galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new file gallery{/tr}</a><br /><br />
 {/if}
 <div align="center">
 <table class="findtable">
@@ -119,6 +128,8 @@
 	{assign var='cntcol' value=$cntcol+1}
 	<td class="heading"><a class="tableheading" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a></td>
 {/if}
+{assign var='cntcol' value=$cntcol+1}
+<td class="heading"><a class="tableheading" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_type'}type_asc{else}type_desc{/if}">{tr}Type{/tr}</a></td>
 {if $fgal_list_created eq 'y'}
 	{assign var='cntcol' value=$cntcol+1}
 	<td class="heading"><a class="tableheading" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a></td>
@@ -156,12 +167,18 @@
 			{/if}
 		</td>
 	{/if}
-	
+
 	{if $fgal_list_description eq 'y'}
 		<td class="{cycle advance=false}">
 			{$galleries[changes].description}
 		</td>
 	{/if}
+
+	<td class="{cycle advance=false}">
+		{if $galleries[changes].type eq "default" }&nbsp;
+		{elseif $galleries[changes].type eq "podcast" }<img src='img/icn/wav.gif' border='0' height='50' width='50' alt='{tr}podcast (video){/tr}' title='{tr}podcast (audio){/tr}' />
+		{elseif $galleries[changes].type eq "vidcast" }<img src='img/icn/mov.gif' border='0' height='50' width='50' alt='{tr}podcast (video){/tr}' title='{tr}podcast (video){/tr}' />{/if}
+	</td>
 
 	{if $fgal_list_created eq 'y'}	
 		<td class="{cycle advance=false}">{$galleries[changes].created|tiki_short_datetime}&nbsp;</td>

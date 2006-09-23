@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.34 2006-09-19 16:33:18 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.35 2006-09-23 13:05:56 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -29,6 +29,11 @@ if ($tiki_p_upload_files != 'y') {
 $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo1 = str_replace("tiki-upload_file", "tiki-download_file", $foo["path"]);
 $smarty->assign('url_browse', $tikilib->httpPrefix(). $foo1);
+$url_browse = $tikilib->httpPrefix(). $foo1;
+
+// create direct download path for podcasts
+$podcast_url = str_replace("tiki-upload_file.php", "", $foo["path"]);
+$podcast_url = $tikilib->httpPrefix().$podcast_url.$fgal_podcast_dir;
 
 if (!isset($_REQUEST["description"]))
 	$_REQUEST["description"] = '';
@@ -54,6 +59,10 @@ if (!empty($editFileId)) {
 	$smarty->assign('editFileId',$editFileId);
 	$editFile = true;
 }
+
+$gal_info = $tikilib->get_file_gallery((int)$_REQUEST["galleryId"]);
+$smarty->assign('fgal_type', $gal_info["type"]);
+$podCastGallery = $filegallib->isPodCastGallery((int)$_REQUEST["galleryId"]);
 
 // Process an upload here
 if (isset($_REQUEST["upload"])) {
@@ -94,8 +103,6 @@ if (isset($_REQUEST["upload"])) {
 		$smarty->display("error.tpl");
 		die;
 	}
-
-	$gal_info = $tikilib->get_file_gallery($_REQUEST["galleryId"]);
 
 	// Check the user to be admin or owner or the gallery is public
 	if ($tiki_p_admin_file_galleries != 'y' && (!$user || $user != $gal_info["user"]) && $gal_info["public"] != 'y') {
@@ -159,7 +166,6 @@ if (isset($_REQUEST["upload"])) {
 				die();
 			}
 			
-			
 			$fp = fopen($tmp_dest, "rb");
 
 			if (!$fp) {
@@ -169,19 +175,31 @@ if (isset($_REQUEST["upload"])) {
 			$data = '';
 			$fhash = '';
 
-			if ($fgal_use_db == 'n') {
+			if (($fgal_use_db == 'n') || ($podCastGallery)) {
 				$fhash = md5($name = $_FILES["userfile$i"]['name']);
-
 				$fhash = md5(uniqid($fhash));
-				@$fw = fopen($fgal_use_dir . $fhash, "wb");
 
+// TODO: MARKER HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!
+
+				// for podcast galleries add the extension so the
+				// file can be called directly if name is known,
+				if ($podCastGallery) {
+					$path_parts = pathinfo($_FILES["userfile$i"]['name']);
+					if (in_array($path_parts["extension"],array("m4a", "mp3", "mov", "mp4", "m4v", "pdf"))) {
+						$fhash .= ".".$path_parts["extension"];
+					}
+					$savedir=$fgal_podcast_dir;
+				} else {
+					$savedir=$fgal_use_dir;
+				}
+				@$fw = fopen($savedir . $fhash, "wb");
 				if (!$fw) {
-					$errors[] = tra('Cannot write to this file:').$fgal_use_dir.$fhash;
+					$errors[] = tra('Cannot write to this file:').$savedir.$fhash;
 				}
 			}
 
 			while (!feof($fp)) {
-				if ($fgal_use_db == 'y') {
+				if (($fgal_use_db == 'y') && (!$podCastGallery)) {
 					$data .= fread($fp, 8192 * 16);
 				} else {
 					$data = fread($fp, 8192 * 16);
@@ -194,7 +212,7 @@ if (isset($_REQUEST["upload"])) {
 			// remove file after copying it to the right location or database
 			@unlink ($tmp_dest);
 
-			if ($fgal_use_db == 'n') {
+			if (($fgal_use_db == 'n') || ($podCastGallery)) {
 				fclose ($fw);
 
 				$data = '';
@@ -208,7 +226,7 @@ if (isset($_REQUEST["upload"])) {
 				break;
 			}
 
-			if ($fgal_use_db == 'y') {
+			if (($fgal_use_db == 'y') && (!$podCastGallery)) {
 				if (!isset($data) || strlen($data) < 1) {
 					$errors[] = tra('Upload was not successful'). ': ' . $name;
 				}
@@ -227,17 +245,22 @@ if (isset($_REQUEST["upload"])) {
 
 				if (!$fileId) {
 					$errors[] = tra('Upload was not successful'). ': ' . $name;
-					if ($fgal_use_db == 'n') {
-						@unlink($fgal_use_dir . $fhash);
+					if (($fgal_use_db == 'n') || ($podCastGallery)) {
+						@unlink($savedir . $fhash);
 					}
 					
 				}
 
 				if (count($errors) == 0) {
 					$aux['name'] = $name;
-
+					
 					$aux['size'] = $size;
 					$aux['fileId'] = $fileId;
+					if ($podCastGallery) {
+						$aux['dllink'] = $podcast_url.$fhash;
+					} else {
+						$aux['dllink'] = $url_browse."?fileId=".$fileId;
+					}
 					$uploads[] = $aux;
 				}
 			}

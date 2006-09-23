@@ -37,8 +37,8 @@ class RSSLib extends TikiLib {
 
 		$rss_version=$ver;
 		
-		// valid format strings are: RSS0.91, RSS1.0, RSS2.0, PIE0.1, MBOX, OPML, ATOM0.3, HTML, JS, RSS0.9, itunespodcast1.0
-		// valid format ids        :    9   ,   1   ,    2  ,   3   ,  4  ,   6 ,    5   ,  7  ,  8,   a,           i
+		// valid format strings are: RSS0.91, RSS1.0, RSS2.0, PIE0.1, MBOX, OPML, ATOM0.3, HTML, JS, RSS0.9, PODCAST
+		// valid format ids        :    9   ,   1   ,    2  ,   3   ,  4  ,   6 ,    5   ,  7  ,  8,   a,       i
 		switch ($ver) {
 			case "ATOM0.3":
 			   $rss_version=5;
@@ -55,7 +55,7 @@ class RSSLib extends TikiLib {
 			case "OPML":
 			   $rss_version=6;
 			   break;
-			case "PC1.0":
+			case "PODCAST":
 			   $rss_version="i";
 			   break;
 			case "PIE0.1":
@@ -85,8 +85,8 @@ class RSSLib extends TikiLib {
 
 		$rss_version_name=$ver;
 
-		// valid format strings are: RSS0.91, RSS1.0, RSS2.0, PIE0.1, MBOX, OPML, ATOM0.3, HTML, JS, RSS0.9, itunespodcast1.0
-		// valid format ids        :    9   ,   1   ,    2  ,   3   ,  4  ,   6 ,    5   ,  7  ,  8,   a,           i
+		// valid format strings are: RSS0.91, RSS1.0, RSS2.0, PIE0.1, MBOX, OPML, ATOM0.3, HTML, JS, RSS0.9, PODCAST
+		// valid format ids        :    9   ,   1   ,    2  ,   3   ,  4  ,   6 ,    5   ,  7  ,  8,   a,       i
 		switch ($ver) {
 			case "1":
 			   $rss_version_name="RSS1.0";
@@ -119,7 +119,7 @@ class RSSLib extends TikiLib {
 			   $rss_version_name="RSS0.9";
 			   break;
 			case "i":
-			   $rss_version_name="PC1.0";
+			   $rss_version_name="PODCAST";
 			   break;
 		}
 		return $rss_version_name;
@@ -248,8 +248,8 @@ class RSSLib extends TikiLib {
 		$encoding = "UTF-8";
 		$contenttype = "application/xml";
 
-		// valid format strings are: RSS0.91, RSS1.0, RSS2.0, PIE0.1, MBOX, OPML, ATOM0.3, HTML, JS, RSS0.9,  itunespodcast1.0
-		// valid format ids        :    9   ,   1   ,    2  ,   3   ,  4  ,   6 ,    5   ,  7  ,  8,   a,            i
+		// valid format strings are: RSS0.91, RSS1.0, RSS2.0, PIE0.1, MBOX, OPML, ATOM0.3, HTML, JS, RSS0.9, PODCAST
+		// valid format ids        :    9   ,   1   ,    2  ,   3   ,  4  ,   6 ,    5   ,  7  ,  8,   a,       i
 
 		switch ($rss_version) {
 			case "1": // RSS 1.0
@@ -283,7 +283,7 @@ class RSSLib extends TikiLib {
 			case "a": // RSS 0.9
 				// plain RDF file
 			break;
-			case "i": // iTunes PodCast 1.0
+			case "i": // PODCAST
 				// plain RDF file
 			break;
 		}
@@ -343,6 +343,12 @@ class RSSLib extends TikiLib {
 				$item->size = $data["filesize"]; 
 			} else {
 				$item->size = 0;
+			}
+			// for file galleries and podcasts
+			if (isset($data["filetype"])) {
+				$item->mimetype = $data["filetype"]; 
+			} else {
+				$item->mimetype = "";
 			}
 	
 			//optional

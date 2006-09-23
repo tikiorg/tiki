@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.652 2006-09-17 13:58:25 ohertel Exp $
+// CVS: $Id: tikilib.php,v 1.653 2006-09-23 13:05:58 ohertel Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1805,29 +1805,7 @@ function add_pageview() {
     // FILE GALLERIES ////
     /*shared*/
     function list_files($offset, $maxRecords, $sort_mode, $find) {
-	$bindvars = array();
-	if ($find) {
-	    $findesc = '%' . $find . '%';
-	    $mid = " where (`name` like ? or `description` like ?)";
-	    $bindvars[] = '%'. $find . '%';
-	    $bindvars[] = '%'. $find . '%';
-	} else {
-	    $mid = "";
-	}
-	$query = "select `fileId` ,`name`,`description`,`created`,`filename`,`filesize`,`user`,`downloads` ";
-	$query.= " from `tiki_files` $mid order by ".$this->convert_sortmode($sort_mode);
-	$query_cant = "select count(*) from `tiki_files` $mid";
-	$result = $this->query($query,$bindvars,$maxRecords,$offset);
-	$cant = $this->getOne($query_cant,$bindvars);
-	$ret = array();
-
-	while ($res = $result->fetchRow()) {
-	    $ret[] = $res;
-	}
-	$retval = array();
-	$retval["data"] = $ret;
-	$retval["cant"] = $cant;
-	return $retval;
+		return $this->get_files($offset, $maxRecords, $sort_mode, $find);
     }
 
     /*shared*/
@@ -1839,32 +1817,58 @@ function add_pageview() {
 	return $res;
     }
 
-    /*Shared*/
-    function get_files($offset, $maxRecords, $sort_mode, $find, $galleryId) {
+    /**
+     * Get file list with additional data from one or all file galleries
+     *
+     * @param int $offset
+     * @param int $maxRecords
+     * @param string $sort_mode
+     * @param string $find
+     * @param int $galleryId (-1 = all galleries (default))
+     * @return array of found files
+     */
+    function get_files($offset, $maxRecords, $sort_mode, $find, $galleryId=-1) {
 
-	if ($find) {
-	    $findesc='%' . $find . '%';
-	    $mid = " where `galleryId`=? and (upper(`name`) like upper(?) or upper(`description`) like upper(?))";
-	    $bindvars=array((int) $galleryId,$findesc,$findesc);
-	} else {
-	    $mid = "where `galleryId`=?";
-	    $bindvars=array((int) $galleryId);
-	}
-
-	$query = "select `fileId` ,`name`,`description`,`created`,`filename`,`filesize`,`user`,`downloads`,`lastModif`,`lastModifUser` from `tiki_files` $mid order by ".$this->convert_sortmode($sort_mode);
-	$query_cant = "select count(*) from `tiki_files` $mid";
-	$result = $this->query($query,$bindvars,$maxRecords,$offset);
-	$cant = $this->getOne($query_cant,$bindvars);
-	$ret = array();
-
-	while ($res = $result->fetchRow()) {
-	    $ret[] = $res;
-	}
-
-	$retval = array();
-	$retval["data"] = $ret;
-	$retval["cant"] = $cant;
-	return $retval;
+		// gallery id available
+		if ($galleryId>=0) {
+		    $bindvars=array((int) $galleryId);
+		    $mid = "where `galleryId`=?";
+		} else {
+			$mid='';
+		}
+		// find files by name or description
+		if ($find) {
+		    $findesc='%' . $find . '%';
+		    if ($mid<>'') {
+		    	$mid .= " and ";
+		    } else {
+		    	$mid = "where ";
+		    }
+		    $mid .= "(upper(`name`) like upper(?) or upper(`description`) like upper(?))";
+		    $bindvars[] = $findesc;
+		    $bindvars[] = $findesc;
+		} elseif ($mid=='') {
+		    $mid = "where 1";
+		    $bindvars = array();
+		}
+	
+		$query = "select `fileId` ,`name`,`description`,`created`,`filename`,`filesize`,`user`,`downloads`,`lastModif`,`lastModifUser`,`filetype`,`path` from `tiki_files` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_files` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
+		$ret = array();
+	
+		while ($res = $result->fetchRow()) {
+			$path_parts = pathinfo($res["filename"]);
+			// generate link for podcasts
+			$res["podcast_filename"] = $res["path"];
+			// store result to return list
+		    $ret[] = $res;
+		}
+		$retval = array();
+		$retval["data"] = $ret;
+		$retval["cant"] = $cant;
+		return $retval;
     }
 
     /*shared*/

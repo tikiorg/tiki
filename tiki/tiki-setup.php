@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.310 2006-09-19 16:33:18 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.311 2006-09-23 13:05:56 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -340,6 +340,7 @@ $fgal_nmatch_regex = '';
 $gal_match_regex = '';
 $gal_nmatch_regex = '';
 $fgal_use_dir = '';
+$fgal_podcast_dir = 'files';
 $gal_use_dir = '';
 $gal_batch_dir = '';
 $feature_experimental = 'n'; /* hide experimental features */
@@ -920,6 +921,7 @@ $smarty->assign("rssfeed_webmaster", $tikilib->get_preference("rssfeed_webmaster
 
 $smarty->assign('fgal_use_db', $fgal_use_db);
 $smarty->assign('fgal_use_dir', $fgal_use_dir);
+$smarty->assign('fgal_podcast_dir', $fgal_podcast_dir);
 $smarty->assign('gal_use_db', $gal_use_db);
 $smarty->assign('gal_use_lib', $gal_use_lib);
 $smarty->assign('gal_use_dir', $gal_use_dir);

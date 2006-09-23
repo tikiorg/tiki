@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.29 2005-09-14 21:45:38 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.30 2006-09-23 13:05:56 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -42,6 +42,7 @@ if ($_REQUEST["galleryId"] == 0) {
 
 if ($_REQUEST["galleryId"] != 0) {
 	$gal_info = $tikilib->get_file_gallery($_REQUEST["galleryId"]);
+	$podCastGallery = $filegallib->isPodCastGallery($_REQUEST["galleryId"]);
 } else {
 	// This is an unreachable block. Remove this code or the verification above?
 	// rbschmidt and lfagundes
@@ -51,6 +52,7 @@ if ($_REQUEST["galleryId"] != 0) {
 	$gal_info["name"] = 'System';
 	$gal_info["public"] = 'y';
 	$gal_info["description"] = 'System Gallery';
+	$podCastGallery=false;
 }
 
 $smarty->assign('individual', 'n');
@@ -147,6 +149,7 @@ if ($tiki_p_view_file_gallery != 'y') {
 $smarty->assign_by_ref('gal_info', $gal_info);
 $smarty->assign_by_ref('owner', $gal_info["user"]);
 $smarty->assign_by_ref('public', $gal_info["public"]);
+$smarty->assign_by_ref('fgal_type', $gal_info["type"]);
 $smarty->assign_by_ref('galleryId', $_REQUEST["galleryId"]);
 
 $tikilib->add_file_gallery_hit($_REQUEST["galleryId"]);
@@ -363,6 +366,11 @@ if($feature_user_watches == 'y') {
 
 $all_galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '');
 $smarty->assign('all_galleries', $all_galleries['data']);
+if ($podCastGallery) {
+	$smarty->assign('download_path', $fgal_podcast_dir);
+} else {
+	$smarty->assign('download_path', $fgal_use_dir);
+}
 ask_ticket('list-fgal');
 
 //add a hit

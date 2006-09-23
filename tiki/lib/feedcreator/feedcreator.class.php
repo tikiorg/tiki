@@ -1,7 +1,7 @@
 <?php
 /***************************************************************************
 
-FeedCreator class v1.7.2
+FeedCreator class v1.7.2.1
 originally (c) Kai Blankenhorn
 www.bitfolge.de
 kaib@bitfolge.de
@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 Changelog:
 
-v1.7.2-tiki-1	09-19-06
+v1.7.2.1	09-19-06
 	RSS0.9 added (ohertel)
 	itunes podcast support (ohertel)
 
@@ -168,7 +168,7 @@ define("TIME_ZONE","+01:00");
 /**
  * Version string.
  **/
-define("FEEDCREATOR_VERSION", "Tiki CMS/Groupware via FeedCreator 1.7.2");
+define("FEEDCREATOR_VERSION", "Tiki CMS/Groupware via FeedCreator 1.7.2.1");
 
 
 
@@ -187,7 +187,7 @@ class FeedItem extends HtmlDescribable {
 	/**
 	 * Optional attributes of an item.
 	 */
-	var $author, $authorEmail, $image, $category, $comments, $guid, $source, $creator, $size, $duration;
+	var $author, $authorEmail, $image, $category, $comments, $guid, $source, $creator, $size, $duration, $mimetype;
 	
 	/**
 	 * Publishing date of an item. May be in one of the following formats:
@@ -387,7 +387,7 @@ class UniversalFeedCreator extends FeedCreator {
 				$this->_feed = new HTMLCreator();
 				break;
 			
-			case "PC1.0":
+			case "PODCAST":
 				$this->_feed = new PodCastCreator10();
 				break;
 			
@@ -416,7 +416,7 @@ class UniversalFeedCreator extends FeedCreator {
 	 *
 	 * @see        FeedCreator::addItem()
 	 * @param    string    format    format the feed should comply to. Valid values are:
-	 *			"PIE0.1", "mbox", "RSS0.91", "RSS1.0", "RSS2.0", "OPML", "ATOM0.3", "HTML", "JS", "RSS0.9", "PC1.0"
+	 *			"PIE0.1", "mbox", "RSS0.91", "RSS1.0", "RSS2.0", "OPML", "ATOM0.3", "HTML", "JS", "RSS0.9", "PODCAST"
 	 * @return    string    the contents of the feed.
 	 */
 	function createFeed($format = "RSS0.91") {
@@ -432,7 +432,7 @@ class UniversalFeedCreator extends FeedCreator {
 	 * @since 1.4
 	 * 
 	 * @param	string	format	format the feed should comply to. Valid values are:
-	 *			"PIE0.1" (deprecated), "mbox", "RSS0.91", "RSS1.0", "RSS2.0", "OPML", "ATOM", "ATOM0.3", "HTML", "JS", "RSS0.9", "PC1.0"
+	 *			"PIE0.1" (deprecated), "mbox", "RSS0.91", "RSS1.0", "RSS2.0", "OPML", "ATOM", "ATOM0.3", "HTML", "JS", "RSS0.9", "PODCAST"
 	 * @param	string	filename	optional	the filename where a recent version of the feed is saved. If not specified, the filename is $_SERVER["PHP_SELF"] with the extension changed to .xml (see _generateFilename()).
 	 * @param	boolean	displayContents	optional	send the content of the file or not. If true, the file will be sent in the body of the response.
 	 */
@@ -450,7 +450,7 @@ class UniversalFeedCreator extends FeedCreator {
     * (web fetching, for example).
     *
     * @param   string   format   format the feed should comply to. Valid values are:
-	* 	       "PIE0.1" (deprecated), "mbox", "RSS0.91", "RSS1.0", "RSS2.0", "OPML", "ATOM", "ATOM0.3", "HTML", "JS", "RSS0.9", "PC1.0"
+	* 	       "PIE0.1" (deprecated), "mbox", "RSS0.91", "RSS1.0", "RSS2.0", "OPML", "ATOM", "ATOM0.3", "HTML", "JS", "RSS0.9", "PODCAST"
     * @param filename   string   optional the filename where a recent version of the feed is saved. If not specified, the filename is $_SERVER["PHP_SELF"] with the extension changed to .xml (see _generateFilename()).
     * @param timeout int      optional the timeout in seconds before a cached version is refreshed (defaults to 3600 = 1 hour)
     */
@@ -808,7 +808,7 @@ class FeedDate {
  * PodCastCreator10 is a FeedCreator that implements itunes PodCast 1.0.
  *
  * @see http://www.apple.com/itunes/store/podcaststechspecs.html
- * @since 1.7.2-tiki-1
+ * @since 1.7.2.1
  * @author Oliver Hertel <ohertel@tikiwiki.org>
  */
 class PodCastCreator10 extends FeedCreator {
@@ -857,8 +857,8 @@ class PodCastCreator10 extends FeedCreator {
 				if ($this->items[$i]->date!=null) {
 					$itemDate = new FeedDate($this->items[$i]->date);
 					$feed.= "<pubDate>".htmlspecialchars($itemDate->rfc822())."</pubDate>\n";
-					$feed.= "<enclosure url=\"".htmlspecialchars($this->items[$i]->link)."&amp;ext=.mp3\" length=\"".(int)$this->items[$i]->size."\" type=\"audio/mpeg\" />\n";
-					$feed.= "<guid>".htmlspecialchars($this->items[$i]->link)."&amp;ext=.mp3</guid>\n";
+					$feed.= "<enclosure url=\"".htmlspecialchars($this->items[$i]->link)."\" length=\"".(int)$this->items[$i]->size."\" type=\"".$this->items[$i]->mimetype."\" />\n";
+					$feed.= "<guid>".htmlspecialchars($this->items[$i]->link)."</guid>\n";
 				}
 			}
 
@@ -1095,7 +1095,7 @@ class RSSCreator091 extends FeedCreator {
 /**
  * RSSCreator09 is a FeedCreator that implements RSS 0.9 Spec (for older applications)
  * 
- * @since 1.7.2-tiki-1
+ * @since 1.7.2.1
  * @author Oliver Hertel <ohertel@tikiwiki.org>
  */
 class RSSCreator09 extends FeedCreator {
