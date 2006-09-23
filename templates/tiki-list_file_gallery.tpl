@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.26 2006-09-23 20:38:23 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.27 2006-09-23 22:37:41 ohertel Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}">{tr}Listing Gallery{/tr}: {$name}</a></h1>
 
@@ -60,14 +60,15 @@
 </td></tr></table>
 
 <table>
-<tr>
+<tr><td width="48">
 {if $fgal_type eq "podcast"}
-<td width="50">
-<img src='img/icn/wav.gif' border='0' height='50' width='50' alt='{tr}podcast (video){/tr}' title='{tr}podcast (audio){/tr}' />
+<img src='pics/jini/gnome-sound-recorder48x48.png' border='0' alt='{tr}podcast (video){/tr}' title='{tr}podcast (audio){/tr}' />
 {elseif $fgal_type eq "vidcast"}
-<img src='img/icn/mov.gif' border='0' height='50' width='50' alt='{tr}podcast (video){/tr}' title='{tr}podcast (video){/tr}' />
-</td>
+<img src='pics/jini/mplayer48x48.png' border='0' alt='{tr}podcast (video){/tr}' title='{tr}podcast (video){/tr}' />
+{else}
+<img src='pics/jini/file-manager48x48.png' border='0' alt='{tr}file gallery{/tr}' title='{tr}file gallery{/tr}' />
 {/if}
+</td>
 <td style="vertical-align:top; text-align:left;" width="100%">
 {if strlen($description) > 0}
     {$description}

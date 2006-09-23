@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.37 2006-09-23 13:05:55 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.38 2006-09-23 22:37:41 ohertel Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-file_galleries.php?galleryId={$galleryId}">{tr}File Galleries{/tr}</a>
 
@@ -175,9 +175,9 @@
 	{/if}
 
 	<td class="{cycle advance=false}">
-		{if $galleries[changes].type eq "default" }&nbsp;
-		{elseif $galleries[changes].type eq "podcast" }<img src='img/icn/wav.gif' border='0' height='50' width='50' alt='{tr}podcast (video){/tr}' title='{tr}podcast (audio){/tr}' />
-		{elseif $galleries[changes].type eq "vidcast" }<img src='img/icn/mov.gif' border='0' height='50' width='50' alt='{tr}podcast (video){/tr}' title='{tr}podcast (video){/tr}' />{/if}
+		{if $galleries[changes].type eq "default" }<img src='pics/jini/file-manager48x48.png' border='0' alt='{tr}file gallery{/tr}' title='{tr}file gallery{/tr}' />
+		{elseif $galleries[changes].type eq "podcast" }<img src='pics/jini/gnome-sound-recorder48x48.png' border='0' alt='{tr}podcast (video){/tr}' title='{tr}podcast (audio){/tr}' />
+		{elseif $galleries[changes].type eq "vidcast" }<img src='pics/jini/mplayer48x48.png' border='0' alt='{tr}podcast (video){/tr}' title='{tr}podcast (video){/tr}' />{/if}
 	</td>
 
 	{if $fgal_list_created eq 'y'}	
