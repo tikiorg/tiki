@@ -1,3 +1,4 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-fgal.tpl,v 1.21 2006-09-23 20:38:23 ohertel Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -55,6 +56,11 @@
           <td>{tr}Directory path{/tr}:<br /><input type="text" name="fgal_podcast_dir"
               value="{$fgal_podcast_dir|escape}" size="50" /> ({tr}required field for podcasts{/tr})</td>
         </tr><tr>
+		<tr><td colspan="2"><b>{tr}Directory Batch Loading{/tr}</b><br />
+		{tr}If you enable Directory Batch Loading, you need to setup a web-readable directory (outside of your web space is better). Then setup a way to upload filed in that dir, either by scp, ftp, or other protocols{/tr}</td></tr>
+    	<tr class="form"><td><label>{tr}Enable directory batch loading{/tr}:</label></td><td><input type="checkbox" name="feature_file_galleries_batch" {if $feature_file_galleries_batch eq 'y'}checked="checked"{/if}/></td></tr>
+    	<tr class="form"><td><label>{tr}Batch loading directory{/tr}:</label></td><td><input type="text" name="fgal_batch_dir" value="{$fgal_batch_dir|escape}" size="50" /></td></tr>
+
           <td class="form">{tr}Uploaded filenames must match regex{/tr}:</td>
           <td><input type="text" name="fgal_match_regex"
                value="{$fgal_match_regex|escape}"/></td>

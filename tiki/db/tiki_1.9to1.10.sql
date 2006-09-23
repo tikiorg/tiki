@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.101 2006-09-23 13:05:59 ohertel Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.102 2006-09-23 20:38:24 ohertel Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -778,3 +778,8 @@ INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUE
 
 #ohertel 9/20/06 - type, required for special fgals (podcasts)
 ALTER TABLE `tiki_file_galleries` ADD `type` varchar(20) NOT NULL default 'default' AFTER `name`;
+
+#ohertel 09/23/06 adding Directory Batch Load feature for File Galleries
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_batch_upload_file_dir', 'Can use Directory Batch Load', 'editors', 'file galleries');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_file_galleries_batch','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_batch_dir','');

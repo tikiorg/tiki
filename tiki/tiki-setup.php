@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.311 2006-09-23 13:05:56 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.312 2006-09-23 20:38:23 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -335,6 +335,7 @@ $home_forum = 0;
 $fgal_use_db = 'y';
 $gal_use_db = 'y';
 $gal_use_lib = 'gd';
+$fgal_batch_dir = '';
 $fgal_match_regex = '';
 $fgal_nmatch_regex = '';
 $gal_match_regex = '';
@@ -552,6 +553,7 @@ $warn_on_edit_time = 2;
 $wiki_cache = 0;
 $smarty->assign('wiki_cache', $wiki_cache);
 $feature_file_galleries = 'n';
+$feature_file_galleries_batch = 'n';
 $feature_file_galleries_rankings = 'n';
 if (!empty($_SESSION['language']))
 	$saveLanguage = $_SESSION['language']; // if register_globals is on variable and _SESSION are the same
@@ -922,6 +924,7 @@ $smarty->assign("rssfeed_webmaster", $tikilib->get_preference("rssfeed_webmaster
 $smarty->assign('fgal_use_db', $fgal_use_db);
 $smarty->assign('fgal_use_dir', $fgal_use_dir);
 $smarty->assign('fgal_podcast_dir', $fgal_podcast_dir);
+$smarty->assign('fgal_batch_dir', $fgal_batch_dir);
 $smarty->assign('gal_use_db', $gal_use_db);
 $smarty->assign('gal_use_lib', $gal_use_lib);
 $smarty->assign('gal_use_dir', $gal_use_dir);
@@ -938,6 +941,7 @@ $smarty->assign('feature_bot_bar_icons', $feature_bot_bar_icons);
 $smarty->assign('feature_bot_bar_debug', $feature_bot_bar_debug);
 
 $smarty->assign('feature_file_galleries', $feature_file_galleries);
+$smarty->assign('feature_file_galleries_batch', $feature_file_galleries_batch);
 $smarty->assign('feature_file_galleries_rankings', $feature_file_galleries_rankings);
 $smarty->assign('language', $language);
 $smarty->assign('lang_use_db', $lang_use_db);

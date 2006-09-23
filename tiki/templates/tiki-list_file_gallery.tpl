@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.25 2006-09-23 13:05:55 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.26 2006-09-23 20:38:23 ohertel Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}">{tr}Listing Gallery{/tr}: {$name}</a></h1>
 
@@ -12,6 +12,11 @@
 {/if}
 {if $tiki_p_upload_files eq 'y' && ($tiki_p_admin_file_galleries eq 'y' or $user eq $owner or $public eq 'y')}
   <a href="tiki-upload_file.php?galleryId={$galleryId}" class="linkbut">{tr}upload file{/tr}</a>
+{/if}
+{if $feature_file_galleries_batch eq "y" and $tiki_p_batch_upload_file_dir eq 'y'}
+  {if $tiki_p_admin_file_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'}
+    <span class="button2"><a href="tiki-batch_upload_files.php?galleryId={$galleryId}" class="linkbut">{tr}Directory batch{/tr}</a></span>
+  {/if}
 {/if}
 {if $rss_file_gallery eq 'y'}
 	{if $fgal_type eq "podcast" or $fgal_type eq "vidcast"}

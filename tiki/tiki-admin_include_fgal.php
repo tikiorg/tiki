@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_fgal.php,v 1.14 2006-09-23 13:05:56 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_fgal.php,v 1.15 2006-09-23 20:38:23 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -22,7 +22,7 @@ if (isset($_REQUEST["filegalfeatures"])) {
 	check_ticket('admin-inc-fgal');
 
 	simple_set_toggle("feature_file_galleries_rankings");
-
+	simple_set_toggle("feature_file_galleries_batch");
 	simple_set_value("fgal_match_regex");
 	simple_set_value("fgal_nmatch_regex");
 
@@ -35,10 +35,14 @@ if (isset($_REQUEST["filegalfeatures"])) {
         if (substr($_REQUEST["fgal_podcast_dir"], -1) != "\\" && substr($_REQUEST["fgal_podcast_dir"], -1) != "/" && $_REQUEST["fgal_podcast_dir"] != "")  {
                 $_REQUEST["fgal_podcast_dir"] .= "/";
         }
+		if (substr($_REQUEST["fgal_batch_dir"], -1) != "\\" && substr($_REQUEST["fgal_batch_dir"], -1) != "/" && $_REQUEST["fgal_batch_dir"] != "") {
+			$_REQUEST["fgal_batch_dir"] .= "/";
+		}
 
 	simple_set_value("fgal_use_db");
 	simple_set_value("fgal_use_dir");
 	simple_set_value("fgal_podcast_dir");
+	simple_set_value("fgal_batch_dir");
 
 	simple_set_toggle("feature_file_galleries_comments");
 

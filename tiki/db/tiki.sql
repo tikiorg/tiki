@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2006-09-23 13:05:58 $
+# $Date: 2006-09-23 20:38:24 $
 # $Author: ohertel $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -4121,6 +4121,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_autosubmit_link', 'Submited links are valid', 'editors', 'directory');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_autoval_chart_suggestio', 'Autovalidate suggestions', 'editors', 'charts');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_batch_upload_files', 'Can upload zip files with files', 'editors', 'file galleries');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_batch_upload_files_dir', 'Can use Directoy Batch Load', 'editors', 'file galleries');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_batch_upload_images', 'Can upload zip files with images', 'editors', 'image galleries');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_batch_upload_image_dir', 'Can use Directory Batch Load', 'editors', 'image galleries');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_batch_subscribe_email', 'Can subscribe many e-mails at once (requires tiki_p_subscribe email)', 'editors', 'newsletters');
@@ -4446,6 +4447,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_featuredLinks',
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_file_galleries','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_file_galleries_comments','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_file_galleries_rankings','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_file_galleries_batch','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_forum_parse','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_forum_quickjump','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_forum_rankings','y');
@@ -4550,6 +4552,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_workflow','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wysiwyg','no');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_xmlrpc','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_allow_duplicates','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_batch_dir','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_list_created','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_list_description','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_list_files','y');
