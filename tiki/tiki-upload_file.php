@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.35 2006-09-23 13:05:56 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.36 2006-09-23 13:41:51 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -179,14 +179,12 @@ if (isset($_REQUEST["upload"])) {
 				$fhash = md5($name = $_FILES["userfile$i"]['name']);
 				$fhash = md5(uniqid($fhash));
 
-// TODO: MARKER HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!
-
 				// for podcast galleries add the extension so the
 				// file can be called directly if name is known,
 				if ($podCastGallery) {
 					$path_parts = pathinfo($_FILES["userfile$i"]['name']);
-					if (in_array($path_parts["extension"],array("m4a", "mp3", "mov", "mp4", "m4v", "pdf"))) {
-						$fhash .= ".".$path_parts["extension"];
+					if (in_array(strtolower($path_parts["extension"]),array("m4a", "mp3", "mov", "mp4", "m4v", "pdf"))) {
+						$fhash .= ".".strtolower($path_parts["extension"]);
 					}
 					$savedir=$fgal_podcast_dir;
 				} else {
