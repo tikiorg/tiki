@@ -234,12 +234,12 @@ class RSSLib extends TikiLib {
 		$dirname = (dirname($urlarray["path"]) != "/" ? "/" : "");
 
 		$url = htmlspecialchars($this->httpPrefix().$_SERVER["REQUEST_URI"]);
-		$home = htmlspecialchars($this->httpPrefix().$dirname.$tikiIndex);
-		$img = htmlspecialchars($this->httpPrefix().$dirname."img/tiki.jpg");
+		$home = htmlspecialchars($this->httpPrefix().dirname( $urlarray["path"] ).$dirname.$tikiIndex);
+		$img = htmlspecialchars($this->httpPrefix().dirname( $urlarray["path"] ).$dirname."img/tiki.jpg");
 
 		$title = htmlspecialchars($title);
 		$desc = htmlspecialchars($desc);
-		$read = $this->httpPrefix().$dirname.$itemurl;
+		$read = $this->httpPrefix().dirname($urlarray["path"]).$dirname.$itemurl;
 
 		// different stylesheets for atom and rss	
 		$cssStyleSheet = "";
