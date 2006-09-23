@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-batch_upload.tpl,v 1.7 2006-08-29 20:19:12 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-batch_upload.tpl,v 1.8 2006-09-23 15:49:59 ohertel Exp $ *}
 <h1><a href="tiki-batch_upload.php" class="pagetitle">{tr}Directory batch upload{/tr}</a></h1>
 <span class="button2">
 {if $galleryId ne ''}
@@ -13,10 +13,10 @@
 {if count($feedback)}<div class="simplebox highlight">{section name=i loop=$feedback}{$feedback[i]}<br />{/section}</div>{/if}
 
 {$totimg} {tr}available images{/tr} {$dirsize} <br /><br />
-<form class="box" method="get" action="tiki-batch_upload.php" name="f">
-<table border="0" class="normal">
+<form method="get" action="tiki-batch_upload.php" name="f">
+<table border="0" class="normal" id="imagelist" width="100%">
 <tr>
-<td width="42" class="heading" nowrap="nowrap">
+<th width="42" class="heading" nowrap="nowrap">
 <input type="checkbox" name="imgs[]" value="ALL" id="box_all" onclick="disableOthers(this);"/>
 <script type="text/javascript">
 {literal}
@@ -34,12 +34,12 @@ function disableOthers(all) {
 //-->
 {/literal}
 </script>
-<label class="tableheading" for="box_all">{tr}all{/tr}</label></td>
-<td class="heading"><a class="tableheading" href="javascript:void(0);">{tr}filename{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="javascript:void(0);">{tr}width{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="javascript:void(0);">{tr}height{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="javascript:void(0);">{tr}filesize{/tr}</td>
-<td class="heading"><a class="tableheading" href="javascript:void(0);">{tr}filetype{/tr}</a></td></tr>
+<label class="tableheading" for="box_all">{tr}all{/tr}</label></th>
+<th class="heading"><a class="tableheading" href="javascript:void(0);">{tr}filename{/tr}</a></th>
+<th class="heading" width="80"><a class="tableheading" href="javascript:void(0);">{tr}width{/tr}</a></th>
+<th class="heading" width="80"><a class="tableheading" href="javascript:void(0);">{tr}height{/tr}</a></th>
+<th class="heading" width="80"><a class="tableheading" href="javascript:void(0);">{tr}filesize{/tr}</th>
+<th class="heading" width="80"><a class="tableheading" href="javascript:void(0);">{tr}filetype{/tr}</a></th></tr>
 {cycle print=false values="even,odd"}
 {foreach key=k item=it from=$imgstring}
 <tr class="{cycle}">
