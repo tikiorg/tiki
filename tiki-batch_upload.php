@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-batch_upload.php,v 1.8 2006-09-19 16:33:14 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-batch_upload.php,v 1.9 2006-09-23 20:02:41 ohertel Exp $
 
 require_once ('tiki-setup.php');
 include_once ('lib/imagegals/imagegallib.php');
@@ -61,7 +61,7 @@ function getDirContent($sub) {
 		die;
 	}
 	while((false!==($imgf=readdir($dimg)))) {
-		if ($imgf != "." && $imgf != "..") {
+		if ($imgf != "." && $imgf != ".." && substr($filef,0,1) != ".") {
 			$allimg[] = $imgf;
 		}
 	}
