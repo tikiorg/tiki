@@ -1,6 +1,13 @@
 <h1><a href="tiki-upload_file.php?galleryId={$galleryId}" class="pagetitle">{if $editFileId}{tr}Edit File:{/tr} {$fileInfo.filename}{else}{tr}Upload File{/tr}{/if}</a></h1>
 {if count($galleries) > 0}
 	<a href="tiki-list_file_gallery.php?galleryId={$galleryId}" class="linkbut">{tr}Browse file gallery{/tr}</a><br /><br />
+
+	<div class="rbox" name="tip">
+	<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+	<div class="rbox-data" name="tip">{tr}Upload big files (e.g. PodCast files) here:{/tr} <a class="rbox-link" href="tiki-batch_upload_files.php?galleryId={$galleryId}">{tr}Directory batch{/tr}</a></div>
+	</div>
+	<br /><br />
+
 	<div align="center">
 	<form enctype="multipart/form-data" action="tiki-upload_file.php" method="post">
 	<table class="normal">

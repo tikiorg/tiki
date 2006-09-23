@@ -286,4 +286,61 @@ div.admbox a.link img { margin-top: 20px; }
 table.chatroom { width: 100%; }
 div.wikitopline table { text-align: right; width: 100%; }
 
+/** rbox: remarks box (note/warning/tip/comment) */
+/* split, so that it works with firefox and IE */
+.rbox {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+.rbox-title { 
+  padding: 0 10px;
+  font-size: small;
+  position: relative;
+  display: inline;
+  margin: 0;
+  font-weight: bold;
+  background-color: #EEEE9C;
+}
+.rbox-title[name="warning"] {
+  border-radius-topright : 1ex;
+  -moz-border-radius-topright : 1ex;
+  -khtml-border-radius-topright : 1ex;
+  font-size: small;
+  padding: 0 10px;   
+  position: relative;
+  display: inline;
+  margin: 0;
+  font-weight: bold;
+  background-color: #EEEE9C;
+}
+.rbox-title[name="note"] {
+  background-color: #EEEE9C;
+}
+.rbox-title[name="comment"], .rbox-title[name="tip"] {
+  background-color: #EEEE9C;
+}
+
+.rbox-data {
+  padding: 2px;
+  margin: 1px;
+  font-size: small;
+  background-color: #EEEE9C;
+  border: 1px solid #DDCCCC;
+}
+.rbox-data[name="warning"] {
+  background-color: #EFECEC;
+  border: 1px solid #DDCCCC;
+}
+.rbox-data[name="note"] {
+  background-color: #ECECEF;
+  border: 1px solid #CCCCDD;
+}
+.rbox-data[name="comment"], .rbox-data[name="tip"] {            
+  background-color: #EEEE9C;
+  border: 1px solid #DDCCCC;
+}
+
+span .box-titletext { align:right; }
+
 /* end of css file */
