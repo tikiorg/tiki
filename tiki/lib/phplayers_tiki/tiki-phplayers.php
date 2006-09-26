@@ -92,7 +92,7 @@ class TikiPhplayers extends TikiLib {
 	function mkMenu($itall, $name, $style, $file='') {
 		list($plType, $plClass, $plNew, $plTplFct, $plTpl) = $this->getParamsStyle($style);
 		include_once ("lib/phplayers/lib/PHPLIB.php");
-		include_once ("lib/phplayers/lib/layersmenu-common.inc.php");
+		include_once ("lib/phplayers_tiki/lib/layersmenu-common.inc.php"); // include Tiki's modified version of that file to keep original intact (luci)
 		include_once ('lib/phplayers/lib/layersmenu.inc.php');
 		include_once ("lib/phplayers/lib/".$plType);
 		global $$plClass;
