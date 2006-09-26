@@ -1,42 +1,45 @@
-// PHP Layers Menu 3.1.1 (C) 2001-2003 Marco Pratesi (marco at telug dot it)
+// PHP Layers Menu 3.2.0-rc (C) 2001-2004 Marco Pratesi - http://www.marcopratesi.it/
 
 layerLeft = new Array();
 layerTop = new Array();
 
-function setVisibility(layer,on) {
+function setVisibility(layer, on)
+{
 	if (on) {
 		if (DOM) {
-			document.getElementById(layer).style.visibility = "visible";
+			document.getElementById(layer).style.visibility = 'visible';
 		} else if (NS4) {
-			document.layers[layer].visibility = "show";
+			document.layers[layer].visibility = 'show';
 		} else {
-			document.all[layer].style.visibility = "visible";
+			document.all[layer].style.visibility = 'visible';
 		}
 	} else {
 		if (DOM) {
-			document.getElementById(layer).style.visibility = "hidden";
+			document.getElementById(layer).style.visibility = 'hidden';
 		} else if (NS4) {
-			document.layers[layer].visibility = "hide";
+			document.layers[layer].visibility = 'hide';
 		} else {
-			document.all[layer].style.visibility = "hidden";
+			document.all[layer].style.visibility = 'hidden';
 		}
 	}
 }
 
-function isVisible(layer) {
+function isVisible(layer)
+{
 	if (DOM) {
-		return (document.getElementById(layer).style.visibility == "visible");
+		return (document.getElementById(layer).style.visibility == 'visible');
 	} else if (NS4) {
-		return (document.layers[layer].visibility == "show");
+		return (document.layers[layer].visibility == 'show');
 	} else {
-		return (document.all[layer].style.visibility == "visible");
+		return (document.all[layer].style.visibility == 'visible');
 	}
 }
 
-function setLeft(layer,x) {
+function setLeft(layer, x)
+{
 layerLeft[layer] = x;
 	if (DOM && !Opera5) {
-		document.getElementById(layer).style.left = x + "px";
+		document.getElementById(layer).style.left = x + 'px';
 	} else if (Opera5) {
 		document.getElementById(layer).style.left = x;
 	} else if (NS4) {
@@ -46,26 +49,27 @@ layerLeft[layer] = x;
 	}
 }
 
-function getOffsetLeft(layer) {
+function getOffsetLeft(layer)
+{
 	var value = 0;
 	if (DOM) {	// Mozilla, Konqueror >= 2.2, Opera >= 5, IE
 		object = document.getElementById(layer);
 		value = object.offsetLeft;
-//alert (object.tagName + " --- " + object.offsetLeft);
-		while (object.tagName != "BODY" && object.offsetParent) {
+//alert (object.tagName + ' --- ' + object.offsetLeft);
+		while (object.tagName != 'BODY' && object.offsetParent) {
 			object = object.offsetParent;
-//alert (object.tagName + " --- " + object.offsetLeft);
+//alert (object.tagName + ' --- ' + object.offsetLeft);
 			value += object.offsetLeft;
 		}
 	} else if (NS4) {
 		value = document.layers[layer].pageX;
 	} else {	// IE4 IS SIMPLY A BASTARD !!!
-		if (document.all["IE4" + layer]) {
-			layer = "IE4" + layer;
+		if (document.all['IE4' + layer]) {
+			layer = 'IE4' + layer;
 		}
 		object = document.all[layer];
 		value = object.offsetLeft;
-		while (object.tagName != "BODY") {
+		while (object.tagName != 'BODY') {
 			object = object.offsetParent;
 			value += object.offsetLeft;
 		}
@@ -73,10 +77,11 @@ function getOffsetLeft(layer) {
 	return (value);
 }
 
-function setTop(layer,y) {
+function setTop(layer, y)
+{
 layerTop[layer] = y;
 	if (DOM && !Opera5) {
-		document.getElementById(layer).style.top = y + "px";
+		document.getElementById(layer).style.top = y + 'px';
 	} else if (Opera5) {
 		document.getElementById(layer).style.top = y;
 	} else if (NS4) {
@@ -86,7 +91,8 @@ layerTop[layer] = y;
 	}
 }
 
-function getOffsetTop(layer) {
+function getOffsetTop(layer)
+{
 // IE 5.5 and 6.0 behaviour with this function is really strange:
 // in some cases, they return a really too large value...
 // ... after all, IE is buggy, nothing new
@@ -94,19 +100,19 @@ function getOffsetTop(layer) {
 	if (DOM) {
 		object = document.getElementById(layer);
 		value = object.offsetTop;
-		while (object.tagName != "BODY" && object.offsetParent) {
+		while (object.tagName != 'BODY' && object.offsetParent) {
 			object = object.offsetParent;
 			value += object.offsetTop;
 		}
 	} else if (NS4) {
 		value = document.layers[layer].pageY;
 	} else {	// IE4 IS SIMPLY A BASTARD !!!
-		if (document.all["IE4" + layer]) {
-			layer = "IE4" + layer;
+		if (document.all['IE4' + layer]) {
+			layer = 'IE4' + layer;
 		}
 		object = document.all[layer];
 		value = object.offsetTop;
-		while (object.tagName != "BODY") {
+		while (object.tagName != 'BODY') {
 			object = object.offsetParent;
 			value += object.offsetTop;
 		}
@@ -114,7 +120,8 @@ function getOffsetTop(layer) {
 	return (value);
 }
 
-function setWidth(layer,w) {
+function setWidth(layer, w)
+{
 	if (DOM) {
 		document.getElementById(layer).style.width = w;
 	} else if (NS4) {
@@ -124,7 +131,8 @@ function setWidth(layer,w) {
 	}
 }
 
-function getOffsetWidth(layer) {
+function getOffsetWidth(layer)
+{
 	var value = 0;
 	if (DOM && !Opera56) {
 		value = document.getElementById(layer).offsetWidth;
@@ -133,15 +141,16 @@ function getOffsetWidth(layer) {
 	} else if (Opera56) {
 		value = document.getElementById(layer).style.pixelWidth;
 	} else {	// IE4 IS SIMPLY A BASTARD !!!
-		if (document.all["IE4" + layer]) {
-			layer = "IE4" + layer;
+		if (document.all['IE4' + layer]) {
+			layer = 'IE4' + layer;
 		}
 		value = document.all[layer].offsetWidth;
 	}
 	return (value);
 }
 
-function setHeight(layer,h) {	// unused, not tested
+function setHeight(layer, h)	// unused, not tested
+{
 	if (DOM) {
 		document.getElementById(layer).style.height = h;
 	} else if (NS4) {
@@ -151,7 +160,8 @@ function setHeight(layer,h) {	// unused, not tested
 	}
 }
 
-function getOffsetHeight(layer) {
+function getOffsetHeight(layer)
+{
 	var value = 0;
 	if (DOM && !Opera56) {
 		value = document.getElementById(layer).offsetHeight;
@@ -160,18 +170,19 @@ function getOffsetHeight(layer) {
 	} else if (Opera56) {
 		value = document.getElementById(layer).style.pixelHeight;
 	} else {	// IE4 IS SIMPLY A BASTARD !!!
-		if (document.all["IE4" + layer]) {
-			layer = "IE4" + layer;
+		if (document.all['IE4' + layer]) {
+			layer = 'IE4' + layer;
 		}
 		value = document.all[layer].offsetHeight;
 	}
 	return (value);
 }
 
-function getWindowWidth() {
+function getWindowWidth()
+{
 	var value = 0;
 	if ((DOM && !IE) || NS4 || Konqueror || Opera) {
-		value = top.innerWidth;
+		value = window.innerWidth;
 //	} else if (NS4) {
 //		value = document.width;
 	} else {	// IE
@@ -182,12 +193,13 @@ function getWindowWidth() {
 		}
 	}
 	if (isNaN(value)) {
-		value = top.innerWidth;
+		value = window.innerWidth;
 	}
 	return (value);
 }
 
-function getWindowXOffset() {
+function getWindowXOffset()
+{
 	var value = 0;
 	if ((DOM && !IE) || NS4 || Konqueror || Opera) {
 		value = window.pageXOffset;
@@ -201,10 +213,11 @@ function getWindowXOffset() {
 	return (value);
 }
 
-function getWindowHeight() {
+function getWindowHeight()
+{
 	var value = 0;
 	if ((DOM && !IE) || NS4 || Konqueror || Opera) {
-		value = top.innerHeight;
+		value = window.innerHeight;
 	} else {	// IE
 		if (document.documentElement && document.documentElement.clientHeight) {
 			value = document.documentElement.clientHeight;
@@ -213,12 +226,13 @@ function getWindowHeight() {
 		}
 	}
 	if (isNaN(value)) {
-		value = top.innerHeight;
+		value = window.innerHeight;
 	}
 	return (value);
 }
 
-function getWindowYOffset() {
+function getWindowYOffset()
+{
 	var value = 0;
 	if ((DOM && !IE) || NS4 || Konqueror || Opera) {
 		value = window.pageYOffset;

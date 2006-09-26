@@ -14,7 +14,7 @@
 <title>The PHP Layers Menu System</title>
 <script language="JavaScript" type="text/javascript">
 <!--
-<?php include ("libjs/layersmenu-browser_detection.js"); ?>
+<?php require_once 'libjs/layersmenu-browser_detection.js'; ?>
 // -->
 </script>
 <script language="JavaScript" type="text/javascript" src="libjs/layerstreemenu-cookies.js"></script>
@@ -26,14 +26,15 @@
 Tree Menu
 </div>
 <?php
-include ("lib/PHPLIB.php");
-include ("lib/layersmenu-common.inc.php");
-include ("lib/treemenu.inc.php");
+require_once 'lib/PHPLIB.php';
+require_once 'lib/layersmenu-common.inc.php';
+require_once 'lib/treemenu.inc.php';
 $mid = new TreeMenu();
-$mid->setMenuStructureFile("layersmenu-horizontal-1.txt");
-$mid->parseStructureForMenu("treemenu1");
-$mid->newTreeMenu("treemenu1");
-$mid->printTreeMenu("treemenu1");
+$mid->setMenuStructureFile('layersmenu-vertical-1.txt');
+$mid->setIconsize(16, 16);
+$mid->parseStructureForMenu('treemenu1');
+$mid->newTreeMenu('treemenu1');
+$mid->printTreeMenu('treemenu1');
 ?>
 
 </body>

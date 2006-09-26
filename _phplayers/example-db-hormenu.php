@@ -11,99 +11,106 @@
 
 <script language="JavaScript" type="text/javascript">
 <!--
-<?php include ("libjs/layersmenu-browser_detection.js"); ?>
+<?php require_once 'libjs/layersmenu-browser_detection.js'; ?>
 // -->
 </script>
 <script language="JavaScript" type="text/javascript" src="libjs/layersmenu-library.js"></script>
 <script language="JavaScript" type="text/javascript" src="libjs/layersmenu.js"></script>
 
 <?php
-include ("lib/PHPLIB.php");
-include ("lib/layersmenu-common.inc.php");
-include ("lib/layersmenu.inc.php");
+require_once 'lib/PHPLIB.php';
+require_once 'PEAR.php';
+require_once 'DB.php';
+require_once 'lib/layersmenu-common.inc.php';
+require_once 'lib/layersmenu.inc.php';
 
 $mid = new LayersMenu();
 
-////$mid->setHorizontalMenuTpl("layersmenu-horizontal_menu-old.ihtml");
-////$mid->setSubMenuTpl("layersmenu-sub_menu-old.ihtml");
-//$mid->setDownArrowImg("down-arrow.png");
-//$mid->setForwardArrowImg("forward-arrow.png");
-//$mid->setMenuStructureFile("layersmenu-horizontal-1.txt");
-//$mid->parseStructureForMenu("hormenu1");
-$mid->setDBConnParms("pgsql://postgres:postgres@localhost/phplayersmenu");
-//$mid->setDBConnParms("mysql://mysql:mysql@localhost/phplayersmenu");
+////$mid->setHorizontalMenuTpl('layersmenu-horizontal_menu-old.ihtml');
+////$mid->setSubMenuTpl('layersmenu-sub_menu-old.ihtml');
+//$mid->setDownArrowImg('down-arrow.png');
+//$mid->setForwardArrowImg('forward-arrow.png');
+//$mid->setMenuStructureFile('layersmenu-horizontal-1.txt');
+//$mid->setIconsize(16, 16);
+//$mid->parseStructureForMenu('hormenu1');
+$mid->setDBConnParms('mysql://mysql:mysql@localhost/phplayersmenu');
+//$mid->setDBConnParms('pgsql://postgres:postgres@localhost/phplayersmenu');
+//$mid->setDBConnParms('sqlite:///DUMPS/phplayersmenu');
 /* THE DEFAULTS FOR THE DEFAULT LANGUAGE TABLE:
-$mid->setTableName("phplayersmenu");
+$mid->setTableName('phplayersmenu');
 $mid->setTableFields(array(
-	"id"		=> "id",
-	"parent_id"	=> "parent_id",
-	"text"		=> "text",
-	"href"		=> "href",
-	"title"		=> "title",
-	"icon"		=> "icon",
-	"target"	=> "target",
-	"orderfield"	=> "orderfield",
-	"expanded"	=> "expanded"
+	'id'		=> 'id',
+	'parent_id'	=> 'parent_id',
+	'text'		=> 'text',
+	'href'		=> 'href',
+	'title'		=> 'title',
+	'icon'		=> 'icon',
+	'target'	=> 'target',
+	'orderfield'	=> 'orderfield',
+	'expanded'	=> 'expanded'
 ));
 */
 /* UNCOMMENT THE COMMAND BELOW IF YOU DO NOT WANT TO SHOW ICONS
 $mid->setTableFields(array(
-	"id"		=> "id",
-	"parent_id"	=> "parent_id",
-	"text"		=> "text",
-	"href"		=> "href",
-	"title"		=> "title",
-	"icon"		=> "",
-//	"icon"		=> "''",	// this is an alternative to the line above
-	"target"	=> "target",
-	"orderfield"	=> "orderfield",
-	"expanded"	=> "expanded"
+	'id'		=> 'id',
+	'parent_id'	=> 'parent_id',
+	'text'		=> 'text',
+	'href'		=> 'href',
+	'title'		=> 'title',
+	'icon'		=> '',
+//	'icon'		=> "''",	// this is an alternative to the line above
+	'target'	=> 'target',
+	'orderfield'	=> 'orderfield',
+	'expanded'	=> 'expanded'
 ));
 */
 /* YOU CAN ELIMINATE ICONS ALSO THIS WAY:
 $mid->setTableFields(array(
-	"icon"		=> ""
+	'icon'		=> ''
 ));
 */
 /* THE DEFAULTS FOR THE I18N TABLE:
-$mid->setTableName_i18n("phplayersmenu_i18n");
+$mid->setTableName_i18n('phplayersmenu_i18n');
 $mid->setTableFields_i18n(array(
-	"language"	=> "language",
-	"id"		=> "id",
-	"text"		=> "text",
-	"title"		=> "title"
+	'language'	=> 'language',
+	'id'		=> 'id',
+	'text'		=> 'text',
+	'title'		=> 'title'
 ));
 */
-/* HOWTO use data taken from the PgMarket "categories"
-   and "categories_i18n" tables:
-$mid->setDBConnParms("pgsql://postgres:postgres@localhost/pgmarket");
-//$mid->setDBConnParms("pgsql://mysql:mysql@localhost/pgmarket");
-$mid->setTableName("categories");
+/* HOWTO use data taken from the PgMarket 'categories'
+   and 'categories_i18n' tables:
+$mid->setDBConnParms('pgsql://postgres:postgres@localhost/pgmarket');
+//$mid->setDBConnParms('pgsql://mysql:mysql@localhost/pgmarket');
+$mid->setTableName('categories');
 $mid->setTableFields(array(
-	"id"		=> "id",
-	"parent_id"	=> "parent_id",
-	"text"		=> "name",
-	"href"		=> "id",
-	"title"		=> "description",
-//	"title"		=> "",
-	"icon"		=> "",
-	"target"	=> "",
-	"orderfield"	=> "special_level",
-	"expanded"	=> ""
+	'id'		=> 'id',
+	'parent_id'	=> 'parent_id',
+	'text'		=> 'name',
+	'href'		=> 'id',
+	'title'		=> 'description',
+//	'title'		=> '',
+	'icon'		=> '',
+	'target'	=> '',
+	'orderfield'	=> 'special_level',
+	'expanded'	=> ''
 ));
-$mid->setTableName_i18n("categories_i18n");
+$mid->setTableName_i18n('categories_i18n');
 $mid->setTableFields_i18n(array(
-	"language"	=> "lang",
-	"id"		=> "category_id",
-	"text"		=> "name",
-	"title"		=> ""
+	'language'	=> 'lang',
+	'id'		=> 'category_id',
+	'text'		=> 'name',
+	'title'		=> ''
 ));
-$mid->setPrependedUrl("/~pratesi/pgmarket/shopping/index.php?id=");
-//$mid->scanTableForMenu("hormenu1", "en");
+$mid->setPrependedUrl('/~pratesi/pgmarket/shopping/index.php?id=');
+//$mid->setIconsize(16, 16);
+//$mid->scanTableForMenu('hormenu1', 'en');
 */
-//$mid->scanTableForMenu("hormenu1");
-$mid->scanTableForMenu("hormenu1", "it");
-$mid->newHorizontalMenu("hormenu1");
+//$mid->setIconsize(16, 16);
+//$mid->scanTableForMenu('hormenu1');
+$mid->setIconsize(16, 16);
+$mid->scanTableForMenu('hormenu1', 'it');
+$mid->newHorizontalMenu('hormenu1');
 
 $mid->printHeader();
 ?>
@@ -112,12 +119,12 @@ $mid->printHeader();
 <body>
 
 <?php
-$mid->printMenu("hormenu1");
+$mid->printMenu('hormenu1');
 ?>
 
 <div class="normalbox">
 <div class="normal" align="center">
-<b>A DB-based example with a Horizontal Layers Menu</b>
+<b><?php print basename(__FILE__); ?> - a DB-based example with a Horizontal Layers Menu</b>
 <div style="height: 10px"></div>
 <a href="http://phplayersmenu.sourceforge.net/"><img border="0"
 src="LOGOS/powered_by_phplm.png" alt="Powered by PHP Layers Menu"
@@ -132,7 +139,7 @@ src="images/vcss.png" alt="Valid CSS!" height="31" width="88" /></a>
 
 <div class="normalbox">
 <div class="normal">
-<?php include ("README.ihtml"); ?>
+<?php require_once 'README.ihtml'; ?>
 </div>
 </div>
 

@@ -1,4 +1,4 @@
-<!-- {packageName} {version} {copyright} {author} -->
+<!-- beginning of menu footer - {packageName} {version} {copyright} {author} -->
 
 {footer}
 
@@ -8,4 +8,4 @@ loaded = 1;
 // -->
 </script>
 
-<!-- {packageName} {version} {copyright} {author} -->
+<!-- end of menu footer - {packageName} {version} {copyright} {author} -->

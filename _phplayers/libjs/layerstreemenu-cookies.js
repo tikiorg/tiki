@@ -1,40 +1,44 @@
-// PHP Layers Menu 3.1.1 (C) 2001-2003 Marco Pratesi (marco at telug dot it)
+// PHP Layers Menu 3.2.0-rc (C) 2001-2004 Marco Pratesi - http://www.marcopratesi.it/
 
-function setLMCookie(name, value) {
-	document.cookie = name + "=" + value;
+function setLMCookie(name, value)
+{
+	document.cookie = name + '=' + value + ';path=/';
 }
 
-function getLMCookie(name) {
-	foobar = document.cookie.split(name + "=");
+function getLMCookie(name)
+{
+	foobar = document.cookie.split(name + '=');
 	if (foobar.length < 2) {
 		return null;
 	}
 	tempString = foobar[1];
-	if (tempString.indexOf(";") == -1) {
+	if (tempString.indexOf(';') == -1) {
 		return tempString;
 	}
-	yafoobar = tempString.split(";");
+	yafoobar = tempString.split(';');
 	return yafoobar[0];
 }
 
-function parseExpandString() {
-	expandString = getLMCookie("expand");
-	expand = new Array();
+function parseExpandString()
+{
+	expandString = getLMCookie('phplm_expand');
+	phplm_expand = new Array();
 	if (expandString) {
-		expanded = expandString.split("|");
+		expanded = expandString.split('|');
 		for (i=0; i<expanded.length-1; i++) {
-			expand[expanded[i]] = 1;
+			phplm_expand[expanded[i]] = 1;
 		}
 	}
 }
 
-function parseCollapseString() {
-	collapseString = getLMCookie("collapse");
-	collapse = new Array();
+function parseCollapseString()
+{
+	collapseString = getLMCookie('phplm_collapse');
+	phplm_collapse = new Array();
 	if (collapseString) {
-		collapsed = collapseString.split("|");
+		collapsed = collapseString.split('|');
 		for (i=0; i<collapsed.length-1; i++) {
-			collapse[collapsed[i]] = 1;
+			phplm_collapse[collapsed[i]] = 1;
 		}
 	}
 }
@@ -42,23 +46,25 @@ function parseCollapseString() {
 parseExpandString();
 parseCollapseString();
 
-function saveExpandString() {
-	expandString = "";
-	for (i=0; i<expand.length; i++) {
-		if (expand[i] == 1) {
-			expandString += i + "|";
+function saveExpandString()
+{
+	expandString = '';
+	for (i=0; i<phplm_expand.length; i++) {
+		if (phplm_expand[i] == 1) {
+			expandString += i + '|';
 		}
 	}
-	setLMCookie("expand", expandString);
+	setLMCookie('phplm_expand', expandString);
 }
 
-function saveCollapseString() {
-	collapseString = "";
-	for (i=0; i<collapse.length; i++) {
-		if (collapse[i] == 1) {
-			collapseString += i + "|";
+function saveCollapseString()
+{
+	collapseString = '';
+	for (i=0; i<phplm_collapse.length; i++) {
+		if (phplm_collapse[i] == 1) {
+			collapseString += i + '|';
 		}
 	}
-	setLMCookie("collapse", collapseString);
+	setLMCookie('phplm_collapse', collapseString);
 }
 

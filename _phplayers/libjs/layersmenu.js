@@ -1,4 +1,4 @@
-// PHP Layers Menu 3.1.1 (C) 2001-2003 Marco Pratesi (marco at telug dot it)
+// PHP Layers Menu 3.2.0-rc (C) 2001-2004 Marco Pratesi - http://www.marcopratesi.it/
 
 useTimeouts = 1;
 timeoutLength = 1000;	// time in ms; not significant if useTimeouts = 0;
@@ -6,7 +6,7 @@ shutdownOnClick = 0;
 
 loaded = 0;
 layersMoved = 0;
-layerPoppedUp = "";
+layerPoppedUp = '';
 
 timeoutFlag = 0;
 if (Opera56 || IE4) {
@@ -17,7 +17,8 @@ if (NS4 || Opera56 || IE4) {
 }
 
 currentY = 0;
-function grabMouse(e) {	// for NS4
+function grabMouse(e)	// for NS4
+{
 	currentY = e.pageY;
 }
 if (NS4) {
@@ -25,22 +26,24 @@ if (NS4) {
 	document.onmousemove = grabMouse;
 }
 
-function seeThroughElements(show) {
+function seeThroughElements(show)
+{
 	if (show) {
-		foobar = "visible";
+		foobar = 'visible';
 	} else {
-		foobar = "hidden";
+		foobar = 'hidden';
 	}
 	for (i=0; i<toBeHidden.length; i++) {
 		toBeHidden[i].style.visibility = foobar;
 	}
 }
 
-function shutdown() {
+function shutdown()
+{
 	for (i=0; i<numl; i++) {
 		LMPopUpL(listl[i], false);
 	}
-	layerPoppedUp = "";
+	layerPoppedUp = '';
 	if (Konqueror || IE5) {
 		seeThroughElements(true);
 	}
@@ -53,23 +56,26 @@ if (shutdownOnClick) {
 	}
 }
 
-function setLMTO() {
+function setLMTO()
+{
 	if (useTimeouts) {
 		timeoutFlag = setTimeout('shutdown()', timeoutLength);
 	}
 }
 
-function clearLMTO() {
+function clearLMTO()
+{
 	if (useTimeouts) {
 		clearTimeout(timeoutFlag);
 	}
 }
 
-function moveLayerX(menuName) {
+function moveLayerX(menuName)
+{
 	if (!loaded || (isVisible(menuName) && menuName != layerPoppedUp)) {
 		return;
 	}
-	if (father[menuName] != "") {
+	if (father[menuName] != '') {
 		if (!Opera5 && !IE4) {
 			width0 = lwidth[father[menuName]];
 			width1 = lwidth[menuName];
@@ -103,7 +109,7 @@ function moveLayerX(menuName) {
 				back[menuName] = 1;
 			}
 		} else {
-//alert(onRight + " - " + width1 + " - " +  windowWidth + " - " + windowXOffset);
+//alert(onRight + ' - ' + width1 + ' - ' +  windowWidth + ' - ' + windowXOffset);
 			if (onRight + width1 > windowWidth + windowXOffset) {
 				back[menuName] = 1;
 			} else {
@@ -119,7 +125,8 @@ function moveLayerX(menuName) {
 	moveLayerY(menuName);	// workaround needed for Mozilla < 1.4 for MS Windows
 }
 
-function moveLayerY(menuName) {
+function moveLayerY(menuName)
+{
 	if (!loaded || (isVisible(menuName) && menuName != layerPoppedUp)) {
 		return;
 	}
@@ -128,7 +135,7 @@ function moveLayerY(menuName) {
 		layersMoved = 1;
 	}
 	if (!NS4) {
-		newY = getOffsetTop("ref" + menuName);
+		newY = getOffsetTop('ref' + menuName);
 	} else {
 		newY = currentY;
 	}
@@ -148,7 +155,8 @@ function moveLayerY(menuName) {
 	}
 }
 
-function moveLayerX1(menuName, father) {
+function moveLayerX1(menuName, father)
+{
 	if (!lwidthDetected) {
 		return;
 	}
@@ -173,7 +181,8 @@ if (!IE4) {
 	setLeft(menuName, foobar);
 }
 
-function layersOverlap(layer, i) {
+function layersOverlap(layer, i)
+{
 	if (Konqueror22) {
 		return true;
 	}
@@ -188,13 +197,13 @@ function layersOverlap(layer, i) {
 	ya1 = layerTop[layer];
 	ya2 = ya1 + getOffsetHeight(layer);
 //setHeight(layer, ya2-ya1);
-//alert(":" + xa1 + ":" + xa2 + ":" + ya1 + ":" + ya2 + ":");
+//alert(':' + xa1 + ':' + xa2 + ':' + ya1 + ':' + ya2 + ':');
 
 	xb1 = toBeHiddenLeft[i];
 	xb2 = xb1 + toBeHidden[i].offsetWidth;
 	yb1 = toBeHiddenTop[i];
 	yb2 = yb1 + toBeHidden[i].offsetHeight;
-//alert(":" + xb1 + ":" + xb2 + ":" + yb1 + ":" + yb2 + ":");
+//alert(':' + xb1 + ':' + xb2 + ':' + yb1 + ':' + yb2 + ':');
 
 	if(xb1>xa1) xa1=xb1; if(xb2<xa2) xa2=xb2;
 	if(yb1>ya1) ya1=yb1; if(yb2<ya2) ya2=yb2;
@@ -202,19 +211,21 @@ function layersOverlap(layer, i) {
 	return (xa2>xa1 && ya2>ya1);
 }
 
-function seeThroughWorkaround(menuName, on) {
+function seeThroughWorkaround(menuName, on)
+{
 	for (i=0; i<toBeHidden.length; i++) {
 		if (layersOverlap(menuName, i)) {
 			if (on) {
-				toBeHidden[i].style.visibility = "hidden";
+				toBeHidden[i].style.visibility = 'hidden';
 			} else {
-				toBeHidden[i].style.visibility = "visible";
+				toBeHidden[i].style.visibility = 'visible';
 			}
 		}
 	}
 }
 
-function LMPopUpL(menuName, on) {
+function LMPopUpL(menuName, on)
+{
 	if (!loaded) {
 		return;
 	}
@@ -225,7 +236,8 @@ function LMPopUpL(menuName, on) {
 	setVisibility(menuName, on);
 }
 
-function LMPopUp(menuName, isCurrent) {
+function LMPopUp(menuName, isCurrent)
+{
 	if (!loaded || menuName == layerPoppedUp || (isVisible(menuName) && !isCurrent)) {
 		return;
 	}
@@ -242,17 +254,18 @@ function LMPopUp(menuName, isCurrent) {
 			LMPopUpL(foobar, true);
 			seeThroughWorkaround(foobar, true);
 			foobar = father[foobar];
-		} while (foobar != "")
+		} while (foobar != '')
 	}
 /*
-	if (layerPoppedUp == "") {
+	if (layerPoppedUp == '') {
 		seeThroughElements(false);
 	}
 */
 	layerPoppedUp = menuName;
 }
 
-function resizeHandler() {
+function resizeHandler()
+{
 	if (NS4) {
 		window.location.reload();
 	}
@@ -261,12 +274,16 @@ function resizeHandler() {
 		setLeft(listl[i], 0);
 		setTop(listl[i], 0);
 	}
+	if (toBeHidden != null && toBeHidden.length > 0) {
+		seeThroughCoordinatesDetection();
+	}
 //	moveLayers();
 	layersMoved = 0;
 }
 window.onresize = resizeHandler;
 
-function yaresizeHandler() {
+function yaresizeHandler()
+{
 	if (window.innerWidth != origWidth || window.innerHeight != origHeight) {
 		if (Konqueror22 || Opera5) {
 			window.location.reload();	// Opera 5 often fails this
@@ -277,7 +294,8 @@ function yaresizeHandler() {
 	}
 	setTimeout('yaresizeHandler()', 500);
 }
-function loadHandler() {
+function loadHandler()
+{
 	if (Konqueror22 || Opera56) {
 		origWidth  = window.innerWidth;
 		origHeight = window.innerHeight;
@@ -286,12 +304,13 @@ function loadHandler() {
 }
 window.onload = loadHandler;
 
-function fixieflm(menuName) {
+function fixieflm(menuName)
+{
 	if (DOM) {
-		setWidth(menuName, "100%");
+		setWidth(menuName, '100%');
 	} else {	// IE4 IS SIMPLY A BASTARD !!!
-		document.write("</div>");
-		document.write("<div id=\"IE4" + menuName + "\" style=\"position: relative; width: 100%; visibility: visible;\">");
+		document.write('</div>');
+		document.write('<div id="IE4' + menuName + '" style="position: relative; width: 100%; visibility: visible;">');
 	}
 }
 

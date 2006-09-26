@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15"></meta>
 <title>The PHP Layers Menu - Templates</title>
-<link rel="StyleSheet" href="../layersmenu.css" type="text/css"></link>
+<link rel="StyleSheet" href="../layersmenu-old.css" type="text/css"></link>
 </head>
 <body>
 
@@ -33,7 +33,7 @@ This comment does not appear on the resulting page.
 <!-- BEGIN sub_menu_cell -->
 <tr>
 <td nowrap="nowrap"><!-- BEGIN cell_icon --><img
-align="top" src="{imgwww}{iconsrc}" width="{iconwidth}" height="{iconheight}" border="0"
+align="top" src="{iconsrc}" width="{iconwidth}" height="{iconheight}" border="0"
 alt="{iconalt}" />&nbsp;<!-- END cell_icon --></td>
 <td width="100%" class="ivorybodytable" valign="middle" nowrap="nowrap"><a
 href="{href}" id="{refid}"{onmouseover}{title}{target}
@@ -42,6 +42,9 @@ class="fwdarr" src="{imgwww}{arrowsrc}" width="{arrowwidth}" height="{arrowheigh
 border="0" alt=">>" /><!-- END cell_arrow --></td>
 </tr>
 <!-- END sub_menu_cell -->
+<!-- BEGIN separator -->
+
+<!-- END separator -->
 </table>
 </td>
 </tr>

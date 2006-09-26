@@ -1,5 +1,5 @@
 <?php
-// PHP Layers Menu 3.1.1 (C) 2001-2003 Marco Pratesi (marco at telug dot it)
+// PHP Layers Menu 3.2.0-rc (C) 2001-2004 Marco Pratesi - http://www.marcopratesi.it/
 
 /**
 * This file contains the code of the PlainMenu class.
@@ -11,10 +11,11 @@
 *
 * This class depends on the LayersMenuCommon class and on the PEAR conforming version of the PHPLib Template class, i.e. on HTML_Template_PHPLIB.  It provides plain menus, that to do not require JavaScript to work.
 *
-* @version 3.1.1
+* @version 3.2.0-rc
 * @package PHPLayersMenu
 */
-class PlainMenu extends LayersMenuCommon {
+class PlainMenu extends LayersMenuCommon
+{
 
 /**
 * The template to be used for the Plain Menu
@@ -42,13 +43,14 @@ var $_horizontalPlainMenu;
 * The constructor method; it initializates some variables
 * @return void
 */
-function PlainMenu() {
+function PlainMenu()
+{
 	$this->LayersMenuCommon();
 
-	$this->plainMenuTpl = $this->tpldir . "layersmenu-plain_menu.ihtml";
+	$this->plainMenuTpl = $this->tpldir . 'layersmenu-plain_menu.ihtml';
 	$this->_plainMenu = array();
 
-	$this->horizontalPlainMenuTpl = $this->tpldir . "layersmenu-horizontal_plain_menu.ihtml";
+	$this->horizontalPlainMenuTpl = $this->tpldir . 'layersmenu-horizontal_plain_menu.ihtml';
 	$this->_horizontalPlainMenu = array();
 }
 
@@ -57,7 +59,8 @@ function PlainMenu() {
 * @access public
 * @return boolean
 */
-function setDirroot($dirroot) {
+function setDirroot($dirroot)
+{
 	$oldtpldir = $this->tpldir;
 	if ($foobar = $this->setDirrootCommon($dirroot)) {
 		$this->updateTpldir($oldtpldir);
@@ -70,7 +73,8 @@ function setDirroot($dirroot) {
 * @access public
 * @return boolean
 */
-function setTpldir($tpldir) {
+function setTpldir($tpldir)
+{
 	$oldtpldir = $this->tpldir;
 	if ($foobar = $this->setTpldirCommon($tpldir)) {
 		$this->updateTpldir($oldtpldir);
@@ -83,7 +87,8 @@ function setTpldir($tpldir) {
 * @access private
 * @return void
 */
-function updateTpldir($oldtpldir) {
+function updateTpldir($oldtpldir)
+{
 	$oldlength = strlen($oldtpldir);
 	$foobar = strpos($this->plainMenuTpl, $oldtpldir);
 	if (!($foobar === false || $foobar != 0)) {
@@ -100,8 +105,9 @@ function updateTpldir($oldtpldir) {
 * @access public
 * @return boolean
 */
-function setPlainMenuTpl($plainMenuTpl) {
-	if (str_replace("/", "", $plainMenuTpl) == $plainMenuTpl) {
+function setPlainMenuTpl($plainMenuTpl)
+{
+	if (str_replace('/', '', $plainMenuTpl) == $plainMenuTpl) {
 		$plainMenuTpl = $this->tpldir . $plainMenuTpl;
 	}
 	if (!file_exists($plainMenuTpl)) {
@@ -123,30 +129,34 @@ function setPlainMenuTpl($plainMenuTpl) {
 * @return string
 */
 function newPlainMenu(
-	$menu_name = ""	// non consistent default...
-	) {
-	$plain_menu_blck = "";
+	$menu_name = ''	// non consistent default...
+	)
+{
+	$plain_menu_blck = '';
 	$t = new Template_PHPLIB();
-	$t->setFile("tplfile", $this->plainMenuTpl);
-	$t->setBlock("tplfile", "template", "template_blck");
-	$t->setBlock("template", "plain_menu_cell", "plain_menu_cell_blck");
-	$t->setVar("plain_menu_cell_blck", "");
+	$t->setFile('tplfile', $this->plainMenuTpl);
+	$t->setBlock('tplfile', 'template', 'template_blck');
+	$t->setBlock('template', 'plain_menu_cell', 'plain_menu_cell_blck');
+	$t->setVar('plain_menu_cell_blck', '');
 	for ($cnt=$this->_firstItem[$menu_name]; $cnt<=$this->_lastItem[$menu_name]; $cnt++) {
-		$nbsp = "";
-		for ($i=1; $i<$this->tree[$cnt]["level"]; $i++) {
-			$nbsp .= "&nbsp;&nbsp;&nbsp;";
+		if ($this->tree[$cnt]['text'] == '---') {
+			continue;	// separators are significant only for layers-based menus
+		}
+		$nbsp = '';
+		for ($i=1; $i<$this->tree[$cnt]['level']; $i++) {
+			$nbsp .= '&nbsp;&nbsp;&nbsp;';
 		}
 		$t->setVar(array(
-			"nbsp"		=> $nbsp,
-			"href"		=> $this->tree[$cnt]["parsed_href"],
-			"title"		=> $this->tree[$cnt]["parsed_title"],
-			"target"	=> $this->tree[$cnt]["parsed_target"],
-			"text"		=> $this->tree[$cnt]["parsed_text"]
+			'nbsp'		=> $nbsp,
+			'href'		=> $this->tree[$cnt]['parsed_href'],
+			'title'		=> $this->tree[$cnt]['parsed_title'],
+			'target'	=> $this->tree[$cnt]['parsed_target'],
+			'text'		=> $this->tree[$cnt]['parsed_text']
 		));
-		$plain_menu_blck .= $t->parse("plain_menu_cell_blck", "plain_menu_cell", false);
+		$plain_menu_blck .= $t->parse('plain_menu_cell_blck', 'plain_menu_cell', false);
 	}
-	$t->setVar("plain_menu_cell_blck", $plain_menu_blck);
-	$this->_plainMenu[$menu_name] = $t->parse("template_blck", "template");
+	$t->setVar('plain_menu_cell_blck', $plain_menu_blck);
+	$this->_plainMenu[$menu_name] = $t->parse('template_blck', 'template');
 
 	return $this->_plainMenu[$menu_name];
 }
@@ -158,7 +168,8 @@ function newPlainMenu(
 *   has to be returned
 * @return string
 */
-function getPlainMenu($menu_name) {
+function getPlainMenu($menu_name)
+{
 	return $this->_plainMenu[$menu_name];
 }
 
@@ -169,7 +180,8 @@ function getPlainMenu($menu_name) {
 *   has to be printed
 * @return void
 */
-function printPlainMenu($menu_name) {
+function printPlainMenu($menu_name)
+{
 	print $this->_plainMenu[$menu_name];
 }
 
@@ -178,8 +190,9 @@ function printPlainMenu($menu_name) {
 * @access public
 * @return boolean
 */
-function setHorizontalPlainMenuTpl($horizontalPlainMenuTpl) {
-	if (str_replace("/", "", $horizontalPlainMenuTpl) == $horizontalPlainMenuTpl) {
+function setHorizontalPlainMenuTpl($horizontalPlainMenuTpl)
+{
+	if (str_replace('/', '', $horizontalPlainMenuTpl) == $horizontalPlainMenuTpl) {
 		$horizontalPlainMenuTpl = $this->tpldir . $horizontalPlainMenuTpl;
 	}
 	if (!file_exists($horizontalPlainMenuTpl)) {
@@ -201,36 +214,40 @@ function setHorizontalPlainMenuTpl($horizontalPlainMenuTpl) {
 * @return string
 */
 function newHorizontalPlainMenu(
-	$menu_name = ""	// non consistent default...
-	) {
-	$horizontal_plain_menu_blck = "";
+	$menu_name = ''	// non consistent default...
+	)
+{
+	$horizontal_plain_menu_blck = '';
 	$t = new Template_PHPLIB();
-	$t->setFile("tplfile", $this->horizontalPlainMenuTpl);
-	$t->setBlock("tplfile", "template", "template_blck");
-	$t->setBlock("template", "horizontal_plain_menu_cell", "horizontal_plain_menu_cell_blck");
-	$t->setVar("horizontal_plain_menu_cell_blck", "");
-	$t->setBlock("horizontal_plain_menu_cell", "plain_menu_cell", "plain_menu_cell_blck");	
-	$t->setVar("plain_menu_cell_blck", "");
+	$t->setFile('tplfile', $this->horizontalPlainMenuTpl);
+	$t->setBlock('tplfile', 'template', 'template_blck');
+	$t->setBlock('template', 'horizontal_plain_menu_cell', 'horizontal_plain_menu_cell_blck');
+	$t->setVar('horizontal_plain_menu_cell_blck', '');
+	$t->setBlock('horizontal_plain_menu_cell', 'plain_menu_cell', 'plain_menu_cell_blck');	
+	$t->setVar('plain_menu_cell_blck', '');
 	for ($cnt=$this->_firstItem[$menu_name]; $cnt<=$this->_lastItem[$menu_name]; $cnt++) {
-		if ($this->tree[$cnt]["level"] == 1 && $cnt > $this->_firstItem[$menu_name]) {
-			$t->parse("horizontal_plain_menu_cell_blck", "horizontal_plain_menu_cell", true);
-			$t->setVar("plain_menu_cell_blck", "");
+		if ($this->tree[$cnt]['text'] == '---') {
+			continue;	// separators are significant only for layers-based menus
 		}
-		$nbsp = "";
-		for ($i=1; $i<$this->tree[$cnt]["level"]; $i++) {
-			$nbsp .= "&nbsp;&nbsp;&nbsp;";
+		if ($this->tree[$cnt]['level'] == 1 && $cnt > $this->_firstItem[$menu_name]) {
+			$t->parse('horizontal_plain_menu_cell_blck', 'horizontal_plain_menu_cell', true);
+			$t->setVar('plain_menu_cell_blck', '');
+		}
+		$nbsp = '';
+		for ($i=1; $i<$this->tree[$cnt]['level']; $i++) {
+			$nbsp .= '&nbsp;&nbsp;&nbsp;';
 		}
 		$t->setVar(array(
-			"nbsp"		=> $nbsp,
-			"href"		=> $this->tree[$cnt]["parsed_href"],
-			"title"		=> $this->tree[$cnt]["parsed_title"],
-			"target"	=> $this->tree[$cnt]["parsed_target"],
-			"text"		=> $this->tree[$cnt]["parsed_text"]
+			'nbsp'		=> $nbsp,
+			'href'		=> $this->tree[$cnt]['parsed_href'],
+			'title'		=> $this->tree[$cnt]['parsed_title'],
+			'target'	=> $this->tree[$cnt]['parsed_target'],
+			'text'		=> $this->tree[$cnt]['parsed_text']
 		));
-		$t->parse("plain_menu_cell_blck", "plain_menu_cell", true);
+		$t->parse('plain_menu_cell_blck', 'plain_menu_cell', true);
 	}
-	$t->parse("horizontal_plain_menu_cell_blck", "horizontal_plain_menu_cell", true);
-	$this->_horizontalPlainMenu[$menu_name] = $t->parse("template_blck", "template");
+	$t->parse('horizontal_plain_menu_cell_blck', 'horizontal_plain_menu_cell', true);
+	$this->_horizontalPlainMenu[$menu_name] = $t->parse('template_blck', 'template');
 
 	return $this->_horizontalPlainMenu[$menu_name];
 }
@@ -242,7 +259,8 @@ function newHorizontalPlainMenu(
 *   has to be returned
 * @return string
 */
-function getHorizontalPlainMenu($menu_name) {
+function getHorizontalPlainMenu($menu_name)
+{
 	return $this->_horizontalPlainMenu[$menu_name];
 }
 
@@ -253,7 +271,8 @@ function getHorizontalPlainMenu($menu_name) {
 *   has to be printed
 * @return void
 */
-function printHorizontalPlainMenu($menu_name) {
+function printHorizontalPlainMenu($menu_name)
+{
 	print $this->_horizontalPlainMenu[$menu_name];
 }
 

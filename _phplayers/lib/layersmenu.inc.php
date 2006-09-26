@@ -1,5 +1,5 @@
 <?php
-// PHP Layers Menu 3.1.1 (C) 2001-2003 Marco Pratesi (marco at telug dot it)
+// PHP Layers Menu 3.2.0-rc (C) 2001-2004 Marco Pratesi - http://www.marcopratesi.it/
 
 /**
 * This file contains the code of the LayersMenu class.
@@ -11,10 +11,11 @@
 *
 * This class depends on the LayersMenuCommon class and on the PEAR conforming version of the PHPLib Template class, i.e. on HTML_Template_PHPLIB
 *
-* @version 3.1.1
+* @version 3.2.0-rc
 * @package PHPLayersMenu
 */
-class LayersMenu extends LayersMenuCommon {
+class LayersMenu extends LayersMenuCommon
+{
 
 /**
 * The template to be used for the first level menu of a horizontal menu.
@@ -49,6 +50,12 @@ var $subMenuTpl;
 * @var string
 */
 var $header;
+/**
+* This var tells if the header has been made or not
+* @access private
+* @var boolean
+*/
+var $_headerHasBeenMade = false;
 /**
 * The JS vector to list layers
 * @access private
@@ -85,6 +92,12 @@ var $_firstLevelMenu;
 * @var string
 */
 var $footer;
+/**
+* This var tells if the footer has been made or not
+* @access private
+* @var boolean
+*/
+var $_footerHasBeenMade = false;
 
 /**
 * The image used for forward arrows.
@@ -151,34 +164,30 @@ function LayersMenu(
 	$menuLeftShift = 2,	// Gtk2-like
 	$thresholdY = 5,
 	$abscissaStep = 140
-	) {
+	)
+{
 	$this->LayersMenuCommon();
 
-	$this->_packageName = "PHP Layers Menu";
-	$this->version = "3.1.1";
-	$this->copyright = "(C) 2001-2003";
-	$this->author = "Marco Pratesi (marco at telug dot it)";
+	$this->horizontalMenuTpl = $this->tpldir . 'layersmenu-horizontal_menu.ihtml';
+	$this->verticalMenuTpl = $this->tpldir . 'layersmenu-vertical_menu.ihtml';
+	$this->subMenuTpl = $this->tpldir . 'layersmenu-sub_menu.ihtml';
 
-	$this->horizontalMenuTpl = $this->tpldir . "layersmenu-horizontal_menu.ihtml";
-	$this->verticalMenuTpl = $this->tpldir . "layersmenu-vertical_menu.ihtml";
-	$this->subMenuTpl = $this->tpldir . "layersmenu-sub_menu.ihtml";
-
-	$this->header = "";
-	$this->listl = "";
-	$this->father_keys = "";
-	$this->father_vals = "";
-	$this->moveLayers = "";
+	$this->header = '';
+	$this->listl = '';
+	$this->father_keys = '';
+	$this->father_vals = '';
+	$this->moveLayers = '';
 	$this->_firstLevelMenu = array();
-	$this->footer = "";
+	$this->footer = '';
 
-	$this->transparentIcon = "transparent.png";
+	$this->transparentIcon = 'transparent.png';
 	$this->_hasIcons = array();
-	$this->forwardArrowImg["src"] = "forward-arrow.png";
-	$this->forwardArrowImg["width"] = 4;
-	$this->forwardArrowImg["height"] = 7;
-	$this->downArrowImg["src"] = "down-arrow.png";
-	$this->downArrowImg["width"] = 9;
-	$this->downArrowImg["height"] = 5;
+	$this->forwardArrowImg['src'] = 'forward-arrow.png';
+	$this->forwardArrowImg['width'] = 4;
+	$this->forwardArrowImg['height'] = 7;
+	$this->downArrowImg['src'] = 'down-arrow.png';
+	$this->downArrowImg['width'] = 9;
+	$this->downArrowImg['height'] = 5;
 	$this->menuTopShift = $menuTopShift;
 	$this->menuRightShift = $menuRightShift;
 	$this->menuLeftShift = $menuLeftShift;
@@ -191,7 +200,8 @@ function LayersMenu(
 * @access public
 * @return void
 */
-function setMenuTopShift($menuTopShift) {
+function setMenuTopShift($menuTopShift)
+{
 	$this->menuTopShift = $menuTopShift;
 }
 
@@ -200,7 +210,8 @@ function setMenuTopShift($menuTopShift) {
 * @access public
 * @return void
 */
-function setMenuRightShift($menuRightShift) {
+function setMenuRightShift($menuRightShift)
+{
 	$this->menuRightShift = $menuRightShift;
 }
 
@@ -209,7 +220,8 @@ function setMenuRightShift($menuRightShift) {
 * @access public
 * @return void
 */
-function setMenuLeftShift($menuLeftShift) {
+function setMenuLeftShift($menuLeftShift)
+{
 	$this->menuLeftShift = $menuLeftShift;
 }
 
@@ -218,7 +230,8 @@ function setMenuLeftShift($menuLeftShift) {
 * @access public
 * @return void
 */
-function setThresholdY($thresholdY) {
+function setThresholdY($thresholdY)
+{
 	$this->thresholdY = $thresholdY;
 }
 
@@ -227,7 +240,8 @@ function setThresholdY($thresholdY) {
 * @access public
 * @return void
 */
-function setAbscissaStep($abscissaStep) {
+function setAbscissaStep($abscissaStep)
+{
 	$this->abscissaStep = $abscissaStep;
 }
 
@@ -236,7 +250,8 @@ function setAbscissaStep($abscissaStep) {
 * @access public
 * @return boolean
 */
-function setDirroot($dirroot) {
+function setDirroot($dirroot)
+{
 	$oldtpldir = $this->tpldir;
 	if ($foobar = $this->setDirrootCommon($dirroot)) {
 		$this->updateTpldir($oldtpldir);
@@ -249,7 +264,8 @@ function setDirroot($dirroot) {
 * @access public
 * @return boolean
 */
-function setTpldir($tpldir) {
+function setTpldir($tpldir)
+{
 	$oldtpldir = $this->tpldir;
 	if ($foobar = $this->setTpldirCommon($tpldir)) {
 		$this->updateTpldir($oldtpldir);
@@ -262,7 +278,8 @@ function setTpldir($tpldir) {
 * @access private
 * @return void
 */
-function updateTpldir($oldtpldir) {
+function updateTpldir($oldtpldir)
+{
 	$oldlength = strlen($oldtpldir);
 	$foobar = strpos($this->horizontalMenuTpl, $oldtpldir);
 	if (!($foobar === false || $foobar != 0)) {
@@ -283,8 +300,9 @@ function updateTpldir($oldtpldir) {
 * @access public
 * @return boolean
 */
-function setHorizontalMenuTpl($horizontalMenuTpl) {
-	if (str_replace("/", "", $horizontalMenuTpl) == $horizontalMenuTpl) {
+function setHorizontalMenuTpl($horizontalMenuTpl)
+{
+	if (str_replace('/', '', $horizontalMenuTpl) == $horizontalMenuTpl) {
 		$horizontalMenuTpl = $this->tpldir . $horizontalMenuTpl;
 	}
 	if (!file_exists($horizontalMenuTpl)) {
@@ -300,8 +318,9 @@ function setHorizontalMenuTpl($horizontalMenuTpl) {
 * @access public
 * @return boolean
 */
-function setVerticalMenuTpl($verticalMenuTpl) {
-	if (str_replace("/", "", $verticalMenuTpl) == $verticalMenuTpl) {
+function setVerticalMenuTpl($verticalMenuTpl)
+{
+	if (str_replace('/', '', $verticalMenuTpl) == $verticalMenuTpl) {
 		$verticalMenuTpl = $this->tpldir . $verticalMenuTpl;
 	}
 	if (!file_exists($verticalMenuTpl)) {
@@ -317,8 +336,9 @@ function setVerticalMenuTpl($verticalMenuTpl) {
 * @access public
 * @return boolean
 */
-function setSubMenuTpl($subMenuTpl) {
-	if (str_replace("/", "", $subMenuTpl) == $subMenuTpl) {
+function setSubMenuTpl($subMenuTpl)
+{
+	if (str_replace('/', '', $subMenuTpl) == $subMenuTpl) {
 		$subMenuTpl = $this->tpldir . $subMenuTpl;
 	}
 	if (!file_exists($subMenuTpl)) {
@@ -335,7 +355,8 @@ function setSubMenuTpl($subMenuTpl) {
 * @param string $transparentIcon a transparentIcon filename (without the path)
 * @return void
 */
-function setTransparentIcon($transparentIcon) {
+function setTransparentIcon($transparentIcon)
+{
 	$this->transparentIcon = $transparentIcon;
 }
 
@@ -345,15 +366,16 @@ function setTransparentIcon($transparentIcon) {
 * @param string $forwardArrowImg the forward arrow image filename
 * @return boolean
 */
-function setForwardArrowImg($forwardArrowImg) {
+function setForwardArrowImg($forwardArrowImg)
+{
 	if (!file_exists($this->imgdir . $forwardArrowImg)) {
-		$this->error("setForwardArrowImg: file " . $this->imgdir . $forwardArrowImg . " does not exist.");
+		$this->error('setForwardArrowImg: file ' . $this->imgdir . $forwardArrowImg . ' does not exist.');
 		return false;
 	}
 	$foobar = getimagesize($this->imgdir . $forwardArrowImg);
-	$this->forwardArrowImg["src"] = $forwardArrowImg;
-	$this->forwardArrowImg["width"] = $foobar[0];
-	$this->forwardArrowImg["height"] = $foobar[1];
+	$this->forwardArrowImg['src'] = $forwardArrowImg;
+	$this->forwardArrowImg['width'] = $foobar[0];
+	$this->forwardArrowImg['height'] = $foobar[1];
 	return true;
 }
 
@@ -363,15 +385,16 @@ function setForwardArrowImg($forwardArrowImg) {
 * @param string $downArrowImg the down arrow image filename
 * @return boolean
 */
-function setDownArrowImg($downArrowImg) {
+function setDownArrowImg($downArrowImg)
+{
 	if (!file_exists($this->imgdir . $downArrowImg)) {
-		$this->error("setDownArrowImg: file " . $this->imgdir . $downArrowImg . " does not exist.");
+		$this->error('setDownArrowImg: file ' . $this->imgdir . $downArrowImg . ' does not exist.');
 		return false;
 	}
 	$foobar = getimagesize($this->imgdir . $downArrowImg);
-	$this->downArrowImg["src"] = $downArrowImg;
-	$this->downArrowImg["width"] = $foobar[0];
-	$this->downArrowImg["height"] = $foobar[1];
+	$this->downArrowImg['src'] = $downArrowImg;
+	$this->downArrowImg['width'] = $foobar[0];
+	$this->downArrowImg['height'] = $foobar[1];
 	return true;
 }
 
@@ -383,44 +406,46 @@ function setDownArrowImg($downArrowImg) {
 * @return void
 */
 function parseCommon(
-	$menu_name = ""	// non consistent default...
-	) {
+	$menu_name = ''	// non consistent default...
+	)
+{
 	$this->_hasIcons[$menu_name] = false;
 	for ($cnt=$this->_firstItem[$menu_name]; $cnt<=$this->_lastItem[$menu_name]; $cnt++) {	// this counter scans all nodes of the new menu
 		$this->_hasIcons[$cnt] = false;
-		$this->tree[$cnt]["layer_label"] = "L" . $cnt;
-		$current_node[$this->tree[$cnt]["level"]] = $cnt;
-		if (!$this->tree[$cnt]["child_of_root_node"]) {
-			$this->tree[$cnt]["father_node"] = $current_node[$this->tree[$cnt]["level"]-1];
-			$this->father_keys .= ",'L" . $cnt . "'";
-			$this->father_vals .= ",'" . $this->tree[$this->tree[$cnt]["father_node"]]["layer_label"] . "'";
+		$this->tree[$cnt]['layer_label'] = "L$cnt";
+		$current_node[$this->tree[$cnt]['level']] = $cnt;
+		if (!$this->tree[$cnt]['child_of_root_node']) {
+			$this->tree[$cnt]['father_node'] = $current_node[$this->tree[$cnt]['level']-1];
+			$this->father_keys .= ",'L$cnt'";
+			$this->father_vals .= ",'" . $this->tree[$this->tree[$cnt]['father_node']]['layer_label'] . "'";
 		}
-		$this->tree[$cnt]["not_a_leaf"] = ($this->tree[$cnt+1]["level"]>$this->tree[$cnt]["level"] && $cnt<$this->_lastItem[$menu_name]);
+		$this->tree[$cnt]['not_a_leaf'] = ($this->tree[$cnt+1]['level']>$this->tree[$cnt]['level'] && $cnt<$this->_lastItem[$menu_name]);
 		// if the above condition is true, the node is not a leaf,
 		// hence it has at least a child; if it is false, the node is a leaf
-		if ($this->tree[$cnt]["not_a_leaf"]) {
+		if ($this->tree[$cnt]['not_a_leaf']) {
 			// initialize the corresponding layer content trought a void string
-			$this->tree[$cnt]["layer_content"] = "";
+			$this->tree[$cnt]['layer_content'] = '';
 			// the new layer is accounted for in the layers list
-			$this->listl .= ",'" . $this->tree[$cnt]["layer_label"] . "'";
+			$this->listl .= ",'" . $this->tree[$cnt]['layer_label'] . "'";
 		}
 /*
-		if ($this->tree[$cnt]["not_a_leaf"]) {
-			$this->tree[$cnt]["parsed_href"] = "#";
+		if ($this->tree[$cnt]['not_a_leaf']) {
+			$this->tree[$cnt]['parsed_href'] = '#';
+		}
 */
-		if ($this->tree[$cnt]["parsed_icon"] == "") {
-			$this->tree[$cnt]["iconsrc"] = $this->transparentIcon;
-			$this->tree[$cnt]["iconwidth"] = 16;
-			$this->tree[$cnt]["iconheight"] = 16;
-			$this->tree[$cnt]["iconalt"] = " ";
+		if ($this->tree[$cnt]['parsed_icon'] == '') {
+			$this->tree[$cnt]['iconsrc'] = $this->imgwww . $this->transparentIcon;
+			$this->tree[$cnt]['iconwidth'] = 16;
+			$this->tree[$cnt]['iconheight'] = 16;
+			$this->tree[$cnt]['iconalt'] = ' ';
 		} else {
-			if ($this->tree[$cnt]["level"] > 1) {
-				$this->_hasIcons[$this->tree[$cnt]["father_node"]] = true;
+			if ($this->tree[$cnt]['level'] > 1) {
+				$this->_hasIcons[$this->tree[$cnt]['father_node']] = true;
 			} else {
 				$this->_hasIcons[$menu_name] = true;
 			}
-			$this->tree[$cnt]["iconsrc"] = $this->tree[$cnt]["parsed_icon"];
-			$this->tree[$cnt]["iconalt"] = "O";
+			$this->tree[$cnt]['iconsrc'] = $this->tree[$cnt]['parsed_icon'];
+			$this->tree[$cnt]['iconalt'] = 'O';
 		}
 	}
 }
@@ -433,23 +458,26 @@ function parseCommon(
 * @return void
 */
 function _updateFooter(
-	$menu_name = ""	// non consistent default...
-	) {
+	$menu_name = ''	// non consistent default...
+	)
+{
 	$t = new Template_PHPLIB();
-	$t->setFile("tplfile", $this->subMenuTpl);
-	$t->setBlock("tplfile", "template", "template_blck");
-	$t->setBlock("template", "sub_menu_cell", "sub_menu_cell_blck");
-	$t->setVar("sub_menu_cell_blck", "");
-	$t->setVar("abscissaStep", $this->abscissaStep);
+	$t->setFile('tplfile', $this->subMenuTpl);
+	$t->setBlock('tplfile', 'template', 'template_blck');
+	$t->setBlock('template', 'sub_menu_cell', 'sub_menu_cell_blck');
+	$t->setVar('sub_menu_cell_blck', '');
+	$t->setBlock('template', 'separator', 'separator_blck');
+	$t->setVar('separator_blck', '');
+	$t->setVar('abscissaStep', $this->abscissaStep);
 
 	for ($cnt=$this->_firstItem[$menu_name]; $cnt<=$this->_lastItem[$menu_name]; $cnt++) {
-		if ($this->tree[$cnt]["not_a_leaf"]) {
+		if ($this->tree[$cnt]['not_a_leaf']) {
 			$t->setVar(array(
-				"layer_label"		=> $this->tree[$cnt]["layer_label"],
-				"layer_title"		=> $this->tree[$cnt]["text"],
-				"sub_menu_cell_blck"	=> $this->tree[$cnt]["layer_content"]
+				'layer_label'		=> $this->tree[$cnt]['layer_label'],
+				'layer_title'		=> $this->tree[$cnt]['text'],
+				'sub_menu_cell_blck'	=> $this->tree[$cnt]['layer_content']
 			));
-			$this->footer .= $t->parse("template_blck", "template");
+			$this->footer .= $t->parse('template_blck', 'template');
 		}
 	}
 }
@@ -466,8 +494,9 @@ function _updateFooter(
 * @return string
 */
 function newHorizontalMenu(
-	$menu_name = ""	// non consistent default...
-	) {
+	$menu_name = ''	// non consistent default...
+	)
+{
 	if (!isset($this->_firstItem[$menu_name]) || !isset($this->_lastItem[$menu_name])) {
 		$this->error("newHorizontalMenu: the first/last item of the menu '$menu_name' is not defined; please check if you have parsed its menu data.");
 		return 0;
@@ -476,129 +505,137 @@ function newHorizontalMenu(
 	$this->parseCommon($menu_name);
 
 	$t = new Template_PHPLIB();
-	$t->setFile("tplfile", $this->horizontalMenuTpl);
-	$t->setBlock("tplfile", "template", "template_blck");
-	$t->setBlock("template", "horizontal_menu_cell", "horizontal_menu_cell_blck");
-	$t->setVar("horizontal_menu_cell_blck", "");
-	$t->setBlock("horizontal_menu_cell", "cell_link", "cell_link_blck");
-	$t->setVar("cell_link_blck", "");
-	$t->setBlock("cell_link", "cell_icon", "cell_icon_blck");
-	$t->setVar("cell_icon_blck", "");
-	$t->setBlock("cell_link", "cell_arrow", "cell_arrow_blck");
-	$t->setVar("cell_arrow_blck", "");
+	$t->setFile('tplfile', $this->horizontalMenuTpl);
+	$t->setBlock('tplfile', 'template', 'template_blck');
+	$t->setBlock('template', 'horizontal_menu_cell', 'horizontal_menu_cell_blck');
+	$t->setVar('horizontal_menu_cell_blck', '');
+	$t->setBlock('horizontal_menu_cell', 'cell_link', 'cell_link_blck');
+	$t->setVar('cell_link_blck', '');
+	$t->setBlock('cell_link', 'cell_icon', 'cell_icon_blck');
+	$t->setVar('cell_icon_blck', '');
+	$t->setBlock('cell_link', 'cell_arrow', 'cell_arrow_blck');
+	$t->setVar('cell_arrow_blck', '');
 
 	$t_sub = new Template_PHPLIB();
-	$t_sub->setFile("tplfile", $this->subMenuTpl);
-	$t_sub->setBlock("tplfile", "sub_menu_cell", "sub_menu_cell_blck");
-	$t_sub->setVar("sub_menu_cell_blck", "");
-	$t_sub->setBlock("sub_menu_cell", "cell_icon", "cell_icon_blck");
-	$t_sub->setVar("cell_icon_blck", "");
-	$t_sub->setBlock("sub_menu_cell", "cell_arrow", "cell_arrow_blck");
-	$t_sub->setVar("cell_arrow_blck", "");
+	$t_sub->setFile('tplfile', $this->subMenuTpl);
+	$t_sub->setBlock('tplfile', 'sub_menu_cell', 'sub_menu_cell_blck');
+	$t_sub->setVar('sub_menu_cell_blck', '');
+	$t_sub->setBlock('sub_menu_cell', 'cell_icon', 'cell_icon_blck');
+	$t_sub->setVar('cell_icon_blck', '');
+	$t_sub->setBlock('sub_menu_cell', 'cell_arrow', 'cell_arrow_blck');
+	$t_sub->setVar('cell_arrow_blck', '');
+	$t_sub->setBlock('tplfile', 'separator', 'separator_blck');
+	$t_sub->setVar('separator_blck', '');
 
-	$this->_firstLevelMenu[$menu_name] = "";
+	$this->_firstLevelMenu[$menu_name] = '';
 
 	$foobar = $this->_firstItem[$menu_name];
 	$this->moveLayers .= "\tvar " . $menu_name . "TOP = getOffsetTop('" . $menu_name . "L" . $foobar . "');\n";
 	$this->moveLayers .= "\tvar " . $menu_name . "HEIGHT = getOffsetHeight('" . $menu_name . "L" . $foobar . "');\n";
 
 	for ($cnt=$this->_firstItem[$menu_name]; $cnt<=$this->_lastItem[$menu_name]; $cnt++) {	// this counter scans all nodes of the new menu
-		if ($this->tree[$cnt]["not_a_leaf"]) {
+		if ($this->tree[$cnt]['not_a_leaf']) {
 			// geometrical parameters are assigned to the new layer, related to the above mentioned children
-			if ($this->tree[$cnt]["child_of_root_node"]) {
-				$this->moveLayers .= "\tsetTop('" . $this->tree[$cnt]["layer_label"] . "', "  . $menu_name . "TOP + " . $menu_name . "HEIGHT);\n";
-				$this->moveLayers .= "\tmoveLayerX1('" . $this->tree[$cnt]["layer_label"] . "', '" . $menu_name . "');\n";
+			if ($this->tree[$cnt]['child_of_root_node']) {
+				$this->moveLayers .= "\tsetTop('" . $this->tree[$cnt]['layer_label'] . "', "  . $menu_name . "TOP + " . $menu_name . "HEIGHT);\n";
+				$this->moveLayers .= "\tmoveLayerX1('" . $this->tree[$cnt]['layer_label'] . "', '" . $menu_name . "');\n";
 			}
 		}
 
-		if ($this->tree[$cnt]["child_of_root_node"]) {
-			if ($this->tree[$cnt]["not_a_leaf"]) {
-				$this->tree[$cnt]["onmouseover"] = " onmouseover=\"moveLayerX1('" . $this->tree[$cnt]["layer_label"] . "', '" . $menu_name . "') ; LMPopUp('" . $this->tree[$cnt]["layer_label"] . "', false);\"";
+		if ($this->tree[$cnt]['child_of_root_node']) {
+			if ($this->tree[$cnt]['text'] == '---') {
+				continue;
+			}
+			if ($this->tree[$cnt]['not_a_leaf']) {
+				$this->tree[$cnt]['onmouseover'] = ' onmouseover="moveLayerX1(' . "'" . $this->tree[$cnt]['layer_label'] . "', '" . $menu_name . "') ; LMPopUp('" . $this->tree[$cnt]['layer_label'] . "'" . ', false);"';
 			} else {
-				$this->tree[$cnt]["onmouseover"] = " onmouseover=\"shutdown();\"";
+				$this->tree[$cnt]['onmouseover'] = ' onmouseover="shutdown();"';
 			}
 			$t->setVar(array(
-				"menu_layer_label"	=> $menu_name . $this->tree[$cnt]["layer_label"],
-				"imgwww"		=> $this->imgwww,
-				"transparent"		=> $this->transparentIcon,
-				"href"			=> $this->tree[$cnt]["parsed_href"],
-				"onmouseover"		=> $this->tree[$cnt]["onmouseover"],
-				"title"			=> $this->tree[$cnt]["parsed_title"],
-				"target"		=> $this->tree[$cnt]["parsed_target"],
-				"text"			=> $this->tree[$cnt]["text"],
-				"downsrc"		=> $this->downArrowImg["src"],
-				"downwidth"		=> $this->downArrowImg["width"],
-				"downheight"		=> $this->downArrowImg["height"]
+				'menu_layer_label'	=> $menu_name . $this->tree[$cnt]['layer_label'],
+				'imgwww'		=> $this->imgwww,
+				'transparent'		=> $this->transparentIcon,
+				'href'			=> $this->tree[$cnt]['parsed_href'],
+				'onmouseover'		=> $this->tree[$cnt]['onmouseover'],
+				'title'			=> $this->tree[$cnt]['parsed_title'],
+				'target'		=> $this->tree[$cnt]['parsed_target'],
+				'text'			=> $this->tree[$cnt]['text'],
+				'downsrc'		=> $this->downArrowImg['src'],
+				'downwidth'		=> $this->downArrowImg['width'],
+				'downheight'		=> $this->downArrowImg['height']
 			));
-			if ($this->tree[$cnt]["parsed_icon"] != "") {
+			if ($this->tree[$cnt]['parsed_icon'] != '') {
 				$t->setVar(array(
-					"imgwww"	=> $this->imgwww,
-					"iconsrc"	=> $this->tree[$cnt]["iconsrc"],
-					"iconwidth"	=> $this->tree[$cnt]["iconwidth"],
-					"iconheight"	=> $this->tree[$cnt]["iconheight"],
-					"iconalt"	=> $this->tree[$cnt]["iconalt"],
+					'iconsrc'	=> $this->tree[$cnt]['iconsrc'],
+					'iconwidth'	=> $this->tree[$cnt]['iconwidth'],
+					'iconheight'	=> $this->tree[$cnt]['iconheight'],
+					'iconalt'	=> $this->tree[$cnt]['iconalt'],
 				));
-				$t->parse("cell_icon_blck", "cell_icon");
+				$t->parse('cell_icon_blck', 'cell_icon');
 			} else {
-				$t->setVar("cell_icon_blck", "");
+				$t->setVar('cell_icon_blck', '');
 			}
-			if ($this->tree[$cnt]["not_a_leaf"]) {
-				$t->parse("cell_arrow_blck", "cell_arrow");
+			if ($this->tree[$cnt]['not_a_leaf']) {
+				$t->parse('cell_arrow_blck', 'cell_arrow');
 			} else {
-				$t->setVar("cell_arrow_blck", "");
+				$t->setVar('cell_arrow_blck', '');
 			}
-			$foobar = $t->parse("cell_link_blck", "cell_link");
+			$foobar = $t->parse('cell_link_blck', 'cell_link');
 			$t->setVar(array(
-				"cellwidth"		=> $this->abscissaStep,
-				"cell_link_blck"	=> $foobar
+				'cellwidth'		=> $this->abscissaStep,
+				'cell_link_blck'	=> $foobar
 			));
-			$t->parse("horizontal_menu_cell_blck", "horizontal_menu_cell", true);
+			$t->parse('horizontal_menu_cell_blck', 'horizontal_menu_cell', true);
 		} else {
-			if ($this->tree[$cnt]["not_a_leaf"]) {
-				$this->tree[$cnt]["onmouseover"] = " onmouseover=\"moveLayerX('" . $this->tree[$cnt]["layer_label"] . "') ; moveLayerY('" . $this->tree[$cnt]["layer_label"] . "') ; LMPopUp('" . $this->tree[$cnt]["layer_label"] . "', false);\"";
+			if ($this->tree[$cnt]['text'] == '---') {
+				$this->tree[$this->tree[$cnt]['father_node']]['layer_content'] .= $t_sub->parse('separator_blck', 'separator');
+				continue;
+			}
+			if ($this->tree[$cnt]['not_a_leaf']) {
+				$this->tree[$cnt]['onmouseover'] = ' onmouseover="moveLayerX(' . "'" . $this->tree[$cnt]['layer_label'] . "') ; moveLayerY('" . $this->tree[$cnt]['layer_label'] . "') ; LMPopUp('" . $this->tree[$cnt]['layer_label'] . "'". ', false);"';
 			} else {
-				$this->tree[$cnt]["onmouseover"] = " onmouseover=\"LMPopUp('" . $this->tree[$this->tree[$cnt]["father_node"]]["layer_label"] . "', true);\"";
+				$this->tree[$cnt]['onmouseover'] = ' onmouseover="LMPopUp(' . "'" . $this->tree[$this->tree[$cnt]['father_node']]['layer_label'] . "'" . ', true);"';
 			}
 			$t_sub->setVar(array(
-				"imgwww"	=> $this->imgwww,
-				"transparent"	=> $this->transparentIcon,
-				"href"		=> $this->tree[$cnt]["parsed_href"],
-				"refid"		=> "ref" . $this->tree[$cnt]["layer_label"],
-				"onmouseover"	=> $this->tree[$cnt]["onmouseover"],
-				"title"		=> $this->tree[$cnt]["parsed_title"],
-				"target"	=> $this->tree[$cnt]["parsed_target"],
-				"text"		=> $this->tree[$cnt]["text"],
-				"arrowsrc"	=> $this->forwardArrowImg["src"],
-				"arrowwidth"	=> $this->forwardArrowImg["width"],
-				"arrowheight"	=> $this->forwardArrowImg["height"]
+				'imgwww'	=> $this->imgwww,
+				'transparent'	=> $this->transparentIcon,
+				'href'		=> $this->tree[$cnt]['parsed_href'],
+				'refid'		=> 'ref' . $this->tree[$cnt]['layer_label'],
+				'onmouseover'	=> $this->tree[$cnt]['onmouseover'],
+				'title'		=> $this->tree[$cnt]['parsed_title'],
+				'target'	=> $this->tree[$cnt]['parsed_target'],
+				'text'		=> $this->tree[$cnt]['text'],
+				'arrowsrc'	=> $this->forwardArrowImg['src'],
+				'arrowwidth'	=> $this->forwardArrowImg['width'],
+				'arrowheight'	=> $this->forwardArrowImg['height']
 			));
-			if ($this->_hasIcons[$this->tree[$cnt]["father_node"]]) {
+			if ($this->_hasIcons[$this->tree[$cnt]['father_node']]) {
 				$t_sub->setVar(array(
-					"iconsrc"	=> $this->tree[$cnt]["iconsrc"],
-					"iconwidth"	=> $this->tree[$cnt]["iconwidth"],
-					"iconheight"	=> $this->tree[$cnt]["iconheight"],
-					"iconalt"	=> $this->tree[$cnt]["iconalt"]
+					'iconsrc'	=> $this->tree[$cnt]['iconsrc'],
+					'iconwidth'	=> $this->tree[$cnt]['iconwidth'],
+					'iconheight'	=> $this->tree[$cnt]['iconheight'],
+					'iconalt'	=> $this->tree[$cnt]['iconalt']
 				));
-				$t_sub->parse("cell_icon_blck", "cell_icon");
+				$t_sub->parse('cell_icon_blck', 'cell_icon');
 			} else {
-				$t_sub->setVar("cell_icon_blck", "");
+				$t_sub->setVar('cell_icon_blck', '');
 			}
-			if ($this->tree[$cnt]["not_a_leaf"]) {
-				$t_sub->parse("cell_arrow_blck", "cell_arrow");
+			if ($this->tree[$cnt]['not_a_leaf']) {
+				$t_sub->parse('cell_arrow_blck', 'cell_arrow');
 			} else {
-				$t_sub->setVar("cell_arrow_blck", "");
+				$t_sub->setVar('cell_arrow_blck', '');
 			}
-			$this->tree[$this->tree[$cnt]["father_node"]]["layer_content"] .= $t_sub->parse("sub_menu_cell_blck", "sub_menu_cell");
+			$this->tree[$this->tree[$cnt]['father_node']]['layer_content'] .= $t_sub->parse('sub_menu_cell_blck', 'sub_menu_cell');
 		}
 	}	// end of the "for" cycle scanning all nodes
 
 	$foobar = $this->_firstLevelCnt[$menu_name] * $this->abscissaStep;
-	$t->setVar("menuwidth", $foobar);
+	$t->setVar('menuwidth', $foobar);
 	$t->setVar(array(
-		"layer_label"	=> $menu_name,
-		"menubody"	=> $this->_firstLevelMenu[$menu_name]
+		'layer_label'	=> $menu_name,
+		'menubody'	=> $this->_firstLevelMenu[$menu_name]
 	));
-	$this->_firstLevelMenu[$menu_name] = $t->parse("template_blck", "template");
+	$this->_firstLevelMenu[$menu_name] = $t->parse('template_blck', 'template');
 
 	$this->_updateFooter($menu_name);
 
@@ -617,8 +654,9 @@ function newHorizontalMenu(
 * @return string
 */
 function newVerticalMenu(
-	$menu_name = ""	// non consistent default...
-	) {
+	$menu_name = ''	// non consistent default...
+	)
+{
 	if (!isset($this->_firstItem[$menu_name]) || !isset($this->_lastItem[$menu_name])) {
 		$this->error("newVerticalMenu: the first/last item of the menu '$menu_name' is not defined; please check if you have parsed its menu data.");
 		return 0;
@@ -627,127 +665,139 @@ function newVerticalMenu(
 	$this->parseCommon($menu_name);
 
 	$t = new Template_PHPLIB();
-	$t->setFile("tplfile", $this->verticalMenuTpl);
-	$t->setBlock("tplfile", "template", "template_blck");
-	$t->setBlock("template", "vertical_menu_box", "vertical_menu_box_blck");
-	$t->setVar("vertical_menu_box_blck", "");
-	$t->setBlock("vertical_menu_box", "vertical_menu_cell", "vertical_menu_cell_blck");
-	$t->setVar("vertical_menu_cell_blck", "");
-	$t->setBlock("vertical_menu_cell", "cell_icon", "cell_icon_blck");
-	$t->setVar("cell_icon_blck", "");
-	$t->setBlock("vertical_menu_cell", "cell_arrow", "cell_arrow_blck");
-	$t->setVar("cell_arrow_blck", "");
+	$t->setFile('tplfile', $this->verticalMenuTpl);
+	$t->setBlock('tplfile', 'template', 'template_blck');
+	$t->setBlock('template', 'vertical_menu_box', 'vertical_menu_box_blck');
+	$t->setVar('vertical_menu_box_blck', '');
+	$t->setBlock('vertical_menu_box', 'vertical_menu_cell', 'vertical_menu_cell_blck');
+	$t->setVar('vertical_menu_cell_blck', '');
+	$t->setBlock('vertical_menu_cell', 'cell_icon', 'cell_icon_blck');
+	$t->setVar('cell_icon_blck', '');
+	$t->setBlock('vertical_menu_cell', 'cell_arrow', 'cell_arrow_blck');
+	$t->setVar('cell_arrow_blck', '');
+	$t->setBlock('vertical_menu_box', 'separator', 'separator_blck');
+	$t->setVar('separator_blck', '');
 
 	$t_sub = new Template_PHPLIB();
-	$t_sub->setFile("tplfile", $this->subMenuTpl);
-	$t_sub->setBlock("tplfile", "sub_menu_cell", "sub_menu_cell_blck");
-	$t_sub->setVar("sub_menu_cell_blck", "");
-	$t_sub->setBlock("sub_menu_cell", "cell_icon", "cell_icon_blck");
-	$t_sub->setVar("cell_icon_blck", "");
-	$t_sub->setBlock("sub_menu_cell", "cell_arrow", "cell_arrow_blck");
-	$t_sub->setVar("cell_arrow_blck", "");
+	$t_sub->setFile('tplfile', $this->subMenuTpl);
+	$t_sub->setBlock('tplfile', 'sub_menu_cell', 'sub_menu_cell_blck');
+	$t_sub->setVar('sub_menu_cell_blck', '');
+	$t_sub->setBlock('sub_menu_cell', 'cell_icon', 'cell_icon_blck');
+	$t_sub->setVar('cell_icon_blck', '');
+	$t_sub->setBlock('sub_menu_cell', 'cell_arrow', 'cell_arrow_blck');
+	$t_sub->setVar('cell_arrow_blck', '');
+	$t_sub->setBlock('tplfile', 'separator', 'separator_blck');
+	$t_sub->setVar('separator_blck', '');
 
-	$this->_firstLevelMenu[$menu_name] = "";
+	$this->_firstLevelMenu[$menu_name] = '';
 
 	$this->moveLayers .= "\tvar " . $menu_name . "TOP = getOffsetTop('" . $menu_name . "');\n";
 	$this->moveLayers .= "\tvar " . $menu_name . "LEFT = getOffsetLeft('" . $menu_name . "');\n";
 	$this->moveLayers .= "\tvar " . $menu_name . "WIDTH = getOffsetWidth('" . $menu_name . "');\n";
 
 	for ($cnt=$this->_firstItem[$menu_name]; $cnt<=$this->_lastItem[$menu_name]; $cnt++) {	// this counter scans all nodes of the new menu
-		if ($this->tree[$cnt]["not_a_leaf"]) {
+		if ($this->tree[$cnt]['not_a_leaf']) {
 			// geometrical parameters are assigned to the new layer, related to the above mentioned children
-			if ($this->tree[$cnt]["child_of_root_node"]) {
-				$this->moveLayers .= "\tsetLeft('" . $this->tree[$cnt]["layer_label"] . "', " . $menu_name . "LEFT + " . $menu_name . "WIDTH - menuRightShift);\n";
+			if ($this->tree[$cnt]['child_of_root_node']) {
+				$this->moveLayers .= "\tsetLeft('" . $this->tree[$cnt]['layer_label'] . "', " . $menu_name . "LEFT + " . $menu_name . "WIDTH - menuRightShift);\n";
 			}
 		}
 
-		if ($this->tree[$cnt]["child_of_root_node"]) {
-			if ($this->tree[$cnt]["not_a_leaf"]) {
-				$this->tree[$cnt]["onmouseover"] = " onmouseover=\"moveLayerX('" . $this->tree[$cnt]["layer_label"] . "') ; moveLayerY('" . $this->tree[$cnt]["layer_label"] . "') ; LMPopUp('" . $this->tree[$cnt]["layer_label"] . "', false);\"";
+		if ($this->tree[$cnt]['child_of_root_node']) {
+			if ($this->tree[$cnt]['text'] == '---') {
+				$this->_firstLevelMenu[$menu_name] .= $t->parse('separator_blck', 'separator');
+				continue;
+			}
+			if ($this->tree[$cnt]['not_a_leaf']) {
+				$this->tree[$cnt]['onmouseover'] = ' onmouseover="moveLayerX(' . "'" . $this->tree[$cnt]['layer_label'] . "') ; moveLayerY('" . $this->tree[$cnt]['layer_label'] . "') ; LMPopUp('" . $this->tree[$cnt]['layer_label'] . "'" . ', false);"';
 			} else {
-				$this->tree[$cnt]["onmouseover"] = " onmouseover=\"shutdown();\"";
+				$this->tree[$cnt]['onmouseover'] = ' onmouseover="shutdown();"';
 			}
 			$t->setVar(array(
-				"imgwww"	=> $this->imgwww,
-				"transparent"	=> $this->transparentIcon,
-				"href"		=> $this->tree[$cnt]["parsed_href"],
-				"refid"		=> "ref" . $this->tree[$cnt]["layer_label"],
-				"onmouseover"	=> $this->tree[$cnt]["onmouseover"],
-				"title"		=> $this->tree[$cnt]["parsed_title"],
-				"target"	=> $this->tree[$cnt]["parsed_target"],
-				"text"		=> $this->tree[$cnt]["text"],
-				"arrowsrc"	=> $this->forwardArrowImg["src"],
-				"arrowwidth"	=> $this->forwardArrowImg["width"],
-				"arrowheight"	=> $this->forwardArrowImg["height"]
+				'imgwww'	=> $this->imgwww,
+				'transparent'	=> $this->transparentIcon,
+				'href'		=> $this->tree[$cnt]['parsed_href'],
+				'refid'		=> 'ref' . $this->tree[$cnt]['layer_label'],
+				'onmouseover'	=> $this->tree[$cnt]['onmouseover'],
+				'title'		=> $this->tree[$cnt]['parsed_title'],
+				'target'	=> $this->tree[$cnt]['parsed_target'],
+				'text'		=> $this->tree[$cnt]['text'],
+				'arrowsrc'	=> $this->forwardArrowImg['src'],
+				'arrowwidth'	=> $this->forwardArrowImg['width'],
+				'arrowheight'	=> $this->forwardArrowImg['height']
 			));
 			if ($this->_hasIcons[$menu_name]) {
 				$t->setVar(array(
-					"iconsrc"	=> $this->tree[$cnt]["iconsrc"],
-					"iconwidth"	=> $this->tree[$cnt]["iconwidth"],
-					"iconheight"	=> $this->tree[$cnt]["iconheight"],
-					"iconalt"	=> $this->tree[$cnt]["iconalt"]
+					'iconsrc'	=> $this->tree[$cnt]['iconsrc'],
+					'iconwidth'	=> $this->tree[$cnt]['iconwidth'],
+					'iconheight'	=> $this->tree[$cnt]['iconheight'],
+					'iconalt'	=> $this->tree[$cnt]['iconalt']
 				));
-				$t->parse("cell_icon_blck", "cell_icon");
+				$t->parse('cell_icon_blck', 'cell_icon');
 			} else {
-				$t->setVar("cell_icon_blck", "");
+				$t->setVar('cell_icon_blck', '');
 			}
-			if ($this->tree[$cnt]["not_a_leaf"]) {
-				$t->parse("cell_arrow_blck", "cell_arrow");
+			if ($this->tree[$cnt]['not_a_leaf']) {
+				$t->parse('cell_arrow_blck', 'cell_arrow');
 			} else {
-				$t->setVar("cell_arrow_blck", "");
+				$t->setVar('cell_arrow_blck', '');
 			}
-			$this->_firstLevelMenu[$menu_name] .= $t->parse("vertical_menu_cell_blck", "vertical_menu_cell");
+			$this->_firstLevelMenu[$menu_name] .= $t->parse('vertical_menu_cell_blck', 'vertical_menu_cell');
 		} else {
-			if ($this->tree[$cnt]["not_a_leaf"]) {
-				$this->tree[$cnt]["onmouseover"] = " onmouseover=\"moveLayerX('" . $this->tree[$cnt]["layer_label"] . "') ; moveLayerY('" . $this->tree[$cnt]["layer_label"] . "') ; LMPopUp('" . $this->tree[$cnt]["layer_label"] . "', false);\"";
+			if ($this->tree[$cnt]['text'] == '---') {
+				$this->tree[$this->tree[$cnt]['father_node']]['layer_content'] .= $t_sub->parse('separator_blck', 'separator');
+				continue;
+			}
+			if ($this->tree[$cnt]['not_a_leaf']) {
+				$this->tree[$cnt]['onmouseover'] = ' onmouseover="moveLayerX(' . "'" . $this->tree[$cnt]['layer_label'] . "') ; moveLayerY('" . $this->tree[$cnt]['layer_label'] . "') ; LMPopUp('" . $this->tree[$cnt]['layer_label'] . "'" . ', false);"';
 			} else {
-				$this->tree[$cnt]["onmouseover"] = " onmouseover=\"LMPopUp('" . $this->tree[$this->tree[$cnt]["father_node"]]["layer_label"] . "', true);\"";
+				$this->tree[$cnt]['onmouseover'] = ' onmouseover="LMPopUp(' . "'" . $this->tree[$this->tree[$cnt]['father_node']]['layer_label'] . "'" . ', true);"';
 			}
 			$t_sub->setVar(array(
-				"imgwww"	=> $this->imgwww,
-				"transparent"	=> $this->transparentIcon,
-				"href"		=> $this->tree[$cnt]["parsed_href"],
-				"refid"		=> "ref" . $this->tree[$cnt]["layer_label"],
-				"onmouseover"	=> $this->tree[$cnt]["onmouseover"],
-				"title"		=> $this->tree[$cnt]["parsed_title"],
-				"target"	=> $this->tree[$cnt]["parsed_target"],
-				"text"		=> $this->tree[$cnt]["text"],
-				"arrowsrc"	=> $this->forwardArrowImg["src"],
-				"arrowwidth"	=> $this->forwardArrowImg["width"],
-				"arrowheight"	=> $this->forwardArrowImg["height"]
+				'imgwww'	=> $this->imgwww,
+				'transparent'	=> $this->transparentIcon,
+				'href'		=> $this->tree[$cnt]['parsed_href'],
+				'refid'		=> 'ref' . $this->tree[$cnt]['layer_label'],
+				'onmouseover'	=> $this->tree[$cnt]['onmouseover'],
+				'title'		=> $this->tree[$cnt]['parsed_title'],
+				'target'	=> $this->tree[$cnt]['parsed_target'],
+				'text'		=> $this->tree[$cnt]['text'],
+				'arrowsrc'	=> $this->forwardArrowImg['src'],
+				'arrowwidth'	=> $this->forwardArrowImg['width'],
+				'arrowheight'	=> $this->forwardArrowImg['height']
 			));
-			if ($this->_hasIcons[$this->tree[$cnt]["father_node"]]) {
+			if ($this->_hasIcons[$this->tree[$cnt]['father_node']]) {
 				$t_sub->setVar(array(
-					"imgwww"	=> $this->imgwww,
-					"iconsrc"	=> $this->tree[$cnt]["iconsrc"],
-					"iconwidth"	=> $this->tree[$cnt]["iconwidth"],
-					"iconheight"	=> $this->tree[$cnt]["iconheight"],
-					"iconalt"	=> $this->tree[$cnt]["iconalt"]
+					'iconsrc'	=> $this->tree[$cnt]['iconsrc'],
+					'iconwidth'	=> $this->tree[$cnt]['iconwidth'],
+					'iconheight'	=> $this->tree[$cnt]['iconheight'],
+					'iconalt'	=> $this->tree[$cnt]['iconalt']
 				));
-				$t_sub->parse("cell_icon_blck", "cell_icon");
+				$t_sub->parse('cell_icon_blck', 'cell_icon');
 			} else {
-				$t_sub->setVar("cell_icon_blck", "");
+				$t_sub->setVar('cell_icon_blck', '');
 			}
-			if ($this->tree[$cnt]["not_a_leaf"]) {
-				$t_sub->parse("cell_arrow_blck", "cell_arrow");
+			if ($this->tree[$cnt]['not_a_leaf']) {
+				$t_sub->parse('cell_arrow_blck', 'cell_arrow');
 			} else {
-				$t_sub->setVar("cell_arrow_blck", "");
+				$t_sub->setVar('cell_arrow_blck', '');
 			}
-			$this->tree[$this->tree[$cnt]["father_node"]]["layer_content"] .= $t_sub->parse("sub_menu_cell_blck", "sub_menu_cell");
+			$this->tree[$this->tree[$cnt]['father_node']]['layer_content'] .= $t_sub->parse('sub_menu_cell_blck', 'sub_menu_cell');
 		}
 	}	// end of the "for" cycle scanning all nodes
 
 	$t->setVar(array(
-		"menu_name"			=> $menu_name,
-		"vertical_menu_cell_blck"	=> $this->_firstLevelMenu[$menu_name]
+		'menu_name'			=> $menu_name,
+		'vertical_menu_cell_blck'	=> $this->_firstLevelMenu[$menu_name],
+		'separator_blck'		=> ''
 	));
-	$this->_firstLevelMenu[$menu_name] = $t->parse("vertical_menu_box_blck", "vertical_menu_box");
-	$t->setVar("abscissaStep", $this->abscissaStep);
+	$this->_firstLevelMenu[$menu_name] = $t->parse('vertical_menu_box_blck', 'vertical_menu_box');
+	$t->setVar('abscissaStep', $this->abscissaStep);
 	$t->setVar(array(
-		"layer_label"			=> $menu_name,
-		"vertical_menu_box_blck"	=> $this->_firstLevelMenu[$menu_name]
+		'layer_label'			=> $menu_name,
+		'vertical_menu_box_blck'	=> $this->_firstLevelMenu[$menu_name]
 	));
-	$this->_firstLevelMenu[$menu_name] = $t->parse("template_blck", "template");
+	$this->_firstLevelMenu[$menu_name] = $t->parse('template_blck', 'template');
 
 	$this->_updateFooter($menu_name);
 
@@ -763,29 +813,31 @@ function newVerticalMenu(
 * @access public
 * @return string
 */
-function makeHeader() {
+function makeHeader()
+{
 	$t = new Template_PHPLIB();
-	$this->listl = "listl = [" . substr($this->listl, 1) . "];";
-	$this->father_keys = "father_keys = [" . substr($this->father_keys, 1) . "];";
-	$this->father_vals = "father_vals = [" . substr($this->father_vals, 1) . "];";
-	$t->setFile("tplfile", $this->libjsdir . "layersmenu-header.ijs");
+	$this->listl = 'listl = [' . substr($this->listl, 1) . '];';
+	$this->father_keys = 'father_keys = [' . substr($this->father_keys, 1) . '];';
+	$this->father_vals = 'father_vals = [' . substr($this->father_vals, 1) . '];';
+	$t->setFile('tplfile', $this->libjsdir . 'layersmenu-header.ijs');
 	$t->setVar(array(
-		"packageName"	=> $this->_packageName,
-		"version"	=> $this->version,
-		"copyright"	=> $this->copyright,
-		"author"	=> $this->author,
-		"menuTopShift"	=> $this->menuTopShift,
-		"menuRightShift"=> $this->menuRightShift,
-		"menuLeftShift"	=> $this->menuLeftShift,
-		"thresholdY"	=> $this->thresholdY,
-		"abscissaStep"	=> $this->abscissaStep,
-		"listl"		=> $this->listl,
-		"nodesCount"	=> $this->_nodesCount,
-		"father_keys"	=> $this->father_keys,
-		"father_vals"	=> $this->father_vals,
-		"moveLayers"	=> $this->moveLayers
+		'packageName'	=> $this->_packageName,
+		'version'	=> $this->version,
+		'copyright'	=> $this->copyright,
+		'author'	=> $this->author,
+		'menuTopShift'	=> $this->menuTopShift,
+		'menuRightShift'=> $this->menuRightShift,
+		'menuLeftShift'	=> $this->menuLeftShift,
+		'thresholdY'	=> $this->thresholdY,
+		'abscissaStep'	=> $this->abscissaStep,
+		'listl'		=> $this->listl,
+		'nodesCount'	=> $this->_nodesCount,
+		'father_keys'	=> $this->father_keys,
+		'father_vals'	=> $this->father_vals,
+		'moveLayers'	=> $this->moveLayers
 	));
-	$this->header = $t->parse("out", "tplfile");
+	$this->header = $t->parse('out', 'tplfile');
+	$this->_headerHasBeenMade = true;
 	return $this->header;
 }
 
@@ -794,7 +846,11 @@ function makeHeader() {
 * @access public
 * @return string
 */
-function getHeader() {
+function getHeader()
+{
+	if (!$this->_headerHasBeenMade) {
+		$this->makeHeader();
+	}
 	return $this->header;
 }
 
@@ -803,9 +859,9 @@ function getHeader() {
 * @access public
 * @return void
 */
-function printHeader() {
-	$this->makeHeader();
-	print $this->header;
+function printHeader()
+{
+	print $this->getHeader();
 }
 
 /**
@@ -815,7 +871,8 @@ function printHeader() {
 *   has to be returned
 * @return string
 */
-function getMenu($menu_name) {
+function getMenu($menu_name)
+{
 	return $this->_firstLevelMenu[$menu_name];
 }
 
@@ -826,7 +883,8 @@ function getMenu($menu_name) {
 *   has to be printed
 * @return void
 */
-function printMenu($menu_name) {
+function printMenu($menu_name)
+{
 	print $this->_firstLevelMenu[$menu_name];
 }
 
@@ -839,18 +897,20 @@ function printMenu($menu_name) {
 * @access public
 * @return string
 */
-function makeFooter() {
+function makeFooter()
+{
 	$t = new Template_PHPLIB();
-	$t->setFile("tplfile", $this->libjsdir . "layersmenu-footer.ijs");
+	$t->setFile('tplfile', $this->libjsdir . 'layersmenu-footer.ijs');
 	$t->setVar(array(
-		"packageName"	=> $this->_packageName,
-		"version"	=> $this->version,
-		"copyright"	=> $this->copyright,
-		"author"	=> $this->author,
-		"footer"	=> $this->footer
+		'packageName'	=> $this->_packageName,
+		'version'	=> $this->version,
+		'copyright'	=> $this->copyright,
+		'author'	=> $this->author,
+		'footer'	=> $this->footer
 		
 	));
-	$this->footer = $t->parse("out", "tplfile");
+	$this->footer = $t->parse('out', 'tplfile');
+	$this->_footerHasBeenMade = true;
 	return $this->footer;
 }
 
@@ -859,7 +919,11 @@ function makeFooter() {
 * @access public
 * @return string
 */
-function getFooter() {
+function getFooter()
+{
+	if (!$this->_footerHasBeenMade) {
+		$this->makeFooter();
+	}
 	return $this->footer;
 }
 
@@ -868,9 +932,9 @@ function getFooter() {
 * @access public
 * @return void
 */
-function printFooter() {
-	$this->makeFooter();
-	print $this->footer;
+function printFooter()
+{
+	print $this->getFooter();
 }
 
 } /* END OF CLASS */

@@ -15,7 +15,7 @@
 <title>The PHP Layers Menu System</title>
 <script language="JavaScript" type="text/javascript">
 <!--
-<?php include ("libjs/layersmenu-browser_detection.js"); ?>
+<?php require_once 'libjs/layersmenu-browser_detection.js'; ?>
 // -->
 </script>
 <script language="JavaScript" type="text/javascript" src="libjs/layersmenu-library.js"></script>
@@ -23,13 +23,14 @@
 <script language="JavaScript" type="text/javascript" src="libjs/layerstreemenu-cookies.js"></script>
 
 <?php
-include ("lib/PHPLIB.php");
-include ("lib/layersmenu-common.inc.php");
-include ("lib/layersmenu.inc.php");
+require_once 'lib/PHPLIB.php';
+require_once 'lib/layersmenu-common.inc.php';
+require_once 'lib/layersmenu.inc.php';
 $mid = new LayersMenu();
-$mid->setMenuStructureFile("layersmenu-horizontal-1.txt");
-$mid->parseStructureForMenu("hormenu1");
-$mid->newHorizontalMenu("hormenu1");
+$mid->setMenuStructureFile('layersmenu-horizontal-1.txt');
+$mid->setIconsize(16, 16);
+$mid->parseStructureForMenu('hormenu1');
+$mid->newHorizontalMenu('hormenu1');
 $mid->printHeader();
 ?>
 
@@ -37,12 +38,12 @@ $mid->printHeader();
 <body>
 
 <?php
-$mid->printMenu("hormenu1");
+$mid->printMenu('hormenu1');
 ?>
 
 <div class="normalbox">
 <div class="normal" align="center">
-<b>A file-based example with a Horizontal Layers Menu and a JavaScript Tree Menu</b>
+<b><?php print basename(__FILE__); ?> - a file-based example with a Horizontal Layers Menu and a JavaScript Tree Menu</b>
 </div>
 </div>
 
@@ -54,11 +55,14 @@ $mid->printMenu("hormenu1");
 JavaScript Tree Menu
 </div>
 <?php
-include ("lib/treemenu.inc.php");
+require_once 'lib/treemenu.inc.php';
 $treemid = new TreeMenu();
-$treemid->setMenuStructureFile("layersmenu-vertical-1.txt");
-$treemid->parseStructureForMenu("treemenu1");
-print $treemid->newTreeMenu("treemenu1");
+$treemid->setMenuStructureFile('layersmenu-vertical-1.txt');
+$treemid->setIconsize(16, 16);
+$treemid->parseStructureForMenu('treemenu1');
+//$treemid->setSelectedItemByCount('treemenu1', 4);
+$treemid->setSelectedItemByUrl('treemenu1', basename(__FILE__));
+print $treemid->newTreeMenu('treemenu1');
 ?>
 </div>
 <br />
@@ -80,7 +84,7 @@ src="images/vcss.png" alt="Valid CSS!" height="31" width="88" /></a>
 <td valign="top">
 <div class="normalbox">
 <div class="normal">
-<?php include ("README.ihtml"); ?>
+<?php require_once 'README.ihtml'; ?>
 </div>
 </div>
 </td>

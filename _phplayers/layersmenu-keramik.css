@@ -7,8 +7,8 @@
 .khorbaritem	{
 	float: left;
 	white-space: nowrap;
-	font-family: luxi sans, verdana, geneva, arial, helvetica, sans-serif;
-	font-size: 14px;
+	font-family: bitstream vera sans, luxi sans, verdana, geneva, arial, helvetica, sans-serif;
+	font-size: 13px;
 }
 
 .khorbaritem a	{
@@ -18,19 +18,23 @@
 
 .khorbaritem a:link	{
 	color: #000000;
+	text-decoration: none;
 }
 
 .khorbaritem a:visited	{
 	color: #000000;
+	text-decoration: none;
 }
 
 .khorbaritem a:hover	{
 	color: #000000;
 	background-color: #ffdd76;
+	text-decoration: none;
 }
 
 .khorbaritem a:active	{
 	color: #ff0000;
+	text-decoration: none;
 }
 
 .kverbar	{
@@ -54,11 +58,10 @@
 }
 
 .kitem	{
-	position: relative;
 	text-align: left;
 	white-space: nowrap;
-	font-family: luxi sans, verdana, geneva, arial, helvetica, sans-serif;
-	font-size: 14px;
+	font-family: bitstream vera sans, luxi sans, verdana, geneva, arial, helvetica, sans-serif;
+	font-size: 13px;
 }
 
 .kitem a	{
@@ -69,19 +72,23 @@
 
 .kitem a:link	{
 	color: #000000;
+	text-decoration: none;
 }
 
 .kitem a:visited	{
 	color: #000000;
+	text-decoration: none;
 }
 
 .kitem a:hover	{
 	color: #000000;
 	background-color: #ffdd76;
+	text-decoration: none;
 }
 
 .kitem a:active	{
 	color: #ff0000;
+	text-decoration: none;
 }
 
 .kitem .kfwdarr	{
@@ -89,3 +96,14 @@
 	top: 4px;
 	right: 11px;
 }
+
+.kseparator	{
+	background-color: #ff0000;
+	border-top: 1px solid #c6c6bf;
+	border-bottom: 1px solid #ffffff;
+	margin: 2px 5px 2px 5px;	/* top right bottom left */
+	height: 0;
+	font-size: 1px;
+	line-height: 0;
+}
+

@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15"></meta>
 <title>The PHP Layers Menu - Templates</title>
-<link rel="StyleSheet" href="../layersmenu.css" type="text/css"></link>
+<link rel="StyleSheet" href="../layersmenu-old.css" type="text/css"></link>
 </head>
 <body>
 
@@ -15,6 +15,7 @@ This comment does not appear on the resulting page.
 </pre>
 
 <!-- BEGIN template -->
+<!-- beginning of horizontal menu bar -->
 
 <table border="0" cellpadding="2" cellspacing="0" class="darkbordertable">
 <tr>
@@ -31,7 +32,7 @@ if (IE) fixieflm("{menu_layer_label}");
 // -->
 </script>
 <!-- BEGIN cell_icon --><img
-align="top" src="{imgwww}{iconsrc}" width="{iconwidth}" height="{iconheight}" border="0"
+align="top" src="{iconsrc}" width="{iconwidth}" height="{iconheight}" border="0"
 alt="{iconalt}" />&nbsp;<!-- END cell_icon --><a href="{href}"{onmouseover}{title}{target}
 class="phplmold">{text}</a><!-- BEGIN cell_arrow -->&nbsp;<img
 src="{imgwww}{downsrc}" width="{downwidth}" height="{downheight}"
@@ -46,6 +47,7 @@ border="0" alt=">>" /><!-- END cell_arrow -->
 </tr>
 </table>
 
+<!-- end of horizontal menu bar -->
 <!-- END template -->
 
 </body>

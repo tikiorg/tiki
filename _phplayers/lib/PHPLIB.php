@@ -8,7 +8,7 @@
 //          Bjoern Schotte <bjoern@rent-a-phpwizard.de> (PEARification)                
 //          Martin Jansen <mj@php.net> (PEAR conformance)            
 //
-// $Id: PHPLIB.php,v 1.1.1.1 2003-11-25 09:07:12 mose Exp $
+// $Id: PHPLIB.php,v 1.2 2006-09-26 10:12:36 luciash Exp $
 //
 
 //require_once "PEAR.php";

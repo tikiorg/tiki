@@ -7,8 +7,8 @@ body	{
 }
 
 .normal {
-	font-family: luxi sans, verdana, geneva, arial, helvetica, sans-serif;
-	font-size: 14px;
+	font-family: bitstream vera sans, luxi sans, verdana, geneva, arial, helvetica, sans-serif;
+	font-size: 13px;
 	color: #000000;
 }
 
@@ -21,8 +21,8 @@ body	{
 
 .h1	{
 	text-align: center;
-	font-family: luxi sans, verdana, geneva, arial, helvetica, sans-serif;
-	font-size: 26px;
+	font-family: bitstream vera sans, luxi sans, verdana, geneva, arial, helvetica, sans-serif;
+	font-size: 22px;
 	font-weight: bold;
 	color: #880000;
 }

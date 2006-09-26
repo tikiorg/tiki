@@ -10,36 +10,39 @@
 
 <script language="JavaScript" type="text/javascript">
 <!--
-<?php include ("libjs/layersmenu-browser_detection.js"); ?>
+<?php require_once 'libjs/layersmenu-browser_detection.js'; ?>
 // -->
 </script>
 <script language="JavaScript" type="text/javascript" src="libjs/layersmenu-library.js"></script>
 <script language="JavaScript" type="text/javascript" src="libjs/layersmenu.js"></script>
 
 <?php
-include ("lib/PHPLIB.php");
-include ("lib/layersmenu-common.inc.php");
-include ("lib/layersmenu.inc.php");
+require_once 'lib/PHPLIB.php';
+require_once 'lib/layersmenu-common.inc.php';
+require_once 'lib/layersmenu.inc.php';
 
 $mid = new LayersMenu();
 
-//$mid->setDirroot("./");
-////$mid->setLibjsdir("./libjs/");
-////$mid->setImgdir("./images/");
-//$mid->setImgwww("images/");
-////$mid->setTpldir("./templates/");
-//$mid->setVerticalMenuTpl("layersmenu-vertical_menu.ihtml");
-//$mid->setSubMenuTpl("layersmenu-sub_menu.ihtml");
+//$mid->setDirroot('./');
+////$mid->setLibjsdir('./libjs/');
+////$mid->setImgdir('./menuimages/');
+//$mid->setImgwww('menuimages/');
+////$mid->setIcondir('./menuicons/');
+//$mid->setIconwww('menuicons/');
+////$mid->setTpldir('./templates/');
+//$mid->setVerticalMenuTpl('layersmenu-vertical_menu.ihtml');
+//$mid->setSubMenuTpl('layersmenu-sub_menu.ihtml');
 
-//$mid->setDownArrowImg("down-arrow.png");
-//$mid->setForwardArrowImg("forward-arrow.png");
-$mid->setMenuStructureFile("layersmenu-horizontal-1.txt");
-$mid->parseStructureForMenu("vermenu1");
-$mid->newVerticalMenu("vermenu1");
+//$mid->setDownArrowImg('down-arrow.png');
+//$mid->setForwardArrowImg('forward-arrow.png');
+$mid->setMenuStructureFile('layersmenu-horizontal-1.txt');
+$mid->setIconsize(16, 16);
+$mid->parseStructureForMenu('vermenu1');
+$mid->newVerticalMenu('vermenu1');
 
 $mid->printHeader();
 /* alternatively:
-$header = $mid->makeHeader();
+$header = $mid->getHeader();
 print $header;
 */
 ?>
@@ -49,7 +52,7 @@ print $header;
 
 <div class="normalbox">
 <div class="normal" align="center">
-<b>A file-based example with a Vertical Layers Menu</b>
+<b><?php print basename(__FILE__); ?> - a file-based example with a Vertical Layers Menu</b>
 </div>
 </div>
 
@@ -58,9 +61,9 @@ print $header;
 <td width="20%" valign="top">
 <div style="height: 3px"></div>
 <?php
-$mid->printMenu("vermenu1");
+$mid->printMenu('vermenu1');
 /* alternatively:
-$vermenu1 = $mid->getMenu("vermenu1");
+$vermenu1 = $mid->getMenu('vermenu1');
 print $vermenu1;
 */
 ?>
@@ -83,7 +86,7 @@ src="images/vcss.png" alt="Valid CSS!" height="31" width="88" /></a>
 <td valign="top">
 <div class="normalbox">
 <div class="normal">
-<?php include ("README.ihtml"); ?>
+<?php require_once 'README.ihtml'; ?>
 </div>
 </div>
 </td>
@@ -93,7 +96,7 @@ src="images/vcss.png" alt="Valid CSS!" height="31" width="88" /></a>
 <?php
 $mid->printFooter();
 /* alternatively:
-$footer = $mid->makeFooter();
+$footer = $mid->getFooter();
 print $footer;
 */
 ?>

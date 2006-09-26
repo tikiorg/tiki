@@ -1,17 +1,8 @@
-.|Linus B. Torvalds|http://www.cs.Helsinki.FI/u/torvalds/|The father of Linux||Linus
-.|Linux Kernel Archives|http://www.kernel.org/|Here you can download the Linux kernel sources|www.kernel.org_images_tux16-16.png|kernelorg
-.|Linux Distributions|http://flashnet.linux.tucows.com/distribution.html|Here you can find a list of the major Linux distributions||Linux|1
-..|Debian GNU/Linux|http://www.debian.org/|Enjoy the exciting world of Debian GNU/Linux!|debian-icon-mini.png|Linux|1
-...|About|http://www.debian.org/intro/about|||Linux
-...|News|http://www.debian.org/News/|||Linux
-...|Distribution|http://www.debian.org/distrib/|||Linux
-...|Support|http://www.debian.org/support|||Linux
-...|Development|http://www.debian.org/devel/|||Linux
-...|Search|http://search.debian.org/|||Linux
-...|A Debian Mirror|http://ftp.mirror.ac.uk/sites/ftp.debian.org/|||Linux
-..|Mandrake|http://www.mandrakelinux.com/|Mandrake Linux||Linux
-...|Errata|http://www.mandrakelinux.com/en/errata.php3|||Linux
-...|Download|http://www.mandrakelinux.com/en/ftp.php3|||Linux
-...|Mandrake Expert|http://www.mandrakeexpert.com/index1.php|||Linux
-...|Bugzilla|http://qa.mandrakesoft.com/|||Linux
-..|Slackware|http://www.freesoftware.org/|Slackware Linux||Linux
+.|PHPLM Complete Demo|demo.php|The PHP Layers Menu System complete demo|shortcut_icon_phplm.png
+.|Some PHPLM examples|||||1
+..|Only tree menus|||||1
+...|Only a tree menu|example-treemenu.php|Example with only one tree menu
+...|Two tree menus|example-two_treemenus.php|Example with 2 tree menus
+..|Layers + tree menus|||||1
+...|Hor. menu + tree|example-hormenu_and_treemenu.php|Example with a horizontal menu and a tree menu
+...|Layers + trees|example-layersmenus_and_treemenus.php|Example with hor. menu, ver. menu, 2 tree menus

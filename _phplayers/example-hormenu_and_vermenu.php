@@ -10,40 +10,43 @@
 
 <script language="JavaScript" type="text/javascript">
 <!--
-<?php include ("libjs/layersmenu-browser_detection.js"); ?>
+<?php require_once 'libjs/layersmenu-browser_detection.js'; ?>
 // -->
 </script>
 <script language="JavaScript" type="text/javascript" src="libjs/layersmenu-library.js"></script>
 <script language="JavaScript" type="text/javascript" src="libjs/layersmenu.js"></script>
 
 <?php
-include ("lib/PHPLIB.php");
-include ("lib/layersmenu-common.inc.php");
-include ("lib/layersmenu.inc.php");
+require_once 'lib/PHPLIB.php';
+require_once 'lib/layersmenu-common.inc.php';
+require_once 'lib/layersmenu.inc.php';
 
 $mid = new LayersMenu();
 
-//$mid->setDirroot("./");
-////$mid->setLibjsdir("./libjs/");
-////$mid->setImgdir("./images/");
-//$mid->setImgwww("images/");
-////$mid->setTpldir("./templates/");
-//$mid->setHorizontalMenuTpl("layersmenu-horizontal_menu.ihtml");
-//$mid->setVerticalMenuTpl("layersmenu-vertical_menu.ihtml");
-//$mid->setSubMenuTpl("layersmenu-sub_menu.ihtml");
+//$mid->setDirroot('./');
+////$mid->setLibjsdir('./libjs/');
+////$mid->setImgdir('./menuimages/');
+//$mid->setImgwww('menuimages/');
+////$mid->setIcondir('./menuicons/');
+//$mid->setIconwww('menuicons/');
+////$mid->setTpldir('./templates/');
+//$mid->setHorizontalMenuTpl('layersmenu-horizontal_menu.ihtml');
+//$mid->setVerticalMenuTpl('layersmenu-vertical_menu.ihtml');
+//$mid->setSubMenuTpl('layersmenu-sub_menu.ihtml');
 
-//$mid->setDownArrowImg("down-arrow.png");
-//$mid->setForwardArrowImg("forward-arrow.png");
-$mid->setMenuStructureFile("layersmenu-horizontal-1.txt");
-$mid->parseStructureForMenu("hormenu1");
-$mid->newHorizontalMenu("hormenu1");
-$mid->setMenuStructureFile("layersmenu-vertical-1.txt");
-$mid->parseStructureForMenu("vermenu1");
-$mid->newVerticalMenu("vermenu1");
+//$mid->setDownArrowImg('down-arrow.png');
+//$mid->setForwardArrowImg('forward-arrow.png');
+$mid->setMenuStructureFile('layersmenu-horizontal-1.txt');
+$mid->setIconsize(16, 16);
+$mid->parseStructureForMenu('hormenu1');
+$mid->newHorizontalMenu('hormenu1');
+$mid->setMenuStructureFile('layersmenu-vertical-2.txt');
+$mid->parseStructureForMenu('vermenu1');
+$mid->newVerticalMenu('vermenu1');
 
 $mid->printHeader();
 /* alternatively:
-$header = $mid->makeHeader();
+$header = $mid->getHeader();
 print $header;
 */
 ?>
@@ -52,16 +55,16 @@ print $header;
 <body>
 
 <?php
-$mid->printMenu("hormenu1");
+$mid->printMenu('hormenu1');
 /* alternatively:
-$hormenu1 = $mid->getMenu("hormenu1");
+$hormenu1 = $mid->getMenu('hormenu1');
 print $hormenu1;
 */
 ?>
 
 <div class="normalbox">
 <div class="normal" align="center">
-<b>A file-based example with a Horizontal and a Vertical Layers Menu</b>
+<b><?php print basename(__FILE__); ?> - a file-based example with a Horizontal and a Vertical Layers Menu</b>
 </div>
 </div>
 
@@ -70,7 +73,7 @@ print $hormenu1;
 <td width="20%" valign="top">
 <div style="height: 3px"></div>
 <?php
-$mid->printMenu("vermenu1");
+$mid->printMenu('vermenu1');
 /* alternatively:
 $vermenu1 = $mid->getMenu("vermenu1");
 print $vermenu1;
@@ -95,7 +98,7 @@ src="images/vcss.png" alt="Valid CSS!" height="31" width="88" /></a>
 <td valign="top">
 <div class="normalbox">
 <div class="normal">
-<?php include ("README.ihtml"); ?>
+<?php require_once 'README.ihtml'; ?>
 </div>
 </div>
 </td>
@@ -105,7 +108,7 @@ src="images/vcss.png" alt="Valid CSS!" height="31" width="88" /></a>
 <?php
 $mid->printFooter();
 /* alternatively:
-$footer = $mid->makeFooter();
+$footer = $mid->getFooter();
 print $footer;
 */
 ?>
