@@ -58,9 +58,9 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {* --- jscalendar block --- *}
 {if $feature_jscalendar eq 'y' and $uses_jscalendar eq 'y'}
 <link rel="StyleSheet" href="lib/jscalendar/calendar-system.css" type="text/css"></link>
-<script type="text/javascript"><!--
-{if $feature_phplayers eq 'y'}{php} include_once ("lib/phplayers/libjs/layersmenu-browser_detection.js"); {/php}{/if}
-// --></script>
+
+
+
 <script type="text/javascript" src="lib/jscalendar/calendar.js"></script>
 {if $jscalendar_langfile}
 <script type="text/javascript" src="lib/jscalendar/lang/calendar-{$jscalendar_langfile}.js"></script>
