@@ -1,14 +1,14 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.30 2006-09-19 16:33:14 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.31 2006-09-26 13:13:42 luciash Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-//
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.30 2006-09-19 16:33:14 ohertel Exp $
-//
+
+
+
 
 // Initialization
 require_once ('tiki-setup.php');
