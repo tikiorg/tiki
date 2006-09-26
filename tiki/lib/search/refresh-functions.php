@@ -1,4 +1,5 @@
 <?php
+// $Header: /cvsroot/tikiwiki/tiki/lib/search/refresh-functions.php,v 1.14 2006-09-26 13:17:51 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -30,6 +31,22 @@ function random_refresh_img() {
     $words=&search_index($res["name"]." ".$res["description"]);
     insert_index($words,"img",$res["imageId"]);
   }
+}
+
+function refresh_index_galleries() {
+	global $tikilib;
+	$query = "select * from `tiki_galleries`";
+	$result = $tikilib->query($query);
+	while ($res = $result->fetchRow()) {
+		$words=&search_index($res["name"]." ".$res["description"]);
+    	insert_index($words,"imggal",$res["galleryId"]);
+	}
+	$query = "select * from `tiki_images`";
+    $result = $tikilib->query($query);
+	while ($res = $result->fetchRow()) {
+  		$words=&search_index($res["name"]." ".$res["description"]);
+    	insert_index($words,"img",$res["imageId"]);
+	}
 }
 
 function random_refresh_index_comments( $times = 1 ) {
@@ -72,6 +89,22 @@ function random_refresh_index_blogs() {
   }
 }
 
+function refresh_index_blogs() {
+	global $tikilib;
+	$query = "select * from  `tiki_blogs`";
+	$result = $tikilib->query($query);
+	while ( $res = $result->fetchRow()) {
+ 	   $words=&search_index($res["title"]." ".$res["user"]." ".$res["description"]);
+ 	   insert_index($words,'blog',$res["blogId"]);	
+	}
+	$query = "select * from `tiki_blog_posts`";
+	$result = $tikilib->query($query);
+	while ( $res = $result->fetchRow()) {
+	    $words=&search_index($res["title"]." ".$res["user"]." ".$res["data"]);
+	    insert_index($words,'blog_post',$res["postId"]);
+	}
+}
+
 function random_refresh_index_dir_cats() {
   global $tikilib;
   // get random directory ctegory
@@ -96,6 +129,21 @@ function random_refresh_index_dir_sites() {
     $words=&search_index($res["name"]." ".$res["description"]);
     insert_index($words,'dir_site',$res["siteId"]);
   }
+}
+function refresh_index_directories() {
+	global $tikilib;
+	$query="select * from `tiki_directory_sites`";
+	$result=$tikilib->query($query);
+	while ($res = $result->fetchRow()) {
+ 		$words=&search_index($res["name"]." ".$res["description"]);
+    	insert_index($words,'dir_site',$res["siteId"]);
+	}
+	$query="select * from `tiki_directory_categories`";
+	$result=$tikilib->query($query);
+	while ($res = $result->fetchRow()) {
+	    $words=&search_index($res["name"]." ".$res["description"]);
+	    insert_index($words,'dir_cat',$res["categId"]);
+	}	
 }
 
 function random_refresh_index_faqs() {
@@ -124,6 +172,22 @@ function random_refresh_index_faq_questions() {
   }
 }
 
+function refresh_index_faqs() {
+	global $tikilib;
+	$query="select * from `tiki_faqs`";
+	$result=$tikilib->query($query);
+	while ($res = $result->fetchRow()) {
+    	$words=&search_index($res["title"]." ".$res["description"]);
+	    insert_index($words,'faq',$res["faqId"]);
+	}
+	$query="select * from `tiki_faq_questions`";
+	$result=$tikilib->query($query);
+	while ($res = $result->fetchRow()) {
+ 	   $words=&search_index($res["question"]." ".$res["answer"]);
+	    insert_index($words,'faq_question',$res["questionId"]);
+	}	
+}
+
 function random_refresh_index_blog_posts() {
   global $tikilib;
   // get random blog
@@ -150,7 +214,15 @@ function random_refresh_index_articles() {
     insert_index($words,'article',$res["articleId"]);
   }
 }
-
+function refresh_index_articles() {
+	global $tikilib;
+	$query = "select * from `tiki_articles`";
+	$result = $tikilib->query($query);
+	while ($res = $result->fetchRow()) {
+    	$words=&search_index($res["title"]." ".$res["authorName"]." ".$res["heading"]." ".$res["body"]." ".$res["author"]." ".$res['topline'].' '.$res['subtitle']);
+    	insert_index($words,'article',$res["articleId"]);	
+	}
+}
 
 function random_refresh_index_forum() {
   global $tikilib;
@@ -163,6 +235,16 @@ function random_refresh_index_forum() {
     $words=&search_index($res["name"]." ".$res["description"]." ".$res["moderator"]);
     insert_index($words,'forum',$res["forumId"]);
   }
+}
+
+function refresh_index_forums() {
+	global $tikilib;
+	$query = "select * from `tiki_forums`";
+	$result = $tikilib->query($query);
+	while ($res = $result->fetchRow()) {
+		$words=&search_index($res["name"]." ".$res["description"]." ".$res["moderator"]);
+    	insert_index($words,'forum',$res["forumId"]);
+	}
 }
 
 function random_refresh_index_trackers() {
@@ -239,23 +321,17 @@ function refresh_index_wiki($page) {
 function refresh_index_comments($threadId) {
     global $tikilib;
 
-    if( isset( $threadId ) )
-    {
-    $query="select * from `tiki_comments` where `threadId` = ? ";
-    $result = $tikilib->query( $query, array( $threadId ) );
-    $res=$result->fetchRow();
-
-    // print "<pre>res:";
-    // print_r( $res );
-    // print "</pre>";
-
-    $words=&search_index($res["title"]." ".$res["data"]." ".$res["summary"]);
-    // print "<pre>words:";
-    // print_r( $words );
-    // print "</pre>";
-
-    insert_index($words,$res["objectType"].'comment',$res["threadId"]);
-    }
+    if(!empty( $threadId ) ) {
+	    $query="select * from `tiki_comments` where `threadId` = ? ";
+    	$result = $tikilib->query( $query, array( $threadId ) );
+	} else {
+	    $query="select * from `tiki_comments`";
+    	$result = $tikilib->query( $query );
+	}
+    while ($res=$result->fetchRow()) {
+	    $words=&search_index($res["title"]." ".$res["data"]." ".$res["summary"]);
+	    insert_index($words,$res["objectType"].'comment',$res["threadId"]);
+	}
 }
 
 function refresh_index_forum($page) {
