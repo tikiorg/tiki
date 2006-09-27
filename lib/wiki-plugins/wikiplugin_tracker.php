@@ -324,12 +324,19 @@ function wikiplugin_tracker($data, $params) {
 								$onemandatory = true;
 							}
 							$back.= "</td><td>";
-							$back.= '<select name="track['.$f["fieldId"].']">';
-							foreach ($list as $item) {
-								$selected = $f['value'] == $item ? 'selected="selected"' : '';
-								$back.= '<option value="'.$item.'" '.$selected.'>'.$item.'</option>';
+							if ($f['type'] == 'R') {
+								foreach ($list as $item) {
+									$selected = $f['value'] == $item ? 'selected="selected"' : '';
+									$back .= $item.' <input type="radio" name="track['.$f["fieldId"].']" value="'.$item.'" '.$selected.'>';
+								}
+							} else {
+								$back.= '<select name="track['.$f["fieldId"].']">';
+								foreach ($list as $item) {
+									$selected = $f['value'] == $item ? 'selected="selected"' : '';
+									$back.= '<option value="'.$item.'" '.$selected.'>'.$item.'</option>';
+								}
+								$back.= "</select>";
 							}
-							$back.= "</select>";
 						} else {
 							$back.= '<input type="hidden" name="track['.$f["fieldId"].']" value="'.$user.'" />';
 						}
