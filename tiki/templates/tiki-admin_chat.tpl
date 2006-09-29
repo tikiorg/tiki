@@ -1,19 +1,13 @@
-<h1><a class="pagetitle" href="tiki-admin_chat.php">{tr}Chat Administration{/tr}</a></h1>
-
-
+<h1><a class="pagetitle" href="tiki-admin_chat.php">{tr}Chat Administration{/tr}</a>
   
-      {if $feature_help eq 'y'}
-<a href="{$helpurl}Chat+Admin" target="tikihelp" class="tikihelp" title="{tr}Chat Admin{/tr}"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+{if $feature_help eq 'y'}
+<a href="{$helpurl}Chat+Admin" target="tikihelp" class="tikihelp" title="{tr}Chat Admin{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
 {/if}
 
-
-
-      {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-admin_chat.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Chat Admin tpl{/tr}"><img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
+{if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=tiki-admin_chat.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Chat Admin tpl{/tr}"><img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}
-
-
-
+</h1>
 
 <h2>{tr}Create/edit channel{/tr}</h2>
 <form action="tiki-admin_chat.php" method="post">
@@ -61,32 +55,21 @@
 <td class="heading"><a class="tableheading" href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'refresh_desc'}refresh_asc{else}refresh_desc{/if}">{tr}refresh{/tr}</a></td>
 <td class="heading">{tr}action{/tr}</td>
 </tr>
+{cycle values="odd,even" print=false advance=false}
 {section name=user loop=$channels}
-{if $smarty.section.user.index % 2}
 <tr>
-<td class="odd">{$channels[user].name}</td>
-<td class="odd">{$channels[user].description}</td>
-<td class="odd">{$channels[user].active}</td>
-<td class="odd">{$channels[user].refresh}</td>
-<td class="odd">
-   &nbsp;&nbsp;<a title="{tr}delete{/tr}" class="link" href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].channelId}" 
-><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>&nbsp;&nbsp;
-   <a title="{tr}edit{/tr}" class="link" href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;channelId={$channels[user].channelId}"><img src="img/icons/edit.gif" border="0" width="20" height="16"  alt='{tr}edit{/tr}' /></a>
+<td class="{cycle advance=false}">{$channels[user].name}</td>
+<td class="{cycle advance=false}">{$channels[user].description}</td>
+<td class="{cycle advance=false}">{$channels[user].active}</td>
+<td class="{cycle advance=false}">{$channels[user].refresh}</td>
+<td class="{cycle advance=true}">
+   &nbsp;&nbsp;
+   <a title="{tr}edit{/tr}" class="link" href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;channelId={$channels[user].channelId}">
+   <img src="pics/icons/page_edit.png" border="0" width="16" height="16"  alt='{tr}edit{/tr}' /></a> &nbsp;
+   <a title="{tr}delete{/tr}" class="link" href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].channelId}" >
+   <img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>
 </td>
 </tr>
-{else}
-<tr>
-<td class="even">{$channels[user].name}</td>
-<td class="even">{$channels[user].description}</td>
-<td class="even">{$channels[user].active}</td>
-<td class="even">{$channels[user].refresh}</td>
-<td class="even">
-   &nbsp;&nbsp;<a title="{tr}delete{/tr}" class="link" href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].channelId}" 
-><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>&nbsp;&nbsp;
-   <a title="{tr}edit{/tr}" class="link" href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;channelId={$channels[user].channelId}"><img src="img/icons/edit.gif" border="0" width="20" height="16"  alt='{tr}edit{/tr}' /></a>
-</td>
-</tr>
-{/if}
 {sectionelse}
 <tr><td class="odd" colspan="5">
 {tr}No records found{/tr}
