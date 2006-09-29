@@ -117,11 +117,10 @@ div.box-title, .xxbox-title, .cbox-title, .articletitle, .tabmark, div.posthead,
 .box-data, .xxbox-data, .cbox-data, form.comments, .editdate, .subcomment, div#comzoneopen,
 div#pagebar, div#forumpostopen, div.mini, div#forumpost, form#editpageform, div.bloginfo {
     background-color: #eeeeff;
-    /* color: black; */
     margin-bottom: 8px;
     padding: 1px 1px 2px 4px;
     border: 1px solid #8899dd;
-    overflow: auto;
+    overflow: auto; flow: left;
 }
 
 .tabcontent {
@@ -275,13 +274,17 @@ div#attzoneopen { display: block; margin-top: 10px; }
 
 div#rules-copy-panel { display: none; }
 
-div.admbox {
+/* tiki-admin menu: */
+a.admbox {
+  /* 100x100 2px-bordered boxes with centered icon and text within */
   border: 2px solid #8899dd; height: 100px; width: 100px;
-  text-align: center;
+  text-align: center; overflow: hidden;
   float: left; margin: 5px;
-  background-color: white;
+  background-color: #b0ffb0;
 }
-div.admbox a.link img { margin-top: 20px; }
+a.admbox img { padding-top: 20px; }
+a.admbox.off { background-color: #d0d0d0; }
+a.admbox:hover { background-color: #a0a0a0; }
 
 table.chatroom { width: 100%; }
 div.wikitopline table { text-align: right; width: 100%; }
@@ -341,6 +344,9 @@ div.wikitopline table { text-align: right; width: 100%; }
   border: 1px solid #DDCCCC;
 }
 
-span .box-titletext { align:right; }
+h1 a.pagetitle { font-size: 18pt; font-weight: bold; }
+
+ul.toc { margin-left: 5px; }
+li.toclevel { margin-left: -30px; }
 
 /* end of css file */
