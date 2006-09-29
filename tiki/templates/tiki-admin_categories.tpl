@@ -1,14 +1,14 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.42 2006-03-16 13:43:12 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.43 2006-09-29 23:28:59 ohertel Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}Categories+Admin" target="tikihelp" class="tikihelp" title="{tr}admin categories{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_categories.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin categories tpl{/tr}">
-<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>{/if}</h1>
+<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>{/if}</h1>
 
 <div class="navbar"><a class="linkbut" href="tiki-browse_categories.php?parentId={$parentId}" title="{tr}browse the category system{/tr}">{tr}browse category{/tr}</a></div>
 
@@ -27,19 +27,20 @@
 {if $smarty.section.dx.index > 0 and $catree[dx].deep > $catree[$before].deep}
 <div id="id{$catree[$before].categId}" style="display:none;">
 {/if}
-<div class="treenode{if $catree[dx].categId eq $smarty.request.parentId}select{/if}" style="padding-left:{$catree[dx].deep*30+20}px;">
+<div class="treenode{if $catree[dx].categId eq $smarty.request.parentId}select{/if}">
 <!-- {$catree[dx].parentId} :: {$catree[dx].categId} :: -->
 {if $catree[dx].children > 0}<i class="mini">{$catree[dx].children} {tr}Child categories{/tr}</i>{/if}
 {if $catree[dx].objects > 0}<i class="mini">{$catree[dx].objects} {tr}Child categories{/tr}</i>{/if}
-<a class="link" href="tiki-admin_categories.php?parentId={$catree[dx].parentId}&amp;removeCat={$catree[dx].categId}" title="{tr}delete{/tr}"><img  
-style="margin-right:{$catree[dx].deep*10+10}px;" border="0" src="img/icons2/delete.gif" align="right" height="12" width="12" hspace="5" vspace="1"/></a>
-<a class="link" href="tiki-admin_categories.php?parentId={$catree[dx].parentId}&amp;categId={$catree[dx].categId}" title="{tr}edit{/tr}"><img  
-border="0" src="img/icons/edit.gif" height="12" width="12" hspace="5" vspace="1"/></a>
+<a class="link" href="tiki-admin_categories.php?parentId={$catree[dx].parentId}&amp;categId={$catree[dx].categId}" title="{tr}edit{/tr}">
+<img border="0" src="pics/icons/page_edit.png" height="16" width="16" hspace="5" vspace="1" /></a>
+<a class="link" href="tiki-admin_categories.php?parentId={$catree[dx].parentId}&amp;removeCat={$catree[dx].categId}" title="{tr}delete{/tr}">
+<img border="0" src="pics/icons/cross.png" height="16" width="16" hspace="5" vspace="1" /></a>
 {if $catree[dx].has_perm eq 'y'}
-<a title="{tr}permissions{/tr}" href="tiki-categpermissions.php?categId={$catree[dx].categId}"><img border="0" alt="{tr}permissions{/tr}" src="img/icons/key_active.gif" /></a>
+<a title="{tr}permissions{/tr}" href="tiki-categpermissions.php?categId={$catree[dx].categId}"><img border="0" height="16" width="16" hspace="5" vspace="1" alt="{tr}permissions{/tr}" src="pics/icons/key_active.png" /></a>
 {else}
-<a title="{tr}permissions{/tr}" href="tiki-categpermissions.php?categId={$catree[dx].categId}"><img border="0" alt="{tr}permissions{/tr}" src="img/icons/key.gif" /></a>
+<a title="{tr}permissions{/tr}" href="tiki-categpermissions.php?categId={$catree[dx].categId}"><img border="0" height="16" width="16" hspace="5" vspace="1" alt="{tr}permissions{/tr}" src="pics/icons/key.png" /></a>
 {/if}
+<span style="padding-left:{$catree[dx].deep*30+5}px;">
 <a class="catname" href="tiki-admin_categories.php?parentId={$catree[dx].categId}">{$catree[dx].name}</a>
 {if $catree[dx].deep < $catree[$after].deep}
 <a href="javascript:toggle('id{$catree[dx].categId}');" class="linkmenu">&gt;&gt;&gt;</a></div>
@@ -49,6 +50,7 @@ border="0" src="img/icons/edit.gif" height="12" width="12" hspace="5" vspace="1"
 </div>
 {repeat count=$catree[dx].deep-$catree[$after].deep}</div>{/repeat}
 {/if}
+</span>
 {/section}
 </div>
 
@@ -125,7 +127,7 @@ border="0" src="img/icons/edit.gif" height="12" width="12" hspace="5" vspace="1"
       <tr>
         <td class="even"><a class="link" href="{$objects[ix].href}" title="{$objects[ix].name}">{$objects[ix].name|truncate:25:"(...)":true}</a></td>
         <td class="even">{tr}{$objects[ix].type}{/tr}</td>
-        <td class="even"><a class="link" href="tiki-admin_categories.php?parentId={$parentId}&amp;removeObject={$objects[ix].catObjectId}&amp;fromCateg={$parentId}" title="{tr}delete{/tr}"><img alt="{tr}delete{/tr}" src="img/icons2/delete2.gif" border="0" /></a></td>
+        <td class="even"><a class="link" href="tiki-admin_categories.php?parentId={$parentId}&amp;removeObject={$objects[ix].catObjectId}&amp;fromCateg={$parentId}" title="{tr}delete{/tr}"><img alt="{tr}delete{/tr}" src="pics/icons/cross.png" border="0" width="16" height="16" /></a></td>
       </tr>
       {/section}
       </table>

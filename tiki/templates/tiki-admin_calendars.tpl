@@ -1,6 +1,6 @@
 <h1><a class="pagetitle" href="tiki-admin_calendars.php">{tr}Admin Calendars{/tr}</a>
 {if $tiki_p_admin eq 'y'}
-<a title="{tr}Configure/Options{/tr}" href="tiki-admin.php?page=calendar">{html_image file='img/icons/config.gif' border='0' alt='{tr}Configure/Options{/tr}'}</a>
+<a title="{tr}Configure/Options{/tr}" href="tiki-admin.php?page=calendar"><img src='pics/icons/wrench.png' border='0' width='16' height='16' alt='{tr}Configure/Options{/tr}' /></a>
 {/if} 
 </h1>
 {* {if $feature_tabs eq 'y'}
@@ -55,11 +55,11 @@
 <td>
 <a title="{tr}permissions{/tr}" class="link" 
 href="tiki-objectpermissions.php?objectName={$cal.name|escape:"url"}&amp;objectType=calendar&amp;permType=calendar&amp;objectId={$id}"><img 
-src='img/icons/key.gif' border='0' alt='{tr}permissions{/tr}' />{if $cal.individual gt 0} {$cal.individual}</a>{/if}</td>
+src='pics/icons/key.png' border='0' width='16' height='16' alt='{tr}permissions{/tr}' />{if $cal.individual gt 0} {$cal.individual}</a>{/if}</td>
 <td>
-   &nbsp;&nbsp;<a title="{tr}delete{/tr}" class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;drop={$id}" 
-title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>&nbsp;&nbsp;
-   <a title="{tr}edit{/tr}" class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;calendarId={$id}"><img src="img/icons/edit.gif" border="0" width="20" height="16"  alt='{tr}edit{/tr}' /></a>
+   &nbsp;&nbsp;<a title="{tr}edit{/tr}" class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;calendarId={$id}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16"  alt='{tr}edit{/tr}' /></a> &nbsp;
+   <a title="{tr}delete{/tr}" class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;drop={$id}" 
+   title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>
 </td>
 </tr>
 {/foreach}
