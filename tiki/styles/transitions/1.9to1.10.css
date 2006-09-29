@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/transitions/1.9to1.10.css,v 1.4 2006-09-16 14:22:42 ohertel Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/transitions/1.9to1.10.css,v 1.5 2006-09-29 18:43:07 ohertel Exp $
 
 The following CSS classes were added to Tiki between v1.9 and v1.10
 They should be added to themes (possibly with tweaks) to make the theme v1.10 ready
@@ -41,14 +41,13 @@ div#ajaxLoading {
        font-size: 10px;
 }
 
-div.admbox {
+/* tiki-admin menu: */
+a.admbox {
+  /* 100x100 2px-bordered boxes with centered icon and text within */
   border: 2px solid #8899dd; height: 100px; width: 100px;
-  text-align: center;
-  float: left; margin: 5px;
+  text-align: center; overflow: hidden;
+  float: left; margin: 5px; background-color: #b0ffb0;
 }
-
-div.admbox:hover {
-  background-color: lightgrey;
-}
-
-div.admbox img { margin-top: 20px; }
+a.admbox img { padding-top: 20px; }
+a.admbox.off { background-color: #d0d0d0; }
+a.admbox:hover { background-color: #a0a0a0; }
