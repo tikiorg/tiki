@@ -153,42 +153,24 @@
 <td class="heading">&nbsp;</td>
 </tr>
 
+{cycle values="odd,even" print=false}
 {section name=user loop=$channels}
-{if $channels[user].type eq 's' or $channels[user].type eq 'r'}
-<tr class="odd">
-<td>{$channels[user].optionId}</td>
-<td><a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}" 
-title="{tr}edit{/tr}"><img src="img/icons/edit.gif" border="0" width="20" height="16"  alt='{tr}edit{/tr}' /></a></td>
-<td>{$channels[user].position}</td>
-<td>{$channels[user].name}</td>
-<td><a href="{$channels[user].url|escape}" class="link" target="_new">{$channels[user].url}</a></td>
-<td>{$channels[user].type_description}</td>
-<td>{$channels[user].section}</td>
-<td>{$channels[user].perm}</td>
-<td>{$channels[user].groupname}</td>
-<td>
+<tr>
+<td class="{cycle advance=false}">{$channels[user].optionId}</td>
+<td class="{cycle advance=false}"><a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}" 
+title="{tr}edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16"  alt='{tr}edit{/tr}' /></a></td>
+<td class="{cycle advance=false}">{$channels[user].position}</td>
+<td class="{cycle advance=false}">{$channels[user].name}</td>
+<td class="{cycle advance=false}"><a href="{$channels[user].url|escape}" class="link" target="_new">{$channels[user].url}</a></td>
+<td class="{cycle advance=false}">{$channels[user].type_description}</td>
+<td class="{cycle advance=false}">{$channels[user].section}</td>
+<td class="{cycle advance=false}">{$channels[user].perm}</td>
+<td class="{cycle advance=false}">{$channels[user].groupname}</td>
+<td class="{cycle advance=true}">
 &nbsp;&nbsp;<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}"
-title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>
+title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>
 </td>
 </tr>
-{else}
-<tr class="even">
-<td>{$channels[user].optionId}</td>
-<td><a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}" 
-title="{tr}edit{/tr}"><img src="img/icons/edit.gif" border="0" width="20" height="16"  alt='{tr}edit{/tr}' /></a></td>
-<td>{$channels[user].position}</td>
-<td>{$channels[user].name}</td>
-<td><a href="{$channels[user].url|escape}" class="link" target="_new">{$channels[user].url}</a></td>
-<td>{$channels[user].type_description}</td>
-<td>{$channels[user].section}</td>
-<td>{$channels[user].perm}</td>
-<td>{$channels[user].groupname}</td>
-<td>
-&nbsp;&nbsp;<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}" 
-title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>
-</td>
-</tr>
-{/if}
 {/section}
 </table>
 <br />

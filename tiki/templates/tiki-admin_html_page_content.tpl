@@ -51,38 +51,22 @@
 <td class="heading"><a class="tableheading" href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'content_desc'}content_asc{else}content_desc{/if}">{tr}content{/tr}</a></td>
 <td class="heading">{tr}action{/tr}</td>
 </tr>
+{cycle values="odd,even" print=false}
 {section name=user loop=$channels}
-{if $smarty.section.user.index % 2}
 <tr>
-<td class="odd">{$channels[user].zone}</td>
+<td class="{cycle advance=false}">{$channels[user].zone}</td>
 <!--<td class="odd">{$channels[user].content|truncate:250:"(...)":true}</td>-->
-<td class="odd">
+<td class="{cycle advance=false}">
 {if $channels[user].type eq 'ta'}
 <textarea name="{$channels[user].zone|escape}" cols="20" rows="4">{$channels[user].content|escape}</textarea>
 {else}
 <input type="text" name="{$channels[user].zone|escape}" value="{$channels[user].content|escape}" />
 {/if}
 </td>
-<td class="odd">
-   <a title="{tr}edit{/tr}" class="link" href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;zone={$channels[user].zone}"><img alt="{tr}edit{/tr}" src="img/icons/edit.gif" /></a>
+<td class="{cycle advance=true}">
+   <a title="{tr}edit{/tr}" class="link" href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;zone={$channels[user].zone}"><img alt="{tr}edit{/tr}" src="pics/icons/page_edit.png" border="0" width="16" height="16" /></a>
 </td>
 </tr>
-{else}
-<tr>
-<td class="even">{$channels[user].zone}</td>
-<!--<td class="even">{$channels[user].content|truncate:250:"(...)":true}</td>-->
-<td class="even">
-{if $channels[user].type eq 'ta'}
-<textarea name="{$channels[user].zone|escape}" cols="20" rows="4">{$channels[user].content|escape}</textarea>
-{else}
-<input type="text" name="{$channels[user].zone|escape}" value="{$channels[user].content|escape}" />
-{/if}
-</td>
-<td class="even">
-   <a title="{tr}edit{/tr}" class="link" href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;zone={$channels[user].zone}"><img alt="{tr}edit{/tr}" src="img/icons/edit.gif" /></a>
-</td>
-</tr>
-{/if}
 {/section}
 </table>
 <div align="center">
