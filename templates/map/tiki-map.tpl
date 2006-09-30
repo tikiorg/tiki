@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.36 2006-08-29 20:19:13 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.37 2006-09-30 19:28:04 ohertel Exp $ *}
 
 <script src="lib/x/x_core.js"></script>
 <script src="lib/x/x_event.js"></script>
@@ -165,7 +165,7 @@
 			{if $tiki_p_map_edit eq 'y'}
 				&nbsp; 
 				<a class="link" href="tiki-map_edit.php?mapfile={$mapfile}&amp;mode=editing">
-				<img src="img/icons/config.gif" border="0"  alt="{tr}edit{/tr}" title="{tr}edit{/tr}" /></a>
+				<img src="pics/icons/wrench.png" border="0" alt="{tr}edit{/tr}" title="{tr}edit{/tr}" width="16" height="16" /></a>
 			{/if}
 			&nbsp;
 			<a href="tiki-map.phtml?mapfile={$mapfile}" ><small>{tr}Reset Map{/tr}</small></a><br /> 
@@ -208,7 +208,7 @@
 				<img src="img/icons/edit.gif" border="0" alt="{tr}Label{/tr}" title="{tr}Label{/tr}" /></td>
 		  		<td class="heading">
 				<img src="img/icons/question.gif" border="0" alt="{tr}Query{/tr}" title="{tr}Query{/tr}" /></td>
-		  		<td class="heading"><img src="img/icons/ico_save.gif" border="0" alt="{tr}Download{/tr}" title="{tr}Download{/tr}" /></td>
+		  		<td class="heading"><img src="pics/icons/disk.png" width="16" height="16" border="0" alt="{tr}Download{/tr}" title="{tr}Download{/tr}" /></td>
 			</tr>
 			{section name=j loop=$my_layers}
 			{if $my_layers[j]->group neq "" }
@@ -279,7 +279,7 @@
 						{if $layer_download[i] eq "T"}
 						<small>
 						<a href="tiki-map_download.phtml?mapfile={$mapfile}&amp;layer={$my_layers[i]->name}">
-						<img src="img/icons/ico_save.gif" border="0" alt="{tr}Download{/tr}" title="{tr}Download{/tr}" /></a>
+						<img src="pics/icons/disk.png" border="0" alt="{tr}Download{/tr}" title="{tr}Download{/tr}" width="16" height="16" /></a>
 						</small>
 						{/if}
 						</td>
@@ -338,7 +338,7 @@
 				{if $layer_download[j] eq "T"}
 				<small>
 				<a href="tiki-map_download.phtml?mapfile={$mapfile}&amp;layer={$my_layers[j]->name}">
-				<img src="img/icons/ico_save.gif" border="0" alt="{tr}Download{/tr}" title="{tr}Download{/tr}" /></a>
+				<img src="pics/icons/disk.png" border="0" alt="{tr}Download{/tr}" title="{tr}Download{/tr}" width="16" height="16" /></a>
 				</small>
 				{/if}
 				</td>

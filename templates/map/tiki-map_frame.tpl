@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_frame.tpl,v 1.3 2006-03-16 13:43:12 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_frame.tpl,v 1.4 2006-09-30 19:28:04 ohertel Exp $ *}
 
 <script src="lib/map/map.js"></script>
   <form name="frmmap" action="tiki-map.phtml" method="get">
@@ -29,9 +29,9 @@
 			<img id="imgzoom2" src="img/icons/zoom-2.gif" onclick="zoomin(2)" alt="-x2" title="{tr}Zoom out x2{/tr}" />
 			{/if}
 			{if $zoom eq 0}
-			<img id="imgzoom3" src="img/icons/info.gif" onclick="zoomin(3)" alt="Q" title="{tr}Query{/tr}" border="1" />
+			<img id="imgzoom3" src="pics/icons/shape_square_edit.png" onclick="zoomin(3)" alt="Q" title="{tr}Query{/tr}" border="1" />
 			{else}
-			<img id="imgzoom3" src="img/icons/info.gif" onclick="zoomin(3)" alt="Q" title="{tr}Query{/tr}" />
+			<img id="imgzoom3" src="pics/icons/shape_square_edit.png" onclick="zoomin(3)" alt="Q" title="{tr}Query{/tr}" />
 			{/if}
 			{if $zoom eq 1}
 			<img id="imgzoom4" src="img/icons/move.gif" onclick="zoomin(4)" alt="P" title="{tr}Pan{/tr}" border="1" />
