@@ -2,10 +2,10 @@ contributor:
 $Author: fumphco $
 
 revision: 
-$Revision: 1.1 $
+$Revision: 1.2 $
 
 lastmodif:
-$Date: 2006-09-28 01:05:59 $
+$Date: 2006-09-30 05:55:52 $
 
 files: 
 wiki-plugins/mindmap/wiki-plugins/wikiplugin_mindmap.php lib/wiki-plugins/wikiplugin_mindmap.php
@@ -25,4 +25,5 @@ Description:
 Wikiplugin using Freemind flash plugin or java applet to browse mind maps
 
 Changelog:
-Initial release
+2006/09/28 Initial release
+2006/09/29 Added param options and help
