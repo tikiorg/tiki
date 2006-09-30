@@ -1,17 +1,12 @@
 <h1><a class="pagetitle" href="tiki-admin_shoutbox_words.php">{tr}Admin Shoutbox Words{/tr}</a>
-
   
-      {if $feature_help eq 'y'}
+{if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=ShoutboxWords" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin shoutbox words{/tr}">
-<img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a>{/if}
+<img border='0' src='pics/icons/help.png' alt="{tr}help{/tr}" height="16" width="16" /></a>{/if}
 
-
-
-      {if $feature_view_tpl eq 'y'}
+{if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_shoutbox_words.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin shoutbox words template{/tr}">
-<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}' /></a>{/if}</h1>
-
-
+<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>{/if}</h1>
 
 <h2>{tr}Add Banned Word{/tr}</h2>
 
@@ -40,26 +35,16 @@
 <td class="heading"><a class="tableheading" href="tiki-admin_shoutbox_words.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'word_desc'}word_asc{else}word_desc{/if}">{tr}Word{/tr}</a></td>
 <td class="heading">{tr}action{/tr}</td>
 </tr>
+{cycle values="odd,even" print=false}
 {section name=user loop=$words}
-{if $smarty.section.user.index % 2}
 <tr>
-<td class="odd">{$words[user].word}</td>
-<td class="odd">
+<td class="{cycle advance=false}">{$words[user].word}</td>
+<td class="{cycle advance=true}">
 &nbsp;&nbsp;<a class="link" href="tiki-admin_shoutbox_words.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$words[user].word}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this word?{/tr}')" 
-title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>&nbsp;&nbsp;
+title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>&nbsp;&nbsp;
 </td>
 </tr>
-{else}
-<tr>
-<td class="even">{$words[user].word}</td>
-<td class="even">
-&nbsp;&nbsp;<a class="link" href="tiki-admin_shoutbox_words.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$words[user].word}" 
-onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this word?{/tr}')" 
-title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>&nbsp;&nbsp;
-</td>
-</tr>
-{/if}
 {sectionelse}
 <tr><td colspan="2" class="odd">{tr}No records found{/tr}</td></tr>
 {/section}
