@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.50 2006-09-17 09:22:18 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.51 2006-09-30 20:27:35 ohertel Exp $ *}
 
 <script type="text/javascript">
 {literal}
@@ -38,8 +38,8 @@
                 {$styles[ix]}</option>
             {/section}
             </select>
-            &nbsp;<a href="javascript:previous_site_style();" title="{tr}prev{/tr}"><img src="img/icons2/nav_dot_right.gif" alt="&#9665;" height="11" width="8" border="0" /></a>
-            <a href="javascript:next_site_style();" title="{tr}next{/tr}"><img src="img/icons2/nav_dot_left.gif" alt="&#9655" height="11" width="8" border="0" /></a>&nbsp;
+            &nbsp;<a href="javascript:previous_site_style();" title="{tr}prev{/tr}"><img src="pics/icons/resultset_previous.png" alt="{tr}previous{/tr}" height="16" width="16" border="0" /></a>
+            <a href="javascript:next_site_style();" title="{tr}next{/tr}"><img src="pics/icons/resultset_next.png" alt="{tr}next{/tr}" height="16" width="16" border="0" /></a>&nbsp;
             <input type="submit" name="style" value="{tr}Change style only{/tr}" />
         </td>
       </tr><tr>
