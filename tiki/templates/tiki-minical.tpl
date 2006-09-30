@@ -2,12 +2,12 @@
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}User+Calendar" target="tikihelp" class="tikihelp" title="{tr}User Calendar{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-minical.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}User Calendar Doc tpl{/tr}">
-<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}' /></a>
+<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}edit template{/tr}' /></a>
 {/if}</h1>
 
 {include file=tiki-mytiki_bar.tpl}
@@ -59,9 +59,9 @@
 {cycle values="odd,even" print=false}
 
 {if $view eq 'daily'}
-<b><a class="link" href="tiki-minical.php?view={$view}&amp;day={$yesterday|date_format:"%d"}&amp;mon={$yesterday|date_format:"%m"}&amp;year={$yesterday|date_format:"%Y"}"><img src='img/icons2/nav_dot_right.gif' border='0' alt='img' /></a>
+<b><a class="link" href="tiki-minical.php?view={$view}&amp;day={$yesterday|date_format:"%d"}&amp;mon={$yesterday|date_format:"%m"}&amp;year={$yesterday|date_format:"%Y"}"><img src='pics/icons/resultset_previous.png' border='0' width='16' height='16' alt='{tr}previous{/tr}' /></a>
 {$pdate|tiki_long_date} 
-<a class="link" href="tiki-minical.php?view={$view}&amp;day={$tomorrow|date_format:"%d"}&amp;mon={$tomorrow|date_format:"%m"}&amp;year={$tomorrow|date_format:"%Y"}"><img src='img/icons2/nav_dot_left.gif' border='0' alt='img' /></a>
+<a class="link" href="tiki-minical.php?view={$view}&amp;day={$tomorrow|date_format:"%d"}&amp;mon={$tomorrow|date_format:"%m"}&amp;year={$tomorrow|date_format:"%Y"}"><img src='pics/icons/resultset_next.png' border='0' width='16' height='16' alt='{tr}next{/tr}' /></a>
 </b>
 <table clas="normal"  >
 {section name=ix loop=$slots}
@@ -83,7 +83,7 @@
     	{/if}
     	
     	<a title="{$slots[ix].events[jj].start|tiki_short_time}-{$slots[ix].events[jj].end|tiki_short_time}:{$slots[ix].events[jj].description}" class="link" href="tiki-minical.php?view={$view}&amp;eventId={$slots[ix].events[jj].eventId}#add">{$slots[ix].events[jj].title}</a>
-    	[<a class="link" href="tiki-minical.php?view={$view}&amp;remove={$slots[ix].events[jj].eventId}">x</a>]
+    	<a class="link" href="tiki-minical.php?view={$view}&amp;remove={$slots[ix].events[jj].eventId}">&nbsp; <img src='pics/icons/cross.png' border='0' width='8' height='8' alt='{tr}remove{/tr}' /></a>
     	<br />
     	{/section}
     	</td>
@@ -96,9 +96,9 @@
 {/if}
 
 {if $view eq 'weekly'}
-<a class="link" href="tiki-minical.php?view={$view}&amp;day={$prev_week_start|date_format:"%d"}&amp;mon={$prev_week_start|date_format:"%m"}&amp;year={$prev_week_start|date_format:"%Y"}"><img src='img/icons2/nav_dot_right.gif' border='0' alt='img' /></a>
+<a class="link" href="tiki-minical.php?view={$view}&amp;day={$prev_week_start|date_format:"%d"}&amp;mon={$prev_week_start|date_format:"%m"}&amp;year={$prev_week_start|date_format:"%Y"}"><img src='pics/icons/resultset_previous.png' border='0' width='16' height='16' alt='{tr}previous{/tr}' /></a>
 <b>{$week_start|date_format:"%b"} {$week_start|date_format:"%d"}-{$week_end|date_format:"%b"} {$week_end|date_format:"%d"}</b>
-<a class="link" href="tiki-minical.php?view={$view}&amp;day={$next_week_start|date_format:"%d"}&amp;mon={$next_week_start|date_format:"%m"}&amp;year={$next_week_start|date_format:"%Y"}"><img src='img/icons2/nav_dot_left.gif' border='0' alt='img' /></a>
+<a class="link" href="tiki-minical.php?view={$view}&amp;day={$next_week_start|date_format:"%d"}&amp;mon={$next_week_start|date_format:"%m"}&amp;year={$next_week_start|date_format:"%Y"}"><img src='pics/icons/resultset_next.png' border='0' width='16' height='16' alt='{tr}next{/tr}' /></a>
 <table class="normal"  >
 {section name=ix loop=$slots}
 <tr>
@@ -151,7 +151,7 @@
 <input type="hidden" name="view" value="{$view|escape}" />
 <table class="normal">
 <tr>
-<td  class="heading"><input type="submit" name="delete" value="x " /></td>
+<td class="heading"><input type="submit" name="delete" value="x " /></td>
 <td class="heading" ><a class="tableheading" href="tiki-minical.php?view={$view}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}title{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="tiki-minical.php?view={$view}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'start_desc'}start{else}start_desc{/if}">{tr}start{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="tiki-minical.php?view={$view}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'duration_desc'}duration_asc{else}duration_desc{/if}">{tr}duration{/tr}</a></td>
