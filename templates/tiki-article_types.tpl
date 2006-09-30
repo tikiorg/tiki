@@ -1,15 +1,12 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.26 2006-09-19 19:34:39 ohertel Exp $ *}
-
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.27 2006-09-30 20:39:49 ohertel Exp $ *}
 <h1><a  class="pagetitle" href="tiki-article_types.php">{tr}Admin Article Types{/tr}</a>
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Articles" target="tikihelp" class="tikihelp" title="{tr}Admin Article Types{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
-
-
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-article_types.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Article Types tpl{/tr}">
-<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}</h1>
+<img src="pics/icons/shape_square_edit.png" border="0" height="16" width="16" alt='{tr}Edit template{/tr}' /></a>{/if}</h1>
 
 <a href="javascript:toggle('wiki-edithelp')">{tr}show help{/tr}</a>
 <div class="wiki-edithelp" id="wiki-edithelp" style="display:none;">
@@ -92,7 +89,7 @@
 <td class="{cycle advance=false}">{$types[user].article_cnt}</td>
 <td class="{cycle}">
 {if $types[user].article_cnt eq 0}
-<a class="link" href="tiki-article_types.php?remove_type={$types[user].type}"><img src='img/icons2/delete.gif' alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' border='0' /></a>
+<a class="link" href="tiki-article_types.php?remove_type={$types[user].type}"><img src='pics/icons/cross.png' alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' border='0' width='16' height='16' /></a>
 {else}
 &nbsp;
 {/if}

@@ -107,7 +107,7 @@ timeFormat : {$timeFormat12_24}
 {if $feature_cal_manual_time eq 'y'}
 {if $start_freeform_error eq 'y'}<span class="attention">{tr}Syntax error{/tr}</span><br />{/if}
 <input type="text" name="start_freeform" value="{$start_freeform}" />
-<a {popup text="{tr}Format: mm/dd/yyyy hh:mm<br />...{/tr} {tr}See strtotime php function{/tr}"}><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<a {popup text="{tr}Format: mm/dd/yyyy hh:mm<br />...{/tr} {tr}See strtotime php function{/tr}"}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
 {tr}or{/tr}
 {/if}
 {html_select_date time=$start prefix="start_" end_year="+4" field_order=DMY}
@@ -137,7 +137,7 @@ timeFormat : {$timeFormat12_24}
 {if $feature_cal_manual_time eq 'y'}
 {if $end_freeform_error eq 'y'}<span class="attention">{tr}Syntax error{/tr}</span><br />{/if}
 <input type="text" name="end_freeform" value="{$end_freeform}" />
-<a {popup text="{tr}Format: mm/dd/yyy hh:mm<br />...{/tr} {tr}See strtotime php function{/tr}"}><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<a {popup text="{tr}Format: mm/dd/yyy hh:mm<br />...{/tr} {tr}See strtotime php function{/tr}"}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
  {tr}or{/tr}
 {/if}
 {html_select_date time=$end prefix="end_" end_year="+4" field_order=DMY}
@@ -213,7 +213,7 @@ timeFormat : {$timeFormat12_24}
 {/if}
 
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor">
-<span  style="float:right;"><a href="tiki-calendar.php?calitemId={$calitemId}&amp;delete=1"  title="{tr}remove{/tr}"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt="{tr}remove{/tr}" /></a></span>
+<span  style="float:right;"><a href="tiki-calendar.php?calitemId={$calitemId}&amp;delete=1"  title="{tr}remove{/tr}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt="{tr}remove{/tr}" /></a></span>
 <input type="submit" name="save" value="{tr}save{/tr}" />
 {if $calitemId and $tiki_p_change_events}
 <input type="submit" name="copy" value="{tr}duplicate{/tr}" />

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.65 2006-09-19 16:33:24 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.66 2006-09-30 20:39:49 ohertel Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-calendar.php">{tr}Calendar{/tr}</a></h1>
@@ -49,7 +49,7 @@
 <br /><a href="{$listevents[w].web}" target="_other" class="calweb" title="{$listevents[w].web}"><img src="img/icons/external_link.gif" width="7" height="7" alt="&gt;" /></a>
 {/if}
 </td>
-<td>{if $listevents[w].modifiable eq "y"}<a class="link" href="tiki-calendar.php?calitemId={$listevents[w].calitemId}&amp;editmode=add{if $feature_tabs ne 'y'}#add{/if}" title="{tr}edit{/tr}"><img src="img/icons/edit.gif" border="0"  width="20" height="16" alt="{tr}edit{/tr}" /></a><a class="link" href="tiki-calendar.php?calitemId={$listevents[w].calitemId}&amp;delete=1" title="{tr}remove{/tr}"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt='{tr}remove{/tr}' />{/if}</td></tr>
+<td>{if $listevents[w].modifiable eq "y"}<a class="link" href="tiki-calendar.php?calitemId={$listevents[w].calitemId}&amp;editmode=add{if $feature_tabs ne 'y'}#add{/if}" title="{tr}edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt="{tr}edit{/tr}" /></a><a class="link" href="tiki-calendar.php?calitemId={$listevents[w].calitemId}&amp;delete=1" title="{tr}remove{/tr}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}remove{/tr}' />{/if}</td></tr>
 {/section}
 </td></tr>
 </table>
@@ -84,7 +84,7 @@
 <div {if $hrows[$h][hr].calname ne ""}class="Cal{$hrows[$h][hr].type}"{/if} style="clear:both">
 {$hours[$h]}:{$hrows[$h][hr].mins} : {if $hrows[$h][hr].calname eq ""}{$hrows[$h][hr].type} : {/if}
 <a href="{$hrows[$h][hr].url}" class="linkmenu">{$hrows[$h][hr].name}</a>
-{if $hrows[$h][hr].calname ne ""}{$hrows[$h][hr].parsedDescription}{else}{$hrows[$h][hr].description}{/if}{if ($calendar_view_tab eq "y" or $tiki_p_change_events eq "y") and $hrows[$h][hr].calname ne ""}<span  style="float:right;">{if $calendar_view_tab eq "y"}<a href="tiki-calendar.php?calitemId={$hrows[$h][hr].calitemId}&amp;editmode=details"{if $feature_tabs ne "y"}#details{/if} title="{tr}details{/tr}"><img src="img/icons/zoom.gif" border="0" width="16" height="16" alt="{tr}zoom{/tr}" /></a>&nbsp;{/if}{if $hrows[$h][hr].modifiable eq "y"}<a href="tiki-calendar.php?calitemId={$hrows[$h][hr].calitemId}&amp;editmode=1{if $feature_tabs ne 'y'}#add{/if}" title="{tr}edit{/tr}"><img src="img/icons/edit.gif" border="0"  width="20" height="16" alt="{tr}edit{/tr}" /></a><a href="tiki-calendar.php?calitemId={$hrows[$h][hr].calitemId}&amp;delete=1"  title="{tr}remove{/tr}"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt="{tr}remove{/tr}" /></a>{/if}</span>{/if}
+{if $hrows[$h][hr].calname ne ""}{$hrows[$h][hr].parsedDescription}{else}{$hrows[$h][hr].description}{/if}{if ($calendar_view_tab eq "y" or $tiki_p_change_events eq "y") and $hrows[$h][hr].calname ne ""}<span  style="float:right;">{if $calendar_view_tab eq "y"}<a href="tiki-calendar.php?calitemId={$hrows[$h][hr].calitemId}&amp;editmode=details"{if $feature_tabs ne "y"}#details{/if} title="{tr}details{/tr}"><img src="img/icons/zoom.gif" border="0" width="16" height="16" alt="{tr}zoom{/tr}" /></a>&nbsp;{/if}{if $hrows[$h][hr].modifiable eq "y"}<a href="tiki-calendar.php?calitemId={$hrows[$h][hr].calitemId}&amp;editmode=1{if $feature_tabs ne 'y'}#add{/if}" title="{tr}edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt="{tr}edit{/tr}" /></a><a href="tiki-calendar.php?calitemId={$hrows[$h][hr].calitemId}&amp;delete=1"  title="{tr}remove{/tr}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt="{tr}remove{/tr}" /></a>{/if}</span>{/if}
 </div>
 {/section}
 </td></tr>
@@ -191,7 +191,7 @@ class="linkmenu">{$cell[w][d].items[items].name|truncate:$trunc:".."|default:"..
 {if $calitemId}
 <a name="details" ></a>
 <h2>{$name}</h2> {if $tiki_p_change_events eq 'y'} [<a href="tiki-calendar.php?calitemId={$calitemId}&amp;editmode=edit">edit</a>] {/if}
-{if $editmode eq "details" and $tiki_p_change_events eq 'y'}<div style="text-align:right"><a href="tiki-calendar.php?calitemId={$calitemId}&amp;editmode=add{if $feature_tabs ne 'y'}#add{/if}" title="{tr}edit{/tr}"><img src="img/icons/edit.gif" border="0"  width="20" height="16" alt="{tr}edit{/tr}" /></a><a href="tiki-calendar.php?calitemId={$calitemId}&amp;delete=1" title="{tr}remove{/tr}"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt="{tr}remove{/tr}" /></a></div>{/if}
+{if $editmode eq "details" and $tiki_p_change_events eq 'y'}<div style="text-align:right"><a href="tiki-calendar.php?calitemId={$calitemId}&amp;editmode=add{if $feature_tabs ne 'y'}#add{/if}" title="{tr}edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt="{tr}edit{/tr}" /></a><a href="tiki-calendar.php?calitemId={$calitemId}&amp;delete=1" title="{tr}remove{/tr}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt="{tr}remove{/tr}" /></a></div>{/if}
 {cycle values="odd, even" print=false}
 <table class="normal">
 <tr><td class="{cycle advance=false}">{tr}Name{/tr}</td><td class="{cycle}">{$name}</td></tr>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_image.tpl,v 1.43 2006-08-29 20:19:12 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_image.tpl,v 1.44 2006-09-30 20:39:49 ohertel Exp $ *}
 
 {if $popup}
 <?xml version="1.0" encoding="UTF-8"?>
@@ -30,7 +30,7 @@
 
 {* --- first image --- *}
 	<a href="{$url_base}{$firstId}{$same_scale}"
-		class="gallink"{if $imageId eq $firstId} style="display: none;"{/if}>{html_image file='img/icons2/nav_first.gif' border='none' alt='{tr}first image{/tr}' title='{tr}first image{/tr}'}</a>
+		class="gallink"{if $imageId eq $firstId} style="display: none;"{/if}>{html_image file='pics/icons/resultset_first.png' border='none' alt='{tr}first image{/tr}' title='{tr}first image{/tr}'}</a>
 
 {* --- previous scale --- *}
 	{if $scaleinfo.prevscale}
@@ -49,7 +49,7 @@
 	    
 {* --- previous image --- *}
 	<a href="{$url_base}{$previmg}{$same_scale}"
-    	class="gallink" style="padding-right:6px;{if !$previmg} display: none;{/if}">    	{html_image file='img/icons2/nav_dot_right.gif' border='none' alt='{tr}prev image{/tr}' title='{tr}prev image{/tr}'}</a>
+    	class="gallink" style="padding-right:6px;{if !$previmg} display: none;{/if}">    	{html_image file='pics/icons/resultset_previous.png' border='none' alt='{tr}prev image{/tr}' title='{tr}prev image{/tr}'}</a>
 
 {* --- popup launch --- *}
 	{if !$popup}
@@ -59,7 +59,7 @@
 
 {* --- next image --- *}
 	<a href="{$url_base}{$nextimg}{$same_scale}"
-    	class="gallink" style="padding-left:6px;{if !$nextimg} display: none;{/if}">    	{html_image file='img/icons2/nav_dot_left.gif' border='none' alt='{tr}next image{/tr}' title='{tr}next image{/tr}'}</a>
+    	class="gallink" style="padding-left:6px;{if !$nextimg} display: none;{/if}">    	{html_image file='pics/icons/resultset_next.png' border='none' alt='{tr}next image{/tr}' title='{tr}next image{/tr}'}</a>
 
 {* --- launch slideshow --- *}
 	{if $listImgId}
@@ -68,7 +68,7 @@
 
 {* --- last image --- *}
 	<a href="{$url_base}{$lastId}{$same_scale}"
-		class="gallink"{if $imageId eq $lastId} style="display: none;"{/if}>{html_image file='img/icons2/nav_last.gif' border='none' alt='{tr}last image{/tr}' title='{tr}last image{/tr}'}</a>    
+		class="gallink"{if $imageId eq $lastId} style="display: none;"{/if}>{html_image file='pics/icons/resultset_last.png' border='none' alt='{tr}last image{/tr}' title='{tr}last image{/tr}'}</a>    
   </div>
 
 {***** when sliding buttons *****}
