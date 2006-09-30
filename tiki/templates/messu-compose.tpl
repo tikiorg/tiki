@@ -2,12 +2,12 @@
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Inter-User Messages" target="tikihelp" class="tikihelp" title="{tr}Compose Message{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-edit_article.tpl" target="tikihelp" class="tikihelp">
-<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}' /></a>
+<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}edit template{/tr}' /></a>
 {/if}</h1>
 
 {include file=tiki-mytiki_bar.tpl}
@@ -32,7 +32,7 @@
     <td class="formcolor"><label for="mess-composecc">{tr}CC{/tr}:</label></td><td class="formcolor"><input type="text" name="cc" id="mess-composecc" value="{$cc|escape}" /></td>
   </tr>
   <tr>
-    <td class="formcolor"><label for="mess-composebcc">{tr}BCC{/tr}:</label></td><td class="formcolor"><input type="text" name="bcc" id="mess-composebcc" value="{$bcc|escape}" /> <span class="warning">{tr}usernames separated with ;{/tr}</span></td>
+    <td class="formcolor"><label for="mess-composebcc">{tr}BCC{/tr}:</label></td><td class="formcolor"><input type="text" name="bcc" id="mess-composebcc" value="{$bcc|escape}" /> <span class="warning">{tr}usernames separated with ,{/tr}</span></td>
   </tr>
   <tr>
     <td class="formcolor"><label for="mess-prio">{tr}Priority{/tr}:</label></td><td class="formcolor">
