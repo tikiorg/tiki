@@ -14,9 +14,9 @@
   </td><td class="formcolor" align="right">
     <input type="submit" name="editcopyright" value="{tr}edit{/tr}" /><br />
     <a title="{tr}delete{/tr}" href="copyrights.php?page={$page|escape:"url"}&amp;action=delete&amp;copyrightId={$copyrights[i].copyrightId}" 
-><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt='{tr}Remove{/tr}' /></a>
-    <a href="copyrights.php?page={$page|escape:"url"}&amp;action=up&amp;copyrightId={$copyrights[i].copyrightId}">{tr}up{/tr}</a>
-    <a href="copyrights.php?page={$page|escape:"url"}&amp;action=down&amp;copyrightId={$copyrights[i].copyrightId}">{tr}down{/tr}</a>
+><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}Remove{/tr}' /></a>
+    <a href="copyrights.php?page={$page|escape:"url"}&amp;action=up&amp;copyrightId={$copyrights[i].copyrightId}"><img src="pics/icons/resultset_up.png" border="0" width="16" height="16" alt='{tr}up{/tr}' /></a>
+    <a href="copyrights.php?page={$page|escape:"url"}&amp;action=down&amp;copyrightId={$copyrights[i].copyrightId}"><img src="pics/icons/resultset_down.png" border="0" width="16" height="16" alt='{tr}down{/tr}' /></a>
     </form>
   </td></tr>
 {/section}
