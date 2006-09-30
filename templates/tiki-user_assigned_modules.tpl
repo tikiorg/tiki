@@ -2,12 +2,12 @@
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}UserAssignedModules" target="tikihelp" class="tikihelp" title="{tr}User Assigned Modules{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-user_assigned_modules.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}User Assigned Modules tpl{/tr}">
-<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}' /></a>
+<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}</h1>
 
 {include file=tiki-mytiki_bar.tpl}
@@ -38,14 +38,12 @@
 				<td class="{cycle advance=false}">{$modules_l[ix].ord}</td>
 				<td class="{cycle advance=false}">{$modules_l[ix].name}</td>
 				<td class="{cycle}">
-				  <a class="link" href="tiki-user_assigned_modules.php?up={$modules_l[ix].name}"><img src='img/icons2/up.gif' alt='{tr}up{/tr}' title='{tr}up{/tr}' border='0' /></a>
-  				  <a class="link" href="tiki-user_assigned_modules.php?down={$modules_l[ix].name}"><img src='img/icons2/down.gif' alt='{tr}down{/tr}' title='{tr}down{/tr}' border='0' /></a>
-  				  <a class="link" href="tiki-user_assigned_modules.php?right={$modules_l[ix].name}"><img src='img/icons2/nav_dot_left.gif' alt='{tr}right{/tr}' title='{tr}move to right column{/tr}' border='0' /></a>
+				  <a class="link" href="tiki-user_assigned_modules.php?up={$modules_l[ix].name}"><img src='pics/icons/resultset_up.png' alt='{tr}up{/tr}' title='{tr}up{/tr}' border='0' width='16' height='16' /></a>
+  				  <a class="link" href="tiki-user_assigned_modules.php?down={$modules_l[ix].name}"><img src='pics/icons/resultset_down.png' alt='{tr}down{/tr}' title='{tr}down{/tr}' border='0' width='16' height='16' /></a>
+  				  <a class="link" href="tiki-user_assigned_modules.php?right={$modules_l[ix].name}"><img src='pics/icons/resultset_next.png' alt='{tr}right{/tr}' title='{tr}move to right column{/tr}' border='0' width='16' height='16' /></a>
 				  {if $modules_l[ix].name ne 'application_menu' and $modules_l[ix].name ne 'login_box' and $modules_l[ix].type ne 'P'}
-  					<a class="link" href="tiki-user_assigned_modules.php?unassign={$modules_l[ix].name}"><img src='img/icons2/delete.gif' border='0' alt='{tr}unassign{/tr}' title='{tr}unassign{/tr}' /></a> 
+  					<a class="link" href="tiki-user_assigned_modules.php?unassign={$modules_l[ix].name}"><img src='pics/icons/cross.png' border='0' alt='{tr}unassign{/tr}' title='{tr}unassign{/tr}' width='16' height='16' /></a> 
   				  {/if}
-
-				
 				</td>
 			</tr>
 			{/section}
@@ -66,19 +64,16 @@
 				<td class="{cycle advance=false}">{$modules_r[ix].ord}</td>
 				<td class="{cycle advance=false}">{$modules_r[ix].name}</td>
 				<td class="{cycle}">
-				  <a class="link" href="tiki-user_assigned_modules.php?up={$modules_r[ix].name}"><img src='img/icons2/up.gif' alt='{tr}up{/tr}' title='{tr}up{/tr}' border='0' /></a>
-  				  <a class="link" href="tiki-user_assigned_modules.php?down={$modules_r[ix].name}"><img src='img/icons2/down.gif' alt='{tr}down{/tr}' title='{tr}down{/tr}' border='0' /></a>
-  				  <a class="link" href="tiki-user_assigned_modules.php?left={$modules_r[ix].name}"><img src='img/icons2/nav_dot_right.gif' alt='{tr}left{/tr}' title='{tr}move to left column{/tr}' border='0' /></a>
+				  <a class="link" href="tiki-user_assigned_modules.php?up={$modules_r[ix].name}"><img src='pics/icons/resultset_up.png' alt='{tr}up{/tr}' title='{tr}up{/tr}' border='0' width='16' height='16' /></a>
+  				  <a class="link" href="tiki-user_assigned_modules.php?down={$modules_r[ix].name}"><img src='pics/icons/resultset_down.png' alt='{tr}down{/tr}' title='{tr}down{/tr}' border='0' width='16' height='16' /></a>
+  				  <a class="link" href="tiki-user_assigned_modules.php?left={$modules_r[ix].name}"><img src='pics/icons/resultset_previous.png' alt='{tr}left{/tr}' title='{tr}move to left column{/tr}' border='0' width='16' height='16' /></a>
 				  {if $modules_r[ix].name ne 'application_menu' and $modules_r[ix].name ne 'login_box' and $modules_r[ix].type ne 'P'}
-  					<a class="link" href="tiki-user_assigned_modules.php?unassign={$modules_r[ix].name}"><img src='img/icons2/delete.gif' border='0' alt='{tr}unassign{/tr}' title='{tr}unassign{/tr}' /></a> 
+  					<a class="link" href="tiki-user_assigned_modules.php?unassign={$modules_r[ix].name}"><img src='pics/icons/cross.png' border='0' alt='{tr}unassign{/tr}' title='{tr}unassign{/tr}' width='16' height='16' /></a> 
   				  {/if}
-
-				
 				</td>
 			</tr>
 			{/section}
 		</table>
-	
 	</td>
 </tr>
 </table>
