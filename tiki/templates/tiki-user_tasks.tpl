@@ -3,16 +3,13 @@
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}User+Tasks" target="tikihelp" class="tikihelp" title="{tr}User Tasks{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-user_tasks.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}User Tasks tpl{/tr}">
-<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}' /></a>
+<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}</h1>
-
-
-
 
 {include file=tiki-mytiki_bar.tpl}
 <br /><br />
@@ -121,7 +118,7 @@
 {* end ************ Task list ***************}
 
 
-{* start ************ Serach  ***************}
+{* start ************ Search  ***************}
 {if (not $show_form)} 
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
@@ -148,4 +145,4 @@
 {/if}
 <br />
 <br />
-{* start ************ Serach ***************}
+{* start ************ Search ***************}

@@ -1,13 +1,13 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_watches.tpl,v 1.17 2006-03-16 13:43:12 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_watches.tpl,v 1.18 2006-09-30 17:37:17 ohertel Exp $ *}
 <h1><a class="pagetitle" href="tiki-user_watches.php">{tr}User Watches{/tr}</a>
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}User+Watches" target="tikihelp" class="tikihelp" title="{tr}User Watches{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
 {/if}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-user_watches.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}User Watches tpl{/tr}">
-<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}' /></a>
+<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}</h1>
 {include file=tiki-mytiki_bar.tpl}
 <br /><br />
