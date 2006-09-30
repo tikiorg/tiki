@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-shoutbox.tpl,v 1.22 2006-09-30 15:29:50 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-shoutbox.tpl,v 1.23 2006-09-30 21:48:20 ohertel Exp $ *}
 <h1><a class="pagetitle" href="tiki-shoutbox.php">{tr}Tiki Shoutbox{/tr}!</a>
 
 {if $feature_help eq 'y'}
@@ -8,7 +8,7 @@
 
 {if $feature_view_tpl eq 'y' and $tiki_p_edit_templates eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-shoutbox.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin Tiki Shoutbox tpl{/tr}">
-<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}edit template{/tr}' /></a>
+<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}</h1>
 
 {if $tiki_p_admin_shoutbox eq 'y'}

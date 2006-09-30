@@ -1,13 +1,13 @@
 {*Smarty template*}
 <h1><a class="pagetitle" href="tiki-theme_control.php">{tr}Theme Control Center: categories{/tr}</a>
   
-      {if $feature_help eq 'y'}
+{if $feature_help eq 'y'}
 <a href="{$helpurl}Theme+Control" target="tikihelp" class="tikihelp" title="{tr}ThemeControl{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
 
-      {if $feature_view_tpl eq 'y'}
+{if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-theme_control.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}ThemeControl tpl{/tr}">
-<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}</h1>
+<img src="pics/icons/shape_square_edit.png" border="0" height="16" width="16" alt='{tr}Edit template{/tr}' /></a>{/if}</h1>
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -16,7 +16,6 @@
 </div>
 </div>
 <br />
-
 
 <div class="simplebox">
 <b>{tr}Theme is selected as follows{/tr}:</b><br />
