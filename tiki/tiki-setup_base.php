@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.102 2006-09-19 17:22:25 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.103 2006-09-30 01:18:46 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -149,7 +149,7 @@ $vartype['numrows'] = 'int';
 $vartype['rows'] = 'int';
 $vartype['cols'] = 'int';
 $vartype['topicname'] = 'string';
-$vartype['error'] = 'string';
+// $vartype['error'] = 'string'; //TODO: translated string are handed over... which type for them?
 $vartype['editmode'] = 'char'; // from calendar
 $vartype['actpass'] = 'string'; // remind password page
 $vartype['user'] = 'string'; // remind password page
