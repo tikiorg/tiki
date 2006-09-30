@@ -1,14 +1,14 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_articles.tpl,v 1.24 2006-09-19 16:33:24 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_articles.tpl,v 1.25 2006-09-30 15:29:50 ohertel Exp $ *}
 <h1><a class="pagetitle" href="tiki-received_articles.php">{tr}Received articles{/tr}</a>
 
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/CommunicationsCenterDoc" target="tikihelp" class="tikihelp" title="{tr}Received Articles{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-received_articles.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}received articles tpl{/tr}">
-<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}' /></a>
+<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}edit template{/tr}' /></a>
 {/if}
 
 </h1>
@@ -142,40 +142,23 @@
 <td class="heading"><a class="tableheading" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'receivedFromUser_desc'}receivedFromUser_asc{else}receivedFromUser_desc{/if}">{tr}User{/tr}</a></td>
 <td class="heading">{tr}action{/tr}</td>
 </tr>
+{cycle values="even,odd" print=false}
 {section name=user loop=$channels}
-{if $smarty.section.user.index % 2}
 <tr>
 <td class="odd">{$channels[user].receivedArticleId}</td>
 <td class="odd">{$channels[user].title}
 {if $channels[user].type eq 'Review'}(r){/if}
 </td>
-<td class="odd">{$channels[user].receivedDate|tiki_short_datetime}</td>
-<td class="odd">{$channels[user].receivedFromSite}</td>
-<td class="odd">{$channels[user].receivedFromUser}</td>
-<td class="odd">
-   <a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedArticleId={$channels[user].receivedArticleId}">{html_image file='img/icons/edit.gif' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}'}</a>
-   <a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedArticleId}"><img src="img/icons2/delete.gif" border="0" width="16" height="16"  alt='{tr}remove{/tr}' title='{tr}remove{/tr}' /></a>
+<td class="{cycle advance=false}">{$channels[user].receivedDate|tiki_short_datetime}</td>
+<td class="{cycle advance=false}">{$channels[user].receivedFromSite}</td>
+<td class="{cycle advance=false}">{$channels[user].receivedFromUser}</td>
+<td class="{cycle advance=true}">
+   <a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedArticleId={$channels[user].receivedArticleId}"><img src='pics/icons/page_edit.png' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' width='16' height='16' /></a> &nbsp;
+   <a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedArticleId}"><img src="pics/icons/cross.png" border="0" width="16" height="16"  alt='{tr}remove{/tr}' title='{tr}remove{/tr}' /></a>
    <!--<a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].receivedArticleId}">{tr}view{/tr}</a>-->
    <!--<a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;accept={$channels[user].receivedArticleId}">{tr}accept{/tr}</a>-->
 </td>
 </tr>
-{else}
-<tr>
-<td class="even">{$channels[user].receivedArticleId}</td>
-<td class="even">{$channels[user].title}
-{if $channels[user].type eq 'Review'}(r){/if}
-</td>
-<td class="even">{$channels[user].receivedDate|tiki_short_datetime}</td>
-<td class="even">{$channels[user].receivedFromSite}</td>
-<td class="even">{$channels[user].receivedFromUser}</td>
-<td class="even">
-   <a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedArticleId={$channels[user].receivedArticleId}">{html_image file='img/icons/edit.gif' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}'}</a>
-   <a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedArticleId}"><img src="img/icons2/delete.gif" border="0" width="16" height="16"  alt='{tr}remove{/tr}' title='{tr}remove{/tr}' /></a>
-   <!--<a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].receivedArticleId}">{tr}view{/tr}</a>-->
-   <!--<a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;accept={$channels[user].receivedArticleId}">{tr}accept{/tr}</a>-->
-</td>
-</tr>
-{/if}
 {/section}
 </table>
 <br />

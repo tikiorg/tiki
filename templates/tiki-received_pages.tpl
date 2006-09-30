@@ -1,12 +1,12 @@
 <h1><a class="pagetitle" href="tiki-received_pages.php">{tr}Received pages{/tr}</a>
   
-      {if $feature_help eq 'y'}
+{if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/CommunicationsCenterDoc" target="tikihelp" class="tikihelp" title="{tr}Help on Communication Center{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
 
-      {if $feature_view_tpl eq 'y'}
+{if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-received_pages.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}received pages tpl{/tr}">
-<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}</h1>
+<img src="pics/icons/shape_square_edit.png" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}</h1>
 
 {if $receivedPageId > 0 or $view eq 'y'}
 <h2>{tr}Preview{/tr}</h2>
@@ -64,10 +64,10 @@
 <td class="{cycle advance=false}">{$channels[user].receivedFromSite}</td>
 <td class="{cycle advance=false}">{$channels[user].receivedFromUser}</td>
 <td class="{cycle advance=false}">
-   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedPageId={$channels[user].receivedPageId}"><img src='img/icons/edit.gif' alt='{tr}edit{/tr}' border='0' title='{tr}edit{/tr}' /></a>
-   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].receivedPageId}"><img src='img/icons2/icn_view.gif' border='0' alt='{tr}view{/tr}' title='{tr}view{/tr}' /></a>
-   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;accept={$channels[user].receivedPageId}"><img src='img/icons2/post.gif' border='0' alt='{tr}accept{/tr}' title='{tr}accept{/tr}' /></a>
-   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedPageId}"><img src='img/icons2/delete.gif' alt='{tr}remove{/tr}' border='0' title='{tr}remove{/tr}' /></a>
+   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedPageId={$channels[user].receivedPageId}"><img src='pics/icons/page_edit.png' alt='{tr}edit{/tr}' border='0' title='{tr}edit{/tr}' width='16' height='16' /></a>
+   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].receivedPageId}"><img src='pics/icons/monitor.png' border='0' alt='{tr}view{/tr}' title='{tr}view{/tr}' width='16' height='16' /></a>
+   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;accept={$channels[user].receivedPageId}"><img src='pics/icons/accept.png' border='0' alt='{tr}accept{/tr}' title='{tr}accept{/tr}' width='16' height='16' /></a> &nbsp;
+   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedPageId}"><img src='pics/icons/cross.png' alt='{tr}remove{/tr}' border='0' title='{tr}remove{/tr}' width='16' height='16' /></a>
 </td>
 </tr>
 {/section}

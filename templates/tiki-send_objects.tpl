@@ -1,12 +1,12 @@
 <h1><a class="pagetitle" href="tiki-send_objects.php">{tr}Send objects{/tr}</a>
   
-      {if $feature_help eq 'y'}
+{if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/CommunicationsCenterDoc" target="tikihelp" class="tikihelp" title="{tr}Help on Communication Center{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
 
-      {if $feature_view_tpl eq 'y'}
+{if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-send_objects.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin send objects tpl{/tr}">
-<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}</h1>
+<img src="pics/icons/shape_square_edit.png" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}</h1>
 
 {if $msg}
 <div class="cbox">

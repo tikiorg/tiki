@@ -19,10 +19,10 @@
 <div class="articleheading">
 {tr}Rating{/tr}: 
 {repeat count=$rating}
-<img src="img/icons/blue.gif" alt=""/>
+<img src="pics/icons/star.png" alt="{tr}star{/tr}" border="0" width="16" height="16" />
 {/repeat}
 {if $rating > $entrating}
-<img src="img/icons/bluehalf.gif" alt=""/>
+<img src="pics/icons/star_half.png" alt="{tr}half star{/tr}" border="0" width="16" height="16" />
 {/if}
 ({$rating}/10)
 </div>
@@ -64,16 +64,16 @@ alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
 {if $feature_multilingual eq 'y' and $show_lang eq 'y' and $lang}{include file="translated-lang.tpl" td='y' type='article'}{/if}
 <td style="text-align:right;">
 {if $tiki_p_edit_article eq 'y'}
-<a class="trailer" href="tiki-edit_article.php?articleId={$articleId}"><img src='img/icons/edit.gif' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
+<a class="trailer" href="tiki-edit_article.php?articleId={$articleId}"><img src='pics/icons/page_edit.png' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' width='16' height='16' /></a>
 {/if}
 {if $feature_cms_print eq 'y'}
-<a class="trailer" href="tiki-print_article.php?articleId={$articleId}"><img src='img/icons/ico_print.gif' border='0' alt='{tr}Print{/tr}' title='{tr}Print{/tr}' /></a>
+<a class="trailer" href="tiki-print_article.php?articleId={$articleId}"><img src='pics/icons/printer.png' border='0' alt='{tr}Print{/tr}' title='{tr}Print{/tr}' width='16' height='16' /></a>
 {/if}
 {if $feature_multilingual eq 'y' and $tiki_p_edit_article eq 'y'}
-<a class="trailer" href="tiki-edit_translation.php?id={$articleId}&amp;type=article"><img src='img/icons2/translation.gif' border='0' alt='{tr}Translation{/tr}' title='{tr}Translation{/tr}' /></a>
+<a class="trailer" href="tiki-edit_translation.php?id={$articleId}&amp;type=article"><img src='pics/icons/world.png' border='0' alt='{tr}Translation{/tr}' title='{tr}Translation{/tr}' width='16' height='16' /></a> &nbsp;
 {/if}
 {if $tiki_p_remove_article eq 'y'}
-<a class="trailer" href="tiki-list_articles.php?remove={$articleId}"><img src='img/icons2/delete.gif' border='0' alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' /></a>
+<a class="trailer" href="tiki-list_articles.php?remove={$articleId}"><img src='pics/icons/cross.png' border='0' alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' width='16' height='16' /></a>
 {/if}
 </td>
 </tr>
@@ -83,16 +83,16 @@ alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
 {$parsed_body}
 {if $pages > 1}
 	<div align="center">
-		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$first_page}"><img src='img/icons2/nav_first.gif' border='0' alt='{tr}First page{/tr}' title='{tr}First page{/tr}' /></a>
+		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$first_page}"><img src='pics/icons/resultset_first.gif' border='0' alt='{tr}First page{/tr}' title='{tr}First page{/tr}' width='16' height='16' /></a>
 
-		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$prev_page}"><img src='img/icons2/nav_dot_right.gif' border='0' alt='{tr}Previous page{/tr}' title='{tr}Previous page{/tr}' /></a>
+		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$prev_page}"><img src='pics/icons/resultset_previous.png' border='0' alt='{tr}Previous page{/tr}' title='{tr}Previous page{/tr}' width='16' height='16' /></a>
 
 		<small>{tr}page{/tr}:{$pagenum}/{$pages}</small>
 
-		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$next_page}"><img src='img/icons2/nav_dot_left.gif' border='0' alt='{tr}Next page{/tr}' title='{tr}Next page{/tr}' /></a>
+		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$next_page}"><img src='pics/icons/resultset_next.png' border='0' alt='{tr}Next page{/tr}' title='{tr}Next page{/tr}' width='16' height='16' /></a>
 
 
-		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$last_page}">{html_image file='img/icons2/nav_last.gif' border='0' alt='{tr}Last page{/tr}' title='{tr}Last page{/tr}'}</a>
+		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$last_page}"><img src='üics/icons/resultset_last.png' border='0' alt='{tr}Last page{/tr}' title='{tr}Last page{/tr}' width='16' height='16' ></a>
 	</div>
 {/if}
 </div>

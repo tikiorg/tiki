@@ -1,5 +1,5 @@
 {include file='header.tpl'}
-<!-- $Header: /cvsroot/tikiwiki/tiki/templates/tiki-send_blog_post.tpl,v 1.8 2006-07-14 11:00:55 sylvieg Exp $ -->
+<!-- $Header: /cvsroot/tikiwiki/tiki/templates/tiki-send_blog_post.tpl,v 1.9 2006-09-30 15:29:50 ohertel Exp $ -->
 {if $feature_blogposts_pings == 'y'
   && ($blog_data.allow_comments == 'y' or $blog_data.allow_comments == 't')
   && $feature_trackbackpings  == 'y'}
@@ -51,8 +51,8 @@
 </span>
 </td><td align="right">
 {if ($ownsblog eq 'y') or ($user and $post_info.user eq $user) or $tiki_p_blog_admin eq 'y'}
-<a class="blogt" href="tiki-blog_post.php?blogId={$post_info.blogId}&amp;postId={$post_info.postId}"><img border='0' src='img/icons/edit.gif' title='{tr}Edit{/tr}' alt='{tr}Edit{/tr}' /></a>
-<a class="blogt" href="tiki-view_blog.php?blogId={$post_info.blogId}&amp;remove={$post_info.postId}"><img border='0' src='img/icons2/delete.gif' title='{tr}Remove{/tr}' alt='{tr}Remove{/tr}' /></a>
+<a class="blogt" href="tiki-blog_post.php?blogId={$post_info.blogId}&amp;postId={$post_info.postId}"><img border='0' src='pics/icons/page_edit.png' title='{tr}Edit{/tr}' alt='{tr}Edit{/tr}' width='16' height='16' /></a> &nbsp;
+<a class="blogt" href="tiki-view_blog.php?blogId={$post_info.blogId}&amp;remove={$post_info.postId}"><img border='0' src='pics/icons/cross.png' title='{tr}Remove{/tr}' alt='{tr}Remove{/tr}' width='16' height='16' /></a>
 {/if}
 </td></tr></table>
 </div>
@@ -70,7 +70,7 @@
 {/if}
 </small>
 </td><td style='text-align:right'>
-<a href='tiki-print_blog_post.php?postId={$postId}'><img src='img/icons/ico_print.gif' border='0' alt='{tr}print{/tr}' title='{tr}print{/tr}' /></a>
-<a href='tiki-send_blog_post.php?postId={$postId}'><img src='img/icons/email.gif' border='0' alt='{tr}email this post{/tr}' title='{tr}email this post{/tr}' /></a>
+<a href='tiki-print_blog_post.php?postId={$postId}'><img src='pics/icons/printer.png' border='0' alt='{tr}print{/tr}' title='{tr}print{/tr}' width='16' height='16' /></a>
+<a href='tiki-send_blog_post.php?postId={$postId}'><img src='pics/icons/email.png' border='0' alt='{tr}email this post{/tr}' title='{tr}email this post{/tr}' width='16' height='16' /></a>
 </td></tr></table>
 </div>
