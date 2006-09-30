@@ -1,13 +1,12 @@
 <h1><a class="pagetitle" href="tiki-user_bookmarks.php">{tr}User Bookmarks{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="{$helpurl}User+Bookmarks" target="tikihelp" class="tikihelp" title="{tr}User Bookmarks{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
 {/if}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-user_bookmarks.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}User Bookmarks tpl{/tr}">
-<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}' /></a>
+<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}</h1>
-
 
 {include file=tiki-mytiki_bar.tpl}
 <br />
@@ -22,10 +21,10 @@
 {cycle values="odd,even" print=false}
 {section name=ix loop=$folders}
 <tr>
-  <td class="{cycle advance=false}"><a href="tiki-user_bookmarks.php?parentId={$folders[ix].folderId}"><img border="0" src="img/icons/folderin.gif" alt='{tr}Folder in{/tr}'/></a>&nbsp;{$folders[ix].name} ({$folders[ix].urls})</td>
+  <td class="{cycle advance=false}"><a href="tiki-user_bookmarks.php?parentId={$folders[ix].folderId}"><img border='0' src='pics/icons/folder.png' alt='{tr}Folder in{/tr}' width='16' height='16' /></a>&nbsp;{$folders[ix].name} ({$folders[ix].urls})</td>
   <td class="{cycle}">
-    <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;removefolder={$folders[ix].folderId}"><img src='img/icons2/delete.gif' alt='{tr}remove{/tr}' title='{tr}remove folder{/tr}' border='0' /></a>
-    <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editfolder={$folders[ix].folderId}">{html_image file='img/icons/edit.gif' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}'}</a>
+    <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editfolder={$folders[ix].folderId}"><img src='pics/icons/page_edit.png' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' width='16' height='16' /></a> &nbsp;
+    <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;removefolder={$folders[ix].folderId}"><img src='pics/icons/cross.png' alt='{tr}remove{/tr}' title='{tr}remove folder{/tr}' border='0' width='16' height='16' /></a>
   </td>
 </tr>
 {/section}
@@ -49,11 +48,11 @@
   </td>
   <td class="{cycle advance=false}">{textformat wrap="60" wrap_cut=true wrap_char="<br />"}{$urls[ix].url}{/textformat}</td>
   <td class="{cycle}">
-    <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;removeurl={$urls[ix].urlId}"><img src="img/icons2/delete.gif" border="0" width="16" height="16"  alt='{tr}remove{/tr}' title='{tr}remove{/tr}' /></a>
-    <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editurl={$urls[ix].urlId}">{html_image file='img/icons/edit.gif' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}'}</a>
+    <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editurl={$urls[ix].urlId}"><img src='pics/icons/page_edit.png' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' width='16' height='16' /></a>
     {if $tiki_p_cache_bookmarks eq 'y' and $urls[ix].datalen > 0}
-    <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;refreshurl={$urls[ix].urlId}"><img src='img/icons/refresh.gif' alt="{tr}refresh cache{/tr}" title="{tr}refresh cache{/tr}" border='0' /></a>
+    <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;refreshurl={$urls[ix].urlId}"><img src='pics/icons/arrow_refresh.png' alt="{tr}refresh cache{/tr}" title="{tr}refresh cache{/tr}" border='0' width='16' height='16' /></a>
     {/if}
+    &nbsp; <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;removeurl={$urls[ix].urlId}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}remove{/tr}' title='{tr}remove{/tr}' /></a>
   </td>
 </tr>
 {/section}

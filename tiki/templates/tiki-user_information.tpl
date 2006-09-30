@@ -10,7 +10,7 @@
   <div class="cbox-data">
   <div class="simplebox">
   <table>
-  <tr><td class="form">{tr}User{/tr}:</td><td>{$userinfo.login}{if $tiki_p_admin eq 'y'} <a class="link" href="tiki-user_preferences.php?view_user={$userinfo.login}"><img src="img/icons/config.gif" title="{tr}Change user preferences{/tr}" border="0" /> </a>  {/if}</td></tr>
+  <tr><td class="form">{tr}User{/tr}:</td><td>{$userinfo.login}{if $tiki_p_admin eq 'y'} <a class="link" href="tiki-user_preferences.php?view_user={$userinfo.login}"><img src="pics/icons/wrench.png" title="{tr}Change user preferences{/tr}" border="0" width='16' height='16' /> </a>  {/if}</td></tr>
 {if $feature_score eq 'y'}
   <tr><td class="form">{tr}Score{/tr}:</td><td>{$userinfo.score|star}{$userinfo.score}</td></tr>
 {/if}
@@ -48,11 +48,11 @@
 {if $feature_friends eq 'y' && $user ne $userwatch && $user}
   {if $friend}
   <tr><td class="form">&nbsp;</td><td class="form">
-    <img src="img/icons/ico_friend.gif" width="7" height="10" /> {tr}This user is your friend{/tr}
+    <img src="pics/icons/user.png" width="16" height="16" border="0" /> {tr}This user is your friend{/tr}
   </td></tr>  
   {else}
   <tr><td class="form">&nbsp;</td><td class="form">
-    <img src="img/icons/ico_not_friend.png" /> <a class="link" href="tiki-friends.php?request_friendship={$userinfo.login}">{tr}Request friendship from this user{/tr}</a>
+    <img src="pics/icons/user_delete.png" width="16" height="16" border="0" /> <a class="link" href="tiki-friends.php?request_friendship={$userinfo.login}">{tr}Request friendship from this user{/tr}</a>
   </td></tr>  
   {/if}
 {/if}
