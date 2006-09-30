@@ -1,11 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_contribution.tpl,v 1.4 2006-09-14 14:28:47 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_contribution.tpl,v 1.5 2006-09-30 16:11:45 ohertel Exp $ *}
 <h1><a  class="pagetitle" href="tiki-admin_contribution.php">{tr}Admin Contributions{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Contribution" target="tikihelp" class="tikihelp" title="{tr}Contribution{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_contributions.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}">
-<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit{/tr}'></a>{/if}</h1>
+<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}edit{/tr}'></a>{/if}</h1>
 
 {if $contribution}
 <h2>{tr}Edit the contribution:{/tr} {$contribution.name|escape}</h2>
@@ -59,8 +59,8 @@
 <td class="{cycle advance=false}">{$contributions[ix].name}</a></td>
 <td class="{cycle advance=false}">{$contributions[ix].description|truncate|escape}</a></td>
 <td class="{cycle}">
-<a class="link" href="tiki-admin_contribution.php?remove={$contributions[ix].contributionId}"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt='{tr}remove{/tr}'></a>
- <a class="link" href="tiki-admin_contribution.php?contributionId={$contributions[ix].contributionId}"><img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit{/tr}'></a>
+<a class="link" href="tiki-admin_contribution.php?contributionId={$contributions[ix].contributionId}"><img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}edit{/tr}'></a> &nbsp;
+<a class="link" href="tiki-admin_contribution.php?remove={$contributions[ix].contributionId}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}remove{/tr}'></a>
 </td>
 </tr>
 {sectionelse}
