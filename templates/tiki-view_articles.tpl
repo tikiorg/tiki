@@ -29,10 +29,10 @@
 <div class="articleheading">
 {tr}Rating{/tr}: 
 {repeat count=$listpages[ix].rating}
-<img src="img/icons/blue.gif" alt=""/>
+<img src="pics/icons/star.png" alt="{tr}star{/tr}" border="0" width="16" height="16" />
 {/repeat}
 {if $listpages[ix].rating > $listpages[ix].entrating}
-<img src="img/icons/bluehalf.gif" alt=""/>
+<img src="pics/icons/star_half.png" alt="{tr}half star{/tr}" border="0" width="16" height="16" />
 {/if}
 ({$listpages[ix].rating}/10)
 </div>
@@ -108,16 +108,16 @@ border="0" src="topic_image.php?id={$listpages[ix].topicId}" /></a>
 {/if}
 <td style="text-align:right;">
 {if $tiki_p_edit_article eq 'y' or ($listpages[ix].author eq $user and $listpages[ix].creator_edit eq 'y')}
-  <a class="trailer" href="tiki-edit_article.php?articleId={$listpages[ix].articleId}"><img src='img/icons/edit.gif' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
+  <a class="trailer" href="tiki-edit_article.php?articleId={$listpages[ix].articleId}"><img src='pics/icons/page_edit.png' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' width='16' height='16' /></a>
 {/if}
 {if $feature_cms_print eq 'y'}
-  <a class="trailer" href="tiki-print_article.php?articleId={$listpages[ix].articleId}"><img src='img/icons/ico_print.gif' border='0' alt='{tr}Print{/tr}' title='{tr}Print{/tr}' /></a>
+  <a class="trailer" href="tiki-print_article.php?articleId={$listpages[ix].articleId}"><img src='pics/icons/printer.png' border='0' alt='{tr}Print{/tr}' title='{tr}Print{/tr}' width='16' height='16' /></a>
 {/if}
 {if $feature_multilingual eq 'y' and $tiki_p_edit_article eq 'y'}
-<a class="trailer" href="tiki-edit_translation.php?id={$listpages[ix].articleId}&amp;type=article"><img src='img/icons2/translation.gif' border='0' alt='{tr}Translation{/tr}' title='{tr}Translation{/tr}' /></a>
+<a class="trailer" href="tiki-edit_translation.php?id={$listpages[ix].articleId}&amp;type=article"><img src='pics/icons/world.png' border='0' alt='{tr}Translation{/tr}' title='{tr}Translation{/tr}' width='16' height='16' /></a>
 {/if}
 {if $tiki_p_remove_article eq 'y'}
-  &nbsp;&nbsp;<a class="trailer" href="tiki-list_articles.php?remove={$listpages[ix].articleId}"><img src='img/icons2/delete.gif' border='0' alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' /></a>
+  &nbsp;&nbsp;<a class="trailer" href="tiki-list_articles.php?remove={$listpages[ix].articleId}"><img src='pics/icons/cross.png' border='0' alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' width='16' height='16' /></a>
 {/if}
 </td>
 </tr>

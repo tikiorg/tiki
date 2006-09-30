@@ -46,11 +46,11 @@
 </span>
 </td><td align="right">
 {if ($ownsblog eq 'y') or ($user and $listpages[ix].user eq $user) or $tiki_p_blog_admin eq 'y'}
-<a class="blogt" href="tiki-blog_post.php?blogId={$listpages[ix].blogId}&amp;postId={$listpages[ix].postId}"><img border='0' src='img/icons/edit.gif' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
-<a class="blogt" href="tiki-view_blog.php?blogId={$blogId}&amp;remove={$listpages[ix].postId}"><img src='img/icons2/delete.gif' alt='{tr}Remove{/tr}' border='0' title='{tr}Remove{/tr}' /></a>
+<a class="blogt" href="tiki-blog_post.php?blogId={$listpages[ix].blogId}&amp;postId={$listpages[ix].postId}"><img border='0' src='pics/icons/page_edit.png' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' width='16' height='16' /></a> &nbsp;
+<a class="blogt" href="tiki-view_blog.php?blogId={$blogId}&amp;remove={$listpages[ix].postId}"><img src='pics/icons/cross.png' alt='{tr}Remove{/tr}' border='0' title='{tr}Remove{/tr}' width='16' height='16' /></a>
 {/if}
 {if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
-<a title="{tr}Save to notepad{/tr}" href="tiki-view_blog.php?blogId={$blogId}&amp;savenotepad={$listpages[ix].postId}">{html_image file='img/icons/ico_save.gif' border='0' alt='{tr}save{/tr}'}</a>
+<a title="{tr}Save to notepad{/tr}" href="tiki-view_blog.php?blogId={$blogId}&amp;savenotepad={$listpages[ix].postId}">{html_image file='pics/icons/disk.png' border='0' alt='{tr}save{/tr}'}</a>
 {/if}
 </td></tr></table>
 </div>
@@ -77,8 +77,8 @@
 {/if}
 </small>
 </td><td style='text-align:right'>
-<a href='tiki-print_blog_post.php?postId={$listpages[ix].postId}'><img src='img/icons/ico_print.gif' border='0' alt='{tr}print{/tr}' title='{tr}print{/tr}' /></a>
-<a href='tiki-send_blog_post.php?postId={$listpages[ix].postId}'><img src='img/icons/email.gif' border='0' alt='{tr}email this post{/tr}' title='{tr}email this post{/tr}' /></a>
+<a href='tiki-print_blog_post.php?postId={$listpages[ix].postId}'><img src='pics/icons/printer.png' border='0' alt='{tr}print{/tr}' title='{tr}print{/tr}' width='16' height='16' /></a>
+<a href='tiki-send_blog_post.php?postId={$listpages[ix].postId}'><img src='pics/icons/email.png' border='0' alt='{tr}email this post{/tr}' title='{tr}email this post{/tr}' width='16' height='16' /></a>
 </td></tr></table>
 </div>
 </div>
