@@ -30,7 +30,7 @@
 			</form>
 		</div>
 		<div class="navigationOption">
-			<a title="{tr}edit{/tr}" href="tiki-editpage.php?page={$pageName}"><img src="img/icons/edit.gif" border="0"  width="20" height="16" alt="{tr}edit{/tr}" /></a>
+			<a title="{tr}edit{/tr}" href="tiki-editpage.php?page={$pageName}"><img src="pics/icons/page_edit.png" border="0"  width="16" height="16" alt="{tr}edit{/tr}" /></a>
 		</div>
 	</div>
 	{if $likepages}

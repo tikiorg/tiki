@@ -51,11 +51,11 @@
   {/section}
 <div class="mini">
 	{if $prev_offset >= 0}
-	<a class="prevnext" href="{$ownurl}&amp;offset={$prev_offset}"><img src="./img/icons2/nav_dot_right.gif" border="0" alt="{tr}prev posts{/tr}"/></a>
+	<a class="prevnext" href="{$ownurl}&amp;offset={$prev_offset}"><img src="pics/icons/resultset_previous.png" border="0" alt="{tr}prev posts{/tr}" width='16' height='16' /></a>
 	{/if}
 	{$actual_page}/{$cant_pages}
 	{if $next_offset >= 0}
-	<a class="prevnext" href="{$ownurl}&amp;offset={$next_offset}"><img src="./img/icons2/nav_dot_left.gif" border="0" alt="{tr}next posts{/tr}"/></a>
+	<a class="prevnext" href="{$ownurl}&amp;offset={$next_offset}"><img src="pics/icons/resultset_next.png" border="0" alt="{tr}next posts{/tr}" width='16' height='16' /></a>
 	{/if}
 </div>
 {/tiki_workspaces_module}

@@ -61,10 +61,10 @@
 <div>
 <label>Selected category:</label> {$selectedCategory.name} {$selectedCategory.description}
 <div class="edubuttons">
-<a class="edubutton" href="#" onclick="document.getElementById('createForm').style.display = 'block';"><img border=0 src="images/workspaces/pageNueva.gif"/> New</a>
-<a class="edubutton" href="#" onclick="document.getElementById('pasteIdCateg').value='{$selectedCategory.categId}';document.getElementById('pasteForm').submit();"><img border=0 src="images/workspaces/edu_paste.gif"/> Paste</a>
+<a class="edubutton" href="#" onclick="document.getElementById('createForm').style.display = 'block';"><img border=0 src="images/workspaces/pageNueva.gif"/>{tr}New{/tr}</a>
+<a class="edubutton" href="#" onclick="document.getElementById('pasteIdCateg').value='{$selectedCategory.categId}';document.getElementById('pasteForm').submit();"><img border=0 src="images/workspaces/edu_paste.gif"/>{tr}Paste{/tr}</a>
 <a class="edubutton" href="./tiki-admin_categories.php?removeCat={$selectedCategory.categId}">
-<img src='img/icons2/delete.gif' height=10 border='0' alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' /> Remove Category</a>
+<img src='pics/icons/cross.png' height=10 border='0' alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' />{tr}Remove Category{/tr}</a>
 </div>
 </div>
 <table class="normal">
