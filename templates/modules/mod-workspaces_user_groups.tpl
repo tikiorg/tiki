@@ -107,13 +107,13 @@
 <b>Active group: {$activeGroup}</b>
 <div class="edubuttons">
 <a class="edubutton" href="#" onclick="document.getElementById('formCreateGroup').style.display = 'block';">
-<img border='0'src='images/workspaces/edu_group_new.gif'/> New group</a>
+<img border='0'src='images/workspaces/edu_group_new.gif'/>{tr}New group{/tr}</a>
 <a class="edubutton" href="#" onclick="document.getElementById('formAddGroup').style.display = 'block';">
-<img border='0' src='images/workspaces/edu_group_add.gif'/> Add group</a>
+<img border='0' src='images/workspaces/edu_group_add.gif'/>{tr}Add group{/tr}</a>
 <a class="edubutton" href="#" onclick="document.getElementById('formRemoveGroup').style.display = 'block';">
-<img border='0' src='images/workspaces/edu_group_remove.gif'/>Remove group</a> 
+<img border='0' src='images/workspaces/edu_group_remove.gif'/>{tr}Remove group{/tr}</a> 
 <a class="edubutton" href="#" onclick="document.getElementById('formCreateUser').style.display = 'block';">
-<img border='0' src='images/workspaces/edu_user_new.gif'/> Add user</a>
+<img border='0' src='images/workspaces/edu_user_new.gif'/>{tr}Add user{/tr}</a>
 </div>
 <div class="edubox">
 {$groupsTree}
@@ -129,7 +129,7 @@
 <td class="odd"><a href="./tiki-user_information.php?view_user={$user.login}">{$user.login}</a></td>
 <td class="odd" width=100%>	<a href="./tiki-user_information.php?view_user={$user.login}">{$user.name}</a></td>
 <td class="odd" >
-<img src='img/icons2/delete.gif' border='0' alt='Borrar' title='Borrar' onclick="document.getElementById('removeUserName').value='{$user.login}';document.getElementById('formRemoveUser').style.display = 'block';"/>
+<img src='pics/icons/cross.png' border='0' alt='{tr}Borrar{/tr}' title='{tr}Borrar{/tr}' onclick="document.getElementById('removeUserName').value='{$user.login}';document.getElementById('formRemoveUser').style.display = 'block';" />
 </td>
 </tr>
 {/foreach} 
