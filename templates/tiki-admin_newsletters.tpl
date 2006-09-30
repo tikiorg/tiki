@@ -1,12 +1,12 @@
 <h1><a class="pagetitle" href="tiki-admin_newsletters.php">{tr}Admin newsletters{/tr}</a>
   
-      {if $feature_help eq 'y'}
+{if $feature_help eq 'y'}
 <a href="{$helpurl}Newsletters" target="tikihelp" class="tikihelp" title="{tr}Newsletters{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
 
-      {if $feature_view_tpl eq 'y'}
+{if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_newsletters.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin newsletters template{/tr}">
-<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>{/if}</h1>
+<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>{/if}</h1>
 
 <span class="button2"><a class="linkbut" href="tiki-newsletters.php">{tr}list newsletters{/tr}</a></span>
 <span class="button2"><a class="linkbut" href="tiki-send_newsletters.php">{tr}send newsletters{/tr}</a></span>
@@ -70,7 +70,7 @@
 {section name=user loop=$channels}
 <tr>
 <td class="{cycle advance=false}">
-<a class="link" href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].nlId}" title="{tr}remove{/tr}"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt='{tr}remove{/tr}' /></a>
+<a class="link" href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].nlId}" title="{tr}remove{/tr}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}remove{/tr}' /></a>
 </td>
 <td class="{cycle advance=false}">{$channels[user].nlId}</td>
 <td class="{cycle advance=false}"><a class="link" href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;nlId={$channels[user].nlId}" title="{tr}edit{/tr}">{$channels[user].name}</a></td>
@@ -81,11 +81,11 @@
 <td class="{cycle advance=false}">{$channels[user].lastSent|tiki_short_datetime}</td>
 <td class="{cycle}">
 <a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=newsletter&amp;permType=newsletters&amp;objectId={$channels[user].nlId}" title="{tr}Assign Permissions{/tr}"><img 
-border="0" alt="{tr}Assign Permissions{/tr}" src="img/icons/key{if $channels[user].individual eq 'y'}_active{/if}.gif" /></a>&nbsp;
-<a class="link" href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;nlId={$channels[user].nlId}" title="{tr}edit{/tr}"><img src="img/icons/edit.gif" border="0"  width="20" height="16" alt="{tr}edit{/tr}" /></a>
-<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$channels[user].nlId}" title="{tr}subscriptions{/tr}"><img src="img/icons2/icn_members.gif" border="0" width="16" height="16" alt='{tr}subscriptions{/tr}' /></a>&nbsp;&nbsp;
-<a class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}" title="{tr}send newsletter{/tr}"><img border="0" src="img/icons/email.gif" alt="{tr}send newsletter{/tr}" /></a>
-<a class="link" href="tiki-newsletter_archives.php?nlId={$channels[user].nlId}" title="{tr}archives{/tr}"><img border="0" src="img/icons/archives.gif" alt="{tr}archives{/tr}" /></a>
+border="0" width="16" height="16" alt="{tr}Assign Permissions{/tr}" src="pics/icons/key{if $channels[user].individual eq 'y'}_active{/if}.png" /></a>
+<a class="link" href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;nlId={$channels[user].nlId}" title="{tr}edit{/tr}"><img src="pics/icons/page_edit.png" border="0"  width="16" height="16" alt="{tr}edit{/tr}" /></a>
+<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$channels[user].nlId}" title="{tr}subscriptions{/tr}"><img src="pics/icons/group.png" border="0" width="16" height="16" alt='{tr}subscriptions{/tr}' /></a>
+<a class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}" title="{tr}send newsletter{/tr}"><img border="0" width="16" height="16" src="pics/icons/email.png" alt="{tr}send newsletter{/tr}" /></a>
+<a class="link" href="tiki-newsletter_archives.php?nlId={$channels[user].nlId}" title="{tr}archives{/tr}"><img border="0" width="16" height="16" src="pics/icons/database.png" alt="{tr}archives{/tr}" /></a>
 </td>
 </tr>
 {/section}
