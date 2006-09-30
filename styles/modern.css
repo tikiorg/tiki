@@ -350,5 +350,6 @@ table.box-title tr td { width: 100%; }
 
 ul.toc { margin-left: 5px; }
 li.toclevel { margin-left: -30px; }
+input.wikitext { padding: 0px; }
 
 /* end of css file */
