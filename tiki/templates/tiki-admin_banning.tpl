@@ -1,4 +1,4 @@
-{* $Id: tiki-admin_banning.tpl,v 1.23 2006-07-14 11:00:55 sylvieg Exp $ *}
+{* $Id: tiki-admin_banning.tpl,v 1.24 2006-09-30 14:06:15 ohertel Exp $ *}
 
 {* this script (un/)checks all checkboxes with id 'banning-section' *}
 <script type="text/javascript">
@@ -16,13 +16,13 @@
 
 <h1><a class="pagetitle" href="tiki-admin_banning.php">{tr}Banning system{/tr}</a>
 
-      {if $feature_help eq 'y'}
+{if $feature_help eq 'y'}
 <a href="{$helpurl}Banning+System" target="tikihelp" class="tikihelp" title="{tr}Help on Banning System{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
 
-      {if $feature_view_tpl eq 'y'}
+{if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_banning.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin banning tpl{/tr}">
-<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>{/if}</h1>
+<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>{/if}</h1>
 
 <h2>{tr}Add or edit a rule{/tr}</h2>
 <form action="tiki-admin_banning.php" name="banningform" method="post">
@@ -159,7 +159,7 @@
 </td>
 <td class="{cycle}">
 &nbsp;&nbsp;<a title="{tr}delete{/tr}" href="tiki-admin_banning.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$items[user].banId}" class="link" 
-><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>&nbsp;&nbsp;
+><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>&nbsp;&nbsp;
 </td>
 </tr>
 {sectionelse}

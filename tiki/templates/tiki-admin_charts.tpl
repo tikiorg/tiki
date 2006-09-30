@@ -2,12 +2,12 @@
 {*Smarty template*}
 <h1><a class="pagetitle" href="tiki-admin_charts.php">{tr}Admin charts{/tr}</a>
   
-      {if $feature_help eq 'y'}
-<a href="{$helpurl}Charts" target="tikihelp" class="tikihelp" title="{tr}Charts{/tr}"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+{if $feature_help eq 'y'}
+<a href="{$helpurl}Charts" target="tikihelp" class="tikihelp" title="{tr}Charts{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
 {/if}
 
-      {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-admin_charts.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin charts template{/tr}"><img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
+{if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=tiki-admin_charts.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin charts template{/tr}"><img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}</h1>
 
 <h2>{tr}Add or edit a chart{/tr} <a class="link" href="tiki-admin_charts.php?where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;chartId=0">{tr}new{/tr}</a>
@@ -155,7 +155,7 @@
 		{$items[ix].periods}
 	</td>
 	<td style="text-align:right;" class="{cycle}">
-		<a title="{tr}view{/tr}" class="link" href="tiki-view_chart.php?chartId={$items[ix].chartId}"><img src="img/icons/ico_table.gif" border='0' alt='{tr}view{/tr}' /></a>
+		<a title="{tr}view{/tr}" class="link" href="tiki-view_chart.php?chartId={$items[ix].chartId}"><img src="pics/icons/monitor.png" border='0' width='16' height='16' alt='{tr}view{/tr}' /></a>
 	</td>
 
 </tr>

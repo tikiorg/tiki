@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.20 2006-08-29 20:19:12 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.21 2006-09-30 14:06:15 ohertel Exp $ *}
 {* Module layout with controls *}
 
 <div class="box box-{$module_name|escape}">
@@ -6,10 +6,10 @@
 <table class="box-title">
   <tr>
     <td width="11">
-      <a title="{tr}Move module up{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_up={$module_name|escape}"><img src="img/icons2/up.gif" border="0" alt="[{tr}up{/tr}]" /></a>
+      <a title="{tr}Move module up{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_up={$module_name|escape}"><img src="pics/icons/resultset_up.png" border="0" width="16" height="16" alt="[{tr}up{/tr}]" /></a>
     </td>
     <td width="11">
-      <a title="{tr}Move module down{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_down={$module_name|escape}"><img src="img/icons2/down.gif" border="0" alt="[{tr}down{/tr}]" /></a>
+      <a title="{tr}Move module down{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_down={$module_name|escape}"><img src="pics/icons/resultset_down.png" border="0" width="16" height="16" alt="[{tr}down{/tr}]" /></a>
     </td>
 <td {if $module_flip eq 'y'}ondblclick="javascript:icntoggle('mod-{$module_name|escape}','mo.png');"{/if}>
 <span class="box-titletext">{$module_title}</span>
@@ -21,7 +21,7 @@
 <a title="{tr}Move module to opposite side{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_move={$module_name|escape}"><img src="img/icons2/admin_move.gif" border="0" alt="[{tr}opp side{/tr}]" /></a>
 </td>
 <td width="16">
-<a title="{tr}Unassign this module{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_unassign={$module_name|escape}" onclick="return confirmTheLink(this,'{tr}Are you sure you want to unassign this module?{/tr}')"><img border="0" alt="[{tr}remove{/tr}]" src="img/icons2/delete.gif" /></a>
+<a title="{tr}Unassign this module{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_unassign={$module_name|escape}" onclick="return confirmTheLink(this,'{tr}Are you sure you want to unassign this module?{/tr}')"><img border="0" width="16" height="16" alt="[{tr}remove{/tr}]" src="pics/icons/cross.png" /></a>
 </td>
 </tr>
 </table>
