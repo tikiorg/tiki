@@ -1,16 +1,14 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.62 2006-09-17 13:36:41 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.63 2006-09-30 20:39:49 ohertel Exp $ *}
 { *TODO: Must fix even/odd table rows detection byusing Smarty 'cycle' *}
-
-
 <h1><a href="tiki-assignpermission.php?group={$group}" class="pagetitle">{tr}Assign permissions to group{/tr}: {$group}</a>
+
 {if $feature_help eq 'y'}
 <a href="{$helpurl}PermissionAdmin" target="tikihelp" class="tikihelp" title="{tr}Edit Article{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
 {/if}
-
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-assignpermission.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}edit article tpl{/tr}">
-<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}' /></a>
+<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}</h1>
 
 <a href="tiki-admingroups.php" class="linkbut">{tr}Back to groups{/tr}</a><br />
