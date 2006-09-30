@@ -2,11 +2,10 @@
   
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Trackers" target="tikihelp" class="tikihelp" title="{tr}Trackers{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
-
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_trackers.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin Trackers tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt="{tr}edit{/tr}" /></a>{/if}</h1>
+<img border='0' src='pics/icons/shape_square_edit.png' alt="{tr}edit{/tr}" width='16' height='16' /></a>{/if}</h1>
 
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
 {if $trackerId}
@@ -60,18 +59,18 @@
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
 <tr class="{cycle}">
-<td class="auto"><a title="{tr}edit{/tr}" href="tiki-admin_trackers.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;trackerId={$channels[user].trackerId}"><img src='img/icons/edit.gif' alt="{tr}edit{/tr}" border='0' /></a></td>
+<td class="auto"><a title="{tr}edit{/tr}" href="tiki-admin_trackers.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;trackerId={$channels[user].trackerId}"><img src='pics/icons/page_edit.png' alt="{tr}edit{/tr}" border='0' width='16' height='16' /></a></td>
 <td><a class="tablename" href="tiki-view_tracker.php?trackerId={$channels[user].trackerId}" title="{tr}view{/tr}">{$channels[user].name}</a></td>
-<td nowrap="nowrap">{if $channels[user].individual eq 'y'}<a title="{tr}active permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$channels[user].trackerId}"><img 
-src='img/icons/key_active.gif' border='0' alt="{tr}active permissions{/tr}" /></a>{else}
-<a title="{tr}permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$channels[user].trackerId}"><img
-src='img/icons/key.gif' border='0' alt="{tr}permissions{/tr}" /></a>{/if}</td>
+<td nowrap="nowrap">{if $channels[user].individual eq 'y'}<a title="{tr}active permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$channels[user].trackerId}">
+<img src='pics/icons/key_active.png' border='0' alt="{tr}active permissions{/tr}" width='16' height='16' /></a>{else}
+<a title="{tr}permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$channels[user].trackerId}">
+<img src='pics/icons/key.png' border='0' alt="{tr}permissions{/tr}" width='16' height='16' /></a>{/if}</td>
 <td>{$channels[user].description}</td>
-<td><a title="{tr}fields{/tr}" class="link" href="tiki-admin_tracker_fields.php?trackerId={$channels[user].trackerId}"><img src='img/icons/ico_table.gif' alt="{tr}fields{/tr}" border='0' /></a></td>
+<td><a title="{tr}fields{/tr}" class="link" href="tiki-admin_tracker_fields.php?trackerId={$channels[user].trackerId}"><img src='pics/icons/table.png' alt="{tr}fields{/tr}" border='0' width='16' height='16' /></a></td>
 <td>{$channels[user].created|tiki_short_date}</td>
 <td>{$channels[user].lastModif|tiki_short_date}</td>
 <td style="text-align:right;" >{$channels[user].items}</td>
-<td  ><a title="{tr}delete{/tr}" class="link" href="tiki-admin_trackers.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].trackerId}"><img src='img/icons2/delete.gif' alt="{tr}delete{/tr}" border='0' /></a></td>
+<td  ><a title="{tr}delete{/tr}" class="link" href="tiki-admin_trackers.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].trackerId}"><img src='pics/icons/cross.png' alt="{tr}delete{/tr}" border='0' width='16' height='16' /></a></td>
 </tr>
 {/section}
 </table>
@@ -85,7 +84,7 @@ src='img/icons/key.gif' border='0' alt="{tr}permissions{/tr}" /></a>{/if}</td>
 {if $individual eq 'y'}
 <div class="simplebox">
 <a title="{tr}permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$trackerId}">
-<img src='img/icons/key.gif' border='0' alt="{tr}permissions{/tr}" />
+<img src='pics/icons/key.png' border='0' alt="{tr}permissions{/tr}" width='16' height='16' />
 {tr}There are individual permissions set for this tracker{/tr}</a>
 </div>
 {/if}
