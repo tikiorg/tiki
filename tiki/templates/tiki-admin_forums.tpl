@@ -1,13 +1,12 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.49 2006-03-16 13:43:12 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.50 2006-09-30 16:11:45 ohertel Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_forums.php">{tr}Admin Forums{/tr}</a>
-
  
-      {if $feature_help eq 'y'}
-<a href="{$helpurl}Forums" target="tikihelp" class="tikihelp" title="{tr}Forums{/tr}"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+{if $feature_help eq 'y'}
+<a href="{$helpurl}Forums" target="tikihelp" class="tikihelp" title="{tr}Forums{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
 {/if}
 
-      {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-admin_forums.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin forums template{/tr}"><img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
+{if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=tiki-admin_forums.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin forums template{/tr}"><img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}</h1>
 
 {if $forumId > 0}
@@ -17,7 +16,7 @@
 {/if}
 
 {if $tiki_p_admin eq 'y'}
-<a title="{tr}Configure/Options{/tr}" href="tiki-admin.php?page=forums"><img src="img/icons/config.gif" border="0" width="16" height="16" alt='{tr}Configure/Options{/tr}' /></a>
+<a title="{tr}Configure/Options{/tr}" href="tiki-admin.php?page=forums"><img src="pics/icons/wrench.png" border="0" width="16" height="16" alt='{tr}Configure/Options{/tr}' /></a>
 {/if}
 
 {if $forumId > 0}
@@ -311,13 +310,13 @@
 <td style="text-align:right;" class="{cycle advance=false}">{$channels[user].hits}</td>
 <td class="{cycle advance=false}">
 {if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
-   <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;forumId={$channels[user].forumId}"><img src="img/icons/config.gif" border="0" width="16" height="16" alt='{tr}Configure/Options{/tr}' /></a>
+   <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;forumId={$channels[user].forumId}"><img src="pics/icons/wrench.png" border="0" width="16" height="16" alt='{tr}Configure/Options{/tr}' /></a>
    {if $channels[user].individual eq 'y'}
-   	<a class="link" href="tiki-objectpermissions.php?objectName=Forum+{$channels[user].name|escape}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}"><img src='img/icons/key_active.gif' border='0' width="17" height="16" alt='{tr}Assign Permissions (Active){/tr}' /></a>
+   	<a class="link" href="tiki-objectpermissions.php?objectName=Forum+{$channels[user].name|escape}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}"><img src='pics/icons/key_active.png' border='0' width="16" height="16" alt='{tr}Assign Permissions (Active){/tr}' /></a>
    {else}
-   	<a class="link" href="tiki-objectpermissions.php?objectName=Forum+{$channels[user].name|escape}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}"><img src='img/icons/key.gif' border='0' width="17" height="16" alt='{tr}Assign Permissions{/tr}' /></a>
+   	<a class="link" href="tiki-objectpermissions.php?objectName=Forum+{$channels[user].name|escape}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}"><img src='pics/icons/key.png' border='0' width="16" height="16" alt='{tr}Assign Permissions{/tr}' /></a>
    {/if}
-   &nbsp;&nbsp;<a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].forumId}" title="{tr}Click here to delete this forum{/tr}"><img src='img/icons2/delete.gif' border='0' width="16" height="16" alt='{tr}Remove{/tr}' /></a>
+   &nbsp;&nbsp;<a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].forumId}" title="{tr}Click here to delete this forum{/tr}"><img src='pics/icons/cross.png' border='0' width="16" height="16" alt='{tr}Remove{/tr}' /></a>
 {/if}
 </td>
 </tr>
