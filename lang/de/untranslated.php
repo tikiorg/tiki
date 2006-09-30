@@ -450,7 +450,6 @@ $lang=Array(
 // "Edit template" => "Edit template",
 // "Message Broadcast" => "Message Broadcast",
 // "If you want people to be able to reply to you, you have to check <a href='tiki-user_preferences.php'>Allow messages from other users</a>" => "If you want people to be able to reply to you, you have to check <a href='tiki-user_preferences.php'>Allow messages from other users</a>",
-// "usernames separated with ;" => "usernames separated with ;",
 // "No messages to download" => "No messages to download",
 // "Unflag" => "Unflag",
 // "'name' parameter for tikimodule missed" => "'name' parameter for tikimodule missed",
@@ -828,7 +827,7 @@ $lang=Array(
 // "Warning: changing the username will require the user to change his password and will mess with slave intertiki sites that use this one as master" => "Warning: changing the username will require the user to change his password and will mess with slave intertiki sites that use this one as master",
 // "Warning: changing the username will require the user to change his password" => "Warning: changing the username will require the user to change his password",
 // "Registration" => "Registration",
-// "Batch upload (CSV file<a {popup text='login,password,email,groups<br />user1,password1,email1,&quot;group1,group2&quot;<br />user2, password2,email2'}><img src=\"img/icons/help.gif\" border=\"0\" height=\"16\" width=\"16\" alt='{tr}help" => "Batch upload (CSV file<a {popup text='login,password,email,groups<br />user1,password1,email1,&quot;group1,group2&quot;<br />user2, password2,email2'}><img src=\"img/icons/help.gif\" border=\"0\" height=\"16\" width=\"16\" alt='{tr}help",
+// "Batch upload (CSV file<a {popup text='login,password,email,groups<br />user1,password1,email1,&quot;group1,group2&quot;<br />user2, password2,email2'}><img src=\"pics/icons/help.png\" border=\"0\" height=\"16\" width=\"16\" alt='{tr}help" => "Batch upload (CSV file<a {popup text='login,password,email,groups<br />user1,password1,email1,&quot;group1,group2&quot;<br />user2, password2,email2'}><img src=\"pics/icons/help.png\" border=\"0\" height=\"16\" width=\"16\" alt='{tr}help",
 // "User tracker item : {\$usersitemid}" => "User tracker item : {\$usersitemid}",
 // "Loading..." => "Loading...",
 // "Article Types tpl" => "Article Types tpl",
@@ -1679,6 +1678,7 @@ $lang=Array(
 "tiki-mobile.php" => "tiki-mobile.php",
 "merged note:" => "merged note:",
 "Post recommendation at" => "Post recommendation at",
+"usernames separated with ," => "Benutzernamen mit , trennen",
 // ###
 // ### end of possibly untranslated words
 // ###

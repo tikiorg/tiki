@@ -457,7 +457,7 @@ $lang=Array(
 "the following groups:" => "de volgende groepen:",
 "Set the default group of the selected users to" => "Zet de standaardgroep van de geselecteerde gebruikers naar",
 "assign to groups" => "wijs toe aan groepen",
-"Batch upload (CSV file<a {popup text='login,password,email'}><img src=\"img/icons/help.gif\" border=\"0\" height=\"16\" width=\"16\" alt='{tr}help" => "Bulk aanlevering (CSV bestand<a {popup text='login,password,email'}><img src=\"img/icons/help.gif\" border=\"0\" height=\"16\" width=\"16\" alt='{tr}hulp",
+"Batch upload (CSV file<a {popup text='login,password,email'}><img src=\"pics/icons/help.png\" border=\"0\" height=\"16\" width=\"16\" alt='{tr}help" => "Bulk aanlevering (CSV bestand<a {popup text='login,password,email'}><img src=\"pics/icons/help.png\" border=\"0\" height=\"16\" width=\"16\" alt='{tr}hulp",
 "Directory batch upload" => "Directory bulk aanlevering",
 "available images" => "beschikbare afbeeldingen",
 "width" => "breedte",
