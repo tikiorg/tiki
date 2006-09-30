@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_edit.tpl,v 1.16 2006-03-16 13:43:12 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_edit.tpl,v 1.17 2006-09-30 19:28:04 ohertel Exp $ *}
 
 <a class="pagetitle" href="tiki-map_edit.php?mode=listing">{tr}Mapfiles{/tr}</a><br />
 <a href="http://mapserver.gis.umn.edu/doc/mapfile-reference.html">http://mapserver.gis.umn.edu/doc/mapfile-reference.html</a><br /><br />
@@ -21,14 +21,14 @@
 <td class="odd">
 {if $tiki_p_map_edit eq 'y'}
 <a class="link" href="tiki-map_edit.php?mapfile={$files[user]}&amp;mode=editing">
-<img src="img/icons/config.gif" border="0"  alt="{tr}edit{/tr}" title="{tr}edit{/tr}" />
+<img src="pics/icons/wrench.png" border="0" alt="{tr}edit{/tr}" title="{tr}edit{/tr}" width='16' height='16' />
 </a>
 {/if}
 {if $user and $feature_user_watches eq 'y'}
  {if $user_watching_map[user] eq 'n'}
-  	<a href="tiki-map_edit.php?watch_event=map_changed&amp;watch_object={$files[user]}&amp;watch_action=add"><img border='0' alt='{tr}monitor this map{/tr}' title='{tr}monitor this map{/tr}' src='img/icons/icon_watch.png' /></a>
+  	<a href="tiki-map_edit.php?watch_event=map_changed&amp;watch_object={$files[user]}&amp;watch_action=add"><img border='0' alt='{tr}monitor this map{/tr}' title='{tr}monitor this map{/tr}' src='pics/icons/eye.png' width='16' height='16' /></a>
 	{else}
-		<a href="tiki-map_edit.php?watch_event=map_changed&amp;watch_object={$files[user]}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this map{/tr}' title='{tr}stop monitoring this map{/tr}' src='img/icons/icon_unwatch.png' /></a>
+		<a href="tiki-map_edit.php?watch_event=map_changed&amp;watch_object={$files[user]}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this map{/tr}' title='{tr}stop monitoring this map{/tr}' src='pics/icons/no_eye.png' width='16' height='16' /></a>
 	{/if}
 {/if}
 </td>
@@ -47,14 +47,14 @@
 <td class="even">
 {if $tiki_p_map_edit eq 'y'}
 <a class="link" href="tiki-map_edit.php?mapfile={$files[user]}&amp;mode=editing">
-<img src="img/icons/config.gif" border="0" alt="{tr}edit{/tr}" title="{tr}edit{/tr}" />
+<img src="pics/icons/wrench.png" border="0" alt="{tr}edit{/tr}" title="{tr}edit{/tr}" width='16' height='16' />
 </a>
 {/if}
 {if $user and $feature_user_watches eq 'y'}
  {if $user_watching_map[user] eq 'n'}
-  	<a href="tiki-map_edit.php?watch_event=map_changed&amp;watch_object={$files[user]}&amp;watch_action=add"><img border='0' alt='{tr}monitor this map{/tr}' title='{tr}monitor this map{/tr}' src='img/icons/icon_watch.png' /></a>
+  	<a href="tiki-map_edit.php?watch_event=map_changed&amp;watch_object={$files[user]}&amp;watch_action=add"><img border='0' alt='{tr}monitor this map{/tr}' title='{tr}monitor this map{/tr}' src='pics/icons/eye.png' width='16' height='16' /></a>
 	{else}
-		<a href="tiki-map_edit.php?watch_event=map_changed&amp;watch_object={$files[user]}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this map{/tr}' title='{tr}stop monitoring this map{/tr}' src='img/icons/icon_unwatch.png' /></a>
+		<a href="tiki-map_edit.php?watch_event=map_changed&amp;watch_object={$files[user]}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this map{/tr}' title='{tr}stop monitoring this map{/tr}' src='pics/icons/no_eye.png' width='16' height='16' /></a>
 	{/if}
 {/if}	
 </td>

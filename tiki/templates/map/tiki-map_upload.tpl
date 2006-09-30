@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_upload.tpl,v 1.13 2006-03-16 13:43:12 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_upload.tpl,v 1.14 2006-09-30 19:28:04 ohertel Exp $ *}
 
 <a class="pagetitle" href="tiki-map_upload.php">Layer Management</a><br /><br />
 <a class="link" href="tiki-map_upload.php?dir={$dir}">
@@ -23,7 +23,7 @@
 <td class="odd">
 {if $tiki_p_map_delete eq 'y'}
 <a class="link" href="tiki-map_upload.php?dir={$dir}&directory={$dirs[user]}&action=deldir">
-<img src='img/icons2/delete.gif' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' />
+<img src='pics/icons/cross.png' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' width='16' height='16' />
 </a>
 {/if}
 </td>
@@ -38,7 +38,7 @@
 <td class="even">
 {if $tiki_p_map_delete eq 'y'}
 <a class="link" href="tiki-map_upload.php?dir={$dir}&directory={$dirs[user]}&action=deldir">
-<img src='img/icons2/delete.gif' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' />
+<img src='pics/icons/cross.png' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' width='16' height='16' />
 </a>
 {/if}
 </td>
@@ -46,34 +46,20 @@
 {/if}
 {/section}
 <td class="heading" colspan="2">{tr}Files{/tr}</a></td>
+{cycle values="odd,even" print=false}
 {section name=user loop=$files}
-{if $smarty.section.user.index % 2}
 <tr>
-<td class="odd">
+<td class="{cycle advance=false}">
 {$files[user]}
 </td>
-<td class="odd">
+<td class="{cycle advance=true}">
 {if $tiki_p_map_delete eq 'y'}
 <a class="link" href="tiki-map_upload.php?dir={$dir}&file={$files[user]}&action=delete">
-<img src='img/icons2/delete.gif' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' />
+<img src='pics/icons/cross.png' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' width='16' height='16' />
 </a>
 {/if}
 </td>
 </tr>
-{else}
-<tr>
-<td class="even">
-{$files[user]}
-</td>
-<td class="even">
-{if $tiki_p_map_delete eq 'y'}
-<a class="link" href="tiki-map_upload.php?dir={$dir}&file={$files[user]}&action=delete">
-<img src='img/icons2/delete.gif' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' />
-</a>
-{/if}
-</td>
-</tr>
-{/if}
 {/section}
 </table>
 <br />
