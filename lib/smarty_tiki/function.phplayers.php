@@ -32,6 +32,6 @@ function smarty_function_phplayers($params, &$smarty) {
 	}
 	$name = 'usermenu'.$id;
 
-	echo $tikiphplayers->mkmenu($output, $name, $type, $file);
+	echo $tikiphplayers->mkMenu($output, $name, $type, $file);
 }
 ?>
