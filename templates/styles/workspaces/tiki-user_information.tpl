@@ -7,7 +7,7 @@
   <div class="cbox-data">
   <div class="simplebox">
   <table>
-  <tr><td class="form">{tr}User{/tr}:</td><td>{$userinfo.login}{if $tiki_p_admin eq 'y'} <a class="link" href="tiki-user_preferences.php?view_user={$userinfo.login}"><IMG SRC="img/icons/config.gif" title="{tr}Change user preferences{/tr}" border="0" /> </a>  {/if}</td></tr>
+  <tr><td class="form">{tr}User{/tr}:</td><td>{$userinfo.login}{if $tiki_p_admin eq 'y'} <a class="link" href="tiki-user_preferences.php?view_user={$userinfo.login}"><IMG SRC="pics/icons/wrench.png" title="{tr}Change user preferences{/tr}" border="0" width='16' height='16' /> </a>  {/if}</td></tr>
 {if $feature_score eq 'y'}
   <tr><td class="form">{tr}Score{/tr}:</td><td>{$userinfo.score|star}{$userinfo.score}</td></tr>
 {/if}
