@@ -27,38 +27,38 @@
 </td>
 {if $rss_wiki eq 'y'}
 <td width="50">
-<a href="tiki-wiki_rss.php"><img alt="rss" border="0" src="img/rss.png" /></a><br />
-<small>Wiki</small>
+<a href="tiki-wiki_rss.php"><img src='pics/icons/feed.png' style='border: 0; vertical-align: text-bottom;' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' width='16' height='16' /></a><br />
+<small>{tr}Wiki{/tr}</small>
 </td>
 {/if}
 {if $rss_blogs eq 'y'}
 <td width="50">
-<a href="tiki-blogs_rss.php"><img alt="rss" border="0" src="img/rss.png" /></a><br />
-<small>Blogs</small>
+<a href="tiki-blogs_rss.php"><img src='pics/icons/feed.png' style='border: 0; vertical-align: text-bottom;' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' width='16' height='16' /></a><br />
+<small>{tr}Blogs{/tr}</small>
 </td>
 {/if}
 {if $rss_articles eq 'y'}
 <td width="50">
-<a href="tiki-articles_rss.php"><img alt="rss" border="0" src="img/rss.png" /></a><br />
-<small>Articles</small>
+<a href="tiki-articles_rss.php"><img src='pics/icons/feed.png' style='border: 0; vertical-align: text-bottom;' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' width='16' height='16' /></a><br />
+<small>{tr}Articles{/tr}</small>
 </td>
 {/if}
 {if $rss_image_galleries eq 'y'}
 <td width="50">
-<a href="tiki-image_galleries_rss.php"><img alt="rss" border="0" src="img/rss.png" /></a><br />
-<small>Images</small>
+<a href="tiki-image_galleries_rss.php"><img src='pics/icons/feed.png' style='border: 0; vertical-align: text-bottom;' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' width='16' height='16' /></a><br />
+<small>{tr}Images{/tr}</small>
 </td>
 {/if}
 {if $rss_file_galleries eq 'y'}
 <td width="50">
-<a href="tiki-file_galleries_rss.php"><img alt="rss" border="0" src="img/rss.png" /></a><br />
-<small>Files</small>
+<a href="tiki-file_galleries_rss.php"><img src='pics/icons/feed.png' style='border: 0; vertical-align: text-bottom;' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' width='16' height='16' /></a><br />
+<small>{tr}Files{/tr}</small>
 </td>
 {/if}
 {if $rss_forums eq 'y'}
 <td width="50">
-<a href="tiki-forums_rss.php"><img alt="rss" border="0" src="img/rss.png" /></a><br />
-<small>Forums</small>
+<a href="tiki-forums_rss.php"><img src='pics/icons/feed.png' style='border: 0; vertical-align: text-bottom;' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' width='16' height='16' /></a><br />
+<small>{tr}Forums{/tr}</small>
 </td>
 {/if}
 
