@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.71 2006-09-29 18:46:15 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.72 2006-10-01 12:55:52 ohertel Exp $
 var feature_no_cookie = 'n';
 
 function browser() {
@@ -932,11 +932,11 @@ function ts_resortTable(lnk) {
     newRows.sort(sortfn);
 
     if (span.getAttribute("sortdir") == 'down') {
-        ARROW = '&nbsp;&nbsp;<img src="img/icons2/up.gif" border="0">';
+        ARROW = '&nbsp;&nbsp;<img src="pics/icons/resultset_up.png" border="0" width="16" height="16" />';
         newRows.reverse();
         span.setAttribute('sortdir','up');
     } else {
-        ARROW = '&nbsp;&nbsp;<img src="img/icons2/down.gif" border="0">';
+        ARROW = '&nbsp;&nbsp;<img src="pics/icons/resultset_down.png" border="0" width="16" height="16" />';
         span.setAttribute('sortdir','down');
     }
     
@@ -1066,7 +1066,11 @@ function correctPNG() // correctly handle PNG transparency in Win IE 5.5 & 6.
       }
    }    
 }
-window.attachEvent("onload", correctPNG);
+
+browser();
+if (this.iewin) {
+	window.attachEvent("onload", correctPNG);
+}
 
 // This was added to allow wiki3d to change url on tiki's window
 window.name = 'tiki';
