@@ -1,8 +1,8 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/mindmap/wiki-plugins/wikiplugin_mindmap.php,v 1.2 2006-09-30 05:56:04 fumphco Exp $
+/* $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/mindmap/wiki-plugins/wikiplugin_mindmap.php,v 1.3 2006-10-01 00:47:33 fumphco Exp $
  *
  * The freemind plugin source is available at http://freemind.sourceforge.net
- * Can use either the freemind java applet or the much lighter flash plugin
+ * Both the freemind java applet and the much lighter flash plugin are supported.
  *
  * The function returns some text that will replace the content in the
  * wiki page.
@@ -34,37 +34,39 @@ function wikiplugin_mindmap($data, $params) {
 		$src = "./tiki-download_wiki_attachment.php?attId=".$src;
 	}
 // optional parameters
-  	if (!isset($width)) {
-			$width = 700;
-  	}
-  	if (!isset($height)) {
-			$height = 400;
-  	}
+  if (!isset($width)) {
+		$width = 700;
+  }
+  if (!isset($height)) {
+		$height = 400;
+  }
+	$id = uniqid("mm_");
 	if ((isset($plugin)) and ($plugin == "java")) {
-		$ret='<APPLET CODE="freemind.main.FreeMindApplet.class" ARCHIVE="lib/mindmap/freemindbrowser.jar"';
-	  $ret.=' WIDTH="'.$width.'" HEIGHT="'.$height.'">';
-	  $ret.=' <PARAM NAME="type" VALUE="application/x-java-applet;version=1.4">';
-	  $ret.=' <PARAM NAME="scriptable" VALUE="false">';
-	  $ret.=' <PARAM NAME="modes" VALUE="freemind.modes.browsemode.BrowseMode">';
-	  $ret.=' <PARAM NAME="browsemode_initial_map" VALUE="'.$src.'">';
-	  $ret.=' <PARAM NAME="initial_mode" VALUE="Browse">';
-	  $ret.=' <PARAM NAME="selection_method" VALUE="selection_method_direct">';
-	  $ret.='</APPLET>';
+		$ret='
+		<APPLET ID="'.$id.'" CODE="freemind.main.FreeMindApplet.class" ARCHIVE="lib/mindmap/freemindbrowser.jar" WIDTH="'.$width.'" HEIGHT="'.$height.'">
+			<PARAM NAME="type" VALUE="application/x-java-applet;version=1.4">
+			<PARAM NAME="scriptable" VALUE="false">
+			<PARAM NAME="modes" VALUE="freemind.modes.browsemode.BrowseMode">
+			<PARAM NAME="browsemode_initial_map" VALUE="'.$src.'">
+			<PARAM NAME="initial_mode" VALUE="Browse">
+			<PARAM NAME="selection_method" VALUE="selection_method_direct">
+	  </APPLET>';
 	} else {
-	  $ret='<script type="text/javascript" src="lib/mindmap/flashobject.js"></script>
-	  <div id="flashcontent">
-	    Flash plugin or Javascript are turned off.
-	    Activate both and reload to view the mindmap
-	  </div>
-	  <script type="text/javascript">
-	    var fo = new FlashObject("lib/mindmap/visorFreemind.swf", "visorFreeMind", '.$width.', '.$height.', 6, "#9999ff");
-	    fo.addParam("quality", "high");
-	    fo.addParam("bgcolor", "#ffffff");
-	    fo.addVariable("openUrl", "_blank");
-	    fo.addVariable("initLoadFile", "'.$src.'");
-	    fo.addVariable("startCollapsedToLevel","5");
-	    fo.write("flashcontent");
-	  </script>';
+		$ret='
+		<script type="text/javascript" src="lib/mindmap/flashobject.js"></script>
+		<div id="flashcontent_'.$id.'">
+		  A problem occurred while trying to display the mindmap.
+		  Check if both Flash plugin and Javascript are activated.
+		</div>
+		<script type="text/javascript">
+			var '.$id.' = new FlashObject("lib/mindmap/visorFreemind.swf", "visorFreeMind", '.$width.', '.$height.', 6, "#9999ff");
+			'.$id.'.addParam("quality", "high");
+			'.$id.'.addParam("bgcolor", "#ffffff");
+			'.$id.'.addVariable("openUrl", "_blank");
+			'.$id.'.addVariable("initLoadFile", "'.$src.'");
+			'.$id.'.addVariable("startCollapsedToLevel","5");
+			'.$id.'.write("flashcontent_'.$id.'");
+		</script>';
 	}
 	return $ret;
 }
