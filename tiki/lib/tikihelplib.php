@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/lib/tikihelplib.php,v 1.3 2005-06-26 14:28:32 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/tikihelplib.php,v 1.4 2006-10-01 13:23:12 ohertel Exp $
  * Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -41,7 +41,7 @@ function help_doclink($params) {
     if ($feature_help == 'y' and $url) {
         $ret = '<a title="'.$desc.'" href="'
         .$helpurl.$url.'" target="tikihelp" class="tikihelp">'
-        .'<img src="img/icons/help.gif"'
+        .'<img src="pics/icons/help.png"'
         .' border="0" height="16" width="16" alt="'.tra('Help').'" /></a>';
     }
     return $ret;
