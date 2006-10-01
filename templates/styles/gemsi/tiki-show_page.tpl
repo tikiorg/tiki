@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-show_page.tpl,v 1.14 2005-12-15 21:02:50 lfagundes Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-show_page.tpl,v 1.15 2006-10-01 13:35:21 ohertel Exp $ *}
 
 {if $feature_page_title eq 'y'}
 <h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
 {if $structure eq 'y' and $page_info.page_alias ne ''}{$page_info.page_alias}{else}{$page}{/if}</a>  
-{if $lock}<img src="img/icons/lock_topic.gif" height="19" width="19" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />{/if}
+{if $lock}<img src="pics/icons/lock.png" height="16" width="16" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />{/if}
 </h1>
 {/if}
 {if $feature_wiki_pageid eq 'y'}
@@ -16,15 +16,15 @@
 <table>
 <tr>
 {if $prev_info and $prev_info.page_ref_id}
-<td align="left" width="33%"><a href="tiki-index.php?page_ref_id={$prev_info.page_ref_id}"><img src='img/icons2/nav_prev.gif' border='0' width="72" height="11" alt='{tr}Previous page{/tr}' 
+<td align="left" width="33%"><a href="tiki-index.php?page_ref_id={$prev_info.page_ref_id}"><img src='pics/icons/resultset_previous.png' border='0' width="16" height="16" alt='{tr}Previous page{/tr}' 
 {if $prev_info.page_alias}title='{$prev_info.page_alias}'{else}title='{$prev_info.pageName}'{/if} /></a>{else}<img src='img/icons2/8.gif' border='0'/></td>
 {/if}
 {if $parent_info}
-<td style="text-align:center;" width="34%"><a href="tiki-index.php?page_ref_id={$parent_info.page_ref_id}"><img src='img/icons2/nav_home.gif' border='0' align="center" alt='{tr}Parent page{/tr}' 
+<td style="text-align:center;" width="34%"><a href="tiki-index.php?page_ref_id={$parent_info.page_ref_id}"><img src='pics/icons/resultset_up.png' border='0' width='16' height='16' align="center" alt='{tr}Parent page{/tr}' 
 {if $parent_info.page_alias}title='{$parent_info.page_alias}'{else}title='{$parent_info.pageName}'{/if}/></a>{else}<img src='img/icons2/8.gif' border='0'/></td>
 {/if}
 {if $next_info and $next_info.page_ref_id}
-<td align="right" width="33%"><a href="tiki-index.php?page_ref_id={$next_info.page_ref_id}"><img src='img/icons2/nav_next.gif' border='0' width="72" height="11" align="right" alt='{tr}Next page{/tr}' 
+<td align="right" width="33%"><a href="tiki-index.php?page_ref_id={$next_info.page_ref_id}"><img src='pics/icons/resultset_next.png' border='0' width="16" height="16" align="right" alt='{tr}Next page{/tr}' 
 {if $next_info.page_alias}title='{$next_info.page_alias}'{else}title='{$next_info.pageName}'{/if}/></a>{else}<img src='img/icons2/8.gif' border='0'/></td>
 {/if}
 </tr></table>
@@ -47,11 +47,11 @@
 {if $pages > 1}
 	<br />
 	<div align="center">
-		<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$first_page}"><img src='img/icons2/nav_first.gif' border='0' alt='{tr}First page{/tr}' title='{tr}First page{/tr}' /></a>
-		<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$prev_page}"><img src='img/icons2/nav_dot_right.gif' border='0' alt='{tr}Previous page{/tr}' title='{tr}Previous page{/tr}' /></a>
+		<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$first_page}"><img src='pics/icons/resultset_first.png' border='0' width='16' height='16' alt='{tr}First page{/tr}' title='{tr}First page{/tr}' /></a>
+		<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$prev_page}"><img src='pics/icons/resultset_previous.png' border='0' width='16' height='16' alt='{tr}Previous page{/tr}' title='{tr}Previous page{/tr}' /></a>
 		<small>{tr}page{/tr}:{$pagenum}/{$pages}</small>
-		<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$next_page}"><img src='img/icons2/nav_dot_left.gif' border='0' alt='{tr}Next page{/tr}' title='{tr}Next page{/tr}' /></a>
-		<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$last_page}">{html_image file='img/icons2/nav_last.gif' border='0' alt='{tr}Last page{/tr}' title='{tr}Last page{/tr}'}</a>
+		<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$next_page}"><img src='pics/icons/resultset_next.png' border='0' width='16' height='16' alt='{tr}Next page{/tr}' title='{tr}Next page{/tr}' /></a>
+		<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$last_page}">{html_image file='pics/icons/resultset_last.png' border='0' width='16' height='16' alt='{tr}Last page{/tr}' title='{tr}Last page{/tr}'}</a>
 	</div>
 {/if}
 </div> {* End of main wiki page *}
@@ -122,19 +122,19 @@
 <td style="text-align:right;">
 
 {if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
-<a title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;savenotepad=1"><img src="img/icons/ico_save.gif" border="0"  width="16" height="16" alt='{tr}save{/tr}' /></a>
+<a title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;savenotepad=1"><img src="pics/icons/disk.png" border="0"  width="16" height="16" alt='{tr}save{/tr}' /></a>
 {/if}
 
 {if $user and $feature_user_watches eq 'y'}
 {if $user_watching_page eq 'n'}
-<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=add"><img border='0' alt='{tr}monitor this page{/tr}' title='{tr}monitor this page{/tr}' src='img/icons/icon_watch.png' /></a>
+<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=add"><img border='0' alt='{tr}monitor this page{/tr}' title='{tr}monitor this page{/tr}' src='pics/icons/eye.png' width='16' height='16' /></a>
 {else}
-<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this page{/tr}' title='{tr}stop monitoring this page{/tr}' src='img/icons/icon_unwatch.png' /></a>
+<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this page{/tr}' title='{tr}stop monitoring this page{/tr}' src='pics/icons/no_eye.png' width='16' height='16' /></a>
 {/if}
 {/if}
 	
 {if $feature_morcego eq "y" && $wiki_feature_3d eq "y"}
-<a title="{tr}3d browser{/tr}" href="javascript:wiki3d_open('{$page|escape}',{$wiki_3d_width}, {$wiki_3d_height})"><img src="img/icons/ico_wiki3d.gif" border="0" width="13" height="16" alt='{tr}3d browser{/tr}' /></a>
+<a title="{tr}3d browser{/tr}" href="javascript:wiki3d_open('{$page|escape}',{$wiki_3d_width}, {$wiki_3d_height})"><img src="pics/icons/wiki3d.png" border="0" width="16" height="16" alt='{tr}3d browser{/tr}' /></a>
 {/if}
 
 {if $feature_backlinks eq 'y' and $backlinks}

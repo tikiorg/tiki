@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/damian/module.tpl,v 1.5 2006-03-16 13:43:13 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/damian/module.tpl,v 1.6 2006-10-01 13:35:21 ohertel Exp $ *}
 {* Module layout with controls *}
 
 <div class="box{if $module_side eq "right_modules"}_right{/if} "><div class="box-title">
@@ -7,10 +7,10 @@
 <table>
   <tr>
     <td width="11">
-      <a href="{$current_location|escape}{$mpchar}mc_up={$module_name|escape}"><img src="img/icons2/up.gif" border="0" /></a>
+      <a href="{$current_location|escape}{$mpchar}mc_up={$module_name|escape}"><img src="pics/icons/resultset_up.png" border="0" width="16" height="16" /></a>
     </td>
     <td width="11">
-      <a href="{$current_location|escape}{$mpchar}mc_down={$module_name|escape}"><img src="img/icons2/down.gif" border="0" /></a>
+      <a href="{$current_location|escape}{$mpchar}mc_down={$module_name|escape}"><img src="pics/icons/resultset_down.png" border="0" width="16" height="16" /></a>
     </td>
     <td>
       {if $module_flip eq 'y'}
@@ -23,7 +23,7 @@
       <a href="{$current_location|escape}{$mpchar}mc_move={$module_name|escape}"><img src="img/icons2/admin_move.gif" border="0" /></a>
     </td>
     <td width="16">
-      <a href="{$current_location|escape}{$mpchar}mc_unassign={$module_name|escape}" onclick="return confirmTheLink(this,'{tr}Are you sure you want to remove this module?{/tr}')"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt='{tr}Remove{/tr}' /></a>
+      <a href="{$current_location|escape}{$mpchar}mc_unassign={$module_name|escape}" onclick="return confirmTheLink(this,'{tr}Are you sure you want to remove this module?{/tr}')"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}Remove{/tr}' /></a>
     </td>
   </tr>
 </table>
