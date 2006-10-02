@@ -1070,7 +1070,7 @@ $lang=Array(
 "Archive is full!" => "L'arxiu és ple!",
 // "If you people want to be able to reply to you, you have to check <a href='tiki-user_preferences.php'>Allow messages from other users</a>" => "If you people want to be able to reply to you, you have to check <a href='tiki-user_preferences.php'>Allow messages from other users</a>",
 "CC" => "CC",
-"usernames separated with ," => "noms d'usuaris separats per ,",
+"usernames separated with ;" => "noms d'usuaris separats per ;",
 "No messages to download" => "No hi ha missatges per descarregar",
 "Mailbox is full! Delete or archive some messages if you want to receive more messages." => "La bústia de correu és plena! Esborra o arxiva alguns missatges si vols rebre'n més.",
 "move to archive" => "mou a l'arxiu",
