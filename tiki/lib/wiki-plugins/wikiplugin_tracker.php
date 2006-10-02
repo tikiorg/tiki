@@ -135,7 +135,7 @@ function wikiplugin_tracker($data, $params) {
 				}
 
 				if (isset($_REQUEST['authorfieldid']) and $_REQUEST['authorfieldid']) {
-					$val = $user? $user: $_REQUEST['name']? $_REQUEST['name']: '';
+				  $val = $user? $user: isset($_REQUEST['name'])? $_REQUEST['name']: '';
 					$ins_fields["data"][] = array('fieldId' => $_REQUEST['authorfieldid'], 'value' => $val, 'type' => 'u', 'options' => 1);
 				}
 				if (isset($_REQUEST['authorgroupfieldid']) and $_REQUEST['authorgroupfieldid']) {
