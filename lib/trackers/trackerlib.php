@@ -681,12 +681,11 @@ class TrackerLib extends TikiLib {
 		$the_data .= $statusTypes[$status]['label'] . "\n\n";
 
 		foreach($ins_fields["data"] as $i=>$array) {
-			if (!isset($ins_fields["data"][$i]["type"]) or $ins_fields["data"][$i]["type"] == 's' or 
-				(($ins_fields["data"][$i]["isHidden"] == 'p' or $ins_fields["data"][$i]["isHidden"] == 'y')and $tiki_p_admin_trackers != 'y')) {
-			    // system type, do nothing
+			if (!isset($ins_fields["data"][$i]["type"]) or $ins_fields["data"][$i]["type"] == 's') {
+				// system type, do nothing
+			} else if ($ins_fields["data"][$i]["type"] != 'u' && $ins_fields["data"][$i]["type"] != 'g' && ($ins_fields["data"][$i]["isHidden"] == 'p' or $ins_fields["data"][$i]["isHidden"] == 'y')and $tiki_p_admin_trackers != 'y') {
 					// hidden field type require tracker amdin perm
 			} else {
-
 				// -----------------------------
 				// save image on disk
 				if ( $ins_fields["data"][$i]["type"] == 'i' && isset($ins_fields["data"][$i]['value'])) {
@@ -1581,6 +1580,17 @@ class TrackerLib extends TikiLib {
 		$sort_mode = "value_asc";
 		$query = "select distinct(ttif.`value`) from `tiki_tracker_item_fields` ttif, `tiki_tracker_items` tti where tti.`itemId`= ttif.`itemId`and ttif.`fieldId`=? $mid order by ".$this->convert_sortmode($sort_mode);
 		$result = $this->query( $query, $bindvars);
+		$ret = array();
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res['value'];
+		}
+		return $ret;
+	}
+	/* return the values of $fieldIdOut of an item that has a value $value for $fieldId */
+	function get_filtered_item_values($fieldId, $value, $fieldIdOut) {
+		$query = "select ttifOut.`value` from `tiki_tracker_item_fields` ttifOut, `tiki_tracker_item_fields` ttif
+			where ttifOut.`itemId`= ttif.`itemId`and ttif.`fieldId`=? and ttif.`value`=? and ttifOut.`fieldId`=?";
+		$result = $this->query($query, array($fieldId, $value, $fieldIdOut));
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res['value'];
