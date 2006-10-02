@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.655 2006-10-02 16:16:41 ohertel Exp $
+// CVS: $Id: tikilib.php,v 1.656 2006-10-02 18:11:51 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4501,7 +4501,7 @@ function add_pageview() {
     //PARSEDATA
     function parse_data($data,$is_html=false) {
    	// Don't bother if there's nothing...
-	if (function_exists(mb_strlen)) {
+	  if (function_exists('mb_strlen')) {
 		if( mb_strlen( $data ) < 1 )
 		{
 		    return;
