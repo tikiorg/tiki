@@ -74,7 +74,7 @@
 {if $wiki_list_name eq 'y'}
 	<td class="{cycle advance=false}"><a href="tiki-index.php?page={$listpages[changes].pageName|escape:"url"}" class="link" title="{$listpages[changes].pageName}">{$listpages[changes].pageName|truncate:40:"...":true}</a>
 	{if $tiki_p_edit eq 'y'}
-	&nbsp;<a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}"><img border='0' title='{tr}edit{/tr}' alt='{tr}edit{/tr}' src='img/icons/edit.gif' /></a>
+	&nbsp;<a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}"><img border='0' title='{tr}edit{/tr}' alt='{tr}edit{/tr}' src='pics/icons/page_edit.png' height='16' width='16' /></a>
 	{/if}
 	</td>
 {/if}
@@ -100,9 +100,9 @@
 {if $wiki_list_status eq 'y'}
 	<td style="text-align:center;" class="{cycle advance=false}">
 	{if $listpages[changes].flag eq 'locked'}
-		<img src='img/icons/lock_topic.gif' alt='{tr}locked{/tr}' />
+		<img src='pics/icons/lock.png' alt='{tr}locked{/tr}' border='0' height='16' width='16' />
 	{else}
-		<img src='img/icons/unlock_topic.gif' alt='{tr}unlocked{/tr}' />
+		<img src='pics/icons/lock_break.png' alt='{tr}unlocked{/tr}' border='0' height='16' width='16' />
 	{/if}
 	</td>
 {/if}
