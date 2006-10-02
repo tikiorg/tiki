@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.653 2006-09-23 13:05:58 ohertel Exp $
+// CVS: $Id: tikilib.php,v 1.654 2006-10-02 05:24:11 rlpowell Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4500,7 +4500,13 @@ function add_pageview() {
 
     //PARSEDATA
     function parse_data($data,$is_html=false) {
-        if (isset($GLOBALS['pear_wiki_parser']) && $GLOBALS['pear_wiki_parser'] == 'y') {
+    	// Don't bother if there's nothing...
+	if( mb_strlen( $data ) < 1 )
+	{
+	    return;
+	}
+
+	if (isset($GLOBALS['pear_wiki_parser']) && $GLOBALS['pear_wiki_parser'] == 'y') {
             require_once('Text/Wiki/Tiki.php');
             $wiki =& new Text_Wiki_Tiki();
             $wiki->setRenderConf('xhtml', 'wikilink', 'exists_callback', array(&$this, 'page_exists'));
@@ -4672,8 +4678,8 @@ function add_pageview() {
 	$data = preg_replace(';~pre~(.*?)~/pre~;s', '<pre>$1</pre>', $data);
 
 	// Handle comment sections
-	$data = preg_replace(';\s*~tc~(.*?)~/tc~\s*;s', '', $data);
-	$data = preg_replace(';\n*~hc~(.*?)~/hc~\n*;s', '<!-- $1 -->', $data);
+	$data = preg_replace(';~tc~(.*?)~/tc~;s', '', $data);
+	$data = preg_replace(';~hc~(.*?)~/hc~;s', '<!-- $1 -->', $data);
 
 	// Extract [link] sections (to be re-inserted later)
 	$noparsedlinks = array();
