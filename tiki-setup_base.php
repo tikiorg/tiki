@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.103 2006-09-30 01:18:46 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.104 2006-10-02 16:24:50 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -109,6 +109,7 @@ $patterns['intSign']   = "/^[-+]?[0-9]*$/"; // *offset,
 $patterns['hex']   = "/^[-0-9a-fA-F]*$/";
 $patterns['char']  = "/^[-,_a-zA-Z0-9]*$/"; // sort_mode, 
 $patterns['string']  = "/^[^<>\";#]*$/"; // find, and such extended chars
+$patterns['stringlist']  = "/^[^<>\"#]*$/"; // to, cc, bcc (for string lists like: user1;user2;user3)
 $patterns['vars']  = "/^[-_a-zA-Z0-9]*$/"; // for variable keys
 $patterns['hash'] = "/^[a-z0-9]*$/"; // for hash reqId in live support
 $patterns['url'] = "/^https?:\/\/[^<>\"']*$/"; // needed for the htmlpage inclusion in tiki-editpage
@@ -137,9 +138,9 @@ $vartype['initial'] = 'char';
 $vartype['username'] = 'string';
 $vartype['realName'] = 'string';
 $vartype['homePage'] = 'string';
-$vartype['to'] = 'string';
-$vartype['cc'] = 'string';
-$vartype['bcc'] = 'string';
+$vartype['to'] = 'stringlist';
+$vartype['cc'] = 'stringlist';
+$vartype['bcc'] = 'stringlist';
 $vartype['subject'] = 'string';
 $vartype['name'] = 'string';
 $vartype['reqId'] = 'hash';

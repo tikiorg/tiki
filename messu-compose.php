@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-compose.php,v 1.34 2006-09-30 13:50:30 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-compose.php,v 1.35 2006-10-02 16:24:50 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -110,9 +110,9 @@ if (isset($_REQUEST['send'])) {
 	}
 
 	// Parse the to, cc and bcc fields into an array
-	$arr_to = preg_split('/\s*(?<!\\\),\s*/', $_REQUEST['to']);
-	$arr_cc = preg_split('/\s*(?<!\\\),\s*/', $_REQUEST['cc']);
-	$arr_bcc = preg_split('/\s*(?<!\\\),\s*/', $_REQUEST['bcc']);
+	$arr_to = preg_split('/\s*(?<!\\\);\s*/', $_REQUEST['to']);
+	$arr_cc = preg_split('/\s*(?<!\\\);\s*/', $_REQUEST['cc']);
+	$arr_bcc = preg_split('/\s*(?<!\\\);\s*/', $_REQUEST['bcc']);
 
 	// Remove invalid users from the to, cc and bcc fields
 	$users = array();
