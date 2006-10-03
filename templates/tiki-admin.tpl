@@ -19,7 +19,7 @@ Add a value in first check when you create a new admin page. *}
 {/if}
 {include file="tiki-admin-include-$include.tpl"}
 
-<br /><br />
+<br style="clear:both" /><br />
 <div class="cbox">
 <div class="cbox-title">{tr}Crosslinks to other features and settings{/tr}</div>
 <div class="cbox-data">
