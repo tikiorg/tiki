@@ -159,7 +159,6 @@ function wikiplugin_tracker($data, $params) {
 				// values are OK, then lets add a new item
 				if( count($field_errors['err_mandatory']) == 0  && count($field_errors['err_value']) == 0 ) {
 					$itemId = $trklib->get_user_item($trackerId, $tracker);
-echo "rrr"; print_r($itemId);
 					$rid = $trklib->replace_item($trackerId,$itemId,$ins_fields,$tracker['newItemStatus']);
 					$trklib->categorized_item($trackerId, $rid, $mainfield, $ins_categs);
 					if (!empty($page)) {
