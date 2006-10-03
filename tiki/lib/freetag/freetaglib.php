@@ -580,7 +580,7 @@ class FreetagLib extends ObjectLib {
 		
 	$query = "SELECT `tagId` FROM `tiki_freetags`
 			WHERE 
-			tag = ?
+			`tag` = ?
 			LIMIT 1
 			";
 
@@ -722,7 +722,7 @@ class FreetagLib extends ObjectLib {
 	// get top tag popularity
 	$query = "SELECT COUNT(*) as count
 			FROM `tiki_freetagged_objects` o
-			GROUP BY tagId
+			GROUP BY `tagId`
 			ORDER BY count DESC
 			";
 
@@ -742,7 +742,7 @@ class FreetagLib extends ObjectLib {
                              `tiki_freetagged_objects` o
 			WHERE t.`tagId` = o.`tagId`
 			$mid
-			GROUP BY tag
+			GROUP BY `tag`
 			ORDER BY count DESC, tag ASC
 			";
 
