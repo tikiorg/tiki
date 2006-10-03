@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.43 2006-09-19 16:33:14 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.44 2006-10-03 10:46:30 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -205,6 +205,14 @@ if (isset($_REQUEST["save"])) {
 		$tracker_options["writerCanModify"] = 'n';
 	}
 
+	if (isset($_REQUEST["oneUserItem"]) 
+		&& ($_REQUEST["oneUserItem"] == 'on'
+			or $_REQUEST["oneUserItem"] == 'y')) {
+		$tracker_options["oneUserItem"] = 'y';
+	} else {
+		$tracker_options["oneUserItem"] = 'n';
+	}
+
 	if (isset($_REQUEST["writerGroupCanModify"]) 
 		&& ($_REQUEST["writerGroupCanModify"] == 'on'
 			or $_REQUEST["writerGroupCanModify"] == 'y')) {
@@ -290,6 +298,7 @@ $info["defaultOrderDir"] = 'asc';
 $info["newItemStatus"] = 'o';
 $info["modItemStatus"] = '';
 $info["writerCanModify"] = '';
+$info['oneUserItem'] = '';
 $info["writerGroupCanModify"] = '';
 $info["defaultStatus"] = 'o';
 $info["defaultStatusList"] = array();
@@ -329,6 +338,7 @@ $smarty->assign('defaultOrderDir', $info["defaultOrderDir"]);
 $smarty->assign('newItemStatus', $info["newItemStatus"]);
 $smarty->assign('modItemStatus', $info["modItemStatus"]);
 $smarty->assign('writerCanModify', $info["writerCanModify"]);
+$smarty->assign('oneUserItem', $info["oneUserItem"]);
 $smarty->assign('writerGroupCanModify', $info["writerGroupCanModify"]);
 $smarty->assign('defaultStatus', $info["defaultStatus"]);
 $smarty->assign('defaultStatusList', $info["defaultStatusList"]);
