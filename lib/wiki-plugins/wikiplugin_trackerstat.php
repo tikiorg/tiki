@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerstat.php,v 1.3 2006-10-03 12:36:10 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerstat.php,v 1.4 2006-10-03 13:12:34 sylvieg Exp $
 /* to have some statistiques about a tracker
  * will returns a table with for each tracker field, the list of values and the number of times the values occurs
  * trackerId = the id of the tracker
@@ -98,6 +98,7 @@ function wikiplugin_trackerstat($data, $params) {
 			$stat['values'] = $v;
 			$stats[] = $stat;
 		}
+		unset($v);
 	}
 	$smarty->assign_by_ref('stats', $stats);
 	return "~np~".$smarty->fetch('wiki-plugins/wikiplugin_trackerstat.tpl')."~/np~";
