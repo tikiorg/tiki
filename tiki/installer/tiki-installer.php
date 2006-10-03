@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.7 2006-09-17 13:37:34 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.8 2006-10-03 13:32:31 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -519,11 +519,10 @@ $tiki_version = '1.10';
 $smarty->assign('tiki_version', $tiki_version);
 
 // Available DB Servers
-$dbservers = array('MySQL', 'MySQL (mysqli driver)', 'PostgeSQL 7.2+', 'Oracle', 'Sybase','SQLLite','MSSQL');
+$dbservers = array('MySQL', 'PostgeSQL 7.2+', 'Oracle', 'Sybase','SQLLite','MSSQL');
 
 $dbtodsn = array(
 	"MySQL" => "mysql",
-	"MySQL (mysqli driver)" => "mysqli",
 	"PostgeSQL 7.2+" => "pgsql",
 	"Oracle" => "oci8",
 	"Sybase" => "sybase",
