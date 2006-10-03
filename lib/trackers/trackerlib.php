@@ -1597,6 +1597,22 @@ class TrackerLib extends TikiLib {
 		}
 		return $ret;
 	}
+	/* look if a tracker has only one item per user and if an item has already being created for a user */
+	function get_user_item($trackerId, $trackerOptions) {
+		global $user;
+		if (empty($trackerOptions['oneUserItem']) || $trackerOptions['oneUserItem'] != 'y') {
+			return 0;
+		}
+		if ($fieldId = $this->get_field_id_from_type($trackerId, 'u', '1')) { // user creator field
+			$value = $user;
+			$items = $this->get_items_list($trackerId, $fieldId, $value);
+			if ($items)
+				return $items[0];
+			else
+				return 0; 
+		}
+		return 0;
+	}
 
 }
 
