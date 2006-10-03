@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/setup.sh,v 1.39 2006-04-12 20:39:29 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/setup.sh,v 1.40 2006-10-03 13:26:35 mose Exp $
 
 # Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 # All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -111,7 +111,7 @@ EOF
 	exit 1
 fi
 
-if [ "$1" == "-acl" ]; then
+if [ "$1" = "-acl" ]; then
 	ACL=1
 	shift
 else
@@ -161,7 +161,7 @@ done
 chown -R $AUSER *
 
 if [ -n "$AGROUP" ]; then
-	if [ $ACL == 1 ] ; then
+	if [ $ACL = 1 ] ; then
 		setfacl -R -m g:${AGROUP}:rwx $DIRS
 		setfacl -m g:${AGROUP}:rwx robots.txt
 	else
@@ -170,7 +170,7 @@ if [ -n "$AGROUP" ]; then
 	fi
 fi
 
-if [ $ACL == 0 ] ; then
+if [ $ACL = 0 ] ; then
 	chmod -R $RIGHTS $DIRS
 	chmod $RIGHTS robots.txt
 	chmod $RIGHTS tiki-install.php
