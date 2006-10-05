@@ -400,6 +400,7 @@ function wikiplugin_tracker($data, $params) {
 		return $back;
 	}
 	else {
+		$smarty->assign('wikiplugin_tracker', '2');//used in vote plugin
 		$back = '';
 		if ($showtitle == 'y') {
 			$back.= '<div class="titlebar">'.$tracker["name"].'</div>';
