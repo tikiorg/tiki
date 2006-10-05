@@ -6,7 +6,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-include_once ('lib/notifications/notificationlib.php');
+global $notificationlib; include_once ('lib/notifications/notificationlib.php');
 
 class TrackerLib extends TikiLib {
 
@@ -850,7 +850,7 @@ class TrackerLib extends TikiLib {
 		if(!$bulk_import) {
 			$options = $this->get_tracker_options( $trackerId );
 
-			include_once('lib/notifications/notificationlib.php');
+			global $notificationlib; include_once('lib/notifications/notificationlib.php');
 
 			$emails = $notificationlib->get_mail_events('tracker_modified', $trackerId);
 			$emails2 = $notificationlib->get_mail_events('tracker_item_modified', $itemId);
