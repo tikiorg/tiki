@@ -69,7 +69,8 @@ function wikiplugin_tracker($data, $params) {
 
 	$tracker = $tikilib->get_tracker($trackerId);
 
-	if (!isset($_REQUEST["ok"]) || $_REQUEST["ok"]  == "n") {
+
+	if (!isset($_REQUEST["ok"]) || $_REQUEST["ok"]  != $trackerId) {
 	
 		$field_errors = array('err_mandatory'=>array(), 'err_value'=>array());
 	
@@ -162,7 +163,7 @@ function wikiplugin_tracker($data, $params) {
 					$rid = $trklib->replace_item($trackerId,$itemId,$ins_fields,$tracker['newItemStatus']);
 					$trklib->categorized_item($trackerId, $rid, $mainfield, $ins_categs);
 					if (!empty($page)) {
-						header("Location: tiki-index.php?page=".urlencode($page)."&ok=y");
+						header("Location: tiki-index.php?page=".urlencode($page)."&ok=$trackerId");
 						die;
 					// return "<div>$data</div>";
 					} else {
@@ -400,7 +401,8 @@ function wikiplugin_tracker($data, $params) {
 		return $back;
 	}
 	else {
-		$smarty->assign('wikiplugin_tracker', '2');//used in vote plugin
+		if (isset($_REQUEST['trackit']) and $_REQUEST['trackit'] == $trackerId)
+			$smarty->assign('wikiplugin_tracker', $trackerId);//used in vote plugin
 		$back = '';
 		if ($showtitle == 'y') {
 			$back.= '<div class="titlebar">'.$tracker["name"].'</div>';
