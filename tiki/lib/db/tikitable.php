@@ -1,13 +1,17 @@
 <?php
 /**
-* @version $Id: tikitable.php,v 1.2 2005-09-26 12:12:33 michael_davey Exp $
+* @version $Id: tikitable.php,v 1.3 2006-10-06 12:56:47 sylvieg Exp $
 * @package TikiWiki
 * @subpackage db
 * @copyright (C) 2005 the Tiki community
 * @license http://www.gnu.org/copyleft/lgpl.html GNU/LGPL
 */
 
-$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+	header("location: index.php");
+	exit;
+}
+
 
 /**
  * TikiDBTable Abstract Class.
