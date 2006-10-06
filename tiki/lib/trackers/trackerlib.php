@@ -1630,6 +1630,9 @@ class TrackerLib extends TikiLib {
 		}
 		return 0;
 	}
+	function get_nb_items($trackerId) {
+		return $this->getOne("select count(*) from `tiki_tracker_items` where `trackerId`=?",array((int) $trackerId));
+	}
 }
 
 global $dbTiki, $tikilib;
