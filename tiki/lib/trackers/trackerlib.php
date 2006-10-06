@@ -1133,7 +1133,11 @@ class TrackerLib extends TikiLib {
 	function remove_tracker_item($itemId) {
 		$now = date("U");
 
-		$trackerId = $this->getOne("select `trackerId` from `tiki_tracker_items` where `itemId`=?",array((int) $itemId));
+		$query = "select * from `tiki_tracker_items` where `itemId`=?";
+		$result = $this->query($query, array((int) $itemId));
+		$res = $result->fetchRow();
+		$trackerId = $res['trackerId'];
+		$status = $res['status'];
 
 		// ---- save image list before sql query ---------------------------------
 		$fieldList = $this->list_tracker_fields($trackerId, 0, -1, 'name_asc', '');
@@ -1167,7 +1171,20 @@ class TrackerLib extends TikiLib {
 		global $cachelib;
 		require_once('lib/cache/cachelib.php');
 		$cachelib->invalidate('trackerItemLabel'.$itemId);
-
+		foreach($fieldList['data'] as $f) {
+			$cachelib->invalidate(md5('trackerfield'.$f['fieldId'].$status));
+			$cachelib->invalidate(md5('trackerfield'.$f['fieldId'].'opc'));
+			if ($status == 'o') {
+				$cachelib->invalidate(md5('trackerfield'.$f['fieldId'].'op'));
+				$cachelib->invalidate(md5('trackerfield'.$f['fieldId'].'oc'));
+			} elseif ($status == 'c') {
+				$cachelib->invalidate(md5('trackerfield'.$f['fieldId'].'oc'));
+				$cachelib->invalidate(md5('trackerfield'.$f['fieldId'].'pc'));
+			} elseif ($status == 'p') {
+				$cachelib->invalidate(md5('trackerfield'.$f['fieldId'].'op'));
+				$cachelib->invalidate(md5('trackerfield'.$f['fieldId'].'pc'));
+			}
+		}
 		return true;
 	}
 
@@ -1613,7 +1630,6 @@ class TrackerLib extends TikiLib {
 		}
 		return 0;
 	}
-
 }
 
 global $dbTiki, $tikilib;
