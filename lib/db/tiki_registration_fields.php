@@ -1,13 +1,16 @@
 <?php
 /**
- * @version $Id: tiki_registration_fields.php,v 1.1 2005-09-26 12:30:01 michael_davey Exp $
+ * @version $Id: tiki_registration_fields.php,v 1.2 2006-10-06 12:56:47 sylvieg Exp $
  * @package TikiWiki
  * @subpackage db
  * @copyright (C) 2005 the Tiki community
  * @license http://www.gnu.org/copyleft/lgpl.html GNU/LGPL
  */
 
-$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+	header("location: index.php");
+	exit;
+}
 
 class TikiRegistrationFields extends TikiDBTable {
     var $id=null;
