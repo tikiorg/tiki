@@ -19,7 +19,7 @@
   {if count($categories) gt 0}
    <select name="cat_categories[]" multiple="multiple" size="5">
    {section name=ix loop=$categories}
-    <option value="{$categories[ix].categId|escape}" {if $categories[ix].incat eq 'y'}selected="selected"{/if}>{$categories[ix].categpath}</option>
+    <option value="{$categories[ix].categId|escape}" {if $categories[ix].incat eq 'y'}selected="selected"{/if}>{if $categories[ix].categpath}{$categories[ix].categpath}{else}{$categories[ix].name}{/if}</option>
    {/section}
    </select><br />
   {if $mandatory_category >=0}
