@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.83 2006-09-19 16:33:22 ohertel Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.84 2006-10-10 14:01:59 sylvieg Exp $
  *
  * \brief Categories support class
  *
@@ -28,23 +28,7 @@ class CategLib extends ObjectLib {
 	function list_categs($categId=0) {
 		global $cachelib;
 		if (!$cachelib->isCached('allcategs')) {
-			$query = "select * from `tiki_categories`";
-			$result = $this->query($query,array());
-			$ret = array();
-			while ($res = $result->fetchRow()) {
-				$catpath = $this->get_category_path($res["categId"]);
-				$tepath = array();	
-				foreach ($catpath as $cat) {
-					$tepath[] = $cat['name'];
-				}
-				$categpath = implode("::",$tepath);
-				$res["categpath"] = $categpath;
-				$res["tepath"] = $tepath;
-				$ret["$categpath"] = $res;
-			}
-			ksort($ret);
-			$back = array_values($ret);
-			$cachelib->cacheItem('allcategs',serialize($back));
+			$back = $this->build_cache();
 		} else {
 			$back = unserialize($cachelib->getCached('allcategs'));
 		}
@@ -747,23 +731,37 @@ class CategLib extends ObjectLib {
 	*/
 		return $this->get_all_categories_ext();
 	}
+	/* build the cache with the categpath and the count */
+	function build_cache() {
+		global $cachelib;
+		$ret = array();
+		$query = "select * from `tiki_categories` order by `name`";
+		$result = $this->query($query,array());
+		while ($res = $result->fetchRow()) {
+			$id = $res["categId"];
+			$catpath = $this->get_category_path($id);
+			$tepath = array();	
+			foreach ($catpath as $cat) {
+				$tepath[] = $cat['name'];
+			}
+			$categpath = implode("::",$tepath);
+			$res["categpath"] = $categpath;
+			$res["tepath"] = $tepath;
+			$query = "select count(*) from `tiki_categories` where `parentId`=?";
+			$res["children"] = $this->getOne($query,array($id));
+			$query = "select count(*) from `tiki_category_objects` where `categId`=?";
+			$res["objects"] = $this->getOne($query,array($id));
+			$ret[] = $res;
+		}
+		$cachelib->cacheItem("allcategs",serialize($ret));
+		return $ret;
+	}
 
 	// Same as get_all_categories + it also get info about count of objects
 	function get_all_categories_ext() {
 		global $cachelib;
 		if (!$cachelib->isCached("allcategs")) {
-			$ret = array();
-			$query = "select * from `tiki_categories` order by `name`";
-			$result = $this->query($query,array());
-			while ($res = $result->fetchRow()) {
-				$id = $res["categId"];
-				$query = "select count(*) from `tiki_categories` where `parentId`=?";
-				$res["children"] = $this->getOne($query,array($id));
-				$query = "select count(*) from `tiki_category_objects` where `categId`=?";
-				$res["objects"] = $this->getOne($query,array($id));
-				$ret[] = $res;
-			}
-			$cachelib->cacheItem("allcategs",serialize($ret));
+			$ret = $this->build_cache();
 		} else {
 			$ret = unserialize($cachelib->getCached("allcategs"));
 		}
