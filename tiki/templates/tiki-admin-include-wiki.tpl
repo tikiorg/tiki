@@ -490,7 +490,7 @@
 	<option value="-1" {if $feature_wiki_mandatory_category eq -1 or $feature_wiki_mandatory_category eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
 	<option value="0" {if $feature_wiki_mandatory_category eq 0}selected="selected"{/if}>{tr}All{/tr}</option>
 	{section name=ix loop=$catree}
-	<option value="{$catree[ix].categId|escape}" {if $catree[ix].categId eq $feature_wiki_mandatory_category}selected="selected"{/if}>{$catree[ix].categpath}</option>
+	<option value="{$catree[ix].categId|escape}" {if $catree[ix].categId eq $feature_wiki_mandatory_category}selected="selected"{/if}>{if $catree[ix].categpath}{$catree[ix].categpath}{else}{$catree[ix].name}{/if}</option>
 	{/section}
 	</select>
 </td></tr>
