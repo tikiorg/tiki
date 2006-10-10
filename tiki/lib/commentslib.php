@@ -1955,7 +1955,8 @@ class Comments extends TikiLib {
     function check_for_topic( $title )
     {
 	$threadId = $this->getOne("select `threadId` from
-		`tiki_comments` where `title`=?", array( $title ) );
+		`tiki_comments` where `title`=?
+		order by threadid asc", array( $title ) );
 	return $threadId;
     }
 
