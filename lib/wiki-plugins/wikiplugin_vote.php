@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_vote.php,v 1.1 2006-10-05 14:21:17 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_vote.php,v 1.2 2006-10-11 21:49:26 sylvieg Exp $
 /* A plugin vote based on tracker
  */
 function wikiplugin_vote_help() {
@@ -8,7 +8,7 @@ function wikiplugin_vote_help() {
 	return $help;
 }
 function wikiplugin_vote($data, $params) {
-	global $smarty;
+	global $smarty, $tikilib, $user;
 	global $trklib; include_once('lib/trackers/trackerlib.php');
 	extract ($params,EXTR_SKIP);
 
@@ -21,11 +21,17 @@ function wikiplugin_vote($data, $params) {
 
 	if (isset($float)) {
 		$smarty->assign('float', $float);
+	} else {
+		$smarty->assign('float', '');
 	}
-	include_once('lib/wiki-plugins/wikiplugin_tracker.php');
-	$vote = wikiplugin_tracker($data, $params);
-	$smarty->assign_by_ref('vote', $vote);
-
+	if ($tikilib->user_has_perm_on_object($user, $trackerId, 'tracker', 'tiki_p_create_tracker_items')) {// to have different vote in the same page
+		$smarty->assign('p_create_tracker_items', 'y');
+		include_once('lib/wiki-plugins/wikiplugin_tracker.php');
+		$vote = wikiplugin_tracker($data, $params);
+		$smarty->assign_by_ref('vote', $vote);
+	} else {
+		$smarty->assign('p_create_tracker_items', 'n');
+	}
 	include_once('lib/wiki-plugins/wikiplugin_trackerstat.php');
 	$stat = wikiplugin_trackerstat($data, $params);
 	$smarty->assign_by_ref('stat', $stat);

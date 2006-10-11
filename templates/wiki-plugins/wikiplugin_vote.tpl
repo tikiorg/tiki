@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/wiki-plugins/wikiplugin_vote.tpl,v 1.2 2006-10-06 12:08:38 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/wiki-plugins/wikiplugin_vote.tpl,v 1.3 2006-10-11 21:49:26 sylvieg Exp $ *}
 {strip}
 <div style="display:inline;float:{$float}" class="poll">
 
@@ -8,7 +8,7 @@
 </span>
 </div>
 
-{if $tiki_p_wiki_vote_ratings eq 'y'}
+{if $p_create_tracker_items eq 'y'}
 <div style="display:{if $wikiplugin_tracker eq $tracker.trackerId}inline{else}none{/if};" id="polledit{$tracker.trackerId}">
 {$vote}
 </div>
