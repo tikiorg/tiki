@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker.tpl,v 1.113 2006-09-14 16:41:54 sylvieg Exp $ *}
+{* $Id: tiki-view_tracker.tpl,v 1.114 2006-10-11 17:50:58 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -494,6 +494,14 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 </select>
 {elseif $fields[ix].options eq 1 and $user}
 {$user}
+{/if}
+
+{* -------------------- IP selector -------------------- *}
+{elseif $fields[ix].type eq 'I'}
+{if !$fields[ix].options or ($fields[ix].options eq '1' and $tiki_p_admin_trackers eq 'y')}
+<input type="text" name="{$fields[ix].ins_id}" value="{if $input_err}{$fields[ix].value}{elseif $defaultvalues.fid}{$defaultvalues.$fid|escape}{else}{$IP}{/if}" />
+{else}
+{$IP}
 {/if}
 
 {* -------------------- group selector -------------------- *}

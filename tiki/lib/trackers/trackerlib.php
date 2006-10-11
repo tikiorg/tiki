@@ -646,13 +646,14 @@ class TrackerLib extends TikiLib {
 		$now = date("U");
 
 		if ($itemId) {
+			$oldStatus = $this->getOne("select `status` from `tiki_tracker_items` where `itemId`=?", array($itemId));
 			if ($status) {
-				$oldStatus = $this->getOne("select `status` from `tiki_tracker_items` where `itemId`=?", array($itemId));
 				$query = "update `tiki_tracker_items` set `status`=?,`lastModif`=? where `itemId`=?";
 				$result = $this->query($query,array($status,(int) $now,(int) $itemId));
 			} else {
 				$query = "update `tiki_tracker_items` set `lastModif`=? where `itemId`=?";
 				$result = $this->query($query,array((int) $now,(int) $itemId));
+				$status = $oldStatus;
 			}
 		} else {
 			if (!$status) {
@@ -683,7 +684,7 @@ class TrackerLib extends TikiLib {
 		foreach($ins_fields["data"] as $i=>$array) {
 			if (!isset($ins_fields["data"][$i]["type"]) or $ins_fields["data"][$i]["type"] == 's') {
 				// system type, do nothing
-			} else if ($ins_fields["data"][$i]["type"] != 'u' && $ins_fields["data"][$i]["type"] != 'g' && ($ins_fields["data"][$i]["isHidden"] == 'p' or $ins_fields["data"][$i]["isHidden"] == 'y')and $tiki_p_admin_trackers != 'y') {
+			} else if ($ins_fields["data"][$i]["type"] != 'u' && $ins_fields["data"][$i]["type"] != 'g' && $ins_fields["data"][$i]["type"] != 'I' && ($ins_fields["data"][$i]["isHidden"] == 'p' or $ins_fields["data"][$i]["isHidden"] == 'y')and $tiki_p_admin_trackers != 'y') {
 					// hidden field type require tracker amdin perm
 			} else {
 				// -----------------------------
@@ -1509,6 +1510,10 @@ class TrackerLib extends TikiLib {
 			'label'=>tra('group selector'),
 			'opt'=>true,
 			'help'=>tra('Group Selector: use options for automatic field feeding : you can use 1 for group of creation and 2 for group where modification come from. The default group has to be set, or the first group that come is chosen for a user, or the default group is Registered.'));
+		$type['I'] = array(
+			'label'=>tra('IP selector'),
+			'opt'=>true,
+			'help'=>tra('IP Selector: use options for automatic field feeding : you can use 1 for author IP or 2 for modificator IP.'));
 		$type['y'] = array(
 			'label'=>tra('country selector'),
 			'opt'=>true,
@@ -1614,21 +1619,27 @@ class TrackerLib extends TikiLib {
 		}
 		return $ret;
 	}
-	/* look if a tracker has only one item per user and if an item has already being created for a user */
+	/* look if a tracker has only one item per user and if an item has already being created for the user  or the IP*/
 	function get_user_item($trackerId, $trackerOptions) {
-		global $user;
+		global $user, $IP;
 		if (empty($trackerOptions['oneUserItem']) || $trackerOptions['oneUserItem'] != 'y') {
 			return 0;
 		}
-		if ($fieldId = $this->get_field_id_from_type($trackerId, 'u', '1')) { // user creator field
-			$value = $user;
-			$items = $this->get_items_list($trackerId, $fieldId, $value);
+		if (!empty($user)) {
+			if ($fieldId = $this->get_field_id_from_type($trackerId, 'u', '1')) { // user creator field
+				$value = $user;
+				$items = $this->get_items_list($trackerId, $fieldId, $value);
+				if ($items)
+					return $items[0];
+			}
+		}
+		if ($fieldId = $this->get_field_id_from_type($trackerId, 'I', '1')) { // IP creator field
+			$items = $this->get_items_list($trackerId, $fieldId, $IP);
 			if ($items)
 				return $items[0];
 			else
 				return 0; 
 		}
-		return 0;
 	}
 	function get_nb_items($trackerId) {
 		return $this->getOne("select count(*) from `tiki_tracker_items` where `trackerId`=?",array((int) $trackerId));

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.95 2006-09-19 16:33:18 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.96 2006-10-11 17:50:58 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -284,6 +284,23 @@ foreach($xfields["data"] as $i=>$array) {
 				$fields["data"][$i]["value"] = '';
 			}
 		
+		} elseif ($fields["data"][$i]["type"] == 'I' and isset($fields["data"][$i]["options"]) and isset($IP))	{
+			if (isset($_REQUEST["$ins_id"]) and ($fields["data"][$i]["options"] < 1 or $tiki_p_admin_trackers == 'y')) {
+				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
+			} else {
+				if ($fields["data"][$i]["options"] == 2) {
+					$ins_fields["data"][$i]["value"] = $IP;
+				} elseif ($fields["data"][$i]["options"] == 1) {
+				} else {
+					$ins_fields["data"][$i]["value"] = '';
+				}
+			}
+			if (isset($_REQUEST["$filter_id"])) {
+				$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
+			} else {
+				$fields["data"][$i]["value"] = '';
+			}
+
 		} elseif ($fields["data"][$i]["type"] == 'g' and isset($fields["data"][$i]["options"]) and $group)	{
 			if (isset($_REQUEST["$ins_id"])) {
 				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];

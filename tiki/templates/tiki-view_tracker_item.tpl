@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker_item.tpl,v 1.101 2006-09-14 16:41:54 sylvieg Exp $ *}
+{* $Id: tiki-view_tracker_item.tpl,v 1.102 2006-10-11 17:50:58 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -426,6 +426,13 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 </select>
 {elseif $cur_field.options}
 <a href="tiki-user_information.php?user={$cur_field.value|escape:"url"}" class="link">{$cur_field.value}</a>
+{/if}
+
+{elseif $cur_field.type eq 'I'}
+{if !$cur_field.options or $tiki_p_admin_trackers eq 'y'}
+<input type="text" name="ins_{$cur_field.id}" value="{$cur_field.value|escape}" />
+{elseif $cur_field.options}
+{$cur_field.value}
 {/if}
 
 {elseif $cur_field.type eq 'g'}
