@@ -273,6 +273,21 @@ function wikiplugin_tracker($data, $params) {
 							$back.= '<option value="'.$item.'" '.$selected.'>'.$item.'</option>';
 						}
 						$back.= "</select>";
+					// country
+					} elseif ($f['type'] == 'y') {
+							$back.= "<tr><td>".wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors);
+						if ($showmandatory == 'y' and $f['isMandatory'] == 'y') {
+							$back.= "&nbsp;<b>*</b>&nbsp;";
+							$onemandatory = true;
+						}
+						$back.= "</td><td>";
+						$back.= '<select name="track['.$f["fieldId"].']">';
+						$flags = $trklib->get_flags();
+						foreach ($flags as $flag) {
+							$selected = $f['value'] == $flag ? 'selected="selected"' : '';
+							$back.= '<option value="'.$flag.'" '.$selected.' style="background-image:url(\'img/flags/'.$flag.'.gif\');background-repeat:no-repeat;padding-left:25px;padding-bottom:3px;">'.$flag.'</option>';
+						}
+						$back.= "</select>";
 					// textarea
 					} elseif ($f['type'] == 'a') {
 						$back.= "<tr><td>".wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors);
