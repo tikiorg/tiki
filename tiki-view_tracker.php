@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.95 2006-10-03 10:53:37 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.96 2006-10-11 17:50:58 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -252,6 +252,24 @@ for ($i = 0; $i < $temp_max; $i++) {
 			} else {
 				if ($fields["data"][$i]["options"] == 1 and $user) {
 					$ins_fields["data"][$i]["value"] = $user;
+				} else {
+					$ins_fields["data"][$i]["value"] = '';
+				}
+			}
+			if ($fields["data"][$i]["options"] == 1 and !$writerfield) {
+				$writerfield = $fid;
+			} elseif (isset($_REQUEST["$filter_id"])) {
+				$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
+			} else {
+				$fields["data"][$i]["value"] = '';
+			}
+
+		} elseif ($fields["data"][$i]["type"] == 'I') { // IP selection
+			if (isset($_REQUEST["$ins_id"]) and $_REQUEST["$ins_id"] and (!$fields["data"][$i]["options"] or $tiki_p_admin_trackers == 'y')) {
+				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
+			} else {
+				if ($fields["data"][$i]["options"] == 1 and $_SERVER['REMOTE_ADDR']) {
+					$ins_fields["data"][$i]["value"] = $_SERVER['REMOTE_ADDR'];
 				} else {
 					$ins_fields["data"][$i]["value"] = '';
 				}
