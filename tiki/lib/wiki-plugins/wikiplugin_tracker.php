@@ -46,24 +46,7 @@ function wikiplugin_tracker($data, $params) {
 		$permMessage = tra("You do not have permission to insert an item");
 	}
 
-	if ($userlib->object_has_one_permission($trackerId, 'tracker')) {
-		if ($tiki_p_admin != 'y') {
-			$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'trackers');
-			foreach ($perms["data"] as $perm) {
-				$permName = $perm["permName"];
-				if ($userlib->object_has_permission($user, $trackerId, 'tracker', $permName)) {
-					$$permName = 'y';
-					$smarty->assign("$permName", 'y');
-				} else {
-					$$permName = 'n';
-					$smarty->assign("$permName", 'n');
-				}
-			}
-		}
-	}
-
-	// permission checking
-	if($tiki_p_create_tracker_items != 'y') {
+	if (!$tikilib->user_has_perm_on_object($user, $trackerId, 'tracker', 'tiki_p_create_tracker_items')) {
 		return '<b>'.$permMessage.'</b>';
 	}
 
