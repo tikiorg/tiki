@@ -1,0 +1,767 @@
+@import "moreneat.css";
+
+body {
+  background-color: #E9ECEF;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  margin: 0px;
+  padding: 0px;
+  font-size : 10px;
+}
+
+TD#centercolumn {  
+  vertical-align: top;
+  width: 100%;
+}
+
+DIV#tiki-center{  
+  margin-top: 4px;
+  width: 100%;
+  }
+
+.mini {
+  font-size: 9px;
+  color : Black;
+  text-align: center;
+}
+
+div.box-title {
+  background-color: #C7D0D9;
+  border-bottom: 1px solid #8CACBB;
+  color: #225566;
+  text-align: center;
+  padding: 1px; 
+  font-weight : bold;
+  background-image: url(../images/workspaces/degrada.gif);
+}
+div.box {  
+  background-color: white;
+  margin: 4px;
+  border: 1px solid #8CACBB; 
+  width : 174px;
+}
+div.box-title table {
+  color: #225566;
+  font-size: 10px;
+  font-weight : bold;   
+  width: 100%;
+}
+
+div.wsbox-data {
+  background-color: #ffffff;
+  color: #000000;
+  padding: 5px;
+  font-size: 10px; 
+   overflow:visible; 
+}
+
+div.wsbox-data-scroll {
+  overflow:auto; 
+  background-color: #ffffff;
+  color: #000000;
+  padding: 5px;
+  font-size: 10px; 
+  width : 100%;
+  height: 300px;
+}
+
+div.wsbox {  
+  background-color: white;
+  margin: 4px;
+  border: 1px solid #8CACBB; 
+  	width : 100%;
+}
+div.wsbox-title {
+  background-color: #C7D0D9;
+  border-bottom: 1px solid #8CACBB;
+  color: #225566;
+  text-align: center;
+  padding: 1px;
+  width : 100%;  
+  font-size : 10px;
+  font-weight : bold; 
+  background-image: url(../images/workspaces/degrada.gif);
+}
+
+div.wsbox-title table {
+  color: #225566;
+  font-size: 10px;
+  font-weight : bold; 
+  text-align: center;  
+  width: 100%;
+}
+
+input,textarea, select {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size : 10px;
+	text-indent : 2px;
+	border : 1px solid #000000;
+}
+textarea, select {
+	border : 1px solid #000000;
+	color : #225566;
+	margin : 1px;
+}	 
+input[type=text]{
+	border : 1px solid #000000;
+	color : #225566;
+	margin : 1px;
+	height : 12px;
+}
+
+input[type=submit]{
+	text-decoration: none;
+	height: 20px;
+	border: 1px solid #8CACBB;
+	border-bottom: 2px solid #8CACBB;
+	border-right: 2px solid #8CACBB;
+	background: #E7E9EA;
+	background-image: url(../images/workspaces/degrada2.gif);
+  	cursor: pointer;
+}
+span.tabbut {
+	border-top: 1px solid #99bec6;
+	border-left: 1px solid #99bec6;
+	border-right: 1px solid #99bec6;
+	color: #225566;
+	margin-left:2px;
+	padding-left:2px;
+	padding-right: 2px;
+	background-color: #C7D0D9;
+	height:14px;
+  	background-image: url(../images/workspaces/degrada3.gif);
+}
+
+.attention {  
+	background: #FFF;
+	border: 1px solid #99bec6;
+	color: red;
+}
+
+div.tree
+{
+  text-align: left;
+  padding-left: 19px;
+  margin: 0px;
+}
+/* Root of tree (outer div) */
+div.tree#top
+{
+  border: 1px solid #8CACBB;
+  padding: 10px 1.5em 20px 1.5em;
+}
+div.treenode
+{
+  text-align: left;
+  padding-left: 0px;
+  margin: 0px;
+}
+/*Workspaces*/
+
+td.wsevent {
+	background-color : #FFCCFF;
+	font-size: 9px;
+	color : black;
+}
+td.wsevent:hover {
+	background-color: #FFF7E6;
+}
+a.wsevent {
+	font-size: 9px;
+	text-decoration: none;
+	color : black;
+}
+a.wsevent:hover {
+	background-color: #FFF7E6;
+}
+
+.wstoday{
+	border : 1px solid #ACCCDD;
+	font-size: 9px;
+}
+
+td.wsday {
+}
+a.wsday {
+	text-decoration: none;
+	font-weight: normal;
+	font-size: 9px;
+	color : black;
+	margin : 3px;
+	
+}
+a.wsday:hover {
+	background-color: #FFF7E6;
+}
+td.wscaleventday {
+	width : 60px;
+	background-color : #BCBCBC;
+	font-size: 9px;
+	color : black;
+}
+td.wscaleventname {
+	
+	background-color : #E1E1E1;
+	font-size: 9px;
+	color : black;
+}
+table.wscalevents {
+	width : 100%;
+}
+
+
+div.printstructure {
+	background-color : #C7D0D9;
+	padding-bottom : 1px;
+	border: 1px solid #8CACBB;
+	overflow : hidden;
+	margin : 5px;
+	width : 100%;
+	font-size : 10px;
+}
+div.printpage {
+	background-color : white;
+	overflow : hidden;
+	margin : 3px;
+	width : 100%;
+	font-size : 10px;
+}
+li.estruct_index{
+	font-size : 10px;
+	list-style-image: url(../images/workspaces/page.gif)
+}
+div.page_head{
+	background-color: #EAEAEE;
+	border: 1px solid #C4C5DE;
+	margin : 2px;
+	width: 100%;
+}
+div.structure_tree{
+	background-color : white;
+	padding-bottom : 1px;
+	border: 1px solid #8CACBB;
+	overflow : hidden;
+	margin : 5px;
+	width : 100%;
+	font-size : 10px;
+
+}
+ol.estruct_index {
+	padding : 0px;
+	margin-top : 2px;
+	margin-bottom : 2px;
+	margin-left: 25px;
+}
+ul.estruct_index {
+	padding : 0px;
+	margin-top : 2px;
+	margin-bottom : 2px;
+	margin-left: 15px;
+}
+TD#workspace_column{
+
+}
+
+TABLE#workspace_desk_table{
+	margin-top : 5px;
+	width : 100%;
+}
+
+ul.workspaceList{
+	margin-left: 15px;
+
+}
+
+li.myworkspaceNoActive{
+	margin: 2px;
+	font-size : 10px;
+	list-style-image: url(../images/workspaces/edu_workspace.png)
+}
+li.myworkspaceActive{
+	font-weight : bold;
+	font-size : 10px;
+	list-style-image: url(../images/workspaces/edu_workspaceActive.png)
+}
+a.linkMyworkspaceActive{
+	font-weight : bold;
+	font-size : 10px;
+}
+ul.myworkspaces {
+	margin-top : 2px;
+	margin-bottom : 2px;
+	margin-left: 2px;
+}
+ul.assignments {
+	margin-top : 2px;
+	margin-bottom : 2px;
+	margin-left: 18px;
+}
+li.assignment{
+	font-size : 10px;
+	list-style-image: url(../images/workspaces/edu_assignments.gif)
+}
+div.myworkspaces{
+	background-color: #EAEAEE;
+	border: 1px solid #C4C5DE;
+	margin-top : 5px;
+	width: 100%;
+}
+a.categtree {
+	text-decoration: none;
+	font-weight: normal;
+	font-size: 9px;
+	color : black;
+}
+a.categtreeActive {
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 9px;
+	color : black;
+}
+div.treenode{
+	margin-bottom : 2px;
+	width: 100%;
+
+}
+div.workspace_desktop_box{
+	border-right: 1px solid #8CACBB;
+	border-bottom: 1px solid #8CACBB;
+	background-color : #A0C1C9;
+	overflow : hidden;
+	width : 100%;
+	font-size : 10px;
+	clear: both;
+}
+div.edubox{
+	background-color : white;
+	border: 1px solid #CCCCCC;
+	overflow : hidden;
+	margin : 2px;
+	width : 100%;
+	font-size : 9px;
+}
+div.eduerror{
+	background-color : white;
+	padding : 2px;
+	border: 2px solid red;
+	overflow : hidden;
+	margin : 4px;
+	width : 100%;
+	font-size : 9px;
+}
+div.edubuttons{
+	background-color : white;
+	padding : 5px;
+	margin : 5px;
+	font-size : 9px;
+	text-align: right;
+}
+
+a.edulinkbut {
+text-decoration: none;
+	height: 20px;
+	border: 1px solid #8CACBB;
+	border-bottom: 2px solid #8CACBB;
+	border-right: 2px solid #8CACBB;
+	background: #E7E9EA;
+}
+a.edulinkbut:hover{
+text-decoration: none;
+	height: 20px;
+	border: 1px solid white;
+	background: #555555;
+	color: white;
+}
+
+.gradeodd {
+	border-bottom : 1px solid #C7D0D9;
+	color : black;
+	background-color : #C7D0D9;
+	float: left;
+	width: 34px;
+	height : 20px;
+}
+.gradeodd2 {
+	border-top : 1px solid #000000;
+	color : #225566;
+	background-color : #C7D0D9;
+	float: left;
+	width: 34px;
+	height : 20px;
+}
+.gradeoddAssg {
+	border-top : 1px solid #225566;
+	border-right : 1px solid #225566;
+	color : black;
+	background-color : #C7D0D9;
+	float: left;
+	height : 20px;
+}
+.gradeodd:hover {
+	background-color: #FFF7E6;
+}
+.gradeeven {
+	border-bottom : 1px solid #225566;
+	background-color : #225566;
+	color : #FFF;
+	float: left;
+	width: 34px;
+	height : 20px;
+}
+
+.gradeevenlink{
+	color : #FFF;
+	font-weight : normal;
+	margin: 3px;
+}
+
+.gradeoddlink{
+	color : #225566;
+	font-weight : normal;
+	margin: 3px;
+}
+
+.gradeeven2 {
+	border-top : 1px solid #000000;
+	background-color : #225566;
+	color : #FFF;
+	float: left;
+	width: 34px;
+	height : 20px;
+}
+
+.gradeevenAssg {
+	border-bottom : 1px solid #225566;
+	background-color : #225566;
+	color : #FFF;
+	float: left;
+	height : 20px;
+}
+.gradeeven:hover {
+	background-color: #FFF7E6;
+}
+.graderow {
+	text-indent : 2px;
+	clear: both;
+	width: 100%
+	margin : 0;
+	padding : 0;
+	border: 0px;
+	
+}
+
+.graderow2 {
+	border : 4px solid #8CACBB;
+	clear: both;
+	width: 100%
+	margin : 0;
+	padding : 0;
+	border: 0px;
+	
+}
+
+.gradebook{
+	font-size : 10px;
+	width: 100%
+	margin : 0;
+	padding : 5px;
+	padding-bottom : 12px;
+	background-color : #E7E9EA;
+	border : 1px solid #8CACBB;
+	clear: both;
+	text-align : right;
+
+}
+
+.firstGradeBookCol{
+	border-right : 0px solid #8CACBB;
+	background-color : #E7E9EA;
+	color : black;
+	float: left;
+	width: 200px;
+	height : 20px;
+
+}
+.userGradeBookCol{
+	border-top : 1px solid #000000;
+	background-color : #C7D0D9;
+	color : #225566;
+	float: left;
+	width: 200px;
+	text-align : left;
+	height : 20px;
+
+}
+
+.inputgrade {
+	border : 1px solid #000000;
+	background-color : #FFFFEC;
+	color : #225566;
+	width: 30px;
+	text-align : right;
+	height : 15px;
+	margin-right : 1px;
+}
+
+.edubutton {
+	color : #436976;
+	margin : 3px;
+	padding : 1px;
+	text-decoration: none;
+	height: 20px;
+	border: 1px solid #8CACBB;
+	border-bottom: 2px solid #8CACBB;
+	border-right: 2px solid #8CACBB;
+	background: #E7E9EA;
+	background-image: url(../images/workspaces/degrada2.gif);
+}
+.edubutton:hover {
+	color : red;
+	margin : 3px;
+	padding : 1px;
+	text-decoration: none;
+	height: 20px;
+	border: 1px solid #8CACBB;
+	border-bottom: 2px solid red;
+	border-right: 2px solid red;
+	background: #E7E9EA;
+	background-image: url(../images/workspaces/degrada2.gif);
+}
+
+div.gradebuttons{
+	background-color : #E7E9EA;
+	border : 1px solid #8CACBB;
+	padding : 5px;
+	overflow : hidden;
+	margin : 4px;
+	font-size : 9px;
+	text-align: center;
+}
+label{
+	color: #225566;
+	font-weight: bold;
+	margin : 2px;
+	font-size: 10px;
+}
+div.odd {
+	border-bottom: 1px solid #8CACBB;  
+	border-collapse: collapse;  
+	font-size: 10px; 
+	color : black; 
+	background-color: #F7F9FA; 
+	vertical-align: top; 
+	text-align: left;
+}
+div.odd:hover {
+	background-color: #FFF7E6;
+}
+div.even {
+	border-bottom: 1px solid #8CACBB; 
+	font-size: 10px; 
+	background-color: transparent; 
+	color : black; 
+	vertical-align: top; 
+	text-align: left;
+}
+div.even:hover {
+background-color: #FFF7E6;
+}
+
+div.oddcenter {
+	border-bottom: 1px solid #8CACBB;  
+	border-collapse: collapse;  
+	font-size: 10px; 
+	color : black; 
+	background-color: #F7F9FA; 
+	vertical-align: top; 
+	text-align: center;
+}
+div.oddcenter:hover {
+	background-color: #FFF7E6;
+}
+
+div.evencenter {
+	border-bottom: 1px solid #8CACBB; 
+	font-size: 10px; 
+	background-color: transparent; 
+	color : black; 
+	vertical-align: top; 
+	text-align: center;
+}
+div.evencenter:hover {
+background-color: #FFF7E6;
+}
+
+div.resourceSelect{
+	border-bottom: 1px solid #8CACBB; 
+	font-size: 10px; 
+	background-color: transparent; 
+	color : black; 
+	vertical-align: top; 
+	text-align: center;
+	margin-bottom : 5px;
+}
+
+div.zoneTabs{
+	width : 100%;
+	float: none;
+}
+
+div.test1 {
+	border: 1px solid #A0C1C9;
+	height:21px;
+	float: left;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;   
+  	background-image: url(../images/workspaces/degrada2.gif);
+}
+
+div.activetabbut {
+	border-top: 1px solid #A0C1C9;
+	border-left: 1px solid #A0C1C9;
+	border-right: 1px solid #A0C1C9;
+	color: #225566;
+	margin-rigth:2px;
+	padding-left:4px;
+	padding-right: 5px;
+	padding-top: 2px;
+	background-color: #FFF;
+	height:21px;
+	float: left;
+  	background-image: url(../images/workspaces/degrada2.gif);
+}
+
+div.noactivetabbut {
+	border-top: 1px solid lightgrey;
+	border-left: 1px solid lightgrey;
+	border-right: 1px solid lightgrey;
+	color: #225566;
+	margin-rigth:2px;
+	padding-left:4px;
+	padding-right: 5px;
+	padding-top: 2px;
+	background-color: #C7D0D9;
+	height:21px;
+	float: left;
+  	background-image: url(../images/workspaces/degrada2gris.gif);
+}
+
+.activetablink {
+	color: #225566; 
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;   
+	text-decoration: none;
+	font-weight: bold;
+}
+.noactivetablink {
+	color: #B7B7B7; 
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;   
+	text-decoration: none;
+	font-weight: normal;
+}
+
+div.resourcelistHead {
+  background-color: #EAEAEE;
+  border: 1px solid #C4C5DE;
+  color: #225566;
+  font-size: 10px; 
+  overflow: hidden;
+  padding: 0px;  
+  background-image: none;
+  margin: 4px;
+}
+
+div.desktopTitle { 
+	font-size: 14px;  
+	color:#7d216a; 
+	margin: 4px; 
+	font-weight : bold;
+
+	}
+div.desktopDesc { 
+	font-size: 10px;  
+	color:#000; 
+	margin: 4px; 
+	}
+	
+
+.navigationbar {
+	padding : 2px;
+	border: 1px solid #8CACBB;
+	background: #E7E9EA;
+	overflow : hidden;
+	margin : 0px;
+	width : 100%;
+	font-size : 9px;
+
+}
+.navigationOption {
+	vertical-align: middle;
+	float: left;
+	margin-left : 3px;
+	margin-right : 3px;
+}
+
+div.wsbox.box-workspaces_last_blog_posts{
+	background-color : white;
+	overflow : hidden;
+	margin : 3px;
+	border : 1px solid #ACCCDD;
+	width : 100%;
+	font-size : 10px;
+}
+div.wsbox.box-workspaces_viewpage {
+	background-color : white;
+	overflow : hidden;
+	margin : 3px;
+	border : 1px solid #ACCCDD;
+	width : 100%;
+	font-size : 10px;
+}
+.fieldHelp {
+	margin-right : 5px;
+	color : #424242;
+	float: left;
+	font-size : 10px;
+
+}
+.wsblogpost{
+	background-color : white;
+	border-bottom: 1px solid #424242;
+	margin : 2px;
+	margin-bottom : 10px;
+	width : 100%;
+	font-size : 10px;
+	color:#424242;
+
+}
+.wsBlogPostTitle{
+	color:#424242;
+	border-bottom: 1px solid #424242;
+	overflow : auto;
+	margin : 2px;
+	font-weight : bold;  
+	width : 100%;
+	font-size : 12px;
+
+}
+.wsBlogTitle{
+	color:#7d216a;
+	overflow : auto;
+	margin : 2px;
+	margin-bottom : 5px;
+	font-weight : bold;  
+	width : 100%;
+	font-size : 12px;
+
+}
+.wsBlogPostInfo{
+	margin-top : 4px;
+	text-align: right;
+	width : 100%;
+}
+.workspace_desktop{  
+  	background: #aacad9; 
+	border: 1px solid #8CACBB;
+  	width: 100%;
+  	float: none;
+  	clear: both;
+  }
+/* end of css file */

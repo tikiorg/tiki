@@ -11,10 +11,10 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 
-include_once ('lib/aulawiki/workspacelib.php');
+include_once ('lib/workspaces/workspacelib.php');
 require_once ('lib/aulawiki/assignmentslib.php');
 require_once ('lib/aulawiki/periodslib.php');
-include_once ('lib/aulawiki/eduuserlib.php');
+include_once ('lib/workspaces/userlib.php');
 
 global $dbTiki;
 global $userlib;
@@ -34,7 +34,7 @@ if (!isset ($workspace)) {
 if(!$exit_module){
 	$assignmentsLib = new AssignmentsLib($dbTiki);
 	$periodsLib = new PeriodsLib($dbTiki);
-	$eduuserlib = new EduUserLib($dbTiki);
+	$eduuserlib = new WorkspaceUserLib($dbTiki);
 	
 	//TODO: asociar al workspace un tipo de periodo y leer los ese tipo
 	$periods = $periodsLib->get_periods_of_type(1);

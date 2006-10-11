@@ -4,8 +4,8 @@
 @copyright (C) 2006 Javier Reyes Gomez (eScire.com)
 @license http://www.gnu.org/copyleft/lgpl.html GNU/LGPL
 *}
-{tikimodule title="{tr}Assignment details{/tr}" name="aulawiki_view_assignment" flip=$module_params.flip decorations=$module_params.decorations}
-{include file="aulawiki-module_error.tpl" error=$error_msg}
+{tiki_workspaces_module title="{tr}Assignment details{/tr}" name="aulawiki_view_assignment" flip=$module_params.flip decorations=$module_params.decorations}
+{include file="tiki-workspaces_module_error.tpl" error=$error_msg}
 <form name="assignmentSelection" method="post" action="{$ownurl}">
 <input name="activeAssignment" type="hidden" id="activeAssignment" value=""> 
 </form>
@@ -131,4 +131,4 @@
 <label>Comment:</label>{$grades[$currentUser].comment}
 {/if}
 
-{/tikimodule}
+{/tiki_workspaces_module}

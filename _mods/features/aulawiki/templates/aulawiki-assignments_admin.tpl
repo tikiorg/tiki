@@ -181,7 +181,7 @@
 <img src="./images/aulawiki/edu_assignments.gif" align="middle">
 </td>
 <td class="{$parImpar}" width=100%>
-<a class="categtree" href="aulawiki-view_module.php?module=edu_view_assignment&activeAssignment={$assignment.assignmentId}">{$assignment.name}</a>
+<a class="categtree" href="tiki-workspaces_view_module.php?module=aulawiki_view_assignment&activeAssignment={$assignment.assignmentId}">{$assignment.name}</a>
 </td>
 <td class="{$parImpar}" >
 {$assignment.gradeWeight}

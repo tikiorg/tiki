@@ -7,7 +7,7 @@
 */
 
 require_once ('tiki-setup.php');
-include_once ('lib/aulawiki/workspacelib.php');
+include_once ('lib/workspaces/workspacelib.php');
 require_once ('lib/aulawiki/assignmentslib.php');
 require_once ('lib/aulawiki/periodslib.php');
 

@@ -8,13 +8,13 @@
 */
 require_once ('tiki-setup.php');
 require_once ('lib/aulawiki/assignmentslib.php');
-require_once ('lib/aulawiki/workspacelib.php');
+require_once ('lib/workspaces/workspacelib.php');
 require_once ('lib/aulawiki/periodslib.php');
-include_once ('lib/aulawiki/eduuserlib.php');
+include_once ('lib/workspaces/userlib.php');
 
 $workspacesLib = new WorkspaceLib($dbTiki);
 $assignmentsLib = new AssignmentsLib($dbTiki);
-$eduuserlib = new EduUserLib($dbTiki);
+$eduuserlib = new WorkspaceUserLib($dbTiki);
 
 $workspace = $workspacesLib->get_current_workspace();
 
