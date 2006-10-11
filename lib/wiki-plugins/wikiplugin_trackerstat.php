@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerstat.php,v 1.5 2006-10-05 14:21:17 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerstat.php,v 1.6 2006-10-11 18:22:11 sylvieg Exp $
 /* to have some statistiques about a tracker
  * will returns a table with for each tracker field, the list of values and the number of times the values occurs
  * trackerId = the id of the tracker
@@ -75,9 +75,7 @@ function wikiplugin_trackerstat($data, $params) {
 		}
 		$allValues = $trklib->get_all_items($trackerId, $fieldId, $status);
 		$j = -1;
-		$total = 0;
 		foreach ($allValues as $value) {
-			++$total;
 			if ($j < 0 || $value != $v[$j]['value']) {
 				++$j;
 				$v[$j]['value'] = $value;
@@ -90,6 +88,7 @@ function wikiplugin_trackerstat($data, $params) {
 			}
 		}
 		if (isset($average)) {
+			$total = $trklib->get_nb_items($trackerId);
 			for (; $j >= 0; --$j) {
 				$v[$j]['average'] = 100*$v[$j]['count']/$total;
 			}
