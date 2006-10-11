@@ -122,6 +122,10 @@ function wikiplugin_tracker($data, $params) {
 					$val = !empty($user)? $user: (isset($_REQUEST['name'])? $_REQUEST['name']: '');
 					$ins_fields["data"][] = array('fieldId' => $_REQUEST['authorfieldid'], 'value' => $val, 'type' => 'u', 'options' => 1);
 				}
+				if (isset($_REQUEST['authoripid']) and $_REQUEST['authoripid']) {
+					$val = !empty($_SERVER['REMOTE_ADDR'])? $_SERVER['REMOTE_ADDR']: '';
+					$ins_fields["data"][] = array('fieldId' => $_REQUEST['authoripid'], 'value' => $val, 'type' => 'I', 'options' => 1);
+				}
 				if (isset($_REQUEST['authorgroupfieldid']) and $_REQUEST['authorgroupfieldid']) {
 					$ins_fields["data"][] = array('fieldId' => $_REQUEST['authorgroupfieldid'], 'value' => $group, 'type' => 'g', 'options' => 1);
 				}
@@ -234,6 +238,9 @@ function wikiplugin_tracker($data, $params) {
 			foreach ($flds['data'] as $f) {
 				if ($f['type'] == 'u' and $f['options'] == '1') {
 					$back.= '<input type="hidden" name="authorfieldid" value="'.$f['fieldId'].'" />';
+				}
+				if ($f['type'] == 'I' and $f['options'] == '1') {
+					$back.= '<input type="hidden" name="authoripid" value="'.$f['fieldId'].'" />';
 				}
 				if ($f['type'] == 'g' and $f['options'] == '1') {
 					$back.= '<input type="hidden" name="authorgroupfieldid" value="'.$f['fieldId'].'" />';

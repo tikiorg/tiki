@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerstat.php,v 1.7 2006-10-11 20:39:21 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerstat.php,v 1.8 2006-10-11 21:18:19 sylvieg Exp $
 /* to have some statistiques about a tracker
  * will returns a table with for each tracker field, the list of values and the number of times the values occurs
  * trackerId = the id of the tracker
@@ -51,6 +51,13 @@ function wikiplugin_trackerstat($data, $params) {
 			break;
 		}
 	}
+	if ($iUser <= -1) {
+		for ($iIp = count($allFields['data']) - 1; $iIp >= 0; $iIp--) {
+			if ($allFields['data'][$iIp]['type'] == 'I') { // this tracker has a IP field - can look for the value the user sets
+				break;
+			}
+		}
+	}
 
 	$tracker_info = $trklib->get_tracker($trackerId);
 	if ($t = $trklib->get_tracker_options($trackerId)) {
@@ -70,12 +77,14 @@ function wikiplugin_trackerstat($data, $params) {
 			return $smarty->fetch("error_simple.tpl");
 		}
 
-		if ($allFields["data"][$i]['isPublic'] != 'y' || $allFields["data"][$i]['type'] == 'u' || $allFields["data"][$i]['type'] == 'g' || $allFields["data"][$i]['type'] == 's') {
+		if ($allFields["data"][$i]['isPublic'] != 'y' || $allFields["data"][$i]['type'] == 'u' || $allFields["data"][$i]['type'] == 'I' || $allFields["data"][$i]['type'] == 'g' || $allFields["data"][$i]['type'] == 's') {
 			continue;
 		}
 		if ($iUser >= 0) {
 			global $user;
 			$userValues = $trklib->get_filtered_item_values($allFields["data"][$iUser]['fieldId'], $user, $allFields["data"][$i]['fieldId']);
+		} else if ($iIp >= 0 && isset($_SERVER['REMOTE_ADDR'])) {
+			$userValues = $trklib->get_filtered_item_values($allFields["data"][$iIp]['fieldId'],  $_SERVER['REMOTE_ADDR'], $allFields["data"][$i]['fieldId']);
 		}
 		$allValues = $trklib->get_all_items($trackerId, $fieldId, $status);
 		$j = -1;
@@ -84,7 +93,7 @@ function wikiplugin_trackerstat($data, $params) {
 				++$j;
 				$v[$j]['value'] = $value;
 				$v[$j]['count'] = 1;
-				if (in_array($value, $userValues)) {
+				if (isset($userValues) && in_array($value, $userValues)) {
 					$v[$j]['me'] = 'y';
 				}
 			} else {
