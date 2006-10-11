@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.96 2006-10-11 17:50:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.97 2006-10-11 20:17:23 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -346,18 +346,7 @@ foreach($xfields["data"] as $i=>$array) {
 				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];				
 			}
 			// Get flags here
-			$flags = array();
-			$h = opendir("img/flags/");
-			
-			while ($file = readdir($h)) {
-				if (strstr($file, ".gif")) {
-					$parts = explode('.', $file);
-					$flags[] = $parts[0];
-				}
-			}			
-			closedir ($h);
-			sort($flags, SORT_STRING);
-			$ins_fields["data"][$i]['flags'] = $flags;
+			$ins_fields["data"][$i]['flags'] = $trklib->get_flags();
 
 		} else {
 

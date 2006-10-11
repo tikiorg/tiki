@@ -1644,6 +1644,19 @@ class TrackerLib extends TikiLib {
 	function get_nb_items($trackerId) {
 		return $this->getOne("select count(*) from `tiki_tracker_items` where `trackerId`=?",array((int) $trackerId));
 	}
+	function get_flags() {
+		$flags = array();
+		$h = opendir("img/flags/");
+		while ($file = readdir($h)) {
+			if (strstr($file, ".gif")) {
+				$parts = explode('.', $file);
+				$flags[] = $parts[0];
+			}
+		}
+		closedir ($h);
+		sort($flags, SORT_STRING);
+		return $flags;	
+	}
 }
 
 global $dbTiki, $tikilib;
