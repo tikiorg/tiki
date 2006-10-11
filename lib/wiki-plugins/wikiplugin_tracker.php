@@ -156,7 +156,10 @@ function wikiplugin_tracker($data, $params) {
 					} else {
 						return '';
 					}
+				} elseif (isset($_REQUEST['trackit']) and $_REQUEST['trackit'] == $trackerId) {
+					$smarty->assign('wikiplugin_tracker', $trackerId);//used in vote plugin
 				}
+
 			}
 			// initialize fields with blank values
 			else {
