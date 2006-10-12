@@ -57,8 +57,6 @@ function wikiplugin_tracker($data, $params) {
 	
 		$field_errors = array('err_mandatory'=>array(), 'err_value'=>array());
 	
-		if ($tracker) {
-			include_once('lib/trackers/trackerlib.php');
 			global $notificationlib; include_once('lib/notifications/notificationlib.php');	
 			$tracker = array_merge($tracker,$trklib->get_tracker_options($trackerId));
 			$flds = $trklib->list_tracker_fields($trackerId,0,-1,"position_asc","");
@@ -179,6 +177,12 @@ function wikiplugin_tracker($data, $params) {
 						$optional[] = $l;
 					}
 					$outf[] = $l;
+				}
+			} else {
+				foreach ($flds['data'] as $f) {
+					if (!$f['isMandatory'])
+						$optional[] = $f['fieldId'];
+					$outf[] = $f['fieldId'];
 				}
 			}
 
@@ -403,9 +407,6 @@ function wikiplugin_tracker($data, $params) {
 			$back.= '</form>';
 			if (!empty($page))
 				$back .= '~/np~';
-		} else {
-			$back = "No such id in trackers.";
-		}
 		return $back;
 	}
 	else {
