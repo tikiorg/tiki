@@ -42,9 +42,9 @@
 <tr class="formcolor"><td>{tr}Field is public? (for use thru trackerlist plugin){/tr}</td><td><input type="checkbox" name="isPublic" {if $isPublic eq 'y'}checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td>{tr}Field is hidden?{/tr}</td><td>
 <select name="isHidden">
-<option value="n"{if isHidden eq 'n'} selected="selected"{/if}>{tr}not hidden{/tr}</option>
-<option value="y"{if isHidden eq 'y'} selected="selected"{/if}>{tr}visible by admin only{/tr}</option>
-<option value="p"{if isHidden eq 'p'} selected="selected"{/if}>{tr}editable by admin only{/tr}</option>
+<option value="n"{if $isHidden eq 'n'} selected="selected"{/if}>{tr}not hidden{/tr}</option>
+<option value="y"{if $isHidden eq 'y'} selected="selected"{/if}>{tr}visible by admin only{/tr}</option>
+<option value="p"{if $isHidden eq 'p'} selected="selected"{/if}>{tr}editable by admin only{/tr}</option>
 </select>
 </td></tr>
 <tr class="formcolor"><td>{tr}Field is mandatory?{/tr}</td><td><input type="checkbox" name="isMandatory" {if $isMandatory eq 'y'}checked="checked"{/if} /></td></tr>
