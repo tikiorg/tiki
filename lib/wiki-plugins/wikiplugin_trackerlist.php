@@ -24,13 +24,6 @@ function wikiplugin_trackerlist($data, $params) {
 
 		$smarty->assign('trackerId', $trackerId);
 		
-		if (!isset($fields)) {
-			$smarty->assign('msg', tra("missing fields list"));
-			return $smarty->fetch("error_simple.tpl");
-		} else {
-			$listfields = split(':',$fields);
-		}
-
 		if ($t = $trklib->get_tracker_options($trackerId))
 			$tracker_info = array_merge($tracker_info, $t);
 		$smarty->assign_by_ref('tracker_info', $tracker_info);
@@ -154,6 +147,14 @@ function wikiplugin_trackerlist($data, $params) {
 		$smarty->assign('status_types', $status_types);
 
 		$allfields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '');
+		if (!empty($fields)) {
+			$listfields = split(':',$fields);
+		} else {
+			foreach($allfields['data'] as $f) {
+				$listfields[] = $f['fieldId'];
+			}
+		}
+
 
 		for ($i = 0; $i < count($allfields["data"]); $i++) {
 			if (in_array($allfields["data"][$i]['fieldId'],$listfields) and $allfields["data"][$i]['isPublic'] == 'y') {

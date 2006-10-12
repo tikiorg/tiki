@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerstat.php,v 1.9 2006-10-12 18:13:44 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerstat.php,v 1.10 2006-10-12 19:34:14 sylvieg Exp $
 /* to have some statistiques about a tracker
  * will returns a table with for each tracker field, the list of values and the number of times the values occurs
  * trackerId = the id of the tracker
@@ -16,7 +16,7 @@ function wikiplugin_trackerstat_help() {
 }
 
 function wikiplugin_trackerstat($data, $params) {
-  global $smarty, $feature_trackers;
+	global $smarty, $feature_trackers;
 	global $trklib; include_once('lib/trackers/trackerlib.php');
 	extract ($params,EXTR_SKIP);
 
@@ -24,11 +24,6 @@ function wikiplugin_trackerstat($data, $params) {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	}
 
-	if (!isset($fields)) {
-		$smarty->assign('msg', tra("missing fields list"));
-		return $smarty->fetch("error_simple.tpl");
-	}
-	$listFields = split(':',$fields);
 	if (!isset($status)) {
 		$status = 'o';
 	}
@@ -56,6 +51,13 @@ function wikiplugin_trackerstat($data, $params) {
 			if ($allFields['data'][$iIp]['type'] == 'I') { // this tracker has a IP field - can look for the value the user sets
 				break;
 			}
+		}
+	}
+	if (!empty($fields)) {
+		$listFields = split(':',$fields);
+	} else {
+		foreach($allFields['data'] as $f) {
+			$listFields[] = $f['fieldId'];
 		}
 	}
 
