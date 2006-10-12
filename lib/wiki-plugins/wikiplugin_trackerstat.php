@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerstat.php,v 1.10 2006-10-12 19:34:14 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerstat.php,v 1.11 2006-10-12 19:45:31 sylvieg Exp $
 /* to have some statistiques about a tracker
  * will returns a table with for each tracker field, the list of values and the number of times the values occurs
  * trackerId = the id of the tracker
@@ -16,7 +16,7 @@ function wikiplugin_trackerstat_help() {
 }
 
 function wikiplugin_trackerstat($data, $params) {
-	global $smarty, $feature_trackers;
+	global $smarty, $feature_trackers, $tiki_p_admin_trackers;
 	global $trklib; include_once('lib/trackers/trackerlib.php');
 	extract ($params,EXTR_SKIP);
 
@@ -70,12 +70,14 @@ function wikiplugin_trackerstat($data, $params) {
 	foreach ($listFields as $fieldId) {
 		for ($i = count($allFields['data']) - 1; $i >= 0; $i--) {
 			if ($allFields['data'][$i]['fieldId'] == $fieldId) {
+				if (($allFields['data'][$i]['isHidden'] == 'y' &&  $tiki_p_admin_trackers != 'y') || $allFields['data'][$i]['isHidden'] == 'p')
+					continue;
 				break;
 			}
 		}
 		if ($i < 0 ) {
-			$smarty->assign('msg', tra("incorrect filedId"));
-			return $smarty->fetch("error_simple.tpl");
+			$smarty->assign('msg', tra("incorrect fieldId")." ".$fieldId);
+			return $msg;
 		}
 
 		if ($allFields["data"][$i]['isPublic'] != 'y' || $allFields["data"][$i]['type'] == 'u' || $allFields["data"][$i]['type'] == 'I' || $allFields["data"][$i]['type'] == 'g' || $allFields["data"][$i]['type'] == 's') {
