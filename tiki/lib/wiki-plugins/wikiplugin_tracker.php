@@ -20,10 +20,16 @@ function wikiplugin_tracker_name($fieldId, $name, $field_errors) {
 	return $name;
 }
 function wikiplugin_tracker($data, $params) {
-	global $tikilib, $trklib, $userlib, $dbTiki, $notificationlib, $user, $group, $page, $tiki_p_admin, $tiki_p_create_tracker_items, $smarty;
+	global $tikilib, $userlib, $dbTiki, $notificationlib, $user, $group, $page, $tiki_p_admin, $tiki_p_create_tracker_items, $smarty, $feature_trackers;
+	global $trklib; include_once('lib/trackers/trackerlib.php');
 	
 	//var_dump($_REQUEST);
 	extract ($params,EXTR_SKIP);
+
+	if ($feature_trackers != 'y' || !isset($trackerId) || !($tracker = $trklib->get_tracker($trackerId))) {
+		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
+	}
+
 	if (!isset($embedded)) {
 		$embedded = "n";
 	}
@@ -32,9 +38,6 @@ function wikiplugin_tracker($data, $params) {
 	}
 	if (!isset($showdesc)) {
 		$showdesc = "n";
-	}
-	if (!isset($trackerId)) {
-		return ("<b>missing tracker ID for plugin TRACKER</b><br />");
 	}
 	if (!isset($action)) {
 		$action = tra("Save");
@@ -49,9 +52,6 @@ function wikiplugin_tracker($data, $params) {
 	if (!$tikilib->user_has_perm_on_object($user, $trackerId, 'tracker', 'tiki_p_create_tracker_items')) {
 		return '<b>'.$permMessage.'</b>';
 	}
-
-	$tracker = $tikilib->get_tracker($trackerId);
-
 
 	if (!isset($_REQUEST["ok"]) || $_REQUEST["ok"]  != $trackerId) {
 	

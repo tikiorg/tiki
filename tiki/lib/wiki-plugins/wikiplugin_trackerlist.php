@@ -13,18 +13,17 @@ function wikiplugin_trackerlist_help() {
 }
 
 function wikiplugin_trackerlist($data, $params) {
-	global $smarty, $trklib, $tikilib, $dbTiki, $userlib, $tiki_p_admin, $maxRecords, $_REQUEST, $tiki_p_view_trackers, $user, $page, $tiki_p_tracker_vote_ratings, $tiki_p_tracker_view_ratings;
+  global $smarty, $tikilib, $dbTiki, $userlib, $tiki_p_admin, $maxRecords, $_REQUEST, $tiki_p_view_trackers, $user, $page, $tiki_p_tracker_vote_ratings, $tiki_p_tracker_view_ratings, $feature_trackers;
+  global $trklib; require_once("lib/trackers/trackerlib.php");
 	global $notificationlib; //needed if plugin tracker after plugin trackerlist
 	extract ($params,EXTR_SKIP);
 
-	if (!isset($trackerId)) {
-		$smarty->assign('msg', tra("missing tracker ID for plugin TRACKER"));
-		return $smarty->fetch("error_simple.tpl");
+	if ($feature_trackers != 'y' || !isset($trackerId) || !($tracker_info = $trklib->get_tracker($trackerId))) {
+		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	} else {
 
 		$smarty->assign('trackerId', $trackerId);
 		
-		require_once("lib/trackers/trackerlib.php");
 		if (!isset($fields)) {
 			$smarty->assign('msg', tra("missing fields list"));
 			return $smarty->fetch("error_simple.tpl");
@@ -32,7 +31,6 @@ function wikiplugin_trackerlist($data, $params) {
 			$listfields = split(':',$fields);
 		}
 
-		$tracker_info = $trklib->get_tracker($trackerId);
 		if ($t = $trklib->get_tracker_options($trackerId))
 			$tracker_info = array_merge($tracker_info, $t);
 		$smarty->assign_by_ref('tracker_info', $tracker_info);
