@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_miniquiz.php,v 1.7 2005-05-18 11:02:00 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_miniquiz.php,v 1.8 2006-10-12 18:54:13 sylvieg Exp $
 /*
 DEV NOTE
 that plugin is not finished !! -- mose
@@ -28,13 +28,14 @@ function rcmp($a, $b) { return mt_rand(-1, 1); }
 function shuf(&$ar) { srand((double) microtime() * 10000000); uksort($ar, "rcmp"); }
 
 function wikiplugin_miniquiz($data, $params) {
-	global $tikilib, $user, $group;
+  global $tikilib, $user, $group, $feature_trackers;
+	global $trklib; include_once('lib/trackers/trackerlib.php');
 	extract ($params,EXTR_SKIP);
 
-	if (!isset($trackerId)) {
-		return ("<b>missing tracker ID for plugin TRACKER</b><br />");
+	if ($feature_trackers != 'y' || !isset($trackerId) || !($tracker = $trklib->get_tracker($trackerId))) {
+		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	}
-	$tracker = $tikilib->get_tracker($trackerId);
+
 	$items = $tikilib->list_tracker_items($trackerId,0,-1,'lastModif_desc','','o');
 	foreach ($items['data'] as $it) {
 		$id = $it['itemId'];
