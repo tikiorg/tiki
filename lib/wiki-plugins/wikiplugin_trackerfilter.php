@@ -5,7 +5,7 @@ function wikiplugin_trackerfilter_help() {
   return $help;
 }
 function wikiplugin_trackerfilter($data, $params) {
-	global $smarty;
+  global $smarty, $feature_trackers;
 	global $trklib; include_once('lib/trackers/trackerlib.php');
 	extract($params, EXTR_SKIP);
 	$dataRes = '';
@@ -13,9 +13,12 @@ function wikiplugin_trackerfilter($data, $params) {
 		$smarty->assign('msgTrackerFilter', $_REQUEST['msgTrackerFilter']);
 	if (isset($_REQUEST['filter']) || isset($_REQUEST['tr_offset']) || isset($_REQUEST['tr_sort_mode'])) {
 	  
-	  if (!isset($fields) && (empty($_REQUEST['trackerId']) || empty($trackerId))) {
+		if ($feature_trackers != 'y' || empty($_REQUEST['trackerId']) || !isset($trackerId) || !($tracker = $trklib->get_tracker($trackerId))) {
+			return $smarty->fetch("wiki-plugins/error_tracker.tpl");
+		}
+		if (!isset($fields)) {
 			$smarty->assign('msg', tra("missing parameters"));
-			return $smarty->fetch("error_simple.tpl");
+			return $msg;
 		}
 		foreach ($_REQUEST as $key =>$val) {
 			if (substr($key, 0, 2) == 'f_' && $val[0] != '') {

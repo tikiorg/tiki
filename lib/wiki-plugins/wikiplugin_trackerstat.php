@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerstat.php,v 1.8 2006-10-11 21:18:19 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerstat.php,v 1.9 2006-10-12 18:13:44 sylvieg Exp $
 /* to have some statistiques about a tracker
  * will returns a table with for each tracker field, the list of values and the number of times the values occurs
  * trackerId = the id of the tracker
@@ -16,14 +16,14 @@ function wikiplugin_trackerstat_help() {
 }
 
 function wikiplugin_trackerstat($data, $params) {
-	global $smarty;
+  global $smarty, $feature_trackers;
 	global $trklib; include_once('lib/trackers/trackerlib.php');
 	extract ($params,EXTR_SKIP);
 
-	if (!isset($trackerId)) {
-		$smarty->assign('msg', tra("missing tracker ID for plugin TRACKER"));
-		return $smarty->fetch("error_simple.tpl");
+	if ($feature_trackers != 'y' || !isset($trackerId) || !($tracker_info = $trklib->get_tracker($trackerId))) {
+		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	}
+
 	if (!isset($fields)) {
 		$smarty->assign('msg', tra("missing fields list"));
 		return $smarty->fetch("error_simple.tpl");
@@ -59,7 +59,6 @@ function wikiplugin_trackerstat($data, $params) {
 		}
 	}
 
-	$tracker_info = $trklib->get_tracker($trackerId);
 	if ($t = $trklib->get_tracker_options($trackerId)) {
 		$tracker_info = array_merge($tracker_info, $t);
 	}
