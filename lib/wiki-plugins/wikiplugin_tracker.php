@@ -180,7 +180,7 @@ function wikiplugin_tracker($data, $params) {
 				}
 			} else {
 				foreach ($flds['data'] as $f) {
-					if (!$f['isMandatory'])
+					if ($f['isMandatory'] == 'y')
 						$optional[] = $f['fieldId'];
 					$outf[] = $f['fieldId'];
 				}
@@ -299,7 +299,9 @@ function wikiplugin_tracker($data, $params) {
 						$flags = $trklib->get_flags();
 						foreach ($flags as $flag) {
 							$selected = $f['value'] == $flag ? 'selected="selected"' : '';
-							$back.= '<option value="'.$flag.'" '.$selected.' style="background-image:url(\'img/flags/'.$flag.'.gif\');background-repeat:no-repeat;padding-left:25px;padding-bottom:3px;">'.$flag.'</option>';
+							if (!isset($f['options']) ||  $f['options'] != '1')
+								$selected .= ' style="background-image:url(\'img/flags/'.$flag.'.gif\');background-repeat:no-repeat;padding-left:25px;padding-bottom:3px;"';
+							$back.= '<option value="'.$flag.'" '.$selected.'>'.$flag.'</option>';
 						}
 						$back.= "</select>";
 					// textarea
