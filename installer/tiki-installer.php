@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.8 2006-10-03 13:32:31 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.9 2006-10-15 22:11:54 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -32,6 +32,12 @@ define('SMARTY_DIR', "lib/smarty/libs/");
 require_once (SMARTY_DIR . 'Smarty.class.php');
 $commands = array();
 ini_set('magic_quotes_runtime',0);
+
+if (!empty($_REQUEST['lang'])) {
+	$language = $_REQUEST['lang'];
+} else {
+	$language = 'en';
+}
 
 function process_sql_file($file,$db_tiki) {
 	global $dbTiki;
@@ -202,7 +208,6 @@ class Smarty_TikiWiki extends Smarty {
 
 	function fetch($_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null, $_smarty_display = false) {
 		global $language;
-		$language = 'en';
 		$_smarty_cache_id = $language . $_smarty_cache_id;
 		$_smarty_compile_id = $language . $_smarty_compile_id;
 		return parent::fetch($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, $_smarty_display);
