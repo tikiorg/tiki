@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerstat.php,v 1.11 2006-10-12 19:45:31 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerstat.php,v 1.12 2006-10-16 12:15:39 sylvieg Exp $
 /* to have some statistiques about a tracker
  * will returns a table with for each tracker field, the list of values and the number of times the values occurs
  * trackerId = the id of the tracker
@@ -83,24 +83,41 @@ function wikiplugin_trackerstat($data, $params) {
 		if ($allFields["data"][$i]['isPublic'] != 'y' || $allFields["data"][$i]['type'] == 'u' || $allFields["data"][$i]['type'] == 'I' || $allFields["data"][$i]['type'] == 'g' || $allFields["data"][$i]['type'] == 's') {
 			continue;
 		}
-		if ($iUser >= 0) {
-			global $user;
-			$userValues = $trklib->get_filtered_item_values($allFields["data"][$iUser]['fieldId'], $user, $allFields["data"][$i]['fieldId']);
-		} else if ($iIp >= 0 && isset($_SERVER['REMOTE_ADDR'])) {
-			$userValues = $trklib->get_filtered_item_values($allFields["data"][$iIp]['fieldId'],  $_SERVER['REMOTE_ADDR'], $allFields["data"][$i]['fieldId']);
-		}
-		$allValues = $trklib->get_all_items($trackerId, $fieldId, $status);
-		$j = -1;
-		foreach ($allValues as $value) {
-			if ($j < 0 || $value != $v[$j]['value']) {
-				++$j;
-				$v[$j]['value'] = $value;
-				$v[$j]['count'] = 1;
-				if (isset($userValues) && in_array($value, $userValues)) {
-					$v[$j]['me'] = 'y';
+		if ($allFields["data"][$i]['type'] == 'e') {
+			global $categlib; include_once('lib/categories/categlib.php');
+			$listCategs = $categlib->get_child_categories($allFields["data"][$i]['options']);
+			$itemId = $trklib->get_user_item($trackerId, $tracker_info);
+			for ($j = 0; $j < count($listCategs); ++$j) {
+				$objects = $categlib->get_category_objects($listCategs[$j]['categId'], "tracker $trackerId");
+				$v[$j]['count'] = count($objects);
+				$v[$j]['value'] = $listCategs[$j]['name'];
+				foreach($objects as $o) {
+					if ($o['itemId'] == $itemId) {
+						$v[$j]['me'] = 'y';
+						break;
+					}
 				}
-			} else {
-				++$v[$j]['count'];
+			}
+		} else {
+			if ($iUser >= 0) {
+				global $user;
+				$userValues = $trklib->get_filtered_item_values($allFields["data"][$iUser]['fieldId'], $user, $allFields["data"][$i]['fieldId']);
+			} else if ($iIp >= 0 && isset($_SERVER['REMOTE_ADDR'])) {
+				$userValues = $trklib->get_filtered_item_values($allFields["data"][$iIp]['fieldId'],  $_SERVER['REMOTE_ADDR'], $allFields["data"][$i]['fieldId']);
+			}
+			$allValues = $trklib->get_all_items($trackerId, $fieldId, $status);
+			$j = -1;
+			foreach ($allValues as $value) {
+				if ($j < 0 || $value != $v[$j]['value']) {
+					++$j;
+					$v[$j]['value'] = $value;
+					$v[$j]['count'] = 1;
+					if (isset($userValues) && in_array($value, $userValues)) {
+						$v[$j]['me'] = 'y';
+					}
+				} else {
+					++$v[$j]['count'];
+				}
 			}
 		}
 		if (isset($average)) {

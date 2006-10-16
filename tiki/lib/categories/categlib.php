@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.84 2006-10-10 14:01:59 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.85 2006-10-16 12:15:38 sylvieg Exp $
  *
  * \brief Categories support class
  *
@@ -474,11 +474,17 @@ class CategLib extends ObjectLib {
 		
 	}
 
-	function get_category_objects($categId) {
-		// Get all the objects in a category
-		$query = "select * from `tiki_category_objects` c,`tiki_categorized_objects` co, `tiki_objects` o where c.`catObjectId`=co.`catObjectId` and co.`catObjectId`=o.`objectId` and c.`categId`=?";
-
-		$result = $this->query($query,array((int) $categId));
+	// Get all the objects in a category
+	function get_category_objects($categId, $type=null) {
+		$bindVars[] = (int)$categId;
+		if (!empty($type)) {
+			$where = ' and o.`type`=?';
+			$bindVars[] = $type;
+		} else {
+			$where = '';
+		}
+		$query = "select * from `tiki_category_objects` c,`tiki_categorized_objects` co, `tiki_objects` o where c.`catObjectId`=co.`catObjectId` and co.`catObjectId`=o.`objectId` and c.`categId`=?".$where;
+		$result = $this->query($query, $bindVars);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
