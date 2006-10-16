@@ -1,10 +1,10 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_vote.php,v 1.3 2006-10-12 18:13:43 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_vote.php,v 1.4 2006-10-16 12:22:50 sylvieg Exp $
 /* A plugin vote based on tracker
  */
 function wikiplugin_vote_help() {
 	$help = tra("Displays some stat of a tracker content, fields are indicated with numeric ids.").":\n";
-	$help.= "~np~{VOTE(trackerId=>1,fields=>2:4:5,show_percent=>y,show_bar=>n,status=>o|c|p|op|oc|pc|opc,float=>right|left)}Title{VOTE}~/np~";
+	$help.= "~np~{VOTE(trackerId=>1,fields=>2:4:5,show_percent=>n|y,show_bar=>n|y,status=>o|c|p|op|oc|pc|opc,float=>right|left, show_stat=n|y)}Title{VOTE}~/np~";
 	return $help;
 }
 function wikiplugin_vote($data, $params) {
@@ -32,8 +32,12 @@ function wikiplugin_vote($data, $params) {
 		$smarty->assign('p_create_tracker_items', 'n');
 	}
 	include_once('lib/wiki-plugins/wikiplugin_trackerstat.php');
-	$stat = wikiplugin_trackerstat($data, $params);
-	$smarty->assign_by_ref('stat', $stat);
+	if (isset($show_stat) && $show_stat == 'y') {
+		$stat = wikiplugin_trackerstat($data, $params);
+		$smarty->assign_by_ref('stat', $stat);
+	} else {
+		$smarty->assign('stat', '');
+	}
 	return $smarty->fetch('wiki-plugins/wikiplugin_vote.tpl');
 }
 
