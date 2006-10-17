@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.656 2006-10-02 18:11:51 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.657 2006-10-17 23:08:44 franck Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -6680,6 +6680,7 @@ if (!$simple_wiki) {
 			'games',
 			'faqs',
 			'html_pages',
+			'maps',
 			'quizzes',
 			'surveys',
 			'webmail',

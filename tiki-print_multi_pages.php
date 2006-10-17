@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-print_multi_pages.php,v 1.12 2006-09-19 16:33:17 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-print_multi_pages.php,v 1.13 2006-10-17 23:08:44 franck Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -24,6 +24,8 @@ if (!isset($_REQUEST["printpages"])) {
 } else {
 	$printpages = unserialize(urldecode($_REQUEST["printpages"]));
 }
+
+global $page_ref_id;
 
 if (isset($_REQUEST["print"])) {
 	check_ticket('multiprint');
@@ -49,6 +51,8 @@ if (isset($_REQUEST["print"])) {
 		}
 
 		$page_info = $tikilib->get_page_info($page);
+		include_once ("lib/structures/structlib.php");
+		$page_ref_id=$structlib->get_struct_ref_id($page_info["pageName"]);
 		$page_info["parsed"] = $tikilib->parse_data($page_info["data"]);
 		$pages[] = $page_info;
 	}

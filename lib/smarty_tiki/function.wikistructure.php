@@ -42,10 +42,10 @@ $_REQUEST["page_ref_id"]=$page_ref_id;
 }
 }
 if (isset($page_ref_id) && isset($detail)) {
-  $channels.= $structlib->get_toc($page_ref_id,'asc',false,false);
+  $channels.= $structlib->get_toc($page_ref_id,'asc',false,false,'','plain',$_REQUEST["page"]);
 }
 else {
-  $channels.= $structlib->get_toc($id,'asc',false,false);
+  $channels.= $structlib->get_toc($id,'asc',false,false,'','plain',$_REQUEST["page"]);
 }
 
 return $channels;

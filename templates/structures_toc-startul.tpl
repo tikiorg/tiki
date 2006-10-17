@@ -1,1 +1,1 @@
-<ul class="toc">
+<div class="toc">
