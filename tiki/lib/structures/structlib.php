@@ -363,27 +363,38 @@ class StructLib extends TikiLib {
 		return $back;
 	}
 
-	function get_toc($page_ref_id,$order='asc',$showdesc=false,$numbering=true,$numberPrefix='',$type='plain') {
+	function get_toc($page_ref_id,$order='asc',$showdesc=false,$numbering=true,$numberPrefix='',$type='plain',$page='') {
 		$structure_tree = $this->build_subtree_toc($page_ref_id,false,$order,$numberPrefix);
-		return $this->fetch_toc($structure_tree,$showdesc,$numbering,$type);
+		return $this->fetch_toc($structure_tree,$showdesc,$numbering,$type,$page);
 	}
 
-	function fetch_toc($structure_tree,$showdesc,$numbering,$type='plain') {
+	function fetch_toc($structure_tree,$showdesc,$numbering,$type='plain',$page='') {
 		global $smarty;
 		$ret='';
 		if ($structure_tree != '') {
 			$ret.=$smarty->fetch('structures_toc-startul.tpl');
 			foreach($structure_tree as $leaf) {
 				//echo "<br />";print_r($leaf);echo "<br />";
+				if ($leaf["pageName"]==$page) {
+					$smarty->assign('hilite',true);
+				} else {
+					$smarty->assign('hilite',false);
+				}
+				$leafspace=(strlen($leaf["prefix"])-1)/2;
+				if ($leafspace!=0) {
+					$smarty->assign('leafspace',str_repeat("<img src=\"img/icons2/no-dots.gif\"/>",$leafspace-1)."<img src=\"img/icons2/corner-dots.gif\"/>");
+				} else {
+					$smarty->assign('leafspace',"");
+				}
 				$smarty->assign_by_ref('structure_tree',$leaf);
 				$smarty->assign('showdesc',$showdesc);
 				$smarty->assign('numbering',$numbering);
 				$smarty->assign('toc_type',$type);
 				$ret.=$smarty->fetch('structures_toc-leaf.tpl');
 				if(isset($leaf['sub']) && is_array($leaf['sub'])) {
-					$ret.=$this->fetch_toc($leaf['sub'],$showdesc,$numbering,$type);
+					$ret.=$this->fetch_toc($leaf['sub'],$showdesc,$numbering,$type,$page);
 				} else {
-				    $ret.='</li>';
+				    $ret.='';
 				}
 			}
 			$ret.=$smarty->fetch('structures_toc-endul.tpl');
