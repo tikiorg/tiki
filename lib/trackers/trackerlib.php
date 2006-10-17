@@ -1402,6 +1402,7 @@ class TrackerLib extends TikiLib {
 		$cachelib->invalidate(md5('trackerfield'.$fieldId.'oc'));
 		$cachelib->invalidate(md5('trackerfield'.$fieldId.'pc'));
 		$cachelib->invalidate(md5('trackerfield'.$fieldId.'opc'));
+		$cachelib->invalidate(md5('trackerfield'.$fieldId.'poc'));
 
 		$this->clear_tracker_cache($trackerId);
 
