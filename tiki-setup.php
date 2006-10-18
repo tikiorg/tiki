@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.314 2006-10-11 17:50:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.315 2006-10-18 19:59:05 rlpowell Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1988,7 +1988,8 @@ if ($feature_integrator == 'y')
  * Register the search refresh function
  */
 
-if ($feature_search == 'y') {
+# Don't waste time refreshing if we're using full text search.
+if ($feature_search == 'y' && $feature_search_fulltext != 'y' ) {
   include_once('lib/search/refresh.php');
   register_shutdown_function('refresh_search_index');
 }
