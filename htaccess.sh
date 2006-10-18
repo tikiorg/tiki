@@ -12,7 +12,7 @@ if [ "$1" = "off" ]; then
         ACTION=deactivating
 fi
  
-ENTRIES=`/bin/ls -Rd *`
+ENTRIES=". `/bin/ls -Rd *`"
 for ENTRY in ${ENTRIES}
 do
         # only work on directories:
