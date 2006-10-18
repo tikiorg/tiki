@@ -217,7 +217,7 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
     		{tr}Your database has been configured and Tikiwiki is ready to run! If
     		this is your first install, your admin password is 'admin'. You can
     		now log in into Tikiwiki as user 'admin' and start configuring
-    		the application.<br />
+    		the application.{/tr}<br />
     		{tr}Note: This install script may be potentially harmful so we strongly
     		recommend you to disable the script and then proceed into Tiki. If
     		you decide to reuse later, just follow the instructions in
