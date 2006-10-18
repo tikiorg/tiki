@@ -122,7 +122,7 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 				<hr />
 		    <table>
 		    <tr><td style="text-align: center;" colspan="2"
- rowspan="1" height="26"><font size="5"><b>Install</b></font>
+ rowspan="1" height="26"><font size="5"><b>{tr}Install{/tr}</b></font>
  			</td></tr>
 			<tr><td>
 			{tr}Create database (clean install) with profile{/tr}:
@@ -143,7 +143,7 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 
 			<hr />
 			<tr><td style="text-align: center;" colspan="2"
- rowspan="1" height="26"><font size="5"><b>Upgrade</b></font>
+ rowspan="1" height="26"><font size="5"><b>{tr}Upgrade{/tr}</b></font>
  			</td></tr>
 		    <tr><td colspan="2">				
 			{tr}Important{/tr}: <b>{tr}backup your database{/tr}</b> {tr}with mysqldump or phpmyadmin before you proceed{/tr}. <br>
