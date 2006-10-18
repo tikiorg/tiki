@@ -1,4 +1,17 @@
 <?php
+// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.66 2006-10-18 19:44:20 luciash Exp $
+
+/**
+ * Tiki registration script
+ *
+ * This file takes care of user registration
+ *
+ * @license GNU LGPL
+ * @copyright Tiki Community
+ * @date created: 2002/10/8 15:54
+ * @date last-modified: $Date: 2006-10-18 19:44:20 $
+ */
+
 // Initialization
 require_once('tiki-setup.php');
 // require_once('lib/tikilib.php'); # httpScheme()
@@ -9,7 +22,6 @@ include_once('lib/notifications/notificationlib.php');
 // Permission: needs p_register and not to be a slave
 if ($allowRegister != 'y' || ($feature_intertiki == 'y' && !empty($feature_intertiki_mymaster))) {
   header("location: index.php");
-  exit;
   die;
 }
 
