@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.87 2006-09-19 16:33:24 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.88 2006-10-18 21:37:53 sylvieg Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -17,7 +17,7 @@
 
 <h1>{tr}Edit{/tr}: {$page|escape}{if $pageAlias ne ''}&nbsp;({$pageAlias|escape}){/if}</h1>
 {if $data.draft}
-  {tr}Draft writen on{/tr} {$data.draft.lastModif|tiki_long_time}<br/>
+  {tr}Draft written on{/tr} {$data.draft.lastModif|tiki_long_time}<br/>
   {if $data.draft.lastModif < $data.lastModif}
     <b>{tr}Warning: new versions of this page have been made after this draft{/tr}</b>
   {/if}
