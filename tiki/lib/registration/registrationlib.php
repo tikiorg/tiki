@@ -6,14 +6,15 @@
  *
  * @license GNU LGPL
  * @copyright Tiki Community
- * @date created:
- * @date last-modified: 2005-08-26 13:01
+ * @date created: 2003/3/21 16:48
+ * @date last-modified: $Date: 2006-10-18 19:44:20 $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/registration/registrationlib.php,v 1.33 2006-10-18 19:44:20 luciash Exp $
  */
 
-//this script may only be included - so its better to die if called directly.
+//this script may only be included - so it's better to die if called directly
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
-  exit;
+  die;
 }
 
 require_once('lib/tikilib.php'); # httpScheme(), get_user_preference
@@ -27,7 +28,7 @@ class RegistrationLib extends TikiLib {
 
   function RegistrationLib($db) 
   {
-    # this is probably uneeded now
+    # this is probably unneeded now
     if(!$db) {
       die("Invalid db object passed to RegistrationLib constructor");  
     }
@@ -47,7 +48,6 @@ class RegistrationLib extends TikiLib {
     // $Return[0] : [true|false]
     // $Return[1] : Processing result save.
 
-//    if (!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $Email)) {
     //Fix by suilinma
     if (!eregi("^[-_a-z0-9+]+(\\.[-_a-z0-9+]+)*\\@([-a-z0-9]+\\.)*([a-z]{2,4})$", $Email)) {
 	// luci's regex that also works
@@ -165,7 +165,7 @@ class RegistrationLib extends TikiLib {
   }
 
   /**
-   *  Default TikiWiki 'user_registers' callback
+   *  Default Tikiwiki 'user_registers' callback
    *  validates data and creates a new user in the database on user registration
    *  @access private
    *  @returns true if user data validates and user was created, false (or never returns) otherwise
@@ -175,7 +175,6 @@ class RegistrationLib extends TikiLib {
 
       if($allowRegister != 'y') {
           header("location: index.php");
-          exit;
           die;
       }
 
@@ -199,7 +198,6 @@ class RegistrationLib extends TikiLib {
 
   if($allowRegister != 'y') {
     header("location: index.php");
-    exit;
     die;
   }
 
@@ -451,7 +449,6 @@ class RegistrationLib extends TikiLib {
         global $allowRegister, $smarty;
         if($allowRegister != 'y') {
             header("location: index.php");
-            exit;
             die;
         }
 
