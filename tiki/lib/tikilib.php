@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.657 2006-10-17 23:08:44 franck Exp $
+// CVS: $Id: tikilib.php,v 1.658 2006-10-19 22:10:03 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1817,6 +1817,14 @@ function add_pageview() {
 	return $res;
     }
 
+    /*shared: added by AW*/
+    function get_file_by_name($galleryId, $name) {
+	$query = "select `path`,`galleryId`,`filename`,`filetype`,`data`,`filesize`,`name`,`description`, `created` from `tiki_files` where `galleryId`=? AND `name`=? ORDER BY created DESC LIMIT 1";
+	$result = $this->query($query,array((int) $galleryId, $name));
+	$res = $result->fetchRow();
+ 	return $res;
+    }
+ 
     /**
      * Get file list with additional data from one or all file galleries
      *
@@ -4707,7 +4715,7 @@ function add_pageview() {
 		$this->parse_htmlchar($data);
 
 	// Now replace a TOC
-	preg_match_all("/\{toc\s?(order=(desc|asc))?\s?(showdesc=(0|1))?\s?(shownum=(0|1))?\s?(type=(plain|fancy))?\s?(structId=([a-z]+))?\s?\}/i", $data, $tocs);
+	preg_match_all("/\{toc\s?(order=(desc|asc))?\s?(showdesc=(0|1))?\s?(shownum=(0|1))?\s?(type=(plain|fancy))?\s?(structId=([a-z]+))?\s?(maxdepth=(\d+))?\s?\}/i", $data, $tocs);
 
     // Loop over all the case-specific versions of {toc} used
     // (if the user is consistent, this is a loop of count 1)
@@ -4719,8 +4727,9 @@ function add_pageview() {
 	    $order = 'asc';
 	    $showdesc = false;
 	    $shownum = false;
-        $type = 'plain';
-        $structId = '';
+			$type = 'plain';
+			$structId = '';
+	    $maxdepth = 0;
 	    if ($tocs[2][$i] == 'desc') {
 		$order = 'desc';
 	    }
@@ -4742,7 +4751,7 @@ function add_pageview() {
 	    //And we are currently viewing a structure
 	    $page_info = $structlib->s_get_page_info($page_ref_id);
 	    if (isset($page_info)) {
-		$html = $structlib->get_toc($page_ref_id,$order,$showdesc,$shownum,'',$type);
+		$html = $structlib->get_toc($page_ref_id,$order,$showdesc,$shownum,'',$type,$maxdepth);
                 $data = str_replace($tocs[0][$i], $html, $data);
 	    } else {
                 //Dont display the {toc} string for non structure pages
@@ -6599,13 +6608,14 @@ if (!$simple_wiki) {
 
 						function read_raw($text) {
 						    $file = split("\n",$text);
+							$back = '';
 						    foreach ($file as $line) {
 							$r = $s = '';
 							if (substr($line,0,1) != "#") {
 							    if( ereg("^\[([A-Z0-9]+)\]",$line,$r) ) {
 								$var = strtolower($r[1]);
 							    }
-							    if ($var and (ereg("^([-_/ a-zA-Z0-9]+)[ \t]+[:=][ \t]+(.*)",$line,$s))) {
+							    if (isset($var) and (ereg("^([-_/ a-zA-Z0-9]+)[ \t]+[:=][ \t]+(.*)",$line,$s))) {
 								$back[$var][trim($s[1])] = trim($s[2]);
 							    }
 							}

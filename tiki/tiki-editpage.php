@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.143 2006-09-19 16:33:15 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.144 2006-10-19 22:10:01 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -954,6 +954,9 @@ ask_ticket('edit-page');
 
 $ajaxlib->registerTemplate('tiki-editpage.tpl');
 $ajaxlib->processRequests();
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');

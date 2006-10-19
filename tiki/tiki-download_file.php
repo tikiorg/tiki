@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tiki-download_file.php,v 1.24 2006-09-23 13:05:56 ohertel Exp $
+// CVS: $Id: tiki-download_file.php,v 1.25 2006-10-19 22:10:01 mose Exp $
 // Initialization
 include_once("lib/init/initlib.php");
 require_once('tiki-setup.php');
@@ -39,10 +39,15 @@ function readfile_chunked($filename,$retbytes=true) {
    return $status;
 }
 
-if(!isset($_REQUEST["fileId"])) {
+if     (isset($_REQUEST["fileId"])) {
+	$info = $tikilib->get_file($_REQUEST["fileId"]);
+}
+elseif (isset($_REQUEST["galleryId"]) && isset($_REQUEST["name"])) {
+	$info = $tikilib->get_file_by_name($_REQUEST["galleryId"], $_REQUEST["name"]);
+}
+else {
   die;
 }
-$info = $tikilib->get_file($_REQUEST["fileId"]);
 
 $fgal_use_db=$tikilib->get_preference('fgal_use_db','y');
 $fgal_use_dir=$tikilib->get_preference('fgal_use_dir','');

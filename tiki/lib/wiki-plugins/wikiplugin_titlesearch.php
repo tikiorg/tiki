@@ -17,7 +17,7 @@
     * @package TikiWiki
     * @subpackage TikiPlugins
     * @author Claudio Bustos
-    * @version $Revision: 1.22 $
+    * @version $Revision: 1.23 $
     */
     function wikiplugin_titlesearch_help() {
         return tra("Search the titles of all pages in this wiki").":<br />~np~{TITLESEARCH(search=>Admin,info=>hits|user,exclude=>HomePage|SandBox,noheader=>0)}{TITLESEARCH}~/np~";
@@ -40,11 +40,11 @@
         }
         function getVersion() {
             return preg_replace("/[Revision: $]/", '',
-                "\$Revision: 1.22 $");
+                "\$Revision: 1.23 $");
         }
         function run ($data, $params) {
             global $wikilib; include_once('lib/wiki/wikilib.php');
-		global $tikilib;
+						global $tikilib;
             $aInfoPreset = array_keys($this->aInfoPresetNames);
             $params = $this->getParams($params, true);
             extract ($params,EXTR_SKIP);

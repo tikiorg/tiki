@@ -1149,7 +1149,6 @@ class RSSCreator09 extends FeedCreator {
 	}
 }
 
-
 /**
  * RSSCreator20 is a FeedCreator that implements RDF Site Summary (RSS) 2.0.
  *

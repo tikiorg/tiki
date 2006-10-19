@@ -363,41 +363,43 @@ class StructLib extends TikiLib {
 		return $back;
 	}
 
-	function get_toc($page_ref_id,$order='asc',$showdesc=false,$numbering=true,$numberPrefix='',$type='plain',$page='') {
+	function get_toc($page_ref_id,$order='asc',$showdesc=false,$numbering=true,$numberPrefix='',$type='plain',$page='',$maxdepth=0) {
 		$structure_tree = $this->build_subtree_toc($page_ref_id,false,$order,$numberPrefix);
-		return $this->fetch_toc($structure_tree,$showdesc,$numbering,$type,$page);
+		return $this->fetch_toc($structure_tree,$showdesc,$numbering,$type,$page,$maxdepth);
 	}
 
-	function fetch_toc($structure_tree,$showdesc,$numbering,$type='plain',$page='') {
+	function fetch_toc($structure_tree,$showdesc,$numbering,$type='plain',$page='',$maxdepth=0, $cur_depth=0) {
 		global $smarty;
 		$ret='';
 		if ($structure_tree != '') {
-			$ret.=$smarty->fetch('structures_toc-startul.tpl');
-			foreach($structure_tree as $leaf) {
-				//echo "<br />";print_r($leaf);echo "<br />";
-				if ($leaf["pageName"]==$page) {
-					$smarty->assign('hilite',true);
-				} else {
-					$smarty->assign('hilite',false);
+			if (($maxdepth <= 0) || ($cur_depth < $maxdepth)) {
+				$ret.=$smarty->fetch('structures_toc-startul.tpl');
+				foreach($structure_tree as $leaf) {
+					//echo "<br />";print_r($leaf);echo "<br />";
+					if ($leaf["pageName"]==$page) {
+						$smarty->assign('hilite',true);
+					} else {
+						$smarty->assign('hilite',false);
+					}
+					$leafspace=(strlen($leaf["prefix"])-1)/2;
+					if ($leafspace!=0) {
+						$smarty->assign('leafspace',str_repeat("<img src=\"img/icons2/no-dots.gif\"/>",$leafspace-1)."<img src=\"img/icons2/corner-dots.gif\"/>");
+					} else {
+						$smarty->assign('leafspace',"");
+					}
+					$smarty->assign_by_ref('structure_tree',$leaf);
+					$smarty->assign('showdesc',$showdesc);
+					$smarty->assign('numbering',$numbering);
+					$smarty->assign('toc_type',$type);
+					$ret.=$smarty->fetch('structures_toc-leaf.tpl');
+					if(isset($leaf['sub']) && is_array($leaf['sub'])) {
+						$ret.=$this->fetch_toc($leaf['sub'],$showdesc,$numbering,$type,$page, $maxdepth, $cur_depth+1);
+					} else {
+						$ret.='';
+					}
 				}
-				$leafspace=(strlen($leaf["prefix"])-1)/2;
-				if ($leafspace!=0) {
-					$smarty->assign('leafspace',str_repeat("<img src=\"img/icons2/no-dots.gif\"/>",$leafspace-1)."<img src=\"img/icons2/corner-dots.gif\"/>");
-				} else {
-					$smarty->assign('leafspace',"");
-				}
-				$smarty->assign_by_ref('structure_tree',$leaf);
-				$smarty->assign('showdesc',$showdesc);
-				$smarty->assign('numbering',$numbering);
-				$smarty->assign('toc_type',$type);
-				$ret.=$smarty->fetch('structures_toc-leaf.tpl');
-				if(isset($leaf['sub']) && is_array($leaf['sub'])) {
-					$ret.=$this->fetch_toc($leaf['sub'],$showdesc,$numbering,$type,$page);
-				} else {
-				    $ret.='';
-				}
+				$ret.=$smarty->fetch("structures_toc-endul.tpl");
 			}
-			$ret.=$smarty->fetch('structures_toc-endul.tpl');
 		}
 		return $ret;
 	}

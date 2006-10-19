@@ -38,7 +38,7 @@ id="{$ratings.info.pollId}{$ratings.options[ix].optionId}" {if $user_vote eq $ra
 </div>
 {if $ratings.title}<div>{$ratings.title}</div>{/if}
 {section name=ix loop=$ratings.options}
-<div>{$ratings.options[ix].votes} : {$ratings.options[ix].title}</div>
+<div{if $user_vote eq $ratings.options[ix].optionId} class="highlight"{/if}>{$ratings.options[ix].votes} : {$ratings.options[ix].title}</div>
 {/section}
 </div>
 

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.66 2006-10-18 19:44:20 luciash Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.67 2006-10-19 22:10:02 mose Exp $
 
 /**
  * Tiki registration script
@@ -9,7 +9,7 @@
  * @license GNU LGPL
  * @copyright Tiki Community
  * @date created: 2002/10/8 15:54
- * @date last-modified: $Date: 2006-10-18 19:44:20 $
+ * @date last-modified: $Date: 2006-10-19 22:10:02 $
  */
 
 // Initialization
@@ -287,6 +287,9 @@ $smarty->assign('_PROMPT_UNAME', sprintf($_VALID, tra("username"), $min_user_len
 $smarty->assign('_PROMPT_PASS', sprintf($_VALID, tra("password"), $min_pass_length, "0-9,a-z,A-Z") );
 $smarty->assign('min_user_length', $min_user_length);
 $smarty->assign('min_pass_length', $min_pass_length);
+
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');

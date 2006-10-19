@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.104 2006-10-02 16:24:50 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.105 2006-10-19 22:10:02 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -252,6 +252,9 @@ if ( $tikilib->get_preference('sessions_silent','disabled')=='disabled' or !empt
 $cookie_site = ereg_replace("[^a-zA-Z0-9]", "", $tikilib->get_preference('cookie_name','tikiwiki'));
 $user_cookie_site = 'tiki-user-'.$cookie_site;
 
+// Check if the user had a session before we assign one
+$user_had_existing_session = isset( $_SESSION["$user_cookie_site"] );
+
 // check if the remember me feature is enabled
 $rememberme = $tikilib->get_preference('rememberme', 'disabled');
 
@@ -291,6 +294,13 @@ if ($auth_method == 'shib' and isset($_SERVER['REMOTE_USER'])){
 // if the username is already saved in the session, pull it from there
 if (isset($_SESSION["$user_cookie_site"])) {
 	$user = $_SESSION["$user_cookie_site"];
+
+	// web authorized users don't log in normally, so we will update their lastlogin here 
+	//  if we made a new session for them
+        if ( $auth_method == 'ws' && $user_had_existing_session == false )
+        {
+                $userlib->update_lastlogin( $user );
+        }
 } else {
 	$user = NULL;
 	

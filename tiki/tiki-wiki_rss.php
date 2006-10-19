@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-wiki_rss.php,v 1.36 2006-09-23 19:19:04 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-wiki_rss.php,v 1.37 2006-10-19 22:10:02 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -36,10 +36,11 @@ if ($output["data"]=="EMPTY") {
 	// if param &diff=1 exists, link to diff, not to page itself
 	if (isset($_REQUEST["diff"])) {
 		$readrepl = "tiki-pagehistory.php?page=%s&compare=1&oldver=%s&newver=0&diff_style=minsidediff";
+		$param = "previous";
 	} else {
 		$readrepl = "tiki-index.php?page=%s";
+		$param = '';
 	}
-	$param = "previous";
 	
 	$tmp = $tikilib->get_preference('title_rss_'.$feed, '');
 	if ($tmp<>'') $title = $tmp;
