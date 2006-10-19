@@ -1,4 +1,5 @@
 <?php
+// $Header: /cvsroot/tikiwiki/tiki/lib/search/refresh.php,v 1.27 2006-10-19 22:10:04 mose Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {

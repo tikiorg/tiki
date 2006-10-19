@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.108 2006-09-19 16:33:19 ohertel Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.109 2006-10-19 22:10:02 mose Exp $
 
 # The following script will update a tiki database from version 1.8.x to 1.9.x
 # The following script will ALSO update from version 1.9.x to 1.9.y
@@ -729,39 +729,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('default_wiki_diff_style
 #added on 2004-10-24 by redflo
 ALTER TABLE `tiki_images_data` ADD `etag` varchar(32) default NULL;
 
-# Now for tiki_project goodies
-# Damo stuff
-CREATE TABLE tiki_projects (
-  projectId int(10) unsigned NOT NULL auto_increment,
-  active char(1) NOT NULL default 'n',
-  projectName varchar(200) NOT NULL default '',
-  projectFriendlyName varchar(200) NOT NULL default '',
-  projectDescription text NOT NULL,
-  Created int(14) default NULL,
-  lastModif int(14) default NULL,
-  PRIMARY KEY  (projectId)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
-		
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('https','auto');
-
-
-CREATE TABLE tiki_projects_preferences (
-  preferenceId int(10) NOT NULL auto_increment,
-  projectId int(10) NOT NULL default '0',
-  name varchar(40) NOT NULL,
-  value varchar(250) default NULL,
-  PRIMARY KEY (preferenceId)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
-
-DROP TABLE IF EXISTS tiki_projects_objects;
-CREATE TABLE tiki_projects_objects (
-  prjobjId int(10) unsigned NOT NULL auto_increment,
-  projectId int(10) NOT NULL,
-  objectType varchar(20) NOT NULL,
-  objectId int(11) NOT NULL,
-  url varchar(250),
-  PRIMARY KEY (prjobjId)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
 	  
 ALTER TABLE `tiki_quicktags` CHANGE `taginsert` `taginsert` TEXT DEFAULT NULL;
 
@@ -1050,9 +1018,6 @@ UPDATE users_permissions SET type="topics" WHERE permName='tiki_p_topic_read';
 
 # 2005_04-23 removed projects 
 delete from tiki_menu_options where section='feature_projects';
-DROP TABLE IF EXISTS tiki_projects;
-DROP TABLE IF EXISTS tiki_projects_objects;
-DROP TABLE IF EXISTS tiki_projects_preferences;
 
 # 2005-04-24 rss tracker
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_tracker','10');

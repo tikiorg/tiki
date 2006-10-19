@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagepermissions.php,v 1.23 2005-05-18 10:58:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagepermissions.php,v 1.24 2006-10-19 22:10:02 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -138,7 +138,7 @@ if ($feature_categories == 'y') {
 }
 
 // Get a list of groups
-$groups = $userlib->get_groups(0, -1, 'groupName_desc');
+$groups = $userlib->get_groups(0, -1, 'groupName_asc');
 $smarty->assign_by_ref('groups', $groups["data"]);
 
 // Get a list of permissions
