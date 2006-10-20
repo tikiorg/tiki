@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.15 2006-08-29 20:19:12 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.16 2006-10-20 03:30:27 luciash Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -1838,9 +1838,15 @@ div#loadstats {
 }
 /* toc */
 .toc {
+	list-style-type: none;
+	margin-left: 0;
+	padding-left: 0;
 }
 .toc li {
+	background-image: url(../img/icons2/corner-dots.gif);
+	background-repeat: no-repeat;
 	margin-top : 3px;
+	padding-left: 16px;
 }
 .tocnav {
 	background-color : #EEEEEE;
