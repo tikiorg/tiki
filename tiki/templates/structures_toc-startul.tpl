@@ -1,1 +1,1 @@
-<div class="toc">
+{$leafspace}<ul class="toc">

@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.659 2006-10-19 23:04:01 mose Exp $
+// CVS: $Id: tikilib.php,v 1.660 2006-10-20 03:28:48 luciash Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -5393,6 +5393,7 @@ if (!$simple_wiki) {
 	$inTable = 0;
 	$inPre = 0;
 	$inComment = 0;
+	$inTOC = 0;
 
 	// loop: process all lines
 	$in_paragraph = 0;
@@ -5463,7 +5464,12 @@ if (!$simple_wiki) {
 	    // not insert <br />
 	    $inTable += substr_count(strtolower($line), "<table");
 	    $inTable -= substr_count(strtolower($line), "</table");
-
+	    
+	    // check if we are inside an ul TOC list, if so, ignore monospaced and do
+	    // not insert <br />
+	    $inTOC += substr_count(strtolower($line), "<ul class=\"toc");
+	    $inTOC -= substr_count(strtolower($line), "</ul");
+	    
 	    // If the first character is ' ' and we are not in pre then we are in pre
 	    global $feature_wiki_monosp;
 
@@ -5654,7 +5660,7 @@ if (!$simple_wiki) {
 			 *
 			 * @since Version 1.9
 			 */
-			if ($inTable == 0 && $inPre == 0 && $inComment == 0
+			if ($inTable == 0 && $inPre == 0 && $inComment == 0 && $inTOC == 0
 				// Don't put newlines at comments' end!
 				&& ! substr_count(strtolower($line), "-->")
 			) {

@@ -1,1 +1,1 @@
-</div class="toc">
+</ul><!-- END OF THE TOC -->
