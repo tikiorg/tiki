@@ -403,6 +403,7 @@ class StructLib extends TikiLib {
 					}
 				}
 			}
+			$ret.=$smarty->fetch('structures_toc-endul.tpl');
 		}
 		
 		return $ret;

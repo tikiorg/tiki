@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.660 2006-10-20 03:28:48 luciash Exp $
+// CVS: $Id: tikilib.php,v 1.661 2006-10-22 03:21:38 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -6617,14 +6617,13 @@ if (!$simple_wiki) {
 
 						function read_raw($text) {
 						    $file = split("\n",$text);
-							$back = '';
 						    foreach ($file as $line) {
 							$r = $s = '';
 							if (substr($line,0,1) != "#") {
 							    if( ereg("^\[([A-Z0-9]+)\]",$line,$r) ) {
 								$var = strtolower($r[1]);
 							    }
-							    if (isset($var) and (ereg("^([-_/ a-zA-Z0-9]+)[ \t]+[:=][ \t]+(.*)",$line,$s))) {
+							    if ($var and (ereg("^([-_/ a-zA-Z0-9]+)[ \t]+[:=][ \t]+(.*)",$line,$s))) {
 								$back[$var][trim($s[1])] = trim($s[2]);
 							    }
 							}

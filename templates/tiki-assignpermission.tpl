@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.64 2006-10-19 22:10:05 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.65 2006-10-22 03:21:41 mose Exp $ *}
 { *TODO: Must fix even/odd table rows detection byusing Smarty 'cycle' *}
 <h1><a href="tiki-assignpermission.php?group={$group}" class="pagetitle">{tr}Assign permissions to group{/tr}: {$group}</a>
 
@@ -26,7 +26,7 @@
 <br />
 <div class="advanced">{tr}advanced feature{/tr}: {tr}level configuration{/tr}:
 {if $advanced_features ne 'y'}
-<a href="tiki-assignpermission.php?find={$find}&amp;type={$type}&amp;group={$group|escape:"url"}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;advanced_features=y">{tr}show{/tr}</a>
+<a href="tiki-assignpermission.php?find={$find}&amp;type={$type}&amp;group={$group}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;advanced_features=y">{tr}show{/tr}</a>
 {else}
 <a href="tiki-assignpermission.php?find={$find}&amp;type={$type}&amp;group={$group}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">{tr}hide{/tr}</a>
 {/if}<br /><br />

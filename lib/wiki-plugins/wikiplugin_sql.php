@@ -53,17 +53,11 @@ function wikiplugin_sql($data, $params) {
 		$parsedsn=substr($parsedsn,strlen($dbdriver)+3);
 		$dbuserid=strtok($parsedsn, ":");
 		$parsedsn=substr($parsedsn,strlen($dbuserid)+1);
-		// awolff: strtok does not return emtpy strings -> a check is needed
-		if (substr($parsedsn,0,1) =='@') {
-			$dbpassword='';
-		} else {
-			$dbpassword=strtok($parsedsn, "@");
-		}
+		$dbpassword=strtok($parsedsn, "@");
 		$parsedsn=substr($parsedsn,strlen($dbpassword)+1);
 		$dbhost=strtok($parsedsn, "/");
 		$parsedsn=substr($parsedsn,strlen($dbhost)+1);
 		$database = $parsedsn;
-
 
 		$dbsqlplugin = &ADONewConnection($dbdriver);
 		if (!$dbsqlplugin) {
