@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages.tpl,v 1.40 2006-10-19 22:10:05 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages.tpl,v 1.41 2006-10-22 03:21:41 mose Exp $ *}
 
 <h1><a href="tiki-listpages.php" class="pagetitle">{tr}Pages{/tr}</a></h1>
 {if $tiki_p_admin eq 'y'}
@@ -28,3 +28,4 @@
 {include file="tiki-listpages_content.tpl"}
 </div>
 </div>
+

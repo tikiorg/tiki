@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_redirect.php,v 1.8 2006-10-19 22:10:01 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_redirect.php,v 1.9 2006-10-22 03:21:37 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -33,12 +33,6 @@ if (!isset($_REQUEST['siteId'])) {
 }
 
 $site_info = $dirlib->dir_get_site($_REQUEST['siteId']);
-if ($site_info['isValid'] != 'y') {
-	$smarty->assign('msg', tra("Site No validated yet"));
-	$smarty->display("error.tpl");
-	die;
-	
-}
 $url = $site_info['url'];
 // Add a hit to the site
 $dirlib->dir_add_site_hit($_REQUEST['siteId']);

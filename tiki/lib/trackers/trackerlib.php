@@ -529,7 +529,7 @@ class TrackerLib extends TikiLib {
 					} else $voteavg = '0';
 					$fopt["voteavg"] = $voteavg;
 				} elseif ($fopt["type"] == 'e') {
-				  global $categlib; include_once('lib/categories/categlib.php');
+				        global $categlib;
 					$mycats = $categlib->get_child_categories($fopt['options']);
 					$zcats = $categlib->get_object_categories("tracker ".$trackerId,$res["itemId"]);
 					$cats = array();

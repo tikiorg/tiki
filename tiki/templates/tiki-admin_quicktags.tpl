@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_quicktags.tpl,v 1.24 2006-10-19 22:10:05 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_quicktags.tpl,v 1.25 2006-10-22 03:21:41 mose Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_quicktags.php">{tr}Admin Quicktags{/tr}</a>
 
@@ -22,3 +22,4 @@
 {include file="tiki-admin_quicktags_content.tpl"}
 
 </div>
+

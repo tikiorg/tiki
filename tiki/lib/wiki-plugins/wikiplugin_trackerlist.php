@@ -78,9 +78,7 @@ function wikiplugin_trackerlist($data, $params) {
 			if (isset($cb[5]))
 				$check['tpl'] = $cb[5];
 			$smarty->assign_by_ref('checkbox', $check);
-		} else {
-			$smarty->assign('checkbox', '');
-		}
+		}	
 
 		if (isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y' 
 				and $user and isset($_REQUEST['itemId']) and isset($_REQUEST["rate_$trackerId"]) and isset($_REQUEST['fieldId'])
@@ -132,6 +130,10 @@ function wikiplugin_trackerlist($data, $params) {
 		}
 		$smarty->assign_by_ref('tr_initial', $tr_initial);
 
+		if (!isset($filterfield)) {
+			$filterfield = '';
+		}
+
 		if (!isset($filtervalue)) {
 			$filtervalue = '';
 		}
@@ -157,16 +159,11 @@ function wikiplugin_trackerlist($data, $params) {
 		if (!isset($filterfield)) {
 			$filterfield = '';
 		} else {
-			foreach ($allfields['data'] as $f) {
-				if ($f['fieldId'] == $filterfield) {
-					$filterfieldok=true;
-					break;
-				}
-			}
-			if (!isset(	$filterfieldok)) {
-				return tra('incorrect filterfield');
+			foreach($allfields['data'] as $f) {
+				$listfields[] = $f['fieldId'];
 			}
 		}
+
 
 		for ($i = 0; $i < count($allfields["data"]); $i++) {
 			if (in_array($allfields["data"][$i]['fieldId'],$listfields) and $allfields["data"][$i]['isPublic'] == 'y') {

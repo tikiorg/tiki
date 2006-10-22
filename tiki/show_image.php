@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.31 2006-10-19 22:10:01 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.32 2006-10-22 03:21:37 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -27,8 +27,6 @@ if (isset($_REQUEST["name"])) {
 	$id=$imagegallib->get_imageid_byname($_REQUEST["name"]);
 } elseif (isset($_REQUEST["id"])) {
 	$id=$_REQUEST["id"];
-} elseif (isset($_REQUEST["galleryId"])) {
-	$id=$imagegallib->get_gallery_image($_REQUEST["galleryId"], 'random');
 }
 
 if (!$id) {
