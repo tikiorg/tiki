@@ -929,3 +929,4 @@ class FreetagLib extends ObjectLib {
 
 global $dbTiki;
 $freetaglib = new FreetagLib($dbTiki);
+?>
