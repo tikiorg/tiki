@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_rssmodules.php,v 1.22 2006-09-19 16:33:13 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_rssmodules.php,v 1.23 2006-10-22 23:36:55 rlpowell Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -15,7 +15,7 @@ if (!isset($rsslib)) {
 	$rsslib = new RssLib($dbTiki);
 }
 
-if ($tiki_p_admin_rssmodules != 'y') {
+if( $tiki_p_admin != 'y' and $tiki_p_admin_rssmodules != 'y' ) {
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 
 	$smarty->display("error.tpl");
