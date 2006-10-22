@@ -1,6 +1,8 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.65 2006-04-05 20:09:06 sylvieg Exp $
+// $start_time = microtime(true);
+
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.66 2006-10-22 23:35:14 rlpowell Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -349,6 +351,11 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
     }
 }
 
+// $end_time = microtime(true);
+
+// print "TIME2 in comments.php: ".($end_time - $start_time)."\n";
+
+
 if ($tiki_p_vote_comments == 'y') {
     // Process a vote here
     if (isset($_REQUEST["comments_vote"]) && isset($_REQUEST["comments_threadId"])) {
@@ -447,6 +454,10 @@ if (!isset($_REQUEST["comments_maxComments"])) {
     $comments_show = 'y';
 }
 
+// $end_time = microtime(true);
+
+// print "TIME3 in comments.php: ".($end_time - $start_time)."\n";
+
 if (!isset($_REQUEST["comments_style"])) {
     // TODO: Make this an option.
     $_REQUEST["comments_style"] = 'commentStyle_threaded';
@@ -509,9 +520,17 @@ if (isset($_REQUEST["post_reply"]) && isset($_REQUEST["comments_reply_threadId"]
 else
 	$threadId_if_reply = 0;
 
+// $end_time = microtime(true);
+
+// print "TIME4 in comments.php: ".($end_time - $start_time)."\n";
+
 $comments_coms = $commentslib->get_comments($comments_objectId, $_REQUEST["comments_parentId"],
 	$comments_offset, $_REQUEST["comments_maxComments"], $_REQUEST["comments_sort_mode"], $_REQUEST["comments_commentFind"],
 	$_REQUEST['comments_threshold'], $_REQUEST["comments_style"], $threadId_if_reply);
+
+// $end_time = microtime(true);
+
+// print "TIME5 in comments.php: ".($end_time - $start_time)."\n";
 
 $comments_cant = $commentslib->count_comments($comments_objectId);
 $comments_cant_page = $comments_coms['cant'];
@@ -591,5 +610,9 @@ if ($feature_contribution == 'y') {
 	$contributionItemId = $_REQUEST["comments_threadId"];
 	include_once('contribution.php');
 }
+
+// $end_time = microtime(true);
+
+// print "TIME in comments.php: ".($end_time - $start_time)."\n";
 
 ?>
