@@ -954,10 +954,10 @@ class Comments extends TikiLib {
 				$res["users_per_day"] = 0;
 		    }
 
-		    $query2 = "select * from `tiki_comments`,`tiki_forums`
-					where `object`=".$this->sql_cast('`forumId`','string')." and `objectType` = ?
-					and `commentDate`=?";
-		    $result2 = $this->query($query2,array('forum',(int) $res["lastPost"]));
+		    $query2 = "select * from `tiki_comments`
+			    where `object`= ? and `objectType` = ?
+			    and `commentDate`=?";
+		    $result2 = $this->query($query2,array($res["forumId"], 'forum',(int) $res["lastPost"]));
 		    $res2 = $result2->fetchRow();
 		    $res["lastPostData"] = $res2;
 		    $ret[] = $res;
@@ -1481,6 +1481,7 @@ class Comments extends TikiLib {
 	    $sort_mode = 'commentDate_asc', $find = '', $threshold = 0, $style = 'commentStyle_threaded', $reply_threadId=0)
     {
 	global $userlib;
+	// $start_time = microtime(true);
 	// Turn maxRecords into maxRecords + offset, so we can increment it without worrying too much.
 	$maxRecords = $offset + $maxRecords;
 
@@ -1537,6 +1538,10 @@ class Comments extends TikiLib {
 	    $bind_mid=array($object[0], $object[1], (int) $parentId, (int) $threshold);
 	}
 
+	// $end_time = microtime(true);
+
+	// print "TIME1 in get_comments: ".($end_time - $start_time)."\n";
+
 	if( $object[0] == "forum" && $style != 'commentStyle_plain' )
 	{
 	    $query = "select `message_id` from `tiki_comments` where `threadId` = ?";
@@ -1560,6 +1565,10 @@ class Comments extends TikiLib {
 	    $bind_mid_cant = $bind_mid;
 	}
 
+	// $end_time = microtime(true);
+
+	// print "TIME2 in get_comments: ".($end_time - $start_time)."\n";
+
 	$ret = array();
 	$logins = array();
 	$threadIds = array();
@@ -1577,13 +1586,17 @@ class Comments extends TikiLib {
 		}
 	}
 
-//	print "<pre>query: ";
-//	print_r($query_cant);
-//	print "\n,";
-//	print_r(array_merge($bind_mid,$bind_time));
-//	print "\n,";
-//	print_r($cant);
-//	print "</pre>";
+	//	print "<pre>query: ";
+	//	print_r($query_cant);
+	//	print "\n,";
+	//	print_r(array_merge($bind_mid,$bind_time));
+	//	print "\n,";
+	//	print_r($cant);
+	//	print "</pre>";
+
+	// $end_time = microtime(true);
+
+	// print "TIME3 in get_comments: ".($end_time - $start_time)."\n";
 
 	foreach ( $ret as $key=>$res )
 	{
@@ -1647,6 +1660,10 @@ class Comments extends TikiLib {
 	    }
 	}
 
+	// $end_time = microtime(true);
+
+	// print "TIME4 in get_comments: ".($end_time - $start_time)."\n";
+
 	if ($old_sort_mode == 'replies_asc') {
 	    usort($ret, 'compare_replies');
 	}
@@ -1674,6 +1691,9 @@ class Comments extends TikiLib {
 	    $rf = &$retval['data'][$i]['replies_flat'];
 	    $this->flatten_comment_replies($r, $rf);
 	}
+	// $end_time = microtime(true);
+
+	// print "TIME in get_comments: ".($end_time - $start_time)."\n";
 
 	return $retval;
     }

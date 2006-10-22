@@ -1,6 +1,9 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.82 2005-11-07 21:42:29 sylvieg Exp $
+//print "<!--\n";
+//$start_time = microtime(true);
+
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.83 2006-10-22 23:35:14 rlpowell Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -145,29 +148,37 @@ if ($tiki_p_admin_forum != 'y' && $tiki_p_forum_read != 'y') {
     die;
 }
 
-$next_thread = $commentslib->get_forum_topics($_REQUEST['forumId'],
-	$_REQUEST['topics_offset'] + 1, 1,
+$smarty->assign('topics_next_offset', $_REQUEST['topics_offset'] + 1);
+$smarty->assign('topics_prev_offset', $_REQUEST['topics_offset'] - 1);
+
+//$end_time = microtime(true);
+
+//print "TIME2: ".($end_time - $start_time)."\n";
+
+$threads = $commentslib->get_forum_topics($_REQUEST['forumId'],
+	$_REQUEST['topics_offset'] - 1, 3,
 	$_REQUEST["topics_sort_mode"]);
 
-if (count($next_thread)) {
-    $smarty->assign('next_topic', $next_thread[0]['threadId']);
+if( count( $threads ) == 3 )
+{
+    $next_thread = $threads[2];
+
+    $smarty->assign('next_topic', $next_thread['threadId']);
 } else {
     $smarty->assign('next_topic', false);
 }
 
-$smarty->assign('topics_next_offset', $_REQUEST['topics_offset'] + 1);
-$smarty->assign('topics_prev_offset', $_REQUEST['topics_offset'] - 1);
-
-// Use topics_offset, topics_find, topics_sort_mode to get the next and previous topics!
-$prev_thread = $commentslib->get_forum_topics($_REQUEST['forumId'],
-	$_REQUEST['topics_offset'] - 1, 1,
-	$_REQUEST["topics_sort_mode"]);
-
-if (count($prev_thread)) {
-    $smarty->assign('prev_topic', $prev_thread[0]['threadId']);
+if( count( $threads ) )
+{
+    $prev_thread = $threads[0];
+    $smarty->assign('prev_topic', $prev_thread['threadId']);
 } else {
     $smarty->assign('prev_topic', false);
 }
+
+//$end_time = microtime(true);
+
+//print "TIME3: ".($end_time - $start_time)."\n";
 
 if($tiki_p_admin_forum == 'y') {
     if(isset($_REQUEST['delsel'])) {
@@ -220,11 +231,23 @@ $comments_prefix_var = 'forum:';
 $comments_object_var = 'forumId';
 $commentslib->process_inbound_mail($_REQUEST['forumId']);
 
+//$end_time = microtime(true);
+
+//print "TIME1: ".($end_time - $start_time)."\n";
+
 $forum_mode = 'y';
 include_once ("comments.php");
 
+//$end_time = microtime(true);
+
+//print "TIME4: ".($end_time - $start_time)."\n";
+
 $section = 'forums';
 include_once ('tiki-section_options.php');
+
+//$end_time = microtime(true);
+
+//print "TIME5: ".($end_time - $start_time)."\n";
 
 if ($feature_theme_control == 'y') {
     $cat_type = 'forum';
@@ -275,14 +298,20 @@ if ($tiki_p_admin_forum == 'y' || $feature_forum_quickjump == 'y') {
     $smarty->assign('all_forums', $all_forums['data']);
 }
 
-if ($tiki_p_admin_forum == 'y') {
-    $topics = $commentslib->get_forum_topics($_REQUEST['forumId'], 0, 200,
-	    "commentDate_desc");
-
-    $smarty->assign_by_ref('topics', $topics);
-}
+// As far as I can tell, this is never used.
+// -rlpowell 10 Oct 2006
+// if ($tiki_p_admin_forum == 'y') {
+//     $topics = $commentslib->get_forum_topics($_REQUEST['forumId'], 0, 200,
+// 	    "commentDate_desc");
+// 
+//     $smarty->assign_by_ref('topics', $topics);
+// }
 
 $smarty->assign('unread', 0);
+
+//$end_time = microtime(true);
+
+//print "TIME6: ".($end_time - $start_time)."\n";
 
 if ($user && $feature_messages == 'y' && $tiki_p_messages == 'y') {
     $unread = $tikilib->user_unread_messages($user);
@@ -317,6 +346,12 @@ if ($feature_actionlog == 'y') {
 }
 
 ask_ticket('view-forum');
+
+////$start_time = microtime(true);
+//$end_time = microtime(true);
+
+//print "TIME: ".($end_time - $start_time)."\n";
+//print "-->\n";
 
 // Display the template
 $smarty->assign('mid', 'tiki-view_forum_thread.tpl');
