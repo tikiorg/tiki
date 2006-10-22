@@ -5,6 +5,7 @@
 * @copyright (C) 2006 Javier Reyes Gomez (eScire.com)
 * @license http://www.gnu.org/copyleft/lgpl.html GNU/LGPL
 */
+
 require_once ('tiki-setup.php');
 require_once ('lib/workspaces/workspacelib.php');
 require_once ('lib/workspaces/typeslib.php');
@@ -52,12 +53,14 @@ if (!$wsmoduleslib->workspace_has_assigned_zones($workspaceId,$wsmodtype)) {
 	$wsmodtype= "workspace type";
 }
 
+
 global $user;
 $user_groups = $userlib->get_user_groups($user);
 
 include_once ("tiki-workspaces_modules.php");
 
 $path = $workspacesLib->get_workspace_path($workspace["workspaceId"]);
+
 $smarty->assign_by_ref('workspace', $workspace);
 $smarty->assign_by_ref('path', $path);
 $smarty->assign('mid', 'tiki-workspaces_desktop.tpl');

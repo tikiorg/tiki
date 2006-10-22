@@ -213,7 +213,12 @@ foreach ($modules as $keycol => $column) {
 	}
 }
 $smarty->assign_by_ref("modulegroups", $modulegroups);
-$smarty->assign('title', $workspace["name"]." : ".$activeZone["name"]);
+
+if (isset($activeZone["name"]))
+ $zonename = $activeZone["name"];
+else
+ $zonename ="";
+$smarty->assign('title', $workspace["name"]." : ".$zonename);
 /*$module_nodecorations = array('decorations' => 'n');
 $module_isflippable = array('flip' => 'y');
 $smarty->assign('module_nodecorations', $module_nodecorations);

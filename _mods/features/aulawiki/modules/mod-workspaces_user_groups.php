@@ -90,6 +90,7 @@ if (!$exit_module){
 	foreach ($wsgroups as $parentGroup => $childgroups) {
 		foreach ($childgroups as $childGroup) {
 			$onclick = "onclick=\"document.getElementById('activeParentGroup').value='$parentGroup';document.getElementById('activeGroup').value='$childGroup';document['groupSelection'].submit();return false\"";
+			
 			$cssclass = "categtree";
 			if ($module_params["activeGroup"] == $childGroup) {
 				$cssclass = "categtreeActive";

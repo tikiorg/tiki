@@ -62,9 +62,10 @@ if (!$exit_module){
 	}
 	
 	global $user;
-	global $categlib;
+	global $dbTiki;
 	include_once ('lib/categories/categlib.php');
-	$ctall = $categlib->get_all_categories_respect_perms($user, 'tiki_p_view_categories');
+	$categlib2 = new CategLib($dbTiki);
+	$ctall = $categlib2->get_all_categories_respect_perms($user, 'tiki_p_view_categories');
 	
 	if (isset ($module_params["type"])) {
 		$type = $module_params["type"];
@@ -84,7 +85,7 @@ if (!$exit_module){
 	if ($categId == 0)
 		$name = tra("Top");
 	else {
-		$car = $categlib->get_category($categId);
+		$car = $categlib2->get_category($categId);
 		$name = $car["name"];
 	}
 	
@@ -107,7 +108,7 @@ if (!$exit_module){
 	$imgWiki = "<img align='bottom' border=0 src='img/icons/page.gif'>";
 	$imgCateg = "<img border=0 valign='center' src='images/workspaces/edu_folder_closed.png'>";
 	$tree_nodes = array ();
-	$descendants = $categlib->get_category_descendants($categId);
+	$descendants = $categlib2->get_category_descendants($categId);
 	$top = $categId;
 	$todo = "";
 	$selectedCategData = "";

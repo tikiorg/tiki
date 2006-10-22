@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/_mods/features/aulawiki/templates/styles/workspaces/tiki-show_page.tpl,v 1.1 2006-10-11 17:29:52 xavidp Exp $ *}
+{* $Header: /cvsroot/tikiwiki/_mods/features/aulawiki/templates/styles/workspaces/tiki-show_page.tpl,v 1.2 2006-10-22 15:29:33 jreyesg Exp $ *}
 
 {breadcrumbs type="trail" loc="page" crumbs=$crumbs}
 {if $feature_page_title eq 'y'}

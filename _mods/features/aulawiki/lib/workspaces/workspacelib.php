@@ -16,6 +16,12 @@ class WorkspaceLib extends TikiDB {
 		}
 		$this->db = $db;
 	}
+	
+	
+	function get_href_to_workspace($workspace){
+		return "tiki-workspaces_desktop.php?workspaceId=".$workspace["workspaceId"];
+	}
+	
 	function add_workspace($code, $name, $desc, $startDate, $endDate, $closed, $parentId, $type, $categoryId, $owner = null, $isuserws = "n", $hide = "n") {
 		$now = date("U");
 		$query = "insert into tiki_workspaces(code,name,description,created,startDate,endDate,closed,parentId,type,categoryId,owner,isuserws,hide,uid) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -92,6 +98,7 @@ class WorkspaceLib extends TikiDB {
 		}
 		return $ret;
 	}
+	
 	function get_workspace_by_uid($uid) {
 		$query = "select * from tiki_workspaces where uid=?";
 		$result = $this->db->query($query, array ($uid));
@@ -110,6 +117,13 @@ class WorkspaceLib extends TikiDB {
 		$res = $result->fetchRow();
 		return $res;
 	}
+	function get_workspace_by_catid($catid) {
+		$query = "select * from tiki_workspaces where categoryId=?";
+		$result = $this->db->query($query, array ($catid));
+		$res = $result->fetchRow();
+		return $res;
+	}
+	
 	function del_workspace($id) {
 		$query = "delete from tiki_workspaces where workspaceId=?";
 		$result = $this->db->query($query, array ($id));
@@ -126,6 +140,7 @@ class WorkspaceLib extends TikiDB {
 			$topWs["workspaceId"] = 0;
 			$topWs["code"] = "TOP";
 			$topWs["name"] = "TOP";
+			$topWs["categoryId"] = 0;
 			$path = array ();
 			$path[] = $topWs;
 			return $path;
@@ -202,33 +217,36 @@ class WorkspaceLib extends TikiDB {
 	}
 	
 	function update_workspace_info($id, $code, $name, $desc, $startDate, $endDate, $closed, $parentId, $type, $categoryId, $parentCategoryId = null, $owner = null, $isuserws = "n", $hide = "n") {
-		global $categlib;
+		global $dbTiki;
 		include_once ('lib/categories/categlib.php');
+		$categlib3 = new CategLib($dbTiki);
 		$resourcesLib = new WorkspaceResourcesLib($this->db);
 		$oldws = $this->get_workspace_by_id($id);
-		$categoryId = $this->update_workspace_category($oldws["categoryId"], $code, $name, $parentId, $parentCategoryId, $categlib);
-		$this->update_workspace($id, $code, $name, $desc, $startDate, $endDate, $closed, $parentId, $type, $categoryId, $owner, $isuserws, $hide);
-		//Categorize workspace
-		$categlib->uncategorize_object("workspace", $id);
-		$idCatObj = $categlib->add_categorized_object("workspace", $id, $name, $code, "tiki-workspaces_desktop.php?workspaceId=".$id);
-		$categlib->categorize($idCatObj, $categoryId);
-		$wsTypesLib = new WorkspaceTypesLib($this->db);
-		$wsType = $wsTypesLib->get_workspace_type_by_id($type);
-		$resources = unserialize($wsType["resources"]);
-		$this->create_workspace_groups($code, $wsType, $owner);
-		//$this->create_workspace_user($code, $wsType);
-		$this->assign_permissions($code, "workspace", $id,$wsType);
-		if (isset ($resources) && $resources != "" && count($resources) > 0) {
-			foreach ($resources as $key => $resource) {
-				$funcname = "create_".str_replace(" ", "", $resource["type"]);
-				$objid = null;
-				if ($resource["type"] != "assignments") {
-					$objid = $resourcesLib-> $funcname ($code."-".$resource["name"], $resource["desc"], $categoryId);
-				} else {
-					$objid = $resourcesLib-> $funcname ($code."-".$resource["name"], $resource["desc"], $categoryId, $id);
-				}
-				if (isset ($id)) {
-					$this->assign_permissions($code,$resource["type"], $objid,$wsType);
+		if(isset($oldws) && $oldws!=""){
+			$categoryId = $this->update_workspace_category($oldws["categoryId"], $code, $name, $parentId, $parentCategoryId);
+			$this->update_workspace($id, $code, $name, $desc, $startDate, $endDate, $closed, $parentId, $type, $categoryId, $owner, $isuserws, $hide);
+			//Categorize workspace
+			//$categlib3->uncategorize_object("workspace", $id);
+			//$idCatObj = $categlib3->add_categorized_object("workspace", $id, $name, $code, "tiki-workspaces_desktop.php?workspaceId=".$id);
+			//$categlib3->categorize($idCatObj, $categoryId);
+			$wsTypesLib = new WorkspaceTypesLib($this->db);
+			$wsType = $wsTypesLib->get_workspace_type_by_id($type);
+			$resources = unserialize($wsType["resources"]);
+			$this->create_workspace_groups($code, $wsType, $owner);
+			//$this->create_workspace_user($code, $wsType);
+			$this->assign_permissions($code, "workspace", $id,$wsType);
+			if (isset ($resources) && $resources != "" && count($resources) > 0) {
+				foreach ($resources as $key => $resource) {
+					$funcname = "create_".str_replace(" ", "", $resource["type"]);
+					$objid = null;
+					if ($resource["type"] != "assignments") {
+						$objid = $resourcesLib-> $funcname ($code."-".$resource["name"], $resource["desc"], $categoryId);
+					} else {
+						$objid = $resourcesLib-> $funcname ($code."-".$resource["name"], $resource["desc"], $categoryId, $id);
+					}
+					if (isset ($id)) {
+						$this->assign_permissions($code,$resource["type"], $objid,$wsType);
+					}
 				}
 			}
 		}
@@ -244,7 +262,10 @@ class WorkspaceLib extends TikiDB {
 		$categId = $categlib->add_category($parentCategoryId, $code, $name);
 		return $categId;
 	}
-	function update_workspace_category($oldcatId, $code, $name, $parentId, $parentCategoryId, $categlib) {
+	function update_workspace_category($oldcatId, $code, $name, $parentId, $parentCategoryId) {
+		global $dbTiki;
+		include_once ('lib/categories/categlib.php');
+		$categlib2 = new CategLib($dbTiki);
 		if (!isset ($parentCategoryId) || $parentCategoryId == "") {
 			$parentCategoryId = 0;
 			if (isset ($parentId) && $parentId != "") {
@@ -253,12 +274,12 @@ class WorkspaceLib extends TikiDB {
 			}
 		}
 		$categId = $oldcatId;
-		$oldcat = $categlib->get_category($oldcatId);
+		$oldcat = $categlib2->get_category($oldcatId);
 		if (isset ($oldcat) && $oldcat != "") {
-			$categlib->update_category($oldcatId, $code, $name, $parentCategoryId);
-		} else {
-			$categId = $categlib->add_category($parentCategoryId, $code, $name);
-		}
+			$categlib2->update_category($oldcatId, $code, $name, $parentCategoryId);
+		} /*else {
+			$categId = $categlib2->add_category($parentCategoryId, $code, $name);
+		}*/
 		return $categId;
 	}
 	

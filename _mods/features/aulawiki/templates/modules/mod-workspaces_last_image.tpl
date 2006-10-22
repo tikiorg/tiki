@@ -11,6 +11,7 @@
 
 {tiki_workspaces_module title=$title name="workspaces_last_image" flip=$module_params.flip decorations=$module_params.decorations style_title=$style_title style_data=$style_data}
 {include file="tiki-workspaces_module_error.tpl" error=$error_msg}
+<div class="resourceSelect">
 <form name="imageGalSelection" method="post" action="{$ownurl}">
   <input name="moduleId" type="hidden" id="moduleId" value="{$moduleId}">
   <select name="name" id="name">
@@ -19,9 +20,11 @@
   	{$galery.name}</option>
       {/foreach}
   </select>
-  <input class="edubutton" type="submit" name="go" value="{tr}Go{/tr}">
+  <input class="edubutton" type="submit" name="refresh" value="{tr}Refresh{/tr}">
+  <a class="edubutton" href="./tiki-browse_gallery.php?galleryId={$selectedGal.objId}">{tr}Go{/tr}</a>
+  <a title="{tr}upload image{/tr}" href="./tiki-upload_image.php?galleryId={$selectedGal.objId}"><img src="img/icons/edit.gif" border="0"  width="20" height="16" alt="{tr}upload image{/tr}" /></a>
 </form>
-
+</div>
 {foreach key=key item=lastImage from=$modLastImages}
 {cycle values="oddcenter,evencenter" assign="parImpar"}
 <div class="{$parImpar}">

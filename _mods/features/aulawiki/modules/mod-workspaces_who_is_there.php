@@ -39,12 +39,12 @@ foreach ($workspace_users as $key => $wsuser) {
 	$online = false;
 	foreach ($online_users as $key2 => $on_user) {
 		if ($wsuser["login"] == $on_user["user"]) {
-			$on_users[] = $wsuser;
+			$on_users[$wsuser["login"]] = $wsuser;
 			$online = true;
 		}
 	}
 	if (!$online) {
-		$off_users[] = $wsuser;
+		$off_users[$wsuser["login"]] = $wsuser;
 	}
 }
 

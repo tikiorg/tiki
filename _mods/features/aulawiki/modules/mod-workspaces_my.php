@@ -30,25 +30,18 @@ if (isset ($workspace) && $workspace != "") {
 	$selectedWorkspaces[] = $workspace;
 	$smarty->assign('activeWorkspace', $workspace);
 }
-
 global $user;
-
-//If the selected workspace is hide, we need to show the first not hide father
-if ($workspace["hide"] == "y") {
-	$hideParent = true;
-	do {
-		$parentWorkspace = $workspacesLib->get_workspace_by_id($workspace["parentId"]);
-		if (isset ($parentWorkspace)) {
-			$wsType = $wsTypesLib->get_workspace_type_by_id($parentWorkspace["type"]);
-			$parentWorkspace["type"] = $wsType;
-			$newElement = array ();
-			$newElement[] = $parentWorkspace;
-			$selectedWorkspaces = array_merge($newElement, $selectedWorkspaces);
-		}
-		if (!isset ($parentWorkspace) || $parentWorkspace["hide"] != "y") {
-			$hideParent = false;
-		}
-	} while ($hideParent);
+$parentId = $workspace["parentId"];
+while($parentId != 0) {
+	$parentWorkspace = $workspacesLib->get_workspace_by_id($parentId);
+	if (isset ($parentWorkspace)) {
+		$wsType = $wsTypesLib->get_workspace_type_by_id($parentWorkspace["type"]);
+		$parentWorkspace["type"] = $wsType;
+		$newElement = array ();
+		$newElement[] = $parentWorkspace;
+		$selectedWorkspaces = array_merge($newElement, $selectedWorkspaces);
+	}
+	$parentId = $parentWorkspace["parentId"];
 }
 
 if (isset ($user) && $user != "") {
@@ -59,13 +52,13 @@ if (isset ($user) && $user != "") {
 		$found = false;
 		$userWorkspacesTmp2 = array ();
 		foreach ($userWorkspacesTmp as $key => $workspace) {
-			if ($workspace["hide"] == "y" && $workspacesLib->parentInSelWorspaces($workspace, $selectedWorkspaces)) {
+			if ( $workspacesLib->parentInSelWorspaces($workspace, $selectedWorkspaces)) {
 				$wsType = $wsTypesLib->get_workspace_type_by_id($workspace["type"]);
 				$workspace["type"] = $wsType;
 				$selectedWorkspaces[] = $workspace;
 				$found = true;
 			}
-			elseif ($workspace["hide"] != "y") {
+			if ($workspace["hide"] != "y") {
 				$userWorkspacesTmp2[] = $workspace;
 			}
 

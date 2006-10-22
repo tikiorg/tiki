@@ -34,7 +34,7 @@
       <td class="formcolor" colspan="2">
       <center>
       <input class="edubutton" type="submit" name="createObject" value="Create object"/>
-      <input class="edubutton" type="submit" name="cancel" value="Cancel"/>
+      <input class="edubutton" type="button" onclick="document.getElementById('createForm').style.display='none';" name="cancel" value="Cancel"/>
       </center></td>
     </tr>
   </table>

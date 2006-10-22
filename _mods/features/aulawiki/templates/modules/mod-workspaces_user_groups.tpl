@@ -8,8 +8,8 @@
 {include file="tiki-workspaces_module_error.tpl" error=$error_msg}
 
 <form name="groupSelection" method="post" action="{$ownurl}">
-<input name="activeGroup" type="hidden" id="activeGroup" value=""> 
-<input name="activeParentGroup" type="hidden" id="activeGroup" value=""> 
+<input name="activeGroup" type="hidden" id="activeGroup" value=""/> 
+<input name="activeParentGroup" type="hidden" id="activeParentGroup" value=""/> 
 </form>
 {if $edu_user_groups_error!=""}
 <div class="eduerror">

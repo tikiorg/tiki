@@ -103,7 +103,12 @@ class WorkspaceUserLib extends TikiLib {
 			$usrgrp = $this->get_group_usersdata($group);
 			$usuarios = array_merge($usuarios, $usrgrp);
 		}
-		return $usuarios;
+
+		$cleanUsrs = array();
+		foreach ($usuarios as $key => $user) {
+			$cleanUsrs[$user["userId"]] = $user;
+		}
+		return $cleanUsrs;
 	}
 
 	function get_group_usersdata($group) {

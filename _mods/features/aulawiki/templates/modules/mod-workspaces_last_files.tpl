@@ -13,14 +13,15 @@
 <div class="resourceSelect">
 <form name="fileGalSelection" method="post" action="{$ownurl}">
   <input name="moduleId" type="hidden" id="moduleId" value="{$moduleId}">
-  <label for="name">{tr}Galleries{/tr}:</label>
   <select name="name" id="name">
   {foreach key=key item=galery from=$fileGals}
   	<option value="{$galery.name}" {if $galery.objId==$selectedGal.objId}selected{/if}>
   	{$galery.name}</option>
       {/foreach}
   </select>
-  <input class="edubutton" type="submit" name="go" value="{tr}Go{/tr}">
+  <input class="edubutton" type="submit" name="refresh" value="{tr}Refresh{/tr}">
+  <a class="edubutton" href="./tiki-list_file_gallery.php?galleryId={$selectedGal.objId}">{tr}Go{/tr}</a>
+  <a title="{tr}upload file{/tr}" href="./tiki-upload_file.php?galleryId={$selectedGal.objId}"><img src="img/icons/edit.gif" border="0"  width="20" height="16" alt="{tr}upload file{/tr}" /></a>
 </form>
 </div>
 {/if}

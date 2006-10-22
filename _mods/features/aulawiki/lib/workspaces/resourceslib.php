@@ -269,6 +269,11 @@ class WorkspaceResourcesLib extends TikiDB {
 	function create_category($name, $desc, $parentCategoryId) {
 		global $categlib;
 		include_once ('lib/categories/categlib.php');
+		$categ = $this->get_category($parentCategoryId, $name);
+
+		if (isset($categ) && $categ["name"]==$name){
+			return $categ["categId"];
+		}
 		$categId = $categlib->add_category($parentCategoryId, $name, $desc);
 		return $categId;
 	}
@@ -844,10 +849,12 @@ class WorkspaceResourcesLib extends TikiDB {
 		}
 
 		return $ret;*/
-		global $categlib;
+		//global $categlib;
+		global $dbTiki;
 		include_once ('lib/categories/categlib.php');
+		$categlib2 = new CategLib($dbTiki);
 		//$ret = $categlib->list_category_objects($categId, 0, 10000, 'name_asc', $type, $name,false);
-		$ret = $categlib->get_category_objects($categId);
+		$ret = $categlib2->get_category_objects($categId);
 
 		$objects = array();
 		foreach ($ret as $key => $object) {
@@ -869,6 +876,23 @@ class WorkspaceResourcesLib extends TikiDB {
 			return null;
 		}
 	}
-
+	
+	function get_category($categId, $name = null) {
+		//global $categlib;
+		global $dbTiki;
+		include_once ('lib/categories/categlib.php');
+		$categlib2 = new CategLib($dbTiki);
+		if (isset($categId) &&  isset($name)){
+			$childs = $categlib2->get_child_categories($categId);
+			if (isset($childs)){
+				foreach ($childs as $key => $category) {
+					if($category["name"]==$name){
+						return $category;
+					}
+				}
+			}
+		}
+		return null;
+	}
 }
 ?>

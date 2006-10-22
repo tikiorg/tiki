@@ -36,11 +36,13 @@ if (isset ($_REQUEST["send"])) {
 	if (isset ($_REQUEST["hide"])) {
 		$workspace["hide"] = "y";
 	}
-
-	if (isset ($_REQUEST["viewWS"])) {
-		$workspace["parentWSId"] = $_REQUEST["viewWS"];
+	
+	if (isset ($_REQUEST["parentId"]) && $_REQUEST["parentId"]!="") {
+		$workspace["parentId"] = $_REQUEST["parentId"];
+	}elseif (isset ($_REQUEST["viewWS"]) && $_REQUEST["viewWS"]!="") {
+		$workspace["parentId"] = $_REQUEST["viewWS"];
 	} else {
-		$workspace["parentWSId"] = 0;
+		$workspace["parentId"] = 0;
 	}
 	if (isset ($_REQUEST["categoryId"])) {
 		$workspace["categoryId"] = $_REQUEST["categoryId"];
@@ -57,7 +59,8 @@ if (isset ($_REQUEST["send"])) {
 	$exit = false;
 	if (isset ($_REQUEST["code"]) && ($_REQUEST["code"] != "")) {
 		$ws = $workspacesLib->get_workspace_by_code($_REQUEST["code"]);
-		if (!isset($_REQUEST["id"]) && isset($ws) && $ws!=""){ //Other workspace with the same code
+
+		if ((!isset($_REQUEST["id"]) || $_REQUEST["id"]=="")  && isset($ws) && $ws!=""){ //Other workspace with the same code
 			$smarty->assign('page_error_msg', tra("Code in use, please select a different code"));
 			$exit = true;	
 		}
@@ -123,20 +126,17 @@ if (isset ($_REQUEST["send"])) {
 	$workspace["created"] = date("U");
 	 
 	if (!$exit && isset($_REQUEST["id"]) && ($_REQUEST["id"] != "")) {
-		$workspacesLib->update_workspace_info($workspace["workspaceId"], $workspace["code"], $workspace["name"], $workspace["description"], $workspace["startDate"], $workspace["endDate"], $workspace["closed"], $workspace["parentWSId"], $workspace["type"],null, null, $workspace["owner"], $workspace["isuserws"], $workspace["hide"]);
+		$workspacesLib->update_workspace_info($workspace["workspaceId"], $workspace["code"], $workspace["name"], $workspace["description"], $workspace["startDate"], $workspace["endDate"], $workspace["closed"], $workspace["parentId"], $workspace["type"],null, null, $workspace["owner"], $workspace["isuserws"], $workspace["hide"]);
 	} elseif(!$exit) {
-		$workspacesLib->create_workspace($workspace["code"], $workspace["name"], $workspace["description"], $workspace["startDate"], $workspace["endDate"], $workspace["closed"], $workspace["parentWSId"], $workspace["type"], null, $workspace["owner"], $workspace["isuserws"], $workspace["hide"]);
+		$workspacesLib->create_workspace($workspace["code"], $workspace["name"], $workspace["description"], $workspace["startDate"], $workspace["endDate"], $workspace["closed"], $workspace["parentId"], $workspace["type"], null, $workspace["owner"], $workspace["isuserws"], $workspace["hide"]);
 	}else{
 		$smarty->assign_by_ref('workspace', $workspace);
 	}
 } else
 	if (isset ($_REQUEST["edit"])) {
 		$workspace = $workspacesLib->get_workspace_by_id($_REQUEST["edit"]);
-/*		foreach ($typesAll as $key => $type) {
-			if ($type["id"] == $workspace["type"]) {
-				$typesAll[$key]["selected"] = true;
-			}
-		}*/
+		$path = $workspacesLib->get_workspace_path($workspace["parentId"]);
+		$workspace["path"] = $path;
 		$smarty->assign_by_ref('workspace', $workspace);
 	} else
 		if (isset ($_REQUEST["delete"])) {
@@ -147,10 +147,6 @@ if (isset ($_REQUEST["send"])) {
 			} else {
 				key_get($area);
 			}
-			
-			//borraRecursosAsg($idAsg,$dbTiki,$tikilib,$userlib);
-			//header("location: aulawiki-workspaces.php");
-			//die;
 		}
 $viewWS = 0;
 if (isset ($_REQUEST["viewWS"])) {
@@ -158,6 +154,7 @@ if (isset ($_REQUEST["viewWS"])) {
 }
 
 $path = $workspacesLib->get_workspace_path($viewWS);
+$viewCategoryId = $path[count($path)-1]["categoryId"];
 
 if (!isset ($_REQUEST["sort_mode"])) {
 	$sort_mode = 'name_desc';
@@ -247,10 +244,19 @@ if (isset ($workspace) && $workspace) {
 }
 $smarty->assign('daformat', $tikilib->get_long_date_format()." ".tra("at")." %H:%M");
 $smarty->assign_by_ref('typesAll', $typesAll);
-$smarty->assign_by_ref('workspaces', $workspacesData["data"]);
+
+$workspaces = array();
+if (isset($workspacesData) && isset($workspacesData["data"])){
+	foreach ($workspacesData["data"] as $key => $ws) {
+		$ws["href"] = $workspacesLib->get_href_to_workspace($ws);
+		$workspaces[$ws["workspaceId"]] = $ws;
+	}
+}
+$smarty->assign_by_ref('workspaces', $workspaces);
 //$smarty->assign_by_ref('workspace',$workspace);
 $smarty->assign_by_ref('path', $path);
 $smarty->assign_by_ref('viewWS', $viewWS);
+$smarty->assign_by_ref('viewCategoryId',$viewCategoryId);
 
 include_once ('tiki-jscalendar.php');
 

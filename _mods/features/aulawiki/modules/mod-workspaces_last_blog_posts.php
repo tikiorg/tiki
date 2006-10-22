@@ -37,27 +37,25 @@ if (!isset ($workspace)) {
 		$blogId = $blogs[0]["objId"];
 	
 		if (isset($module_params["name"]) && $module_params["name"]!=""){
-			foreach($blogs as $blogId=>$blog){
+			foreach($blogs as $key=>$blog){
 				if($blog["name"]==$module_params["name"]){
 					$blogId = $blog["objId"];
 					$smarty->assign('selectedBlog', $blog);
 				}
 			}
 		}
-		
+
 		$maxPosts = 5;
 		if (isset($module_params["maxPosts"]) && $module_params["maxPosts"]!=""){
 			$maxPosts = $module_params["maxPosts"];
 		}
-		
-		$smarty->assign('selectedBlogId', $blogId);
-		
 		$offset = 0;
 		if (isset($module_params["offset"])){
 			$offset = $module_params["offset"];
 		}
-		
+
 		$posts = $bloglib2->list_blog_posts($blogId, $offset, $maxPosts, 'created_desc', '', '');
+
 		//Configure Offset
 		$cant_pages = ceil($posts["cant"] / $maxPosts);
 		$smarty->assign_by_ref('cant_pages', $cant_pages);

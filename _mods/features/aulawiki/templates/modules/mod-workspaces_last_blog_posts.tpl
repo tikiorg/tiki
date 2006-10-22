@@ -15,14 +15,15 @@
 <div class="resourceSelect">
 <form name="blogsSelection" method="post" action="{$ownurl}">
   <input name="moduleId" type="hidden" id="moduleId" value="{$moduleId}">
-  <label for="name">{tr}Blogs{/tr}:</label>
   <select name="name" id="name">
   {foreach key=key item=workspaceBlog from=$workspaceBlogs}
-  	<option value="{$workspaceBlog.name}" {if $selectedBlogId==$workspaceBlog.objId}selected{/if}>
+  	<option value="{$workspaceBlog.name}" {if $selectedBlog.objId==$workspaceBlog.objId}selected{/if}>
   	{$workspaceBlog.name}</option>
       {/foreach}
   </select>
-  <input class="edubutton" type="submit" name="go" value="{tr}Go{/tr}">
+  <input class="edubutton" type="submit" name="refresh" value="{tr}Refresh{/tr}">
+  <a class="edubutton" href="./tiki-view_blog.php?blogId={$selectedBlog.objId}">{tr}Go{/tr}</a>
+  <a title="{tr}edit{/tr}" href="./tiki-blog_post.php?blogId={$selectedBlog.objId}"><img src="img/icons/edit.gif" border="0"  width="20" height="16" alt="{tr}post{/tr}" /></a>
 </form>
 </div>
 {/if}

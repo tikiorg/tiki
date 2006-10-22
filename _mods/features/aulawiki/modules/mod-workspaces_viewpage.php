@@ -46,11 +46,11 @@ if (!$exit_module && isset($module_params["name"]) && $module_params["name"]!=""
 	}
 	if (isset ($info) && $info != "") {
 		//TODO: BAD PERFORMANCE!!! 322 database querys for 2 pages
-		require('tiki-pagesetup.php');
+		//require('tiki-pagesetup.php');
 	
 		// Check to see if page is categorized
 		$objId = urldecode($page);
-		if ($tiki_p_admin != 'y' && $feature_categories == 'y' && !$object_has_perms) {
+		/*if ($tiki_p_admin != 'y' && $feature_categories == 'y' && !$object_has_perms) {
 			// Check to see if page is categorized
 			$perms_array = $categlib->get_object_categories_perms($user, 'wiki page', $objId);
 		   	if ($perms_array) {
@@ -70,8 +70,8 @@ if (!$exit_module && isset($module_params["name"]) && $module_params["name"]!=""
 		
 		if($tiki_p_admin != 'y' && $tiki_p_view != 'y') {
 			$exit_module = true;
-		}
-		
+		}*/
+		$exit_module = false;
 		if ($exit_module){
 				$smarty->assign('error_msg', tra("Permission denied you cannot view this page"));
 				$exit_module = true;
