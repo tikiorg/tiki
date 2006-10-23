@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/wiki-plugins/wikiplugin_vote.tpl,v 1.4 2006-10-12 15:30:25 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/wiki-plugins/wikiplugin_vote.tpl,v 1.5 2006-10-23 17:16:53 sylvieg Exp $ *}
 {strip}
 <span style="display:inline;{if $float}float:{$float}{/if}" class="poll">
 
@@ -7,7 +7,7 @@
 <span id="pollicon{$tracker.trackerId}" style="display:inline;float:left"><img src="img/icons/plus.gif" border="0" alt="{tr}Toggle{/tr}" /></span>
 <span id="pollicon{$tracker.trackerId}o" style="display:none;float:left;"><img src="img/icons/minus.gif" border="0" alt="{tr}Toggle{/tr}" /></span>
 </a>
-{$tracker.name|escape}
+{if $has_already_voted ne 'y'}<span class="highlight">{/if}{$tracker.name|escape}{if $has_already_voted ne 'y'}</span>{/if}
 </div>
 
 {if $p_create_tracker_items eq 'y'}
