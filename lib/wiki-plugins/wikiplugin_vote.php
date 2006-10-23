@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_vote.php,v 1.4 2006-10-16 12:22:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_vote.php,v 1.5 2006-10-23 15:51:21 sylvieg Exp $
 /* A plugin vote based on tracker
  */
 function wikiplugin_vote_help() {
@@ -32,7 +32,7 @@ function wikiplugin_vote($data, $params) {
 		$smarty->assign('p_create_tracker_items', 'n');
 	}
 	include_once('lib/wiki-plugins/wikiplugin_trackerstat.php');
-	if (isset($show_stat) && $show_stat == 'y') {
+	if (!isset($show_stat) || $show_stat == 'y') {
 		$stat = wikiplugin_trackerstat($data, $params);
 		$smarty->assign_by_ref('stat', $stat);
 	} else {
