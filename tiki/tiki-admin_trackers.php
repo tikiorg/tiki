@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.44 2006-10-03 10:46:30 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.45 2006-10-23 14:01:15 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -261,12 +261,13 @@ if (isset($_REQUEST["save"])) {
 		$tracker_options["useExplicitNames"] = 'n';
 	}
 	
-	$trklib->replace_tracker($_REQUEST["trackerId"], $_REQUEST["name"], $_REQUEST["description"], $tracker_options);
+	$_REQUEST["trackerId"] = $trklib->replace_tracker($_REQUEST["trackerId"], $_REQUEST["name"], $_REQUEST["description"], $tracker_options);
 	$logslib->add_log('admintrackers','changed or created tracker '.$_REQUEST["name"]);
 
 	$cat_desc = $_REQUEST["description"];
 	$cat_name = $_REQUEST["name"];
 	$cat_href = "tiki-view_tracker.php?trackerId=".$_REQUEST["trackerId"];
+	$cat_objid = $_REQUEST["trackerId"];
 	include_once("categorize.php");
 }
 

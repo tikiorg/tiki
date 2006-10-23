@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.97 2006-10-11 20:17:23 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.98 2006-10-23 14:01:15 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -63,6 +63,7 @@ if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
    		$is_categorized = FALSE;
    	}
 	if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+	  echo "DDD";
 		if (!isset($user)){
 			$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
 			$smarty->assign('errortitle',tra("Please login"));
@@ -105,6 +106,11 @@ if (isset($_REQUEST['my'])) {
 }
 
 $tracker_info = $trklib->get_tracker($_REQUEST["trackerId"]);
+if (empty($tracker_info)) {
+	$smarty->assign('msg', tra("No tracker indicated"));
+	$smarty->display("error.tpl");
+	die;
+}
 if ($t = $trklib->get_tracker_options($_REQUEST["trackerId"]))
 	$tracker_info = array_merge($tracker_info,$t);
 
