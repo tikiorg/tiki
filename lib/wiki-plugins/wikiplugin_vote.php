@@ -1,6 +1,8 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_vote.php,v 1.6 2006-10-23 17:16:53 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_vote.php,v 1.7 2006-10-25 18:47:34 sylvieg Exp $
 /* A plugin vote based on tracker
+ */
+/* fields is optionnal - all the fields except the type suer, group, ip will be used
  */
 function wikiplugin_vote_help() {
 	$help = tra("Displays some stat of a tracker content, fields are indicated with numeric ids.").":\n";
@@ -27,6 +29,18 @@ function wikiplugin_vote($data, $params) {
 		$smarty->assign('has_already_voted', 'y');
 	} else {
 		$smarty->assign('has_already_voted', 'n');
+	}
+	if (empty($fields)) {
+		$fields = $trklib->list_tracker_fields($trackerId);
+		$ff = array();
+		foreach ($fields['data'] as $field) {
+			if ($field['type'] != 'u' && $field['type'] != 'I' && $field['type'] != 'g') {
+				$ff[] = $field['fieldId'];
+			}
+		}
+		if (!empty($ff)) {
+			$params['fields'] = implode(':', $ff);
+		}
 	}
 	if ($tikilib->user_has_perm_on_object($user, $trackerId, 'tracker', 'tiki_p_create_tracker_items')) {
 		$smarty->assign('p_create_tracker_items', 'y');// to have different vote in the same page
