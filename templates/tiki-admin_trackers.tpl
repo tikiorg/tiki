@@ -14,15 +14,16 @@
 <br /><br />
 
 {if $feature_tabs eq 'y'}
-{cycle name=tabs values="1,2,3,4" print=false advance=false reset=true}
+{cycle name=tabs values="1,2,3,4,5" print=false advance=false reset=true}
 <div class="tabs">
-<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Trackers{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Trackers{/tr}</a></span>
 {if $trackerId}
-<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Edit tracker{/tr} {$name} (#{$trackerId})</a></span>
+<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Edit tracker{/tr} {$name} (#{$trackerId})</a></span>
 {else}
-<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Create trackers{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Create trackers{/tr}</a></span>
 {/if}
-<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Import/export{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Import/export{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Duplicate tracker{/tr}</a></span>
 </div>
 {/if}
 
@@ -88,7 +89,7 @@
 {tr}There are individual permissions set for this tracker{/tr}</a>
 </div>
 {/if}
-<form action="tiki-admin_trackers.php" method="post">
+<form action="tiki-admin_trackers.php" method="post" name="editpageform" id="editpageform">
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 <table class="normal">
 <tr class="formcolor"><td>{tr}Name{/tr}:</td><td><input type="text" name="name" value="{$name|escape}" /></td><td></td></tr>
@@ -267,4 +268,26 @@ categories = {$catsdump}
 </form>
 {/if}
 
+</div>
+
+{* --- tab with raw form --- *}
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+<h2>{tr}Duplicate tracker{/tr}</h2>
+
+<form action="tiki-admin_trackers.php" method="post">
+<table class="normal">
+<tr class="formcolor"><td>{tr}Name{/tr}</td><td><input type="text" name="name" value="{$name|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}Description{/tr}</td><td><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
+<tr class="formcolor"><td>{tr}Tracker{/tr}</td>
+<td>
+<select name="trackerId">
+{section name=ix loop=$trackers}
+<option value="{$trackers[ix].trackerId}">{$trackers[ix].name|escape}</option>
+{/section}
+</select>
+</td>
+</tr>
+<tr class="formcolor"><td></tdf<td><input type="submit" name="duplicate" value="{tr}Duplicate tracker{/tr}" /></td></tr>
+</table>
+</form>
 </div>
