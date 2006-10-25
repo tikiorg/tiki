@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.28 2006-10-25 20:43:21 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.29 2006-10-25 20:45:19 ohertel Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}">{tr}Listing Gallery{/tr}: {$name}</a></h1>
 
@@ -62,7 +62,7 @@
 <table>
 <tr><td width="48">
 {if $fgal_type eq "podcast"}
-<img src='pics/large/gnome-sound-recorder48x48.png' border='0' alt='{tr}podcast (video){/tr}' title='{tr}podcast (audio){/tr}' />
+<img src='pics/large/gnome-sound-recorder48x48.png' border='0' alt='{tr}podcast (audio){/tr}' title='{tr}podcast (audio){/tr}' />
 {elseif $fgal_type eq "vidcast"}
 <img src='pics/large/mplayer48x48.png' border='0' alt='{tr}podcast (video){/tr}' title='{tr}podcast (video){/tr}' />
 {else}
