@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerstat.php,v 1.12 2006-10-16 12:15:39 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerstat.php,v 1.13 2006-10-25 18:19:02 sylvieg Exp $
 /* to have some statistiques about a tracker
  * will returns a table with for each tracker field, the list of values and the number of times the values occurs
  * trackerId = the id of the tracker
@@ -76,8 +76,7 @@ function wikiplugin_trackerstat($data, $params) {
 			}
 		}
 		if ($i < 0 ) {
-			$smarty->assign('msg', tra("incorrect fieldId")." ".$fieldId);
-			return $msg;
+			return tra("incorrect fieldId")." ".$fieldId;
 		}
 
 		if ($allFields["data"][$i]['isPublic'] != 'y' || $allFields["data"][$i]['type'] == 'u' || $allFields["data"][$i]['type'] == 'I' || $allFields["data"][$i]['type'] == 'g' || $allFields["data"][$i]['type'] == 's') {
