@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.45 2006-10-23 14:01:15 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.46 2006-10-25 20:09:23 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -271,7 +271,9 @@ if (isset($_REQUEST["save"])) {
 	include_once("categorize.php");
 }
 
-
+if (!empty($_REQUEST['duplicate']) && !empty($_REQUEST['name']) && !empty($_REQUEST['trackerId'])) {
+	$_REQUEST['trackerId'] = $trklib->duplicate_tracker($_REQUEST['trackerId'], $_REQUEST['name'], $_REQUEST['description']);
+}
 $status_types = $trklib->status_types();
 $smarty->assign('status_types', $status_types);
 
@@ -385,6 +387,12 @@ if (isset($_REQUEST["find"])) {
 $smarty->assign('find', $find);
 
 $channels = $trklib->list_trackers($offset, $maxRecords, $sort_mode, $find);
+if ($offset != 0 || $maxRecords < $channels['cant'] || $sort_mode != ''|| $find != '') {
+	$trackers = $trklib->list_trackers();
+	$smarty->assign_by_ref('trackers', $trackers['data']);// for duplicate
+} else {
+	$smarty->assign_by_ref('trackers', $channels['data']);
+}
 
 $temp_max = count($channels["data"]);
 for ($i = 0; $i < $temp_max; $i++) {

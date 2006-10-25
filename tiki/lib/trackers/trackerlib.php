@@ -1175,6 +1175,7 @@ class TrackerLib extends TikiLib {
 		foreach($fieldList['data'] as $f) {
 			$cachelib->invalidate(md5('trackerfield'.$f['fieldId'].$status));
 			$cachelib->invalidate(md5('trackerfield'.$f['fieldId'].'opc'));
+			$cachelib->invalidate(md5('trackerfield'.$f['fieldId'].'opc'));
 			if ($status == 'o') {
 				$cachelib->invalidate(md5('trackerfield'.$f['fieldId'].'op'));
 				$cachelib->invalidate(md5('trackerfield'.$f['fieldId'].'oc'));
@@ -1190,7 +1191,7 @@ class TrackerLib extends TikiLib {
 	}
 
 	// Lists all the fields for an existing tracker
-	function list_tracker_fields($trackerId, $offset, $maxRecords, $sort_mode, $find) {
+	function list_tracker_fields($trackerId, $offset=0, $maxRecords=-1, $sort_mode='position_asc', $find='') {
 		if ($find) {
 			$findesc = '%' . $find . '%';
 			$mid = " where `trackerId`=? and (`name` like ?)";
@@ -1657,6 +1658,31 @@ class TrackerLib extends TikiLib {
 		closedir ($h);
 		sort($flags, SORT_STRING);
 		return $flags;	
+	}
+	function duplicate_tracker($trackerId, $name, $description='') {
+		global $feature_category;
+		$tracker_info = $this->get_tracker($trackerId);
+		if ($t = $this->get_tracker_options($trackerId))
+			$tracker_info = array_merge($tracker_info,$t);
+		$newTrackerId = $this->replace_tracker(0, $name, $description, array());
+		$query = "select * from `tiki_tracker_options` where `trackerId`=?";
+		$result = $this->query($query, array($trackerId));
+		$query = "insert into `tiki_tracker_options`(`trackerId`,`name`,`value`) values(?,?,?)";
+		while ($res = $result->fetchRow()) {
+			$this->query($query, array($newTrackerId, $res['name'],$res['value']));
+		}
+
+		$fields = $this->list_tracker_fields($trackerId, 0, -1, 'position_asc', '');
+		foreach($fields['data'] as $field) {
+			$this->replace_tracker_field($newTrackerId, 0, $field['name'], $field['type'], $field['isMain'], $field['isSearchable'], $field['isTblVisible'], $field['isPublic'], $field['isHidden'], $field['isMandatory'], $field['position'], $field['options'], $field['description']);
+		}
+		if ($feature_category == 'y') {
+			global $categlib; include_once('lib/categories/categlib.php');
+			$cats = get_object_categories('tracker', $trackerId);
+			$catObjectId = $categlib->add_categorized_object('tracker', $newTrackerId, $description, $name, "tiki-view_tracker.php?trackerId=$newTrackerId");
+			$categlib->categorize($catObjectId, $cat_acat);
+		}
+		return $newTrackerId;
 	}
 }
 
