@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.42 2006-09-16 14:22:42 ohertel Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.43 2006-10-26 12:45:08 luciash Exp $
  *
  * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye !
  * Enables font re-sizing in all browsers, aims to be standards compliant and WCAG 1.0 compatible (not yet).
@@ -865,5 +865,9 @@ div.admbox {
 }
 div.admbox:hover { background-color: #DDEEFF; }
 div.admbox img { margin-top: 20px; }
+
+/* structures toc */
+ul.toc {margin-left: 0.5em; padding-left: 0.5em; list-style-type: none}
+ul.toc li {margin-left: .2em; padding-left: .2em}
 
 /* end of css file */
