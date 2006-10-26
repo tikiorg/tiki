@@ -1,10 +1,11 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/tree/tree.php,v 1.9 2005-05-18 11:01:55 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/tree/tree.php,v 1.10 2006-10-26 11:23:27 luciash Exp $
  *
  * \brief Base tree maker
  *
  * \author zaufi@sendmail.ru
+ * \enhanced by luci@sh.ground.cz
  *
  */
 
@@ -19,7 +20,7 @@ require_once ('lib/debug/debugger.php');
 /**
  * \brief Base class for all tree makers
  *
- * Define base interface and provide common algotithm for tree generation
+ * Define base interface and provide common algorithm for tree generation
  *
  * Format of element in array for make_tree() call:
  *  id     => number of ID of current node
@@ -59,6 +60,7 @@ class TreeMaker {
 				else
 					$tmp[] = $i;
 
+			$ind = "";
 			//
 			foreach ($cli as $i) {
 				$child_result = $this->make_tree_r($i["id"], $tmp);
@@ -66,8 +68,11 @@ class TreeMaker {
 				$have_childs = (strlen($child_result) > 0);
 				//
 				// NOTE: The main rule is to call all methods in 
-				//       stricty defined order!!
+				//       stricty defined order!
 				//
+				$nl = "\n";
+				$ind .= "\t";
+				
 				$nsc = $this->node_start_code($i);
 
 				$flipper = '';
@@ -83,25 +88,27 @@ class TreeMaker {
 
 				if ($have_childs) {
 					$ncsc = $this->node_child_start_code($i);
-
 					$ncec = $this->node_child_end_code($i);
+					$ind .= $this->indent($i);
 				}
-
+				
 				$nec = $this->node_end_code($i);
 				// Form result
-				$result .= $nsc . $flipper . $ndsc . $i["data"] . $ndec . $ncsc . $child_result . $ncec . $nec;
+				$result .= $nsc . $flipper . $ndsc . $i["data"] . $nl . $ind . $ncsc. $nl . $ind . $ind . $child_result . $ncec . $nl . $ind . $ind . $ndec . $nec . $nl . $ind; // this sort is for lists kind of tree
+#				$result .= $nsc . $flipper . $ndsc . $i["data"] . $ndec . $ncsc . $child_result . $ncec . $nec; // this sort is for old div/table kind of tree
 			}
 		}
 
 		return $result;
 	}
 	/**
-	 * To change behavior (look and feel :) of generated tree
-	 * it is enough to redefine follwing methods..
-	 * (thanx that PHP have implicit vurtual functions :)
+	 * To change behavior (xhtml layout :) of generated tree
+	 * it is enough to redefine following methods..
+	 * (thanx that PHP have implicit virtual functions :)
 	 *
 	 * General layout of generated tree code looks like this:
 	 *
+	 * [indent]
 	 * [node start code]
 	 *   [node flipper code]       (1)
 	 *   [node data start code]
@@ -113,14 +120,18 @@ class TreeMaker {
 	 * (1) -- this code will be generated if node have childs
 	 *
 	 * NOTE: Methods called exactly in that order. This fact can be
-	 *       (and actualy do) used by child classes to define
-	 *       and use some variables depends on pervious call...
+	 *       (and actualy it is) used by child classes to define
+	 *       and use some variables dependent on previous call...
 	 *
-	 * NOTE: This is abstract base class... it doing nothig
-	 *       except defining algirithm...
-	 *       So to make smth other use inheritance and redifine
+	 * NOTE: This is abstract base class... it does nothing
+	 *       except defining algorithm...
+	 *       So to make smth other use inheritance and redefine
 	 *       corresponding function :)
 	 */
+	function indent($nodeinfo) {
+		return '';
+	}
+	
 	function node_start_code($nodeinfo) {
 		return '';
 	}
