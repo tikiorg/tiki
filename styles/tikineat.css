@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.16 2006-10-20 03:30:27 luciash Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.17 2006-10-26 11:53:44 luciash Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -126,6 +126,13 @@ label {
 	* centercolumn contains tiki-center where the main area is displayed.
 	*
 	*/
+
+/*********************** SITE IDENTITY HEADER ************************************/
+
+#sitesearchbar {
+	padding: 5px;
+	text-align: right;
+}
 
 /*********************** GENERAL LAYOUT ************************************/
 DIV#tiki-main {
