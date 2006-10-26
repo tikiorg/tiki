@@ -393,7 +393,9 @@ class StructLib extends TikiLib {
 					$smarty->assign('leafspace',str_repeat("\t",$cur_depth*2));
 					$ret.=$smarty->fetch('structures_toc-leaf.tpl');
 					if(isset($leaf['sub']) && is_array($leaf['sub'])) {
-						$ret.=$this->fetch_toc($leaf['sub'],$showdesc,$numbering,$type,$page,$maxdepth,$cur_depth+1);
+						$ret.=$this->fetch_toc($leaf['sub'],$showdesc,$numbering,$type,$page,$maxdepth,$cur_depth+1).str_repeat("\t",($cur_depth*2)+1)."</li>\n";
+					} else {
+						$ret.=str_repeat("\t",($cur_depth*2)+1)."</li>\n";
 					} 					
 				}	
 				$smarty->assign('leafspace',str_repeat("\t",$cur_depth*2));
