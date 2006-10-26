@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.43 2006-10-26 12:45:08 luciash Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.44 2006-10-26 13:00:42 luciash Exp $
  *
  * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye !
  * Enables font re-sizing in all browsers, aims to be standards compliant and WCAG 1.0 compatible (not yet).
@@ -288,6 +288,13 @@ ul, ol {
   display: none;
 }
 
+/* Site Identity Search Bar */
+#sitesearchbar {
+	padding: 0.4em;
+	text-align: right;
+}
+
+
 /* ASSORTED  */
 
 #clear {
@@ -340,7 +347,8 @@ div.box-title table {
  border-bottom: dashed 0.2em #abcdef;
  border-left: dashed 0.2em #abcdef;
  border-right: dashed 0.2em #abcdef;
- padding-bottom: 0.2em;
+ padding: 0.4em;
+ padding-bottom: 0.6em;
 }
 .box-data a {
   text-decoration: none;
