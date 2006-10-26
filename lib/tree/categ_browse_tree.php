@@ -1,10 +1,11 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/tree/categ_browse_tree.php,v 1.5 2005-05-18 11:01:54 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/tree/categ_browse_tree.php,v 1.6 2006-10-26 11:23:27 luciash Exp $
  *
  * \brief Categories browse tree
  *
  * \author zaufi@sendmail.ru
+ * \enhanced by luci@sh.ground.cz
  *
  */
 require_once ('lib/tree/tree.php');
@@ -29,11 +30,13 @@ class CatBrowseTreeMaker extends TreeMaker {
 	/// Generate HTML code for tree. Need to redefine to add javascript cookies block
 	function make_tree($rootid, $ar) {
 		global $debugger;
+		
+		$r = '<ul class="tree root">'."\n";
 
-		$r = $this->make_tree_r($rootid, $ar);
+		$r .= $this->make_tree_r($rootid, $ar);
 		// $debugger->var_dump('$r');
 		// return tree with java script block that opens the nodes as remembered in cookies
-		return $r . "<script language='Javascript' type='text/javascript'> " . $this->jsscriptblock . " </script>\n";
+		return $r . "</ul>\n<script type='text/javascript'>\n" . $this->jsscriptblock . "\n</script>\n";
 	}
 
 	//
@@ -41,17 +44,24 @@ class CatBrowseTreeMaker extends TreeMaker {
 	//  
 	// Need to generate:
 	//
-	// [node start = <div class="treenode">]
-	//  [flipper] user data
-	// [node data end = </div>]
-	// [node child start = <div class="tree">]
-	//   [childs code]
-	// [node child end = </div>]
+	// [indent = <tabulator>]
+	// [node start = <li class="treenode">]
+	//  [node data start]
+	//   [flipper] +/- link to flip
+	//   [node child start = <ul class="tree">]
+	//    [child's code]
+	//   [node child end = </ul>]
+	//  [node data end]
+	// [node end = </li>]
 	//
-	// Unsymmetrical calls is not important :)
 	//
+	//
+	function indent($nodeinfo) {
+		return "\t\t";
+	}
+	
 	function node_start_code($nodeinfo) {
-		return '<div class="treenode">&nbsp;';
+		return "\t" . '<li class="treenode">';
 	}
 
 	//
@@ -64,27 +74,27 @@ class CatBrowseTreeMaker extends TreeMaker {
 
 	//
 	function node_data_start_code($nodeinfo) {
-		return '&nbsp;&nbsp;';
+		return '<!-- START_NODE_DATA -->';
 	}
 
 	//
 	function node_data_end_code($nodeinfo) {
-		return '</div>';
+		return '<!-- END_NODE_DATA -->'."\n";
 	}
 
 	//
 	function node_child_start_code($nodeinfo) {
-		return '<div class="tree" id="' . $this->itemID . '" style="display: none;">';
+		return '<ul class="tree" id="' . $this->itemID . '" style="display: none;">';
 	}
 
 	//
 	function node_child_end_code($nodeinfo) {
-		return '</div>';
+		return '</ul>';
 	}
 
 	//
 	function node_end_code($nodeinfo) {
-		return '';
+		return "\t" . '</li>';
 	}
 }
 
