@@ -366,7 +366,7 @@ class StructLib extends TikiLib {
 	function get_toc($page_ref_id,$order='asc',$showdesc=false,$numbering=true,$numberPrefix='',$type='plain',$page='',$maxdepth=0) {
 		global $smarty;
 		$structure_tree = $this->build_subtree_toc($page_ref_id,false,$order,$numberPrefix);
-		return $this->fetch_toc($structure_tree,$showdesc,$numbering,$type,$page,$maxdepth)."\n".$smarty->fetch("structures_toc-endul.tpl");
+		return $this->fetch_toc($structure_tree,$showdesc,$numbering,$type,$page,$maxdepth)."\n";
 	}
 
 	function fetch_toc($structure_tree,$showdesc,$numbering,$type='plain',$page='',$maxdepth=0,$cur_depth=0) {
@@ -375,13 +375,8 @@ class StructLib extends TikiLib {
 		if ($structure_tree != '') {
 			if (($maxdepth <= 0) || ($cur_depth < $maxdepth)) {
 				
-				$leafspace=$cur_depth;
-				if ($leafspace!=0) {
-					$smarty->assign('leafspace',str_repeat("\t",$leafspace*2));
-				} else {
-					$smarty->assign('leafspace','');
-				}
-				$ret.="<!--depth: $cur_depth-->\n".$smarty->fetch('structures_toc-startul.tpl');
+				$smarty->assign('leafspace',str_repeat("\t",$cur_depth*2));
+				$ret.="<!--depth: $cur_depth-->\n".$smarty->fetch('structures_toc-startul.tpl')."\n";
 				
 				foreach($structure_tree as $leaf) {
 				
@@ -395,17 +390,16 @@ class StructLib extends TikiLib {
 					$smarty->assign('showdesc',$showdesc);
 					$smarty->assign('numbering',$numbering);
 					$smarty->assign('toc_type',$type);
-					$ret.="\n".$smarty->fetch('structures_toc-leaf.tpl');
+					$smarty->assign('leafspace',str_repeat("\t",$cur_depth*2));
+					$ret.=$smarty->fetch('structures_toc-leaf.tpl');
 					if(isset($leaf['sub']) && is_array($leaf['sub'])) {
 						$ret.=$this->fetch_toc($leaf['sub'],$showdesc,$numbering,$type,$page,$maxdepth,$cur_depth+1);
-					} else {
-						$ret.=str_repeat("</li></ul>\n",$leafspace).'<!--END OF SUBLEVELS--></li>';
-					}
-				}
+					} 					
+				}	
+				$smarty->assign('leafspace',str_repeat("\t",$cur_depth*2));
+				$ret.=$smarty->fetch('structures_toc-endul.tpl')."\n";			
 			}
-			$ret.=$smarty->fetch('structures_toc-endul.tpl');
 		}
-		
 		return $ret;
 	}
 	// end of replacement
