@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2006-10-19 22:10:02 $
-# $Author: mose $
+# $Date: 2006-10-27 18:22:55 $
+# $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -1946,7 +1946,7 @@ CREATE TABLE tiki_logs (
   logtype varchar(20) NOT NULL,
   logmessage text NOT NULL,
   loguser varchar(40) NOT NULL,
-  logip varchar(200) NOT NULL,
+  logip varchar(200),
   logclient text NOT NULL,
   logtime int(14) NOT NULL,
   PRIMARY KEY  (logId),
