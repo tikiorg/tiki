@@ -102,7 +102,7 @@ function wikiplugin_trackerlist($data, $params) {
 			} else {
 				$sort_mode = '';
 			}
-		} 
+		}
 		$tr_sort_mode = $sort_mode;
 		$smarty->assign_by_ref('tr_sort_mode', $tr_sort_mode);
 		
@@ -195,6 +195,12 @@ function wikiplugin_trackerlist($data, $params) {
 			if ($rated) {
 				foreach ($items['data'] as $f=>$v) {
 					$items['data'][$f]['my_rate'] = $tikilib->get_user_vote("tracker.".$trackerId.'.'.$items['data'][$f]['itemId'],$user);
+				}
+			}
+			if ($tracker_info['useAttachments'] == 'y' && $tracker_info['showAttachments'] == 'y') {
+				foreach ($items["data"] as $itkey=>$oneitem) {
+					$res = $trklib->get_item_nb_attachments($items["data"][$itkey]['itemId']);
+					$items["data"][$itkey]['attachments']  = $res['attachments'];
 				}
 			}
 
