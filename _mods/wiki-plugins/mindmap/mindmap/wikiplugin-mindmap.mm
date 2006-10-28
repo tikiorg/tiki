@@ -1,6 +1,6 @@
 <map version="0.8.0">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
-<node BACKGROUND_COLOR="#ccffcc" COLOR="#ff0000" CREATED="1159253738226" ID="Freemind_Link_282881935" MODIFIED="1161390601078" TEXT="{MINDMAP(  )} {MINDMAP}">
+<node BACKGROUND_COLOR="#ccffcc" COLOR="#ff0000" CREATED="1159253738226" ID="Freemind_Link_282881935" MODIFIED="1162062875154" TEXT="{MINDMAP(  )} {MINDMAP}">
 <font BOLD="true" NAME="SansSerif" SIZE="12"/>
 <icon BUILTIN="idea"/>
 <hook NAME="accessories/plugins/BlinkingNodeHook.properties"/>
@@ -31,8 +31,8 @@
 </node>
 <node CREATED="1161390072611" ID="Freemind_Link_27516788" MODIFIED="1161390474262" TEXT="mode">
 <node BACKGROUND_COLOR="#ffffff" CREATED="1161390085000" ID="Freemind_Link_113018018" MODIFIED="1161390237876" STYLE="bubble" TEXT=" inline (default)"/>
-<node BACKGROUND_COLOR="#00cccc" CREATED="1161390096227" ID="Freemind_Link_1579763033" MODIFIED="1161390338071" STYLE="bubble" TEXT="window (java only)"/>
-<node BACKGROUND_COLOR="#00cccc" CREATED="1161390102387" ID="Freemind_Link_1810482907" MODIFIED="1161390346935" STYLE="bubble" TEXT="fullscreen (java only)"/>
+<node BACKGROUND_COLOR="#ffffff" CREATED="1161390096227" ID="Freemind_Link_1579763033" MODIFIED="1162062722605" STYLE="bubble" TEXT="window"/>
+<node BACKGROUND_COLOR="#ffffff" CREATED="1161390102387" ID="Freemind_Link_1810482907" MODIFIED="1162062741392" STYLE="bubble" TEXT="fullscreen"/>
 </node>
 </node>
 <node BACKGROUND_COLOR="#ffff99" CREATED="1159253929901" ID="Freemind_Link_1526969228" LINK="http://freemind.sourceforge.net/" MODIFIED="1159593222963" POSITION="right" STYLE="bubble" TEXT="Freemind web site"/>
