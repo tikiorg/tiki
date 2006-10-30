@@ -140,7 +140,7 @@
 	  $smarty->assign('show_created',isset($_REQUEST['show_created'])?'y':'n');
 	  $smarty->assign('show_dl',isset($_REQUEST['show_dl'])?'y':'n');
 	  $smarty->assign('max_desc',($_REQUEST['max_desc']));
-	  $smarty->assign('fgal_type',($_REQUEST['type']));
+	  $smarty->assign('fgal_type',isset($_REQUEST['type'])? $_REQUEST['type']: '');
 	
 	  $smarty->assign_by_ref('maxRows',$_REQUEST["maxRows"]);
 	  $smarty->assign_by_ref('rowImages',$_REQUEST["rowImages"]);
