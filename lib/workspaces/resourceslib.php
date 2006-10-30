@@ -554,7 +554,7 @@ class WorkspaceResourcesLib extends TikiDB {
 		include_once ('lib/filegals/filegallib.php');
 		$filegal = $this->get_category_object($categoryId, $name, "file gallery");
 		if (isset ($filegal) && $filegal["name"] == $name) {
-			$galId = $filegallib->remove_file_gallery($filegal["objId"]);
+		  $galId = $filegallib->remove_file_gallery($filegal["objId"], $filegal['name']);
 		}
 	}
 

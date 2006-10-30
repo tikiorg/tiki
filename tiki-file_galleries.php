@@ -191,7 +191,7 @@
 		$area = 'delfilegal';
 		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
-			$filegallib->remove_file_gallery($_REQUEST["removegal"]);
+			$filegallib->remove_file_gallery($_REQUEST["removegal"], $_REQUEST['galleryId']);
 		} else {
 			key_get($area);
 		}
