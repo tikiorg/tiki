@@ -245,8 +245,13 @@ class FileGalLib extends TikiLib {
 		$this->query($query,array($gallery,$file));
 	}
 
-	function remove_file_gallery($id) {
+	function remove_file_gallery($id, $galleryId=0) {
 		global $fgal_use_dir, $fgal_podcast_dir;
+
+		if (empty($galleryId)) {
+			$info = $this->get_file_info($id);
+			$galleryId = $info['galleryId'];
+		}
 
 		if ($podCastGallery = $this->isPodCastGallery($galleryId)) {
 			$savedir=$fgal_podcast_dir;
