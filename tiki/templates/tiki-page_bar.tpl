@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.49 2006-05-25 06:06:47 sampaioprimo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.50 2006-10-30 16:10:38 beuc Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -117,7 +117,7 @@
 
   <td>
     <div class="button2">
-      <a href="#attachments" onclick="javascript:flip('attzone');" class="linkbut">
+      <a href="{if $atts_show ne 'y'}tiki-index.php?page={$page|escape:"url"}&amp;atts_show=y#attachments{else}tiki-index.php?page={$page|escape:"url"}&amp;atts_show=n{/if}" onclick="javascript:flip('attzone'); return false;" class="linkbut">
 
         {* display 'attach file' only if no attached files or
          * only $tiki_p_wiki_attach_files perm
