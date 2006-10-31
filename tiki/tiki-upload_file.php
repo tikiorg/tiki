@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.36 2006-09-23 13:41:51 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.37 2006-10-31 19:20:00 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -60,12 +60,14 @@ if (!empty($editFileId)) {
 	$editFile = true;
 }
 
-$gal_info = $tikilib->get_file_gallery((int)$_REQUEST["galleryId"]);
-$smarty->assign('fgal_type', $gal_info["type"]);
-$podCastGallery = $filegallib->isPodCastGallery((int)$_REQUEST["galleryId"]);
+if (!empty($_REQUEST['galleryId'])) {
+	$gal_info = $tikilib->get_file_gallery((int)$_REQUEST["galleryId"]);
+	$smarty->assign('fgal_type', $gal_info["type"]);
+	$podCastGallery = $filegallib->isPodCastGallery((int)$_REQUEST["galleryId"]);
+}
 
 // Process an upload here
-if (isset($_REQUEST["upload"])) {
+if (isset($_REQUEST["upload"]) && !empty($_REQUEST['galleryId'])) {
 	check_ticket('upload-file');
 	// Check here if it is an upload or an URL
 	$smarty->assign('individual', 'n');
