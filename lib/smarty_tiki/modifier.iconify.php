@@ -18,10 +18,10 @@ function smarty_modifier_iconify($string)
 {
   
   $string=strtolower(substr($string,strlen($string)-3));
-  if(file_exists("img/icn/$string".".gif")) {
-    return "<img border='0' src='img/icn/${string}.gif' alt='icon' />";
+  if(file_exists("pics/icons/mime/$string".".png")) {
+    return "<img border='0' src='pics/icons/mime/${string}.png' alt='icon' width='16' height='16' />";
   } else {
-    return "<img border='0' src='img/icn/else.gif' alt='icon' />";
+    return "<img border='0' src='pics/icons/mime/default.png' alt='icon' width='16' height='16' />";
   }     
 	
 }
