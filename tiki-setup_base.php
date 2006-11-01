@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.106 2006-10-22 03:21:37 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.107 2006-11-01 21:23:02 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -106,7 +106,6 @@ if ( false ) { // if pre-PHP 4.1 compatibility is not required
 // mose : simulate strong var type checking for http vars
 $patterns['int']   = "/^[0-9]*$/"; // *Id
 $patterns['intSign']   = "/^[-+]?[0-9]*$/"; // *offset,
-$patterns['hex']   = "/^[-0-9a-fA-F]*$/";
 $patterns['char']  = "/^[-,_a-zA-Z0-9]*$/"; // sort_mode, 
 $patterns['string']  = "/^[^<>\";#]*$/"; // find, and such extended chars
 $patterns['stringlist']  = "/^[^<>\"#]*$/"; // to, cc, bcc (for string lists like: user1;user2;user3)
@@ -114,28 +113,28 @@ $patterns['vars']  = "/^[-_a-zA-Z0-9]*$/"; // for variable keys
 $patterns['hash'] = "/^[a-z0-9]*$/"; // for hash reqId in live support
 $patterns['url'] = "/^https?:\/\/[^<>\"']*$/"; // needed for the htmlpage inclusion in tiki-editpage
 
-$vartype['id'] = 'int';
-$vartype['forumId'] = 'int';
+// parameter type definitions. prepend a + if variable may not be empty, e.g. '+int'
+$vartype['id'] = '+int';
+$vartype['forumId'] = '+int';
 $vartype['offset'] = 'intSign';
 $vartype['thresold'] = 'int';
-$vartype['sort_mode'] = 'char';
+$vartype['sort_mode'] = '+char'; // TODO: only allow valid field names and order here!
 $vartype['comments_offset'] = 'int';
 $vartype['comments_thresold'] = 'int';
-$vartype['comments_parentId'] = 'int';
-$vartype['comments_sort_mode'] = 'char';
+$vartype['comments_parentId'] = '+int';
+$vartype['comments_sort_mode'] = '+char';  // TODO: only allow valid field names and order here!
 $vartype['topics_offset'] = 'int';
-$vartype['topics_sort_mode'] = 'char';
+$vartype['topics_sort_mode'] = '+char';  // TODO: only allow valid field names and order here!
 $vartype['priority'] = 'int';
 $vartype['theme'] = 'string';
 $vartype['flag'] = 'char';
 $vartype['lang'] = 'char';
-$vartype['switchLang'] = 'char';
 $vartype['language'] = 'char';
 $vartype['page'] = 'string';
 $vartype['edit_mode'] = 'char';
 $vartype['find'] = 'string';
 $vartype['initial'] = 'char';
-$vartype['username'] = 'string';
+$vartype['username'] = '+string';
 $vartype['realName'] = 'string';
 $vartype['homePage'] = 'string';
 $vartype['to'] = 'stringlist';
@@ -143,27 +142,28 @@ $vartype['cc'] = 'stringlist';
 $vartype['bcc'] = 'stringlist';
 $vartype['subject'] = 'string';
 $vartype['name'] = 'string';
-$vartype['reqId'] = 'hash';
-$vartype['days'] = 'int';
-$vartype['max'] = 'int';
-$vartype['numrows'] = 'int';
-$vartype['rows'] = 'int';
-$vartype['cols'] = 'int';
-$vartype['topicname'] = 'string';
-// $vartype['error'] = 'string'; //TODO: translated string are handed over... which type for them?
+$vartype['reqId'] = '+hash';
+$vartype['days'] = '+int';
+$vartype['max'] = '+int';
+$vartype['numrows'] = '+int';
+$vartype['rows'] = '+int';
+$vartype['cols'] = '+int';
+$vartype['topicname'] = '+string';
+$vartype['error'] = 'string';
 $vartype['editmode'] = 'char'; // from calendar
-$vartype['actpass'] = 'string'; // remind password page
-$vartype['user'] = 'string'; // remind password page
+$vartype['actpass'] = '+string'; // remind password page
+$vartype['user'] = '+string'; // remind password page
 $vartype['remind'] = 'string'; // remind password page
+$vartype['url'] = 'url';
 // galaxia
-$vartype['aid'] = 'int';
+$vartype['aid'] = '+int';
 $vartype['description'] = 'string';
 $vartype['filter_active'] = 'char';
-$vartype['filter_name'] = 'string';
-$vartype['newmajor'] = 'int';
-$vartype['newminor'] = 'int';
-$vartype['pid'] = 'int';
-$vartype['remove_role'] = 'int';
+$vartype['filter_name'] = '+string';
+$vartype['newmajor'] = '+int';
+$vartype['newminor'] = '+int';
+$vartype['pid'] = '+int';
+$vartype['remove_role'] = '+int';
 $vartype['rolename'] = 'char';
 $vartype['type'] = 'string';
 $vartype['userole'] = 'int';
@@ -181,29 +181,50 @@ if (!$rc) {
 $language = $tikilib->get_preference('language', 'en');// varcheck use tra
 
 function varcheck($array) {
-  global $patterns,$vartype, $access;
+  global $patterns, $vartype;
   if (isset($array) and is_array($array)) {
     foreach ($array as $rq=>$rv) {
+	  // check if the variable name is allowed
       if (!preg_match($patterns['vars'],$rq)) {
         //die(tra("Invalid variable name : "). htmlspecialchars($rq));
-      } else {
+      } elseif (isset($vartype["$rq"])) {
+      	// variable allowed to be empty?
+      	if ('+'==substr($vartype[$rq],0,1)) {
+      		if ($rv == "") {
+	        	// TODO: better output!
+				print "<html><head><title>".tra("An error occurred.")."</title></head><body><center><br />";
+				print "<b>".tra("An error occurred.")."</b><br /><br /></center>";
+				print tra("Notice: this variable may not be empty:")." <font color='red'>$rq</font></body></html>";
+				die;
+      		}
+      		// remove + from type
+      		$vartype[$rq]=substr($vartype[$rq],1);
+      	}
+      	// expand arrays:
         if (is_array($rv)) {
           varcheck($rv);
-        } elseif ((((substr($rq,-2,2) == 'Id' and $rq != 'reqId') or (isset($vartype["$rq"]) and $vartype["$rq"] == 'int')) and !preg_match($patterns['int'],$rv))
-          or ((isset($vartype["$rq"]) and $vartype["$rq"] == 'hex')  and  !preg_match($patterns['hex'],$rv))
-          or ((isset($vartype["$rq"]) and $vartype["$rq"] == 'intSign') and  !preg_match($patterns['intSign'],$rv))
-          or ((isset($vartype["$rq"]) and $vartype["$rq"] == 'url') and  !preg_match($patterns['url'],$rv))
-          or ((isset($vartype["$rq"]) and $vartype["$rq"] == 'char') and  !preg_match($patterns['char'],$rv))
-          or ((isset($vartype["$rq"]) and $vartype["$rq"] == 'hash') and  !preg_match($patterns['hash'],$rv))
-          or ((isset($vartype["$rq"]) and $vartype["$rq"] == 'string') and  !preg_match($patterns['string'],$rv))) {
-          $msg = tra("Invalid variable value : "). "$rq = ". htmlspecialchars($rv);
-          $access->redirect($feature_server_name . "tiki-error.php", $msg);
-          die;
+        // check single parameters:
+        } else {
+	        if (
+	          (((substr($rq,-2,2) == 'Id' and $rq != 'reqId') or $vartype["$rq"] == 'int') and !preg_match($patterns['int'],$rv))
+	          or ($vartype["$rq"] == 'intSign') and !preg_match($patterns['intSign'],$rv)
+	          or ($vartype["$rq"] == 'url') and !preg_match($patterns['url'],$rv)
+	          or ($vartype["$rq"] == 'char') and !preg_match($patterns['char'],$rv)
+	          or ($vartype["$rq"] == 'hash') and !preg_match($patterns['hash'],$rv)
+	          or ($vartype["$rq"] == 'string') and !preg_match($patterns['string'],$rv)
+	          or ($vartype["$rq"] == 'stringlist') and !preg_match($patterns['stringlist'],$rv))
+	        {
+	        	// TODO: better output!
+				print "<html><head><title>".tra("An error occurred.")."</title></head><body><center><br />";
+				print "<b>".tra("An error occurred.")."</b><br /><br /></center>";
+				print tra("Notice: invalid variable value:")." $rq = <font color='red'>".htmlspecialchars($rv)."</font></body></html>";
+				die;
+	        }
         }
       }
-    }
+    } // foreach
   }
-}
+} // varcheck($array)
 varcheck($_REQUEST);
 
 // rebuild $_REQUEST after sanity check
