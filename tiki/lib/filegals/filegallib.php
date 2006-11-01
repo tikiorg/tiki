@@ -79,7 +79,7 @@ class FileGalLib extends TikiLib {
 
 		$search_data = '';
 		if ($tikilib->get_preference('fgal_enable_auto_indexing','y') != 'n') {
-			$search_data = $this->get_search_text_for_data($data,$path,$type);
+			$search_data = $this->get_search_text_for_data($data,$path,$type, $galleryId);
 			if ($search_data === false)
 				return false;
 		}			
@@ -463,7 +463,7 @@ class FileGalLib extends TikiLib {
 
 		$search_data = '';
 		if ($tikilib->get_preference("fgal_enable_auto_indexing") != 'n') {
-			$search_data = $this->get_search_text_for_data($data,$path,$type);
+			$search_data = $this->get_search_text_for_data($data,$path,$type, $galleryId);
 			if ($search_data === false)
 				return false;
 		}
@@ -526,7 +526,7 @@ class FileGalLib extends TikiLib {
 	}
 
 	function reindex_all_files_for_search_text() {
-		$query = "select fileId, filename, filesize, filetype, data, path from `tiki_files`";
+		$query = "select fileId, filename, filesize, filetype, data, path, galleryId from `tiki_files`";
 		$result = $this->query($query);
 		$rows = array();
 		while($row = $result->fetchRow()) {
@@ -534,7 +534,7 @@ class FileGalLib extends TikiLib {
 		}
 		
 		foreach($rows as $row) {
-			$search_text = $this->get_search_text_for_data($row['data'],$row['path'],$row['filetype']);
+			$search_text = $this->get_search_text_for_data($row['data'],$row['path'],$row['filetype'], $row['galleryId']);
 			if ($search_text!==false) {
 				$query = "update `tiki_files` set `search_data`=? where `fileId`=?";
 				$result = $this->query($query,array($search_text,$row['fileId']));
@@ -544,7 +544,7 @@ class FileGalLib extends TikiLib {
 		refresh_index_files();
 	}
 
-	function get_search_text_for_data($data,$path,$type) {
+	function get_search_text_for_data($data,$path,$type, $galleryId) {
 		global $fgal_use_dir, $fgal_podcast_dir;
 		
 		if (!isset($data) && !isset($path)) {
