@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.22 2005-12-16 16:43:55 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.23 2006-11-01 21:18:33 ohertel Exp $
 //
 
 // $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
@@ -177,9 +177,10 @@ function sql_error($query, $values, $result) {
     } else {
       echo $outp;
     }
-    echo "<pre>";
-    var_dump(debug_backtrace());
-    echo "</pre>";
+    // -- debugging stuff:
+    // echo "<pre>";
+    // var_dump(debug_backtrace());
+    // echo "</pre>";
     die;
 }
 
