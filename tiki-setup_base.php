@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.107 2006-11-01 21:23:02 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.108 2006-11-01 23:23:30 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -111,7 +111,8 @@ $patterns['string']  = "/^[^<>\";#]*$/"; // find, and such extended chars
 $patterns['stringlist']  = "/^[^<>\"#]*$/"; // to, cc, bcc (for string lists like: user1;user2;user3)
 $patterns['vars']  = "/^[-_a-zA-Z0-9]*$/"; // for variable keys
 $patterns['hash'] = "/^[a-z0-9]*$/"; // for hash reqId in live support
-$patterns['url'] = "/^https?:\/\/[^<>\"']*$/"; // needed for the htmlpage inclusion in tiki-editpage
+// needed for the htmlpage inclusion in tiki-editpage
+$patterns['url'] = "/^https?:\/\/[^<>\"']*$/"; // TODO: allow relative / local urls, too.
 
 // parameter type definitions. prepend a + if variable may not be empty, e.g. '+int'
 $vartype['id'] = '+int';
@@ -154,7 +155,7 @@ $vartype['editmode'] = 'char'; // from calendar
 $vartype['actpass'] = '+string'; // remind password page
 $vartype['user'] = '+string'; // remind password page
 $vartype['remind'] = 'string'; // remind password page
-$vartype['url'] = 'url';
+// $vartype['url'] = 'url'; // TODO: uncomment, as soon as url pattern above is fixed
 // galaxia
 $vartype['aid'] = '+int';
 $vartype['description'] = 'string';
