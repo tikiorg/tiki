@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/transitions/1.9to1.10.css,v 1.5 2006-09-29 18:43:07 ohertel Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/transitions/1.9to1.10.css,v 1.6 2006-11-02 18:58:10 sylvieg Exp $
 
 The following CSS classes were added to Tiki between v1.9 and v1.10
 They should be added to themes (possibly with tweaks) to make the theme v1.10 ready
@@ -51,3 +51,5 @@ a.admbox {
 a.admbox img { padding-top: 20px; }
 a.admbox.off { background-color: #d0d0d0; }
 a.admbox:hover { background-color: #a0a0a0; }
+
+.wikiplugin_trackerstat, .wikiplugin_tracker, .wikiplugin_trackerlist {} 
