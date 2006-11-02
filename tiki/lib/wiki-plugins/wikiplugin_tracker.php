@@ -158,6 +158,9 @@ function wikiplugin_tracker($data, $params) {
 					$smarty->assign('wikiplugin_tracker', $trackerId);//used in vote plugin
 				}
 
+			/*} else if (!empty($tracker['oneUserItem']) && $tracker['oneUserItem'] == 'y' && ($itemId = $trklib->get_user_item($trackerId, $tracker))) {
+				$flds['data'] = @@;
+			*/
 			}
 			// initialize fields with blank values
 			else {
@@ -241,7 +244,7 @@ function wikiplugin_tracker($data, $params) {
 			}
 
 			// Loop on tracker fields and display form
-			$back.= '<table>';
+			$back.= '<table class="wikiplugin_tracker">';
 			foreach ($flds['data'] as $f) {
 				if ($f['type'] == 'u' and $f['options'] == '1') {
 					$back.= '<input type="hidden" name="authorfieldid" value="'.$f['fieldId'].'" />';

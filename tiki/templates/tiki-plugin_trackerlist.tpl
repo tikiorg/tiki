@@ -16,7 +16,7 @@
 
 {if $checkbox && $items|@count gt 0}<form method="post" action="{$checkbox.action}">{/if}
 
-<table class="normal">
+<table class="normal wikiplugin_trackerlist">
 <tr>
 {if $checkbox}<td class="heading">{$checkbox.title}</td>{/if}
 {if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y'))}
