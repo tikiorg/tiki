@@ -152,6 +152,7 @@ class SurveyLib extends TikiLib {
 	}
 
 	function list_survey_questions($surveyId, $offset, $maxRecords, $sort_mode, $find) {
+		global $tikilib;
 		$bindvars = array((int) $surveyId);
 		if ($find) {
 			$findesc = '%' . $find . '%';
@@ -169,6 +170,8 @@ class SurveyLib extends TikiLib {
 
 		while ($res = $result->fetchRow()) {
 			$questionId = $res["questionId"];
+			if (!empty($res['options']) &&  ($res["type"] == 'r' || $res["type"] == 's') )
+				$res['explode'] = array_fill(1,$res['options'], " "); 
 
 			// save user options
 			$options = explode( ",", $res["options"] );
@@ -203,6 +206,8 @@ class SurveyLib extends TikiLib {
 				$votes += $res2["votes"];
 				$res2["average"] = $average;
 				$res2["width"] = $average * 2;
+				if ($res['type'] == 'x') 
+					$res2['qoption'] = $tikilib->parse_data($res2['qoption']);
 				
 				// when question with multiple options
 				// we MUST respect the user defined order

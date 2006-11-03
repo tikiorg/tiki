@@ -1,4 +1,4 @@
-<form name="aform" action="tiki-take_survey.php" method="post">
+<form name="aform" formId='editpageform' action="tiki-take_survey.php" method="post">
 <input type="hidden" name="surveyId" value="{$surveyId|escape}" />
 <h2>{$survey_info.name}</h2>
 <div class="quizdescription">{$survey_info.description}</div>
@@ -17,6 +17,16 @@
 <input type="text" name="question_{$questions[ix].questionId}" />
 </div>  
 {/if}
+{if $questions[ix].type eq 'x'}
+<div class="quizoptions">
+<table class="normal"><tr><td valign="top">
+{include file="textareasize.tpl" area_name='editwiki' formId='editpageform'}<br /><br />
+{include file=tiki-edit_help_tool.tpl area_name='editwiki'}
+</td><td valign="top">
+<textarea id='editwiki' name="question_{$questions[ix].questionId}" rows="{$rows}" cols="{$cols}"></textarea>
+</td></tr></table>
+</div>  
+{/if}
 {if $questions[ix].type eq 'm'}
 <div class="quizoptions">
   {section name=jx loop=$questions[ix].qoptions}
@@ -24,17 +34,19 @@
   {/section}
 </div>  
 {/if}
-{if $questions[ix].type eq 'r'}
+{if $questions[ix].type eq 'r' or $questions[ix].type eq 's'}
 <div class="quizoptions">
+{if $questions[ix].options}
+{foreach from=$questions[ix].explode key=k item=j}
+{$k}<input type="radio" value="{$k}" name="question_{$questions[ix].questionId}" />
+{/foreach}
+{elseif $questions[ix].type eq 'r'}
 1<input type="radio" value="1" name="question_{$questions[ix].questionId}" />
 <input type="radio" value="2" name="question_{$questions[ix].questionId}" />
 <input type="radio" value="3" name="question_{$questions[ix].questionId}" />
 <input type="radio" value="4" name="question_{$questions[ix].questionId}" />
 <input type="radio" value="5" name="question_{$questions[ix].questionId}" />5
-</div>  
-{/if}
-{if $questions[ix].type eq 's'}
-<div class="quizoptions">
+{elseif $questions[ix].type eq 's'}
 1<input type="radio" value="1" name="question_{$questions[ix].questionId}" />
 <input type="radio" value="2" name="question_{$questions[ix].questionId}" />
 <input type="radio" value="3" name="question_{$questions[ix].questionId}" />
@@ -45,9 +57,9 @@
 <input type="radio" value="8" name="question_{$questions[ix].questionId}" />
 <input type="radio" value="9" name="question_{$questions[ix].questionId}" />
 <input type="radio" value="10" name="question_{$questions[ix].questionId}" />10
-</div>  
 {/if}
 </div>
+{/if}
 {/section}
 <input type="submit" value="{tr}send answers{/tr}" name="ans" />
 </form>
