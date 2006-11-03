@@ -84,9 +84,9 @@ class WikiLib extends TikiLib {
      *  the returned array does not contain the last editor/contributor
      */
     function get_contributors($page, $last) {
-				$notus = "`user` not like 'system' and `user` not like ?";
-        $query = "select `user` from `tiki_history` where ($notus) and `pageName`=? order by `version` desc";
-        $result = $this->query($query,array($last,$page), 10);
+	$notus = "`user` not like 'system' and `user` not like ?";
+        $query = "select DISTINCT `user` from `tiki_history` where ($notus) and `pageName`=? order by `version` desc";
+        $result = $this->query($query,array($last,$page));
         $ret = array();
         $seen = array();
         //$seen = array("system", "admin", $last); // would it be more efficient to put admin and system in here rather than in the where clause, above?
