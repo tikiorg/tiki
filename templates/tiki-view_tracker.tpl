@@ -1,11 +1,11 @@
-{* $Id: tiki-view_tracker.tpl,v 1.114 2006-10-11 17:50:58 sylvieg Exp $ *}
+{* $Id: tiki-view_tracker.tpl,v 1.115 2006-11-03 16:29:12 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
 {if $filtervalue}
 <span class="button2"><a href="tiki-view_tracker.php?trackerId={$trackerId}" class="linkbut">{tr}View this tracker items{/tr}</a></span>
 {/if}
-{if $user}
+{if $user and $tiki_p_watch_trackers == 'y'}
 <span class="button2"><a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;monitor=1" class="linkbut">{tr}{$email_mon}{/tr}</a></span>
 {/if}
 {if $tiki_p_admin_trackers eq 'y'}

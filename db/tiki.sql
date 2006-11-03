@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2006-11-02 07:16:50 $
-# $Author: mose $
+# $Date: 2006-11-03 16:29:12 $
+# $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -4022,6 +4022,7 @@ insert into users_grouppermissions (groupName,permName) values('Anonymous','tiki
 insert into users_grouppermissions (groupName,permName) values('Anonymous','tiki_p_wiki_view_history');
 insert into users_grouppermissions (groupName,permName) values('Anonymous','tiki_p_wiki_view_comments');
 insert into users_grouppermissions (groupName,permName) values('Anonymous','tiki_p_wiki_view_source');
+insert into users_grouppermissions (groupName,permName) values('Registered','tiki_p_watch_trackers');
 
 #
 # Table structure for table users_groups
@@ -4258,6 +4259,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName,permDesc,level,type) values ('tiki_p_admin_rssmodules','Can admin rss modules', 'admin', 'tiki');
 insert into users_permissions (permName,permDesc,level,type) values ('tiki_p_admin_polls','Can admin polls', 'admin', 'tiki');
 insert into users_permissions (permName,permDesc,level,type) values ('tiki_p_admin_objects','Can edit object permissions', 'admin', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_watch_trackers', 'Can watch tracker', 'registered', 'trackers');
 # --------------------------------------------------------
 
 #
