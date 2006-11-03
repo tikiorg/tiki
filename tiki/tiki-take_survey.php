@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-take_survey.php,v 1.14 2005-05-18 10:58:59 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-take_survey.php,v 1.15 2006-11-03 22:19:11 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -125,7 +125,7 @@ if (isset($_REQUEST["ans"])) {
 				//print("value: $value<br />");
 				if ($question["type"] == 'r' || $question["type"] == 's') {
 					$srvlib->register_survey_rate_vote($questionId, $value);
-				} elseif ($question["type"] == 't') {
+				} elseif ($question["type"] == 't' || $question["type"] == 'x') {
 					$srvlib->register_survey_text_option_vote($questionId, $value);
 				} else {
 					$srvlib->register_survey_option_vote($questionId, $value);
@@ -141,6 +141,13 @@ if (isset($_REQUEST["ans"])) {
 //print_r($questions);
 $section = 'surveys';
 include_once ('tiki-section_options.php');
+
+include_once("textareasize.php");
+
+include_once ('lib/quicktags/quicktagslib.php');
+$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','wiki');
+$smarty->assign_by_ref('quicktags', $quicktags["data"]);
+$smarty->assign('quicktagscant', $quicktags["cant"]);
 
 ask_ticket('take-survey');
 
