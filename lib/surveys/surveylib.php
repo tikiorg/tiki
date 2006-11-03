@@ -174,7 +174,7 @@ class SurveyLib extends TikiLib {
 			$options = explode( ",", $res["options"] );
 			
 			$res["options"] = $this->getOne("select count(*) from `tiki_survey_question_options` where `questionId`=?",array((int)$res["questionId"]));
-			$query2 = "select * from `tiki_survey_question_options` where `questionId`=?";
+			$query2 = "select * from `tiki_survey_question_options` where `questionId`=? order by `optionId`";
 
 			if ($res["type"] == 'r') {
 				$maxwidth = 5;
