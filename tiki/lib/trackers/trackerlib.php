@@ -1,5 +1,5 @@
 <?php
-
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.143 2006-11-06 15:14:36 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1675,12 +1675,6 @@ class TrackerLib extends TikiLib {
 		$fields = $this->list_tracker_fields($trackerId, 0, -1, 'position_asc', '');
 		foreach($fields['data'] as $field) {
 			$this->replace_tracker_field($newTrackerId, 0, $field['name'], $field['type'], $field['isMain'], $field['isSearchable'], $field['isTblVisible'], $field['isPublic'], $field['isHidden'], $field['isMandatory'], $field['position'], $field['options'], $field['description']);
-		}
-		if ($feature_category == 'y') {
-			global $categlib; include_once('lib/categories/categlib.php');
-			$cats = get_object_categories('tracker', $trackerId);
-			$catObjectId = $categlib->add_categorized_object('tracker', $newTrackerId, $description, $name, "tiki-view_tracker.php?trackerId=$newTrackerId");
-			$categlib->categorize($catObjectId, $cat_acat);
 		}
 		return $newTrackerId;
 	}
