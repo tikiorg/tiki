@@ -1,4 +1,4 @@
-	# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.104 2006-11-03 16:29:12 sylvieg Exp $
+	# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.105 2006-11-06 17:12:21 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -790,3 +790,6 @@ ALTER TABLE tiki_logs CHANGE logip logip varchar(200);
 #sylvieg 11/3/06
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_watch_trackers', 'Can watch tracker', 'Registered', 'trackers');
 INSERT INTO users_grouppermissions (groupName,permName) values('Registered','tiki_p_watch_trackers');
+
+#sylvieg 11/6/6
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_list_type','n');

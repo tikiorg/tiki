@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.39 2006-10-25 20:40:28 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.40 2006-11-06 17:12:21 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-file_galleries.php?galleryId={$galleryId}">{tr}File Galleries{/tr}</a>
 
@@ -128,8 +128,10 @@
 	{assign var='cntcol' value=$cntcol+1}
 	<td class="heading"><a class="tableheading" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a></td>
 {/if}
-{assign var='cntcol' value=$cntcol+1}
-<td class="heading"><a class="tableheading" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_type'}type_asc{else}type_desc{/if}">{tr}Type{/tr}</a></td>
+{if $fgal_list_type eq 'y'}
+	{assign var='cntcol' value=$cntcol+1}
+	<td class="heading"><a class="tableheading" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_type'}type_asc{else}type_desc{/if}">{tr}Type{/tr}</a></td>
+{/if}
 {if $fgal_list_created eq 'y'}
 	{assign var='cntcol' value=$cntcol+1}
 	<td class="heading"><a class="tableheading" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a></td>
@@ -174,11 +176,13 @@
 		</td>
 	{/if}
 
-	<td class="{cycle advance=false}">
-		{if $galleries[changes].type eq "default" }<img src='pics/large/file-manager48x48.png' border='0' alt='{tr}file gallery{/tr}' title='{tr}file gallery{/tr}' />
-		{elseif $galleries[changes].type eq "podcast" }<img src='pics/large/gnome-sound-recorder48x48.png' border='0' alt='{tr}podcast (audio){/tr}' title='{tr}podcast (audio){/tr}' />
-		{elseif $galleries[changes].type eq "vidcast" }<img src='pics/large/mplayer48x48.png' border='0' alt='{tr}podcast (video){/tr}' title='{tr}podcast (video){/tr}' />{/if}
-	</td>
+	{if $fgal_list_type eq 'y'}
+		<td class="{cycle advance=false}">
+			{if $galleries[changes].type eq "default" }<img src='pics/large/file-manager48x48.png' border='0' alt='{tr}file gallery{/tr}' title='{tr}file gallery{/tr}' />
+			{elseif $galleries[changes].type eq "podcast" }<img src='pics/large/gnome-sound-recorder48x48.png' border='0' alt='{tr}podcast (audio){/tr}' title='{tr}podcast (audio){/tr}' />
+			{elseif $galleries[changes].type eq "vidcast" }<img src='pics/large/mplayer48x48.png' border='0' alt='{tr}podcast (video){/tr}' title='{tr}podcast (video){/tr}' />{/if}
+		</td>
+	{/if}
 
 	{if $fgal_list_created eq 'y'}	
 		<td class="{cycle advance=false}">{$galleries[changes].created|tiki_short_datetime}&nbsp;</td>
