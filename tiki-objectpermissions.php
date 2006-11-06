@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-objectpermissions.php,v 1.14 2006-05-22 17:09:07 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-objectpermissions.php,v 1.15 2006-11-06 15:04:49 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -52,7 +52,9 @@ $smarty->assign('permType', $_REQUEST["permType"]);
 // Process the form to assign a new permission to this page
 if (isset($_REQUEST["assign"])) {
 	check_ticket('object-perms');
-	$userlib->assign_object_permission($_REQUEST["group"], $_REQUEST["objectId"], $_REQUEST["objectType"], $_REQUEST["perm"]);
+	foreach($_REQUEST['perm'] as $perm) {
+		$userlib->assign_object_permission($_REQUEST["group"], $_REQUEST["objectId"], $_REQUEST["objectType"], $perm);
+	}
 	$smarty->assign('groupName', $_REQUEST["group"]);
 }
 

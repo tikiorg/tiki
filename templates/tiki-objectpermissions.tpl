@@ -1,3 +1,4 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-objectpermissions.tpl,v 1.15 2006-11-06 15:04:49 sylvieg Exp $ *}
 <h1>{tr}Assign permissions to {/tr}{tr}{$objectType}{/tr} {$objectName}</h1>
 <a href="{$referer}" class="linkbut">{tr}back{/tr}</a>
 <div>
@@ -8,12 +9,13 @@
 {section  name=pg loop=$page_perms}
 <tr><td class="{cycle advance=false}">{$page_perms[pg].groupName}</td>
 <td class="{cycle advance=false}">{$page_perms[pg].permName}</td>
-<td class="{cycle advance=true}"><a class="link" href="tiki-objectpermissions.php?referer={$referer|escape:"url"}&amp;action=remove&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;page={$page|escape:"url"}&amp;perm={$page_perms[pg].permName}&amp;group={$page_perms[pg].groupName}" title="{tr}Delete{/tr}"><img src="img/icons2/delete.gif" width="12" height="12" alt="{tr}delete{/tr}" border="0" /></a></td></tr>
+<td class="{cycle advance=true}"><a class="link" href="tiki-objectpermissions.php?referer={$referer|escape:"url"}&amp;action=remove&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;page={$page|escape:"url"}&amp;perm={$page_perms[pg].permName}&amp;group={$page_perms[pg].groupName}" title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" width="16" height="16" alt="{tr}delete{/tr}" border="0" /></a></td></tr>
 {sectionelse}
 <tr><td colspan="3" class="odd">{tr}No individual permissions global permissions apply{/tr}</td></tr>
 {/section}
 </table>
 <h2>{tr}Assign permissions to this object{/tr}</h2>
+<div class="simplebox">{tr}Tip: hold down CTRL to select multiple{/tr}</div>
 <form method="post" action="tiki-objectpermissions.php">
 <input type="hidden" name="page" value="{$page|escape}" />
 <input type="hidden" name="referer" value="{$referer|escape}" />
@@ -23,7 +25,7 @@
 <input type="hidden" name="permType" value="{$permType|escape}" />
 <input type="submit" name="assign" value="{tr}assign{/tr}" />
 
-<select name="perm">
+<select name="perm[]" multiple="multiple" size="5">
 {section name=prm loop=$perms}
 <option value="{$perms[prm].permName|escape}">{$perms[prm].permName}</option>
 {/section}
