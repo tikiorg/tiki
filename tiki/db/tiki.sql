@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2006-11-03 16:29:12 $
+# $Date: 2006-11-06 17:12:21 $
 # $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -4550,6 +4550,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_allow_duplicates',
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_batch_dir','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_list_created','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_list_description','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_list_type','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_list_files','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_list_hits','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_list_lastmodif','y');
