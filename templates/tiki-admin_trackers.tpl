@@ -287,6 +287,8 @@ categories = {$catsdump}
 </select>
 </td>
 </tr>
+<tr class="formcolor"><td>{tr}Duplicate categories{/tr}</td><td><input type="checkbox" name="dupCateg" /></td></tr>
+<tr class="formcolor"><td>{tr}Duplicate perms{/tr}</td><td><input type="checkbox" name="dupPerms" /></td></tr>
 <tr class="formcolor"><td></tdf<td><input type="submit" name="duplicate" value="{tr}Duplicate tracker{/tr}" /></td></tr>
 </table>
 </form>
