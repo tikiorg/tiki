@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.9 2006-10-15 22:11:54 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.10 2006-11-07 14:33:50 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -515,9 +515,11 @@ $smarty = new Smarty_TikiWiki();
 //$smarty->load_filter('pre', 'tr');
 $smarty->load_filter('output', 'trimwhitespace');
 $smarty->assign('mid', 'tiki-install.tpl');
-$smarty->assign('style', 'moreneat.css');
+$smarty->assign('style', 'tikineat.css');
 $smarty->assign('virt',$virt);
 $smarty->assign('multi', $multi);
+if ($language != 'en')
+	$smarty->assign('lang', $language);
 
 // Tiki Database schema version
 $tiki_version = '1.10';
