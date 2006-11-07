@@ -1,5 +1,5 @@
-<div style="margin-left:180px;margin-right:180px;">
-<h1>{tr}Tiki installer{/tr} v1.10 (CVS)<a title='help' href='http://doc.tikiwiki.org/Installation' target="help"><img
+<div style="margin:10px 30px;">
+<h1>{tr}Tiki installer{/tr} v1.9.6 (CVS)<a title='help' href='http://doc.tikiwiki.org/Installation' target="help"><img
 border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a></h1>
 
 {if $tikifeedback}
@@ -39,7 +39,7 @@ border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a></h1>
 {if $multi} <h2> ({tr}MultiTiki{/tr}) {$multi|default:"default"} </h2> {/if}
 {* / multitiki --------------------------- *}
 
-<a href="tiki-install.php?restart=1{if $multi}&amp;multi={$multi}{/if}" class="link">{tr}reload{/tr}</a><br /><br />
+<a href="tiki-install.php?restart=1{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" class="link">{tr}reload{/tr}</a><br /><br />
 
 {* we do not have a valid db connection or db reset is requested *}
 
@@ -48,6 +48,7 @@ border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a></h1>
 {tr}Please enter your database connection info{/tr}<br /><br />
 <form action="tiki-install.php" method="post">
 {if $multi}<input type="hidden" name="multi" value="{$multi}" />{/if}
+{if $lang}<input type="hidden" name="lang" value="{$lang}" />{/if}
 <table class="normal"><tr class="formcolor">
 <td>{tr}Database type{/tr}:</td>
 <td>
@@ -61,7 +62,7 @@ border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a></h1>
 </tr>
 
 <tr class="formcolor">
-<td>Host:</td>
+<td>{tr}Host:{/tr}</td>
 <td>
 <input type="text" name="host" value="localhost" />
 </td><td>
@@ -114,11 +115,12 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 	  {if $dbdone eq 'n'}
 		  {if $logged eq 'y'}
 		    {* we are logged if no admin account is found or if he user logged in*}
-		    <b>{tr}Welcome to the installation & upgrade script!{/tr}</b><br />
+		    <b>{tr}Welcome to the installation &amp; upgrade script!{/tr}</b><br />
 		    <br /><br />
 			
 		    <form method="post" action="tiki-install.php">
 				{if $multi}<input type="hidden" name="multi" value="{$multi}" />{/if}
+				{if $lang}<input type="hidden" name="lang" value="{$lang}" />{/if}
 				<hr />
 		    <table>
 		    <tr><td style="text-align: center;" colspan="2"
@@ -133,11 +135,10 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 			{/section}
 			</select>
 			<input type="submit" name="scratch" value="create" />	    
-		    </td></tr>
+		    </td></tr><tr>
 			<td height="100" valign="top">
 			</td><td height="100" valign="top">
-			<a target="_new" href="http://tikiwiki.org/tiki-index.php?page=TikiProfiles" class="link">{tr}Descriptions of the available profiles{/tr}</a>
-			<p>
+			<a target="_blank" href="http://tikiwiki.org/tiki-index.php?page=TikiProfiles" class="link">{tr}Descriptions of the available profiles{/tr}</a>
 		    </td>
 		    <tr><td colspan="2">
 
@@ -146,7 +147,7 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
  rowspan="1" height="26"><font size="5"><b>{tr}Upgrade{/tr}</b></font>
  			</td></tr>
 		    <tr><td colspan="2">				
-			{tr}Important{/tr}: <b>{tr}backup your database{/tr}</b> {tr}with mysqldump or phpmyadmin before you proceed{/tr}. <br>
+			{tr}Important{/tr}: <b>{tr}backup your database{/tr}</b> {tr}with mysqldump or phpmyadmin before you proceed{/tr}. <br />
 			</td></tr>
 		    <tr><td>			
 			{tr}Update database using script{/tr}: 
@@ -183,7 +184,7 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 			<hr />
 			<br /><br /><br />
 			<a href="tiki-index.php" class="link">{tr}Do nothing and enter Tiki{/tr}</a><br />
-			<a href="tiki-install.php?reset=yes" class="link">{tr}Reset database connection settings{/tr}</a>
+			<a href="tiki-install.php?reset=yes{if $lang}&amp;lang={$lang}{/if}" class="link">{tr}Reset database connection settings{/tr}</a>
 		  {else}
 			{* we are not logged then no admin account found and user not logged*}
 			<b>{tr}This site has an admin account configured{/tr}</b><br />
@@ -191,6 +192,7 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 
      <form name="loginbox" action="tiki-install.php" method="post"> 
 			{if $multi}<input type="hidden" name="multi" value="{$multi}" />{/if}
+			{if $lang}<input type="hidden" name="lang" value="{$lang}" />{/if}
           <table>
           <tr><td class="module">{tr}user{/tr}:</td></tr>
           <tr><td>admin</td></tr>
@@ -275,8 +277,8 @@ webserver. Too little memory will cause blank pages!{/tr}</div>
 
     		<a href="tiki-install.php?kill=1" class="link">{tr}Click here to disable the install script and proceed into tiki{/tr}.</a><br /><br />
     		<a href="tiki-index.php" class="link">{tr}Click here to proceed into tiki without disabling the script{/tr}.</a><br /><br />
-    		<a href="tiki-install.php?reset=yes{if $multi}&amp;multi={$multi}{/if}" class="link">{tr}Reset database connection settings{/tr}.</a><br /><br />
-    		<a href="tiki-install.php{if $multi}?multi={$multi}{/if}" class="link">{tr}Go back and run another install/upgrade script{/tr}</a> - {tr}do not use your Back button in your browser!{/tr}<br /><br />
+    		<a href="tiki-install.php?reset=yes{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" class="link">{tr}Reset database connection settings{/tr}.</a><br /><br />
+    		<a href="tiki-install.php{if $multi}?multi={$multi}{/if}{if $lang}{if $multi}&amp;{else}?{/if}lang={$lang}{/if}" class="link">{tr}Go back and run another install/upgrade script{/tr}</a> - {tr}do not use your Back button in your browser!{/tr}<br /><br />
     	{/if}
 	{/if}
 </div>

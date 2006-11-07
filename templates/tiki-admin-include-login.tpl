@@ -185,7 +185,7 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 <div class="cbox">
 <div class="cbox-title">
   {tr}PEAR::Auth{/tr}
-  {help url="User+Registration+Settings" desc="{tr}LDAP{/tr}"}
+  {help url="Login+Config" desc="{tr}LDAP{/tr}"}
 </div>
 <div class="cbox-data">
 <form action="tiki-admin.php?page=login" method="post">

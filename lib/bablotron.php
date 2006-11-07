@@ -99,8 +99,8 @@ class bablotron extends TikiLib {
 
 	function word_exists($word) {
 		$word = addslashes(trim($word));
-		$query = "select `word` from `{$this->tbl}` where `word`=?";
-		@$result = $this->query($query,array($word));
+		$query = "select `word` from `{$this->tbl}` where `word`=? or `word`=?";
+		@$result = $this->query($query,array($word,strtolower($word)));
 
 		return $result->numRows();
 	}

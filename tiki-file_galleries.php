@@ -134,7 +134,7 @@
 	  
 	  $smarty->assign('show_id',isset($_REQUEST['show_id'])?'y':'n');
 	  $smarty->assign('show_icon',isset($_REQUEST['show_icon'])?'y':'n');
-	  $smarty->assign('show_name',($_REQUEST['show_name']));
+	  $smarty->assign('show_name',isset($_REQUEST['show_name'])?$_REQUEST['show_name']:'a');
 	  $smarty->assign('show_size',isset($_REQUEST['show_size'])?'y':'n');
 	  $smarty->assign('show_description',isset($_REQUEST['show_description'])?'y':'n');
 	  $smarty->assign('show_created',isset($_REQUEST['show_created'])?'y':'n');
@@ -166,6 +166,7 @@
 	  $_REQUEST['show_created']=isset($_REQUEST['show_created'])?'y':'n';
 	  $_REQUEST['show_dl']=isset($_REQUEST['show_dl'])?'y':'n';
 	  $_REQUEST['show_size']=isset($_REQUEST['show_size'])?'y':'n';
+	  $_REQUEST['show_name']=isset($_REQUEST['show_name'])?$_REQUEST['show_name']:'a';
 	  $fgid = $filegallib->replace_file_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $user, $_REQUEST["maxRows"], $public, $visible,$_REQUEST['show_id'],$_REQUEST['show_icon'],$_REQUEST['show_name'],$_REQUEST['show_size'],$_REQUEST['show_description'],$_REQUEST['show_created'],$_REQUEST['show_dl'],$_REQUEST['max_desc'],$_REQUEST['fgal_type']);
 	  
 	  $cat_type='file gallery';
