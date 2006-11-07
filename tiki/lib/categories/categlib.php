@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.85 2006-10-16 12:15:38 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.86 2006-11-07 13:08:41 sylvieg Exp $
  *
  * \brief Categories support class
  *
@@ -263,6 +263,7 @@ class CategLib extends ObjectLib {
 			 'article' => 'tiki_p_read_article',
 			 'image' => 'tiki_p_view_image_gallery',
 			 'calendar' => 'tiki_p_view_calendar',
+			 'file' => 'tiki_p_download_files',
 			 
 			 // newsletters can't be categorized, although there's some code in tiki-admin_newsletters.php
 			 // 'newsletter' => ?,
@@ -373,10 +374,10 @@ class CategLib extends ObjectLib {
 		$objs = array();
 
 		while ($res = $result->fetchRow()) {
-			if (!in_array($res["catObjectId"], $objs)) {
+			if (!in_array($res['catObjectId'].'-'.$res['categId'], $objs)) { // same object and same category
 				$ret[] = $res;
 
-				$objs[] = $res["catObjectId"];
+				$objs[] = $res['catObjectId'].'-'.$res['categId'];
 			}
 		}
 
@@ -384,6 +385,7 @@ class CategLib extends ObjectLib {
 		if ($sort_mode == 'shuffle') {
 			shuffle($ret);
 		}
+
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;
 
@@ -514,8 +516,8 @@ class CategLib extends ObjectLib {
 
 		if (!$catObjectId) {
 			// The page is not cateorized
-			$info = $this->get_page_info($pageName);
-
+			if (!($info = $this->get_page_info($pageName)))
+				return;
 			$href = 'tiki-index.php?page=' . urlencode($pageName);
 			$catObjectId = $this->add_categorized_object('wiki page', $pageName, substr($info["description"], 0, 200), $pageName, $href);
 		}
