@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-batch_upload.php,v 1.11 2006-11-07 01:39:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-batch_upload.php,v 1.12 2006-11-07 01:54:57 sylvieg Exp $
 
 require_once ('tiki-setup.php');
 include_once ('lib/imagegals/imagegallib.php');
@@ -47,7 +47,6 @@ $allowed_types = array('.png','.jpg','.jpeg','.gif'); // list of filetypes you w
 
 // recursively get all images from all subdirectories
 function getDirContent($sub) {
-  return;
 	global $allowed_types;
 	global $a_img;
 	global $a_path;
