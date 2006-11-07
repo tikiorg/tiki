@@ -39,14 +39,13 @@ if (!isset($fgal_batch_dir) or !is_dir($fgal_batch_dir)) {
 }
 
 // We need a galleryId
-if ((int)$_REQUEST["galleryId"]<1) {
-	$smarty->assign('msg', tra("No galleryId specified"));
-	$smarty->display("error.tpl");
-	die;
+if (!isset($_REQUEST['galleryId'])) {
+	$_REQUEST['galleryId']=0;
+	$podCastGallery = false;
+} else 
+	$gal_info = $tikilib->get_file_gallery($_REQUEST["galleryId"]);
+	$podCastGallery = $filegallib->isPodCastGallery($_REQUEST["galleryId"]);
 }
-
-$gal_info = $tikilib->get_file_gallery($_REQUEST["galleryId"]);
-$podCastGallery = $filegallib->isPodCastGallery($_REQUEST["galleryId"]);
 
 $smarty->assign('filedir',$filedir);
 
