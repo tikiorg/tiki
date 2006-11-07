@@ -43,6 +43,7 @@ class FileGalLib extends TikiLib {
 
 		$query = "delete from `tiki_files` where `fileId`=?";
 		$result = $this->query($query,array($id));
+		$this->remove_object('file', $id);
 
 		//Watches
 		$this->notify($galleryId, $name, $filename, '', 'remove file', $user);

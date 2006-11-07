@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.37 2006-10-31 19:20:00 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.38 2006-11-07 15:30:20 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -244,7 +244,7 @@ if (isset($_REQUEST["upload"]) && !empty($_REQUEST['galleryId'])) {
 					$fileId	= $filegallib->insert_file($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $name, $data, $size, $type, $user, $fhash);
 
 				if (!$fileId) {
-					$errors[] = tra('Upload was not successful'). ': ' . $name;
+					$errors[] = tra('Upload was not successful. Duplicate file content'). ': ' . $name;
 					if (($fgal_use_db == 'n') || ($podCastGallery)) {
 						@unlink($savedir . $fhash);
 					}
@@ -262,6 +262,12 @@ if (isset($_REQUEST["upload"]) && !empty($_REQUEST['galleryId'])) {
 						$aux['dllink'] = $url_browse."?fileId=".$fileId;
 					}
 					$uploads[] = $aux;
+					$cat_type = 'file';
+					$cat_objid = $fileId;
+					$cat_desc = substr($_REQUEST["description"], 0, 200);
+					$cat_name =  empty($_REQUEST['name'])? $name: $_REQUEST['name'];
+					$cat_href = $aux['dllink'];
+					include_once ('categorize.php');
 				}
 			}
 		}
@@ -271,6 +277,12 @@ if (isset($_REQUEST["upload"]) && !empty($_REQUEST['galleryId'])) {
 		$filegallib->update_file($editFileId, $_REQUEST["name"], $_REQUEST["description"],$user);
 		$fileChangedMessage = tra('File update was successful').': '.$_REQUEST['name'];
 		$smarty->assign('fileChangedMessage',$fileChangedMessage);
+		$cat_type = 'file';
+		$cat_objid = $editFileId;
+		$cat_desc = substr($_REQUEST["description"], 0, 200);
+		$cat_name = empty($fileInfo['name'])?$fileInfo['filename']: $fileInfo['name'];
+		$cat_href = $podCastGallery?$podcast_url.$fhash: "$url_browse?fileId=".$editFileId; 
+		include_once ('categorize.php');
 	}
 
 	$smarty->assign('errors', $errors);
@@ -335,6 +347,10 @@ for ($i = 0; $i < $temp_max; $i++) {
 }
 
 $smarty->assign_by_ref('galleries', $galleries["data"]);
+
+$cat_type = 'file';
+$cat_objid = empty($_REQUEST['fileId'])? 0: $_REQUEST['fileId'];
+include_once('categorize_list.php');
 
 $section = 'file_galleries';
 include_once ('tiki-section_options.php');
