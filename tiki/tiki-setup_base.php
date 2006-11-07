@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.108 2006-11-01 23:23:30 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.109 2006-11-07 14:21:51 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -65,7 +65,11 @@ function make_clean(&$var,$gpc=false) {
 		}
 	} else {
 		if ($gpc) $var = stripslashes($var);
-		$var = preg_replace("~</?\s*(script|embed|object|applet)[^>]*>~si","",$var);
+		$var = preg_replace("~</?\s*(embed|object|applet)[^>]*>~si","",$var);
+		if (preg_match("~</?\s*script[^>]*>~si",$var)) {
+			$var = preg_replace("~</?\s*script[^>]*>~si","",$var);
+			make_clean($var);
+		}
 		$var = preg_replace('~(<[^>]*)(onmouseover|onmouseout|onload|onclick|ondblclick|onfocus|onmousedown|onmouseup|onmousemove|onmouseenter|onmouseleave|onblur|onchange|onkeydown|onkeypress|onkeyup|onabort|ondragdrop|onerror|onload|onmove|onreset|onresize|onselect|onsubmit|onunload)=[^>]*>~si','$1>',$var);
 	}
 }
@@ -107,12 +111,12 @@ if ( false ) { // if pre-PHP 4.1 compatibility is not required
 $patterns['int']   = "/^[0-9]*$/"; // *Id
 $patterns['intSign']   = "/^[-+]?[0-9]*$/"; // *offset,
 $patterns['char']  = "/^[-,_a-zA-Z0-9]*$/"; // sort_mode, 
-$patterns['string']  = "/^[^<>\";#]*$/"; // find, and such extended chars
+$patterns['string']  = "/^<\/?(b|strong|small|br *\/?|ul|li|i)>|[^<>\";#]*$/"; // find, and such extended chars
 $patterns['stringlist']  = "/^[^<>\"#]*$/"; // to, cc, bcc (for string lists like: user1;user2;user3)
 $patterns['vars']  = "/^[-_a-zA-Z0-9]*$/"; // for variable keys
 $patterns['hash'] = "/^[a-z0-9]*$/"; // for hash reqId in live support
 // needed for the htmlpage inclusion in tiki-editpage
-$patterns['url'] = "/^https?:\/\/[^<>\"']*$/"; // TODO: allow relative / local urls, too.
+$patterns['url'] = "/^(https?:\/\/)?[^<>\"']*$/"; // needed for the htmlpage inclusion in tiki-editpage
 
 // parameter type definitions. prepend a + if variable may not be empty, e.g. '+int'
 $vartype['id'] = '+int';
@@ -134,6 +138,7 @@ $vartype['language'] = 'char';
 $vartype['page'] = 'string';
 $vartype['edit_mode'] = 'char';
 $vartype['find'] = 'string';
+$vartype['topic_find'] = 'string';
 $vartype['initial'] = 'char';
 $vartype['username'] = '+string';
 $vartype['realName'] = 'string';
@@ -155,7 +160,7 @@ $vartype['editmode'] = 'char'; // from calendar
 $vartype['actpass'] = '+string'; // remind password page
 $vartype['user'] = '+string'; // remind password page
 $vartype['remind'] = 'string'; // remind password page
-// $vartype['url'] = 'url'; // TODO: uncomment, as soon as url pattern above is fixed
+$vartype['url'] = 'url';
 // galaxia
 $vartype['aid'] = '+int';
 $vartype['description'] = 'string';
@@ -168,6 +173,7 @@ $vartype['remove_role'] = '+int';
 $vartype['rolename'] = 'char';
 $vartype['type'] = 'string';
 $vartype['userole'] = 'int';
+$vartype['focus'] = 'string';
 
 
 // if we get an error while reading language from prefs, assume the db
@@ -232,9 +238,10 @@ varcheck($_REQUEST);
 unset($_REQUEST);
 unset($_COOKIE['offset']);
 $_REQUEST = array_merge($_COOKIE, $_POST, $_GET, $_ENV, $_SERVER);
-if (!empty($_REQUEST['highlight']))
+if (!empty($_REQUEST['highlight'])) {
+	if (is_array($_REQUEST['highlight'])) $_REQUEST['highlight'] = '';
 	$_REQUEST['highlight'] = htmlspecialchars($_REQUEST['highlight']);
-
+}
 // ---------------------------------------------------------------------
 if (isset($_SERVER["REQUEST_URI"])) {
   ini_set('session.cookie_path', str_replace( "\\", "/", dirname($_SERVER["REQUEST_URI"])));

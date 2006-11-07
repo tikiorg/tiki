@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_box.php,v 1.17 2005-11-07 19:09:04 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_box.php,v 1.18 2006-11-07 14:21:53 mose Exp $
  *
  * Tiki-Wiki BOX plugin.
  * 
@@ -48,7 +48,7 @@ function wikiplugin_box($data, $params) {
 	//$data = preg_replace("/\\n/", "<br />", $data);
 	// Insert "\n" at data begin if absent (so start-of-line-sensitive syntaxes will be parsed OK)
 	//if (substr($data, 0, 1) != "\n") $data = "\n".$data;
-	$data = $tikilib->parse_data($data);
+	//$data = $tikilib->parse_data($data);
 	return $begin . $data . $end;
 }
 

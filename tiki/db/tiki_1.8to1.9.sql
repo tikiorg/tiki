@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.110 2006-10-22 03:21:37 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.111 2006-11-07 14:21:52 mose Exp $
 
 # The following script will update a tiki database from version 1.8.x to 1.9.x
 # The following script will ALSO update from version 1.9.x to 1.9.y
@@ -1062,19 +1062,19 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_tracker','n');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_history', 'Can view wiki history', 'basic', 'wiki');
 
 # 2005-04-24 toggg: view wiki history copied for groups
-DROP TABLE IF EXISTS temp_users_grouppermissions;
-CREATE TABLE temp_users_grouppermissions (
-  groupName varchar(255) NOT NULL default '',
-  permName varchar(30) NOT NULL default '',
-  value char(1) default '',
-  PRIMARY KEY  (groupName(30),permName)
-) TYPE=MyISAM;
-INSERT into temp_users_grouppermissions SELECT groupName, 'tiki_p_wiki_view_history', value FROM users_grouppermissions WHERE permName='tiki_p_view';
-INSERT into users_grouppermissions SELECT * FROM temp_users_grouppermissions;
-DROP TABLE temp_users_grouppermissions;
+# DROP TABLE IF EXISTS temp_users_grouppermissions;
+# CREATE TABLE temp_users_grouppermissions (
+#   groupName varchar(255) NOT NULL default '',
+#   permName varchar(30) NOT NULL default '',
+#   value char(1) default '',
+#   PRIMARY KEY  (groupName(30),permName)
+# ) TYPE=MyISAM;
+# INSERT into temp_users_grouppermissions SELECT groupName, 'tiki_p_wiki_view_history', value FROM users_grouppermissions WHERE permName='tiki_p_view';
+# INSERT into users_grouppermissions SELECT * FROM temp_users_grouppermissions;
+# DROP TABLE temp_users_grouppermissions;
 
 # 2005-04-25 redflo: tiki_secdb for admin->security checks
-DROP TABLE IF EXISTS tiki_secdb;
+# DROP TABLE IF EXISTS tiki_secdb;
 CREATE TABLE tiki_secdb(
   md5_value varchar(32) NOT NULL,
   filename varchar(250) NOT NULL,
@@ -1115,16 +1115,16 @@ UPDATE tiki_menu_options SET perm="tiki_p_view_trackers" WHERE url="tiki-list_tr
 
 #2005-05-04 sg
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_tiki_calendar', 'Can view TikiWiki tools calendar', 'basic', 'calendar');
-DROP TABLE IF EXISTS temp_users_grouppermissions;
-CREATE TABLE temp_users_grouppermissions (
-  groupName varchar(255) NOT NULL default '',
-  permName varchar(30) NOT NULL default '',
-  value char(1) default '',
-  PRIMARY KEY  (groupName(30),permName)
-) TYPE=MyISAM;
-INSERT into temp_users_grouppermissions SELECT groupName, 'tiki_p_view_tiki_calendar', value FROM users_grouppermissions WHERE permName='tiki_p_view_calendar';
-INSERT into users_grouppermissions SELECT * FROM temp_users_grouppermissions;
-DROP TABLE temp_users_grouppermissions;
+# DROP TABLE IF EXISTS temp_users_grouppermissions;
+# CREATE TABLE temp_users_grouppermissions (
+#   groupName varchar(255) NOT NULL default '',
+#   permName varchar(30) NOT NULL default '',
+#   value char(1) default '',
+#   PRIMARY KEY  (groupName(30),permName)
+# ) TYPE=MyISAM;
+# INSERT into temp_users_grouppermissions SELECT groupName, 'tiki_p_view_tiki_calendar', value FROM users_grouppermissions WHERE permName='tiki_p_view_calendar';
+# INSERT into users_grouppermissions SELECT * FROM temp_users_grouppermissions;
+# DROP TABLE temp_users_grouppermissions;
 
 # 2005-05-10 redflo
 alter table tiki_sessions add tikihost varchar(200) default NULL;
@@ -1252,8 +1252,9 @@ ALTER TABLE `tiki_user_watches` DROP PRIMARY KEY , ADD PRIMARY KEY ( `user` , `e
 INSERT IGNORE INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Mobile','tiki-mobile.php',37,'feature_mobile','','');
 
 # not needed anymore, so drop it:
-DROP TABLE IF EXISTS tiki_features;
-DROP TABLE IF EXISTS users_score;
+# NO ! NEVER put a 'DROP' in this file (except maybe indexes). People may have used it
+#DROP TABLE IF EXISTS tiki_features;
+#DROP TABLE IF EXISTS users_score;
 ALTER TABLE users_users DROP KEY score_2;
 ALTER TABLE users_groups DROP groupHomeLocalized;
 
@@ -1298,5 +1299,8 @@ ALTER TABLE `tiki_trackers` ADD showAttachments char(1) default NULL AFTER useAt
 INSERT IGNORE INTO users_grouppermissions (groupName,permName,value) VALUES ('Anonymous','tiki_p_view','');
 INSERT IGNORE INTO users_grouppermissions (groupName,permName,value) VALUES ('Anonymous','tiki_p_wiki_view_history','');
 
+# 2006-10-21 mose/cfreeze - changed pear auth params to be more generic
+update tiki_preferences set name='auth_pear_host' where name='auth_ldap_host';
+update tiki_preferences set name='auth_pear_port' where name='auth_ldap_port';
 
 

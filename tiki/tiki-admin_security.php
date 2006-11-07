@@ -226,7 +226,8 @@ if (isset($_REQUEST['check_files'])) {
 		4=>'1.9.3.1',
 		5=>'1.9.3.2',
 		6=>'1.9.4',
-		7=>'1.9.5'
+		7=>'1.9.5',
+		8=>'1.9.6'
 	); // all valid versions. Newer versions have a higher array index
   $result=array();
   md5_check_dir(".",$result);

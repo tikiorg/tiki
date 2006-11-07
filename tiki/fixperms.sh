@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/fixperms.sh,v 1.7 2005-10-27 20:12:31 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/fixperms.sh,v 1.8 2006-11-07 14:21:51 mose Exp $
 
 # Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 # All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,7 +8,7 @@
 # This file is a replacement for setup.sh
 # in test in 1.9 version
 
-DIRS="backups db dump img/wiki img/wiki_up img/trackers modules/cache temp temp/cache templates_c templates styles maps whelp mods"
+DIRS="backups db dump img/wiki img/wiki_up img/trackers modules/cache temp temp/cache templates_c templates styles maps whelp mods files"
 
 if [ -d 'lib/Galaxia' ]; then
 	DIRS=$DIRS" lib/Galaxia/processes"

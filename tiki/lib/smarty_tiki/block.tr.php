@@ -25,7 +25,7 @@ function smarty_block_tr($params, $content, &$smarty)
     if ($content) {
     global $language;
     global $lang;
-    include_once("lang/$language/language.php");
+    @include_once("lang/$language/language.php");
       if(isset($lang[$content])) {
         echo $lang[$content];  
       } else {

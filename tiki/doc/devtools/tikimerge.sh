@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/tikimerge.sh,v 1.11 2005-10-16 14:35:09 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/tikimerge.sh,v 1.12 2006-11-07 14:21:52 mose Exp $
 #
 # NOTE: Since 1.9 release, merge only concerns BRANCH-1-9 to HEAD
 #
@@ -41,7 +41,7 @@ echo "cvs -q up -d -r BRANCH-1-9 $FILES"
 echo "cvs -q tag -r BRANCH-1-9 -F BRANCH-1-9-HEAD $FILES"
 echo "cvs -q up -dA $FILES"
 for i in $FILES; do
-	echo "cvs -q up -dkk -j MERGE-BRANCH-1-9-to-HEAD -j BRANCH-1-9-HEAD $i"
+	echo "cvs -q up -dkk -j MERGE-1-9-HEAD -j BRANCH-1-9-HEAD $i"
 done
 for i in $EXCLUDE; do
 	echo "rm -rf $i"
@@ -49,7 +49,7 @@ for i in $EXCLUDE; do
 done
 echo "grep -r '<<<<<<<' $FILES"
 echo "cvs ci -m'Instant-Auto-Merge from BRANCH-1-9 to HEAD' $FILES"
-echo "cvs -q tag -r BRANCH-1-9-HEAD -F MERGE-BRANCH-1-9-to-HEAD $FILES"
+echo "cvs -q tag -r BRANCH-1-9-HEAD -F MERGE-1-9-HEAD $FILES"
 
 echo 
 echo "# Done."

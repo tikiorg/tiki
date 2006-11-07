@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.23 2006-11-01 21:18:33 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.24 2006-11-07 14:21:53 mose Exp $
 //
 
 // $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
@@ -156,11 +156,11 @@ function sql_error($query, $values, $result) {
     //trigger_error($ADODB_LASTDB . " error:  " . $this->db->ErrorMsg(). " in query:<br />" . $query . "<br />", E_USER_WARNING);
     $outp = "<div class='simplebox'><b>".tra("An error occured in a database query!")."</b></div>";
     $outp.= "<br /><table class='form'>";
-    $outp.= "<tr class='heading'><td colspan='2'>Context:</td></tr>";
-    $outp.= "<tr class='formcolor'><td>File</td><td>".$_SERVER['SCRIPT_NAME']."</td></tr>";
-    $outp.= "<tr class='formcolor'><td>Url</td><td>".$_SERVER['REQUEST_URI']."</td></tr>";
-    $outp.= "<tr class='heading'><td colspan='2'>Query:</td></tr>";
-    $outp.= "<tr class='formcolor'><td colspan='2'><tt>$query</tt></td></tr>";
+   	$outp.= "<tr class='heading'><td colspan='2'>Context:</td></tr>";
+		$outp.= "<tr class='formcolor'><td>File</td><td>".basename($_SERVER['SCRIPT_NAME'])."</td></tr>";
+		$outp.= "<tr class='formcolor'><td>Url</td><td>".basename($_SERVER['REQUEST_URI'])."</td></tr>";
+		$outp.= "<tr class='heading'><td colspan='2'>Query:</td></tr>";
+		$outp.= "<tr class='formcolor'><td colspan='2'><tt>$query</tt></td></tr>";
     $outp.= "<tr class='heading'><td colspan='2'>Values:</td></tr>";
     foreach ($values as $k=>$v) {
       $outp.= "<tr class='formcolor'><td>$k</td><td>$v</td></tr>";
@@ -177,7 +177,7 @@ function sql_error($query, $values, $result) {
     } else {
       echo $outp;
     }
-    // -- debugging stuff:
+    // -- debugging stuff: after php 5.1.1 will disclose db user and password
     // echo "<pre>";
     // var_dump(debug_backtrace());
     // echo "</pre>";

@@ -1,4 +1,4 @@
-	# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.105 2006-11-06 17:12:21 sylvieg Exp $
+	# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.106 2006-11-07 14:21:52 mose Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -793,3 +793,8 @@ INSERT INTO users_grouppermissions (groupName,permName) values('Registered','tik
 
 #sylvieg 11/6/6
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_list_type','n');
+
+# 2006-10-21 mose/cfreeze - changed pear auth params to be more generic
+update tiki_preferences set name='auth_pear_host' where name='auth_ldap_host';
+update tiki_preferences set name='auth_pear_port' where name='auth_ldap_port';
+

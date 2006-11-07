@@ -14,12 +14,15 @@ function smarty_function_menu($params, &$smarty)
 
     $smarty->caching = true;
 
+//REYES problema al crear directorios con nombres demasiado largos
     if ($user) {
-        $cache_id = "menu$id|" . $tikilib->get_user_cache_id($user);
+    	$uid = md5($tikilib->get_user_cache_id($user));
+        $cache_id = "menu$id|" . $uid;
+        
+        //$cache_id = "menu$id|" . $tikilib->get_user_cache_id($user);
     } else {
 	$cache_id = "menu$id";
     }
-
     if (!$smarty->is_cached('tiki-user_menu.tpl', "$cache_id")) {
        $menu_info = $tikilib->get_menu($id);
        $channels = $tikilib->list_menu_options($id,0,-1,'position_asc','');
@@ -39,3 +42,4 @@ function compare_menu_options($a, $b) { return strcmp(tra($a['name']), tra($b['n
 /* vim: set expandtab: */
 
 ?>
+
