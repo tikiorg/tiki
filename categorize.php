@@ -1,5 +1,5 @@
 <?php 
-// $Header: /cvsroot/tikiwiki/tiki/categorize.php,v 1.19 2006-01-16 12:31:27 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/categorize.php,v 1.20 2006-11-07 15:30:20 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -52,11 +52,11 @@ if ($feature_categories == 'y') {
 	else
 		$categories = $categlib->list_categs();
 	$num_categories = count($categories);
-	for ($i = 0; $i < $num_categories; $i++) {
-		if (in_array($categories[$i]["categId"], $cats)) {
-			$categories[$i]["incat"] = 'y';
+	for ($iCat = 0; $iCat < $num_categories; $iCat++) {
+		if (in_array($categories[$iCat]["categId"], $cats)) {
+			$categories[$iCat]["incat"] = 'y';
 		} else {
-			$categories[$i]["incat"] = 'n';
+			$categories[$iCat]["incat"] = 'n';
 		}
 	}
 	$smarty->assign_by_ref('categories', $categories["data"]);

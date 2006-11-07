@@ -1,6 +1,8 @@
-<h1><a href="tiki-upload_file.php?galleryId={$galleryId}" class="pagetitle">{if $editFileId}{tr}Edit File:{/tr} {$fileInfo.filename}{else}{tr}Upload File{/tr}{/if}</a></h1>
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_file.tpl,v 1.19 2006-11-07 15:30:24 sylvieg Exp $ *}
+
+<h1><a href="tiki-upload_file.php?galleryId={$galleryId}{if $editFileId}&amp;fileId={$editFileId}{/if}" class="pagetitle">{if $editFileId}{tr}Edit File:{/tr} {$fileInfo.filename}{else}{tr}Upload File{/tr}{/if}</a></h1>
 {if count($galleries) > 0}
-	<a href="tiki-list_file_gallery.php?galleryId={$galleryId}" class="linkbut">{tr}Browse file gallery{/tr}</a><br /><br />
+	{if $galleryId}<a href="tiki-list_file_gallery.php?galleryId={$galleryId}" class="linkbut">{tr}Browse file gallery{/tr}</a><br /><br />{/if}
 
 	<div class="rbox" name="tip">
 	<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -23,11 +25,13 @@
 	{/if}
 	{/section}
 	</select>{/if}</td></tr>
+{include file=categorize.tpl}
 	<!--<tr><td colspan="2"><b>{tr}Now enter the file URL{/tr}{tr} or upload a local file from your disk{/tr}
 	<tr><td class="formcolor">URL:</td><td><input size="50" type="text" name="url" /></td></tr>-->
 	<tr><td class="formcolor">	{tr}Upload from disk:{/tr}</td>
 	<td class="formcolor">
 		<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
+		{if $editFileId}{$fileInfo.filename|escape}<br />{/if}
 		<input name="userfile1" type="file" />
 		{if !$editFileId}<input name="userfile2" type="file" />
 		<br />
@@ -37,7 +41,7 @@
 		<input name="userfile5" type="file" />
 		<input name="userfile6" type="file" />{/if}
 	</td></tr>
-	{if !$editFileId}<tr><td class="formcolor">{tr}Batch upload{/tr}</td><td class="formcolor">
+	{if !$editFileId}<tr><td class="formcolor">{tr}Batch upload{/tr}<br />{tr}Unzip file{/tr}</td><td class="formcolor">
 	<input type="checkbox" name="isbatch" /></td></tr>{/if}
 	<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="upload" value="{if $editFileId}{tr}edit{/tr}{else}{tr}upload{/tr}{/if}" /></td></tr>
 	</table>
