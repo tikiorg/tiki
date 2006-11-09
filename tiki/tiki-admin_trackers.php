@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.48 2006-11-06 15:30:13 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.49 2006-11-09 21:29:07 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -260,6 +260,16 @@ if (isset($_REQUEST["save"])) {
 	else {
 		$tracker_options["useExplicitNames"] = 'n';
 	}
+	if (isset($_REQUEST['start']) && $_REQUEST['start'] == 'on') {
+		$dc = &$tikilib->get_date_converter($user);
+		$tracker_options['start'] = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["start_Hour"], $_REQUEST["start_Minute"],
+                0, $_REQUEST["start_Month"], $_REQUEST["start_Day"], $_REQUEST["start_Year"]));
+	}
+	if (isset($_REQUEST['end']) && $_REQUEST['end'] == 'on') {
+		$dc = &$tikilib->get_date_converter($user);
+		$tracker_options['end'] = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["end_Hour"], $_REQUEST["end_Minute"],
+                0, $_REQUEST["end_Month"], $_REQUEST["end_Day"], $_REQUEST["end_Year"]));
+	}
 	
 	$_REQUEST["trackerId"] = $trklib->replace_tracker($_REQUEST["trackerId"], $_REQUEST["name"], $_REQUEST["description"], $tracker_options);
 	$logslib->add_log('admintrackers','changed or created tracker '.$_REQUEST["name"]);
@@ -319,6 +329,8 @@ $info["writerGroupCanModify"] = '';
 $info["defaultStatus"] = 'o';
 $info["defaultStatusList"] = array();
 $info["orderAttachments"] = 'name,created,filesize,downloads,desc';
+$info['start']= 0;
+$info['end'] = 0;
 
 if ($_REQUEST["trackerId"]) {
 	$info = array_merge($info,$tikilib->get_tracker($_REQUEST["trackerId"]));
@@ -358,6 +370,7 @@ $smarty->assign('oneUserItem', $info["oneUserItem"]);
 $smarty->assign('writerGroupCanModify', $info["writerGroupCanModify"]);
 $smarty->assign('defaultStatus', $info["defaultStatus"]);
 $smarty->assign('defaultStatusList', $info["defaultStatusList"]);
+$smarty->assign_by_ref('info', $info);
 
 $outatt = array();
 $info["orderPopup"] = '';

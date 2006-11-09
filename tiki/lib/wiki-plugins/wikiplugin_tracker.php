@@ -59,6 +59,8 @@ function wikiplugin_tracker($data, $params) {
 	
 			global $notificationlib; include_once('lib/notifications/notificationlib.php');	
 			$tracker = array_merge($tracker,$trklib->get_tracker_options($trackerId));
+			if ((!empty($tracker['start']) && date('U') < $tracker['start']) || (!empty($tracker['end']) && date('U') > $tracker['end']))
+				return;
 			$flds = $trklib->list_tracker_fields($trackerId,0,-1,"position_asc","");
 			$back = '';
 			$bad = array();
