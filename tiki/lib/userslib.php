@@ -1163,7 +1163,7 @@ function get_included_groups($group) {
     }
 
     function remove_user($user) {
-		global $cachelib;
+	global $cachelib, $tikilib;
 	$userId = $this->getOne("select `userId`  from `users_users` where `login` = ?", array($user));
 
 	$query = "delete from `users_users` where ". $this->convert_binary()." `login` = ?";
@@ -1176,6 +1176,9 @@ function get_included_groups($group) {
 	$result = $this->query($query, array($user));
 	$query = "delete from `tiki_newsletter_subscriptions` where ". $this->convert_binary()." `email`=? and `isUser`=?";
 	$result = $this->query($query, array($user, 'y'));
+	if( $tikilib->get_preference("eponymousGroups", 'n') == 'y' ) {
+		$this->remove_group($user);
+	}
 
 	$cachelib->invalidate('userslist');
 	return true;
