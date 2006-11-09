@@ -1,3 +1,4 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.65 2006-11-09 21:29:07 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
   
 {if $feature_help eq 'y'}
@@ -151,8 +152,8 @@ for a tracker and they must be valid in SQL{/tr}</em>
 </td></tr>
 <tr class="formcolor"><td class="auto" colspan="2">{tr}What is default sort order in list?{/tr}</td><td>
 <select name="defaultOrderDir">
-<option value="asc" {if $defaultOrderDir eq 'asc'}selected="selected"{/if}/>{tr}ascending{/tr}</option>
-<option value="desc" {if $defaultOrderDir eq 'desc'}selected="selected"{/if}/>{tr}descending{/tr}</option>
+<option value="asc" {if $defaultOrderDir eq 'asc'}selected="selected"{/if}>{tr}ascending{/tr}</option>
+<option value="desc" {if $defaultOrderDir eq 'desc'}selected="selected"{/if}>{tr}descending{/tr}</option>
 </select>
 </td></tr>
 
@@ -200,6 +201,9 @@ for a tracker and they must be valid in SQL{/tr}</em>
 <td><input type="text" size="2" name="ui[longdesc]" value="{$ui.longdesc}" /></td>
 </tr></table>
 </div>
+</td></tr>
+<tr class="formcolor"><td colspan="2">{tr}Items can be created only during a certain time{/tr}</td><td>{tr}After:{/tr} <input type="checkbox" name="start"{if $info.start} checked="checked"{/if} /> {html_select_date prefix="start_" time=$info.start start_year="0" end_year="+10"} <span dir="ltr">{html_select_time prefix="start_" time=$info.start display_seconds=false}<br />{tr}Before:{/tr}  <input type="checkbox" name="end"{if $info.end} checked="checked"{/if} /> {html_select_date prefix="end_" time=$info.end start_year="0" end_year="+10"} <span dir="ltr">{html_select_time prefix="end_" time=$info.end display_seconds=false}
+&nbsp;{$siteTimeZone}
 </td></tr>
 
 <tr class="formcolor"><td>&nbsp;</td><td colspan="2"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
@@ -259,6 +263,7 @@ categories = {$catsdump}
 </td></tr>
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="export" value="{tr}export{/tr}" /></td></tr>
 </table>
+</form>
 <form action="tiki-import_tracker.php?trackerId={$trackerId}" method="post" enctype="multipart/form-data">
 <table class="normal">
 <tr class="formcolor"><td>{tr}Download CSV export{/tr}</td><td><a href="tiki-export_tracker.php?trackerId={$trackerId}" class="linkbut">{tr}tracker_{$trackerId}.csv{/tr}</a></td></tr>
@@ -289,7 +294,7 @@ categories = {$catsdump}
 </tr>
 <tr class="formcolor"><td>{tr}Duplicate categories{/tr}</td><td><input type="checkbox" name="dupCateg" /></td></tr>
 <tr class="formcolor"><td>{tr}Duplicate perms{/tr}</td><td><input type="checkbox" name="dupPerms" /></td></tr>
-<tr class="formcolor"><td></tdf<td><input type="submit" name="duplicate" value="{tr}Duplicate tracker{/tr}" /></td></tr>
+<tr class="formcolor"><td></td><td><input type="submit" name="duplicate" value="{tr}Duplicate tracker{/tr}" /></td></tr>
 </table>
 </form>
 </div>

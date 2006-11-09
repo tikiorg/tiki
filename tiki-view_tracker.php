@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.100 2006-11-03 17:36:31 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.101 2006-11-09 21:29:07 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -112,6 +112,19 @@ if (empty($tracker_info)) {
 }
 if ($t = $trklib->get_tracker_options($_REQUEST["trackerId"]))
 	$tracker_info = array_merge($tracker_info,$t);
+
+if ($tiki_p_create_tracker_items == 'y' && !empty($t['start'])) {
+	if (date('U') < $t['start']) {
+		$tiki_p_create_tracker_items = 'n';
+		$smarty->assign('tiki_p_create_tracker_items', 'n');
+	}
+}
+if ($tiki_p_create_tracker_items == 'y' && !empty($t['end'])) {
+	if (date('U') > $t['end']) {
+		$tiki_p_create_tracker_items = 'n';
+		$smarty->assign('tiki_p_create_tracker_items', 'n');
+	}
+}
 
 if ($tiki_p_view_trackers != 'y') {
 	if (!$my and isset($tracker_info['writerCanModify']) and $tracker_info['writerCanModify'] == 'y') {
