@@ -1164,7 +1164,7 @@ function get_included_groups($group) {
 
     function remove_user($user) {
 		global $cachelib;
-	$userId = $this->getOne("select `userId`  from `users_users` where ". $this->convert_binary()." `login` = ?", array($user));
+	$userId = $this->getOne("select `userId`  from `users_users` where `login` = ?", array($user));
 
 	$query = "delete from `users_users` where ". $this->convert_binary()." `login` = ?";
 	$result = $this->query($query, array( $user ) );
