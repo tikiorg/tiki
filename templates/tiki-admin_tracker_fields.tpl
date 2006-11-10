@@ -45,7 +45,8 @@
 <option value="n"{if $isHidden eq 'n'} selected="selected"{/if}>{tr}not hidden{/tr}</option>
 <option value="y"{if $isHidden eq 'y'} selected="selected"{/if}>{tr}visible by admin only{/tr}</option>
 <option value="p"{if $isHidden eq 'p'} selected="selected"{/if}>{tr}editable by admin only{/tr}</option>
-</select>
+<option value="c"{if $isHidden eq 'c'} selected="selected"{/if}>{tr}visible by creator &amp; admin only{/tr}</option>
+</select><br /><i>{tr}The option creator needs a field of type user selector and option 1{/tr}</i>
 </td></tr>
 <tr class="formcolor"><td>{tr}Field is mandatory?{/tr}</td><td><input type="checkbox" name="isMandatory" {if $isMandatory eq 'y'}checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td>{tr}Order{/tr}</td><td><input type="text" size="5" name="position" value="{$position}" /></td></tr>
