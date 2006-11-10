@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.68 2006-10-22 03:21:37 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.69 2006-11-10 03:14:42 mose Exp $
 
 /**
  * Tiki registration script
@@ -9,7 +9,7 @@
  * @license GNU LGPL
  * @copyright Tiki Community
  * @date created: 2002/10/8 15:54
- * @date last-modified: $Date: 2006-10-22 03:21:37 $
+ * @date last-modified: $Date: 2006-11-10 03:14:42 $
  */
 
 // Initialization
@@ -151,7 +151,11 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
 			$smarty->assign('group',$_REQUEST['group']);
 		$email_valid = 'no';
       }
-    }
+    } elseif (preg_match('/[ ;,:]/',trim($_REQUEST["email"]))) {
+			$smarty->assign('msg',tra("Invalid email address. You must enter a valid email address"));
+			$smarty->display("error.tpl");
+			die;
+		}
 
   if ($email_valid != 'no'&& $userTracker == 'y') {
 		$re = $userlib->get_group_info(isset($_REQUEST['group'])? $_REQUEST['group']: 'Registered');
