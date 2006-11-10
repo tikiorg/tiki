@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.663 2006-11-07 14:21:53 mose Exp $
+// CVS: $Id: tikilib.php,v 1.664 2006-11-10 16:34:12 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1249,12 +1249,12 @@ function add_pageview() {
 
     /*shared*/
     function get_user_groups($user) {
-		global $feature_intertiki,$interlist;
+		global $feature_intertiki,$interlist,$feature_intertiki_mymaster;
 	if (!$user) {
 		$ret = array();
 		$ret[] = "Anonymous";
 		return $ret;
-	} elseif ($feature_intertiki == 'y' and strstr($user,'@')) {
+	} elseif ($feature_intertiki == 'y' and empty($feature_intertiki_mymaster) and strstr($user,'@')) {
 		$realm = substr($user,strpos($user,'@')+1);
 		$user = substr($user,0,strpos($user,'@'));
 		if (isset($interlist[$realm])) {
@@ -1647,7 +1647,7 @@ function add_pageview() {
 
     /*shared*/
     function list_menu_options($menuId, $offset, $maxRecords, $sort_mode, $find, $full=false) {
-	global $smarty,$user;
+	  global $smarty,$user, $tiki_p_admin;
 	$ret = array();
 	$retval = array();
 	$bindvars = array((int)$menuId);
@@ -1674,7 +1674,7 @@ function add_pageview() {
 			}
 		    }
 		}
-		if ($display) {
+		if ($display && $tiki_p_admin != 'y') {
 		    if (isset($res['perm']) and $res['perm']) {
 			$sections = split(",",$res['perm']);
 			foreach ($sections as $sec) {
@@ -1685,7 +1685,7 @@ function add_pageview() {
 			}
 		    }
 		}
-		if ($display) {
+		if ($display && $tiki_p_admin != 'y') {
 		    $usergroups = $this->get_user_groups($user);
 		    if (isset($res['groupname']) and $res['groupname']) {
 			$sections = split(",",$res['groupname']);
