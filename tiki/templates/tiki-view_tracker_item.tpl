@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker_item.tpl,v 1.102 2006-10-11 17:50:58 sylvieg Exp $ *}
+{* $Id: tiki-view_tracker_item.tpl,v 1.103 2006-11-10 21:31:27 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -361,7 +361,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {/if}
 
 {foreach from=$ins_fields key=ix item=cur_field}
-{if $cur_field.isHidden eq 'n' or $tiki_p_admin_trackers eq 'y'}
+{if $cur_field.isHidden eq 'n' or $tiki_p_admin_trackers eq 'y' or $cur_field.isHidden eq 'c'}
 
 {if $cur_field.type eq 's' and $cur_field.name eq "Rating" and ($tiki_p_tracker_view_ratings eq 'y' || $tiki_p_tracker_vote_ratings eq 'y')}
 	<tr class="formcolor">

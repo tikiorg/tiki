@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.98 2006-11-03 17:50:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.99 2006-11-10 21:31:23 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -229,7 +229,7 @@ foreach($xfields["data"] as $i=>$array) {
 			$rateFieldId = $fid;
 			//$fields["data"][$i] = $xfields["data"][$i];
 		}
-	} elseif ($xfields["data"][$i]['isHidden'] != 'y' or $tiki_p_admin_trackers == 'y') {
+	} elseif ($xfields["data"][$i]['isHidden'] == 'n' or $xfields["data"][$i]['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($xfields['data'][$i]['isHidden'] == 'c' && !empty($user) && $user == $trklib->get_item_creator($_REQUEST['trackerId'], $_REQUEST['itemId']))) {
 		$ins_fields["data"][$i] = $xfields["data"][$i];
 		$fields["data"][$i] = $xfields["data"][$i];
 
@@ -560,7 +560,7 @@ if ($_REQUEST["itemId"]) {
 	$lst = '';
 
 	foreach($xfields["data"] as $i=>$array) {
-		if ($xfields["data"][$i]['isHidden'] == 'n' or $tiki_p_admin_trackers == 'y' or ($xfields["data"][$i]['type'] == 's'and $tiki_p_tracker_view_ratings == 'y')) {
+		if ($xfields["data"][$i]['isHidden'] == 'n' or $tiki_p_admin_trackers == 'y' or ($xfields["data"][$i]['type'] == 's'and $tiki_p_tracker_view_ratings == 'y')or ($xfields['data'][$i]['isHidden'] == 'c' && !empty($user) && $user == $trklib->get_item_creator($_REQUEST['trackerId'], $_REQUEST['itemId']))) {
 			$fields["data"][$i] = $xfields["data"][$i];
 			if ($fields["data"][$i]["type"] != 'h') {
 				$fid = $fields["data"][$i]["fieldId"];

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.143 2006-11-06 15:14:36 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.144 2006-11-10 21:31:27 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -595,6 +595,7 @@ class TrackerLib extends TikiLib {
 	function getSqlFilter($trackerId, $filterfield, $exactvalue, $filtervalue, &$cat_table, &$mid, &$bindvars, $suffix='') {
 		global $feature_categories;
 		$filter = $this->get_tracker_field($filterfield);
+
 		if ($filter['type'] == 'e' && $feature_categories == 'y') { //category
 			$cat_table .= ", `tiki_categorized_objects` tob$filterfield, `tiki_category_objects` tco$filterfield";
 			$mid .= " and tob$filterfield.`catObjectId`=tco$filterfield.`catObjectId` and tob$filterfield.`type`='tracker $trackerId' and tob$filterfield.`objId`=tti.`itemId` and tco$filterfield.`categId` in ( 0 ";
@@ -1641,6 +1642,13 @@ class TrackerLib extends TikiLib {
 				return $items[0];
 			else
 				return 0; 
+		}
+	}
+	function get_item_creator($trackerId, $itemId) {
+		if ($fieldId = $this->get_field_id_from_type($trackerId, 'u', '1')) { // user creator field
+			return $this->get_item_value($trackerId, $itemId, $fieldId);
+		} else {
+			return null;
 		}
 	}
 	function get_nb_items($trackerId) {
