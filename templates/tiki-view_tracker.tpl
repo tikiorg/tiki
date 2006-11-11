@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker.tpl,v 1.116 2006-11-11 17:31:16 mose Exp $ *}
+{* $Id: tiki-view_tracker.tpl,v 1.117 2006-11-11 17:43:36 mose Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -245,8 +245,8 @@ $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}created{/tr
 {if  ($items[user].field_values[ix].type eq 't' or $items[user].field_values[ix].type eq 'n' or $items[user].field_values[ix].type eq 'c') 
  and $items[user].field_values[ix].options_array[2]}<span class="formunit">&nbsp;{$items[user].field_values[ix].options_array[2]}</span>{/if}
 
-{if $items[user].field_values[ix].type eq 'f'}
-{if $items[user].field_values[ix].value}{$items[user].field_values[ix].value|tiki_short_datetime|truncate:255:"..."|default:"&nbsp;"}{else}&nbsp;{/if}
+{if $items[user].field_values[ix].type eq 'f' or $items[user].field_values[ix].type eq 'j'}
+{$items[user].field_values[ix].value|tiki_short_datetime|truncate:255:"..."|default:"&nbsp;"}
 
 {elseif $items[user].field_values[ix].type eq 'c'}
 {$items[user].field_values[ix].value|replace:"y":"Yes"|replace:"n":"No"|replace:"on":"Yes"}
@@ -254,6 +254,7 @@ $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}created{/tr
 {elseif $items[user].field_values[ix].type eq 'a'}
 {if $items[user].field_values[ix].options_array[4] ne ''}
 {$items[user].field_values[ix].pvalue|truncate:$items[user].field_values[ix].options_array[4]:"...":true}
+{elseif $items[user].field_values[ix].type eq 'a'}
 {else}
 {$items[user].field_values[ix].pvalue}
 {/if}
@@ -314,7 +315,7 @@ $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}created{/tr
 </td>
 {elseif $items[user].field_values[ix].type eq 'f' or $items[user].field_values[ix].type eq 'j'}
 <td class="auto">
-{if $items[user].field_values[ix].value}{$items[user].field_values[ix].value|tiki_short_datetime|default:"&nbsp;"}{else}&nbsp;{/if}
+{$items[user].field_values[ix].value|tiki_short_datetime|default:"&nbsp;"}
 </td>
 {elseif $items[user].field_values[ix].type eq 'a'}
 <td class="auto">
