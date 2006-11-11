@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker.tpl,v 1.115 2006-11-03 16:29:12 sylvieg Exp $ *}
+{* $Id: tiki-view_tracker.tpl,v 1.116 2006-11-11 17:31:16 mose Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -573,7 +573,7 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 
 {* -------------------- jscalendar ------------------- *}
 {elseif $fields[ix].type eq 'j'}
-<input type="hidden" name="ins_{$fields[ix].ins_id}" value="" id="{$fields[ix].ins_id}" />
+<input type="hidden" name="{$fields[ix].ins_id}" value="" id="{$fields[ix].ins_id}" />
 <span id="disp_{$fields[ix].ins_id}" class="daterow">{$fields[ix].value|default:$smarty.now|tiki_long_date}</span>
 <script type="text/javascript">
 {literal}Calendar.setup( { {/literal}
