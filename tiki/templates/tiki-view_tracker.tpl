@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker.tpl,v 1.117 2006-11-11 17:43:36 mose Exp $ *}
+{* $Id: tiki-view_tracker.tpl,v 1.118 2006-11-11 17:52:28 mose Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -574,7 +574,7 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 
 {* -------------------- jscalendar ------------------- *}
 {elseif $fields[ix].type eq 'j'}
-<input type="hidden" name="{$fields[ix].ins_id}" value="" id="{$fields[ix].ins_id}" />
+<input type="hidden" name="{$fields[ix].ins_id}" value="{$now}" id="{$fields[ix].ins_id}" />
 <span id="disp_{$fields[ix].ins_id}" class="daterow">{$fields[ix].value|default:$smarty.now|tiki_long_date}</span>
 <script type="text/javascript">
 {literal}Calendar.setup( { {/literal}
@@ -582,7 +582,7 @@ date        : "{$fields[ix].value|default:$now|date_format:"%B %e, %Y %H:%M"}", 
 inputField  : "{$fields[ix].ins_id}",      // ID of the input field
 ifFormat    : "%s",    // the date format
 displayArea : "disp_{$fields[ix].ins_id}",       // ID of the span where the date is to be shown
-daFormat    : "{$tiki_long_date}",  // format of the displayed date
+daFormat    : "{$long_date_format}",  // format of the displayed date
 showsTime   : true,
 singleClick : true,
 align       : "bR"
