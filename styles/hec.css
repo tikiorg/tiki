@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/hec.css,v 1.8 2006-09-16 14:22:42 ohertel Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/hec.css,v 1.9 2006-11-12 02:47:04 mose Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -1875,7 +1875,16 @@ td.middle {
 	vertical-align : middle;
 }
 .daterow {
-	margin-left : 10px;
+  padding : 0 5px;
+  border : 1px outset #ddd;
+  background-color : #ddd;
+}
+.daterow:hover {
+  background-color : #fff;
+  cursor : pointer;
+}
+.daterow:active {
+  border : 1px inset #ddd;
 }
 .mininotes {
 	font-size : 9px;

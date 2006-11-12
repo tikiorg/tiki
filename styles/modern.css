@@ -352,4 +352,17 @@ ul.toc { margin-left: 5px; }
 li.toclevel { margin-left: -30px; }
 input.wikitext { padding: 0px; }
 
+.daterow {
+  padding : 0 5px;
+  border : 1px outset #ddd;
+  background-color : #ddd;
+}
+.daterow:hover {
+  background-color : #fff;
+  cursor : pointer;
+}
+.daterow:active {
+  border : 1px inset #ddd;
+}
+
 /* end of css file */

@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.79 2006-09-19 16:33:24 ohertel Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.80 2006-11-12 02:47:04 mose Exp $
 
 MoreNeat theme
 */
@@ -1306,7 +1306,13 @@ td.middle {
 	border: 1px outset black;
 	padding: 1px 5px 1px 5px;
 	font-size: 10px;
-	cursor: pointer;
+}
+.daterow:hover {
+  background-color : #fff;
+  cursor : pointer;
+}
+.daterow:active {
+  border : 1px inset #ddd;
 }
 .mininotes {
 	font-size: 80%;
