@@ -1,5 +1,5 @@
 /* 
-  $Header: /cvsroot/tikiwiki/tiki/styles/whitebluegrey.css,v 1.47 2006-09-20 01:01:28 illori Exp $
+  $Header: /cvsroot/tikiwiki/tiki/styles/whitebluegrey.css,v 1.48 2006-11-12 02:47:05 mose Exp $
   whitebluegrey.css
   This theme is based on the default2 style for Tiki 1.2
   If you want  a short-version CSS template, start by copying default2
@@ -2433,7 +2433,16 @@ td.middle {
 	vertical-align: middle; 
 }
 .daterow {
-	margin-left: 10px;
+  padding : 0 5px;
+  border : 1px outset #ddd;
+  background-color : #ddd;
+}
+.daterow:hover {
+  background-color : #fff;
+  cursor : pointer;
+}
+.daterow:active {
+  border : 1px inset #ddd;
 }
 .mininotes {
 	font-size: 80%;

@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.27 2006-11-07 14:21:53 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.28 2006-11-12 02:47:05 mose Exp $
 
 Smarty style by mose@tikiwiki.org
 
@@ -1668,7 +1668,16 @@ td.middle {
 	vertical-align: middle; 
 }
 .daterow {
-	margin-left: 10px;
+  padding : 0 5px;
+  border : 1px outset #ddd;
+  background-color : #ddd;
+}
+.daterow:hover {
+  background-color : #fff;
+  cursor : pointer;
+}
+.daterow:active {
+  border : 1px inset #ddd;
 }
 .mininotes {
 	font-size: 80%;

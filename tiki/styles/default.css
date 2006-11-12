@@ -1,5 +1,5 @@
 /* 
-  $Header: /cvsroot/tikiwiki/tiki/styles/default.css,v 1.65 2006-09-20 01:01:27 illori Exp $
+  $Header: /cvsroot/tikiwiki/tiki/styles/default.css,v 1.66 2006-11-12 02:47:04 mose Exp $
   default.css
   This theme is based on the subsilver style for Tiki 1.2
   If you want  a short-version CSS template, start with default2
@@ -2568,7 +2568,16 @@ td.middle {
 	vertical-align: middle; 
 }
 .daterow {
-	margin-left: 10px;
+  padding : 0 5px;
+  border : 1px outset #ddd;
+  background-color : #ddd;
+}
+.daterow:hover {
+  background-color : #fff;
+  cursor : pointer;
+}
+.daterow:active {
+  border : 1px inset #ddd;
 }
 .mininotes {
 	font-size: 80%;

@@ -194,6 +194,18 @@ table.wikitable {
 	font-size: 11px
 	width: 650px;
 }
+.daterow {
+  padding : 0 5px;
+  border : 1px outset #ddd;
+  background-color : #ddd;
+}
+.daterow:hover {
+  background-color : #fff;
+  cursor : pointer;
+}
+.daterow:active {
+  border : 1px inset #ddd;
+}
 
 /* =========================================== PHP Layers ================================= */
 .mdkhorbar      {

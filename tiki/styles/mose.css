@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.70 2006-09-16 14:22:42 ohertel Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.71 2006-11-12 02:47:04 mose Exp $
 2003 - created and maintained by mose@tikiwiki.org
 
 colorset:
@@ -414,7 +414,9 @@ div.separator:hover {
         cursor : pointer;
         background-color : #abc;
 }
-
+.daterow:active {
+        border : 2px inset #666;
+}
 
 /* 
 Links to extend/collapse menus 
