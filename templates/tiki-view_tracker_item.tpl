@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker_item.tpl,v 1.103 2006-11-10 21:31:27 sylvieg Exp $ *}
+{* $Id: tiki-view_tracker_item.tpl,v 1.104 2006-11-12 03:08:40 mose Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -521,21 +521,9 @@ style="background-image:url('img/flags/{$flag}.gif');background-repeat:no-repeat
 {/if}
 
 {elseif $cur_field.type eq 'j'}
-<input type="hidden" name="ins_{$cur_field.id}" value="{$cur_field.value|default:$smarty.now}" id="ins_{$cur_field.id}" />
-<span id="disp_{$cur_field.id}" class="daterow">{$cur_field.value|default:$smarty.now|tiki_long_datetime}</span>
-<script type="text/javascript">
-{literal}Calendar.setup( { {/literal}
-date        : "{$cur_field.value|default:$smarty.now|date_format:"%B %e, %Y %H:%M"}",      // initial date
-inputField  : "ins_{$cur_field.id}",      // ID of the input field
-ifFormat    : "%s",    // the date format
-displayArea : "disp_{$cur_field.id}",       // ID of the span where the date is to be shown
-daFormat    : "{$long_date_format}",  // format of the displayed date
-showsTime   : true,
-singleClick : true,
-align       : "bR"
-{literal} } );{/literal}
-</script>
+{jscalendar date=$cur_field.value|default:$smarty.now id=$cur_field.id fieldname="ins_"|cat:$cur_field.id}
 {/if}
+
 {if $cur_field.description}
 <br /><em>{$cur_field.description}</em>
 {/if}
