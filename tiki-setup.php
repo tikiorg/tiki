@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.316 2006-11-09 15:41:35 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.317 2006-11-12 03:01:35 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -235,6 +235,9 @@ $feature_referer_highlight = 'n';
 include_once ('tiki-setup_base.php');
 TikiSetup::check($tikidomain);
 //print("tiki-setup: before rest of tiki-setup:".$tiki_timer->elapsed()."<br />");
+
+include_once ('lib/headerlib.php');
+$smarty->assign_by_ref('headerlib',$headerlib);
 
 // patch for Case-sensitivity perm issue
 $case_patched = $tikilib->get_preference('case_patched','n');
