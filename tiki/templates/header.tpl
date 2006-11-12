@@ -89,11 +89,6 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 <link rel="StyleSheet" href="{$integrator_css_file}" type="text/css" />
 {/if}
     
-{* --- tabs block (for myTiki, calendar, and more to come) --- *}
-{if $uses_tabs eq 'y'}
-{* tabs lib removed because non-free *}
-{/if}
-
 {* --- Firefox RSS icons --- *}
 {if $feature_wiki eq 'y' and $rss_wiki eq 'y' and $tiki_p_view eq 'y'}
 <link rel="alternate" type="application/rss+xml" title="{tr}RSS Wiki{/tr}" href="tiki-wiki_rss.php?ver={$rssfeed_default_version}" />
@@ -133,6 +128,8 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {* ---- END ---- *}
 
 {$trl}
+
+{$headerlib->output_headers()}
 
 </head>
 
