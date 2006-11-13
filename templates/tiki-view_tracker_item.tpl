@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker_item.tpl,v 1.104 2006-11-12 03:08:40 mose Exp $ *}
+{* $Id: tiki-view_tracker_item.tpl,v 1.105 2006-11-13 07:44:12 mose Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -521,7 +521,7 @@ style="background-image:url('img/flags/{$flag}.gif');background-repeat:no-repeat
 {/if}
 
 {elseif $cur_field.type eq 'j'}
-{jscalendar date=$cur_field.value|default:$smarty.now id=$cur_field.id fieldname="ins_"|cat:$cur_field.id}
+{jscalendar date=$cur_field.value|default:$smarty.now id=$cur_field.id fieldname="ins_"|cat:$cur_field.id showtime="y"}
 {/if}
 
 {if $cur_field.description}

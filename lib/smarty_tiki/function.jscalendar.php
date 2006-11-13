@@ -7,7 +7,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 function smarty_function_jscalendar($params, &$smarty) {
-	global $headerlib;
+	global $headerlib,$firstDayOfWeek;
 
 	$headerlib->add_cssfile('lib/jscalendar/calendar-system.css');
 	$headerlib->add_jsfile('lib/jscalendar/calendar.js');
@@ -42,25 +42,49 @@ function smarty_function_jscalendar($params, &$smarty) {
 	if (isset($params['fieldname'])) {
 		$fieldname = preg_replace('/[^-_a-zA-Z0-9\[\]]/','',$params['fieldname']);
 	} else {
-		$fieldname = "ins_$id";
+		$fieldname = false;
+	}
+	if (isset($params['goto'])) {
+		$goto = $params['goto'];
+		if (!$fieldname) $fieldname = "gotoit";
+	} else {
+		$goto = false;
+	}
+	if (isset($params['showtime']) and $params['showtime'] == 'y') {
+		$showtime = true;
+	} else {
+		$showtime = false;
 	}
 
-	$back =<<<__END__
-	<input type="hidden" name="$fieldname" value="$date" id="id_$id" />
-	<span id="disp_$id" class="daterow">$formatted_date</span>
-	<script type="text/javascript">
-	Calendar.setup( {
-		date        : "$formatted_date",
-		inputField  : "id_$id",
-		ifFormat    : "%s",
-		displayArea : "disp_$id",
-		daFormat    : "$format",
-		showsTime   : true,
-		singleClick : true,
-		align       : "bR"
-	} );
-	</script>
-__END__;
+	$back = '';
+	if ($fieldname) {
+		$back.= "<input type=\"hidden\" name=\"$fieldname\" value=\"$date\" id=\"id_$id\" />\n";
+	}
+	$back.= "<span title=\"".tra("Date Selector")."\" id=\"disp_$id\" class=\"daterow\">$formatted_date</span>\n";
+	$back.= "<script type=\"text/javascript\">\n";
+	if ($goto) {
+		$back.= "function goto_url() { window.location='".sprintf($goto,"'+document.getElementById('id_$id').value+'")."'; }\n";
+	}
+	$back.= "Calendar.setup( {\n";
+	$back.= "  date : \"$formatted_date\",\n";
+	if ($fieldname) {
+		$back.= "  inputField : \"id_$id\",\n";
+	}
+	$back.= "  ifFormat : \"%s\",\n";
+	$back.= "  displayArea : \"disp_$id\",\n";
+	$back.= "  daFormat : \"$format\",\n";
+	$back.= "  singeClick : true,\n";
+	//$back.= "  firstDay : $firstDayOfWeek,\n";
+	if ($showtime) {
+		$back.= "  showtime : true,\n";
+	}
+	if ($goto) {
+		$back.= "  onUpdate : goto_url,\n";
+	}
+	$back.= "  align : \"bR\"\n";
+	
+	$back.= "} );\n";
+	$back.= "</script>\n";
 
 	echo $back;
 
