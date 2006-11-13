@@ -39,6 +39,12 @@ function smarty_function_jscalendar($params, &$smarty) {
 		$id = $_GLOBALS['now'];
 	}
 
+	if (isset($params['align'])) {
+		$align = substr(preg_replace('/[^bBrRtTlLc]/','',$params['align']),0,2);
+	} else {
+		$align = "bR";
+	}
+
 	if (isset($params['fieldname'])) {
 		$fieldname = preg_replace('/[^-_a-zA-Z0-9\[\]]/','',$params['fieldname']);
 	} else {
@@ -81,7 +87,7 @@ function smarty_function_jscalendar($params, &$smarty) {
 	if ($goto) {
 		$back.= "  onUpdate : goto_url,\n";
 	}
-	$back.= "  align : \"bR\"\n";
+	$back.= "  align : \"$align\"\n";
 	
 	$back.= "} );\n";
 	$back.= "</script>\n";
