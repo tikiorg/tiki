@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.664 2006-11-10 16:34:12 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.665 2006-11-13 09:58:48 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3602,8 +3602,6 @@ function add_pageview() {
     function set_preference($name, $value) {
 	global $preferences;
 	global $tikidomain;
-
-	@unlink ("templates_c/$tikidomain/preferences.php");
 
 	//refresh cache
 	if (isset($preferences[$name])) {
