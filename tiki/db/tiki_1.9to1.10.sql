@@ -1,4 +1,4 @@
-	# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.107 2006-11-09 08:46:54 mose Exp $
+	# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.108 2006-11-13 18:37:16 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -626,3 +626,6 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_list_type','n');
 update tiki_preferences set name='auth_pear_host' where name='auth_ldap_host';
 update tiki_preferences set name='auth_pear_port' where name='auth_ldap_port';
 
+#sylvieg 2006-11-13
+ALTER TABLE `tiki_file_galleries` ADD `parentId` int(14) NOT NULL default -1;
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_list_parent','n');

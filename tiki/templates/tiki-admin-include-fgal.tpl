@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-fgal.tpl,v 1.23 2006-11-13 14:04:49 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-fgal.tpl,v 1.24 2006-11-13 18:37:16 sylvieg Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -116,6 +116,10 @@
           <td>{tr}Hits{/tr}</td>
           <td><input type="checkbox" name="fgal_list_hits"
               {if $fgal_list_hits eq 'y'}checked="checked"{/if} /></td>
+        </tr><tr class="formcolor">
+          <td>{tr}Parent gallery{/tr}</td>
+          <td><input type="checkbox" name="fgal_list_parent"
+              {if $fgal_list_parent eq 'y'}checked="checked"{/if} /></td>
         </tr><tr class="formcolor">
           <td colspan="2" class="button"><input type="submit"
               name="filegallistprefs" value="{tr}Change configuration{/tr}" /></td>

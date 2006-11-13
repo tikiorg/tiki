@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_fgal.php,v 1.16 2006-11-06 17:12:21 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_fgal.php,v 1.17 2006-11-13 18:37:16 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -60,6 +60,7 @@ if (isset($_REQUEST["filegallistprefs"])) {
 	simple_set_toggle("fgal_list_user");
 	simple_set_toggle("fgal_list_files");
 	simple_set_toggle("fgal_list_hits");
+	simple_set_toggle('fgal_list_parent');
 }
 
 if (isset($_REQUEST["filegalcomprefs"])) {

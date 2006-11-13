@@ -1,5 +1,6 @@
 <?php
-	// Initialization
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.28 2006-11-13 18:37:16 sylvieg Exp $
+
 	require_once('tiki-setup.php');
 	include_once('lib/filegals/filegallib.php');
 	
@@ -74,6 +75,8 @@
 	$smarty->assign('edit_mode','n');
 	$smarty->assign('visible','y');
 	$smarty->assign('fgal_type','default');
+	$smarty->assign('parentId', -1);
+	$smarty->assign('creator', $user);
 	
 	// If we are editing an existing gallery prepare smarty variables
 	if(isset($_REQUEST["edit_mode"])&&$_REQUEST["edit_mode"]) {
@@ -100,6 +103,8 @@
 	    $smarty->assign_by_ref('maxRows',$info["maxRows"]);
 	    $smarty->assign_by_ref('public',$info["public"]);
 	    $smarty->assign_by_ref('visible',$info["visible"]);
+		$smarty->assign_by_ref('parentId',$info['parentId']);
+		$smarty->assign_by_ref('creator',$info['user']);
 	  }
 	}
 	
@@ -146,6 +151,8 @@
 	  $smarty->assign_by_ref('rowImages',$_REQUEST["rowImages"]);
 	  $smarty->assign_by_ref('thumbSizeX',$_REQUEST["thumbSizeX"]);
 	  $smarty->assign_by_ref('thumbSizeY',$_REQUEST["thumbSizeY"]);
+	  $smarty->assign_by_ref('parentId',$_REQUEST['parentId']);
+	  $smarty->assign_by_ref('creator',$_REQUEST['creator']);
 	  if(isset($_REQUEST["visible"]) && $_REQUEST["visible"]=="on") {
 	    $smarty->assign('visible','y');
 	    $visible ='y';
@@ -167,7 +174,8 @@
 	  $_REQUEST['show_dl']=isset($_REQUEST['show_dl'])?'y':'n';
 	  $_REQUEST['show_size']=isset($_REQUEST['show_size'])?'y':'n';
 	  $_REQUEST['show_name']=isset($_REQUEST['show_name'])?$_REQUEST['show_name']:'a';
-	  $fgid = $filegallib->replace_file_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $user, $_REQUEST["maxRows"], $public, $visible,$_REQUEST['show_id'],$_REQUEST['show_icon'],$_REQUEST['show_name'],$_REQUEST['show_size'],$_REQUEST['show_description'],$_REQUEST['show_created'],$_REQUEST['show_dl'],$_REQUEST['max_desc'],$_REQUEST['fgal_type']);
+	  $_REQUEST['user'] = isset($_REQUEST['user'])?$_REQUEST['user']:(isset($info['user'])?$info['user']:$user);
+	  $fgid = $filegallib->replace_file_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST['user'], $_REQUEST["maxRows"], $public, $visible,$_REQUEST['show_id'],$_REQUEST['show_icon'],$_REQUEST['show_name'],$_REQUEST['show_size'],$_REQUEST['show_description'],$_REQUEST['show_created'],$_REQUEST['show_dl'],$_REQUEST['max_desc'],$_REQUEST['fgal_type'], $_REQUEST['parentId']);
 	  
 	  $cat_type='file gallery';
 	  $cat_objid = $fgid;
@@ -271,6 +279,11 @@
 	
 	$smarty->assign_by_ref('galleries',$galleries["data"]);
 	//print_r($galleries["data"]);
+
+	if ($tiki_p_admin_file_galleries == 'y' || $tiki_p_admin == 'y') {
+		$users = $tikilib->list_users(0, -1, 'login_asc');
+		$smarty->assign_by_ref('users', $users['data']);
+	}
 	
 	$cat_type='file gallery';
 	$cat_objid = $_REQUEST["galleryId"];

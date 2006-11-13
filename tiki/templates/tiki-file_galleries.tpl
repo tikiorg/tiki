@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.40 2006-11-06 17:12:21 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.41 2006-11-13 18:37:16 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-file_galleries.php?galleryId={$galleryId}">{tr}File Galleries{/tr}</a>
 
@@ -13,14 +13,14 @@
 {/if}</h1>
 
 {if $tiki_p_admin eq 'y'}
-<a href="tiki-admin.php?page=fgal"><img src='pics/icons/wrench.png' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
+<a href="tiki-admin.php?page=fgal"><img src='pics/icons/wrench.png' border='0' alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
 <br /><br />
 {/if}
 
 {if $tiki_p_create_file_galleries eq 'y'}
 {if $edit_mode eq 'y'}
 {if $galleryId eq 0}
-<h3>{tr}Create a file gallery{/tr}</h3>
+<h2>{tr}Create a file gallery{/tr}</h2>
 {else}
 <h3>{tr}Edit this file gallery:{/tr} {$name}</h3>
 <a class="linkbut" href="tiki-file_galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new file gallery{/tr}</a>
@@ -86,6 +86,20 @@
 <tr><td class="formcolor">{tr}Max Rows per page{/tr}:</td><td class="formcolor"><input type="text" name="maxRows" value="{$maxRows|escape}" /></td></tr>
 {include file=categorize.tpl}
 <tr><td class="formcolor">{tr}Other users can upload files to this gallery{/tr}:</td><td class="formcolor"><input type="checkbox" name="public" {if $public eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="formcolor">{tr}Parent gallery{/tr}:</td><td class="formcolor"><select name="parentId">
+<option value="-1" {if $parentId == -1} selected="selected"{/if}>{tr}none{/tr}</option>
+{foreach from=$galleries key=key item=item}
+<option value="{$item.galleryId}" {if $parentId == $item.galleryId} selected="selected"{/if}>{$item.name|escape}</option>
+{/foreach}
+</select>
+</td></tr>
+{if $tiki_p_admin eq 'y' or $tiki_p_admin_file_galleries eq 'y'}
+<tr><td class="formcolor">{tr}Owner of the gallery{/tr}:</td><td class="formcolor">
+<select name="user">
+{section name=ix loop=$users}<option value="{$users[ix].login|escape}"{if $creator eq $users[ix].login}  selected="selected"{/if}>{$users[ix].login|escape}</option>{/section}
+</select>
+</td></tr>
+{/if}
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" value="{tr}save{/tr}" name="edit" /></td></tr>
 </table>
 </form>
@@ -123,6 +137,10 @@
 {if $fgal_list_name eq 'y'}
 	{assign var='cntcol' value=$cntcol+1}
 	<td class="heading"><a class="tableheading" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
+{/if}
+{if $fgal_list_parent eq 'y'}
+	{assign var='cntcol' value=$cntcol+1}
+	<td class="heading"><a class="tableheading" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}parent_asc{else}parent_desc{/if}">{tr}Parent{/tr}</a></td>
 {/if}
 {if $fgal_list_description eq 'y'}
 	{assign var='cntcol' value=$cntcol+1}
@@ -170,6 +188,12 @@
 		</td>
 	{/if}
 
+	{if $fgal_list_parent eq 'y'}
+		<td class="{cycle advance=false}">
+			<a class="fgalname" href="tiki-list_file_gallery.php?galleryId={$galleries[changes].parentId}">{$galleries[changes].parentName|escape}</a>
+		</td>
+	{/if}
+
 	{if $fgal_list_description eq 'y'}
 		<td class="{cycle advance=false}">
 			{$galleries[changes].description}
@@ -206,6 +230,9 @@
 	
 	
 	<td class="{cycle}" nowrap="nowrap">
+	{if $tiki_p_view_file_gallery == 'y' or $tiki_p_admin_file_galleries eq 'y' or $tiki_p_admin eq 'y'}
+		<a class="gallink" href="tiki-list_file_gallery.php?galleryId={$galleries[changes].galleryId}"><img border='0' height="16" width="18" src='img/icons/ico_table.gif' title='{tr}list{/tr}' alt='{tr}list{/tr}' /></a>
+	{/if}
 	{if $tiki_p_admin_file_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
 		{if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_create_file_galleries eq 'y' ) }
 			<a class="fgallink" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;galleryId={$galleries[changes].id}"><img src="pics/icons/wrench.png" border="0" width="16" height="16" alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
@@ -215,7 +242,7 @@
 	{if $tiki_p_upload_files eq 'y'}
 		{if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_upload_files eq 'y' ) }
 			{if $tiki_p_admin_file_galleries eq 'y' or ($user and $galleries[changes].user eq $user) or $galleries[changes].public eq 'y'}
-				<a class="fgallink" href="tiki-upload_file.php?galleryId={$galleries[changes].id}"><img src='img/icons2/upload.gif' border='0' alt='{tr}Upload{/tr}' title='{tr}Upload{/tr}' /></a>
+				<a class="fgallink" href="tiki-upload_file.php?galleryId={$galleries[changes].id}"><img src='img/icons2/upload.gif' border='0' alt='{tr}upload{/tr}' title='{tr}upload{/tr}' /></a>
 			{/if}
 		{/if}
 	{/if}
@@ -232,7 +259,6 @@
                 &nbsp;&nbsp; <a class="fgallink" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removegal={$galleries[changes].id}"><img src='pics/icons/cross.png' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' /></a>
                 {/if}
         {/if}
-	
 	</td>
 </tr>
 {/if}

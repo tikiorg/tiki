@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.30 2006-10-30 14:01:13 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.31 2006-11-13 18:37:16 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}">{tr}Listing Gallery{/tr}: {$name}</a></h1>
 
@@ -227,11 +227,18 @@
 {/if}
 
 <td style="text-align:center;" class="{cycle}">
+	{if $tiki_p_download_files eq 'y'}
+		{if $fgal_type eq "podcast" or $fgal_type eq "vidcast"}
+			<a class="fgalname" href="{$download_path}{$images[changes].path}">
+		{else}
+			<a class="fgalname" href="tiki-download_file.php?fileId={$images[changes].fileId}">
+		{/if}
+		<img src="pics/icons/disk.png" border="0" width="16" height="16" alt="{tr}Download{/tr}" /></a> 
+	{/if}
 	{if $tiki_p_admin_file_galleries eq 'y' or ($user and $user eq $owner)}
 		<a class="link" href="tiki-upload_file.php?galleryId={$galleryId}&amp;fileId={$images[changes].fileId}"><img src='pics/icons/page_edit.png' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
 		<a class="link" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$images[changes].fileId}"><img src='pics/icons/cross.png' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' /></a>
 	{/if}
-	&nbsp;
 </td>
 <!--<td class="{cycle advance=false}">{$images[changes].user}&nbsp;</td>-->
 </tr>
