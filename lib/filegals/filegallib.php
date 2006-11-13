@@ -138,7 +138,7 @@ class FileGalLib extends TikiLib {
 			$whuser = "";
 			$bindvars=array();
 		} else {
-			$whuser = "where `user`=? or `public`=?";
+			$whuser = "where tfg.`user`=? or tfg.`public`=?";
 			$bindvars=array($user,'y');
 		}
 
@@ -146,17 +146,21 @@ class FileGalLib extends TikiLib {
 			$find = '%' . $find . '%';
 
 			if (empty($whuser)) {
-				$whuser = "where `name` like ? or `description` like ?";
+				$whuser = "where tfg.`name` like ? or tfg.`description` like ?";
 				$bindvars=array($find,$find);
 			} else {
-				$whuser .= " and `name` like ? or `description` like ?";
+				$whuser .= " and tfg.`name` like ? or tfg.`description` like ?";
 				$bindvars[]=$find;
 				$bindvars[]=$find;
 			}
 		}
 
-		$query = "select * from `tiki_file_galleries` $whuser order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_file_galleries` $whuser";
+		$query = "select tfg.*, tfgp.`name` as `parentName`
+			from `tiki_file_galleries` tfg
+			left join `tiki_file_galleries` tfgp on (tfg.`parentId` = tfgp.`galleryId`)
+			$whuser
+			order by tfg.".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_file_galleries` tfg $whuser";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
@@ -211,10 +215,13 @@ class FileGalLib extends TikiLib {
 				$aux["hits"] = $res["hits"];
 				$aux["public"] = $res["public"];
 				$aux["type"] = $res["type"];
+				$aux['parentId'] = $res['parentId'];
+				$aux['parentName'] = $res['parentName'];
 // Only get the file count when necessary. Otherwise there are many excess db queries. GG
 				if ($maxRecords > -1) {
 				$aux["files"] = $this->getOne("select count(*) from `tiki_files` where `galleryId`=?",array($gid));
 				}
+
 				$ret[] = $aux;
 			}
 		}
@@ -288,7 +295,7 @@ class FileGalLib extends TikiLib {
 	}
 
 	function replace_file_gallery($galleryId, $name, $description, $user, $maxRows, $public, $visible = 'y', $show_id, $show_icon,
-		$show_name, $show_size, $show_description, $show_created, $show_dl, $max_desc, $fgal_type='default') {
+		$show_name, $show_size, $show_description, $show_created, $show_dl, $max_desc, $fgal_type='default', $parentId=-1) {
 		// if the user is admin or the user is the same user and the gallery exists then replace if not then
 		// create the gallary if the name is unused.
 		$name = strip_tags($name);
@@ -297,17 +304,17 @@ class FileGalLib extends TikiLib {
 		$now = date("U");
 
 		if ($galleryId > 0) {
-			$query = "update `tiki_file_galleries` set `name`=?, `maxRows`=?, `description`=?,`lastModif`=?, `public`=?, `visible`=?,`show_icon`=?,`show_id`=?,`show_name`=?,`show_description`=?,`show_size`=?,`show_created`=?,`show_dl`=?,`max_desc`=?,`type`=? where `galleryId`=?";
-			$bindvars=array($name,(int) $maxRows,$description,(int) $now,$public,$visible,$show_icon,$show_id,$show_name,$show_description,$show_size,$show_created,$show_dl,(int) $max_desc, $fgal_type,(int) $galleryId);
+			$query = "update `tiki_file_galleries` set `name`=?, `maxRows`=?, `description`=?,`lastModif`=?, `public`=?, `visible`=?,`show_icon`=?,`show_id`=?,`show_name`=?,`show_description`=?,`show_size`=?,`show_created`=?,`show_dl`=?,`max_desc`=?,`type`=?,`parentId`=?,`user`=? where `galleryId`=?";
+			$bindvars=array($name,(int) $maxRows,$description,(int) $now,$public,$visible,$show_icon,$show_id,$show_name,$show_description,$show_size,$show_created,$show_dl,(int) $max_desc, $fgal_type, $parentId, $user, (int) $galleryId);
 
 			$result = $this->query($query,$bindvars);
 		} else {
 			// Create a new record
-			$query = "insert into `tiki_file_galleries`(`name`,`description`,`created`,`user`,`lastModif`,`maxRows`,`public`,`hits`,`visible`,`show_id`,`show_icon`,`show_name`,`show_description`,`show_created`,`show_dl`,`max_desc`,`type`)
+			$query = "insert into `tiki_file_galleries`(`name`,`description`,`created`,`user`,`lastModif`,`maxRows`,`public`,`hits`,`visible`,`show_id`,`show_icon`,`show_name`,`show_description`,`show_created`,`show_dl`,`max_desc`,`type`, `parentId`)
                                     values (?,?,?,?,?,?,?,?,?,
-                                    ?,?,?,?,?,?,?,?)";
+                                    ?,?,?,?,?,?,?,?,?)";
 			$bindvars=array($name,$description,(int) $now,$user,(int) $now,(int) $maxRows,$public,0,$visible,
-					$show_id,$show_icon,$show_name,$show_description,$show_created,$show_dl,(int) $max_desc, $fgal_type);
+					$show_id,$show_icon,$show_name,$show_description,$show_created,$show_dl,(int) $max_desc, $fgal_type, $parentId);
 
 			$result = $this->query($query,$bindvars);
 			$galleryId

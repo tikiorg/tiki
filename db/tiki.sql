@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2006-11-06 17:12:21 $
+# $Date: 2006-11-13 18:37:16 $
 # $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -1311,6 +1311,7 @@ CREATE TABLE tiki_file_galleries (
   max_desc int(8) default NULL,
   show_created char(1) default NULL,
   show_dl char(1) default NULL,
+  parentId int(14) NOT NULL default -1,
   PRIMARY KEY  (galleryId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -4556,6 +4557,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_list_hits','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_list_lastmodif','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_list_name','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_list_user','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_list_parent','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_match_regex','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_nmatch_regex','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_use_db','y');
