@@ -129,7 +129,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 
 {$trl}
 
-{$headerlib->output_headers()}
+{if $headerlib}{$headerlib->output_headers()}{/if}
 
 </head>
 
