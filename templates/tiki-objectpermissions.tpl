@@ -1,5 +1,5 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-objectpermissions.tpl,v 1.15 2006-11-06 15:04:49 sylvieg Exp $ *}
-<h1>{tr}Assign permissions to {/tr}{tr}{$objectType}{/tr} {$objectName}</h1>
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-objectpermissions.tpl,v 1.16 2006-11-14 13:42:56 sylvieg Exp $ *}
+<h1>{tr}Assign permissions to {/tr}{tr}{$objectType|escape}{/tr} {$objectName|escape}</h1>
 <a href="{$referer}" class="linkbut">{tr}back{/tr}</a>
 <div>
 <h2>{tr}Current permissions for this object{/tr}:</h2>
@@ -25,15 +25,15 @@
 <input type="hidden" name="permType" value="{$permType|escape}" />
 <input type="submit" name="assign" value="{tr}assign{/tr}" />
 
-<select name="perm[]" multiple="multiple" size="5">
+<select name="perm[]" multiple="multiple" size="{$perms|@count}">
 {section name=prm loop=$perms}
-<option value="{$perms[prm].permName|escape}">{$perms[prm].permName}</option>
+<option value="{$perms[prm].permName|escape}">{$perms[prm].permName|escape}</option>
 {/section}
 </select>
 {tr}to group{/tr}:
-<select name="group">
+<select name="group[]" multiple="multiple" size="{$perms|@count}">
 {section name=grp loop=$groups}
-<option value="{$groups[grp].groupName|escape}" {if $groupName eq $groups[grp].groupName }selected="selected"{/if}>{$groups[grp].groupName}</option>
+<option value="{$groups[grp].groupName|escape}" {if $groupName eq $groups[grp].groupName }selected="selected"{/if}>{$groups[grp].groupName|escape}</option>
 {/section}
 </select>
 </form>

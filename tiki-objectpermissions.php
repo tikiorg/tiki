@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-objectpermissions.php,v 1.15 2006-11-06 15:04:49 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-objectpermissions.php,v 1.16 2006-11-14 13:42:56 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -50,10 +50,12 @@ $smarty->assign('objectType', $_REQUEST["objectType"]);
 $smarty->assign('permType', $_REQUEST["permType"]);
 
 // Process the form to assign a new permission to this page
-if (isset($_REQUEST["assign"])) {
+if (isset($_REQUEST['assign']) && isset($_REQUEST['group']) && isset($_REQUEST['perm'])) {
 	check_ticket('object-perms');
 	foreach($_REQUEST['perm'] as $perm) {
-		$userlib->assign_object_permission($_REQUEST["group"], $_REQUEST["objectId"], $_REQUEST["objectType"], $perm);
+		foreach ($_REQUEST['group'] as $group) {
+			$userlib->assign_object_permission($group, $_REQUEST["objectId"], $_REQUEST["objectType"], $perm);
+		}
 	}
 	$smarty->assign('groupName', $_REQUEST["group"]);
 }
@@ -71,11 +73,11 @@ $page_perms = $userlib->get_object_permissions($_REQUEST["objectId"], $_REQUEST[
 $smarty->assign_by_ref('page_perms', $page_perms);
 
 // Get a list of groups
-$groups = $userlib->get_groups(0, -1, 'groupName_desc', '', '', 'n');
+$groups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
 $smarty->assign_by_ref('groups', $groups["data"]);
 
 // Get a list of permissions
-$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $_REQUEST["permType"]);
+$perms = $userlib->get_permissions(0, -1, 'permName_asc', '', $_REQUEST["permType"]);
 $smarty->assign_by_ref('perms', $perms["data"]);
 
 ask_ticket('object-perms');
