@@ -1624,7 +1624,7 @@ function get_included_groups($group) {
 		return $utr;
 	}
 
-  function get_permissions($offset = 0, $maxRecords = -1, $sort_mode = 'permName_desc', $find = '', $type = '', $group = '') {
+  function get_permissions($offset = 0, $maxRecords = -1, $sort_mode = 'permName_asc', $find = '', $type = '', $group = '') {
 	$values = array();
 	$sort_mode = $this->convert_sortmode($sort_mode);
 	$mid = '';
