@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_surveys.php,v 1.16 2006-11-03 22:19:11 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_surveys.php,v 1.17 2006-11-15 09:30:24 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -83,7 +83,6 @@ for ($i = 0; $i < $temp_max; $i++) {
 		$channels["data"][$i]["taken_survey"] = 'n';
 	}
 }
-print_r($channels);
 
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
