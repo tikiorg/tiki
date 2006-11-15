@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.317 2006-11-12 03:01:35 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.318 2006-11-15 08:37:40 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1162,6 +1162,8 @@ $smarty->assign('wikiHomePage', $wikiHomePage);
 
 $wiki_page_regex = $tikilib->get_preference('wiki_page_regex', 'strict');
 $smarty->assign('wiki_page_regex', $wiki_page_regex);
+$wiki_pagename_strip = $tikilib->get_preference('wiki_pagename_strip','');
+$smarty->assign('wiki_pagename_strip', $wiki_pagename_strip);
 
 // Wiki dump tarball doesn't exist by default
 $wiki_dump_exists = 'n';
@@ -2082,5 +2084,16 @@ if (!empty($_SESSION['interactive_translation_mode'])&&($_SESSION['interactive_t
 	include_once("lib/multilingual/multilinguallib.php");
 	$cachelib->empty_full_cache();
 }
-
+if ($feature_freetags == 'y') {     // And get the Tags for the posts
+		if (isset($_POST['tags']) && trim($_POST['tags']) != "" && $tiki_p_freetags_tag) {
+			if (!isset($user)) {
+				$userid = 0;
+			} else {
+				$userid = $userlib->get_user_id($user);
+			}
+			$freetaglib->tag_object($userid, $page, 'wiki page', $_POST['tags']);
+		}
+    $tags = $freetaglib->get_tags_on_object($info['pageName'], 'wiki page');
+    $smarty->assign('freetags',$tags);
+}
 ?>
