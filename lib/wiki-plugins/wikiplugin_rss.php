@@ -5,7 +5,25 @@
 //
 
 function wikiplugin_rss_help() {
-	return tra("~np~{~/np~RSS(id=>feedId,max=>3,date=>1,body=>1)}{RSS} Insert rss feed output into a wikipage");
+	return tra("~np~{~/np~RSS(id=>feedId|feedId2,max=>3,date=>1,desc=>1,author=>1)}{RSS} Insert rss feed output into a wikipage");
+}
+
+function rss_sort($a,$b) {
+	if (isset($a["pubDate"])) {
+  	$datea=strtotime($a["pubDate"]);
+	} else {
+		$datea=time();
+	}
+	if (isset($b["pubDate"])) {
+  	$dateb=strtotime($b["pubDate"]);
+	} else {
+		$dateb=time();
+	}	
+	if ($datea<$dateb) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 function wikiplugin_rss($data,$params) {
@@ -28,9 +46,20 @@ function wikiplugin_rss($data,$params) {
 
 	$now = date("U");
 
-	$rssdata = $rsslib->get_rss_module_content($id);
-	$items = $rsslib->parse_rss_data($rssdata, $id);
-
+	$ids=explode("|",$id);
+  
+  $items=array();
+  foreach ($ids as $val) {
+		$rssdata = $rsslib->get_rss_module_content($val);
+		$itemsrss = $rsslib->parse_rss_data($rssdata, $val);
+		$items=array_merge($items,$itemsrss);		
+ }
+ 
+ usort($items,"rss_sort");
+ if (count($ids)>1) {
+ 	$items=array_slice($items, count($ids));
+ }
+ 
 	$repl="";		
 	if ($items[0]["isTitle"]=="y") {
 		$repl .= '<div class="wiki"><a target="_blank" href="'.$items[0]["link"].'">'.$items[0]["title"].'</a></div><br />'; 
@@ -56,38 +85,13 @@ function wikiplugin_rss($data,$params) {
 			$repl .= '<tr><td class="even" colspan="2">'.html_entity_decode($items[$j]["description"]).'</td></tr>';
 		    $repl .= '</tr>';
 		}
+		if ($desc>1) {
+					$repl .= '<tr><td class="even" colspan="2">'.substr(strip_tags(html_entity_decode($items[$j]["description"])),0,$desc).' <a class="wiki" href="'.$items[$j]["link"].'">[[...]</a></td></tr>';
+		    $repl .= '</tr>';
+		}
 	}
 	$repl .= '</table>';
 	return $repl;
-	
-	
-	
-	
-
-/*
-
-</tr>
-{section name=changes loop=$listpages}
-<tr>
-{if $smarty.section.changes.index % 2}
-
-<td class="odd">&nbsp;{$listpages[changes].contentId}&nbsp;</td>
-
-{else}
-
-<td class="even">&nbsp;{$listpages[changes].contentId}&nbsp;</td>
-
-{/if}
-</tr>
-{sectionelse}
-<tr><td colspan="6">
-<b>{tr}No records found{/tr}</b>
-</td></tr>
-{/section}
-</table>
-*/
-		
-	
 }
 
 ?>
