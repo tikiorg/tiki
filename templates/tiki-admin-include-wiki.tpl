@@ -153,18 +153,15 @@
     </div>
     <div class="cbox-data">
     <form method="post" action="tiki-admin.php?page=wiki">
-    <table class="admin">
-    <tr><td class="form">
-    {tr}Controls recognition of Wiki links using the two parenthesis Wiki link syntax <i>((page name))</i>.{/tr}
-    </td></tr><tr><td>
+    {tr}Controls recognition of Wiki links using the two parenthesis Wiki link syntax <i>((page name))</i>.{/tr}<br />
     <select name="wiki_page_regex">
     <option value='complete' {if $wiki_page_regex eq 'complete'}selected="selected"{/if}>{tr}complete{/tr}</option>
     <option value='full' {if $wiki_page_regex eq 'full'}selected="selected"{/if}>{tr}latin{/tr}</option>
     <option value='strict' {if $wiki_page_regex eq 'strict'}selected="selected"{/if}>{tr}english{/tr}</option>
-    </select>
+    </select><br />
+		{tr}Page name display stripper: choose a character that will be used as a delimiter to strip a final part of the page name (only concerns display){/tr}<br />
+		<input type="text" name="wiki_pagename_strip" value="{$wiki_pagename_strip}" />
     <input type="submit" name="setwikiregex" value="{tr}set{/tr}" />
-    </td>
-    </tr></table>
     </form>
     </div>
   </div>
@@ -383,7 +380,7 @@
     </select>
     </td></tr>
     <tr><td class="form">{tr}Wysiwyg editor{/tr}:</td><td>
-    <select name="feature_wysiwyg" disabled="disabled">
+    <select name="feature_wysiwyg">
     <option value="default" {if $feature_wysiwyg eq 'default'}selected="selected"{/if}>{tr}default{/tr}</option>
     <option value="optional" {if $feature_wysiwyg eq 'optional'}selected="selected"{/if}>{tr}optional{/tr}</option>
     <option value="no" {if $feature_wysiwyg eq 'no'}selected="selected"{/if}>{tr}no{/tr}</option>
