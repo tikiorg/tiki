@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.79 2006-08-29 21:09:29 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.80 2006-11-15 20:44:59 niclone Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -1032,7 +1032,8 @@ class ImageGalsLib extends TikiLib {
 
 
 	function get_gallery_image($galleryId,$rule='',$sort_mode = '') {
-		$query='select `imageId` from `tiki_images` where `galleryId`=? order by ';
+		$query='select i.`imageId` from `tiki_images` i, `tiki_images_data` d
+                        where d.imageId=i.imageId and `galleryId`=? order by ';
 		$bindvars=array($galleryId);
 		switch($rule) {
 			case 'firstu':
@@ -1135,7 +1136,7 @@ class ImageGalsLib extends TikiLib {
                  where i.`imageId`=d.`imageId`
                  and d.`type`=?
                 $mid
-                order by ".$this->convert_sortmode($sort_mode);
+                order by ".$this->convert_sortmode($sort_mode)." limit 1";
 		$result = $this->query($query,$bindvars,1,0);
 		$res = $result->fetchRow();
 		return $res['imageId'];
@@ -1173,7 +1174,7 @@ class ImageGalsLib extends TikiLib {
                  where i.`imageId`=d.`imageId`
                  and d.`type`=?
                 $mid
-                order by ".$this->convert_sortmode($sort_mode);
+                order by ".$this->convert_sortmode($sort_mode)." limit 1";
 		$result = $this->query($query,$bindvars,1,0);
 		$res = $result->fetchRow();
 		return $res['imageId'];
