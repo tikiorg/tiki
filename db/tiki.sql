@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2006-11-13 18:37:16 $
+# $Date: 2006-11-15 14:56:14 $
 # $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -4345,10 +4345,10 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('auth_ldap_groupattr','c
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('auth_ldap_groupdn','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('auth_ldap_groupoc','groupOfUniqueNames');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('auth_ldap_url','');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('auth_ldap_host','localhost');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('auth_pear_host','localhost');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('auth_ldap_memberattr','uniqueMember');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('auth_ldap_memberisdn','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('auth_ldap_port','389');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('auth_pear_port','389');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('auth_ldap_scope','sub');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('auth_ldap_userattr','uid');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('auth_ldap_userdn','');

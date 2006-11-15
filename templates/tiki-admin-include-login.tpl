@@ -194,8 +194,8 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 <tr><td class="form">{tr}Create user if not in Auth?{/tr}</td><td><input type="checkbox" name="auth_create_user_auth" {if $auth_create_user_auth eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="form">{tr}Just use Tiki auth for admin?{/tr}</td><td><input type="checkbox" name="auth_skip_admin" {if $auth_skip_admin eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="form">{tr}LDAP URL<br />(if set, this will override the Host and Port below){/tr}:</td><td><input type="text" name="auth_ldap_url" value="{$auth_ldap_url|escape}" size="50" /></td></tr>
-<tr><td class="form">{tr}LDAP Host{/tr}:</td><td><input type="text" name="auth_ldap_host" value="{$auth_ldap_host|escape}" size="50" /></td></tr>
-<tr><td class="form">{tr}LDAP Port{/tr}:</td><td><input type="text" name="auth_ldap_port" value="{$auth_ldap_port|escape}" /></td></tr>
+<tr><td class="form">{tr}LDAP Host{/tr}:</td><td><input type="text" name="auth_pear_host" value="{$auth_pear_host|escape}" size="50" /></td></tr>
+<tr><td class="form">{tr}LDAP Port{/tr}:</td><td><input type="text" name="auth_pear_port" value="{$auth_pear_port|escape}" /></td></tr>
 <tr><td class="form">{tr}LDAP Scope{/tr}:</td><td>
 <select name="auth_ldap_scope">
 <option value="sub" {if $auth_ldap_scope eq "sub"} selected="selected"{/if}>sub</option>

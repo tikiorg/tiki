@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.44 2006-08-29 20:19:02 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.45 2006-11-15 14:56:14 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -382,16 +382,16 @@ if (isset($_REQUEST["auth_pear"])) {
 	$smarty->assign('auth_ldap_url', $_REQUEST["auth_ldap_url"]);
     }
 
-    if (isset($_REQUEST["auth_ldap_host"])) {
-	$tikilib->set_preference("auth_ldap_host", $_REQUEST["auth_ldap_host"]);
+    if (isset($_REQUEST["auth_pear_host"])) {
+	$tikilib->set_preference("auth_pear_host", $_REQUEST["auth_pear_host"]);
 
-	$smarty->assign('auth_ldap_host', $_REQUEST["auth_ldap_host"]);
+	$smarty->assign('auth_pear_host', $_REQUEST["auth_pear_host"]);
     }
 
-    if (isset($_REQUEST["auth_ldap_port"])) {
-	$tikilib->set_preference("auth_ldap_port", $_REQUEST["auth_ldap_port"]);
+    if (isset($_REQUEST["auth_pear_port"])) {
+	$tikilib->set_preference("auth_pear_port", $_REQUEST["auth_pear_port"]);
 
-	$smarty->assign('auth_ldap_port', $_REQUEST["auth_ldap_port"]);
+	$smarty->assign('auth_pear_port', $_REQUEST["auth_pear_port"]);
     }
 
     if (isset($_REQUEST["auth_ldap_scope"])) {
