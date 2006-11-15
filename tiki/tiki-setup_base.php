@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.109 2006-11-07 14:21:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.110 2006-11-15 11:08:51 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -66,8 +66,8 @@ function make_clean(&$var,$gpc=false) {
 	} else {
 		if ($gpc) $var = stripslashes($var);
 		$var = preg_replace("~</?\s*(embed|object|applet)[^>]*>~si","",$var);
-		if (preg_match("~</?\s*script[^>]*>~si",$var)) {
-			$var = preg_replace("~</?\s*script[^>]*>~si","",$var);
+		if (preg_match("~</?\s*script[^>]*>?~si",$var)) {
+			$var = preg_replace("~</?\s*script[^>]*>?~si","",$var);
 			make_clean($var);
 		}
 		$var = preg_replace('~(<[^>]*)(onmouseover|onmouseout|onload|onclick|ondblclick|onfocus|onmousedown|onmouseup|onmousemove|onmouseenter|onmouseleave|onblur|onchange|onkeydown|onkeypress|onkeyup|onabort|ondragdrop|onerror|onload|onmove|onreset|onresize|onselect|onsubmit|onunload)=[^>]*>~si','$1>',$var);
