@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.320 2006-11-15 14:32:55 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.321 2006-11-15 15:46:03 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -2084,10 +2084,10 @@ if (!empty($_SESSION['interactive_translation_mode'])&&($_SESSION['interactive_t
 	include_once("lib/multilingual/multilinguallib.php");
 	$cachelib->empty_full_cache();
 }
-if ($feature_freetags == 'y') {     // And get the Tags for the posts
-	include_once ('lib/freetag/freetaglib.php');
+if ($feature_freetags == 'y' && isset($info['pageName'])) {     // And get the Tags for the posts
+  global $freetaglib; include_once ('lib/freetag/freetaglib.php');
 
-		if (isset($_POST['tags']) && trim($_POST['tags']) != "" && $tiki_p_freetags_tag) {
+		if (isset($_POST['tags']) && trim($_POST['tags']) != "" && $tiki_p_freetags_tag == 'y') {
 			if (!isset($user)) {
 				$userid = 0;
 			} else {
