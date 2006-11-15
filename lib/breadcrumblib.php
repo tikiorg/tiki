@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/lib/breadcrumblib.php,v 1.7 2006-10-01 13:23:12 ohertel Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/breadcrumblib.php,v 1.8 2006-11-15 08:55:17 mose Exp $
  * Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -214,7 +214,7 @@ class Breadcrumb {
     /* static */
     function _breadcrumb_getTitle($crumbs, $loc) {
         global $feature_siteidentity, $feature_wiki_description, $feature_sitetitle, $print_page, $info, $feature_breadcrumbs;
-        global $structure, $structure_path;
+        global $structure, $structure_path, $wiki_pagename_strip;
     
         if ( ($feature_siteidentity == 'n'|| $feature_breadcrumbs == 'n') || $feature_sitetitle == 'title' ) {
             $class = "pagetitle";
@@ -237,7 +237,12 @@ class Breadcrumb {
         $ret .= '" href="'.$crumbs[$len-1]->url.'">';
         if ($feature_breadcrumbs == 'n' && $loc == "admin")
             $ret .= tra("Administration:")." ";
-        $ret .= tra($crumbs[$len-1]->title).'</a>';
+				if (!empty($wiki_pagename_strip)) {
+					$wiki_pagename_strip = '/'.preg_quote($wiki_pagename_strip).'[a-zA-Z0-9]*$/';
+					$ret .= tra(preg_replace($wiki_pagename_strip,'',$crumbs[$len-1]->title)).'</a>';
+				} else {
+        	$ret .= tra($crumbs[$len-1]->title).'</a>';
+				}
         $ret .= help_doclink(array(crumb=>$crumbs[$len-1]));
         if( $info['flag'] == 'L' && $print_page != 'y' ) {
             $ret .= ' <img src="pics/icons/lock.png" border="0" height="16" width="16" alt="'.tra('locked').'" title="'.tra('locked by').' '.$info['user'].'" />';
