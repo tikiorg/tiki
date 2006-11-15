@@ -886,8 +886,8 @@ class UsersLib extends TikiLib {
 
 	$options = array();
 	$options["url"] = $tikilib->get_preference("auth_ldap_url", "");
-	$options["host"] = $tikilib->get_preference("auth_ldap_host", "localhost");
-	$options["port"] = $tikilib->get_preference("auth_ldap_port", "389");
+	$options["host"] = $tikilib->get_preference("auth_pear_host", "localhost");
+	$options["port"] = $tikilib->get_preference("auth_pear_port", "389");
 	$options["scope"] = $tikilib->get_preference("auth_ldap_scope", "sub");
 	$options["basedn"] = $tikilib->get_preference("auth_ldap_basedn", "");
 	$options["userdn"] = $tikilib->get_preference("auth_ldap_userdn", "");

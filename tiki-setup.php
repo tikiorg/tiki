@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.319 2006-11-15 11:01:59 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.320 2006-11-15 14:32:55 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1201,11 +1201,11 @@ $auth_skip_admin = 'y';
 $smarty->assign('auth_skip_admin', $auth_skip_admin);
 $auth_ldap_url = '';
 $smarty->assign('auth_ldap_url', $auth_ldap_url);
-$auth_ldap_host = 'localhost';
-$smarty->assign('auth_ldap_host', $auth_ldap_host);
-$auth_ldap_port = '389';
-$smarty->assign('auth_ldap_port', $auth_ldap_port);
-$auth_ldap_scope = 'sub';
+$auth_pear_host = "localhost";
+$smarty->assign('auth_pear_host', $auth_pear_host);
+$auth_pear_port = "389";
+$smarty->assign('auth_pear_port', $auth_pear_port);
+$auth_ldap_scope = "sub";
 $smarty->assign('auth_ldap_scope', $auth_ldap_scope);
 $auth_ldap_basedn = '';
 $smarty->assign('auth_ldap_basedn', $auth_ldap_basedn);
