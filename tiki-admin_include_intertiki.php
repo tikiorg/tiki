@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_intertiki.php,v 1.4 2006-08-29 20:19:02 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_intertiki.php,v 1.5 2006-11-15 14:02:05 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -70,10 +70,11 @@ if (isset($_REQUEST["intertikiserver"])) {
 	simple_set_value('known_hosts');
 }
 
-// assigned by ref, so smarty vars are up to date
 $interlist   = unserialize($tikilib->get_preference("interlist",''));
 $known_hosts = unserialize($tikilib->get_preference("known_hosts",''));
 
+$smarty->assign("interlist", $interlist);
+$smarty->assign("known_hosts", $known_hosts);
 $smarty->assign("intertiki_server", $tikilib->get_preference("intertiki_server", "n"));
 
 ask_ticket('admin-inc-intertiki');

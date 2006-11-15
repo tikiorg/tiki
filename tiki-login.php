@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.54 2006-09-15 20:09:39 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.55 2006-11-15 14:02:05 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.54 2006-09-15 20:09:39 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.55 2006-11-15 14:02:05 sylvieg Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -85,11 +85,13 @@ $response = isset($_REQUEST['response']) ? $_REQUEST['response'] : false;
 $isvalid = false;
 $isdue = false;
 
-if (strstr($user,'@') && $feature_intertiki == 'y' ) {
-	$_REQUEST['intertiki'] = substr($user,strpos($user,'@')+1);
-	$user = substr($user,0,strpos($user,'@'));
-} elseif ($feature_intertiki == 'y' && !empty($feature_intertiki_mymaster)) {
+if ($feature_intertiki == 'y') {
+  if (strstr($user,'@') && empty($feature_intertiki_mymaster)) {
+    $_REQUEST['intertiki'] = substr($user,strpos($user,'@')+1);
+    $user = substr($user,0,strpos($user,'@'));
+  } elseif (!empty($feature_intertiki_mymaster)) {
     $_REQUEST['intertiki'] = $feature_intertiki_mymaster;
+  }
 }
 
 if ($user == 'admin') {
