@@ -14,6 +14,7 @@
 <img src="show_image.php?id={$imageId}" alt="{tr}image{/tr}" /><br /><br />
 <form enctype="multipart/form-data" action="tiki-edit_image.php" method="post">
 <input type="hidden" name="edit" value="{$imageId|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <input type="hidden" name="galleryId" value="{$galleryId|escape}" />
 <table class="normal">
 <tr><td class="formcolor">{tr}Image Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}" /></td></tr>
@@ -23,7 +24,7 @@
 <tr><td class="formcolor">{tr}Longitude (WGS84/decimal degrees){/tr}:</td><td class="formcolor"><input type="text" name="lon" value="{$lon|escape}" /></td></tr>
 {/if}
 {include file=categorize.tpl}
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="editimage" value="{tr}save{/tr}" />&nbsp;&nbsp;<a class="link" href="tiki-browse_image.php?imageId={$imageId}">{tr}cancel edit{/tr}</a></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="editimage" value="{tr}save{/tr}" />&nbsp;&nbsp;<input type="submit" name="editimage_andgonext" value="{tr}save and go next{/tr}" />&nbsp;&nbsp;<a class="link" href="tiki-browse_image.php?imageId={$imageId}">{tr}cancel edit{/tr}</a></td></tr>
 </table>
 </form>
 <br />
