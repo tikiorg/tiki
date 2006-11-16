@@ -1242,6 +1242,7 @@ function get_included_groups($group) {
 			$this->query("update `tiki_forums` set `moderator`=? where `moderator`=?", array($to,$from));
 			$this->query("update `tiki_forum_reads` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_files` set `user`=? where `user`=?", array($to,$from));
+			$this->query("update `tiki_files` set `lastModifUser`=? where `lastModifUser`=?", array($to,$from));
 			$this->query("update `tiki_file_galleries` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_drawings` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_download` set `userId`=? where `userId`=?", array((int)$userId,(int)$userId));
