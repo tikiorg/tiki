@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.665 2006-11-13 09:58:48 mose Exp $
+// CVS: $Id: tikilib.php,v 1.666 2006-11-16 16:47:06 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1860,7 +1860,7 @@ function add_pageview() {
 		    $bindvars = array();
 		}
 	
-		$query = "select `fileId` ,`name`,`description`,`created`,`filename`,`filesize`,`user`,`downloads`,`lastModif`,`lastModifUser`,`filetype`,`path` from `tiki_files` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_files` $mid order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_files` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
