@@ -24,23 +24,33 @@ class HeaderLib {
 	}
 
 	function add_jsfile($file,$rank=0) {
-		$this->jsfiles[$rank][] = $file;
+		if (!in_array($file,$this->jsfiles[$rank])) {
+			$this->jsfiles[$rank][] = $file;
+		}
 	}
 
 	function add_js($script,$rank=0) {
-		$this->js[$rank][] = $script;
+		if (!in_array($script,$this->js[$rank])) {
+			$this->js[$rank][] = $script;
+		}
 	}
 
 	function add_cssfile($file,$rank=0) {
-		$this->cssfiles[$rank][] = $file;
+		if (!in_array($file,$this->cssfiles[$rank])) {
+			$this->cssfiles[$rank][] = $file;
+		}
 	}
 
 	function add_css($rules,$rank=0) {
-		$this->js[$rank][] = $script;
+		if (!in_array($script,$this->css[$rank])) {
+			$this->css[$rank][] = $script;
+		}
 	}
 
 	function add_rssfeed($href,$title,$rank=0) {
-		$this->rssfeeds[$rank][$href] = $title;
+		if (!in_array($href,array_keys($this->rssfeeds[$rank]))) {
+			$this->rssfeeds[$rank][$href] = $title;
+		}
 	}
 
 	function set_metatags($tag,$value,$rank=0) {
