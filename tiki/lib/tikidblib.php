@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.24 2006-11-07 14:21:53 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.25 2006-11-16 18:44:04 niclone Exp $
 //
 
 // $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
@@ -22,6 +22,18 @@ function TikiDB($db)
   $this->db = $db;
 }
 
+function startTimer() {
+  list($micro, $sec) = explode(' ', microtime());
+  return $micro + $sec;
+}
+
+function stopTimer($starttime) {
+  global $elapsed_in_db;
+  list($micro, $sec) = explode(' ', microtime());
+  $now=$micro + $sec;
+  $elapsed_in_db+=$now - $starttime;
+}
+
 // Use ADOdb->qstr() for 1.8
 function qstr($str) {
     if (function_exists('mysql_real_escape_string')) {
@@ -41,11 +53,13 @@ function queryError( $query, &$error, $values = null, $numrows = -1,
     $offset = intval($offset);
     $this->convert_query($query);
     $this->convert_query_table_prefixes($query);
-
+    
+    $starttime=$this->startTimer();
     if ($numrows == -1 && $offset == -1)
         $result = $this->db->Execute($query, $values);
     else
         $result = $this->db->SelectLimit($query, $numrows, $offset, $values);
+    $this->stopTimer($starttime);
 
     if (!$result )
     {
@@ -78,10 +92,12 @@ function query($query = null, $values = null, $numrows = -1,
     //print_r($values);
     //echo "\n";
 
+    $starttime=$this->startTimer();
     if ($numrows == -1 && $offset == -1)
         $result = $this->db->Execute($query, $values);
     else
         $result = $this->db->SelectLimit($query, $numrows, $offset, $values);
+    $this->stopTimer($starttime);
 
     //print_r($result);
     //echo "\n</pre>\n";
@@ -121,6 +137,7 @@ function getOne($query, $values = null, $reporterrors = true, $offset = 0) {
     //echo "query: $query \n";
     //print_r($values);
     //echo "\n";
+    $starttime=$this->startTimer();
     $result = $this->db->SelectLimit($query, 1, $offset, $values);
 
     //echo "\n</pre>\n";
@@ -128,11 +145,13 @@ function getOne($query, $values = null, $reporterrors = true, $offset = 0) {
         if ($reporterrors) {
                 $this->sql_error($query, $values, $result);
         } else {
+	        $this->stopTimer($starttime);
                 return $result;
         }
     }
 
     $res = $result->fetchRow();
+    $this->stopTimer($starttime);
 
     //count the number of queries made
     global $num_queries;
