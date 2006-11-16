@@ -24,31 +24,31 @@ class HeaderLib {
 	}
 
 	function add_jsfile($file,$rank=0) {
-		if (!in_array($file,$this->jsfiles[$rank])) {
+		if (empty($this->jsfiles[$rank]) or !in_array($file,$this->jsfiles[$rank])) {
 			$this->jsfiles[$rank][] = $file;
 		}
 	}
 
 	function add_js($script,$rank=0) {
-		if (!in_array($script,$this->js[$rank])) {
+		if (empty($this->js[$rank]) or !in_array($script,$this->js[$rank])) {
 			$this->js[$rank][] = $script;
 		}
 	}
 
 	function add_cssfile($file,$rank=0) {
-		if (!in_array($file,$this->cssfiles[$rank])) {
+		if (empty($this->cssfiles[$rank]) or !in_array($file,$this->cssfiles[$rank])) {
 			$this->cssfiles[$rank][] = $file;
 		}
 	}
 
 	function add_css($rules,$rank=0) {
-		if (!in_array($script,$this->css[$rank])) {
+		if (empty($this->css[$rank]) or !in_array($script,$this->css[$rank])) {
 			$this->css[$rank][] = $script;
 		}
 	}
 
 	function add_rssfeed($href,$title,$rank=0) {
-		if (!in_array($href,array_keys($this->rssfeeds[$rank]))) {
+		if (empty($this->rssfeeds[$rank]) or !in_array($href,array_keys($this->rssfeeds[$rank]))) {
 			$this->rssfeeds[$rank][$href] = $title;
 		}
 	}
