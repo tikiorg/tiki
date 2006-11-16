@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.321 2006-11-15 15:46:03 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.322 2006-11-16 18:44:04 niclone Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -226,7 +226,9 @@ if (!function_exists('array_fill')) {
 
 //num queries has to be global
 global $num_queries;
+global $elapsed_in_db;
 $num_queries=0;
+$elapsed_in_db=0.0;
 
 $tikifeedback = array();
 
@@ -1959,6 +1961,7 @@ if ($feature_debug_console == 'y') {
 //print("tiki-setup: after include debugger.php:".$tiki_timer->elapsed()."<br />");
 
 $smarty->assign_by_ref('num_queries',$num_queries);
+$smarty->assign_by_ref('elapsed_in_db',$elapsed_in_db);
 
 $favicon = $tikilib->get_preference('site_favicon','favicon.png');
 $favicon_type = $tikilib->get_preference('site_favicon_type','image/png');
