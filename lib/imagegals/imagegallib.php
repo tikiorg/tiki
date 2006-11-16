@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.80 2006-11-15 20:44:59 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.81 2006-11-16 00:24:35 niclone Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -1109,6 +1109,48 @@ class ImageGalsLib extends TikiLib {
 			return($imageId);
 	}
 
+	function get_prev_and_next_image($sort_mode, $find, $imageId, $galleryId = -1) {
+
+		if ($find) {
+			$findesc = '%' . $find . '%';
+
+			$mid = " and (`name` like ? or `description` like ?)";
+			$bindvars=array('o',$findesc,$findesc);
+		} else {
+			$mid = "";
+			$bindvars=array('o');
+		}
+
+		$midcant = "";
+		$cantvars=array();
+
+		if ($galleryId != -1 && is_numeric($galleryId)) {
+			$mid .= " and i.`galleryId`=? ";
+			$bindvars[]=(int)$galleryId;
+			$midcant = "where `galleryId`=? ";
+			$cantvars[]=(int)$galleryId;
+		}
+
+		$query = "select i.`imageId`
+                from `tiki_images` i , `tiki_images_data` d
+                 where i.`imageId`=d.`imageId`
+                 and d.`type`=?
+                $mid
+                order by ".$this->convert_sortmode($sort_mode);
+		$result = $this->query($query,$bindvars);
+		$prev=-1; $next=0; $tmpid=0;
+		while ($res = $result->fetchRow()) {
+		        if ($imageId == $res['imageId']) {
+		                $prev=$tmpid;
+		        } else if ($prev >= 0) { // $prev is set, so, this one is the next
+		                $next=$res['imageId'];
+		                break;
+		        }
+		        $tmpid=$res['imageId'];
+		}
+		return array('prev' => ($prev > 0 ? $prev : 0), 'next' => $next);
+	}
+
 	function get_first_image($sort_mode, $find, $galleryId = -1) {
 
 		if ($find) {
@@ -1136,7 +1178,7 @@ class ImageGalsLib extends TikiLib {
                  where i.`imageId`=d.`imageId`
                  and d.`type`=?
                 $mid
-                order by ".$this->convert_sortmode($sort_mode)." limit 1";
+                order by ".$this->convert_sortmode($sort_mode);
 		$result = $this->query($query,$bindvars,1,0);
 		$res = $result->fetchRow();
 		return $res['imageId'];
@@ -1174,7 +1216,7 @@ class ImageGalsLib extends TikiLib {
                  where i.`imageId`=d.`imageId`
                  and d.`type`=?
                 $mid
-                order by ".$this->convert_sortmode($sort_mode)." limit 1";
+                order by ".$this->convert_sortmode($sort_mode);
 		$result = $this->query($query,$bindvars,1,0);
 		$res = $result->fetchRow();
 		return $res['imageId'];

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_image.php,v 1.17 2006-09-19 16:33:15 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_image.php,v 1.18 2006-11-16 00:24:35 niclone Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,13 +34,22 @@ if ($tiki_p_upload_images != 'y') {
 	die;
 }
 
+$imageId=$_REQUEST['edit'];
 $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo1 = str_replace("tiki-edit_image", "tiki-browse_image", $foo["path"]);
 $foo2 = str_replace("tiki-edit_image", "show_image", $foo["path"]);
 $smarty->assign('url_browse', $tikilib->httpPrefix(). $foo1);
 $smarty->assign('url_show', $tikilib->httpPrefix(). $foo2);
 
-if (isset($_REQUEST["editimage"])) {
+$gal_info = $imagegallib->get_gallery($_REQUEST["galleryId"]);
+
+if (!isset($_REQUEST['sort_mode'])) {
+	$sort_mode = $gal_info['sortorder'].'_'.$gal_info['sortdirection'];
+} else $sort_mode = $_REQUEST['sort_mode'];
+$smarty->assign('sort_mode', $sort_mode);
+
+
+if (isset($_REQUEST["editimage"]) || isset($_REQUEST["editimage_andgonext"])) {
 	check_ticket('edit-image');
 	$smarty->assign('individual', 'n');
 
@@ -81,8 +90,6 @@ if (isset($_REQUEST["editimage"])) {
 		die;
 	}
 
-	$gal_info = $imagegallib->get_gallery($_REQUEST["galleryId"]);
-
 	if ($gal_info["thumbSizeX"] == 0)
 		$gal_info["thumbSizeX"] = 80;
 
@@ -105,16 +112,21 @@ if (isset($_REQUEST["editimage"])) {
 	    $_REQUEST['lon'] = '';
 	}
 
-	if ($imagegallib->edit_image($_REQUEST['edit'], $_REQUEST['name'], $_REQUEST['description'],$_REQUEST['lat'],$_REQUEST['lon'])) {
+	if ($imagegallib->edit_image($imageId, $_REQUEST['name'], $_REQUEST['description'],$_REQUEST['lat'],$_REQUEST['lon'])) {
 		$smarty->assign('show', 'y');
 		$cat_type = 'image';
-		$cat_objid = $_REQUEST["edit"];
+		$cat_objid = $imageId;
 		$cat_desc = $_REQUEST['description'];
 		$cat_lat = $_REQUEST['lat'];
 		$cat_lon = $_REQUEST['lon'];
 		$cat_name = $_REQUEST['name'];
 		$cat_href = "tiki-browse_image.php?imageId=".$cat_objid;
 		include_once("categorize.php");
+
+		if (isset($_REQUEST["editimage_andgonext"])) {
+		        $prevnext = $imagegallib->get_prev_and_next_image($sort_mode, NULL, $imageId, $_REQUEST["galleryId"]);
+		        if ($prevnext['next']) $imageId=$prevnext['next'];
+		}
 
 	} else {
 		$smarty->assign('msg', tra("Failed to edit the image"));
@@ -124,9 +136,9 @@ if (isset($_REQUEST["editimage"])) {
 	}
 }
 
-$info = $imagegallib->get_image($_REQUEST["edit"]);
+$info = $imagegallib->get_image($imageId);
 $smarty->assign('show', 'n');
-$smarty->assign_by_ref('imageId', $_REQUEST['edit']);
+$smarty->assign_by_ref('imageId', $imageId);
 $smarty->assign_by_ref('galleryId', $info['galleryId']);
 $smarty->assign_by_ref('name', $info['name']);
 $smarty->assign_by_ref('description', $info['description']);
@@ -134,7 +146,7 @@ $smarty->assign_by_ref('lat', $info['lat']);
 $smarty->assign_by_ref('lon', $info['lon']);
 
 $cat_type = 'image';
-$cat_objid = $_REQUEST["edit"];
+$cat_objid = $imageId;
 include_once ("categorize_list.php");
 
 ask_ticket('edit-image');
