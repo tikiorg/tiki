@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.111 2006-11-16 13:57:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.112 2006-11-17 21:32:00 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -245,6 +245,16 @@ if (!empty($_REQUEST['highlight'])) {
 // ---------------------------------------------------------------------
 if (isset($_SERVER["REQUEST_URI"])) {
   ini_set('session.cookie_path', str_replace( "\\", "/", dirname($_SERVER["REQUEST_URI"])));
+}
+
+if (!isset($_SERVER['QUERY_STRING'])) {
+	$_SERVER['QUERY_STRING'] = '';
+}
+if (empty($_SERVER['REQUEST_URI'])) {
+	$_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'];
+}
+if (empty($_SERVER['SERVER_NAME'])) {
+	$_SERVER['SERVER_NAME'] = $_SERVER['HTTP_HOST'];
 }
 
 // set session lifetime
