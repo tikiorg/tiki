@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.71 2006-11-12 02:47:04 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.72 2006-11-17 11:54:10 mose Exp $
 2003 - created and maintained by mose@tikiwiki.org
 
 colorset:
@@ -90,6 +90,11 @@ color: #990000;
 ul {
 	margin: 0;
 	padding: 0 0 0 35px;
+}
+#fullscreenbutton {
+	position : absolute;
+	top : 2px;
+	left : 190px;
 }
 /*
 GENERAL LAYOUT 
