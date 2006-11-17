@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.39 2006-08-30 16:27:22 toggg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.40 2006-11-17 15:38:50 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -172,11 +172,9 @@ $smarty->assign('offset', $maxgal ? $offset - ($offset % $maxgal) : 0);
 //$smarty->assign('use_theme','y');
 
 if ($feature_gal_slideshow != 'n') {
-	// Require js slideshow library middle priority 50
-	$head_extra_js['lib/imagegals/imagegallib.js'] = 50;
-
-    $listImgId = implode(',', $listImgId);
-    $smarty->assign('listImgId', $listImgId);
+	$headerlib->add_jsfile('lib/imagegals/imagegallib.js',50);
+	$listImgId = implode(',', $listImgId);
+	$smarty->assign('listImgId', $listImgId);
 }
 
 // Everybody can browse images
