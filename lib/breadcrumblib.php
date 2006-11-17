@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/lib/breadcrumblib.php,v 1.8 2006-11-15 08:55:17 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/breadcrumblib.php,v 1.9 2006-11-17 19:16:43 mose Exp $
  * Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -243,7 +243,7 @@ class Breadcrumb {
 				} else {
         	$ret .= tra($crumbs[$len-1]->title).'</a>';
 				}
-        $ret .= help_doclink(array(crumb=>$crumbs[$len-1]));
+        $ret .= help_doclink(array('crumb'=>$crumbs[$len-1]));
         if( $info['flag'] == 'L' && $print_page != 'y' ) {
             $ret .= ' <img src="pics/icons/lock.png" border="0" height="16" width="16" alt="'.tra('locked').'" title="'.tra('locked by').' '.$info['user'].'" />';
         }
