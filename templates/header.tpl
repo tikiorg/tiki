@@ -136,7 +136,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 <body {if $user_dbl eq 'y' and $dblclickedit eq 'y' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}
 {if $show_comzone eq 'y'}onload="javascript:flip('comzone');"{/if}{if $msgError} onload="javascript:location.hash='msgError'" {/if}{if $section} class="tiki_{$section}"{/if}>
 {if $minical_reminders>100}
-	<iframe width='0' height='0' frameborder="0" src="tiki-minical_reminders.php"></iframe>
+<iframe width='0' height='0' frameborder="0" src="tiki-minical_reminders.php"></iframe>
 {/if}
 
 {if $feature_community_mouseover}{popup_init src="lib/overlib.js"}{/if}
@@ -146,3 +146,12 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 		{include file="tiki-site_header.tpl"}
 	</div>
 {/if}
+
+{if $feature_fullscreen eq 'y'}
+{if $smarty.session.fullscreen eq 'y'}
+<a href="?fullscreen=n" style="float:right;padding:0 10px;font-size:80%;" class="menulink" id="fullscreenbutton">{tr}Cancel Fullscreen{/tr}</a>
+{else}
+<a href="?fullscreen=y" style="float:right;padding:0 10px;font-size:80%;" class="menulink" id="fullscreenbutton">{tr}Fullscreen{/tr}</a>
+{/if}
+{/if}
+

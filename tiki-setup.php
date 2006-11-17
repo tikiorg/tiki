@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.322 2006-11-16 18:44:04 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.323 2006-11-17 11:14:52 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1429,6 +1429,8 @@ $smarty->assign('login_url', $login_url);
 $smarty->assign('login_scr', $login_scr);
 $smarty->assign('register_url', $register_url);
 $smarty->assign('error_url', $error_url);
+$feature_fullscreen = 'n';
+$smarty->assign('feature_fullscreen',$feature_fullscreen);
 
 if ($https_login == 'y' || $https_login_required == 'y') {
     $http_login_url = 'http://' . $http_domain;
@@ -2087,8 +2089,8 @@ if (!empty($_SESSION['interactive_translation_mode'])&&($_SESSION['interactive_t
 	include_once("lib/multilingual/multilinguallib.php");
 	$cachelib->empty_full_cache();
 }
-if ($feature_freetags == 'y' && isset($info['pageName'])) {     // And get the Tags for the posts
-  global $freetaglib; include_once ('lib/freetag/freetaglib.php');
+if ($feature_freetags == 'y') {
+  include_once ('lib/freetag/freetaglib.php');
 
 		if (isset($_POST['tags']) && trim($_POST['tags']) != "" && $tiki_p_freetags_tag == 'y') {
 			if (!isset($user)) {
@@ -2100,5 +2102,15 @@ if ($feature_freetags == 'y' && isset($info['pageName'])) {     // And get the T
 		}
     $tags = $freetaglib->get_tags_on_object($info['pageName'], 'wiki page');
     $smarty->assign('freetags',$tags);
+}
+
+if ($feature_fullscreen == 'y') {
+	if (isset($_GET['fullscreen'])) {
+		if ($_GET['fullscreen'] == 'y') {
+			$_SESSION['fullscreen'] = 'y';
+		} else {
+			$_SESSION['fullscreen'] = 'n';
+		}
+	}
 }
 ?>
