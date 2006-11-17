@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.41 2006-11-13 18:37:16 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.42 2006-11-17 18:35:56 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-file_galleries.php?galleryId={$galleryId}">{tr}File Galleries{/tr}</a>
 
@@ -60,6 +60,7 @@
 				<td class="formcolor">{tr}description{/tr}</td>
 				<td class="formcolor">{tr}created{/tr}</td>
 				<td class="formcolor">{tr}downloads{/tr}</td>
+				<td class="formcolor">{tr}locked by{/tr}<br /></td>
 			</tr>
 			<tr>
 				<td class="formcolor"><input type="checkbox" name="show_icon" {if $show_icon eq 'y'} checked="checked"{/if} /></td>
@@ -75,6 +76,7 @@
 				<td class="formcolor"><input type="checkbox" name="show_description" {if $show_description eq 'y'} checked="checked"{/if} /></td>
 				<td class="formcolor"><input type="checkbox" name="show_created" {if $show_created eq 'y'} checked="checked"{/if} /></td>
 				<td class="formcolor"><input type="checkbox" name="show_dl" {if $show_dl eq 'y'} checked="checked"{/if} /></td>
+				<td class="formcolor"><input type="checkbox" name="show_lockedby" {if $show_lockedby eq 'y'} checked="checked"{/if} /></td>
 			</tr>
 		</table>
 	</td>
@@ -86,6 +88,7 @@
 <tr><td class="formcolor">{tr}Max Rows per page{/tr}:</td><td class="formcolor"><input type="text" name="maxRows" value="{$maxRows|escape}" /></td></tr>
 {include file=categorize.tpl}
 <tr><td class="formcolor">{tr}Other users can upload files to this gallery{/tr}:</td><td class="formcolor"><input type="checkbox" name="public" {if $public eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="formcolor">{tr}The files can be locked at download:{/tr} </td><td class="formcolor"><input type="checkbox" name="lockable" {if $lockable eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="formcolor">{tr}Parent gallery{/tr}:</td><td class="formcolor"><select name="parentId">
 <option value="-1" {if $parentId == -1} selected="selected"{/if}>{tr}none{/tr}</option>
 {foreach from=$galleries key=key item=item}
@@ -179,9 +182,9 @@
 	{if $fgal_list_name eq 'y'}
 		<td class="{cycle advance=false}">
 			{if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_view_file_gallery eq 'y' ) }
-				<a class="fgalname" href="tiki-list_file_gallery.php?galleryId={$galleries[changes].id}">
+				<a class="fgalname" href="tiki-list_file_gallery.php?galleryId={$galleries[changes].id}" title="{tr}list{/tr}">
 			{/if}
-			{$galleries[changes].name}
+			{$galleries[changes].name|escape}
 			{if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_view_file_gallery eq 'y' ) }
 			</a>
 			{/if}
@@ -190,13 +193,13 @@
 
 	{if $fgal_list_parent eq 'y'}
 		<td class="{cycle advance=false}">
-			<a class="fgalname" href="tiki-list_file_gallery.php?galleryId={$galleries[changes].parentId}">{$galleries[changes].parentName|escape}</a>
+			<a class="fgalname" href="tiki-list_file_gallery.php?galleryId={$galleries[changes].parentId}" title="{tr}list{/tr}">{$galleries[changes].parentName|escape}</a>
 		</td>
 	{/if}
 
 	{if $fgal_list_description eq 'y'}
 		<td class="{cycle advance=false}">
-			{$galleries[changes].description}
+			{$galleries[changes].description|escape}
 		</td>
 	{/if}
 
@@ -217,7 +220,7 @@
 	{/if}
 	
 	{if $fgal_list_user eq 'y'}
-		<td class="{cycle advance=false}">{$galleries[changes].user}&nbsp;</td>
+		<td class="{cycle advance=false}">{$galleries[changes].user|escape}</td>
 	{/if}
 	
 	{if $fgal_list_files eq 'y'}

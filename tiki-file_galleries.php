@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.28 2006-11-13 18:37:16 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.29 2006-11-17 18:35:56 sylvieg Exp $
 
 	require_once('tiki-setup.php');
 	include_once('lib/filegals/filegallib.php');
@@ -68,9 +68,11 @@
 	$smarty->assign('show_created','y');
 	$smarty->assign('show_dl','y');
 	$smarty->assign('max_desc',1024);
+	$smarty->assign('show_lockedby', 'y');
 	
 	$smarty->assign('maxRows',10);
 	$smarty->assign('public','n');
+	$smarty->assign('lockable', 'n');
 	$smarty->assign('edited','n');
 	$smarty->assign('edit_mode','n');
 	$smarty->assign('visible','y');
@@ -99,9 +101,10 @@
 		$smarty->assign('show_dl',$info['show_dl']);
 		$smarty->assign('max_desc',$info['max_desc']);
 		$smarty->assign('fgal_type',$info['type']);
-	
+		$smarty->assign('show_lockedby',$info['show_lockedby']);
 	    $smarty->assign_by_ref('maxRows',$info["maxRows"]);
 	    $smarty->assign_by_ref('public',$info["public"]);
+		$smarty->assign_by_ref('lockable', $info['lockable']);
 	    $smarty->assign_by_ref('visible',$info["visible"]);
 		$smarty->assign_by_ref('parentId',$info['parentId']);
 		$smarty->assign_by_ref('creator',$info['user']);
@@ -146,7 +149,7 @@
 	  $smarty->assign('show_dl',isset($_REQUEST['show_dl'])?'y':'n');
 	  $smarty->assign('max_desc',($_REQUEST['max_desc']));
 	  $smarty->assign('fgal_type',isset($_REQUEST['type'])? $_REQUEST['type']: '');
-	
+	  $smarty->assign('show_lockedby',isset($_REQUEST['show_lockedby'])?'y':'n');
 	  $smarty->assign_by_ref('maxRows',$_REQUEST["maxRows"]);
 	  $smarty->assign_by_ref('rowImages',$_REQUEST["rowImages"]);
 	  $smarty->assign_by_ref('thumbSizeX',$_REQUEST["thumbSizeX"]);
@@ -159,6 +162,7 @@
 	  } else {
 	    $visible ='n';
 	  }
+	  $smarty->assign('visible',$visible);
 	  if(isset($_REQUEST["public"]) && $_REQUEST["public"]=="on") {
 	    $smarty->assign('public','y');
 	    $public ='y';
@@ -166,7 +170,13 @@
 	    $public ='n';
 	  }
 	  $smarty->assign('public',$public);
-	  $smarty->assign('visible',$visible);
+	  if(isset($_REQUEST['lockable']) && $_REQUEST['lockable'] == 'on') {
+	    $smarty->assign('lockable','y');
+	    $lockable ='y';
+	  } else {
+	    $lockable ='n';
+	  }
+	  $smarty->assign('lockable', $lockable);
 	  $_REQUEST['show_id']=isset($_REQUEST['show_id'])?'y':'n';
 	  $_REQUEST['show_icon']=isset($_REQUEST['show_icon'])?'y':'n';
 	  $_REQUEST['show_description']=isset($_REQUEST['show_description'])?'y':'n';
@@ -175,7 +185,8 @@
 	  $_REQUEST['show_size']=isset($_REQUEST['show_size'])?'y':'n';
 	  $_REQUEST['show_name']=isset($_REQUEST['show_name'])?$_REQUEST['show_name']:'a';
 	  $_REQUEST['user'] = isset($_REQUEST['user'])?$_REQUEST['user']:(isset($info['user'])?$info['user']:$user);
-	  $fgid = $filegallib->replace_file_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST['user'], $_REQUEST["maxRows"], $public, $visible,$_REQUEST['show_id'],$_REQUEST['show_icon'],$_REQUEST['show_name'],$_REQUEST['show_size'],$_REQUEST['show_description'],$_REQUEST['show_created'],$_REQUEST['show_dl'],$_REQUEST['max_desc'],$_REQUEST['fgal_type'], $_REQUEST['parentId']);
+	  $_REQUEST['show_lockedby']=isset($_REQUEST['show_lockedby'])?'y':'n';
+	  $fgid = $filegallib->replace_file_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST['user'], $_REQUEST["maxRows"], $public, $visible,$_REQUEST['show_id'],$_REQUEST['show_icon'],$_REQUEST['show_name'],$_REQUEST['show_size'],$_REQUEST['show_description'],$_REQUEST['show_created'],$_REQUEST['show_dl'],$_REQUEST['max_desc'],$_REQUEST['fgal_type'], $_REQUEST['parentId'], $lockable, $_REQUEST['show_lockedby']);
 	  
 	  $cat_type='file gallery';
 	  $cat_objid = $fgid;

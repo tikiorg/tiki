@@ -1,16 +1,17 @@
 <?php
-// CVS: $Id: tiki-download_file.php,v 1.26 2006-10-22 03:21:37 mose Exp $
+// CVS: $Id: tiki-download_file.php,v 1.27 2006-11-17 18:32:45 sylvieg Exp $
 // Initialization
 include_once("lib/init/initlib.php");
 require_once('tiki-setup.php');
 include_once ('lib/stats/statslib.php');
-/*
+include_once('lib/filegals/filegallib.php');
+
 if($feature_file_galleries != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display("error.tpl");
   die;
 }
-*/
+
 /*
 Borrowed from http://php.net/manual/en/function.readfile.php#54295
 to come over the 2MB readfile() limitation
@@ -39,13 +40,11 @@ function readfile_chunked($filename,$retbytes=true) {
    return $status;
 }
 
-if(!isset($_REQUEST["fileId"])) {
-  die;
+if(!isset($_REQUEST['fileId']) || !($info = $tikilib->get_file($_REQUEST['fileId']))) {
+	$smarty->assign('msg', tra('incorrect fieldId'));
+	$smarty->display('error.tpl');
+	die;
 }
-$info = $tikilib->get_file($_REQUEST["fileId"]);
-
-$fgal_use_db=$tikilib->get_preference('fgal_use_db','y');
-$fgal_use_dir=$tikilib->get_preference('fgal_use_dir','');
 
 $_REQUEST["galleryId"] = $info["galleryId"];
 
@@ -77,6 +76,18 @@ if($tiki_p_download_files != 'y') {
   $smarty->display("error.tpl");
   die;
 }
+
+if (!empty($_REQUEST['user'])) {
+	if (!empty($info['lockedby']) && $info['lockedby'] != $user) {
+		$smarty->assign('msg', tra(sprintf('The file is locked by %s', $info['lockedby'])));
+		$smarty->display('error.tpl');
+		die;
+	}
+	$filegallib->lock_file($_REQUEST['fileId'], $user);
+}	 
+
+$fgal_use_db=$tikilib->get_preference('fgal_use_db','y');
+$fgal_use_dir=$tikilib->get_preference('fgal_use_dir','');
 
 if (!IsSet($_SERVER['REQUEST_URI'])) { 
 	$_SERVER['REQUEST_URI'] = ''; 

@@ -1,14 +1,16 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_file.tpl,v 1.19 2006-11-07 15:30:24 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_file.tpl,v 1.20 2006-11-17 18:32:45 sylvieg Exp $ *}
 
 <h1><a href="tiki-upload_file.php?galleryId={$galleryId}{if $editFileId}&amp;fileId={$editFileId}{/if}" class="pagetitle">{if $editFileId}{tr}Edit File:{/tr} {$fileInfo.filename}{else}{tr}Upload File{/tr}{/if}</a></h1>
 {if count($galleries) > 0}
 	{if $galleryId}<a href="tiki-list_file_gallery.php?galleryId={$galleryId}" class="linkbut">{tr}Browse file gallery{/tr}</a><br /><br />{/if}
 
+{if !$editFileId}
 	<div class="rbox" name="tip">
 	<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
 	<div class="rbox-data" name="tip">{tr}Upload big files (e.g. PodCast files) here:{/tr} <a class="rbox-link" href="tiki-batch_upload_files.php?galleryId={$galleryId}">{tr}Directory batch{/tr}</a></div>
 	</div>
 	<br /><br />
+{/if}
 
 	<div align="center">
 	<form enctype="multipart/form-data" action="tiki-upload_file.php" method="post">
@@ -41,9 +43,12 @@
 		<input name="userfile5" type="file" />
 		<input name="userfile6" type="file" />{/if}
 	</td></tr>
+
 	{if !$editFileId}<tr><td class="formcolor">{tr}Batch upload{/tr}<br />{tr}Unzip file{/tr}</td><td class="formcolor">
-	<input type="checkbox" name="isbatch" /></td></tr>{/if}
-	<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="upload" value="{if $editFileId}{tr}edit{/tr}{else}{tr}upload{/tr}{/if}" /></td></tr>
+	<input type="checkbox" name="isbatch" /></td></tr>
+	{elseif $fileInfo.lockedby}<tr><td class="formcolor">{tr}Unlock{/tr}</td><td class="formcolor">
+	<input type="checkbox" name="unlock" checked="checked"/>{if $user ne $fileInfo.lockedby}{tr}The file is locked by {$fileInfo.lockedby}{/tr}{/if}</td></tr>{/if}
+	<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="upload" value="{if $editFileId}{tr}save{/tr}{else}{tr}upload{/tr}{/if}" /></td></tr>
 	</table>
 	</form>
 	</div>

@@ -16,8 +16,9 @@ class FileGalLib extends TikiLib {
 		$this->db = $db;
 	}
 
-	function isPodCastGallery($galleryId) {
-		$gal_info = $this->get_file_gallery_info((int)$galleryId);
+	function isPodCastGallery($galleryId, $gal_info=null) {
+		if (empty($gal_info))
+			$gal_info = $this->get_file_gallery_info((int)$galleryId);
 		if (($gal_info["type"]=="podcast") || ($gal_info["type"]=="vidcast")) {
 			return true;
 		} else {
@@ -295,7 +296,7 @@ class FileGalLib extends TikiLib {
 	}
 
 	function replace_file_gallery($galleryId, $name, $description, $user, $maxRows, $public, $visible = 'y', $show_id, $show_icon,
-		$show_name, $show_size, $show_description, $show_created, $show_dl, $max_desc, $fgal_type='default', $parentId=-1) {
+		$show_name, $show_size, $show_description, $show_created, $show_dl, $max_desc, $fgal_type='default', $parentId=-1, $lockable='n', $show_lockedby='y') {
 		// if the user is admin or the user is the same user and the gallery exists then replace if not then
 		// create the gallary if the name is unused.
 		$name = strip_tags($name);
@@ -304,17 +305,17 @@ class FileGalLib extends TikiLib {
 		$now = date("U");
 
 		if ($galleryId > 0) {
-			$query = "update `tiki_file_galleries` set `name`=?, `maxRows`=?, `description`=?,`lastModif`=?, `public`=?, `visible`=?,`show_icon`=?,`show_id`=?,`show_name`=?,`show_description`=?,`show_size`=?,`show_created`=?,`show_dl`=?,`max_desc`=?,`type`=?,`parentId`=?,`user`=? where `galleryId`=?";
-			$bindvars=array($name,(int) $maxRows,$description,(int) $now,$public,$visible,$show_icon,$show_id,$show_name,$show_description,$show_size,$show_created,$show_dl,(int) $max_desc, $fgal_type, $parentId, $user, (int) $galleryId);
+			$query = "update `tiki_file_galleries` set `name`=?, `maxRows`=?, `description`=?,`lastModif`=?, `public`=?, `visible`=?,`show_icon`=?,`show_id`=?,`show_name`=?,`show_description`=?,`show_size`=?,`show_created`=?,`show_dl`=?,`max_desc`=?,`type`=?,`parentId`=?,`user`=?,`lockable`=?,`show_lockedby`=? where `galleryId`=?";
+			$bindvars=array($name,(int) $maxRows,$description,(int) $now,$public,$visible,$show_icon,$show_id,$show_name,$show_description,$show_size,$show_created,$show_dl,(int) $max_desc, $fgal_type, $parentId, $user, $lockable, $show_lockedby, (int)$galleryId);
 
 			$result = $this->query($query,$bindvars);
 		} else {
 			// Create a new record
-			$query = "insert into `tiki_file_galleries`(`name`,`description`,`created`,`user`,`lastModif`,`maxRows`,`public`,`hits`,`visible`,`show_id`,`show_icon`,`show_name`,`show_description`,`show_created`,`show_dl`,`max_desc`,`type`, `parentId`)
+			$query = "insert into `tiki_file_galleries`(`name`,`description`,`created`,`user`,`lastModif`,`maxRows`,`public`,`hits`,`visible`,`show_id`,`show_icon`,`show_name`,`show_description`,`show_created`,`show_dl`,`max_desc`,`type`, `parentId`, `lockable`, `show_lockedby`)
                                     values (?,?,?,?,?,?,?,?,?,
-                                    ?,?,?,?,?,?,?,?,?)";
+                                    ?,?,?,?,?,?,?,?,?,?,?)";
 			$bindvars=array($name,$description,(int) $now,$user,(int) $now,(int) $maxRows,$public,0,$visible,
-					$show_id,$show_icon,$show_name,$show_description,$show_created,$show_dl,(int) $max_desc, $fgal_type, $parentId);
+					$show_id,$show_icon,$show_name,$show_description,$show_created,$show_dl,(int) $max_desc, $fgal_type, $parentId, $lockable, $show_lockedby);
 
 			$result = $this->query($query,$bindvars);
 			$galleryId
@@ -444,7 +445,7 @@ class FileGalLib extends TikiLib {
 		return $result;
 	}
 
-	function replace_file($id, $name, $description, $filename, $data, $size, $type, $user, $path) {
+	function replace_file($id, $name, $description, $filename, $data, $size, $type, $user, $path, $galleryId) {
 		global $fgal_use_db, $fgal_use_dir, $fgal_podcast_dir, $tikilib;
 
 		// Update the fields in the database
@@ -638,6 +639,14 @@ class FileGalLib extends TikiLib {
 
                         sendFileGalleryEmailNotification('file_gallery_changed', $galleryId, $galleryName, $name, $filename, $description, $action, $user);
                 }
+	}
+	function lock_file($fileId, $user) {
+		$query = 'update `tiki_files` set `lockedby`=? where `fileId`=?';
+		$this->query($query, array($user, $fileId));
+	}
+	function unlock_file($fileId) {
+		$query = 'update `tiki_files` set `lockedby`=? where `fileId`=?';
+		$this->query($query, array(NULL, $fileId));		
 	}
 }
 global $dbTiki;

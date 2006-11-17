@@ -44,7 +44,7 @@ if (!isset($_REQUEST['galleryId'])) {
 	$podCastGallery = false;
 } else {
 	$gal_info = $tikilib->get_file_gallery($_REQUEST["galleryId"]);
-	$podCastGallery = $filegallib->isPodCastGallery($_REQUEST["galleryId"]);
+	$podCastGallery = $filegallib->isPodCastGallery($_REQUEST["galleryId"], $gal_info);
 }
 
 $smarty->assign('filedir',$filedir);
@@ -52,7 +52,7 @@ $smarty->assign('filedir',$filedir);
 $a_file = $filestring = $feedback = array();
 $a_path = array();
 
-$disallowed_types = array('.php','php3','php4','phtml','phps','.py','.pl','.sh'); // list of filetypes you DO NOT want to show
+$disallowed_types = array('.php','php3','php4','phtml','phps','.py','.pl','.sh','php~'); // list of filetypes you DO NOT want to show
 
 // recursively get all files from all subdirectories
 function getDirContent($sub) {
