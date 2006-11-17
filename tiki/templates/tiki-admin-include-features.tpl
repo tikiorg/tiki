@@ -261,8 +261,9 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
     <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Tracbacks+Pings" target="tikihelp" class="tikihelp" title="{tr}tikiwiki.org help{/tr}: {tr}Tracbacks Pings{/tr}">{/if} {tr}Tracbacks Pings{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
 	
   </tr><tr>
-    <td><input type="checkbox" name="feature_workspaces" {if $feature_workspaces eq 'y'}checked="checked"{/if}/></td>
-    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Workspaces" target="tikihelp" class="tikihelp" title="{tr}tikiwiki.org help{/tr}: {tr}Workspaces{/tr}">{/if} {tr}Workspaces{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
+    <td><input type="checkbox" name="feature_fullscreen" {if $feature_fullscreen eq 'y'}checked="checked"{/if}/></td>
+    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Fullscreen" target="tikihelp" class="tikihelp" title="{tr}tikiwiki.org help{/tr}:
+		{tr}Fullscreen{/tr}">{/if} {tr}Propose a Fullscreen mode{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
     <td>&nbsp;</td>
     <td></td>
     <td></td>	

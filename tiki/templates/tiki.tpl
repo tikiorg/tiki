@@ -1,12 +1,13 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki.tpl,v 1.22 2006-09-19 17:19:54 ohertel Exp $ *}{include file="header.tpl"}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki.tpl,v 1.23 2006-11-17 11:14:43 mose Exp $ *}{include file="header.tpl"}
 {* Index we display a wiki page here *}
 {if $feature_bidi eq 'y'}
 <div dir="rtl">
 {/if}
+{if $feature_ajax eq 'y'}
+{include file="tiki-ajax_header.tpl"}
+{/if}
+{if $feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 <div id="tiki-main">
-  {if $feature_ajax eq 'y'}
-    {include file="tiki-ajax_header.tpl"}
-  {/if}
   {if $feature_top_bar eq 'y'}
   <div id="tiki-top">
     {include file="tiki-top_bar.tpl"}
@@ -45,11 +46,17 @@
           {/if}
       </td>
       {/if}
-      <td id="centercolumn" valign="top"><div id="tiki-center">{* {include file=$mid} *}{$mid_data}
+      <td id="centercolumn" valign="top">
+			{/if}
+
+			<div id="tiki-center">
+			{$mid_data}
       {if $show_page_bar eq 'y'}
       {include file="tiki-page_bar.tpl"}
       {/if}
       </div>
+			
+			{if $feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
       </td>
       {if $feature_right_column ne 'n'}
       <td id="rightcolumn" valign="top">
@@ -75,6 +82,7 @@
   </div>
   {/if}
 </div>
+{/if}
 {if $feature_bidi eq 'y'}
 </div>
 {/if}
