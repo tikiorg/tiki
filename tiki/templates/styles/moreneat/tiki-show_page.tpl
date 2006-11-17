@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki-show_page.tpl,v 1.57 2006-10-01 13:45:06 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki-show_page.tpl,v 1.58 2006-11-17 16:32:33 mose Exp $ *}
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
     {$page_info.page_alias}
@@ -11,13 +11,6 @@
 </h1>{/if}
 {if $feature_wiki_pageid eq 'y'}
 	<small><a class="link" href="tiki-index.php?page_id={$page_id}">{tr}page id{/tr}: {$page_id}</a></small>
-{/if}
-
-{if $pear_wiki_parser}
-<a href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1{if !$smarty.request.tikiParser}&amp;tikiParser=1{/if}{if $pagenum > 1}&amp;pagenum={$pagenum}{/if}">View parsed by {if ($smarty.request.tikiParser and ($pear_wiki_parser eq 'y')) or (!$smarty.request.tikiParser and ($pear_wiki_parser eq 'n'))}Text_Wiki{else}Tikilib{/if}</a>
-{if $smarty.request.tikiParser}
-{assign var="pageNumUrlExtra" value="&amp;tikiParser=1"}
-{/if}
 {/if}
 
 <table class="wikibar">
