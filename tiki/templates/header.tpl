@@ -119,12 +119,6 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 <link rel="alternate" type="application/rss+xml" title="{tr}RSS Calendars{/tr}" href="tiki-calendars_rss.php?ver={$rssfeed_default_version}" />
 {/if}
 
-{* extra javascript external files *}
-<!-- {$head_extra_js|@asort} -->
-{foreach key=extrajs item=fooprio from=$head_extra_js}
-	<script type="text/javascript" src="{$extrajs}"></script>
-{/foreach}
-
 {if $headerlib}{$headerlib->output_headers()}{/if}
 
 </head>
