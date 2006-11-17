@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagepermissions.php,v 1.26 2006-11-13 20:23:19 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagepermissions.php,v 1.27 2006-11-17 18:34:21 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -142,7 +142,7 @@ $groups = $userlib->get_groups(0, -1, 'groupName_asc');
 $smarty->assign_by_ref('groups', $groups["data"]);
 
 // Get a list of permissions
-$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'wiki');
+$perms = $userlib->get_permissions(0, -1, 'permName_asc', '', 'wiki');
 $smarty->assign_by_ref('perms', $perms["data"]);
 
 ask_ticket('page-perms');
