@@ -2,6 +2,7 @@
 {* Index we display a wiki page here *}
 {if $feature_bidi eq 'y'}<table dir="rtl" ><tr><td>{/if}
 <div id="tiki-main">
+{if $feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 {if $feature_top_bar eq 'y'}
 <div id="tiki-top">
 {include file="tiki-top_bar.tpl"}
@@ -28,12 +29,14 @@
 		{/if}
 		<td id="page23"><img src="styles/codex/page_0.gif" width="7" height="1" alt="" border="0" /></td>
 		<td id="page24" >
+			{/if}
 			<div id="tiki-center">
 			{$mid_data}
 			{if $show_page_bar eq 'y'}
 			{include file="tiki-page_bar.tpl"}
 			{/if}
 			</div>
+			{if $feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 		</td>			
 		{if $feature_right_column ne 'n'}
 		<td id="rightcolumn">
@@ -60,5 +63,6 @@
 </div>
 {/if}
 </div>
+{/if}
 {if $feature_bidi eq 'y'}</td></tr></table>{/if}
 {include file="footer.tpl"}
