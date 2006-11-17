@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.323 2006-11-17 11:14:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.324 2006-11-17 17:50:50 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -2100,8 +2100,10 @@ if ($feature_freetags == 'y') {
 			}
 			$freetaglib->tag_object($userid, $page, 'wiki page', $_POST['tags']);
 		}
-    $tags = $freetaglib->get_tags_on_object($info['pageName'], 'wiki page');
-    $smarty->assign('freetags',$tags);
+	if (isset($info['pageName'])) {
+    	$tags = $freetaglib->get_tags_on_object($info['pageName'], 'wiki page');
+    	$smarty->assign('freetags',$tags);
+	}
 }
 
 if ($feature_fullscreen == 'y') {
