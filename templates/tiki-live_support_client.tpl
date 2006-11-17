@@ -12,7 +12,7 @@
 	<script type="text/javascript" src="lib/live_support/live-support.js">
 	</script>
 	{/literal}
-	{$trl}
+	{$headerlib->output_headers()}
   </head>
   <body onunload="client_close();">
   	<div id='request_chat' align="center">

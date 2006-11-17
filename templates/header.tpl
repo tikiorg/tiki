@@ -125,10 +125,6 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 	<script type="text/javascript" src="{$extrajs}"></script>
 {/foreach}
 
-{* ---- END ---- *}
-
-{$trl}
-
 {if $headerlib}{$headerlib->output_headers()}{/if}
 
 </head>
