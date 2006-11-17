@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.101 2006-10-03 15:43:38 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.102 2006-11-17 19:20:47 mose Exp $ *}
 
 {if $feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
@@ -91,7 +91,7 @@
 </tr></table>
 </div>
 
-{if $freetags.data[0] and $feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
+{if $feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and isset($freetags.data[0])}
 <div class="freetaglist">{tr}Tags{/tr}: 
 {foreach from=$freetags.data item=taginfo}
 <a class="freetag" href="tiki-browse_freetags.php?tag={$taginfo.tag}">{$taginfo.tag}</a> . 
