@@ -107,9 +107,9 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {/if}
 {* ---- END of blocks ---- *}
 
-{$trl}
+{if $headerlib}{$headerlib->output_headers()}{/if}
 
-	</head>
+</head>
 
 {* ---- BODY ---- *}
 	<body{if $user_dbl eq 'y' and $dblclickedit eq 'y' and $tiki_p_edit eq 'y'} ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}{if $show_comzone eq 'y'} onload="javascript:flip('comzone');"{/if}>

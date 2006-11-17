@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.666 2006-11-16 16:47:06 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.667 2006-11-17 14:54:04 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1431,9 +1431,8 @@ function add_pageview() {
     /*shared*/
     // \todo replace the hardcoded html by smarty template
     function spellcheckreplace($what, $where, $language, $element) {
-	global $smarty;
+	global $smarty,$headerlib;
 
-	$trl = '';
 	$words = preg_split("/\s/", $what);
 
 	foreach ($words as $word) {
@@ -1460,7 +1459,8 @@ function add_pageview() {
 			    // If you want to use the commented out line below, please remove the \ in <\/script>; it was breaking vim highlighting.  -rlpowell
 			    // $repl.="<script type='text/javascript'>param_${word}_$i = new Array(\\\"$element\\\",\\\"$word\\\",\\\"$sug\\\");<\/script><a href=\\\"javascript:replaceLimon(param_${word}_$i);\\"."\">$sug</a><br />";
 			    $repl .= "<a href=\'javascript:param=doo_${word}_$i();replaceLimon(param);\'>".addslashes($sug)."</a><br />";
-			    $trl .= "<script type='text/javascript'>function doo_${word}_$i(){ aux = new Array(\"$element\",\"$word\",\"$sug\"); return aux;}</script>";
+
+					$headerlib->add_js("function doo_${word}_$i(){ aux = new Array(\"$element\",\"$word\",\"$sug\"); return aux;}");
 			}
 
 			//$popup_text = " <a title=\"".$sug."\" style=\"text-decoration:none; color:red;\" onclick='"."return overlib(".'"'.$repl.'"'.",STICKY,CAPTION,".'"'."SpellChecker suggestions".'"'.");'>".$word.'</a> ';
@@ -1474,7 +1474,6 @@ function add_pageview() {
 			$where = preg_replace("/\s$word\s/", ' <span style="color:red;">' . $word . '</span> ', $where);
 		    }
 
-		    $smarty->assign('trl', $trl);
 		    //$parsed = preg_replace("/\s$word\s/",' <a style="color:red;">'.$word.'</a> ',$parsed);
 		}
 	    }

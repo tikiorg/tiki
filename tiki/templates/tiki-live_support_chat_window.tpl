@@ -12,7 +12,7 @@
 	<script type="text/javascript" src="lib/live_support/live-support.js">
 	</script>
 	{/literal}
-	{$trl}
+	{$headerlib->output_headers()}
   </head>
   <body onunload="javascript:chat_close(document.getElementById('role').value,document.getElementById('username').value);">
   	<input type="hidden" id="reqId" value="{$reqId|escape}" />
