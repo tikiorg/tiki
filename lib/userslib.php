@@ -1413,7 +1413,11 @@ function get_included_groups($group) {
 		$groups = $this->get_user_groups($user);
 	}
 	$res["groups"] = $groups;
-	$res["age"] = date('U') - $res['registrationDate'];
+	if (isset($res['registrationDate'])) {
+		$res["age"] = date('U') - $res['registrationDate'];
+	} else {
+		$res['age'] = 0;
+	}
 	return $res;
     }
     
