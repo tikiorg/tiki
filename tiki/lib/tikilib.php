@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.667 2006-11-17 14:54:04 mose Exp $
+// CVS: $Id: tikilib.php,v 1.668 2006-11-17 21:33:49 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4566,6 +4566,7 @@ function add_pageview() {
 	global $feature_wikiwords_usedash;
 	global $feature_multilingual;
 	global $feature_best_language;
+	global $wiki_page_separator;
         // melmut - if $is_html is set, check $wiki_wikisyntax_in_html,
         //  which can be set to 'full' (default), 'partial' or 'none'
 	global $wiki_wikisyntax_in_html;
@@ -5631,11 +5632,11 @@ if (!$simple_wiki) {
 			$line = $anchor . "<h" . ($hdrlevel+1) . ' class="showhide_heading">' . $aclose." ". substr($line, $hdrlevel + $addremove). "</h".($hdrlevel+1).">" .$aclose2;
 			else
 			$line = $anchor . "<h" . ($hdrlevel+1) . ' class="showhide_heading">' . substr($line, $hdrlevel + $addremove). "</h".($hdrlevel+1).">" . $aclose.$aclose2;
-		    } elseif (!strcmp($line, $GLOBALS['PAGE_SEP'])) {
+		    } elseif (!strcmp($line, $wiki_page_separator)) {
 			// Close open paragraph, lists, and div's
 			$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 1);
 			// Leave line unchanged... tiki-index.php will split wiki here
-			$line = $GLOBALS['PAGE_SEP'];
+			$line = $wiki_page_separator;
 			$pageNum += 1;
 		    } else {
 			/** Usual paragraph.

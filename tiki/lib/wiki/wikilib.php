@@ -21,6 +21,7 @@ class WikiLib extends TikiLib {
 
     //Special parsing for multipage articles
     function get_number_of_pages($data) {
+	global $wiki_page_separator;
 	// Temporary remove <PRE></PRE> secions to protect
 	// from broke <PRE> tags and leave well known <PRE>
 	// behaviour (i.e. type all text inside AS IS w/o
@@ -40,7 +41,7 @@ class WikiLib extends TikiLib {
 	    $idx = $idx + 1;
 	}
 
-	$parts = explode($GLOBALS['PAGE_SEP'], $data);
+	$parts = explode($wiki_page_separator, $data);
 	return count($parts);
     }
 
@@ -66,7 +67,8 @@ class WikiLib extends TikiLib {
 	}
 */
 	// Get slides
-	$parts = explode($GLOBALS['PAGE_SEP'], $data);
+	global $wiki_page_separator;
+	$parts = explode($wiki_page_separator, $data);
 	$ret = $parts[$i - 1];
 
 	if (substr($parts[$i - 1], 1, 5) == "<br/>") $ret = substr($parts[$i - 1], 6);
