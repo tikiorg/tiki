@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/block.tikimodule.php,v 1.8 2005-05-18 11:01:43 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/block.tikimodule.php,v 1.9 2006-11-17 21:05:04 mose Exp $
 /**
  * \brief Smarty {tikimodule}{/tikimodule} block handler
  *
@@ -43,19 +43,14 @@ function smarty_block_tikimodule($params, $content, &$smarty) {
 	if (!isset($flip) || $flip != 'y') $flip = 'n';
 	if (!isset($decorations) || $decorations != 'n') $decorations = 'y';
 
-        if (isset($user_flip_modules) && ($user_flip_modules != 'module')) {
-	    $flip = $user_flip_modules;
+	if (isset($user_flip_modules) && ($user_flip_modules != 'module')) {
+		$flip = $user_flip_modules;
 	}
-
-if ($decorations == 'y') {	
 	$smarty->assign('module_title', $title);
 	$smarty->assign('module_name', $name);
 	$smarty->assign('module_flip', $flip);
 	$smarty->assign('module_decorations', $decorations);
 	$smarty->assign_by_ref('module_content', $content);
 	return $smarty->fetch('module.tpl');
-} else {
-	return $content.$module_error;
-}
 }
 ?>
