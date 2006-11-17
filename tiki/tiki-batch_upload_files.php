@@ -42,7 +42,7 @@ if (!isset($fgal_batch_dir) or !is_dir($fgal_batch_dir)) {
 if (!isset($_REQUEST['galleryId'])) {
 	$_REQUEST['galleryId']=0;
 	$podCastGallery = false;
-} else 
+} else {
 	$gal_info = $tikilib->get_file_gallery($_REQUEST["galleryId"]);
 	$podCastGallery = $filegallib->isPodCastGallery($_REQUEST["galleryId"]);
 }
