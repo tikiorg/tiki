@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.30 2006-09-23 13:05:56 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.31 2006-11-17 18:32:45 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -26,34 +26,14 @@ if ($feature_file_galleries != 'y') {
 	die;
 }
 
-if (!isset($_REQUEST["galleryId"])) {
-	$smarty->assign('msg', tra("No gallery indicated"));
-
-	$smarty->display("error.tpl");
-	die;
-}
-
-if ($_REQUEST["galleryId"] == 0) {
+if (empty($_REQUEST['galleryId']) || !($gal_info = $tikilib->get_file_gallery($_REQUEST['galleryId']))) {
 	$smarty->assign('msg', tra("Non-existent gallery"));
 
 	$smarty->display("error.tpl");
 	die;
 }
 
-if ($_REQUEST["galleryId"] != 0) {
-	$gal_info = $tikilib->get_file_gallery($_REQUEST["galleryId"]);
-	$podCastGallery = $filegallib->isPodCastGallery($_REQUEST["galleryId"]);
-} else {
-	// This is an unreachable block. Remove this code or the verification above?
-	// rbschmidt and lfagundes
-	$gal_info["galleryId"] = 0;
-
-	$gal_info["user"] = 'admin';
-	$gal_info["name"] = 'System';
-	$gal_info["public"] = 'y';
-	$gal_info["description"] = 'System Gallery';
-	$podCastGallery=false;
-}
+$podCastGallery = $filegallib->isPodCastGallery($_REQUEST['galleryId'], $gal_info);
 
 $smarty->assign('individual', 'n');
 
@@ -147,10 +127,7 @@ if ($tiki_p_view_file_gallery != 'y') {
 }
 
 $smarty->assign_by_ref('gal_info', $gal_info);
-$smarty->assign_by_ref('owner', $gal_info["user"]);
-$smarty->assign_by_ref('public', $gal_info["public"]);
-$smarty->assign_by_ref('fgal_type', $gal_info["type"]);
-$smarty->assign_by_ref('galleryId', $_REQUEST["galleryId"]);
+$smarty->assign_by_ref('galleryId', $_REQUEST['galleryId']);
 
 $tikilib->add_file_gallery_hit($_REQUEST["galleryId"]);
 
@@ -236,7 +213,7 @@ if (isset($_REQUEST['edit'])) {
 	$smarty->assign_by_ref('fname', $_REQUEST["fname"]);
 	$smarty->assign_by_ref('fdescription', $_REQUEST["fdescription"]);
 
-	$fid = $filegallib->replace_file($_REQUEST["fileId"], $_REQUEST["fname"], $_REQUEST["fdescription"]);
+	$fid = $filegallib->replace_file($_REQUEST["fileId"], $_REQUEST["fname"], $_REQUEST["fdescription"], $info['filename'], $info['data'], $info['filesize'], $info['filetype'], $info['user'], $info['path'], $info['galleryId']);
 
 	/*
 	  $cat_type='file gallery';

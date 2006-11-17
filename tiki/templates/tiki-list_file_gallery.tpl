@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.31 2006-11-13 18:37:16 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.32 2006-11-17 18:32:45 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}">{tr}Listing Gallery{/tr}: {$name}</a></h1>
 
@@ -7,43 +7,27 @@
 
 <a href="tiki-file_galleries.php" class="linkbut" title="{tr}list galleries{/tr}">{tr}list galleries{/tr}</a>
 
-{if $tiki_p_admin_file_galleries eq 'y' or $user eq $owner}
-  <a href="tiki-file_galleries.php?edit_mode=1&amp;galleryId={$galleryId}" class="linkbut">{tr}edit gallery{/tr}</a>
+{if $tiki_p_admin_file_galleries eq 'y' or $user eq $gal_info.user}
+  <a href="tiki-file_galleries.php?edit_mode=1&amp;galleryId={$galleryId}" class="linkbut" title="{tr}edit gallery{/tr}">{tr}edit gallery{/tr}</a>
 {/if}
-{if $tiki_p_upload_files eq 'y' && ($tiki_p_admin_file_galleries eq 'y' or $user eq $owner or $public eq 'y')}
-  <a href="tiki-upload_file.php?galleryId={$galleryId}" class="linkbut">{tr}upload file{/tr}</a>
-{/if}
-{if $feature_file_galleries_batch eq "y" and $tiki_p_batch_upload_file_dir eq 'y'}
-  {if $tiki_p_admin_file_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'}
+
+{if $tiki_p_admin_file_galleries eq 'y' or $user eq $gal_info.user or $gal_info.public eq 'y'}
+  {if $tiki_p_upload_files eq 'y'}
+    <a href="tiki-upload_file.php?galleryId={$galleryId}" class="linkbut">{tr}upload file{/tr}</a>
+  {/if}
+  {if $feature_file_galleries_batch eq "y" and $tiki_p_batch_upload_file_dir eq 'y'}
     <span class="button2"><a href="tiki-batch_upload_files.php?galleryId={$galleryId}" class="linkbut">{tr}Directory batch{/tr}</a></span>
   {/if}
 {/if}
+
 {if $rss_file_gallery eq 'y'}
-	{if $fgal_type eq "podcast" or $fgal_type eq "vidcast"}
+	{if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"}
 	<a href="tiki-file_gallery_rss.php?galleryId={$galleryId}&amp;ver=PODCAST">
 	<img src='img/rss_podcast_80_15.png' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' /></a>
 	{else}
 	<a href="tiki-file_gallery_rss.php?galleryId={$galleryId}">
 	<img src='pics/icons/feed.png' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' /></a>
 	{/if}
-{/if}<br /><br />
-{if $tiki_p_create_file_galleries eq 'y'}
-{if $edit_mode eq 'y'}
-<h2>{tr}Edit a file using this form{/tr}</h2>
-<div  align="center">
-<form action="tiki-list_file_gallery.php" method="post">
-<input type="hidden" name="galleryId" value="{$galleryId|escape}" />
-<input type="hidden" name="fileId" value="{$fileId|escape}" />
-<table class="normal">
-<tr><td class="formcolor">{tr}Filename{/tr}:</td><td class="formcolor">{$filename|escape}</td></tr>
-<tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="fname" value="{$fname|escape}"/></td></tr>
-<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="fdescription">{$fdescription|escape}</textarea></td></tr>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" value="{tr}edit{/tr}" name="edit" /></td></tr>
-</table>
-</form>
-</div>
-<br />
-{/if}
 {/if}
 
 </td>
@@ -61,22 +45,19 @@
 
 <table>
 <tr><td width="48">
-{if $fgal_type eq "podcast"}
-<img src='pics/large/gnome-sound-recorder48x48.png' border='0' alt='{tr}podcast (audio){/tr}' title='{tr}podcast (audio){/tr}' />
-{elseif $fgal_type eq "vidcast"}
-<img src='pics/large/mplayer48x48.png' border='0' alt='{tr}podcast (video){/tr}' title='{tr}podcast (video){/tr}' />
+{if $gal_info.type eq "podcast"}
+<img src='pics/large/gnome-sound-recorder48x48.png' border='0' alt='{tr}podcast (audio){/tr}' />
+{elseif $gal_info.type eq "vidcast"}
+<img src='pics/large/mplayer48x48.png' border='0' alt='{tr}podcast (video){/tr}' />
 {else}
-<img src='pics/large/file-manager48x48.png' border='0' alt='{tr}file gallery{/tr}' title='{tr}file gallery{/tr}' />
+<img src='pics/large/file-manager48x48.png' border='0' alt='{tr}file gallery{/tr}' />
 {/if}
 </td>
 <td style="vertical-align:top; text-align:left;" width="100%">
-{if strlen($description) > 0}
-    {$description}
-    <br />
-{/if}
-&nbsp;</td></tr></table>
+{$description|escape}
+</td></tr></table>
 
-  <h2>{tr}Gallery Files{/tr}</h2>
+<h2>{tr}Gallery Files{/tr}</h2>
 <div align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
@@ -155,6 +136,9 @@
 {if $gal_info.show_dl eq 'y'}
 	<td style="text-align:right;"  class="heading"><a class="tableheading" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'downloads_desc'}downloads_asc{else}downloads_desc{/if}">{tr}Dls{/tr}</a></td>
 {/if}
+{if $gal_info.show_lockedby eq 'y'}
+	<td class="heading"><a class="tableheading" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'lockedby_desc'}lockedby_asc{else}lockedby_desc{/if}">{tr}Locked by{/tr}</a></td>
+{/if}
 <td  class="heading">{tr}Actions{/tr}</td>
 </tr>
 
@@ -185,7 +169,7 @@
 {if $gal_info.show_name eq 'a' || $gal_info.show_name eq 'n'}
 	<td class="{cycle advance=false}">
 		{if $tiki_p_download_files eq 'y'}
-			{if $fgal_type eq "podcast" or $fgal_type eq "vidcast"}
+			{if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"}
 				<a class="fgalname" href="{$download_path}{$images[changes].path}">
 			{else}
 				<a class="fgalname" href="tiki-download_file.php?fileId={$images[changes].fileId}">
@@ -198,7 +182,7 @@
 {if $gal_info.show_name eq 'a' || $gal_info.show_name eq 'f'}
 	<td class="{cycle advance=false}">
 		{if $tiki_p_download_files eq 'y'}
-			{if $fgal_type eq "podcast" or $fgal_type eq "vidcast"}
+			{if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"}
 				<a class="fgalname" href="{$download_path}{$images[changes].path}">
 			{else}
 				<a class="fgalname" href="tiki-download_file.php?fileId={$images[changes].fileId}">
@@ -226,21 +210,34 @@
 	<td style="text-align:right;" class="{cycle advance=false}">{$images[changes].downloads}</td>
 {/if}
 
-<td style="text-align:center;" class="{cycle}">
+{if $gal_info.show_lockedby eq 'y'}
+	<td class="{cycle advance=false}">{$images[changes].lockedby|escape}</td>
+{/if}
+
+<td class="{cycle}">
 	{if $tiki_p_download_files eq 'y'}
-		{if $fgal_type eq "podcast" or $fgal_type eq "vidcast"}
-			<a class="fgalname" href="{$download_path}{$images[changes].path}">
+		{if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"}
+			<a class="fgalname" href="{$download_path}{$images[changes].path}" title="{tr}Download{/tr}">
 		{else}
-			<a class="fgalname" href="tiki-download_file.php?fileId={$images[changes].fileId}">
+			<a class="fgalname" href="tiki-download_file.php?fileId={$images[changes].fileId}" title="{tr}Download{/tr}">
 		{/if}
 		<img src="pics/icons/disk.png" border="0" width="16" height="16" alt="{tr}Download{/tr}" /></a> 
+		{* can locked if the gall can be locked or I am the locker or the file is not locked - this only for regular file *}
+		{if $gal_info.lockable == 'y'
+			and ($images[changes].lockedby eq '' or $images[changes].lockedby eq $user)
+			and $gal_info.type ne "podcast" and $gal_info.type ne "vidcast"}
+			<a class="fgalname" href="tiki-download_file.php?fileId={$images[changes].fileId}&amp;user={$user|escape}" title="{tr}Download and lock{/tr}">
+			<img src="pics/icons/disk_lock.png" border="0" width="16" height="16" alt="{tr}Download and lock{/tr}" /></a> 
+		{/if}	
 	{/if}
-	{if $tiki_p_admin_file_galleries eq 'y' or ($user and $user eq $owner)}
+	{* can edit if I am admin or the owner of the file or the locker of the file or if I have the perm to edit file on this gall *}
+	{if $tiki_p_admin_file_galleries eq 'y'
+		or ($images[changes].lockedby and $images[changes].lockedby eq $user)
+		or (!$images[changes].lockedby and (($user and $user eq $images[changes].user) or $tiki_p_edit_file_gallery eq 'y')) }
 		<a class="link" href="tiki-upload_file.php?galleryId={$galleryId}&amp;fileId={$images[changes].fileId}"><img src='pics/icons/page_edit.png' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
 		<a class="link" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$images[changes].fileId}"><img src='pics/icons/cross.png' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' /></a>
 	{/if}
 </td>
-<!--<td class="{cycle advance=false}">{$images[changes].user}&nbsp;</td>-->
 </tr>
 {sectionelse}
 <tr><td colspan="16">

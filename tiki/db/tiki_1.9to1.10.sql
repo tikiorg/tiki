@@ -1,4 +1,4 @@
-	# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.108 2006-11-13 18:37:16 sylvieg Exp $
+	# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.109 2006-11-17 18:32:44 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -629,3 +629,13 @@ update tiki_preferences set name='auth_pear_port' where name='auth_ldap_port';
 #sylvieg 2006-11-13
 ALTER TABLE `tiki_file_galleries` ADD `parentId` int(14) NOT NULL default -1;
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_list_parent','n');
+
+#sylvieg 2006-11-16
+ALTER TABLE `tiki_file_galleries` ADD `lockable` char(1) default 'n';
+ALTER TABLE `tiki_file_galleries` ADD `show_lockedby` char(1) default NULL;
+ALTER TABLE `tiki_files` ADD `lockedby`  varchar(40) default NULL;
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_gallery_file', 'Can edit a gallery file', 'editors', 'file galleries');
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Directory bacth' and url='tiki-batch_upload_files.php' and position='617' and section='feature_file_galleries_batch' and perm='tiki_p_batch_upload_file_dir' and groupname='' ;
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Directory batch','tiki-batch_upload_files.php',617,'feature_file_galleries_batch','tiki_p_batch_upload_file_dir','');
+
+
