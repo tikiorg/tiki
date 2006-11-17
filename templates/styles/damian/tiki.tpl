@@ -3,6 +3,7 @@
 {if $feature_bidi eq 'y'}
 <table dir="rtl" ><tr><td>
 {/if}
+{if $feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 <div id="tiki-main">
   {if $feature_top_bar eq 'y'}
   <div id="tiki-top">
@@ -20,12 +21,15 @@
       
       </td>
       {/if}
-      <td id="centercolumn"><div id="tiki-center">{$mid_data}
+      <td id="centercolumn">
+			{/if}
+			<div id="tiki-center">{$mid_data}
       {if $show_page_bar eq 'y'}
       {include file="tiki-page_bar.tpl"}
       {/if}
       </div>
-      </td>
+      {if $feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
+			</td>
       {if $feature_right_column ne 'n'}
       <td id="rightcolumn">
       {section name=homeix loop=$right_modules}
@@ -43,6 +47,7 @@
   </div>
   {/if}
 </div>
+{/if}
 {if $feature_bidi eq 'y'}
 </td></tr></table>
 {/if}

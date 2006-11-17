@@ -3,6 +3,7 @@
 {if $feature_bidi eq 'y'}
 <table dir="rtl" ><tr><td>
 {/if}
+{if $feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 <div id="tiki-main">
   {if $user}
 	  <div id="tiki-top-menu">
@@ -73,8 +74,11 @@
       
       </td>
       {/if}
-      <td id="centercolumn"><div id="tiki-center">{$mid_data}
+      <td id="centercolumn">
+			{/if}
+			<div id="tiki-center">{$mid_data}
       </div>
+			{if $feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
       </td>
       {if $feature_right_column ne 'n'}
       <td id="rightcolumn">
@@ -93,6 +97,7 @@
   </div>
   {/if}
 </div>
+{/if}
 {if $feature_bidi eq 'y'}
 </td></tr></table>
 {/if}

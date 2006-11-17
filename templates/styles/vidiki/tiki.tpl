@@ -1,6 +1,7 @@
 {include file="header.tpl"}
 
 {if $feature_bidi eq 'y'}<table dir="rtl" ><tr><td>{/if}
+{if $feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 
 {* Index we display a wiki page here *}
 
@@ -25,10 +26,11 @@
  
  <div id="shadow"></div></div> 
  {/if}
-
+{/if}
       <div class="content">{$mid_data}
       {if $show_page_bar eq 'y'}
       {include file="tiki-page_bar.tpl"}
+{if $feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 
 	{/if}
       </div>
@@ -56,6 +58,7 @@
   </div>
   {/if}
 
+{/if}
 {if $feature_bidi eq 'y'}</td></tr></table>{/if}
 
 {include file="footer.tpl"}

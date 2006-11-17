@@ -1,9 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki.tpl,v 1.22 2006-08-29 20:19:14 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki.tpl,v 1.23 2006-11-17 11:44:31 mose Exp $ *}
 {include file="header.tpl"}
 {* Index we display a wiki page here *}
 {if $feature_bidi eq 'y'}
 <table dir="rtl" ><tr><td>
 {/if}
+{if $feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 
 <div id="tiki-main">
 
@@ -79,14 +80,12 @@
 </td>
 {/if}
 <td id="centercolumn">
-<div id="tiki-center">
-{if $pagetop_msg ne ''}
-<span class="pagetop_msg">{$pagetop_msg}</span>
 {/if}
-<!-- content -->
+<div id="tiki-center">
 {$mid_data}
-<!-- end of content -->
 </div>
+{if $feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
+
 </td>
 {if $feature_right_column ne 'n'}
 <td id="rightcolumn">
@@ -114,6 +113,7 @@
 
 </div>
 
+{/if}
 {if $feature_bidi eq 'y'}
 </td></tr></table>
 {/if}

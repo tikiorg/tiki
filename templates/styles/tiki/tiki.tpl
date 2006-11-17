@@ -1,5 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/tiki/tiki.tpl,v 1.13 2006-08-29 20:19:15 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/tiki/tiki.tpl,v 1.14 2006-11-17 11:44:31 mose Exp $ *}
 {include file="header.tpl"}
+
+{if $feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 
 {assign var=cols value=1}
 {assign var=rcol value="n"}
@@ -50,7 +52,10 @@
 {/if}
 
 <td valign="top" id="tiki-mid">
+{/if}
 <div id="tiki-center">{$mid_data}</div>
+{if $feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
+
 </td>
 
 {if $rcol eq "y"}
@@ -77,5 +82,5 @@
 {/if}
 
 </table>
-
+{/if}
 {include file="footer.tpl"}

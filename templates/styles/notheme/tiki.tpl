@@ -1,9 +1,9 @@
 {include file="header.tpl"}{* This must be included as the first thing in a document to be XML compliant *}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki.tpl,v 1.9 2006-02-05 01:07:06 amette Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki.tpl,v 1.10 2006-11-17 11:44:30 mose Exp $ *}
 {* Index we display a wiki page here *}
 
 {if $feature_bidi eq 'y'}<table dir="rtl" ><tr><td>{/if}
-
+{if $feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 <div id="tiki-main">
   {if $feature_top_bar eq 'y'}
   <div id="tiki-top">
@@ -40,6 +40,7 @@
     {/php}
 
     {* Display center column *}
+		{/if}
 
     <div id="tiki-center" {$add_style}>
       {$mid_data}
@@ -52,7 +53,7 @@
         </div><!-- bottom -->
       {/if}
     </div><!-- center -->
-
+		{if $feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
     {* Display right modules if available *}
 
     {if $feature_right_column ne 'n' and count($right_modules) gt 0}
@@ -73,6 +74,7 @@
 
 
 </div><!-- tiki-main -->
+{/if}
 
 {if $feature_bidi eq 'y'}</td></tr></table>{/if}
 
