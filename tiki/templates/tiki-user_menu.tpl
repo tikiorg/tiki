@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_menu.tpl,v 1.23 2006-08-29 20:19:13 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_menu.tpl,v 1.24 2006-11-17 19:30:17 mose Exp $ *}
 {assign var=opensec value='n'}
 {assign var=sep value=''}
 
@@ -24,7 +24,7 @@
 {/if}
 </div>
 {assign var=opensec value='y'}
-<div {if $menu_info.type eq 'd' and $smarty.cookies.menu ne ''}style="display:none;"{else}style="display:block;"{/if} id='menu{$cname}'>
+<div {if $menu_info.type eq 'd' and isset($smarty.session.tiki_cookie_jar.menu.$cname) and $smarty.session.tiki_cookie_jar.menu.$cname ne 'c'}style="display:none;"{else}style="display:block;"{/if} id='menu{$cname}'>
 {elseif $chdata.type eq 'o'}
 <div class="option{$sep}">&nbsp;<a href="{$chdata.url|escape}" class="linkmenu">{tr}{$chdata.name}{/tr}</a></div>
 {if $sep eq 'line'}{assign var=sep value=''}{/if}
