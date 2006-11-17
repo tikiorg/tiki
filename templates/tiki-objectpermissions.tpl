@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-objectpermissions.tpl,v 1.16 2006-11-14 13:42:56 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-objectpermissions.tpl,v 1.17 2006-11-17 15:35:02 sylvieg Exp $ *}
 <h1>{tr}Assign permissions to {/tr}{tr}{$objectType|escape}{/tr} {$objectName|escape}</h1>
 <a href="{$referer}" class="linkbut">{tr}back{/tr}</a>
 <div>
@@ -36,5 +36,17 @@
 <option value="{$groups[grp].groupName|escape}" {if $groupName eq $groups[grp].groupName }selected="selected"{/if}>{$groups[grp].groupName|escape}</option>
 {/section}
 </select>
+<br /><br />
+<div class="button2">
+<a href="#" onclick="javascript:flip('edithelpzone'); return false;" class="linkbut">{tr}perms help{/tr}</a>
+</div>
+<div class="wiki-edithelp"  id='edithelpzone' >
+{cycle print=false values="even,odd"}
+<table class="normal">
+{section name=prm loop=$perms}
+<tr><td class="{cycle advance=false}">{$perms[prm].permName}</td><td class="{cycle}">{tr}{$perms[prm].permDesc}{/tr}</tr>
+{/section}
+</table>
+</div>
 </form>
 </div>

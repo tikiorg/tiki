@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagepermissions.tpl,v 1.19 2006-09-17 15:33:38 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagepermissions.tpl,v 1.20 2006-11-17 15:35:02 sylvieg Exp $ *}
 
 <h2>{tr}Assign permissions to page{/tr}: <a href="tiki-index.php?page={$page}">{$page}</a></h2>
 
@@ -43,6 +43,18 @@
 {tr}for{/tr}
 <input type="submit" name="assign" value="{tr}this page{/tr}" />
 {if $inStructure eq "y"}<input type="submit" name="assignstructure" value="{tr}this structure{/tr}" />{/if}
+<br /><br />
+<div class="button2">
+<a href="#" onclick="javascript:flip('edithelpzone'); return false;" class="linkbut">{tr}perms help{/tr}</a>
+</div>
+<div class="wiki-edithelp"  id='edithelpzone' >
+{cycle print=false values="even,odd"}
+<table class="normal">
+{section name=prm loop=$perms}
+<tr><td class="{cycle advance=false}">{$perms[prm].permName}</td><td class="{cycle}">{tr}{$perms[prm].permDesc}{/tr}</tr>
+{/section}
+</table>
+</div>
 </form>
 
 <br /><br />
