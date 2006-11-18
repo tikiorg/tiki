@@ -1,4 +1,4 @@
-<?php // $Id: initlib.php,v 1.8 2005-08-18 12:59:23 mashmorgan Exp $
+<?php // $Id: initlib.php,v 1.9 2006-11-18 03:35:27 mose Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
@@ -100,5 +100,56 @@ class TikiInit {
 	}
 
 }
+
+function tiki_error_handling($errno, $errstr, $errfile, $errline) {
+	global $error_reporting_level,$tiki_p_admin;
+	$err[E_ERROR]           = 'E_ERROR';
+	$err[E_CORE_ERROR]      = 'E_CORE_ERROR';
+	$err[E_USER_ERROR]      = 'E_USER_ERROR';
+	$err[E_COMPILE_ERROR]   = 'E_COMPILE_ERROR';
+	$err[E_WARNING]         = 'E_WARNING';
+	$err[E_CORE_WARNING]    = 'E_CORE_WARNING';
+	$err[E_USER_WARNING]    = 'E_USER_WARNING';
+	$err[E_COMPILE_WARNING] = 'E_COMPILE_WARNING';
+	$err[E_PARSE]           = 'E_PARSE';
+	$err[E_NOTICE]          = 'E_NOTICE';
+	$err[E_USER_NOTICE]     = 'E_USER_NOTICE';
+	if (!empty($error_reporting_level) and $error_reporting_level) {
+		$errfile = basename($errfile);
+		switch ($errno) {
+		case E_ERROR:
+		case E_CORE_ERROR:
+		case E_USER_ERROR:
+		case E_COMPILE_ERROR:
+		case E_WARNING:
+		case E_CORE_WARNING:
+		case E_USER_WARNING:
+		case E_COMPILE_WARNING:
+		case E_PARSE:
+			if ($error_reporting_level == 2047 or $error_reporting_level == 2039 or ($error_reporting_level == 1 and $tiki_p_admin == 'y')) {
+				echo "<div style='padding:4px;border:1px solid #000;background-color:#F66;font-size:10px;'>";
+				echo "<b>PHP (".PHP_VERSION.") ERROR (".$err[$errno]."):</b><br />";
+				echo "<tt><b>File:</b></tt> $errfile<br />";
+				echo "<tt><b>Line:</b></tt> $errline<br />";
+				echo "<tt><b>Type:</b></tt> $errstr";
+				echo "</div>";
+			}
+			break;
+		case E_NOTICE:
+		case E_USER_NOTICE:
+			if ($error_reporting_level == '2047' and $tiki_p_admin == 'y') {
+				echo "<div style='padding:4px;border:1px solid #000;background-color:#FF6;font-size:10px;'>";
+				echo "<b>PHP (".PHP_VERSION.") NOTICE ($errno):</b><br />";
+				echo "<tt><b>File:</b></tt> $errfile<br />";
+				echo "<tt><b>Line:</b></tt> $errline<br />";
+				echo "<tt><b>Type:</b></tt> $errstr";
+				echo "</div>";
+			}
+		default:
+			break;
+		}
+	}
+}
+set_error_handler("tiki_error_handling");
 
 ?>

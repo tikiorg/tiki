@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.46 2006-01-20 09:54:53 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.47 2006-11-18 03:35:27 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -41,7 +41,8 @@ elseif (isset($_REQUEST["prefs"])) {
         "use_load_threshold",
         "use_proxy",
         "session_db",
-	"contact_anon"
+				"contact_anon",
+				"error_reporting_adminonly"
     );
 
     foreach ($pref_toggles as $toggle) {
