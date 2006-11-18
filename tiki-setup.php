@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.325 2006-11-17 21:31:59 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.326 2006-11-18 03:35:27 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -288,20 +288,15 @@ if (!isset($_SESSION['votes'])) {
 $appname = 'tiki';
 
 if (!isset($_SESSION['appname'])) {
-    //session_register("appname");
-    $_SESSION['appname'] = $appname;
+	$_SESSION['appname'] = $appname;
 }
-
 $smarty->assign('appname', $appname);
-
 
 if (isset($_REQUEST['PHPSESSID'])) {
     $tikilib->update_session($_REQUEST['PHPSESSID']);
 } elseif (function_exists('session_id')) {
     $tikilib->update_session(session_id());
 }
-
-if (isset($_REQUEST['page'])) { $_REQUEST['page'] = strip_tags($_REQUEST['page']); }
 
 # wiki
 $sections['wiki page']['feature'] = 'feature_wiki';
@@ -891,6 +886,8 @@ $pref['tikiIndex'] = 'tiki-index.php';
 $pref['style'] = 'tikineat.css';
 $pref['feature_babelfish'] = 'y';
 $pref['feature_babelfish_logo'] = 'n';
+$pref['error_reporting_level'] = 0;
+$pref['error_reporting_adminonly'] = 'y';
 
 
 // ******************************************************************************************
@@ -923,6 +920,8 @@ $smarty->assign('uses_tabs', 'n');
 $smarty->assign('uses_jscalendar', 'n');
 $smarty->assign('uses_phplayers', 'n');
 $smarty->assign('show_page_bar', 'n');
+$smarty->assign('fullscreen', 'n');
+$smarty->assign('semUser', '');
 
 if (isset($_SESSION['tiki_cookie_jar'])) {
 	foreach ($_SESSION['tiki_cookie_jar'] as $nn=>$vv) {
@@ -942,9 +941,11 @@ if (isset($_COOKIE['tiki-theme']) ) {
 	$style = $_COOKIE['tiki-theme'];
 }
 
-$error_reporting_level = (int)($tikilib->get_preference('error_reporting_level', 0));
-if ($error_reporting_level == 1)
+if ($error_reporting_level == 1) {
 	$error_reporting_level = ($tiki_p_admin == 'y') ? E_ALL: 0;
+} elseif ($error_reporting_adminonly == 'y' and $tiki_p_admin != 'y') {
+	$error_reporting_level = 0;
+}
 error_reporting($error_reporting_level);
 
 
@@ -1246,9 +1247,9 @@ if ($user && $feature_usermenu == 'y') {
 
 // We set empty wiki page name as default here if not set (before including Tiki modules)
 if (empty($_REQUEST['page'])) {
-	$page = '';
+ 	$page = '';
 } else {
-	$page = $_REQUEST['page'];
+ 	$page = $_REQUEST['page'];
 }
 $smarty->assign('page', $page);
 
@@ -1583,6 +1584,9 @@ if ($feature_fullscreen == 'y') {
 		} else {
 			$_SESSION['fullscreen'] = 'n';
 		}
+	}
+	if (!isset($_SESSION['fullscreen'])) {
+		$_SESSION['fullscreen'] = 'n';
 	}
 }
 ?>

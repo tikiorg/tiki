@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.51 2006-09-30 20:27:35 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.52 2006-11-18 03:35:27 mose Exp $ *}
 
 <script type="text/javascript">
 {literal}
@@ -146,13 +146,14 @@
             </select>
         </td>
       </tr><tr>
-      <td class="form"><label for="general-error">{tr}PHP error reporting level for non-admin:{/tr}</label></td>
+      <td class="form"><label for="general-error">{tr}PHP error reporting level:{/tr}</label></td>
       <td><select name="error_reporting_level" id="general-error">
             <option value="0" {if $error_reporting_level eq 0}selected="selected"{/if}>{tr}No error reporting{/tr}</option>
             <option value="2047" {if $error_reporting_level eq 2047}selected="selected"{/if}>{tr}Report all PHP errors{/tr}</option>
             <option value="2039" {if $error_reporting_level eq 2039}selected="selected"{/if}>{tr}Report all errors except notices{/tr}</option>
-		<option value="1" {if $error_reporting_level eq 1}selected="selected"{/if}>{tr}Report PHP errors only for admin{/tr}</option>
             </select>
+						{tr}visible to admin only{/tr}
+						<input type="checkbox" name="error_reporting_adminonly"{if $error_reporting_adminonly eq 'y'} checked="checked"{/if} />
       </td>
       </tr><tr>
       <td class="form"><label for="general-charset">{tr}Default charset for sending mail:{/tr}</label></td>
