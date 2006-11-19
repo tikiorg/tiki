@@ -14,6 +14,8 @@ if(isset($module_params["cluster"]) && $module_params["cluster"]==1) {
   $smarty->assign('cluster',true);
   $logged_cluster_users = $tikilib->count_cluster_sessions();
   $smarty->assign('logged_cluster_users', $logged_cluster_users);
+} else {
+  $smarty->assign('cluster',false);
 }
 
 $smarty->assign_by_ref('online_users', $online_users);
