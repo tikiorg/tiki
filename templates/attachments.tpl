@@ -1,11 +1,15 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.28 2006-09-30 01:36:01 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.29 2006-11-19 17:12:19 mose Exp $ *}
 
 <a name="attachments"></a>
 {* Don't even generate DIV if no any needed rights *}
 {if $tiki_p_wiki_view_attachments == 'y'
  || $tiki_p_wiki_admin_attachments == 'y'
  || $tiki_p_wiki_attach_files == 'y'}
-{if $atts_show eq 'y'}<div id="attzoneopen">{else}<div id="attzone">{/if}
+{if isset($smarty.session.tiki_cookie_jar.show_attzone) and $smarty.session.tiki_cookie_jar.show_attzone eq 'y'}
+<div id="attzone" style="display:block;">
+{else}
+<div id="attzone" style="display:none;">
+{/if}
 
 {* Generate table if view permissions granted
  * and if count of attached files > 0

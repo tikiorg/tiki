@@ -1,14 +1,14 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.68 2006-05-22 17:09:13 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.69 2006-11-19 17:12:19 mose Exp $ *}
 
 {if $forum_mode eq 'y'}
-    <tr><td>
+<tr><td>
 {else}
-    <a name="comments"></a>
-    {if $comments_show eq 'y'}
-	<div id="comzoneopen">
-    {else}
-	<div id="comzone">
-    {/if}
+<a name="comments"></a>
+{if isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y'}
+<div id="comzone" style="display:block;">
+{else}
+<div id="comzone" style="display:none;">
+{/if}
 {/if}
 
 {if ($tiki_p_read_comments eq 'y'  and $forum_mode ne 'y') or ($tiki_p_forum_read eq 'y' and $forum_mode eq 'y')}
