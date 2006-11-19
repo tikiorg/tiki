@@ -64,7 +64,9 @@ class Cachelib {
 		
   function invalidate($key) {
 		$key = md5($key);
-		@unlink($this->folder."/$key");
+		if (is_file($this->folder."/$key")) {
+			unlink($this->folder."/$key");
+		}
   }
 
   function empty_full_cache(){
