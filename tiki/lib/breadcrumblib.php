@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/lib/breadcrumblib.php,v 1.9 2006-11-17 19:16:43 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/breadcrumblib.php,v 1.10 2006-11-19 00:35:05 mose Exp $
  * Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -238,8 +238,8 @@ class Breadcrumb {
         if ($feature_breadcrumbs == 'n' && $loc == "admin")
             $ret .= tra("Administration:")." ";
 				if (!empty($wiki_pagename_strip)) {
-					$wiki_pagename_strip = '/'.preg_quote($wiki_pagename_strip).'[a-zA-Z0-9]*$/';
-					$ret .= tra(preg_replace($wiki_pagename_strip,'',$crumbs[$len-1]->title)).'</a>';
+					$wiki_strip = '~'. preg_quote($wiki_pagename_strip).'[a-zA-Z0-9]*$~';
+					$ret .= tra(preg_replace($wiki_strip,'',$crumbs[$len-1]->title)).'</a>';
 				} else {
         	$ret .= tra($crumbs[$len-1]->title).'</a>';
 				}
