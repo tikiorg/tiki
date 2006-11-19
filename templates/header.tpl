@@ -28,7 +28,6 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {/if}
 
 {* --- tikiwiki block --- *}
-{php} include("lib/tiki-dynamic-js.php"); {/php}
 <script type="text/javascript" src="lib/tiki-js.js"></script>
 {include file="bidi.tpl"}
 <title>
@@ -84,11 +83,6 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 <script type="text/javascript" src="lib/phplayers/libjs/layerstreemenu-cookies.js"></script>
 {/if}
 
-{* --- Integrator block --- *}
-{if strlen($integrator_css_file) > 0}
-<link rel="StyleSheet" href="{$integrator_css_file}" type="text/css" />
-{/if}
-    
 {* --- Firefox RSS icons --- *}
 {if $feature_wiki eq 'y' and $rss_wiki eq 'y' and $tiki_p_view eq 'y'}
 <link rel="alternate" type="application/rss+xml" title="{tr}RSS Wiki{/tr}" href="tiki-wiki_rss.php?ver={$rssfeed_default_version}" />
@@ -124,7 +118,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 </head>
 
 <body {if $user_dbl eq 'y' and $dblclickedit eq 'y' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}
-{if $show_comzone eq 'y'}onload="javascript:flip('comzone');"{/if}{if $msgError} onload="javascript:location.hash='msgError'" {/if}{if $section} class="tiki_{$section}"{/if}>
+{if $msgError} onload="javascript:location.hash='msgError'" {/if}>
 {if $minical_reminders>100}
 <iframe width='0' height='0' frameborder="0" src="tiki-minical_reminders.php"></iframe>
 {/if}

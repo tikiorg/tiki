@@ -99,10 +99,16 @@ border="0" src="topic_image.php?id={$listpages[ix].topicId}" /></a>
    and ($tiki_p_read_comments eq 'y')
    and ($listpages[ix].allow_comments eq 'y')}
     <td class="articletrailer">
-    <a href="tiki-read_article.php?articleId={$listpages[ix].articleId}&amp;comzone=show#comments" class="trailer">{if $listpages[ix].comments_cant eq 0}{tr}no comments{/tr}
-    {elseif $listpages[ix].comments_cant eq 1}{tr}1 comment{/tr}
-    {else}{$listpages[ix].comments_cant} {tr}comments{/tr}
-    {/if}</a>
+<a href="#comment" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;" class="linkbut">
+{if $listpages[ix].comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
+{tr}add comment{/tr}
+{elseif $listpages[ix].comments_cant == 1}
+<span class="highlight">{tr}1 comment{/tr}</span>
+{else}
+<span class="highlight">{$listpages[ix].comments_cant} {tr}comments{/tr}</span>
+{/if}
+<span id="comzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y'}inline{else}none{/if};">({tr}close{/tr})</span>
+</a>
     </td>
   {/if}
 {/if}

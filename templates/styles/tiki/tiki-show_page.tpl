@@ -152,18 +152,31 @@
 
 {if $print_page ne 'y'}
 {if $show_page eq 'y' && $feature_wiki_comments == 'y' && $tiki_p_wiki_view_comments == 'y'}
-<span class="tabbut">
-{if $comments_cant > 0}
-	<a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink" style="background: #FFAAAA">{if $comments_cant eq 1}1 {tr}comment{/tr}{else}{$comments_cant} {tr}comments{/tr}{/if}</a></span>
+<span class="tabbut"><a href="#" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;" class="tablink">
+{if $comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
+{tr}add comment{/tr}
+{elseif $comments_cant == 1}
+<span class="highlight">{tr}1 comment{/tr}</span>
 {else}
-	<a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink">{tr}comment{/tr}</a></span>
+<span class="highlight">{$comments_cant} {tr}comments{/tr}</span>
 {/if}
+<span id="comzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y'}inline{else}none{/if};">({tr}close{/tr})</span>
+</a></span>
 {/if}
 {/if}
 
 {if $print_page ne 'y'}
 {if $feature_wiki_attachments eq 'y' and $tiki_p_wiki_view_attachments eq 'y' and $show_page eq 'y'}
-<span class="tabbut"><a href="#attachments" onclick="javascript:flip('attzone{if $atts_show eq 'y'}open{/if}');" class="tablink">{if $atts_count eq 0}{tr}attach file{/tr}{elseif $atts_count eq 1}1 {tr}attachment{/tr}{else}{$atts_count} {tr}attachments{/tr}{/if}</a></span>
+<span class="tabbut"><a href="#" onclick="javascript:flip('attzone');flip('attzone_close','inline');return false;" class="tablink">
+{if $atts|@count == 0 || $tiki_p_wiki_attach_files == 'y' && $tiki_p_wiki_view_attachments == 'n' && $tiki_p_wiki_admin_attachments == 'n'}
+{tr}attach file{/tr}
+{elseif $atts|@count == 1}
+<span class="highlight">{tr}1 file attached{/tr}</span>
+{else}
+<span class="highlight">{tr}{$atts|@count} files attached{/tr}</span>
+{/if}
+<span id="attzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_attzone) and $smarty.session.tiki_cookie_jar.show_attzone eq 'y'}inline{else}none{/if};">({tr}close{/tr})</span>
+</a></span>
 {/if}
 {/if}
 
