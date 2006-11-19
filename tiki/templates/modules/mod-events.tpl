@@ -148,9 +148,12 @@ $todaylink=$father."day=".date("d")."&amp;mon=".date("m")."&amp;year=".date("Y")
 				}
 				$newval="";
 				unset($tmp);
-				$tmp = $items[mktime(0, 0, 0, $mon, $val, $year)];
+				$valtime = intval($val);
+				if (array_key_exists(mktime(0, 0, 0, $mon, $valtime, $year),$items)) {
+					$tmp = $items[mktime(0, 0, 0, $mon, $valtime, $year)];
+				}
 				if (isset($tmp)) if (is_array($tmp)) {
-					unset($items[mktime(0, 0, 0, $mon, $val, $year)]);
+					unset($items[mktime(0, 0, 0, $mon, $valtime, $year)]);
 					foreach ($tmp as $xx) {
 						// TODO: put more data in the mouseover window
 						$newval .= $xx['name']."<br />";
