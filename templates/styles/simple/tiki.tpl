@@ -43,21 +43,6 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {* --- favicon file --- *}
 {if $favicon}		<link rel="icon" href="{$favicon}" />{/if}
 
-{* --- jscalendar block --- *}
-{if $feature_jscalendar eq 'y' and $uses_jscalendar eq 'y'}
-		<link rel="StyleSheet" href="lib/jscalendar/calendar-system.css" type="text/css"></link>
-		<script type="text/javascript"><!--
-{if $feature_phplayers eq 'y'}{php} include_once ("lib/phplayers/libjs/layersmenu-browser_detection.js"); {/php}{/if}
-		// --></script>
-		<script type="text/javascript" src="lib/jscalendar/calendar.js"></script>
-{if $jscalendar_langfile}
-		<script type="text/javascript" src="lib/jscalendar/lang/calendar-{$jscalendar_langfile}.js"></script>
-{else}
-		<script type="text/javascript" src="lib/jscalendar/lang/calendar-en.js"></script>
-{/if}
-		<script type="text/javascript" src="lib/jscalendar/calendar-setup.js"></script>
-{/if}
-
 {* --- phplayers block --- *}
 {if $feature_phplayers eq 'y'}
 		<link rel="StyleSheet" href="lib/phplayers/layerstreemenu.css" type="text/css"></link>
@@ -70,11 +55,6 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 		<script type="text/javascript" src="lib/phplayers/libjs/layersmenu.js"></script>
 *}
 		<script type="text/javascript" src="lib/phplayers/libjs/layerstreemenu-cookies.js"></script>
-{/if}
-
-{* --- Integrator block --- *}
-{if strlen($integrator_css_file) > 0}
-		<link rel="StyleSheet" href="{$integrator_css_file}" type="text/css" />
 {/if}
 
 {* --- Firefox RSS icons --- *}

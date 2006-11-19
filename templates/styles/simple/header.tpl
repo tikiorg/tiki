@@ -75,11 +75,6 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 <script language="JavaScript" type="text/javascript" src="lib/phplayers/libjs/layerstreemenu-cookies.js"></script>
 {/if}
 
-{* --- Integrator block --- *}
-{if strlen($integrator_css_file) > 0}
-<link rel="StyleSheet" href="{$integrator_css_file}" type="text/css" />
-{/if}
-
 {* --- Firefox RSS icons --- *}
 {if $feature_wiki eq 'y' and $rss_wiki eq 'y'}
 <link rel="alternate" type="application/xml" title="{tr}RSS Wiki{/tr}" href="tiki-wiki_rss.php?ver={$rssfeed_default_version}" />
