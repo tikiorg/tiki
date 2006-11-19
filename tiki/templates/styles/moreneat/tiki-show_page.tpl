@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki-show_page.tpl,v 1.58 2006-11-17 16:32:33 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki-show_page.tpl,v 1.59 2006-11-19 20:14:56 mose Exp $ *}
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
     {$page_info.page_alias}
@@ -173,39 +173,35 @@
 
 {if $feature_wiki_comments eq 'y' and $tiki_p_wiki_view_comments eq 'y' and $show_page eq 'y'}
 <span class="tabbut">
-{if $comments_cant > 0}
-	<a href="{if $comments_show ne 'y'}tiki-index.php?page={$page|escape:"url"}&amp;comzone=show#comments{else}tiki-index.php?page={$page|escape:"url"}&amp;comzone=hide{/if}" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');{if $comments_show eq 'y'} return false;{/if}" class="tablink" style="background: #FFAAAA">{if $comments_cant eq 1}1&nbsp;{tr}comment{/tr}{else}{$comments_cant}&nbsp;{tr}comments{/tr}{/if}</a>
+<a href="#" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;" class="tablink">
+{if $comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
+{tr}add comment{/tr}
+{elseif $comments_cant == 1}
+<span class="highlight">{tr}1 comment{/tr}</span>
 {else}
-	<a href="{if $comments_show ne 'y'}tiki-index.php?page={$page|escape:"url"}&amp;comzone=show#comments{else}tiki-index.php?page={$page|escape:"url"}&amp;comzone=hide{/if}" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');{if $comments_show eq 'y'} return false;{/if}" class="tablink">{tr}comment{/tr}</a>
+<span class="highlight">{$comments_cant} {tr}comments{/tr}</span>
 {/if}
+<span id="comzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y'}inline{else}none{/if};">({tr}close{/tr})</span>
+</a>
 </span>
 {/if}
 
 {* Attaching a file and viewing attachments are separate permissions! *}
 {if $feature_wiki_attachments eq 'y' and $show_page eq 'y'}
-  {if $tiki_p_wiki_attach_files eq 'y'}
-    <span class="tabbut">
-      <a href="#attachments" onclick="javascript:flip('attzone{if $atts_show eq 'y'}open{/if}');" class="tablink">
-        {if $atts_count eq 0}
-          {tr}attach file{/tr}
-        {elseif $atts_count eq 1}
-          1&nbsp;{tr}attachment{/tr}
-        {else}
-          {$atts_count}&nbsp;{tr}attachments{/tr}
-        {/if}
-      </a>
-    </span>
-  {elseif $tiki_p_wiki_view_attachments eq 'y' and $atts_count gt 0}
-    <span class="tabbut">
-      <a href="#attachments" onclick="javascript:flip('attzone{if $atts_show eq 'y'}open{/if}');" class="tablink">
-        {if $atts_count eq 1}
-          1&nbsp;{tr}attachment{/tr}
-        {else}
-          {$atts_count}&nbsp;{tr}attachments{/tr}
-        {/if}
-      </a>
-    </span>
-  {/if}
+{if $tiki_p_wiki_attach_files eq 'y'}
+<span class="tabbut">
+<a href="#" onclick="javascript:flip('attzone');flip('attzone_close','inline');return false;" class="tablink">
+{if $atts|@count == 0 || $tiki_p_wiki_attach_files == 'y' && $tiki_p_wiki_view_attachments == 'n' && $tiki_p_wiki_admin_attachments == 'n'}
+{tr}attach file{/tr}
+{elseif $atts|@count == 1}
+<span class="highlight">{tr}1 file attached{/tr}</span>
+{else}
+<span class="highlight">{tr}{$atts|@count} files attached{/tr}</span>
+{/if}
+<span id="attzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_attzone) and $smarty.session.tiki_cookie_jar.show_attzone eq 'y'}inline{else}none{/if};">({tr}close{/tr})</span>
+</a>
+</span>
+{/if}
 {/if}
 {/if}
 

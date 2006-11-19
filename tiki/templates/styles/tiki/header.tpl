@@ -89,7 +89,7 @@
 
 </head>
 
-<body{if $uses_tabs eq 'y' or $show_comzone eq 'y'} onload="{if $uses_tabs eq 'y'}javascript:tabInit();{/if}{if $show_comzone eq 'y'}javascript:flip('comzone');{/if}"{/if}{if $user_dbl eq 'y' and $dblclickedit eq 'y' and $tiki_p_edit eq 'y'} ondblclick="location.href='tiki-editpage.php?page={$page}';"{/if}>  
+<body{if $uses_tabs eq 'y'} onload="javascript:tabInit();"{/if}{if $user_dbl eq 'y' and $dblclickedit eq 'y' and $tiki_p_edit eq 'y'} ondblclick="location.href='tiki-editpage.php?page={$page}';"{/if}>  
 {if $minical_reminders>100}
 <iframe width='0' height='0' frameborder="0" src="tiki-minical_reminders.php"></iframe>
 {/if}  

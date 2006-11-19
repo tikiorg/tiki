@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-page_bar.tpl,v 1.10 2006-01-20 09:54:57 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-page_bar.tpl,v 1.11 2006-11-19 20:14:56 mose Exp $ *}
 
 <div id="page-bar">
 
@@ -72,8 +72,11 @@ class="linkbut">{if $beingEdited eq 'y'}<span class="highlight">{tr}edit{/tr}</s
   && ($tiki_p_read_comments  == 'y'
   ||  $tiki_p_post_comments  == 'y'
   ||  $tiki_p_edit_comments  == 'y')}
-<div class="button2"><a title="View/post comments" href="javascript:document.location='#comments';flip('comzone{if $comments_show eq 'y'}open{/if}');"
-class="linkbut">{if $comments_cant == 0}{tr}add comment{/tr}{elseif $comments_cant == 1}<span class="highlight">{tr}1 comment{/tr}</span>{else}<span class="highlight">{$comments_cant} {tr}comments{/tr}</span>{/if}</a></div>
+<div class="button2">
+<a href="#" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;" class="linkbut">
+{if $comments_cant == 0}{tr}add comment{/tr}{elseif $comments_cant == 1}<span class="highlight">{tr}1 comment{/tr}</span>{else}<span class="highlight">{$comments_cant} {tr}comments{/tr}</span>{/if}
+<span id="comzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y'}inline{else}none{/if};">({tr}close{/tr})</span>
+</a></div>
 {/if}
 
   {* don't show attachments button if feature disabled or no corresponding rights or no attached files and r/o*}
@@ -85,7 +88,8 @@ class="linkbut">{if $comments_cant == 0}{tr}add comment{/tr}{elseif $comments_ca
   ||  $tiki_p_wiki_attach_files      == 'y'
   ||  $tiki_p_wiki_admin_attachments == 'y')}
  
-<div class="button2"><a title="Manage attachments for this page" href="javascript:document.location='#attachments';flip('attzone');" class="linkbut">
+<div class="button2">
+<a href="#" onclick="javascript:flip('attzone');flip('attzone_close','inline');return false;" class="linkbut">
 {if $atts_cnt == 0
          || $tiki_p_wiki_attach_files == 'y'
          && $tiki_p_wiki_view_attachments == 'n'
@@ -96,6 +100,7 @@ class="linkbut">{if $comments_cant == 0}{tr}add comment{/tr}{elseif $comments_ca
         {else}
           <span class="highlight">{tr}{$atts_cnt} files attached{/tr}</span>
         {/if}
+			<span id="attzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_attzone) and $smarty.session.tiki_cookie_jar.show_attzone eq 'y'}inline{else}none{/if};">({tr}close{/tr})</span>
       </a>
     </div>
   {/if}{* attachments *}
