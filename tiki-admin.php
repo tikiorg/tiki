@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.113 2006-10-04 02:12:53 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.114 2006-11-20 02:32:26 bluestrain Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -87,7 +87,7 @@ $smarty->assign('home_file_gallery', $home_file_gallery);
 $crumbs[] = new Breadcrumb('Administration',
                               'Sections',
                               'tiki-admin.php',
-                              'Tiki+Admin',
+                              'Admin+Home',
                               'Help on Configuration Sections');
 
 if (isset($_REQUEST["page"])) {
