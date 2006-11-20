@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.329 2006-11-20 05:03:25 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.330 2006-11-20 16:59:06 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -928,7 +928,8 @@ $smarty->assign('uses_phplayers', 'n');
 $smarty->assign('show_page_bar', 'n');
 $smarty->assign('fullscreen', 'n');
 $smarty->assign('semUser', '');
-$smarty->assign('section', $section);
+if (!empty($section))
+	$smarty->assign('section', $section);
 
 ini_set('docref_root',$php_docroot);
 

@@ -31,6 +31,8 @@ function smarty_function_phplayers($params, &$smarty) {
 		$output = $tikiphplayers->mkMenuEntry($id);
 	}
 	$name = 'usermenu'.$id;
+	if (!isset($file))
+		$file = '';
 
 	echo $tikiphplayers->mkMenu($output, $name, $type, $file);
 }
