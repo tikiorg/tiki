@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.52 2006-11-19 20:14:55 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.53 2006-11-20 14:03:45 sylvieg Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -91,7 +91,7 @@
   && $comments_cant != 0)
   ||  $tiki_p_post_comments  == 'y'
   ||  $tiki_p_edit_comments  == 'y')}
-<td>
+<td><div class="button2">
 <a href="#comment" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;" class="linkbut">
 {if $comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
 {tr}add comment{/tr}
