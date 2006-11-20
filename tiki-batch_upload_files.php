@@ -153,7 +153,9 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 	// cycle through all files to upload	
 	for ($x=0; $x < $totfiles; $x++) {
 		$error=false;
-		if ($filePathArray[$x]<>"") {
+		if (!isset($filePathArray[$x])) {
+			$filePathArray[$x] = '';
+		} else if ($filePathArray[$x]<>"") {
 			$filePathArray[$x] .= '/';
 		} else {
 			// if there is a path in file name, move it to the path array
