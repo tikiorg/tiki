@@ -123,7 +123,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 <iframe width='0' height='0' frameborder="0" src="tiki-minical_reminders.php"></iframe>
 {/if}
 
-{if $feature_community_mouseover}{popup_init src="lib/overlib.js"}{/if}
+{if $feature_community_mouseover eq 'y'}{popup_init src="lib/overlib.js"}{/if}
 {if $feature_siteidentity eq 'y'}
 {* Site identity header section *}
 	<div id="siteheader">
