@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.163 2006-11-20 00:37:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.164 2006-11-20 01:55:02 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -40,12 +40,13 @@ if (isset($_REQUEST['page_id'])) {
 
 $use_best_language = false;
 
-if (!isset($_REQUEST['page']) || $_REQUEST['page'] == '') {
+if ((!isset($_REQUEST['page']) || $_REQUEST['page'] == '') and !isset($_REQUEST['page_ref_id'])) {
 	$_REQUEST['page'] = $userHomePage = $userlib->get_user_default_homepage2($user);
     // Create the HomePage if it doesn't exist
     if(!$tikilib->page_exists($wikiHomePage)) {
         $tikilib->create_page($wikiHomePage,0,'',date('U'),'Tiki initialization');
     }
+		header('Location: tiki-index.php?page='.$userHomePage);
     if ($feature_best_language == 'y') {
         $use_best_language = true;
     }
