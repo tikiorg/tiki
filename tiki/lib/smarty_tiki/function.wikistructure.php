@@ -33,6 +33,7 @@ if (isset($_REQUEST["page_ref_id"])) {
 }
 else {
 //Get the structures this page is a member of
+if (!isset($structure)) $structure='';
 $structs = $structlib->get_page_structures($_REQUEST["page"],$structure);
 //If page is only member of one structure, display if requested
 $single_struct = count($structs) == 1;
@@ -41,6 +42,7 @@ $page_ref_id=$structs[0]['req_page_ref_id'];
 $_REQUEST["page_ref_id"]=$page_ref_id;
 }
 }
+if (!isset($channels)) $channels='';
 if (isset($page_ref_id) && isset($detail)) {
   $channels.= $structlib->get_toc($page_ref_id,'asc',false,false,'','plain',$_REQUEST["page"]);
 }
