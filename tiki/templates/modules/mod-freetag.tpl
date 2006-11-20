@@ -1,15 +1,21 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-freetag.tpl,v 1.2 2006-10-03 15:22:29 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-freetag.tpl,v 1.3 2006-11-20 00:37:51 mose Exp $ *}
 
+{if $feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
 {eval var="{tr}Folksonomy{/tr}" assign="tpl_module_title"}
 {tikimodule title=$tpl_module_title name="folksonomy_tagging" flip=$module_params.flip decorations=$module_params.decorations}
-  <table  border="0" cellpadding="0" cellspacing="0">
-  <tr><td>
-  {tr}Tag{/tr} <b>{$page}</b> ({tr}signed{/tr} {$user})
-	<form name="addTags" method="post" action="modules/mod-freetag.php">
-	<input type="hidden" name="page_id" value="{$pageid}" />
-	<input type="text" name="tags" maxlength="40" />
-	<input type="submit" name="Add" value="Add" />
-	</form>
-  </td></tr>
-  </table>
+
+<div class="freetaglist">{tr}Tags{/tr}:
+
+{if isset($freetags.data[0])}
+{foreach from=$freetags.data item=taginfo}
+<a class="freetag" href="tiki-browse_freetags.php?tag={$taginfo.tag}">{$taginfo.tag}</a> .
+{/foreach}
+</div>
+{/if}
+
+<form name="addTags" method="post" action="{$smarty.request.php_self}">
+<input type="text" name="addtags" maxlength="40" />
+<input type="submit" name="Add" value="Add" />
+</form>
 {/tikimodule}
+{/if}

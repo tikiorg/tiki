@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.326 2006-11-18 03:35:27 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.327 2006-11-20 00:37:51 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -299,6 +299,8 @@ if (isset($_REQUEST['PHPSESSID'])) {
 }
 
 # wiki
+$sections['wiki']['feature'] = 'feature_wiki';
+$sections['wiki']['key'] = 'page';
 $sections['wiki page']['feature'] = 'feature_wiki';
 $sections['wiki page']['key'] = 'page';
 $pref['feature_wiki'] = 'y';
@@ -601,6 +603,9 @@ $pref['directory_validate_urls'] = 'n';
 $pref['directory_cool_sites'] = 'y';
 
 # rss
+$sections['forum']['feature'] = 'feature_forums';
+$sections['forum']['key'] = 'forumId';
+$sections['forum']['itemkey'] = 'comments_parentId';
 $pref['rss_forums'] = 'y';
 $pref['rss_forum'] = 'y';
 $pref['rss_directories'] = 'y';
@@ -888,6 +893,7 @@ $pref['feature_babelfish'] = 'y';
 $pref['feature_babelfish_logo'] = 'n';
 $pref['error_reporting_level'] = 0;
 $pref['error_reporting_adminonly'] = 'y';
+$pref['php_docroot'] = 'http://php.net/';
 
 
 // ******************************************************************************************
@@ -922,13 +928,16 @@ $smarty->assign('uses_phplayers', 'n');
 $smarty->assign('show_page_bar', 'n');
 $smarty->assign('fullscreen', 'n');
 $smarty->assign('semUser', '');
+$smarty->assign('section', $section);
+
+ini_set('docref_root',$php_docroot);
 
 if (isset($_SESSION['tiki_cookie_jar'])) {
 	foreach ($_SESSION['tiki_cookie_jar'] as $nn=>$vv) {
 		$cookielist[] = "$nn: '". addslashes($vv)."'";
 	}
 	if (count($cookielist)) {
-		$headerlib->add_js("var tiki_cookie_jar=new Array();tiki_cookie_jar={\n\n". implode(",\n\t",$list)."};",80);
+		$headerlib->add_js("var tiki_cookie_jar=new Array();\ntiki_cookie_jar={\n". implode(",\n\t",$cookielist)."\n};",80);
 	}
 }
 
@@ -1245,73 +1254,6 @@ if ($user && $feature_usermenu == 'y') {
     }
 }
 
-// We set empty wiki page name as default here if not set (before including Tiki modules)
-if (empty($_REQUEST['page'])) {
- 	$page = '';
-} else {
- 	$page = $_REQUEST['page'];
-}
-$smarty->assign('page', $page);
-
-if ($feature_warn_on_edit == 'y') {
-    
-    if (strstr($_SERVER['REQUEST_URI'], 'tiki-editpage')) {
-    	$current_page = 'tiki-editpage';
-    } elseif (strstr($_SERVER['REQUEST_URI'], 'tiki-index')) {
-    	$current_page = 'tiki-index';
-    } else {
-    	$current_page = NULL;
-    }
-    if ($current_page == 'tiki-editpage' || $current_page == 'tiki-index') {
-		// initiate all the variables
-        $smarty->assign('editpageconflict', 'n');
-        $editpageconflict = 'n';
-	    $smarty->assign('beingEdited', 'n');
-	    $beingedited = 'n';
-	    if (!empty($_REQUEST['page'])) {
-	        $chkpage = $_REQUEST['page'];
-	    } elseif ($current_page == 'tiki-index') {
-	    	$chkpage = $wikiHomePage;
-	    } else {
-	    	$chkpage = NULL;
-	    }
-	    $u = $user? $user: 'anonymous';
-	    if (!empty($chkpage) && ($chkpage != 'sandbox' || $chkpage == 'sandbox' && $tiki_p_admin == 'y')) {
-	        if ($current_page == 'tiki-index' && $tikilib->semaphore_is_set($chkpage, $warn_on_edit_time * 60) && $tikilib->get_semaphore_user($chkpage) != $u) {
-		        $smarty->assign('semUser', $tikilib->get_semaphore_user($chkpage));
-		        $smarty->assign('beingEdited', 'y');
-		        $beingedited = 'y';
-	        } elseif ($current_page == 'tiki-editpage' && isset($_REQUEST['cancel_edit'])) {
-	        	//Unlock the page when cancelling
-	        	if (!empty($_SESSION["edit_lock_$chkpage"])) {
-		        	$tikilib->semaphore_unset($chkpage, $_SESSION["edit_lock_$chkpage"]);
-	        	}
-	        } elseif ($current_page == 'tiki-editpage' && !isset($_REQUEST['save'])) {
-	        	//When tiki-editpage.php is loading, check to see if there is an editing conflict
-	        	if ($current_page == 'tiki-editpage' && $tikilib->semaphore_is_set($chkpage, $warn_on_edit_time * 60) && $tikilib->get_semaphore_user($chkpage) != $u) {
-		            $smarty->assign('editpageconflict', 'y');
-		            $editpageconflict = 'y';
-			} elseif ($tiki_p_edit == 'y') {
-	        		//Lock the page that is being edited
-		            $_SESSION["edit_lock_$chkpage"] = $tikilib->semaphore_set($chkpage);
-	        	}
-		        $smarty->assign('semUser', $tikilib->get_semaphore_user($chkpage));
-		        $smarty->assign('beingEdited', 'y');
-		        $beingedited = 'y';
-	        } elseif ($current_page == 'tiki-editpage' && isset($_REQUEST['save'])) {
-	        	//Unlock the page when saving
-	        	if (!empty($_SESSION["edit_lock_$chkpage"])) {
-		        	$tikilib->semaphore_unset($chkpage, $_SESSION["edit_lock_$chkpage"]);
-	        	}
-	        }
-	    }
-    }
-
-} else {
-	$smarty->assign('beingEdited', 'n');
-	$smarty->assign('editpageconflict', 'n');
-}
-
 $ownurl = $tikilib->httpPrefix(). $_SERVER['REQUEST_URI'];
 $parsed = parse_url($_SERVER['REQUEST_URI']);
 
@@ -1565,15 +1507,25 @@ if (!empty($_SESSION['interactive_translation_mode'])&&($_SESSION['interactive_t
 if ($feature_freetags == 'y' and isset($section) and isset($sections[$section])) {
   include_once ('lib/freetag/freetaglib.php');
 	$here = $sections[$section];
-	if (isset($_POST['tags']) && trim($_POST['tags']) != "" && $tiki_p_freetags_tag == 'y') {
+	if (isset($_POST['addtags']) && trim($_POST['addtags']) != "" && $tiki_p_freetags_tag == 'y') {
 		if (!isset($user)) {
 			$userid = 0;
 		} else {
 			$userid = $userlib->get_user_id($user);
 		}
-		$freetaglib->tag_object($userid, $sections[$section]['key'], $section, $_POST['tags']);
+		if (isset($here['itemkey']) and isset($_REQUEST[$here['itemkey']])) {
+			$freetaglib->tag_object($userid, $_REQUEST[$here['itemkey']], "$section ".$here['itemkey'], $_POST['addtags']);
+		} elseif (isset($here['key']) and isset($_REQUEST[$here['key']])) {
+			$freetaglib->tag_object($userid, $_REQUEST[$here['key']], $section, $_POST['addtags']);
+		}
 	}
-	$tags = $freetaglib->get_tags_on_object($sections[$section]['key'], $section);
+	if (isset($here['itemkey']) and isset($_REQUEST[$here['itemkey']])) {
+		$tags = $freetaglib->get_tags_on_object($_REQUEST[$here['itemkey']], "$section ".$here['itemkey']);
+	} elseif (isset($here['key']) and isset($_REQUEST[$here['key']])) {
+		$tags = $freetaglib->get_tags_on_object($_REQUEST[$here['key']], $section);
+	} else {
+		$tags = array();
+	}
 	$smarty->assign('freetags',$tags);
 }
 

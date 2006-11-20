@@ -6,13 +6,24 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-global $page;
+global $sections,$section;
 
 $userid = $userlib->get_user_id($user);
 $smarty->assign('userid',$userid);
 
-$pageid = $tikilib->get_page_id_from_name($page);
-$smarty->assign('pageid',$pageid);
-$smarty->assign('page',$page);
+$tagname = "";
+$tagid = 0;
+if (isset($sections[$section])) {
+	$par = $sections[$section];
+	if (isset($par['itemkey']) and isset($_REQUEST["{$par['itemkey']}"])) {
+		$tagid = $_REQUEST["{$par['itemkey']}"];
+		$taglabel = "$section $key";
+	} elseif (isset($par['key']) and isset($_REQUEST["{$par['key']}"])) {
+		$tagid = $_REQUEST["{$par['key']}"];
+		$taglabel = $section;
+	}
+}
+$smarty->assign('tagid',$tagid);
+$smarty->assign('tagname',$tagname);
 
 ?>
