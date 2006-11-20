@@ -302,7 +302,7 @@ if (isset($_REQUEST["galleryId"])) {
 	$smarty->assign('galleryId', '');
 }
 
-$galleries = $filegallib->list_file_galleries(0, -1, 'lastModif_desc', $user, '');
+$galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '');
 
 $temp_max = count($galleries["data"]);
 for ($i = 0; $i < $temp_max; $i++) {
