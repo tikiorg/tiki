@@ -1,6 +1,6 @@
 <?php
 $list = array();
-if( is_array( $_SESSION['tiki_cookie_jar'] ) )
+if(!empty($_SESSION['tiki_cookie_jar']) && is_array( $_SESSION['tiki_cookie_jar'] ) )
 	foreach( $_SESSION['tiki_cookie_jar'] as $name=>$value )
 		$list[] = $name . ": '" . addslashes($value) . "'";
 ?>
