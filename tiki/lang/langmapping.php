@@ -24,6 +24,7 @@ $langmapping = array(
     'el' => array(  'Greek',        tra("Greek")        ),
     'fj' => array(  'Fijian',       tra("Fijian")      ),
     'fr' => array(  'Français',    tra("French")       ),
+    'gl' => array(  'Galego',    tra("Galician")       ),
     'he' => array(  'עברית',    tra("Hebrew")       ),
     'hr' => array(  'Hrvatski',     tra("Croatian")   ),
     'it' => array(  'Italiano',     tra("Italian")      ),
