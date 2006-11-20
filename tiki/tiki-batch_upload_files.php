@@ -69,6 +69,7 @@ function getDirContent($sub) {
 		$smarty->display("error.tpl");
 		die;
 	}
+	$allfile = array();
 	while((false!==($filef=readdir($dfile)))) {
 		if ($filef != "." && $filef != ".." && substr($filef,0,1) != "." ) {
 			$allfile[] = $filef;
