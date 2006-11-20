@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.39 2006-11-17 18:32:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.40 2006-11-20 23:16:26 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -21,7 +21,13 @@ if (!empty($_REQUEST['fileId'])) {
 		$smarty->display('error.tpl');
 		die;
 	}
-	$_REQUEST['galleryId'] = $fileInfo['galleryId'];	
+	if (empty($_REQUEST['galleryId'])) {
+		$_REQUEST['galleryId'] = $fileInfo['galleryId'];
+	} elseif ($_REQUEST['galleryId'] != $fileInfo['galleryId']) {
+		$smarty->assign('msg', tra("Could not find the file requested"));
+		$smarty->display('error.tpl');
+		die;
+	}
 }	
 
 if (!empty($_REQUEST['galleryId'])) { // perms of the gallery can overwrite general perms
@@ -49,7 +55,7 @@ if (!empty($_REQUEST['galleryId'])) { // perms of the gallery can overwrite gene
 	}
 }
 
-if (!empty($_REQUEST['galleryId']) && empty($_REQUEST['fileId']) && $tiki_p_upload_files != 'y') {
+if (!empty($_REQUEST['galleryId']) && empty($_REQUEST['fileId']) && $tiki_p_upload_files != 'y' && $tiki_p_admin_file_galleries != 'y') {
 	$smarty->assign('msg', tra("Permission denied you can upload files but not to this file gallery"));
 	$smarty->display('error.tpl');
 	die;
@@ -87,47 +93,26 @@ if (isset($_REQUEST['fileId']))
 	$editFileId = $_REQUEST['fileId'];
 $editFile = false;
 if (!empty($editFileId)) {
-	$fileInfo = $filegallib->get_file_info($editFileId);
-	if (empty($fileInfo) || $fileInfo == null || $fileInfo['galleryId'] != $_REQUEST['galleryId']) {
-		$smarty->assign('msg', tra("Could not find the file requested"));
-		$smarty->display("error.tpl");
-		die;
-	}
 	if (!empty($_REQUEST['name']))
 		$fileInfo['name']=$_REQUEST['name'];
 	if (!empty($_REQUEST['description']))
 		$fileInfo['description']=$_REQUEST['description'];
 
-	$smarty->assign('fileInfo',$fileInfo);
+	$smarty->assign_by_ref('fileInfo',$fileInfo);
 	$smarty->assign('editFileId',$editFileId);
 	$editFile = true;
 }
 
 if (!empty($_REQUEST['galleryId'])) {
 	$gal_info = $tikilib->get_file_gallery((int)$_REQUEST["galleryId"]);
-	$smarty->assign('fgal_type', $gal_info["type"]);
+	$smarty->assign_by_ref('gal_info', $gal_info);
 	$podCastGallery = $filegallib->isPodCastGallery((int)$_REQUEST["galleryId"], $gal_info);
 }
 
 // Process an upload here
 if (isset($_REQUEST["upload"]) && !empty($_REQUEST['galleryId'])) {
 	check_ticket('upload-file');
-	// Check here if it is an upload or an URL
-	if ($tiki_p_upload_files != 'y') {
-		$smarty->assign('msg', tra("Permission denied you cannot upload files"));
 
-		$smarty->display("error.tpl");
-		die;
-	}
-
-	// Check the user to be admin or owner or the gallery is public
-	if ($tiki_p_admin_file_galleries != 'y' && (!$user || $user != $gal_info["user"]) && $gal_info["public"] != 'y') {
-		$smarty->assign('msg', tra("Permission denied you can upload files but not to this file gallery"));
-
-		$smarty->display("error.tpl");
-		die;
-	}
-	
 	$error_msg = '';
 
 	$errors = array();
@@ -249,6 +234,8 @@ if (isset($_REQUEST["upload"]) && !empty($_REQUEST['galleryId'])) {
 			if (!isset($_REQUEST['name']))
 				$_REQUEST['name'] = $name;
 
+			$fileInfo['filename'] = $file_name;
+
 			if (isset($data)) {
 				if ($editFile) {
 					$fileId = $filegallib->replace_file($editFileId, $_REQUEST["name"], $_REQUEST["description"], $name, $data, $size, $type, $user, $fhash, $_REQUEST['galleryId']);
@@ -286,9 +273,9 @@ if (isset($_REQUEST["upload"]) && !empty($_REQUEST['galleryId'])) {
 			}
 		}
 	}
-	
+
 	if ($editFile && !$didFileReplace) {
-		$filegallib->update_file($editFileId, $_REQUEST["name"], $_REQUEST["description"],$user);
+		$filegallib->update_file($editFileId, $_REQUEST['name'], $_REQUEST['description'], $user);
 		$fileChangedMessage = tra('File update was successful').': '.$_REQUEST['name'];
 		$smarty->assign('fileChangedMessage',$fileChangedMessage);
 		$cat_type = 'file';
