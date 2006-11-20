@@ -1,22 +1,18 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.162 2006-11-19 23:43:07 franck Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.163 2006-11-20 00:37:51 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
-
+$section = "wiki";
 require_once('tiki-setup.php');
 include_once('lib/structures/structlib.php');
 include_once('lib/wiki/wikilib.php');
 include_once('lib/stats/statslib.php');
 include_once('lib/ajax/ajaxlib.php');
 require_once ("lib/wiki/wiki-ajax.php");
-
-if ($feature_freetags == 'y') {
-	include_once('lib/freetag/freetaglib.php');
-}
 
 if ($feature_categories == 'y') {
 	global $categlib;
@@ -575,11 +571,6 @@ if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='mobile') {
      */
     include_once('lib/hawhaw/hawtikilib.php');
     HAWTIKI_index($info);
-}
-
-if ($feature_freetags == 'y') {     // And get the Tags for the posts
-    $tags = $freetaglib->get_tags_on_object($info['pageName'], 'wiki page');
-    $smarty->assign('freetags',$tags);
 }
 
 // Display category path or not (like {catpath()})
