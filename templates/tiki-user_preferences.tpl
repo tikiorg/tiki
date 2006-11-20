@@ -55,6 +55,7 @@
   <tr><td class="form">{tr}Name{/tr}:</td><td class="form">{$userinfo.login}</td></tr>
   <tr><td class="form">{tr}Real Name{/tr}:</td><td class="form"><input type="text" name="realName" value="{$realName|escape}" /></td></tr>
 
+	{* this should be optional
   <tr><td class="form">{tr}Gender{/tr}:</td>
   <td class="form">
   <input type="radio" name="gender" value="Male" {if $gender eq 'Male'}checked="checked"{/if}/> {tr}Male{/tr}
@@ -62,6 +63,7 @@
   <input type="radio" name="gender" value="Hidden" {if $gender ne 'Male' and $gender ne 'Female'}checked="checked"{/if}/> {tr}Hidden{/tr}
   </td>
   </tr>
+	*}
 
   <tr><td class="form">{tr}Country{/tr}:</td><td class="form">
   {if $country == "None"}

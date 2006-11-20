@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.81 2006-08-29 20:19:03 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.82 2006-11-20 16:17:54 mose Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -143,8 +143,10 @@ if (isset($_REQUEST['info'])) {
 	if (isset($_REQUEST["realName"]))
 		$tikilib->set_user_preference($userwatch, 'realName', $_REQUEST["realName"]);
 
+	/* this should be optional
 	if (isset($_REQUEST["gender"]))
 		$tikilib->set_user_preference($userwatch, 'gender', $_REQUEST["gender"]);
+	*/
 
 	if (isset($_REQUEST["homePage"]))
 		$tikilib->set_user_preference($userwatch, 'homePage', $_REQUEST["homePage"]);
