@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.327 2006-11-20 00:37:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.328 2006-11-20 04:20:48 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -424,9 +424,9 @@ $pref['fgal_enable_auto_indexing'] =  'y';
 
 
 # imagegals
-$sections['imagegal']['feature'] = 'feature_galleries';
-$sections['imagegal']['key'] = 'galleryId';
-$sections['imagegal']['itemkey'] = 'imageId';
+$sections['galleries']['feature'] = 'feature_galleries';
+$sections['galleries']['key'] = 'galleryId';
+$sections['galleries']['itemkey'] = 'imageId';
 $pref['feature_galleries'] = 'n';
 $pref['feature_gal_batch'] = 'n';
 $pref['feature_gal_slideshow'] = 'n';
@@ -1514,13 +1514,13 @@ if ($feature_freetags == 'y' and isset($section) and isset($sections[$section]))
 			$userid = $userlib->get_user_id($user);
 		}
 		if (isset($here['itemkey']) and isset($_REQUEST[$here['itemkey']])) {
-			$freetaglib->tag_object($userid, $_REQUEST[$here['itemkey']], "$section ".$here['itemkey'], $_POST['addtags']);
+			$freetaglib->tag_object($userid, $_REQUEST[$here['itemkey']], "$section ".$_REQUEST[$here['key']], $_POST['addtags']);
 		} elseif (isset($here['key']) and isset($_REQUEST[$here['key']])) {
 			$freetaglib->tag_object($userid, $_REQUEST[$here['key']], $section, $_POST['addtags']);
 		}
 	}
 	if (isset($here['itemkey']) and isset($_REQUEST[$here['itemkey']])) {
-		$tags = $freetaglib->get_tags_on_object($_REQUEST[$here['itemkey']], "$section ".$here['itemkey']);
+		$tags = $freetaglib->get_tags_on_object($_REQUEST[$here['itemkey']], "$section ".$_REQUEST[$here['key']]);
 	} elseif (isset($here['key']) and isset($_REQUEST[$here['key']])) {
 		$tags = $freetaglib->get_tags_on_object($_REQUEST[$here['key']], $section);
 	} else {
