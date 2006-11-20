@@ -35,7 +35,7 @@ class TikiPhplayers extends TikiLib {
 		global $tikilib;
 		$menu_info = $tikilib->get_menu($idMenu);
 		$channels = $tikilib->list_menu_options($idMenu, 0, -1, 'position_asc', '');
-		$intended = false;
+		$indented = false;
 		$res = '';
 		foreach ($channels["data"] as $cd) {
 			$cd["name"] = tra($cd["name"]);
