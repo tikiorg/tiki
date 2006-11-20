@@ -133,9 +133,9 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 
 {if $feature_fullscreen eq 'y'}
 {if $smarty.session.fullscreen eq 'y'}
-<a href="{$smarty.server.SCRIPT_NAME}{if $smarty.server.QUERY_STRING}?{$smarty.server.QUERY_STRING}&amp;{else}?{/if}fullscreen=n" style="float:right;padding:0 10px;font-size:80%;" class="menulink" id="fullscreenbutton">{tr}Cancel Fullscreen{/tr}</a>
+<a href="{$smarty.server.SCRIPT_NAME}{if $fsquery}?{$fsquery}&amp;{else}?{/if}fullscreen=n" style="float:right;padding:0 10px;font-size:80%;" class="menulink" id="fullscreenbutton">{tr}Cancel Fullscreen{/tr}</a>
 {else}
-<a href="{$smarty.server.SCRIPT_NAME}{if $smarty.server.QUERY_STRING}?{$smarty.server.QUERY_STRING}&amp;{else}?{/if}fullscreen=y" style="float:right;padding:0 10px;font-size:80%;" class="menulink" id="fullscreenbutton">{tr}Fullscreen{/tr}</a>
+<a href="{$smarty.server.SCRIPT_NAME}{if $fsquery}?{$fsquery}&amp;{else}?{/if}fullscreen=y" style="float:right;padding:0 10px;font-size:80%;" class="menulink" id="fullscreenbutton">{tr}Fullscreen{/tr}</a>
 {/if}
 {/if}
 

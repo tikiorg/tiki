@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.328 2006-11-20 04:20:48 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.329 2006-11-20 05:03:25 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1530,6 +1530,7 @@ if ($feature_freetags == 'y' and isset($section) and isset($sections[$section]))
 }
 
 if ($feature_fullscreen == 'y') {
+	$smarty->assign('fsquery',preg_replace('/(\?|&(amp;)?)fullscreen=(n|y)/','',$_SERVER['QUERY_STRING']));
 	if (isset($_GET['fullscreen'])) {
 		if ($_GET['fullscreen'] == 'y') {
 			$_SESSION['fullscreen'] = 'y';
