@@ -5,7 +5,7 @@
 //
 
 function wikiplugin_events_help() {
-	return tra("~np~{~/np~EVENTS(calendarid=>1,maxdays=>365,max=>-1,datetime=>0|1)}{EVENTS} Insert rss feed output into a wikipage");
+	return tra("~np~{~/np~EVENTS(calendarid=>1,maxdays=>365,max=>-1,datetime=>0|1,desc=>0|1)}{EVENTS} Insert rss feed output into a wikipage");
 }
 
 
@@ -26,6 +26,7 @@ function wikiplugin_events($data,$params) {
 	if (isset($calendarid)) { $calendarids=explode("|",$calendarid); }
 	if (!isset($max)) { $max=10; }
 	if (!isset($datetime)) { $datetime=1; }
+	if (!isset($desc)) { $desc=1; }
 	
 
 	$rawcals = $calendarlib->list_calendars();
@@ -84,9 +85,12 @@ function wikiplugin_events($data,$params) {
 		} else {
 			$style="even";
 		}
-		$repl .= '<tr class="'.$style.'"><td width="5%">~np~'.$eventStart.'~/np~<br/>~np~'.$eventEnd.'~/np~</td>';
-		$repl .= '<td><a class="linkmodule" href="tiki-calendar.php?editmode=details&calitemId='.$events[$j]["calitemId"].'"><b>'.$events[$j]["name"].'</b></a><br/>';
-		$repl .= nl2br($events[$j]["description"]).'</td></tr>';
+		$repl .= '<tr class="'.$style.'"><td width="5%">~np~'.$eventStart.'<br/>'.$eventEnd.'~/np~</td>';
+		$repl .= '<td><a class="linkmodule" href="tiki-calendar.php?editmode=details&calitemId='.$events[$j]["calitemId"].'"><b>'.$events[$j]["name"].'</b></a>';
+		if ($desc==1) {
+			$repl .= '<br/>'.nl2br($events[$j]["description"]);
+		}
+		$repl .='</td></tr>';
 	}
 	$repl .= '</table>';
 	return $repl;
