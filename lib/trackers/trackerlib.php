@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.144 2006-11-10 21:31:27 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.145 2006-11-21 17:44:17 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -477,7 +477,7 @@ class TrackerLib extends TikiLib {
 			var_dump($query);
 			die();
 		}
-		if (@$_REQUEST['dbug'] == '1') { header('Content-type: text/plain');var_dump($query,$bindvars);die(); }
+		if (isset($_REQUEST['dbug']) && $_REQUEST['dbug'] == '1') { header('Content-type: text/plain');var_dump($query,$bindvars);die(); }
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
 		$type = '';
