@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2006-11-17 18:32:44 $
-# $Author: sylvieg $
+# $Date: 2006-11-21 01:14:07 $
+# $Author: mose $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -4763,7 +4763,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('limitedGoGroupHome','y'
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_gal_slideshow','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_galleries','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_ranking','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_trackbackpings','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_trackbackpings','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_creator','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_css','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_publisher','');
