@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.668 2006-11-17 21:33:49 mose Exp $
+// CVS: $Id: tikilib.php,v 1.669 2006-11-21 01:20:44 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4513,32 +4513,7 @@ function add_pageview() {
 		    return;
 		}
 	}
-
-	if (isset($GLOBALS['pear_wiki_parser']) && $GLOBALS['pear_wiki_parser'] == 'y') {
-            require_once('Text/Wiki/Tiki.php');
-            $wiki =& new Text_Wiki_Tiki();
-            $wiki->setRenderConf('xhtml', 'wikilink', 'exists_callback', array(&$this, 'page_exists'));
-            $wiki->setRenderConf('xhtml', 'wikilink', 'view_url', 'tiki-index.php?page=');
-            $wiki->setRenderConf('xhtml', 'wikilink', 'new_url', 'tiki-editpage.php?page=');
-            $wiki->setRenderConf('xhtml', 'table', 'css_table', 'wikitable');
-            $wiki->setRenderConf('xhtml', 'table', 'css_td', 'wikicell');
-            $wiki->setRenderConf('xhtml', 'image', 'base', '');
-            $wiki->setRenderConf('xhtml', 'image', 'url_base', '');
-            $wiki->setRenderConf('xhtml', 'smiley', 'prefix', 'img/smiles/icon_');
-            $wiki->setRenderConf('xhtml', 'smiley', 'extension', '.gif');
-
-            $wiki->setParseConf('image', 'popupLinks', $this->get_preference('popupLinks', 'n'));
-
-            $wiki->setFormatConf('Xhtml', 'translate', false);
-            $extwiki = array();
-            $extwikiSth = $this->query('SELECT `extwiki`, `name` FROM `tiki_extwiki`');
-            while ($rec = $extwikiSth->fetchRow()) {
-                $extwiki[$rec['name']] = str_replace('$page', '%s', $rec['extwiki']);
-            }
-            $wiki->setRenderConf('xhtml', 'interwiki', 'sites', $extwiki);
-            return $wiki->transform($data, 'Xhtml');
-        }
-
+	
 	global $page_regex;
 
 	global $slidemode;
