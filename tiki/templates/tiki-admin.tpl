@@ -19,8 +19,10 @@ Add a value in first check when you create a new admin page. *}
 {/if}
 {include file="tiki-admin-include-$include.tpl"}
 
-<br style="clear:both" /><br />
-<div class="cbox">
+<br style="clear:both" />
+<span class="button2"><a href="#" onclick="flip('morelinks');return false;" class="linkbut">More Links</a></span><br />
+
+<div class="cbox" id="morelinks" style="display:{if isset($smarty.session.tiki_cookie_jar.show_morelinks) and $smarty.session.tiki_cookie_jar.show_morelinks eq 'y'}block{else}none{/if};">
 <div class="cbox-title">{tr}Crosslinks to other features and settings{/tr}</div>
 <div class="cbox-data">
 {tr}Other sections{/tr}:<br />
