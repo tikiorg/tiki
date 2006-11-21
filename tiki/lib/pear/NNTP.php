@@ -18,7 +18,7 @@
 // |                                                                      |
 // +----------------------------------------------------------------------+
 //
-// $Id: NNTP.php,v 1.1 2003-08-07 01:53:07 rossta Exp $
+// $Id: NNTP.php,v 1.2 2006-11-21 20:17:53 sylvieg Exp $
 
 require_once 'PEAR.php';
 
@@ -473,8 +473,8 @@ class Net_NNTP extends PEAR
 
         $this->command("LIST NEWSGROUPS");
         foreach($this->_getData() as $line) {
-            preg_match("/^(.*?)\s(.*?$)/",$line,$matches);
-            $groups[$matches[1]]["desc"] = $matches[2];
+            if (preg_match("/^(.*?)\s(.*?$)/",$line,$matches))
+            	$groups[$matches[1]]["desc"] = $matches[2];
         }
         return $groups;
     }
