@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.28 2006-11-12 02:47:05 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.29 2006-11-21 01:27:46 mose Exp $
 
 Smarty style by mose@tikiwiki.org
 
@@ -163,25 +163,24 @@ textarea.small {
 #tiki-top .date {
 	color: #9b410e;
 }
-
+#tiki-midtbl {
+	width : 100%;
+}
 #tiki-subtop {
 	background-color: #9b410e;
 	color: #ffffff;
 }
-
 #leftcolumn {
 	width: 170px;
 	background-color: #f0ead8;
 }
-#leftcolumn table {
+#rightcolumn {
 	width: 170px;
-}
-.vertline {
-	width: 2px;
 	background-color: #f0ead8;
-	background-image: url('smartiki/checkerboard-orange.gif');
 }
-
+#tiki-center {
+	margin : 0 20px;
+}
 div#debugconsole {
   position: absolute;
   background-color: #8CACBB;
