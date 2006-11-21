@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.114 2006-11-20 02:32:26 bluestrain Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.115 2006-11-21 14:41:30 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -15,7 +15,6 @@ $tikifeedback = array();
 
 if ($tiki_p_admin != 'y') {
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -90,6 +89,7 @@ $crumbs[] = new Breadcrumb('Administration',
                               'Admin+Home',
                               'Help on Configuration Sections');
 
+$adminPage = '';
 if (isset($_REQUEST["page"])) {
 	$adminPage = $_REQUEST["page"];
 	$helpUrl='';
@@ -247,6 +247,7 @@ $smarty->assign_by_ref('tikifeedback', $tikifeedback);
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 // Display the template
+$smarty->assign('adminpage', $adminPage);
 $smarty->assign('mid', 'tiki-admin.tpl');
 if(isset($helpUrl)) $smarty->assign_by_ref('sectionhelp', $helpUrl);
 if(isset($description)) $smarty->assign('description', $description);
