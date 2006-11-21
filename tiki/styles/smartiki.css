@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.29 2006-11-21 01:27:46 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.30 2006-11-21 02:13:26 mose Exp $
 
 Smarty style by mose@tikiwiki.org
 
@@ -40,27 +40,12 @@ em {
 }
 a {
 	text-decoration: none;
-	color: #424242;
+	color: #994242;
 }
 a:hover {
+	text-decoration: underline;
 	color: #000000;
 }
-a.menuWhite {
-	font-size: 80%;
-	color: #ffffff;
-}
-
-a.menuBlack {
-	font-size: 80%;
-	color: #000000;
-}
-
-.newsDate {
-	font-size: 85%;
-	font-style: italic;
-	color: #9b410e;
-}
-
 pre,code,tt {
 	font-family: "andale mono", "monotype.com", "courier new", courier, monospace;
 	font-size: 90%;
@@ -145,10 +130,7 @@ textarea.small {
 	background-color: #E0E0E0
 }
 
-.memberbar {
-}
-
-#tiki-bottom {
+#tiki-bot {
 	background-color: #f0c040;
 	padding: 2px 0px 2px 0px;
 	border-top: 1px solid #9b410e;
@@ -173,10 +155,12 @@ textarea.small {
 #leftcolumn {
 	width: 170px;
 	background-color: #f0ead8;
+	border-right : 1px solid #dcb;
 }
 #rightcolumn {
 	width: 170px;
 	background-color: #f0ead8;
+	border-left : 1px solid #dcb;
 }
 #tiki-center {
 	margin : 0 20px;
@@ -214,12 +198,13 @@ div.box-title {
   color: #000000;
   overflow: hidden;
 	font-weight: bold;
-	margin-bottom: 7px;
+	margin : 0 6px 3px 6px;
 	border-bottom: 1px solid #e0dac8;
 }
 
 /* And this is the data */
 div.box-data {
+	margin : 0 6px 0 6px;
   overflow: hidden;
   color: black;
 }
@@ -229,14 +214,8 @@ div.box-data {
 /* Separators are used to sepparate menu areas in the application menu and user created menus*/
 div.separator {
 	margin-top: 5px;
+	font-weight : bold;
 }
-
-
-/* Links to extend/collapse menus */
-.separator { text-decoration: none; }
-
-/* Links to collapse menus for example the main menu can be completely collapsed*/
-.flip {text-decoration: none;}
 
 span.user-box-text {
   color: black;
@@ -1791,6 +1770,7 @@ div#rules-copy-panel {
 	display: none;
 }
 TABLE.admin { 
+	width : 100%;
 }
 .admin tbody tr {
 	background-color: none;
