@@ -800,11 +800,11 @@ class CalendarLib extends TikiLib {
 			$cond = $cond." and `calendarId` = ? ";
 			$bindvars += array($calendarId);
 		}
-		$cond .= " and `end` > (unix_timestamp(now()))";
+		$cond .= " and `end` >= (unix_timestamp(now()))";
 		if($maxDays > 0)
 		{
 			$maxSeconds = ($maxDays * 24 * 60 * 60);
-			$cond .= " and `end` < (unix_timestamp(now())) +".$maxSeconds;
+			$cond .= " and `end` <= (unix_timestamp(now())) +".$maxSeconds;
 		}
 		$query = "select `start`, `end`, `name`, `description`, `calitemId`, `calendarId`, `user`, `lastModif` from `tiki_calendar_items` where 1=1 ".$cond." order by ".$this->convert_sortmode($order);
 
