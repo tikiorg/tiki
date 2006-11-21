@@ -13,7 +13,7 @@
 {cycle values="odd,even" print=false}
 {foreach from=$groups key=group item=item}
 <tr>
-  <td class="{cycle advance=false}"><a class="link" href="tiki-newsreader_news.php?server={$info.server}&amp;port={$info.port}&amp;username={$info.username}&amp;password={$info.password}&amp;group={$group}&amp;offset=0&amp;serverId={$serverId}&amp;serverId={$serverId}">{$group}</a></td>
+  <td class="{cycle advance=false}"><a class="link" href="tiki-newsreader_news.php?server={$info.server}&amp;port={$info.port}{if !empty($info.username)}&amp;username={$info.username}{/if}{if !empty($info.password)}&amp;password={$info.password}{/if}&amp;group={$group}&amp;offset=0&amp;serverId={$serverId}&amp;serverId={$serverId}">{$group}</a></td>
   <td style="text-align:right;" class="{cycle advance=false}">{if isset($item.last) and isset($item.first)}{math equation="1+x-y" x=$item.last y=$item.first}{/if}</td>
   <td class="{cycle}">{$item.desc}</td>
 </tr>
