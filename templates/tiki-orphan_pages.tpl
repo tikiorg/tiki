@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-orphan_pages.tpl,v 1.18 2005-06-16 20:11:08 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-orphan_pages.tpl,v 1.19 2006-11-21 14:45:18 mose Exp $ *}
 
 <h1><a href="tiki-orphan_pages.php" class="pagetitle">{tr}Orphan Pages{/tr}</a></h1>
 <table class="findtable">
@@ -70,7 +70,7 @@
 	<td class="{cycle advance=false}">{$listpages[changes].lastModif|tiki_short_datetime}</td>
 {/if}
 {if $wiki_list_creator eq 'y'}
-	<td class="{cycle advance=false}">{$listpages[changes].creator|userlink}</td>
+	<td class="{cycle advance=false}">{if isset($listpages[changes].creator)}{$listpages[changes].creator|userlink}{/if}&nbsp;</td>
 {/if}
 
 {if $wiki_list_user eq 'y'}
