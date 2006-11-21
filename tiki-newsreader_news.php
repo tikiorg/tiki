@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-newsreader_news.php,v 1.19 2005-05-18 10:58:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-newsreader_news.php,v 1.20 2006-11-21 20:32:24 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -30,13 +30,16 @@ if ($tiki_p_newsreader != 'y') {
 	die;
 }
 
-if ((!isset($_REQUEST['server'])) || (!isset($_REQUEST['port']))
-	|| (!isset($_REQUEST['username'])) || (!isset($_REQUEST['password'])) || (!isset($_REQUEST['group']))) {
+if ((!isset($_REQUEST['server'])) || (!isset($_REQUEST['port'])) || (!isset($_REQUEST['group']))) {
 	$smarty->assign('msg', tra("Missing information to read news (server,port,username,password,group) required"));
 
 	$smarty->display("error.tpl");
 	die;
 }
+if (!isset($_REQUEST['username']))
+	$_REQUEST['username'] = '';
+if (!isset($_REQUEST['password']))
+	$_REQUEST['password'] = '';
 
 $smarty->assign('server', $_REQUEST['server']);
 $smarty->assign('port', $_REQUEST['port']);
