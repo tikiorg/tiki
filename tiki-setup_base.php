@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.113 2006-11-21 15:23:45 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.114 2006-11-22 00:26:49 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -370,49 +370,56 @@ if (isset($_REQUEST['highlight']) || (isset($feature_referer_highlight) && $feat
  * @param $lg - language - if not specify = global current language
  */
 function tra($content, $lg='') {
-    global $lang_use_db;
-    global $language;
-    if ($lang_use_db != 'y') {
-        if ($lg == "" || $lg == $language) {
-           global $lang;
-	      include_once("lang/$language/language.php");
-        }
-        else
-           include ("lang/$lg/language.php");
-        if ($content) {
-            if (isset($lang[$content])) {
-                return $lang[$content];
-            } else {
-                return $content;
-            }
-        }
-    } else {
-        global $tikilib,$multilinguallib;
-	$tag=isset($multilinguallib)?$multilinguallib->getInteractiveTag($content):"";
-        $query = "select `tran` from `tiki_language` where `source`=? and `lang`=?";
-        $result = $tikilib->query($query, array($content,$lg == ""? $language: $lg));
-        $res = $result->fetchRow();
-
-        if (!$res)
-            return $content.$tag;
-
-        if (!isset($res["tran"])) {
-            global $record_untranslated;
-
-            if ($record_untranslated == 'y') {
-                $query = "insert into `tiki_untranslated` (`source`,`lang`) values (?,?)";
-
-                //No eror checking here
-                $tikilib->query($query, array($content,$language),-1,-1,false);
-            }
-
-            return $content.$tag;
-        }
-
-	
-        return $res["tran"].$tag;
-    }
+	global $lang_use_db;
+	global $language;
+	if ($content) {
+		if ($lang_use_db != 'y') {
+			global $lang;
+				if ($lg != "") {
+					if (is_file("lang/$lg/language.php")) {
+						$l = $lg;
+					} else {
+						$l = $language;
+					}
+				} elseif (is_file("lang/$language/language.php")) {
+					$l = $language;
+				} else {
+					$l = false;
+				}
+				if ($l) {
+					include_once("lang/$l/language.php");
+					if (is_file("lang/$l/custom.php")) {
+						include_once("lang/$l/custom.php");
+					}
+				}
+			if (isset($lang[$content])) {
+				return $lang[$content];
+			} else {
+				return $content;
+			}
+		} else {
+			global $tikilib,$multilinguallib;
+			$tag=isset($multilinguallib)?$multilinguallib->getInteractiveTag($content):"";
+			$query = "select `tran` from `tiki_language` where `source`=? and `lang`=?";
+			$result = $tikilib->query($query, array($content,$lg == ""? $language: $lg));
+			$res = $result->fetchRow();
+			if (!$res) {
+				return $content.$tag;
+			}
+			if (!isset($res["tran"])) {
+				global $record_untranslated;
+				if ($record_untranslated == 'y') {
+					$query = "insert into `tiki_untranslated` (`source`,`lang`) values (?,?)";
+					$tikilib->query($query, array($content,$language),-1,-1,false);
+				}
+				return $content.$tag;
+			}
+			$res["tran"] = preg_replace("~&lt;br(\s*/)&gt;~","<br$1>",$res["tran"]);
+			return $res["tran"].$tag;
+		}
+	}
 }
+
 /* \brief  substr with a utf8 string - works only with $start and $length positive or nuls
  * This function is the same as substr but works with multibyte
  * In a multybyte sequence, the first byte of a multibyte sequence that represents a non-ASCII character is always in the range 0xC0 to 0xFD
