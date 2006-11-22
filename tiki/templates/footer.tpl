@@ -1,4 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/footer.tpl,v 1.7 2006-10-01 13:49:09 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/footer.tpl,v 1.8 2006-11-22 01:42:41 mose Exp $ *}
+
+{if count($errors)}
+<span class="button2"><a href="#" onclick="flip('errors');return false;" class="linkbut">{tr}Show php error messages{/tr}</a></span><br />
+<div id="errors" style="display:{if isset($smarty.session.tiki_cookie_jar.show_errors) and $smarty.session.tiki_cookie_jar.show_errors eq 'y'}block{else}none{/if};">
+{foreach item=err from=$errors}{$err}{/foreach}
+</div>
+{/if}
 
 {if $tiki_p_admin eq 'y' and $feature_debug_console eq 'y'}
   {* Include debugging console. Note it shoudl be processed as near as possible to the end of file *}
