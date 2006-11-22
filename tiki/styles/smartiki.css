@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.30 2006-11-21 02:13:26 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.31 2006-11-22 02:34:36 mose Exp $
 
 Smarty style by mose@tikiwiki.org
 
@@ -54,7 +54,10 @@ pre,code,tt {
 pre.code {
 	background-color: #f0f0f0;
 }
-
+h1,h2,h3,h4 {
+	margin : 0;
+	margin-bottom : 2px;
+}
 h1, .pagetitle {
 	font-family: verdana,arial,helvetica,sans-serif;
 	font-size: 140%;
@@ -64,21 +67,21 @@ h1, .pagetitle {
 
 h2 {
 	font-family: verdana,arial,helvetica,sans-serif;
-	font-size: 125%;
+	font-size: 140%;
 	font-weight: bold;
 	color: #000000;
 }
 
 dt,h3 {
 	font-family: verdana,arial,helvetica,sans-serif;
-	font-size: 110%;
+	font-size: 125%;
 	font-weight: bold;
 	color: #000000;
 }
 
 h4 {
 	font-family: verdana,arial,helvetica,sans-serif;
-	font-size: 100%;
+	font-size: 110%;
 	font-weight: bold;
 	color: #000000;
 }
@@ -209,7 +212,6 @@ div.box-data {
   color: black;
 }
 
-
 /* Menus */
 /* Separators are used to sepparate menu areas in the application menu and user created menus*/
 div.separator {
@@ -337,6 +339,10 @@ tr.formcolor table td {
 	padding: 1px 20px 1px 3px;
 }
 
+table.normal {
+	width : 100%;
+	_width : auto;
+}
 .normal tr.formcolor:first-child td {
 	border-top: 0;
 }
@@ -595,8 +601,7 @@ td.wikicell {
 /* Text in wiki pages is displayed using the following style */
 div.wikitext {
   background: white;
-  padding: 4px;
-  margin: 2px;
+  padding: 5px;
   clear: both;
 }
 .wikitopline table { width: 100%; }
