@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_articles.php,v 1.24 2006-08-29 20:19:02 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_articles.php,v 1.25 2006-11-22 03:15:31 franck Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -112,7 +112,7 @@ if (!isset($_REQUEST["categId"])) {
 
 $smarty->assign('find_topic', $_REQUEST["topic"]);
 $smarty->assign('find_type', $_REQUEST["type"]);
-$smarty->assign('categId', $_REQUEST["categId"]);
+$smarty->assign('find_categId', $_REQUEST["categId"]);
 
 
 
@@ -146,6 +146,9 @@ $smarty->assign_by_ref('topics', $topics);
 
 $types = $artlib->list_types();
 $smarty->assign_by_ref('types', $types);
+
+$categ = $categlib->get_all_categories_ext();
+$smarty->assign_by_ref('categ', $categ);
 
 $section = 'cms';
 include_once ('tiki-section_options.php');

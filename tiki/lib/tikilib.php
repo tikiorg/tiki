@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.669 2006-11-21 01:20:44 mose Exp $
+// CVS: $Id: tikilib.php,v 1.670 2006-11-22 03:15:31 franck Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2474,10 +2474,9 @@ function add_pageview() {
 	    	from `tiki_articles`, `tiki_article_types`$fromSql
 	    	$mid $mid2 order by ".$this->convert_sortmode($sort_mode);
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
-	$query_cant = "select count(*) from  `tiki_articles`, `tiki_article_types` $fromSql $mid $mid2";
+	$query_cant = "select count(*) from  `tiki_articles`, `tiki_article_types`$fromSql $mid $mid2";
 	$cant = $this->getOne($query_cant,$bindvars);
 	$ret = array();
-
 	while ($res = $result->fetchRow()) {
 	    if ($res['topicId'] != 0 && $userlib->object_has_one_permission($res['topicId'], 'topic')) {// if no topic or if topic has no special perm don't have to check for topic perm
 		$add=$this->user_has_perm_on_object($user,$res['topicId'],'topic','tiki_p_topic_read');
