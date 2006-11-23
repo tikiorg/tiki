@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.670 2006-11-22 03:15:31 franck Exp $
+// CVS: $Id: tikilib.php,v 1.671 2006-11-23 18:35:01 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -6659,34 +6659,6 @@ if (!$simple_wiki) {
 	    return $ret;
 	}
 
-	function list_sections() {
-		return array(
-			'wiki',
-			'galleries',
-			'file_galleries',
-			'cms',
-			'blogs',
-			'forums',
-			'chat',
-			'categories',
-			'games',
-			'faqs',
-			'html_pages',
-			'maps',
-			'quizzes',
-			'surveys',
-			'webmail',
-			'trackers',
-			'featured_links',
-			'directory',
-			'user_messages',
-			'newsreader',
-			'mytiki',
-			'calendar',
-			'workflow',
-			'charts'
-		);
-	}
 	function other_value_in_tab_line($tab, $valField1, $field1, $field2) {
 		foreach ($tab as $line) {
 			if ($line[$field1] == $valField1)
