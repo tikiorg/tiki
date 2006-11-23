@@ -146,7 +146,6 @@ if ($offset > 0) {
 
 $smarty->assign_by_ref('items', $items["data"]);
 
-$sections = $tikilib->list_sections();
 $smarty->assign('sections', $sections);
 ask_ticket('admin-banning');
 

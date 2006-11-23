@@ -1,4 +1,4 @@
-{* $Id: tiki-admin_banning.tpl,v 1.24 2006-09-30 14:06:15 ohertel Exp $ *}
+{* $Id: tiki-admin_banning.tpl,v 1.25 2006-11-23 17:50:31 mose Exp $ *}
 
 {* this script (un/)checks all checkboxes with id 'banning-section' *}
 <script type="text/javascript">
@@ -60,27 +60,14 @@
 		</div>
 
 		<table><tr>
-		{section name=ix loop=$sections}
+		{foreach key=sec name=ix item=it from=$sections}
         <td class="formcolor">
-			<input type="checkbox" name="section[{$sections[ix]}]" id="banning-section" {if in_array($sections[ix],$info.sections)}checked="checked"{/if} /> <label for="banning-section">{tr}{$sections[ix]}{/tr}</label>
+			<input type="checkbox" name="section[{$sec}]" id="banning-section" {if in_array($sec,$info.sections)}checked="checked"{/if} /> <label for="banning-section">{tr}{$sec}{/tr}</label>
         </td>
-        {* see if we should go to the next row *}
-        {if not ($smarty.section.ix.rownum mod 3)}
-                {if not $smarty.section.ix.last}
-                        </tr><tr>
-                {/if}
+        {if $smarty.foreach.ix.index mod 2}
+				</tr><tr>
         {/if}
-        {if $smarty.section.ix.last}
-                {* pad the cells not yet created *}
-                {math equation = "n - a % n" n=3 a=$data|@count assign="cells"}
-                {if $cells ne $cols}
-                {section name=pad loop=$cells}
-                        <td>&nbsp;</td>
-                {/section}
-                {/if}
-                </tr>
-        {/if}
-    	{/section}
+    	{/foreach}
 		</table>
 	</td>
 </tr>
