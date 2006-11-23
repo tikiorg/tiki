@@ -32,9 +32,9 @@
 <tr>
   <td class="formcolor">
     <select name="section">
-      {section name=ix loop=$sections}
-      <option value="{$sections[ix]|escape}">{$sections[ix]}</option>
-      {/section}
+      {foreach key=sec item=ix from=$sections}
+      <option value="{$sec|escape}">{$sec}</option>
+      {/foreach}
     </select>
   </td>
   <td class="formcolor">

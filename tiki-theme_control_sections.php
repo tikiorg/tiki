@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-theme_control_sections.php,v 1.11 2005-10-03 17:21:43 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-theme_control_sections.php,v 1.12 2006-11-23 18:26:46 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -44,10 +44,7 @@ if (isset($_REQUEST["delete"])) {
 $channels = $tcontrollib->tc_list_sections(0, -1, 'section_asc', '');
 $smarty->assign_by_ref('channels', $channels["data"]);
 
-$sections = $tikilib->list_sections();
-
-sort ($sections);
-$smarty->assign('sections', $sections);
+$smarty->assign('sections', $sections_enabled);
 
 ask_ticket('tc-sections');
 

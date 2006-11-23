@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.333 2006-11-23 17:48:44 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.334 2006-11-23 18:26:46 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -787,6 +787,7 @@ $pref['rssfeed_publisher'] = '';
 # maps
 $sections['maps']['feature'] = 'feature_maps';
 $sections['maps']['key'] = 'mapId';
+$sections['maps']['itemkey'] = '';
 $pref['feature_maps'] = 'n';
 $pref['map_path'] = '';
 $pref['default_map'] = '';
@@ -879,6 +880,7 @@ $pref['search_syll_age'] = '48';
 # categories
 $sections['categories']['feature'] = 'feature_categories';
 $sections['categories']['key'] = 'categId';
+$sections['categories']['itemkey'] = '';
 $pref['feature_categories'] = 'n';
 $pref['feature_categoryobjects'] = 'n';
 $pref['feature_categorypath'] = 'n';
@@ -886,11 +888,13 @@ $pref['feature_categorypath'] = 'n';
 # games
 $sections['games']['feature'] = 'feature_games';
 $sections['games']['key'] = 'gameId';
+$sections['games']['itemkey'] = '';
 $pref['feature_games'] = 'n';
 
 # html pages
 $sections['html_pages']['feature'] = 'feature_html_pages';
 $sections['html_pages']['key'] = 'pageId';
+$sections['html_pages']['itemkey'] = '';
 $pref['feature_html_pages'] = 'n';
 
 # contact & mail
@@ -1092,6 +1096,14 @@ foreach ($preferences as $name => $val) {
 	$$name = $val;
 	$smarty->assign("$name", $val);
 }
+// ******************************************************************************************
+$sections_enabled = array();
+foreach ($sections as $sec=>$dat) {
+	if ($$dat['feature'] == 'y') {
+		$sections_enabled[$sec] = $dat;
+	}
+}
+ksort($sections_enabled);
 // ******************************************************************************************
 
 $area = 'tiki';
