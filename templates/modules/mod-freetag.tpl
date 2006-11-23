@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-freetag.tpl,v 1.3 2006-11-20 00:37:51 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-freetag.tpl,v 1.4 2006-11-23 00:41:32 mose Exp $ *}
 
 {if $feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
 {eval var="{tr}Folksonomy{/tr}" assign="tpl_module_title"}
@@ -13,7 +13,7 @@
 </div>
 {/if}
 
-<form name="addTags" method="post" action="{$smarty.request.php_self}">
+<form name="addTags" method="post" action="{$smarty.server.REQUEST_URI}">
 <input type="text" name="addtags" maxlength="40" />
 <input type="submit" name="Add" value="Add" />
 </form>
