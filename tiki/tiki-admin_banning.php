@@ -146,7 +146,7 @@ if ($offset > 0) {
 
 $smarty->assign_by_ref('items', $items["data"]);
 
-$smarty->assign('sections', $sections);
+$smarty->assign('sections', $sections_enabled);
 ask_ticket('admin-banning');
 
 // disallow robots to index page:
