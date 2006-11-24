@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.145 2006-11-21 17:44:17 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.146 2006-11-24 17:30:42 hangerman Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -330,7 +330,7 @@ class TrackerLib extends TikiLib {
 
 		while ($res2 = $result->fetchrow()) {
 			$id = $res2["fieldId"];
-			$res["$id"] = $res2["value"];
+			$res["$id".$res2["lang"].""] = $res2["value"];
 		}
 
 		return $res;
@@ -350,9 +350,21 @@ class TrackerLib extends TikiLib {
 
 	/* experimental shared */
 	function get_item_value($trackerId,$itemId,$fieldId) {
-		$query = "select ttif.`value` from `tiki_tracker_items` tti, `tiki_tracker_fields` ttf, `tiki_tracker_item_fields` ttif ";
-		$query.= " where tti.`trackerId`=ttf.`trackerId` and ttif.`fieldId`=ttf.`fieldId` and ttf.`trackerId`=? and ttf.`fieldId`=? and ttif.`itemId`=?";
-		return $this->getOne($query,array((int) $trackerId,(int)$fieldId,(int)$itemId));
+		$basequery = "select ttif.`value` from `tiki_tracker_items` tti, `tiki_tracker_fields` ttf, `tiki_tracker_item_fields` ttif where tti.`trackerId`=ttf.`trackerId` and ttif.`fieldId`=ttf.`fieldId` and ttf.`trackerId`=? and ttf.`fieldId`=? and ttif.`itemId`=? ";
+		if ($this->is_multilingual($fieldId)=='y') {
+	        	global $language;
+	        	$query= "$basequery  and ttif.`lang`=?";
+			$res=$this->getOne($query,array((int) $trackerId,(int)$fieldId,(int)$itemId,(string)$language));
+			// Check if a translation was given
+			if (isset($res)&& $res!='' )
+		  	return $res;
+		}
+		//Fields is not multilingual
+	       $query = $basequery;
+    	       return $this->getOne($query,array((int) $trackerId,(int)$fieldId,(int)$itemId));
+	
+	
+		
 	}
 
 	/* experimental shared */
@@ -369,14 +381,31 @@ class TrackerLib extends TikiLib {
 
 	function get_all_items($trackerId,$fieldId,$status='o') {
 		global $cachelib;
+		global $language;
 		$sort_mode = "value_asc";
 		$cache = md5('trackerfield'.$fieldId.$status);
+		if ($this->is_multilingual($fieldId) == 'y') { 
+                global $multilinguallib;
+                include_once('lib/multilingual/multilinguallib.php');
+                $available_languages=$multilinguallib->getSystemLanguage();
+                $cache = md5('trackerfield'.$fieldId.$status.$language);
+                }else unset($available_languages);
+                
+		
 		if (!$cachelib->isCached($cache)) {
 			$sts = preg_split('//', $status, -1, PREG_SPLIT_NO_EMPTY);
-			$mid = " and (".implode('=? or ',array_fill(0,count($sts),'tti.`status`'))."=?) ";
-			$bindvars = array_merge(array((int)$fieldId),$sts);
+			$mid = "  (".implode('=? or ',array_fill(0,count($sts),'tti.`status`'))."=?) ";
+			$fieldIdArray = preg_split('/\|/', $fieldId, -1, PREG_SPLIT_NO_EMPTY);
+			$mid.= " and (".implode('=? or ',array_fill(0,count($fieldIdArray),'ttif.`fieldId`'))."=?) ";
+			if ($this->is_multilingual($fieldId) == 'y'){
+			   $mid.=" and ttif.`lang`=?";
+			   $bindvars = array_merge($sts,$fieldIdArray,array((string)$language));
+			}else {
+			   $bindvars = array_merge($sts,$fieldIdArray);
+			   }
+			
 			$query = "select ttif.`itemId` , ttif.`value` FROM `tiki_tracker_items` tti,`tiki_tracker_item_fields` ttif ";
-			$query.= " WHERE ttif.`fieldId` =? $mid and  tti.`itemId` = ttif.`itemId` order by ".$this->convert_sortmode($sort_mode);
+			$query.= " WHERE  $mid and  tti.`itemId` = ttif.`itemId` order by ".$this->convert_sortmode($sort_mode);
 			$result = $this->query($query,$bindvars);
 			$ret = array();
 			while ($res = $result->fetchRow()) {
@@ -388,6 +417,15 @@ class TrackerLib extends TikiLib {
 		} else {
 			return unserialize($cachelib->getCached($cache));
 		}
+	}
+	
+	function get_all_tracker_items($trackerId){
+	     $query="select distinct(`itemId`) from `tiki_tracker_items` where`trackerId`=?";
+	     $result=$result = $this->query($query,array((int)$trackerId));
+	     while ($res = $result->fetchRow()) {
+				$ret=$res['itemId'];
+	     }
+	     return $ret;
 	}
 
 	function getSqlStatus($status, &$mid, &$bindvars) {
@@ -413,7 +451,7 @@ class TrackerLib extends TikiLib {
 	
 	/* experimental shared */
 	function list_items($trackerId, $offset, $maxRecords, $sort_mode, $listfields, $filterfield='', $filtervalue='', $status = '', $initial = '',$exactvalue='',$numsort=false) {
-		global $tiki_p_view_trackers_pending,$tiki_p_view_trackers_closed,$tiki_p_admin_trackers, $feature_categories;
+		global $tiki_p_view_trackers_pending,$tiki_p_view_trackers_closed,$tiki_p_admin_trackers, $feature_categories,$language;
 		if (isset($_REQUEST['dbg'])) { $dbg = true; } else { $dbg = false; }
 		$cat_table = '';
 		$trackerId = (int) $trackerId;
@@ -486,18 +524,10 @@ class TrackerLib extends TikiLib {
 			$fields = array();
 			$opts = array();
 			$itid = $res["itemId"];
-			// Commented out because it incorrectly prevents every non-admin user
-			// from seeing the content of fields whose 'isPublic' flag is not set.
-			// This flag should only be used for the TRACKERLIST plugin.
-			//if ($tiki_p_admin_trackers == 'y') {
-				$mid = "";
-				$bindvars = array((int) $res["itemId"]);
-			//} else {
-			//	$mid = "`isPublic`=? and ";
-			//	$bindvars = array('y',(int) $res["itemId"]);
-			//}
+			$bindvars = array((string)$language,(int) $res["itemId"]);
+			$mid = " (`lang`=? or `lang` is null or `lang`='') and ";
 			$query2 = "select ttf.`fieldId`, `value`,`isPublic` from `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf
-				where ttif.`fieldId`=ttf.`fieldId` and $mid `itemId`=? order by `position` asc";
+				where ttif.`fieldId`=ttf.`fieldId` and $mid `itemId`=? order by `position` asc,lang desc";
 			$result2 = $this->query($query2,$bindvars);
 			$last = array();
 			$res2 = array();
@@ -646,7 +676,7 @@ class TrackerLib extends TikiLib {
 
 		$now = date("U");
 
-		if ($itemId) {
+		if ($itemId && $itemId!=0) {
 			$oldStatus = $this->getOne("select `status` from `tiki_tracker_items` where `itemId`=?", array($itemId));
 			if ($status) {
 				$query = "update `tiki_tracker_items` set `status`=?,`lastModif`=? where `itemId`=?";
@@ -730,8 +760,8 @@ class TrackerLib extends TikiLib {
 					}
 				}
 				// ---------------------------
-
-				$fieldId = $ins_fields["data"][$i]["fieldId"];
+                if (isset($ins_fields["data"][$i]["fieldId"]))
+				   $fieldId = $ins_fields["data"][$i]["fieldId"];
 				if (isset($ins_fields["data"][$i]["name"])) {
 					$name = $ins_fields["data"][$i]["name"];
 				} else {
@@ -787,7 +817,31 @@ class TrackerLib extends TikiLib {
 						$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
 						$this->query($query,array((int) $new_itemId,(int) $fieldId,''));
 					}
-				} else {
+				} elseif (($ins_fields["data"][$i]["isMultilingual"] == 'y') && ($ins_fields["data"][$i]["type"] =='a' || $ins_fields["data"][$i]["type"]=='t')){
+				 
+                                global $multilinguallib;
+                                include_once('lib/multilingual/multilinguallib.php');
+                                if (!isset($available_languages))
+                                $available_languages=$multilinguallib->getSystemLanguage();
+                              
+                
+				  foreach ($ins_fields["data"][$i]['lingualvalue'] as $linvalue) 
+	                                if ($itemId) {
+	                                        $result = $this->query('select `value` from `tiki_tracker_item_fields` where `itemId`=? and `fieldId`=? and `lang`=?',array((int) $itemId,(int) $fieldId,(string)$linvalue['lang']));
+						if ($row = $result->fetchRow()){
+                                                        $query = "update `tiki_tracker_item_fields` set `value`=? where `itemId`=? and `fieldId`=? and `lang`=?";
+                                                        $result=$this->query($query,array($linvalue['value'],(int) $itemId,(int) $fieldId,(string)$linvalue['lang']));
+                                                        }else{
+                                                            $query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`,`lang`) values(?,?,?,?)";
+                                                            $result=$this->query($query,array((int) $itemId,(int) $fieldId,(string)$linvalue['value'],(string)$linvalue['lang']));
+                                                        }
+                                                        } else {
+                                                        //echo "error in this insert";
+                                                                $query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`,`lang`) values(?,?,?,?)";
+                                                                $this->query($query,array((int) $new_itemId,(int) $fieldId,(string)$linvalue['value'],(string)$linvalue['lang']));
+                                                        }
+				}  
+				else {
 
 					$is_date = (isset($ins_fields["data"][$i]["type"]) and ($ins_fields["data"][$i]["type"] == 'f' or $ins_fields["data"][$i]["type"] == 'j'));
 					$is_visible = !isset($ins_fields["data"][$i]["isHidden"]) || $ins_fields["data"][$i]["isHidden"] == 'n';
@@ -1088,14 +1142,32 @@ class TrackerLib extends TikiLib {
 	function check_field_values($ins_fields, $categorized_fields='') {
 		$mandatory_fields = array();
 		$erroneous_values = array();
-
+        if (isset($ins_fields)&&isset($ins_fields['data']))        
 		foreach($ins_fields['data'] as $f) {
 
 			if (isset($f['isMandatory']) && $f['isMandatory'] == 'y') {
 				if (isset($f['type']) &&  $f['type'] == 'e') {
 					if (!in_array($f['fieldId'], $categorized_fields))
 						$mandatory_fields[] = $f;
-				} elseif (!isset($f['value']) or strlen($f['value']) == 0) {
+				} elseif (isset($f['type']) &&  ($f['type'] == 'a' || $f['type'] == 't') && ($this->is_multilingual($f['fieldId']) == 'y')) {
+                                  global $multilinguallib;
+                                  include_once('lib/multilingual/multilinguallib.php');
+                                  if (!isset($available_languages))
+                                  $available_languages=$multilinguallib->getSystemLanguage();
+				    //Check recipient
+				    if (isset($f['lingualvalue']) ) {
+				        foreach ($f['lingualvalue'] as $val)
+				        foreach ($available_languages as $num=>$lang)
+				            //Check if trad is empty
+				            if (!isset($val['lang']) ||!isset($val['value']) ||(($val['lang']==$lang) && strlen($val['value'])==0))
+				            $mandatory_fields[] = $f;
+				      
+				    }else 
+				    {
+				       $mandatory_fields[] = $f;
+				    }
+				}elseif (!isset($f['value']) or strlen($f['value']) == 0) {
+				
 					$mandatory_fields[] = $f;
 				}
 			}
@@ -1274,7 +1346,7 @@ class TrackerLib extends TikiLib {
 	}
 
 
-	function replace_tracker_field($trackerId, $fieldId, $name, $type, $isMain, $isSearchable, $isTblVisible, $isPublic, $isHidden, $isMandatory, $position, $options, $description='') {
+	function replace_tracker_field($trackerId, $fieldId, $name, $type, $isMain, $isSearchable, $isTblVisible, $isPublic, $isHidden, $isMandatory, $position, $options, $description='',$isMultilingual) {
 		if ($fieldId) {			
 			// -------------------------------------
 			// remove images when needed
@@ -1284,21 +1356,21 @@ class TrackerLib extends TikiLib {
 					$this->remove_field_images( $fieldId );
 				}
 				$query = "update `tiki_tracker_fields` set `name`=? ,`type`=?,`isMain`=?,`isSearchable`=?,
-					`isTblVisible`=?,`isPublic`=?,`isHidden`=?,`isMandatory`=?,`position`=?,`options`=? where `fieldId`=?";
-				$bindvars=array($name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,$isHidden,$isMandatory,(int)$position,$options,(int) $fieldId);
+					`isTblVisible`=?,`isPublic`=?,`isHidden`=?,`isMandatory`=?,`position`=?,`options`=?,`isMultilingual`=? where `fieldId`=?";
+				$bindvars=array($name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,$isHidden,$isMandatory,(int)$position,$options,$isMultilingual,(int) $fieldId);
 			} else {
 				$query = "insert into `tiki_tracker_fields` (`trackerId`,`name`,`type`,`isMain`,`isSearchable`,
-					`isTblVisible`,`isPublic`,`isHidden`,`isMandatory`,`position`,`options`,`fieldId`) values (?,?,?,?,?,?,?,?,?,?,?,?);";
-				$bindvars=array((int) $trackerId,$name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,$isHidden,$isMandatory,(int)$position,$options,(int) $fieldId);
+					`isTblVisible`,`isPublic`,`isHidden`,`isMandatory`,`position`,`options`,`fieldId`,`isMultilingual`) values (?,?,?,?,?,?,?,?,?,?,?,?,?);";
+				$bindvars=array((int) $trackerId,$name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,$isHidden,$isMandatory,(int)$position,$options,(int) $fieldId,$isMultilingual);
 			}
 			$result = $this->query($query, $bindvars);
 		} else {
 			$this->getOne("delete from `tiki_tracker_fields` where `trackerId`=? and `name`=?",
 				array((int) $trackerId,$name),false);
-			$query = "insert into `tiki_tracker_fields`(`trackerId`,`name`,`type`,`isMain`,`isSearchable`,`isTblVisible`,`isPublic`,`isHidden`,`isMandatory`,`position`,`options`,`description`)
-                values(?,?,?,?,?,?,?,?,?,?,?,?)";
+			$query = "insert into `tiki_tracker_fields`(`trackerId`,`name`,`type`,`isMain`,`isSearchable`,`isTblVisible`,`isPublic`,`isHidden`,`isMandatory`,`position`,`options`,`description`,`isMultilingual`)
+                values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-			$result = $this->query($query,array((int) $trackerId,$name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,$isHidden,$isMandatory,$position,$options,$description));
+			$result = $this->query($query,array((int) $trackerId,$name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,$isHidden,$isMandatory,$position,$options,$description,$isMultilingual));
 			$fieldId = $this->getOne("select max(`fieldId`) from `tiki_tracker_fields` where `trackerId`=? and `name`=?",array((int) $trackerId,$name));
 			// Now add the field to all the existing items
 			$query = "select `itemId` from `tiki_tracker_items` where `trackerId`=?";
@@ -1569,6 +1641,13 @@ class TrackerLib extends TikiLib {
 	}
 
 	function get_isMain_value($trackerId, $itemId) {
+	
+	    global $language;
+	    $query = "select i.`value` from `tiki_tracker_item_fields` i, `tiki_tracker_fields` f where f.`trackerId`=? and i.`itemId`=? and f.`fieldId` = i.`fieldId` and f.`isMain`=? and i.`lang`=?";
+		$result = $this->getOne($query, array((int)$trackerId, (int)$itemId, "y",$language));
+		if(isset($result)&&$result!='')
+		  return $result;
+	
 		$query = "select i.`value` from `tiki_tracker_item_fields` i, `tiki_tracker_fields` f where f.`trackerId`=? and i.`itemId`=? and f.`fieldId` = i.`fieldId` and f.`isMain`=?";
 		$result = $this->getOne($query, array((int)$trackerId, (int)$itemId, "y"));
 		return $result;
@@ -1611,6 +1690,19 @@ class TrackerLib extends TikiLib {
 		}
 		return $ret;
 	}
+
+	function is_multilingual($fieldId){
+	         global $feature_multilingual;
+	         if ( $feature_multilingual !='y')
+	           return 'n';
+	         $query = "select `isMultilingual` from `tiki_tracker_fields` where `fieldId`=?";
+	         $res=$this->getOne($query,(int)$fieldId);
+	         if ($res === NULL || $res=='n' || $res=='')
+	           return 'n';
+	         else
+		   return "y";
+	}
+	
 	/* return the values of $fieldIdOut of an item that has a value $value for $fieldId */
 	function get_filtered_item_values($fieldId, $value, $fieldIdOut) {
 		$query = "select ttifOut.`value` from `tiki_tracker_item_fields` ttifOut, `tiki_tracker_item_fields` ttif

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.99 2006-11-10 21:31:23 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.100 2006-11-24 17:30:43 hangerman Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -324,7 +324,8 @@ foreach($xfields["data"] as $i=>$array) {
 				$fields["data"][$i]["value"] = '';
 			}
 			
-		} elseif ($fields["data"][$i]["type"] == 'a' and isset($fields["data"][$i]["options_array"][2]))	{
+		} elseif ($fields["data"][$i]["type"] == 'a' )	{
+		if ( isset($fields["data"][$i]["options_array"][2])){
 			if (isset($_REQUEST["$ins_id"])) {
 				if (isset($fields["data"][$i]["options_array"][3]) and $fields["data"][$i]["options_array"][3] > 0 and strlen($_REQUEST["$ins_id"]) > $fields["data"][$i]["options_array"][3]) {
 					$ins_fields["data"][$i]["value"] = substr($_REQUEST["$ins_id"],0,$fields["data"][$i]["options_array"][3])." (...)";
@@ -342,6 +343,29 @@ foreach($xfields["data"] as $i=>$array) {
 			if (1 or $fields["data"][$i]["options_array"][0])	{
 				$textarea_options = true;
 			} 
+		}	
+		        if ($fields["data"][$i]["isMultilingual"]=='y') {
+		        
+                                  global $multilinguallib;
+                                  include_once('lib/multilingual/multilinguallib.php');
+                                  $available_languages=$multilinguallib->getSystemLanguage();
+                                  $smarty->assign('available_languages',$available_languages);
+                                  
+                                  $ins_fields["data"][$i]['isMultilingual']='y';
+				            //print_r($available_languages);
+				            $compteur=0;
+				            foreach ($available_languages as $num=>$lang){
+				            //Case convert normal -> multilingual
+				            if (!isset($_REQUEST[$ins_id."_".$lang]) && isset($_REQUEST["$fid"]))
+				                $_REQUEST["$fid$lang"]=$_REQUEST["$fid"];
+				            $ins_fields["data"][$i]["lingualvalue"][$num]["lang"] = $lang;
+				            if (isset($_REQUEST[$ins_id."_".$lang]))
+				                $ins_fields["data"][$i]["lingualvalue"][$num]["value"] =     $_REQUEST[$ins_id."_".$lang];
+				            $ins_fields["data"][$i]["lingualpvalue"][$num]["lang"] = $lang;
+				            if (isset($_REQUEST[$ins_id."_".$lang]))
+				                $ins_fields["data"][$i]["lingualpvalue"][$num]["value"] =     $tikilib->parse_data(htmlspecialchars($_REQUEST[$ins_id."_".$lang]));
+					    }
+				        } 
 			
 		} elseif($fields["data"][$i]["type"] == 'y' ) { // country list			
 			if (isset($_REQUEST["$ins_id"])) {			
@@ -393,6 +417,27 @@ foreach($xfields["data"] as $i=>$array) {
 					$ins_fields["data"][$i]["file_name"] = $_FILES["$ins_id"]['name'];
 				}
 			}
+			 if (($fields["data"][$i]["isMultilingual"] == 'y') && $fields["data"][$i]["type"] == 't') {
+			
+		        
+                                  global $multilinguallib;
+                                  include_once('lib/multilingual/multilinguallib.php');
+                                  $available_languages=$multilinguallib->getSystemLanguage();
+                                  $smarty->assign('available_languages',$available_languages); 
+                                  $ins_fields["data"][$i]['isMultilingual']='y';
+				            $compteur=0;
+				            foreach ($available_languages as $num=>$lang){
+				            //Case convert normal -> multilingual
+				            if (!isset($_REQUEST[$ins_id."_".$lang]) && isset($_REQUEST["$fid"]))
+				                $_REQUEST["$fid$lang"]=$_REQUEST["$fid"];
+				            $ins_fields["data"][$i]["lingualvalue"][$num]["lang"] = $lang;
+				            if (isset($_REQUEST[$ins_id."_".$lang]))
+				            $ins_fields["data"][$i]["lingualvalue"][$num]["value"] =     $_REQUEST[$ins_id."_".$lang];
+				            $ins_fields["data"][$i]["lingualpvalue"][$num]["lang"] = $lang;
+				            if (isset($_REQUEST[$ins_id."_".$lang]))
+				            $ins_fields["data"][$i]["lingualpvalue"][$num]["value"] =     $tikilib->parse_data(htmlspecialchars($_REQUEST[$ins_id."_".$lang]));
+					    }
+				        } 
 		}
 	} elseif ($xfields["data"][$i]["type"] == "u" and isset($xfields["data"][$i]["options"]) and $user and $xfields["data"][$i]["options"] == 1 and isset($tracker_info["writerCanModify"]) and $tracker_info["writerCanModify"] == 'y') {
 		// even if field is hidden need to pick up user for perm
@@ -577,7 +622,8 @@ if ($_REQUEST["itemId"]) {
 					if (!isset($cat)) {
 						$cat = $categlib->get_object_categories("tracker ".$_REQUEST["trackerId"],$_REQUEST["itemId"]);
 					}
-					foreach ($cat as $c) {
+					if (isset($cat) && $cat != '')
+					foreach ($cat as $c) { 
 						$ins_fields["data"][$i]["cat"]["$c"] = 'y';
 					}
 				} elseif ($fields["data"][$i]["type"] == 'l') {
@@ -619,9 +665,33 @@ if ($_REQUEST["itemId"]) {
 						$ins_fields["data"][$i]["defvalue"] = $group;
 					}
 					$ins_fields["data"][$i]["value"] = $info["$fid"];
-				} elseif ($fields["data"][$i]["type"] == 'a') {
-					$ins_fields["data"][$i]["value"] = $info["$fid"];
-					$ins_fields["data"][$i]["pvalue"] = $tikilib->parse_data(htmlspecialchars($info["$fid"]));
+				} elseif ($fields["data"][$i]["type"] == 'a' || $fields["data"][$i]["type"] == 't') {
+				        if ($fields["data"][$i]["isMultilingual"] == 'y') {
+                                  
+                                  
+                                            global $multilinguallib;
+                                            include_once('lib/multilingual/multilinguallib.php');
+                                            $available_languages=$multilinguallib->getSystemLanguage();
+                                            $smarty->assign('available_languages',$available_languages); 
+                                            $ins_fields["data"][$i]['isMultilingual']='y';
+				            $compteur=0;
+				            foreach ($available_languages as $num=>$lang){
+				            //Case convert normal -> multilingual
+				            if (!isset($info["$fid$lang"]) && isset($info["$fid"]))
+				                $info["$fid$lang"]=$info["$fid"];
+				            $ins_fields["data"][$i]["lingualvalue"][$num]["lang"] = $lang;
+				            $ins_fields["data"][$i]["lingualvalue"][$num]["value"] =     $info["$fid$lang"];
+				            $ins_fields["data"][$i]["lingualpvalue"][$num]["lang"] = $lang;
+				            $ins_fields["data"][$i]["lingualpvalue"][$num]["value"] =     $tikilib->parse_data(htmlspecialchars($info["$fid$lang"]));
+					    }
+					    //For display only
+					     $ins_fields["data"][$i]["value"] = $info["$fid$language"];
+					     $ins_fields["data"][$i]["pvalue"] = $tikilib->parse_data(htmlspecialchars($info["$fid$language"]));
+				        } else {
+					     $ins_fields["data"][$i]["value"] = $info["$fid"];
+					     $ins_fields["data"][$i]["pvalue"] = $tikilib->parse_data(htmlspecialchars($info["$fid"]));
+					}
+	
 				} else {
 					$ins_fields["data"][$i]["value"] = $info["$fid"];
 				}

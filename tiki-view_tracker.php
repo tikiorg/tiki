@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.102 2006-11-15 14:02:06 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.103 2006-11-24 17:30:43 hangerman Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -348,6 +348,30 @@ for ($i = 0; $i < $temp_max; $i++) {
 			if ($fields["data"][$i]["options_array"][0])	{
 				$textarea_options = true;
 			} 
+			 if ($fields["data"][$i]["isMultilingual"]=='y') {
+		        
+                                  global $multilinguallib;
+                                  include_once('lib/multilingual/multilinguallib.php');
+                                  $available_languages=$multilinguallib->getSystemLanguage();
+                                  $smarty->assign('available_languages',$available_languages);
+                                  
+                                  $ins_fields["data"][$i]['isMultilingual']='y';
+				            $compteur=0;
+				            foreach ($available_languages as $num=>$lang){
+				            //Case convert normal -> multilingual
+				            if (!isset($_REQUEST[$ins_id."_".$lang]) && isset($_REQUEST["$ins_id"]))
+				                $_REQUEST[$ins_id."_".$lang]=$_REQUEST["$ins_id"];
+				            $fields["data"][$i]["lingualvalue"][$num]["lang"] = $lang;
+				            if (isset($_REQUEST[$ins_id."_".$lang]))
+				                $fields["data"][$i]["lingualvalue"][$num]["value"] =     $_REQUEST[$ins_id."_".$lang];
+				            $fields["data"][$i]["lingualpvalue"][$num]["lang"] = $lang;
+				            if (isset($_REQUEST[$ins_id."_".$lang]))
+				                $fields["data"][$i]["lingualpvalue"][$num]["value"] =     $tikilib->parse_data(htmlspecialchars($_REQUEST[$ins_id."_".$lang]));
+					    }
+					 $ins_fields["data"][$i]["lingualpvalue"]=$fields["data"][$i]["lingualpvalue"];
+					     $ins_fields["data"][$i]["lingualvalue"]=$fields["data"][$i]["lingualvalue"];
+				        } 
+			
 			
 		} elseif($fields["data"][$i]["type"] == 's') { // rating
 			if (isset($_REQUEST["$ins_id"])) {
@@ -415,7 +439,30 @@ for ($i = 0; $i < $temp_max; $i++) {
 					$ins_fields["data"][$i]["file_size"] = $_FILES["$ins_id"]['size'];
 					$ins_fields["data"][$i]["file_name"] = $_FILES["$ins_id"]['name'];
 				}
-			}
+			} elseif (($fields["data"][$i]["type"] == 't')&& ($fields["data"][$i]["isMultilingual"]=='y')) {
+			          global $multilinguallib;
+                                  include_once('lib/multilingual/multilinguallib.php');
+                                  $available_languages=$multilinguallib->getSystemLanguage();
+                                  $smarty->assign('available_languages',$available_languages);
+                                  
+                                  $ins_fields["data"][$i]['isMultilingual']='y';
+				            $compteur=0;
+				            foreach ($available_languages as $num=>$lang){
+				            //Case convert normal -> multilingual
+				            if (!isset($_REQUEST[$ins_id."_".$lang]) && isset($_REQUEST["$ins_id"]))
+				                $_REQUEST[$ins_id."_".$lang]=$_REQUEST["$ins_id"];
+				            $fields["data"][$i]["lingualvalue"][$num]["lang"] = $lang;
+				            if (isset($_REQUEST[$ins_id."_".$lang]))
+				                $fields["data"][$i]["lingualvalue"][$num]["value"] =     $_REQUEST[$ins_id."_".$lang];
+				            $fields["data"][$i]["lingualpvalue"][$num]["lang"] = $lang;
+				            if (isset($_REQUEST[$ins_id."_".$lang]))
+				                $fields["data"][$i]["lingualpvalue"][$num]["value"] =     $tikilib->parse_data(htmlspecialchars($_REQUEST[$ins_id."_".$lang]));
+				                
+					    }
+					    $ins_fields["data"][$i]["lingualpvalue"]=$fields["data"][$i]["lingualpvalue"];
+					     $ins_fields["data"][$i]["lingualvalue"]=$fields["data"][$i]["lingualvalue"];
+				        } 
+			
 		}
 	}
 	// store values to have them available when there is 
