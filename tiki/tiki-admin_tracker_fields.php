@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.42 2006-11-10 21:31:23 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.43 2006-11-24 17:30:43 hangerman Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -63,6 +63,7 @@ if ($_REQUEST["fieldId"]) {
 	$info["position"] = $trklib->get_last_position($_REQUEST["trackerId"])+1;
 	$info["type"] = 'o';
 	$info["isMain"] = 'n';
+	$info["isMultilingual"] = 'n';
 	$info["isSearchable"] = 'n';
 	$info["isTblVisible"] = 'n';
 	$info["isPublic"] = 'n';
@@ -83,6 +84,7 @@ $smarty->assign('type', $info["type"]);
 $smarty->assign('options', $info["options"]);
 $smarty->assign('position', $info["position"]);
 $smarty->assign('isMain', $info["isMain"]);
+$smarty->assign('isMultilingual', $info["isMultilingual"]);
 $smarty->assign('isSearchable', $info["isSearchable"]);
 $smarty->assign('isTblVisible', $info["isTblVisible"]);
 $smarty->assign('isPublic', $info["isPublic"]);
@@ -113,6 +115,12 @@ function replace_tracker_from_request( $tracker_info )
     } else {
 	$isMain = 'n';
     }
+    if (isset($_REQUEST["isMultilingual"]) && ( $_REQUEST["isMultilingual"] == 'on' || $_REQUEST["isMultilingual"] == 'y' )) {
+	$isMultilingual = 'y';
+    } else {
+	$isMultilingual = 'n';
+    }
+
 
     if (isset($_REQUEST["isSearchable"]) && ( $_REQUEST["isSearchable"] == 'on' || $_REQUEST["isSearchable"] == 'y' )) {
 	$isSearchable = 'y';
@@ -158,13 +166,14 @@ function replace_tracker_from_request( $tracker_info )
 
     //$_REQUEST["name"] = str_replace(' ', '_', $_REQUEST["name"]);
     $trklib->replace_tracker_field($_REQUEST["trackerId"], $_REQUEST["fieldId"], $_REQUEST["name"], $_REQUEST["type"], $isMain, $isSearchable,
-	    $isTblVisible, $isPublic, $isHidden, $isMandatory, $_REQUEST["position"], $_REQUEST["options"], $_REQUEST['description']);
+	    $isTblVisible, $isPublic, $isHidden, $isMandatory, $_REQUEST["position"], $_REQUEST["options"], $_REQUEST['description'],$isMultilingual);
     $logslib->add_log('admintrackerfields','changed or created tracker field '.$_REQUEST["name"].' in tracker '.$tracker_info['name']);
     $smarty->assign('fieldId', 0);
     $smarty->assign('name', '');
     $smarty->assign('type', '');
     $smarty->assign('options', '');
     $smarty->assign('isMain', $isMain);
+    $smarty->assign('isMultilingual', $isMultilingual);
     $smarty->assign('isSearchable', $isSearchable);
     $smarty->assign('isTblVisible', $isTblVisible);
     $smarty->assign('isPublic', $isPublic);

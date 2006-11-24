@@ -171,10 +171,21 @@ class MultilingualLib extends TikiLib {
 		return false;
 	}
 
+        function getSystemLanguage(){
+              
+              $query = "select `lang` from `tiki_languages`";
+              $result=$this->query($query);
+              $languages = array();
+              while ($row = $result->fetchRow())
+                      $languages[] = $row["lang"];
+              return $languages;
+        }
+
+
 	/* @brief : returns an ordered list of prefered languages
 	 * @param $langContext: optional the language the user comes from
 	 */
-	function preferedLangs($langContext = null) {
+	function preferedLangs($langContext = null,$include_browser_lang=TRUE) {
 		global $user, $language, $tikilib;
 		$langs = array();
 
@@ -191,7 +202,7 @@ class MultilingualLib extends TikiLib {
 				$langs[] = $l;
 		}
 
-		if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+		if (($include_browser_lang)&&(isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))) {
 			$ls = preg_split('/\s*,\s*/', preg_replace('/;q=[0-9.]+/','',$_SERVER['HTTP_ACCEPT_LANGUAGE'])); // browser
 			foreach ($ls as $l) {
 				if (!in_array($l, $langs)) {

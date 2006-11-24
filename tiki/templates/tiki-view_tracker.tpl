@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker.tpl,v 1.118 2006-11-11 17:52:28 mose Exp $ *}
+{* $Id: tiki-view_tracker.tpl,v 1.119 2006-11-24 17:30:43 hangerman Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -412,7 +412,7 @@ link="{tr}list attachments{/tr}"><img src="img/icons/folderin.gif" border="0" al
 {if $tiki_p_admin_trackers eq 'y'}<td  style="text-align:center;">{$items[user].downloads}</td>{/if}
 {/if}
 {if $tiki_p_admin_trackers eq 'y'}
-<td><a class="link" href="tiki-view_tracker.php?status={$status}&amp;trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$items[user].itemId}" 
+<td><a class="link" href="tiki-view_tracker.php?status={$status}&amp;trackerId={$trackerId}&amp;offset={$offset}{if $sort_mode ne ''}&amp;sort_mode={$sort_mode}{/if}&amp;remove={$items[user].itemId}" 
 title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a></td>
 {/if}
 </tr>
@@ -534,9 +534,22 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 
 {* -------------------- text field / email -------------------- *}
 {elseif $fields[ix].type eq 't' || $fields[ix].type eq 'm'}
+{if $fields[ix].isMultilingual ne "y"}
 {if $fields[ix].options_array[2]}<span class="formunit">{$fields[ix].options_array[2]}&nbsp;</span>{/if}
 <input type="text" name="{$fields[ix].ins_id}" {if $fields[ix].options_array[1]}size="{$fields[ix].options_array[1]}" maxlength="{$fields[ix].options_array[1]}"{/if} value="{if $input_err}{$fields[ix].value}{else}{$defaultvalues.$fid|escape}{/if}" />
 {if $fields[ix].options_array[3]}<span class="formunit">&nbsp;{$fields[ix].options_array[3]}</span>{/if}
+{else}
+<table>
+    {foreach from=$fields[ix].lingualvalue item=ling}
+    <TR><TD>{$ling.lang}</td><td>
+            {if $fields[ix].options_array[2]}<span class="formunit">{$fields[ix].options_array[2]}&nbsp;</span>{/if}
+        <input type="text" name="{$fields[ix].ins_id}_{$ling.lang}" value="{$ling.value|escape}" {if $fields[ix].options_array[1]}size="{$fields[ix].options_array[1]}" maxlength="{$fields[ix].options_array[1]}"{/if} />
+        {if $fields[ix].options_array[3]}<span class="formunit">&nbsp;{$fields[ix].options_array[3]}</span>{/if}
+        </td></tr>
+    {/foreach}
+</table>
+{/if}
+
 
 {* -------------------- numeric field -------------------- *}
 {elseif $fields[ix].type eq 'n'}
@@ -546,8 +559,17 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 
 {* -------------------- textarea -------------------- *}
 {elseif $fields[ix].type eq 'a'}
+{if $fields[ix].isMultilingual ne "y"}
 <textarea id="{$fields[ix].ins_id}" name="{$fields[ix].ins_id}" cols="{if $fields[ix].options_array[1] gt 1}{$fields[ix].options_array[1]}{else}50{/if}" 
 rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}4{/if}">{if $input_err}{$fields[ix].value}{else}{$defaultvalues.$fid|escape}{/if}</textarea>
+{else}
+<table>
+{foreach from=$fields[ix].lingualvalue item=ling}
+    <TR><TD>{$ling.lang}</td><td>
+        <textarea name="ins_{$fields[ix].id}_{$ling.lang}" id="area_{$fields[ix].id}" cols="{if $fields[ix].options_array[1] gt 1}{$fields[ix].options_array[1]}{else}50{/if}" rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}4{/if}">{$ling.value|escape}</textarea></td></tr>
+    {/foreach}
+</table>
+{/if}
 
 {* -------------------- date and time -------------------- *}
 {elseif $fields[ix].type eq 'f'}

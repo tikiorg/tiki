@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker_item.tpl,v 1.105 2006-11-13 07:44:12 mose Exp $ *}
+{* $Id: tiki-view_tracker_item.tpl,v 1.106 2006-11-24 17:30:43 hangerman Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -463,19 +463,39 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 </table>
 
 {elseif $cur_field.type eq 't' || $cur_field.type eq 'm'}
-{if $cur_field.options_array[2]}<span class="formunit">{$cur_field.options_array[2]}&nbsp;</span>{/if}
-<input type="text" name="ins_{$cur_field.id}" value="{$cur_field.value|escape}" {if $cur_field.options_array[1]}size="{$cur_field.options_array[1]}" maxlength="{$cur_field.options_array[1]}"{/if} />
-{if $cur_field.options_array[3]}<span class="formunit">&nbsp;{$cur_field.options_array[3]}</span>{/if}
 
+    {if $cur_field.isMultilingual ne "y"}
+        {if $cur_field.options_array[2]}<span class="formunit">{$cur_field.options_array[2]}&nbsp;</span>{/if}
+        <input type="text" name="ins_{$cur_field.id}" value="{$cur_field.value|escape}" {if $cur_field.options_array[1]}size="{$cur_field.options_array[1]}" maxlength="{$cur_field.options_array[1]}"{/if} />
+        {if $cur_field.options_array[3]}<span class="formunit">&nbsp;{$cur_field.options_array[3]}</span>{/if}
+    
+    {else}
+    <table>
+        {foreach from=$cur_field.lingualvalue item=ling}
+        <TR><TD>{$ling.lang}</td><td>
+                {if $cur_field.options_array[2]}<span class="formunit">{$cur_field.options_array[2]}&nbsp;</span>{/if}
+            <input type="text" name="ins_{$cur_field.id}_{$ling.lang}" value="{$ling.value|escape}" {if $cur_field.options_array[1]}size="{$cur_field.options_array[1]}" maxlength="{$cur_field.options_array[1]}"{/if} />
+            {if $cur_field.options_array[3]}<span class="formunit">&nbsp;{$cur_field.options_array[3]}</span>{/if}
+            </td></tr>
+        {/foreach}
+    </table>
+    {/if}
 {elseif $cur_field.type eq 'n'}
 {if $cur_field.options_array[2]}<span class="formunit">{$cur_field.options_array[2]}&nbsp;</span>{/if}
 <input type="text" name="ins_{$cur_field.id}" value="{$cur_field.value|escape}" {if $cur_field.options_array[1]}size="{$cur_field.options_array[1]}" maxlength="{$cur_field.options_array[1]}"{/if} />
 {if $cur_field.options_array[3]}<span class="formunit">&nbsp;{$cur_field.options_array[3]}</span>{/if}
 
 {elseif $cur_field.type eq 'a'}
-<textarea name="ins_{$cur_field.id}" id="area_{$cur_field.id}" cols="{if $cur_field.options_array[1] gt 1}{$cur_field.options_array[1]}{else}50{/if}"
-rows="{if $cur_field.options_array[2] gt 1}{$cur_field.options_array[2]}{else}4{/if}">{$cur_field.value|escape}</textarea>
-
+{if $cur_field.isMultilingual ne "y"}
+            <textarea name="ins_{$cur_field.id}" id="area_{$cur_field.id}" cols="{if $cur_field.options_array[1] gt 1}{$cur_field.options_array[1]}{else}50{/if}" rows="{if $cur_field.options_array[2] gt 1}{$cur_field.options_array[2]}{else}4{/if}">{$cur_field.value|escape}</textarea>
+        {else}
+        <table>
+            {foreach from=$cur_field.lingualvalue item=ling}
+            <TR><TD>{$ling.lang}</td><td>
+                <textarea name="ins_{$cur_field.id}_{$ling.lang}" id="area_{$cur_field.id}" cols="{if $cur_field.options_array[1] gt 1}{$cur_field.options_array[1]}{else}50{/if}" rows="{if $cur_field.options_array[2] gt 1}{$cur_field.options_array[2]}{else}4{/if}">{$ling.value|escape}</textarea></td></tr>
+            {/foreach}
+        </table>
+        {/if}
 {elseif $cur_field.type eq 'f'}
 {html_select_date prefix="ins_"|cat:$cur_field.id time=$cur_field.value start_year="-4" end_year="+4"} {html_select_time prefix="ins_"|cat:$cur_field.id time=$cur_field.value display_seconds=false}
 

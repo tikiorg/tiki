@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.66 2006-11-09 21:57:25 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.67 2006-11-24 17:30:42 hangerman Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
   
 {if $feature_help eq 'y'}
@@ -106,6 +106,10 @@ for a tracker and they must be valid in SQL{/tr}</em>
 </td><td class="auto">
 <input type="checkbox" name="useExplicitNames" {if $useExplicitNames eq 'y'}checked="checked"{/if} />
 </td></tr>
+{/if}
+{if $feature_multilingual}
+<tr class="formcolor"><td class="auto" colspan="2">{tr}Multilingual{/tr}</td><td>
+<input type="checkbox" name="ismultilingual" {if $ismultilingual eq 'y'}checked="checked"{/if} /></td></tr>
 {/if}
 
 <tr class="formcolor"><td class="auto" colspan="2">{tr}Show status{/tr}</td><td>
