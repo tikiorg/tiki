@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/search/refresh-functions.php,v 1.14 2006-09-26 13:17:51 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/search/refresh-functions.php,v 1.15 2006-11-24 12:42:17 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -384,8 +384,8 @@ function random_refresh_file(){
    global $tikilib;
    $cant=$tikilib->getOne("select count(*) from `tiki_files`",array());
    if($cant>0) {
-     $query="select * from `tiki_files`";
-     $result=$tikilib->query($query,array(),1,rand(0,$cant-1));
+     $query="select * from `tiki_files` where `archiveId`=?";
+     $result=$tikilib->query($query,array(0),1,rand(0,$cant-1));
      $info=$result->fetchRow();
      $words=&search_index($info["data"]." ".$info["description"]." ".$info["name"]);
      insert_index($words,"file",$info["fileId"]);
@@ -394,7 +394,7 @@ function random_refresh_file(){
 
 function refresh_index_files() {
   global $tikilib;
-  $result = $tikilib->query("select * from `tiki_files`", array());
+  $result = $tikilib->query("select * from `tiki_files` where `archiveId`=?", array(0));
   while ($info = $result->fetchRow()) {
       $words=&search_index($info['data'].' '.$info['description']." ".$info['name'], ' '.$info['search_data']);
       insert_index($words,"file",$info["fileId"]);
@@ -404,7 +404,7 @@ function refresh_index_files() {
 function random_refresh_filegal() {
   global $feature_galleries;
   global $tikilib;
-  $cant=$tikilib->getOne("select count(*) from `tiki_file_galleries`",array());
+  $cant=$tikilib->getOne("select count(*) from `tiki_file_galleries` where `archiveId`=?",array(0));
   if($cant>0) {
     $query="select * from `tiki_file_galleries`";
     $result=$tikilib->query($query,array(),1,rand(0,$cant-1));

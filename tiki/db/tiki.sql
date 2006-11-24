@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2006-11-22 00:24:46 $
-# $Author: mose $
+# $Date: 2006-11-24 12:43:27 $
+# $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -1314,6 +1314,7 @@ CREATE TABLE tiki_file_galleries (
   parentId int(14) NOT NULL default -1,
   lockable char(1) default 'n',
   show_lockedby char(1) default NULL,
+  archives int(4) default -1,
   PRIMARY KEY  (galleryId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -1348,7 +1349,9 @@ CREATE TABLE tiki_files (
   search_data longtext,
   lastModif integer(14) DEFAULT NULL,
   lastModifUser varchar(200) DEFAULT NULL,
-  lockedby varchar(40) default NULL;
+  lockedby varchar(40) default NULL,
+  comment varchar(200) default NULL,
+  archiveId int(14) default 0,
   PRIMARY KEY  (fileId),
   KEY name (name),
   KEY description (description(255)),

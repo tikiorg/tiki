@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.671 2006-11-23 18:35:01 mose Exp $
+// CVS: $Id: tikilib.php,v 1.672 2006-11-24 12:42:18 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1832,14 +1832,18 @@ function add_pageview() {
      * @param string $sort_mode
      * @param string $find
      * @param int $galleryId (-1 = all galleries (default))
+	 * @param bool $with_archive give back the number of archives
      * @return array of found files
      */
-    function get_files($offset, $maxRecords, $sort_mode, $find, $galleryId=-1) {
+    function get_files($offset, $maxRecords, $sort_mode, $find, $galleryId=-1, $with_archive=false) {
 
+		$join = '';
+		$select = '';
+		$group = '';
 		// gallery id available
 		if ($galleryId>=0) {
 		    $bindvars=array((int) $galleryId);
-		    $mid = "where `galleryId`=?";
+		    $mid = "where tf.`galleryId`=?";
 		} else {
 			$mid='';
 		}
@@ -1851,16 +1855,22 @@ function add_pageview() {
 		    } else {
 		    	$mid = "where ";
 		    }
-		    $mid .= "(upper(`name`) like upper(?) or upper(`description`) like upper(?))";
+		    $mid .= "(upper(tf.`name`) like upper(?) or upper(tf.`description`) like upper(?))";
 		    $bindvars[] = $findesc;
 		    $bindvars[] = $findesc;
 		} elseif ($mid=='') {
 		    $mid = "where 1";
 		    $bindvars = array();
 		}
-	
-		$query = "select * from `tiki_files` $mid order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_files` $mid";
+		if ($with_archive) {
+			$select = ",count(tfh.`fileId`) as nbArchives";
+			$join = "left join `tiki_files` tfh ON (tf.`fileId`=tfh.`archiveId`)";
+			$group = " group by tf.`fileId` ";
+		}
+		$mid .= " and tf.`archiveId`= 0 ";
+
+		$query = "select tf.* $select from `tiki_files` tf $join $mid $group order by tf.".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_files` tf $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
