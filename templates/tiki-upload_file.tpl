@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_file.tpl,v 1.20 2006-11-17 18:32:45 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_file.tpl,v 1.21 2006-11-24 12:42:17 sylvieg Exp $ *}
 
 <h1><a href="tiki-upload_file.php?galleryId={$galleryId}{if $editFileId}&amp;fileId={$editFileId}{/if}" class="pagetitle">{if $editFileId}{tr}Edit File:{/tr} {$fileInfo.filename}{else}{tr}Upload File{/tr}{/if}</a></h1>
 {if count($galleries) > 0}
@@ -15,8 +15,8 @@
 	<div align="center">
 	<form enctype="multipart/form-data" action="tiki-upload_file.php" method="post">
 	<table class="normal">
-	<tr><td class="formcolor">{tr}File Title{/tr}:</td><td class="formcolor"><input type="text" name="name" {if $fileInfo.name}value="{$fileInfo.name}"{/if}/> {if $fgal_type eq "podcast" or $fgal_type eq "vidcast"} ({tr}required field for podcasts{/tr}){/if}</td></tr>
-	<tr><td class="formcolor">{tr}File Description{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="description">{if $fileInfo.description}{$fileInfo.description}{/if}</textarea> {if $fgal_type eq "podcast" or $fgal_type eq "vidcast"} ({tr}required field for podcasts{/tr}){/if}</td></tr>
+	<tr><td class="formcolor">{tr}File Title{/tr}:</td><td class="formcolor"><input type="text" name="name" {if $fileInfo.name}value="{$fileInfo.name}"{/if}/> {if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"} ({tr}required field for podcasts{/tr}){/if}</td></tr>
+	<tr><td class="formcolor">{tr}File Description{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="description">{if $fileInfo.description}{$fileInfo.description}{/if}</textarea> {if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"} ({tr}required field for podcasts{/tr}){/if}</td></tr>
 	{if $editFileId}<input type="hidden" name="galleryId" value="{$galleryId}"/>
 	<input type="hidden" name="fileId" value="{$editFileId}"/>{else}
 	<tr><td class="formcolor">{tr}File Gallery{/tr}:</td><td class="formcolor"> 
@@ -48,6 +48,7 @@
 	<input type="checkbox" name="isbatch" /></td></tr>
 	{elseif $fileInfo.lockedby}<tr><td class="formcolor">{tr}Unlock{/tr}</td><td class="formcolor">
 	<input type="checkbox" name="unlock" checked="checked"/>{if $user ne $fileInfo.lockedby}{tr}The file is locked by {$fileInfo.lockedby}{/tr}{/if}</td></tr>{/if}
+	{if $editFileId}<tr><td class="formcolor">{tr}Comment{/tr}</td><td  class="formcolor"><input type="text" name="comment" value="{$fileInfo.comment}" size="40" /></td></tr>{/if}
 	<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="upload" value="{if $editFileId}{tr}save{/tr}{else}{tr}upload{/tr}{/if}" /></td></tr>
 	</table>
 	</form>

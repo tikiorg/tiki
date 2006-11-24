@@ -429,7 +429,7 @@ class SearchLib extends TikiLib {
 			'id' => array('`fileId`'),
 			'pageName' => '`filename`',
 			'search' => array('f.`name`', 'f.`description`', 'f.`search_data`'),
-
+   			'filter' => '`archiveId` = 0',
 			'permName' => 'tiki_p_download_files',
 			'objectType' => 'file gallery',
 			'objectKey' => '`galleryId`',

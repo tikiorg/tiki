@@ -1,5 +1,5 @@
 <?php
-// $Id: searchlib.php,v 1.31 2006-05-22 17:09:12 mose Exp $
+// $Id: searchlib.php,v 1.32 2006-11-24 12:42:17 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1004,7 +1004,7 @@ class SearchLib extends TikiLib {
 	  	f.`data`,f.`lastModif`, f.`filename`, f.`downloads`, f.`description`, f.`name`, g.`name` as `galName` from
 		`tiki_searchindex` s, `tiki_files` f, `tiki_file_galleries` g  where `searchword` in
 		(".implode(',',array_fill(0,count($words),'?')).") and
-		s.`location`='file' and f.`galleryId`= g.`galleryId` and
+		s.`location`='file' and f.`galleryId`= g.`galleryId` and f.`archiveId`=0 and 
 		".$this->sql_cast("s.`page`","int")."=f.`fileId` order by `count` desc";
 	  $result=$this->query($query,$words,$maxRecords,$offset);
 
