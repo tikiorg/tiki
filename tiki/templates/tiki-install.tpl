@@ -1,5 +1,5 @@
 <div style="margin:10px 30px;">
-<h1>{tr}Tiki installer{/tr} v1.9.6 (CVS)<a title='help' href='http://doc.tikiwiki.org/Installation' target="help"><img
+<h1>{tr}Tiki installer{/tr} v1.9.7 (CVS)<a title='help' href='http://doc.tikiwiki.org/Installation' target="help"><img
 border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a></h1>
 
 {if $tikifeedback}
