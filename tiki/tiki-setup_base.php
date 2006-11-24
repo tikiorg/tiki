@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.114 2006-11-22 00:26:49 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.115 2006-11-24 09:27:21 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -365,60 +365,7 @@ if (isset($_REQUEST['highlight']) || (isset($feature_referer_highlight) && $feat
   $smarty->load_filter('output','highlight');
 }
 
-/** translate a English string
- * @param $content - English string
- * @param $lg - language - if not specify = global current language
- */
-function tra($content, $lg='') {
-	global $lang_use_db;
-	global $language;
-	if ($content) {
-		if ($lang_use_db != 'y') {
-			global $lang;
-				if ($lg != "") {
-					if (is_file("lang/$lg/language.php")) {
-						$l = $lg;
-					} else {
-						$l = $language;
-					}
-				} elseif (is_file("lang/$language/language.php")) {
-					$l = $language;
-				} else {
-					$l = false;
-				}
-				if ($l) {
-					include_once("lang/$l/language.php");
-					if (is_file("lang/$l/custom.php")) {
-						include_once("lang/$l/custom.php");
-					}
-				}
-			if (isset($lang[$content])) {
-				return $lang[$content];
-			} else {
-				return $content;
-			}
-		} else {
-			global $tikilib,$multilinguallib;
-			$tag=isset($multilinguallib)?$multilinguallib->getInteractiveTag($content):"";
-			$query = "select `tran` from `tiki_language` where `source`=? and `lang`=?";
-			$result = $tikilib->query($query, array($content,$lg == ""? $language: $lg));
-			$res = $result->fetchRow();
-			if (!$res) {
-				return $content.$tag;
-			}
-			if (!isset($res["tran"])) {
-				global $record_untranslated;
-				if ($record_untranslated == 'y') {
-					$query = "insert into `tiki_untranslated` (`source`,`lang`) values (?,?)";
-					$tikilib->query($query, array($content,$language),-1,-1,false);
-				}
-				return $content.$tag;
-			}
-			$res["tran"] = preg_replace("~&lt;br(\s*/)&gt;~","<br$1>",$res["tran"]);
-			return $res["tran"].$tag;
-		}
-	}
-}
+include_once('lib/init/tra.php');
 
 /* \brief  substr with a utf8 string - works only with $start and $length positive or nuls
  * This function is the same as substr but works with multibyte

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.10 2006-11-07 14:33:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.11 2006-11-24 09:27:22 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -38,6 +38,7 @@ if (!empty($_REQUEST['lang'])) {
 } else {
 	$language = 'en';
 }
+include_once('lib/init/tra.php');
 
 function process_sql_file($file,$db_tiki) {
 	global $dbTiki;
