@@ -18,9 +18,7 @@ function wikiplugin_articles($data,$params) {
 	global $dbTiki;
 	global $feature_multilingual;
 	global $pageLang;
-	global $userlib,$user;
-	global $categlib;
-        
+
 	extract($params,EXTR_SKIP);
 	if (($feature_articles !=  'y') || ($tiki_p_read_article != 'y')) {
 		//		the feature is disabled or the user can't read articles
@@ -33,8 +31,7 @@ function wikiplugin_articles($data,$params) {
 	if(!isset($topic)) {
 		$topic='';
 	} else {
-		$topicId = $tikilib->fetchtopicId($topic);
-		$topic='';
+		$topic = $tikilib->fetchtopicId($topic);
 	}
 	if(!isset($topicId))
 		$topicId='';
@@ -48,18 +45,14 @@ function wikiplugin_articles($data,$params) {
 
 	if (!isset($categId))
 		$categId = '';
-	if (!isset($user))
-	   $user=admin;
-	if (!isset($group))
-	   $group='';
-
 
 	$now = date("U");
 	
 	include_once("lib/commentslib.php");
 	$commentslib = new Comments($dbTiki);
 	
-	$listpages = $tikilib->list_articles($start, $max, 'publishDate_desc', '', $now, $user, $type, $topicId, 'y', $topic, $categId,'',$group);
+	$listpages = $tikilib->list_articles($start, $max, $sort, '', $now, 'admin', '', $topic);
+	$listpages = $tikilib->list_articles($start, $max, 'publishDate_desc', '', $now, 'admin', $type, $topicId, 'y', $topic, $categId);
  	if ($feature_multilingual == 'y') {
 		global $multilinguallib;
 		include_once("lib/multilingual/multilinguallib.php");
@@ -67,18 +60,12 @@ function wikiplugin_articles($data,$params) {
 	}
 
 	for ($i = 0; $i < count($listpages["data"]); $i++) {
-	        $catinfo='';
 		$listpages["data"][$i]["parsed_heading"] = $tikilib->parse_data($listpages["data"][$i]["heading"]);
 		$comments_prefix_var='article:';
 		$comments_object_var=$listpages["data"][$i]["articleId"];
 		$comments_objectId = $comments_prefix_var.$comments_object_var;
 		$listpages["data"][$i]["comments_cant"] = $commentslib->count_comments($comments_objectId);
-		$cats=$categlib->get_object_categories("article", $listpages["data"][$i]["articleId"]);
-		foreach ($cats as $val){
-		  $catinfo.="[<a href='tiki-browse_categories.php?parentId=$val'>".$categlib->get_category_name($val)."</a>]"; 
-		}
-		$listpages["data"][$i]['catinfo']=$catinfo;
-		
+		//print_r($listpages["data"][$i]['title']);
 	}
 	global $artlib; require_once ('lib/articles/artlib.php');
 
@@ -95,8 +82,7 @@ function wikiplugin_articles($data,$params) {
 	// If there're more records then assign next_offset
 	$smarty->assign_by_ref('listpages', $listpages["data"]);
 
-	//return "~np~ ".$smarty->fetch('tiki-view_articles.tpl')." ~/np~";
-	return $smarty->fetch('tiki-view_articles.tpl');
+	return "~np~ ".$smarty->fetch('tiki-view_articles.tpl')." ~/np~";
 	//return str_replace("\n","",$smarty->fetch('tiki-view_articles.tpl')); // this considers the hour in the header like a link
 }
 ?>
