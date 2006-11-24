@@ -38,9 +38,22 @@
 <td><label>{tr}Calendar manual selection of time/date{/tr}</label></td>
 <td><input type="checkbox" name="feature_cal_manual_time" {if $feature_cal_manual_time eq 'y'}checked="checked"{/if}/></td>
 </tr>
+
 <tr class="form">
 <td><label>{tr}JsCalendar{/tr}</label></td>
 <td><input type="checkbox" name="feature_jscalendar" {if $feature_jscalendar eq 'y'}checked="checked"{/if}/></td>
+</tr>
+
+<tr class="form">
+<td><label>{tr}First day of the week{/tr}</label></td>
+<td>
+<select name="calendar_firstDayofWeek">
+<option value="6"{if $calendar_firstDayofWeek eq "6"} selected="selected"{/if}>{tr}Saturday{/tr}</option>
+<option value="0"{if $calendar_firstDayofWeek eq "0"} selected="selected"{/if}>{tr}Sunday{/tr}</option>
+<option value="1"{if $calendar_firstDayofWeek eq "1"} selected="selected"{/if}>{tr}Monday{/tr}</option>
+<option value="user"{if $calendar_firstDayofWeek eq "user"} selected="selected"{/if}>{tr}Depends user language{/tr}</option>
+</select>
+</td>
 </tr>
 
 <tr>
