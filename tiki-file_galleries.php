@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.29 2006-11-17 18:35:56 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.30 2006-11-24 12:45:09 sylvieg Exp $
 
 	require_once('tiki-setup.php');
 	include_once('lib/filegals/filegallib.php');
@@ -73,6 +73,7 @@
 	$smarty->assign('maxRows',10);
 	$smarty->assign('public','n');
 	$smarty->assign('lockable', 'n');
+	$smarty->assign('archives', -1);
 	$smarty->assign('edited','n');
 	$smarty->assign('edit_mode','n');
 	$smarty->assign('visible','y');
@@ -105,6 +106,7 @@
 	    $smarty->assign_by_ref('maxRows',$info["maxRows"]);
 	    $smarty->assign_by_ref('public',$info["public"]);
 		$smarty->assign_by_ref('lockable', $info['lockable']);
+		$smarty->assign_by_ref('archives', $info['archives']);
 	    $smarty->assign_by_ref('visible',$info["visible"]);
 		$smarty->assign_by_ref('parentId',$info['parentId']);
 		$smarty->assign_by_ref('creator',$info['user']);
@@ -177,6 +179,7 @@
 	    $lockable ='n';
 	  }
 	  $smarty->assign('lockable', $lockable);
+	  $_REQUEST['archives']=isset($_REQUEST['archives'])? $_REQUEST['archives']: -1;
 	  $_REQUEST['show_id']=isset($_REQUEST['show_id'])?'y':'n';
 	  $_REQUEST['show_icon']=isset($_REQUEST['show_icon'])?'y':'n';
 	  $_REQUEST['show_description']=isset($_REQUEST['show_description'])?'y':'n';
@@ -186,7 +189,7 @@
 	  $_REQUEST['show_name']=isset($_REQUEST['show_name'])?$_REQUEST['show_name']:'a';
 	  $_REQUEST['user'] = isset($_REQUEST['user'])?$_REQUEST['user']:(isset($info['user'])?$info['user']:$user);
 	  $_REQUEST['show_lockedby']=isset($_REQUEST['show_lockedby'])?'y':'n';
-	  $fgid = $filegallib->replace_file_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST['user'], $_REQUEST["maxRows"], $public, $visible,$_REQUEST['show_id'],$_REQUEST['show_icon'],$_REQUEST['show_name'],$_REQUEST['show_size'],$_REQUEST['show_description'],$_REQUEST['show_created'],$_REQUEST['show_dl'],$_REQUEST['max_desc'],$_REQUEST['fgal_type'], $_REQUEST['parentId'], $lockable, $_REQUEST['show_lockedby']);
+	  $fgid = $filegallib->replace_file_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST['user'], $_REQUEST["maxRows"], $public, $visible,$_REQUEST['show_id'],$_REQUEST['show_icon'],$_REQUEST['show_name'],$_REQUEST['show_size'],$_REQUEST['show_description'],$_REQUEST['show_created'],$_REQUEST['show_dl'],$_REQUEST['max_desc'],$_REQUEST['fgal_type'], $_REQUEST['parentId'], $lockable, $_REQUEST['show_lockedby'], $_REQUEST['archives']);
 	  
 	  $cat_type='file gallery';
 	  $cat_objid = $fgid;
