@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.335 2006-11-24 10:32:39 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.336 2006-11-24 16:39:20 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -723,6 +723,9 @@ $pref['feature_calendar'] = 'n';
 $pref['calendar_sticky_popup'] = 'n';
 $pref['calendar_view_mode'] = 'week';
 $pref['calendar_view_tab'] = 'n';
+$pref['calendar_firstDayofWeek'] = 'user';
+$pref['feature_cal_manual_time'] = '0';
+$pref['feature_jscalendar'] = 'n';
 
 # dates
 $pref['display_timezone'] = 'EST';
@@ -992,7 +995,6 @@ $pref['feature_babelfish_logo'] = 'n';
 $pref['feature_banners'] = 'n';
 $pref['feature_banning'] = 'n';
 $pref['feature_best_language'] = 'n';
-$pref['feature_cal_manual_time'] = 'n';
 $pref['feature_comm'] = 'n';
 $pref['feature_contribution'] = 'n';
 $pref['feature_contribution_display_in_comment'] = 'y';
@@ -1016,7 +1018,6 @@ $pref['feature_help'] = 'y';
 $pref['feature_hotwords'] = 'y';
 $pref['feature_hotwords_nw'] = 'n';
 $pref['feature_integrator'] = 'n';
-$pref['feature_jscalendar'] = 'n';
 $pref['feature_live_support'] = 'n';
 $pref['feature_mailin'] = 'n';
 $pref['feature_menusfolderstyle'] = 'y';
