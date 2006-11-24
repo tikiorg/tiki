@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.672 2006-11-24 12:42:18 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.673 2006-11-24 17:28:19 hangerman Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -420,6 +420,31 @@ class TikiLib extends TikiDB {
 	    $aux["name"] = $tracker;
 
 	    if (!in_array($itemId, $items)) {
+		$ret[] = $aux;
+		$items[] = $itemId;
+	    }
+	}
+
+        $query = "select ttf.`trackerId`, tti.`itemId` from `tiki_tracker_fields` ttf, `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif";
+	$query .= " where ttf.`fieldId`=ttif.`fieldId` and ttif.`itemId`=tti.`itemId` and `type`=? and tti.`status`=? ";
+	$result = $this->query($query,array('u','o'));
+	
+
+	while ($res = $result->fetchRow()) {
+	    $itemId = $res["itemId"];
+
+	    $trackerId = $res["trackerId"];
+	    // Now get the isMain field for this tracker
+	    $fieldId = $this->getOne("select `fieldId`  from `tiki_tracker_fields` ttf where `isMain`=? and `trackerId`=?",array('y',(int)$trackerId));
+	    // Now get the field value
+	    $value = $this->getOne("select `value`  from `tiki_tracker_item_fields` where `fieldId`=? and `itemId`=?",array((int)$fieldId,(int)$itemId));
+	    $tracker = $this->getOne("select `name`  from `tiki_trackers` where `trackerId`=?",array((int)$trackerId));
+	    $aux["trackerId"] = $trackerId;
+	    $aux["itemId"] = $itemId;
+	    $aux["value"] = $value;
+	    $aux["name"] = $tracker;
+
+	    if (!in_array($itemId, $items) && $this->isItemOf($user,$trackerId,$itemId)) {
 		$ret[] = $aux;
 		$items[] = $itemId;
 	    }
@@ -2341,7 +2366,7 @@ function add_pageview() {
     }
 
 /*shared*/
-    function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '', $user=false, $type = '', $topicId = '', $visible_only = 'y', $topic='', $categId='') {
+    function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '', $user=false, $type = '', $topicId = '', $visible_only = 'y', $topic='', $categId='',$creator='',$group='') {
         global $userlib, $user;
 
 	$mid = '';
@@ -2457,6 +2482,29 @@ function add_pageview() {
 	else
 		$mid2 = " where ";
 	$mid2 .= "  `tiki_articles`.`type` = `tiki_article_types`.`type`";
+
+        if ($creator!=''){
+          $mid2 .= " and `tiki_articles`.`author` like '%$creator%' " ;
+        }
+        
+        if ($group==''){
+        global $userlib;
+          $users= $userlib->get_users( 0, -1, 'login_asc',  '',  '',false, $group, '');
+          $tmp='and (';
+          $first=1;
+          if (isset ($users) && is_array($users['data']))
+          foreach ($users['data'] as $key=>$val){
+              if ($first==1){
+                $first=0;
+              }else{
+                  $tmp .=" or "; 
+              }
+              $tmp.="  `tiki_articles`.`author` like '%".$val['user']."%' ";
+          }
+          $tmp.=')';
+          if ($first==0)
+            $mid2.=$tmp;
+        }
 
 	if ($categId) {
 		global $categlib; require_once('lib/categories/categlib.php');
