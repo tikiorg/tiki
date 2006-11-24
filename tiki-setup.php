@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.334 2006-11-23 18:26:46 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.335 2006-11-24 10:32:39 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -301,6 +301,7 @@ if (isset($_REQUEST['PHPSESSID'])) {
 # wiki
 $sections['wiki page']['feature'] = 'feature_wiki';
 $sections['wiki page']['key'] = 'page';
+$sections['wiki page']['itemkey'] = '';
 $pref['feature_wiki'] = 'y';
 $pref['feature_wiki_rankings'] = 'y';
 $pref['feature_wiki_icache'] = 'n';
@@ -667,7 +668,7 @@ $sections['webmail']['itemkey'] = '';
 $pref['feature_webmail'] = 'n';
 
 # faq
-$sections['faqs']['feature'] = 'feature_faq';
+$sections['faqs']['feature'] = 'feature_faqs';
 $sections['faqs']['key'] = 'faqId';
 $sections['faqs']['itemkey'] = '';
 $pref['feature_faqs'] = 'n';
@@ -1099,7 +1100,8 @@ foreach ($preferences as $name => $val) {
 // ******************************************************************************************
 $sections_enabled = array();
 foreach ($sections as $sec=>$dat) {
-	if ($$dat['feature'] == 'y') {
+	$feat = $dat['feature'];
+	if (isset($$feat) and $$feat == 'y') {
 		$sections_enabled[$sec] = $dat;
 	}
 }
