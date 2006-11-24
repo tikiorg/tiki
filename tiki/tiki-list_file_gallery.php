@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.31 2006-11-17 18:32:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.32 2006-11-24 12:45:09 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -104,8 +104,7 @@ if ($tiki_p_admin_file_galleries == 'y') {
                                 $smarty->assign_by_ref('fname', $info['name']);
                                 $smarty->assign_by_ref('fdescription', $info['description']);
                         }
-                //      $filegallib->remove_file($file);
-                        $filegallib->remove_file($file, $_REQUEST['galleryId'], $info['name'], $info['filename'], $user);
+                        $filegallib->remove_file($info, $user, $gal_info);
 
 		}
 	}
@@ -152,9 +151,7 @@ if (isset($_REQUEST["remove"])) {
                 $smarty->assign_by_ref('fname', $info['name']);
                 $smarty->assign_by_ref('fdescription', $info['description']);
         }
-                $filegallib->remove_file($_REQUEST['remove'], $_REQUEST['galleryId'], $info['name'], $info['filename'], $user);
-
-		//$filegallib->remove_file($_REQUEST["remove"]);
+	$filegallib->remove_file($info, $user, $gal_info);
 
   } else {
     key_get($area);
@@ -270,12 +267,12 @@ if (isset($_REQUEST["find"])) {
 
 $smarty->assign('find', $find);
 
-$images = $tikilib->get_files($offset, $maxRecords, $sort_mode, $find, $_REQUEST["galleryId"]);
-$cant_pages = ceil($images["cant"] / $maxRecords);
+$files = $tikilib->get_files($offset, $maxRecords, $sort_mode, $find, $_REQUEST["galleryId"], true);
+$cant_pages = ceil($files['cant'] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
 $smarty->assign('actual_page', 1 + ($offset / $maxRecords));
 
-if ($images["cant"] > ($offset + $maxRecords)) {
+if ($files["cant"] > ($offset + $maxRecords)) {
 	$smarty->assign('next_offset', $offset + $maxRecords);
 } else {
 	$smarty->assign('next_offset', -1);
@@ -288,7 +285,7 @@ if ($offset > 0) {
 	$smarty->assign('prev_offset', -1);
 }
 
-$smarty->assign_by_ref('images', $images["data"]);
+$smarty->assign_by_ref('files', $files['data']);
 
 if ($feature_file_galleries_comments == 'y') {
 	$comments_per_page = $file_galleries_comments_per_page;
