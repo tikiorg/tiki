@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.18 2006-11-12 02:47:05 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.19 2006-11-27 18:56:35 sylvieg Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -1781,7 +1781,7 @@ div.tree#top {
 }
 /* TikiIntegrator: By default copy rules dialog not shown */
 div#rules-copy-panel {
-	displayi : none;
+	display : none;
 }
 /* JsCalendar wrapper */
 #datrigger {
