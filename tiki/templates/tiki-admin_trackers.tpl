@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.67 2006-11-24 17:30:42 hangerman Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.68 2006-11-27 08:45:46 hangerman Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
   
 {if $feature_help eq 'y'}
@@ -97,6 +97,10 @@
 <tr class="formcolor"><td>{tr}Description{/tr}:</td><td colspan="2"><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
 {assign var=cols value="2"}
 {include file=categorize.tpl}
+{if $feature_categories}
+<tr class="formcolor"><td class="auto" colspan="2">{tr}Auto create corresponding categories{/tr}</td><td>
+<input type="checkbox" name="autoCreateCategories" {if $autoCreateCategories eq 'y' }checked="checked"{/if} /></td></tr>
+{/if}
 
 {if $trk_with_mirror_tables eq 'y'}
 <tr class="formcolor"><td class="auto" colspan="2">
@@ -107,11 +111,6 @@ for a tracker and they must be valid in SQL{/tr}</em>
 <input type="checkbox" name="useExplicitNames" {if $useExplicitNames eq 'y'}checked="checked"{/if} />
 </td></tr>
 {/if}
-{if $feature_multilingual}
-<tr class="formcolor"><td class="auto" colspan="2">{tr}Multilingual{/tr}</td><td>
-<input type="checkbox" name="ismultilingual" {if $ismultilingual eq 'y'}checked="checked"{/if} /></td></tr>
-{/if}
-
 <tr class="formcolor"><td class="auto" colspan="2">{tr}Show status{/tr}</td><td>
 <input type="checkbox" name="showStatus" {if $showStatus eq 'y'}checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td class="auto" colspan="2">{tr}Default status displayed in list mode{/tr}</td><td>

@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.87 2006-11-22 03:15:33 franck Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.88 2006-11-27 08:45:45 hangerman Exp $
  *
  * \brief Categories support class
  *
@@ -83,6 +83,7 @@ class CategLib extends ObjectLib {
 			$res["categpath"] = $categpath;
 			$res["tepath"] = $tepath;
 			$res["deep"] = count($tepath);
+			$res['name'] = $this->get_category_name($res['categId']);
 			global $userlib;
 			if ($userlib->object_has_one_permission($res['categId'], 'category')) {
 				$res['has_perm'] = 'y';
@@ -120,12 +121,31 @@ class CategLib extends ObjectLib {
 		}
 		$this->category_cache[$categId] = $result->fetchRow();
 	   }
+	   $this->category_cache[$categId]['name']=$this->get_category_name($categId);
 	   return $this->category_cache[$categId];
 	}
 	
-	function get_category_name($categId) {
-		$query = "select `name` from `tiki_categories` where `categId`=?";
-		return $this->getOne($query,array((int) $categId));
+	function get_category_id($name){
+		$query = "select `categId` from `tiki_categories` where `name`=?";
+		return $this->getOne($query,array((string)$name));
+		
+	
+	}
+	function get_category_name($categId,$ref='nom',$real=false) {
+	       
+		$query = "select `name`,`parentId` from `tiki_categories` where `categId`=?";
+		$result=$this->query($query,array((int) $categId)) ;
+		$res = $result->fetchRow();
+		if (preg_match('/^Tracker ([0-9]+)$/',$res['name'])) {
+		    $trackerId=preg_replace('/^Tracker ([0-9]+)$/',"$1",$res['name']);
+		    return $this->getOne("select `name` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
+		}
+		if (preg_match('/^Tracker Item ([0-9]+)$/',$res['name'])) {
+		    global $trklib;require_once('lib/trackers/trackerlib.php');
+		    $itemId=preg_replace('/^Tracker Item ([0-9]+)$/',"$1",$res['name']);
+		    return $trklib->get_isMain_value(-1,$itemId);
+		}
+		return $res['name'];
 	}
 	
 	function remove_category($categId) {
@@ -272,6 +292,8 @@ class CategLib extends ObjectLib {
 	}
 
 	function list_category_objects($categId, $offset, $maxRecords, $sort_mode='pageName_asc', $type='', $find='', $deep=false, $and=false) {
+	global $trklib;require_once('lib/trackers/trackerlib.php');
+	
 	    
 	    // Build the condition to restrict which categories objects must be in to be returned.
 	    $join = '';
@@ -375,9 +397,15 @@ class CategLib extends ObjectLib {
 
 		while ($res = $result->fetchRow()) {
 			if (!in_array($res['catObjectId'].'-'.$res['categId'], $objs)) { // same object and same category
-				$ret[] = $res;
+			    if (preg_match('/tracker/',$res['type'])&&$res['description']==''){
+                              	$trackerId=preg_replace('/^.*trackerId=([0-9]+).*$/','$1',$res['href']);
+                                $res['name']=$trklib->get_isMain_value($trackerId,$res['itemId']);
+                                $filed=$trklib->get_field_id($trackerId,"description");
+                                $res['description']=$trklib->get_item_value($trackerId,$res['itemId'],$filed);
+                            }
+			    $ret[] = $res;
 
-				$objs[] = $res['catObjectId'].'-'.$res['categId'];
+			    $objs[] = $res['catObjectId'].'-'.$res['categId'];
 			}
 		}
 
@@ -393,13 +421,23 @@ class CategLib extends ObjectLib {
 	}
 
 	// get the parent categories of an object
-	function get_object_categories($type, $itemId) {
+	function get_object_categories($type, $itemId,$parentId=-1) {
 
-		$query = "select `categId` from `tiki_category_objects` tco, `tiki_categorized_objects` tto, `tiki_objects` o
-    where tco.`catObjectId`=tto.`catObjectId` and o.`objectId`=tto.`catObjectId` and `type`=? and `itemId`=?";
-		//settype($itemId,"string"); //itemId is defined as varchar
-		$bindvars=array($type,$itemId);
-		settype($bindvars["1"],"string");
+                if ($parentId==-1){
+		   $query = "select `categId` from `tiki_category_objects` tco, `tiki_categorized_objects` tto, `tiki_objects` o
+    			where tco.`catObjectId`=tto.`catObjectId` and o.`objectId`=tto.`catObjectId` and `type`=? and `itemId`=?";
+		   //settype($itemId,"string"); //itemId is defined as varchar
+		   $bindvars=array($type,$itemId);
+		   settype($bindvars["1"],"string");
+		}else {
+		    $query = "select tc.`categId` from `tiki_category_objects` tco, `tiki_categorized_objects` tto, `tiki_objects` o,`tiki_categories` tc
+    				where tco.`catObjectId`=tto.`catObjectId` and o.`objectId`=tto.`catObjectId` and `type`=? and `itemId`=? and tc.`parentId` = ? and tc.`categId`=tco.`categId`";
+		    $bindvars=array($type,$itemId,$parentId);
+		    settype($bindvars["1"],"string");
+		}
+		
+		
+		
 		$result = $this->query($query,$bindvars);
 		$ret = array();
 
@@ -716,6 +754,7 @@ class CategLib extends ObjectLib {
 				$res["children"] = $this->getOne($query,array($id));
 				$query = "select count(*) from `tiki_category_objects` where `categId`=?";
 				$res["objects"] = $this->getOne($query,array($id));
+				$res['name']=$this->get_category_name($id);
 				$ret[] = $res;
 			}
 			$cachelib->cacheItem("childcategs$categId",serialize($ret));
@@ -812,6 +851,7 @@ class CategLib extends ObjectLib {
 				
 				if ($add) {
 					$id = $res["categId"];
+					$res['name']=$this->get_category_name($id);
 					$query = "select count(*) from `tiki_categories` where `parentId`=?";
 					$res["children"] = $this->getOne($query,array($id));
 					$query = "select count(*) from `tiki_category_objects` where `categId`=?";

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.146 2006-11-24 17:30:42 hangerman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.147 2006-11-27 08:45:46 hangerman Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1020,7 +1020,39 @@ class TrackerLib extends TikiLib {
 		global $cachelib;
 		require_once('lib/cache/cachelib.php');
 		$cachelib->invalidate('trackerItemLabel'.$itemId);
-
+		
+		
+		$options=$this->get_tracker_options($trackerId);
+		
+		if (isset ($options) && isset($options['autoCreateCategories']) && $options['autoCreateCategories']=='y') {
+		$trackerName = $this->getOne("select `name` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
+		$trackerDescription = $this->getOne("select `description` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
+		$tracker_item_desc=$this->get_isMain_value($trackerId,$itemId);
+		
+		// Verify that parentCat exists Or Create It
+		$parentcategId=$categlib->get_category_id("Tracker $trackerId");
+		if (!isset($parentcategId))
+		    $parentcategId=$categlib->add_category(0,"Tracker $trackerId",$trackerDescription);
+		// Verify that the sub Categ doesn't already exists
+		$currentCategId=$categlib->get_category_id("Tracker Item $itemId");
+		if (!isset($currentCategId) || $currentCategId == 0 )    
+		     $currentCategId=$categlib->add_category($parentcategId,"Tracker Item $itemId",$tracker_item_desc);
+		else 
+		     $categlib->update_category($currentCategId, "Tracker Item $itemId", $tracker_item_desc, $parentcategId) ;
+		$cat_type = "tracker $trackerId";
+		$cat_objid = $itemId;
+		$cat_desc = '';
+		$cat_name = "Tracker Item $itemId";
+		$cat_href = "tiki-view_tracker_item.php?trackerId=$trackerId&amp;itemId=$itemId";
+		// ?? HAS to do it ?? $categlib->uncategorize_object($cat_type, $cat_objid);
+		$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
+			if (!$catObjectId) {
+				$catObjectId = $categlib->add_categorized_object($cat_type, $cat_objid, $cat_desc, $cat_name, $cat_href);
+			}
+			$categlib->categorize($catObjectId, $currentCategId);
+		
+		
+		}
 		return $itemId;
 	}
 
@@ -1260,6 +1292,13 @@ class TrackerLib extends TikiLib {
 				$cachelib->invalidate(md5('trackerfield'.$f['fieldId'].'pc'));
 			}
 		}
+		
+		$options=$this->get_tracker_options($trackerId);
+		if (isset ($option) && isset($option['autoCreateCategories']) && $option['autoCreateCategories']=='y') {
+		
+		$currentCategId=$categlib->get_category_id("Tracker Item $itemId");
+		$categlib->remove_category($currentCategId);
+		}
 		return true;
 	}
 
@@ -1450,7 +1489,13 @@ class TrackerLib extends TikiLib {
 		$this->remove_object('tracker', $trackerId);
 
 		$this->clear_tracker_cache($trackerId);
-
+                
+                $options=$this->get_tracker_options($trackerId);
+		if (isset ($option) && isset($option['autoCreateCategories']) && $option['autoCreateCategories']=='y') {
+		
+		$currentCategId=$categlib->get_category_id("Tracker $trackerId");
+		$categlib->remove_category($currentCategId);
+		}
 		return true;
 	}
 
@@ -1643,13 +1688,13 @@ class TrackerLib extends TikiLib {
 	function get_isMain_value($trackerId, $itemId) {
 	
 	    global $language;
-	    $query = "select i.`value` from `tiki_tracker_item_fields` i, `tiki_tracker_fields` f where f.`trackerId`=? and i.`itemId`=? and f.`fieldId` = i.`fieldId` and f.`isMain`=? and i.`lang`=?";
-		$result = $this->getOne($query, array((int)$trackerId, (int)$itemId, "y",$language));
-		if(isset($result)&&$result!='')
+	    $query = "select tif.`value` from `tiki_tracker_item_fields` tif, `tiki_tracker_items` i, `tiki_tracker_fields` tf where i.`itemId`=? and i.`itemId`=tif.`itemId` and tf.`fieldId`=tif.`fieldId` and tf.`isMain`=? and tif.`lang`=? ";
+		$result = $this->getOne($query, array( (int)$itemId, "y",$language));
+		if(isset($result) && $result!='')
 		  return $result;
 	
-		$query = "select i.`value` from `tiki_tracker_item_fields` i, `tiki_tracker_fields` f where f.`trackerId`=? and i.`itemId`=? and f.`fieldId` = i.`fieldId` and f.`isMain`=?";
-		$result = $this->getOne($query, array((int)$trackerId, (int)$itemId, "y"));
+		$query = "select tif.`value` from `tiki_tracker_item_fields` tif, `tiki_tracker_items` i, `tiki_tracker_fields` tf where i.`itemId`=? and i.`itemId`=tif.`itemId` and tf.`fieldId`=tif.`fieldId` and tf.`isMain`=?  ";
+		$result = $this->getOne($query, array((int)$itemId, "y"));
 		return $result;
 	}
 	function categorized_item($trackerId, $itemId, $mainfield, $ins_categs) {
@@ -1692,6 +1737,8 @@ class TrackerLib extends TikiLib {
 	}
 
 	function is_multilingual($fieldId){
+	         if ($fieldId<1)
+	           return 'n';
 	         global $feature_multilingual;
 	         if ( $feature_multilingual !='y')
 	           return 'n';

@@ -2,7 +2,7 @@
 class TikiPhplayers extends TikiLib {
 	/* Build the input to the phplayers lib for a category tree  */
 	function mkCatEntry($categId, $indent="", $back, $categories, $urlEnd, $tpl='') {
-		global $smarty, $language;
+		global $smarty, $language,$categlib;
 		$kids = array();
 		foreach ($categories as $cat) {
 			if ($cat['parentId'] == $categId) {
@@ -12,6 +12,7 @@ class TikiPhplayers extends TikiLib {
 		if (count($kids)) {
 			$total = 0;
 			foreach ($kids as $k) {
+				$k['name']= $categlib->get_category_name($k['categId']);
 				list($subTree, $count) = $this->mkCatEntry($k['categId'],".$indent",'', $categories, $urlEnd, $tpl);
 				$count += $k['objects'];
 				$total += $count;
