@@ -1,4 +1,5 @@
 <?php
+// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.44 2006-11-27 19:23:56 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -464,11 +465,9 @@ class FileGalLib extends TikiLib {
 		if (($fgal_use_db == 'n') || ($podCastGallery)) {
 			if (function_exists('md5_file')) {
 				$checksum = md5_file($savedir . $path);
-echo "GGG".$savedir . $path;
 			} else {
 				$checksum = md5(implode('', file($savedir . $path)));
 			}
-echo "EEE".$checksum;
 		} else {
 			$checksum = md5($data);
 		}
@@ -493,7 +492,6 @@ echo "EEE".$checksum;
 				unlink($savedir . $oldPath);
 			}
 		} else { //archive the old file : change archive_id, take away from indexation and categorization
-echo "RRR".$comment;
 			$idNew = $this->insert_file($gal_info['galleryId'], $name, $description, $filename, $data, $size, $type, $user, $path, $comment);
 			$query = "update `tiki_files` set `archiveId`=?, `search_data`=? where `archiveId`=? or `fileId`=?";
 			$this->query($query,array($idNew, '',$id, $id));
