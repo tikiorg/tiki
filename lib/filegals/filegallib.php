@@ -55,7 +55,7 @@ class FileGalLib extends TikiLib {
 		return true;
 	}
 
-	function insert_file($galleryId, $name, $description, $filename, $data, $size, $type, $user, $path) {
+	function insert_file($galleryId, $name, $description, $filename, $data, $size, $type, $user, $path, $comment='') {
 		global $fgal_use_db, $fgal_use_dir, $fgal_podcast_dir, $tikilib, $fgal_allow_duplicates, $smarty;
 
 		$name = strip_tags($name);
@@ -88,11 +88,11 @@ class FileGalLib extends TikiLib {
 			$search_data = $this->get_search_text_for_data($data,$path,$type, $galleryId);
 			if ($search_data === false)
 				return false;
-		}			
+		}
 		
-		$query = "insert into `tiki_files`(`galleryId`,`name`,`description`,`filename`,`filesize`,`filetype`,`data`,`user`,`created`,`downloads`,`path`,`hash`,`search_data`,`lastModif`,`lastModifUser`)
-                          values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		$result = $this->query($query,array($galleryId,$name,$description,$filename,$size,$type,$data,$user,(int) $now,0,$path,$checksum,$search_data,(int)$now,$user));
+		$query = "insert into `tiki_files`(`galleryId`,`name`,`description`,`filename`,`filesize`,`filetype`,`data`,`user`,`created`,`downloads`,`path`,`hash`,`search_data`,`lastModif`,`lastModifUser`, `comment`)
+                          values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		$result = $this->query($query,array($galleryId,$name,$description,$filename,$size,$type,$data,$user,(int) $now,0,$path,$checksum,$search_data,(int)$now,$user,$comment));
 		$query = "update `tiki_file_galleries` set `lastModif`=? where `galleryId`=?";
 		$result = $this->query($query,array((int) $now,$galleryId));
 		$query = "select max(`fileId`) from `tiki_files` where `created`=?";
@@ -449,8 +449,8 @@ class FileGalLib extends TikiLib {
 		return $result;
 	}
 
-	function replace_file($id, $name, $description, $filename, $data, $size, $type, $user, $path, $gal_info) {
-		global $fgal_use_db, $fgal_use_dir, $fgal_podcast_dir, $tikilib, $feature_categories;
+	function replace_file($id, $name, $description, $filename, $data, $size, $type, $user, $path, $comment='', $gal_info) {
+		global $fgal_use_db, $fgal_use_dir, $fgal_podcast_dir, $tikilib, $feature_categories, $feature_search;
 
 		// Update the fields in the database
 		$name = strip_tags($name);
@@ -464,9 +464,11 @@ class FileGalLib extends TikiLib {
 		if (($fgal_use_db == 'n') || ($podCastGallery)) {
 			if (function_exists('md5_file')) {
 				$checksum = md5_file($savedir . $path);
+echo "GGG".$savedir . $path;
 			} else {
 				$checksum = md5(implode('', file($savedir . $path)));
 			}
+echo "EEE".$checksum;
 		} else {
 			$checksum = md5($data);
 		}
@@ -491,12 +493,18 @@ class FileGalLib extends TikiLib {
 				unlink($savedir . $oldPath);
 			}
 		} else { //archive the old file : change archive_id, take away from indexation and categorization
-			$idNew = $this->insert_file($gal_info['galleryId'], $name, $description, $filename, $data, $size, $type, $user, $path);
+echo "RRR".$comment;
+			$idNew = $this->insert_file($gal_info['galleryId'], $name, $description, $filename, $data, $size, $type, $user, $path, $comment);
 			$query = "update `tiki_files` set `archiveId`=?, `search_data`=? where `archiveId`=? or `fileId`=?";
 			$this->query($query,array($idNew, '',$id, $id));
 			if ($feature_categories == 'y') {
 				global $categlib; require_once('lib/categories/categlib.php');
 				$categlib->uncategorize_object('file', $id);
+			}
+			if ($feature_search == 'y') {
+				include_once('lib/search/refresh-functions.php');
+				$words = array();
+				insert_index($words, 'file', $id);
 			}
 			$id = $idNew;
 		}		
@@ -546,8 +554,8 @@ class FileGalLib extends TikiLib {
 	}
 
 	function reindex_all_files_for_search_text() {
-		$query = "select fileId, filename, filesize, filetype, data, path, galleryId from `tiki_files`";
-		$result = $this->query($query);
+		$query = "select fileId, filename, filesize, filetype, data, path, galleryId from `tiki_files` where `archiveId`=?";
+		$result = $this->query($query, array(0));
 		$rows = array();
 		while($row = $result->fetchRow()) {
 			$rows[] = $row;
