@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.31 2006-11-22 02:34:36 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.32 2006-11-27 10:14:16 mose Exp $
 
 Smarty style by mose@tikiwiki.org
 
@@ -64,7 +64,12 @@ h1, .pagetitle {
 	font-weight: bold;
 	color: #000000;
 }
+.pagetitle {
+}
 
+body h1:first-child {
+	margin : 0 10px;
+}
 h2 {
 	font-family: verdana,arial,helvetica,sans-serif;
 	font-size: 140%;
@@ -544,9 +549,8 @@ DIV#page-bar {	margin-left: 5px;}
 .linkbut {
   background-color: #f0c040;
   border: 1px solid #676767;
-	padding-left: 4px;
-	padding-right: 4px;
-  margin: 0.0ex 0px;
+	padding : 0 6px;	
+  margin: 0;
 }
 .linkbut:hover {
 	cursor: pointer;
@@ -612,10 +616,15 @@ div.wikitext {
 .wikinew { text-decoration: underline; font-weight: bold;}
 
 /* Date displayed for last modification date of pages */
-p.editdate { color: black; font-size: smaller; font-family: "Lucida Grande", Helvetica, Arial, sans-serif; }
+.editdate { 
+	color: black;
+	font-size: smaller;
+	font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  margin-left :   10px;
+}
 #description {
-  font-size : 10px !important;
-  padding-left:   10px;
+  font-size :  10px !important;
+  margin-left :   10px;
   color:   #333300;
 }
 
@@ -1775,7 +1784,8 @@ div#rules-copy-panel {
 	display: none;
 }
 TABLE.admin { 
-	width : 100%;
+	width: 100%; 
+	margin : 0 10px;
 }
 .admin tbody tr {
 	background-color: none;
