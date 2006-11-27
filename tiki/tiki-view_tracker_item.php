@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.100 2006-11-24 17:30:43 hangerman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.101 2006-11-27 17:49:20 hangerman Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -325,6 +325,11 @@ foreach($xfields["data"] as $i=>$array) {
 			}
 			
 		} elseif ($fields["data"][$i]["type"] == 'a' )	{
+		if (isset($_REQUEST["$ins_id"])) {
+				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
+			} else {
+				$ins_fields["data"][$i]["value"] = '';
+			}
 		if ( isset($fields["data"][$i]["options_array"][2])){
 			if (isset($_REQUEST["$ins_id"])) {
 				if (isset($fields["data"][$i]["options_array"][3]) and $fields["data"][$i]["options_array"][3] > 0 and strlen($_REQUEST["$ins_id"]) > $fields["data"][$i]["options_array"][3]) {
