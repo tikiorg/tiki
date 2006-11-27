@@ -1,12 +1,13 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.164 2006-11-20 01:55:02 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.165 2006-11-27 10:16:53 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
-$section = "wiki";
+
+$section = 'wiki page';
 require_once('tiki-setup.php');
 include_once('lib/structures/structlib.php');
 include_once('lib/wiki/wikilib.php');
@@ -510,7 +511,6 @@ if($feature_wiki_attachments == 'y') {
     $smarty->assign('atts_count',count($atts['data']));
 }
 
-$section='wiki';
 $smarty->assign('section',$section);
 include_once('tiki-section_options.php');
 
