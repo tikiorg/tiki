@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.673 2006-11-24 17:28:19 hangerman Exp $
+// CVS: $Id: tikilib.php,v 1.674 2006-11-27 17:01:03 hangerman Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -420,31 +420,6 @@ class TikiLib extends TikiDB {
 	    $aux["name"] = $tracker;
 
 	    if (!in_array($itemId, $items)) {
-		$ret[] = $aux;
-		$items[] = $itemId;
-	    }
-	}
-
-        $query = "select ttf.`trackerId`, tti.`itemId` from `tiki_tracker_fields` ttf, `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif";
-	$query .= " where ttf.`fieldId`=ttif.`fieldId` and ttif.`itemId`=tti.`itemId` and `type`=? and tti.`status`=? ";
-	$result = $this->query($query,array('u','o'));
-	
-
-	while ($res = $result->fetchRow()) {
-	    $itemId = $res["itemId"];
-
-	    $trackerId = $res["trackerId"];
-	    // Now get the isMain field for this tracker
-	    $fieldId = $this->getOne("select `fieldId`  from `tiki_tracker_fields` ttf where `isMain`=? and `trackerId`=?",array('y',(int)$trackerId));
-	    // Now get the field value
-	    $value = $this->getOne("select `value`  from `tiki_tracker_item_fields` where `fieldId`=? and `itemId`=?",array((int)$fieldId,(int)$itemId));
-	    $tracker = $this->getOne("select `name`  from `tiki_trackers` where `trackerId`=?",array((int)$trackerId));
-	    $aux["trackerId"] = $trackerId;
-	    $aux["itemId"] = $itemId;
-	    $aux["value"] = $value;
-	    $aux["name"] = $tracker;
-
-	    if (!in_array($itemId, $items) && $this->isItemOf($user,$trackerId,$itemId)) {
 		$ret[] = $aux;
 		$items[] = $itemId;
 	    }
