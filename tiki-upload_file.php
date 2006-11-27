@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.42 2006-11-27 21:24:13 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.43 2006-11-27 21:41:29 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -119,6 +119,8 @@ if (isset($_REQUEST["upload"]) && !empty($_REQUEST['galleryId'])) {
 	$uploads = array();
 
 	$didFileReplace = false;
+	if (!isset($_REQUEST['comment']))
+		$_REQUEST['comment'] = '';
 	for ($i = 1; $i <= 6; $i++) {
 		// We process here file uploads
 		if (isset($_FILES["userfile$i"]) && !empty($_FILES["userfile$i"]['name'])) {
@@ -238,7 +240,7 @@ if (isset($_REQUEST["upload"]) && !empty($_REQUEST['galleryId'])) {
 
 			if (isset($data)) {
 				if ($editFile) {
-					$fileId = $filegallib->replace_file($editFileId, $_REQUEST["name"], $_REQUEST["description"], $name, $data, $size, $type, $user, $fhash, $gal_info);
+				  $fileId = $filegallib->replace_file($editFileId, $_REQUEST["name"], $_REQUEST["description"], $name, $data, $size, $type, $user, $fhash, $_REQUEST['comment'], $gal_info);
 					$didFileReplace = true;
 				}
 				else
@@ -275,7 +277,7 @@ if (isset($_REQUEST["upload"]) && !empty($_REQUEST['galleryId'])) {
 	}
 
 	if ($editFile && !$didFileReplace) {
-	  $filegallib->replace_file($editFileId, $_REQUEST['name'], $_REQUEST['description'], $fileInfo['filename'], $fileInfo['data'], $fileInfo['filesize'], $fileInfo['filetype'], $user, $fileInfo['path'], $gal_info);
+	  $filegallib->replace_file($editFileId, $_REQUEST['name'], $_REQUEST['description'], $fileInfo['filename'], $fileInfo['data'], $fileInfo['filesize'], $fileInfo['filetype'], $user, $fileInfo['path'], $_REQUEST['comment'], $gal_info);
 		$fileChangedMessage = tra('File update was successful').': '.$_REQUEST['name'];
 		$smarty->assign('fileChangedMessage',$fileChangedMessage);
 		$cat_type = 'file';
