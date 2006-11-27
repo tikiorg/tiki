@@ -1,6 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.1 2006-11-24 12:42:17 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.2 2006-11-27 19:14:15 sylvieg Exp $ *}
 {* param:$gal_info, $files *}
+{strip}
 
+{if !isset($no_find)}
 <div align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
@@ -14,11 +16,14 @@
    </td>
 </tr>
 </table>
+</div>
+{/if}
 
-<form method="get" action="{$smarty.server.PHP_SELF}">
+<form  name="checkboxes_on" method="post" action="{$smarty.server.PHP_SELF}">
 	<input type="hidden" name="galleryId" value="{$gal_info.galleryId|escape}" />
     <input type="hidden" name="find" value="{$find|escape}" />
     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+	{if isset($file_info)}<input type="hidden" name="fileId" value="{$file_info.fileId|escape}" />{/if}
 
 
 {assign var=nbCols value=`2`}
@@ -30,6 +35,10 @@
 {if $gal_info.show_id eq 'y'}
 	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'fileId_desc'}fileId_asc{else}fileId_desc{/if}">{tr}ID{/tr}</a></td>
 	{assign var=nbCols value=`$nbCols+1`}
+{/if}
+{if $gal_info.name eq ''}
+	<td class="heading">{tr}Gallery{/tr}</td>
+	{assign var=nb value=`$nb+1`}
 {/if}
 {if $gal_info.show_icon eq 'y'}
 	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'filetype_desc'}filetype_asc{else}filetype_desc{/if}">{tr}Type{/tr}</a></td>
@@ -69,7 +78,7 @@
 	<td style="text-align:right;"  class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'downloads_desc'}downloads_asc{else}downloads_desc{/if}">{tr}Dls{/tr}</a></td>
 	{assign var=nbCols value=`$nbCols+1`}
 {/if}
-{if $gal_info.show_lockedby eq 'y'}
+{if $gal_info.show_lockedby eq 'y' and $gal_info.lockable eq 'y'}
 	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'lockedby_desc'}lockedby_asc{else}lockedby_desc{/if}">{tr}Locked by{/tr}</a></td>
 	{assign var=nbCols value=`$nbCols+1`}
 {/if}
@@ -89,6 +98,10 @@
 
 {if $gal_info.show_id eq 'y'}
 	<td class="{cycle advance=false}">{$files[changes].fileId}</td>
+{/if}
+
+{if $gal_info.name eq ''}
+	<td class="{cycle advance=false}"><a href="tiki-list_file_gallery.php?galleryId={$files[ix].galleryId}" title="{tr}list{/tr}">{tr}{$files[changes].gallery}{/tr}</a></td>
 {/if}
 
 {if $gal_info.show_icon eq 'y'}
@@ -138,7 +151,7 @@
 	<td class="{cycle advance=false}">{$files[changes].user|escape}</td>
 {/if}
 
-{if isset($gal_info.show_modifie) and $gal_info.show_modified eq 'y'}
+{if isset($gal_info.show_modified) and $gal_info.show_modified eq 'y'}
 	<td class="{cycle advance=false}">{$files[changes].lastModif|tiki_short_date}</td>
 	<td class="{cycle advance=false}">{$files[changes].lastModifUser|escape}</td>
 {/if}
@@ -151,12 +164,13 @@
 	<td style="text-align:right;" class="{cycle advance=false}">{$files[changes].downloads}</td>
 {/if}
 
-{if $gal_info.show_lockedby eq 'y'}
+{if $gal_info.show_lockedby eq 'y' and $gal_info.lockable eq 'y'}
 	<td class="{cycle advance=false}">{$files[changes].lockedby|escape}</td>
 {/if}
 
 <td class="{cycle}">
-	{if $tiki_p_download_files eq 'y'}
+	{if (isset($files[changes].p_download_files) and  $files[changes].p_download_files eq 'y')
+	 or (!isset($files[changes].p_download_files) and $tiki_p_download_files eq 'y')}
 		{if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"}
 			<a class="fgalname" href="{$download_path}{$files[changes].path}" title="{tr}Download{/tr}">
 		{else}
@@ -165,6 +179,7 @@
 		<img src="pics/icons/disk.png" border="0" width="16" height="16" alt="{tr}Download{/tr}" /></a> 
 		{* can locked if the gall can be locked or I am the locker or the file is not locked - this only for regular file *}
 		{if $files[changes].archiveId == 0
+			and $user
 			and $gal_info.lockable == 'y'
 			and ($files[changes].lockedby eq '' or $files[changes].lockedby eq $user)
 			and $gal_info.type ne "podcast" and $gal_info.type ne "vidcast"}
@@ -182,7 +197,7 @@
 		{if $files[changes].archiveId == 0}
 			<a class="link" href="tiki-upload_file.php?galleryId={$gal_info.galleryId}&amp;fileId={$files[changes].fileId}"><img src='pics/icons/page_edit.png' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
 		{/if}
-		<a class="link" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$files[changes].fileId}"><img src='pics/icons/cross.png' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' /></a>
+		<a class="link" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$files[changes].fileId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}"><img src='pics/icons/cross.png' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' /></a>
 	{/if}
 </td>
 </tr>
@@ -191,6 +206,12 @@
 <b>{tr}No records found{/tr}</b>
 </td></tr>
 {/section}
+{if $tiki_p_admin_file_galleries eq 'y'}
+	<script type="text/javascript"> /* <![CDATA[ */
+	document.write("<tr><td colspan=\"{$nbCols}\"><input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'file[]',this.checked)\"/>");
+	document.write("<label for=\"clickall\">{tr}select all{/tr}</label></td></tr>");
+	/* ]]> */</script>
+{/if}
 </table>
 
 {if $tiki_p_admin_file_galleries eq 'y'}
@@ -200,7 +221,7 @@
 {if !isset($file_info)}
 	<input type="image" name="movesel" src="img/icons/topic_move.gif" alt='{tr}move{/tr}' title='{tr}move selected files{/tr}' />
 {/if}
-<img src='pics/icons/cross.png' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' />
+<input type="image" name="delsel" src='pics/icons/cross.png'alt='{tr}delete{/tr}' title='{tr}delete{/tr}' />
 </div>
 {if $smarty.request.movesel_x and !isset($file_info)} 
 <div>
@@ -216,11 +237,12 @@
 </div>
 {/if}
 </div>
+<br style="clear:both"/>
 {/if}
 </form>
 
-<br style="clear:both"/>
-  <div class="mini">
+{if $maxRecords > 0}
+  <div class="mini" align="center">
       {if $prev_offset >= 0}
         [<a class="fgalprevnext" href="{$smarty.server.PHP_SELF}?find={$find}&amp;galleryId={$gal_info.galleryId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
       {/if}
@@ -228,15 +250,15 @@
       {if $next_offset >= 0}
       &nbsp;[<a class="fgalprevnext" href="{$smarty.server.PHP_SELF}?find={$find}&amp;galleryId={$gal_info.galleryId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
       {/if}
-      {if $direct_pagination eq 'y'}
-<br />
-{section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
-<a class="prevnext" href="{$smarty.server.PHP_SELF}?find={$find}&amp;galleryId={$gal_info.galleryId}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
-{$smarty.section.foo.index_next}</a>&nbsp;
-{/section}
+      {if $direct_pagination eq 'y' and $cant_pages > 1}
+	<br />
+	{section loop=$cant_pages name=foo}
+	{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+	<a class="prevnext" href="{$smarty.server.PHP_SELF}?find={$find}&amp;galleryId={$gal_info.galleryId}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
+	{$smarty.section.foo.index_next}</a>&nbsp;
+	{/section}
+	{/if}
+  </div>
 {/if}
 
-  </div>
-
-</div>
+{/strip}
