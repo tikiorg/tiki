@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.49 2006-11-09 21:29:07 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.50 2006-11-27 08:45:46 hangerman Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -204,6 +204,14 @@ if (isset($_REQUEST["save"])) {
 	} else {
 		$tracker_options["writerCanModify"] = 'n';
 	}
+	
+	if (isset($_REQUEST["autoCreateCategories"]) 
+		&& ($_REQUEST["autoCreateCategories"] == 'on'
+			or $_REQUEST["autoCreateCategories"] == 'y')) {
+		$tracker_options["autoCreateCategories"] = 'y';
+	} else {
+		$tracker_options["autoCreateCategories"] = 'n';
+	}
 
 	if (isset($_REQUEST["oneUserItem"]) 
 		&& ($_REQUEST["oneUserItem"] == 'on'
@@ -331,6 +339,7 @@ $info["defaultStatusList"] = array();
 $info["orderAttachments"] = 'name,created,filesize,downloads,desc';
 $info['start']= 0;
 $info['end'] = 0;
+$info['autoCreateCategories']='';
 
 if ($_REQUEST["trackerId"]) {
 	$info = array_merge($info,$tikilib->get_tracker($_REQUEST["trackerId"]));
@@ -370,6 +379,7 @@ $smarty->assign('oneUserItem', $info["oneUserItem"]);
 $smarty->assign('writerGroupCanModify', $info["writerGroupCanModify"]);
 $smarty->assign('defaultStatus', $info["defaultStatus"]);
 $smarty->assign('defaultStatusList', $info["defaultStatusList"]);
+$smarty->assign('autoCreateCategories', $info["autoCreateCategories"]);
 $smarty->assign_by_ref('info', $info);
 
 $outatt = array();
