@@ -285,13 +285,16 @@ class UsersLib extends TikiLib {
     }
 
     function validate_user(&$user, $pass, $challenge, $response) {
-	global $tikilib, $sender_email, $feature_intertiki, $feature_intertiki_mymaster;
+	global $tikilib, $sender_email, $feature_intertiki, $feature_intertiki_mymaster, $min_pass_length;
 
 	if ($user != 'admin' && $feature_intertiki == 'y' && !empty($feature_intertiki_mymaster)) {
 	    // slave intertiki sites should never check passwords locally, just for admin
 	    return false;
 	}
 
+	if (sizeof($pass) < $min_pass_length) {
+		return false;
+	}
 	// these will help us keep tabs of what is going on
 	$userTiki = false;
 	$userTikiPresent = false;
