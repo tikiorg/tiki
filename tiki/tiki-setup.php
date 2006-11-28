@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.337 2006-11-28 07:14:01 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.338 2006-11-28 14:34:12 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -17,7 +17,7 @@ if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
 // see http://tikiwiki.org/tiki-index.php?page=CharacterEncodingTrouble
 header('Content-Type: text/html; charset=utf-8');
 
-$errors = array();
+$phpErrors = array();
 // include_once("lib/init/setup_inc.php");
 include_once('lib/init/initlib.php');
 
@@ -1747,5 +1747,5 @@ if ($feature_fullscreen == 'y') {
 		$_SESSION['fullscreen'] = 'n';
 	}
 }
-$smarty->assign_by_ref('errors',$errors);
+$smarty->assign_by_ref('phpErrors',$phpErrors);
 ?>
