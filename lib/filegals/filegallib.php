@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.44 2006-11-27 19:23:56 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.45 2006-11-28 05:17:10 mose Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -314,6 +314,10 @@ class FileGalLib extends TikiLib {
 			$bindvars=array($name,(int) $maxRows,$description,(int) $now,$public,$visible,$show_icon,$show_id,$show_name,$show_description,$show_size,$show_created,$show_dl,(int) $max_desc, $fgal_type, $parentId, $user, $lockable, $show_lockedby, $archives, (int)$galleryId);
 
 			$result = $this->query($query,$bindvars);
+
+			$query = "update `tiki_objects` set `name`=?, `description`=? where `type`=? and `itemId`=?";
+			$bindvars = array($name,$description,'file gallery',(int)$galleryId);
+			$this->query($query,$bindvars);
 		} else {
 			// Create a new record
 			$query = "insert into `tiki_file_galleries`(`name`,`description`,`created`,`user`,`lastModif`,`maxRows`,`public`,`hits`,`visible`,`show_id`,`show_icon`,`show_name`,`show_description`,`show_created`,`show_dl`,`max_desc`,`type`, `parentId`, `lockable`, `show_lockedby`, `archives`)

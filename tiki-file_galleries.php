@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.30 2006-11-24 12:45:09 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.31 2006-11-28 05:17:11 mose Exp $
 
 	require_once('tiki-setup.php');
 	include_once('lib/filegals/filegallib.php');
@@ -191,13 +191,15 @@
 	  $_REQUEST['show_lockedby']=isset($_REQUEST['show_lockedby'])?'y':'n';
 	  $fgid = $filegallib->replace_file_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST['user'], $_REQUEST["maxRows"], $public, $visible,$_REQUEST['show_id'],$_REQUEST['show_icon'],$_REQUEST['show_name'],$_REQUEST['show_size'],$_REQUEST['show_description'],$_REQUEST['show_created'],$_REQUEST['show_dl'],$_REQUEST['max_desc'],$_REQUEST['fgal_type'], $_REQUEST['parentId'], $lockable, $_REQUEST['show_lockedby'], $_REQUEST['archives']);
 	  
-	  $cat_type='file gallery';
-	  $cat_objid = $fgid;
-	  $cat_desc = substr($_REQUEST["description"],0,$_REQUEST['max_desc']);
-	  $cat_name = $_REQUEST["name"];
-	  $cat_href="tiki-list_file_gallery.php?galleryId=".$cat_objid;
-	  include_once("categorize.php");
-	  
+		if ($feature_categories == 'y') {
+			$cat_type='file gallery';
+			$cat_objid = $fgid;
+			$cat_desc = substr($_REQUEST["description"],0,$_REQUEST['max_desc']);
+			$cat_name = $_REQUEST["name"];
+			$cat_href="tiki-list_file_gallery.php?galleryId=".$cat_objid;
+			include_once("categorize.php");
+			$categlib->build_cache();
+		}
 	  $smarty->assign('edit_mode','n');
 	}
 	
