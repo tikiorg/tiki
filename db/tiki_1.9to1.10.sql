@@ -1,4 +1,4 @@
-	# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.112 2006-11-28 02:50:45 lmoss Exp $
+	# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.113 2006-11-28 07:24:53 mose Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -650,3 +650,8 @@ ALTER TABLE `tiki_files` ADD `archiveId` int(14) default 0;
 
 #lmoss 2006-11-29 - Increase article title length to 255
 ALTER TABLE `tiki_articles` CHANGE `title` `title` varchar(255) default NULL;
+
+# mose 2006-11-28 - new user contacts menu entry
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Contacts','tiki-contacts.php',87,'feature_contacts','','Registered');
+
+
