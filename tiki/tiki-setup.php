@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.336 2006-11-24 16:39:20 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.337 2006-11-28 07:14:01 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -667,6 +667,12 @@ $sections['webmail']['key'] = 'msgId';
 $sections['webmail']['itemkey'] = '';
 $pref['feature_webmail'] = 'n';
 
+# contaacts
+$sections['contacts']['feature'] = 'feature_contacts';
+$sections['contacts']['key'] = 'contactId';
+$sections['contacts']['itemkey'] = '';
+$pref['feature_contacts'] = 'n';
+
 # faq
 $sections['faqs']['feature'] = 'feature_faqs';
 $sections['faqs']['key'] = 'faqId';
@@ -724,6 +730,7 @@ $pref['calendar_sticky_popup'] = 'n';
 $pref['calendar_view_mode'] = 'week';
 $pref['calendar_view_tab'] = 'n';
 $pref['calendar_firstDayofWeek'] = 'user';
+$pref['calendar_timespan'] = '5';
 $pref['feature_cal_manual_time'] = '0';
 $pref['feature_jscalendar'] = 'n';
 
