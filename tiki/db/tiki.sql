@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2006-11-24 12:43:27 $
-# $Author: sylvieg $
+# $Date: 2006-11-28 02:53:17 $
+# $Author: lmoss $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -338,7 +338,7 @@ CREATE TABLE tiki_actionlog_params (
 # Table structure for table tiki_articles
 #
 # Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 13, 2003 at 01:30 AM
+# Last update: Nov 27, 2006 at 21:53 PM
 # Last check: Jul 03, 2003 at 07:42 PM
 #
 
@@ -346,7 +346,7 @@ DROP TABLE IF EXISTS tiki_articles;
 CREATE TABLE tiki_articles (
   articleId int(8) NOT NULL auto_increment,
   topline varchar(255) default NULL,
-  title varchar(80) default NULL,
+  title varchar(255) default NULL,
   subtitle varchar(255) default NULL,
   linkto varchar(255) default NULL,
   lang varchar(16) default NULL,

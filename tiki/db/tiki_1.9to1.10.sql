@@ -1,4 +1,4 @@
-	# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.111 2006-11-24 17:30:42 hangerman Exp $
+	# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.112 2006-11-28 02:50:45 lmoss Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -648,3 +648,5 @@ ALTER TABLE `tiki_file_galleries` ADD `archives` int(4) default -1;
 ALTER TABLE `tiki_files` ADD `comment` varchar(200) default NULL;
 ALTER TABLE `tiki_files` ADD `archiveId` int(14) default 0;
 
+#lmoss 2006-11-29 - Increase article title length to 255
+ALTER TABLE `tiki_articles` CHANGE `title` `title` varchar(255) default NULL;
