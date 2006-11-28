@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.88 2006-11-27 08:45:45 hangerman Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.89 2006-11-28 15:23:18 hangerman Exp $
  *
  * \brief Categories support class
  *
@@ -131,11 +131,12 @@ class CategLib extends ObjectLib {
 		
 	
 	}
-	function get_category_name($categId,$ref='nom',$real=false) {
+	function get_category_name($categId,$real=false) {
 	       
 		$query = "select `name`,`parentId` from `tiki_categories` where `categId`=?";
 		$result=$this->query($query,array((int) $categId)) ;
 		$res = $result->fetchRow();
+		if ($real) return $res['name'];
 		if (preg_match('/^Tracker ([0-9]+)$/',$res['name'])) {
 		    $trackerId=preg_replace('/^Tracker ([0-9]+)$/',"$1",$res['name']);
 		    return $this->getOne("select `name` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
@@ -402,6 +403,7 @@ class CategLib extends ObjectLib {
                                 $res['name']=$trklib->get_isMain_value($trackerId,$res['itemId']);
                                 $filed=$trklib->get_field_id($trackerId,"description");
                                 $res['description']=$trklib->get_item_value($trackerId,$res['itemId'],$filed);
+                                $res['type']=$this->getOne("select `name` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
                             }
 			    $ret[] = $res;
 
