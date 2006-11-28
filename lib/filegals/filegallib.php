@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.45 2006-11-28 05:17:10 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.46 2006-11-28 14:54:54 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -454,7 +454,7 @@ class FileGalLib extends TikiLib {
 		return $result;
 	}
 
-	function replace_file($id, $name, $description, $filename, $data, $size, $type, $user, $path, $comment='', $gal_info) {
+	function replace_file($id, $name, $description, $filename, $data, $size, $type, $user, $path, $comment='', $gal_info, $didFileReplace) {
 		global $fgal_use_db, $fgal_use_dir, $fgal_podcast_dir, $tikilib, $feature_categories, $feature_search;
 
 		// Update the fields in the database
@@ -487,7 +487,7 @@ class FileGalLib extends TikiLib {
 		}
 		$oldPath = $this->getOne("select `path` from `tiki_files` where `fileId`=?",array($id));
 
-		if ($gal_info['archives'] == -1) {
+		if ($gal_info['archives'] == -1 || !$didFileReplace) { // no archive
 			$query = "update `tiki_files` set `name`=?, `description`=?, `filename`=?, `filesize`=?, `filetype`=?, `data`=?, `lastModifUser`=?, `lastModif`=?, `path`=?, `hash`=?, `search_data`=? where `fileId`=?";
 			if (!($result = $this->query($query,array($name,$description,$filename,$size,$type,$data,$user,(int)$now,$path,$checksum,$search_data,$id))))
 				return false;
@@ -497,6 +497,19 @@ class FileGalLib extends TikiLib {
 			}
 		} else { //archive the old file : change archive_id, take away from indexation and categorization
 			$idNew = $this->insert_file($gal_info['galleryId'], $name, $description, $filename, $data, $size, $type, $user, $path, $comment);
+			if ($gal_info['archives'] > 0) {
+				$archives = $this->get_archives($id, 0, -1, 'created_asc');
+				if ($archives['cant'] >= $gal_info['archives']) {
+					$nb = $archives['cant'] - $gal_info['archives'] + 1;
+					$query = "delete from `tiki_files` where `fileId`in (".implode(',', array_fill(0, $nb, '?')).")";
+					for ($i = 0; $i < $nb; ++$i) {
+						$bindvars[] = $archives['data'][$i]['fileId'];
+						if ($archives['data'][$i]['path'])
+							unlink ($savedir . $archives['data'][$i]['path']);
+					}
+					$this->query($query, $bindvars);
+				}
+			}
 			$query = "update `tiki_files` set `archiveId`=?, `search_data`=? where `archiveId`=? or `fileId`=?";
 			$this->query($query,array($idNew, '',$id, $id));
 			if ($feature_categories == 'y') {
