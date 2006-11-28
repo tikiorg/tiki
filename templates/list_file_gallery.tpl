@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.3 2006-11-28 14:54:54 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.4 2006-11-28 16:05:53 sylvieg Exp $ *}
 {* param:$gal_info, $files *}
 {strip}
 
@@ -29,7 +29,7 @@
 {assign var=nbCols value=`2`}
 <table class="normal">
 <tr>
-{if $tiki_p_admin_file_galleries eq 'y'}
+{if $gal_info.show_checked ne 'n' and $tiki_p_admin_file_galleries eq 'y'}
 <td  class="heading">&nbsp;</td>
 {/if}
 {if $gal_info.show_id eq 'y'}
@@ -90,7 +90,7 @@
 {section name=changes loop=$files}
 <tr>
 
-{if $tiki_p_admin_file_galleries eq 'y'}
+{if $gal_info.show_checked ne 'n' and $tiki_p_admin_file_galleries eq 'y'}
 <td  style="text-align:center;" class="{cycle advance=false}">
 	<input type="checkbox" name="file[]" value="{$files[changes].fileId|escape}"  {if $smarty.request.file and in_array($files[changes].fileId,$smarty.request.file)}checked="checked"{/if} />
 </td>
@@ -209,7 +209,7 @@
 <b>{tr}No records found{/tr}</b>
 </td></tr>
 {/section}
-{if $tiki_p_admin_file_galleries eq 'y'}
+{if $gal_info.show_checked ne 'n' and $tiki_p_admin_file_galleries eq 'y'}
 	<script type="text/javascript"> /* <![CDATA[ */
 	document.write("<tr><td colspan=\"{$nbCols}\"><input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'file[]',this.checked)\"/>");
 	document.write("<label for=\"clickall\">{tr}select all{/tr}</label></td></tr>");
@@ -217,7 +217,7 @@
 {/if}
 </table>
 
-{if $tiki_p_admin_file_galleries eq 'y'}
+{if $gal_info.show_checked ne 'n' and $tiki_p_admin_file_galleries eq 'y'}
 <div>
 <div style="float:left">
 {tr}Perform action with checked:{/tr} 

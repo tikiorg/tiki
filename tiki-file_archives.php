@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_archives.php,v 1.2 2006-11-27 21:41:29 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_archives.php,v 1.3 2006-11-28 16:05:52 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -73,6 +73,8 @@ $smarty->assign_by_ref('offset', $_REQUEST['offset']);
 
 $files = $filegallib->get_archives($_REQUEST['fileId']);
 $smarty->assign_by_ref('files', $files['data']);
+$file[] = $fileInfo;
+$smarty->assign_by_ref('file',$file); 
 
 $cant_pages = ceil($files['cant'] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
@@ -90,10 +92,16 @@ if ($offset > 0) {
 }
 
 $smarty->assign_by_ref('file_info', $fileInfo);
+$gal_info['show_checked'] = 'n';
+$gal_info['show_created'] = 'n';
+$gal_info['show_modified'] = 'y';
+$gal_info['show_comment'] = 'y';
+$smarty->assign('file_gal_info', $gal_info);
+unset($gal_info['show_checked']);
 $gal_info['show_comment'] = 'y';
 $gal_info['show_description'] = 'n';
-$gal_info['show_created'] = 'y';
-$gal_info['show_modified'] = 'n';
+$gal_info['show_created'] = 'n';
+$gal_info['show_modified'] = 'y';
 $gal_info['show_lockedby'] = 'n';
 $smarty->assign_by_ref('gal_info', $gal_info);
 
