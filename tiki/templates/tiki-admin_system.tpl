@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_system.tpl,v 1.22 2006-11-28 07:52:17 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_system.tpl,v 1.23 2006-11-28 07:59:17 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_system.php">{tr}System Admin{/tr}</a>
 
 {if $feature_help eq 'y'}
@@ -82,4 +82,5 @@
 </tr>
 {/foreach}
 </table>
+</div>
 </div>
