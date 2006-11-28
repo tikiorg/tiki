@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.2 2006-11-27 19:14:15 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.3 2006-11-28 14:54:54 sylvieg Exp $ *}
 {* param:$gal_info, $files *}
 {strip}
 
@@ -197,7 +197,10 @@
 		{if $files[changes].archiveId == 0}
 			<a class="link" href="tiki-upload_file.php?galleryId={$gal_info.galleryId}&amp;fileId={$files[changes].fileId}"><img src='pics/icons/page_edit.png' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
 		{/if}
-		<a class="link" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$files[changes].fileId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}"><img src='pics/icons/cross.png' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' /></a>
+	{/if}
+	{if $tiki_p_admin_file_galleries eq 'y'
+		or (!$files[changes].lockedby and (($user and $user eq $files[changes].user) or $tiki_p_edit_file_gallery eq 'y')) }
+			<a class="link" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$files[changes].fileId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}"><img src='pics/icons/cross.png' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' /></a>
 	{/if}
 </td>
 </tr>
