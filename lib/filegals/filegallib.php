@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.47 2006-11-28 16:20:21 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.48 2006-11-28 19:29:22 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -492,7 +492,7 @@ class FileGalLib extends TikiLib {
 			if (!($result = $this->query($query,array($name,$description,$filename,$size,$type,$data,$user,(int)$now,$path,$checksum,$search_data,$id))))
 				return false;
 			
-			if (!empty($oldPath)) {
+			if ($didFileReplace && !empty($oldPath)) {
 				unlink($savedir . $oldPath);
 			}
 		} else { //archive the old file : change archive_id, take away from indexation and categorization
