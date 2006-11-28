@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_archives.tpl,v 1.3 2006-11-28 14:54:54 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_archives.tpl,v 1.4 2006-11-28 16:05:53 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-file_archives.php?fileId={$file_info.fileId}">{tr}File Archive{/tr}: {if empty($file_info.name)}{$file_info.filename|escape}{else}{$file_info.name}{/if}</a></h1>
 
@@ -22,4 +22,8 @@
 {/if}
 </td></tr></table>
 
+<h2>{tr}File{/tr}</h2>
+{include file=list_file_gallery.tpl files=$file no_find='y' maxRecords=0 gal_info=$file_gal_info}
+
+<h2>{tr}Archives{/tr}</h2>
 {include file=list_file_gallery.tpl}
