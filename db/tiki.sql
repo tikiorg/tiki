@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2006-11-28 07:24:53 $
+# $Date: 2006-11-28 07:32:11 $
 # $Author: mose $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -3930,6 +3930,14 @@ CREATE TABLE tiki_webmail_contacts (
   user varchar(40) NOT NULL default '',
   PRIMARY KEY  (contactId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+DROP TABLE IF EXISTS tiki_webmail_contacts_groups;
+CREATE TABLE tiki_webmail_contacts_groups (
+  contactId int(12) NOT NULL,
+  groupName varchar(255) NOT NULL,
+  PRIMARY KEY  (contactId,groupName(200))
+) TYPE=MyISAM ;
 # --------------------------------------------------------
 
 #
