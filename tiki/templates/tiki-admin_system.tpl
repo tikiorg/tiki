@@ -1,3 +1,4 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_system.tpl,v 1.22 2006-11-28 07:52:17 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_system.php">{tr}System Admin{/tr}</a>
 
 {if $feature_help eq 'y'}
@@ -76,8 +77,8 @@
 {cycle values="even,odd" print=false}
 {foreach key=key item=item from=$tabfields}
 <tr><td class="{cycle advance=false}">{$item.table}</td><td class="{cycle advance=false}">{$item.field}</td>
-<td class="{cycle advance=false}"><a href="tiki-admin_system.php?utf8it={$item.table}&utf8if={$item.field}" class="link">{tr}Investigate{/tr}</a></td>
-<td class="{cycle}"><a href="tiki-admin_system.php?utf8ft={$item.table}&utf8ff={$item.field}" class="link">{tr}Fix it{/tr}</a></td>
+<td class="{cycle advance=false}"><a href="tiki-admin_system.php?utf8it={$item.table}&amp;utf8if={$item.field}" class="link">{tr}Investigate{/tr}</a></td>
+<td class="{cycle}"><a href="tiki-admin_system.php?utf8ft={$item.table}&amp;utf8ff={$item.field}" class="link">{tr}Fix it{/tr}</a></td>
 </tr>
 {/foreach}
 </table>
