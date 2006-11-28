@@ -39,7 +39,7 @@ if ($user && isset($feature_tasks) && $feature_tasks == 'y' && isset($tiki_p_tas
 			die;
 		}
 	}
-    $smarty->assign('ownurl', $tikilib->httpPrefix().$_SERVER["SCRIPT_NAME"].urlencode($_SERVER["QUERY_STRING"]));
+    $smarty->assign('ownurl', $tikilib->httpPrefix().$_SERVER["SCRIPT_NAME"]."?".urlencode($_SERVER["QUERY_STRING"]));
 	$modTasks = $tasklib->list_tasks($user, 0, -1, null, 'priority_desc', true, false, true, false);
 	$smarty->assign('modTasks', $modTasks['data']);
 }
