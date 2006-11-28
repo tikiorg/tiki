@@ -1,4 +1,4 @@
-<?php // $Id: initlib.php,v 1.10 2006-11-21 15:00:48 mose Exp $
+<?php // $Id: initlib.php,v 1.11 2006-11-28 05:26:03 mose Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
@@ -133,8 +133,8 @@ function tiki_error_handling($errno, $errstr, $errfile, $errline) {
 				$back.= "<tt><b>Line:</b></tt> $errline<br />";
 				$back.= "<tt><b>Type:</b></tt> $errstr";
 				$back.= "</div>";
+				$errors[] = $back;
 			}
-			$errors[] = $back;
 			break;
 		case E_NOTICE:
 		case E_USER_NOTICE:
