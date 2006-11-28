@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.29 2005-05-18 10:59:01 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.30 2006-11-28 07:16:46 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,6 +10,7 @@
 require_once ('tiki-setup.php');
 
 include_once ('lib/webmail/webmaillib.php');
+include_once ('lib/webmail/contactlib.php');
 
 if ($feature_webmail != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
@@ -125,7 +126,7 @@ if (isset($_REQUEST["add_contacts"])) {
 	if (isset($_REQUEST["add"])) {
 		check_ticket('webmail');
 		foreach (array_keys($_REQUEST["add"])as $i) {
-			$webmaillib->replace_contact(0, $_REQUEST["addFirstName"][$i], $_REQUEST["addLastName"][$i], $_REQUEST["addemail"][$i],
+			$contactlib->replace_contact(0, $_REQUEST["addFirstName"][$i], $_REQUEST["addLastName"][$i], $_REQUEST["addemail"][$i],
 				$_REQUEST["addNickname"][$i], $user);
 		}
 	}
@@ -605,10 +606,10 @@ if ($_REQUEST["locSection"] == 'compose') {
 			}
 		}
 
-		$to_array = $webmaillib->parse_nicknames($to_array);
+		$to_array = $contactlib->parse_nicknames($to_array);
 
 		// Get email addresses not in the address book
-		$not_contacts = $webmaillib->are_contacts($to_array, $user);
+		$not_contacts = $contactllib->are_contacts($to_array, $user);
 
 		if (count($not_contacts) > 0) {
 			$smarty->assign('notcon', 'y');
@@ -784,7 +785,7 @@ if ($_REQUEST["locSection"] == 'contacts') {
 	$smarty->assign('contactId', $_REQUEST["contactId"]);
 
 	if ($_REQUEST["contactId"]) {
-		$info = $webmaillib->get_contact($_REQUEST["contactId"], $user);
+		$info = $contactlib->get_contact($_REQUEST["contactId"], $user);
 	} else {
 		$info = array();
 
@@ -798,12 +799,12 @@ if ($_REQUEST["locSection"] == 'contacts') {
 
 	if (isset($_REQUEST["remove"])) {
 		check_ticket('webmail');
-		$webmaillib->remove_contact($_REQUEST["remove"], $user);
+		$contactlib->remove_contact($_REQUEST["remove"], $user);
 	}
 
 	if (isset($_REQUEST["save"])) {
 		check_ticket('webmail');
-		$webmaillib->replace_contact($_REQUEST["contactId"], $_REQUEST["firstName"], $_REQUEST["lastName"], $_REQUEST["email"], $_REQUEST["nickname"], $user);
+		$contactlib->replace_contact($_REQUEST["contactId"], $_REQUEST["firstName"], $_REQUEST["lastName"], $_REQUEST["email"], $_REQUEST["nickname"], $user);
 
 		$info["firstName"] = '';
 		$info["lastName"] = '';
@@ -838,9 +839,9 @@ if ($_REQUEST["locSection"] == 'contacts') {
 	$smarty->assign_by_ref('sort_mode', $sort_mode);
 
 	if (!isset($_REQUEST["letter"])) {
-		$channels = $webmaillib->list_contacts($user, $offset, $maxRecords, $sort_mode, $find);
+		$channels = $contactlib->list_contacts($user, $offset, $maxRecords, $sort_mode, $find);
 	} else {
-		$channels = $webmaillib->list_contacts_by_letter($user, $offset, $maxRecords, $sort_mode, $_REQUEST["letter"]);
+		$channels = $contactlib->list_contacts_by_letter($user, $offset, $maxRecords, $sort_mode, $_REQUEST["letter"]);
 	}
 
 	$cant_pages = ceil($channels["cant"] / $maxRecords);

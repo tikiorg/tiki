@@ -1,15 +1,17 @@
 <?php
-
-// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail_contacts.php,v 1.12 2006-11-28 07:16:46 mose Exp $
-
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
 require_once ('tiki-setup.php');
+include_once ('lib/webmail/contactlib.php');
 
-include_once ('lib/webmail/webmaillib.php');
+if ($feature_contacts != 'y') {
+  $smarty->assign('msg', tra("This feature is disabled").": feature_contacts");
+  $smarty->display("error.tpl");
+  die;
+}
 
 $smarty->assign('element', $_REQUEST["element"]);
 
@@ -23,13 +25,11 @@ if ($_REQUEST["contactId"]) {
 	$info = $contactlib->get_contact($_REQUEST["contactId"], $user);
 } else {
 	$info = array();
-
 	$info["firstName"] = '';
 	$info["lastName"] = '';
 	$info["email"] = '';
 	$info["nickname"] = '';
 }
-
 $smarty->assign('info', $info);
 
 if (isset($_REQUEST["remove"])) {
@@ -45,7 +45,6 @@ if (isset($_REQUEST["remove"])) {
 if (isset($_REQUEST["save"])) {
 	check_ticket('webmail-contact');
 	$contactlib->replace_contact($_REQUEST["contactId"], $_REQUEST["firstName"], $_REQUEST["lastName"], $_REQUEST["email"], $_REQUEST["nickname"], $user);
-
 	$info["firstName"] = '';
 	$info["lastName"] = '';
 	$info["email"] = '';
@@ -59,6 +58,7 @@ if (!isset($_REQUEST["sort_mode"])) {
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
+$smarty->assign_by_ref('sort_mode', $sort_mode);
 
 if (!isset($_REQUEST["offset"])) {
 	$offset = 0;
@@ -76,7 +76,6 @@ if (isset($_REQUEST["find"])) {
 
 $smarty->assign('find', $find);
 $maxRecords = 20;
-$smarty->assign_by_ref('sort_mode', $sort_mode);
 
 if (!isset($_REQUEST["letter"])) {
 	$channels = $contactlib->list_contacts($user, $offset, $maxRecords, $sort_mode, $find);
@@ -108,9 +107,8 @@ if ($offset > 0) {
 
 $smarty->assign_by_ref('channels', $channels["data"]);
 
-ask_ticket('webmail-contact');
+ask_ticket('contacts');
 
-//$smarty->display("tiki-webmail_contacts.tpl");
-$smarty->display("tiki-webmail_contacts.tpl");
-
+$smarty->assign('mid','tiki-contacts.tpl');
+$smarty->display('tiki.tpl');
 ?>

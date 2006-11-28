@@ -470,6 +470,12 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
             {if $feature_notepad eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=UserNotepadDoc" target="tikihelp" class="tikihelp" title="{tr}User Notepad{/tr}">{/if} {tr}User Notepad{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
     <td>&nbsp;</td>
+    <td align="right"><div align="right">
+      <input type="checkbox" name="feature_contacts"
+            {if $feature_contacts eq 'y'}checked="checked"{/if}/>
+    </div></td>
+    <td class="form"> {if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=UserContacts" target="tikihelp" class="tikihelp" title="{tr}User Contacts{/tr}">{/if} {tr}User Contacts{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
+    <td>&nbsp;</td>
   </tr>
 </table>
 {* --- General Layout options --- *}
