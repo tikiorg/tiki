@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.148 2006-11-28 15:23:27 hangerman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.149 2006-11-28 22:27:55 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -351,8 +351,6 @@ class TrackerLib extends TikiLib {
 	/* experimental shared */
 	function get_item_value($trackerId,$itemId,$fieldId) {
 	        $res=""; 
-	        $fieldInfo=$this->get_tracker_field($fieldId);
-	        $isTextArea=($fieldInfo['type']=='a');
 		$basequery = "select ttif.`value` from `tiki_tracker_items` tti, `tiki_tracker_fields` ttf, `tiki_tracker_item_fields` ttif where tti.`trackerId`=ttf.`trackerId` and ttif.`fieldId`=ttf.`fieldId` and ttf.`trackerId`=? and ttf.`fieldId`=? and ttif.`itemId`=? ";
 		if ($this->is_multilingual($fieldId)=='y') {
 	        	global $language;
@@ -364,10 +362,6 @@ class TrackerLib extends TikiLib {
                     $query = $basequery;
                     $res=$this->getOne($query,array((int) $trackerId,(int)$fieldId,(int)$itemId));
                }
-               if ($isTextArea){
-                    global $tikilib;
-                    return $tikilib->parse_data($res,'full');
-               } else
 		    return $res;
 	}
 
