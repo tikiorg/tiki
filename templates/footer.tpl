@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/footer.tpl,v 1.8 2006-11-22 01:42:41 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/footer.tpl,v 1.9 2006-11-28 14:34:11 sylvieg Exp $ *}
 
-{if count($errors)}
+{if count($phpErrors)}
 <span class="button2"><a href="#" onclick="flip('errors');return false;" class="linkbut">{tr}Show php error messages{/tr}</a></span><br />
 <div id="errors" style="display:{if isset($smarty.session.tiki_cookie_jar.show_errors) and $smarty.session.tiki_cookie_jar.show_errors eq 'y'}block{else}none{/if};">
-{foreach item=err from=$errors}{$err}{/foreach}
+{foreach item=err from=$phpErrors}{$err}{/foreach}
 </div>
 {/if}
 
