@@ -30,7 +30,7 @@
 <input type="hidden" name="image_size" value="{$image_size|escape}" />
 <table class="normal">
 <tr class="formcolor" id='show_topline' {if $types.$type.show_topline eq 'y'}style="display:;"{else}style="display:none;"{/if}><td>{tr}Topline{/tr} *</td><td><input type="text" name="topline" value="{$topline|escape}" size="60" /></td></tr>
-<tr class="formcolor"><td>{tr}Title{/tr}</td><td><input type="text" name="title" value="{$title|escape}" maxlength="80" size="80" /></td></tr>
+<tr class="formcolor"><td>{tr}Title{/tr}</td><td><input type="text" name="title" value="{$title|escape}" maxlength="255" size="80" /></td></tr>
 <tr class="formcolor" id='show_subtitle' {if $types.$type.show_subtitle eq 'y'}style="display:;"{else}style="display:none;"{/if}><td>{tr}Subtitle{/tr} *</td><td><input type="text" name="subtitle" value="{$subtitle|escape}" size="60" /></td></tr>
 <tr class="formcolor" id='show_linkto' {if $types.$type.show_linkto eq 'y'}style="display:;"{else}style="display:none;"{/if}><td>{tr}Source{/tr} ({tr}URL{/tr}) *</td><td><input type="text" name="linkto" value="{$linkto|escape}" size="60" /></td></tr>
 {if $feature_multilingual eq 'y'}
