@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_archives.php,v 1.3 2006-11-28 16:05:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_archives.php,v 1.4 2006-11-28 16:20:21 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -68,10 +68,10 @@ if (!isset($_REQUEST['find']))
 	$_REQUEST['find'] = '';
 $smarty->assign('find', $_REQUEST['find']);
 if (!isset($_REQUEST['offset']))
-	$_REQUEST["offset"] = 0;
+	$_REQUEST['offset'] = 0;
 $smarty->assign_by_ref('offset', $_REQUEST['offset']);
 
-$files = $filegallib->get_archives($_REQUEST['fileId']);
+$files = $filegallib->get_archives($_REQUEST['fileId'], $_REQUEST['offset'], $maxRecords, $_REQUEST['sort_mode'], $_REQUEST['find']);
 $smarty->assign_by_ref('files', $files['data']);
 $file[] = $fileInfo;
 $smarty->assign_by_ref('file',$file); 
