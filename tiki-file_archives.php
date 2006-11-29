@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_archives.php,v 1.4 2006-11-28 16:20:21 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_archives.php,v 1.5 2006-11-29 18:40:50 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -61,17 +61,17 @@ if (isset($_REQUEST['delsel_x']) && !empty($_REQUEST['file'])) {
 	}
 }
 
-if (!isset($_REQUEST['sort_mode']))
-	$_REQUEST['sort_mode'] = 'created_desc';
-$smarty->assign_by_ref('sort_mode', $_REQUEST['sort_mode']);
-if (!isset($_REQUEST['find']))
-	$_REQUEST['find'] = '';
-$smarty->assign('find', $_REQUEST['find']);
-if (!isset($_REQUEST['offset']))
-	$_REQUEST['offset'] = 0;
-$smarty->assign_by_ref('offset', $_REQUEST['offset']);
+if (!isset($_REQUEST['file_sort_mode']))
+	$_REQUEST['file_sort_mode'] = 'created_desc';
+$smarty->assign_by_ref('file_sort_mode', $_REQUEST['file_sort_mode']);
+if (!isset($_REQUEST['file_find']))
+	$_REQUEST['file_find'] = '';
+$smarty->assign('file_find', $_REQUEST['file_find']);
+if (!isset($_REQUEST['file_offset']))
+	$_REQUEST['file_offset'] = 0;
+$smarty->assign_by_ref('file_offset', $_REQUEST['file_offset']);
 
-$files = $filegallib->get_archives($_REQUEST['fileId'], $_REQUEST['offset'], $maxRecords, $_REQUEST['sort_mode'], $_REQUEST['find']);
+$files = $filegallib->get_archives($_REQUEST['fileId'], $_REQUEST['file_offset'], $maxRecords, $_REQUEST['file_sort_mode'], $_REQUEST['file_find']);
 $smarty->assign_by_ref('files', $files['data']);
 $file[] = $fileInfo;
 $smarty->assign_by_ref('file',$file); 
@@ -79,16 +79,16 @@ $smarty->assign_by_ref('file',$file);
 $cant_pages = ceil($files['cant'] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
 $smarty->assign_by_ref('maxRecords', $maxRecords);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
-if ($files["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
+$smarty->assign('actual_page', 1 + ($file_offset / $maxRecords));
+if ($files["cant"] > ($file_offset + $maxRecords)) {
+	$smarty->assign('file_next_offset', $file_offset + $maxRecords);
 } else {
-	$smarty->assign('next_offset', -1);
+	$smarty->assign('file_next_offset', -1);
 }
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
+if ($file_offset > 0) {
+	$smarty->assign('file_prev_offset', $file_offset - $maxRecords);
 } else {
-	$smarty->assign('prev_offset', -1);
+	$smarty->assign('file_prev_offset', -1);
 }
 
 $smarty->assign_by_ref('file_info', $fileInfo);

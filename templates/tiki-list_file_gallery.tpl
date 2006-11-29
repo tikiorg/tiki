@@ -1,5 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.35 2006-11-27 21:41:29 sylvieg Exp $ *}
-
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.36 2006-11-29 18:40:51 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}">{tr}Listing Gallery{/tr}: {$name}</a></h1>
 
 <table><tr>
@@ -58,7 +57,13 @@
 </td></tr></table>
 
 <h2>{tr}Gallery Files{/tr}</h2>
-{include file=list_file_gallery.tpl}
+{include file=list_file_gallery.tpl ext="file_" offset=$file_offset find=$file_find sort_mode=$file_sort_mode prev_offset=$file_prev_offset next_offset=$file_next_offset cant_pages=$file_cant_pages actual_page=$file_actual_page}
+
+{if isset($galleries)}
+<h2>{tr}Sub-galleries{/tr}</h2>
+{include file=file_galleries.tpl}
+{/if}
+
 
 {if $feature_file_galleries_comments == 'y'
   && (($tiki_p_read_comments  == 'y'
