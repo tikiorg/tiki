@@ -30,12 +30,52 @@ class ContactLib extends TikiLib {
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
+			$query = "select `groupName` from `tiki_webmail_contacts_groups` where `contactId`=?";
+			$res2 = $this->query($query,array((int)$res['contactId']));
+			$ret2 = array();
+			if ($res2) {
+				while ($r2 = $res2->fetchRow()) {
+					$res['groups'][] = $r2['groupName'];
+				}
+			} else {
+				$res['groups'] = array();
+			}
 			$ret[] = $res;
 		}
+
 		$retval = array();
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;
 		return $retval;
+	}
+
+
+	function list_group_contacts($user, $offset, $maxRecords, $sort_mode, $find, $initial=false) {
+		if ($find) {
+			$findesc = '%' . $find . '%';
+			$mid = " and (c.`nickname` like ? or c.`firstName` like ? or c.`lastName` like ? or c.`email` like ?)";
+			$bindvars=array($findesc, $findesc, $findesc, $findesc);
+		} else {
+			$mid = "";
+			$bindvars=array();
+		}
+		$groups = $this->get_user_groups($user);
+		$count = 0;
+		foreach ($groups as $group) {
+			$query = "select c.* from `tiki_webmail_contacts_groups` as a left join `tiki_webmail_contacts` as c on a.`contactId`=c.`contactId` where a.`groupName`=? $mid order by c.".$this->convert_sortmode($sort_mode);
+			$query_cant = "select count(*) from `tiki_webmail_contacts_groups` as a left join `tiki_webmail_contacts` as c on a.`contactId`=c.`contactId` where a.`groupName`=? $mid";
+			$bindv = $bindvars;
+			array_unshift($bindv,$group);
+			$result = $this->query($query, $bindv, $maxRecords, $offset);
+			$cant = $this->getOne($query_cant, $bindv);
+			$ret = array();
+			while ($res = $result->fetchRow()) {
+				$back[$group][] = $res;
+			}
+			$count = $count + $cant;
+		}
+
+		return array('data'=>$back,'cant'=>$count);
 	}
 
 	function are_contacts($contacts, $user) {
@@ -89,7 +129,7 @@ class ContactLib extends TikiLib {
 		return $dirs;
 	}
 
-	function replace_contact($contactId, $firstName, $lastName, $email, $nickname, $user) {
+	function replace_contact($contactId, $firstName, $lastName, $email, $nickname, $user, $groups=array()) {
 		$firstName = trim($firstName);
 		$lastName = trim($lastName);
 		$email = trim($email);
@@ -98,11 +138,18 @@ class ContactLib extends TikiLib {
 			$query = "update `tiki_webmail_contacts` set `firstName`=?, `lastName`=?, `email`=?, `nickname`=? where `contactId`=? and `user`=?";
 			$bindvars = array($firstName,$lastName,$email,$nickname,(int)$contactId,$user);
 			$result = $this->query($query, $bindvars);
+			$this->query('delete from `tiki_webmail_contacts_groups` where `contactId`=?',array((int)$contactId));
 		} else {
 		  $query = "delete from `tiki_webmail_contacts` where `contactId`=? and `user`=?"; 
 		  $result = $this->query($query,array((int)$contactId, $user),-1,-1,false); //the false allows ignoring errors 
-      $query = "insert into `tiki_webmail_contacts`(`firstName`,`lastName`,`email`,`nickname`,`user`) values(?,?,?,?,?)"; 
-      $result = $this->query($query,array($firstName,$lastName,$email,$nickname,$user)); 
+			$contactId = $this->getOne('select max(`contactId`) from `tiki_webmail_contacts`') + 1;
+      $query = "insert into `tiki_webmail_contacts`(`contactId`,`firstName`,`lastName`,`email`,`nickname`,`user`) values(?,?,?,?,?,?)"; 
+      $result = $this->query($query,array((int)$contactId,$firstName,$lastName,$email,$nickname,$user)); 
+		}
+		if (count($groups)) {
+			foreach ($groups as $group) {
+				$this->query('insert into `tiki_webmail_contacts_groups` (`contactId`,`groupName`) values (?,?)',array((int)$contactId,$group));
+			}
 		}
 		return true;
 	}
@@ -120,6 +167,14 @@ class ContactLib extends TikiLib {
 			return false;
 		}
 		$res = $result->fetchRow();
+		$query = "select `groupName` from `tiki_webmail_contacts_groups` where `contactId`=?";
+		$res2 = $this->query($query,array((int)$res['contactId']));
+		$ret2 = array();
+		if ($res2) {
+			while ($r2 = $res2->fetchRow()) {
+				$res['groups'][] = $r2['groupName'];
+			}
+		}
 		return $res;
 	}
 

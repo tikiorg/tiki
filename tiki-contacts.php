@@ -29,6 +29,7 @@ if ($_REQUEST["contactId"]) {
 	$info["lastName"] = '';
 	$info["email"] = '';
 	$info["nickname"] = '';
+	$info["groups"] = array();
 }
 $smarty->assign('info', $info);
 
@@ -44,11 +45,12 @@ if (isset($_REQUEST["remove"])) {
 
 if (isset($_REQUEST["save"])) {
 	check_ticket('webmail-contact');
-	$contactlib->replace_contact($_REQUEST["contactId"], $_REQUEST["firstName"], $_REQUEST["lastName"], $_REQUEST["email"], $_REQUEST["nickname"], $user);
+	$contactlib->replace_contact($_REQUEST["contactId"], $_REQUEST["firstName"], $_REQUEST["lastName"], $_REQUEST["email"], $_REQUEST["nickname"], $user, $_REQUEST['groups']);
 	$info["firstName"] = '';
 	$info["lastName"] = '';
 	$info["email"] = '';
 	$info["nickname"] = '';
+	$info["groups"] = array();
 	$smarty->assign('info', $info);
 	$smarty->assign('contactId', 0);
 }
@@ -83,12 +85,20 @@ if (!isset($_REQUEST["letter"])) {
 	$channels = $contactlib->list_contacts_by_letter($user, $offset, $maxRecords, $sort_mode, $_REQUEST["letter"]);
 }
 
-$cant_pages = ceil($channels["cant"] / $maxRecords);
+$all = $contactlib->list_group_contacts($user, $offset, $maxRecords, $sort_mode, $find);
 
+$all['data']['user_personal_contacts'] = $channels["data"];
+
+$smarty->assign('all', $all['data']);
+
+$groups = $userlib->get_user_groups($user);
+$smarty->assign('groups', $groups);
+
+$cant = $channels['cant'] + $all['cant'];
+$cant_pages = ceil($cant / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
 $smarty->assign('actual_page', 1 + ($offset / $maxRecords));
-
-if ($channels["cant"] > ($offset + $maxRecords)) {
+if ($cant > ($offset + $maxRecords)) {
 	$smarty->assign('next_offset', $offset + $maxRecords);
 } else {
 	$smarty->assign('next_offset', -1);
@@ -97,15 +107,12 @@ if ($channels["cant"] > ($offset + $maxRecords)) {
 $letters = 'a-b-c-d-e-f-g-h-i-j-k-l-m-n-o-p-q-r-s-t-u-v-w-x-y-z';
 $letters = split('-', $letters);
 $smarty->assign('letters', $letters);
-
-// If offset is > 0 then prev_offset
 if ($offset > 0) {
 	$smarty->assign('prev_offset', $offset - $maxRecords);
 } else {
 	$smarty->assign('prev_offset', -1);
 }
 
-$smarty->assign_by_ref('channels', $channels["data"]);
 
 ask_ticket('contacts');
 
