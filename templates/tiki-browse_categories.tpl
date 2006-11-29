@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.19 2006-11-17 21:26:50 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.20 2006-11-29 06:07:49 mose Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-browse_categories.php">{if $parentId ne 0}{tr}Category{/tr} {$p_info.name}{else}{tr}Categories{/tr}{/if}</a></h1>
 {if $parentId and $p_info.description}<div class="description">{$p_info.description}</div>{/if}
@@ -87,7 +87,7 @@
 {/section}
 {/if}
 
-<table width="100%">
+<table class="admin">
 <tr><td>
 <div class="tree">
 {$tree}
