@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.88 2006-10-18 21:37:53 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.89 2006-11-29 10:29:53 mose Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -16,7 +16,7 @@
 {/if}
 
 <h1>{tr}Edit{/tr}: {$page|escape}{if $pageAlias ne ''}&nbsp;({$pageAlias|escape}){/if}</h1>
-{if $data.draft}
+{if isset($data.draft)}
   {tr}Draft written on{/tr} {$data.draft.lastModif|tiki_long_time}<br/>
   {if $data.draft.lastModif < $data.lastModif}
     <b>{tr}Warning: new versions of this page have been made after this draft{/tr}</b>
@@ -77,7 +77,7 @@
 {if $add_child}
 <input type="hidden" name="add_child" value="true" />
 {/if}
-{if $can_wysiwyg}
+{if $feature_wysiwyg eq 'optional' and $can_wysiwyg}
 {if !$wysiwyg}
 <span class="button2"><a class="linkbut" href="?page={$page}&&wysiwyg=y">{tr}Use wysiwyg editor{/tr}</a></span>
 {else}
@@ -171,25 +171,21 @@ or use
 {if $feature_wiki_description eq 'y'}
 <tr class="formcolor"><td>{tr}Description{/tr}:</td><td><input style="width:95%;" class="wikitext" type="text" name="description" value="{$description|escape}" /></td></tr>
 {/if}
-<tr class="formcolor"><td>{tr}Edit{/tr}:<br /><br />
+<tr class="formcolor">
 {if !$wysiwyg}
+<td>
+{tr}Edit{/tr}:<br /><br />
 {include file="textareasize.tpl" area_name='editwiki' formId='editpageform'}<br /><br />
 {include file=tiki-edit_help_tool.tpl area_name='editwiki'}
-{/if}
 </td>
 <td>
 <textarea id='editwiki' class="wikiedit" name="edit" rows="{$rows}" cols="{$cols}" style="WIDTH: 100%;">{$pagedata|escape}</textarea>
-{if $wysiwyg}
- <script type="text/javascript" src="lib/fckeditor/fckeditor.js"></script>
- <script type="text/javascript">
-        sBasePath = 'lib/fckeditor/';
-	var oFCKeditor = new FCKeditor( 'edit' ) ;
-	oFCKeditor.BasePath	= sBasePath ;
-	oFCKeditor.ReplaceTextarea() ;
- </script>
-{/if}
 <input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/>
+{else}
+<td colspan="2">
+{editform Meat=$pagedata InstanceName='edit'}
+{/if}
 </td></tr>
 
 {if $feature_wiki_replace eq 'y'}
