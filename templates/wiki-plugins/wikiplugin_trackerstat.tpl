@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/wiki-plugins/wikiplugin_trackerstat.tpl,v 1.4 2006-11-02 18:58:10 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/wiki-plugins/wikiplugin_trackerstat.tpl,v 1.5 2006-11-29 18:21:59 sylvieg Exp $ *}
 <table class="normal wikiplugin_trackerstat">
 {cycle values="even,odd" print=false}
 {section name=istat loop=$stats}
-<tr><th class="heading" colspan="{if $show_bar eq 'y' and $show_percent eq 'y'}4{elseif $show_bar eq 'y' or $show_percent eq 'y'}3{else}2{/if}">{$stats[istat].name|escape}</td>
+<tr><th class="heading" colspan="{if $show_bar eq 'y' and $show_percent eq 'y'}4{elseif $show_bar eq 'y' or $show_percent eq 'y'}3{else}2{/if}">{$stats[istat].name|escape}</th>
 </tr>
 {foreach from=$stats[istat].values item=val}
 <tr>
