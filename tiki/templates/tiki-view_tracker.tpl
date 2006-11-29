@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker.tpl,v 1.119 2006-11-24 17:30:43 hangerman Exp $ *}
+{* $Id: tiki-view_tracker.tpl,v 1.120 2006-11-29 00:29:41 fr_rodo Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -451,7 +451,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {assign var=fid value=$fields[ix].fieldId}
 
 {if $fields[ix].isHidden eq 'n' or $tiki_p_admin_trackers eq 'y'}
-{if $fields[ix].type ne 'x' and $fields[ix].type ne 'l'}
+{if $fields[ix].type ne 'x' and $fields[ix].type ne 'l' and $fields[ix].type ne 'q'}
 {if $fields[ix].type eq 'h'}
 </table>
 <h2>{$fields[ix].name}</h2>

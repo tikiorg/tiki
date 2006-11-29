@@ -734,6 +734,10 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 				} else {
 				  $value = '';
 				}
+
+				if (isset($ins_fields["data"][$i]["type"]) and $ins_fields["data"][$i]["type"] == 'q' and $itemId == false)
+					$value = $this->getOne("select max(cast(field_$fieldId as UNSIGNED)) from $tableId") + 1;
+
 				if (isset($ins_fields["data"][$i]["type"]) and ($ins_fields["data"][$i]["type"] == 'f' or $ins_fields["data"][$i]["type"] == 'j')) {
 					$human_value = date('r',$ins_fields["data"][$i]["value"]);
 					$the_data .= "  $name = $human_value\n";
