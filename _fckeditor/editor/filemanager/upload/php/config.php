@@ -21,14 +21,14 @@
 global $Config ;
 
 // SECURITY: You must explicitelly enable this "uploader". 
-$Config['Enabled'] = false ;
+$Config['Enabled'] = true ;
 
 // Set if the file type must be considere in the target path. 
 // Ex: /UserFiles/Image/ or /UserFiles/File/
 $Config['UseFileType'] = false ;
 
 // Path to uploaded files relative to the document root.
-$Config['UserFilesPath'] = '/UserFiles/' ;
+$Config['UserFilesPath'] = 'img/wiki_up/' ;
 
 // Fill the following value it you prefer to specify the absolute path for the
 // user files directory. Usefull if you are using a virtual directory, symbolic
