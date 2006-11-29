@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker_item.tpl,v 1.106 2006-11-24 17:30:43 hangerman Exp $ *}
+{* $Id: tiki-view_tracker_item.tpl,v 1.107 2006-11-29 00:29:58 fr_rodo Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -392,7 +392,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 <h2>{$cur_field.name}</h2>
 <table class="normal">
 {else}
-{if ($cur_field.type eq 'c' or $$cur_field.type eq 't' or $$cur_field.type eq 'n') and $$cur_field.options_array[0] eq '1'}
+{if ($cur_field.type eq 'c' or $cur_field.type eq 't' or $cur_field.type eq 'n') and $cur_field.options_array[0] eq '1'}
 <tr class="formcolor"><td class="formlabel">{$cur_field.name}{if $cur_field.isMandatory eq 'y'} *{/if}</td><td nowrap="nowrap">
 {elseif $stick eq 'y'}
 <td class="formlabel right">{$cur_field.name}{if $cur_field.isMandatory eq 'y'} *{/if}</td><td nowrap="nowrap">
@@ -484,6 +484,10 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {if $cur_field.options_array[2]}<span class="formunit">{$cur_field.options_array[2]}&nbsp;</span>{/if}
 <input type="text" name="ins_{$cur_field.id}" value="{$cur_field.value|escape}" {if $cur_field.options_array[1]}size="{$cur_field.options_array[1]}" maxlength="{$cur_field.options_array[1]}"{/if} />
 {if $cur_field.options_array[3]}<span class="formunit">&nbsp;{$cur_field.options_array[3]}</span>{/if}
+
+{elseif $cur_field.type eq 'q'}
+<input type="hidden" name="ins_{$cur_field.id}" value="{$cur_field.value|escape}" size="6" maxlength="6" />
+{$cur_field.value|escape}
 
 {elseif $cur_field.type eq 'a'}
 {if $cur_field.isMultilingual ne "y"}
