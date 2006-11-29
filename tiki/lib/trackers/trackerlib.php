@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.149 2006-11-28 22:27:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.150 2006-11-29 00:36:04 fr_rodo Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -767,6 +767,8 @@ class TrackerLib extends TikiLib {
 				}
 				$value = @ $ins_fields["data"][$i]["value"];
 
+				if (isset($ins_fields["data"][$i]["type"]) and $ins_fields["data"][$i]["type"] == 'q' and $itemId == false)
+					$value = $this->getOne("select max(cast(value as UNSIGNED)) from `tiki_tracker_item_fields` where `fieldId`=?",array((int)$fieldId)) + 1;
 
 				if ($ins_fields["data"][$i]["type"] == 'e' && $feature_categories == 'y') {
 				// category type
@@ -1669,6 +1671,10 @@ class TrackerLib extends TikiLib {
 			'label'=>tra('email'),
 			'opt'=>true,
 			'help'=>tra('Email address options: 0|1|2 where 0 puts the address as plain text, 1 does a hex encoded mailto link (more difficult for web spiders to pick it up and spam) and 2 does the normal href mailto.') );
+		$type['q'] = array(
+			'label'=>tra('auto-increment'),
+			'opt'=>false,
+			'help'=>tra('Sequential auto-increment number') );
 		$type['s'] = array(
 			'label'=>tra('system'),
 			'opt'=>false);
