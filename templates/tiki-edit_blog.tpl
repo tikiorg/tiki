@@ -33,7 +33,12 @@
 <table class="normal">
 <tr class="editblogform"><td><label for="blog-title">{tr}Title{/tr}</label></td><td><input type="text" name="title" id="blog-title" value="{$title|escape}" /></td></tr>
 <tr><td class="editblogform"><label for="blog-desc">{tr}Description{/tr}</label><br />{include file="textareasize.tpl" area_name='blog-desc' formId='blog-edit-form'}</td><td class="editblogform"><textarea class="wikiedit" name="description" id="blog-desc" rows="{$rows}" cols="{$cols}" wrap="virtual">{$description|escape}</textarea></td></tr>
-<tr><TD>{tr}Creator{/tr}</TD><td>{$creators}</td></tr>
+{if $tiki_p_admin eq 'y' and $blogId}<tr class="editblogform"><td>{tr}Creator{/tr}</td><td><select name="user">
+{foreach from=$users key=userId item=u}
+<option value="{$u|escape}"{if $u eq $blog_info.user} selected="selected"{/if}>{$u}</option> 	
+{/foreach}
+</select> 
+</td></tr>{/if}
 <tr class="editblogform"><td><label for="blogs-number">{tr}Number of posts to show{/tr}</label></td><td><input type="text" name="maxPosts" id="blogs-number" value="{$maxPosts|escape}" /></td></tr>
 <tr class="editblogform"><td><label for="blogs-allow_others">{tr}Allow other user to post in this blog{/tr}</label></td><td>
 <input type="checkbox" name="public" id="blogs-allow_others" {if $public eq 'y'}checked='checked'{/if}/>
