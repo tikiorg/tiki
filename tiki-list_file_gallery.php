@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.32 2006-11-24 12:45:09 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.33 2006-11-29 18:37:37 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -234,55 +234,55 @@ $smarty->assign('maxRecords', $maxRecords);
 $smarty->assign_by_ref('name', $gal_info["name"]);
 $smarty->assign_by_ref('description', $gal_info["description"]);
 
-if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'created_desc';
+if (!isset($_REQUEST["file_sort_mode"])) {
+	$file_sort_mode = 'created_desc';
 
-	$_REQUEST["sort_mode"] = 'created_desc';
+	$_REQUEST["file_sort_mode"] = 'created_desc';
 } else {
-	$sort_mode = $_REQUEST["sort_mode"];
+	$file_sort_mode = $_REQUEST["file_sort_mode"];
 }
 
-$smarty->assign_by_ref('sort_mode', $sort_mode);
+$smarty->assign_by_ref('file_sort_mode', $file_sort_mode);
 
 // If offset is set use it if not then use offset =0
 // use the maxRecords php variable to set the limit
 // if sortMode is not set then use lastModif_desc
-if (!isset($_REQUEST["offset"])) {
-	$offset = 0;
+if (!isset($_REQUEST["file_offset"])) {
+	$file_offset = 0;
 
-	$_REQUEST["offset"] = 0;
+	$_REQUEST["file_offset"] = 0;
 } else {
-	$offset = $_REQUEST["offset"];
+	$file_offset = $_REQUEST["file_offset"];
 }
 
-$smarty->assign_by_ref('offset', $offset);
+$smarty->assign_by_ref('file_offset', $file_offset);
 
-if (isset($_REQUEST["find"])) {
-	$find = $_REQUEST["find"];
+if (isset($_REQUEST['file_find'])) {
+	$file_find = $_REQUEST['file_find'];
 } else {
-	$find = '';
+	$file_find = '';
 
-	$_REQUEST["find"] = '';
+	$_REQUEST['file_find'] = '';
 }
 
-$smarty->assign('find', $find);
+$smarty->assign('file_find', $file_find);
 
-$files = $tikilib->get_files($offset, $maxRecords, $sort_mode, $find, $_REQUEST["galleryId"], true);
+$files = $tikilib->get_files($file_offset, $maxRecords, $file_sort_mode, $file_find, $_REQUEST["galleryId"], true);
 $cant_pages = ceil($files['cant'] / $maxRecords);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
+$smarty->assign_by_ref('file_cant_pages', $cant_pages);
+$smarty->assign('file_actual_page', 1 + ($file_offset / $maxRecords));
 
-if ($files["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
+if ($files["cant"] > ($file_offset + $maxRecords)) {
+	$smarty->assign('file_next_offset', $file_offset + $maxRecords);
 } else {
-	$smarty->assign('next_offset', -1);
+	$smarty->assign('file_next_offset', -1);
 }
 
 // If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
+if ($file_offset > 0) {
+	$smarty->assign('file_prev_offset', $file_offset - $maxRecords);
 } else {
-	$smarty->assign('prev_offset', -1);
+	$smarty->assign('file_prev_offset', -1);
 }
 
 $smarty->assign_by_ref('files', $files['data']);
@@ -291,15 +291,38 @@ if ($feature_file_galleries_comments == 'y') {
 	$comments_per_page = $file_galleries_comments_per_page;
 
 	$comments_default_ordering = $file_galleries_comments_default_ordering;
-	$comments_vars = array(
-		'galleryId',
-		'offset',
-		'sort_mode'
-	);
+	$comments_vars = array('galleryId',	'offset', 'sort_mode', 'find', 'file_offset', 'file_sort_mode', 'file_find');
 
 	$comments_prefix_var = 'file gallery:';
 	$comments_object_var = 'galleryId';
 	include_once ("comments.php");
+}
+
+// sub galleries
+if (!isset($_REQUEST['offset']))
+	$_REQUEST['offset'] = 0;
+if (!isset($_REQUEST['sort_mode']))
+	$_REQUEST['sort_mode'] = 'name_asc';
+if (!isset($_REQUEST['find']))
+	$_REQUEST['find'] = '';
+$galleries = $filegallib->list_file_galleries($_REQUEST['offset'], $maxRecords, $_REQUEST['sort_mode'], $user, $_REQUEST['find'], $_REQUEST["galleryId"]);
+if ($galleries['cant']) {
+	if ($galleries['cant'] > ($_REQUEST['offset'] + $maxRecords)) {
+		$smarty->assign('next_offset', $_REQUEST['offset'] + $maxRecords);
+	} else {
+		$smarty->assign('next_offset', -1);
+	}
+	if ($offset > 0) {
+		$smarty->assign('prev_offset', $_REQUEST['offset'] - $maxRecords);
+	} else {
+		$smarty->assign('prev_offset', -1);
+	}
+	$smarty->assign('actual_page', 1 + ($_REQUEST['offset'] / $maxRecords));
+	$smarty->assign_by_ref('cant_pages', ceil($galleries['cant'] / $maxRecords));
+	$smarty->assign_by_ref('galleries', $galleries['data']);
+	$smarty->assign_by_ref('sort_mode', $_REQUEST['sort_mode']);
+	$smarty->assign_by_ref('find', $_REQUEST['find']);
+	$smarty->assign_by_ref('offset', $_REQUEST['offset']);
 }
 
 $section = 'file_galleries';
@@ -335,7 +358,6 @@ if($feature_user_watches == 'y') {
         $smarty->assign('user_watching_file_gallery','y');
     }
 }
-
 
 
 $all_galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '');

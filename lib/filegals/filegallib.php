@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.48 2006-11-28 19:29:22 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.49 2006-11-29 18:37:37 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -120,7 +120,7 @@ class FileGalLib extends TikiLib {
 		return $fileId;
 	}
 
-	function list_file_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user, $find) {
+	function list_file_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user, $find='', $parentId=0) {
 		global $tiki_p_admin_file_galleries;
 
 		// If $user is admin then get ALL galleries, if not only user galleries are shown
@@ -159,6 +159,11 @@ class FileGalLib extends TikiLib {
 				$bindvars[]=$find;
 				$bindvars[]=$find;
 			}
+		}
+		if ($parentId) {
+			$whuser .= empty($whuser)? 'where ':' and ';
+			$whuser .= 'tfg.`parentId` = ?';
+			$bindvars[] = $parentId;
 		}
 
 		$query = "select tfg.*, tfgp.`name` as `parentName`
