@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.675 2006-11-29 14:21:02 mose Exp $
+// CVS: $Id: tikilib.php,v 1.676 2006-11-29 21:49:22 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3514,22 +3514,13 @@ function add_pageview() {
   // if O.K. this function shall replace similar constructs in list_pages and other functions above.
   // $categperm is the category permission that should grant $perm. if none, pass 0
   function user_has_perm_on_object($user,$object,$objtype,$perm,$categperm='tiki_p_view_categories') {
-            global $feature_categories,$feature_blogs;
+            global $feature_categories;
             global $userlib;
             // superadmin
 	    if($userlib->user_has_permission($user, 'tiki_p_admin')) {
 	       return(TRUE);
 	    }
-	    //User with tiki_p_blog_post can post to their blog or if it is public
-	    if ($feature_blogs=='y' && $objtype=='blog' && $perm == 'tiki_p_blog_post'){
-                  $query = "select * from `tiki_blogs` where `blogId`=$object";
-	          $result = $this->query($query);
-	          if (count($result)==0) return (FALSE);
-	          $res = $result->fetchRow();
-	          if ($res['user'] == $user) return (TRUE);
-	          if ($res['public'] == 'y') return (TRUE);
-	          return (FALSE);
-	     }elseif ($userlib->object_has_one_permission($object, $objtype)) {
+		if ($userlib->object_has_one_permission($object, $objtype)) {
             // wiki permissions override category permissions
 	          //handle multiple permissions
 		  if(is_array($perm)) {
