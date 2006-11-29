@@ -1,5 +1,5 @@
 <?php
-/* $Id: wikiplugin_module.php,v 1.29 2006-08-29 20:19:11 sylvieg Exp $
+/* $Id: wikiplugin_module.php,v 1.30 2006-11-29 15:00:23 mose Exp $
 Displays a module inlined in page
 
 Parameters
@@ -84,6 +84,8 @@ function wikiplugin_module($data, $params) {
 
 		$module_rows = $max;
 		$module_params = $params;
+		if (!isset($module_params['decorations'])) $module_params['decorations'] = 'n';
+		if (!isset($module_params['flip'])) $module_params['flip'] = 'n';
 		$smarty->assign_by_ref('module_rows',$module_rows);
 		$smarty->assign_by_ref('module_params', $module_params); // module code can unassign this if it wants to hide params
 
