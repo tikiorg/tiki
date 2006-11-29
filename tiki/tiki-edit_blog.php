@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.33 2006-10-03 09:41:54 hangerman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.34 2006-11-29 22:16:08 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -122,22 +122,7 @@ if (isset($_REQUEST["blogId"]) && $_REQUEST["blogId"] > 0) {
 	$smarty->assign('use_find', $data["use_find"]);
 	$smarty->assign('maxPosts', $data["maxPosts"]);
 	$smarty->assign('heading', $data["heading"]);
-	if ($tiki_p_admin_trackers =='y') {
-              $user_list=$userlib->list_all_users();
-              $creators="<select name='creators'>";
-              foreach ($user_list as $key => $value) {
-                  $creators.="<option value='$value' ";
-                  if ($value==$data["user"])$creators.=" selected "; 
-                  $creators.=">$value</option>";
-              }
-              $creators.="</select>";
-	} else {
-	       $creators=$data["user"];
-	}
-	$smarty->assign('creators',$creators);
-	$smarty->assign('creator',$data["user"]);
-	if (!isset($_REQUEST["creators"])) 
-            $_REQUEST["creators"]=$data["user"];
+	$smarty->assign_by_ref('blog_info', $data);
 }
 
 if (isset($_REQUEST['preview'])) {
@@ -175,7 +160,7 @@ if (isset($_REQUEST["save"]) && $feature_categories == 'y' && $feature_blog_mand
 	$heading = isset($_REQUEST['heading']) ? $_REQUEST['heading'] : '';
 
 	$bid = $bloglib->replace_blog($_REQUEST["title"],
-	    $_REQUEST["description"], $_REQUEST["creators"], $public,
+	    $_REQUEST["description"], isset($_REQUEST['user'])?$_REQUEST['user']: $user, $public,
 	    $_REQUEST["maxPosts"], $_REQUEST["blogId"],
 	    $heading, $use_title, $use_find,
 	    $allow_comments, $show_avatar);
@@ -189,6 +174,11 @@ if (isset($_REQUEST["save"]) && $feature_categories == 'y' && $feature_blog_mand
 
 	header ("location: tiki-list_blogs.php?blogId=$bid");
 	die;
+}
+
+if ($tiki_p_admin_trackers =='y') {
+	$users = $userlib->list_all_users();
+	$smarty->assign_by_ref('users', $users);
 }
 
 if (isset($_REQUEST['preview']) || $category_needed) {
