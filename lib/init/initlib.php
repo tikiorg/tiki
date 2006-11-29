@@ -1,4 +1,4 @@
-<?php // $Id: initlib.php,v 1.12 2006-11-28 14:34:11 sylvieg Exp $
+<?php // $Id: initlib.php,v 1.13 2006-11-29 10:39:10 mose Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
@@ -102,7 +102,7 @@ class TikiInit {
 }
 
 function tiki_error_handling($errno, $errstr, $errfile, $errline) {
-	global $error_reporting_level,$tiki_p_admin,$errors;
+	global $error_reporting_level,$tiki_p_admin,$phpErrors;
 	$err[E_ERROR]           = 'E_ERROR';
 	$err[E_CORE_ERROR]      = 'E_CORE_ERROR';
 	$err[E_USER_ERROR]      = 'E_USER_ERROR';
