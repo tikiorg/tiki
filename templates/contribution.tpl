@@ -1,7 +1,9 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/contribution.tpl,v 1.11 2006-11-29 18:29:08 sylvieg Exp $ *}
 {if $feature_contribution eq 'y' and count($contributions) gt 0}
-{popup_init src="lib/overlib.js"}
 <tr>
-<td class="formcolor">{if $contribution_needed eq 'y'}<span class="highlight">{/if}{tr}Type of contribution:{/tr}{if $contribution_needed eq 'y'}</span>{/if}</td>
+<td class="formcolor">
+{popup_init src="lib/overlib.js"}
+{if $contribution_needed eq 'y'}<span class="highlight">{/if}{tr}Type of contribution:{/tr}{if $contribution_needed eq 'y'}</span>{/if}</td>
 <td class="formcolor">
    <select name="contributions[]" multiple="multiple" size="5">
    {section name=ix loop=$contributions}
