@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.674 2006-11-27 17:01:03 hangerman Exp $
+// CVS: $Id: tikilib.php,v 1.675 2006-11-29 14:21:02 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4574,6 +4574,7 @@ function add_pageview() {
 	global $feature_multilingual;
 	global $feature_best_language;
 	global $wiki_page_separator;
+	global $feature_wysiwyg;
         // melmut - if $is_html is set, check $wiki_wikisyntax_in_html,
         //  which can be set to 'full' (default), 'partial' or 'none'
 	global $wiki_wikisyntax_in_html;
@@ -4716,10 +4717,11 @@ function add_pageview() {
 	}
 
 	// Replace special characters
-	//done after url catching because otherwise urls of dyn. sites will be modified
-        if (!$simple_wiki)
-		$this->parse_htmlchar($data);
-
+	// done after url catching because otherwise urls of dyn. sites will be modified
+  // not done in wysiwyg mode, i.e. $feature_wysiwyg set to something other than 'no' or not set at all
+			if (!$simple_wiki and $feature_wysiwyg == 'no') {
+				$this->parse_htmlchar($data);
+			}
 	// Now replace a TOC
 	preg_match_all("/\{toc\s?(order=(desc|asc))?\s?(showdesc=(0|1))?\s?(shownum=(0|1))?\s?(type=(plain|fancy))?\s?(structId=([a-z]+))?\s?(maxdepth=(\d+))?\s?\}/i", $data, $tocs);
 
