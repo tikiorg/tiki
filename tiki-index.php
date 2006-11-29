@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.165 2006-11-27 10:16:53 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.166 2006-11-29 14:38:40 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -642,6 +642,7 @@ $ajaxlib->processRequests();
 // Display the Index Template
 $smarty->assign('dblclickedit','y');
 $smarty->assign('print_page','n');
+$smarty->assign('beingEdited','n');
 $smarty->assign('mid','tiki-show_page.tpl');
 $smarty->assign('show_page_bar','y');
 $smarty->assign('categorypath',$feature_categorypath);
