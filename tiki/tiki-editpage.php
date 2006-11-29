@@ -1,12 +1,14 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.144 2006-10-19 22:10:01 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.145 2006-11-29 10:29:53 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
+//var_dump($_REQUEST);die;
 // Initialization
+$section = "wiki";
 require_once ('tiki-setup.php');
 
 include_once ('lib/wiki/wikilib.php');
@@ -45,6 +47,9 @@ if (isset($_REQUEST["current_page_id"])) {
   if (isset($_REQUEST["add_child"])) {
     $smarty->assign('add_child', "true");
   }
+} else {
+  $smarty->assign('current_page_id',0);
+	$smarty->assign('add_child', false);
 }
 
 
@@ -54,10 +59,40 @@ function compare_import_versions($a1, $a2) {
 
 if (isset($_REQUEST['cancel_edit'])) {
     $page = urlencode($page);
+		$tikilib->semaphore_unset($page, $_SESSION["edit_lock_$page"]);
     header("location: tiki-index.php?page=$page");
     die;
 }
 
+// We set empty wiki page name as default here if not set (before including Tiki modules)
+
+$editpageconflict = 'n';
+$beingEdited = 'n';
+$semUser = '';
+if ($feature_warn_on_edit == 'y') {
+	$u = $user? $user: 'anonymous';
+	if (!empty($page) && ($page != 'sandbox' || $page == 'sandbox' && $tiki_p_admin == 'y')) {
+		if (!isset($_REQUEST['save'])) {
+			if ($tikilib->semaphore_is_set($page, $warn_on_edit_time * 60) && $tikilib->get_semaphore_user($page) != $u) {
+				$editpageconflict = 'y';
+			} elseif ($tiki_p_edit == 'y') {
+				$_SESSION["edit_lock_$page"] = $tikilib->semaphore_set($page);
+			}
+			$semUser = $tikilib->get_semaphore_user($page);
+			$beingedited = 'y';
+		} else {
+			if (!empty($_SESSION["edit_lock_$page"])) {
+				$tikilib->semaphore_unset($page, $_SESSION["edit_lock_$page"]);
+			}
+		}
+	}
+}
+$smarty->assign('semUser', $semUser);
+$smarty->assign('beingEdited', $beingEdited);
+$smarty->assign('editpageconflict', $editpageconflict);
+
+$category_needed = false;
+$contribution_needed = false;
 if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
   check_ticket('edit-page');
   require ("lib/mail/mimelib.php");
@@ -159,6 +194,8 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
     die;
   }
 }
+$smarty->assign('category_needed',$category_needed);
+$smarty->assign('contribution_needed',$contribution_needed);
 
 $wiki_up = "img/wiki_up";
 if ($tikidomain) { $wiki_up.= "/$tikidomain"; }
@@ -441,10 +478,12 @@ if(isset($info['wiki_cache'])) {
 
 if ($info["flag"] == 'L' && !$wikilib->is_editable($page, $user, $info)) {
   $smarty->assign('msg', tra("Cannot edit page because it is locked"));
-
   $smarty->display("error.tpl");
   die;
 }
+$smarty->assign('editable','y');
+$smarty->assign('show_page','n');
+$smarty->assign('comments_show','n');
 
 if (strtolower($page) != 'sandbox') {
 	// Permissions
@@ -458,34 +497,30 @@ if (strtolower($page) != 'sandbox') {
 }
 
 # melmut - is_html is defined here...
- $can_html=$feature_wiki_allowhtml == 'y' && ($tiki_p_admin||$tiki_p_use_HTML == 'y');
- $is_html=false;
- if ($can_html)
- {
-  if ((!isset($_REQUEST["edit"])&&$info['is_html'])||(isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"]=="on"))
-  {
-	  $is_html=true;
+$is_html = false;
+$can_html = false;
+if ($feature_wiki_allowhtml == 'y' and ($tiki_p_admin == 'y' or $tiki_p_use_HTML == 'y')) {
+ 	$can_html = true;
+  if ((!isset($_REQUEST["edit"]) and $info['is_html']) or (isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"] == "on")) {
+	  $is_html = true;
 	  $_REQUEST["allowhtml"] = 'on';
-  }
-  else
-  {
+  } else {
 	  $_REQUEST["allowhtml"] = 'off';
   }
- }
+}
 
 # melmut - can_wysiwyg is set if a user can use the wysiwyg editor in html
 # wysiwyg is set if it should be used right now
- $can_wysiwyg=$feature_wysiwyg!='no'&&$can_html&&$is_html;
- $wysiwyg=false;
- if ($can_wysiwyg) 
- {
-  if (isset($_REQUEST['wysiwyg']))
-   $wysiwyg=$_REQUEST['wysiwyg']=='y';
-  else
-   $wysiwyg=$feature_wysiwyg=='default';
- }
- $smarty->assign('can_wysiwyg',$can_wysiwyg);
- $smarty->assign('wysiwyg',$wysiwyg);
+$wysiwyg = false;
+$can_wysiwyg = false;
+if ($feature_wysiwyg != 'no' and $can_html and $is_html) {
+	$can_wysiwyg = true;
+	if ((isset($_REQUEST['wysiwyg']) and $_REQUEST['wysiwyg'] == 'y') or $feature_wysiwyg == 'default') {
+		$wysiwyg = true;
+	}
+}
+$smarty->assign('can_wysiwyg',$can_wysiwyg);
+$smarty->assign('wysiwyg',$wysiwyg);
 
 #if ($tiki_p_admin != 'y') {
 #  if ($tiki_p_use_HTML != 'y') {
@@ -549,12 +584,15 @@ if (isset($_REQUEST["categId"]) && $_REQUEST["categId"] > 0) {
 	$categs = split("\+",$_REQUEST["categId"]);
 	$smarty->assign('categIds',$categs);
 	$smarty->assign('categIdstr',$_REQUEST["categId"]);
+} else {
+	$smarty->assign('categIds',array());
+	$smarty->assign('categIdstr',0);
 }
-
 if (isset($_REQUEST["ratingId"]) && $_REQUEST["ratingId"] > 0) {
 	$smarty->assign("poll_template",$_REQUEST["ratingId"]);
+} else {
+	$smarty->assign("poll_template",0);
 }
-
 if(isset($_REQUEST["edit"])) {
   
   if ($is_html) {
@@ -573,9 +611,10 @@ if(isset($_REQUEST["edit"])) {
     }
 }
 
+$likepages = '';
+$smarty->assign_by_ref('likepages', $likepages);
 if ($feature_likePages == 'y' and $edit_data == '' && !$tikilib->page_exists($page)) {
 	$likepages = $wikilib->get_like_pages($page);
-	$smarty->assign_by_ref('likepages', $likepages);
 }
 	
 if (isset($wiki_feature_copyrights) && $wiki_feature_copyrights == 'y') {
@@ -714,6 +753,7 @@ function parse_output(&$obj, &$parts,$i) {
 // Pro
 // Check if the page has changed
 
+$pageAlias = '';
 $cat_type='wiki page';
 $cat_objid = $_REQUEST["page"];
 
@@ -811,6 +851,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
   //Page may have been inserted from a structure page view
   if (isset($_REQUEST['current_page_id']) ) {
     $page_info = $structlib->s_get_page_info($_REQUEST['current_page_id']);
+		$pageAlias = $page_info['page_alias'];
     if (isset($_REQUEST["add_child"]) ) {
       //Insert page after last child of current page
       $subpages = $structlib->s_get_pages($_REQUEST["current_page_id"]);
@@ -840,6 +881,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
   }
   die;
 } //save
+$smarty->assign('pageAlias',$pageAlias);
 
 if ($feature_wiki_templates == 'y' && $tiki_p_use_content_templates == 'y') {
   $templates = $tikilib->list_templates('wiki', 0, -1, 'name_asc', '');
@@ -920,22 +962,23 @@ foreach ($plugin_files as $pfile) {
 }
 
 $smarty->assign_by_ref('plugins', $plugins);
+$smarty->assign('showstructs', array());
 
 if ($structlib->page_is_in_structure($_REQUEST["page"])) {
   $structs = $structlib->get_page_structures($_REQUEST["page"]);
-  $smarty->assign('showstructs', $structs);
 }
 
 // Flag for 'page bar' that currently 'Edit' mode active
 // so no need to show comments & attachments, but need
 // to show 'wiki quick help'
 $smarty->assign('edit_page', 'y');
+$smarty->assign('categ_checked', 'n');
 
 // Set variables so the preview page will keep the newly inputted category information
 if (isset($_REQUEST['cat_categorize'])) {
   if ($_REQUEST['cat_categorize'] == 'on') {
     $smarty->assign('categ_checked', 'y');
-  }
+	}
 }
 include_once("textareasize.php");
 
@@ -964,6 +1007,9 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the Index Template
 $smarty->assign('mid', 'tiki-editpage.tpl');
 $smarty->assign('show_page_bar', 'y');
+$smarty->assign('showtags', 'n');
+$smarty->assign('qtnum', '1');
+$smarty->assign('qtcycle', '');
 $smarty->display("tiki.tpl");
 
 ?>
