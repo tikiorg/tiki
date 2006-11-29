@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.115 2006-11-24 09:27:21 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.116 2006-11-29 16:09:14 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -45,6 +45,7 @@ require_once("setup_smarty.php");
 require_once("lib/tikilib.php");
 require_once("lib/cache/cachelib.php");
 require_once("lib/logs/logslib.php");
+include_once('lib/init/tra.php');
 
 $tikilib = new TikiLib($dbTiki);
 require_once("lib/userslib.php");
@@ -365,7 +366,6 @@ if (isset($_REQUEST['highlight']) || (isset($feature_referer_highlight) && $feat
   $smarty->load_filter('output','highlight');
 }
 
-include_once('lib/init/tra.php');
 
 /* \brief  substr with a utf8 string - works only with $start and $length positive or nuls
  * This function is the same as substr but works with multibyte
