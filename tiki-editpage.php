@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.145 2006-11-29 10:29:53 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.146 2006-11-29 14:21:02 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -689,7 +689,8 @@ if (isset($_REQUEST["lang"])) {
 }
 $smarty->assign('lang', $pageLang);
 
-$smarty->assign('pagedata',htmldecode($edit_data));
+if (!$wysiwyg) $edit_data =& htmldecode($edit_data);
+$smarty->assign('pagedata',$edit_data);
 
 // apply the optional post edit filters before preview
 if(isset($_REQUEST["preview"]) || ($wiki_spellcheck == 'y' && isset($_REQUEST["spellcheck"]) && $_REQUEST["spellcheck"] == 'on')) {
