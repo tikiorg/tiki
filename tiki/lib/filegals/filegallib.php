@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.49 2006-11-29 18:37:37 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.50 2006-11-30 20:01:57 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -143,7 +143,7 @@ class FileGalLib extends TikiLib {
 		if (($tiki_p_admin_file_galleries == 'y') or ($user == 'admin')) {
 			$whuser = "";
 			$bindvars=array();
-		} else {
+		} elseif (!$parentId) {
 			$whuser = "where tfg.`user`=? or tfg.`public`=?";
 			$bindvars=array($user,'y');
 		}
