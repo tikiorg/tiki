@@ -292,7 +292,7 @@ class UsersLib extends TikiLib {
 	    return false;
 	}
 
-	if (sizeof($pass) < $min_pass_length) {
+	if (strlen($pass) < $min_pass_length) {
 		return false;
 	}
 	// these will help us keep tabs of what is going on
