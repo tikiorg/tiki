@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-objectpermissions.tpl,v 1.17 2006-11-17 15:35:02 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-objectpermissions.tpl,v 1.18 2006-11-30 15:45:41 sylvieg Exp $ *}
 <h1>{tr}Assign permissions to {/tr}{tr}{$objectType|escape}{/tr} {$objectName|escape}</h1>
 <a href="{$referer}" class="linkbut">{tr}back{/tr}</a>
 <div>
-<h2>{tr}Current permissions for this object{/tr}:</h2>
+<h2>{tr}Current permissions for this object{/tr}</h2>
 <table class="normal">
 <tr><td class="heading">{tr}group{/tr}</td><td class="heading">{tr}permission{/tr}</td><td class="heading">{tr}action{/tr}</td></tr>
 {cycle values="odd,even" print=false}
@@ -14,8 +14,12 @@
 <tr><td colspan="3" class="odd">{tr}No individual permissions global permissions apply{/tr}</td></tr>
 {/section}
 </table>
+
 <h2>{tr}Assign permissions to this object{/tr}</h2>
-<div class="simplebox">{tr}Tip: hold down CTRL to select multiple{/tr}</div>
+<div class="rbox" name="tip">
+<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>
+<div class="rbox-data" name="tip">{tr}Hold down CTRL to select multiple{/tr}</div>
+</div>
 <form method="post" action="tiki-objectpermissions.php">
 <input type="hidden" name="page" value="{$page|escape}" />
 <input type="hidden" name="referer" value="{$referer|escape}" />
@@ -36,6 +40,7 @@
 <option value="{$groups[grp].groupName|escape}" {if $groupName eq $groups[grp].groupName }selected="selected"{/if}>{$groups[grp].groupName|escape}</option>
 {/section}
 </select>
+<input type="submit" name="assign" value="{tr}assign{/tr}" />
 <br /><br />
 <div class="button2">
 <a href="#" onclick="javascript:flip('edithelpzone'); return false;" class="linkbut">{tr}perms help{/tr}</a>

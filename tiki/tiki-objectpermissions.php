@@ -1,14 +1,22 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-objectpermissions.php,v 1.16 2006-11-14 13:42:56 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-objectpermissions.php,v 1.17 2006-11-30 15:45:41 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 include_once ("tiki-setup.php");
 
+if (!isset(
+	$_REQUEST['objectName']) || empty($_REQUEST['objectType']) || empty($_REQUEST['objectId']) || empty($_REQUEST['permType'])) {
+	$smarty->assign('msg', tra("Not enough information to display this page"));
 
-if ($tiki_p_admin_objects != 'y') {
+	$smarty->display("error.tpl");
+	die;
+}
+$perm = 'tiki_p_assign_perm_'.str_replace(' ', '_', $_REQUEST['objectType']);
+
+if (!($tiki_p_admin_objects == 'y' || (isset($$perm) && $$perm == 'y'))) {
 	$smarty->assign('msg', tra("Permission denied you cannot assign permissions for this page"));
 
 	$smarty->display("error.tpl");
@@ -25,20 +33,6 @@ if (isset($_REQUEST["referer"])) {
 	$smarty->assign('referer', $_REQUEST["referer"]);
 }
 
-if (!isset(
-	$_REQUEST["objectName"]) || !isset($_REQUEST["objectType"]) || !isset($_REQUEST["objectId"]) || !isset($_REQUEST["permType"])) {
-	$smarty->assign('msg', tra("Not enough information to display this page"));
-
-	$smarty->display("error.tpl");
-	die;
-}
-
-if ($_REQUEST["objectId"] < 1) {
-	$smarty->assign('msg', tra("Fatal error"));
-
-	$smarty->display("error.tpl");
-	die;
-}
 
 $_REQUEST["objectId"] = urldecode($_REQUEST["objectId"]);
 $_REQUEST["objectType"] = urldecode($_REQUEST["objectType"]);
@@ -52,6 +46,13 @@ $smarty->assign('permType', $_REQUEST["permType"]);
 // Process the form to assign a new permission to this page
 if (isset($_REQUEST['assign']) && isset($_REQUEST['group']) && isset($_REQUEST['perm'])) {
 	check_ticket('object-perms');
+	foreach($_REQUEST['perm'] as $perm) {
+		if ($tiki_p_admin_objects != 'y' && !$userlib->user_has_permission($user, $perm)) {
+			$smarty->assign('msg', tra('Permission denied'));
+			$smarty->display('error.tpl');
+			die;
+		}
+	}
 	foreach($_REQUEST['perm'] as $perm) {
 		foreach ($_REQUEST['group'] as $group) {
 			$userlib->assign_object_permission($group, $_REQUEST["objectId"], $_REQUEST["objectType"], $perm);
@@ -78,7 +79,17 @@ $smarty->assign_by_ref('groups', $groups["data"]);
 
 // Get a list of permissions
 $perms = $userlib->get_permissions(0, -1, 'permName_asc', '', $_REQUEST["permType"]);
-$smarty->assign_by_ref('perms', $perms["data"]);
+if ($tiki_p_admin_objects != 'y') {
+	$userPerms = array();
+	foreach ($perms['data'] as $perm) {
+		if ($userlib->user_has_permission($user, $perm['permName'])) {
+			$userPerms[] = $perm;
+		}	
+	}
+	$smarty->assign_by_ref('perms', $userPerms);
+} else {
+	$smarty->assign_by_ref('perms', $perms['data']);
+}
 
 ask_ticket('object-perms');
 
