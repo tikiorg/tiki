@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-freetag.tpl,v 1.4 2006-11-23 00:41:32 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-freetag.tpl,v 1.5 2006-11-30 22:00:39 mose Exp $ *}
 
 {if $feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
 {eval var="{tr}Folksonomy{/tr}" assign="tpl_module_title"}
@@ -17,5 +17,6 @@
 <input type="text" name="addtags" maxlength="40" />
 <input type="submit" name="Add" value="Add" />
 </form>
+</div>
 {/tikimodule}
 {/if}
