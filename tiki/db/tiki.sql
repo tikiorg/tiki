@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2006-11-28 07:32:11 $
-# $Author: mose $
+# $Date: 2006-11-30 01:47:55 $
+# $Author: lmoss $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -3138,14 +3138,14 @@ CREATE TABLE tiki_structures (
 # Table structure for table tiki_submissions
 #
 # Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 08, 2003 at 04:16 PM
+# Last update: Nov 29, 2006 at 08:46 PM
 #
 
 DROP TABLE IF EXISTS tiki_submissions;
 CREATE TABLE tiki_submissions (
   subId int(8) NOT NULL auto_increment,
   topline varchar(255) default NULL,
-  title varchar(80) default NULL,
+  title varchar(255) default NULL,
   subtitle varchar(255) default NULL,
   linkto varchar(255) default NULL,
   lang varchar(16) default NULL,
