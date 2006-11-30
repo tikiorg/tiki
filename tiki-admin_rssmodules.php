@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_rssmodules.php,v 1.23 2006-10-22 23:36:55 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_rssmodules.php,v 1.24 2006-11-30 07:11:52 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -50,7 +50,7 @@ if (isset($_REQUEST["rssId"])) {
 	$info["name"] = '';
 	$info["description"] = '';
 	$info["url"] = '';
-	$info["refresh"] = 1;
+	$info["refresh"] = 1800;
 	$info["showTitle"] = 'n';
 	$info["showPubDate"] = 'n';
 }
