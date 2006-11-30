@@ -3,11 +3,9 @@
 // Usage:
 // {ARTICLES(max=>3,topic=>topicId)}{ARTICLES}
 //
-// Damian added the following parameter
-// topic=>topicId
 
 function wikiplugin_articles_help() {
-	return tra("~np~{~/np~ARTICLES(max=>3,topic=>topicName,type=>type,categId=>Category parent ID,sort=>columnName_asc|columnName_desc)}{ARTICLES} Insert articles into a wikipage");
+	return tra("~np~{~/np~ARTICLES(max=>3,topic=>topicName,topicId=>id,type=>type,categId=>Category parent ID,sort=>columnName_asc|columnName_desc)}{ARTICLES} Insert articles into a wikipage");
 }
 
 function wikiplugin_articles($data,$params) {
@@ -28,10 +26,8 @@ function wikiplugin_articles($data,$params) {
 	if(!isset($start)) {$start='0';}
 
 	// Addes filtering by topic if topic is passed
-	if(!isset($topic)) {
-		$topic='';
-	} else {
-		$topic = $tikilib->fetchtopicId($topic);
+	if(isset($topic)) {
+		$topicId = $tikilib->fetchtopicId($topic);
 	}
 	if(!isset($topicId))
 		$topicId='';
@@ -51,7 +47,6 @@ function wikiplugin_articles($data,$params) {
 	include_once("lib/commentslib.php");
 	$commentslib = new Comments($dbTiki);
 	
-	$listpages = $tikilib->list_articles($start, $max, $sort, '', $now, 'admin', '', $topic);
 	$listpages = $tikilib->list_articles($start, $max, 'publishDate_desc', '', $now, 'admin', $type, $topicId, 'y', $topic, $categId);
  	if ($feature_multilingual == 'y') {
 		global $multilinguallib;
