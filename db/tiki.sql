@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2006-11-30 01:47:55 $
-# $Author: lmoss $
+# $Date: 2006-11-30 15:45:40 $
+# $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -4029,7 +4029,7 @@ CREATE TABLE tiki_download (
 DROP TABLE IF EXISTS users_grouppermissions;
 CREATE TABLE users_grouppermissions (
   groupName varchar(255) NOT NULL default '',
-  permName varchar(30) NOT NULL default '',
+  permName varchar(31) NOT NULL default '',
   value char(1) default '',
   PRIMARY KEY  (groupName(30),permName)
 ) TYPE=MyISAM;
@@ -4069,7 +4069,7 @@ CREATE TABLE users_groups (
 DROP TABLE IF EXISTS users_objectpermissions;
 CREATE TABLE users_objectpermissions (
   groupName varchar(255) NOT NULL default '',
-  permName varchar(30) NOT NULL default '',
+  permName varchar(31) NOT NULL default '',
   objectType varchar(20) NOT NULL default '',
   objectId varchar(32) NOT NULL default '',
   PRIMARY KEY  (objectId, objectType, groupName(30),permName)
@@ -4085,7 +4085,7 @@ CREATE TABLE users_objectpermissions (
 
 DROP TABLE IF EXISTS users_permissions;
 CREATE TABLE users_permissions (
-  permName varchar(30) NOT NULL default '',
+  permName varchar(31) NOT NULL default '',
   permDesc varchar(250) default NULL,
   level varchar(80) default NULL,
   type varchar(20) default NULL,
@@ -4279,7 +4279,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_ratings', 'Can view rating of wiki pages', 'basic', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_source', 'Can view source of wiki pages', 'basic', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_vote_ratings', 'Can participate to rating of wiki pages', 'registered', 'wiki');
-
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_assign_perm_file_gallery', 'Can assign perms to file gallery', 'admin', 'file galleries');
 
 # --------------------------------------------------------
 

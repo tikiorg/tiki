@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.31 2006-11-28 05:17:11 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.32 2006-11-30 15:45:41 sylvieg Exp $
 
 	require_once('tiki-setup.php');
 	include_once('lib/filegals/filegallib.php');
@@ -264,11 +264,17 @@
 	    } else {
 	      $galleries["data"][$i]["individual_tiki_p_create_file_galleries"]='n';
 	    }
+	    if($userlib->object_has_permission($user,$galleries["data"][$i]["galleryId"],'file gallery','tiki_p_assign_perm_file_gallery')) {
+	      $galleries["data"][$i]["individual_tiki_p_assign_perm_file_gallery"]='y';
+	    } else {
+	      $galleries["data"][$i]["individual_tiki_p_assign_perm_file_gallery"]='n';
+	    }
 	    if($tiki_p_admin=='y' || $userlib->object_has_permission($user,$galleries["data"][$i]["galleryId"],'file gallery','tiki_p_admin_file_galleries')) {
 	      $galleries["data"][$i]["individual_tiki_p_create_file_galleries"]='y';
 	      $galleries["data"][$i]["individual_tiki_p_download_files"]='y';
 	      $galleries["data"][$i]["individual_tiki_p_upload_files"]='y';
 	      $galleries["data"][$i]["individual_tiki_p_view_file_gallery"]='y';
+	      $galleries["data"][$i]["individual_tiki_p_assign_perm_file_gallery"]='y';
 	    } 
 	    
 	  } else {
