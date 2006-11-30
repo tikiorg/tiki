@@ -47,7 +47,7 @@
 <tr><td class="formcolor">{tr}URL{/tr}:</td><td class="formcolor"><input size="47" type="text" name="url" value="{$url|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Refresh rate{/tr}:</td><td class="formcolor">
 <select name="refresh">
-<option value="1" {if $minutes eq 60}selected="selected"{/if}>1 {tr}minute{/tr}</option>
+<option value="1" {if $refresh eq 60}selected="selected"{/if}>1 {tr}minute{/tr}</option>
 <option value="5" {if $refresh eq 300}selected="selected"{/if}>5 {tr}minutes{/tr}</option>
 <option value="10" {if $refresh eq 600}selected="selected"{/if}>10 {tr}minutes{/tr}</option>
 <option value="15" {if $refresh eq 900}selected="selected"{/if}>15 {tr}minutes{/tr}</option>
