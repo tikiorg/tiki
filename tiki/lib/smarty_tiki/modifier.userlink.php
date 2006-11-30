@@ -10,7 +10,7 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
     global $tikilib, $userlib, $cachelib, $user, $feature_score, $feature_friends, $highlight_group,
 	$feature_community_mouseover, $feature_community_mouseover_name,$feature_community_mouseover_picture,
 	$feature_community_mouseover_friends,$feature_community_mouseover_score,$feature_community_mouseover_country,
-	$feature_community_mouseover_email, $feature_community_mouseover_lastlogin;
+	$feature_community_mouseover_email, $feature_community_mouseover_lastlogin, $feature_community_mouseover_distance;
 
     $cachePeriod = 60*60*2; // how long does an entry stay in the cache for?  2hr
 
@@ -71,7 +71,7 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
 			if ($show_mouseover) {
 			    $content = '';
 			    if ($feature_community_mouseover_name == 'y') {
-				$line .= $userlib->get_user_preference($other_user, "realName");
+				$line = $userlib->get_user_preference($other_user, "realName");
 				if ($line) {
 				    $content .= $line."<br />";
 				}
