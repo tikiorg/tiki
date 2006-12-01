@@ -1,10 +1,11 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.56 2006-09-19 16:33:14 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.57 2006-12-01 07:07:49 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+$section = 'calendar';
 require_once ('tiki-setup.php');
 
 include_once ('lib/calendar/calendarlib.php');
@@ -22,6 +23,7 @@ if ($feature_calendar != 'y') {
 	die;
 }
 
+$myurl = 'tiki-calendar.php';
 $bufid = array();
 $bufdata = array();
 $modifiable = array();
@@ -123,18 +125,6 @@ if ($viewOneCal != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-if (isset($_REQUEST['calitemId'])) {
-	$info = $calendarlib->get_item($_REQUEST["calitemId"]);
-	if (!$userlib->user_has_perm_on_object($user,$info['calendarId'], 'calendar', 'tiki_p_admin_calendar')) {
-		if ((isset($_REQUEST['delete']) && !$userlib->user_has_perm_on_object($user,$info['calendarId'], 'calendar', 'tiki_p_change_events'))
-		|| ((isset($_REQUEST['copy']) || isset($_REQUEST['save'])) && !$userlib->user_has_perm_on_object($user,$info['calendarId'], 'calendar', 'tiki_p_add_events'))
-		|| !$userlib->user_has_perm_on_object($user,$info['calendarId'], 'calendar', 'tiki_p_view_calendar')) {
-			$smarty->assign('msg', tra("Permission denied you cannot view the calendar"));
-			$smarty->display("error.tpl");
-			die;
-		}
-	}
-}
 
 $listcals = $bufid;
 $infocals["data"] = $bufdata;
@@ -156,94 +146,7 @@ if (isset($_REQUEST["calIds"])and is_array($_REQUEST["calIds"])and count($_REQUE
 	$_SESSION['CalendarViewGroups'] = array_intersect($_SESSION['CalendarViewGroups'], $listcals);
 }
 
-// setup list of tiki items displayed
-if (isset($_REQUEST["tikicals"])and is_array($_REQUEST["tikicals"])and count($_REQUEST["tikicals"])) {
-	$_SESSION['CalendarViewTikiCals'] = $_REQUEST["tikicals"];
-} elseif (!isset($_SESSION['CalendarViewTikiCals'])) {
-	$_SESSION['CalendarViewTikiCals'] = array();
-} elseif (isset($_REQUEST["refresh"])and !isset($_REQUEST["tikicals"])) {
-	$_SESSION['CalendarViewTikiCals'] = array();
-}
-
-
-// that should be a global array set up in tiki-setup.php
-$tikiItems = array(
-	"wiki" => array(
-	"label" => tra("Wiki"),
-	"feature" => "$feature_wiki",
-	"right" => "$tiki_p_view"
-),
-	"gal" => array(
-	"label" => tra("Image Gallery"),
-	"feature" => "$feature_galleries",
-	"right" => "$tiki_p_view_image_gallery"
-),
-	"art" => array(
-	"label" => tra("Articles"),
-	"feature" => "$feature_articles",
-	"right" => "$tiki_p_read_article"
-),
-	"blog" => array(
-	"label" => tra("Blogs"),
-	"feature" => "$feature_blogs",
-	"right" => "$tiki_p_read_blog"
-),
-	"forum" => array(
-	"label" => tra("Forums"),
-	"feature" => "$feature_forums",
-	"right" => "$tiki_p_forum_read"
-),
-	"dir" => array(
-	"label" => tra("Directory"),
-	"feature" => "$feature_directory",
-	"right" => "$tiki_p_view_directory"
-),
-	"fgal" => array(
-	"label" => tra("File Gallery"),
-	"feature" => "$feature_file_galleries",
-	"right" => "$tiki_p_view_file_gallery"
-),
-	"faq" => array(
-	"label" => tra("FAQs"),
-	"feature" => $feature_faqs,
-	"right" => $tiki_p_view_faqs
-),
-	"quiz" => array(
-	"label" => tra("Quizzes"),
-	"feature" => $feature_quizzes,
-	"right" => $tiki_p_take_quiz
-),
-	"track" => array(
-	"label" => tra("Trackers"),
-	"feature" => "$feature_trackers",
-	"right" => "$tiki_p_view_trackers"
-),
-	"surv" => array(
-	"label" => tra("Survey"),
-	"feature" => "$feature_surveys",
-	"right" => "$tiki_p_take_survey"
-),
-	"nl" => array(
-	"label" => tra("Newsletter"),
-	"feature" => "$feature_newsletters",
-	"right" => "$tiki_p_subscribe_newsletters"
-),
-	"eph" => array(
-	"label" => tra("Ephemerides"),
-	"feature" => "$feature_eph",
-	"right" => "$tiki_p_view_eph"
-),
-	"chart" => array(
-	"label" => tra("Charts"),
-	"feature" => "$feature_charts",
-	"right" => "$tiki_p_view_chart"
-)
-);
-
-$smarty->assign('tikiItems', $tikiItems);
-
 $smarty->assign('displayedcals', $_SESSION['CalendarViewGroups']);
-$smarty->assign('displayedtikicals', $_SESSION['CalendarViewTikiCals']);
 
 $thiscal = array();
 $checkedCals = array();
@@ -256,331 +159,16 @@ foreach ($listcals as $thatid) {
 		$thiscal["$thatid"] = 0;
 	}
 }
-
 $smarty->assign('thiscal', $thiscal);
 
-$tikical = array();
-
-foreach ($_SESSION['CalendarViewTikiCals'] as $calt) {
-	$tikical["$calt"] = 1;
-}
-
-$smarty->assign('tikical', $tikical);
-
 include_once("tiki-calendar_setup.php");
-
-if (isset($_REQUEST["delete"])and ($_REQUEST["delete"]) and isset($_REQUEST["calitemId"])) {
-  $area = 'delcalevent';
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-    key_check($area);
-		$calendarlib->drop_item($user, $_REQUEST["calitemId"]);
-		$_REQUEST["calitemId"] = 0;
-  } else {
-    key_get($area);
-  }
-}
-
-if (!isset($_REQUEST["calitemId"]))
-	$_REQUEST["calitemId"] = 0;
-
-if (!isset($_REQUEST["locationId"]))
-	$_REQUEST["locationId"] = 0;
-
-if (!isset($_REQUEST["categoryId"]))
-	$_REQUEST["categoryId"] = 0;
-
-if (!isset($_REQUEST["organizers"]))
-	$_REQUEST["organizers"] = "";
-
-if (!isset($_REQUEST["participants"]))
-	$_REQUEST["participants"] = "";
-
-if (!isset($_REQUEST["newloc"]))
-	$_REQUEST["newloc"] = "";
-
-if (!isset($_REQUEST["newcat"]))
-	$_REQUEST["newcat"] = "";
-
-if (!isset($_REQUEST["priority"]))
-	$_REQUEST["priority"] = "5";
-
-if (!isset($_REQUEST["lang"]))
-	$_REQUEST["lang"] = $language;
-
-if (!isset($_REQUEST["nlId"]))
-	$_REQUEST["nlId"] = 0;
-
-if (!isset($_REQUEST["status"]))
-	$_REQUEST["status"] = 0;
-
-if (isset($_REQUEST["copy"])and ($_REQUEST["copy"])) {
-	check_ticket('calendar');
-	$_REQUEST["calitemId"] = 0;
-	$_REQUEST["save"] = true;
-	$_REQUEST["calendarId"] = $_REQUEST["calendarId2"];
-}
-
-$error = "n";
-if (isset($_REQUEST["save"])and ($_REQUEST["save"])) {
-	check_ticket('calendar');
-	if (!isset($_REQUEST["name"])or !(trim($_REQUEST["name"]))) {
-		$_REQUEST["name"] = tra("event without name");
-	}
-	if (isset($_REQUEST["start_date_input"]) and $_REQUEST["start_date_input"]) {
-		$event_start = $_REQUEST["start_date_input"];
-	} else {
-		if (isset($_REQUEST["start_freeform"])and $_REQUEST["start_freeform"]) {
-			if (($event_start = strtotime($_REQUEST["start_freeform"])) == -1) {
-				$error = "y";
-				$smarty->assign('start_freeform', $_REQUEST["start_freeform"]);
-				$smarty->assign('start_freeform_error', "y");
-			}
-		}
-		if (!isset($event_start)) {
-			$event_start = mktime($_REQUEST["starth_Hour"], $_REQUEST["starth_Minute"],
-					0, $_REQUEST["start_Month"], $_REQUEST["start_Day"], $_REQUEST["start_Year"]);
-		}
-	}
-
-	if (isset($_REQUEST["end_date_input"]) and $_REQUEST["end_date_input"]) {
-		$event_end = $_REQUEST["end_date_input"];
-	} else {
-		if (isset($_REQUEST["end_freeform"])and $_REQUEST["end_freeform"]) {
-			if (($event_end = strtotime($_REQUEST["end_freeform"])) == -1) {
-				$error = "y";
-				$smarty->assign('end_freeform', $_REQUEST["end_freeform"]);
-				$smarty->assign('end_freeform_error', "y");
-			}
-		}
-		if (!isset($event_end)) {
-			$event_end = mktime($_REQUEST["endh_Hour"], $_REQUEST["endh_Minute"],
-					0, $_REQUEST["end_Month"], $_REQUEST["end_Day"], $_REQUEST["end_Year"]);
-		}
-	}
-	if (isset($_REQUEST["endChoice"]) && $_REQUEST["endChoice"] == "duration") {
-		if (!isset($_REQUEST["duration_hours"])) $_REQUEST["duration_hours"] = 0;
-		if (!isset($_REQUEST["duration_minutes"])) $_REQUEST["duration_minutes"] = 0;
-		$event_end = $event_start + $_REQUEST["duration_hours"] * 60 *60 + $_REQUEST["duration_minutes"]*60;
-	}
-	if ($event_start > $event_end) {
-		$error = "y";
-		$smarty->assign('end_error', "y");
-	}
-	if ($error == "n") {
-		$_REQUEST["calitemId"] = $calendarlib->set_item($user, $_REQUEST["calitemId"], array(
-			"user" => $user,
-			"organizers" => $_REQUEST["organizers"],
-			"participants" => $_REQUEST["participants"],
-			"calendarId" => $_REQUEST["calendarId"],
-			"start" => $event_start,
-			"end" => $event_end,
-			"locationId" => $_REQUEST["locationId"],
-			"newloc" => $_REQUEST["newloc"],
-			"categoryId" => $_REQUEST["categoryId"],
-			"newcat" => $_REQUEST["newcat"],
-			"priority" => $_REQUEST["priority"],
-			"status" => $_REQUEST["status"],
-			"url" => $_REQUEST["url"],
-			"lang" => $_REQUEST["lang"],
-			"nlId" => $_REQUEST["nlId"],
-			"name" => $_REQUEST["name"],
-			"description" => $_REQUEST["description"]
-		));
-		$_REQUEST["editmode"] = '';
-	}
-	$_SESSION["defaultAddCal"] = $_REQUEST["calendarId"];
-	//$_REQUEST["calitemId"] = 0;
-}
-
-if ($_REQUEST["calitemId"] && !isset($_REQUEST["preview"])) {
-	$info = $calendarlib->get_item($_REQUEST["calitemId"]);
-	$info['modifiable'] = in_array($info['calendarId'], $modifiable)? "y": "n";
-} elseif ($error  == "y" || isset($_REQUEST["preview"])) {
-	if (isset($_REQUEST["preview"])) {
-		$info["parsedDescription"] = $tikilib->parse_data($_REQUEST["description"]);
-		$smarty->assign('preview', 'y');
-	}
-	$info["calitemId"] = $_REQUEST["calitemId"];
-	$info["calendarId"] = $_REQUEST["calendarId"];
-	$info["user"] = $user;
-	$info["calname"] = isset($_REQUEST["calname"])? $_REQUEST["calname"]: "";
-	$info["organizers"] = $_REQUEST["organizers"];
-	$info["participants"] = $_REQUEST["participants"];
-	if (isset($_REQUEST["start_date_input"]) and $_REQUEST["start_date_input"]) {
-		$info["start"] = $_REQUEST["start_date_input"];
-	} elseif (!isset($event_start)) {
-		$info["start"] = mktime($_REQUEST["starth_Hour"], $_REQUEST["starth_Minute"],
-					0, $_REQUEST["start_Month"], $_REQUEST["start_Day"], $_REQUEST["start_Year"]);
-	} else {
-		$info["start"] = $event_start;
-	}
-	if (isset($_REQUEST["end_date_input"]) and $_REQUEST["end_date_input"]) {
-		$info["end"] = $_REQUEST["end_date_input"];
-	} elseif (!isset($event_end)) {
-		$info["end"] = mktime($_REQUEST["endh_Hour"], $_REQUEST["endh_Minute"],
-					0, $_REQUEST["end_Month"], $_REQUEST["end_Day"], $_REQUEST["end_Year"]);
-	} else {
-		$info["end"] = $event_end;
-	}
-	$info["locationId"] = $_REQUEST["locationId"];
-	$info["locationName"] = $_REQUEST["newloc"];
-	$info["categoryId"] = $_REQUEST["categoryId"];
-	$info["categoryName"] = $_REQUEST["newcat"];
-	$info["priority"] = $_REQUEST["priority"];
-	$info["url"] = $_REQUEST["url"];
-	$info["lang"] = $_REQUEST["lang"];
-	$info["nlId"] = $_REQUEST["nlId"];
-	$info["name"] = $_REQUEST["name"];
-	$info["description"] = $_REQUEST["description"];
-	$info["created"] = isset($_REQUEST["created"]) ? $_REQUEST["created"]: time();
-	$info["lastModif"] = isset($_REQUEST["lastModif"])? $_REQUEST["lastModif"]: time();
-	$info["status"] = $_REQUEST["status"];
-	$info['modifiable'] = in_array($info['calendarId'], $modifiable)? "y": "n";
-} else {
-	$info = array();
-
-	$info["calitemId"] = "";
-	$info["calendarId"] = "";
-	$info["user"] = "";
-	$info["calname"] = "";
-	$info["organizers"] = $user . ",";
-	$info["participants"] = $user . ":0,";
-	$info["start"] = $focusdate;
-	$info["end"] = $info["start"] +  2 * 60 * 60;
-	$info["locationId"] = 0;
-	$info["locationName"] = '';
-	$info["categoryId"] = 0;
-	$info["categoryName"] = '';
-	$info["priority"] = 5;
-	$info["url"] = '';
-	$info["lang"] = $tikilib->get_user_preference($user, "language");
-	$info["nlId"] = 0;
-	$info["name"] = isset($_REQUEST["name"])? $_REQUEST["name"]: '';
-	$info["description"] = isset($_REQUEST["description"])? $_REQUEST["description"]: '';
-	$info["created"] = time();
-	$info["lastModif"] = time();
-	$info["status"] = '0';
-	$info["customlocations"] = 'n';
-	$info["customcategories"] = 'n';
-	$info["customlanguages"] = 'n';
-	$info["custompriorities"] = 'n';
-	$info["customparticipants"] = 'n';
-	$info["customsubscription"] = 'n';
-	$info["modifiable"] = "y";
-}
-$info["duration_hours"] = intval(($info["end"] - $info["start"]) / (60*60));
-$info["duration_minutes"] = intval(($info["end"] - $info["start"]) - ($info["duration_hours"] *60*60))/60;
-
-if (!isset($_REQUEST["calendarId"])or !$_REQUEST["calendarId"]) {
-	$_REQUEST["calendarId"] = $info["calendarId"];
-}
-
-$smarty->assign('calitemId', $info["calitemId"]);
-$smarty->assign('organizers', $info["organizers"]);
-$smarty->assign('participants', $info["participants"]);
-$smarty->assign('calname', $info["calname"]);
-$smarty->assign('start', $info["start"]); /* user time */
-$smarty->assign('end', $info["end"]);
-$smarty->assign('locationId', $info["locationId"]);
-$smarty->assign('locationName', $info["locationName"]);
-$smarty->assign('categoryId', $info["categoryId"]);
-$smarty->assign('categoryName', $info["categoryName"]);
-$smarty->assign('priority', $info["priority"]);
-$smarty->assign('url', $info["url"]);
-$smarty->assign('lang', $info["lang"]);
-$smarty->assign('nlId', $info["nlId"]);
-$smarty->assign('name', $info["name"]);
-$smarty->assign('description', $info["description"]);
-$smarty->assign('parsedDescription', $tikilib->parse_data($info["description"]));
-$smarty->assign('created', $info["created"]);
-$smarty->assign('lastModif', $info["lastModif"]);
-$smarty->assign('lastUser', $info["user"]);
-$smarty->assign('status', $info["status"]);
-$smarty->assign('duration_hours', $info["duration_hours"]);
-$smarty->assign('duration_minutes', $info["duration_minutes"]);
-$smarty->assign('modifiable', $info['modifiable']);
-
-if ((isset($_REQUEST["editmode"]) && $_REQUEST["editmode"]) || $error == "y"){ /* 1 for edit item - add for new item - details for view item*/
-	$cookietab = 3;
-	$smarty->assign("editmode", $_REQUEST["editmode"]);
-}
-
-if (isset($_REQUEST["calendarId"]) && $_REQUEST["calendarId"] !='')
-	$defaultAddCal = $_REQUEST["calendarId"];
-elseif (count($checkedCals) == 1)
-	$defaultAddCal = $checkedCals[0];
-elseif (isset($_SESSION["calendar"]))
-	$defaultAddCal = $_SESSION["calendar"];
-elseif (isset($_SESSION["defaultAddCal"]))
-	$defaultAddCal = $_SESSION["defaultAddCal"];
-else
-	$defaultAddCal = "";
-$smarty->assign('defaultAddCal', $defaultAddCal);
-
-if ($defaultAddCal) {
-	$thatcal = $calendarlib->get_calendar($defaultAddCal);
-
-	$info["customlocations"] = $thatcal["customlocations"];
-	$info["customcategories"] = $thatcal["customcategories"];
-	$info["customlanguages"] = $thatcal["customlanguages"];
-	$info["custompriorities"] = $thatcal["custompriorities"];
-	$info["customparticipants"] = $thatcal["customparticipants"];
-	$info["customsubscription"] = $thatcal["customsubscription"];
-	$listcat = array();
-	$listloc = array();
-	$listpeople = array();
-	$languages = array();
-	$subscrips = array();
-
-	if ($thatcal["customcategories"] == 'y') {
-		$listcat = $calendarlib->list_categories($defaultAddCal);
-	}
-
-	if ($thatcal["customsubscription"] == 'y') {
-		$subscrips = $nllib->list_avail_newsletters();
-//gg		$subscrips = $tikilib->list_languages();
-	}
-
-	if ($thatcal["customlocations"] == 'y') {
-		$listloc = $calendarlib->list_locations($defaultAddCal);
-	}
-
-	if ($thatcal["customlanguages"] == 'y') {
-		$languages = $tikilib->list_languages();
-	}
-
-	$smarty->assign('listcat', $listcat);
-	$smarty->assign('listloc', $listloc);
-	$smarty->assign_by_ref('languages', $languages);
-	$smarty->assign_by_ref('subscrips', $subscrips);
-}
-
-$smarty->assign('calendarId', $_REQUEST["calendarId"]);
-$smarty->assign('customlocations', $info["customlocations"]);
-$smarty->assign('customcategories', $info["customcategories"]);
-$smarty->assign('customlanguages', $info["customlanguages"]);
-$smarty->assign('custompriorities', $info["custompriorities"]);
-$smarty->assign('customparticipants', $info["customparticipants"]);
-$smarty->assign('customsubscription', $info["customsubscription"]);
 
 if (isset($_REQUEST["find"])) {
 	$find = $_REQUEST["find"];
 } else {
 	$find = '';
 }
-
 $smarty->assign('find', $find);
-
-if (isset($_REQUEST['drop'])) {
-	check_ticket('calendar');
-	if (is_array($_REQUEST['drop'])) {
-		foreach ($_REQUEST['drop'] as $dropme) {
-			$calendarlib->drop_item($user, $dropme);
-		}
-	} else {
-		$calendarlib->drop_item($user, $_REQUEST['drop']);
-	}
-}
 
 if (isset($_REQUEST['mon']) && !empty($_REQUEST['mon'])) {
 	$request_month = $_REQUEST['mon'];
@@ -594,7 +182,111 @@ if (isset($_REQUEST['year']) && !empty($_REQUEST['year'])) {
 
 if (isset($_REQUEST['sort_mode'])) $sort_mode = $_REQUEST['sort_mode'];
 
-include ("tiki-show_calendar.php");
+include ("tiki-calendar_nav.php");
+if ($_SESSION['CalendarViewGroups']) { 
+  if ($_SESSION['CalendarViewList'] == "list") {
+    if (isset($sort_mode)) {
+      $smarty->assign_by_ref('sort_mode', $sort_mode);
+    } else {
+      $sort_mode = "start_asc";
+		}
+    $listevents = $calendarlib->list_raw_items($_SESSION['CalendarViewGroups'], $user, $viewstart, $viewend, 0, 50, $sort_mode);
+    for ($i = count($listevents) - 1; $i >= 0; --$i) {
+      $listevents[$i]['modifiable'] = in_array($listevents[$i]['calendarId'], $modifiable)? "y": "n";
+		}
+  } else {
+    $listevents = $calendarlib->list_items($_SESSION['CalendarViewGroups'], $user, $viewstart, $viewend, 0, 50);
+  }
+  $smarty->assign_by_ref('listevents', $listevents);
+} else {
+  $listevents = array();
+}
+
+define("weekInSeconds", 604800);
+$mloop = date("m", $viewstart);
+$dloop = date("d", $viewstart);
+$yloop = date("Y", $viewstart);
+
+// note that number of weeks starts at ZERO (i.e., zero = 1 week to display).
+for ($i = 0; $i <= $numberofweeks; $i++) {
+  $wee = date("W",$viewstart + ($i * weekInSeconds) + $d);
+
+  $weeks[] = $wee;
+
+   // $startOfWeek is a unix timestamp
+   $startOfWeek = $viewstart + $i * weekInSeconds;
+
+  foreach ($weekdays as $w) {
+    $leday = array();
+    If ($calendarViewMode == 'day') {
+      $dday = $daystart;
+    } else {
+      //$dday = $startOfWeek + $d * $w;
+      $dday = mktime(0,0,0, $mloop, $dloop++, $yloop);
+    }
+    $cell[$i][$w]['day'] = $dday;
+
+    If ($calendarViewMode == 'day' or ($dday>=$daystart && $dday<=$dayend)) {
+      $cell[$i][$w]['focus'] = true;
+    } else {
+      $cell[$i][$w]['focus'] = false;
+    }
+    if (isset($listevents["$dday"])) {
+      $e = 0;
+
+      foreach ($listevents["$dday"] as $le) {
+        $le['modifiable'] = in_array($le['calendarId'], $modifiable)? "y": "n";
+        $leday["{$le['time']}$e"] = $le;
+
+        $smarty->assign_by_ref('cellhead', $le["head"]);
+        $smarty->assign_by_ref('cellprio', $le["prio"]);
+        $smarty->assign_by_ref('cellcalname', $le["calname"]);
+        $smarty->assign_by_ref('celllocation', $le["location"]);
+        $smarty->assign_by_ref('cellcategory', $le["category"]);
+        $smarty->assign_by_ref('cellname', $le["name"]);
+        $smarty->assign_by_ref('cellurl', $le["url"]);
+        $smarty->assign_by_ref('cellid', $le["calitemId"]);
+        $smarty->assign('celldescription', $tikilib->parse_data($le["description"]));
+        $smarty->assign_by_ref('cellmodif', $le['modifiable']);
+        $leday["{$le['time']}$e"]["over"] = $smarty->fetch("tiki-calendar_box.tpl");
+        $e++;
+      }
+    }
+    if (is_array($leday)) {
+      ksort ($leday);
+      $cell[$i][$w]['items'] = array_values($leday);
+    }
+  } 
+} 
+
+$hrows = array();
+$hours = array();
+if ($calendarViewMode == 'day') {
+  $hours = array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23);
+  foreach ($cell[0]["{$weekdays[0]}"]['items'] as $dayitems) {
+    $rawhour = intval(substr($dayitems['time'],0,2));
+    $dayitems['mins'] = substr($dayitems['time'],2);
+    $hrows["$rawhour"][] = $dayitems;
+  }
+}
+$smarty->assign('hrows', $hrows);
+$smarty->assign('hours', $hours);
+$smarty->assign('mrows', array(0=>"00", 5=>"05", 10=>"10", 15=>"15", 20=>"20", 25=>"25", 30=>"30", 35=>"35", 40=>"40", 45=>"45", 50=>"50", 55=>"55"));
+
+$smarty->assign('info', $info);
+
+$smarty->assign('trunc', $trunc);
+$smarty->assign('daformat', $tikilib->get_long_date_format()." ".tra("at")." %H:%M");
+$smarty->assign('daformat2', $tikilib->get_long_date_format());
+$smarty->assign('currentweek', $currentweek);
+$smarty->assign('firstweek', $firstweek);
+$smarty->assign('lastweek', $lastweek);
+$smarty->assign('weekdays', $weekdays);
+$smarty->assign('weeks', $weeks);
+$smarty->assign('daysnames', $daysnames);
+$smarty->assign('cell', $cell);
+$smarty->assign('var', '');
+$smarty->assign('myurl', $myurl);
 
 $section = 'calendar';
 include_once ('tiki-section_options.php');

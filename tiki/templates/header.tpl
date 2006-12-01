@@ -31,20 +31,20 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 <script type="text/javascript" src="lib/tiki-js.js"></script>
 {include file="bidi.tpl"}
 <title>
-{if $trail}{breadcrumbs type="fulltrail" loc="head" crumbs=$trail}
+{if isset($trail)}{breadcrumbs type="fulltrail" loc="head" crumbs=$trail}
 {else}
 {$siteTitle}
-{if $headtitle} : {$headtitle}
-{elseif $page ne ''} : {$page|escape} {* add $description|escape if you want to put the description *}
-{elseif $arttitle ne ''} : {$arttitle}
-{elseif $title ne ''} : {$title}
-{elseif $thread_info.title ne ''} : {$thread_info.title}
-{elseif $post_info.title ne ''} : {$post_info.title}
-{elseif $forum_info.name ne ''} : {$forum_info.name}
-{elseif $categ_info.name ne ''} : {$categ_info.name}
-{elseif $userinfo.login ne ''} : {$userinfo.login}
-{elseif $tracker_item_main_value ne ''} : {$tracker_item_main_value}
-{elseif $tracker_info.name ne ''} : {$tracker_info.name}
+{if !empty($headtitle)} : {$headtitle}
+{elseif !empty($page)} : {$page|escape} {* add $description|escape if you want to put the description *}
+{elseif !empty($arttitle)} : {$arttitle}
+{elseif !empty($title)} : {$title}
+{elseif !empty($thread_info.title)} : {$thread_info.title}
+{elseif !empty($post_info.title)} : {$post_info.title}
+{elseif !empty($forum_info.name)} : {$forum_info.name}
+{elseif !empty($categ_info.name)} : {$categ_info.name}
+{elseif !empty($userinfo.login)} : {$userinfo.login}
+{elseif !empty($tracker_item_main_value)} : {$tracker_item_main_value}
+{elseif !empty($tracker_info.name)} : {$tracker_info.name}
 {/if}
 {/if}
 </title>
@@ -54,20 +54,6 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {/if}
 <link rel="StyleSheet"  href="styles/{$style}" type="text/css" />
 {if $favicon}<link rel="icon" href="{$favicon}" />{/if}
-{* --- jscalendar block --- *}
-{if $feature_jscalendar eq 'y' and $uses_jscalendar eq 'y'}
-<link rel="StyleSheet" href="lib/jscalendar/calendar-system.css" type="text/css"></link>
-
-
-
-<script type="text/javascript" src="lib/jscalendar/calendar.js"></script>
-{if $jscalendar_langfile}
-<script type="text/javascript" src="lib/jscalendar/lang/calendar-{$jscalendar_langfile}.js"></script>
-{else}
-<script type="text/javascript" src="lib/jscalendar/lang/calendar-en.js"></script>
-{/if}
-<script type="text/javascript" src="lib/jscalendar/calendar-setup.js"></script>
-{/if}
 
 {* --- phplayers block --- *}
 {if $feature_phplayers eq 'y'}
@@ -117,7 +103,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 
 </head>
 
-<body {if $user_dbl eq 'y' and $dblclickedit eq 'y' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}
+<body {if isset($section) and $section eq 'wiki page' and $user_dbl eq 'y' and $dblclickedit eq 'y' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}
 {if $msgError} onload="javascript:location.hash='msgError'" {/if}>
 {if $minical_reminders>100}
 <iframe width='0' height='0' frameborder="0" src="tiki-minical_reminders.php"></iframe>

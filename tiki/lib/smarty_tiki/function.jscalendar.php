@@ -7,31 +7,49 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 function smarty_function_jscalendar($params, &$smarty) {
-	global $headerlib,$firstDayOfWeek;
+	global $headerlib,$firstDayofWeek,$tikilib;
 
 	$headerlib->add_cssfile('lib/jscalendar/calendar-system.css');
 	$headerlib->add_jsfile('lib/jscalendar/calendar.js');
 	global $language;
-	if (is_file('lib/jscalendar/calendar-'.$language.'.js')) {
-		$headerlib->add_jsfile('lib/jscalendar/calendar-'.$language.'.js');
+	if (is_file('lib/jscalendar/lang/calendar-'.$language.'-utf8.js')) {
+		$headerlib->add_jsfile('lib/jscalendar/lang/calendar-'.$language.'-utf8.js');
 	} else {
-		$headerlib->add_jsfile('lib/jscalendar/calendar-en.js');
+		$headerlib->add_jsfile('lib/jscalendar/lang/calendar-en.js');
 	}
-	$headerlib->add_jsfile('lib/jscalendar/calendar-setup.js');
-
-
-	if (isset($params['format'])) {
-		$format = preg_replace('/"/','\"',$params['format']);
-	} else {
-		$format = "%A %e %B %Y, %H:%M";
-	}
+	$headerlib->add_jsfile('lib/jscalendar/calendar-setup_stripped.js');
 
 	if (isset($params['date'])) {
 		$date = preg_replace('/[^0-9]/','',$params['date']);
 	} else {
 		$date = date('U');
 	}
-	$formatted_date = strftime($format,(int)$date);
+
+	if (isset($params['showtime']) and $params['showtime'] == 'y') {
+		$showtime = true;
+		if (isset($params['minutes_interval'])) {
+			$minutes_interval = preg_replace('/[^0-9]/','',$params['minutes_interval']);
+		} else {
+			$minutes_interval = 5;
+		}
+		if ($minutes_interval > 1) {
+			$sec = $minutes_interval*60;
+			$date = (ceil($date/$sec))*$sec;
+		}
+	} else {
+		$showtime = false;
+	}
+
+	if (isset($params['format'])) {
+		$format = preg_replace('/"/','\"',$params['format']);
+	} else {
+		$format = tra($GLOBALS['long_date_format']);
+		if ($showtime) {
+			$format.= ' '.tra($GLOBALS['short_time_format']);
+		}
+	}
+
+	$formatted_date = $tikilib->date_format($format,(int)$date);
 	
 	if (isset($params['id'])) {
 		$id =  preg_replace('/"/','\"',$params['id']);
@@ -56,11 +74,6 @@ function smarty_function_jscalendar($params, &$smarty) {
 	} else {
 		$goto = false;
 	}
-	if (isset($params['showtime']) and $params['showtime'] == 'y') {
-		$showtime = true;
-	} else {
-		$showtime = false;
-	}
 
 	$back = '';
 	if ($fieldname) {
@@ -72,23 +85,22 @@ function smarty_function_jscalendar($params, &$smarty) {
 		$back.= "function goto_url() { window.location='".sprintf($goto,"'+document.getElementById('id_$id').value+'")."'; }\n";
 	}
 	$back.= "Calendar.setup( {\n";
-	$back.= "  date : \"$formatted_date\",\n";
+	$back.= "date : \"$formatted_date\",\n";
 	if ($fieldname) {
-		$back.= "  inputField : \"id_$id\",\n";
+		$back.= "inputField : \"id_$id\",\n";
 	}
-	$back.= "  ifFormat : \"%s\",\n";
-	$back.= "  displayArea : \"disp_$id\",\n";
-	$back.= "  daFormat : \"$format\",\n";
-	$back.= "  singeClick : true,\n";
-	//$back.= "  firstDay : $firstDayOfWeek,\n";
+	$back.= "ifFormat : \"%s\",\n";
+	$back.= "displayArea : \"disp_$id\",\n";
+	$back.= "daFormat : \"$format\",\n";
+	// $back.= "singleClick : true,\n";
+	// $back.= "  firstDay : \"$firstDayofWeek\",\n";
 	if ($showtime) {
-		$back.= "  showtime : true,\n";
+		$back.= "showsTime : true,\n";
 	}
 	if ($goto) {
-		$back.= "  onUpdate : goto_url,\n";
+		$back.= "onUpdate : goto_url,\n";
 	}
-	$back.= "  align : \"$align\"\n";
-	
+	$back.= "align : \"$align\"\n";
 	$back.= "} );\n";
 	$back.= "</script>\n";
 
