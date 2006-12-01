@@ -1,6 +1,6 @@
 {if $feature_freetags eq 'y'}
 
-<script language="JavaScript">
+<script type="type/javaScript">
 {literal}
   function addTag(tag) {
     el = document.getElementById('tagBox');
