@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki.tpl,v 1.25 2006-11-22 01:42:41 mose Exp $ *}{include file="header.tpl"}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki.tpl,v 1.26 2006-12-01 11:00:19 mose Exp $ *}{include file="header.tpl"}
 {* Index we display a wiki page here *}
 {if $feature_bidi eq 'y'}
 <div dir="rtl">
@@ -14,7 +14,7 @@
   </div>
   {/if}
   <div id="tiki-mid">
-  <table id="tiki-midtbl" border="0" cellpadding="0" cellspacing="0" >
+  <table id="tiki-midtbl" border="0" cellpadding="0" cellspacing="0" width="100%">
   {if $feature_left_column eq 'user' or $feature_right_column eq 'user'}
     <tr><td id="tiki-columns" colspan="0" width="100%">
       {if $feature_left_column eq 'user'}
