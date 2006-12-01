@@ -139,8 +139,15 @@
    </td>
 </tr>
 </table>
+
+<form method="get" action="tiki-admin_menu_options.php">
+<input type="hidden" name="find" value="{$find|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+<input type="hidden" name="menuId" value="{$menuId}" />
+<input type="hidden" name="offset" value="{$offset}" />
 <table class="normal">
 <tr>
+<td class="heading"></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'optionId_desc'}optionId_asc{else}optionId_desc{/if}">{tr}ID{/tr}</a></td>
 <td class="heading">&nbsp;</td>
 <td class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'position_desc'}position_asc{else}position_desc{/if}">{tr}position{/tr}</a></td>
@@ -156,6 +163,7 @@
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
 <tr>
+<td class="{cycle advance=false}"><input type="checkbox" name="checked[]" value="{$channels[user].optionId|escape}"  {if $smarty.request.checked and in_array($channels[user].optionId,$smarty.request.checked)}checked="checked"{/if} /></td>
 <td class="{cycle advance=false}">{$channels[user].optionId}</td>
 <td class="{cycle advance=false}"><a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}" 
 title="{tr}edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16"  alt='{tr}edit{/tr}' /></a></td>
@@ -172,8 +180,18 @@ title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
 </td>
 </tr>
 {/section}
+	<script type="text/javascript"> /* <![CDATA[ */
+	document.write("<tr><td colspan=\"11\"><input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/>");
+	document.write("<label for=\"clickall\">{tr}select all{/tr}</label></td></tr>");
+	/* ]]> */</script>
 </table>
+<div align="left">
+{tr}Perform action with checked:{/tr} 
+<input type="image" name="delsel" src='pics/icons/cross.png' alt={tr}delete{/tr}' title='{tr}delete{/tr}' />
+</div>
+</form>
 <br />
+
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-admin_menu_options.php?find={$find}&amp;menuId={$menuId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
