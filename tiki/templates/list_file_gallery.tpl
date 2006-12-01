@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.7 2006-11-30 20:03:17 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.8 2006-12-01 22:19:25 sylvieg Exp $ *}
 {* param:$gal_info, $files *}
 {strip}
 
@@ -227,7 +227,7 @@
 {if !isset($file_info)}
 	<input type="image" name="movesel" src="img/icons/topic_move.gif" alt='{tr}move{/tr}' title='{tr}move selected files{/tr}' />
 {/if}
-<input type="image" name="delsel" src='pics/icons/cross.png'alt='{tr}delete{/tr}' title='{tr}delete{/tr}' />
+<input type="image" name="delsel" src='pics/icons/cross.png' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' />
 </div>
 {if $smarty.request.movesel_x and !isset($file_info)} 
 <div>

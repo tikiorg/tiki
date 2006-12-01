@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.33 2006-11-29 18:37:37 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.34 2006-12-01 22:19:25 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -235,9 +235,9 @@ $smarty->assign_by_ref('name', $gal_info["name"]);
 $smarty->assign_by_ref('description', $gal_info["description"]);
 
 if (!isset($_REQUEST["file_sort_mode"])) {
-	$file_sort_mode = 'created_desc';
+	$file_sort_mode = $gal_info['sort_mode']? $gal_info['sort_mode']: 'created_desc';
 
-	$_REQUEST["file_sort_mode"] = 'created_desc';
+	$_REQUEST["file_sort_mode"] = $file_sort_mode;
 } else {
 	$file_sort_mode = $_REQUEST["file_sort_mode"];
 }

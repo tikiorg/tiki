@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.44 2006-11-29 18:37:36 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.45 2006-12-01 22:19:25 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-file_galleries.php?galleryId={$galleryId}{if isset($edit_mode)}&amp;edit_mode=1{/if}">{tr}File Galleries{/tr}</a>
 
@@ -22,11 +22,11 @@
 {if $galleryId eq 0}
 <h2>{tr}Create a file gallery{/tr}</h2>
 {else}
-<h3>{tr}Edit this file gallery:{/tr} {$name}</h3>
 <a class="linkbut" href="tiki-file_galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new file gallery{/tr}</a>
+<h3>{tr}Edit this file gallery:{/tr} {$name}</h3>
 {/if}
 {if $individual eq 'y'}
-<a class="fgallink" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$galleryId}">{tr}There are individual permissions set for this file gallery{/tr}</a>
+<br /><a class="fgallink" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$galleryId}">{tr}There are individual permissions set for this file gallery{/tr}</a>
 {/if}
 <div  align="center">
 <form action="tiki-file_galleries.php" method="post">
@@ -81,7 +81,14 @@
 		</table>
 	</td>
 </tr>
-<tr>
+<tr><td class="formcolor">{tr}Default sort order{/tr}:</td><td class="formcolor"><select name="sortorder">
+{foreach from=$options_sortorder key=key item=item}
+<option value="{$item|escape}" {if $sortorder == $item} selected="selected"{/if}>{$key}</option>
+{/foreach}
+</select>
+<input type="radio" name="sortdirection" value="desc" {if $sortdirection == 'desc'}checked="checked"{/if} />{tr}descending{/tr}
+<input type="radio" name="sortdirection" value="asc" {if $sortdirection == 'asc'}checked="checked"{/if} />{tr}ascending{/tr}
+</td></tr><tr>
 	<td class="formcolor">{tr}Max description display size{/tr}</td>
 	<td class="formcolor"><input type="text" name="max_desc" value="{$max_desc|escape}" /></td>
 </tr>

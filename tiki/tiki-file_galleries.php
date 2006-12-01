@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.32 2006-11-30 15:45:41 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.33 2006-12-01 22:19:25 sylvieg Exp $
 
 	require_once('tiki-setup.php');
 	include_once('lib/filegals/filegallib.php');
@@ -80,6 +80,8 @@
 	$smarty->assign('fgal_type','default');
 	$smarty->assign('parentId', -1);
 	$smarty->assign('creator', $user);
+	$smarty->assign('sortorder', 'created');
+	$smarty->assign('sortdirection', 'desc');
 	
 	// If we are editing an existing gallery prepare smarty variables
 	if(isset($_REQUEST["edit_mode"])&&$_REQUEST["edit_mode"]) {
@@ -110,6 +112,14 @@
 	    $smarty->assign_by_ref('visible',$info["visible"]);
 		$smarty->assign_by_ref('parentId',$info['parentId']);
 		$smarty->assign_by_ref('creator',$info['user']);
+		if ($info['sort_mode']) {
+			preg_match('/(.*)_(asc|desc)/', $info['sort_mode'], $matches);
+			$smarty->assign('sortorder',$matches[1]);
+			$smarty->assign('sortdirection', $matches[2]);
+		} else {
+			$smarty->assign('sortorder', 'created');
+			$smarty->assign('sortdirection', 'desc');
+		}
 	  }
 	}
 	
@@ -189,7 +199,9 @@
 	  $_REQUEST['show_name']=isset($_REQUEST['show_name'])?$_REQUEST['show_name']:'a';
 	  $_REQUEST['user'] = isset($_REQUEST['user'])?$_REQUEST['user']:(isset($info['user'])?$info['user']:$user);
 	  $_REQUEST['show_lockedby']=isset($_REQUEST['show_lockedby'])?'y':'n';
-	  $fgid = $filegallib->replace_file_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST['user'], $_REQUEST["maxRows"], $public, $visible,$_REQUEST['show_id'],$_REQUEST['show_icon'],$_REQUEST['show_name'],$_REQUEST['show_size'],$_REQUEST['show_description'],$_REQUEST['show_created'],$_REQUEST['show_dl'],$_REQUEST['max_desc'],$_REQUEST['fgal_type'], $_REQUEST['parentId'], $lockable, $_REQUEST['show_lockedby'], $_REQUEST['archives']);
+	  $_REQUEST['sortorder']=isset($_REQUEST['sortorder'])?$_REQUEST['sortorder']:'created';
+	  $_REQUEST['sortdirection']=isset($_REQUEST['sortdirection']) && $_REQUEST['sortdirection'] == 'asc'? 'asc':'desc';
+	  $fgid = $filegallib->replace_file_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST['user'], $_REQUEST["maxRows"], $public, $visible,$_REQUEST['show_id'],$_REQUEST['show_icon'],$_REQUEST['show_name'],$_REQUEST['show_size'],$_REQUEST['show_description'],$_REQUEST['show_created'],$_REQUEST['show_dl'],$_REQUEST['max_desc'],$_REQUEST['fgal_type'], $_REQUEST['parentId'], $lockable, $_REQUEST['show_lockedby'], $_REQUEST['archives'], $_REQUEST['sortorder'].'_'.$_REQUEST['sortdirection']);
 	  
 		if ($feature_categories == 'y') {
 			$cat_type='file gallery';
@@ -306,6 +318,8 @@
 		$users = $tikilib->list_users(0, -1, 'login_asc');
 		$smarty->assign_by_ref('users', $users['data']);
 	}
+	$options_sortorder = array(tra('Creation Date')=>'created', tra('Name')=>'name', tra('Filename')=>'filename', tra('Size')=>'filesize', tra('Owner') => 'user',tra('Downloads') => 'downloads');
+	$smarty->assign_by_ref('options_sortorder', $options_sortorder);
 	
 	$cat_type='file gallery';
 	$cat_objid = $_REQUEST["galleryId"];
