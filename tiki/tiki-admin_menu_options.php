@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_menu_options.php,v 1.21 2006-09-19 16:33:12 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_menu_options.php,v 1.22 2006-12-01 19:37:54 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -60,6 +60,7 @@ $smarty->assign('type', $info["type"]);
 $smarty->assign('position', $info["position"]);
 
 if (isset($_REQUEST["remove"])) {
+  check_ticket('admin-menu-options');
   $area = 'delmenuoption';
   if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
@@ -70,6 +71,16 @@ if (isset($_REQUEST["remove"])) {
   } else {
     key_get($area);
   }
+}
+
+if (isset($_REQUEST['delsel_x']) && isset($_REQUEST['checked'])) {
+	check_ticket('admin-menu-options');
+	foreach($_REQUEST['checked'] as $id) {
+		$menulib->remove_menu_option($id);
+	}
+	$maxPos = $menulib->get_max_option($_REQUEST['menuId']);
+	$smarty->assign('position', $maxPos + 1);
+	$smarty->clear_cache(null, 'menu' . $_REQUEST['menuId']);
 }
 
 if (isset($_REQUEST["save"])) {
