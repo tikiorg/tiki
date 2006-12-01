@@ -10,7 +10,7 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
     global $tikilib, $userlib, $cachelib, $user, $feature_score, $feature_friends, $highlight_group,
 	$feature_community_mouseover, $feature_community_mouseover_name,$feature_community_mouseover_picture,
 	$feature_community_mouseover_friends,$feature_community_mouseover_score,$feature_community_mouseover_country,
-	$feature_community_mouseover_email, $feature_community_mouseover_lastlogin, $feature_community_mouseover_distance;
+	$feature_community_mouseover_email, $feature_community_mouseover_lastlogin, $feature_community_mouseover_distance,$userprefslib;
 
     $cachePeriod = 60*60*2; // how long does an entry stay in the cache for?  2hr
 
@@ -92,7 +92,8 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
 				}
 					}
 					if ($feature_community_mouseover_distance == 'y') {
-				$distance = $tikilib->get_userdistance($other_user,$user);
+				if (!is_object($userprefslib)) include_once 'lib/userprefs/userprefslib.php';
+				$distance = $userprefslib->get_userdistance($other_user,$user);
 				if (!is_null($distance)) {
 				   $content .= $distance." ".tra("km") . "<br />";
 				}
