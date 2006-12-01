@@ -5,9 +5,11 @@
 {if $mandatory_category >= 0}
   <div id="categorizator">
 {else}
-  [ <a class="link" href="javascript:show('categorizator');">{tr}show categories{/tr}</a>
-  | <a class="link" href="javascript:hide('categorizator');">{tr}hide categories{/tr}</a> ]
-  <div id="categorizator" {if $cat_categorize eq 'n' and $categ_checked ne 'y'}style="display:none;"{else}style="display:block;"{/if}>
+<a class="link" href="javascript:flip('categorizator');flip('categshow','inline');flip('categhide','inline');">
+<span id="categshow" style="display:{if isset($smarty.session.tiki_cookie_jar.show_categorizator) and $smarty.session.tiki_cookie_jar.show_categorizator eq 'y'}none{else}inline{/if};">{tr}show categories{/tr}</span>
+<span id="categhide" style="display:{if isset($smarty.session.tiki_cookie_jar.show_categorizator) and $smarty.session.tiki_cookie_jar.show_categorizator eq 'y'}inline{else}none{/if};">{tr}hide categories{/tr}</span>
+</a>
+  <div id="categorizator" style="display:{if isset($smarty.session.tiki_cookie_jar.show_categorizator) and $smarty.session.tiki_cookie_jar.show_categorizator eq 'y'}block{else}none{/if};">
 {/if}
 {if $feature_help eq 'y'}
   <div class="rbox" name="tip">
@@ -44,4 +46,5 @@
   </div>
   </td>
 </tr>
-{/if}{* $feature_categories eq 'y' *}
+{/if}
+
