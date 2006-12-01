@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.676 2006-11-29 21:49:22 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.677 2006-12-01 07:07:50 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -5073,7 +5073,7 @@ function add_pageview() {
 		    if ($desc = $this->page_exists_desc($page_parse)) {
 			//$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
 			$repl = '<a title="' . htmlspecialchars($desc) . '" href="tiki-index.php?page=' . urlencode($page_parse). '" class="wiki">' . $page_parse . '</a>';
-		    } elseif ($feature_wiki_plurals == 'y' && $this->get_locale() == 'en_US') {
+		    } elseif ($feature_wiki_plurals == 'y') {
 # Link plural topic names to singular topic names if the plural
 # doesn't exist, and the language is english
 			$plural_tmp = $page_parse;
@@ -6208,75 +6208,11 @@ if (!$simple_wiki) {
 			    return $date->getTime();
 			}
 
-			/**
-
-			 */
-			function get_site_date($timestamp, $user = false) {
-			    static $localed = false;
-
-			    if (!$localed) {
-				$this->set_locale($user);
-
-				$localed = true;
-			    }
-
-			    $original_tz = date('T', $timestamp);
-
-			    $format = '%b %e, %Y';
-			    $rv = strftime($format, $timestamp);
-			    $rv .= " =timestamp\n";
-			    $rv .= strftime('%Z', $timestamp);
-			    $rv .= " =strftime('%Z')\n";
-			    $rv .= date('T', $timestamp);
-			    $rv .= " =date('T')\n";
-
-			    $date = &new Date($timestamp);
-
-# Calling new Date() changes the timezone of the $timestamp var!
-# so we only change the timezone to UTC if the original TZ wasn't UTC
-# to begin with.
-# This seems really buggy, but I don't have time to delve into right now.
-			    $rv .= date('T', $timestamp);
-			    $rv .= " =date('T')\n";
-
-			    $rv .= $date->format($format);
-			    $rv .= " =new Date()\n";
-
-			    $rv .= date('T', $timestamp);
-			    $rv .= " =date('T')\n";
-
-			    if ($original_tz == 'UTC') {
-				$date->setTZbyID('UTC');
-
-				$rv .= $date->format($format);
-				$rv .= " =setTZbyID('UTC')\n";
-			    }
-
-			    $tz_id = $this->get_display_timezone($user);
-
-			    if ($date->tz->getID() != $tz_id) {
-# let's convert to the displayed timezone
-				$date->convertTZbyID($tz_id);
-
-				$rv .= $date->format($format);
-				$rv .= " =convertTZbyID($tz_id)\n";
-			    }
-
-#return $rv;
-
-# if ($format == "%b %e, %Y")
-#   $format = $tikilib->get_short_date_format();
-			    return $date;
-			}
 
 			function date_format($format, $timestamp, $user = false) {
-			    //$date = $this->get_site_date($timestamp, $user);
-			    // JJ - ignore conversion - we have no idea what TZ they're using
-
 			    // strftime doesn't do translations correctly
 			    // return strftime($format,$timestamp);
 			    $date = new Date($timestamp);
-
 			    return $date->format($format);
 			}
 
@@ -6572,46 +6508,6 @@ if (!$simple_wiki) {
 							$language = $this->get_preference('language', 'en');
 						}
 						return $language;
-						}
-
-						function get_locale($user = false) {
-# TODO move to admin preferences screen
-						    static $locales = array(
-							    'cs' => 'cs_CZ',
-							    'de' => 'de_DE',
-							    'dk' => 'da_DK',
-							    'en' => 'en_US',
-							    'fr' => 'fr_FR',
-							    'he' => 'he_IL', # hebrew
-							    'it' => 'it_IT', # italian
-							    'pl' => 'pl_PL', # polish
-							    'po' => 'po',
-							    'ru' => 'ru_RU',
-							    'es' => 'es_ES',
-							    'sw' => 'sw_SW', # swahili
-							    'tw' => 'tw_TW',
-							    );
-
-						    if (!isset($locale) or !$locale) {
-							$locale = '';
-							if (isset($locales[$this->get_language($user)]))
-							    $locale = $locales[$this->get_language($user)];
-#print "<pre>get_locale(): locale=$locale\n</pre>";
-						    }
-
-						    return $locale;
-						}
-
-						function set_locale($user = false) {
-						    static $locale = false;
-
-						    if (!$locale) {
-# breaks the RFC 2822 code
-							$locale = @setlocale(LC_TIME, $this->get_locale($user));
-#print "<pre>set_locale(): locale=$locale\n</pre>";
-						    }
-
-						    return $locale;
 						}
 
 						function read_raw($text) {

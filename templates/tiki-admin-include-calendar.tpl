@@ -56,6 +56,19 @@
 </td>
 </tr>
 
+<tr class="form">
+<td><label>{tr}Split hours in periods of{/tr}</label></td>
+<td>
+<select name="calendar_timespan">
+<option value="1"{if $calendar_timespan eq "1"} selected="selected"{/if}>{tr}1 minute{/tr}</option>
+<option value="5"{if $calendar_timespan eq "5"} selected="selected"{/if}>{tr}5 minutes{/tr}</option>
+<option value="10"{if $calendar_timespan eq "10"} selected="selected"{/if}>{tr}10 minutes{/tr}</option>
+<option value="15"{if $calendar_timespan eq "15"} selected="selected"{/if}>{tr}15 minutes{/tr}</option>
+<option value="30"{if $calendar_timespan eq "30"} selected="selected"{/if}>{tr}30 minutes{/tr}</option>
+</select>
+</td>
+</tr>
+
 <tr>
 <td colspan="2" class="button"><input type="submit" name="calprefs" value="{tr}Change settings{/tr}" /></td>
 </tr>
