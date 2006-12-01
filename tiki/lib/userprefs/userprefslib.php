@@ -41,6 +41,8 @@ class UserPrefsLib extends TikiLib {
 	}
 	
 	function get_userdistance($usersrc,$userdst) {
+		if ($usersrc == $userdst)
+			return null;
 		$user1=$this->get_userprefs($usersrc);
 		$user2=$this->get_userprefs($userdst);
 
