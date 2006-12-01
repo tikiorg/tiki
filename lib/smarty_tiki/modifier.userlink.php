@@ -80,10 +80,10 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
 				$content .= "<img src='img/icons/ico_friend.gif' />&nbsp;";
 				$content .= $tikilib->get_friends_count($other_user) . '&nbsp;&nbsp;&nbsp;';
 			    }
-			    if ($feature_community_mouseover_score == 'y') {
+			    if ($feature_community_mouseover_score == 'y' && $star) {
 				$content .= $star . $info['score'];
 			    }
-			    if ($feature_community_mouseover_score == 'y' || $feature_community_mouseover_friends == 'y') $content .= "<br />";
+			    if (($feature_community_mouseover_score == 'y' || $feature_community_mouseover_friends == 'y') && $star) $content .= "<br />";
 
 			    if ($feature_community_mouseover_country == 'y') {
 				$country = $tikilib->get_user_preference($other_user, "country", "");
