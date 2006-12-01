@@ -1,4 +1,4 @@
-	# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.117 2006-11-30 15:51:13 sylvieg Exp $
+	# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.118 2006-12-01 22:27:59 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -667,3 +667,6 @@ ALTER TABLE `users_grouppermissions` CHANGE `permName` `permName` varchar(31)  N
 ALTER TABLE `users_objectpermissions` CHANGE `permName` `permName` varchar(31)  NOT NULL default '';
 ALTER TABLE `users_permissions` CHANGE `permName` `permName` varchar(31)  NOT NULL default '';
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_assign_perm_file_gallery', 'Can assign perms to file gallery', 'admin', 'file galleries');
+
+#sylvieg 2006-12-01
+ALTER TABLE `tiki_file_galleries` ADD `sort_mode` char(20) default NULL;
