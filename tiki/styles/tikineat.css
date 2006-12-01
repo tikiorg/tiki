@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.19 2006-11-27 18:56:35 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.20 2006-12-01 11:00:17 mose Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -14,9 +14,10 @@ and change them with
 
 body {
 	background-color : #E9ECEF;
-	font-family : Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-family : Verdana, Helvetica, Geneva, Arial, sans-serif;
 	margin : 0;
 	padding : 0;
+	letter-spacing : 0;
 }
 h1, h2, h3, h4, h5, h6 {
 	margin : 0;
@@ -248,6 +249,13 @@ div.separator, div.separatorline {
 	text-decoration : none;
 	font-weight : normal;
 }
+.linkmenu:hover {
+  color : #224466;
+	background-color: #ddd;
+	letter-spacing : 0;
+}
+
+
 .rsslist {
 	background-color: #FFFFFF;
 	margin : 0;
@@ -637,14 +645,8 @@ DIV#page-bar table, DIV#page-bar td, DIV#page-bar tr {
 
 /* Wiki action buttons (the buttons displayed at the end of each page to edit/print/remove/etc a page */
 .button2, .button3 {
-	font-size : 10px;
 	margin : 0;
-	padding : 0 2px;
-	border : 1px solid #999;
-}
-
-.button2 a {
-	text-decoration:none;
+	padding : 0;
 }
 .button3 {
 	border-radius : 5px 5px 0 0;
@@ -662,16 +664,16 @@ body .button2 {
 	margin-left : 5px;
 }
 /* Links in buttons */
-/*.linkbut, .linkbut:visited {
+.linkbut, .linkbut:visited {
 	font-size : 10px;
 	color : #223344;
 	background-color : #C7D0D9;
-	padding : 1px 4px;
-	font-weight : normal;
+	padding : 0px 4px;
 	text-decoration : none;
-	border : 1px solid #46596f;
-} */
+	border : 1px solid #999;
+}
 .linkbut:hover {
+	background-color : #dca;
 }
 .tab1 form {
 	display : inline;
@@ -679,12 +681,12 @@ body .button2 {
 div.cache {
 	background-color : #DEE7EC;
 	border : 1px solid #8CACBB;
-	padding : 10px
+	padding : 10px;
 	margin : 4px;
 }
 div.cachedpage {
 	border : 1px solid black;
-	padding : 10px
+	padding : 10px;
 	margin : 20px;
 }
 .wikicache, .wikicache:visited {
@@ -1046,7 +1048,7 @@ span.commentstitle {
 
 /************************************************************ CHAT *********************************************************/
 table.chatroom {
-	border-color : 2px solid #334455;
+	border : 2px solid #334455;
 	width : 100%;
 }
 td.chatchannels {
@@ -1343,7 +1345,7 @@ div.shoutboxmsg {
 	padding : 4px;
 	padding-bottom : 1px;
 }
-div.shoutboxmsg:last {
+div.shoutboxmsg:last-child {
 	border-bottom : 1px solid #8CACBB;
 }
 div.shoutboxmodmsg {
@@ -1360,7 +1362,7 @@ textarea.tshoutbox{
 	width : 162px;
 }
 .wiki-table {
-	border-color : 1px solid #8CACBB;
+	border : 1px solid #8CACBB;
 }
 .wiki-tr-a td {
 	background-color : #DDDDDD;
@@ -1385,7 +1387,7 @@ div.dircategs {
 }
 div.dirlistsites {
 	background-color : white;
-	padding-left : 5px 0 10px 5px;
+	padding : 5px 0px 10px 5px;
 	border : 1px solid #8CACBB;
 	margin-top : 10px;
 }
@@ -1471,7 +1473,6 @@ div.messureadbody {
 }
 /******************************************** Tiki calendar *********************************************/
 #calendar {
-	width : 100%;
 }
 .Cal0, .Cal1, .Cal2 {
 	color : #425262;
@@ -1701,20 +1702,42 @@ div.messureadbody {
 	color : #000000;
 	font-weight : normal;
 }
-div.tabrow {
-	margin-left : 29px;
-	background-color : #EEEEEE;
-	border : 1px solid #787878;
-	border-bottom : 0;
+.tabrow {
+	margin : 0;
 	font-size : 11px;
+	margin-left : 10px;
+}
+.tabrow a {
+	text-decoration : none;
+}
+.calnavigation {
+	text-align : center;
+	border : 1px solid #ccc;
+	font-size : 11px;
+}
+.calnavigation a {
+	font-size : 160%;
+	font-weight : bold;
+	padding : 0 20px 4px 20px;
+	line-height : 11px;
+}
+.calnavigation a:hover {
+	background-color : #FE3;
+}
+.calnavigation a.prev {
+	float : left;
+}
+.calnavigation a.next {
+	float : right;
 }
 td.middle {
 	vertical-align : middle;
 }
 .daterow {
-	padding : 0 5px;
+	padding : 1px 5px;
 	border : 1px outset #ddd;
 	background-color : #ddd;
+	margin-right : 10px;
 }
 .daterow:hover {
 	background-color : #fff;
@@ -1755,12 +1778,75 @@ td.middle {
 a.viewmodeon img {
 	margin : 0;
 	padding : 0;
+	padding-left : 3px;
+	_padding-left : 0;
+	border : 1px solid #900;
 }
 a.viewmodeoff img {
-	margin : 0;
+	margin : 1px;
 	padding : 0;
+	padding-left : 3px;
+	_padding-left : 0;
+	border : 0;
 }
 #caltable {
+	_width : 95%;
+}
+#caltable .days {
+	border : 0;
+	border-bottom : 1px solid #999;
+}
+#caltable .weeks {
+	border-right : 1px solid #999;
+	font-size : 8px;
+	color : #666;
+	vertical-align : middle;
+}
+#caltable .odd, #caltable .even {
+	margin : 1px !important;
+	border : 0 !important;
+}
+#caltable tbody tr td:last-child .calcontent,
+#caltable tbody tr td:last-child .calfocus,
+#caltable tbody tr td:last-child .calfocuson {
+	margin-right : 1px;
+	border-right : 1px solid #999;
+}
+#caltable tbody tr:last-child td .calcontent {
+	margin-bottom : 1px;
+	border-bottom : 1px solid #999;
+}
+.addevent {
+	padding: 0 5px;
+	_padding: 0;
+	float : right;
+}
+.calodd {
+	background-color : #cde;
+	_padding: 0;
+}
+.caleven {
+	background-color : #def;
+	_padding: 0;
+}
+.caldark {
+	background-color : #eee;
+	_padding: 0;
+}
+#filtercal {
+	background-color : #FFF;
+	position : absolute;
+	z-index : 2 !important;
+	border : 1px solid #000;
+	right : 190px;
+}
+#filtercal .caltitle,
+#filtercal .caltoggle,
+#filtercal .calcheckbox {
+	padding : 0 10px;
+}
+#filtercal .calinput {
+	padding : 10px;
 }
 /*************************** user menu ***************/
 .option {
@@ -1944,7 +2030,7 @@ div#loadstats {
 	display : block;
 	border : 0;
 	border-bottom : 1px dashed #999999;
-	background-color : none;
+	background-color : transparent;
 }
 .versionav .button2 .linkbut {
 	border : 0;
@@ -1963,7 +2049,6 @@ div#loadstats {
 	padding : 2px 30px;
 	float : right;
 }
-
 /**** coloration for QUOTE plugin *****/
 .quoteheader {
 margin: 10px 5px 0px 5px;
@@ -1990,24 +2075,6 @@ border: 1px dashed #A9B8C2;
 clear:both;
 }
 
-/* TikiSheet Default Style {{{1 */
-table.default	thead	td,	table.default	tfoot	td
-{
-	font-weight:		bold;
-	text-align:			center;
-	background-color: #E5EEF6;
-}
-
-table.default	td
-{
-	border-style:		solid;
-	border-width:		1px;
-	border-color:		#8CACBB;
-	background-color: #FFFFFF;
-}
-/* }}}1 */
-
-
 /* AJAX */
 
 div#ajaxLoading {
@@ -2024,35 +2091,14 @@ div#ajaxLoading {
 
 
 /* TikiSheet Default Style {{{1 */
-table.default	thead	td,	table.default	tfoot	td
-{
+table.default	thead	td,	table.default	tfoot	td {
 	font-weight:		bold;
 	text-align:			center;
 	background-color: #E5EEF6;
 }
 
-table.default	td
-{
-	border-style:		solid;
-	border-width:		1px;
-	border-color:		#8CACBB;
-	background-color: #FFFFFF;
-}
-/* }}}1 */
-
-/* TikiSheet Default Style {{{1 */
-table.default	thead	td,	table.default	tfoot	td
-{
-	font-weight:		bold;
-	text-align:			center;
-	background-color: #E5EEF6;
-}
-
-table.default	td
-{
-	border-style:		solid;
-	border-width:		1px;
-	border-color:		#8CACBB;
+table.default	td {
+	border : solid 1px #8CACBB;
 	background-color: #FFFFFF;
 }
 /* }}}1 */
