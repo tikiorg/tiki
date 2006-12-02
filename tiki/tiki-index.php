@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.166 2006-11-29 14:38:40 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.167 2006-12-02 18:24:54 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -529,9 +529,6 @@ $smarty->assign('wiki_extras','y');
 
 $cat_type='wiki page';
 $cat_objid = $page;
-if($feature_theme_control == 'y') {
-    include('tiki-tc.php');
-}
 
 // Watches
 if($feature_user_watches == 'y') {
