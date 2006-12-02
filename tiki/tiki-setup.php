@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.338 2006-11-28 14:34:12 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.339 2006-12-02 19:35:22 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1371,7 +1371,8 @@ if ($tikidomain and is_file("styles/$tikidomain/$style")) {
 $smarty->assign('style', $style);
 include_once("csslib.php");
 $transition_style = $csslib->transition_css('styles/'.$style);
-$smarty->assign('transition_style', $transition_style);
+$headerlib->add_cssfile('styles/transitions/'.$transition_style,50);
+$headerlib->add_cssfile('styles/'.$style,51);
 
 // \todo if this page is not viewable by anonymous, then don't display the babelfish stuff
 /* this code following if (0) is never executed, right?

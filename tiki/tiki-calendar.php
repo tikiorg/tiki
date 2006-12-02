@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.57 2006-12-01 07:07:49 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.58 2006-12-02 19:35:21 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -12,6 +12,7 @@ include_once ('lib/calendar/calendarlib.php');
 include_once ('lib/categories/categlib.php');
 include_once ('lib/newsletters/nllib.php');
 
+$headerlib->add_cssfile('css/calendar.css',20);
 # perms are
 # 	$tiki_p_view_calendar
 # 	$tiki_p_admin_calendar

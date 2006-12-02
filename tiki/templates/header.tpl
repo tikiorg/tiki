@@ -49,10 +49,6 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {/if}
 </title>
 
-{if $transition_style ne '' and $transition_style ne 'none' }
-<link rel="StyleSheet"  href="styles/transitions/{$transition_style}" type="text/css" />
-{/if}
-<link rel="StyleSheet"  href="styles/{$style}" type="text/css" />
 {if $favicon}<link rel="icon" href="{$favicon}" />{/if}
 
 {* --- phplayers block --- *}
