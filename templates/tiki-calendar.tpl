@@ -1,12 +1,13 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.67 2006-12-01 07:07:49 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.68 2006-12-02 19:35:22 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 <div id="calscreen">
 
 <div style="float:right;margin:5px;">
 {if $tiki_p_admin_calendar eq 'y' or $tiki_p_admin eq 'y'}
 <span class="button2"><a href="tiki-admin_calendars.php" class="linkbut">{tr}admin{/tr}</a></span>
+<span class="button2"><a href="tiki-admin.php?page=calendar" class="linkbut">{tr}configure{/tr}</a></span>
 {/if}
-{if $modifTab}
+{if $tiki_p_add_event eq 'y'}
 <span class="button2"><a href="tiki-calendar_edit_item.php"class="linkbut">{tr}add item{/tr}</a></span>
 {/if}
 
