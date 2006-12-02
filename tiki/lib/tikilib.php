@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.677 2006-12-01 07:07:50 mose Exp $
+// CVS: $Id: tikilib.php,v 1.678 2006-12-02 17:43:40 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3775,6 +3775,11 @@ function add_pageview() {
 	    return false;
 
 	$html=$is_html?1:0;
+	if ($html) {
+		require "HTMLPurifier.auto.php";
+		$purifier = new HTMLPurifier();
+		$edit_data = $purifier->purify($edit_data);
+	}
 	$mid = ''; $midvar = '';
 	$bindvars = array($name, (int)$hits, $data, (int)$lastModif, $comment, 1, $user, $ip, $description, $user, (int)strlen($data), $html, mktime());
 	if ($lang) {
@@ -4569,22 +4574,24 @@ function add_pageview() {
         // melmut - if $is_html is set, check $wiki_wikisyntax_in_html,
         //  which can be set to 'full' (default), 'partial' or 'none'
 	global $wiki_wikisyntax_in_html;
-        $simple_wiki=false;
-        if ($is_html)
-        {
+
+	$simple_wiki = false;
+	if ($is_html) {
 		// if it is set to 'none', don't parse anything
-		if ($wiki_wikisyntax_in_html=='none')
-			return $data;
 		// if it is set to 'partial', disable some wiki syntax
-                // basically, allow wiki plugins, wiki links and almost
-                // everything between {}
-		$simple_wiki=$wiki_wikisyntax_in_html!='full';
-        }
+		// basically, allow wiki plugins, wiki links and almost
+		// everything between {}
+		if ($wiki_wikisyntax_in_html == 'none') {
+			return $data;
+		} elseif ($wiki_wikisyntax_in_html == 'partial') {
+			$simple_wiki = true;
+		}
+	}
 	// Process pre_handlers here
 	if (is_array($this->pre_handlers)) {
-	    foreach ($this->pre_handlers as $handler) {
-		$data = $handler($data);
-	    }
+		foreach ($this->pre_handlers as $handler) {
+			$data = $handler($data);
+		}
 	}
 
 	// Handle pre- and no-parse sections and plugins
@@ -5799,9 +5806,9 @@ if (!$simple_wiki) {
 	foreach ($this->pos_handlers as $handler) {
 	    $data = $handler($data);
 	}
-
-	return $data;
-    }
+	
+		return $data;
+	}
 
     function parse_smileys($data) {
 	global $feature_smileys;
@@ -5890,6 +5897,11 @@ if (!$simple_wiki) {
 	$version = $old_version + 1;
 
 	$html=$is_html?1:0;
+	if ($html) {
+		require "HTMLPurifier.auto.php";
+		$purifier = new HTMLPurifier();
+		$edit_data = $purifier->purify($edit_data);
+	}
 	$mid = '';
 	$bindvars = array($description,$edit_data,$edit_comment,(int) $t,$version,$edit_user,$edit_ip,(int)strlen($data),$html);
 	if ($lang) {
