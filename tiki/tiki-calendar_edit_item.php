@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_edit_item.php,v 1.2 2006-12-02 17:30:26 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_edit_item.php,v 1.3 2006-12-02 23:39:27 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -33,6 +33,8 @@ if (isset($_REQUEST['calendarId']) and $userlib->object_has_one_permission($_REQ
   } 
 } 
 */
+
+$smarty->assign('edit',false);
 
 if ($tiki_p_admin_calendar == 'y') {
   $tiki_p_add_events = 'y';
@@ -133,7 +135,7 @@ if (isset($_POST['act'])) {
 	}
 }
 
-if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["calitemId"])) {
+if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["calitemId"]) and $tiki_p_change_events == 'y') {
   $area = 'delcalevent';
   if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
@@ -144,7 +146,7 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
   } else {
     key_get($area);
   }
-} elseif (isset($_REQUEST['drop'])) {
+} elseif (isset($_REQUEST['drop']) and $tiki_p_change_events == 'y') {
   check_ticket('calendar');
   if (is_array($_REQUEST['drop'])) {
     foreach ($_REQUEST['drop'] as $dropme) {
@@ -163,10 +165,17 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
   } else {
 		$calendar = $calendarlib->get_calendar($calitem['calendarId']);
   }
+	$smarty->assign('edit',true);
+} elseif (isset($_REQUEST['viewcalitemId']) and $tiki_p_view_calendar == 'y') {
+	$calitem = $calendarlib->get_item($_REQUEST['viewcalitemId']);
+	$id = $_REQUEST['viewcalitemId'];
+	$calendar = $calendarlib->get_calendar($calitem['calendarId']);
+	$_REQUEST['calendarId'] = $calitem['calendarId'];
 } elseif (isset($_REQUEST['calitemId']) and $tiki_p_change_events == 'y') {
 	$calitem = $calendarlib->get_item($_REQUEST['calitemId']);
 	$id = $_REQUEST['calitemId'];
 	$calendar = $calendarlib->get_calendar($calitem['calendarId']);
+	$smarty->assign('edit',true);
 } elseif (isset($_REQUEST['calendarId']) and $tiki_p_add_events == 'y') {
 	$dc = $tikilib->get_date_converter($user);
 	if (isset($_REQUEST['todate'])) {
@@ -195,11 +204,13 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 		);
 	$id = 0;
 	$calendar = $calendarlib->get_calendar($_REQUEST['calendarId']);
+	$smarty->assign('edit',true);
 } else {
   $smarty->assign('msg', tra("Permission denied you can not view this page"));
   $smarty->display("error.tpl");
   die;
 }
+
 
 if ($calendar['customlocations'] == 'y') {
 	$listlocs = $calendarlib->list_locations($_REQUEST['calendarId']);
