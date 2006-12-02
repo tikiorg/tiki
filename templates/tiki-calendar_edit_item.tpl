@@ -132,8 +132,7 @@
 <td>
 <table class="normal">
 <tr>
-<td>{tr}Status{/tr}</td>
-<td>
+<td colspan="2">
 <div style="float:right;display:{if $calendar.custompriorities eq 'y'}block{else}none{/if};width:120px;padding:4px;border:1px solid #888;" id="calprio">
 {tr}Priority{/tr}<br />
 <select name="save[priority]" style="background-color:#{$listprioritycolors[$calitem.priority]};font-size:150%;width:90%;"
@@ -143,18 +142,18 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 {/foreach}
 </select>
 </div>
-<span style="background-color:#cc6;padding:0 3px;{if $calitem.status eq 0}border:1px solid #000{/if};">
+<div style="margin-bottom:1px;width:120px;background-color:#cc6;padding:0 3px;{if $calitem.status eq 0}border:1px solid #000{/if};">
 <input id="status0" type="radio" name="save[status]" value="0"{if $calitem.status eq 0} checked="checked"{/if} />
-<label for="status0" style="width:120px;">{tr}Tentative{/tr}</label>
-</span><br />
-<span style="background-color:#6c6;padding:0 3px;{if $calitem.status eq 1}border:1px solid #000{/if};">
+<label for="status0">{tr}Tentative{/tr}</label>
+</div>
+<div style="margin-bottom:1px;width:120px;background-color:#6c6;padding:0 3px;{if $calitem.status eq 1}border:1px solid #000{/if};">
 <input id="status1" type="radio" name="save[status]" value="1"{if $calitem.status eq 1} checked="checked"{/if} />
-<label for="status1" style="width:120px;">{tr}Confirmed{/tr}</label>
-</span><br />
-<span style="background-color:#c66;padding:0 3px;{if $calitem.status eq 2}border:1px solid #000{/if};">
+<label for="status1">{tr}Confirmed{/tr}</label>
+</div>
+<div style="margin-bottom:1px;width:120px;background-color:#c66;padding:0 3px;{if $calitem.status eq 2}border:1px solid #000{/if};">
 <input id="status2" type="radio" name="save[status]" value="2"{if $calitem.status eq 2} checked="checked"{/if} />
-<label for="status2" style="width:120px;">{tr}Cancelled{/tr}</label>
-</span><br />
+<label for="status2">{tr}Cancelled{/tr}</label>
+</div>
 </td></tr>
 <tr class="formcolor" style="display:{if $calendar.customcategories eq 'y'}tablerow{else}none{/if};" id="calcat">
 <td>{tr}Category{/tr}</td>
