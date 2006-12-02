@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.146 2006-11-29 14:21:02 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.147 2006-12-02 18:31:01 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,7 +8,7 @@
 
 //var_dump($_REQUEST);die;
 // Initialization
-$section = "wiki";
+$section = "wiki page";
 require_once ('tiki-setup.php');
 
 include_once ('lib/wiki/wikilib.php');
@@ -925,27 +925,26 @@ if ($feature_multilingual == 'y') {
 
 $cat_type = 'wiki page';
 $cat_objid = $_REQUEST["page"];
-$section = 'wiki';
-include_once ("categorize_list.php");
-include_once ("freetag_list.php");
+$smarty->assign('section',$section);
+include_once ('tiki-section_options.php');
 
-if ($feature_categories == 'y' && isset($_SERVER['HTTP_REFERER']) && strstr($_SERVER['HTTP_REFERER'], 'tiki-index.php') && !$tikilib->page_exists($_REQUEST["page"])) { // default the categs the page you come from for a new page
-	if (preg_match('/page=([^\&]+)/', $_SERVER['HTTP_REFERER'], $ms))
-		$p = $ms[1];
-	else
-		$p = $wikilib->get_default_wiki_page();
-	$cs = $categlib->get_object_categories('wiki page', $p);
-	for ($i = count($categories) - 1; $i >= 0; --$i) {
-		if (in_array($categories[$i]['categId'], $cs))
-			$categories[$i]['incat'] = 'y';
+if ($feature_freetags == 'y') {
+	include_once ("freetag_list.php");
+}
+if ($feature_categories == 'y') {
+	include_once ("categorize_list.php");
+	if (isset($_SERVER['HTTP_REFERER']) && strstr($_SERVER['HTTP_REFERER'], 'tiki-index.php') && !$tikilib->page_exists($_REQUEST["page"])) { // default the categs the page you come from for a new page
+		if (preg_match('/page=([^\&]+)/', $_SERVER['HTTP_REFERER'], $ms))
+			$p = $ms[1];
+		else
+			$p = $wikilib->get_default_wiki_page();
+		$cs = $categlib->get_object_categories('wiki page', $p);
+		for ($i = count($categories) - 1; $i >= 0; --$i) {
+			if (in_array($categories[$i]['categId'], $cs))
+				$categories[$i]['incat'] = 'y';
+		}
 	}
 }
-
-if ($feature_theme_control == 'y') {
-  include ('tiki-tc.php');
-}
-
-include_once ('tiki-section_options.php');
 
 // 27-Jun-2003, by zaufi
 // Get plugins with descriptions
@@ -998,6 +997,7 @@ ask_ticket('edit-page');
 
 $ajaxlib->registerTemplate('tiki-editpage.tpl');
 $ajaxlib->processRequests();
+
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
