@@ -91,11 +91,10 @@
 </form>
 </div>
 </div>
-<br />
 
 <div class="cbox">
 <div class="cbox-title">
-{tr}Filter{/tr}
+{tr}Select Wiki Pages{/tr}
 </div>
 <div class="cbox-data">
 <form action="tiki-config_pdf.php{if $page_ref_id ge '-1'}?page_ref_id={$page_ref_id}{/if}" method="post">
@@ -113,18 +112,8 @@
 <input type="hidden" name="encoding" value="{$encoding|escape}" />
 <input type="hidden" name="method" value="{$method|escape}" />
 <input type="hidden" name="pdfversion" value="{$pdfversion|escape}" />
-
-{tr}filter{/tr}:<input type="text" name="find" value="{$find|escape}" /><input type="submit" name="filter" value="{tr}filter{/tr}" /><br />
+<input type="text" name="find" value="{$find|escape}" /><input type="submit" name="filter" value="{tr}filter{/tr}" /><br />
 </form>
-</div>
-</div>
-<br />
-
-<div class="cbox">
-<div class="cbox-title">
-{tr}Select Wiki Pages{/tr}
-</div>
-<div class="cbox-data">
 <br />
 <form action="tiki-config_pdf.php{if $page_ref_id ge '-1'}?page_ref_id={$page_ref_id}{/if}" method="post">
 <input type="hidden" name="convertpages" value="{$form_convertpages|escape}" />
@@ -165,9 +154,6 @@
 </div>
 
 <div class="cbox">
-<div class="cbox-title">
-{tr}Create PDF{/tr}
-</div>
 <div class="cbox-data" align="center">
 <form action="tiki-export_pdf.php{if $page_ref_id ge '-1'}?page_ref_id={$page_ref_id}{/if}" method="post">
 <input type="hidden" name="convertpages" value="{$form_convertpages|escape}" />
@@ -185,7 +171,7 @@
 <input type="hidden" name="method" value="{$method|escape}" />
 <input type="hidden" name="pdfversion" value="{$pdfversion|escape}" />
 
-<input type="submit" name="create" value="{tr}create{/tr}" />
+<input type="submit" name="create" value="{tr}Create PDF{/tr}" />
 </form>
 </div>
 </div>
