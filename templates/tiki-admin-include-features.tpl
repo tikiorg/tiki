@@ -86,9 +86,8 @@
     <td class="form"> {if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=WebmailDoc" target="tikihelp" class="tikihelp" title="{tr}Webmail{/tr}">{/if} {tr}Webmail{/tr} {if $feature_help eq 'y'}</a>{/if} </td>
     </tr>
   <tr>
-    <td><input type="checkbox" name="feature_newsreader"
-            {if $feature_newsreader eq 'y'}checked="checked"{/if}/></td>
-    <td class="form"> {if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=NewsreaderDoc" target="tikihelp" class="tikihelp" title="{tr}Newsreader{/tr}">{/if} {tr}Newsreader{/tr} {if $feature_help eq 'y'}</a>{/if} </td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td><input type="checkbox" name="feature_surveys"
             {if $feature_surveys eq 'y'}checked="checked"{/if}/></td>
@@ -479,6 +478,13 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
     <td class="form"> {if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=UserContacts" target="tikihelp" class="tikihelp" title="{tr}User Contacts{/tr}">{/if} {tr}User Contacts{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
     <td>&nbsp;</td>
   </tr>
+	<tr>
+    <td><input type="checkbox" name="feature_newsreader" {if $feature_newsreader eq 'y'}checked="checked"{/if}/></td>
+    <td class="form"> {if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=NewsreaderDoc" target="tikihelp" class="tikihelp" title="{tr}Newsreader{/tr}">{/if} {tr}Newsreader{/tr} {if $feature_help eq 'y'}</a>{/if} </td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		</tr>
 </table>
 {* --- General Layout options --- *}
 <table class="admin" width="100%">
