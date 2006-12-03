@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.340 2006-12-03 13:50:48 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.341 2006-12-03 16:26:40 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -553,6 +553,9 @@ $pref['userTracker'] = 'n';
 $pref['trk_with_mirror_tables'] = 'n';
 
 # user
+$sections['mytiki']['feature'] = '';
+$sections['mytiki']['key'] = 'user';
+$sections['mytiki']['itemkey'] = '';
 $pref['userbreadCrumb'] = 4;
 $pref['user_assigned_modules'] = 'n';
 $pref['user_flip_modules'] = 'module';
@@ -1110,7 +1113,7 @@ foreach ($preferences as $name => $val) {
 $sections_enabled = array();
 foreach ($sections as $sec=>$dat) {
 	$feat = $dat['feature'];
-	if (isset($$feat) and $$feat == 'y') {
+	if ($feat === '' or (isset($$feat) and $$feat == 'y')) {
 		$sections_enabled[$sec] = $dat;
 	}
 }
@@ -1133,9 +1136,9 @@ $smarty->assign('uses_phplayers', 'n');
 $smarty->assign('show_page_bar', 'n');
 $smarty->assign('fullscreen', 'n');
 $smarty->assign('semUser', '');
-if (!empty($section))
+if (!empty($section)) {
 	$smarty->assign('section', $section);
-
+}
 ini_set('docref_root',$php_docroot);
 
 if (isset($_SESSION['tiki_cookie_jar'])) {
