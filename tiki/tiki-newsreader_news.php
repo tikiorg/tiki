@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-newsreader_news.php,v 1.21 2006-12-03 16:47:36 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-newsreader_news.php,v 1.22 2006-12-03 17:05:47 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -37,14 +37,14 @@ if ((!isset($_REQUEST['server'])) || (!isset($_REQUEST['port'])) || (!isset($_RE
 	$smarty->display("error.tpl");
 	die;
 }
-if (!isset($_REQUEST['username']))
-	$_REQUEST['username'] = '';
+if (!isset($_REQUEST['news_username']))
+	$_REQUEST['news_username'] = '';
 if (!isset($_REQUEST['password']))
 	$_REQUEST['password'] = '';
 
 $smarty->assign('server', $_REQUEST['server']);
 $smarty->assign('port', $_REQUEST['port']);
-$smarty->assign('username', $_REQUEST['username']);
+$smarty->assign('news_username', $_REQUEST['news_username']);
 $smarty->assign('password', $_REQUEST['password']);
 $smarty->assign('group', $_REQUEST['group']);
 
@@ -54,7 +54,7 @@ if (isset($_REQUEST['serverId'])) {
 	$smarty->assign('serverId', 0);
 }
 
-if (!$newslib->news_set_server($_REQUEST['server'], $_REQUEST['port'], $_REQUEST['username'], $_REQUEST['password'])) {
+if (!$newslib->news_set_server($_REQUEST['server'], $_REQUEST['port'], $_REQUEST['news_username'], $_REQUEST['password'])) {
 	$smarty->assign('msg', tra("Cannot connect to"). ':' . $info['server']);
 
 	$smarty->display("error.tpl");
