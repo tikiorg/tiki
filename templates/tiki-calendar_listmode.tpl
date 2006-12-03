@@ -9,7 +9,7 @@
 {section name=w loop=$listevents}
 <tr class="{cycle}">
 <td>
-<a href="{$myurl}?todate={$listevents[w].startUser}" title="{tr}change focus{/tr}">{$listevents[w].start|tiki_short_date}</a><br />
+<a href="{$myurl}?todate={$listevents[w].start}" title="{tr}change focus{/tr}">{$listevents[w].start|tiki_short_date}</a><br />
 {$listevents[w].start|tiki_short_time}</a>
 </td>
 <td>
