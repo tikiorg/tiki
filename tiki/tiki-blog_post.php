@@ -1,12 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.52 2006-09-19 18:31:19 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.53 2006-12-03 21:48:22 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'blogs';
 require_once ('tiki-setup.php');
 
 include_once ('lib/blogs/bloglib.php');
@@ -329,7 +330,7 @@ function htmldecode($string) {
 }
 
 $smarty->assign_by_ref('blogs', $blogs);
-$section = 'blogs';
+
 include_once ('tiki-section_options.php');
 
 include_once("textareasize.php");

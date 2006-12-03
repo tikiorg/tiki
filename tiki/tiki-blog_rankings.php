@@ -1,12 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_rankings.php,v 1.15 2005-05-18 10:58:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_rankings.php,v 1.16 2006-12-03 21:48:22 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'blogs';
 require_once ('tiki-setup.php');
 
 include_once ('lib/rankings/ranklib.php');
@@ -78,6 +79,8 @@ $rank["title"] = $rk["title"];
 $rank["y"] = $rk["y"];
 $rank["type"] = $rk["type"];
 $rankings[] = $rank;
+
+include_once ('tiki-section_options.php');
 
 $smarty->assign_by_ref('rankings', $rankings);
 $smarty->assign('rpage', 'tiki-blog_rankings.php');

@@ -1,12 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.34 2006-11-29 22:16:08 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.35 2006-12-03 21:48:22 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'blogs';
 require_once ('tiki-setup.php');
 
 include_once ('lib/blogs/bloglib.php');
@@ -203,6 +204,8 @@ $defaultRows = 5;
 include_once("textareasize.php");
 
 ask_ticket('edit-blog');
+
+include_once ('tiki-section_options.php');
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');

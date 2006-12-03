@@ -1,12 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.53 2006-09-14 14:28:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.54 2006-12-03 21:49:03 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'blogs';
 require_once ('tiki-setup.php');
 
 include_once ('lib/blogs/bloglib.php');
@@ -231,7 +232,6 @@ if ($feature_blog_comments == 'y') {
 	include_once ("comments.php");
 }
 
-$section = 'blogs';
 include_once ('tiki-section_options.php');
 
 if ($feature_theme_control == 'y') {
