@@ -1,12 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-print_article.php,v 1.12 2006-09-19 16:33:17 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-print_article.php,v 1.13 2006-12-03 18:40:46 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'cms';
 require_once ('tiki-setup.php');
 
 include_once ('lib/articles/artlib.php');
@@ -74,6 +75,8 @@ if (isset($_REQUEST["articleId"])) {
 }
 
 ask_ticket('print-article');
+
+include_once ('tiki-section_options.php');
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');

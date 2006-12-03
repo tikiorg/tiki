@@ -1,12 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_articles.php,v 1.25 2006-11-22 03:15:31 franck Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_articles.php,v 1.26 2006-12-03 18:40:46 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'cms';
 require_once ('tiki-setup.php');
 
 include_once ('lib/articles/artlib.php');
@@ -150,7 +151,6 @@ $smarty->assign_by_ref('types', $types);
 $categ = $categlib->get_all_categories_ext();
 $smarty->assign_by_ref('categ', $categ);
 
-$section = 'cms';
 include_once ('tiki-section_options.php');
 
 if ($feature_mobile =='y' && isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
