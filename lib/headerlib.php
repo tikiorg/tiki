@@ -41,6 +41,17 @@ class HeaderLib {
 		}
 	}
 
+	function drop_cssfile($file) {
+		foreach ($this->cssfiles as $rank=>$data) {
+			foreach ($data as $f) {
+				if ($f != $file) {
+					$out[$rank][] = $f;
+				}
+			}
+		}
+		$this->cssfiles = $out;
+	}
+
 	function add_css($rules,$rank=0) {
 		if (empty($this->css[$rank]) or !in_array($script,$this->css[$rank])) {
 			$this->css[$rank][] = $script;
