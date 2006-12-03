@@ -1,6 +1,7 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-batch_upload.php,v 1.12 2006-11-07 01:54:57 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-batch_upload.php,v 1.13 2006-12-03 18:33:38 mose Exp $
 
+$section = 'galleries';
 require_once ('tiki-setup.php');
 include_once ('lib/imagegals/imagegallib.php');
 
@@ -282,7 +283,6 @@ for ($i = 0; $i < $temp_max; $i++) {
 
 $smarty->assign_by_ref('galleries', $galleries["data"]);
 
-$section = 'galleries';
 include_once ('tiki-section_options.php');
 
 // disallow robots to index page:

@@ -1,12 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_image.php,v 1.40 2006-09-19 16:33:18 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_image.php,v 1.41 2006-12-03 18:33:38 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'galleries';
 require_once ('tiki-setup.php');
 
 include_once ('lib/imagegals/imagegallib.php');
@@ -405,7 +406,6 @@ $cat_type = 'image';
 $cat_objid = '0';
 include_once ("categorize_list.php");
 
-$section = 'galleries';
 include_once ('tiki-section_options.php');
 
 $smarty->assign("max_img_upload_size", $imagegallib->max_img_upload_size());
