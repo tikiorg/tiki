@@ -1,10 +1,11 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-mailbox.php,v 1.18 2006-02-17 15:10:30 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-mailbox.php,v 1.19 2006-12-03 16:27:10 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+$section = 'user_messages';
 require_once ('tiki-setup.php');
 
 include_once ('lib/messu/messulib.php');
@@ -192,7 +193,6 @@ if ($messu_mailbox_size>0) {
 $smarty->assign('cellsize', $cellsize);
 $smarty->assign('percentage', $percentage);
 
-$section = 'user_messages';
 include_once ('tiki-section_options.php');
 
 include_once ('tiki-mytiki_shared.php');
