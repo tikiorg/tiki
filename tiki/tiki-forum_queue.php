@@ -1,12 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-forum_queue.php,v 1.14 2005-05-18 10:58:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-forum_queue.php,v 1.15 2006-12-03 22:58:38 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'forums';
 require_once ('tiki-setup.php');
 
 // Forums must be active
@@ -288,6 +289,8 @@ $smarty->assign_by_ref('items', $items["data"]);
 $topics = $commentslib->get_forum_topics($_REQUEST['forumId']);
 $smarty->assign_by_ref('topics', $topics);
 ask_ticket('forum-queue');
+
+include_once ('tiki-section_options.php');
 
 // Display the template
 $smarty->assign('mid', 'tiki-forum_queue.tpl');

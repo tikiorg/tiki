@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.342 2006-12-03 21:36:44 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.343 2006-12-03 22:58:38 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -758,9 +758,6 @@ $sections['charts']['itemkey'] = '';
 $pref['feature_charts'] = 'n';
 
 # rss
-$sections['forum']['feature'] = 'feature_forums';
-$sections['forum']['key'] = 'forumId';
-$sections['forum']['itemkey'] = 'comments_parentId';
 $pref['rss_forums'] = 'y';
 $pref['rss_forum'] = 'y';
 $pref['rss_directories'] = 'y';

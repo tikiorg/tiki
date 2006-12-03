@@ -7,6 +7,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'forums';
 require_once ('tiki-setup.php');
 
 // Forums must be active
@@ -175,6 +176,8 @@ $smarty->assign_by_ref('items', $items["data"]);
 $topics = $commentslib->get_forum_topics($_REQUEST['forumId']);
 $smarty->assign_by_ref('topics', $topics);
 ask_ticket('forum-reported');
+
+include_once ('tiki-section_options.php');
 
 // Display the template
 $smarty->assign('mid', 'tiki-forums_reported.tpl');
