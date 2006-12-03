@@ -1,10 +1,11 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-read_sent.php,v 1.4 2005-09-08 01:45:05 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-read_sent.php,v 1.5 2006-12-03 16:27:11 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+$section = 'user_messages';
 require_once ('tiki-setup.php');
 
 include_once ('lib/messu/messulib.php');
@@ -78,7 +79,7 @@ $smarty->assign('prev', $prev);
 $msg = $messulib->get_message($user, $_REQUEST['msgId'], 'sent');
 $smarty->assign('msg', $msg);
 ask_ticket('messu-read_sent');
-$section = 'user_messages';
+
 include_once ('tiki-section_options.php');
 include_once ('tiki-mytiki_shared.php');
 $smarty->assign('mid', 'messu-read_sent.tpl');

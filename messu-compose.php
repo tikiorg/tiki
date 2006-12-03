@@ -1,10 +1,11 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-compose.php,v 1.35 2006-10-02 16:24:50 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-compose.php,v 1.36 2006-12-03 16:27:10 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+$section = 'user_messages';
 require_once ('tiki-setup.php');
 
 include_once ('lib/messu/messulib.php');
@@ -225,7 +226,6 @@ if (isset($_REQUEST['send'])) {
 $allowMsgs = $messulib->get_user_preference($user, 'allowMsgs', 'y');
 $smarty->assign('allowMsgs', $allowMsgs);
 
-$section = 'user_messages';
 include_once ('tiki-section_options.php');
 
 ask_ticket('messu-compose');
