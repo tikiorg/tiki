@@ -1,12 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.57 2006-09-19 16:33:15 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.58 2006-12-03 18:40:46 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'cms';
 require_once ('tiki-setup.php');
 
 include_once ('lib/articles/artlib.php');
@@ -428,7 +429,6 @@ if ($display_timezone == "Local"){
 	$smarty->assign('siteTimeZone', $display_timezone);
 }
 
-$section = 'cms';
 include_once ('tiki-section_options.php');
 
 include_once("textareasize.php");

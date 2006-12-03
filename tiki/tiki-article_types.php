@@ -1,10 +1,11 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-article_types.php,v 1.15 2005-05-18 10:58:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-article_types.php,v 1.16 2006-12-03 18:40:46 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+$section = 'cms';
 require_once ('tiki-setup.php');
 
 include_once ('lib/articles/artlib.php');
@@ -82,6 +83,8 @@ elseif(isset($_REQUEST["update_type"])) {
 
 $types = $artlib->list_types();
 $smarty->assign('types', $types);
+
+include_once ('tiki-section_options.php');
 
 $smarty->assign('mid', 'tiki-article_types.tpl');
 $smarty->display("tiki.tpl");

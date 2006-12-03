@@ -1,12 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_articles.php,v 1.32 2006-08-29 20:19:03 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_articles.php,v 1.33 2006-12-03 18:40:46 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'cms';
 require_once ('tiki-setup.php');
 
 include_once ('lib/articles/artlib.php');
@@ -161,12 +162,7 @@ if ($offset > 0) {
 // If there're more records then assign next_offset
 $smarty->assign_by_ref('listpages', $listpages["data"]);
 //print_r($listpages["data"]);
-$section = 'cms';
-$smarty->assign('section', $section);
-include_once ('tiki-section_options.php');
 
-$section = 'cms';
-$smarty->assign('section', $section);
 include_once ('tiki-section_options.php');
 
 ask_ticket('view_article');
