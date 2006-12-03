@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.34 2006-12-01 22:19:25 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.35 2006-12-03 22:18:57 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -130,28 +130,41 @@ $smarty->assign_by_ref('galleryId', $_REQUEST['galleryId']);
 
 $tikilib->add_file_gallery_hit($_REQUEST["galleryId"]);
 
-if (isset($_REQUEST["remove"])) {
-	// To remove an image the user must be the owner or admin
-	if ($tiki_p_admin_file_galleries != 'y' && (!$user || $user != $gal_info["user"])) {
+if (!empty($_REQUEST['remove'])) {
+	// To remove an image the user must be the owner or the file or the gallery or admin
+	$info = array();
+	if (!$user) {
 		$smarty->assign('msg', tra("Permission denied you cannot remove files from this gallery"));
 		$smarty->display("error.tpl");
-		die;
+		die;		
 	}
-  $area = 'delfile';
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-    key_check($area);
+	if ($tiki_p_admin_file_galleries != 'y' || $user != $gal_info['user']) {
+		$info = $filegallib->get_file_info($_REQUEST['remove']);
+		if (!$info || $user != $info['user']) {
+			$smarty->assign('msg', tra("Permission denied you cannot remove files from this gallery"));
+			$smarty->display("error.tpl");
+			die;
+		}
+	}
+	$area = 'delfile';
+	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		key_check($area);
 
 //Watches
-	if ($_REQUEST['remove'] > 0) {
-                $info = $filegallib->get_file_info($_REQUEST['remove']);
-        
-                $smarty->assign('fileId', $_REQUEST['remove']);
-                $smarty->assign('galleryId', $_REQUEST['galleryId']);
-                $smarty->assign_by_ref('filename', $info['filename']);
-                $smarty->assign_by_ref('fname', $info['name']);
-                $smarty->assign_by_ref('fdescription', $info['description']);
-        }
-	$filegallib->remove_file($info, $user, $gal_info);
+		if (empty($info)) {
+			$info = $filegallib->get_file_info($_REQUEST['remove']);
+		}
+		if (!$info) {
+			$smarty->assign('msg', tra('Incorrect file'));
+			$smarty->display("error.tpl");
+			die;			
+		}
+		$smarty->assign('fileId', $_REQUEST['remove']);
+		$smarty->assign('galleryId', $_REQUEST['galleryId']);
+		$smarty->assign_by_ref('filename', $info['filename']);
+		$smarty->assign_by_ref('fname', $info['name']);
+		$smarty->assign_by_ref('fdescription', $info['description']);
+		$filegallib->remove_file($info, $user, $gal_info);
 
   } else {
     key_get($area);
