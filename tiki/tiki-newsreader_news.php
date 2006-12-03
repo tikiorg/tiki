@@ -1,10 +1,11 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-newsreader_news.php,v 1.20 2006-11-21 20:32:24 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-newsreader_news.php,v 1.21 2006-12-03 16:47:36 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+$section = 'newsreader';
 require_once ('tiki-setup.php');
 
 include_once ('lib/newsreader/newslib.php');
@@ -128,7 +129,6 @@ $smarty->assign('articles', $articles);
 
 include_once ('tiki-mytiki_shared.php');
 
-$section = 'newsreader';
 include_once ('tiki-section_options.php');
 ask_ticket('newsreader');
 
