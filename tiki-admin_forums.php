@@ -1,12 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.39 2006-10-22 23:38:58 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.40 2006-12-03 23:00:56 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'forums';
 require_once ('tiki-setup.php');
 
 if (!isset($_REQUEST["forumId"])) {
@@ -257,7 +258,7 @@ $smarty->assign_by_ref('groups', $groups);
 
 $sections = $tikilib->get_forum_sections();
 $smarty->assign_by_ref('sections', $sections);
-$section = 'forums';
+
 include_once ('tiki-section_options.php');
 
 ask_ticket('admin-forums');
