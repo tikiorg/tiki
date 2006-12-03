@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_edit_item.php,v 1.3 2006-12-02 23:39:27 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_edit_item.php,v 1.4 2006-12-03 02:34:26 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -35,6 +35,7 @@ if (isset($_REQUEST['calendarId']) and $userlib->object_has_one_permission($_REQ
 */
 
 $smarty->assign('edit',false);
+$hours_minmax = '';
 
 if ($tiki_p_admin_calendar == 'y') {
   $tiki_p_add_events = 'y';
@@ -166,6 +167,7 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 		$calendar = $calendarlib->get_calendar($calitem['calendarId']);
   }
 	$smarty->assign('edit',true);
+	$hour_minmax = floor(($calendar['startday']-1)/(60*60)).'-'. ceil(($calendar['endday'])/(60*60));
 } elseif (isset($_REQUEST['viewcalitemId']) and $tiki_p_view_calendar == 'y') {
 	$calitem = $calendarlib->get_item($_REQUEST['viewcalitemId']);
 	$id = $_REQUEST['viewcalitemId'];
@@ -176,6 +178,7 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 	$id = $_REQUEST['calitemId'];
 	$calendar = $calendarlib->get_calendar($calitem['calendarId']);
 	$smarty->assign('edit',true);
+	$hour_minmax = ceil(($calendar['startday'])/(60*60)).'-'. ceil(($calendar['endday'])/(60*60));
 } elseif (isset($_REQUEST['calendarId']) and $tiki_p_add_events == 'y') {
 	$dc = $tikilib->get_date_converter($user);
 	if (isset($_REQUEST['todate'])) {
@@ -205,6 +208,7 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 	$id = 0;
 	$calendar = $calendarlib->get_calendar($_REQUEST['calendarId']);
 	$smarty->assign('edit',true);
+	$hour_minmax = floor(($calendar['startday']-1)/(60*60)).'-'. ceil(($calendar['endday'])/(60*60));
 } else {
   $smarty->assign('msg', tra("Permission denied you can not view this page"));
   $smarty->display("error.tpl");
@@ -252,6 +256,7 @@ if ($feature_theme_control == 'y') {
 
 $smarty->assign('myurl', 'tiki-calendar_edit_item.php');
 $smarty->assign('id', $id);
+$smarty->assign('hour_minmax', $hour_minmax);
 $smarty->assign('calitem', $calitem);
 $smarty->assign('calendar', $calendar);
 $smarty->assign('calendarId', $_REQUEST['calendarId']);

@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2006-12-01 22:27:59 $
-# $Author: sylvieg $
+# $Date: 2006-12-03 02:34:26 $
+# $Author: mose $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -702,9 +702,17 @@ CREATE TABLE tiki_calendars (
   lastmodif int(14) NOT NULL default '0',
   personal enum ('n', 'y') NOT NULL default 'n',
   PRIMARY KEY  (calendarId)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) TYPE=MyISAM ;
 # --------------------------------------------------------
 
+DROP TABLE IF EXISTS tiki_calendar_options;
+CREATE TABLE tiki_calendar_options (
+	calendarId int(14) NOT NULL default 0,
+	optionName varchar(120) NOT NULL default '',
+	value varchar(255),
+	PRIMARY KEY (calendarId,optionName)
+) TYPE=MyISAM ;
+# --------------------------------------------------------
 #
 # Table structure for table tiki_categories
 #

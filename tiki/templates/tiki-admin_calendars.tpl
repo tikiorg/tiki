@@ -100,53 +100,59 @@ src='pics/icons/key.png' border='0' width='16' height='16' alt='{tr}permissions{
 {if $tiki_p_view_categories eq 'y'}
 {include file=categorize.tpl}
 {/if}
-<tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea name="description" rows="5" wrap="virtual" style="width:100%;">{$description|escape}</textarea></td></tr>
-<tr><td class="formcolor">{tr}Custom Locations{/tr}:</td><td class="formcolor">
+<tr class="formcolor"><td>{tr}Name{/tr}:</td><td><input type="text" name="name" value="{$name|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}Description{/tr}:</td><td><textarea name="description" rows="5" wrap="virtual" style="width:100%;">{$description|escape}</textarea></td></tr>
+<tr class="formcolor"><td>{tr}Custom Locations{/tr}:</td><td>
 <select name="customlocations">
 <option value='y' {if $customlocations eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>
 <option value='n' {if $customlocations eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
 </select>
 </td></tr>
-<tr><td class="formcolor">{tr}Custom Participants{/tr}:</td><td class="formcolor">
+<tr class="formcolor"><td>{tr}Custom Participants{/tr}:</td><td>
 <select name="customparticipants">
 <option value='y' {if $customparticipants eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>
 <option value='n' {if $customparticipants eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
 </select>
 </td></tr>
-<tr><td class="formcolor">{tr}Custom Categories{/tr}:</td><td class="formcolor">
+<tr class="formcolor"><td>{tr}Custom Categories{/tr}:</td><td>
 <select name="customcategories">
 <option value='y' {if $customcategories eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>
 <option value='n' {if $customcategories eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
 </select>
 </td></tr>
-<tr><td class="formcolor">{tr}Custom Languages{/tr}:</td><td class="formcolor">
+<tr class="formcolor"><td>{tr}Custom Languages{/tr}:</td><td>
 <select name="customlanguages">
 <option value='y' {if $customlanguages eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>
 <option value='n' {if $customlanguages eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
 </select>
 </td></tr>
 {if $feature_newsletters eq 'y'}
-<tr><td class="formcolor">{tr}Custom Subscription List{/tr}:</td><td class="formcolor">
+<tr class="formcolor"><td>{tr}Custom Subscription List{/tr}:</td><td>
 <select name="customsubscription">
 <option value='y' {if $customsubscription eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>
 <option value='n' {if $customsubscription eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
 </select>
 </td></tr>
 {/if}
-<tr><td class="formcolor">{tr}Custom Priorities{/tr}:</td><td class="formcolor">
+<tr class="formcolor"><td>{tr}Custom Priorities{/tr}:</td><td>
 <select name="custompriorities">
 <option value='y' {if $custompriorities eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>
 <option value='n' {if $custompriorities eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
 </select>
 </td></tr>
-<tr><td class="formcolor">{tr}Personal Calendar{/tr}:</td><td class="formcolor">
+<tr class="formcolor"><td>{tr}Personal Calendar{/tr}:</td><td>
 <select name="personal">
 <option value='y' {if $personal eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>
 <option value='n' {if $personal eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
 </select>
 </td></tr>
-<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+<tr class="formcolor"><td>{tr}Start of day{/tr}:</td><td>
+{html_select_time prefix="startday_" display_seconds=false display_minutes=false time=$startday}{tr}h{/tr}
+</td></tr>
+<tr class="formcolor"><td>{tr}End of day{/tr}:</td><td>
+{html_select_time prefix="endday_" display_seconds=false display_minutes=false time=$endday}{tr}h{/tr}
+</td></tr>
+<tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 

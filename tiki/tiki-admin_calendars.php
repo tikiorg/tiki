@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_calendars.php,v 1.25 2006-09-19 16:33:06 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_calendars.php,v 1.26 2006-12-03 02:34:26 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -43,7 +43,10 @@ if (isset($_REQUEST["save"])) {
 	$customflags["custompriorities"] = $_REQUEST["custompriorities"];
 	$customflags["customsubscription"] = isset($_REQUEST["customsubscription"]) ? $_REQUEST["customsubscription"] : 'n';
 	$customflags["personal"] = $_REQUEST["personal"];
-	$_REQUEST["calendarId"] = $calendarlib->set_calendar($_REQUEST["calendarId"],$user,$_REQUEST["name"],$_REQUEST["description"],$customflags);
+	$options = $_REQUEST['options'];
+	$options['startday'] = $_REQUEST['startday_Hour']*60*60 - 1;
+	$options['endday'] = $_REQUEST['endday_Hour']*60*60 - 1;
+	$_REQUEST["calendarId"] = $calendarlib->set_calendar($_REQUEST["calendarId"],$user,$_REQUEST["name"],$_REQUEST["description"],$customflags,$options);
 	if ($_REQUEST['personal'] == 'y') {
 		$userlib->assign_object_permission("Registered", $_REQUEST["calendarId"], "calendar", "tiki_p_view_calendar");
 		$userlib->assign_object_permission("Registered", $_REQUEST["calendarId"], "calendar", "tiki_p_add_events");
@@ -85,6 +88,8 @@ if ($_REQUEST["calendarId"]) {
 	$info["customsubscription"] = 'n';
 	$info["user"] = "$user";
 	$info["personal"] = 'n';
+	$info["startday"] = '25200';
+	$info["endday"] = '72000';
 }
 
 $smarty->assign('name', $info["name"]);
@@ -98,6 +103,8 @@ $smarty->assign('custompriorities', $info["custompriorities"]);
 $smarty->assign('customsubscription', $info["customsubscription"]);
 $smarty->assign('calendarId', $_REQUEST["calendarId"]);
 $smarty->assign('personal', $info["personal"]);
+$smarty->assign('startday', $info["startday"]);
+$smarty->assign('endday', $info["endday"]);
 
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'name_desc';

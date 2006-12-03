@@ -59,7 +59,7 @@ class CalendarLib extends TikiLib {
 		return $res;
 	}
 
-	function set_calendar($calendarId, $user, $name, $description, $customflags=array()) {
+	function set_calendar($calendarId, $user, $name, $description, $customflags=array(),$options=array()) {
 		$name = strip_tags($name);
 		$description = strip_tags($description);
 		$now = time();
@@ -82,14 +82,26 @@ class CalendarLib extends TikiLib {
 			$bindvars=array($name,$user,$description,$now,$now);
 			foreach ($customflags as $k => $v) $bindvars[]=$v;
 			$result = $this->query($query,$bindvars);
-			$calendarId=$this->GetOne("select `calendarId` from `tiki_calendars` where `created`=?",array($now));
+			$calendarId = $this->GetOne("select `calendarId` from `tiki_calendars` where `created`=?",array($now));
+		}
+		$this->query('delete from `tiki_calendar_options` where `calendarId`=?',array((int)$calendarId));
+		if (count($options)) {
+			foreach ($options as $name=>$value) {
+				$name = preg_replace('/[^-_a-zA-Z0-9]/','',$name);
+				$this->query('insert into `tiki_calendar_options` (`calendarId`,`optionName`,`value`) values (?,?,?)',array((int)$calendarId,$name,$value));
+			}
 		}
 		return $calendarId;
 	}
 
 	function get_calendar($calendarId) {
 		$res = $this->query("select * from `tiki_calendars` where `calendarId`=?",array((int)$calendarId));
-		return $res->fetchRow();
+		$cal = $res->fetchRow();
+		$res2 = $this->query("select `optionName`,`value` from `tiki_calendar_options` where `calendarId`=?",array((int)$calendarId));
+		while ($r = $res2->fetchRow()) {
+			$cal[$r['optionName']] = $r['value'];
+		}
+		return $cal;
 	}
 
 	function get_calendarid($calitemId) {
