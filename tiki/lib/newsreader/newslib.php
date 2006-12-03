@@ -41,7 +41,7 @@ class Newslib extends TikiLib {
 
 	function news_get_mark($user, $serverId, $groupName) {
 		if ($this->getOne( "select count(*) from `tiki_newsreader_marks` where `user`=? and `serverId`=? and `groupName`=?",array($user,(int)$serverId,$groupName))) {
-			return $this->getOne("select `timestamp` from `tiki_newsreader_marks` where `user`='$user' and `serverId`=? and `groupName`=?",array($user,(int)$serverId,$groupName));
+			return $this->getOne("select `timestamp` from `tiki_newsreader_marks` where `user`=? and `serverId`=? and `groupName`=?",array($user,(int)$serverId,$groupName));
 		} else {
 			return 0;
 		}
