@@ -1,12 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-print_pages.php,v 1.16 2006-09-19 16:33:17 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-print_pages.php,v 1.17 2006-12-03 18:08:41 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'wiki page';
 require_once ('tiki-setup.php');
 include_once ('lib/structures/structlib.php');
 
@@ -77,7 +78,7 @@ $pages = $tikilib->list_pageNames(0, -1, 'pageName_asc', $find);
 $smarty->assign_by_ref('pages', $pages["data"]);
 $structures = $structlib->list_structures(0,-1,'pageName_asc',0);
 $smarty->assign_by_ref('structures',$structures["data"]);
-$section = 'wiki';
+
 include_once ('tiki-section_options.php');
 
 ask_ticket('print-pages');
