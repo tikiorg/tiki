@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.54 2006-12-03 13:50:48 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.55 2006-12-03 23:47:08 mose Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -15,8 +15,6 @@ $features_toggles = array(
 	"feature_ajax",
 	"feature_articles",
 	"feature_autolinks",
-	"feature_babelfish",
-	"feature_babelfish_logo",
 	"feature_banners",
 	"feature_banning",
 	"feature_blogs",
@@ -103,8 +101,6 @@ $features_toggles = array(
 	"feature_xmlrpc",
 	"layout_section",
 	"user_assigned_modules",
-	"feature_multilingual",
-	"feature_best_language",
 	"contact_anon",
 	"feature_actionlog",
 	"feature_contribution"
