@@ -1,10 +1,11 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagepermissions.php,v 1.27 2006-11-17 18:34:21 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagepermissions.php,v 1.28 2006-12-03 18:08:41 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+$section = 'wiki page';
 include_once ("tiki-setup.php");
 
 include_once ('lib/notifications/notificationlib.php');
@@ -146,6 +147,8 @@ $perms = $userlib->get_permissions(0, -1, 'permName_asc', '', 'wiki');
 $smarty->assign_by_ref('perms', $perms["data"]);
 
 ask_ticket('page-perms');
+
+include_once ('tiki-section_options.php');
 
 $smarty->assign('mid', 'tiki-pagepermissions.tpl');
 $smarty->assign('show_page_bar', 'y');

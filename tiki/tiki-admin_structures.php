@@ -1,12 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.23 2006-09-19 16:33:13 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.24 2006-12-03 18:08:41 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'wiki page';
 require_once ('tiki-setup.php');
 
 include_once ('lib/structures/structlib.php');
@@ -155,7 +156,7 @@ if ($offset > 0) {
 
 $smarty->assign_by_ref('channels', $channels["data"]);
 ask_ticket('admin-structures');
-$section = 'wiki';
+
 include_once ('tiki-section_options.php');
 
 // disallow robots to index page:

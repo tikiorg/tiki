@@ -1,12 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-orphan_pages.php,v 1.11 2006-09-19 16:33:17 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-orphan_pages.php,v 1.12 2006-12-03 18:08:41 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'wiki page';
 require_once ('tiki-setup.php');
 
 include_once ('lib/stats/statslib.php');
@@ -88,6 +89,8 @@ $smarty->assign_by_ref('listpages', $listpages["data"]);
 //print_r($listpages["data"]);
 
 ask_ticket('orphan-pages');
+
+include_once ('tiki-section_options.php');
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
