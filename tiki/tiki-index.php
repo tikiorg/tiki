@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.168 2006-12-02 18:31:01 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.169 2006-12-03 22:13:28 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -513,7 +513,6 @@ if($feature_wiki_attachments == 'y') {
 
 $cat_type = 'wiki page';
 $cat_objid = $page;
-$smarty->assign('section',$section);
 include_once('tiki-section_options.php');
 
 $smarty->assign('footnote','');
