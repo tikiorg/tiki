@@ -1,10 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_watches.php,v 1.16 2006-03-02 11:34:11 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_watches.php,v 1.17 2006-12-03 16:26:41 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+
+$section = 'mytiki';
 include_once ('tiki-setup.php');
 
 if (!$user) {
