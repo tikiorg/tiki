@@ -77,7 +77,7 @@
 </tr>
 <tr>
   <td class="formcolor">{tr}User{/tr}</td>
-  <td class="formcolor"><input type="text" name="username" value="{$info.username|escape}" /></td>
+  <td class="formcolor"><input type="text" name="news_username" value="{$info.username|escape}" /></td>
 </tr>
 <tr>
   <td class="formcolor">{tr}Password{/tr}</td>

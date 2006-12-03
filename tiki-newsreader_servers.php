@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-newsreader_servers.php,v 1.19 2006-12-03 16:47:37 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-newsreader_servers.php,v 1.20 2006-12-03 16:50:35 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -51,7 +51,7 @@ if ($_REQUEST["serverId"]) {
 
 	$info['server'] = '';
 	$info['port'] = 119;
-	$info['username'] = '';
+	$info['news_username'] = '';
 	;
 	$info['password'] = '';
 }
@@ -59,12 +59,12 @@ if ($_REQUEST["serverId"]) {
 if (isset($_REQUEST['save'])) {
 	check_ticket('news-server');
 	$newslib->replace_server(
-		$user, $_REQUEST["serverId"], $_REQUEST["server"], $_REQUEST["port"], $_REQUEST['username'], $_REQUEST['password']);
+		$user, $_REQUEST["serverId"], $_REQUEST["server"], $_REQUEST["port"], $_REQUEST['news_username'], $_REQUEST['password']);
 
 	$info = array();
 	$info['server'] = '';
 	$info['port'] = 119;
-	$info['username'] = '';
+	$info['news_username'] = '';
 	$info['password'] = '';
 	$_REQUEST["serverId"] = 0;
 }
