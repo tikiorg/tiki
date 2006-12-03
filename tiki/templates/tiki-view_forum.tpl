@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.71 2006-09-19 16:33:25 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.72 2006-12-03 22:11:02 mose Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -9,41 +9,35 @@
 <a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a> -&gt; <a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name}</a>
 <br /><br />
 
-{if $openpost eq 'y'}
-{assign var="postclass" value="forumpostopen"}
-{else}
-{assign var="postclass" value="forumpost"}
-{/if}
-<table>
+<table width="97%">
 <tr>
 <td>
 {if $tiki_p_forum_post_topic eq 'y'}
-<input type="button" name="comments_postComment" value="{tr}new topic{/tr}" onclick="show('{$postclass}');"/>
+<a class="linkbut" href="#" onclick="flip('forumpost');return false;">{tr}new topic{/tr}</a>
 {/if}
-<div align="right">
-  {if $rss_forum eq 'y'}
-   <a href="tiki-forum_rss.php?forumId={$forumId}"><img src='img/rss.png' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' /></a>
-  {/if}
-  <a class="linkbut" href="tiki-forums.php">{tr}Forum List{/tr}</a> 
-  {if $tiki_p_admin_forum eq 'y'}
-  <a class="linkbut" href="tiki-admin_forums.php?forumId={$forum_info.forumId}">{tr}Edit Forum{/tr}</a>
-  {/if}
-</div>
+<a class="linkbut" href="tiki-forums.php">{tr}Forum List{/tr}</a> 
+{if $tiki_p_admin_forum eq 'y'}
+<a class="linkbut" href="tiki-admin_forums.php?forumId={$forum_info.forumId}">{tr}Edit Forum{/tr}</a>
+{/if}
+
 </td>
 <td style="text-align:right;">
+{if $rss_forum eq 'y'}
+<a href="tiki-forum_rss.php?forumId={$forumId}"><img src='img/rss.png' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' /></a>
+{/if}
 {if $user and $feature_user_watches eq 'y'}
-	{if $user_watching_forum eq 'n'}
-		<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=add"><img border='0' alt='{tr}monitor this forum{/tr}' src='img/icons/icon_watch.png' /></a>
-	{else}
-		<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this forum{/tr}' src='img/icons/icon_unwatch.png' /></a>
-	{/if}
+{if $user_watching_forum eq 'n'}
+<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=add"><img border='0' alt='{tr}monitor this forum{/tr}' src='img/icons/icon_watch.png' /></a>
+{else}
+<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this forum{/tr}' src='img/icons/icon_unwatch.png' /></a>
+{/if}
 {/if}
 </td>
 </tr>
 </table>
 
 {if $unread > 0}
-	<a class='link' href='messu-mailbox.php'>{tr}You have {$unread} unread private messages{/tr}<br /></a>
+<a class='link' href='messu-mailbox.php'>{tr}You have {$unread} unread private messages{/tr}<br /></a>
 {/if}
 
 {if $was_queued eq 'y'}
@@ -95,8 +89,7 @@ a moderator approves it.{/tr}</small>
   <br />
   {/if}
 
-<div id='{$postclass}'>
-  <br />
+<div id="forumpost" style="display:{if isset($smarty.session.tiki_cookie_jar.show_forumpost) and $smarty.session.tiki_cookie_jar.show_forumpost eq 'y'}block{else}none{/if};">
   {if $comments_threadId > 0}
     {tr}Editing comment{/tr}: {$comments_threadId} (<a class="forumbutlink" href="tiki-view_forum.php?openpost=1&amp;forumId={$forum_info.forumId}&amp;comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}">{tr}post new comment{/tr}</a>)
     {/if}
