@@ -40,6 +40,7 @@ function smarty_function_html_select_time($params, &$smarty)
     $use_24_hours       = true;
     $minute_interval    = 1;
     $second_interval    = 1;
+    $hour_minmax        = '0-23';
     /* Should the select boxes be part of an array when returned from PHP?
        e.g. setting it to "birthday", would create "birthday[Hour]",
        "birthday[Minute]", "birthday[Seconds]" & "birthday[Meridian]".
@@ -52,13 +53,18 @@ function smarty_function_html_select_time($params, &$smarty)
     $meridian_extra     = null;
 
     extract($params);
+		
+		if (!preg_match('/^[0-2]?[0-9]-[0-2]?[0-9]$/',$hour_minmax)) {
+			$hour_minmax = '0-23';
+		}
 
     $time = smarty_make_timestamp($time);
 
     $html_result = '';
 
     if ($display_hours) {
-        $hours       = $use_24_hours ? range(0, 23) : range(1, 12);
+				list($hour_min,$hour_max) = split('-',$hour_minmax);
+        $hours       = $use_24_hours ? range($hour_min, $hour_max) : range(1, 12);
         $hour_fmt = $use_24_hours ? '%H' : '%I';
         for ($i = 0, $for_max = count($hours); $i < $for_max; $i++)
             $hours[$i] = sprintf('%02d', $hours[$i]);
@@ -138,7 +144,7 @@ function smarty_function_html_select_time($params, &$smarty)
         $html_result .= "</select>\n";
     }
 
-    if ($display_meridian && !$use_24_hours) {
+    if (!$use_24_hours) {
         $html_result .= '<select name=';
         if (null !== $field_array) {
             $html_result .= '"' . $field_array . '[' . $prefix . 'Meridian]"';
@@ -171,7 +177,5 @@ function smarty_function_html_select_time($params, &$smarty)
     
     return $html_result;
 }
-
-/* vim: set expandtab: */
 
 ?>
