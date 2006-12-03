@@ -1,12 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog_post.php,v 1.37 2006-09-19 16:33:18 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog_post.php,v 1.38 2006-12-03 21:49:03 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'blogs';
 require_once ('tiki-setup.php');
 
 include_once ('lib/blogs/bloglib.php');
@@ -230,15 +231,10 @@ if ($feature_blogposts_comments == 'y') {
 	include_once ("comments.php");
 }
 
-$section = 'blogs';
+$cat_type = 'blog';
+$cat_objid = $blogId;
 include_once ('tiki-section_options.php');
 
-if ($feature_theme_control == 'y') {
-	$cat_type = 'blog';
-
-	$cat_objid = $blogId;
-	include ('tiki-tc.php');
-}
 
 if ($user && $tiki_p_notepad == 'y' && $feature_notepad == 'y' && isset($_REQUEST['savenotepad'])) {
 	check_ticket('view-blog-post');
