@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.339 2006-12-02 19:35:22 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.340 2006-12-03 13:50:48 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -733,6 +733,7 @@ $pref['calendar_firstDayofWeek'] = 'user';
 $pref['calendar_timespan'] = '5';
 $pref['feature_cal_manual_time'] = '0';
 $pref['feature_jscalendar'] = 'n';
+$pref['feature_action_calendar'] = 'n';
 
 # dates
 $pref['display_timezone'] = 'EST';

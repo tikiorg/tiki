@@ -184,7 +184,7 @@
     <td>&nbsp;</td>
     <td><input type="checkbox" name="feature_calendar"
 					{if $feature_calendar eq 'y'}checked="checked"{/if}/></td>
-    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Calendar" target="tikihelp" class="tikihelp" title="{tr}Calendar{/tr}">{/if} {tr}Tiki Calendar{/tr} {if $feature_help eq 'y'}</a>{/if}</td></tr>
+    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Calendar" target="tikihelp" class="tikihelp" title="{tr}Calendar{/tr}">{/if} {tr}Calendar{/tr} {if $feature_help eq 'y'}</a>{/if}</td></tr>
     <tr>
     <td><input type="checkbox" name="feature_mailin"
 				{if $feature_mailin eq 'y'}checked="checked"{/if}/></td>
@@ -265,6 +265,8 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
     <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Fullscreen" target="tikihelp" class="tikihelp" title="{tr}tikiwiki.org help{/tr}:
 		{tr}Fullscreen{/tr}">{/if} {tr}Propose a Fullscreen mode{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
     <td>&nbsp;</td>
+    <td><input type="checkbox" name="feature_action_calendar" {if $feature_action_calendar eq 'y'}checked="checked"{/if}/></td>
+    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Action+Calendar" target="tikihelp" class="tikihelp" title="{tr}tikiwiki.org help{/tr}: {tr}Action Calendar{/tr}">{/if} {tr}Tiki Calendar{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
     <td></td>
     <td></td>	
 
