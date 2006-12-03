@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.44 2006-11-28 14:54:54 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.45 2006-12-03 21:43:45 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -146,7 +146,7 @@ if (isset($_REQUEST["upload"]) && !empty($_REQUEST['galleryId'])) {
 
 			$name = $_FILES["userfile$i"]['name'];
 
-			if (isset($_REQUEST["isbatch"]) && $_REQUEST["isbatch"] == 'on' && substr($name, strlen($name) - 3) == 'zip') {
+			if (isset($_REQUEST["isbatch"]) && $_REQUEST["isbatch"] == 'on' && strtolower(substr($name, strlen($name) - 3)) == 'zip') {
 				if ($tiki_p_batch_upload_files == 'y') {
 					$filegallib->process_batch_file_upload($_REQUEST["galleryId"], $_FILES["userfile$i"]['tmp_name'],
 						$user, $_REQUEST["description"]);
