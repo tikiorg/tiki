@@ -1,4 +1,4 @@
-	# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.118 2006-12-01 22:27:59 sylvieg Exp $
+	# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.119 2006-12-03 02:34:26 mose Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -670,3 +670,12 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 
 #sylvieg 2006-12-01
 ALTER TABLE `tiki_file_galleries` ADD `sort_mode` char(20) default NULL;
+
+# mose 2006-12-03
+CREATE TABLE tiki_calendar_options (
+	calendarId int(14) NOT NULL default 0,
+	optionName varchar(120) NOT NULL default '',
+	value varchar(255),
+	PRIMARY KEY (calendarId,optionName)
+) TYPE=MyISAM ;
+
