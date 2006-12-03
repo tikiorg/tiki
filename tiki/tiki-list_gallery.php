@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_gallery.php,v 1.24 2006-11-20 04:24:36 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_gallery.php,v 1.25 2006-12-03 18:33:38 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -223,15 +223,10 @@ if ($offset > 0) {
 
 $smarty->assign_by_ref('images', $images["data"]);
 
-$section = 'galleries';
+$cat_type = 'image gallery';
+$cat_objid = $_REQUEST["galleryId"];
 include_once ('tiki-section_options.php');
 
-if ($feature_theme_control == 'y') {
-	$cat_type = 'image gallery';
-
-	$cat_objid = $_REQUEST["galleryId"];
-	include ('tiki-tc.php');
-}
 ask_ticket('list-gal');
 
 if ($feature_actionlog == 'y') {

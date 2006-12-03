@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.36 2006-11-20 04:24:36 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.37 2006-12-03 18:33:38 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -343,7 +343,6 @@ if ($feature_image_galleries_comments == 'y') {
 	include_once ("comments.php");
 }
 
-$section = 'galleries';
 include_once ('tiki-section_options.php');
 
 if ($feature_theme_control == 'y') {
