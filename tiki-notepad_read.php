@@ -1,10 +1,11 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-notepad_read.php,v 1.15 2005-11-07 21:42:29 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-notepad_read.php,v 1.16 2006-12-03 16:30:51 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+$section = 'mytiki';
 require_once ('tiki-setup.php');
 
 include_once ('lib/notepad/notepadlib.php');
@@ -97,6 +98,7 @@ $smarty->assign('parse_mode', $_REQUEST['parse_mode']);
 $smarty->assign('noteId', $_REQUEST["noteId"]);
 $smarty->assign('info', $info);
 
+include_once ('tiki-section_options.php');
 include_once ('tiki-mytiki_shared.php');
 ask_ticket('notepad-read');
 
