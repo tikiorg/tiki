@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-blogs.tpl,v 1.21 2006-07-14 11:00:54 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-blogs.tpl,v 1.22 2006-12-03 21:36:44 mose Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -30,23 +30,27 @@
         <table class="admin"><tr>
           <td class="form"><label for="blogs-rankings">{tr}Rankings{/tr}:</label></td>
           <td><input type="checkbox" name="feature_blog_rankings" id="blogs-rankings"
-              {if $feature_blog_rankings eq 'y'}checked="checked"{/if}/></td>
+              {if $feature_blog_rankings eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td class="form"><label for="blogs-blogcomments">{tr}Blog level comments{/tr}:</label></td>
           <td><input type="checkbox" name="feature_blog_comments" id="blogs-blogcomments"
-              {if $feature_blog_comments eq 'y'}checked="checked"{/if}/></td>
+              {if $feature_blog_comments eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td class="form"><label for="blogs-postcomments">{tr}Post level comments{/tr}:</label></td>
           <td><input type="checkbox" name="feature_blogposts_comments" id="blogs-postcomments"
-              {if $feature_blogposts_comments eq 'y'}checked="checked"{/if}/></td>
+              {if $feature_blogposts_comments eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td class="form"><label for="blogs-postpings">{tr}Post level trackback pings{/tr}:</label></td>
           <td><input type="checkbox" name="feature_blogposts_pings" id="blogs-postpings"
-              {if $feature_blogposts_pings eq 'y'}checked="checked"{/if}/></td>
+              {if $feature_blogposts_pings eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td class="form"><label for="blogs-spell">{tr}Spellchecking{/tr}:</label></td>
           <td>{if $lib_spellcheck eq 'y'}<input type="checkbox" name="blog_spellcheck" id="blogs-spell"
               {if $blog_spellcheck eq 'y'}checked="checked"{/if}/>{else}{tr}Not Installed{/tr}{/if}</td>
+        </tr><tr>
+          <td class="form"><label for="blogs-heading">{tr}Blogs have a custom heading{/tr}:</label></td>
+          <td><input type="checkbox" name="feature_blog_heading" id="blogs-heading"
+              {if $feature_blog_heading eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td class="form"><label for="blogs-order">{tr}Default ordering for blog listing{/tr}:</label></td>
           <td><select name="blog_list_order" id="blogs-order">
