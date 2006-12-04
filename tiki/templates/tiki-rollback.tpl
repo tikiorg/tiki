@@ -7,3 +7,6 @@
 <input type="submit" name="rollback" value="{tr}rollback{/tr}" />
 </form>
 </div>
+
+{include file=tiki-page_bar.tpl}
+

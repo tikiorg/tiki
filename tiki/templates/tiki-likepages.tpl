@@ -12,3 +12,6 @@
 {tr}No pages found{/tr}
 {/section}
 <br />
+
+{include file=tiki-page_bar.tpl}
+

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagepermissions.tpl,v 1.20 2006-11-17 15:35:02 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagepermissions.tpl,v 1.21 2006-12-04 09:03:02 mose Exp $ *}
 
 <h2>{tr}Assign permissions to page{/tr}: <a href="tiki-index.php?page={$page}">{$page}</a></h2>
 
@@ -86,3 +86,6 @@
 {section name=ix loop=$emails}
 {$emails[ix]} (<a class="link" href="tiki-pagepermissions.php?page={$page}&amp;removeemail={$emails[ix]}">x</a>)<br />
 {/section}
+
+{include file=tiki-page_bar.tpl}
+

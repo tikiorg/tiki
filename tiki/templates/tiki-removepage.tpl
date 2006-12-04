@@ -7,3 +7,6 @@
 <input type="hidden" name="historyId" value="{$historyId|escape}" />
 <input type="submit" name="remove" value="{tr}remove{/tr}" />
 </form>
+
+{include file=tiki-page_bar.tpl}
+

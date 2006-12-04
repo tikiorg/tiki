@@ -32,3 +32,5 @@
   {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}
 </p>
 {/if}
+
+{include file=tiki-page_bar.tpl}
