@@ -386,6 +386,9 @@
     <option value="no" {if $feature_wysiwyg eq 'no'}selected="selected"{/if}>{tr}no{/tr}</option>
     </select>
     </td></tr>
+		<tr><td>{tr}Wysiwyg editor by default (if optional){/tr}:</td><td>
+		<input type="checkbox" name="wysiwyg_default" {if $wysiwyg_default eq 'y'}checked="checked"{/if}/>
+		</td></tr>
     <tr><td colspan="2" class="button"><input type="submit" name="wikisethtmloptions" value="{tr}Change preferences{/tr}" /></td></tr>    
     </table>
     </form>

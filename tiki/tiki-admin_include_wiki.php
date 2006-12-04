@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.63 2006-11-17 16:32:34 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.64 2006-12-04 14:54:45 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -695,6 +695,13 @@ if (isset($_REQUEST["wikisethtmloptions"])) {
 	} else {
 		$tikilib->set_preference("feature_wiki_allowhtml", 'n');
 		$smarty->assign("feature_wiki_allowhtml", 'n');
+	}
+	if (isset($_REQUEST["wysiwyg_default"]) && $_REQUEST["wysiwyg_default"] == "on") {
+		$tikilib->set_preference("wysiwyg_default", 'y');
+		$smarty->assign("wysiwyg_default", 'y');
+	} else {
+		$tikilib->set_preference("wysiwyg_default", 'n');
+		$smarty->assign("wysiwyg_default", 'n');
 	}
 	$tikilib->set_preference('wiki_wikisyntax_in_html', $_REQUEST['wiki_wikisyntax_in_html']);
 	$smarty->assign('wiki_wikisyntax_in_html', $_REQUEST['wiki_wikisyntax_in_html']);
