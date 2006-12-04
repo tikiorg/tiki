@@ -1,5 +1,5 @@
 {include file="header.tpl"}{* This must be included as the first thing in a document to be XML compliant *}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki.tpl,v 1.10 2006-11-17 11:44:30 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki.tpl,v 1.11 2006-12-04 09:11:44 mose Exp $ *}
 {* Index we display a wiki page here *}
 
 {if $feature_bidi eq 'y'}<table dir="rtl" ><tr><td>{/if}
@@ -44,9 +44,6 @@
 
     <div id="tiki-center" {$add_style}>
       {$mid_data}
-      {if $show_page_bar eq 'y'}
-        {include file="tiki-page_bar.tpl"}
-      {/if}
       {if $feature_bot_bar eq 'y' and strstr($style, "II") ne ''}
         <div id="tiki-bot">
           {include file="tiki-bot_bar.tpl"}
