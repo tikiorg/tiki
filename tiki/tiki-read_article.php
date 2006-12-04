@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.52 2006-07-14 11:00:44 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.53 2006-12-04 09:22:11 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -243,7 +243,6 @@ $statslib->stats_hit($article_data["title"],"article",$article_data['articleId']
 
 // Display the Index Template
 $smarty->assign('mid', 'tiki-read_article.tpl');
-$smarty->assign('show_page_bar', 'n');
 $smarty->display("tiki.tpl");
 
 ?>

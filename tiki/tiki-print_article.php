@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-print_article.php,v 1.13 2006-12-03 18:40:46 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-print_article.php,v 1.14 2006-12-04 09:22:11 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -81,9 +81,6 @@ include_once ('tiki-section_options.php');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
-// Display the Index Template
-//$smarty->assign('mid','tiki-printread_article.tpl');
-//$smarty->assign('show_page_bar','n');
 $smarty->display("tiki-print_article.tpl");
 
 ?>
