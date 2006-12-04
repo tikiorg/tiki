@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.45 2006-12-03 21:43:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.46 2006-12-04 20:38:46 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -121,9 +121,11 @@ if (isset($_REQUEST["upload"]) && !empty($_REQUEST['galleryId'])) {
 	$didFileReplace = false;
 	if (!isset($_REQUEST['comment']))
 		$_REQUEST['comment'] = '';
+echo "KKK";
 	for ($i = 1; $i <= 6; $i++) {
 		// We process here file uploads
 		if (isset($_FILES["userfile$i"]) && !empty($_FILES["userfile$i"]['name'])) {
+echo "EEEEE"; die;
 			// Were there any problems with the upload?  If so, report here.
 			if (!is_uploaded_file($_FILES["userfile$i"]['tmp_name'])) {
 				$errors[] = tra('Upload was not successful').': '.FileGalLib::convert_error_to_string($_FILES["userfile$i"]['error']);
@@ -300,9 +302,9 @@ if (isset($_REQUEST["galleryId"])) {
 }
 
 if ($tiki_p_admin_file_galleries != 'y') {
-	$galleries = $tikilib->list_visible_file_galleries(0, -1, 'lastModif_desc', $user, '');
+	$galleries = $tikilib->list_visible_file_galleries(0, -1, 'name_asc', $user, '');
 } else {
-	$galleries = $filegallib->list_file_galleries(0, -1, 'lastModif_desc', $user, '');
+	$galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '');
 }
 
 $temp_max = count($galleries["data"]);
