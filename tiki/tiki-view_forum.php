@@ -1,12 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.101 2006-05-03 10:41:53 xavidp Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.102 2006-12-04 10:19:01 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'forums';
 require_once ('tiki-setup.php');
 
 if ($feature_categories == 'y') {
@@ -575,7 +576,6 @@ if ($comments_offset > 0) {
 
 $smarty->assign_by_ref('comments_coms', $comments_coms);
 
-$section = 'forums';
 $cat_type = 'forum';
 $cat_objid = $_REQUEST["forumId"];
 include_once ('tiki-section_options.php');

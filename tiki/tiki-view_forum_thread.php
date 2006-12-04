@@ -3,13 +3,14 @@
 //print "<!--\n";
 //$start_time = microtime(true);
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.83 2006-10-22 23:35:14 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.84 2006-12-04 10:19:02 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'forums';
 require_once ('tiki-setup.php');
 
 if ($feature_forums != 'y') {
@@ -242,19 +243,13 @@ include_once ("comments.php");
 
 //print "TIME4: ".($end_time - $start_time)."\n";
 
-$section = 'forums';
+$cat_type = 'forum';
+$cat_objid = $_REQUEST["forumId"];
 include_once ('tiki-section_options.php');
 
 //$end_time = microtime(true);
 
 //print "TIME5: ".($end_time - $start_time)."\n";
-
-if ($feature_theme_control == 'y') {
-    $cat_type = 'forum';
-
-    $cat_objid = $_REQUEST["forumId"];
-    include ('tiki-tc.php');
-}
 
 if ($user && $tiki_p_notepad == 'y' && $feature_notepad == 'y' && isset($_REQUEST['savenotepad'])) {
     check_ticket('view-forum');
