@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.89 2006-11-28 15:23:18 hangerman Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.90 2006-12-04 10:20:37 mose Exp $
  *
  * \brief Categories support class
  *
@@ -424,29 +424,21 @@ class CategLib extends ObjectLib {
 
 	// get the parent categories of an object
 	function get_object_categories($type, $itemId,$parentId=-1) {
-
-                if ($parentId==-1){
-		   $query = "select `categId` from `tiki_category_objects` tco, `tiki_categorized_objects` tto, `tiki_objects` o
-    			where tco.`catObjectId`=tto.`catObjectId` and o.`objectId`=tto.`catObjectId` and `type`=? and `itemId`=?";
-		   //settype($itemId,"string"); //itemId is defined as varchar
-		   $bindvars=array($type,$itemId);
-		   settype($bindvars["1"],"string");
-		}else {
-		    $query = "select tc.`categId` from `tiki_category_objects` tco, `tiki_categorized_objects` tto, `tiki_objects` o,`tiki_categories` tc
-    				where tco.`catObjectId`=tto.`catObjectId` and o.`objectId`=tto.`catObjectId` and `type`=? and `itemId`=? and tc.`parentId` = ? and tc.`categId`=tco.`categId`";
-		    $bindvars=array($type,$itemId,$parentId);
-		    settype($bindvars["1"],"string");
+		if ($parentId == -1){
+			$query = "select `categId` from `tiki_category_objects` tco, `tiki_categorized_objects` tto, `tiki_objects` o
+				where tco.`catObjectId`=tto.`catObjectId` and o.`objectId`=tto.`catObjectId` and `type`=? and `itemId`=?";
+			//settype($itemId,"string"); //itemId is defined as varchar
+			$bindvars = array("$type",(int)$itemId);
+		} else {
+			$query = "select tc.`categId` from `tiki_category_objects` tco, `tiki_categorized_objects` tto, `tiki_objects` o,`tiki_categories` tc
+    		where tco.`catObjectId`=tto.`catObjectId` and o.`objectId`=tto.`catObjectId` and `type`=? and `itemId`=? and tc.`parentId` = ? and tc.`categId`=tco.`categId`";
+			$bindvars = array("$type",(int)$itemId,(int)$parentId);
 		}
-		
-		
-		
 		$result = $this->query($query,$bindvars);
 		$ret = array();
-
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res["categId"];
 		}
-
 		return $ret;
 	}
 	
