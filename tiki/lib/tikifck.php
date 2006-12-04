@@ -18,7 +18,7 @@ class TikiFCK {
 		$this->BasePath     = 'lib/fckeditor/';
 		$this->Width        = '100%';
 		$this->Height       = '400px';
-		$this->ToolbarSet   = '';
+		$this->ToolbarSet   = 'Tiki';
 		$this->File         = 'fckeditor.html';
 		$this->LinkFile     = '';
 		$this->Meat         = '';
@@ -35,10 +35,9 @@ class TikiFCK {
 			if (isset($_GET['fcksource']) && $_GET['fcksource'] == "true") {
 				$this->File = 'fckeditor.original.html';
 			}
-			if ($this->ToolbarSet != '') $this->LinkFile.= '&amp;Toolbar='.$this->ToolbarSet;
 			$this->ConfigString = $this->GetConfigFieldString();
 			$this->id = preg_replace('/[^a-zA-Z0-9]/','',$this->InstanceName);
-			$this->LinkFile = $this->BasePath.'editor/'.$this->File.'?InstanceName='.$this->id;
+			$this->LinkFile = $this->BasePath.'editor/'.$this->File.'?InstanceName='.$this->id.'&amp;Toolbar='.$this->ToolbarSet.'&amp;'.$this->ConfigString;
 			$this->Compat = true;
 		}
 		$smarty->assign('fck',$this);
