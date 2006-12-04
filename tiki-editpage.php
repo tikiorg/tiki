@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.148 2006-12-04 09:20:08 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.149 2006-12-04 14:54:44 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -501,7 +501,7 @@ $is_html = false;
 $can_html = false;
 if ($feature_wiki_allowhtml == 'y' and ($tiki_p_admin == 'y' or $tiki_p_use_HTML == 'y')) {
  	$can_html = true;
-  if ((!isset($_REQUEST["edit"]) and $info['is_html']) or (isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"] == "on")) {
+  if ((!isset($_REQUEST["edit"]) and $info['is_html']) or (isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"] == "on") or $feature_wysiwyg == 'default' or ($feature_wysiwyg == 'optional' and $wysiwyg_default == 'y')) {
 	  $is_html = true;
 	  $_REQUEST["allowhtml"] = 'on';
   } else {
@@ -513,22 +513,16 @@ if ($feature_wiki_allowhtml == 'y' and ($tiki_p_admin == 'y' or $tiki_p_use_HTML
 # wysiwyg is set if it should be used right now
 $wysiwyg = false;
 $can_wysiwyg = false;
-if ($feature_wysiwyg != 'no' and $can_html and $is_html) {
+if ($feature_wysiwyg != 'no' and $can_html and $is_html ) {
 	$can_wysiwyg = true;
-	if ((isset($_REQUEST['wysiwyg']) and $_REQUEST['wysiwyg'] == 'y') or $feature_wysiwyg == 'default') {
+	if ((isset($_REQUEST['wysiwyg']) and $_REQUEST['wysiwyg'] == 'y') or $feature_wysiwyg == 'default' or (!isset($_REQUEST['wysiwyg']) and $feature_wysiwyg == 'optional' and $wysiwyg_default == 'y')) {
 		$wysiwyg = true;
+	  $_REQUEST["allowhtml"] = 'on';
 	}
 }
 $smarty->assign('can_wysiwyg',$can_wysiwyg);
 $smarty->assign('wysiwyg',$wysiwyg);
 
-#if ($tiki_p_admin != 'y') {
-#  if ($tiki_p_use_HTML != 'y') {
-#    $_REQUEST["allowhtml"] = 'off';
-#  }
-#}
-
-//$smarty->assign('allowhtml','y');
 
 /*
 if(!$user && $anonCanEdit<>'y') {
