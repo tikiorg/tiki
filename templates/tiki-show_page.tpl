@@ -1,5 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.103 2006-12-04 09:03:02 mose Exp $ *}
-
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.104 2006-12-04 10:03:37 mose Exp $ *} 
 {if $feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
@@ -234,7 +233,7 @@
 
 {if $print_page eq 'y'}
   <div class="editdate" align="center"><p>
-    {tr}The original document is available at{/tr} {$urlprefix}tiki-index.php?page={$page|escape:"url"}
+    {tr}The original document is available at{/tr} <a href="{$urlprefix}tiki-index.php?page={$page|escape:"url"}">{$urlprefix}tiki-index.php?page={$page|escape:"url"}</a>
   </p></div>
 {/if}
 
@@ -242,5 +241,6 @@
 <div class="catblock">{$display_catobjects}</div>
 {/if}
 
+{if $print_page ne 'y'}
 {include file=tiki-page_bar.tpl}
-
+{/if}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-print.php,v 1.26 2006-12-04 09:22:11 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-print.php,v 1.27 2006-12-04 10:03:38 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -135,7 +135,6 @@ $creator = $wikilib->get_creator($page);
 $smarty->assign('creator', $creator);
 $smarty->assign('print_page','y');
 $smarty->assign('mid', 'tiki-show_page.tpl');
-$smarty->assign('print_page', 'y');
 $smarty->display("tiki-print.tpl");
 
 ?>
