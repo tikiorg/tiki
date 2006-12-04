@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagepermissions.php,v 1.28 2006-12-03 18:08:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagepermissions.php,v 1.29 2006-12-04 09:22:11 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -151,7 +151,6 @@ ask_ticket('page-perms');
 include_once ('tiki-section_options.php');
 
 $smarty->assign('mid', 'tiki-pagepermissions.tpl');
-$smarty->assign('show_page_bar', 'y');
 $smarty->display("tiki.tpl");
 
 ?>
