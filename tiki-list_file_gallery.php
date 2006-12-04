@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.35 2006-12-03 22:18:57 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.36 2006-12-04 20:10:39 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -138,7 +138,7 @@ if (!empty($_REQUEST['remove'])) {
 		$smarty->display("error.tpl");
 		die;		
 	}
-	if ($tiki_p_admin_file_galleries != 'y' || $user != $gal_info['user']) {
+	if ($tiki_p_admin_file_galleries != 'y'  && $user != $gal_info['user']) {
 		$info = $filegallib->get_file_info($_REQUEST['remove']);
 		if (!$info || $user != $info['user']) {
 			$smarty->assign('msg', tra("Permission denied you cannot remove files from this gallery"));
