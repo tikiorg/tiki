@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki.tpl,v 1.26 2006-12-01 11:00:19 mose Exp $ *}{include file="header.tpl"}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki.tpl,v 1.27 2006-12-04 09:11:43 mose Exp $ *}{include file="header.tpl"}
 {* Index we display a wiki page here *}
 {if $feature_bidi eq 'y'}
 <div dir="rtl">
@@ -51,9 +51,6 @@
 
 			<div id="tiki-center">
 			{$mid_data}
-      {if $show_page_bar eq 'y'}
-      {include file="tiki-page_bar.tpl"}
-      {/if}
       </div>
 			
 			{if $feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}

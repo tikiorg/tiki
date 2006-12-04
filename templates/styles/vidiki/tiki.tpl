@@ -27,13 +27,8 @@
  <div id="shadow"></div></div> 
  {/if}
 {/if}
-      <div class="content">{$mid_data}
-      {if $show_page_bar eq 'y'}
-      {include file="tiki-page_bar.tpl"}
+      <div class="content">{$mid_data}</div>
 {if $feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
-
-	{/if}
-      </div>
 
       {if $feature_left_column eq 'y'}
       <div id="tiki-left">

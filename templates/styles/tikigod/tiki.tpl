@@ -22,10 +22,8 @@
       {/if}
       <td id="centercolumn">
 			{/if}
-			<div id="tiki-center">{$mid_data}
-      {if $show_page_bar eq 'y'}
-      {include file="tiki-page_bar.tpl"}
-      {/if}
+			<div id="tiki-center">
+			{$mid_data}
       </div>
 			{if $feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
       </td>
