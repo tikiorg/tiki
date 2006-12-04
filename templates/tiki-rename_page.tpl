@@ -12,4 +12,6 @@
 </table>
 </form>
 <br />
-<br />
+
+{include file=tiki-page_bar.tpl}
+

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.89 2006-11-29 10:29:53 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.90 2006-12-04 09:03:02 mose Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -77,7 +77,7 @@
 {if $add_child}
 <input type="hidden" name="add_child" value="true" />
 {/if}
-{if $feature_wysiwyg eq 'optional' and $can_wysiwyg}
+{if $feature_wysiwyg eq 'optional'}
 {if !$wysiwyg}
 <span class="button2"><a class="linkbut" href="?page={$page}&&wysiwyg=y">{tr}Use wysiwyg editor{/tr}</a></span>
 {else}
@@ -175,7 +175,7 @@ or use
 {if !$wysiwyg}
 <td>
 {tr}Edit{/tr}:<br /><br />
-{include file="textareasize.tpl" area_name='editwiki' formId='editpageform'}<br /><br />
+{include file="textareasize.tpl" area_name='editwiki' formId='editpageform' ToolbarSet='Tiki'}<br /><br />
 {include file=tiki-edit_help_tool.tpl area_name='editwiki'}
 </td>
 <td>
@@ -184,7 +184,7 @@ or use
 <input type="hidden" name="cols" value="{$cols}"/>
 {else}
 <td colspan="2">
-{editform Meat=$pagedata InstanceName='edit'}
+{editform Meat=$pagedata InstanceName='edit' ToolbarSet="Tiki"}
 {/if}
 </td></tr>
 
@@ -342,6 +342,10 @@ function searchrep() {
 </table>
 </form>
 <br />
+
 {if $wysiwyg ne 'y'}
 {include file=tiki-edit_help.tpl}
 {/if}
+
+{include file=tiki-page_bar.tpl}
+

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.102 2006-11-17 19:20:47 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.103 2006-12-04 09:03:02 mose Exp $ *}
 
 {if $feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
@@ -241,3 +241,6 @@
 {if $is_categorized eq 'y' and $feature_categories eq 'y' and $feature_categoryobjects eq 'y'}
 <div class="catblock">{$display_catobjects}</div>
 {/if}
+
+{include file=tiki-page_bar.tpl}
+
