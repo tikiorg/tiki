@@ -2,9 +2,15 @@
 
 <div class="page-bar">
 &nbsp;
+{if $tiki_p_view_calendar eq 'y'}
 <a href="tiki-calendar.php" class="linkbut">{tr}Calendar{/tr}</a>
+{/if}
+{if $tiki_p_admin eq 'y'}
 <a href="tiki-admin.php?page=calendar" class="linkbut">{tr}Config Calendars{/tr}</a>
+{/if}
+{if $tiki_p_admin_calendar eq 'y'}
 <a href="tiki-admin_calendars.php?calendarId={$calendarId}" class="linkbut">{tr}Edit Calendar{/tr}</a>
+{/if}
 <br /><br />
 &nbsp;
 {if $edit}
@@ -12,7 +18,9 @@
 {elseif $tiki_p_change_events eq 'y'}
 <a href="tiki-calendar_edit_item.php?calitemId={$id}" class="linkbut">{tr}Edit event{/tr}</a>
 {/if}
+{if $tiki_p_add_events eq 'y'}
 <a href="tiki-calendar_edit_item.php" class="linkbut">{tr}New event{/tr}</a>
+{/if}
 {if $id}
 
 {/if}
