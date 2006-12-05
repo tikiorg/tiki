@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker_item.tpl,v 1.107 2006-11-29 00:29:58 fr_rodo Exp $ *}
+{* $Id: tiki-view_tracker_item.tpl,v 1.108 2006-12-05 17:28:05 hangerman Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -161,11 +161,13 @@
 {/if}
 
 {elseif $cur_field.type eq 'r'}
-{if $cur_field.options_array[2] eq '1'}
-<a href="tiki-view_tracker_item.php?trackerId={$cur_field.options_array[0]}&amp;itemId={$cur_field.linkId}" class="link">{$cur_field.value|default:"&nbsp;"}</a>
-{else}
-{$cur_field.value|default:"&nbsp;"}
-{/if}
+{if $cur_field.options_array[2] eq '1'}<a href="tiki-view_tracker_item.php?trackerId={$cur_field.options_array[0]}&amp;itemId={$cur_field.linkId}" class="link">{/if}
+       {if $cur_field.options_array[3] ne ''}
+              {$cur_field.displayedvalue}
+       {else}
+              {$cur_field.value|default:"&nbsp;"}
+       {/if}
+{if $cur_field.options_array[2] eq '1'}</a>{/if}
 
 {elseif $cur_field.type eq 'm'}
 {if $cur_field.options_array[0] eq '1' and $cur_field.value}
@@ -507,7 +509,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 <select name="ins_{$cur_field.id}">
 {if $cur_field.isMandatory}<option value=""></option>{/if}
 {foreach key=id item=label from=$cur_field.list}
-<option value="{$label|escape}" {if $cur_field.value eq $label}selected="selected"{/if}>{$label}</option>
+<option value="{$label|escape}" {if $cur_field.value eq $label}selected="selected"{/if}>{if $cur_field.listdisplay[$id] eq ""}{$label}{else}{$cur_field.listdisplay[$id]}{/if}</option>
 {/foreach}
 </select>
 

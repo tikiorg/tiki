@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.151 2006-11-30 20:31:13 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.152 2006-12-05 17:28:03 hangerman Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -377,6 +377,47 @@ class TrackerLib extends TikiLib {
 		return $ret;
 	}
 
+        function concat_item_from_fieldslist($trackerId,$itemId,$fieldsId,$status='o',$separator=' '){
+                $res='';
+                $sts = preg_split('/\|/', $fieldsId, -1, PREG_SPLIT_NO_EMPTY);
+                foreach ($sts as $field){
+                    $myfield=$this->get_tracker_field($field);
+                    $is_date=($myfield['type']=='f');
+                    $is_trackerlink=($myfield['type']=='r');
+                    
+                    $tmp=$this->get_item_value($trackerId,$itemId,$field);
+                    if ($is_trackerlink){
+                      $options = split(',', $myfield["options"]);
+                      $tmp=$this->concat_item_from_fieldslist($options[0],$this->get_item_id($options[0],$options[1],$tmp),$options[3]);
+                     }
+                    if ($is_date) $tmp=date("j/m/y",$tmp);
+                    $res.=$separator.$tmp;
+                }
+                return $res;
+        }
+
+        function concat_all_items_from_fieldslist($trackerId,$fieldsId,$status='o',$separator=' ') {
+                $sts = preg_split('/\|/', $fieldsId, -1, PREG_SPLIT_NO_EMPTY);
+                foreach ($sts as $field){
+                $myfield=$this->get_tracker_field($field);
+                $is_date=($myfield['type']=='f');
+                $is_trackerlink=($myfield['type']=='r');
+                $tmp="";
+                $tmp=$this->get_all_items($trackerId,$field,$status);
+                $options = split(',', $myfield["options"]);
+                  foreach ($tmp as $key=>$value){
+                    if ($is_date) $value=date("j/m/y",$value);
+                    if ($is_trackerlink){
+                      
+                      $value=$this->concat_item_from_fieldslist($options[0],$this->get_item_id($options[0],$options[1],$value),$options[3]);
+                     }
+                    $res[$key].=$separator.$value;
+                    }
+                }
+                return $res;
+        }
+        
+        
 	function get_all_items($trackerId,$fieldId,$status='o') {
 		global $cachelib;
 		global $language;
@@ -598,6 +639,8 @@ class TrackerLib extends TikiLib {
 								$fopt['options_array'][3] = $t * $imagegallib->ysize;
 							}
 						}
+					}elseif ($fopt['type'] == 'r' && isset($fopt["options_array"][3])) {
+					     $fopt["displayedvalue"]=$this->concat_item_from_fieldslist($fopt["options_array"][0],$this->get_item_id($fopt["options_array"][0],$fopt["options_array"][1],$fopt["value"]),$fopt["options_array"][3]);
 					}
 				}
 				if (empty($asort_mode) || ($fieldId == $asort_mode)) {
@@ -1662,7 +1705,7 @@ class TrackerLib extends TikiLib {
 		$type['r'] = array(
 			'label'=>tra('item link'),
 			'opt'=>true,
-			'help'=>tra('Item Link options: trackerId,fieldId,linkToItem links to item from trackerId which fieldId matches the content of that field. linkToItem 1|0 to create a link to the item in view mode and listing') );
+			'help'=>tra('Item Link options: trackerId,fieldId,linkToItem,displayedfieldslist links to item from trackerId which fieldId matches the content of that field. linkToItem 1|0 to create a link to the item in view mode and listing.  Display displayedfieldslist(separate with |) instead of the target item') );
 		$type['l'] = array(
 			'label'=>tra('items list'),
 			'opt'=>true,

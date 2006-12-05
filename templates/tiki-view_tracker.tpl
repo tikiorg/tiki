@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker.tpl,v 1.121 2006-12-01 09:20:50 mose Exp $ *}
+{* $Id: tiki-view_tracker.tpl,v 1.122 2006-12-05 17:28:04 hangerman Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -251,6 +251,12 @@ $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}created{/tr
 {elseif $items[user].field_values[ix].type eq 'c'}
 {$items[user].field_values[ix].value|replace:"y":"Yes"|replace:"n":"No"|replace:"on":"Yes"}
 
+{elseif $items[user].field_values[ix].type eq 'r'}
+    {if $items[user].field_values[ix].displayedvalue ne ""}
+        {$items[user].field_values[ix].displayedvalue}
+    {else}
+        {$items[user].field_values[ix].value}
+    {/if}
 {elseif $items[user].field_values[ix].type eq 'a'}
 {if $items[user].field_values[ix].options_array[4] ne ''}
 {$items[user].field_values[ix].pvalue|truncate:$items[user].field_values[ix].options_array[4]:"...":true}
@@ -603,7 +609,7 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 <select name="{$fields[ix].ins_id}">
 {if $fields[ix].isMandatory ne 'y'}<option value="" />{/if}
 {foreach key=id item=label from=$fields[ix].list}
-<option value="{$label|escape}" {if $input_err}{if $fields[ix].value eq $label}selected="selected"{/if}{elseif $defaultvalue eq $label}selected="selected"{/if}>{$label}</option>
+<option value="{$label|escape}" {if $input_err}{if $fields[ix].value eq $label}selected="selected"{/if}{elseif $defaultvalue eq $label}selected="selected"{/if}>{if $fields[ix].listdisplay.$id eq ''}{$label}{else}{$fields[ix].listdisplay.$id}{/if}</option>
 {/foreach}
 </select>
 
