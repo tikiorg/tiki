@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.59 2006-12-05 07:22:17 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.60 2006-12-05 10:26:09 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -252,19 +252,26 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
       foreach ($listevents["$dday"] as $le) {
         $le['modifiable'] = in_array($le['calendarId'], $modifiable)? "y": "n";
         $le['visible'] = in_array($le['calendarId'], $visible)? "y": "n";
+				$lec = $infocals['data']["{$le['calendarId']}"];
         $leday["{$le['time']}$e"] = $le;
 
-        $smarty->assign_by_ref('cellhead', $le["head"]);
-        $smarty->assign_by_ref('cellprio', $le["prio"]);
-        $smarty->assign_by_ref('cellcalname', $le["calname"]);
-        $smarty->assign_by_ref('celllocation', $le["location"]);
-        $smarty->assign_by_ref('cellcategory', $le["category"]);
-        $smarty->assign_by_ref('cellname', $le["name"]);
-        $smarty->assign_by_ref('cellurl', $le["url"]);
-        $smarty->assign_by_ref('cellid', $le["calitemId"]);
+        $smarty->assign('cellhead', $le["head"]);
+        $smarty->assign('cellprio', $le["prio"]);
+        $smarty->assign('cellcalname', $le["calname"]);
+        $smarty->assign('celllocation', $le["location"]);
+        $smarty->assign('cellcategory', $le["category"]);
+        $smarty->assign('cellname', $le["name"]);
+        $smarty->assign('cellurl', $le["url"]);
+        $smarty->assign('cellid', $le["calitemId"]);
         $smarty->assign('celldescription', $tikilib->parse_data($le["description"]));
-        $smarty->assign_by_ref('cellmodif', $le['modifiable']);
-        $smarty->assign_by_ref('cellmodif', $le['modifiable']);
+        $smarty->assign('cellmodif', $le['modifiable']);
+        $smarty->assign('cellvisible', $le['visible']);
+        $smarty->assign('show_calname', $lec['show_calname']);
+        $smarty->assign('show_description', $lec['show_description']);
+        $smarty->assign('show_location', $lec['show_location']);
+        $smarty->assign('show_category', $lec['show_category']);
+        $smarty->assign('show_language', $lec['show_language']);
+        $smarty->assign('show_participants', $lec['show_participants']);
         $leday["{$le['time']}$e"]["over"] = $smarty->fetch("tiki-calendar_box.tpl");
         $e++;
       }

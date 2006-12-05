@@ -44,11 +44,11 @@
 {foreach key=id item=cal from=$calendars}
 <tr class="{cycle}">
 <td>{$id}</td>
-<td><a class="tablename" href="tiki-calendar.php?calIds[]={$id}">{$cal.name}</a></td>
-<td>{$cal.customlocations}</td>
-<td>{$cal.customparticipants}</td>
-<td>{$cal.customcategories}</td>
-<td>{$cal.customlanguages}</td>
+<td><a class="tablename" href="tiki-calendar.php?calIds[]={$id}">{$cal.name}</a>{if $cal.show_calname eq 'y'} v{/if}</td>
+<td>{$cal.customlocations}{if $cal.show_location eq 'y'} v{/if}</td>
+<td>{$cal.customparticipants}{if $cal.show_participants eq 'y'} v{/if}</td>
+<td>{$cal.customcategories}{if $cal.show_category eq 'y'} v{/if}</td>
+<td>{$cal.customlanguages}{if $cal.show_language eq 'y'} v{/if}</td>
 <td>{$cal.custompriorities}</td>
 <td>{$cal.customsubscription}</td>
 <td>{$cal.personal}</td>
@@ -100,31 +100,46 @@ src='pics/icons/key.png' border='0' width='16' height='16' alt='{tr}permissions{
 {if $tiki_p_view_categories eq 'y'}
 {include file=categorize.tpl}
 {/if}
-<tr class="formcolor"><td>{tr}Name{/tr}:</td><td><input type="text" name="name" value="{$name|escape}" /></td></tr>
-<tr class="formcolor"><td>{tr}Description{/tr}:</td><td><textarea name="description" rows="5" wrap="virtual" style="width:100%;">{$description|escape}</textarea></td></tr>
+<tr class="formcolor"><td>{tr}Name{/tr}:</td><td><input type="text" name="name" value="{$name|escape}" />
+{tr}Show in popup box{/tr}
+<input type="checkbox" name="show[calname]" value="on"{if $show_calname eq 'y'} checked="checked"{/if} />
+</td></tr>
+<tr class="formcolor"><td>{tr}Description{/tr}:</td><td><textarea name="description" rows="5" wrap="virtual" style="width:100%;">{$description|escape}</textarea>
+<br />
+{tr}Show in popup box{/tr}
+<input type="checkbox" name="show[description]" value="on"{if $show_description eq 'y'} checked="checked"{/if} />
+</td></tr>
 <tr class="formcolor"><td>{tr}Custom Locations{/tr}:</td><td>
 <select name="customlocations">
 <option value='y' {if $customlocations eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>
 <option value='n' {if $customlocations eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
 </select>
+{tr}Show in popup box{/tr}
+<input type="checkbox" name="show[location]" value="on"{if $show_location eq 'y'} checked="checked"{/if} />
 </td></tr>
 <tr class="formcolor"><td>{tr}Custom Participants{/tr}:</td><td>
 <select name="customparticipants">
 <option value='y' {if $customparticipants eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>
 <option value='n' {if $customparticipants eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
 </select>
+{tr}Show in popup box{/tr}
+<input type="checkbox" name="show[participants]" value="on"{if $show_participants eq 'y'} checked="checked"{/if} />
 </td></tr>
 <tr class="formcolor"><td>{tr}Custom Categories{/tr}:</td><td>
 <select name="customcategories">
 <option value='y' {if $customcategories eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>
 <option value='n' {if $customcategories eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
 </select>
+{tr}Show in popup box{/tr}
+<input type="checkbox" name="show[category]" value="on"{if $show_category eq 'y'} checked="checked"{/if} />
 </td></tr>
 <tr class="formcolor"><td>{tr}Custom Languages{/tr}:</td><td>
 <select name="customlanguages">
 <option value='y' {if $customlanguages eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>
 <option value='n' {if $customlanguages eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
 </select>
+{tr}Show in popup box{/tr}
+<input type="checkbox" name="show[language]" value="on"{if $show_language eq 'y'} checked="checked"{/if} />
 </td></tr>
 {if $feature_newsletters eq 'y'}
 <tr class="formcolor"><td>{tr}Custom Subscription List{/tr}:</td><td>
