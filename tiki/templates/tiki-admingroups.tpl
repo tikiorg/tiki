@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.66 2006-10-01 14:11:24 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.67 2006-12-05 21:37:30 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -176,7 +176,7 @@ To use a relative link, use ex.: <i>http:tiki-forums.php</i>
 <select name="usersfield">
 <option value="0">{tr}choose a field ...{/tr}</option>
 {section name=ix loop=$usersFields}
-<option value="{$usersFields[ix].fieldId}"{if $usersFields[ix].fieldId eq $usersfieldid} selected="selected"{/if}>{$usersFields[ix].name}</option>
+<option value="{$usersFields[ix].fieldId}"{if $usersFields[ix].fieldId eq $usersfieldid} selected="selected"{/if}>{$usersFields[ix].fieldId} - {$usersFields[ix].name}</option>
 {/section}
 </select>
 {/if}
