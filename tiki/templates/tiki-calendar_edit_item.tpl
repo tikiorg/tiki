@@ -43,8 +43,8 @@
 <tr><td colspan="2"><input type="submit" name="act" value="Save" />
 {tr}in{/tr}
 <select name="save[calendarId]" id="calid">
-{foreach item=it from=$listcals}
-<option value="{$it.calendarId}"{if $calendarId eq $it.calendarId} selected="selected"{/if}>{$it.name}</option>
+{foreach item=it key=itid from=$listcals}
+<option value="{$it.calendarId}"{if $calitem.calendarId eq $itid} selected="selected"{/if}>{$it.name}</option>
 {/foreach}
 </select>
 {tr}or{/tr} <input type="submit" name="act" value="Go to" onclick="document.location='{$myurl}?calendarId='+document.getElementById('calid').value;return false;" />
@@ -161,17 +161,6 @@
 {/if}
 </td>
 </tr>
-{if $edit}
-<tr><td colspan="2"><input type="submit" name="act" value="Save" />
-{tr}in{/tr}
-<select name="save[calendarId]" id="calid">
-{foreach item=it from=$listcals}
-<option value="{$it.calendarId}"{if $calendarId eq $it.calendarId} selected="selected"{/if}>{$it.name}</option>
-{/foreach}
-</select>
-{tr}or{/tr} <input type="submit" name="act" value="Go to" onclick="document.location='tiki-calendar_edit_item.php?calendarId='+document.getElementById('calid').value;return false;" />
-</td></tr>
-{/if}
 </table>
 </td>
 
