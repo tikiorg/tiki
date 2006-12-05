@@ -36,7 +36,7 @@
 {/if}
 {/if}
 
-<table>
+<table width="100%">
 <tr><td>
 <table class="normal">
 {if $edit}
@@ -203,7 +203,7 @@
 </div>
 </td>
 
-<td>
+<td align="right" style="text-align:right;">
 <div style="display:{if $calendar.custompriorities eq 'y'}block{else}none{/if};width:120px;padding:4px;border:1px solid #888;text-align:center;" id="calprio">
 {tr}Priority{/tr}<br />
 {if $edit}
