@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.58 2006-12-02 19:35:21 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.59 2006-12-05 07:22:17 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -41,45 +41,55 @@ if ($feature_theme_control == 'y'	and isset($_REQUEST['calIds'])) {
 foreach ($rawcals["data"] as $cal_id=>$cal_data) {
 	if ($tiki_p_admin == 'y') {
 		$cal_data["tiki_p_view_calendar"] = 'y';
+		$cal_data["tiki_p_view_events"] = 'y';
 		$cal_data["tiki_p_add_events"] = 'y';
 		$cal_data["tiki_p_change_events"] = 'y';
 	} elseif ($cal_data["personal"] == "y") {
 		if ($user) {
 			$cal_data["tiki_p_view_calendar"] = 'y';
+			$cal_data["tiki_p_view_events"] = 'y';
 			$cal_data["tiki_p_add_events"] = 'y';
 			$cal_data["tiki_p_change_events"] = 'y';
 		} else {
 			$cal_data["tiki_p_view_calendar"] = 'n';
+			$cal_data["tiki_p_view_events"] = 'y';
 			$cal_data["tiki_p_add_events"] = 'n';
 			$cal_data["tiki_p_change_events"] = 'n';
 		}
 	} else {
 		if ($userlib->object_has_one_permission($cal_id,'calendar')) {
-			if ($userlib->object_has_permission($user, $cal_id, 'calendar', 'tiki_p_view_calendar')) {
-				$cal_data["tiki_p_view_calendar"] = 'y';
-			} else {
-				$cal_data["tiki_p_view_calendar"] = 'n';
-			}
-			if ($userlib->object_has_permission($user, $cal_id, 'calendar', 'tiki_p_add_events')) {
-				$cal_data["tiki_p_add_events"] = 'y';
-				$tiki_p_add_events = "y";
-				$smarty->assign("tiki_p_add_events", "y");
-			} else {
-				$cal_data["tiki_p_add_events"] = 'n';
-			}
-			if ($userlib->object_has_permission($user, $cal_id, 'calendar', 'tiki_p_change_events')) {
-				$cal_data["tiki_p_change_events"] = 'y';
-			} else {
-				$cal_data["tiki_p_change_events"] = 'n';
-			}
-			$smarty->assign("tiki_p_change_events", $cal_data["tiki_p_change_events"] );
 			if ($userlib->object_has_permission($user, $cal_id, 'calendar', 'tiki_p_admin_calendar')) {
 				$cal_data["tiki_p_view_calendar"] = 'y';
 				$cal_data["tiki_p_add_events"] = 'y';
 				$cal_data["tiki_p_change_events"] = 'y';
+			} else {
+				if ($userlib->object_has_permission($user, $cal_id, 'calendar', 'tiki_p_view_calendar')) {
+					$cal_data["tiki_p_view_calendar"] = 'y';
+				} else {
+					$cal_data["tiki_p_view_calendar"] = 'n';
+				}
+				if ($userlib->object_has_permission($user, $cal_id, 'calendar', 'tiki_p_view_events')) {
+					$cal_data["tiki_p_view_events"] = 'y';
+				} else {
+					$cal_data["tiki_p_view_events"] = 'n';
+				}
+				if ($userlib->object_has_permission($user, $cal_id, 'calendar', 'tiki_p_add_events')) {
+					$cal_data["tiki_p_add_events"] = 'y';
+					$tiki_p_add_events = "y";
+					$smarty->assign("tiki_p_add_events", "y");
+				} else {
+					$cal_data["tiki_p_add_events"] = 'n';
+				}
+				if ($userlib->object_has_permission($user, $cal_id, 'calendar', 'tiki_p_change_events')) {
+					$cal_data["tiki_p_change_events"] = 'y';
+				} else {
+					$cal_data["tiki_p_change_events"] = 'n';
+				}
+				$smarty->assign("tiki_p_change_events", $cal_data["tiki_p_change_events"] );
 			}
 		} else {
 			$cal_data["tiki_p_view_calendar"] = $tiki_p_view_calendar;
+			$cal_data["tiki_p_view_events"] = $tiki_p_view_events;
 			$cal_data["tiki_p_add_events"] = $tiki_p_add_events;
 			$cal_data["tiki_p_change_events"] = $tiki_p_change_events;
 		}
@@ -89,12 +99,16 @@ foreach ($rawcals["data"] as $cal_id=>$cal_data) {
 		$bufid[] = $cal_id;
 		$bufdata["$cal_id"] = $cal_data;
 	}
+	if ($cal_data["tiki_p_view_events"] == 'y') {
+		$visible[] = $cal_id;
+	}
 	if ($cal_data["tiki_p_add_events"] == 'y') {
 		$modifTab = 1;
 	}
 	if ($cal_data["tiki_p_change_events"] == 'y') {
 		$modifTab = 1;
 		$modifiable[] = $cal_id;
+		$visible[] = $cal_id;
 	}
 }
 if ($feature_categories == 'y' and isset($_REQUEST['calIds'])) {
@@ -237,6 +251,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 
       foreach ($listevents["$dday"] as $le) {
         $le['modifiable'] = in_array($le['calendarId'], $modifiable)? "y": "n";
+        $le['visible'] = in_array($le['calendarId'], $visible)? "y": "n";
         $leday["{$le['time']}$e"] = $le;
 
         $smarty->assign_by_ref('cellhead', $le["head"]);
@@ -248,6 +263,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
         $smarty->assign_by_ref('cellurl', $le["url"]);
         $smarty->assign_by_ref('cellid', $le["calitemId"]);
         $smarty->assign('celldescription', $tikilib->parse_data($le["description"]));
+        $smarty->assign_by_ref('cellmodif', $le['modifiable']);
         $smarty->assign_by_ref('cellmodif', $le['modifiable']);
         $leday["{$le['time']}$e"]["over"] = $smarty->fetch("tiki-calendar_box.tpl");
         $e++;

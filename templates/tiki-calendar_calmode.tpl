@@ -28,7 +28,7 @@
 {assign var=over value=$cell[w][d].items[items].over}
 <div class="Cal{$cell[w][d].items[items].type} calId{$cell[w][d].items[items].calendarId}" {if $cell[w][d].items[items].calitemId eq $calitemId and $calitemId|string_format:"%d" ne 0}style="padding:5px;border:1px solid black;"{/if}>
 <span class="calprio{$cell[w][d].items[items].prio}" style="padding-left:3px;padding-right:3px;"><a 
-{if $cell[w][d].items[items].modifiable eq "y" || $cell[w][d].items[items].calname eq ""}href="{$cell[w][d].items[items].url}{if $feature_tabs ne 'y'}#add{/if}"{/if} 
+{if $cell[w][d].items[items].modifiable eq "y" || $cell[w][d].items[items].visible eq 'y'}href="{$cell[w][d].items[items].url}"{/if} 
 {if $calendar_sticky_popup eq "y" and $cell[w][d].items[items].calitemId}{popup sticky=true fullhtml="1" text=$over|escape:"javascript"|escape:"html"}{else}
 {popup fullhtml="1" text=$over|escape:"javascript"|escape:"html"}{/if}
 class="linkmenu">{$cell[w][d].items[items].name|truncate:$trunc:".."|default:"..."}</a></span>

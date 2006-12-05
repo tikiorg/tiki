@@ -1,4 +1,4 @@
-	# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.121 2006-12-03 15:36:26 mose Exp $
+	# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.122 2006-12-05 07:22:17 mose Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -681,4 +681,8 @@ CREATE TABLE tiki_calendar_options (
 
 update `users_permissions` set type='tiki' where `permName`='tiki_p_view_tiki_calendar' and `type`='calendar';
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Tiki Calendar','tiki-action_calendar.php',36,'feature_action_calendar','tiki_p_view_tiki_calendar','');
+
+# mose 2006-12-05
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_events', 'Can view events details', 'registered', 'calendar');
+
 
