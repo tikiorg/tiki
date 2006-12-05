@@ -49,10 +49,15 @@
 </select>
 {tr}or{/tr} <input type="submit" name="act" value="Go to" onclick="document.location='{$myurl}?calendarId='+document.getElementById('calid').value;return false;" />
 </td></tr>
+{else}
+<tr class="formcolor"><td>
+{tr}Calendar{/tr}</td>
+<td>{$listcals.$calendarId.name}
+</td></tr>
 {/if}
 
 <tr class="formcolor">
-<td>{tr}Name{/tr}</td>
+<td>{tr}Event Name{/tr}</td>
 <td>
 {if $edit}
 <input type="text" name="save[name]" value="{$calitem.name|escape}" size="32" style="width:90%;"/>
