@@ -67,7 +67,7 @@
 </td>
 </tr>
 <tr class="formcolor">
-<td>{tr}From{/tr}</td><td>
+<td>{tr}Start{/tr}</td><td>
 {if $edit}
 <table cellpadding="0" cellspacing="0" border="0" style="border:0;">
 <tr><td style="border:0;padding-top:2px;">
@@ -99,9 +99,10 @@
 </td>
 </tr>
 <tr class="formcolor">
-<td>{tr}to{/tr}</td><td>
+<td>{tr}End{/tr}</td><td>
 {if $edit}
-<table cellpadding="0" cellspacing="0" border="0" style="border:0;">
+<input type="hidden" name="save[end_or_duration]" value="end" id="end_or_duration" />
+<table cellpadding="0" cellspacing="0" border="0" style="border:0;display:block;" id="end_date"> 
 <tr><td style="border:0;padding-top:2px;">
 <a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>
 </td>
@@ -112,46 +113,46 @@
 <a href="#" onclick="document.f.end_Hour.selectedIndex=(document.f.end_Hour.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>
 </td>
 <td rowspan="2" style="border:0;">
-{html_select_time prefix="end_" display_seconds=false time=$calitem.end minute_interval=$calendar_timespan hour_minmax=$hour_minmax}
+{html_select_time prefix="end_" display_seconds=false time=$calitem.time_end minute_interval=$calendar_timespan hour_minmax=$hour_minmax}
 </td>
 <td style="border:0;padding-top:2px;">
 <a href="#" onclick="document.f.end_Minute.selectedIndex=(document.f.end_Minute.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>
-</td></tr>
+</td>
+<td rowspan="2" style="border:0;padding-top:2px;"><a href="#" onclick="document.getElementById('end_or_duration').value='duration';flip('end_date');flip('end_duration');return false;">{tr}Duration{/tr}</a>
+</tr>
 <tr><td style="border:0;">
 <a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex-1);"><img src="pics/icons/minus_small.png" height="8" width="11" border="0" align="left" /></a>
 </td><td style="border:0;">
 <a href="#" onclick="document.f.end_Hour.selectedIndex=(document.f.end_Hour.selectedIndex-1);"><img src="pics/icons/minus_small.png" height="8" width="11" border="0" align="left" /></a>
 </td><td style="border:0;">
 <a href="#" onclick="document.f.end_Minute.selectedIndex=(document.f.end_Minute.selectedIndex-1);"><img src="pics/icons/minus_small.png" height="8" width="11" border="0" align="left" /></a>
-</td></tr>
+</td>
+</td>
+</tr>
 </table>
+<table cellpadding="0" cellspacing="0" border="0" style="border:0;display:none;" id="end_duration">
+<tr><td style="border:0;padding-top:2px;">
+<a href="#" onclick="document.f.duration_Hour.selectedIndex=(document.f.duration_Hour.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>
+</td><td style="border:0;" rowspan="2">
+{html_select_time prefix="duration_" display_seconds=false time=$calitem.duration|default:'01:00' minute_interval=$calendar_timespan}
+</td><td style="border:0;padding-top:2px;">
+<a href="#" onclick="document.f.duration_Minute.selectedIndex=(document.f.duration_Minute.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>
+</td>
+<td rowspan="2" style="border:0;padding-top:2px;"><a href="#" onclick="document.getElementById('end_or_duration').value='end';flip('end_date');flip('end_duration');return false;">{tr}Date and time of end{/tr}</a>
+</tr>
+<tr><td style="border:0;">
+<a href="#" onclick="document.f.duration_Hour.selectedIndex=(document.f.duration_Hour.selectedIndex-1);"><img src="pics/icons/minus_small.png" height="8" width="11" border="0" align="left" /></a>
+</td><td style="border:0;">
+<a href="#" onclick="document.f.duration_Minute.selectedIndex=(document.f.duration_Minute.selectedIndex-1);"><img src="pics/icons/minus_small.png" height="8" width="11" border="0" align="left" /></a>
+</td>
+</tr>
+</table>
+
 {else}
 {$calitem.end|tiki_long_datetime}
 {/if}
 </td>
 </tr>
-<tr class="formcolor">
-<td>{tr}Duration{/tr}</td>
-<td>
-{if $edit}
-<table cellpadding="0" cellspacing="0" border="0" style="border:0;">
-<tr><td style="border:0;padding-top:2px;">
-<a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>
-</td><td style="border:0;" rowspan="2">
-{html_select_time display_seconds=false time=$calitem.duration|default:'01:00' minute_interval=$calendar_timespan}
-</td><td style="border:0;padding-top:2px;">
-<a href="#" onclick="document.f.Time_Minute.selectedIndex=(document.f.Time_Minute.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>
-</td></tr>
-<tr><td style="border:0;">
-<a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex-1);"><img src="pics/icons/minus_small.png" height="8" width="11" border="0" align="left" /></a>
-</td><td style="border:0;">
-<a href="#" onclick="document.f.Time_Minute.selectedIndex=(document.f.Time_Minute.selectedIndex-1);"><img src="pics/icons/minus_small.png" height="8" width="11" border="0" align="left" /></a>
-</td></tr>
-</table>
-{else}
-{$calitem.duration|tiki_long_time}
-{/if}
-</td></tr>
 <tr class="formcolor">
 <td colspan="2">
 {if $edit}
