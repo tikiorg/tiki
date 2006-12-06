@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.117 2006-11-29 22:43:40 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.118 2006-12-06 19:08:09 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -123,10 +123,15 @@ $patterns['url'] = "/^(https?:\/\/)?[^<>\"']*$/"; // needed for the htmlpage inc
 $vartype['id'] = '+int';
 $vartype['forumId'] = '+int';
 $vartype['offset'] = 'intSign';
+$vartype['prev_offset'] = 'intSign';
+$vartype['next_offset'] = 'intSign';
 $vartype['thresold'] = 'int';
 $vartype['sort_mode'] = '+char'; // TODO: only allow valid field names and order here!
 $vartype['file_sort_mode'] = 'char';
 $vartype['file_offset'] = 'int';
+$vartype['file_find'] = 'string';
+$vartype['file_prev_offset'] = 'intSign';
+$vartype['file_next_offset'] = 'intSign';
 $vartype['comments_offset'] = 'int';
 $vartype['comments_thresold'] = 'int';
 $vartype['comments_parentId'] = '+int';
