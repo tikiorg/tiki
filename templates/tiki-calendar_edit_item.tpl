@@ -13,10 +13,12 @@
 {/if}
 <br /><br />
 &nbsp;
+{if id}
 {if $edit}
 <a href="tiki-calendar_edit_item.php?viewcalitemId={$id}" class="linkbut">{tr}View event{/tr}</a>
 {elseif $tiki_p_change_events eq 'y'}
 <a href="tiki-calendar_edit_item.php?calitemId={$id}" class="linkbut">{tr}Edit event{/tr}</a>
+{/if}
 {/if}
 {if $tiki_p_add_events eq 'y'}
 <a href="tiki-calendar_edit_item.php" class="linkbut">{tr}New event{/tr}</a>
@@ -118,7 +120,7 @@
 <td style="border:0;padding-top:2px;">
 <a href="#" onclick="document.f.end_Minute.selectedIndex=(document.f.end_Minute.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>
 </td>
-<td rowspan="2" style="border:0;padding-top:2px;"><a href="#" onclick="document.getElementById('end_or_duration').value='duration';flip('end_date');flip('end_duration');return false;">{tr}Duration{/tr}</a>
+<td rowspan="2" style="border:0;padding-top:2px;"><a href="#" onclick="document.getElementById('end_or_duration').value='duration';flip('end_duration');flip('end_date');return false;">{tr}Duration{/tr}</a>
 </tr>
 <tr><td style="border:0;">
 <a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex-1);"><img src="pics/icons/minus_small.png" height="8" width="11" border="0" align="left" /></a>
