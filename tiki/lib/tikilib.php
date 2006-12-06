@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.678 2006-12-02 17:43:40 mose Exp $
+// CVS: $Id: tikilib.php,v 1.679 2006-12-06 19:47:54 fr_rodo Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2284,6 +2284,12 @@ function add_pageview() {
 
     function list_posts($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $filterByBlogId = -1) {
 
+	$authorized_blogs = $this->list_blogs();
+	$permit_blogs = array();
+	for ($i = 0; $i < $authorized_blogs["cant"] ; $i++) {
+		$permit_blogs[] = $authorized_blogs["data"][$i]['blogId'];
+	}
+
 	if ($filterByBlogId >= 0) {
 		// get posts for a given blogId:
 	    $mid = " where ( `blogId` = ? ) ";
@@ -2313,6 +2319,10 @@ function add_pageview() {
 
 	while ($res = $result->fetchRow()) {
 	    $blogId = $res["blogId"];
+
+		if ( ! in_array($blogId, $permit_blogs) ) {
+			continue;
+		}
 
 	    $query = "select `title`  from `tiki_blogs` where `blogId`=?";
 	    $cant_com = $this->getOne("select count(*) from
