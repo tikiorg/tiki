@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_edit_item.php,v 1.5 2006-12-05 07:22:17 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_edit_item.php,v 1.6 2006-12-06 07:18:40 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -141,7 +141,17 @@ if (isset($_POST['act'])) {
 		if (empty($save['name'])) $save['name'] = tra("event without name");
 		// do some tests on input
 		$save['start'] = (floor($save['date_start']/(60*60*24))*60*60*24) - 60*60 + $_REQUEST['start_Hour']*60*60 + $_REQUEST['start_Minute']*60;
-		$save['end'] = (floor($save['date_end']/(60*60*24))*60*60*24) - 60*60 + $_REQUEST['end_Hour']*60*60 + $_REQUEST['end_Minute']*60;
+		$save['duration'] = $_REQUEST['duration_Hour']*60*60 + $_REQUEST['duration_Minute']*60;
+		if ($save['end_or_duration'] == 'duration') {
+			$save['end'] = $save['start'] + $save['duration'];
+		} else {
+			$save['end'] = (floor($save['date_end']/(60*60*24))*60*60*24) - 60*60 + $_REQUEST['end_Hour']*60*60 + $_REQUEST['end_Minute']*60;
+			$save['duration'] = $save['end'] - $save['start'];
+		}
+		if ($save['start'] > $save['end']) {
+			$save['end'] = $save['start'];
+			$save['duration'] = 0;
+		}
 		$calendarlib->set_item($user,$save['calitemId'],$save);
 		header('Location: tiki-calendar.php');
 		die;
@@ -191,6 +201,7 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 	$calendar = $calendarlib->get_calendar($calitem['calendarId']);
 	$smarty->assign('edit',true);
 	$hour_minmax = ceil(($calendar['startday'])/(60*60)).'-'. ceil(($calendar['endday'])/(60*60));
+	$_REQUEST['calendarId'] = $calitem['calendarId'];
 } elseif (isset($_REQUEST['calendarId']) and $tiki_p_add_events == 'y') {
 	$dc = $tikilib->get_date_converter($user);
 	if (isset($_REQUEST['todate'])) {

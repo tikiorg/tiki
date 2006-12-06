@@ -31,6 +31,10 @@ class CalendarLib extends TikiLib {
 		$res = array();
 		while ($r = $result->fetchRow()) {
 			$k = $r["calendarId"];
+			$res2 = $this->query("select `optionName`,`value` from `tiki_calendar_options` where `calendarId`=?",array((int)$k));
+			while ($r2 = $res2->fetchRow()) {
+				$r[$r2['optionName']] = $r2['value'];
+			}
 			$res["$k"] = $r;
 		}
 		$retval["data"] = $res;
@@ -100,6 +104,10 @@ class CalendarLib extends TikiLib {
 		$res2 = $this->query("select `optionName`,`value` from `tiki_calendar_options` where `calendarId`=?",array((int)$calendarId));
 		while ($r = $res2->fetchRow()) {
 			$cal[$r['optionName']] = $r['value'];
+		}
+		if (!isset($cal['startday']) and !isset($cal['endday'])) {
+			$cal['startday'] = 0;
+			$cal['endday'] = 23*60*60;
 		}
 		return $cal;
 	}

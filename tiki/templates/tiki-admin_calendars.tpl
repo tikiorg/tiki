@@ -44,11 +44,11 @@
 {foreach key=id item=cal from=$calendars}
 <tr class="{cycle}">
 <td>{$id}</td>
-<td><a class="tablename" href="tiki-calendar.php?calIds[]={$id}">{$cal.name}</a>{if $cal.show_calname eq 'y'} v{/if}</td>
-<td>{$cal.customlocations}{if $cal.show_location eq 'y'} v{/if}</td>
-<td>{$cal.customparticipants}{if $cal.show_participants eq 'y'} v{/if}</td>
-<td>{$cal.customcategories}{if $cal.show_category eq 'y'} v{/if}</td>
-<td>{$cal.customlanguages}{if $cal.show_language eq 'y'} v{/if}</td>
+<td><a class="tablename" href="tiki-calendar.php?calIds[]={$id}">{$cal.name}</a>{if $cal.show_calname eq 'y'} +{/if}</td>
+<td>{$cal.customlocations}{if $cal.show_location eq 'y'} +{/if}</td>
+<td>{$cal.customparticipants}{if $cal.show_participants eq 'y'} +{/if}</td>
+<td>{$cal.customcategories}{if $cal.show_category eq 'y'} +{/if}</td>
+<td>{$cal.customlanguages}{if $cal.show_language eq 'y'} +{/if}</td>
 <td>{$cal.custompriorities}</td>
 <td>{$cal.customsubscription}</td>
 <td>{$cal.personal}</td>
