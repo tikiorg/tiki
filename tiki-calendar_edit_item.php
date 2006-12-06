@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_edit_item.php,v 1.7 2006-12-06 08:47:47 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_edit_item.php,v 1.8 2006-12-06 08:50:10 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -152,7 +152,6 @@ if (isset($_POST['act'])) {
 			$save['end'] = $save['start'];
 			$save['duration'] = 0;
 		}
-		var_dump($save);die;
 		$calendarlib->set_item($user,$save['calitemId'],$save);
 		header('Location: tiki-calendar.php');
 		die;
