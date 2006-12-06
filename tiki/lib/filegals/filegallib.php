@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.51 2006-12-01 22:19:25 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.52 2006-12-06 19:08:09 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -698,7 +698,8 @@ class FileGalLib extends TikiLib {
 		$bindvars = array();
 		if ($find) {
 			$findesc = '%' . $find . '%';
-			$mid[] = "(upper(`name`) like upper(?) or upper(`description`) like upper(?) or upper(`comment`) like upper(?))";
+			$mid[] = "(upper(`name`) like upper(?) or upper(`filename`) like upper(?) or upper(`description`) like upper(?) or upper(`comment`) like upper(?))";
+			$bindvars[] = $findesc;
 			$bindvars[] = $findesc;
 			$bindvars[] = $findesc;
 			$bindvars[] = $findesc;
