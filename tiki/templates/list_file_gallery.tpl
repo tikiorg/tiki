@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.8 2006-12-01 22:19:25 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.9 2006-12-06 18:36:17 sylvieg Exp $ *}
 {* param:$gal_info, $files *}
 {strip}
 
@@ -12,7 +12,7 @@
 	 {if isset($file_info)}<input type="hidden" name="fileId" value="{$file_info.fileId}" />{/if}
      <input type="text" name="{$ext}find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="{$ext}sort_mode" value="{$sort_mode|escape}" />
+     {if !empty($sort_mode)}<input type="hidden" name="{$ext}sort_mode" value="{$sort_mode|escape}" />{/if}
 	 {if isset($page)}<input type="hidden" name="page" value="{$page|escape}" />{/if}
    </form>
    </td>
@@ -24,7 +24,7 @@
 <form  name="checkboxes_on" method="post" action="{$smarty.server.PHP_SELF}">
 	<input type="hidden" name="galleryId" value="{$gal_info.galleryId|escape}" />
     <input type="hidden" name="{$ext}find" value="{$find|escape}" />
-    <input type="hidden" name="{$ext}sort_mode" value="{$sort_mode|escape}" />
+    {if !empty($sort_mode)}<input type="hidden" name="{$ext}sort_mode" value="{$sort_mode|escape}" />{/if}
 	{if isset($file_info)}<input type="hidden" name="fileId" value="{$file_info.fileId|escape}" />{/if}
 	{if isset($page)}<input type="hidden" name="page" value="{$page|escape}" />{/if}
 
@@ -203,7 +203,7 @@
 	{/if}
 	{if $tiki_p_admin_file_galleries eq 'y'
 		or (!$files[changes].lockedby and (($user and $user eq $files[changes].user) or $tiki_p_edit_file_gallery eq 'y')) }
-			<a class="link" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}&amp;{$ext}sort_mode={$sort_mode}&amp;remove={$files[changes].fileId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}"><img src='pics/icons/cross.png' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' /></a>
+			<a class="link" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if !empty($sort_mode)}&amp;{$ext}sort_mode={$sort_mode}{/if}&amp;remove={$files[changes].fileId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}"><img src='pics/icons/cross.png' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' /></a>
 	{/if}
 </td>
 </tr>
