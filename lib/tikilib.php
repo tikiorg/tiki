@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.679 2006-12-06 19:47:54 fr_rodo Exp $
+// CVS: $Id: tikilib.php,v 1.680 2006-12-07 18:53:35 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2472,25 +2472,6 @@ function add_pageview() {
           $mid2 .= " and `tiki_articles`.`author` like '%$creator%' " ;
         }
         
-        if ($group==''){
-        global $userlib;
-          $users= $userlib->get_users( 0, -1, 'login_asc',  '',  '',false, $group, '');
-          $tmp='and (';
-          $first=1;
-          if (isset ($users) && is_array($users['data']))
-          foreach ($users['data'] as $key=>$val){
-              if ($first==1){
-                $first=0;
-              }else{
-                  $tmp .=" or "; 
-              }
-              $tmp.="  `tiki_articles`.`author` like '%".$val['user']."%' ";
-          }
-          $tmp.=')';
-          if ($first==0)
-            $mid2.=$tmp;
-        }
-
 	if ($categId) {
 		global $categlib; require_once('lib/categories/categlib.php');
 		$categlib->getSqlJoin($categId, 'article', '`tiki_articles`.`articleId`', $fromSql, $mid2, $bindvars);
