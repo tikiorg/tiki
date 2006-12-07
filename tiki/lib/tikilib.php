@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.680 2006-12-07 18:53:35 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.681 2006-12-07 21:58:46 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2469,7 +2469,8 @@ function add_pageview() {
 	$mid2 .= "  `tiki_articles`.`type` = `tiki_article_types`.`type`";
 
         if ($creator!=''){
-          $mid2 .= " and `tiki_articles`.`author` like '%$creator%' " ;
+          $mid2 .= " and `tiki_articles`.`author` like ? " ;
+		  $bindvars[] = "%$creator%";
         }
         
 	if ($categId) {
