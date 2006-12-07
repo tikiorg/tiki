@@ -89,7 +89,8 @@ class HeaderLib {
 		}
 		
 		if (count($this->cssfiles)) {
-			foreach ($this->cssfiles as $cssf) {
+			foreach ($this->cssfiles as $x=>$cssf) {
+				$back.= "<!-- cssfile $x -->\n";
 				foreach ($cssf as $cf) {
 					$back.= "<link rel=\"stylesheet\" href=\"$cf\" type=\"text/css\" />\n";
 				}
@@ -98,7 +99,8 @@ class HeaderLib {
 
 		if (count($this->css)) {
 			$back.= "<style><!--\n";
-			foreach ($this->css as $css) {
+			foreach ($this->css as $x=>$css) {
+				$back.= "/* css $x */\n";
 				foreach ($css as $c) {
 					$back.= "$c\n";
 				}
@@ -107,7 +109,8 @@ class HeaderLib {
 		}
 		
 		if (count($this->jsfiles)) {
-			foreach ($this->jsfiles as $jsf) {
+			foreach ($this->jsfiles as $x->$jsf) {
+				$back.= "<!-- jsfile $x -->\n";
 				foreach ($jsf as $jf) {
 					$back.= "<script type=\"text/javascript\" src=\"$jf\"></script>\n";
 				}
@@ -117,7 +120,8 @@ class HeaderLib {
 
 		if (count($this->js)) {
 			$back.= "<script type=\"text/javascript\">\n<!--\n";
-			foreach ($this->js as $js) {
+			foreach ($this->js as $x->$js) {
+				$back.= "// js $x \n";
 				foreach ($js as $j) {
 					$back.= "$j\n";
 				}
@@ -126,7 +130,8 @@ class HeaderLib {
 		}
 		
 		if (count($this->rssfeeds)) {
-			foreach ($this->rssfeeds as $rssf) {
+			foreach ($this->rssfeeds as $x->$rssf) {
+				$back.= "<!-- rss $x -->\n";
 				foreach ($rssf as $rsstitle=>$rssurl) {
 					$back.= "<link rel=\"alternate\" type=\"application/rss+xml\" title=\"$rsstitle\" href=\"$rssurl\" />\n";
 				}
