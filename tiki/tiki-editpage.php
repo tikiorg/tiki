@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.150 2006-12-07 04:42:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.151 2006-12-07 11:02:16 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -66,6 +66,10 @@ if (isset($_REQUEST['cancel_edit'])) {
     die;
 }
 
+if (isset($_REQUEST['minor'])) {
+	$_REQUEST['isminor'] = 'on';
+	$_REQUEST['save'] = true;
+}
 // We set empty wiki page name as default here if not set (before including Tiki modules)
 
 $editpageconflict = 'n';

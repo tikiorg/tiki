@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.91 2006-12-04 15:33:57 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.92 2006-12-07 11:02:16 mose Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -328,7 +328,7 @@ function searchrep() {
 {if $page|lower neq 'sandbox' or $tiki_p_admin eq 'y'}
 <tr class="formcolor"><td>&nbsp;</td><td>
 {if $tiki_p_minor eq 'y' and $page|lower ne 'sandbox'}
-<input type="checkbox" name="isminor" value="on" />{tr}Minor{/tr}
+<input type="submit" class="wikiaction" name="minor" value="{tr}Minor{/tr}" />
 {/if}
 <input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /> &nbsp;&nbsp;
 {if $feature_ajax eq 'y'}
