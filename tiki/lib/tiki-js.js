@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.74 2006-11-24 17:30:42 hangerman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.75 2006-12-07 13:25:28 sylvieg Exp $
 var feature_no_cookie = 'n';
 
 function browser() {
@@ -1055,7 +1055,7 @@ function addEvent(elm, evType, fn, useCapture)
   }
 } 
 // --- end of sorttable ---
-
+/* do not need if all pngs are png8
 function correctPNG() // correctly handle PNG transparency in Win IE 5.5 & 6.
 {
    var arVersion = navigator.appVersion.split("MSIE")
@@ -1085,12 +1085,14 @@ function correctPNG() // correctly handle PNG transparency in Win IE 5.5 & 6.
       }
    }    
 }
-
+*/
 browser();
+/* do not need if all the pngs are png8
 if (this.iewin) {
 	window.attachEvent("onload", correctPNG);
-}
 
+}
+*/
 // This was added to allow wiki3d to change url on tiki's window
 window.name = 'tiki';
 
