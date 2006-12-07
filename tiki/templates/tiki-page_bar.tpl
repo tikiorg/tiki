@@ -1,9 +1,17 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.53 2006-11-20 14:03:45 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.54 2006-12-07 13:07:26 mose Exp $ *}
 
 <hr/>
 <div id="page-bar">
   <table>
     <tr>
+
+{if $edit_page eq 'y'} {* Show this button only in editing mode *}
+  <td>
+    <div class="button2">
+      <a href="#" onclick="javascript:flip('edithelpzone'); return false;" class="linkbut">{tr}wiki help{/tr}</a>
+    </div>
+  </td>
+{else}
 
 {* Check that page is not locked and edit permission granted. SandBox can be edited w/o perm *}
 {if ($editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox')) or $tiki_p_admin_wiki eq 'y'}
@@ -74,14 +82,6 @@
 {/if}
 
 
-{if $edit_page eq 'y'} {* Show this button only in editing mode *}
-  <td>
-    <div class="button2">
-      <a href="#" onclick="javascript:flip('edithelpzone'); return false;" class="linkbut">{tr}wiki help{/tr}</a>
-    </div>
-  </td>
-{/if}
-
 {if $show_page == 'y'} {* Show this buttons only if page view mode *}
 
   {* don't show comments if feature disabled or not enough rights *}
@@ -136,6 +136,7 @@
 
 {/if}
 
+{/if}
 </tr>
 </table>
 </div>
@@ -147,3 +148,4 @@
 {if $feature_wiki_comments eq 'y' and $tiki_p_wiki_view_comments == 'y'}
 {include file=comments.tpl}
 {/if}
+

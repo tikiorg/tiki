@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.92 2006-12-07 11:02:16 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.93 2006-12-07 13:07:26 mose Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -343,9 +343,8 @@ function searchrep() {
 </form>
 <br />
 
-{if $wysiwyg ne 'y'}
-{include file=tiki-edit_help.tpl}
-{/if}
-
 {include file=tiki-page_bar.tpl}
+
+{include file=tiki-edit_help.tpl}
+
 
