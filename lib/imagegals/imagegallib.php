@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.82 2006-12-07 06:45:46 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.83 2006-12-07 07:34:21 mose Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -2195,113 +2195,7 @@ class ImageGalsLib extends TikiLib {
 			return min($t, $ybox/$ysize);
 		}
 	}
-
-  // function to move images from one store to another (fs to db or db to fs)
-  function move_image_store($imageId,$direction='to_fs')
-  {
-    global $gal_use_db;
-    global $gal_use_dir;
-    $this->clear_class_vars(); //cleanup
-
-    if($direction!='to_fs' && $direction!='to_db') {
-      return(false);
-    }
-
-    // get the storage location
-    $query='select `path` from `tiki_images` where `imageId`=?';
-    $path=$this->getOne($query,array($imageId),false);
-    if($path===false) { // imageId not found
-      return(false);
-    }
-
-    if((empty($path) && $direction=='to_fs') || (!empty($path) && $direction=='to_db')) {
-      // move image
-      // load image
-      $this->get_image($imageId);
-      $query='update `tiki_images` set `path`=? where `imageId`=?';
-      if($direction=='to_fs') {
-	 $this->path=md5(uniqid($this->filename));
-        // store_image data did already overwrite the "data" field in tiki_images_data
-        $this->query($query,array($this->path,$imageId));
-      }
-      // write image
-      $this->store_image_data(true);
-      if($direction=='to_db') {
-        // remove image in fs
-        if(!@unlink($gal_use_dir.$this->path)) {
-          $errstr="unlink failed";
-        }
-        $this->query($query,array('',$imageId));
-      }
-      return(1);
-
-    }
-    return(0);
-  }
-
-  function move_gallery_store($galId,$direction='to_fs')
-  {
-    $met=ini_get('max_execution_time');
-    $st=time();
-    $n=0;
-    $errors=0;
-    $timeout=false;
-    if($direction!='to_fs' && $direction!='to_db') {
-      return(false);
-    }
-
-    // remove all scales. They will be rebuild on access
-    $this->rebuild_scales($galId);
-
-    // move images store
-    if($galId==-1) {
-      $query='select `imageId` from `tiki_images`';
-      $result=$this->query($query,array());
-    } else {
-      $query='select `imageId` from `tiki_images` where `galleryId`=?';
-      $result=$this->query($query,array($galId));
-    }
-    while ($res = $result->fetchRow()) {
-      $r=$this->move_image_store($res['imageId'],$direction);
-      if($r!==false) {
-        $n+=$r;
-      } else {
-	$errors++;
-      }
-      if($met-time()+$st < 3) { // avoid timeouts so that we dont end with broken images
-	 $timeout=true;
-	 break;
-      }
-    }
-    $resultarray=array('moved_images'=>$n,'timeout'=>$timeout,'errors'=>$errors);
-    return($resultarray);
-  }
-
-  function clear_class_vars()
-  { // function to clear loaded data. Usable for mass changes
-     unset($this->imageId);
-     unset($this->galleryId);
-     unset($this->name);
-     unset($this->description);
-     unset($this->lat);
-     unset($this->lon);
-     unset($this->created);
-     unset($this->user); 
-     unset($this->hits);
-     unset($this->path);
-     unset($this->xsize);
-     unset($this->oldxsize);
-     unset($this->ysize);
-     unset($this->oldysize);
-     unset($this->type);
-     unset($this->filesize);
-     unset($this->filetype);
-     unset($this->filename);
-     unset($this->etag);
-     unset($this->image);
-  }
-  }
-
+	}
 }
 global $dbTiki;
 global $imagegallib;
