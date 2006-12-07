@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.81 2006-11-16 00:24:35 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.82 2006-12-07 06:45:46 mose Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -2075,12 +2075,17 @@ class ImageGalsLib extends TikiLib {
   {
     global $gal_use_db;
     global $gal_use_dir;
+		global $errstr;
     $this->clear_class_vars(); //cleanup
     
     if($direction!='to_fs' && $direction!='to_db') {
       return(false);
     }
     
+		if ($direction == 'to_fs' and !is_dir($gal_use_dir)) {
+			$errstr = tra("unknown destination directory. Please set it up in <a href='tiki-admin.php?page=galleries'>tiki-admin.php?page=galleries</a>");
+			return(0);
+		}
     // get the storage location
     $query='select `path` from `tiki_images` where `imageId`=?';
     $path=$this->getOne($query,array($imageId),false);
@@ -2103,7 +2108,7 @@ class ImageGalsLib extends TikiLib {
       if($direction=='to_db') {
         // remove image in fs 
         if(!@unlink($gal_use_dir.$this->path)) {
-          $errstr="unlink failed";
+          $errstr = tra("unlink failed");
         }
         $this->query($query,array('',$imageId));
       }
