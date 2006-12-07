@@ -16,7 +16,7 @@
 <td class="{cycle}" width="14%">
 <div align="center" class="calfocus{if $cell[w][d].day eq $focuscell}on{/if}">
 <span style="float:left">
-<a href="tiki-calendar.php?todate={$cell[w][d].day}" title="{tr}change focus{/tr}">{$cell[w][d].day|date_format:$short_format_day}</a> {* day is unix timestamp *}
+<a href="{$myurl}?todate={$cell[w][d].day}" title="{tr}change focus{/tr}">{$cell[w][d].day|date_format:$short_format_day}</a> {* day is unix timestamp *}
 </span>
 {if $tiki_p_add_events eq 'y' and count($listcals) > 0}
 <a href="tiki-calendar_edit_item.php?todate={$cell[w][d].day}" title="{tr}add item{/tr}" class="addevent">{tr}+{/tr}</a>
