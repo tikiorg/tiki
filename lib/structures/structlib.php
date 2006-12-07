@@ -45,6 +45,7 @@ class StructLib extends TikiLib {
 
 		$level = 0;
 		$first = true;
+		header('Content-type: text/plain; charset=utf8');
 		foreach ( $structure_tree as $node ) {
 			//This special case indicates head of structure
 			if ($node['first'] and $node['last']) {
