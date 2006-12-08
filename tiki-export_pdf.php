@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-export_pdf.php,v 1.17 2006-04-25 10:14:15 xavidp Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-export_pdf.php,v 1.18 2006-12-08 09:22:35 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -22,17 +22,12 @@ include_once ('lib/pdflib/pdflib.php');
 //Permissions
 if ($tiki_p_view != 'y') {
 	$smarty->assign('msg', tra("Permission denied you cannot view this page"));
-
 	$smarty->display("error.tpl");
 	die;
 }
 
-//feature
-$feature_wiki_pdf = $tikilib->get_preference('feature_wiki_pdf', 'n');
-
 if ($feature_wiki_pdf != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki_pdf");
-
 	$smarty->display("error.tpl");
 	die;
 }
