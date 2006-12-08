@@ -6,3 +6,5 @@
 {tr}No backlinks to this page{/tr}
 {/section}
 </ul>
+
+{include file="tiki-page_bar.tpl"}
