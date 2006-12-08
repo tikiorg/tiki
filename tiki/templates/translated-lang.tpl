@@ -1,6 +1,6 @@
 {* displays a cell with the languages of the translation set *}
 	{if isset($trads) && (count($trads) > 1 || $trads[0].langName)}
-		{if $td eq 'y'}<td style="text-align: left; width:42px;">{/if}
+		{if $td eq 'y'}<td style="vertical-align:top;text-align: left; width:42px;">{/if}
 		{if isset($verbose) && $verbose eq 'y'}The main text of this page is available in the following languages:{/if}
 		{if count($trads) > 1}
 			{if isset($type) && $type == 'article'}
