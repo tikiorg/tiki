@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-assignpermission.php,v 1.28 2006-09-19 16:33:14 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-assignpermission.php,v 1.29 2006-12-08 20:59:08 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -63,7 +63,7 @@ if (isset($_REQUEST["action"])) {
 			$userlib->remove_permission_from_group($_REQUEST["permission"], $group);
 			$logslib->add_log('perms',"unassigned perm ".$_REQUEST['permission']." from group $group");
 		} else {
-			key_get($area);
+			key_get($area, sprintf(tra('Unassign perm %s from group %s'), $_REQUEST['permission'], $group));
 		}
 	}
 }
