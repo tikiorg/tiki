@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.683 2006-12-08 10:57:33 mose Exp $
+// CVS: $Id: tikilib.php,v 1.684 2006-12-08 13:49:31 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -6471,8 +6471,8 @@ if (!$simple_wiki) {
 							$formatted[] = array('value' => $lc, 'name' => $lc);
 					}
 					usort($formatted, array('TikiLib', 'formatted_language_compare'));
-					return $formatted;
 				}
+					return $formatted;
 				}
 			    foreach ($languages as $lc) {
 					if (!count($avlang) or (!$all and in_array($lc,$avlang))) {
