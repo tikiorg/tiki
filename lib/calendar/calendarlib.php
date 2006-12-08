@@ -124,9 +124,10 @@ class CalendarLib extends TikiLib {
 		while ($res = $result->fetchRow()) {
 			$allItemsFromCalendar[] = $res['calitemId'];
 		}
-		$query = "delete from `tiki_calendar_roles` where `calitemId` in (".implode(',', array_fill(0,count($allItemsFromCalendar),'?')).")";
-		$this->query($query,array($allItemsFromCalendar));
-
+		if (count($allItemsFromCalendar)) {
+			$query = "delete from `tiki_calendar_roles` where `calitemId` in (".implode(',', array_fill(0,count($allItemsFromCalendar),'?')).")";
+			$this->query($query,array($allItemsFromCalendar));
+		}
 		// remove calendar items, categories and locations:
 		$query = "delete from `tiki_calendar_items` where `calendarId`=?";
 		$this->query($query,array($calendarId));
