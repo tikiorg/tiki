@@ -17,7 +17,7 @@
     <input type="hidden" name="name" value="{$login}"/>
     <input type="hidden" name="pass" value="{$password}"/>
     <input type="hidden" name="novalidation" value="yes"/>
-    {if $group}<input type="hidden" name="group" value="{$group}" />{/if}
+    {if $chosenGroup}<input type="hidden" name="chosenGroup" value="{$chosenGroup}" />{/if}
     <input type="submit" name="register" value="{tr}register{/tr}" />
   </form>
 
@@ -83,7 +83,7 @@
       {if $listgroups}
         <tr><td class="formcolor">{tr}Select your group{/tr}</td><td class="formcolor">
         {foreach item=gr from=$listgroups}
-          {if $gr.registrationChoice eq 'y'}<input type="radio" name="group" value="{$gr.groupName|escape}">{if $gr.groupDesc}{$gr.groupDesc}{else}{$gr.groupName}{/if}</input><br />{/if}
+          {if $gr.registrationChoice eq 'y'}<input type="radio" name="chosenGroup" value="{$gr.groupName|escape}">{if $gr.groupDesc}{$gr.groupDesc}{else}{$gr.groupName}{/if}</input><br />{/if}
         {/foreach}</td></tr>
       {/if}
       

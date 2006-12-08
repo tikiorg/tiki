@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.69 2006-11-10 03:14:42 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.70 2006-12-08 15:09:54 sylvieg Exp $
 
 /**
  * Tiki registration script
@@ -9,7 +9,7 @@
  * @license GNU LGPL
  * @copyright Tiki Community
  * @date created: 2002/10/8 15:54
- * @date last-modified: $Date: 2006-11-10 03:14:42 $
+ * @date last-modified: $Date: 2006-12-08 15:09:54 $
  */
 
 // Initialization
@@ -147,8 +147,8 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
 		$smarty->assign('email',$_REQUEST['email']);
 		$smarty->assign('login',$_REQUEST['name']);
 		$smarty->assign('password',$_REQUEST['pass']);
-		if (isset($_REQUEST['group']))
-			$smarty->assign('group',$_REQUEST['group']);
+		if (isset($_REQUEST['chosenGroup']))
+			$smarty->assign('chosenGroup',$_REQUEST['chosenGroup']);
 		$email_valid = 'no';
       }
     } elseif (preg_match('/[ ;,:]/',trim($_REQUEST["email"]))) {
@@ -158,7 +158,7 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
 		}
 
   if ($email_valid != 'no'&& $userTracker == 'y') {
-		$re = $userlib->get_group_info(isset($_REQUEST['group'])? $_REQUEST['group']: 'Registered');
+		$re = $userlib->get_group_info(isset($_REQUEST['chosenGroup'])? $_REQUEST['chosenGroup']: 'Registered');
 		if (!empty($re['usersTrackerId']) && !empty($re['registrationUsersFieldIds'])) {
 			include_once('lib/wiki-plugins/wikiplugin_tracker.php');
 			$userTrackerData = $tikilib->parse_data(wikiplugin_tracker('', array('trackerId'=>$re['usersTrackerId'], 'fields'=>$re['registrationUsersFieldIds'], 'showdesc'=>'y', 'showmandatory'=>'y', 'embedded'=>'n')));
@@ -177,8 +177,8 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
 			$foo1=str_replace("tiki-register","tiki-login_validate",$foo["path"]);
 			$machine =$tikilib->httpPrefix().$foo1;
 			$userlib->add_user($_REQUEST["name"],$apass,$_REQUEST["email"],$_REQUEST["pass"]);
-			if (isset($_REQUEST['group']) && $userlib->get_registrationChoice($_REQUEST['group']) == 'y') {
-				$userlib->set_default_group($_REQUEST['name'], $_REQUEST['group']);
+			if (isset($_REQUEST['chosenGroup']) && $userlib->get_registrationChoice($_REQUEST['chosenGroup']) == 'y') {
+				$userlib->set_default_group($_REQUEST['name'], $_REQUEST['chosenGroup']);
 			}			
 			
 			$logslib->add_log('register','created account '.$_REQUEST["name"]);
@@ -218,8 +218,8 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
 			$smarty->assign('showmsg','y');
 		} else {
 			$userlib->add_user($_REQUEST["name"],$_REQUEST["pass"],$_REQUEST["email"],'');
-			if (isset($_REQUEST['group']) && $userlib->get_registrationChoice($_REQUEST['group']) == 'y') {
-				$userlib->set_default_group($_REQUEST['name'], $_REQUEST['group']);
+			if (isset($_REQUEST['chosenGroup']) && $userlib->get_registrationChoice($_REQUEST['chosenGroup']) == 'y') {
+				$userlib->set_default_group($_REQUEST['name'], $_REQUEST['chosenGroup']);
 			}			
 			$logslib->add_log('register','created account '.$_REQUEST["name"]);
 			$smarty->assign('msg',$smarty->fetch('mail/user_welcome_msg.tpl'));
