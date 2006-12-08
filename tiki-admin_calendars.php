@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_calendars.php,v 1.27 2006-12-05 10:26:09 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_calendars.php,v 1.28 2006-12-08 11:03:56 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -46,7 +46,7 @@ if (isset($_REQUEST["save"])) {
 	$options = $_REQUEST['options'];
 	$options['startday'] = $_REQUEST['startday_Hour']*60*60 - 1;
 	$options['endday'] = $_REQUEST['endday_Hour']*60*60 - 1;
-	$extra = array('calname','description','location','description','language','category','participants');
+	$extra = array('calname','description','location','description','language','category','participants','url');
 	foreach ($extra as $ex) {
 		if (isset($_REQUEST['show'][$ex]) and $_REQUEST['show'][$ex] == 'on') {
 			$options["show_$ex"] = 'y';
@@ -95,12 +95,14 @@ if ($_REQUEST["calendarId"]) {
 	$info["customcategories"] = 'n';
 	$info["custompriorities"] = 'n';
 	$info["customsubscription"] = 'n';
+	$info["customurl"] = 'n';
 	$info["show_calname"] = 'y';
 	$info["show_description"] = 'y';
 	$info["show_category"] = 'n';
 	$info["show_location"] = 'n';
 	$info["show_language"] = 'n';
 	$info["show_participants"] = 'n';
+	$info["show_url"] = 'n';
 	$info["user"] = "$user";
 	$info["personal"] = 'n';
 	$info["startday"] = '25200';
@@ -116,12 +118,14 @@ $smarty->assign('customparticipants', $info["customparticipants"]);
 $smarty->assign('customcategories', $info["customcategories"]);
 $smarty->assign('custompriorities', $info["custompriorities"]);
 $smarty->assign('customsubscription', $info["customsubscription"]);
+$smarty->assign('customurl', $info["customurl"]);
 $smarty->assign('show_calname', $info["show_calname"]);
 $smarty->assign('show_description', $info["show_description"]);
 $smarty->assign('show_category', $info["show_category"]);
 $smarty->assign('show_location', $info["show_location"]);
 $smarty->assign('show_language', $info["show_language"]);
 $smarty->assign('show_participants', $info["show_participants"]);
+$smarty->assign('show_url', $info["show_url"]);
 $smarty->assign('calendarId', $_REQUEST["calendarId"]);
 $smarty->assign('personal', $info["personal"]);
 $smarty->assign('startday', $info["startday"]);
