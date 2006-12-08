@@ -49,8 +49,10 @@ function wikiplugin_tracker($data, $params) {
 		$permMessage = tra("You do not have permission to insert an item");
 	}
 
-	if (!$tikilib->user_has_perm_on_object($user, $trackerId, 'tracker', 'tiki_p_create_tracker_items')) {
-		return '<b>'.$permMessage.'</b>';
+	if (isset($_SERVER['SCRIPT_NAME']) && !strstr($_SERVER['SCRIPT_NAME'],'tiki-register.php')) {
+		if (!$tikilib->user_has_perm_on_object($user, $trackerId, 'tracker', 'tiki_p_create_tracker_items')) {
+			return '<b>'.$permMessage.'</b>';
+		}
 	}
 
 	if (!isset($_REQUEST["ok"]) || $_REQUEST["ok"]  != $trackerId) {
