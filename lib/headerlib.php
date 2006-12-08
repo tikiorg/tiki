@@ -120,7 +120,7 @@ class HeaderLib {
 
 		if (count($this->js)) {
 			$back.= "<script type=\"text/javascript\">\n<!--\n";
-			foreach ($this->js as $x->$js) {
+			foreach ($this->js as $x=>$js) {
 				$back.= "// js $x \n";
 				foreach ($js as $j) {
 					$back.= "$j\n";
