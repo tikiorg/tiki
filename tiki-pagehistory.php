@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.36 2006-12-04 09:20:08 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.37 2006-12-08 01:17:25 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -167,6 +167,14 @@ if (isset($_REQUEST["compare"])) {
 	}
 	else {
 		require_once('lib/diff/difflib.php');
+		if ($info['is_html'] == 1) {
+			$search[] = "/<(h|b)r />/";
+			$replace[] = "\n";
+			$search[] = "/<\/(t(d|h)|div|p)>/";
+			$replace[] = "\n";
+			$old['data'] = strip_tags(preg_replace($search,$replace,$old['data']));
+			$new['data'] = strip_tags(preg_replace($search,$replace,$new['data']));
+		}
 		$html = diff2($old["data"], $new["data"], $_REQUEST["diff_style"]);
 		$smarty->assign_by_ref('diffdata', $html);
 	}
