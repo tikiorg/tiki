@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.38 2006-12-08 01:24:33 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.39 2006-12-08 01:32:16 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -172,8 +172,8 @@ if (isset($_REQUEST["compare"])) {
 			$replace[] = "\n";
 			$search[] = "~<(hr|br) />~";
 			$replace[] = "\n";
-			$old['data'] = strip_tags(preg_replace($search,$replace,$old['data']));
-			$new['data'] = strip_tags(preg_replace($search,$replace,$new['data']));
+			$old['data'] = strip_tags(preg_replace($search,$replace,$old['data']),'<h1><h2><h3><h4><b><i><u><span>');
+			$new['data'] = strip_tags(preg_replace($search,$replace,$new['data']),'<h1><h2><h3><h4><b><i><u><span>');
 		}
 		$html = diff2($old["data"], $new["data"], $_REQUEST["diff_style"]);
 		$smarty->assign_by_ref('diffdata', $html);
