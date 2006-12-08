@@ -5,7 +5,7 @@
 <td class="heading"><a class="tableheading" {ajax_href template="tiki-admin_quicktags_content.tpl" htmlelement="quicktags-content"}tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'taginsert_desc'}taginsert_asc{else}taginsert_desc{/if}{/ajax_href}}>{tr}Insert{/tr}</a></td>
 <td class="heading"><a class="tableheading" {ajax_href template="tiki-admin_quicktags_content.tpl" htmlelement="quicktags-content"}tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'tagicon_desc'}tagicon_asc{else}tagicon_desc{/if}{/ajax_href}}>{tr}Icon{/tr}</a></td>
 <td class="heading"><a class="tableheading" {ajax_href template="tiki-admin_quicktags_content.tpl" htmlelement="quicktags-content"}tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'tagcategory_desc'}tagcategory_asc{else}tagcategory_desc{/if}{/ajax_href}}>{tr}Category{/tr}</a></td>
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=tag loop=$quicktags}
@@ -15,8 +15,8 @@
 <td class="{cycle advance=false}">{html_image file=$quicktags[tag].tagicon} {$quicktags[tag].iconpath}</td>
 <td class="{cycle advance=false}">{$quicktags[tag].tagcategory}</td>
 <td class="{cycle}">
-   <a class="link" href="tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$quicktags[tag].tagId}">{tr}delete{/tr}</a>
-   <a class="link" {ajax_href template="tiki-admin_quicktags_edit.tpl" htmlelement="quicktags-edit"}tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;tagId={$quicktags[tag].tagId}{/ajax_href}}>{tr}edit{/tr}</a>
+   <a class="link" {ajax_href template="tiki-admin_quicktags_edit.tpl" htmlelement="quicktags-edit"}tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;tagId={$quicktags[tag].tagId}{/ajax_href}}><img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>&nbsp;&nbsp;
+   <a class="link" href="tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$quicktags[tag].tagId}"><img src='pics/icons/cross.png' alt="{tr}remove{/tr}" border='0' width='16' height='16' /></a>
 </td>
 </tr>
 {/section}
