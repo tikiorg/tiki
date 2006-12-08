@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-config_pdf.php,v 1.14 2006-09-19 16:33:14 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-config_pdf.php,v 1.15 2006-12-08 00:26:36 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -17,7 +17,6 @@ include_once ('lib/structures/structlib.php');
 //Permissions
 if ($tiki_p_view != 'y') {
 	$smarty->assign('msg', tra("Permission denied you cannot view this page"));
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -27,7 +26,6 @@ $feature_wiki_pdf = $tikilib->get_preference('feature_wiki_pdf', 'n');
 
 if ($feature_wiki_pdf != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki_pdf");
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -95,7 +93,7 @@ if (!isset($_REQUEST["pdfversion"])) {
 if (!isset($_REQUEST["convertpages"])) {
 	$convertpages = array();
 
-	if (isset($_REQUEST["page_ref_id"]) ) {
+	if (!empty($_REQUEST["page_ref_id"]) ) {
 		$struct = $structlib->get_subtree($_REQUEST["page_ref_id"]);
 		foreach($struct as $struct_page) {
 			// Handle dummy last entry
