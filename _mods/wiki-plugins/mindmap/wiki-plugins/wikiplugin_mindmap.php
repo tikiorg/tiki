@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/mindmap/wiki-plugins/wikiplugin_mindmap.php,v 1.6 2006-10-28 20:04:27 fumphco Exp $
+/* $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/mindmap/wiki-plugins/wikiplugin_mindmap.php,v 1.7 2006-12-08 01:04:22 uid138927 Exp $
  *
  * The freemind plugin source is available at http://freemind.sourceforge.net
  * Both the freemind java applet and the much lighter flash plugin are supported.
@@ -10,7 +10,7 @@
 function wikiplugin_mindmap_help() {
 	$help = tra("Browse a mindmap using freemind flash plugin or java applet");
 	$help.=":<br />~np~{MINDMAP(";
-	$help.="src=>99|./lib/mindmap/wikiplugin_mindmap.mm";
+	$help.="src=>99|./lib/mindmap/wikiplugin-mindmap.mm";
 	$help.="[,plugin=>flash|java]";
 	$help.="[,mode=>inline|window|fullscreen]";
 	$help.="[,width=>100%]";
