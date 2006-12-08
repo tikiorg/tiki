@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.45 2006-11-15 14:56:14 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.46 2006-12-08 10:49:35 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -646,7 +646,7 @@ if (isset($_REQUEST['users_defaults'])) {
 
 // Get list of available languages
 $languages = array();
-$languages = $tikilib->list_languages();
+$languages = $tikilib->list_languages(false,null,true);
 $smarty->assign_by_ref('languages', $languages);
 
 $smarty->assign("styles", $tikilib->list_styles());
