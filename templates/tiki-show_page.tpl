@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.104 2006-12-04 10:03:37 mose Exp $ *} 
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.105 2006-12-08 12:08:09 sylvieg Exp $ *} 
 {if $feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
@@ -21,7 +21,7 @@
 	<td style="vertical-align:top;width:100px;">{$display_catpath}</td>
 {/if}
 {if $print_page ne 'y'}
-	<td style="text-align:right;width:142px;wrap:nowrap">
+	<td style="vertical-align:top;text-align:right;width:142px;wrap:nowrap">
 	{if $editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y'}
 		<a title="{tr}edit{/tr}" {ajax_href template="tiki-editpage.tpl" htmlelement="tiki-center"}tiki-editpage.php?page={$page|escape:"url"}{/ajax_href}><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt="{tr}edit{/tr}" /></a>
 	{/if}       
@@ -51,7 +51,7 @@
 	</td>
 
 	{if $feature_backlinks eq 'y' and $backlinks}
-		<td style="text-align:right;width:42px;">
+		<td style="vertical-align:top;text-align:right;width:42px;">
 		<form action="tiki-index.php" method="get">
 		<select name="page" onchange="page.form.submit()">
 		<option>{tr}backlinks{/tr}...</option>
@@ -64,7 +64,7 @@
 	{/if}
 
 	{if !$page_ref_id and count($showstructs) ne 0}
-		<td style="text-align:right;width:42px;">
+		<td style="vertical-align:top;text-align:right;width:42px;">
 		<form action="tiki-index.php" method="post">
 		<select name="page_ref_id" onchange="page_ref_id.form.submit()">
 		<option>{tr}Structures{/tr}...</option>
