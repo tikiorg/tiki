@@ -22,6 +22,7 @@ alt="{tr}zoom{/tr}" /></a>&nbsp;{/if}{if $cellmodif eq "y"}<a href="{$cellurl}" 
 
 {if $show_location eq 'y' and $customlocations eq 'y' and $celllocation}<div class='box-title'><b>{$celllocation}</b></div>{/if}
 {if $show_category eq 'y' and $customcategories eq 'y' and $cellcategory}<div class='box-title'><b>{$cellcategory}</b></div>{/if}
+{if $show_url eq 'y' and $customurl eq 'y' and $cellurl}<div class='box-title'><a href="{$cellurl|escape:'url'}" title="{$cellurl|escape:'url'}">{$url|truncate:32:'...'}</a></div>{/if}
 <div class='box-data'>
 <b>{$cellname}</b>
 {if $show_description eq 'y'}

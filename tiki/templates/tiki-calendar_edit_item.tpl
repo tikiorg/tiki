@@ -76,7 +76,11 @@
 <a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>
 </td>
 <td rowspan="2" style="border:0;padding-top:2px;">
+{if $feature_jscalendar eq 'y'}
 {jscalendar id="start" date=$calitem.start fieldname="save[date_start]" align="Bc" showtime='n'}
+{else}
+{html_select_date prefix="start_date_" time=$calitem.start}
+{/if}
 </td>
 <td style="border:0;padding-top:2px;">
 <a href="#" onclick="document.f.start_Hour.selectedIndex=(document.f.start_Hour.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>
@@ -109,7 +113,11 @@
 <a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>
 </td>
 <td rowspan="2" style="border:0;">
+{if $feature_jscalendar eq 'y'}
 {jscalendar id="end" date=$calitem.end fieldname="save[date_end]" align="Bc" showtime='n'}
+{else}
+{html_select_date prefix="start_date_" time=$calitem.start}
+{/if}
 </td>
 <td style="border:0;padding-top:2px;">
 <a href="#" onclick="document.f.end_Hour.selectedIndex=(document.f.end_Hour.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>

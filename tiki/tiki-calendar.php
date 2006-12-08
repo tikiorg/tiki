@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.60 2006-12-05 10:26:09 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.61 2006-12-08 11:03:56 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -272,6 +272,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
         $smarty->assign('show_category', $lec['show_category']);
         $smarty->assign('show_language', $lec['show_language']);
         $smarty->assign('show_participants', $lec['show_participants']);
+        $smarty->assign('show_url', $lec['show_url']);
         $leday["{$le['time']}$e"]["over"] = $smarty->fetch("tiki-calendar_box.tpl");
         $e++;
       }

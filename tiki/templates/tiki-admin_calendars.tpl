@@ -34,6 +34,7 @@
 <td class="heading"><a class="tableheading" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'customparticipants_desc'}customparticipants_asc{else}customparticipants_desc{/if}">{tr}participants{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'customcategories_desc'}customcategories_asc{else}customcategories_desc{/if}">{tr}cat{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'customlanguages_desc'}customlanguages_asc{else}customlanguages_desc{/if}">{tr}lang{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'customurl_desc'}customurl_asc{else}customurl_desc{/if}">{tr}url{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'custompriorities_desc'}custompriorities_asc{else}custompriorities_desc{/if}">{tr}prio{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'customsubscription_desc'}customsubscription_asc{else}customsubscription_desc{/if}">{tr}subscription{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'personal_desc'}personal_asc{else}personal_desc{/if}">{tr}perso{/tr}</a></td>
@@ -49,6 +50,7 @@
 <td>{$cal.customparticipants}{if $cal.show_participants eq 'y'} +{/if}</td>
 <td>{$cal.customcategories}{if $cal.show_category eq 'y'} +{/if}</td>
 <td>{$cal.customlanguages}{if $cal.show_language eq 'y'} +{/if}</td>
+<td>{$cal.customurl}{if $cal.show_url eq 'y'} +{/if}</td>
 <td>{$cal.custompriorities}</td>
 <td>{$cal.customsubscription}</td>
 <td>{$cal.personal}</td>
@@ -140,6 +142,14 @@ src='pics/icons/key.png' border='0' width='16' height='16' alt='{tr}permissions{
 </select>
 {tr}Show in popup box{/tr}
 <input type="checkbox" name="show[language]" value="on"{if $show_language eq 'y'} checked="checked"{/if} />
+</td></tr>
+<tr class="formcolor"><td>{tr}Custom URL{/tr}:</td><td>
+<select name="options[customurl]">
+<option value='y' {if $customurl eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>
+<option value='n' {if $customurl eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
+</select>
+{tr}Show in popup box{/tr}
+<input type="checkbox" name="show[url]" value="on"{if $show_url eq 'y'} checked="checked"{/if} />
 </td></tr>
 {if $feature_newsletters eq 'y'}
 <tr class="formcolor"><td>{tr}Custom Subscription List{/tr}:</td><td>
