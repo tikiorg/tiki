@@ -26,6 +26,7 @@ class TikiCalendarLib extends TikiLib {
 					$tstart2 = date("Hi", $res["lastModif"]);
 					$quote = "<i>" . tra("by"). " " . $res["user"] . "</i><br />" . str_replace('"', "'", $res["comment"]);
 					$ret["$dstart2"][] = array(
+						"visible" => "y",
 						"calitemId" => "",
 						"calname" => "",
 						"prio" => "",
@@ -47,6 +48,7 @@ class TikiCalendarLib extends TikiLib {
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
 					$tstart = date("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
+						"visible" => "y",
 						"calitemId" => "",
 						"calname" => "",
 						"prio" => "",
@@ -74,6 +76,7 @@ class TikiCalendarLib extends TikiLib {
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
 					$tstart = date("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
+						"visible" => "y",
 						"calitemId" => "",
 						"calname" => "",
 						"prio" => "",
@@ -98,6 +101,7 @@ class TikiCalendarLib extends TikiLib {
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
 					$tstart = date("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
+						"visible" => "y",
 						"calitemId" => "",
 						"calname" => "",
 						"prio" => "",
@@ -122,6 +126,7 @@ class TikiCalendarLib extends TikiLib {
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
 					$tstart = date("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
+						"visible" => "y",
 						"calitemId" => "",
 						"calname" => "",
 						"prio" => "",
@@ -156,6 +161,7 @@ class TikiCalendarLib extends TikiLib {
 					} else
 						$anchor = "#threadId".$res['threadId'];
 					$ret["$dstart"][] = array(
+						"visible" => "y",
 						"calitemId" => "",
 						"calname" => "",
 						"prio" => "",
@@ -181,6 +187,7 @@ class TikiCalendarLib extends TikiLib {
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
 					$tstart = date("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
+						"visible" => "y",
 						"calitemId" => "",
 						"calname" => "",
 						"prio" => "",
@@ -205,6 +212,7 @@ class TikiCalendarLib extends TikiLib {
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
 					$tstart = date("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
+						"visible" => "y",
 						"calitemId" => "",
 						"calname" => "",
 						"prio" => "",
@@ -229,6 +237,7 @@ class TikiCalendarLib extends TikiLib {
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
 					$tstart = date("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
+						"visible" => "y",
 						"calitemId" => "",
 						"calname" => "",
 						"prio" => "",
@@ -253,6 +262,7 @@ class TikiCalendarLib extends TikiLib {
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
 					$tstart = date("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
+						"visible" => "y",
 						"calitemId" => "",
 						"calname" => "",
 						"prio" => "",
@@ -277,6 +287,7 @@ class TikiCalendarLib extends TikiLib {
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
 					$tstart = date("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
+						"visible" => "y",
 						"calitemId" => "",
 						"calname" => "",
 						"prio" => "",
@@ -301,6 +312,7 @@ class TikiCalendarLib extends TikiLib {
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
 					$tstart = date("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
+						"visible" => "y",
 						"calitemId" => "",
 						"calname" => "",
 						"prio" => "",
@@ -327,6 +339,7 @@ class TikiCalendarLib extends TikiLib {
 					$dstart = mktime(0, 0, 0, date("m", $res['day']), date("d", $res['day']), date("Y", $res['day']));
 					$tstart = date("Hi", $res["day"]);
 					$ret["$dstart"][] = array(
+						"visible" => "y",
 						"calitemId" => "",
 						"calname" => "",
 						"prio" => "",
@@ -351,6 +364,7 @@ class TikiCalendarLib extends TikiLib {
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
 					$tstart = date("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
+						"visible" => "y",
 						"calitemId" => "",
 						"calname" => "",
 						"prio" => "",
@@ -375,6 +389,7 @@ class TikiCalendarLib extends TikiLib {
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
 					$tstart = date("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
+						"visible" => "y",
 						"calitemId" => "",
 						"calname" => "",
 						"prio" => "",
