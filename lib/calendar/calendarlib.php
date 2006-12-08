@@ -133,6 +133,8 @@ class CalendarLib extends TikiLib {
 		$this->query($query,array($calendarId));
 		$query = "delete from `tiki_calendar_categories` where `calendarId`=?";
 		$this->query($query,array($calendarId));
+		$query = "delete from `tiki_calendar_options` where `calendarId`=?";
+		$this->query($query,array($calendarId));
 		$query = "delete from `tiki_calendar_locations` where `calendarId`=?";
 		$this->query($query,array($calendarId));
 		// now remove the calendar itself:
