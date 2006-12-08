@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/lib/tikihelplib.php,v 1.5 2006-11-17 19:18:02 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/tikihelplib.php,v 1.6 2006-12-08 13:58:55 sylvieg Exp $
  * Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -34,7 +34,7 @@ function help_doclink($params) {
     if(empty($url) && empty($desc) && empty($crumb)) {
         return;
     }
-    if ($crumb) {
+    if (!empty($crumb)) {
         $url = $crumb->helpUrl;
         $desc = $crumb->helpDescription;
     }
