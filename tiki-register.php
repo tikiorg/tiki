@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.70 2006-12-08 15:09:54 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.71 2006-12-08 18:46:35 sylvieg Exp $
 
 /**
  * Tiki registration script
@@ -9,7 +9,7 @@
  * @license GNU LGPL
  * @copyright Tiki Community
  * @date created: 2002/10/8 15:54
- * @date last-modified: $Date: 2006-12-08 15:09:54 $
+ * @date last-modified: $Date: 2006-12-08 18:46:35 $
  */
 
 // Initialization
@@ -28,7 +28,10 @@ if ($allowRegister != 'y' || ($feature_intertiki == 'y' && !empty($feature_inter
 $smarty->assign('showmsg','n');
 // novalidation is set to yes if a user confirms his email is correct after tiki fails to validate it
 if (!isset($_REQUEST['novalidation'])) {
-	$novalidation = '';
+	if (!empty($_REQUEST['trackit']))
+		$novalidation = 'yes'; // the user has already confirmed manually that SnowCheck is not working
+	else
+		$novalidation = '';
 } else {
 	$novalidation = $_REQUEST['novalidation'];
 }
