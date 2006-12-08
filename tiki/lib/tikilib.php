@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.681 2006-12-07 21:58:46 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.682 2006-12-08 10:49:36 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -6376,7 +6376,7 @@ if (!$simple_wiki) {
 			    return sprintf("%s%02d%s%02d", $sign, $mins / 60, $colon, $mins % 60);
 			}
 
-			function list_languages($path = false, $short=null) {
+			function list_languages($path = false, $short=null, $all=false) {
 			    $languages = array();
 
 			    if (!$path)
@@ -6396,7 +6396,7 @@ if (!$simple_wiki) {
 			    closedir ($h);
 
 			    // Format and return the list
-			    return $this->format_language_list($languages, $short);
+			    return $this->format_language_list($languages, $short, $all);
 			}
 
 			function list_styles() {
@@ -6452,10 +6452,12 @@ if (!$simple_wiki) {
 			// with 'value' being the language code and 'name' being the name of
 			// the language.
 			// if $short is 'y' returns only the localized language names array
-			function format_language_list($languages, $short=null) {
+			function format_language_list($languages, $short=null, $all=false) {
 			    // The list of available languages so far with both English and
 			    // translated names.
 			    global $langmapping;
+			    global $available_languages;
+					$avlang = unserialize($available_languages);
 			    include_once("lang/langmapping.php");
 			    $formatted = array();
 
@@ -6471,6 +6473,7 @@ if (!$simple_wiki) {
 					return $formatted;
 				}
 			    foreach ($languages as $lc) {
+					if (!count($avlang) or (!$all and in_array($lc,$avlang))) {
 				if (isset($langmapping[$lc])) {
 				    // known language
 				    if ($langmapping[$lc][0] == $langmapping[$lc][1]) {
@@ -6491,6 +6494,7 @@ if (!$simple_wiki) {
 						    'value' => $lc,
 						    'name' => tra("Unknown language"). " ($lc)"
 						    );
+						}
 						}
 						}
 
