@@ -4,7 +4,7 @@
 <input type="hidden" name="offset" value="{$offset|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table class="normal">
-<tr class="formcolor"><td>{tr}label{/tr}:</td>
+<tr class="formcolor"><td>{tr}Label{/tr}:</td>
 <td><input type="text" maxlength="255" size="25" name="taglabel" value="{$info.taglabel|escape}" /></td></tr>
 <tr class="formcolor"><td>{tr}Insert (use 'text' for figuring the selection){/tr}:</td>
 
