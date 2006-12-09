@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.33 2006-12-01 22:19:25 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.34 2006-12-09 13:37:14 sylvieg Exp $
 
 	require_once('tiki-setup.php');
 	include_once('lib/filegals/filegallib.php');
@@ -69,6 +69,7 @@
 	$smarty->assign('show_dl','y');
 	$smarty->assign('max_desc',1024);
 	$smarty->assign('show_lockedby', 'y');
+	$smarty->assign('show_modified', 'n');
 	
 	$smarty->assign('maxRows',10);
 	$smarty->assign('public','n');
@@ -105,6 +106,7 @@
 		$smarty->assign('max_desc',$info['max_desc']);
 		$smarty->assign('fgal_type',$info['type']);
 		$smarty->assign('show_lockedby',$info['show_lockedby']);
+		$smarty->assign('show_modified',$info['show_modified']);
 	    $smarty->assign_by_ref('maxRows',$info["maxRows"]);
 	    $smarty->assign_by_ref('public',$info["public"]);
 		$smarty->assign_by_ref('lockable', $info['lockable']);
@@ -162,6 +164,7 @@
 	  $smarty->assign('max_desc',($_REQUEST['max_desc']));
 	  $smarty->assign('fgal_type',isset($_REQUEST['type'])? $_REQUEST['type']: '');
 	  $smarty->assign('show_lockedby',isset($_REQUEST['show_lockedby'])?'y':'n');
+	  $smarty->assign('show_modified',isset($_REQUEST['show_modified'])?'y':'n');
 	  $smarty->assign_by_ref('maxRows',$_REQUEST["maxRows"]);
 	  $smarty->assign_by_ref('rowImages',$_REQUEST["rowImages"]);
 	  $smarty->assign_by_ref('thumbSizeX',$_REQUEST["thumbSizeX"]);
@@ -199,9 +202,10 @@
 	  $_REQUEST['show_name']=isset($_REQUEST['show_name'])?$_REQUEST['show_name']:'a';
 	  $_REQUEST['user'] = isset($_REQUEST['user'])?$_REQUEST['user']:(isset($info['user'])?$info['user']:$user);
 	  $_REQUEST['show_lockedby']=isset($_REQUEST['show_lockedby'])?'y':'n';
+	  $_REQUEST['show_modified']=isset($_REQUEST['show_modified'])?'y':'n';
 	  $_REQUEST['sortorder']=isset($_REQUEST['sortorder'])?$_REQUEST['sortorder']:'created';
 	  $_REQUEST['sortdirection']=isset($_REQUEST['sortdirection']) && $_REQUEST['sortdirection'] == 'asc'? 'asc':'desc';
-	  $fgid = $filegallib->replace_file_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST['user'], $_REQUEST["maxRows"], $public, $visible,$_REQUEST['show_id'],$_REQUEST['show_icon'],$_REQUEST['show_name'],$_REQUEST['show_size'],$_REQUEST['show_description'],$_REQUEST['show_created'],$_REQUEST['show_dl'],$_REQUEST['max_desc'],$_REQUEST['fgal_type'], $_REQUEST['parentId'], $lockable, $_REQUEST['show_lockedby'], $_REQUEST['archives'], $_REQUEST['sortorder'].'_'.$_REQUEST['sortdirection']);
+	  $fgid = $filegallib->replace_file_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST['user'], $_REQUEST["maxRows"], $public, $visible,$_REQUEST['show_id'],$_REQUEST['show_icon'],$_REQUEST['show_name'],$_REQUEST['show_size'],$_REQUEST['show_description'],$_REQUEST['show_created'],$_REQUEST['show_dl'],$_REQUEST['max_desc'],$_REQUEST['fgal_type'], $_REQUEST['parentId'], $lockable, $_REQUEST['show_lockedby'], $_REQUEST['archives'], $_REQUEST['sortorder'].'_'.$_REQUEST['sortdirection'], $_REQUEST['show_modified']);
 	  
 		if ($feature_categories == 'y') {
 			$cat_type='file gallery';
