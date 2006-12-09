@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_fgal.php,v 1.18 2006-12-09 14:24:51 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_fgal.php,v 1.19 2006-12-09 14:36:53 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -62,6 +62,7 @@ if (isset($_REQUEST["filegallistprefs"])) {
 	simple_set_toggle("fgal_list_hits");
 	simple_set_toggle('fgal_list_parent');
 	$_REQUEST['fgal_sort_mode'] = (empty($_REQUEST['sortorder'])?'created':$_REQUEST['sortorder']).'_'.(empty($_REQUEST['sortdirection'])?'desc':$_REQUEST['sortdirection']);
+	$fgal_sort_mode = $_REQUEST['fgal_sort_mode'];
 	simple_set_value('fgal_sort_mode');
 }
 
@@ -99,8 +100,8 @@ if (isset($_REQUEST["filegalredosearch"])) {
 	$filegallib->reindex_all_files_for_search_text();
 }
 
-if ($_REQUEST['fgal_sort_mode']) {
-	preg_match('/(.*)_(asc|desc)/', $_REQUEST['fgal_sort_mode'], $matches);
+if (!empty($fgal_sort_mode)) {
+	preg_match('/(.*)_(asc|desc)/', $fgal_sort_mode, $matches);
 	$smarty->assign('sortorder',$matches[1]);
 	$smarty->assign('sortdirection', $matches[2]);
 } else {
