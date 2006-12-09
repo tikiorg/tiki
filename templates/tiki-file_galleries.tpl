@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.45 2006-12-01 22:19:25 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.46 2006-12-09 13:37:14 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-file_galleries.php?galleryId={$galleryId}{if isset($edit_mode)}&amp;edit_mode=1{/if}">{tr}File Galleries{/tr}</a>
 
@@ -59,8 +59,9 @@
 				<td class="formcolor">{tr}size{/tr}</td>
 				<td class="formcolor">{tr}description{/tr}</td>
 				<td class="formcolor">{tr}created{/tr}</td>
+				<td class="formcolor">{tr}lastMod{/tr}</td>
 				<td class="formcolor">{tr}downloads{/tr}</td>
-				<td class="formcolor">{tr}locked by{/tr}<br /></td>
+				<td class="formcolor">{tr}locked{/tr}<br /></td>
 			</tr>
 			<tr>
 				<td class="formcolor"><input type="checkbox" name="show_icon" {if $show_icon eq 'y'} checked="checked"{/if} /></td>
@@ -75,6 +76,7 @@
 				<td class="formcolor"><input type="checkbox" name="show_size" {if $show_size eq 'y'} checked="checked"{/if} /></td>
 				<td class="formcolor"><input type="checkbox" name="show_description" {if $show_description eq 'y'} checked="checked"{/if} /></td>
 				<td class="formcolor"><input type="checkbox" name="show_created" {if $show_created eq 'y'} checked="checked"{/if} /></td>
+				<td class="formcolor"><input type="checkbox" name="show_modified" {if $show_modified eq 'y'} checked="checked"{/if} /></td>
 				<td class="formcolor"><input type="checkbox" name="show_dl" {if $show_dl eq 'y'} checked="checked"{/if} /></td>
 				<td class="formcolor"><input type="checkbox" name="show_lockedby" {if $show_lockedby eq 'y'} checked="checked"{/if} /></td>
 			</tr>

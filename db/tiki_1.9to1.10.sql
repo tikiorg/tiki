@@ -1,4 +1,4 @@
-	# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.123 2006-12-08 23:16:30 sylvieg Exp $
+	# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.124 2006-12-09 13:37:13 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -687,3 +687,4 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 
 #sylvieg 2006-12-08
 ALTER TABLE tiki_objects ADD KEY(type, objectId);
+ALTER TABLE `tiki_file_galleries` ADD `show_modified` char(1) default NULL;
