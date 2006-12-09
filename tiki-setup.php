@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.345 2006-12-04 14:54:44 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.346 2006-12-09 14:24:51 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -450,6 +450,7 @@ $pref['fgal_enable_auto_indexing'] = 'y';
 $pref['fgal_allow_duplicates'] = 'n';
 $pref['fgal_list_parent'] = 'n';
 $pref['fgal_list_type'] = 'n';
+$pref['fgal_sort_mode'] = 'created_desc';
 
 
 # imagegals

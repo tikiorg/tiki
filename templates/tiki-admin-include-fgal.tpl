@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-fgal.tpl,v 1.24 2006-11-13 18:37:16 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-fgal.tpl,v 1.25 2006-12-09 14:24:51 sylvieg Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -120,6 +120,16 @@
           <td>{tr}Parent gallery{/tr}</td>
           <td><input type="checkbox" name="fgal_list_parent"
               {if $fgal_list_parent eq 'y'}checked="checked"{/if} /></td>
+		</tr><tr class="formcolor">
+          <td>{tr}Default sort order{/tr}</td>
+          <td><select name="sortorder">
+			{foreach from=$options_sortorder key=key item=item}
+			<option value="{$item|escape}" {if $sortorder == $item} selected="selected"{/if}>{$key}</option>
+			{/foreach}
+			</select>
+			<input type="radio" name="sortdirection" value="desc" {if $sortdirection == 'desc'}checked="checked"{/if} />{tr}descending{/tr}
+			<input type="radio" name="sortdirection" value="asc" {if $sortdirection == 'asc'}checked="checked"{/if} />{tr}ascending{/tr}
+		</td>
         </tr><tr class="formcolor">
           <td colspan="2" class="button"><input type="submit"
               name="filegallistprefs" value="{tr}Change configuration{/tr}" /></td>

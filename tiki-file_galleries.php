@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.34 2006-12-09 13:37:14 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.35 2006-12-09 14:24:51 sylvieg Exp $
 
 	require_once('tiki-setup.php');
 	include_once('lib/filegals/filegallib.php');
@@ -239,7 +239,7 @@
 	}
 	
 	if(!isset($_REQUEST["sort_mode"])) {
-	  $sort_mode = 'created_desc'; 
+	  $sort_mode = !empty($fgal_sort_mode)? $fgal_sort_mode: 'created_desc'; 
 	} else {
 	  $sort_mode = $_REQUEST["sort_mode"];
 	} 
