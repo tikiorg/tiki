@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.3 2006-11-30 15:45:41 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.4 2006-12-09 13:39:02 sylvieg Exp $ *}
 {if !isset($show_find) or $show_find ne 'n'}
 <div align="center">
 <table class="findtable">
@@ -116,7 +116,7 @@
 	
 	<td class="{cycle}" nowrap="nowrap">
 	{if $tiki_p_view_file_gallery == 'y' or $tiki_p_admin_file_galleries eq 'y' or $tiki_p_admin eq 'y'}
-		<a class="gallink" href="tiki-list_file_gallery.php?galleryId={$galleries[changes].galleryId}"><img border='0' height="16" width="18" src='img/icons/ico_table.gif' title='{tr}list{/tr}' alt='{tr}list{/tr}' /></a>
+		<a class="gallink" href="tiki-list_file_gallery.php?galleryId={$galleries[changes].galleryId}"><img border='0' height="16" width="18" src='pics/icons/table.png' title='{tr}list{/tr}' alt='{tr}list{/tr}' /></a>
 	{/if}
 	{if $tiki_p_admin_file_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
 		{if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_create_file_galleries eq 'y' ) }
