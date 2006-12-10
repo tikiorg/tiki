@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/remote.php,v 1.3 2006-02-17 15:10:30 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/remote.php,v 1.4 2006-12-10 12:34:55 ohertel Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -65,7 +65,9 @@ function validate($params) {
 		$logslib->add_log('intertiki',$msg.' from '.$known_hosts[$key]['name'],$login);
 		return new XML_RPC_Response(0, 101, $msg);
 	}
-	if(!$userlib->validate_user($login,$pass,'','')) {
+	
+	list($isvalid, $dummy, $error) = $userlib->validate_user($login,$pass,'','');
+	if(!$isvalid) {
 		$msg = tra('Invalid username or password');
 		if ($intertiki_errfile) logit($intertiki_errfile,$msg,$login,INTERTIKI_BADUSER,$known_hosts[$key]['name']);
 		$logslib->add_log('intertiki',$msg.' from '.$known_hosts[$key]['name'],$login);
