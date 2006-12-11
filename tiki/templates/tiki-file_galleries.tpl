@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.46 2006-12-09 13:37:14 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.47 2006-12-11 23:23:28 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-file_galleries.php?galleryId={$galleryId}{if isset($edit_mode)}&amp;edit_mode=1{/if}">{tr}File Galleries{/tr}</a>
 
@@ -102,7 +102,7 @@
 
 <tr><td class="formcolor">{tr}Parent gallery{/tr}:</td><td class="formcolor"><select name="parentId">
 <option value="-1" {if $parentId == -1} selected="selected"{/if}>{tr}none{/tr}</option>
-{foreach from=$galleries key=key item=item}
+{foreach from=$allGalleries key=key item=item}
 <option value="{$item.galleryId}" {if $parentId == $item.galleryId} selected="selected"{/if}>{$item.name|escape}</option>
 {/foreach}
 </select>
