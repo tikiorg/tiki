@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.10 2006-12-09 13:37:14 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.11 2006-12-11 14:40:34 sylvieg Exp $ *}
 {* param:$gal_info, $files *}
 {strip}
 
@@ -64,8 +64,8 @@
 	{assign var=nbCols value=`$nbCols+1`}
 {/if}
 {if $gal_info.show_created eq 'y'}
-	<td  class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a></td>
-	<td  class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}Creator{/tr}</a></td>
+	<td  class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Uploaded{/tr}</a></td>
+	<td  class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}Author{/tr}</a></td>
 	{assign var=nbCols value=`$nbCols+1`}
 {/if}
 {if isset($gal_info.show_modified) and $gal_info.show_modified eq 'y'}
@@ -155,8 +155,8 @@
 {/if}
 
 {if isset($gal_info.show_modified) and $gal_info.show_modified eq 'y'}
-	<td class="{cycle advance=false}">{$files[changes].lastModif|tiki_short_date}</td>
-	<td class="{cycle advance=false}">{$files[changes].lastModifUser|escape}</td>
+	<td class="{cycle advance=false}">{if $gal_info.show_created ne 'y' or $files[changes].created ne $files[changes].lastModif}{$files[changes].lastModif|tiki_short_date}{/if}</td>
+	<td class="{cycle advance=false}">{if $gal_info.show_created ne 'y' or $files[changes].created ne $files[changes].lastModif}{$files[changes].lastModifUser|escape}{/if}</td>
 {/if}
 
 {if isset($gal_info.show_comment) and $gal_info.show_comment eq 'y'}
