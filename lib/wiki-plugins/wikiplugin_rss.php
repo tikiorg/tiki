@@ -5,7 +5,7 @@
 //
 
 function wikiplugin_rss_help() {
-	return tra("~np~{~/np~RSS(id=>feedId|feedId2,max=>3,date=>1,desc=>1,author=>1)}{RSS} Insert rss feed output into a wikipage");
+	return tra("~np~{~/np~RSS(id=>feedId:feedId2,max=>3,date=>1,desc=>1,author=>1)}{RSS} Insert rss feed output into a wikipage");
 }
 
 function rss_sort($a,$b) {
@@ -46,7 +46,7 @@ function wikiplugin_rss($data,$params) {
 
 	$now = date("U");
 
-	$ids=explode("|",$id);
+	$ids=explode(":",$id);
   
   $items=array();
   foreach ($ids as $val) {
