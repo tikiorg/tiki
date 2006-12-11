@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_cms.php,v 1.14 2006-07-14 11:00:43 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_cms.php,v 1.15 2006-12-11 22:36:15 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,174 +14,47 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 if (isset($_REQUEST["cmsfeatures"])) {
 	check_ticket('admin-inc-cms');
-
-	if (isset($_REQUEST["feature_submissions"]) && $_REQUEST["feature_submissions"] == "on") {
-		$tikilib->set_preference("feature_submissions", 'y');
-
-		$smarty->assign("feature_submissions", 'y');
-	} else {
-		$tikilib->set_preference("feature_submissions", 'n');
-
-		$smarty->assign("feature_submissions", 'n');
-	}
-
-	if (isset($_REQUEST["feature_cms_rankings"]) && $_REQUEST["feature_cms_rankings"] == "on") {
-		$tikilib->set_preference("feature_cms_rankings", 'y');
-
-		$smarty->assign("feature_cms_rankings", 'y');
-	} else {
-		$tikilib->set_preference("feature_cms_rankings", 'n');
-
-		$smarty->assign("feature_cms_rankings", 'n');
-	}
-
-	if (isset($_REQUEST["cms_spellcheck"]) && $_REQUEST["cms_spellcheck"] == "on") {
-		$tikilib->set_preference("cms_spellcheck", 'y');
-
-		$smarty->assign("cms_spellcheck", 'y');
-	} else {
-		$tikilib->set_preference("cms_spellcheck", 'n');
-
-		$smarty->assign("cms_spellcheck", 'n');
-	}
-
-	if (isset($_REQUEST["feature_article_comments"]) && $_REQUEST["feature_article_comments"] == "on") {
-		$tikilib->set_preference("feature_article_comments", 'y');
-
-		$smarty->assign("feature_article_comments", 'y');
-	} else {
-		$tikilib->set_preference("feature_article_comments", 'n');
-
-		$smarty->assign("feature_article_comments", 'n');
-	}
-
-	if (isset($_REQUEST["feature_cms_templates"]) && $_REQUEST["feature_cms_templates"] == "on") {
-		$tikilib->set_preference("feature_cms_templates", 'y');
-
-		$smarty->assign("feature_cms_templates", 'y');
-	} else {
-		$tikilib->set_preference("feature_cms_templates", 'n');
-
-		$smarty->assign("feature_cms_templates", 'n');
-	}
-
-	if (isset($_REQUEST["feature_cms_print"]) && $_REQUEST["feature_cms_print"] == "on") {
-		$tikilib->set_preference("feature_cms_print", 'y');
-
-		$smarty->assign("feature_cms_print", 'y');
-	} else {
-		$tikilib->set_preference("feature_cms_print", 'n');
-
-		$smarty->assign("feature_cms_print", 'n');
+	$pref_toggles = array(
+	'feature_submissions',
+	'feature_cms_rankings',
+	'cms_spellcheck',
+	'feature_article_comments',
+	'feature_cms_templates',
+	'feature_cms_print'
+	);
+	foreach ($pref_toggles as $toggle) {
+		simple_set_toggle ($toggle);
 	}
 }
 
 if (isset($_REQUEST["cmsprefs"])) {
 	check_ticket('admin-inc-cms');
-	if (isset($_REQUEST["maxArticles"])) {
-		$tikilib->set_preference("maxArticles", $_REQUEST["maxArticles"]);
-
-		$smarty->assign('maxArticles', $_REQUEST["maxArticles"]);
-	}
+	simple_set_value ("maxArticles");
 }
 
 if (isset($_REQUEST["articlecomprefs"])) {
 	check_ticket('admin-inc-cms');
-	if (isset($_REQUEST["article_comments_per_page"])) {
-		$tikilib->set_preference("article_comments_per_page", $_REQUEST["article_comments_per_page"]);
-
-		$smarty->assign('article_comments_per_page', $_REQUEST["article_comments_per_page"]);
-	}
-
-	if (isset($_REQUEST["article_comments_default_ordering"])) {
-		$tikilib->set_preference("article_comments_default_ordering", $_REQUEST["article_comments_default_ordering"]);
-
-		$smarty->assign('article_comments_default_ordering', $_REQUEST["article_comments_default_ordering"]);
-	}
+  simple_set_value ("article_comments_per_page");
+  simple_set_value ("article_comments_default_ordering");
 }
 
 if (isset($_REQUEST['artlist'])) {
 	check_ticket('admin-inc-cms');
-	if (isset($_REQUEST['art_list_title'])) {
-		$tikilib->set_preference('art_list_title', 'y');
-	} else {
-		$tikilib->set_preference('art_list_title', 'n');
+	$pref_toggles = array(
+	'art_list_title',
+	'art_list_type',
+	'art_list_topic',
+	'art_list_date',
+	'art_list_expire',
+	'art_list_visible',
+	'art_list_author',
+	'art_list_reads',
+	'art_list_size',
+	'art_list_img'
+	);
+	foreach ($pref_toggles as $toggle) {
+		simple_set_toggle ($toggle);
 	}
-
-	$smarty->assign('art_list_title', isset($_REQUEST['art_list_title']) ? 'y' : 'n');
-
-	if (isset($_REQUEST['art_list_type'])) {
-		$tikilib->set_preference('art_list_type', 'y');
-	} else {
-		$tikilib->set_preference('art_list_type', 'n');
-	}
-
-	$smarty->assign('art_list_type', isset($_REQUEST['art_list_type']) ? 'y' : 'n');
-
-	if (isset($_REQUEST['art_list_topic'])) {
-		$tikilib->set_preference('art_list_topic', 'y');
-	} else {
-		$tikilib->set_preference('art_list_topic', 'n');
-	}
-
-	$smarty->assign('art_list_topic', isset($_REQUEST['art_list_topic']) ? 'y' : 'n');
-
-	if (isset($_REQUEST['art_list_date'])) {
-		$tikilib->set_preference('art_list_date', 'y');
-	} else {
-		$tikilib->set_preference('art_list_date', 'n');
-	}
-
-	$smarty->assign('art_list_date', isset($_REQUEST['art_list_date']) ? 'y' : 'n');
-
-	if (isset($_REQUEST['art_list_expire'])) {
-		$tikilib->set_preference('art_list_expire', 'y');
-	} else {
-		$tikilib->set_preference('art_list_expire', 'n');
-	}
-
-	$smarty->assign('art_list_expire', isset($_REQUEST['art_list_expire']) ? 'y' : 'n');
-
-	if (isset($_REQUEST['art_list_visible'])) {
-		$tikilib->set_preference('art_list_visible', 'y');
-	} else {
-		$tikilib->set_preference('art_list_visible', 'n');
-	}
-
-	$smarty->assign('art_list_visible', isset($_REQUEST['art_list_visible']) ? 'y' : 'n');
-
-	if (isset($_REQUEST['art_list_author'])) {
-		$tikilib->set_preference('art_list_author', 'y');
-	} else {
-		$tikilib->set_preference('art_list_author', 'n');
-	}
-
-	$smarty->assign('art_list_author', isset($_REQUEST['art_list_author']) ? 'y' : 'n');
-
-	if (isset($_REQUEST['art_list_reads'])) {
-		$tikilib->set_preference('art_list_reads', 'y');
-	} else {
-		$tikilib->set_preference('art_list_reads', 'n');
-	}
-
-	$smarty->assign('art_list_reads', isset($_REQUEST['art_list_reads']) ? 'y' : 'n');
-
-	if (isset($_REQUEST['art_list_size'])) {
-		$tikilib->set_preference('art_list_size', 'y');
-	} else {
-		$tikilib->set_preference('art_list_size', 'n');
-	}
-
-	$smarty->assign('art_list_size', isset($_REQUEST['art_list_size']) ? 'y' : 'n');
-
-	if (isset($_REQUEST['art_list_img'])) {
-		$tikilib->set_preference('art_list_img', 'y');
-	} else {
-		$tikilib->set_preference('art_list_img', 'n');
-	}
-
-	$smarty->assign('art_list_img', isset($_REQUEST['art_list_img']) ? 'y' : 'n');
-
 }
 ask_ticket('admin-inc-cms');
 ?>

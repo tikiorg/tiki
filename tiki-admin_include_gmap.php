@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gmap.php,v 1.3 2006-07-14 11:00:43 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gmap.php,v 1.4 2006-12-11 22:36:15 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,22 +12,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-if (!isset($gmap_defaultx)) {
-	$gmap_defaultx = '0';
-	$smarty->assign_by_ref('gmap_defaultx',$gmap_defaultx);
-}
-if (!isset($gmap_defaulty)) {
-	$gmap_defaulty = '0';
-	$smarty->assign_by_ref('gmap_defaulty',$gmap_defaulty);
-}
-if (!isset($gmap_defaultz)) {
-	$gmap_defaultz = '17';
-	$smarty->assign_by_ref('gmap_defaultz',$gmap_defaultz);
-}
-
 if (isset($_REQUEST["gmapsetup"])) {
 	check_ticket('admin-inc-gmap');
-
 	simple_set_value ("gmap_key");
 	simple_set_value ("gmap_defaultx");
 	simple_set_value ("gmap_defaulty");

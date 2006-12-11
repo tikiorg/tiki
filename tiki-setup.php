@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.346 2006-12-09 14:24:51 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.347 2006-12-11 22:36:15 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -376,7 +376,6 @@ $pref['feature_wiki_show_hide_before'] = 'n';
 $pref['feature_wiki_tables'] = 'new';
 $pref['wikiLicensePage'] = '';
 $pref['wikiSubmitNotice'] = '';
-$pref['wiki_forum'] = '';
 $pref['wiki_forum_id'] = '';
 $pref['wiki_left_column'] = 'y';
 $pref['wiki_right_column'] = 'y';
@@ -588,6 +587,9 @@ $pref['feature_community_friends_permission'] = 'n';
 $pref['feature_community_friends_permission_dep'] = '2';
 $pref['change_language'] = 'y';
 $pref['change_theme'] = 'y';
+$pref['validateUsers'] = 'n';
+$pref['forgotPass'] = 'n';
+$pref['change_password'] = 'y';
 $pref['available_languages'] = 'a:0:{}'; 
 $pref['available_styles'] = 'a:0:{}'; 
 $pref['lowercase_username'] = 'n'; 
@@ -791,13 +793,14 @@ $pref['max_rss_mapfiles'] = 10;
 $pref['max_rss_tracker'] = 10;
 $pref['max_rss_trackers'] = 10;
 $pref['max_rss_calendar'] = 10;
-$pref['rssfeed_default_version'] = '9';
+$pref['rssfeed_default_version'] = '2';
 $pref['rssfeed_language'] =  'en-us';
 $pref['rssfeed_editor'] = '';
 $pref['rssfeed_webmaster'] = '';
 $pref['rssfeed_creator'] = '';
 $pref['rssfeed_css'] = 'y';
 $pref['rssfeed_publisher'] = '';
+
 
 # maps
 $sections['maps']['feature'] = 'feature_maps';
@@ -811,6 +814,17 @@ $pref['map_comments'] = 'MapsComments';
 $pref['gdaltindex'] = '';
 $pref['ogr2ogr'] = '';
 $pref['mapzone'] = '';
+
+# gmap
+$sections['gmaps']['feature'] = 'feature_gmap';
+$sections['gmaps']['key'] = '';
+$sections['gmaps']['itemkey'] = '';
+$pref['feature_gmap'] = 'n';
+$pref['gmap_defaultx'] = '0';
+$pref['gmap_defaulty'] = '0';
+$pref['gmap_defaultz'] = '17';
+$pref['gmap_key'] = '';
+
 
 # auth
 $pref['allowRegister'] = 'n';
@@ -847,9 +861,6 @@ $pref['auth_ldap_memberattr'] = 'uniqueMember';
 $pref['auth_ldap_memberisdn'] = 'y';
 $pref['auth_ldap_adminuser'] = '';
 $pref['auth_ldap_adminpass'] = '';
-$pref['validateUsers'] = 'n';
-$pref['forgotPass'] = 'n';
-$pref['change_password'] = 'y';
 $pref['https'] = 'auto';
 $pref['https_login'] = 'n';
 $pref['https_login_required'] = 'n';
@@ -870,6 +881,7 @@ $pref['login_url'] = 'tiki-login.php';
 $pref['login_scr'] = 'tiki-login_scr.php';
 $pref['register_url'] = 'tiki-register.php';
 $pref['error_url'] = 'tiki-error.php';
+$pref['highlight_group'] = '';
 
 # intertiki
 $pref['feature_intertiki'] = 'n';
@@ -974,6 +986,8 @@ $pref['maxArticles'] = 10;
 $pref['maxVersions'] = 0;
 $pref['feature_view_tpl'] = 'n';
 $pref['slide_style'] = 'slidestyle.css';
+$pref['site_favicon'] = 'favicon.png';
+$pref['style'] = 'tikineat.css';
 
 # mods
 $pref['feature_mods_provider'] = 'n';
@@ -1024,7 +1038,6 @@ $pref['feature_eph'] = 'n';
 $pref['feature_events'] = 'n';
 $pref['feature_friends'] = 'n';
 $pref['feature_fullscreen'] = 'n';
-$pref['feature_gmap'] = 'n';
 $pref['feature_help'] = 'y';
 $pref['feature_hotwords'] = 'y';
 $pref['feature_hotwords_nw'] = 'n';
@@ -1083,7 +1096,6 @@ $pref['session_db'] = 'n';
 $pref['session_lifetime'] = 0;
 $pref['shoutbox_autolink'] = 'n';
 $pref['show_comzone'] = 'n';
-$pref['style'] = 'tikineat.css';
 $pref['system_os'] = TikiSetup::os();
 $pref['tikiIndex'] = 'tiki-index.php';
 $pref['urlIndex'] = '';
@@ -1289,8 +1301,7 @@ $smarty->assign('default_group',$group);
 $user_dbl = 'y';
 $diff_versions = 'n';
 
-$user_style = $site_style = $tikilib->get_preference('style', 'tikineat.css');
-$transition_style = $tikilib->get_preference('transition_style', 'none');
+$user_style = $site_style = $style;
 
 if( isset($_COOKIE['tiki-theme']) ) {
 	$user_style = $_COOKIE['tiki-theme'];

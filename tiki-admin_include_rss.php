@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_rss.php,v 1.16 2006-09-19 16:33:08 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_rss.php,v 1.17 2006-12-11 22:36:15 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -33,27 +33,18 @@ if (isset($_REQUEST["rss"])) {
 		  $smarty->assign('rss_'.$feed, 'n');
 		}
 	}
-	$tikilib->set_preference('rssfeed_default_version', $_REQUEST["rssfeed_default_version"]);
-	$smarty->assign("rssfeed_default_version", $_REQUEST["rssfeed_default_version"]);
-	$tikilib->set_preference('rssfeed_language', $_REQUEST["rssfeed_language"]);
-	$smarty->assign("rssfeed_language", $_REQUEST["rssfeed_language"]);
-	$tikilib->set_preference('rssfeed_editor', $_REQUEST["rssfeed_editor"]);
-	$smarty->assign("rssfeed_editor", $_REQUEST["rssfeed_editor"]);
-	$tikilib->set_preference('rssfeed_webmaster', $_REQUEST["rssfeed_webmaster"]);
-	$smarty->assign("rssfeed_webmaster", $_REQUEST["rssfeed_webmaster"]);
-	$tikilib->set_preference('rss_cache_time', (int) $_REQUEST["rss_cache_time"]);
-	$smarty->assign("rss_cache_time", (int) $_REQUEST["rss_cache_time"]);
-} else {
-	foreach($feeds as $feed){
-		$smarty->assign("max_rss_".$feed, $tikilib->get_preference("max_rss_".$feed, 10));
-		$smarty->assign("title_rss_".$feed, $tikilib->get_preference("title_rss_".$feed));
-		$smarty->assign("desc_rss_".$feed, $tikilib->get_preference("desc_rss_".$feed));
-	}
-	$smarty->assign("rssfeed_default_version", $tikilib->get_preference("rssfeed_default_version","2"));
-	$smarty->assign("rssfeed_language", $tikilib->get_preference("rssfeed_language","en-us"));
-	$smarty->assign("rssfeed_editor", $tikilib->get_preference("rssfeed_editor",""));
-	$smarty->assign("rssfeed_webmaster", $tikilib->get_preference("rssfeed_webmaster",""));
-	$smarty->assign("rss_cache_time", $tikilib->get_preference("rss_cache_time",0));
+	simple_set_value('rssfeed_default_version');
+	simple_set_value('rssfeed_language');
+	simple_set_value('rssfeed_editor');
+	simple_set_value('rssfeed_webmaster');
+	simple_set_value('rss_cache_time');
 }
+
+foreach($feeds as $feed){
+	$smarty->assign("max_rss_".$feed, $tikilib->get_preference("max_rss_".$feed, 10));
+	$smarty->assign("title_rss_".$feed, $tikilib->get_preference("title_rss_".$feed));
+	$smarty->assign("desc_rss_".$feed, $tikilib->get_preference("desc_rss_".$feed));
+}
+
 ask_ticket('admin-inc-rss');
 ?>

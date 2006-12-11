@@ -11,7 +11,7 @@
       <form method="post" action="tiki-admin.php?page=forums">
         <table class="admin"><tr class="form">
           <td><label>{tr}Home Forum (main forum){/tr}</label></td>
-          <td><select name="homeForum">
+          <td><select name="home_forum">
           		<option value="">-</option>
               {section name=ix loop=$forums}
                 <option value="{$forums[ix].forumId|escape}" {if $forums[ix].forumId eq $home_forum}selected="selected"{/if}>{$forums[ix].name|truncate:20:"...":true}</option>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.47 2006-11-18 03:35:27 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.48 2006-12-11 22:36:15 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -179,26 +179,6 @@ $smarty->assign_by_ref("display_timezone", $display_timezone);
 
 $timezone_server = $timezone_options[$server_time->tz->getID()];
 $smarty->assign_by_ref("timezone_server", $timezone_server);
-
-// Set defaults
-$smarty->assign("language", $tikilib->get_preference("language", "en"));
-$smarty->assign("feature_detect_language", $tikilib->get_preference("feature_detect_language", 'n'));
-$smarty->assign("site_favicon", $tikilib->get_preference("site_favicon", 'favicon.png'));
-$smarty->assign("site_favicon_type", $tikilib->get_preference("site_favicon_type", 'image/png'));
-$smarty->assign("lang_use_db", $tikilib->get_preference("lang_use_db", 'n'));
-$smarty->assign("useUrlIndex", $tikilib->get_preference("useUrlIndex", 'n'));
-$smarty->assign("urlIndex", $tikilib->get_preference("urlIndex", ''));
-$smarty->assign("maxRecords", $tikilib->get_preference("maxRecords", 10));
-$smarty->assign("title", $tikilib->get_preference("title", ""));
-$smarty->assign("popupLinks", $tikilib->get_preference("popupLinks", 'n'));
-$smarty->assign("style_site", $tikilib->get_preference("style", "default.css"));
-$smarty->assign("transition_style", $tikilib->get_preference("transition_style", "none"));
-$smarty->assign("site_closed", $tikilib->get_preference("site_closed", "n"));
-$smarty->assign('site_closed_msg', $tikilib->get_preference('site_closed_msg', 'Site is closed for maintainance; please come back later.'));
-$smarty->assign('use_load_threshold', $tikilib->get_preference('use_load_threshold', 'n'));
-$smarty->assign('load_threshold', $tikilib->get_preference('load_threshold', 3));
-$smarty->assign('site_busy_msg', $tikilib->get_preference('site_busy_msg', 'Server is currently too busy; please come back later.'));
-$smarty->assign('https', $tikilib->get_preference('https', 'auto'));
 
 // Get information for alternate homes
 $smarty->assign("home_forum_url", "tiki-view_forum.php?forumId=" . $home_forum);
