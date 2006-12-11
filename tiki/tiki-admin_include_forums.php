@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_forums.php,v 1.10 2005-05-18 10:58:53 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_forums.php,v 1.11 2006-12-11 22:36:15 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,122 +13,32 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 
-if (isset($_REQUEST["homeforumprefs"]) && isset($_REQUEST["homeForum"])) {
+if (isset($_REQUEST["homeforumprefs"]) && isset($_REQUEST["home_forum"])) {
 	check_ticket('admin-inc-forums');
-	$tikilib->set_preference("home_forum", $_REQUEST["homeForum"]);
-
-	$smarty->assign('home_forum', $_REQUEST["homeForum"]);
+	simple_set_value('home_forum');
 }
 
 if (isset($_REQUEST["forumprefs"])) {
 	check_ticket('admin-inc-forums');
-	if (isset($_REQUEST["feature_forum_rankings"]) && $_REQUEST["feature_forum_rankings"] == "on") {
-		$tikilib->set_preference("feature_forum_rankings", 'y');
-
-		$smarty->assign("feature_forum_rankings", 'y');
-	} else {
-		$tikilib->set_preference("feature_forum_rankings", 'n');
-
-		$smarty->assign("feature_forum_rankings", 'n');
-	}
-
-	if (isset($_REQUEST["feature_forum_parse"]) && $_REQUEST["feature_forum_parse"] == "on") {
-		$tikilib->set_preference("feature_forum_parse", 'y');
-
-		$smarty->assign("feature_forum_parse", 'y');
-	} else {
-		$tikilib->set_preference("feature_forum_parse", 'n');
-
-		$smarty->assign("feature_forum_parse", 'n');
-	}
-
-	if (isset($_REQUEST["feature_forum_quickjump"]) && $_REQUEST["feature_forum_quickjump"] == "on") {
-		$tikilib->set_preference("feature_forum_quickjump", 'y');
-
-		$smarty->assign("feature_forum_quickjump", 'y');
-	} else {
-		$tikilib->set_preference("feature_forum_quickjump", 'n');
-
-		$smarty->assign("feature_forum_quickjump", 'n');
-	}
-
-	if (isset($_REQUEST["feature_forum_topicd"]) && $_REQUEST["feature_forum_topicd"] == "on") {
-		$tikilib->set_preference("feature_forum_topicd", 'y');
-
-		$smarty->assign("feature_forum_topicd", 'y');
-	} else {
-		$tikilib->set_preference("feature_forum_topicd", 'n');
-
-		$smarty->assign("feature_forum_topicd", 'n');
-	}
-
-	if (isset($_REQUEST["forums_ordering"])) {
-		$tikilib->set_preference("forums_ordering", $_REQUEST["forums_ordering"]);
-
-		$smarty->assign('forums_ordering', $_REQUEST["forums_ordering"]);
-	}
+	simple_set_toggle('feature_forum_rankings');
+	simple_set_toggle('feature_forum_parse');
+	simple_set_toggle('feature_forum_quickjump');
+	simple_set_toggle('feature_forum_topicd');
+	simple_set_value('forums_ordering');
 }
 
 if (isset($_REQUEST["forumlistprefs"])) {
 	check_ticket('admin-inc-forums');
-	if (isset($_REQUEST["forum_list_topics"]) && $_REQUEST["forum_list_topics"] == "on") {
-		$tikilib->set_preference("forum_list_topics", 'y');
-
-		$smarty->assign("forum_list_topics", 'y');
-	} else {
-		$tikilib->set_preference("forum_list_topics", 'n');
-
-		$smarty->assign("forum_list_topics", 'n');
-	}
-
-	if (isset($_REQUEST["forum_list_posts"]) && $_REQUEST["forum_list_posts"] == "on") {
-		$tikilib->set_preference("forum_list_posts", 'y');
-
-		$smarty->assign("forum_list_posts", 'y');
-	} else {
-		$tikilib->set_preference("forum_list_posts", 'n');
-
-		$smarty->assign("forum_list_posts", 'n');
-	}
-
-	if (isset($_REQUEST["forum_list_ppd"]) && $_REQUEST["forum_list_ppd"] == "on") {
-		$tikilib->set_preference("forum_list_ppd", 'y');
-
-		$smarty->assign("forum_list_ppd", 'y');
-	} else {
-		$tikilib->set_preference("forum_list_ppd", 'n');
-
-		$smarty->assign("forum_list_ppd", 'n');
-	}
-
-	if (isset($_REQUEST["forum_list_lastpost"]) && $_REQUEST["forum_list_lastpost"] == "on") {
-		$tikilib->set_preference("forum_list_lastpost", 'y');
-
-		$smarty->assign("forum_list_lastpost", 'y');
-	} else {
-		$tikilib->set_preference("forum_list_lastpost", 'n');
-
-		$smarty->assign("forum_list_lastpost", 'n');
-	}
-
-	if (isset($_REQUEST["forum_list_visits"]) && $_REQUEST["forum_list_visits"] == "on") {
-		$tikilib->set_preference("forum_list_visits", 'y');
-
-		$smarty->assign("forum_list_visits", 'y');
-	} else {
-		$tikilib->set_preference("forum_list_visits", 'n');
-
-		$smarty->assign("forum_list_visits", 'n');
-	}
-
-	if (isset($_REQUEST["forum_list_desc"]) && $_REQUEST["forum_list_desc"] == "on") {
-		$tikilib->set_preference("forum_list_desc", 'y');
-
-		$smarty->assign("forum_list_desc", 'y');
-	} else {
-		$tikilib->set_preference("forum_list_desc", 'n');
-
-		$smarty->assign("forum_list_desc", 'n');
+	$pref_toggles = array(
+	'forum_list_topics',
+	'forum_list_posts',
+	'forum_list_ppd',
+	'forum_list_lastpost',
+	'forum_list_visits',
+	'forum_list_desc'
+	);
+	foreach ($pref_toggles as $toggle) {
+		simple_set_toggle ($toggle);
 	}
 }
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_faqs.php,v 1.10 2005-05-18 10:58:53 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_faqs.php,v 1.11 2006-12-11 22:36:15 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,27 +14,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 if (isset($_REQUEST["faqcomprefs"])) {
 	check_ticket('admin-inc-faqs');
-	if (isset($_REQUEST["faq_comments_per_page"])) {
-		$tikilib->set_preference("faq_comments_per_page", $_REQUEST["faq_comments_per_page"]);
-
-		$smarty->assign('faq_comments_per_page', $_REQUEST["faq_comments_per_page"]);
-	}
-
-	if (isset($_REQUEST["faq_comments_default_ordering"])) {
-		$tikilib->set_preference("faq_comments_default_ordering", $_REQUEST["faq_comments_default_ordering"]);
-
-		$smarty->assign('faq_comments_default_ordering', $_REQUEST["faq_comments_default_ordering"]);
-	}
-
-	if (isset($_REQUEST["feature_faq_comments"]) && $_REQUEST["feature_faq_comments"] == "on") {
-		$tikilib->set_preference("feature_faq_comments", 'y');
-
-		$smarty->assign("feature_faq_comments", 'y');
-	} else {
-		$tikilib->set_preference("feature_faq_comments", 'n');
-
-		$smarty->assign("feature_faq_comments", 'n');
-	}
+	simple_set_value('faq_comments_per_page');
+	simple_set_value('faq_comments_default_ordering');
+	simple_set_toggle('feature_faq_comments');
 }
 ask_ticket('admin-inc-faqs');
 ?>

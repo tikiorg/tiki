@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_directory.php,v 1.10 2005-05-18 10:58:53 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_directory.php,v 1.11 2006-12-11 22:36:15 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,28 +14,11 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 if (isset($_REQUEST["directory"])) {
 	check_ticket('admin-inc-directory');
-	if (isset($_REQUEST["directory_validate_urls"]) && $_REQUEST["directory_validate_urls"] == "on") {
-		$tikilib->set_preference('directory_validate_urls', 'y');
-		$smarty->assign('directory_validate_urls', 'y');
-	} else {
-		$tikilib->set_preference('directory_validate_urls', 'n');
-		$smarty->assign('directory_validate_urls', 'n');
-	}
-
-	if (isset($_REQUEST["directory_cool_sites"]) && $_REQUEST["directory_cool_sites"] == "on") {
-		$tikilib->set_preference('directory_cool_sites', 'y');
-		$smarty->assign('directory_cool_sites', 'y');
-	} else {
-		$tikilib->set_preference('directory_cool_sites', 'n');
-		$smarty->assign('directory_cool_sites', 'n');
-	}
-
-	$tikilib->set_preference('directory_columns', $_REQUEST["directory_columns"]);
-	$tikilib->set_preference('directory_links_per_page', $_REQUEST["directory_links_per_page"]);
-	$tikilib->set_preference('directory_open_links', $_REQUEST["directory_open_links"]);
-	$smarty->assign('directory_columns', $_REQUEST['directory_columns']);
-	$smarty->assign('directory_links_per_page', $_REQUEST['directory_links_per_page']);
-	$smarty->assign('directory_open_links', $_REQUEST['directory_open_links']);
+	simple_set_toggle('directory_validate_urls');
+	simple_set_toggle('directory_cool_sites');
+	simple_set_value('directory_columns');
+	simple_set_value('directory_links_per_page');
+	simple_set_value('directory_open_links');
 }
 ask_ticket('admin-inc-directory');
 ?>

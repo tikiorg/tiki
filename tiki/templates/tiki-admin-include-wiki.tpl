@@ -95,11 +95,27 @@
     
   <div class="cbox">
     <div class="cbox-title">
-    {tr}Wiki Administration{/tr}
+    {tr}Wiki attachments{/tr}
     </div>
-    <div class="cbox-data">
-    <a class="link" href="tiki-admin.php?page=wikiatt">{tr}Manage attachment preferences{/tr}</a>
+    <div class="cbox-data"> 
+		<form method="post" action="tiki-admin.php?page=wiki">
+		<table class="admin">
+		<tr><td class="form">{tr}Wiki attachments{/tr}:</td><td><input type="checkbox" name="feature_wiki_attachments" {if $feature_wiki_attachments eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Use database to store files{/tr}:</td><td><input type="radio" name="w_use_db" value="y" {if $w_use_db eq 'y'}checked="checked"{/if} /></td></tr>
+    <tr><td class="form">{tr}Use a directory to store files{/tr}:</td><td><input type="radio" name="w_use_db" value="n" {if $w_use_db eq 'n'}checked="checked"{/if} /></td></tr>
+    <tr><td class="form">{tr}Path{/tr}:</td><td><input type="text" name="w_use_dir" value="{$w_use_dir}" /></td></tr>
+		<tr><td colspan="2" class="button"><input type="submit" name="wikiattprefs" value="{tr}Change preferences{/tr}" /></td></tr>
+		</table>
+		</form>
+
+    <a class="link" href="tiki-admin.php?page=wikiatt">{tr}Manage attachments{/tr}</a>
     </div>
+	</div>
+
+	<div class="cbox">
+		<div class="cbox-title">
+		{tr}Wiki Administration{/tr}
+		</div>
 
     <div class="cbox-data">
     <a class="link" href="tiki-admin.php?page=wiki&amp;rmvunusedpic=1">{tr}Remove unused pictures{/tr}</a>
@@ -132,10 +148,9 @@
     {tr}Discuss pages on forums{/tr}: </td><td>
     <input type="checkbox" name="feature_wiki_discuss" {if $feature_wiki_discuss eq 'y'}checked="checked"{/if}/> </td></tr>
     <tr><td class="form">{tr}Forum{/tr}:</td><td class="form">
-{*    <input maxlength="20" size="10" type="text" name="wiki_forum" value="{$wiki_forum|escape}"/> *}
-	  <select name="wiki_forum">
+	  <select name="wiki_forum_id">
     {section name=ix loop=$all_forums}
-    <option value="{$all_forums[ix].name|escape}" {if $all_forums[ix].name eq $wiki_forum}selected="selected"{/if}>{$all_forums[ix].name}</option>
+    <option value="{$all_forums[ix].forumId|escape}" {if $all_forums[ix].forumId eq $wiki_forum_id}selected="selected"{/if}>{$all_forums[ix].name}</option>
     {/section}
     </select>
 
