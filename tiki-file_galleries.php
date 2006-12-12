@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.37 2006-12-12 14:26:48 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.38 2006-12-12 17:22:54 sylvieg Exp $
 
 	require_once('tiki-setup.php');
 	include_once('lib/filegals/filegallib.php');
@@ -66,6 +66,8 @@
 	$smarty->assign('show_size','y');
 	$smarty->assign('show_description','y');
 	$smarty->assign('show_created','y');
+	$smarty->assign('show_creator','y');
+	$smarty->assign('show_author','y');
 	$smarty->assign('show_dl','y');
 	$smarty->assign('max_desc',1024);
 	$smarty->assign('show_lockedby', 'y');
@@ -102,6 +104,8 @@
 		$smarty->assign('show_size',$info['show_size']);
 		$smarty->assign('show_description',$info['show_description']);
 		$smarty->assign('show_created',$info['show_created']);
+		$smarty->assign('show_creator',$info['show_creator']);
+		$smarty->assign('show_author',$info['show_author']);
 		$smarty->assign('show_dl',$info['show_dl']);
 		$smarty->assign('max_desc',$info['max_desc']);
 		$smarty->assign('fgal_type',$info['type']);
@@ -160,6 +164,8 @@
 	  $smarty->assign('show_size',isset($_REQUEST['show_size'])?'y':'n');
 	  $smarty->assign('show_description',isset($_REQUEST['show_description'])?'y':'n');
 	  $smarty->assign('show_created',isset($_REQUEST['show_created'])?'y':'n');
+	  $smarty->assign('show_creator',isset($_REQUEST['show_creator'])?'y':'n');
+	  $smarty->assign('show_author',isset($_REQUEST['show_author'])?'y':'n');
 	  $smarty->assign('show_dl',isset($_REQUEST['show_dl'])?'y':'n');
 	  $smarty->assign('max_desc',($_REQUEST['max_desc']));
 	  $smarty->assign('fgal_type',isset($_REQUEST['type'])? $_REQUEST['type']: '');
@@ -197,6 +203,8 @@
 	  $_REQUEST['show_icon']=isset($_REQUEST['show_icon'])?'y':'n';
 	  $_REQUEST['show_description']=isset($_REQUEST['show_description'])?'y':'n';
 	  $_REQUEST['show_created']=isset($_REQUEST['show_created'])?'y':'n';
+	  $_REQUEST['show_creator']=isset($_REQUEST['show_creator'])?'y':'n';
+	  $_REQUEST['show_author']=isset($_REQUEST['show_author'])?'y':'n';
 	  $_REQUEST['show_dl']=isset($_REQUEST['show_dl'])?'y':'n';
 	  $_REQUEST['show_size']=isset($_REQUEST['show_size'])?'y':'n';
 	  $_REQUEST['show_name']=isset($_REQUEST['show_name'])?$_REQUEST['show_name']:'a';
@@ -205,7 +213,7 @@
 	  $_REQUEST['show_modified']=isset($_REQUEST['show_modified'])?'y':'n';
 	  $_REQUEST['sortorder']=isset($_REQUEST['sortorder'])?$_REQUEST['sortorder']:'created';
 	  $_REQUEST['sortdirection']=isset($_REQUEST['sortdirection']) && $_REQUEST['sortdirection'] == 'asc'? 'asc':'desc';
-	  $fgid = $filegallib->replace_file_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST['user'], $_REQUEST["maxRows"], $public, $visible,$_REQUEST['show_id'],$_REQUEST['show_icon'],$_REQUEST['show_name'],$_REQUEST['show_size'],$_REQUEST['show_description'],$_REQUEST['show_created'],$_REQUEST['show_dl'],$_REQUEST['max_desc'],$_REQUEST['fgal_type'], $_REQUEST['parentId'], $lockable, $_REQUEST['show_lockedby'], $_REQUEST['archives'], $_REQUEST['sortorder'].'_'.$_REQUEST['sortdirection'], $_REQUEST['show_modified']);
+	  $fgid = $filegallib->replace_file_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST['user'], $_REQUEST["maxRows"], $public, $visible,$_REQUEST['show_id'],$_REQUEST['show_icon'],$_REQUEST['show_name'],$_REQUEST['show_size'],$_REQUEST['show_description'],$_REQUEST['show_created'],$_REQUEST['show_dl'],$_REQUEST['max_desc'],$_REQUEST['fgal_type'], $_REQUEST['parentId'], $lockable, $_REQUEST['show_lockedby'], $_REQUEST['archives'], $_REQUEST['sortorder'].'_'.$_REQUEST['sortdirection'], $_REQUEST['show_modified'], $_REQUEST['show_creator'], $_REQUEST['show_author']);
 	  
 		if ($feature_categories == 'y') {
 			$cat_type='file gallery';

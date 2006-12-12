@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.47 2006-12-11 23:23:28 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.48 2006-12-12 17:22:55 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-file_galleries.php?galleryId={$galleryId}{if isset($edit_mode)}&amp;edit_mode=1{/if}">{tr}File Galleries{/tr}</a>
 
@@ -58,8 +58,6 @@
 				<td class="formcolor">{tr}name{/tr}</td>
 				<td class="formcolor">{tr}size{/tr}</td>
 				<td class="formcolor">{tr}description{/tr}</td>
-				<td class="formcolor">{tr}created{/tr}</td>
-				<td class="formcolor">{tr}lastMod{/tr}</td>
 				<td class="formcolor">{tr}downloads{/tr}</td>
 				<td class="formcolor">{tr}locked{/tr}<br /></td>
 			</tr>
@@ -75,10 +73,22 @@
 				</td>
 				<td class="formcolor"><input type="checkbox" name="show_size" {if $show_size eq 'y'} checked="checked"{/if} /></td>
 				<td class="formcolor"><input type="checkbox" name="show_description" {if $show_description eq 'y'} checked="checked"{/if} /></td>
-				<td class="formcolor"><input type="checkbox" name="show_created" {if $show_created eq 'y'} checked="checked"{/if} /></td>
-				<td class="formcolor"><input type="checkbox" name="show_modified" {if $show_modified eq 'y'} checked="checked"{/if} /></td>
 				<td class="formcolor"><input type="checkbox" name="show_dl" {if $show_dl eq 'y'} checked="checked"{/if} /></td>
 				<td class="formcolor"><input type="checkbox" name="show_lockedby" {if $show_lockedby eq 'y'} checked="checked"{/if} /></td>
+			</tr>
+		</table>
+		<table>
+			<tr>
+				<td class="formcolor">{tr}lastMod{/tr}</td>
+				<td class="formcolor">{tr}created{/tr}</td>
+				<td class="formcolor">{tr}creator{/tr}</td>
+				<td class="formcolor">{tr}author{/tr}</td>
+			</tr>
+			<tr>
+				<td class="formcolor"><input type="checkbox" name="show_modified" {if $show_modified eq 'y'} checked="checked"{/if} /></td>
+				<td class="formcolor"><input type="checkbox" name="show_created" {if $show_created eq 'y'} checked="checked"{/if} /></td>
+				<td class="formcolor"><input type="checkbox" name="show_creator" {if $show_creator eq 'y'} checked="checked"{/if} /></td>
+				<td class="formcolor"><input type="checkbox" name="show_author" {if $show_author eq 'y'} checked="checked"{/if} /><i>{tr}If creator is not checked, will display creator is author not set{/tr}</td>
 			</tr>
 		</table>
 	</td>

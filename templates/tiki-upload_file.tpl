@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_file.tpl,v 1.22 2006-11-27 21:41:29 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_file.tpl,v 1.23 2006-12-12 17:22:55 sylvieg Exp $ *}
 
 <h1><a href="tiki-upload_file.php?galleryId={$galleryId}{if $editFileId}&amp;fileId={$editFileId}{/if}" class="pagetitle">{if $editFileId}{tr}Edit File:{/tr} {$fileInfo.filename}{else}{tr}Upload File{/tr}{/if}</a></h1>
 {if count($galleries) > 0}
@@ -44,10 +44,23 @@
 		<input name="userfile6" type="file" />{/if}
 	</td></tr>
 
-	{if !$editFileId}<tr><td class="formcolor">{tr}Batch upload{/tr}<br />{tr}Unzip file{/tr}</td><td class="formcolor">
-	<input type="checkbox" name="isbatch" /></td></tr>
+	{if !$editFileId}<tr><td class="formcolor">{tr}Batch upload{/tr}</td><td class="formcolor">
+	<input type="checkbox" name="isbatch" /><i>{tr}Unzip all zip files{/tr}</i></td></tr>
 	{elseif $fileInfo.lockedby}<tr><td class="formcolor">{tr}Unlock{/tr}</td><td class="formcolor">
 	<input type="checkbox" name="unlock" checked="checked"/>{if $user ne $fileInfo.lockedby}{tr}The file is locked by {$fileInfo.lockedby}{/tr}{/if}</td></tr>{/if}
+
+	{if $tiki_p_admin_file_galleries eq 'y'}
+	<tr><td class="formcolor">{tr}Creator{/tr}</td><td class="formcolor">
+	<select name="user">
+	{section name=ix loop=$users}<option value="{$users[ix].login|escape}"{if (isset($fileInfo) and $fileInfo.user eq $users[ix].login) or (!isset($fileInfo) and $user == $users[ix].login)}  selected="selected"{/if}>{$users[ix].login|escape}</option>{/section}
+	</select>
+	</td></tr>
+	{/if}
+
+	{if $feature_file_galleries_author eq 'y'}
+	<tr><td class="formcolor">{tr}Author if not the file creator{/tr}</td><td class="formcolor"><input type="text" name="author" value="{$author|escape}" /></td></tr>
+	{/if}
+
 	{if $editFileId}<tr><td class="formcolor">{tr}Comment{/tr}</td><td  class="formcolor"><input type="text" name="comment" value="" size="40" /></td></tr>{/if}
 	<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="upload" value="{if $editFileId}{tr}save{/tr}{else}{tr}upload{/tr}{/if}" /></td></tr>
 	</table>
