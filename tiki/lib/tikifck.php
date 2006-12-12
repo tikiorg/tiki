@@ -17,7 +17,7 @@ class TikiFCK {
 		$this->id           = '42';
 		$this->BasePath     = 'lib/fckeditor/';
 		$this->Width        = '100%';
-		$this->Height       = '400px';
+		$this->Height       = '500px';
 		$this->ToolbarSet   = 'Tiki';
 		$this->File         = 'fckeditor.html';
 		$this->LinkFile     = '';
