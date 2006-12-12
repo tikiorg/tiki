@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.61 2006-12-08 11:03:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.62 2006-12-12 18:43:01 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -297,8 +297,6 @@ if ($calendarViewMode == 'day') {
 $smarty->assign('hrows', $hrows);
 $smarty->assign('hours', $hours);
 $smarty->assign('mrows', array(0=>"00", 5=>"05", 10=>"10", 15=>"15", 20=>"20", 25=>"25", 30=>"30", 35=>"35", 40=>"40", 45=>"45", 50=>"50", 55=>"55"));
-
-$smarty->assign('info', $info);
 
 $smarty->assign('trunc', $trunc);
 $smarty->assign('daformat', $tikilib->get_long_date_format()." ".tra("at")." %H:%M");
