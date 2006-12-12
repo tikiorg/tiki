@@ -109,7 +109,7 @@ class HeaderLib {
 		}
 		
 		if (count($this->jsfiles)) {
-			foreach ($this->jsfiles as $x->$jsf) {
+			foreach ($this->jsfiles as $x=>$jsf) {
 				$back.= "<!-- jsfile $x -->\n";
 				foreach ($jsf as $jf) {
 					$back.= "<script type=\"text/javascript\" src=\"$jf\"></script>\n";
