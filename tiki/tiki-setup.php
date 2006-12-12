@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.347 2006-12-11 22:36:15 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.348 2006-12-12 02:26:15 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -934,6 +934,9 @@ $pref['mail_crlf'] = 'LF';
 $pref['feature_detect_language'] = 'n';
 $pref['feature_homePage_if_bl_missing'] = 'n';
 $pref['record_untranslated'] = 'n';
+$pref['feature_best_language'] = 'n';
+$pref['lang_use_db'] = 'n';
+$pref['language'] = 'en';
 
 # html header
 $pref['metatag_keywords'] = '';
@@ -1019,7 +1022,6 @@ $pref['feature_babelfish'] = 'y';
 $pref['feature_babelfish_logo'] = 'n';
 $pref['feature_banners'] = 'n';
 $pref['feature_banning'] = 'n';
-$pref['feature_best_language'] = 'n';
 $pref['feature_comm'] = 'n';
 $pref['feature_contribution'] = 'n';
 $pref['feature_contribution_display_in_comment'] = 'y';
@@ -1080,8 +1082,6 @@ $pref['feature_wiki_usrlock'] = 'n';
 $pref['feature_workflow'] = 'n';
 $pref['feature_xmlrpc'] = 'n';
 $pref['helpurl'] = "http://doc.tikiwiki.org/tiki-index.php?best_lang&amp;page=";
-$pref['lang_use_db'] = 'n';
-$pref['language'] = 'en';
 $pref['layout_section'] = 'n';
 $pref['limitedGoGroupHome'] = 'n';
 $pref['minical_reminders'] = $tikilib->get_user_preference($user, 'minical_reminders', 0);
@@ -1151,6 +1151,11 @@ if (!empty($section)) {
 	$smarty->assign('section', $section);
 }
 ini_set('docref_root',$php_docroot);
+
+$tikipath = dirname($_SERVER['SCRIPT_NAME']);
+$tikiroot = dirname($_SERVER['PHP_SELF']);
+$smarty->assign('tikipath',$tikipath);
+$smarty->assign('tikiroot',$tikiroot);
 
 if (isset($_SESSION['tiki_cookie_jar'])) {
 	foreach ($_SESSION['tiki_cookie_jar'] as $nn=>$vv) {
