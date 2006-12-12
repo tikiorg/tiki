@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_archives.php,v 1.5 2006-11-29 18:40:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_archives.php,v 1.6 2006-12-12 14:26:48 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -46,7 +46,7 @@ if (!empty($_REQUEST['remove'])) {
     	key_check($area);
 		$filegallib->remove_file($removeInfo, $user, $gal_info);
 	} else {
-		key_get($area);
+	  key_get($area, ($removeInfo['archiveId']? tra('Remove archive: '): tra('Remove file gallery: ')).(!empty($removeInfo['name'])?$removeInfo['name'].' - ':'').$removeInfo['filename']);
 	}
 }
 if (isset($_REQUEST['delsel_x']) && !empty($_REQUEST['file'])) {

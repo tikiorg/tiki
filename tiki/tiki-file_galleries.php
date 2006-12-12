@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.36 2006-12-11 23:23:27 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.37 2006-12-12 14:26:48 sylvieg Exp $
 
 	require_once('tiki-setup.php');
 	include_once('lib/filegals/filegallib.php');
@@ -220,9 +220,13 @@
 	}
 	
 	
-	if(isset($_REQUEST["removegal"])) {
+	if(!empty($_REQUEST["removegal"])) {
+		if (!($info = $filegallib->get_file_gallery_info($_REQUEST['removegal']))) {
+			$smarty->assign('msg',tra('Incorrect param'));
+			$smarty->display("error.tpl");
+			die;
+		}
 	  if($tiki_p_admin_file_galleries != 'y') {
-	     $info = $filegallib->get_file_gallery_info($_REQUEST["removegal"]);
 	     if(!$user || $info["user"]!=$user) {
 	       $smarty->assign('msg',tra("Permission denied you cannot remove this gallery"));
 	       $smarty->display("error.tpl");
@@ -234,7 +238,7 @@
 			key_check($area);
 			$filegallib->remove_file_gallery($_REQUEST["removegal"], $_REQUEST['galleryId']);
 		} else {
-			key_get($area);
+		  key_get($area, tra('Remove file gallery:').' '.$info['name']);
 		}
 	}
 	
