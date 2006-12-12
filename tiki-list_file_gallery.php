@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.36 2006-12-04 20:10:39 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.37 2006-12-12 14:26:48 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -132,15 +132,13 @@ $tikilib->add_file_gallery_hit($_REQUEST["galleryId"]);
 
 if (!empty($_REQUEST['remove'])) {
 	// To remove an image the user must be the owner or the file or the gallery or admin
-	$info = array();
-	if (!$user) {
-		$smarty->assign('msg', tra("Permission denied you cannot remove files from this gallery"));
+  if (!$info = $filegallib->get_file_info($_REQUEST['remove'])) {
+		$smarty->assign('msg', tra('Incorrect param'));
 		$smarty->display("error.tpl");
 		die;		
 	}
-	if ($tiki_p_admin_file_galleries != 'y'  && $user != $gal_info['user']) {
-		$info = $filegallib->get_file_info($_REQUEST['remove']);
-		if (!$info || $user != $info['user']) {
+	if ($tiki_p_admin_file_galleries != 'y'  && (!$user || $user != $gal_info['user'])) {
+		if ($user != $info['user']) {
 			$smarty->assign('msg', tra("Permission denied you cannot remove files from this gallery"));
 			$smarty->display("error.tpl");
 			die;
@@ -148,17 +146,9 @@ if (!empty($_REQUEST['remove'])) {
 	}
 	$area = 'delfile';
 	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
+	  key_check($area);
 
 //Watches
-		if (empty($info)) {
-			$info = $filegallib->get_file_info($_REQUEST['remove']);
-		}
-		if (!$info) {
-			$smarty->assign('msg', tra('Incorrect file'));
-			$smarty->display("error.tpl");
-			die;			
-		}
 		$smarty->assign('fileId', $_REQUEST['remove']);
 		$smarty->assign('galleryId', $_REQUEST['galleryId']);
 		$smarty->assign_by_ref('filename', $info['filename']);
@@ -167,7 +157,7 @@ if (!empty($_REQUEST['remove'])) {
 		$filegallib->remove_file($info, $user, $gal_info);
 
   } else {
-    key_get($area);
+	  key_get($area, tra('Remove file: ').(!empty($info['name'])?$info['name'].' - ':'').$info['filename']);
   }
 }
 
