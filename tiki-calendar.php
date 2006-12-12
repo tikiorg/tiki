@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.62 2006-12-12 18:43:01 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.63 2006-12-12 23:34:48 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -255,6 +255,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 				$lec = $infocals['data']["{$le['calendarId']}"];
         $leday["{$le['time']}$e"] = $le;
 
+        $smarty->assign('cellcalendarId', $le["calendarId"]);
         $smarty->assign('cellhead', $le["head"]);
         $smarty->assign('cellprio', $le["prio"]);
         $smarty->assign('cellcalname', $le["calname"]);
