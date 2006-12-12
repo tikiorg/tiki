@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.47 2006-12-12 17:22:55 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.48 2006-12-12 17:57:12 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -249,7 +249,7 @@ if (isset($_REQUEST["upload"]) && !empty($_REQUEST['galleryId'])) {
 			if (isset($data)) {
 				if ($editFile) {
 					$didFileReplace = true;
-					$fileId = $filegallib->replace_file($editFileId, $_REQUEST["name"], $_REQUEST["description"], $name, $data, $size, $type, $_REQUEST['user'], $fhash, $_REQUEST['comment'], $gal_info, $didFileReplace, $_REQUEST['author']);
+					$fileId = $filegallib->replace_file($editFileId, $_REQUEST["name"], $_REQUEST["description"], $name, $data, $size, $type, $_REQUEST['user'], $fhash, $_REQUEST['comment'], $gal_info, $didFileReplace, $_REQUEST['author'], $fileInfo['lastModif']);
 				}
 				else
 				  $fileId	= $filegallib->insert_file($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $name, $data, $size, $type, $_REQUEST['user'], $fhash, '', $_REQUEST['author']);
@@ -285,7 +285,7 @@ if (isset($_REQUEST["upload"]) && !empty($_REQUEST['galleryId'])) {
 	}
 
 	if ($editFile && !$didFileReplace) {
-		$filegallib->replace_file($editFileId, $_REQUEST['name'], $_REQUEST['description'], $fileInfo['filename'], $fileInfo['data'], $fileInfo['filesize'], $fileInfo['filetype'], $_REQUEST['user'], $fileInfo['path'], $_REQUEST['comment'], $gal_info, $didFileReplace);
+	  $filegallib->replace_file($editFileId, $_REQUEST['name'], $_REQUEST['description'], $fileInfo['filename'], $fileInfo['data'], $fileInfo['filesize'], $fileInfo['filetype'], $_REQUEST['user'], $fileInfo['path'], $_REQUEST['comment'], $gal_info, $didFileReplace, $_REQUEST['author'], $fileInfo['lastModif']);
 		$fileChangedMessage = tra('File update was successful').': '.$_REQUEST['name'];
 		$smarty->assign('fileChangedMessage',$fileChangedMessage);
 		$cat_type = 'file';

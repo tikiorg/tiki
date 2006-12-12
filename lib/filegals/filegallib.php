@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.54 2006-12-12 17:22:55 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.55 2006-12-12 17:57:12 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -56,7 +56,7 @@ class FileGalLib extends TikiLib {
 		return true;
 	}
 
-	function insert_file($galleryId, $name, $description, $filename, $data, $size, $type, $creator, $path, $comment='', $author) {
+	function insert_file($galleryId, $name, $description, $filename, $data, $size, $type, $creator, $path, $comment='', $author, $created='') {
 	  global $fgal_use_db, $fgal_use_dir, $fgal_podcast_dir, $tikilib, $fgal_allow_duplicates, $smarty, $user;
 
 		$name = strip_tags($name);
@@ -90,10 +90,12 @@ class FileGalLib extends TikiLib {
 			if ($search_data === false)
 				return false;
 		}
+		if (empty($created))
+			$created = $now;
 		
 		$query = "insert into `tiki_files`(`galleryId`,`name`,`description`,`filename`,`filesize`,`filetype`,`data`,`user`,`created`,`downloads`,`path`,`hash`,`search_data`,`lastModif`,`lastModifUser`, `comment`, `author`)
                           values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		$result = $this->query($query,array($galleryId,$name,$description,$filename,$size,$type,$data,$creator,(int) $now,0,$path,$checksum,$search_data,(int)$now,$user,$comment, $author));
+		$result = $this->query($query,array($galleryId,$name,$description,$filename,$size,$type,$data,$creator,$created,0,$path,$checksum,$search_data,(int)$now,$user,$comment, $author));
 		$query = "update `tiki_file_galleries` set `lastModif`=? where `galleryId`=?";
 		$result = $this->query($query,array((int) $now,$galleryId));
 		$query = "select max(`fileId`) from `tiki_files` where `created`=?";
@@ -462,7 +464,7 @@ class FileGalLib extends TikiLib {
 		return $result;
 	}
 
-	function replace_file($id, $name, $description, $filename, $data, $size, $type, $creator, $path, $comment='', $gal_info, $didFileReplace, $author='') {
+	function replace_file($id, $name, $description, $filename, $data, $size, $type, $creator, $path, $comment='', $gal_info, $didFileReplace, $author='', $created='') {
 	  global $fgal_use_db, $fgal_use_dir, $fgal_podcast_dir, $tikilib, $feature_categories, $feature_search, $user;
 
 		// Update the fields in the database
@@ -504,7 +506,7 @@ class FileGalLib extends TikiLib {
 				unlink($savedir . $oldPath);
 			}
 		} else { //archive the old file : change archive_id, take away from indexation and categorization
-		  $idNew = $this->insert_file($gal_info['galleryId'], $name, $description, $filename, $data, $size, $type, $creator, $path, $comment, $author);
+		  $idNew = $this->insert_file($gal_info['galleryId'], $name, $description, $filename, $data, $size, $type, $creator, $path, $comment, $author, $created);
 			if ($gal_info['archives'] > 0) {
 				$archives = $this->get_archives($id, 0, -1, 'created_asc');
 				if ($archives['cant'] >= $gal_info['archives']) {
