@@ -9,8 +9,8 @@ FCKConfig.ToolbarSets["Tiki"] = [
   ['FitWindow','Templates','-','Cut','Copy','Paste','PasteWord','Print','SpellCheck'],
 	['Undo','Redo','-','Replace','RemoveFormat','-','Image','Table','Rule','SpecialChar','PageBreak','UniversalKey'],
 	'/',
-	['JustifyLeft','JustifyCenter','JustifyRight','JustifyFull','-','Bold','Italic','Underline','StrikeThrough','-','Subscript','Superscript'],
-	['OrderedList','UnorderedList','-','Outdent','Indent','Link','Unlink','Anchor'],
+	['JustifyLeft','JustifyCenter','JustifyRight','JustifyFull','-','OrderedList','UnorderedList','Outdent','Indent'],
+	['Bold','Italic','Underline','StrikeThrough','-','Subscript','Superscript','-','Link','Unlink','Anchor','-','tikilink'],
 	'/',
 	['Style','FontFormat','FontName','FontSize','-','TextColor','BGColor']
 ] ;
@@ -24,4 +24,11 @@ FCKConfig.DefaultLanguage   = '{$language}' ;
 FCKConfig.AutoDetectLanguage   = {if $feature_detect_language eq 'y'}true{else}false{/if} ;
 FCKConfig.ContentLangDirection = '{if $feature_bidi eq 'y'}rtl{else}ltr{/if}' ;
 FCKConfig.StartupFocus = true ;
+
+FCKConfig.PluginsPath = _TikiPath + '/lib/fckeditor_tiki/plugins' ;
+FCKConfig.Plugins.Add( 'tikilink' ) ;
+FCKConfig.tikilinkBtn     = '{tr}Insert/Edit CMS Content{/tr}' ;
+FCKConfig.tikilinkDlgTitle    = '{tr}Tiki Link - Insert internal link{/tr}' ;
+FCKConfig.tikilinkDlgName   = '{tr}Wiki Link insert{/tr}' ;
+FCKConfig.tikilinkDlgSelection    = '{tr}Please make a selection of text in order to create a link{/tr}' ;
 
