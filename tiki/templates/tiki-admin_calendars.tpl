@@ -177,6 +177,9 @@ src='pics/icons/key.png' border='0' width='16' height='16' alt='{tr}permissions{
 <tr class="formcolor"><td>{tr}End of day{/tr}:</td><td>
 {html_select_time prefix="endday_" display_seconds=false display_minutes=false time=$endday}{tr}h{/tr}
 </td></tr>
+<tr class="formcolor"><td>{tr}Custom Color{/tr}:</td><td>
+<input type="text" name="options[customcolor]" value="{$customcolor}" size="6" />
+</td></tr>
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
