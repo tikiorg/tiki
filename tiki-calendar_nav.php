@@ -8,7 +8,6 @@ if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
 
 $calendarViewMode = $_SESSION['CalendarViewMode'];
 $calendarViewGroups = $_SESSION['CalendarViewGroups'];
-$calendarViewTikiCals = $_SESSION['CalendarViewTikiCals'];
 $calendarViewList = $_SESSION['CalendarViewList'];
 
 if ($calendar_firstDayofWeek == 'user') {
