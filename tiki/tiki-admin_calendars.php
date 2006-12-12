@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_calendars.php,v 1.29 2006-12-12 22:16:06 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_calendars.php,v 1.30 2006-12-12 23:34:48 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -44,7 +44,8 @@ if (isset($_REQUEST["save"])) {
 	$customflags["customsubscription"] = isset($_REQUEST["customsubscription"]) ? $_REQUEST["customsubscription"] : 'n';
 	$customflags["personal"] = $_REQUEST["personal"];
 	$options = $_REQUEST['options'];
-	if (!preg_match('/^[0-9a-fA-F]{3,6}$/',$options['customcolor'])) $options['customcolor'] = 'ffffff';
+	if (!preg_match('/^[0-9a-fA-F]{3,6}$/',$options['customfgcolor'])) $options['customfgcolor'] = '000000';
+	if (!preg_match('/^[0-9a-fA-F]{3,6}$/',$options['custombgcolor'])) $options['custombgcolor'] = 'ffffff';
 	$options['startday'] = $_REQUEST['startday_Hour']*60*60 - 1;
 	$options['endday'] = $_REQUEST['endday_Hour']*60*60 - 1;
 	$extra = array('calname','description','location','description','language','category','participants','url');
@@ -97,7 +98,8 @@ if ($_REQUEST["calendarId"]) {
 	$info["custompriorities"] = 'n';
 	$info["customsubscription"] = 'n';
 	$info["customurl"] = 'n';
-	$info["customcolor"] = 'ffffff';
+	$info["customfgcolor"] = '000000';
+	$info["custombgcolor"] = 'ffffff';
 	$info["show_calname"] = 'y';
 	$info["show_description"] = 'y';
 	$info["show_category"] = 'n';
@@ -121,7 +123,8 @@ $smarty->assign('customcategories', $info["customcategories"]);
 $smarty->assign('custompriorities', $info["custompriorities"]);
 $smarty->assign('customsubscription', $info["customsubscription"]);
 $smarty->assign('customurl', $info["customurl"]);
-$smarty->assign('customcolor', $info["customcolor"]);
+$smarty->assign('customfgcolor', $info["customfgcolor"]);
+$smarty->assign('custombgcolor', $info["custombgcolor"]);
 $smarty->assign('show_calname', $info["show_calname"]);
 $smarty->assign('show_description', $info["show_description"]);
 $smarty->assign('show_category', $info["show_category"]);

@@ -4,7 +4,7 @@
 {if $calendar_sticky_popup eq "y" and $cellid}&nbsp;<a onmouseover="javascript:cClick()" title="{tr}close{/tr}">{html_image file='img/icons/close.gif' alt="{tr}close{/tr}"}</a>{/if}
 </div>
 
-{if $show_calname eq 'y' and $cellcalname}<div class='box-title'><b>{$cellcalname}</b></div>{/if}
+{if $show_calname eq 'y' and $cellcalname}<div class='box-title' style="background-color:#{$infocals.$cellcalendarId.custombgcolor};color:#{$infocals.$cellcalendarId.customfgcolor};"><b>{$cellcalname}</b></div>{/if}
 
 {if $cellid}
 <div style="text-align:right" class='box-title'>

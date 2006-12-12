@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.69 2006-12-08 13:46:14 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.70 2006-12-12 23:34:48 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 <div id="calscreen">
 
@@ -11,17 +11,20 @@
 <span class="button2"><a href="tiki-calendar_edit_item.php"class="linkbut">{tr}add item{/tr}</a></span>
 {/if}
 
-<a href="#" title="{tr}Click to select visible calendars{/tr}" class="linkbut" onclick="toggle('filtercal');">{tr}Visible Calendars{/tr}
-<span style="background-color:#fff;margin-left:4px; padding:0 4px;">
+<span class="button2"><a href="#" title="{tr}Click to select visible calendars{/tr}" class="linkbut" onclick="toggle('filtercal');">{tr}Visible Calendars{/tr}</a></span>
+
 {if count($thiscal)}
 {foreach item=k from=$listcals name=listc}
 {if $thiscal.$k}
-{$infocals.$k.name}
+<span class="button2"><a href="#" class="linkbut" style="background-color:#{$infocals.$k.custombgcolor};color:#{$infocals.$k.customfgcolor}" onclick="toggle('filtercal');">{$infocals.$k.name}</a></span>
 {/if}
 {/foreach}
-{/if}
+{else}
+<span class="button2" style="background-color:#fff;padding:0 4px;">
+none
 </span>
-</a>
+{/if}
+
 
 <span class="button2">
 {if $viewlist eq 'list'}
