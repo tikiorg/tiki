@@ -22,6 +22,6 @@ FCKCommands.RegisterCommand(
 );
  
 var otikilinkItem = new FCKToolbarButton( 'tikilink', FCKConfig.tikilinkBtn, null, null, false, true ); 
-otikilinkItem.IconPath = _TikiRoot + '/pics/icons/page_white_link.png'; 
+otikilinkItem.IconPath = _TikiRoot + 'pics/icons/page_white_link.png'; 
 
 FCKToolbarItems.RegisterItem( 'tikilink', otikilinkItem );
