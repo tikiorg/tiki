@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.4 2006-12-09 13:39:02 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.5 2006-12-12 19:30:34 sylvieg Exp $ *}
 {if !isset($show_find) or $show_find ne 'n'}
 <div align="center">
 <table class="findtable">
@@ -127,7 +127,7 @@
 	{if $tiki_p_upload_files eq 'y'}
 		{if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_upload_files eq 'y' ) }
 			{if $tiki_p_admin_file_galleries eq 'y' or ($user and $galleries[changes].user eq $user) or $galleries[changes].public eq 'y'}
-				<a class="fgallink" href="tiki-upload_file.php?galleryId={$galleries[changes].id}"><img src='img/icons2/upload.gif' border='0' width='16' height='16' alt='{tr}upload{/tr}' title='{tr}upload{/tr}' /></a>
+				<a class="fgallink" href="tiki-upload_file.php?galleryId={$galleries[changes].id}"><img src='pics/icons/upload.png' border='0' width='16' height='16' alt='{tr}upload{/tr}' title='{tr}upload{/tr}' /></a>
 			{/if}
 		{/if}
 	{/if}
