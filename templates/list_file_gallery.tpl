@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.13 2006-12-12 17:22:55 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.14 2006-12-12 18:46:39 sylvieg Exp $ *}
 {* param:$gal_info, $files *}
 {strip}
 
@@ -237,9 +237,9 @@
 <div style="float:left">
 {tr}Perform action with checked:{/tr} 
 {if !isset($file_info)}
-	<input type="image" name="movesel" src="img/icons/topic_move.gif" alt='{tr}move{/tr}' title='{tr}move selected files{/tr}' />
+	<input style="vertical-align: middle;" type="image" name="movesel" src="pics/icons/arrow_right.png" alt='{tr}move{/tr}' title='{tr}move selected files{/tr}' />
 {/if}
-<input type="image" name="delsel" src='pics/icons/cross.png' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' />
+<input  style="vertical-align: middle;" type="image" name="delsel" src='pics/icons/cross.png' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' />
 </div>
 {if $smarty.request.movesel_x and !isset($file_info)} 
 <div>
