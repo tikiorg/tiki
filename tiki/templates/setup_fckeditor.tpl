@@ -15,17 +15,17 @@ FCKConfig.ToolbarSets["Tiki"] = [
 	['Style','FontFormat','FontName','FontSize','-','TextColor','BGColor']
 ] ;
 
-// FCKConfig.StylesXmlPath = _TikiPath + '/lib/fckeditor_tiki/tikistyles.xml';
-// FCKConfig.TemplatesXmlPath = _TikiPath + '/lib/fckeditor_tiki/tikitemplates.xml';
+// FCKConfig.StylesXmlPath = _TikiPath + 'lib/fckeditor_tiki/tikistyles.xml';
+// FCKConfig.TemplatesXmlPath = _TikiPath + 'lib/fckeditor_tiki/tikitemplates.xml';
 FCKConfig.AutoDetectLanguage  = true ;
-FCKConfig.EditorAreaCSS = _TikiRoot + '/styles/{$style}' ;
+FCKConfig.EditorAreaCSS = _TikiRoot + 'styles/{$style}' ;
 FCKConfig.SkinPath = FCKConfig.BasePath + 'skins/default/' ;
 FCKConfig.DefaultLanguage   = '{$language}' ;
 FCKConfig.AutoDetectLanguage   = {if $feature_detect_language eq 'y'}true{else}false{/if} ;
 FCKConfig.ContentLangDirection = '{if $feature_bidi eq 'y'}rtl{else}ltr{/if}' ;
 FCKConfig.StartupFocus = true ;
 
-FCKConfig.PluginsPath = _TikiPath + '/lib/fckeditor_tiki/plugins' ;
+FCKConfig.PluginsPath = _TikiPath + 'lib/fckeditor_tiki/plugins' ;
 FCKConfig.Plugins.Add( 'tikilink' ) ;
 FCKConfig.tikilinkBtn     = '{tr}Insert/Edit CMS Content{/tr}' ;
 FCKConfig.tikilinkDlgTitle    = '{tr}Tiki Link - Insert internal link{/tr}' ;
