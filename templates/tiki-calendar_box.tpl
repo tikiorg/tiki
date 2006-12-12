@@ -1,6 +1,6 @@
 <div class='opaque'>
 <div class='box-title'>{$cellhead}
-{if $show_priority eq 'y' and $custompriorities eq 'y' and $cellprio}<span class='calprio{$cellprio}' id='calprio'>{$cellprio}</span>{/if}
+{if $infocals.$cellcalendarId.custompriorities eq 'y' and $cellprio}<span class='calprio{$cellprio}' id='calprio'>{$cellprio}</span>{/if}
 {if $calendar_sticky_popup eq "y" and $cellid}&nbsp;<a onmouseover="javascript:cClick()" title="{tr}close{/tr}">{html_image file='img/icons/close.gif' alt="{tr}close{/tr}"}</a>{/if}
 </div>
 
@@ -20,9 +20,9 @@ alt="{tr}zoom{/tr}" /></a>&nbsp;{/if}{if $cellmodif eq "y"}<a href="{$cellurl}" 
 </div>
 {/if}
 
-{if $show_location eq 'y' and $customlocations eq 'y' and $celllocation}<div class='box-title'><b>{$celllocation}</b></div>{/if}
-{if $show_category eq 'y' and $customcategories eq 'y' and $cellcategory}<div class='box-title'><b>{$cellcategory}</b></div>{/if}
-{if $show_url eq 'y' and $customurl eq 'y' and $cellurl}<div class='box-title'><a href="{$cellurl|escape:'url'}" title="{$cellurl|escape:'url'}">{$url|truncate:32:'...'}</a></div>{/if}
+{if $show_location eq 'y' and $infocals.$cellcalendarId.customlocations eq 'y' and $celllocation}<div class='box-title'><b>{$celllocation}</b></div>{/if}
+{if $show_category eq 'y' and $infocals.$cellcalendarId.customcategories eq 'y' and $cellcategory}<div class='box-title'><b>{$cellcategory}</b></div>{/if}
+{if $show_url eq 'y' and $infocals.$cellcalendarId.customurl eq 'y' and $cellurl}<div class='box-title'><a href="{$cellurl|escape:'url'}" title="{$cellurl|escape:'url'}">{$url|truncate:32:'...'}</a></div>{/if}
 <div class='box-data'>
 <b>{$cellname}</b>
 {if $show_description eq 'y'}
