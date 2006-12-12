@@ -120,10 +120,15 @@ function Ok() {
 {/if}
 
 <br />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
 {foreach item=page from=$listpages}
-<a href="javascript:addInfo('tiki-index.php?page={$page.pageName|escape:'javascript'}');" 
-title="{if $page.description}{$page.description}{else}{$page.pageName}{/if}" class="wikilink">{$page.pageName}</a><br />
+<tr><td><a href="javascript:addInfo('tiki-index.php?page={$page.pageName|escape:'javascript'}');" 
+title="{if $page.description}{$page.description}{else}{$page.pageName}{/if}" class="wikilink">{$page.pageName}</a>
+</td><td style="color:#999;">
+{$page.description}
+</td></tr>
 {/foreach}
+</table>
 </div>
 							</td>
 						</tr>
