@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2006-12-09 13:37:13 $
+# $Date: 2006-12-12 17:22:55 $
 # $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -1350,6 +1350,7 @@ CREATE TABLE tiki_files (
   filetype varchar(250) default NULL,
   data longblob,
   user varchar(40) default NULL,
+  author varchar(40) default NULL,
   downloads int(14) default NULL,
   votes int(8) default NULL,
   points decimal(8,2) default NULL,

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.46 2006-12-04 20:38:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.47 2006-12-12 17:22:55 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -86,6 +86,8 @@ $podcast_url = $tikilib->httpPrefix().$podcast_url.$fgal_podcast_dir;
 
 if (!isset($_REQUEST["description"]))
 	$_REQUEST["description"] = '';
+if (!isset($_REQUEST['author']))
+	$_REQUEST['author'] = '';
 
 $smarty->assign('show', 'n');
 
@@ -97,6 +99,10 @@ if (!empty($editFileId)) {
 		$fileInfo['name']=$_REQUEST['name'];
 	if (!empty($_REQUEST['description']))
 		$fileInfo['description']=$_REQUEST['description'];
+	if (!empty($_REQUEST['user']))
+		$fileInfo['user']=$_REQUEST['user'];
+	if (!empty($_REQUEST['author']))
+		$fileInfo['author']=$_REQUEST['author'];
 
 	$smarty->assign_by_ref('fileInfo',$fileInfo);
 	$smarty->assign('editFileId',$editFileId);
@@ -121,11 +127,9 @@ if (isset($_REQUEST["upload"]) && !empty($_REQUEST['galleryId'])) {
 	$didFileReplace = false;
 	if (!isset($_REQUEST['comment']))
 		$_REQUEST['comment'] = '';
-echo "KKK";
 	for ($i = 1; $i <= 6; $i++) {
 		// We process here file uploads
 		if (isset($_FILES["userfile$i"]) && !empty($_FILES["userfile$i"]['name'])) {
-echo "EEEEE"; die;
 			// Were there any problems with the upload?  If so, report here.
 			if (!is_uploaded_file($_FILES["userfile$i"]['tmp_name'])) {
 				$errors[] = tra('Upload was not successful').': '.FileGalLib::convert_error_to_string($_FILES["userfile$i"]['error']);
@@ -237,16 +241,18 @@ echo "EEEEE"; die;
 
 			if (!isset($_REQUEST['name']))
 				$_REQUEST['name'] = $name;
+			if (empty($_REQUEST['user']))
+				$_REQUEST['user'] = $user;
 
 			$fileInfo['filename'] = $file_name;
 
 			if (isset($data)) {
 				if ($editFile) {
 					$didFileReplace = true;
-					$fileId = $filegallib->replace_file($editFileId, $_REQUEST["name"], $_REQUEST["description"], $name, $data, $size, $type, $user, $fhash, $_REQUEST['comment'], $gal_info, $didFileReplace);
+					$fileId = $filegallib->replace_file($editFileId, $_REQUEST["name"], $_REQUEST["description"], $name, $data, $size, $type, $_REQUEST['user'], $fhash, $_REQUEST['comment'], $gal_info, $didFileReplace, $_REQUEST['author']);
 				}
 				else
-					$fileId	= $filegallib->insert_file($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $name, $data, $size, $type, $user, $fhash);
+				  $fileId	= $filegallib->insert_file($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $name, $data, $size, $type, $_REQUEST['user'], $fhash, '', $_REQUEST['author']);
 
 				if (!$fileId) {
 					$errors[] = tra('Upload was not successful. Duplicate file content'). ': ' . $name;
@@ -279,7 +285,7 @@ echo "EEEEE"; die;
 	}
 
 	if ($editFile && !$didFileReplace) {
-		$filegallib->replace_file($editFileId, $_REQUEST['name'], $_REQUEST['description'], $fileInfo['filename'], $fileInfo['data'], $fileInfo['filesize'], $fileInfo['filetype'], $user, $fileInfo['path'], $_REQUEST['comment'], $gal_info, $didFileReplace);
+		$filegallib->replace_file($editFileId, $_REQUEST['name'], $_REQUEST['description'], $fileInfo['filename'], $fileInfo['data'], $fileInfo['filesize'], $fileInfo['filetype'], $_REQUEST['user'], $fileInfo['path'], $_REQUEST['comment'], $gal_info, $didFileReplace);
 		$fileChangedMessage = tra('File update was successful').': '.$_REQUEST['name'];
 		$smarty->assign('fileChangedMessage',$fileChangedMessage);
 		$cat_type = 'file';
@@ -352,6 +358,11 @@ for ($i = 0; $i < $temp_max; $i++) {
 }
 
 $smarty->assign_by_ref('galleries', $galleries["data"]);
+
+if ($tiki_p_admin_file_galleries == 'y' || $tiki_p_admin == 'y') {
+	$users = $tikilib->list_users(0, -1, 'login_asc');
+	$smarty->assign_by_ref('users', $users['data']);
+}
 
 $cat_type = 'file';
 $cat_objid = empty($_REQUEST['fileId'])? 0: $_REQUEST['fileId'];
