@@ -144,7 +144,9 @@
 {if $feature_wiki_description eq 'y'}
 <tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><input size="80" class="wikitext" type="text" name="description" value="{$description|escape}" /></td>
 {/if}
-<tr><td class="formcolor">{tr}Edit{/tr}:<br /><br />
+<tr>
+{if !$wysiwyg}
+<td class="formcolor">{tr}Edit{/tr}:<br /><br />
 {include file="textareasize.tpl" area_name='editwiki' formId='editpageform'}<br /><br />
 {include file=tiki-edit_help_tool.tpl}
 </td>
@@ -152,7 +154,12 @@
 <textarea id='editwiki' class="wikiedit" name="edit" rows="{$rows}" wrap="virtual" cols="{$cols}">{$pagedata|escape}</textarea>
 <input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/>
-</td></tr>
+</td>
+{else}
+<td colspan="2">
+{editform Meat=$pagedata InstanceName='edit' ToolbarSet="Tiki"}
+{/if}
+</tr>
 {if $feature_wiki_footnotes eq 'y'}
 {if $user}
 <tr><td class="formcolor">{tr}My Footnotes{/tr}:</td><td class="formcolor"><textarea name="footnote" rows="8" cols="80">{$footnote|escape}</textarea></td>
