@@ -194,6 +194,10 @@ table.wikitable {
 	font-size: 11px
 	width: 650px;
 }
+body.wikitext, div.wikitext {
+	margin : 5px;
+	background-color : #ddd;
+}
 .daterow {
   padding : 0 5px;
   border : 1px outset #ddd;

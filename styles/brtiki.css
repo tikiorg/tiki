@@ -1102,23 +1102,31 @@ td.wikicell {
 }
 
 /* Text in wiki pages is displayed using the following style */
+body.wikitext {
+	background:    white;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   13px;
+	margin :   4px;
+}
+body.wikitext a {
+	color: #588C0C !important;
+	font-weight: bold;
+}
+body.wikitext a:hover {
+	color: #588C0C !important;
+	font-weight: bold;
+	background-color:   #EDEDED;
+}
 div.wikitext {
 	background:    white;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   13px;
 	border:   1px solid black;
-	padding-left:   5px;
-	padding-right:   5px;
-	padding-top:   5px;
-	padding-bottom:   5px;
-	margin-left:   5px;
-	margin-right:   5px;
-	margin-top:   5px;
-	margin-bottom:   5px;
+	padding :   5px;
+	margin :   5px;
 	width:   100%;
 	clear:   both;
 }
-
 /* Links to wiki pages */
 .wiki {
 	color: #588C0C;

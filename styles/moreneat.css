@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.80 2006-11-12 02:47:04 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.81 2006-12-13 16:04:54 mose Exp $
 
 MoreNeat theme
 */
@@ -590,18 +590,20 @@ td.wikicell {
 }
 
 /* Text in wiki pages is displayed using the following style */
-div.wikitext {
+body.wikitext, div.wikitext {
   background: white;
-     font-size: 12px;
-  border: 1px solid #99bec6;
+  font-size: 12px;
   width: auto; /*xen fixes IE formating.  i.e. Middle column sliding under right*/
   clear: both;
 	padding : 1ex 2ex;
 }
+div.wikitext {
+  border: 1px solid #99bec6;
+}
 .wikitopline table { width: 100%; }
 
 /* Links to wiki pages */
-.wiki { color:#335966; text-decoration:underline;}
+.wiki { color:#335966 !important; text-decoration:underline;}
 .wiki:hover {color: #436976;text-decoration:underline;}
 
 /* Links to create new wiki pages that don't exist yet, this modifies the "?"*/

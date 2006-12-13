@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/fmsc.css,v 1.6 2006-11-12 02:47:04 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/fmsc.css,v 1.7 2006-12-13 16:04:54 mose Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -974,11 +974,12 @@ td.wikicell {
 	border : 1px solid #ACB9C7;
 	background-color : #F7F9FA;
 }
-div.wikitext {
+body.wikitext, div.wikitext {
 	font-size : 11px;
 	width : auto;
 	padding: 10px;
 	text-align: left;
+	background-color : #ffffff;
 }
 .colg{
 	width : auto;
@@ -1001,12 +1002,12 @@ div.wikitext {
 .cold span{
 	font-weight: bold;
 }
-div.wikitext span{
+.wikitext span{
 	font-weight: bold;
 }
 .wikitext a {
-	color : #DE600C;
-	text-decoration: none;
+	color : #DE600C !important;
+	text-decoration: none !important;
 }
 .wikitext a:hover {
 	color : #9C9376;

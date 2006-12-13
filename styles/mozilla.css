@@ -1,5 +1,5 @@
 /* 
-  $Header: /cvsroot/tikiwiki/tiki/styles/mozilla.css,v 1.48 2006-11-12 02:47:04 mose Exp $
+  $Header: /cvsroot/tikiwiki/tiki/styles/mozilla.css,v 1.49 2006-12-13 16:04:54 mose Exp $
   mozilla.css
   This theme is based on the default2 style for Tiki 1.2
   If you want  a short-version CSS template, start with default2
@@ -888,11 +888,10 @@ td.wikicell {
 }
 
 /* Text in wiki pages is displayed using the following style */
-div.wikitext {
-	background-color:    white;
+body.wikitext, div.wikitext {
+	background-color:    white !important;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
-	border:   1px solid black;
 	padding-left:   3px;
 	padding-right:   3px;
 	padding-top:   1px;
@@ -904,11 +903,14 @@ div.wikitext {
 	width:   100%;
 	clear:   both;
 }
+div.wikitext {
+	border:   1px solid black;
+}
 .wikitopline table { width: 100%; }
 
 /* Links to wiki pages */
 .wiki {
-	color:    black;
+	color:    black !important;
 	font-weight:   bold;
 	text-decoration:   underline;
 }

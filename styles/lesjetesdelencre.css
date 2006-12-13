@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/lesjetesdelencre.css,v 1.6 2006-11-12 02:47:04 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/lesjetesdelencre.css,v 1.7 2006-12-13 16:04:54 mose Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -978,7 +978,8 @@ td.wikicell {
 	border : 1px solid #ACB9C7;
 	background-color : #F7F9FA;
 }
-div.wikitext {
+body.wikitext, div.wikitext {
+	background-color : #ffffff;
 	font-size : 11px;
 	width : auto;
 	padding: 10px;
@@ -1009,8 +1010,8 @@ div.wikitext span{
 	font-weight: bold;
 }
 .wikitext a {
-	color : #DE600C;
-	text-decoration: none;
+	color : #DE600C !important;
+	text-decoration: none !important;
 }
 .wikitext a:hover {
 	color : #9C9376;

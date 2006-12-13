@@ -801,10 +801,9 @@ td.wikicell {
 }
 
 /* Text in wiki pages is displayed using the following style */
-div.wikitext {
+.wikitext {
 	background:    white;
 	font-size:   12px;
-/*	border:   1px solid #74AE0B;*/
 	padding-left:   4px;
 	padding-right:   4px;
 	padding-top:   3px;
@@ -819,8 +818,8 @@ div.wikitext {
 .wikitopline table{ width: 100%; }
 
 /* Links to wiki pages */
-.wiki {
-	color:    #436976;
+body.wikitext a, .wiki {
+	color:    #436976 !important;
 	text-decoration:   underline;
 }
 

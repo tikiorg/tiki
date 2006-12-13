@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.72 2006-11-17 11:54:10 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.73 2006-12-13 16:04:54 mose Exp $
 2003 - created and maintained by mose@tikiwiki.org
 
 colorset:
@@ -835,15 +835,17 @@ td.wikicell:first-child {
 /* 
 Text in wiki pages is displayed using the following style 
 */
-div.wikitext {
+body.wikitext, div.wikitext {
 	line-height : 1.4em;
 	background:    #fff;
 	font-size:   12px;
-	border:   1px dashed #dca;
 	padding:  3px 10px 3px 10px;
 	clear:   both;
 }
-div.wikitext pre {
+div.wikitext {
+	border:   1px dashed #dca;
+}
+body.wikitext pre, div.wikitext pre {
 	font-family: monospace;
 	padding: 4px;
 	background-color: #FFFFFF;
@@ -857,6 +859,8 @@ div.wikitext pre {
 Links to wiki pages 
 */
 .wiki {
+	color: #430 !important;
+	text-decoration: none !important;
 	background-color:   #eeeecc;
 }
 

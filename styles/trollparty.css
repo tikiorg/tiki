@@ -1,5 +1,5 @@
 /*
-$Id: trollparty.css,v 1.45 2006-11-12 02:47:05 mose Exp $
+$Id: trollparty.css,v 1.46 2006-12-13 16:04:55 mose Exp $
 made by mose@trollparty.org
 
 background-color: #000000;
@@ -1062,26 +1062,28 @@ background-color: #121212;
 /* 
 Text in wiki pages is displayed using the following style 
 */
-div.wikitext {
-background-color: #000000;
-padding: 3px 20px;
-margin: 1px 0px;
-clear: both;
+body.wikitext, div.wikitext {
+	background-color: #000000;
+	padding: 3px 20px;
+	margin: 1px 0px;
+	clear: both;
+}
+body.wikitext a {
+	color: #dede98 !important;
+	text-decoration: none !important;
 }
 .wikitopline table { width: 100% }
 
 /* 
 Links to wiki pages 
 */
-.wiki
-{
-color: #b1b299;
-text-decoration: none;
+.wiki {
+	color: #b1b299 !important;
+	text-decoration: none !important;
 }
 
-.wiki:hover
-{
-color: white;
+.wiki:hover {
+	color: white;
 }
 
 hr {
