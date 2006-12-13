@@ -14,8 +14,6 @@ if ($feature_contacts != 'y') {
   die;
 }
 
-$smarty->assign('element', $_REQUEST["element"]);
-
 if (!isset($_REQUEST["contactId"])) {
 	$_REQUEST["contactId"] = 0;
 }
