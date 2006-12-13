@@ -15,7 +15,7 @@ FCKConfig.ToolbarSets["Tiki"] = [
 	['Style','FontName','FontSize','-','TextColor','BGColor']
 ] ;
 
-FCKConfig.StylesXmlPath = '../../../lib/fckeditor_tiki/tikistyles.xml';
+FCKConfig.StylesXmlPath = _TikiRoot + 'lib/fckeditor_tiki/tikistyles.xml';
 FCKConfig.TemplatesXmlPath = _TikiRoot + 'lib/fckeditor_tiki/tikitemplates.xml';
 
 FCKConfig.EditorAreaCSS = _TikiRoot + '{$fckstyle}' ;
