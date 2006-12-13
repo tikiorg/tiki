@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.54 2006-12-07 13:07:26 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.55 2006-12-13 20:28:34 mose Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -8,7 +8,7 @@
 {if $edit_page eq 'y'} {* Show this button only in editing mode *}
   <td>
     <div class="button2">
-      <a href="#" onclick="javascript:flip('edithelpzone'); return false;" class="linkbut">{tr}wiki help{/tr}</a>
+      <a href="#edithelp" onclick="javascript:flip('edithelpzone'); return true;" name="edithelp" class="linkbut">{tr}wiki help{/tr}</a>
     </div>
   </td>
 {else}
