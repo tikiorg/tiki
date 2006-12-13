@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.83 2006-12-03 16:26:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.84 2006-12-13 14:30:57 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -181,6 +181,11 @@ if (isset($_REQUEST['info'])) {
 	$tikilib->set_user_preference($userwatch, 'country', $_REQUEST["country"]);
 
 	$cookietab = 1;
+}
+
+if ($auth_method == 'auth' && $user == 'admin' && $auth_skip_admin == 'y') {
+	$change_password = 'y';
+	$smarty->assign('change_password', $change_password);
 }
 
 if (isset($_REQUEST['chgadmin'])) {
