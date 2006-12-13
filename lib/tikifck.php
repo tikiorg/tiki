@@ -10,7 +10,6 @@ class TikiFCK {
   var $Config;
 	var $ConfigString;
 	var $Compat;
-	var $Smarty;
 
 	function TikiFCK($InstanceName) {
 		$this->InstanceName = $InstanceName;
