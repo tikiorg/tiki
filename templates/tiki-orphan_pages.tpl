@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-orphan_pages.tpl,v 1.19 2006-11-21 14:45:18 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-orphan_pages.tpl,v 1.20 2006-12-13 01:58:20 mose Exp $ *}
 
 <h1><a href="tiki-orphan_pages.php" class="pagetitle">{tr}Orphan Pages{/tr}</a></h1>
 <table class="findtable">
@@ -85,9 +85,9 @@
 {if $wiki_list_status eq 'y'}
 	<td style="text-align:center;" class="{cycle advance=false}">
 	{if $listpages[changes].flag eq 'locked'}
-		<img src='img/icons/lock_topic.gif' alt='{tr}locked{/tr}' />
+		<img src='pics/icons/lock.png' border='0' height='16' width='16' alt='{tr}locked{/tr}' />
 	{else}
-		<img src='img/icons/unlock_topic.gif' alt='{tr}unlocked{/tr}' />
+		<img src='pics/icons/lock_break.png' border='0' height='16' width='16' alt='{tr}unlocked{/tr}' />
 	{/if}
 	</td>
 {/if}
