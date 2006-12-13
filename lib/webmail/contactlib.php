@@ -61,6 +61,7 @@ class ContactLib extends TikiLib {
 		}
 		$groups = $this->get_user_groups($user);
 		$count = 0;
+		$back = array();
 		foreach ($groups as $group) {
 			$query = "select c.* from `tiki_webmail_contacts_groups` as a left join `tiki_webmail_contacts` as c on a.`contactId`=c.`contactId` where a.`groupName`=? $mid order by c.".$this->convert_sortmode($sort_mode);
 			$query_cant = "select count(*) from `tiki_webmail_contacts_groups` as a left join `tiki_webmail_contacts` as c on a.`contactId`=c.`contactId` where a.`groupName`=? $mid";
