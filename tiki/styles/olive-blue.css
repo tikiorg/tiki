@@ -906,11 +906,10 @@ td.wikicell {
 }
 
 /* Text in wiki pages is displayed using the following style */
-div.wikitext {
+body.wikitext, div.wikitext {
 	background-color: white;
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 13px;
-	border: 1px solid #0084aa;
 	padding-left: 1px;
 	padding-right: 1px;
 	padding-top: 1px;
@@ -921,6 +920,9 @@ div.wikitext {
 	margin-bottom: 5px;
 	width: 100%;
 	clear: both;
+}
+div.wikitext {
+	border: 1px solid #0084aa;
 }
 .wikitopline table { width: 100%; }
 

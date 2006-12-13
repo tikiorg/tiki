@@ -735,19 +735,13 @@ td.wikicell {
 }
 
 /* Text in wiki pages is displayed using the following style */
-div.wikitext {
+.wikitext {
 	font-family:    Verdana, Helvetica;
 	font-size:   10px;
 	border:   1px solid #444444;
 	color:   white;
-	padding-left:   1px;
-	padding-right:   1px;
-	padding-top:   1px;
-	padding-bottom:   1px;
-	margin-left:   1px;
-	margin-right:   1px;
-	margin-top:   5px;
-	margin-bottom:   5px;
+	padding :   1px;
+	margin : 5px  1px;
 	width:   100%;
 	clear:   both;
 }

@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.22 2006-12-13 03:51:24 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.23 2006-12-13 16:04:55 mose Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -713,16 +713,16 @@ div.wikitext {
 	clear : both;
 	width : auto;
 }
-html[dir] body {
+body.wikitext {
 	font-size : 12px;
-	padding : 10px;
+	margin : 10px !important;
 	background-color: #F3F6F9;
 }
-html[dir] a {
+body.wikitext a {
 	color : #225566 !important;
 	font-weight : bold;
 }
-html[dir] a:hover {
+body.wikitext a:hover {
 	color : #224466 !important;
 	background-color: #FFFFF1;
 }

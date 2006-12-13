@@ -886,7 +886,7 @@ td.wikicell {
 }
 
 /* Text in wiki pages is displayed using the following style */
-div.wikitext {
+.wikitext {
 	background:    white;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   13px;
@@ -903,15 +903,17 @@ div.wikitext {
 	clear:   both;
 }
 .wikitopline table { width: 100%; }
-
+body.wikitext {
+	border : 0;
+}
 /* Links to wiki pages */
-.wiki {
-	color:    #0000FF;
+body.wikitext a, .wiki {
+	color:    #0000FF !important;
 	font-weight:   bold;
-	text-decoration:   none;
+	text-decoration:   none !important;
 }
 
-.wiki:hover {
+body.wikitext a:hover, .wiki:hover {
 	color:    #0000FF;
 	font-weight:   bold;
 	text-decoration:   underline;

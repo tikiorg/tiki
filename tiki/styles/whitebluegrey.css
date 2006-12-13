@@ -1,5 +1,5 @@
 /* 
-  $Header: /cvsroot/tikiwiki/tiki/styles/whitebluegrey.css,v 1.48 2006-11-12 02:47:05 mose Exp $
+  $Header: /cvsroot/tikiwiki/tiki/styles/whitebluegrey.css,v 1.49 2006-12-13 16:04:56 mose Exp $
   whitebluegrey.css
   This theme is based on the default2 style for Tiki 1.2
   If you want  a short-version CSS template, start by copying default2
@@ -911,11 +911,10 @@ td.wikicell {
 }
 
 /* Text in wiki pages is displayed using the following style */
-div.wikitext {
+body.wikitext, div.wikitext {
 	background:    white;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   13px;
-	border:   1px solid black;
 	padding-left:   1px;
 	padding-right:   1px;
 	padding-top:   1px;
@@ -927,11 +926,14 @@ div.wikitext {
 	width:   100%;
 	clear:   both;
 }
+div.wikitext {
+	border:   1px solid black;
+}
 .wikitopline table { width: 100% }
 
 /* Links to wiki pages */
 .wiki {
-	color: black;
+	color: black !important;
 }
 
 .wiki:hover {

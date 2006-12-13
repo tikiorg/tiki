@@ -903,11 +903,10 @@ td.wikicell {
 }
 
 /* Text in wiki pages is displayed using the following style */
-div.wikitext {
-	background:    white;
+body.wikitext, div.wikitext {
+	background-color :    white;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   12px;
-	border:   1px solid #74AE0B;
 	padding-left:   4px;
 	padding-right:   4px;
 	padding-top:   3px;
@@ -919,11 +918,14 @@ div.wikitext {
 	width:   100%;
 	clear:   both;
 }
+div.wikitext {
+	border:   1px solid #74AE0B;
+}
 .wikitopline table { width: 100%; }
 
 /* Links to wiki pages */
 .wiki {
-	color:    #436976;
+	color:    #436976 !important;
 	text-decoration:   underline;
 }
 

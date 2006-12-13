@@ -958,7 +958,7 @@ td.wikicell {
 /* 
 Text in wiki pages is displayed using the following style 
 */
-div.wikitext {
+.wikitext {
 	background-color:    #f1f1c9;
 	font-size:   12px;
 	padding:   10px;
@@ -966,13 +966,15 @@ div.wikitext {
 	clear:   both;
 }
 .wikitopline table{ width: 100%; }
-
+body.wikitext {
+	background-image : none;
+}
 /* 
 Links to wiki pages 
 */
 .wiki {
-	color:    #2255aa;;
-	text-decoration:   none;
+	color:    #2255aa !important;
+	text-decoration:   none !important;
 }
 
 .wiki:hover {

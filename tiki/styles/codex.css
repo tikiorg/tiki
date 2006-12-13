@@ -940,20 +940,26 @@ td.wikicell {
 
 /* Text in wiki pages is displayed using the following style */
 div.wikitext {
-	background:    white;
+	background-color : #ffffff;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   13px;
 	border:   1px solid black;
-	padding-left:   1px;
-	padding-right:   1px;
-	padding-top:   1px;
-	padding-bottom:   1px;
-	margin-left:   1px;
-	margin-right:   1px;
-	margin-top:   5px;
-	margin-bottom:   5px;
+	padding :   5px;
 	width:   100%;
 	clear:   both;
+}
+body.wikitext {
+	background-image : none;
+	background-color : #ffffff;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   13px;
+	padding :   5px;
+}
+body.wikitext a {
+	color : black !important;
+}
+body.wikitext a:hover {
+	background-color:   #EFEFEF;
 }
 .wikitopline table { width : 100%; }
 

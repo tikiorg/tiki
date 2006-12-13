@@ -1,5 +1,5 @@
 /* 
-  $Header: /cvsroot/tikiwiki/tiki/styles/default2.css,v 1.61 2006-11-12 02:47:04 mose Exp $
+  $Header: /cvsroot/tikiwiki/tiki/styles/default2.css,v 1.62 2006-12-13 16:04:54 mose Exp $
   default2.css
   (This theme is based on the) default2 style for Tiki 1.2
   If you want  a short-version CSS template, start by copying default2
@@ -881,7 +881,7 @@ td.wikicell {
 }
 
 /* Text in wiki pages is displayed using the following style */
-div.wikitext {
+.wikitext {
 	background:    white;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   13px;
@@ -897,14 +897,17 @@ div.wikitext {
 	width:   100%;
 	clear:   both;
 }
-.wikitopline table{ width: 100%; }
+body.wikitext {
+	border : 0;
+}
+}.wikitopline table{ width: 100%; }
 
 /* Links to wiki pages */
-.wiki {
-	color: black;
+body.wikitext a, .wiki {
+	color: black !important;
 }
 
-.wiki:hover {
+body.wikitext a:hover, .wiki:hover {
 	color:    black;
 	background:   #EFEFEF;
 }

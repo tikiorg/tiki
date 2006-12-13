@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.45 2006-11-12 02:47:05 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.46 2006-12-13 16:04:55 mose Exp $
  *
  * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye !
  * Enables font re-sizing in all browsers, aims to be standards compliant and WCAG 1.0 compatible (not yet).
@@ -573,7 +573,9 @@ div.messureadbody {
   /*overflow: auto;
   clip: rect(0,100%,100%,0);*/
 }
-
+body.wikitext {
+	margin : 5px;
+}
 .wikitopline {
   border: 1px dashed #abcdef;
   background-color: #f0f9ff;

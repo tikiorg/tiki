@@ -715,10 +715,17 @@ td.wikicell {
 }
 
 /* Text in wiki pages is displayed using the following style */
+body.wikitext, div.wikitext {
+	background-color: #f3f6f9;
+  margin : 5px; 
+  clear : both;
+}
 div.wikitext {
-	padding-top: 30px;
-  margin: 5px; 
-  clear: both;
+	padding-top : 30px;
+}
+body.wikitext a {
+	color : #225566 !important;
+	text-decoration : none !important;
 }
 .wikitopline table { width: 100%; }
 
