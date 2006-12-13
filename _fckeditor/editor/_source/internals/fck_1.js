@@ -258,7 +258,7 @@ FCK.SetHTML = function( html )
 				sHtml += '<link href="' + FCKConfig.FullBasePath + 'css/fck_showtableborders_gecko.css" rel="stylesheet" type="text/css" _fcktemp="true" />' ;
 
 			sHtml += FCK.TempBaseTag ;
-			sHtml += '</head><body>' ;
+			sHtml += '</head><body class="wikitext">' ;
 			
 			if ( FCKBrowserInfo.IsGecko && ( html.length == 0 || FCKRegexLib.EmptyParagraph.test( html ) ) )
 				sHtml += GECKO_BOGUS ;

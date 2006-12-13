@@ -100,7 +100,7 @@ FCK.Preview = function()
 			FCK.TempBaseTag +
 			'<title>' + FCKLang.Preview + '</title>' +
 			FCK._GetEditorAreaStyleTags() +
-			'</head><body>' + 
+			'</head><body class="wikitext">' + 
 			FCK.GetXHTML() + 
 			'</body></html>' ;
 	}
