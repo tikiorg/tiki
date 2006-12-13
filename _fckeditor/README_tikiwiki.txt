@@ -10,7 +10,7 @@ for a full version of the original package, check oout
 Tikiwiki integration
 --------------------
 
-This libaray is tuned up to work with tikiwiki v1.10 or above.
+This library is tuned up to work with tikiwiki v1.10 or above.
 3 files in Tikiwiki manage the integration:
 * lib/tikifck.php is the main class for creating fckeditor edit forms 
 * lib/smarty_tiki/function.editform.php is used in templates
@@ -30,6 +30,37 @@ Optional parameters are:
 Meat : the default content of the edit zone
 Width and Height : self explanatory
 ToolbarSet : make choice of the toolbar used in fckeditor
+
+
+Patches for specific Tikiwiki use
+---------------------------------
+
+* Style patch
+For having the wikitext class declared in the body element en editarea
+zone. The _source/ content is a human-readable version of js/ content,
+but it has been patched as well for understandability purpose.
+
+=======
+lib/fckeditor/editor/_source/internals/fck_1.js
+261c261
+<                       sHtml += '</head><body>' ;
+---
+>                       sHtml += '</head><body class="wikitext">' ;
+=======
+lib/fckeditor/editor/_source/internals/fck_2.js
+103c103
+<                       '</head><body>' + 
+---
+>                       '</head><body class="wikitext">' +
+=======
+
+The equivalent changes have to be made in 
+* lib/fckeditor/editor/js/fckeditorcode_gecko.js
+* lib/fckeditor/editor/js/fckeditorcode_ie.js
+That can be done manually (but preserve lines formatting) 
+or by launching that oneline :
+  
+	perl -pi -e 's/head><body>/head><body class="wikitext">/' lib/fckeditor/editor/js/fckeditorcode_*.js
 
 
 
