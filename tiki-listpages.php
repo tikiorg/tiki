@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.29 2006-12-03 18:08:40 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.30 2006-12-13 01:53:07 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -63,6 +63,12 @@ if (isset($_REQUEST["submit_mult"]) && isset($_REQUEST["checked"]) && $_REQUEST[
 // for the information as the number of
 // days to get in the log 1,3,4,etc
 // it will default to 1 recovering information for today
+if (isset($_REQUEST["numrows"])) {
+	$maxRecords = $_REQUEST["numrows"];
+}
+$smarty->assign('maxRecords', $maxRecords);
+
+
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'pageName_asc';
 } else {
