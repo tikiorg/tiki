@@ -27,6 +27,7 @@
 <form name="checkboxes_on" method="post" action="{$smarty.server.PHP_SELF}">
   <td class="heading">&nbsp;</td>
 {/if}
+  <td class="heading">&nbsp;</td>
 {if $wiki_list_name eq 'y'}
 	<td class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}tiki-listpages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'pageName_desc'}pageName_asc{else}pageName_desc{/if}{if $initial}&amp;initial={$initial}{/if}{/ajax_href}>{tr}Page{/tr}</a></td>
 {/if}
@@ -71,11 +72,13 @@
 {if $checkboxes_on eq 'y'}
 <td class="{cycle advance=false}"><input type="checkbox" name="checked[]" value="{$listpages[changes].pageName|escape}"/></td>
 {/if}
+<td class="{cycle advance=false}">
+{if $tiki_p_edit eq 'y'}
+&nbsp;<a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}"><img border='0' title='{tr}edit{/tr}' alt='{tr}edit{/tr}' src='pics/icons/page_edit.png' height='16' width='16' /></a>
+{/if}
+</td>
 {if $wiki_list_name eq 'y'}
 	<td class="{cycle advance=false}"><a href="tiki-index.php?page={$listpages[changes].pageName|escape:"url"}" class="link" title="{$listpages[changes].pageName}">{$listpages[changes].pageName|truncate:40:"...":true}</a>
-	{if $tiki_p_edit eq 'y'}
-	&nbsp;<a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}"><img border='0' title='{tr}edit{/tr}' alt='{tr}edit{/tr}' src='pics/icons/page_edit.png' height='16' width='16' /></a>
-	{/if}
 	</td>
 {/if}
 {if $wiki_list_hits eq 'y'}	
