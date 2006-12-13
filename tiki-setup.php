@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.352 2006-12-12 17:22:54 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.353 2006-12-13 01:24:59 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1153,7 +1153,7 @@ if (!empty($section)) {
 }
 ini_set('docref_root',$php_docroot);
 
-$tikipath = dirname($_SERVER['SCRIPT_NAME']);
+$tikipath = dirname($_SERVER['SCRIPT_FILENAME']);
 if (substr($tikipath,-1,1) != '/') $tikipath.= '/';
 $tikiroot = dirname($_SERVER['PHP_SELF']);
 if (substr($tikiroot,-1,1) != '/') $tikiroot.= '/';
