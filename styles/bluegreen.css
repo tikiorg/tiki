@@ -1,5 +1,5 @@
 /* 
-  $Header: /cvsroot/tikiwiki/tiki/styles/bluegreen.css,v 1.52 2006-11-12 02:47:04 mose Exp $
+  $Header: /cvsroot/tikiwiki/tiki/styles/bluegreen.css,v 1.53 2006-12-13 04:01:38 mose Exp $
   bluegreen.css
   This theme is based on the default2 style for Tiki 1.2
   If you want  a short-version CSS template, start by copying default2
@@ -8,11 +8,8 @@
 */
 
 body {
-	background-color:    #ADBABD;
-	margin-top:   0px;
-	margin-left:   0px;
-	margin-bottom:   0px;
-	margin-right:   0px;
+	background-color: #ADBABD;
+	margin : 0px;
 }
 
 /* GENERAL LAYOUT EXPLANATION
@@ -30,11 +27,8 @@ body {
 /* This div encloses the whole Tiki application */
 DIV#tiki-main {
 	background:    #EFEFE7;
-	height:   100%;
-	margin-top:   0px;
-	margin-bottom:   0px;
-	margin-right:   0px;
-	margin-left:   0px;
+	height : 100%;
+	margin : 0px;
 }
 
 /* This is the header */
@@ -914,31 +908,39 @@ td.wikicell {
 
 /* Text in wiki pages is displayed using the following style */
 div.wikitext {
-	background:    white;
-	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size:   13px;
-	border:   1px solid black;
-	padding-left:   1px;
-	padding-right:   1px;
-	padding-top:   1px;
-	padding-bottom:   1px;
-	margin-left:   1px;
-	margin-right:   1px;
-	margin-top:   5px;
-	margin-bottom:   5px;
+	background :    white;
+	font-family :   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size :   13px;
+	border :   1px solid black;
+	padding :   10px;
+	margin : 5px  1px;
 	width:   100%;
 	clear:   both;
+}
+html[dir] body {
+	background :    white;
+	font-family :   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size :   13px;
+	padding :   10px;
+	margin : 5px  1px;
+}
+html[dir] a {
+	color: black !important;
+}
+html[dir] a:hover {
+	color: black !important;
+	background-color :   #EFEFEF;
 }
 .wikitopline table{ width: 100%; }
 
 /* Links to wiki pages */
-.wiki {
+.wikitext a, .wiki {
 	color: black;
 }
 
-.wiki:hover {
+.wikitext a:hover, .wiki:hover {
 	color:    black;
-	background:   #EFEFEF;
+	background-color :   #EFEFEF;
 }
 
 /* Date displayed for last modification date of pages */
