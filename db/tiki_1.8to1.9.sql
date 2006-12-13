@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.111 2006-11-07 14:21:52 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.112 2006-12-13 20:23:35 ohertel Exp $
 
 # The following script will update a tiki database from version 1.8.x to 1.9.x
 # The following script will ALSO update from version 1.9.x to 1.9.y
@@ -562,6 +562,7 @@ UPDATE tiki_pages set lang=null where lang="NULL";
 #Added June13th 2004 lfagundes
 ALTER TABLE users_score RENAME TO tiki_users_score;
 ALTER TABLE users_users ADD score int4 NOT NULL default 0;
+ALTER TABLE users_users DROP KEY score;
 ALTER TABLE users_users ADD KEY (score);
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_score','n');
 
