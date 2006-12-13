@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.68 2006-11-27 08:45:46 hangerman Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.69 2006-12-13 20:29:47 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
   
 {if $feature_help eq 'y'}
@@ -11,6 +11,7 @@
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
 {if $trackerId}
 <span class="button2"><a href="tiki-admin_tracker_fields.php?trackerId={$trackerId}" class="linkbut">{tr}Edit fields for tracker{/tr} {$name}</a></span>
+<span class="button2"><a href="tiki-view_tracker.php?trackerId={$trackerId}" class="linkbut">{tr}View this tracker items{/tr}</a></span>
 {/if}
 <br /><br />
 
@@ -151,6 +152,8 @@ for a tracker and they must be valid in SQL{/tr}</em>
 {section name=x loop=$fields}
 <option value="{$fields[x].fieldId}"{if $defaultOrderKey eq $fields[x].fieldId} selected="selected"{/if}>{$fields[x].name|truncate:42:" ..."}</option>
 {/section}
+<option value="-1"{if $defaultOrderKey eq -1} selected="selected"{/if}>{tr}lastModif{/tr}</option>
+<option value="-2"{if $defaultOrderKey eq -2} selected="selected"{/if}>{tr}created{/tr}</option>
 </select>
 </td></tr>
 <tr class="formcolor"><td class="auto" colspan="2">{tr}What is default sort order in list?{/tr}</td><td>

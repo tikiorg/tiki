@@ -93,7 +93,12 @@ function wikiplugin_trackerlist($data, $params) {
 			$sort_mode = $_REQUEST['tr_sort_mode'];
 		} elseif (!isset($sort_mode)) {
 			if (!empty($tracker_info['defaultOrderKey'])) {
-				$sort_mode = 'f_'.$tracker_info['defaultOrderKey'];
+				if ($tracker_info['defaultOrderKey'] == -1)
+					$sort_mode = 'lastModif';
+				elseif ($tracker_info['defaultOrderKey'] == -2)
+					$sort_mode = 'created';
+				else
+					$sort_mode = 'f_'.$tracker_info['defaultOrderKey'];
 				if (isset($tracker_info['defaultOrderDir'])) {
 					$sort_mode.= "_".$tracker_info['defaultOrderDir'];
 				} else {

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.105 2006-12-06 09:12:20 hangerman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.106 2006-12-13 20:29:46 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -590,8 +590,14 @@ if (isset($_REQUEST['import'])) {
 $smarty->assign_by_ref('fields', $fields["data"]);
 
 if (!isset($_REQUEST["sort_mode"])) {
-	if ($orderkey) {
-		$sort_mode = 'f_'.$tracker_info['defaultOrderKey'];
+	if (isset($tracker_info['defaultOrderKey'])) {
+		if ($tracker_info['defaultOrderKey'] == -1)
+			$sort_mode = 'lastModif';
+		elseif ($tracker_info['defaultOrderKey'] == -2)
+			$sort_mode = 'created';
+		elseif ($orderkey) {
+			$sort_mode = 'f_'.$tracker_info['defaultOrderKey'];
+		}
 		if (isset($tracker_info['defaultOrderDir'])) {
 			$sort_mode.= "_".$tracker_info['defaultOrderDir'];
 		} else {
