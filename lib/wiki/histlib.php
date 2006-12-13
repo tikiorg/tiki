@@ -204,7 +204,7 @@ class HistLib extends TikiLib {
 		$bindvars = array();
 		if ($findwhat) {
 			$findstr='%' . $findwhat . '%';
-			$where.= " and ta.`pageName` like ? or ta.`user` like ? or ta.`comment` like ?";
+			$where.= " and ta.`object` like ? or ta.`user` like ? or ta.`comment` like ?";
 			$bindvars = array($findstr,$findstr,$findstr);
 		}
 
