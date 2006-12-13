@@ -4,10 +4,10 @@
 {if $initial and $initials[ini] eq $initial}
 <span class="button2"><span class="linkbuton">{$initials[ini]|capitalize}</span></span> . 
 {else}
-<a {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?initial={$initials[ini]}{if $offset}&amp;offset={$offset}{/if}{if $numrows}&amp;numrows={$numrows}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}{/ajax_href} class="prevnext">{$initials[ini]}</a> . 
+<a {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?initial={$initials[ini]}{if $offset}&amp;offset={$offset}{/if}&amp;numrows={$maxRecords}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}{/ajax_href} class="prevnext">{$initials[ini]}</a> . 
 {/if}
 {/section}
-<a {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?initial={if $offset}&amp;offset={$offset}{/if}{if $numrows}&amp;numrows={$numrows}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}{/ajax_href} class="prevnext">{tr}All{/tr}</a>
+<a {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?initial={if $offset}&amp;offset={$offset}{/if}&amp;numrows={$maxRecords}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}{/ajax_href} class="prevnext">{tr}All{/tr}</a>
 </div>
 {/if}
 
