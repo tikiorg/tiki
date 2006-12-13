@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.353 2006-12-13 01:24:59 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.354 2006-12-13 20:49:53 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1755,6 +1755,7 @@ if ($feature_freetags == 'y' and isset($section) and isset($sections[$section]))
 		$tags = array();
 	}
 	$smarty->assign('freetags',$tags);
+	$headerlib->add_cssfile('css/freetags.css');
 }
 
 if ($feature_fullscreen == 'y') {
