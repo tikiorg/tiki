@@ -23,7 +23,7 @@ function wikiplugin_bloglist($data, $params) {
 	$result = $tikilib->query($query, array($Id));
     	while ($res = $result->fetchRow()) {
         	$text.="<tr><td>" . date("d/M/Y h:i", $res["created"]) . "</td>";
-		$text.="<td><a href=\"tiki-view_blog_post.php?blogId=" . $res["blogId"] . "&postId=" . $res["postId"] . "\">" . $res["title"] . "</a></td>";
+		$text.="<td><a href=\"tiki-view_blog_post.php?blogId=" . $Id . "&postId=" . $res["postId"] . "\">" . $res["title"] . "</a></td>";
         	$text.= "<td>" . $res["user"] . "</td></tr>\n";
   	}
 	$text.="</table></div>\n";

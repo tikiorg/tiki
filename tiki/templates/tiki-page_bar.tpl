@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.55 2006-12-13 20:28:34 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.56 2006-12-14 16:40:33 sylvieg Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -133,7 +133,6 @@
   {if $feature_multilingual eq 'y' and $tiki_p_edit eq 'y' and !$lock}
      <td><div class="button2"><a href="tiki-edit_translation.php?page={$page|escape:'url'}" class="linkbut">{tr}translation{/tr}</a></div></td>
   {/if}
-
 {/if}
 
 {/if}

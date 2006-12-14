@@ -532,6 +532,7 @@
        <option value="old" {if $default_wiki_diff_style eq 'old'}selected="selected"{/if}>{tr}Only with last version{/tr}</option>
        <option value="minsidediff" {if $default_wiki_diff_style ne 'old'}selected="selected"{/if}>{tr}Any 2 versions{/tr}</option>
     </select></td></tr>
+	<tr><td class="form">{tr}History only for data, description, comment change{/tr}</td><td><input type="checkbox" name="feature_wiki_history_full" {if $feature_wiki_history_full eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td colspan="2" class="button"><input type="submit" name="wikisetprefs" value="{tr}Change preferences{/tr}" /></td></tr>
     </table>
     </form>

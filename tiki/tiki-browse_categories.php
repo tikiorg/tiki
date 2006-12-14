@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.31 2006-09-26 13:13:42 luciash Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.32 2006-12-14 16:40:27 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -75,9 +75,14 @@ if (isset($_REQUEST["deep"]) && $_REQUEST["deep"] == 'on') {
 	$smarty->assign('deep', 'off');
 }
 
+$canView = false;
 if (is_array($_REQUEST['parentId'])) {
 	foreach ($_REQUEST['parentId'] as $p) {
 		$paths[] = $categlib->get_category_path($p);
+		$p_info = $categlib->get_category($p);
+		if($userlib->user_has_perm_on_object($user,$p_info['categId'],'category','tiki_p_view_categories')) {	
+			$canView = true;
+		}
 	}
 	$smarty->assign('paths', $paths);
 } else {
@@ -87,14 +92,25 @@ if (is_array($_REQUEST['parentId'])) {
 		$p_info = $categlib->get_category($_REQUEST["parentId"]);
 		$father = $p_info["parentId"];
 		$smarty->assign_by_ref('p_info', $p_info);
+		if($userlib->user_has_perm_on_object($user,$p_info['categId'],'category','tiki_p_view_categories')) {	
+			$canView = true;
+		}
 	} else {
 		$path = tra("TOP");
 		$father = 0;
+		$canView = true;
 	}
 	$smarty->assign('path', $path);
 	$smarty->assign('father', $father);
 }
 
+if(!$canView) {
+	$smarty->assign('msg',tra("Permission denied you cannot view this page"));
+	$smarty->display("error.tpl");
+	die;
+}
+
+//$ctall = $categlib->get_all_categories();
 $ctall = $categlib->get_all_categories_respect_perms($user, 'tiki_p_view_categories');
 
 if ($feature_phplayers == 'y') {

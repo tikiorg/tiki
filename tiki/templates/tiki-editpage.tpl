@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.94 2006-12-14 14:38:31 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.95 2006-12-14 16:40:33 sylvieg Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -150,7 +150,7 @@ or use
 </td></tr>
 {/if}
 
-{if $feature_smileys eq 'y' && $wysiwyg ne 'y'}
+{if $feature_smileys eq 'y'&&!$wysiwyg}
 <tr class="formcolor"><td>{tr}Smileys{/tr}:</td><td>
 {include file="tiki-smileys.tpl" area_name='editwiki'}
 </td>
@@ -269,6 +269,7 @@ function searchrep() {
 <a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}&amp;all=1" class="link">{tr}export all versions{/tr}</a>
 </td></tr>
 {/if}
+
 {if $feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y'}
 <tr class="formcolor"><td>{tr}Upload picture{/tr}:</td><td>
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />

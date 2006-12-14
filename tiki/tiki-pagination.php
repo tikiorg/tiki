@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagination.php,v 1.8 2006-01-05 17:16:37 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagination.php,v 1.9 2006-12-14 16:40:27 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -24,7 +24,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 if (isset($cant) and $cant) {
 	if (!isset($offset)) $offset = 0;
-	if (!isset($max))
+	if (!isset($max) || $max == 0)
 		$max = isset($maxRecords)? $maxRecords: 10;
 	$smarty->assign_by_ref('offset', $offset);
 	$smarty->assign_by_ref('maxRecords', $maxRecords);

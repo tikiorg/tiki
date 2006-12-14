@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.112 2006-12-13 20:23:35 ohertel Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.113 2006-12-14 16:40:28 sylvieg Exp $
 
 # The following script will update a tiki database from version 1.8.x to 1.9.x
 # The following script will ALSO update from version 1.9.x to 1.9.y
@@ -1304,4 +1304,5 @@ INSERT IGNORE INTO users_grouppermissions (groupName,permName,value) VALUES ('An
 update tiki_preferences set name='auth_pear_host' where name='auth_ldap_host';
 update tiki_preferences set name='auth_pear_port' where name='auth_ldap_port';
 
-
+#sylvieg 2006-12-08
+ALTER TABLE tiki_categorized_objects ADD KEY(type, objId);

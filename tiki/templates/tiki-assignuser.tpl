@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.29 2006-04-12 20:39:31 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.30 2006-12-14 16:40:32 sylvieg Exp $ *}
 
 <h1><a href="tiki-assignuser.php?assign_user={$assign_user|escape:url}" class="pagetitle">{tr}Assign user{/tr} {$assign_user} {tr}to groups{/tr}</a></h1>
 <a href="tiki-adminusers.php" class="linkbut">{tr}Admin users{/tr}</a> <a href="tiki-admingroups.php" class="linkbut">{tr}Admin groups{/tr}</a>
 <br />
 
-{if !empty($feature_intertiki_mymaster)}
+{if $feature_intertiki eq 'y' and !empty($feature_intertiki_mymaster)}
   <br /><b>{tr}Warning: since this tiki site is in slave mode, all user information you enter manually will be automatically overriden by other site's data, including users permissions{/tr}</b>
 {/if}
   

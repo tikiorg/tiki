@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/categorize_list.php,v 1.19 2006-10-23 14:01:15 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/categorize_list.php,v 1.20 2006-12-14 16:40:26 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,7 +13,7 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 $smarty->assign('mandatory_category', '-1');
 if ($feature_categories == 'y') {
-	global $categlib; include_once ('lib/categories/categlib.php');
+	global $categlib, $user; include_once ('lib/categories/categlib.php');
 	$smarty->assign('cat_categorize', 'n');
 
 	if (isset($_REQUEST["cat_categorize"]) && $_REQUEST["cat_categorize"] == 'on') {
@@ -25,12 +25,18 @@ if ($feature_categories == 'y') {
 		$ext = ($cat_type == 'wiki page')? 'wiki':str_replace(' ', '_', $cat_type);
 		$pref = 'feature_'.$ext.'_mandatory_category';
 		if ($$pref > 0)
-			$categories = $categlib->list_categs($$pref);
+			$all_categories = $categlib->list_categs($$pref);
 		else
-			$categories = $categlib->list_categs();
+			$all_categories = $categlib->list_categs();
 		$smarty->assign('mandatory_category', $$pref);
 	} else
-		$categories = $categlib->list_categs();
+		$all_categories = $categlib->list_categs();
+	for ($i = 0; $i < $num_categories; $i++) {
+		if($userlib->user_has_perm_on_object($user,$all_categories[$i]['categId'],'category','tiki_p_view_categories')) {
+			$categories[] = $all_categories[$i];
+		}	
+	}
+
 	$num_categories = count($categories);
 
 	for ($i = 0; $i < $num_categories; $i++) {

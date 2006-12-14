@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.38 2006-12-12 17:22:54 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.39 2006-12-14 16:40:27 sylvieg Exp $
 
 	require_once('tiki-setup.php');
 	include_once('lib/filegals/filegallib.php');
@@ -36,7 +36,27 @@
 	      }
 	    }
 	  }
-	}
+	} elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+	  $perms_array = $categlib->get_object_categories_perms($user, 'file gallery', $_REQUEST['galleryId']);
+   	  if ($perms_array) {
+   	    $is_categorized = TRUE;
+    	    foreach ($perms_array as $perm => $value) {
+    	      $$perm = $value;
+    	    }
+   	  } else {
+   	    $is_categorized = FALSE;
+   	  }
+	  if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+	    if (!isset($user)){
+	      $smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
+	      $smarty->assign('errortitle',tra("Please login"));
+	    } else {
+	      $smarty->assign('msg',tra("Permission denied you cannot view this page"));
+    	    }
+	    $smarty->display("error.tpl");
+	    die;
+	  }
+       }
 	
 	
 	if(isset($_REQUEST["find"])) {
