@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.686 2006-12-14 16:40:28 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.687 2006-12-14 16:56:05 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4567,19 +4567,17 @@ function add_pageview() {
 	global $feature_best_language;
 	global $wiki_page_separator;
 	global $feature_wysiwyg;
-        // melmut - if $is_html is set, check $wiki_wikisyntax_in_html,
-        //  which can be set to 'full' (default), 'partial' or 'none'
-	global $wiki_wikisyntax_in_html;
+	global $wysiwyg_wiki_parsed;
+	global $wysiwyg_wiki_semi_parsed;
 
+	// if simple_wiki is tru, disable some wiki syntax
+	// basically, allow wiki plugins, wiki links and almost
+	// everything between {}
 	$simple_wiki = false;
 	if ($is_html) {
-		// if it is set to 'none', don't parse anything
-		// if it is set to 'partial', disable some wiki syntax
-		// basically, allow wiki plugins, wiki links and almost
-		// everything between {}
-		if ($wiki_wikisyntax_in_html == 'none') {
+		if ($wysiwyg_wiki_parsed == 'n') {
 			return $data;
-		} elseif ($wiki_wikisyntax_in_html == 'partial') {
+		} elseif ($wysiwyg_wiki_semi_parsed == 'y') {
 			$simple_wiki = true;
 		}
 	}
