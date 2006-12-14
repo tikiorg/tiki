@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.152 2006-12-05 17:28:03 hangerman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.153 2006-12-14 20:50:43 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -598,7 +598,7 @@ class TrackerLib extends TikiLib {
 					} else $voteavg = '0';
 					$fopt["voteavg"] = $voteavg;
 				} elseif ($fopt["type"] == 'e') {
-				        global $categlib;
+				        global $categlib;include_once('lib/categories/categlib.php');
 					$mycats = $categlib->get_child_categories($fopt['options']);
 					$zcats = $categlib->get_object_categories("tracker ".$trackerId,$res["itemId"]);
 					$cats = array();
