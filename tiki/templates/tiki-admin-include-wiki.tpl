@@ -379,36 +379,6 @@
     </div>
   </div>
 {/if}
-  <div class="cbox">
-    <div class="cbox-title">
-    {tr}HTML in Wiki Pages{/tr}
-    </div>
-    <div class="cbox-data">
-    <form action="tiki-admin.php?page=wiki" method="post">
-    <table class="admin">
-    <tr><td class="form">{tr}Allow HTML{/tr}:</td><td><input type="checkbox" name="feature_wiki_allowhtml" {if $feature_wiki_allowhtml eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="form">{tr}Wiki syntax used when a page contains HTML{/tr}:</td><td>
-    <select name="wiki_wikisyntax_in_html">
-    <option value="full" {if $wiki_wikisyntax_in_html eq 'full'}selected="selected"{/if}>{tr}full{/tr}</option>
-    <option value="partial" {if $wiki_wikisyntax_in_html eq 'partial'}selected="selected"{/if}>{tr}partial{/tr}</option>
-    <option value="none" {if $wiki_wikisyntax_in_html eq 'none'}selected="selected"{/if}>{tr}none{/tr}</option>
-    </select>
-    </td></tr>
-    <tr><td class="form">{tr}Wysiwyg editor{/tr}:</td><td>
-    <select name="feature_wysiwyg">
-    <option value="default" {if $feature_wysiwyg eq 'default'}selected="selected"{/if}>{tr}default{/tr}</option>
-    <option value="optional" {if $feature_wysiwyg eq 'optional'}selected="selected"{/if}>{tr}optional{/tr}</option>
-    <option value="no" {if $feature_wysiwyg eq 'no'}selected="selected"{/if}>{tr}no{/tr}</option>
-    </select>
-    </td></tr>
-		<tr><td>{tr}Wysiwyg editor by default (if optional){/tr}:</td><td>
-		<input type="checkbox" name="wysiwyg_default" {if $wysiwyg_default eq 'y'}checked="checked"{/if}/>
-		</td></tr>
-    <tr><td colspan="2" class="button"><input type="submit" name="wikisethtmloptions" value="{tr}Change preferences{/tr}" /></td></tr>    
-    </table>
-    </form>
-    </div>
-  </div>
 
   </td>
   <td  valign="top">
@@ -510,6 +480,7 @@
 </td></tr>
     <tr><td class="form">{tr}Print Page{/tr}:</td><td><input type="checkbox" name="feature_wiki_print" {if $feature_wiki_print eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Search and replace{/tr}:</td><td><input type="checkbox" name="feature_wiki_replace" {if $feature_wiki_replace eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Allow HTML{/tr}:</td><td><input type="checkbox" name="feature_wiki_allowhtml" {if $feature_wiki_allowhtml eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td colspan="2" class="button"><input type="submit" name="wikifeatures" value="{tr}Set features{/tr}" /></td></tr>
     </table>
     </form>
