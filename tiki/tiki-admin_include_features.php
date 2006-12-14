@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.55 2006-12-03 23:47:08 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.56 2006-12-14 14:38:30 mose Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -10,8 +10,15 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+
+
+// Process Features form(s)
+if (isset($_REQUEST["features"])) {
+
 $features_toggles = array(
+	"contact_anon",
 	"feature_action_calendar",
+	"feature_actionlog",
 	"feature_ajax",
 	"feature_articles",
 	"feature_autolinks",
@@ -19,8 +26,8 @@ $features_toggles = array(
 	"feature_banning",
 	"feature_blogs",
 	"feature_bot_bar",
-	"feature_bot_bar_icons",
 	"feature_bot_bar_debug",
+	"feature_bot_bar_icons",
 	"feature_calendar",
 	"feature_categories",
 	"feature_categoryobjects",
@@ -30,6 +37,7 @@ $features_toggles = array(
 	"feature_comm",
 	"feature_contact",
 	"feature_contacts",
+	"feature_contribution",
 	"feature_custom_home",
 	"feature_debug_console",
 	"feature_directory",
@@ -45,11 +53,13 @@ $features_toggles = array(
 	"feature_forums",
 	"feature_freetags",
 	"feature_friends",
+	"feature_fullscreen",
 	"feature_galleries",
 	"feature_games",
+	"feature_gmap",
+	"feature_help",
 	"feature_hotwords",
 	"feature_hotwords_nw",
-	"feature_help",
 	"feature_html_pages",
 	"feature_integrator",
 	"feature_intertiki",
@@ -57,7 +67,6 @@ $features_toggles = array(
 	"feature_live_support",
 	"feature_mailin",
 	"feature_maps",
-	"feature_gmap",
 	"feature_messages",
 	"feature_minical",
 	"feature_mobile",
@@ -69,13 +78,13 @@ $features_toggles = array(
 	"feature_phplayers",
 	"feature_polls",
 	"feature_quizzes",
-	"feature_referer_stats",
 	"feature_redirect_on_error",
+	"feature_referer_stats",
 	"feature_score",
 	"feature_search",
-	"feature_signal",
 	"feature_sheet",
 	"feature_shoutbox",
+	"feature_signal",
 	"feature_siteidentity",
 	"feature_smileys",
 	"feature_stats",
@@ -84,8 +93,8 @@ $features_toggles = array(
 	"feature_tasks",
 	"feature_theme_control",
 	"feature_top_bar",
-	"feature_trackers",
 	"feature_trackbackpings",
+	"feature_trackers",
 	"feature_use_quoteplugin",
 	"feature_userPreferences",
 	"feature_user_bookmarks",
@@ -97,13 +106,10 @@ $features_toggles = array(
 	"feature_webmail",
 	"feature_wiki",
 	"feature_workflow",
-	"feature_fullscreen",
+	"feature_wysiwyg",
 	"feature_xmlrpc",
 	"layout_section",
-	"user_assigned_modules",
-	"contact_anon",
-	"feature_actionlog",
-	"feature_contribution"
+	"user_assigned_modules"
 );
 
     $pref_byref_values = array(
@@ -113,8 +119,6 @@ $features_toggles = array(
     );
 
 
-// Process Features form(s)
-if (isset($_REQUEST["features"])) {
     check_ticket('admin-inc-features');
     foreach ($features_toggles as $toggle) {
         simple_set_toggle ($toggle);

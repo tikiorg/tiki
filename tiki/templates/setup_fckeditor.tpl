@@ -6,20 +6,21 @@ var _QuickUploadLanguage      = 'php' ;
 FCKConfig.FontNames = 'sans serif;serif;monospace;Arial;Comic Sans MS;Courier New;Tahoma;Times New Roman;Verdana' ;
 
 FCKConfig.ToolbarSets["Tiki"] = [
-  ['FitWindow','Templates','-','Cut','Copy','Paste','PasteWord','Print','SpellCheck'],
-	['Undo','Redo','-','Replace','RemoveFormat','-','Image','Table','Rule','SpecialChar','PageBreak','UniversalKey'],
-	'/',
-	['JustifyLeft','JustifyCenter','JustifyRight','JustifyFull','-','OrderedList','UnorderedList','Outdent','Indent'],
-	['Bold','Italic','Underline','StrikeThrough','-','Subscript','Superscript','-','Link','Unlink','Anchor','-','tikilink'],
-	'/',
-	['Style','FontName','FontSize','-','TextColor','BGColor']
+{foreach item=it from=$toolbar name=lines}
+  {foreach item=i from=$it name=item}
+  [{foreach item=m from=$i name=im}'{$m}'{if $smarty.foreach.im.index+1 ne $smarty.foreach.im.total},{/if}{/foreach}]{if $smarty.foreach.lines.index+1 ne $smarty.foreach.lines.total},{/if}
+
+  {/foreach}
+  {if $smarty.foreach.lines.index+1 ne $smarty.foreach.lines.total}'/',{/if}
+
+{/foreach}
 ] ;
 
 FCKConfig.StylesXmlPath = _TikiRoot + 'lib/fckeditor_tiki/tikistyles.xml';
 FCKConfig.TemplatesXmlPath = _TikiRoot + 'lib/fckeditor_tiki/tikitemplates.xml';
 
 FCKConfig.EditorAreaCSS = _TikiRoot + '{$fckstyle}' ;
-FCKConfig.SkinPath = FCKConfig.BasePath + 'skins/default/' ;
+FCKConfig.SkinPath = FCKConfig.BasePath + 'skins/{$wysiwyg_toolbar_skin}/' ;
 FCKConfig.DefaultLanguage   = '{$language}' ;
 FCKConfig.AutoDetectLanguage   = {if $feature_detect_language eq 'y'}true{else}false{/if} ;
 FCKConfig.ContentLangDirection = '{if $feature_bidi eq 'y'}rtl{else}ltr{/if}' ;

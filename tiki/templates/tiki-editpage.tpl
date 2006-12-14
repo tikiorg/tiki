@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.93 2006-12-07 13:07:26 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.94 2006-12-14 14:38:31 mose Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -77,11 +77,11 @@
 {if $add_child}
 <input type="hidden" name="add_child" value="true" />
 {/if}
-{if $feature_wysiwyg eq 'optional'}
-{if !$wysiwyg}
-<span class="button2"><a class="linkbut" href="?page={$page}&&wysiwyg=y">{tr}Use wysiwyg editor{/tr}</a></span>
+{if $feature_wysiwyg eq 'y' and $wysiwyg_optional eq 'y'}
+{if $wysiwyg ne 'y'}
+<span class="button2"><a class="linkbut" href="?page={$page}&amp;wysiwyg=y">{tr}Use wysiwyg editor{/tr}</a></span>
 {else}
-<span class="button2"><a class="linkbut" href="?page={$page}&&wysiwyg=n">{tr}Use normal editor{/tr}</a></span>
+<span class="button2"><a class="linkbut" href="?page={$page}&amp;wysiwyg=n">{tr}Use normal editor{/tr}</a></span>
 {/if}
 {/if}
 
@@ -150,7 +150,7 @@ or use
 </td></tr>
 {/if}
 
-{if $feature_smileys eq 'y'&&!$wysiwyg}
+{if $feature_smileys eq 'y' && $wysiwyg ne 'y'}
 <tr class="formcolor"><td>{tr}Smileys{/tr}:</td><td>
 {include file="tiki-smileys.tpl" area_name='editwiki'}
 </td>
@@ -160,7 +160,7 @@ or use
 <tr class="formcolor"><td>{tr}Description{/tr}:</td><td><input style="width:95%;" class="wikitext" type="text" name="description" value="{$description|escape}" /></td></tr>
 {/if}
 <tr class="formcolor">
-{if !$wysiwyg}
+{if $wysiwyg ne 'y'}
 <td>
 {tr}Edit{/tr}:<br /><br />
 {include file="textareasize.tpl" area_name='editwiki' formId='editpageform' ToolbarSet='Tiki'}<br /><br />
