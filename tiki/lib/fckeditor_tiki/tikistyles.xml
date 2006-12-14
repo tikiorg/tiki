@@ -26,6 +26,16 @@
 	<Style name="Title H2" element="h2" />
 	
 	<Style name="Title H3" element="h3" />
+
+	<Style name="Title Bar" element="div">
+		<Attribute name="class" value="titlebar" />
+	</Style>
+	
+	<Style name="Normal" element="div" />
+	
+	<Style name="Framed" element="div">
+		<Attribute name="class" value="simplebox" />
+	</Style>
 	
 	<Style name="Code" element="div">
 		<Attribute name="class" value="code" />
