@@ -634,9 +634,7 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 					}
 					$fopt['categs'] = $cats;	
 				} elseif ($fopt["type"] == 'l') {
-					if (!$optsl) {
-						$optsl = split(',',$fopt['options']);
-					}
+					$optsl = split(',',$fopt['options']);
 					$fopt["links"] = array();
 					$lst = $last[$optsl[2]];
 					if ($lst) {
