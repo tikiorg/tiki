@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.151 2006-12-07 11:02:16 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.152 2006-12-14 14:38:30 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -500,32 +500,24 @@ if (!($tiki_p_admin == 'y' || $tiki_p_admin_wiki== 'y' || $tikilib->user_has_per
 	die;
 }
 
-# melmut - is_html is defined here...
+// wysiwyg decision
 $is_html = false;
-$can_html = false;
-if ($feature_wiki_allowhtml == 'y' and ($tiki_p_admin == 'y' or $tiki_p_use_HTML == 'y')) {
- 	$can_html = true;
-  if ((!isset($_REQUEST["edit"]) and $info['is_html']) or (isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"] == "on") or $feature_wysiwyg == 'default' or ($feature_wysiwyg == 'optional' and $wysiwyg_default == 'y')) {
-	  $is_html = true;
-	  $_REQUEST["allowhtml"] = 'on';
-  } else {
-	  $_REQUEST["allowhtml"] = 'off';
-  }
-}
-
-# melmut - can_wysiwyg is set if a user can use the wysiwyg editor in html
-# wysiwyg is set if it should be used right now
-$wysiwyg = false;
-$can_wysiwyg = false;
-if ($feature_wysiwyg != 'no' and $can_html and $is_html ) {
-	$can_wysiwyg = true;
-	if ((isset($_REQUEST['wysiwyg']) and $_REQUEST['wysiwyg'] == 'y') or $feature_wysiwyg == 'default' or (!isset($_REQUEST['wysiwyg']) and $feature_wysiwyg == 'optional' and $wysiwyg_default == 'y')) {
-		$wysiwyg = true;
-	  $_REQUEST["allowhtml"] = 'on';
+if ($feature_wysiwyg == 'y') {
+	if (!isset($_SESSION['wysiwyg'])) {
+		$_SESSION['wysiwyg'] = 'n';
+	}
+	if ((isset($_REQUEST['wysiwyg']) and $_REQUEST['wysiwyg'] == 'y' and $wysiwyg_optional == 'y') or ($wysiwyg_optional == 'n' or $wysiwyg_default == 'y')) {
+		$_SESSION['wysiwyg'] = 'y';
+	} elseif (isset($_REQUEST['wysiwyg']) and $_REQUEST['wysiwyg'] == 'n') {
+		$_SESSION['wysiwyg'] = 'n';
+	}
+	$is_html = true;
+} elseif ($feature_wiki_allowhtml == 'y' and ($tiki_p_admin == 'y' or $tiki_p_use_HTML == 'y')) {
+	if ($info['is_html'] or (isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"] == "on")) {
+		$is_html = true;
 	}
 }
-$smarty->assign('can_wysiwyg',$can_wysiwyg);
-$smarty->assign('wysiwyg',$wysiwyg);
+$smarty->assign('wysiwyg',$_SESSION['wysiwyg']);
 
 
 /*
@@ -687,7 +679,7 @@ if (isset($_REQUEST["lang"])) {
 }
 $smarty->assign('lang', $pageLang);
 
-if (!$wysiwyg) $edit_data =& htmldecode($edit_data);
+if ($feature_wysiwyg == 'n' or $_SESSION['wysiwyg'] != 'y') $edit_data =& htmldecode($edit_data);
 $smarty->assign('pagedata',$edit_data);
 
 // apply the optional post edit filters before preview

@@ -96,5 +96,8 @@
     <a href="tiki-admin.php?page=i18n" title="{tr}i18n{/tr}" class="admbox">
       <img border="0" src="pics/large/i18n48x48.png" alt="{tr}i18n{/tr}" /><br />{tr}i18n{/tr}
     </a>
+    <a href="tiki-admin.php?page=wysiwyg" title="{tr}wysiwyg{/tr}" class="admbox">
+      <img border="0" src="pics/large/wysiwyg48x48.png" alt="{tr}wysiwyg{/tr}" /><br />{tr}wysiwyg{/tr}
+    </a>
   </div>
 </div><p/>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.115 2006-11-21 14:41:30 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.116 2006-12-14 14:38:30 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -95,13 +95,13 @@ if (isset($_REQUEST["page"])) {
 	$helpUrl='';
 	if ($adminPage == "features") {
 		$admintitle = "Features"; //get_strings tra("Features")
-                $description = "Enable/disable Tiki features here, but configure them elsewhere"; //get_strings tra("Enable/disable Tiki features here, but configure them elsewhere") TODO FOR EACH DESCRIPTION
-				$helpUrl = "Features Admin";
+		$description = "Enable/disable Tiki features here, but configure them elsewhere"; //get_strings tra("Enable/disable Tiki features here, but configure them elsewhere") TODO FOR EACH DESCRIPTION
+		$helpUrl = "Features Admin";
 		include_once ('tiki-admin_include_features.php');
 	} else if ($adminPage == "general") {
 		$admintitle = "General";//get_strings tra("General")
-                $description = "General preferences and settings";//get_strings tra("General preferences and settings")
-				$helpUrl = "General Admin";
+		$description = "General preferences and settings";//get_strings tra("General preferences and settings")
+		$helpUrl = "General Admin";
 		include_once ('tiki-admin_include_general.php');
 	} else if ($adminPage == "login") {
 		$admintitle = "Login";//get_strings tra("Login")
@@ -156,8 +156,8 @@ if (isset($_REQUEST["page"])) {
 		$description = "Webmail";
 		include_once ('tiki-admin_include_webmail.php');
 	} else if ($adminPage == "rss") {
-                $admintitle = "RSS feeds";//get_strings tra("RSS feeds")
-                $description = "RSS settings";//get_strings tra("RSS settings")
+		$admintitle = "RSS feeds";//get_strings tra("RSS feeds")
+		$description = "RSS settings";//get_strings tra("RSS settings")
 		include_once ('tiki-admin_include_rss.php');
 	} else if ($adminPage == "directory") {
 		$admintitle = "Directory";//get_strings tra("Directory")
@@ -176,7 +176,7 @@ if (isset($_REQUEST["page"])) {
 		$admintitle = "Meta Tags";//get_strings tra("Meta Tags")
 		$helpUrl = "Meta+Tags+Config";
 		$description = "Meta Tags settings";//get_strings tra("Meta Tags settings")
-                include_once ('tiki-admin_include_metatags.php');
+		include_once ('tiki-admin_include_metatags.php');
 	} else if ($adminPage == "search") {
 		$admintitle = "Search";//get_strings tra("Search")
 		$description = "Search settings";//get_strings tra("Search settings")
@@ -219,6 +219,11 @@ if (isset($_REQUEST["page"])) {
 		$description = "Internationalization";//get_strings tra("i18n")
 		$helpUrl = "Internationalization Admin";
 		include_once ('tiki-admin_include_i18n.php');		
+	} else if ($adminPage == "wysiwyg") {
+		$admintitle = "wysiwyg";//get_strings tra("i18n")
+		$description = "Wysiwyg Editor";//get_strings tra("i18n")
+		$helpUrl = "Wysiwyg Editor Admin";
+		include_once ('tiki-admin_include_wysiwyg.php');		
 	}
 	$url = 'tiki-admin.php'.'?page='.$adminPage;
 	if (!$helpUrl) {$helpUrl = ucfirst($adminPage)."+Config";}
