@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.65 2006-12-11 22:36:15 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.66 2006-12-14 16:40:26 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -177,6 +177,7 @@ if (isset($_REQUEST["wikisetprefs"])) {
 	simple_set_value('keep_versions');
 	simple_set_value('default_wiki_diff_style');
 	simple_set_toggle('feature_wiki_history_ip');
+	simple_set_toggle('feature_wiki_history_full');
 }
 
 if (isset($_REQUEST["wikisethtmloptions"])) {

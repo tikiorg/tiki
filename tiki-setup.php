@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.355 2006-12-14 14:38:30 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.356 2006-12-14 16:40:27 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -298,142 +298,95 @@ if (isset($_REQUEST['PHPSESSID'])) {
     $tikilib->update_session(session_id());
 }
 
-/* UPGRADE temporary for wysiwyg prefs. TODO REMOVE from release*/
-/* ------------------------------------------------------------- */
-
-$wys = $tikilib->get_preference('feature_wysiwyg','n');
-if ($wys == 'no' or $wys == 'optional' or $wys == 'default') {
-	$par = $tikilib->get_preference('wiki_wikisyntax_in_html','');
-	$def = $tikilib->get_preference('wysiwyg_default','y');
-	if ($wys == 'optional') {
-		$tikilib->set_preference('feature_wysiwyg','y');
-		$tikilib->set_preference('wysiwyg_optional','y');
-		if ($def == 'y') {
-			$tikilib->set_preference('wysiwyg_default','y');
-		}
-	} elseif ($wys == 'default') {
-		$tikilib->set_preference('feature_wysiwyg','y');
-		$tikilib->set_preference('wysiwyg_optional','n');
-		$tikilib->set_preference('wysiwyg_default','y');
-	} else {
-		$tikilib->set_preference('feature_wysiwyg','n');
-	}
-	if ($par == 'full') {
-		$tikilib->set_preference('wysiwyg_wiki_parsed','y');
-		$tikilib->set_preference('wysiwyg_wiki_semi_parsed','n');
-	} elseif ($par == 'partial') {
-		$tikilib->set_preference('wysiwyg_wiki_parsed','y');
-		$tikilib->set_preference('wysiwyg_wiki_semi_parsed','y');
-	} elseif ($par == 'none') {
-		$tikilib->set_preference('wysiwyg_wiki_parsed','n');
-		$tikilib->set_preference('wysiwyg_wiki_semi_parsed','n');
-	}
-}
-
-/* ------------------------------------------------------------- */
-/* END of UPGRADE wysiwyg */
-
 # wiki
 $sections['wiki page']['feature'] = 'feature_wiki';
 $sections['wiki page']['key'] = 'page';
 $sections['wiki page']['itemkey'] = '';
 $pref['feature_wiki'] = 'y';
-$pref['default_wiki_diff_style'] = 'minsidediff';
-$pref['feature_backlinks'] = 'y';
-$pref['feature_dump'] = 'y';
-$pref['feature_history'] = 'y';
-$pref['feature_lastChanges'] = 'y';
-$pref['feature_likePages'] = 'y';
-$pref['feature_listPages'] = 'y';
-$pref['feature_page_title'] = 'y';
-$pref['feature_sandbox'] = 'y';
-$pref['feature_warn_on_edit'] = 'n';
-$pref['feature_wiki_1like_redirection'] = 'y';
-$pref['feature_wiki_allowhtml'] = 'n';
-$pref['feature_wiki_attachments'] = 'n';
-$pref['feature_wiki_comments'] = 'n';
-$pref['feature_wiki_description'] = 'n';
-$pref['feature_wiki_discuss'] = 'n';
-$pref['feature_wiki_export'] = 'y';
-$pref['feature_wiki_footnotes'] = 'n';
+$pref['feature_wiki_rankings'] = 'y';
 $pref['feature_wiki_icache'] = 'n';
+$pref['feature_wiki_undo'] = 'n';
+$pref['feature_wiki_multiprint'] = 'n';
+$pref['feature_wiki_pdf'] = 'n';
+$pref['feature_wiki_export'] = 'y';
+$pref['feature_lastChanges'] = 'y';
+$pref['feature_dump'] = 'y';
+$pref['feature_listPages'] = 'y';
+$pref['feature_history'] = 'y';
+$pref['feature_backlinks'] = 'y';
+$pref['feature_likePages'] = 'y';
+$pref['feature_sandbox'] = 'y';
+$pref['feature_wiki_print'] = 'y';
+$pref['wiki_uses_slides'] = 'n';
+$pref['feature_wiki_allowhtml'] = 'n';
+$pref['wiki_feature_copyrights'] = 'n';
+$pref['wiki_creator_admin'] = 'n';
+$pref['wiki_authors_style'] = 'classic';
+$pref['wiki_watch_author'] = 'n';
+$pref['wiki_watch_comments'] = 'y';
+$pref['wiki_watch_editor'] = 'n';
+$pref['wiki_list_name'] = 'y';
+$pref['wiki_list_hits'] = 'y';
+$pref['wiki_list_lastmodif'] = 'y';
+$pref['wiki_list_creator'] = 'y';
+$pref['wiki_list_user'] = 'y';
+$pref['wiki_list_lastver'] = 'y';
+$pref['wiki_list_comment'] = 'y';
+$pref['wiki_list_status'] = 'y';
+$pref['wiki_list_versions'] = 'y';
+$pref['wiki_list_links'] = 'y';
+$pref['wiki_list_backlinks'] = 'y';
+$pref['wiki_list_size'] = 'y';
+$pref['feature_wiki_pageid'] = 'n';
+$pref['mailin_autocheck'] = 'n';
+$pref['mailin_autocheckFreq'] = '0';
+$pref['mailin_autocheckLast'] = 0;
+$pref['feature_wiki_comments'] = 'n';
+$pref['wiki_comments_default_ordering'] = 'points_desc';
+$pref['wiki_comments_per_page'] = 10;
+$pref['feature_wiki_templates'] = 'n';
+$pref['feature_warn_on_edit'] = 'n';
+$pref['warn_on_edit_time'] = 2;
+$pref['wiki_cache'] = 0;
+$pref['feature_wiki_description'] = 'n';
+$pref['feature_wiki_pictures'] = 'n';
+$pref['feature_wikiwords'] = 'y';
+$pref['feature_wikiwords_usedash'] = 'y';
+$pref['feature_wiki_plurals'] = 'y';
+$pref['feature_wiki_paragraph_formatting'] = 'n';
+$pref['feature_wiki_footnotes'] = 'n';
+$pref['feature_wiki_monosp'] = 'y';
+$pref['feature_wiki_attachments'] = 'n';
+$pref['feature_page_title'] = 'y';
+$pref['wikiHomePage'] = 'HomePage';
+$pref['wiki_page_regex'] = 'strict';
+$pref['wiki_pagename_strip'] = '';
+$pref['wiki_page_separator'] = '...page...';
+$pref['default_wiki_diff_style'] = 'minsidediff';
+$pref['feature_wiki_1like_redirection'] = 'y';
+$pref['feature_wiki_discuss'] = 'n';
 $pref['feature_wiki_import_html'] = 'n';
 $pref['feature_wiki_mandatory_category'] = '-1';
-$pref['feature_wiki_monosp'] = 'y';
-$pref['feature_wiki_multiprint'] = 'n';
 $pref['feature_wiki_notepad'] = 'n';
 $pref['feature_wiki_open_as_structure'] = 'n';
-$pref['feature_wiki_pageid'] = 'n';
-$pref['feature_wiki_paragraph_formatting'] = 'n';
-$pref['feature_wiki_pdf'] = 'n';
-$pref['feature_wiki_pictures'] = 'n';
-$pref['feature_wiki_plurals'] = 'y';
-$pref['feature_wiki_print'] = 'y';
 $pref['feature_wiki_protect_email'] = 'n';
-$pref['feature_wiki_rankings'] = 'y';
 $pref['feature_wiki_ratings'] = 'n';
 $pref['feature_wiki_replace'] = 'n';
 $pref['feature_wiki_show_hide_before'] = 'n';
 $pref['feature_wiki_tables'] = 'new';
-$pref['feature_wiki_templates'] = 'n';
-$pref['feature_wiki_undo'] = 'n';
-$pref['feature_wiki_userpage'] = 'y';
-$pref['feature_wiki_userpage_prefix'] = 'UserPage';
-$pref['feature_wiki_usrlock'] = 'n';
-$pref['feature_wikiwords'] = 'y';
-$pref['feature_wikiwords_usedash'] = 'y';
-$pref['mailin_autocheck'] = 'n';
-$pref['mailin_autocheckFreq'] = '0';
-$pref['mailin_autocheckLast'] = 0;
-$pref['warn_on_edit_time'] = 2;
-$pref['wikiHomePage'] = 'HomePage';
 $pref['wikiLicensePage'] = '';
 $pref['wikiSubmitNotice'] = '';
-$pref['wiki_authors_style'] = 'classic';
-$pref['wiki_bot_bar'] = 'n';
-$pref['wiki_cache'] = 0;
-$pref['wiki_comments_default_ordering'] = 'points_desc';
-$pref['wiki_comments_per_page'] = 10;
-$pref['wiki_creator_admin'] = 'n';
-$pref['wiki_feature_copyrights'] = 'n';
 $pref['wiki_forum_id'] = '';
 $pref['wiki_left_column'] = 'y';
-$pref['wiki_list_backlinks'] = 'y';
-$pref['wiki_list_comment'] = 'y';
-$pref['wiki_list_creator'] = 'y';
-$pref['wiki_list_hits'] = 'y';
-$pref['wiki_list_lastmodif'] = 'y';
-$pref['wiki_list_lastver'] = 'y';
-$pref['wiki_list_links'] = 'y';
-$pref['wiki_list_name'] = 'y';
-$pref['wiki_list_size'] = 'y';
-$pref['wiki_list_status'] = 'y';
-$pref['wiki_list_user'] = 'y';
-$pref['wiki_list_versions'] = 'y';
-$pref['wiki_page_regex'] = 'strict';
-$pref['wiki_page_separator'] = '...page...';
-$pref['wiki_pagename_strip'] = '';
 $pref['wiki_right_column'] = 'y';
 $pref['wiki_top_bar'] = 'y';
-$pref['wiki_uses_slides'] = 'n';
-$pref['wiki_watch_author'] = 'n';
-$pref['wiki_watch_comments'] = 'y';
-$pref['wiki_watch_editor'] = 'n';
+$pref['wiki_bot_bar'] = 'n';
+$pref['feature_wiki_history_full'] = 'n';
 
 # wysiwyg
-$pref['feature_wysiwyg'] = 'n';
-$pref['wysiwyg_optional'] = 'y';
-$pref['wysiwyg_default'] = 'y';
-$pref['wysiwyg_wiki_parsed'] = 'y';
-$pref['wysiwyg_wiki_semi_parsed'] = 'y';
-$pref['wysiwyg_toolbar_skin'] = 'default';
-$pref['wysiwyg_toolbar'] ="FitWindow,Templates,-,Cut,Copy,Paste,PasteWord,Print,SpellCheck
-Undo,Redo,-,Replace,RemoveFormat,-,Image,Table,Rule,SpecialChar,PageBreak,UniversalKey
-/
-JustifyLeft,JustifyCenter,JustifyRight,JustifyFull,-,OrderedList,UnorderedList,Outdent,Indent
-Bold,Italic,Underline,StrikeThrough,-,Subscript,Superscript,-,Link,Unlink,Anchor,-,tikilink
-/
-Style,FontName,FontSize,-,TextColor,BGColor";
+$pref['feature_wysiwyg'] = 'no';
+$pref['wiki_wikisyntax_in_html'] = 'full';
+$pref['wysiwyg_default'] = 'n';
 
 # wiki3d
 $pref['wiki_feature_3d'] = 'n';
@@ -723,8 +676,6 @@ $sections['webmail']['feature'] = 'feature_webmail';
 $sections['webmail']['key'] = 'msgId';
 $sections['webmail']['itemkey'] = '';
 $pref['feature_webmail'] = 'n';
-$pref['webmail_max_attachment'] = 1500000;
-$pref['webmail_view_html'] = 'y';
 
 # contaacts
 $sections['contacts']['feature'] = 'feature_contacts';
@@ -1127,6 +1078,9 @@ $pref['feature_usability'] = 'n';
 $pref['feature_use_quoteplugin'] = 'n';
 $pref['feature_user_watches'] = 'n';
 $pref['feature_user_watches_translations'] = 'y';
+$pref['feature_wiki_userpage'] = 'y';
+$pref['feature_wiki_userpage_prefix'] = 'UserPage';
+$pref['feature_wiki_usrlock'] = 'n';
 $pref['feature_workflow'] = 'n';
 $pref['feature_xmlrpc'] = 'n';
 $pref['helpurl'] = "http://doc.tikiwiki.org/tiki-index.php?best_lang&amp;page=";
@@ -1151,6 +1105,8 @@ $pref['useGroupHome'] = 'n';
 $pref['useUrlIndex'] = 'n';
 $pref['use_proxy'] = 'n';
 $pref['user_list_order'] = 'score_desc';
+$pref['webmail_max_attachment'] = 1500000;
+$pref['webmail_view_html'] = 'y';
 $pref['webserverauth'] = 'n';
 
 // ******************************************************************************************
@@ -1800,7 +1756,6 @@ if ($feature_freetags == 'y' and isset($section) and isset($sections[$section]))
 		$tags = array();
 	}
 	$smarty->assign('freetags',$tags);
-	$headerlib->add_cssfile('css/freetags.css');
 }
 
 if ($feature_fullscreen == 'y') {

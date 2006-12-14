@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.685 2006-12-08 13:55:04 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.686 2006-12-14 16:40:28 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3361,7 +3361,8 @@ function add_pageview() {
 	return $this->list_pages($offset, $maxRecords, $sort_mode, $find, '', true, true);
    }
 
-    function list_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '', $initial = '', $exact_match = true, $onlyName=false) {
+    function list_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '', $initial = '', $exact_match = true, $onlyName=false, $forListPages=false) {
+	global $wiki_list_links, $wiki_list_versions, $wiki_list_backlinks;
 
 	if ($sort_mode == 'size_desc') {
 	    $sort_mode = 'page_size_desc';
@@ -3446,9 +3447,12 @@ function add_pageview() {
 			$aux["creator"] = $res["creator"];
 			$aux["version"] = $res["version"];
 			$aux["flag"] = $res["flag"] == 'L' ? 'locked' : 'unlocked';
-			$aux["versions"] = $this->getOne("select count(*) from `tiki_history` where `pageName`=?",array($page));
-			$aux["links"] = $this->getOne("select count(*) from `tiki_links` where `fromPage`=?",array($page));
-			$aux["backlinks"] = $this->getOne("select count(*) from `tiki_links` where `toPage`=?",array($page));
+			if ($forListPages && $wiki_list_versions == 'y')
+				$aux["versions"] = $this->getOne("select count(*) from `tiki_history` where `pageName`=?",array($page));
+			if ($forListPages && $wiki_list_links == 'y')
+				$aux["links"] = $this->getOne("select count(*) from `tiki_links` where `fromPage`=?",array($page));
+			if ($forListPages && $wiki_list_backlinks == 'y')
+				$aux["backlinks"] = $this->getOne("select count(*) from `tiki_links` where `toPage`=?",array($page));
 			$aux["description"] = $res["description"];
 		    }
 		    $ret[] = $aux;
@@ -5200,7 +5204,7 @@ function add_pageview() {
 		if (isset($_SERVER['SERVER_NAME'])) {
 			$_SERVER['SERVER_NAME'] = $_SERVER['HTTP_HOST'];
 		}
-	    if (strstr($link, $_SERVER["SERVER_NAME"]))
+	    if (empty($_SERVER['SERVER_NAME']) || strstr($link, $_SERVER["SERVER_NAME"]))
 	    {
 		$target = '';
 	    } else {
@@ -5856,7 +5860,7 @@ if (!$simple_wiki) {
 	global $wiki_watch_author;
 	global $wiki_watch_comments;
 	global $sender_email;
-	global $histlib;
+	global $histlib, $feature_wiki_history_full;
 	include_once ("lib/wiki/histlib.php");
 	include_once ("lib/commentslib.php");
 
@@ -5950,7 +5954,7 @@ if (!$simple_wiki) {
 	}
 
 	// This if no longer checks for minor-ness of the change; sendWikiEmailNotification does that.
-	if( $data != $edit_data || $description != $info["description"] || $comment != $edit_comment ) {
+	if( $feature_wiki_history_full == 'y' || $data != $edit_data || $description != $info["description"] || $comment != $edit_comment ) {
 	    if (strtolower($pageName) != 'sandbox') {
 		$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`)
 		    values(?,?,?,?,?,?,?,?)";

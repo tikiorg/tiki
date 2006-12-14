@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker_item.tpl,v 1.108 2006-12-05 17:28:05 hangerman Exp $ *}
+{* $Id: tiki-view_tracker_item.tpl,v 1.109 2006-12-14 16:40:33 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -284,6 +284,10 @@ title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
 {section name=ix loop=$attfields}
 <td class="heading auto">{tr}{$attfields[ix]}{/tr}</td>
 {/section}
+<td class="heading">{tr}filename{/tr}</td>
+<td class="heading">{tr}comment{/tr}</td>
+<td class="heading">{tr}version{/tr}</td>
+<td class="heading">{tr}description{/tr}</td>
 <td class="heading">&nbsp;</td>
 </tr>
 {cycle values="odd,even" print=false}
@@ -307,6 +311,10 @@ class="tablename" href="tiki-download_item_attachment.php?attId={$atts[ix].attId
 <td>{$atts[ix].$x}</td>
 {/if}
 {/foreach}
+<td>{$atts[ix].filename}</td>
+<td>{$atts[ix].comment}</td>
+<td>{$atts[ix].version}</td>
+<td>{$atts[ix].longdesc}</td>
 <td>
 {if $tiki_p_wiki_admin_attachments eq 'y' or ($user and ($atts[ix].user eq $user))}
 <a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}" title="{tr}delete{/tr}"><img

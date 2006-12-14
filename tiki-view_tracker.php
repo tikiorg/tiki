@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.106 2006-12-13 20:29:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.107 2006-12-14 16:40:27 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -610,7 +610,7 @@ if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
 $sorts = split('_',$sort_mode);
-if (is_array($sorts) and isset($sorts[1]) and isset($listfields["{$sorts[1]}"]['type']) and $listfields["{$sorts[1]}"]['type'] == 'n') {
+if (is_array($sorts) and isset($sorts[1]) and isset($listfields["{$sorts[1]}"]['type']) and ($listfields["{$sorts[1]}"]['type'] == 'n' or $listfields["{$sorts[1]}"]['type'] == 'q')) {
 	$numsort = true;
 } else {
 	$numsort = false;

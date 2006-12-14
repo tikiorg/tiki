@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker.tpl,v 1.122 2006-12-05 17:28:04 hangerman Exp $ *}
+{* $Id: tiki-view_tracker.tpl,v 1.123 2006-12-14 16:40:33 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -246,7 +246,7 @@ $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}created{/tr
  and $items[user].field_values[ix].options_array[2]}<span class="formunit">&nbsp;{$items[user].field_values[ix].options_array[2]}</span>{/if}
 
 {if $items[user].field_values[ix].type eq 'f' or $items[user].field_values[ix].type eq 'j'}
-{$items[user].field_values[ix].value|tiki_short_datetime|truncate:255:"..."|default:"&nbsp;"}
+{if $items[user].field_values[ix].value}{$items[user].field_values[ix].value|tiki_short_datetime|truncate:255:"..."|default:"&nbsp;"}{else}&nbsp;{/if}
 
 {elseif $items[user].field_values[ix].type eq 'c'}
 {$items[user].field_values[ix].value|replace:"y":"Yes"|replace:"n":"No"|replace:"on":"Yes"}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_gallery.php,v 1.25 2006-12-03 18:33:38 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_gallery.php,v 1.26 2006-12-14 16:40:27 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -54,6 +54,26 @@ if ($userlib->object_has_one_permission($_REQUEST["galleryId"], 'image gallery')
 				$smarty->assign("$permName", 'n');
 			}
 		}
+	} 
+} elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+	$perms_array = $categlib->get_object_categories_perms($user, 'image gallery', $_REQUEST['galleryId']);
+   	if ($perms_array) {
+   		$is_categorized = TRUE;
+    	foreach ($perms_array as $perm => $value) {
+    		$$perm = $value;
+    	}
+   	} else {
+   		$is_categorized = FALSE;
+   	}
+	if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+		if (!isset($user)){
+			$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
+			$smarty->assign('errortitle',tra("Please login"));
+		} else {
+			$smarty->assign('msg',tra("Permission denied you cannot view this page"));
+    	}
+	    $smarty->display("error.tpl");
+		die;
 	}
 }
 
