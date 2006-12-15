@@ -99,7 +99,7 @@ class ContactLib extends TikiLib {
 		$mid = " where `user`=? and (`email` like ?)";
 		$bindvars=array($user, $letter);
 
-		$query = "select * from `tiki_webmail_contacts` $mid order by ".$this-convert_sortmode($sort_mode);
+		$query = "select * from `tiki_webmail_contacts` $mid order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_webmail_contacts` $mid";
 			
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
