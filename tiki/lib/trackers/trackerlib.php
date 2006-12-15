@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.153 2006-12-14 20:50:43 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.154 2006-12-15 00:19:50 fr_rodo Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1710,6 +1710,10 @@ class TrackerLib extends TikiLib {
 			'label'=>tra('items list'),
 			'opt'=>true,
 			'help'=>tra('Items list options: trackerId,fieldIdThere, fieldIdHere, displayFieldIdThere, linkToItems displays the list of displayFieldIdThere from item in tracker trackerId where fieldIdThere matches fieldIdHere. linkToItems 1|0 to create a link to items in view mode and listing') );
+		$type['w'] = array(
+			'label'=>tra('dynamic items list'),
+			'opt'=>true,
+			'help'=>tra('dynamic items list options: trackerId, filterFieldIdThere, filterFieldIdHere, listFieldIdThere, statusThere insert the list of listFieldIdThere from item in tracker trackerId where filterFieldIdThere matches filterFieldIdHere where status is statusThere.') );
 		$type['m'] = array(
 			'label'=>tra('email'),
 			'opt'=>true,
