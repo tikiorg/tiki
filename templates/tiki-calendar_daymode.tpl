@@ -17,7 +17,7 @@
 {/if}
 <div {if $hrows[$h][hr].calname ne ""}class="Cal{$hrows[$h][hr].type}"{/if}>
 {$hours[$h]}:{$hrows[$h][hr].mins} : {if $hrows[$h][hr].calname eq ""}{$hrows[$h][hr].type} : {/if}
-<a href="{$hrows[$h][hr].url}" class="linkmenu">{$hrows[$h][hr].name}</a>
+<a href="tiki-calendar_edit_item.php?viewcalitemId={$hrows[$h][hr].calitemId}" class="linkmenu">{$hrows[$h][hr].name}</a>
 {if $hrows[$h][hr].calname ne ""}{$hrows[$h][hr].parsedDescription}{else}{$hrows[$h][hr].description}{/if}
 </div>
 {/section}

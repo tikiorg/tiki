@@ -221,7 +221,6 @@ class CalendarLib extends TikiLib {
 					"prio" => $res["priority"],
 					"location" => $res["locationName"],
 					"category" => $res["categoryName"],
-					"url" => "tiki-calendar_edit_item.php?todate=$i&amp;viewcalitemId=" . $res["calitemId"],
 					"name" => $res["name"],
 					"head" => $head,
 					"parsedDescription" => $this->parse_data($res["description"]),
