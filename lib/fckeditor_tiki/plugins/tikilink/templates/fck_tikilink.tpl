@@ -6,19 +6,12 @@
 <meta content="noindex, nofollow" name="robots">
 {literal}	
 <script type="text/javascript" src="fcktikilink.js"></script>
-<script type = "text/javascript">
-function addInfo(myString) {
-	var listen = document.getElementById("PageURL") ;
-	var listen1 = document.getElementById("txtSelection") ;
-	listen.value = myString;
-	listen1.value = myString;
-}
-</script>
 <script type="text/javascript">
 <!--
 var oEditor			= window.parent.InnerDialogLoaded(); 
 var FCK					= oEditor.FCK; 
 var FCKConfig		= oEditor.FCKConfig ;
+var FCKTikiLinks = oEditor.FCKTikiLinks ;
  
 // oLink: The actual selected link in the editor.
 var oLink = FCK.Selection.MoveToAncestorNode( 'A' ) ;
@@ -29,10 +22,12 @@ if ( oLink ) {
 window.onload = function ()	{ 
 	LoadSelected();							//See function below 
 	window.parent.SetOkButton( true );		//Show the "Ok" button. 
+	window.parent.SetAutoSize( true ) ;
 } 
  
 //If an anchor (A) object is currently selected, load the properties into the dialog 
 function LoadSelected()	{
+	if ( !oLink ) return ;
 	var sSelected;
 	if ( oEditor.FCKBrowserInfo.IsGecko ) {
 		sSelected = FCK.EditorWindow.getSelection();
@@ -42,12 +37,14 @@ function LoadSelected()	{
 	if ( sSelected != "" ) {
 		var listen = document.getElementById("txtTitle");
 		listen.value = sSelected;
+		var listen1 = document.getElementById( 'txtPage' );
+		listen1.value = oLink.getAttribute( 'href' ) ;
 	}
 }
 
 //Code that runs after the OK button is clicked 
 function Ok() {
-	var oDoc = document.getElementById( 'PageURL' );
+	var oDoc = document.getElementById( 'txtPage' );
 	if(oDoc.value == "") {
 		alert('Please select a page in order to create a link');
 		return false;
@@ -57,10 +54,8 @@ function Ok() {
 		alert('Please enter a Link Title');
 		return false;
 	}
-	var sURL = document.getElementById( 'PageURL' ) ; 
-	var sTagOutput = '<a href="' + sURL.value + '" class="wiki">' + document.getElementById( "txtTitle").value + '</a>';
-	oEditor.FCK.InsertHtml( sTagOutput );
 
+	FCKTikiLinks.add ( oDoc.value, oLinkTitle.value );
 	return true;
 } 
 {/literal}
@@ -122,7 +117,7 @@ function Ok() {
 <br />
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 {foreach item=page from=$listpages}
-<tr><td><a href="javascript:addInfo('tiki-index.php?page={$page.pageName|escape:'javascript'}');" 
+<tr><td><a href="#" onclick="javascript:document.getElementById('txtPage').value = '{$page.pageName|escape:'javascript'}';" 
 title="{if $page.description}{$page.description}{else}{$page.pageName}{/if}" class="wikilink">{$page.pageName}</a>
 </td><td style="color:#999;">
 {$page.description}
@@ -133,12 +128,12 @@ title="{if $page.description}{$page.description}{else}{$page.pageName}{/if}" cla
 							</td>
 						</tr>
 						<tr>
-							<td nowrap>{tr}Title{/tr}&nbsp;</td>
+							<td nowrap>{tr}Link{/tr}&nbsp;</td>
 							<td width="100%" style="align:right;"><input id="txtTitle" style="WIDTH: 98%" type="text" name="txtTitle"></td>
 						</tr>
 						<tr>
-							<td nowrap>{tr}Selection{/tr}&nbsp;</td>
-							<td width="100%" style="align:right;"><input id="txtSelection" disabled="true" style="WIDTH: 98%" type="text" name="txtSelection"></td>
+							<td nowrap>{tr}Page name{/tr}&nbsp;</td>
+							<td width="100%" style="align:right;"><input id="txtPage" style="WIDTH: 98%" type="text" name="txtPage"></td>
 						</tr>
 					</table>
 				</td>
