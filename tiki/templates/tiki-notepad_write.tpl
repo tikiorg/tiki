@@ -1,9 +1,10 @@
 {*Smarty template*}
 <h1><a class="pagetitle" href="tiki-notepad_write.php">{tr}Write a note{/tr}</a></h1>
 {include file=tiki-mytiki_bar.tpl}
+
+<span class="button2"><a class="linkbut" href="tiki-notepad_list.php">{tr}Notes{/tr}</a></span>
 <br /><br />
-<a class="link" href="tiki-notepad_list.php">{tr}Notes{/tr}</a>
-<br /><br />
+
 <form action="tiki-notepad_write.php" method="post">
 <input type="hidden" name="noteId" value="{$noteId|escape}" />
 <table class="normal">
