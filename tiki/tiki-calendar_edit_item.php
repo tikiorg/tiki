@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_edit_item.php,v 1.9 2006-12-15 02:40:17 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_edit_item.php,v 1.10 2006-12-15 03:00:16 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -140,12 +140,12 @@ if (isset($_POST['act'])) {
 	or (!empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_change_events'])) {
 		if (empty($save['name'])) $save['name'] = tra("event without name");
 		// do some tests on input
-		$save['start'] = (ceil($save['date_start']/(60*60*24))*60*60*24) - 60*60 + $_REQUEST['start_Hour']*60*60 + $_REQUEST['start_Minute']*60;
+		$save['start'] = (floor($save['date_start']/(60*60*24))*60*60*24) - 60*60 + $_REQUEST['start_Hour']*60*60 + $_REQUEST['start_Minute']*60;
 		$save['duration'] = $_REQUEST['duration_Hour']*60*60 + $_REQUEST['duration_Minute']*60;
 		if ($save['end_or_duration'] == 'duration') {
 			$save['end'] = $save['start'] + $save['duration'];
 		} else {
-			$save['end'] = (ceil($save['date_end']/(60*60*24))*60*60*24) - 60*60 + $_REQUEST['end_Hour']*60*60 + $_REQUEST['end_Minute']*60;
+			$save['end'] = (floor($save['date_end']/(60*60*24))*60*60*24) - 60*60 + $_REQUEST['end_Hour']*60*60 + $_REQUEST['end_Minute']*60;
 			$save['duration'] = $save['end'] - $save['start'];
 		}
 		if ($save['start'] > $save['end']) {
