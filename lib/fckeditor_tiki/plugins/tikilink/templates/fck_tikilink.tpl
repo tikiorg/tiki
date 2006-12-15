@@ -27,7 +27,6 @@ window.onload = function ()	{
  
 //If an anchor (A) object is currently selected, load the properties into the dialog 
 function LoadSelected()	{
-	if ( !oLink ) return ;
 	var sSelected;
 	if ( oEditor.FCKBrowserInfo.IsGecko ) {
 		sSelected = FCK.EditorWindow.getSelection();
