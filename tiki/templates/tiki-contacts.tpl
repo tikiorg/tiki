@@ -65,10 +65,12 @@
 <td class="{cycle advance=false}">{foreach item=it name=gr from=$channels[user].groups}{$it}{if $smarty.foreach.gr.index ne $smarty.foreach.gr.lastindex}, {/if}{/foreach}</td>
 <td class="{cycle advance=false}">&nbsp;
 {if $k eq 'user_personal_contacts'}
-<a class="link" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$channels[user].contactId}" 
+<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}" 
+title="{tr}edit{/tr}"><img src="pics/icons/page_edit.png" border="0" height="16" width="16" alt='{tr}edit{/tr}' /></a><a 
+href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$channels[user].contactId}" style="margin-left:20px;"
 title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>
 {elseif $tiki_p_admin eq 'y'}
-<a class="link" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$channels[user].contactId}" 
+<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$channels[user].contactId}" style="margin-left:36px;"
 title="{tr}delete{/tr}"><img src="pics/icons/cross_admin.png" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>
 {/if}
 </td>
@@ -83,7 +85,7 @@ title="{tr}delete{/tr}"><img src="pics/icons/cross_admin.png" border="0" height=
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href=tiki-contacts.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="tiki-contacts.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />
