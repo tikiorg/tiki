@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2006-12-12 17:22:55 $
-# $Author: sylvieg $
+# $Date: 2006-12-15 15:55:56 $
+# $Author: nyloth $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -749,7 +749,7 @@ CREATE TABLE tiki_objects (
   href varchar(200) default NULL,
   hits int(8) default NULL,
   PRIMARY KEY  (objectId),
-  KEY (type, objectId);
+  KEY (type, objectId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
 
