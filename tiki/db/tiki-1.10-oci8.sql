@@ -1,6 +1,6 @@
 -- $Rev$
--- $Date: 2006-12-11 21:16:42 $
--- $Author: mose $
+-- $Date: 2006-12-15 16:02:15 $
+-- $Author: nyloth $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -893,7 +893,7 @@ CREATE TABLE "tiki_objects" (
   "href" varchar(200) default NULL,
   "hits" number(8) default NULL,
   PRIMARY KEY ("objectId")
-  KEY (type, objectId);
+  KEY (type, objectId)
 
 CREATE TRIGGER "tiki_objects_trig" BEFORE INSERT ON "tiki_objects" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
