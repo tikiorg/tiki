@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.687 2006-12-14 16:56:05 mose Exp $
+// CVS: $Id: tikilib.php,v 1.688 2006-12-15 05:45:38 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4575,10 +4575,10 @@ function add_pageview() {
 	// everything between {}
 	$simple_wiki = false;
 	if ($is_html) {
-		if ($wysiwyg_wiki_parsed == 'n') {
-			return $data;
-		} elseif ($wysiwyg_wiki_semi_parsed == 'y') {
+		if ($wysiwyg_wiki_semi_parsed == 'y') {
 			$simple_wiki = true;
+		} elseif ($wysiwyg_wiki_parsed == 'n') {
+			return $data;
 		}
 	}
 	// Process pre_handlers here
@@ -4711,7 +4711,7 @@ function add_pageview() {
 	// Replace special characters
 	// done after url catching because otherwise urls of dyn. sites will be modified
   // not done in wysiwyg mode, i.e. $feature_wysiwyg set to something other than 'no' or not set at all
-			if (!$simple_wiki and $feature_wysiwyg == 'no') {
+			if (!$simple_wiki and $feature_wysiwyg == 'n') {
 				$this->parse_htmlchar($data);
 			}
 	// Now replace a TOC
