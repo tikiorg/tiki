@@ -29,7 +29,7 @@ FCKConfig.StartupFocus = true ;
 FCKConfig.PluginsPath = _TikiRoot + 'lib/fckeditor_tiki/plugins' ;
 
 FCKConfig.Plugins.Add( 'tikilink' ) ;
-FCKConfig.tikilinkBtn     = '{tr}Insert/Edit CMS Content{/tr}' ;
+FCKConfig.tikilinkBtn     = '{tr}Insert/Edit an internal wiki link{/tr}' ;
 FCKConfig.tikilinkDlgTitle    = '{tr}Tiki Link - Insert internal link{/tr}' ;
 FCKConfig.tikilinkDlgName   = '{tr}Wiki Link insert{/tr}' ;
 FCKConfig.tikilinkDlgSelection    = '{tr}Please make a selection of text in order to create a link{/tr}' ;
