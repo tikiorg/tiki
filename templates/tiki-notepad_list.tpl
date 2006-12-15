@@ -1,37 +1,19 @@
-{*Smarty template*}
 <h1><a class="pagetitle" href="tiki-notepad_list.php">{tr}Notes{/tr}</a></h1>
 {include file=tiki-mytiki_bar.tpl}
 <br />
-<div align="center">
+
+<div style="float:right;margin-right:10px;">
 <table border='0' cellpadding='0' cellspacing='0'>
-	<tr>
-		<td>
-			<table border='0' height='10' cellpadding='0' cellspacing='0' 
-			       width='200' style='background-color:#666666;'>
-				<tr>
-					<td style='background-color:red;' width='{$cellsize}'>&nbsp;</td>
-					<td>&nbsp;</td>
-				</tr>
-			</table>
-		</td>
-		<td>
-			<small>{$percentage}%</small>
-		</td>
-	</tr>
-	<tr>
-		<td colspan='2'>
-			<small>{tr}quota{/tr}</small>
-		</td>
-	</tr>
-</table>
+<tr><td><small>{tr}quota{/tr}&nbsp;{$percentage}%</small></td><td>
+<table border='0' height='10' cellpadding='0' cellspacing='0' width='200' style='background-color:#666666;'>
+<tr><td style='background-color:red;' width='{$cellsize}'>&nbsp;</td><td>&nbsp;</td></tr></table>
+</td></tr></table>
 </div>
 
+<span class="button2"><a class="linkbut" href="tiki-notepad_write.php">{tr}Write a note{/tr}</a></span>
 <br />
-<table border="0"><tr><td><div class="button2">
-<a class="linkbut" href="tiki-notepad_write.php">{tr}Write a note{/tr}</a>
-</div></td></tr></table>
+
 {if count($channels) > 0}
-<br />
 <h2>{tr}Notes{/tr}</h2>
 <table>
 <tr><td class="findtable">
@@ -48,8 +30,11 @@
 <tr>
 <td style="text-align:center;" class="heading"><input type="submit" name="delete" value="{tr}x{/tr} " /></td>
 <td class="heading" ><a class="tableheading" href="tiki-notepad_list.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
+<td class="heading" ><a class="tableheading" href="tiki-notepad_list.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'parse_mode_desc'}parse_mode_asc{else}parse_mode_desc{/if}">{tr}Type{/tr}</a></td>
+<td class="heading" ><a class="tableheading" href="tiki-notepad_list.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="tiki-notepad_list.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}Last Modified{/tr}</a></td>
 <td style="text-align:right;" class="heading" >{tr}Size{/tr}</td>
+<td style="text-align:right;" class="heading" >&nbsp;</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
@@ -57,10 +42,15 @@
 <td style="text-align:center;" class="{cycle advance=false}">
 <input type="checkbox" name="note[{$channels[user].noteId}]" />
 </td>
-<td class="{cycle advance=false}"><a class="link" href="tiki-notepad_read.php?noteId={$channels[user].noteId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}">{$channels[user].name}</a>
-(<a href="tiki-notepad_get.php?noteId={$channels[user].noteId}" class="link">{tr}save{/tr}</a>)</td>
+<td class="{cycle advance=false}"><a class="link" href="tiki-notepad_read.php?noteId={$channels[user].noteId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}">{$channels[user].name}</a></td>
+<td class="{cycle advance=false}">{$channels[user].parse_mode}</td>
+<td class="{cycle advance=false}">{$channels[user].created|tiki_short_datetime}</td>
 <td class="{cycle advance=false}">{$channels[user].lastModif|tiki_short_datetime}</td>
-<td style="text-align:right;"  class="{cycle}">{$channels[user].size|kbsize}</td>
+<td style="text-align:right;"  class="{cycle advance=false}">{$channels[user].size|kbsize}</td>
+<td style="text-align:right;"  class="{cycle}">
+<a href="tiki-notepad_get.php?noteId={$channels[user].noteId}" class="link"><img src="pics/icons/magnifier.png" width="16" height="16" border="0" alt="{tr}view{/tr}" /></a>
+<a style="margin-left:10px;" href="tiki-notepad_get.php?noteId={$channels[user].noteId}&amp;save=1" class="link"><img src="pics/icons/disk.png" width="16" height="16" border="0" alt="{tr}save{/tr}" /></a>
+</td>
 </tr>
 {sectionelse}
 <tr>
@@ -96,13 +86,7 @@
 <h2>{tr}Upload file{/tr}</h2>
 <form enctype="multipart/form-data" action="tiki-notepad_list.php" method="post">
 <table class="normal">
-<!--
-<tr>
-  <td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" /></td>
-</tr>
--->
-<tr>
-  <td class="formcolor">{tr}Upload file{/tr}:</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="16" name="userfile1" type="file" /><input style="font-size:9px;" type="submit" name="upload" value="{tr}upload{/tr}" /></td>
+<td class="formcolor">{tr}Upload file{/tr}:</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="16" name="userfile1" type="file" /><input style="font-size:9px;" type="submit" name="upload" value="{tr}upload{/tr}" /></td>
 </tr>
 </table>
 </form>
