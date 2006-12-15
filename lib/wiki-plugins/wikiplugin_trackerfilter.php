@@ -112,7 +112,7 @@ function wikiplugin_trackerfilter($data, $params) {
 			$opts[] = $opt;
 		}
 		break;
-	case 'n':case 't': case 'a': case 'm': case 'y':
+	case 'n':case 't': case 'a': case 'm': case 'y': case 'w':
 		if (isset($status))
 			$res = $trklib->list_tracker_field_values($fieldId, $status);
 		else

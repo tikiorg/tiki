@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.107 2006-12-14 16:40:27 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.108 2006-12-15 00:19:50 fr_rodo Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -227,6 +227,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 		$listfields[$fid]['isTblVisible'] = $xfields["data"][$i]["isTblVisible"];
 		$listfields[$fid]['isHidden'] = $xfields["data"][$i]["isHidden"];
 		$listfields[$fid]['isSearchable'] = $xfields["data"][$i]["isSearchable"];
+		$listfields[$fid]['isMandatory'] = $xfields["data"][$i]["isMandatory"];
 
 		if ($listfields[$fid]['type'] == 'e') { //category
 		    $parentId = $listfields[$fid]["options"];
@@ -723,6 +724,26 @@ foreach ($items["data"] as $itkey=>$oneitem) {
     }
 }
 ******************** */
+
+// dynamic list process
+foreach ($listfields as $sfid => $oneitem) {
+	if ($listfields[$sfid]['type'] == 'w') {
+		if ( ! isset($listfields[$listfields[$sfid]['options_array'][2]]['http_request']))
+			$listfields[$listfields[$sfid]['options_array'][2]]['http_request'] = array('','','','','','','','','');
+		for($i = 0; $i < 5; $i++)
+		{
+			$listfields[$listfields[$sfid]['options_array'][2]]['http_request'][$i] .=
+				($listfields[$listfields[$sfid]['options_array'][2]]['http_request'][$i] ? "," : "") .
+				 $listfields[$sfid]['options_array'][$i];
+		}
+		$listfields[$listfields[$sfid]['options_array'][2]]['http_request'][5] .=
+			($listfields[$listfields[$sfid]['options_array'][2]]['http_request'][5] ? "," : "") .
+			 $sfid;
+		$listfields[$listfields[$sfid]['options_array'][2]]['http_request'][6] .=
+			($listfields[$listfields[$sfid]['options_array'][2]]['http_request'][6] ? "," : "") .
+			 $listfields[$sfid]['isMandatory'];
+	}
+}
 
 $smarty->assign_by_ref('items', $items["data"]);
 $smarty->assign_by_ref('item_count', $items['cant']);

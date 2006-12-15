@@ -1,4 +1,5 @@
-{* $Id: tiki-view_tracker.tpl,v 1.123 2006-12-14 16:40:33 sylvieg Exp $ *}
+{* $Id: tiki-view_tracker.tpl,v 1.124 2006-12-15 00:19:49 fr_rodo Exp $ *}
+<script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -487,7 +488,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {* -------------------- user selector -------------------- *}
 {if $fields[ix].type eq 'u'}
 {if !$fields[ix].options or ($fields[ix].options eq '1' and $tiki_p_admin_trackers eq 'y')}
-<select name="{$fields[ix].ins_id}">
+<select name="{$fields[ix].ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
 <option value="">{tr}None{/tr}</option>
 {foreach key=id item=one from=$users}
 {if $fields[ix].value}
@@ -514,7 +515,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {* -------------------- group selector -------------------- *}
 {elseif $fields[ix].type eq 'g'}
 {if !$fields[ix].options or ($fields[ix].options eq '1' and $tiki_p_admin_trackers eq 'y')}
-<select name="{$fields[ix].ins_id}">
+<select name="{$fields[ix].ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
 <option value="">{tr}None{/tr}</option>
 {section name=ux loop=$groups}
 <option value="{$groups[ux]|escape}" {if $input_err and $fields[ix].value eq $groups[ux]} selected="selected"{/if}>{$groups[ux]}</option>
@@ -583,7 +584,7 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 
 {* -------------------- drop down -------------------- *}
 {elseif $fields[ix].type eq 'd'}
-<select name="{$fields[ix].ins_id}">
+<select name="{$fields[ix].ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
 {if $fields[ix].isMandatory ne 'y'}<option value="" />{/if}
 {section name=jx loop=$fields[ix].options_array}
 <option value="{$fields[ix].options_array[jx]|escape}" {if $input_err}{if $fields[ix].value eq $fields[ix].options_array[jx]}selected="selected"{/if}{elseif $defaultvalues.$fid eq $fields[ix].options_array[jx]}selected="selected"{/if}>{$fields[ix].options_array[jx]}</option>
@@ -606,16 +607,21 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 
 {* -------------------- item link -------------------- *}
 {elseif $fields[ix].type eq 'r'}
-<select name="{$fields[ix].ins_id}">
+<select name="{$fields[ix].ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
 {if $fields[ix].isMandatory ne 'y'}<option value="" />{/if}
 {foreach key=id item=label from=$fields[ix].list}
 <option value="{$label|escape}" {if $input_err}{if $fields[ix].value eq $label}selected="selected"{/if}{elseif $defaultvalue eq $label}selected="selected"{/if}>{if $fields[ix].listdisplay.$id eq ''}{$label}{else}{$fields[ix].listdisplay.$id}{/if}</option>
 {/foreach}
 </select>
 
+{* -------------------- dynamic list -------------------- *}
+{elseif $fields[ix].type eq 'w'}
+<select name="{$fields[ix].ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
+</select>
+
 {* -------------------- country selector -------------------- *}
 {elseif $fields[ix].type eq 'y'}
-<select name="{$fields[ix].ins_id}">
+<select name="{$fields[ix].ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
 {sortlinks}
 {foreach item=flag from=$fields[ix].flags}
 <option value="{$flag|escape}" {if $input_err}{if $fields[ix].value eq $flag}selected="selected"{/if}{elseif $flag eq $fields[ix].defaultvalue}selected="selected"{/if}
@@ -642,3 +648,11 @@ style="background-image:url('img/flags/{$flag}.gif');background-repeat:no-repeat
 <br /><em>{tr}fields marked with a * are mandatory{/tr}</em>
 </div>
 {/if}
+{section name=ix loop=$fields}
+{assign var=fid value=$fields[ix].fieldId}
+{if $listfields.$fid.http_request}
+<script language="JavaScript" type="text/javascript">
+selectValues('trackerIdList={$listfields.$fid.http_request[0]}&fieldlist={$listfields.$fid.http_request[3]}&filterfield={$listfields.$fid.http_request[1]}&status={$listfields.$fid.http_request[4]}&mandatory={$listfields.$fid.http_request[6]}','{$listfields.$fid.http_request[5]}','{$fields[ix].ins_id}')
+</script>
+{/if}
+{/section}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.102 2006-12-05 17:28:04 hangerman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.103 2006-12-15 00:19:50 fr_rodo Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -743,7 +743,40 @@ if(isset($error)) {
 	foreach($ins_fields["data"] as $i=>$array) {
 		$ins_fields["data"][$i]["value"] = $error["data"][$i]["value"];
 	}
-}	
+}
+
+// dynamic list process
+$id_fields = array();
+foreach ($xfields['data'] as $sid => $onefield) {
+	$id_fields[$xfields['data'][$sid]['fieldId']] = $sid;
+}
+foreach ($ins_fields['data'] as $sid => $onefield) {
+	if ($ins_fields['data'][$sid]['type'] == 'w') {
+		if ( ! isset($ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['http_request']))
+			$ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['http_request'] = array('','','','','','','','','');
+		for($i = 0; $i < 5; $i++)
+		{
+			$ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['http_request'][$i] .=
+				($ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['http_request'][$i] ? "," : "") .
+				 $ins_fields['data'][$sid]['options_array'][$i];
+		}
+		$ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['http_request'][5] .=
+			($ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['http_request'][5] ? "," : "") .
+			 $ins_fields['data'][$sid]['fieldId'];
+		$ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['http_request'][6] .=
+			($ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['http_request'][6] ? "," : "") .
+			 $ins_fields['data'][$sid]['isMandatory'];
+		$ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['http_request'][7] =
+			$ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['value'];
+		$ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['http_request'][8] .=
+			($ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['http_request'][8] ? "," : "") .
+			 $ins_fields['data'][$sid]['value'];
+		$ins_fields['data'][$sid]['filter_value'] =
+			$ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['value'];
+	}
+}
+
+$smarty->assign('id_fields', $id_fields);
 $smarty->assign_by_ref('info', $info);
 $smarty->assign_by_ref('fields', $fields["data"]);
 $smarty->assign_by_ref('ins_fields', $ins_fields["data"]);
