@@ -1,6 +1,5 @@
 <h1><a class="pagetitle" href="tiki-notepad_list.php">{tr}Notes{/tr}</a></h1>
 {include file=tiki-mytiki_bar.tpl}
-<br />
 
 <div style="float:right;margin-right:10px;">
 <table border='0' cellpadding='0' cellspacing='0'>
@@ -11,7 +10,7 @@
 </div>
 
 <span class="button2"><a class="linkbut" href="tiki-notepad_write.php">{tr}Write a note{/tr}</a></span>
-<br />
+<br /><br />
 
 {if count($channels) > 0}
 <h2>{tr}Notes{/tr}</h2>
