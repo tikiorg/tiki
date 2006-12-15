@@ -364,3 +364,17 @@ a.viewmodeoff img {
 #filtercal .calinput {
 	padding : 10px;
 }
+.statusbox {
+	margin-bottom : 1px;
+	width : 120px;
+	padding : 0 3px;
+	font-weight : bold;
+	background-color : #eee;
+	border : 1px solid #aaa;
+	color : #999;
+}
+.status0     { background-color : #ff6; border : 1px solid #000; color : #000; }
+.status1     { background-color : #6f6; border : 1px solid #000; color : #000; }
+.status2     { background-color : #f66; border : 1px solid #000; color : #000; }
+
+

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_edit_item.php,v 1.8 2006-12-06 08:50:10 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_edit_item.php,v 1.9 2006-12-15 02:40:17 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -276,6 +276,8 @@ if ($feature_theme_control == 'y') {
   $cat_objid = $_REQUEST['calendarId'];
   include('tiki-tc.php');
 }
+
+$headerlib->add_cssfile('css/calendar.css',20);
 
 $smarty->assign('myurl', 'tiki-calendar_edit_item.php');
 $smarty->assign('id', $id);

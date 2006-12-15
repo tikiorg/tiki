@@ -185,7 +185,7 @@
 <td colspan="2">
 <table cellpadding="0" cellspacing="0" border="0" style="border:0;" width="100%">
 <tr><td>
-<div style="margin-bottom:1px;width:120px;background-color:#cc6;padding:0 3px;{if $calitem.status eq 0}border:1px solid #000;font-weight:bold;{/if};">
+<div class="statusbox{if $calitem.status eq 0} status0{/if}">
 {if $edit}
 <input id="status0" type="radio" name="save[status]" value="0"{if $calitem.status eq 0} checked="checked"{/if} />
 <label for="status0">{tr}Tentative{/tr}</label>
@@ -193,7 +193,7 @@
 {tr}Tentative{/tr}
 {/if}
 </div>
-<div style="margin-bottom:1px;width:120px;background-color:#6c6;padding:0 3px;{if $calitem.status eq 1}border:1px solid #000;font-weight:bold;{/if};">
+<div class="statusbox{if $calitem.status eq 1} status1{/if}">
 {if $edit}
 <input id="status1" type="radio" name="save[status]" value="1"{if $calitem.status eq 1} checked="checked"{/if} />
 <label for="status1">{tr}Confirmed{/tr}</label>
@@ -201,7 +201,7 @@
 {tr}Confirmed{/tr}
 {/if}
 </div>
-<div style="margin-bottom:1px;width:120px;background-color:#c66;padding:0 3px;{if $calitem.status eq 2}border:1px solid #000;font-weight:bold;{/if};">
+<div class="statusbox{if $calitem.status eq 2} status2{/if}">
 {if $edit}
 <input id="status2" type="radio" name="save[status]" value="2"{if $calitem.status eq 2} checked="checked"{/if} />
 <label for="status2">{tr}Cancelled{/tr}</label>
