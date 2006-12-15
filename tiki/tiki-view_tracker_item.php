@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.103 2006-12-15 00:19:50 fr_rodo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.104 2006-12-15 21:15:04 fr_rodo Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -770,7 +770,7 @@ foreach ($ins_fields['data'] as $sid => $onefield) {
 			$ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['value'];
 		$ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['http_request'][8] .=
 			($ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['http_request'][8] ? "," : "") .
-			 $ins_fields['data'][$sid]['value'];
+			($ins_fields['data'][$sid]['value'] ? $ins_fields['data'][$sid]['value'] : " ");
 		$ins_fields['data'][$sid]['filter_value'] =
 			$ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['value'];
 	}
