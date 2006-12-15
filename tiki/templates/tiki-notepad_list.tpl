@@ -42,7 +42,7 @@
 <td style="text-align:center;" class="{cycle advance=false}">
 <input type="checkbox" name="note[{$channels[user].noteId}]" />
 </td>
-<td class="{cycle advance=false}"><a class="link" href="tiki-notepad_read.php?noteId={$channels[user].noteId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}">{$channels[user].name}</a></td>
+<td class="{cycle advance=false}"><a class="link" href="tiki-notepad_read.php?noteId={$channels[user].noteId}">{$channels[user].name}</a></td>
 <td class="{cycle advance=false}">{$channels[user].parse_mode}</td>
 <td class="{cycle advance=false}">{$channels[user].created|tiki_short_datetime}</td>
 <td class="{cycle advance=false}">{$channels[user].lastModif|tiki_short_datetime}</td>
