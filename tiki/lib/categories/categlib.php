@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.90 2006-12-04 10:20:37 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.91 2006-12-16 18:58:24 sylvieg Exp $
  *
  * \brief Categories support class
  *
@@ -424,6 +424,8 @@ class CategLib extends ObjectLib {
 
 	// get the parent categories of an object
 	function get_object_categories($type, $itemId,$parentId=-1) {
+		if (!$itemId)
+			return null;
 		if ($parentId == -1){
 			$query = "select `categId` from `tiki_category_objects` tco, `tiki_categorized_objects` tto, `tiki_objects` o
 				where tco.`catObjectId`=tto.`catObjectId` and o.`objectId`=tto.`catObjectId` and `type`=? and `itemId`=?";
