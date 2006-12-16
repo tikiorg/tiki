@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.155 2006-12-16 19:23:51 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.156 2006-12-16 19:27:07 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -517,7 +517,8 @@ if ($feature_wysiwyg == 'y') {
 		$is_html = true;
 	}
 }
-$smarty->assign('wysiwyg',$_SESSION['wysiwyg']);
+if (isset($_SESSION['wysiwyg']))
+	$smarty->assign('wysiwyg',$_SESSION['wysiwyg']);
 
 
 /*
