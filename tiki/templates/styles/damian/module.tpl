@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/damian/module.tpl,v 1.6 2006-10-01 13:35:21 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/damian/module.tpl,v 1.7 2006-12-16 12:03:18 mose Exp $ *}
 {* Module layout with controls *}
 
 <div class="box{if $module_side eq "right_modules"}_right{/if} "><div class="box-title">
 {* Draw module controls for logged user only *}
-{if $user and $user_assigned_modules == 'y' and $no_module_controls ne 'y' and $feature_modulecontrols eq 'y'}
+{if $user and $user_assigned_modules == 'y' and $feature_modulecontrols eq 'y'}
 <table>
   <tr>
     <td width="11">

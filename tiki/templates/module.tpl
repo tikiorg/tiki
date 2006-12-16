@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.21 2006-09-30 14:06:15 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.22 2006-12-16 12:03:16 mose Exp $ *}
 {* Module layout with controls *}
 
 <div class="box box-{$module_name|escape}">
-<div class="box-title">{if $user and $user_assigned_modules == 'y' and $no_module_controls ne 'y' and $feature_modulecontrols eq 'y'}
+<div class="box-title">{if $user and $user_assigned_modules == 'y' and $feature_modulecontrols eq 'y'}
 <table class="box-title">
   <tr>
     <td width="11">
