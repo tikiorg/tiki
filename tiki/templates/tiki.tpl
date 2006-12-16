@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki.tpl,v 1.27 2006-12-04 09:11:43 mose Exp $ *}{include file="header.tpl"}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki.tpl,v 1.28 2006-12-16 10:02:57 mose Exp $ *}{include file="header.tpl"}
 {* Index we display a wiki page here *}
 {if $feature_bidi eq 'y'}
 <div dir="rtl">
@@ -14,9 +14,7 @@
   </div>
   {/if}
   <div id="tiki-mid">
-  <table id="tiki-midtbl" border="0" cellpadding="0" cellspacing="0" width="100%">
   {if $feature_left_column eq 'user' or $feature_right_column eq 'user'}
-    <tr><td id="tiki-columns" colspan="0" width="100%">
       {if $feature_left_column eq 'user'}
         <span style="float: left"><a class="flip" href="javascript:icntoggle('leftcolumn');">
         <img name="leftcolumnicn" class="colflip" src="img/icons/ofo.gif" border="0" alt="+/-" />&nbsp;{tr}Show/Hide Left Menus{/tr}&nbsp;</a>
@@ -28,8 +26,8 @@
         </span>
       {/if}
       <br />
-    </td></tr>
   {/if}
+  <table id="tiki-midtbl" border="0" cellpadding="0" cellspacing="0" width="100%">
     <tr>
       {if $feature_left_column ne 'n'}
       <td id="leftcolumn" valign="top">
