@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.49 2006-12-15 21:57:54 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.50 2006-12-16 13:02:08 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -125,6 +125,12 @@ if (isset($_REQUEST["upload"]) && !empty($_REQUEST['galleryId'])) {
 	$uploads = array();
 
 	$didFileReplace = false;
+	if ($editFile) {
+		if (isset($_REQUEST['unlock']) && $_REQUEST['unlock'] == 'on')
+			$lockedby = NULL;
+		else
+			$lockedby = $fileInfo['lockedby'];
+	}
 	if (!isset($_REQUEST['comment']))
 		$_REQUEST['comment'] = '';
 	for ($i = 1; $i <= 6; $i++) {
@@ -289,7 +295,7 @@ if (isset($_REQUEST["upload"]) && !empty($_REQUEST['galleryId'])) {
 	}
 
 	if ($editFile && !$didFileReplace) {
-	  $filegallib->replace_file($editFileId, $_REQUEST['name'], $_REQUEST['description'], $fileInfo['filename'], $fileInfo['data'], $fileInfo['filesize'], $fileInfo['filetype'], $_REQUEST['user'], $fileInfo['path'], $_REQUEST['comment'], $gal_info, $didFileReplace, $_REQUEST['author'], $fileInfo['lastModif']);
+	  $filegallib->replace_file($editFileId, $_REQUEST['name'], $_REQUEST['description'], $fileInfo['filename'], $fileInfo['data'], $fileInfo['filesize'], $fileInfo['filetype'], $_REQUEST['user'], $fileInfo['path'], $_REQUEST['comment'], $gal_info, $didFileReplace, $_REQUEST['author'], $fileInfo['lastModif'], $lockedby);
 		$fileChangedMessage = tra('File update was successful').': '.$_REQUEST['name'];
 		$smarty->assign('fileChangedMessage',$fileChangedMessage);
 		$cat_type = 'file';
