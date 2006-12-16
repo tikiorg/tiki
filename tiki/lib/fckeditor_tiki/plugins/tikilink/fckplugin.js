@@ -38,7 +38,8 @@ FCKTikiLinks.SetupLink  = function( a, page, name ) {
 	a.contentEditable = 'false' ;
 	a.class = 'wiki' ;
 	a.href = page ;
-	a._wikilink = name ;
+	a.title = 'wiki : ' + page ;
+	a._wikilink = page ;
 	a.onresizestart = function() {
 		FCK.EditorWindow.event.returnValue = false ;
 		return false ;
@@ -96,13 +97,13 @@ if ( FCKBrowserInfo.IsIE ) {
 			aNodes[ aNodes.length ] = oNode ;
 		}
 		for ( var n = 0 ; n < aNodes.length ; n++ ) {
-			var aPieces = aNodes[n].nodeValue.split( /(\(\[^\)\|]*\|?[^\)]*?\)\))/ );
+			var aPieces = aNodes[n].nodeValue.split( /(\(\([^\)]*\)\))/ );
 			for ( var i = 0 ; i < aPieces.length ; i++ ) {
 				if ( aPieces[i].length > 0 ) {
-					if ( aPieces[i].indexOf( '((' ) == 1 ) {
+					if ( aPieces[i].indexOf( '((' ) == 0 ) {
 						var sPage = aPieces[i].match(  /\(\(([^\)\|]*)(\|([^\)]*))?\)\)/ )[1] ;
 						var sName = aPieces[i].match(  /\(\(([^\)\|]*)(\|([^\)]*))?\)\)/ )[3] ;
-						if ( sName == 'undefined') {
+						if ( !sName ) {
 							sName = sPage ;
 						}
 						var oA = FCK.EditorDocument.createElement( 'a' ) ;
@@ -118,7 +119,7 @@ if ( FCKBrowserInfo.IsIE ) {
 		FCKTikiLinks._SetupClickListener() ;
 	}
 	FCKTikiLinks._AcceptNode = function( node ) {
-		if ( /\(\([^\)\|]+(\|[^\)]*)?\)\)/.test( node.nodeValue ) ) {
+		if ( /\(\([^\)\|]*(\|[^\)]*)?\)\)/.test( node.nodeValue ) ) {
 			return NodeFilter.FILTER_ACCEPT ;
 		} else {
 			return NodeFilter.FILTER_SKIP ;
