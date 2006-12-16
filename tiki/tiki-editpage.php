@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.154 2006-12-16 18:41:32 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.155 2006-12-16 19:23:51 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -912,8 +912,6 @@ if ($feature_multilingual == 'y') {
 	$languages = array();
 	$languages = $tikilib->list_languages();
 	$smarty->assign_by_ref('languages', $languages);
-	$available_languages = unserialize($tikilib->get_preference("available_languages"));
-	$smarty->assign_by_ref('available_languages', $available_languages);
 }
 
 $cat_type = 'wiki page';
@@ -926,6 +924,7 @@ if ($feature_freetags == 'y') {
 }
 if ($feature_categories == 'y') {
 	include_once ("categorize_list.php");
+
 	if (isset($_SERVER['HTTP_REFERER']) && strstr($_SERVER['HTTP_REFERER'], 'tiki-index.php') && !$tikilib->page_exists($_REQUEST["page"])) { // default the categs the page you come from for a new page
 		if (preg_match('/page=([^\&]+)/', $_SERVER['HTTP_REFERER'], $ms))
 			$p = $ms[1];
