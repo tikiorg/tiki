@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_polls.php,v 1.19 2006-09-19 16:33:13 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_polls.php,v 1.20 2006-12-16 19:48:04 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -82,6 +82,22 @@ if (isset($_REQUEST["save"])) {
 	include_once ("categorize.php");
 }
 
+if (isset($_REQUEST['addPoll']) && !empty($_REQUEST['poll_template']) && !empty($_REQUEST['pages'])) {
+	global $wikilib; include_once('lib/wiki/wikilib.php');
+	global $categlib; include_once('lib/categories/categlib.php');
+	$cat_type = 'wiki page';
+	foreach ($_REQUEST['pages'] as $cat_objid) {
+		if (!$catObjectId = $categlib->is_categorized($cat_type, $cat_objid)) {
+			$info = $tikilib->get_page_info;
+			$cat_desc = $info['description'];
+			$cat_href = 'tiki-index.php?page='.urlencode($cat_objid);
+		}
+		include('poll_categorize.php');
+		if (isset($_REQUEST['locked']) && $_REQUEST['locked'] == 'on')
+			$wikilib->lock_page($cat_objid);
+	}
+}
+
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'publishDate_desc';
 } else {
@@ -125,6 +141,9 @@ if ($offset > 0) {
 }
 
 $smarty->assign_by_ref('channels', $channels["data"]);
+
+$listPages = $tikilib->list_pageNames();
+$smarty->assign_by_ref('listPages', $listPages['data']);
 
 $cat_type = 'poll';
 $cat_objid = $_REQUEST["pollId"];

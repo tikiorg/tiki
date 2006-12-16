@@ -114,3 +114,27 @@
 </div>
 </div>
 
+<h2>{tr}Add poll to pages{/tr}</h2>
+<form action="tiki-admin_polls.php" method="post">
+<table class="normal">
+<tr><td class="formcolor">
+{tr}Poll{/tr}</td><td class="formcolor">
+<select name="poll_template">
+{section name=ix loop=$channels}
+{if $channels[ix].active eq 't'}
+<option value="{$channels[ix].pollId|escape}"{if $smarty.section.ix.first} selected="selected"{/if}>{tr}{$channels[ix].title}{/tr}</option>
+{/if}
+{/section}
+</select></td></tr>
+<tr><td class="formcolor">{tr}Title{/tr}</td><td class="formcolor"><input type="text" name="poll_title" /></td></tr>
+<tr><td class="formcolor">
+{tr}Wiki pages{/tr}</td><td class="formcolor">
+<select name="pages[]" multiple="multiple" size="20">
+{section name=ix loop=$listPages}
+<option value="{$listPages[ix].pageName|escape}">{tr}{$listPages[ix].pageName}{/tr}</option>
+{/section}
+</select><br /><i>{tr}Tip: hold down CTRL to select multiple{/tr}</i>
+</td></tr>
+<tr><td class="formcolor">{tr}Lock the pages{/tr}</td><td class="formcolor"><input type="checkbox" name="locked" /></td></tr>
+<tr><td class="formcolor"></td><td class="formcolor"><input type="submit" name="addPoll" value="{tr}Add{/tr}" /></td></tr></table>
+</form>

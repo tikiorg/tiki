@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.688 2006-12-15 05:45:38 mose Exp $
+// CVS: $Id: tikilib.php,v 1.689 2006-12-16 19:48:04 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3357,7 +3357,7 @@ function add_pageview() {
 	return $ret;
     }
     // use this function to speed up when pagename is only needed (the 3 getOne can killed tikiwith more that 3000 pages)
-    function list_pageNames($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '') {
+    function list_pageNames($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_asc', $find = '') {
 	return $this->list_pages($offset, $maxRecords, $sort_mode, $find, '', true, true);
    }
 
