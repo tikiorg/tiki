@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.91 2006-12-16 18:58:24 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.92 2006-12-16 19:16:40 sylvieg Exp $
  *
  * \brief Categories support class
  *
@@ -430,11 +430,11 @@ class CategLib extends ObjectLib {
 			$query = "select `categId` from `tiki_category_objects` tco, `tiki_categorized_objects` tto, `tiki_objects` o
 				where tco.`catObjectId`=tto.`catObjectId` and o.`objectId`=tto.`catObjectId` and `type`=? and `itemId`=?";
 			//settype($itemId,"string"); //itemId is defined as varchar
-			$bindvars = array("$type",(int)$itemId);
+			$bindvars = array("$type",$itemId);
 		} else {
 			$query = "select tc.`categId` from `tiki_category_objects` tco, `tiki_categorized_objects` tto, `tiki_objects` o,`tiki_categories` tc
     		where tco.`catObjectId`=tto.`catObjectId` and o.`objectId`=tto.`catObjectId` and `type`=? and `itemId`=? and tc.`parentId` = ? and tc.`categId`=tco.`categId`";
-			$bindvars = array("$type",(int)$itemId,(int)$parentId);
+			$bindvars = array("$type",$itemId,(int)$parentId);
 		}
 		$result = $this->query($query,$bindvars);
 		$ret = array();
