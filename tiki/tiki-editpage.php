@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.153 2006-12-14 16:40:27 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.154 2006-12-16 18:41:32 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -901,7 +901,6 @@ if ($feature_polls =='y' and $feature_wiki_ratings == 'y' && $tiki_p_wiki_admin_
 		$smarty->assign('poll_template',$_REQUEST['poll_template']);
 	}
 	$listpolls = $polllib->get_polls('o',"$page: ");
-print_r($listpolls);
 	/*	if ($listpolls['data']) {
 		$listpolls['data'] = array_map('pollnameclean',$listpolls['data']);
 	}
