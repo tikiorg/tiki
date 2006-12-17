@@ -220,10 +220,8 @@ class UsersLib extends TikiLib {
     }
 
     function user_logout($user) {
-	$t = date("U");
-	// No need to change lastLogin since it is handled at the validateUser method
-	//$query = "update `users_users` set `lastLogin`=$t where `login`='$user'";
-	//$result = $this->query($query);
+			$query = 'delete from `tiki_user_preferences` where `prefName`=? and `user`=?';
+			$user = $this->query($query, array('cookie',(string)$user));
     }
     
     function user_logout_cas() {
@@ -1999,8 +1997,7 @@ function get_included_groups($group) {
     }
 
     function get_user_hash($user) {
-	$query = "select `hash`  from `users_users` where " .
-		$this->convert_binary(). " `login` = ?";
+	$query = "select `hash`  from `users_users` where " .  $this->convert_binary(). " `login` = ?";
 	$pass = $this->getOne($query, array($user));
 	return $pass;
     }
@@ -2010,6 +2007,32 @@ function get_included_groups($group) {
 	$pass = $this->getOne($query, array($hash));
 	return $pass;
     }
+
+	function create_user_cookie($user) {
+		global $remembertime;
+		$hash = md5($_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT'].$_SERVER['HTTP_ACCEPT_CHARSET']);
+		$hash.= ".". (date('U') + $remembertime);
+		$this->set_user_preference($user,'cookie',$hash);
+		return $hash;
+	}
+
+	function get_user_by_cookie($hash) {
+		list($check,$expire) = explode('.',$hash);
+		if ($check == md5($_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT'].$_SERVER['HTTP_ACCEPT_CHARSET'])) {
+			$query = 'select `user` from `tiki_user_preferences` where `prefName`=? and `value`=?';
+			$user = $this->getOne($query, array('cookie',$hash));
+			if ($user) {
+				if ($expire < date('U')) {
+					$query = 'delete from `tiki_user_preferences` where `prefName`=? and `value`=?';
+					$user = $this->query($query, array('cookie',$hash));
+					return false;
+				} else {
+					return $user;
+				}
+			}
+		}
+		return false;
+	}
 
     function get_user_by_email($email) {
     $query = "select `login` from `users_users` where `email`=?";

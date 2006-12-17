@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.118 2006-12-06 19:08:09 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.119 2006-12-17 08:39:40 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -307,8 +307,11 @@ $rememberme = $tikilib->get_preference('rememberme', 'disabled');
 if (($rememberme != 'disabled') 
 	and (isset($_COOKIE["$user_cookie_site"])) 
 	and (!isset($user) and !isset($_SESSION["$user_cookie_site"]))) {
-	$user = $userlib->get_user_by_hash($_COOKIE["$user_cookie_site"]);
-	$_SESSION["$user_cookie_site"] = $user;
+	# $user = $userlib->get_user_by_hash($_COOKIE["$user_cookie_site"]);
+	$user = $userlib->get_user_by_cookie($_COOKIE["$user_cookie_site"]);
+	if ($user) {
+		$_SESSION["$user_cookie_site"] = $user;
+	}
 }
 
 // check what auth metod is selected. default is for the 'tiki' to auth users
