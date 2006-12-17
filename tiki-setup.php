@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.364 2006-12-17 11:29:23 fr_rodo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.365 2006-12-17 11:55:26 fr_rodo Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -461,6 +461,7 @@ $pref['blog_comments_per_page'] = 10;
 $pref['feature_blogposts_comments'] = 'n';
 $pref['blog_list_user'] = 'text';
 $pref['blog_list_title'] = 'y';
+$pref['blog_list_title_len'] = '35';
 $pref['blog_list_description'] = 'y';
 $pref['blog_list_created'] = 'y';
 $pref['blog_list_lastmodif'] = 'y';
