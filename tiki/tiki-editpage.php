@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.156 2006-12-16 19:27:07 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.157 2006-12-17 06:49:40 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -501,36 +501,8 @@ if (!($tiki_p_admin == 'y' || $tiki_p_admin_wiki== 'y' || $tikilib->user_has_per
 }
 
 // wysiwyg decision
-$is_html = false;
-if ($feature_wysiwyg == 'y') {
-	if (!isset($_SESSION['wysiwyg'])) {
-		$_SESSION['wysiwyg'] = 'n';
-	}
-	if ((isset($_REQUEST['wysiwyg']) and $_REQUEST['wysiwyg'] == 'y' and $wysiwyg_optional == 'y') or ($wysiwyg_optional == 'n' or $wysiwyg_default == 'y')) {
-		$_SESSION['wysiwyg'] = 'y';
-	} elseif (isset($_REQUEST['wysiwyg']) and $_REQUEST['wysiwyg'] == 'n') {
-		$_SESSION['wysiwyg'] = 'n';
-	}
-	$is_html = true;
-} elseif ($feature_wiki_allowhtml == 'y' and ($tiki_p_admin == 'y' or $tiki_p_use_HTML == 'y')) {
-	if ($info['is_html'] or (isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"] == "on")) {
-		$is_html = true;
-	}
-}
-if (isset($_SESSION['wysiwyg']))
-	$smarty->assign('wysiwyg',$_SESSION['wysiwyg']);
+include 'tiki-parsemode_setup.php';
 
-
-/*
-if(!$user && $anonCanEdit<>'y') {
-
-  header("location: tiki-index.php");
-  die;
-  //$smarty->assign('msg',tra("Anonymous users cannot edit pages"));
-  //$smarty->display("error.tpl");
-  //die;
-}
-*/
 $smarty->assign_by_ref('data', $info);
 
 $smarty->assign('footnote', '');
