@@ -43,7 +43,7 @@
 {section name=changes loop=$lastchanges}
 <tr class="{cycle}">
 <td>&nbsp;{$lastchanges[changes].lastModif|tiki_short_datetime}&nbsp;</td>
-<td>&nbsp;<a href="tiki-index.php?page={$lastchanges[changes].pageName|escape:"url"}" class="tablename" title="{$lastchanges[changes].pageName}">{$lastchanges[changes].pageName|truncate:20:"...":true}</a> 
+<td>&nbsp;<a href="tiki-index.php?page={$lastchanges[changes].pageName|escape:"url"}" class="tablename" title="{$lastchanges[changes].pageName}">{$lastchanges[changes].pageName|truncate:$wiki_list_name_len:"...":true}</a> 
 {if $lastchanges[changes].version}
 (<a class="link" href="tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}">{tr}hist{/tr}</a> {tr}v{/tr}{$lastchanges[changes].version}</span>)
 &nbsp;<a class="link" href="tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;preview={$lastchanges[changes].version}"

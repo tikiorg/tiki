@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-orphan_pages.tpl,v 1.20 2006-12-13 01:58:20 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-orphan_pages.tpl,v 1.21 2006-12-17 11:29:22 fr_rodo Exp $ *}
 
 <h1><a href="tiki-orphan_pages.php" class="pagetitle">{tr}Orphan Pages{/tr}</a></h1>
 <table class="findtable">
@@ -57,7 +57,7 @@
 {section name=changes loop=$listpages}
 <tr>
 {if $wiki_list_name eq 'y'}
-	<td class="{cycle advance=false}"><a href="tiki-index.php?page={$listpages[changes].pageName|escape:"url"}" class="link" title="{$listpages[changes].pageName}">{$listpages[changes].pageName|truncate:20:"...":true}</a>
+	<td class="{cycle advance=false}"><a href="tiki-index.php?page={$listpages[changes].pageName|escape:"url"}" class="link" title="{$listpages[changes].pageName}">{$listpages[changes].pageName|truncate:$wiki_list_name_len:"...":true}</a>
 	{if $tiki_p_edit eq 'y'}
 	<br />(<a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}">{tr}edit{/tr}</a>)
 	{/if}
