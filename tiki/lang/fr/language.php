@@ -5670,6 +5670,7 @@ $lang=Array(
 "a timeout occured. Hit the reload button to move the rest" => "un timeout est arrivé. Pressez le bouton recherger pour déplacer le reste",
 "Detected, Version:" => "Trouvé. Version :",
 "Not detected." => "Pas trouvé.",
+"Title length" => "Longueur du titre",
 "Arabic" => "Arabe",
 "Simplified Chinese" => "Chinois simp.",
 "Chinese" => "Chinois",
