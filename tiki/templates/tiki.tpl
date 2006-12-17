@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki.tpl,v 1.28 2006-12-16 10:02:57 mose Exp $ *}{include file="header.tpl"}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki.tpl,v 1.29 2006-12-17 06:51:43 mose Exp $ *}{include file="header.tpl"}
 {* Index we display a wiki page here *}
 {if $feature_bidi eq 'y'}
 <div dir="rtl">
@@ -25,7 +25,7 @@
         <img name="rightcolumnicn" class="colflip" src="img/icons/ofo.gif" border="0" alt="+/-" />&nbsp;{tr}Show/Hide Right Menus{/tr}&nbsp;</a>
         </span>
       {/if}
-      <br />
+      <br clear="both" />
   {/if}
   <table id="tiki-midtbl" border="0" cellpadding="0" cellspacing="0" width="100%">
     <tr>
