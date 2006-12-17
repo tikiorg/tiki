@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.361 2006-12-17 07:20:32 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.362 2006-12-17 07:59:35 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -934,8 +934,9 @@ $pref['login_scr'] = 'tiki-login_scr.php';
 $pref['register_url'] = 'tiki-register.php';
 $pref['error_url'] = 'tiki-error.php';
 $pref['highlight_group'] = '';
-$oref['cookie_path'] = '/';
-$oref['cookie_domain'] = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME']) : $_SERVER['HTTP_HOST']);
+$pref['cookie_path'] = '/';
+$pref['cookie_domain'] = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : $_SERVER['HTTP_HOST'];
+$pref['cookie_name'] = 'tikiwiki';
 
 # intertiki
 $pref['feature_intertiki'] = 'n';
