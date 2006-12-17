@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_edit.tpl,v 1.19 2006-03-16 13:43:12 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_edit.tpl,v 1.20 2006-12-17 17:43:20 fr_rodo Exp $ *}
 
 {* Copyright (c) 2004 George G. Geller et. al. *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -71,13 +71,13 @@
 						<tr class="formcolor">
       				<td>{tr}Publication Date{/tr}</td>
       				<td>
-								{html_select_date prefix="quiz_publish_" time=$quiz->datePub start_year="-5" end_year="+10"} {tr}at {/tr}{html_select_time prefix="quiz_publish_" time=$quiz->datePub display_seconds=false} HRS&nbsp;{$tpl.siteTimeZone} 
+								{html_select_date prefix="quiz_publish_" time=$quiz->datePub start_year="-5" end_year="+10" field_order=$display_field_order} {tr}at {/tr}{html_select_time prefix="quiz_publish_" time=$quiz->datePub display_seconds=false} HRS&nbsp;{$tpl.siteTimeZone} 
 							</td>
 						</tr>
 						<tr class="formcolor">
 							<td>{tr}Expiration Date{/tr}</td>
 							<td>
-								{html_select_date prefix="quiz_expire_" time=$quiz->dateExp start_year="-5" end_year="+10"} {tr}at {/tr}{html_select_time prefix="quiz_expire_" time=$quiz->dateExp display_seconds=false} HRS&nbsp;{$tpl.siteTimeZone}
+								{html_select_date prefix="quiz_expire_" time=$quiz->dateExp start_year="-5" end_year="+10" field_order=$display_field_order} {tr}at {/tr}{html_select_time prefix="quiz_expire_" time=$quiz->dateExp display_seconds=false} HRS&nbsp;{$tpl.siteTimeZone}
 							</td>
 						</tr>
 						<tr class="formcolor">

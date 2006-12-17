@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.52 2006-11-18 03:35:27 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.53 2006-12-17 17:43:20 fr_rodo Exp $ *}
 
 <script type="text/javascript">
 {literal}
@@ -361,6 +361,16 @@
         <td class="form"><label for="general-short_time">{tr}Short time format{/tr}:</label></td>
         <td><input type="text" name="short_time_format" id="general-short_time"
              value="{$short_time_format|escape}" size="40"/></td>
+      </tr><tr>
+        <td class="form" ><label for="general-display_fieldorder">{tr}Fields display order{/tr}:</label></td>
+        <td ><select name="display_field_order" id="general-display_fieldorder">
+        	<option value="DMY" {if $display_field_order=="DMY"}selected="selected"{/if}>{tr}Day{/tr} {tr}Month{/tr} {tr}Year{/tr}</option>
+            <option value="DYM" {if $display_field_order=="DYM"}selected="selected"{/if}>{tr}Day{/tr} {tr}Year{/tr} {tr}Month{/tr}</option>
+            <option value="MDY" {if $display_field_order=="MDY"}selected="selected"{/if}>{tr}Month{/tr} {tr}Day{/tr} {tr}Year{/tr}</option>
+            <option value="MYD" {if $display_field_order=="MYD"}selected="selected"{/if}>{tr}Month{/tr} {tr}Year{/tr} {tr}Day{/tr}</option>
+            <option value="YDM" {if $display_field_order=="YDM"}selected="selected"{/if}>{tr}Year{/tr} {tr}Day{/tr} {tr}Month{/tr}</option>
+            <option value="YMD" {if $display_field_order=="YMD"}selected="selected"{/if}>{tr}Year{/tr} {tr}Month{/tr} {tr}Day{/tr}</option>
+        </select></td>
       </tr><tr>
         {assign var="fcnlink" value="http://www.php.net/manual/en/function.strftime.php"}
         <td colspan="2" align="center">

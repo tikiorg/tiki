@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz.tpl,v 1.25 2006-03-16 13:43:12 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz.tpl,v 1.26 2006-12-17 17:43:20 fr_rodo Exp $ *}
  
 {* Copyright (c) 2004 *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -57,7 +57,7 @@
 <!-- the publishing info does not work... don't trust it -->
 <td>{tr}Publish Date{/tr}</td>
 <td>
-{html_select_date prefix="publish_" time=$publishDateSite start_year="-5" end_year="+10"} {tr}at{/tr} <span dir="ltr">{html_select_time prefix="publish_" time=$publishDateSite display_seconds=false}
+{html_select_date prefix="publish_" time=$publishDateSite start_year="-5" end_year="+10" field_order=$display_field_order} {tr}at{/tr} <span dir="ltr">{html_select_time prefix="publish_" time=$publishDateSite display_seconds=false}
 &nbsp;{$siteTimeZone}
 </span>
 </td>
@@ -65,7 +65,7 @@
 <tr class="formcolor">
 <td>{tr}Expiration Date{/tr}</td>
 <td>
-{html_select_date prefix="expire_" time=$expireDateSite start_year="-5" end_year="+10"} {tr}at{/tr} <span dir="ltr">{html_select_time prefix="expire_" time=$expireDateSite display_seconds=false}
+{html_select_date prefix="expire_" time=$expireDateSite start_year="-5" end_year="+10" field_order=$display_field_order} {tr}at{/tr} <span dir="ltr">{html_select_time prefix="expire_" time=$expireDateSite display_seconds=false}
 &nbsp;{$siteTimeZone}
 </span>
 </td>

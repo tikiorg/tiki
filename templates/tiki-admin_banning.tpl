@@ -1,4 +1,4 @@
-{* $Id: tiki-admin_banning.tpl,v 1.25 2006-11-23 17:50:31 mose Exp $ *}
+{* $Id: tiki-admin_banning.tpl,v 1.26 2006-12-17 17:43:20 fr_rodo Exp $ *}
 
 {* this script (un/)checks all checkboxes with id 'banning-section' *}
 <script type="text/javascript">
@@ -80,13 +80,13 @@
 <tr>
 	<td class="formcolor">{tr}Rule active from{/tr}</td>
 	<td class="formcolor">
-		{html_select_date prefix="date_from" time="$info.date_from"}
+		{html_select_date prefix="date_from" time="$info.date_from" field_order=$display_field_order}
 	</td>
 </tr>
 <tr>
 	<td class="formcolor">{tr}Rule active until{/tr}</td>
 	<td class="formcolor">
-		{html_select_date prefix="date_to" time="$info.date_to"}
+		{html_select_date prefix="date_to" time="$info.date_to" field_order=$display_field_order}
 	</td>
 </tr>
 <tr>

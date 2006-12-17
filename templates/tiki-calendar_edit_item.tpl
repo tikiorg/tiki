@@ -82,7 +82,7 @@
 {if $feature_jscalendar eq 'y'}
 {jscalendar id="start" date=$calitem.start fieldname="save[date_start]" align="Bc" showtime='n'}
 {else}
-{html_select_date prefix="start_date_" time=$calitem.start}
+{html_select_date prefix="start_date_" time=$calitem.start field_order=$display_field_order}
 {/if}
 </td>
 <td style="border:0;padding-top:2px;">
@@ -119,7 +119,7 @@
 {if $feature_jscalendar eq 'y'}
 {jscalendar id="end" date=$calitem.end fieldname="save[date_end]" align="Bc" showtime='n'}
 {else}
-{html_select_date prefix="start_date_" time=$calitem.start}
+{html_select_date prefix="start_date_" time=$calitem.start field_order=$display_field_order}
 {/if}
 </td>
 <td style="border:0;padding-top:2px;">

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.365 2006-12-17 11:55:26 fr_rodo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.366 2006-12-17 17:43:20 fr_rodo Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -804,6 +804,7 @@ $pref['long_date_format'] = '%A %d of %B, %Y';
 $pref['long_time_format'] = '%H:%M:%S %Z';
 $pref['short_date_format'] = '%a %d of %b, %Y';
 $pref['short_time_format'] = '%H:%M %Z';
+$pref['display_field_order'] = 'MDY';
 
 # workflow
 $sections['workflow']['feature'] = 'feature_workflow';

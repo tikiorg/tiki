@@ -128,7 +128,7 @@
   	</tr>
 	<tr><td  class="formcolor">{tr}Start{/tr}</td>
 		<td colspan="3" class="formcolor">
-			{html_select_date time=$start_date prefix="start_" end_year="+4" field_order="DMY"}
+			{html_select_date time=$start_date prefix="start_" end_year="+4" field_order=$display_field_order}
 			&nbsp;-&nbsp;
 			{html_select_time minute_interval=10 time=$start_date prefix="start_" display_seconds=false use_24_hours=true}
 			&nbsp;<input name="use_start_date" {if $info.start or $taskId eq  0} checked="checked" {/if} type="checkbox" />
@@ -137,7 +137,7 @@
 	</tr>
 	<tr><td  class="formcolor">{tr}End{/tr}</td>
 		<td colspan="3" class="formcolor">
-			{html_select_date time=$end_date prefix="end_" end_year="+4" field_order="DMY"}
+			{html_select_date time=$end_date prefix="end_" end_year="+4" field_order=$display_field_order}
 			&nbsp;-&nbsp;
 			{html_select_time minute_interval=10 time=$end_date prefix="end_" display_seconds=false use_24_hours=true}
 			&nbsp;<input name="use_end_date" {if $info.end} checked="checked" {/if} type="checkbox" />

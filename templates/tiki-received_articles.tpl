@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_articles.tpl,v 1.25 2006-09-30 15:29:50 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_articles.tpl,v 1.26 2006-12-17 17:43:20 fr_rodo Exp $ *}
 <h1><a class="pagetitle" href="tiki-received_articles.php">{tr}Received articles{/tr}</a>
 
 {if $feature_help eq 'y'}
@@ -105,7 +105,7 @@
 {/if}
 <tr><td class="formcolor">{tr}Created{/tr}:</td><td class="formcolor">{$created|tiki_short_datetime}</td></tr>
 <tr><td class="formcolor">{tr}Publishing date{/tr}:</td><td class="formcolor">
-{html_select_date time=$publishDate end_year="+1"} at {html_select_time time=$publishDate display_seconds=false}
+{html_select_date time=$publishDate end_year="+1" field_order=$display_field_order} at {html_select_time time=$publishDate display_seconds=false}
 </td></tr>
 <tr><td class="formcolor">{tr}Heading{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="heading">{$heading|escape}</textarea></td></tr>
 <tr><td class="formcolor">{tr}Heading{/tr}:</td><td class="formcolor"><textarea rows="25" cols="40" name="body">{$body|escape}</textarea></td></tr>
