@@ -218,7 +218,7 @@
   <tr>
   	  <td class="formcolor">{tr}Start{/tr}</td>
   	  <td class="formcolor">
-  	  {html_select_date time=$ev_pdate end_year="+4"}
+  	  {html_select_date time=$ev_pdate end_year="+4" field_order=$display_field_order}
   	  {html_select_time minute_interval=5 time=$ev_pdate_h display_seconds=false use_24_hours=true}
   	  </td>
   </tr>

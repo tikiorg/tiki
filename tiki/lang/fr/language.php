@@ -4519,6 +4519,7 @@ $lang=Array(
 "Month" => "Mois",
 "Quarter" => "Trimestre",
 "Semester" => "Semestre",
+"Fields display order" => "Ordre d'affichage des champs",
 "Quicktags" => "Raccourcis",
 "bold" => "gras",
 "italic" => "italique",

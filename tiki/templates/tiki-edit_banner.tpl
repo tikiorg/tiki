@@ -45,8 +45,8 @@
 <div class="simplebox">
 <table >
 <tr><td colspan="2" class="form">{tr}Show the banner only between these dates{/tr}:</td></tr>
-<tr><td class="form">{tr}From date{/tr}:</td><td class="form">{html_select_date time=$fromDate prefix="fromDate_" end_year="+2"}</td></tr>
-<tr><td class="form">{tr}To date{/tr}:</td><td class="form">{html_select_date time=$toDate prefix="toDate_" end_year="+2"}</td></tr>
+<tr><td class="form">{tr}From date{/tr}:</td><td class="form">{html_select_date time=$fromDate prefix="fromDate_" end_year="+2" field_order=$display_field_order}</td></tr>
+<tr><td class="form">{tr}To date{/tr}:</td><td class="form">{html_select_date time=$toDate prefix="toDate_" end_year="+2" field_order=$display_field_order}</td></tr>
 <tr><td class="form">{tr}Use dates{/tr}</td><td class="form"><input type="checkbox" name="useDates" {if $useDates eq 'y'}checked='checked'{/if}/></td></tr>
 </table>
 </div>

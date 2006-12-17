@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker_item.tpl,v 1.110 2006-12-15 00:19:49 fr_rodo Exp $ *}
+{* $Id: tiki-view_tracker_item.tpl,v 1.111 2006-12-17 17:43:20 fr_rodo Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
@@ -512,7 +512,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
         </table>
         {/if}
 {elseif $cur_field.type eq 'f'}
-{html_select_date prefix="ins_"|cat:$cur_field.id time=$cur_field.value start_year="-4" end_year="+4"} {html_select_time prefix="ins_"|cat:$cur_field.id time=$cur_field.value display_seconds=false}
+{html_select_date prefix="ins_"|cat:$cur_field.id time=$cur_field.value start_year="-4" end_year="+4" field_order=$display_field_order} {html_select_time prefix="ins_"|cat:$cur_field.id time=$cur_field.value display_seconds=false}
 
 {elseif $cur_field.type eq 'r'}
 <select name="ins_{$cur_field.id}" {if $cur_field.http_request}onchange="selectValues('trackerIdList={$cur_field.http_request[0]}&fieldlist={$cur_field.http_request[3]}&filterfield={$cur_field.http_request[1]}&status={$cur_field.http_request[4]}&mandatory={$cur_field.http_request[6]}&filtervalue='+escape(this.value),'{$cur_field.http_request[5]}')"{/if}>

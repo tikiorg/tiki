@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.19 2006-12-14 14:37:29 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.20 2006-12-17 17:43:20 fr_rodo Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Admin Action Log{/tr}</a></h1>
 <a name="Setting" />
@@ -34,7 +34,7 @@
 </select>
 </td>
 <td>{tr}Start date:{/tr}</td>
-<td>{html_select_date time=$startDate prefix="startDate_" end_year="-10" field_order=DMY}</td>
+<td>{html_select_date time=$startDate prefix="startDate_" end_year="-10" field_order=$display_field_order}</td>
 </tr>
 <tr>
 <td>{tr}Group:{/tr}</td>
@@ -46,7 +46,7 @@
 </select>
 </td>
 <td>{tr}End date:{/tr}</td>
-<td>{html_select_date time=$endDate prefix="endDate_" end_year="-10" field_order=DMY}</td>
+<td>{html_select_date time=$endDate prefix="endDate_" end_year="-10" field_order=$display_field_order}</td>
 </tr>
 <tr>
 <td>{tr}Category:{/tr}</td>

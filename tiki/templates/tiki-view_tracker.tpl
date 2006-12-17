@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker.tpl,v 1.124 2006-12-15 00:19:49 fr_rodo Exp $ *}
+{* $Id: tiki-view_tracker.tpl,v 1.125 2006-12-17 17:43:20 fr_rodo Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a></h1>
 <div>
@@ -580,7 +580,7 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 
 {* -------------------- date and time -------------------- *}
 {elseif $fields[ix].type eq 'f'}
-{html_select_date prefix=$fields[ix].ins_id time=$fields[ix].value start_year="-4" end_year="+4"} {tr}at{/tr} {html_select_time prefix=$fields[ix].ins_id time=$fields[ix].value display_seconds=false}
+{html_select_date prefix=$fields[ix].ins_id time=$fields[ix].value start_year="-4" end_year="+4" field_order=$display_field_order} {tr}at{/tr} {html_select_time prefix=$fields[ix].ins_id time=$fields[ix].value display_seconds=false}
 
 {* -------------------- drop down -------------------- *}
 {elseif $fields[ix].type eq 'd'}

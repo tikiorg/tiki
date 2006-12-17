@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.48 2006-12-11 22:36:15 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.49 2006-12-17 17:43:20 fr_rodo Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -77,6 +77,7 @@ elseif (isset($_REQUEST["prefs"])) {
     }
 
     $pref_byref_values = array(
+        "display_field_order",
         "display_timezone",
         "language",
         "long_date_format",

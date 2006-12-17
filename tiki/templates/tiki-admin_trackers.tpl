@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.70 2006-12-14 17:36:35 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.71 2006-12-17 17:43:20 fr_rodo Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
   
 {if $feature_help eq 'y'}
@@ -209,7 +209,7 @@ for a tracker and they must be valid in SQL{/tr}</em>
 </tr></table>
 </div>
 </td></tr>
-<tr class="formcolor"><td colspan="2">{tr}Items can be created only during a certain time{/tr}</td><td>{tr}After:{/tr} <input type="checkbox" name="start"{if $info.start} checked="checked"{/if} /> {html_select_date prefix="start_" time=$info.start start_year="0" end_year="+10"} <span dir="ltr">{html_select_time prefix="start_" time=$info.start display_seconds=false}</span>&nbsp;{$siteTimeZone}<br />{tr}Before:{/tr}  <input type="checkbox" name="end"{if $info.end} checked="checked"{/if} /> {html_select_date prefix="end_" time=$info.end start_year="0" end_year="+10"} <span dir="ltr">{html_select_time prefix="end_" time=$info.end display_seconds=false}</span>
+<tr class="formcolor"><td colspan="2">{tr}Items can be created only during a certain time{/tr}</td><td>{tr}After:{/tr} <input type="checkbox" name="start"{if $info.start} checked="checked"{/if} /> {html_select_date prefix="start_" time=$info.start start_year="0" end_year="+10" field_order=$display_field_order} <span dir="ltr">{html_select_time prefix="start_" time=$info.start display_seconds=false}</span>&nbsp;{$siteTimeZone}<br />{tr}Before:{/tr}  <input type="checkbox" name="end"{if $info.end} checked="checked"{/if} /> {html_select_date prefix="end_" time=$info.end start_year="0" end_year="+10" field_order=$display_field_order} <span dir="ltr">{html_select_time prefix="end_" time=$info.end display_seconds=false}</span>
 &nbsp;{$siteTimeZone}
 </td></tr>
 
