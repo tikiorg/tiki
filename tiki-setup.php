@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.359 2006-12-15 11:56:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.360 2006-12-17 06:47:10 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1817,5 +1817,10 @@ if ($feature_fullscreen == 'y') {
 		$_SESSION['fullscreen'] = 'n';
 	}
 }
+if (!isset($_SESSION['wysiwyg'])) {
+  $_SESSION['wysiwyg'] = 'n';
+}
+$smarty->assign_by_ref('wysiwyg',$_SESSION['wysiwyg']);
+
 $smarty->assign_by_ref('phpErrors',$phpErrors);
 ?>
