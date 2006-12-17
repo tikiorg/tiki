@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_cms.php,v 1.15 2006-12-11 22:36:15 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_cms.php,v 1.16 2006-12-17 10:48:26 fr_rodo Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -55,6 +55,7 @@ if (isset($_REQUEST['artlist'])) {
 	foreach ($pref_toggles as $toggle) {
 		simple_set_toggle ($toggle);
 	}
+	simple_set_int("art_list_title_len");
 }
 ask_ticket('admin-inc-cms');
 ?>

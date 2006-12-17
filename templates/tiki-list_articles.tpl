@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.35 2006-11-22 03:15:31 franck Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.36 2006-12-17 10:48:26 fr_rodo Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-list_articles.php">{tr}Articles{/tr}</a>
 
@@ -99,7 +99,7 @@ $sort_mode eq 'nbreads_desc'}nbreads_asc{else}nbreads_desc{/if}">{tr}Reads{/tr}<
 	{if $tiki_p_read_article eq 'y'}
 		<a class="artname" href="tiki-read_article.php?articleId={$listpages[changes].articleId}" title="{$listpages[changes].title|escape}">
 	{/if}
-	{$listpages[changes].title|truncate:20:"...":true}
+	{$listpages[changes].title|truncate:$art_list_title_len:"...":true}
 	{if $listpages[changes].type eq 'Review'}(r){/if}
 	{if $tiki_p_read_article eq 'y'}
 		</a>

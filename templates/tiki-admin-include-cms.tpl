@@ -94,6 +94,10 @@
           <td class="form"><input type="checkbox" name="art_list_title" id="articles-title"
               {if $art_list_title eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
+          <td class="form"><label for="articles-titlelen">{tr}Title length{/tr}: </label></td>
+          <td><input size="5" type="text" name="art_list_title_len" id="articles-titlelen"
+               value="{$art_list_title_len|escape}" /></td>
+        </tr><tr>
           <td class="form"><label for="articles-type">{tr}Type{/tr}</label></td>
           <td class="form"><input type="checkbox" name="art_list_type" id="articles-type"
               {if $art_list_type eq 'y'}checked="checked"{/if} /></td>

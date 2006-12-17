@@ -42,7 +42,7 @@
 {section name=changes loop=$listpages}
 <tr>
 {if $art_list_title eq 'y'}
-	<td class="{cycle advance=false}"><a class="link" title="{$listpages[changes].title}" href="tiki-edit_submission.php?subId={$listpages[changes].subId}">{$listpages[changes].title|truncate:20:"...":true}</a>
+	<td class="{cycle advance=false}"><a class="link" title="{$listpages[changes].title}" href="tiki-edit_submission.php?subId={$listpages[changes].subId}">{$listpages[changes].title|truncate:$art_list_title_len:"...":true}</a>
 	{*if $listpages[changes].type eq 'Review'}(r){/if*}
 	</td>
 {/if}
