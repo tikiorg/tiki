@@ -5671,6 +5671,7 @@ $lang=Array(
 "Detected, Version:" => "Trouvé. Version :",
 "Not detected." => "Pas trouvé.",
 "Title length" => "Longueur du titre",
+"Name length" => "Longueur du nom",
 "Arabic" => "Arabe",
 "Simplified Chinese" => "Chinois simp.",
 "Chinese" => "Chinois",

@@ -78,7 +78,7 @@
 {/if}
 </td>
 {if $wiki_list_name eq 'y'}
-	<td class="{cycle advance=false}"><a href="tiki-index.php?page={$listpages[changes].pageName|escape:"url"}" class="link" title="{$listpages[changes].pageName}">{$listpages[changes].pageName|truncate:40:"...":true}</a>
+	<td class="{cycle advance=false}"><a href="tiki-index.php?page={$listpages[changes].pageName|escape:"url"}" class="link" title="{$listpages[changes].pageName}">{$listpages[changes].pageName|truncate:$wiki_list_name_len:"...":true}</a>
 	</td>
 {/if}
 {if $wiki_list_hits eq 'y'}	

@@ -195,6 +195,12 @@
     		</td>
     	</tr>
     	<tr>
+			<td class="form">{tr}Name length{/tr}:</td>
+			<td class="form">
+				<input type="text" name="wiki_list_name_len" value="{$wiki_list_name_len}" size="3" />
+			</td>
+		</tr>
+    	<tr>
     		<td class="form">{tr}Hits{/tr}</td>
     		<td class="form">
     			<input type="checkbox" name="wiki_list_hits" {if $wiki_list_hits eq 'y'}checked="checked"{/if} />
