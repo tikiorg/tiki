@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-logout.php,v 1.21 2006-08-29 20:19:02 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-logout.php,v 1.22 2006-12-17 08:39:40 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -19,8 +19,6 @@ if ($feature_live_support == 'y') {
 	}
 }
 
-$cookie_path = $tikilib->get_preference('cookie_path', '/');
-$cookie_domain = $tikilib->get_preference('cookie_domain', $tikilib->get_preference('http_domain', $_SERVER['SERVER_NAME']));
 setcookie($user_cookie_site, '', -3600, $cookie_path, $cookie_domain);
 $userlib->user_logout($user);
 $logslib->add_log('login','logged out');		
