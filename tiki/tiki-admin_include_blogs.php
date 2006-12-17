@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_blogs.php,v 1.15 2006-12-03 21:36:44 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_blogs.php,v 1.16 2006-12-17 11:55:27 fr_rodo Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -56,6 +56,7 @@ if (isset($_REQUEST['bloglistconf'])) {
 	}
 
 	simple_set_value ("blog_list_user");
+	simple_set_int("blog_list_title_len");
 }
 
 if (isset($_REQUEST["blogcomprefs"])) {

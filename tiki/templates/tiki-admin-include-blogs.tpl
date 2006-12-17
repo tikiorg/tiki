@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-blogs.tpl,v 1.22 2006-12-03 21:36:44 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-blogs.tpl,v 1.23 2006-12-17 11:55:25 fr_rodo Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -14,7 +14,7 @@
           <td class="form"><label for="blogs-home">{tr}Home Blog (main blog){/tr}</label></td>
           <td><select name="homeBlog" id="blogs-home">
               {section name=ix loop=$blogs}
-                <option value="{$blogs[ix].blogId|escape}" {if $blogs[ix].blogId eq $home_blog}selected="selected"{/if}>{$blogs[ix].title|truncate:20:"...":true}</option>
+                <option value="{$blogs[ix].blogId|escape}" {if $blogs[ix].blogId eq $home_blog}selected="selected"{/if}>{$blogs[ix].title|truncate:$blog_list_title_len:"...":true}</option>
               {/section}
               </select></td>
           <td><input type="submit" name="blogset" value="{tr}ok{/tr}" /></td>
@@ -89,6 +89,10 @@
           <td class="form"><label for="blogs-title">{tr}Title{/tr}</label></td>
           <td class="form"><input type="checkbox" name="blog_list_title" id="blogs-title"
               {if $blog_list_title eq 'y'}checked="checked"{/if}></td>
+        </tr><tr>
+          <td class="form"><label for="blogs-titlelen">{tr}Title length{/tr}: </label></td>
+          <td class="form"><input size="3" type="text" name="blog_list_title_len" id="blogs-titlelen"
+               value="{$blog_list_title_len|escape}" /></td>
         </tr><tr>
           <td class="form"><label for="blogs-desc">{tr}Description{/tr}</label></td>
           <td class="form"><input type="checkbox" name="blog_list_description" id="blogs-desc"
