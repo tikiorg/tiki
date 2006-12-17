@@ -9,7 +9,7 @@
 <input type="hidden" name="noteId" value="{$noteId|escape}" />
 <table class="normal">
 <tr class="formcolor"><td>{tr}Name{/tr}</td><td><input type="text" name="name" value="{$info.name|escape}" /></td></tr>
-{if $feature_wysiwyg eq 'y'}
+{if $feature_wysiwyg eq 'y' and $wysiwyg eq 'y'}
 <tr class="formcolor"><td colspan="2">
 {editform InstanceName=data Meat=$info.data}
 </td></tr>

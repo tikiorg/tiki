@@ -10,11 +10,9 @@
 <form id='formread' action="tiki-notepad_read.php" method="post">
 <input type="hidden" name="noteId" value="{$noteId|escape}" />
 <select name="parse_mode" onchange="javascript:document.getElementById('formread').submit();">
-<option value="raw" {if $parse_mode eq 'raw'}selected="selected"{/if}>{tr}Normal{/tr}</option>
-<option value="wiki"{if $parse_mode eq 'wiki'}selected="selected"{/if}>{tr}Wiki{/tr}</option>
-<option value="template"{if $parse_mode eq 'template'}selected="selected"{/if}>{tr}Template{/tr}</option>
+<option value="raw"{if $info.parse_mode eq 'raw'} selected="selected"{/if}>{tr}Text{/tr}</option>
+<option value="wiki"{if $info.parse_mode eq 'wiki'} selected="selected"{/if}>{tr}Wiki{/tr}</option>
 </select>
-<!--<input type="submit" name="setpm" value="{tr}set{/tr}" />-->
 </form>
 </td>
 <td>
@@ -42,18 +40,11 @@
 <input type="hidden" name="noteId" value="{$noteId|escape}" />
 <input type="submit" name="wikify" value="{tr}wiki overwrite{/tr}" />
 <input size="20" type="text" name="wiki_name" value="{$info.name|escape}" />
-<input type="checkbox" name="over" />
 </form>
 {/if}
 </td>
 {/if}
 </tr></table>
-{if $smarty.request.parse_mode eq 'template'}
-  <div class="wikitext">
-  {$info.data}
-  </div>
-{else}
-  <div class="wikitext">
-  {$info.parsed}
-  </div>
-{/if}
+<div class="wikitext">
+{$info.parsed}
+</div>
