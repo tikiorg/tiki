@@ -1,0 +1,20 @@
+a.admbox {
+	border : 2px solid #8899dd;
+	height : 100px;
+	width : 100px;
+	text-align : center; 
+	overflow : hidden;
+	float : left; 
+	margin : 5px; 
+	background-color: #b0ffb0;
+}
+a.admbox img { 
+	margin-top : 20px; 
+}
+a.admbox.off { 
+	background-color : #d0d0d0; 
+}
+a.admbox:hover { 
+	background-color : #a0a0a0; 
+}
+

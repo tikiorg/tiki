@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.116 2006-12-14 14:38:30 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.117 2006-12-18 19:24:41 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -231,6 +231,7 @@ if (isset($_REQUEST["page"])) {
 } else {
   $smarty->assign('headtitle', breadcrumb_buildHeadTitle($crumbs));
   $smarty->assign('description', $crumbs[0]->description);
+	$headerlib->add_cssfile('css/admin.css');
 }
 
 if(isset($admintitle)) {
