@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.119 2006-12-17 08:39:40 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.120 2006-12-18 19:06:52 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -183,20 +183,10 @@ $vartype['type'] = 'string';
 $vartype['userole'] = 'int';
 $vartype['focus'] = 'string';
 
-
-// if we get an error while reading language from prefs, assume the db
-// is not yet set up and give a message
-$rc = @$tikilib->getOne( "select `value` from `tiki_preferences` where `name`=?",array("language"),false);
-if (!$rc) {
-	print "<html><head><title>Site not available</title></head><body><center><br />";
-	print "<b>Notice: this site is currently unavailable.<br /><br />Please try again later or contact the admin.</b></center></body></html>";
-	die();
-}
-
 $language = $tikilib->get_preference('language', 'en');// varcheck use tra
 
 function varcheck($array) {
-  global $patterns, $vartype;
+  global $patterns, $vartype, $language;
   if (isset($array) and is_array($array)) {
     foreach ($array as $rq=>$rv) {
 	  // check if the variable name is allowed
