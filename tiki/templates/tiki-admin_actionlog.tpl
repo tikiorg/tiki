@@ -1,6 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.20 2006-12-17 17:43:20 fr_rodo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.21 2006-12-18 16:44:52 sylvieg Exp $ *}
 
-<h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Admin Action Log{/tr}</a></h1>
+<h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a></h1>
+{if $tiki_p_admin eq 'y'}
 <a name="Setting" />
 <h2>{tr}Setting{/tr}</h2>
 <form method="post" action="tiki-admin_actionlog.php">
@@ -18,13 +19,22 @@
 </table>
 <div class="rbox">{tr}Wiki page actions except viewed will always be recorded but can be not reported{/tr}</div>
 </form>
+{/if}
 
 <a name="Report" />
 <h2>{tr}Report{/tr}</h2>
 <form method="post" action="tiki-admin_actionlog.php#Report">
-<h3>{tr}Filter{/tr}</h3>
+<h2>{tr}Filter{/tr}</h2>
 <table class="smallnormal">
-<tr>
+<tr class="formcolor">
+<td>{tr}Start date:{/tr}</td>
+<td>{html_select_date time=$startDate prefix="startDate_" end_year="-10" field_order=$display_field_order}</td>
+</tr><tr class="formcolor">
+<td>{tr}End date:{/tr}</td>
+<td>{html_select_date time=$endDate prefix="endDate_" end_year="-10" field_order=$display_field_order}</td>
+</tr>
+{if $tiki_p_admin eq 'y'}
+<tr class="formcolor">
 <td>{tr}User:{/tr}</td>
 <td><select multiple="multiple" size="5" name="selectedUsers[]">
 <option value="">&nbsp;</option>
@@ -33,22 +43,23 @@
 {/foreach}
 </select>
 </td>
-<td>{tr}Start date:{/tr}</td>
-<td>{html_select_date time=$startDate prefix="startDate_" end_year="-10" field_order=$display_field_order}</td>
 </tr>
-<tr>
+{else}
+<input type="hidden" name="selectedUsers[]" value="{$user|escape}">
+{/if}
+{if $tiki_p_admin eq 'y'}
+<tr class="formcolor">
 <td>{tr}Group:{/tr}</td>
-<td><select multiple="multiple" size="5" name="selectedGroups[]">
+<td><select multiple="multiple" size="{if $groups|@count < 5}{math equation=x+y x=$groups|@count y=1}{else}5{/if}" name="selectedGroups[]">
 <option value="">&nbsp;</option>
 {section name=ix loop=$groups}
 <option value="{$groups[ix]|escape}" {if $selectedGroups[ix] eq 'y'}selected="selected"{/if}>{$groups[ix]|escape}</option>
 {/section}
 </select>
 </td>
-<td>{tr}End date:{/tr}</td>
-<td>{html_select_date time=$endDate prefix="endDate_" end_year="-10" field_order=$display_field_order}</td>
 </tr>
-<tr>
+{/if}
+<tr class="formcolor">
 <td>{tr}Category:{/tr}</td>
 <td><select name="categId">
 <option value="" {if $reportCateg eq  '' or reportCateg eq 0}selected="selected"{/if}>* {tr}All{/tr} *</option>
@@ -56,21 +67,23 @@
 <option value="{$categories[ix].categId|escape}" {if $reportCateg eq  $categories[ix].name}selected="selected"{/if}>{$categories[ix].name|escape}</option>
 {/section}
 </select>
-</td>
-<td>{tr}bytes{/tr}<input type="radio" name="unit" value="bytes"{if $unit ne 'kb'} checked="checked"{/if}> {tr}kb{/tr}<input type="radio" name="unit" value="kb"{if $unit eq 'kb'} checked="checked"{/if}></td></tr>
-<tr><td colspan="4" class="button"><input type="submit" name="list" value="{tr}Report{/tr}" /><br />
-<input type="submit" name="export" value="{tr}Export{/tr}" /></td></tr>
+</td></tr><tr class="formcolor">
+<td></td><td>{tr}bytes{/tr}<input type="radio" name="unit" value="bytes"{if $unit ne 'kb'} checked="checked"{/if}> {tr}kb{/tr}<input type="radio" name="unit" value="kb"{if $unit eq 'kb'} checked="checked"{/if}></td></tr>
+<tr><td colspan="2" class="button"><input type="submit" name="list" value="{tr}Report{/tr}" /></td></tr>
+{if $tiki_p_admin eq 'y'}
+<tr class="formcolor"><td colspan="2" class="button"><input type="submit" name="export" value="{tr}Export{/tr}" /></td></tr>
+{/if}
 </table>
 </form>
 
 {if $actionlogs}<a href="#Statistic" class="buttom">See Statictics</a>{/if}
 
 <a name="List" />
-<h3>{tr}List{/tr}
+<h2>{tr}List{/tr}
 {if $selectedUsers}&nbsp;&mdash;&nbsp;{tr}User:{/tr}{foreach  key=ix item=user from=$users}{if $selectedUsers[$ix] eq 'y'} {$user|escape}{/if}{/foreach}{/if}
 {if $selectedGroups}&nbsp;&mdash;&nbsp;{tr}Group:{/tr}{foreach  key=ix item=group from=$groups}{if $selectedGroups[$ix] eq 'y'} {$group|escape}{/if}{/foreach}{/if}
 {if $reportCategory}&nbsp;&mdash;&nbsp;{tr}Category:{/tr} {$reportCateg}{/if}
-</h3>
+</h2>
 {if $actionlogs}
 <table class="smallnormal">
 <tr>
@@ -82,7 +95,7 @@
 {if !$reportCateg and $showCateg eq 'y'}<th class="heading"><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=categName_{if $sort_mode eq 'categName_desc'}asc{else}desc{/if}{$url}">{tr}category{/tr}</a></th>{/if}
 <th class="heading"><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=add_{if $sort_mode eq 'add_desc'}asc{else}desc{/if}{$url}">+{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</a></th>
 <th class="heading"><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=del_{if $sort_mode eq 'del_desc'}asc{else}desc{/if}{$url}">-{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</a></th>
-{if $feature_contribution eq 'y'}<th class="heading">{tr}contribution{/tr}</th><th class="heading">&nbsp;</th>{/if}
+{if $feature_contribution eq 'y'}<th class="heading">{tr}contribution{/tr}</th>{if $tiki_p_admin eq 'y'}<th class="heading">&nbsp;</th>{/if}{/if}
 </tr>
 {cycle values="even,odd" print=false}
 {section name=ix loop=$actionlogs}
@@ -102,7 +115,7 @@
 {$actionlogs[ix].contributions[iy].name}
 {/section}
 </td>
-{if $feature_contribution eq 'y'}<td class="{cycle advance=false}">{if $actionlogs[ix].actionId}<a class="link" href="tiki-admin_actionlog.php?actionId={$actionlogs[ix].actionId}&amp;startDate={$startDate}&amp;endDate={$endDate}#action" title="{tr}edit contribution{/tr}"><img src="pics/icons/page_edit.png" alt="{tr}edit{/tr}" width="16" heigth="16" border="0"></a>{else}&nbsp;{/if}</td>{/if}
+{if $feature_contribution eq 'y' and $tiki_p_admin eq 'y'}<td class="{cycle advance=false}">{if $actionlogs[ix].actionId}<a class="link" href="tiki-admin_actionlog.php?actionId={$actionlogs[ix].actionId}&amp;startDate={$startDate}&amp;endDate={$endDate}#action" title="{tr}edit contribution{/tr}"><img src="pics/icons/page_edit.png" alt="{tr}edit{/tr}" width="16" heigth="16" border="0"></a>{else}&nbsp;{/if}</td>{/if}
 {/if}
 <!-- {cycle} -->
 </tr>
@@ -112,7 +125,7 @@
 
 {if $action}
 <a name="action">
-<h3>{tr}Edit action{/tr}</h3>
+<h2>{tr}Edit action{/tr}</h2>
 <form method="post" action="tiki-admin_actionlog.php">
 <input type="hidden" name="actionId" value="{$action.actionId}" />
 <input type="hidden" name="list" value="y" />
@@ -129,11 +142,11 @@
 {/if}
 
 <a name="Statistic" />
-<h3>{tr}Statistic{/tr}
+<h2>{tr}Statistic{/tr}
 {if $selectedUsers}&nbsp;&mdash;&nbsp;{tr}User:{/tr}{foreach  key=ix item=user from=$users}{if $selectedUsers[$ix] eq 'y'} {$user|escape}{/if}{/foreach}{/if}
 {if $selectedGroups}&nbsp;&mdash;&nbsp;{tr}Group:{/tr}{foreach  key=ix item=group from=$groups}{if $selectedGroups[$ix] eq 'y'} {$group|escape}{/if}{/foreach}{/if}
 {if $reportCategory}&nbsp;&mdash;&nbsp;{tr}Category:{/tr} {$reportCateg}{/if}
-</h3>
+</h2>
 
 {if $showLogin eq 'y' and $logTimes|@count ne 0}
 <table class="smallnormal">
