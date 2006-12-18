@@ -5,7 +5,7 @@ header('Content-type: application/javascript');
 $fckstyle = "styles/$style";
 $smarty->assign('fckstyle',$fckstyle);
 
-$tools = split("\r|\n",$wysiwyg_toolbar);
+$tools = split("\r\n|\n",$wysiwyg_toolbar);
 $line = 0;
 $trim = create_function('&$x', '$x=trim($x);');
 foreach ($tools as $t) {
