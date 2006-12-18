@@ -4,9 +4,9 @@ if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) != FALSE) { header('locat
 
 $is_html = false;
 if ($feature_wysiwyg == 'y') {
-	if ((isset($_REQUEST['wysiwyg']) and $_REQUEST['wysiwyg'] == 'y' and $wysiwyg_optional == 'y') or ($wysiwyg_optional == 'n' or $wysiwyg_default == 'y')) {
+	if ((isset($_REQUEST['wysiwyg']) and $_REQUEST['wysiwyg'] == 'y' and $wysiwyg_optional == 'y') or ($wysiwyg_optional == 'n' or ($wysiwyg_default == 'y' and !isset($_REQUEST['wysiwyg'])))) {
 		$_SESSION['wysiwyg'] = 'y';
-	} elseif (isset($_REQUEST['wysiwyg']) and $_REQUEST['wysiwyg'] == 'n') {
+	} elseif ($wysiwyg_optional == 'y' and isset($_REQUEST['wysiwyg']) and $_REQUEST['wysiwyg'] == 'n') {
 		$_SESSION['wysiwyg'] = 'n';
 	}
 	$is_html = true;
