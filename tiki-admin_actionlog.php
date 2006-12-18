@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.20 2006-09-14 14:28:42 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.21 2006-12-18 16:44:51 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -14,32 +14,35 @@ include_once('lib/categories/categlib.php');
 include_once('lib/contribution/contributionlib.php');
 $commentslib = new Comments($dbTiki);
 
-if ($tiki_p_admin != 'y') {
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
 if ($feature_actionlog != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_actionlog");
 	$smarty->display("error.tpl");
 	die;
 }
-$confs = $logslib->get_all_actionlog_conf();
-if (isset($_REQUEST['setConf'])) { 
-	for ($i = 0; $i < sizeof($confs); ++$i) {
-		if (isset($_REQUEST['view_'.$confs[$i]['code']]) && $_REQUEST['view_'.$confs[$i]['code']] == 'on') {//viewed and reported
-			$logslib->set_actionlog_conf($confs[$i]['action'], $confs[$i]['objectType'], 'v');
-			$confs[$i]['status'] = 'v';
-		} elseif (isset($_REQUEST[$confs[$i]['code']]) && $_REQUEST[$confs[$i]['code']] == 'on') {
-			$logslib->set_actionlog_conf($confs[$i]['action'], $confs[$i]['objectType'], 'y');
-			$confs[$i]['status'] = 'y';
-		} else {
-			$logslib->set_actionlog_conf($confs[$i]['action'], $confs[$i]['objectType'], 'n');
-			$confs[$i]['status'] = 'n';
+if (empty($user)) {
+	$smarty->assign('msg', tra("You do not have permission to use this feature"));
+	$smarty->display("error.tpl");
+	die;
+}
+
+if ($tiki_p_admin == 'y') {
+	$confs = $logslib->get_all_actionlog_conf();
+	if (isset($_REQUEST['setConf'])) { 
+		for ($i = 0; $i < sizeof($confs); ++$i) {
+			if (isset($_REQUEST['view_'.$confs[$i]['code']]) && $_REQUEST['view_'.$confs[$i]['code']] == 'on') {//viewed and reported
+				$logslib->set_actionlog_conf($confs[$i]['action'], $confs[$i]['objectType'], 'v');
+				$confs[$i]['status'] = 'v';
+			} elseif (isset($_REQUEST[$confs[$i]['code']]) && $_REQUEST[$confs[$i]['code']] == 'on') {
+				$logslib->set_actionlog_conf($confs[$i]['action'], $confs[$i]['objectType'], 'y');
+				$confs[$i]['status'] = 'y';
+			} else {
+				$logslib->set_actionlog_conf($confs[$i]['action'], $confs[$i]['objectType'], 'n');
+				$confs[$i]['status'] = 'n';
+			}
 		}
 	}
+	$smarty->assign_by_ref('actionlogConf', $confs);
 }
-$smarty->assign_by_ref('actionlogConf', $confs);
 
 if (!empty($_REQUEST['actionId'])) {
 	$action = $logslib->get_info_action($_REQUEST['actionId']);
@@ -81,9 +84,14 @@ if (!empty($_REQUEST['actionId'])) {
 	}
 }
 
-$users = $userlib->list_all_users();
+if ($tiki_p_admin == 'y') {
+	$users = $userlib->list_all_users();
+	$groups = $userlib->list_all_groups();
+} else {
+	$users = array($userlib->get_user_id($user) => $user);
+ 	$groups = $tikilib->get_user_groups($user);
+}
 $smarty->assign_by_ref('users', $users);
-$groups = $userlib->list_all_groups();
 $smarty->assign_by_ref('groups', $groups);
 $categories = $categlib->list_categs();
 $smarty->assign_by_ref('categories', $categories);
@@ -95,9 +103,9 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export'])) {
 	$url = '';
 	$selectedUsers = array();
 	if (isset($_REQUEST['selectedUsers'])) {
-		foreach ($users as $key=>$user) {
-			if (in_array($user, $_REQUEST['selectedUsers'])) {
-				$url .= "&amp;selectedUsers[]=$user";
+		foreach ($users as $key=>$u) {
+			if (in_array($u, $_REQUEST['selectedUsers'])) {
+				$url .= "&amp;selectedUsers[]=$u";
 				$selectedUsers[$key] = 'y';
 			} else
 				$selectedUsers[$key] = 'n';
@@ -106,13 +114,15 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export'])) {
 	$smarty->assign('selectedUsers', $selectedUsers);
 	if (isset($_REQUEST['selectedGroups']) && !(sizeof($_REQUEST['selectedGroups']) == 1 && $_REQUEST['selectedGroups'][0] == '')) {
 		$selectedGroups = array();
-		foreach ($groups as $key=>$group) {
-			if (in_array($group, $_REQUEST['selectedGroups'])) {
-				$url .= "&amp;selectedGroups[]=$group";
+		foreach ($groups as $key=>$g) {
+			if (in_array($g, $_REQUEST['selectedGroups'])) {
+				$url .= "&amp;selectedGroups[]=$g";
 				$selectedGroups[$key] = 'y';
-				$members = $userlib->get_group_users($group);
-				foreach ($members as $m)
-					$_REQUEST['selectedUsers'][] = $m;
+				if ($tiki_p_admin == 'y') {
+					$members = $userlib->get_group_users($g);
+					foreach ($members as $m)
+						$_REQUEST['selectedUsers'][] = $m;
+				}
 			} else {
 				$selectedGroups[$key] = 'n';
 			}
