@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.366 2006-12-17 17:43:20 fr_rodo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.367 2006-12-19 02:12:00 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -996,6 +996,8 @@ $pref['record_untranslated'] = 'n';
 $pref['feature_best_language'] = 'n';
 $pref['lang_use_db'] = 'n';
 $pref['language'] = 'en';
+$pref['feature_babelfish'] = 'en';
+$pref['feature_babelfish_logo'] = 'en';
 
 # html header
 $pref['metatag_keywords'] = '';
@@ -1448,14 +1450,6 @@ include_once("csslib.php");
 $transition_style = $csslib->transition_css('styles/'.$style);
 $headerlib->add_cssfile('styles/transitions/'.$transition_style,50);
 $headerlib->add_cssfile('styles/'.$style,51);
-
-// \todo if this page is not viewable by anonymous, then don't display the babelfish stuff
-/* this code following if (0) is never executed, right?
-if (0) {
-    $feature_babelfish = 'n';
-    $feature_babelfish_logo = 'n';
-}
-*/
 
 if ($feature_babelfish == 'y') {
     require_once('lib/Babelfish.php');
