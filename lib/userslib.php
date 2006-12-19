@@ -752,6 +752,7 @@ class UsersLib extends TikiLib {
 	$options["groupoc"] = $tikilib->get_preference("auth_ldap_groupoc", "groupOfUniqueNames");
 	$options["memberattr"] = $tikilib->get_preference("auth_ldap_memberattr", "uniqueMember");
 	$options["memberisdn"] = ($tikilib->get_preference("auth_ldap_memberisdn", "y") == "y");
+	$options["version"] = $tikilib->get_preference("auth_ldap_version", 3);
 
 	// set the Auth options
 	$a = new Auth("LDAP", $options, "", false, $user, $pass);
