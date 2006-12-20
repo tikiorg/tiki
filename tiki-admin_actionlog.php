@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.21 2006-12-18 16:44:51 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.22 2006-12-20 18:59:52 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -99,6 +99,7 @@ foreach ($categories as $categ) {
 	$categNames[$categ['categId']] = $categ['name'];
 }
 $smarty->assign_by_ref('categNames', $categNames);
+
 if (isset($_REQUEST['list']) || isset($_REQUEST['export'])) {
 	$url = '';
 	$selectedUsers = array();
@@ -329,7 +330,18 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export'])) {
 		$csv = $logslib->export($actions);
 		$smarty->assign('csv', $csv);
 	}
+	if ($feature_contribution == 'y') {
+		if (empty($_REQUEST['contribTime']))
+			$_REQUEST['contribTime'] = 'w';
+		$contributionStat = $logslib->get_stat_contribution($actions, $startDate, $endDate, $_REQUEST['contribTime']);
+		$smarty->assign_by_ref('contributionStat', $contributionStat['data']);
+		$smarty->assign_by_ref('contributionNbCols', $contributionStat['nbCols']);
+		$smarty->assign_by_ref('contribTime', $_REQUEST['contribTime']);
+	}
 }
+
+if (isset($_REQUEST['time']))
+	$smarty->assign('time', $_REQUEST['time']);
 if (isset($_REQUEST['unit']))
 	$smarty->assign('unit', $_REQUEST['unit']);
 // Display the template
