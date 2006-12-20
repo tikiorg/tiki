@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.369 2006-12-19 11:39:37 gregmartin Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.370 2006-12-20 12:22:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1080,8 +1080,6 @@ $pref['error_reporting_level'] = 0;
 $pref['feature_ajax'] = 'n';
 $pref['feature_antibot'] = 'n';
 $pref['feature_autolinks'] = 'y';
-$pref['feature_babelfish'] = 'y';
-$pref['feature_babelfish_logo'] = 'n';
 $pref['feature_banners'] = 'n';
 $pref['feature_banning'] = 'n';
 $pref['feature_comm'] = 'n';
