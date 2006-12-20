@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.11 2006-11-24 09:27:22 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.12 2006-12-20 12:23:47 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -735,11 +735,18 @@ if (isset($_SESSION["install-logged-$multi"]) && $_SESSION["install-logged-$mult
 }
 $smarty->assign_by_ref('tikifeedback', $tikifeedback);
 
+$php_memory_limit = ini_get('memory_limit');
+$smarty->assign('php_memory_limit', $php_memory_limit);
+
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
+
+include "lib/headerlib.php";
+$headerlib->add_cssfile('styles/tikineat.css');
+$smarty->assign_by_ref('headerlib',$headerlib);
+
 $mid_data = $smarty->fetch('tiki-install.tpl');
 $smarty->assign('mid_data', $mid_data);
 
-// $smarty->display("tiki.tpl");
+$smarty->display("tiki.tpl");
 
-//print "<hr>";
-//setup_help();
 ?>
