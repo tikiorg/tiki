@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/categorize_list.php,v 1.22 2006-12-16 19:01:30 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/categorize_list.php,v 1.23 2006-12-20 17:52:38 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -40,7 +40,7 @@ if ($feature_categories == 'y') {
 	$num_categories = count($categories);
 
 	for ($i = 0; $i < $num_categories; $i++) {
-		if (in_array($categories[$i]["categId"], $cats)) {
+	  if (!empty($cats) && in_array($categories[$i]["categId"], $cats)) {
 			$categories[$i]["incat"] = 'y';
 		} else {
 			$categories[$i]["incat"] = 'n';
@@ -57,7 +57,8 @@ if ($feature_categories == 'y') {
 		}
 	}
 
-	$smarty->assign('catsdump', implode(',',$cats));
+	if (!empty($cats))
+		$smarty->assign('catsdump', implode(',',$cats));
 	$smarty->assign_by_ref('categories', $categories);
 
 	// check if this page is categorized
