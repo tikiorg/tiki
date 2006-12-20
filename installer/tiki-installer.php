@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.12 2006-12-20 12:23:47 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.13 2006-12-20 13:11:05 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -477,6 +477,9 @@ function check_password() {
 		}
 	}
 }
+
+include 'lib/cache/cachelib.php';
+$cachelib->empty_full_cache();
 
 // -------------------------------------------------------------------------------------
 // end of functions .. now starts the processing
