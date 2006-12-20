@@ -1,5 +1,5 @@
 <?php 
-// $Header: /cvsroot/tikiwiki/tiki/poll_categorize.php,v 1.4 2005-08-25 20:50:04 michael_davey Exp $
+// $Header: /cvsroot/tikiwiki/tiki/poll_categorize.php,v 1.5 2006-12-20 21:12:22 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -25,7 +25,7 @@ if ($feature_categories == 'y' and $feature_polls == 'y') {
 			$catObjectId = $categlib->add_categorized_object($cat_type, $cat_objid, $cat_desc, $cat_name, $cat_href);
 		}
 		if ($polllib->has_object_polls($catObjectId)) {
-			$polllib->remove_object_poll($catObjectId);	
+			$polllib->remove_object_poll($cat_type, $cat_objid);	
 		}
 		$pollid = $polllib->create_poll($_REQUEST["poll_template"], $cat_objid .': '. $_REQUEST['poll_title']);
 		$polllib->poll_categorize($catObjectId, $pollid, $_REQUEST['poll_title']);
