@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.40 2006-12-20 17:10:20 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.41 2006-12-20 17:24:12 sylvieg Exp $
 
 	require_once('tiki-setup.php');
 	include_once('lib/filegals/filegallib.php');
@@ -37,6 +37,7 @@
 	    }
 	  }
 	} elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+	  global $categlib; include_once('lib/categories/categlib.php');
 	  $perms_array = $categlib->get_object_categories_perms($user, 'file gallery', $_REQUEST['galleryId']);
    	  if ($perms_array) {
    	    $is_categorized = TRUE;
