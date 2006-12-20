@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2006-12-15 15:55:56 $
-# $Author: nyloth $
+# $Date: 2006-12-20 19:15:49 $
+# $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -749,7 +749,8 @@ CREATE TABLE tiki_objects (
   href varchar(200) default NULL,
   hits int(8) default NULL,
   PRIMARY KEY  (objectId),
-  KEY (type, objectId)
+  KEY (type, objectId),
+  KEY (itemId, type)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
 
@@ -1368,6 +1369,9 @@ CREATE TABLE tiki_files (
   KEY name (name),
   KEY description (description(255)),
   KEY downloads (downloads),
+  KEY created (created),
+  KEY archiveId (archiveId),
+  KEY galleryId (galleryId),
   FULLTEXT KEY ft (name,description,search_data)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -2898,7 +2902,8 @@ CREATE TABLE tiki_rss_modules (
   showTitle char(1) default 'n',
   showPubDate char(1) default 'n',
   content longblob,
-  PRIMARY KEY  (rssId)
+  PRIMARY KEY  (rssId),
+  KEY name (name)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
 
@@ -3329,7 +3334,7 @@ CREATE TABLE tiki_theme_control_objects (
   type varchar(250) NOT NULL default '',
   name varchar(250) NOT NULL default '',
   theme varchar(250) NOT NULL default '',
-  PRIMARY KEY  (objId)
+  PRIMARY KEY  (objId, type)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -3592,7 +3597,7 @@ CREATE TABLE tiki_user_assigned_modules (
   ord int(4) default NULL,
   type char(1) default NULL,
   user varchar(40) NOT NULL default '',
-  PRIMARY KEY  (name,user)
+  PRIMARY KEY  (name(30),user,position)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -4354,7 +4359,8 @@ CREATE TABLE users_users (
   score int(11) NOT NULL default 0,
   PRIMARY KEY  (userId),
   KEY login (login),
-  KEY score (score)
+  KEY score (score),
+  KEY registrationDate (registrationDate)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
 ### Administrator account
