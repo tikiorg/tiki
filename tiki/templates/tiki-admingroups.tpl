@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.67 2006-12-05 21:37:30 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.68 2006-12-20 15:57:23 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -134,6 +134,7 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}remove{/tr}" src="pics/icons/cr
 {foreach key=gr item=yn from=$inc}{if $yn eq 'y'}{$gr|escape} {/if}{/foreach}<br />
 {/if}
 <select name="include_groups[]" id="groups_inc" multiple="multiple" size="4">
+{if !empty($groupname)}<option value="">{tr}None{/tr}</option>{/if}
 {foreach key=gr item=yn from=$inc}
 <option value="{$gr|escape}" {if $yn eq 'y'} selected="selected"{/if}>{$gr|truncate:"52":" ..."}</option>
 {/foreach}
