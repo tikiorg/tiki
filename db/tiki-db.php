@@ -119,7 +119,8 @@ $dsn = "$db_tiki://$user_tiki:$pass_tiki@$host_tiki/$dbs_tiki";
 //$dsn = "mysql://$user_tiki@$pass_tiki(localhost)/$dbs_tiki";
 $dbTiki = &ADONewConnection($db_tiki);
 
-if (!@$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
+if (!@$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki) 
+		or (!@$dbTiki->Execute('select `login` from `users_users` limit 1'))) {
 	print "
 <html><body>
 <h2><font color='red'>TikiWiki is not properly set up:</font></h1>
