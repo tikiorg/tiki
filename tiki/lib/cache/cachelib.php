@@ -69,17 +69,15 @@ class Cachelib {
 		}
   }
 
-  function empty_full_cache(){
-  	global $tikidomain,$logslib;
-	$this->erase_dir_content("templates_c/$tikidomain");
-	$logslib->add_log('system','erased templates_c content');
-	
-	$this->erase_dir_content("temp/cache/$tikidomain");
-	$logslib->add_log('system','erased temp/cache content');
-	
-	$this->erase_dir_content("modules/cache/$tikidomain");
-	$logslib->add_log('system','erased modules/cache content');
-  }
+	function empty_full_cache(){
+		global $tikidomain,$logslib;
+		$this->erase_dir_content("templates_c/$tikidomain");
+		$this->erase_dir_content("temp/cache/$tikidomain");
+		$this->erase_dir_content("modules/cache/$tikidomain");
+		if (is_object($logslib)) {
+			$logslib->add_log('system','erased full cache');
+		}
+	}
 
   function du($path, $begin=null) {
 	if (!$path or !is_dir($path)) return (array('total' => 0,'cant' =>0));
