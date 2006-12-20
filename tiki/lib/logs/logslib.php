@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.27 2006-09-14 14:28:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.28 2006-12-20 18:59:52 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -133,11 +133,17 @@ class LogsLib extends TikiLib {
 			}
 		}
 		$query = "select `actionId` from `tiki_actionlog` where `action`=? and `object`=? and `lastModif`=? and `user`=? and `ip`=?";
-		$actionId = $this->getOne($query, array($action, $object, (int)$date, $who, $ip));
+		$result = $this->query($query, array($action, $object, (int)$date, $who, $ip));
+		$actions = array();
+		while ($res = $result->fetchRow()) {
+			$actions[] = $res['actionId'];
+		}
 		if (!empty($contributions)) {
-			$query = "insert into `tiki_actionlog_params` (`actionId`, `name`, `value`) values(?,?,?)";
-			foreach ($contributions as $contribution) {
-				$this->query($query, array($actionId, 'contribution', $contribution));			
+			foreach ($actions as $a) {
+				$query = "insert into `tiki_actionlog_params` (`actionId`, `name`, `value`) values(?,?,?)";
+				foreach ($contributions as $contribution) {
+					$this->query($query, array($a, 'contribution', $contribution));			
+				}
 			}
 		}
 		if (!empty($hash)) {
@@ -570,6 +576,49 @@ class LogsLib extends TikiLib {
 		foreach ($values as $val) {
 			$this->query($query, array($actionId, $param, $val));
 		}
+	}
+	function get_stat_contribution($actions, $startDate, $endDate, $unit='w') {
+		$contributions = array();
+		$nbCols = floor(($endDate - $startDate) / (60*60*24));
+		if ($unit != 'd') {
+			$nbCols = $nbCols/7;
+		}
+		++$nbCols;
+		foreach ($actions as $action) {
+			if (isset($action['contributions'])) {
+				if (!empty($previousAction) && $action['lastModif'] == $previousAction['lastModif'] && $action['user'] == $previousAction['user'] && $action['object'] == $previousAction['object'] && $action['objectType'] == $previousAction['objectType'])
+					continue;	// differ only by the categories
+				$previousAction = $action;
+				foreach ($action['contributions'] as $contrib) {
+					$i = floor(($action['lastModif'] - $startDate) / (60*60*24));
+					if ($unit != 'd')
+						$i = $i/7;
+					if (empty($contributions[$contrib['contributionId']])) {
+						$contributions[$contrib['contributionId']]['name'] = $contrib['name'];
+						for ($j = 0; $j < $nbCols; ++$j) {
+							$contributions[$contrib['contributionId']]['stat'][$j]['add'] = 0;
+							$contributions[$contrib['contributionId']]['stat'][$j]['del'] = 0;
+							$contributions[$contrib['contributionId']]['stat'][$j]['nbAdd'] = 0;
+							$contributions[$contrib['contributionId']]['stat'][$j]['nbDel'] = 0;
+							$contributions[$contrib['contributionId']]['stat'][$j]['nbUpdate'] = 0;
+						}
+					}
+					if ($action['add']) {
+						$contributions[$contrib['contributionId']]['stat'][$i]['add'] += $action['add'];
+						if (!$action['del'])
+							++$contributions[$contrib['contributionId']]['stat'][$i]['nbAdd'];
+					}
+					if ($action['del']) {
+						$contributions[$contrib['contributionId']]['stat'][$i]['del'] += $action['del'];
+						if (!$action['add'])
+							++$contributions[$contrib['contributionId']]['stat'][$i]['nbDel'];
+					}
+					if ($action['add'] && $action['del'])
+						++$contributions[$contrib['contributionId']]['stat'][$i]['nbUpdate'];
+				}
+			}
+		}
+		return (array('nbCols'=>$nbCols, 'data'=>$contributions));
 	}
 }
 global $dbTiki;

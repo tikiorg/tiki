@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.21 2006-12-18 16:44:52 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.22 2006-12-20 18:59:52 sylvieg Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a></h1>
 {if $tiki_p_admin eq 'y'}
@@ -69,7 +69,8 @@
 </select>
 </td></tr><tr class="formcolor">
 <td></td><td>{tr}bytes{/tr}<input type="radio" name="unit" value="bytes"{if $unit ne 'kb'} checked="checked"{/if}> {tr}kb{/tr}<input type="radio" name="unit" value="kb"{if $unit eq 'kb'} checked="checked"{/if}></td></tr>
-<tr><td colspan="2" class="button"><input type="submit" name="list" value="{tr}Report{/tr}" /></td></tr>
+<tr class="formcolor"><td></td><td>{tr}Week{/tr}<input type="radio" name="contribTime" value="w"{if $contribTime ne 'd'} checked="checked"{/if}> {tr}Day{/tr}<input type="radio" name="contribTime" value="d"{if $contribTime eq 'd'} checked="checked"{/if}></td></tr>
+<tr class="formcolor"><td colspan="2" class="button"><input type="submit" name="list" value="{tr}Report{/tr}" /></td></tr>
 {if $tiki_p_admin eq 'y'}
 <tr class="formcolor"><td colspan="2" class="button"><input type="submit" name="export" value="{tr}Export{/tr}" /></td></tr>
 {/if}
@@ -276,8 +277,30 @@
 </table>
 {/if}
 
+{if isset($contributionStat)}
+<table>
+<tr><th class="heading">{tr}Contribution{/tr}</th>
+<th class="heading" colspan="{$contributionNbCols}">{if $contribTime eq 'd'}{tr}Days{/tr}{else}{tr}Weeks{/tr}{/if}</th></tr>
+<tr><td class="heading"></td>
+{section name=foo start=0 loop=`$contributionNbCols`}
+<td class="heading">{$smarty.section.foo.index+1}</td>
+{/section}
+</tr>
+{foreach from=$contributionStat key=contributionId item=contribution}
+<tr><td class="{cycle advance=false}">{$contribution.name}</td>
+{foreach from=$contribution.stat item=stat}
+<td class="{cycle advance=false}">
+{if !empty($stat.add)}<span class="diffadded">{$stat.add}</span>{/if}<br />
+{if !empty($stat.del)}<span class="diffdeleted">{$stat.del}</span>{/if}
+</td>
+{/foreach}
+<!--{cycle}--> 
+</tr>
+{/foreach}
+</table>
+{/if}
+
 <a name="#csv"></a>
 {if $csv}
-<a name="#csv"></a>
 <div class="cbox">{$csv}</div>
 {/if}
