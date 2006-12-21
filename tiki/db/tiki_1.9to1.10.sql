@@ -1,4 +1,4 @@
-	# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.126 2006-12-20 19:15:49 sylvieg Exp $
+	# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.127 2006-12-21 16:14:15 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -704,3 +704,6 @@ ALTER TABLE tiki_theme_control_objects DROP PRIMARY KEY , ADD PRIMARY KEY (objId
 ALTER TABLE tiki_objects ADD KEY(itemId, type);
 ALTER TABLE users_users ADD KEY(registrationDate);
 ALTER TABLE tiki_rss_modules ADD KEY(name);
+
+#sylvie 2006-12-21
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_actionlog', 'Can view action log', 'registered', 'tiki');
