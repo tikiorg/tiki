@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.83 2006-12-07 07:34:21 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.84 2006-12-21 23:25:43 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -1565,7 +1565,7 @@ class ImageGalsLib extends TikiLib {
 
 		
 		
-		if(!@is_array($bindvars)) {
+		if(!isset($bindvars) || !is_array($bindvars)) {
 			$bindvars=array((int)$id,$itype);
 		}
 
