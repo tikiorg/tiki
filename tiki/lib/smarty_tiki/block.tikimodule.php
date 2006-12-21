@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/block.tikimodule.php,v 1.11 2006-12-21 15:14:53 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/block.tikimodule.php,v 1.12 2006-12-21 15:28:11 sylvieg Exp $
 /**
  * \brief Smarty {tikimodule}{/tikimodule} block handler
  *
@@ -48,7 +48,6 @@ function smarty_block_tikimodule($params, $content, &$smarty) {
 		$flip = $user_flip_modules;
 	}
 
-if ($decorations == 'y') {	
 	$smarty->assign('module_overflow', $overflow);
 	$smarty->assign('module_title', $title);
 	$smarty->assign('module_name', $name);
@@ -57,5 +56,5 @@ if ($decorations == 'y') {
 	$smarty->assign_by_ref('module_content', $content);
 	return $smarty->fetch('module.tpl');
 }
-}
+
 ?>
