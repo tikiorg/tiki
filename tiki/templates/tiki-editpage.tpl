@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.95 2006-12-14 16:40:33 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.96 2006-12-21 14:57:59 mose Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -138,7 +138,7 @@
 {/if}
 {/if}
 {if count($listpolls)}
-or use 
+{tr}or use{/tr}
 <select name="olpoll">
 <option value="">... {tr}an existing poll{/tr}</option>
 {section name=ix loop=$listpolls}

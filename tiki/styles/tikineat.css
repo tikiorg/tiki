@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.25 2006-12-16 10:30:28 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.26 2006-12-21 14:57:58 mose Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -169,7 +169,6 @@ DIV#tiki-bot {
 #centercolumn {
 	background-color: #F3F6F9;
 	margin : 0;
-	width : 100%;
 }
 #rightcolumn {
 	width : 180px;
@@ -180,7 +179,6 @@ DIV#tiki-center {
 	padding : 10px 0;
 }
 DIV#tiki-mid > table {
-	width : 100%;
 	border-spacing : 0;
 	margin : 0;
 	padding : 0;
@@ -207,7 +205,6 @@ div#debugconsole {
 div.box {
 	background-color : white;
 	overflow : hidden;
-	_overflow : visible; /* IE hack  */
 	margin : 3px;
 	border : 1px solid #ACCCDD;
 	width : 174px;
@@ -232,10 +229,8 @@ div.box-title table td {
 }
 div.box-data {
 	overflow : hidden;
-	_overflow : visible; /* IE hack  */
 	color : black;
 	padding : 5px;
-	_padding : 0px 0px 0px 0px; /* IE hack */
 	font-size : 10px;
 }
 div.separator, div.separatorline {
@@ -736,10 +731,8 @@ div.wikitext div.img {
 	width : auto;
 }
 .wikitopline table {
-	width : 100%;
-	voice-family : "\"}\"";
-	voice-family : inherit;
-	width : 97%;
+	width : 100% ;
+	_width : 97% ;
 }
 html>body .wikitopline table {
 	width : 100%;
@@ -1515,7 +1508,7 @@ div#rules-copy-panel {
 	font-weight : bold;
 }
 .calendar {
-	z-index: 200;
+	z-index : 200;
 }
 table.commentinfo {
 	width : 100%;
@@ -1529,6 +1522,7 @@ div#loadstats {
 /* phplayers style */
 .box-data table {
 	width : 100%;
+	_width : 95%;
 }
 .mdkverbar  {
 	margin : 0px;
@@ -1545,7 +1539,6 @@ div#loadstats {
 	width : auto;
 }
 .mdksubframe  {
-	z-index : 1000;
 	position : relative;
 	display : block;
 	border : 1px solid #000000;
@@ -1566,6 +1559,7 @@ div#loadstats {
 .mdkitem a:visited  {
 }
 .mdkitem a:hover  {
+	background-color : #E9ECEF;
 }
 .mdkitem a:active {
 	color : #993300;

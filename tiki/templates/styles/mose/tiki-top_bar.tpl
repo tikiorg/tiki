@@ -54,3 +54,4 @@ Text Search <input type="hidden" name="where" value="wikis" />
 </div>
 {/if}
 </td></tr></table>
+</td></tr></table>

@@ -81,18 +81,13 @@ TD#rightcolumn {
 }
 
 TD#centercolumn {
-	padding-right:    2px;
 	background:   #EFEFFF;
 	vertical-align:   top;
-	width:   100%;
+	padding : 0 7px;
 }
 
 /* And this is what lies inside the centercolumn */
 DIV#tiki-center {
-	margin-left:    2px;
-	margin-right:   5px;
-	padding-left:   7px;
-	padding-right:   5px;
 }
 
 div#debugconsole {

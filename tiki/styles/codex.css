@@ -25,12 +25,8 @@ body {
 
 /* This div encloses the whole Tiki application */
 DIV#tiki-main {
-	height:   100%;
-	width:   100%;
-	margin-top:   0px;
-	margin-bottom:   0px;
-	margin-right:   0px;
-	margin-left:   0px;
+	height:    100%;
+	margin:   0px 0px 0px 0px;
 }
 
 /* This is the header */
@@ -74,19 +70,13 @@ TD#rightcolumn {
 }
 
 TD#centercolumn {
-	_padding-right:    2px;	
 	vertical-align: top;
 	width: 100%;
+	padding : 0 7px;
 }
 
 /* And this is what lies inside the centercolumn */
 DIV#tiki-center {
-	margin-left:    2px;
-	margin-right:   5px;
-	padding-left:   7px;
-	padding-right:   5px;
-	_vertical-align: top;
-	_width: 100%;
 }
 
 /* Lets build the book interface */
@@ -940,26 +930,13 @@ td.wikicell {
 
 /* Text in wiki pages is displayed using the following style */
 div.wikitext {
-	background-color : #ffffff;
+	background-color :    #ffffff;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   13px;
 	border:   1px solid black;
 	padding :   5px;
 	width:   100%;
 	clear:   both;
-}
-body.wikitext {
-	background-image : none;
-	background-color : #ffffff;
-	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size:   13px;
-	padding :   5px;
-}
-body.wikitext a {
-	color : black !important;
-}
-body.wikitext a:hover {
-	background-color:   #EFEFEF;
 }
 .wikitopline table { width : 100%; }
 
@@ -2030,8 +2007,8 @@ div.shoutboxmodmsg {
 	padding-left:   2px;
 	padding-top:   1px;
 	padding-bottom:   1px;
-    width: 95%;
 }
+
 textarea.tshoutbox {
 	background-color:    white;
 	border-bottom:   #5e5d63 1px solid;
@@ -2658,16 +2635,16 @@ td.middle {
 	vertical-align: middle; 
 }
 .daterow {
-  padding : 0 5px;
-  border : 1px outset #ddd;
-  background-color : #ddd;
+	padding : 0 5px;
+	border : 1px outset #ddd;
+	background-color : #ddd;
 }
 .daterow:hover {
   background-color : #fff;
-  cursor : pointer;
+	cursor : pointer;
 }
 .daterow:active {
-  border : 1px inset #ddd;
+	border : 1px inset #ddd;
 }
 .mininotes {
 	font-size: 80%;
@@ -3129,12 +3106,11 @@ border-style: solid;
 color: black;
 background-color: #edeeef;
 }
-
 /* tiki-admin menu */
 div.admbox {
-  border: 2px solid #BDBEE6; height: 100px; width: 100px;
-  text-align: center; float: left; margin: 5px;
-  background-color: white;
+	border: 2px solid #BDBEE6; height: 100px; width: 100px;
+	text-align: center; float: left; margin: 5px;
+	background-color: white;
 }
 div.admbox:hover { background-color: #CCCCEF; }
 div.admbox img { margin-top: 20px; }

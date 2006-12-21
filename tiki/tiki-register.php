@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.71 2006-12-08 18:46:35 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.72 2006-12-21 14:57:56 mose Exp $
 
 /**
  * Tiki registration script
@@ -9,7 +9,7 @@
  * @license GNU LGPL
  * @copyright Tiki Community
  * @date created: 2002/10/8 15:54
- * @date last-modified: $Date: 2006-12-08 18:46:35 $
+ * @date last-modified: $Date: 2006-12-21 14:57:56 $
  */
 
 // Initialization
@@ -118,14 +118,14 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
   
   // Check this code
   if($pass_chr_num == 'y') {
-    if(!preg_match_all("/[0-9]+/",$_REQUEST["pass"],$foo) || !preg_match_all("/[A-Za-z]+/",$_REQUEST["pass"],$foo)) {
+    if (!preg_match("/[0-9]/",$_REQUEST["pass"]) || !preg_match("/[A-Za-z]/",$_REQUEST["pass"])) {
       $smarty->assign('msg',tra("Password must contain both letters and numbers"));
       $smarty->display("error.tpl");
       die; 	
     }
   }
   
-  if(!preg_match_all("/[A-Z0-9a-z\_\-]+/",$_REQUEST["name"],$matches)) {
+  if (!preg_match($patterns['login'],$_REQUEST["name"])) {
     $smarty->assign('msg',tra("Invalid username"));
     $smarty->display("error.tpl");
     die;

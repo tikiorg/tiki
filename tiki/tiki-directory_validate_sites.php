@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_validate_sites.php,v 1.15 2005-05-18 10:58:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_validate_sites.php,v 1.16 2006-12-21 14:57:56 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -41,16 +41,10 @@ if (isset($_REQUEST["remove"])) {
 		key_get($area);
 	}
 }
-
 if (isset($_REQUEST["del"]) && isset($_REQUEST['sites'])) {
-	$area = 'deldirvalidate';
-	if ($feature_ticketlib2 != 'y' or ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])))) {
-		key_check($area);
-                foreach (array_keys($_REQUEST["sites"])as $siteId) {
-			$dirlib->dir_remove_site($siteId);
-		}
-	} else {
-		key_get($area);
+	check_ticket('dir-validate');
+	foreach (array_keys($_REQUEST["sites"])as $siteId) {
+		$dirlib->dir_remove_site($siteId);
 	}
 }
 

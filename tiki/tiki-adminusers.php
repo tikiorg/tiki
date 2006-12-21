@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.62 2006-09-19 16:33:14 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.63 2006-12-21 14:57:56 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -70,6 +70,9 @@ function batchImportUsers() {
 			$discarded[] = discardUser($u, tra("Email is required"));
 			++$discards;
 			continue;
+		} elseif (!preg_match($patterns['login'],$u['login'])) {
+			$discarded[] = discardUser($u, tra("Login contains invalid characters"));
+			++$discards;
 		} elseif ($userlib->user_exists($u['login'])) {
 			 if ($_REQUEST['overwrite'] == 'n') {
 				$discarded[] = discardUser($u, tra("User is duplicated"));
@@ -148,6 +151,8 @@ if (isset($_REQUEST["newuser"])) {
 			list($cant, $uu) = $userlib->other_user_exists_case_insensitive($_REQUEST["name"]);
 			if ($cant != 0) {
 				$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("User %s already exists"),$uu));
+			} elseif (!preg_match($patterns['login'],$_REQUEST['name'])) {
+				$tikifeedback[] = array('num'=>1,'mes'=>tra("User login contains invalid characters"));
 			} else {
 				if ($userlib->add_user($_REQUEST["name"], $_REQUEST["pass"], $_REQUEST["email"])) {
 					$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("New %s created with %s %s."),tra("user"),tra("username"),$_REQUEST["name"]));
@@ -409,7 +414,9 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 			}
 		}
 		if ($chlogin) {
-			if ($userlib->change_login($userinfo['login'],$_POST['name'])) {
+			if (!preg_match($patterns['login'],$_POST['name'])) {
+				$tikifeedback[] = array('num'=>1,'mes'=>tra("Login contains invalid characters"));
+			} elseif ($userlib->change_login($userinfo['login'],$_POST['name'])) {
 				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s changed from %s to %s"),tra("login"),$userinfo['login'],$_POST["name"]));
 				$logslib->add_log('adminusers','changed login for '.$_POST['name'].' from '.$userinfo['login'].' to '.$_POST["name"]);
 				$userinfo['login'] = $_POST['name'];
