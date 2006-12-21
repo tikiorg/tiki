@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/block.tikimodule.php,v 1.10 2006-12-21 14:57:57 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/block.tikimodule.php,v 1.11 2006-12-21 15:14:53 sylvieg Exp $
 /**
  * \brief Smarty {tikimodule}{/tikimodule} block handler
  *
@@ -56,5 +56,6 @@ if ($decorations == 'y') {
 	$smarty->assign('module_decorations', $decorations);
 	$smarty->assign_by_ref('module_content', $content);
 	return $smarty->fetch('module.tpl');
+}
 }
 ?>
