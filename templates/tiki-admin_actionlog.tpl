@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.22 2006-12-20 18:59:52 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.23 2006-12-21 16:16:23 sylvieg Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a></h1>
 {if $tiki_p_admin eq 'y'}
@@ -22,7 +22,6 @@
 {/if}
 
 <a name="Report" />
-<h2>{tr}Report{/tr}</h2>
 <form method="post" action="tiki-admin_actionlog.php#Report">
 <h2>{tr}Filter{/tr}</h2>
 <table class="smallnormal">
@@ -291,7 +290,8 @@
 {foreach from=$contribution.stat item=stat}
 <td class="{cycle advance=false}">
 {if !empty($stat.add)}<span class="diffadded">{$stat.add}</span>{/if}<br />
-{if !empty($stat.del)}<span class="diffdeleted">{$stat.del}</span>{/if}
+{if !empty($stat.del)}<span class="diffdeleted">{$stat.del}</span>{/if}<br />
+{if !empty($stat.del) || !empty($stat.add)}{math equation=x-y x=$stat.add y=$stat.del}{/if}<br />
 </td>
 {/foreach}
 <!--{cycle}--> 
