@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.122 2006-12-20 12:32:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.123 2006-12-21 14:57:56 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -109,9 +109,10 @@ if ( false ) { // if pre-PHP 4.1 compatibility is not required
 }
 
 // mose : simulate strong var type checking for http vars
+$patterns['login']   = "/^[-_a-zA-Z0-9@\.]*$/"; // special check for logins, not to be used in varcheck because compat with already created accounts
 $patterns['int']   = "/^[0-9]*$/"; // *Id
 $patterns['intSign']   = "/^[-+]?[0-9]*$/"; // *offset,
-$patterns['char']  = "/^[-,_a-zA-Z0-9]*$/"; // sort_mode, 
+$patterns['char']  = "/^[-,_a-zA-Z0-9]*$/"; // sort_mode 
 $patterns['string']  = "/^<\/?(b|strong|small|br *\/?|ul|li|i)>|[^<>\";#]*$/"; // find, and such extended chars
 $patterns['stringlist']  = "/^[^<>\"#]*$/"; // to, cc, bcc (for string lists like: user1;user2;user3)
 $patterns['vars']  = "/^[-_a-zA-Z0-9]*$/"; // for variable keys
@@ -297,7 +298,6 @@ $rememberme = $tikilib->get_preference('rememberme', 'disabled');
 if (($rememberme != 'disabled') 
 	and (isset($_COOKIE["$user_cookie_site"])) 
 	and (!isset($user) and !isset($_SESSION["$user_cookie_site"]))) {
-	# $user = $userlib->get_user_by_hash($_COOKIE["$user_cookie_site"]);
 	$user = $userlib->get_user_by_cookie($_COOKIE["$user_cookie_site"]);
 	if ($user) {
 		$_SESSION["$user_cookie_site"] = $user;

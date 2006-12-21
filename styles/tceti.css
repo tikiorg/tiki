@@ -80,7 +80,7 @@ TD#rightcolumn {
 }
 
 TD#centercolumn {
-	padding-right:    14px;
+	padding : 0 10px;
 	background-color:   white;
 	vertical-align:   top;
 	width:   100%;
@@ -88,10 +88,6 @@ TD#centercolumn {
 
 /* And this is what lies inside the centercolumn */
 DIV#tiki-center {
-	margin-left:    2px;
-	margin-right:   5px;
-	padding-left:   7px;
-	padding-right:   5px;
 }
 
 div#debugconsole {

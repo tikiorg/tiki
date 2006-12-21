@@ -1,5 +1,5 @@
 /*
-$Id: trollparty.css,v 1.46 2006-12-13 16:04:55 mose Exp $
+$Id: trollparty.css,v 1.47 2006-12-21 14:57:58 mose Exp $
 made by mose@trollparty.org
 
 background-color: #000000;
@@ -49,7 +49,6 @@ margin: 0px;
 }
 
 DIV#tiki-main > table:first-child {
-width : 100%;
 }
 
 DIV#tiki-top {
@@ -72,13 +71,13 @@ The three columns
 */
 TD#leftcolumn {
 vertical-align: top;
-width: 180px;
-border-right: 1px solid #003388;
+width : 180px;
+border-right : 1px solid #003388;
 }
 
 TD#rightcolumn {
 vertical-align: top;
-width: 180px;
+width : 180px;
 border-left: 1px solid #003388;
 }
 
@@ -160,19 +159,6 @@ div.box-data
 overflow: hidden;
 margin-left: 15px;
 margin-right: 5px;
-}
-
-div.box-data li:before
-{
-content: "- ";
-color: #b1b299;
-font-weight: bold;
-}
-
-div.box-data li
-{
-border-top: 1px solid #2255aa;
-border-bottom: 1px solid #4477cc;
 }
 
 /* 
@@ -279,9 +265,9 @@ color : white;
   border: 1px solid #424242;
 }
 .rssitem {
-  padding: 1px 6px 1px 6px;
+	list-style : none;
   border-top: 1px dashed #323232;
-  margin-left: 15px;
+  margin-left: 5px;
 }
 .rssitem:first-child {
   border-top: 0;

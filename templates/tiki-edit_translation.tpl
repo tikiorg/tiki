@@ -74,9 +74,9 @@
 	<table><tr><td>
 
 	{if $articles}
-		<select name="srcId">{section name=ix loop=$articles}<option value="{$articles[ix].articleId|escape}" {if $articles[ix].articleId == $srcId}checked="checked"{/if}>{$articles[ix].title|truncate:40:"(...)":true}</option>{/section}</select>
+		<select name="srcId">{section name=ix loop=$articles}<option value="{$articles[ix].articleId|escape}" {if $articles[ix].articleId == $srcId}checked="checked"{/if}>{$articles[ix].title|truncate:80:"(...)":true}</option>{/section}</select>
 	{else}
-		<select name="srcName">{section name=ix loop=$pages}<option value="{$pages[ix].pageName|escape}" {if $pages[ix].pageName == $srcId}checked="checked"{/if}>{$pages[ix].pageName|truncate:40:"(...)":true}</option>{/section}</select>
+		<select name="srcName">{section name=ix loop=$pages}<option value="{$pages[ix].pageName|escape}" {if $pages[ix].pageName == $srcId}checked="checked"{/if}>{$pages[ix].pageName|truncate:80:"(...)":true}</option>{/section}</select>
 	{/if}
 	&nbsp;<input type="submit" class="wikiaction"  value="{tr}add to the set{/tr}"/>
 	</td></tr></table>
@@ -85,12 +85,12 @@
 	{if $articles}
 		<p>{tr}Select the article for which the current article is the translation.{/tr}</p>
 		{tr}Translation of:{/tr}&nbsp;
-		<select name="srcId">{section name=ix loop=$articles}<option value="{$articles[ix].articleId|escape}">{$articles[ix].title|truncate:40:"(...)":true}</option>{/section}</select>
+		<select name="srcId">{section name=ix loop=$articles}<option value="{$articles[ix].articleId|escape}">{$articles[ix].title|truncate:80:"(...)":true}</option>{/section}</select>
 		&nbsp;<input type="submit" class="wikiaction"  value="{tr}go{/tr}"/>
 	{else}
 		<p>{tr}Enter the name of the page for which the current page is the translation.{/tr}</p>
 		{tr}Translation of:{/tr}&nbsp;
-		<select name="srcName">{section name=ix loop=$pages}<option value="{$pages[ix].pageName|escape}">{$pages[ix].pageName|truncate:40:"(...)":true}</option>{/section}</select>
+		<select name="srcName">{section name=ix loop=$pages}<option value="{$pages[ix].pageName|escape}">{$pages[ix].pageName|truncate:80:"(...)":true}</option>{/section}</select>
 		&nbsp;<input type="submit" class="wikiaction"  value="{tr}go{/tr}"/> 
 		{tr}or create a new page{/tr} <input type="text" name="newpage" id="newpage" value="" /> <a href="#" onclick="document.location='tiki-editpage.php?page='+document.getElementById('newpage').value;return false;">{tr}Create{/tr}</a>
 	{/if}

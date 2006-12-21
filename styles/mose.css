@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.73 2006-12-13 16:04:54 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.74 2006-12-21 14:57:57 mose Exp $
 2003 - created and maintained by mose@tikiwiki.org
 
 colorset:
@@ -25,16 +25,19 @@ H1, H2, H3 {
 H1 {
 	font-size: 24px;
 	margin: 6px 0 2px 0;
+	line-height : 24px;
 }
 
 H2 {
 	font-size: 18px;
 	margin: 6px 0 2px 0;
+	line-height : 18px;
 }
 
 H3 {
 	font-size: 14px;
 	margin: 6px 0 2px 0;
+	line-height : 14px;
 }
 table {
 padding: 0;
@@ -110,10 +113,6 @@ DIV#tiki-main {
 	background-color:    #DED6C6;
 }
 
-#tiki-top table#topbar {
-	width:100%;
-}
-
 #tiki-top a.linkh {
 	color:    #FFFFFF;
 	font-weight:   bold;
@@ -159,16 +158,15 @@ DIV#tiki-main {
 	background-color:    #423222;
 	text-decoration:   none;
 }
-
+#topbar {
+	width : 100%;
+}
 /* 
 This is the middle 
 */
 DIV#tiki-mid {
-	height:   auto;
-}
-DIV#tiki-mid > table {
-	width:100%;
-	margin: 0;
+	margin : 0;
+	padding : 0;
 }
 /* 
 And this is the footer 
@@ -179,37 +177,34 @@ DIV#tiki-bot {
 	background:   #DED6C6;
 	padding-bottom:   0px;
 }
-DIV#tiki-bot > table{
-	margin: 0;
-	width : 100%;
-}
 /* 
 The three columns 
 */
 TD#leftcolumn {
-	vertical-align:   top;
+	vertical-align :   top;
 	background:   #DED6C6;
-	width:   180px;
+	width :   180px;
 }
 
 TD#rightcolumn {
-	vertical-align:   top;
+	vertical-align :   top;
 	background:   #DED6C6;
 	width:   180px;
 }
 
 TD#centercolumn {
-	background:   #EFEFE7;
-	vertical-align:   top;
-	border-top:   1px solid #5A4A39;
+	background-color :   #EFEFE7;
+	vertical-align :   top;
+	border-top :   1px solid #5A4A39;
 	padding : 0 10px;
 }
-
-/* 
-centercolumn 
-*/
 DIV#tiki-center {
-	vertical-align:   top;
+	vertical-align : top;
+}
+DIV#tiki-mid > table {
+	border-spacing : 0;
+	margin : 0;
+	padding : 0;
 }
 
 div#debugconsole {
@@ -809,7 +804,6 @@ cached version (cache) is displayed using this style
 }
 
 table.wikitable {
-	width: 100%;
 	border: 1px solid #B5A58C;
 	border-spacing: 0;
 }

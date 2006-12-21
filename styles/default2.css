@@ -1,5 +1,5 @@
 /* 
-  $Header: /cvsroot/tikiwiki/tiki/styles/default2.css,v 1.62 2006-12-13 16:04:54 mose Exp $
+  $Header: /cvsroot/tikiwiki/tiki/styles/default2.css,v 1.63 2006-12-21 14:57:57 mose Exp $
   default2.css
   (This theme is based on the) default2 style for Tiki 1.2
   If you want  a short-version CSS template, start by copying default2
@@ -86,15 +86,11 @@ TD#centercolumn {
 	padding-right:    2px;
 	background:   #EFEFE7;
 	vertical-align:   top;
-	width:   100%;
+	padding : 0 7px;
 }
 
 /* And this is what lies inside the centercolumn */
 DIV#tiki-center {
-	margin-left:    2px;
-	margin-right:   5px;
-	padding-left:   7px;
-	padding-right:   5px;
 }
 
 div#debugconsole {

@@ -84,14 +84,11 @@ TD#centercolumn {
 	background:    #FFFFCC;
 	vertical-align:   top;
 	width:   100%;
+	padding : 0 5px;
 }
 
 /* And this is what lies inside the centercolumn */
 DIV#tiki-center {
-	margin-left:    0px;
-	margin-right:   5px;
-	padding-left:   2px;
-	padding-right:   5px;
 }
 
 div#debugconsole {

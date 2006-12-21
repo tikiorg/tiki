@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.35 2006-12-14 16:40:30 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.36 2006-12-21 14:57:57 mose Exp $
 
 Smarty style by mose@tikiwiki.org
 
@@ -23,7 +23,7 @@ medium : #676767
 */
 
 body {
-  margin: 0px;
+  margin : 0;
 	font-family: verdana,arial,helvetica,sans-serif;
 	font-size: 90%;
 	background-color : #ffffff;
@@ -195,7 +195,7 @@ span.off-option { color: #005000; }
 
 /* Boxes used for modules (modules are those boxes in the left/right columns) */
 div.box {  
-	overflow: hidden; 
+	overflow : hidden; 
 	margin-bottom: 12px;
 }
 
@@ -211,7 +211,7 @@ div.box-title {
 /* And this is the data */
 div.box-data {
 	margin : 0 6px 0 6px;
-  overflow: hidden;
+  overflow : hidden;
   color: black;
 }
 

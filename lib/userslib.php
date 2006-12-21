@@ -1884,10 +1884,10 @@ function get_included_groups($group) {
     }
 
     function add_user($user, $pass, $email, $provpass = '') {
-	global $pass_due, $tikilib, $cachelib;
+	global $pass_due, $tikilib, $cachelib, $patterns;
 	global $feature_clear_passwords;
 
-	if ($this->user_exists($user) || empty($user))
+	if ($this->user_exists($user) || empty($user) || !preg_match($patterns['login'],$user))
 	    return false;
 
 	// Generate a unique hash; this is also done below in set_user_fields()

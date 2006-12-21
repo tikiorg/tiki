@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.56 2006-12-17 08:39:40 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.57 2006-12-21 14:57:56 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.56 2006-12-17 08:39:40 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.57 2006-12-21 14:57:56 mose Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -155,8 +155,14 @@ if ($feature_intertiki == 'y' and isset($_REQUEST['intertiki']) and in_array($_R
 		$user_details = unserialize($response_value->scalarval());
 
 		if (!$userlib->user_exists($user)) {
-		    $userlib->add_user($user, '', $user_details['info']['email']);
-		    $userlib->set_user_fields($user_details['info']);
+		    if ($userlib->add_user($user, '', $user_details['info']['email'])) {
+		    	$userlib->set_user_fields($user_details['info']);
+				} else {
+					$logslib->add_log('login','intertiki : login creation failed');
+					$smarty->assign('msg',tra('Unable to create login'));
+					$smarty->display('error.tpl');
+					die;
+				}
 		} else {
 		    $userlib->set_user_fields($user_details['info']);
 		    $userlib->update_lastlogin($user);
@@ -245,7 +251,6 @@ if ($isvalid) {
 		// Now if the remember me feature is on and the user checked the rememberme checkbox then ...
 		if ($rememberme != 'disabled') {
 			if (isset($_REQUEST['rme']) && $_REQUEST['rme'] == 'on') {
-				#$hash = $userlib->get_user_hash($_REQUEST['user']);
 				$hash = $userlib->create_user_cookie($_REQUEST['user']);
 				$time = substr($hash,strpos($hash,'.')+1);
 				setcookie($user_cookie_site, $hash, $time, $cookie_path, $cookie_domain);
