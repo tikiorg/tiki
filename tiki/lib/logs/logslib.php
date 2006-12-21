@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.28 2006-12-20 18:59:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.29 2006-12-21 16:16:23 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -152,7 +152,7 @@ class LogsLib extends TikiLib {
 				$this->query($query, array($actionId, $param, $val));
 			}
 		}
-		return  $actionId;
+		return  $actions[0];
 	}
 	function action_must_be_logged($action, $objectType) {
 		global $feature_actionlog;

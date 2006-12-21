@@ -1,19 +1,23 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.19 2006-03-16 13:43:12 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.20 2006-12-21 16:16:23 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a>
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}MyTiki" target="tikihelp" class="tikihelp" title="{tr}MyTiki{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-my_tiki.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}my tiki tpl{/tr}">
-<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}' /></a>
+<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}edit template{/tr}' /></a>
 {/if}</h1>
 
 {include file=tiki-mytiki_bar.tpl}
-<br /><br />
+<br />
+
+{if $feature_actionlog == 'y' and !empty($user)}
+
+{/if}
 
 {if $feature_wiki eq 'y' and $mytiki_pages eq 'y'}
 <div id="content1" class="content">
@@ -33,7 +37,7 @@
   <td class="{cycle advance=false}" style="text-align:center;">{if $userwatch eq $user_pages[ix].creator}{tr}y{/tr}{else}&nbsp;{/if}</td>
   <td class="{cycle advance=false}" style="text-align:center;">{if $userwatch eq $user_pages[ix].lastEditor}{tr}y{/tr}{else}&nbsp;{/if}</td>
   <td class="{cycle advance=false}">{$user_pages[ix].date|tiki_short_datetime}</td>
-  <td class="{cycle}" style="text-align:center;"><a class="link" href="tiki-editpage.php?page={$user_pages[ix].pageName|escape:"url"}"><img border="0" alt="{tr}edit{/tr}" title="{tr}edit{/tr}: {$user_pages[ix].pageName}" src="img/icons/edit.gif" /></a></td>
+  <td class="{cycle}" style="text-align:center;"><a class="link" href="tiki-editpage.php?page={$user_pages[ix].pageName|escape:"url"}"><img border="0" alt="{tr}edit{/tr}" title="{tr}edit{/tr}: {$user_pages[ix].pageName}" src="pics/icons/page_edit.png" width="16" height="16" /></a></td>
   </tr>
   {/section}
   </table>
@@ -53,7 +57,7 @@
   <tr><td class="{cycle advance=false}">
   <a class="link" href="tiki-browse_gallery.php?galleryId={$user_galleries[ix].galleryId}">{$user_galleries[ix].name}</a>
   </td><td class="{cycle}" style="text-align:center;">
-  <a class="link" href="tiki-galleries.php?editgal={$user_galleries[ix].galleryId}"><img border="0" alt="{tr}edit{/tr}" title="{tr}edit{/tr}" src="img/icons/edit.gif" /></a>
+  <a class="link" href="tiki-galleries.php?editgal={$user_galleries[ix].galleryId}"><img border="0" alt="{tr}edit{/tr}" title="{tr}edit{/tr}" src="pics/icons/page_edit.png" width="16" height="16" /></a>
   </td></tr>
   {/section}
   </table>
@@ -128,7 +132,7 @@
   <tr><td class="{cycle advance=false}">
   <a class="link" title="{tr}view{/tr}" href="tiki-view_blog.php?blogId={$user_blogs[ix].blogId}">{$user_blogs[ix].title}</a>
   </td><td class="{cycle}" style="text-align:center;">
-  <a class="link" href="tiki-edit_blog.php?blogId={$user_blogs[ix].blogId}"><img border="0" alt="{tr}edit{/tr}" title="{tr}edit{/tr}" src="img/icons/edit.gif" /></a>
+  <a class="link" href="tiki-edit_blog.php?blogId={$user_blogs[ix].blogId}"><img border="0" alt="{tr}edit{/tr}" title="{tr}edit{/tr}" src="pics/icons/page_edit.png" width="16" height="16" /></a>
   </td></tr>
   {/section}
   </table>
