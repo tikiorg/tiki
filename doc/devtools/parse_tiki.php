@@ -1,4 +1,4 @@
-<?php // $Header: /cvsroot/tikiwiki/tiki/parse_tiki.php,v 1.6 2005-09-08 01:45:05 damosoft Exp $
+<?php // $Header: /cvsroot/tikiwiki/tiki/doc/devtools/parse_tiki.php,v 1.1 2006-12-22 04:29:22 mose Exp $
 
 // heaviled modified get_strings.php
 // dedicated as a tool for use in an eventual test suite
