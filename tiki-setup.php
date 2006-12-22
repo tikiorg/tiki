@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.370 2006-12-20 12:22:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.371 2006-12-22 01:03:13 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1418,9 +1418,20 @@ if ($feature_userPreferences == 'y') {
 	$style = $user_style;
 }
 
-if (!(is_file("styles/$style") or is_file("styles/$tikidomain/$style"))) {
+if (!is_file("styles/$style") or !is_file("styles/$tikidomain/$style")) {
 	$style = 'tikineat.css';
 }
+if ($tikidomain and is_file("styles/$tikidomain/$style")) {
+	$style = "$tikidomain/$style";
+}
+$smarty->assign('style', $style);
+$smarty->assign('site_style', $site_style);
+$smarty->assign('user_style', $user_style);
+include_once("csslib.php");
+$transition_style = $csslib->transition_css('styles/'.$style);
+$headerlib->add_cssfile('styles/transitions/'.$transition_style,50);
+$headerlib->add_cssfile('styles/'.$style,51);
+
 
 if (!$user) {
 	if (isset($_REQUEST['switchLang'])) {
@@ -1440,15 +1451,6 @@ if ($lang_use_db != 'y') {
     // check if needed!!!
     global $lang;
 }
-
-if ($tikidomain and is_file("styles/$tikidomain/$style")) {
-	$style = "$tikidomain/$style";
-}
-$smarty->assign('style', $style);
-include_once("csslib.php");
-$transition_style = $csslib->transition_css('styles/'.$style);
-$headerlib->add_cssfile('styles/transitions/'.$transition_style,50);
-$headerlib->add_cssfile('styles/'.$style,51);
 
 if ($feature_babelfish == 'y') {
     require_once('lib/Babelfish.php');
