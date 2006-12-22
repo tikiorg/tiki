@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-logout.php,v 1.22 2006-12-17 08:39:40 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-logout.php,v 1.23 2006-12-22 02:21:20 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -37,13 +37,13 @@ if ($groupHome) {
 } else {
     $tikiIndex = $tikilib->get_preference("tikiIndex",'tiki-index.php'); 
 }
-if ($tikilib->get_preference('auth_method', 'tiki') == 'cas' && $user != 'admin') {
-	unset ($user);
-	$userlib->user_logout_cas();
-} else {
-	unset ($user);
+
+if ($phpcas_enabled == 'y' and $user != 'admin') {
+	require_once('phpcas/source/CAS/CAS.php');
+	phpCAS::client($cas_version, "$cas_hostname", (int) $cas_port, "$cas_path");
+	phpCAS::logout();
 }
+
 header ("location: $tikiIndex");
 exit;
-
 ?>

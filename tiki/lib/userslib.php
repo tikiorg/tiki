@@ -224,31 +224,6 @@ class UsersLib extends TikiLib {
 			$user = $this->query($query, array('cookie',(string)$user));
     }
     
-    function user_logout_cas() {
-    	global $tikilib;
-    	
-    	// just make sure we're supposed to be here
-		if ($tikilib->get_preference('auth_method', 'tiki') != 'cas') {
-		    return false;
-		}
-		
-		$cas_version = $tikilib->get_preference('cas_version', '1.0');
-		$cas_hostname = $tikilib->get_preference('cas_hostname');
-		$cas_port = $tikilib->get_preference('cas_port');
-		$cas_path = $tikilib->get_preference('cas_path');
-		
-		// import phpCAS lib
-		require_once('phpcas/source/CAS/CAS.php');
-
-		phpCAS::setDebug();
-
-		// initialize phpCAS
-		phpCAS::client($cas_version, "$cas_hostname", (int) $cas_port, "$cas_path");
-		
-		// Logout
-    	phpCAS::logout();
-    }
-
     function genPass() {
 	// AWC: enable mixed case and digits, don't return too short password
 	global $min_pass_length;                                          //AWC
@@ -310,10 +285,14 @@ class UsersLib extends TikiLib {
 	$create_auth = ($tikilib->get_preference("auth_create_user_auth", "n") == "y");
 	$skip_admin = ($tikilib->get_preference("auth_skip_admin", "n") == "y");
 	
-	// see if we are to use CAS
-	$auth_cas = ($tikilib->get_preference('auth_method', 'tiki') == 'cas');
-	$cas_create_tiki = ($tikilib->get_preference('cas_create_user_tiki', 'n') == 'y');
-	$cas_skip_admin = ($tikilib->get_preference('cas_skip_admin', 'n') == 'y');
+	global $phpcas_enabled;
+	if ($phpcas_enabled == 'y') {
+		$auth_cas = ($tikilib->get_preference('auth_method', 'tiki') == 'cas');
+		$cas_create_tiki = ($tikilib->get_preference('cas_create_user_tiki', 'n') == 'y');
+		$cas_skip_admin = ($tikilib->get_preference('cas_skip_admin', 'n') == 'y');
+	} else {
+		$auth_cas = $cas_create_tiki = $cas_skip_admin = false;
+	}
 
 	// see if we are to use Shibboleth
 	$auth_shib = ($tikilib->get_preference('auth_method', 'tiki') == 'shib');
@@ -694,7 +673,10 @@ class UsersLib extends TikiLib {
 	// validate the user through CAS
 	function validate_user_cas(&$user) {
 		global $tikilib;
-
+		global $phpcas_enabled;
+		if ($phpcas_enabled != 'y') {
+			return SERVER_ERROR;
+		}
 		// just make sure we're supposed to be here
 		if ($tikilib->get_preference('auth_method', 'tiki') != 'cas') {
 		    return false;
@@ -2043,8 +2025,11 @@ function get_included_groups($group) {
     
     function is_due($user) {
     	global $change_password;
+			global $phpcas_enabled;
+			global $auth_method;
+
     	// if CAS auth is enabled, don't check if password is due since CAS does not use local Tiki passwords
-    	if ($this->get_preference('auth_method', 'tiki') == 'cas' || $change_password != 'y') {
+    	if (($phpcas_enabled == 'y' and $auth_method == 'cas') || $change_password != 'y') {
     		return false;
     	}
     	
