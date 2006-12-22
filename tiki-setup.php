@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.372 2006-12-22 02:21:20 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.373 2006-12-22 03:10:40 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -453,7 +453,6 @@ $sections['blogs']['itemkey'] = 'postId';
 $pref['feature_blogs'] = 'n';
 $pref['blog_list_order'] = 'created_desc';
 $pref['home_blog'] = 0;
-$pref['feature_trackbackpings'] = 'n';
 $pref['feature_blog_rankings'] = 'y';
 $pref['feature_blog_comments'] = 'n';
 $pref['blog_comments_default_ordering'] = 'points_desc';
