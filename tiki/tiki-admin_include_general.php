@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.49 2006-12-17 17:43:20 fr_rodo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.50 2006-12-22 01:03:13 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,10 +12,13 @@
 require_once('tiki-setup.php');  
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
-// Just change site style
-if (isset($_REQUEST["style"])) {
-    check_ticket('admin-inc-general');
-    byref_set_value("site_style", "style");
+if (isset($_REQUEST["change_style"])) {
+	check_ticket('admin-inc-general');
+	byref_set_value("site_style", "style");
+	if ($style != $user_style) {
+		header('Location: tiki-admin.php?page=general');
+		die;
+	}
 }
 // Handle Update
 elseif (isset($_REQUEST["prefs"])) {
