@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog_post.php,v 1.39 2006-12-22 03:10:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog_post.php,v 1.40 2006-12-22 04:11:49 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -85,40 +85,6 @@ if ($tiki_p_read_blog != 'y') {
 	die;
 }
 
-
-if (!isset($_REQUEST['blogId']) && !isset($_REQUEST['postId'])) {
-	// So this is to process a trackback ping
-//	if (isset($_REQUEST['__mode'])) {
-		// Build RSS listing trackback_from
-//		$pings = $bloglist->get_trackbacks_from($postId);
-//	}
-
-	if (isset($_REQUEST['url'])
-     && $feature_blogposts_pings == 'y'
-     && ($blog_data['allow_comments'] == 'y' || $blog_data['allow_comments'] == 't')) {
-		// Add a trackback ping to the list of trackback_from
-		$title = isset($_REQUEST['title']) ? $_REQUEST['title'] : '';
-		$excerpt = isset($_REQUEST['excerpt']) ? $_REQUEST['excerpt'] : '';
-		$blog_name = isset($_REQUEST['blog_name']) ? $_REQUEST['blog_name'] : '';
-
-		if ($bloglib->add_trackback_from($postId, $_REQUEST['url'], $title, $excerpt, $blog_name)) {
-			print ('<?xml version="1.0" encoding="iso-8859-1"?>');
-
-			print ('<response>');
-			print ('<error>0</error>');
-			print ('</response>');
-		} else {
-			print ('<?xml version="1.0" encoding="iso-8859-1"?>');
-
-			print ('<response>');
-			print ('<error>1</error>');
-			print ('<message>Error trying to add ping for post</message>');
-			print ('</response>');
-		}
-	}
-	die;
-}
-
 $ownsblog = 'n';
 
 if ($user && $user == $blog_data["user"]) {
@@ -126,32 +92,6 @@ if ($user && $user == $blog_data["user"]) {
 }
 
 $smarty->assign('ownsblog', $ownsblog);
-
-if ( isset($_REQUEST["deltrack"]) && ($_REQUEST["deltrack"] != '') ) {
-//var_dump($ownsblog);var_dump($user);var_dump($tiki_p_blog_admin);die;
-	if ($ownsblog == 'n') {
-		if (!$user || $blog_data["user"] != $user) {
-			if ($tiki_p_blog_admin != 'y') {
-				$smarty->assign('msg', tra("Permission denied you cannot remove trackbacks"));
-
-				$smarty->display("error.tpl");
-				die;
-			}
-		}
-	}
-		$area = 'delpost';
-		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-			key_check($area);
-			$bloglib->remove_trackback_from($postId, $_REQUEST["deltrack"]);
-			$post_info = $bloglib->get_post($postId);
-	} else {
-		key_get($area);
-  	}
-}
-
-//var_dump($post_info["trackbacks_from"]);die;
-
-
 
 $post_info['data']=htmldecode($post_info['data']);
 $smarty->assign('post_info', $post_info);

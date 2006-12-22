@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_blogs.php,v 1.27 2006-12-03 21:48:22 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_blogs.php,v 1.28 2006-12-22 04:11:49 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -30,22 +30,6 @@ if ($tiki_p_read_blog != 'y') {
 	die;
 }
 
-/*
-if($feature_listPages != 'y') {
-  $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display("error.tpl");
-  die;  
-}
-*/
-
-/*
-// Now check permissions to access this page
-if($tiki_p_view != 'y') {
-  $smarty->assign('msg',tra("Permission denied you cannot view pages"));
-  $smarty->display("error.tpl");
-  die;  
-}
-*/
 if (isset($_REQUEST["remove"])) {
 
 	// Check if it is the owner
