@@ -1,7 +1,0 @@
-Alternative Authentication Methods
-==================================
-
-This directory contains packages relating to rather unique authentication
-methods for use with TikiWiki
-
-phpCAS - phpCAS authentication
