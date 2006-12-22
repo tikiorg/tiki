@@ -205,20 +205,12 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
 
   </tr>
 	<tr>
-    <td><input type="checkbox" name="feature_trackbackpings" {if $feature_trackbackpings eq 'y'}checked="checked"{/if}/></td>
-    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Tracbacks+Pings" target="tikihelp" class="tikihelp" title="{tr}tikiwiki.org help{/tr}: {tr}Tracbacks Pings{/tr}">{/if} {tr}Tracbacks Pings{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
+    <td><input type="checkbox" name="feature_wysiwyg" {if $feature_wysiwyg eq 'y'}checked="checked"{/if}/></td>
+    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Wysiwyg+Editor" target="tikihelp" class="tikihelp" title="{tr}tikiwiki.org help{/tr}: {tr}Wysiwyg Editor{/tr}">{/if} {tr}Wysiwyg Editor{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
     <td>&nbsp;</td>
     <td><input type="checkbox" name="feature_fullscreen" {if $feature_fullscreen eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Fullscreen" target="tikihelp" class="tikihelp" title="{tr}tikiwiki.org help{/tr}:
 		{tr}Fullscreen{/tr}">{/if} {tr}Propose a Fullscreen mode{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
-  </tr>
-
-	<tr>
-    <td><input type="checkbox" name="feature_wysiwyg" {if $feature_wysiwyg eq 'y'}checked="checked"{/if}/></td>
-    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Wysiwyg+Editor" target="tikihelp" class="tikihelp" title="{tr}tikiwiki.org help{/tr}: {tr}Wysiwyg Editor{/tr}">{/if} {tr}Wysiwyg Editor{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
   </tr>
 
 </table>    

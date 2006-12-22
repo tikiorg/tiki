@@ -1,8 +1,6 @@
 {include file='header.tpl'}
-<!-- $Header: /cvsroot/tikiwiki/tiki/templates/tiki-send_blog_post.tpl,v 1.9 2006-09-30 15:29:50 ohertel Exp $ -->
-{if $feature_blogposts_pings == 'y'
-  && ($blog_data.allow_comments == 'y' or $blog_data.allow_comments == 't')
-  && $feature_trackbackpings  == 'y'}
+<!-- $Header: /cvsroot/tikiwiki/tiki/templates/tiki-send_blog_post.tpl,v 1.10 2006-12-22 03:10:42 mose Exp $ -->
+{if $feature_blogposts_pings == 'y' && ($blog_data.allow_comments == 'y' or $blog_data.allow_comments == 't')}
 <!--
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
          xmlns:dc="http://purl.org/dc/elements/1.1/"

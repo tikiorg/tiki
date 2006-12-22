@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog_post.php,v 1.38 2006-12-03 21:49:03 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog_post.php,v 1.39 2006-12-22 03:10:41 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -85,8 +85,6 @@ if ($tiki_p_read_blog != 'y') {
 	die;
 }
 
-if (!isset($feature_trackbackpings)) $feature_trackbackpings='n';
-
 
 if (!isset($_REQUEST['blogId']) && !isset($_REQUEST['postId'])) {
 	// So this is to process a trackback ping
@@ -96,7 +94,6 @@ if (!isset($_REQUEST['blogId']) && !isset($_REQUEST['postId'])) {
 //	}
 
 	if (isset($_REQUEST['url'])
-     && $feature_trackbackpings == 'y'
      && $feature_blogposts_pings == 'y'
      && ($blog_data['allow_comments'] == 'y' || $blog_data['allow_comments'] == 't')) {
 		// Add a trackback ping to the list of trackback_from
