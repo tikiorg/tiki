@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.371 2006-12-22 01:03:13 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.372 2006-12-22 02:21:20 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -942,6 +942,14 @@ $pref['highlight_group'] = '';
 $pref['cookie_path'] = '/';
 $pref['cookie_domain'] = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : $_SERVER['HTTP_HOST'];
 $pref['cookie_name'] = 'tikiwiki';
+if ($phpcas_enabled == 'y') {
+	$pref['cas_create_user_tiki'] = 'n';
+	$pref['cas_skip_admin'] = 'n';
+	$pref['cas_version'] = '';
+	$pref['cas_hostname'] = '';
+	$pref['cas_port'] = '';
+	$pref['cas_path'] = '';
+}
 
 # intertiki
 $pref['feature_intertiki'] = 'n';

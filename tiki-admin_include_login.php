@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.47 2006-12-11 22:36:15 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.48 2006-12-22 02:21:20 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -125,14 +125,16 @@ if (isset($_REQUEST["auth_pam"])) {
 	simple_set_value('pam_service');
 }
 
-if (isset($_REQUEST['auth_cas'])) {
-	check_ticket('admin-inc-login');
-	simple_set_toggle('cas_create_user_tiki');
-	simple_set_toggle('cas_skip_admin');
-  simple_set_value('cas_version');
-  simple_set_value('cas_hostname');
-  simple_set_value('cas_port');
-  simple_set_value('cas_path');
+if ($phpcas_enabled == 'y') {
+	if (isset($_REQUEST['auth_cas'])) {
+		check_ticket('admin-inc-login');
+		simple_set_toggle('cas_create_user_tiki');
+		simple_set_toggle('cas_skip_admin');
+		simple_set_value('cas_version');
+		simple_set_value('cas_hostname');
+		simple_set_value('cas_port');
+		simple_set_value('cas_path');
+	}
 }
 
 if (isset($_REQUEST['auth_shib'])) {
@@ -184,6 +186,8 @@ if (isset($_REQUEST['users_defaults'])) {
 		simple_set_toggle($pref);
 	}
 }
+
+$smarty->assign("phpcas_enabled", $phpcas_enabled);
 
 // Get list of available languages
 $languages = array();

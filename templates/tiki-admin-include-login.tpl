@@ -238,6 +238,7 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 </div>
 </div>
 
+{if $phpcas_enabled eq 'y'}
 <div class="cbox">
 <div class="cbox-title">
   {tr}CAS (Central Authentication Service){/tr}
@@ -269,7 +270,7 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 </form>
 </div>
 </div>
-
+{/if}
 
 <div class="cbox">
 <div class="cbox-title">

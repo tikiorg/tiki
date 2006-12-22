@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.123 2006-12-21 14:57:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.124 2006-12-22 02:21:20 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -318,6 +318,13 @@ if (($auth_method == 'ws') and (isset($_SERVER['REMOTE_USER']))) {
 		// Check for the username without the domain name
 		$_SESSION["$user_cookie_site"] = substr($_SERVER['REMOTE_USER'], strpos($_SERVER['REMOTE_USER'], "\\") + 2);
 	}																						 
+}
+
+// check if phpCAS mods is installed 
+if (is_file('lib/phpcas/source/CAS/CAS.php')) {
+	$phpcas_enabled = 'y';
+} else {
+	$phpcas_enabled = 'n';
 }
 
 // Check for Shibboleth Login
