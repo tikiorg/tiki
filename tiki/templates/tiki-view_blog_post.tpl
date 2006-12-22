@@ -1,19 +1,5 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_blog_post.tpl,v 1.30 2006-12-22 03:10:42 mose Exp $ *}
-{if $feature_blogposts_pings == 'y' && ($blog_data.allow_comments == 'y' or $blog_data.allow_comments == 't')}
-<!--
-<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-         xmlns:dc="http://purl.org/dc/elements/1.1/"
-         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
-<rdf:Description
-    rdf:about="{$uri}"
-    dc:identifer="{$uri}"
-    dc:title="{if $blog_data.use_title eq 'y'}{$post_info.title} {tr}posted by{/tr} {$post_info.user} on {$post_info.created|tiki_short_datetime}{else}{$post_info.created|tiki_short_datetime} {tr}posted by{/tr} {$post_info.user}{/if}"
-    trackback:ping="{$uri2}" />
-</rdf:RDF>
--->
-{/if}
-<h2>{tr}Viewing blog post{/tr} - {$blog_data.title}</h2>
-<a class="link" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">{tr}Return to blog{/tr}</a>
+<h1><a href="tiki-view_blog_post.php?blogId={$post_info.blogId}&amp;postId={$post_info.postId}" class="pagetitle">{tr}Viewing blog post{/tr} - {$blog_data.title}</a></h1>
+<span class="button2"><a class="linkbut" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">{tr}Return to blog{/tr}</a></span>
 <br /><br />
 <div class="posthead">
 {if $blog_data.use_title eq 'y'}

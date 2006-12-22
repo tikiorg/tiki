@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.36 2006-12-04 09:20:08 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.37 2006-12-22 04:11:49 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -26,12 +26,6 @@ if ($tiki_p_create_blogs != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-
-// The requested allow comments is determined by the combination
-// of the checkboxes allow_comments * allow_trackbackpings
-$req_allow_comments = array(
-    false=>array(false=>'n', true=>'t'),
-    true =>array(false=>'c', true=>'y'));
 
 if (isset($_REQUEST["blogId"])) {
 	$blogId = $_REQUEST["blogId"];
@@ -133,8 +127,7 @@ if (isset($_REQUEST['preview'])) {
 	$smarty->assign('public', isset($_REQUEST["public"]) ? 'y' : 'n');
 	$smarty->assign('use_find', isset($_REQUEST["use_find"]) ? 'y' : 'n');
 	$smarty->assign('use_title', isset($_REQUEST["use_title"]) ? 'y' : 'n');
-	$smarty->assign('allow_comments',
-	   $req_allow_comments[isset($_REQUEST["allow_comments"])][isset($_REQUEST["allow_trackbackpings"])]);
+	$smarty->assign('allow_comments', isset($_REQUEST["allow_comments"]) ? 'y' : 'n');
 	$smarty->assign('maxPosts', $_REQUEST["maxPosts"]);
 	$smarty->assign('heading', $heading);
 }
@@ -152,8 +145,7 @@ if (isset($_REQUEST["save"]) && $feature_categories == 'y' && $feature_blog_mand
 	}
 
 	$use_title = isset($_REQUEST['use_title']) ? 'y' : 'n';
-	$allow_comments =
-	   $req_allow_comments[isset($_REQUEST["allow_comments"])][isset($_REQUEST["allow_trackbackpings"])];
+	$allow_comments = isset($_REQUEST["allow_comments"]) ? 'y' : 'n';
     $show_avatar = isset($_REQUEST['show_avatar']) ? 'y' : 'n';	
 	$use_find = isset($_REQUEST['use_find']) ? 'y' : 'n';
 

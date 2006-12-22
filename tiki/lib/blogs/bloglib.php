@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/blogs/bloglib.php,v 1.51 2006-09-19 18:31:19 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/blogs/bloglib.php,v 1.52 2006-12-22 04:11:49 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -33,139 +33,17 @@ class BlogLib extends TikiLib {
 		return $ret;
 	}
 
-	function send_trackbacks($id, $trackbacks) {
-	        global $tikilib;
-		// Split to get each URI
-		$tracks = explode(',', $trackbacks);
-
-		$ret = array();
-		// Foreach URI
-		$post_info = $this->get_post($id);
-		$blog_info = $this->get_blog($post_info['blogId']);
-		//Build uri for post
-		$parts = parse_url($_SERVER['REQUEST_URI']);
-		$uri = $tikilib->httpPrefix(). str_replace('tiki-blog_post',
-			'tiki-view_blog_post', $parts['path']). '?postId=' . $id . '&amp;blogId=' . $post_info['blogId'];
-		include ("lib/snoopy/Snoopy.class.php");
-		$snoopy = new Snoopy;
-
-		foreach ($tracks as $track) {
-			@$fp = fopen($track, 'r');
-
-			if ($fp) {
-				$data = '';
-
-				while (!feof($fp)) {
-					$data .= fread($fp, 32767);
-				}
-
-				fclose ($fp);
-				preg_match("/trackback:ping=(\"|\'|\s*)(.+)(\"|\'\s)/", $data, $reqs);
-
-				if (!isset($reqs[2]))
-					return $ret;
-
-				@$fp = fopen($reqs[2], 'r');
-
-				if ($fp) {
-					fclose ($fp);
-
-					$submit_url = $reqs[2];
-					$submit_vars["url"] = $uri;
-					$submit_vars["blog_name"] = $blog_info['title'];
-					$submit_vars["title"] = $post_info['title'] ? $post_info['title'] : date("d/m/Y [h:i]", $post_info['created']);
-					$submit_vars["title"] .= ' ' . tra('by'). ' ' . $post_info['user'];
-					$submit_vars["excerpt"] = substr($post_info['data'], 0, 200);
-					$snoopy->submit($submit_url, $submit_vars);
-					$back = $snoopy->results;
-
-					if (!strstr('<error>1</error>', $back)) {
-						$ret[] = $track;
-					}
-				}
-			}
-		}
-
-		return $ret;
-	}
-
-	function add_trackback_from($postId, $url, $title = '', $excerpt = '', $blog_name = '') {
-		if (!$this->getOne("select count(*) from `tiki_blog_posts` where `postId`=?",array($postId)))
-			return false;
-
-		$tbs = $this->get_trackbacks_from($postId);
-		$aux = array(
-			'title' => $title,
-			'excerpt' => $excerpt,
-			'blog_name' => $blog_name
-		);
-
-		$tbs[$url] = $aux;
-		$st = serialize($tbs);
-		$query = "update `tiki_blog_posts` set `trackbacks_from`=? where `postId`=?";
-		$this->query($query,array($st,$postId));
-		return true;
-	}
-
-	function remove_trackback_from($postId, $url) {
-		if (!$this->getOne("select count(*) from `tiki_blog_posts` where `postId`=?",array($postId)))
-			return false;
-
-		$tbs = $this->get_trackbacks_from($_REQUEST["postId"]);
-		$newtbs = array();
-		foreach ( $tbs as $key => $oldtbs ) {
-			if ( $key != $_REQUEST["deltrack"] ) {
-				$newtbs["$key"] = $oldtbs;
-			}
-		}
-		$st = serialize($newtbs);
-		$query = "update `tiki_blog_posts` set `trackbacks_from`=? where `postId`=?";
-		$this->query($query,array($st,$postId));
-		return true;
-	}
-
-	function get_trackbacks_from($postId) {
-		$st = $this->db->getOne("select `trackbacks_from` from `tiki_blog_posts` where `postId`=?",array($postId));
-
-		return unserialize($st);
-	}
-
-	function get_trackbacks_to($postId) {
-		$st = $this->db->getOne("select `trackbacks_to` from `tiki_blog_posts` where `postId`=?",array($postId));
-
-		return unserialize($st);
-	}
-
-	function clear_trackbacks_from($postId) {
-		$empty = serialize(array());
-
-		$query = "update `tiki_blog_posts` set `trackbacks_from` = ? where `postId`=?";
-		$this->query($query,array($empty,$postId));
-	}
-
-	function clear_trackbacks_to($postId) {
-		$empty = serialize(array());
-
-		$query = "update `tiki_blog_posts` set `trackbacks_to` = ? where `postId`=?";
-		$this->query($query,array($empty,$postId));
-	}
-
 	function add_blog_hit($blogId) {
 		global $count_admin_pvs;
-
 		global $user;
-
 		if ($count_admin_pvs == 'y' || $user != 'admin') {
 			$query = "update `tiki_blogs` set `hits` = `hits`+1 where `blogId`=?";
-
 			$result = $this->query($query,array((int) $blogId));
 		}
-
 		return true;
 	}
 
 	function insert_post_image($postId, $filename, $filesize, $filetype, $data) {
-
 		$query = "insert into `tiki_blog_posts_images`(`postId`,`filename`,`filesize`,`filetype`,`data`)
     values(?,?,?,?,?)";
 		$this->query($query,array($postId,$filename,$filesize,$filetype,$data));
@@ -173,7 +51,6 @@ class BlogLib extends TikiLib {
 
 	function get_post_image($imgId) {
 		$query = "select * from `tiki_blog_posts_images` where `imgId`=?";
-
 		$result = $this->query($query,array($imgId));
 		$res = $result->fetchRow();
 		return $res;
@@ -254,24 +131,10 @@ class BlogLib extends TikiLib {
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
-			$cant_com = $this->getOne("select count(*)
-			from `tiki_comments` where
-			`object`=? and `objectType` = 'post'", array(
-			$res["postId"] ) );
-
+			$cant_com = $this->getOne("select count(*) from `tiki_comments` where `object`=? and `objectType` = 'post'", array((int)$res["postId"]));
 			$res["comments"] = $cant_com;
-			if($res['trackbacks_from']!=null)
-				$res['trackbacks_from'] = unserialize($res['trackbacks_from']);
-
-			if (!is_array($res['trackbacks_from']))
-				$res['trackbacks_from'] = array();
-
-			$res['trackbacks_from_count'] = count(array_keys($res['trackbacks_from']));
-			if($res['trackbacks_to']!=null)
-				$res['trackbacks_to'] = unserialize($res['trackbacks_to']);
-			$res['trackbacks_to_count'] = count($res['trackbacks_to']);
 			$res['pages'] = $this->get_number_of_pages($res['data']);
-	        $res['avatar'] = $this->get_user_avatar($res['user']);		
+			$res['avatar'] = $this->get_user_avatar($res['user']);		
 			$ret[] = $res;
 		}
 
@@ -358,25 +221,19 @@ class BlogLib extends TikiLib {
 		return $retval;
 	}
 
-	function blog_post($blogId, $data, $user, $title = '', $trackbacks = '', $contributions='', $priv='n') {
+	function blog_post($blogId, $data, $user, $title = '', $contributions='', $priv='n') {
 		// update tiki_blogs and call activity functions
 		global $smarty;
 		global $tikilib, $feature_categories;
 
 		global $feature_user_watches;
 		global $sender_email;
-		$tracks = serialize(explode(',', $trackbacks));
 		$data = strip_tags($data, '<a><b><i><h1><h2><h3><h4><h5><h6><ul><li><ol><br><p><table><tr><td><img><pre>');
 		$now = date("U");
-		$query = "insert into `tiki_blog_posts`(`blogId`,`data`,`created`,`user`,`title`,`trackbacks_from`,`trackbacks_to`,`priv`) values(?,?,?,?,?,?,?,?)";
-		$result = $this->query($query,array((int) $blogId,$data,(int) $now,$user,$title,serialize(array()),serialize(array()),$priv));
+		$query = "insert into `tiki_blog_posts`(`blogId`,`data`,`created`,`user`,`title`,`priv`) values(?,?,?,?,?,?,?,?)";
+		$result = $this->query($query,array((int) $blogId,$data,(int) $now,$user,$title,$priv));
 		$query = "select max(`postId`) from `tiki_blog_posts` where `created`=? and `user`=?";
 		$id = $this->getOne($query,array((int) $now,$user));
-		// Send trackbacks recovering only successful trackbacks
-		$trackbacks = serialize($this->send_trackbacks($id, $trackbacks));
-		// Update post with trackbacks successfully sent
-		$query = "update `tiki_blog_posts` set `trackbacks_from`=?, `trackbacks_to` = ? where `postId`=?";
-		$this->query($query,array(serialize(array()),$trackbacks,(int) $id));
 		$query = "update `tiki_blogs` set `lastModif`=?,`posts`=`posts`+1 where `blogId`=?";
 		$result = $this->query($query,array((int) $now,(int) $blogId));
 		$this->add_blog_activity($blogId);
@@ -388,8 +245,6 @@ class BlogLib extends TikiLib {
 			}
 			if (count($nots)) {
 				include_once("lib/notifications/notificationemaillib.php");
-
-
 				$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
 				$query = "select `title` from `tiki_blogs` where `blogId`=?";
 				$blogTitle = $this->getOne($query, array((int)$blogId));
@@ -413,7 +268,6 @@ class BlogLib extends TikiLib {
 					unset ($parts[count($parts) - 1]);
 				$smarty->assign('mail_machine_raw', $tikilib->httpPrefix(). implode('/', $parts));
 				sendEmailNotification($nots, "watch", "user_watch_blog_post_subject.tpl", $_SERVER["SERVER_NAME"], "user_watch_blog_post.tpl");
-				//@mail($not['email'], tra('Blog post'). ' ' . $blogTitle, $mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
 			}
 		}
 
@@ -473,39 +327,22 @@ class BlogLib extends TikiLib {
 
 	function get_post($postId) {
 		$query = "select * from `tiki_blog_posts` where `postId`=?";
-
 		$result = $this->query($query,array((int) $postId));
-
 		if ($result->numRows()) {
 			$res = $result->fetchRow();
-			
-			if (!$res['trackbacks_from'] || $res['trackbacks_from']===null)
-				$res['trackbacks_from'] = serialize(array());
-
-			if (!$res['trackbacks_to'] || $res['trackbacks_to']===null)
-				$res['trackbacks_to'] = serialize(array());
-
-			$res['trackbacks_from_count'] = count(array_keys(unserialize($res['trackbacks_from'])));
-			$res['trackbacks_from'] = unserialize($res['trackbacks_from']);
-			$res['trackbacks_to'] = unserialize($res['trackbacks_to']);
-			$res['trackbacks_to_count'] = count($res['trackbacks_to']);
 		} else {
 			return false;
 		}
-
 		return $res;
 	}
 
-	function update_post($postId, $blogId, $data, $user, $title = '', $trackbacks = '', $contributions='', $old_data='', $priv='n') {
+	function update_post($postId, $blogId, $data, $user, $title = '', $contributions='', $old_data='', $priv='n') {
 		global $feature_actionlog;
-		$trackbacks = serialize($this->send_trackbacks($postId, $trackbacks));
-		$query = "update `tiki_blog_posts` set `blogId`=?,`trackbacks_to`=?,`data`=?,`user`=?,`title`=?, `priv`=? where `postId`=?";
-		$result = $this->query($query,array($blogId,$trackbacks,$data,$user,$title,$priv,$postId));
+		$query = "update `tiki_blog_posts` set `blogId`=?,`data`=?,`user`=?,`title`=?, `priv`=? where `postId`=?";
+		$result = $this->query($query,array($blogId,$data,$user,$title,$priv,$postId));
 		if ($feature_actionlog == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
-			include_once('lib/diff/difflib.php');
-		    $bytes = diff2($old_data , $data, 'bytes');
-			$logslib->add_action('Updated', $blogId, 'blog', "blogId=$blogId&amp;postId=$postId&amp;$bytes#postId$postId", '', '', '', '', $contributions);
+			$logslib->add_action('Updated', $blogId, 'blog', "blogId=$blogId&amp;postId=$postId#postId$postId", '', '', '', '', $contributions);
 		}
 	}
 

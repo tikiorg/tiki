@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.54 2006-12-04 09:20:08 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.55 2006-12-22 04:11:49 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -95,7 +95,6 @@ if (isset($_REQUEST["postId"]) && $_REQUEST["postId"] > 0) {
 
 	$smarty->assign('data', htmldecode( $data["data"] ) );
 	$smarty->assign('title', $data["title"]);
-	$smarty->assign('trackbacks_to', $data["trackbacks_to"]);
 	$smarty->assign('created', $data["created"]);
 	$smarty->assign('parsed_data', $tikilib->parse_data($data["data"]));
     $smarty->assign('blogpriv', $data["priv"]);
@@ -179,7 +178,6 @@ if (isset($_REQUEST["preview"])) {
 	if ($feature_freetags == 'y') {
 	$smarty->assign('taglist',$_REQUEST["freetag_string"]);
 	}
-	$smarty->assign('trackbacks_to', explode(',', $_REQUEST['trackback']));
 	$smarty->assign('title', isset($_REQUEST["title"]) ? $_REQUEST['title'] : '');
 	$smarty->assign('parsed_data', $parsed_data);
 	$smarty->assign('preview', 'y');
@@ -256,10 +254,10 @@ if ((isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) && !$contributio
 	$edit_data = $imagegallib->capture_images($edit_data);
 	$title = isset($_REQUEST['title']) ? $_REQUEST['title'] : '';
 	if ($_REQUEST["postId"] > 0) {
-	  $bloglib->update_post($_REQUEST["postId"], $_REQUEST["blogId"], $edit_data, $user, $title, $_REQUEST['trackback'], isset($_REQUEST['contributions'])? $_REQUEST['contributions']:'', $data['data'], $blogpriv);
+	  $bloglib->update_post($_REQUEST["postId"], $_REQUEST["blogId"], $edit_data, $user, $title, isset($_REQUEST['contributions'])? $_REQUEST['contributions']:'', $data['data'], $blogpriv);
 		$postid = $_REQUEST["postId"];
 	} else {
-	  $postid = $bloglib->blog_post($_REQUEST["blogId"], $edit_data, $user, $title, $_REQUEST['trackback'], isset($_REQUEST['contributions'])? $_REQUEST['contributions']:'', $blogpriv);
+	  $postid = $bloglib->blog_post($_REQUEST["blogId"], $edit_data, $user, $title, isset($_REQUEST['contributions'])? $_REQUEST['contributions']:'', $blogpriv);
 		$smarty->assign('postId', $postid);
 	}
 
@@ -286,7 +284,6 @@ if ((isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) && !$contributio
 	$smarty->assign('taglist',$_REQUEST["freetag_string"]);	
 	}
 	$smarty->assign('title', isset($_REQUEST["title"]) ? $_REQUEST['title'] : '');
-	$smarty->assign('trackbacks_to', explode(',', $_REQUEST['trackback']));
 	$smarty->assign('parsed_data', $parsed_data);
 }
 
@@ -294,7 +291,6 @@ if ($contribution_needed) {
 	$smarty->assign('title', $_REQUEST["title"]);
 	$smarty->assign('parsed_data', $tikilib->parse_data($_REQUEST['data']));
 	$smarty->assign('data', htmldecode( $_REQUEST['data'] ) );
-	$smarty->assign('trackbacks_to', explode(',', $_REQUEST['trackback']));
 	if ($feature_freetags == 'y') {
 		$smarty->assign('taglist',$_REQUEST["freetag_string"]);
 	}

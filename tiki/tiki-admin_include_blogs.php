@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_blogs.php,v 1.16 2006-12-17 11:55:27 fr_rodo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_blogs.php,v 1.17 2006-12-22 04:11:49 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -26,8 +26,7 @@ if (isset($_REQUEST["blogfeatures"])) {
 	"blog_spellcheck",
 	"feature_blog_comments",
 	"feature_blog_heading",
-	"feature_blogposts_comments",
-	"feature_blogposts_pings"
+	"feature_blogposts_comments"
 	);
 
 	foreach ($pref_toggles as $toggle) {

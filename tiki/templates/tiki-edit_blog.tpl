@@ -52,9 +52,6 @@
 <tr class="editblogform"><td><label for="blogs-comments">{tr}Allow comments{/tr}</label></td><td>
 <input type="checkbox" name="allow_comments" id="blogs-comments" {if $allow_comments eq 'y' or $allow_comments eq 'c'}checked='checked'{/if} />
 </td></tr>
-<tr class="editblogform"><td><label for="blogs-trackbackpings">{tr}Allow trackback pings{/tr}</label></td><td>
-<input type="checkbox" name="allow_trackbackpings" id="blogs-trackbackpings" {if $allow_comments eq 'y' or $allow_comments eq 't'}checked='checked'{/if} />
-</td></tr>
 <tr class="editblogform"><td>{tr}Show user avatar{/tr}</td><td>
 <input type="checkbox" name="show_avatar" {if $show_avatar eq 'y'}checked='checked'{/if} />
 </td></tr>

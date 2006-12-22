@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-blogs.tpl,v 1.23 2006-12-17 11:55:25 fr_rodo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-blogs.tpl,v 1.24 2006-12-22 04:11:49 mose Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -39,10 +39,6 @@
           <td class="form"><label for="blogs-postcomments">{tr}Post level comments{/tr}:</label></td>
           <td><input type="checkbox" name="feature_blogposts_comments" id="blogs-postcomments"
               {if $feature_blogposts_comments eq 'y'}checked="checked"{/if} /></td>
-        </tr><tr>
-          <td class="form"><label for="blogs-postpings">{tr}Post level trackback pings{/tr}:</label></td>
-          <td><input type="checkbox" name="feature_blogposts_pings" id="blogs-postpings"
-              {if $feature_blogposts_pings eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td class="form"><label for="blogs-spell">{tr}Spellchecking{/tr}:</label></td>
           <td>{if $lib_spellcheck eq 'y'}<input type="checkbox" name="blog_spellcheck" id="blogs-spell"
