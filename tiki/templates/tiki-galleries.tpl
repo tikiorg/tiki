@@ -89,7 +89,7 @@
 {/section}<br />
 {tr}Original image is default scale{/tr}<input type="radio" name="defaultscale" value="o" {if $defaultscale=='o'}checked="checked"{/if} />
 </td></tr>
-<tr><td class="formcolor">{tr}Add scaled images with bounding box of square size{/tr}:</td><td class="formcolor"><input type="text" name="scaleSize" size=4 />{tr}pixels{/tr}</td></tr>
+<tr><td class="formcolor">{tr}Add scaled images with bounding box of square size{/tr}:</td><td class="formcolor"><input type="text" name="scaleSize" size="4" />{tr}pixels{/tr}</td></tr>
 <tr><td class="formcolor">{tr}Owner of the gallery{/tr}:</td><td class="formcolor"><input type="text" name="owner" value="{$owner|escape}"/></td></tr>
 {include file=categorize.tpl}
 {include file=freetag.tpl}
@@ -239,7 +239,7 @@
 {/section}
 </table>
 <br />
-{$map_error}
+{if $feature_maps eq 'y'}{$map_error}{/if}
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="galprevnext" href="tiki-galleries.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;

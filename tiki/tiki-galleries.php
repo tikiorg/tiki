@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.53 2006-12-23 15:53:02 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.54 2006-12-23 16:52:34 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -131,6 +131,7 @@ $smarty->assign('galleryimage','first');
 $galleries_list=$imagegallib->list_galleries(0,-1,'name_desc',$user);
 $smarty->assign_by_ref('galleries_list',$galleries_list['data']);
 $smarty->assign('defaultscale','o');
+$smarty->assign('scaleinfo',array());
 $smarty->assign('parentgallery',-1);
 
 // If we are editing an existing gallery prepare smarty variables
@@ -181,10 +182,9 @@ if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
 }
 
 // Process the insertion or modification of a gallery here
-$category_needed = false;
+$category_needed = 'n';
 if (isset($_REQUEST["edit"]) && $feature_categories == 'y' && $feature_image_gallery_mandatory_category >=0 && (empty($_REQUEST['cat_categories']) || count($_REQUEST['cat_categories']) <= 0)) {
-		$category_needed = true;
-		$smarty->assign('category_needed', 'y');
+		$category_needed = 'y';
 } elseif (isset($_REQUEST["edit"])) {
 	check_ticket('galleries');
 	// Saving information
@@ -288,7 +288,7 @@ if (isset($_REQUEST["edit"]) && $feature_categories == 'y' && $feature_image_gal
 	$_REQUEST["galleryId"] = 0;
 }
 
-if ($category_needed) {
+if ($category_needed == 'y') {
 	$smarty->assign_by_ref('name', $_REQUEST["name"]);
 	$smarty->assign_by_ref('description', $_REQUEST["description"]);
 	$smarty->assign_by_ref('maxRows', $_REQUEST["maxRows"]);
@@ -349,7 +349,9 @@ if (isset($_REQUEST["removegal"])) {
     key_get($area);
   }
 }
+$smarty->assign('category_needed', $category_needed);
 
+if ($feature_maps == 'y') {
 $map_error="";
 if (isset($_REQUEST["make_map"])) {
 		if ($_REQUEST["galleryId"] > 0) {
@@ -369,6 +371,7 @@ if (isset($_REQUEST["make_map"])) {
 		}
 }
 $smarty->assign('map_error', $map_error);
+}
 
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'name_asc';
