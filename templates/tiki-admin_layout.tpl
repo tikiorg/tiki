@@ -22,6 +22,7 @@
 	<tr><td class="form">{tr}Bottom bar{/tr}:</td><td><input type="checkbox" name="{$sections[ix].name|escape}_bot_bar" {if $sections[ix].bot_bar eq 'y'}checked="checked"{/if}/></td></tr>
 	<tr><td align="center" class="form" colspan="2"><input type="submit" name="{$sections[ix].name|escape}_layout" value="{tr}Set features{/tr}" /></td></tr>
     </table>
+		</form>
     </div>
 </div>
 </div>
