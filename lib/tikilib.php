@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.689 2006-12-16 19:48:04 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.690 2006-12-23 13:05:13 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4574,7 +4574,7 @@ function add_pageview() {
 	// basically, allow wiki plugins, wiki links and almost
 	// everything between {}
 	$simple_wiki = false;
-	if ($is_html) {
+	if ($feature_wysiwyg == 'y' and $is_html) {
 		if ($wysiwyg_wiki_semi_parsed == 'y') {
 			$simple_wiki = true;
 		} elseif ($wysiwyg_wiki_parsed == 'n') {
