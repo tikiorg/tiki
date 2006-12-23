@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.54 2006-11-17 21:02:18 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.55 2006-12-23 15:15:41 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -54,6 +54,7 @@ for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
 	parse_str($mod_reference["params"], $module_params);
 	if (!isset($module_params['decorations'])) $module_params['decorations'] = 'n';
 	if (!isset($module_params['flip'])) $module_params['flip'] = 'n';
+	if (!isset($module_params['overflow'])) $module_params['overflow'] = 'n';
 	$pass = 'y';
 	if (isset($module_params["lang"]) && ((gettype($module_params["lang"]) == "array" && !in_array($language, $module_params["lang"])) ||  (gettype($module_params["lang"]) == "string" && $module_params["lang"] != $language))) {
 		$pass="n";
