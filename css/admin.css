@@ -1,12 +1,15 @@
 a.admbox {
-	border : 2px solid #8899dd;
+	border : 2px solid #89d;
 	height : 100px;
 	width : 100px;
 	text-align : center; 
+	vertical-align : middle;
 	overflow : hidden;
 	float : left; 
 	margin : 5px; 
 	background-color: #b0ffb0;
+	padding : 0;
+	text-decoration : none;
 }
 a.admbox img { 
 	margin-top : 20px; 
@@ -15,6 +18,9 @@ a.admbox.off {
 	background-color : #d0d0d0; 
 }
 a.admbox:hover { 
-	background-color : #a0a0a0; 
+	background-color : #fc3;
+	padding : 0;
+	margin : 5px;
+	border : 2px solid #900;
 }
 
