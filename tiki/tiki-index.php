@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.170 2006-12-04 09:20:08 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.171 2006-12-23 15:47:26 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -52,37 +52,6 @@ if ((!isset($_REQUEST['page']) || $_REQUEST['page'] == '') and !isset($_REQUEST[
         $use_best_language = true;
     }
 }
-$page = $_REQUEST['page'];
-
-if (!$tikilib->page_exists($page) && $tikilib->page_exists(utf8_encode($page))) {
-    $page = $_REQUEST["page"] = utf8_encode($page);
-}
-
-$use_best_language = $use_best_language || isset($_REQUEST['bl']) || isset($_REQUEST['best_lang']);
-
-$info = null;
-if ($feature_multilingual == 'y' && $use_best_language) { // chose the best language page
-	global $multilinguallib;
-	include_once('lib/multilingual/multilinguallib.php');
-	$info = $tikilib->get_page_info($page);
-	$bestLangPageId = $multilinguallib->selectLangObj('wiki page', $info['page_id']);
-	if ($info['page_id'] != $bestLangPageId) {
-		$page = $tikilib->get_page_name_from_id($bestLangPageId);
-//TODO: introduce a get_info_from_id to save a sql request
-		$info = null;
-	} elseif ($info['lang'] != $language && $feature_homePage_if_bl_missing == 'y') {
-		if (!isset($userPageName))
-			$userPageName = $userlib->get_user_default_homepage2($user);
-		$page = $userPageName;
-		$info = $tikilib->get_page_info($page);
-		$bestLangPageId = $multilinguallib->selectLangObj('wiki page', $info['page_id']);
-		if ($info['page_id'] != $bestLangPageId) {
-			$page = $tikilib->get_page_name_from_id($bestLangPageId);
-			$info = null;
-		}
-	}
-}
-
 
 $structure = 'n';
 $smarty->assign('structure',$structure);
@@ -92,7 +61,7 @@ if (isset($_REQUEST['page_ref_id'])) {
     $page_ref_id = $_REQUEST['page_ref_id'];
 } else {
     // else check if page is the head of a structure 
-    $page_ref_id = $structlib->get_struct_ref_if_head($page);
+    $page_ref_id = $structlib->get_struct_ref_if_head($_REQUEST['page']);
 }
 
 //If a structure page isnt going to be displayed
@@ -138,8 +107,42 @@ if(isset($page_ref_id)) {
 } else {
     $page_ref_id = '';
 }
+
+$page = $_REQUEST['page'];
 $smarty->assign_by_ref('page',$page);
 $smarty->assign('page_ref_id', $page_ref_id);
+
+
+
+if (!$tikilib->page_exists($page) && $tikilib->page_exists(utf8_encode($page))) {
+    $page = $_REQUEST["page"] = utf8_encode($page);
+}
+
+$use_best_language = $use_best_language || isset($_REQUEST['bl']) || isset($_REQUEST['best_lang']);
+
+$info = null;
+if ($feature_multilingual == 'y' && $use_best_language) { // chose the best language page
+	global $multilinguallib;
+	include_once('lib/multilingual/multilinguallib.php');
+	$info = $tikilib->get_page_info($page);
+	$bestLangPageId = $multilinguallib->selectLangObj('wiki page', $info['page_id']);
+	if ($info['page_id'] != $bestLangPageId) {
+		$page = $tikilib->get_page_name_from_id($bestLangPageId);
+//TODO: introduce a get_info_from_id to save a sql request
+		$info = null;
+	} elseif ($info['lang'] != $language && $feature_homePage_if_bl_missing == 'y') {
+		if (!isset($userPageName))
+			$userPageName = $userlib->get_user_default_homepage2($user);
+		$page = $userPageName;
+		$info = $tikilib->get_page_info($page);
+		$bestLangPageId = $multilinguallib->selectLangObj('wiki page', $info['page_id']);
+		if ($info['page_id'] != $bestLangPageId) {
+			$page = $tikilib->get_page_name_from_id($bestLangPageId);
+			$info = null;
+		}
+	}
+}
+
 
 
 // Get page data, if available
