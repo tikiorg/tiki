@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.20 2006-12-21 16:16:23 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.21 2006-12-23 15:17:02 mose Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a>
 
@@ -122,7 +122,7 @@
 
 
 
-{if $feature_blogs eq y && $mytiki_blogs eq 'y'}
+{if $feature_blogs eq 'y' && $mytiki_blogs eq 'y'}
 <div id="content6" class="content">
   <div class="cbox">
   <div class="cbox-title">{if $userwatch eq $user}{tr}My blogs{/tr}{else}{tr}User Blogs{/tr}{/if}</div>
