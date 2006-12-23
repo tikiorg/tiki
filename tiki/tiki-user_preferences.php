@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.84 2006-12-13 14:30:57 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.85 2006-12-23 15:19:48 mose Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -460,6 +460,7 @@ $display_timezone = $tikilib->get_display_timezone($userwatch);
 if ($display_timezone != "UTC")
 	$display_timezone = "Local";
 
+$smarty->assign('userPageExists', 'n');
 if ($feature_wiki == 'y' and $feature_wiki_userpage == 'y') {
 	if ($tikilib->page_exists($feature_wiki_userpage_prefix.$user))
 		$smarty->assign('userPageExists', 'y');
