@@ -117,7 +117,8 @@
 
 {include file=categorize.tpl}
 
-<tr class="formcolor"><td>{tr}Heading{/tr}<br />{include file=tiki-edit_help_tool.tpl area_name='heading'}</td><td><textarea class="wikiedit" name="heading" rows="5" cols="80" id='subheading' wrap="virtual">{$heading|escape}</textarea></td></tr>
+<tr class="formcolor"><td>{tr}Heading{/tr}<br />
+{include file=tiki-edit_help_tool.tpl area_name='heading' qtnum='1'}</td><td><textarea class="wikiedit" name="heading" rows="5" cols="80" id='subheading' wrap="virtual">{$heading|escape}</textarea></td></tr>
 <tr  id='heading_only' {if $types.$type.heading_only ne 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Body{/tr}
 <br />{include file="textareasize.tpl" area_name='body' formId='editpageform'}
 <br />{include file=tiki-edit_help_tool.tpl area_name='body' qtnum='2'}
