@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.52 2006-12-23 17:03:31 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.53 2006-12-23 18:12:20 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -60,6 +60,7 @@ $smarty->assign('hasImage', 'n');
 $smarty->assign('image_name', '');
 $smarty->assign('image_type', '');
 $smarty->assign('image_size', '');
+$smarty->assign('image_data', '');
 $smarty->assign('image_x', 0);
 $smarty->assign('image_y', 0);
 $smarty->assign('heading', '');
@@ -67,6 +68,7 @@ $smarty->assign('body', '');
 $smarty->assign('type', 'Article');
 $smarty->assign('rating', 7);
 $smarty->assign('edit_data', 'n');
+$smarty->assign('spellcheck', 'n');
 
 if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0) {
 	$template_data = $tikilib->get_template($_REQUEST["templateId"]);
