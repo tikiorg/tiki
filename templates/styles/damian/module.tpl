@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/damian/module.tpl,v 1.7 2006-12-16 12:03:18 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/damian/module.tpl,v 1.8 2006-12-24 02:37:43 mose Exp $ *}
 {* Module layout with controls *}
 
 <div class="box{if $module_side eq "right_modules"}_right{/if} "><div class="box-title">
@@ -14,7 +14,7 @@
     </td>
     <td>
       {if $module_flip eq 'y'}
-        <a class="flip" href="javascript:flip('flip-{$module_name|escape}');">{$module_title}</a>
+        <a href="javascript:flip('flip-{$module_name|escape}');">{$module_title}</a>
       {else}
         {$module_title}
       {/if}
