@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.74 2006-12-21 14:57:57 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.75 2006-12-24 02:37:43 mose Exp $
 2003 - created and maintained by mose@tikiwiki.org
 
 colorset:
@@ -189,7 +189,7 @@ TD#leftcolumn {
 TD#rightcolumn {
 	vertical-align :   top;
 	background:   #DED6C6;
-	width:   180px;
+	width :   180px;
 }
 
 TD#centercolumn {
@@ -197,6 +197,7 @@ TD#centercolumn {
 	vertical-align :   top;
 	border-top :   1px solid #5A4A39;
 	padding : 0 10px;
+	width : 100%;
 }
 DIV#tiki-center {
 	vertical-align : top;
@@ -434,15 +435,13 @@ Links to collapse menus for example the main menu
 can be completely collapsed
 */
 .flip {
-	color:   white;
+	font-size : 80%;
 }
 
 .flip:active {
-	color:   white;
 }
 
 .flip:hover {
-	color:   white;
 }
 
 /* 
