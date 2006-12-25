@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-section_options.php,v 1.12 2006-12-03 18:08:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-section_options.php,v 1.13 2006-12-25 14:55:15 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-section_options.php,v 1.12 2006-12-03 18:08:52 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-section_options.php,v 1.13 2006-12-25 14:55:15 mose Exp $
 
 if ($feature_theme_control == 'y') {
 	include ('tiki-tc.php');
@@ -31,11 +31,6 @@ if ($layout_section == 'y') {
 		$smarty->assign('feature_bot_bar', $$section_bot_bar);
 		$smarty->assign('feature_left_column', $$section_left_column);
 		$smarty->assign('feature_right_column', $$section_right_column);
-	} else {
-		$smarty->assign('feature_top_bar', 'y');
-		$smarty->assign('feature_bot_bar', 'y');
-		$smarty->assign('feature_left_column', 'y');
-		$smarty->assign('feature_right_column', 'y');
 	}
 }
 
