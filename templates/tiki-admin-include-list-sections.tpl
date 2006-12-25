@@ -100,4 +100,5 @@
       <img border="0" src="pics/large/wysiwyg48x48.png" alt="{tr}wysiwyg{/tr}" /><br />{tr}wysiwyg{/tr}
     </a>
   </div>
-</div><p/>
+</div>
+<br />
