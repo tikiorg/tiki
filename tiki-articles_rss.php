@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-articles_rss.php,v 1.29 2006-12-13 13:05:21 hsaelens Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-articles_rss.php,v 1.30 2006-12-26 17:33:11 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -31,6 +31,12 @@ if (isset($_REQUEST["topic"])) {
     $uniqueid = $feed;
     $topic = "";
 }
+
+if ($topic and !$tikilib->user_has_perm_on_object($user,$topic,'topic','tiki_p_topic_read')) {
+	$errmsg=tra("Permission denied you cannot view this section");
+	require_once ('tiki-rss_error.php');
+}
+
 $output = $rsslib->get_from_cache($uniqueid);
 
 if ($output["data"]=="EMPTY") {
