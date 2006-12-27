@@ -1,4 +1,4 @@
-	# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.127 2006-12-21 16:14:15 sylvieg Exp $
+	# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.128 2006-12-27 03:07:42 mose Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -707,3 +707,9 @@ ALTER TABLE tiki_rss_modules ADD KEY(name);
 
 #sylvie 2006-12-21
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_actionlog', 'Can view action log', 'registered', 'tiki');
+
+# mose 2006-12-27
+# this is a destructive action, but required because backups has been removed
+delete from tiki_menu_options where url='tiki-backup.php';
+
+
