@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.34 2006-09-19 16:33:18 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.35 2006-12-27 06:27:41 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,14 +14,27 @@ include_once ('lib/userprefs/scrambleEmail.php');
 include_once('lib/registration/registrationlib.php');
 include_once ('lib/wiki/wikilib.php');
 
+if (isset($_REQUEST['userId'])) {
+	$userwatch = $tikilib->get_user_login($_REQUEST['userId']);
+	if ($userwatch === NULL) {
+		$smarty->assign('msg', tra("Unknown user"));
+		$smarty->display("error.tpl");
+		die;
+	}
+}
+
 if (isset($_REQUEST['view_user'])) {
 	$userwatch = $_REQUEST['view_user'];
+	if (!$userlib->user_exists($userwatch)) {
+		$smarty->assign('msg', tra("Unknown user"));
+		$smarty->display("error.tpl");
+		die;
+	}
 } else {
 	if ($user) {
 		$userwatch = $user;
 	} else {
 		$smarty->assign('msg', tra("You are not logged in and no user indicated"));
-
 		$smarty->display("error.tpl");
 		die;
 	}
@@ -37,13 +50,6 @@ $smarty->assign_by_ref('customfields', $customfields);
 
 if ($feature_friends == 'y') {
      $smarty->assign('friend', $tikilib->verify_friendship($userwatch, $user));
-}
-
-if (!$userlib->user_exists($userwatch)) {
-	$smarty->assign('msg', tra("Unknown user"));
-
-	$smarty->display("error.tpl");
-	die;
 }
 
 if ($tiki_p_admin != 'y') {
