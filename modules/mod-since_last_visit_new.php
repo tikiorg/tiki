@@ -320,14 +320,12 @@ function since_last_visit_new($user) {
   
   $ret["items"]["users"]["label"] = tra("new users");
   $ret["items"]["users"]["cname"] = "slvn_users_menu";
-  $query = "select `login`, `registrationDate` from `users_users` where `registrationDate`>?";
+  $query = "select `userId`, `login`, `registrationDate` from `users_users` where `registrationDate`>?";
   $result = $tikilib->query($query, array((int)$last));
 
   $count = 0;
-  $slvn_tmp_href = $userlib->user_has_permission($user, "tiki_p_admin") ? "tiki-assignuser.php?assign_user=" : "tiki-user_information.php?view_user=";
-  while ($res = $result->fetchRow())
-  {
-      $ret["items"]["users"]["list"][$count]["href"]  = $slvn_tmp_href . $res["login"];
+  while ($res = $result->fetchRow()) {
+      $ret["items"]["users"]["list"][$count]["href"]  = "tiki-user_information.php?view_user=" . $res["userId"];
       $ret["items"]["users"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["registrationDate"]);
       $ret["items"]["users"]["list"][$count]["label"] = $res["login"]; 
       $count++;

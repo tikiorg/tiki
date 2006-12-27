@@ -10,7 +10,13 @@
   <div class="cbox-data">
   <div class="simplebox">
   <table>
-  <tr><td class="form">{tr}User{/tr}:</td><td>{$userinfo.login}{if $tiki_p_admin eq 'y'} <a class="link" href="tiki-user_preferences.php?view_user={$userinfo.login}"><img src="pics/icons/wrench.png" title="{tr}Change user preferences{/tr}" border="0" width='16' height='16' /> </a>  {/if}</td></tr>
+  <tr><td class="form">{tr}User{/tr}:</td><td>
+	{if $tiki_p_admin eq 'y'}
+	<a class="link" href="tiki-assignuser.php?assign_user={$userinfo.login|escape:"url"}" title="{tr}Assign Group{/tr}"><img src="pics/icons/key.png" border="0" width="16" height="16" alt="{tr}Assign Group{/tr}" align="right" /></a>
+	<a class="link" href="tiki-user_preferences.php?userId={$userinfo.userId}" title="{tr}Change user preferences{/tr}"><img src="pics/icons/wrench.png" border="0" width="16" height="16" alt="{tr}Change user preferences{/tr}" align="right" /></a>
+	{/if}
+	{$userinfo.login|userlink}
+	</td></tr>
 {if $feature_score eq 'y'}
   <tr><td class="form">{tr}Score{/tr}:</td><td>{$userinfo.score|star}{$userinfo.score}</td></tr>
 {/if}
