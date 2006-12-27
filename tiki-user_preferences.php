@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.85 2006-12-23 15:19:48 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.86 2006-12-27 06:43:37 mose Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -26,21 +26,38 @@ if (!$user) {
 	die;
 }
 
-$userwatch = $user;
-
-if (isset($_REQUEST["view_user"])) {
-	if ($_REQUEST["view_user"] <> $user) {
-		if ($tiki_p_admin == 'y') {
+if (isset($_REQUEST['userId'])) {
+	$userwatch = $tikilib->get_user_login($_REQUEST['userId']);
+	if ($userwatch != $user) {
+		if ($userwatch === NULL) {
+			$smarty->assign('msg', tra("Unknown user"));
+			$smarty->display("error.tpl");
+			die;
+		} elseif ($tiki_p_admin != 'y' and $tiki_p_admin_users != 'y') {
+			$smarty->assign('msg', tra("You do not have permission to view other users data"));
+			$smarty->display("error.tpl");
+			die;
+		}
+	}
+} elseif (isset($_REQUEST["view_user"])) {
+	if ($_REQUEST["view_user"] != $user) {
+		if ($tiki_p_admin == 'y' or $tiki_p_admin_users == 'y') {
 			$userwatch = $_REQUEST["view_user"];
+			if (!$userlib->user_exists($userwatch)) {
+				$smarty->assign('msg', tra("Unknown user"));
+				$smarty->display("error.tpl");
+				die;
+			}
 		} else {
 			$smarty->assign('msg', tra("You do not have permission to view other users data"));
-
 			$smarty->display("error.tpl");
 			die;
 		}
 	} else {
 		$userwatch = $user;
 	}
+} else {
+	$userwatch = $user;
 }
 
 // Custom fields
