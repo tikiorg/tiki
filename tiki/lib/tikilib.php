@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.690 2006-12-23 13:05:13 mose Exp $
+// CVS: $Id: tikilib.php,v 1.691 2006-12-27 01:59:52 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1216,6 +1216,11 @@ function add_pageview() {
 
     // User assigned modules ////
     /*shared*/
+    function get_user_login($id) {
+	$login = $this->getOne("select `login` from `users_users` where `userId`=?", array((int)$id));
+	return $login;
+    }
+
     function get_user_id($user) {
 	$id = $this->getOne("select `userId` from `users_users` where `login`=?", array($user),-1,-1,false);
 	return $id;
@@ -6834,4 +6839,9 @@ function alterprefs() {
 	}
 	return true;
 }
+
+function validate_email_syntax($email) {
+	return eregi("^[_a-z0-9\.\-]+@[_a-z0-9\.\-]+\.[a-z]{2,4}$",$email);
+}
+
 ?>

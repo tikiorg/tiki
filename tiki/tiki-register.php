@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.72 2006-12-21 14:57:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.73 2006-12-27 01:59:52 mose Exp $
 
 /**
  * Tiki registration script
@@ -9,7 +9,7 @@
  * @license GNU LGPL
  * @copyright Tiki Community
  * @date created: 2002/10/8 15:54
- * @date last-modified: $Date: 2006-12-21 14:57:56 $
+ * @date last-modified: $Date: 2006-12-27 01:59:52 $
  */
 
 // Initialization
@@ -141,26 +141,13 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
     }
   }
   
+	if (!validate_email_syntax($_REQUEST["email"])) {
+		$smarty->assign('msg',tra("Invalid email address. You must enter a valid email address"));
+		$smarty->display("error.tpl");
+		die;
+	}
 
-    $email_valid = 'yes';
-    if($validateEmail=='y') {
-      $ret = $registrationlib->SnowCheckMail($_REQUEST["email"],$sender_email,$novalidation);
-      if(!$ret[0]) {
-		$smarty->assign('notrecognized','y');
-		$smarty->assign('email',$_REQUEST['email']);
-		$smarty->assign('login',$_REQUEST['name']);
-		$smarty->assign('password',$_REQUEST['pass']);
-		if (isset($_REQUEST['chosenGroup']))
-			$smarty->assign('chosenGroup',$_REQUEST['chosenGroup']);
-		$email_valid = 'no';
-      }
-    } elseif (preg_match('/[ ;,:]/',trim($_REQUEST["email"]))) {
-			$smarty->assign('msg',tra("Invalid email address. You must enter a valid email address"));
-			$smarty->display("error.tpl");
-			die;
-		}
-
-  if ($email_valid != 'no'&& $userTracker == 'y') {
+  if ($userTracker == 'y') {
 		$re = $userlib->get_group_info(isset($_REQUEST['chosenGroup'])? $_REQUEST['chosenGroup']: 'Registered');
 		if (!empty($re['usersTrackerId']) && !empty($re['registrationUsersFieldIds'])) {
 			include_once('lib/wiki-plugins/wikiplugin_tracker.php');
@@ -172,7 +159,6 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
 		}
   }
 
-  if($email_valid != 'no') {
 		if($validateUsers == 'y' || (isset($validateRegistration) && $validateRegistration == 'y')) {
 			//$apass = addslashes(substr(md5($tikilib->genPass()),0,25));
 			$apass = addslashes(md5($tikilib->genPass()));
@@ -276,8 +262,6 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
 		}
 
 	}
-
-}
 
 $listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
 foreach ($listgroups['data'] as $gr) {
