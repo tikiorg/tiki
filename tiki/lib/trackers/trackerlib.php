@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.154 2006-12-15 00:19:50 fr_rodo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.155 2006-12-27 02:03:31 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1259,13 +1259,7 @@ class TrackerLib extends TikiLib {
 
 				// email
 				case 'm':
-					global $registrationlib,$dbTiki, $sender_email;
-					if(!isset($registrationlib)) {
-						require_once('lib/registration/registrationlib.php');
-					}
-					$res = $registrationlib->SnowCheckMail($f['value'], $sender_email, false);
-					if($res[0] == false) {
-						$res[1];
+					if(!validate_email_syntax($f['value'])) {
 						$erroneous_values[] = $f;
 					}
 					break;
