@@ -18,7 +18,7 @@
  * @author     Adam Ashley <aashley@php.net>
  * @copyright  2001-2006 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    CVS: $Id: Auth.php,v 1.2 2006-10-22 16:15:04 mose Exp $
+ * @version    CVS: $Id: Auth.php,v 1.3 2006-12-27 10:17:06 mose Exp $
  * @link       http://pear.php.net/package/Auth
  */
 
@@ -42,6 +42,10 @@ define('AUTH_METHOD_NOT_SUPPORTED',     -4);
  * Returned if new Advanced security system detects a breach
  */
 define('AUTH_SECURITY_BREACH',          -5);
+/**
+ * Returned if checkAuthCallback says session should not continue.
+ */
+define('AUTH_CALLBACK_ABORT',           -6);
 
 /**
  * PEAR::Auth
@@ -55,7 +59,7 @@ define('AUTH_SECURITY_BREACH',          -5);
  * @author     Adam Ashley <aashley@php.net>
  * @copyright  2001-2006 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    Release: @package_version@  File: $Revision: 1.2 $
+ * @version    Release: 1.4.3  File: $Revision: 1.3 $
  * @link       http://pear.php.net/package/Auth
  */
 class Auth {
@@ -151,6 +155,14 @@ class Auth {
      * @var string
      */
     var $password = '';
+
+    /**
+     * checkAuth callback function name
+     *
+     * @var string
+     * @see setCheckAuthCallback()
+     */
+    var $checkAuthCallback = '';
 
     /**
      * Login callback function name
@@ -267,7 +279,7 @@ class Auth {
      * @param boolean   Should the login form be displayed if neccessary?
      * @return void
      */
-    function Auth($storageDriver, $options = '', $loginFunction = 'FakeCallback', $showLogin = true, $user = "", $pass = "")
+    function Auth($storageDriver, $options = '', $loginFunction = '', $showLogin = true)
     {
         $this->applyAuthOptions($options);
 
@@ -284,91 +296,15 @@ class Auth {
         }
 
         // Make Sure Auth session variable is there
-        if(   !isset($_SESSION[$this->_sessionName]) 
-           && !isset($GLOBALS['HTTP_SESSION_VARS'][$this->_sessionName])) {
-            isset($_SESSION)
-                ? $_SESSION[$this->_sessionName] = array()
-                : $GLOBALS['HTTP_SESSION_VARS'][$this->_sessionName] = array();
+        if(!isset($_SESSION[$this->_sessionName])) {
+            $_SESSION[$this->_sessionName] = array();
         }
 
         // Assign Some globals to internal references, this will replace _importGlobalVariable
-        isset($_SESSION) 
-            ? $this->session =& $_SESSION[$this->_sessionName] 
-            : $this->session =& $GLOBALS['HTTP_SESSION_VARS'][$this->_sessionName] ;
-        isset($_SERVER) 
-            ? $this->server =& $_SERVER 
-            : $this->server =& $GLOBALS['HTTP_SERVER_VARS'];
-        isset($_POST) 
-            ? $this->post =& $_POST 
-            : $this->post =& $GLOBALS['HTTP_POST_VARS'];
-        isset($_COOKIE) 
-            ? $this->cookie =& $_COOKIE 
-            : $this->cookie =& $GLOBALS['HTTP_COOKIE_VARS'];
-
-        if ($loginFunction != "" && function_exists($loginFunction)) {
-            $this->loginFunction = $loginFunction;
-        }
-
-        if (is_bool($showLogin)) {
-            $this->showLogin = $showLogin;
-        }
-
-        if ($user != "") {
-            $this->username = (get_magic_quotes_gpc() == 1 ? stripslashes($user) : $user );
-            $this->password = (get_magic_quotes_gpc() == 1 ? stripslashes($pass) : $pass );
-        }
-
-        if (is_object($storageDriver)) {
-            $this->storage =& $storageDriver;
-            // Pass a reference to auth to the container, ugly but works
-            // this is used by the DB container to use method setAuthData not staticaly.
-            $this->storage->_auth_obj =& $this;
-        } else {
-            //$this->storage = $this->_factory($storageDriver, $options);
-            // 
-            $this->storage_driver = $storageDriver;
-            $this->storage_options =& $options;
-        }
-    }
-
-    function AuthOrig($storageDriver, $options = '', $loginFunction = '', $showLogin = true)
-    {
-        $this->applyAuthOptions($options);
-
-        // Start the session suppress error if already started
-        if(!session_id()){
-            @session_start();
-            if(!session_id()) {
-                // Throw error
-                include_once 'PEAR.php';
-                PEAR::throwError('Session could not be started by Auth, '
-                        .'possibly headers are already sent, try putting '
-                        .'ob_start in the beginning of your script');
-            }
-        }
-
-        // Make Sure Auth session variable is there
-        if(   !isset($_SESSION[$this->_sessionName]) 
-           && !isset($GLOBALS['HTTP_SESSION_VARS'][$this->_sessionName])) {
-            isset($_SESSION)
-                ? $_SESSION[$this->_sessionName] = array()
-                : $GLOBALS['HTTP_SESSION_VARS'][$this->_sessionName] = array();
-        }
-
-        // Assign Some globals to internal references, this will replace _importGlobalVariable
-        isset($_SESSION) 
-            ? $this->session =& $_SESSION[$this->_sessionName] 
-            : $this->session =& $GLOBALS['HTTP_SESSION_VARS'][$this->_sessionName] ;
-        isset($_SERVER) 
-            ? $this->server =& $_SERVER 
-            : $this->server =& $GLOBALS['HTTP_SERVER_VARS'];
-        isset($_POST) 
-            ? $this->post =& $_POST 
-            : $this->post =& $GLOBALS['HTTP_POST_VARS'];
-        isset($_COOKIE) 
-            ? $this->cookie =& $_COOKIE 
-            : $this->cookie =& $GLOBALS['HTTP_COOKIE_VARS'];
-        //isset($_GET) ? $var = &$_GET : $var = &$GLOBALS['HTTP_GET_VARS'];
+        $this->session =& $_SESSION[$this->_sessionName];
+        $this->server =& $_SERVER;
+        $this->post =& $_POST;
+        $this->cookie =& $_COOKIE;
 
         if ($loginFunction != '' && is_callable($loginFunction)) {
             $this->loginFunction = $loginFunction;
@@ -543,6 +479,7 @@ class Auth {
             ? $usingChap = true 
             : $usingChap = false;
 
+        
         // When the user has already entered a username, we have to validate it.
         if (!empty($this->username)) {
             if (true === $this->storage->fetchData($this->username, $this->password, $usingChap)) {
@@ -554,7 +491,7 @@ class Auth {
         if (!empty($this->username) && $login_ok) {
             $this->setAuth($this->username);
             if (is_callable($this->loginCallback)) {
-                call_user_func_array($this->loginCallback, array($this->username, $this));
+                call_user_func_array($this->loginCallback, array($this->username, &$this));
             }
         }
 
@@ -563,13 +500,13 @@ class Auth {
         if (!empty($this->username) && !$login_ok) {
             $this->status = AUTH_WRONG_LOGIN;
             if (is_callable($this->loginFailedCallback)) {
-                call_user_func_array($this->loginFailedCallback, array($this->username, $this));
+                call_user_func_array($this->loginFailedCallback, array($this->username, &$this));
             }
         }
 
         if ((empty($this->username) || !$login_ok) && $this->showLogin) {
             if (is_callable($this->loginFunction)) {
-                call_user_func_array($this->loginFunction, array($this->username, $this->status, $this));
+                call_user_func_array($this->loginFunction, array($this->username, $this->status, &$this));
             } else {
                 // BC fix Auth used to use drawLogin for this
                 // call is sub classes implement this
@@ -637,9 +574,7 @@ class Auth {
     function setSessionName($name = 'session')
     {
         $this->_sessionName = '_auth_'.$name;
-        isset($_SESSION) 
-            ? $this->session =& $_SESSION[$this->_sessionName] 
-            : $this->session =& $GLOBALS['HTTP_SESSION_VARS'][$this->_sessionName] ;
+        $this->session =& $_SESSION[$this->_sessionName];
     }
 
     // }}}
@@ -673,6 +608,23 @@ class Auth {
     }
 
     // }}}
+    // {{{ setCheckAuthCallback()
+
+    /**
+     * Register a callback function to be called whenever the validity of the login is checked
+     * The function will receive two parameters, the username and a reference to the auth object.
+     *
+     * @param  string  callback function name
+     * @return void
+     * @access public
+     * @since Method available since Release 1.4.3
+     */
+    function setCheckAuthCallback($checkAuthCallback)
+    {
+        $this->checkAuthCallback = $checkAuthCallback;
+    }
+
+    // }}}
     // {{{ setLoginCallback()
     
     /**
@@ -694,7 +646,7 @@ class Auth {
 
     /**
      * Register a callback function to be called on failed user login.
-     * The function will receive a single parameter, the username and a reference to the auth object.
+     * The function will receive two parameters, the username and a reference to the auth object.
      *
      * @param  string  callback function name
      * @return void
@@ -922,6 +874,16 @@ class Auth {
                     }
                 }
 
+                if (is_callable($this->checkAuthCallback)) {
+                    $checkCallback = call_user_func_array($this->checkAuthCallback, array($this->username, &$this));
+                    if ($checkCallback == false) {
+                        $this->expired = true;
+                        $this->status = AUTH_CALLBACK_ABORT;
+                        $this->logout();
+                        return false;
+                    }
+                }
+
                 return true;
             }
         }
@@ -978,7 +940,7 @@ class Auth {
     function logout()
     {
         if (is_callable($this->logoutCallback)) {
-            call_user_func_array($this->logoutCallback, array($this->session['username'], $this));
+            call_user_func_array($this->logoutCallback, array($this->session['username'], &$this));
         }
 
         $this->username = '';
