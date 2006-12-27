@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.374 2006-12-22 04:17:21 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.375 2006-12-27 02:08:46 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -671,7 +671,6 @@ $pref['users_prefs_tasks_maxRecords'] = '10';
 $pref['users_prefs_user_dbl'] = 'n'; 
 $pref['users_prefs_user_information'] = 'public'; 
 $pref['users_prefs_userbreadCrumb'] = '4'; 
-$pref['validateEmail'] = 'n'; 
 $pref['validateRegistration'] = 'n'; 
 
 # user messages
