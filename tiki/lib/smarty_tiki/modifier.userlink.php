@@ -14,10 +14,8 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
 
     $cachePeriod = 60*60*2; // how long does an entry stay in the cache for?  2hr
 
-    $show_mouseover = $feature_community_mouseover == 'y' &&
-        $userlib->get_user_preference($user, 'show_mouseover_user_info','y') == 'y';
-    $show_friends = $feature_friends == 'y' &&
-	$tikilib->verify_friendship($user, $other_user);
+    $show_mouseover = $feature_community_mouseover == 'y' && $userlib->get_user_preference($user, 'show_mouseover_user_info','y') == 'y';
+    $show_friends = $feature_friends == 'y' && $tikilib->verify_friendship($user, $other_user);
     
     if( $show_mouseover || $show_friends ) {
         $cacheItem = "userlink.".$user.".".$other_user.$fullname;
@@ -138,11 +136,11 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
 
 
 		if (is_numeric($idletime) && empty($mouseover)) {
-		    $ret = "<a class='$class' target='_top' href='tiki-user_information.php?view_user=".urlencode($other_user)."' title='".tra("More info about $other_user")." ".tra("(idle for $idletime seconds)")."'>$ou</a>$friend$star";
+		    $ret = "<a class='$class' target='_top' href='tiki-user_information.php?userId=".urlencode($info['userId'])."' title='".tra("More info about $other_user")." ".tra("(idle for $idletime seconds)")."'>$ou</a>$friend$star";
                     $cachelib->cacheItem($cacheItem, $ret);
                     return $ret;
 		} else {
-                    $ret = "<a class='$class' $mouseover target='_top' href='tiki-user_information.php?view_user=".urlencode($other_user)."' >$ou</a>$friend$star";
+                    $ret = "<a class='$class' $mouseover target='_top' href='tiki-user_information.php?userId=".urlencode($info['userId'])."' >$ou</a>$friend$star";
                     $cachelib->cacheItem($cacheItem, $ret);
                     return $ret;
 		}
@@ -152,7 +150,5 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
         return $ret;
     }
 }
-
-/* vim: set expandtab: */
 
 ?>
