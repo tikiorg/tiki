@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.35 2006-12-27 06:27:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.36 2006-12-27 06:48:56 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -21,9 +21,7 @@ if (isset($_REQUEST['userId'])) {
 		$smarty->display("error.tpl");
 		die;
 	}
-}
-
-if (isset($_REQUEST['view_user'])) {
+} elseif (isset($_REQUEST['view_user'])) {
 	$userwatch = $_REQUEST['view_user'];
 	if (!$userlib->user_exists($userwatch)) {
 		$smarty->assign('msg', tra("Unknown user"));
