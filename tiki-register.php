@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.73 2006-12-27 01:59:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.74 2006-12-27 02:55:54 mose Exp $
 
 /**
  * Tiki registration script
@@ -9,7 +9,7 @@
  * @license GNU LGPL
  * @copyright Tiki Community
  * @date created: 2002/10/8 15:54
- * @date last-modified: $Date: 2006-12-27 01:59:52 $
+ * @date last-modified: $Date: 2006-12-27 02:55:54 $
  */
 
 // Initialization
@@ -35,11 +35,6 @@ if (!isset($_REQUEST['novalidation'])) {
 } else {
 	$novalidation = $_REQUEST['novalidation'];
 }
-
-//get hidden fields
-$hiddenfields = array();
-$hiddenfields = $registrationlib->get_hiddenfields();
-$smarty->assign_by_ref('hiddenfields', $hiddenfields);
 
 //get custom fields
 $customfields = array();
@@ -133,32 +128,29 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
   
   // Check the mode
   if($useRegisterPasscode == 'y') {
-    if(($_REQUEST["passcode"]!=$tikilib->get_preference("registerPasscode",md5($tikilib->genPass()))))
-    {
+    if(($_REQUEST["passcode"]!=$tikilib->get_preference("registerPasscode",md5($tikilib->genPass())))) {
       $smarty->assign('msg',tra("Wrong passcode you need to know the passcode to register in this site"));
       $smarty->display("error.tpl");
       die;
     }
   }
   
+	$email_valid = 'y';
 	if (!validate_email_syntax($_REQUEST["email"])) {
-		$smarty->assign('msg',tra("Invalid email address. You must enter a valid email address"));
-		$smarty->display("error.tpl");
-		die;
-	}
-
-  if ($userTracker == 'y') {
+		$email_valid = 'n';
+	} elseif ($userTracker == 'y') {
 		$re = $userlib->get_group_info(isset($_REQUEST['chosenGroup'])? $_REQUEST['chosenGroup']: 'Registered');
 		if (!empty($re['usersTrackerId']) && !empty($re['registrationUsersFieldIds'])) {
 			include_once('lib/wiki-plugins/wikiplugin_tracker.php');
 			$userTrackerData = $tikilib->parse_data(wikiplugin_tracker('', array('trackerId'=>$re['usersTrackerId'], 'fields'=>$re['registrationUsersFieldIds'], 'showdesc'=>'y', 'showmandatory'=>'y', 'embedded'=>'n')));
 			$smarty->assign('userTrackerData', $userTrackerData);
 			if (!isset($_REQUEST['trackit']) || (isset($_REQUEST['error']) && $_REQUEST['error'] == 'y')) {
-				$email_valid = 'no';// first pass or error
+				$email_valid = 'n';// first pass or error
 			}
 		}
   }
-
+	
+	if ($email_valid == 'y') {
 		if($validateUsers == 'y' || (isset($validateRegistration) && $validateRegistration == 'y')) {
 			//$apass = addslashes(substr(md5($tikilib->genPass()),0,25));
 			$apass = addslashes(md5($tikilib->genPass()));
@@ -168,7 +160,7 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
 			$userlib->add_user($_REQUEST["name"],$apass,$_REQUEST["email"],$_REQUEST["pass"]);
 			if (isset($_REQUEST['chosenGroup']) && $userlib->get_registrationChoice($_REQUEST['chosenGroup']) == 'y') {
 				$userlib->set_default_group($_REQUEST['name'], $_REQUEST['chosenGroup']);
-			}			
+			}	
 			
 			$logslib->add_log('register','created account '.$_REQUEST["name"]);
 			$smarty->assign('mail_machine',$machine);
@@ -262,6 +254,8 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
 		}
 
 	}
+}
+$smarty->assign('email_valid',$email_valid);
 
 $listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
 foreach ($listgroups['data'] as $gr) {
