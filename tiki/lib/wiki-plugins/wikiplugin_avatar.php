@@ -26,7 +26,8 @@ function wikiplugin_avatar($data, $params) {
 	if (isset($page)) {
 		$avatar = "<a href='tiki-index.php?page=$page'>" . $avatar . '</a>';
 	} else if ($userlib->user_exists($data) && $tikilib->get_user_preference($data, 'user_information', 'public') == 'public') {
-		$avatar = "<a href='tiki-user_information.php?view_user=$data'>" . $avatar . '</a>';
+		$id = $userlib->get_user_login($data);
+		$avatar = "<a href=\"tiki-user_information.php?userId=$id\">" . $avatar . '</a>';
 	}
 
 	return $avatar;
