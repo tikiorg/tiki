@@ -6,24 +6,22 @@
 {/if}
 
 {if $showmsg eq 'y'}
+{$msg}
 
-  {$msg}
+{elseif $userTrackerData}
+{$userTrackerData}
 
-{elseif $notrecognized eq 'y'}
+{elseif $email_valid eq 'n'}
 
   {tr}Your email could not be validated; make sure you email is correct and click register below.{/tr}<br />
   <form action="tiki-register.php" method="post">
-    <input type="text" name="email" value="{$email}"/>
-    <input type="hidden" name="name" value="{$login}"/>
-    <input type="hidden" name="pass" value="{$password}"/>
+    <input type="text" name="email" value="{$smarty.post.email}"/>
+    <input type="hidden" name="name" value="{$smarty.post.name}"/>
+    <input type="hidden" name="pass" value="{$smarty.post.pass}"/>
     <input type="hidden" name="novalidation" value="yes"/>
-    {if $chosenGroup}<input type="hidden" name="chosenGroup" value="{$chosenGroup}" />{/if}
+    {if $chosenGroup}<input type="hidden" name="chosenGroup" value="{$smarty.post.chosenGroup}" />{/if}
     <input type="submit" name="register" value="{tr}register{/tr}" />
   </form>
-
-{elseif $userTrackerData}
-
-  {$userTrackerData}
 
 {else}
 
@@ -68,7 +66,6 @@
         {if $validateUsers eq 'y' and $validateEmail ne 'y'}<br />
         <div style="float:left">{tr}A valid email is mandatory to register{/tr}</div>{/if}</td>
       </tr>
-      {tr}NOTE: Make sure to whitelist this domain to prevent<br />registration emails being canned by your spam filter!{/tr}
 
       {* Custom fields *}
       {section name=ir loop=$customfields}
@@ -92,7 +89,9 @@
       </tr>
     </table>
   </form>
-
+<div class="simplebox">
+{tr}NOTE: Make sure to whitelist this domain to prevent<br />registration emails being canned by your spam filter!{/tr}
+</div>
   <br />
 
   <table class="normal">
