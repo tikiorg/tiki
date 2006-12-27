@@ -18,7 +18,7 @@
  * @author     Adam Ashley <aashley@php.net>
  * @copyright  2001-2006 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    CVS: $Id: DBLite.php,v 1.2 2006-10-22 03:21:38 mose Exp $
+ * @version    CVS: $Id: DBLite.php,v 1.3 2006-12-27 10:17:07 mose Exp $
  * @link       http://pear.php.net/package/Auth
  * @since      File available since Release 1.3.0
  */
@@ -45,7 +45,7 @@ require_once 'DB.php';
  * @author     Adam Ashley <aashley@php.net>
  * @copyright  2001-2006 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    Release: @package_version@  File: $Revision: 1.2 $
+ * @version    Release: 1.4.3  File: $Revision: 1.3 $
  * @link       http://pear.php.net/package/Auth
  * @since      Class available since Release 1.3.0
  */
@@ -93,6 +93,7 @@ class Auth_Container_DBLite extends Auth_Container
         $this->options['db_fields']   = '';
         $this->options['cryptType']   = 'md5';
         $this->options['db_options']  = array();
+        $this->options['auto_quote']  = true;
 
         if (is_array($dsn)) {
             $this->_parseOptions($dsn);
@@ -151,6 +152,15 @@ class Auth_Container_DBLite extends Auth_Container
                 return $res;
             }
         }
+        if ($this->options['auto_quote'] && $this->db->dsn['phptype'] != 'sqlite') {
+            $this->options['final_table'] = $this->db->quoteIdentifier($this->options['table']);
+            $this->options['final_usernamecol'] = $this->db->quoteIdentifier($this->options['usernamecol']);
+            $this->options['final_passwordcol'] = $this->db->quoteIdentifier($this->options['passwordcol']);
+        } else {
+            $this->options['final_table'] = $this->options['table'];
+            $this->options['final_usernamecol'] = $this->options['usernamecol'];
+            $this->options['final_passwordcol'] = $this->options['passwordcol'];
+        }
         return true;
     }
 
@@ -186,14 +196,22 @@ class Auth_Container_DBLite extends Auth_Container
     {
         if (isset($this->options['db_fields'])) {
             if (is_array($this->options['db_fields'])) {
-                $fields = array();
-                foreach ($this->options['db_fields'] as $field) {
-                    $fields[] = $this->db->quoteIdentifier($field);
+                if ($this->options['auto_quote']) {
+                    $fields = array();
+                    foreach ($this->options['db_fields'] as $field) {
+                        $fields[] = $this->db->quoteIdentifier($field);
+                    }
+                    return implode(', ', $fields);
+                } else {
+                    return implode(', ', $this->options['db_fields']);
                 }
-                return implode(', ', $fields);
             } else {
                 if (strlen($this->options['db_fields']) > 0) {
-                    return $this->db->quoteIdentifier($this->options['db_fields']);
+                    if ($this->options['auto_quote']) {
+                        return $this->db->quoteIdentifier($this->options['db_fields']);
+                    } else {
+                        $this->options['db_fields'];
+                    }
                 }
             }
         }
@@ -230,8 +248,8 @@ class Auth_Container_DBLite extends Auth_Container
             && strstr($this->options['db_fields'], '*')) {
             $sql_from = "*";
         } else {
-            $sql_from = $this->db->quoteIdentifier($this->options['usernamecol']).
-                ", ".$this->db->quoteIdentifier($this->options['passwordcol']);
+            $sql_from = $this->options['final_usernamecol'].
+                ", ".$this->options['final_passwordcol'];
 
             if (strlen($fields = $this->_quoteDBFields()) > 0) {
                 $sql_from .= ', '.$fields;
@@ -239,8 +257,8 @@ class Auth_Container_DBLite extends Auth_Container
         }
         
         $query = "SELECT ".$sql_from.
-                " FROM ".$this->db->quoteIdentifier($this->options['table']).
-                " WHERE ".$this->db->quoteIdentifier($this->options['usernamecol'])." = ".$this->db->quoteSmart($username);
+                " FROM ".$this->options['final_table'].
+                " WHERE ".$this->options['final_usernamecol']." = ".$this->db->quoteSmart($username);
         $res = $this->db->getRow($query, null, DB_FETCHMODE_ASSOC);
 
         if (DB::isError($res)) {

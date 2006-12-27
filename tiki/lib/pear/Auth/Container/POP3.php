@@ -20,7 +20,7 @@
  * @author     Adam Ashley <aashley@php.net>
  * @copyright  2001-2006 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    CVS: $Id: POP3.php,v 1.2 2006-10-22 03:21:38 mose Exp $
+ * @version    CVS: $Id: POP3.php,v 1.3 2006-12-27 10:17:07 mose Exp $
  * @link       http://pear.php.net/package/Auth
  * @since      File available since Release 1.2.0
  */
@@ -48,7 +48,7 @@ require_once 'Net/POP3.php';
  * @author     Adam Ashley <aashley@php.net>
  * @copyright  2001-2006 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    Release: @package_version@  File: $Revision: 1.2 $
+ * @version    Release: 1.4.3  File: $Revision: 1.3 $
  * @link       http://pear.php.net/package/Auth
  * @since      Class available since Release 1.2.0
  */
@@ -92,7 +92,7 @@ class Auth_Container_POP3 extends Auth_Container
      */
     function Auth_Container_POP3($server=null)
     {
-        if (isset($server)) {
+        if (isset($server) && !is_null($server)) {
             if (is_array($server)) {
                 if (isset($server['host'])) {
                     $this->server = $server['host'];

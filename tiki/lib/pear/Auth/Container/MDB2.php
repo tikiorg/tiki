@@ -18,7 +18,7 @@
  * @author     Adam Ashley <aashley@php.net>
  * @copyright  2001-2006 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    CVS: $Id: MDB2.php,v 1.2 2006-10-22 03:21:38 mose Exp $
+ * @version    CVS: $Id: MDB2.php,v 1.3 2006-12-27 10:17:07 mose Exp $
  * @link       http://pear.php.net/package/Auth
  * @since      File available since Release 1.3.0
  */
@@ -44,7 +44,7 @@ require_once 'MDB2.php';
  * @author     Adam Ashley <aashley@php.net>
  * @copyright  2001-2006 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    Release: @package_version@  File: $Revision: 1.2 $
+ * @version    Release: 1.4.3  File: $Revision: 1.3 $
  * @link       http://pear.php.net/package/Auth
  * @since      Class available since Release 1.3.0
  */
@@ -128,6 +128,17 @@ class Auth_Container_MDB2 extends Auth_Container
         if (MDB2::isError($this->db) || PEAR::isError($this->db)) {
             return PEAR::raiseError($this->db->getMessage(), $this->db->code);
         }
+        
+        if ($this->options['auto_quote']) {
+            $this->options['final_table'] = $this->db->quoteIdentifier($this->options['table'], true);
+            $this->options['final_usernamecol'] = $this->db->quoteIdentifier($this->options['usernamecol'], true);
+            $this->options['final_passwordcol'] = $this->db->quoteIdentifier($this->options['passwordcol'], true);
+        } else {
+            $this->options['final_table'] = $this->options['table'];
+            $this->options['final_usernamecol'] = $this->options['usernamecol'];
+            $this->options['final_passwordcol'] = $this->options['passwordcol'];
+        }
+                
         return true;
     }
 
@@ -193,6 +204,7 @@ class Auth_Container_MDB2 extends Auth_Container
         $this->options['db_fields']   = '';
         $this->options['cryptType']   = 'md5';
         $this->options['db_options']  = array();
+        $this->options['auto_quote']  = true;
     }
 
     // }}}
@@ -227,14 +239,22 @@ class Auth_Container_MDB2 extends Auth_Container
     {
         if (isset($this->options['db_fields'])) {
             if (is_array($this->options['db_fields'])) {
-                $fields = array();
-                foreach ($this->options['db_fields'] as $field) {
-                    $fields[] = $this->db->quoteIdentifier($field, true);
+                if ($this->options['auto_quote']) {
+                    $fields = array();
+                    foreach ($this->options['db_fields'] as $field) {
+                        $fields[] = $this->db->quoteIdentifier($field, true);
+                    }
+                    return implode(', ', $fields);
+                } else {
+                    return implode(', ', $this->options['db_fields']);
                 }
-                return implode(', ', $fields);
             } else {
                 if (strlen($this->options['db_fields']) > 0) {
-                    return $this->db->quoteIdentifier($this->options['db_fields'], true);
+                    if ($this->options['auto_quote']) {
+                        return $this->db->quoteIdentifier($this->options['db_fields'], true);
+                    } else {
+                        return $this->options['db_fields'];
+                    }
                 }
             }
         }
@@ -274,8 +294,8 @@ class Auth_Container_MDB2 extends Auth_Container
             && strstr($this->options['db_fields'], '*')) {
             $sql_from = '*';
         } else {
-            $sql_from = $this->db->quoteIdentifier($this->options['usernamecol'], true).
-                ", ".$this->db->quoteIdentifier($this->options['passwordcol'], true);
+            $sql_from = $this->options['final_usernamecol'].
+                ", ".$this->options['final_passwordcol'];
 
             if (strlen($fields = $this->_quoteDBFields()) > 0) {
                 $sql_from .= ', '.$fields;
@@ -283,8 +303,8 @@ class Auth_Container_MDB2 extends Auth_Container
         }
         $query = sprintf("SELECT %s FROM %s WHERE %s = %s",
                          $sql_from,
-                         $this->db->quoteIdentifier($this->options['table'], true),
-                         $this->db->quoteIdentifier($this->options['usernamecol'], true),
+                         $this->options['final_table'],
+                         $this->options['final_usernamecol'],
                          $this->db->quote($username, 'text')
                          );
 
@@ -348,11 +368,12 @@ class Auth_Container_MDB2 extends Auth_Container
         $retVal = array();
 
         //Check if db_fields contains a *, if so assume all columns are selected
-        if (strstr($this->options['db_fields'], '*')) {
+        if (   is_string($this->options['db_fields'])
+            && strstr($this->options['db_fields'], '*')) {
             $sql_from = '*';
         } else {
-            $sql_from = $this->db->quoteIdentifier($this->options['usernamecol'], true).
-                ", ".$this->db->quoteIdentifier($this->options['passwordcol'], true);
+            $sql_from = $this->options['final_usernamecol'].
+                ", ".$this->options['final_passwordcol'];
 
             if (strlen($fields = $this->_quoteDBFields()) > 0) {
                 $sql_from .= ', '.$fields;
@@ -361,7 +382,7 @@ class Auth_Container_MDB2 extends Auth_Container
 
         $query = sprintf('SELECT %s FROM %s',
                          $sql_from,
-                         $this->db->quoteIdentifier($this->options['table'], true)
+                         $this->options['final_table']
                          );
 
         $res = $this->db->queryAll($query, null, MDB2_FETCHMODE_ASSOC);
@@ -413,15 +434,19 @@ class Auth_Container_MDB2 extends Auth_Container
 
         if (is_array($additional)) {
             foreach ($additional as $key => $value) {
-                $additional_key   .= ', ' . $this->db->quoteIdentifier($key, true);
+                if ($this->options['auto_quote']) {
+                    $additional_key   .= ', ' . $this->db->quoteIdentifier($key, true);
+                } else {
+                    $additional_key   .= ', ' . $key;
+                }
                 $additional_value .= ', ' . $this->db->quote($value, 'text');
             }
         }
 
         $query = sprintf("INSERT INTO %s (%s, %s%s) VALUES (%s, %s%s)",
-                         $this->db->quoteIdentifier($this->options['table'], true),
-                         $this->db->quoteIdentifier($this->options['usernamecol'], true),
-                         $this->db->quoteIdentifier($this->options['passwordcol'], true),
+                         $this->options['final_table'],
+                         $this->options['final_usernamecol'],
+                         $this->options['final_passwordcol'],
                          $additional_key,
                          $this->db->quote($username, 'text'),
                          $this->db->quote($password, 'text'),
@@ -456,8 +481,8 @@ class Auth_Container_MDB2 extends Auth_Container
         }
 
         $query = sprintf("DELETE FROM %s WHERE %s = %s",
-                         $this->db->quoteIdentifier($this->options['table'], true),
-                         $this->db->quoteIdentifier($this->options['usernamecol'], true),
+                         $this->options['final_table'],
+                         $this->options['final_usernamecol'],
                          $this->db->quote($username, 'text')
                          );
 
@@ -497,10 +522,10 @@ class Auth_Container_MDB2 extends Auth_Container
         $password = $cryptFunction($password);
 
         $query = sprintf("UPDATE %s SET %s = %s WHERE %s = %s",
-                         $this->db->quoteIdentifier($this->options['table'], true),
-                         $this->db->quoteIdentifier($this->options['passwordcol'], true),
+                         $this->options['final_table'],
+                         $this->options['final_passwordcol'],
                          $this->db->quote($password, 'text'),
-                         $this->db->quoteIdentifier($this->options['usernamecol'], true),
+                         $this->options['final_usernamecol'],
                          $this->db->quote($username, 'text')
                          );
 
