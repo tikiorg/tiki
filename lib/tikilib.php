@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.692 2006-12-28 11:16:38 mose Exp $
+// CVS: $Id: tikilib.php,v 1.693 2006-12-28 17:15:18 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -256,7 +256,7 @@ class TikiLib extends TikiDB {
 		$mid .= "`object`=?";
 		$bindvars[] = $object;
 	}
-	$query = "select * from `tiki_user_watches` where `event`=? and (".$mid.")";
+	$query = "select `user`,`email` from `tiki_user_watches` where `event`=? and (".$mid.")";
 	$result = $this->query($query,$bindvars);
 
 	if (!$result->numRows()) {
@@ -268,6 +268,13 @@ class TikiLib extends TikiDB {
                 case 'wiki_page_changed':
                     $res['perm']=($this->user_has_perm_on_object($res['user'],$object,'wiki page','tiki_p_view') ||
                                   $this->user_has_perm_on_object($res['user'],$object,'wiki page','tiki_p_admin_wiki'));
+                    break;
+                case 'tracker_modified':
+                    $res['perm'] = $this->user_has_perm_on_object($res['user'],$object,'tracker','tiki_p_view_tracker');
+                    break;
+                case 'tracker_item_modified':
+										global $trackerId;
+                    $res['perm'] = $this->user_has_perm_on_object($res['user'],$trackerId,'tracker','tiki_p_view_tracker');
                     break;
                 case 'blog_post':
                     $res['perm']=($this->user_has_perm_on_object($res['user'],$object,'blog','tiki_p_read_blog') ||

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.108 2006-12-15 00:19:50 fr_rodo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.109 2006-12-28 17:15:17 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -500,26 +500,19 @@ if ($tiki_p_admin_trackers == 'y' and isset($_REQUEST["remove"])) {
 $smarty->assign('mail_msg', '');
 $smarty->assign('email_mon', '');
 
-if ($user) {
-	if (isset($_REQUEST["monitor"])) {
+if ($feature_user_watches == 'y' and $tiki_p_watch_trackers == 'y') {
+	if ($user and isset($_REQUEST['watch'])) {
 		check_ticket('view-trackers');
-		$user_email = $userlib->get_user_email($user);
-		$emails = $notificationlib->get_mail_events('tracker_modified', $_REQUEST["trackerId"]);
-		if (in_array($user_email, $emails)) {
-			$notificationlib->remove_mail_event('tracker_modified', $_REQUEST["trackerId"], $user_email);
-			$mail_msg = tra('Your email address has been removed from the list of addresses monitoring this tracker');
+		if ($_REQUEST['watch'] == 'add') {
+			$tikilib->add_user_watch($user, 'tracker_modified', $_REQUEST["trackerId"], 'tracker', $tracker_info['name'],"tiki-view_tracker.php?trackerId=".$_REQUEST["trackerId"]); 
 		} else {
-			$notificationlib->add_mail_event('tracker_modified', $_REQUEST["trackerId"], $user_email);
-			$mail_msg = tra('Your email address has been added to the list of addresses monitoring this tracker');
+			$tikilib->remove_user_watch($user, 'tracker_modified', $_REQUEST["trackerId"]);
 		}
-		$smarty->assign('mail_msg', $mail_msg);
 	}
-	$user_email = $userlib->get_user_email($user);
-	$emails = $notificationlib->get_mail_events('tracker_modified', $_REQUEST["trackerId"]);
-	if (in_array($user_email, $emails)) {
-		$smarty->assign('email_mon', tra('Cancel monitoring'));
-	} else {
-		$smarty->assign('email_mon', tra('Monitor'));
+	$smarty->assign('user_watching_tracker', 'n');
+	$it = $tikilib->user_watches($user, 'tracker_modified', $_REQUEST['trackerId'], 'tracker');
+	if ($user and $tikilib->user_watches($user, 'tracker_modified', $_REQUEST['trackerId'], 'tracker')) {
+		$smarty->assign('user_watching_tracker', 'y');
 	}
 }
 
