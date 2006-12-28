@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.377 2006-12-28 18:00:12 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.378 2006-12-28 20:11:41 tombombadilom Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1422,7 +1422,7 @@ if ($feature_userPreferences == 'y') {
 	$style = $user_style;
 }
 
-if (!is_file("styles/$style") or !is_file("styles/$tikidomain/$style")) {
+if (!is_file("styles/$style") and !is_file("styles/$tikidomain/$style")) {
 	$style = 'tikineat.css';
 }
 if ($tikidomain and is_file("styles/$tikidomain/$style")) {
