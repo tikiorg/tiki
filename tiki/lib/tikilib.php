@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.691 2006-12-27 01:59:52 mose Exp $
+// CVS: $Id: tikilib.php,v 1.692 2006-12-28 11:16:38 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -226,15 +226,10 @@ class TikiLib extends TikiDB {
     }
 
     /*shared*/
-    function get_user_event_watches($user, $event, $object) {
-	/* don't look in the translation as this function is only for the eye buttom */
-	$query = "select * from `tiki_user_watches` where `user`=? and `event`=? and `object`=?";
-	$result = $this->query($query,array($user,$event,$object));
-	if (!$result->numRows())
-		return false;
-	$res = $result->fetchRow();
-	return $res;
-    }
+	function user_watches($user, $event, $object, $type) {
+		$query = "select count(*) from `tiki_user_watches` where `user`=? and `event`=? and `object`=? and `type`=?";
+		return $this->getOne($query,array($user,$event,$object,$type));
+	}
 
     /*shared*/
     function get_event_watches($event, $object) {

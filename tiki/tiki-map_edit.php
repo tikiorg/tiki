@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.22 2006-09-19 16:33:17 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.23 2006-12-28 11:16:38 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -270,7 +270,7 @@ if($feature_user_watches == 'y') {
  $user_watching_map = array();
  foreach ($files as $key => $value) {
 	  $user_watching_map[$key]='n';
-	  if($user && $watch = $tikilib->get_user_event_watches($user,'map_changed',$value)) { 
+	  if($user && $tikilib->user_watches($user,'map_changed',$value,'Map')) { 
 		  $user_watching_map[$key]='y';
 	  }
 	}
