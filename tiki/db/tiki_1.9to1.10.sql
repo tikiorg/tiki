@@ -1,4 +1,4 @@
-	# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.128 2006-12-27 03:07:42 mose Exp $
+	# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.129 2006-12-28 17:29:57 mose Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -711,5 +711,92 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 # mose 2006-12-27
 # this is a destructive action, but required because backups has been removed
 delete from tiki_menu_options where url='tiki-backup.php';
+
+# mose 2006-12-28
+# changing username max length
+ALTER TABLE tiki_newsreader_marks DROP PRIMARY KEY , ADD PRIMARY KEY (user(100),serverId,groupName(100));
+ALTER TABLE tiki_page_footnotes DROP PRIMARY KEY , ADD PRIMARY KEY (user(150),pageName(100));
+ALTER TABLE tiki_user_taken_quizzes DROP PRIMARY KEY , ADD PRIMARY KEY (user,quizId(50));
+ALTER TABLE tiki_user_votings DROP PRIMARY KEY , ADD PRIMARY KEY (user(100),id(100));
+ALTER TABLE tiki_user_watches DROP PRIMARY KEY ;
+ALTER TABLE tiki_user_watches change user user varchar(200) not null default '' ;
+ALTER TABLE tiki_user_watches ADD PRIMARY KEY (user(100),event,object(50));
+ALTER TABLE tiki_friends DROP PRIMARY KEY ;
+ALTER TABLE tiki_friends change user user varchar(200) not null default '';
+ALTER TABLE tiki_friends change friend friend varchar(200) not null default '';
+ALTER TABLE tiki_friends ADD PRIMARY KEY (user(120),friend(120));
+ALTER TABLE tiki_friendship_requests DROP PRIMARY KEY ;
+ALTER TABLE tiki_friendship_requests change userFrom userFrom varchar(200) not null default '';
+ALTER TABLE tiki_friendship_requests change userTo userTo varchar(200) not null default '' ;
+ALTER TABLE tiki_friendship_requests ADD PRIMARY KEY (userFrom(120),userTo(120));
+
+alter table users_users change login login varchar(200) not null default '';
+alter table tiki_wiki_attachments change user user varchar(200) not null default '';
+alter table tiki_webmail_messages change user user varchar(200) not null default '';
+alter table tiki_webmail_contacts change user user varchar(200) not null default '';
+alter table tiki_users change user user varchar(200) not null default '';
+alter table tiki_userpoints change user user varchar(200) not null default '';
+alter table tiki_userfiles change user user varchar(200) not null default '';
+alter table tiki_user_votings change user user varchar(200) not null default '';
+alter table tiki_user_tasks change user user varchar(200) not null default '';
+alter table tiki_user_taken_quizzes change user user varchar(200) not null default '';
+alter table tiki_user_quizzes change user user varchar(200) not null default '';
+alter table tiki_user_preferences change user user varchar(200) not null default '';
+alter table tiki_user_postings change user user varchar(200) not null default '';
+alter table tiki_user_notes change user user varchar(200) not null default '';
+alter table tiki_user_menus change user user varchar(200) not null default '';
+alter table tiki_user_mail_accounts change user user varchar(200) not null default '';
+alter table tiki_user_bookmarks_urls change user user varchar(200) not null default '';
+alter table tiki_user_bookmarks_folders change user user varchar(200) not null default '';
+alter table tiki_user_assigned_modules change user user varchar(200) not null default '';
+alter table tiki_tags change user user varchar(200) not null default '';
+alter table tiki_suggested_faq_questions change user user varchar(200) not null default '';
+alter table tiki_submissions change author author varchar(200) not null default '';
+alter table tiki_shoutbox change user user varchar(200) not null default '';
+alter table tiki_sessions change user user varchar(200) not null default '';
+alter table tiki_semaphores change user user varchar(200) not null default '';
+alter table tiki_pages change user user varchar(200) not null default '';
+alter table tiki_page_footnotes change user user varchar(200) not null default '';
+alter table tiki_newsreader_servers change user user varchar(200) not null default '';
+alter table tiki_newsreader_marks change user user varchar(200) not null default '';
+alter table tiki_minical_topics change user user varchar(200) not null default '';
+alter table tiki_minical_events change user user varchar(200) not null default '';
+alter table tiki_mailin_accounts change user user varchar(200) not null default '';
+alter table tiki_live_support_requests change user user varchar(200) not null default '';
+alter table tiki_live_support_operators change user user varchar(200) not null default '';
+alter table tiki_live_support_messages change user user varchar(200) not null default '';
+alter table tiki_images change user user varchar(200) not null default '';
+alter table tiki_history change user user varchar(200) not null default '';
+alter table tiki_galleries change user user varchar(200) not null default '';
+alter table tiki_forums_reported change user user varchar(200) not null default '';
+alter table tiki_forums_queue change user user varchar(200) not null default '';
+alter table tiki_forum_reads change user user varchar(200) not null default '';
+alter table tiki_files change user user varchar(200) not null default '';
+alter table tiki_files change lockedby lockedby varchar(200) not null default '';
+alter table tiki_file_galleries change user user varchar(200) not null default '';
+alter table tiki_drawings change user user varchar(200) not null default '';
+alter table tiki_copyrights change userName userName varchar(200) not null default '';
+alter table tiki_comments change userName userName varchar(200) not null default '';
+alter table tiki_charts_votes change user user varchar(200) not null default '';
+alter table tiki_calendars change user user varchar(200) not null default '';
+alter table tiki_calendar_roles change userName userName varchar(200) not null default '';
+alter table tiki_calendar_items change user user varchar(200) not null default '';
+alter table tiki_blogs change user user varchar(200) not null default '';
+alter table tiki_banning change user user varchar(200) not null default '';
+alter table tiki_actionlog change user user varchar(200) not null default '';
+alter table messu_messages change user user varchar(200) not null default '';
+alter table galaxia_workitems change user user varchar(200) not null default '';
+alter table galaxia_user_roles change user user varchar(200) not null default '';
+alter table galaxia_instance_comments change user user varchar(200) not null default '';
+alter table galaxia_instance_activities change user user varchar(200) not null default '';
+alter table tiki_freetagged_objects change user user varchar(200) not null default '';
+ 
+# fixes with key length
+ALTER TABLE tiki_theme_control_objects DROP PRIMARY KEY , ADD PRIMARY KEY (objId(100), type(100));
+
+
+
+
+
 
 

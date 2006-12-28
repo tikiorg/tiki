@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2006-12-27 03:07:42 $
+# $Date: 2006-12-28 17:29:57 $
 # $Author: mose $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -65,7 +65,7 @@ CREATE TABLE galaxia_instance_activities (
   activityId int(14) NOT NULL default '0',
   started int(14) NOT NULL default '0',
   ended int(14) NOT NULL default '0',
-  user varchar(40) default NULL,
+  user varchar(200) not null default '',
   status enum('running','completed') default NULL,
   PRIMARY KEY  (instanceId,activityId)
 ) TYPE=MyISAM;
@@ -82,7 +82,7 @@ DROP TABLE IF EXISTS galaxia_instance_comments;
 CREATE TABLE galaxia_instance_comments (
   cId int(14) NOT NULL auto_increment,
   instanceId int(14) NOT NULL default '0',
-  user varchar(40) default NULL,
+  user varchar(200) not null default '',
   activityId int(14) default NULL,
   hash varchar(34) default NULL,
   title varchar(250) default NULL,
@@ -182,7 +182,7 @@ DROP TABLE IF EXISTS galaxia_user_roles;
 CREATE TABLE galaxia_user_roles (
   pId int(14) NOT NULL default '0',
   roleId int(14) NOT NULL auto_increment,
-  user varchar(40) NOT NULL default '',
+  user varchar(200) NOT NULL default '',
   PRIMARY KEY  (roleId,user)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -203,7 +203,7 @@ CREATE TABLE galaxia_workitems (
   properties longblob,
   started int(14) default NULL,
   ended int(14) default NULL,
-  user varchar(40) default NULL,
+  user varchar(200) not null default '',
   PRIMARY KEY  (itemId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -218,7 +218,7 @@ CREATE TABLE galaxia_workitems (
 DROP TABLE IF EXISTS messu_messages;
 CREATE TABLE messu_messages (
   msgId int(14) NOT NULL auto_increment,
-  user varchar(40) NOT NULL default '',
+  user varchar(200) NOT NULL default '',
   user_from varchar(200) NOT NULL default '',
   user_to text,
   user_cc text,
@@ -318,7 +318,7 @@ CREATE TABLE tiki_actionlog (
   lastModif int(14) default NULL,
   object varchar(255) default NULL,
   objectType varchar(32) NOT NULL default '',
-  user varchar(40) default NULL,
+  user varchar(200) not null default '',
   ip varchar(15) default NULL,
   comment varchar(200) default NULL,
   categId int(12) NOT NULL default '0',
@@ -474,7 +474,7 @@ CREATE TABLE tiki_banning (
   ip2 char(3) default NULL,
   ip3 char(3) default NULL,
   ip4 char(3) default NULL,
-  user varchar(40) default NULL,
+  user varchar(200) not null default '',
   date_from timestamp(14) NOT NULL,
   date_to timestamp(14) NOT NULL,
   use_dates char(1) default NULL,
@@ -577,7 +577,7 @@ CREATE TABLE tiki_blogs (
   lastModif int(14) default NULL,
   title varchar(200) default NULL,
   description text,
-  user varchar(40) default NULL,
+  user varchar(200) not null default '',
   public char(1) default NULL,
   posts int(8) default NULL,
   maxPosts int(8) default NULL,
@@ -637,7 +637,7 @@ CREATE TABLE tiki_calendar_items (
   lang char(16) NOT NULL default 'en',
   name varchar(255) NOT NULL default '',
   description blob,
-  user varchar(40) default NULL,
+  user varchar(200) not null default '',
   created int(14) NOT NULL default '0',
   lastmodif int(14) NOT NULL default '0',
   PRIMARY KEY  (calitemId),
@@ -673,7 +673,7 @@ CREATE TABLE tiki_calendar_locations (
 DROP TABLE IF EXISTS tiki_calendar_roles;
 CREATE TABLE tiki_calendar_roles (
   calitemId int(14) NOT NULL default '0',
-  username varchar(40) NOT NULL default '',
+  username varchar(200) NOT NULL default '',
   role enum('0','1','2','3','6') NOT NULL default '0',
   PRIMARY KEY  (calitemId,username(16),role)
 ) TYPE=MyISAM;
@@ -691,7 +691,7 @@ CREATE TABLE tiki_calendars (
   calendarId int(14) NOT NULL auto_increment,
   name varchar(80) NOT NULL default '',
   description varchar(255) default NULL,
-  user varchar(40) NOT NULL default '',
+  user varchar(200) NOT NULL default '',
   customlocations enum('n','y') NOT NULL default 'n',
   customcategories enum('n','y') NOT NULL default 'n',
   customlanguages enum('n','y') NOT NULL default 'n',
@@ -892,7 +892,7 @@ CREATE TABLE tiki_charts_rankings (
 
 DROP TABLE IF EXISTS tiki_charts_votes;
 CREATE TABLE tiki_charts_votes (
-  user varchar(40) NOT NULL default '',
+  user varchar(200) NOT NULL default '',
   itemId int(14) NOT NULL default '0',
   timestamp int(14) default NULL,
   chartId int(14) default NULL,
@@ -969,7 +969,7 @@ CREATE TABLE tiki_comments (
   object varchar(255) NOT NULL default '',
   objectType varchar(32) NOT NULL default '',
   parentId int(14) default NULL,
-  userName varchar(40) default NULL,
+  userName varchar(200) NOT NULL default '',
   commentDate int(14) default NULL,
   hits int(8) default NULL,
   type char(1) default NULL,
@@ -1074,7 +1074,7 @@ CREATE TABLE tiki_copyrights (
   year int(11) default NULL,
   authors varchar(200) default NULL,
   copyright_order int(11) default NULL,
-  userName varchar(40) default NULL,
+  userName varchar(200) not null default '',
   PRIMARY KEY  (copyrightId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -1158,7 +1158,7 @@ CREATE TABLE tiki_drawings (
   filename_draw varchar(250) default NULL,
   filename_pad varchar(250) default NULL,
   timestamp int(14) default NULL,
-  user varchar(40) default NULL,
+  user varchar(200) not null default '',
   PRIMARY KEY  (drawId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -1307,7 +1307,7 @@ CREATE TABLE tiki_file_galleries (
   created int(14) default NULL,
   visible char(1) default NULL,
   lastModif int(14) default NULL,
-  user varchar(40) default NULL,
+  user varchar(200) NOT NULL default '',
   hits int(14) default NULL,
   votes int(8) default NULL,
   points decimal(8,2) default NULL,
@@ -1350,7 +1350,7 @@ CREATE TABLE tiki_files (
   filesize int(14) default NULL,
   filetype varchar(250) default NULL,
   data longblob,
-  user varchar(40) default NULL,
+  user varchar(200) not null default '',
   author varchar(40) default NULL,
   downloads int(14) default NULL,
   votes int(8) default NULL,
@@ -1362,7 +1362,7 @@ CREATE TABLE tiki_files (
   search_data longtext,
   lastModif integer(14) DEFAULT NULL,
   lastModifUser varchar(200) DEFAULT NULL,
-  lockedby varchar(40) default NULL,
+  lockedby varchar(200) NOT NULL default '',
   comment varchar(200) default NULL,
   archiveId int(14) default 0,
   PRIMARY KEY  (fileId),
@@ -1409,7 +1409,7 @@ CREATE TABLE tiki_forum_attachments (
 
 DROP TABLE IF EXISTS tiki_forum_reads;
 CREATE TABLE tiki_forum_reads (
-  user varchar(40) NOT NULL default '',
+  user varchar(200) NOT NULL default '',
   threadId int(14) NOT NULL default '0',
   forumId int(14) default NULL,
   timestamp int(14) default NULL,
@@ -1498,7 +1498,7 @@ CREATE TABLE tiki_forums_queue (
   parentId int(14) default NULL,
   forumId int(14) default NULL,
   timestamp int(14) default NULL,
-  user varchar(40) default NULL,
+  user varchar(200) not null default '',
   title varchar(240) default NULL,
   data text,
   type varchar(60) default NULL,
@@ -1522,7 +1522,7 @@ CREATE TABLE tiki_forums_reported (
   threadId int(12) NOT NULL default '0',
   forumId int(12) NOT NULL default '0',
   parentId int(12) NOT NULL default '0',
-  user varchar(40) default NULL,
+  user varchar(200) NOT NULL default '',
   timestamp int(14) default NULL,
   reason varchar(250) default NULL,
   PRIMARY KEY  (threadId)
@@ -1547,7 +1547,7 @@ CREATE TABLE tiki_galleries (
   visible char(1) default NULL,
   geographic char(1) default NULL,
   theme varchar(60) default NULL,
-  user varchar(40) default NULL,
+  user varchar(200) NOT NULL default '',
   hits int(14) default NULL,
   maxRows int(10) default NULL,
   rowImages int(10) default NULL,
@@ -1638,7 +1638,7 @@ CREATE TABLE tiki_history (
   version_minor int(8) NOT NULL default '0',
   lastModif int(14) default NULL,
   description varchar(200) default NULL,
-  user varchar(40) default NULL,
+  user varchar(200) not null default '',
   ip varchar(15) default NULL,
   comment varchar(200) default NULL,
   data longblob,
@@ -1715,7 +1715,7 @@ CREATE TABLE tiki_images (
   lon float default NULL,
   lat float default NULL,
   created int(14) default NULL,
-  user varchar(40) default NULL,
+  user varchar(200) not null default '',
   hits int(14) default NULL,
   path varchar(255) default NULL,
   PRIMARY KEY  (imageId),
@@ -1869,7 +1869,7 @@ CREATE TABLE tiki_live_support_messages (
   msgId int(12) NOT NULL auto_increment,
   data text,
   timestamp int(14) default NULL,
-  user varchar(40) default NULL,
+  user varchar(200) not null default '',
   username varchar(200) default NULL,
   priority int(2) default NULL,
   status char(1) default NULL,
@@ -1914,7 +1914,7 @@ INSERT INTO tiki_live_support_modules(name) VALUES('charts');
 
 DROP TABLE IF EXISTS tiki_live_support_operators;
 CREATE TABLE tiki_live_support_operators (
-  user varchar(40) NOT NULL default '',
+  user varchar(200) NOT NULL default '',
   accepted_requests int(10) default NULL,
   status varchar(20) default NULL,
   longest_chat int(10) default NULL,
@@ -1939,7 +1939,7 @@ CREATE TABLE tiki_live_support_operators (
 DROP TABLE IF EXISTS tiki_live_support_requests;
 CREATE TABLE tiki_live_support_requests (
   reqId varchar(32) NOT NULL default '',
-  user varchar(40) default NULL,
+  user varchar(200) NOT NULL default '',
   tiki_user varchar(200) default NULL,
   email varchar(200) default NULL,
   operator varchar(200) default NULL,
@@ -1957,7 +1957,7 @@ CREATE TABLE tiki_live_support_requests (
 # --------------------------------------------------------
 
 #
-# Table structure for table tiki_live_support_requests
+# Table structure for table tiki_logs
 #
 # Creation: Jul 03, 2003 at 07:42 PM
 # Last update: Jul 03, 2003 at 07:42 PM
@@ -2003,7 +2003,7 @@ CREATE TABLE tiki_mail_events (
 DROP TABLE IF EXISTS tiki_mailin_accounts;
 CREATE TABLE tiki_mailin_accounts (
   accountId int(12) NOT NULL auto_increment,
-  user varchar(40) NOT NULL default '',
+  user varchar(200) NOT NULL default '',
   account varchar(50) NOT NULL default '',
   pop varchar(255) default NULL,
   port int(4) default NULL,
@@ -2301,7 +2301,7 @@ INSERT INTO tiki_menus (menuId,name,description,type) VALUES ('42','Application 
 
 DROP TABLE IF EXISTS tiki_minical_events;
 CREATE TABLE tiki_minical_events (
-  user varchar(40) default NULL,
+  user varchar(200) not null default '',
   eventId int(12) NOT NULL auto_increment,
   title varchar(250) default NULL,
   description text,
@@ -2324,7 +2324,7 @@ CREATE TABLE tiki_minical_events (
 
 DROP TABLE IF EXISTS tiki_minical_topics;
 CREATE TABLE tiki_minical_topics (
-  user varchar(40) default NULL,
+  user varchar(200) not null default '',
   topicId int(12) NOT NULL auto_increment,
   name varchar(250) default NULL,
   filename varchar(200) default NULL,
@@ -2434,11 +2434,11 @@ CREATE TABLE tiki_newsletters (
 
 DROP TABLE IF EXISTS tiki_newsreader_marks;
 CREATE TABLE tiki_newsreader_marks (
-  user varchar(40) NOT NULL default '',
+  user varchar(200) NOT NULL default '',
   serverId int(12) NOT NULL default '0',
   groupName varchar(255) NOT NULL default '',
   timestamp int(14) NOT NULL default '0',
-  PRIMARY KEY  (user,serverId,groupName(100))
+  PRIMARY KEY  (user(100),serverId,groupName(100))
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -2451,7 +2451,7 @@ CREATE TABLE tiki_newsreader_marks (
 
 DROP TABLE IF EXISTS tiki_newsreader_servers;
 CREATE TABLE tiki_newsreader_servers (
-  user varchar(40) NOT NULL default '',
+  user varchar(200) NOT NULL default '',
   serverId int(12) NOT NULL auto_increment,
   server varchar(250) default NULL,
   port int(4) default NULL,
@@ -2471,10 +2471,10 @@ CREATE TABLE tiki_newsreader_servers (
 
 DROP TABLE IF EXISTS tiki_page_footnotes;
 CREATE TABLE tiki_page_footnotes (
-  user varchar(40) NOT NULL default '',
+  user varchar(200) NOT NULL default '',
   pageName varchar(250) NOT NULL default '',
   data text,
-  PRIMARY KEY  (user,pageName(100))
+  PRIMARY KEY  (user(150),pageName(100))
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -2496,7 +2496,7 @@ CREATE TABLE tiki_pages (
   lastModif int(14) default NULL,
   comment varchar(200) default NULL,
   version int(8) NOT NULL default '0',
-  user varchar(40) default NULL,
+  user varchar(200) NOT NULL default '',
   ip varchar(15) default NULL,
   flag char(1) default NULL,
   points int(8) default NULL,
@@ -2994,7 +2994,7 @@ DROP TABLE IF EXISTS tiki_semaphores;
 CREATE TABLE tiki_semaphores (
   semName varchar(250) NOT NULL default '',
   objectType varchar(20) default 'wiki page',
-  user varchar(40) default NULL,
+  user varchar(200) default NULL,
   timestamp int(14) default NULL,
   PRIMARY KEY  (semName)
 ) TYPE=MyISAM;
@@ -3045,7 +3045,7 @@ CREATE TABLE tiki_sent_newsletters_errors (
 DROP TABLE IF EXISTS tiki_sessions;
 CREATE TABLE tiki_sessions (
   sessionId varchar(32) NOT NULL default '',
-  user varchar(40) default NULL,
+  user varchar(200) default NULL,
   timestamp int(14) default NULL,
   tikihost varchar(200) default NULL,
   PRIMARY KEY  (sessionId)
@@ -3102,7 +3102,7 @@ CREATE TABLE tiki_shoutbox (
   msgId int(10) NOT NULL auto_increment,
   message varchar(255) default NULL,
   timestamp int(14) default NULL,
-  user varchar(40) default NULL,
+  user varchar(200) default NULL,
   hash varchar(32) default NULL,
   PRIMARY KEY  (msgId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
@@ -3217,7 +3217,7 @@ CREATE TABLE tiki_suggested_faq_questions (
   question text,
   answer text,
   created int(14) default NULL,
-  user varchar(40) default NULL,
+  user varchar(200) default NULL,
   PRIMARY KEY  (sfqId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -3298,7 +3298,7 @@ CREATE TABLE tiki_tags (
   lastModif int(14) default NULL,
   comment varchar(200) default NULL,
   version int(8) NOT NULL default '0',
-  user varchar(40) default NULL,
+  user varchar(200) default NULL,
   ip varchar(15) default NULL,
   flag char(1) default NULL,
   PRIMARY KEY  (tagName,pageName)
@@ -3333,7 +3333,7 @@ CREATE TABLE tiki_theme_control_objects (
   type varchar(250) NOT NULL default '',
   name varchar(250) NOT NULL default '',
   theme varchar(250) NOT NULL default '',
-  PRIMARY KEY  (objId, type)
+  PRIMARY KEY  (objId(100), type(100))
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -3595,7 +3595,7 @@ CREATE TABLE tiki_user_assigned_modules (
   position char(1) default NULL,
   ord int(4) default NULL,
   type char(1) default NULL,
-  user varchar(40) NOT NULL default '',
+  user varchar(200) NOT NULL default '',
   PRIMARY KEY  (name(30),user,position)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
@@ -3611,7 +3611,7 @@ DROP TABLE IF EXISTS tiki_user_bookmarks_folders;
 CREATE TABLE tiki_user_bookmarks_folders (
   folderId int(12) NOT NULL auto_increment,
   parentId int(12) default NULL,
-  user varchar(40) NOT NULL default '',
+  user varchar(200) NOT NULL default '',
   name varchar(30) default NULL,
   PRIMARY KEY  (user,folderId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
@@ -3632,7 +3632,7 @@ CREATE TABLE tiki_user_bookmarks_urls (
   data longblob,
   lastUpdated int(14) default NULL,
   folderId int(12) NOT NULL default '0',
-  user varchar(40) NOT NULL default '',
+  user varchar(200) NOT NULL default '',
   PRIMARY KEY  (urlId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -3647,7 +3647,7 @@ CREATE TABLE tiki_user_bookmarks_urls (
 DROP TABLE IF EXISTS tiki_user_mail_accounts;
 CREATE TABLE tiki_user_mail_accounts (
   accountId int(12) NOT NULL auto_increment,
-  user varchar(40) NOT NULL default '',
+  user varchar(200) NOT NULL default '',
   account varchar(50) NOT NULL default '',
   pop varchar(255) default NULL,
   current char(1) default NULL,
@@ -3671,7 +3671,7 @@ CREATE TABLE tiki_user_mail_accounts (
 
 DROP TABLE IF EXISTS tiki_user_menus;
 CREATE TABLE tiki_user_menus (
-  user varchar(40) NOT NULL default '',
+  user varchar(200) NOT NULL default '',
   menuId int(12) NOT NULL auto_increment,
   url varchar(250) default NULL,
   name varchar(40) default NULL,
@@ -3708,7 +3708,7 @@ INSERT INTO tiki_user_modules (name, title, data, parse) VALUES ('mnu_applicatio
 
 DROP TABLE IF EXISTS tiki_user_notes;
 CREATE TABLE tiki_user_notes (
-  user varchar(40) NOT NULL default '',
+  user varchar(200) NOT NULL default '',
   noteId int(12) NOT NULL auto_increment,
   created int(14) default NULL,
   name varchar(255) default NULL,
@@ -3729,7 +3729,7 @@ CREATE TABLE tiki_user_notes (
 
 DROP TABLE IF EXISTS tiki_user_postings;
 CREATE TABLE tiki_user_postings (
-  user varchar(40) NOT NULL default '',
+  user varchar(200) NOT NULL default '',
   posts int(12) default NULL,
   last int(14) default NULL,
   first int(14) default NULL,
@@ -3747,7 +3747,7 @@ CREATE TABLE tiki_user_postings (
 
 DROP TABLE IF EXISTS tiki_user_preferences;
 CREATE TABLE tiki_user_preferences (
-  user varchar(40) NOT NULL default '',
+  user varchar(200) NOT NULL default '',
   prefName varchar(40) NOT NULL default '',
   value varchar(250) default NULL,
   PRIMARY KEY  (user,prefName)
@@ -3763,7 +3763,7 @@ CREATE TABLE tiki_user_preferences (
 
 DROP TABLE IF EXISTS tiki_user_quizzes;
 CREATE TABLE tiki_user_quizzes (
-  user varchar(40) default NULL,
+  user varchar(200) NOT NULL default '',
   quizId int(10) default NULL,
   timestamp int(14) default NULL,
   timeTaken int(14) default NULL,
@@ -3784,9 +3784,9 @@ CREATE TABLE tiki_user_quizzes (
 
 DROP TABLE IF EXISTS tiki_user_taken_quizzes;
 CREATE TABLE tiki_user_taken_quizzes (
-  user varchar(40) NOT NULL default '',
+  user varchar(200) NOT NULL default '',
   quizId varchar(255) NOT NULL default '',
-  PRIMARY KEY  (user,quizId(100))
+  PRIMARY KEY  (user,quizId(50))
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -3830,7 +3830,7 @@ DROP TABLE IF EXISTS tiki_user_tasks;
 CREATE TABLE tiki_user_tasks (
   taskId integer(14) NOT NULL auto_increment,        -- task id
   last_version integer(4) NOT NULL DEFAULT 0,        -- last version of the task starting with 0
-  user varchar(40) NOT NULL DEFAULT '',              -- task user
+  user varchar(200) NOT NULL DEFAULT '',              -- task user
   creator varchar(200) NOT NULL,                     -- username of creator
   public_for_group varchar(30) DEFAULT NULL,         -- this group can also view the task, if it is null it is not public
   rights_by_creator char(1) DEFAULT NULL,            -- null the user can delete the task, 
@@ -3854,10 +3854,10 @@ CREATE TABLE tiki_user_tasks (
 
 DROP TABLE IF EXISTS tiki_user_votings;
 CREATE TABLE tiki_user_votings (
-  user varchar(40) NOT NULL default '',
+  user varchar(200) NOT NULL default '',
   id varchar(255) NOT NULL default '',
   optionId int(10) NOT NULL default 0,
-  PRIMARY KEY  (user,id(100))
+  PRIMARY KEY  (user(100),id(100))
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -3870,7 +3870,7 @@ CREATE TABLE tiki_user_votings (
 
 DROP TABLE IF EXISTS tiki_user_watches;
 CREATE TABLE tiki_user_watches (
-  user varchar(40) NOT NULL default '',
+  user varchar(200) NOT NULL default '',
   event varchar(40) NOT NULL default '',
   object varchar(200) NOT NULL default '',
   hash varchar(32) default NULL,
@@ -3878,7 +3878,7 @@ CREATE TABLE tiki_user_watches (
   type varchar(200) default NULL,
   url varchar(250) default NULL,
   email varchar(200) default NULL,
-  PRIMARY KEY  (user,event,object(100))
+  PRIMARY KEY  (user(100),event,object(100))
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -3891,7 +3891,7 @@ CREATE TABLE tiki_user_watches (
 
 DROP TABLE IF EXISTS tiki_userfiles;
 CREATE TABLE tiki_userfiles (
-  user varchar(40) NOT NULL default '',
+  user varchar(200) NOT NULL default '',
   fileId int(12) NOT NULL auto_increment,
   name varchar(200) default NULL,
   filename varchar(200) default NULL,
@@ -3915,7 +3915,7 @@ CREATE TABLE tiki_userfiles (
 
 DROP TABLE IF EXISTS tiki_userpoints;
 CREATE TABLE tiki_userpoints (
-  user varchar(40) default NULL,
+  user varchar(200) default NULL,
   points decimal(8,2) default NULL,
   voted int(8) default NULL
 ) TYPE=MyISAM;
@@ -3930,7 +3930,7 @@ CREATE TABLE tiki_userpoints (
 
 DROP TABLE IF EXISTS tiki_users;
 CREATE TABLE tiki_users (
-  user varchar(40) NOT NULL default '',
+  user varchar(200) NOT NULL default '',
   password varchar(40) default NULL,
   email varchar(200) default NULL,
   lastLogin int(14) default NULL,
@@ -3952,7 +3952,7 @@ CREATE TABLE tiki_webmail_contacts (
   lastName varchar(80) default NULL,
   email varchar(250) default NULL,
   nickname varchar(200) default NULL,
-  user varchar(40) NOT NULL default '',
+  user varchar(200) NOT NULL default '',
   PRIMARY KEY  (contactId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -3976,7 +3976,7 @@ DROP TABLE IF EXISTS tiki_webmail_messages;
 CREATE TABLE tiki_webmail_messages (
   accountId int(12) NOT NULL default '0',
   mailId varchar(255) NOT NULL default '',
-  user varchar(40) NOT NULL default '',
+  user varchar(200) NOT NULL default '',
   isRead char(1) default NULL,
   isReplied char(1) default NULL,
   isFlagged char(1) default NULL,
@@ -3998,7 +3998,7 @@ CREATE TABLE tiki_wiki_attachments (
   filename varchar(80) default NULL,
   filetype varchar(80) default NULL,
   filesize int(14) default NULL,
-  user varchar(40) default NULL,
+  user varchar(200) default NULL,
   data longblob,
   path varchar(255) default NULL,
   downloads int(10) default NULL,
@@ -4338,7 +4338,7 @@ DROP TABLE IF EXISTS users_users;
 CREATE TABLE users_users (
   userId int(8) NOT NULL auto_increment,
   email varchar(200) default NULL,
-  login varchar(40) NOT NULL default '',
+  login varchar(200) NOT NULL default '',
   password varchar(30) default '',
   provpass varchar(30) default NULL,
   default_group varchar(255),
@@ -4631,17 +4631,17 @@ CREATE TABLE tiki_translated_objects (
 
 DROP TABLE IF EXISTS tiki_friends;
 CREATE TABLE tiki_friends (
-  user char(40) NOT NULL default '',
-  friend char(40) NOT NULL default '',
-  PRIMARY KEY  (user,friend)
+  user char(200) NOT NULL default '',
+  friend char(200) NOT NULL default '',
+  PRIMARY KEY  (user(120),friend(120))
 ) TYPE=MyISAM;
 
 DROP TABLE IF EXISTS tiki_friendship_requests;
 CREATE TABLE tiki_friendship_requests (
-  userFrom char(40) NOT NULL default '',
-  userTo char(40) NOT NULL default '',
+  userFrom char(200) NOT NULL default '',
+  userTo char(200) NOT NULL default '',
   tstamp timestamp(14) NOT NULL,
-  PRIMARY KEY  (userFrom,userTo)
+  PRIMARY KEY  (userFrom(120),userTo(120))
 ) TYPE=MyISAM;
 
 DROP TABLE IF EXISTS tiki_score;
@@ -4686,7 +4686,7 @@ INSERT INTO tiki_score (event, score, expiration) VALUES ('wiki_attach_file',3,0
 
 DROP TABLE IF EXISTS tiki_users_score;
 CREATE TABLE tiki_users_score (
-  user char(40) NOT NULL default '',
+  user char(200) NOT NULL default '',
   event_id char(40) NOT NULL default '',
   expire int(14) NOT NULL default '0',
   tstamp timestamp(14) NOT NULL,
@@ -4719,13 +4719,13 @@ CREATE TABLE tiki_file_handlers (
 # Last update: Aug 04, 2005 at 05:59 PM
 #
 
-DROP TABLE IF EXISTS `tiki_stats`;
-CREATE TABLE `tiki_stats` (
-  `object` varchar(255) NOT NULL default '',
-  `type` varchar(20) NOT NULL default '',
-  `day` int(14) NOT NULL default '0',
-  `hits` int(14) NOT NULL default '0',
-  PRIMARY KEY  (`object`,`type`,`day`)
+DROP TABLE IF EXISTS tiki_stats;
+CREATE TABLE tiki_stats (
+  object varchar(255) NOT NULL default '',
+  type varchar(20) NOT NULL default '',
+  day int(14) NOT NULL default '0',
+  hits int(14) NOT NULL default '0',
+  PRIMARY KEY  (object(200),type,day)
 ) TYPE=MyISAM;
 
 #
@@ -4735,83 +4735,83 @@ CREATE TABLE `tiki_stats` (
 # Last update: Sep 31, 2005 at 12:29 PM - mdavey
 #
 
-DROP TABLE IF EXISTS `tiki_events`;
-CREATE TABLE `tiki_events` (
-  `callback_type` int(1) NOT NULL default '3',
-  `order` int(2) NOT NULL default '50',
-  `event` varchar(200) NOT NULL default '',
-  `file` varchar(200) NOT NULL default '',  
-  `object` varchar(200) NOT NULL default '',
-  `method` varchar(200) NOT NULL default '',
-  PRIMARY KEY  (`callback_type`,`order`)
+DROP TABLE IF EXISTS tiki_events;
+CREATE TABLE tiki_events (
+  callback_type int(1) NOT NULL default '3',
+  order int(2) NOT NULL default '50',
+  event varchar(200) NOT NULL default '',
+  file varchar(200) NOT NULL default '',  
+  object varchar(200) NOT NULL default '',
+  method varchar(200) NOT NULL default '',
+  PRIMARY KEY  (callback_type,order)
 ) TYPE=MyISAM;
 
-INSERT IGNORE INTO tiki_events(`callback_type`,`order`,`event`,`file`,`object`,`method`) VALUES ('1', '20', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikiwiki_setup_custom_fields');
-INSERT IGNORE INTO tiki_events(`event`,`file`,`object`,`method`) VALUES ('user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikiwiki_save_registration');
-INSERT IGNORE INTO tiki_events(`callback_type`,`order`,`event`,`file`,`object`,`method`) VALUES ('5', '20', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_logslib_user_registers');
-INSERT IGNORE INTO tiki_events(`callback_type`,`order`,`event`,`file`,`object`,`method`) VALUES ('5', '25', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikiwiki_send_email');
-INSERT IGNORE INTO tiki_events(`callback_type`,`order`,`event`,`file`,`object`,`method`) VALUES ('5', '30', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikimail_user_registers');
+INSERT IGNORE INTO tiki_events(callback_type,order,event,file,object,method) VALUES ('1', '20', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikiwiki_setup_custom_fields');
+INSERT IGNORE INTO tiki_events(event,file,object,method) VALUES ('user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikiwiki_save_registration');
+INSERT IGNORE INTO tiki_events(callback_type,order,event,file,object,method) VALUES ('5', '20', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_logslib_user_registers');
+INSERT IGNORE INTO tiki_events(callback_type,order,event,file,object,method) VALUES ('5', '25', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikiwiki_send_email');
+INSERT IGNORE INTO tiki_events(callback_type,order,event,file,object,method) VALUES ('5', '30', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikimail_user_registers');
 
 #
-# Table structure for table `tiki_registration_fields`
+# Table structure for table tiki_registration_fields
 #
 # Creation: Aug 31, 2005 at 12:57 PM - mdavey
 # Last update: Aug 31, 2005 at 12:57 PM - mdavey
 # 
 
-DROP TABLE IF EXISTS `tiki_registration_fields`;
-CREATE TABLE `tiki_registration_fields` (
-  `id` int(11) NOT NULL auto_increment,
-  `field` varchar(255) NOT NULL default '',
-  `name` varchar(255) default NULL,
-  `type` varchar(255) NOT NULL default 'text',
-  `show` tinyint(1) NOT NULL default '0',
-  `size` varchar(10) default '10',
-  PRIMARY KEY  (`id`)
+DROP TABLE IF EXISTS tiki_registration_fields;
+CREATE TABLE tiki_registration_fields (
+  id int(11) NOT NULL auto_increment,
+  field varchar(255) NOT NULL default '',
+  name varchar(255) default NULL,
+  type varchar(255) NOT NULL default 'text',
+  show tinyint(1) NOT NULL default '0',
+  size varchar(10) default '10',
+  PRIMARY KEY  (id)
 ) TYPE=MyISAM;
 
-DROP TABLE IF EXISTS `tiki_actionlog_conf`;
-CREATE TABLE `tiki_actionlog_conf` (
- `action` varchar(32) NOT NULL default '',
- `objectType`varchar(32) NOT NULL default '',
- `status` char(1) default '',
-PRIMARY KEY (`action`, `objectType`)
+DROP TABLE IF EXISTS tiki_actionlog_conf;
+CREATE TABLE tiki_actionlog_conf (
+ action varchar(32) NOT NULL default '',
+ objectTypevarchar(32) NOT NULL default '',
+ status char(1) default '',
+PRIMARY KEY (action, objectType)
 ) TYPE=MyISAM;
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Created', 'wiki page', 'y');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Updated', 'wiki page', 'y');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Removed', 'wiki page', 'y');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Viewed', 'wiki page', 'n');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Viewed', 'forum', 'n');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Posted', 'forum', 'n');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Replied', 'forum', 'n');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Updated', 'forum', 'n');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Viewed', 'file gallery', 'n');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Viewed', 'image gallery', 'n');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Uploaded', 'file gallery', 'n');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Uploaded', 'image gallery', 'n');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Downloaded', 'file gallery', 'n');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('*', 'category', 'n');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('*', 'login', 'n');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Posted', 'message', 'n');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Replied', 'message', 'n');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Viewed', 'message', 'n');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Removed version', 'wiki page', 'n');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Removed last version', 'wiki page', 'n');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Rollback', 'wiki page', 'n');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Removed', 'forum', 'n');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Posted', 'comment', 'n');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Replied', 'comment', 'n');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Updated', 'comment', 'n');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Removed', 'comment', 'n');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Renamed', 'wiki page', 'n');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Created', 'sheet', 'n');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Updated', 'sheet', 'n');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Removed', 'sheet', 'n');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Viewed', 'sheet', 'n');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Viewed', 'blog', 'n');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Posted', 'blog', 'n');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Updated', 'blog', 'n');
-INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Removed', 'blog', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Created', 'wiki page', 'y');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Updated', 'wiki page', 'y');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Removed', 'wiki page', 'y');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Viewed', 'wiki page', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Viewed', 'forum', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Posted', 'forum', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Replied', 'forum', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Updated', 'forum', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Viewed', 'file gallery', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Viewed', 'image gallery', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Uploaded', 'file gallery', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Uploaded', 'image gallery', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Downloaded', 'file gallery', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('*', 'category', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('*', 'login', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Posted', 'message', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Replied', 'message', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Viewed', 'message', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Removed version', 'wiki page', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Removed last version', 'wiki page', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Rollback', 'wiki page', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Removed', 'forum', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Posted', 'comment', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Replied', 'comment', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Updated', 'comment', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Removed', 'comment', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Renamed', 'wiki page', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Created', 'sheet', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Updated', 'sheet', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Removed', 'sheet', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Viewed', 'sheet', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Viewed', 'blog', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Posted', 'blog', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Updated', 'blog', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Removed', 'blog', 'n');
 # --------------------------------------------------------
 
 
@@ -4821,39 +4821,39 @@ INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUE
 # Last update: Out 16, 2005 - batawata
 # 
 
-DROP TABLE IF EXISTS `tiki_freetags`;
-CREATE TABLE `tiki_freetags` (
-  `tagId` int(10) unsigned NOT NULL auto_increment,
-  `tag` varchar(30) NOT NULL default '',
-  `raw_tag` varchar(50) NOT NULL default '',
-  PRIMARY KEY  (`tagId`)
+DROP TABLE IF EXISTS tiki_freetags;
+CREATE TABLE tiki_freetags (
+  tagId int(10) unsigned NOT NULL auto_increment,
+  tag varchar(30) NOT NULL default '',
+  raw_tag varchar(50) NOT NULL default '',
+  PRIMARY KEY  (tagId)
 ) TYPE=MyISAM;
 
-DROP TABLE IF EXISTS `tiki_freetagged_objects`;
-CREATE TABLE `tiki_freetagged_objects` (
-  `tagId` int(12) NOT NULL auto_increment,
-  `objectId` int(11) NOT NULL default 0,
-  `user` varchar(40) NOT NULL default '',
-  `created` int(14) NOT NULL default '0',
-  PRIMARY KEY  (`tagId`,`user`,`objectId`),
-  KEY (`tagId`),
-  KEY (`user`),
-  KEY (`objectId`)
+DROP TABLE IF EXISTS tiki_freetagged_objects;
+CREATE TABLE tiki_freetagged_objects (
+  tagId int(12) NOT NULL auto_increment,
+  objectId int(11) NOT NULL default 0,
+  user varchar(200) NOT NULL default '',
+  created int(14) NOT NULL default '0',
+  PRIMARY KEY  (tagId,user,objectId),
+  KEY (tagId),
+  KEY (user),
+  KEY (objectId)
 ) TYPE=MyISAM;
 
 
-DROP TABLE IF EXISTS `tiki_contributions`;
-CREATE TABLE `tiki_contributions` (
-  `contributionId` int(12) NOT NULL auto_increment,
-  `name` varchar(100) default NULL,
-  `description` varchar(250) default NULL,
-  PRIMARY KEY  (`contributionId`)
+DROP TABLE IF EXISTS tiki_contributions;
+CREATE TABLE tiki_contributions (
+  contributionId int(12) NOT NULL auto_increment,
+  name varchar(100) default NULL,
+  description varchar(250) default NULL,
+  PRIMARY KEY  (contributionId)
 ) TYPE=MyISAM;
 
-DROP TABLE IF EXISTS `tiki_contributions_assigned`;
-CREATE TABLE `tiki_contributions_assigned` (
-  `contributionId` int(12) NOT NULL,
-  `objectId` int(12) NOT NULL,
-  PRIMARY KEY  (`objectId`, `contributionId`)
+DROP TABLE IF EXISTS tiki_contributions_assigned;
+CREATE TABLE tiki_contributions_assigned (
+  contributionId int(12) NOT NULL,
+  objectId int(12) NOT NULL,
+  PRIMARY KEY  (objectId, contributionId)
 ) TYPE=MyISAM;
 
