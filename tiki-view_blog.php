@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.54 2006-12-03 21:49:03 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.55 2006-12-28 11:16:38 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -262,7 +262,7 @@ if ($feature_user_watches == 'y') {
 
 	$smarty->assign('user_watching_blog', 'n');
 
-	if ($user && $watch = $tikilib->get_user_event_watches($user, 'blog_post', $_REQUEST['blogId'])) {
+	if ($user && $tikilib->user_watches($user, 'blog_post', $_REQUEST['blogId'], 'blog')) {
 		$smarty->assign('user_watching_blog', 'y');
 	}
 }
