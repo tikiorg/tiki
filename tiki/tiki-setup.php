@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.375 2006-12-27 02:08:46 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.376 2006-12-28 09:55:16 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -638,6 +638,7 @@ $pref['feature_community_friends_permission'] = 'n';
 $pref['feature_community_friends_permission_dep'] = '2';
 $pref['change_language'] = 'y';
 $pref['change_theme'] = 'y';
+$pref['login_is_email'] = 'n';
 $pref['validateUsers'] = 'n';
 $pref['forgotPass'] = 'n';
 $pref['change_password'] = 'y';
@@ -1128,7 +1129,6 @@ $pref['feature_score'] = 'n';
 $pref['feature_server_name'] = (isset($_SERVER['SERVER_NAME'])) ? $_SERVER['SERVER_NAME']  : $_SERVER['HTTP_HOST'];
 $pref['feature_sheet'] = 'n';
 $pref['feature_shoutbox'] = 'n';
-$pref['feature_signal'] = 'n';
 $pref['feature_smileys'] = 'y';
 $pref['feature_source'] = 'y';
 $pref['feature_stats'] = 'n';
