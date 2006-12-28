@@ -1207,12 +1207,10 @@ function get_included_groups($group) {
 			$this->query("update `tiki_page_footnotes` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_newsreader_servers` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_newsreader_marks` set `user`=? where `user`=?", array($to,$from));
-			$this->query("update `tiki_minical_topics` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_minical_events` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_minical_topics` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_mailin_accounts` set `user`=? where `user`=?", array($to,$from));
-			$this->query("update `tiki_minical_topics` set `user`=? where `user`=?", array($to,$from));
-			$this->query("update `tiki_live_support_requests` set `user`=? where `operator`=?", array($to,$from));
+			$this->query("update `tiki_live_support_requests` set `operator`=? where `operator`=?", array($to,$from));
 			$this->query("update `tiki_live_support_requests` set `tiki_user`=? where `tiki_user`=?", array($to,$from));
 			$this->query("update `tiki_live_support_requests` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_live_support_operators` set `user`=? where `user`=?", array($to,$from));
@@ -1230,7 +1228,6 @@ function get_included_groups($group) {
 			$this->query("update `tiki_files` set `lockedby`=? where `lockedby`=?", array($to,$from));
 			$this->query("update `tiki_file_galleries` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_drawings` set `user`=? where `user`=?", array($to,$from));
-			$this->query("update `tiki_download` set `userId`=? where `userId`=?", array((int)$userId,(int)$userId));
 			$this->query("update `tiki_copyrights` set `userName`=? where `userName`=?", array($to,$from));
 			$this->query("update `tiki_comments` set `userName`=? where `userName`=?", array($to,$from));
 			$this->query("update `tiki_chat_users` set `nickname`=? where `nickname`=?", array($to,$from));
@@ -1240,7 +1237,6 @@ function get_included_groups($group) {
 			$this->query("update `tiki_calendars` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_calendar_roles` set `username`=? where `username`=?", array($to,$from));
 			$this->query("update `tiki_calendar_items` set `user`=? where `user`=?", array($to,$from));
-			$this->query("update `tiki_blogs` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_blogs` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_banning` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_banners` set `client`=? where `client`=?", array($to,$from));
@@ -1255,6 +1251,11 @@ function get_included_groups($group) {
 			$this->query("update `galaxia_instance_comments` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `galaxia_instance_activities` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_newsletter_subscriptions` set `email`=? where `email`=? and `isUser`=?", array($to,$from, 'y'));
+			$this->query("update `tiki_friends` set `user`=? where `user`=?", array($to,$from));
+			$this->query("update `tiki_friends` set `friend`=? where `friend`=?", array($to,$from));
+			$this->query("update `tiki_friendship_requests` set `userFrom`=? where `userFrom`=?", array($to,$from));
+			$this->query("update `tiki_friendship_requests` set `userTo`=? where `userTo`=?", array($to,$from));
+			$this->query("update `tiki_freetagged_objects` set `user`=? where `user`=?", array($to,$from));
 
 			$cachelib->invalidate('userslist');
 			return true;
