@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2006-12-28 17:56:05 $
+# $Date: 2006-12-28 17:57:26 $
 # $Author: mose $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -1187,29 +1187,7 @@ CREATE TABLE tiki_dynamic_variables (
   PRIMARY KEY  (name)
 );
 
-#
-# Table structure for table tiki_eph
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 06, 2003 at 08:23 AM
-#
-
-DROP TABLE IF EXISTS tiki_eph;
-CREATE TABLE tiki_eph (
-  ephId int(12) NOT NULL auto_increment,
-  title varchar(250) default NULL,
-  isFile char(1) default NULL,
-  filename varchar(250) default NULL,
-  filetype varchar(250) default NULL,
-  filesize varchar(250) default NULL,
-  data longblob,
-  textdata longblob,
-  publish int(14) default NULL,
-  hits int(10) default NULL,
-  PRIMARY KEY  (ephId)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
-
 #
 # Table structure for table tiki_extwiki
 #
@@ -2195,9 +2173,6 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Send newsletters','tiki-send_newsletters.php',905,'feature_newsletters','tiki_p_send_newsletters','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin newsletters','tiki-admin_newsletters.php',910,'feature_newsletters','tiki_p_admin_newsletters','');
 
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Ephemerides','',950,'feature_eph','','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Ephemerides','tiki-eph.php',953,'feature_eph','','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin ephemerides','tiki-eph_admin.php',955,'feature_eph','tiki_p_eph_admin','');
 
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Charts','',1000,'feature_charts','','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'','Charts','tiki-charts.php',1003,'feature_charts','','');
@@ -4198,7 +4173,6 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_structures', 'Can create and edit structures', 'editors', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_submission', 'Can edit submissions', 'editors', 'cms');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_templates', 'Can edit site templates', 'admin', 'tiki');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_eph_admin', 'Can admin ephemerides', 'editors', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_exception_instance', 'Can declare an instance as exception', 'registered', 'workflow');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_forum_attach', 'Can attach to forum posts', 'registered', 'forums');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_forum_autoapp', 'Auto approve forum posts', 'editors', 'forums');
@@ -4271,7 +4245,6 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_categories', 'Can browse categories', 'basic', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_chart', 'Can view charts', 'basic', 'charts');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_directory', 'Can use the directory', 'basic', 'directory');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_eph', 'Can view ephemerides', 'registered', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_events', 'Can view events details', 'registered', 'calendar');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_faqs', 'Can view faqs', 'basic', 'faqs');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_file_gallery', 'Can view file galleries', 'basic', 'file galleries');
