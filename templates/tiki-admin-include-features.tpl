@@ -213,23 +213,16 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
 		{tr}Fullscreen{/tr}">{/if} {tr}Propose a Fullscreen mode{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
   </tr>
 
-</table>    
-
-{* ---------- System features ------------ *}
-<table width="100%" class="admin">  <tr>
-    <td class="heading" colspan="5"
-            align="center">{tr}System Features{/tr}</td>
-  </tr>
   <tr>
     <td><input type="checkbox" name="feature_help"
             {if $feature_help eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Help+System+Future+Concept" target="tikihelp" class="tikihelp" title="{tr}Help System{/tr}">{/if} {tr}Help System{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
-    <td>&nbsp;</td>    <td><input type="checkbox" name="feature_signal"            {if $feature_signal eq 'y'}checked="checked"{/if}/></td>    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}TikiSignal" target="tikihelp" class="tikihelp" title="{tr}Signal System{/tr}">{/if} {tr}Signal System{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
+    <td>&nbsp;</td> 
+    <td>&nbsp;</td> 
+    <td>&nbsp;</td> 
 </tr>
-</table>
 
 {* ---------- Content features ------------ *}
-<table width="100%" class="admin">
   <tr>
     <td class="heading" colspan="5"
             align="center">{tr}Content Features{/tr}</td>
@@ -288,9 +281,7 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
             {if $feature_use_quoteplugin eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {tr}Use Quote plugin rather than &ldquo;>&rdquo; for quoting{/tr} </td>
   </tr>
-</table>
 {* ---------- Administration features ------------ *}
-<table width="100%" class="admin">
   <tr>
     <td class="heading" colspan="5" 
             align="center">{tr}Administration Features{/tr}</td>
@@ -340,9 +331,7 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
     	{if $feature_redirect_on_error eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {tr}Redirect On Error{/tr} </td>
     </tr>
-</table>
 {* --- User Features --- *}
-<table width="100%" class="admin">
   <tr>
     <td class="heading" colspan="5"
             align="center">{tr}User Features{/tr}</td>
@@ -363,12 +352,12 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
             {if $feature_user_bookmarks eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=UserBookmarkDoc" target="tikihelp" class="tikihelp" title="{tr}User Bookmarks{/tr}">{/if} {tr}User Bookmarks{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
     <td>&nbsp;</td>
-    <td style="text-align:right"><select name="user_flip_modules">
+    <td colspan="2"><select name="user_flip_modules">
       <option value="y" {if $user_flip_modules eq 'y'}selected="selected"{/if}>{tr}always{/tr}</option>
       <option value="module" {if $user_flip_modules eq 'module'}selected="selected"{/if}>{tr}module decides{/tr}</option>
       <option value="n" {if $user_flip_modules eq 'n'}selected="selected"{/if}>{tr}never{/tr}</option>
-    </select></td>
-    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Users+Shade+Modules" target="tikihelp" class="tikihelp" title="{tr}Users can Shade Modules{/tr}">{/if} {tr}Users can Shade Modules{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
+    </select>
+    {if $feature_help eq 'y'}<a href="{$helpurl}Users+Shade+Modules" target="tikihelp" class="tikihelp" title="{tr}Users can Shade Modules{/tr}">{/if} {tr}Users can Shade Modules{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
   </tr>
   <tr>
     <td><input type="checkbox" name="feature_user_watches"
