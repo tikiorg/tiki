@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagepermissions.tpl,v 1.22 2006-12-14 09:39:08 ang23 Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagepermissions.tpl,v 1.23 2006-12-28 10:54:46 mose Exp $ *}
 
 <h2>{tr}Assign permissions to page{/tr}: <a href="tiki-index.php?page={$page}">{$page}</a></h2>
 
@@ -75,17 +75,6 @@
 {/section}
 </table>
 
-<br /><br /><br />
-<h2>{tr}Send email notifications when this page changes to{/tr}:</h2>
-<form action="tiki-pagepermissions.php" method="post">
-<input type="hidden" name="page" value="{$page|escape}" />
-{tr}add email{/tr}: <input type="text" name="email" />
-<input type="submit" name="addemail" value="{tr}add{/tr}" />
-</form>
-<h3>{tr}Notifications{/tr}:</h3>
-{section name=ix loop=$emails}
-{$emails[ix]} (<a class="link" href="tiki-pagepermissions.php?page={$page}&amp;removeemail={$emails[ix]}">x</a>)<br />
-{/section}
+<br /><br />
 
-{include file=tiki-page_bar.tpl}
-
+<span class="button2"><a href="tiki-index.php?page={$page}" class="linkbut">{tr}go back to{/tr} {$page}</a></span>

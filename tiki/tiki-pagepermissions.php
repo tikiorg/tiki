@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagepermissions.php,v 1.29 2006-12-04 09:22:11 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagepermissions.php,v 1.30 2006-12-28 10:54:47 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -59,22 +59,8 @@ if ($tiki_p_admin_wiki != 'y') {
 	die;
 }
 
-if (isset($_REQUEST["addemail"])) {
-	check_ticket('page-perms');
-	$notificationlib->add_mail_event('wiki_page_changes', 'wikipage' . $_REQUEST["page"], $_REQUEST["email"]);
-}
-
-if (isset($_REQUEST["removeemail"])) {
-	check_ticket('page-perms');
-	$notificationlib->remove_mail_event('wiki_page_changes', 'wikipage' . $_REQUEST["page"], $_REQUEST["removeemail"]);
-}
-
-$emails = $notificationlib->get_mail_events('wiki_page_changes', 'wikipage' . $_REQUEST["page"]);
-$smarty->assign('emails', $emails);
-
 if (!$tikilib->page_exists($page)) {
 	$smarty->assign('msg', tra("Page cannot be found"));
-
 	$smarty->display("error.tpl");
 	die;
 }
