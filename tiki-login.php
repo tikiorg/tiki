@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.57 2006-12-21 14:57:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.58 2006-12-28 20:12:57 rlpowell Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.57 2006-12-21 14:57:56 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.58 2006-12-28 20:12:57 rlpowell Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -242,10 +242,13 @@ if ($isvalid) {
 		// No sense in sending user to registration page
 		// This happens if the user has just registered and it's first login
 		if (preg_match("/tiki-register.php/",$url)) {
-		    $url = preg_replace("/tiki-register.php*$/","tiki-index.php",$url);
+		    $url = preg_replace("/tiki-register.php.*$/","tiki-index.php",$url);
 		}
 		if (preg_match("/tiki-login_validate.php/",$url)) {
-		    $url = preg_replace("/tiki-login_validate.php*$/","tiki-index.php",$url);
+		    $url = preg_replace("/tiki-login_validate.php.*$/","tiki-index.php",$url);
+		}
+		if (preg_match("/tiki-login_scr.php/",$url)) {
+		    $url = preg_replace("/tiki-login_scr.php.*$/","tiki-index.php",$url);
 		}
 
 		// Now if the remember me feature is on and the user checked the rememberme checkbox then ...
