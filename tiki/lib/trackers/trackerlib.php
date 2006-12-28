@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.155 2006-12-27 02:03:31 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.156 2006-12-28 17:15:18 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -201,8 +201,15 @@ class TrackerLib extends TikiLib {
 
 		$trackerId = $this->getOne("select `trackerId` from `tiki_tracker_items` where `itemId`=?",array((int) $itemId));
 		$trackerName = $this->getOne("select `name` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
-		$emails = $notificationlib->get_mail_events('tracker_modified', $trackerId);
-		$emails2 = $notificationlib->get_mail_events('tracker_item_modified', $itemId);
+		global $userlib;
+		$watchers = $this->get_event_watches('tracker_modified',$trackerId);
+		foreach ($watchers as $w) {
+			$emails[] = $userlib->get_user_email($w['user']);
+		}
+		$watchers_item = $this->get_event_watches('tracker_item_modified',$itemId);
+		foreach ($watchers2 as $w) {
+			$emails2[] = $userlib->get_user_email($w['user']);
+		}
 		$emails = array_merge($emails, $emails2);
 		if (count($emails > 0)) {
 			$smarty->assign('mail_date', date("U"));
@@ -949,10 +956,15 @@ class TrackerLib extends TikiLib {
 		if(!$bulk_import) {
 			$options = $this->get_tracker_options( $trackerId );
 
-			global $notificationlib; include_once('lib/notifications/notificationlib.php');
-
-			$emails = $notificationlib->get_mail_events('tracker_modified', $trackerId);
-			$emails2 = $notificationlib->get_mail_events('tracker_item_modified', $itemId);
+			global $userlib;
+			$watchers = $this->get_event_watches('tracker_modified',$trackerId);
+			foreach ($watchers as $w) {
+				$emails[] = $userlib->get_user_email($w['user']);
+			}
+			$watchers_item = $this->get_event_watches('tracker_item_modified',$itemId);
+			foreach ($watchers2 as $w) {
+				$emails2[] = $userlib->get_user_email($w['user']);
+			}
 
 			if( array_key_exists( "outboundEmail", $options ) && $options["outboundEmail"] )
 			{

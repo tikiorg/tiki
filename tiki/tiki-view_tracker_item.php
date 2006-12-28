@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.104 2006-12-15 21:15:04 fr_rodo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.105 2006-12-28 17:15:17 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -812,6 +812,25 @@ if ($user) {
 		$smarty->assign('email_mon', tra('Monitor'));
 	}
 }
+
+if ($feature_user_watches == 'y' and $tiki_p_watch_trackers == 'y') {
+  if ($user and isset($_REQUEST['watch'])) {
+    check_ticket('view-trackers');
+    if ($_REQUEST['watch'] == 'add') {
+      $tikilib->add_user_watch($user, 'tracker_item_modified', $_REQUEST["itemId"], 'tracker '.$_REQUEST["trackerId"], $tracker_info['name'],"tiki-view_tracker_item.php?trackerId=".$_REQUEST["trackerId"]."&amp;itemId=".$_REQUEST["itemId"]);
+    } else {
+      $tikilib->remove_user_watch($user, 'tracker_item_modified', $_REQUEST["itemId"]);
+    }
+  }
+  $smarty->assign('user_watching_tracker', 'n');
+  $it = $tikilib->user_watches($user, 'tracker_item_modified', $_REQUEST['itemId'], 'tracker '.$_REQUEST["trackerId"]);
+  if ($user and $tikilib->user_watches($user, 'tracker_item_modified', $_REQUEST['itemId'], 'tracker '.$_REQUEST["trackerId"])) {
+    $smarty->assign('user_watching_tracker', 'y');
+  }
+}
+
+
+
 
 if ($tracker_info["useComments"] == 'y') {
 	if ($tiki_p_admin_trackers == 'y' and isset($_REQUEST["remove_comment"])) {
