@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.376 2006-12-28 09:55:16 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.377 2006-12-28 18:00:12 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1102,7 +1102,6 @@ $pref['feature_drawings'] = 'n';
 $pref['feature_dynamic_content'] = 'n';
 $pref['feature_edit_templates'] = 'n';
 $pref['feature_editcss'] = 'n';
-$pref['feature_eph'] = 'n';
 $pref['feature_events'] = 'n';
 $pref['feature_friends'] = 'n';
 $pref['feature_fullscreen'] = 'n';
@@ -1497,7 +1496,6 @@ if (!strstr($_SERVER['REQUEST_URI'], 'tiki-login')) {
 setDisplayMenu('nlmenu');
 setDisplayMenu('evmenu');
 setDisplayMenu('chartmenu');
-setDisplayMenu('ephmenu');
 setDisplayMenu('mymenu');
 setDisplayMenu('wfmenu');
 setDisplayMenu('usrmenu');
