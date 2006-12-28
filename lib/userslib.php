@@ -1994,7 +1994,7 @@ function get_included_groups($group) {
 
 	function create_user_cookie($user) {
 		global $remembertime;
-		$hash = md5($_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT'].$_SERVER['HTTP_ACCEPT_CHARSET']);
+		$hash = md5($_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT']);
 		$hash.= ".". (date('U') + $remembertime);
 		$this->set_user_preference($user,'cookie',$hash);
 		return $hash;
@@ -2002,7 +2002,7 @@ function get_included_groups($group) {
 
 	function get_user_by_cookie($hash) {
 		list($check,$expire) = explode('.',$hash);
-		if ($check == md5($_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT'].$_SERVER['HTTP_ACCEPT_CHARSET'])) {
+		if ($check == md5($_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT'])) {
 			$query = 'select `user` from `tiki_user_preferences` where `prefName`=? and `value`=?';
 			$user = $this->getOne($query, array('cookie',$hash));
 			if ($user) {
