@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/damian/tiki-show_page.tpl,v 1.21 2006-10-01 13:45:05 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/damian/tiki-show_page.tpl,v 1.22 2006-12-28 19:12:05 rlpowell Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -238,4 +238,8 @@
 
 {if $is_categorized eq 'y' and $feature_categories eq 'y' and $feature_categoryobjects eq 'y'}
 <div class="catblock">{$display_catobjects}</div>
+{/if}
+
+{if $print_page ne 'y'}
+{include file=tiki-page_bar.tpl}
 {/if}
