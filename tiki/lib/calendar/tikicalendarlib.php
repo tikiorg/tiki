@@ -354,31 +354,6 @@ class TikiCalendarLib extends TikiLib {
 				}
 				break;
 
-			case "eph":
-				$query = "select `publish` as `created`, `title` as `name`, `textdata` as `description` ";
-				$query.= "from `tiki_eph` where (`publish`>? and `publish`<?)";
-				$result = $this->query($query,array($tstart,$tstop));
-
-				while ($res = $result->fetchRow()) {
-					$res['created'] = $dc->getDisplayDateFromServerDate($res['created']); /* server time -> user time */
-					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
-					$tstart = date("Hi", $res["created"]);
-					$ret["$dstart"][] = array(
-						"visible" => "y",
-						"calitemId" => "",
-						"calname" => "",
-						"prio" => "",
-						"time" => $tstart,
-						"start" => $res['created'],
-						"type" => "eph",
-						"url" => "tiki-eph.php?day=" . date("d", $res["created"]). "&amp;mon=" . date("m", $res['created']). "&amp;year=" . date("Y", $res['created']),
-						"name" => str_replace("'", "", $res["name"]),
-						"head" => "<b>" . date("H:i", $res["created"]). "</b>",
-						"description" => str_replace('"', "'", $res["description"])
-					);
-				}
-				break;
-
 			case "chart":
 				$query = "select `chartId`, `created`, `title` as `name`, `description` ";
 				$query .= "from `tiki_charts` where (`created`>? and `created`<?)";
