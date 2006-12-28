@@ -48,7 +48,7 @@
 }
 
 .Calwiki, .Calblog, .Calgal, .Calart, .Calforum, .Caldir, .Calfgal,
-.Calfaq, .Calquiz, .Caltrack, .Calsurv, .Calnl, .Caleph, .Calchart {
+.Calfaq, .Calquiz, .Caltrack, .Calsurv, .Calnl, .Calchart {
 	border-top : 1px dashed #CCCCCC;
 	font-size : 10px;
 	padding : 0 3px;
@@ -160,15 +160,6 @@
 }
 .Calnl:before {
 	content : "n";
-	font-family : monospace;
-	background-color : #FFFFFF;
-}
-.Caleph a {
-	color : #304F30;
-	font-weight : normal;
-}
-.Caleph:before {
-	content : "e";
 	font-family : monospace;
 	background-color : #FFFFFF;
 }
