@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.92 2006-12-16 19:16:40 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.93 2006-12-28 18:57:55 rlpowell Exp $
  *
  * \brief Categories support class
  *
@@ -1050,6 +1050,7 @@ class CategLib extends ObjectLib {
 				$smarty->assign("id", $id);
 				$smarty->assign("titles", $titles);
 				$smarty->assign("listcat", $listcat);
+				$smarty->assign("one", count($listcat));
 				$out .= $smarty->fetch("categobjects.tpl");
 				$listcat = array();
 				$titles = array();
@@ -1064,6 +1065,7 @@ class CategLib extends ObjectLib {
 			$smarty->assign("id", $id);
 			$smarty->assign("titles", $titles);
 			$smarty->assign("listcat", $listcat);
+			$smarty->assign("one", count($listcat));
 			$out = $smarty->fetch("categobjects.tpl");
 		}
 		return $out;
