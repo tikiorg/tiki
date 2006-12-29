@@ -62,6 +62,6 @@ include_once('lib/tasks/tasklib.php');
     return $content;
 }
 
-/* vim: set expandtab: */
+
 
 ?>

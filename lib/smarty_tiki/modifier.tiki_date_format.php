@@ -41,6 +41,6 @@ function smarty_modifier_tiki_date_format($string, $format = "%b %e, %Y", $defau
 	return $date->format($format);
 }
 
-/* vim: set expandtab: */
+
 
 ?>

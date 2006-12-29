@@ -19,6 +19,6 @@ function smarty_function_showdate($params, &$smarty)
     print(date($mode));
 }
 
-/* vim: set expandtab: */
+
 
 ?>

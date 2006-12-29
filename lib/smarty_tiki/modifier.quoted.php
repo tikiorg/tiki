@@ -25,6 +25,6 @@ function smarty_modifier_quoted($string, $format='simple', $replyto='')
 	return $string;
 }
 
-/* vim: set expandtab: */
+
 
 ?>

@@ -34,6 +34,6 @@ function smarty_function_memusage($params, &$smarty)
     }
 }
 
-/* vim: set expandtab: */
+
 
 ?>

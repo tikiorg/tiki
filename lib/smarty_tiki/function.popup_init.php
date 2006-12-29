@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/function.popup_init.php,v 1.3 2006-08-29 20:19:10 sylvieg Exp $ */
+/* $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/function.popup_init.php,v 1.4 2006-12-29 11:17:49 mose Exp $ */
 /**
  * Smarty plugin
  * @package Smarty
@@ -49,6 +49,6 @@ function smarty_function_popup_init($params, &$smarty)
 
 }
 
-/* vim: set expandtab: */
+
 
 ?>

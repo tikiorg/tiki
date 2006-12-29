@@ -22,6 +22,6 @@ function smarty_function_rcontent($params, &$smarty)
     print($data);
 }
 
-/* vim: set expandtab: */
+
 
 ?>

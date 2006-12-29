@@ -14,6 +14,6 @@ function smarty_function_elapsed($params, &$smarty)
     print($ela);
 }
 
-/* vim: set expandtab: */
+
 
 ?>

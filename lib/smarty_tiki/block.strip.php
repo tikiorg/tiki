@@ -30,6 +30,6 @@ function smarty_block_strip($params, $content, &$smarty)
 	return preg_replace($_strip_search, $_strip_replace, $content);
 }
 
-/* vim: set expandtab: */
+
 
 ?>
