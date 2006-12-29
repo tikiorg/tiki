@@ -13,6 +13,6 @@ function smarty_modifier_tiki_long_date($string)
 	return smarty_modifier_tiki_date_format($string, $tikilib->get_long_date_format(), null, tra("%A %d of %B, %Y"));
 }
 
-/* vim: set expandtab: */
+
 
 ?>

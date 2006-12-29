@@ -13,6 +13,6 @@ function smarty_modifier_tiki_short_date($string)
 	return smarty_modifier_tiki_date_format($string, $tikilib->get_short_date_format(), null, tra("%a %d of %b, %Y"));
 }
 
-/* vim: set expandtab: */
+
 
 ?>

@@ -53,6 +53,6 @@ function smarty_function_rss($params, &$smarty)
     print('</ul>');
 }
 
-/* vim: set expandtab: */
+
 
 ?>

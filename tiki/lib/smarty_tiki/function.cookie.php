@@ -16,6 +16,6 @@ function smarty_function_cookie($params, &$smarty)
     print($data);
 }
 
-/* vim: set expandtab: */
+
 
 ?>

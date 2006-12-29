@@ -22,6 +22,6 @@ function smarty_function_jspopup($params, &$smarty)
     print("href='#' onclick='javascript:window.open(\"$href\",\"\",\"menubar=$menubar,scrollbars=$scrollbars,resizable=$resizable,height=$height,width=$width\");' ");
 }
 
-/* vim: set expandtab: */
+
 
 ?>

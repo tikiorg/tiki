@@ -20,6 +20,6 @@ function smarty_modifier_div($string,$num,$max=10)
     return ceil(strlen($string)/$num);
 }
 
-/* vim: set expandtab: */
+
 
 ?>

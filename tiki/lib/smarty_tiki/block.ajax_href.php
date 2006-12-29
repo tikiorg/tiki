@@ -17,10 +17,10 @@ function smarty_block_ajax_href($params, $content, &$smarty)
     if ($feature_ajax != 'y') {
 	return " href=\"$url\" ";
     } else {
-	return " style=\"cursor: pointer;\" onclick=\"loadComponent('$url','$template','$htmlelement');\" ";
+	return " href=\"#\" title=\"$template\" onclick=\"loadComponent('$url','$template','$htmlelement');\" ";
     }
 }
 
-/* vim: set expandtab: */
+
 
 ?>

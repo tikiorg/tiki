@@ -55,6 +55,6 @@ return $channels;
 }
 
 
-/* vim: set expandtab: */
+
 
 ?>
