@@ -19,6 +19,9 @@ define("USER_NOT_FOUND", -5);
 define("ACCOUNT_DISABLED", -6);
 define ("USER_AMBIGOUS", -7);
 
+//added for Auth v1.3 support
+define ("AUTH_LOGIN_OK", 0);
+
 class UsersLib extends TikiLib {
 # var $db;  // The PEAR db object used to access the database
 
@@ -738,6 +741,11 @@ class UsersLib extends TikiLib {
 
 	// set the Auth options
 	$a = new Auth("LDAP", $options, "", false, $user, $pass);
+
+	
+	$a->username = $user;
+	$a->password = $pass;
+	$a->status = AUTH_LOGIN_OK;
 
 	// check if the login correct
 	$a->login();
