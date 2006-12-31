@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.92 2006-12-13 14:30:57 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.93 2006-12-31 08:11:37 mose Exp $ *}
 <h1>{if $userwatch ne $user}<a class="pagetitle" href="tiki-user_preferences.php?view_user={$userwatch}">{tr}User Preferences{/tr}: {$userwatch}</a>{else}<a class="pagetitle" href="tiki-user_preferences.php">{tr}User Preferences{/tr}</a>{/if}
 
 {if $feature_help eq 'y'}
@@ -150,9 +150,10 @@
   </td></tr>
   {if $change_theme eq 'y'}
   <tr><td class="form">{tr}Theme{/tr}:</td><td class="form"><select name="mystyle">
+		<option value="{$style}" style="font-style:italic;border-bottom:1px dashed #666;">{tr}Site default{/tr}</option>
     {section name=ix loop=$styles}
       {if count($available_styles) == 0 || in_array($styles[ix], $available_styles)}
-        <option value="{$styles[ix]|escape}" {if $style eq $styles[ix]}selected="selected"{/if}>{$styles[ix]}</option>
+        <option value="{$styles[ix]|escape}" {if $user_style eq $styles[ix]}selected="selected"{/if}>{$styles[ix]}</option>
       {/if}
     {/section}
         </select>
