@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki.tpl,v 1.30 2006-12-21 14:57:59 mose Exp $ *}{include file="header.tpl"}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki.tpl,v 1.31 2006-12-31 07:09:25 mose Exp $ *}{include file="header.tpl"}
 {* Index we display a wiki page here *}
 {if $feature_bidi eq 'y'}
 <div dir="rtl">
@@ -46,7 +46,7 @@
           {/if}
       </td>
       {/if}
-      <td width="100%" id="centercolumn" valign="top">
+      <td id="centercolumn" valign="top">
 			{/if}
 
 			<div id="tiki-center">
