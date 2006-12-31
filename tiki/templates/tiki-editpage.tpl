@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.96 2006-12-21 14:57:59 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.97 2006-12-31 08:52:38 mose Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -157,7 +157,7 @@
 </tr>
 {/if}
 {if $feature_wiki_description eq 'y'}
-<tr class="formcolor"><td>{tr}Description{/tr}:</td><td><input style="width:95%;" class="wikitext" type="text" name="description" value="{$description|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}Description{/tr}:</td><td><input style="width:95%;" type="text" name="description" value="{$description|escape}" /></td></tr>
 {/if}
 <tr class="formcolor">
 {if $wysiwyg ne 'y'}
