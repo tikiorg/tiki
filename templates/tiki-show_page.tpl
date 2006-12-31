@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.106 2006-12-13 20:49:53 mose Exp $ *} 
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.107 2006-12-31 09:26:12 mose Exp $ *} 
 {if $feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
@@ -196,7 +196,7 @@
    {/if}
    {$contributors[author]|userlink}
   {/section}.<br />                                         
-  {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}.
+  {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}. {if $wiki_show_version eq 'y'}({tr}version{/tr} {$lastVersion}){/if}
 </p>
 {elseif isset($wiki_authors_style) &&  $wiki_authors_style eq 'collaborative'}
 <p class="editdate">
@@ -207,13 +207,13 @@
    {/if}
    {$contributors[author]|userlink}
   {/section}.<br />
-  {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}.
+  {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}. {if $wiki_show_version eq 'y'}({tr}version{/tr} {$lastVersion}){/if}
 </p>
 {elseif isset($wiki_authors_style) &&  $wiki_authors_style eq 'none'}
 {else}
 <p class="editdate">
   {tr}Created by{/tr}: {$creator|userlink}
-  {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}
+  {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}. {if $wiki_show_version eq 'y'}({tr}version{/tr} {$lastVersion}){/if}
 </p>
 {/if}
 

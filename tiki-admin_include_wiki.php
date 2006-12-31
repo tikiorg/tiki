@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.68 2006-12-17 11:29:23 fr_rodo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.69 2006-12-31 09:26:11 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -154,7 +154,8 @@ if (isset($_REQUEST["wikifeatures"])) {
 	'feature_wiki_protect_email',
 	'feature_wiki_1like_redirection',
 	'feature_wiki_show_hide_before',
-	'feature_wiki_allowhtml'
+	'feature_wiki_allowhtml',
+	'wiki_show_version'
 	);
 	foreach ($pref_toggles as $toggle) {
 		simple_set_toggle($toggle);
