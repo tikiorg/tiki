@@ -140,7 +140,6 @@
 </td><td style="border:0;">
 <a href="#" onclick="document.f.end_Minute.selectedIndex=(document.f.end_Minute.selectedIndex-1);"><img src="pics/icons/minus_small.png" height="8" width="11" border="0" align="left" /></a>
 </td>
-</td>
 </tr>
 </table>
 <table cellpadding="0" cellspacing="0" border="0" style="border:0;display:none;" id="end_duration">
