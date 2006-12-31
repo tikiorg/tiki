@@ -271,6 +271,7 @@ class CalendarLib extends TikiLib {
 		
 		$res['duration'] = $res['end'] - $res['start'];
 		$res['parsed'] = $this->parse_data($res['description']);
+		$res['parsedName'] = $this->parse_data($res['name']);
 		return $res;
 	}
 
