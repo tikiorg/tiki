@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.379 2006-12-31 08:11:36 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.380 2006-12-31 09:26:11 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -390,6 +390,7 @@ $pref['wikiHomePage'] = 'HomePage';
 $pref['wikiLicensePage'] = '';
 $pref['wikiSubmitNotice'] = '';
 $pref['wiki_authors_style'] = 'classic';
+$pref['wiki_show_version'] = 'n';
 $pref['wiki_bot_bar'] = 'n';
 $pref['wiki_cache'] = 0;
 $pref['wiki_comments_default_ordering'] = 'points_desc';
