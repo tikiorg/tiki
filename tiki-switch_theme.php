@@ -12,10 +12,10 @@ if (isset($_SERVER['HTTP_REFERER'])) {
 
 if (isset($_GET['theme'])){
 	$new_theme = $_GET['theme'];
-	if($feature_userPreferences == 'y' && $user && $change_theme == 'y') {  
+	if ($feature_userPreferences == 'y' && $user && $change_theme == 'y') {  
 		$tikilib->set_user_preference($user,'theme',$new_theme);
 	} else {
-		$a = setcookie('tiki-theme', $new_theme, time()+3600*24*30*12);
+		$_SESSION['style'] = $new_theme;
 	}
 }
 

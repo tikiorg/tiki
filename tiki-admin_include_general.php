@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.50 2006-12-22 01:03:13 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.51 2006-12-31 08:11:36 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,8 +14,9 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 if (isset($_REQUEST["change_style"])) {
 	check_ticket('admin-inc-general');
-	byref_set_value("site_style", "style");
-	if ($style != $user_style) {
+	simple_set_value('style');
+	//byref_set_value("site_style", "style");
+	if ($site_style != $user_style) {
 		header('Location: tiki-admin.php?page=general');
 		die;
 	}
@@ -89,6 +90,7 @@ elseif (isset($_REQUEST["prefs"])) {
         "short_time_format",
         "siteTitle",
         "slide_style",
+        "style",
         "tikiIndex",
 	"https"
     );
@@ -98,7 +100,7 @@ elseif (isset($_REQUEST["prefs"])) {
     }
 
     // Set value(s) with alternate pref name
-    byref_set_value("site_style", "style");
+    //byref_set_value("site_style", "style");
 
     // Special handling for tied fields: tikiIndex, urlIndex and useUrlIndex
     if (!empty($_REQUEST["urlIndex"]) && isset($_REQUEST["useUrlIndex"]) && $_REQUEST["useUrlIndex"] == 'on') {

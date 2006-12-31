@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.54 2006-12-22 01:03:13 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.55 2006-12-31 08:11:37 mose Exp $ *}
 
 <script type="text/javascript">
 {literal}
@@ -29,24 +29,14 @@
       <table class="admin"><tr>
         <td class="heading" colspan="2"
             align="center">{tr}General Preferences{/tr}</td>
-			{if $site_style ne $user_style}
-      </tr><tr>
-				<td class="form" >&nbsp;</td><td>
-				<div class="simplebox">
-				{tr}Your user theme is{/tr} <b>{$user_style}</b>. {tr}If you change the Theme below, you won't see immediate change.{/tr}<br />
-				<a href="tiki-switch_theme.php?theme=0">{tr}Click here to reset your user theme to default theme{/tr}</a>
-				</div>
-				</td>
-			{/if}
       </tr><tr>
         <td class="form" ><label for="general-theme">{tr}Theme{/tr}:</label></td>
-        <td width="67%"><select name="site_style" id="general-theme">
+        <td width="67%"><select name="style" id="general-theme">
             {section name=ix loop=$styles}
-              <option value="{$styles[ix]|escape}"
-                {if $site_style eq $styles[ix]}selected="selected"{/if}>
-                {$styles[ix]}</option>
+              <option value="{$styles[ix]|escape}" {if $style eq $styles[ix]} selected="selected"{/if}>{$styles[ix]}</option>
             {/section}
             </select>
+						{$site_style} - {$style} - {$user_style}
             &nbsp;<a href="javascript:previous_site_style();" title="{tr}prev{/tr}"><img src="pics/icons/resultset_previous.png" alt="{tr}previous{/tr}" height="16" width="16" border="0" /></a>
             <a href="javascript:next_site_style();" title="{tr}next{/tr}"><img src="pics/icons/resultset_next.png" alt="{tr}next{/tr}" height="16" width="16" border="0" /></a>&nbsp;
             <input type="submit" name="change_style" value="{tr}Change style only{/tr}" />

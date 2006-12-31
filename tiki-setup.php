@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.378 2006-12-28 20:11:41 tombombadilom Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.379 2006-12-31 08:11:36 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -229,7 +229,7 @@ global $num_queries;
 global $elapsed_in_db;
 $num_queries=0;
 $elapsed_in_db=0.0;
-
+if(!isset($section)) $section = '';
 $tikifeedback = array();
 
 $feature_referer_highlight = 'n';
@@ -1227,13 +1227,8 @@ if (isset($_SESSION['tiki_cookie_jar'])) {
 	}
 }
 
-if (!empty($_SESSION['language']))
+if (!empty($_SESSION['language'])) {
 	$saveLanguage = $_SESSION['language']; // if register_globals is on variable and _SESSION are the same
-if (isset($_SESSION['style']))
-	$style = $_SESSION['style'];
-
-if (isset($_COOKIE['tiki-theme']) ) {
-	$style = $_COOKIE['tiki-theme'];
 }
 
 if ($error_reporting_level == 1) {
@@ -1367,20 +1362,6 @@ $smarty->assign('default_group',$group);
 $user_dbl = 'y';
 $diff_versions = 'n';
 
-$user_style = $site_style = $style;
-
-if( isset($_COOKIE['tiki-theme']) ) {
-	$user_style = $_COOKIE['tiki-theme'];
-}
-if (isset($_REQUEST['switchLang'])) {
-	if ($change_language != 'y'
-		|| !preg_match("/[a-zA-Z-_]*$/", $_REQUEST['switchLang'])
-		|| !file_exists('lang/'.$_REQUEST['switchLang'].'/language.php')
-		|| ($available_languages && !in_array($_REQUEST['switchLang'], unserialize($available_languages))) ) {
-			unset($_REQUEST['switchLang']);
-	}
-}
-
 if (isset($_REQUEST['switchLang'])) {
 	if ($change_language != 'y'
 		|| !preg_match("/[a-zA-Z-_]*$/", $_REQUEST['switchLang'])
@@ -1393,14 +1374,23 @@ if (isset($_REQUEST['switchLang'])) {
 	}
 }
 
+$user_style = $site_style = $style;
+
+if (isset($_SESSION['style'])) {
+	$user_style = $_SESSION['style'];
+}
+
 if ($feature_userPreferences == 'y') {
 	if ($user) {
 		$user_dbl = $tikilib->get_user_preference($user, 'user_dbl', 'y');
 		$diff_versions = $tikilib->get_user_preference($user, 'diff_versions', 'n');
+		if (isset($_REQUEST['style'])) {
+			$site_style = $_REQUEST['style'];
+		}
 		if ($change_theme == 'y') {
 			$user_style = $tikilib->get_user_preference($user, 'theme', $style);
 			if ($user_style and (is_file("styles/$user_style") or is_file("styles/$tikidomain/$user_style"))) {
-				$style = $user_style;
+				$site_style = $user_style;
 			}
 		}
 		if ($change_language == 'y') {
@@ -1415,27 +1405,29 @@ if ($feature_userPreferences == 'y') {
 			}
 		}
 	} else {
-		$style = $user_style;
+		$site_style = $user_style;
 	}
 	$smarty->assign('language', $language);
 } else {
-	$style = $user_style;
+	$site_style = $user_style;
 }
 
-if (!is_file("styles/$style") and !is_file("styles/$tikidomain/$style")) {
-	$style = 'tikineat.css';
+if (!is_file("styles/$site_style") and !is_file("styles/$tikidomain/$site_style")) {
+	$site_style = 'tikineat.css';
 }
-if ($tikidomain and is_file("styles/$tikidomain/$style")) {
-	$style = "$tikidomain/$style";
+if ($tikidomain and is_file("styles/$tikidomain/$site_style")) {
+	$site_style = "$tikidomain/$site_style";
 }
-$smarty->assign('style', $style);
-$smarty->assign('site_style', $site_style);
-$smarty->assign('user_style', $user_style);
+
+$smarty->assign('style', $style);           // that is the pref
+$smarty->assign('site_style', $site_style); // that is the effective site style
+$smarty->assign('user_style', $user_style); // that is the user-chosen style
 include_once("csslib.php");
-$transition_style = $csslib->transition_css('styles/'.$style);
+$transition_style = $csslib->transition_css('styles/'.$site_style);
 $headerlib->add_cssfile('styles/transitions/'.$transition_style,50);
-$headerlib->add_cssfile('styles/'.$style,51);
-
+$headerlib->add_cssfile('styles/'.$site_style,51);
+$stlstl = split("-|\.", $site_style);
+$style_base = $stlstl[0];
 
 if (!$user) {
 	if (isset($_REQUEST['switchLang'])) {
@@ -1447,9 +1439,6 @@ if (!$user) {
 		$smarty->assign('language', $language);
 	}
 }
-
-$stlstl = split("-|\.", $style);
-$style_base = $stlstl[0];
 
 if ($lang_use_db != 'y') {
     // check if needed!!!
