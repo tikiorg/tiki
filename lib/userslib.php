@@ -739,10 +739,17 @@ class UsersLib extends TikiLib {
 	$options["memberisdn"] = ($tikilib->get_preference("auth_ldap_memberisdn", "y") == "y");
 	$options["version"] = $tikilib->get_preference("auth_ldap_version", 3);
 
+	//added to allow for ldap systems that do not allow anonymous bind
+	$options["binddn"] = $tikilib->get_preference("auth_ldap_adminuser", "");
+	$options["bindpw"] = $tikilib->get_preference("auth_ldap_adminpass", "");
+ 
 	// set the Auth options
-	$a = new Auth("LDAP", $options, "", false, $user, $pass);
-
+	//$a = new Auth("LDAP", $options, "", false, $user, $pass);
 	
+	//corrected for the Auth v.13 upgrade
+	$a = new Auth("LDAP", $options, "", false);
+
+	//added to support Auth v1.3
 	$a->username = $user;
 	$a->password = $pass;
 	$a->status = AUTH_LOGIN_OK;
