@@ -107,7 +107,7 @@ class HeaderLib {
 			}
 			$back.= "-->\n</style>\n\n";
 		}
-		
+
 		if (count($this->jsfiles)) {
 			foreach ($this->jsfiles as $x=>$jsf) {
 				$back.= "<!-- jsfile $x -->\n";
@@ -130,7 +130,7 @@ class HeaderLib {
 		}
 		
 		if (count($this->rssfeeds)) {
-			foreach ($this->rssfeeds as $x->$rssf) {
+			foreach ($this->rssfeeds as $x=>$rssf) {
 				$back.= "<!-- rss $x -->\n";
 				foreach ($rssf as $rsstitle=>$rssurl) {
 					$back.= "<link rel=\"alternate\" type=\"application/rss+xml\" title=\"$rsstitle\" href=\"$rssurl\" />\n";
