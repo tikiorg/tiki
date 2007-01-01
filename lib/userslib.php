@@ -260,6 +260,8 @@ class UsersLib extends TikiLib {
 		);
     }
 
+	// For each auth method, validate user in auth, if valid, verify tiki user exists and create if necessary (as configured)
+	// Once complete, update_lastlogin and return result, username and login message.
     function validate_user(&$user, $pass, $challenge, $response) {
 	global $tikilib, $sender_email, $feature_intertiki, $feature_intertiki_mymaster, $min_pass_length;
 
@@ -277,17 +279,18 @@ class UsersLib extends TikiLib {
 	$userAuth = false;
 	$userAuthPresent = false;
 
-	// see if we are to use PAM
+	// read basic pam options
 	$auth_pam = ($tikilib->get_preference("auth_method", "tiki") == "pam");
 	$pam_create_tiki = ($tikilib->get_preference("pam_create_user_tiki", "n") == "y");
 	$pam_skip_admin = ($tikilib->get_preference("pam_skip_admin", "n") == "y");
 
-	// see if we are to use PEAR::Auth
+	// read basic PEAR:Auth options
 	$auth_pear = ($tikilib->get_preference("auth_method", "tiki") == "auth");
 	$create_tiki = ($tikilib->get_preference("auth_create_user_tiki", "n") == "y");
 	$create_auth = ($tikilib->get_preference("auth_create_user_auth", "n") == "y");
 	$skip_admin = ($tikilib->get_preference("auth_skip_admin", "n") == "y");
 	
+	// read basic cas options
 	global $phpcas_enabled;
 	if ($phpcas_enabled == 'y') {
 		$auth_cas = ($tikilib->get_preference('auth_method', 'tiki') == 'cas');
@@ -303,6 +306,7 @@ class UsersLib extends TikiLib {
 	$shib_skip_admin = ($tikilib->get_preference('shib_skip_admin', 'n') == 'y');
 
 	// first attempt a login via the standard Tiki system
+	// 
 	if (!($auth_shib || $auth_cas) || $user == 'admin') {
 		list($result, $user) = $this->validate_user_tiki($user, $pass, $challenge, $response);
 	} else {
@@ -322,18 +326,23 @@ class UsersLib extends TikiLib {
 	}
 
 	// if we aren't using LDAP this will be quick
+	// if we are using tiki auth or if we're using an alternative auth except for admin  
 	if ((!$auth_pear && !$auth_pam && !$auth_cas && !$auth_shib) || ((($auth_pear && $skip_admin) || ($auth_shib && $shib_skip_admin) || ($auth_pam && $pam_skip_admin) || ($auth_cas && $cas_skip_admin)) && $user == "admin")) {
 	    // if the user verified ok, log them in
-	    if ($userTiki)
+	    if ($userTiki)  //user validated in tiki, update lastlogin and be done
 		return array($this->update_lastlogin($user), $user, $result);
 	    // if the user password was incorrect but the account was there, give an error
-	    elseif ($userTikiPresent)
+	    elseif ($userTikiPresent)  //user ixists in tiki but bad password
 		return array(false, $user, $result);
 	    // if the user was not found, give an error
 	    // this could be for future uses
 	    else
 		return array(false, $user, $result);
 	}
+
+	// For the alternate auth methods, attempt to validate user
+	// return back one of two conditions
+	// Valid User or Bad password 
 	// next see if we need to check PAM
 	elseif ($auth_pam) {
 
@@ -897,8 +906,8 @@ class UsersLib extends TikiLib {
 	$options["groupoc"] = $tikilib->get_preference("auth_ldap_groupoc", "groupOfUniqueNames");
 	$options["memberattr"] = $tikilib->get_preference("auth_ldap_memberattr", "uniqueMember");
 	$options["memberisdn"] = ($tikilib->get_preference("auth_ldap_memberisdn", "y") == "y");
-	$options["adminuser"] = $tikilib->get_preference("auth_ldap_adminuser", "");
-	$options["adminpass"] = $tikilib->get_preference("auth_ldap_adminpass", "");
+	$options["binduser"] = $tikilib->get_preference("auth_ldap_adminuser", "");
+	$options["bindpw"] = $tikilib->get_preference("auth_ldap_adminpass", "");
 
 	// set additional attributes here
 	$userattr = array();
@@ -2436,4 +2445,4 @@ Local Variables:
    c-basic-offset: 4
 End:
 */
-?>
+
