@@ -81,6 +81,12 @@
 </a></td>
 {/if}
 
+{if $tiki_p_view_actionlog eq 'y'}
+<td valign="top"><a class="link" href="tiki-admin_actionlog.php?selectedUsers[]={$user|escape}" title="{tr}Action Log{/tr}">
+<img  border="0" src="img/mytiki/gnome-vumeter.png" alt="{tr}Action Log{/tr}" width="32" height="32" /><br />
+</a></td>
+{/if}
+
 </tr></table>
 </div>
 
