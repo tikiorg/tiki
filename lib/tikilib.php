@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.694 2007-01-02 23:31:55 mose Exp $
+// CVS: $Id: tikilib.php,v 1.695 2007-01-02 23:36:53 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -6275,18 +6275,6 @@ if (!$simple_wiki) {
 			    return $this->date_format($this->get_short_datetime_format(), $timestamp, $user);
 			}
 
-			function get_site_timezone_shortname($user = false) {
-			    // UTC, or blank for local
-			    $dc = &$this->get_date_converter($user);
-
-			    return $dc->getTzName();
-			}
-
-			function get_server_timezone_shortname($user = false) {
-			    // Site time is always UTC, from the user's perspective.
-			    return "UTC";
-			}
-
 			/**
 			  get_site_time_difference - Return the number of seconds needed to add to a
 			  'system' time to return a 'site' time.
@@ -6297,70 +6285,6 @@ if (!$simple_wiki) {
 			    $display_offset = $dc->display_offset;
 			    $server_offset = $dc->server_offset;
 			    return $display_offset - $server_offset;
-			}
-
-			/**
-			  Timezone saavy replacement for mktime()
-			 */
-			function make_time($hour, $minute, $second, $month, $day, $year, $timezone_id = false) {
-			    global $user; # ugh!
-
-				if ($year <= 69)
-				    $year += 2000;
-
-			    if ($year <= 99)
-				$year += 1900;
-
-			    $date = new Date();
-			    $date->setHour($hour);
-			    $date->setMinute($minute);
-			    $date->setSecond($second);
-			    $date->setMonth($month);
-			    $date->setDay($day);
-			    $date->setYear($year);
-
-#$rv = sprintf("make_time(): $date->format(%D %T %Z)=%s<br />\n", $date->format('%D %T %Z'));
-#print "<pre> make_time() start";
-#print_r($date);
-			    if ($timezone_id)
-				$date->setTZbyID($timezone_id);
-
-#print_r($date);
-#$rv .= sprintf("make_time(): $date->format(%D %T %Z)=%s<br />\n", $date->format('%D %T %Z'));
-#print $rv;
-			    return $date->getTime();
-			}
-
-			/**
-			  Timezone saavy replacement for mktime()
-			 */
-			function make_server_time($hour, $minute, $second, $month, $day, $year, $timezone_id = false) {
-			    global $user; # ugh!
-
-				if ($year <= 69)
-				    $year += 2000;
-
-			    if ($year <= 99)
-				$year += 1900;
-
-			    $date = new Date();
-			    $date->setHour($hour);
-			    $date->setMinute($minute);
-			    $date->setSecond($second);
-			    $date->setMonth($month);
-			    $date->setDay($day);
-			    $date->setYear($year);
-
-#print "<pre> make_server_time() start\n";
-#print_r($date);
-			    if ($timezone_id)
-				$date->setTZbyID($timezone_id);
-
-#print_r($date);
-			    $date->convertTZbyID($this->get_server_timezone());
-#print_r($date);
-#print "make_server_time() end\n</pre>";
-			    return $date->getTime();
 			}
 
 			/**
