@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.380 2006-12-31 09:26:11 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.381 2007-01-02 08:19:44 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1818,4 +1818,5 @@ if (!isset($_SESSION['wysiwyg'])) {
 $smarty->assign_by_ref('wysiwyg',$_SESSION['wysiwyg']);
 
 $smarty->assign_by_ref('phpErrors',$phpErrors);
+$smarty->assign_by_ref('cookie',$_SESSION['tiki_cookie_jar']);
 ?>
