@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.49 2006-07-31 13:05:16 hangerman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.50 2007-01-02 19:13:03 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -173,6 +173,7 @@ class NlLib extends TikiLib {
 
 	function newsletter_subscribe($nlId, $add, $isUser='n', $validateAddr='', $addEmail='') {
 		global $smarty, $tikilib, $user, $sender_email,  $userlib;
+		$add = trim($add);
 		if (empty($add))
 			return false;
 		if ($isUser == "y" && $addEmail == "y") {
