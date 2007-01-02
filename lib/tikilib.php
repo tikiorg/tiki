@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.693 2006-12-28 17:15:18 mose Exp $
+// CVS: $Id: tikilib.php,v 1.694 2007-01-02 23:31:55 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -169,12 +169,34 @@ class TikiLib extends TikiDB {
 	}
     }
 
+	function list_watches($offset, $maxRecords, $sort_mode, $find) {
+		if ($find) {	
+			$mid = ' where `event` like ?';
+			$bindvars = array('%'.$find.'%');
+		}
+		$query = 'select * from `tiki_user_watches`'.$mid.' order by '.$this->convert_sortmode($sort_mode);
+		$query_cant = 'select count(*) from `tiki_user_watches`'.$mid;
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
+		$ret = array();
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res;
+		}
+		$retval = array();
+		$retval["data"] = $ret;
+		$retval["cant"] = $cant;
+		return $retval; 
+	}
+
+
     /*shared*/
-    function add_user_watch($user, $event, $object, $type, $title, $url) {
-	global $userlib;
+    function add_user_watch($user, $event, $object, $type, $title, $url, $email='') {
 
 	$hash = md5(uniqid('.'));
-	$email = $userlib->get_user_email($user);
+	if ($user) {
+		global $userlib;
+		$email = $userlib->get_user_email($user);
+	}
 	$query = "delete from `tiki_user_watches` where ".$this->convert_binary()." `user`=? and `event`=? and `object`=?";
 	$this->query($query,array($user,$event,$object));
 	$query = "insert into `tiki_user_watches`(`user`,`event`,`object`,`email`,`hash`,`type`,`title`,`url`) ";
