@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_image.tpl,v 1.45 2006-11-16 00:24:35 niclone Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_image.tpl,v 1.46 2007-01-02 16:18:00 sylvieg Exp $ *}
 
 {if $popup}
 <?xml version="1.0" encoding="UTF-8"?>
@@ -108,7 +108,7 @@
 	<tr><td class="even">{tr}imagescale{/tr}:</td><td class="even">{if $resultscale}{$xsize_scaled}x{$ysize_scaled}{else}{tr}original size{/tr}{/if}</td></tr>
 	<tr><td class="odd">{tr}Hits{/tr}:</td><td class="odd">{$hits}</td></tr>
 	<tr><td class="even">{tr}Description{/tr}:</td><td class="even">{$description}</td></tr>
-	{if $feature_maps eq 'y'}
+	{if $feature_maps eq 'y' and $gal_info.geographic eq 'y'}
   		<tr><td class="odd">{tr}Latitude (WGS84/decimal degrees){/tr}:</td><td class="odd">{$lat|escape}</td></tr>
   		<tr><td class="even">{tr}Longitude (WGS84/decimal degrees){/tr}:</td><td class="even">{$lon|escape}</td></tr>
   	{/if}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.41 2006-11-20 04:20:48 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.42 2007-01-02 16:18:00 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -212,6 +212,7 @@ $smarty->assign('xsize', $info["xsize"]);
 $smarty->assign('ysize', $info["ysize"]);
 $smarty->assign_by_ref('hits', $info["hits"]);
 $smarty->assign_by_ref('image_user', $info["user"]);
+$smarty->assign_by_ref('gal_info', $gal_info);
 
 $galleries = $imagegallib->list_visible_galleries(0, -1, 'lastModif_desc', $user, '');
 $smarty->assign_by_ref('galleries', $galleries["data"]);
