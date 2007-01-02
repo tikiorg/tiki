@@ -2,15 +2,15 @@
 
       {if $feature_help eq 'y'}
 <a href="{$helpurl}Image+Galleries" target="tikihelp" class="tikihelp" title="{tr}Image Gallery{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
 
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-galleries.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}galleries tpl{/tr}">
-<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}
+<img src="pics/icons/shape_square_edit.png" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}
 
 {if $tiki_p_admin eq 'y'}
-<a href="tiki-admin.php?page=gal" class="tikihelp"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
+<a href="tiki-admin.php?page=gal" class="tikihelp"><img src='pics/icons/wrench.png' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}"  height="16" width="16" /></a>
 {/if}</h1>
 
 {if $tiki_p_create_galleries eq 'y'}
@@ -197,34 +197,34 @@
   <td style="text-align:right;" class="{cycle advance=false}">{$galleries[changes].hits}</td>
 {/if}
   <td class="{cycle}" nowrap="nowrap">
+  {if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_view_image_gallery eq 'y' ) }
+  <a class="gallink" href="tiki-list_gallery.php?galleryId={$galleries[changes].galleryId}"><img border='0' height="16" width="16" src='pics/icons/table.png' title='{tr}list{/tr}' alt='{tr}list{/tr}' /></a>
+  {/if}
   {if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
   {if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_create_galleries eq 'y' ) }
-    <a class="gallink" title="{tr}edit{/tr}" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;galleryId={$galleries[changes].galleryId}">{html_image file='img/icons/edit.gif' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' border='0'}</a>
+    <a class="gallink" title="{tr}edit{/tr}" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;galleryId={$galleries[changes].galleryId}"><img src='pics/icons/page_edit.png' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' border='0' width='16' height='16'></a>
   {/if}
   {/if}
   {if $tiki_p_upload_images eq 'y'}
   {if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_upload_images eq 'y' ) }
   {if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user) or $galleries[changes].public eq 'y'}
-    <a class="gallink" href="tiki-upload_image.php?galleryId={$galleries[changes].galleryId}"><img src='img/icons2/upload.gif' border='0' height="16" width="16" alt='{tr}Upload{/tr}' title='{tr}Upload{/tr}' /></a>
+    <a class="gallink" href="tiki-upload_image.php?galleryId={$galleries[changes].galleryId}"><img src='pics/icons/upload.png' border='0' height="16" width="16" alt='{tr}upload{/tr}' title='{tr}upload{/tr}' /></a>
   {if ($galleries[changes].geographic eq 'y')}
     <a class="gallink" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;make_map=1&amp;galleryId={$galleries[changes].galleryId}"><img src='img/icons/config.gif' alt='{tr}Make Map{/tr}' title='{tr}Make Map{/tr}' height="16" width="16" border='0' /></a>
   {/if}
   {/if}
   {/if}
   {/if}
-  {if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_view_image_gallery eq 'y' ) }
-  <a class="gallink" href="tiki-list_gallery.php?galleryId={$galleries[changes].galleryId}"><img border='0' height="16" width="18" src='img/icons/ico_table.gif' title='{tr}List{/tr}' alt='{tr}List{/tr}' /></a>
-  {/if}
   {if $tiki_p_admin eq 'y'}
     {if $galleries[changes].individual eq 'y'}
-	<a class="gallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=image+gallery&amp;permType=image+galleries&amp;objectId={$galleries[changes].galleryId}"><img src='img/icons/key_active.gif' alt='{tr}active perms{/tr}' title='{tr}active perms{/tr}' height="16" width="17" border='0' /></a>
+	<a class="gallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=image+gallery&amp;permType=image+galleries&amp;objectId={$galleries[changes].galleryId}"><img src='pics/icons/key_active.png' alt='{tr}active perms{/tr}' title='{tr}active perms{/tr}' height="16" width="16" border='0' /></a>
     {else}
-	<a class="gallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=image+gallery&amp;permType=image+galleries&amp;objectId={$galleries[changes].galleryId}"><img src='img/icons/key.gif' alt='{tr}perms{/tr}' title='{tr}perms{/tr}' height="16" width="17" border='0' /></a>
+	<a class="gallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=image+gallery&amp;permType=image+galleries&amp;objectId={$galleries[changes].galleryId}"><img src='pics/icons/key.png' alt='{tr}perms{/tr}' title='{tr}perms{/tr}' height="16" width="16" border='0' /></a>
     {/if}
   {/if}
 {if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
   {if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_create_galleries eq 'y' ) }
-    &nbsp;&nbsp;<a class="gallink" title="{tr}delete{/tr}" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removegal={$galleries[changes].galleryId}"><img src='img/icons2/delete.gif' height="16" width="16" border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' /></a>
+    &nbsp;&nbsp;<a class="gallink" title="{tr}delete{/tr}" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removegal={$galleries[changes].galleryId}"><img src='pics/icons/cross.png' height="16" width="16" border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' /></a>
   {/if}
   {/if}
 
