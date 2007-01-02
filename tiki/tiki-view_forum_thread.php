@@ -3,7 +3,7 @@
 //print "<!--\n";
 //$start_time = microtime(true);
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.85 2006-12-28 11:16:39 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.86 2007-01-02 19:02:17 rlpowell Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -258,7 +258,6 @@ if ($user && $tiki_p_notepad == 'y' && $feature_notepad == 'y' && isset($_REQUES
 }
 
 if ($feature_user_watches == 'y') {
-	$watch_type = 
     if ($user && isset($_REQUEST['watch_event'])) {
 	check_ticket('view-forum');
 	if ($_REQUEST['watch_action'] == 'add') {
