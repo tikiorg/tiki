@@ -236,8 +236,8 @@ function wikiplugin_tracker($data, $params) {
 				$back.= '<input type="hidden" name="email" value="'.$_REQUEST["email"].'" />';
 			if (isset($_REQUEST['regcode']))
 				$back.= '<input type="hidden" name="regcode" value="'.$_REQUEST["regcode"].'" />';
-			if (isset($_REQUEST['group']))
-				$back.= '<input type="hidden" name="group" value="'.$_REQUEST["group"].'" />';
+			if (isset($_REQUEST['chosenGroup'])) // for registration
+				$back.= '<input type="hidden" name="chosenGroup" value="'.$_REQUEST["chosenGroup"].'" />';
 			if (isset($_REQUEST['register']))
 				$back.= '<input type="hidden" name="register" value="'.$_REQUEST["register"].'" />';
 			if ($showtitle == 'y') {
