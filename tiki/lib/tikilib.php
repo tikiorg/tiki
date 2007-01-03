@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.695 2007-01-02 23:36:53 mose Exp $
+// CVS: $Id: tikilib.php,v 1.696 2007-01-03 01:09:35 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -6788,8 +6788,35 @@ function alterprefs() {
 	return true;
 }
 
-function validate_email_syntax($email) {
-	return eregi("^[_a-z0-9\.\-]+@[_a-z0-9\.\-]+\.[a-z]{2,4}$",$email);
+function validate_email($email,$checkserver='n') {
+	$valid_syntax = eregi("^[_a-z0-9\.\-]+@[_a-z0-9\.\-]+\.[a-z]{2,4}$",$email);
+	if (!$valid_syntax) {
+		return false;
+	} elseif ($checkserver == 'y') {
+		include 'Net/DNS.php';
+		$resolver = new Net_DNS_Resolver();
+		$domain = substr(strstr($email,'@'),1);
+		$answer = $resolver->query($domain,'MX');
+		if (!$answer) {
+			return false;
+		} else {
+			foreach ($answer->answer as $server) {
+				$mxserver[$server->preference] = $server->exchange;
+			}
+			krsort($mxserver);
+			foreach ($mxserver as $server) {
+				$test = fsockopen($server,25,$errno,$errstr,15);
+				if ($test) {
+					fclose($test);
+					return true;
+				}
+				fclose($test);
+			}
+			return false;
+		}
+	} else {
+		return true;
+	}
 }
 
 ?>

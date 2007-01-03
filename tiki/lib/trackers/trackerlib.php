@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.156 2006-12-28 17:15:18 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.157 2007-01-03 01:09:34 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1227,6 +1227,7 @@ class TrackerLib extends TikiLib {
 	// check the validity of each field values of a tracker item
 	// and the presence of mandatory fields
 	function check_field_values($ins_fields, $categorized_fields='') {
+		global $validateEmail;
 		$mandatory_fields = array();
 		$erroneous_values = array();
         if (isset($ins_fields)&&isset($ins_fields['data']))        
@@ -1271,7 +1272,7 @@ class TrackerLib extends TikiLib {
 
 				// email
 				case 'm':
-					if(!validate_email_syntax($f['value'])) {
+					if(!validate_email($f['value'],$validateEmail)) {
 						$erroneous_values[] = $f;
 					}
 					break;
