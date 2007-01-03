@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.74 2006-12-27 02:55:54 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.75 2007-01-03 01:09:34 mose Exp $
 
 /**
  * Tiki registration script
@@ -9,7 +9,7 @@
  * @license GNU LGPL
  * @copyright Tiki Community
  * @date created: 2002/10/8 15:54
- * @date last-modified: $Date: 2006-12-27 02:55:54 $
+ * @date last-modified: $Date: 2007-01-03 01:09:34 $
  */
 
 // Initialization
@@ -71,7 +71,7 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
     die;
   }
   
-  if(strlen($_REQUEST["name"])>37) {
+  if(strlen($_REQUEST["name"])>200) {
     $smarty->assign('msg',tra("Username is too long"));
     $smarty->display("error.tpl");
     die;
@@ -135,8 +135,12 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
     }
   }
   
+	if ($login_is_email == 'y') {
+		$_REQUEST['email'] = $_REQUEST["name"];
+	}
+
 	$email_valid = 'y';
-	if (!validate_email_syntax($_REQUEST["email"])) {
+	if (!validate_email($_REQUEST["email"],$validateEmail)) {
 		$email_valid = 'n';
 	} elseif ($userTracker == 'y') {
 		$re = $userlib->get_group_info(isset($_REQUEST['chosenGroup'])? $_REQUEST['chosenGroup']: 'Registered');

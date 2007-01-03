@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_notifications.php,v 1.15 2006-09-19 16:33:13 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_notifications.php,v 1.16 2007-01-03 01:09:34 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,26 +8,89 @@
 
 // Initialization
 require_once ('tiki-setup.php');
-
 include_once ('lib/notifications/notificationlib.php');
 
 if ($tiki_p_admin != 'y') {
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-
 	$smarty->display("error.tpl");
 	die;
 }
 
+$watches['user_registers'] = array(
+	'label'=>tra('A user registers'),
+	'type'=>'users',
+	'url'=>'tiki-adminusers.php',
+	'object'=>'*'
+);
+$watches['article_submitted'] = array(
+	'label'=>tra('A user submits an article'),
+	'type'=>'cms',
+	'url'=>'tiki-list_submissions.php',
+	'object'=>'*'
+);
+$watches['wiki_page_changes'] = array(
+	'label'=>tra('Any wiki page is changed'),
+	'type'=>'wiki',
+	'url'=>'tiki-lastchanges.php',
+	'object'=>'*'
+);
+$watches['wiki_page_changes_incl_minor'] = array(
+	'label'=>tra('Any wiki page is changed, even minor changes'),
+	'type'=>'wiki',
+	'url'=>'tiki-lastchanges.php',
+	'object'=>'*'
+);
+$watches['wiki_comment_changes'] = array(
+	'label'=>tra('A comment in a wiki page is posted or edited'),
+	'type'=>'wiki',
+	'url'=>'',
+	'object'=>'*'
+);
+$watches['php_error'] = array(
+	'label'=>tra('PHP error'),
+	'type'=>'system',
+	'url'=>'',
+	'object'=>'*'
+);
+
+$save = true;
+$login = $email = '';
 if (isset($_REQUEST["add"])) {
 	check_ticket('admin-notif');
-	$notificationlib->add_mail_event($_REQUEST["event"], '*', $_REQUEST["email"]);
+	if (!empty($_REQUEST['login'])) {
+		if ($userlib->user_exists($_REQUEST['login'])) {
+			$login = $_REQUEST['login'];
+		} else {
+			$tikifeedback[] = array('num'=>0,'mes'=>tra("Invalid username"));
+			$save = false;
+		}
+	} elseif (!empty($_REQUEST['email'])) {
+		if (validate_email($_REQUEST['email'],$validateEmail)) {
+			$email = $_REQUEST['email'];
+		} else {
+			$tikifeedback[] = array('num'=>0,'mes'=>tra("Invalid email"));
+			$save = false;
+		}
+	} else {
+		$tikifeedback[] = array('num'=>0,'mes'=>tra("You need to provide a username or an email"));
+		$save = false;
+	}
+	if ($save and isset($_REQUEST['event']) and isset($watches[$_REQUEST['event']])) {
+		$tikilib->add_user_watch($login, 
+			$_REQUEST["event"], 
+			$watches[$_REQUEST['event']]['object'], 
+			$watches[$_REQUEST['event']]['type'], 
+			$watches[$_REQUEST['event']]['label'],
+			$watches[$_REQUEST['event']]['url'],
+			$email);
+	}
 }
 
 if (isset($_REQUEST["removeevent"])) {
   $area = 'delnotif';
   if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
-		$notificationlib->remove_mail_event($_REQUEST["removeevent"], $_REQUEST["object"], $_REQUEST["email"]);
+		$tikilib->remove_user_watch_by_hash($_REQUEST["removeevent"]);
   } else {
     key_get($area);
   }
@@ -56,7 +119,7 @@ if (isset($_REQUEST["find"])) {
 $smarty->assign('find', $find);
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
-$channels = $notificationlib->list_mail_events($offset, $maxRecords, $sort_mode, $find);
+$channels = $tikilib->list_watches($offset, $maxRecords, $sort_mode, $find);
 
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
@@ -76,9 +139,6 @@ if ($offset > 0) {
 }
 
 $smarty->assign_by_ref('channels', $channels["data"]);
-
-$admin_mail = $userlib->get_user_email('admin');
-$smarty->assign('admin_mail', $admin_mail);
 
 ask_ticket('admin-notif');
 
