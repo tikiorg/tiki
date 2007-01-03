@@ -17,30 +17,12 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *           default_date: default date if $string is empty
  * -------------------------------------------------------------
  */
-require_once $smarty->_get_plugin_filepath('shared','make_timestamp');
-function smarty_modifier_tiki_date_format($string, $format = "%b %e, %Y", $default_date=null, $tra_format=null)
-{
-	global $tikilib, $user;
-	$dc =& $tikilib->get_date_converter($user);
-	
-	$disptime = $dc->getDisplayDateFromServerDate($string);
-
-	global $language;
-	if ($tikilib->get_preference("language", "en") != $language && $tra_format) {
-		$format = $tra_format;
-	}
-	
-	if ($tikilib->get_display_offset($user)) {
-		$format = preg_replace("/[ ]?%Z/","",$format);
-	}
-	else {
-		$format = preg_replace("/%Z/","UTC",$format);
-	}
-	
-	$date = new Date($disptime);
-	return $date->format($format);
+function smarty_modifier_tiki_date_format($string, $format) {
+	global $tikilib, $user, $server_timezone, $tikidate;
+	$tz = $tikilib->get_user_preference($user,'display_timezone',$server_timezone);
+	$tikidate->setDate($string);
+	$tikidate->convertTZbyID($tz);
+	return $tikidate->format($format);
 }
-
-
 
 ?>
