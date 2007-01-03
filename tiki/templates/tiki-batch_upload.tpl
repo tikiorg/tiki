@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-batch_upload.tpl,v 1.8 2006-09-23 15:49:59 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-batch_upload.tpl,v 1.9 2007-01-03 17:00:41 sylvieg Exp $ *}
 <h1><a href="tiki-batch_upload.php" class="pagetitle">{tr}Directory batch upload{/tr}</a></h1>
 <span class="button2">
 {if $galleryId ne ''}
@@ -16,25 +16,7 @@
 <form method="get" action="tiki-batch_upload.php" name="f">
 <table border="0" class="normal" id="imagelist" width="100%">
 <tr>
-<th width="42" class="heading" nowrap="nowrap">
-<input type="checkbox" name="imgs[]" value="ALL" id="box_all" onclick="disableOthers(this);"/>
-<script type="text/javascript">
-{literal}
-<!--
-function disableOthers(all) {
-    els = document.getElementsByTagName("input");
-    for(i = 0; i < els.length; ++i) {
-    if(els[i].type == "checkbox" && els[i].name == "imgs[]" && els[i].value != "ALL" && all.checked) {
-      els[i].disabled = true;
-    } else {
-      els[i].disabled = false;
-    }
-  }
-}
-//-->
-{/literal}
-</script>
-<label class="tableheading" for="box_all">{tr}all{/tr}</label></th>
+<th width="42" class="heading"></th>
 <th class="heading"><a class="tableheading" href="javascript:void(0);">{tr}filename{/tr}</a></th>
 <th class="heading" width="80"><a class="tableheading" href="javascript:void(0);">{tr}width{/tr}</a></th>
 <th class="heading" width="80"><a class="tableheading" href="javascript:void(0);">{tr}height{/tr}</a></th>
@@ -50,6 +32,10 @@ function disableOthers(all) {
 <td>{$it[3]|kbsize}</td>
 <td>{$it[4]}</td></tr>
 {/foreach}
+	<script type="text/javascript"> /* <![CDATA[ */
+	document.write("<tr><td colspan='4'><input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'imgs[]',this.checked)\"/>");
+	document.write("<label for=\"clickall\">{tr}select all{/tr}</label></td></tr>");
+	/* ]]> */</script>
 </table>
 <br />
 &nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="removeExt" value="true" id="removeExt" /> {tr}remove file extension from image name{/tr}<br />
