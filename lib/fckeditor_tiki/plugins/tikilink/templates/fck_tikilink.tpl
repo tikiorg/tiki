@@ -28,6 +28,7 @@ window.onload = function ()	{
 //If an anchor (A) object is currently selected, load the properties into the dialog 
 function LoadSelected()	{
 	var sSelected;
+	var oLink = FCK.Selection.MoveToAncestorNode( 'A' ) ;
 	if ( oEditor.FCKBrowserInfo.IsGecko ) {
 		sSelected = FCK.EditorWindow.getSelection();
 	} else {
@@ -37,7 +38,7 @@ function LoadSelected()	{
 		var listen = document.getElementById("txtTitle");
 		listen.value = sSelected;
 		var listen1 = document.getElementById( 'txtPage' );
-		listen1.value = oLink.getAttribute( 'href' ) ;
+		if ( oLink != null ) { listen1.value = oLink.getAttribute( 'href' ) ; }
 	}
 }
 
