@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.382 2007-01-03 00:55:33 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.383 2007-01-03 05:23:12 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -799,7 +799,8 @@ $pref['feature_jscalendar'] = 'n';
 $pref['feature_action_calendar'] = 'n';
 
 # dates
-$pref['display_timezone'] = 'EST';
+$server_date = new Date();
+$pref['server_timezone'] = $server_date->tz->getID();
 $pref['long_date_format'] = '%A %d of %B, %Y';
 $pref['long_time_format'] = '%H:%M:%S %Z';
 $pref['short_date_format'] = '%a %d of %b, %Y';

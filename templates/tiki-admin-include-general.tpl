@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.55 2006-12-31 08:11:37 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.56 2007-01-03 05:23:12 mose Exp $ *}
 
 <script type="text/javascript">
 {literal}
@@ -348,21 +348,25 @@
       <table class="admin"><tr>
         <td class="heading" colspan="2" align="center">{tr}Date and Time Formats{/tr}</td>
       </tr><tr>
+        <td class="form" ><label for="general-timezone">{tr}Default timezone{/tr}:</label></td>
+        <td ><select name="server_timezone" id="general-timezone">
+				{foreach key=tz item=tzinfo from=$timezones}
+				{math equation="floor(x / (3600000))" x=$tzinfo.offset assign=offset}{math equation="(x - (y*3600000)) / 60000" y=$offset x=$tzinfo.offset assign=offset_min format="%02d"}
+				<option value="{$tz}"{if $server_timezone eq $tz} selected="selected"{/if}>{$tz} (UTC{if $offset >= 0}+{/if}{$offset}h{if $offset_min gt 0}{$offset_min}{/if})</option>
+				{/foreach}
+				</select></td>
+      </tr><tr>
         <td class="form" ><label for="general-long_date">{tr}Long date format{/tr}:</label></td>
-        <td ><input type="text" name="long_date_format" id="general-long_date"
-             value="{$long_date_format|escape}" size="40"/></td>
+        <td ><input type="text" name="long_date_format" id="general-long_date" value="{$long_date_format|escape}" size="40"/></td>
       </tr><tr>
         <td class="form"><label for="general-short_date">{tr}Short date format{/tr}:</label></td>
-        <td><input type="text" name="short_date_format" id="general-short_date"
-             value="{$short_date_format|escape}" size="40"/></td>
+        <td><input type="text" name="short_date_format" id="general-short_date" value="{$short_date_format|escape}" size="40"/></td>
       </tr><tr>
         <td class="form"><label for="general-long_time">{tr}Long time format{/tr}:</label></td>
-        <td><input type="text" name="long_time_format" id="general-long_time"
-             value="{$long_time_format|escape}" size="40"/></td>
+        <td><input type="text" name="long_time_format" id="general-long_time" value="{$long_time_format|escape}" size="40"/></td>
       </tr><tr>
         <td class="form"><label for="general-short_time">{tr}Short time format{/tr}:</label></td>
-        <td><input type="text" name="short_time_format" id="general-short_time"
-             value="{$short_time_format|escape}" size="40"/></td>
+        <td><input type="text" name="short_time_format" id="general-short_time" value="{$short_time_format|escape}" size="40"/></td>
       </tr><tr>
         <td class="form" ><label for="general-display_fieldorder">{tr}Fields display order{/tr}:</label></td>
         <td ><select name="display_field_order" id="general-display_fieldorder">
