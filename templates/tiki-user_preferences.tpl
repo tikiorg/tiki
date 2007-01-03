@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.93 2006-12-31 08:11:37 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.94 2007-01-03 07:55:24 mose Exp $ *}
 <h1>{if $userwatch ne $user}<a class="pagetitle" href="tiki-user_preferences.php?view_user={$userwatch}">{tr}User Preferences{/tr}: {$userwatch}</a>{else}<a class="pagetitle" href="tiki-user_preferences.php">{tr}User Preferences{/tr}</a>{/if}
 
 {if $feature_help eq 'y'}
@@ -187,8 +187,14 @@
   </td></tr>
   <tr><td class="form">{tr}Displayed time zone{/tr}:</td>
   <td class="form">
-  <input type="radio" name="display_timezone" value="UTC" {if $display_timezone eq 'UTC'}checked="checked"{/if}/> {tr}UTC{/tr}
-  <input type="radio" name="display_timezone" value="Local" {if $display_timezone ne 'UTC'}checked="checked"{/if}/> {tr}Local{/tr}
+	<select name="display_timezone" id="display_timezone">
+	{foreach key=tz item=tzinfo from=$timezones}
+	{math equation="floor(x / (3600000))" x=$tzinfo.offset assign=offset}{math equation="(x - (y*3600000)) / 60000" y=$offset x=$tzinfo.offset assign=offset_min format="%02d"}
+	<option value="{$tz}"{if $display_timezone eq $tz} selected="selected"{/if}>{$tz} (UTC{if $offset >= 0}+{/if}{$offset}h{if $offset_min gt 0}{$offset_min}{/if})</option>
+	{/foreach}
+	</select><br />
+	<a href="#" onclick="document.getElementById('display_timezone').value='{$server_timezone}';">{tr}Reset to default timezone{/tr}</a>
+	({$server_timezone})
   </td>
   </tr>
   <tr><td class="form">{tr}User information{/tr}:</td><td class="form">
