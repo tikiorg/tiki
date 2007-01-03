@@ -83,7 +83,7 @@ if ( FCKBrowserInfo.IsIE ) {
 				var sPage = aWikiLinks[i].match( /\(\(([^\)\|]*)(\|([^\)]*))?\)\)/ )[1] ;
 				var sName = aWikiLinks[i].match( /\(\(([^\)\|]*)(\|([^\)]*))?\)\)/ )[3] ;
 				if (! sName ) {
-					$sName = $sPage ;
+					sName = sPage ;
 				}
 				oRange.pasteHTML( '<a href="' + sName + '" class="wiki" contenteditable="false" _wikilink="' + sName + '">' + sName + '</a>' );
 			}
