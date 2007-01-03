@@ -7,12 +7,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 require_once $smarty->_get_plugin_filepath('modifier','tiki_date_format');
-function smarty_modifier_tiki_long_time($string)
-{
-	global $tikilib;
-	return smarty_modifier_tiki_date_format($string, $tikilib->get_long_time_format(), null, tra("%H:%M:%S %Z"));
+function smarty_modifier_tiki_long_time($string) {
+	global $long_time_format;
+	return smarty_modifier_tiki_date_format($string, $long_time_format);
 }
-
-
 
 ?>
