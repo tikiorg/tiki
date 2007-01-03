@@ -279,7 +279,7 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 				if (@unlink ($filepath))
 					$feedback[] = sprintf(tra('File %s removed from Batch directory.'),$name);
 				else
-						$feedback[] = "!!! ". sprintf(tra('Impossible to remove fiel %s from Batch directory.'),$name);
+						$feedback[] = "!!! ". sprintf(tra('Impossible to remove file %s from Batch directory.'),$name);
 			} else {
 				$feedback[] = "!!!".tra('Upload was not successful'). ': ' . $name;
 				if (($fgal_use_db == 'n') || ($podCastGallery)) {
