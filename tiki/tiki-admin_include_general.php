@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.51 2006-12-31 08:11:36 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.52 2007-01-03 05:23:12 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -84,6 +84,7 @@ elseif (isset($_REQUEST["prefs"])) {
         "display_field_order",
         "display_timezone",
         "language",
+        "server_timezone",
         "long_date_format",
         "long_time_format",
         "short_date_format",
@@ -175,16 +176,7 @@ $languages = $tikilib->list_languages();
 $smarty->assign_by_ref("languages", $languages);
 
 // Get list of time zones
-$timezone_options = $tikilib->get_timezone_list(false);
-$smarty->assign_by_ref("timezone_options", $timezone_options);
-
-// Get TimeZone information
-$server_time = new Date();
-$display_timezone = $tikilib->get_preference("display_timezone", $server_time->tz->getID());
-$smarty->assign_by_ref("display_timezone", $display_timezone);
-
-$timezone_server = $timezone_options[$server_time->tz->getID()];
-$smarty->assign_by_ref("timezone_server", $timezone_server);
+$smarty->assign_by_ref("timezones", $GLOBALS['_DATE_TIMEZONE_DATA']);
 
 // Get information for alternate homes
 $smarty->assign("home_forum_url", "tiki-view_forum.php?forumId=" . $home_forum);
@@ -193,19 +185,17 @@ $smarty->assign("home_gallery_url", "tiki-browse_gallery.php?galleryId=" . $home
 $smarty->assign("home_file_gallery_url", "tiki-list_file_gallery.php?galleryId=" . $home_file_gallery);
 
 if ($home_blog) {
-    $hbloginfo = $tikilib->get_blog($home_blog);
-
-    $smarty->assign("home_blog_name", substr($hbloginfo["title"], 0, 20));
+	$hbloginfo = $tikilib->get_blog($home_blog);
+	$smarty->assign("home_blog_name", substr($hbloginfo["title"], 0, 20));
 } else {
-    $smarty->assign("home_blog_name", '');
+	$smarty->assign("home_blog_name", '');
 }
 
 if ($home_gallery) {
-    $hgalinfo = $tikilib->get_gallery($home_gallery);
-
-    $smarty->assign("home_gal_name", substr($hgalinfo["name"], 0, 20));
+	$hgalinfo = $tikilib->get_gallery($home_gallery);
+	$smarty->assign("home_gal_name", substr($hgalinfo["name"], 0, 20));
 } else {
-    $smarty->assign("home_gal_name", '');
+	$smarty->assign("home_gal_name", '');
 }
 
 if ($home_forum) {
@@ -213,32 +203,18 @@ if ($home_forum) {
 	if (!isset($commentslib)) {
 		$commentslib = new Comments($dbTiki);
 	}
-    $hforuminfo = $commentslib->get_forum($home_forum);
-
-    $smarty->assign("home_forum_name", substr($hforuminfo["name"], 0, 20));
+	$hforuminfo = $commentslib->get_forum($home_forum);
+	$smarty->assign("home_forum_name", substr($hforuminfo["name"], 0, 20));
 } else {
-    $smarty->assign("home_forum_name", '');
+	$smarty->assign("home_forum_name", '');
 }
 
 if ($home_file_gallery) {
-    $hgalinfo = $tikilib->get_gallery($home_file_gallery);
-
-    $smarty->assign("home_fil_name", substr($hgalinfo["name"], 0, 20));
+	$hgalinfo = $tikilib->get_gallery($home_file_gallery);
+	$smarty->assign("home_fil_name", substr($hgalinfo["name"], 0, 20));
 } else {
-    $smarty->assign("home_fil_name", '');
+	$smarty->assign("home_fil_name", '');
 }
 
-// Get Date/Time preferences
-$long_date_format = $tikilib->get_preference("long_date_format", "%A %d " . tra("DATE-of"). " %B, %Y");
-$smarty->assign_by_ref("long_date_format", $long_date_format);
-
-$short_date_format = $tikilib->get_preference("short_date_format", "%a %d " . tra("DATE-of"). " %b, %Y");
-$smarty->assign_by_ref("short_date_format", $short_date_format);
-
-$long_time_format = $tikilib->get_preference("long_time_format", "%H:%M:%S %Z");
-$smarty->assign_by_ref("long_time_format", $long_time_format);
-
-$short_time_format = $tikilib->get_preference("short_time_format", "%H:%M %Z");
-$smarty->assign_by_ref("short_time_format", $short_time_format);
 ask_ticket('admin-inc-general');
 ?>
