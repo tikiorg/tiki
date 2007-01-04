@@ -22,6 +22,7 @@ $langmapping = array(
     'en-uk' => array( 'English British',  tra("English British")	),
     'es' => array(  'Español',     tra("Spanish")      ),
     'el' => array(  'Greek',        tra("Greek")        ),
+		'fa' => array(  'فارسي',        tra("Farsi")        ),
     'fj' => array(  'Fijian',       tra("Fijian")      ),
     'fr' => array(  'Français',    tra("French")       ),
     'gl' => array(  'Galego',    tra("Galician")       ),
