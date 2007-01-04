@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_edit.php,v 1.16 2005-05-18 10:58:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_edit.php,v 1.17 2007-01-04 05:01:49 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, 
 //                          George G. Geller et. al.
@@ -253,12 +253,7 @@ function setup_options(&$tpl){
 
 	$tpl['qpp'] = $qpp;
 	
-	// Additional data for smarty
-	$tzName = $tikilib->get_display_timezone($user);
-	if ($tzName == "Local"){
-		$tzName = "";
-	}
-	$tpl['siteTimeZone'] = $tzName;
+	$tpl['siteTimeZone'] = $display_timezone;
 }
 
 $tpl = array();
