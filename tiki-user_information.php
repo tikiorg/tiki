@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.36 2006-12-27 06:48:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.37 2007-01-04 04:45:46 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -47,12 +47,11 @@ $customfields = $registrationlib->get_customfields($userwatch);
 $smarty->assign_by_ref('customfields', $customfields);
 
 if ($feature_friends == 'y') {
-     $smarty->assign('friend', $tikilib->verify_friendship($userwatch, $user));
+	$smarty->assign('friend', $tikilib->verify_friendship($userwatch, $user));
 }
 
 if ($tiki_p_admin != 'y') {
 	$user_information = $tikilib->get_user_preference($userwatch, 'user_information', 'public');
-
 	if ($user_information == 'private') {
 		$smarty->assign('msg', tra("The user has chosen to make his information private"));
 		$smarty->display("error.tpl");
@@ -60,30 +59,22 @@ if ($tiki_p_admin != 'y') {
 	}
 }
 
-$smarty->assign('mid', 'tiki-user_information.tpl');
 
 if ($user) {
 	$smarty->assign('sent', 0);
-
 	if (isset($_REQUEST['send'])) {
 		check_ticket('user-information');
 		$smarty->assign('sent', 1);
 
 		$message = '';
 
-		// Validation:
-		// must have a subject or body non-empty (or both)
 		if (empty($_REQUEST['subject']) && empty($_REQUEST['body'])) {
 			$smarty->assign('message', tra('ERROR: Either the subject or body must be non-empty'));
-
 			$smarty->display("tiki.tpl");
 			die;
 		}
-
 		$message = tra('Message sent to'). ':' . $userwatch . '<br />';
-		$messulib->post_message($userwatch, $user, $_REQUEST['to'],
-			'', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority']);
-
+		$messulib->post_message($userwatch, $user, $_REQUEST['to'], '', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority']);
 		$smarty->assign('message', $message);
 	}
 }
@@ -91,7 +82,6 @@ if ($feature_score == 'y' and isset($user) and $user != $userwatch) {
 	$tikilib->score_event($user, 'profile_see');
 	$tikilib->score_event($userwatch, 'profile_is_seen');
 }
-global $site_style;
 
 $smarty->assign('priority',3);
 $allowMsgs = $tikilib->get_user_preference($userwatch,'allowMsgs','y');
@@ -119,12 +109,6 @@ $smarty->assign('avatar', $avatar);
 $user_information = $tikilib->get_user_preference($userwatch, 'user_information', 'public');
 $smarty->assign('user_information', $user_information);
 
-$timezone_options = $tikilib->get_timezone_list(true);
-$smarty->assign_by_ref('timezone_options', $timezone_options);
-$server_time = new Date();
-$display_timezone = $tikilib->get_user_preference($userwatch, 'display_timezone', $server_time->tz->getID());
-$smarty->assign_by_ref('display_timezone', $display_timezone);
-
 $userinfo = $userlib->get_user_info($userwatch);
 $email_isPublic = $tikilib->get_user_preference($userwatch, 'email is public', 'n');
 if ($email_isPublic != 'n') {
@@ -150,6 +134,7 @@ ask_ticket('user-information');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
+$smarty->assign('mid', 'tiki-user_information.tpl');
 $smarty->display("tiki.tpl");
 
 ?>
