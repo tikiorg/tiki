@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.109 2006-12-28 17:15:17 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.110 2007-01-04 15:58:41 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -211,7 +211,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 		$mainfieldId = $fid;
 	}
 
-	if (isset($tracker_info['defaultOrderKey']) and $tracker_info['defaultOrderKey'] == $xfields["data"][$i]['fieldId']) {
+	if (!empty($tracker_info['defaultOrderKey']) and $tracker_info['defaultOrderKey'] == $xfields["data"][$i]['fieldId']) {
 		$orderkey = true;
 	}
 	if (($xfields["data"][$i]['isTblVisible'] == 'y' or $xfields["data"][$i]['isSearchable'] == 'y') 
@@ -591,6 +591,8 @@ if (!isset($_REQUEST["sort_mode"])) {
 			$sort_mode = 'created';
 		elseif ($orderkey) {
 			$sort_mode = 'f_'.$tracker_info['defaultOrderKey'];
+		} else {
+			$sort_mode = 'lastModif';
 		}
 		if (isset($tracker_info['defaultOrderDir'])) {
 			$sort_mode.= "_".$tracker_info['defaultOrderDir'];
