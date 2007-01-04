@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.85 2006-12-14 16:40:32 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.86 2007-01-04 02:36:12 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 <h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
 
@@ -132,7 +132,7 @@ class="prevnext">{tr}All{/tr}</a>
 {section name=user loop=$users}
 <tr class="{cycle}">
 <td class="thin"><input type="checkbox" name="checked[]" value="{$users[user].user}" {if $users[user].checked eq 'y'}checked="checked" {/if}/></td>
-<td class="thin"><a class="link" href="tiki-user_preferences.php?view_user={$users[user].user}" title="{tr}Change user preferences{/tr}: {$users[user].user}"><img border="0" alt="{tr}Change user preferences{/tr}: {$users[user].user}" src="pics/icons/wrench.png" width='16' height='16' /></a></td>
+<td class="thin"><a class="link" href="tiki-user_preferences.php?userId={$users[user].userId}" title="{tr}Change user preferences{/tr}: {$users[user].user}"><img border="0" alt="{tr}Change user preferences{/tr}: {$users[user].user}" src="pics/icons/wrench.png" width='16' height='16' /></a></td>
 <td class="thin"><a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}{if feature_tabs ne 'y'}#2{/if}"  
 title="{tr}edit account settings{/tr}: {$users[user].user}"><img border="0" alt="{tr}edit account settings{/tr}: {$users[user].user}" src="pics/icons/page_edit.png" width='16' height='16' /></a></td>
 <td><a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}{if feature_tabs ne 'y'}#2{/if}" title="{tr}edit account settings{/tr}">{$users[user].user}</a></td>
