@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.105 2006-12-28 17:15:17 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.106 2007-01-04 17:28:50 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -495,7 +495,7 @@ if ($textarea_options) {
 	$smarty->assign('quicktags', $quicktags["data"]);
 }
 
-if ($tiki_p_admin_trackers == 'y') {
+if ($tiki_p_admin_trackers == 'y' or $tiki_p_modify_tracker_items == 'y') {
 	if (isset($_REQUEST["remove"])) {
 		check_ticket('view-trackers-items');
 		$trklib->remove_tracker_item($_REQUEST["remove"]);
@@ -786,33 +786,6 @@ $smarty->assign_by_ref('users', $users);
 $groups = $userlib->list_all_groups();
 $smarty->assign_by_ref('groups', $groups);
 
-$smarty->assign('mail_msg', '');
-$smarty->assign('email_mon', '');
-
-if ($user) {
-	if (isset($_REQUEST["monitor"])) {
-		check_ticket('view-trackers-items');
-		$user_email = $userlib->get_user_email($user);
-		$emails = $notificationlib->get_mail_events('tracker_item_modified', $_REQUEST["itemId"]);
-		if (in_array($user_email, $emails)) {
-			$notificationlib->remove_mail_event('tracker_item_modified', $_REQUEST["itemId"], $user_email);
-			$mail_msg = tra('Your email address has been removed from the list of addresses monitoring this item');
-		} else {
-			$notificationlib->add_mail_event('tracker_item_modified', $_REQUEST["itemId"], $user_email);
-			$mail_msg = tra('Your email address has been added to the list of addresses monitoring this item');
-		}
-		$smarty->assign('mail_msg', $mail_msg);
-	}
-	$user_email = $userlib->get_user_email($user);
-	$emails = $notificationlib->get_mail_events('tracker_item_modified', $_REQUEST["itemId"]);
-
-	if (in_array($user_email, $emails)) {
-		$smarty->assign('email_mon', tra('Cancel monitoring'));
-	} else {
-		$smarty->assign('email_mon', tra('Monitor'));
-	}
-}
-
 if ($feature_user_watches == 'y' and $tiki_p_watch_trackers == 'y') {
   if ($user and isset($_REQUEST['watch'])) {
     check_ticket('view-trackers');
@@ -828,9 +801,6 @@ if ($feature_user_watches == 'y' and $tiki_p_watch_trackers == 'y') {
     $smarty->assign('user_watching_tracker', 'y');
   }
 }
-
-
-
 
 if ($tracker_info["useComments"] == 'y') {
 	if ($tiki_p_admin_trackers == 'y' and isset($_REQUEST["remove_comment"])) {
