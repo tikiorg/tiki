@@ -151,8 +151,8 @@ class CalendarLib extends TikiLib {
 		    return array();
 		}
 
-		$tstart = $dc->getServerDateFromDisplayDate($tstart);/* user time -> server time */;
-		$tstop = $dc->getServerDateFromDisplayDate($tstop);
+		$tstart = $dc->getDisplayDateFromUTC($tstart);/* user time -> server time */;
+		$tstop = $dc->getDisplayDateFromUTC($tstop);
 		
 		$where = array();
 		$bindvars=array();
@@ -252,16 +252,16 @@ class CalendarLib extends TikiLib {
 			if ($rez["role"] == '6') {
 				$org[] = $rez["username"];
 			} elseif ($rez["username"]) {
-				$ppl[] = $rez["username"] . ":" . $rez["role"];
+				$ppl[] = array('name'=>$rez["username"],'role'=>$rez["role"]);
 			}
 		}
 
-		$res["participants"] = implode(',', $ppl);
-		$res["organizers"] = implode(',', $org);
+		$res["participants"] = $ppl;
+		$res["organizers"] = $org;
 		
 		$dc = $this->get_date_converter($user);
-		$res["start"] = $dc->getDisplayDateFromServerDate($res["start"]); /* user time */
-		$res["end"] = $dc->getDisplayDateFromServerDate($res["end"]);
+		$res["start"] = $dc->getDisplayDateFromUTC($res["start"]); /* user time */
+		$res["end"] = $dc->getDisplayDateFromUTC($res["end"]);
 
 		$res['time_start'] = $res['start'] % 86400;
 		$res['date_start'] = (int)$res['start'] - (int)$res['time_start'];
@@ -283,9 +283,9 @@ class CalendarLib extends TikiLib {
 		$caldata = $this->get_calendar($data['calendarId']);
 
 		$dc = $this->get_date_converter($user);
-		$data['start'] = $dc->getServerDateFromDisplayDate($data['start']);/* user time -> server time */
-		$data['end'] = $dc->getServerDateFromDisplayDate($data['end']);
-		
+		$data['start'] = $dc->getUTCFromDisplayDate($data['start']);/* user time -> server time */
+		$data['end'] = $dc->getUTCFromDisplayDate($data['end']);
+
 		if ($caldata['customlocations'] == 'y') {
 			if (!$data["locationId"] and !$data["newloc"]) {
 				$data['locationId'] = 0;
@@ -323,15 +323,21 @@ class CalendarLib extends TikiLib {
 			if ($data["organizers"]) {
 				$orgs = split(',', $data["organizers"]);
 				foreach ($orgs as $o) {
-					$roles['6'][] = trim($o);
+					if (trim($o)) {
+						$roles['6'][] = trim($o);
+					}
 				}
 			}
 			if ($data["participants"]) {
 				$parts = split(',', $data["participants"]);
 				foreach ($parts as $pa) {
-					$p = split('\:', trim($pa));
-					if (isset($p[0])and isset($p[1])) {
-						$roles["$p[1]"][] = trim($p[0]);
+					if (trim($pa)) {
+						if (strstr($pa,':')) {
+							$p = split('\:', trim($pa));
+							$roles["$p[0]"][] = trim($p[1]);
+						} else {
+							$roles[0][] = trim($pa);
+						}
 					}
 				}
 			}
@@ -378,13 +384,13 @@ class CalendarLib extends TikiLib {
 
 		if ($calitemId) {
 			$query = "delete from `tiki_calendar_roles` where `calitemId`=?";
-			$this->query($query,array($calitemId));
+			$this->query($query,array((int)$calitemId));
 		}
 
-		foreach ($roles as $lvl => $ro) {
+		foreach ($roles as $lvl=>$ro) {
 			foreach ($ro as $r) {
-				$query = "insert into `tiki_calendar_roles` (`calitemId`,`username`,`role`) values (?,?,'?')";
-				$this->query($query,array($calitemId,$r,$lvl));
+				$query = "insert into `tiki_calendar_roles` (`calitemId`,`username`,`role`) values (?,?,?)";
+				$this->query($query,array((int)$calitemId,$r,(string)$lvl));
 			}
 		}
 		return $calitemId;

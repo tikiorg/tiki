@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_edit_item.php,v 1.10 2006-12-15 03:00:16 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_edit_item.php,v 1.11 2007-01-05 10:51:14 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -130,7 +130,6 @@ if ($feature_categories == 'y') {
   } 
 } 
 
-
 if (isset($_POST['act'])) {
 	$save = $_POST['save'];
 	if (empty($save['user'])) $save['user'] = $user;
@@ -140,12 +139,12 @@ if (isset($_POST['act'])) {
 	or (!empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_change_events'])) {
 		if (empty($save['name'])) $save['name'] = tra("event without name");
 		// do some tests on input
-		$save['start'] = (floor($save['date_start']/(60*60*24))*60*60*24) - 60*60 + $_REQUEST['start_Hour']*60*60 + $_REQUEST['start_Minute']*60;
+		$save['start'] = (floor($save['date_start']/(60*60*24))*60*60*24) + $_REQUEST['start_Hour']*60*60 + $_REQUEST['start_Minute']*60;
 		$save['duration'] = $_REQUEST['duration_Hour']*60*60 + $_REQUEST['duration_Minute']*60;
 		if ($save['end_or_duration'] == 'duration') {
 			$save['end'] = $save['start'] + $save['duration'];
 		} else {
-			$save['end'] = (floor($save['date_end']/(60*60*24))*60*60*24) - 60*60 + $_REQUEST['end_Hour']*60*60 + $_REQUEST['end_Minute']*60;
+			$save['end'] = (floor($save['date_end']/(60*60*24))*60*60*24) + $_REQUEST['end_Hour']*60*60 + $_REQUEST['end_Minute']*60;
 			$save['duration'] = $save['end'] - $save['start'];
 		}
 		if ($save['start'] > $save['end']) {
@@ -209,7 +208,7 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 	} else {
 		$now = date('U');
 	}
-	$now = $dc->getDisplayDateFromServerDate($now);
+	$now = $dc->getDisplayDateFromUTC($now);
 	$now_time = 14*60*60;
 	$calitem = array(
 		'calitemId'=>0,
@@ -269,6 +268,7 @@ $smarty->assign('listlanguages', $languages);
 
 $smarty->assign('listpriorities',array('0','1','2','3','4','5','6','7','8','9'));
 $smarty->assign('listprioritycolors',array('fff','fdd','fcc','fbb','faa','f99','e88','d77','c66','b66','a66'));
+$smarty->assign('listroles',array('0'=>'','1'=>tra('required'),'2'=>tra('optional'),'3'=>tra('non participant')));
 
 
 if ($feature_theme_control == 'y') {
