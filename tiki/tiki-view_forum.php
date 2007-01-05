@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.103 2006-12-28 11:16:38 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.104 2007-01-05 13:28:40 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -39,7 +39,10 @@ if (isset($_POST['daconfirm']) && !empty($_SESSION["requestvars_$phpself"])) {
 	unset($_SESSION["requestvars_$phpself"]);
 }
 
-if (!isset($_REQUEST["forumId"])) {
+include_once ("lib/commentslib.php");
+$commentslib = new Comments($dbTiki);
+
+if (!isset($_REQUEST["forumId"]) || !($forum_info = $commentslib->get_forum($_REQUEST["forumId"]))) {
     $smarty->assign('msg', tra("No forum indicated"));
 
     $smarty->display("error.tpl");
@@ -53,12 +56,8 @@ if (isset($_REQUEST["openpost"])) {
 }
 
 $smarty->assign('forumId', $_REQUEST["forumId"]);
-include_once ("lib/commentslib.php");
-$commentslib = new Comments($dbTiki);
 
 $commentslib->forum_add_hit($_REQUEST["forumId"]);
-
-$forum_info = $commentslib->get_forum($_REQUEST["forumId"]);
 
 $smarty->assign('individual', 'n');
 
