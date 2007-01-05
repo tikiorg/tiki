@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.384 2007-01-03 08:32:39 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.385 2007-01-05 19:08:37 rlpowell Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1526,10 +1526,19 @@ if ($user && $feature_usermenu == 'y') {
 }
 
 $ownurl = $tikilib->httpPrefix(). $_SERVER['REQUEST_URI'];
+
+// Turn off all error reporting; parse_url emits E_WARNING to the logs when it
+// gets given real crap.
+$old_error_reporting = error_reporting(0);
 $parsed = parse_url($_SERVER['REQUEST_URI']);
+error_reporting($old_error_reporting);
 
 if (!isset($parsed['query'])) {
     $parsed['query'] = '';
+}
+
+if (!isset($parsed['path'])) {
+    $parsed['path'] = '';
 }
 
 parse_str($parsed['query'], $query);
