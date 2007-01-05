@@ -303,23 +303,43 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 <td>{tr}Organized by{/tr}</td>
 <td>
 {if $edit}
-<input type="text" name="save[organizers]" value="{$calitem.organizers}" style="width:90%;" />
+<input type="text" name="save[organizers]" value="{foreach item=org from=$calitem.organizers}{$org}, {/foreach}" style="width:90%;" />
 {else}
-{$calitem.organizers}
+{foreach item=org from=$calitem.organizers}
+{$org}<br />
+{/foreach}
 {/if}
 </td>
 </tr>
 <tr class="formcolor" style="display:{if $calendar.customparticipants eq 'y'}tablerow{else}none{/if};" id="calpart">
-<td>{tr}Participants{/tr}</td>
+<td>{tr}Participants{/tr}
+{if $edit}
+<a href="#" onclick="flip('calparthelp');"><img src="pics/icons/help.png" width="16" height="16" border="0" alt="{tr}help{/tr}" /></a>
+{/if}
+</td>
 <td>
 {if $edit}
-<input type="text" name="save[participants]" value="{$calitem.participants}" style="width:90%;" />
+<input type="text" name="save[participants]" value="{foreach item=ppl from=$calitem.participants}{if $ppl.role}{$ppl.role}:{/if}{$ppl.name}, {/foreach}" style="width:90%;" />
 {else}
-{$calitem.participants}
+{foreach item=ppl from=$calitem.participants}
+{$ppl.name} {if $listroles[$ppl.role]}({$listroles[$ppl.role]}){/if}<br />
+{/foreach}
 {/if}
 </td>
 </tr>
 </table>
+{if $edit}
+<div style="display:{if $calendar.customparticipants eq 'y' and (isset($cookie.show_calparthelp) and $cookie.show_calparthelp eq 'y')}block{else}none{/if};" id="calparthelp">
+{tr}Roles{/tr}<br />
+0: {tr}chair{/tr} ({tr}default role{/tr})<br />
+1: {tr}required participant{/tr}<br />
+2: {tr}optional participant{/tr}<br />
+3: {tr}non participant{/tr}<br />
+{tr}Give participant list separated by commas, <br />
+indicating role in a prefix separated by a column like in:{/tr}<br />
+<tt>role:login_or_email,login_or_email</tt><br />
+{tr}If no role is provided, default role will be "Chair participant".{/tr}
+{/if}
 
 </td></tr></table>
 
