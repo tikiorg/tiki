@@ -16,8 +16,9 @@ function wikiplugin_calendar($data, $params) {
     
     
     if(!isset($calendarId))
-	$calendarId = 1;
-    
+		$calendarId = 1;
+    $_SESSION['CalendarViewGroups'] = array($calendarId);
+
     return $smarty->fetch('tiki-show_calendar.tpl');
 
 }
