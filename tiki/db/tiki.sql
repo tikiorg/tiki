@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2006-12-28 17:57:26 $
-# $Author: mose $
+# $Date: 2007-01-07 21:07:19 $
+# $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -318,7 +318,7 @@ CREATE TABLE tiki_actionlog (
   lastModif int(14) default NULL,
   object varchar(255) default NULL,
   objectType varchar(32) NOT NULL default '',
-  user varchar(200) not null default '',
+  user varchar(200) default '',
   ip varchar(15) default NULL,
   comment varchar(200) default NULL,
   categId int(12) NOT NULL default '0',

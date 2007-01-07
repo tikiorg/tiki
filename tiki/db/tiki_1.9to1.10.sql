@@ -1,4 +1,4 @@
-	# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.130 2007-01-01 09:37:31 mose Exp $
+	# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.131 2007-01-07 21:07:19 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -795,4 +795,5 @@ alter table galaxia_instance_comments change user user varchar(200) not null def
 alter table galaxia_instance_activities change user user varchar(200) not null default '';
 alter table tiki_freetagged_objects change user user varchar(200) not null default '';
  
-
+#01/07/1007 sylvieg
+alter table tiki_actionlog change user user varchar(200) default '';
