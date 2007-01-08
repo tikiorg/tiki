@@ -1,4 +1,4 @@
-	# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.131 2007-01-07 21:07:19 sylvieg Exp $
+	# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.132 2007-01-08 13:54:38 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -797,3 +797,29 @@ alter table tiki_freetagged_objects change user user varchar(200) not null defau
  
 #01/07/1007 sylvieg
 alter table tiki_actionlog change user user varchar(200) default '';
+alter table galaxia_instance_activities change user user varchar(200) default '';
+alter table galaxia_instance_comments change user user varchar(200) default '';
+alter table galaxia_workitems change user user varchar(200) default '';
+alter table tiki_banning change user user varchar(200) default '';
+alter table tiki_blog_posts change user user varchar(200) default '';
+alter table tiki_blogs change user user varchar(200) default '';
+alter table tiki_calendar_items change user user varchar(200) default '';
+alter table tiki_comments change userName userName varchar(200) default '';
+alter table tiki_copyrights change userName userName varchar(200) default '';
+alter table tiki_drawings change user user varchar(200) default '';
+alter table tiki_file_galleries change user user varchar(200) default '';
+alter table tiki_files change user user varchar(200) default '';
+alter table tiki_files change lockedby lockedby varchar(200) default '';
+alter table tiki_forums_queue change user user varchar(200) default '';
+alter table tiki_forums_reported change user user varchar(200) default '';
+alter table tiki_galleries change user user varchar(200) default '';
+alter table tiki_pages change user user varchar(200) default '';
+alter table tiki_page_drafts change user user varchar(200) default '';
+alter table tiki_page_drafts drop primary key ;
+alter table tiki_page_drafts add primary key (pageName(120),user(120));
+alter table tiki_sheet_values change user user varchar(200) default '';
+alter table tiki_tracker_item_attachments change user user varchar(200) default NULL;
+alter table tiki_tracker_item_comments change user user varchar(200) default NULL;
+alter table tiki_user_quizzes change user user varchar(200) default '';
+
+
