@@ -1,23 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/copyrights.php,v 1.14 2006-06-25 21:24:22 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/copyrights.php,v 1.15 2007-01-08 21:11:52 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-
-//smarty is not there - we need setup
-require_once('tiki-setup.php');  
-
-
-// This file sets up the information needed to display
-// the copyrights information box
-require_once ('lib/tikilib.php');
-
 require_once ('tiki-setup.php');
-
-
 
 
 if ($wiki_feature_copyrights != 'y') {
