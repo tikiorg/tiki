@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.63 2006-12-12 23:34:48 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.64 2007-01-08 16:03:28 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -153,7 +153,7 @@ if (isset($_REQUEST["calIds"])and is_array($_REQUEST["calIds"])and count($_REQUE
 	$_SESSION['CalendarViewGroups'] = array_intersect($_REQUEST["calIds"], $listcals);
 } elseif (isset($_REQUEST["calIds"])and !is_array($_REQUEST["calIds"])) {
 	$_SESSION['CalendarViewGroups'] = array_intersect(array($_REQUEST["calIds"]), $listcals);
-} elseif (!isset($_SESSION['CalendarViewGroups'])) {
+} elseif (!isset($_SESSION['CalendarViewGroups']) || !empty($_REQUEST['allCals'])) {
 	$_SESSION['CalendarViewGroups'] = $listcals;
 } elseif (isset($_REQUEST["refresh"])and !isset($_REQUEST["calIds"])) {
 	$_SESSION['CalendarViewGroups'] = array();
