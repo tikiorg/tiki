@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.64 2007-01-08 16:03:28 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.65 2007-01-09 16:04:31 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -311,6 +311,23 @@ $smarty->assign('daysnames', $daysnames);
 $smarty->assign('cell', $cell);
 $smarty->assign('var', '');
 $smarty->assign('myurl', $myurl);
+
+if($feature_user_watches == 'y' && $user && count($_SESSION['CalendarViewGroups']) == 1) {
+	$calId = $_SESSION['CalendarViewGroups'][0];
+	if (isset($_REQUEST['watch_event']) && isset($_REQUEST['watch_action'])) {
+		check_ticket('calendar');
+		if ($_REQUEST['watch_action'] == 'add') {
+	    	$tikilib->add_user_watch($user, $_REQUEST['watch_event'], $calId, 'calendar', $infocals['data'][$calId]['name'],"tiki-calendar.php?calIds[]=$calId");
+		} else {
+	    	$tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $calId);
+		}
+	}
+	if ($tikilib->user_watches($user,'calendar_changed', $calId, 'calendar')) {
+		$smarty->assign('user_watching', 'y');	
+	} else {
+		$smarty->assign('user_watching', 'n');
+	}
+}
 
 $section = 'calendar';
 include_once ('tiki-section_options.php');

@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.696 2007-01-03 01:09:35 mose Exp $
+// CVS: $Id: tikilib.php,v 1.697 2007-01-09 16:04:31 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -325,14 +325,17 @@ class TikiLib extends TikiDB {
 		    $res['perm']= ($userlib->user_has_permission($res['user'],'tiki_p_read_article') &&
 		                   $this->user_has_perm_on_object($res['user'],$topicId,'topic','tiki_p_topic_read'));
 		    break;
-                default:
-                    // for security we deny all others.
-                    $res['perm']=FALSE;
-                    break;
-                }
-            if($res['perm']) {
-               $ret[] = $res;
-            }
+		case 'calendar_changed':
+			$res['perm']= $this->user_has_perm_on_object($res['user'],$object,'calendar','tiki_p_view_calendar');
+			break;
+		default:
+			// for security we deny all others.
+			$res['perm']=FALSE;
+			 break;
+		}
+		if($res['perm']) {
+			$ret[] = $res;
+		}
 
 	}
 

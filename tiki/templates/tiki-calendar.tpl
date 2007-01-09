@@ -1,8 +1,16 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.70 2006-12-12 23:34:48 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.71 2007-01-09 16:04:31 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 <div id="calscreen">
 
 <div style="float:right;margin:5px;">
+{if $displayedcals|@count eq 1 and $user and $feature_user_watches eq 'y'}
+{if $user_watching eq 'y'}
+<a href="tiki-calendar.php?watch_event=calendar_changed&amp;watch_action=remove">{html_image file='pics/icons/no_eye.png' border='0' alt="{tr}stop monitoring this page{/tr}" title="{tr}stop monitoring this page{/tr}"}</a>
+{else}
+<a href="tiki-calendar.php?watch_event=calendar_changed&amp;watch_action=add">{html_image file='pics/icons/eye.png' border='0' alt="{tr}monitor this page{/tr}" title="{tr}monitor this page{/tr}"}</a>
+{/if}
+{/if}
+
 {if $tiki_p_admin_calendar eq 'y' or $tiki_p_admin eq 'y'}
 <span class="button2"><a href="tiki-admin_calendars.php" class="linkbut">{tr}admin{/tr}</a></span>
 <span class="button2"><a href="tiki-admin.php?page=calendar" class="linkbut">{tr}configure{/tr}</a></span>
@@ -33,8 +41,7 @@ none
 </span>
 
 </div>
-
-<h1><a class="pagetitle" href="tiki-calendar.php">{tr}Calendar{/tr}</a></h1>
+<h1><a class="pagetitle" href="tiki-calendar.php">{if $displayedcals|@count eq 1}{tr}Calendar:{/tr} {assign var=x value=$displayedcals[0]}{$infocals[$x].name}{else}{tr}Calendar{/tr}{/if}</a></h1>
 
 <form id="filtercal" method="get" action="{$myurl}" name="f" style="display:none;">
 <div class="caltitle">{tr}Group Calendars{/tr}</div>
