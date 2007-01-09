@@ -368,12 +368,14 @@ class CalendarLib extends TikiLib {
 		}
 
 		if ($calitemId) {
+			$new = false;
 			$query = "update `tiki_calendar_items` set `calendarId`=?,`user`=?,`start`=?,`end`=? ,`locationId`=? ,`categoryId`=?,`priority`=?,`status`=?,`url`=?,";
 			$query.= "`nlId`=?,`lang`=?,`name`=?,`description`=?,`lastmodif`=? where `calitemId`=?";
 			$bindvars=array((int)$data["calendarId"],$user,(int)$data["start"],(int)$data["end"],(int)$data["locationId"],(int)$data["categoryId"],(int)$data["priority"],
 			                $data["status"],$data["url"],$data["nlId"],$data["lang"],$data["name"],$data["description"],(int)time(),(int)$calitemId);
 			$result = $this->query($query,$bindvars);
 		} else {
+			$new = true;
 			$now=time();
 			$query = "insert into `tiki_calendar_items` (`calendarId`, `user`, `start`, `end`, `locationId`, `categoryId`,  ";
 			$query.= " `priority`, `status`, `url`, `nlId`, `lang`, `name`, `description`, `created`, `lastmodif`) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -393,7 +395,38 @@ class CalendarLib extends TikiLib {
 				$this->query($query,array((int)$calitemId,$r,(string)$lvl));
 			}
 		}
+
+		global $feature_user_watches;
+		if ($feature_user_watches == 'y') {
+			$this->watch($calitemId, $data);
+		}
+
 		return $calitemId;
+	}
+
+	function watch($calitemId, $data) {
+		global $tikilib, $smarty;
+		if ($nots = $tikilib->get_event_watches('calendar_changed', $data['calendarId'])) {
+			include_once('lib/webmail/tikimaillib.php');
+			$mail = new TikiMail();
+			$smarty->assign('mail_new', $new);
+			$smarty->assign('mail_data', $data);
+			$smarty->assign('mail_calitemId', $calitemId);
+			$foo = parse_url($_SERVER["REQUEST_URI"]);
+			$machine = $tikilib->httpPrefix() . dirname( $foo["path"] );
+			$machine = preg_replace("!/$!", "", $machine); // just incase
+ 			$smarty->assign('mail_machine', $machine);
+			$defaultLanguage = $tikilib->get_preference('language', "en");
+			foreach ($nots as $not) {
+				$mail->setUser($not['user']);
+				$mail_data = $smarty->fetchLang($defaultLanguage, "mail/user_watch_calendar_subject.tpl");
+				$mail->setSubject($mail_data);
+				$mail_data = $smarty->fetchLang($defaultLanguage, "mail/user_watch_calendar.tpl");
+				$mail->setText($mail_data);
+				$mail->buildMessage();
+				$mail->send(array($not['email']));
+			}
+		}
 	}
 
 	function drop_item($user, $calitemId) {
