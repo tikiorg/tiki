@@ -4,7 +4,7 @@
 */
 
 body {
-	background-image:    url(codex/page_back.png);
+	background-image:    url(../styles/codex/page_back.png);
 	margin-top:   0px;
 	margin-left:   0px;
 	margin-bottom:   0px;
@@ -31,7 +31,7 @@ DIV#tiki-main {
 
 /* This is the header */
 DIV#tiki-top {
-	background-image:    url(codex/page_back.png);
+	background-image:    url(../styles/codex/page_back.png);
 	color:   white;
 	padding:   2px 2px 2px 2px;
 }
@@ -49,7 +49,7 @@ DIV#tiki-mid {
 
 /* And this is the footer */
 DIV#tiki-bot {
-	background-image:    url(codex/page_back.png);
+	background-image:    url(../styles/codex/page_back.png);
 	padding:   2px 2px 2px 2px;
 }
 
@@ -81,35 +81,35 @@ DIV#tiki-center {
 
 /* Lets build the book interface */
 TD#page11 {
-	background-image: url(codex/page_1_1.png);
+	background-image: url(../styles/codex/page_1_1.png);
 }
 
 TD#page12 {
-	background-image: url(codex/page_1_2.png);
+	background-image: url(../styles/codex/page_1_2.png);
 }
 
 TD#page13 {
-	background-image: url(codex/page_1_3.png);
+	background-image: url(../styles/codex/page_1_3.png);
 }
 
 TD#page14 {
-	background-image: url(codex/page_1_4.png);
+	background-image: url(../styles/codex/page_1_4.png);
 }
 
 TD#page15 {
-	background-image: url(codex/page_1_5.png);
+	background-image: url(../styles/codex/page_1_5.png);
 }
 
 TD#page21 {
-	background-image: url(codex/page_2_1.png);
+	background-image: url(../styles/codex/page_2_1.png);
 }
 
 TD#page22 {
-	background-image: url(codex/page_2_2.png);
+	background-image: url(../styles/codex/page_2_2.png);
 }
 
 TD#page23 {
-	background-image: url(codex/page_2_3.png);
+	background-image: url(../styles/codex/page_2_3.png);
 }
 
 TD#page24 {
@@ -123,27 +123,27 @@ TD#page24 {
 }
 
 TD#page25 {
-	background-image: url(codex/page_2_5.png);
+	background-image: url(../styles/codex/page_2_5.png);
 }
 
 TD#page31 {
-	background-image: url(codex/page_3_1.png);
+	background-image: url(../styles/codex/page_3_1.png);
 }
 
 TD#page32 {
-	background-image: url(codex/page_3_2.png);
+	background-image: url(../styles/codex/page_3_2.png);
 }
 
 TD#page33 {
-	background-image: url(codex/page_3_3.png);
+	background-image: url(../styles/codex/page_3_3.png);
 }
 
 TD#page34 {
-	background-image: url(codex/page_3_4.png);
+	background-image: url(../styles/codex/page_3_4.png);
 }
 
 TD#page35 {
-	background-image: url(codex/page_3_5.png);
+	background-image: url(../styles/codex/page_3_5.png);
 }
 
 div#debugconsole {
@@ -183,7 +183,7 @@ div.box {
 	margin-top:   4px;
 	margin-bottom:   10px;
 	padding-bottom:   10px;
-	overflow:   hidden;
+	
 	width:   170px;
 }
 
@@ -213,12 +213,12 @@ div.box-title table {
 
 /* And this is the data */
 div.box-data {
-	overflow:    hidden;
+	
 	margin-left:   5px;
 	margin-right:   5px;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
-	width:   170px;
+	width:   160px;
 }
 
 TD#leftcolumn > div > div.box-data {
@@ -334,7 +334,7 @@ div.separator {
 	margin-right:   2px;
 	margin-top:   6px;
 	margin-bottom:   2px;
-	width:   90%;
+	width:   99%;
 }
 
 /* Links in menus */
@@ -2876,7 +2876,7 @@ div#loadstats {
 }
 
 .mdksubframe  {
-  background-image: url(codex/page_2_2.png);
+  background-image: url(../styles/codex/page_2_2.png);
   background-repeat: repeat;
   z-index: 1000;
   position: relative;
@@ -2908,11 +2908,14 @@ div#loadstats {
   padding-left: 7px;
   margin-right: 0;
   text-decoration: none;
+  background-color: #FFFFEE;
 }
 
 .mdkitem a:active {
   color: #993300;
 }
+
+
 
 .mdkitem .mdkfwdarr {
   position: absolute;
@@ -2928,6 +2931,8 @@ a.phplm	{
 a.phplm:hover	{
 	background-color: #dedede;
 }
+
+
 
 /* TOC */
 .toc {

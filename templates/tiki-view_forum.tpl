@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.72 2006-12-03 22:11:02 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.73 2007-01-09 17:17:10 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -364,7 +364,7 @@ a moderator approves it.{/tr}</small>
   	<td style="text-align:right;" class="{cycle advance=false}">{$comments_coms[ix].average|string_format:"%.2f"}</td>
   {/if}
   {if $forum_info.topics_list_lastpost eq 'y'}
-  	  <td class="{cycle advance=false}">{$comments_coms[ix].lastPost|tiki_short_datetime} {*date_format:"%b %d [%H:%M]" *}
+  	  <td class="{cycle advance=false}">{$comments_coms[ix].lastPost|tiki_short_datetime} {* date_format:"%b %d [%H:%M]" *}
 	  {if $comments_coms[ix].replies}
 	  <br />
 	  <small><i>{$comments_coms[ix].lastPostData.title}</i> {tr}by{/tr} {$comments_coms[ix].lastPostData.userName}</small>     

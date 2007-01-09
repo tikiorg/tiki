@@ -1,13 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/copyrights.php,v 1.15 2007-01-08 21:11:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/copyrights.php,v 1.16 2007-01-09 17:17:06 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 require_once ('tiki-setup.php');
-
 
 if ($wiki_feature_copyrights != 'y') {
 	$smarty->assign('msg', tra("The copyright management feature is not enabled."));

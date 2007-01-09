@@ -3,10 +3,14 @@
 {if $comments_style != 'commentStyle_plain'}
 <table class="normal">
 {/if}
+
+{if $comments_style != 'commentStyle_headers'}
   <tr>
 		<td class="heading forumuser">{tr}author{/tr}</td>
 		<td class="heading">{tr}message{/tr}</td>
   </tr>
+{/if}  
+
   <tr>
 		{if $comments_style != 'commentStyle_headers'}
 		<td rowspan="2" class="odd">
@@ -60,13 +64,15 @@
   	    <td style="font-size:8pt;">
 				  <b>{tr}on{/tr}</b>: {$comment.commentDate|tiki_short_datetime}
   	  	</td>
+		{if $forum_mode eq 'y' and $forum_info.vote_threads eq 'y' or $forum_mode neq 'y'}		
 	    	<td style="font-size:8pt;">
 					<b>{tr}score{/tr}</b>: {$comment.average|string_format:"%.2f"}
 
 	    	</td>
+		{/if}	
 
 	    	{if $comments_style != 'commentStyle_headers'}
-				{if (($tiki_p_vote_comments eq 'y' and $forum_mode ne 'y') or ($tiki_p_forum_vote eq 'y' and $forum_mode eq 'y')) and $comment.userName ne $user}
+				{if (($tiki_p_vote_comments eq 'y' and $forum_mode ne 'y') or ($tiki_p_forum_vote eq 'y' and $forum_mode eq 'y' and $forum_info.vote_threads eq 'y')) and $comment.userName ne $user}
 				<td style="font-size:8pt;">
 					<b>{tr}Vote{/tr}</b>:  
 					<a class="link" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_threadId={$comment.threadId}&amp;comments_vote=1&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}&amp;comments_style={$comments_style}">1</a>

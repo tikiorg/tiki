@@ -164,8 +164,28 @@ function wikiplugin_trackerlist($data, $params) {
 		if (!isset($filterfield)) {
 			$filterfield = '';
 		} else {
-			foreach($allfields['data'] as $f) {
-				$listfields[] = $f['fieldId'];
+			if (is_array($filterfield)) {
+				foreach ($filterfield as $ff) {
+					unset($filterfieldok);
+					foreach ($allfields['data'] as $f) {
+						if ($f['fieldId'] == $ff) {
+							$filterfieldok=true;
+							break;
+						}
+					}
+					if (!isset($filterfieldok))
+						break;
+				}
+			} else {
+				foreach ($allfields['data'] as $f) {
+					if ($f['fieldId'] == $filterfield) {
+						$filterfieldok=true;
+						break;
+					}
+				}
+			}
+			if (!isset($filterfieldok)) {
+				return tra('incorrect filterfield');
 			}
 		}
 

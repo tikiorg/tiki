@@ -31,7 +31,7 @@ function wikiplugin_skype($data, $params) {
 	extract ($params,EXTR_SKIP);
 
 	if (empty($data)) {
-			return ("<b>You need to a Skype username</b><br />".
+			return ("<b>You need to add a Skype username</b><br />".
 "~np~{SKYPE()}username{SKYPE}~/np~");
 	}
 	

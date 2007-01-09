@@ -121,7 +121,7 @@ div.box {
 	margin-bottom:   10px;
 	border:   1px solid #444444;
 	padding-bottom:   10px;
-	overflow:   hidden;
+	
 	width:   170px;
 }
 
@@ -146,13 +146,13 @@ div.box-title table {
 
 /* And this is the data */
 div.box-data {
-	overflow:    hidden;
+	
 	color:   white;
 	margin-left:   5px;
 	margin-right:   5px;
 	font-family:   Verdana, Helvetica;
 	font-size:   10px;
-	width:   170px;
+	width:   160px;
 }
 
 /* When modules display a list of items each item is enclosed in a cell with the following style */

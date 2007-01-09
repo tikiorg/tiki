@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.39 2006-12-31 08:11:36 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.40 2007-01-09 17:17:06 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -32,7 +32,13 @@ class Smarty_TikiWiki extends Smarty {
 			dirname(dirname(SMARTY_DIR)).'/smarty_tiki',
 			SMARTY_DIR.'plugins'
 		);
-		$this->use_sub_dirs = false;
+		// In general, it's better that use_sub_dirs = false
+		// If ever you are on a very large/complex/multilingual site and your
+		// templates_c directory is > 10 000 files, (you can check at tiki-admin_system.php)
+		// you can change to true and maybe you will get better performance.
+		// http://smarty.php.net/manual/en/variable.use.sub.dirs.php
+
+			$this->use_sub_dirs = false;
 	}
 
 	function _smarty_include($params) {

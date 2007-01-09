@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.69 2006-11-19 17:12:19 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.70 2007-01-09 17:17:09 sylvieg Exp $ *}
 
 {if $forum_mode eq 'y'}
 <tr><td>
@@ -87,9 +87,15 @@
         <select name="comments_sort_mode" id="comments-sort">
           <option value="commentDate_desc" {if $comments_sort_mode eq 'commentDate_desc'}selected="selected"{/if}>{tr}Newest first{/tr}</option>
           <option value="commentDate_asc" {if $comments_sort_mode eq 'commentDate_asc'}selected="selected"{/if}>{tr}Oldest first{/tr}</option>
+
+		  
+	{if $forum_mode eq 'y' and $forum_info.vote_threads eq 'y' or $forum_mode neq 'y'}	
           <option value="points_desc" {if $comments_sort_mode eq 'points_desc'}selected="selected"{/if}>{tr}Score{/tr}</option>
+	{/if}
+	
         </select>
     </td>
+{if ($forum_mode eq 'y' and $forum_info.vote_threads eq 'y') or $forum_mode neq 'y'}
     <td class="heading"><label for="comments-thresh">{tr}Threshold{/tr}</label>
         <select name="comments_threshold" id="comments-thresh">
         <option value="0" {if $comments_threshold eq 0}selected="selected"{/if}>{tr}All{/tr}</option>
@@ -101,6 +107,7 @@
         </select>
     
     </td>
+{/if}
     <td class="heading"><label for="comments-search">{tr}Find{/tr}</label>
         <input type="text" size="7" name="comments_commentFind" id="comments-search" value="{$comments_commentFind|escape}" />
     </td>
