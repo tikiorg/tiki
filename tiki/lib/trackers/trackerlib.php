@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.157 2007-01-03 01:09:34 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.158 2007-01-09 17:17:07 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -698,7 +698,7 @@ class TrackerLib extends TikiLib {
 			}
 			$mid .= " and ttif$suffix.`fieldId`=? ";
 			$bindvars[] = $filterfield;
-		} elseif ($filtervalue) {
+		} elseif ($filterfield && $filtervalue) {
 			$filter = $this->get_tracker_field($filterfield);
 			$mid.= " and ttif$suffix.`value` like ? ";
 			if (substr($filtervalue,0,1) == '*') {
@@ -1846,6 +1846,23 @@ class TrackerLib extends TikiLib {
 			return $this->get_item_value($trackerId, $itemId, $fieldId);
 		} else {
 			return null;
+		}
+	}
+	/* find the best fieldwhere you can do a filter on the initial
+	 * 1) if sort_mode and sort_mode is a text and the field is visible
+	 * 2) the first main taht is text
+	 */
+	function get_initial_field($list_fields, $sort_mode) {
+		if (preg_match('/^f_([^_]*)_?.*/', $sort_mode, $matches)) {
+			if (isset($list_fields[$matches[1]])) {
+				$type = $list_fields[$matches[1]]['type'];
+				if ($type == 't' || $type == 'a' || $type == 'm')
+					return $matches[1];
+			}
+		}
+		foreach($list_fields as $fieldId=>$field) {
+			if ($field['isMain'] == 'y' && ($field['type'] == 't' || $field['type'] == 'a' || $field['type'] == 'm'))
+				return $fieldId;
 		}
 	}
 	function get_nb_items($trackerId) {

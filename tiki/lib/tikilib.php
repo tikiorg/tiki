@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.697 2007-01-09 16:04:31 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.698 2007-01-09 17:17:06 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -401,7 +401,7 @@ class TikiLib extends TikiDB {
     function get_online_users() {
 	if(!isset($this->online_users_cache)) {
 	$this->online_users_cache=array();
-	$query = "select s.`user`, p.`value` as 'realName', `timestamp`, `tikihost` from `tiki_sessions` s left join `tiki_user_preferences` p on s.`user`<>? and s.user = p.user and p.prefName = 'realName' where s.user is not null;";
+	$query = "select s.`user`, p.`value` as 'realName', `timestamp`, `tikihost` from `tiki_sessions` s left join `tiki_user_preferences` p on s.`user`<>? and s.`user` = p.`user` and p.`prefName` = 'realName' where s.`user` is not null;";
 	$result = $this->query($query,array(''));
 	$ret = array();
 	while ($res = $result->fetchRow()) {
@@ -5021,6 +5021,8 @@ function add_pageview() {
 		$text = explode("|", $pages[5][$i]);
 
 		if ($desc = $this->page_exists_desc($pages[1][$i])) {
+			// why the preg_replace? ex: ((page||Page-Desc)) the desc must stay Page-Desc, and not ))Page-Desc((
+			$desc1 = $desc;
 		    $desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
 		    $bestLang = ($feature_multilingual == 'y' && $feature_best_language == 'y')? "&amp;bl" : "";
 		    $uri_ref = "tiki-index.php?page=" . urlencode($pages[1][$i]).$bestLang;
@@ -5036,7 +5038,7 @@ function add_pageview() {
 				$linktext = $pages[1][$i];
 			}
 
-		    $repl = '<a title="'.$desc.'" href="'.$uri_ref.'" class="wiki">' . $linktext . '</a>';
+		    $repl = '<a title="'.$desc1.'" href="'.$uri_ref.'" class="wiki">' . $linktext . '</a>';
 
 		    // Check is timeout expired?
 		    if (isset($text[1]) && (time() - intval($this->page_exists_modtime($pages[1][$i]))) < intval($text[1]))
@@ -5076,7 +5078,8 @@ function add_pageview() {
 
 	    if ($repl2) {
 		if ($desc = $this->page_exists_desc($page_parse)) {
-		    $desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
+		    // why the preg_replace? ex: ((page||Page-Desc)) the desc must stay Page-Desc in the title, and not ))Page-Desc((
+			//$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
 		    $bestLang = ($feature_multilingual == 'y' && $feature_best_language == 'y')? "&amp;bl" : ""; // to choose the best page language
 		    $repl = "<a title=\"$desc\" href='tiki-index.php?page=" . urlencode($page_parse).$bestLang. "' class='wiki'>$page_parse</a>";
 		} else {

@@ -25,7 +25,26 @@ function load() {literal}{{/literal}
 {/foreach}
 
 {literal}}{/literal}
-load();
+//]]>
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+function addLoadEvent(func) {literal}{{/literal}
+  var oldonload = window.onload;
+  if (typeof window.onload != 'function') {literal}{{/literal}
+    window.onload = func;
+  {literal}}{/literal} else {literal}{{/literal}
+    window.onload = function() {literal}{{/literal}
+      if (oldonload) {literal}{{/literal}
+        oldonload();
+      {literal}}{/literal}
+      func();
+    {literal}}{/literal}
+  {literal}}{/literal}
+{literal}}{/literal}
+
+addLoadEvent(load);
 //]]>
 </script>
 

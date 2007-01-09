@@ -160,14 +160,13 @@ div.box-title table {
 
 /* And this is the data */
 div.box-data {
-	overflow:    hidden;
 	background-color:   #100852;
 	color:   white;
 	margin-left:   5px;
 	margin-right:   5px;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
-	width:   170px;
+	width:   160px;
 }
 
 /* When modules display a list of items each item is enclosed in a cell with the following style */
@@ -277,7 +276,7 @@ div.separator {
 	margin-right:   2px;
 	margin-top:   6px;
 	margin-bottom:   2px;
-	width:   90%;
+	width:   97%;
 }
 
 /* Links in menus */

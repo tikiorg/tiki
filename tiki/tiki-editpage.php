@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.158 2006-12-29 00:05:33 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.159 2007-01-09 17:17:06 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -945,6 +945,15 @@ if (isset($_REQUEST['cat_categorize'])) {
     $smarty->assign('categ_checked', 'y');
 	}
 }
+
+if ($wiki_feature_copyrights == 'y' && $tiki_p_edit_copyrights == 'y') {
+	include_once ('lib/copyrights/copyrightslib.php');
+	$copyrightslib = new CopyrightsLib($dbTiki);
+	$copyrights = $copyrightslib->list_copyrights($_REQUEST["page"]);
+	if ($copyrights['cant'])
+	$smarty->assign_by_ref('copyrights', $copyrights['data']);
+}
+
 include_once("textareasize.php");
 
 include_once ('lib/quicktags/quicktagslib.php');
