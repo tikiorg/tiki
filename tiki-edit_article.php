@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.59 2006-12-04 09:20:08 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.60 2007-01-11 01:40:37 fmk_ca Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -115,15 +115,9 @@ if (isset($_REQUEST["articleId"]) and $_REQUEST["articleId"] > 0) {
 	$imgname = $article_data["image_name"];
 
 	if ($hasImage == 'y') {
-		$tmpfname = $tmpDir . "/articleimage" . "." . $_REQUEST["articleId"];
-		$fp = fopen($tmpfname, "wb");
-		if ($fp) {
-			fwrite($fp, $data);
-			fclose ($fp);
-			$smarty->assign('tempimg', $tmpfname);
-		} else {
-			$smarty->assign('tempimg', 'n');
-		}
+		$smarty->assign('tempimg', 'article_image.php?id='.$_REQUEST["articleId"]);
+	} else {
+		$smarty->assign('tempimg', 'n');
 	}
 
 	$body = $article_data["body"];
@@ -340,7 +334,10 @@ if (isset($_REQUEST["save"])) {
 		$imgtype = $_FILES['userfile1']['type'];
 		$imgsize = $_FILES['userfile1']['size'];
 		$imgname = $_FILES['userfile1']['name'];
-		@unlink("temp/article.$articleId");
+		$topiccachefile = $tikilib->get_preference("tmpdir", "temp");
+		if ($tikidomain) { $topiccachefile.= "/$tikidomain"; }
+		$topiccachefile.= "/article.".$_REQUEST["id"];
+		@unlink($topiccachefile);
 	}
 
 	// Parse $edit and eliminate image references to external URIs (make them internal)
