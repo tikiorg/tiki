@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.36 2006-08-29 20:19:14 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.37 2007-01-11 22:54:16 sylvieg Exp $ *}
 {tikimodule title="{tr}Login{/tr}" name="login_box" flip=$module_params.flip decorations=$module_params.decorations}
 
     {if $user}
@@ -60,6 +60,7 @@
           <tr><td class="module"><label for="login-user">{tr}user{/tr}:</label></td></tr>
 		{if $loginuser eq ''}
           <tr><td><input type="text" name="user" id="login-user" size="20" /></td></tr>
+	  <script type="text/javascript">document.getElementById('login-user').focus();</script>
 		{else}
 		  <tr><td><input type="hidden" name="user" id="login-user" value="{$loginuser}" /><b>{$loginuser}</b></td></tr>
 		{/if}
