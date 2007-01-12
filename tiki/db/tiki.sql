@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2007-01-08 13:54:38 $
+# $Date: 2007-01-12 17:02:51 $
 # $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -4280,6 +4280,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_vote_ratings', 'Can participate to rating of wiki pages', 'registered', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_assign_perm_file_gallery', 'Can assign perms to file gallery', 'admin', 'file galleries');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_actionlog', 'Can view action log', 'registered', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_assign_perm_blog', 'Can assign perms to blog', 'admin', 'blogs');
 # --------------------------------------------------------
 
 #

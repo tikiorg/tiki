@@ -93,7 +93,7 @@
 			{/if}
 		{/if}
 	{/if}
-	{if $tiki_p_admin eq 'y'}
+	{if $tiki_p_admin eq 'y' || $tiki_p_assign_perm_blog eq 'y'}
 	    {if $listpages[changes].individual eq 'y'}
 		<a class="bloglink" href="tiki-objectpermissions.php?objectName={$listpages[changes].title|escape:"url"}&amp;objectType=blog&amp;permType=blogs&amp;objectId={$listpages[changes].blogId}"><img border='0' title='{tr}active perms{/tr}' alt='{tr}active perms{/tr}' src='pics/icons/key_active.png' width='16' height='16' /></a>
 	    {else}

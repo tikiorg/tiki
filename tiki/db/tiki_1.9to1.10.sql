@@ -1,4 +1,4 @@
-	# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.132 2007-01-08 13:54:38 sylvieg Exp $
+	# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.133 2007-01-12 17:02:51 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -822,4 +822,5 @@ alter table tiki_tracker_item_attachments change user user varchar(200) default 
 alter table tiki_tracker_item_comments change user user varchar(200) default NULL;
 alter table tiki_user_quizzes change user user varchar(200) default '';
 
-
+#01/12/1007 sylvieg
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_assign_perm_blog', 'Can assign perms to blog', 'admin', 'blogs');
