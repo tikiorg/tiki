@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.87 2007-01-03 07:55:24 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.88 2007-01-12 13:59:38 mose Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -104,7 +104,7 @@ if (isset($_REQUEST["prefs"])) {
 	if (isset($_REQUEST['display_timezone'])) {
 		$tikilib->set_user_preference($userwatch, 'display_timezone', $_REQUEST['display_timezone']);
 
-		$smarty->assign_by_ref('display_timezone', $_REQUEST['display_timezone']);
+		$smarty->assign('display_timezone', $_REQUEST['display_timezone']);
 	}
 
 	$tikilib->set_user_preference($userwatch, 'user_information', $_REQUEST['user_information']);
@@ -467,9 +467,6 @@ if ($feature_messages == 'y' && $tiki_p_messages == 'y') {
 	$unread = $tikilib->user_unread_messages($userwatch);
 	$smarty->assign('unread', $unread);
 }
-
-$display_timezone = $tikilib->get_user_preference($userwatch, 'display_timezone', $server_timezone);
-$smarty->assign('display_timezone', $display_timezone);
 
 $smarty->assign_by_ref("timezones", $GLOBALS['_DATE_TIMEZONE_DATA']);
 
