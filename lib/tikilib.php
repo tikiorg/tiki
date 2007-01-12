@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.698 2007-01-09 17:17:06 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.699 2007-01-12 13:59:38 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -7,8 +7,11 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 require_once ('lib/pear/Date.php');
+$tikidate = new Date();
+
 require_once ('lib/tikidate.php');
 require_once ('lib/tikidblib.php');
+
 //performance collecting:
 //require_once ('lib/tikidblib-debug.php');
 
@@ -6084,30 +6087,6 @@ if (!$simple_wiki) {
 	    }
 	}
     }
-
-# TODO move all of these date/time functions to a static class: TikiDate
-    function get_timezone_list($use_default = false) {
-	static $timezone_options;
-
-	if (!$timezone_options) {
-	    $timezone_options = array();
-
-	    if ($use_default)
-		$timezone_options['default'] = '-- Use Default Time Zone --';
-
-	    foreach ($GLOBALS['_DATE_TIMEZONE_DATA'] as $tz_key => $tz) {
-		$offset = $tz['offset'];
-
-		$absoffset = abs($offset /= 60000);
-		$plusminus = $offset < 0 ? '-' : '+';
-		$gmtoff = sprintf("GMT%1s%02d:%02d", $plusminus, $absoffset / 60, $absoffset - (intval($absoffset / 60) * 60));
-		$tzlongshort = $tz['longname'] . ' (' . $tz['shortname'] . ')';
-			$timezone_options[$tz_key] = sprintf('%-28.28s: %-36.36s %s', $tz_key, $tzlongshort, $gmtoff);
-			}
-			}
-
-			return $timezone_options;
-			}
 
 			function get_server_timezone() {
 			static $server_timezone;
