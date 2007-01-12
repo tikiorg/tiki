@@ -33,12 +33,17 @@
   <form action="tiki-register.php" method="post"> <br />
     <table class="normal">
 
+
       <tr><td class="formcolor">{tr}Username{/tr}:</td>
       <td class="formcolor">
         <input style="float:left" type="text" name="name" id="name"
 	  {if $feature_ajax eq 'y'}onKeyUp="return check_name()"{/if}/>
           {if $feature_ajax eq'y'}<div id="checkfield" style="float:left"></div>{/if}
+		{if $login_is_email eq 'y'}
+		({tr}Use your email as login{/tr})
+		{else}
 	  {if $lowercase_username eq 'y'}({tr}lowercase only{/tr}){/if}</td>
+		{/if}
       </tr>
 
       {if $useRegisterPasscode eq 'y'}
@@ -60,13 +65,14 @@
         {if $feature_ajax eq'y'}onKeyUp="check_pass()"{/if}/>{if $feature_ajax eq'y'}<div style="float:left" id="checkpass"></div>{/if}</td>
       </tr>
 
+{if $login_is_email ne 'y'}
       <tr><td class="formcolor">{tr}Email{/tr}:</td>
       <td class="formcolor"><input style="float:left" type="text" id="email" name="email"
         {if $validateUsers eq 'y' and $feature_ajax eq 'y'}onKeyUp="return check_mail()"{/if}/>{if $feature_ajax eq'y'}<div id="checkmail" style="float:left"></div>{/if}
         {if $validateUsers eq 'y' and $validateEmail ne 'y'}<br />
         <div style="float:left">{tr}A valid email is mandatory to register{/tr}</div>{/if}</td>
       </tr>
-
+{/if}
       {* Custom fields *}
       {section name=ir loop=$customfields}
         {if $customfields[ir].show}
