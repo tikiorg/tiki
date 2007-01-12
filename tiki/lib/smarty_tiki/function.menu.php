@@ -8,7 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function smarty_function_menu($params, &$smarty)
 {
-    global $tikilib, $user;
+    global $tikilib, $user, $headerlib;
     extract($params);
     // Param = zone
 
@@ -23,17 +23,20 @@ function smarty_function_menu($params, &$smarty)
     } else {
 	$cache_id = "menu$id";
     }
-    if (!$smarty->is_cached('tiki-user_menu.tpl', "$cache_id")) {
+		if (isset($css)) {
+			$headerlib->add_cssfile('css/cssmenu.css',50);
+			$tpl = 'tiki-user_cssmenu.tpl';
+		} else {
+			$tpl = 'tiki-user_menu.tpl';
+		}
+    if (!$smarty->is_cached($tpl, "$cache_id")) {
        $menu_info = $tikilib->get_menu($id);
        $channels = $tikilib->list_menu_options($id,0,-1,'position_asc','');
        $channels = $tikilib->sort_menu_options($channels);
-       
        $smarty->assign('channels',$channels['data']);
-       
        $smarty->assign('menu_info',$menu_info);
-       
     }
-    $smarty->display('tiki-user_menu.tpl', "$cache_id");
+    $smarty->display($tpl, "$cache_id");
     $smarty->caching = false;
 }
 
