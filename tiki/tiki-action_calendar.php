@@ -34,7 +34,6 @@ $tikiItems = array(
   "track" => array( "label" => tra("Trackers"), "feature" => "$feature_trackers", "right" => "$tiki_p_view_trackers"),
   "surv" => array( "label" => tra("Survey"), "feature" => "$feature_surveys", "right" => "$tiki_p_take_survey"),
   "nl" => array( "label" => tra("Newsletter"), "feature" => "$feature_newsletters", "right" => "$tiki_p_subscribe_newsletters"),
-  "eph" => array( "label" => tra("Ephemerides"), "feature" => "$feature_eph", "right" => "$tiki_p_view_eph"),
   "chart" => array( "label" => tra("Charts"), "feature" => "$feature_charts", "right" => "$tiki_p_view_chart")
 );
 
