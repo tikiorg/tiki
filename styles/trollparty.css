@@ -1,5 +1,5 @@
 /*
-$Id: trollparty.css,v 1.47 2006-12-21 14:57:58 mose Exp $
+$Id: trollparty.css,v 1.48 2007-01-13 12:02:54 mose Exp $
 made by mose@trollparty.org
 
 background-color: #000000;
@@ -126,15 +126,13 @@ div.box
 {
 /*background-color: #e1e2b9; */
 padding-top: 3px;
-overflow: hidden;
 margin-top: 13px;
 }
 
 /* 
 Boxes are divided in title and data, this is the title 
 */
-div.box-title 
-{
+div.box-title {
 border-bottom: 1px dashed #2255aa;
 font-size: 90%;
 font-weight: bold;
@@ -154,9 +152,7 @@ div.box-title table {
 /* 
 And this is the data 
 */
-div.box-data 
-{
-overflow: hidden;
+div.box-data {
 margin-left: 15px;
 margin-right: 5px;
 }
@@ -2726,4 +2722,12 @@ div.admbox {
 div.admbox:hover { background-color: #E9ECEF; color: black; }
 div.admbox img { margin-top: 20px; }
 
+/* cssmenu */
+.cssmenu ul a, .cssmenu h2 {
+	border : 1px solid #555;
+	border-bottom : 0;
+}
+.cssmenu a, .cssmenu h2 {
+	background-color : #000;
+}
 /* end of css file */
