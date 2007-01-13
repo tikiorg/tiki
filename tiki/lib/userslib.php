@@ -186,27 +186,14 @@ class UsersLib extends TikiLib {
 	return $this->userobjectperm_cache[$objectId];
     }
 
-    function user_exists($user) {
-	static $rv = array();
-
-	if (!isset($rv[$user])) {
-	    $query = "select count(*) from `users_users` where ". $this->convert_binary()." `login` = ?";
-
-	    $result = $this->getOne($query, array($user));
-	    $rv[$user] = $result;
-	}
-
-	return $rv[$user];
-    }
-	function other_user_exists_case_insensitive($user) {
-		$query = "select * from `users_users` where upper(`login`) = ?";
-		$result = $this->query($query, array(strtoupper( $user )));
-		$cant = $result->numRows();
-		while ($ret = $result->fetchRow()) {
-			if ($ret['login'] != $user)
-				return array($cant, $ret['login']);
+	function user_exists($user) {
+		static $rv = array();
+		if (!isset($rv[$user])) {
+			$query = "select count(*) from `users_users` where upper(`login`) = ? and `provpass` = ?";
+			$result = $this->getOne($query, array(strtoupper($user),''));
+			$rv[$user] = $result;
 		}
-		return array($cant, $user);
+		return $rv[$user];
 	}
 
     function group_exists($group) {

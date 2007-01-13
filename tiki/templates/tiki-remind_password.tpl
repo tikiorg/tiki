@@ -19,7 +19,6 @@
   </table>
   </form>
 {/if}
-{tr}Important: Username & password are CaSe SenSitiVe{/tr}
 
 <br /><br />
 <a href="{$tikiIndex}" class="link">{tr}Return to HomePage{/tr}</a>

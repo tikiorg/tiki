@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-remind_password.php,v 1.27 2006-09-19 16:33:17 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-remind_password.php,v 1.28 2007-01-13 11:22:18 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,7 +11,6 @@ require_once ('tiki-setup.php');
 
 if ($forgotPass != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": forgotPass");
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -25,8 +24,7 @@ if (isset($_REQUEST["user"])) {
 	if (isset($_REQUEST["actpass"])) {
 		$oldPass = $userlib->activate_password($_REQUEST["user"], $_REQUEST["actpass"]);
 		if ($oldPass) {
-			header ("location: tiki-change_password.php?user=".$_REQUEST["user"].
-				"&oldpass=".$oldPass);
+			header ("location: tiki-change_password.php?user=". urlencode($_REQUEST["user"])."&oldpass=".$oldPass);
 			die;
 		}
 		$smarty->assign('msg', tra("Invalid username or activation code. Maybe this code has already been used."));
@@ -36,14 +34,11 @@ if (isset($_REQUEST["user"])) {
 }
 
 if (isset($_REQUEST["remind"])) {
-	if (!($ok = $userlib->user_exists($_REQUEST["username"]))) {
-		list($cant, $u) = $userlib->other_user_exists_case_insensitive($_REQUEST["username"]);
-		if ($cant == 1) {
-			$ok = true;
-			$_REQUEST["username"] = $u;
-		}
-	}
-	if ($ok) {
+	if (!$userlib->user_exists($_REQUEST["username"])) {
+		$smarty->assign('showmsg', 'e');
+		$tmp = tra("Invalid or unknown username"). ": " . $_REQUEST["username"];
+		$smarty->assign('msg', $tmp);
+	} else {
 		include_once ('lib/webmail/tikimaillib.php');
 		$email = $userlib->get_user_email($_REQUEST["username"]);
 
@@ -97,13 +92,6 @@ if (isset($_REQUEST["remind"])) {
 		$tmp .= " " . $_REQUEST["username"] . ".";
 		$smarty->assign('msg', $tmp);
 		}
-	} else {
-		// Show error message (and leave form visible so user can fix problem)
-		$smarty->assign('showmsg', 'e');
-
-		$tmp = tra("Invalid or unknown username");
-		$tmp .= ": " . $_REQUEST["username"];
-		$smarty->assign('msg', $tmp);
 	}
 }
 
