@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.99 2007-01-09 17:17:10 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.100 2007-01-14 13:38:35 sylvieg Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -345,7 +345,8 @@ function searchrep() {
 </form>
 <br />
 
-
+{include file="tiki-page_bar.tpl"}
 {include file=tiki-edit_help.tpl}
+
 
 
