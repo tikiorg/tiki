@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.386 2007-01-12 13:54:33 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.387 2007-01-15 10:45:10 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -434,9 +434,9 @@ $pref['wysiwyg_toolbar'] ="FitWindow,Templates,-,Cut,Copy,Paste,PasteWord,Print,
 Undo,Redo,-,Replace,RemoveFormat,-,Image,Table,Rule,SpecialChar,PageBreak,UniversalKey
 /
 JustifyLeft,JustifyCenter,JustifyRight,JustifyFull,-,OrderedList,UnorderedList,Outdent,Indent
-Bold,Italic,Underline,StrikeThrough,-,Subscript,Superscript,-,Link,Unlink,Anchor,-,tikilink
+Bold,Italic,Underline,StrikeThrough,-,Subscript,Superscript,-,Link,Unlink,Anchor,-,tikilink,tikiimage
 /
-Style,FontName,FontSize,-,TextColor,BGColor";
+Style,FontName,FontSize,-,TextColor,BGColor,-,Source";
 
 # wiki3d
 $pref['wiki_feature_3d'] = 'n';
