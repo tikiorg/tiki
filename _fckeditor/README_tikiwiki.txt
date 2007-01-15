@@ -63,6 +63,36 @@ or by launching that oneline :
 	perl -pi -e 's/head><body>/head><body class="wikitext">/' lib/fckeditor/editor/js/fckeditorcode_*.js
 
 
+* Filemanager MultiTiki patch
+Files to patch get similar changes, in browser and upload connectors:
+lib/fckeditor/editor/filemanager/browser/default/connectors/php/config.php
+lib/fckeditor/editor/filemanager/upload/default/connectors/php/config.php
+===================================================================
+20a21,38
+> $tikiroot = dirname(dirname(dirname(dirname(dirname(dirname(dirname(dirname(getcwd()))))))));
+> $tikidomain = '';
+> if (is_file('db/virtuals.inc')) {
+> 	if (isset($_SERVER['TIKI_VIRTUAL']) and is_file($tikiroot.'/db/'.$_SERVER['TIKI_VIRTUAL'].'/local.php')) {
+> 		$tikidomain = $_SERVER['TIKI_VIRTUAL'];
+> 	} elseif (isset($_SERVER['SERVER_NAME']) and is_file($tikiroot.'/db/'.$_SERVER['SERVER_NAME'].'/local.php')) {
+> 		$tikidomain = $_SERVER['SERVER_NAME'];
+> 	} elseif (isset($_SERVER['HTTP_HOST']) and is_file($tikiroot.'/db/'.$_SERVER['HTTP_HOST'].'/local.php')) {
+> 		$tikidomain = $_SERVER['HTTP_HOST'];
+> 	}
+> }
+> if ($tikidomain) $tikidomain.= '/';
+> if ($tikiroot != $_SERVER['DOCUMENT_ROOT']) {
+> 	$tikipath = strrchr($tikiroot,$_SERVER['DOCUMENT_ROOT']).'/';
+> } else {
+> 	$tikipath = '/';
+> }
+> 
+27c45
+< $Config['UserFilesPath'] = 'img/wiki_up/' ;
+---
+> $Config['UserFilesPath'] = $tikipath.'img/wiki_up/'.$tikidomain ;
+
+
 
 Translation status
 -------------------
