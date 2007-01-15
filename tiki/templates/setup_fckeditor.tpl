@@ -2,6 +2,7 @@ var _TikiPath = '{$tikipath}' ;
 var _TikiRoot = '{$tikiroot}' ;
 var _FileBrowserLanguage      = 'php' ;
 var _QuickUploadLanguage      = 'php' ;
+var _FileBrowserExtension     = 'php' ;
 
 FCKConfig.FontNames = 'sans serif;serif;monospace;Arial;Comic Sans MS;Courier New;Tahoma;Times New Roman;Verdana' ;
 
@@ -25,6 +26,9 @@ FCKConfig.DefaultLanguage   = '{$language}' ;
 FCKConfig.AutoDetectLanguage   = {if $feature_detect_language eq 'y'}true{else}false{/if} ;
 FCKConfig.ContentLangDirection = '{if $feature_bidi eq 'y'}rtl{else}ltr{/if}' ;
 FCKConfig.StartupFocus = true ;
+FCKConfig.FormatOutput = true ;
+
+FCKConfig.ImageBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Type=Image&Connector=connectors/php/connector.php' ;
 
 FCKConfig.PluginsPath = _TikiRoot + 'lib/fckeditor_tiki/plugins' ;
 
@@ -34,3 +38,5 @@ FCKConfig.tikilinkDlgTitle    = '{tr}Tiki Link - Insert internal link{/tr}' ;
 FCKConfig.tikilinkDlgName   = '{tr}Wiki Link insert{/tr}' ;
 FCKConfig.tikilinkDlgSelection    = '{tr}Please make a selection of text in order to create a link{/tr}' ;
 
+
+FCKConfig.Plugins.Add( 'tikiimage' ) ;
