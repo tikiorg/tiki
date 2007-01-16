@@ -35,7 +35,7 @@ FCKTikiImages.add = function( sSrc, sHeight, sWidth, sLink, sAlign, sDesc, sImal
 
 FCKTikiImages.SetupImage  = function( img, sSrc, sHeight, sWidth, sLink, sAlign, sDesc, sImalign, sAlt, sUsemap, sClass ) {
 	img.contentEditable = 'false' ;
-	if ( sClass ) img.class = sClass ;
+	if ( sClass ) img.className = sClass ;
 	if ( sHeight ) img.height = sHeight ;
 	if ( sWidth ) img.width = sWidth ;
 	if ( sAlign ) img.align = sAlign ;
@@ -77,13 +77,44 @@ FCKTikiImages.Exist = function( name ) {
 if ( FCKBrowserInfo.IsIE ) {
 	FCKTikiImages.Redraw = function() {
 		var aImgs = FCK.EditorDocument.body.innerText.match( /(\{img\s*[^\}]*\})/g ) ;
-		if ( !aImgs )
+		if ( !aImgs ) {
 			return ;
+		}
 		var oRange = FCK.EditorDocument.body.createTextRange() ;
 		for ( var i = 0 ; i < aImgs.length ; i++ ) {
 			if ( oRange.findText( aImgs[i] ) ) {
-				var sImg = aImgs[i].match( /(\{img\s*[^\}]*\})/ ) ;
-				oRange.pasteHTML( '<img src="' + sSrc + '" class="' + sClass + '" contenteditable="false" _tikiimage="true" />' );
+				var sImg = aImgs[i].match( /{img\s*([^\}]*)\}/ )[0].split(' ') ;
+				var sSrc = '' ;
+				var sClass  = '' ;
+				var sHeight  = '' ;
+				var sWidth  = '' ;
+				var sAlign  = '' ;
+				alert(sImg) ;
+				for ( var j = 0 ; j < sImg.length ; j++ ) {
+					if ( sImg[j].indexOf( '=' ) != -1 ) {
+						var lParam = sImg[j].split('=')[0] ;
+						var lValue = sImg[j].split('=')[1] ;
+						if ( lParam == 'src') {
+							sSrc = lValue ;
+						} else if ( lParam == 'height' ) {
+							sHeight = lValue ;
+						} else if ( lParam == 'width' ) {
+							sWidth = lValue ;
+						} else if ( lParam == 'align' ) {
+							sAlign = lValue ;
+						} else if ( lParam == 'class' ) {
+							sClass = lValue ;
+						}
+					}
+				}
+				if ( sSrc ) {
+					var extra = '' ;
+					if ( sHeight ) extra = extra + ' height="' + sHeight + '"' ;
+					if ( sWidth ) extra = extra + ' width="' + sWidth + '"' ;
+					if ( sClass ) extra = extra + ' class="' + sClass + '"' ;
+					if ( sAlign ) extra = extra + ' align="' + sAlign + '"' ;
+					oRange.pasteHTML( '<img src="' + sSrc + '" ' + extra + 'contenteditable="false" _tikiimage="true" />' );
+				}
 			}
 		}
 	}
