@@ -28,17 +28,22 @@ window.onload = function ()	{
 //If an anchor (A) object is currently selected, load the properties into the dialog 
 function LoadSelected()	{
 	var sSelected;
-	var oLink = FCK.Selection.MoveToAncestorNode( 'A' ) ;
-	if ( oEditor.FCKBrowserInfo.IsGecko ) {
-		sSelected = FCK.EditorWindow.getSelection();
+	var oLink = FCK.Selection.GetSelectedElement() ;
+	if ( oEditor.FCKBrowserInfo.IsIE && oLink != null ) {
+		document.getElementById( 'txtPage' ).value = oLink.getAttribute( '_wikilink' ) ;
+		document.getElementById( 'txtTitle' ).value = oLink.getAttribute( 'innerHTML' ) ;
 	} else {
-		sSelected = FCK.EditorDocument.selection.createRange().text;
-	}
-	if ( sSelected != "" ) {
-		var listen = document.getElementById("txtTitle");
-		listen.value = sSelected;
-		var listen1 = document.getElementById( 'txtPage' );
-		if ( oLink != null ) { listen1.value = oLink.getAttribute( 'href' ) ; }
+		if ( oEditor.FCKBrowserInfo.IsGecko ) {
+			sSelected = FCK.EditorWindow.getSelection();
+		} else {
+			sSelected = FCK.EditorDocument.selection.createRange().text;
+		}
+		if ( sSelected != "" ) {
+			var listen = document.getElementById( 'txtTitle' );
+			listen.value = sSelected;
+			var listen1 = document.getElementById( 'txtPage' );
+			if ( oLink != null ) { listen1.value = oLink.getAttribute( 'href' ) ; }
+		}
 	}
 }
 
