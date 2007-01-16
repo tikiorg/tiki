@@ -89,7 +89,6 @@ if ( FCKBrowserInfo.IsIE ) {
 				var sHeight  = '' ;
 				var sWidth  = '' ;
 				var sAlign  = '' ;
-				alert(sImg) ;
 				for ( var j = 0 ; j < sImg.length ; j++ ) {
 					if ( sImg[j].indexOf( '=' ) != -1 ) {
 						var lParam = sImg[j].split('=')[0] ;
