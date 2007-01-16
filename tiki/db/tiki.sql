@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2007-01-12 17:02:51 $
+# $Date: 2007-01-16 14:45:56 $
 # $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -1139,6 +1139,8 @@ CREATE TABLE tiki_directory_sites (
   cache longblob,
   cache_timestamp int(14) default NULL,
   PRIMARY KEY  (siteId),
+  KEY (isValid),
+  KEY (url),
   FULLTEXT KEY ft (name,description)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
