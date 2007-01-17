@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/phplayers_tiki/tiki-phplayers.php,v 1.7 2007-01-17 14:55:54 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/phplayers_tiki/tiki-phplayers.php,v 1.8 2007-01-17 15:10:11 sylvieg Exp $
 class TikiPhplayers extends TikiLib {
 	/* Build the input to the phplayers lib for a category tree  */
 	function mkCatEntry($categId, $indent="", $back, $categories, $urlEnd, $tpl='') {
@@ -34,7 +34,7 @@ class TikiPhplayers extends TikiLib {
 		}
 	}
 	function mkMenuEntry($idMenu, &$curOption) {
-		global $tikilib;
+	  global $tikilib, $wikilib;
 		$menu_info = $tikilib->get_menu($idMenu);
 		$channels = $tikilib->list_menu_options($idMenu, 0, -1, 'position_asc', '');
 		$indented = false;
@@ -48,7 +48,7 @@ class TikiPhplayers extends TikiLib {
 		} elseif (preg_match('/tiki-index.php/', $url)) {
 			$url = strtolower($url);
 		}
-		foreach ($channels["data"] as $cd) {
+		foreach ($channels["data"] as $key=>$cd) {
 			$cd["name"] = tra($cd["name"]);
 			if ($cd["type"] == 'o' and $indented) {
 				$res .= ".";
@@ -56,7 +56,7 @@ class TikiPhplayers extends TikiLib {
 				$indented = true;
 			}
 			$res .= ".|".$cd["name"]."|".$cd["url"]."\n";
-			if (!empty($cd['url']) && empty($curOption)) {
+			if (!empty($cd['url']) && $curOption == -1) {
 				if ($cd['url'] == 'tiki-index.php') {
 					$cd['url'] .= "?page=$homePage";
 				}
@@ -130,7 +130,7 @@ class TikiPhplayers extends TikiLib {
 		}
 		$$plClass->parseStructureForMenu($name);
 		if ($curOption != -1)
-		  $phplayers->setSelectedItemByCount($struct[$type], $curOption);
+		  $$plClass->setSelectedItemByCount($name, $curOption);
 
 		$res = '';
 		if ($style == 'vert' || $style == 'horiz') {
