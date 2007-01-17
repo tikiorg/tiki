@@ -28,12 +28,12 @@ function smarty_function_phplayers($params, &$smarty) {
 	}
 
 	if (!empty($id)) {
-		$output = $tikiphplayers->mkMenuEntry($id);
+	  $output = $tikiphplayers->mkMenuEntry($id, $curOption);
 	}
 	$name = 'usermenu'.$id;
 	if (!isset($file))
 		$file = '';
 
-	echo $tikiphplayers->mkMenu($output, $name, $type, $file);
+	echo $tikiphplayers->mkMenu($output, $name, $type, $file, $curOption);
 }
 ?>

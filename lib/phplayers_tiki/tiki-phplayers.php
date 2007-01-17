@@ -1,4 +1,5 @@
 <?php
+// $Header: /cvsroot/tikiwiki/tiki/lib/phplayers_tiki/tiki-phplayers.php,v 1.7 2007-01-17 14:55:54 sylvieg Exp $
 class TikiPhplayers extends TikiLib {
 	/* Build the input to the phplayers lib for a category tree  */
 	function mkCatEntry($categId, $indent="", $back, $categories, $urlEnd, $tpl='') {
@@ -32,12 +33,21 @@ class TikiPhplayers extends TikiLib {
 			return array('', 0);
 		}
 	}
-	function mkMenuEntry($idMenu) {
+	function mkMenuEntry($idMenu, &$curOption) {
 		global $tikilib;
 		$menu_info = $tikilib->get_menu($idMenu);
 		$channels = $tikilib->list_menu_options($idMenu, 0, -1, 'position_asc', '');
 		$indented = false;
 		$res = '';
+		$curOption = -1;
+		$url = urldecode($_SERVER['REQUEST_URI']);
+		include_once('lib/wiki/wikilib.php');
+		$homePage = strtolower($wikilib->get_default_wiki_page());
+		if (preg_match('/.*tiki.index.php$/', $url)) {
+			$url .= "?page=$homePage";
+		} elseif (preg_match('/tiki-index.php/', $url)) {
+			$url = strtolower($url);
+		}
 		foreach ($channels["data"] as $cd) {
 			$cd["name"] = tra($cd["name"]);
 			if ($cd["type"] == 'o' and $indented) {
@@ -46,6 +56,14 @@ class TikiPhplayers extends TikiLib {
 				$indented = true;
 			}
 			$res .= ".|".$cd["name"]."|".$cd["url"]."\n";
+			if (!empty($cd['url']) && empty($curOption)) {
+				if ($cd['url'] == 'tiki-index.php') {
+					$cd['url'] .= "?page=$homePage";
+				}
+				if (($pos = strpos($url, strtolower($cd['url']))) !== false && ($pos == 0 || $url[$pos -1] == '/' || $url[$pos - 1] == '\\')) {
+					$curOption = $key+1;
+				}
+			}
 		}
 		return $res;
 	}
@@ -90,7 +108,7 @@ class TikiPhplayers extends TikiLib {
 		}
 		return array($type, $class, $new, $tplFct, $tpl);		
 	}
-	function mkMenu($itall, $name, $style, $file='') {
+	function mkMenu($itall, $name, $style, $file='', $curOption = -1) {
 		list($plType, $plClass, $plNew, $plTplFct, $plTpl) = $this->getParamsStyle($style);
 		include_once ("lib/phplayers/lib/PHPLIB.php");
 		include_once ("lib/phplayers_tiki/lib/layersmenu-common.inc.php"); // include Tiki's modified version of that file to keep original intact (luci)
@@ -111,6 +129,9 @@ class TikiPhplayers extends TikiLib {
 			$$plClass->setMenuStructureFile($file);
 		}
 		$$plClass->parseStructureForMenu($name);
+		if ($curOption != -1)
+		  $phplayers->setSelectedItemByCount($struct[$type], $curOption);
+
 		$res = '';
 		if ($style == 'vert' || $style == 'horiz') {
 			$$plClass->setDownArrowImg('down-galaxy.png');

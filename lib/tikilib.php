@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.699 2007-01-12 13:59:38 mose Exp $
+// CVS: $Id: tikilib.php,v 1.700 2007-01-17 14:55:53 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2386,7 +2386,7 @@ function add_pageview() {
     }
 
 /*shared*/
-    function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '', $user=false, $type = '', $topicId = '', $visible_only = 'y', $topic='', $categId='',$creator='',$group='') {
+		  function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '', $user=false, $type = '', $topicId = '', $visible_only = 'y', $topic='', $categId='',$creator='',$group='', $lang='') {
         global $userlib, $user;
 
 	$mid = '';
@@ -2497,6 +2497,12 @@ function add_pageview() {
 		    $mid .= " where $condition";
 		}
     }
+	if (!empty($lang)) {
+		$condition = '`tiki_articles`.`lang`=?';
+		$mid .= ($mid)? ' and ': ' where ';
+		$mid .= $condition.' ';
+		$bindvars[] = $lang;
+	}
 	if ($mid)
 		$mid2 = " and ";
 	else

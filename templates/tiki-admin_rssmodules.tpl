@@ -54,7 +54,7 @@
 <option value="20" {if $refresh eq 1200}selected="selected"{/if}>20 {tr}minutes{/tr}</option>
 <option value="30" {if $refresh eq 1800}selected="selected"{/if}>30 {tr}minutes{/tr}</option>
 <option value="45" {if $refresh eq 2700}selected="selected"{/if}>45 {tr}minutes{/tr}</option>
-<option value="60" {if $refresh eq 3600}selected{/if}>1 {tr}hour{/tr}</option>
+<option value="60" {if $refresh eq 3600}selected="selected"{/if}>1 {tr}hour{/tr}</option>
 <option value="90" {if $refresh eq 5400}selected="selected"{/if}>1.5 {tr}hours{/tr}</option>
 <option value="120" {if $refresh eq 7200}selected="selected"{/if}>2 {tr}hours{/tr}</option>
 <option value="360" {if $refresh eq 21600}selected="selected"{/if}>6 {tr}hours{/tr}</option>

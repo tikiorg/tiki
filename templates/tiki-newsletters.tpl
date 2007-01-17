@@ -1,9 +1,11 @@
 <h1><a href="tiki-newsletters.php" class="pagetitle">{tr}Newsletters{/tr}</a></h1>
 {if $subscribed eq 'y'}
-{tr}Thanks for your subscription. You will receive an email soon to confirm your subscription. No newsletters will be sent to you until the subscription is confirmed.{/tr}<br /><br />
+<div class="simplebox highlight">
+{tr}Thanks for your subscription. You will receive an email soon to confirm your subscription. No newsletters will be sent to you until the subscription is confirmed.{/tr}</div>
 {/if}
 {if $unsub eq 'y'}
-{tr}Your email address was removed from the list of subscriptors.{/tr}<br /><br />
+<div class="highlight">
+{tr}Your email address was removed from the list of subscriptors.{/tr}</div>
 {/if}
 
 {if $confirm eq 'y'}
