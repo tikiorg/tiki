@@ -9,8 +9,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 /**
 * Filename.......: class.html.mime.mail.inc
 * Project........: HTML Mime mail class
-* Last Modified..: $Date: 2006-01-20 09:54:56 $
-* CVS Revision...: $Revision: 1.15 $
+* Last Modified..: $Date: 2007-01-17 14:55:54 $
+* CVS Revision...: $Revision: 1.16 $
 * Copyright......: 2001, 2002 Richard Heyes
 */
 
@@ -439,7 +439,8 @@ class htmlMimeMail {
 		if (is_object($obj)) {
 			return $obj->addSubpart('', $params);
 		} else {
-			return new Mail_mimePart('', $params);
+			$m = new Mail_mimePart('', $params);
+			return $m;
 		}
 	}
 
@@ -889,7 +890,7 @@ class htmlMimeMail {
 *    re-build the message.
 *
 * @author  Richard Heyes <richard@phpguru.org>
-* @version $Revision: 1.15 $
+* @version $Revision: 1.16 $
 * @package Mail
 */
 class Mail_mimePart {
@@ -1179,7 +1180,7 @@ class Mail_mimePart {
 *
 * @author  Richard Heyes <richard@phpguru.org>
 * @author  Chuck Hagenbuch <chuck@horde.org>
-* @version $Revision: 1.15 $
+* @version $Revision: 1.16 $
 * @package Mail
 */
 class Mail_RFC822 {

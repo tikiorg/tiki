@@ -42,12 +42,15 @@ function wikiplugin_articles($data,$params) {
 	if (!isset($categId))
 		$categId = '';
 
+	if (!isset($lang))
+		$lang = '';
+
 	$now = date("U");
 	
 	include_once("lib/commentslib.php");
 	$commentslib = new Comments($dbTiki);
 	
-	$listpages = $tikilib->list_articles($start, $max, 'publishDate_desc', '', $now, 'admin', $type, $topicId, 'y', $topic, $categId);
+	$listpages = $tikilib->list_articles($start, $max, 'publishDate_desc', '', $now, 'admin', $type, $topicId, 'y', $topic, $categId, '', '', $lang);
  	if ($feature_multilingual == 'y') {
 		global $multilinguallib;
 		include_once("lib/multilingual/multilinguallib.php");

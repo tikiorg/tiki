@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.106 2007-01-04 17:28:50 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.107 2007-01-17 14:55:53 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -208,7 +208,7 @@ $ins_fields = array();
 $usecategs = false;
 $ins_categs = array();
 $textarea_options = false;
-
+$tabi = 1;
 
 foreach($xfields["data"] as $i=>$array) {
 	$fid = $xfields["data"][$i]["fieldId"];
@@ -551,7 +551,7 @@ if ($tiki_p_modify_tracker_items == 'y') {
 		}
 		else {
 			$error = $ins_fields;
-			$cookietab = "2";
+			$tabi = "2";
 			$smarty->assign('input_err', '1'); // warning to display
 
 			// can't go back if there are errors
@@ -922,7 +922,6 @@ if ($tracker_info["useAttachments"] == 'y') {
 	$smarty->assign('attfields', $attfields);
 	$smarty->assign('attextra', $attextra);
 }
-$tabi = 1;
 if (isset($_REQUEST['show'])) {
 	if ($_REQUEST['show'] == 'view') {
 		$tabi = 1;

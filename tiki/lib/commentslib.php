@@ -1263,8 +1263,13 @@ class Comments extends TikiLib {
 
     function count_comments($objectId) {
 	$object = explode( ":", $objectId, 2);
-	$query = "select count(*) from `tiki_comments` where `objectType`=? and `object`=?";
-	$cant = $this->getOne($query, $object );
+	if ($object[0] == 'topic') {
+		$query = 'select count(*) from `tiki_comments` where `objectType`=? and `parentId`=?';
+		$cant = $this->getOne($query, array('forum', $object[1]));
+	} else {
+		$query = 'select count(*) from `tiki_comments` where `objectType`=? and `object`=?';
+		$cant = $this->getOne($query, $object );
+	}
 	return $cant;
     }
 

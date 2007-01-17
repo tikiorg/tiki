@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.111 2007-01-04 17:42:25 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.112 2007-01-17 14:55:53 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -74,10 +74,18 @@ if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
 	}
 }
 
-if (!($tiki_p_view_trackers == 'y' || $tiki_p_admin == 'y' || $tiki_p_admin_trackers == 'y') && $tiki_p_create_tracker_items  == 'y')
-	$cookietab = "2";
-else
-	$cookietab = "1";
+if (!empty($_REQUEST['tab']) && $_REQUEST['tab'] == 'view') {
+	$cookietab = '1';
+} elseif (!empty($_REQUEST['tab']) && $_REQUEST['tab'] == 'edit') {
+	$cookietab = '2';
+} elseif (empty($_REQUEST['cookietab'])) {
+	if (!($tiki_p_view_trackers == 'y' || $tiki_p_admin == 'y' || $tiki_p_admin_trackers == 'y') && $tiki_p_create_tracker_items  == 'y')
+		$cookietab = "2";
+	else
+		$cookietab = "1";
+} else {
+	$cookietab = $_REQUEST['cookietab'];
+}
 $defaultvalues = array();
 
 if (isset($_REQUEST['vals']) and is_array($_REQUEST['vals'])) {

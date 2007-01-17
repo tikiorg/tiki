@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.64 2007-01-13 11:22:17 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.65 2007-01-17 14:55:53 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -22,6 +22,7 @@ function discardUser($u, $reason) {
 }
 
 function batchImportUsers() {
+	$patterns['login'] = "/^[-_a-zA-Z0-9@\.]*$/";
 	global $userlib, $smarty, $logslib, $tiki_p_admin, $user;
 
 	$fname = $_FILES['csvlist']['tmp_name'];

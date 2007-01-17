@@ -2,7 +2,7 @@
 
 // $start_time = microtime(true);
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.67 2007-01-17 14:09:18 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.68 2007-01-17 14:55:53 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -529,10 +529,13 @@ $comments_coms = $commentslib->get_comments($comments_objectId, $_REQUEST["comme
 	$_REQUEST['comments_threshold'], $_REQUEST["comments_style"], $threadId_if_reply);
 
 // $end_time = microtime(true);
-
 // print "TIME5 in comments.php: ".($end_time - $start_time)."\n";
 
-$comments_cant = $commentslib->count_comments($comments_objectId);
+if ($comments_prefix_var == 'forum:') {
+	$comments_cant = $commentslib->count_comments('topic:'. $_REQUEST['comments_parentId']); // comments in the topic not in the forum
+} else {
+	$comments_cant = $commentslib->count_comments($comments_objectId);
+}
 $comments_cant_page = $comments_coms['cant'];
 
 $smarty->assign('comments_below', $comments_coms["below"]);

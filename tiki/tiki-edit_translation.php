@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.11 2006-09-19 16:33:15 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.12 2007-01-17 14:55:53 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -75,7 +75,7 @@ else if ($_REQUEST['id']) {
 }
 
 if ($type == "wiki page") {
-	if ($tiki_p_edit != 'y') {
+	if ($tiki_p_admin_wiki== 'y' || $tikilib->user_has_perm_on_object($user, $page, 'wiki page', 'tiki_p_edit') || ($wiki_creator_admin == 'y' && $user && $info['creator'] == $user)) {
 		$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
 		$smarty->display("error.tpl");
 		die;
@@ -84,7 +84,7 @@ if ($type == "wiki page") {
 	$smarty->assign_by_ref('pages', $pages["data"]);
 }
 else if ($type == "article") {
-	if ($tiki_p_edit_article != 'y') {
+	if ($tiki_p_admin_cms != 'y' && !$tikilib->user_has_perm_on_object($user, $id, 'article', 'tiki_p_edit_article') and ($info['author'] != $user or $info['creator_edit'] != 'y')) {
 		$smarty->assign('msg', tra("Permission denied you cannot edit this article"));
 		$smarty->display("error.tpl");
 		die;
@@ -112,7 +112,7 @@ if (isset($_REQUEST['detach']) && isset($_REQUEST['srcId'])) { // detach from a 
 	check_ticket('edit-translation');
 	$multilinguallib->detachTranslation($type, $_REQUEST['srcId']);
 }
-else if (isset($_REQUEST['srcName']) && $_REQUEST['srcName']) { // attach to a translation set
+ else if (isset($_REQUEST['set']) && !empty($_REQUEST['srcName'])) { // attach to a translation set
 	check_ticket('edit-translation');
 	if (empty($langpage) || $langpage == "NULL") {
 		$error = "traLang";
@@ -139,7 +139,7 @@ else if (isset($_REQUEST['srcName']) && $_REQUEST['srcName']) { // attach to a t
 	}
 	$smarty->assign('srcName', $_REQUEST['srcName']);
 }
-else if  (isset($_REQUEST['srcId']) && $_REQUEST['srcId']) {
+else if  (isset($_REQUEST['set']) && !empty($_REQUEST['srcId'])) {
 	check_ticket('edit-translation');
 	if (empty($langpage) || $langpage == "NULL") {
 		$error = "traLang";

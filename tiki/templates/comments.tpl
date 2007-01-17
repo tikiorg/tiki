@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.70 2007-01-09 17:17:09 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.71 2007-01-17 14:55:55 sylvieg Exp $ *}
 
 {if $forum_mode eq 'y'}
 <tr><td>
@@ -68,6 +68,7 @@
 <h2> {tr}Posted messages{/tr} </h2>
   <table class="normal">
   <tr>
+	{if $comments_cant > 10}
     <td class="heading"><label for="comments-maxcomm">{tr}Messages{/tr} </label>
         <select name="comments_maxComments" id="comments-maxcomm">
         <option value="10" {if $comments_maxComments eq 10 }selected="selected"{/if}>10</option>
@@ -76,6 +77,7 @@
         <option value="999999" {if $comments_maxComments eq 999999 }selected="selected"{/if}>{tr}All{/tr}</option>
         </select>
     </td>
+	{/if}
     <td class="heading"><label for="comments-style">{tr}Style{/tr}</label>
         <select name="comments_style" id="comments-style">
           <option value="commentStyle_plain" {if $comments_style eq 'commentStyle_plain'}selected="selected"{/if}>{tr}Plain{/tr}</option>
