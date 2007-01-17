@@ -1,11 +1,12 @@
 <?php
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_articles.php,v 1.23 2007-01-17 15:22:36 sylvieg Exp $
 // Includes articles listing in a wiki page
 // Usage:
 // {ARTICLES(max=>3,topic=>topicId)}{ARTICLES}
 //
 
 function wikiplugin_articles_help() {
-	return tra("~np~{~/np~ARTICLES(max=>3,topic=>topicName,topicId=>id,type=>type,categId=>Category parent ID,sort=>columnName_asc|columnName_desc)}{ARTICLES} Insert articles into a wikipage");
+	return tra("~np~{~/np~ARTICLES(max=>3,topic=>topicName,topicId=>id,type=>type,categId=>Category parent ID,lang=>en,sort=>columnName_asc|columnName_desc)}{ARTICLES} Insert articles into a wikipage");
 }
 
 function wikiplugin_articles($data,$params) {
@@ -31,6 +32,8 @@ function wikiplugin_articles($data,$params) {
 	}
 	if(!isset($topicId))
 		$topicId='';
+	if(!isset($topic))
+		$topic='';
 
 	if (!isset($sort))
 		$sort = 'publishDate_desc';
