@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.700 2007-01-17 14:55:53 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.701 2007-01-17 15:43:42 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -6586,6 +6586,32 @@ if (!$simple_wiki) {
 			$data = preg_replace('/^>.*\\n?/m', '', $data);
 		}
 		return strlen($data);
+	}
+	function list_votes($id, $offset=0, $maxRecords=-1, $sort_mode='user_asc', $find='', $table='', $column='') {
+		$mid = 'where  `id`=?';
+		$bindvars[] = $id;
+		$select = '';
+		$join = '';
+		if (!empty($find)) {
+			$mid .= " and `user` like ?";
+			$bindvars[] = '%'.$find.'%';
+		}
+		if (!empty($table) && !empty($column)) {
+			$select = ", `$table`.`$column` as title";
+			$join = "left join `$table` on (`tiki_user_votings`.`optionId` = `$table`.`optionId`)";
+		}
+		$query = "select * $select from `tiki_user_votings` $join $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_user_votings` $mid";
+		$result = $this->query($query, $bindvars, $maxRecords, $offset);
+		$cant = $this->getOne($query_cant, $bindvars);
+		$ret = array();
+		while ($res = $result->fetchRow()) {
+		    $ret[] = $res;
+		}
+		$retval = array();
+		$retval["data"] = $ret;
+		$retval["cant"] = $cant;
+		return $retval;
 	}
 
 }
