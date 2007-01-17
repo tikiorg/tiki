@@ -1,7 +1,7 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.36 2007-01-17 14:55:55 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.37 2007-01-17 15:32:52 sylvieg Exp $
  * 
  * \brief {SPLIT} wiki plugin implementation
  * Usage:
@@ -66,31 +66,25 @@ function wikiplugin_split($data, $params, $pos) {
    if (count($rows) <= 1 && count($rows[0]) <= 1)
       return $data;
 
-	$columnSize = floor(100 / $maxcols);
 	
-	// if the user specify row size in %
-
-
 	if (isset($colsize)) {
-	   $fixedsize=true;
 		$tdsize= explode("|", $colsize);
 		$tdtotal=0;
 		for ($i=0;$i<$maxcols;$i++) {
 		  if (!isset($tdsize[$i])) {
 		    $tdsize[$i]=0;
+		  } else {
+			$tdsize[$i] = trim($tdsize[$i]);
 		  }
 		  $tdtotal+=$tdsize[$i];
 		}
-		for ($i=0;$i<$maxcols;$i++) {
-		  $tdsize[$i]=floor($tdsize[$i]/$tdtotal*100);
-		}		
 		$tdtotaltd=floor($tdtotal/100*100);
 		if ($tdtotaltd == 100) // avoir IE to do to far
 			$class = 'class="normal split"';
 		else
 			$class = 'class="split" width="'.$tdtotaltd.'%"';
 	} else {
-		$tdsize=array_fill(0,$maxcols,$columnSize);
+		$columnSize = floor(100 / $maxcols);
 		$class = 'class="normal split"';	
 	}
 
@@ -112,7 +106,17 @@ function wikiplugin_split($data, $params, $pos) {
             $colspan = ((count($r) == $idx) && (($maxcols - $idx) > 0) ? ' colspan="'.($maxcols - $idx + 1).'"' : '');
             $idx++;
             // Add cell to table
-    		   $result .= '<td valign="top"'.($fixedsize ? ' width="'.$tdsize[$idx-2].'%"' : '').$colspan.'>'
+			if (isset($colsize)) {
+				$width = ' width="'.$tdsize[$idx-2];
+				if (!$fixedsize && substr($tdsize[$idx-2], -1) != '%')
+					$width .= '%';
+				$width .= '" ';
+			} elseif (!$fixedsize) {
+				$width = ' width="$columnSize%" ';
+			} else {
+				$width = '';
+			}
+    		   $result .= '<td valign="top"'.$width.$colspan.'>'
 				// Insert "\n" at data begin (so start-of-line-sensitive syntaxes will be parsed OK)
 				."\n"
 				// now prepend any carriage return and newline char with br
