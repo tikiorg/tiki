@@ -2,7 +2,7 @@
 
 // $start_time = microtime(true);
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.66 2006-10-22 23:35:14 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.67 2007-01-17 14:09:18 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
