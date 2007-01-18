@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_polls.php,v 1.20 2006-12-16 19:48:04 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_polls.php,v 1.21 2007-01-18 22:04:26 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -140,6 +140,16 @@ if ($offset > 0) {
 	$smarty->assign('prev_offset', -1);
 }
 
+if ($poll_list_categories == 'y') {
+	foreach ($channels['data'] as $key=>$channel) {
+		$channels['data'][$key]['categories'] = $polllib->get_poll_categories($channel['pollId']);
+	}
+}
+if ($poll_list_objects == 'y') {
+	foreach ($channels['data'] as $key=>$channel) {
+		$channels['data'][$key]['objects'] = $polllib->get_poll_objects($channel['pollId']);
+	}
+}
 $smarty->assign_by_ref('channels', $channels["data"]);
 
 $listPages = $tikilib->list_pageNames();

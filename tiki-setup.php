@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.387 2007-01-15 10:45:10 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.388 2007-01-18 22:04:26 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -760,6 +760,8 @@ $pref['feature_poll_comments'] = 'n';
 $pref['feature_poll_anonymous'] = 'n';
 $pref['poll_comments_default_ordering'] = 'points_desc';
 $pref['poll_comments_per_page'] = 10;
+$pref['poll_list_categories'] = 'n';
+$pref['poll_list_objects'] = 'n';
 
 # surveys
 $sections['surveys']['feature'] = 'feature_surveys';

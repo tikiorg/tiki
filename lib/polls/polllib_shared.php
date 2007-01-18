@@ -174,6 +174,25 @@ class PollLibShared extends TikiLib {
     $query = "insert into `tiki_poll_objects`(`catObjectId`,`pollId`,`title`) values(?,?,?)";
     $result = $this->query($query,array((int) $catObjectId,(int) $pollId, $title));
   }
+	function get_poll_categories($pollId) {
+		global $categlib; include_once('lib/categories/categlib.php');
+		$query = "select tco.`categId`, tc.`name` from `tiki_poll_objects` tpo, `tiki_category_objects` tco, `tiki_categories` tc where tpo.`pollId`=? and tpo.`catObjectId`=tco.`catObjectId` and tco.`categId`=tc.`categId`";
+		$result = $this->query($query,array((int)$pollId));
+		$ret = array();
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res;
+		}
+		return $ret;
+	}
+	function get_poll_objects($pollId) {
+		$query = "select tob.* from `tiki_objects` tob, `tiki_poll_objects` tpo where tpo.`pollId`=? and tpo.`catObjectId`=tob.`objectId`";
+		$result = $this->query($query,array((int)$pollId));
+		$ret = array();
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res;
+		}
+		return $ret;		
+	}
 
 }
 global $dbTiki;

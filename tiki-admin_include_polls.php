@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_polls.php,v 1.11 2005-05-18 10:58:54 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_polls.php,v 1.12 2007-01-18 22:04:26 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -46,6 +46,8 @@ if (isset($_REQUEST["pollprefs"])) {
 
 		$smarty->assign("feature_poll_anonymous", 'n');
 	}
+	simple_set_toggle('poll_list_categories');
+	simple_set_toggle('poll_list_objects');
 }
 ask_ticket('admin-inc-polls');
 ?>
