@@ -25,6 +25,8 @@
     <option value="points_desc" {if $poll_comments_default_ordering eq 'points_desc'}selected="selected"{/if}>{tr}Points{/tr}</option>
     </select>
     </td></tr>
+	<tr><td class="form">{tr}Show categories{/tr}</td><td><input type="checkbox" name="poll_list_categories" {if $poll_list_categories eq 'y'}checked="checked"{/if}/></td></tr>
+	<tr><td class="form">{tr}Show objects{/tr}</td><td><input type="checkbox" name="poll_list_objects" {if $poll_list_objects eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td colspan="2" class="button"><input type="submit" name="pollprefs" value="{tr}Change settings{/tr}" /></td></tr>
     </table>
     </form>
