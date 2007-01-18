@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.701 2007-01-17 15:43:42 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.702 2007-01-18 16:31:20 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -6810,7 +6810,7 @@ function validate_email($email,$checkserver='n') {
 	if (!$valid_syntax) {
 		return false;
 	} elseif ($checkserver == 'y') {
-		include 'Net/DNS.php';
+		include_once('Net/DNS.php');
 		$resolver = new Net_DNS_Resolver();
 		$domain = substr(strstr($email,'@'),1);
 		$answer = $resolver->query($domain,'MX');
