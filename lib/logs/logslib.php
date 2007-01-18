@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.29 2006-12-21 16:16:23 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.30 2007-01-18 18:50:17 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -116,7 +116,12 @@ class LogsLib extends TikiLib {
 			$client = $_SERVER['HTTP_USER_AGENT'];
 		if ($logCateg) {
 			global $categlib; include_once('lib/categories/categlib.php');
-			$categs = $categlib->get_object_categories($objectType, $object);
+			if ($objectType == 'comment') {
+				preg_match('/type=([^&]*)/', $param, $matches);
+echo $matches[1]."DDD";
+				$categs = $categlib->get_object_categories($matches[1], $object);
+			} else
+				$categs = $categlib->get_object_categories($objectType, $object);
 		}
 		if ($logObject && !$logCateg) {
 			$query = "insert into `tiki_actionlog` (`action`,`object`,`lastModif`,`user`,`ip`,`comment`, `objectType`) values(?,?,?,?,?,?,?)";
