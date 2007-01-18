@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.75 2007-01-03 01:09:34 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.76 2007-01-18 18:18:55 sylvieg Exp $
 
 /**
  * Tiki registration script
@@ -9,7 +9,7 @@
  * @license GNU LGPL
  * @copyright Tiki Community
  * @date created: 2002/10/8 15:54
- * @date last-modified: $Date: 2007-01-03 01:09:34 $
+ * @date last-modified: $Date: 2007-01-18 18:18:55 $
  */
 
 // Initialization
