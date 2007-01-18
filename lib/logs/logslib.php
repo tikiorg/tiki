@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.30 2007-01-18 18:50:17 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.31 2007-01-18 23:17:27 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -118,7 +118,6 @@ class LogsLib extends TikiLib {
 			global $categlib; include_once('lib/categories/categlib.php');
 			if ($objectType == 'comment') {
 				preg_match('/type=([^&]*)/', $param, $matches);
-echo $matches[1]."DDD";
 				$categs = $categlib->get_object_categories($matches[1], $object);
 			} else
 				$categs = $categlib->get_object_categories($objectType, $object);
@@ -285,6 +284,17 @@ echo $matches[1]."DDD";
 						$res['contributions'] = $contributionlib->get_assigned_contributions($res['object'], $res['objectType']); // todo: do a left join
 					}
 				}
+				if ($res['objectType'] == 'comment' && empty($res['categId'])) { // patch for xavi
+					global $categlib; include_once('lib/categories/categlib.php');
+					preg_match('/type=([^&]*)/', $res['comment'], $matches);
+					$categs = $categlib->get_object_categories($matches[1], $res['object']);
+					$i = 0;
+					foreach ($categs as $categId) {
+						$res['categId'] = $categId;
+						if ($i++ > 0)
+							$ret[] = $res;
+					}
+				} 
 				$ret[] = $res;
 			}
 		}
@@ -625,6 +635,56 @@ echo $matches[1]."DDD";
 		}
 		return (array('nbCols'=>$nbCols, 'data'=>$contributions));
 	}
+	function get_colors($nb) {
+		$colors[] = 'red';	if (!$nb--) return $colors;
+		$colors[] = 'yellow';	if (!$nb--) return $colors;
+		$colors[] = 'blue';	if (!$nb--) return $colors;
+		$colors[] = 'fuschia';	if (!$nb--) return $colors;
+		$colors[] = 'gray';	if (!$nb--) return $colors;
+		$colors[] = 'green';	if (!$nb--) return $colors;
+		$colors[] = 'aqua';	if (!$nb--) return $colors;
+		$colors[] = 'lime';	if (!$nb--) return $colors;
+		$colors[] = 'maroon';	if (!$nb--) return $colors;
+		$colors[] = 'navy';	if (!$nb--) return $colors;
+		$colors[] = 'olive';	if (!$nb--) return $colors;
+		$colors[] = 'black';	if (!$nb--) return $colors;
+		$colors[] = 'purple';	if (!$nb--) return $colors;
+		$colors[] = 'silver';	if (!$nb--) return $colors;
+		$colors[] = 'teal';	if (!$nb--) return $colors;
+		while ($nb--) {
+			$colors[] = rand(1, 999999);
+		} 
+	}
+	function draw_contribution_vol($contributionStat, $type='add') {
+		$i = 0;
+		$x[] = tra('Contributions');
+		$colors = $this->get_colors($contributionStat['nbCols']);
+		foreach ($contributionStat['data'] as $contribution) {
+			$labels[] = $contribution['name'];
+			$vol = 0;
+			foreach ($contribution['stat'] as $stat) {
+				$vol += $stat[$type];
+			}
+			$y0[] = $vol;
+		}
+		return Array('label' => $labels, 'color' => $colors, 'x' => $x, 'y0' => $y0);
+	}
+	function draw_week_contribution_vol($contributionStat, $type='add') {
+		for ($i = 1, $nb = $contributionStat['nbCols']; $nb; --$nb)
+			$x[] = $i++;
+		$colors = $this->get_colors($contributionStat['nbCols']);
+		foreach ($contributionStat['data'] as $contribution) {
+			$labels[] = $contribution['name'];
+			$j = 0;
+			foreach ($contribution['stat'] as $stat) {
+				$table = "y$j";
+				$j++;
+				array_push($$table,  $stat[$type]);
+			}
+		}
+		return Array('label' => $labels, 'color' => $colors, 'x' => $x, 'y0' => $y0);
+	}
+
 }
 global $dbTiki;
 $logslib = new LogsLib($dbTiki);
