@@ -7,8 +7,8 @@
  * @license GNU LGPL
  * @copyright Tiki Community
  * @date created: 2003/3/21 16:48
- * @date last-modified: $Date: 2006-10-18 19:44:20 $
- * $Header: /cvsroot/tikiwiki/tiki/lib/registration/registrationlib.php,v 1.33 2006-10-18 19:44:20 luciash Exp $
+ * @date last-modified: $Date: 2007-01-18 18:18:55 $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/registration/registrationlib.php,v 1.34 2007-01-18 18:18:55 sylvieg Exp $
  */
 
 //this script may only be included - so it's better to die if called directly
@@ -94,9 +94,14 @@ class RegistrationLib extends TikiLib {
         // If there is no MX record simply @ to next time address socket connection do .
         $ConnectAddress = $Domain;
         if ($Debug) echo "Confirmation : MX record about {$Domain} does not exist.<br>";
+		if ($novalidation == 'mini') {
+			$Return[0]=false;
+    		$Return[1]="{$Email} domain is incorrect.";
+    		return $Return;
+		}
     }
 
-	if ($novalidation != 'yes') {	// Skip the connecting test if it didn't work the first time
+	if ($novalidation != 'yes' && $novalidation != 'mini') {	// Skip the connecting test if it didn't work the first time
 	    // fsockopen function reference : http://www.php.net/manual/en/function.fsockopen.php
 	    @$Connect = fsockopen ( $ConnectAddress, 25 );
 
