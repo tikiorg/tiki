@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.23 2006-12-21 16:16:23 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.24 2007-01-19 23:15:30 nyloth Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a></h1>
 {if $tiki_p_admin eq 'y'}
@@ -37,14 +37,14 @@
 <td>{tr}User:{/tr}</td>
 <td><select multiple="multiple" size="5" name="selectedUsers[]">
 <option value="">&nbsp;</option>
-{foreach  key=ix item=user from=$users}
-<option value="{$user|escape}" {if $selectedUsers[$ix] eq 'y'}selected="selected"{/if}>{$user|escape}</option>
+{foreach  key=ix item=auser from=$users}
+<option value="{$auser|escape}" {if $selectedUsers[$ix] eq 'y'}selected="selected"{/if}>{$auser|escape}</option>
 {/foreach}
 </select>
 </td>
 </tr>
 {else}
-<input type="hidden" name="selectedUsers[]" value="{$user|escape}">
+<input type="hidden" name="selectedUsers[]" value="{$auser|escape}">
 {/if}
 {if $tiki_p_admin eq 'y'}
 <tr class="formcolor">
@@ -80,7 +80,7 @@
 
 <a name="List" />
 <h2>{tr}List{/tr}
-{if $selectedUsers}&nbsp;&mdash;&nbsp;{tr}User:{/tr}{foreach  key=ix item=user from=$users}{if $selectedUsers[$ix] eq 'y'} {$user|escape}{/if}{/foreach}{/if}
+{if $selectedUsers}&nbsp;&mdash;&nbsp;{tr}User:{/tr}{foreach  key=ix item=auser from=$users}{if $selectedUsers[$ix] eq 'y'} {$auser|escape}{/if}{/foreach}{/if}
 {if $selectedGroups}&nbsp;&mdash;&nbsp;{tr}Group:{/tr}{foreach  key=ix item=group from=$groups}{if $selectedGroups[$ix] eq 'y'} {$group|escape}{/if}{/foreach}{/if}
 {if $reportCategory}&nbsp;&mdash;&nbsp;{tr}Category:{/tr} {$reportCateg}{/if}
 </h2>
@@ -143,7 +143,7 @@
 
 <a name="Statistic" />
 <h2>{tr}Statistic{/tr}
-{if $selectedUsers}&nbsp;&mdash;&nbsp;{tr}User:{/tr}{foreach  key=ix item=user from=$users}{if $selectedUsers[$ix] eq 'y'} {$user|escape}{/if}{/foreach}{/if}
+{if $selectedUsers}&nbsp;&mdash;&nbsp;{tr}User:{/tr}{foreach  key=ix item=auser from=$users}{if $selectedUsers[$ix] eq 'y'} {$auser|escape}{/if}{/foreach}{/if}
 {if $selectedGroups}&nbsp;&mdash;&nbsp;{tr}Group:{/tr}{foreach  key=ix item=group from=$groups}{if $selectedGroups[$ix] eq 'y'} {$group|escape}{/if}{/foreach}{/if}
 {if $reportCategory}&nbsp;&mdash;&nbsp;{tr}Category:{/tr} {$reportCateg}{/if}
 </h2>
@@ -156,9 +156,9 @@
 <th class="heading">{tr}connection seconds{/tr}</th>
 <th class="heading">{tr}login{/tr}</th>
 </tr>
-{foreach key=user item=time from=$logTimes}
+{foreach key=auser item=time from=$logTimes}
 <tr>
-<td class="{cycle advance=false}">{$user}</td>
+<td class="{cycle advance=false}">{$auser}</td>
 <td class="{cycle advance=false}">{$time.days} {tr}days{/tr} {$time.hours} {tr}hours{/tr} {$time.mins} {tr}mns{/tr}</td>
 <td class="{cycle advance=false}">{$time.time}</td>
 <td class="{cycle}">{$time.nbLogins}</td>
