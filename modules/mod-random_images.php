@@ -17,5 +17,6 @@ if (isset($module_params["galleryId"])) {
 
 $ranking = $imagegallib->get_random_image($galleryId);
 $smarty->assign('modRandomImages', $ranking["imageId"]);
+$smarty->assign('modRandomDescription', $ranking["description"]);
 
 ?>

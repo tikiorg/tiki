@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.84 2006-12-21 23:25:43 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.85 2007-01-19 12:26:28 tombombadilom Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -1241,12 +1241,13 @@ class ImageGalsLib extends TikiLib {
 	if ($cant) {
 	    $pick = rand(0, $cant - 1);
 
-	    $query = "select `imageId` ,`galleryId`,`name` from `tiki_images` $whgal";
+	    $query = "select `imageId` ,`description`, `galleryId`,`name` from `tiki_images` $whgal";
 	    $result = $this->query($query,$bindvars,1,$pick);
 	    $res = $result->fetchRow();
 	    $ret["galleryId"] = $res["galleryId"];
 	    $ret["imageId"] = $res["imageId"];
 	    $ret["name"] = $res["name"];
+	    $ret["description"] = $res["description"];
 	    $query = "select `name`  from `tiki_galleries` where `galleryId` = ?";
 	    $ret["gallery"] = $this->getOne($query,array((int)$res["galleryId"]));
 	} else {
