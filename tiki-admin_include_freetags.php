@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_freetags.php,v 1.5 2006-12-11 22:36:15 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_freetags.php,v 1.6 2007-01-19 22:38:28 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -32,7 +32,7 @@ if (isset($_REQUEST["freetagsset3d"])) {
 	'freetags_3d_camera_distance',
 	'freetags_3d_fov',
 	'freetags_3d_node_size',
-	'freetags_3d_text_size'
+	'freetags_3d_text_size',
 	'freetags_3d_friction_constant',
 	'freetags_3d_elastic_constant',
 	'freetags_3d_eletrostatic_constant',
