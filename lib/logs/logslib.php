@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.31 2007-01-18 23:17:27 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.32 2007-01-20 02:17:24 nyloth Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -152,8 +152,10 @@ class LogsLib extends TikiLib {
 		}
 		if (!empty($hash)) {
 			$query = "insert into `tiki_actionlog_params` (`actionId`, `name`, `value`) values(?,?,?)";
+			$a = 0;
 			foreach ($hash as $param=>$val) {
-				$this->query($query, array($actionId, $param, $val));
+				$this->query($query, array($actions[$a], $param, $val));
+				$a++;
 			}
 		}
 		return  $actions[0];
