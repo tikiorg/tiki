@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.388 2007-01-18 22:04:26 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.389 2007-01-20 12:01:56 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1305,7 +1305,7 @@ if ($wiki_page_regex == 'strict') {
 } elseif ($wiki_page_regex == 'full') {
 	$page_regex = '([A-Za-z0-9_]|[\x80-\xFF])([\.: A-Za-z0-9_\-]|[\x80-\xFF])*([A-Za-z0-9_]|[\x80-\xFF])';
 } else {
-	$page_regex = '([^\n|\(\)])([^\n|\(\)](?!\)\)))*?([^\n|\(\)])';
+	$page_regex = '([^\n|\(\)])((?!(\)\)|\||\n)).)*?';
 }
 
 $wiki_dump_exists = 'n';
