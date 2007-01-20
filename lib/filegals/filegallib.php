@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.57 2006-12-15 21:57:54 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.58 2007-01-20 01:22:48 nyloth Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -357,10 +357,13 @@ class FileGalLib extends TikiLib {
 		global $fgal_podcast_dir;
 		include_once ('lib/pclzip.lib.php');
 		include_once ('lib/mime/mimelib.php');
+		$extract_dir = 'temp/'.basename($file).'/';
+		mkdir($extract_dir);
 		$archive = new PclZip($file);
-		$archive->extract('temp');
+		$archive->extract($extract_dir);
+		unlink($file);
 		$files = array();
-		$h = opendir("temp");
+		$h = opendir($extract_dir);
 		$gal_info = $this->get_file_gallery_info($galleryId);
 		if ($podCastGallery = $this->isPodCastGallery($galleryId, $gal_info)) {
 			$savedir=$fgal_podcast_dir;
@@ -369,7 +372,7 @@ class FileGalLib extends TikiLib {
 		}
 
 		while (($file = readdir($h)) !== false) {
-			if ($file != '.' && $file != '..' && is_file("temp/$file") && $file != 'license.txt') {
+			if ($file != '.' && $file != '..' && is_file($extract_dir.'/'.$file)) {
 				$files[] = $file;
 
 				// check filters
@@ -385,7 +388,7 @@ class FileGalLib extends TikiLib {
 						$upl = 0;
 				}
 
-				$fp = fopen('temp/' . $file, "rb");
+				$fp = fopen($extract_dir.$file, "rb");
 				$data = '';
 				$fhash = '';
 
@@ -420,15 +423,16 @@ class FileGalLib extends TikiLib {
 					$data = '';
 				}
 
-				$size = filesize('temp/' . $file);
+				$size = filesize($extract_dir.$file);
 				$name = $file;
-				$type = tiki_get_mime('temp/' . $file);
+				$type = tiki_get_mime($extract_dir.$file);
 				$fileId = $this->insert_file($galleryId, $name, $description, $name, $data, $size, $type, $user, $fhash);
-				unlink ('temp/' . $file);
+				unlink ($extract_dir.$file);
 			}
 		}
 
 		closedir ($h);
+		rmdir($extract_dir);
 	}
 
 	// Added by LeChuck, May 2, 2003
