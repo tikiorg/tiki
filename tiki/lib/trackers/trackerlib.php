@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.158 2007-01-09 17:17:07 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.159 2007-01-20 01:08:15 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -519,10 +519,9 @@ class TrackerLib extends TikiLib {
 		        $cat_table='';
 		        if (substr($sort_mode,0,2) == "f_") {
 			  list($a,$asort_mode,$corder) = split('_',$sort_mode);
-			  $cat_table .= ", `tiki_tracker_item_fields` sf ";
-			  $mid .= " and tti.`itemId`=sf.`itemId` and sf.`fieldId`=? ";
+			  $mid .= " and ttif.`fieldId`=? ";
 			  $bindvars[] = $asort_mode;
-			  $csort_mode = "sf.`value` ";
+			  $csort_mode = "ttif.`value` ";
 			} else {
 			  list($csort_mode,$corder) = split('_',$sort_mode);
 			  $csort_mode = "tti.`".$csort_mode."` ";
