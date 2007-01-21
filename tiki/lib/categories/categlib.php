@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.93 2006-12-28 18:57:55 rlpowell Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.94 2007-01-21 00:42:02 fr_rodo Exp $
  *
  * \brief Categories support class
  *
@@ -451,6 +451,7 @@ class CategLib extends ObjectLib {
 			global $cachelib;
 			global $userlib;
 			global $tiki_p_admin;
+			global $feature_category_reinforce;
 			
 			$parents = $this->get_object_categories("$type", $itemId);
 			$return_perms = array(); // initialize array for storing perms to be returned
@@ -471,12 +472,17 @@ class CategLib extends ObjectLib {
 						if ($userlib->object_has_one_permission($categId, 'category')) {
 							if ($userlib->object_has_permission($user, $categId, 'category', $perm)) {
 								$return_perms["$perm"] = 'y';
+								if ($feature_category_reinforce == "n") {
+									break 1;
+								}
 							} else {
 								$return_perms["$perm"] = 'n';
 								// better-sorry-than-safe approach:
 								// if a user lacks a given permission regarding a particular category,
 								// that category takes precedence when considering if user has that permission
-								break 1;
+								if ($feature_category_reinforce == "y") {
+									break 1;
+								}
 								// break out of one FOREACH loop
 							}
 						} else {
@@ -491,7 +497,9 @@ class CategLib extends ObjectLib {
 										// better-sorry-than-safe approach:
 										// if a user lacks a given permission regarding a particular category,
 										// that category takes precedence when considering if user has that permission
-										break 2;
+										if ($feature_category_reinforce == "y") {
+											break 2;
+										}
 										// break out of one FOR loop and one FOREACH loop
 									}
 								} else { /* no special perm on cat  so general perm: (to see the categ panel as anonymous */ 
