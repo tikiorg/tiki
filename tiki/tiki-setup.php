@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.390 2007-01-21 00:42:03 fr_rodo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.391 2007-01-21 12:48:56 fr_rodo Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -635,6 +635,10 @@ $pref['feature_community_mouseover_country'] = 'y';
 $pref['feature_community_mouseover_email'] = 'y';
 $pref['feature_community_mouseover_lastlogin'] = 'y';
 $pref['feature_community_mouseover_distance'] = 'y';
+$pref['feature_community_list_name'] = 'y';
+$pref['feature_community_list_score'] = 'y';
+$pref['feature_community_list_country'] = 'y';
+$pref['feature_community_list_distance'] = 'y';
 $pref['feature_community_friends_permission'] = 'n';
 $pref['feature_community_friends_permission_dep'] = '2';
 $pref['change_language'] = 'y';

@@ -46,6 +46,44 @@
   </div>
 </div>
 
+<div class="cbox">
+  <div class="cbox-title">{tr}User List{/tr}</div>
+  <div class="cbox-data">
+      <form action="tiki-admin.php?page=community" method="post">
+        <table class="admin"><tr>
+          <td class="form"><label for="community-list-name">{tr}Name{/tr}:</label></td>
+          <td><input type="checkbox" name="feature_community_list_name" id="community-list-name"
+              {if $feature_community_list_name eq 'y'}checked="checked"{/if} /></td>
+        </tr><tr>
+          <td class="form"><label for="community-list-score">{tr}Score{/tr}:</label></td>
+          <td><input type="checkbox" name="feature_community_list_score" id="community-list-score"
+              {if $feature_community_list_score eq 'y'}checked="checked"{/if} /></td>
+        </tr><tr>
+          <td class="form"><label for="community-list-country">{tr}Country{/tr}:</label></td>
+          <td><input type="checkbox" name="feature_community_list_country" id="community-list-country"
+              {if $feature_community_list_country eq 'y'}checked="checked"{/if} /></td>
+        </tr><tr>
+          <td class="form"><label for="community-list-distance">{tr}Distance{/tr}:</label></td>
+          <td><input type="checkbox" name="feature_community_list_distance" id="community-list-distance"
+              {if $feature_community_list_distance eq 'y'}checked="checked"{/if} /></td>
+        </tr><tr>
+          <td class="form" ><label for="user_list_order">{tr}Users sort order{/tr}:</label></td>
+          <td ><select name="user_list_order" id="user_list_order">
+        	<option value="score_asc" {if $user_list_order=="score_asc"}selected="selected"{/if}>{tr}Score ascending{/tr}</option>
+            <option value="score_desc" {if $user_list_order=="score_desc"}selected="selected"{/if}>{tr}Score descending{/tr}</option>
+            <option value="realName_asc" {if $user_list_order=="realName_asc"}selected="selected"{/if}>{tr}Name ascending{/tr}</option>
+            <option value="realName_desc" {if $user_list_order=="realName_desc"}selected="selected"{/if}>{tr}Name descending{/tr}</option>
+            <option value="login_asc" {if $user_list_order=="login_asc"}selected="selected"{/if}>{tr}Login ascending{/tr}</option>
+            <option value="login_desc" {if $user_list_order=="login_desc"}selected="selected"{/if}>{tr}Login descending{/tr}</option>
+          </select></td>
+       </tr><tr>
+          <td colspan="2" class="button"><input type="submit" name="listfeatures"
+              value="{tr}Set features{/tr}" /></td>
+        </tr></table>
+      </form>
+  </div>
+</div>
+
 {* This is desired feature for future
 <div class="cbox">
   <div class="cbox-title">{tr}Friendship network{/tr}</div>

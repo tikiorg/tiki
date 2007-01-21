@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_users.php,v 1.8 2005-07-14 13:59:50 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_users.php,v 1.9 2007-01-21 12:48:56 fr_rodo Exp $
 
 // Initialization
 require_once('tiki-setup.php');
@@ -72,19 +72,23 @@ if($offset>0) {
 $listdistance = array();
 $listuserscountry = array();
 for ($i=0;$i<count($listusers["data"]);$i++) {
-	$userlogin=$listusers["data"][$i]["login"];
-	$distance=$userprefslib->get_userdistance($userlogin,$user);
-	if (is_null($distance)) {
-		$listdistance[]=NULL;
-	} else {
-		$listdistance[]=round($distance,0);
+	if ($feature_community_list_distance == "y") {
+		$userlogin=$listusers["data"][$i]["login"];
+		$distance=$userprefslib->get_userdistance($userlogin,$user);
+		if (is_null($distance)) {
+			$listdistance[]=NULL;
+		} else {
+			$listdistance[]=round($distance,0);
+		}
 	}
 
-	$userprefs=$listusers["data"][$i]["preferences"];
-	$country="None";
-	for ($j=0;$j<count($userprefs);$j++) {
-			if ($userprefs[$j]["prefName"]=="country") $country=$userprefs[$j]["value"];
-			if ($userprefs[$j]["prefName"]=="realName") $listusers["data"][$i]["realName"]=$userprefs[$j]["value"];
+	if ($feature_community_list_country == "y") {
+		$userprefs=$listusers["data"][$i]["preferences"];
+		$country="None";
+		for ($j=0;$j<count($userprefs);$j++) {
+				if ($userprefs[$j]["prefName"]=="country") $country=$userprefs[$j]["value"];
+				if ($userprefs[$j]["prefName"]=="realName") $listusers["data"][$i]["realName"]=$userprefs[$j]["value"];
+		}
 	}
 	$listuserscountry[]=$country;
 }
