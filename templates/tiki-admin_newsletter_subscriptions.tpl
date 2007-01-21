@@ -21,7 +21,9 @@
 <form action="tiki-admin_newsletter_subscriptions.php" method="post">
 <input type="hidden" name="nlId" value="{$nlId|escape}" />
 <table class="normal">
-<tr><td class="formcolor" width="30%">{tr}Email{/tr}:</td><td colspan="2" class="formcolor"><input type="text" name="email" /></td></tr>
+<tr><td class="formcolor" width="30%">{tr}Email{/tr}:</td><td colspan="2" class="formcolor"><textarea cols="70" rows="6" wrap="soft" name="email"></textarea>
+<br /><i>{tr}You can add several email addresses by separating them with commas.{/tr}</i>
+</td></tr>
 <tr><td class="formcolor">{tr}User{/tr}:</td><td class="formcolor">
 <select name="user">
 <option value="">---</option>
@@ -49,16 +51,6 @@
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor" colspan="2"><input type="submit" name="add" value="{tr}add{/tr}" /></td></tr>
 </table>
 </form>
-{if $tiki_p_batch_subscribe_email eq "y" && $tiki_p_subscribe_email eq "y"}
-<h2>{tr}Batch e-mail subscribe{/tr}</h2>
-<form action="tiki-admin_newsletter_subscriptions.php" method="post" enctype="multipart/form-data">
-<input type="hidden" name="nlId" value="{$nlId|escape}" />
-<table class="normal">
-<tr><td class="formcolor" width="30%">{tr}File{/tr}:</td><td class="formcolor" colspan="2"><input type="file" name="batch_subscription" /><br /><i>{tr}txt file, one e-mail per line{/tr}</td></tr>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor" colspan="2"><input type="submit" name="addbatch" value="{tr}add{/tr}" /></td></tr>
-</table>
-</form>
-{/if}
 <h2>{tr}Subscribe group{/tr}</h2>
 <form action="tiki-admin_newsletter_subscriptions.php" method="post">
 <input type="hidden" name="nlId" value="{$nlId|escape}" />
@@ -99,7 +91,7 @@
 {section name=ix loop=$groups_g}
 <tr>
 <td class="{cycle advance=false}">{$groups_g[ix].groupName|escape}</td>
-<td class="{cycle}"><a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$groups_g[ix].nlId}&amp;group={$groups_g[ix].groupName}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}remove{/tr}' /></a>
+<td class="{cycle}"><a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$groups_g[ix].nlId}&amp;group={$groups_g[ix].groupName}"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt='{tr}remove{/tr}' /></a>
 </tr>
 {/section}
 </div>
@@ -134,7 +126,7 @@
 {else}{tr}yes{/tr}{/if}</td>
 <td class="{cycle advance=false}">{$channels[user].subscribed|tiki_short_datetime}</td>
 <td class="{cycle}">
-   <a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].nlId}&amp;{if $channels[user].isUser eq "y"}user{else}email{/if}={$channels[user].email}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}remove{/tr}' /></a>
+   <a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].nlId}&amp;{if $channels[user].isUser eq "y"}user{else}email{/if}={$channels[user].email}"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt='{tr}remove{/tr}' /></a>
 </td>
 </tr>
 {/section}
