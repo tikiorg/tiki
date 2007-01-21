@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-01-21 03:21:18 $
-# $Author: garygriffin $
+# $Date: 2007-01-21 19:27:12 $
+# $Author: awolfff $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -2417,7 +2417,7 @@ CREATE TABLE tiki_newsreader_marks (
   serverId int(12) NOT NULL default '0',
   groupName varchar(255) NOT NULL default '',
   timestamp int(14) NOT NULL default '0',
-  PRIMARY KEY  (user(100),serverId,groupName(100))
+  PRIMARY KEY  (`user`(100),serverId,groupName(100))
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -2453,7 +2453,7 @@ CREATE TABLE tiki_page_footnotes (
   user varchar(200) NOT NULL default '',
   pageName varchar(250) NOT NULL default '',
   data text,
-  PRIMARY KEY  (user(150),pageName(100))
+  PRIMARY KEY  (`user`(150),pageName(100))
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -2513,7 +2513,7 @@ CREATE TABLE tiki_page_drafts (
   description varchar(200) default NULL,
   comment varchar(200) default NULL,
   lastModif int(14) default NULL,
-  PRIMARY KEY  (pageName(120), user(120))
+  PRIMARY KEY  (pageName(120), `user`(120))
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -3836,7 +3836,7 @@ CREATE TABLE tiki_user_votings (
   user varchar(200) NOT NULL default '',
   id varchar(255) NOT NULL default '',
   optionId int(10) NOT NULL default 0,
-  PRIMARY KEY  (user(100),id(100))
+  PRIMARY KEY  (`user`(100),id(100))
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -3857,7 +3857,7 @@ CREATE TABLE tiki_user_watches (
   type varchar(200) default NULL,
   url varchar(250) default NULL,
   email varchar(200) default NULL,
-  PRIMARY KEY  (user(100),event,object(100))
+  PRIMARY KEY  (`user`(100),event,object(100))
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -4611,7 +4611,7 @@ DROP TABLE IF EXISTS tiki_friends;
 CREATE TABLE tiki_friends (
   user char(200) NOT NULL default '',
   friend char(200) NOT NULL default '',
-  PRIMARY KEY  (user(120),friend(120))
+  PRIMARY KEY  (`user`(120),friend(120))
 ) TYPE=MyISAM;
 
 DROP TABLE IF EXISTS tiki_friendship_requests;
