@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_newsletter_subscriptions.php,v 1.17 2006-09-19 16:33:13 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_newsletter_subscriptions.php,v 1.18 2007-01-21 01:45:12 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -104,7 +104,18 @@ else
 	$addEmail = "n";
 if (isset($_REQUEST["add"]) && isset($_REQUEST["email"]) && $_REQUEST["email"] != "") {
 	check_ticket('admin-nl-subsriptions');
-	$sid = $nllib->newsletter_subscribe($_REQUEST["nlId"], $_REQUEST["email"], "n", $confirmEmail, "");
+	if (strpos($_REQUEST["email"],',')) {
+		$emails = split(',',$_REQUEST["email"]);
+		foreach ($emails as $e) {
+			if ($userlib->user_exists(trim($e))) {
+				$nllib->newsletter_subscribe($_REQUEST["nlId"], trim($e), "y", $confirmEmail, $addEmail);
+			} else {
+				$nllib->newsletter_subscribe($_REQUEST["nlId"],trim($e),"n", $confirmEmail, "");
+			}
+		}
+	} else {
+		$nllib->newsletter_subscribe($_REQUEST["nlId"], trim($_REQUEST["email"]), "n", $confirmEmail, "");
+	}
 }
 if (isset($_REQUEST["add"]) && isset($_REQUEST['user']) && $_REQUEST['user'] != "") {
 	check_ticket('admin-nl-subsriptions');
@@ -117,28 +128,6 @@ if (isset($_REQUEST["add"]) && isset($_REQUEST["addall"]) && $_REQUEST["addall"]
 if (isset($_REQUEST["add"]) && isset($_REQUEST['group']) && $_REQUEST['group'] != "") {
 	check_ticket('admin-nl-subsriptions');
 	$nllib->add_group_users($_REQUEST["nlId"], $_REQUEST['group'], $confirmEmail, $addEmail);
-}
-if (isset($_REQUEST["addbatch"]) && isset($_FILES['batch_subscription']) && $tiki_p_batch_subscribe_email == 'y' && $tiki_p_subscribe_email == 'y') {
-    check_ticket('admin-nl-subscription');
-
-    // array with success and errors
-    $ok = array();
-    $error = array();
-
-    if (!$emails = file($_FILES['batch_subscription']['tmp_name'])) {
-	$smarty->assign('msg', tra("Error opening uploaded file"));
-	$smarty->display("error.tpl");
-	die;
-    }
-
-    for ($i = 0; $i<sizeof($emails); $i++) {
-	$email = $emails[$i];
-	if ($nllib->newsletter_subscribe($_REQUEST["nlId"], $email, 'n', '', 'y')) {
-	    $ok[] = $email;
-	} else {
-	    $error[] = $email;
-	}
-    }
 }
 if (isset($_REQUEST["addgroup"]) && isset($_REQUEST['group']) && $_REQUEST['group'] != ""){
 	check_ticket('admin-nl-subsriptions');
