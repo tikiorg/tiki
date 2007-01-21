@@ -1853,6 +1853,7 @@ $lang=Array(
 "Mini Calendar" => "Mon calendrier",
 "Categories" => "Catégories",
 "tikiwiki.org help" => "Aide de tikiwiki.org",
+"Reinforce categories" => "Catégories renforcées",
 "Multilingual" => "Multilingue",
 "Best language" => "Meilleure langue",
 "Show Category Path" => "Montrer l'arborescence des catégories",

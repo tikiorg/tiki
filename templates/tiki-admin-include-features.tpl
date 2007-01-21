@@ -331,6 +331,14 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
     	{if $feature_redirect_on_error eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {tr}Redirect On Error{/tr} </td>
     </tr>
+  <tr>
+    <td><input type="checkbox" name="feature_category_reinforce"
+            {if $feature_category_reinforce eq 'y'}checked="checked"{/if}/></td>
+    <td class="form"> {if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=Category" target="tikihelp" class="tikihelp" title="{tr}Reinforce categories{/tr}">{/if} {tr}Reinforce categories{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
+    <td>&nbsp;</td>
+    <td></td>
+    <td class="form"></td>
+    </tr>
 {* --- User Features --- *}
   <tr>
     <td class="heading" colspan="5"

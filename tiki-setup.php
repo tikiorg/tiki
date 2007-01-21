@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.389 2007-01-20 12:01:56 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.390 2007-01-21 00:42:03 fr_rodo Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -981,6 +981,7 @@ $sections['categories']['itemkey'] = '';
 $pref['feature_categories'] = 'n';
 $pref['feature_categoryobjects'] = 'n';
 $pref['feature_categorypath'] = 'n';
+$pref['feature_category_reinforce'] = 'y';
 
 # games
 $sections['games']['feature'] = 'feature_games';

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.59 2006-12-28 18:00:12 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.60 2007-01-21 00:42:03 fr_rodo Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -32,6 +32,7 @@ $features_toggles = array(
 	"feature_categories",
 	"feature_categoryobjects",
 	"feature_categorypath",
+	"feature_category_reinforce",
 	"feature_charts",
 	"feature_chat",
 	"feature_comm",
