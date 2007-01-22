@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.23 2006-12-28 11:16:38 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.24 2007-01-22 03:03:06 franck Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -291,6 +291,9 @@ $smarty->assign_by_ref('quicktags', $quicktags["data"]);
 $smarty->assign('quicktagscant', $quicktags["cant"]);
 
 ask_ticket('edit-map');
+
+$section = 'maps';
+include_once ('tiki-section_options.php');
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
