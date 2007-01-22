@@ -2,20 +2,23 @@
 
 chdir("../..");
 require_once('tiki-setup.php');
-require_once('lib/cpaint/cpaint2.inc.php');
 include_once('lib/map/map_query.php');
 
-	$cp = new cpaint();
-  $cp->register('cp_map_query');
-  $cp->start();
-  $cp->return_data();
-  
-  function cp_map_query($mapfile,$corx,$cory,$minx,$maxx,$miny,$maxy,$xsize,$ysize,$layers,$labels) {
-  	global $cp;
-  	global $map_path;
+//setting up xajax
+require_once("lib/ajax/xajax.inc.php");
+$xajax = new xajax("lib/map/map_cp.php");
+//$xajax->debugOn();
+//$xajax->statusMessagesOn();
 
+  
+  function cp_map_redraw($mapfile,$corx,$cory,$minx,$maxx,$miny,$maxy,$xsize,$ysize,$layers,$labels,$zoom,$corx2=0,$cory2=0) {
+  	global $map_path;
+  	$objResponse = new xajaxResponse();
+  	
   	if (strstr($mapfile, '..')) {
 	    $msg = tra("You do not have permission to do that");
+	    $objResponse->addAlert($msg);
+	    return $objResponse;
 		}
 
 		$map_path = preg_replace("/\/?$/","/",$map_path);
@@ -23,19 +26,21 @@ include_once('lib/map/map_query.php');
 		//checking the mapfile
 		if (!is_file($map_path.$mapfile) || preg_match("/(\/\.)/", $map_path.$mapfile)) {
 	  	$msg = tra("invalid mapfile name");
+	  	$objResponse->addAlert($msg);
+	  	return $objResponse;
 	  }
-  	
+
   	$map = ms_newMapObj($map_path.$mapfile);
   	for ($j=0;$j<$map->numlayers;$j++)
   	{
     	$my_layer=$map->getLayer($j);
-    	if ($layers[$j]) {
-	    	$my_layer->Set("status",MS_ON);
+    	if ($layers[$j]=="true") {
+	    	$my_layer->set("status",MS_ON);
 	    } else {
-    		$my_layer->Set("status",MS_OFF);
+    		$my_layer->set("status",MS_OFF);
     	}
-    	if (!$labels[$j]) {
-	     	$my_layer->Set("labelmaxscale",0);
+    	if ($labels[$j]=="false") {
+	     	$my_layer->set("labelmaxscale",0);
 	    }
     }
 
@@ -43,20 +48,63 @@ include_once('lib/map/map_query.php');
 		$map->Set("height",$ysize);
 		
 		$my_point = ms_newpointObj();
-		$my_point->setXY(($map->width)/2,($map->height)/2);
+		
+		if ($zoom==3) {
+			$my_point->setXY(($map->width)/2,($map->height)/2);
+		} else {
+			$my_point->setXY(floor($corx),floor($cory));
+		}
 		
 		$my_extent = ms_newrectObj();
     $my_extent->setextent($minx,$miny,$maxx,$maxy);
-    
-    $map->zoompoint(1,$my_point,$map->width,$map->height,$my_extent);
-    
-  	$result=map_query($map,$corx,$cory);
+        
+    $result="";
+    if ($zoom==3) {
+			$map->zoompoint(1,$my_point,$map->width,$map->height,$my_extent); 
+	  	$result=map_query($map,$corx,$cory); 		
+  	} elseif ($zoom==5) {
+  	  $my_rect= ms_newrectObj();
+  	  $my_rect->setextent($corx,$cory,$corx2,$cory2);
+  		$map->zoomrectangle($my_rect,$map->width,$map->height,$my_extent);
+	  	$objResponse->addAssign("minx", "value",$map->extent->minx);
+	  	$objResponse->addAssign("miny", "value",$map->extent->miny);
+	  	$objResponse->addAssign("maxx", "value",$map->extent->maxx);
+	  	$objResponse->addAssign("maxy", "value",$map->extent->maxy);
+	  	$objResponse->addAssign("map", "style.cursor","default");
+	  	$objResponse->addAssign("zoomselect", "style.visibility","hidden");
+	  	$objResponse->addScript("xMoveTo(xGetElementById('map'),0,0);");
+	  	$objResponse->addScript("minx=".$map->extent->minx.";");
+	  	$objResponse->addScript("miny=".$map->extent->miny.";");
+	  	$objResponse->addScript("maxx=".$map->extent->maxx.";");
+	  	$objResponse->addScript("maxy=".$map->extent->maxy.";");
+  	} else {
+	  	$map->zoompoint(1,$my_point,$map->width,$map->height,$my_extent);
+	  	$objResponse->addAssign("minx", "value",$map->extent->minx);
+	  	$objResponse->addAssign("miny", "value",$map->extent->miny);
+	  	$objResponse->addAssign("maxx", "value",$map->extent->maxx);
+	  	$objResponse->addAssign("maxy", "value",$map->extent->maxy);
+	  	$objResponse->addAssign("map", "style.cursor","move");
+	  	$objResponse->addScript("xMoveTo(xGetElementById('map'),0,0);");
+	  	$objResponse->addScript("minx=".$map->extent->minx.";");
+	  	$objResponse->addScript("miny=".$map->extent->miny.";");
+	  	$objResponse->addScript("maxx=".$map->extent->maxx.";");
+	  	$objResponse->addScript("maxy=".$map->extent->maxy.";");
+	  }
   	$image = $map->drawquery();
 		$image_url = $image->saveWebImage();
+		$image_ref = $map->drawReferenceMap();
+		$image_ref_url = $image_ref->saveWebImage();
+		$image->free();
+		$image_ref->free();
 
-		$result=$image_url."\n".$result;
-		
-  	$cp->set_data($result);
+
+  	$objResponse->addAssign("innerBoxContent","innerHTML", $result);
+  	$objResponse->addAssign("resultBox","innerHTML", $result);
+  	$objResponse->addAssign("map", "src", $image_url);
+  	$objResponse->addAssign("ref", "src", $image_ref_url);
+  	return $objResponse;
   }
-
+  
+  $xajax->registerFunction("cp_map_redraw");
+  $xajax->processRequests();
 ?>

@@ -12,6 +12,14 @@ if (!function_exists('ms_newMapObj')) {
 $access->check_feature('feature_maps');
 $access->check_permission(array('tiki_p_map_view'), tra("View maps"));
 
+//setting up xajax
+require_once("lib/ajax/xajax.inc.php");
+$xajax = new xajax("lib/map/map_cp.php");
+//$xajax->debugOn();
+//$xajax->statusMessagesOn();
+$xajax->registerFunction("cp_map_redraw");
+$smarty->assign('xajax_javascript', $xajax->getJavascript("lib/ajax"));
+
 //handling the layer manager menu: visible by default if never used before
 if (getCookie('layermenu', "menu") != 'o' && getCookie('layermenu', "menu") != 'c') {
 	$smarty->assign('mnu_layermenu', 'display:block;');
@@ -326,20 +334,19 @@ if (isset($_REQUEST['maponly']) && $_REQUEST['maponly']=='yes')
   $image->free();
   die;
 }
-$image->free();
 
 if (@$_REQUEST['maponly']!='frame') {
 	$image_ref = $map->drawReferenceMap();
 	$image_ref_url = $image_ref->saveWebImage();
-	$image_ref->free();
 	$image_leg = $map->drawLegend();
 	$image_leg_url = $image_leg->saveWebImage();
-	$image_leg->free();
 	$image_scale = $map->drawScaleBar();
 	$image_scale_url = $image_scale->saveWebImage();
+	$image_leg->free();
+	$image_ref->free();
 	$image_scale->free();
 }
-
+$image->free();
 
 $minx=$map->extent->minx;
 $miny=$map->extent->miny;
@@ -501,6 +508,8 @@ $smarty->assign('mapstats7days', $mapstats7days);
 
 //display the template
 if (@$_REQUEST['maponly']!='frame') {
+	$section = 'maps';
+	include_once ('tiki-section_options.php');
 	$smarty->assign('mid','map/tiki-map.tpl');
 	$smarty->display("tiki.tpl");
 } else {

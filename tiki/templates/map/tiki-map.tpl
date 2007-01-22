@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.37 2006-09-30 19:28:04 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.38 2007-01-22 02:55:44 franck Exp $ *}
 
 <script src="lib/x/x_core.js"></script>
 <script src="lib/x/x_event.js"></script>
@@ -7,23 +7,33 @@
 <script src='lib/x/x_misc.js'></script>
 <script src='lib/x/x_drag.js'></script>
 <script src="lib/map/map.js"></script>
-<script src="lib/cpaint/cpaint2.inc.js"></script>
+{$xajax_javascript}
 
 <h1>{$pagelink}</h1>
 <div align="center">
-  <form name="frmmap" action="tiki-map.phtml" method="get">
+  <form name="frmmap" id="frmmap" action="tiki-map.phtml" method="get">
    <input type="hidden" name="mapfile" value="{$mapfile}" />
 	<table border="0" cellpadding="0" cellspacing="0" >
 	  <tr>
 	     <td align="center" valign="middle">
 		<table class="normal">
-		  <tr><td align="center">
-		      	<input type="image" id="map" src="{$image_url}" 
-			{if $xsize != ""}width="{$xsize}"{/if} 
-			{if $ysize != ""}height="{$ysize}"{/if} 
-		  border="1"
-		  alt="{tr}click on the map to zoom or pan, do not drag{/tr}" 
-		  title="{tr}click on the map to zoom or pan, do not drag{/tr}" />
+		  <tr><td align="center"> 
+		  <div id="mapWindow" style="z-index:50;overflow:hidden;
+		  	{if $xsize != ""}width:{$xsize}px;{/if} 
+				{if $ysize != ""}height:{$ysize}px;{/if}
+			">	
+					  <div id="zoomselect" style="position:absolute; left:0px; top:0px; width: 0px; height: 0px; 
+							border: blue solid 2px; z-index:30; visibility:hidden;overflow:hidden;">
+			      </div>
+		      {*	<input type="image" id="map" src="{$image_url}"  *}
+		        <img id="map" src="{$image_url}"
+						{if $xsize != ""}width="{$xsize}"{/if} 
+						{if $ysize != ""}height="{$ysize}"{/if} 
+					  border="0"
+		  			alt="{tr}click on the map to zoom or pan, do not drag{/tr}" 
+					  title="{tr}click on the map to zoom or pan, do not drag{/tr}"
+					  style="z-index:20;position:relative"/> 
+			</div>		  
 		  <script type="text/javascript">	
 		    var minx={$minx};
 		    var miny={$miny};
@@ -49,18 +59,27 @@
 		    {/if}
 		    {/section}
 				xAddEventListener(xGetElementById('map'),'mousemove',map_mousemove,false);
-				xAddEventListener(xGetElementById('map'),'click',map_mouseclick,true);
+				xAddEventListener(xGetElementById('map'),'mousedown',map_mousedown,false);			
+				xAddEventListener(xGetElementById('map'),'mouseup',map_mouseup,false);
+				xAddEventListener(xGetElementById('map'),'mouseout',map_mouseup,false);
+				xAddEventListener(xGetElementById('map'),'click',map_mouseclick,false);
+				{literal}
+				if (xIE4Up) {
+					xAddEventListener(xGetElementById('map'),'drag',function() {return false;},false);
+				}
+				{/literal}
+				xEnableDrag(xGetElementById('map'));
 			</script>
 			
-			<div id="queryWindow" style="position:absolute; top:0px; left:0px; visibility:hidden;">
+			<div id="queryWindow" style="position:absolute; top:0px; left:0px; visibility:hidden; z-Index:100">
 				<div id="outerBox" style="position:absolute; top:0px; left:0px;
 					height:200px; width:275px; overflow:hidden; border-top:4px solid #ffffff;
 					border-left:4px solid #ffffff; border-right:4px solid #666666;
-					border-bottom:4px solid #666666; background-color:#ffffff">
+					border-bottom:4px solid #666666; background-color:#ffffff; z-Index:100">
 					<div id="queryBar" style="position:absolute; top:0px; left:0px; padding:1px;
 						font:8px Arial, Helvetical, sans-serif; font-weight:bold; z-Index:200;
-						background-color: #FFFFFF; width:255px; cursor: move">{tr}Query Results{/tr}</div>
-					<div id="innerBox" style="position:absolute; top:12px; left:2px; padding:5px;
+						background-color: #D0D0FF; width:255px; cursor: move">{tr}Query Results{/tr}</div>
+					<div id="innerBox" style="position:absolute; top:15px; left:0px; padding:8px;
 						height:160px; width:245px; font:12px Arial, Helvetical, sans-serif; z-Index:150;
 						overflow:hidden">
 					<div id="innerBoxContent" style="position:relative; top:0px">
@@ -75,11 +94,11 @@
 						style="position:absolute; top:188px; left:257px" />
 				  <script language="JavaScript">
 				  	var scrollActive = false, scrollStop = true, scrollIncrement = 10, scrollInterval = 60;
-				  	xAddEventListener(xGetElementById('queryClose'),'click',query_close,true);
-				  	xAddEventListener(xGetElementById('queryUp'),'mousemove',query_up,true);
-				  	xAddEventListener(xGetElementById('queryUp'),'mouseout',query_scroll_stop,true);
-				  	xAddEventListener(xGetElementById('queryDown'),'mousemove',query_down,true);
-				  	xAddEventListener(xGetElementById('queryDown'),'mouseout',query_scroll_stop,true);
+				  	xAddEventListener(xGetElementById('queryClose'),'click',query_close,false);
+				  	xAddEventListener(xGetElementById('queryUp'),'mousemove',query_up,false);
+				  	xAddEventListener(xGetElementById('queryUp'),'mouseout',query_scroll_stop,false);
+				  	xAddEventListener(xGetElementById('queryDown'),'mousemove',query_down,false);
+				  	xAddEventListener(xGetElementById('queryDown'),'mouseout',query_scroll_stop,false);
 				  	xEnableDrag(xGetElementById('queryBar'), queryOnDragStart, queryOnDrag, null);
 				  </script>
 				</div>
@@ -170,11 +189,11 @@
 			&nbsp;
 			<a href="tiki-map.phtml?mapfile={$mapfile}" ><small>{tr}Reset Map{/tr}</small></a><br /> 
 			<small>{tr}Click on the map or click redraw{/tr}</small>
-			<input type="hidden" name="minx" value="{$minx}" />
-			<input type="hidden" name="miny" value="{$miny}" />
-			<input type="hidden" name="maxx" value="{$maxx}" />
-			<input type="hidden" name="maxy" value="{$maxy}" />
-			<input type="hidden" name="oldsize" value="{$size}" />
+			<input id="minx" type="hidden" name="minx" value="{$minx}" />
+			<input id="miny" type="hidden" name="miny" value="{$miny}" />
+			<input id="maxx" type="hidden" name="maxx" value="{$maxx}" />
+			<input id="maxy" type="hidden" name="maxy" value="{$maxy}" />
+			<input id="size" type="hidden" name="oldsize" value="{$size}" />
 			<a href="tiki-index.php?page={$map_help}"><small>{tr}Help{/tr}</small></a>&nbsp;
 			<a href="tiki-index.php?page={$map_comments}"><small>{tr}Comments{/tr}</small></a><br />
 		</td></tr>
@@ -195,7 +214,7 @@
 			{if $feature_menusfolderstyle eq 'y'}
 				<a class="separator" href="javascript:toggle('layermenu');"><img src="img/icons/fo.gif" border="0" name="layermenuicn" alt=""/>&nbsp;</a>
 			{else}
-			<a class="separator" href="javascript:toggle('layermenu');"><b>[+/-]</b>
+			<a class="separator" href="javascript:toggle('layermenu');"><b>[+/-]</b></a>
 			{/if}
 			{tr}Layer Manager{/tr}
 			</div>
@@ -247,7 +266,7 @@
 						{else}
 						<td class="even" width=20px>
 						{/if}
-						<input type="checkbox" name="{$my_layers[i]->name}" value="1" {$my_layers_checked[i]} />
+						<input type="checkbox" onClick="changelayer({$smarty.section.i.index})" name="{$my_layers[i]->name}" value="1" {$my_layers_checked[i]} />
 						</td>
 						{if $smarty.section.i.index % 2}
 						<td class="odd" width=20px>
@@ -255,7 +274,7 @@
 						<td class="even" width=20px>
 						{/if}
 						{if $layer_label[i] eq "On"}
-						<input type="checkbox" name="{$my_layers[i]->name}_label" value="1" {$my_layers_label_checked[i]} />
+						<input type="checkbox" onClick="changelabel({$smarty.section.i.index})" name="{$my_layers[i]->name}_label" value="1" {$my_layers_label_checked[i]} />
 						{else}
 						&nbsp;
 						{/if}
@@ -306,7 +325,7 @@
 				{else}
 				<td class="even">
 				{/if}
-				<input type="checkbox" name="{$my_layers[j]->name}" value="1" {$my_layers_checked[j]} />
+				<input type="checkbox" onClick="changelayer({$smarty.section.j.index})" name="{$my_layers[j]->name}" value="1" {$my_layers_checked[j]} />
 				</td>
 				{if $smarty.section.j.index % 2}
 				<td class="odd">
@@ -314,7 +333,7 @@
 				<td class="even">
 				{/if}
 				{if $layer_label[j] eq "On"}
-				<input type="checkbox" name="{$my_layers[j]->name}_label" value="1" {$my_layers_label_checked[j]} />
+				<input type="checkbox" onClick="changelabel({$smarty.section.j.index})" name="{$my_layers[j]->name}_label" value="1" {$my_layers_label_checked[j]} />
 				{else}
 				&nbsp;
 				{/if}
