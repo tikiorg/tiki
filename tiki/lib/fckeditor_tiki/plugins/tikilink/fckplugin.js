@@ -74,14 +74,15 @@ FCKTikiLinks.Exist = function( name ) {
 
 if ( FCKBrowserInfo.IsIE ) {
 	FCKTikiLinks.Redraw = function() {
-		var aWikiLinks = FCK.EditorDocument.body.innerText.match( /\(\([^\)\|]*(\|[^\)]*)?\)\)/g ) ;
+		var aWikiLinks = FCK.EditorDocument.body.innerText.match( /\(\(((?:[^\n|\(\)])(?:(?!(\)\)|\||\n)).)*?)(\|([^\)]*))?\)\)/g ) ;
 		if ( !aWikiLinks )
 			return ;
 		var oRange = FCK.EditorDocument.body.createTextRange() ;
 		for ( var i = 0 ; i < aWikiLinks.length ; i++ ) {
 			if ( oRange.findText( aWikiLinks[i] ) ) {
-				var sPage = aWikiLinks[i].match( /\(\(([^\)\|]*)(\|([^\)]*))?\)\)/ )[1] ;
-				var sName = aWikiLinks[i].match( /\(\(([^\)\|]*)(\|([^\)]*))?\)\)/ )[3] ;
+				var sMatch = aWikiLinks[i].match( /\(\(((?:[^\n|\(\)])(?:(?!(\)\)|\||\n)).)*?)(\|([^\)]*))?\)\)/ );
+				var sPage = sMatch[1] ;
+				var sName = sMatch[4] ;
 				if (! sName ) {
 					sName = sPage ;
 				}
@@ -97,12 +98,13 @@ if ( FCKBrowserInfo.IsIE ) {
 			aNodes[ aNodes.length ] = oNode ;
 		}
 		for ( var n = 0 ; n < aNodes.length ; n++ ) {
-			var aPieces = aNodes[n].nodeValue.split( /(\(\([^\)]*\)\))/ );
+			var aPieces = aNodes[n].nodeValue.split( /(\(\((?:(?:[^\n|\(\)])(?:(?!(\)\)|\||\n)).)*?)(?:\|(?:[^\)]*))?\)\))/ );
 			for ( var i = 0 ; i < aPieces.length ; i++ ) {
 				if ( aPieces[i].length > 0 ) {
 					if ( aPieces[i].indexOf( '((' ) == 0 ) {
-						var sPage = aPieces[i].match(  /\(\(([^\)\|]*)(\|([^\)]*))?\)\)/ )[1] ;
-						var sName = aPieces[i].match(  /\(\(([^\)\|]*)(\|([^\)]*))?\)\)/ )[3] ;
+						var sMatch = aPieces[i].match( /\(\(((?:[^\n|\(\)])(?:(?!(\)\)|\||\n)).)*?)(\|([^\)]*))?\)\)/ );
+						var sPage = sMatch[1] ;
+						var sName = sMatch[4] ;
 						if ( !sName ) {
 							sName = sPage ;
 						}
@@ -119,7 +121,7 @@ if ( FCKBrowserInfo.IsIE ) {
 		FCKTikiLinks._SetupClickListener() ;
 	}
 	FCKTikiLinks._AcceptNode = function( node ) {
-		if ( /\(\([^\)\|]*(\|[^\)]*)?\)\)/.test( node.nodeValue ) ) {
+		if ( /\(\((([^\n|\(\)])((?!(\)\)|\||\n)).)*?)(\|([^\)]*))?\)\)/.test( node.nodeValue ) ) {
 			return NodeFilter.FILTER_ACCEPT ;
 		} else {
 			return NodeFilter.FILTER_SKIP ;
