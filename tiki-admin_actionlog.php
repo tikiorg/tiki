@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.22 2006-12-20 18:59:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.23 2007-01-22 15:28:40 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -19,7 +19,7 @@ if ($feature_actionlog != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-if (empty($user)) {
+if (empty($user) || $tiki_p_view_actionlog != 'y') {
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;
@@ -44,7 +44,7 @@ if ($tiki_p_admin == 'y') {
 	$smarty->assign_by_ref('actionlogConf', $confs);
 }
 
-if (!empty($_REQUEST['actionId'])) {
+if (!empty($_REQUEST['actionId']) && $tiki_p_admin == 'y') {
 	$action = $logslib->get_info_action($_REQUEST['actionId']);
 	if (empty($action)) {
 		$smarty->assign('msg', tra('Must specify actionId'));
@@ -90,6 +90,7 @@ if ($tiki_p_admin == 'y') {
 } else {
 	$users = array($userlib->get_user_id($user) => $user);
  	$groups = $tikilib->get_user_groups($user);
+	$_REQUEST['selectedUsers'] = array($user);
 }
 $smarty->assign_by_ref('users', $users);
 $smarty->assign_by_ref('groups', $groups);
@@ -100,7 +101,7 @@ foreach ($categories as $categ) {
 }
 $smarty->assign_by_ref('categNames', $categNames);
 
-if (isset($_REQUEST['list']) || isset($_REQUEST['export'])) {
+if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['graph'])) {
 	$url = '';
 	$selectedUsers = array();
 	if (isset($_REQUEST['selectedUsers'])) {
