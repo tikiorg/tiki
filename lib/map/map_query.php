@@ -44,4 +44,4 @@ for ($j=0;$j<$map->numlayers;$j++)
 $map_querymsg.="</table>";
 return($map_querymsg);
 }
-?>   
+?>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_history.php,v 1.3 2005-05-18 10:58:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_history.php,v 1.4 2007-01-22 02:55:43 franck Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -144,6 +144,8 @@ if (isset($_REQUEST["compare"])) {
 else
 	$smarty->assign('diff_style', '');
 
+$section = 'maps';
+include_once ('tiki-section_options.php');
 
 // Get templates from the templates/modules directori
 $smarty->assign('mid', 'map/tiki-map_history.tpl');

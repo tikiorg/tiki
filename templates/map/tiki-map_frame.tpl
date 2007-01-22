@@ -1,5 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_frame.tpl,v 1.4 2006-09-30 19:28:04 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_frame.tpl,v 1.5 2007-01-22 02:55:44 franck Exp $ *}
 
+<script src="lib/x/x_core.js"></script>
+<script src="lib/x/x_event.js"></script>
+<script src="lib/x/x_dom.js"></script>
+<script src='lib/x/x_slide.js'></script>
+<script src='lib/x/x_misc.js'></script>
+<script src='lib/x/x_drag.js'></script>
 <script src="lib/map/map.js"></script>
   <form name="frmmap" action="tiki-map.phtml" method="get">
    <input type="hidden" name="mapfile" value="{$mapfile}" />
