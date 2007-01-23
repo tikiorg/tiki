@@ -1,16 +1,18 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.56 2006-12-14 16:40:33 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.57 2007-01-23 08:52:29 nyloth Exp $ *}
 
 <hr/>
 <div id="page-bar">
   <table>
     <tr>
 
-{if $edit_page eq 'y'} {* Show this button only in editing mode *}
+{if $edit_page eq 'y'}
+  {if $wysiwyg eq 'n'} {* Show this button only in normal editing mode *}
   <td>
     <div class="button2">
       <a href="#edithelp" onclick="javascript:flip('edithelpzone'); return true;" name="edithelp" class="linkbut">{tr}wiki help{/tr}</a>
     </div>
   </td>
+  {/if}
 {else}
 
 {* Check that page is not locked and edit permission granted. SandBox can be edited w/o perm *}
