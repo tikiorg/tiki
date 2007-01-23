@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.159 2007-01-20 01:08:15 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.160 2007-01-23 14:39:48 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -203,14 +203,16 @@ class TrackerLib extends TikiLib {
 		$trackerName = $this->getOne("select `name` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
 		global $userlib;
 		$watchers = $this->get_event_watches('tracker_modified',$trackerId);
+		$emails = array();
 		foreach ($watchers as $w) {
 			$emails[] = $userlib->get_user_email($w['user']);
 		}
 		$watchers_item = $this->get_event_watches('tracker_item_modified',$itemId);
-		foreach ($watchers2 as $w) {
+		foreach ($watchers_item as $w) {
 			$emails2[] = $userlib->get_user_email($w['user']);
 		}
-		$emails = array_merge($emails, $emails2);
+		if (!empty($emails2))
+			$emails = array_merge($emails, $emails2);
 		if (count($emails > 0)) {
 			$smarty->assign('mail_date', date("U"));
 			$smarty->assign('mail_user', $user);
@@ -957,22 +959,23 @@ class TrackerLib extends TikiLib {
 
 			global $userlib;
 			$watchers = $this->get_event_watches('tracker_modified',$trackerId);
+			$emails = array();
 			foreach ($watchers as $w) {
 				$emails[] = $userlib->get_user_email($w['user']);
 			}
 			$watchers_item = $this->get_event_watches('tracker_item_modified',$itemId);
-			foreach ($watchers2 as $w) {
+			foreach ($watchers_item as $w) {
 				$emails2[] = $userlib->get_user_email($w['user']);
 			}
 
-			if( array_key_exists( "outboundEmail", $options ) && $options["outboundEmail"] )
-			{
+			if( array_key_exists( "outboundEmail", $options ) && $options["outboundEmail"] ) {
 				$emails3 = array( $options["outboundEmail"] );
-			} else {
-				$emails3 = array( );
 			}
 
-			$emails = array_merge($emails, $emails2, $emails3);
+			if (!empty($emails2))
+				$emails = array_merge($emails, $emails2);
+			if (!empty($emails3))
+				$emails = array_merge($emails, $emails3);
 
 			if (!isset($_SERVER["SERVER_NAME"])) {
 				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
@@ -1040,11 +1043,10 @@ class TrackerLib extends TikiLib {
 			    		// Try to find a Subject in $the_data
 			    		$subject_test = preg_match( '/^Subject:\n   .*$/m', $the_data, $matches );
 
-			    		if( $subject_test == 1 )
-			    		{
-						$subject = preg_replace( '/^Subject:\n   /m', '', $matches[0] );
-						// Remove the subject from $the_data
-						$the_data = preg_replace( '/^Subject:\n   .*$/m', '', $the_data );
+			    		if( $subject_test == 1 ) {
+							$subject = preg_replace( '/^Subject:\n   /m', '', $matches[0] );
+							// Remove the subject from $the_data
+							$the_data = preg_replace( '/^Subject:\n   .*$/m', '', $the_data );
 			    		}
 
 			    		$the_data = preg_replace( '/^.+:\n   /m', '', $the_data );
@@ -1055,11 +1057,9 @@ class TrackerLib extends TikiLib {
 			    		$mail->setSubject($subject);
 			    		$mail->setText($the_data);
 
-			    		if( ! empty( $my_sender ) )
-			    		{
-						$mail->setHeader("From", $my_sender);
+			    		if( ! empty( $my_sender ) ) {
+							$mail->setHeader("From", $my_sender);
 			    		}
-
 			    		$mail->send( $emails );
 				}
 			}
