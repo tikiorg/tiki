@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.160 2007-01-23 14:39:48 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.161 2007-01-23 15:02:34 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -214,6 +214,7 @@ class TrackerLib extends TikiLib {
 		if (!empty($emails2))
 			$emails = array_merge($emails, $emails2);
 		if (count($emails > 0)) {
+			$emails = array_unique($emails);
 			$smarty->assign('mail_date', date("U"));
 			$smarty->assign('mail_user', $user);
 			$smarty->assign('mail_action', 'New comment added for item:' . $itemId . ' at tracker ' . $trackerName);
@@ -991,6 +992,7 @@ class TrackerLib extends TikiLib {
 			$trackerName = $this->getOne("select `name` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
 
 			if (count($emails) > 0) {
+				$emails = array_unique($emails);
 				if( $simpleEmail == "n" )
 				{
 					$smarty->assign('mail_date', $now);
