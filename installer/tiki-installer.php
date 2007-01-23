@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.13 2006-12-20 13:11:05 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.14 2007-01-23 23:01:09 luciash Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -248,11 +248,15 @@ function kill_script() {
 
 	if ($removed == true) {
 		header ('location: tiki-index.php');
-	} else {
-		print "<html><body>
-<p><font color='red'><b>Security Alert!</b><br />
-Tiki installer failed to disable itself due to wrong write permissions. Please remove or rename the file <b>installer/tiki-installer.php</b> manually. Others can potentially wipe out your Tiki database if you do not remove or rename this file.</b></font><br />
-<a href='index.php'>Proceed to your site</a> after you have removed or renamed <b>installer/tiki-installer.php</b></p>
+	} else { // TODO: display this via translantable error msg template ?
+		print "<html><head><title>Ooops !</title></head><body>
+<h1 style='color: red'>Ooops !</h1>
+<p>Tikiwiki installer failed to rename the <b>installer/tiki-installer.php</b> file.</p>
+<p style='border: solid 1px red; margin: 0 10% 0 10%; text-align: center; width: 80%'>Leaving this file on a publicly accessible site is a <strong>security risk</strong>.</p>
+<p>Please remove or rename the <b>installer/tiki-installer.php</b> from your Tiki installation folder 'manually' (e.g. using SSH or FTP).
+<strong>Somebody else could be potentially able to wipe out your Tikiwiki database if you do not remove or rename this file !</strong></p>
+<p><a href='index.php'>Proceed to your site</a> after you have removed or renamed <b>installer/tiki-installer.php</b>.</p>
+<p style='text-align: right'>Thank you</p>
 </body></html>";
 	}
 	die;
