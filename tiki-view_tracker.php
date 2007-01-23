@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.112 2007-01-17 14:55:53 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.113 2007-01-23 16:53:09 darzee Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -380,8 +380,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 					 $ins_fields["data"][$i]["lingualpvalue"]=$fields["data"][$i]["lingualpvalue"];
 					     $ins_fields["data"][$i]["lingualvalue"]=$fields["data"][$i]["lingualvalue"];
 				        } 
-			
-			
+
 		} elseif($fields["data"][$i]["type"] == 's') { // rating
 			if (isset($_REQUEST["$ins_id"])) {
 				$newItemRate = $_REQUEST["$ins_id"];
@@ -453,6 +452,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 					$ins_fields["data"][$i]["file_size"] = $_FILES["$ins_id"]['size'];
 					$ins_fields["data"][$i]["file_name"] = $_FILES["$ins_id"]['name'];
 				}
+
 			} elseif (($fields["data"][$i]["type"] == 't')&& ($fields["data"][$i]["isMultilingual"]=='y')) {
 			          global $multilinguallib;
                                   include_once('lib/multilingual/multilinguallib.php');
@@ -475,7 +475,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 					    }
 					    $ins_fields["data"][$i]["lingualpvalue"]=$fields["data"][$i]["lingualpvalue"];
 					     $ins_fields["data"][$i]["lingualvalue"]=$fields["data"][$i]["lingualvalue"];
-				        } 
+			}
 			
 		}
 	}

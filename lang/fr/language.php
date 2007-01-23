@@ -5822,5 +5822,12 @@ $lang=Array(
 "Yugoslavia" => "Yougoslavie",
 "Zambia" => "Zambie",
 "Bulgaria" => "Bulgarie",
+"subscriptions" => "inscriptions",
+"with" => "avec",
+"friends" => "amis",
+"Unsubscribe" => "Se désinscrire",
+"You have ever subscribed" => "Vous êtes déjà inscrit",
+"You have not yet subscribed" => "Vous n'êtes pas inscrit",
+//"" => "",
 "###end###"=>"###end###");
 ?>

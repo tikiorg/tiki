@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker_item.tpl,v 1.114 2007-01-22 15:10:20 jyhem Exp $ *}
+{* $Id: tiki-view_tracker_item.tpl,v 1.115 2007-01-23 16:53:12 darzee Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
@@ -222,6 +222,25 @@
           <img border="0" src="img/icons/na_pict.gif" alt="n/a" />
         {/if}
 
+
+      {elseif $cur_field.type eq 'U'}
+	{$cur_field.value|how_many_user_inscriptions} {tr}subscriptions{/tr} {if $cur_field.maxsubscriptions}(max : {$cur_field.maxsubscriptions}){/if} :
+	{foreach from=$cur_field.users_array name=U_user item=U_user}{$U_user.login}{if $U_user.friends} (+{$U_user.friends}){/if}{if $smarty.foreach.U_user.last}{else},&nbsp;{$last}{/if}{/foreach}
+	{if $user}
+	<br />{if $cur_field.user_subscription} {tr}You have ever subscribed{/tr}.{else}{tr}You have not yet subscribed{/tr}.{/if}
+	<form method="POST" action="{$smarty.server.REQUEST_URI}" >
+	<input type="hidden" name="U_fieldId" value="{$cur_field.fieldId}" />
+	<input type="hidden" name="itemId" value="{$itemId}" />
+	<input type="hidden" name="trackerId" value="{$trackerId}" />
+	<input type="submit" name="user_subscribe" value="{tr}Subscribe{/tr}" /> {tr}with{/tr}
+	{if $U_liste}
+	  {html_options options=$U_liste name="user_friends" selected=$cur_field.user_nb_friends} {tr}friends{/tr}
+	{else}
+	  <input type="text" size="4" name="user_friends" value="{$cur_field.user_nb_friends}" /> {tr}friends{/tr}
+	{/if}
+	{if $cur_field.user_subscription}<br /><input type="submit" name="user_unsubscribe" value="{tr}Unsubscribe{/tr}" />{/if}
+	</form>
+	{/if}
       {else}
         {$cur_field.value|default:"&nbsp;"}
         </td></tr>
@@ -563,6 +582,11 @@ style="background-image:url('img/flags/{$flag}.gif');background-repeat:no-repeat
 {else}
 <img border="0" src="img/icons/na_pict.gif" alt="n/a" />
 {/if}
+
+
+{elseif $cur_field.type eq 'U'}
+<input type="text" name="ins_{$cur_field.id}" value="{$cur_field.value}" />
+
 
 {elseif $cur_field.type eq 'j'}
 {jscalendar date=$cur_field.value|default:$smarty.now id=$cur_field.id fieldname="ins_"|cat:$cur_field.id showtime="y"}
