@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.107 2007-01-17 14:55:53 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.108 2007-01-23 16:53:09 darzee Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -130,6 +130,58 @@ if (isset($_REQUEST["filtervalue"]) and is_array($_REQUEST["filtervalue"]) and i
 	$tryfiltervalue = $_REQUEST["filtervalue"]["$tryfilterfield"];
     $urlquery["filtervalue[".$tryfilterfield."]"] = $tryfiltervalue;
 }
+
+
+
+//Management of the field type 'User subscribe' (U)
+//when user clic on (un)subscribe
+if(isset($_REQUEST['user_subscribe']) || isset($_REQUEST['user_unsubscribe'])){
+  $temp=$userlib->get_user_info($user);
+  $id_user=$temp['userId'];
+  $id_tiki_user=$temp['userId'];
+
+  $U_query="SELECT value FROM `tiki_tracker_item_fields` WHERE `itemId`=? AND `fieldId`=?";
+  $U_fieldId=$_REQUEST['U_fieldId'];
+  $U_value=$trklib->getOne($U_query,array((int)$_REQUEST['itemId'], (int)$U_fieldId));
+
+  $U_maxsubscriptions=substr($U_value,0,strpos($U_value,'#'));
+
+  $pattern="/(\d+)\[(\d+)\]/";
+  preg_match_all($pattern,$U_value,$match);
+  $users_array2=array();
+  $user_subscription=FALSE;
+
+  foreach($match[1] as $i=>$id_user){
+    $temp=$userlib->get_userId_info($id_user);
+    if($id_user==$id_tiki_user){
+      $user_subscription=TRUE;
+    } else {
+      array_push($users_array2,
+		 array('id'=>$id_user,'login'=>$temp['login'],'friends'=>$match[2][$i])
+		 );
+    }
+  }
+  $match=NULL;
+  if(isset($_REQUEST['user_subscribe'])){
+    array_push($users_array2,
+	       array('id'=>$id_tiki_user,'login'=>$user,'friends'=>intval($_POST['user_friends']))
+	       );
+  }
+
+  $sql_value=$U_maxsubscriptions."#";
+  $sql_value2="";
+  foreach($users_array2 as $U){
+    $sql_value2 .= $U['id']."[".$U['friends']."],";
+  }
+  $sql_value.=$sql_value2?substr($sql_value2,0,strlen($sql_value2)-1):"";
+  
+  $U_query="UPDATE `tiki_tracker_item_fields` SET `value`=? WHERE `itemId`=? AND `fieldId`=?";
+  $trklib->query($U_query,array($sql_value, (int)$_REQUEST['itemId'], (int)$U_fieldId));
+ }
+
+
+
+
 
 if (isset($_REQUEST["move"])) {
     $move = ($_REQUEST["move"] == 'prev') ? -1 : 1;
@@ -670,6 +722,47 @@ if ($_REQUEST["itemId"]) {
 						$ins_fields["data"][$i]["defvalue"] = $user;
 					}
 					$ins_fields["data"][$i]["value"] = $info["$fid"];
+				} elseif ($fields["data"][$i]["type"] == 'U') {
+					$ins_fields["data"][$i]["value"]=$info["$fid"];
+					$temp=$userlib->get_user_info($user);
+					$id_user=$temp['userId'];
+					$id_tiki_user=$temp['userId'];
+
+					$pattern="/(\d+)\[(\d+)\]/";
+					preg_match_all($pattern,$ins_fields["data"][$i]["value"],$match);
+					$users_array=array();
+					$ins_fields["data"][$i]["user_subscription"]=FALSE;
+					$U_nb_users=0;
+					$ins_fields["data"][$i]["user_nb_friends"]=0;
+					foreach($match[1] as $j=>$id_user){
+					  $temp=$userlib->get_userId_info($id_user);
+					  array_push($users_array,
+						     array('id'=>$id_user,'login'=>$temp['login'],'friends'=>$match[2][$j])
+						     );
+					  $U_nb_users+=$match[2][$j]+1;
+					  if($id_user==$id_tiki_user){
+					    $ins_fields["data"][$i]["user_subscription"]=TRUE;
+					    $ins_fields["data"][$i]["user_nb_friends"]=$match[2][$j];
+					  }
+					}
+					$ins_fields["data"][$i]["users_array"]=array();
+					$ins_fields["data"][$i]["users_array"]=$users_array;
+
+					$U_maxsubscriptions=substr($info["$fid"],0,strpos($info["$fid"],'#'));
+					$ins_fields["data"][$i]["maxsubscriptions"]=$U_maxsubscriptions;
+
+					$U_liste=NULL;
+					$U_othersubscriptions=$ins_fields["data"][$i]["user_nb_friends"];
+					if(!$ins_fields["data"][$i]["user_subscription"]){
+					  $U_othersubscriptions--;
+					}					  
+					if($U_maxsubscriptions){
+					  for($j=0 ; $j <= $U_maxsubscriptions-$U_nb_users+$U_othersubscriptions ; $j++){
+					    $U_liste[$j]=$j;
+					  }
+					}
+					$smarty->assign("U_liste",$U_liste);
+
 				} elseif ($fields["data"][$i]["type"] == 'g') {
 					if ($fields["data"][$i]['options'] == 2 and !$info["$fid"]) {
 						$ins_fields["data"][$i]["defvalue"] = $group;

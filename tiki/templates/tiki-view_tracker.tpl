@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker.tpl,v 1.126 2006-12-28 17:15:18 mose Exp $ *}
+{* $Id: tiki-view_tracker.tpl,v 1.127 2007-01-23 16:53:11 darzee Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a></h1>
 <div>
@@ -358,6 +358,14 @@ $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}created{/tr
 {if $o_opt eq '0' or $o_opt eq 1}{tr}{$items[user].field_values[ix].value}{/tr}{/if}
 </td>
 
+
+{elseif $items[user].field_values[ix].type eq 'U'}
+<td class="auto">
+
+{$items[user].field_values[ix].value|how_many_user_inscriptions} {tr}subscriptions{/tr}
+
+</td>
+
 {elseif $items[user].field_values[ix].type eq 's' and $items[user].field_values[ix].name eq "Rating" and $tiki_p_tracker_view_ratings eq 'y'}
 	<td class="auto">
 		<b title="{tr}Rating{/tr}: {$items[user].field_values[ix].value|default:"-"}, {tr}Number of voices{/tr}: {$items[user].field_values[ix].numvotes|default:"-"}, {tr}Average{/tr}: {$items[user].field_values[ix].voteavg|default:"-"}">
@@ -622,6 +630,12 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 {elseif $fields[ix].type eq 'w'}
 <select name="{$fields[ix].ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
 </select>
+
+
+{* -------------------- User subscription -------------------- *}
+{elseif $fields[ix].type eq 'U'}
+<input type="text" name="{$fields[ix].ins_id}" value="{$fields[ix].value}" />
+
 
 {* -------------------- country selector -------------------- *}
 {elseif $fields[ix].type eq 'y'}

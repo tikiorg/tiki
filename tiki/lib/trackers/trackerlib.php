@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.161 2007-01-23 15:02:34 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.162 2007-01-23 16:53:11 darzee Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1730,6 +1730,10 @@ class TrackerLib extends TikiLib {
 			'label'=>tra('auto-increment'),
 			'opt'=>false,
 			'help'=>tra('Sequential auto-increment number') );
+		$type['U'] = array(
+			'label'=>tra('User subscription'),
+			'opt'=>false,
+			'help'=>tra('Allow registred use to subscribe to an item. They can add a number of friends.'));
 		$type['s'] = array(
 			'label'=>tra('system'),
 			'opt'=>false);
