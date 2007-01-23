@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.100 2007-01-14 13:38:35 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.101 2007-01-23 12:45:14 nyloth Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -239,7 +239,7 @@ function searchrep() {
 {if $feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
   {include file=freetag.tpl}
 {/if}
-{if $feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y'}
+{if $feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y' and $wysiwyg neq 'y'}
 <tr class="formcolor"><td>{tr}Allow HTML{/tr}: </td><td><input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/></td></tr>
 {/if}
 {if $wiki_spellcheck eq 'y'}
@@ -342,6 +342,9 @@ function searchrep() {
 {/if}
 </td></tr>
 </table>
+{if $feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y' and $wysiwyg eq 'y' and $allowhtml eq 'y'}
+  <input type="hidden" name="allowhtml" checked="checked"/>
+{/if}
 </form>
 <br />
 
