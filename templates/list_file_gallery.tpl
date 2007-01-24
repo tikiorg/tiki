@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.14 2006-12-12 18:46:39 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.15 2007-01-24 22:36:42 sylvieg Exp $ *}
 {* param:$gal_info, $files *}
 {strip}
 
@@ -210,7 +210,7 @@
 		or ($files[changes].lockedby and $files[changes].lockedby eq $user)
 		or (!$files[changes].lockedby and (($user and $user eq $files[changes].user) or $tiki_p_edit_file_gallery eq 'y')) }
 		{if $files[changes].archiveId == 0}
-			<a class="link" href="tiki-upload_file.php?galleryId={$gal_info.galleryId}&amp;fileId={$files[changes].fileId}"><img src='pics/icons/page_edit.png' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
+			<a class="link" href="tiki-upload_file.php?galleryId={$gal_info.galleryId}&amp;fileId={$files[changes].fileId}"><img src='pics/icons/page_edit.png' border='0' {if $gal_info.lockable eq 'y' and $files[changes].lockedby}alt='{tr}edit/unlock{/tr}'{else}alt='{tr}edit{/tr}'{/if} {if $gal_info.lockable eq 'y' and $files[changes].lockedby}title='{tr}edit/unlock{/tr}'{else}title='{tr}edit{/tr}'{/if} /></a>
 		{/if}
 	{/if}
 	{if $tiki_p_admin_file_galleries eq 'y'
