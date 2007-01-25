@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.88 2007-01-12 13:59:38 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.89 2007-01-25 18:18:24 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -26,8 +26,11 @@ if (!$user) {
 	die;
 }
 
-if (isset($_REQUEST['userId'])) {
-	$userwatch = $tikilib->get_user_login($_REQUEST['userId']);
+if (isset($_REQUEST['userId']) || isset($_REQUEST['view_user'])) {
+	if (empty($_REQUEST['view_user']))
+		$userwatch = $tikilib->get_user_login($_REQUEST['userId']);
+	else
+		$userwatch = $_REQUEST['view_user'];
 	if ($userwatch != $user) {
 		if ($userwatch === NULL) {
 			$smarty->assign('msg', tra("Unknown user"));
