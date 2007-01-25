@@ -1,6 +1,6 @@
 -- $Rev$
--- $Date: 2006-12-28 18:06:50 $
--- $Author: mose $
+-- $Date: 2007-01-25 15:20:39 $
+-- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -70,7 +70,7 @@ CREATE TABLE "galaxia_instance_activities" (
   "activityId" bigint NOT NULL default '0',
   "started" bigint NOT NULL default '0',
   "ended" bigint NOT NULL default '0',
-  "user" varchar(200) not null default '',
+  "user" varchar(200) default '',
   "status" varchar(11) CHECK ("status" IN ('running','completed')) default NULL,
   PRIMARY KEY ("instanceId","activityId")
 ) ;
@@ -89,7 +89,7 @@ DROP TABLE "galaxia_instance_comments";
 CREATE TABLE "galaxia_instance_comments" (
   "cId" bigserial,
   "instanceId" bigint NOT NULL default '0',
-  "user" varchar(200) not null default '',
+  "user" varchar(200) default '',
   "activityId" bigint default NULL,
   "hash" varchar(34) default NULL,
   "title" varchar(250) default NULL,
@@ -222,7 +222,7 @@ CREATE TABLE "galaxia_workitems" (
   "properties" bytea,
   "started" bigint default NULL,
   "ended" bigint default NULL,
-  "user" varchar(200) not null default '',
+  "user" varchar(200) default '',
   PRIMARY KEY ("itemId")
 )   ;
 
@@ -347,7 +347,7 @@ CREATE TABLE "tiki_actionlog" (
   "lastModif" bigint default NULL,
   "object" varchar(255) default NULL,
   "objectType" varchar(32) NOT NULL default '',
-  "user" varchar(200) not null default '',
+  "user" varchar(200) default '',
   "ip" varchar(15) default NULL,
   "comment" varchar(200) default NULL,
   "categId" bigint NOT NULL default '0',
@@ -517,7 +517,7 @@ CREATE TABLE "tiki_banning" (
   "ip2" char(3) default NULL,
   "ip3" char(3) default NULL,
   "ip4" char(3) default NULL,
-  "user" varchar(200) not null default '',
+  "user" varchar(200) default '',
   "date_from" timestamp(3) NOT NULL,
   "date_to" timestamp(3) NOT NULL,
   "use_dates" char(1) default NULL,
@@ -579,7 +579,7 @@ CREATE TABLE "tiki_blog_posts" (
   "data" text,
   "data_size" bigint unsigned NOT NULL default '0',
   "created" bigint default NULL,
-  "user" varchar(40) default NULL,
+  "user" varchar(200) default '',
   "trackbacks_to" text,
   "trackbacks_from" text,
   "title" varchar(80) default NULL,
@@ -630,7 +630,7 @@ CREATE TABLE "tiki_blogs" (
   "lastModif" bigint default NULL,
   "title" varchar(200) default NULL,
   "description" text,
-  "user" varchar(200) not null default '',
+  "user" varchar(200) default '',
   "public" char(1) default NULL,
   "posts" integer default NULL,
   "maxPosts" integer default NULL,
@@ -694,7 +694,7 @@ CREATE TABLE "tiki_calendar_items" (
   "lang" char(16) NOT NULL default 'en',
   "name" varchar(255) NOT NULL default '',
   "description" bytea,
-  "user" varchar(200) not null default '',
+  "user" varchar(200) default '',
   "created" bigint NOT NULL default '0',
   "lastmodif" bigint NOT NULL default '0',
   PRIMARY KEY ("calitemId")
@@ -1062,7 +1062,7 @@ CREATE TABLE "tiki_comments" (
   "object" varchar(255) NOT NULL default '',
   "objectType" varchar(32) NOT NULL default '',
   "parentId" bigint default NULL,
-  "userName" varchar(200) NOT NULL default '',
+  "userName" varchar(200) default '',
   "commentDate" bigint default NULL,
   "hits" integer default NULL,
   "type" char(1) default NULL,
@@ -1177,7 +1177,7 @@ CREATE TABLE "tiki_copyrights" (
   "year" bigint default NULL,
   "authors" varchar(200) default NULL,
   "copyright_order" bigint default NULL,
-  "userName" varchar(200) not null default '',
+  "userName" varchar(200) default '',
   PRIMARY KEY ("copyrightId")
 )   ;
 
@@ -1248,6 +1248,8 @@ CREATE TABLE "tiki_directory_sites" (
   "cache" bytea,
   "cache_timestamp" bigint default NULL,
   PRIMARY KEY ("siteId")
+  KEY (isValid),
+  KEY (url)
 )   ;
 
 CREATE  INDEX "tiki_directory_sites_ft" ON "tiki_directory_sites"("name","description");
@@ -1269,7 +1271,7 @@ CREATE TABLE "tiki_drawings" (
   "filename_draw" varchar(250) default NULL,
   "filename_pad" varchar(250) default NULL,
   "timestamp" bigint default NULL,
-  "user" varchar(200) not null default '',
+  "user" varchar(200) default '',
   PRIMARY KEY ("drawId")
 )   ;
 
@@ -1410,7 +1412,7 @@ CREATE TABLE "tiki_file_galleries" (
   "created" bigint default NULL,
   "visible" char(1) default NULL,
   "lastModif" bigint default NULL,
-  "user" varchar(200) NOT NULL default '',
+  "user" varchar(200) default '',
   "hits" bigint default NULL,
   "votes" integer default NULL,
   "points" decimal(8,2) default NULL,
@@ -1430,6 +1432,8 @@ CREATE TABLE "tiki_file_galleries" (
   "archives" smallint default -1,
   "sort_mode" char(20) default NULL,
   "show_modified" char(1) default NULL,
+  "show_author" char(1) default NULL,
+  "show_creator" char(1) default NULL,
   PRIMARY KEY ("galleryId")
 )   ;
 
@@ -1455,7 +1459,7 @@ CREATE TABLE "tiki_files" (
   "filesize" bigint default NULL,
   "filetype" varchar(250) default NULL,
   "data" bytea,
-  "user" varchar(200) not null default '',
+  "user" varchar(200) default '',
   "author" varchar(40) default NULL,
   "downloads" bigint default NULL,
   "votes" integer default NULL,
@@ -1467,7 +1471,7 @@ CREATE TABLE "tiki_files" (
   "search_data" longtext,
   "lastModif" integer(14) DEFAULT NULL,
   "lastModifUser" varchar(200) DEFAULT NULL,
-  "lockedby" varchar(200) NOT NULL default '',
+  "lockedby" varchar(200) default '',
   "comment" varchar(200) default NULL,
   "archiveId" bigint default 0,
   PRIMARY KEY ("fileId")
@@ -1611,7 +1615,7 @@ CREATE TABLE "tiki_forums_queue" (
   "parentId" bigint default NULL,
   "forumId" bigint default NULL,
   "timestamp" bigint default NULL,
-  "user" varchar(200) not null default '',
+  "user" varchar(200) default '',
   "title" varchar(240) default NULL,
   "data" text,
   "type" varchar(60) default NULL,
@@ -1637,7 +1641,7 @@ CREATE TABLE "tiki_forums_reported" (
   "threadId" bigint NOT NULL default '0',
   "forumId" bigint NOT NULL default '0',
   "parentId" bigint NOT NULL default '0',
-  "user" varchar(200) NOT NULL default '',
+  "user" varchar(200) default '',
   "timestamp" bigint default NULL,
   "reason" varchar(250) default NULL,
   PRIMARY KEY ("threadId")
@@ -1664,7 +1668,7 @@ CREATE TABLE "tiki_galleries" (
   "visible" char(1) default NULL,
   "geographic" char(1) default NULL,
   "theme" varchar(60) default NULL,
-  "user" varchar(200) NOT NULL default '',
+  "user" varchar(200) default '',
   "hits" bigint default NULL,
   "maxRows" bigint default NULL,
   "rowImages" bigint default NULL,
@@ -1848,7 +1852,7 @@ CREATE TABLE "tiki_images" (
   "lon" float default NULL,
   "lat" float default NULL,
   "created" bigint default NULL,
-  "user" varchar(200) not null default '',
+  "user" varchar(200) NOT NULL default '',
   "hits" bigint default NULL,
   "path" varchar(255) default NULL,
   PRIMARY KEY ("imageId")
@@ -2664,7 +2668,7 @@ INSERT INTO "tiki_menus" ("menuId","name","description","type") VALUES ('42','Ap
 DROP TABLE "tiki_minical_events";
 
 CREATE TABLE "tiki_minical_events" (
-  "user" varchar(200) not null default '',
+  "user" varchar(200) default '',
   "eventId" bigserial,
   "title" varchar(250) default NULL,
   "description" text,
@@ -2689,7 +2693,7 @@ CREATE TABLE "tiki_minical_events" (
 DROP TABLE "tiki_minical_topics";
 
 CREATE TABLE "tiki_minical_topics" (
-  "user" varchar(200) not null default '',
+  "user" varchar(200) default '',
   "topicId" bigserial,
   "name" varchar(250) default NULL,
   "filename" varchar(200) default NULL,
@@ -2817,7 +2821,7 @@ CREATE TABLE "tiki_newsreader_marks" (
   "serverId" bigint NOT NULL default '0',
   "groupName" varchar(255) NOT NULL default '',
   "timestamp" bigint NOT NULL default '0',
-  PRIMARY KEY ("user","serverId","groupName")
+  PRIMARY KEY ("`user`","serverId","groupName")
 ) ;
 
 -- --------------------------------------------------------
@@ -2857,7 +2861,7 @@ CREATE TABLE "tiki_page_footnotes" (
   "user" varchar(200) NOT NULL default '',
   "pageName" varchar(250) NOT NULL default '',
   "data" text,
-  PRIMARY KEY ("user","pageName")
+  PRIMARY KEY ("`user`","pageName")
 ) ;
 
 -- --------------------------------------------------------
@@ -2881,7 +2885,7 @@ CREATE TABLE "tiki_pages" (
   "lastModif" bigint default NULL,
   "comment" varchar(200) default NULL,
   "version" integer NOT NULL default '0',
-  "user" varchar(200) NOT NULL default '',
+  "user" varchar(200) default '',
   "ip" varchar(15) default NULL,
   "flag" char(1) default NULL,
   "points" integer default NULL,
@@ -2915,13 +2919,13 @@ CREATE UNIQUE INDEX "tiki_pages_pageName" ON "tiki_pages"("pageName");
 DROP TABLE "tiki_page_drafts";
 
 CREATE TABLE "tiki_page_drafts" (
-  "user" varchar(40) NOT NULL,
+  "user" varchar(200) default '',
   "pageName" varchar(255) NOT NULL,
   "data" mediumtext,
   "description" varchar(200) default NULL,
   "comment" varchar(200) default NULL,
   "lastModif" bigint default NULL,
-  PRIMARY KEY ("pageName","user")
+  PRIMARY KEY ("pageName","`user`")
 ) ;
 
 -- --------------------------------------------------------
@@ -3523,7 +3527,7 @@ CREATE TABLE "tiki_sheet_values" (
   "width" smallint NOT NULL default '1',
   "height" smallint NOT NULL default '1',
   "format" varchar(255) default NULL,
-  "user" varchar(40) default NULL
+  "user" varchar(200) default NULL
 ) ;
 
 CREATE  INDEX "tiki_sheet_values_sheetId_2" ON "tiki_sheet_values"("sheetId","rowIndex","columnIndex");
@@ -3895,7 +3899,7 @@ CREATE TABLE "tiki_tracker_item_attachments" (
   "filename" varchar(80) default NULL,
   "filetype" varchar(80) default NULL,
   "filesize" bigint default NULL,
-  "user" varchar(40) default NULL,
+  "user" varchar(200) default NULL,
   "data" bytea,
   "path" varchar(255) default NULL,
   "downloads" bigint default NULL,
@@ -3920,7 +3924,7 @@ DROP TABLE "tiki_tracker_item_comments";
 CREATE TABLE "tiki_tracker_item_comments" (
   "commentId" bigserial,
   "itemId" bigint NOT NULL default '0',
-  "user" varchar(40) default NULL,
+  "user" varchar(200) default NULL,
   "data" text,
   "title" varchar(200) default NULL,
   "posted" bigint default NULL,
@@ -4281,7 +4285,7 @@ CREATE TABLE "tiki_user_preferences" (
 DROP TABLE "tiki_user_quizzes";
 
 CREATE TABLE "tiki_user_quizzes" (
-  "user" varchar(200) NOT NULL default '',
+  "user" varchar(200) default '',
   "quizId" bigint default NULL,
   "timestamp" bigint default NULL,
   "timeTaken" bigint default NULL,
@@ -4383,7 +4387,7 @@ CREATE TABLE "tiki_user_votings" (
   "user" varchar(200) NOT NULL default '',
   "id" varchar(255) NOT NULL default '',
   "optionId" bigint NOT NULL default 0,
-  PRIMARY KEY ("user","id")
+  PRIMARY KEY ("`user`","id")
 ) ;
 
 -- --------------------------------------------------------
@@ -4406,7 +4410,7 @@ CREATE TABLE "tiki_user_watches" (
   "type" varchar(200) default NULL,
   "url" varchar(250) default NULL,
   "email" varchar(200) default NULL,
-  PRIMARY KEY ("user","event","object")
+  PRIMARY KEY ("`user`","event","object")
 ) ;
 
 -- --------------------------------------------------------
@@ -5047,6 +5051,8 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_actionlog', 'Can view action log', 'registered', 'tiki');
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_assign_perm_blog', 'Can assign perms to blog', 'admin', 'blogs');
+
 -- --------------------------------------------------------
 
 --
@@ -5558,7 +5564,7 @@ DROP TABLE "tiki_friends";
 CREATE TABLE "tiki_friends" (
   "user" char(200) NOT NULL default '',
   "friend" char(200) NOT NULL default '',
-  PRIMARY KEY ("user","friend")
+  PRIMARY KEY ("`user`","friend")
 ) ;
 
 
@@ -5705,24 +5711,24 @@ DROP TABLE "tiki_events";
 
 CREATE TABLE "tiki_events" (
   "callback_type" smallint NOT NULL default '3',
-  "order" smallint NOT NULL default '50',
+  `order` smallint NOT NULL default '50',
   "event" varchar(200) NOT NULL default '',
   "file" varchar(200) NOT NULL default '',  
   "object" varchar(200) NOT NULL default '',
   "method" varchar(200) NOT NULL default '',
-  PRIMARY KEY ("callback_type","order")
+  PRIMARY KEY ("callback_type","`order`")
 ) ;
 
 
-INSERT INTO "tiki_events" ("callback_type","order","event","file","object","method") VALUES ('1', '20', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikiwiki_setup_custom_fields');
+INSERT INTO "tiki_events" ("callback_type","`order`","event","file","object","method") VALUES ('1', '20', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikiwiki_setup_custom_fields');
 
 INSERT INTO "tiki_events" ("event","file","object","method") VALUES ('user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikiwiki_save_registration');
 
-INSERT INTO "tiki_events" ("callback_type","order","event","file","object","method") VALUES ('5', '20', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_logslib_user_registers');
+INSERT INTO "tiki_events" ("callback_type","`order`","event","file","object","method") VALUES ('5', '20', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_logslib_user_registers');
 
-INSERT INTO "tiki_events" ("callback_type","order","event","file","object","method") VALUES ('5', '25', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikiwiki_send_email');
+INSERT INTO "tiki_events" ("callback_type","`order`","event","file","object","method") VALUES ('5', '25', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikiwiki_send_email');
 
-INSERT INTO "tiki_events" ("callback_type","order","event","file","object","method") VALUES ('5', '30', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikimail_user_registers');
+INSERT INTO "tiki_events" ("callback_type","`order`","event","file","object","method") VALUES ('5', '30', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikimail_user_registers');
 
 
 --
@@ -5739,7 +5745,7 @@ CREATE TABLE "tiki_registration_fields" (
   "field" varchar(255) NOT NULL default '',
   "name" varchar(255) default NULL,
   "type" varchar(255) NOT NULL default 'text',
-  "show" smallint NOT NULL default '0',
+  `show` smallint NOT NULL default '0',
   "size" varchar(10) default '10',
   PRIMARY KEY ("id")
 ) ;
@@ -5749,8 +5755,8 @@ DROP TABLE "tiki_actionlog_conf";
 
 CREATE TABLE "tiki_actionlog_conf" (
   "action" varchar(32) NOT NULL default '',
-  "objectTypevarchar"(32) NOT NULL default '',
-  "status" char(1) default '',
+  "objectType" varchar(32) NOT NULL default '',
+ `status` char(1) default '',
 PRIMARY KEY (action, objectType)
 ) ;
 
