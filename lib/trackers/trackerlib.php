@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.162 2007-01-23 16:53:11 darzee Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.163 2007-01-25 17:39:02 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1446,12 +1446,12 @@ class TrackerLib extends TikiLib {
 					$this->remove_field_images( $fieldId );
 				}
 				$query = "update `tiki_tracker_fields` set `name`=? ,`type`=?,`isMain`=?,`isSearchable`=?,
-					`isTblVisible`=?,`isPublic`=?,`isHidden`=?,`isMandatory`=?,`position`=?,`options`=?,`isMultilingual`=? where `fieldId`=?";
-				$bindvars=array($name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,$isHidden,$isMandatory,(int)$position,$options,$isMultilingual,(int) $fieldId);
+					`isTblVisible`=?,`isPublic`=?,`isHidden`=?,`isMandatory`=?,`position`=?,`options`=?,`isMultilingual`=?, `description`=? where `fieldId`=?";
+				$bindvars=array($name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,$isHidden,$isMandatory,(int)$position,$options,$isMultilingual,$description, (int) $fieldId);
 			} else {
 				$query = "insert into `tiki_tracker_fields` (`trackerId`,`name`,`type`,`isMain`,`isSearchable`,
-					`isTblVisible`,`isPublic`,`isHidden`,`isMandatory`,`position`,`options`,`fieldId`,`isMultilingual`) values (?,?,?,?,?,?,?,?,?,?,?,?,?);";
-				$bindvars=array((int) $trackerId,$name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,$isHidden,$isMandatory,(int)$position,$options,(int) $fieldId,$isMultilingual);
+					`isTblVisible`,`isPublic`,`isHidden`,`isMandatory`,`position`,`options`,`fieldId`,`isMultilingual`, `description`) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+				$bindvars=array((int) $trackerId,$name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,$isHidden,$isMandatory,(int)$position,$options,(int) $fieldId,$isMultilingual, $description);
 			}
 			$result = $this->query($query, $bindvars);
 		} else {
@@ -1709,7 +1709,7 @@ class TrackerLib extends TikiLib {
 		$type['e'] = array(
 			'label'=>tra('category'), 
 			'opt'=>true, 
-			'help'=>tra('Category options: parentId,radio|checkbox(default)') );
+			'help'=>tra('Category options: parentId,radio|checkbox(default),1|0(default) to have a select all button') );
 		$type['r'] = array(
 			'label'=>tra('item link'),
 			'opt'=>true,
