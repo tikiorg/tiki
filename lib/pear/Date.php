@@ -41,7 +41,7 @@
  * @copyright  1997-2006 Baba Buehler, Pierre-Alain Joye
  * @license    http://www.opensource.org/licenses/bsd-license.php
  *             BSD License
- * @version    CVS: $Id: Date.php,v 1.2 2007-01-03 03:16:18 mose Exp $
+ * @version    CVS: $Id: Date.php,v 1.3 2007-01-25 17:26:04 sylvieg Exp $
  * @link       http://pear.php.net/package/Date
  */
 
@@ -391,16 +391,16 @@ class Date
                 $nextchar = substr($format,$strpos + 1,1);
                 switch ($nextchar) {
                 case "a":
-                    $output .= Date_Calc::getWeekdayAbbrname($this->day,$this->month,$this->year, $this->getWeekdayAbbrnameLength);
+                    $output .= tra(Date_Calc::getWeekdayAbbrname($this->day,$this->month,$this->year, $this->getWeekdayAbbrnameLength));
                     break;
                 case "A":
-                    $output .= Date_Calc::getWeekdayFullname($this->day,$this->month,$this->year);
+                    $output .= tra(Date_Calc::getWeekdayFullname($this->day,$this->month,$this->year));
                     break;
                 case "b":
-                    $output .= Date_Calc::getMonthAbbrname($this->month);
+                    $output .= tra(Date_Calc::getMonthAbbrname($this->month));
                     break;
                 case "B":
-                    $output .= Date_Calc::getMonthFullname($this->month);
+                    $output .= tra(Date_Calc::getMonthFullname($this->month));
                     break;
                 case "C":
                     $output .= sprintf("%02d",intval($this->year/100));
