@@ -11,7 +11,7 @@ $xajax = new xajax("lib/map/map_cp.php");
 //$xajax->statusMessagesOn();
 
   
-  function cp_map_redraw($mapfile,$corx,$cory,$minx,$maxx,$miny,$maxy,$xsize,$ysize,$layers,$labels,$zoom,$corx2=0,$cory2=0) {
+  function cp_map_redraw($mapfile,$corx,$cory,$minx,$maxx,$miny,$maxy,$xsize,$ysize,$layers,$labels,$zoom,$changeleg=false,$corx2=0,$cory2=0) {
   	global $map_path;
   	$objResponse = new xajaxResponse();
   	
@@ -92,16 +92,39 @@ $xajax = new xajax("lib/map/map_cp.php");
 	  }
   	$image = $map->drawquery();
 		$image_url = $image->saveWebImage();
-		$image_ref = $map->drawReferenceMap();
-		$image_ref_url = $image_ref->saveWebImage();
-		$image->free();
-		$image_ref->free();
+		if ($zoom!=3) {
+			$image_ref = $map->drawReferenceMap();
+			$image_ref_url = $image_ref->saveWebImage();
+			$image_ref->free();
+		}
+		
+		if ($changeleg) {
+			$image_leg = $map->drawLegend();
+			$image_leg_url = $image_leg->saveWebImage();
+			$image_leg->free();
+		}
 
-
+		if ($zoom==2 || $zoom==5) {
+			$image_scale = $map->drawScaleBar();
+			$image_scale_url = $image_scale->saveWebImage();
+			$image_scale->free();
+		}
+		
+		$image->free();		
+		
+		
   	$objResponse->addAssign("innerBoxContent","innerHTML", $result);
   	$objResponse->addAssign("resultBox","innerHTML", $result);
   	$objResponse->addAssign("map", "src", $image_url);
-  	$objResponse->addAssign("ref", "src", $image_ref_url);
+  	if ($zoom!=3) {
+  		$objResponse->addAssign("ref", "src", $image_ref_url);
+  	}
+  	if ($zoom==2 || $zoom==5) {
+  		$objResponse->addAssign("scale", "src", $image_scale_url);
+  	}
+  	if ($changeleg) {
+  		$objResponse->addAssign("leg", "src", $image_leg_url);
+  	}
   	return $objResponse;
   }
   
