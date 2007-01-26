@@ -9,15 +9,59 @@ function wikiplugin_perm_help() {
 	return $help;
 }
 function wikiplugin_perm($data, $params) {
-	$perms = explode('|',$params['perms']);
+	global $user, $userlib;
+	if (!empty($params['perms']))
+		$perms = explode('|',$params['perms']);
+	if (!empty($params['notperms']))
+		$notperms = explode('|', $params['notperms']);
 
-	foreach ($perms as $perm) {
-	    global $$perm;
-	    if ($$perm == 'y')
-		return $data;
+	if (strpos($data,'{ELSE}')) {
+		$dataelse = substr($data,strpos($data,'{ELSE}')+6);
+		$data = substr($data,0,strpos($data,'{ELSE}'));
+	} else {
+		$dataelse = '';
 	}
 
-	return '';
+	if (!empty($perms)) {
+		$ok = false;
+		foreach ($perms as $perm) {
+			if (!empty($params['global']) && $params['global']) {
+				if ($userlib->user_has_permission($user, $perm)) {
+					$ok = true;
+					break;
+				}
+			} else {
+	    		global $$perm;
+	    		if ($$perm == 'y') {
+					$ok = true;
+					break;
+				}
+			}
+		}
+		if (!$ok)
+			return $dataelse;
+	}
+	if (!empty($notperms)) {
+		$ok = true;
+		foreach ($notperms as $perm) {
+			if (!empty($params['global']) && $params['global']) {
+				if ($userlib->user_has_permission($user, $perm)) {
+					$ok = false;
+					break;
+				}
+			} else {
+				global $$perm;
+				if ($$perm == 'y') {
+					$ok = false;
+					break;
+				}
+			}
+		}
+		if (!$ok)
+			return $dataelse;
+	}
+
+	return $data;
 }
 
 ?>
