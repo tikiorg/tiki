@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-compose.php,v 1.36 2006-12-03 16:27:10 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-compose.php,v 1.37 2007-01-26 13:43:06 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -121,9 +121,9 @@ if (isset($_REQUEST['send'])) {
 	foreach ($arr_to as $a_user) {
 		if (!empty($a_user)) {
 			$a_user = str_replace('\\;', ';', $a_user);
-			if ($messulib->user_exists($a_user)) {
+			if ($userlib->user_exists($a_user)) {
 				// mail only to users with activated message feature
-				if ($messulib->get_user_preference($a_user, 'allowMsgs', 'y') == 'y') {
+			  if ($allowmsg_is_optional != 'y' || $tikilib->get_user_preference($a_user, 'allowMsgs', 'y') == 'y') {
 					// only send mail if nox mailbox size is defined or not reached yet
 					if (($messulib->count_messages($a_user)<$messu_mailbox_size) || ($messu_mailbox_size==0)) {
 						$users[] = $a_user;
@@ -142,9 +142,9 @@ if (isset($_REQUEST['send'])) {
 	foreach ($arr_cc as $a_user) {
 		if (!empty($a_user)) {
 			$a_user = str_replace('\\;', ';', $a_user);
-			if ($messulib->user_exists($a_user)) {
+			if ($userlib->user_exists($a_user)) {
 				// mail only to users with activated message feature
-				if ($messulib->get_user_preference($a_user, 'allowMsgs', 'y') == 'y') {
+			  if ($allowmsg_is_optional != 'y' || $tikilib->get_user_preference($a_user, 'allowMsgs', 'y') == 'y') {
 					// only send mail if nox mailbox size is defined or not reached yet
 					if (($messulib->count_messages($a_user)<$messu_mailbox_size) || ($messu_mailbox_size==0)) {
 						$users[] = $a_user;
@@ -163,9 +163,9 @@ if (isset($_REQUEST['send'])) {
 	foreach ($arr_bcc as $a_user) {
 		if (!empty($a_user)) {
 			$a_user = str_replace('\\;', ';', $a_user);
-			if ($messulib->user_exists($a_user)) {
+			if ($userlib->user_exists($a_user)) {
 				// mail only to users with activated message feature
-				if ($messulib->get_user_preference($a_user, 'allowMsgs', 'y') == 'y') {
+				if ($allowmsg_is_optional != 'y' || $tikilib->get_user_preference($a_user, 'allowMsgs', 'y') == 'y') {
 					// only send mail if nox mailbox size is defined or not reached yet
 					if (($messulib->count_messages($a_user)<$messu_mailbox_size) || ($messu_mailbox_size==0)) {
 						$users[] = $a_user;
@@ -223,7 +223,7 @@ if (isset($_REQUEST['send'])) {
 			$logslib->add_action('Posted', '', 'message', 'add='.strlen($_REQUEST['body']));
 	}
 }
-$allowMsgs = $messulib->get_user_preference($user, 'allowMsgs', 'y');
+$allowMsgs = $allowmsg_is_optional != 'y' || $tikilib->get_user_preference($user, 'allowMsgs', 'y');
 $smarty->assign('allowMsgs', $allowMsgs);
 
 include_once ('tiki-section_options.php');
