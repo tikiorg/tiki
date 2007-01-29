@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-siteid.tpl,v 1.6 2006-05-22 17:09:14 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-siteid.tpl,v 1.7 2007-01-29 17:27:54 jyhem Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -118,7 +118,7 @@
 					<td class="form"><label for="feature_sitead">{tr}Site ads and banners{/tr}:</label></td>
 					<td><input type="checkbox" name="feature_sitead" id="feature_sitead"{if $feature_sitead eq 'y'} checked="checked"{/if} /></td>
 				</tr>
-				<mall>
+				<tr>
 					<td class="form"><label for="sitead">&nbsp;&nbsp;{tr}Content{/tr}:</label></td>
 					<td><textarea name="sitead" rows="6" style="width: 40%" id="sitead">{$sitead}</textarea>
 					<br />
