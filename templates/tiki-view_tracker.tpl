@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker.tpl,v 1.127 2007-01-23 16:53:11 darzee Exp $ *}
+{* $Id: tiki-view_tracker.tpl,v 1.128 2007-01-29 16:48:12 darzee Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a></h1>
 <div>
@@ -636,6 +636,11 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 {elseif $fields[ix].type eq 'U'}
 <input type="text" name="{$fields[ix].ins_id}" value="{$fields[ix].value}" />
 
+
+{* -------------------- Google Map -------------------- *}
+{elseif $fields[ix].type eq 'G'}
+<input type="text" name="{$fields[ix].ins_id}" value="{$fields[ix].value}" />
+<br />{tr}Format : x,y,zoom - You can use Google Map Locator in the item view script.{/tr}
 
 {* -------------------- country selector -------------------- *}
 {elseif $fields[ix].type eq 'y'}

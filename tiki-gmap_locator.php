@@ -1,5 +1,6 @@
 <?php
 include 'tiki-setup.php';
+include_once ('lib/trackers/trackerlib.php');
 
 if ($feature_gmap != 'y') {
 	$smarty->assign('msg', tra('This feature is disabled').": feature_gmap");
@@ -52,6 +53,40 @@ if (isset($_REQUEST['for'])) {
 		$smarty->assign('extraquery','?for=user');
 		$smarty->assign('backurl','tiki-user_preferences.php');
 		$smarty->assign('backlink',tra('Back to preferences'));
+	}
+	if ($_REQUEST['for'] == 'item') {
+	  if (isset($_REQUEST['point']) and is_array($_REQUEST['point'])) {
+	    echo "OK";
+	    if(isset($_REQUEST['itemId']) && isset($_REQUEST['fieldId'])){
+	      echo "OK";
+	      $p = $_REQUEST['point'];
+	      if ( ($p['x'] > -90 and $p['x'] < 90) &&
+		   ($p['y'] > -90 and $p['y'] < 90) &&
+		   ($p['z'] > 0 and $p['z'] < 20)      ){
+
+		$G_query="UPDATE `tiki_tracker_item_fields` SET `value`=? WHERE `itemId`=? AND `fieldId`=?";
+		$trklib->query($G_query,array($p['x'].','.$p['y'].','.$p['z'], (int)$_REQUEST['itemId'], (int)$_REQUEST['fieldId']));
+	      }
+	    }
+	  }
+	  $smarty->assign('input','y');
+	  $xyz = $trklib->get_item_value($_REQUEST['trackerId'],$_REQUEST['itemId'],$_REQUEST['fieldId']);
+	  $first_comma=strpos($xyz,',');
+	  $second_comma=strpos($xyz,',',$first_comma+1);
+	  echo "$xyz $first_comma $second_comma";
+	  if(!$second_comma){
+	    $second_comma=strlen($xyz);
+	    $xyz.=",11";
+	  }
+	  $pointx = substr($xyz,0,$first_comma);
+	  $pointy = substr($xyz,$first_comma+1,$second_comma-$first_comma-1);
+	  $pointz = substr($xyz,$second_comma+1);
+	  $smarty->assign('pointx',$pointx);
+	  $smarty->assign('pointy',$pointy);
+	  $smarty->assign('pointz',$pointz);
+	  $smarty->assign('extraquery','?for=item&amp;itemId='.$_REQUEST['itemId'].'&amp;trackerId='.$_REQUEST['trackerId'].'&amp;fieldId='.$_REQUEST['fieldId']);
+	  $smarty->assign('backurl','tiki-view_tracker_item.php?itemId='.$_REQUEST['itemId'].'&amp;trackerId='.$_REQUEST['trackerId']);
+	  $smarty->assign('backlink',tra('Back to item'));
 	}
 }
 if (isset($_REQUEST['recenter']) and $pointx and $pointy) {

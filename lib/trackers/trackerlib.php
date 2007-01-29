@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.163 2007-01-25 17:39:02 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.164 2007-01-29 16:48:11 darzee Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1734,6 +1734,10 @@ class TrackerLib extends TikiLib {
 			'label'=>tra('User subscription'),
 			'opt'=>false,
 			'help'=>tra('Allow registred use to subscribe to an item. They can add a number of friends.'));
+		$type['G'] = array(
+			'label'=>tra('Google map'),
+			'opt'=>false,
+			'help'=>tra('Use Google map.'));
 		$type['s'] = array(
 			'label'=>tra('system'),
 			'opt'=>false);

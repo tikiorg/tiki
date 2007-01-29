@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.108 2007-01-23 16:53:09 darzee Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.109 2007-01-29 16:48:11 darzee Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -722,6 +722,17 @@ if ($_REQUEST["itemId"]) {
 						$ins_fields["data"][$i]["defvalue"] = $user;
 					}
 					$ins_fields["data"][$i]["value"] = $info["$fid"];
+				} elseif ($fields["data"][$i]["type"] == 'G') {
+					$ins_fields["data"][$i]["value"] = $info["$fid"];
+					$first_comma=strpos($info["$fid"],',');
+					$second_comma=strpos($info["$fid"],',',$first_comma+1);
+					if(!$second_comma){
+					  $second_comma=strlen($info["$fid"]);
+					  $ins_fields["data"][$i]["value"].=",11";
+					}
+					$ins_fields["data"][$i]["x"] = substr($ins_fields["data"][$i]["value"],0,$first_comma);
+					$ins_fields["data"][$i]["y"] = substr($ins_fields["data"][$i]["value"],$first_comma+1,$second_comma-$first_comma-1);
+					$ins_fields["data"][$i]["z"] = substr($ins_fields["data"][$i]["value"],$second_comma+1);
 				} elseif ($fields["data"][$i]["type"] == 'U') {
 					$ins_fields["data"][$i]["value"]=$info["$fid"];
 					$temp=$userlib->get_user_info($user);
