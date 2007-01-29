@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/block.tikimodule.php,v 1.12 2006-12-21 15:28:11 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/block.tikimodule.php,v 1.13 2007-01-29 22:02:42 awolfff Exp $
 /**
  * \brief Smarty {tikimodule}{/tikimodule} block handler
  *
@@ -41,7 +41,15 @@ function smarty_block_tikimodule($params, $content, &$smarty) {
 	if (!isset($overflow))  $overflow = false;
 	if (!isset($title))     $title = substr($content,0,12)."...";
 	if (!isset($name))      $name  = ereg_replace("[^-_a-zA-Z0-9]","",$title);
-	if (!isset($flip) || $flip != 'y') $flip = 'n';
+	if (!isset($flip) || ($flip != 'y' && $flip != 'yc')) $flip = 'n';
+	if ($flip == 'yc') {
+		// can be switched but initialy closed
+		$flip = 'y';
+		$dstate = 'c';
+	}
+	else {
+		$dstate = 'o';
+	}
 	if (!isset($decorations) || $decorations != 'n') $decorations = 'y';
 
 	if (isset($user_flip_modules) && ($user_flip_modules != 'module')) {
@@ -52,6 +60,7 @@ function smarty_block_tikimodule($params, $content, &$smarty) {
 	$smarty->assign('module_title', $title);
 	$smarty->assign('module_name', $name);
 	$smarty->assign('module_flip', $flip);
+	$smarty->assign('module_dstate', $dstate);
 	$smarty->assign('module_decorations', $decorations);
 	$smarty->assign_by_ref('module_content', $content);
 	return $smarty->fetch('module.tpl');
