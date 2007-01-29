@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker_item.tpl,v 1.115 2007-01-23 16:53:12 darzee Exp $ *}
+{* $Id: tiki-view_tracker_item.tpl,v 1.116 2007-01-29 16:48:12 darzee Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
@@ -221,6 +221,44 @@
         {else}
           <img border="0" src="img/icons/na_pict.gif" alt="n/a" />
         {/if}
+
+
+      {elseif $cur_field.type eq 'G'}
+      {if $feature_gmap eq 'y'}
+        Google Map : X = {$cur_field.x} ; Y = {$cur_field.y} ; Zoom = {$cur_field.z}
+	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key={$gmap_key}" type="text/javascript">
+	</script>
+	<div id="map" style="width: 500px; height: 400px;border: 1px solid #000;"></div>
+	</div>
+	<script type="text/javascript">
+	//<![CDATA[
+	function load() {literal}{{/literal}
+	  var map = new GMap2(document.getElementById("map"));
+	  map.addControl(new GLargeMapControl());
+	  map.addControl(new GMapTypeControl());
+	  map.addControl(new GScaleControl());
+	  map.setCenter(new GLatLng({$cur_field.y}, {$cur_field.x}), {$cur_field.z});
+
+	  map.addOverlay(new GMarker(new GLatLng({$cur_field.y},{$cur_field.x})));
+
+/*	  GEvent.addListener(map, "zoomend", function(gold, gnew) {literal}{{/literal}
+	    document.getElementById('defz').value = gnew;
+	    document.getElementById('pointz').value = gnew;
+	  {literal}});{/literal}
+
+	  GEvent.addListener(map, "moveend", function() {literal}{{/literal}
+	    document.getElementById('defx').value = map.getCenter().x;
+	    document.getElementById('defy').value = map.getCenter().y;
+	  {literal}});{/literal}
+*/
+	{literal}}{/literal}
+	load();
+	//]]>
+	window.onload=load;
+	</script>
+	{else}
+	  {tr}Google Maps is not enabled.{/tr}
+	{/if}
 
 
       {elseif $cur_field.type eq 'U'}
@@ -586,6 +624,10 @@ style="background-image:url('img/flags/{$flag}.gif');background-repeat:no-repeat
 
 {elseif $cur_field.type eq 'U'}
 <input type="text" name="ins_{$cur_field.id}" value="{$cur_field.value}" />
+
+{elseif $cur_field.type eq 'G'}
+<input type="text" name="ins_{$cur_field.id}" value="{$cur_field.value}" />
+<a href="tiki-gmap_locator.php?for=item&amp;itemId={$itemId}&amp;trackerId={$trackerId}&amp;fieldId={$cur_field.id}">{tr}Google Map Locator{/tr}</a>
 
 
 {elseif $cur_field.type eq 'j'}
