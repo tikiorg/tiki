@@ -73,7 +73,6 @@ if (isset($_REQUEST['for'])) {
 	  $xyz = $trklib->get_item_value($_REQUEST['trackerId'],$_REQUEST['itemId'],$_REQUEST['fieldId']);
 	  $first_comma=strpos($xyz,',');
 	  $second_comma=strpos($xyz,',',$first_comma+1);
-	  echo "$xyz $first_comma $second_comma";
 	  if(!$second_comma){
 	    $second_comma=strlen($xyz);
 	    $xyz.=",11";
