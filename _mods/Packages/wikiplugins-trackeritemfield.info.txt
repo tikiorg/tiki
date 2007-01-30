@@ -2,13 +2,15 @@ contributor:
 $Author: sylvieg $
 
 revision: 
-$Revision: 1.1 $
+$Revision: 1.2 $
 
 lastmodif:
-$Date: 2007-01-23 21:10:36 $
+$Date: 2007-01-30 14:25:43 $
 
 files: 
 wiki-plugins/trackeritemfield/wiki-plugins/wikiplugin_trackeritemfield.php lib/wiki-plugins/wikiplugin_trackeritemfield.php
+wiki-plugins/trackeritemfield/smarty_tiki/block.itemfield.php
+lib/smarty_tiki/block.tempfield.php
 
 author:
 sylvieg
@@ -21,4 +23,4 @@ Shows the content of a tracker item field or the wiki text of the plugin if
 the tracker item field is set and not empty. If itemId is not set, will test
 the user tracker. test default is 0(disply mode and not test mode)
 {TRACKERITEMFIELD(itemId=>1, fieldId=>1, test=>1|0)}Wiki text{TRACKERITEMFIELD}
-
+Exists also a smarty block version
