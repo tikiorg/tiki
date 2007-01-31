@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker_item.tpl,v 1.116 2007-01-29 16:48:12 darzee Exp $ *}
+{* $Id: tiki-view_tracker_item.tpl,v 1.117 2007-01-31 16:53:19 darzee Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
@@ -252,7 +252,7 @@
 	  {literal}});{/literal}
 */
 	{literal}}{/literal}
-	load();
+//	load();
 	//]]>
 	window.onload=load;
 	</script>

@@ -69,7 +69,8 @@ function load() {literal}{{/literal}
   {literal}});{/literal}
 
 {literal}}{/literal}
-load();
+//load();
 //]]>
+window.onload=load;
 </script>
 {/if}
