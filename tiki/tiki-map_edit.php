@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.24 2007-01-22 03:03:06 franck Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.25 2007-01-31 02:20:43 franck Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -220,7 +220,7 @@ if ($tiki_p_map_edit != 'y') {
 		die;
 	}
 	if (filesize($mapfile)>0) {
-		$pagedata = fread($fp, filesize($mapfile));
+		$pagedata = file_get_contents($mapfile,FALSE);
 		fclose ($fp);
 	} else {
 		$pagedata="";
