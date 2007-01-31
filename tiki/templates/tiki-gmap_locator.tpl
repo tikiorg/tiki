@@ -73,8 +73,9 @@ function load() {literal}{{/literal}
   {literal}});{/literal}
 
 {literal}}{/literal}
-load();
+//load();
 //]]>
+window.onload=load;
 </script>
 {else}
 Google Maps is not enabled.
