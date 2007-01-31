@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/blogs/bloglib.php,v 1.52 2006-12-22 04:11:49 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/blogs/bloglib.php,v 1.53 2007-01-31 14:26:01 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -230,7 +230,7 @@ class BlogLib extends TikiLib {
 		global $sender_email;
 		$data = strip_tags($data, '<a><b><i><h1><h2><h3><h4><h5><h6><ul><li><ol><br><p><table><tr><td><img><pre>');
 		$now = date("U");
-		$query = "insert into `tiki_blog_posts`(`blogId`,`data`,`created`,`user`,`title`,`priv`) values(?,?,?,?,?,?,?,?)";
+		$query = "insert into `tiki_blog_posts`(`blogId`,`data`,`created`,`user`,`title`,`priv`) values(?,?,?,?,?,?)";
 		$result = $this->query($query,array((int) $blogId,$data,(int) $now,$user,$title,$priv));
 		$query = "select max(`postId`) from `tiki_blog_posts` where `created`=? and `user`=?";
 		$id = $this->getOne($query,array((int) $now,$user));
