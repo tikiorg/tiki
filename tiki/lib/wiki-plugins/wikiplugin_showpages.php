@@ -1,7 +1,7 @@
 <?php
 
 /**
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_showpages.php,v 1.4 2005-05-18 11:02:00 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_showpages.php,v 1.5 2007-01-31 23:52:15 fr_rodo Exp $
  *
  * SHOWPAGES plugin
  * Displays wiki pages that match a supplied pagename criteria.
@@ -19,11 +19,11 @@
  *
  * @package TikiWiki
  * @subpackage TikiPlugins
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 function wikiplugin_showpages_help() {
-	return tra("List wiki pages").":<br />~np~{SHOWPAGES(find=>criteria [, max=>qty])/}~/np~";
+	return tra("List wiki pages").":<br />~np~{SHOWPAGES(find=>criteria [, max=>qty] [, display=>name|desc])/}~/np~";
 }
 
 function wikiplugin_showpages($data, $params) {
@@ -38,19 +38,27 @@ function wikiplugin_showpages($data, $params) {
 		$max = -1;
 	}
 
+	if (!isset($display) || (strpos($display,'name') === false && strpos($display,'desc') === false)) {
+		$display = 'name|desc';
+	}
+
 	$data = $tikilib->list_pages(0, $max, 'pageName_asc', $find);
 
 	$text = '';
 
 	foreach ($data["data"] as $page) {
-		$text .= "<a href=\"tiki-index.php?page=".$page["pageName"]."\" title=\"".tra("Last modified by")." ".$page["user"]."\" class=\"wiki\">".$page["pageName"]."</a>";
-		if (isset($feature_wiki_description) && $feature_wiki_description == 'y') {
-			$text .= " - ".$tikilib->page_exists_desc($page["pageName"]);
+		if (isset($feature_wiki_description) && $feature_wiki_description == 'y' && strpos($display,'desc') !== false) {
+			$desc = $tikilib->page_exists_desc($page["pageName"]);
+		} else {
+			$desc = '';
 		}
+		$text .= "<a href=\"tiki-index.php?page=".$page["pageName"]."\" title=\"".tra("Last modified by")." ".$page["user"]."\" class=\"wiki\">";
+		$text .= (strpos($display,'name') !== false || strlen($desc) == 0 ? $page["pageName"] : $desc);
+		$text .= "</a>";
+		$text .= (strpos($display,'name') !== false && $desc !== $page["pageName"] && strlen($desc) > 0 ? " - $desc" : "");
 		$text .= "<br />";
-
 	}
-	
+
 	return $text;
 }
 
