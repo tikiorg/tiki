@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.25 2007-01-29 22:02:42 awolfff Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.26 2007-01-31 11:36:50 darzee Exp $ *}
 {* Module layout with controls *}
 
 <div class="box box-{$module_name|escape}">
@@ -44,5 +44,8 @@
   setsectionstate('mod-{$module_name|escape}','{$module_dstate}', 'mo.png');
 </script>
 {/if}
+</div>
+<div class="box-footer">
+
 </div>
 </div>
