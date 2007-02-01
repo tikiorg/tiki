@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.95 2007-02-01 18:35:35 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.96 2007-02-01 20:18:32 sylvieg Exp $
  *
  * \brief Categories support class
  *
@@ -294,7 +294,7 @@ class CategLib extends ObjectLib {
 
 	function list_category_objects($categId, $offset, $maxRecords, $sort_mode='pageName_asc', $type='', $find='', $deep=false, $and=false) {
 	global $trklib;require_once('lib/trackers/trackerlib.php');
-	
+	global $userlib;
 	    
 	    // Build the condition to restrict which categories objects must be in to be returned.
 	    $join = '';
@@ -370,13 +370,15 @@ class CategLib extends ObjectLib {
 		}
 
 		$allowField = preg_replace("/OR $/",") ",$allowField);
-		$allowField .= " AND u.`groupName` IN (''";
-		
-		foreach ($groupList as $grp) {
-		    $bindAllow[] = $grp;
-		    $allowField .= ",?";
+		if (!$userlib->user_has_permission($user, 'tiki_p_admin')) { // do not filter on group if admin
+			$allowField .= " AND u.`groupName` IN (''";	
+			foreach ($groupList as $grp) {
+		    	$bindAllow[] = $grp;
+		    	$allowField .= ",?";
+			}
+			$where .= ')';
 		}
-		$where .= ")) OR (($allowField )))";
+		$where .= ") OR (($allowField )))";
 
 		$bindVars = array_merge($bindWhere, $bindAllow);
 
