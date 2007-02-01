@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.109 2007-01-29 16:48:11 darzee Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.110 2007-02-01 08:35:21 hangerman Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -405,13 +405,13 @@ foreach($xfields["data"] as $i=>$array) {
 		        
                                   global $multilinguallib;
                                   include_once('lib/multilingual/multilinguallib.php');
-                                  $available_languages=$multilinguallib->getSystemLanguage();
-                                  $smarty->assign('available_languages',$available_languages);
+                                  $multi_languages=$multilinguallib->getSystemLanguage();
+                                  $smarty->assign('multi_languages',$multi_languages);
                                   
                                   $ins_fields["data"][$i]['isMultilingual']='y';
-				            //print_r($available_languages);
+				            //print_r($multi_languages);
 				            $compteur=0;
-				            foreach ($available_languages as $num=>$lang){
+				            foreach ($multi_languages as $num=>$lang){
 				            //Case convert normal -> multilingual
 				            if (!isset($_REQUEST[$ins_id."_".$lang]) && isset($_REQUEST["$fid"]))
 				                $_REQUEST["$fid$lang"]=$_REQUEST["$fid"];
@@ -479,11 +479,11 @@ foreach($xfields["data"] as $i=>$array) {
 		        
                                   global $multilinguallib;
                                   include_once('lib/multilingual/multilinguallib.php');
-                                  $available_languages=$multilinguallib->getSystemLanguage();
-                                  $smarty->assign('available_languages',$available_languages); 
+                                  $multi_languages=$multilinguallib->getSystemLanguage();
+                                  $smarty->assign('multi_languages',$multi_languages); 
                                   $ins_fields["data"][$i]['isMultilingual']='y';
 				            $compteur=0;
-				            foreach ($available_languages as $num=>$lang){
+				            foreach ($multi_languages as $num=>$lang){
 				            //Case convert normal -> multilingual
 				            if (!isset($_REQUEST[$ins_id."_".$lang]) && isset($_REQUEST["$fid"]))
 				                $_REQUEST["$fid$lang"]=$_REQUEST["$fid"];
@@ -785,11 +785,11 @@ if ($_REQUEST["itemId"]) {
                                   
                                             global $multilinguallib;
                                             include_once('lib/multilingual/multilinguallib.php');
-                                            $available_languages=$multilinguallib->getSystemLanguage();
-                                            $smarty->assign('available_languages',$available_languages); 
+                                            $multi_languages=$multilinguallib->getSystemLanguage();
+                                            $smarty->assign('multi_languages',$multi_languages); 
                                             $ins_fields["data"][$i]['isMultilingual']='y';
 				            $compteur=0;
-				            foreach ($available_languages as $num=>$lang){
+				            foreach ($multi_languages as $num=>$lang){
 				            //Case convert normal -> multilingual
 				            if (!isset($info["$fid$lang"]) && isset($info["$fid"]))
 				                $info["$fid$lang"]=$info["$fid"];

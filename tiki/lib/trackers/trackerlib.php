@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.164 2007-01-29 16:48:11 darzee Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.165 2007-02-01 08:35:21 hangerman Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -436,9 +436,9 @@ class TrackerLib extends TikiLib {
 		if ($this->is_multilingual($fieldId) == 'y') { 
                 global $multilinguallib;
                 include_once('lib/multilingual/multilinguallib.php');
-                $available_languages=$multilinguallib->getSystemLanguage();
+                $multi_languages=$multilinguallib->getSystemLanguage();
                 $cache = md5('trackerfield'.$fieldId.$status.$language);
-                }else unset($available_languages);
+                }else unset($multi_languages);
                 
 		
 		if (!$cachelib->isCached($cache)) {
@@ -873,8 +873,8 @@ class TrackerLib extends TikiLib {
 				 
                                 global $multilinguallib;
                                 include_once('lib/multilingual/multilinguallib.php');
-                                if (!isset($available_languages))
-                                $available_languages=$multilinguallib->getSystemLanguage();
+                                if (!isset($multi_languages))
+                                $multi_languages=$multilinguallib->getSystemLanguage();
                               
                 
 				  foreach ($ins_fields["data"][$i]['lingualvalue'] as $linvalue) 
@@ -1241,12 +1241,12 @@ class TrackerLib extends TikiLib {
 				} elseif (isset($f['type']) &&  ($f['type'] == 'a' || $f['type'] == 't') && ($this->is_multilingual($f['fieldId']) == 'y')) {
                                   global $multilinguallib;
                                   include_once('lib/multilingual/multilinguallib.php');
-                                  if (!isset($available_languages))
-                                  $available_languages=$multilinguallib->getSystemLanguage();
+                                  if (!isset($multi_languages))
+                                  $multi_languages=$multilinguallib->getSystemLanguage();
 				    //Check recipient
 				    if (isset($f['lingualvalue']) ) {
 				        foreach ($f['lingualvalue'] as $val)
-				        foreach ($available_languages as $num=>$lang)
+				        foreach ($multi_languages as $num=>$lang)
 				            //Check if trad is empty
 				            if (!isset($val['lang']) ||!isset($val['value']) ||(($val['lang']==$lang) && strlen($val['value'])==0))
 				            $mandatory_fields[] = $f;
