@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.65 2007-01-17 14:55:53 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.66 2007-02-01 21:12:22 franck Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -33,8 +33,13 @@ function batchImportUsers() {
 		$smarty->display("error.tpl");
 		die;
 	}
+	if ($fields[0]!="login" && $fields[0]!="password" && $fields[0]!="email" && $fields[0]!="groups") {
+		$smarty->assign('msg', tra("The file does not have the required header:")." login, email, password, groups");
+		$smarty->display("error.tpl");
+		die;	
+	}	
+	$data = @fgetcsv($fhandle, 1000);		
 	while (!feof($fhandle)) {
-		$data = fgetcsv($fhandle, 1000);
 		$temp_max = count($fields);
 		for ($i = 0; $i < $temp_max; $i++) {
 			if ($fields[$i] == "login" && function_exists("mb_detect_encoding") && mb_detect_encoding($data[$i], "ASCII, UTF-8, ISO-8859-1") ==  "ISO-8859-1") {
@@ -43,6 +48,7 @@ function batchImportUsers() {
 			@$ar[$fields[$i]] = $data[$i];
 		}
 		$userrecs[] = $ar;
+		$data = fgetcsv($fhandle, 1000);
 	}
 	fclose ($fhandle);
 	if (!is_array($userrecs)) {
