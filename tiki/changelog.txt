@@ -17,7 +17,8 @@ Use the following tags to distinguish changes :
 * -[DB] for changes in the database
 when possible, it's also nice to indicate what feature is concerned by 
 the change.
-
+---------------------------------------------------------------------
+Version 1.10 
 
 ----------------------------------------------------------------------
 Version 1.9.7
