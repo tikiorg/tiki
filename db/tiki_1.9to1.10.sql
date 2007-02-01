@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.134 2007-01-16 14:45:56 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.135 2007-02-01 08:36:14 hangerman Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -829,3 +829,5 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 ALTER TABLE tiki_directory_sites ADD KEY(isValid);
 ALTER TABLE tiki_directory_sites ADD KEY(url);
 
+#02/01/2007 mkalbere
+ALTER TABLE `tiki_tracker_item_fields` ADD FULLTEXT (value);
