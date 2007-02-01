@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.114 2007-02-01 08:35:21 hangerman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.115 2007-02-01 16:51:38 hangerman Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -366,16 +366,16 @@ for ($i = 0; $i < $temp_max; $i++) {
                                   
                                   $ins_fields["data"][$i]['isMultilingual']='y';
 				            $compteur=0;
-				            foreach ($multi_languages as $num=>$lang){
+				            foreach ($multi_languages as $num=>$tmplang){
 				            //Case convert normal -> multilingual
-				            if (!isset($_REQUEST[$ins_id."_".$lang]) && isset($_REQUEST["$ins_id"]))
-				                $_REQUEST[$ins_id."_".$lang]=$_REQUEST["$ins_id"];
-				            $fields["data"][$i]["lingualvalue"][$num]["lang"] = $lang;
-				            if (isset($_REQUEST[$ins_id."_".$lang]))
-				                $fields["data"][$i]["lingualvalue"][$num]["value"] =     $_REQUEST[$ins_id."_".$lang];
-				            $fields["data"][$i]["lingualpvalue"][$num]["lang"] = $lang;
-				            if (isset($_REQUEST[$ins_id."_".$lang]))
-				                $fields["data"][$i]["lingualpvalue"][$num]["value"] =     $tikilib->parse_data(htmlspecialchars($_REQUEST[$ins_id."_".$lang]));
+				            if (!isset($_REQUEST[$ins_id."_".$tmplang]) && isset($_REQUEST["$ins_id"]))
+				                $_REQUEST[$ins_id."_".$tmplang]=$_REQUEST["$ins_id"];
+				            $fields["data"][$i]["lingualvalue"][$num]["lang"] = $tmplang;
+				            if (isset($_REQUEST[$ins_id."_".$tmplang]))
+				                $fields["data"][$i]["lingualvalue"][$num]["value"] =     $_REQUEST[$ins_id."_".$tmplang];
+				            $fields["data"][$i]["lingualpvalue"][$num]["lang"] = $tmplang;
+				            if (isset($_REQUEST[$ins_id."_".$tmplang]))
+				                $fields["data"][$i]["lingualpvalue"][$num]["value"] =     $tikilib->parse_data(htmlspecialchars($_REQUEST[$ins_id."_".$tmplang]));
 					    }
 					 $ins_fields["data"][$i]["lingualpvalue"]=$fields["data"][$i]["lingualpvalue"];
 					     $ins_fields["data"][$i]["lingualvalue"]=$fields["data"][$i]["lingualvalue"];

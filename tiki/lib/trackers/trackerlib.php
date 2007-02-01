@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.165 2007-02-01 08:35:21 hangerman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.166 2007-02-01 16:51:38 hangerman Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1246,9 +1246,9 @@ class TrackerLib extends TikiLib {
 				    //Check recipient
 				    if (isset($f['lingualvalue']) ) {
 				        foreach ($f['lingualvalue'] as $val)
-				        foreach ($multi_languages as $num=>$lang)
+				        foreach ($multi_languages as $num=>$tmplang)
 				            //Check if trad is empty
-				            if (!isset($val['lang']) ||!isset($val['value']) ||(($val['lang']==$lang) && strlen($val['value'])==0))
+				            if (!isset($val['lang']) ||!isset($val['value']) ||(($val['lang']==$tmplang) && strlen($val['value'])==0))
 				            $mandatory_fields[] = $f;
 				      
 				    }else 
