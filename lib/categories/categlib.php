@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.94 2007-01-21 00:42:02 fr_rodo Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.95 2007-02-01 18:35:35 sylvieg Exp $
  *
  * \brief Categories support class
  *
@@ -68,7 +68,7 @@ class CategLib extends ObjectLib {
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
-			if (in_array($res["categId"], $cats)) {
+		  if (!empty($cats) && in_array($res["categId"], $cats)) {
 				$res["incat"] = 'y';
 			} else {
 				$res["incat"] = 'n';
