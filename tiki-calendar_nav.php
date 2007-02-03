@@ -66,7 +66,7 @@ $smarty->assign('focusdate', $focusdate);
 $smarty->assign('focuscell', $focuscell);
 $now = gmmktime(gmdate('G'), date('i'), date('s'), date('n'), date('d'), date('Y')); /* server date */
 $smarty->assign('now', $now); /* server date */
-$smarty->assign('nowUser', $dc->getDisplayDateFromServerDate($now)); /* user time */
+$smarty->assign('nowUser', $now); /* user time */
 
 
 $weekdays = range(0, 6);

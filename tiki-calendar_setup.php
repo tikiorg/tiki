@@ -7,14 +7,13 @@ if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
 }
 
 $trunc = "20"; // put in a pref, number of chars displayed in cal cells
-$dc = $tikilib->get_date_converter($user);
 
 if (isset($_REQUEST["todate"]) && $_REQUEST['todate']) {
 	$_SESSION['CalendarFocusDate'] = $_REQUEST['todate'];
 } elseif (isset($_SESSION['CalendarFocusDate']) && $_SESSION['CalendarFocusDate']) {
 	$_REQUEST["todate"] = $_SESSION['CalendarFocusDate'];
 } else {
-	$focusdate = $dc->getDisplayDateFromServerDate(gmmktime(gmdate('G'),date('i'),date('s'), date('m'), date('d'), date('Y'))); /* user date */
+	$focusdate = gmmktime(gmdate('G'),gmdate('i'),gmdate('s'),gmdate('m'),gmdate('d'),gmdate('Y')); /* user date */
 	$_SESSION['CalendarFocusDate'] = $focusdate;
 	$_REQUEST["todate"] = $_SESSION['CalendarFocusDate'];
 }
