@@ -815,7 +815,7 @@ class UsersLib extends TikiLib {
 	    //print("challenge: ".$_SESSION["challenge"]." challenge: $challenge<br />");
 	    //print("response : $response<br />");
 	    if ($response == md5($user . $hash . $_SESSION["challenge"])) {
-		$t = date("U");
+		$t = gmdate("U");
 
 		// Check
 		$current = $this->getOne("select `currentLogin` from `users_users` where `login`=?", array($user));
@@ -849,7 +849,7 @@ class UsersLib extends TikiLib {
 
     // update the lastlogin status on this user
     function update_lastlogin($user) {
-	$t = date("U");
+	$t = gmdate("U");
 
 	// Check
 	$current = $this->getOne("select `currentLogin` from `users_users` where `login`= ?", array($user));
@@ -941,7 +941,7 @@ class UsersLib extends TikiLib {
 
 function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $find = '', $initial = '', $inclusion=false, $group='', $email='') {
 	
-	$now = date('U');
+	$now = gmdate('U');
 	$mid = '';
 	$bindvars = array();
 	$mmid = '';
@@ -1410,7 +1410,7 @@ function get_included_groups($group) {
 	}
 	$res["groups"] = $groups;
 	if (isset($res['registrationDate'])) {
-		$res["age"] = date('U') - $res['registrationDate'];
+		$res["age"] = gmdate('U') - $res['registrationDate'];
 	} else {
 		$res['age'] = 0;
 	}
@@ -1544,7 +1544,7 @@ function get_included_groups($group) {
 	$res = $result->fetchRow();
 	$res["groups"] = $this->get_user_groups($res['login']);
 	if (isset($res['registrationDate']))
-		$res["age"] = date('U') - $res['registrationDate'];
+		$res["age"] = gmdate('U') - $res['registrationDate'];
 	return $res;
     }
 
@@ -1890,7 +1890,7 @@ function get_included_groups($group) {
 	if ($feature_clear_passwords == 'n')
 	    $pass = '';
 
-	$now = date("U");
+	$now = gmdate("U");
 	$new_pass_due = $now + (60 * 60 * 24 * $pass_due);
 	$query = "insert into
 	    `users_users`(`login`, `password`, `email`, `provpass`,
@@ -2006,7 +2006,7 @@ function get_included_groups($group) {
 	function create_user_cookie($user) {
 		global $remembertime;
 		$hash = md5($_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT']);
-		$hash.= ".". (date('U') + $remembertime);
+		$hash.= ".". (gmdate('U') + $remembertime);
 		$this->set_user_preference($user,'cookie',$hash);
 		return $hash;
 	}
@@ -2017,7 +2017,7 @@ function get_included_groups($group) {
 			$query = 'select `user` from `tiki_user_preferences` where `prefName`=? and `value`=?';
 			$user = $this->getOne($query, array('cookie',$hash));
 			if ($user) {
-				if ($expire < date('U')) {
+				if ($expire < gmdate('U')) {
 					$query = 'delete from `tiki_user_preferences` where `prefName`=? and `value`=?';
 					$user = $this->query($query, array('cookie',$hash));
 					return false;
@@ -2047,7 +2047,7 @@ function get_included_groups($group) {
     	
 	$due = $this->getOne("select `pass_due`  from `users_users` where " . $this->convert_binary(). " `login`=?", array($user));
 
-	if ($due <= date("U"))
+	if ($due <= gmdate("U"))
 	    return true;
 
 	return false;
@@ -2057,7 +2057,7 @@ function get_included_groups($group) {
 		$pass = $this->genPass();
 		// Note that tiki-generated passwords are due inmediatley
 		// Note: ^ not anymore. old pw is usable until the URL in the password reminder mail is clicked
-		$now = date("U");
+		$now = gmdate("U");
 		$query = "update `users_users` set `provpass` = ? where " . $this->convert_binary() . " `login`=?";
 		$result = $this->query($query, array($pass, $user));
 		return $pass;
@@ -2069,7 +2069,7 @@ function get_included_groups($group) {
 		$pass = $this->getOne($query, array($user));
 		if (($pass <> '') && ($actpass == md5($pass))) {
 			$hash = $this->hash_pass($user, $pass);
-			$now = date("U");
+			$now = gmdate("U");
 			$query = "update `users_users` set `password`=?, `hash`=?, `pass_due`=? where " . $this->convert_binary() . " `login`=?";
 			$result = $this->query($query, array("", $hash, (int)$now, $user));
 			return $pass;
@@ -2083,7 +2083,7 @@ function get_included_groups($group) {
 	global $feature_clear_passwords;
 
 	$hash = $this->hash_pass($user, $pass);
-	$now = date("U");
+	$now = gmdate("U");
 	$new_pass_due = $now + (60 * 60 * 24 * $pass_due);
 
 	if ($feature_clear_passwords == 'n') {

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/blogs/bloglib.php,v 1.53 2007-01-31 14:26:01 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/blogs/bloglib.php,v 1.54 2007-02-03 20:47:20 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -84,7 +84,7 @@ class BlogLib extends TikiLib {
 
 	function replace_blog($title, $description, $user, $public, $maxPosts, $blogId, $heading, $use_title, $use_find,
 		$allow_comments, $show_avatar) {
-		$now = date("U");
+		$now = gmdate("U");
 
 		if ($blogId) {
 			$query = "update `tiki_blogs` set `title`=? ,`description`=?,`user`=?,`public`=?,`lastModif`=?,`maxPosts`=?,`heading`=?,`use_title`=?,`use_find`=?,`allow_comments`=?,`show_avatar`=? where `blogId`=?";
@@ -229,7 +229,7 @@ class BlogLib extends TikiLib {
 		global $feature_user_watches;
 		global $sender_email;
 		$data = strip_tags($data, '<a><b><i><h1><h2><h3><h4><h5><h6><ul><li><ol><br><p><table><tr><td><img><pre>');
-		$now = date("U");
+		$now = gmdate("U");
 		$query = "insert into `tiki_blog_posts`(`blogId`,`data`,`created`,`user`,`title`,`priv`) values(?,?,?,?,?,?)";
 		$result = $this->query($query,array((int) $blogId,$data,(int) $now,$user,$title,$priv));
 		$query = "select max(`postId`) from `tiki_blog_posts` where `created`=? and `user`=?";
@@ -252,7 +252,7 @@ class BlogLib extends TikiLib {
 				$smarty->assign('mail_post_title', $title);
 				$smarty->assign('mail_blogid', $blogId);
 				$smarty->assign('mail_postid', $id);
-				$smarty->assign('mail_date', date("U"));
+				$smarty->assign('mail_date', gmdate("U"));
 				$smarty->assign('mail_user', $user);
 				$smarty->assign('mail_data', $data);
 				global $feature_contribution;
@@ -377,7 +377,7 @@ class BlogLib extends TikiLib {
 	function add_blog_activity($blogId) {
 
 		//Caclulate activity, update tiki_blogs and purge activity table
-		$today = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
+		$today = gmmktime(0, 0, 0, gmdate("m"), date("d"), date("Y"));
 
 		$day0 = $today - (24 * 60 * 60);
 		$day1 = $today - (2 * 24 * 60 * 60);

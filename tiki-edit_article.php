@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.60 2007-01-11 01:40:37 fmk_ca Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.61 2007-02-03 20:47:14 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -41,7 +41,7 @@ if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0) {
 }
 
 $smarty->assign('allowhtml', 'on');
-$publishDate = date("U");
+$publishDate = gmdate("U");
 $cur_time = getdate();
 $expireDate = mktime ($cur_time["hours"], $cur_time["minutes"], 0, $cur_time["mon"], $cur_time["mday"]+365, $cur_time["year"]);
 $dc = &$tikilib->get_date_converter($user);
@@ -147,13 +147,13 @@ $smarty->assign('preview', 0);
 if (isset($_REQUEST["preview"])) {
 	# convert from the displayed 'site' time to 'server' time
 	if (isset($_REQUEST["publish_Hour"])) {
-	$publishDate = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["publish_Hour"], $_REQUEST["publish_Minute"],
+	$publishDate = $dc->getServerDateFromDisplayDate(gmmktime($_REQUEST["publish_Hour"], $_REQUEST["publish_Minute"],
 		0, $_REQUEST["publish_Month"], $_REQUEST["publish_Day"], $_REQUEST["publish_Year"]));
 	} else {
-		$publishDate = date('U');
+		$publishDate = gmdate('U');
 	}
 	if (isset($_REQUEST["expire_Hour"])) {
-	$expireDate = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"],
+	$expireDate = $dc->getServerDateFromDisplayDate(gmmktime($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"],
 		0, $_REQUEST["expire_Month"], $_REQUEST["expire_Day"], $_REQUEST["expire_Year"]));
 	} else {
 		$expireDate = $publishDate;
@@ -282,16 +282,16 @@ if (isset($_REQUEST["save"])) {
 
 	# convert from the displayed 'site' time to 'server' time
 	if (isset($_REQUEST["publish_Hour"])) {
-	$publishDate = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["publish_Hour"], $_REQUEST["publish_Minute"],
+	$publishDate = $dc->getServerDateFromDisplayDate(gmmktime($_REQUEST["publish_Hour"], $_REQUEST["publish_Minute"],
 		0, $_REQUEST["publish_Month"], $_REQUEST["publish_Day"], $_REQUEST["publish_Year"]));
 	} else {
-		$publishDate = date('U');
+		$publishDate = gmdate('U');
 	}
 	if (isset($_REQUEST["expire_Hour"])) {
-	$expireDate = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"],
+	$expireDate = $dc->getServerDateFromDisplayDate(gmmktime($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"],
 		0, $_REQUEST["expire_Month"], $_REQUEST["expire_Day"], $_REQUEST["expire_Year"]));
 	} else {
-		$expireDate = date('U');
+		$expireDate = gmdate('U');
 	}
 
 	if (isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"] == "on") {
@@ -387,7 +387,7 @@ if (isset($_REQUEST["save"])) {
 }
 
 // Set date to today before it's too late
-$_SESSION["thedate"] = date("U");
+$_SESSION["thedate"] = gmdate("U");
 
 // Armar un select con los topics
 $topics = $artlib->list_topics();

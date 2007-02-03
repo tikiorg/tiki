@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.55 2006-12-23 15:15:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.56 2007-02-03 20:47:14 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -16,7 +16,7 @@ global $modseparateanon, $user, $userlib, $user_assigned_modules, $tiki_p_config
 global $language, $modallgroups, $smarty, $tikidomain, $tikilib, $section;
 
 clearstatcache();
-$now = date("U");
+$now = gmdate("U");
 
 if ($user != 'admin') {
 	$user_groups = $userlib->get_user_groups($user);

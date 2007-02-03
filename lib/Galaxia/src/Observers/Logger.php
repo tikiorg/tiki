@@ -24,7 +24,7 @@ class Logger extends Observer {
 	function notify($event,$msg) {
 		// Add a line to the log file.
 		$fp = fopen($this->_filename,"a");
-		$date = date("[d/m/Y h:i:s]");
+		$date = gmdate("[d/m/Y h:i:s]");
 		$msg=trim($msg);
 		fputs($fp,$date." ".$msg."\n");
 		fclose($fp);

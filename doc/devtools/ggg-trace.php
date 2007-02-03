@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/doc/devtools/ggg-trace.php,v 1.4 2005-05-18 10:59:14 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/doc/devtools/ggg-trace.php,v 1.5 2007-02-03 20:47:16 nyloth Exp $
 //
 // George G. Geller
 // January 24, 2004
@@ -31,9 +31,9 @@ class ggg_trace
     $this->fp = fopen($nameStr,"a");
     fwrite($this->fp,"\n");
     // e.g. 20031231 17:00:20
-    fwrite($this->fp,"*".date("Ymd G:i:s")."*Starting*****************************************************\n");
+    fwrite($this->fp,"*".gmdate("Ymd G:i:s")."*Starting*****************************************************\n");
 
-    // print date("Ymd G:i:s<br>",time()); // e.g. 20031231 17:00:20
+    // print gmdate("Ymd G:i:s<br>",time()); // e.g. 20031231 17:00:20
   }
   function out($outStr="")
   {
@@ -73,7 +73,7 @@ class ggg_trace
   }
   function _ggg_trace()
   {
-    fwrite($this->fp,"*".date("Ymd G:i:s")."*Finishing****************************************************\n");
+    fwrite($this->fp,"*".gmdate("Ymd G:i:s")."*Finishing****************************************************\n");
     fclose($this->fp);
   }
 }

@@ -22,8 +22,8 @@ class TikiCalendarLib extends TikiLib {
 		//header('Content-type: text/plain');var_dump($result);die;
 				while ($res = $result->fetchRow()) {
 					$res['lastModif'] = $dc->getDisplayDateFromServerDate($res['lastModif']); /* server time -> user time */
-					$dstart2 = mktime(0, 0, 0, date("m", $res['lastModif']), date("d", $res['lastModif']), date("Y", $res['lastModif']));
-					$tstart2 = date("Hi", $res["lastModif"]);
+					$dstart2 = gmmktime(0, 0, 0, gmdate("m", $res['lastModif']), date("d", $res['lastModif']), date("Y", $res['lastModif']));
+					$tstart2 = gmdate("Hi", $res["lastModif"]);
 					$quote = "<i>" . tra("by"). " " . $res["user"] . "</i><br />" . str_replace('"', "'", $res["comment"]);
 					$ret["$dstart2"][] = array(
 						"visible" => "y",
@@ -35,7 +35,7 @@ class TikiCalendarLib extends TikiLib {
 						"type" => "wiki",
 						"url" => "tiki-index.php?page=" . $res['object'],
 						"name" => $res['object'] . " " . tra($res["action"]),
-						"head" => "<b>" . date("H:i", $res["lastModif"]). "</b> " . tra("in"). " <b>".str_replace("\n|\r", "", addslashes($tik))."</b>",
+						"head" => "<b>" . gmdate("H:i", $res["lastModif"]). "</b> " . tra("in"). " <b>".str_replace("\n|\r", "", addslashes($tik))."</b>",
 						"description" => str_replace("\n|\r", "", $quote)
 					);
 				}
@@ -45,8 +45,8 @@ class TikiCalendarLib extends TikiLib {
 				$result = $this->query($query,array('wiki page',$tstart,$tstop));
 				while ($res = $result->fetchRow()) {
 					$res['created'] = $dc->getDisplayDateFromServerDate($res['created']); /* server time -> user time */
-					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
-					$tstart = date("Hi", $res["created"]);
+					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
+					$tstart = gmdate("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
 						"visible" => "y",
 						"calitemId" => "",
@@ -57,7 +57,7 @@ class TikiCalendarLib extends TikiLib {
 						"type" => "wiki page",
 						"url" => "tiki-index.php?page=" . urlencode($res["pageName"]). "&amp;comzone=show#comments",
 						"name" => $res["name"],
-						"head" => "<b>" . date("H:i", $res["created"]). "</b> " . tra("in"). " <b>" . $res["pageName"]. "</b>",
+						"head" => "<b>" . gmdate("H:i", $res["created"]). "</b> " . tra("in"). " <b>" . $res["pageName"]. "</b>",
 						"description" => "<i>" . tra("by"). " " . $res["user"] . "</i>"
 					);
 						
@@ -73,8 +73,8 @@ class TikiCalendarLib extends TikiLib {
 
 				while ($res = $result->fetchRow()) {
 					$res['created'] = $dc->getDisplayDateFromServerDate($res['created']); /* server time -> user time */
-					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
-					$tstart = date("Hi", $res["created"]);
+					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
+					$tstart = gmdate("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
 						"visible" => "y",
 						"calitemId" => "",
@@ -85,7 +85,7 @@ class TikiCalendarLib extends TikiLib {
 						"type" => "gal",
 						"url" => "tiki-browse_image.php?galleryId=" . $res["galid"] . "&amp;imageId=" . $res["imageid"],
 						"name" => $res["name"],
-						"head" => "<b>" . date("H:i", $res["created"]). "</b> " . tra("in"). " <b>" . $res["galname"]. "</b>",
+						"head" => "<b>" . gmdate("H:i", $res["created"]). "</b> " . tra("in"). " <b>" . $res["galname"]. "</b>",
 						"description" => tra("new image uploaded by"). " " . $res["user"]
 					);
 				}
@@ -98,8 +98,8 @@ class TikiCalendarLib extends TikiLib {
 
 				while ($res = $result->fetchRow()) {
 					$res['created'] = $dc->getDisplayDateFromServerDate($res['created']); /* server time -> user time */
-					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
-					$tstart = date("Hi", $res["created"]);
+					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
+					$tstart = gmdate("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
 						"visible" => "y",
 						"calitemId" => "",
@@ -110,7 +110,7 @@ class TikiCalendarLib extends TikiLib {
 						"type" => "art",
 						"url" => "tiki-read_article.php?articleId=" . $res["articleId"],
 						"name" => $res["title"],
-						"head" => "<b>" . date("H:i", $res["created"]). "</b> " . tra("in"). " <b>" . $res["topicName"]. "</b>",
+						"head" => "<b>" . gmdate("H:i", $res["created"]). "</b> " . tra("in"). " <b>" . $res["topicName"]. "</b>",
 						"description" => "<i>" . tra("by"). " " . $res["authorName"] . "</i><br />" . str_replace('"', "'", $tikilib->parse_data($res["heading"]))
 					);
 				}
@@ -123,8 +123,8 @@ class TikiCalendarLib extends TikiLib {
 
 				while ($res = $result->fetchRow()) {
 					$res['created'] = $dc->getDisplayDateFromServerDate($res['created']); /* server time -> user time */
-					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
-					$tstart = date("Hi", $res["created"]);
+					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
+					$tstart = gmdate("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
 						"visible" => "y",
 						"calitemId" => "",
@@ -135,7 +135,7 @@ class TikiCalendarLib extends TikiLib {
 						"type" => "blog",
 						"url" => "tiki-view_blog.php?blogId=" . $res["blogid"],
 						"name" => $res["blogname"] . " :: " . $res["postname"],
-						"head" => "<b>" . date( "H:i", $res["created"]). "</b> " . tra("in"). " <b>" . $res["blogname"]. "</b>",
+						"head" => "<b>" . gmdate( "H:i", $res["created"]). "</b> " . tra("in"). " <b>" . $res["blogname"]. "</b>",
 						"description" => "<i>" . tra("by"). " " . $res["user"] . "</i>"
 					);
 				}
@@ -153,8 +153,8 @@ class TikiCalendarLib extends TikiLib {
 
 				while ($res = $result->fetchRow()) {
 					$res['created'] = $dc->getDisplayDateFromServerDate($res['created']); /* server time -> user time */
-					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
-					$tstart = date("Hi", $res["created"]);
+					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
+					$tstart = gmdate("Hi", $res["created"]);
 					if ($res["parentId"] == 0) {
 						$res["parentId"] = $res["threadId"];
 						$anchor = "";
@@ -170,7 +170,7 @@ class TikiCalendarLib extends TikiLib {
 						"type" => "forum",
 						"url" => "tiki-view_forum_thread.php?forumId=" . $res["forumid"]."&amp;comments_parentId=".$res["parentId"].$anchor ,
 						"name" => $res["name"],
-						"head" => "<b>" . date("H:i", $res["created"]). "</b> " . tra("in"). " <b>" . $res["forum"]. "</b>",
+						"head" => "<b>" . gmdate("H:i", $res["created"]). "</b> " . tra("in"). " <b>" . $res["forum"]. "</b>",
 						"description" => "<i>" . tra("by"). " " . $res["user"] . "</i>"
 					);
 						
@@ -184,8 +184,8 @@ class TikiCalendarLib extends TikiLib {
 
 				while ($res = $result->fetchRow()) {
 					$res['created'] = $dc->getDisplayDateFromServerDate($res['created']); /* server time -> user time */
-					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
-					$tstart = date("Hi", $res["created"]);
+					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
+					$tstart = gmdate("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
 						"visible" => "y",
 						"calitemId" => "",
@@ -196,7 +196,7 @@ class TikiCalendarLib extends TikiLib {
 						"type" => "dir",
 						"url" => "tiki-directory_redirect.php?siteId=" . $res["siteId"],
 						"name" => str_replace("'", "", $res["name"]),
-						"head" => "<b>" . date("H:i", $res["created"]). "</b>",
+						"head" => "<b>" . gmdate("H:i", $res["created"]). "</b>",
 						"description" => addslashes($res["url"]). "<br />" . str_replace('"', "'", $res["description"])
 					);
 				}
@@ -209,8 +209,8 @@ class TikiCalendarLib extends TikiLib {
 
 				while ($res = $result->fetchRow()) {
 					$res['created'] = $dc->getDisplayDateFromServerDate($res['created']); /* server time -> user time */
-					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
-					$tstart = date("Hi", $res["created"]);
+					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
+					$tstart = gmdate("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
 						"visible" => "y",
 						"calitemId" => "",
@@ -221,7 +221,7 @@ class TikiCalendarLib extends TikiLib {
 						"type" => "fgal",
 						"url" => "tiki-list_file_gallery.php?galleryId=" . $res["fgalId"],
 						"name" => str_replace("'", "", $res["name"]),
-						"head" => "<b>" . date("H:i", $res["created"]). "</b> " . tra("in"). " <b>" . $res["fgalname"]. "</b>",
+						"head" => "<b>" . gmdate("H:i", $res["created"]). "</b> " . tra("in"). " <b>" . $res["fgalname"]. "</b>",
 						"description" => "<i>" . tra("uploaded by"). " " . addslashes($res["user"]). "</i><br />" . str_replace('"', "'", $res["description"])
 					);
 				}
@@ -234,8 +234,8 @@ class TikiCalendarLib extends TikiLib {
 
 				while ($res = $result->fetchRow()) {
 					$res['created'] = $dc->getDisplayDateFromServerDate($res['created']); /* server time -> user time */
-					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
-					$tstart = date("Hi", $res["created"]);
+					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
+					$tstart = gmdate("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
 						"visible" => "y",
 						"calitemId" => "",
@@ -246,7 +246,7 @@ class TikiCalendarLib extends TikiLib {
 						"type" => "faq",
 						"url" => "tiki-view_faq.php?faqId=" . $res["faqId"],
 						"name" => str_replace("'", "", $res["title"]),
-						"head" => "<b>" . date("H:i", $res["created"]). "</b>",
+						"head" => "<b>" . gmdate("H:i", $res["created"]). "</b>",
 						"description" => str_replace('"', "'", $res["description"])
 					);
 				}
@@ -259,8 +259,8 @@ class TikiCalendarLib extends TikiLib {
 
 				while ($res = $result->fetchRow()) {
 					$res['created'] = $dc->getDisplayDateFromServerDate($res['created']); /* server time -> user time */
-					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
-					$tstart = date("Hi", $res["created"]);
+					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
+					$tstart = gmdate("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
 						"visible" => "y",
 						"calitemId" => "",
@@ -271,7 +271,7 @@ class TikiCalendarLib extends TikiLib {
 						"type" => "quiz",
 						"url" => "tiki-take_quiz.php?quizId=" . $res["quizId"],
 						"name" => str_replace("'", "", $res["name"]),
-						"head" => "<b>" . date("H:i", $res["created"]). "</b>",
+						"head" => "<b>" . gmdate("H:i", $res["created"]). "</b>",
 						"description" => str_replace('"', "'", $res["description"])
 					);
 				}
@@ -284,8 +284,8 @@ class TikiCalendarLib extends TikiLib {
 
 				while ($res = $result->fetchRow()) {
 					$res['created'] = $dc->getDisplayDateFromServerDate($res['created']); /* server time -> user time */
-					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
-					$tstart = date("Hi", $res["created"]);
+					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
+					$tstart = gmdate("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
 						"visible" => "y",
 						"calitemId" => "",
@@ -296,7 +296,7 @@ class TikiCalendarLib extends TikiLib {
 						"type" => "track",
 						"url" => "tiki-view_tracker_item.php?trackerId=" . $res["tracker"] . "&amp;offset=0&amp;sort_mode=created_desc&amp;itemId=" . $res["itemId"],
 						"name" => str_replace("'", "", $res["name"]),
-						"head" => "<b>" . date("H:i", $res["created"]). "</b>",
+						"head" => "<b>" . gmdate("H:i", $res["created"]). "</b>",
 						"description" => tra("new item in tracker")
 					);
 				}
@@ -309,8 +309,8 @@ class TikiCalendarLib extends TikiLib {
 
 				while ($res = $result->fetchRow()) {
 					$res['created'] = $dc->getDisplayDateFromServerDate($res['created']); /* server time -> user time */
-					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
-					$tstart = date("Hi", $res["created"]);
+					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
+					$tstart = gmdate("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
 						"visible" => "y",
 						"calitemId" => "",
@@ -321,7 +321,7 @@ class TikiCalendarLib extends TikiLib {
 						"type" => "surv",
 						"url" => "tiki-take_survey.php?surveyId=" . $res["surveyId"],
 						"name" => str_replace("'", "", $res["name"]),
-						"head" => "<b>" . date("H:i", $res["created"]). "</b>",
+						"head" => "<b>" . gmdate("H:i", $res["created"]). "</b>",
 						"description" => str_replace('"', "'", $res["description"])
 					);
 				}
@@ -336,8 +336,8 @@ class TikiCalendarLib extends TikiLib {
 
 				while ($res = $result->fetchRow()) {
 					$res['day'] = $dc->getDisplayDateFromServerDate($res['day']); /* server time -> user time */
-					$dstart = mktime(0, 0, 0, date("m", $res['day']), date("d", $res['day']), date("Y", $res['day']));
-					$tstart = date("Hi", $res["day"]);
+					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['day']), date("d", $res['day']), date("Y", $res['day']));
+					$tstart = gmdate("Hi", $res["day"]);
 					$ret["$dstart"][] = array(
 						"visible" => "y",
 						"calitemId" => "",
@@ -361,8 +361,8 @@ class TikiCalendarLib extends TikiLib {
 
 				while ($res = $result->fetchRow()) {
 					$res['created'] = $dc->getDisplayDateFromServerDate($res['created']); /* server time -> user time */
-					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
-					$tstart = date("Hi", $res["created"]);
+					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
+					$tstart = gmdate("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
 						"visible" => "y",
 						"calitemId" => "",
@@ -373,7 +373,7 @@ class TikiCalendarLib extends TikiLib {
 						"type" => "chart",
 						"url" => "tiki-view_chart.php?chartId=" . $res["chartId"],
 						"name" => str_replace("'", "", $res["name"]),
-						"head" => "<b>" . date("H:i", $res["created"]). "</b>",
+						"head" => "<b>" . gmdate("H:i", $res["created"]). "</b>",
 						"description" => str_replace('"', "'", $res["description"])
 					);
 				}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.53 2006-12-04 09:22:11 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.54 2007-02-03 20:47:15 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -85,7 +85,7 @@ if (!isset($_REQUEST["articleId"])) {
 		}
 	}
 
-	if (($article_data["publishDate"] > date("U")) && ($tiki_p_admin != 'y' && $tiki_p_admin_cms !='y') && ($article_data["type"] != 'Event')) {
+	if (($article_data["publishDate"] > gmdate("U")) && ($tiki_p_admin != 'y' && $tiki_p_admin_cms !='y') && ($article_data["type"] != 'Event')) {
 		$smarty->assign('msg', tra("Article is not published yet"));
 
 		$smarty->display("error.tpl");

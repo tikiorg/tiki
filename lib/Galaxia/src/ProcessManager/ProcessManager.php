@@ -60,7 +60,7 @@ class ProcessManager extends BaseManager {
     $out.= '  <version>'.htmlspecialchars($proc_info['version']).'</version>'."\n";
     $out.= '  <isActive>'.htmlspecialchars($proc_info['isActive']).'</isActive>'."\n";
     $out.='   <description>'.htmlspecialchars($proc_info['description']).'</description>'."\n";
-    $out.= '  <lastModif>'.date("d/m/Y [h:i:s]",$proc_info['lastModif']).'</lastModif>'."\n";
+    $out.= '  <lastModif>'.gmdate("d/m/Y [h:i:s]",$proc_info['lastModif']).'</lastModif>'."\n";
     $out.= '  <sharedCode><![CDATA[';
     $fp=fopen(GALAXIA_PROCESSES."/$procname/code/shared.php","r");
     while(!feof($fp)) {
@@ -80,7 +80,7 @@ class ProcessManager extends BaseManager {
       $out.='      <name>'.htmlspecialchars($res['name']).'</name>'."\n";
       $out.='      <type>'.htmlspecialchars($res['type']).'</type>'."\n";
       $out.='      <description>'.htmlspecialchars($res['description']).'</description>'."\n";
-      $out.='      <lastModif>'.date("d/m/Y [h:i:s]",$res['lastModif']).'</lastModif>'."\n";
+      $out.='      <lastModif>'.gmdate("d/m/Y [h:i:s]",$res['lastModif']).'</lastModif>'."\n";
       $out.='      <isInteractive>'.$res['isInteractive'].'</isInteractive>'."\n";
       $out.='      <isAutoRouted>'.$res['isAutoRouted'].'</isAutoRouted>'."\n";
       $out.='	   <expirationTime>'.$res['expirationTime'].'</expirationTime>'."\n";
@@ -270,7 +270,7 @@ class ProcessManager extends BaseManager {
       }
       $actids[$activity['name']] = $am->_get_activity_id_by_name($pid,$activity['name']);
       $actname = $am->_normalize_name($activity['name']);
-      $now = date("U");
+      $now = gmdate("U");
 
       foreach($activity['roles'] as $role) {
         $vars = Array(
@@ -539,7 +539,7 @@ class ProcessManager extends BaseManager {
   function replace_process($pId, $vars, $create = true)
   {
     $TABLE_NAME = GALAXIA_TABLE_PREFIX."processes";
-    $now = date("U");
+    $now = gmdate("U");
     $vars['lastModif']=$now;
     $vars['normalized_name'] = $this->_normalize_name($vars['name'],$vars['version']);        
     foreach($vars as $key=>$value)

@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.31 2005-05-18 11:00:59 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.32 2007-02-03 20:47:26 nyloth Exp $
  * 
  * \brief Tiki integrator support class
  *
@@ -308,7 +308,7 @@ function add_replace_repository($repID, $name, $path, $start, $css, $vis, $cache
 
 //        $debugger->msg("exp: ".$rep["expiration"]);
         // If smth found in cache return it... else try to get it by usual way.
-        // \todo Smbd can explain why to use date('U') instead of time()???
+        // \todo Smbd can explain why to use gmdate('U') instead of time()???
         if ($data != '' && isset($data["data"]) && ($data["data"] != '')
          && ($rep["expiration"] > 0 ? (time() - $data["refresh"]) < $rep["expiration"] : true))
             return $data["data"];

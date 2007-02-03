@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.52 2007-01-31 00:08:51 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.53 2007-02-03 20:47:29 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -18,7 +18,7 @@ class NlLib extends TikiLib {
 			$query = "update `tiki_newsletters` set `name`=?, `description`=?, `allowUserSub`=?, `allowAnySub`=?, `unsubMsg`=?, `validateAddr`=?  where `nlId`=?";
 			$result = $this->query($query, array($name,$description,$allowUserSub,$allowAnySub,$unsubMsg,$validateAddr,(int)$nlId));
 		} else {
-			$now = date("U");
+			$now = gmdate("U");
 			$query = "insert into `tiki_newsletters`(`name`,`description`,`allowUserSub`,`allowAnySub`,`unsubMsg`,`validateAddr`,`lastSent`,`editions`,`users`,`created`) ";
       $query.= " values(?,?,?,?,?,?,?,?,?,?)";
 			$result = $this->query($query, array($name,$description,$allowUserSub,$allowAnySub,$unsubMsg,$validateAddr,(int)$now,0,0,(int)$now));
@@ -29,7 +29,7 @@ class NlLib extends TikiLib {
 	}
 
 	function replace_edition($nlId, $subject, $data, $users) {
-		$now = date("U");
+		$now = gmdate("U");
 		$query = "insert into `tiki_sent_newsletters`(`nlId`,`subject`,`data`,`sent`,`users`) values(?,?,?,?,?)";
 		$result = $this->query($query,array((int)$nlId,$subject,$data,(int)$now,$users));
 		$query = "update `tiki_newsletters` set `editions`= `editions`+ 1 where `nlId`=?";
@@ -103,7 +103,7 @@ class NlLib extends TikiLib {
 					if ($genUnsub == "y") {
 						$query = "insert into `tiki_newsletter_subscriptions`(`nlId`,`email`,`code`,`valid`,`subscribed`,`isUser`) values(?,?,?,?,?,?)";
 						$code = $this->genRandomString($res["login"]);
-						$this->query($query,array((int)$nlId,$res["login"],$code,'y',(int)date('U'),'g'));
+						$this->query($query,array((int)$nlId,$res["login"],$code,'y',(int)gmdate('U'),'g'));
 						$res["code"] = $code;
 					}
 					$ret[] = $res;
@@ -139,7 +139,7 @@ class NlLib extends TikiLib {
 			return false; /* already subscribed and valid - keep the same valid status */
 			}
 		$code = $this->genRandomString($add);
-		$now = date("U");
+		$now = gmdate("U");
 		$info = $this->get_newsletter($nlId);
 		if ($info["validateAddr"] == 'y' && $validateAddr != 'n') {
 			if ($isUser == "y")
@@ -156,7 +156,7 @@ class NlLib extends TikiLib {
 			$result = $this->query($query,array((int)$nlId,$add,$code,'n',(int)$now,$isUser));
 			// Now send an email to the address with the confirmation instructions
 			$smarty->assign('info', $info);
-			$smarty->assign('mail_date', date("U"));
+			$smarty->assign('mail_date', gmdate("U"));
 			$smarty->assign('mail_user', $user);
 			$smarty->assign('code', $code);
 			$smarty->assign('url_subscribe', $url_subscribe);
@@ -198,7 +198,7 @@ class NlLib extends TikiLib {
 		$query = "update `tiki_newsletter_subscriptions` set `valid`=? where `code`=?";
 		$result = $this->query($query,array('y',$code));
 		// Now send a welcome email
-		$smarty->assign('mail_date', date("U"));
+		$smarty->assign('mail_date', gmdate("U"));
 		if ($res["isUser"] == "y") {
 			$user = $res["email"];
 			$email = $userlib->get_user_email($user);
@@ -246,7 +246,7 @@ class NlLib extends TikiLib {
 			$query = "delete from `tiki_newsletter_subscriptions` where `code`=?";
 		$result = $this->query($query,array($code), -1, -1, false);
 		// Now send a bye bye email
-		$smarty->assign('mail_date', date("U"));
+		$smarty->assign('mail_date', gmdate("U"));
 		if ($res["isUser"] == "y") {
 			$user = $res["email"];
 			$email = $userlib->get_user_email($user);

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/remote.php,v 1.4 2006-12-10 12:34:55 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/remote.php,v 1.5 2007-02-03 20:47:13 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -33,7 +33,7 @@ function lograw($file,$line) {
 }
 
 function logit($file,$txt,$user,$code,$from) {
-	$line = $_SERVER['REMOTE_ADDR']." - $user - ". date('[m/d/Y:H:i:s]')." \"$txt\" $code \"$from\"";
+	$line = $_SERVER['REMOTE_ADDR']." - $user - ". gmdate('[m/d/Y:H:i:s]')." \"$txt\" $code \"$from\"";
 	lograw($file,$line);
 }
 

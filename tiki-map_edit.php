@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.25 2007-01-31 02:20:43 franck Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.26 2007-02-03 20:47:14 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -185,7 +185,7 @@ if ($tiki_p_map_edit != 'y') {
 		     $smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
 
 		     $smarty->assign('mail_page', $_REQUEST["mapfile"]);
-		     $smarty->assign('mail_date', date("U"));
+		     $smarty->assign('mail_date', gmdate("U"));
 		     $smarty->assign('mail_user', $user);
 		     $smarty->assign('mail_hash', $not['hash']);
 		     $foo = parse_url($_SERVER["REQUEST_URI"]);

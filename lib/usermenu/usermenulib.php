@@ -89,7 +89,7 @@ class UserMenuLib extends TikiLib {
 
 	function replace_usermenu($user, $menuId, $name, $url, $position, $mode) {
 
-		$now = date("U");
+		$now = gmdate("U");
 
 		if ($menuId) {
 			$query = "update `tiki_user_menus` set `name`=?, `position`=?, `url`=?, `mode`=? where `user`=? and `menuId`=?";

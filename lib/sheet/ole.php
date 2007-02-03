@@ -25,7 +25,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 // | Based on OLE::Storage_Lite by Kawai, Takanori                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: ole.php,v 1.3 2005-05-18 11:01:21 mose Exp $
+// $Id: ole.php,v 1.4 2007-02-03 20:47:32 nyloth Exp $
 
 
 /**
@@ -339,8 +339,8 @@ class OLE extends PEAR
         // days from 1-1-1601 until the beggining of UNIX era
         $days = 134774;
         // calculate seconds
-        $big_date = $days*24*3600 + gmmktime(date("H",$date),date("i",$date),date("s",$date),
-                                             date("m",$date),date("d",$date),date("Y",$date));
+        $big_date = $days*24*3600 + gmmktime(gmdate("H",$date),date("i",$date),date("s",$date),
+                                             gmdate("m",$date),date("d",$date),date("Y",$date));
         // multiply just to make MS happy
         $big_date *= 10000000;
 

@@ -46,13 +46,13 @@ $listtikievents = $tikicalendarlib->list_tiki_items($_SESSION['CalendarViewTikiC
 $smarty->assign_by_ref('listtikievents', $listtikievents);
 
 define("weekInSeconds", 604800);
-$mloop = date("m", $viewstart);
-$dloop = date("d", $viewstart);
-$yloop = date("Y", $viewstart);
+$mloop = gmdate("m", $viewstart);
+$dloop = gmdate("d", $viewstart);
+$yloop = gmdate("Y", $viewstart);
 
 // note that number of weeks starts at ZERO (i.e., zero = 1 week to display).
 for ($i = 0; $i <= $numberofweeks; $i++) {
-  $wee = date("W",$viewstart + ($i * weekInSeconds) + $d);
+  $wee = gmdate("W",$viewstart + ($i * weekInSeconds) + $d);
 
   $weeks[] = $wee;
 
@@ -65,7 +65,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
       $dday = $daystart;
     } else {
       //$dday = $startOfWeek + $d * $w;
-      $dday = mktime(0,0,0, $mloop, $dloop++, $yloop);
+      $dday = gmmktime(0,0,0, $mloop, $dloop++, $yloop);
     }
     $cell[$i][$w]['day'] = $dday;
 

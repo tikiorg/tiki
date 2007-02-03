@@ -26,7 +26,7 @@ class ChatLib extends TikiLib {
 	}
 
 	function send_message($user, $channelId, $data) {
-		$now = date("U");
+		$now = gmdate("U");
 		$info = $this->get_channel($channelId);
 		$name = $info["name"];
 		// Check if the user is registered in the channel or update the user timestamp
@@ -52,7 +52,7 @@ class ChatLib extends TikiLib {
 	}
 
 	function send_private_message($user, $toNickname, $data) {
-		$now = date("U");
+		$now = gmdate("U");
 		// :TODO: If logging is used then log the message
 		//$log = fopen("logs/${name}.txt","a");
 		//fwrite($log,"$posterName: $data\n");
@@ -63,7 +63,7 @@ class ChatLib extends TikiLib {
 	}
 
 	function user_to_channel($user, $channelId) {
-		$now = date("U");
+		$now = gmdate("U");
 		$query = "delete from `tiki_chat_users` where `nickname`=?";
 		$result = $this->query($query,array($user));
 		$query = "insert into `tiki_chat_users`(`nickname`,`channelId`,`timestamp`) values(?,?,?)";
@@ -72,7 +72,7 @@ class ChatLib extends TikiLib {
 
 	function get_chat_users($channelId) {
 		global $tikilib;
-		$now = date("U") - (5 * 60);
+		$now = gmdate("U") - (5 * 60);
 		$query = "delete from `tiki_chat_users` where `timestamp` < ?";
 		$result = $this->query($query,array((int)$now));
 		$query = "select `nickname` from `tiki_chat_users` where `channelId`=?";
@@ -134,7 +134,7 @@ class ChatLib extends TikiLib {
 	function purge_private_messages($user, $minutes) {
 		// :TODO: pass old messages to the message log table
 		$secs = $minutes * 60;
-		$last = date("U") - $secs;
+		$last = gmdate("U") - $secs;
 		$query = "delete from `tiki_private_messages` where `toNickname`=? and `timestamp`<?";
 		$result = $this->query($query,array($user, (int)$last));
 		// :TODO: delete from modMessages y privateMessages
@@ -144,7 +144,7 @@ class ChatLib extends TikiLib {
 	function purge_messages($minutes) {
 		// :TODO: pass old messages to the message log table
 		$secs = $minutes * 60;
-		$last = date("U") - $secs;
+		$last = gmdate("U") - $secs;
 		$query = "delete from `tiki_chat_messages` where `timestamp`<?";
 		$result = $this->query($query,array((int)$last));
 		// :TODO: delete from modMessages y privateMessages

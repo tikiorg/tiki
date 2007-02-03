@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.54 2007-01-09 17:17:08 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.55 2007-02-03 20:47:37 nyloth Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -62,7 +62,7 @@ function wikiplugin_tracker($data, $params) {
 	
 			global $notificationlib; include_once('lib/notifications/notificationlib.php');	
 			$tracker = array_merge($tracker,$trklib->get_tracker_options($trackerId));
-			if ((!empty($tracker['start']) && date('U') < $tracker['start']) || (!empty($tracker['end']) && date('U') > $tracker['end']))
+			if ((!empty($tracker['start']) && gmdate('U') < $tracker['start']) || (!empty($tracker['end']) && date('U') > $tracker['end']))
 				return;
 			$flds = $trklib->list_tracker_fields($trackerId,0,-1,"position_asc","");
 			$back = '';

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_articles.php,v 1.23 2007-01-17 15:22:36 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_articles.php,v 1.24 2007-02-03 20:47:37 nyloth Exp $
 // Includes articles listing in a wiki page
 // Usage:
 // {ARTICLES(max=>3,topic=>topicId)}{ARTICLES}
@@ -48,7 +48,7 @@ function wikiplugin_articles($data,$params) {
 	if (!isset($lang))
 		$lang = '';
 
-	$now = date("U");
+	$now = gmdate("U");
 	
 	include_once("lib/commentslib.php");
 	$commentslib = new Comments($dbTiki);

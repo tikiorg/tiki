@@ -32,7 +32,7 @@ class LsAdminlib extends TikiLib {
 
 		$result = $this->query($query,array($status));
 		$ret = array();
-		$now = date("U");
+		$now = gmdate("U");
 
 		while ($res = $result->fetchRow()) {
 			$res['elapsed'] = $now - $res['status_since'];

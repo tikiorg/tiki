@@ -44,7 +44,7 @@ function wikiplugin_rss($data,$params) {
 	if (!isset($desc)) { $desc=0; }
 	if (!isset($author)) { $author=0; }
 
-	$now = date("U");
+	$now = gmdate("U");
 
 	$ids=explode(":",$id);
   

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.173 2006-12-31 09:26:11 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.174 2007-02-03 20:47:14 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -29,7 +29,7 @@ if($feature_wiki != 'y') {
 }
 
 if(!isset($_SESSION['thedate'])) {
-    $thedate = date('U');
+    $thedate = gmdate('U');
 } else {
     $thedate = $_SESSION['thedate'];
 }
@@ -45,7 +45,7 @@ if ((!isset($_REQUEST['page']) || $_REQUEST['page'] == '') and !isset($_REQUEST[
 	$_REQUEST['page'] = $userHomePage = $userlib->get_user_default_homepage2($user);
     // Create the HomePage if it doesn't exist
     if(!$tikilib->page_exists($wikiHomePage)) {
-        $tikilib->create_page($wikiHomePage,0,'',date('U'),'Tiki initialization');
+        $tikilib->create_page($wikiHomePage,0,'',gmdate('U'),'Tiki initialization');
     }
 		header('Location: tiki-index.php?page='.$userHomePage);
     if ($feature_best_language == 'y') {
@@ -377,7 +377,7 @@ if(isset($_REQUEST['undo'])) {
 	    $wikilib->remove_last_version($page);
 	    // If page was deleted then re-create
 	    if(!$tikilib->page_exists($page)) {
-		$tikilib->create_page($page,0,'',date('U'),'Tiki initialization'); 
+		$tikilib->create_page($page,0,'',gmdate('U'),'Tiki initialization'); 
 	    }
 	    // Restore page information
 	    $info = $tikilib->get_page_info($page);  	
@@ -416,7 +416,7 @@ $smarty->assign('cached_page','n');
 if(isset($info['wiki_cache'])) {$wiki_cache=$info['wiki_cache'];}
 if($wiki_cache>0) {
     $cache_info = $wikilib->get_cache_info($page);
-    $now = date('U');
+    $now = gmdate('U');
     if($cache_info['cache_timestamp']+$wiki_cache > $now) {
 	$pdata = $cache_info['cache'];
 	$smarty->assign('cached_page','y');
@@ -450,7 +450,7 @@ $smarty->assign('first_page',1);
 $smarty->assign('last_page',$pages);
 $smarty->assign('pagenum',$_REQUEST['pagenum']);
 
-//$smarty->assign_by_ref('lastModif',date("l d of F, Y  [H:i:s]",$info["lastModif"]));
+//$smarty->assign_by_ref('lastModif',gmdate("l d of F, Y  [H:i:s]",$info["lastModif"]));
 $smarty->assign_by_ref('lastVersion',$info["version"]);
 $smarty->assign_by_ref('lastModif',$info["lastModif"]);
 if(empty($info['user'])) {

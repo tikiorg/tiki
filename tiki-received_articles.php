@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-received_articles.php,v 1.18 2005-05-18 10:58:59 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-received_articles.php,v 1.19 2007-02-03 20:47:15 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -49,9 +49,9 @@ if ($_REQUEST["receivedArticleId"]) {
 	$info["image_x"] = 0;
 	$info["image_y"] = 0;
 	$info["image_data"] = '';
-	$info["publishDate"] = date("U");
-	$info["expireDate"] = mktime (0,0,0,date("m"),  date("d"),  date("Y")+1);
-	$info["created"] = date("U");
+	$info["publishDate"] = gmdate("U");
+	$info["expireDate"] = mktime (0,0,0,gmdate("m"),  date("d"),  date("Y")+1);
+	$info["created"] = gmdate("U");
 	$info["heading"] = '';
 	$info["body"] = '';
 	$info["hash"] = '';
@@ -73,9 +73,9 @@ if (isset($_REQUEST["view"])) {
 if (isset($_REQUEST["accept"])) {
 	check_ticket('received-articles');
 	// CODE TO ACCEPT A PAGE HERE
-	$publishDate = mktime($_REQUEST["Time_Hour"], $_REQUEST["Time_Minute"],
+	$publishDate = gmmktime($_REQUEST["Time_Hour"], $_REQUEST["Time_Minute"],
 		0, $_REQUEST["Date_Month"], $_REQUEST["Date_Day"], $_REQUEST["Date_Year"]);
-	$expireDate = mktime($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"],
+	$expireDate = gmmktime($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"],
 		0, $_REQUEST["expire_Month"], $_REQUEST["expire_Day"], $_REQUEST["expire_Year"]);
 
 	$commlib->update_received_article($_REQUEST["receivedArticleId"], $_REQUEST["title"], $_REQUEST["authorName"],
@@ -92,9 +92,9 @@ $smarty->assign('topic', $info["topic"]);
 if (isset($_REQUEST["preview"])) {
 	$smarty->assign('preview', 'y');
 
-	$info["publishDate"] = mktime($_REQUEST["Time_Hour"], $_REQUEST["Time_Minute"],
+	$info["publishDate"] = gmmktime($_REQUEST["Time_Hour"], $_REQUEST["Time_Minute"],
 		0, $_REQUEST["Date_Month"], $_REQUEST["Date_Day"], $_REQUEST["Date_Year"]);
-	$info["expireDate"] = mktime($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"],
+	$info["expireDate"] = gmmktime($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"],
 		0, $_REQUEST["expire_Month"], $_REQUEST["expire_Day"], $_REQUEST["expire_Year"]);
 	$info["title"] = $_REQUEST["title"];
 	$info["authorName"] = $_REQUEST["authorName"];
@@ -144,9 +144,9 @@ if (isset($_REQUEST["remove"])) {
 
 if (isset($_REQUEST["save"])) {
 	check_ticket('received-articles');
-	$publishDate = mktime($_REQUEST["Time_Hour"], $_REQUEST["Time_Minute"],
+	$publishDate = gmmktime($_REQUEST["Time_Hour"], $_REQUEST["Time_Minute"],
 		0, $_REQUEST["Date_Month"], $_REQUEST["Date_Day"], $_REQUEST["Date_Year"]);
-	$expireDate = mktime($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"],
+	$expireDate = gmmktime($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"],
 		0, $_REQUEST["Date_Month"], $_REQUEST["Date_Day"], $_REQUEST["Date_Year"]);
 
 	$commlib->update_received_article($_REQUEST["receivedArticleId"], $_REQUEST["title"], $_REQUEST["authorName"],

@@ -43,7 +43,7 @@ function smarty_function_html_select_date($params, &$smarty)
     require_once $smarty->_get_plugin_filepath('function','html_options');
     /* Default values. */
     $prefix          = "Date_";
-    $start_year      = strftime("%Y");
+    $start_year      = gmstrftime("%Y");
     $end_year        = $start_year;
     $display_days    = true;
     $display_months  = true;
@@ -88,7 +88,7 @@ function smarty_function_html_select_date($params, &$smarty)
   		// then $time is empty or unix timestamp or mysql timestamp
   		// using smarty_make_timestamp to get an unix timestamp and
   		// strftime to make yyyy-mm-dd
-  		$time = strftime('%Y-%m-%d', smarty_make_timestamp($time));
+  		$time = gmstrftime('%Y-%m-%d', smarty_make_timestamp($time));
   	}
   	// Now split this in pieces, which later can be used to set the select
   	$time = explode("-", $time);
@@ -96,16 +96,16 @@ function smarty_function_html_select_date($params, &$smarty)
   	// make syntax "+N" or "-N" work with start_year and end_year
   	if (preg_match('!^(\+|\-)\s*(\d+)$!', $end_year, $match)) {
   		if ($match[1] == '+') {
-  			$end_year = strftime('%Y') + $match[2];
+  			$end_year = gmstrftime('%Y') + $match[2];
   		} else {
-  			$end_year = strftime('%Y') - $match[2];
+  			$end_year = gmstrftime('%Y') - $match[2];
   		}
   	}
   	if (preg_match('!^(\+|\-)\s*(\d+)$!', $start_year, $match)) {
   		if ($match[1] == '+') {
-  			$start_year = strftime('%Y') + $match[2];
+  			$start_year = gmstrftime('%Y') + $match[2];
   		} else {
-  			$start_year = strftime('%Y') - $match[2];
+  			$start_year = gmstrftime('%Y') - $match[2];
   		}
   	}
   
@@ -121,11 +121,11 @@ function smarty_function_html_select_date($params, &$smarty)
 
 			// date: 2003/03/20 22:54:34;  author: ohertel;  state: Exp;  lines: +1 -1
 			// added many missing translation blocks and german translations for user admin page, newsreader, notepad and bookmarks, month from html_select_date is being translated now
-			// -            $month_names[] = strftime($month_format, mktime(0, 0, 0, $i, 1, 2000));
-			// +            $month_names[] = tra(strftime($month_format, mktime(0, 0, 0, $i, 1, 2000)));
+			// -            $month_names[] = gmstrftime($month_format, gmmktime(0, 0, 0, $i, 1, 2000));
+			// +            $month_names[] = tra(gmstrftime($month_format, gmmktime(0, 0, 0, $i, 1, 2000)));
 
-            $month_names[] = tra(strftime($month_format, mktime(0, 0, 0, $i, 1, 2000)));
-            $month_values[] = strftime($month_value_format, mktime(0, 0, 0, $i, 1, 2000));
+            $month_names[] = tra(gmstrftime($month_format, gmmktime(0, 0, 0, $i, 1, 2000)));
+            $month_values[] = gmstrftime($month_value_format, gmmktime(0, 0, 0, $i, 1, 2000));
         }
 
         $month_result .= '<select name=';

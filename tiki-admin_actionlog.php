@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.23 2007-01-22 15:28:40 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.24 2007-02-03 20:47:13 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -146,20 +146,20 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 	$smarty->assign('showLogin', $showLogin?'y':'n');
 
 	if (isset($_REQUEST['startDate_Month'])) {
-		$startDate = mktime(0, 0, 0, $_REQUEST['startDate_Month'], $_REQUEST['startDate_Day'], $_REQUEST['startDate_Year']);
+		$startDate = gmmktime(0, 0, 0, $_REQUEST['startDate_Month'], $_REQUEST['startDate_Day'], $_REQUEST['startDate_Year']);
 		$url .= "&amp;start=$startDate";
 	} elseif (isset($_REQUEST['startDate'])) {
 		$startDate = $_REQUEST['startDate'];
 	} else
-		$startDate = mktime(0, 0, 0, date('n'), date('d'), date('Y'));
+		$startDate = gmmktime(0, 0, 0, gmdate('n'), date('d'), date('Y'));
 	$smarty->assign('startDate', $startDate);
 	if (isset($_REQUEST['endDate_Month'])) {
-		$endDate = mktime(23, 59, 59, $_REQUEST['endDate_Month'], $_REQUEST['endDate_Day'], $_REQUEST['endDate_Year']);
+		$endDate = gmmktime(23, 59, 59, $_REQUEST['endDate_Month'], $_REQUEST['endDate_Day'], $_REQUEST['endDate_Year']);
 		$url .= "&amp;end=$endDate";
 	} elseif (isset($_REQUEST['endDate'])) {
 		$endDate = $_REQUEST['endDate'];
 	} else
-		$endDate = mktime(23, 59, 59, date('n'), date('d'), date('Y'));
+		$endDate = gmmktime(23, 59, 59, gmdate('n'), date('d'), date('Y'));
 	$smarty->assign('endDate', $endDate);
 
 	$actions = $logslib->list_actions('', '', $_REQUEST['selectedUsers'], 0, -1, 'lastModif_desc', '', $startDate, $endDate, $_REQUEST['categId']);

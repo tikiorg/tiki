@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/search/refresh-functions.php,v 1.15 2006-11-24 12:42:17 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/search/refresh-functions.php,v 1.16 2007-02-03 20:47:32 nyloth Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -368,7 +368,7 @@ function insert_index(&$words,$location,$page) {
   $query="delete from `tiki_searchindex` where `location`=? and `page`=?";
   $tikilib->query($query,array($location,$page),-1,-1,false);
 
-  $now= (int) date('U');
+  $now= (int) gmdate('U');
   foreach ($words as $key=>$value) {
     if (strlen($key)>$search_min_wordlength) {//todo: make min length configurable
       // todo: stopwords

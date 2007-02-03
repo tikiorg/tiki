@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.55 2006-12-22 04:11:49 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.56 2007-02-03 20:47:13 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -56,7 +56,7 @@ if (isset($_REQUEST["postId"])) {
 $smarty->assign('postId', $postId);
 
 $smarty->assign('data', '');
-$smarty->assign('created', date("U"));
+$smarty->assign('created', gmdate("U"));
 
 $blog_data = $bloglib->get_blog($blogId);
 $smarty->assign_by_ref('blog_data', $blog_data);

@@ -16,7 +16,7 @@ function smarty_function_showdate($params, &$smarty)
         $smarty->trigger_error("assign: missing 'mode' parameter");
         return;
     }
-    print(date($mode));
+    print(gmdate($mode));
 }
 
 

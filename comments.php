@@ -2,7 +2,7 @@
 
 // $start_time = microtime(true);
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.68 2007-01-17 14:55:53 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.69 2007-02-03 20:47:13 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -305,7 +305,7 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 		    if (!$isBuilt) {
 			$isBuilt = true;
 			$smarty->assign('mail_page', $_REQUEST["page"]);
-			$smarty->assign('mail_date', date("U"));
+			$smarty->assign('mail_date', gmdate("U"));
 			$smarty->assign('mail_user', $user);
 			$smarty->assign('mail_title', $_REQUEST["comments_title"]);
 			$smarty->assign('mail_comment', $_REQUEST["comments_data"]);

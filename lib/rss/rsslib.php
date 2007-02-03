@@ -152,7 +152,7 @@ class RSSLib extends TikiLib {
 		$output["encoding"] = "UTF-8";
 
 		$output["data"] = "EMPTY";
-        $now = date("U");
+        $now = gmdate("U");
 
 		// caching rss data for anonymous users only
 		if (isset($user) && $user<>"") return $output;
@@ -188,7 +188,7 @@ class RSSLib extends TikiLib {
 		$rss_version=$this->get_current_rss_version();
 
 		// update cache with new generated data if data not empty
-		$now = date("U");
+		$now = gmdate("U");
 
 		$query = "update `tiki_rss_feeds` set `cache`=?, `lastUpdated`=? where `name`=? and `rssVer`=?";
 		$bindvars = array($output, (int) $now, $uniqueid, $rss_version);
@@ -203,7 +203,7 @@ class RSSLib extends TikiLib {
 		$rss_version=$this->get_current_rss_version();
 
 		if ($rss_cache_time < 1) $fromcache=false;
-		$now = date("U");
+		$now = gmdate("U");
 
 		// only get cache data if rss cache is enabled
 		if ($fromcache) {
@@ -545,7 +545,7 @@ class RSSLib extends TikiLib {
 			} else {
 				return false;
 			}
-			$now = date("U");
+			$now = gmdate("U");
 			$query = "update `tiki_rss_modules` set `content`=?, `lastUpdated`=? where `rssId`=?";
 			$result = $this->query($query,array((string)$data,(int) $now, $rssId));
 			return $data;
@@ -589,7 +589,7 @@ class RSSLib extends TikiLib {
 	/* retrieve the content of an rss feed, first try cache, then http request (may be forced) */
 	function get_rss_module_content($rssId, $refresh=false) {
 		$info = $this->get_rss_module($rssId);
-		$now = date("U");
+		$now = gmdate("U");
 
 		// cache too old, get data from feed and update cache
 		if (($info["lastUpdated"] + $info["refresh"] < $now) || ($info["content"]=="") || $refresh) {

@@ -11,7 +11,7 @@ $calendarViewGroups = $_SESSION['CalendarViewGroups'];
 $calendarViewTikiCals = $_SESSION['CalendarViewTikiCals'];
 $calendarViewList = $_SESSION['CalendarViewList'];
 
-$z = date("z");
+$z = gmdate("z");
 
 if (($firstDayofWeek = $tikilib->get_user_preference($user, "")) == "") { /* 0 for Sundays, 1 for Mondays */
 	$strRef = "First day of week: Sunday (its ID is 0) - translators you need to localize this string!";
@@ -36,12 +36,12 @@ $short_format_day = tra("%m/%d");
 $smarty->assign('short_format_day', $short_format_day);
 
 // Windows requires clean dates!
-$focus_prevday = mktime(0, 0, 0, $focus_month, $focus_day - 1, $focus_year);
-$focus_nextday = mktime(0, 0, 0, $focus_month, $focus_day + 1, $focus_year);
-$focus_prevweek = mktime(0, 0, 0, $focus_month, $focus_day - 7, $focus_year);
-$focus_nextweek = mktime(0, 0, 0, $focus_month, $focus_day + 7, $focus_year);
-$focus_prevmonth = mktime(0, 0, 0, $focus_month - 1, $focus_day, $focus_year);
-$focus_nextmonth = mktime(0, 0, 0, $focus_month + 1, $focus_day, $focus_year);
+$focus_prevday = gmmktime(0, 0, 0, $focus_month, $focus_day - 1, $focus_year);
+$focus_nextday = gmmktime(0, 0, 0, $focus_month, $focus_day + 1, $focus_year);
+$focus_prevweek = gmmktime(0, 0, 0, $focus_month, $focus_day - 7, $focus_year);
+$focus_nextweek = gmmktime(0, 0, 0, $focus_month, $focus_day + 7, $focus_year);
+$focus_prevmonth = gmmktime(0, 0, 0, $focus_month - 1, $focus_day, $focus_year);
+$focus_nextmonth = gmmktime(0, 0, 0, $focus_month + 1, $focus_day, $focus_year);
 
 $smarty->assign('daybefore', $focus_prevday);
 $smarty->assign('weekbefore', $focus_prevweek);
@@ -52,7 +52,7 @@ $smarty->assign('monthafter', $focus_nextmonth);
 $smarty->assign('focusmonth', $focus_month);
 $smarty->assign('focusdate', $focusdate);
 $smarty->assign('focuscell', $focuscell);
-$now = mktime(date('G'), date('i'), date('s'), date('n'), date('d'), date('Y')); /* server date */
+$now = gmmktime(gmdate('G'), date('i'), date('s'), date('n'), date('d'), date('Y')); /* server date */
 $smarty->assign('now', $now); /* server date */
 if (!isset($dc->getDisplayDateFromServerDate)) {
     $dc = $tikilib->get_date_converter($user);
@@ -64,8 +64,8 @@ $weekdays = range(0, 6);
 $hours = range(0, 23);
 
 $d = 60 * 60 * 24;
-$currentweek = date("W", $focusdate);
-$wd = date('w', $focusdate);
+$currentweek = gmdate("W", $focusdate);
+$wd = gmdate('w', $focusdate);
 
 #if ($wd == 0) $w = 7;
 #$wd--;
@@ -87,11 +87,11 @@ $smarty->assign('viewyear', $focus_year);
 
 // calculate timespan for sql query
 if ($calendarViewMode == 'month' || $calendarViewMode == 'quarter' || $calendarViewMode == 'semester') {
-	$daystart = mktime(0,0,0, $focus_month, 1, $focus_year);
+	$daystart = gmmktime(0,0,0, $focus_month, 1, $focus_year);
 } elseif ($calendarViewMode == 'year') {
-	$daystart = mktime(0,0,0, 1, 1, $focus_year);
+	$daystart = gmmktime(0,0,0, 1, 1, $focus_year);
 } else {
-	$daystart = mktime(0,0,0,$focus_month, $focus_day, $focus_year);
+	$daystart = gmmktime(0,0,0,$focus_month, $focus_day, $focus_year);
 }
 $viewstart = $daystart; // viewstart is the beginning of the display, daystart is the beginning of the selected period
 	
@@ -99,7 +99,7 @@ if ($calendarViewMode == 'month' ||
 	 $calendarViewMode == 'quarter' ||
 	 $calendarViewMode == 'semester' ||
 	 $calendarViewMode == 'year'	) {
-   $TmpWeekday = date("w",$viewstart);
+   $TmpWeekday = gmdate("w",$viewstart);
 //prepare for select first day of week (Hausi)
    if($firstDayofWeek == 1){
 	$TmpWeekday--;
@@ -112,28 +112,28 @@ if ($calendarViewMode == 'month' ||
    $viewstart -= $TmpWeekday * $d;
    // this is the last day of $focus_month
    if ($calendarViewMode == 'month') {
-     $viewend = mktime(0,0,0,$focus_month + 1, 1, $focus_year);
+     $viewend = gmmktime(0,0,0,$focus_month + 1, 1, $focus_year);
    } elseif ($calendarViewMode == 'quarter') {
-     $viewend = mktime(0,0,0,$focus_month + 3, 1, $focus_year);
+     $viewend = gmmktime(0,0,0,$focus_month + 3, 1, $focus_year);
    } elseif ($calendarViewMode == 'semester') {
-     $viewend = mktime(0,0,0,$focus_month + 6, 1, $focus_year);
+     $viewend = gmmktime(0,0,0,$focus_month + 6, 1, $focus_year);
    } elseif ($calendarViewMode == 'year') {
-     $viewend = mktime(0,0,0,1, 1, $focus_year+1);
+     $viewend = gmmktime(0,0,0,1, 1, $focus_year+1);
    } else {
-     $viewend = mktime(0,0,0,$focus_month + 1, 0, $focus_year);
+     $viewend = gmmktime(0,0,0,$focus_month + 1, 0, $focus_year);
    }
    $viewend -= 1;
    $dayend=$viewend;
-   $TmpWeekday = date("w", $viewend);
+   $TmpWeekday = gmdate("w", $viewend);
    $viewend += (6 - $TmpWeekday) * $d;
    // ISO weeks --- kinda mangled because ours begin on Sunday...
-   $firstweek = date("W", $viewstart + $d);
-   $lastweek = date("W", $viewend);
+   $firstweek = gmdate("W", $viewstart + $d);
+   $lastweek = gmdate("W", $viewend);
    if ($lastweek <= $firstweek) {
-		   $startyear = date("Y",$daystart-1);
-		   $weeksinyear = date("W",mktime(0,0,0,12,31,$startyear));
+		   $startyear = gmdate("Y",$daystart-1);
+		   $weeksinyear = gmdate("W",gmmktime(0,0,0,12,31,$startyear));
 		   if ($weeksinyear == 1){
-			$weeksinyear = date("W",mktime(0,0,0,12,28,$startyear));
+			$weeksinyear = gmdate("W",gmmktime(0,0,0,12,28,$startyear));
 		   }
 		   $lastweek += $weeksinyear;
    }
@@ -154,7 +154,7 @@ if ($calendarViewMode == 'month' ||
    $lastweek = $currentweek;
    $viewend = $viewstart + ($d - 1);
    $dayend = $daystart;
-   $weekdays = array(date('w',$focusdate));
+   $weekdays = array(gmdate('w',$focusdate));
    $numberofweeks = 0;
 }
 // untested (by me, anyway!) function grabbed from the php.net site:
@@ -165,12 +165,12 @@ function m_weeks($y, $m){
                8=>31, 9=>30, 10=>31, 11=>30, 12=>31);
   // weekdays remaining in a week starting on 7 - Sunday...(could be changed)
   $weekdays = array(7=>7, 1=>6, 2=>5, 3=>4, 4=>3, 5=>2, 6=>1);
-  $date = mktime( 0, 0, 0, $m, 1, $y);
-  $leap = date("L", $date);
+  $date = gmmktime( 0, 0, 0, $m, 1, $y);
+  $leap = gmdate("L", $date);
   // if it is a leap year set February to 29 days, otherwise 28
   $monthdays[2] = ($leap ? 29 : 28);
   // get the weekday of the first day of the month
-  $wn = strftime("%u",$date);
+  $wn = gmstrftime("%u",$date);
   $days = $monthdays[$m] - $weekdays[$wn];
   return (ceil($days/7) + 1);
 }
@@ -225,13 +225,13 @@ if ($calendarViewTikiCals) {
 
 
 define("weekInSeconds", 604800);
-$mloop = date("m", $viewstart);
-$dloop = date("d", $viewstart);
-$yloop = date("Y", $viewstart);
+$mloop = gmdate("m", $viewstart);
+$dloop = gmdate("d", $viewstart);
+$yloop = gmdate("Y", $viewstart);
 
 // note that number of weeks starts at ZERO (i.e., zero = 1 week to display).
 for ($i = 0; $i <= $numberofweeks; $i++) {
-	$wee = date("W",$viewstart + ($i * weekInSeconds) + $d);
+	$wee = gmdate("W",$viewstart + ($i * weekInSeconds) + $d);
 
 	$weeks[] = $wee;
 
@@ -244,7 +244,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 			$dday = $daystart;
 		} else {
 			//$dday = $startOfWeek + $d * $w;
-			$dday = mktime(0,0,0, $mloop, $dloop++, $yloop);
+			$dday = gmmktime(0,0,0, $mloop, $dloop++, $yloop);
 		}
 		$cell[$i][$w]['day'] = $dday;
 		
