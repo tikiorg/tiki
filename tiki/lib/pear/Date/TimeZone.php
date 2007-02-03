@@ -36,7 +36,7 @@
  * @copyright  1997-2006 Baba Buehler, Pierre-Alain Joye
  * @license    http://www.opensource.org/licenses/bsd-license.php
  *             BSD License
- * @version    CVS: $Id: TimeZone.php,v 1.3 2007-01-03 03:16:19 mose Exp $
+ * @version    CVS: $Id: TimeZone.php,v 1.4 2007-02-03 20:47:30 nyloth Exp $
  * @link       http://pear.php.net/package/Date
  */
 
@@ -51,7 +51,7 @@
  *   + global $_DATE_TIMEZONE_DEFAULT
  *   + system environment variable PHP_TZ
  *   + system environment variable TZ
- *   + the result of date('T')
+ *   + the result of gmdate('T')
  *
  * If no valid timezone id is found, the default timezone is set to 'UTC'.
  * You may also manually set the default timezone by passing a valid id to
@@ -4714,8 +4714,8 @@ if(isset($GLOBALS['_DATE_TIMEZONE_DEFAULT'])
     Date_TimeZone::setDefault(getenv('PHP_TZ'));
 } elseif (getenv('TZ') && Date_TimeZone::isValidID(getenv('TZ'))) {
     Date_TimeZone::setDefault(getenv('TZ'));
-} elseif (Date_TimeZone::isValidID(date('T'))) {
-    Date_TimeZone::setDefault(date('T'));
+} elseif (Date_TimeZone::isValidID(gmdate('T'))) {
+    Date_TimeZone::setDefault(gmdate('T'));
 } else {
     Date_TimeZone::setDefault('UTC');
 }

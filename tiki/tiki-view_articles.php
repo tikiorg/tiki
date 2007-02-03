@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_articles.php,v 1.33 2006-12-03 18:40:46 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_articles.php,v 1.34 2007-02-03 20:47:15 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -77,7 +77,7 @@ if (!isset($_REQUEST["offset"])) {
 
 $smarty->assign_by_ref('offset', $offset);
 
-$now = date("U");
+$now = gmdate("U");
 
 if (isset($_SESSION["thedate"])) {
 	if ($_SESSION["thedate"] < $now) {

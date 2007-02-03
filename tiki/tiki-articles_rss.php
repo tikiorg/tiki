@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-articles_rss.php,v 1.30 2006-12-26 17:33:11 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-articles_rss.php,v 1.31 2007-02-03 20:47:13 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -44,7 +44,7 @@ if ($output["data"]=="EMPTY") {
 	$title = (!empty($title_rss_articles)) ? $title_rss_articles : $tmp;
 	$tmp = tra("Last articles.");
 	$desc = (!empty($desc_rss_articles)) ? $desc_rss_articles : $tmp;
-	$now = date("U");
+	$now = gmdate("U");
 	$id = "articleId";
 	$titleId = "title";
 	$descId = "heading";

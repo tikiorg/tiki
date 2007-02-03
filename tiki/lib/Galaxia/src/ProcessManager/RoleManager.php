@@ -158,7 +158,7 @@ class RoleManager extends BaseManager {
   function replace_role($pId, $roleId, $vars)
   {
     $TABLE_NAME = GALAXIA_TABLE_PREFIX."roles";
-    $now = date("U");
+    $now = gmdate("U");
     $vars['lastModif']=$now;
     $vars['pId']=$pId;
     

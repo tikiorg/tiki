@@ -14,18 +14,18 @@ if (isset($_REQUEST["todate"]) && $_REQUEST['todate']) {
 } elseif (isset($_SESSION['CalendarFocusDate']) && $_SESSION['CalendarFocusDate']) {
 	$_REQUEST["todate"] = $_SESSION['CalendarFocusDate'];
 } else {
-	$focusdate = $dc->getDisplayDateFromServerDate(mktime(date('G'),date('i'),date('s'), date('m'), date('d'), date('Y'))); /* user date */
+	$focusdate = $dc->getDisplayDateFromServerDate(gmmktime(gmdate('G'),date('i'),date('s'), date('m'), date('d'), date('Y'))); /* user date */
 	$_SESSION['CalendarFocusDate'] = $focusdate;
 	$_REQUEST["todate"] = $_SESSION['CalendarFocusDate'];
 }
 
 $focusdate = $_REQUEST['todate'];
 list($focus_day, $focus_month, $focus_year) = array(
-	date("d", $focusdate),
-	date("m", $focusdate),
-	date("Y", $focusdate)
+	gmdate("d", $focusdate),
+	gmdate("m", $focusdate),
+	gmdate("Y", $focusdate)
 );
-$focuscell = mktime(0,0,0,$focus_month,$focus_day,$focus_year);
+$focuscell = gmmktime(0,0,0,$focus_month,$focus_day,$focus_year);
 $smarty->assign('focusdate', $focusdate);
 $smarty->assign('focuscell', $focuscell);
 

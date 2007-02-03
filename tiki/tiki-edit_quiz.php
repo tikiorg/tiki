@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz.php,v 1.19 2006-09-19 16:33:15 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz.php,v 1.20 2007-02-03 20:47:14 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -62,7 +62,7 @@ $_REQUEST["questionsPerPage"] = 999;
 $info = array();
 $info["name"] = '';
 $info["description"] = '';
-$info["publishDate"] = date("U");
+$info["publishDate"] = gmdate("U");
 $cur_time = getdate();
 $info["expireDate"] = mktime ($cur_time["hours"], $cur_time["minutes"], 0, $cur_time["mon"], $cur_time["mday"]+365, $cur_time["year"]);
 $info["canRepeat"] = 'n';
@@ -87,9 +87,9 @@ if (isset($_REQUEST["save"])) {
 
 
  	# convert from the displayed 'site' time to 'server' time
- 	$publishDate = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["publish_Hour"], $_REQUEST["publish_Minute"],
+ 	$publishDate = $dc->getServerDateFromDisplayDate(gmmktime($_REQUEST["publish_Hour"], $_REQUEST["publish_Minute"],
  		0, $_REQUEST["publish_Month"], $_REQUEST["publish_Day"], $_REQUEST["publish_Year"]));
- 	$expireDate = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"],
+ 	$expireDate = $dc->getServerDateFromDisplayDate(gmmktime($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"],
  		0, $_REQUEST["expire_Month"], $_REQUEST["expire_Day"], $_REQUEST["expire_Year"]));
 
 //  	print $publishDate."<br>";
@@ -161,7 +161,7 @@ if (isset($_REQUEST["save"])) {
 	$info = $quizlib->get_quiz($_REQUEST["quizId"]);
 
 	if (!isset($info["publishDate"])){
-		$info["publishDate"] = date("U");
+		$info["publishDate"] = gmdate("U");
 	}
 	if (!isset($info["expireDate"])){
 		$cur_time = getdate();

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-image_gallery_rss.php,v 1.26 2006-12-26 17:33:11 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-image_gallery_rss.php,v 1.27 2007-02-03 20:47:14 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -32,7 +32,7 @@ $output = $rsslib->get_from_cache($uniqueid);
 if ($output["data"]=="EMPTY") {
 	$tmp = $imagegallib->get_gallery($_REQUEST["galleryId"]);
 	$title = tra("Tiki RSS feed for the image gallery: ").$tmp["name"];
-	$now = date("U");
+	$now = gmdate("U");
 	$desc = $tmp["description"]; // TODO: make configurable
 	$id = "imageId";
 	$titleId = "name";

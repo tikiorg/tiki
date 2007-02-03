@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.166 2007-02-01 16:51:38 hangerman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.167 2007-02-03 20:47:35 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -143,7 +143,7 @@ class TrackerLib extends TikiLib {
 
 	function item_attach_file($itemId, $name, $type, $size, $data, $comment, $user, $fhash, $version, $longdesc) {
 		$comment = strip_tags($comment);
-		$now = date("U");
+		$now = gmdate("U");
 		$query = "insert into `tiki_tracker_item_attachments`(`itemId`,`filename`,`filesize`,`filetype`,`data`,`created`,`downloads`,`user`,";
 		$query.= "`comment`,`path`,`version`,`longdesc`) values(?,?,?,?,?,?,?,?,?,?,?,?)";
 		$result = $this->query($query,array((int) $itemId,$name,$size,$type,$data,(int) $now,0,$user,$comment,$fhash,$version,$longdesc));
@@ -191,7 +191,7 @@ class TrackerLib extends TikiLib {
 
 			$result = $this->query($query,array($title,$data,$user,(int) $commentId));
 		} else {
-			$now = date("U");
+			$now = gmdate("U");
 
 			$query = "insert into `tiki_tracker_item_comments`(`itemId`,`title`,`data`,`user`,`posted`) values (?,?,?,?,?)";
 			$result = $this->query($query,array((int) $itemId,$title,$data,$user,(int) $now));
@@ -215,7 +215,7 @@ class TrackerLib extends TikiLib {
 			$emails = array_merge($emails, $emails2);
 		if (count($emails > 0)) {
 			$emails = array_unique($emails);
-			$smarty->assign('mail_date', date("U"));
+			$smarty->assign('mail_date', gmdate("U"));
 			$smarty->assign('mail_user', $user);
 			$smarty->assign('mail_action', 'New comment added for item:' . $itemId . ' at tracker ' . $trackerName);
 			$smarty->assign('mail_data', $title . "\n\n" . $data);
@@ -400,7 +400,7 @@ class TrackerLib extends TikiLib {
                       $options = split(',', $myfield["options"]);
                       $tmp=$this->concat_item_from_fieldslist($options[0],$this->get_item_id($options[0],$options[1],$tmp),$options[3]);
                      }
-                    if ($is_date) $tmp=date("j/m/y",$tmp);
+                    if ($is_date) $tmp=gmdate("j/m/y",$tmp);
                     $res.=$separator.$tmp;
                 }
                 return $res;
@@ -416,7 +416,7 @@ class TrackerLib extends TikiLib {
                 $tmp=$this->get_all_items($trackerId,$field,$status);
                 $options = split(',', $myfield["options"]);
                   foreach ($tmp as $key=>$value){
-                    if ($is_date) $value=date("j/m/y",$value);
+                    if ($is_date) $value=gmdate("j/m/y",$value);
                     if ($is_trackerlink){
                       
                       $value=$this->concat_item_from_fieldslist($options[0],$this->get_item_id($options[0],$options[1],$value),$options[3]);
@@ -724,7 +724,7 @@ class TrackerLib extends TikiLib {
 		global $feature_categories;
 		global $tiki_p_admin_trackers;
 
-		$now = date("U");
+		$now = gmdate("U");
 
 		if ($itemId && $itemId!=0) {
 			$oldStatus = $this->getOne("select `status` from `tiki_tracker_items` where `itemId`=?", array($itemId));
@@ -904,8 +904,8 @@ class TrackerLib extends TikiLib {
 							if ($is_visible) {
 								$old_value = $row['value'];
 								if ($is_date) {
-									$old_value = date('r',(int)$old_value);
-									$new_value = date('r',(int)$value);
+									$old_value = gmdate('r',(int)$old_value);
+									$new_value = gmdate('r',(int)$value);
 								} else {
 									$new_value = $value;
 								}
@@ -921,7 +921,7 @@ class TrackerLib extends TikiLib {
 						} else {
 							if ($is_visible) {
 								if ($is_date) {
-									$new_value = date('r',(int)$value);
+									$new_value = gmdate('r',(int)$value);
 								} else {
 									$new_value = $value;
 								}
@@ -933,7 +933,7 @@ class TrackerLib extends TikiLib {
 					} else {
 						if ($is_visible) {
 							if ($is_date) {
-								$new_value = date('r',(int)$value);
+								$new_value = gmdate('r',(int)$value);
 							} else {
 								$new_value = $value;
 							}
@@ -1175,7 +1175,7 @@ class TrackerLib extends TikiLib {
 	}
 
 	function import_csv($trackerId, $csvHandle, $replace = true) {
-		$now = date('U');
+		$now = gmdate('U');
 		if (($data = fgetcsv($csvHandle,100000)) === FALSE) {
 			return -1;
 		}
@@ -1288,7 +1288,7 @@ class TrackerLib extends TikiLib {
 	}
 
 	function remove_tracker_item($itemId) {
-		$now = date("U");
+		$now = gmdate("U");
 
 		$query = "select * from `tiki_tracker_items` where `itemId`=?";
 		$result = $this->query($query, array((int) $itemId));
@@ -1382,15 +1382,15 @@ class TrackerLib extends TikiLib {
 
 	// Inserts or updates a tracker
 	function replace_tracker($trackerId, $name, $description, $options) {
-		$now = date("U");
+		$now = gmdate("U");
 		if ($trackerId) {
 			$old = $this->getOne('select count(*) from `tiki_trackers` where `trackerId`=?',array((int)$trackerId)); 
 			if ($old) {
 				$query = "update `tiki_trackers` set `name`=?,`description`=?,`lastModif`=? where `trackerId`=?";
-				$this->query($query,array($name,$description,(int)date('U'),(int) $trackerId));
+				$this->query($query,array($name,$description,(int)gmdate('U'),(int) $trackerId));
 			} else {
 				$query = "insert into `tiki_trackers` (`name`,`description`,`lastModif`,`trackerId`) values (?,?,?,?)";
-				$this->query($query,array($name,$description,(int)date('U'),(int) $trackerId));
+				$this->query($query,array($name,$description,(int)gmdate('U'),(int) $trackerId));
 			}
 		} else {
 			$this->getOne("delete from `tiki_trackers` where `name`=?",array($name),false);

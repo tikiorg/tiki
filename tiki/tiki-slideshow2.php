@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-slideshow2.php,v 1.15 2006-12-04 09:22:12 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-slideshow2.php,v 1.16 2007-02-03 20:47:15 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -36,7 +36,7 @@ $smarty->assign('home_info', $navigation_info["home"]);
 $smarty->assign('page_info', $page_info);
 
 if (!isset($_SESSION["thedate"])) {
-	$thedate = date("U");
+	$thedate = gmdate("U");
 } else {
 	$thedate = $_SESSION["thedate"];
 }
@@ -112,7 +112,7 @@ if ($tiki_p_admin_wiki == 'y') {
 	$smarty->assign('canundo', 'y');
 }
 
-//$smarty->assign_by_ref('lastModif',date("l d of F, Y  [H:i:s]",$info["lastModif"]));
+//$smarty->assign_by_ref('lastModif',gmdate("l d of F, Y  [H:i:s]",$info["lastModif"]));
 $smarty->assign_by_ref('lastModif', $info["lastModif"]);
 
 if (empty($info["user"])) {

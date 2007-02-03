@@ -22,7 +22,7 @@ function wikiplugin_bloglist($data, $params) {
 	$query = "select `postId`, `title`, `user`, `created`  from `tiki_blog_posts` where `blogId`=? order by `created` desc";
 	$result = $tikilib->query($query, array($Id));
     	while ($res = $result->fetchRow()) {
-        	$text.="<tr><td>" . date("d/M/Y h:i", $res["created"]) . "</td>";
+        	$text.="<tr><td>" . gmdate("d/M/Y h:i", $res["created"]) . "</td>";
 		$text.="<td><a href=\"tiki-view_blog_post.php?blogId=" . $Id . "&postId=" . $res["postId"] . "\">" . $res["title"] . "</a></td>";
         	$text.= "<td>" . $res["user"] . "</td></tr>\n";
   	}

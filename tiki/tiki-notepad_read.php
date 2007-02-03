@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-notepad_read.php,v 1.17 2006-12-17 06:49:48 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-notepad_read.php,v 1.18 2007-02-03 20:47:15 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -60,7 +60,7 @@ if ($tiki_p_edit == 'y') {
 		if ($tikilib->page_exists($_REQUEST['wiki_name'])) {
 			$tikilib->update_page($_REQUEST['wiki_name'], $info['data'], tra('created from notepad'), $user, '127.0.1.1', $info['name']);
 		} else {
-			$tikilib->create_page($_REQUEST['wiki_name'], 0, $info['data'], date("U"), tra('created from notepad'), $user, $ip = '0.0.0.0', $info['name']);
+			$tikilib->create_page($_REQUEST['wiki_name'], 0, $info['data'], gmdate("U"), tra('created from notepad'), $user, $ip = '0.0.0.0', $info['name']);
 		}
 	}
 }

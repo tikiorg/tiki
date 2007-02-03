@@ -7,8 +7,8 @@
  * @license GNU LGPL
  * @copyright Tiki Community
  * @date created: 2003/3/21 16:48
- * @date last-modified: $Date: 2007-01-18 18:18:55 $
- * $Header: /cvsroot/tikiwiki/tiki/lib/registration/registrationlib.php,v 1.34 2007-01-18 18:18:55 sylvieg Exp $
+ * @date last-modified: $Date: 2007-02-03 20:47:31 $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/registration/registrationlib.php,v 1.35 2007-02-03 20:47:31 nyloth Exp $
  */
 
 //this script may only be included - so it's better to die if called directly
@@ -439,7 +439,7 @@ class RegistrationLib extends TikiLib {
                 $emails = $notificationlib->get_mail_events('user_registers','*');
                 if (count($emails)) {
                         $smarty->assign('mail_user',$data['user']);
-                        $smarty->assign('mail_date',date("U"));
+                        $smarty->assign('mail_date',gmdate("U"));
                         $smarty->assign('mail_site',$data['mail_site']);
                         sendEmailNotification($emails, "email", "new_user_notification_subject.tpl", null, "new_user_notification.tpl");
                 }

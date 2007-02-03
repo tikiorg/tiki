@@ -189,21 +189,21 @@ class CalendarLib extends TikiLib {
 		$ret = array();
 		$list = $this->list_raw_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode, $find);
 		foreach ($list as $res) {
-			$mloop = date("m", $res['start']);
-			$dloop = date("d", $res['start']);
-			$yloop = date("Y", $res['start']);
-			$dstart = mktime(0, 0, 0, $mloop, $dloop, $yloop);
-			$dend = mktime(0, 0, 0, date("m", $res['end']), date("d", $res['end']), date("Y", $res['end']));
-			$tstart = date("Hi", $res["start"]);
-			$tend = date("Hi", $res["end"]);
-			for ($i = $dstart; $i <= $dend; $i = mktime(0, 0, 0, $mloop, ++$dloop, $yloop)) {
+			$mloop = gmdate("m", $res['start']);
+			$dloop = gmdate("d", $res['start']);
+			$yloop = gmdate("Y", $res['start']);
+			$dstart = gmmktime(0, 0, 0, $mloop, $dloop, $yloop);
+			$dend = gmmktime(0, 0, 0, gmdate("m", $res['end']), date("d", $res['end']), date("Y", $res['end']));
+			$tstart = gmdate("Hi", $res["start"]);
+			$tend = gmdate("Hi", $res["end"]);
+			for ($i = $dstart; $i <= $dend; $i = gmmktime(0, 0, 0, $mloop, ++$dloop, $yloop)) {
 				/* $head is in user time */
 				if ($dstart == $dend) {
-					$head = date("H:i", $res["start"]). " - " . date("H:i", $res["end"]);
+					$head = gmdate("H:i", $res["start"]). " - " . date("H:i", $res["end"]);
 				} elseif ($i == $dstart) {
-					$head = date("H:i", $res["start"]). " ...";
+					$head = gmdate("H:i", $res["start"]). " ...";
 				} elseif ($i == $dend) {
-					$head = " ... " . date("H:i", $res["end"]);
+					$head = " ... " . gmdate("H:i", $res["end"]);
 				} else {
 					$head = " ... " . tra("continued"). " ... ";
 				}

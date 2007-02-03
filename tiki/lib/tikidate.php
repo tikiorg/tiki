@@ -43,7 +43,7 @@ class TikiDate extends Date {
 			Date::Date();
 		$this->display_offset = $_display_offset;
 
-		$this->server_offset = intval(date("Z"));
+		$this->server_offset = intval(gmdate("Z"));
 	}
 
 	/**

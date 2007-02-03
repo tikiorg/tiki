@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_lastmod.php,v 1.1 2006-12-31 20:18:03 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_lastmod.php,v 1.2 2007-02-03 20:47:37 nyloth Exp $
 
 // Wiki plugin to display last modification information.
 // rlpowell 31 Dec 2006
@@ -23,7 +23,7 @@ function wikiplugin_lastmod($data, $params) {
 
 	}
 
-	$lastmod = date( "r", $tikilib->page_exists_modtime($page) );
+	$lastmod = gmdate( "r", $tikilib->page_exists_modtime($page) );
 
 	return $lastmod;
 

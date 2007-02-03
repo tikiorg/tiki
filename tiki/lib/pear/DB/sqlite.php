@@ -16,7 +16,7 @@
 // | Author: Urs Gehrig <urs@circle.ch>                                   |
 // +----------------------------------------------------------------------+
 //
-// $Id: sqlite.php,v 1.1 2003-07-15 20:25:15 rossta Exp $
+// $Id: sqlite.php,v 1.2 2007-02-03 20:47:29 nyloth Exp $
 //
 // Database independent query interface definition for the PECL's SQLite
 // extension.
@@ -65,7 +65,7 @@
     $result = $db->query("CREATE TABLE $table (comment varchar(50), 
       datetime varchar(50));");
     $result = $db->query("INSERT INTO $table VALUES ('Date and Time', '" . 
-      date('Y-m-j H:i:s') . "');");
+      gmdate('Y-m-j H:i:s') . "');");
     
     // Get results
     printf("affectedRows:\t\t%s\n", $db->affectedRows() );

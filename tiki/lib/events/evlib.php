@@ -17,7 +17,7 @@ class EvLib extends TikiLib {
 			$query = "update `tiki_events` set `name`=?, `description`=?, `allowUserSub`=?, `allowAnySub`=?, `unsubMsg`=?, `validateAddr`=? where `evId`=?";
 			$result = $this->query($query, array($name,$description,$allowUserSub,$allowAnySub,$unsubMsg,$validateAddr,(int)$evId));
 		} else {
-			$now = date("U");
+			$now = gmdate("U");
 			$query = "insert into `tiki_events`(`name`,`description`,`allowUserSub`,`allowAnySub`,`unsubMsg`,`validateAddr`,`lastSent`,`editions`,`users`,`created`) ";
       $query.= " values(?,?,?,?,?,?,?,?,?,?)";
 			$result = $this->query($query, array($name,$description,$allowUserSub,$allowAnySub,$unsubMsg,$validateAddr,(int)$now,0,0,(int)$now));
@@ -28,7 +28,7 @@ class EvLib extends TikiLib {
 	}
 
 	function replace_edition($evId, $subject, $data, $users) {
-		$now = date("U");
+		$now = gmdate("U");
 		$query = "insert into `tiki_sent_events`(`evId`,`subject`,`data`,`sent`,`users`) values(?,?,?,?,?)";
 		$result = $this->query($query,array((int)$evId,$subject,$data,(int)$now,$users));
 	}
@@ -58,7 +58,7 @@ class EvLib extends TikiLib {
 		$info = $this->get_event($evId);
 		$smarty->assign('info', $info);
 		$code = $this->genRandomString($sender_email);
-		$now = date("U");
+		$now = gmdate("U");
 		if ($info["validateAddr"] == 'y') {
 			// Generate a code and store it and send an email  with the
 			// URL to confirm the subscription put valid as 'n'
@@ -70,7 +70,7 @@ class EvLib extends TikiLib {
 			$query = "insert into `tiki_event_subscriptions`(`evId`,`email`,`code`,`valid`,`subscribed`,`fname`,`lname`,`company`) values(?,?,?,?,?,?,?,?)";
 			$result = $this->query($query,array((int)$evId,$email,$code,'n',(int)$now,$fname,$lname,$company));
 			// Now send an email to the address with the confirmation instructions
-			$smarty->assign('mail_date', date("U"));
+			$smarty->assign('mail_date', gmdate("U"));
 			$smarty->assign('mail_user', $user);
 			$smarty->assign('code', $code);
 			$smarty->assign('url_subscribe', $url_subscribe);
@@ -113,7 +113,7 @@ class EvLib extends TikiLib {
 		$query = "update `tiki_event_subscriptions` set `valid`=? where `code`=?";
 		$result = $this->query($query,array('y',$code));
 		// Now send a welcome email
-		$smarty->assign('mail_date', date("U"));
+		$smarty->assign('mail_date', gmdate("U"));
 		$user = $userlib->get_user_by_email($res["email"]); //global $user is not necessary defined as the user is not necessary logged in
 		$smarty->assign('mail_user', $user);
 		$smarty->assign('code', $res["code"]);
@@ -152,7 +152,7 @@ class EvLib extends TikiLib {
 		$query = "delete from `tiki_event_subscriptions` where `code`=?";
 		$result = $this->query($query,array($code));
 		// Now send a bye bye email
-		$smarty->assign('mail_date', date("U"));
+		$smarty->assign('mail_date', gmdate("U"));
 		$user = $userlib->get_user_by_email($res["email"]); //global $user is not necessary defined as the user is not necessary logged in
 		$smarty->assign('mail_user', $user);
 		$smarty->assign('url_subscribe', $url_subscribe);

@@ -40,10 +40,10 @@ class Date_Calc
 {
     /**
      * Returns the current local date. NOTE: This function
-     * retrieves the local date using strftime(), which may
+     * retrieves the local date using gmstrftime(), which may
      * or may not be 32-bit safe on your system.
      *
-     * @param string the strftime() format to return the date
+     * @param string the gmstrftime() format to return the date
      *
      * @access public
      *
@@ -52,7 +52,7 @@ class Date_Calc
 
     function dateNow($format="%Y%m%d")
     {
-        return(strftime($format,time()));
+        return(gmstrftime($format,time()));
 
     } // end func dateNow
 
@@ -1602,7 +1602,7 @@ class Date_Calc
     function getMonthNames()
     {
         for($i=1;$i<13;$i++) {
-            $months[$i] = strftime('%B', mktime(0, 0, 0, $i, 1, 2001));
+            $months[$i] = gmstrftime('%B', gmmktime(0, 0, 0, $i, 1, 2001));
         }
         return($months);
     } // end func getMonthNames
@@ -1620,7 +1620,7 @@ class Date_Calc
     function getWeekDays()
     {
         for($i=0;$i<7;$i++) {
-            $weekdays[$i] = strftime('%A', mktime(0, 0, 0, 1, $i, 2001));
+            $weekdays[$i] = gmstrftime('%A', gmmktime(0, 0, 0, 1, $i, 2001));
         }
         return($weekdays);
     } // end func getWeekDays

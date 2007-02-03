@@ -21,7 +21,7 @@ class CommLib extends TikiLib {
 		if ($this->page_exists($info["pageName"]))
 			return false;
 
-		$now = date("U");
+		$now = gmdate("U");
 		$this->create_page($info["pageName"], 0, $info["data"], $now, $info["comment"], $info["receivedFromUser"], $info["receivedFromSite"], $info["description"]);
 		$query = "delete from `tiki_received_pages` where `receivedPageId`=?";
 		$result = $this->query($query,array((int)$receivedPageId));
@@ -114,7 +114,7 @@ class CommLib extends TikiLib {
 
 	function receive_article($site, $user, $title, $authorName, $size, $use_image, $image_name, $image_type, $image_size, $image_x,
 		$image_y, $image_data, $publishDate, $expireDate, $created, $heading, $body, $hash, $author, $type, $rating) {
-		$now = date("U");
+		$now = gmdate("U");
 		$query = "delete from `tiki_received_articles` where `title`=? and `receivedFromsite`=? and `receivedFromUser`=?";
 		$result = $this->query($query,array($title,$site,$user));
 		$query = "insert into `tiki_received_articles`(`receivedDate`,`receivedFromSite`,`receivedFromUser`,`title`,`authorName`,`size`, ";
@@ -125,7 +125,7 @@ class CommLib extends TikiLib {
 	}
 
 	function receive_page($pageName, $data, $comment, $site, $user, $description) {
-		$now = date("U");
+		$now = gmdate("U");
 		// Remove previous page sent from the same site-user (an update)
 		$query = "delete from `tiki_received_pages` where `pageName`=? and `receivedFromsite`=? and `receivedFromUser`=?";
 		$result = $this->query($query,array($pageName,$site,$user));

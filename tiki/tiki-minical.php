@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-minical.php,v 1.18 2005-05-18 10:58:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-minical.php,v 1.19 2007-02-03 20:47:14 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -64,12 +64,12 @@ if (isset($_REQUEST['delete'])) {
 }
 
 if (isset($_REQUEST['day']) && isset($_REQUEST['mon']) && isset($_REQUEST['year'])) {
-	$pdate = mktime(0, 0, 0, $_REQUEST['mon'], $_REQUEST['day'], $_REQUEST['year']);
+	$pdate = gmmktime(0, 0, 0, $_REQUEST['mon'], $_REQUEST['day'], $_REQUEST['year']);
 } else {
 	if (isset($_SESSION['thedate'])) {
-		$pdate = mktime(0, 0, 0, date("m", $_SESSION['thedate']), date("d", $_SESSION['thedate']), date("Y", $_SESSION['thedate']));
+		$pdate = gmmktime(0, 0, 0, gmdate("m", $_SESSION['thedate']), date("d", $_SESSION['thedate']), date("Y", $_SESSION['thedate']));
 	} else {
-		$pdate = date("U");
+		$pdate = gmdate("U");
 	}
 }
 
@@ -77,10 +77,10 @@ $yesterday = $pdate - 60 * 60 * 24;
 $tomorrow = $pdate + 60 * 60 * 24;
 $smarty->assign('yesterday', $yesterday);
 $smarty->assign('tomorrow', $tomorrow);
-$smarty->assign('day', date("d", $pdate));
-$smarty->assign('mon', date("m", $pdate));
-$smarty->assign('year', date("Y", $pdate));
-$pdate_h = mktime(date("G"), date("i"), date("s"), date("m", $pdate), date("d", $pdate), date("Y", $pdate));
+$smarty->assign('day', gmdate("d", $pdate));
+$smarty->assign('mon', gmdate("m", $pdate));
+$smarty->assign('year', gmdate("Y", $pdate));
+$pdate_h = gmmktime(gmdate("G"), date("i"), date("s"), date("m", $pdate), date("d", $pdate), date("Y", $pdate));
 $smarty->assign('pdate', $pdate);
 $smarty->assign('pdate_h', $pdate_h);
 
@@ -112,7 +112,7 @@ if ($_REQUEST["eventId"]) {
 	$info['title'] = '';
 	$info['topicId'] = 0;
 	$info['description'] = '';
-	$info['start'] = mktime(date("H"), date("i"), date("s"), date("m", $pdate), date("d", $pdate), date("Y", $pdate));
+	$info['start'] = gmmktime(gmdate("H"), date("i"), date("s"), date("m", $pdate), date("d", $pdate), date("Y", $pdate));
 	$info['duration'] = 60 * 60;
 }
 
@@ -121,7 +121,7 @@ $smarty->assign('ev_pdate_h', $ev_pdate_h);
 
 if (isset($_REQUEST['save'])) {
 	check_ticket('minical');
-	$start = mktime($_REQUEST['Time_Hour'], $_REQUEST['Time_Minute'],
+	$start = gmmktime($_REQUEST['Time_Hour'], $_REQUEST['Time_Minute'],
 		0, $_REQUEST['Date_Month'], $_REQUEST['Date_Day'], $_REQUEST['Date_Year']);
 
 	$start -= $tikilib->get_site_time_difference($user);
@@ -131,7 +131,7 @@ if (isset($_REQUEST['save'])) {
 	$info['title'] = '';
 	$info['topicId'] = 0;
 	$info['description'] = '';
-	$info['start'] = mktime(date("h"), date("i"), date("s"), date("m", $pdate), date("d", $pdate), date("Y", $pdate));
+	$info['start'] = gmmktime(gmdate("h"), date("i"), date("s"), date("m", $pdate), date("d", $pdate), date("Y", $pdate));
 	$info['duration'] = 60 * 60;
 	$_REQUEST["eventId"] = 0;
 }
@@ -173,7 +173,7 @@ if ($_REQUEST['view'] == 'weekly') {
 	$interval = 24 * 60 * 60;
 
 	// Determine weekday
-	$wd = date('w', $pdate);
+	$wd = gmdate('w', $pdate);
 
 	if ($wd == 0)
 		$wd = 7;
@@ -229,7 +229,7 @@ if ($_REQUEST['view'] == 'list') {
 	if (isset($_SESSION['thedate'])) {
 		$pdate = $_SESSION['thedate'];
 	} else {
-		$pdate = date("U");
+		$pdate = gmdate("U");
 	}
 
 	$channels = $minicallib->minical_list_events($user, $offset, $maxRecords, $sort_mode, $find);

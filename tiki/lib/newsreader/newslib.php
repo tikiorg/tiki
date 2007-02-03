@@ -29,7 +29,7 @@ class Newslib extends TikiLib {
 	}
 
 	function news_mark($user, $serverId, $groupName) {
-		$now = date("U");
+		$now = gmdate("U");
 		if ($this->getOne( "select count(*) from `tiki_newsreader_marks` where `user`=? and `serverId`=? and `groupName`=?",array($user,(int)$serverId,$groupName))) {
 			$query = "update `tiki_newsreader_marks` set `timestamp`=? where `user`=? and `serverId`=? and `groupName`=?";
 			$this->query($query,array(array((int)$now,$user,(int)$serverId,$groupName)));

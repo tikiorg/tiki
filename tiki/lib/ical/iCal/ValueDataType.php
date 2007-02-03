@@ -136,11 +136,11 @@ class File_iCal_ValueDataType_Date extends File_iCal_ValueDataType
     //returns YYYYmmdd
     public function getValue()
     {
-      return date("Ymd", mktime(0,0,0, $this->_month, $this->_day, $this->_year));
+      return gmdate("Ymd", gmmktime(0,0,0, $this->_month, $this->_day, $this->_year));
     }
 
     public function getIntegerValue() {
-        return mktime(0,0,0, $this->_month, $this->_day, $this->_year);
+        return gmmktime(0,0,0, $this->_month, $this->_day, $this->_year);
     }
 
     public function setYear($y)
@@ -193,8 +193,8 @@ class File_iCal_ValueDataType_DateTime extends File_iCal_ValueDataType
             $this->_time = new File_iCal_ValueDataType_Time(substr($dt, 9));
         }
         else {
-            $this->_date = new File_iCal_ValueDataType_Date(date("Ymd", $dt));
-            $this->_time = new File_iCal_ValueDataType_Time(date("His", $dt));
+            $this->_date = new File_iCal_ValueDataType_Date(gmdate("Ymd", $dt));
+            $this->_time = new File_iCal_ValueDataType_Time(gmdate("His", $dt));
         }
     }
 

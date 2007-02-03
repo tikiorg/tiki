@@ -16,7 +16,7 @@ class SurveyLib extends TikiLib {
 		global $user;
 
 		if ($count_admin_pvs == 'y' || $user != 'admin') {
-			$now = date("U");
+			$now = gmdate("U");
 			$query = "update `tiki_surveys` set `taken`=`taken`+1, `lastTaken`=? where `surveyId`=?";
 			$result = $this->query($query,array((int)$now,(int)$surveyId));
 		}
@@ -66,7 +66,7 @@ class SurveyLib extends TikiLib {
 			$query = "update `tiki_surveys` set `name`=?, `description`=?, `status`=? where `surveyId`=?";
 			$result = $this->query($query,array($name,$description,$status,(int)$surveyId));
 		} else {
-			$now = date("U");
+			$now = gmdate("U");
 			$query = "insert into `tiki_surveys`(`name`,`description`,`status`,`created`,`taken`,`lastTaken`) values(?,?,?,?,0,?)";
 			$result = $this->query($query,array($name,$description,$status,(int)$now,(int)$now));
 
@@ -86,7 +86,7 @@ class SurveyLib extends TikiLib {
 
 			$result = $this->query($query, array($type,(int) $position,$question,$options,(int)$questionId,(int)$surveyId));
 		} else {
-			$now = date("U");
+			$now = gmdate("U");
 
 			$query = "insert into `tiki_survey_questions`(`question`,`type`,`surveyId`,`position`,`votes`,`value`,`options`) values(?,?,?,?,0,0,?)";
 			$result = $this->query($query,array($question,$type,(int)$surveyId,(int) $position,$options));

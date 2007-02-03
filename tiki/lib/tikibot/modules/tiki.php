@@ -99,7 +99,7 @@ class tiki extends Wollabot_Module {
 			// if ($ppl == 'mose' or $ppl == 'damian') {
 				$comment = implode(' ',$args);
 				$comment = preg_replace("~((https?|ftp|irc)://)([^ ]*)~i", "[\\0]", $comment);
-				$date = date("Y/m/d H:i");
+				$date = gmdate("Y/m/d H:i");
 				$textinput = "\n~~#666666:''__{$ppl}__ $date :''~~ $comment";
 				if ($tikilib->page_exists($arg)) {
 					$tikilib->invalidate_cache($arg);
@@ -128,7 +128,7 @@ class tiki extends Wollabot_Module {
 		} else {
 			global $statslib;
 			$i = $statslib->site_stats();
-			return "Since ".date("Y-m-d",$i["started"])." (".$i["days"]." days) we got ".$i["pageviews"]." pages viewed on tw.o (".round($i["ppd"])." per day).";
+			return "Since ".gmdate("Y-m-d",$i["started"])." (".$i["days"]." days) we got ".$i["pageviews"]." pages viewed on tw.o (".round($i["ppd"])." per day).";
 		}
 	}
 

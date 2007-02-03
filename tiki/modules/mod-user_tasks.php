@@ -13,7 +13,7 @@ if ($user && isset($feature_tasks) && $feature_tasks == 'y' && isset($tiki_p_tas
 	if (isset($_SESSION['thedate'])) {
 		$pdate = $_SESSION['thedate'];
 	} else {
-		$pdate = date("U");
+		$pdate = gmdate("U");
 	}
 
 	if (isset($_REQUEST["modTasksDel"])) {
@@ -32,7 +32,7 @@ if ($user && isset($feature_tasks) && $feature_tasks == 'y' && isset($tiki_p_tas
 	
 		$task = $tasklib->get_default_new_task($user);
 		if(strlen($_REQUEST["modTasksTitle"]) > 2) {
-			$tasklib->new_task($user, $user, null, null, date('U'), array('title' => $_REQUEST["modTasksTitle"]));
+			$tasklib->new_task($user, $user, null, null, gmdate('U'), array('title' => $_REQUEST["modTasksTitle"]));
 		} else {
 			$smarty->assign('msg', tra("The task title must have at least 3 characters"));
 			$smarty->display("error.tpl");

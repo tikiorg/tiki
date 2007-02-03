@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-export_tracker.php,v 1.6 2006-09-18 14:22:00 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-export_tracker.php,v 1.7 2007-02-03 20:47:14 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -187,10 +187,10 @@ for ($i = 0; $i < $temp_max; $i++) {
 			$fields["data"][$i]["value"] = '';
 			$ins_fields["data"][$i]["value"] = '';
 			if (isset($_REQUEST["$ins_id" . "Day"])) {
-				$ins_fields["data"][$i]["value"] = mktime($_REQUEST["$ins_id" . "Hour"], $_REQUEST["$ins_id" . "Minute"],
+				$ins_fields["data"][$i]["value"] = gmmktime($_REQUEST["$ins_id" . "Hour"], $_REQUEST["$ins_id" . "Minute"],
 				0, $_REQUEST["$ins_id" . "Month"], $_REQUEST["$ins_id" . "Day"], $_REQUEST["$ins_id" . "Year"]);
 			} else {
-				$ins_fields["data"][$i]["value"] = date("U");
+				$ins_fields["data"][$i]["value"] = gmdate("U");
 			}
 		} elseif ($fields["data"][$i]["type"] == 'e') { // category
 			include_once('lib/categories/categlib.php');

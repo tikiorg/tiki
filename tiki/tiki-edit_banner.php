@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_banner.php,v 1.22 2006-09-19 16:33:15 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_banner.php,v 1.23 2007-02-03 20:47:14 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -94,7 +94,7 @@ if (isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"] > 0) {
 } else {
 	$smarty->assign('client', '');
 	$smarty->assign('maxImpressions', 1000);
-	$now = date("U");
+	$now = gmdate("U");
 	$smarty->assign('fromDate', $now);
 	$smarty->assign('toDate', $now + (365 * 24 * 3600));
 	$smarty->assign('useDates', 'n');
@@ -134,8 +134,8 @@ if (isset($_REQUEST["removeZone"])) {
 // Now assign if the set button was pressed
 if (isset($_REQUEST["save"]) || isset($_REQUEST["create_zone"])) {
 	check_ticket('edit-banner');
-	$fromDate = mktime(0, 0, 0, $_REQUEST["fromDate_Month"], $_REQUEST["fromDate_Day"], $_REQUEST["fromDate_Year"]);
-	$toDate = mktime(0, 0, 0, $_REQUEST["toDate_Month"], $_REQUEST["toDate_Day"], $_REQUEST["toDate_Year"]);
+	$fromDate = gmmktime(0, 0, 0, $_REQUEST["fromDate_Month"], $_REQUEST["fromDate_Day"], $_REQUEST["fromDate_Year"]);
+	$toDate = gmmktime(0, 0, 0, $_REQUEST["toDate_Month"], $_REQUEST["toDate_Day"], $_REQUEST["toDate_Year"]);
 	$fromTime = ''.$_REQUEST["fromTimeHour"].$_REQUEST["fromTimeMinute"].'';
 	$toTime = ''.$_REQUEST["toTimeHour"].$_REQUEST["toTimeMinute"].'';
 	$smarty->assign('fromDate', $fromDate);

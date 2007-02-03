@@ -29,7 +29,7 @@ class ADODB_vfp extends ADODB_odbc {
 	var $hasTop = 'top';		// support mssql SELECT TOP 10 * FROM TABLE
 	var $_bindInputArray = false; // strangely enough, setting to true does not work reliably
 	var $sysTimeStamp = 'datetime()';
-	var $sysDate = 'date()';
+	var $sysDate = 'gmdate()';
 	var $ansiOuter = true;
 	var $hasTransactions = false;
 	var $curmode = false ; // See sqlext.h, SQL_CUR_DEFAULT == SQL_CUR_USE_DRIVER == 2L

@@ -133,7 +133,7 @@ function& adodb_log_sql(&$conn,$sql,$inputarr)
 		$conn->debug = 0;
 		
 		$d = $conn->sysTimeStamp;
-		if (empty($d)) $d = date("'Y-m-d H:i:s'");
+		if (empty($d)) $d = gmdate("'Y-m-d H:i:s'");
 		if ($conn->dataProvider == 'oci8' && $dbT != 'oci8po') {
 			$isql = "insert into $perf_table values($d,:b,:c,:d,:e,:f)";
 		} else if ($dbT == 'odbc_mssql' || $dbT == 'informix') {
@@ -753,7 +753,7 @@ Committed_AS:   348732 kB
 			}
 			if ($cnt % 10 == 0) echo " Time   ".$oslabel."   Hit%   Sess           Reads/s          Writes/s\n"; 
 			$cnt += 1;
-			echo date('H:i:s').'  '.$osval."$hits  $sess $reads $writes\n";
+			echo gmdate('H:i:s').'  '.$osval."$hits  $sess $reads $writes\n";
 			flush();
 			
 			if (connection_aborted()) return;

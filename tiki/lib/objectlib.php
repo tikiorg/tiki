@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: objectlib.php,v 1.4 2006-03-02 15:15:52 sylvieg Exp $
+// CVS: $Id: objectlib.php,v 1.5 2007-02-03 20:47:16 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -32,7 +32,7 @@ class ObjectLib extends TikiLib {
     function insert_object($type, $itemId, $description = '', $name = '', $href = '') {
 		$description = strip_tags($description);
 		$name = strip_tags($name);
-		$now = date("U");
+		$now = gmdate("U");
 	
 	    $query = "insert into `tiki_objects`(`type`,`itemId`,`description`,`name`,`href`,`created`,`hits`)
     values(?,?,?,?,?,?,?)";

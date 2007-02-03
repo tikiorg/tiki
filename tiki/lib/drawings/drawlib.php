@@ -15,7 +15,7 @@ class DrawLib extends TikiLib {
 	}
 
 	function replace_drawing($drawId, $name, $filename_draw, $filename_pad, $user, $version) {
-		$now = date("U");
+		$now = gmdate("U");
 		if ($drawId) {
 			$query = "update `tiki_drawings` set `name`=?, `filename_draw`=?, `filename_pad`=?, `timestamp`=?, `version`=?, `user`='?  where `drawId`=?";
 			$this->query($query,array($name,$filename_draw,$filename_pad,(int)$now,(int)$version,$user,(int)$drawId));
@@ -35,7 +35,7 @@ class DrawLib extends TikiLib {
 		$maxversions = $this->get_preference("maxVersions", 0);
 		$keep = $this->get_preference('keep_versions', 0);
 		$cant = $this->getOne("select count(*) from `tiki_drawings` where `name`=?",array($name));
-		$now = date("U");
+		$now = gmdate("U");
 		$oktodel = $now - ($keep * 24 * 3600);
 
 		if ($cant > $maxversions) {

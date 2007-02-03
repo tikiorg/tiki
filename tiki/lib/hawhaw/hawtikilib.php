@@ -6,7 +6,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/hawhaw/hawtikilib.php,v 1.19 2005-11-07 21:42:30 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/hawhaw/hawtikilib.php,v 1.20 2007-02-03 20:47:22 nyloth Exp $
 
 // HAWHAW function library for TikiWiki
 
@@ -308,7 +308,7 @@ function HAWTIKI_view_blog($listpages, $blog_data)
 
     // post header
     $nonparsed_text .= sprintf("__%s ~np~%s~/np~__\n__%s ~np~%s~/np~__\n",
-                               hawtra("posted on"), date(HAWIKI_DATETIME_LONG, $listpages['data'][$i]['created']),
+                               hawtra("posted on"), gmdate(HAWIKI_DATETIME_LONG, $listpages['data'][$i]['created']),
                                hawtra("by"), $listpages['data'][$i]['user']);
 
     // post body
@@ -378,7 +378,7 @@ function HAWTIKI_view_blog_post($blog_post_data)
 
   // post header
   $nonparsed_text .= sprintf("__%s ~np~%s~/np~__\n__%s ~np~%s~/np~__\n",
-    hawtra("posted on"), date(HAWIKI_DATETIME_LONG, $blog_post_data['created']),
+    hawtra("posted on"), gmdate(HAWIKI_DATETIME_LONG, $blog_post_data['created']),
     hawtra("by"), $blog_post_data['user']);
 
   // post body
@@ -421,7 +421,7 @@ function HAWTIKI_list_articles($listpages, $tiki_p_read_article, $offset, $maxRe
     $title = new HAW_text(HAWIKI_specchar($article['title']), HAW_TEXTFORMAT_BOLD);
     $listitem->add_text($title);
 
-    $date = new HAW_text(date(HAWIKI_DATETIME_SHORT, $article['publishDate']));
+    $date = new HAW_text(gmdate(HAWIKI_DATETIME_SHORT, $article['publishDate']));
     $listitem->add_text($date);
 
     $author = new HAW_text(hawtra("By:") . HAWIKI_specchar($article['authorName']), HAW_TEXTFORMAT_SMALL | HAW_TEXTFORMAT_ITALIC);
@@ -441,7 +441,7 @@ function HAWTIKI_list_articles($listpages, $tiki_p_read_article, $offset, $maxRe
 function HAWTIKI_read_article($article_data, $pages)
 {
   $prefix = sprintf("__~np~%s~/np~__\n__%s ~np~%s~/np~__\n",
-                    date(HAWIKI_DATETIME_SHORT, $article_data['publishDate']),
+                    gmdate(HAWIKI_DATETIME_SHORT, $article_data['publishDate']),
                     hawtra("By:"), $article_data['authorName']);
 
   $heading = sprintf("\n%s\n---\n", $article_data['heading']);
@@ -518,14 +518,14 @@ function HAWTIKI_view_forum($forum_name, $threads, $tiki_p_forum_read, $offset, 
     if (isset($val['lastPostData']))
     {
       // there's a reply available - show data of last post
-      $date = new HAW_text(date(HAWIKI_DATETIME_SHORT, $val['lastPostData']['commentDate']));
+      $date = new HAW_text(gmdate(HAWIKI_DATETIME_SHORT, $val['lastPostData']['commentDate']));
       $author = new HAW_text(hawtra("By:") . HAWIKI_specchar($val['lastPostData']['userName']), HAW_TEXTFORMAT_SMALL | HAW_TEXTFORMAT_ITALIC);
       $threadId = $val['lastPostData']['threadId'];
     }
     else
     {
       // no reply at all - show data of original posting
-      $date = new HAW_text(date(HAWIKI_DATETIME_SHORT, $val['commentDate']));
+      $date = new HAW_text(gmdate(HAWIKI_DATETIME_SHORT, $val['commentDate']));
       $author = new HAW_text(hawtra("By:") . HAWIKI_specchar($val['userName']), HAW_TEXTFORMAT_SMALL | HAW_TEXTFORMAT_ITALIC);
       $threadId = $val['threadId'];
     }
@@ -551,7 +551,7 @@ function HAWTIKI_view_forum_thread($forum_name, $thread_info, $tiki_p_forum_read
 
   $prefix = sprintf("__%s:__\n__~np~%s~/np~__\n__%s ~np~%s~/np~__\n---\n",
                     hawtra("Last post"),
-                    date(HAWIKI_DATETIME_SHORT, $thread_info['commentDate']),
+                    gmdate(HAWIKI_DATETIME_SHORT, $thread_info['commentDate']),
                     hawtra("By:"), $thread_info['userName']);
 
   $thread = new HAWIKI_page($prefix . $thread_info['data'],

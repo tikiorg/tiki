@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-newsreader_servers.php,v 1.20 2006-12-03 16:50:35 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-newsreader_servers.php,v 1.21 2007-02-03 20:47:15 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -99,7 +99,7 @@ $smarty->assign_by_ref('sort_mode', $sort_mode);
 if (isset($_SESSION['thedate'])) {
 	$pdate = $_SESSION['thedate'];
 } else {
-	$pdate = date("U");
+	$pdate = gmdate("U");
 }
 
 $channels = $newslib->list_servers($user, $offset, $maxRecords, $sort_mode, $find);

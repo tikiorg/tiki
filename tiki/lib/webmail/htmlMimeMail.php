@@ -9,8 +9,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 /**
 * Filename.......: class.html.mime.mail.inc
 * Project........: HTML Mime mail class
-* Last Modified..: $Date: 2007-01-17 14:55:54 $
-* CVS Revision...: $Revision: 1.16 $
+* Last Modified..: $Date: 2007-02-03 20:47:36 $
+* CVS Revision...: $Revision: 1.17 $
 * Copyright......: 2001, 2002 Richard Heyes
 */
 
@@ -793,7 +793,7 @@ class htmlMimeMail {
 	function getRFC822($recipients) {
 		// Make up the date header as according to RFC822
 		// TODO Change to user or system defined timezone
-		$this->setHeader('Date', date('D, d M y H:i:s O'));
+		$this->setHeader('Date', gmdate('D, d M y H:i:s O'));
 
 		if (!defined('CRLF')) {
 			$this->setCrlf($type == 'mail' ? "\n" : "\r\n");
@@ -890,7 +890,7 @@ class htmlMimeMail {
 *    re-build the message.
 *
 * @author  Richard Heyes <richard@phpguru.org>
-* @version $Revision: 1.16 $
+* @version $Revision: 1.17 $
 * @package Mail
 */
 class Mail_mimePart {
@@ -1180,7 +1180,7 @@ class Mail_mimePart {
 *
 * @author  Richard Heyes <richard@phpguru.org>
 * @author  Chuck Hagenbuch <chuck@horde.org>
-* @version $Revision: 1.16 $
+* @version $Revision: 1.17 $
 * @package Mail
 */
 class Mail_RFC822 {

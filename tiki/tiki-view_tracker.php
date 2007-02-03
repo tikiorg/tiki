@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.115 2007-02-01 16:51:38 hangerman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.116 2007-02-03 20:47:15 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -122,13 +122,13 @@ if ($t = $trklib->get_tracker_options($_REQUEST["trackerId"]))
 	$tracker_info = array_merge($tracker_info,$t);
 
 if ($tiki_p_create_tracker_items == 'y' && !empty($t['start'])) {
-	if (date('U') < $t['start']) {
+	if (gmdate('U') < $t['start']) {
 		$tiki_p_create_tracker_items = 'n';
 		$smarty->assign('tiki_p_create_tracker_items', 'n');
 	}
 }
 if ($tiki_p_create_tracker_items == 'y' && !empty($t['end'])) {
-	if (date('U') > $t['end']) {
+	if (gmdate('U') > $t['end']) {
 		$tiki_p_create_tracker_items = 'n';
 		$smarty->assign('tiki_p_create_tracker_items', 'n');
 	}
@@ -251,10 +251,10 @@ for ($i = 0; $i < $temp_max; $i++) {
 			$fields["data"][$i]["value"] = '';
 			$ins_fields["data"][$i]["value"] = '';
 			if (isset($_REQUEST["$ins_id" . "Day"])) {
-				$ins_fields["data"][$i]["value"] = mktime($_REQUEST["$ins_id" . "Hour"], $_REQUEST["$ins_id" . "Minute"],
+				$ins_fields["data"][$i]["value"] = gmmktime($_REQUEST["$ins_id" . "Hour"], $_REQUEST["$ins_id" . "Minute"],
 				0, $_REQUEST["$ins_id" . "Month"], $_REQUEST["$ins_id" . "Day"], $_REQUEST["$ins_id" . "Year"]);
 			} else {
-				$ins_fields["data"][$i]["value"] = date("U");
+				$ins_fields["data"][$i]["value"] = gmdate("U");
 			}
 		} elseif ($fields["data"][$i]["type"] == 'e') { // category
 			include_once('lib/categories/categlib.php');

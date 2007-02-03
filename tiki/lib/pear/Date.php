@@ -41,7 +41,7 @@
  * @copyright  1997-2006 Baba Buehler, Pierre-Alain Joye
  * @license    http://www.opensource.org/licenses/bsd-license.php
  *             BSD License
- * @version    CVS: $Id: Date.php,v 1.3 2007-01-25 17:26:04 sylvieg Exp $
+ * @version    CVS: $Id: Date.php,v 1.4 2007-02-03 20:47:29 nyloth Exp $
  * @link       http://pear.php.net/package/Date
  */
 
@@ -200,7 +200,7 @@ class Date
     {
         $this->tz = Date_TimeZone::getDefault();
         if (is_null($date)) {
-            $this->setDate(date("Y-m-d H:i:s"));
+            $this->setDate(gmdate("Y-m-d H:i:s"));
         } elseif (is_a($date, 'Date')) {
             $this->copy($date);
         } else {
@@ -250,7 +250,7 @@ class Date
             }
         } elseif (is_numeric($date)) {
             // UNIXTIME
-            $this->setDate(date("Y-m-d H:i:s", $date));
+            $this->setDate(gmdate("Y-m-d H:i:s", $date));
         } else {
             // unknown format
             $this->year       = 0;
@@ -307,7 +307,7 @@ class Date
             return $this->format("%Y%m%d%H%M%S");
             break;
         case DATE_FORMAT_UNIXTIME:
-            return mktime($this->hour, $this->minute, $this->second, $this->month, $this->day, $this->year);
+            return gmmktime($this->hour, $this->minute, $this->second, $this->month, $this->day, $this->year);
             break;
         }
     }
@@ -338,10 +338,10 @@ class Date
     // {{{ format()
 
     /**
-     *  Date pretty printing, similar to strftime()
+     *  Date pretty printing, similar to gmstrftime()
      *
      *  Formats the date in the given format, much like
-     *  strftime().  Most strftime() options are supported.<br><br>
+     *  gmstrftime().  Most strftime() options are supported.<br><br>
      *
      *  formatting options:<br><br>
      *

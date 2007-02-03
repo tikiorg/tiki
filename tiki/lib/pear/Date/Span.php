@@ -36,7 +36,7 @@
  * @copyright  1997-2006 Leandro Lucarella, Pierre-Alain Joye
  * @license    http://www.opensource.org/licenses/bsd-license.php
  *             BSD License
- * @version    CVS: $Id: Span.php,v 1.1 2007-01-03 03:16:19 mose Exp $
+ * @version    CVS: $Id: Span.php,v 1.2 2007-02-03 20:47:30 nyloth Exp $
  * @link       http://pear.php.net/package/Date
  * @since      File available since Release 1.4
  */
@@ -586,7 +586,7 @@ class Date_Span
      * Time span pretty printing (similar to Date::format()).
      *
      * Formats the time span in the given format, similar to
-     * strftime() and Date::format().<br>
+     * gmstrftime() and Date::format().<br>
      * <br>
      * Formatting options:<br>
      *  <code>%C</code> Days with time, same as "%D, %H:%M:%S".<br>

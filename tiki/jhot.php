@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/jhot.php,v 1.15 2006-09-05 15:35:30 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/jhot.php,v 1.16 2007-02-03 20:47:13 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/jhot.php,v 1.15 2006-09-05 15:35:30 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/jhot.php,v 1.16 2007-02-03 20:47:13 nyloth Exp $
 include_once ('tiki-setup.php');
 
 include_once ('lib/drawings/drawlib.php');
@@ -31,7 +31,7 @@ if (isset($_FILES['filepath']) && is_uploaded_file($_FILES['filepath']['tmp_name
 	$absolute_name = str_replace('.gif', '', $absolute_name);
 	$absolute_name = str_replace('.pad_xml', '', $absolute_name);
 
-	$now = date("U");
+	$now = gmdate("U");
 
 	if (substr($name,-4,4) == '.gif') {
 		$hash = $absolute_name . md5(uniqid('.')). '.gif';
