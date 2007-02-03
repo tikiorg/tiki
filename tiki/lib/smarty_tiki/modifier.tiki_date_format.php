@@ -18,10 +18,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * -------------------------------------------------------------
  */
 function smarty_modifier_tiki_date_format($string, $format) {
-	global $tikidate, $display_timezone;
-	$tikidate->setDate($string);
-	$tikidate->convertTZbyID($display_timezone);
-	return $tikidate->format($format);
+	global $tikilib;
+	return $tikilib->date_format($format, $string);
 }
 
 ?>

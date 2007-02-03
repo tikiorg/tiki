@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.703 2007-02-03 20:47:16 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.704 2007-02-03 21:38:25 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -7,9 +7,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 require_once ('lib/pear/Date.php');
-$tikidate = new Date();
-
-require_once ('lib/tikidate.php');
 require_once ('lib/tikidblib.php');
 
 //performance collecting:
@@ -1176,7 +1173,7 @@ class TikiLib extends TikiDB {
     }
 
     function get_pv_chart_data($days) {
-	$now = gmmktime(0, 0, 0, gmdate("m"), date("d"), date("Y"));
+	$now = gmmktime(0, 0, 0, gmdate("m"), gmdate("d"), gmdate("Y"));
 	$dfrom = 0;
 	if ($days != 0) $dfrom = $now - ($days * 24 * 60 * 60);
 
@@ -1201,7 +1198,7 @@ class TikiLib extends TikiDB {
     }
 
 function add_pageview() {
-    $dayzero = gmmktime(0, 0, 0, gmdate("m"), date("d"), date("Y"));
+    $dayzero = gmmktime(0, 0, 0, gmdate("m"), gmdate("d"), gmdate("Y"));
 //echo "PAGEVIEW:".gmdate('r', $dayzero).'<br>';
     $cant = $this->getOne("select count(*) from `tiki_pageviews` where `day`=?",array((int)$dayzero));
 
@@ -6234,12 +6231,24 @@ if (!$simple_wiki) {
 			    return $date->getTime();
 			}
 
+			function date_display_to_UTC($date) {
+			    global $user;
+			    $tz =& new Date_TimeZone($this->get_display_timezone($user));
+			    return $date - floor($tz->getOffset(new Date($date))/1000);
+			}
+			
+			function date_UTC_to_display($date) {
+			    global $user;
+			    $tz =& new Date_TimeZone($this->get_display_timezone($user));
+			    $date = $date + floor($tz->getOffset(new Date($date))/1000);
+			    return $date;
+			}
 
-			function date_format($format, $timestamp, $user = false) {
-			    // strftime doesn't do translations correctly
-			    // return gmstrftime($format,$timestamp);
-			    $date = new Date($timestamp);
-			    return $date->format($format);
+			function date_format($format, $timestamp) {
+			    $d =& new Date();
+			    $d->toUTC();
+			    $d->setDate(gmdate("Y-m-d H:i:s", $timestamp));
+			    return $d->format($format);
 			}
 
 			function get_long_date($timestamp, $user = false) {
