@@ -7,24 +7,25 @@ if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
 }
 
 $trunc = "20"; // put in a pref, number of chars displayed in cal cells
+$dc = $tikilib->get_date_converter($user);
 
 if (isset($_REQUEST["todate"]) && $_REQUEST['todate']) {
 	$_SESSION['CalendarFocusDate'] = $_REQUEST['todate'];
 } elseif (isset($_SESSION['CalendarFocusDate']) && $_SESSION['CalendarFocusDate']) {
 	$_REQUEST["todate"] = $_SESSION['CalendarFocusDate'];
 } else {
-	$focusdate = gmmktime(gmdate('G'),gmdate('i'),gmdate('s'),gmdate('m'),gmdate('d'),gmdate('Y')); /* user date */
+	$focusdate = $dc->getDisplayDateFromServerDate(mktime(date('G'),date('i'),date('s'), date('m'), date('d'), date('Y'))); /* user date */
 	$_SESSION['CalendarFocusDate'] = $focusdate;
 	$_REQUEST["todate"] = $_SESSION['CalendarFocusDate'];
 }
 
 $focusdate = $_REQUEST['todate'];
 list($focus_day, $focus_month, $focus_year) = array(
-	gmdate("d", $focusdate),
-	gmdate("m", $focusdate),
-	gmdate("Y", $focusdate)
+	date("d", $focusdate),
+	date("m", $focusdate),
+	date("Y", $focusdate)
 );
-$focuscell = gmmktime(0,0,0,$focus_month,$focus_day,$focus_year);
+$focuscell = mktime(0,0,0,$focus_month,$focus_day,$focus_year);
 $smarty->assign('focusdate', $focusdate);
 $smarty->assign('focuscell', $focuscell);
 

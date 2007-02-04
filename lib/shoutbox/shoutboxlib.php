@@ -84,7 +84,7 @@ class ShoutboxLib extends TikiLib {
 		$hash = md5($message);  // this checks for the same message already existing
 		$cant = $this->getOne("select count(*) from `tiki_shoutbox` where `hash`=? and `user`=?", array($hash,$user));
 					
-		$now = gmdate("U");
+		$now = date("U");
 		if ($cant) { // at least update  the timestamp - can be convenient if message is thanks or hello - we can see the last post
 			$query = "update `tiki_shoutbox` set `timestamp`=? where `user`=? and `hash`=?";
 			$bindvars = array((int)$now, $user, $hash);

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.66 2007-02-03 20:47:13 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.67 2007-02-04 20:09:32 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -218,13 +218,13 @@ if ($_SESSION['CalendarViewGroups']) {
 }
 
 define("weekInSeconds", 604800);
-$mloop = gmdate("m", $viewstart);
-$dloop = gmdate("d", $viewstart);
-$yloop = gmdate("Y", $viewstart);
+$mloop = date("m", $viewstart);
+$dloop = date("d", $viewstart);
+$yloop = date("Y", $viewstart);
 
 // note that number of weeks starts at ZERO (i.e., zero = 1 week to display).
 for ($i = 0; $i <= $numberofweeks; $i++) {
-  $wee = gmdate("W",$viewstart + ($i * weekInSeconds) + $d);
+  $wee = date("W",$viewstart + ($i * weekInSeconds) + $d);
 
   $weeks[] = $wee;
 
@@ -237,7 +237,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
       $dday = $daystart;
     } else {
       //$dday = $startOfWeek + $d * $w;
-      $dday = gmmktime(0,0,0, $mloop, $dloop++, $yloop);
+      $dday = mktime(0,0,0, $mloop, $dloop++, $yloop);
     }
     $cell[$i][$w]['day'] = $dday;
 

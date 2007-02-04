@@ -277,7 +277,7 @@ class StatsLib extends TikiLib {
 			$result=false;
 			return $result;
 		}
-    $dayzero = gmmktime(0, 0, 0, gmdate("m"), date("d"), date("Y"));
+    $dayzero = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
     if (!is_null($id)) {
     	$object=$id."?".$object;
     }
@@ -295,7 +295,7 @@ class StatsLib extends TikiLib {
 	function best_overall_object_stats($max=20,$days=0) {
 		$stats = array();
 		if ($days!=0) {
-			$mid="WHERE `day` >= ".gmmktime(0, 0, 0, gmdate("m"), date("d")-$days, date("Y"))." ";
+			$mid="WHERE `day` >= ".mktime(0, 0, 0, date("m"), date("d")-$days, date("Y"))." ";
 		} else {
 			$mid="";
 		}
@@ -318,7 +318,7 @@ class StatsLib extends TikiLib {
 	
 	function object_hits($object,$type,$days=0) {
 		if ($days!=0) {
-			$mid="AND `day` >= ".gmmktime(0, 0, 0, gmdate("m"), date("d")-$days, date("Y"))." ";
+			$mid="AND `day` >= ".mktime(0, 0, 0, date("m"), date("d")-$days, date("Y"))." ";
 		} else {
 			$mid="";
 		}
@@ -329,7 +329,7 @@ class StatsLib extends TikiLib {
 	
 	function get_daily_usage_chart_data($days=30) {
 		if ($days!=0) {
-			$mid="WHERE `day` >= ".gmmktime(0, 0, 0, gmdate("m"), date("d")-$days, date("Y"))." ";
+			$mid="WHERE `day` >= ".mktime(0, 0, 0, date("m"), date("d")-$days, date("Y"))." ";
 		} else {
 			$mid="";
 		}
@@ -337,7 +337,7 @@ class StatsLib extends TikiLib {
 		$result = $this->query($query,array(),-1,0);
 		$data=array();
 		while ($res = $result->fetchRow()) {
-			$data['xdata'][]=gmdate("Y/m/d",$res['day']);
+			$data['xdata'][]=date("Y/m/d",$res['day']);
 			$data['ydata'][]=$res['hits'];
 		}
 		return $data;

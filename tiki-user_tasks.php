@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_tasks.php,v 1.22 2007-02-03 20:47:15 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_tasks.php,v 1.23 2007-02-04 20:09:33 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -348,7 +348,7 @@ if (isset($_REQUEST['preview'])) {
 
 if ((isset($_REQUEST['save'])) || (isset($_REQUEST['preview']))) {
 	$dc = $tikilib->get_date_converter($user);
-	$now = gmdate("U");
+	$now = date("U");
 	$auto_accepted_status = true;
 	$save = array();
 	$save_head = array();
@@ -367,7 +367,7 @@ if ((isset($_REQUEST['save'])) || (isset($_REQUEST['preview']))) {
 		isset($_REQUEST['start_Month']) and 
 		isset($_REQUEST['start_Day']) and 
 		isset($_REQUEST['start_Year'])){
-			$start_date = $dc->getServerDateFromDisplayDate(gmmktime(	$_REQUEST['start_Hour'], 
+			$start_date = $dc->getServerDateFromDisplayDate(mktime(	$_REQUEST['start_Hour'], 
 																	$_REQUEST['start_Minute'], 
 																	0, 
 																	$_REQUEST['start_Month'], 
@@ -381,7 +381,7 @@ if ((isset($_REQUEST['save'])) || (isset($_REQUEST['preview']))) {
 		isset($_REQUEST['end_Month']) and 
 		isset($_REQUEST['end_Day']) and 
 		isset($_REQUEST['end_Year'])){
-			$end_date = $dc->getServerDateFromDisplayDate(gmmktime(	$_REQUEST['end_Hour'], 
+			$end_date = $dc->getServerDateFromDisplayDate(mktime(	$_REQUEST['end_Hour'], 
 																	$_REQUEST['end_Minute'], 
 																	0, 
 																	$_REQUEST['end_Month'], 
@@ -444,17 +444,17 @@ if ((isset($_REQUEST['save'])) || (isset($_REQUEST['preview']))) {
 		$save['start'] = $start_date;
 			$msg_changes .=  tra('Start').": ";
 			if($info['start'] != null) {
-				$msg_changes .= gmdate("l dS of F Y H:i:s", $info['start']).' --> ';
+				$msg_changes .= date("l dS of F Y H:i:s", $info['start']).' --> ';
 			}
-			$msg_changes .= gmdate("l dS of F Y H:i:s", $save['start']) ."\n";
+			$msg_changes .= date("l dS of F Y H:i:s", $save['start']) ."\n";
 	}
 	if(isset($_REQUEST['use_end_date']) and $info['end'] != $end_date){
 		$save['end'] = $end_date;
 			$msg_changes .=  tra('END').": ";
 			if($info['end'] != null) {
-				$msg_changes .= gmdate("l dS of F Y H:i:s", $info['end']).' --> ';
+				$msg_changes .= date("l dS of F Y H:i:s", $info['end']).' --> ';
 			}
-			$msg_changes .= gmdate("l dS of F Y H:i:s", $save['end']) ."\n";
+			$msg_changes .= date("l dS of F Y H:i:s", $save['end']) ."\n";
 	}
 	if(isset($_REQUEST['priority']) and $info['priority'] != $_REQUEST['priority']){
 		$save['priority'] = $_REQUEST['priority'];
@@ -533,11 +533,11 @@ if ((isset($_REQUEST['save'])) || (isset($_REQUEST['preview']))) {
         $info['public_for_group'] = $_REQUEST['public_for_group'];
         $info['rights_by_creator'] = (isset($_REQUEST['rights_by_creator']))? $_REQUEST['rights_by_creator'] : NULL;
       //  $task['deleted'] = (isset($_REQUEST['deleted']))? $_REQUEST['deleted'] :NULL;
-        $info['created'] = (isset($_REQUEST['created']))? $_REQUEST['created'] :gmdate("U");
+        $info['created'] = (isset($_REQUEST['created']))? $_REQUEST['created'] :date("U");
         /*--history --*/
       //  $task['belongs_to'] = (isset($_REQUEST['belongs_to']))? :;
       //  $task['lasteditor'] = (isset($_REQUEST['lasteditor']))? :;
-      //  $task['lastchanges'] = gmdate("U");
+      //  $task['lastchanges'] = date("U");
         /*--*/
         $info['percentage_null'] = ($_REQUEST['percentage'] == 'w');
 
@@ -638,10 +638,10 @@ if (isset($_REQUEST['save'])) {
 		}
 		$mail_data .= ".\n\n";
 		if ($info['start'] !== NULL){
-			$mail_data .= tra("You've to start your work at least on").": ".gmdate("j.M.Y - H:i",$info['end'])."\n";
+			$mail_data .= tra("You've to start your work at least on").": ".date("j.M.Y - H:i",$info['end'])."\n";
 		}
 		if ($info['end'] !== NULL){
-			$mail_data .= tra("You've to finish your work on").": ".gmdate("j.M.Y - H:i",$info['end'])."\n";
+			$mail_data .= tra("You've to finish your work on").": ".date("j.M.Y - H:i",$info['end'])."\n";
 		}
 
 		$mail_data .= "\n".tra("Login and click the link below")."\n";
@@ -686,14 +686,14 @@ if (isset($_REQUEST['save'])) {
 
 $smarty->assign('taskId', $_REQUEST['taskId']);
 $smarty->assign('info', $info);
-$smarty->assign('created_Month',  gmdate('m', $info['created']));
-$smarty->assign('created_Day',  gmdate('d', $info['created']));
-$smarty->assign('created_Year',  gmdate('Y', $info['created']));
-$smarty->assign('created_Hour',  gmdate('H', $info['created']));
-$smarty->assign('created_Minute',  gmdate('M', $info['created']));
+$smarty->assign('created_Month',  date('m', $info['created']));
+$smarty->assign('created_Day',  date('d', $info['created']));
+$smarty->assign('created_Year',  date('Y', $info['created']));
+$smarty->assign('created_Hour',  date('H', $info['created']));
+$smarty->assign('created_Minute',  date('M', $info['created']));
 
 if ((!isset($info['start'])) || ($info['start'] == null)) {
-	$info['start'] = gmdate("U");
+	$info['start'] = date("U");
 	$smarty->assign('start_date', $info['start'] );
 }
 else {

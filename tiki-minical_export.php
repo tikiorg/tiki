@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-minical_export.php,v 1.7 2007-02-03 20:47:14 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-minical_export.php,v 1.8 2007-02-04 20:09:33 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -39,17 +39,17 @@ foreach ($events['data'] as $event) {
 	$line = array();
 
 	$line[] = _csv($event['title']);
-	$line[] = _csv(gmdate("n/j/Y", $event['start']));
-	$line[] = _csv(gmdate("g:i:s A", $event['start']));
-	$line[] = _csv(gmdate("n/j/Y", $event['end']));
-	$line[] = _csv(gmdate("g:i:s A", $event['end']));
+	$line[] = _csv(date("n/j/Y", $event['start']));
+	$line[] = _csv(date("g:i:s A", $event['start']));
+	$line[] = _csv(date("n/j/Y", $event['end']));
+	$line[] = _csv(date("g:i:s A", $event['end']));
 	$line[] = _csv('False');
 
 	if ($minical_reminders) {
 		$line[] = _csv('True');
 
-		$line[] = _csv(gmdate("n/j/Y", $event['start'] - $minical_reminders));
-		$line[] = _csv(gmdate("g:i:s A", $event['start'] - $minical_reminders));
+		$line[] = _csv(date("n/j/Y", $event['start'] - $minical_reminders));
+		$line[] = _csv(date("g:i:s A", $event['start'] - $minical_reminders));
 	} else {
 		$line[] = _csv('False');
 

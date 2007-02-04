@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.86 2007-02-03 20:47:23 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.87 2007-02-04 20:09:39 mose Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -816,7 +816,7 @@ class ImageGalsLib extends TikiLib {
 		if ($t_data && is_string($t_data)) {
 			$t_data = array('data' => $t_data, 'xsize' => 0, 'ysize' => 0);
 		}
-		$now = gmdate("U");
+		$now = date("U");
 		$path = '';
 
 		if ($gal_use_db == 'y') {
@@ -1749,7 +1749,7 @@ class ImageGalsLib extends TikiLib {
 		$name = strip_tags($name);
 
 		$description = strip_tags($description);
-		$now = gmdate("U");
+		$now = date("U");
 
 		// check if the gallery already exists. if yes: do update, if no: update it
 		if ($galleryId<1)

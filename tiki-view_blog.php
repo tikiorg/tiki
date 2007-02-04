@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.56 2007-02-03 20:47:15 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.57 2007-02-04 20:09:33 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -177,7 +177,7 @@ if (!isset($_REQUEST["offset"])) {
 
 $smarty->assign_by_ref('offset', $offset);
 
-$now = gmdate("U");
+$now = date("U");
 
 if (isset($_REQUEST["find"])) {
 	$find = $_REQUEST["find"];
@@ -246,7 +246,7 @@ if ($user && $tiki_p_notepad == 'y' && $feature_notepad == 'y' && isset($_REQUES
 	$post_info = $bloglib->get_post($_REQUEST['savenotepad']);
 
 	$tikilib->replace_note($user,
-		0, $post_info['title'] ? $post_info['title'] : gmdate("d/m/Y [h:i]", $post_info['created']), $post_info['data']);
+		0, $post_info['title'] ? $post_info['title'] : date("d/m/Y [h:i]", $post_info['created']), $post_info['data']);
 }
 
 if ($feature_user_watches == 'y') {

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.59 2007-02-03 20:47:22 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.60 2007-02-04 20:09:38 mose Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -78,7 +78,7 @@ class FileGalLib extends TikiLib {
 		}
 
 		$description = strip_tags($description);
-		$now = gmdate("U");
+		$now = date("U");
 
 		if ($fgal_allow_duplicates != 'y' &&
 		    $this->getOne("select count(*) from `tiki_files` where `hash`=?",array($checksum)))
@@ -314,7 +314,7 @@ class FileGalLib extends TikiLib {
 		$name = strip_tags($name);
 
 		$description = strip_tags($description);
-		$now = gmdate("U");
+		$now = date("U");
 		if ($sort_mode == 'created_desc') {
 			$sort_mode = null;
 		}
@@ -449,14 +449,14 @@ class FileGalLib extends TikiLib {
 		// Update the fields in the database
 		$name = strip_tags($name);
 
-		$now = gmdate("U");
+		$now = date("U");
 
 		$description = strip_tags($description);
 		$query = "update `tiki_files` set `name`=?, `description`=?, `lastModif`=?, `lastModifUser`=? where `fileId`=?";
 		$result = $this->query($query,array($name,$description,(int)$now,$user,$id));
 
 		// Get the gallery id for the file and update the last modified field
-		$now = gmdate("U");
+		$now = date("U");
 		$galleryId = $this->getOne("select `galleryId` from `tiki_files` where `fileId`=?",array($id));
 
 		if ($galleryId) {
@@ -491,7 +491,7 @@ class FileGalLib extends TikiLib {
 		}
 
 		$description = strip_tags($description);
-		$now = gmdate("U");
+		$now = date("U");
 
 		$search_data = '';
 		if ($tikilib->get_preference("fgal_enable_auto_indexing") != 'n') {

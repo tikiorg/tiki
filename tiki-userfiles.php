@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-userfiles.php,v 1.17 2007-02-03 20:47:15 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-userfiles.php,v 1.18 2007-02-04 20:09:33 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -152,7 +152,7 @@ $smarty->assign_by_ref('sort_mode', $sort_mode);
 if (isset($_SESSION['thedate'])) {
 	$pdate = $_SESSION['thedate'];
 } else {
-	$pdate = gmdate("U");
+	$pdate = date("U");
 }
 
 $channels = $userfileslib->list_userfiles($user, $offset, $maxRecords, $sort_mode, $find);

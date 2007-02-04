@@ -32,7 +32,7 @@
  * @author     Martin Jansen <mj@php.net>
  * @author     Daniel Convissor <danielc@php.net>
  * @copyright  1999-2001 Edd Dumbill, 2001-2005 The PHP Group
- * @version    CVS: $Id: RPC.php,v 1.3 2007-02-03 20:47:31 nyloth Exp $
+ * @version    CVS: $Id: RPC.php,v 1.4 2007-02-04 20:09:41 mose Exp $
  * @link       http://pear.php.net/package/XML_RPC
  */
 
@@ -1802,14 +1802,14 @@ class XML_RPC_Value extends XML_RPC_Base
 function XML_RPC_iso8601_encode($timet, $utc = 0)
 {
     if (!$utc) {
-        $t = gmstrftime('%Y%m%dT%H:%M:%S', $timet);
+        $t = strftime('%Y%m%dT%H:%M:%S', $timet);
     } else {
         if (function_exists('gmstrftime')) {
             // gmstrftime doesn't exist in some versions
             // of PHP
             $t = gmstrftime('%Y%m%dT%H:%M:%S', $timet);
         } else {
-            $t = gmstrftime('%Y%m%dT%H:%M:%S', $timet - gmdate('Z'));
+            $t = strftime('%Y%m%dT%H:%M:%S', $timet - date('Z'));
         }
     }
     return $t;
@@ -1835,7 +1835,7 @@ function XML_RPC_iso8601_decode($idate, $utc = 0)
         if ($utc) {
             $t = gmmktime($regs[4], $regs[5], $regs[6], $regs[2], $regs[3], $regs[1]);
         } else {
-            $t = gmmktime($regs[4], $regs[5], $regs[6], $regs[2], $regs[3], $regs[1]);
+            $t = mktime($regs[4], $regs[5], $regs[6], $regs[2], $regs[3], $regs[1]);
         }
     }
     return $t;

@@ -101,7 +101,7 @@ class Instance extends Base {
     $this->nextActivity = 0;
     $this->setNextUser('');
     $this->pId = $pid;
-    $now = gmdate("U");
+    $now = date("U");
     $this->started=$now;
     $this->owner = $user;
     $props=serialize($this->properties);
@@ -280,7 +280,7 @@ class Instance extends Base {
   Resets the start time of the activity indicated to the current time.
   */
   function setActivityStarted($activityId) {
-    $now = gmdate("U");
+    $now = date("U");
     for($i=0;$i<count($this->activities);$i++) {
       if($this->activities[$i]['activityId']==$activityId) {
         $this->activities[$i]['started']=$now;
@@ -389,7 +389,7 @@ class Instance extends Base {
     }
 
 	// Now that we have an instance, we can set $activityId as 'completed'
-    $now = gmdate("U");
+    $now = date("U");
     $query = "UPDATE `" . GALAXIA_TABLE_PREFIX . "instance_activities` SET `ended`=?, `user`=? WHERE `activityId`=? AND `instanceId`=?";
     $this->query($query, array((int)$now, $theuser, (int)$activityId, (int)$this->instanceId));
 
@@ -416,7 +416,7 @@ class Instance extends Base {
 			$putuser = $act['user'];
 		}
 
-		$ended = gmdate("U");
+		$ended = date("U");
 		$properties = serialize($this->properties);
 		$query = "INSERT INTO `" . GALAXIA_TABLE_PREFIX . "workitems` (`instanceId`, `orderId`, `activityId`, `started`, `ended`, `properties`, `user`) VALUES (?,?,?,?,?,?,?)";
 		$this->query($query, array((int)$iid, (int)$max, (int)$activityId, (int)$started, (int)$ended, $properties, $theuser));
@@ -492,7 +492,7 @@ class Instance extends Base {
     }
       
     // Now set ended
-    $now = gmdate("U");
+    $now = date("U");
     $query = "update `".GALAXIA_TABLE_PREFIX."instance_activities` set `ended`=? where `activityId`=? and `instanceId`=?";
     $this->query($query,array((int)$now,(int)$activityId,(int)$this->instanceId));
     
@@ -514,7 +514,7 @@ class Instance extends Base {
         $started=$act['started'];
         $putuser = $act['user'];
       }
-      $ended = gmdate("U");
+      $ended = date("U");
       $properties = serialize($this->properties);
       $query="insert into `".GALAXIA_TABLE_PREFIX."workitems`(`instanceId`,`orderId`,`activityId`,`started`,`ended`,`properties`,`user`) values(?,?,?,?,?,?,?)";    
       $this->query($query,array((int)$iid,(int)$max,(int)$activityId,(int)$started,(int)$ended,$properties,$putuser));
@@ -536,7 +536,7 @@ class Instance extends Base {
   */
   function terminate($status = 'completed') {
     //Set the status of the instance to completed
-    $now = gmdate("U");
+    $now = date("U");
     $query = "update `".GALAXIA_TABLE_PREFIX."instances` set `status`=?, `ended`=? where `instanceId`=?";
     $this->query($query,array($status,(int)$now,(int)$this->instanceId));
     //$query = "delete from `".GALAXIA_TABLE_PREFIX."instance_activities` where `instanceId`=?";
@@ -583,7 +583,7 @@ class Instance extends Base {
 		$putuser = (count($candidates) == 1) ? $candidates[0] : '*';
     }        
 
-	$now = gmdate("U");
+	$now = date("U");
     $iid = $this->instanceId;
 	
 	// Test if the join activity has preceding activities that are not completed yet
@@ -672,7 +672,7 @@ class Instance extends Base {
       if ($this->getOne("select count(*) from `".GALAXIA_TABLE_PREFIX."instance_comments` where `instanceId`=? and `hash`=?",array($iid,$hash))) {
         return false;
       }
-      $now = gmdate("U");
+      $now = date("U");
       $query ="insert into `".GALAXIA_TABLE_PREFIX."instance_comments`(`instanceId`,`user`,`activityId`,`activity`,`title`,`comment`,`timestamp`,`hash`) values(?,?,?,?,?,?,?,?)";
       $this->query($query,array((int)$iid,$user,(int)$activityId,$activity,$title,$comment,(int)$now,$hash));
     }  

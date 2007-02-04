@@ -144,14 +144,15 @@ class CalendarLib extends TikiLib {
 
 	/* tsart ans tstop are in user time - the data base is in server time */
 	function list_raw_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode='start_asc', $find='') {
-		global $tikilib, $user;
+		global $user;
+		$dc = $this->get_date_converter($user);
 
 		if (sizeOf($calIds) == 0) {
 		    return array();
 		}
 
-		$tstart = $tikilib->date_UTC_to_display($tstart);/* user time -> server time */;
-		$tstop = $tikilib->date_UTC_to_display($tstop);
+		$tstart = $dc->getDisplayDateFromUTC($tstart);/* user time -> server time */;
+		$tstop = $dc->getDisplayDateFromUTC($tstop);
 		
 		$where = array();
 		$bindvars=array();
@@ -188,21 +189,21 @@ class CalendarLib extends TikiLib {
 		$ret = array();
 		$list = $this->list_raw_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode, $find);
 		foreach ($list as $res) {
-			$mloop = gmdate("m", $res['start']);
-			$dloop = gmdate("d", $res['start']);
-			$yloop = gmdate("Y", $res['start']);
-			$dstart = gmmktime(0, 0, 0, $mloop, $dloop, $yloop);
-			$dend = gmmktime(0, 0, 0, gmdate("m", $res['end']), gmdate("d", $res['end']), gmdate("Y", $res['end']));
-			$tstart = gmdate("Hi", $res["start"]);
-			$tend = gmdate("Hi", $res["end"]);
-			for ($i = $dstart; $i <= $dend; $i = gmmktime(0, 0, 0, $mloop, ++$dloop, $yloop)) {
+			$mloop = date("m", $res['start']);
+			$dloop = date("d", $res['start']);
+			$yloop = date("Y", $res['start']);
+			$dstart = mktime(0, 0, 0, $mloop, $dloop, $yloop);
+			$dend = mktime(0, 0, 0, date("m", $res['end']), date("d", $res['end']), date("Y", $res['end']));
+			$tstart = date("Hi", $res["start"]);
+			$tend = date("Hi", $res["end"]);
+			for ($i = $dstart; $i <= $dend; $i = mktime(0, 0, 0, $mloop, ++$dloop, $yloop)) {
 				/* $head is in user time */
 				if ($dstart == $dend) {
-					$head = gmdate("H:i", $res["start"]). " - " . gmdate("H:i", $res["end"]);
+					$head = date("H:i", $res["start"]). " - " . date("H:i", $res["end"]);
 				} elseif ($i == $dstart) {
-					$head = gmdate("H:i", $res["start"]). " ...";
+					$head = date("H:i", $res["start"]). " ...";
 				} elseif ($i == $dend) {
-					$head = " ... " . gmdate("H:i", $res["end"]);
+					$head = " ... " . date("H:i", $res["end"]);
 				} else {
 					$head = " ... " . tra("continued"). " ... ";
 				}
@@ -232,7 +233,7 @@ class CalendarLib extends TikiLib {
 	}
 
 	function get_item($calitemId) {
-		global $tikilib, $user;
+		global $user;
 		$query = "select i.`calitemId` as `calitemId`, i.`calendarId` as `calendarId`, i.`user` as `user`, i.`start` as `start`, i.`end` as `end`, t.`name` as `calname`, ";
 		$query.= "i.`locationId` as `locationId`, l.`name` as `locationName`, i.`categoryId` as `categoryId`, c.`name` as `categoryName`, i.`priority` as `priority`, i.`nlId` as `nlId`, ";
 		$query.= "i.`status` as `status`, i.`url` as `url`, i.`lang` as `lang`, i.`name` as `name`, i.`description` as `description`, i.`created` as `created`, i.`lastmodif` as `lastModif`, ";
@@ -258,8 +259,9 @@ class CalendarLib extends TikiLib {
 		$res["participants"] = $ppl;
 		$res["organizers"] = $org;
 		
-		$res["start"] = $tikilib->date_UTC_to_display($res["start"]); /* user time */
-		$res["end"] = $tikilib->date_UTC_to_display($res["end"]);
+		$dc = $this->get_date_converter($user);
+		$res["start"] = $dc->getDisplayDateFromUTC($res["start"]); /* user time */
+		$res["end"] = $dc->getDisplayDateFromUTC($res["end"]);
 
 		$res['time_start'] = $res['start'] % 86400;
 		$res['date_start'] = (int)$res['start'] - (int)$res['time_start'];
@@ -274,14 +276,15 @@ class CalendarLib extends TikiLib {
 	}
 
 	function set_item($user, $calitemId, $data) {
-		global $tikilib, $user;
+		global $user;
 		if (!isset($data['calendarId'])) {
 			return false;
 		}
 		$caldata = $this->get_calendar($data['calendarId']);
 
-		$data['start'] = $tikilib->date_display_to_UTC($data['start']);/* user time -> server time */
-		$data['end'] = $tikilib->date_display_to_UTC($data['end']);
+		$dc = $this->get_date_converter($user);
+		$data['start'] = $dc->getUTCFromDisplayDate($data['start']);/* user time -> server time */
+		$data['end'] = $dc->getUTCFromDisplayDate($data['end']);
 
 		if ($caldata['customlocations'] == 'y') {
 			if (!$data["locationId"] and !$data["newloc"]) {

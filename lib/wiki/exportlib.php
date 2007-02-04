@@ -26,7 +26,7 @@ class ExportLib extends TikiLib {
 		while ($res = $result->fetchRow()) {
 			$page = $res["pageName"];
 			$content = $this->export_wiki_page($page, 0);
-			$tar->addData($page, $content, gmdate("U"));
+			$tar->addData($page, $content, date("U"));
 		}
 		$dump = "dump";
 		if ($tikidomain) { $dump.= "/$tikidomain"; }

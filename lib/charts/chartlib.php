@@ -43,7 +43,7 @@ class ChartLib extends TikiLib {
 	function user_vote($user, $itemId, $points = 0) {
 		$chartId = $this->getOne("select `chartId` from `tiki_chart_items` where `itemId`=?",array((int) $itemId));
 
-		$now = gmdate("U");
+		$now = date("U");
 
 		// Register that the user has voted the item
 		if ($user) {
@@ -83,7 +83,7 @@ class ChartLib extends TikiLib {
 	}
 
 	function generate_new_ranking($chartId) {
-		$now = gmdate("U");
+		$now = date("U");
 
 		$info = $this->get_chart($chartId);
 
@@ -169,7 +169,7 @@ class ChartLib extends TikiLib {
 	}
 
 	function purge_user_votes($chartId, $again) {
-		$now = gmdate("U");
+		$now = date("U");
 
 		$query = "delete from `tiki_charts_votes` where `timestamp` + ? < ?";
 		$this->query($query,array((int) $again,(int) $now));
@@ -264,7 +264,7 @@ class ChartLib extends TikiLib {
 	function replace_chart($chartId, $vars) {
 		$TABLE_NAME = 'tiki_charts';
 
-		$now = gmdate("U");
+		$now = date("U");
 		$vars['created'] = $now;
 
 		foreach ($vars as $key => $value) {
@@ -341,7 +341,7 @@ class ChartLib extends TikiLib {
 	function replace_chart_item($itemId, $vars) {
 		$TABLE_NAME = 'tiki_chart_items';
 
-		$now = gmdate("U");
+		$now = date("U");
 		$vars['created'] = $now;
 
 		if (!isset($vars['votes']))

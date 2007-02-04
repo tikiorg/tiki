@@ -31,7 +31,7 @@ $output = $rsslib->get_from_cache($uniqueid);
 if ($output["data"]=="EMPTY") {
 	$title = (!empty($desc_rss_directories)) ? $desc_rss_directories :tra("Tiki RSS feed for directory sites");
 	$desc = (!empty($desc_rss_directories)) ? $desc_rss_directories :tra("Last sites.");
-	$now = gmdate("U");
+	$now = date("U");
 	$id = "siteId";
 	$titleId = "name";
 	$descId = "description";

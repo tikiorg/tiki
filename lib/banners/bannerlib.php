@@ -24,10 +24,10 @@ class BannerLib extends TikiLib {
 		// zone
 		// maxImpressions and impressions
 		# TODO localize
-		$dw = "`".strtolower(gmdate("D"))."`";
+		$dw = "`".strtolower(date("D"))."`";
 
-		$hour = gmdate("H"). gmdate("i");
-		$now = gmdate("U");
+		$hour = date("H"). date("i");
+		$now = date("U");
 		$raw = '';
 		//
 		//
@@ -180,7 +180,7 @@ class BannerLib extends TikiLib {
 		$maxImpressions, $zone) {
 		$imageData = urldecode($imageData);
 		//$imageData = '';
-		$now = gmdate("U");
+		$now = date("U");
 
 		if ($bannerId) {
 			$query = "update `tiki_banners` set

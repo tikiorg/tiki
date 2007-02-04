@@ -1046,7 +1046,7 @@ if ($diff)
       $html .= sprintf(tra ("version %s"), $wiki['version']);
       $html .= "</td><td>";
       $html .= sprintf(tra ("last modified on %s"),
-	gmdate($datetimeformat, $wiki['lastmodified']));
+	date($datetimeformat, $wiki['lastmodified']));
       $html .= "</td><td>";
       $html .= sprintf (tra ("by %s"), $wiki['author']);
       $html .= "</td>";
@@ -1064,7 +1064,7 @@ if ($diff)
       $html .= sprintf(tra ("version %s"), $archive['version']);
       $html .= "</td><td>";
       $html .= sprintf(tra ("last modified on %s"),
-	gmdate($datetimeformat, $archive['lastmodified']));
+	date($datetimeformat, $archive['lastmodified']));
       $html .= "</td><td>";
       $html .= sprintf(tra ("by %s"), $archive['author']);
       $html .= "</td>";

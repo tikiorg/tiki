@@ -75,7 +75,7 @@ class TaskLib extends TikiLib {
 		$task['priority'] = 3;
 		$task['completed'] = NULL;
 		$task['deleted'] = NULL;
-		$task['created'] = gmdate("U");
+		$task['created'] = date("U");
 		$task['status'] = NULL;
 		$task['percentage'] = NULL;
 		$task['accepted_creator'] = NULL;
@@ -88,7 +88,7 @@ class TaskLib extends TikiLib {
 		$task['start'] = NULL;
 		$task['end'] =NULL;
 		$task['lasteditor'] = $user;
-		$task['lastchanges'] = gmdate("U");
+		$task['lastchanges'] = date("U");
 		/*--*/
 		$task['percentage_null'] = true;
 		
@@ -161,7 +161,7 @@ class TaskLib extends TikiLib {
 			$entries['completed'] = NULL;
 		} else if ($entries['percentage'] >= 100) {
 			$entries['status'] = 'c'; 
-			$entries['completed'] = gmdate('U');
+			$entries['completed'] = date('U');
 		} else { 
 			$entries['status'] = 'o'; 
 			$entries['completed'] = NULL;
@@ -172,7 +172,7 @@ class TaskLib extends TikiLib {
 			$count_entries = 0;
 			$entries['task_version'] = $entries['task_version'] + 1;
 			$entries['lasteditor'] = $user;
-			$entries['lastchanges'] = gmdate('U');
+			$entries['lastchanges'] = date('U');
 			$comma = '';
 			foreach ($entries as $key => $value) {
 				$query .= "$comma `$key`";
@@ -207,7 +207,7 @@ class TaskLib extends TikiLib {
 		$result = $this->query("SELECT * FROM `tiki_user_tasks` WHERE taskId = ?",array($taskId)); 
 		$res = $result->fetchRow(); 
 		if($user == $res['creator'] or  ($user == $res['user'] and $res['rights_by_creator'] == null) or $admin_mode){
-			$values = array('deleted' => (int)gmdate('U'));
+			$values = array('deleted' => (int)date('U'));
 			$this->update_task($taskId, $user, $values, null, $admin_mode);
 		}
     }
@@ -232,7 +232,7 @@ class TaskLib extends TikiLib {
 	}
 	
 	function mark_complete_task($taskId, $user) {
-		$values = array('percentage' => (int) 100, 'status' => 'c', 'completed' => (int)gmdate('U'));
+		$values = array('percentage' => (int) 100, 'status' => 'c', 'completed' => (int)date('U'));
 		$this->update_task($taskId, $user, $values);
 	}
 	

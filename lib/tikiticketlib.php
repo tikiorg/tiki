@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/lib/tikiticketlib.php,v 1.21 2007-02-03 20:47:17 nyloth Exp $
+/* $Header: /cvsroot/tikiwiki/tiki/lib/tikiticketlib.php,v 1.22 2007-02-04 20:09:35 mose Exp $
 
 Tikiwiki CSRF protection.
 also called Sea-Surfing
@@ -76,8 +76,8 @@ function key_check($area) {
 		return true;
 	} else {
 		if (isset($_SESSION["ticket_$area"])
-			and $_SESSION["ticket_$area"] < gmdate('U')
-			and $_SESSION["ticket_$area"] > (gmdate('U')-(60*15))) {
+			and $_SESSION["ticket_$area"] < date('U')
+			and $_SESSION["ticket_$area"] > (date('U')-(60*15))) {
 			$smarty->load_filter('pre', 'ticket');
 			if ($user) {
 				$whose = $user;

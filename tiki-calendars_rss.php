@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendars_rss.php,v 1.7 2007-02-03 20:47:13 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendars_rss.php,v 1.8 2007-02-04 20:09:32 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -39,7 +39,7 @@ if ($output["data"]=="EMPTY") {
 	$title = (!empty($title_rss_calendars)) ? $title_rss_calendars : $tmp;
 	$tmp = tra("Upcoming events.");
 	$desc = (!empty($desc_rss_calendars)) ? $desc_rss_calendars : $tmp;
-	$now = gmdate("U");
+	$now = date("U");
 	$id = "calitemId";
 	$titleId = "name";
 	$descId = "body";

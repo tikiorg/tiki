@@ -50,7 +50,7 @@ class PollLib extends PollLibShared {
 	}
 
 	function list_active_polls($offset, $maxRecords, $sort_mode, $find) {
-		$now = gmdate("U");
+		$now = date("U");
 
 		if ($find) {
 			$findesc = '%' . $find . '%';
@@ -78,7 +78,7 @@ class PollLib extends PollLibShared {
 	}
 
 	function list_all_polls($offset, $maxRecords, $sort_mode, $find) {
-		$now = gmdate("U");
+		$now = date("U");
 
 		if ($find) {
 			$findesc = '%' . $find . '%';
@@ -106,7 +106,7 @@ class PollLib extends PollLibShared {
 	}
 
 	function set_last_poll() {
-		$now = gmdate("U");
+		$now = date("U");
 		$query = "select max(`publishDate`) from `tiki_polls` where `publishDate`<=?";
 		$last = $this->getOne($query,array((int) $now));
 		$query = "update `tiki_polls` set `active`=? where `publishDate`=?";
@@ -114,7 +114,7 @@ class PollLib extends PollLibShared {
 	}
 
 	function close_all_polls() {
-		$now = gmdate("U");
+		$now = date("U");
 		$query = "select max(`publishDate`) from `tiki_polls` where `publishDate`<=?";
 		$last = $this->getOne($query,array((int) $now));
 		$query = "update `tiki_polls` set `active`=? where `publishDate`<=?";
@@ -122,7 +122,7 @@ class PollLib extends PollLibShared {
 	}
 
 	function active_all_polls() {
-		$now = gmdate("U");
+		$now = date("U");
 		$query = "update `tiki_polls` set `active`=? where `publishDate`<=?";
 		$result = $this->query($query,array('a',(int) $now));
 	}

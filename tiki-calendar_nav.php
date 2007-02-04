@@ -35,18 +35,18 @@ $short_format_day = tra("%m/%d");
 $smarty->assign('short_format_day', $short_format_day);
 
 // Windows requires clean dates!
-$focus_prevday = gmmktime(0, 0, 0, $focus_month, $focus_day - 1, $focus_year);
-$focus_nextday = gmmktime(0, 0, 0, $focus_month, $focus_day + 1, $focus_year);
-$focus_prevweek = gmmktime(0, 0, 0, $focus_month, $focus_day - 7, $focus_year);
-$focus_nextweek = gmmktime(0, 0, 0, $focus_month, $focus_day + 7, $focus_year);
-$focus_prevmonth = gmmktime(0, 0, 0, $focus_month - 1, $focus_day, $focus_year);
-$focus_nextmonth = gmmktime(0, 0, 0, $focus_month + 1, $focus_day, $focus_year);
-$focus_prevquarter = gmmktime(0, 0, 0, $focus_month - 3, $focus_day, $focus_year);
-$focus_nextquarter = gmmktime(0, 0, 0, $focus_month + 3, $focus_day, $focus_year);
-$focus_prevsemester = gmmktime(0, 0, 0, $focus_month - 6, $focus_day, $focus_year);
-$focus_nextsemester = gmmktime(0, 0, 0, $focus_month + 6, $focus_day, $focus_year);
-$focus_prevyear = gmmktime(0, 0, 0, $focus_month - 12, $focus_day, $focus_year);
-$focus_nextyear = gmmktime(0, 0, 0, $focus_month + 12, $focus_day, $focus_year);
+$focus_prevday = mktime(0, 0, 0, $focus_month, $focus_day - 1, $focus_year);
+$focus_nextday = mktime(0, 0, 0, $focus_month, $focus_day + 1, $focus_year);
+$focus_prevweek = mktime(0, 0, 0, $focus_month, $focus_day - 7, $focus_year);
+$focus_nextweek = mktime(0, 0, 0, $focus_month, $focus_day + 7, $focus_year);
+$focus_prevmonth = mktime(0, 0, 0, $focus_month - 1, $focus_day, $focus_year);
+$focus_nextmonth = mktime(0, 0, 0, $focus_month + 1, $focus_day, $focus_year);
+$focus_prevquarter = mktime(0, 0, 0, $focus_month - 3, $focus_day, $focus_year);
+$focus_nextquarter = mktime(0, 0, 0, $focus_month + 3, $focus_day, $focus_year);
+$focus_prevsemester = mktime(0, 0, 0, $focus_month - 6, $focus_day, $focus_year);
+$focus_nextsemester = mktime(0, 0, 0, $focus_month + 6, $focus_day, $focus_year);
+$focus_prevyear = mktime(0, 0, 0, $focus_month - 12, $focus_day, $focus_year);
+$focus_nextyear = mktime(0, 0, 0, $focus_month + 12, $focus_day, $focus_year);
 
 $smarty->assign('daybefore', $focus_prevday);
 $smarty->assign('weekbefore', $focus_prevweek);
@@ -64,17 +64,17 @@ $smarty->assign('yearafter', $focus_nextyear);
 $smarty->assign('focusmonth', $focus_month);
 $smarty->assign('focusdate', $focusdate);
 $smarty->assign('focuscell', $focuscell);
-$now = gmmktime(gmdate('G'), gmdate('i'), gmdate('s'), gmdate('n'), gmdate('d'), gmdate('Y')); /* server date */
+$now = mktime(date('G'), date('i'), date('s'), date('n'), date('d'), date('Y')); /* server date */
 $smarty->assign('now', $now); /* server date */
-$smarty->assign('nowUser', $now); /* user time */
+$smarty->assign('nowUser', $dc->getDisplayDateFromServerDate($now)); /* user time */
 
 
 $weekdays = range(0, 6);
 $hours = range(0, 23);
 
 $d = 60 * 60 * 24;
-$currentweek = gmdate("W", $focusdate);
-$wd = gmdate('w', $focusdate);
+$currentweek = date("W", $focusdate);
+$wd = date('w', $focusdate);
 
 //prepare for select first day of week (Hausi)
 if ($firstDayofWeek == 1) {
@@ -94,11 +94,11 @@ $smarty->assign('viewyear', $focus_year);
 
 // calculate timespan for sql query
 if ($calendarViewMode == 'month' || $calendarViewMode == 'quarter' || $calendarViewMode == 'semester') {
-	$daystart = gmmktime(0,0,0, $focus_month, 1, $focus_year);
+	$daystart = mktime(0,0,0, $focus_month, 1, $focus_year);
 } elseif ($calendarViewMode == 'year') {
-	$daystart = gmmktime(0,0,0, 1, 1, $focus_year);
+	$daystart = mktime(0,0,0, 1, 1, $focus_year);
 } else {
-	$daystart = gmmktime(0,0,0,$focus_month, $focus_day, $focus_year);
+	$daystart = mktime(0,0,0,$focus_month, $focus_day, $focus_year);
 }
 $viewstart = $daystart; // viewstart is the beginning of the display, daystart is the beginning of the selected period
 	
@@ -106,7 +106,7 @@ if ($calendarViewMode == 'month' ||
 	 $calendarViewMode == 'quarter' ||
 	 $calendarViewMode == 'semester' ||
 	 $calendarViewMode == 'year'	) {
-   $TmpWeekday = gmdate("w",$viewstart);
+   $TmpWeekday = date("w",$viewstart);
 //prepare for select first day of week (Hausi)
    if($firstDayofWeek == 1){
 	$TmpWeekday--;
@@ -119,28 +119,28 @@ if ($calendarViewMode == 'month' ||
    $viewstart -= $TmpWeekday * $d;
    // this is the last day of $focus_month
    if ($calendarViewMode == 'month') {
-     $viewend = gmmktime(0,0,0,$focus_month + 1, 1, $focus_year);
+     $viewend = mktime(0,0,0,$focus_month + 1, 1, $focus_year);
    } elseif ($calendarViewMode == 'quarter') {
-     $viewend = gmmktime(0,0,0,$focus_month + 3, 1, $focus_year);
+     $viewend = mktime(0,0,0,$focus_month + 3, 1, $focus_year);
    } elseif ($calendarViewMode == 'semester') {
-     $viewend = gmmktime(0,0,0,$focus_month + 6, 1, $focus_year);
+     $viewend = mktime(0,0,0,$focus_month + 6, 1, $focus_year);
    } elseif ($calendarViewMode == 'year') {
-     $viewend = gmmktime(0,0,0,1, 1, $focus_year+1);
+     $viewend = mktime(0,0,0,1, 1, $focus_year+1);
    } else {
-     $viewend = gmmktime(0,0,0,$focus_month + 1, 0, $focus_year);
+     $viewend = mktime(0,0,0,$focus_month + 1, 0, $focus_year);
    }
    $viewend -= 1;
    $dayend=$viewend;
-   $TmpWeekday = gmdate("w", $viewend);
+   $TmpWeekday = date("w", $viewend);
    $viewend += (6 - $TmpWeekday) * $d;
    // ISO weeks --- kinda mangled because ours begin on Sunday...
-   $firstweek = gmdate("W", $viewstart + $d);
-   $lastweek = gmdate("W", $viewend);
+   $firstweek = date("W", $viewstart + $d);
+   $lastweek = date("W", $viewend);
    if ($lastweek <= $firstweek) {
-		   $startyear = gmdate("Y",$daystart-1);
-		   $weeksinyear = gmdate("W",gmmktime(0,0,0,12,31,$startyear));
+		   $startyear = date("Y",$daystart-1);
+		   $weeksinyear = date("W",mktime(0,0,0,12,31,$startyear));
 		   if ($weeksinyear == 1){
-			$weeksinyear = gmdate("W",gmmktime(0,0,0,12,28,$startyear));
+			$weeksinyear = date("W",mktime(0,0,0,12,28,$startyear));
 		   }
 		   $lastweek += $weeksinyear;
    }
@@ -161,7 +161,7 @@ if ($calendarViewMode == 'month' ||
    $lastweek = $currentweek;
    $viewend = $viewstart + ($d - 1);
    $dayend = $daystart;
-   $weekdays = array(gmdate('w',$focusdate));
+   $weekdays = array(date('w',$focusdate));
    $numberofweeks = 0;
 }
 // untested (by me, anyway!) function grabbed from the php.net site:
@@ -172,12 +172,12 @@ function m_weeks($y, $m){
                8=>31, 9=>30, 10=>31, 11=>30, 12=>31);
   // weekdays remaining in a week starting on 7 - Sunday...(could be changed)
   $weekdays = array(7=>7, 1=>6, 2=>5, 3=>4, 4=>3, 5=>2, 6=>1);
-  $date = gmmktime( 0, 0, 0, $m, 1, $y);
-  $leap = gmdate("L", $date);
+  $date = mktime( 0, 0, 0, $m, 1, $y);
+  $leap = date("L", $date);
   // if it is a leap year set February to 29 days, otherwise 28
   $monthdays[2] = ($leap ? 29 : 28);
   // get the weekday of the first day of the month
-  $wn = gmstrftime("%u",$date);
+  $wn = strftime("%u",$date);
   $days = $monthdays[$m] - $weekdays[$wn];
   return (ceil($days/7) + 1);
 }

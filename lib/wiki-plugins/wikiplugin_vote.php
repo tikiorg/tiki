@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_vote.php,v 1.10 2007-02-04 01:43:59 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_vote.php,v 1.11 2007-02-04 20:09:46 mose Exp $
 /* A plugin vote based on tracker
  */
 /* fields is optionnal - all the fields except the type suer, group, ip will be used
@@ -47,7 +47,7 @@ function wikiplugin_vote($data, $params) {
 		$options = $trklib->get_tracker_options($trackerId);
 		if (!empty($options['start']) || !empty($options['end']))
 			$smarty->assign_by_ref('options', $options);
-		if ((!empty($options['start']) && gmdate('U') < $options['start']) || (!empty($options['end']) && gmdate('U') > $options['end'])) {
+		if ((!empty($options['start']) && date('U') < $options['start']) || (!empty($options['end']) && date('U') > $options['end'])) {
 			$smarty->assign('p_create_tracker_items', 'n');
 			$smarty->assign('vote', '');
 		} else {
@@ -67,7 +67,7 @@ function wikiplugin_vote($data, $params) {
 				if (!empty($options['start']) || !empty($options['end']))
 					$smarty->assign_by_ref('options', $options);
 			}
-			if (!empty($options['end']) && gmdate('U') < $options['end'])
+			if (!empty($options['end']) && date('U') < $options['end'])
 				$show_stat = 'n';
 		}
 		if ($show_stat == 'y') {
@@ -80,7 +80,7 @@ function wikiplugin_vote($data, $params) {
 	} else {
 		$smarty->assign('stat', '');
 	}
-	$smarty->assign('date', gmdate('U'));
+	$smarty->assign('date', date('U'));
 	return $smarty->fetch('wiki-plugins/wikiplugin_vote.tpl');
 }
 

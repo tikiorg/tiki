@@ -1,4 +1,4 @@
-<?php // $Header: /cvsroot/tikiwiki/tiki/doc/devtools/parse_tiki.php,v 1.2 2007-02-03 20:47:16 nyloth Exp $
+<?php // $Header: /cvsroot/tikiwiki/tiki/doc/devtools/parse_tiki.php,v 1.3 2007-02-04 20:09:34 mose Exp $
 
 // heaviled modified get_strings.php
 // dedicated as a tool for use in an eventual test suite
@@ -58,7 +58,7 @@ function echoline($fd, $fx, $outstring, $style='', $mod='', $br=true) {
 	}
   fwrite ($fd, $outstring.$br);
 	if ($mod == 'd') {
-		$outstring = gmdate('D M d H:m:s Y',trim($outstring));
+		$outstring = date('D M d H:m:s Y',trim($outstring));
 	}
 	if ($style == 'eob') {
 		$htmlstring = "</div>";

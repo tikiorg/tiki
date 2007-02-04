@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.77 2007-02-03 20:47:15 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.78 2007-02-04 20:09:33 mose Exp $
 
 /**
  * Tiki registration script
@@ -9,7 +9,7 @@
  * @license GNU LGPL
  * @copyright Tiki Community
  * @date created: 2002/10/8 15:54
- * @date last-modified: $Date: 2007-02-03 20:47:15 $
+ * @date last-modified: $Date: 2007-02-04 20:09:33 $
  */
 
 // Initialization
@@ -252,7 +252,7 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
 		if (count($emails)) {
 			include_once("lib/notifications/notificationemaillib.php");
 			$smarty->assign('mail_user',$_REQUEST["name"]);
-			$smarty->assign('mail_date',gmdate("U"));
+			$smarty->assign('mail_date',date("U"));
 			$smarty->assign('mail_site',$_SERVER["SERVER_NAME"]);
 			sendEmailNotification($emails, "email", "new_user_notification_subject.tpl", null, "new_user_notification.tpl");
 		}

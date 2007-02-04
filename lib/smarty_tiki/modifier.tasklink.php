@@ -39,13 +39,13 @@ include_once('lib/tasks/tasklib.php');
 
 		$fillin = tra("Task")." ".tra("from")." <b>$info[creator]</b> ".tra("for")." <b>$info[user]</b>.<br />".tra("Priority").": <b>$info[priority]</b>, (<b>$info[percentage]%</b>) ".tra(done).".<br />"; 
 		if ($info[start] != 0 ){
-			$fillin .= tra("Start date:")." ".gmdate("H:i -- d. M. Y",$info[start])."<br />";
+			$fillin .= tra("Start date:")." ".date("H:i -- d. M. Y",$info[start])."<br />";
 		}
 		else{
 			$fillin .= tra("Start date:")." -<br />";
 		}
 		if ($info[end]){
-			$fillin .= tra("End date:")." ".gmdate("H:i -- d. M. Y",$info[end])."<br />";
+			$fillin .= tra("End date:")." ".date("H:i -- d. M. Y",$info[end])."<br />";
 		}
 		else{
 			$fillin .= tra("End date:")." -<br />";

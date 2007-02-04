@@ -111,7 +111,7 @@ class ArtLib extends TikiLib {
 			require_once('lib/notifications/notificationlib.php');
 		}
 		$hash = md5($title . $heading . $body);
-		$now = gmdate("U");
+		$now = date("U");
 		$query = "select `name` from `tiki_topics` where `topicId` = ?";
 		$topicName = $this->getOne($query,array((int) $topicId));
 		$size = strlen($body);
@@ -177,7 +177,7 @@ class ArtLib extends TikiLib {
 			$smarty->assign('mail_title', $title);
 			$smarty->assign('mail_heading', $heading);
 			$smarty->assign('mail_body', $body);
-			$smarty->assign('mail_date', gmdate("U"));
+			$smarty->assign('mail_date', date("U"));
 			$smarty->assign('mail_machine', $machine);
 			$smarty->assign('mail_subId', $id);
 			sendEmailNotification($emails, "email", "submission_notification_subject.tpl", $_SERVER["SERVER_NAME"], "submission_notification.tpl");
@@ -195,7 +195,7 @@ class ArtLib extends TikiLib {
 		    $expireDate = $publishDate;
 		}
 		$hash = md5($title . $heading . $body);
-		$now = gmdate("U");
+		$now = date("U");
 		if(empty($imgdata)) $imgdata='';
 		// Fixed query. -rlpowell
 		$query = "select `name`  from `tiki_topics` where `topicId` = ?";
@@ -249,7 +249,7 @@ class ArtLib extends TikiLib {
 				    $smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
 				    $smarty->assign('mail_title', $title);
 				    $smarty->assign('mail_postid', $articleId);
-				    $smarty->assign('mail_date', gmdate("U"));
+				    $smarty->assign('mail_date', date("U"));
 				    $smarty->assign('mail_user', $user);
 				    $smarty->assign('mail_data', $heading."\n----------------------\n".$body);
 				    $foo = parse_url($_SERVER["REQUEST_URI"]);
@@ -268,7 +268,7 @@ class ArtLib extends TikiLib {
     }
 
 	function add_topic($name, $imagename, $imagetype, $imagesize, $imagedata) {
-		$now = gmdate("U");
+		$now = date("U");
 
 		$query = "insert into `tiki_topics`(`name`,`image_name`,`image_type`,`image_size`,`image_data`,`active`,`created`)
                      values(?,?,?,?,?,?,?)";
