@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/blogs/bloglib.php,v 1.56 2007-02-04 20:09:37 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/blogs/bloglib.php,v 1.57 2007-02-04 20:43:36 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -377,7 +377,7 @@ class BlogLib extends TikiLib {
 	function add_blog_activity($blogId) {
 
 		//Caclulate activity, update tiki_blogs and purge activity table
-		$today = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
+		$today = gmmktime(0, 0, 0, gmdate("m"), gmdate("d"), gmdate("Y"));
 
 		$day0 = $today - (24 * 60 * 60);
 		$day1 = $today - (2 * 24 * 60 * 60);
