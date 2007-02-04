@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.393 2007-02-04 20:09:33 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.394 2007-02-04 22:43:17 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1210,6 +1210,7 @@ if ($user) {
 	$display_timezone = $server_timezone;
 }
 $smarty->assign('display_timezone', $display_timezone);
+$tikidate->setTZbyID($display_timezone);
 
 $smarty->assign('lastup', '');
 $smarty->assign('edit_page', 'n');
