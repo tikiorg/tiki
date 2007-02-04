@@ -33,7 +33,7 @@ APIC::import("org.apicnet.io.File");
  * @package 
  * @author diogene
  * @copyright Copyright (c) 2004
- * @version $Id: OOoMeta.php,v 1.4 2007-02-03 20:47:33 nyloth Exp $
+ * @version $Id: OOoMeta.php,v 1.5 2007-02-04 01:43:58 nyloth Exp $
  * @access public
  **/
 class OOoMeta extends absOOo {
@@ -223,11 +223,11 @@ class OOoMeta extends absOOo {
 	}
 
 	/**
-	 * OOoMeta::gmdate()
+	 * OOoMeta::date()
 	 * 
 	 * @return String
 	 **/
-	function gmdate(){
+	function date(){
 		$date = $this->accessor("/office:document-meta/office:meta/dc:date", 0);
 		return $date->getText();
 	}

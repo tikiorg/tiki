@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-minical.php,v 1.19 2007-02-03 20:47:14 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-minical.php,v 1.20 2007-02-04 01:43:57 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -67,7 +67,7 @@ if (isset($_REQUEST['day']) && isset($_REQUEST['mon']) && isset($_REQUEST['year'
 	$pdate = gmmktime(0, 0, 0, $_REQUEST['mon'], $_REQUEST['day'], $_REQUEST['year']);
 } else {
 	if (isset($_SESSION['thedate'])) {
-		$pdate = gmmktime(0, 0, 0, gmdate("m", $_SESSION['thedate']), date("d", $_SESSION['thedate']), date("Y", $_SESSION['thedate']));
+		$pdate = gmmktime(0, 0, 0, gmdate("m", $_SESSION['thedate']), gmdate("d", $_SESSION['thedate']), gmdate("Y", $_SESSION['thedate']));
 	} else {
 		$pdate = gmdate("U");
 	}
@@ -80,7 +80,7 @@ $smarty->assign('tomorrow', $tomorrow);
 $smarty->assign('day', gmdate("d", $pdate));
 $smarty->assign('mon', gmdate("m", $pdate));
 $smarty->assign('year', gmdate("Y", $pdate));
-$pdate_h = gmmktime(gmdate("G"), date("i"), date("s"), date("m", $pdate), date("d", $pdate), date("Y", $pdate));
+$pdate_h = gmmktime(gmdate("G"), gmdate("i"), gmdate("s"), gmdate("m", $pdate), gmdate("d", $pdate), gmdate("Y", $pdate));
 $smarty->assign('pdate', $pdate);
 $smarty->assign('pdate_h', $pdate_h);
 
@@ -112,7 +112,7 @@ if ($_REQUEST["eventId"]) {
 	$info['title'] = '';
 	$info['topicId'] = 0;
 	$info['description'] = '';
-	$info['start'] = gmmktime(gmdate("H"), date("i"), date("s"), date("m", $pdate), date("d", $pdate), date("Y", $pdate));
+	$info['start'] = gmmktime(gmdate("H"), gmdate("i"), gmdate("s"), gmdate("m", $pdate), gmdate("d", $pdate), gmdate("Y", $pdate));
 	$info['duration'] = 60 * 60;
 }
 
@@ -131,7 +131,7 @@ if (isset($_REQUEST['save'])) {
 	$info['title'] = '';
 	$info['topicId'] = 0;
 	$info['description'] = '';
-	$info['start'] = gmmktime(gmdate("h"), date("i"), date("s"), date("m", $pdate), date("d", $pdate), date("Y", $pdate));
+	$info['start'] = gmmktime(gmdate("h"), gmdate("i"), gmdate("s"), gmdate("m", $pdate), gmdate("d", $pdate), gmdate("Y", $pdate));
 	$info['duration'] = 60 * 60;
 	$_REQUEST["eventId"] = 0;
 }

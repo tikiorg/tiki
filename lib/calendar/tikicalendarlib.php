@@ -21,7 +21,7 @@ class TikiCalendarLib extends TikiLib {
 		//header('Content-type: text/plain');var_dump($result);die;
 				while ($res = $result->fetchRow()) {
 					$res['lastModif'] = $tikilib->date_utc_to_display($res['lastModif']); /* server time -> user time */
-					$dstart2 = gmmktime(0, 0, 0, gmdate("m", $res['lastModif']), date("d", $res['lastModif']), date("Y", $res['lastModif']));
+					$dstart2 = gmmktime(0, 0, 0, gmdate("m", $res['lastModif']), gmdate("d", $res['lastModif']), gmdate("Y", $res['lastModif']));
 					$tstart2 = gmdate("Hi", $res["lastModif"]);
 					$quote = "<i>" . tra("by"). " " . $res["user"] . "</i><br />" . str_replace('"', "'", $res["comment"]);
 					$ret["$dstart2"][] = array(
@@ -44,7 +44,7 @@ class TikiCalendarLib extends TikiLib {
 				$result = $this->query($query,array('wiki page',$tstart,$tstop));
 				while ($res = $result->fetchRow()) {
 					$res['created'] = $tikilib->date_utc_to_display($res['created']); /* server time -> user time */
-					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
+					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), gmdate("d", $res['created']), gmdate("Y", $res['created']));
 					$tstart = gmdate("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
 						"visible" => "y",
@@ -72,7 +72,7 @@ class TikiCalendarLib extends TikiLib {
 
 				while ($res = $result->fetchRow()) {
 					$res['created'] = $tikilib->date_utc_to_display($res['created']); /* server time -> user time */
-					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
+					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), gmdate("d", $res['created']), gmdate("Y", $res['created']));
 					$tstart = gmdate("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
 						"visible" => "y",
@@ -97,7 +97,7 @@ class TikiCalendarLib extends TikiLib {
 
 				while ($res = $result->fetchRow()) {
 					$res['created'] = $tikilib->date_utc_to_display($res['created']); /* server time -> user time */
-					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
+					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), gmdate("d", $res['created']), gmdate("Y", $res['created']));
 					$tstart = gmdate("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
 						"visible" => "y",
@@ -122,7 +122,7 @@ class TikiCalendarLib extends TikiLib {
 
 				while ($res = $result->fetchRow()) {
 					$res['created'] = $tikilib->date_utc_to_display($res['created']); /* server time -> user time */
-					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
+					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), gmdate("d", $res['created']), gmdate("Y", $res['created']));
 					$tstart = gmdate("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
 						"visible" => "y",
@@ -152,7 +152,7 @@ class TikiCalendarLib extends TikiLib {
 
 				while ($res = $result->fetchRow()) {
 					$res['created'] = $tikilib->date_utc_to_display($res['created']); /* server time -> user time */
-					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
+					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), gmdate("d", $res['created']), gmdate("Y", $res['created']));
 					$tstart = gmdate("Hi", $res["created"]);
 					if ($res["parentId"] == 0) {
 						$res["parentId"] = $res["threadId"];
@@ -183,7 +183,7 @@ class TikiCalendarLib extends TikiLib {
 
 				while ($res = $result->fetchRow()) {
 					$res['created'] = $tikilib->date_utc_to_display($res['created']); /* server time -> user time */
-					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
+					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), gmdate("d", $res['created']), gmdate("Y", $res['created']));
 					$tstart = gmdate("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
 						"visible" => "y",
@@ -208,7 +208,7 @@ class TikiCalendarLib extends TikiLib {
 
 				while ($res = $result->fetchRow()) {
 					$res['created'] = $tikilib->date_utc_to_display($res['created']); /* server time -> user time */
-					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
+					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), gmdate("d", $res['created']), gmdate("Y", $res['created']));
 					$tstart = gmdate("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
 						"visible" => "y",
@@ -233,7 +233,7 @@ class TikiCalendarLib extends TikiLib {
 
 				while ($res = $result->fetchRow()) {
 					$res['created'] = $tikilib->date_utc_to_display($res['created']); /* server time -> user time */
-					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
+					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), gmdate("d", $res['created']), gmdate("Y", $res['created']));
 					$tstart = gmdate("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
 						"visible" => "y",
@@ -258,7 +258,7 @@ class TikiCalendarLib extends TikiLib {
 
 				while ($res = $result->fetchRow()) {
 					$res['created'] = $tikilib->date_utc_to_display($res['created']); /* server time -> user time */
-					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
+					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), gmdate("d", $res['created']), gmdate("Y", $res['created']));
 					$tstart = gmdate("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
 						"visible" => "y",
@@ -283,7 +283,7 @@ class TikiCalendarLib extends TikiLib {
 
 				while ($res = $result->fetchRow()) {
 					$res['created'] = $tikilib->date_utc_to_display($res['created']); /* server time -> user time */
-					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
+					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), gmdate("d", $res['created']), gmdate("Y", $res['created']));
 					$tstart = gmdate("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
 						"visible" => "y",
@@ -308,7 +308,7 @@ class TikiCalendarLib extends TikiLib {
 
 				while ($res = $result->fetchRow()) {
 					$res['created'] = $tikilib->date_utc_to_display($res['created']); /* server time -> user time */
-					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
+					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), gmdate("d", $res['created']), gmdate("Y", $res['created']));
 					$tstart = gmdate("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
 						"visible" => "y",
@@ -335,7 +335,7 @@ class TikiCalendarLib extends TikiLib {
 
 				while ($res = $result->fetchRow()) {
 					$res['day'] = $tikilib->date_utc_to_display($res['day']); /* server time -> user time */
-					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['day']), date("d", $res['day']), date("Y", $res['day']));
+					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['day']), gmdate("d", $res['day']), gmdate("Y", $res['day']));
 					$tstart = gmdate("Hi", $res["day"]);
 					$ret["$dstart"][] = array(
 						"visible" => "y",
@@ -360,7 +360,7 @@ class TikiCalendarLib extends TikiLib {
 
 				while ($res = $result->fetchRow()) {
 					$res['created'] = $tikilib->date_utc_to_display($res['created']); /* server time -> user time */
-					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
+					$dstart = gmmktime(0, 0, 0, gmdate("m", $res['created']), gmdate("d", $res['created']), gmdate("Y", $res['created']));
 					$tstart = gmdate("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
 						"visible" => "y",

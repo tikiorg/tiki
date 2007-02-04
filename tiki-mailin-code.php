@@ -131,7 +131,7 @@ var_dump($aux);
         $authorName = $user;
         $body = '';
         $publishDate = gmdate('U');
-        $expireDate = mktime (0,0,0,gmdate("m"),  date("d"),  date("Y")+1);
+        $expireDate = gmmktime(0,0,0,gmdate("m"), gmdate("d"), gmdate("Y")+1);
         $subId = 0;
         $type = $acc['article_type'];
         $useImage = 'n';

@@ -26,7 +26,7 @@ class BannerLib extends TikiLib {
 		# TODO localize
 		$dw = "`".strtolower(gmdate("D"))."`";
 
-		$hour = gmdate("H"). date("i");
+		$hour = gmdate("H"). gmdate("i");
 		$now = gmdate("U");
 		$raw = '';
 		//
