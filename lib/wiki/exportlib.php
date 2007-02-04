@@ -36,7 +36,7 @@ class ExportLib extends TikiLib {
 
 	function export_wiki_page($pageName, $nversions = 1) {
 		$head = '';
-		$head .= "Date: " . $this->get_rfc2822_datetime(). "\r\n";
+		$head .= "Date: " . date('r'). "\r\n";
 		$head .= sprintf("Mime-Version: 1.0 (Produced by Tiki)\r\n");
 		$iter = $this->get_page_history($pageName);
 		$info = $this->get_page_info($pageName);
