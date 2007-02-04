@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.704 2007-02-03 21:38:25 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.705 2007-02-04 09:28:22 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3373,7 +3373,7 @@ function add_pageview() {
 	while ($res = $result->fetchRow()) {
 	  //WYSIWYCA hack: the $maxRecords will not be respected
 	  if($this->user_has_perm_on_object($user,$res["pageName"],'wiki page','tiki_p_view')) {
-	    $ret[] = $res;
+	    $ret[] = $this->page_info_UTC_to_display($res);
 	  }
 	}
 	return $ret;
@@ -3389,7 +3389,7 @@ function add_pageview() {
 	while ($res = $result->fetchRow()) {
 	  //WYSIWYCA hack: the $maxRecords will not be respected
 	  if($this->user_has_perm_on_object($user,$res["pageName"],'wiki page','tiki_p_view')) {
-	    $ret[] = $res;
+	    $ret[] = $this->page_info_UTC_to_display($res);
 	  }
 	}
 	return $ret;
@@ -3466,10 +3466,9 @@ function add_pageview() {
 	}
 	$ret = array();
 
-	while ($res = $result->fetchRow()) {
+	while ($res = $this->page_info_UTC_to_display($result->fetchRow())) {
                 global $user;
 	        $add=$this->user_has_perm_on_object($user,$res["pageName"],'wiki page','tiki_p_view');
-
 
 		if ($add) {
 		    $aux = array();
@@ -3768,10 +3767,9 @@ function add_pageview() {
 	if (!$result->numRows())
 	    return false;
 
-	$res = $result->fetchRow();
+	$res = $this->page_info_UTC_to_display($result->fetchRow());
 
-	if (!$res["lastModif"])
-	    $res["lastModif"] = 0;
+	if (!$res["lastModif"]) $res["lastModif"] = 0;
 
 	return $res["lastModif"];
     }
@@ -3909,22 +3907,30 @@ function add_pageview() {
 	return $ret;
     }
 
-    function get_page_info($pageName) {
-	$query = "select * from `tiki_pages` where `pageName`=?";
+    function page_info_UTC_to_display($page_info) {
+    	if ( is_array($page_info) ) {
+		$timestamp_fields = array('lastModif', 'created', 'cache_timestamp');
+		foreach ( $timestamp_fields as $f )
+			if ( $page_info[$f] > 0 ) $page_info[$f] = $this->date_UTC_to_display($page_info[$f]);
+	}
+    	return $page_info;
+    }
 
-	$result = $this->query($query, array($pageName));
+    function get_page_info($field_value, $field_name = 'pageName') {
+	$query = "select * from `tiki_pages` where `$field_name`=?";
+	$result = $this->query($query, array($field_value));
 
 	if (!$result->numRows()) {
 	    return false;
 	} else {
-	    $res = $result->fetchRow();
+	    $res = $this->page_info_UTC_to_display($result->fetchRow());
 
 	    global $user;
 	    if ($user) {
-		$query = "select * from `tiki_page_drafts` where `user`=? and `pageName`=?";
-		$result = $this->query($query, array($user, $pageName));
+		$query = "select * from `tiki_page_drafts` where `user`=? and `$field_name`=?";
+		$result = $this->query($query, array($user, $field_value));
 		if ($result->numRows()) {
-		    $res['draft'] = $result->fetchRow();
+		    $res['draft'] = $this->page_info_UTC_to_display($result->fetchRow());
 		}
 	    }
 
@@ -3933,14 +3939,7 @@ function add_pageview() {
     }
 
     function get_page_info_from_id($page_id) {
-	$query = "select * from `tiki_pages` where `page_id`=?";
-
-	$result = $this->query($query, array($page_id));
-
-	if (!$result->numRows())
-	    return false;
-	else
-	    return $result->fetchRow();
+    	return $this->get_page_info($page_id, 'page_id');
     }
 
 
