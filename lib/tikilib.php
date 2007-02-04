@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.708 2007-02-04 22:43:18 mose Exp $
+// CVS: $Id: tikilib.php,v 1.709 2007-02-04 23:40:59 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -107,6 +107,7 @@ class TikiLib extends TikiDB {
     }
 
     /* convert data to iso-8601 format */
+		// used for atom export. date() use is okay, as we use server timezone in such case
     function iso_8601 ($timestamp) {
 	$main_date = date("Y-m-d\TH:i:s", $timestamp);
 
@@ -1176,7 +1177,7 @@ class TikiLib extends TikiDB {
     }
 
     function get_pv_chart_data($days) {
-	$now = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
+	$now = gmmktime(0, 0, 0, gmdate("m"), gmdate("d"), gmdate("Y"));
 	$dfrom = 0;
 	if ($days != 0) $dfrom = $now - ($days * 24 * 60 * 60);
 
@@ -1189,7 +1190,7 @@ class TikiLib extends TikiDB {
 	$ydata=array();
 	while ($res = $result->fetchRow()) {
 	    if ($i % $n == 0) {
-		$xdata[] = date("j M", $res["day"]);
+		$xdata[] = gmdate("j M", $res["day"]);
 	    } else {
 		$xdata = '';
 	    }
@@ -3818,7 +3819,7 @@ function add_pageview() {
 		$edit_data = $purifier->purify($edit_data);
 	}
 	$mid = ''; $midvar = '';
-	$bindvars = array($name, (int)$hits, $data, (int)$lastModif, $comment, 1, $user, $ip, $description, $user, (int)strlen($data), $html, mktime());
+	$bindvars = array($name, (int)$hits, $data, (int)$lastModif, $comment, 1, $user, $ip, $description, $user, (int)strlen($data), $html, $this->now);
 	if ($lang) {
 		$mid .= ',`lang`';
 		$midvar .= ',?';
@@ -6282,43 +6283,6 @@ if (!$simple_wiki) {
 			 */
 			function get_iso8601_datetime($timestamp, $user = false) {
 			    return $this->date_format('%Y-%m-%dT%H:%M:%S%O', $timestamp, $user);
-			}
-
-			function get_rfc2822_datetime($timestamp = false, $user = false) {
-			    if (!$timestamp)
-				$timestamp = time();
-
-# rfc2822 requires dates to be en formatted
-			    $saved_locale = @setlocale(0);
-			    @setlocale ('en_US');
-#was return date('D, j M Y H:i:s ', $time) . $this->timezone_offset($time, 'no colon');
-			    $rv = $this->date_format('%a, %e %b %Y %H:%M:%S', $timestamp, $user). $this->get_rfc2822_timezone_offset($timestamp, $user);
-
-# switch back to the 'saved' locale
-			    if ($saved_locale)
-				@setlocale ($saved_locale);
-
-			    return $rv;
-			}
-
-			function get_rfc2822_timezone_offset($time = false, $no_colon = false, $user = false) {
-			    if ($time === false)
-				$time = time();
-
-			    $secs = $this->date_format('%Z', $time, $user);
-
-			    if ($secs < 0) {
-				$sign = '-';
-
-				$secs = -$secs;
-			    } else {
-				$sign = '+';
-			    }
-
-			    $colon = $no_colon ? '' : ':';
-			    $mins = intval(($secs + 30) / 60);
-
-			    return sprintf("%s%02d%s%02d", $sign, $mins / 60, $colon, $mins % 60);
 			}
 
 			function list_languages($path = false, $short=null, $all=false) {
