@@ -2703,7 +2703,7 @@
 	/**
 	 *
 	 * @param v  	is the character timestamp in YYYY-MM-DD hh:mm:ss format
-	 * @param fmt 	is the format to apply to it, using gmdate()
+	 * @param fmt 	is the format to apply to it, using date()
 	 *
 	 * @return a timestamp formated as user desires
 	 */

@@ -74,11 +74,11 @@ function wikiplugin_events($data,$params) {
 	$repl .= '<tr class="heading"><td colspan="2">'.tra("Upcoming events").'</td></tr>';
 	for ($j = 0; $j < $max; $j++) {
 	  if ($datetime!=1) {
-			$eventStart=str_replace(" ","&nbsp;",gmstrftime($tikilib->get_short_date_format(),$events[$j]["start"]));
-			$eventEnd=str_replace(" ","&nbsp;",gmstrftime($tikilib->get_short_date_format(),$events[$j]["end"]));	  
+			$eventStart=str_replace(" ","&nbsp;",strftime($tikilib->get_short_date_format(),$events[$j]["start"]));
+			$eventEnd=str_replace(" ","&nbsp;",strftime($tikilib->get_short_date_format(),$events[$j]["end"]));	  
 	  } else {
-			$eventStart=str_replace(" ","&nbsp;",gmstrftime($tikilib->get_short_datetime_format(),$events[$j]["start"]));
-			$eventEnd=str_replace(" ","&nbsp;",gmstrftime($tikilib->get_short_datetime_format(),$events[$j]["end"]));
+			$eventStart=str_replace(" ","&nbsp;",strftime($tikilib->get_short_datetime_format(),$events[$j]["start"]));
+			$eventEnd=str_replace(" ","&nbsp;",strftime($tikilib->get_short_datetime_format(),$events[$j]["end"]));
 		}
 		if ($j%2) {
 			$style="odd";

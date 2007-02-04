@@ -683,7 +683,7 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 		global $notificationlib;
 		global $sender_email;
 		global $cachelib;
-		$now = gmdate("U");
+		$now = date("U");
 		
 		// update
 		if ($itemId) {
@@ -737,7 +737,7 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 					$value = $this->getOne("select max(cast(field_$fieldId as UNSIGNED)) from $tableId") + 1;
 
 				if (isset($ins_fields["data"][$i]["type"]) and ($ins_fields["data"][$i]["type"] == 'f' or $ins_fields["data"][$i]["type"] == 'j')) {
-					$human_value = gmdate('r',$ins_fields["data"][$i]["value"]);
+					$human_value = date('r',$ins_fields["data"][$i]["value"]);
 					$the_data .= "  $name = $human_value\n";
 				} else {
 					$the_data .= "  $name = $value\n";
@@ -882,7 +882,7 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 	// ########## A TESTER ##########
 	// ##############################
 	function remove_tracker_item($itemId) {
-		$now = gmdate("U");
+		$now = date("U");
 
 		$trackerId = $this->getOne("select `trackerId` from `tiki_tracker_items` where `itemId`=?",array((int) $itemId));
 		// --
@@ -925,10 +925,10 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 			}
 		
 			// -------------------
-			$now = gmdate("U");
+			$now = date("U");
 			if ($trackerId) {
 				$query = "update `tiki_trackers` set `name`=?,`description`=?,`lastModif`=? where `trackerId`=?";
-				$this->query($query,array($name,$description,(int)gmdate('U'),(int) $trackerId));
+				$this->query($query,array($name,$description,(int)date('U'),(int) $trackerId));
 			} else {
 				$this->getOne("delete from `tiki_trackers` where `name`=?",array($name),false);
 				$query = "insert into `tiki_trackers`(`name`,`description`,`created`,`lastModif`) values(?,?,?,?)";

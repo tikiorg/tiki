@@ -18,7 +18,7 @@
 // |                                                                      |
 // +----------------------------------------------------------------------+
 //
-// $Id: NNTP.php,v 1.3 2007-02-03 20:47:29 nyloth Exp $
+// $Id: NNTP.php,v 1.4 2007-02-04 20:09:41 mose Exp $
 
 require_once 'PEAR.php';
 
@@ -567,7 +567,7 @@ class Net_NNTP extends PEAR
      * @return array date
      * @access public
      */
-    function gmdate()
+    function date()
     {
         $r = $this->command('DATE');
         if (PEAR::isError($r) || $this->responseCode($r) > 299) {

@@ -130,8 +130,8 @@ var_dump($aux);
         $user = $aux['sender']['user'];
         $authorName = $user;
         $body = '';
-        $publishDate = gmdate('U');
-        $expireDate = gmmktime(0,0,0,gmdate("m"), gmdate("d"), gmdate("Y")+1);
+        $publishDate = date('U');
+        $expireDate = mktime (0,0,0,date("m"),  date("d"),  date("Y")+1);
         $subId = 0;
         $type = $acc['article_type'];
         $useImage = 'n';
@@ -218,7 +218,7 @@ var_dump($aux);
             $content .= "Page: $page has been created<br />";
   
             $tikilib->create_page($page,
-              0, $body, gmdate('U'), "Created from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
+              0, $body, date('U'), "Created from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
           } else {
             $tikilib->update_page($page, $body, "Created from " . $acc["account"], $aux["sender"]["user"],
               '0.0.0.0', '');
@@ -242,7 +242,7 @@ var_dump($aux);
             $content .= "Page: $page has been created<br />";
   
             $tikilib->create_page($page,
-              0, $body, gmdate('U'), "Created from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
+              0, $body, date('U'), "Created from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
           } else {
             $info = $tikilib->get_page_info($page);
             if ($acc['type'] == 'wiki-append' || $acc['type'] == 'wiki' && $method == "APPEND")

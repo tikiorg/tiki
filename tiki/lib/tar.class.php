@@ -494,7 +494,7 @@ class tar {
 		// Make sure there are no other files in the archive that have this same filename
 		if($this->containsFile($filename))
 			return false;
-		if(!$time) $time=gmdate("U");
+		if(!$time) $time=date("U");
 
 		// Read in the file's contents
 		$file_contents = $data;

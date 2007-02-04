@@ -638,7 +638,7 @@ class Spreadsheet_Excel_Reader {
             $hours = floor($numValue * 24);
             $mins = floor($numValue * 24 * 60) - $hours * 60;
             $secs = floor($numValue * Spreadsheet_Excel_Reader_msInADay) - $hours * 60 * 60 - $mins * 60;
-            $string = date ($this->curformat, gmmktime($hours, $mins, $secs));
+            $string = date ($this->curformat, mktime($hours, $mins, $secs));
         }
         return array($string, $raw);
     }

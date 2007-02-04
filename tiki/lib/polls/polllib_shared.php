@@ -53,7 +53,7 @@ class PollLibShared extends TikiLib {
   }
 
   function get_polls($type='a',$datestart=0,$dateend='',$find='') {
-		if (!$dateend) $dateend = gmdate('U');
+		if (!$dateend) $dateend = date('U');
 		$bindvars = array($type,(int)$datestart,(int)$dateend);
 		if ($find) {
 			$mid = 'and `title`=?';
@@ -137,7 +137,7 @@ class PollLibShared extends TikiLib {
   }
   
   function create_poll($template_id,$title) {
-    $pollid = $this->replace_poll(0,$title,"o",gmdate('U'));
+    $pollid = $this->replace_poll(0,$title,"o",date('U'));
     $options = $this->list_poll_options($template_id);
     foreach ($options as $op) {
       $this->replace_poll_option($pollid,0,$op['title'],$op['position']);

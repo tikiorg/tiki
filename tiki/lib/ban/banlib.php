@@ -86,7 +86,7 @@ class BanLib extends TikiLib {
 		$retval = array();
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;
-		$now = gmdate("U");
+		$now = date("U");
 		$query = "select `banId` from `tiki_banning` where `use_dates`=? and `date_to` < ?";
 		$result = $this->query($query,array('y',$now));
 
@@ -132,7 +132,7 @@ class BanLib extends TikiLib {
 
 			$this->query($query,array($title,$ip1,$ip2,$ip3,$ip4,$user,$date_from,$date_to,$use_dates,$message,$banId));
 		} else {
-			$now = gmdate("U");
+			$now = date("U");
 
 			$query = "insert into `tiki_banning`(`mode`,`title`,`ip1`,`ip2`,`ip3`,`ip4`,`user`,`date_from`,`date_to`,`use_dates`,`message`,`created`)
 		values(?,?,?,?,?,?,?,?,?,?,?,?)";

@@ -38,7 +38,7 @@ function smarty_function_article($params, &$smarty)
 
       $x.= "<div class=\"articles\">";
       $x.= "<a href=\"tiki-read_article.php?articleId=".$list_articles[data][$i][articleId]."\" class=\"article\">";
-      $x.= $list_articles[data][$i][title]." - ".gmdate('d/m/Y',$list_articles[data][$i][publishDate])."</a></div>\n";     
+      $x.= $list_articles[data][$i][title]." - ".date('d/m/Y',$list_articles[data][$i][publishDate])."</a></div>\n";     
     }
     echo $x;
 

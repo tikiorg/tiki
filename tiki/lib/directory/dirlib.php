@@ -407,7 +407,7 @@ class DirLib extends TikiLib {
 		make_clean($description);
 		make_clean($url);
 		make_clean($country);
-		$now = gmdate("U");
+		$now = date("U");
 
 		if ($siteId) {
 			$query = "update `tiki_directory_sites` set `name`=?, `description`=?, `url`=?, `country`=?, `isValid`=?, `lastModif`=?  where `siteId`=?";

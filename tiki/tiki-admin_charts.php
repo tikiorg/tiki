@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_charts.php,v 1.14 2007-02-03 20:47:13 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_charts.php,v 1.15 2007-02-04 20:09:32 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -75,7 +75,7 @@ if (isset($_REQUEST['save'])) {
 	$_REQUEST['showVotes'] = isset($_REQUEST['showVotes']) ? 'y' : 'n';
 	$_REQUEST['useCookies'] = isset($_REQUEST['useCookies']) ? 'y' : 'n';
 	$_REQUEST['lastChart'] = 0;
-	$_REQUEST['created'] = gmdate("U");
+	$_REQUEST['created'] = date("U");
 	$_REQUEST['hits'] = 0;
 
 	foreach (array_keys($info)as $key) {

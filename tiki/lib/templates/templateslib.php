@@ -49,7 +49,7 @@ class TemplatesLib extends TikiLib {
 	}
 
 	function replace_template($templateId, $name, $content) {
-		$now = gmdate("U");
+		$now = date("U");
 		$bindvars = array($content,$name,(int)$now);
 		if ($templateId) {
 			$query = "update `tiki_content_templates` set `content`=?, `name`=?, `created`=? where `templateId`=?";

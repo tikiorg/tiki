@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.31 2007-02-03 20:47:15 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.32 2007-02-04 20:09:33 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -274,7 +274,7 @@ if ($_REQUEST["locSection"] == 'mailbox') {
 		die;
 	}
 
-//die(gmdate(time()));
+//die(date(time()));
 	$smarty->assign('current', $current);
 	// Now get messages from mailbox
 	//$pop3 = new POP3($current["pop"], $current["username"], $current["pass"]);

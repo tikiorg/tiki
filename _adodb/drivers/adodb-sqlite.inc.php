@@ -39,8 +39,8 @@ class ADODB_sqlite extends ADOConnection {
   function __get($name) 
   {
   	switch($name) {
-	case 'sysDate': return "'".gmdate($this->fmtDate)."'";
-	case 'sysTimeStamp' : return "'".gmdate($this->sysTimeStamp)."'";
+	case 'sysDate': return "'".date($this->fmtDate)."'";
+	case 'sysTimeStamp' : return "'".date($this->sysTimeStamp)."'";
 	}
   }*/
 	

@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.706 2007-02-04 12:04:31 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.707 2007-02-04 20:09:35 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -7,6 +7,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 require_once ('lib/pear/Date.php');
+$tikidate = new Date();
+
+require_once ('lib/tikidate.php');
 require_once ('lib/tikidblib.php');
 
 //performance collecting:
@@ -40,7 +43,7 @@ class TikiLib extends TikiDB {
 	}
 
 	$this->db = $db;
-	$this->now = gmdate('U');
+	$this->now = date('U');
     }
 
 
@@ -105,9 +108,9 @@ class TikiLib extends TikiDB {
 
     /* convert data to iso-8601 format */
     function iso_8601 ($timestamp) {
-	$main_date = gmdate("Y-m-d\TH:i:s", $timestamp);
+	$main_date = date("Y-m-d\TH:i:s", $timestamp);
 
-	$tz = gmdate("O", $timestamp);
+	$tz = date("O", $timestamp);
 	$tz = substr_replace ($tz, ':', 3, 0);
 
 	$return = $main_date . $tz;
@@ -122,7 +125,7 @@ class TikiLib extends TikiDB {
 	    return false;
 
 	$ips = explode('.', $_SERVER["REMOTE_ADDR"]);
-	$now = gmdate("U");
+	$now = date("U");
 	$query = "select tb.`message`,tb.`user`,tb.`ip1`,tb.`ip2`,tb.`ip3`,tb.`ip4`,tb.`mode` from `tiki_banning` tb, `tiki_banning_sections` tbs where tbs.`banId`=tb.`banId` and tbs.`section`=? and ( (tb.`use_dates` = ?) or (tb.`date_from` <= ? and tb.`date_to` >= ?))";
 	$result = $this->query($query,array($section,'n',(int)$now,(int)$now));
 
@@ -154,7 +157,7 @@ class TikiLib extends TikiDB {
 
     /*shared*/
     function replace_note($user, $noteId, $name, $data) {
-	$now = gmdate("U");
+	$now = date("U");
 	$size = strlen($data);
 
 	if ($noteId) {
@@ -487,7 +490,7 @@ class TikiLib extends TikiDB {
     function get_actual_content($contentId) {
 	$data = '';
 
-	$now = gmdate("U");
+	$now = date("U");
 	$query = "select max(`publishDate`) from `tiki_programmed_content` where `contentId`=? and `publishDate`<=?";
 	$res = $this->getOne($query,array((int)$contentId,$now));
 
@@ -606,7 +609,7 @@ class TikiLib extends TikiDB {
 	$query = "select * from `tiki_trackers` where `trackerId`=?";
 	$result = $this->query($query,array((int) $trackerId));
 	if (!$result->numRows()) return false;
-	$res = $this->tracker_UTC_to_display($result->fetchRow());
+	$res = $result->fetchRow();
 	return $res;
     }
     /*shared*/
@@ -631,7 +634,7 @@ class TikiLib extends TikiDB {
 	$ret = array();
 
 	$list = array();
-	while ($res = $this->tracker_UTC_to_display($result->fetchRow())) {
+	while ($res = $result->fetchRow()) {
 
 	    global $user;
 	    $add=$this->user_has_perm_on_object($user,$res['trackerId'],'tracker','tiki_p_view_trackers');
@@ -981,7 +984,7 @@ class TikiLib extends TikiDB {
     /* Referer stats */
     /*shared*/
     function register_referer($referer) {
-	$now = gmdate("U");
+	$now = date("U");
 	$cant = $this->getOne("select count(*) from `tiki_referer_stats` where `referer`=?",array($referer));
 
 	if ($cant) {
@@ -1173,7 +1176,7 @@ class TikiLib extends TikiDB {
     }
 
     function get_pv_chart_data($days) {
-	$now = gmmktime(0, 0, 0, gmdate("m"), gmdate("d"), gmdate("Y"));
+	$now = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
 	$dfrom = 0;
 	if ($days != 0) $dfrom = $now - ($days * 24 * 60 * 60);
 
@@ -1186,7 +1189,7 @@ class TikiLib extends TikiDB {
 	$ydata=array();
 	while ($res = $result->fetchRow()) {
 	    if ($i % $n == 0) {
-		$xdata[] = gmdate("j M", $res["day"]);
+		$xdata[] = date("j M", $res["day"]);
 	    } else {
 		$xdata = '';
 	    }
@@ -1198,8 +1201,8 @@ class TikiLib extends TikiDB {
     }
 
 function add_pageview() {
-    $dayzero = gmmktime(0, 0, 0, gmdate("m"), gmdate("d"), gmdate("Y"));
-//echo "PAGEVIEW:".gmdate('r', $dayzero).'<br>';
+    $dayzero = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
+//echo "PAGEVIEW:".date('r', $dayzero).'<br>';
     $cant = $this->getOne("select count(*) from `tiki_pageviews` where `day`=?",array((int)$dayzero));
 
     if ($cant) {
@@ -1541,7 +1544,7 @@ function add_pageview() {
 	$query_cant.= " where `object`=`forumId` and `objectType`=? and `parentId`=? $mid";
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
 	$cant = $this->getOne($query_cant,$bindvars);
-	$now = gmdate("U");
+	$now = date("U");
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
@@ -1578,7 +1581,7 @@ function add_pageview() {
 	$query_cant.= " `forumId`=? and `object`=? and `objectType`=? and `parentId`=? $mid";
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
 	$cant = $this->getOne($query_cant,$bindvars);
-	$now = gmdate("U");
+	$now = date("U");
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
@@ -2050,7 +2053,7 @@ function add_pageview() {
     }
 
     function semaphore_is_set($semName, $limit, $objectType='wiki page') {
-	$now = gmdate("U");
+	$now = date("U");
 	$lim = $now - $limit;
 	$query = "delete from `tiki_semaphores` where `timestamp`<?"; // clean all the old semaphores even if it is not on the object
 	$result = $this->query($query,array((int)$lim));
@@ -2066,7 +2069,7 @@ function add_pageview() {
 	    $user = 'anonymous';
 	}
 
-	$now = gmdate("U");
+	$now = date("U");
 	//  $cant=$this->getOne("select count(*) from `tiki_semaphores` where `semName`='$semName'");
 	$query = "delete from `tiki_semaphores` where `semName`=? and `objectType`=?";
 	$this->query($query,array($semName, $objectType));
@@ -2479,14 +2482,14 @@ function add_pageview() {
     if (($visible_only) && ($visible_only <> 'n')) {
 		if ($date !== false){ // looking for articles on a specific date (or today)
 			if ($date === ""){ // show articles published today
-				$date = gmdate('U');
+				$date = date('U');
 			}
 			$bindvars[]=(int) $date;
-			$bindvars[]=(int) gmdate('U');
+			$bindvars[]=(int) date('U');
 			$condition = "(`tiki_articles`.`publishDate`<? or `tiki_article_types`.`show_pre_publ`='y') and (`tiki_articles`.`expireDate`>? or `tiki_article_types`.`show_post_expire`='y')";
 		}else{ // looking for all articles not expired
 			$condition = "(`tiki_articles`.`expireDate`>? or `tiki_article_types`.`show_post_expire`='y')";
-			$bindvars[]=gmdate('U');
+			$bindvars[]=date('U');
 		}
 		if ($mid) {
 		    $mid .= " and $condition";
@@ -2564,7 +2567,7 @@ function add_pageview() {
 
 		    // Determine if the article would be displayed in the view page
 		    $res["disp_article"] = 'y';
-		    $now = gmdate("U");
+		    $now = date("U");
 		    //if ($date) {
 		    if (($res["show_pre_publ"] != 'y') and ($now < $res["publishDate"])) {
 				$res["disp_article"] = 'n';
@@ -2724,7 +2727,7 @@ function add_pageview() {
 	global $logslib; include_once("lib/logs/logslib.php");
 
 	if ($user === false) $user = '';
-	$now = gmdate("U");
+	$now = date("U");
 	$delay = 5*60; // 5 minutes
 	$oldy = $now - $delay;
 	if ($user != '') { // was the user timeout?
@@ -2954,7 +2957,7 @@ function add_pageview() {
 
 	$url = $this->getOne($query, array( $cacheId ) );
 	$data = $this->httprequest($url);
-	$refresh = gmdate("U");
+	$refresh = date("U");
 	$query = "update `tiki_link_cache`
 	    set `data`=?, `refresh`=?
 	    where `cacheId`=? ";
@@ -3099,7 +3102,7 @@ function add_pageview() {
 	// will be empty.  -rlpowell
 	if ($data)
 	{
-	    $refresh = gmdate("U");
+	    $refresh = date("U");
 	    $query = "insert into `tiki_link_cache`(`url`,`data`,`refresh`) values(?,?,?)";
 	    $result = $this->queryError($query, $error, array($url,$data,$refresh) );
 	    return !isset($error);
@@ -3373,7 +3376,7 @@ function add_pageview() {
 	while ($res = $result->fetchRow()) {
 	  //WYSIWYCA hack: the $maxRecords will not be respected
 	  if($this->user_has_perm_on_object($user,$res["pageName"],'wiki page','tiki_p_view')) {
-	    $ret[] = $this->page_info_UTC_to_display($res);
+	    $ret[] = $res;
 	  }
 	}
 	return $ret;
@@ -3389,7 +3392,7 @@ function add_pageview() {
 	while ($res = $result->fetchRow()) {
 	  //WYSIWYCA hack: the $maxRecords will not be respected
 	  if($this->user_has_perm_on_object($user,$res["pageName"],'wiki page','tiki_p_view')) {
-	    $ret[] = $this->page_info_UTC_to_display($res);
+	    $ret[] = $res;
 	  }
 	}
 	return $ret;
@@ -3466,9 +3469,10 @@ function add_pageview() {
 	}
 	$ret = array();
 
-	while ($res = $this->page_info_UTC_to_display($result->fetchRow())) {
+	while ($res = $result->fetchRow()) {
                 global $user;
 	        $add=$this->user_has_perm_on_object($user,$res["pageName"],'wiki page','tiki_p_view');
+
 
 		if ($add) {
 		    $aux = array();
@@ -3767,9 +3771,10 @@ function add_pageview() {
 	if (!$result->numRows())
 	    return false;
 
-	$res = $this->page_info_UTC_to_display($result->fetchRow());
+	$res = $result->fetchRow();
 
-	if (!$res["lastModif"]) $res["lastModif"] = 0;
+	if (!$res["lastModif"])
+	    $res["lastModif"] = 0;
 
 	return $res["lastModif"];
     }
@@ -3813,7 +3818,7 @@ function add_pageview() {
 		$edit_data = $purifier->purify($edit_data);
 	}
 	$mid = ''; $midvar = '';
-	$bindvars = array($name, (int)$hits, $data, (int)$lastModif, $comment, 1, $user, $ip, $description, $user, (int)strlen($data), $html, gmmktime());
+	$bindvars = array($name, (int)$hits, $data, (int)$lastModif, $comment, 1, $user, $ip, $description, $user, (int)strlen($data), $html, mktime());
 	if ($lang) {
 		$mid .= ',`lang`';
 		$midvar .= ',?';
@@ -3907,37 +3912,22 @@ function add_pageview() {
 	return $ret;
     }
 
-    function fetched_db_result_UTC_to_display($db_infos, $timestamp_fields = '') {
-    	if ( is_array($db_infos) ) {
-		$timestamp_fields[] = 'lastModif';
-		$timestamp_fields[] = 'created';
-		foreach ( $timestamp_fields as $f )
-			if ( $db_infos[$f] > 0 ) $db_infos[$f] = $this->date_UTC_to_display($db_infos[$f]);
-	}
-    	return $db_infos;
-    }
-    function tracker_UTC_to_display($db_infos) {
-    	return $this->fetched_db_result_UTC_to_display($db_infos, array('posted'));
-    }
-    function page_info_UTC_to_display($db_infos) {
-    	return $this->fetched_db_result_UTC_to_display($db_infos, array('cache_timestamp'));
-    }
+    function get_page_info($pageName) {
+	$query = "select * from `tiki_pages` where `pageName`=?";
 
-    function get_page_info($field_value, $field_name = 'pageName') {
-	$query = "select * from `tiki_pages` where `$field_name`=?";
-	$result = $this->query($query, array($field_value));
+	$result = $this->query($query, array($pageName));
 
 	if (!$result->numRows()) {
 	    return false;
 	} else {
-	    $res = $this->page_info_UTC_to_display($result->fetchRow());
+	    $res = $result->fetchRow();
 
 	    global $user;
 	    if ($user) {
-		$query = "select * from `tiki_page_drafts` where `user`=? and `$field_name`=?";
-		$result = $this->query($query, array($user, $field_value));
+		$query = "select * from `tiki_page_drafts` where `user`=? and `pageName`=?";
+		$result = $this->query($query, array($user, $pageName));
 		if ($result->numRows()) {
-		    $res['draft'] = $this->page_info_UTC_to_display($result->fetchRow());
+		    $res['draft'] = $result->fetchRow();
 		}
 	    }
 
@@ -3946,7 +3936,14 @@ function add_pageview() {
     }
 
     function get_page_info_from_id($page_id) {
-    	return $this->get_page_info($page_id, 'page_id');
+	$query = "select * from `tiki_pages` where `page_id`=?";
+
+	$result = $this->query($query, array($page_id));
+
+	if (!$result->numRows())
+	    return false;
+	else
+	    return $result->fetchRow();
     }
 
 
@@ -5918,7 +5915,7 @@ if (!$simple_wiki) {
 	if (!$this->page_exists($pageName))
 	    return false;
 
-	$t = gmdate("U");
+	$t = date("U");
 	// Get this page information
 	$info = $this->get_page_info($pageName);
 	// Store the old version of this page in the history table
@@ -5978,7 +5975,7 @@ if (!$simple_wiki) {
 		// Select only versions older than keep_versions days
 		$keep = $this->get_preference('keep_versions', 0);
 
-		$now = gmdate("U");
+		$now = date("U");
 		$oktodel = $now - ($keep * 24 * 3600);
 		$query = "select `pageName` ,`version`, `historyId` from `tiki_history` where `pageName`=? and `lastModif`<=? order by `lastModif` asc";
 		$result = $this->query($query,array($pageName,$oktodel),$nb - $maxversions);
@@ -6068,7 +6065,7 @@ if (!$simple_wiki) {
 	if (!$this->page_exists($pageName))
 	    return false;
 
-	$t = gmdate("U");
+	$t = date("U");
 	$query = "delete from `tiki_history` where `pageName`=? and `version`=?";
 	$result = $this->query($query, array($pageName,(int) $version));
 	$query = "insert into `tiki_history`(pageName, version, lastModif, user, ip, comment, data,description) values(?,?,?, ?,?,?, ?,?)";
@@ -6237,24 +6234,12 @@ if (!$simple_wiki) {
 			    return $date->getTime();
 			}
 
-			function date_display_to_UTC($date) {
-			    global $user;
-			    $tz =& new Date_TimeZone($this->get_display_timezone($user));
-			    return $date - floor($tz->getOffset(new Date($date))/1000);
-			}
-			
-			function date_UTC_to_display($date) {
-			    global $user;
-			    $tz =& new Date_TimeZone($this->get_display_timezone($user));
-			    $date = $date + floor($tz->getOffset(new Date($date))/1000);
-			    return $date;
-			}
 
-			function date_format($format, $timestamp) {
-			    $d =& new Date();
-			    $d->toUTC();
-			    $d->setDate(gmdate("Y-m-d H:i:s", $timestamp));
-			    return $d->format($format);
+			function date_format($format, $timestamp, $user = false) {
+			    // strftime doesn't do translations correctly
+			    // return strftime($format,$timestamp);
+			    $date = new Date($timestamp);
+			    return $date->format($format);
 			}
 
 			function get_long_date($timestamp, $user = false) {
@@ -6307,7 +6292,7 @@ if (!$simple_wiki) {
 # rfc2822 requires dates to be en formatted
 			    $saved_locale = @setlocale(0);
 			    @setlocale ('en_US');
-#was return gmdate('D, j M Y H:i:s ', $time) . $this->timezone_offset($time, 'no colon');
+#was return date('D, j M Y H:i:s ', $time) . $this->timezone_offset($time, 'no colon');
 			    $rv = $this->date_format('%a, %e %b %Y %H:%M:%S', $timestamp, $user). $this->get_rfc2822_timezone_offset($timestamp, $user);
 
 # switch back to the 'saved' locale

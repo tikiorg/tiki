@@ -1388,8 +1388,8 @@ function output() {
     $expiresHours = $this->parameter['hours_to_live'];
 
     if ($expiresHours || $expiresSeconds) {
-      $now = mktime (gmdate("H"),date("i"),date("s"),date("m"),date("d"),date("Y"));
-      $expires = mktime (gmdate("H")+$expiresHours,date("i"),date("s")+$expiresSeconds,date("m"),date("d"),date("Y"));
+      $now = mktime (date("H"),date("i"),date("s"),date("m"),date("d"),date("Y"));
+      $expires = mktime (date("H")+$expiresHours,date("i"),date("s")+$expiresSeconds,date("m"),date("d"),date("Y"));
       $expiresGMT = gmdate('D, d M Y H:i:s', $expires).' GMT';
       $lastModifiedGMT  = gmdate('D, d M Y H:i:s', $now).' GMT';
 

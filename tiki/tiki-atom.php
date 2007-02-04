@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-atom.php,v 1.9 2007-02-03 20:47:13 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-atom.php,v 1.10 2007-02-04 20:09:32 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,7 +12,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-$datenow = htmlspecialchars($tikilib->iso_8601(gmdate("U")));
+$datenow = htmlspecialchars($tikilib->iso_8601(date("U")));
 
 $url = $_SERVER["REQUEST_URI"];
 $url = substr($url, 0, strpos($url."?", "?")); // strip all parameters from url

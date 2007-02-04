@@ -42,7 +42,7 @@ $incErrorManager = true;
  * @package 
  * @author Diogene
  * @copyright Copyright (c) 2003
- * @version $Id: ErrorManager.php,v 1.4 2007-02-03 20:47:33 nyloth Exp $
+ * @version $Id: ErrorManager.php,v 1.5 2007-02-04 20:09:42 mose Exp $
  * @access public
  **/
 class ErrorManager extends Object {
@@ -197,7 +197,7 @@ class ErrorManager extends Object {
         if ($level == '') $level = $this -> errorTrackingLevel;
 
         if ($this -> maxErrorReport >= $level) {
-            $message = 'The '.gmdate('<b>d/M/Y </b> H:i:s')."<br />\n".'ErrorManager report, you\'ve got '.$this -> numberError.' error(s), see below to correct:'."\n<br>\n".$this -> errorMessage."\n</ul>";
+            $message = 'The '.date('<b>d/M/Y </b> H:i:s')."<br />\n".'ErrorManager report, you\'ve got '.$this -> numberError.' error(s), see below to correct:'."\n<br>\n".$this -> errorMessage."\n</ul>";
 
             if ($this -> errorManagerSystem) {
 

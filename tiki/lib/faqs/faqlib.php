@@ -23,7 +23,7 @@ class FaqLib extends TikiLib {
 		$question = strip_tags($question, '<a>');
 
 		$answer = strip_tags($answer, '<a>');
-		$now = gmdate("U");
+		$now = date("U");
 		$query = "insert into `tiki_suggested_faq_questions`(`faqId`,`question`,`answer`,`user`,`created`)
     values(?,?,?,?,?)";
 		$result = $this->query($query,array($faqId,$question,$answer,$user,$now));
@@ -169,7 +169,7 @@ class FaqLib extends TikiLib {
 
 			$result = $this->query($query,array($title,$description,$canSuggest,(int) $faqId));
 		} else {
-			$now = gmdate("U");
+			$now = date("U");
 			$query = "delete from `tiki_faqs`where `title`=?";
 			$result = $this->query($query,array($title),-1,-1,false);
 			$query = "insert into `tiki_faqs`(`title`,`description`,`created`,`hits`,`questions`,`canSuggest`)

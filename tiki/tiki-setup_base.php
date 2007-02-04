@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.125 2007-02-03 21:38:25 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.126 2007-02-04 20:09:33 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,9 +12,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 	die();
 }
-
-// Default Timezone set to UTC
-$GLOBALS['_DATE_TIMEZONE_DEFAULT'] = 'UTC';
 
 // ---------------------------------------------------------------------
 // basic php conf adjustment

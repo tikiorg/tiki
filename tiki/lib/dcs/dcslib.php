@@ -47,7 +47,7 @@ class DCSLib extends TikiLib {
 			// Add number of programmed versions
 			// Add next programmed version
 			// Add number of old versions
-			$now = gmdate("U");
+			$now = date("U");
 
 			$id = $res["contentId"];
 			$query = "select count(*) from `tiki_programmed_content` where `publishDate`>? and `contentId`=?";
@@ -72,7 +72,7 @@ class DCSLib extends TikiLib {
 	}
 
 	function get_actual_content_date($contentId) {
-		$now = gmdate("U");
+		$now = date("U");
 
 		$query = "select max(`publishDate`) from `tiki_programmed_content` where `contentId`=? and `publishDate`<=?";
 		$res = $this->getOne($query,array($contentId,$now));
@@ -80,7 +80,7 @@ class DCSLib extends TikiLib {
 	}
 
 	function get_random_content($contentId) {
-		$now = gmdate("U");
+		$now = date("U");
 
 		$querycant = "select count(*) from `tiki_programmed_content` where `contentId`=? and `publishDate`<=?";
 		$cant = $this->getOne($querycant,array($contentId,$now));
@@ -96,7 +96,7 @@ class DCSLib extends TikiLib {
 	}
 
 	function get_next_content($contentId) {
-		$now = gmdate("U");
+		$now = date("U");
 
 		$query = "select min(`publishDate`) from `tiki_programmed_content` where `contentId`=? and `publishDate`>?";
 		$res = $this->getOne($query,array($contentId,$now));

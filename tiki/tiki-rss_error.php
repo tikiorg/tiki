@@ -2,7 +2,7 @@
 $feed = tra("Error Message");
 $title = tra("Tiki RSS Feed Error Message: $errmsg");
 $desc = $errmsg;
-$now = gmdate("U");
+$now = date("U");
 $id = "errorMessage";
 $titleId = "title";
 $descId = "description";

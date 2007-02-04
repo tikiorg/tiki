@@ -513,7 +513,7 @@ class ActivityManager extends BaseManager {
   function replace_activity($pId, $activityId, $vars)
   {
     $TABLE_NAME = GALAXIA_TABLE_PREFIX."activities";
-    $now = gmdate("U");
+    $now = date("U");
     $vars['lastModif']=$now;
     $vars['pId']=$pId;
     $vars['normalized_name'] = $this->_normalize_name($vars['name']);    

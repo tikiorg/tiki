@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pdf.php,v 1.15 2007-02-03 20:47:15 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pdf.php,v 1.16 2007-02-04 20:09:33 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,11 +14,11 @@ include_once ('lib/wiki/wikilib.php');
 
 // Create the HomePage if it doesn't exist
 if (!$tikilib->page_exists($wikiHomePage)) {
-	$tikilib->create_page($wikiHomePage, 0, '', gmdate("U"), 'Tiki initialization');
+	$tikilib->create_page($wikiHomePage, 0, '', date("U"), 'Tiki initialization');
 }
 
 if (!isset($_SESSION["thedate"])) {
-	$thedate = gmdate("U");
+	$thedate = date("U");
 } else {
 	$thedate = $_SESSION["thedate"];
 }
@@ -70,7 +70,7 @@ if ($info["flag"] == 'L') {
 $pdata = $tikilib->parse_data($info["data"]);
 
 //$smarty->assign_by_ref('parsed',$pdata);
-//$smarty->assign_by_ref('lastModif',gmdate("l d of F, Y  [H:i:s]",$info["lastModif"]));
+//$smarty->assign_by_ref('lastModif',date("l d of F, Y  [H:i:s]",$info["lastModif"]));
 //$smarty->assign_by_ref('lastModif',$info["lastModif"]);
 if (empty($info["user"])) {
 	$info["user"] = 'anonymous';

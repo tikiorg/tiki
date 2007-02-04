@@ -25,7 +25,7 @@ This library replaces native functions as follows:
 	mktime()   with  adodb_mktime()
 	gmmktime() with  adodb_gmmktime()
 	strftime() with  adodb_strftime()
-	gmstrftime() with  adodb_gmstrftime()
+	strftime() with  adodb_gmstrftime()
 </pre>
 	
 The parameters are identical, except that adodb_date() accepts a subset
@@ -475,7 +475,7 @@ function adodb_date_test()
 	$s1 = date($fmt,0);
 	$s2 = adodb_date($fmt,0);
 	if ($s1 != $s2) {
-		print " gmdate() 0 failed<br>$s1<br>$s2<br>";
+		print " date() 0 failed<br>$s1<br>$s2<br>";
 	}
 	flush();
 	for ($i=100; --$i > 0; ) {
@@ -656,7 +656,7 @@ function adodb_get_gmt_diff()
 static $TZ;
 	if (isset($TZ)) return $TZ;
 	
-	$TZ = mktime(0,0,0,1,2,1970,0) - mktime(0,0,0,1,2,1970,0);
+	$TZ = mktime(0,0,0,1,2,1970,0) - gmmktime(0,0,0,1,2,1970,0);
 	return $TZ;
 }
 
@@ -891,7 +891,7 @@ static $YRS;
 		'year' => $year,
 		'yday' => floor($secsInYear/$_day_power),
 		'weekday' => gmdate('l',$_day_power*(3+$dow)),
-		'month' => gmdate('F',gmmktime(0,0,0,$month,2,1971)),
+		'month' => gmdate('F',mktime(0,0,0,$month,2,1971)),
 		0 => $origd
 	);
 }
@@ -927,11 +927,11 @@ function adodb_date($fmt,$d=false,$is_gmt=false)
 {
 static $daylight;
 
-	if ($d === false) return ($is_gmt)? @date($fmt): @date($fmt);
+	if ($d === false) return ($is_gmt)? @gmdate($fmt): @date($fmt);
 	if (!defined('ADODB_TEST_DATES')) {
 		if ((abs($d) <= 0x7FFFFFFF)) { // check if number in 32-bit signed range
 			if (!defined('ADODB_NO_NEGATIVE_TS') || $d >= 0) // if windows, must be +ve integer
-				return ($is_gmt)? @date($fmt,$d): @date($fmt,$d);
+				return ($is_gmt)? @gmdate($fmt,$d): @date($fmt,$d);
 
 		}
 	}

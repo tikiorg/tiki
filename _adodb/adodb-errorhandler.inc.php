@@ -65,7 +65,7 @@ function ADODB_Error_Handler($dbms, $fn, $errno, $errmsg, $p1, $p2, &$thisConnec
 	*	3 message is appended to the file destination
 	*/
 	if (defined('ADODB_ERROR_LOG_TYPE')) {
-		$t = gmdate('Y-m-d H:i:s');
+		$t = date('Y-m-d H:i:s');
 		if (defined('ADODB_ERROR_LOG_DEST'))
 			error_log("($t) $s", ADODB_ERROR_LOG_TYPE, ADODB_ERROR_LOG_DEST);
 		else

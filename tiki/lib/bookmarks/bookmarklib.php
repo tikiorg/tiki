@@ -99,7 +99,7 @@ class BookmarkLib extends TikiLib {
 	}
 
 	function replace_url($urlId, $folderId, $name, $url, $user) {
-		$now = gmdate("U");
+		$now = date("U");
 
 		if ($urlId) {
 			$query = "update `tiki_user_bookmarks_urls` set `user`=?,`lastUpdated`=?,`folderId`=?,`name`=?,`url`=? where `urlId`=?";
@@ -126,7 +126,7 @@ class BookmarkLib extends TikiLib {
 		if (!$data)
 			return;
 
-		$now = gmdate("U");
+		$now = date("U");
 		$query = "update `tiki_user_bookmarks_urls` set `lastUpdated`=?, `data`=? where `urlId`=?";
 		$result = $this->query($query,array((int) $now,$data,$urlId));
 		return true;

@@ -236,9 +236,9 @@ class Calendar {
 		$dw = $this->dayOfWeek(1, $m, $y);
 
 		$cu = $this->daysInMonth($m, $y);
-		$hd = gmdate('d');
-		$hm = gmdate('m');
-		$hy = gmdate('Y');
+		$hd = date('d');
+		$hm = date('m');
+		$hy = date('Y');
 
 		//Inicializo la matriz horrible...
 		for ($i = 0; $i < 42; $i++) {
@@ -380,9 +380,9 @@ class Calendar {
 
 	// Returns the day of week for the passed date. 1=Sun,2=Mon,...,7=Sat
 	function dayOfWeek($dia, $mes, $anio) {
-		$u = gmmktime(10, 1, 1, $mes, $dia, $anio);
+		$u = mktime(10, 1, 1, $mes, $dia, $anio);
 
-		$w = gmdate('w', $u);
+		$w = date('w', $u);
 		return $w + 1;
 	}
 

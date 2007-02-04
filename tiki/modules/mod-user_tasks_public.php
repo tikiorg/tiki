@@ -29,7 +29,7 @@ if ($user && isset($feature_tasks) && $feature_tasks == 'y' && isset($tiki_p_tas
         $smarty->assign('user_group', $user_group);
 
 	if ($user_group == '') {
-	  $public_tasks =  array('data'=>''); //$tasklib->list_tasks($user, '0', '10', 'priority_desc', '', 'n', gmdate('U'),false,false,true); 
+	  $public_tasks =  array('data'=>''); //$tasklib->list_tasks($user, '0', '10', 'priority_desc', '', 'n', date('U'),false,false,true); 
 	}
         else{  
 	  	$public_tasks =  $tasklib->list_tasks($user, '0', '10',NULL, 'priority_asc', false,false,false,false,true,$user_group); 

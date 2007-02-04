@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_blog_post.php,v 1.20 2007-02-03 20:47:15 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_blog_post.php,v 1.21 2007-02-04 20:09:33 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -174,7 +174,7 @@ if (isset($_REQUEST['send'])) {
 		$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
 
 		$smarty->assign('mail_user', $user);
-		$smarty->assign('mail_title', $post_info['title'] ? $post_info['title'] : gmdate("d/m/Y [h:i]", $post_info['created']));
+		$smarty->assign('mail_title', $post_info['title'] ? $post_info['title'] : date("d/m/Y [h:i]", $post_info['created']));
 		$smarty->assign('mail_machine', $machine);
 		$mail_data = $smarty->fetch('mail/blogs_send_link.tpl');
 		@mail($email, tra('Post recommendation at'). ' ' . $_SERVER["SERVER_NAME"], $mail_data,

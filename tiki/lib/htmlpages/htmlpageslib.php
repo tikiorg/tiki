@@ -89,7 +89,7 @@ class HtmlPagesLib extends TikiLib {
 	}
 
 	function replace_html_page($pageName, $type, $content, $refresh) {
-		$now = gmdate("U");
+		$now = date("U");
 		$query = "delete from `tiki_html_pages` where ".$this->convert_binary()." `pageName`=?";
 		$this->query($query,array($pageName),-1,-1,false);
 		$query = "insert into `tiki_html_pages`(`pageName`,`content`,`type`,`created`,`refresh`) values(?,?,?,?,?)";

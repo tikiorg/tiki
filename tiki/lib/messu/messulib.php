@@ -41,7 +41,7 @@ class Messu extends TikiLib {
 			return false;
 		}
 
-		$now = gmdate('U');
+		$now = date('U');
 		$query = "insert into `messu_sent`(`user`,`user_from`,`user_to`,`user_cc`,`subject`,`body`,`date`,`isRead`,`isReplied`,`isFlagged`,`priority`,`hash`,`replyto_hash`) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		$this->query($query,array($user,$from,$to,$cc,$subject,$body,(int) $now,'n','n','n',(int) $priority,$hash,$replyto_hash));
 
@@ -63,7 +63,7 @@ class Messu extends TikiLib {
 			return false;
 		}
 		
-		$now = gmdate('U');
+		$now = date('U');
 		$query = "insert into `messu_messages`(`user`,`user_from`,`user_to`,`user_cc`,`subject`,`body`,`date`,`isRead`,`isReplied`,`isFlagged`,`priority`,`hash`,`replyto_hash`) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		$this->query($query,array($user,$from,$to,$cc,$subject,$body,(int) $now,'n','n','n',(int) $priority,$hash,$replyto_hash));
 
@@ -80,7 +80,7 @@ class Messu extends TikiLib {
 				include_once('lib/webmail/tikimaillib.php');
 				$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
 				$smarty->assign('mail_machine', $machine);
-				$smarty->assign('mail_date', gmdate("U"));
+				$smarty->assign('mail_date', date("U"));
 				$smarty->assign('mail_user', stripslashes($user));
 				$smarty->assign('mail_from', stripslashes($from));
 				$smarty->assign('mail_subject', stripslashes($subject));
@@ -240,7 +240,7 @@ class Messu extends TikiLib {
 		if ($days<1)
 			return false;
 		if ($dbsource=='') $dbsource="messages";
-		$age = gmdate("U") - ($days * 3600 * 24);
+		$age = date("U") - ($days * 3600 * 24);
 		
 		// TODO: only move as much msgs into archive as there is space left in there
 		$query = "insert into `messu_archive` select * from `messu_".$dbsource."` where `user`=? and `isRead`=? and `date`<=?";

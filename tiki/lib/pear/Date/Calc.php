@@ -40,7 +40,7 @@
  * @copyright  1999-2006 Monte Ohrt, Pierre-Alain Joye, Daniel Convissor
  * @license    http://www.opensource.org/licenses/bsd-license.php
  *             BSD License
- * @version    CVS: $Id: Calc.php,v 1.3 2007-02-03 20:47:30 nyloth Exp $
+ * @version    CVS: $Id: Calc.php,v 1.4 2007-02-04 20:09:41 mose Exp $
  * @link       http://pear.php.net/package/Date
  * @since      File available since Release 1.2
  */
@@ -460,7 +460,7 @@ class Date_Calc
     /**
      * Returns the current local date
      *
-     * NOTE: This function retrieves the local date using gmstrftime(),
+     * NOTE: This function retrieves the local date using strftime(),
      * which may or may not be 32-bit safe on your system.
      *
      * @param string $format  the string indicating how to format the output
@@ -472,7 +472,7 @@ class Date_Calc
      */
     function dateNow($format = DATE_CALC_FORMAT)
     {
-        return gmstrftime($format, time());
+        return strftime($format, time());
     }
 
     // }}}
@@ -716,7 +716,7 @@ class Date_Calc
     {
         $months = array();
         for ($i = 1; $i < 13; $i++) {
-            $months[$i] = gmstrftime('%B', gmmktime(0, 0, 0, $i, 1, 2001));
+            $months[$i] = strftime('%B', mktime(0, 0, 0, $i, 1, 2001));
         }
         return $months;
     }
@@ -742,7 +742,7 @@ class Date_Calc
     {
         $weekdays = array();
         for ($i = 0; $i < 7; $i++) {
-            $weekdays[$i] = gmstrftime('%A', gmmktime(0, 0, 0, 1, $i, 2001));
+            $weekdays[$i] = strftime('%A', mktime(0, 0, 0, 1, $i, 2001));
         }
         return $weekdays;
     }

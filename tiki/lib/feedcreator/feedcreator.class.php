@@ -646,7 +646,7 @@ class FeedCreator extends HtmlDescribable {
 		// attention, heavily-commented-out-area
 		
 		// maybe use this in addition to file time checking
-		//Header("Expires: ".gmdate("r",time()+$this->_timeout));
+		//Header("Expires: ".date("r",time()+$this->_timeout));
 		
 		/* no caching at all, doesn't seem to work as good:
 		Header("Cache-Control: no-cache");
@@ -723,7 +723,7 @@ class FeedDate {
 	 * @param mixed $dateString optional the date this FeedDate will represent. If not specified, the current date and time is used.
 	 */
 	function FeedDate($dateString="") {
-		if ($dateString=="") $dateString = gmdate("r");
+		if ($dateString=="") $dateString = date("r");
 		
 		if (is_integer($dateString)) {
 			$this->unix = $dateString;
@@ -731,7 +731,7 @@ class FeedDate {
 		}
 		if (preg_match("~(?:(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun),\\s+)?(\\d{1,2})\\s+([a-zA-Z]{3})\\s+(\\d{4})\\s+(\\d{2}):(\\d{2}):(\\d{2})\\s+(.*)~",$dateString,$matches)) {
 			$months = Array("Jan"=>1,"Feb"=>2,"Mar"=>3,"Apr"=>4,"May"=>5,"Jun"=>6,"Jul"=>7,"Aug"=>8,"Sep"=>9,"Oct"=>10,"Nov"=>11,"Dec"=>12);
-			$this->unix = gmmktime($matches[4],$matches[5],$matches[6],$months[$matches[2]],$matches[1],$matches[3]);
+			$this->unix = mktime($matches[4],$matches[5],$matches[6],$months[$matches[2]],$matches[1],$matches[3]);
 			if (substr($matches[7],0,1)=='+' OR substr($matches[7],0,1)=='-') {
 				$tzOffset = (substr($matches[7],0,3) * 60 + substr($matches[7],-2)) * 60;
 			} else {
@@ -755,7 +755,7 @@ class FeedDate {
 			return;
 		}
 		if (preg_match("~(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2})(.*)~",$dateString,$matches)) {
-			$this->unix = gmmktime($matches[4],$matches[5],$matches[6],$matches[2],$matches[3],$matches[1]);
+			$this->unix = mktime($matches[4],$matches[5],$matches[6],$matches[2],$matches[3],$matches[1]);
 			if (substr($matches[7],0,1)=='+' OR substr($matches[7],0,1)=='-') {
 				$tzOffset = (substr($matches[7],0,3) * 60 + substr($matches[7],-2)) * 60;
 			} else {
@@ -1350,7 +1350,7 @@ class MBOXCreator extends FeedCreator {
 				$from = $this->title;
 			}
 			$itemDate = new FeedDate($this->items[$i]->date);
-			$feed.= "From ".strtr(MBOXCreator::qp_enc($from)," ","_")." ".gmdate("D M d H:i:s Y",$itemDate->unix())."\n";
+			$feed.= "From ".strtr(MBOXCreator::qp_enc($from)," ","_")." ".date("D M d H:i:s Y",$itemDate->unix())."\n";
 			$feed.= "Content-Type: text/plain;\n";
 			$feed.= "	charset=\"".$this->encoding."\"\n";
 			$feed.= "Content-Transfer-Encoding: quoted-printable\n";

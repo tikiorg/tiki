@@ -207,7 +207,7 @@ class ADODB_odbtp extends ADOConnection{
 				$this->databaseType = 'odbtp_vfp';
 				$this->fmtDate = "{^Y-m-d}";
 				$this->fmtTimeStamp = "{^Y-m-d, h:i:sA}";
-				$this->sysDate = 'gmdate()';
+				$this->sysDate = 'date()';
 				$this->sysTimeStamp = 'datetime()';
 				$this->ansiOuter = true;
                 $this->hasTop = 'top';

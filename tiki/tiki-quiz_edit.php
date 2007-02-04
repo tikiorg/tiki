@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_edit.php,v 1.18 2007-02-03 20:47:15 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_edit.php,v 1.19 2007-02-04 20:09:33 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, 
 //                          George G. Geller et. al.
@@ -120,11 +120,11 @@ function quiz_data_load(){
 		$quiz_data["online"] = "n";
 	}
 
-  $quiz_data["datePub"] = $dc->getServerDateFromDisplayDate(gmmktime($quiz_data["publish_Hour"],
+  $quiz_data["datePub"] = $dc->getServerDateFromDisplayDate(mktime($quiz_data["publish_Hour"],
     $quiz_data["publish_Minute"], 0, $quiz_data["publish_Month"], $quiz_data["publish_Day"], 
     $quiz_data["publish_Year"]));
 
-  $quiz_data["dateExp"] = $dc->getServerDateFromDisplayDate(gmmktime($quiz_data["expire_Hour"],
+  $quiz_data["dateExp"] = $dc->getServerDateFromDisplayDate(mktime($quiz_data["expire_Hour"],
     $quiz_data["expire_Minute"], 0, $quiz_data["expire_Month"], $quiz_data["expire_Day"], 
     $quiz_data["expire_Year"]));
  

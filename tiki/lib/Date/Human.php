@@ -16,7 +16,7 @@
 // | Author: Allan Kent <allan@lodestone.co.za>                           |
 // +----------------------------------------------------------------------+
 //
-// $Id: Human.php,v 1.7 2007-02-03 20:47:17 nyloth Exp $
+// $Id: Human.php,v 1.8 2007-02-04 20:09:35 mose Exp $
 //
 
 //this script may only be included - so its better to die if called directly.
@@ -91,7 +91,7 @@ class Date_Human
         /**
          * We need to know how many days into the year we are
          */
-        $dateinfo = getdate(gmmktime(0, 0, 0, $month, $day, $year));
+        $dateinfo = getdate(mktime(0, 0, 0, $month, $day, $year));
         $dayofyear = $dateinfo["yday"];
         /**
          * Human Calendar starts at 0 for months and the first day of the year
@@ -182,11 +182,11 @@ class Date_Human
          */
         $DayOfYear++;
         /**
-         * the gmmktime() function will correctly calculate the date for out of
+         * the mktime() function will correctly calculate the date for out of
          * range values, so putting $DayOfYear instead of the day of the month
          * will work fine.
          */
-        $GregorianTimeStamp = gmmktime(0, 0, 0, 1, $DayOfYear, $year);
+        $GregorianTimeStamp = mktime(0, 0, 0, 1, $DayOfYear, $year);
         return $GregorianTimeStamp;
     }
 
