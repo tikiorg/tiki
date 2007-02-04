@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.705 2007-02-04 09:28:22 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.706 2007-02-04 12:04:31 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -606,7 +606,7 @@ class TikiLib extends TikiDB {
 	$query = "select * from `tiki_trackers` where `trackerId`=?";
 	$result = $this->query($query,array((int) $trackerId));
 	if (!$result->numRows()) return false;
-	$res = $result->fetchRow();
+	$res = $this->tracker_UTC_to_display($result->fetchRow());
 	return $res;
     }
     /*shared*/
@@ -631,7 +631,7 @@ class TikiLib extends TikiDB {
 	$ret = array();
 
 	$list = array();
-	while ($res = $result->fetchRow()) {
+	while ($res = $this->tracker_UTC_to_display($result->fetchRow())) {
 
 	    global $user;
 	    $add=$this->user_has_perm_on_object($user,$res['trackerId'],'tracker','tiki_p_view_trackers');
@@ -3907,13 +3907,20 @@ function add_pageview() {
 	return $ret;
     }
 
-    function page_info_UTC_to_display($page_info) {
-    	if ( is_array($page_info) ) {
-		$timestamp_fields = array('lastModif', 'created', 'cache_timestamp');
+    function fetched_db_result_UTC_to_display($db_infos, $timestamp_fields = '') {
+    	if ( is_array($db_infos) ) {
+		$timestamp_fields[] = 'lastModif';
+		$timestamp_fields[] = 'created';
 		foreach ( $timestamp_fields as $f )
-			if ( $page_info[$f] > 0 ) $page_info[$f] = $this->date_UTC_to_display($page_info[$f]);
+			if ( $db_infos[$f] > 0 ) $db_infos[$f] = $this->date_UTC_to_display($db_infos[$f]);
 	}
-    	return $page_info;
+    	return $db_infos;
+    }
+    function tracker_UTC_to_display($db_infos) {
+    	return $this->fetched_db_result_UTC_to_display($db_infos, array('posted'));
+    }
+    function page_info_UTC_to_display($db_infos) {
+    	return $this->fetched_db_result_UTC_to_display($db_infos, array('cache_timestamp'));
     }
 
     function get_page_info($field_value, $field_name = 'pageName') {
