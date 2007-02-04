@@ -209,7 +209,7 @@ class HistLib extends TikiLib {
 		}
 
 		if ($days) {
-			$toTime = gmmktime(23, 59, 59, gmdate("m"), date("d"), date("Y"));
+			$toTime = gmmktime(23, 59, 59, gmdate("m"), gmdate("d"), gmdate("Y"));
 			$fromTime = $toTime - (24 * 60 * 60 * $days);
 			$where .= " and ta.`lastModif`>=? and ta.`lastModif`<=? ";
 			$bindvars[] = $fromTime;

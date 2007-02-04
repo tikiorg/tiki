@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-received_articles.php,v 1.19 2007-02-03 20:47:15 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-received_articles.php,v 1.20 2007-02-04 01:43:57 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -50,7 +50,7 @@ if ($_REQUEST["receivedArticleId"]) {
 	$info["image_y"] = 0;
 	$info["image_data"] = '';
 	$info["publishDate"] = gmdate("U");
-	$info["expireDate"] = mktime (0,0,0,gmdate("m"),  date("d"),  date("Y")+1);
+	$info["expireDate"] = gmmktime(0,0,0,gmdate("m"), gmdate("d"), gmdate("Y")+1);
 	$info["created"] = gmdate("U");
 	$info["heading"] = '';
 	$info["body"] = '';

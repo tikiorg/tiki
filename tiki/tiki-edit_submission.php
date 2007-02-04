@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.54 2007-02-03 20:47:14 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.55 2007-02-04 01:43:57 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -42,7 +42,7 @@ $smarty->assign('subId', $subId);
 $smarty->assign('articleId', $subId);
 $smarty->assign('allowhtml', 'y');
 $publishDate = gmdate('U');
-$expireDate = mktime (0,0,0,gmdate("m"),  date("d"),  date("Y")+1);
+$expireDate = gmmktime(0,0,0,gmdate("m"), gmdate("d"), gmdate("Y")+1);
 $dc = &$tikilib->get_date_converter($user);
 $smarty->assign('title', '');
 $smarty->assign('topline', '');

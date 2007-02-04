@@ -64,7 +64,7 @@ $smarty->assign('yearafter', $focus_nextyear);
 $smarty->assign('focusmonth', $focus_month);
 $smarty->assign('focusdate', $focusdate);
 $smarty->assign('focuscell', $focuscell);
-$now = gmmktime(gmdate('G'), date('i'), date('s'), date('n'), date('d'), date('Y')); /* server date */
+$now = gmmktime(gmdate('G'), gmdate('i'), gmdate('s'), gmdate('n'), gmdate('d'), gmdate('Y')); /* server date */
 $smarty->assign('now', $now); /* server date */
 $smarty->assign('nowUser', $now); /* user time */
 

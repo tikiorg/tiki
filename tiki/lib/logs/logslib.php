@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.33 2007-02-03 20:47:28 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.34 2007-02-04 01:43:57 nyloth Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -533,7 +533,7 @@ class LogsLib extends TikiLib {
 		if (!isset($action['del']))
 			$action['del'] = '';
 
-		$csv.= '"'.$action['user'].'","'.gmdate("ymd",$action['lastModif']).'","'.date("H:i",$action['lastModif']).'","'.$action['action'].'","'.$action['objectType'].'","'.$action['object'].'","'
+		$csv.= '"'.$action['user'].'","'.gmdate("ymd",$action['lastModif']).'","'.gmdate("H:i",$action['lastModif']).'","'.$action['action'].'","'.$action['objectType'].'","'.$action['object'].'","'
 			.$action['category'].'","'.$unit.'","'.$action['add'].'","'.$action['del'].'","';
 		if (isset($action['contributions'])) {
 			$i = 0;

@@ -2206,7 +2206,7 @@
 	 * Format database date based on user defined format.
 	 *
 	 * @param v  	is the character date in YYYY-MM-DD format, returned by database
-	 * @param fmt 	is the format to apply to it, using gmdate()
+	 * @param fmt 	is the format to apply to it, using date()
 	 *
 	 * @return a date formated as user desires
 	 */
@@ -2228,7 +2228,7 @@
 		/**
 	 *
 	 * @param v  	is the character timestamp in YYYY-MM-DD hh:mm:ss format
-	 * @param fmt 	is the format to apply to it, using gmdate()
+	 * @param fmt 	is the format to apply to it, using date()
 	 *
 	 * @return a timestamp formated as user desires
 	 */
@@ -2720,7 +2720,7 @@
 	
 	/**
 	 * @param v  	is the character date in YYYY-MM-DD format, returned by database
-	 * @param fmt 	is the format to apply to it, using gmdate()
+	 * @param fmt 	is the format to apply to it, using date()
 	 *
 	 * @return a date formated as user desires
 	 */
