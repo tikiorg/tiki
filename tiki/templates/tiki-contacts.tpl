@@ -132,7 +132,7 @@ title="{tr}delete{/tr}"><img src="pics/icons/cross_admin.png" border="0" height=
 	td=newelem('td', { });
 	input=newelem('input', { 'type':'button', 'value':'-', 'onClick':'ext_remove(\''+extid+'\');' });
 	td.appendChild(input);
-	td.innerHTML+=htmlspecialchars(text)+':';
+	td.innerHTML+=text+':';
 	tr.appendChild(td);
 
 	td=newelem('td', { });
@@ -150,7 +150,7 @@ title="{tr}delete{/tr}"><img src="pics/icons/cross_admin.png" border="0" height=
 	text=document.editform_contact.select_exts.options[document.editform_contact.select_exts.selectedIndex].text;
 	document.editform_contact.select_exts.selectedIndex=0;
 
-	ext_add(value, text, '');
+	ext_add(value, htmlspecialchars(text), '');
     }
 
     function ext_remove(extid) {
