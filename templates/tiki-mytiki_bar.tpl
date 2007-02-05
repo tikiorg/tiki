@@ -57,6 +57,12 @@
 </a></td>
 {/if}
 
+{if $feature_contacts eq 'y'}
+<td valign="top"><a class="link" href="tiki-user_contacts_prefs.php" title="{tr}Contacts Preferences{/tr}">
+<img  border="0" src="img/mytiki/stock_contact.png" alt="{tr}Contacts Preferences{/tr}" /><br />
+</a></td>
+{/if}
+
 {if $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
 <td valign="top"><a class="link" href="tiki-notepad_list.php" title="{tr}Notepad{/tr}">
 <img border="0" src="img/mytiki/notes.gif" alt="{tr}Notepad{/tr}" /><br />
