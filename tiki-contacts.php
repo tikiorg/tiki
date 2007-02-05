@@ -22,7 +22,12 @@ $smarty->assign('contactId', $_REQUEST["contactId"]);
 
 $tmpexts=$contactlib->get_ext_list();
 $exts=array();
+$traducted_exts=array();
 foreach($tmpexts as $ext) $exts[bin2hex($ext)]=$ext;
+foreach($exts as $k => $v) {
+    $traducted_exts[$k]['tra']=tra($v);
+    $traducted_exts[$k]['art']=$v;
+}
 
 if ($_REQUEST["contactId"]) {
 	$info = $contactlib->get_contact($_REQUEST["contactId"], $user);
@@ -39,7 +44,7 @@ if ($_REQUEST["contactId"]) {
 	$info["groups"] = array();
 }
 $smarty->assign('info', $info);
-$smarty->assign('exts', $exts);
+$smarty->assign('exts', $traducted_exts);
 
 if (isset($_REQUEST["remove"])) {
 	$area = "delwebmailcontact";
