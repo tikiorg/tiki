@@ -1835,7 +1835,7 @@ $lang=Array(
 "save_to" => "à",
 "User_versions_for" => "Versions pour",
 "Ip" => "IP",
-"select all" => "les sélectionner tous",
+"select all" => "tout sélectionner",
 "Perform action with checked:" => "Faire l'action sur les sélectionnés :",
 "delete" => "effacer",
 "Tiki sections and features" => "Sections et fonctionnalités Tiki",
@@ -5828,6 +5828,7 @@ $lang=Array(
 "Unsubscribe" => "Se désinscrire",
 "You have ever subscribed" => "Vous êtes déjà inscrit",
 "You have not yet subscribed" => "Vous n'êtes pas inscrit",
+"Your previously registered password has been sent " => "Votre mot de passe précédemment enregistré a été envoyé ",
 //"" => "",
 "###end###"=>"###end###");
 ?>
