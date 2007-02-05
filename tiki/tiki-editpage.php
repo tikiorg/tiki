@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.161 2007-02-04 20:09:32 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.162 2007-02-05 22:32:48 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -454,6 +454,7 @@ if (isset($_REQUEST['do_suck']) && strlen($suck_url) > 0)
     $_REQUEST['edit'] .= $sdta;
 }
 // Checks if a "UserPagesomething" can be edited
+$isUserPage = false;
 if ($feature_wiki_userpage == 'y' && $tiki_p_admin != 'y') {
 	if(strcasecmp(substr($page,0,strlen($feature_wiki_userpage_prefix)),$feature_wiki_userpage_prefix)==0) {
 		$name = substr($page,strlen($feature_wiki_userpage_prefix));
@@ -461,6 +462,8 @@ if ($feature_wiki_userpage == 'y' && $tiki_p_admin != 'y') {
 			$smarty->assign('msg',tra("You cannot edit this page because it is a user personal page"));
 			$smarty->display("error.tpl");
 			die;
+		} elseif ($name != '') {
+			$isUserPage = true;
 		}
 	}
 }
@@ -494,7 +497,7 @@ $smarty->assign('comments_show','n');
 // Permissions
 // if this page has at least one permission then we apply individual group/page permissions
 // if not then generic permissions apply
-if (!($tiki_p_admin == 'y' || $tiki_p_admin_wiki== 'y' || $tikilib->user_has_perm_on_object($user, $page, 'wiki page', 'tiki_p_edit') || ($wiki_creator_admin == 'y' && $user && $info['creator'] == $user))) {
+if (!($tiki_p_admin == 'y' || $tiki_p_admin_wiki== 'y' || $tikilib->user_has_perm_on_object($user, $page, 'wiki page', 'tiki_p_edit') || ($wiki_creator_admin == 'y' && $user && $info['creator'] == $user) || $isUserPage)) {
 	$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
 	$smarty->display("error.tpl");
 	die;
