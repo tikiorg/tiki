@@ -190,6 +190,12 @@ class ContactLib extends TikiLib {
 		return $res;
 	}
 	
+	// this function is never called, it is just for making get_strings.php happy, so that default fields in the next function will be in translation files
+	function make_get_strings_happy() {
+		tra('Personal Phone'); tra('Personal Mobile'); tra('Personal Fax'); tra('Work Phone'); tra('Work Mobile');
+		tra('Work Fax'); tra('Company'); tra('Organization'); tra('Department'); tra('Division'); tra('Job Title');
+		tra('Street Address'); tra('City'); tra('State'); tra('Zip Code'); tra('Country');
+	}
 	function get_ext_list() {
 		global $user;
 		if ($this->ext_list_cache !== NULL) return $this->ext_list_cache;
