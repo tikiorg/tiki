@@ -189,32 +189,36 @@ class ContactLib extends TikiLib {
 	}
 	
 	function get_ext_list() {
-		$exts=$this->get_preference("contacts_exts", serialize(array('Phone','Mobile')));
+		global $user;
+		$exts=$this->get_user_preference($user, "contacts_exts", serialize(array('Phone','Mobile')));
 		$exts=unserialize($exts);
  		return $exts;
 	}
 	
 	function add_ext($name) {
-		$exts=$this->get_preference("contacts_exts", serialize(array()));
+		global $user;
+		$exts=$this->get_user_preference($user, "contacts_exts", serialize(array()));
 		$exts=unserialize($exts);
 		$exts[]=$name;
-		$this->set_preference("contacts_exts", serialize($exts));
+		$this->set_user_preference("contacts_exts", serialize($exts));
 	}
 	
 	function remove_ext($name) {
-		$exts=$this->get_preference("contacts_exts", serialize(array()));
+		global $user;
+		$exts=$this->get_user_preference($user, "contacts_exts", serialize(array()));
 		$exts=unserialize($exts);
 		foreach($exts as $k => $v)
 			if ($v == $name) unset($exts[$k]);
-		$this->set_preference("contacts_exts", serialize($exts));
+		$this->set_user_preference("contacts_exts", serialize($exts));
 	}
 	
 	function rename_ext($oldname, $newname) {
-		$exts=$this->get_preference("contacts_exts", serialize(array()));
+		global $user;
+		$exts=$this->get_user_preference($user, "contacts_exts", serialize(array()));
 		$exts=unserialize($exts);
 		foreach($exts as $k => $v)
 			if ($v == $oldname) $exts[$k]=$newname;
-		$this->set_preference("contacts_exts", serialize($exts));
+		$this->set_user_preference($user, "contacts_exts", serialize($exts));
 	}
 }
 $contactlib = new ContactLib($dbTiki);
