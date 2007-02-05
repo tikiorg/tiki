@@ -190,7 +190,25 @@ class ContactLib extends TikiLib {
 	
 	function get_ext_list() {
 		global $user;
-		$exts=$this->get_user_preference($user, "contacts_exts", serialize(array('Phone','Mobile')));
+		$exts=$this->get_user_preference($user,
+						 "contacts_exts",
+						 serialize(array(
+								 'Personal Phone',
+								 'Personal Mobile',
+								 'Personal Fax',
+								 'Work Phone',
+								 'Work Mobile',
+								 'Work Fax',
+								 'Company',
+								 'Organization',
+								 'Department',
+								 'Division',
+								 'Job Title',
+								 'Street Address',
+								 'City',
+								 'State',
+								 'Zip Code',
+								 'Country')));
 		$exts=unserialize($exts);
  		return $exts;
 	}
