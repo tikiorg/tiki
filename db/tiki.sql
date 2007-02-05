@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-01-21 19:27:12 $
-# $Author: awolfff $
+# $Date: 2007-02-05 14:37:06 $
+# $Author: niclone $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -4835,3 +4835,11 @@ CREATE TABLE tiki_contributions_assigned (
   PRIMARY KEY  (objectId, contributionId)
 ) TYPE=MyISAM;
 
+DROP TABLE IF EXISTS tiki_webmail_contacts_ext;
+CREATE TABLE `tiki_webmail_contacts_ext` (
+  `contactId` int(11) NOT NULL,
+  `name` varchar(32) NOT NULL,
+  `value` varchar(256) NOT NULL,
+  `hidden` tinyint(1) NOT NULL,
+  KEY `contactId` (`contactId`)
+) ENGINE=MyISAM;
