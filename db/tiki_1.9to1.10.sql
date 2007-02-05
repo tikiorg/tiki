@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.136 2007-02-05 14:04:21 niclone Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.137 2007-02-05 14:19:05 niclone Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -832,7 +832,7 @@ ALTER TABLE tiki_directory_sites ADD KEY(url);
 #02/01/2007 mkalbere
 ALTER TABLE `tiki_tracker_item_fields` ADD FULLTEXT (value);
 
-#05/01/2006 niclone
+#05/01/2007 niclone
 CREATE TABLE IF NOT EXISTS `tiki_webmail_contacts_ext` (
   `contactId` int(11) NOT NULL,
   `name` varchar(32) NOT NULL,
