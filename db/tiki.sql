@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2007-02-05 14:37:06 $
+# $Date: 2007-02-05 19:31:51 $
 # $Author: niclone $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -4843,3 +4843,10 @@ CREATE TABLE `tiki_webmail_contacts_ext` (
   `hidden` tinyint(1) NOT NULL,
   KEY `contactId` (`contactId`)
 ) ENGINE=MyISAM;
+
+DROP TABLE IF EXISTS tiki_webmail_contacts_fields;
+CREATE TABLE `tiki_webmail_contacts_fields` (
+  `user` VARCHAR( 200 ) NOT NULL ,
+  `fieldname` VARCHAR( 256 ) NOT NULL ,
+  INDEX ( `user` )
+) ENGINE = MyISAM ;
