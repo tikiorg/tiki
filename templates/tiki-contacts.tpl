@@ -4,10 +4,10 @@
 <span class="button2"><a href="#" onclick="flip('editform');return false;" class="linkbut">{tr}Create/edit contacts{/tr}</a></span>
 </div>
 
-<form action="tiki-contacts.php" method="post" id="editform" style="display:{ if $contactId}block{else}none{/if};">
+<form action="tiki-contacts.php" method="post" id="editform" name='editform_contact' style="display:{ if $contactId}block{else}none{/if};">
 <input type="hidden" name="locSection" value="contacts" />
 <input type="hidden" name="contactId" value="{$contactId|escape}" />
-<table class="normal">
+<table class="normal"><tbody id='tbody_editcontact'>
 <tr class="formcolor"><td>{tr}First Name{/tr}:</td><td><input type="text" maxlength="80" size="20" name="firstName" value="{$info.firstName|escape}" /></td>
 <td rowspan="5">
 {tr}Publish this contact to groups{/tr}:<br />
@@ -21,8 +21,14 @@
 <tr class="formcolor"><td>{tr}Last Name{/tr}:</td><td><input type="text" maxlength="80" size="20" name="lastName" value="{$info.lastName|escape}" /></td></tr>
 <tr class="formcolor"><td>{tr}Email{/tr}:</td><td><input type="text" maxlength="80" size="20" name="email" value="{$info.email|escape}" /></td></tr>
 <tr class="formcolor"><td>{tr}Nickname{/tr}:</td><td><input type="text" maxlength="80" size="20" name="nickname" value="{$info.nickname|escape}" /></td></tr>
+<tr class="formcolor" id='tr_exts'>
+  <td><select id='select_exts' onChange='ext_select();'>
+    <option>{tr}More...{/tr}</option>
+  </select></td>
+  <td></td>
+</tr>
 <tr class="formcolor"><td></td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
-</table>
+</tbody></table>
 <br /><br />
 </form>
 
@@ -98,3 +104,71 @@ title="{tr}delete{/tr}"><img src="pics/icons/cross_admin.png" border="0" height=
 </div>
 </div>
 
+{literal}
+<script lang='JavaScript'>
+    function newelem(type, vals) {
+        var elem=document.createElement(type);
+        for (key in vals) {
+	    elem.setAttribute(key, vals[key]);
+        }
+        return elem;
+    }
+
+    function htmlspecialchars(ch) {
+	ch = ch.replace(/&/g,"&amp;");
+	ch = ch.replace(/\"/g,"&quot;");
+	ch = ch.replace(/\'/g,"&#039;");
+	ch = ch.replace(/</g,"&lt;");
+	ch = ch.replace(/>/g,"&gt;");
+	return ch;
+    }
+
+    function ext_add(extid, text, defaultvalue) {
+	var option=document.getElementById('ext_option_'+extid);
+	option.disabled='1';
+
+	var tr,td, input;
+	tr=newelem('tr', { 'class':'formcolor', 'id':'tr_ext_'+extid });
+	td=newelem('td', { });
+	input=newelem('input', { 'type':'button', 'value':'-', 'onClick':'ext_remove(\''+extid+'\');' });
+	td.appendChild(input);
+	td.innerHTML+=htmlspecialchars(text)+':';
+	tr.appendChild(td);
+
+	td=newelem('td', { });
+	input=newelem('input', { 'maxlength':'80', 'size':'20', 'name':'ext_'+extid, 'value':defaultvalue });
+	td.appendChild(input);
+	tr.appendChild(td);
+
+	var tbody=document.getElementById('tbody_editcontact');
+	tbody.insertBefore(tr, document.getElementById('tr_exts'));	
+    }
+
+    function ext_select() {
+	var value, text;
+	value=document.editform_contact.select_exts.options[document.editform_contact.select_exts.selectedIndex].value;
+	text=document.editform_contact.select_exts.options[document.editform_contact.select_exts.selectedIndex].text;
+	document.editform_contact.select_exts.selectedIndex=0;
+
+	ext_add(value, text, '');
+    }
+
+    function ext_remove(extid) {
+	var elem=document.getElementById('tr_ext_'+extid);
+	var tbody=document.getElementById('tbody_editcontact');
+	tbody.removeChild(elem);
+	var option=document.getElementById('ext_option_'+extid);
+	option.disabled='';
+    }
+    
+    function extmenu_add(extid, text, defaultvalue) {
+	var selectelem=document.getElementById('select_exts');
+	var option=newelem('option', { 'id':'ext_option_'+extid, 'value':extid });
+	option.innerHTML=text;
+	selectelem.appendChild(option);
+	if (defaultvalue != '')
+	    ext_add(extid, text, defaultvalue);
+    }
+{/literal}{foreach from=$exts item=ext key=k}extmenu_add('{$k|escape}', '{$ext|escape}', '{$info.ext[$ext]|escape}');{/foreach}{literal}
+</script>
+{/literal}

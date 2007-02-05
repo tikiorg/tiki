@@ -129,8 +129,8 @@ class ContactLib extends TikiLib {
 		}
 		return $dirs;
 	}
-
-	function replace_contact($contactId, $firstName, $lastName, $email, $nickname, $user, $groups=array()) {
+	
+	function replace_contact($contactId, $firstName, $lastName, $email, $nickname, $user, $groups=array(), $exts=array()) {
 		$firstName = trim($firstName);
 		$lastName = trim($lastName);
 		$email = trim($email);
@@ -141,26 +141,31 @@ class ContactLib extends TikiLib {
 			$result = $this->query($query, $bindvars);
 			$this->query('delete from `tiki_webmail_contacts_groups` where `contactId`=?',array((int)$contactId));
 		} else {
-		  $query = "delete from `tiki_webmail_contacts` where `contactId`=? and `user`=?"; 
-		  $result = $this->query($query,array((int)$contactId, $user),-1,-1,false); //the false allows ignoring errors 
+			$query = "delete from `tiki_webmail_contacts` where `contactId`=? and `user`=?"; 
+			$result = $this->query($query,array((int)$contactId, $user),-1,-1,false); //the false allows ignoring errors 
 			$contactId = $this->getOne('select max(`contactId`) from `tiki_webmail_contacts`') + 1;
-      $query = "insert into `tiki_webmail_contacts`(`contactId`,`firstName`,`lastName`,`email`,`nickname`,`user`) values(?,?,?,?,?,?)"; 
-      $result = $this->query($query,array((int)$contactId,$firstName,$lastName,$email,$nickname,$user)); 
+			$query = "insert into `tiki_webmail_contacts`(`contactId`,`firstName`,`lastName`,`email`,`nickname`,`user`) values(?,?,?,?,?,?)"; 
+			$result = $this->query($query,array((int)$contactId,$firstName,$lastName,$email,$nickname,$user)); 
 		}
-		if (count($groups)) {
-			foreach ($groups as $group) {
-				$this->query('insert into `tiki_webmail_contacts_groups` (`contactId`,`groupName`) values (?,?)',array((int)$contactId,$group));
-			}
+		foreach ($groups as $group) {
+			$this->query('insert into `tiki_webmail_contacts_groups` (`contactId`,`groupName`) values (?,?)',array((int)$contactId,$group));
+		}
+		foreach($exts as $ext => $value) {
+			$this->query('delete from `tiki_webmail_contacts_ext` where `contactId`=? and `name`=?',
+				     array((int)$contactId, $ext));
+			if (strlen($value))
+				$this->query('insert into `tiki_webmail_contacts_ext` (`contactId`,`name`,`value`) values (?,?,?)',
+					     array((int)$contactId, $ext, $value));
 		}
 		return true;
 	}
-
+	
 	function remove_contact($contactId, $user) {
 		$query = "delete from `tiki_webmail_contacts` where `contactId`=? and `user`=?";
 		$result = $this->query($query, array((int)$contactId,$user));
 		return true;
 	}
-
+	
 	function get_contact($contactId, $user) {
 		$query = "select * from `tiki_webmail_contacts` where `contactId`=? and `user`=?";
 		$result = $this->query($query, array((int)$contactId,$user));
@@ -176,9 +181,41 @@ class ContactLib extends TikiLib {
 				$res['groups'][] = $r2['groupName'];
 			}
 		}
+		$res2=$this->query("select `name`,`value` from `tiki_webmail_contacts_ext` where `contactId`=?", array($contactId));
+		while($r2 = $res2->fetchRow()) {
+			$res['ext'][$r2['name']]=$r2['value'];
+		}
 		return $res;
 	}
-
+	
+	function get_ext_list() {
+		$exts=$this->get_preference("contacts_exts", serialize(array('Phone','Mobile')));
+		$exts=unserialize($exts);
+ 		return $exts;
+	}
+	
+	function add_ext($name) {
+		$exts=$this->get_preference("contacts_exts", serialize(array()));
+		$exts=unserialize($exts);
+		$exts[]=$name;
+		$this->set_preference("contacts_exts", serialize($exts));
+	}
+	
+	function remove_ext($name) {
+		$exts=$this->get_preference("contacts_exts", serialize(array()));
+		$exts=unserialize($exts);
+		foreach($exts as $k => $v)
+			if ($v == $name) unset($exts[$k]);
+		$this->set_preference("contacts_exts", serialize($exts));
+	}
+	
+	function rename_ext($oldname, $newname) {
+		$exts=$this->get_preference("contacts_exts", serialize(array()));
+		$exts=unserialize($exts);
+		foreach($exts as $k => $v)
+			if ($v == $oldname) $exts[$k]=$newname;
+		$this->set_preference("contacts_exts", serialize($exts));
+	}
 }
 $contactlib = new ContactLib($dbTiki);
 ?>
