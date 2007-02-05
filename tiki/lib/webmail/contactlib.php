@@ -7,6 +7,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class ContactLib extends TikiLib {
+	var $ext_list_cache=NULL;
+
 	function ContactLib($db) {
 		parent::TikiLib($db);
 	}
@@ -190,50 +192,40 @@ class ContactLib extends TikiLib {
 	
 	function get_ext_list() {
 		global $user;
-		$exts=$this->get_user_preference($user,
-						 "contacts_exts",
-						 serialize(array(
-								 'Personal Phone',
-								 'Personal Mobile',
-								 'Personal Fax',
-								 'Work Phone',
-								 'Work Mobile',
-								 'Work Fax',
-								 'Company',
-								 'Organization',
-								 'Department',
-								 'Division',
-								 'Job Title',
-								 'Street Address',
-								 'City',
-								 'State',
-								 'Zip Code',
-								 'Country')));
-		$exts=unserialize($exts);
+		if ($this->ext_list_cache !== NULL) return $this->ext_list_cache;
+
+		$res=$this->query("select `fieldname` from tiki_webmail_contacts_fields where user=?",
+				  array($user));
+		if (!$res->numRows()) {
+			$exts=array('Personal Phone', 'Personal Mobile', 'Personal Fax', 'Work Phone', 'Work Mobile',
+				   'Work Fax', 'Company', 'Organization', 'Department', 'Division', 'Job Title',
+				   'Street Address', 'City', 'State', 'Zip Code', 'Country');
+			foreach($exts as $ext) $this->add_ext($ext);
+		} else {
+			$exts=array();
+			while($r = $res->fetchRow()) $exts[]=$r['fieldname'];
+		}
+
+		$this->ext_list_cache=$exts;
  		return $exts;
 	}
 	
 	function add_ext($name) {
 		global $user;
-		$exts=$this->get_ext_list();
-		$exts[]=$name;
-		$this->set_user_preference($user, "contacts_exts", serialize($exts));
+		$this->query("insert into tiki_webmail_contacts_fields (user, fieldname) values (?,?)",
+			     array($user, $name));
 	}
 	
 	function remove_ext($name) {
 		global $user;
-		$exts=$this->get_ext_list();
-		foreach($exts as $k => $v)
-			if ($v == $name) unset($exts[$k]);
-		$this->set_user_preference($user, "contacts_exts", serialize($exts));
+		$this->query('delete from tiki_webmail_contacts_fields where user=? and fieldname=?',
+			     array($user, $name));
 	}
 	
 	function rename_ext($oldname, $newname) {
 		global $user;
-		$exts=$this->get_ext_list();
-		foreach($exts as $k => $v)
-			if ($v == $oldname) $exts[$k]=$newname;
-		$this->set_user_preference($user, "contacts_exts", serialize($exts));
+		$this->query('update tiki_webmail_contacts_fields set fieldname=? where fieldname=? and user=?',
+			     array($newname, $oldname, $user));
 	}
 }
 $contactlib = new ContactLib($dbTiki);
