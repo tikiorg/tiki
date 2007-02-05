@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.169 2007-02-04 20:09:45 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.170 2007-02-05 14:35:29 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -638,14 +638,14 @@ class TrackerLib extends TikiLib {
 							if (!isset($fopt['options_array'][1]))
 								$fopt['options_array'][1] = 0;
 							$t = $imagegallib->ratio($imagegallib->xsize, $imagegallib->ysize, $fopt['options_array'][0], $fopt['options_array'][1] );
-							$fopt['options_array'][0] = $t * $imagegallib->xsize;
-							$fopt['options_array'][1] = $t * $imagegallib->ysize;
+							$fopt['options_array'][0] = round($t * $imagegallib->xsize);
+							$fopt['options_array'][1] = round($t * $imagegallib->ysize);
 							if (isset($fopt['options_array'][2])) {
 								if (!isset($fopt['options_array'][3]))
 									$fopt['options_array'][3] = 0;
 								$t = $imagegallib->ratio($imagegallib->xsize, $imagegallib->ysize, $fopt['options_array'][2], $fopt['options_array'][3] );
-								$fopt['options_array'][2] = $t * $imagegallib->xsize;
-								$fopt['options_array'][3] = $t * $imagegallib->ysize;
+								$fopt['options_array'][2] = round($t * $imagegallib->xsize);
+								$fopt['options_array'][3] = round($t * $imagegallib->ysize);
 							}
 						}
 					}elseif ($fopt['type'] == 'r' && isset($fopt["options_array"][3])) {
@@ -1653,6 +1653,7 @@ class TrackerLib extends TikiLib {
 				'max'=>array('type'=>'int','label'=>tra('max')),
 			),
 			'help'=>tra('Text options: 1,size,prepend,append,max with size in chars, prepend will be displayed before the field append will be displayed just after, max is the maximum number of characters that can be saved, and initial 1 to make that next text field or checkbox is in same row. If you indicate only 1 it means next field is in same row too.'));
+
 		$type['a'] = array(
 			'label'=>tra('textarea'),
 			'opt'=>true,
