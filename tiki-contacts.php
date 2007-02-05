@@ -32,8 +32,12 @@ foreach($exts as $k => $v) {
 if ($_REQUEST["contactId"]) {
 	$info = $contactlib->get_contact($_REQUEST["contactId"], $user);
 	foreach($info['ext'] as $ext => $value) {
-	    if (!in_array($ext, $exts))
-		$exts[bin2hex($ext)]=$ext;
+	    if (!in_array($ext, $exts)) {
+		$k=bin2hex($ext);
+		$exts[$k]=$ext;
+		$traducted_exts[$k]['tra']=tra($ext);
+		$traducted_exts[$k]['art']=$ext;
+	    }
 	}
 } else {
 	$info = array();
