@@ -1183,6 +1183,7 @@ function get_included_groups($group) {
 			$this->query("update `tiki_wiki_attachments` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_webmail_messages` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_webmail_contacts` set `user`=? where `user`=?", array($to,$from));
+			$this->query("update `tiki_webmail_contacts_fields` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_users` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_userpoints` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_userfiles` set `user`=? where `user`=?", array($to,$from));
