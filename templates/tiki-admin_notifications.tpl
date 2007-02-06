@@ -68,7 +68,7 @@
 <td>{$channels[user].object}</td>
 <td>{$channels[user].email}</td>
 <td>
-   <a class="link" href="tiki-admin_notifications.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removeevent={$channels[user].event}&amp;object={$channels[user].object}&amp;email={$channels[user].email}">{tr}remove{/tr}</a>
+   <a class="link" href="tiki-admin_notifications.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removeevent={$channels[user].hash}">{tr}remove{/tr}</a>
 </td>
 </tr>
 {sectionelse}
