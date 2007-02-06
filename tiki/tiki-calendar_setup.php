@@ -196,7 +196,7 @@ if ($calendarViewMode == 'month' ||
    $viewstart -= $wd * $d;
    $daystart = $viewstart;
    // then go to the end of the week for $viewend
-   $viewend = $viewstart + (7 * $d);
+   $viewend = $viewstart + (7 * $d) - 1;
    $dayend=$viewend;
    $numberofweeks = 0;
 } else {
