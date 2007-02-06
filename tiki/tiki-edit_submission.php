@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.56 2007-02-04 20:09:32 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.57 2007-02-06 09:31:08 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -42,8 +42,7 @@ $smarty->assign('subId', $subId);
 $smarty->assign('articleId', $subId);
 $smarty->assign('allowhtml', 'y');
 $publishDate = date('U');
-$expireDate = mktime (0,0,0,date("m"),  date("d"),  date("Y")+1);
-$dc = &$tikilib->get_date_converter($user);
+$expireDate = TikiLib::make_time(0,0,0,date("m"), date("d"), date("Y")+1);
 $smarty->assign('title', '');
 $smarty->assign('topline', '');
 $smarty->assign('subtitle', '');
@@ -162,10 +161,9 @@ $smarty->assign('preview', 0);
 if (isset($_REQUEST["preview"])) {
 	check_ticket('edit-submission'); 
 	# convert from the displayed 'site' time to 'server' time
-	$publishDate = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["publish_Hour"], $_REQUEST["publish_Minute"],
-		0, $_REQUEST["publish_Month"], $_REQUEST["publish_Day"], $_REQUEST["publish_Year"]));
-	$expireDate = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"],
-		0, $_REQUEST["expire_Month"], $_REQUEST["expire_Day"], $_REQUEST["expire_Year"]));
+
+	$publishDate = TikiLib::make_time($_REQUEST["publish_Hour"], $_REQUEST["publish_Minute"], 0, $_REQUEST["publish_Month"], $_REQUEST["publish_Day"], $_REQUEST["publish_Year"]);
+	$expireDate = TikiLib::make_time($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"], 0, $_REQUEST["expire_Month"], $_REQUEST["expire_Day"], $_REQUEST["expire_Year"]);
 
 	$smarty->assign('reads', '0');
 	$smarty->assign('preview', 1);
@@ -303,11 +301,9 @@ if (isset($_REQUEST["save"])) {
 	check_ticket('edit-submission'); 
 	include_once ("lib/imagegals/imagegallib.php");
 
-	# convert from the displayed 'site' time to 'server' time
-	$publishDate = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["publish_Hour"], $_REQUEST["publish_Minute"],
-		0, $_REQUEST["publish_Month"], $_REQUEST["publish_Day"], $_REQUEST["publish_Year"]));
-	$expireDate = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"],
-		0, $_REQUEST["expire_Month"], $_REQUEST["expire_Day"], $_REQUEST["expire_Year"]));
+	# convert from the displayed 'site' time to UTC time
+	$publishDate = TikiLib::make_time($_REQUEST["publish_Hour"], $_REQUEST["publish_Minute"], 0, $_REQUEST["publish_Month"], $_REQUEST["publish_Day"], $_REQUEST["publish_Year"]);
+	$expireDate = TikiLib::make_time($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"], 0, $_REQUEST["expire_Month"], $_REQUEST["expire_Day"], $_REQUEST["expire_Year"]);
 
 	if (isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"] == "on") {
 		$body = $_REQUEST["body"];
@@ -427,11 +423,9 @@ $cat_type = 'submission';
 $cat_objid = $subId;
 include_once ("categorize_list.php");
 
-$smarty->assign('publishDate', $publishDate);
-$smarty->assign('publishDateSite', $dc->getDisplayDateFromServerDate($publishDate));
-$smarty->assign('expireDate', $expireDate);
-$smarty->assign('expireDateSite', $dc->getDisplayDateFromServerDate($expireDate));
-$smarty->assign('siteTimeZone', $dc->getTzName());
+$smarty->assign('publishDateSite', $publishDate);
+$smarty->assign('expireDateSite', $expireDate);
+$smarty->assign('siteTimeZone', $display_timezone);
 
 include_once("textareasize.php");
 
