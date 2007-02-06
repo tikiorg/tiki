@@ -41,7 +41,7 @@
  * @copyright  1997-2006 Baba Buehler, Pierre-Alain Joye
  * @license    http://www.opensource.org/licenses/bsd-license.php
  *             BSD License
- * @version    CVS: $Id: Date.php,v 1.5 2007-02-04 20:09:41 mose Exp $
+ * @version    CVS: $Id: Date.php,v 1.6 2007-02-06 04:24:52 mose Exp $
  * @link       http://pear.php.net/package/Date
  */
 
@@ -200,7 +200,7 @@ class Date
     {
         $this->tz = Date_TimeZone::getDefault();
         if (is_null($date)) {
-            $this->setDate(date("Y-m-d H:i:s"));
+            $this->setDate(gmdate("Y-m-d H:i:s"));
         } elseif (is_a($date, 'Date')) {
             $this->copy($date);
         } else {
@@ -250,7 +250,7 @@ class Date
             }
         } elseif (is_numeric($date)) {
             // UNIXTIME
-            $this->setDate(date("Y-m-d H:i:s", $date));
+            $this->setDate(gmdate("Y-m-d H:i:s", $date));
         } else {
             // unknown format
             $this->year       = 0;

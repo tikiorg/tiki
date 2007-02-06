@@ -53,6 +53,7 @@ function smarty_function_html_select_time($params, &$smarty)
     $meridian_extra     = null;
 
     extract($params);
+		if (!isset($time) or !$time) $time = time();
 		
 		if (!preg_match('/^[0-2]?[0-9]-[0-2]?[0-9]$/',$hour_minmax)) {
 			$hour_minmax = '0-23';

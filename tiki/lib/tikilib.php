@@ -1,12 +1,12 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.709 2007-02-04 23:40:59 mose Exp $
+// CVS: $Id: tikilib.php,v 1.710 2007-02-06 04:24:51 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
-require_once ('lib/pear/Date.php');
+require_once ('Date.php');
 $tikidate = new Date();
 
 require_once ('lib/tikidate.php');
@@ -2483,14 +2483,14 @@ function add_pageview() {
     if (($visible_only) && ($visible_only <> 'n')) {
 		if ($date !== false){ // looking for articles on a specific date (or today)
 			if ($date === ""){ // show articles published today
-				$date = date('U');
+				$date = $this->now;
 			}
 			$bindvars[]=(int) $date;
-			$bindvars[]=(int) date('U');
+			$bindvars[]=(int) $this->now;
 			$condition = "(`tiki_articles`.`publishDate`<? or `tiki_article_types`.`show_pre_publ`='y') and (`tiki_articles`.`expireDate`>? or `tiki_article_types`.`show_post_expire`='y')";
 		}else{ // looking for all articles not expired
 			$condition = "(`tiki_articles`.`expireDate`>? or `tiki_article_types`.`show_post_expire`='y')";
-			$bindvars[]=date('U');
+			$bindvars[] = $this->now;
 		}
 		if ($mid) {
 		    $mid .= " and $condition";
@@ -6227,21 +6227,37 @@ if (!$simple_wiki) {
 			    return $short_datetime_format;
 			}
 
-			function server_time_to_site_time($timestamp, $user = false) {
-			    $date = new Date($timestamp);
-
-			    $date->setTZbyID($this->get_server_timezone());
-			    $date->convertTZbyID($this->get_display_timezone($user));
-			    return $date->getTime();
-			}
-
-
-			function date_format($format, $timestamp, $user = false) {
-				global $tikidate;
+			function date_format($format, $timestamp = false, $user = false) {
+				global $tikidate, $display_timezone;
+				if (!$timestamp) {
+					$timestamp = time();
+				}
+				if ($user) {
+					global $server_timezone;
+					$tz = $this->get_user_preference($user, 'display_timezone', $server_timezone);
+				} else {
+					$tz = $display_timezone;
+				}
+				$tikidate->setTZbyID('UTC');
 				$tikidate->setDate($timestamp);
+				$tikidate->convertTZbyID($display_timezone);
 				return $tikidate->format($format);
 			}
 
+			function make_time($hour,$minute,$second,$month,$day,$year) {
+				global $tikidate, $display_timezone;
+				$tikidate->setTZbyID($display_timezone);
+				$tikidate->setDate(0);
+				$tikidate->setHour($hour);
+				$tikidate->setMinute($minute);
+				$tikidate->setSecond($second);
+				$tikidate->setMonth($month);
+				$tikidate->setDay($day);
+				$tikidate->setYear($year);
+				$tikidate->convertTZbyID('UTC');
+				return $tikidate->getTime();
+			}
+			
 			function get_long_date($timestamp, $user = false) {
 			    return $this->date_format($this->get_long_date_format(), $timestamp, $user);
 			}
