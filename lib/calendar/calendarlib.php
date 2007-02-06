@@ -145,19 +145,13 @@ class CalendarLib extends TikiLib {
 	/* tsart ans tstop are in user time - the data base is in server time */
 	function list_raw_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode='start_asc', $find='') {
 		global $user;
-		$dc = $this->get_date_converter($user);
 
 		if (sizeOf($calIds) == 0) {
 		    return array();
 		}
 
-		$tstart = $dc->getDisplayDateFromUTC($tstart);/* user time -> server time */;
-		$tstop = $dc->getDisplayDateFromUTC($tstop);
-		
 		$where = array();
 		$bindvars=array();
-		$time = new timer;
-		$time->start();
 		foreach ($calIds as $calendarId) {
 		    $where[] = "i.`calendarId`=?";
 		    $bindvars[] = (int)$calendarId;
@@ -189,21 +183,21 @@ class CalendarLib extends TikiLib {
 		$ret = array();
 		$list = $this->list_raw_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode, $find);
 		foreach ($list as $res) {
-			$mloop = date("m", $res['start']);
-			$dloop = date("d", $res['start']);
-			$yloop = date("Y", $res['start']);
-			$dstart = mktime(0, 0, 0, $mloop, $dloop, $yloop);
-			$dend = mktime(0, 0, 0, date("m", $res['end']), date("d", $res['end']), date("Y", $res['end']));
-			$tstart = date("Hi", $res["start"]);
-			$tend = date("Hi", $res["end"]);
-			for ($i = $dstart; $i <= $dend; $i = mktime(0, 0, 0, $mloop, ++$dloop, $yloop)) {
+			$mloop = TikiLib::date_format("%m", $res['start']);
+			$dloop = TikiLib::date_format("%d", $res['start']);
+			$yloop = TikiLib::date_format("%Y", $res['start']);
+			$dstart = TikiLib::make_time(0, 0, 0, $mloop, $dloop, $yloop);
+			$dend = TikiLib::make_time(0, 0, 0, TikiLib::date_format("m", $res['end']), TikiLib::date_format("%d", $res['end']), TikiLib::date_format("%Y", $res['end']));
+			$tstart = TikiLib::date_format("Hi", $res["start"]);
+			$tend = TikiLib::date_format("Hi", $res["end"]);
+			for ($i = $dstart; $i <= $dend; $i = TikiLib::make_time(0, 0, 0, $mloop, ++$dloop, $yloop)) {
 				/* $head is in user time */
 				if ($dstart == $dend) {
-					$head = date("H:i", $res["start"]). " - " . date("H:i", $res["end"]);
+					$head = TikiLib::date_format("%H:%M", $res["start"]). " - " . TikiLib::date_format("%H:%M", $res["end"]);
 				} elseif ($i == $dstart) {
-					$head = date("H:i", $res["start"]). " ...";
+					$head = TikiLib::date_format("%H:%M", $res["start"]). " ...";
 				} elseif ($i == $dend) {
-					$head = " ... " . date("H:i", $res["end"]);
+					$head = " ... " . TikiLib::date_format("%H:%M", $res["end"]);
 				} else {
 					$head = " ... " . tra("continued"). " ... ";
 				}
@@ -259,10 +253,6 @@ class CalendarLib extends TikiLib {
 		$res["participants"] = $ppl;
 		$res["organizers"] = $org;
 		
-		$dc = $this->get_date_converter($user);
-		$res["start"] = $dc->getDisplayDateFromUTC($res["start"]); /* user time */
-		$res["end"] = $dc->getDisplayDateFromUTC($res["end"]);
-
 		$res['time_start'] = $res['start'] % 86400;
 		$res['date_start'] = (int)$res['start'] - (int)$res['time_start'];
 
@@ -281,10 +271,6 @@ class CalendarLib extends TikiLib {
 			return false;
 		}
 		$caldata = $this->get_calendar($data['calendarId']);
-
-		$dc = $this->get_date_converter($user);
-		$data['start'] = $dc->getUTCFromDisplayDate($data['start']);/* user time -> server time */
-		$data['end'] = $dc->getUTCFromDisplayDate($data['end']);
 
 		if ($caldata['customlocations'] == 'y') {
 			if (!$data["locationId"] and !$data["newloc"]) {

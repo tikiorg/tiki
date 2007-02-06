@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.67 2007-02-04 20:09:32 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.68 2007-02-06 09:28:38 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -176,7 +176,6 @@ foreach ($listcals as $thatid) {
 }
 $smarty->assign('thiscal', $thiscal);
 
-include_once("tiki-calendar_setup.php");
 
 if (isset($_REQUEST["find"])) {
 	$find = $_REQUEST["find"];
@@ -195,9 +194,10 @@ if (isset($_REQUEST['year']) && !empty($_REQUEST['year'])) {
 	$request_year = $_REQUEST['year'];
 }
 
+include_once("tiki-calendar_setup.php");
+
 if (isset($_REQUEST['sort_mode'])) $sort_mode = $_REQUEST['sort_mode'];
 
-include ("tiki-calendar_nav.php");
 if ($_SESSION['CalendarViewGroups']) { 
   if ($_SESSION['CalendarViewList'] == "list") {
     if (isset($sort_mode)) {
@@ -218,14 +218,12 @@ if ($_SESSION['CalendarViewGroups']) {
 }
 
 define("weekInSeconds", 604800);
-$mloop = date("m", $viewstart);
-$dloop = date("d", $viewstart);
-$yloop = date("Y", $viewstart);
+$mloop = TikiLib::date_format("%m", $viewstart);
+$dloop = TikiLib::date_format("%d", $viewstart);
+$yloop = TikiLib::date_format("%Y", $viewstart);
 
-// note that number of weeks starts at ZERO (i.e., zero = 1 week to display).
 for ($i = 0; $i <= $numberofweeks; $i++) {
-  $wee = date("W",$viewstart + ($i * weekInSeconds) + $d);
-
+  $wee = TikiLib::date_format("%U",$viewstart + ($i * weekInSeconds) + $d);
   $weeks[] = $wee;
 
    // $startOfWeek is a unix timestamp
@@ -237,7 +235,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
       $dday = $daystart;
     } else {
       //$dday = $startOfWeek + $d * $w;
-      $dday = mktime(0,0,0, $mloop, $dloop++, $yloop);
+      $dday = TikiLib::make_time(0,0,0, $mloop, $dloop++, $yloop);
     }
     $cell[$i][$w]['day'] = $dday;
 
@@ -288,7 +286,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 $hrows = array();
 $hours = array();
 if ($calendarViewMode == 'day') {
-  $hours = array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23);
+  $hours = range(0,23);
   foreach ($cell[0]["{$weekdays[0]}"]['items'] as $dayitems) {
     $rawhour = intval(substr($dayitems['time'],0,2));
     $dayitems['mins'] = substr($dayitems['time'],2);
