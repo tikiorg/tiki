@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.712 2007-02-06 21:53:24 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.713 2007-02-06 22:01:42 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -325,6 +325,7 @@ class TikiLib extends TikiDB {
                                   $this->user_has_perm_on_object($res['user'],$object,'blog','tiki_p_download_files'));
                     break;
 		case 'article_submitted':
+		case 'topic_article_created':
 		    global $userlib, $topicId;
 		    $res['perm']= ($userlib->user_has_permission($res['user'],'tiki_p_read_article') &&
 		                   $this->user_has_perm_on_object($res['user'],$topicId,'topic','tiki_p_topic_read'));
