@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.711 2007-02-06 09:20:56 mose Exp $
+// CVS: $Id: tikilib.php,v 1.712 2007-02-06 21:53:24 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -342,7 +342,6 @@ class TikiLib extends TikiDB {
 		}
 
 	}
-
 	return $ret;
     }
 
@@ -3555,7 +3554,7 @@ function add_pageview() {
             global $feature_categories;
             global $userlib;
             // superadmin
-	    if($userlib->user_has_permission($user, 'tiki_p_admin')) {
+	    if($userlib->user_has_permission($user, 'tiki_p_admin') || $user == 'admin') {
 	       return(TRUE);
 	    }
 		if ($userlib->object_has_one_permission($object, $objtype)) {
