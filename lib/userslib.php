@@ -941,7 +941,6 @@ class UsersLib extends TikiLib {
 
 function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $find = '', $initial = '', $inclusion=false, $group='', $email='') {
 	
-	$now = date('U');
 	$mid = '';
 	$bindvars = array();
 	$mmid = '';
@@ -1001,7 +1000,7 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $fin
 	    }
 	    $aux["groups"] = $groups;
 	    $aux["currentLogin"] = $res["currentLogin"];
-	    $aux["age"] = $now - $res["registrationDate"];
+	    $aux["age"] = $this->now - $res["registrationDate"];
 	    $ret[] = $aux;
 	}
 
@@ -1890,8 +1889,7 @@ function get_included_groups($group) {
 	if ($feature_clear_passwords == 'n')
 	    $pass = '';
 
-	$now = date("U");
-	$new_pass_due = $now + (60 * 60 * 24 * $pass_due);
+	$new_pass_due = $this->now + (60 * 60 * 24 * $pass_due);
 	$query = "insert into
 	    `users_users`(`login`, `password`, `email`, `provpass`,
 		    `registrationDate`, `hash`, `pass_due`, `created`)
@@ -1901,10 +1899,10 @@ function get_included_groups($group) {
 		    $pass,
 		    $email,
 		    $provpass,
-		    (int) $now,
+		    (int) $this->now,
 		    $hash,
 		    (int) $new_pass_due,
-		    (int) $now
+		    (int) $this->now
 		    ));
 
 	$this->assign_user_to_group($user, 'Registered');
@@ -2057,7 +2055,6 @@ function get_included_groups($group) {
 		$pass = $this->genPass();
 		// Note that tiki-generated passwords are due inmediatley
 		// Note: ^ not anymore. old pw is usable until the URL in the password reminder mail is clicked
-		$now = date("U");
 		$query = "update `users_users` set `provpass` = ? where " . $this->convert_binary() . " `login`=?";
 		$result = $this->query($query, array($pass, $user));
 		return $pass;
@@ -2069,9 +2066,8 @@ function get_included_groups($group) {
 		$pass = $this->getOne($query, array($user));
 		if (($pass <> '') && ($actpass == md5($pass))) {
 			$hash = $this->hash_pass($user, $pass);
-			$now = date("U");
 			$query = "update `users_users` set `password`=?, `hash`=?, `pass_due`=? where " . $this->convert_binary() . " `login`=?";
-			$result = $this->query($query, array("", $hash, (int)$now, $user));
+			$result = $this->query($query, array("", $hash, (int)$this->now, $user));
 			return $pass;
 		}
 		return false;
@@ -2083,8 +2079,7 @@ function get_included_groups($group) {
 	global $feature_clear_passwords;
 
 	$hash = $this->hash_pass($user, $pass);
-	$now = date("U");
-	$new_pass_due = $now + (60 * 60 * 24 * $pass_due);
+	$new_pass_due = $this->now + (60 * 60 * 24 * $pass_due);
 
 	if ($feature_clear_passwords == 'n') {
 	    $pass = '';
