@@ -187,9 +187,9 @@ class CalendarLib extends TikiLib {
 			$dloop = TikiLib::date_format("%d", $res['start']);
 			$yloop = TikiLib::date_format("%Y", $res['start']);
 			$dstart = TikiLib::make_time(0, 0, 0, $mloop, $dloop, $yloop);
-			$dend = TikiLib::make_time(0, 0, 0, TikiLib::date_format("m", $res['end']), TikiLib::date_format("%d", $res['end']), TikiLib::date_format("%Y", $res['end']));
-			$tstart = TikiLib::date_format("Hi", $res["start"]);
-			$tend = TikiLib::date_format("Hi", $res["end"]);
+			$dend = TikiLib::make_time(0, 0, 0, TikiLib::date_format("%m", $res['end']), TikiLib::date_format("%d", $res['end']), TikiLib::date_format("%Y", $res['end']));
+			$tstart = TikiLib::date_format("%H%M", $res["start"]);
+			$tend = TikiLib::date_format("%H%M", $res["end"]);
 			for ($i = $dstart; $i <= $dend; $i = TikiLib::make_time(0, 0, 0, $mloop, ++$dloop, $yloop)) {
 				/* $head is in user time */
 				if ($dstart == $dend) {
