@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.710 2007-02-06 04:24:51 mose Exp $
+// CVS: $Id: tikilib.php,v 1.711 2007-02-06 09:20:56 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -6248,12 +6248,12 @@ if (!$simple_wiki) {
 				global $tikidate, $display_timezone;
 				$tikidate->setTZbyID($display_timezone);
 				$tikidate->setDate(0);
-				$tikidate->setHour($hour);
-				$tikidate->setMinute($minute);
-				$tikidate->setSecond($second);
-				$tikidate->setMonth($month);
-				$tikidate->setDay($day);
-				$tikidate->setYear($year);
+				$tikidate->hour = $hour;
+				$tikidate->minute = $minute;
+				$tikidate->second = $second;
+				$tikidate->month = $month;
+				$tikidate->day = $day;
+				$tikidate->year = $year;
 				$tikidate->convertTZbyID('UTC');
 				return $tikidate->getTime();
 			}
