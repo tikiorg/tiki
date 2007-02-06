@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_edit_item.php,v 1.14 2007-02-04 20:09:32 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_edit_item.php,v 1.15 2007-02-06 18:02:16 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -138,19 +138,31 @@ if (isset($_POST['act'])) {
 	if ((empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_add_events']) 
 	or (!empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_change_events'])) {
 		if (empty($save['name'])) $save['name'] = tra("event without name");
-		// do some tests on input
-		$save['start'] = (floor($save['date_start']/(60*60*24))*60*60*24) + $_REQUEST['start_Hour']*60*60 + $_REQUEST['start_Minute']*60;
-		$save['duration'] = $_REQUEST['duration_Hour']*60*60 + $_REQUEST['duration_Minute']*60;
+		
+		$save['start'] = TikiLib::make_time(
+			$_REQUEST['start_Hour'],
+			$_REQUEST['start_Minute'],
+			0,
+			TikiLib::date_format("%m", $save['date_start']),
+			TikiLib::date_format("%d", $save['date_start']),
+			TikiLib::date_format("%Y", $save['date_start'])
+		);
+
 		if ($save['end_or_duration'] == 'duration') {
+			$save['duration'] = max(0, $_REQUEST['duration_Hour']*60*60 + $_REQUEST['duration_Minute']*60);
 			$save['end'] = $save['start'] + $save['duration'];
 		} else {
-			$save['end'] = (floor($save['date_end']/(60*60*24))*60*60*24) + $_REQUEST['end_Hour']*60*60 + $_REQUEST['end_Minute']*60;
-			$save['duration'] = $save['end'] - $save['start'];
+			$save['end'] = TikiLib::make_time(
+				$_REQUEST['end_Hour'],
+				$_REQUEST['end_Minute'],
+				0,
+				TikiLib::date_format("%m", $save['date_end']),
+				TikiLib::date_format("%d", $save['date_end']),
+				TikiLib::date_format("%Y", $save['date_end'])
+			);
+			$save['duration'] = max(0, $save['end'] - $save['start']);
 		}
-		if ($save['start'] > $save['end']) {
-			$save['end'] = $save['start'];
-			$save['duration'] = 0;
-		}
+		
 		$calendarlib->set_item($user,$save['calitemId'],$save);
 		header('Location: tiki-calendar.php');
 		die;
