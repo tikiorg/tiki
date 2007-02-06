@@ -13,6 +13,9 @@
 {/if}
 
 <h2>{tr}Add notification{/tr}</h2>
+{if !empty($tikifeedback)}
+<div class="highlight simplebox">{section name=ix loop=$tikifeedback}{$tikifeedback[ix].mes}{/section}</div>
+{/if}
 <table class="normal">
 <form action="tiki-admin_notifications.php" method="post">
      <input type="hidden" name="find" value="{$find|escape}" />
@@ -30,7 +33,7 @@
     </select>
     </td>
 </tr> 
-<tr><td class="formcolor">{tr}Email{/tr}:</td>        
+<tr><td class="formcolor">{tr}Email or user:{/tr}</td>        
     <td class="formcolor">
       <input type="text" id='femail' name="email" />
       <a href="#" onclick="javascript:document.getElementById('femail').value='{$admin_mail}'" class="link">{tr}use admin email{/tr}</a>

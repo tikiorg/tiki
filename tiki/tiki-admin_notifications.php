@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_notifications.php,v 1.16 2007-01-03 01:09:34 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_notifications.php,v 1.17 2007-02-06 21:23:15 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -86,6 +86,9 @@ if (isset($_REQUEST["add"])) {
 	}
 }
 
+if (!empty($tikifeedback)) {
+	$smarty->assign_by_ref('tikifeedback', $tikifeedback);
+}
 if (isset($_REQUEST["removeevent"])) {
   $area = 'delnotif';
   if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
