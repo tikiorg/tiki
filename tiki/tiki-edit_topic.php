@@ -45,9 +45,22 @@ if(isset($_REQUEST["edittopic"])) {
 
   if(isset($_REQUEST["name"])) {
     $artlib->replace_topic_name($_REQUEST["topicid"], $_REQUEST["name"]);
+	$topic_info['name'] = $_REQUEST['name'];
   }
-
-  header("Location: tiki-admin_topics.php");
+	if (isset($_REQUEST['email'])) {
+		if (!validate_email($_REQUEST['email'])) {
+			$errors[] = tra('Invalid email');
+			$smarty->assign('email', $_REQUEST['email']);
+		} else {
+			$tikilib->add_user_watch('admin', 'topic_article_created', $_REQUEST['topicid'], 'cms', $topic_info['name'],'tiki-edit_topic.php?topicId='.$_REQUEST['topicid'], $_REQUEST['email']);
+		}
+	}
+	if (empty($errors)) {
+		header("Location: tiki-admin_topics.php");
+		die;
+	} else {
+		$smarty->assign_by_ref('errors', $errors);
+	}
 }
 $section = 'cms';
 include_once ('tiki-section_options.php');

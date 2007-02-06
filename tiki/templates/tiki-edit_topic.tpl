@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_topic.tpl,v 1.8 2006-03-16 13:43:12 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_topic.tpl,v 1.9 2007-02-06 22:01:42 sylvieg Exp $ *}
 
 <h1><a  class="pagetitle" href="tiki-admin_topics.php">{tr}Admin Topics{/tr}</a>
 
@@ -9,6 +9,10 @@
 </h1>
 
 <h2>{tr}Edit a topic{/tr}</h2>
+
+{if !empty($errors)}
+<div class="highlight simplebox">{section name=ix loop=$errors}{$errors[ix]}{/section}</div>
+{/if}
 
 <form enctype="multipart/form-data" action="tiki-edit_topic.php" method="post">
  <table class="normal">
@@ -24,6 +28,7 @@
       <input name="userfile1" type="file" />
     </td>
 </tr>
+<tr><td class="formcolor">{tr}Add Notification Email{/tr}</td><td class="formcolor"><input type="text" name="email" value="{$email|escape}" />&nbsp;<a href="tiki-admin_notifications.php" title="{tr}Admin notifications{/tr}"><img src="pics/icons/wrench.png" border="0" alt="{tr}Admin notifications{/tr}" /></a></td></tr>
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="edittopic" value="{tr}edit{/tr}" /></td></tr>
 </table>
 </form>
