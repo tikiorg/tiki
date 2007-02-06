@@ -1265,6 +1265,7 @@ $lang=Array(
 "Start date:" => "Date de début :",
 "End date:" => "Date de fin:",
 "The text is" => "Le texte est",
+"%B %e" => "%e %B",
 "%a %d of %b, %Y" => "%e/%m/%y",
 "%A %d of %B, %Y" => "%A %d %B %Y",
 "help" => "aide",
