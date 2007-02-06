@@ -42,27 +42,27 @@
 {if $viewmode eq "day"}
 <a href="{$myurl}?todate={$daybefore}" title="&laquo; {tr}day{/tr}" class="prev">&laquo;</a>
 <a href="{$myurl}?todate={$dayafter}" title="{tr}day{/tr} &raquo;" class="next">&raquo;</a>
-{$viewstart|user_date_format}
+{$viewstart|tiki_date_format:"%B %e"}
 {elseif $viewmode eq "week"}
 <a href="{$myurl}?todate={$weekbefore}" title="&laquo; {tr}week{/tr}" class="prev">&laquo;</a>
 <a href="{$myurl}?todate={$weekafter}" title="{tr}week{/tr} &raquo;" class="next">&raquo;</a>
-{$viewstart|user_date_format} - {$viewend|user_date_format}
+{$viewstart|tiki_date_format:"%B %e"} - {$viewend|tiki_date_format:"%B %e"}
 {elseif $viewmode eq "month"}
 <a href="{$myurl}?todate={$monthbefore}" title="&laquo; {tr}month{/tr}" class="prev">&laquo;</a>
 <a href="{$myurl}?todate={$monthafter}" title="{tr}month{/tr}&raquo;" class="next">&raquo;</a>
-{$daystart|user_date_format:"%B %Y"}
+{$daystart|tiki_date_format:"%B %e"}
 {elseif $viewmode eq "quarter"}
 <a href="{$myurl}?todate={$quarterbefore}" title="&laquo; {tr}quarter{/tr}" class="prev">&laquo;</a>
 <a href="{$myurl}?todate={$quarterafter}" title="{tr}quarter{/tr} &raquo;" class="next">&raquo;</a>
-{$daystart|user_date_format:"%B %Y"} - {$dayend|user_date_format:"%B %Y"}
+{$daystart|tiki_date_format:"%B %e"} - {$dayend|tiki_date_format:"%B %e"}
 {elseif $viewmode eq "semester"}
 <a href="{$myurl}?todate={$semesterbefore}" title="&laquo; {tr}semester{/tr}" class="prev">&laquo;</a>
 <a href="{$myurl}?todate={$semesterafter}" title="{tr}semester{/tr} &raquo;" class="next">&raquo;</a>
-{$daystart|user_date_format:"%B %Y"} - {$dayend|user_date_format:"%B %Y"}
+{$daystart|tiki_date_format:"%B %e"} - {$dayend|tiki_date_format:"%B %e"}
 {elseif $viewmode eq "year"}
 <a href="{$myurl}?todate={$yearbefore}" title="&laquo; {tr}year{/tr}" class="prev">&laquo;</a>
 <a href="{$myurl}?todate={$yearafter}" title="{tr}year{/tr} &raquo;" class="next">&raquo;</a>
-{$daystart|user_date_format:"%Y"}
+{$daystart|tiki_date_format:"%B %e"}
 {/if}
 </div>
 

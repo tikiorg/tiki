@@ -59,32 +59,32 @@ firstDay : {$firstDayofWeek}
 {if $viewmode eq "day"}
 {assign var="dBefore" value=$viewday-1}
 {assign var="dAfter" value=$viewday+1}
-<a href="tiki-calendar.php?mon={$viewmonth}&amp;day={$dBefore}&amp;year={$viewyear}" title="&laquo; {tr}day{/tr}">&laquo;</a>&nbsp;<a href="tiki-calendar.php?mon={$viewmonth}&amp;day={$dAfter}&amp;year={$viewyear}" title="{tr}day{/tr} &raquo;">&raquo;</a>&nbsp;{$viewstart|user_date_format}
+<a href="tiki-calendar.php?mon={$viewmonth}&amp;day={$dBefore}&amp;year={$viewyear}" title="&laquo; {tr}day{/tr}">&laquo;</a>&nbsp;<a href="tiki-calendar.php?mon={$viewmonth}&amp;day={$dAfter}&amp;year={$viewyear}" title="{tr}day{/tr} &raquo;">&raquo;</a>&nbsp;{$viewstart|tiki_date_format:"%B %e"}
 {/if}
 {if $viewmode eq "week"}
 {assign var="dBefore" value=$viewday-7}
 {assign var="dAfter" value=$viewday+7}
-<a href="tiki-calendar.php?mon={$viewmonth}&amp;day={$dBefore}&amp;year={$viewyear}" title="&laquo; {tr}week{/tr}">&laquo;</a>&nbsp;<a href="tiki-calendar.php?mon={$viewmonth}&amp;day={$dAfter}&amp;year={$viewyear}" title="{tr}week{/tr} &raquo;">&raquo;</a>&nbsp;{$viewstart|user_date_format} - {$viewend|user_date_format}
+<a href="tiki-calendar.php?mon={$viewmonth}&amp;day={$dBefore}&amp;year={$viewyear}" title="&laquo; {tr}week{/tr}">&laquo;</a>&nbsp;<a href="tiki-calendar.php?mon={$viewmonth}&amp;day={$dAfter}&amp;year={$viewyear}" title="{tr}week{/tr} &raquo;">&raquo;</a>&nbsp;{$viewstart|tiki_date_format:"%B %e"} - {$viewend|tiki_date_format:"%B %e"}
 {/if}
 {if $viewmode eq "month"}
 {assign var="mBefore" value=$viewmonth-1}
 {assign var="mAfter" value=$viewmonth+1}
-<a href="tiki-calendar.php?mon={$mBefore}&amp;day=1&amp;year={$viewyear}" title="&laquo; {tr}month{/tr}">&laquo;</a>&nbsp;<a href="tiki-calendar.php?mon={$mAfter}&amp;day=1&amp;year={$viewyear}" title="{tr}month{/tr}&raquo;">&raquo;</a>&nbsp;{$daystart|user_date_format:"%B %Y"}
+<a href="tiki-calendar.php?mon={$mBefore}&amp;day=1&amp;year={$viewyear}" title="&laquo; {tr}month{/tr}">&laquo;</a>&nbsp;<a href="tiki-calendar.php?mon={$mAfter}&amp;day=1&amp;year={$viewyear}" title="{tr}month{/tr}&raquo;">&raquo;</a>&nbsp;{$daystart|tiki_date_format:"%B %Y"}
 {/if}
 {if $viewmode eq "quarter"}
 {assign var="mBefore" value=$viewmonth-3}
 {assign var="mAfter" value=$viewmonth+3}
-<a href="tiki-calendar.php?mon={$mBefore}&amp;day=1&amp;year={$viewyear}" title="&laquo; {tr}quater{/tr}">&laquo;</a>&nbsp;<a href="tiki-calendar.php?mon={$mAfter}&amp;day=1&amp;year={$viewyear}" title="{tr}quater{/tr} &raquo;">&raquo;</a>&nbsp;{$daystart|user_date_format:"%B %Y"} - {$dayend|user_date_format:"%B %Y"}
+<a href="tiki-calendar.php?mon={$mBefore}&amp;day=1&amp;year={$viewyear}" title="&laquo; {tr}quater{/tr}">&laquo;</a>&nbsp;<a href="tiki-calendar.php?mon={$mAfter}&amp;day=1&amp;year={$viewyear}" title="{tr}quater{/tr} &raquo;">&raquo;</a>&nbsp;{$daystart|tiki_date_format:"%B %Y"} - {$dayend|tiki_date_format:"%B %Y"}
 {/if}
 {if $viewmode eq "semester"}
 {assign var="mBefore" value=$viewmonth-6}
 {assign var="mAfter" value=$viewmonth+7}
-<a href="tiki-calendar.php?mon={$mBefore}&amp;day=1&amp;year={$viewyear}" title="&laquo; {tr}semester{/tr}">&laquo;</a>&nbsp;<a href="tiki-calendar.php?mon={$mAfter}&amp;day=1&amp;year={$viewyear}" title="{tr}semester{/tr} &raquo;">&raquo;</a>&nbsp;{$daystart|user_date_format:"%B %Y"} - {$dayend|user_date_format:"%B %Y"}
+<a href="tiki-calendar.php?mon={$mBefore}&amp;day=1&amp;year={$viewyear}" title="&laquo; {tr}semester{/tr}">&laquo;</a>&nbsp;<a href="tiki-calendar.php?mon={$mAfter}&amp;day=1&amp;year={$viewyear}" title="{tr}semester{/tr} &raquo;">&raquo;</a>&nbsp;{$daystart|tiki_date_format:"%B %Y"} - {$dayend|tiki_date_format:"%B %Y"}
 {/if}
 {if $viewmode eq "year"}
 {assign var="yBefore" value=$viewyear-1}
 {assign var="yAfter" value=$viewyear+1}
-<a href="tiki-calendar.php?mon={$viewmonth}&amp;day=1&amp;year={$yBefore}" title="&laquo; {tr}year{/tr}">&laquo;</a>&nbsp;<a href="tiki-calendar.php?mon={$viewmonth}&amp;day=1&amp;year={$yAfter}" title="{tr}year{/tr} &raquo;">&raquo;</a>&nbsp;{$daystart|user_date_format:"%Y"}
+<a href="tiki-calendar.php?mon={$viewmonth}&amp;day=1&amp;year={$yBefore}" title="&laquo; {tr}year{/tr}">&laquo;</a>&nbsp;<a href="tiki-calendar.php?mon={$viewmonth}&amp;day=1&amp;year={$yAfter}" title="{tr}year{/tr} &raquo;">&raquo;</a>&nbsp;{$daystart|tiki_date_format:"%Y"}
 {/if}
 </td></tr>
 </table>
