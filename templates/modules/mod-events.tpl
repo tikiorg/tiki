@@ -7,13 +7,13 @@ global $dbTiki,$tikilib,$user;
 
 // get date for which to display the calendar view:
 if(isset($_SESSION["thedate"])) {
-	$day=date("d",$_SESSION["thedate"]);
-	$mon=date("m",$_SESSION["thedate"]);
-	$year=date("Y",$_SESSION["thedate"]);
+	$day=TikiLib::date_format("d",$_SESSION["thedate"]);
+	$mon=TikiLib::date_format("m",$_SESSION["thedate"]);
+	$year=TikiLib::date_format("Y",$_SESSION["thedate"]);
 } else {
-	$day=date("d",$tikilib->server_time_to_site_time(time(),$user));
-	$mon=date("m",$tikilib->server_time_to_site_time(time(),$user));
-	$year=date("Y",$tikilib->server_time_to_site_time(time(),$user));
+	$day=TikiLib::date_format("d");
+	$mon=TikiLib::date_format("m");
+	$year=TikiLib::date_format("Y");
 }
 if(isset($_REQUEST["day"])) {
 	$day = $_REQUEST["day"];
@@ -27,7 +27,7 @@ if(isset($_REQUEST["year"])) {
 	$year = $_REQUEST["year"];
 }
 
-$thedate = mktime(23,59,59,$mon,$day,$year);
+$thedate = TikiLib::make_time(23,59,59,$mon,$day,$year);
 $_SESSION["thedate"] = $thedate;
 
 $calids=$calendarlib->list_user_calIds();

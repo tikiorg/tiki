@@ -11,17 +11,13 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * -------------------------------------------------------------
  * Type:     modifier
  * Name:     tiki_date_format
- * Purpose:  format datestamps via strftime, (timezone adjusted to administrator specified timezone)
+ * Purpose:  format datestamps via Pear::Date using TikiLib static call, (timezone adjusted to user specified timezone)
  * Input:    string: input date string
  *           format: strftime format for output
- *           default_date: default date if $string is empty
  * -------------------------------------------------------------
  */
 function smarty_modifier_tiki_date_format($string, $format) {
-	global $tikidate, $display_timezone;
-	$tikidate->setDate($string);
-	$tikidate->convertTZbyID($display_timezone);
-	return $tikidate->format($format);
+	return TikiLib::date_format($format,$string);
 }
 
 ?>
