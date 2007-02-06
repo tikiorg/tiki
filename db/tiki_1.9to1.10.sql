@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.138 2007-02-05 19:31:51 niclone Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.139 2007-02-06 03:37:51 mose Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -814,8 +814,8 @@ alter table tiki_forums_queue change user user varchar(200) default '';
 alter table tiki_forums_reported change user user varchar(200) default '';
 alter table tiki_galleries change user user varchar(200) default '';
 alter table tiki_pages change user user varchar(200) default '';
-alter table tiki_page_drafts change user user varchar(200) default '';
 alter table tiki_page_drafts drop primary key ;
+alter table tiki_page_drafts change user user varchar(200) default '';
 alter table tiki_page_drafts add primary key (pageName(120),user(120));
 alter table tiki_sheet_values change user user varchar(200) default '';
 alter table tiki_tracker_item_attachments change user user varchar(200) default NULL;
