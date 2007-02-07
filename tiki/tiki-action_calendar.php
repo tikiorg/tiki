@@ -87,6 +87,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
         $smarty->assign_by_ref('cellname', $lte["name"]);
         $smarty->assign('cellid', "");
         $smarty->assign_by_ref('celldescription', $lte["description"]);
+        $smarty->assign('show_description', $lte["show_description"]);
         $leday["{$lte['time']}$e"]["over"] = $smarty->fetch("tiki-calendar_box.tpl");
         $e++;
       }
@@ -124,6 +125,13 @@ $smarty->assign('weekdays', $weekdays);
 $smarty->assign('weeks', $weeks);
 $smarty->assign('daysnames', $daysnames);
 $smarty->assign('cell', $cell);
+
+if ( $_SESSION['CalendarViewList'] == 'list' )
+	if ( is_array($listtikievents) ) foreach ( $listtikievents as $le )
+		if ( is_array($le) ) foreach ( $le as $e )
+			$listevents[] = $e;
+	
+$smarty->assign('listevents', $listevents);
 $smarty->assign('var', '');
 $smarty->assign('myurl', 'tiki-action_calendar.php');
 
