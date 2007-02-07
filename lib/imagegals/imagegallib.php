@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.87 2007-02-04 20:09:39 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.88 2007-02-07 17:01:04 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -1032,8 +1032,7 @@ class ImageGalsLib extends TikiLib {
 
 
 	function get_gallery_image($galleryId,$rule='',$sort_mode = '') {
-		$query='select i.`imageId` from `tiki_images` i, `tiki_images_data` d
-                        where d.imageId=i.imageId and `galleryId`=? order by ';
+		$query='select i.`imageId` from `tiki_images` i where `galleryId`=? order by ';
 		$bindvars=array($galleryId);
 		switch($rule) {
 			case 'firstu':
