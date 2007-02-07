@@ -164,15 +164,15 @@ class ArtLib extends TikiLib {
 
 		#workaround to "pass" $topicId to get_event_watches
 		$GLOBALS["topicId"] = $topicId;
-		$emails3 = $tikilib->get_event_watches('article_submitted', '*');
+		$emails = $tikilib->get_event_watches('article_submitted', '*');
 		$emails2 = $tikilib->get_event_watches('topic_article_created', $topicId);
-		$emails = array();
-		foreach ($emails3 as $n) {
-			$emails[] = $n['email'];
+		$emails3 = array();
+		foreach ($emails as $n) {
+			$emails3[] = $n['email'];
 		}
 		foreach ($emails2 as $n) {
-			if (!in_array($n['emails'], $emails))
-				$emails[] = $n['email'];
+			if (!in_array($n['emails'], $emails3))
+				$emails[] = $n;
 		}
 		if (!isset($_SERVER["SERVER_NAME"])) {
 			$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
@@ -191,7 +191,7 @@ class ArtLib extends TikiLib {
 			$smarty->assign('mail_date', date("U"));
 			$smarty->assign('mail_machine', $machine);
 			$smarty->assign('mail_subId', $id);
-			sendEmailNotification($emails, "email", "submission_notification_subject.tpl", $_SERVER["SERVER_NAME"], "submission_notification.tpl");
+			sendEmailNotification($emails, "watch", "submission_notification_subject.tpl", $_SERVER["SERVER_NAME"], "submission_notification.tpl");
 		}
 
 		return $id;
@@ -249,15 +249,15 @@ class ArtLib extends TikiLib {
 		    global $smarty, $tikilib;
 		    #workaround to "pass" $topicId to get_event_watches
 			$GLOBALS["topicId"] = $topicId;
-			$nots3 = $tikilib->get_event_watches('article_submitted', '*');
+			$nots = $tikilib->get_event_watches('article_submitted', '*');
 			$nots2 = $tikilib->get_event_watches('topic_article_created', $topicId);
-			$nots = array();
-			foreach ($nots3 as $n) {
-				$nots[] = $n['email'];
+			$nots3 = array();
+			foreach ($nots as $n) {
+				$nots3[] = $n['email'];
 			}
 			foreach ($nots2 as $n) {
-				if (!in_array($n['email'], $nots))
-					$nots[] = $n['email'];
+				if (!in_array($n['email'], $nots3))
+					$nots[] = $n;
 			}
 		    if (!isset($_SERVER["SERVER_NAME"])) {
 			    $_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
