@@ -1,5 +1,5 @@
 <?php
-
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_notifications.php,v 1.16 2007/01/03 01:09:34 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -162,7 +162,18 @@ class ArtLib extends TikiLib {
 			$id = $this->getOne($query, array( (int) $now, $title, $hash ) );
 		}
 
-		$emails = $notificationlib->get_mail_events('article_submitted', '*');
+		#workaround to "pass" $topicId to get_event_watches
+		$GLOBALS["topicId"] = $topicId;
+		$emails3 = $tikilib->get_event_watches('article_submitted', '*');
+		$emails2 = $tikilib->get_event_watches('topic_article_created', $topicId);
+		$emails = array();
+		foreach ($emails3 as $n) {
+			$emails[] = $n['email'];
+		}
+		foreach ($emails2 as $n) {
+			if (!in_array($n['emails'], $emails))
+				$emails[] = $n['email'];
+		}
 		if (!isset($_SERVER["SERVER_NAME"])) {
 			$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 		}
@@ -233,36 +244,43 @@ class ArtLib extends TikiLib {
 
 		    global $feature_score;
 		    if ($feature_score == 'y') {
-			$this->score_event($user, 'article_new');
+				$this->score_event($user, 'article_new');
 		    }		    
-		    global $feature_user_watches, $smarty,$tikilib;
-		    if ($feature_user_watches == 'y') {
-			    #workaround to "pass" $topicId to get_event_watches
-			    $GLOBALS["topicId"] = $topicId;
-			    $nots = $this->get_event_watches('article_submitted', '*');
-			    if (!isset($_SERVER["SERVER_NAME"])) {
-				    $_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
-			    }
-			    if (count($nots)) {
-				    include_once("lib/notifications/notificationemaillib.php");
-
-				    $smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
-				    $smarty->assign('mail_title', $title);
-				    $smarty->assign('mail_postid', $articleId);
-				    $smarty->assign('mail_date', date("U"));
-				    $smarty->assign('mail_user', $user);
-				    $smarty->assign('mail_data', $heading."\n----------------------\n".$body);
-				    $foo = parse_url($_SERVER["REQUEST_URI"]);
-				    $machine = $tikilib->httpPrefix(). $foo["path"];
-				    $smarty->assign('mail_machine', $machine);
-				    $parts = explode('/', $foo['path']);
-				    if (count($parts) > 1)
-					    unset ($parts[count($parts) - 1]);
-				    $smarty->assign('mail_machine_raw', $tikilib->httpPrefix(). implode('/', $parts));
-				    sendEmailNotification($nots, "watch", "user_watch_article_post_subject.tpl", $_SERVER["SERVER_NAME"], "user_watch_article_post.tpl");
-			    }
+		    global $smarty, $tikilib;
+		    #workaround to "pass" $topicId to get_event_watches
+			$GLOBALS["topicId"] = $topicId;
+			$nots3 = $tikilib->get_event_watches('article_submitted', '*');
+			$nots2 = $tikilib->get_event_watches('topic_article_created', $topicId);
+			$nots = array();
+			foreach ($nots3 as $n) {
+				$nots[] = $n['email'];
+			}
+			foreach ($nots2 as $n) {
+				if (!in_array($n['email'], $nots))
+					$nots[] = $n['email'];
+			}
+		    if (!isset($_SERVER["SERVER_NAME"])) {
+			    $_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 		    }
-		}
+		    if (count($nots)) {
+			    include_once("lib/notifications/notificationemaillib.php");
+
+			    $smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
+			    $smarty->assign('mail_title', $title);
+			    $smarty->assign('mail_postid', $articleId);
+			    $smarty->assign('mail_date', date("U"));
+			    $smarty->assign('mail_user', $user);
+			    $smarty->assign('mail_data', $heading."\n----------------------\n".$body);
+			    $foo = parse_url($_SERVER["REQUEST_URI"]);
+			    $machine = $tikilib->httpPrefix(). $foo["path"];
+			    $smarty->assign('mail_machine', $machine);
+			    $parts = explode('/', $foo['path']);
+			    if (count($parts) > 1)
+				    unset ($parts[count($parts) - 1]);
+			    $smarty->assign('mail_machine_raw', $tikilib->httpPrefix(). implode('/', $parts));
+			    sendEmailNotification($nots, "watch", "user_watch_article_post_subject.tpl", $_SERVER["SERVER_NAME"], "user_watch_article_post.tpl");
+		    }
+	    }
 
 		return $articleId;
     }
@@ -337,6 +355,11 @@ class ArtLib extends TikiLib {
 
 		$res = $result->fetchRow();
 		return $res;
+	}
+
+	function get_topicId($name) {
+		$query = "select `topicId` from `tiki_topics` where `name`=?";
+		return $this->getOne($query,array($name));
 	}
 
 	function list_topics() {

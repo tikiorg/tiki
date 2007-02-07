@@ -1,4 +1,5 @@
 <?php
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_topic.php,v 1.8 2007-02-07 13:59:34 sylvieg Exp $
 require_once('tiki-setup.php');
 include_once('lib/articles/artlib.php');
 
