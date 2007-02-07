@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.713 2007-02-06 22:01:42 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.714 2007-02-07 16:16:10 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -197,7 +197,7 @@ class TikiLib extends TikiDB {
     function add_user_watch($user, $event, $object, $type, $title, $url, $email='') {
 
 	$hash = md5(uniqid('.'));
-	if ($user) {
+	if (empty($email) {
 		global $userlib;
 		$email = $userlib->get_user_email($user);
 	}
