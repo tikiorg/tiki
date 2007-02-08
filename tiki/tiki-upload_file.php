@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.51 2007-02-08 13:51:20 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.52 2007-02-08 16:15:41 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -328,39 +328,14 @@ for ($i = 0; $i < $temp_max; $i++) {
 	if ($userlib->object_has_one_permission($galleries["data"][$i]["galleryId"], 'file gallery')) {
 		$galleries["data"][$i]["individual"] = 'y';
 
-		if ($userlib->object_has_permission($user, $galleries["data"][$i]["galleryId"], 'file gallery', 'tiki_p_view_file_gallery'))
-			{
-			$galleries["data"][$i]["individual_tiki_p_view_file_gallery"] = 'y';
-		} else {
-			$galleries["data"][$i]["individual_tiki_p_view_file_gallery"] = 'n';
-		}
-
 		if ($userlib->object_has_permission($user, $galleries["data"][$i]["galleryId"], 'file gallery', 'tiki_p_upload_files')) {
 			$galleries["data"][$i]["individual_tiki_p_upload_files"] = 'y';
 		} else {
 			$galleries["data"][$i]["individual_tiki_p_upload_files"] = 'n';
 		}
-
-		if ($userlib->object_has_permission($user, $galleries["data"][$i]["galleryId"], 'file gallery', 'tiki_p_download_files')) {
-			$galleries["data"][$i]["individual_tiki_p_download_files"] = 'y';
-		} else {
-			$galleries["data"][$i]["individual_tiki_p_download_files"] = 'n';
-		}
-
-		if ($userlib->object_has_permission($user, $galleries["data"][$i]["galleryId"], 'file gallery',
-			'tiki_p_create_file_galleries')) {
-			$galleries["data"][$i]["individual_tiki_p_create_file_galleries"] = 'y';
-		} else {
-			$galleries["data"][$i]["individual_tiki_p_create_file_galleries"] = 'n';
-		}
-
 		if ($tiki_p_admin == 'y' || $userlib->object_has_permission($user, $galleries["data"][$i]["galleryId"], 'file gallery',
 			'tiki_p_admin_file_galleries')) {
-			$galleries["data"][$i]["individual_tiki_p_create_file_galleries"] = 'y';
-
-			$galleries["data"][$i]["individual_tiki_p_download_files"] = 'y';
 			$galleries["data"][$i]["individual_tiki_p_upload_files"] = 'y';
-			$galleries["data"][$i]["individual_tiki_p_view_file_gallery"] = 'y';
 		}
 	} else {
 		$galleries["data"][$i]["individual"] = 'n';
