@@ -34,7 +34,7 @@ class UsersLib extends TikiLib {
     var $userobjectperm_cache; // used to cache queries in object_has_one_permission()
 
     function UsersLib($db) {
-	$this->db = $db;
+	$this->TikiLib($db);
 
 	// Initialize caches
 	$this->usergroups_cache = array();
