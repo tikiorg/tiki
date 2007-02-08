@@ -172,7 +172,22 @@ class ContactLib extends TikiLib {
 		$query = "select * from `tiki_webmail_contacts` where `contactId`=? and `user`=?";
 		$result = $this->query($query, array((int)$contactId,$user));
 		if (!$result->numRows()) {
-			return false;
+			// ok, let's try to see if we are in an authorized group
+			$authorized_groups=array();
+			$res=$this->query("select groupName from `tiki_webmail_contacts_groups` WHERE `contactId`=?", array((int)$contactId));
+			while($row = $res->fetchRow()) $authorized_groups[]=$row['groupName'];
+
+			// now search if we are in one group
+			$groups=$this->get_user_groups($user);
+			if (count(array_intersect($groups, $authorized_groups)) > 0) { // yes get it !
+				$query = "select * from `tiki_webmail_contacts` where `contactId`=?";
+				$result = $this->query($query, array((int)$contactId));
+				if (!$result->numRows()) { // hum, in case it isn't exist anymore...
+					return false;
+				}
+			} else {
+				return false;
+			}
 		}
 		$res = $result->fetchRow();
 		$query = "select `groupName` from `tiki_webmail_contacts_groups` where `contactId`=?";
