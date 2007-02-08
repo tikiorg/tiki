@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.172 2007-02-08 14:09:48 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.173 2007-02-08 15:03:45 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -685,8 +685,8 @@ class TrackerLib extends TikiLib {
 		$filter = $this->get_tracker_field($filterfield);
 
 		if ($filter['type'] == 'e' && $feature_categories == 'y') { //category
-			$cat_table .= ", `tiki_categorized_objects` tob$filterfield, `tiki_category_objects` tco$filterfield";
-			$mid .= " and tob$filterfield.`catObjectId`=tco$filterfield.`catObjectId` and tob$filterfield.`type`='tracker $trackerId' and tob$filterfield.`objId`=tti.`itemId` and tco$filterfield.`categId` in ( 0 ";
+			$cat_table .= ", `tiki_objects` tob$filterfield, `tiki_category_objects` tco$filterfield ";
+			$mid .= " and tob$filterfield.`objectId`=tco$filterfield.`catObjectId` and tob$filterfield.`type`='tracker $trackerId' and tob$filterfield.`itemId`=tti.`itemId` and tco$filterfield.`categId` in ( 0 ";
 			$value = empty($filtervalue)? $exactvalue: $filtervalue;
 			if(!is_array($value) && $value != '') {
 					$value = array($value);
