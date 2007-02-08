@@ -145,7 +145,7 @@ class BookmarkLib extends TikiLib {
 		}
 
 		$query = "select * from `tiki_user_bookmarks_urls` where `folderId`=? and `user`=? $mid order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_user_bookmarks_urls` where `folderId`=? and user=? $mid";
+		$query_cant = "select count(*) from `tiki_user_bookmarks_urls` where `folderId`=? and `user`=? $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
@@ -169,7 +169,7 @@ class BookmarkLib extends TikiLib {
 		$result = $this->query($query,array($folderId,$user));
 
 		while ($res = $result->fetchRow()) {
-			$cant = $this->getOne("select count(*) from `tiki_user_bookmarks_urls` where `folderId`=?",array($res["folderId"]));
+			$cant = $this->getOne("select count(*) from `tiki_user_bookmarks_urls` where `folderId`=? and `user`=?",array($res["folderId"],$user));
 
 			$res["urls"] = $cant;
 			$ret[] = $res;
