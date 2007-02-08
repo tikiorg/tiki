@@ -18,19 +18,10 @@ class Messu extends TikiLib {
 	}
 
 	/**
-	 * Check if a users exists (wrapper for userlib function)
-	 */
-	function user_exists($user) {
-		global $userlib;
-
-		return $userlib->user_exists($user);
-	}
-
-	/**
 	 * Put sent message to 'sent' box
 	 */
 	function save_sent_message($user, $from, $to, $cc, $subject, $body, $priority, $replyto_hash='') {
-		global $smarty, $userlib, $sender_email, $language, $tikilib;
+		global $smarty, $userlib, $sender_email, $language;
 
 		$subject = strip_tags($subject);
 		$body = strip_tags($body, '<a><b><img><i>');
@@ -52,7 +43,7 @@ class Messu extends TikiLib {
 	 * Send a message to a user
 	 */
 	function post_message($user, $from, $to, $cc, $subject, $body, $priority, $replyto_hash='') {
-		global $smarty, $userlib, $sender_email, $language, $tikilib, $sender_email;
+		global $smarty, $userlib, $sender_email, $language;
 
 		$subject = strip_tags($subject);
 		$body = strip_tags($body, '<a><b><img><i>');
@@ -92,30 +83,19 @@ class Messu extends TikiLib {
 				$mail_data = $smarty->fetchLang($lg, 'mail/messu_message_notification.tpl');
 				$mail->setText($mail_data);
 
-				$local_sender_email = $userlib->get_user_email($from);
-
-				if( strlen( $sender_email ) < 1 )
-				{
-				    $local_sender_email = $sender_email;
+				if ($userlib->get_user_preference($from,'email is public','n') == 'y') {
+					$sender_email = $userlib->get_user_email($from);
+				}
+				if (strlen( $sender_email ) > 1 ) {
+					$mail->setHeader("Reply-To", $local_sender_email);
+					$mail->setHeader("From", $local_sender_email);
 				}
 
-				$mail->setHeader("Reply-To", $local_sender_email);
-				$mail->setHeader("From", $local_sender_email);
 				if (!$mail->send(array($email), 'mail'))
 					return false; //TODO echo $mail->errors;
 			}
 		}
 		return true;
-	}
-
-	/**
-	 * Validate user (wrapper for userlib function)
-	 */ 
-	function validate_user($user, $pass) {
-		global $userlib;
-
-		list($cant, $user, $error) = $userlib->validate_user($user, $pass, '', '');
-		return $cant;
 	}
 
 	/**

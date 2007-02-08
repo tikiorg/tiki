@@ -448,6 +448,7 @@ class ProcessManager extends BaseManager {
 			$amid[] = "`isActive`=?";
 			$bindvars[] = $filteractive;
 		}
+		$mid = "";
 		if (count($amid)) {
 			$mid = " where ".implode(" and ",$amid);
 		}

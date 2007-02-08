@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_system.tpl,v 1.23 2006-11-28 07:59:17 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_system.tpl,v 1.24 2007-02-08 13:51:23 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_system.php">{tr}System Admin{/tr}</a>
 
 {if $feature_help eq 'y'}
@@ -10,7 +10,7 @@
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-<div class="rbox-data" name="tip">{tr}If your Tiki is acting weird, 1st thing to try it to clear your cache below. Also very important to clear your cache after an upgrade (by FTP/SSH if need be).{/tr}
+<div class="rbox-data" name="tip">{tr}If your Tiki is acting weird, first thing to try is to clear your cache below. Also very important is to clear your cache after an upgrade (by FTP/SSH when needed).{/tr}
 
 </div>
 </div>

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.170 2007-02-05 14:35:29 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.171 2007-02-08 13:51:22 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -650,6 +650,14 @@ class TrackerLib extends TikiLib {
 						}
 					}elseif ($fopt['type'] == 'r' && isset($fopt["options_array"][3])) {
 					     $fopt["displayedvalue"]=$this->concat_item_from_fieldslist($fopt["options_array"][0],$this->get_item_id($fopt["options_array"][0],$fopt["options_array"][1],$fopt["value"]),$fopt["options_array"][3]);
+					} else if ($fopt['type'] == 'd') {
+						global $feature_multilingual;
+						if ($feature_multilingual == 'y') {
+							foreach ($fopt['options_array'] as $key=>$l) {
+									$fopt['options_array'][$key] = tra($l);
+							}
+						}
+						$fopt = $this->set_default_dropdown_option($fopt);						
 					}
 				}
 				if (empty($asort_mode) || ($fieldId == $asort_mode)) {
@@ -765,7 +773,7 @@ class TrackerLib extends TikiLib {
 		foreach($ins_fields["data"] as $i=>$array) {
 			if (!isset($ins_fields["data"][$i]["type"]) or $ins_fields["data"][$i]["type"] == 's') {
 				// system type, do nothing
-			} else if ($ins_fields["data"][$i]["type"] != 'u' && $ins_fields["data"][$i]["type"] != 'g' && $ins_fields["data"][$i]["type"] != 'I' && ($ins_fields["data"][$i]["isHidden"] == 'p' or $ins_fields["data"][$i]["isHidden"] == 'y')and $tiki_p_admin_trackers != 'y') {
+			} else if ($ins_fields["data"][$i]["type"] != 'u' && $ins_fields["data"][$i]["type"] != 'g' && $ins_fields["data"][$i]["type"] != 'I' && isset($ins_fields['data'][$i]['isHidden'] && ($ins_fields["data"][$i]["isHidden"] == 'p' or $ins_fields["data"][$i]["isHidden"] == 'y')and $tiki_p_admin_trackers != 'y') {
 					// hidden field type require tracker amdin perm
 			} else {
 				// -----------------------------
@@ -1036,8 +1044,13 @@ class TrackerLib extends TikiLib {
 
 			    		global $userlib;
 
-			    		$user_email = $userlib->get_user_email($user);
-			    		$my_sender = $user_email;
+						if (!empty($user)) {
+							$my_sender = $userlib->get_user_email($user);
+						} else { // look if a email field exists
+							$fieldId = $this->get_field_id_from_type($trackerId, 'm');
+							if (!empty($fieldId))
+								$my_sender = $this->get_item_value($trackerId, (!empty($itemId)? $itemId:$new_itemId), $fieldId);
+						}
 
 			    		// Default subject
 			    		$subject='['.$trackerName.'] '.tra('Tracker was modified at '). $_SERVER["SERVER_NAME"];
@@ -1354,7 +1367,8 @@ class TrackerLib extends TikiLib {
 	}
 
 	// Lists all the fields for an existing tracker
-	function list_tracker_fields($trackerId, $offset=0, $maxRecords=-1, $sort_mode='position_asc', $find='') {
+	function list_tracker_fields($trackerId, $offset=0, $maxRecords=-1, $sort_mode='position_asc', $find='', $tra_name=true) {
+		global $feature_multilingual, $language;
 		if ($find) {
 			$findesc = '%' . $find . '%';
 			$mid = " where `trackerId`=? and (`name` like ?)";
@@ -1371,7 +1385,17 @@ class TrackerLib extends TikiLib {
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
-			$res["options_array"] = split(',', $res["options"]);
+			$res['options_array'] = split(',', $res['options']);
+			if ($tra_name && $feature_multilingual == 'y' && $language != 'en')
+				$res['name'] = tra($res['name']);
+			if ($res['type'] == 'd') { // drop down
+				if ($feature_multilingual == 'y') {
+					foreach ($res['options_array'] as $key=>$l) {
+						$res['options_array'][$key] = tra($l);
+					}
+				}
+				$res = $this->set_default_dropdown_option($res);						
+			}
 			$ret[] = $res;
 		}
 		$retval = array();
@@ -1602,8 +1626,14 @@ class TrackerLib extends TikiLib {
 		return $this->getOne("select `fieldId` from `tiki_tracker_fields` where `trackerId`=? and `name`=?",array((int)$trackerId,$name));
 	}
 
-	function get_field_id_from_type($trackerId, $type, $option) {
-		return $this->getOne("select `fieldId` from `tiki_tracker_fields` where `trackerId`=? and `type`=? and `options`=?",array((int)$trackerId,$type,$option));
+	function get_field_id_from_type($trackerId, $type, $option=NULL) {
+		$mid = ' `trackerId`=? and `type`=? ';
+		$bindvars = array((int)$trackerId, $type);
+		if (!empty($option)) {
+			$mid .= ' and `options`=? ';
+			$bindvars[] = $option;
+		} 
+		return $this->getOne("select `fieldId` from `tiki_tracker_fields` where $mid",$bindvars);
 	}
 
 /*
@@ -1903,6 +1933,20 @@ class TrackerLib extends TikiLib {
 		while ($res = $result->fetchRow()) {
 			$this->query($query, array($newTrackerId, $res['name'],$res['value']));
 		}
+	// look for default value: a default value is 2 consecutive same value
+	function set_default_dropdown_option($field) {
+		for ($io = 0; $io < sizeof($field['options_array']); ++$io) {
+			if ($io > 0 && $field['options_array'][$io] == $field['options_array'][$io - 1]) {
+				$field['defaultvalue'] = $field['options_array'][$io];
+				for (; $io < sizeof($field['options_array']) - 1; ++$io) {
+					$field['options_array'][$io] = $field['options_array'][$io + 1];
+				}
+				unset($field['options_array'][$io]);
+				break;
+			}
+		}
+		return $field;
+	}
 
 		$fields = $this->list_tracker_fields($trackerId, 0, -1, 'position_asc', '');
 		foreach($fields['data'] as $field) {

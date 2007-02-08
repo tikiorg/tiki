@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.96 2007-02-01 20:18:32 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.97 2007-02-08 13:51:21 sylvieg Exp $
  *
  * \brief Categories support class
  *
@@ -92,6 +92,7 @@ class CategLib extends ObjectLib {
 			}
 			$ret["$categpath"] = $res;
 		}
+
 		ksort($ret);
 		
 		$retval = array();
@@ -748,7 +749,7 @@ class CategLib extends ObjectLib {
 
 	// FUNCTIONS TO CATEGORIZE SPECIFIC OBJECTS END ////
 	function get_child_categories($categId) {
-		global $cachelib;
+	  global $cachelib, $language, $feature_multilingual;
 		if (!$categId) $categId = "0"; // avoid wrong cache
 		if (!$cachelib->isCached("childcategs$categId")) {
 			$ret = array();
@@ -766,6 +767,11 @@ class CategLib extends ObjectLib {
 			$cachelib->cacheItem("childcategs$categId",serialize($ret));
 		} else {
 			$ret = unserialize($cachelib->getCached("childcategs$categId"));
+		}
+		if ($feature_multilingual == 'y' && $language != 'en') {
+			foreach ($ret as $key=>$res) {
+				$ret[$key]['name'] = tra($res['name']);
+			}
 		}
 		return $ret;
 	}
@@ -1148,7 +1154,10 @@ class CategLib extends ObjectLib {
 		else
 			$bindVars = $bind;
 	} 		
-
+	function exist_child_category($parentId, $name) {
+		$query = 'select `categId` from `tiki_categories` where `parentId`=? and `name`=?';
+		return ($this->getOne($query, array((int)$parentId, $name)));
+	}
 }
 
 global $dbTiki;

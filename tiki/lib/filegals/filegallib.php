@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.60 2007-02-04 20:09:38 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.61 2007-02-08 13:51:21 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -388,7 +388,11 @@ class FileGalLib extends TikiLib {
 						$upl = 0;
 				}
 
-				$fp = fopen($extract_dir.$file, "rb");
+				if (!($fp = fopen($extract_dir.$file, "rb"))) {
+					$smarty->assign('msg', tra('Cannot open this file:'). "temp/$file");
+					$smarty->display("error.tpl");
+					die;
+				}
 				$data = '';
 				$fhash = '';
 
@@ -404,7 +408,6 @@ class FileGalLib extends TikiLib {
 						die;
 					}
 				}
-
 				while (!feof($fp)) {
 					if (($fgal_use_db == 'y') && (!$podCastGallery)) {
 						$data .= fread($fp, 8192 * 16);

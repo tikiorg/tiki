@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.50 2006-12-16 13:02:08 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.51 2007-02-08 13:51:20 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -163,7 +163,7 @@ if (isset($_REQUEST["upload"]) && !empty($_REQUEST['galleryId'])) {
 					$filegallib->process_batch_file_upload($_REQUEST["galleryId"], $_FILES["userfile$i"]['tmp_name'],
 						$user, $_REQUEST["description"]);
 
-					header ("location: tiki-list_file_gallery.php?galleryId=" . $_REQUEST["galleryId"]);
+				  	header ("location: tiki-list_file_gallery.php?galleryId=" . $_REQUEST["galleryId"]);					die;
 				} else {
 					$smarty->assign('msg', tra('No permission to upload zipped file packages'));
 

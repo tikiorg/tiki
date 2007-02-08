@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker_item.tpl,v 1.117 2007-01-31 16:53:19 darzee Exp $ *}
+{* $Id: tiki-view_tracker_item.tpl,v 1.118 2007-02-08 13:51:26 sylvieg Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
@@ -152,7 +152,51 @@
         {$cur_field.value|escape:"html"|default:"&nbsp;"}
         {if $cur_field.options_array[3]}<span class="formunit">&nbsp;{$cur_field.options_array[3]|escape}</span>{/if}
 
-        {if $cur_field.options_array[0] eq '1' and $stick ne 'y'}
+{elseif $cur_field.type eq 'a'}
+{$cur_field.pvalue|default:"&nbsp;"}
+
+{elseif $cur_field.type eq 'e'}
+{assign var=fca value=$cur_field.options}
+{* style with all the categories
+<table width="100%"><tr>{cycle name="1_$fca" values=",</tr><tr>" advance=false print=false}
+{foreach key=ku item=iu from=$ins_fields.$ix.$fca name=eforeach}
+{assign var=fcat value=$iu.categId}
+<td width="50%" nowrap="nowrap">
+{if $cur_field.cat.$fcat eq 'y'}<tt>X&nbsp;</tt><b>{$iu.name}</b></td>{else}<tt>&nbsp;&nbsp;</tt><s>{$iu.name}</s></td>{/if}
+{if !$smarty.foreach.eforeach.last{cycle name="1_$fca"}{else}{if $ins_fields.$ix.$fca|@count%2}<td></td>{/if}</tr>{/if}
+{/foreach}
+</tr></table>
+*}
+{foreach key=ku item=iu from=$ins_fields.$ix.$fca}
+{assign var=fcat value=$iu.categId}
+{if $cur_field.cat.$fcat eq 'y'}{$iu.name}<br />{/if}
+{/foreach}
+</td></tr>
+
+{elseif $cur_field.type eq 'c'}
+{if $cur_field.value eq 'y'}{tr}Yes{/tr}
+{else}{tr}No{/tr}
+{/if}
+{if $cur_field.options_array[0] eq '1' and $stick ne 'y'}
+</td>
+{assign var=stick value="y"}
+{else}
+</td></tr>
+{assign var=stick value="n"}
+{/if}
+
+{elseif $cur_field.type eq 'y'}
+{assign var=o_opt value=$cur_field.options_array[0]}
+{if $o_opt ne '1' and $cur_field.value ne 'None'}<img border="0" src="img/flags/{$cur_field.value}.gif" alt="{$cur_field.value}"/>{/if}
+{if $o_opt ne '1' and $o_opt ne '2'}&nbsp;{/if}
+{if $o_opt ne '2'}{tr}{$cur_field.value}{/tr}{/if}
+
+{elseif $cur_field.type eq 't' or $cur_field.type eq 'n'}
+{if $cur_field.options_array[2]}<span class="formunit">{$cur_field.options_array[2]|escape}&nbsp;</span>{/if}
+{$cur_field.value|escape:"html"|default:"&nbsp;"}
+{if $cur_field.options_array[3]}<span class="formunit">&nbsp;{$cur_field.options_array[3]|escape}</span>{/if}
+
+{if $cur_field.options_array[0] eq '1' and $stick ne 'y'}
 {* ********** was only for 1.8 <tr><td class="formcolor">{$cur_field.name}</td>
           <td class="formcolor">
           {if $cur_field.type eq 'f'}
@@ -279,13 +323,24 @@
 	{if $cur_field.user_subscription}<br /><input type="submit" name="user_unsubscribe" value="{tr}Unsubscribe{/tr}" />{/if}
 	</form>
 	{/if}
-      {else}
-        {$cur_field.value|default:"&nbsp;"}
-        </td></tr>
-        {assign var=stick value="n"}
-      {/if}
-    {/if}
-  {/if}
+
+{elseif $cur_field.type eq 'i'}
+{if $cur_field.value ne ''}
+<img src="{$cur_field.value}" alt="" {if $cur_field.options_array[2]} width="{$cur_field.options_array[2]}"{/if}{if $cur_field.options_array[3]} height="{$cur_field.options_array[3]}"{/if} />
+{else}
+<img border="0" src="img/icons/na_pict.gif" alt="n/a" />
+{/if}
+
+{elseif $cur_field.type eq 'd'}
+{$cur_field.value|tr_if}
+
+{else}
+{$cur_field.value|default:"&nbsp;"}
+</td></tr>
+{assign var=stick value="n"}
+{/if}
+{/if}
+{/if}
 {/foreach}
 </table>
 </div>
@@ -526,12 +581,17 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {/foreach}
 
 {elseif $cur_field.type eq 'e'}
+{if !empty($cur_field.options_array[2]) && ($cur_field.options_array[2] eq '1' or $cur_field.options_array[2] eq 'y')} 
+<script type="text/javascript"> /* <![CDATA[ */
+document.write('<div class="categSelectAll"><input type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,\'ins_cat_{$cur_field.fieldId}[]\',this.checked)"/>{tr}select all{/tr}</div>');
+/* ]]> */</script>
+{/if}
 {assign var=fca value=$cur_field.options}
-<table width="100%"><tr>{cycle name="2_$fca" values=",</tr><tr>" advance=false print=false}
-{foreach key=ku item=iu from=$cur_field.$fca}
+<table width="100%"><tr>{cycle name="2_$fca" values=",</tr><tr>" advance=false}
+{foreach key=ku item=iu from=$cur_field.$fca name=foreache}
 {assign var=fcat value=$iu.categId }
 <td width="50%" nowrap="nowrap"><input type={if $cur_field.options_array[1] eq "radio"}"radio"{else}"checkbox"{/if} name="ins_cat_{$cur_field.fieldId}[]" value="{$fcat}" {if $cur_field.cat.$fcat eq 'y'}checked="checked"{/if}/>{$iu.name}</td>
-{cycle name="2_$fca"}
+{if !$smarty.foreach.foreache.last}{cycle name="2_$fca"}{else}{if $cur_field.$fca|@count%2}<td></td>{/if}</tr>{/if}
 {/foreach}
 </table>
 
@@ -590,9 +650,9 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 
 {elseif $cur_field.type eq 'd'}
 <select name="ins_{$cur_field.id}" {if $cur_field.http_request}onchange="selectValues('trackerIdList={$cur_field.http_request[0]}&amp;fieldlist={$cur_field.http_request[3]}&amp;filterfield={$cur_field.http_request[1]}&amp;status={$cur_field.http_request[4]}&amp;mandatory={$cur_field.http_request[6]}&amp;filtervalue='+escape(this.value),'{$cur_field.http_request[5]}')"{/if}>
-{if $cur_field.isMandatory}<option value=""></option>{/if}
+{if $cur_field.isMandatory ne 'y' || empty($cur_field.value)}<option value=""></option>{/if}{*can be empty even if mandatory when coming from a user tracker *}
 {section name=jx loop=$cur_field.options_array}
-<option value="{$cur_field.options_array[jx]|escape}" {if $cur_field.value eq $cur_field.options_array[jx]}selected="selected"{/if}>{$cur_field.options_array[jx]}</option>
+<option value="{$cur_field.options_array[jx]|escape}" {if (!empty($cur_field.value) and $cur_field.value eq $cur_field.options_array[jx]) or (empty($cur_field.value) and $cur_field.options_array[jx] eq $cur_field.defaultvalue)}selected="selected"{/if}>{$cur_field.options_array[jx]|tr_if}</option>
 {/section}
 </select>
 
@@ -606,9 +666,12 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 
 {elseif $cur_field.type eq 'y'}
 <select name="ins_{$cur_field.id}" {if $cur_field.http_request}onchange="selectValues('trackerIdList={$cur_field.http_request[0]}&amp;fieldlist={$cur_field.http_request[3]}&amp;filterfield={$cur_field.http_request[1]}&amp;status={$cur_field.http_request[4]}&amp;mandatory={$cur_field.http_request[6]}&amp;filtervalue='+escape(this.value),'{$cur_field.http_request[5]}')"{/if}>
+{if $cur_field.isMandatory ne 'y' || empty($cur_field.value)}<option value=""{if $cur_field.value eq '' or $cur_field.value eq 'None'} selected="selected"{/if}></option>{/if}
 {foreach item=flag from=$cur_field.flags}
-<option value="{$flag|escape}" {if ($cur_field.value ne '' and $cur_field.value eq $flag) or ($cur_field.value eq '' and $flag eq 'None')}selected="selected"{/if}
+{if $flag ne 'None'}
+<option value="{$flag|escape}" {if $cur_field.value ne '' and $cur_field.value eq $flag}selected="selected"{/if}
 style="background-image:url('img/flags/{$flag}.gif');background-repeat:no-repeat;padding-left:25px;padding-bottom:3px;">{tr}{$flag}{/tr}</option>
+{/if}
 {/foreach}
 </select>
 

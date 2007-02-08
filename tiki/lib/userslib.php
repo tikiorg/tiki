@@ -1937,7 +1937,7 @@ function get_included_groups($group) {
 
     function change_user_email($user, $email, $pass) {
     // Need to change the email-address for notifications, too
-    include_once('lib/notifications/notificationlib.php');
+	global $notificationlib; include_once('lib/notifications/notificationlib.php');
     $oldMail = $this->get_user_email($user);
     $notificationlib->update_mail_address($oldMail, $email);
     
@@ -1969,10 +1969,14 @@ function get_included_groups($group) {
     }
 
     function get_user_password($user) {
-	$query = "select `password`  from `users_users` where " . $this->convert_binary(). " `login`=?";
+	$query = "select `password`,`provpass`  from `users_users` where " . $this->convert_binary(). " `login`=?";
 
-	$pass = $this->getOne($query, array($user));
-	return $pass;
+	$result = $this->query($query, array($user));
+	$res = $result->fetchRow();
+	if (empty($res['provpass']))
+		return $res['password'];
+	else
+		return $res['provpass'];
     }
 
     function get_user_email($user) {
