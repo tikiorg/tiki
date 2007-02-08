@@ -135,10 +135,6 @@ function wikiplugin_trackerlist($data, $params) {
 		}
 		$smarty->assign_by_ref('tr_initial', $tr_initial);
 
-		if (!isset($filterfield)) {
-			$filterfield = '';
-		}
-
 		if (!isset($filtervalue)) {
 			$filtervalue = '';
 		}
@@ -159,7 +155,6 @@ function wikiplugin_trackerlist($data, $params) {
 				$listfields[] = $f['fieldId'];
 			}
 		}
-
 
 		if (!isset($filterfield)) {
 			$filterfield = '';
