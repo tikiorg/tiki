@@ -207,7 +207,7 @@ class ContactLib extends TikiLib {
 				   'Work Fax', 'Company', 'Organization', 'Department', 'Division', 'Job Title',
 				   'Street Address', 'City', 'State', 'Zip Code', 'Country');
 			if (($user == NULL) || (empty($user))) return $exts;
-			foreach($exts as $ext) $this->add_ext($ext);
+			foreach($exts as $ext) $this->add_ext($user, $ext);
 		} else {
 			$exts=array();
 			while($r = $res->fetchRow()) $exts[]=$r['fieldname'];
