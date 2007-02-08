@@ -15,10 +15,6 @@ if ($tiki_p_view_tiki_calendar != 'y') {
 	die;
 }
 
-if (!empty($_REQUEST["tikicals"]) and is_array($_REQUEST["tikicals"])) {
-	$_SESSION['CalendarViewTikiCals'] = $_REQUEST["tikicals"];
-}
-
 $headerlib->add_cssfile('css/calendar.css',20);
 
 $tikiItems = array(
@@ -36,6 +32,18 @@ $tikiItems = array(
   "nl" => array( "label" => tra("Newsletter"), "feature" => "$feature_newsletters", "right" => "$tiki_p_subscribe_newsletters"),
   "chart" => array( "label" => tra("Charts"), "feature" => "$feature_charts", "right" => "$tiki_p_view_chart")
 );
+
+// Register selected tikiItems in session vars if a refresh is requested
+//   If no refresh is requested, either keep existing session values if they exists, either view all tikiItems by default
+//   If a refresh has been requested without tikicals, view no tikiItem
+if ( empty($_REQUEST['refresh']) ) {
+	if ( ! array_key_exists('CalendarViewTikiCals', $_SESSION) )
+		$_SESSION['CalendarViewTikiCals'] = array_keys($tikiItems);
+} elseif ( !empty($_REQUEST["tikicals"]) and is_array($_REQUEST["tikicals"]) ) {
+	$_SESSION['CalendarViewTikiCals'] = $_REQUEST["tikicals"];
+} else {
+	unset($_SESSION['CalendarViewTikiCals']);
+}
 
 $smarty->assign('tikiItems', $tikiItems);
 
