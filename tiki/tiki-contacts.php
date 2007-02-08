@@ -20,7 +20,7 @@ if (!isset($_REQUEST["contactId"])) {
 
 $smarty->assign('contactId', $_REQUEST["contactId"]);
 
-$tmpexts=$contactlib->get_ext_list();
+$tmpexts=$contactlib->get_ext_list($user);
 $exts=array();
 $traducted_exts=array();
 foreach($tmpexts as $ext) $exts[bin2hex($ext)]=$ext;
@@ -51,6 +51,11 @@ $smarty->assign('info', $info);
 $smarty->assign('exts', $traducted_exts);
 
 if (isset($_REQUEST["remove"])) {
+	if (!$user) {
+		$smarty->assign('msg', tra("You are not logged in"));
+		$smarty->display("error.tpl");
+		die;
+	}
 	$area = "delwebmailcontact";
 	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
@@ -61,6 +66,11 @@ if (isset($_REQUEST["remove"])) {
 }
 
 if (isset($_REQUEST["save"])) {
+	if (!$user) {
+		$smarty->assign('msg', tra("You are not logged in"));
+		$smarty->display("error.tpl");
+		die;
+	}
 	check_ticket('webmail-contact');
 	$ext_result=array();
 	foreach($exts as $k=>$ext)
