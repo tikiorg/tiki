@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-broadcast.php,v 1.27 2006-12-03 16:27:10 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-broadcast.php,v 1.28 2007-02-08 13:51:20 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -108,8 +108,8 @@ if (isset($_REQUEST['send'])) {
 
 	foreach ($all_users as $a_user) {
 		if (!empty($a_user)) {
-			if ($messulib->user_exists($a_user)) {
-				if ($messulib->get_user_preference($a_user, 'allowMsgs', 'y')) {
+			if ($userlib->user_exists($a_user)) {
+				if ($tikilib->get_user_preference($a_user, 'allowMsgs', 'y')) {
 					$users[] = $a_user;
 				} else {
 					// TODO: needs translation as soon as there is a solution for strings with embedded variables

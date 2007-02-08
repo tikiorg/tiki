@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.71 2006-12-17 17:43:20 fr_rodo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.72 2007-02-08 13:51:23 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
   
 {if $feature_help eq 'y'}
@@ -124,7 +124,7 @@ for a tracker and they must be valid in SQL{/tr}</em>
 <input type="checkbox" name="showStatusAdminOnly" {if $showStatusAdminOnly eq 'y'}checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td class="auto" colspan="2">{tr}Send copies of all activity in this tracker to this e-mail address{/tr}:</td><td><input type="text" name="outboundEmail" value="{$outboundEmail|escape}" /></td></tr>
 <tr class="formcolor"><td class="auto" colspan="2">{tr}Use simplified e-mail format{/tr}
-<br /><i>{tr}The tracker needs a text field named Subject{/tr}</i>
+<br /><i>{tr}The tracker will use the text field named Subject if any as subject and will use the user email or for anonymous the email field if any as sender{/tr}</i>
 </td><td>
 <input type="checkbox" name="simpleEmail" {if $simpleEmail eq 'y'}checked="checked"{/if} />
 </td></tr>

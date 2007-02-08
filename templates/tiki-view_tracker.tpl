@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker.tpl,v 1.128 2007-01-29 16:48:12 darzee Exp $ *}
+{* $Id: tiki-view_tracker.tpl,v 1.129 2007-02-08 13:51:26 sylvieg Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a></h1>
 <div>
@@ -86,7 +86,7 @@ class="statusimg"><img src="{$stdata.image}" title="{$stdata.label}" alt="{$stda
 {elseif $field.type eq 'd'}
 <div style="display:{if $filterfield eq $fid}block{else}none{/if};" id="fid{$fid}"><select name="filtervalue[{$fid}]">
 {section name=jx loop=$field.options_array}
-<option value="{$field.options_array[jx]|escape}" {if $filtervalue eq $field.options_array[jx]}selected="selected"{/if}>{$field.options_array[jx]}</option>
+<option value="{$field.options_array[jx]|escape}" {if $filtervalue eq $field.options_array[jx]}selected="selected"{/if}>{$field.options_array[jx]|tr_if}</option>
 {/section}
 </select></div>
 
@@ -103,14 +103,14 @@ class="statusimg"><img src="{$stdata.image}" title="{$stdata.label}" alt="{$stda
 <table><tr>
 
 {cycle name=rows values=",</tr><tr>" advance=false print=false}
-{foreach key=ku item=iu from=$field.categories}
+{foreach key=ku item=iu from=$field.categories name=eforeach}
   <td width="50%" nowrap="nowrap">
     <input type="checkbox" name="filtervalue[{$fid}][]" value="{$iu.categId}" id="cat{$iu.categId}" 
       {if $fid == $filterfield && is_array($filtervalue) && in_array($iu.categId,$filtervalue)} checked{/if}
     />
     <label for="cat{$i.categId}">{$iu.name}</label>
   </td>
-  {cycle name=rows}
+  {if !$smarty.foreach.eforeach.last}{cycle name=rows}{else}{if $fields[ix].categories|@count%2}<td></td>{/if}</tr>{/if}
 {/foreach}
 
 </tr></table>
@@ -287,7 +287,7 @@ $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}created{/tr
 
 {elseif $items[user].field_values[ix].type eq 'y'}
 {assign var=o_opt value=$items[user].field_values[ix].options_array[0]}
-{if $o_opt ne '1'}<img border="0" src="img/flags/{$items[user].field_values[ix].value}.gif" title="{$items[user].field_values[ix].value}" />{/if}
+{if $o_opt ne '1' and $items[user].field_values[ix].value ne 'None'}<img border="0" src="img/flags/{$items[user].field_values[ix].value}.gif" title="{$items[user].field_values[ix].value}" alt="{$items[user].field_values[ix].value}" />{/if}
 {if $o_opt ne '1' and $o_opt ne '2'}&nbsp;{/if}
 {if $o_opt ne '2'}{tr}{$items[user].field_values[ix].value}{/tr}{/if}
 
@@ -353,7 +353,7 @@ $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}created{/tr
 {elseif $items[user].field_values[ix].type eq 'y'}
 <td class="auto">
 {assign var=o_opt value=$items[user].field_values[ix].options_array[0]}
-{if $o_opt eq '0' or $o_opt eq 2}<img border="0" src="img/flags/{$items[user].field_values[ix].value}.gif"  title="{$items[user].field_values[ix].value}" />{/if}
+{if ($o_opt eq '0' or $o_opt eq 2) and $items[user].field_values[ix].value ne 'None'}<img border="0" src="img/flags/{$items[user].field_values[ix].value}.gif"  title="{$items[user].field_values[ix].value}" alt="{$items[user].field_values[ix].value}"/>{/if}
 {if $o_opt eq '0'}&nbsp;{/if}
 {if $o_opt eq '0' or $o_opt eq 1}{tr}{$items[user].field_values[ix].value}{/tr}{/if}
 </td>
@@ -539,11 +539,16 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 
 {* -------------------- category -------------------- *}
 {elseif $fields[ix].type eq 'e'}
+{if !empty($fields[ix].options_array[2]) && ($fields[ix].options_array[2] eq '1' or $fields[ix].options_array[2] eq 'y')}
+<script type="text/javascript"> /* <![CDATA[ */
+document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,\'ins_cat_{$fields[ix].fieldId}[]\',this.checked)"/>{tr}select all{/tr}</div>');
+/* ]]> */</script>
+{/if}
 {assign var=fca value=$fields[ix].options}
 <table width="100%"><tr>{cycle name=2_$fca values=",</tr><tr>" advance=false print=false}
-{foreach key=ku item=iu from=$fields[ix].categories}
+{foreach key=ku item=iu from=$fields[ix].categories name=eforeach}
 {assign var=fcat value=$iu.categId }
-<td width="50%" nowrap="nowrap"><input type={if $fields[ix].options_array[1] eq "radio"}"radio"{else}"checkbox"{/if} name="ins_cat_{$fields[ix].fieldId}[]" value="{$iu.categId}" id="cat{$iu.categId}" {if $fields[ix].cat.$fcat eq 'y'}checked="checked"{/if}/><label for="cat{$i.categId}">{$iu.name}</label></td>{cycle name=2_$fca}
+<td width="50%" nowrap="nowrap"><input type={if $fields[ix].options_array[1] eq "radio"}"radio"{else}"checkbox"{/if} name="ins_cat_{$fields[ix].fieldId}[]" value="{$iu.categId}" id="cat{$iu.categId}" {if $fields[ix].cat.$fcat eq 'y'}checked="checked"{/if}/><label for="cat{$i.categId}">{$iu.name}</label></td>{if !$smarty.foreach.eforeach.last}{cycle name=2_$fca}{else}{if $fields[ix].categories|@count%2}<td></td>{/if}</tr>{/if}
 {/foreach}
 </tr></table>
 
@@ -599,7 +604,7 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 <select name="{$fields[ix].ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
 {if $fields[ix].isMandatory ne 'y'}<option value="" />{/if}
 {section name=jx loop=$fields[ix].options_array}
-<option value="{$fields[ix].options_array[jx]|escape}" {if $input_err}{if $fields[ix].value eq $fields[ix].options_array[jx]}selected="selected"{/if}{elseif $defaultvalues.$fid eq $fields[ix].options_array[jx]}selected="selected"{/if}>{$fields[ix].options_array[jx]}</option>
+<option value="{$fields[ix].options_array[jx]|escape}" {if $input_err}{if $fields[ix].value eq $fields[ix].options_array[jx]}selected="selected"{/if}{elseif $defaultvalues.$fid eq $fields[ix].options_array[jx] or $fields[ix].defaultvalue eq $fields[ix].options_array[jx]}selected="selected"{/if}>{$fields[ix].options_array[jx]|tr_if}</option>
 {/section}
 </select>
 
@@ -645,10 +650,13 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 {* -------------------- country selector -------------------- *}
 {elseif $fields[ix].type eq 'y'}
 <select name="{$fields[ix].ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
+<option value=""{if $fields[ix].value eq '' or $fields[ix].value eq 'None'} selected="selected"{/if}>&nbsp;</option>
 {sortlinks}
 {foreach item=flag from=$fields[ix].flags}
+{if $flag ne 'None'}
 <option value="{$flag|escape}" {if $input_err}{if $fields[ix].value eq $flag}selected="selected"{/if}{elseif $flag eq $fields[ix].defaultvalue}selected="selected"{/if}
 style="background-image:url('img/flags/{$flag}.gif');background-repeat:no-repeat;padding-left:25px;padding-bottom:3px;">{tr}{$flag}{/tr}</option>
+{/if}
 {/foreach}
 {/sortlinks}
 </select>

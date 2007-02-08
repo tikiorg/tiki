@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.395 2007-02-06 04:24:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.396 2007-02-08 13:51:20 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1454,7 +1454,10 @@ if (!$user) {
 		$language = $saveLanguage;
 		$smarty->assign('language', $language);
 	}
-}
+ } elseif (!empty($saveLanguage) && $feature_userPreferences != 'y' && $change_language == 'y') {
+ 	$language = $saveLanguage;
+	$smarty->assign('language', $language);
+ }
 
 if ($lang_use_db != 'y') {
     // check if needed!!!
@@ -1738,7 +1741,7 @@ if (is_file('.lastup') and is_readable('.lastup')) {
 }
 
 if ($feature_wiki_discuss == 'y') {
-	$wiki_discussion_string = tra ("Use this thread to discuss the page:", $tikilib->get_preference('language', 'en'));
+	$wiki_discussion_string = $smarty->fetchLang($tikilib->get_preference('language', 'en'), 'wiki-discussion.tpl');
 	$smarty->assign('wiki_discussion_string', $wiki_discussion_string);
 }
 // ------------------------------------------------------

@@ -11,7 +11,7 @@ border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a></h1>
 <table><tr><td width="180">
 <div class="box">
 <div class="box-title">
-<a title='help' href='http://tikiwiki.org/MultiTiki19' target="help"><img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a>
+<a title='{tr}help{/tr}' href='http://tikiwiki.org/MultiTiki19' target="help"><img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a>
 {tr}MultiTiki setup{/tr}</div>
 <div class="box-data">
 <div><a href="tiki-install.php">default</a></div><br />
@@ -114,7 +114,7 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 	  {* we do have a database connection *}
 	  {if $dbdone eq 'n'}
 		  {if $logged eq 'y'}
-		    {* we are logged if no admin account is found or if he user logged in*}
+		    {* we are logged if no admin account is found or if the admin user is logged in*}
 		    <b>{tr}Welcome to the installation &amp; upgrade script!{/tr}</b><br />
 		    <br /><br />
 			
@@ -134,7 +134,7 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 			<option value="{$profiles[ix].name|escape}">{$profiles[ix].desc}</option>
 			{/section}
 			</select>
-			<input type="submit" name="scratch" value="create" />	    
+			<button type="submit" name="scratch" value="create">{tr}create{/tr}</button>
 		    </td></tr><tr>
 			<td height="100" valign="top">
 			</td><td height="100" valign="top">
@@ -157,7 +157,7 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 			<option value="{$files[ix]|escape}">{$files[ix]}</option>
 			{/section}
 			</select>
-			<input type="submit" name="update" value="update" />
+			<button type="submit" name="update" value="update">{tr}update{/tr}</button>
 		    </td></tr>
 		    <tr><td colspan="2">
 			{tr}For database update from 1.8 or later{/tr}:

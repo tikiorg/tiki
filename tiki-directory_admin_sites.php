@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_admin_sites.php,v 1.18 2006-09-19 16:33:15 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_admin_sites.php,v 1.19 2007-02-08 13:51:20 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -80,13 +80,20 @@ $smarty->assign_by_ref('info', $info);
 
 // Remove a category
 if (isset($_REQUEST["remove"])) {
-  $area = 'deldirsite';
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-    key_check($area);
-		$dirlib->dir_remove_site($_REQUEST["remove"]);
-  } else {
-    key_get($area);
-  }
+	if (is_array($_REQUEST["remove"])) {
+		check_ticket('dir-admin-sites');
+		foreach ($_REQUEST["remove"] as $remid) {
+			$dirlib->dir_remove_site($remid);
+		}
+	} else {
+		$area = 'deldirsite';
+		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+			key_check($area);
+			$dirlib->dir_remove_site($_REQUEST["remove"]);
+		} else {
+			key_get($area);
+		}
+	}
 }
 
 // Replace (add or edit) a category

@@ -18,6 +18,8 @@ if (!preg_match('/(\?|&)bl=/', $orig_url)) {
 	else if (strstr($orig_url, 'tiki-index.php'))
 		$orig_url .= '?bl=y';
 }
+$orig_url = preg_replace('/(.*\?.*)switchLang=[a-zA-Z-_]*&?(.*)/', '$1$2', $orig_url);
+
 if(isset($_REQUEST['language'])|| isset($_REQUEST['switchLang'])) {
 	$language = isset($_REQUEST['language'])? $_REQUEST['language']: $_REQUEST['switchLang'];
 	if($feature_userPreferences == 'y' && $user && $change_language == 'y')  {

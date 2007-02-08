@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.43 2006-11-24 17:30:43 hangerman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.44 2007-02-08 13:51:20 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -231,7 +231,7 @@ if (isset($_REQUEST["max"])) {
 $smarty->assign('max', $max);
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
-$channels = $trklib->list_tracker_fields($_REQUEST["trackerId"], $offset, $max, $sort_mode, $find);
+$channels = $trklib->list_tracker_fields($_REQUEST["trackerId"], $offset, $max, $sort_mode, $find, false);
 $plug = array();
 foreach ($channels['data'] as $c) {
 	if ($c['isPublic'] == 'y') {

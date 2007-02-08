@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.117 2007-02-04 20:09:33 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.118 2007-02-08 13:51:20 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,7 +10,7 @@
 require_once('tiki-setup.php');
 
 include_once('lib/trackers/trackerlib.php');
-include_once('lib/notifications/notificationlib.php');
+global $notificationlib; include_once('lib/notifications/notificationlib.php');
 
 if ($feature_categories == 'y') {
 	global $categlib;
@@ -74,9 +74,9 @@ if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
 	}
 }
 
-if (!empty($_REQUEST['tab']) && $_REQUEST['tab'] == 'view') {
+if (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'view') {
 	$cookietab = '1';
-} elseif (!empty($_REQUEST['tab']) && $_REQUEST['tab'] == 'edit') {
+} elseif (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'mod') {
 	$cookietab = '2';
 } elseif (empty($_REQUEST['cookietab'])) {
 	if (!($tiki_p_view_trackers == 'y' || $tiki_p_admin == 'y' || $tiki_p_admin_trackers == 'y') && $tiki_p_create_tracker_items  == 'y')

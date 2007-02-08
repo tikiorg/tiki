@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.113 2007-02-04 20:09:33 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.114 2007-02-08 13:51:20 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -673,15 +673,20 @@ if ($_REQUEST["itemId"]) {
 					if (!isset($info["$fid"])) $info["$fid"] = '';
 				}
 				if ($fields["data"][$i]["type"] == 'e') {
-					include_once('lib/categories/categlib.php');
+					global $categlib; include_once('lib/categories/categlib.php');
 					$k = $fields["data"][$i]["options"];
 					$ins_fields["data"][$i]["$k"] = $categlib->get_child_categories($k);
 					if (!isset($cat)) {
 						$cat = $categlib->get_object_categories("tracker ".$_REQUEST["trackerId"],$_REQUEST["itemId"]);
 					}
-					if (isset($cat) && $cat != '')
-					foreach ($cat as $c) { 
-						$ins_fields["data"][$i]["cat"]["$c"] = 'y';
+					if (isset($_REQUEST['save']) || isset($_REQUEST['save_return'])) {
+						foreach ($ins_categs as $c) {
+							$ins_fields['data'][$i]['cat']["$c"] = 'y';
+						}
+					} else {
+						foreach ($cat as $c) {
+							$ins_fields['data'][$i]['cat']["$c"] = 'y';
+						}
 					}
 				} elseif ($fields["data"][$i]["type"] == 'l') {
 					if (isset($fields["data"][$i]["options_array"][3])) {
@@ -828,6 +833,7 @@ if ($_REQUEST["itemId"]) {
 				$smarty->assign('tracker_item_main_value', $ins_fields['data'][$i]['value']);			
 		}
 	}
+
 /* **************** seems it is only 1.8
 	for ($i = 0; $i < count($fields["data"]); $i++) {
 		$name = $fields["data"][$i]["name"];

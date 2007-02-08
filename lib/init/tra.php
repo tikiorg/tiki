@@ -3,6 +3,7 @@
  * @param $content - English string
  * @param $lg - language - if not specify = global current language
  */
+// BUG; will not work with a language other than the default ($lang will be or not redefined)
 function tra($content, $lg='') {
 	global $lang_use_db;
 	global $language;

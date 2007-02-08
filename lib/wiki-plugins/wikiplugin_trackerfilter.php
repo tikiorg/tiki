@@ -1,4 +1,5 @@
 <?php
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.7 2007-02-08 13:51:22 sylvieg Exp $
 function wikiplugin_trackerfilter_help() {
   $help = tra("Filters the items of a tracker, fields are indicated with numeric ids.").":\n";
   $help .= "~np~{TRACKERFILTER(filters=>2/d:4/r:5,TRACKERLIST_params )}{TRACKERFILTER}~/np~";
@@ -83,7 +84,7 @@ function wikiplugin_trackerfilter($data, $params) {
 		}
 		break;
 	case 'd': // drop down list
-		$res = split(',', $field['options']);
+	  $res = array_unique(split(',', $field['options']));
 		$opts = array();
 		foreach ($res as $val) {
 			$opt['id'] = $val;

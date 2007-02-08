@@ -15,7 +15,7 @@ function wikiplugin_trackerlist_help() {
 function wikiplugin_trackerlist($data, $params) {
   global $smarty, $tikilib, $dbTiki, $userlib, $tiki_p_admin, $maxRecords, $_REQUEST, $tiki_p_view_trackers, $user, $page, $tiki_p_tracker_vote_ratings, $tiki_p_tracker_view_ratings, $feature_trackers;
   global $trklib; require_once("lib/trackers/trackerlib.php");
-	global $notificationlib; //needed if plugin tracker after plugin trackerlist
+	global $notificationlib;  include_once('lib/notifications/notificationlib.php');//needed if plugin tracker after plugin trackerlist
 	extract ($params,EXTR_SKIP);
 
 	if ($feature_trackers != 'y' || !isset($trackerId) || !($tracker_info = $trklib->get_tracker($trackerId))) {

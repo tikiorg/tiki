@@ -1,3 +1,4 @@
+{* $Id: tiki-plugin_trackerlist.tpl,v 1.18 2007-02-08 13:51:26 sylvieg Exp $ *}
 {if $showtitle eq 'y'}<div class="pagetitle">{$tracker_info.name}</div>{/if}
 {if $showdesc eq 'y'}<div class="wikitext">{$tracker_info.description}</div>{/if}
 
@@ -96,6 +97,9 @@
 {elseif $items[user].field_values[ix].type eq 'e'}
 {foreach item=ii from=$items[user].field_values[ix].categs}{$ii.name}<br />{/foreach}
 
+{elseif $items[user].field_values[ix].type eq 'd'}
+{$items[user].field_values[ix].value|tr_if}
+
 {else}
 {$items[user].field_values[ix].value|truncate:255:"..."|default:"&nbsp;"}
 
@@ -155,6 +159,9 @@ class="linkbut">{$items[user].field_values[ix].options_array[i]}</a>
 <td class="auto">
 {$items[user].field_values[ix].pvalue|default:"&nbsp;"}
 </td>
+
+{elseif $items[user].field_values[ix].type eq 'd'}
+<td class="auto">{$items[user].field_values[ix].value|tr_if}</td>
 
 
 {elseif $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h'}

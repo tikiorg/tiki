@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.57 2007-02-04 20:09:46 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.58 2007-02-08 13:51:22 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -21,7 +21,7 @@ function wikiplugin_tracker_name($fieldId, $name, $field_errors) {
 	return $name;
 }
 function wikiplugin_tracker($data, $params) {
-	global $tikilib, $userlib, $dbTiki, $notificationlib, $user, $group, $page, $tiki_p_admin, $tiki_p_create_tracker_items, $smarty, $feature_trackers;
+	global $tikilib, $userlib, $dbTiki, $notificationlib, $user, $group, $page, $tiki_p_admin, $tiki_p_create_tracker_items, $smarty, $feature_trackers, $feature_multilingual, $userTracker;
 	global $trklib; include_once('lib/trackers/trackerlib.php');
 	
 	//var_dump($_REQUEST);
@@ -39,6 +39,18 @@ function wikiplugin_tracker($data, $params) {
 	}
 	if (!isset($showdesc)) {
 		$showdesc = "n";
+	}
+	if (empty($trackerId) && !empty($view) && $view == 'user' && $userTracker == 'y') {
+		$utid = $userlib->get_usertrackerid($group);
+		if (!empty($utid) && !empty($utid['usersTrackerId'])) {
+			$itemId = $trklib->get_item_id($utid['usersTrackerId'],$utid['usersFieldId'],$user);
+			$trackerId = $utid['usersTrackerId'];
+			if (!empty($itemId) && empty($_REQUEST['ok']))
+				return('<b>Item already created</b>');
+		}
+	}
+	if (!isset($trackerId)) {
+		return ("<b>missing tracker ID for plugin TRACKER</b><br />");
 	}
 	if (!isset($action)) {
 		$action = tra("Save");
@@ -152,9 +164,48 @@ function wikiplugin_tracker($data, $params) {
 					$itemId = $trklib->get_user_item($trackerId, $tracker);
 					$rid = $trklib->replace_item($trackerId,$itemId,$ins_fields,$tracker['newItemStatus']);
 					$trklib->categorized_item($trackerId, $rid, $mainfield, $ins_categs);
+					if (!empty($email)) {
+						global $sender_email;
+						$emailOptions = split("\|", $email);
+						if (is_numeric($emailOptions[0])) {
+							$emailOptions[0] = $trklib->get_item_value($trackerId, $rid, $emailOptions[0]);
+						}
+						if (empty($emailOptions[0])) { // from
+							$emailOptions[0] = $sender_email;
+						}
+						if (empty($emailOptions[1])) { // to
+							$emailOptions[1][0] = $sender_email;
+						} else {
+							$emailOptions[1] = split(',', $emailOptions[1]);
+							foreach ($emailOptions[1] as $key=>$email) {
+								if (is_numeric($email))
+									$emailOptions[1][$key] = $trklib->get_item_value($trackerId, $rid, $email);
+							}
+						}
+						if (!empty($emailOptions[2])) { //tpl
+							if (!preg_match('/\.tpl$/', $emailOptions[2]))
+								$emailOptions[2] .= '.tpl';
+							$tplSubject = str_replace('.tpl', '_subject.tpl', $emailOptions[2]);
+						} else {
+							$emailOptions[2] = 'tracker_changed_notification.tpl';
+						}
+						if (empty($tplSubject)) {
+							$tplSubject = 'tracker_changed_notification_subject.tpl';
+						}							
+						include_once('lib/webmail/tikimaillib.php');
+						$mail = new TikiMail();
+						@$mail_data = $smarty->fetch('mail/'.$tplSubject);
+						if (empty($mail_data))
+							$mail_data = tra('Tracker was modified at '). $_SERVER["SERVER_NAME"];
+						$mail->setSubject($mail_data);
+						$mail_data = $smarty->fetch('mail/'.$emailOptions[2]);
+						$mail->setText($mail_data);
+						$mail->setHeader('From', $emailOptions[0]);
+						$mail->send($emailOptions[1]);
+					}
 					if (!empty($page)) {
-						header("Location: tiki-index.php?page=".urlencode($page)."&ok=$trackerId");
-						die;
+						header("Location: tiki-index.php?page=".urlencode($page)."&ok=y");
+					die;
 					// return "<div>$data</div>";
 					} else {
 						return '';
@@ -175,8 +226,8 @@ function wikiplugin_tracker($data, $params) {
 			}
 			
 			$optional = array();
+			$outf = array();
 			if (isset($fields)) {
-				$outf = array();
 				$fl = split(":",$fields);
 			
 				foreach ($fl as $l) {
@@ -361,6 +412,10 @@ function wikiplugin_tracker($data, $params) {
 								}
 								$back.= "</select>";
 							}
+							if ($f['isMandatory'] != 'y') {
+								$back .= '<option value=""></option>';
+							}
+							$back.= "</select>";
 						} else {
 							$back.= '<input type="hidden" name="track['.$f["fieldId"].']" value="'.$user.'" />';
 						}
@@ -380,6 +435,12 @@ function wikiplugin_tracker($data, $params) {
 						global $categlib; include_once('lib/categories/categlib.php');
 						$cats = $categlib->get_child_categories($k);
 						$i = 0;
+						if (!empty($f['options_array'][2]) && ($f['options_array'][2] == '1' || $f['options_array'][2] == 'y')) { 
+							$back .= '<script type="text/javascript"> /* <![CDATA[ */';
+							$back .= "document.write('<div class=\"categSelectAll\"><input type=\"checkbox\" onclick=\"switchCheckboxes(this.form,\'ins_cat_{$f['fieldId']}[]\',this.checked)\"/>";
+							$back .= tra('select all');
+							$back .= "</div>')/* ]]> */</script>";
+						}
 						foreach ($cats as $cat) {
 							$checked = ($f['value'] == $cat['categId']) ? 'checked="checked"' : '';
 							$t = (isset($f["options_array"][1]) && $f["options_array"][1] == 'radio')? 'radio': 'checkbox';

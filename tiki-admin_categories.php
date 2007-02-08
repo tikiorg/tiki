@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.43 2006-09-19 16:33:06 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.44 2007-02-08 13:51:20 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -150,7 +150,9 @@ if (isset($_REQUEST["removeCat"])) {
 if (isset($_REQUEST["save"]) && isset($_REQUEST["name"]) && strlen($_REQUEST["name"]) > 0) {
 	check_ticket('admin-categories');
 	// Save
-	if ($_REQUEST["categId"]) {
+	if ($categlib->exist_child_category($_REQUEST['parentId'], $_REQUEST['name'])) {
+		$errors[]= 'You can not create a category with a name already existing at this level';//tra('You can not create a category with a name already existing at this level');
+	} else if ($_REQUEST["categId"]) {
 	        if ($_REQUEST['parentId'] == $_REQUEST['categId']) {
 	            $smarty->assign('msg', tra("Category can`t be parent of itself"));
   	            $smarty->display("error.tpl");
@@ -347,6 +349,8 @@ $directories = $dirlib->dir_list_all_categories(0, -1, 'name_asc', $find_objects
 $smarty->assign_by_ref('directories', $directories["data"]);
 
 ask_ticket('admin-categories');
+if (!empty($errors))
+	$smarty->assign_by_ref('errors', $errors);
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');

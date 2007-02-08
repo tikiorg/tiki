@@ -77,6 +77,8 @@
 
 {* Display the list of categories (items) using pagination *}
 {* Links to edit, remove, browse the categories *}
+<form action="tiki-directory_admin_sites.php" method="post">
+<div style="text-align:right;"><input type="submit" name="groupdel" value="{tr}Delete selected{/tr}" /></div>
 <table class="normal">
   <tr>
     <td class="heading"><a class="tableheading" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
@@ -90,13 +92,14 @@
 {section name=user loop=$items}
 <tr>
 <td class="{cycle advance=false}">{$items[user].name}</td>
-<td class="{cycle advance=false}">{$items[user].url}</td>
+<td class="{cycle advance=false}"><a href="{$items[user].url}" target="_new">{$items[user].url}</a></td>
 <td class="{cycle advance=false}"><img src='img/flags/{$items[user].country}.gif' alt='{$items[user].country}'/></td>
 <td class="{cycle advance=false}">{$items[user].hits}</td>
 <td class="{cycle advance=false}">{$items[user].isValid}</td>
 <td  class="{cycle advance=false}">
    <a class="link" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$items[user].siteId}"><img src='img/icons2/delete.gif' alt='{tr}remove{/tr}' border='0' title='{tr}remove{/tr}' /></a>
    <a class="link" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;siteId={$items[user].siteId}"><img src='img/icons/edit.gif' alt='{tr}edit{/tr}' border='0' title='{tr}edit{/tr}' /></a>
+	 <input type="checkbox" name="remove[]" value="{$items[user].siteId}" />
 </td>
 </tr>
 <tr>
@@ -110,6 +113,8 @@
 </tr>
 {/section}
 </table>
+</form>
+
 <div align="center">
 <div class="mini">
 {if $prev_offset >= 0}
