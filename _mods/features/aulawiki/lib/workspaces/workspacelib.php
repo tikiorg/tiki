@@ -10,7 +10,7 @@ include_once ('resourceslib.php');
 
 class WorkspaceLib extends TikiDB {
 	function WorkspaceLib($db) {
-		$this->TikiLib($db);
+		$this->TikiDB($db);
 	}
 	
 	
