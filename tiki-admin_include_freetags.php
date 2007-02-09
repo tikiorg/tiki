@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_freetags.php,v 1.6 2007-01-19 22:38:28 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_freetags.php,v 1.7 2007-02-09 15:01:51 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,17 +11,26 @@
 require_once('tiki-setup.php');  
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
+if (isset($_REQUEST["freetagsfeatures"])) {
+	check_ticket('admin-inc-freetags');
+	
+	simple_set_toggle('freetags_browse_show_cloud');
+	simple_set_toggle('freetags_ascii_only');
+	simple_set_toggle('freetags_lowercase_only');
+
+	simple_set_value('freetags_browse_amount_tags_in_cloud');
+}
+						
 if (isset($_REQUEST["freetagsset3d"])) {
 	check_ticket('admin-inc-freetags');
 	$pref_toggles = array(
-	'freetags_browse_show_cloud',
+	'freetags_feature_3d',
 	'freetags_feature_3d',
 	);
 	foreach ($pref_toggles as $toggle) {
 		simple_set_toggle ($toggle);
 	}
 	$pref_values = array(
-	'freetags_browse_amount_tags_in_cloud',
 	'freetags_3d_width',
 	'freetags_3d_height',
 	'freetags_3d_navigation_depth',

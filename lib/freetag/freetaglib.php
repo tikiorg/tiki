@@ -56,6 +56,11 @@ class FreetagLib extends ObjectLib {
     var $_normalized_valid_chars = 'a-zA-Z0-9';
     /**
      * @access private
+     * @param string The regex-style set of characters that are valid for normalized tags.
+     */
+    var $_normalize_in_lowercase = 1;
+    /**
+     * @access private
      * @param string Whether to normalize tags at all.
      */
     var $_normalize_tags = 1;
@@ -91,6 +96,11 @@ class FreetagLib extends ObjectLib {
      */ 
     function FreetagLib($db) {
 	$this->ObjectLib($db);
+	
+	// update private vars with tiki preferences
+    	global $tikilib;
+	if ( $tikilib->get_preference('freetags_lowercase_only', 'y') != 'y' ) $this->_normalize_in_lowercase = 0;
+	if ( $tikilib->get_preference('freetags_ascii_only', 'y') != 'y' ) $this->_normalize_tags = 0;
     }
 
     /**
@@ -463,11 +473,9 @@ class FreetagLib extends ObjectLib {
     function normalize_tag($tag) {
 	if ($this->_normalize_tags) {
 	    $normalized_valid_chars = $this->_normalized_valid_chars;
-	    $normalized_tag = preg_replace("/[^$normalized_valid_chars]/", "", $tag);
-	    return strtolower($normalized_tag);
-	} else {
-	    return $tag;
+	    $tag = preg_replace("/[^$normalized_valid_chars]/", "", $tag);
 	}
+	return $this->_normalize_in_lowercase ? strtolower($tag) : $tag;
 	    
     }
 	
