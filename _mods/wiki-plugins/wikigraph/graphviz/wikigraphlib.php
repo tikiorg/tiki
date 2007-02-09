@@ -11,7 +11,7 @@ if( !defined( 'PLUGINS_DIR' ) ) {
 
 class WikiGraphLib extends TikiLib {
 
-    function WikiLib($db) {
+    function WikiGraphLib($db) {
         $this->TikiLib($db);
     }
 

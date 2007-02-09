@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/_mods/features/cartoweb/lib/categories/categlib.php,v 1.2 2007-02-09 12:31:08 niclone Exp $
+ * $Header: /cvsroot/tikiwiki/_mods/features/cartoweb/lib/categories/categlib.php,v 1.3 2007-02-09 13:06:25 niclone Exp $
  *
  * \brief Categories support class
  *
@@ -15,7 +15,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 class CategLib extends TikiLib {
 
 	function CategLib($db) {
-		# this is probably unneeded now
 		$this->TikiLib($db);
 	}
 	

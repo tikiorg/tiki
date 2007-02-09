@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.26 2007-02-09 12:31:22 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.27 2007-02-09 13:06:25 niclone Exp $
 //
 
 // $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
@@ -18,7 +18,11 @@ var $_sql; // Internal variable to store the query string
 
 function TikiDB($db)
 {
-  $this->TikiLib($db);
+  if (!$db) {
+    die ("Invalid db object passed to TikiDB constructor");
+  }
+
+  $this->db=$db;
 }
 
 function startTimer() {

@@ -10,8 +10,7 @@ class bablotron extends TikiLib {
 	var $words;
 
 	var $lan;
-	var $db;
-  var $tbl;
+	var $tbl;
 
 	function bablotron($db, $lan) {
 		$this->TikiLib($db);

@@ -6,9 +6,8 @@
 * @license http://www.gnu.org/copyleft/lgpl.html GNU/LGPL
 */
 class WorkspaceResourcesLib extends TikiDB {
-	var $db; // The PEAR db object used to access the database
 	function WorkspaceResourcesLib($db) {
-		$this->TikiLib($db);
+		$this->TikiDB($db);
 	}
 
 	function get_category_by_name($parentId, $catName) {
