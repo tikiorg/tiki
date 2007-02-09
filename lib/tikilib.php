@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.717 2007-02-09 13:06:25 niclone Exp $
+// CVS: $Id: tikilib.php,v 1.718 2007-02-09 15:27:41 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3538,25 +3538,33 @@ function add_pageview() {
   function user_has_perm_on_object($user,$object,$objtype,$perm,$categperm='tiki_p_view_categories') {
             global $feature_categories;
             global $userlib;
+		static $cacheUserPerm;
+		$keyCache = "$user/$object/$objtype/$perm";
+		if (!empty($cacheUserPerm[$keyCache])) {
+			return $cacheUserPerm[$keyCache];
+		}
             // superadmin
 	    if($userlib->user_has_permission($user, 'tiki_p_admin') || $user == 'admin') {
-	       return(TRUE);
+			$cacheUserPerm[$keyCache] = true;
+			return(TRUE);
 	    }
 		if ($userlib->object_has_one_permission($object, $objtype)) {
             // wiki permissions override category permissions
 	          //handle multiple permissions
 		  if(is_array($perm)) {
 		     foreach($perm as $p) {
-			if(!$userlib->object_has_permission($user, $object, $objtype,$p)) {
-			   return(FALSE);
-			}
+				if(!$userlib->object_has_permission($user, $object, $objtype,$p)) {
+					$cacheUserPerm[$keyCache] = false;
+					return(FALSE);
+				}
 		     }
 		  } else {
-                        if (!$userlib->object_has_permission($user, $object, $objtype,$perm))
-                        {
+                        if (!$userlib->object_has_permission($user, $object, $objtype,$perm)) {
+							$cacheUserPerm[$keyCache] = false;
                             return(FALSE);
                         }
 		  }
+			$cacheUserPerm[$keyCache] = true;
             return (TRUE);
             } elseif ($feature_categories == 'y' && $categperm !== 0) {
                 // no wiki permissions so now we check category permissions
@@ -3578,6 +3586,7 @@ function add_pageview() {
                 }
 
 		if ($is_categorized && !empty($categperm) && $$categperm != 'y') {
+			$cacheUserPerm[$keyCache] = false;
 			return (FALSE);
 		}
                 // if it has no category perms or the user does not have
@@ -3587,15 +3596,17 @@ function add_pageview() {
 		if (is_array($perm)) {
 		   foreach($perm as $p) {
 		      if(!$userlib->user_has_permission($user, $p)) {
+		         $cacheUserPerm[$keyCache] = false;
 		         return(FALSE);
 		      }
 		   }
 		} else {
 		   if(!$userlib->user_has_permission($user, $perm)) {
+		      $cacheUserPerm[$keyCache] = false;
 		      return(FALSE);
 		   }
 		}
-
+      $cacheUserPerm[$keyCache] = true;
       return(TRUE);
     }
 
