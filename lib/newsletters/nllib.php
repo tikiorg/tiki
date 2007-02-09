@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.54 2007-02-04 20:09:40 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.55 2007-02-09 04:59:50 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -18,20 +18,18 @@ class NlLib extends TikiLib {
 			$query = "update `tiki_newsletters` set `name`=?, `description`=?, `allowUserSub`=?, `allowAnySub`=?, `unsubMsg`=?, `validateAddr`=?  where `nlId`=?";
 			$result = $this->query($query, array($name,$description,$allowUserSub,$allowAnySub,$unsubMsg,$validateAddr,(int)$nlId));
 		} else {
-			$now = date("U");
 			$query = "insert into `tiki_newsletters`(`name`,`description`,`allowUserSub`,`allowAnySub`,`unsubMsg`,`validateAddr`,`lastSent`,`editions`,`users`,`created`) ";
       $query.= " values(?,?,?,?,?,?,?,?,?,?)";
-			$result = $this->query($query, array($name,$description,$allowUserSub,$allowAnySub,$unsubMsg,$validateAddr,(int)$now,0,0,(int)$now));
+			$result = $this->query($query, array($name,$description,$allowUserSub,$allowAnySub,$unsubMsg,$validateAddr,(int)$this->now,0,0,(int)$this->now));
 			$queryid = "select max(`nlId`) from `tiki_newsletters` where `created`=?";
-			$nlId = $this->getOne($queryid, array((int)$now));
+			$nlId = $this->getOne($queryid, array((int)$this->now));
 		}
 		return $nlId;
 	}
 
 	function replace_edition($nlId, $subject, $data, $users) {
-		$now = date("U");
 		$query = "insert into `tiki_sent_newsletters`(`nlId`,`subject`,`data`,`sent`,`users`) values(?,?,?,?,?)";
-		$result = $this->query($query,array((int)$nlId,$subject,$data,(int)$now,$users));
+		$result = $this->query($query,array((int)$nlId,$subject,$data,(int)$this->now,$users));
 		$query = "update `tiki_newsletters` set `editions`= `editions`+ 1 where `nlId`=?";
 		$result = $this->query($query,array((int)$nlId));
 	}
@@ -103,7 +101,7 @@ class NlLib extends TikiLib {
 					if ($genUnsub == "y") {
 						$query = "insert into `tiki_newsletter_subscriptions`(`nlId`,`email`,`code`,`valid`,`subscribed`,`isUser`) values(?,?,?,?,?,?)";
 						$code = $this->genRandomString($res["login"]);
-						$this->query($query,array((int)$nlId,$res["login"],$code,'y',(int)date('U'),'g'));
+						$this->query($query,array((int)$nlId,$res["login"],$code,'y',(int)$this->now,'g'));
 						$res["code"] = $code;
 					}
 					$ret[] = $res;
@@ -139,7 +137,6 @@ class NlLib extends TikiLib {
 			return false; /* already subscribed and valid - keep the same valid status */
 			}
 		$code = $this->genRandomString($add);
-		$now = date("U");
 		$info = $this->get_newsletter($nlId);
 		if ($info["validateAddr"] == 'y' && $validateAddr != 'n') {
 			if ($isUser == "y")
@@ -153,10 +150,10 @@ class NlLib extends TikiLib {
 			$foopath = preg_replace('/tiki-admin_newsletter_subscriptions.php/', 'tiki-newsletters.php', $foo["path"]);
 			$url_subscribe = $tikilib->httpPrefix(). $foopath;
 			$query = "insert into `tiki_newsletter_subscriptions`(`nlId`,`email`,`code`,`valid`,`subscribed`,`isUser`) values(?,?,?,?,?,?)";
-			$result = $this->query($query,array((int)$nlId,$add,$code,'n',(int)$now,$isUser));
+			$result = $this->query($query,array((int)$nlId,$add,$code,'n',(int)$this->now,$isUser));
 			// Now send an email to the address with the confirmation instructions
 			$smarty->assign('info', $info);
-			$smarty->assign('mail_date', date("U"));
+			$smarty->assign('mail_date', $this->now);
 			$smarty->assign('mail_user', $user);
 			$smarty->assign('code', $code);
 			$smarty->assign('url_subscribe', $url_subscribe);
@@ -173,7 +170,7 @@ class NlLib extends TikiLib {
 			return true;
 		} else {
 			$query = "insert into `tiki_newsletter_subscriptions`(`nlId`,`email`,`code`,`valid`,`subscribed`,`isUser`) values(?,?,?,?,?,?)";
-			$result = $this->query($query,array((int)$nlId,$add,$code,'y',(int)$now,$isUser));
+			$result = $this->query($query,array((int)$nlId,$add,$code,'y',(int)$this->now,$isUser));
 		}
 		/*$this->update_users($nlId);*/
 		return false;

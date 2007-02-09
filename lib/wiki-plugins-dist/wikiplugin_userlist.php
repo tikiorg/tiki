@@ -36,7 +36,7 @@ function wikiplugin_userlist($data, $params) {
     $pre=''; $post='';
     if (isset($layout)) {
         if ($layout=='table') {
-        	$pre='<table class=\'sortable\' id=\''.date('U').'\'><tr><th>'.tra('users').'</th></tr><tr><td>';
+        	$pre='<table class=\'sortable\' id=\''.$tikilib->now.'\'><tr><th>'.tra('users').'</th></tr><tr><td>';
         	$sep = '</td></tr><tr><td>';
         	$post='</td></tr></table>';
         }

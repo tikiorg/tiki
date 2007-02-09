@@ -47,17 +47,16 @@ class DCSLib extends TikiLib {
 			// Add number of programmed versions
 			// Add next programmed version
 			// Add number of old versions
-			$now = date("U");
 
 			$id = $res["contentId"];
 			$query = "select count(*) from `tiki_programmed_content` where `publishDate`>? and `contentId`=?";
-			$res["future"] = $this->getOne($query,array($now,$id));
+			$res["future"] = $this->getOne($query,array($this->now,$id));
 			$query = "select max(`publishDate`) from `tiki_programmed_content` where `contentId`=? and `publishDate`<=?";
-			$res["actual"] = $this->getOne($query,array($id,$now));
+			$res["actual"] = $this->getOne($query,array($id,$this->now));
 			$query = "select min(`publishDate`) from `tiki_programmed_content` where `contentId`=? and `publishDate`>=?";
-			$res["next"] = $this->getOne($query,array($id,$now));
+			$res["next"] = $this->getOne($query,array($id,$this->now));
 			$query = "select count(*) from `tiki_programmed_content` where `contentId` = ? and `publishDate`<?";
-			$res["old"] = $this->getOne($query,array($id,$now));
+			$res["old"] = $this->getOne($query,array($id,$this->now));
 
 			if ($res["old"] > 0)
 				$res["old"]--;
@@ -72,34 +71,31 @@ class DCSLib extends TikiLib {
 	}
 
 	function get_actual_content_date($contentId) {
-		$now = date("U");
 
 		$query = "select max(`publishDate`) from `tiki_programmed_content` where `contentId`=? and `publishDate`<=?";
-		$res = $this->getOne($query,array($contentId,$now));
+		$res = $this->getOne($query,array($contentId,$this->now));
 		return $res;
 	}
 
 	function get_random_content($contentId) {
-		$now = date("U");
 
 		$querycant = "select count(*) from `tiki_programmed_content` where `contentId`=? and `publishDate`<=?";
-		$cant = $this->getOne($querycant,array($contentId,$now));
+		$cant = $this->getOne($querycant,array($contentId,$this->now));
 
 		if (!$cant)
 			return '';
 
 		$x = rand(0, $cant - 1);
 		$query = "select `data` from `tiki_programmed_content` where `contentId`=? and `publishDate`<=?";
-		$result = $this->query($query,array($contentId,$now),1,$x);
+		$result = $this->query($query,array($contentId,$this->now),1,$x);
 		$res = $result->fetchRow();
 		return $res["data"];
 	}
 
 	function get_next_content($contentId) {
-		$now = date("U");
 
 		$query = "select min(`publishDate`) from `tiki_programmed_content` where `contentId`=? and `publishDate`>?";
-		$res = $this->getOne($query,array($contentId,$now));
+		$res = $this->getOne($query,array($contentId,$this->now));
 		return $res;
 	}
 

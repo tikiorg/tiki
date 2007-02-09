@@ -281,7 +281,7 @@ class WikiLib extends TikiLib {
 				$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
 				$smarty->assign('mail_oldname', $oldName);
 				$smarty->assign('mail_newname', $newName);
-				$smarty->assign('mail_date', date("U"));
+				$smarty->assign('mail_date', $this->now);
 				$smarty->assign('mail_user', $user);
 				$foo = parse_url($_SERVER["REQUEST_URI"]);
 				$machine = $tikilib->httpPrefix(). $foo["path"];
@@ -316,10 +316,9 @@ class WikiLib extends TikiLib {
 	}
 
 	function update_cache($page, $data) {
-		$now = date('U');
 
 		$query = "update `tiki_pages` set `cache`=?, `cache_timestamp`=? where `pageName`=?";
-		$result = $this->query($query, array( $data, $now, $page ) );
+		$result = $this->query($query, array( $data, $this->now, $page ) );
 		return true;
 	}
 
@@ -343,10 +342,9 @@ class WikiLib extends TikiLib {
 
 	function wiki_attach_file($page, $name, $type, $size, $data, $comment, $user, $fhash) {
 		$comment = strip_tags($comment);
-		$now = date("U");
 		$query = "insert into `tiki_wiki_attachments`(`page`,`filename`,`filesize`,`filetype`,`data`,`created`,`downloads`,`user`,`comment`,`path`) values(?,?,?,?,?,?,0,?,?,?)";
 		$this->blob_encode($data);
-		$result = $this->query($query,array("$page","$name", (int) $size,"$type","$data", (int) $now,"$user","$comment","$fhash"));
+		$result = $this->query($query,array("$page","$name", (int) $size,"$type","$data", (int) $this->now,"$user","$comment","$fhash"));
 
 		global $feature_score;
 	        if ($feature_score == 'y') {

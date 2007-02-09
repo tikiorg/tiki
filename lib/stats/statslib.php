@@ -277,7 +277,7 @@ class StatsLib extends TikiLib {
 			$result=false;
 			return $result;
 		}
-    $dayzero = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
+    $dayzero = $this->make_time(0, 0, 0, $this->date_format("%m"), $this->date_format("%d"), $this->date_format("%Y"));
     if (!is_null($id)) {
     	$object=$id."?".$object;
     }
@@ -294,13 +294,15 @@ class StatsLib extends TikiLib {
 	
 	function best_overall_object_stats($max=20,$days=0) {
 		$stats = array();
+		$bindvars = array();
 		if ($days!=0) {
-			$mid="WHERE `day` >= ".mktime(0, 0, 0, date("m"), date("d")-$days, date("Y"))." ";
+			$mid="WHERE `day` >= ?";
+			$binvars[] = $this->make_time(0, 0, 0, $this->date_format("%m"), $this->date_format("%d")-$days, $this->date_format("%Y"));
 		} else {
 			$mid="";
 		}
-		$query="SELECT `object`, `type`, sum(`hits`) AS `hits` FROM `tiki_stats` ".$mid."GROUP BY `object`,`type` ORDER BY `hits` DESC";
-		$result = $this->query($query,array(),$max,0);
+		$query="SELECT `object`, `type`, sum(`hits`) AS `hits` FROM `tiki_stats` ".$mid." GROUP BY `object`,`type` ORDER BY `hits` DESC";
+		$result = $this->query($query,$bindvars,$max,0);
 		$i=0;
 		while ($res = $result->fetchRow()) {
 		  if (strpos($res["object"],"?")) {
@@ -317,27 +319,31 @@ class StatsLib extends TikiLib {
 	}
 	
 	function object_hits($object,$type,$days=0) {
+		$bindvars = array($object,$type);
 		if ($days!=0) {
-			$mid="AND `day` >= ".mktime(0, 0, 0, date("m"), date("d")-$days, date("Y"))." ";
+			$mid="AND `day` >= ? ";
+			$binvars[] = $this->make_time(0, 0, 0, $this->date_format("%m"), $this->date_format("%d")-$days, $this->date_format("%Y"));
 		} else {
 			$mid="";
 		}
-		$query_cant="SELECT sum(`hits`) AS `hits` FROM `tiki_stats` WHERE `object`=? AND `type`=?".$mid."GROUP BY `object`,`type`";
-		$cant = $this->getOne($query_cant,array($object,$type));
+		$query_cant="SELECT sum(`hits`) AS `hits` FROM `tiki_stats` WHERE `object`=? AND `type`=? ".$mid." GROUP BY `object`,`type`";
+		$cant = $this->getOne($query_cant,$bindvars);
 		return $cant;
 	}
 	
 	function get_daily_usage_chart_data($days=30) {
+		$bindvars = array();
 		if ($days!=0) {
-			$mid="WHERE `day` >= ".mktime(0, 0, 0, date("m"), date("d")-$days, date("Y"))." ";
+			$mid="WHERE `day` >= ? ";
+			$binvars[] = $this->make_time(0, 0, 0, $this->date_format("%m"), $this->date_format("%d")-$days, $this->date_format("%Y"));
 		} else {
 			$mid="";
 		}
-		$query="SELECT `day`,sum(`hits`) AS `hits` FROM `tiki_stats` ".$mid."GROUP BY `day`";
-		$result = $this->query($query,array(),-1,0);
+		$query="SELECT `day`,sum(`hits`) AS `hits` FROM `tiki_stats` ".$mid." GROUP BY `day`";
+		$result = $this->query($query,$bindvars,-1,0);
 		$data=array();
 		while ($res = $result->fetchRow()) {
-			$data['xdata'][]=date("Y/m/d",$res['day']);
+			$data['xdata'][]=$this->date_format("%Y/%m/%d",$res['day']);
 			$data['ydata'][]=$res['hits'];
 		}
 		return $data;

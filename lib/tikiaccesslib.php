@@ -202,7 +202,7 @@ class TikiAccessLib extends TikiLib {
                 $page = $wikiHomePage;
             }
             if(!$tikilib->page_exists($wikiHomePage)) {
-                $tikilib->create_page($wikiHomePage,0,'',date("U"),'Tiki initialization');
+                $tikilib->create_page($wikiHomePage,0,'',$this->now,'Tiki initialization');
             }
             if ($feature_best_language == 'y') {
                 $use_best_language = true;

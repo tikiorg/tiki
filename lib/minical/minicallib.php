@@ -177,7 +177,6 @@ class MiniCalLib extends TikiLib {
 	}
 
 	function minical_replace_event($user, $eventId, $title, $description, $start, $duration, $topicId) {
-		$now = date("U");
 		if ($eventId) {
 			$query = "update `tiki_minical_events` set `topicId`=?,`end`=?,`title`=?,`description`=?,`start`=?,`duration`=?,`reminded`=?  where `user`=? and `eventId`=?";
 			$this->query($query,array((int)$topicId,$start+$duration,$title,$description,(int)$start,(int)$duration,"n",$user,(int)$eventId));
@@ -198,10 +197,9 @@ class MiniCalLib extends TikiLib {
 	function minical_get_events_to_remind($user, $rem) {
 		// Search for events that are not reminded and will start
 		// in less than $rem
-		$limit = date("U") + $rem;
-		$now = date("U");
+		$limit = $this->now + $rem;
 		$query = "select * from `tiki_minical_events` where `user`=? and `reminded`<>? and `start`<=? and `start`>?";
-		$result = $this->query($query,array($user,'y',(int)$limit,(int)$now));
+		$result = $this->query($query,array($user,'y',(int)$limit,(int)$this->now));
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res;

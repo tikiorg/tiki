@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.715 2007-02-07 16:23:20 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.716 2007-02-09 04:59:50 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -43,7 +43,7 @@ class TikiLib extends TikiDB {
 	}
 
 	$this->db = $db;
-	$this->now = date('U');
+	$this->now = (int) date('U');
     }
 
 
@@ -109,10 +109,9 @@ class TikiLib extends TikiDB {
     /* convert data to iso-8601 format */
 		// used for atom export. date() use is okay, as we use server timezone in such case
     function iso_8601 ($timestamp) {
-	$main_date = date("Y-m-d\TH:i:s", $timestamp);
+	$main_date = $this->date_format("%Y-%m-%d\T%H:%M:%S", $timestamp);
 
-	$tz = date("O", $timestamp);
-	$tz = substr_replace ($tz, ':', 3, 0);
+	$tz = $this->date("%O", $timestamp);
 
 	$return = $main_date . $tz;
 
@@ -126,9 +125,8 @@ class TikiLib extends TikiDB {
 	    return false;
 
 	$ips = explode('.', $_SERVER["REMOTE_ADDR"]);
-	$now = date("U");
 	$query = "select tb.`message`,tb.`user`,tb.`ip1`,tb.`ip2`,tb.`ip3`,tb.`ip4`,tb.`mode` from `tiki_banning` tb, `tiki_banning_sections` tbs where tbs.`banId`=tb.`banId` and tbs.`section`=? and ( (tb.`use_dates` = ?) or (tb.`date_from` <= ? and tb.`date_to` >= ?))";
-	$result = $this->query($query,array($section,'n',(int)$now,(int)$now));
+	$result = $this->query($query,array($section,'n',(int)$this->now,(int)$this->now));
 
 	while ($res = $result->fetchRow()) {
 	    if (!$res['message']) {
@@ -158,17 +156,16 @@ class TikiLib extends TikiDB {
 
     /*shared*/
     function replace_note($user, $noteId, $name, $data) {
-	$now = date("U");
 	$size = strlen($data);
 
 	if ($noteId) {
 	    $query = "update `tiki_user_notes` set `name` = ?, `data` = ?, `size` = ?, `lastModif` = ?  where `user`=? and `noteId`=?";
-	    $this->query($query,array($name,$data,(int)$size,(int)$now,$user,(int)$noteId));
+	    $this->query($query,array($name,$data,(int)$size,(int)$this->now,$user,(int)$noteId));
 	    return $noteId;
 	} else {
 	    $query = "insert into `tiki_user_notes`(`user`,`noteId`,`name`,`data`,`created`,`lastModif`,`size`) values(?,?,?,?,?,?,?)";
-	    $this->query($query,array($user,(int)$noteId,$name,$data,(int)$now,(int)$now,(int)$size));
-	    $noteId = $this->getOne( "select max(`noteId`) from `tiki_user_notes` where `user`=? and `name`=? and `created`=?",array($user,$name,(int)$now));
+	    $this->query($query,array($user,(int)$noteId,$name,$data,(int)$this->now,(int)$this->now,(int)$size));
+	    $noteId = $this->getOne( "select max(`noteId`) from `tiki_user_notes` where `user`=? and `name`=? and `created`=?",array($user,$name,(int)$this->now));
 	    return $noteId;
 	}
     }
@@ -491,9 +488,8 @@ class TikiLib extends TikiDB {
     function get_actual_content($contentId) {
 	$data = '';
 
-	$now = date("U");
 	$query = "select max(`publishDate`) from `tiki_programmed_content` where `contentId`=? and `publishDate`<=?";
-	$res = $this->getOne($query,array((int)$contentId,$now));
+	$res = $this->getOne($query,array((int)$contentId,$this->now));
 
 	if (!$res)
 	    return '';
@@ -985,7 +981,6 @@ class TikiLib extends TikiDB {
     /* Referer stats */
     /*shared*/
     function register_referer($referer) {
-	$now = date("U");
 	$cant = $this->getOne("select count(*) from `tiki_referer_stats` where `referer`=?",array($referer));
 
 	if ($cant) {
@@ -994,7 +989,7 @@ class TikiLib extends TikiDB {
 	    $query = "insert into `tiki_referer_stats`(`last`,`referer`,`hits`) values(?,?,1)";
 	}
 
-	$result = $this->query($query,array((int)$now,$referer));
+	$result = $this->query($query,array((int)$this->now,$referer));
     }
 
     // File attachments functions for the wiki ////
@@ -1177,7 +1172,7 @@ class TikiLib extends TikiDB {
     }
 
     function get_pv_chart_data($days) {
-	$now = gmmktime(0, 0, 0, gmdate("m"), gmdate("d"), gmdate("Y"));
+	$now = $this->make_time(0, 0, 0, $this->date_format("%m"), $this->date_format("%d"), $this->date_format("%Y"));
 	$dfrom = 0;
 	if ($days != 0) $dfrom = $now - ($days * 24 * 60 * 60);
 
@@ -1190,7 +1185,7 @@ class TikiLib extends TikiDB {
 	$ydata=array();
 	while ($res = $result->fetchRow()) {
 	    if ($i % $n == 0) {
-		$xdata[] = gmdate("j M", $res["day"]);
+		$xdata[] = $this->date_format("%e %b", $res["day"]);
 	    } else {
 		$xdata = '';
 	    }
@@ -1202,8 +1197,7 @@ class TikiLib extends TikiDB {
     }
 
 function add_pageview() {
-    $dayzero = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
-//echo "PAGEVIEW:".date('r', $dayzero).'<br>';
+    $dayzero = $this->make_time(0, 0, 0, $this->date_format("%m",$this->now), $this->date_format("%d",$this->now), $this->date_format("%Y",$this->now));
     $cant = $this->getOne("select count(*) from `tiki_pageviews` where `day`=?",array((int)$dayzero));
 
     if ($cant) {
@@ -1545,7 +1539,6 @@ function add_pageview() {
 	$query_cant.= " where `object`=`forumId` and `objectType`=? and `parentId`=? $mid";
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
 	$cant = $this->getOne($query_cant,$bindvars);
-	$now = date("U");
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
@@ -1582,7 +1575,6 @@ function add_pageview() {
 	$query_cant.= " `forumId`=? and `object`=? and `objectType`=? and `parentId`=? $mid";
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
 	$cant = $this->getOne($query_cant,$bindvars);
-	$now = date("U");
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
@@ -2054,8 +2046,7 @@ function add_pageview() {
     }
 
     function semaphore_is_set($semName, $limit, $objectType='wiki page') {
-	$now = date("U");
-	$lim = $now - $limit;
+	$lim = $this->now - $limit;
 	$query = "delete from `tiki_semaphores` where `timestamp`<?"; // clean all the old semaphores even if it is not on the object
 	$result = $this->query($query,array((int)$lim));
 	$query = "select `semName`  from `tiki_semaphores` where `semName`=? and `objectType`=?";
@@ -2070,13 +2061,12 @@ function add_pageview() {
 	    $user = 'anonymous';
 	}
 
-	$now = date("U");
 	//  $cant=$this->getOne("select count(*) from `tiki_semaphores` where `semName`='$semName'");
 	$query = "delete from `tiki_semaphores` where `semName`=? and `objectType`=?";
 	$this->query($query,array($semName, $objectType));
 	$query = "insert into `tiki_semaphores`(`semName`,`timestamp`,`user`, `objectType`) values(?,?,?,?)";
-	$result = $this->query($query,array($semName,(int)$now,$user,$objectType));
-	return $now;
+	$result = $this->query($query,array($semName,(int)$this->now,$user,$objectType));
+	return $this->now;
     }
 
     function semaphore_unset($semName, $lock, $objectType='wiki page') {
@@ -2568,12 +2558,11 @@ function add_pageview() {
 
 		    // Determine if the article would be displayed in the view page
 		    $res["disp_article"] = 'y';
-		    $now = date("U");
 		    //if ($date) {
-		    if (($res["show_pre_publ"] != 'y') and ($now < $res["publishDate"])) {
+		    if (($res["show_pre_publ"] != 'y') and ($this->now < $res["publishDate"])) {
 				$res["disp_article"] = 'n';
 		    }
-		    if (($res["show_post_expire"] != 'y') and ($now > $res["expireDate"])) {
+		    if (($res["show_post_expire"] != 'y') and ($this->now > $res["expireDate"])) {
 				$res["disp_article"] = 'n';
 		    }
 		    //}
@@ -2728,14 +2717,13 @@ function add_pageview() {
 	global $logslib; include_once("lib/logs/logslib.php");
 
 	if ($user === false) $user = '';
-	$now = date("U");
 	$delay = 5*60; // 5 minutes
-	$oldy = $now - $delay;
+	$oldy = $this->now - $delay;
 	if ($user != '') { // was the user timeout?
 		$query = "select count(*) from `tiki_sessions` where `sessionId`=?";
 		$cant = $this->getOne($query, array($sessionId));
 		if ($cant == 0)
-			$logslib->add_log("login", "back", $user, '', '', $now);
+			$logslib->add_log("login", "back", $user, '', '', $this->now);
 	}
 	$query = "select * from `tiki_sessions` where `timestamp`<?";
 	$result = $this->query($query, array($oldy));
@@ -2751,7 +2739,7 @@ function add_pageview() {
 	}
 	$this->query($query, $bindvars, -1, -1, false);
 	$query = "insert into `tiki_sessions`(`sessionId`,`timestamp`,`user`,`tikihost`) values(?,?,?,?)";
-	$result = $this->query($query, array($sessionId, (int)$now, $user,$_SERVER['HTTP_HOST']), -1, -1, false );
+	$result = $this->query($query, array($sessionId, (int)$this->now, $user,$_SERVER['HTTP_HOST']), -1, -1, false );
 	return true;
     }
 
@@ -2958,11 +2946,10 @@ function add_pageview() {
 
 	$url = $this->getOne($query, array( $cacheId ) );
 	$data = $this->httprequest($url);
-	$refresh = date("U");
 	$query = "update `tiki_link_cache`
 	    set `data`=?, `refresh`=?
 	    where `cacheId`=? ";
-	$result = $this->query($query, array( $data, $refresh, $cacheId) );
+	$result = $this->query($query, array( $data, $this->now, $cacheId) );
 	return true;
     }
 
@@ -3103,9 +3090,8 @@ function add_pageview() {
 	// will be empty.  -rlpowell
 	if ($data)
 	{
-	    $refresh = date("U");
 	    $query = "insert into `tiki_link_cache`(`url`,`data`,`refresh`) values(?,?,?)";
-	    $result = $this->queryError($query, $error, array($url,$data,$refresh) );
+	    $result = $this->queryError($query, $error, array($url,$data,$this->now) );
 	    return !isset($error);
 	}
 	else return false;
@@ -5916,7 +5902,6 @@ if (!$simple_wiki) {
 	if (!$this->page_exists($pageName))
 	    return false;
 
-	$t = date("U");
 	// Get this page information
 	$info = $this->get_page_info($pageName);
 	// Store the old version of this page in the history table
@@ -5942,7 +5927,7 @@ if (!$simple_wiki) {
 		$edit_data = $purifier->purify($edit_data);
 	}
 	$mid = '';
-	$bindvars = array($description,$edit_data,$edit_comment,(int) $t,$version,$edit_user,$edit_ip,(int)strlen($data),$html);
+	$bindvars = array($description,$edit_data,$edit_comment,(int) $this->now,$version,$edit_user,$edit_ip,(int)strlen($data),$html);
 	if ($lang) {
 		$mid .= ', `lang`=? ';
 		$bindvars[] = $lang;
@@ -5976,8 +5961,7 @@ if (!$simple_wiki) {
 		// Select only versions older than keep_versions days
 		$keep = $this->get_preference('keep_versions', 0);
 
-		$now = date("U");
-		$oktodel = $now - ($keep * 24 * 3600);
+		$oktodel = $this->now - ($keep * 24 * 3600);
 		$query = "select `pageName` ,`version`, `historyId` from `tiki_history` where `pageName`=? and `lastModif`<=? order by `lastModif` asc";
 		$result = $this->query($query,array($pageName,$oktodel),$nb - $maxversions);
 		$toelim = $result->numRows();
@@ -6022,7 +6006,7 @@ if (!$simple_wiki) {
 		    global $logslib; include_once('lib/logs/logslib.php');
 		    include_once('lib/diff/difflib.php');
 		    $bytes = diff2($data , $edit_data, 'bytes');
-		    $logslib->add_action('Updated', $pageName, 'wiki page', $bytes, $edit_user, $edit_ip, '', $t, $contributions);
+		    $logslib->add_action('Updated', $pageName, 'wiki page', $bytes, $edit_user, $edit_ip, '', $this->now, $contributions);
 		    if ($feature_contribution == 'y') {
 			global $contributionlib; include_once('lib/contribution/contributionlib.php');
 			$contributionlib->assign_contributions($contributions, $pageName, 'wiki page', $description, $pageName, "tiki-index.php?page=".urlencode($pageName));
@@ -6066,7 +6050,6 @@ if (!$simple_wiki) {
 	if (!$this->page_exists($pageName))
 	    return false;
 
-	$t = date("U");
 	$query = "delete from `tiki_history` where `pageName`=? and `version`=?";
 	$result = $this->query($query, array($pageName,(int) $version));
 	$query = "insert into `tiki_history`(pageName, version, lastModif, user, ip, comment, data,description) values(?,?,?, ?,?,?, ?,?)";
@@ -6080,10 +6063,10 @@ if (!$simple_wiki) {
 	if ($version >= $info["version"]) {
 	    if ($lang) { // not sure it is necessary
 		    $query = "update `tiki_pages` set `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `description`=?,`page_size`=?,`lang`=?  where `pageName`=?";
-		    $result = $this->query($query, array($edit_data, $edit_comment, (int) $t, (int) $version, $edit_user, $edit_ip, $description, (int) strlen($edit_data), $lang, $pageName));
+		    $result = $this->query($query, array($edit_data, $edit_comment, (int) $this->now, (int) $version, $edit_user, $edit_ip, $description, (int) strlen($edit_data), $lang, $pageName));
 	    } else {
 		    $query = "update `tiki_pages` set `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `description`=?,`page_size`=? where `pageName`=?";
-		    $result = $this->query($query, array($edit_data, $edit_comment, (int) $t, (int) $version, $edit_user, $edit_ip, $description, (int) strlen($edit_data), $pageName));
+		    $result = $this->query($query, array($edit_data, $edit_comment, (int) $this->now, (int) $version, $edit_user, $edit_ip, $description, (int) strlen($edit_data), $pageName));
 	    }
 	    // Parse edit_data updating the list of links from this page
 	    $this->clear_links($pageName);
