@@ -78,24 +78,16 @@ class UsersLib extends TikiLib {
 
     function object_has_permission($user, $objectId, $objectType, $permName) {
 	$groups = $this->get_user_groups($user);
-
 	$objectId = md5($objectType . strtolower($objectId));
-
-	foreach ($groups as $groupName) {
-	    $query = "select count(*)
-		from `users_objectpermissions`
-		where `groupName` = ? and `objectId` = ?
-		and `objectType` = ? and `permName` = ?";
-
-	    $bindvars = array($groupName, $objectId, $objectType,
-		    $permName);
-	    $result = $this->getOne($query, $bindvars);
-
-	    if ($result>0)
+	$mid = implode(',',array_fill(0,count($groups),'?'));
+	$query = "select count(*) from `users_objectpermissions` where `groupName` in ($mid) and `objectId` = ? and `objectType` = ? and `permName` = ?";
+    $bindvars = array_merge($groups, array($objectId, $objectType, $permName));
+    $result = $this->getOne($query, $bindvars);
+    if ($result > 0) {
 		return true;
+	} else {
+		return false;
 	}
-
-	return false;
     }
 
     function remove_object_permission($groupName, $objectId, $objectType, $permName) {
