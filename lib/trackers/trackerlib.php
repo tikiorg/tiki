@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.175 2007-02-09 16:33:08 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.176 2007-02-09 17:27:45 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1927,6 +1927,12 @@ class TrackerLib extends TikiLib {
 		while ($res = $result->fetchRow()) {
 			$this->query($query, array($newTrackerId, $res['name'],$res['value']));
 		}
+		$fields = $this->list_tracker_fields($trackerId, 0, -1, 'position_asc', '');
+		foreach($fields['data'] as $field) {
+			$this->replace_tracker_field($newTrackerId, 0, $field['name'], $field['type'], $field['isMain'], $field['isSearchable'], $field['isTblVisible'], $field['isPublic'], $field['isHidden'], $field['isMandatory'], $field['position'], $field['options'], $field['description']);
+		}
+		return $newTrackerId;
+	}
 	// look for default value: a default value is 2 consecutive same value
 	function set_default_dropdown_option($field) {
 		for ($io = 0; $io < sizeof($field['options_array']); ++$io) {
@@ -1942,12 +1948,6 @@ class TrackerLib extends TikiLib {
 		return $field;
 	}
 
-		$fields = $this->list_tracker_fields($trackerId, 0, -1, 'position_asc', '');
-		foreach($fields['data'] as $field) {
-			$this->replace_tracker_field($newTrackerId, 0, $field['name'], $field['type'], $field['isMain'], $field['isSearchable'], $field['isTblVisible'], $field['isPublic'], $field['isHidden'], $field['isMandatory'], $field['position'], $field['options'], $field['description']);
-		}
-		return $newTrackerId;
-	}
 }
 
 global $dbTiki, $tikilib;
