@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.396 2007-02-08 13:51:20 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.397 2007-02-09 15:01:51 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -705,6 +705,8 @@ $sections['mytiki']['feature'] = '';
 $pref['feature_freetags'] = 'n';
 $pref['freetags_browse_show_cloud'] = 'y';
 $pref['freetags_browse_amount_tags_in_cloud'] = '100';
+$pref['freetags_ascii_only'] = 'y';
+$pref['freetags_lowercase_only'] = 'y';
 $pref['freetags_feature_3d'] = 'n';
 $pref['freetags_3d_width'] = 500;
 $pref['freetags_3d_height'] = 500;

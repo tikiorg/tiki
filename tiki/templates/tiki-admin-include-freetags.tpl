@@ -12,21 +12,33 @@
     </div>
     <div class="cbox-data">
     <form action="tiki-admin.php?page=freetags" method="post">
-    <table class="admin">
-      <tr>
-        <td colspan="2" class="heading">General</td>
-      </tr>
-      <tr>
-        <td class="form">{tr}Show Tag Cloud{/tr}: </td>
-	<td><input type="checkbox" name="freetags_browse_show_cloud" value="y" {if $freetags_browse_show_cloud eq 'y'}checked{/if} /></td>
-      </tr>
-      <tr>
-        <td class="form">{tr}Number of Tags to show in Cloud{/tr}: </td>
-	<td><input type="text" name="freetags_browse_amount_tags_in_cloud" value="{$freetags_browse_amount_tags_in_cloud|escape}" size="3" /></td>
-      </tr>
-</table>
-</div>
-</div>
+      <table class="admin">
+        <tr>
+          <td colspan="2" class="heading">General</td>
+        </tr>
+        <tr>
+          <td class="form">{tr}Show Tag Cloud{/tr}: </td>
+          <td><input type="checkbox" name="freetags_browse_show_cloud" {if $freetags_browse_show_cloud eq 'y'}checked{/if} /></td>
+        </tr>
+        <tr>
+          <td class="form">{tr}Number of Tags to show in Cloud{/tr}: </td>
+          <td><input type="text" name="freetags_browse_amount_tags_in_cloud" value="{$freetags_browse_amount_tags_in_cloud|escape}" size="3" /></td>
+        </tr>
+        <tr>
+          <td class="form">{tr}Only accept alphanumeric ASCII freetags (no accents or special chars){/tr}: </td>
+          <td><input type="checkbox" name="freetags_ascii_only" {if $freetags_ascii_only eq 'y'}checked{/if} /></td>
+        </tr>
+        <tr>
+          <td class="form">{tr}Only accept lowercase freetags{/tr}: </td>
+          <td><input type="checkbox" name="freetags_lowercase_only" {if $freetags_lowercase_only eq 'y'}checked{/if} /></td>
+        </tr>
+	<tr>
+          <td colspan="2" class="button"><input type="submit" name="freetagsfeatures" value="{tr}Change preferences{/tr}" /></td>
+        </tr>
+      </table>
+    </form>
+    </div>
+  </div>
 
 {if $feature_morcego eq "y"}
   <div class="cbox">
