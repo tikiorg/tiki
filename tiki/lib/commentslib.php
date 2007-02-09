@@ -23,8 +23,6 @@ class Comments extends TikiLib {
     /* Functions for the forums */
     function report_post($forumId, $parentId, $threadId, $user, $reason = '') {
 
-	$now = date("U");
-
 	$query = "delete from `tiki_forums_reported` where `forumId`=?";
 	$bindvars=array($forumId);
 	$this->query($query,$bindvars,-1,-1,false);
@@ -32,7 +30,7 @@ class Comments extends TikiLib {
 	$query = "insert into `tiki_forums_reported`(`forumId`,
 	`parentId`, `threadId`, `user`, `reason`, `timestamp`)
 	    values(?,?,?,?,?,?)";
-	$bindvars=array($forumId,$parentId,$threadId,$user,$reason,$now);
+	$bindvars=array($forumId,$parentId,$threadId,$user,$reason,(int)$this->now);
 	$this->query($query,$bindvars);
     }
 
@@ -58,7 +56,6 @@ class Comments extends TikiLib {
 	    `forumId`=? $mid";
 	$result = $this->query($query, $bindvars, $maxRecords, $offset);
 	$cant = $this->getOne($query_cant, $bindvars);
-	$now = date("U");
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
@@ -89,15 +86,13 @@ class Comments extends TikiLib {
 	if (!$user)
 	    return false;
 
-	$now = time();
-
 	$query = "delete from `tiki_forum_reads` where `user`=? and `threadId`=?";
 	$bindvars=array($user,(int) $threadId);
 	$this->query($query,$bindvars,-1,-1,false);
 
 	$query = "insert into `tiki_forum_reads`(`user`,`threadId`,`forumId`,`timestamp`)
 	    values(?,?,?,?)";
-	$bindvars=array($user,(int) $threadId,(int) $forumId,(int) $now);
+	$bindvars=array($user,(int) $threadId,(int) $forumId,(int) $this->now);
 	$this->query($query,$bindvars);
     }
 
@@ -181,8 +176,6 @@ class Comments extends TikiLib {
     }
 
     function attach_file($threadId, $qId, $name, $type, $size, $data, $fhash, $dir, $forumId) {
-	$now = time();
-
 	if ($fhash) {
 	    // Do not store data if we have a file
 	    $data = '';
@@ -193,7 +186,7 @@ class Comments extends TikiLib {
 		    `filetype`, `filesize`, `data`, `path`, `created`, `dir`,
 		    `forumId`)
 	    values(?,?,?,?,?,?,?,?,?,?)";
-	$this->query($query,array($threadId,$qId,$name,$type,$size,$data,$fhash,$now,$dir,$forumId));
+	$this->query($query,array($threadId,$qId,$name,$type,$size,$data,$fhash,$this->now,$dir,$forumId));
 	// Now the file is attached and we can proceed.
     }
 
@@ -526,8 +519,6 @@ class Comments extends TikiLib {
 		    `tiki_forums_queue` where `title`=? and `data`=?",array($title,$hash2)))
 	    return false;
 
-	$now = date("U");
-
 	if ($qId) {
 	    $query = "update `tiki_forums_queue` set
 		`object` = ?,
@@ -545,7 +536,7 @@ class Comments extends TikiLib {
 		where `qId`=?
 		";
 
-	    $this->query($query,array($object,$parentId,$user,$title,$data,$forumId,$type,$hash2,$topic_title,$topic_smiley,$summary,$now,$qId));
+	    $this->query($query,array($object,$parentId,$user,$title,$data,$forumId,$type,$hash2,$topic_title,$topic_smiley,$summary,(int)$this->now,$qId));
 	    return $qId;
 	} else {
 	    $query = "insert into
@@ -555,11 +546,11 @@ class Comments extends TikiLib {
 		values(?,?,?,?,?,?,?,?,?,?,?,?)";
 
 	    $this->query($query, array($object, $parentId, $user,
-			$title, $data, $type, $topic_smiley, $summary, $now,
+			$title, $data, $type, $topic_smiley, $summary, (int)$this->now,
 			$topic_title, $hash2, $forumId));
 	    $qId = $this->getOne("select max(`qId`) from
 		    `tiki_forums_queue` where `hash`=? and
-		    `timestamp`=?",array($hash2,$now));
+		    `timestamp`=?",array($hash2,(int)$this->now));
 	}
 
 	return $qId;
@@ -587,7 +578,6 @@ class Comments extends TikiLib {
 
 	$result = $this->query($query, $bindvars,$maxRecords,$offset );
 	$cant = $this->getOne($query_cant, $bindvars );
-	$now = date("U");
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
@@ -839,8 +829,6 @@ class Comments extends TikiLib {
 			    )
 			    );
 	} else {
-	    $now = date("U");
-
 	    $query = "insert into `tiki_forums`(`name`, `description`,
 	    `created`, `lastPost`, `threads`, `comments`,
 	    `controlFlood`,`floodInterval`, `moderator`, `hits`, `mail`,
@@ -863,7 +851,7 @@ class Comments extends TikiLib {
 			?,?,?,?,?,?,?,?,?,?,
 			?,?,?,?,?,?,?,?,?,?,
 			?,?,?,?,?,?,?,?,?,?,?,?)";
-	    $bindvars=array($name, $description, (int) $now, (int) $now, 0, 0,
+	    $bindvars=array($name, $description, (int) $this->now, (int) $this->now, 0, 0,
 		    $controlFlood, (int) $floodInterval, $moderator, 0, $mail,
 		    $useMail, $usePruneUnreplied, (int) $pruneUnrepliedAge,
 		    $usePruneOld, (int) $pruneMaxAge, (int) $topicsPerPage,  $topicOrdering,
@@ -883,7 +871,7 @@ class Comments extends TikiLib {
 	    $result = $this->query($query,$bindvars);
 	    $forumId = $this->getOne("select max(`forumId`)
 		    from `tiki_forums` where `name`=? and `created`=?",
-		    array($name,(int) $now));
+		    array($name,(int) $this->now));
 	}
 
 	return $forumId;
@@ -922,7 +910,6 @@ class Comments extends TikiLib {
 	$query_cant = "select count(*) from `tiki_forums` $mid";
 	$result = $this->query($query,$bindvars);
 	$cant = $this->getOne($query_cant,$bindvars);
-	$now = date("U");
 	$ret = array();
 	$count = 0;
 	$off = 0;
@@ -931,7 +918,7 @@ class Comments extends TikiLib {
 	    if ($this->user_has_perm_on_object($user, $res['forumId'], 'forum', 'tiki_p_forum_read')) {
 		    if ($off++ < $offset)
 			continue;
-		    $forum_age = ceil(($now - $res["created"]) / (24 * 3600));
+		    $forum_age = ceil(($this->now - $res["created"]) / (24 * 3600));
 
 		    $res["age"] = $forum_age;
 
@@ -987,11 +974,10 @@ class Comments extends TikiLib {
 	$query_cant = "select count(*) from `tiki_forums`";
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
 	$cant = $this->getOne($query_cant,array());
-	$now = date("U");
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
-	    $forum_age = ceil(($now - $res["created"]) / (24 * 3600));
+	    $forum_age = ceil(($this->now - $res["created"]) / (24 * 3600));
 
 	    $res["age"] = $forum_age;
 
@@ -1058,9 +1044,7 @@ class Comments extends TikiLib {
 		return true;
 	    }
 
-	    $now = date("U");
-
-	    if ($maxDate + $forum["floodInterval"] > $now) {
+	    if ($maxDate + $forum["floodInterval"] > $this->now) {
 		return false;
 	    } else {
 		return true;
@@ -1070,9 +1054,8 @@ class Comments extends TikiLib {
 	    if (!isset($_SESSION["lastPost"])) {
 		return true;
 	    } else {
-		$now = date("U");
 
-		if ($_SESSION["lastPost"] + $forum["floodInterval"] > $now) {
+		if ($_SESSION["lastPost"] + $forum["floodInterval"] > $this->now) {
 		    return false;
 		} else {
 		    return true;
@@ -1082,8 +1065,6 @@ class Comments extends TikiLib {
     }
 
     function register_forum_post($forumId, $parentId) {
-	$now = date("U");
-
 	if (!$parentId) {
 	    $query = "update `tiki_forums` set `threads`=`threads`+1, `comments`=`comments`+1 where `forumId`=?";
 	} else {
@@ -1148,8 +1129,7 @@ class Comments extends TikiLib {
 
 	    // Get all unreplied threads
 	    // Get all the top_level threads
-	    $now = date("U");
-	    $oldage = $now - $age;
+	    $oldage = $this->now - $age;
 	    $query = "select `threadId` from `tiki_comments` where
 	    `parentId`=0  and `commentDate`<?";
 	    $result = $this->query($query, array( (int) $oldage ));
@@ -1177,7 +1157,7 @@ class Comments extends TikiLib {
 	if ($forum["usePruneOld"] == 'y') { // this is very dangerous as you can delete some posts in the middle or root of a tree strucuture
 	    $maxAge = $forum["pruneMaxAge"];
 
-	    $old = date("U") - $maxAge;
+	    $old = $this->now - $maxAge;
 	    $query = "delete from `tiki_comments` where `object`=?
 		and `objectType` = 'forum' and `commentDate`<?";
 	    $result = $this->query($query, array($forumId, (int) $old));
@@ -1498,7 +1478,7 @@ class Comments extends TikiLib {
 	}
 
 	if ($this->time_control) {
-	    $limit = date("U") - $this->time_control;
+	    $limit = $this->now - $this->time_control;
 
 	    $time_cond = " and `commentDate` > ? ";
 	    $bind_time = array($limit);
@@ -1831,7 +1811,7 @@ class Comments extends TikiLib {
 	    )
     {
 	if (!$userName) {
-	    $_SESSION["lastPost"] = date("U");
+	    $_SESSION["lastPost"] = $this->now;
 	}
 
 	if (!isset($_SERVER['REMOTE_ADDR']))
@@ -1845,7 +1825,6 @@ class Comments extends TikiLib {
 	if (!$userName) {
 	    $userName = tra('Anonymous');
 	} else {
-	    $now = (int) date("U");
 
 	    if ($this->getOne("select count(*) from 
 			`tiki_user_postings` where `user`=?",
@@ -1854,7 +1833,7 @@ class Comments extends TikiLib {
 		$query = "update `tiki_user_postings` ".
 		    "set `last`=?, `posts` = `posts` + 1 where `user`=?";
 
-		$this->query($query, array( $now, $userName ) );
+		$this->query($query, array( (int)$this->now, $userName ) );
 	    } else {
 		$posts = $this->getOne("select count(*) ".
 			"from `tiki_comments` where `userName`=?",
@@ -1866,7 +1845,7 @@ class Comments extends TikiLib {
 		$query = "insert into 
 		    `tiki_user_postings`(`user`,`first`,`last`,`posts`) 
 		    values( ?, ?, ?, ? )";
-		$this->query($query,  array($userName, (int) $now, (int) $now,(int) $posts) );
+		$this->query($query,  array($userName, (int) $this->now, (int) $this->now,(int) $posts) );
 	    }
 
 	    // Calculate max
@@ -1927,8 +1906,6 @@ class Comments extends TikiLib {
 	// If this post was not already found.
 	if (!$result->numRows())
 	{
-	    $now = (int) date("U");
-
 	    $query = "insert into
 		`tiki_comments`(`objectType`, `object`,
 			`commentDate`, `userName`, `title`, `data`, `votes`,
@@ -1939,7 +1916,7 @@ class Comments extends TikiLib {
 			0, 0, ?, ?, 0, 0, ?, ?, 
 			?, ?, ?, ?)";
 	    $result = $this->query($query, 
-		    array( $object[0], (string) $object[1],(int) $now, $userName,
+		    array( $object[0], (string) $object[1],(int) $this->now, $userName,
 			$title, $data, $hash, (int) $parentId, $type,
 			$summary, $smiley, $_SERVER["REMOTE_ADDR"],
 			$message_id, $in_reply_to)

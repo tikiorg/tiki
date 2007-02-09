@@ -21,8 +21,7 @@ class CommLib extends TikiLib {
 		if ($this->page_exists($info["pageName"]))
 			return false;
 
-		$now = date("U");
-		$this->create_page($info["pageName"], 0, $info["data"], $now, $info["comment"], $info["receivedFromUser"], $info["receivedFromSite"], $info["description"]);
+		$this->create_page($info["pageName"], 0, $info["data"], $this->now, $info["comment"], $info["receivedFromUser"], $info["receivedFromSite"], $info["description"]);
 		$query = "delete from `tiki_received_pages` where `receivedPageId`=?";
 		$result = $this->query($query,array((int)$receivedPageId));
 		return true;
@@ -114,24 +113,22 @@ class CommLib extends TikiLib {
 
 	function receive_article($site, $user, $title, $authorName, $size, $use_image, $image_name, $image_type, $image_size, $image_x,
 		$image_y, $image_data, $publishDate, $expireDate, $created, $heading, $body, $hash, $author, $type, $rating) {
-		$now = date("U");
 		$query = "delete from `tiki_received_articles` where `title`=? and `receivedFromsite`=? and `receivedFromUser`=?";
 		$result = $this->query($query,array($title,$site,$user));
 		$query = "insert into `tiki_received_articles`(`receivedDate`,`receivedFromSite`,`receivedFromUser`,`title`,`authorName`,`size`, ";
 		$query.= " `useImage`,`image_name`,`image_type`,`image_size`,`image_x`,`image_y`,`image_data`,`publishDate`,`expireDate`,`created`,`heading`,`body`,`hash`,`author`,`type`,`rating`) ";
     $query.= " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		$result = $this->query($query,array((int)$now,$site,$user,$title,$authorName,(int)$size,$use_image,$image_name,$image_type,$image_size,
+		$result = $this->query($query,array((int)$this->now,$site,$user,$title,$authorName,(int)$size,$use_image,$image_name,$image_type,$image_size,
 		                              $image_x,$image_y,$image_data,(int)$publishDate,(int)$expireDate,(int)$created,$heading,$body,$hash,$author,$type,(int)$rating));
 	}
 
 	function receive_page($pageName, $data, $comment, $site, $user, $description) {
-		$now = date("U");
 		// Remove previous page sent from the same site-user (an update)
 		$query = "delete from `tiki_received_pages` where `pageName`=? and `receivedFromsite`=? and `receivedFromUser`=?";
 		$result = $this->query($query,array($pageName,$site,$user));
 		// Now insert the page
 		$query = "insert into `tiki_received_pages`(`pageName`,`data`,`comment`,`receivedFromSite`, `receivedFromUser`, `receivedDate`,`description`) values(?,?,?,?,?,?,?)";
-		$result = $this->query($query,array($pageName,$data,$comment,$site,$user,(int)$now,$description));
+		$result = $this->query($query,array($pageName,$data,$comment,$site,$user,(int)$this->now,$description));
 	}
 
 // Functions for the communication center end ////

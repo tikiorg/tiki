@@ -815,14 +815,12 @@ class UsersLib extends TikiLib {
 	    //print("challenge: ".$_SESSION["challenge"]." challenge: $challenge<br />");
 	    //print("response : $response<br />");
 	    if ($response == md5($user . $hash . $_SESSION["challenge"])) {
-		$t = date("U");
-
 		// Check
 		$current = $this->getOne("select `currentLogin` from `users_users` where `login`=?", array($user));
 
 		if (is_null($current)) {
 		    // First time
-		    $current = $t;
+		    $current = $this->now;
 		}
 
 		$query = "update `users_users` set `lastLogin`=? where `login`=?";
@@ -834,7 +832,7 @@ class UsersLib extends TikiLib {
 		// check
 		$query = "update `users_users` set `currentLogin`=? where `login`=?";
 		$result = $this->query($query, array(
-			    (int)$t,
+			    (int)$this->now,
 			    $user
 			    ));
 
@@ -849,14 +847,12 @@ class UsersLib extends TikiLib {
 
     // update the lastlogin status on this user
     function update_lastlogin($user) {
-	$t = date("U");
-
 	// Check
 	$current = $this->getOne("select `currentLogin` from `users_users` where `login`= ?", array($user));
 
 	if (is_null($current)) {
 	    // First time
-	    $current = $t;
+	    $current = $this->now;
 	}
 
 	$query = "update `users_users` set `lastLogin`=? where `login`=?";
@@ -868,7 +864,7 @@ class UsersLib extends TikiLib {
 	// check
 	$query = "update `users_users` set `currentLogin`=? where `login`=?";
 	$result = $this->query($query, array(
-		    (int)$t,
+		    (int)$this->now,
 		    $user
 		    ));
 
@@ -1410,7 +1406,7 @@ function get_included_groups($group) {
 	}
 	$res["groups"] = $groups;
 	if (isset($res['registrationDate'])) {
-		$res["age"] = date('U') - $res['registrationDate'];
+		$res["age"] = $this->now - $res['registrationDate'];
 	} else {
 		$res['age'] = 0;
 	}
@@ -1544,7 +1540,7 @@ function get_included_groups($group) {
 	$res = $result->fetchRow();
 	$res["groups"] = $this->get_user_groups($res['login']);
 	if (isset($res['registrationDate']))
-		$res["age"] = date('U') - $res['registrationDate'];
+		$res["age"] = $this->now - $res['registrationDate'];
 	return $res;
     }
 
@@ -2009,7 +2005,7 @@ function get_included_groups($group) {
 	function create_user_cookie($user) {
 		global $remembertime;
 		$hash = md5($_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT']);
-		$hash.= ".". (date('U') + $remembertime);
+		$hash.= ".". ($this->now + $remembertime);
 		$this->set_user_preference($user,'cookie',$hash);
 		return $hash;
 	}
@@ -2020,7 +2016,7 @@ function get_included_groups($group) {
 			$query = 'select `user` from `tiki_user_preferences` where `prefName`=? and `value`=?';
 			$user = $this->getOne($query, array('cookie',$hash));
 			if ($user) {
-				if ($expire < date('U')) {
+				if ($expire < $this->now) {
 					$query = 'delete from `tiki_user_preferences` where `prefName`=? and `value`=?';
 					$user = $this->query($query, array('cookie',$hash));
 					return false;
@@ -2050,7 +2046,7 @@ function get_included_groups($group) {
     	
 	$due = $this->getOne("select `pass_due`  from `users_users` where " . $this->convert_binary(). " `login`=?", array($user));
 
-	if ($due <= date("U"))
+	if ($due <= $this->now)
 	    return true;
 
 	return false;

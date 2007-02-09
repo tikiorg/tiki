@@ -49,8 +49,7 @@ class TemplatesLib extends TikiLib {
 	}
 
 	function replace_template($templateId, $name, $content) {
-		$now = date("U");
-		$bindvars = array($content,$name,(int)$now);
+		$bindvars = array($content,$name,(int)$this->now);
 		if ($templateId) {
 			$query = "update `tiki_content_templates` set `content`=?, `name`=?, `created`=? where `templateId`=?";
 			$bindvars[] = (int) $templateId;
@@ -61,7 +60,7 @@ class TemplatesLib extends TikiLib {
 		}
 
 		$result = $this->query($query,$bindvars);
-		$id = $this->getOne("select max(`templateId`) from `tiki_content_templates` where `created`=? and `name`=?",array((int)$now,$name));
+		$id = $this->getOne("select max(`templateId`) from `tiki_content_templates` where `created`=? and `name`=?",array((int)$this->now,$name));
 		return $id;
 	}
 

@@ -84,19 +84,18 @@ class ShoutboxLib extends TikiLib {
 		$hash = md5($message);  // this checks for the same message already existing
 		$cant = $this->getOne("select count(*) from `tiki_shoutbox` where `hash`=? and `user`=?", array($hash,$user));
 					
-		$now = date("U");
 		if ($cant) { // at least update  the timestamp - can be convenient if message is thanks or hello - we can see the last post
 			$query = "update `tiki_shoutbox` set `timestamp`=? where `user`=? and `hash`=?";
-			$bindvars = array((int)$now, $user, $hash);
+			$bindvars = array((int)$this->now, $user, $hash);
 		} else if ($msgId) {
 			$query = "update `tiki_shoutbox` set `user`=?, `message`=?, `hash`=? where `msgId`=?";
 			$bindvars = array($user,$message,$hash,(int)$msgId);
 		} else {
 			$query = "delete from `tiki_shoutbox` where `user`=? and `timestamp`=? and `hash`=?";
-			$bindvars = array($user,(int)$now,$hash);
+			$bindvars = array($user,(int)$this->now,$hash);
 			$this->query($query,$bindvars);
 			$query = "insert into `tiki_shoutbox`(`message`,`user`,`timestamp`,`hash`) values(?,?,?,?)";
-			$bindvars = array($message,$user,(int)$now,$hash);
+			$bindvars = array($message,$user,(int)$this->now,$hash);
 		}
 
 		$result = $this->query($query,$bindvars);

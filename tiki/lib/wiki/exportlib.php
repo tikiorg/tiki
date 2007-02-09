@@ -26,7 +26,7 @@ class ExportLib extends TikiLib {
 		while ($res = $result->fetchRow()) {
 			$page = $res["pageName"];
 			$content = $this->export_wiki_page($page, 0);
-			$tar->addData($page, $content, date("U"));
+			$tar->addData($page, $content, $this->now);
 		}
 		$dump = "dump";
 		if ($tikidomain) { $dump.= "/$tikidomain"; }
@@ -36,7 +36,7 @@ class ExportLib extends TikiLib {
 
 	function export_wiki_page($pageName, $nversions = 1) {
 		$head = '';
-		$head .= "Date: " . date('r'). "\r\n";
+		$head .= "Date: " . $this->date_format("%a, %e %b %Y %H:%M:%S %O"). "\r\n";
 		$head .= sprintf("Mime-Version: 1.0 (Produced by Tiki)\r\n");
 		$iter = $this->get_page_history($pageName);
 		$info = $this->get_page_info($pageName);

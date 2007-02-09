@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/quizzes/quizlib.php,v 1.42 2007-02-04 20:09:42 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/quizzes/quizlib.php,v 1.43 2007-02-09 04:59:52 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, 
 //                          George G. Geller et. al.
@@ -237,15 +237,14 @@ class QuizLib extends TikiLib {
 	}
 
 	function register_quiz_stats($quizId, $user, $timeTaken, $points, $maxPoints, $resultId) {
-		$now = date("U");
 
 		// Fix a bug if no result is indicated.
 		if (!$resultId)
 			$resultId = 0;
 
 		$query = "insert into `tiki_user_quizzes`(`user`,`quizId`,`timestamp`,`timeTaken`,`points`,`maxPoints`,`resultId`) values(?,?,?,?,?,?,?)";
-		$result = $this->query($query,array($user,$quizId,$now,$timeTaken,$points,$maxPoints,$resultId));
-		$queryId = $this->getOne("select max(`userResultId`) from `tiki_user_quizzes` where `timestamp`=? and `quizId`=?",array($now,(int)$quizId));
+		$result = $this->query($query,array($user,$quizId,$this->now,$timeTaken,$points,$maxPoints,$resultId));
+		$queryId = $this->getOne("select max(`userResultId`) from `tiki_user_quizzes` where `timestamp`=? and `quizId`=?",array($this->now,(int)$quizId));
 		return $queryId;
 	}
 
@@ -301,7 +300,6 @@ class QuizLib extends TikiLib {
 			$result = $this->query($query,$bindvars);
 		} else {
 			// insert a new quiz
-			$now = date("U");
 
 			$query = "insert into `tiki_quiz_results`(`quizId`,`fromPoints`,`toPoints`,`answer`) values(?,?,?,?)";
 			$bindvars=array((int)$quizId,(int)$fromPoints,(int)$toPoints,$answer);
@@ -373,7 +371,6 @@ class QuizLib extends TikiLib {
 			$result = $this->query($query,$bindvars);
 		} else {
 			// insert a new quiz
-			$now = date("U");
 
 			$query = "insert into `tiki_quizzes`(`name`,`description`,`canRepeat`,`storeResults`,";
       $query.= "`immediateFeedback`, `showAnswers`,	`shuffleQuestions`, `shuffleAnswers`,";
@@ -382,10 +379,10 @@ class QuizLib extends TikiLib {
 			$bindvars=array($name,$description,$canRepeat,$storeResults,
 											$immediateFeedback, $showAnswers,	$shuffleQuestions, $shuffleAnswers,
 											$publishDate,$expireDate,
-											(int)$questionsPerPage,$timeLimited,(int) $timeLimit,(int) $now,0,(int)$passingperct);
+											(int)$questionsPerPage,$timeLimited,(int) $timeLimit,(int) $this->now,0,(int)$passingperct);
 			$result = $this->query($query,$bindvars);
 			$queryid = "select max(`quizId`) from `tiki_quizzes` where `created`=?";
-			$quizId = $this->getOne($queryid,array((int) $now));
+			$quizId = $this->getOne($queryid,array((int) $this->now));
 		}
 
 		return $quizId;
@@ -399,7 +396,6 @@ class QuizLib extends TikiLib {
 			$result = $this->query($query,$bindvars);
 		} else {
 			// insert a new quiz
-			$now = date("U");
 
 			$query = "insert into `tiki_quiz_questions`(`question`,`type`,`quizId`,`position`) values(?,?,?,?)";
 			$bindvars=array($question,$type,(int)$quizId,(int) $position);
@@ -421,7 +417,6 @@ class QuizLib extends TikiLib {
 			$bindvars=array((int)$points,$option,(int)$optionId,(int)$questionId);
 			$result = $this->query($query,$bindvars);
 		} else {
-			$now = date("U");
 			$query = "insert into `tiki_quiz_question_options`(`optionText`,`points`,`questionId`) values(?,?,?)";
 			$result = $this->query($query,array($option,(int)$points,(int)$questionId));
 			$queryid = "select max(`optionId`) from `tiki_quiz_question_options` where `optionText`=? and `questionId`=?";
@@ -619,7 +614,6 @@ class QuizLib extends TikiLib {
 			$result = $this->query($query,$bindvars);
 		} else {
 			// insert a new quiz
-			$now = date("U");
 
 			$query = "insert into `tiki_quizzes`(`name`,`description`,`canRepeat`,`storeResults`,";
       $query.= "`immediateFeedback`, `showAnswers`,	`shuffleQuestions`, `shuffleAnswers`,";
@@ -628,10 +622,10 @@ class QuizLib extends TikiLib {
 			$bindvars=array($name,$description,$canRepeat,$storeResults,
 											$immediateFeedback, $showAnswers,	$shuffleQuestions, $shuffleAnswers,
 											$publishDate,$expireDate,
-											(int)$questionsPerPage,$timeLimited,(int) $timeLimit,(int) $now,0);
+											(int)$questionsPerPage,$timeLimited,(int) $timeLimit,(int) $this->now,0);
 			$result = $this->query($query,$bindvars);
 			$queryid = "select max(`quizId`) from `tiki_quizzes` where `created`=?";
-			$quizId = $this->getOne($queryid,array((int) $now));
+			$quizId = $this->getOne($queryid,array((int) $this->now));
 		}
 
 		return $quizId;
@@ -921,15 +915,15 @@ class Quiz {
 		$this->id = 0;
 		$this->bDeleted = 0;
 		$this->nVersion = 1;
-		$this->timestamp = date('U');
+		$this->timestamp = $this->now;
 		$this->nAuthor = $userlib->get_user_id($user);
 		$this->sAuthor = $user;
 		$this->bOnline = 'n';
 		$this->nTaken = 'n';
 		$this->sName = "";
 		$this->sDescription = "";
-		$this->datePub = date("U");
-		$this->dateExp = mktime(0, 0, 0, 1, 1,  date("Y")+10);
+		$this->datePub = $this->now;
+		$this->dateExp = TikiLib::make_time(0, 0, 0, 1, 1, TikiLib::date_format("%Y")+10);
 		$this->bRandomQuestions = "y";
 		$this->nRandomQuestions = 10;
 		$this->nShuffleQuestions = "y";
@@ -962,13 +956,13 @@ class Quiz {
 		$authorInfo = $userlib->get_userid_info($this->author);
 		$lines[] = "author id = ".$this->author."; author login = ".$authorInfo["login"]."<br />";
 		$lines[] = "version = ".$this->version."<br />";
-		$lines[] = "timestamp = ".date("r",$this->timestamp)."<br />";
+		$lines[] = "timestamp = ".$this->date_format("%a, %e %b %Y %H:%M:%S %O",$this->timestamp)."<br />";
 		$lines[] = "online = ".$this->online."<br />";
 		$lines[] = "studentAttempts = ".$this->studentAttempts."<br />";
 		$lines[] = "name = ".$this->name."<br />";
 		$lines[] = "description = ".$this->description."<br />";
-		$lines[] = "datePub = ".date("r",$this->datePub)."<br />";
-		$lines[] = "dateExp = ".date("r",$this->dateExp)."<br />";
+		$lines[] = "datePub = ".$this->date_format("%a, %e %b %Y %H:%M:%S %O",$this->datePub)."<br />";
+		$lines[] = "dateExp = ".$this->date_format("%a, %e %b %Y %H:%M:%S %O",$this->dateExp)."<br />";
 		$lines[] = "nQuestion = ".$this->nQuestion."<br />";
 		$lines[] = "nQuestions = ".$this->nQuestions."<br />";
 		$lines[] = "shuffleQuestions = ".$this->shuffleQuestions."<br />";

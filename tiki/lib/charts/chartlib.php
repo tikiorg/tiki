@@ -43,8 +43,6 @@ class ChartLib extends TikiLib {
 	function user_vote($user, $itemId, $points = 0) {
 		$chartId = $this->getOne("select `chartId` from `tiki_chart_items` where `itemId`=?",array((int) $itemId));
 
-		$now = date("U");
-
 		// Register that the user has voted the item
 		if ($user) {
 			$query = "delete from `tiki_charts_votes`where `user`=? and `itemId`=?";
@@ -52,7 +50,7 @@ class ChartLib extends TikiLib {
 			$this->query($query,$bindvars,-1,-1,false);
 			$query = "insert into `tiki_charts_votes`(`user`,`itemId`,`timestamp`,`chartId`)
     	values(?,?,?,?)";
-			$bindvars[]=(int) $now;
+			$bindvars[]=(int) $this->now;
 			$bindvars[]=(int) $chartId;
 
 			$this->query($query,$bindvars);
@@ -83,14 +81,13 @@ class ChartLib extends TikiLib {
 	}
 
 	function generate_new_ranking($chartId) {
-		$now = date("U");
 
 		$info = $this->get_chart($chartId);
 
 		if ($info['frequency'] == 0)
 			$this->drop_rankings($chartId);
 
-		if ($info['lastChart'] + $info['frequency'] < $now) {
+		if ($info['lastChart'] + $info['frequency'] < $this->now) {
 			$maxPeriod = $this->get_last_period($chartId);
 
 			$newPeriod = $maxPeriod + 1;
@@ -114,12 +111,12 @@ class ChartLib extends TikiLib {
 				$raverage = $res['average'];
 				$query2 = "insert into `tiki_charts_rankings`(`chartId`,`itemId`,`position`,`lastPosition`,`period`,`timestamp`,`rvotes`,`raverage`)
 	      values(?,?,?,?,?,?,?,?)";
-				$this->query($query2,array((int) $chartId,(int) $itemId,(int) $position,(int) $lastPosition,$newPeriod,(int) $now,$rvotes,$raverage));
+				$this->query($query2,array((int) $chartId,(int) $itemId,(int) $position,(int) $lastPosition,$newPeriod,(int) $this->now,$rvotes,$raverage));
 				$position++;
 			}
 
 			$query = "update `tiki_charts` set `lastChart`=? where `chartId`=?";
-			$this->query($query,array((int) $now,(int) $chartId));
+			$this->query($query,array((int) $this->now,(int) $chartId));
 			$info = $this->get_chart($chartId);
 		}
 	}
@@ -169,10 +166,8 @@ class ChartLib extends TikiLib {
 	}
 
 	function purge_user_votes($chartId, $again) {
-		$now = date("U");
-
 		$query = "delete from `tiki_charts_votes` where `timestamp` + ? < ?";
-		$this->query($query,array((int) $again,(int) $now));
+		$this->query($query,array((int) $again,(int) $this->now));
 	}
 
 	function user_has_voted_chart($user, $chartId) {
@@ -264,8 +259,7 @@ class ChartLib extends TikiLib {
 	function replace_chart($chartId, $vars) {
 		$TABLE_NAME = 'tiki_charts';
 
-		$now = date("U");
-		$vars['created'] = $now;
+		$vars['created'] = $this->now;
 
 		foreach ($vars as $key => $value) {
 			$vars[$key] = $value;
@@ -331,7 +325,7 @@ class ChartLib extends TikiLib {
 
 			$query .= ")";
 			$this->query($query,$bindvars);
-			$chartId = $this->getOne("select max(`chartId`) from `$TABLE_NAME` where `created`=?",array((int) $now));
+			$chartId = $this->getOne("select max(`chartId`) from `$TABLE_NAME` where `created`=?",array((int) $this->now));
 		}
 
 		// Get the id
@@ -341,8 +335,7 @@ class ChartLib extends TikiLib {
 	function replace_chart_item($itemId, $vars) {
 		$TABLE_NAME = 'tiki_chart_items';
 
-		$now = date("U");
-		$vars['created'] = $now;
+		$vars['created'] = $this->now;
 
 		if (!isset($vars['votes']))
 			$vars['votes'] = 0;
@@ -410,7 +403,7 @@ class ChartLib extends TikiLib {
 
 			$query .= ")";
 			$this->query($query,$bindvars);
-			$itemId = $this->getOne("select max(`itemId`) from `$TABLE_NAME` where `created`=?",array((int) $now));
+			$itemId = $this->getOne("select max(`itemId`) from `$TABLE_NAME` where `created`=?",array((int) $this->now));
 		}
 
 		// Get the id

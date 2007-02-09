@@ -407,16 +407,15 @@ class DirLib extends TikiLib {
 		make_clean($description);
 		make_clean($url);
 		make_clean($country);
-		$now = date("U");
 
 		if ($siteId) {
 			$query = "update `tiki_directory_sites` set `name`=?, `description`=?, `url`=?, `country`=?, `isValid`=?, `lastModif`=?  where `siteId`=?";
-			$this->query($query,array($name,$description,$url,$country,$isValid,(int)$now,(int)$siteId));
+			$this->query($query,array($name,$description,$url,$country,$isValid,(int)$this->now,(int)$siteId));
 			return $siteId;
 		} else {
 			$query = "insert into `tiki_directory_sites`(`name`,`description`,`url`,`country`,`isValid`,`hits`,`created`,`lastModif`) values(?,?,?,?,?,?,?,?)";
-			$this->query($query,array($name,$description,$url,$country,$isValid,0,(int)$now,(int)$now));
-			$siteId = $this->db->getOne("select max(siteId) from `tiki_directory_sites` where `created`=? and `name`=?",array((int)$now,$name));
+			$this->query($query,array($name,$description,$url,$country,$isValid,0,(int)$this->now,(int)$this->now));
+			$siteId = $this->db->getOne("select max(siteId) from `tiki_directory_sites` where `created`=? and `name`=?",array((int)$this->now,$name));
 
 			if ($cachepages == 'y') {
 				$this->cache_url($url);

@@ -683,16 +683,15 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 		global $notificationlib;
 		global $sender_email;
 		global $cachelib;
-		$now = date("U");
 		
 		// update
 		if ($itemId) {
 			if ($status) {
 				$query = "update `tiki_tracker_items` set `status`=?,`lastModif`=? where `itemId`=?";
-				$result = $this->query($query,array($status,(int) $now,(int) $itemId));
+				$result = $this->query($query,array($status,(int) $this->now,(int) $itemId));
 			} else {
 				$query = "update `tiki_tracker_items` set `lastModif`=? where `itemId`=?";
-				$result = $this->query($query,array((int) $now,(int) $itemId));
+				$result = $this->query($query,array((int) $this->now,(int) $itemId));
 			}
 		// insert
 		} else {
@@ -701,8 +700,8 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 			}
 			if (empty($status)) { $status = 'o'; }
 			$query = "insert into `tiki_tracker_items`(`trackerId`,`created`,`lastModif`,`status`) values(?,?,?,?)";
-			$result = $this->query($query,array((int) $trackerId,(int) $now,(int) $now,$status));
-			$new_itemId = $this->getOne("select max(`itemId`) from `tiki_tracker_items` where `created`=? and `trackerId`=?",array((int) $now,(int) $trackerId));
+			$result = $this->query($query,array((int) $trackerId,(int) $this->now,(int) $this->now,$status));
+			$new_itemId = $this->getOne("select max(`itemId`) from `tiki_tracker_items` where `created`=? and `trackerId`=?",array((int) $this->now,(int) $trackerId));
 		}
 		$the_data = '';
 
@@ -737,7 +736,7 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 					$value = $this->getOne("select max(cast(field_$fieldId as UNSIGNED)) from $tableId") + 1;
 
 				if (isset($ins_fields["data"][$i]["type"]) and ($ins_fields["data"][$i]["type"] == 'f' or $ins_fields["data"][$i]["type"] == 'j')) {
-					$human_value = date('r',$ins_fields["data"][$i]["value"]);
+					$human_value = $this->date_format("%a, %e %b %Y %H:%M:%S %O",$ins_fields["data"][$i]["value"]);
 					$the_data .= "  $name = $human_value\n";
 				} else {
 					$the_data .= "  $name = $value\n";
@@ -792,7 +791,7 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 		if (count($emails) > 0) {
 			if( $simpleEmail == "n" )
 			{
-				$smarty->assign('mail_date', $now);
+				$smarty->assign('mail_date', $this->now);
 				$smarty->assign('mail_user', $user);
 				if ($itemId) {
 					$mail_action = "\r\n".tra('Item Modification')."\r\n\r\n";
@@ -873,7 +872,7 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 
 		$cant_items = $this->getOne("select count(*) from `tiki_tracker_items` where `trackerId`=?",array((int) $trackerId));
 		$query = "update `tiki_trackers` set `items`=?,`lastModif`=?  where `trackerId`=?";
-		$result = $this->query($query,array((int)$cant_items,(int) $now,(int) $trackerId));
+		$result = $this->query($query,array((int)$cant_items,(int) $this->now,(int) $trackerId));
 
 		if (!$itemId) $itemId = $new_itemId;
 		return $itemId;
@@ -882,7 +881,6 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 	// ########## A TESTER ##########
 	// ##############################
 	function remove_tracker_item($itemId) {
-		$now = date("U");
 
 		$trackerId = $this->getOne("select `trackerId` from `tiki_tracker_items` where `itemId`=?",array((int) $itemId));
 		// --
@@ -890,7 +888,7 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 			return;
 		// --
 		$query = "update `tiki_trackers` set `lastModif`=? where `trackerId`=?";
-		$result = $this->query($query,array((int) $now,(int) $trackerId));
+		$result = $this->query($query,array((int) $this->now,(int) $trackerId));
 		$query = "update `tiki_trackers` set `items`=`items`-1 where `trackerId`=?";
 		$result = $this->query($query,array((int) $trackerId));
 		
@@ -925,15 +923,14 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 			}
 		
 			// -------------------
-			$now = date("U");
 			if ($trackerId) {
 				$query = "update `tiki_trackers` set `name`=?,`description`=?,`lastModif`=? where `trackerId`=?";
-				$this->query($query,array($name,$description,(int)date('U'),(int) $trackerId));
+				$this->query($query,array($name,$description,(int)$this->now,(int) $trackerId));
 			} else {
 				$this->getOne("delete from `tiki_trackers` where `name`=?",array($name),false);
 				$query = "insert into `tiki_trackers`(`name`,`description`,`created`,`lastModif`) values(?,?,?,?)";
-				$this->query($query,array($name,$description,(int) $now,(int) $now));
-				$trackerId = $this->getOne("select max(`trackerId`) from `tiki_trackers` where `name`=? and `created`=?",array($name,(int) $now));
+				$this->query($query,array($name,$description,(int) $this->now,(int) $this->now));
+				$trackerId = $this->getOne("select max(`trackerId`) from `tiki_trackers` where `name`=? and `created`=?",array($name,(int) $this->now));
 			}
 			$this->query("delete from `tiki_tracker_options` where `trackerId`=?",array((int)$trackerId));
 			$rating = false;
