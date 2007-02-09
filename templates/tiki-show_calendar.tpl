@@ -49,7 +49,7 @@ firstDay : {$firstDayofWeek}
 <a href="tiki-calendar.php?viewmode=day{if $viewmonth}&amp;mon={$viewmonth}&amp;day={$viewday}&amp;year={$viewyear}{/if}" class="viewmode{if $viewmode eq 'day'}on{else}off{/if}" title="{tr}day{/tr}"><img src="img/icons/cal_day.gif" width="30" height="24" border="0" alt="{tr}day{/tr}" align="top" /></a>
 <a href="tiki-calendar.php?viewmode=week{if $viewmonth}&amp;mon={$viewmonth}&amp;day={$viewday}&amp;year={$viewyear}{/if}" class="viewmode{if $viewmode eq 'week'}on{else}off{/if}" title="{tr}week{/tr}"><img src="img/icons/cal_week.gif" width="30" height="24" border="0" alt="{tr}week{/tr}" align="top" /></a>
 <a href="tiki-calendar.php?viewmode=month{if $viewmonth}&amp;mon={$viewmonth}&amp;day={$viewday}&amp;year={$viewyear}{/if}" class="viewmode{if $viewmode eq 'month'}on{else}off{/if}" title="{tr}month{/tr}"><img src="img/icons/cal_month.gif" width="30" height="24" border="0" alt="{tr}month{/tr}" align="top" /></a><br />
-<a href="tiki-calendar.php?viewmode=quarter{if $viewmonth}&amp;mon={$viewmonth}&amp;day={$viewday}&amp;year={$viewyear}{/if}" class="viewmode{if $viewmode eq 'quarter'}on{else}off{/if}" title="{tr}quater{/tr}"><img src="img/icons/cal_quarter.gif" width="30" height="24" border="0" alt="{tr}quarter{/tr}" align="top" /></a>
+<a href="tiki-calendar.php?viewmode=quarter{if $viewmonth}&amp;mon={$viewmonth}&amp;day={$viewday}&amp;year={$viewyear}{/if}" class="viewmode{if $viewmode eq 'quarter'}on{else}off{/if}" title="{tr}quarter{/tr}"><img src="img/icons/cal_quarter.gif" width="30" height="24" border="0" alt="{tr}quarter{/tr}" align="top" /></a>
 <a href="tiki-calendar.php?viewmode=semester{if $viewmonth}&amp;mon={$viewmonth}&amp;day={$viewday}&amp;year={$viewyear}{/if}" class="viewmode{if $viewmode eq 'semester'}on{else}off{/if}" title="{tr}semester{/tr}"><img src="img/icons/cal_semester.gif" width="30" height="24" border="0" alt="{tr}semester{/tr}" align="top" /></a>
 <a href="tiki-calendar.php?viewmode=year{if $viewmonth}&amp;mon={$viewmonth}&amp;day={$viewday}&amp;year={$viewyear}{/if}" class="viewmode{if $viewmode eq 'year'}on{else}off{/if}" title="{tr}year{/tr}"><img src="img/icons/cal_year.gif" width="30" height="24" border="0" alt="{tr}year{/tr}" align="top" /></a><br /></td></tr>
 <tr><td style="text-align:center; padding-top:5px; padding-bottom: 5px">{if $viewlist eq 'list'}<a href="tiki-calendar.php?viewlist=table{if $viewmonth}&amp;mon={$viewmonth}&amp;day={$viewday}&amp;year={$viewyear}{/if}" class="linkbut" title="{tr}calendar view{/tr}">{tr}calendar view{/tr}</a>{else}<a href="tiki-calendar.php?viewlist=list" class="linkbut" title="{tr}list view{/tr}">{tr}list view{/tr}</a>{/if}
@@ -74,7 +74,7 @@ firstDay : {$firstDayofWeek}
 {if $viewmode eq "quarter"}
 {assign var="mBefore" value=$viewmonth-3}
 {assign var="mAfter" value=$viewmonth+3}
-<a href="tiki-calendar.php?mon={$mBefore}&amp;day=1&amp;year={$viewyear}" title="&laquo; {tr}quater{/tr}">&laquo;</a>&nbsp;<a href="tiki-calendar.php?mon={$mAfter}&amp;day=1&amp;year={$viewyear}" title="{tr}quater{/tr} &raquo;">&raquo;</a>&nbsp;{$daystart|tiki_date_format:"%B %Y"} - {$dayend|tiki_date_format:"%B %Y"}
+<a href="tiki-calendar.php?mon={$mBefore}&amp;day=1&amp;year={$viewyear}" title="&laquo; {tr}quarter{/tr}">&laquo;</a>&nbsp;<a href="tiki-calendar.php?mon={$mAfter}&amp;day=1&amp;year={$viewyear}" title="{tr}quarter{/tr} &raquo;">&raquo;</a>&nbsp;{$daystart|tiki_date_format:"%B %Y"} - {$dayend|tiki_date_format:"%B %Y"}
 {/if}
 {if $viewmode eq "semester"}
 {assign var="mBefore" value=$viewmonth-6}
