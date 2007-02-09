@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.716 2007-02-09 04:59:50 mose Exp $
+// CVS: $Id: tikilib.php,v 1.717 2007-02-09 13:06:25 niclone Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -23,8 +23,6 @@ require_once ('lib/tikidblib.php');
 //   called from Tiki modules.
 
 class TikiLib extends TikiDB {
-    var $db; // The ADODB db object used to access the database
-
     var $buffer;
     var $flag;
     var $parser;
@@ -42,7 +40,7 @@ class TikiLib extends TikiDB {
 	    die ("Invalid db object passed to TikiLib constructor");
 	}
 
-	$this->db = $db;
+	$this->TikiDB($db);
 	$this->now = (int) date('U');
     }
 

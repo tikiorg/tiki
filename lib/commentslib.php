@@ -9,7 +9,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 // A library to handle comments on object (notes, articles, etc)
 // This is just a test
 class Comments extends TikiLib {
-#  var $db;  // The PEAR db object used to access the database
     var $time_control = 0;
 
     function Comments($db) {
