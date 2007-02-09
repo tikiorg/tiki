@@ -3,7 +3,7 @@
 class TikiCalendarLib extends TikiLib {
 
 	function TikiCalendarLib($db) {
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function list_tiki_items($tikiobj, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode, $find) {

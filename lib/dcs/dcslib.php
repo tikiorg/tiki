@@ -8,12 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class DCSLib extends TikiLib {
 	function DCSLib($db) {
-		# this is probably uneeded now
-		if (!$db) {
-			die ("Invalid db object passed to DCSLib constructor");
-		}
-
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function remove_contents($contentId) {

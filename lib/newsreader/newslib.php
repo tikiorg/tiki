@@ -9,16 +9,10 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 require_once "lib/pear/NNTP.php";
 
 class Newslib extends TikiLib {
-	var $db;
-
 	var $nntp;
 
 	function Newslib($db) {
-		if (!$db) {
-			die ("Invalid db object passed to NewsLib constructor");
-		}
-		$this->nntp = new Net_NNTP;
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function get_server($user, $serverId) {

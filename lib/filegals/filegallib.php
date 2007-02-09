@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.61 2007-02-08 13:51:21 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.62 2007-02-09 12:31:28 niclone Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -9,12 +9,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class FileGalLib extends TikiLib {
 	function FileGalLib($db) {
-		# this is probably uneeded now
-		if (!$db) {
-			die ("Invalid db object passed to FilegalLib constructor");
-		}
-
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function isPodCastGallery($galleryId, $gal_info=null) {

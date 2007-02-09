@@ -8,12 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class BanLib extends TikiLib {
 	function BanLib($db) {
-		# this is probably uneeded now
-		if (!$db) {
-			die ("Invalid db object passed to BanLib constructor");
-		}
-
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function get_rule($banId) {

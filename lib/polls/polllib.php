@@ -10,12 +10,7 @@ include_once('lib/polls/polllib_shared.php');
 
 class PollLib extends PollLibShared {
 	function PollLib($db) {
-		# this is probably uneeded now
-		if (!$db) {
-			die ("aInvalid db object passed to PollLib constructor");
-		}
-
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function list_polls($offset, $maxRecords, $sort_mode, $find) {

@@ -37,12 +37,7 @@ if (!isset($Debug)) $Debug = false;
  */
 class NotificationLib extends TikiLib {
 	function NotificationLib($db) {
-		# this is probably uneeded now
-		if (!$db) {
-			die ("Invalid db object passed to NotificationLib constructor");
-		}
-
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function list_mail_events($offset, $maxRecords, $sort_mode, $find) {

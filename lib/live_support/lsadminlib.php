@@ -2,11 +2,7 @@
 
 class LsAdminlib extends TikiLib {
 	function LsAdminlib($db) {
-		if (!$db) {
-			die ("Invalid db object passed to LsAdminlib constructor");
-		}
-
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function add_operator($user) {

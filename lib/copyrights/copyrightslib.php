@@ -8,10 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class CopyrightsLib extends TikiLib {
 	function CopyrightsLib($db) {
-		if (!$db) {
-			die ("Invalid db object passed to CopyrightsLib constructor");
-		}
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function list_copyrights($page) {

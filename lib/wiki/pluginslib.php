@@ -21,7 +21,7 @@
     * @package TikiWiki
     * @subpackage Plugins
     * @author Claudio Bustos
-    * @version $Revision: 1.10 $
+    * @version $Revision: 1.11 $
     */
 
 //this script may only be included - so its better to die if called directly.
@@ -55,7 +55,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
         * Constructor
         */
         function PluginsLib() {
-            $this->db = $GLOBALS["dbTiki"];
+            $this->TikiLib($GLOBALS["dbTiki"]);
         }
         /**
         * Process the params, in this order:
@@ -122,7 +122,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
         function getVersion() {
             return tra("No version indicated");
             //return preg_replace("/[Revision: $]/", '',
-            //                    "\$Revision: 1.10 $");
+            //                    "\$Revision: 1.11 $");
         }
         /**
         * Returns the default arguments for the plugin

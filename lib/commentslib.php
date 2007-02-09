@@ -13,11 +13,7 @@ class Comments extends TikiLib {
     var $time_control = 0;
 
     function Comments($db) {
-	if (!$db) {
-	    die ("Invalid db object passed to CommentsLib constructor");
-	}
-
-	$this->db = $db;
+	$this->TikiLib($db);
     }
 
     /* Functions for the forums */

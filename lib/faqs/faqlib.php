@@ -11,12 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 */
 class FaqLib extends TikiLib {
 	function FaqLib($db) {
-		# this is probably uneeded now
-		if (!$db) {
-			die ("Invalid db object passed to FAQLib constructor");
-		}
-
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function add_suggested_faq_question($faqId, $question, $answer, $user) {

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.88 2007-02-07 17:01:04 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.89 2007-02-09 12:31:29 niclone Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -9,12 +9,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class ImageGalsLib extends TikiLib {
 	function ImageGalsLib($db) {
-		# this is probably uneeded now
-		if (!$db) {
-			die ("Invalid db object passed to ImagegalLib constructor");
-		}
-
-		$this->db = $db;
+		$this->TikiLib($db);
 		$exts=get_loaded_extensions();
 
 		// Which GD Version do we have?

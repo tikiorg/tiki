@@ -11,11 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 */
 class NotepadLib extends TikiLib {
 	function NotepadLib($db) {
-		# this is probably uneeded now
-		if (!$db) {
-			die ("Invalid db object passed to NotepadLib constructor");
-		}
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function get_note($user, $noteId) {

@@ -8,12 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class GameLib extends TikiLib {
 	function GameLib($db) {
-		# this is probably uneeded now
-		if (!$db) {
-			die ("Invalid db object passed to GameLib constructor");
-		}
-
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function add_game_hit($game) {

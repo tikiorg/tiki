@@ -17,12 +17,7 @@ global $rss_cache_time;
 class RSSLib extends TikiLib {
 
 	function RSSLib($db) {
-		# this is probably uneeded now
-		if (!$db) {
-			die ("Invalid db object passed to RSSLib constructor");
-		}
-
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	// ------------------------------------

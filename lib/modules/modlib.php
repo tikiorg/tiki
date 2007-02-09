@@ -10,12 +10,7 @@ include_once('lib/usermodules/usermoduleslib.php');
 
 class ModLib extends TikiLib {
 	function ModLib($db) {
-		# this is probably uneeded now
-		if (!$db) {
-			die ("Invalid db object passed to ModLib constructor");
-		}
-
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function replace_user_module($name, $title, $data, $parse=NULL) {

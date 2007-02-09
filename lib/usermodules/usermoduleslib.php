@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.31 2005-12-19 17:27:24 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.32 2007-02-09 12:31:41 niclone Exp $
  *
  * \brief Manage user assigned modules
  */
@@ -23,12 +23,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  */
 class UserModulesLib extends TikiLib {
 	function UserModulesLib($db) {
-		# this is probably uneeded now
-		if (!$db) {
-			die ("Invalid db object passed to UserModulesLib constructor");
-		}
-
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function unassign_user_module($name, $user) {

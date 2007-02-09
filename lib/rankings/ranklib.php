@@ -8,12 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class RankLib extends TikiLib {
 	function RankLib($db) {
-		# this is probably uneeded now
-		if (!$db) {
-			die ("Invalid db object passed to RankLib constructor");
-		}
-
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function wiki_ranking_top_pages($limit) {

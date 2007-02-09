@@ -8,11 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class HtmlPagesLib extends TikiLib {
 	function HtmlPagesLib($db) {
-		# this is probably uneeded now
-		if (!$db) {
-			die ("Invalid db object passed to HTMLpagesLib constructor");
-		}
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function remove_html_page($pageName) {
