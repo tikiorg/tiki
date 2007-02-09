@@ -3,7 +3,7 @@
 class LayerLib extends TikiLib {
 
 	function LayerLib($db,$db2) {
-		$this->db = $db;
+		$this->TikiLib($db);
 		$this->db2= $db2;
 	}
 

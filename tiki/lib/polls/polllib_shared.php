@@ -7,9 +7,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class PollLibShared extends TikiLib {
-	var $db;
 	function PollLibShared($db) {
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function get_poll($pollId) {

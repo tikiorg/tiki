@@ -12,10 +12,7 @@ if( !defined( 'PLUGINS_DIR' ) ) {
 class WikiGraphLib extends TikiLib {
 
     function WikiLib($db) {
-        if (!$db) {
-           die ("Invalid db object passed to WikiLib constructor");
-        }
-        $this->db = $db;
+        $this->TikiLib($db);
     }
 
 

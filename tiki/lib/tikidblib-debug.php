@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib-debug.php,v 1.14 2005-11-07 16:20:29 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib-debug.php,v 1.15 2007-02-09 12:31:22 niclone Exp $
 //
 
 
@@ -38,8 +38,7 @@ var $db; // The ADODB db object used to access the database
 
 function TikiDB($db)
 {
-  if (!$db) die("Invalid db object passed to TikiLib constructor");
-  $this->db = $db;
+  $this->TikiLib($db);
 }
 
 // Use ADOdb->qstr() for 1.8

@@ -8,11 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class SearchStatsLib extends TikiLib {
 	function SearchStatsLib($db) {
-		# this is probably uneeded now
-		if (!$db) {
-			die ("Invalid db object passed to SearchStatsLib constructor");
-		}
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function clear_search_stats() {

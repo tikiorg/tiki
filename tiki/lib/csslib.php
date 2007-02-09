@@ -8,12 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class cssLib extends TikiLib {
 	function cssLib($db) {
-		# this is probably uneeded now
-		if (!$db) {
-			die ("Invalid db object passed to TemplatesLib constructor");
-		}
-
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function list_css($path) {

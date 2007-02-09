@@ -8,12 +8,7 @@ if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
 
 class StructLib extends TikiLib {
 	function StructLib($db) {
-		# this is probably uneeded now
-		if (!$db) {
-			die ('Invalid db object passed to StructLib constructor');
-		}
-
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function s_export_structure($structure_id) {

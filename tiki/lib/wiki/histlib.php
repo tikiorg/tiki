@@ -8,12 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class HistLib extends TikiLib {
 	function HistLib($db) {
-		# this is probably uneeded now
-		if (!$db) {
-			die ("Invalid db object passed to HistLib constructor");
-		}
-
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	// Removes a specific version of a page

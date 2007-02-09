@@ -13,11 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 class AssignmentsLib extends TikiLib {
 	function AssignmentsLib($db) {
-		if (!$db) {
-			die("Invalid db object passed to WsTypesLib constructor");
-		}
-
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function add_assignment($workspaceId, $periodId, $gradeWeight, $name, $description, $wikipage, $createdby, $startDate, $endDate, $type) {

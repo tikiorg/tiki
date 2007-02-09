@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.35 2007-02-04 20:09:40 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.36 2007-02-09 12:31:30 niclone Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -10,7 +10,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 class LogsLib extends TikiLib {
 
 	function LogsLib($db) {
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function add_log($type,$message,$who='',$ip='',$client='',$time='') {

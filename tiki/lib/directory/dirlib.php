@@ -9,10 +9,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class DirLib extends TikiLib {
 	function DirLib($db) {
-		if (!$db) {
-			die ("Invalid db object passed to DirLib constructor");
-		}
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	// Path functions

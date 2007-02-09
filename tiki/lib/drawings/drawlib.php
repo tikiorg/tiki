@@ -8,10 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class DrawLib extends TikiLib {
 	function DrawLib($db) {
-		if (!$db) {
-			die ("Invalid db object passed to DrawLib constructor");
-		}
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function replace_drawing($drawId, $name, $filename_draw, $filename_pad, $user, $version) {

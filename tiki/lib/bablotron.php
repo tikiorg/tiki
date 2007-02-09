@@ -14,11 +14,7 @@ class bablotron extends TikiLib {
   var $tbl;
 
 	function bablotron($db, $lan) {
-		if (!$db) {
-			die ("Invalid db object passed to BablotronLib constructor");
-		}
-
-		$this->db = $db;
+		$this->TikiLib($db);
 		$this->lan = preg_replace('/-/','_',$lan);
 		$this->tbl = 'babl_words_' . $this->lan;
 	}

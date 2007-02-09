@@ -8,11 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class MiniCalLib extends TikiLib {
 	function MiniCalLib($db) {
-		# this is probably uneeded now
-		if (!$db) {
-			die ("Invalid db object passed to MiniCalLib constructor");
-		}
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	// Returns an array where each member of the array has:

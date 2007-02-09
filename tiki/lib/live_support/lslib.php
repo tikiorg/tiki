@@ -2,11 +2,7 @@
 
 class Lslib extends TikiLib {
 	function Lslib($db) {
-		if (!$db) {
-			die ("Invalid db object passed to Lslib constructor");
-		}
-
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function set_operator_id($reqId, $senderId) {

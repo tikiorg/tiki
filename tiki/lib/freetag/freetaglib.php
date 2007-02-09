@@ -90,11 +90,7 @@ class FreetagLib extends ObjectLib {
      *
      */ 
     function FreetagLib($db) {
-	if (!$db) {
-	    die ("Invalid db object passed to FreetagLib constructor");
-	}
-	
-	$this->db = $db;
+	$this->ObjectLib($db);
     }
 
     /**

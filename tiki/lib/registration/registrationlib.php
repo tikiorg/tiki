@@ -7,8 +7,8 @@
  * @license GNU LGPL
  * @copyright Tiki Community
  * @date created: 2003/3/21 16:48
- * @date last-modified: $Date: 2007-02-04 20:09:42 $
- * $Header: /cvsroot/tikiwiki/tiki/lib/registration/registrationlib.php,v 1.36 2007-02-04 20:09:42 mose Exp $
+ * @date last-modified: $Date: 2007-02-09 12:31:34 $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/registration/registrationlib.php,v 1.37 2007-02-09 12:31:34 niclone Exp $
  */
 
 //this script may only be included - so it's better to die if called directly
@@ -28,11 +28,7 @@ class RegistrationLib extends TikiLib {
 
   function RegistrationLib($db) 
   {
-    # this is probably unneeded now
-    if(!$db) {
-      die("Invalid db object passed to RegistrationLib constructor");  
-    }
-    $this->db = $db;  
+    $this->TikiLib($db);  
   }
   
     // Validate emails...

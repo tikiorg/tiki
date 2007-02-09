@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.97 2007-02-08 13:51:21 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.98 2007-02-09 12:31:25 niclone Exp $
  *
  * \brief Categories support class
  *
@@ -17,12 +17,7 @@ global $objectlib;require_once("lib/objectlib.php");
 class CategLib extends ObjectLib {
 
 	function CategLib($db) {
-		# this is probably unneeded now
-		if (!$db) {
-			die ("Invalid db object passed to CategLib constructor");
-		}
-
-		$this->db = $db;
+		$this->ObjectLib($db);
 	}
 
 	function list_categs($categId=0) {

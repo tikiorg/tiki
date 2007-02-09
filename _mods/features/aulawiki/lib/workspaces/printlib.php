@@ -14,12 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class PrintLib extends TikiLib {
 	function PrintLib($db) {
-		# this is probably uneeded now
-		if (!$db) {
-			die ("Invalid db object passed to WsTypesLib constructor");
-		}
-
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 function s_print_structure($structure_id) {

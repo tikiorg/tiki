@@ -8,11 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class MailinLib extends TikiLib {
 	function MailinLib($db) {
-		if (!$db) {
-			die ("Invalid db object passed to MailinLib constructor");
-		}
-
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function list_mailin_accounts($offset, $maxRecords, $sort_mode, $find) {

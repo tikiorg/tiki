@@ -8,11 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class QuickTagsLib extends TikiLib {
 	function QuickTagsLib($db) {
-		# this is probably uneeded now
-		if (!$db) {
-			die ("Invalid db object passed to AdminLib constructor");
-		}
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function list_quicktags($offset, $maxRecords, $sort_mode, $find, $category=null) {

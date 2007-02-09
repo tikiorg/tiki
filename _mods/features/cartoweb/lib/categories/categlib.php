@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/_mods/features/cartoweb/lib/categories/categlib.php,v 1.1 2006-07-01 23:37:05 tombombadilom Exp $
+ * $Header: /cvsroot/tikiwiki/_mods/features/cartoweb/lib/categories/categlib.php,v 1.2 2007-02-09 12:31:08 niclone Exp $
  *
  * \brief Categories support class
  *
@@ -16,11 +16,7 @@ class CategLib extends TikiLib {
 
 	function CategLib($db) {
 		# this is probably unneeded now
-		if (!$db) {
-			die ("Invalid db object passed to CategLib constructor");
-		}
-
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 	
 	function list_categs($categId=0) {

@@ -16,10 +16,7 @@ include_once ('lib/tikidav/docbooklib.php');
 
 class DocBookLib extends TikiLib {
 	function DocBookLib($db) {
-		if (!$db) {
-			die("Invalid db object passed to DocBookLib constructor");
-		}
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function transforma($data, $xslFile) {

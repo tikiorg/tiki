@@ -8,12 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class FlinksLib extends TikiLib {
 	function FlinksLib($db) {
-		# this is probably uneeded now
-		if (!$db) {
-			die ("Invalid db object passed to FlinksLib constructor");
-		}
-
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function add_featured_link($url, $title, $description = '', $position = 0, $type = 'f') {

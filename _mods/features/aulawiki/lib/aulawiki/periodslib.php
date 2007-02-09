@@ -15,11 +15,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 class PeriodsLib extends TikiLib {
 	function PeriodsLib($db) {
-		if (!$db) {
-			die("Invalid db object passed to PeriodsLib constructor");
-		}
-
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function add_period($periodTypeId, $name, $description, $startDate, $endDate, $gradeWeight) {

@@ -1,5 +1,5 @@
 <?php
-// $Id: searchlib.php,v 1.32 2006-11-24 12:42:17 sylvieg Exp $
+// $Id: searchlib.php,v 1.33 2007-02-09 12:31:35 niclone Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -8,12 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class SearchLib extends TikiLib {
 	function SearchLib($db) {
-		# this is probably uneeded now
-		if (!$db) {
-			die ("Invalid db object passed to SearchLib constructor");
-		}
-
-		$this->db = $db;
+		$this->TikiLib($db);
 		$this->wordlist_cache = array(); // for caching queries to the LRU-cache-list.
 	}
 

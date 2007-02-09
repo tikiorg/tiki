@@ -8,12 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class BannerLib extends TikiLib {
 	function BannerLib($db) {
-		# this is probably uneeded now
-		if (!$db) {
-			die ("Invalid db object passed to BannersLib constructor");
-		}
-
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function select_banner($zone) {

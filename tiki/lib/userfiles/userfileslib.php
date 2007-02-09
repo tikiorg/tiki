@@ -8,12 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class UserFilesLib extends TikiLib {
 	function UserFilesLib($db) {
-		# this is probably uneeded now
-		if (!$db) {
-			die ("Invalid db object passed to UserFilesLib constructor");
-		}
-
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function userfiles_quota($user) {

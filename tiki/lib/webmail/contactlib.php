@@ -10,7 +10,7 @@ class ContactLib extends TikiLib {
 	var $ext_list_cache=NULL;
 
 	function ContactLib($db) {
-		parent::TikiLib($db);
+		$this->TikiLib($db);
 	}
 
 	// Contacts

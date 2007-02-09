@@ -8,12 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class BookmarkLib extends TikiLib {
 	function BookmarkLib($db) {
-		# this is probably uneeded now
-		if (!$db) {
-			die ("Invalid db object passed to BookmarkLib constructor");
-		}
-
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function get_folder_path($folderId, $user) {

@@ -8,10 +8,7 @@
 class WorkspaceResourcesLib extends TikiDB {
 	var $db; // The PEAR db object used to access the database
 	function WorkspaceResourcesLib($db) {
-		if (!$db) {
-			die("Invalid db object passed to CategUtilLib constructor");
-		}
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function get_category_by_name($parentId, $catName) {

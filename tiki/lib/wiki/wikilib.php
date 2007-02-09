@@ -12,11 +12,7 @@ if( !defined( 'PLUGINS_DIR' ) ) {
 
 class WikiLib extends TikiLib {
     function WikiLib($db) {
-	if (!$db) {
-	    die ("Invalid db object passed to WikiLib constructor");
-	}
-
-	$this->db = $db;
+	$this->TikiLib($db);
     }
 
     //Special parsing for multipage articles

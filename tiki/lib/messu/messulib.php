@@ -7,14 +7,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class Messu extends TikiLib {
-	var $db;
 
 	function Messu($db) {
-		if (!$db) {
-			die ("Invalid db object passed to MessuLib constructor");
-		}
-
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	/**

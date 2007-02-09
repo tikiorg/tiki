@@ -8,12 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class ArtLib extends TikiLib {
 	function ArtLib($db) {
-		# this is probably uneeded now
-		if (!$db) {
-			die ("Invalid db object passed to ArtLib constructor");
-		}
-
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	//Special parsing for multipage articles

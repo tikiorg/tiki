@@ -8,12 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class RefererLib extends TikiLib {
 	function RefererLib($db) {
-		# this is probably uneeded now
-		if (!$db) {
-			die ("Invalid db object passed to RefererLib constructor");
-		}
-
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function clear_referer_stats() {

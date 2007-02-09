@@ -13,11 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class WorkspaceModulesLib extends TikiLib {
 	function WorkspaceModulesLib($db) {
-		if (!$db) {
-			die ("Invalid db object passed to UserModulesLib constructor");
-		}
-
-		$this->db = $db;
+		$this->TikiLib($db);
 	}
 
 	function unassign_workspace_module($moduleId) {
