@@ -1,7 +1,7 @@
 <?php
-// $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/trackeritemfield/wiki-plugins/wikiplugin_trackeritemfield.php,v 1.2 2007-01-30 14:25:43 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/trackeritemfield/wiki-plugins/wikiplugin_trackeritemfield.php,v 1.3 2007-02-10 15:20:20 sylvieg Exp $
 function wikiplugin_trackeritemfield_help() {
-	$help = tra("Displays the value of an tracker item field or the wiki text id test is true (if itemID not specified, the user tracker).").":\n";
+	$help = tra("Displays the value of an tracker item field or the wiki text if test is true (if itemId not specified, the user tracker).").":\n";
 	$help .= "~np~{TRACKERITEMFIELD(itemId=>1, fieldId=>1, test=>1|0)}".tra('Wiki text')."{TRACKERITEMFIELD}~/np~";
 	return $help;
 }
