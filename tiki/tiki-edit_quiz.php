@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz.php,v 1.21 2007-02-04 20:09:32 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz.php,v 1.22 2007-02-12 11:47:58 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -22,7 +22,6 @@ if (!isset($_REQUEST["quizId"])) {
 	$_REQUEST["quizId"] = 0;
 }
 
-$dc = &$tikilib->get_date_converter($user);
 
 $smarty->assign('quizId', $_REQUEST["quizId"]);
 
@@ -62,9 +61,8 @@ $_REQUEST["questionsPerPage"] = 999;
 $info = array();
 $info["name"] = '';
 $info["description"] = '';
-$info["publishDate"] = date("U");
-$cur_time = getdate();
-$info["expireDate"] = mktime ($cur_time["hours"], $cur_time["minutes"], 0, $cur_time["mon"], $cur_time["mday"]+365, $cur_time["year"]);
+$info["publishDate"] = $tikilib->now;
+$info["expireDate"] = $tikilib->now + 365*24*60*60;
 $info["canRepeat"] = 'n';
 $info["storeResults"] = 'n';
 $info["immediateFeedback"] = 'n';
@@ -87,10 +85,8 @@ if (isset($_REQUEST["save"])) {
 
 
  	# convert from the displayed 'site' time to 'server' time
- 	$publishDate = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["publish_Hour"], $_REQUEST["publish_Minute"],
- 		0, $_REQUEST["publish_Month"], $_REQUEST["publish_Day"], $_REQUEST["publish_Year"]));
- 	$expireDate = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"],
- 		0, $_REQUEST["expire_Month"], $_REQUEST["expire_Day"], $_REQUEST["expire_Year"]));
+ 	$publishDate = $tikilib->make_time($_REQUEST["publish_Hour"], $_REQUEST["publish_Minute"], 0, $_REQUEST["publish_Month"], $_REQUEST["publish_Day"], $_REQUEST["publish_Year"]));
+ 	$expireDate = $tikilib->make_time($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"], 0, $_REQUEST["expire_Month"], $_REQUEST["expire_Day"], $_REQUEST["expire_Year"]));
 
 //  	print $publishDate."<br>";
 //  	print $expireDate."<br>";
@@ -161,11 +157,10 @@ if (isset($_REQUEST["save"])) {
 	$info = $quizlib->get_quiz($_REQUEST["quizId"]);
 
 	if (!isset($info["publishDate"])){
-		$info["publishDate"] = date("U");
+		$info["publishDate"] = $tikilib->now;
 	}
 	if (!isset($info["expireDate"])){
-		$cur_time = getdate();
-		$info["expireDate"] = mktime ($cur_time["hours"], $cur_time["minutes"], 0, $cur_time["mon"], $cur_time["mday"]+365, $cur_time["year"]);
+		$info["expireDate"] = $tikilib->now + 365*24*60*60;
 	}
 }
 
@@ -303,9 +298,9 @@ include_once ("categorize_list.php");
 ask_ticket('edit-quiz');
 
 $smarty->assign('publishDate', $info['publishDate']);
-$smarty->assign('publishDateSite', $dc->getDisplayDateFromServerDate($info['publishDate']));
+$smarty->assign('publishDateSite', $info['publishDate']);
 $smarty->assign('expireDate', $info['expireDate']);
-$smarty->assign('expireDateSite', $dc->getDisplayDateFromServerDate($info['expireDate']));
+$smarty->assign('expireDateSite', $info['expireDate']);
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');

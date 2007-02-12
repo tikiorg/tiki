@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.57 2007-02-06 09:31:08 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.58 2007-02-12 11:47:58 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -41,8 +41,8 @@ if (isset($_REQUEST["subId"])) {
 $smarty->assign('subId', $subId);
 $smarty->assign('articleId', $subId);
 $smarty->assign('allowhtml', 'y');
-$publishDate = date('U');
-$expireDate = TikiLib::make_time(0,0,0,date("m"), date("d"), date("Y")+1);
+$publishDate = $tikilib->now;
+$expireDate = $tikilib->make_time(0,0,0,$tikilib->date_format("%m"), $tikilib->date_format("%d"), $tikilib->date_format("%Y")+1);
 $smarty->assign('title', '');
 $smarty->assign('topline', '');
 $smarty->assign('subtitle', '');
@@ -398,7 +398,7 @@ if (isset($_REQUEST["save"])) {
 }
 
 // Set date to today before it's too late
-$_SESSION["thedate"] = date("U");
+$_SESSION["thedate"] = $tikilib->now;
 
 // Armar un select con los topics
 $topics = $artlib->list_topics();

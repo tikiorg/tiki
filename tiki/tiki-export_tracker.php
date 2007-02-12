@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-export_tracker.php,v 1.8 2007-02-04 20:09:32 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-export_tracker.php,v 1.9 2007-02-12 11:47:58 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -190,7 +190,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 				$ins_fields["data"][$i]["value"] = mktime($_REQUEST["$ins_id" . "Hour"], $_REQUEST["$ins_id" . "Minute"],
 				0, $_REQUEST["$ins_id" . "Month"], $_REQUEST["$ins_id" . "Day"], $_REQUEST["$ins_id" . "Year"]);
 			} else {
-				$ins_fields["data"][$i]["value"] = date("U");
+				$ins_fields["data"][$i]["value"] = $tikilib->now;
 			}
 		} elseif ($fields["data"][$i]["type"] == 'e') { // category
 			include_once('lib/categories/categlib.php');
