@@ -81,9 +81,8 @@ class BanLib extends TikiLib {
 		$retval = array();
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;
-		$now = date("U");
 		$query = "select `banId` from `tiki_banning` where `use_dates`=? and `date_to` < ?";
-		$result = $this->query($query,array('y',$now));
+		$result = $this->query($query,array('y',$this->now));
 
 		while ($res = $result->fetchRow()) {
 			$this->remove_rule($res['banId']);
@@ -127,12 +126,10 @@ class BanLib extends TikiLib {
 
 			$this->query($query,array($title,$ip1,$ip2,$ip3,$ip4,$user,$date_from,$date_to,$use_dates,$message,$banId));
 		} else {
-			$now = date("U");
-
 			$query = "insert into `tiki_banning`(`mode`,`title`,`ip1`,`ip2`,`ip3`,`ip4`,`user`,`date_from`,`date_to`,`use_dates`,`message`,`created`)
 		values(?,?,?,?,?,?,?,?,?,?,?,?)";
-			$this->query($query,array($mode,$title,$ip1,$ip2,$ip3,$ip4,$user,$date_from,$date_to,$use_dates,$message,$now));
-			$banId = $this->getOne("select max(`banId`) from `tiki_banning` where `created`=?",array($now));
+			$this->query($query,array($mode,$title,$ip1,$ip2,$ip3,$ip4,$user,$date_from,$date_to,$use_dates,$message,$this->now));
+			$banId = $this->getOne("select max(`banId`) from `tiki_banning` where `created`=?",array($this->now));
 		}
 
 		$query = "delete from `tiki_banning_sections` where `banId`=?";

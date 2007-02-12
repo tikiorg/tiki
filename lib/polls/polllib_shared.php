@@ -30,8 +30,7 @@ class PollLibShared extends TikiLib {
 	}
 
   function get_random_poll($active="a") {
-	global $now;
-	$bindvars = array((int)$now, $active);
+	$bindvars = array((int)$this->now, $active);
 	if ($active == "a") {
 		$bindvars[] = "c"; // current;
 		$mid = "or `active`=?";

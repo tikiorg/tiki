@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/blogs/bloglib.php,v 1.58 2007-02-09 12:31:24 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/blogs/bloglib.php,v 1.59 2007-02-12 08:21:45 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -79,19 +79,17 @@ class BlogLib extends TikiLib {
 
 	function replace_blog($title, $description, $user, $public, $maxPosts, $blogId, $heading, $use_title, $use_find,
 		$allow_comments, $show_avatar) {
-		$now = date("U");
-
 		if ($blogId) {
 			$query = "update `tiki_blogs` set `title`=? ,`description`=?,`user`=?,`public`=?,`lastModif`=?,`maxPosts`=?,`heading`=?,`use_title`=?,`use_find`=?,`allow_comments`=?,`show_avatar`=? where `blogId`=?";
 
-			$result = $this->query($query,array($title,$description,$user,$public,$now,$maxPosts,$heading,$use_title,$use_find,$allow_comments,$show_avatar,$blogId));
+			$result = $this->query($query,array($title,$description,$user,$public,$this->now,$maxPosts,$heading,$use_title,$use_find,$allow_comments,$show_avatar,$blogId));
 		} else {
 			$query = "insert into `tiki_blogs`(`created`,`lastModif`,`title`,`description`,`user`,`public`,`posts`,`maxPosts`,`hits`,`heading`,`use_title`,`use_find`,`allow_comments`,`show_avatar`)
                        values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-			$result = $this->query($query,array((int) $now,(int) $now,$title,$description,$user,$public,0,(int) $maxPosts,0,$heading,$use_title,$use_find,$allow_comments,$show_avatar));
+			$result = $this->query($query,array((int) $this->now,(int) $this->now,$title,$description,$user,$public,0,(int) $maxPosts,0,$heading,$use_title,$use_find,$allow_comments,$show_avatar));
 			$query2 = "select max(`blogId`) from `tiki_blogs` where `lastModif`=?";
-			$blogId = $this->getOne($query2,array((int) $now));
+			$blogId = $this->getOne($query2,array((int) $this->now));
 
 			global $feature_score;
 			if ($feature_score == 'y') {
@@ -224,13 +222,12 @@ class BlogLib extends TikiLib {
 		global $feature_user_watches;
 		global $sender_email;
 		$data = strip_tags($data, '<a><b><i><h1><h2><h3><h4><h5><h6><ul><li><ol><br><p><table><tr><td><img><pre>');
-		$now = date("U");
 		$query = "insert into `tiki_blog_posts`(`blogId`,`data`,`created`,`user`,`title`,`priv`) values(?,?,?,?,?,?)";
-		$result = $this->query($query,array((int) $blogId,$data,(int) $now,$user,$title,$priv));
+		$result = $this->query($query,array((int) $blogId,$data,(int) $this->now,$user,$title,$priv));
 		$query = "select max(`postId`) from `tiki_blog_posts` where `created`=? and `user`=?";
-		$id = $this->getOne($query,array((int) $now,$user));
+		$id = $this->getOne($query,array((int) $this->now,$user));
 		$query = "update `tiki_blogs` set `lastModif`=?,`posts`=`posts`+1 where `blogId`=?";
-		$result = $this->query($query,array((int) $now,(int) $blogId));
+		$result = $this->query($query,array((int) $this->now,(int) $blogId));
 		$this->add_blog_activity($blogId);
 
 		if ($feature_user_watches == 'y') {
@@ -247,7 +244,7 @@ class BlogLib extends TikiLib {
 				$smarty->assign('mail_post_title', $title);
 				$smarty->assign('mail_blogid', $blogId);
 				$smarty->assign('mail_postid', $id);
-				$smarty->assign('mail_date', date("U"));
+				$smarty->assign('mail_date', $this->now);
 				$smarty->assign('mail_user', $user);
 				$smarty->assign('mail_data', $data);
 				global $feature_contribution;
@@ -372,7 +369,7 @@ class BlogLib extends TikiLib {
 	function add_blog_activity($blogId) {
 
 		//Caclulate activity, update tiki_blogs and purge activity table
-		$today = gmmktime(0, 0, 0, gmdate("m"), gmdate("d"), gmdate("Y"));
+		$today = $this->make_time(0, 0, 0, $this->date_format("%m"), $this->date_format("%d"), $this->date_format("%Y"));
 
 		$day0 = $today - (24 * 60 * 60);
 		$day1 = $today - (2 * 24 * 60 * 60);

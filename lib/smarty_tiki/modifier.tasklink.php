@@ -37,28 +37,28 @@ include_once('lib/tasks/tasklib.php');
 		}
 			$description =str_replace("\"","\'",str_replace("'","\\'",str_replace("\n","", (str_replace("\r\n", "<br />",$tikilib->parse_data($description)))))).$append;
 
-		$fillin = tra("Task")." ".tra("from")." <b>$info[creator]</b> ".tra("for")." <b>$info[user]</b>.<br />".tra("Priority").": <b>$info[priority]</b>, (<b>$info[percentage]%</b>) ".tra(done).".<br />"; 
+		$fillin = tra("Task").' '.tra("from").' <b>'.$info['creator'].'</b> '.tra("for").' <b>'.$info['user'].'</b>.<br />'.tra("Priority").': <b>'.$info['priority'].'</b>, (<b>'.$info['percentage'].'%</b>) '.tra('done').'.<br />'; 
 		if ($info[start] != 0 ){
-			$fillin .= tra("Start date:")." ".date("H:i -- d. M. Y",$info[start])."<br />";
+			$fillin .= tra("Start date:")." ".$tikilib->date_format("%H:%M -- %d. %e. %Y",$info['start'])."<br />";
 		}
 		else{
 			$fillin .= tra("Start date:")." -<br />";
 		}
 		if ($info[end]){
-			$fillin .= tra("End date:")." ".date("H:i -- d. M. Y",$info[end])."<br />";
+			$fillin .= tra("End date:")." ".$tikilib->date_format("%H:%M -- %d. %e. %Y",$info['end'])."<br />";
 		}
 		else{
 			$fillin .= tra("End date:")." -<br />";
 		}
 	 	$fillin .= "<hr />".$description;
 		
-		$mouseover = " onmouseover=\"return overlib('<table><tr><td>".$fillin."</td></tr></table>',HAUTO,VAUTO,CAPTION,'<div align=\'center\'>&nbsp; ".tra("Task").":&nbsp;&nbsp;".htmlspecialchars($info[title])."</div>');\" onmouseout=\"nd()\""; 
+		$mouseover = " onmouseover=\"return overlib('<table><tr><td>".$fillin."</td></tr></table>',HAUTO,VAUTO,CAPTION,'<div align=\'center\'>&nbsp; ".tra("Task").":&nbsp;&nbsp;".htmlspecialchars($info['title'])."</div>');\" onmouseout=\"nd()\""; 
 	}
 	$content = "<a class='".$class_name."'".$mouseover." href='tiki-user_tasks.php?taskId=".$taskId."&amp;tiki_view_mode=view&amp;offset=".$offset."&amp;sort_mode=".$sort_mode."' ";
  	if ($info[status] == 'c'){
 		$content .= "style=\"text-decoration:line-through;\"";
 	}
-	$content .= ">".$info[title]."</a>";
+	$content .= ">".$info['title']."</a>";
     return $content;
 }
 

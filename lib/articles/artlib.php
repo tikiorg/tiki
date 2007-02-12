@@ -106,7 +106,6 @@ class ArtLib extends TikiLib {
 			require_once('lib/notifications/notificationlib.php');
 		}
 		$hash = md5($title . $heading . $body);
-		$now = date("U");
 		$query = "select `name` from `tiki_topics` where `topicId` = ?";
 		$topicName = $this->getOne($query,array((int) $topicId));
 		$size = strlen($body);
@@ -140,7 +139,7 @@ class ArtLib extends TikiLib {
 
 			$result = $this->query($query,array($title,$authorName,(int) $topicId,$topicName,(int) $size,
 			$useImage,$isfloat,$imgname,$imgtype,(int) $imgsize,$imgdata,(int) $image_x,(int) $image_y,
-			$heading,$body,(int) $publishDate,(int) $expireDate,(int) $now,$user,$type,(float) $rating,$topline, $subtitle, $linkto, $image_caption, $lang, (int) $subId));
+			$heading,$body,(int) $publishDate,(int) $expireDate,(int) $this->now,$user,$type,(float) $rating,$topline, $subtitle, $linkto, $image_caption, $lang, (int) $subId));
 			$id = $subId;
 		} else {
 			// Insert the article
@@ -150,11 +149,11 @@ class ArtLib extends TikiLib {
                          values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 			$result = $this->query($query,array($title,$authorName,(int) $topicId,$useImage,$imgname,(int) $imgsize,$imgtype,
-	$imgdata,(int) $publishDate,(int) $expireDate, (int) $now,$heading,$body,$hash,$user,0,0,0,(int) $size,$topicName,(int) $image_x,
+	$imgdata,(int) $publishDate,(int) $expireDate, (int) $this->now,$heading,$body,$hash,$user,0,0,0,(int) $size,$topicName,(int) $image_x,
 	(int) $image_y,$type,(float) $rating,$isfloat,$topline, $subtitle, $linkto, $image_caption, $lang));
 			// Fixed query. -edgar
 			$query = "select max(`subId`) from `tiki_submissions` where `created` = ? and `title`=? and `hash`=?";
-			$id = $this->getOne($query, array( (int) $now, $title, $hash ) );
+			$id = $this->getOne($query, array( (int) $this->now, $title, $hash ) );
 		}
 
 		#workaround to "pass" $topicId to get_event_watches
@@ -183,7 +182,7 @@ class ArtLib extends TikiLib {
 			$smarty->assign('mail_title', $title);
 			$smarty->assign('mail_heading', $heading);
 			$smarty->assign('mail_body', $body);
-			$smarty->assign('mail_date', date("U"));
+			$smarty->assign('mail_date', $this->now);
 			$smarty->assign('mail_machine', $machine);
 			$smarty->assign('mail_subId', $id);
 			sendEmailNotification($emails, "watch", "submission_notification_subject.tpl", $_SERVER["SERVER_NAME"], "submission_notification.tpl");
@@ -201,7 +200,6 @@ class ArtLib extends TikiLib {
 		    $expireDate = $publishDate;
 		}
 		$hash = md5($title . $heading . $body);
-		$now = date("U");
 		if(empty($imgdata)) $imgdata='';
 		// Fixed query. -rlpowell
 		$query = "select `name`  from `tiki_topics` where `topicId` = ?";
@@ -218,7 +216,7 @@ class ArtLib extends TikiLib {
 
 		    $result = $this->query($query, array(
 				$title, $authorName, (int) $topicId, $topicName, (int) $size, $useImage, $imgname, $imgtype, (int) $imgsize, $imgdata, $isfloat,
-				(int) $image_x, (int) $image_y, $heading, $body, (int) $publishDate, (int) $expireDate, (int) $now, $user, $type, (float) $rating, 
+				(int) $image_x, (int) $image_y, $heading, $body, (int) $publishDate, (int) $expireDate, (int) $this->now, $user, $type, (float) $rating, 
 				$topline, $subtitle, $linkto, $image_caption, $lang, (int) $articleId ) );
 		} else {
 		    // Fixed query. -rlpowell
@@ -229,13 +227,13 @@ class ArtLib extends TikiLib {
 		    $query.= " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	
 		    $result = $this->query($query, array(
-				$title, $authorName, (int) $topicId, $useImage, $imgname, (int) $imgsize, $imgtype, $imgdata, (int) $publishDate, (int) $expireDate, (int) $now, $heading,
+				$title, $authorName, (int) $topicId, $useImage, $imgname, (int) $imgsize, $imgtype, $imgdata, (int) $publishDate, (int) $expireDate, (int) $this->now, $heading,
 				$body, $hash, $user, 0, 0, 0, (int) $size, $topicName, (int) $image_x, (int) $image_y, $type, (float) $rating, $isfloat,
 				$topline, $subtitle, $linkto, $image_caption, $lang));
 
 		    // Fixed query. -rlpowell
 		    $query2 = "select max(`articleId`) from `tiki_articles` where `created` = ? and `title`=? and `hash`=?";
-		    $articleId = $this->getOne($query2, array( (int) $now, $title, $hash ) );
+		    $articleId = $this->getOne($query2, array( (int) $this->now, $title, $hash ) );
 
 		    global $feature_score;
 		    if ($feature_score == 'y') {
@@ -263,7 +261,7 @@ class ArtLib extends TikiLib {
 			    $smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
 			    $smarty->assign('mail_title', $title);
 			    $smarty->assign('mail_postid', $articleId);
-			    $smarty->assign('mail_date', date("U"));
+			    $smarty->assign('mail_date', $this->now);
 			    $smarty->assign('mail_user', $user);
 			    $smarty->assign('mail_data', $heading."\n----------------------\n".$body);
 			    $foo = parse_url($_SERVER["REQUEST_URI"]);
@@ -281,14 +279,12 @@ class ArtLib extends TikiLib {
     }
 
 	function add_topic($name, $imagename, $imagetype, $imagesize, $imagedata) {
-		$now = date("U");
-
 		$query = "insert into `tiki_topics`(`name`,`image_name`,`image_type`,`image_size`,`image_data`,`active`,`created`)
                      values(?,?,?,?,?,?,?)";
-		$result = $this->query($query,array($name,$imagename,$imagetype,(int) $imagesize,$imagedata,'y',(int) $now));
+		$result = $this->query($query,array($name,$imagename,$imagetype,(int) $imagesize,$imagedata,'y',(int) $this->now));
 
 		$query = "select max(`topicId`) from `tiki_topics` where `created`=? and `name`=?";
-		$topicId = $this->getOne($query,array((int) $now,$name));
+		$topicId = $this->getOne($query,array((int) $this->now,$name));
 		return $topicId;
 	}
 

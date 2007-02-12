@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.36 2007-02-09 12:31:30 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.37 2007-02-12 08:21:45 mose Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -33,7 +33,7 @@ class LogsLib extends TikiLib {
 			}
 		}
 		if (!$time) {
-			$time = date("U");
+			$time = $this->now;
 		}
 		$query = "insert into `tiki_logs` (`logtype`,`logmessage`,`loguser`,`logip`,`logclient`,`logtime`) values (?,?,?,?,?,?)";
 		$result = $this->query($query,array($type,$message,$who,$ip,$client,(int)$time));
@@ -107,7 +107,7 @@ class LogsLib extends TikiLib {
 		if (!$logObject && !$logCateg)
 			return 0;
 		if ($date == '')
-			$date = date('U');
+			$date = $this->now;
 		if ($who == '')
 			$who = $user;
 		if ($ip == '')
@@ -306,8 +306,8 @@ class LogsLib extends TikiLib {
 		return ($action1['lastModif'] -  $action2['lastModif']);
 	}
 	function get_login_time($logins, $startDate, $endDate, $actions) {
-		if ($endDate > date('U'))
-			$endDate = date('U');
+		if ($endDate > $this->now)
+			$endDate = $this->now;
 		$logTimes = array();
 		foreach ($logins as $login) {
 			if (!array_key_exists($login['loguser'], $logTimes)) {
@@ -533,7 +533,7 @@ class LogsLib extends TikiLib {
 		if (!isset($action['del']))
 			$action['del'] = '';
 
-		$csv.= '"'.$action['user'].'","'.date("ymd",$action['lastModif']).'","'.date("H:i",$action['lastModif']).'","'.$action['action'].'","'.$action['objectType'].'","'.$action['object'].'","'
+		$csv.= '"'.$action['user'].'","'.$this->date_format("%y%m%d",$action['lastModif']).'","'.$this->date_format("%H:%M",$action['lastModif']).'","'.$action['action'].'","'.$action['objectType'].'","'.$action['object'].'","'
 			.$action['category'].'","'.$unit.'","'.$action['add'].'","'.$action['del'].'","';
 		if (isset($action['contributions'])) {
 			$i = 0;

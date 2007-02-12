@@ -45,15 +45,14 @@ class PollLib extends PollLibShared {
 	}
 
 	function list_active_polls($offset, $maxRecords, $sort_mode, $find) {
-		$now = date("U");
 
 		if ($find) {
 			$findesc = '%' . $find . '%';
 			$mid = " where (`active`=? or `active`=?) and `publishDate`<=? and (`title` like ?)";
-			$bindvars=array('a','c',(int) $now,$findesc);
+			$bindvars=array('a','c',(int) $this->now,$findesc);
 		} else {
 			$mid = " where (`active`=? or `active`=?) and `publishDate`<=? ";
-			$bindvars=array('a','c',(int) $now);
+			$bindvars=array('a','c',(int) $this->now);
 		}
 
 		$query = "select * from `tiki_polls` $mid order by ".$this->convert_sortmode($sort_mode);
@@ -73,15 +72,14 @@ class PollLib extends PollLibShared {
 	}
 
 	function list_all_polls($offset, $maxRecords, $sort_mode, $find) {
-		$now = date("U");
 
 		if ($find) {
 			$findesc = '%' . $find . '%';
 			$mid = " where `publishDate`<=? and (`title` like ?)";
-			$bindvars=array((int) $now,$findesc);
+			$bindvars=array((int) $this->now,$findesc);
 		} else {
 			$mid = " where `publishDate`<=? ";
-			$bindvars=array((int) $now);
+			$bindvars=array((int) $this->now);
 		}
 
 		$query = "select * from `tiki_polls` $mid order by ".$this->convert_sortmode($sort_mode);
@@ -101,25 +99,22 @@ class PollLib extends PollLibShared {
 	}
 
 	function set_last_poll() {
-		$now = date("U");
 		$query = "select max(`publishDate`) from `tiki_polls` where `publishDate`<=?";
-		$last = $this->getOne($query,array((int) $now));
+		$last = $this->getOne($query,array((int) $this->now));
 		$query = "update `tiki_polls` set `active`=? where `publishDate`=?";
 		$result = $this->query($query,array('c',$last));
 	}
 
 	function close_all_polls() {
-		$now = date("U");
 		$query = "select max(`publishDate`) from `tiki_polls` where `publishDate`<=?";
-		$last = $this->getOne($query,array((int) $now));
+		$last = $this->getOne($query,array((int) $this->now));
 		$query = "update `tiki_polls` set `active`=? where `publishDate`<=?";
-		$result = $this->query($query,array('x',(int) $now));
+		$result = $this->query($query,array('x',(int) $this->now));
 	}
 
 	function active_all_polls() {
-		$now = date("U");
 		$query = "update `tiki_polls` set `active`=? where `publishDate`<=?";
-		$result = $this->query($query,array('a',(int) $now));
+		$result = $this->query($query,array('a',(int) $this->now));
 	}
 
 	function remove_poll_option($optionId) {
