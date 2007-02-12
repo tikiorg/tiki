@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_rss.php,v 1.32 2007-02-04 20:09:32 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_rss.php,v 1.33 2007-02-12 11:33:23 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -64,7 +64,6 @@ if ($output["data"]=="EMPTY") {
 	$tmp = $tikilib -> get_blog($_REQUEST["$id"]);
 	$title = tra("Tiki RSS feed for blog: ").$tmp["title"];
 	$desc = $tmp["description"];
-	$now = date("U");
 	$descId = "data";
 	$dateId = "created";
 	$authorId = "user";
@@ -76,7 +75,7 @@ if ($output["data"]=="EMPTY") {
 	$tmp = $tikilib->get_preference('desc_rss_'.$feed, '');
 	if ($desc<>'') $desc = $tmp;
 	
-	$changes = $bloglib -> list_blog_posts($_REQUEST["$id"], 0, $max_rss_blog, $dateId.'_desc', '', $now);
+	$changes = $bloglib -> list_blog_posts($_REQUEST["$id"], 0, $max_rss_blog, $dateId.'_desc', '', $tikilib->now);
 	$tmp = array();
 	foreach ($changes["data"] as $data)  {
 		$data["$descId"] = $tikilib->parse_data($data["$descId"]);

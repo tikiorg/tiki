@@ -38,7 +38,6 @@ if ($output["data"]=="EMPTY") {
 	$title = tra("Tiki RSS feed for directory sites");
 	$rc = $dirlib->dir_get_category($_REQUEST["parent"]);
 	$desc = tra("Last sites of directory ".$rc["name"]." .");
-	$now = date("U");
 	$id = "siteId";
 	$titleId = "name";
 	$descId = "description";

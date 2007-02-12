@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-articles_rss.php,v 1.32 2007-02-04 20:09:32 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-articles_rss.php,v 1.33 2007-02-12 11:33:23 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -44,7 +44,6 @@ if ($output["data"]=="EMPTY") {
 	$title = (!empty($title_rss_articles)) ? $title_rss_articles : $tmp;
 	$tmp = tra("Last articles.");
 	$desc = (!empty($desc_rss_articles)) ? $desc_rss_articles : $tmp;
-	$now = date("U");
 	$id = "articleId";
 	$titleId = "title";
 	$descId = "heading";
@@ -57,7 +56,7 @@ if ($output["data"]=="EMPTY") {
 	$tmp = $tikilib->get_preference('desc_rss_'.$feed, '');
 	if ($desc<>'') $desc = $tmp;
 
-	$changes = $tikilib -> list_articles(0, $max_rss_articles, $dateId.'_desc', '', $now, $user, '', $topic);
+	$changes = $tikilib -> list_articles(0, $max_rss_articles, $dateId.'_desc', '', $tikilib->now, $user, '', $topic);
 	$tmp = array();
 	foreach ($changes["data"] as $data)  {
 		$data["$descId"] = $tikilib->parse_data($data["$descId"]);
