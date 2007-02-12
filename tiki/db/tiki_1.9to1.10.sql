@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.139 2007-02-06 03:37:51 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.140 2007-02-12 21:08:56 nyloth Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -845,3 +845,11 @@ CREATE TABLE IF NOT EXISTS `tiki_webmail_contacts_fields` (
   `fieldname` VARCHAR( 256 ) NOT NULL ,
   INDEX ( `user` )
 ) ENGINE = MyISAM ;
+
+#nyloth 2007-02-12
+ALTER TABLE `tiki_webmail_contacts_fields` ADD `order` int(2) NOT NULL default '0';
+ALTER TABLE `tiki_webmail_contacts_fields` ADD `show` char(1) NOT NULL default 'n';
+ALTER TABLE `tiki_webmail_contacts_fields` ADD `fieldId` int(10) unsigned NOT NULL auto_increment PRIMARY KEY;
+ALTER TABLE `tiki_webmail_contacts_ext` ADD `fieldId` int(10) unsigned NOT NULL;
+UPDATE `tiki_webmail_contacts_ext` SET `fieldId` = (SELECT `fieldId` FROM `tiki_webmail_contacts_fields` WHERE `fieldname` = `name` LIMIT 1);
+ALTER TABLE `tiki_webmail_contacts_ext` DROP COLUMN `name`;

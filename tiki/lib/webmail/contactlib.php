@@ -111,12 +111,12 @@ class ContactLib extends TikiLib {
 				$this->query('insert into `tiki_webmail_contacts_groups` (`contactId`,`groupName`) values (?,?)',array((int)$contactId,$group));
 			}
 		}
-		foreach($exts as $ext => $value) {
-			$this->query('delete from `tiki_webmail_contacts_ext` where `contactId`=? and `name`=?',
-				     array((int)$contactId, $ext));
-			if (strlen($value))
-				$this->query('insert into `tiki_webmail_contacts_ext` (`contactId`,`name`,`value`) values (?,?,?)',
-					     array((int)$contactId, $ext, $value));
+		
+		$this->query('delete from `tiki_webmail_contacts_ext` where `contactId`=?', array((int)$contactId));
+		foreach($exts as $ext => $fieldId) {
+			if (strlen($fieldId))
+				$this->query('insert into `tiki_webmail_contacts_ext` (`contactId`,`fieldId`,`value`) values (?,?,?)',
+					     array((int)$contactId, $ext, $fieldId));
 		}
 		return true;
 	}
@@ -151,8 +151,8 @@ class ContactLib extends TikiLib {
 			$res2 = $this->query($query,array((int)$res['contactId']));
 			$ret2 = array();
 			if ($res2) while ($r2 = $res2->fetchRow()) $res['groups'][] = $r2['groupName'];
-			$res2=$this->query("select `name`,`value` from `tiki_webmail_contacts_ext` where `contactId`=?", array($contactId));
-			if ($res2) while ($r2 = $res2->fetchRow()) $res['ext'][$r2['name']]=$r2['value'];
+			$res2=$this->query("select `fieldId`,`value` from `tiki_webmail_contacts_ext` where `contactId`=?", array($contactId));
+			if ($res2) while ($r2 = $res2->fetchRow()) $res['ext'][$r2['fieldId']]=$r2['value'];
 			return $res;
 		}
 		return false;
@@ -168,8 +168,7 @@ class ContactLib extends TikiLib {
 		global $user;
 		if ($this->ext_list_cache !== NULL) return $this->ext_list_cache;
 
-		$res=$this->query("select `fieldname` from tiki_webmail_contacts_fields where user=?",
-				  array($user));
+		$res=$this->query("select `fieldId`, `fieldname` from tiki_webmail_contacts_fields where user=?", array($user));
 		if (!$res->numRows()) {
 			$exts=array('Personal Phone', 'Personal Mobile', 'Personal Fax', 'Work Phone', 'Work Mobile',
 				   'Work Fax', 'Company', 'Organization', 'Department', 'Division', 'Job Title',
@@ -178,7 +177,7 @@ class ContactLib extends TikiLib {
 			foreach($exts as $ext) $this->add_ext($user, $ext);
 		} else {
 			$exts=array();
-			while($r = $res->fetchRow()) $exts[]=$r['fieldname'];
+			while($r = $res->fetchRow()) $exts[$r['fieldId']]=$r['fieldname'];
 		}
 
 		$this->ext_list_cache=$exts;
@@ -190,14 +189,14 @@ class ContactLib extends TikiLib {
 			     array($user, $name));
 	}
 	
-	function remove_ext($user, $name) {
-		$this->query('delete from tiki_webmail_contacts_fields where user=? and fieldname=?',
-			     array($user, $name));
+	function remove_ext($user, $fieldId) {
+		$this->query('delete from tiki_webmail_contacts_fields where user=? and fieldId=?',
+			     array($user, $fieldId));
 	}
 	
-	function rename_ext($user, $oldname, $newname) {
-		$this->query('update tiki_webmail_contacts_fields set fieldname=? where fieldname=? and user=?',
-			     array($newname, $oldname, $user));
+	function rename_ext($user, $fieldId, $newname) {
+		$this->query('update tiki_webmail_contacts_fields set fieldname=? where fieldId=? and user=?',
+			     array($newname, $fieldId, $user));
 	}
 }
 $contactlib = new ContactLib($dbTiki);

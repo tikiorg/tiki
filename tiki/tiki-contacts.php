@@ -20,25 +20,23 @@ if (!isset($_REQUEST["contactId"])) {
 
 $smarty->assign('contactId', $_REQUEST["contactId"]);
 
-$tmpexts=$contactlib->get_ext_list($user);
-$exts=array();
+$exts=$contactlib->get_ext_list($user);
 $traducted_exts=array();
-foreach($tmpexts as $ext) $exts[bin2hex($ext)]=$ext;
 foreach($exts as $k => $v) {
     $traducted_exts[$k]['tra']=tra($v);
-    $traducted_exts[$k]['art']=$v;
+    $traducted_exts[$k]['art']=$k;
 }
 
 if ($_REQUEST["contactId"]) {
 	$info = $contactlib->get_contact($_REQUEST["contactId"], $user);
-	foreach($info['ext'] as $ext => $value) {
-	    if (!in_array($ext, $exts)) {
-		$k=bin2hex($ext);
-		$exts[$k]=$ext;
-		$traducted_exts[$k]['tra']=tra($ext);
-		$traducted_exts[$k]['art']=$ext;
+	/* I'm not sure the user need to see those fields since they are not in his ext list...
+	foreach($info['ext'] as $k => $v) {
+	    if (!in_array($k, array_keys($exts))) {
+		$exts[$k]=$v;
+		$traducted_exts[$k]['tra']=tra($k);
+		$traducted_exts[$k]['art']=$k;
 	    }
-	}
+	}*/
 } else {
 	$info = array();
 	$info["firstName"] = '';
@@ -74,7 +72,7 @@ if (isset($_REQUEST["save"])) {
 	check_ticket('webmail-contact');
 	$ext_result=array();
 	foreach($exts as $k=>$ext)
-	    $ext_result[$ext]=isset($_REQUEST['ext_'.$k]) ? $_REQUEST['ext_'.$k] : '';
+	    $ext_result[$k]=isset($_REQUEST['ext_'.$k]) ? $_REQUEST['ext_'.$k] : '';
 	$contactlib->replace_contact($_REQUEST["contactId"], $_REQUEST["firstName"], $_REQUEST["lastName"], $_REQUEST["email"], $_REQUEST["nickname"], $user, $_REQUEST['groups'], $ext_result);
 	$info["firstName"] = '';
 	$info["lastName"] = '';
