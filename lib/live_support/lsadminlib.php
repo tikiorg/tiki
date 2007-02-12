@@ -28,10 +28,8 @@ class LsAdminlib extends TikiLib {
 
 		$result = $this->query($query,array($status));
 		$ret = array();
-		$now = date("U");
-
 		while ($res = $result->fetchRow()) {
-			$res['elapsed'] = $now - $res['status_since'];
+			$res['elapsed'] = $this->now - $res['status_since'];
 
 			$ret[] = $res;
 		}
