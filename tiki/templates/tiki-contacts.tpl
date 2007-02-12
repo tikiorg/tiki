@@ -1,10 +1,21 @@
 <h1><a href="tiki-contacts.php" class="pagetitle">{tr}Contacts{/tr}</a></h1>
 
 <div class="page-bar">
+<div style="float:right;margin:5px;">
+<span class="button2">
+{if $view eq 'list'}
+<a href="{$myurl}?view=group" class="linkbut" title="{tr}group view{/tr}">{tr}group view{/tr}</a>
+{else}
+<a href="{$myurl}?view=list" class="linkbut" title="{tr}list view{/tr}">{tr}list view{/tr}</a>
+{/if}
+</span>
+</div>
+<div style="float:left;margin:5px;">
 <span class="button2"><a href="#" onclick="flip('editform');return false;" class="linkbut">{tr}Create/edit contacts{/tr}</a></span>
 </div>
+</div>
 
-<form action="tiki-contacts.php" method="post" id="editform" name='editform_contact' style="display:{ if $contactId}block{else}none{/if};">
+<form action="tiki-contacts.php" method="post" id="editform" name='editform_contact' style="float:right;margin:5px;display:{ if $contactId}block{else}none{/if};">
 <input type="hidden" name="locSection" value="contacts" />
 <input type="hidden" name="contactId" value="{$contactId|escape}" />
 <table class="normal"><tbody id='tbody_editcontact'>
@@ -29,10 +40,9 @@
 </tr>
 <tr class="formcolor"><td></td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </tbody></table>
-<br /><br />
 </form>
 
-<div align="center">
+<div align="center" style="float:right;margin:5px;">
 <table class="findtable">
 <tr><td>{tr}Find{/tr}</td>
    <td>
@@ -60,7 +70,9 @@
 {cycle values="odd,even" print=false}
 {foreach key=k item=channels from=$all}
 {if count($channels)}
+{if $view neq 'list'}
 <tr><td colspan="6" style="font-size:80%;color:#999;">{tr}from{/tr} <b>{$k}</b></td></tr>
+{/if}
 {section name=user loop=$channels}
 <tr>
 <td class="{cycle advance=false}"><a class="link" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">{$channels[user].firstName}</a></td>
@@ -69,7 +81,7 @@
 <td class="{cycle advance=false}">{$channels[user].nickname}</td>
 <td class="{cycle advance=false}">{if isset($channels[user].groups)}{foreach item=it name=gr from=$channels[user].groups}{$it}{if $smarty.foreach.gr.index+1 ne $smarty.foreach.gr.last}, {/if}{/foreach}{else}&nbsp;{/if}</td>
 <td class="{cycle advance=false}">&nbsp;
-{if $k eq 'user_personal_contacts'}
+{if $channels[user].user eq $user}
 <a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}" 
 title="{tr}edit{/tr}"><img src="pics/icons/page_edit.png" border="0" height="16" width="16" alt='{tr}edit{/tr}' /></a><a 
 href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$channels[user].contactId}" style="margin-left:20px;"
