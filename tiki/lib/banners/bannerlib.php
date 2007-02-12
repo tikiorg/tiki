@@ -20,13 +20,14 @@ class BannerLib extends TikiLib {
 		// zone
 		// maxImpressions and impressions
 		# TODO localize
-		$dw = "`".strtolower($this->date_format("%a"))."`";
+		$map = array(0=>'sun', 1=>'mon', 2=>'tue', 3=>'wed', 4=>'thu', 5=>'fri', 6=>'sat');
+		$dw = $this->date_format("%w");
 
 		$hour = $this->date_format("%H"). $this->date_format("%M");
 		$raw = '';
 		//
 		//
-		$query = "select count(*) from `tiki_banners` where $dw = ? and  `hourFrom`<=? and `hourTo`>=? and
+		$query = "select count(*) from `tiki_banners` where `$dw` = ? and  `hourFrom`<=? and `hourTo`>=? and
     		( ((`useDates` = ?) and (`fromDate`<=? and `toDate`>=?)) or (`useDates` = ?) ) and
     		`impressions`<`maxImpressions` and `zone`=?";
     		$bindvars=array('y',$hour,$hour,'y',(int) $this->now,(int) $this->now,'n',$zone);
