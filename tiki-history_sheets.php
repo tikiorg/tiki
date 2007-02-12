@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-history_sheets.php,v 1.7 2007-02-04 20:09:32 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-history_sheets.php,v 1.8 2007-02-12 11:47:58 mose Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -42,7 +42,7 @@ $smarty->assign('page_mode', 'view' );
 $result = $tikilib->query( "SELECT DISTINCT `begin`, `user` FROM `tiki_sheet_values` WHERE `sheetId` = ? ORDER BY begin DESC", array( $_REQUEST['sheetId'] ) );
 $data = array();
 while( $row = $result->fetchRow() )
-	$data[] = array( "stamp" =>$row['begin'], "string" => date( "Y-m-d H:i:s", $row['begin'] ), "user" => $row['user'] );
+	$data[] = array( "stamp" =>$row['begin'], "string" => $tikilib->date_format( "%Y-%m-%d %H:%M:%S", $row['begin'] ), "user" => $row['user'] );
 
 $smarty->assign_by_ref( 'history', $data );
 

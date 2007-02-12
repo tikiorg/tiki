@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index_p.php,v 1.24 2007-02-04 20:09:32 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index_p.php,v 1.25 2007-02-12 11:47:59 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -31,11 +31,11 @@ if ($feature_wiki != 'y') {
 
 // Create the HomePage if it doesn't exist
 if (!$tikilib->page_exists($wikiHomePage)) {
-	$tikilib->create_page($wikiHomePage, 0, '', date("U"), 'Tiki initialization');
+	$tikilib->create_page($wikiHomePage, 0, '', $tikilib->now, 'Tiki initialization');
 }
 
 if (!isset($_SESSION["thedate"])) {
-	$thedate = date("U");
+	$thedate = $tikilib->now;
 } else {
 	$thedate = $_SESSION["thedate"];
 }
@@ -48,7 +48,7 @@ $page = $_REQUEST['page'];
 $smarty->assign('page', $page);
 
 if (!$tikilib->page_exists($wikiHomePage)) {
-	$tikilib->create_page($wikiHomePage, 0, '', date("U"), 'Tiki initialization');
+	$tikilib->create_page($wikiHomePage, 0, '', $tikilib->now, 'Tiki initialization');
 }
 
 require_once('tiki-pagesetup.php');
@@ -198,9 +198,7 @@ $tikilib->parse_first( $info["data"], $preparsed, $noparsed );
 if ($wiki_cache > 0) {
 	$cache_info = $wikilib->get_cache_info($page);
 
-	$now = date('U');
-
-	if ($cache_info['cache_timestamp'] + $wiki_cache > $now) {
+	if ($cache_info['cache_timestamp'] + $wiki_cache > $tikilib->now) {
 		$pdata = $cache_info['cache'];
 
 		$smarty->assign('cached_page', 'y');
@@ -244,7 +242,6 @@ $tikilib->replace_preparse( $pdata, $preparsed, $noparsed );
 
 $smarty->assign_by_ref('parsed', $pdata);
 
-//$smarty->assign_by_ref('lastModif',date("l d of F, Y  [H:i:s]",$info["lastModif"]));
 $smarty->assign_by_ref('lastModif', $info["lastModif"]);
 
 if (empty($info["user"])) {
