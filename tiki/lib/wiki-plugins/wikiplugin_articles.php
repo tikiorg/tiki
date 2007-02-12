@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_articles.php,v 1.25 2007-02-04 20:09:46 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_articles.php,v 1.26 2007-02-12 11:12:56 mose Exp $
 // Includes articles listing in a wiki page
 // Usage:
 // {ARTICLES(max=>3,topic=>topicId)}{ARTICLES}
@@ -48,12 +48,10 @@ function wikiplugin_articles($data,$params) {
 	if (!isset($lang))
 		$lang = '';
 
-	$now = date("U");
-	
 	include_once("lib/commentslib.php");
 	$commentslib = new Comments($dbTiki);
 	
-	$listpages = $tikilib->list_articles($start, $max, 'publishDate_desc', '', $now, 'admin', $type, $topicId, 'y', $topic, $categId, '', '', $lang);
+	$listpages = $tikilib->list_articles($start, $max, 'publishDate_desc', '', $tikilib->now, 'admin', $type, $topicId, 'y', $topic, $categId, '', '', $lang);
  	if ($feature_multilingual == 'y') {
 		global $multilinguallib;
 		include_once("lib/multilingual/multilinguallib.php");
