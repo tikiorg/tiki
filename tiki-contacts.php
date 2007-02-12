@@ -110,14 +110,33 @@ $smarty->assign('find', $find);
 $maxRecords = 20;
 
 $channels = $contactlib->list_contacts($user, $offset, $maxRecords, $sort_mode, $find, true, $_REQUEST["letter"]);
-if ( is_array($channels['data']) ) foreach ( $channels['data'] as $c ) {
-	if ( is_array($c['groups']) ) foreach ( $c['groups'] as $g ) $all['data'][$g][] = $c;
-	if ( $c['user'] == $user ) $all_personnal[] = $c;
-}
 
-ksort($all['data']); // sort contacts by group name
-$all['data']['user_personal_contacts'] =& $all_personnal; // this group needs to be the last one
-$smarty->assign('all', $all['data']);
+if ( isset($_REQUEST['view']) ) $_SESSION['UserContactsView'] = $_REQUEST['view'];
+$smarty->assign('view', $_SESSION['UserContactsView']);
+
+if ( is_array($channels['data']) ) {
+
+	if ( $_SESSION['UserContactsView'] == 'list' ) {
+		$smarty->assign('all', array($channels['data']));
+	} else {
+		// ordering contacts by groups
+
+		foreach ( $channels['data'] as $c ) {
+			if ( is_array($c['groups']) ) foreach ( $c['groups'] as $g ) $all['data'][$g][] = $c;
+			if ( $c['user'] == $user ) $all_personnal[] = $c;
+		}
+	
+		// sort contacts by group name
+		ksort($all['data']);
+	
+		// this group needs to be the last one
+		$all['data']['user_personal_contacts'] =& $all_personnal;
+
+		$smarty->assign('all', $all['data']);
+		
+	}
+
+}
 
 $groups = $userlib->get_user_groups($user);
 $smarty->assign('groups', $groups);
