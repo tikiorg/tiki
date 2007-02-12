@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-xmlrpc_services.php,v 1.15 2007-02-04 20:09:34 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-xmlrpc_services.php,v 1.16 2007-02-12 12:14:15 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -128,8 +128,6 @@ function newPost($params) {
 	}
 
 	// User ok and can submit then submit the post
-	$now = date("U");
-
 	$id = $bloglib->blog_post($blogid, $content, $username);
 
 	return new XML_RPC_Response(new XML_RPC_Value("$id"));
@@ -180,7 +178,6 @@ function editPost($params) {
 		}
 	}
 
-	$now = date("U");
 	$id = $bloglib->update_post($postid, $blogid, $content, $username);
 	return new XML_RPC_Response(new XML_RPC_Value(1, "boolean"));
 }
@@ -219,7 +216,6 @@ function deletePost($params) {
 		}
 	}
 
-	$now = date("U");
 	$id = $bloglib->remove_post($postid);
 	return new XML_RPC_Response(new XML_RPC_Value(1, "boolean"));
 }
@@ -266,7 +262,6 @@ function getPost($params) {
 		return new XML_RPC_Response(0, 101, "Post not found");
 	}
 
-	#  $dateCreated=date("Ymd",$post_data["created"])."T".date("h:i:s",$post_data["created"]);
 	$dateCreated = $tikilib->get_iso8601_datetime($post_data["created"]);
 	// added dateTime type for blogger compliant xml tag Joerg Knobloch <joerg@happypenguins.net>
 	$myStruct = new XML_RPC_Value(array(
@@ -320,7 +315,6 @@ function getRecentPosts($params) {
 	$arrayval = array();
 
 	foreach ($posts["data"] as $post) {
-		#    $dateCreated=date("Ymd",$post["created"])."T".date("h:i:s",$post["created"]);    
 		$dateCreated = $tikilib->get_iso8601_datetime($post["created"]);
 
 		$myStruct = new XML_RPC_Value(array(

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.114 2007-02-08 13:51:20 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.115 2007-02-12 12:14:15 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -292,7 +292,7 @@ foreach($xfields["data"] as $i=>$array) {
 				$ins_fields["data"][$i]["value"] = mktime($_REQUEST["$ins_id" . "Hour"], $_REQUEST["$ins_id" . "Minute"],
 				0, $_REQUEST["$ins_id" . "Month"], $_REQUEST["$ins_id" . "Day"], $_REQUEST["$ins_id" . "Year"]);
 			} else {
-				$ins_fields["data"][$i]["value"] = date("U");
+				$ins_fields["data"][$i]["value"] = $tikilib->now;
 			}
 		
 		} elseif ($fields["data"][$i]["type"] == 'e') {

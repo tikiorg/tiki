@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_tasks.php,v 1.23 2007-02-04 20:09:33 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_tasks.php,v 1.24 2007-02-12 12:14:16 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -348,7 +348,6 @@ if (isset($_REQUEST['preview'])) {
 
 if ((isset($_REQUEST['save'])) || (isset($_REQUEST['preview']))) {
 	$dc = $tikilib->get_date_converter($user);
-	$now = date("U");
 	$auto_accepted_status = true;
 	$save = array();
 	$save_head = array();
@@ -367,12 +366,7 @@ if ((isset($_REQUEST['save'])) || (isset($_REQUEST['preview']))) {
 		isset($_REQUEST['start_Month']) and 
 		isset($_REQUEST['start_Day']) and 
 		isset($_REQUEST['start_Year'])){
-			$start_date = $dc->getServerDateFromDisplayDate(mktime(	$_REQUEST['start_Hour'], 
-																	$_REQUEST['start_Minute'], 
-																	0, 
-																	$_REQUEST['start_Month'], 
-																	$_REQUEST['start_Day'], 
-																	$_REQUEST['start_Year']));
+			$start_date = $tikilib->make_time($_REQUEST['start_Hour'], $_REQUEST['start_Minute'], 0, $_REQUEST['start_Month'], $_REQUEST['start_Day'], $_REQUEST['start_Year']);
 	} else $start_date = null;
 	
 	if(	isset($_REQUEST['use_end_date']) and
@@ -381,12 +375,7 @@ if ((isset($_REQUEST['save'])) || (isset($_REQUEST['preview']))) {
 		isset($_REQUEST['end_Month']) and 
 		isset($_REQUEST['end_Day']) and 
 		isset($_REQUEST['end_Year'])){
-			$end_date = $dc->getServerDateFromDisplayDate(mktime(	$_REQUEST['end_Hour'], 
-																	$_REQUEST['end_Minute'], 
-																	0, 
-																	$_REQUEST['end_Month'], 
-																	$_REQUEST['end_Day'], 
-																	$_REQUEST['end_Year']));
+			$end_date = $tikilib->make_time($_REQUEST['end_Hour'], $_REQUEST['end_Minute'], 0, $_REQUEST['end_Month'], $_REQUEST['end_Day'], $_REQUEST['end_Year']);
 	} else $end_date = null;
 
 	if(isset($_REQUEST['task_user'])){
@@ -444,17 +433,17 @@ if ((isset($_REQUEST['save'])) || (isset($_REQUEST['preview']))) {
 		$save['start'] = $start_date;
 			$msg_changes .=  tra('Start').": ";
 			if($info['start'] != null) {
-				$msg_changes .= date("l dS of F Y H:i:s", $info['start']).' --> ';
+				$msg_changes .= $tikilib->date_format("$short_date_format $long_time_format", $info['start']).' --> ';
 			}
-			$msg_changes .= date("l dS of F Y H:i:s", $save['start']) ."\n";
+			$msg_changes .= $tikilib->date_format("$short_date_format $long_time_format", $save['start']) ."\n";
 	}
 	if(isset($_REQUEST['use_end_date']) and $info['end'] != $end_date){
 		$save['end'] = $end_date;
 			$msg_changes .=  tra('END').": ";
 			if($info['end'] != null) {
-				$msg_changes .= date("l dS of F Y H:i:s", $info['end']).' --> ';
+				$msg_changes .= $tikilib->date_format("$short_date_format $long_time_format", $info['end']).' --> ';
 			}
-			$msg_changes .= date("l dS of F Y H:i:s", $save['end']) ."\n";
+			$msg_changes .= $tikilib->date_format("$short_date_format $long_time_format", $save['end']) ."\n";
 	}
 	if(isset($_REQUEST['priority']) and $info['priority'] != $_REQUEST['priority']){
 		$save['priority'] = $_REQUEST['priority'];
@@ -467,7 +456,7 @@ if ((isset($_REQUEST['save'])) || (isset($_REQUEST['preview']))) {
 			$msg_changes .= tra('Status').': '.$info['status'].' --> '. $save['status']."\n";
 			if($save['status'] == 'c'){ 
 			$_REQUEST['percentage'] = 100;
-			$save['completed'] = $now;
+			$save['completed'] = $tikilib->now;
 			} 
 		} else {
 			unset($save['status']);
@@ -532,19 +521,12 @@ if ((isset($_REQUEST['save'])) || (isset($_REQUEST['preview']))) {
         $info['creator'] = $_REQUEST['creator'];;
         $info['public_for_group'] = $_REQUEST['public_for_group'];
         $info['rights_by_creator'] = (isset($_REQUEST['rights_by_creator']))? $_REQUEST['rights_by_creator'] : NULL;
-      //  $task['deleted'] = (isset($_REQUEST['deleted']))? $_REQUEST['deleted'] :NULL;
-        $info['created'] = (isset($_REQUEST['created']))? $_REQUEST['created'] :date("U");
-        /*--history --*/
-      //  $task['belongs_to'] = (isset($_REQUEST['belongs_to']))? :;
-      //  $task['lasteditor'] = (isset($_REQUEST['lasteditor']))? :;
-      //  $task['lastchanges'] = date("U");
-        /*--*/
+        $info['created'] = (isset($_REQUEST['created']))? $_REQUEST['created'] : $tikilib->now;
         $info['percentage_null'] = ($_REQUEST['percentage'] == 'w');
 
 		if  ((isset($_REQUEST['status'])) && ($_REQUEST['status'] != 'w')) {
 			$info['status'] = $_REQUEST['status'];
-		}
-		else{
+		} else {
         	$info['status'] = null; 
 		}
         $info['info'] = (isset($_REQUEST['task_info_message']))? $_REQUEST['task_info_message']:'';
@@ -582,7 +564,7 @@ if (isset($_REQUEST['save'])) {
 				($userlib->user_has_permission($_REQUEST['task_user'],'tiki_p_tasks_receive') and 
 				 $userlib->user_has_permission($user,'tiki_p_tasks_send')))
 			{
-				$taskId = $tasklib->new_task($_REQUEST['task_user'], $user, $public_for_group, $rights_by_creator, $now, $save);
+				$taskId = $tasklib->new_task($_REQUEST['task_user'], $user, $public_for_group, $rights_by_creator, $tikilib->now, $save);
 			
 			}
 		        else{
@@ -638,10 +620,10 @@ if (isset($_REQUEST['save'])) {
 		}
 		$mail_data .= ".\n\n";
 		if ($info['start'] !== NULL){
-			$mail_data .= tra("You've to start your work at least on").": ".date("j.M.Y - H:i",$info['end'])."\n";
+			$mail_data .= tra("You've to start your work at least on").": ".$tikilib->date_format("$short_date_format $short_time_format",$info['end'])."\n";
 		}
 		if ($info['end'] !== NULL){
-			$mail_data .= tra("You've to finish your work on").": ".date("j.M.Y - H:i",$info['end'])."\n";
+			$mail_data .= tra("You've to finish your work on").": ". $tikilib->date_format("$short_date_format $short_time_format",$info['end'])."\n";
 		}
 
 		$mail_data .= "\n".tra("Login and click the link below")."\n";
@@ -686,14 +668,14 @@ if (isset($_REQUEST['save'])) {
 
 $smarty->assign('taskId', $_REQUEST['taskId']);
 $smarty->assign('info', $info);
-$smarty->assign('created_Month',  date('m', $info['created']));
-$smarty->assign('created_Day',  date('d', $info['created']));
-$smarty->assign('created_Year',  date('Y', $info['created']));
-$smarty->assign('created_Hour',  date('H', $info['created']));
-$smarty->assign('created_Minute',  date('M', $info['created']));
+$smarty->assign('created_Month',  $tikilib->date_format('%m', $info['created']));
+$smarty->assign('created_Day',  $tikilib->date_format('%d', $info['created']));
+$smarty->assign('created_Year',  $tikilib->date_format('%Y', $info['created']));
+$smarty->assign('created_Hour',  $tikilib->date_format('%H', $info['created']));
+$smarty->assign('created_Minute',  $tikilib->date_format('%M', $info['created']));
 
 if ((!isset($info['start'])) || ($info['start'] == null)) {
-	$info['start'] = date("U");
+	$info['start'] = $tikilib->now;
 	$smarty->assign('start_date', $info['start'] );
 }
 else {

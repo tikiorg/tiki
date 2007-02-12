@@ -1,5 +1,5 @@
 <?php 
-# $Header: /cvsroot/tikiwiki/tiki/xmlrpc.php,v 1.28 2007-02-04 20:09:34 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/xmlrpc.php,v 1.29 2007-02-12 12:14:15 mose Exp $
 include_once("lib/init/initlib.php");
 require_once('db/tiki-db.php');
 require_once('lib/tikilib.php');
@@ -98,8 +98,6 @@ function newPost($params) {
   }
   
   // User ok and can submit then submit the post
-  $now=date("U");
-  
   $id = $bloglib->blog_post($blogid,$content,$username, $title);
    
   return new XML_RPC_Response(new XML_RPC_Value("$id"));
@@ -144,7 +142,6 @@ function editPost($params) {
     }
   }
  
-  $now=date("U");
   $id = $bloglib->update_post($postid,$blogid,$content,$username,$title);
   return new XML_RPC_Response(new XML_RPC_Value(1,"boolean"));
 }
@@ -175,8 +172,6 @@ function deletePost($params) {
     }
   }
  
-  
-  $now=date("U");
   $id = $bloglib->remove_post($postid);
   return new XML_RPC_Response(new XML_RPC_Value(1,"boolean"));
 }
@@ -210,7 +205,6 @@ function getPost($params) {
   if(!$post_data) {
     return new XML_RPC_Response(0, 101, "Post not found");
   }
-#  $dateCreated=date("Ymd",$post_data["created"])."T".date("h:i:s",$post_data["created"]);
   $dateCreated=$tikilib->get_iso8601_datetime($post_data["created"]);    
   // added dateTime type for blogger compliant xml tag Joerg Knobloch <joerg@happypenguins.net>
   $myStruct=new XML_RPC_Value(array("userid" => new XML_RPC_Value($username),
@@ -255,7 +249,6 @@ function getRecentPosts($params) {
   $arrayval = Array();
   foreach($posts["data"] as $post) {
     
-#    $dateCreated=date("Ymd",$post["created"])."T".date("h:i:s",$post["created"]);    
     $dateCreated=$tikilib->get_iso8601_datetime($post["created"]);    
     $myStruct=new XML_RPC_Value(array("userid" => new XML_RPC_Value($username),
   "dateCreated" => new XML_RPC_Value($dateCreated, "dateTime.iso8601"),
