@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.68 2007-02-04 20:09:32 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.69 2007-02-12 11:33:23 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -439,7 +439,7 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 } else {
 	$userinfo['login'] = '';
 	$userinfo['email'] = '';
-	$userinfo['created'] = date('U');
+	$userinfo['created'] = $tikilib->now;
 	$userinfo['registrationDate'] = '';
 	$userinfo['age'] = '';
 	$userinfo['currentLogin'] = '';

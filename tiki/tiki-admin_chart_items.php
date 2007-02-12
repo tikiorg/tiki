@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_chart_items.php,v 1.15 2007-02-04 20:09:32 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_chart_items.php,v 1.16 2007-02-12 11:33:22 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -64,7 +64,7 @@ if (isset($_REQUEST['save'])) {
 	$vars = array();
 
 	$vars['chartId'] = $_REQUEST['chartId'];
-	$_REQUEST['created'] = date("U");
+	$_REQUEST['created'] = $tikilib->now;
 
 	foreach (array_keys($info)as $key) {
 		if (isset($_REQUEST[$key])) {

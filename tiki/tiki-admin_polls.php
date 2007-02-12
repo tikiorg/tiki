@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_polls.php,v 1.23 2007-02-04 20:09:32 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_polls.php,v 1.24 2007-02-12 11:33:23 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -50,7 +50,7 @@ if ($_REQUEST["pollId"]) {
 
 	$info["title"] = '';
 	$info["active"] = 'y';
-	$info["publishDate"] = date("U");
+	$info["publishDate"] = $tikilib->now;
 }
 
 $smarty->assign('title', $info["title"]);

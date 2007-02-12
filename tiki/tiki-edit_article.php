@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.62 2007-02-04 20:09:32 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.63 2007-02-12 11:33:24 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -41,10 +41,9 @@ if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0) {
 }
 
 $smarty->assign('allowhtml', 'on');
-$publishDate = date("U");
-$cur_time = getdate();
-$expireDate = mktime ($cur_time["hours"], $cur_time["minutes"], 0, $cur_time["mon"], $cur_time["mday"]+365, $cur_time["year"]);
-$dc = &$tikilib->get_date_converter($user);
+$publishDate = $tikilib->now;
+$cur_time = time();
+$expireDate = $tikilib->make_time($cur_time["hours"], $cur_time["minutes"], 0, $cur_time["mon"], $cur_time["mday"]+365, $cur_time["year"]);
 $smarty->assign('title', '');
 $smarty->assign('topline', '');
 $smarty->assign('subtitle', '');
@@ -147,14 +146,12 @@ $smarty->assign('preview', 0);
 if (isset($_REQUEST["preview"])) {
 	# convert from the displayed 'site' time to 'server' time
 	if (isset($_REQUEST["publish_Hour"])) {
-	$publishDate = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["publish_Hour"], $_REQUEST["publish_Minute"],
-		0, $_REQUEST["publish_Month"], $_REQUEST["publish_Day"], $_REQUEST["publish_Year"]));
+	$publishDate = $tikilib->make_time($_REQUEST["publish_Hour"], $_REQUEST["publish_Minute"], 0, $_REQUEST["publish_Month"], $_REQUEST["publish_Day"], $_REQUEST["publish_Year"]);
 	} else {
-		$publishDate = date('U');
+		$publishDate = $tikilib->now;
 	}
 	if (isset($_REQUEST["expire_Hour"])) {
-	$expireDate = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"],
-		0, $_REQUEST["expire_Month"], $_REQUEST["expire_Day"], $_REQUEST["expire_Year"]));
+	$expireDate = $tikilib->make_time($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"], 0, $_REQUEST["expire_Month"], $_REQUEST["expire_Day"], $_REQUEST["expire_Year"]);
 	} else {
 		$expireDate = $publishDate;
 	}
@@ -282,16 +279,14 @@ if (isset($_REQUEST["save"])) {
 
 	# convert from the displayed 'site' time to 'server' time
 	if (isset($_REQUEST["publish_Hour"])) {
-	$publishDate = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["publish_Hour"], $_REQUEST["publish_Minute"],
-		0, $_REQUEST["publish_Month"], $_REQUEST["publish_Day"], $_REQUEST["publish_Year"]));
+	$publishDate = $tikilib->make_time($_REQUEST["publish_Hour"], $_REQUEST["publish_Minute"], 0, $_REQUEST["publish_Month"], $_REQUEST["publish_Day"], $_REQUEST["publish_Year"]));
 	} else {
-		$publishDate = date('U');
+		$publishDate = $tikilib->now;
 	}
 	if (isset($_REQUEST["expire_Hour"])) {
-	$expireDate = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"],
-		0, $_REQUEST["expire_Month"], $_REQUEST["expire_Day"], $_REQUEST["expire_Year"]));
+	$expireDate = $tikilib->make_time($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"], 0, $_REQUEST["expire_Month"], $_REQUEST["expire_Day"], $_REQUEST["expire_Year"]);
 	} else {
-		$expireDate = date('U');
+		$expireDate = $tikilib->now;
 	}
 
 	if (isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"] == "on") {
@@ -387,7 +382,7 @@ if (isset($_REQUEST["save"])) {
 }
 
 // Set date to today before it's too late
-$_SESSION["thedate"] = date("U");
+$_SESSION["thedate"] = $tikilib->now;
 
 // Armar un select con los topics
 $topics = $artlib->list_topics();
@@ -413,18 +408,10 @@ $cat_objid = $articleId;
 include_once ("categorize_list.php");
 
 $smarty->assign('publishDate', $publishDate);
-$smarty->assign('publishDateSite', $dc->getDisplayDateFromServerDate($publishDate));
+$smarty->assign('publishDateSite', $publishDate);
 $smarty->assign('expireDate', $expireDate);
-$smarty->assign('expireDateSite', $dc->getDisplayDateFromServerDate($expireDate));
-
-// In 1.9 all times in the db are UTC.
-// We have no way of knowing what the userss Local time zone is.
-$display_timezone = $tikilib->get_user_preference($user, 'display_timezone');
-if ($display_timezone == "Local"){
-	$smarty->assign('siteTimeZone', "");
-} else {
-	$smarty->assign('siteTimeZone', $display_timezone);
-}
+$smarty->assign('expireDateSite', $expireDate);
+$smarty->assign('siteTimeZone', $display_timezone);
 
 include_once ('tiki-section_options.php');
 

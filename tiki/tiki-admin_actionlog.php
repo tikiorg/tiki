@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.26 2007-02-04 20:09:32 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.27 2007-02-12 11:33:22 mose Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -146,20 +146,21 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 	$smarty->assign('showLogin', $showLogin?'y':'n');
 
 	if (isset($_REQUEST['startDate_Month'])) {
-		$startDate = mktime(0, 0, 0, $_REQUEST['startDate_Month'], $_REQUEST['startDate_Day'], $_REQUEST['startDate_Year']);
+		$startDate = $tikilib->make_time(0, 0, 0, $_REQUEST['startDate_Month'], $_REQUEST['startDate_Day'], $_REQUEST['startDate_Year']);
 		$url .= "&amp;start=$startDate";
 	} elseif (isset($_REQUEST['startDate'])) {
 		$startDate = $_REQUEST['startDate'];
-	} else
-		$startDate = mktime(0, 0, 0, date('n'), date('d'), date('Y'));
+	} else {
+		$startDate = $tikilib->make_time(0, 0, 0, $tikilib->date_format('%m'), $tikilib->date_format('%d'), $tikilib->date_format('%Y'));
+	}
 	$smarty->assign('startDate', $startDate);
 	if (isset($_REQUEST['endDate_Month'])) {
-		$endDate = mktime(23, 59, 59, $_REQUEST['endDate_Month'], $_REQUEST['endDate_Day'], $_REQUEST['endDate_Year']);
+		$endDate = $tikilib->make_time(23, 59, 59, $_REQUEST['endDate_Month'], $_REQUEST['endDate_Day'], $_REQUEST['endDate_Year']);
 		$url .= "&amp;end=$endDate";
 	} elseif (isset($_REQUEST['endDate'])) {
 		$endDate = $_REQUEST['endDate'];
 	} else
-		$endDate = mktime(23, 59, 59, date('n'), date('d'), date('Y'));
+		$endDate = $tikilib->make_time(23, 59, 59, $tikilib->date_format('%m'), $tikilib->date_format('%d'), $tikilib->date_format('%Y'));
 	$smarty->assign('endDate', $endDate);
 
 	$actions = $logslib->list_actions('', '', $_REQUEST['selectedUsers'], 0, -1, 'lastModif_desc', '', $startDate, $endDate, $_REQUEST['categId']);

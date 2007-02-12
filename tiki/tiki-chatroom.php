@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-chatroom.php,v 1.16 2007-02-04 20:09:32 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-chatroom.php,v 1.17 2007-02-12 11:33:24 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -49,7 +49,7 @@ if ($user) {
 }
 
 //session_register("nickname");
-$enterTime = date("U");
+$enterTime = $tikilib->now;
 
 //session_register('enterTime');
 //if ($tiki_p_admin_chat == 'y') {
@@ -59,7 +59,7 @@ $enterTime = date("U");
 $chatlib->user_to_channel($nickname, $channelId);
 $smarty->assign('nickname', $nickname);
 $smarty->assign('channelId', $_REQUEST["channelId"]);
-$smarty->assign('now', date("U"));
+$smarty->assign('now', $tikilib->now);
 $info = $chatlib->get_channel($_REQUEST["channelId"]);
 $refresh = $info["refresh"];
 $name = $info["name"];

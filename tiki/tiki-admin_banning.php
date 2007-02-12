@@ -36,8 +36,8 @@ if (isset($_REQUEST['banId'])) {
 	$info['ip3'] = 255;
 	$info['ip4'] = 255;
 	$info['use_dates'] = 'n';
-	$info['date_from'] = date("U");
-	$info['date_to'] = date("U") + 7 * 24 * 3600;
+	$info['date_from'] = $tikilib->now;
+	$info['date_to'] = $tikilib->now + 7 * 24 * 3600;
 	$info['message'] = '';
 }
 
@@ -64,8 +64,8 @@ if (isset($_REQUEST['save'])) {
 	check_ticket('admin-banning');
 	$_REQUEST['use_dates'] = isset($_REQUEST['use_dates']) ? 'y' : 'n';
 
-	$_REQUEST['date_from'] = mktime(0, 0, 0, $_REQUEST['date_fromMonth'], $_REQUEST['date_fromDay'], $_REQUEST['date_fromYear']);
-	$_REQUEST['date_to'] = mktime(0, 0, 0, $_REQUEST['date_toMonth'], $_REQUEST['date_toDay'], $_REQUEST['date_toYear']);
+	$_REQUEST['date_from'] = $tikilib->make_time(0, 0, 0, $_REQUEST['date_fromMonth'], $_REQUEST['date_fromDay'], $_REQUEST['date_fromYear']);
+	$_REQUEST['date_to'] = $tikilib->make_time(0, 0, 0, $_REQUEST['date_toMonth'], $_REQUEST['date_toDay'], $_REQUEST['date_toYear']);
 	$sections = array_keys($_REQUEST['section']);
 	$banlib->replace_rule($_REQUEST['banId'], $_REQUEST['mode'], $_REQUEST['title'], $_REQUEST['ip1'], $_REQUEST['ip2'],
 		$_REQUEST['ip3'], $_REQUEST['ip4'], $_REQUEST['user'], $_REQUEST['date_from'], $_REQUEST['date_to'], $_REQUEST['use_dates'],
@@ -79,8 +79,8 @@ if (isset($_REQUEST['save'])) {
 	$info['ip3'] = 255;
 	$info['ip4'] = 255;
 	$info['use_dates'] = 'n';
-	$info['date_from'] = date("U");
-	$info['date_to'] = date("U") + 7 * 24 * 3600;
+	$info['date_from'] = $tikilib->now;
+	$info['date_to'] = $tikilib->now + 7 * 24 * 3600;
 	$info['message'] = '';
 	$smarty->assign_by_ref('info', $info);
 }
