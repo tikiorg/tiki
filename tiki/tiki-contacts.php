@@ -109,16 +109,14 @@ if (isset($_REQUEST["find"])) {
 $smarty->assign('find', $find);
 $maxRecords = 20;
 
-if (!isset($_REQUEST["letter"])) {
-	$channels = $contactlib->list_contacts($user, $offset, $maxRecords, $sort_mode, $find);
-} else {
-	$channels = $contactlib->list_contacts_by_letter($user, $offset, $maxRecords, $sort_mode, $_REQUEST["letter"]);
+$channels = $contactlib->list_contacts($user, $offset, $maxRecords, $sort_mode, $find, true, $_REQUEST["letter"]);
+if ( is_array($channels['data']) ) foreach ( $channels['data'] as $c ) {
+	if ( is_array($c['groups']) ) foreach ( $c['groups'] as $g ) $all['data'][$g][] = $c;
+	if ( $c['user'] == $user ) $all_personnal[] = $c;
 }
 
-$all = $contactlib->list_group_contacts($user, $offset, $maxRecords, $sort_mode, $find);
-
-$all['data']['user_personal_contacts'] = $channels["data"];
-
+ksort($all['data']); // sort contacts by group name
+$all['data']['user_personal_contacts'] =& $all_personnal; // this group needs to be the last one
 $smarty->assign('all', $all['data']);
 
 $groups = $userlib->get_user_groups($user);

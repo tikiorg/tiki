@@ -14,24 +14,29 @@ class ContactLib extends TikiLib {
 	}
 
 	// Contacts
-	function list_contacts($user, $offset, $maxRecords, $sort_mode, $find) {
+	function list_contacts($user, $offset, $maxRecords, $sort_mode, $find, $include_group_contacts = false, $letter = '', $letter_field = 'email') {
+
+		if ( $include_group_contacts ) {
+			$user_groups = "'".join("','", $this->get_user_groups($user))."'";
+			$mid = "where (`user`=? or `groupName` IN ($user_groups)) and `$letter_field` like ?";
+		} else $mid = "where `user`=? and `$letter_field` like ?";
+		$bindvars=array($user, $letter.'%');
+		
 		if ($find) {
 			$findesc = '%' . $find . '%';
-			$mid = " where `user`=? and (`nickname` like ? or `firstName` like ? or `lastName` like ? or `email` like ?)";
-			$bindvars=array($user, $findesc, $findesc, $findesc, $findesc);
-		} else {
-			$mid = " where `user`=? ";
-			$bindvars=array($user);
+			$mid .= " and (`nickname` like ? or `firstName` like ? or `lastName` like ? or `email` like ?)";
+			array_push($bindvars, $findesc, $findesc, $findesc, $findesc);
 		}
 
-		$query = "select * from `tiki_webmail_contacts` $mid order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_webmail_contacts` $mid";
+		$query = "select c.* from `tiki_webmail_contacts` as c left join `tiki_webmail_contacts_groups` as a on a.`contactId`=c.`contactId` $mid group by contactId order by c.".$this->convert_sortmode($sort_mode);
+		//$query = "select * from `tiki_webmail_contacts` $mid order by ".$this->convert_sortmode($sort_mode);
 
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
-		$cant = $this->getOne($query_cant, $bindvars);
 		$ret = array();
 
+		$cant = 0;
 		while ($res = $result->fetchRow()) {
+			$cant++;
 			$query = "select `groupName` from `tiki_webmail_contacts_groups` where `contactId`=?";
 			$res2 = $this->query($query,array((int)$res['contactId']));
 			$ret2 = array();
@@ -51,36 +56,6 @@ class ContactLib extends TikiLib {
 		return $retval;
 	}
 
-
-	function list_group_contacts($user, $offset, $maxRecords, $sort_mode, $find, $initial=false) {
-		if ($find) {
-			$findesc = '%' . $find . '%';
-			$mid = " and (c.`nickname` like ? or c.`firstName` like ? or c.`lastName` like ? or c.`email` like ?)";
-			$bindvars=array($findesc, $findesc, $findesc, $findesc);
-		} else {
-			$mid = "";
-			$bindvars=array();
-		}
-		$groups = $this->get_user_groups($user);
-		$count = 0;
-		$back = array();
-		foreach ($groups as $group) {
-			$query = "select c.* from `tiki_webmail_contacts_groups` as a left join `tiki_webmail_contacts` as c on a.`contactId`=c.`contactId` where a.`groupName`=? $mid order by c.".$this->convert_sortmode($sort_mode);
-			$query_cant = "select count(*) from `tiki_webmail_contacts_groups` as a left join `tiki_webmail_contacts` as c on a.`contactId`=c.`contactId` where a.`groupName`=? $mid";
-			$bindv = $bindvars;
-			array_unshift($bindv,$group);
-			$result = $this->query($query, $bindv, $maxRecords, $offset);
-			$cant = $this->getOne($query_cant, $bindv);
-			$ret = array();
-			while ($res = $result->fetchRow()) {
-				$back[$group][] = $res;
-			}
-			$count = $count + $cant;
-		}
-
-		return array('data'=>$back,'cant'=>$count);
-	}
-
 	function are_contacts($contacts, $user) {
 		$ret = array();
 
@@ -97,25 +72,7 @@ class ContactLib extends TikiLib {
 	}
 
 	function list_contacts_by_letter($user, $offset, $maxRecords, $sort_mode, $letter) {
-		$letter .= '%';
-		$mid = " where `user`=? and (`email` like ?)";
-		$bindvars=array($user, $letter);
-
-		$query = "select * from `tiki_webmail_contacts` $mid order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_webmail_contacts` $mid";
-			
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvars);
-		$ret = array();
-
-		while ($res = $result->fetchRow()) {
-			$ret[] = $res;
-		}
-
-		$retval = array();
-		$retval["data"] = $ret;
-		$retval["cant"] = $cant;
-		return $retval;
+		return $this->list_contacts($user, $offset, $maxRecords, $sort_mode, '', false, $letter);
 	}
 
 	function parse_nicknames($dirs) {
@@ -138,19 +95,21 @@ class ContactLib extends TikiLib {
 		$email = trim($email);
 		$nickname = trim($nickname);
 		if ($contactId) {
-			$query = "update `tiki_webmail_contacts` set `firstName`=?, `lastName`=?, `email`=?, `nickname`=? where `contactId`=? and `user`=?";
-			$bindvars = array($firstName,$lastName,$email,$nickname,(int)$contactId,$user);
-			$result = $this->query($query, $bindvars);
-			$this->query('delete from `tiki_webmail_contacts_groups` where `contactId`=?',array((int)$contactId));
+			if ( $this->is_a_user_contact($contactId, $user, true) ) {
+				$query = "update `tiki_webmail_contacts` set `firstName`=?, `lastName`=?, `email`=?, `nickname`=? where `contactId`=?";
+				$bindvars = array($firstName,$lastName,$email,$nickname,(int)$contactId);
+				$result = $this->query($query, $bindvars);
+				$this->query('delete from `tiki_webmail_contacts_groups` where `contactId`=?',array((int)$contactId));
+			} else return false;
 		} else {
-			$query = "delete from `tiki_webmail_contacts` where `contactId`=? and `user`=?"; 
-			$result = $this->query($query,array((int)$contactId, $user),-1,-1,false); //the false allows ignoring errors 
 			$contactId = $this->getOne('select max(`contactId`) from `tiki_webmail_contacts`') + 1;
-			$query = "insert into `tiki_webmail_contacts`(`contactId`,`firstName`,`lastName`,`email`,`nickname`,`user`) values(?,?,?,?,?,?)"; 
-			$result = $this->query($query,array((int)$contactId,$firstName,$lastName,$email,$nickname,$user)); 
+			$query = "insert into `tiki_webmail_contacts`(`contactId`,`firstName`,`lastName`,`email`,`nickname`,`user`) values(?,?,?,?,?,?)";
+			$result = $this->query($query,array((int)$contactId,$firstName,$lastName,$email,$nickname,$user));
 		}
-		foreach ($groups as $group) {
-			$this->query('insert into `tiki_webmail_contacts_groups` (`contactId`,`groupName`) values (?,?)',array((int)$contactId,$group));
+		if (is_array($groups)) {
+			foreach ($groups as $group) {
+				$this->query('insert into `tiki_webmail_contacts_groups` (`contactId`,`groupName`) values (?,?)',array((int)$contactId,$group));
+			}
 		}
 		foreach($exts as $ext => $value) {
 			$this->query('delete from `tiki_webmail_contacts_ext` where `contactId`=? and `name`=?',
@@ -161,48 +120,42 @@ class ContactLib extends TikiLib {
 		}
 		return true;
 	}
-	
-	function remove_contact($contactId, $user) {
-		$query = "delete from `tiki_webmail_contacts` where `contactId`=? and `user`=?";
-		$result = $this->query($query, array((int)$contactId,$user));
-		return true;
-	}
-	
-	function get_contact($contactId, $user) {
-		$query = "select * from `tiki_webmail_contacts` where `contactId`=? and `user`=?";
-		$result = $this->query($query, array((int)$contactId,$user));
-		if (!$result->numRows()) {
-			// ok, let's try to see if we are in an authorized group
-			$authorized_groups=array();
-			$res=$this->query("select groupName from `tiki_webmail_contacts_groups` WHERE `contactId`=?", array((int)$contactId));
-			while($row = $res->fetchRow()) $authorized_groups[]=$row['groupName'];
 
-			// now search if we are in one group
-			$groups=$this->get_user_groups($user);
-			if (count(array_intersect($groups, $authorized_groups)) > 0) { // yes get it !
-				$query = "select * from `tiki_webmail_contacts` where `contactId`=?";
-				$result = $this->query($query, array((int)$contactId));
-				if (!$result->numRows()) { // hum, in case it isn't exist anymore...
-					return false;
-				}
-			} else {
-				return false;
-			}
+	function is_a_user_contact($contactId, $user, $include_group_contacts = true) {
+		if ( $contactId > 0 ) {
+			$user_groups = "'".join("','", $this->get_user_groups($user))."'";
+			$query = "select count(*) as res from `tiki_webmail_contacts` as c left join `tiki_webmail_contacts_groups` as a on a.`contactId`=c.`contactId` where c.`contactId`=? and (`user`=? or `groupName` IN ($user_groups))";
+			$result = $this->query($query, array((int)$contactId,$user));
+			if ( $result ) $r = $result->fetchRow();
+			return ( $r['res'] > 0 );
 		}
-		$res = $result->fetchRow();
-		$query = "select `groupName` from `tiki_webmail_contacts_groups` where `contactId`=?";
-		$res2 = $this->query($query,array((int)$res['contactId']));
-		$ret2 = array();
-		if ($res2) {
-			while ($r2 = $res2->fetchRow()) {
-				$res['groups'][] = $r2['groupName'];
-			}
+		return false;
+	}
+
+	function remove_contact($contactId, $user) {
+		if ( $this->is_a_user_contact($contactId, $user, true) ) {
+			$this->query('delete from `tiki_webmail_contacts` where `contactId`=?', array((int)$contactId));
+			$this->query('delete from `tiki_webmail_contacts_groups` where `contactId`=?',array((int)$contactId));
+			return true;
 		}
-		$res2=$this->query("select `name`,`value` from `tiki_webmail_contacts_ext` where `contactId`=?", array($contactId));
-		while($r2 = $res2->fetchRow()) {
-			$res['ext'][$r2['name']]=$r2['value'];
+		return false;
+	}
+
+	function get_contact($contactId, $user) {
+		if ( $this->is_a_user_contact($contactId, $user, true) ) {
+			$query = "select * from `tiki_webmail_contacts` where `contactId`=?";
+			$result = $this->query($query, array((int)$contactId));
+			if (!$result->numRows()) return false;
+			$res = $result->fetchRow();
+			$query = "select `groupName` from `tiki_webmail_contacts_groups` where `contactId`=?";
+			$res2 = $this->query($query,array((int)$res['contactId']));
+			$ret2 = array();
+			if ($res2) while ($r2 = $res2->fetchRow()) $res['groups'][] = $r2['groupName'];
+			$res2=$this->query("select `name`,`value` from `tiki_webmail_contacts_ext` where `contactId`=?", array($contactId));
+			if ($res2) while ($r2 = $res2->fetchRow()) $res['ext'][$r2['name']]=$r2['value'];
+			return $res;
 		}
-		return $res;
+		return false;
 	}
 	
 	// this function is never called, it is just for making get_strings.php happy, so that default fields in the next function will be in translation files
