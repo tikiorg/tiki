@@ -204,7 +204,7 @@ class HistLib extends TikiLib {
 		}
 
 		if ($days) {
-			$toTime = mktime(23, 59, 59, date("m"), date("d"), date("Y"));
+			$toTime = $this->make_time(23, 59, 59, $this->date_format("%m"), $this->date_format("%d"), $this->date_format("%Y"));
 			$fromTime = $toTime - (24 * 60 * 60 * $days);
 			$where .= " and ta.`lastModif`>=? and ta.`lastModif`<=? ";
 			$bindvars[] = $fromTime;

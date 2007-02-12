@@ -37,8 +37,8 @@ function smarty_function_article($params, &$smarty)
     for($i=0;sizeof($list_articles['data'])>$i;$i++) {      
 
       $x.= "<div class=\"articles\">";
-      $x.= "<a href=\"tiki-read_article.php?articleId=".$list_articles[data][$i][articleId]."\" class=\"article\">";
-      $x.= $list_articles[data][$i][title]." - ".date('d/m/Y',$list_articles[data][$i][publishDate])."</a></div>\n";     
+      $x.= "<a href=\"tiki-read_article.php?articleId=".$list_articles['data'][$i]['articleId']."\" class=\"article\">";
+      $x.= $list_articles['data'][$i]['title']." - ".$tikilib->date_format('%d/%m/%Y',$list_articles['data'][$i]['publishDate'])."</a></div>\n";     
     }
     echo $x;
 

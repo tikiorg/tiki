@@ -418,7 +418,7 @@ function unixtime2dostime($unix_time) {
 	if ($unix_time % 1)
 		$unix_time++; // Round up to even seconds.
 
-	list($year, $month, $mday, $hour, $min, $sec) = explode(" ", date("Y n j G i s", $unix_time));
+	list($year, $month, $mday, $hour, $min, $sec) = explode(" ", TikiLib::date_format("%Y %m %e %H %M %S", $unix_time));
 
 	if ($year < 1980)
 		list($year, $month, $mday, $hour, $min, $sec) = array(
@@ -449,7 +449,7 @@ function dostime2unixtime($dosdate, $dostime) {
 	$min = ($dostime >> 5) & 0x3f;
 	$hour = ($dostime >> 11) & 0x1f;
 
-	return mktime($hour, $min, $sec, $month, $mday, $year);
+	return TikiLib::make_time($hour, $min, $sec, $month, $mday, $year);
 }
 
 /**
