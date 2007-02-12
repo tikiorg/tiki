@@ -17,10 +17,19 @@
 
 <h3>Contacts Possible Fields:</h3>
 <form method='POST' action='tiki-user_contacts_prefs.php'>
-<table>
+<table class="normal">
+  <tr>
+  	<td class="heading">{tr}Field{/tr}</td>
+	<td class="heading">{tr}Action{/tr}</td>
+  </tr>
+{cycle values="odd,even" print=false}
   {foreach from=$exts item=ext key=k}
-  <tr><td><a href='?ext_remove={$k}'>remove</a></td><td>{$ext|escape}</td></tr>
+  <tr>
+	<td class="{cycle advance=false}">{$ext|escape}</td>
+  	<td class="{cycle advance=true}"><a href="?ext_remove={$k}" style="margin-left:20px;" title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a></td>
+  </tr>
   {/foreach}
+{/cycle}
 </table>
 add: <input type='text' name='ext_add' /> <input type='submit' value='Add' />
 </form>
