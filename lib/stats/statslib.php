@@ -293,7 +293,7 @@ class StatsLib extends TikiLib {
 		$bindvars = array();
 		if ($days!=0) {
 			$mid="WHERE `day` >= ?";
-			$binvars[] = $this->make_time(0, 0, 0, $this->date_format("%m"), $this->date_format("%d")-$days, $this->date_format("%Y"));
+			$bindvars[] = $this->make_time(0, 0, 0, $this->date_format("%m"), $this->date_format("%d")-$days, $this->date_format("%Y"));
 		} else {
 			$mid="";
 		}
@@ -318,7 +318,7 @@ class StatsLib extends TikiLib {
 		$bindvars = array($object,$type);
 		if ($days!=0) {
 			$mid="AND `day` >= ? ";
-			$binvars[] = $this->make_time(0, 0, 0, $this->date_format("%m"), $this->date_format("%d")-$days, $this->date_format("%Y"));
+			$bindvars[] = $this->make_time(0, 0, 0, $this->date_format("%m"), $this->date_format("%d")-$days, $this->date_format("%Y"));
 		} else {
 			$mid="";
 		}
@@ -331,7 +331,7 @@ class StatsLib extends TikiLib {
 		$bindvars = array();
 		if ($days!=0) {
 			$mid="WHERE `day` >= ? ";
-			$binvars[] = $this->make_time(0, 0, 0, $this->date_format("%m"), $this->date_format("%d")-$days, $this->date_format("%Y"));
+			$bindvars[] = $this->make_time(0, 0, 0, $this->date_format("%m"), $this->date_format("%d")-$days, $this->date_format("%Y"));
 		} else {
 			$mid="";
 		}
