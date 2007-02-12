@@ -18,10 +18,9 @@ class FaqLib extends TikiLib {
 		$question = strip_tags($question, '<a>');
 
 		$answer = strip_tags($answer, '<a>');
-		$now = date("U");
 		$query = "insert into `tiki_suggested_faq_questions`(`faqId`,`question`,`answer`,`user`,`created`)
     values(?,?,?,?,?)";
-		$result = $this->query($query,array($faqId,$question,$answer,$user,$now));
+		$result = $this->query($query,array($faqId,$question,$answer,$user,$this->now));
 	}
 
 	function list_suggested_questions($offset, $maxRecords, $sort_mode, $find, $faqId) {
@@ -164,13 +163,12 @@ class FaqLib extends TikiLib {
 
 			$result = $this->query($query,array($title,$description,$canSuggest,(int) $faqId));
 		} else {
-			$now = date("U");
 			$query = "delete from `tiki_faqs`where `title`=?";
 			$result = $this->query($query,array($title),-1,-1,false);
 			$query = "insert into `tiki_faqs`(`title`,`description`,`created`,`hits`,`questions`,`canSuggest`)
                 		values(?,?,?,?,?,?)";
-			$result = $this->query($query,array($title,$description,(int) $now,0,0,$canSuggest));
-			$faqId = $this->getOne("select max(`faqId`) from `tiki_faqs` where `title`=? and `created`=?",array($title,(int) $now));
+			$result = $this->query($query,array($title,$description,(int) $this->now,0,0,$canSuggest));
+			$faqId = $this->getOne("select max(`faqId`) from `tiki_faqs` where `title`=? and `created`=?",array($title,(int) $this->now));
 		}
 
 		return $faqId;

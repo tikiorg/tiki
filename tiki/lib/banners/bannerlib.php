@@ -19,17 +19,16 @@ class BannerLib extends TikiLib {
 		// zone
 		// maxImpressions and impressions
 		# TODO localize
-		$dw = "`".strtolower(date("D"))."`";
+		$dw = "`".strtolower($this->date_format("%a"))."`";
 
-		$hour = date("H"). date("i");
-		$now = date("U");
+		$hour = $this->date_format("%H"). $this->date_fomat("%M");
 		$raw = '';
 		//
 		//
 		$query = "select count(*) from `tiki_banners` where $dw = ? and  `hourFrom`<=? and `hourTo`>=? and
     		( ((`useDates` = ?) and (`fromDate`<=? and `toDate`>=?)) or (`useDates` = ?) ) and
     		`impressions`<`maxImpressions` and `zone`=?";
-    		$bindvars=array('y',$hour,$hour,'y',(int) $now,(int) $now,'n',$zone);
+    		$bindvars=array('y',$hour,$hour,'y',(int) $this->now,(int) $this->now,'n',$zone);
 		$rows=$this->getOne($query,$bindvars);
 
 		if (!$rows)
@@ -175,7 +174,6 @@ class BannerLib extends TikiLib {
 		$maxImpressions, $zone) {
 		$imageData = urldecode($imageData);
 		//$imageData = '';
-		$now = date("U");
 
 		if ($bannerId) {
 			$query = "update `tiki_banners` set
@@ -201,7 +199,7 @@ class BannerLib extends TikiLib {
                 `maxImpressions` = ? where `bannerId`=?";
 
                 $bindvars=array($client,$url,$title,$alt,$use,$imageData,$imageType,$imageName,$HTMLData,
-                                $fixedURLData, $textData, $fromDate, $toDate, $useDates,$now,$zone,$hourFrom,$hourTo,
+                                $fixedURLData, $textData, $fromDate, $toDate, $useDates,$this->now,$zone,$hourFrom,$hourTo,
 				$mon,$tue,$wed,$thu,$fri,$sat,$sun,$maxImpressions,$bannerId);
 
 			$result = $this->query($query,$bindvars);
@@ -215,12 +213,12 @@ class BannerLib extends TikiLib {
 
                 $bindvars=array($client,$url,$title,$alt,$use,$imageData,$imageType,$HTMLData,
                                 $fixedURLData, $textData, $fromDate, $toDate, $useDates, $mon,$tue,$wed,$thu,
-                                $fri,$sat,$sun,$hourFrom,$hourTo,$maxImpressions,$now,$zone,$imageName,0,0);
+                                $fri,$sat,$sun,$hourFrom,$hourTo,$maxImpressions,$this->now,$zone,$imageName,0,0);
 
 
 			$result = $this->query($query,$bindvars);
 			$query = "select max(`bannerId`) from `tiki_banners` where `created`=?";
-			$bannerId = $this->getOne($query,array((int)$now));
+			$bannerId = $this->getOne($query,array((int)$this->now));
 		}
 
 		return $bannerId;

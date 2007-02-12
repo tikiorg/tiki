@@ -26,7 +26,7 @@ class StructLib extends TikiLib {
 
 		foreach ($pages as $page) {
 			$data = $exportlib->export_wiki_page($page['pageName'], 0);
-			$tar->addData($page['pageName'], $data, date('U'));
+			$tar->addData($page['pageName'], $data, $this->now);
 		}
 		$dump = 'dump';
 		if ($tikidomain) { $dump.= "/$tikidomain"; }
@@ -174,8 +174,7 @@ class StructLib extends TikiLib {
   function s_create_page($parent_id, $after_ref_id, $name, $alias='') {
     $ret = null;
     // If the page doesn't exist then create a new wiki page!
-    $now = date('U');
-      $created = $this->create_page($name, 0, '', $now, tra('created from structure'), 'system', '0.0.0.0', '');
+      $created = $this->create_page($name, 0, '', $this->now, tra('created from structure'), 'system', '0.0.0.0', '');
 		// if were not trying to add a duplicate structure head
 		if ($created or isset($parent_id)) {
             //Get the page Id
