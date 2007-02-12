@@ -129,7 +129,6 @@ function buildFileList() {
 
 
 if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array($_REQUEST['files'])) {
-
 	// default is: file names from request
 	$fileArray = $_REQUEST['files'];
 	$totfiles = count($fileArray);
@@ -253,22 +252,19 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 				}
 			}
 */
-			// remove extension, if selected by user
+			// if subToDesc is set, set description:
+			if (isset($_REQUEST["subToDesc"])) {
+				// get last subdir 'last' from 'some/path/last'
+				$tmpDesc = preg_replace('/.*([^\/]*)\/([^\/]+)$/U','$1', $fileArray[$x]);
+			} else {
+				$tmpDesc = '';
+			}
+			// remove possible path from filename
+			$fileArray[$x] = preg_replace('/.*([^\/]*)$/U','$1', $fileArray[$x]);
 			$name = $fileArray[$x];
 			// remove extension from name field
 			if (isset($_REQUEST["removeExt"])) {
 				$name = substr($name,0,strrpos($name, "."));
-			}
-
-			// if subToDesc is set, set description:
-			if (isset($_REQUEST["subToDesc"])) {
-				$tmpDesc = $filePathArray[$x];
-				// get last subdir 'last' from 'some/path/last'
-				if (strpos($tmpDesc,"/")>0) { $tmpDesc = substr($tmpDesc,strrpos($tmpDesc,"/")+1,999); }
-				if (substr($tmpDesc,0,1)=="/") { $tmpDesc = substr($tmpDesc,1); }
-				if (substr($tmpDesc,-1,1)=="/") { $tmpDesc = substr($tmpDesc,0,strlen($tmpDesc)-1); }
-			} else {
-				$tmpDesc = '';
 			}
 
 			$fileId	= $filegallib->insert_file($tmpGalId, $name,
