@@ -23,7 +23,7 @@ function smarty_function_jscalendar($params, &$smarty) {
 	if (isset($params['date'])) {
 		$date = preg_replace('/[^0-9]/','',$params['date']);
 	} else {
-		$date = date('U');
+		$date = $tikilib->now;
 	}
 
 	if (isset($params['showtime']) and $params['showtime'] == 'y') {

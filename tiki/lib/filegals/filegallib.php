@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.62 2007-02-09 12:31:28 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.63 2007-02-12 10:57:43 mose Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -73,7 +73,6 @@ class FileGalLib extends TikiLib {
 		}
 
 		$description = strip_tags($description);
-		$now = date("U");
 
 		if ($fgal_allow_duplicates != 'y' &&
 		    $this->getOne("select count(*) from `tiki_files` where `hash`=?",array($checksum)))
@@ -86,13 +85,14 @@ class FileGalLib extends TikiLib {
 				return false;
 		}
 		if (empty($created))
-			$created = $now;
+			$created = $this->now;
 		
 		$query = "insert into `tiki_files`(`galleryId`,`name`,`description`,`filename`,`filesize`,`filetype`,`data`,`user`,`created`,`downloads`,`path`,`hash`,`search_data`,`lastModif`,`lastModifUser`, `comment`, `author`, `lockedby`)
                           values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		$result = $this->query($query,array($galleryId,$name,$description,$filename,$size,$type,$data,$creator,$created,0,$path,$checksum,$search_data,(int)$now,$user,$comment, $author, $lockedby));
+		$result =
+		$this->query($query,array($galleryId,$name,$description,$filename,$size,$type,$data,$creator,$created,0,$path,$checksum,$search_data,(int)$this->now,$user,$comment, $author, $lockedby));
 		$query = "update `tiki_file_galleries` set `lastModif`=? where `galleryId`=?";
-		$result = $this->query($query,array((int) $now,$galleryId));
+		$result = $this->query($query,array((int) $this->now,$galleryId));
 		$query = "select max(`fileId`) from `tiki_files` where `created`=?";
 		$fileId = $this->getOne($query,array((int) $created));
 
@@ -309,14 +309,13 @@ class FileGalLib extends TikiLib {
 		$name = strip_tags($name);
 
 		$description = strip_tags($description);
-		$now = date("U");
 		if ($sort_mode == 'created_desc') {
 			$sort_mode = null;
 		}
 
 		if ($galleryId > 0) {
 			$query = "update `tiki_file_galleries` set `name`=?, `maxRows`=?, `description`=?,`lastModif`=?, `public`=?, `visible`=?,`show_icon`=?,`show_id`=?,`show_name`=?,`show_description`=?,`show_size`=?,`show_created`=?,`show_dl`=?,`max_desc`=?,`type`=?,`parentId`=?,`user`=?,`lockable`=?,`show_lockedby`=?, `archives`=?, `sort_mode`=?, `show_modified`=?, `show_creator`=?, `show_author`=? where `galleryId`=?";
-			$bindvars=array($name,(int) $maxRows,$description,(int) $now,$public,$visible,$show_icon,$show_id,$show_name,$show_description,$show_size,$show_created,$show_dl,(int) $max_desc, $fgal_type, $parentId, $user, $lockable, $show_lockedby, $archives, $sort_mode, $show_modified, $show_creator, $show_author,(int)$galleryId);
+			$bindvars=array($name,(int) $maxRows,$description,(int) $this->now,$public,$visible,$show_icon,$show_id,$show_name,$show_description,$show_size,$show_created,$show_dl,(int) $max_desc, $fgal_type, $parentId, $user, $lockable, $show_lockedby, $archives, $sort_mode, $show_modified, $show_creator, $show_author,(int)$galleryId);
 
 			$result = $this->query($query,$bindvars);
 
@@ -328,12 +327,12 @@ class FileGalLib extends TikiLib {
 			$query = "insert into `tiki_file_galleries`(`name`,`description`,`created`,`user`,`lastModif`,`maxRows`,`public`,`hits`,`visible`,`show_id`,`show_icon`,`show_name`,`show_description`,`show_created`,`show_dl`,`max_desc`,`type`, `parentId`, `lockable`, `show_lockedby`, `archives`, `sort_mode`, `show_modified`, `show_creator`, `show_author`)
                                     values (?,?,?,?,?,?,?,?,?,
                                     ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-			$bindvars=array($name,$description,(int) $now,$user,(int) $now,(int) $maxRows,$public,0,$visible,
+			$bindvars=array($name,$description,(int) $this->now,$user,(int) $this->now,(int) $maxRows,$public,0,$visible,
 							$show_id,$show_icon,$show_name,$show_description,$show_created,$show_dl,(int) $max_desc, $fgal_type, $parentId, $lockable, $show_lockedby, $archives, $sort_mode, $show_modified, $show_creator, $show_author);
 
 			$result = $this->query($query,$bindvars);
 			$galleryId
-				= $this->getOne("select max(`galleryId`) from `tiki_file_galleries` where `name`=? and `lastModif`=?",array($name,(int) $now));
+				= $this->getOne("select max(`galleryId`) from `tiki_file_galleries` where `name`=? and `lastModif`=?",array($name,(int) $this->now));
 			global $feature_score;
 			if ($feature_score == 'y') {
 			    $this->score_event($user, 'fgallery_new');
@@ -447,20 +446,16 @@ class FileGalLib extends TikiLib {
 		// Update the fields in the database
 		$name = strip_tags($name);
 
-		$now = date("U");
-
 		$description = strip_tags($description);
 		$query = "update `tiki_files` set `name`=?, `description`=?, `lastModif`=?, `lastModifUser`=? where `fileId`=?";
-		$result = $this->query($query,array($name,$description,(int)$now,$user,$id));
+		$result = $this->query($query,array($name,$description,(int)$this->now,$user,$id));
 
 		// Get the gallery id for the file and update the last modified field
-		$now = date("U");
 		$galleryId = $this->getOne("select `galleryId` from `tiki_files` where `fileId`=?",array($id));
 
 		if ($galleryId) {
 			$query = "update `tiki_file_galleries` set `lastModif`=? where `galleryId`=?";
-
-			$this->query($query,array($now,$galleryId));
+			$this->query($query,array($this->now,$galleryId));
 		}
 
 		return $result;
@@ -489,7 +484,6 @@ class FileGalLib extends TikiLib {
 		}
 
 		$description = strip_tags($description);
-		$now = date("U");
 
 		$search_data = '';
 		if ($tikilib->get_preference("fgal_enable_auto_indexing") != 'n') {
@@ -501,7 +495,7 @@ class FileGalLib extends TikiLib {
 
 		if ($gal_info['archives'] == -1 || !$didFileReplace) { // no archive
 			$query = "update `tiki_files` set `name`=?, `description`=?, `filename`=?, `filesize`=?, `filetype`=?, `data`=?, `lastModifUser`=?, `lastModif`=?, `path`=?, `hash`=?, `search_data`=?, `author`=?, `user`=?, `lockedby`=?  where `fileId`=?";
-			if (!($result = $this->query($query,array($name,$description,$filename,$size,$type,$data,$user,(int)$now,$path,$checksum,$search_data,$author,$creator,$lockedby, $id))))
+			if (!($result = $this->query($query,array($name,$description,$filename,$size,$type,$data,$user,(int)$this->now,$path,$checksum,$search_data,$author,$creator,$lockedby, $id))))
 				return false;
 			
 			if ($didFileReplace && !empty($oldPath)) {
@@ -539,7 +533,7 @@ class FileGalLib extends TikiLib {
 		if ($gal_info['galleryId']) {
 			$query = "update `tiki_file_galleries` set `lastModif`=? where `galleryId`=?";
 
-			$this->query($query,array($now,$gal_info['galleryId']));
+			$this->query($query,array($this->now,$gal_info['galleryId']));
 		}
 
 		return $id;
