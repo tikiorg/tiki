@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-tracker_rss.php,v 1.7 2007-02-04 20:09:33 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-tracker_rss.php,v 1.8 2007-02-12 12:57:12 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -38,7 +38,6 @@ if ($output["data"]=="EMPTY") {
 	$tmp = $tikilib->get_tracker($_REQUEST["$id"]);
 	
 	$title = tra("Tiki RSS feed for individual trackers: ").$tmp["name"];
-	$now = date("U");
 	$desc = $tmp["description"];
 	$tmp=null;
 	

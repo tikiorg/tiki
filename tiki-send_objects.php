@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_objects.php,v 1.23 2007-02-04 20:09:33 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_objects.php,v 1.24 2007-02-12 12:57:12 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -182,7 +182,7 @@ $smarty->assign('form_sendarticles', $form_sendarticles);
 $smarty->assign('form_sendpages', $form_sendpages);
 
 $pages = $tikilib->list_pageNames(0, -1, 'pageName_asc', $find);
-$articles = $tikilib->list_articles(0, -1, 'publishDate_desc', $find, date("U"), $user);
+$articles = $tikilib->list_articles(0, -1, 'publishDate_desc', $find, $tikilib->now, $user);
 $smarty->assign_by_ref('pages', $pages["data"]);
 $smarty->assign_by_ref('articles', $articles["data"]);
 
