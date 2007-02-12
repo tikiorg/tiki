@@ -22,21 +22,20 @@ class ChatLib extends TikiLib {
 	}
 
 	function send_message($user, $channelId, $data) {
-		$now = date("U");
 		$info = $this->get_channel($channelId);
 		$name = $info["name"];
 		// Check if the user is registered in the channel or update the user timestamp
 		$query = "delete from `tiki_chat_users` where `nickname`=? and `channelId`=?";
 		$result = $this->query($query,array($user,(int)$channelId),-1,-1,false);
 		$query = "insert into `tiki_chat_users`(`nickname`,`channelId`,`timestamp`) values(?,?,?)";
-		$result = $this->query($query,array($user,(int)$channelId,(int)$now));
+		$result = $this->query($query,array($user,(int)$channelId,(int)$this->now));
 
 		// :TODO: If logging is used then log the message
 		//$log = fopen("logs/${name}.txt","a");
 		//fwrite($log,"$posterName: $data\n");
 		//fclose($log);
 		$query = "insert into `tiki_chat_messages`(`channelId`,`poster`,`timestamp`,`data`) values(?,?,?,?)";
-		$result = $this->query($query,array((int)$channelId,$user,(int)$now,$data));
+		$result = $this->query($query,array((int)$channelId,$user,(int)$this->now,$data));
 		return true;
 	}
 
@@ -48,34 +47,30 @@ class ChatLib extends TikiLib {
 	}
 
 	function send_private_message($user, $toNickname, $data) {
-		$now = date("U");
 		// :TODO: If logging is used then log the message
 		//$log = fopen("logs/${name}.txt","a");
 		//fwrite($log,"$posterName: $data\n");
 		//fclose($log);
 		$query = "insert into `tiki_private_messages`(`poster`,`timestamp`,`message`,`toNickname`) values(?,?,?,?)";
-		$result = $this->query($query,array($user,(int)$now,$data,$toNickname));
+		$result = $this->query($query,array($user,(int)$this->now,$data,$toNickname));
 		return true;
 	}
 
 	function user_to_channel($user, $channelId) {
-		$now = date("U");
 		$query = "delete from `tiki_chat_users` where `nickname`=?";
 		$result = $this->query($query,array($user));
 		$query = "insert into `tiki_chat_users`(`nickname`,`channelId`,`timestamp`) values(?,?,?)";
-		$result = $this->query($query,array($user,(int)$channelId,(int)$now));
+		$result = $this->query($query,array($user,(int)$channelId,(int)$this->now));
 	}
 
 	function get_chat_users($channelId) {
-		global $tikilib;
-		$now = date("U") - (5 * 60);
 		$query = "delete from `tiki_chat_users` where `timestamp` < ?";
-		$result = $this->query($query,array((int)$now));
+		$result = $this->query($query,array((int)$this->now));
 		$query = "select `nickname` from `tiki_chat_users` where `channelId`=?";
 		$result = $this->query($query,array((int)$channelId));
 		$ret = array();
 		while ($res = $result->fetchRow()) {
-			$realName = $tikilib->getOne( "select `value` from `tiki_user_preferences` where `user`=? and prefName = 'realName'", array( $res["nickname"] ) );
+			$realName = $this->getOne( "select `value` from `tiki_user_preferences` where `user`=? and prefName = 'realName'", array( $res["nickname"] ) );
 			if( $realName )
 			{
 				$res["displayName"] = $realName;
@@ -130,7 +125,7 @@ class ChatLib extends TikiLib {
 	function purge_private_messages($user, $minutes) {
 		// :TODO: pass old messages to the message log table
 		$secs = $minutes * 60;
-		$last = date("U") - $secs;
+		$last = $this->now - $secs;
 		$query = "delete from `tiki_private_messages` where `toNickname`=? and `timestamp`<?";
 		$result = $this->query($query,array($user, (int)$last));
 		// :TODO: delete from modMessages y privateMessages
@@ -140,7 +135,7 @@ class ChatLib extends TikiLib {
 	function purge_messages($minutes) {
 		// :TODO: pass old messages to the message log table
 		$secs = $minutes * 60;
-		$last = date("U") - $secs;
+		$last = $this->now - $secs;
 		$query = "delete from `tiki_chat_messages` where `timestamp`<?";
 		$result = $this->query($query,array((int)$last));
 		// :TODO: delete from modMessages y privateMessages

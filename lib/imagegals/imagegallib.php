@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.89 2007-02-09 12:31:29 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.90 2007-02-12 11:12:55 mose Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -811,7 +811,6 @@ class ImageGalsLib extends TikiLib {
 		if ($t_data && is_string($t_data)) {
 			$t_data = array('data' => $t_data, 'xsize' => 0, 'ysize' => 0);
 		}
-		$now = date("U");
 		$path = '';
 
 		if ($gal_use_db == 'y') {
@@ -847,9 +846,9 @@ class ImageGalsLib extends TikiLib {
 
 		$query = "insert into `tiki_images`(`galleryId`,`name`,`description`,`user`,`created`,`hits`,`path`,`lat`,`lon`)
                           values(?,?,?,?,?,?,?,?,?)";
-		$result = $this->query($query,array((int)$galleryId,$name,$description,$user,(int)$now,0,$path,$lat,$lon));
+		$result = $this->query($query,array((int)$galleryId,$name,$description,$user,(int)$this->now,0,$path,$lat,$lon));
 		$query = "select max(`imageId`) from `tiki_images` where `created`=?";
-		$imageId = $this->getOne($query,array((int)$now));
+		$imageId = $this->getOne($query,array((int)$this->now));
 		// insert data
 		$this->blob_encode($data);
 		$query = "insert into `tiki_images_data`(`imageId`,`xsize`,`ysize`,
@@ -868,7 +867,7 @@ class ImageGalsLib extends TikiLib {
 		}
 
 		$query = "update `tiki_galleries` set `lastModif`=? where `galleryId`=?";
-		$result = $this->query($query,array((int)$now,(int)$galleryId));
+		$result = $this->query($query,array((int)$this->now,(int)$galleryId));
 
 		global $feature_score;
 		if ($feature_score == 'y') {
@@ -1743,7 +1742,6 @@ class ImageGalsLib extends TikiLib {
 		$name = strip_tags($name);
 
 		$description = strip_tags($description);
-		$now = date("U");
 
 		// check if the gallery already exists. if yes: do update, if no: update it
 		if ($galleryId<1)
@@ -1760,13 +1758,13 @@ class ImageGalsLib extends TikiLib {
 		`showfilename`=?,`defaultscale`=?, `user`=?
 	       	where `galleryId`=?";
 
-			$result = $this->query($query,array($name,$visible,$geographic,(int)$maxRows,(int)$rowImages,(int)$thumbSizeX,(int)$thumbSizeY,$description,$theme,(int)$now,$public,$sortorder,$sortdirection,$galleryimage,(int)$parentgallery,$showname,$showimageid,$showdescription,$showcreated,$showuser,$showhits,$showxysize,$showfilesize,$showfilename,$defaultscale,$user,(int)$galleryId));
+			$result = $this->query($query,array($name,$visible,$geographic,(int)$maxRows,(int)$rowImages,(int)$thumbSizeX,(int)$thumbSizeY,$description,$theme,(int)$this->now,$public,$sortorder,$sortdirection,$galleryimage,(int)$parentgallery,$showname,$showimageid,$showdescription,$showcreated,$showuser,$showhits,$showxysize,$showfilesize,$showfilename,$defaultscale,$user,(int)$galleryId));
 		} else {
 			// Create a new record
 			$query = "insert into `tiki_galleries`(`name`,`description`,`theme`,`created`,`user`,`lastModif`,`maxRows`,`rowImages`,`thumbSizeX`,`thumbSizeY`,`public`,`hits`,`visible`,`sortorder`,`sortdirection`,`galleryimage`,`parentgallery`,`showname`,`showimageid`,`showdescription`,`showcreated`,`showuser`,`showhits`,`showxysize`,`showfilesize`,`showfilename`,`defaultscale`,`geographic`) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-			$bindvars=array($name,$description,$theme,(int) $now,$user,(int) $now,(int) $maxRows,(int) $rowImages,(int) $thumbSizeX,(int) $thumbSizeY,$public,0,$visible,$sortorder,$sortdirection,$galleryimage,(int)$parentgallery,$showname,$showimageid,$showdescription,$showcreated,$showuser,$showhits,$showxysize,$showfilesize,$showfilename,$defaultscale,$geographic);
+			$bindvars=array($name,$description,$theme,(int) $this->now,$user,(int) $this->now,(int) $maxRows,(int) $rowImages,(int) $thumbSizeX,(int) $thumbSizeY,$public,0,$visible,$sortorder,$sortdirection,$galleryimage,(int)$parentgallery,$showname,$showimageid,$showdescription,$showcreated,$showuser,$showhits,$showxysize,$showfilesize,$showfilename,$defaultscale,$geographic);
 			$result = $this->query($query,$bindvars);
-			$galleryId = $this->getOne("select max(`galleryId`) from `tiki_galleries` where `name`=? and `created`=?",array($name,(int) $now));
+			$galleryId = $this->getOne("select max(`galleryId`) from `tiki_galleries` where `name`=? and `created`=?",array($name,(int) $this->now));
 
 			global $feature_score;
 			if ($feature_score == 'y') {

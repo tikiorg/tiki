@@ -22,11 +22,9 @@ class UserFilesLib extends TikiLib {
 	}
 
 	function upload_userfile($user, $name, $filename, $filetype, $filesize, $data, $path) {
-
-		$now = date("U");
 		$query = "insert into `tiki_userfiles`(`user`,`name`,`filename`,`filetype`,`filesize`,`data`,`created`,`hits`,`path`)
     values(?,?,?,?,?,?,?,?,?)";
-		$this->query($query,array($user,$name,$filename,$filetype,(int) $filesize,$data,(int) $now,0,$path));
+		$this->query($query,array($user,$name,$filename,$filetype,(int) $filesize,$data,(int) $this->now,0,$path));
 	}
 
 	function list_userfiles($user, $offset, $maxRecords, $sort_mode, $find) {

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-mailbox.php,v 1.21 2007-02-04 20:09:31 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-mailbox.php,v 1.22 2007-02-12 11:12:56 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -46,10 +46,10 @@ $mess_archiveAfter = $messulib->get_user_preference($user, 'mess_archiveAfter', 
 $smarty->assign_by_ref('mess_archiveAfter', $mess_archiveAfter);
 if ($mess_archiveAfter>0) {
 	// get date of last check. if not set yet, set it to 'before 10 minutes'
-	$mess_archiveLast = $messulib->get_user_preference($user, 'mess_archiveLast', date("U")-600);
-	// only run auto-archive job every 10 minutes:
-	if (date("U")-$mess_archiveLast>=600) {
-		$messulib->set_user_preference($user, 'mess_archiveLast', date("U"));
+	$mess_archiveLast = $messulib->get_user_preference($user, 'mess_archiveLast', $tikilib->now - 600);
+	// only run auto-archive job every 10 minutes: 
+	if ($tikiilb->now - $mess_archiveLast >= 600) {
+		$messulib->set_user_preference($user, 'mess_archiveLast', $tikilib->now);
 		$messulib->archive_messages($user, $mess_archiveAfter);
 	}
 }

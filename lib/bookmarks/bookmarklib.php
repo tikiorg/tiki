@@ -94,19 +94,17 @@ class BookmarkLib extends TikiLib {
 	}
 
 	function replace_url($urlId, $folderId, $name, $url, $user) {
-		$now = date("U");
-
 		if ($urlId) {
 			$query = "update `tiki_user_bookmarks_urls` set `user`=?,`lastUpdated`=?,`folderId`=?,`name`=?,`url`=? where `urlId`=?";
-			$bindvars=array($user,(int) $now,$folderId,$name,$url,$urlId);
+			$bindvars=array($user,(int) $this->now,$folderId,$name,$url,$urlId);
 		} else {
 			$query = " insert into `tiki_user_bookmarks_urls`(`name`,`url`,`data`,`lastUpdated`,`folderId`,`user`)
       values(?,?,?,?,?,?)";
-      			$bindvars=array($name,$url,'',(int) $now,$folderId,$user);
+      			$bindvars=array($name,$url,'',(int) $this->now,$folderId,$user);
 		}
 
 		$result = $this->query($query,$bindvars);
-		$id = $this->getOne("select max(`urlId`) from `tiki_user_bookmarks_urls` where `url`=? and `lastUpdated`=?",array($url,(int) $now));
+		$id = $this->getOne("select max(`urlId`) from `tiki_user_bookmarks_urls` where `url`=? and `lastUpdated`=?",array($url,(int) $this->now));
 		return $id;
 	}
 
@@ -121,9 +119,8 @@ class BookmarkLib extends TikiLib {
 		if (!$data)
 			return;
 
-		$now = date("U");
 		$query = "update `tiki_user_bookmarks_urls` set `lastUpdated`=?, `data`=? where `urlId`=?";
-		$result = $this->query($query,array((int) $now,$data,$urlId));
+		$result = $this->query($query,array((int) $this->now,$data,$urlId));
 		return true;
 	}
 

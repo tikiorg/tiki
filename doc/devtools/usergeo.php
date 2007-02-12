@@ -5,7 +5,7 @@ include "/usr/local/tikiwiki/db/local.php";
 $db = mysql_connect($host_tiki, $user_tiki, $pass_tiki);
 mysql_select_db($dbs_tiki);
 
-$pre = "usermap_". date("Y-m-d");
+$pre = "usermap_". gmdate("Y-m-d");
 $mif = "mif_$pre.mif";
 $mid = "mif_$pre.mid";
 
