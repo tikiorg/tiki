@@ -12,6 +12,7 @@ class BannerLib extends TikiLib {
 	}
 
 	function select_banner($zone) {
+	  return;
 		// Things to check
 		// UseDates and dates
 		// Hours
@@ -21,7 +22,7 @@ class BannerLib extends TikiLib {
 		# TODO localize
 		$dw = "`".strtolower($this->date_format("%a"))."`";
 
-		$hour = $this->date_format("%H"). $this->date_foirmat("%M");
+		$hour = $this->date_format("%H"). $this->date_format("%M");
 		$raw = '';
 		//
 		//
