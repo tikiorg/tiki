@@ -21,7 +21,7 @@ class BannerLib extends TikiLib {
 		# TODO localize
 		$dw = "`".strtolower($this->date_format("%a"))."`";
 
-		$hour = $this->date_format("%H"). $this->date_fomat("%M");
+		$hour = $this->date_format("%H"). $this->date_foirmat("%M");
 		$raw = '';
 		//
 		//
