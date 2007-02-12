@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-take_quiz.php,v 1.22 2007-02-04 20:09:33 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-take_quiz.php,v 1.23 2007-02-12 12:57:12 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -104,7 +104,7 @@ $smarty->assign('ans', 'n');
 if (isset($_REQUEST["timeleft"])) {
 	$smarty->assign('ans', 'y');
 
-	$_SESSION["finishQuiz"] = date("U");
+	$_SESSION["finishQuiz"] = $tikilib->now;
 	$elapsed = $_SESSION["finishQuiz"] - $_SESSION["startQuiz"];
 
 	if ($user) {
@@ -192,7 +192,7 @@ if (isset($_REQUEST["timeleft"])) {
 
 //print("points: $points over $max<br />");
 } else {
-	$_SESSION["startQuiz"] = date("U");
+	$_SESSION["startQuiz"] = $tikilib->now;
 }
 
 $quiz_info["timeLimitsec"] = $quiz_info["timeLimit"] * 60;

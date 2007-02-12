@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-newsreader_servers.php,v 1.22 2007-02-04 20:09:33 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-newsreader_servers.php,v 1.23 2007-02-12 12:57:13 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -95,12 +95,6 @@ if (isset($_REQUEST["find"])) {
 $smarty->assign('find', $find);
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
-
-if (isset($_SESSION['thedate'])) {
-	$pdate = $_SESSION['thedate'];
-} else {
-	$pdate = date("U");
-}
 
 $channels = $newslib->list_servers($user, $offset, $maxRecords, $sort_mode, $find);
 $cant_pages = ceil($channels["cant"] / $maxRecords);

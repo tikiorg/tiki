@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-print.php,v 1.29 2007-02-04 20:09:33 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-print.php,v 1.30 2007-02-12 12:57:13 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -27,7 +27,7 @@ if ($feature_wiki_print != 'y') {
 
 // Create the HomePage if it doesn't exist
 if (!$tikilib->page_exists($wikiHomePage)) {
-	$tikilib->create_page($wikiHomePage, 0, '', date("U"), 'Tiki initialization');
+	$tikilib->create_page($wikiHomePage, 0, '', $tikilib->now, 'Tiki initialization');
 }
 
 // Get the page from the request var or default it to HomePage

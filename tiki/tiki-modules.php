@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.57 2007-02-04 20:09:33 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.58 2007-02-12 12:57:13 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -16,7 +16,6 @@ global $modseparateanon, $user, $userlib, $user_assigned_modules, $tiki_p_config
 global $language, $modallgroups, $smarty, $tikidomain, $tikilib, $section;
 
 clearstatcache();
-$now = date("U");
 
 if ($user != 'admin') {
 	$user_groups = $userlib->get_user_groups($user);
@@ -107,7 +106,6 @@ for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
 		}
 		$module_rows = $mod_reference["rows"];
 		$smarty->assign_by_ref('module_rows',$mod_reference["rows"]);
-//		if ((!file_exists($cachefile)) || (file_exists($nocache)) || (($now - filemtime($cachefile)) >= $mod_reference["cache_time"])) {
 			$mod_reference["data"] = '';
             $smarty->assign_by_ref('module_params', $module_params); // module code can unassign this if it wants to hide params
 			if (file_exists($phpfile)) {
