@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_submissions.php,v 1.18 2007-02-04 20:09:32 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_submissions.php,v 1.19 2007-02-12 12:14:14 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -83,17 +83,16 @@ if (!isset($_REQUEST["offset"])) {
 
 $smarty->assign_by_ref('offset', $offset);
 
-$now = date("U");
 if( ($tiki_p_admin == 'y') || ($tiki_p_admin_cms == 'y') ) {
   $pdate = '';
 } elseif(isset($_SESSION["thedate"])) {
-  if($_SESSION["thedate"]<$now) {
+  if($_SESSION["thedate"]<$tikilib->now) {
     $pdate = $_SESSION["thedate"]; 
   } else {
-    $pdate = $now;
+    $pdate = $tikilib->now;
   }
 } else {
-  $pdate = $now;
+  $pdate = $tikilib->now;
 }
 
 if (isset($_REQUEST["find"])) {
