@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.55 2007-02-09 04:59:50 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.56 2007-02-12 09:36:48 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -195,7 +195,7 @@ class NlLib extends TikiLib {
 		$query = "update `tiki_newsletter_subscriptions` set `valid`=? where `code`=?";
 		$result = $this->query($query,array('y',$code));
 		// Now send a welcome email
-		$smarty->assign('mail_date', date("U"));
+		$smarty->assign('mail_date', $this->now);
 		if ($res["isUser"] == "y") {
 			$user = $res["email"];
 			$email = $userlib->get_user_email($user);
@@ -243,7 +243,7 @@ class NlLib extends TikiLib {
 			$query = "delete from `tiki_newsletter_subscriptions` where `code`=?";
 		$result = $this->query($query,array($code), -1, -1, false);
 		// Now send a bye bye email
-		$smarty->assign('mail_date', date("U"));
+		$smarty->assign('mail_date', $this->now);
 		if ($res["isUser"] == "y") {
 			$user = $res["email"];
 			$email = $userlib->get_user_email($user);

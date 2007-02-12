@@ -85,11 +85,10 @@ class HtmlPagesLib extends TikiLib {
 	}
 
 	function replace_html_page($pageName, $type, $content, $refresh) {
-		$now = date("U");
 		$query = "delete from `tiki_html_pages` where ".$this->convert_binary()." `pageName`=?";
 		$this->query($query,array($pageName),-1,-1,false);
 		$query = "insert into `tiki_html_pages`(`pageName`,`content`,`type`,`created`,`refresh`) values(?,?,?,?,?)";
-		$result = $this->query($query,array($pageName,$content,$type,(int)$now,(int)$refresh));
+		$result = $this->query($query,array($pageName,$content,$type,(int)$this->now,(int)$refresh));
 		// For dynamic pages update the zones into the dynamic pages zone
 		preg_match_all("/\{ed id=([^\}]+)\}/", $content, $eds);
 		preg_match_all("/\{ted id=([^\}]+)\}/", $content, $teds);
