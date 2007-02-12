@@ -65,7 +65,7 @@
 <tr>
 <td class="{cycle advance=false}"><a class="link" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">{$channels[user].firstName}</a></td>
 <td class="{cycle advance=false}"><a class="link" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">{$channels[user].lastName}</a></td>
-<td class="{cycle advance=false}"><a class="link" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">{$channels[user].email}</a></td>
+<td class="{cycle advance=false}"><a class="link" href="mailto:{$channels[user].email}">{$channels[user].email}</a></td>
 <td class="{cycle advance=false}">{$channels[user].nickname}</td>
 <td class="{cycle advance=false}">{if isset($channels[user].groups)}{foreach item=it name=gr from=$channels[user].groups}{$it}{if $smarty.foreach.gr.index+1 ne $smarty.foreach.gr.last}, {/if}{/foreach}{else}&nbsp;{/if}</td>
 <td class="{cycle advance=false}">&nbsp;
