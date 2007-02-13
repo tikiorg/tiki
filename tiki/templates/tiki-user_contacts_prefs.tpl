@@ -19,12 +19,23 @@
 <form method='POST' action='tiki-user_contacts_prefs.php'>
 <table class="normal">
   <tr>
+	<td class="heading" colspan=2>{tr}Order{/tr}</td>
   	<td class="heading">{tr}Field{/tr}</td>
 	<td class="heading">{tr}Action{/tr}</td>
   </tr>
 {cycle values="odd,even" print=false}
-  {foreach from=$exts item=ext key=k}
+  {foreach from=$exts item=ext key=k name=e}
   <tr>
+  	<td class="{cycle advance=false}" width="2%">
+		{if not $smarty.foreach.e.first}
+		<a href="?ext_up={$ext.fieldId}" title="{tr}up{/tr}"><img src="pics/icons/resultset_up.png" border="0" height="16" width="16" alt='{tr}up{/tr}' /></a>
+		{/if}
+	</td>
+  	<td class="{cycle advance=false}" width="2%">
+		{if not $smarty.foreach.e.last}
+		<a href="?ext_down={$ext.fieldId}" title="{tr}down{/tr}"><img src="pics/icons/resultset_down.png" border="0" height="16" width="16" alt='{tr}down{/tr}' /></a>
+		{/if}
+	</td>
 	<td class="{cycle advance=false}">{$ext.fieldname|escape}</td>
   	<td class="{cycle advance=true}">
 		{if $ext.show eq 'y'}

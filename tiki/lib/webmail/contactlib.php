@@ -7,7 +7,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class ContactLib extends TikiLib {
-	var $ext_list_cache=NULL;
 
 	function ContactLib($db) {
 		$this->TikiLib($db);
@@ -166,8 +165,7 @@ class ContactLib extends TikiLib {
 	}
 	function get_ext_list($user) {
 		global $user;
-		if ($this->ext_list_cache !== NULL) return $this->ext_list_cache;
-		$query = 'select * from `tiki_webmail_contacts_fields` where `user`=? order by `order`';
+		$query = 'select * from `tiki_webmail_contacts_fields` where `user`=? order by `order`, `fieldname`';
 		$bindvars = array($user);
 		
 		$res = $this->query($query, $bindvars);
@@ -180,10 +178,8 @@ class ContactLib extends TikiLib {
 			foreach($exts as $ext) $this->add_ext($user, $ext);
 			$res = $this->query($query, $bindvars);
 		}
-
 		while ($row = $res->fetchRow()) $ret[] = $row;
 
-		$this->ext_list_cache=$ret;
  		return $ret;
 	}
 	
