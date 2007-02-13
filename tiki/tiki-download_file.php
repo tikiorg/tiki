@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tiki-download_file.php,v 1.27 2006-11-17 18:32:45 sylvieg Exp $
+// CVS: $Id: tiki-download_file.php,v 1.28 2007-02-13 13:28:30 sylvieg Exp $
 // Initialization
 include_once("lib/init/initlib.php");
 require_once('tiki-setup.php');
@@ -113,7 +113,7 @@ $smarty->assign('url_show',$tikilib->httpPrefix().$foo2);
 $tikilib->add_file_hit($_REQUEST["fileId"]);
 
 $type=&$info["filetype"];
-$file=&$info["filename"];
+$file = preg_replace('/.*([^\/]*)$/U','$1', $info['filename']); // IE6 can not download file with / in the name (the / can be there from a previous bug)
 $content=&$info["data"];
 
 //add a hit
