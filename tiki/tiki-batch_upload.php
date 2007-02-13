@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-batch_upload.php,v 1.13 2006-12-03 18:33:38 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-batch_upload.php,v 1.14 2007-02-13 14:25:17 sylvieg Exp $
 
 $section = 'galleries';
 require_once ('tiki-setup.php');
@@ -226,7 +226,7 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['imgs']) and is_array($
 			else
 				$tmpDesc = '';
 
-			// add image to gallery			
+			// add image to gallery
 			$imageId = $imagegallib->insert_image($tmpGalId, $tmpName, $tmpDesc, $imgArray[$x], $type, $data, $filesize, $size[0], $size[1], $user, '', '');
 			if (!$imageId) {
 				$feedback[] = "!!!". sprintf(tra('Image %s upload failed.'),$imgArray[$x]);
@@ -251,9 +251,7 @@ $smarty->assign('feedback', $feedback);
 if (isset($_REQUEST["galleryId"])) {
 	$smarty->assign_by_ref('galleryId', $_REQUEST["galleryId"]);
 	$smarty->assign('permAddGallery', 'n');
-	if ($userlib->object_has_permission($user, $_REQUEST["galleryId"], 'image gallery', 'tiki_p_create_galleries')) {
-		$smarty->assign('permAddGallery', 'y');
-	} elseif (($tiki_p_admin_galleries == 'y') || ($tiki_p_create_galleries == 'y')) {
+	if ($tiki_p_admin_galleries == 'y' || $userlib->object_has_permission($user, $_REQUEST["galleryId"], 'image gallery', 'tiki_p_create_galleries')) {
 		$smarty->assign('permAddGallery', 'y');
 	}
 } else {
