@@ -756,7 +756,7 @@ function list_structures($offset, $maxRecords, $sort_mode, $find) {
 	$result = $this->query($query,array((int)$page_ref_id));
 	$res = $result->fetchRow();
 	if(empty($res['description'])) $res['description']=$res['pageName'];
-	$name = $res['description'].'|'.$res['pageName'];
+	$name = str_replace("'","\'",$res['description'].'|'.$res['pageName']);
 	$code = '';
 	$code.= "'$name'=>";
 	$query = 'select * from `tiki_structures` ts, `tiki_pages` tp  where tp.`page_id`=ts.`page_id` and `parent_id`=?';
