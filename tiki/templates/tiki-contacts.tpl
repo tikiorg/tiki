@@ -64,6 +64,9 @@
 <td class="heading"><a class="tableheading" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastName_desc'}lastName_asc{else}lastName_desc{/if}">{tr}Last Name{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}Email{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'nickname_desc'}nickname_asc{else}nickname_desc{/if}">{tr}Nickname{/tr}</a></td>
+{foreach from=$exts item=ext key=k}{if $ext.show eq 'y'}
+<td class="heading"><a class="tableheading">{$ext.tra}</a></td>
+{/if}{/foreach}
 <td class="heading">{tr}Groups{/tr}</td>
 <td class="heading">{tr}Action{/tr}</td>
 </tr>
@@ -79,6 +82,9 @@
 <td class="{cycle advance=false}"><a class="link" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">{$channels[user].lastName}</a></td>
 <td class="{cycle advance=false}"><a class="link" href="mailto:{$channels[user].email}">{$channels[user].email}</a></td>
 <td class="{cycle advance=false}">{$channels[user].nickname}</td>
+{foreach from=$exts item=ext key=e}{if $ext.show eq 'y'}
+	<td class="{cycle advance=false}">{$channels[user].ext[$e]}</td>
+{/if}{/foreach}
 <td class="{cycle advance=false}">{if isset($channels[user].groups)}{foreach item=it name=gr from=$channels[user].groups}{$it}{if $smarty.foreach.gr.index+1 ne $smarty.foreach.gr.last}, {/if}{/foreach}{else}&nbsp;{/if}</td>
 <td class="{cycle advance=false}">&nbsp;
 {if $channels[user].user eq $user}
