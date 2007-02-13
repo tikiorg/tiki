@@ -39,13 +39,14 @@ class ContactLib extends TikiLib {
 			$cant++;
 			$query = "select `groupName` from `tiki_webmail_contacts_groups` where `contactId`=?";
 			$res2 = $this->query($query,array((int)$res['contactId']));
-			$ret2 = array();
 			if ($res2) {
-				while ($r2 = $res2->fetchRow()) {
-					$res['groups'][] = $r2['groupName'];
-				}
+				while ($r2 = $res2->fetchRow()) $res['groups'][] = $r2['groupName'];
 			} else {
 				$res['groups'] = array();
+			}
+			$res2 = $this->query("select `fieldId`,`value` from `tiki_webmail_contacts_ext` where `contactId`=?", array((int)$res['contactId']));
+			if ($res2) {
+				while ($r2 = $res2->fetchRow()) $res['ext'][$r2['fieldId']]=$r2['value'];
 			}
 			$ret[] = $res;
 		}
@@ -113,10 +114,9 @@ class ContactLib extends TikiLib {
 		}
 		
 		$this->query('delete from `tiki_webmail_contacts_ext` where `contactId`=?', array((int)$contactId));
-		foreach($exts as $ext => $fieldId) {
-			if (strlen($fieldId))
-				$this->query('insert into `tiki_webmail_contacts_ext` (`contactId`,`fieldId`,`value`) values (?,?,?)',
-					     array((int)$contactId, $ext, $fieldId));
+		foreach($exts as $fieldId => $ext) if ($fieldId > 0 && $ext != '') {
+			$this->query('insert into `tiki_webmail_contacts_ext` (`contactId`,`fieldId`,`value`) values (?,?,?)',
+				array((int)$contactId, $fieldId, $ext));
 		}
 		return true;
 	}
@@ -167,36 +167,53 @@ class ContactLib extends TikiLib {
 	function get_ext_list($user) {
 		global $user;
 		if ($this->ext_list_cache !== NULL) return $this->ext_list_cache;
-
-		$res=$this->query("select `fieldId`, `fieldname` from tiki_webmail_contacts_fields where user=?", array($user));
+		$query = 'select * from `tiki_webmail_contacts_fields` where `user`=? order by `order`';
+		$bindvars = array($user);
+		
+		$res = $this->query($query, $bindvars);
+		// default values if no user is specified or if user has no ext list
 		if (!$res->numRows()) {
 			$exts=array('Personal Phone', 'Personal Mobile', 'Personal Fax', 'Work Phone', 'Work Mobile',
 				   'Work Fax', 'Company', 'Organization', 'Department', 'Division', 'Job Title',
 				   'Street Address', 'City', 'State', 'Zip Code', 'Country');
 			if (($user == NULL) || (empty($user))) return $exts;
 			foreach($exts as $ext) $this->add_ext($user, $ext);
-		} else {
-			$exts=array();
-			while($r = $res->fetchRow()) $exts[$r['fieldId']]=$r['fieldname'];
+			$res = $this->query($query, $bindvars);
 		}
 
-		$this->ext_list_cache=$exts;
- 		return $exts;
+		while ($row = $res->fetchRow()) $ret[] = $row;
+
+		$this->ext_list_cache=$ret;
+ 		return $ret;
 	}
 	
 	function add_ext($user, $name) {
-		$this->query("insert into tiki_webmail_contacts_fields (user, fieldname) values (?,?)",
+		$this->query("insert into `tiki_webmail_contacts_fields` (`user`, `fieldname`) values (?,?)",
 			     array($user, $name));
 	}
 	
 	function remove_ext($user, $fieldId) {
-		$this->query('delete from tiki_webmail_contacts_fields where user=? and fieldId=?',
+		$this->query('delete from `tiki_webmail_contacts_fields` where `user`=? and `fieldId`=?',
 			     array($user, $fieldId));
 	}
 	
 	function rename_ext($user, $fieldId, $newname) {
-		$this->query('update tiki_webmail_contacts_fields set fieldname=? where fieldId=? and user=?',
+		$this->query('update `tiki_webmail_contacts_fields` set `fieldname`=? where `fieldId`=? and `user`=?',
 			     array($newname, $fieldId, $user));
+	}
+
+	function modify_ext($user, $fieldId, $new_values) {
+		if ( is_array($new_values) ) {
+			foreach ( $new_values as $f => $v ) {
+				if ( $query != '' ) $query .= ', ';
+				$query .= "`$f`=?";
+				$bindvars[] = $v;
+			}
+			$query = "update `tiki_webmail_contacts_fields` set $query where `fieldId`=? and `user`=?";
+			$bindvars[] = $fieldId;
+			$bindvars[] = $user;
+			$this->query($query, $bindvars);
+		}
 	}
 }
 $contactlib = new ContactLib($dbTiki);

@@ -22,9 +22,12 @@ $smarty->assign('contactId', $_REQUEST["contactId"]);
 
 $exts=$contactlib->get_ext_list($user);
 $traducted_exts=array();
-foreach($exts as $k => $v) {
-    $traducted_exts[$k]['tra']=tra($v);
-    $traducted_exts[$k]['art']=$k;
+foreach($exts as $ext) {
+	$traducted_exts[$ext['fieldId']] = array(
+    		'tra' => tra($ext['fieldname']),
+		'art' => $ext['fieldId'],
+		'show' => $ext['show']
+	);
 }
 
 if ($_REQUEST["contactId"]) {
@@ -45,6 +48,7 @@ if ($_REQUEST["contactId"]) {
 	$info["nickname"] = '';
 	$info["groups"] = array();
 }
+
 $smarty->assign('info', $info);
 $smarty->assign('exts', $traducted_exts);
 
@@ -71,8 +75,8 @@ if (isset($_REQUEST["save"])) {
 	}
 	check_ticket('webmail-contact');
 	$ext_result=array();
-	foreach($exts as $k=>$ext)
-	    $ext_result[$k]=isset($_REQUEST['ext_'.$k]) ? $_REQUEST['ext_'.$k] : '';
+	foreach($exts as $ext)
+		$ext_result[$ext['fieldId']] = isset($_REQUEST['ext_'.$ext['fieldId']]) ? $_REQUEST['ext_'.$ext['fieldId']] : '';
 	$contactlib->replace_contact($_REQUEST["contactId"], $_REQUEST["firstName"], $_REQUEST["lastName"], $_REQUEST["email"], $_REQUEST["nickname"], $user, $_REQUEST['groups'], $ext_result);
 	$info["firstName"] = '';
 	$info["lastName"] = '';
@@ -112,16 +116,24 @@ $channels = $contactlib->list_contacts($user, $offset, $maxRecords, $sort_mode, 
 if ( isset($_REQUEST['view']) ) $_SESSION['UserContactsView'] = $_REQUEST['view'];
 $smarty->assign('view', $_SESSION['UserContactsView']);
 
+$cant = 0;
 if ( is_array($channels['data']) ) {
 
 	if ( $_SESSION['UserContactsView'] == 'list' ) {
 		$smarty->assign('all', array($channels['data']));
+		$cant = $channels['cant'];
 	} else {
 		// ordering contacts by groups
 
 		foreach ( $channels['data'] as $c ) {
-			if ( is_array($c['groups']) ) foreach ( $c['groups'] as $g ) $all['data'][$g][] = $c;
-			if ( $c['user'] == $user ) $all_personnal[] = $c;
+			if ( is_array($c['groups']) ) foreach ( $c['groups'] as $g ) {
+				$all['data'][$g][] = $c;
+				$cant++;
+			}
+			if ( $c['user'] == $user ) {
+				$all_personnal[] = $c;
+				$cant++;
+			}
 		}
 	
 		// sort contacts by group name
@@ -131,7 +143,6 @@ if ( is_array($channels['data']) ) {
 		$all['data']['user_personal_contacts'] =& $all_personnal;
 
 		$smarty->assign('all', $all['data']);
-		
 	}
 
 }
@@ -139,7 +150,6 @@ if ( is_array($channels['data']) ) {
 $groups = $userlib->get_user_groups($user);
 $smarty->assign('groups', $groups);
 
-$cant = $channels['cant'] + $all['cant'];
 $cant_pages = ceil($cant / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
 $smarty->assign('actual_page', 1 + ($offset / $maxRecords));

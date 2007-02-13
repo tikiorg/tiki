@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_contacts_prefs.php,v 1.3 2007-02-12 21:08:56 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_contacts_prefs.php,v 1.4 2007-02-13 01:26:04 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -23,18 +23,12 @@ if ($feature_contacts != 'y') {
 	die;
 }
 
-if (isset($_REQUEST['ext_remove'])) {
-	$contactlib->remove_ext($user, $_REQUEST['ext_remove']);
-}
+if (isset($_REQUEST['ext_remove'])) $contactlib->remove_ext($user, $_REQUEST['ext_remove']);
+if (isset($_REQUEST['ext_add'])) $contactlib->add_ext($user, $_REQUEST['ext_add']);
+if (isset($_REQUEST['ext_show'])) $contactlib->modify_ext($user, $_REQUEST['ext_show'], array('show' => 'y'));
+if (isset($_REQUEST['ext_hide'])) $contactlib->modify_ext($user, $_REQUEST['ext_hide'], array('show' => 'n'));
 
-if (isset($_REQUEST['ext_add'])) {
-	$contactlib->add_ext($user, $_REQUEST['ext_add']);
-}
-
-$tmpexts=$contactlib->get_ext_list($user);
-$exts=array();
-foreach($tmpexts as $fieldId => $ext) $exts[$fieldId]=$ext;
-
+$exts = $contactlib->get_ext_list($user);
 $smarty->assign('exts', $exts);
 
 include_once ('tiki-mytiki_shared.php');
