@@ -295,9 +295,7 @@ $smarty->assign('feedback', $feedback);
 if (isset($_REQUEST["galleryId"])) {
 	$smarty->assign_by_ref('galleryId', $_REQUEST["galleryId"]);
 	$smarty->assign('permAddGallery', 'n');
-	if ($userlib->object_has_permission($user, $_REQUEST["galleryId"], 'image gallery', 'tiki_p_create_file_galleries')) {
-		$smarty->assign('permAddGallery', 'y');
-	} elseif (($tiki_p_admin_galleries == 'y') || ($tiki_p_create_galleries == 'y')) {
+	if ($tiki_p_admin_file_galleries == 'y' || $userlib->object_has_permission($user, $_REQUEST["galleryId"], 'image gallery', 'tiki_p_create_file_galleries')) {
 		$smarty->assign('permAddGallery', 'y');
 	}
 } else {
