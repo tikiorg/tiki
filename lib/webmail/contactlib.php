@@ -135,6 +135,7 @@ class ContactLib extends TikiLib {
 		if ( $this->is_a_user_contact($contactId, $user, true) ) {
 			$this->query('delete from `tiki_webmail_contacts` where `contactId`=?', array((int)$contactId));
 			$this->query('delete from `tiki_webmail_contacts_groups` where `contactId`=?',array((int)$contactId));
+			$this->query('delete from `tiki_webmail_contacts_ext` where `contactId`=?',array((int)$contactId));
 			return true;
 		}
 		return false;
