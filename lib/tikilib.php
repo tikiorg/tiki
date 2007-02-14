@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.718 2007-02-09 15:27:41 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.719 2007-02-14 16:01:14 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -170,8 +170,8 @@ class TikiLib extends TikiDB {
 
 	function list_watches($offset, $maxRecords, $sort_mode, $find) {
 		if ($find) {	
-			$mid = ' where `event` like ?';
-			$bindvars = array('%'.$find.'%');
+			$mid = ' where `event` like ? or `email` like ?';
+			$bindvars = array('%'.$find.'%', '%'.$find.'%');
 		}
 		$query = 'select * from `tiki_user_watches`'.$mid.' order by '.$this->convert_sortmode($sort_mode);
 		$query_cant = 'select count(*) from `tiki_user_watches`'.$mid;
