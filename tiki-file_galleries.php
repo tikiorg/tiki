@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.41 2006-12-20 17:24:12 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.42 2007-02-14 15:16:04 sylvieg Exp $
 
 	require_once('tiki-setup.php');
 	include_once('lib/filegals/filegallib.php');
@@ -100,6 +100,7 @@
 	$smarty->assign('archives', -1);
 	$smarty->assign('edited','n');
 	$smarty->assign('edit_mode','n');
+	$smarty->assign('dup_mode','n');
 	$smarty->assign('visible','y');
 	$smarty->assign('fgal_type','default');
 	$smarty->assign('parentId', -1);
@@ -108,7 +109,7 @@
 	$smarty->assign('sortdirection', 'desc');
 	
 	// If we are editing an existing gallery prepare smarty variables
-	if(isset($_REQUEST["edit_mode"])&&$_REQUEST["edit_mode"]) {
+	if(isset($_REQUEST["edit_mode"])&& $_REQUEST["edit_mode"]) {
 	  // Get information about this galleryID and fill smarty variables
 	  $smarty->assign('edit_mode','y');
 	  $smarty->assign('edited','y');
@@ -148,6 +149,8 @@
 			$smarty->assign('sortdirection', 'desc');
 		}
 	  }
+	} elseif (!empty($_REQUEST['dup_mode'])) {
+		$smarty->assign('dup_mode','y');
 	}
 	
 	
@@ -248,7 +251,23 @@
 	  $smarty->assign('edit_mode','n');
 	}
 	
-	
+	if (!empty($_REQUEST['duplicate']) && !empty($_REQUEST['name']) && !empty($_REQUEST['galleryId'])) {
+		$newGalleryId = $filegallib->duplicate_file_gallery($_REQUEST['galleryId'], $_REQUEST['name'], isset($_REQUEST['description'])?$_REQUEST['description']: '' );
+	if (isset($_REQUEST['dupCateg']) && $_REQUEST['dupCateg'] == 'on' && $feature_categories == 'y') {
+		global $categlib; include_once('lib/categories/categlib.php');
+		$cats = $categlib->get_object_categories('file gallery', $_REQUEST['galleryId']);
+		$catObjectId = $categlib->add_categorized_object('file gallery', $newGalleryId, isset($_REQUEST['description'])?$_REQUEST['description']: '', $_REQUEST['name'], "tiki-list_file_gallery.php?galleryId=$newGalleryId");
+		foreach($cats as $cat) {
+			$categlib->categorize($catObjectId, $cat);
+		}
+	}
+	if (isset($_REQUEST['dupPerms']) && $_REQUEST['dupPerms'] == 'on') {
+		global $userlib; include_once('lib/userslib.php');
+		$userlib->copy_object_permissions($_REQUEST['galleryId'], $newGalleryId, 'file gallery');
+	}  
+	$_REQUEST['galleryId'] = $newGalleryId;
+	}
+
 	if(!empty($_REQUEST["removegal"])) {
 		if (!($info = $filegallib->get_file_gallery_info($_REQUEST['removegal']))) {
 			$smarty->assign('msg',tra('Incorrect param'));

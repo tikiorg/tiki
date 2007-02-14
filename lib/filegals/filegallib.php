@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.63 2007-02-12 10:57:43 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.64 2007-02-14 15:16:05 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -716,6 +716,12 @@ class FileGalLib extends TikiLib {
 		$query_cant = "select count(*) from `tiki_files` where $mid";
 		$cant = $this->getOne($query_cant, $bindvars);
 		return array('cant'=>$cant, 'data'=>$ret);
+	}
+	function duplicate_file_gallery($galleryId, $name, $description = '') {
+		global $user;
+		$info = $this->get_file_gallery_info($galleryId);
+		$newGalleryId = $this->replace_file_gallery(0, $name, $description, $user, $info['maxRows'], $info['public'], $info['visible'], $info['show_id'], $info['show_icon'], $info['show_name'], $info['show_size'], $info['show_description'], $info['show_created'], $info['show_dl'], $info['max_desc'], $info['type'], $info['parentId'], $info['lockable'], $info['show_lockedby'], $info['archives'], $info['sort_mode'], $info['show_modified'], $info['show_creator'], $info['show_author']);
+		return $newGalleryId;
 	}
 }
 global $dbTiki;
