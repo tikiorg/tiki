@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.49 2006-12-13 14:40:39 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.50 2007-02-14 15:16:04 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-file_galleries.php?galleryId={$galleryId}{if isset($edit_mode)}&amp;edit_mode=1{/if}">{tr}File Galleries{/tr}</a>
 
@@ -12,9 +12,17 @@
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}</h1>
 
+{if $edit_mode eq 'y' or $dup_mode eq 'y'}
+<a class="linkbut" href="tiki-file_galleries.php">{tr}list galleries{/tr}</a>
+{/if}
+{if $tiki_p_create_file_galleries eq 'y'and $edit_mode ne 'y'}
+<a class="linkbut" href="tiki-file_galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new file gallery{/tr}</a>
+{/if}
+{if $tiki_p_create_file_galleries eq 'y'and $dup_mode ne 'y'}
+<a class="linkbut" href="tiki-file_galleries.php?dup_mode=1">{tr}duplicate file gallery{/tr}</a>
+{/if}
 {if $tiki_p_admin eq 'y'}
 <a href="tiki-admin.php?page=fgal"><img src='pics/icons/wrench.png' border='0' alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
-<br /><br />
 {/if}
 
 {if $tiki_p_create_file_galleries eq 'y'}
@@ -22,8 +30,7 @@
 {if $galleryId eq 0}
 <h2>{tr}Create a file gallery{/tr}</h2>
 {else}
-<a class="linkbut" href="tiki-file_galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new file gallery{/tr}</a>
-<h3>{tr}Edit this file gallery:{/tr} {$name}</h3>
+<h2>{tr}Edit this file gallery:{/tr} {$name}</h2>
 {/if}
 {if $individual eq 'y'}
 <br /><a class="fgallink" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$galleryId}">{tr}There are individual permissions set for this file gallery{/tr}</a>
@@ -139,9 +146,29 @@
 {/if}
 {/if}
 
-<h2>{tr}Available File Galleries{/tr}</h2>
-{if $tiki_p_create_file_galleries eq 'y'}
-<a class="linkbut" href="tiki-file_galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new file gallery{/tr}</a><br /><br />
+{if $tiki_p_create_file_galleries eq 'y' and $dup_mode eq 'y'}
+<h2>{tr}Duplicate File Gallery{/tr}</h2>
+<form action="tiki-file_galleries.php" method="post">
+<table class="normal">
+<tr class="formcolor"><td>{tr}Name{/tr}</td><td><input type="text" name="name" value="{$name|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}Description{/tr}</td><td><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
+<tr class="formcolor"><td>{tr}File gallery{/tr}</td>
+<td>
+<select name="galleryId">
+{section name=ix loop=$allGalleries}
+<option value="{$allGalleries[ix].galleryId}">{$allGalleries[ix].name}</option>
+{/section}
+</select>
+</td>
+</tr>
+<tr class="formcolor"><td>{tr}Duplicate categories{/tr}</td><td><input type="checkbox" name="dupCateg" /></td></tr>
+<tr class="formcolor"><td>{tr}Duplicate perms{/tr}</td><td><input type="checkbox" name="dupPerms" /></td></tr>
+<tr class="formcolor"><td></td><td><input type="submit" name="duplicate" value="{tr}duplicate {/tr}" /></td></tr>
+</table>
+</form>
 {/if}
 
+{if $edit_mode ne 'y' and $dup_mode ne 'y'}
+<h2>{tr}Available File Galleries{/tr}</h2>
 {include file="file_galleries.tpl"}
+{/if}
