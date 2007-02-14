@@ -5,7 +5,7 @@ revision:
 0.0.1
 
 lastmodif:
-$Date: 2007-02-14 19:39:32 $
+$Date: 2007-02-14 20:33:48 $
 
 files: 
 features/cartoweb/tiki-list_maps.php tiki-list_maps.php
@@ -15,7 +15,7 @@ features/cartoweb/tiki-edit_layer.php tiki-edit_layer.php
 features/cartoweb/db/local2.php lib/db/local2.php
 features/cartoweb/lib/categories/categlib.php lib/categories/categlib.php
 features/cartoweb/lib/map/layer.php lib/map/layer.php
-features/cartoweb/lib/wiki-plugins/wiki-plugin_cartoweb.php lib/wiki-plugins/wiki-plugin_mapicon.php
+features/cartoweb/lib/wiki-plugins/wiki-plugin_cartoweb.php lib/wiki-plugins/wiki-plugin_cartoweb.php
 features/cartoweb/templates/tiki-edit_layer.tpl templates/tiki-edit_layer.tpl
 features/cartoweb/templates/tiki-edit_map.tpl templates/tiki-edit_map.tpl
 features/cartoweb/templates/tiki-list_layers.tpl templates/tiki-list_layers.tpl
