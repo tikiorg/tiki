@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.176 2007-02-09 17:27:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.177 2007-02-14 00:30:15 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -520,9 +520,11 @@ class TrackerLib extends TikiLib {
 		        $cat_table='';
 		        if (substr($sort_mode,0,2) == "f_") {
 			  list($a,$asort_mode,$corder) = split('_',$sort_mode);
-			  $mid .= " and ttif.`fieldId`=? ";
+			  $mid .= " and sttif.`fieldId`=? ";
 			  $bindvars[] = $asort_mode;
-			  $csort_mode = "ttif.`value` ";
+			  $csort_mode = "sttif.`value` ";
+			  $sort_tables = ', `tiki_tracker_item_fields` sttif, `tiki_tracker_fields` sttf';
+			  $sort_join_clauses = ' and tti.`itemId`=sttif.`itemId` and sttf.`fieldId`=sttif.`fieldId`';
 			} else {
 			  list($csort_mode,$corder) = split('_',$sort_mode);
 			  $csort_mode = "tti.`".$csort_mode."` ";
@@ -542,15 +544,14 @@ class TrackerLib extends TikiLib {
 			}
 
 			if ($numsort) {
-				$query = "select tti.*, ttif.`value`,ttf.`type`, right(lpad(ttif.`value`,40,'0'),40) as ok from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf $cat_table ";
-				$query.= " $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` group by tti.`itemId` order by ".$this->convert_sortmode('ok_'.$corder);
+				$sort_field = "right(lpad($csort_mode,40,'0'),40)";
+				$query = "select tti.*, ttif.`value`,ttf.`type`, $sort_field as ok from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf $sort_tables $cat_table $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` $sort_join_clauses group by tti.`itemId` order by ".$this->convert_sortmode('ok_'.$corder);
+				
 			} else {
-
-				$query = "select tti.*, ttif.`value`,ttf.`type` from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf $cat_table ";
-				$query.= " $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` group by tti.`itemId` order by ".$csort_mode.$corder;
+				$query = "select tti.*, ttif.`value`,ttf.`type` from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf $sort_tables $cat_table $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` $sort_join_clauses group by tti.`itemId` order by ".$csort_mode.$corder;
 			}
-			$query_cant = "select count(distinct ttif.`itemId`) from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf  $cat_table ";
-			$query_cant.= " $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` ";
+
+			$query_cant = "select count(distinct ttif.`itemId`) from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf $sort_tables $cat_table $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` ".$sort_join_clauses;
 		} else {
 
 			$query = "select tti.*, ttif.`value` from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif $mid and tti.`itemId`=ttif.`itemId` group by tti.`itemId` order by ".$this->convert_sortmode($sort_mode);
@@ -572,8 +573,7 @@ class TrackerLib extends TikiLib {
 			$itid = $res["itemId"];
 			$bindvars = array((string)$language,(int) $res["itemId"]);
 			$mid = " (`lang`=? or `lang` is null or `lang`='') and ";
-			$query2 = "select ttf.`fieldId`, `value`,`isPublic` from `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf
-				where ttif.`fieldId`=ttf.`fieldId` and $mid `itemId`=? order by `position` asc,lang desc";
+			$query2 = "select ttf.`fieldId`, `value`,`isPublic` from `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf where ttif.`fieldId`=ttf.`fieldId` and $mid `itemId`=? order by `position` asc,lang desc";
 			$result2 = $this->query($query2,$bindvars);
 			$last = array();
 			$res2 = array();
