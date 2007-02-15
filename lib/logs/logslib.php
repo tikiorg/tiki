@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.37 2007-02-12 08:21:45 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.38 2007-02-15 22:52:44 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -152,10 +152,12 @@ class LogsLib extends TikiLib {
 		}
 		if (!empty($hash)) {
 			$query = "insert into `tiki_actionlog_params` (`actionId`, `name`, `value`) values(?,?,?)";
-			$a = 0;
-			foreach ($hash as $param=>$val) {
-				$this->query($query, array($actions[$a], $param, $val));
-				$a++;
+			foreach ($actions as $a) {
+				foreach ($hash as $h) {
+			  		foreach ($h as $param=>$val) {
+						$this->query($query, array($a, $param, $val));
+					}
+				}
 			}
 		}
 		return  $actions[0];
@@ -213,7 +215,7 @@ class LogsLib extends TikiLib {
 		return split('_', str_replace('0', ' ', $conf));
 	}
 	function list_actions($action='', $objectType='',$user='',$offset=0,$maxRecords=-1,$sort_mode='lastModif_desc',$find='',$start=0,$end=0, $categId='') {
-		global $feature_contribution;
+		global $feature_contribution, $feature_contributor_wiki, $section;
 		global $contributionlib;include_once('lib/contribution/contributionlib.php');
 
 		$bindvars = array();
@@ -247,7 +249,6 @@ class LogsLib extends TikiLib {
 				$amid[] = "`user` = ?";
 				$bindvars[] = $user ;
 			}
-				
 		}
 		if ($start) {
 			$amid[] = "`lastModif` > ?";
@@ -285,6 +286,9 @@ class LogsLib extends TikiLib {
 					} else {
 						$res['contributions'] = $contributionlib->get_assigned_contributions($res['object'], $res['objectType']); // todo: do a left join
 					}
+				}
+				if ($feature_contributor_wiki == 'y' && $res['objectType'] == 'wiki page') {
+					$res['contributors'] = $this->get_contributors($res['actionId']);
 				}
 				if ($res['objectType'] == 'comment' && empty($res['categId'])) { // patch for xavi
 					global $categlib; include_once('lib/categories/categlib.php');
@@ -685,6 +689,15 @@ class LogsLib extends TikiLib {
 			}
 		}
 		return Array('label' => $labels, 'color' => $colors, 'x' => $x, 'y0' => $y0);
+	}
+	function get_contributors($actionId) {
+		$query = 'select uu.`login` from `tiki_actionlog_params` tap, `users_users` uu where tap.`actionId`=? and tap.`name`=? and uu.`userId`=tap.`value`';
+		$result = $this->query($query, array($actionId, 'contributor'));
+		$ret = array();
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res;
+		}
+		return $ret;
 	}
 
 }
