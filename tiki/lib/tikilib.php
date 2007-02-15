@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.719 2007-02-14 16:01:14 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.720 2007-02-15 22:40:56 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3781,7 +3781,10 @@ function add_pageview() {
 	return true;
     }
 
-    function create_page($name, $hits, $data, $lastModif, $comment, $user = 'admin', $ip = '0.0.0.0', $description = '', $lang='', $is_html = false, $lock_it='', $contributions=null) {
+	/** Create a wiki page
+	 @param array $hash- lock_it,contributions, contributors
+	 **/
+    function create_page($name, $hits, $data, $lastModif, $comment, $user = 'admin', $ip = '0.0.0.0', $description = '', $lang='', $is_html = false, $hash=null) {
 	global $smarty, $feature_contribution;
 	global $dbTiki;
 	global $sender_email;
@@ -3820,16 +3823,27 @@ function add_pageview() {
 		$midvar .= ',?';
 		$bindvars[] = $lang;
 	}
-	if ($lock_it == 'y' || $lock_it == 'on') {
+	if (!empty($hash['lock_it']) && ($hash['lock_it'] == 'y' || $hash['lock_it'] == 'on')) {
 		$mid .= ',`flag`,`lockedby`';
 		$midvar .= ',?,?';
 		$bindvars[] = 'L';
 		$bindvars[] = $user;
-	} else if ($lock_it == 'n') {
+	} else if (empty($hash['lock_it']) || $hash['lock_it'] == 'n') {
 		$mid .= ',`flag`,`lockedby`';
 		$midvar .= ',?,?';
 		$bindvars[] = '';
 		$bindvars[] = '';
+	}
+	if (empty($hash['contributions'])) {
+		$hash['contributions'] = '';
+	}
+	if (empty($hash['contributors'])) {
+		$hash2 = '';
+	} else {
+		foreach ($hash['contributors'] as $c) {
+			$hash3['contributor'] = $c;
+			$hash2[] = $hash3;
+		}
 	}
 	$query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`,`is_html`,`created`$mid) values(?,?,?,?,?,?,?,?,?,?,?,?,? $midvar)";
 	$result = $this->query($query, $bindvars);
@@ -3846,7 +3860,7 @@ function add_pageview() {
 	// Update the log
 	if (strtolower($name) != 'sandbox') {
 	    global $logslib; include_once("lib/logs/logslib.php");
-	    $logslib->add_action("Created", $name, 'wiki page', 'add='.strlen($data), '', '', '', '', $contributions);
+	    $logslib->add_action("Created", $name, 'wiki page', 'add='.strlen($data), '', '', '', '', $hash['contributions'], $hash2);
 	    //get_strings tra("Created");
 
 	    //  Deal with mail notifications.
@@ -3861,10 +3875,10 @@ function add_pageview() {
 	    //  }
 	    $foo = parse_url($_SERVER["REQUEST_URI"]);
 	    $machine = $this->httpPrefix(). dirname( $foo["path"] );
-	    sendWikiEmailNotification('wiki_page_created', $name, $user, $comment, 1, $data, $machine, '', false, $contributions);
+	    sendWikiEmailNotification('wiki_page_created', $name, $user, $comment, 1, $data, $machine, '', false, $hash['contributions']);
 		if ($feature_contribution == 'y') {
 			global $contributionlib; include_once('lib/contribution/contributionlib.php');
-			$contributionlib->assign_contributions($contributions, $name, 'wiki page', $description, $name, "tiki-index.php?page=".urlencode($name));
+			$contributionlib->assign_contributions($$hash['contributions'], $name, 'wiki page', $description, $name, "tiki-index.php?page=".urlencode($name));
 		}
 	}
 
@@ -5890,7 +5904,10 @@ if (!$simple_wiki) {
 	$this->query($query, array(0,$page) );
     }
 
-    function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $description = '', $minor = false, $lang='', $is_html=false, $lock_it='', $contributions='') {
+	/** Update a wiki page
+	 @param array $hash- lock_it,contributions, contributors
+	 **/
+    function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $description = '', $minor = false, $lang='', $is_html=false, $hash=null) {
 	global $smarty;
 	global $feature_contribution;
 	global $dbTiki;
@@ -5941,14 +5958,25 @@ if (!$simple_wiki) {
 		$mid .= ', `lang`=? ';
 		$bindvars[] = $lang;
 	}
-	if ($lock_it == 'y' || $lock_it == 'on') {
+	if (!empty($hash['lock_it']) && ($hash['lock_it'] == 'y' || $hash['lock_it'] == 'on')) {
 		$mid .= ', `flag`=?, `lockedby`=? ';
 		$bindvars[] = 'L';
 		$bindvars[] = $user;
-	} else if ($lock_it == 'n') {
+	} else if (empty($hash['lock_it']) || $hash['lock_it'] == 'n') {
 		$mid .= ', `flag`=?, `lockedby`=? ';
 		$bindvars[] = '';
 		$bindvars[] = '';
+	}
+	if (empty($hash['contributions'])) {
+		$hash['contributions'] = '';
+	}
+	if (empty($hash['contributors'])) {
+		$hash2 = '';
+	} else {
+		foreach ($hash['contributors'] as $c) {
+			$hash3['contributor'] = $c;
+			$hash2[] = $hash3;
+		}
 	}
 
 	$bindvars[] = $pageName;
@@ -6015,10 +6043,10 @@ if (!$simple_wiki) {
 		    global $logslib; include_once('lib/logs/logslib.php');
 		    include_once('lib/diff/difflib.php');
 		    $bytes = diff2($data , $edit_data, 'bytes');
-		    $logslib->add_action('Updated', $pageName, 'wiki page', $bytes, $edit_user, $edit_ip, '', $this->now, $contributions);
+		    $logslib->add_action('Updated', $pageName, 'wiki page', $bytes, $edit_user, $edit_ip, '', $this->now, $hash['contributions'], $hash2);
 		    if ($feature_contribution == 'y') {
 			global $contributionlib; include_once('lib/contribution/contributionlib.php');
-			$contributionlib->assign_contributions($contributions, $pageName, 'wiki page', $description, $pageName, "tiki-index.php?page=".urlencode($pageName));
+			$contributionlib->assign_contributions($hash['contributions'], $pageName, 'wiki page', $description, $pageName, "tiki-index.php?page=".urlencode($pageName));
 		   }
 		}
 
@@ -6032,7 +6060,7 @@ if (!$simple_wiki) {
 			$machine = $this->httpPrefix(). dirname( $foo["path"] );
 			require_once('lib/diff/difflib.php');
 			$diff = diff2($old["data"] , $edit_data, "unidiff");
-			sendWikiEmailNotification('wiki_page_changed', $pageName, $edit_user, $edit_comment, $old_version, $edit_data, $machine, $diff, $minor, $contributions);
+			sendWikiEmailNotification('wiki_page_changed', $pageName, $edit_user, $edit_comment, $old_version, $edit_data, $machine, $diff, $minor, $hash['contributions']);
 		}
 
 		$query = "delete from `tiki_page_drafts` where `user`=? and `pageName`=?";

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_contribution.tpl,v 1.5 2006-09-30 16:11:45 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_contribution.tpl,v 1.6 2007-02-15 22:44:37 sylvieg Exp $ *}
 <h1><a  class="pagetitle" href="tiki-admin_contribution.php">{tr}Admin Contributions{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Contribution" target="tikihelp" class="tikihelp" title="{tr}Contribution{/tr}">
@@ -31,7 +31,10 @@
 <tr><td class="formcolor">{tr}Contributions are mandatory in blogs{/tr}</td>
 <td class="formcolor"><input type="checkbox" name="feature_contribution_mandatory_blog" {if $feature_contribution_mandatory_blog eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="formcolor">{tr}Contributions are displayed in the comment/post{/tr}</td>
-<td class="formcolor"><input type="checkbox" name="feature_contribution_display_in_comment" {if $feature_contribution_display_in_comment eq 'y'}checked="checked"{/if}/></td></tr><tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="setting" value="{tr}save{/tr}" /></td></tr>
+<td class="formcolor"><input type="checkbox" name="feature_contribution_display_in_comment" {if $feature_contribution_display_in_comment eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="formcolor">{tr}Contributors{/tr}</td>
+<td class="formcolor"><input type="checkbox" name="feature_contributor_wiki" {if $feature_contributor_wiki eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="setting" value="{tr}save{/tr}" /></td></tr>
 </table>
 </form>
 

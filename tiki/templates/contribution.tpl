@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/contribution.tpl,v 1.11 2006-11-29 18:29:08 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/contribution.tpl,v 1.12 2007-02-15 22:40:56 sylvieg Exp $ *}
 {if $feature_contribution eq 'y' and count($contributions) gt 0}
 <tr>
 <td class="formcolor">
@@ -13,4 +13,18 @@
    </select>
 <a {popup text=$help|replace:'"':"'" width=500}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
 </td></tr>
+
+{if $feature_contributor_wiki eq 'y' and $section eq 'wiki page'}
+<tr>
+<td class="formcolor">{tr}Contributors{/tr}</td>
+<td class="formcolor">
+   <select name="contributors[]" multiple="multiple" size="5">
+	{foreach key=userId item=user from=$users}
+	<option value="{$userId}"{if !empty($contributors) and in_array($userId, $contributors)} selected="selected"{/if}>{$user}</option>
+	{/foreach}
+   </select>
+
+</td></tr>
+{/if}
+
 {/if}

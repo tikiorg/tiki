@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.24 2007-01-19 23:15:30 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.25 2007-02-15 22:40:56 sylvieg Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a></h1>
 {if $tiki_p_admin eq 'y'}
@@ -70,6 +70,7 @@
 <td></td><td>{tr}bytes{/tr}<input type="radio" name="unit" value="bytes"{if $unit ne 'kb'} checked="checked"{/if}> {tr}kb{/tr}<input type="radio" name="unit" value="kb"{if $unit eq 'kb'} checked="checked"{/if}></td></tr>
 <tr class="formcolor"><td></td><td>{tr}Week{/tr}<input type="radio" name="contribTime" value="w"{if $contribTime ne 'd'} checked="checked"{/if}> {tr}Day{/tr}<input type="radio" name="contribTime" value="d"{if $contribTime eq 'd'} checked="checked"{/if}></td></tr>
 <tr class="formcolor"><td colspan="2" class="button"><input type="submit" name="list" value="{tr}Report{/tr}" /></td></tr>
+<tr class="formcolor"><td colspan="2" class="button"><input type="submit" name="graph" value="{tr}Graph{/tr}" /></td></tr>
 {if $tiki_p_admin eq 'y'}
 <tr class="formcolor"><td colspan="2" class="button"><input type="submit" name="export" value="{tr}Export{/tr}" /></td></tr>
 {/if}
@@ -95,7 +96,9 @@
 {if !$reportCateg and $showCateg eq 'y'}<th class="heading"><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=categName_{if $sort_mode eq 'categName_desc'}asc{else}desc{/if}{$url}">{tr}category{/tr}</a></th>{/if}
 <th class="heading"><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=add_{if $sort_mode eq 'add_desc'}asc{else}desc{/if}{$url}">+{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</a></th>
 <th class="heading"><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=del_{if $sort_mode eq 'del_desc'}asc{else}desc{/if}{$url}">-{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</a></th>
-{if $feature_contribution eq 'y'}<th class="heading">{tr}contribution{/tr}</th>{if $tiki_p_admin eq 'y'}<th class="heading">&nbsp;</th>{/if}{/if}
+{if $feature_contribution eq 'y'}<th class="heading">{tr}contribution{/tr}</th>{/if}
+{if $feature_contributor_wiki eq 'y'}<th class="heading">{tr}contributor{/tr}</th>{/if}
+{if $feature_contribution eq 'y' and $tiki_p_admin eq 'y'}<th class="heading">&nbsp;</th>{/if}
 </tr>
 {cycle values="even,odd" print=false}
 {section name=ix loop=$actionlogs}
@@ -115,6 +118,14 @@
 {$actionlogs[ix].contributions[iy].name}
 {/section}
 </td>
+{if $feature_contributor_wiki eq 'y'}
+<td class="{cycle advance=false}">
+{section name=iy loop=$actionlogs[ix].contributors}
+{if !$smarty.section.iy.first}, {/if}
+{$actionlogs[ix].contributors[iy].login}
+{/section}
+</td>
+{/if}
 {if $feature_contribution eq 'y' and $tiki_p_admin eq 'y'}<td class="{cycle advance=false}">{if $actionlogs[ix].actionId}<a class="link" href="tiki-admin_actionlog.php?actionId={$actionlogs[ix].actionId}&amp;startDate={$startDate}&amp;endDate={$endDate}#action" title="{tr}edit contribution{/tr}"><img src="pics/icons/page_edit.png" alt="{tr}edit{/tr}" width="16" heigth="16" border="0"></a>{else}&nbsp;{/if}</td>{/if}
 {/if}
 <!-- {cycle} -->
