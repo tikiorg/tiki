@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index_raw.php,v 1.25 2007-02-04 20:09:32 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index_raw.php,v 1.26 2007-02-15 04:19:42 franck Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -15,7 +15,7 @@ include_once ('lib/wiki/wikilib.php');
 if ($feature_wiki != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
 
-	$smarty->display("error.tpl");
+	$smarty->display("error_raw.tpl");
 	die;
 }
 
@@ -46,7 +46,7 @@ require_once ('tiki-pagesetup.php');
 if (!$tikilib->page_exists($page)) {
 	$smarty->assign('msg', tra("Page cannot be found"));
 
-	$smarty->display("error.tpl");
+	$smarty->display("error_raw.tpl");
 	die;
 }
 
@@ -54,7 +54,7 @@ if (!$tikilib->page_exists($page)) {
 if ($tiki_p_view != 'y') {
 	$smarty->assign('msg', tra("Permission denied you cannot view this page"));
 
-	$smarty->display("error.tpl");
+	$smarty->display("error_raw.tpl");
 	die;
 }
 

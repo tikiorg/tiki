@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.27 2007-02-04 20:09:33 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.28 2007-02-15 04:19:42 franck Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,6 +9,7 @@
 // Initialization
 require_once ('tiki-setup.php');
 include_once ('lib/stats/statslib.php');
+include_once ('lib/map/maplib.php');
 
 if(!isset($feature_maps) or $feature_maps != 'y') {
   $smarty->assign('msg',tra("Feature disabled"));
@@ -129,16 +130,7 @@ if ($tiki_p_map_edit != 'y') {
   
   //Get the revision number
   // Get mapfiles from the mapfiles directory
-	$files = array();
-	$h = opendir($map_path);
-
-	while (($file = readdir($h)) !== false) {
-		if (preg_match('/\.map/i', $file)) {
-			$files[] = $file;
-		}
-	}
-	closedir ($h);
-	sort ($files);
+$files=$maplib->listMaps($map_path);
 	
 	for ($i=0;$i<count($files);$i++) {
   	if (substr($files[$i],0,strlen($_REQUEST["mapfile"]))==$_REQUEST["mapfile"]) {
@@ -232,19 +224,7 @@ if ($tiki_p_map_edit != 'y') {
 $smarty->assign('mode', $mode);
 
 // Get mapfiles from the mapfiles directory
-$files = array();
-$h = opendir($map_path);
-
-while (($file = readdir($h)) !== false) {
-	if (preg_match('/\.map$/i', $file)) {
-		$files[] = $file;
-
-	}
-}
-
-closedir ($h);
-
-sort ($files);
+$files=$maplib->listMaps($map_path);
 
 $mapstats = array();
 for ($i=0;$i<count($files);$i++) {
