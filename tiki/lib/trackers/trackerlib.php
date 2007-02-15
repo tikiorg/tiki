@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.177 2007-02-14 00:30:15 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.178 2007-02-15 22:35:22 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1916,7 +1916,6 @@ class TrackerLib extends TikiLib {
 		return $flags;	
 	}
 	function duplicate_tracker($trackerId, $name, $description='') {
-		global $feature_category;
 		$tracker_info = $this->get_tracker($trackerId);
 		if ($t = $this->get_tracker_options($trackerId))
 			$tracker_info = array_merge($tracker_info,$t);
