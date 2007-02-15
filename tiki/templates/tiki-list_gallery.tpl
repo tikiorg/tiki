@@ -34,7 +34,7 @@
 <td class="{cycle advance=false}">{$images[changes].imageId}&nbsp;</td>
 <td class="{cycle advance=false}"><a class="imagename" href="tiki-browse_image.php?{if $images[changes].galleryId}galleryId={$images[changes].galleryId}&amp;{/if}imageId={$images[changes].imageId}">{$images[changes].name|truncate:22:"..."}</a>&nbsp;
 {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
-<a class="gallink" href="tiki-list_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$images[changes].imageId}">[x]</a>
+<a class="gallink" href="tiki-list_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$images[changes].imageId}"><img src='pics/icons/cross.png' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' width='16' height='16' /></a>
 {/if}
 </td>
 <td class="{cycle advance=false}">{$images[changes].created|tiki_short_datetime}&nbsp;</td>

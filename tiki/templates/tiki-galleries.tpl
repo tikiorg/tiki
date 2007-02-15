@@ -210,7 +210,7 @@
   {if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user) or $galleries[changes].public eq 'y'}
     <a class="gallink" href="tiki-upload_image.php?galleryId={$galleries[changes].galleryId}"><img src='pics/icons/upload.png' border='0' height="16" width="16" alt='{tr}upload{/tr}' title='{tr}upload{/tr}' /></a>
   {if ($galleries[changes].geographic eq 'y')}
-    <a class="gallink" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;make_map=1&amp;galleryId={$galleries[changes].galleryId}"><img src='img/icons/config.gif' alt='{tr}Make Map{/tr}' title='{tr}Make Map{/tr}' height="16" width="16" border='0' /></a>
+    <a class="gallink" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;make_map=1&amp;galleryId={$galleries[changes].galleryId}"><img src='pics/icons/wrench.png' alt='{tr}Make Map{/tr}' title='{tr}Make Map{/tr}' height="16" width="16" border='0' /></a>
   {/if}
   {/if}
   {/if}
