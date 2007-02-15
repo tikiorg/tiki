@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.163 2007-02-12 11:47:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.164 2007-02-15 22:40:56 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -99,6 +99,20 @@ $smarty->assign('editpageconflict', $editpageconflict);
 
 $category_needed = false;
 $contribution_needed = false;
+if (isset($_REQUEST['lock_it']) && $_REQUEST['lock_it'] =='on') {
+	$lock_it = 'y';
+} else {
+	$lock_it = 'n';
+}
+$hash = array();
+$hash['lock_it'] = $lock_it;
+if (!empty($_REQUEST['contributions'])) {
+	$hash['contributions'] = $_REQUEST['contributions'];
+}
+if (!empty($_REQUEST['contributors'])) {
+	$hash['contributors'] = $_REQUEST['contributors'];
+}
+
 if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
   check_ticket('edit-page');
   require ("lib/mail/mimelib.php");
@@ -179,9 +193,9 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 					}
 				}
   			}
-          	$tikilib->update_page($pagename, $part["body"], tra('page imported'), $author, $authorid, $description, null, $pageLang, false, '', isset($_REQUEST['contributions'])? $_REQUEST['contributions']:'');
+          	$tikilib->update_page($pagename, $part["body"], tra('page imported'), $author, $authorid, $description, null, $pageLang, false, $hash);
         	} else {
-          	$tikilib->create_page($pagename, $hits, $part["body"], $lastmodified, tra('created from import'), $author, $authorid, $description, $pageLang, false, '', isset($_REQUEST['contributions'])? $_REQUEST['contributions']:'');
+          	$tikilib->create_page($pagename, $hits, $part["body"], $lastmodified, tra('created from import'), $author, $authorid, $description, $pageLang, false, $hash);
         	}
         }
       } else {
@@ -464,6 +478,11 @@ if ($feature_wiki_userpage == 'y' && $tiki_p_admin != 'y') {
 			die;
 		} elseif ($name != '') {
 			$isUserPage = true;
+		} else {
+			$isUserPage = true;
+			$page .= $user;
+			$_REQUEST['page'] = $page;
+
 		}
 	}
 }
@@ -627,16 +646,11 @@ if($is_html) {
 } else {
   $smarty->assign('allowhtml','n');
 }
-$lock_it = 'n';
-if (isset($_REQUEST['lock_it'])) {
-	if ($_REQUEST['lock_it'] =='on') {
-		$smarty->assign('lock_it','y');
-		$lock_it = 'y';
-	}
-} elseif (!(isset($_REQUEST['save']) || isset($_REQUEST['preview'])) && isset($info) && $info['flag'] == 'L') {
-	 $smarty->assign('lock_it','y');
+if (empty($_REQUEST['lock_it']) && !empty($info['flag']) && $info['flag'] == 'L') {
 	$lock_it = 'y';
 }
+$smarty->assign_by_ref('lock_it', $lock_it);
+
 if (isset($_REQUEST["lang"])) {
   if ($feature_multilingual == 'y' && isset($info["lang"]) && $info['lang'] != $_REQUEST["lang"]) {
 	include_once("lib/multilingual/multilinguallib.php");
@@ -797,7 +811,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
       $cachedlinks = array_diff($links, $notcachedlinks);
       $tikilib->cache_links($cachedlinks);
       */
-      $tikilib->create_page($_REQUEST["page"], 0, $edit, $tikilib->now, $_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description, $pageLang, $is_html, $lock_it, isset($_REQUEST['contributions'])? $_REQUEST['contributions']:'');
+      $tikilib->create_page($_REQUEST["page"], 0, $edit, $tikilib->now, $_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description, $pageLang, $is_html, $hash);
       if ($wiki_watch_author == 'y') {
         $tikilib->add_user_watch($user,"wiki_page_changed",$_REQUEST["page"],'wiki page',$page,"tiki-index.php?page=$page");
       }
@@ -811,7 +825,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
       } else {
         $minor=false;
       }
-      $tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description,$minor,$pageLang, $is_html, $lock_it, isset($_REQUEST['contributions'])? $_REQUEST['contributions']:'');
+      $tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description,$minor,$pageLang, $is_html, $hash);
     }
 
   //Page may have been inserted from a structure page view
