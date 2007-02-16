@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.38 2007-02-15 22:52:44 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.39 2007-02-16 19:16:59 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -600,11 +600,10 @@ class LogsLib extends TikiLib {
 	}
 	function get_stat_contribution($actions, $startDate, $endDate, $unit='w') {
 		$contributions = array();
-		$nbCols = floor(($endDate - $startDate) / (60*60*24));
+		$nbCols = ceil(($endDate - $startDate) / (60*60*24));
 		if ($unit != 'd') {
-			$nbCols = $nbCols/7;
+			$nbCols = ceil($nbCols/7);
 		}
-		++$nbCols;
 		foreach ($actions as $action) {
 			if (isset($action['contributions'])) {
 				if (!empty($previousAction) && $action['lastModif'] == $previousAction['lastModif'] && $action['user'] == $previousAction['user'] && $action['object'] == $previousAction['object'] && $action['objectType'] == $previousAction['objectType'])
@@ -613,7 +612,7 @@ class LogsLib extends TikiLib {
 				foreach ($action['contributions'] as $contrib) {
 					$i = floor(($action['lastModif'] - $startDate) / (60*60*24));
 					if ($unit != 'd')
-						$i = $i/7;
+						$i = floor($i/7);
 					if (empty($contributions[$contrib['contributionId']])) {
 						$contributions[$contrib['contributionId']]['name'] = $contrib['name'];
 						for ($j = 0; $j < $nbCols; ++$j) {
@@ -642,53 +641,55 @@ class LogsLib extends TikiLib {
 		return (array('nbCols'=>$nbCols, 'data'=>$contributions));
 	}
 	function get_colors($nb) {
-		$colors[] = 'red';	if (!$nb--) return $colors;
-		$colors[] = 'yellow';	if (!$nb--) return $colors;
-		$colors[] = 'blue';	if (!$nb--) return $colors;
-		$colors[] = 'fuschia';	if (!$nb--) return $colors;
-		$colors[] = 'gray';	if (!$nb--) return $colors;
-		$colors[] = 'green';	if (!$nb--) return $colors;
-		$colors[] = 'aqua';	if (!$nb--) return $colors;
-		$colors[] = 'lime';	if (!$nb--) return $colors;
-		$colors[] = 'maroon';	if (!$nb--) return $colors;
-		$colors[] = 'navy';	if (!$nb--) return $colors;
-		$colors[] = 'olive';	if (!$nb--) return $colors;
-		$colors[] = 'black';	if (!$nb--) return $colors;
-		$colors[] = 'purple';	if (!$nb--) return $colors;
-		$colors[] = 'silver';	if (!$nb--) return $colors;
-		$colors[] = 'teal';	if (!$nb--) return $colors;
-		while ($nb--) {
+		$colors[] = 'red';	if (!--$nb) return $colors;
+		$colors[] = 'yellow';	if (!--$nb) return $colors;
+		$colors[] = 'blue';	if (!--$nb) return $colors;
+		$colors[] = 'fuschia';	if (!--$nb) return $colors;
+		$colors[] = 'gray';	if (!--$nb) return $colors;
+		$colors[] = 'green';	if (!--$nb) return $colors;
+		$colors[] = 'aqua';	if (!--$nb) return $colors;
+		$colors[] = 'lime';	if (!--$nb) return $colors;
+		$colors[] = 'maroon';	if (!--$nb) return $colors;
+		$colors[] = 'navy';	if (!--$nb) return $colors;
+		$colors[] = 'olive';	if (!--$nb) return $colors;
+		$colors[] = 'black';	if (!--$nb) return $colors;
+		$colors[] = 'purple';	if (!--$nb) return $colors;
+		$colors[] = 'silver';	if (!--$nb) return $colors;
+		$colors[] = 'teal';	if (!--$nb) return $colors;
+		while (--$nb) {
 			$colors[] = rand(1, 999999);
 		} 
 	}
 	function draw_contribution_vol($contributionStat, $type='add') {
-		$i = 0;
-		$x[] = tra('Contributions');
-		$colors = $this->get_colors($contributionStat['nbCols']);
+		$ret = array();
+		$ret['x'][] = tra('Contributions');
+		$ret['color'] = $this->get_colors($contributionStat['nbCols']);
+		$j = 0;
 		foreach ($contributionStat['data'] as $contribution) {
-			$labels[] = $contribution['name'];
+			$ret['label'][] = $contribution['name'];
 			$vol = 0;
 			foreach ($contribution['stat'] as $stat) {
 				$vol += $stat[$type];
 			}
-			$y0[] = $vol;
+			$ret["y$j"][] = $vol;
+			++$j;
 		}
-		return Array('label' => $labels, 'color' => $colors, 'x' => $x, 'y0' => $y0);
+		return $ret;
 	}
 	function draw_week_contribution_vol($contributionStat, $type='add') {
+		$ret = array();
 		for ($i = 1, $nb = $contributionStat['nbCols']; $nb; --$nb)
-			$x[] = $i++;
-		$colors = $this->get_colors($contributionStat['nbCols']);
+			$ret['x'][] = $i++;
+		$ret['color'] = $this->get_colors($contributionStat['nbCols']);
+		$j = 0;
 		foreach ($contributionStat['data'] as $contribution) {
-			$labels[] = $contribution['name'];
-			$j = 0;
-			foreach ($contribution['stat'] as $stat) {
-				$table = "y$j";
-				$j++;
-				array_push($$table,  $stat[$type]);
+			$ret['label'][] = $contribution['name'];
+			foreach ($contribution['stat'] as $key=>$stat) {
+				$ret["y$j"][] = $stat[$type];
 			}
+			++$j;
 		}
-		return Array('label' => $labels, 'color' => $colors, 'x' => $x, 'y0' => $y0);
+		return $ret;
 	}
 	function get_contributors($actionId) {
 		$query = 'select uu.`login` from `tiki_actionlog_params` tap, `users_users` uu where tap.`actionId`=? and tap.`name`=? and uu.`userId`=tap.`value`';
