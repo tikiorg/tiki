@@ -249,7 +249,7 @@ class WikiLib extends TikiLib {
 		global $feature_actionlog;
 		if ($feature_actionlog == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
-			$logslib->add_action('Renamed', $newName, 'wiki page', 'old='.$oldName.'&new='.$newName, '', '', '', '', '', array('rename'=>$oldName));
+			$logslib->add_action('Renamed', $newName, 'wiki page', 'old='.$oldName.'&new='.$newName, '', '', '', '', '', array(array('rename'=>$oldName)));
 			$logslib->rename('wiki page', $oldName, $newName);
 		}
 		global $feature_user_watches;
