@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.57 2007-01-23 08:52:29 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.58 2007-02-16 15:18:52 sylvieg Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -83,7 +83,6 @@
 <td><div class="button2"><a href="tiki-view_forum.php?forumId={$wiki_forum_id}&amp;comments_postComment=post&amp;comments_title={$page|escape:"url"}&amp;comments_data={$wiki_discussion_string|escape:"url"}: {"[tiki-index.php?page="}{$page|escape:"url"}{"|"}{$page|escape:"url"}{"]"}&amp;comment_topictype=n" class="linkbut">{tr}discuss{/tr}</a></div></td>
 {/if}
 
-
 {if $show_page == 'y'} {* Show this buttons only if page view mode *}
 
   {* don't show comments if feature disabled or not enough rights *}
@@ -146,7 +145,7 @@
 {include file=attachments.tpl}
 {/if}
 
-{if $feature_wiki_comments eq 'y' and $tiki_p_wiki_view_comments == 'y'}
+{if $feature_wiki_comments eq 'y' and $tiki_p_wiki_view_comments == 'y' and $edit_page ne 'y'}
 {include file=comments.tpl}
 {/if}
 
