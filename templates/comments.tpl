@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.71 2007-01-17 14:55:55 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.72 2007-02-16 15:12:58 sylvieg Exp $ *}
 
 {if $forum_mode eq 'y'}
 <tr><td>
@@ -246,7 +246,7 @@
       </td>
     </tr>
 {if $feature_contribution eq 'y'}
-	{include file="contribution.tpl"}
+	{include file="contribution.tpl" in_comment="y"}
 {/if}
     <tr>
       <td class="formcolor"><label for="comments-title">{tr}Title{/tr}: </label><div class="attention">{tr}Required{/tr}</div></td>
