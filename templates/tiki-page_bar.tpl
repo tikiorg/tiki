@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.59 2007-02-16 16:34:18 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.60 2007-02-16 17:38:55 mose Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -125,7 +125,8 @@
 {else}
 <span class="highlight">{tr}{$atts|@count} files attached{/tr}</span>
 {/if}
-<span id="attzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_attzone) and $smarty.session.tiki_cookie_jar.show_attzone eq 'y'}inline{else}none{/if};">({tr}hid{/tr})</span>
+<span id="attzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_attzone) and $smarty.session.tiki_cookie_jar.show_attzone eq
+'y'}inline{else}none{/if};">({tr}hide{/tr})</span>
 </a>
     </div>
   </td>
