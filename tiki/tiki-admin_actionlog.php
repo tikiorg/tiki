@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.27 2007-02-12 11:33:22 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.28 2007-02-16 19:16:58 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -341,6 +341,32 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 		$smarty->assign_by_ref('contribTime', $_REQUEST['contribTime']);
 	}
 }
+
+if (isset($_REQUEST['graph'])) {
+	require_once ('lib/sheet/grid.php');
+	require_once ('lib/graph-engine/gd.php');
+	require_once ('lib/graph-engine/pdflib.php');
+	require_once ('lib/graph-engine/ps.php');
+	require_once ('lib/graph-engine/graph.pie.php');
+	require_once ('lib/graph-engine/graph.bar.php');
+	require_once ('lib/graph-engine/graph.multiline.php');
+	$width = 400;
+	$height = 400;
+	$ext = 'jpg';
+	$graph = 'BarStackGraphic';
+	$renderer = &new GD_GRenderer( $width, $height, $ext );
+	$graph = new $graph;
+	$series = $logslib->draw_week_contribution_vol($contributionStat, 'add');
+	$graph->setTitle(tra('Addition for each contribution per week'));
+	$graph->setData($series);
+	//echo "<pre>"; print_r($series);print_r($graph); die;
+	$graph->draw($renderer);
+	ob_start();
+	$renderer->httpOutput( "graph.$ext" );
+	$content = ob_get_contents();
+	ob_end_flush();
+	die;
+}	
 
 if (isset($_REQUEST['time']))
 	$smarty->assign('time', $_REQUEST['time']);
