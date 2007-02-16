@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/contribution.php,v 1.6 2007-02-15 22:40:56 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/contribution.php,v 1.7 2007-02-16 19:22:33 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -52,7 +52,7 @@ if ($feature_contribution == 'y') {
 	}		
 	$smarty->assign_by_ref('contributions', $contributions['data']);
 
-	if ($feature_contributor_wiki == 'y' && $section == 'wiki page') {
+	if ($feature_contributor_wiki == 'y' && !empty($section) && $section == 'wiki page') {
 		$users = $userlib->list_all_users();
 		$smarty->assign_by_ref('users', $users);
 		if (!empty($_REQUEST['contributors'])) {
