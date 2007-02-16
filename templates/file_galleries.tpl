@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.7 2007-02-14 22:23:32 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.8 2007-02-16 23:45:16 sylvieg Exp $ *}
 {if !isset($show_find) or $show_find ne 'n'}
 <div align="center">
 <table class="findtable">
@@ -126,7 +126,7 @@
 		{/if}
 	{/if}
 
-	{if $tiki_p_admin eq 'y' || $galleries[changes].individual_tiki_p_assign_perm_file_gallery eq 'y'}
+	{if $tiki_p_admin eq 'y' || $galleries[changes].individual_tiki_p_assign_perm_file_gallery eq 'y' || ($galleries[changes].individual eq 'n' and $tiki_p_assign_perm_file_gallery eq 'y')}
 	    {if $galleries[changes].individual eq 'y'}
 		<a class="fgallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$galleries[changes].id}"><img border='0' width='16' height='16' src='pics/icons/key_active.png' alt='{tr}active perms{/tr}' title='{tr}active perms{/tr}' /></a>
 	    {else}
