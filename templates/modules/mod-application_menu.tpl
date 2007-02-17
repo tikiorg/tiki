@@ -1,5 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.120 2006-08-29 20:19:13 sylvieg Exp $ *}
-{tikimodule title="{tr}Menu{/tr}" name="application_menu" flip=$module_params.flip decorations=$module_params.decorations}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.121 2007-02-17 10:53:23 mose Exp $ *}
+{if !$tpl_module_title}{assign var=tpl_module_title value="Menu"}{/if}
+{tikimodule title="{tr}$tpl_module_title{/tr}" name="application_menu" flip=$module_params.flip decorations=$module_params.decorations}
 &nbsp;<a href="{$tikiIndex}" class="linkmenu">{tr}Home{/tr}</a><br />
 {if $feature_chat eq 'y' and $tiki_p_chat eq 'y'}
 &nbsp;<a href="tiki-chat.php" class="linkmenu">{tr}Chat{/tr}</a><br />
