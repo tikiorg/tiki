@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.59 2007-02-17 10:53:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.60 2007-02-17 11:16:41 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -51,7 +51,7 @@ for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
 
 	$mod_reference = &$these_modules[$mod_counter];
 	parse_str($mod_reference["params"], $module_params);
-	if (isset($module_params['title'])) { $smarty->assign_by_ref('tpl_module_title',$module_params['title']); }
+	if (isset($module_params['title'])) { $smarty->assign('tpl_module_title',tra($module_params['title'])); }
 	if (!isset($module_params['decorations'])) $module_params['decorations'] = 'n';
 	if (!isset($module_params['flip'])) $module_params['flip'] = 'n';
 	if (!isset($module_params['overflow'])) $module_params['overflow'] = 'n';
