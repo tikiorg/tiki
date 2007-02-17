@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/lib/tikiticketlib.php,v 1.22 2007-02-04 20:09:35 mose Exp $
+/* $Header: /cvsroot/tikiwiki/tiki/lib/tikiticketlib.php,v 1.23 2007-02-17 10:09:34 mose Exp $
 
 Tikiwiki CSRF protection.
 also called Sea-Surfing
@@ -14,13 +14,11 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-// obsolete: will be removed soon
 function ask_ticket($area) {
-	$_SESSION['antisurf'] =  $area; 
+	$_SESSION['antisurf'] = $area; 
 	return true;
 }
 
-// obsolete: will be removed soon
 function check_ticket($area) { 
 	if (!isset($_SESSION['antisurf'])) $_SESSION['antisurf'] = '';
 	if ($_SESSION['antisurf'] != $area) { 
@@ -60,6 +58,7 @@ function key_get($area, $confirmation_text = '', $confirmaction='') {
 			$confirmaction = $_SERVER['REQUEST_URI'];
 		}
 // Display the confirmation in the main tiki.tpl template
+		$smarty->assign('post',$_POST);
 		$smarty->assign('dblclickedit','n');
 		$smarty->assign('print_page','n');
 		$smarty->assign('confirmation_text', $confirmation_text);
