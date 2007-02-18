@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.31 2007-02-08 13:51:20 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.32 2007-02-18 15:52:58 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,19 +8,17 @@
 
 // Initialization
 $section = 'wiki page';
-require_once ('tiki-setup.php');
-require_once("lib/ajax/ajaxlib.php");
+require_once('tiki-setup.php');
+require_once('lib/ajax/ajaxlib.php');
 
 if ($feature_wiki != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
-
 	$smarty->display("error.tpl");
 	die;
 }
 
 if ($feature_listPages != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_listPages");
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -28,7 +26,6 @@ if ($feature_listPages != 'y') {
 // Now check permissions to access this page
 if ($tiki_p_view != 'y') {
 	$smarty->assign('msg', tra("Permission denied you cannot view pages"));
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -113,27 +110,21 @@ if (isset($_REQUEST["exact_match"])) {
 
 $smarty->assign('initials', split(' ','a b c d e f g h i j k l m n o p q r s t u v w x y z'));
 // Get a list of last changes to the Wiki database
-$listpages = $tikilib->list_pages($offset, $maxRecords, $sort_mode, $find, $initial, $exact_match, false, true);
+$listpages = $tikilib->list_pages($offset, $maxRecords, $sort_mode, $find, $initial, $exact_match, false, true, $listpages_orphans);
 // If there're more records then assign next_offset
 $cant_pages = ceil($listpages["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
 $smarty->assign('actual_page', 1 + ($offset / $maxRecords));
 
-if ($listpages["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
-} else {
-	$smarty->assign('next_offset', -1);
-}
+if ($listpages["cant"] > ($offset + $maxRecords)) $smarty->assign('next_offset', $offset + $maxRecords);
+else $smarty->assign('next_offset', -1);
 
 // If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
+if ($offset > 0) $smarty->assign('prev_offset', $offset - $maxRecords);
+else $smarty->assign('prev_offset', -1);
 
 $smarty->assign_by_ref('listpages', $listpages["data"]);
-//print_r($listpages["data"]);
+
 ask_ticket('list-pages');
 
 $ajaxlib->registerTemplate('tiki-listpages_content.tpl');
@@ -145,7 +136,7 @@ include_once ('tiki-section_options.php');
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 // Display the template
-$smarty->assign('mid', 'tiki-listpages.tpl');
+$smarty->assign('mid', ($listpages_orphans ? 'tiki-orphan_pages.tpl' : 'tiki-listpages.tpl') );
 $smarty->display("tiki.tpl");
 
 ?>
