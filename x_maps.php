@@ -1,17 +1,16 @@
 <?php
 
-chdir("../..");
 require_once('tiki-setup.php');
 include_once('lib/map/map_query.php');
 
 //setting up xajax
 require_once("lib/ajax/xajax.inc.php");
-$xajax = new xajax("lib/map/map_cp.php");
+$xajax = new xajax("x_maps.php");
 //$xajax->debugOn();
 //$xajax->statusMessagesOn();
 
   
-  function cp_map_redraw($mapfile,$corx,$cory,$minx,$maxx,$miny,$maxy,$xsize,$ysize,$layers,$labels,$zoom,$changeleg=false,$corx2=0,$cory2=0) {
+  function map_redraw($mapfile,$corx,$cory,$minx,$maxx,$miny,$maxy,$xsize,$ysize,$layers,$labels,$zoom,$changeleg=false,$corx2=0,$cory2=0) {
   	global $map_path;
   	$objResponse = new xajaxResponse();
   	
@@ -128,6 +127,6 @@ $xajax = new xajax("lib/map/map_cp.php");
   	return $objResponse;
   }
   
-  $xajax->registerFunction("cp_map_redraw");
+  $xajax->registerFunction("map_redraw");
   $xajax->processRequests();
 ?>
