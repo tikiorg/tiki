@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_menu.tpl,v 1.24 2006-11-17 19:30:17 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_menu.tpl,v 1.25 2007-02-18 23:55:23 nyloth Exp $ *}
 {assign var=opensec value='n'}
 {assign var=sep value=''}
 
@@ -13,7 +13,7 @@
 
 {if $chdata.url}
 {if $feature_menusfolderstyle eq 'y'}
-<a class='separator' href="javascript:icntoggle('menu{$cname}');" title="{tr}Toggle options{/tr}"><img src="img/icons/{if $menu_info.type ne 'd'}o{/if}fo.gif" border="0" name="menu{$cname}icn" alt='{tr}Toggle{/tr}'/></a>&nbsp;
+<a class='separator' href="javascript:icntoggle('menu{$cname}');" title="{tr}Toggle options{/tr}"><img src="img/icons/{if $menu_info.type ne 'd'}o{/if}fo.gif" border="0" name="menu{$cname}icn" alt='{tr}Toggle{/tr}'/></a>
 {else}<a class='separator' href="javascript:toggle('menu{$cname}');">[-]</a>{/if} 
 <a href="{$chdata.url|escape}" class="separator">{tr}{$chdata.name}{/tr}</a>
 {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('menu{$cname}');">[+]</a>{/if} 
@@ -26,7 +26,7 @@
 {assign var=opensec value='y'}
 <div {if $menu_info.type eq 'd' and isset($smarty.session.tiki_cookie_jar.menu.$cname) and $smarty.session.tiki_cookie_jar.menu.$cname ne 'c'}style="display:none;"{else}style="display:block;"{/if} id='menu{$cname}'>
 {elseif $chdata.type eq 'o'}
-<div class="option{$sep}">&nbsp;<a href="{$chdata.url|escape}" class="linkmenu">{tr}{$chdata.name}{/tr}</a></div>
+<div class="option{$sep}"><a href="{$chdata.url|escape}" class="linkmenu">{tr}{$chdata.name}{/tr}</a></div>
 {if $sep eq 'line'}{assign var=sep value=''}{/if}
 {else}
 {if $chdata.type eq '-'}{if $opensec eq 'y'}</div>{/if}{assign var=opensec value='n'}{/if}
@@ -41,7 +41,7 @@
 <div class="separator{$sep}"><a class='separator' href="{$chdata.url|escape}">{tr}{$chdata.name}{/tr}</a></div>
 {if $sep eq 'line'}{assign var=sep value=''}{/if}
 {elseif $chdata.type eq 'o'}
-<div class="option{$sep}">&nbsp;<a href="{$chdata.url|escape}" class="linkmenu">{tr}{$chdata.name}{/tr}</a></div>
+<div class="option{$sep}"><a href="{$chdata.url|escape}" class="linkmenu">{tr}{$chdata.name}{/tr}</a></div>
 {if $sep eq 'line'}{assign var=sep value=''}{/if}
 {else}
 {assign var=sep value='line'}
