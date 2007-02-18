@@ -488,6 +488,13 @@
     <tr><td class="form">{tr}Search and replace{/tr}:</td><td><input type="checkbox" name="feature_wiki_replace" {if $feature_wiki_replace eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Allow HTML{/tr}:</td><td><input type="checkbox" name="feature_wiki_allowhtml" {if $feature_wiki_allowhtml eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Show page version{/tr}:</td><td><input type="checkbox" name="wiki_show_version" {if $wiki_show_version eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Page navigation bar position (displayed when page break '...page...' are used){/tr}:</td><td>
+    <select name="wiki_page_navigation_bar">
+    <option value="top" {if $wiki_page_navigation_bar eq 'top'}selected="selected"{/if}>{tr}Top bar{/tr}</option>
+    <option value="bottom" {if $wiki_page_navigation_bar eq 'bottom'}selected="selected"{/if}>{tr}Bottom bar{/tr}</option>
+    <option value="both" {if $wiki_page_navigation_bar eq 'both'}selected="selected"{/if}>{tr}Both{/tr}</option>
+    </select>
+    </td></tr>
     <tr><td colspan="2" class="button"><input type="submit" name="wikifeatures" value="{tr}Set features{/tr}" /></td></tr>
     </table>
     </form>

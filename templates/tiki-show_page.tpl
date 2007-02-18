@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.107 2006-12-31 09:26:12 mose Exp $ *} 
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.108 2007-02-18 22:58:59 nyloth Exp $ *} 
 {if $feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
@@ -94,6 +94,21 @@
 {include file="freetag_list.tpl"}
 {/if}
 
+{if $pages > 1 and $wiki_page_navigation_bar neq 'bottom'}
+	<div align="center">
+		<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$first_page}"><img src="pics/icons/resultset_first.png" border="0" height="16" width="16" alt="{tr}First page{/tr}" title="{tr}First page{/tr}" /></a>
+
+		<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$prev_page}"><img src="pics/icons/resultset_previous.png" border="0" height="16" width="16" alt="{tr}Previous page{/tr}" title="{tr}Previous page{/tr}" /></a>
+
+		<small>{tr}page{/tr}:{$pagenum}/{$pages}</small>
+
+		<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$next_page}"><img src="pics/icons/resultset_next.png" border="0" height="16" width="16" alt="{tr}Next page{/tr}" title="{tr}Next page{/tr}" /></a>
+
+
+		<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$last_page}"><img src="pics/icons/resultset_last.png" border="0" height="16" width="16" alt="{tr}Last page{/tr}" title="{tr}Last page{/tr}" /></a>
+	</div>
+{/if}
+
 <div class="wikitext">
 {if $structure eq 'y'}
 <div class="tocnav">
@@ -165,7 +180,7 @@
 {/if}
 {if $feature_wiki_ratings eq 'y'}{include file="poll.tpl"}{/if}
 {$parsed}
-{if $pages > 1}
+{if $pages > 1 and $wiki_page_navigation_bar neq 'top'}
 	<br />
 	<div align="center">
 		<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$first_page}"><img src="pics/icons/resultset_first.png" border="0" height="16" width="16" alt="{tr}First page{/tr}" title="{tr}First page{/tr}" /></a>
