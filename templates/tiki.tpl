@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki.tpl,v 1.32 2007-01-02 08:19:45 mose Exp $ *}{include file="header.tpl"}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki.tpl,v 1.33 2007-02-18 20:46:39 nyloth Exp $ *}{include file="header.tpl"}
 {* Index we display a wiki page here *}
 {if $feature_bidi eq 'y'}
 <div dir="rtl">
@@ -14,20 +14,6 @@
   </div>
   {/if}
   <div id="tiki-mid">
-  {if $feature_left_column eq 'user' or $feature_right_column eq 'user'}
-  <table border="0" cellpadding="0" cellspacing="0" width="100%">
-			<tr>
-      {if $feature_left_column eq 'user'}
-				<td align="left"><a class="flip" href="javascript:flip('leftcolumn','table-cell');">
-        <img  align="left" name="leftcolumnicn" class="colflip" src="img/icons/ofo.gif" border="0" alt="+/-" />&nbsp;{tr}Show/Hide Left Menus{/tr}&nbsp;</a></td>
-      {/if}
-      {if $feature_right_column eq 'user'}
-        <td align="right" style="text-align:right"><a class="flip" href="javascript:flip('rightcolumn','table-cell');">
-        <img align="right" name="rightcolumnicn" class="colflip" src="img/icons/ofo.gif" border="0" alt="+/-" />&nbsp;{tr}Show/Hide Right Menus{/tr}&nbsp;</a></td>
-      {/if}
-			</td></tr>
-	</table>
-  {/if}
   <table id="tiki-midtbl" border="0" cellpadding="0" cellspacing="0" width="100%">
     <tr>
       {if $feature_left_column ne 'n'}
@@ -41,7 +27,20 @@
       </td>
       {/if}
       <td id="centercolumn" valign="top">
-			{/if}
+ 		{/if}
+      {if $feature_left_column eq 'user' or $feature_right_column eq 'user'}
+        <div>
+      {if $feature_left_column eq 'user'}
+	<div style="text-align:left;float:left;position:absolute;"><a class="flip" href="javascript:flip('leftcolumn','table-cell');">
+        <img  align="left" name="leftcolumnicn" class="colflip" src="img/icons/ofo.gif" border="0" alt="+/-" />&nbsp;{tr}Show/Hide Left Menus{/tr}&nbsp;</a></div>
+      {/if}
+      {if $feature_right_column eq 'user'}
+        <div style="text-align:right;float:right;"><a class="flip" href="javascript:flip('rightcolumn','table-cell');" align="right">
+        <img align="right" name="rightcolumnicn" class="colflip" src="img/icons/ofo.gif" border="0" alt="+/-" />&nbsp;{tr}Show/Hide Right Menus{/tr}&nbsp;</a></div>
+      {/if}
+        <br clear="both">
+        </div>
+      {/if}
 
 			<div id="tiki-center">
 			{$mid_data}
