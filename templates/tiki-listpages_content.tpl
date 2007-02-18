@@ -11,11 +11,7 @@
 </div>
 {/if}
 
-{*  at the moment, the only working option to use the checkboxes for is deleting pages.
-    so for now the checkboxes are visible if $tiki_p_remove is set. Other applications make 
-    sense as well (categorize, convert to pdf, etc). Add necessary corresponding permission here:
-*}    
-{if $tiki_p_remove eq 'y'}              {* ... "or $tiki_p_other_sufficient_condition_for_checkboxes eq 'y'"  *}
+{if $tiki_p_remove eq 'y' or $feature_wiki_multiprint eq 'y'}
   {assign var='checkboxes_on' value='y'}
 {else}
   {assign var='checkboxes_on' value='n'}
@@ -155,6 +151,9 @@
     <option value="" selected="selected">{tr}with checked{/tr}:</option>
     {if $tiki_p_remove eq 'y'} 
       <option value="remove_pages" >{tr}remove{/tr}</option>
+    {/if}
+    {if $feature_wiki_multiprint eq 'y'}
+      <option value="print_pages" >{tr}print{/tr}</option>
     {/if}
     {* add here e.g. <option value="categorize" >{tr}categorize{/tr}</option> *}
   </select>                
