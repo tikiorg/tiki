@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.720 2007-02-15 22:40:56 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.721 2007-02-18 15:52:58 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3387,33 +3387,27 @@ function add_pageview() {
 	return $this->list_pages($offset, $maxRecords, $sort_mode, $find, '', true, true);
    }
 
-    function list_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '', $initial = '', $exact_match = true, $onlyName=false, $forListPages=false) {
-	global $wiki_list_links, $wiki_list_versions, $wiki_list_backlinks;
+    function list_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '', $initial = '', $exact_match = true, $onlyName=false, $forListPages=false, $only_orphan_pages = false) {
+	global $wiki_list_links, $wiki_list_versions, $wiki_list_backlinks, $user;
 
-	if ($sort_mode == 'size_desc') {
-	    $sort_mode = 'page_size_desc';
-	}
-
-	if ($sort_mode == 'size_asc') {
-	    $sort_mode = 'page_size_asc';
-	}
-
-	$old_sort_mode = '';
-
+	if ($sort_mode == 'size_desc') $sort_mode = 'page_size_desc';
+	if ($sort_mode == 'size_asc') $sort_mode = 'page_size_asc';
+	
+	// If sort mode is versions, links or backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
 	if (in_array($sort_mode, array(
-			'versions_desc',
-			'versions_asc',
-			'links_asc',
-			'links_desc',
-			'backlinks_asc',
-			'backlinks_desc'
-			))) {
-	    $old_offset = $offset;
-	    $old_maxRecords = $maxRecords;
-	    $old_sort_mode = $sort_mode;
-	    $sort_mode = 'user_desc';
-	    $offset = 0;
-	    $maxRecords = -1;
+		'versions_desc',
+		'versions_asc',
+		'links_asc',
+		'links_desc',
+		'backlinks_asc',
+		'backlinks_desc'
+	))) {
+		$old_offset = $offset;
+		$old_maxRecords = $maxRecords;
+		$old_sort_mode = $sort_mode;
+		$sort_mode = 'user_desc';
+		$offset = 0;
+		$maxRecords = -1;
 	}
 
 	if (is_array($find)) { // you can use an array of pages
@@ -3430,9 +3424,9 @@ function add_pageview() {
 		$bindvars = array('%' . $find . '%');
 	    }
 	} else {
-	    $mid = "";
 	    $bindvars = array();
 	}
+
         if ($initial) {
                 $mid = " where `pageName` like ?";
                 $mmid = $mid;
@@ -3440,90 +3434,62 @@ function add_pageview() {
                 $mbindvars = $bindvars;
 	}
 
-	// If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-	// If sort mode is links then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-	// If sort mode is backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-	$query = "select `creator` ,`pageName`, `hits`, `page_size` as `len`, `lastModif`, `user`, `ip`, `comment`, `version`, `flag` , `description`";
-	$query.= " from `tiki_pages` $mid order by ".$this->convert_sortmode($sort_mode);
-	$query_cant = "select count(*) from `tiki_pages` $mid";
-	$result = $this->query($query,$bindvars,$maxRecords,$offset);
-	if ($initial) {
-	$cant = $this->getOne($query_cant,$mbindvars);
-	} else {
-	$cant = $this->getOne($query_cant,$bindvars);
+	if ( $only_orphan_pages ) {
+		$join_tables = ' left join `tiki_links` as tl on tp.`pageName` = tl.`toPage` left join `tiki_structures` as ts on tp.`page_id` = ts.`page_id`';
+		$mid .= ( $mid == '' ) ? ' where ' : ' and ';
+		$mid .= 'tl.`toPage` IS NULL and `ts`.page_id IS NULL';
 	}
+
+	$query = "select tp.* from `tiki_pages` as tp $join_tables $mid order by ".$this->convert_sortmode($sort_mode);
+	$query_cant = "select count(*) from `tiki_pages` as tp $join_tables $mid";
+	$result = $this->query($query,$bindvars,$maxRecords,$offset);
+
+	if ($initial) $cant = $this->getOne($query_cant,$mbindvars);
+	else $cant = $this->getOne($query_cant,$bindvars);
+
 	$ret = array();
-
 	while ($res = $result->fetchRow()) {
-                global $user;
-	        $add=$this->user_has_perm_on_object($user,$res["pageName"],'wiki page','tiki_p_view');
-
-
-		if ($add) {
-		    $aux = array();
-		    $aux["pageName"] = $res["pageName"];
-		    if (!$onlyName) {
-			$page = $aux["pageName"];
-			$aux["hits"] = $res["hits"];
-			$aux["lastModif"] = $res["lastModif"];
-			$aux["user"] = $res["user"];
-			$aux["ip"] = $res["ip"];
-			$aux["len"] = $res["len"];
-			$aux["comment"] = $res["comment"];
-			$aux["creator"] = $res["creator"];
-			$aux["version"] = $res["version"];
-			$aux["flag"] = $res["flag"] == 'L' ? 'locked' : 'unlocked';
+		//WYSIWYCA
+	        if ( $this->user_has_perm_on_object($user,$res['pageName'],'wiki page','tiki_p_view') ) {
+		    if ( $onlyName ) $res = array('pageName' => $res['pageName']);
+		    else {
+			$page = $res['pageName'];
+			$res['len'] = $res['page_size'];
+			unset($res['page_size']);
+			$res['flag'] = $res['flag'] == 'L' ? 'locked' : 'unlocked';
 			if ($forListPages && $wiki_list_versions == 'y')
-				$aux["versions"] = $this->getOne("select count(*) from `tiki_history` where `pageName`=?",array($page));
+				$res['versions'] = $this->getOne("select count(*) from `tiki_history` where `pageName`=?",array($page));
 			if ($forListPages && $wiki_list_links == 'y')
-				$aux["links"] = $this->getOne("select count(*) from `tiki_links` where `fromPage`=?",array($page));
+				$res['links'] = $this->getOne("select count(*) from `tiki_links` where `fromPage`=?",array($page));
 			if ($forListPages && $wiki_list_backlinks == 'y')
-				$aux["backlinks"] = $this->getOne("select count(*) from `tiki_links` where `toPage`=?",array($page));
-			$aux["description"] = $res["description"];
+				$res['backlinks'] = $this->getOne("select count(*) from `tiki_links` where `toPage`=?",array($page));
 		    }
-		    $ret[] = $aux;
+		    $ret[] = $res;
 		}
 	}
 
-	// If sortmode is versions, links or backlinks sort using the ad-hoc function and reduce using old_offse and old_maxRecords
-	if ($old_sort_mode == 'versions_asc') {
-	    usort($ret, 'compare_versions');
-	}
-
-	if ($old_sort_mode == 'versions_desc') {
-	    usort($ret, 'r_compare_versions');
-	}
-
-	if ($old_sort_mode == 'links_desc') {
-	    usort($ret, 'compare_links');
-	}
-
-	if ($old_sort_mode == 'links_asc') {
-	    usort($ret, 'r_compare_links');
-	}
-
-	if ($old_sort_mode == 'backlinks_desc') {
-	    usort($ret, 'compare_backlinks');
-	}
-
-	if ($old_sort_mode == 'backlinks_asc') {
-	    usort($ret, 'r_compare_backlinks');
-	}
+	// If sortmode is versions, links or backlinks sort using the ad-hoc function and reduce using old_offset and old_maxRecords
+	if ($old_sort_mode == 'versions_asc') usort($ret, 'compare_versions');
+	if ($old_sort_mode == 'versions_desc') usort($ret, 'r_compare_versions');
+	if ($old_sort_mode == 'links_desc') usort($ret, 'compare_links');
+	if ($old_sort_mode == 'links_asc') usort($ret, 'r_compare_links');
+	if ($old_sort_mode == 'backlinks_desc') usort($ret, 'compare_backlinks');
+	if ($old_sort_mode == 'backlinks_asc') usort($ret, 'r_compare_backlinks');
 
 	if (in_array($old_sort_mode, array(
-			'versions_desc',
-			'versions_asc',
-			'links_asc',
-			'links_desc',
-			'backlinks_asc',
-			'backlinks_desc'
-			))) {
+		'versions_desc',
+		'versions_asc',
+		'links_asc',
+		'links_desc',
+		'backlinks_asc',
+		'backlinks_desc'
+	))) {
 	    $ret = array_slice($ret, $old_offset, $old_maxRecords);
 	}
 
 	$retval = array();
-	$retval["data"] = $ret;
-	$retval["cant"] = $cant;
+	$retval['data'] = $ret;
+	$retval['cant'] = $cant;
 	return $retval;
     }
 
