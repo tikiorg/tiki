@@ -13,6 +13,10 @@
 
 <!-- this bar is created by a ref to {include file=tiki-mytiki_bar.tpl} :) -->
 {include file=tiki-mytiki_bar.tpl}
+<div style="float:right;margin:5px;">
+	<span class="button2"><a href="tiki-contacts.php" class="linkbut" title="{tr}Contacts{/tr}">{tr}Contacts{/tr}</a></span>
+</div>
+
 <h2>{tr}User Contacts Preferences{/tr}</h2>
 
 <h3>Contacts Possible Fields:</h3>
