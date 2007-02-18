@@ -14,10 +14,10 @@ $access->check_permission(array('tiki_p_map_view'), tra("View maps"));
 
 //setting up xajax
 require_once("lib/ajax/xajax.inc.php");
-$xajax = new xajax("lib/map/map_cp.php");
+$xajax = new xajax("x_maps.php");
 //$xajax->debugOn();
 //$xajax->statusMessagesOn();
-$xajax->registerFunction("cp_map_redraw");
+$xajax->registerFunction("map_redraw");
 $smarty->assign('xajax_javascript', $xajax->getJavascript("lib/ajax"));
 
 //handling the layer manager menu: visible by default if never used before

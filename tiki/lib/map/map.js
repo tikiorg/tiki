@@ -32,7 +32,7 @@ function map_mouseclick(evt) {
 //    cp.set_response_type('TEXT');
 
 		var zoom=3;
-		xajax_cp_map_redraw(mapfile ,xGetElementById('xx').value, xGetElementById('yy').value, minx, maxx, miny, maxy, xsize, ysize, layers, labels,zoom,changeleg);
+		xajax_map_redraw(mapfile ,xGetElementById('xx').value, xGetElementById('yy').value, minx, maxx, miny, maxy, xsize, ysize, layers, labels,zoom,changeleg);
 		changeleg=false;
 
 		return false;
@@ -269,7 +269,7 @@ function map_mouseup(evt) {
 		var xx=mapcursor.imagex-imagex+(xsize/2);
 		var yy=mapcursor.imagey-imagey+(ysize/2);
 		
-  	xajax_cp_map_redraw(mapfile ,xx, yy, 
+  	xajax_map_redraw(mapfile ,xx, yy, 
 	    	minx, maxx, miny, maxy,
   	  	xsize, ysize, layers, labels, zoom, changeleg);
   	imgClicked=false;
@@ -305,7 +305,7 @@ function map_mouseup(evt) {
 			var yy2=Y-imagey;
 		}
 		//window.status='zooming '+xx+'-'+yy+'/'+xx2+'-'+yy2;
-		xajax_cp_map_redraw(mapfile ,xx, yy, 
+		xajax_map_redraw(mapfile ,xx, yy, 
 	    	minx, maxx, miny, maxy,
   	  	xsize, ysize, layers, labels, zoom, changeleg, xx2, yy2);
   	changeleg=false;
@@ -339,7 +339,7 @@ function map_mouseup(evt) {
 			var yy2=xHeight(map)+(mapcursor.Y-imagey);
 		}
 		//window.status='zooming '+xx+'-'+yy+'/'+xx2+'-'+yy2;
-		xajax_cp_map_redraw(mapfile ,xx, yy, 
+		xajax_map_redraw(mapfile ,xx, yy, 
 	    	minx, maxx, miny, maxy,
   	  	xsize, ysize, layers, labels, zoom, changeleg, xx2, yy2);
   	changeleg=false;
