@@ -12,6 +12,7 @@
 </div>
 <div style="float:left;margin:5px;">
 <span class="button2"><a href="#" onclick="flip('editform');return false;" class="linkbut">{tr}Create/edit contacts{/tr}</a></span>
+<span class="button2"><a href="tiki-user_contacts_prefs.php" class="linkbut" title="{tr}Preferences{/tr}">{tr}Preferences{/tr}</a></span>
 </div>
 </div>
 
