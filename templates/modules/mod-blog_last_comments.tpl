@@ -1,10 +1,12 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-blog_last_comments.tpl,v 1.2 2006-07-08 00:34:05 amette Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-blog_last_comments.tpl,v 1.3 2007-02-18 11:21:16 mose Exp $ *}
 
 {if $feature_blogs eq 'y'}
+{if !isset($tpl_module_title)}
 {if $nonums eq 'y'}
 {eval var="{tr}Last `$module_rows` blog comments{/tr}" assign="tpl_module_title"}
 {else}
 {eval var="{tr}Last blog comments{/tr}" assign="tpl_module_title"}
+{/if}
 {/if}
 {tikimodule title=$tpl_module_title name="blog_last_comments" flip=$module_params.flip decorations=$module_params.decorations}
 {if $nonums != 'y'}<ol>{else}<ul>{/if}

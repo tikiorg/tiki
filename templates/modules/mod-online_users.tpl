@@ -1,6 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-online_users.tpl,v 1.9 2006-03-16 13:43:13 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-online_users.tpl,v 1.10 2007-02-18 11:21:17 mose Exp $ *}
 
-{tikimodule title="{tr}Online users{/tr}" name="online_users" flip=$module_params.flip decorations=$module_params.decorations}
+{if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Online users{/tr}"}{/if}
+{tikimodule title=$tpl_module_title name="online_users" flip=$module_params.flip decorations=$module_params.decorations}
 {foreach key=ix from=$online_users item=online_user}
 {if $user and $feature_messages eq 'y' and $tiki_p_messages eq 'y'}
     {if $online_user.allowMsgs eq 'n'}

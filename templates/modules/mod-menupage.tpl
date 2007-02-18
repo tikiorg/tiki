@@ -1,3 +1,4 @@
-{tikimodule title=$tpl_module_title name="menu $page" flip=$module_params.flip decorations=$module_params.decorations}
+{if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Menu{/tr}"}{/if}
+{tikimodule title=$tpl_module_title name="menu_$page" flip=$module_params.flip decorations=$module_params.decorations}
 {$contentmenu}
 {/tikimodule}

@@ -1,5 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.37 2007-01-11 22:54:16 sylvieg Exp $ *}
-{tikimodule title="{tr}Login{/tr}" name="login_box" flip=$module_params.flip decorations=$module_params.decorations}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.38 2007-02-18 11:21:17 mose Exp $ *}
+{if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Login{/tr}"}{/if}
+{tikimodule title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations}
 
     {if $user}
       {tr}logged as{/tr}: {$user}<br />

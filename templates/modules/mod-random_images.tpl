@@ -1,5 +1,6 @@
 {if $feature_galleries eq 'y'}
-  {tikimodule title="{tr}Random Images{/tr}" name="random_images" flip=$module_params.flip decorations=$module_params.decorations}
+{if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Random Images{/tr}"}{/if}
+{tikimodule title=$tpl_module_title name="random_images" flip=$module_params.flip decorations=$module_params.decorations}
   <center>
   <a class="linkmodule" href="tiki-browse_image.php?imageId={$modRandomImages}">
        <img border="0" src="show_image.php?id={$modRandomImages}&amp;thumb=1" alt="{tr}image{/tr}" />

@@ -1,6 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-user_tasks_public.tpl,v 1.4 2005-05-18 11:03:32 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-user_tasks_public.tpl,v 1.5 2007-02-18 11:21:19 mose Exp $ *}
 {if $feature_tasks eq 'y' and $user}
-{tikimodule title="<a class='cboxtlink' href='tiki-user_tasks.php'>{tr}Public tasks{/tr}</a>" name="user_tasks_public" flip=$module_params.flip decorations=$module_params.decorations}
+{if !isset($tpl_module_title)}{assign var=tpl_module_title value="<a href='tiki-user_tasks.php'>{tr}Public tasks{/tr}</a>"}{/if}
+{tikimodule title=$tpl_module_title name="user_tasks_public" flip=$module_params.flip decorations=$module_params.decorations}
 <table class="normal">
 <tr><td width="100%">
  <form class="forms" method="post" action="{$ownurl}">

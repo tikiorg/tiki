@@ -1,11 +1,13 @@
 {* $Header$ *}
 
 {if $feature_calendar eq 'y'}
+{if !isset($tpl_module_title)}
 	{if $nonums eq 'y'}
 		{eval var="{tr}Upcoming `$module_rows` events{/tr}" assign="tpl_module_title"}
 	{else}
 		{eval var="{tr}Upcoming events{/tr}" assign="tpl_module_title"}
 	{/if}
+{/if}
 	{tikimodule title=$tpl_module_title name="upcoming_events" flip=$module_params.flip decorations=$module_params.decorations}
    		<table  border="0" cellpadding="0" cellspacing="0">
 		{section name=ix loop=$modUpcomingEvents}

@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-breadcrumb.tpl,v 1.11 2005-05-18 11:03:28 mose Exp $ *}
-
-{tikimodule title="{tr}Recently visited pages{/tr}" name="breadcrumb" flip=$module_params.flip decorations=$module_params.decorations}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-breadcrumb.tpl,v 1.12 2007-02-18 11:21:16 mose Exp $ *}
+{if !isset($tpl_module_title)}{eval assign=tpl_module_title var="{tr}Recently visited pages{/tr}"}{/if}
+{tikimodule title=$tpl_module_title name="breadcrumb" flip=$module_params.flip decorations=$module_params.decorations}
   <table  border="0" cellpadding="0" cellspacing="0">
     {section name=ix loop=$breadCrumb}
       <tr><td class="module">

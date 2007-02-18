@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-admin_menu.tpl,v 1.28 2007-02-17 10:53:23 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-admin_menu.tpl,v 1.29 2007-02-18 11:21:15 mose Exp $ *}
 
-{if !$tpl_module_title}{assign var=tpl_module_title value="Admin Menu"}{/if}
+{if !isset($tpl_module_title)}{eval assign=tpl_module_title var="{tr}Admin Menu{/tr}"}{/if}
 {tikimodule title="{tr}$tpl_module_title{/tr}" name="admin_menu" flip=$module_params.flip decorations=$module_params.decorations}
 {if $tiki_p_admin eq 'y' or 
  $tiki_p_admin_chat eq 'y' or
