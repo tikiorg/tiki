@@ -1,7 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-usergroup_tracker.tpl,v 1.5 2006-07-14 11:00:59 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-usergroup_tracker.tpl,v 1.6 2007-02-18 11:21:19 mose Exp $ *}
 
 {if $user}
-{tikimodule title="{tr}Login{/tr}" name="login_infos" flip=$module_params.flip decorations=$module_params.decorations}
+{if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Login{/tr}"}{/if}
+{tikimodule title=$tpl_module_title name="login_infos" flip=$module_params.flip decorations=$module_params.decorations}
 
 <div><a class="linkmodule" href="tiki-logout.php">{tr}Logout{/tr}</a></div>
 

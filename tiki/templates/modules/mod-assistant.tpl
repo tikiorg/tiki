@@ -1,5 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-assistant.tpl,v 1.6 2005-05-18 11:03:28 mose Exp $ *}
-{tikimodule title="{tr}TikiWiki Assistant{/tr}" name="assistant" flip=$module_params.flip decorations=$module_params.decorations}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-assistant.tpl,v 1.7 2007-02-18 11:21:16 mose Exp $ *}
+{if !isset($tpl_module_title)}{eval assign=tpl_module_title var="{tr}TikiWiki Assistant{/tr}"}{/if}
+{tikimodule title=$tpl_module_title name="assistant" flip=$module_params.flip decorations=$module_params.decorations}
 <div><em>{tr}Thank you for installing TikiWiki{/tr}!</em><br />
 {tr}Click the :: options in the Menu for more options.{/tr}
 {tr}Please, also see{/tr} <a class="link" href="http://tikiwiki.org/TikiMovies">TikiMovies</a> {tr}for more setup details.{/tr}

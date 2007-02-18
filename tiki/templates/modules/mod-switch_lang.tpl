@@ -1,6 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-switch_lang.tpl,v 1.6 2005-05-18 11:03:31 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-switch_lang.tpl,v 1.7 2007-02-18 11:21:17 mose Exp $ *}
 
-{tikimodule title="{tr}Language: {/tr}`$language`" name="switch_lang" flip=$module_params.flip decorations=$module_params.decorations}
+{if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Language: {/tr} $language"}{/if}
+{tikimodule title=$tpl_module_title name="switch_lang" flip=$module_params.flip decorations=$module_params.decorations}
 {if $change_language ne 'n' or $user eq ''}
 <form method="get" action="tiki-switch_lang.php" target="_self">
        <select name="language" size="1" onchange="this.form.submit();">

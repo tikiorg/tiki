@@ -1,10 +1,12 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_articles.tpl,v 1.13 2006-12-14 16:40:33 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_articles.tpl,v 1.14 2007-02-18 11:21:16 mose Exp $ *}
 
 {if $feature_articles eq 'y'}
+{if !isset($tpl_module_title)}
 {if $nonums eq 'y'}
 {eval var="<a href=\"tiki-view_articles.php?topic=$topicId&type=$type\">{tr}Last `$module_rows` articles{/tr}</a>" assign="tpl_module_title"}
 {else}
 {eval var="<a href=\"tiki-view_articles.php?topic=$topicId&type=$type\">{tr}Last articles{/tr}</a>" assign="tpl_module_title"}
+{/if}
 {/if}
 {tikimodule title=$tpl_module_title name="last_articles" flip=$module_params.flip decorations=$module_params.decorations}
   <table  border="0" cellpadding="1" cellspacing="0" width="100%">

@@ -1,10 +1,12 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_modified_blogs.tpl,v 1.11 2005-05-18 11:03:30 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_modified_blogs.tpl,v 1.12 2007-02-18 11:21:16 mose Exp $ *}
 
 {if $feature_blogs eq 'y'}
+{if !isset($tpl_module_title)}
 {if $nonums eq 'y'}
 {eval var="{tr}Last `$module_rows` Modified blogs{/tr}" assign="tpl_module_title"}
 {else}
 {eval var="{tr}Last Modified blogs{/tr}" assign="tpl_module_title"}
+{/if}
 {/if}
 {tikimodule title=$tpl_module_title name="last_modified_blogs" flip=$module_params.flip decorations=$module_params.decorations}
   <table  border="0" cellpadding="0" cellspacing="0">

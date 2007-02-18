@@ -1,7 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-search_new.tpl,v 1.10 2005-05-18 11:03:30 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-search_new.tpl,v 1.11 2007-02-18 11:21:17 mose Exp $ *}
 
 {if $feature_search eq 'y'}
-{tikimodule title="{tr}Search{/tr}" name="search_new" flip=$module_params.flip decorations=$module_params.decorations}
+{if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Search{/tr}"}{/if}
+{tikimodule title=$tpl_module_title name="search_new" flip=$module_params.flip decorations=$module_params.decorations}
     <form class="forms" method="get" action="tiki-searchindex.php">
     <input id="fuser" name="highlight" size="14" type="text" accesskey="s" /> {tr}in:{/tr}<br />
     <select name="where">

@@ -1,4 +1,5 @@
-{tikimodule title="{tr}Style{/tr}: $user_style" name="switch_theme" flip=$module_params.flip decorations=$module_params.decorations}
+{if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Style{/tr}: $user_style"}{/if}
+{tikimodule title=$tpl_module_title name="switch_theme" flip=$module_params.flip decorations=$module_params.decorations}
 {if $change_theme ne 'n' or $user eq ''}
 <form method="get" action="tiki-switch_theme.php" target="_self">
 <select name="theme" size="1" onchange="this.form.submit();">
