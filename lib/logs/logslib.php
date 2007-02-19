@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.39 2007-02-16 19:16:59 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.40 2007-02-19 17:01:56 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -664,6 +664,7 @@ class LogsLib extends TikiLib {
 		$ret = array();
 		$ret['x'][] = tra('Contributions');
 		$ret['color'] = $this->get_colors($contributionStat['nbCols']);
+		$ret['totalVol'] = 0;
 		$j = 0;
 		foreach ($contributionStat['data'] as $contribution) {
 			$ret['label'][] = $contribution['name'];
@@ -672,6 +673,7 @@ class LogsLib extends TikiLib {
 				$vol += $stat[$type];
 			}
 			$ret["y$j"][] = $vol;
+			$ret['totalVol'] += $vol;
 			++$j;
 		}
 		return $ret;
@@ -681,11 +683,13 @@ class LogsLib extends TikiLib {
 		for ($i = 1, $nb = $contributionStat['nbCols']; $nb; --$nb)
 			$ret['x'][] = $i++;
 		$ret['color'] = $this->get_colors($contributionStat['nbCols']);
+		$ret['totalVol'] = 0;
 		$j = 0;
 		foreach ($contributionStat['data'] as $contribution) {
 			$ret['label'][] = $contribution['name'];
 			foreach ($contribution['stat'] as $key=>$stat) {
 				$ret["y$j"][] = $stat[$type];
+				$ret['totalVol'] += $stat[$type];
 			}
 			++$j;
 		}

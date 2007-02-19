@@ -122,7 +122,7 @@ class ContributionLib extends TikiLib {
 		global $tikilib;
 		global $logslib; include_once('lib/logs/logslib.php');
 
-		if ($action['objectType'] == 'wiki page') {
+		if ($action['objectType'] == 'wiki page' && $action['action'] != 'Removed') {
 			// try to find an history
 			$query = "select * from `tiki_history` where `pageName`=? and `lastModif` <=? and `lastModif` >= ? and `user`=?";
 			$result = $tikilib->query($query,array($action['object'], $action['lastModif']+$delay, $action['lastModif'], $action['user']));
