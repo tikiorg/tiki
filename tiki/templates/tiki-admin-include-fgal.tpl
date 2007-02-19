@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-fgal.tpl,v 1.27 2006-12-12 22:09:47 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-fgal.tpl,v 1.28 2007-02-19 00:52:28 nyloth Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -42,8 +42,13 @@
               {if $feature_file_galleries_author eq 'y'}checked="checked"{/if}/><i>{tr}For not registered author{/tr}</i></td>
         </tr><tr class="formcolor">
           <td>{tr}Allow same file to be uploaded more than once{/tr}:</td>
-          <td><input type="checkbox" name="fgal_allow_duplicates"
-              {if $fgal_allow_duplicates eq 'y'}checked="checked"{/if}/></td>
+          <td>
+	  <select name="fgal_allow_duplicates">
+              <option value="n" {if $fgal_allow_duplicates eq 'n'}selected="selected"{/if}>{tr}Never{/tr}</option>
+              <option value="y" {if $fgal_allow_duplicates eq 'y'}selected="selected"{/if}>{tr}Yes, even in the same fallery{/tr}</option>
+              <option value="different_galleries" {if $fgal_allow_duplicates eq 'different_galleries'}selected="selected"{/if}>{tr}Only in different galleries{/tr}</option>
+          </select>
+	  </td>
          </tr><tr class="formcolor">
           <td>{tr}Use database to store files{/tr}:</td>
           <td><input type="radio" name="fgal_use_db" value="y"
