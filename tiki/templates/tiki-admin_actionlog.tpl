@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.25 2007-02-15 22:40:56 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.26 2007-02-19 17:01:56 sylvieg Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a></h1>
 {if $tiki_p_admin eq 'y'}
@@ -136,7 +136,7 @@
 
 {if $action}
 <a name="action">
-<h2>{tr}Edit action{/tr}</h2>
+<h2>{tr}Edit Action{/tr}</h2>
 <form method="post" action="tiki-admin_actionlog.php">
 <input type="hidden" name="actionId" value="{$action.actionId}" />
 <input type="hidden" name="list" value="y" />
