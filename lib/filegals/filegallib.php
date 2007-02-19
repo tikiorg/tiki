@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.65 2007-02-19 00:52:27 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.66 2007-02-19 01:05:06 nyloth Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -75,7 +75,7 @@ class FileGalLib extends TikiLib {
 		$description = strip_tags($description);
 
 		if ( $fgal_allow_duplicates != 'y' ) {
-			$query = 'select count(*) from `tiki_files` where `hash`=?';
+			$fgal_query = 'select count(*) from `tiki_files` where `hash`=?';
 			$fgal_vars = array($checksum);
 			if ( $fgal_allow_duplicates == 'different_galleries' ) {
 				$fgal_query .= ' and `galleryId`=?';
