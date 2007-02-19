@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_fgal.php,v 1.21 2006-12-12 17:22:54 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_fgal.php,v 1.22 2007-02-19 00:52:27 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -43,10 +43,10 @@ if (isset($_REQUEST["filegalfeatures"])) {
 	simple_set_value("fgal_use_dir");
 	simple_set_value("fgal_podcast_dir");
 	simple_set_value("fgal_batch_dir");
+	simple_set_value("fgal_allow_duplicates");
 
 	simple_set_toggle("feature_file_galleries_comments");
 	simple_set_toggle("feature_file_galleries_author");
-	simple_set_toggle("fgal_allow_duplicates");
 }
 
 if (isset($_REQUEST["filegallistprefs"])) {
