@@ -570,7 +570,10 @@ class StaticGridScale extends GridScale // {{{1
 
 	function _calculateSkip( $size, $space ) // {{{2
 	{
+		$space = abs($space);
 		$skip = 0;
+		if (empty($space))
+			return $skip;
 		while( $size > $space * ++$skip );
 
 		return $skip;
