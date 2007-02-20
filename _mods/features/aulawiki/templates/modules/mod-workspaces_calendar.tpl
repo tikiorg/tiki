@@ -9,13 +9,13 @@
 include_once("lib/class_calendar.php");
 global $dbTiki,$tikilib,$user;
 if(isset($_SESSION["thedate"])) {
-  $day=date("d",$_SESSION["thedate"]);
-  $mon=date("m",$_SESSION["thedate"]);
-  $year=date("Y",$_SESSION["thedate"]);
+  $day=TikiLib::date_format("d",$_SESSION["thedate"]);
+  $mon=TikiLib::date_format("m",$_SESSION["thedate"]);
+  $year=TikiLib::date_format("Y",$_SESSION["thedate"]);
 } else {
-	$day=date("d",$tikilib->server_time_to_site_time(time(),$user));
-	$mon=date("m",$tikilib->server_time_to_site_time(time(),$user));
-	$year=date("Y",$tikilib->server_time_to_site_time(time(),$user));
+	$day=TikiLib::date_format("d");
+	$mon=TikiLib::date_format("m");
+	$year=TikiLib::date_format("Y");
 }
 if(isset($_REQUEST["day"])) {
  $day = $_REQUEST["day"];
@@ -29,7 +29,7 @@ if(isset($_REQUEST["year"])) {
  $year = $_REQUEST["year"];
 }
 
-$thedate = mktime(23,59,59,$mon,$day,$year);
+$thedate = TikiLib::make_time(23,59,59,$mon,$day,$year);
 $_SESSION["thedate"] = $thedate;
 
 // Calculate number of days in month
@@ -107,8 +107,8 @@ $todaylink=$father."day=".date("d")."&amp;mon=".date("m")."&amp;year=".date("Y")
 	    global $calendarlib;
 	  	include_once ('lib/calendar/calendarlib.php'); 
 	  	require_once ('lib/workspaces/resourceslib.php'); 
-	  	$viewstart = mktime(0,0,0, $mon, 1, $year);
-	  	$viewend = mktime(0,0,0,$mon + 1, 1, $year);
+	  	$viewstart = TikiLib::make_time(0,0,0, $mon, 1, $year);
+	  	$viewend = TikiLib::make_time(0,0,0,$mon + 1, 1, $year);
     	/*$calendarData = $calendarlib->list_calendars(0, -1, 'created_desc', "WSCALENDAR".$_SESSION["currentWorkspace"]["code"]);
 		$calendarId = '0';
 		foreach ($calendarData['data'] as $key => $val) {
