@@ -1,5 +1,5 @@
 {if $user}
-{if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}$slvn_info.label{/tr}"}{/if}
+{if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}`$slvn_info.label`{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="since_last_visit_new" flip=$module_params.flip decorations=$module_params.decorations}
     <table>
       <tr height="20">
