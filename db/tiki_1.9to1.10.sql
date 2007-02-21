@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.142 2007-02-18 22:00:26 nyloth Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.143 2007-02-21 11:54:19 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -853,3 +853,6 @@ ALTER TABLE `tiki_webmail_contacts_fields` ADD `fieldId` int(10) unsigned NOT NU
 ALTER TABLE `tiki_webmail_contacts_ext` ADD `fieldId` int(10) unsigned NOT NULL;
 UPDATE `tiki_webmail_contacts_ext` SET `fieldId` = (SELECT `fieldId` FROM `tiki_webmail_contacts_fields` WHERE `fieldname` = `name` LIMIT 1);
 ALTER TABLE `tiki_webmail_contacts_ext` DROP COLUMN `name`;
+
+#xavi/sylvie 2007-02-21
+ALTER TABLE tiki_searchindex ADD KEY location(location(50), page(200));
