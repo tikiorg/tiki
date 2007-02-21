@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-02-12 21:08:56 $
-# $Author: nyloth $
+# $Date: 2007-02-21 11:54:19 $
+# $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -2911,7 +2911,8 @@ CREATE TABLE tiki_searchindex(
   count int(11) NOT NULL default '1',
   last_update int(11) NOT NULL default '0',
   PRIMARY KEY  (searchword,location,page(80)),
-  KEY last_update (last_update)
+  KEY last_update (last_update),
+  KEY location (location(50), page(200))
 ) TYPE=MyISAM;
 
 # LRU (last recently used) list for searching parts of words
