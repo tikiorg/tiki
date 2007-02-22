@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.115 2007-02-12 12:14:15 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.116 2007-02-22 13:35:33 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -18,7 +18,7 @@ if ($feature_trackers != 'y') {
 	die;
 }
 
-$smarty->assign('special',false);
+$special = false;
 
 if (!isset($_REQUEST['trackerId']) && $userTracker == 'y') {
 	if (isset($_REQUEST['view']) and $_REQUEST['view'] == ' user') {
@@ -46,7 +46,7 @@ if (!isset($_REQUEST['trackerId']) && $userTracker == 'y') {
 				}
 				$_REQUEST['itemId'] = $trklib->replace_item($_REQUEST["trackerId"], 0, $addit, 'o');
 			}
-			$smarty->assign('special',' user');
+			$special = 'user';
 		}
 	} elseif (isset($_REQUEST["usertracker"]) and $tiki_p_admin == 'y') {
 		$thatgroup = $userlib->get_user_default_group($_REQUEST["usertracker"]);
@@ -68,7 +68,7 @@ if (!isset($_REQUEST['trackerId']) && $groupTracker == 'y') {
 				$addit['data'][0]['value'] = $group;
 				$_REQUEST['itemId'] = $trklib->replace_item($_REQUEST["trackerId"], 0, $addit, 'o');
 			}
-			$smarty->assign('special',' group');
+			$special = 'group';
 		}
 	} elseif (isset($_REQUEST["grouptracker"]) and $tiki_p_admin == 'y') {
 		$gtid = $userlib->get_grouptrackerid($_REQUEST["grouptracker"]);
@@ -76,6 +76,8 @@ if (!isset($_REQUEST['trackerId']) && $groupTracker == 'y') {
 		$_REQUEST["itemId"] = $trklib->get_item_id($_REQUEST['trackerId'],$gtid['groupFieldId'],$_REQUEST["grouptracker"]);
 	}
 }
+$smarty->assign_by_ref('special', $special);
+
 if ((!isset($_REQUEST["trackerId"]) || !$_REQUEST["trackerId"]) && isset($_REQUEST["itemId"])) {
 	$item_info = $trklib->get_tracker_item($_REQUEST["itemId"]);
 	$_REQUEST['trackerId'] = $item_info['trackerId'];	
@@ -220,12 +222,23 @@ if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
 			if ($userlib->object_has_permission($user, $_REQUEST["trackerId"], 'tracker', $permName)) {
 				$$permName = 'y';
 				$smarty->assign("$permName", 'y');
+				if ($permName == 'tiki_p_admin_trackers') {
+					$propagate = true;
+				}
 			} else {
 				$$permName = 'n';
 				$smarty->assign("$permName", 'n');
 			}
 		}
 	}
+}
+if (!empty($propagate) && $propagate) { // if local set of tiki_p_admin_trackers, need to other perm
+    $perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'trackers');
+    foreach ($perms['data'] as $perm) {
+        $perm = $perm['permName'];
+        $smarty->assign("$perm", 'y');
+        $$perm = 'y';
+    }
 }
 
 $tracker_info = $trklib->get_tracker($_REQUEST["trackerId"]);
@@ -239,7 +252,7 @@ if (!isset($tracker_info["writerGroupCanModify"]) or (isset($gtid) and ($_REQUES
 	$tracker_info["writerGroupCanModify"] = 'n';
 }
 
-if ($tiki_p_view_trackers != 'y' and $tracker_info["writerCanModify"] != 'y' and $tracker_info["writerGroupCanModify"] != 'y') {
+if ($tiki_p_view_trackers != 'y' and $tracker_info["writerCanModify"] != 'y' and $tracker_info["writerGroupCanModify"] != 'y'&& !$special) {
   if (!$user) {
     $smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
     $smarty->assign('errortitle',tra("Please login"));
@@ -438,6 +451,9 @@ foreach($xfields["data"] as $i=>$array) {
 			} else {
 				$ins_fields["data"][$i]["value"] = '';
 			}
+			if ($ins_fields['data'][$i]['type'] == 'D' && !empty($_REQUEST[$ins_id.'_other'])) { // drop down with other
+				$ins_fields['data'][$i]['value'] = $_REQUEST[$ins_id.'_other'];
+			}
 			if (isset($_REQUEST["$filter_id"])) {
 				$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
 			} else {
@@ -531,7 +547,7 @@ if (isset($tracker_info["authorfield"])) {
 		$smarty->assign("tiki_p_view_trackers","y");
 	}
 }
-if ($tiki_p_view_trackers != 'y') {
+if ($tiki_p_view_trackers != 'y' && !$special) {
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;
@@ -554,7 +570,7 @@ if ($tiki_p_admin_trackers == 'y' or $tiki_p_modify_tracker_items == 'y') {
 	}
 }
 
-if ($tiki_p_modify_tracker_items == 'y') {
+if ($tiki_p_modify_tracker_items == 'y' || $special) {
 	if (isset($_REQUEST["save"]) || isset($_REQUEST["save_return"])) {
 
 		// Check field values for each type and presence of mandatory ones
@@ -650,7 +666,7 @@ if ($_REQUEST["itemId"]) {
 	if (!isset($info['trackerId'])) $info['trackerId'] = $_REQUEST['trackerId'];
 	if ((isset($info['status']) and $info['status'] == 'p' && $tiki_p_view_trackers_pending != 'y') 
 	||  (isset($info['status']) and $info['status'] == 'c' && $tiki_p_view_trackers_closed != 'y')
-	||  (!$tikilib->user_has_perm_on_object($user, $info['trackerId'], 'tracker', 'tiki_p_view_trackers') &&
+	||  ($tiki_p_admin_trackers != 'y' && !$tikilib->user_has_perm_on_object($user, $info['trackerId'], 'tracker', 'tiki_p_view_trackers') &&
 	  (!isset($utid) || $_REQUEST['trackerId'] != $utid['usersTrackerId']) &&
 		(!isset($gtid) || $_REQUEST['trackerId'] != $utid['groupTrackerId'])
 	) ) {

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/block.tikimodule.php,v 1.13 2007-01-29 22:02:42 awolfff Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/block.tikimodule.php,v 1.14 2007-02-22 13:35:40 sylvieg Exp $
 /**
  * \brief Smarty {tikimodule}{/tikimodule} block handler
  *
@@ -39,7 +39,7 @@ function smarty_block_tikimodule($params, $content, &$smarty) {
 	extract($params);
 	if (!isset($content))   return "";
 	if (!isset($overflow))  $overflow = false;
-	if (!isset($title))     $title = substr($content,0,12)."...";
+	if (!isset($title))     $title = substr(strip_tags($content),0,12)."...";
 	if (!isset($name))      $name  = ereg_replace("[^-_a-zA-Z0-9]","",$title);
 	if (!isset($flip) || ($flip != 'y' && $flip != 'yc')) $flip = 'n';
 	if ($flip == 'yc') {

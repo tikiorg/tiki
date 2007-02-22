@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.119 2007-02-12 12:14:15 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.120 2007-02-22 13:35:33 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -46,6 +46,9 @@ if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
 			if ($userlib->object_has_permission($user, $_REQUEST["trackerId"], 'tracker', $permName)) {
 				$$permName = 'y';
 				$smarty->assign("$permName", 'y');
+				if ($permName == 'tiki_p_admin_trackers') {
+					$propagate = true;
+				}
 			} else {
 				$$permName = 'n';
 				$smarty->assign("$permName", 'n');
@@ -59,6 +62,11 @@ if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
     	foreach ($perms_array as $perm => $value) {
     		$$perm = $value;
     	}
+		if ($tiki_p_view_categories == 'y' || $tiki_p_admin_categories == 'y') {
+			$tiki_p_view_categories = 'y';
+			$tiki_p_view_trackers = 'y';
+			$smarty->assign('tiki_p_view_trackers', 'y');
+		}
    	} else {
    		$is_categorized = FALSE;
    	}
@@ -72,6 +80,14 @@ if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
 	    $smarty->display("error.tpl");
 		die;
 	}
+}
+if (!empty($propagate) && $propagate) { // if local set of tiki_p_admin_trackers, need to other perm
+    $perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'trackers');
+    foreach ($perms['data'] as $perm) {
+        $perm = $perm['permName'];
+        $smarty->assign("$perm", 'y');
+        $$perm = 'y';
+    }
 }
 
 if (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'view') {
@@ -403,6 +419,9 @@ for ($i = 0; $i < $temp_max; $i++) {
 			} else {
 				$ins_fields["data"][$i]["value"] = '';
 			}
+			if ($fields['data'][$i]['type'] == 'D' && !empty($_REQUEST[$ins_id.'_other'])) { // drop down with other
+				$ins_fields['data'][$i]['value'] = $_REQUEST[$ins_id.'_other'];
+			}
 			if (isset($_REQUEST["$filter_id"])) {
 				$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
 			} else {
@@ -665,6 +684,9 @@ if ($my and $writerfield) {
 		$filtervalue = $_REQUEST["filtervalue"];
 	} else {
 		$filtervalue = '';
+	}
+	if (isset($_REQUEST['filtervalue_other'])) {
+		$filtervalue = $_REQUEST['filtervalue_other'];
 	}
 	$exactvalue = '';
 }

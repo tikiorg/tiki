@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.721 2007-02-18 15:52:58 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.722 2007-02-22 13:35:39 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3576,6 +3576,104 @@ function add_pageview() {
       return(TRUE);
     }
 
+	/* tiki_p_admin must be test outside
+	 * TODO: all the objectType
+	 * global = true set the global perm and smarty var, otherwise return an array of perms
+	 */
+	function get_perm_object($objectId, $objectType, $global=true) {
+		global $tiki_p_admin, $user, $feature_categories, $userlib, $smarty;
+		$ret = array();
+		if ($userlib->object_has_one_permission($objectId, $objectType)) {
+			$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
+			foreach ($perms['data'] as $perm) { // foreach perm of the same group of perms
+				$permName = $perm['permName'];
+				global $$permName;
+				if ($userlib->object_has_permission($user, $objectId, $objectType, $permName)) {
+					$ret[$permName] = 'y';
+					if ($global) {
+						$$permName = 'y';
+						$smarty->assign("$permName", 'y');
+					}
+					if ($permName == $this->get_adminPerm_from_objectType($objectType)) { // admin sets all the other perms
+					    foreach ($perms['data'] as $perm) {
+							$perm = $perm['permName'];
+							$ret[$perm] = 'y';
+       						if ($global) {
+								global $perm;
+	        					$$perm = 'y';
+        						$smarty->assign("$perm", 'y');
+							}
+						}
+						return $ret;
+					}
+				} else {
+					$ret[$permName] = 'n';
+					if ($global) {
+						$$permName = 'n';
+						$smarty->assign("$permName", 'n');
+					}
+				}
+			}
+			return $ret; // special perms - no look at categ
+		} elseif ($feature_categories == 'y') {
+			global $categlib; include_once('lib/categories/categlib.php');
+			$perms = $categlib->get_object_categories_perms($user, $objectType, $objectId);
+			if (!empty($perms)) {
+				$result = $this->get_perm_from_categPerms($perms, $objectType);
+				foreach ($result as $perm=>$value) {
+					if ($global) {
+						global $$perm;
+						$$perm = $value;
+					} else {
+						$ret[$perm] = $value;
+					}
+				}
+			}
+		} elseif (!$global) {
+			$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
+			foreach ($perms as $perm) {
+				global $$perm;
+				$ret[$perm] = $$perm;
+			}
+		}
+		return $ret;
+	}
+	function get_permGroup_from_objectType($objectType) {
+		switch ($objectType) {
+		case 'tracker':
+			return 'trackers';
+		/* TODO */
+		default:
+			return $objectType;
+		}
+	}
+	function get_adminPerm_from_objectType($objectType) {
+		switch ($objectType) {
+		case 'tracker':
+			return 'tiki_p_admin_trackers';
+		/* TODO */
+		default:
+			return "tiki_p_admin_$objectType";
+		}
+	}
+	/* this function will change if we got a table categ<->perm
+	 */
+	function get_perm_from_categPerms($categPerms, $objectType) {
+		global $userlib;
+		$ret = array();
+		$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
+		foreach ($perms['data'] as $perm) {
+			$ret[$perm['permName']] = 'n';
+		}
+		switch ($objectType) {
+		case 'tracker':
+			$ret['tiki_p_view_trackers'] = 'y';
+		/* TODO */
+		default:
+			$ret["tiki_p_view_$objectType"] = 'y';
+		}
+		return $ret;
+	}
 
     function get_all_preferences() {
 	global $preferences;

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.178 2007-02-15 22:35:22 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.179 2007-02-22 13:35:40 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -649,6 +649,13 @@ class TrackerLib extends TikiLib {
 					}elseif ($fopt['type'] == 'r' && isset($fopt["options_array"][3])) {
 					     $fopt["displayedvalue"]=$this->concat_item_from_fieldslist($fopt["options_array"][0],$this->get_item_id($fopt["options_array"][0],$fopt["options_array"][1],$fopt["value"]),$fopt["options_array"][3]);
 					} else if ($fopt['type'] == 'd') {
+						global $feature_multilingual;
+						if ($feature_multilingual == 'y') {
+							foreach ($fopt['options_array'] as $key=>$l) {
+									$fopt['options_array'][$key] = tra($l);
+							}
+						}
+					} else if ($fopt['type'] == 'd' || $fopt['type'] == 'D') {
 						global $feature_multilingual;
 						if ($feature_multilingual == 'y') {
 							foreach ($fopt['options_array'] as $key=>$l) {
@@ -1383,7 +1390,7 @@ class TrackerLib extends TikiLib {
 			$res['options_array'] = split(',', $res['options']);
 			if ($tra_name && $feature_multilingual == 'y' && $language != 'en')
 				$res['name'] = tra($res['name']);
-			if ($res['type'] == 'd') { // drop down
+			if ($res['type'] == 'd' || $res['type'] == 'D') { // drop down
 				if ($feature_multilingual == 'y') {
 					foreach ($res['options_array'] as $key=>$l) {
 						$res['options_array'][$key] = tra($l);
@@ -1693,7 +1700,11 @@ class TrackerLib extends TikiLib {
 		$type['d'] = array(
 			'label'=>tra('drop down'),
 			'opt'=>true,
-			'help'=>tra('Dropdown options: list of items separated with commas.') );
+			'help'=>tra('Dropdown options: list of items separated with commas.').tra('Default value is specified by having the value indicated twice consecutively') );
+		$type['D'] = array(
+			'label'=>tra('drop down with other textfield'),
+			'opt'=>true,
+			'help'=>tra('Dropdown options: list of items separated with commas.').tra('Default value is specified by having the value indicated twice consecutively') );
 		$type['R'] = array(
 			'label'=>tra('radio buttons'),
 			'opt'=>true,
@@ -1931,6 +1942,20 @@ class TrackerLib extends TikiLib {
 			$this->replace_tracker_field($newTrackerId, 0, $field['name'], $field['type'], $field['isMain'], $field['isSearchable'], $field['isTblVisible'], $field['isPublic'], $field['isHidden'], $field['isMandatory'], $field['position'], $field['options'], $field['description']);
 		}
 		return $newTrackerId;
+	}
+	// look for default value: a default value is 2 consecutive same value
+	function set_default_dropdown_option($field) {
+		for ($io = 0; $io < sizeof($field['options_array']); ++$io) {
+			if ($io > 0 && $field['options_array'][$io] == $field['options_array'][$io - 1]) {
+				$field['defaultvalue'] = $field['options_array'][$io];
+				for (; $io < sizeof($field['options_array']) - 1; ++$io) {
+					$field['options_array'][$io] = $field['options_array'][$io + 1];
+				}
+				unset($field['options_array'][$io]);
+				break;
+			}
+		}
+		return $field;
 	}
 	// look for default value: a default value is 2 consecutive same value
 	function set_default_dropdown_option($field) {

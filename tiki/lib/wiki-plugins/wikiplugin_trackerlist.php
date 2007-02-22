@@ -1,5 +1,5 @@
 <?php
-
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.28 2007-02-22 13:35:45 sylvieg Exp $
 //
 // TODO : 
 // ----------
@@ -24,6 +24,22 @@ function wikiplugin_trackerlist($data, $params) {
 
 		$smarty->assign('trackerId', $trackerId);
 		
+		if ($tiki_p_admin != 'y') {
+			$perms = $tikilib->get_perm_object($trackerId, 'tracker', false);
+			if ($perms['tiki_p_view_trackers'] != 'y')
+				return;
+			$smarty->assign_by_ref('perms', $perms);
+		}
+
+		require_once("lib/trackers/trackerlib.php");
+		if (!isset($fields)) {
+			$smarty->assign('msg', tra("missing fields list"));
+			return $smarty->fetch("error_simple.tpl");
+		} else {
+			$listfields = split(':',$fields);
+		}
+
+		$tracker_info = $trklib->get_tracker($trackerId);
 		if ($t = $trklib->get_tracker_options($trackerId))
 			$tracker_info = array_merge($tracker_info, $t);
 		$smarty->assign_by_ref('tracker_info', $tracker_info);

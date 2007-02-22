@@ -353,6 +353,7 @@ TD {
 	font-size:   10px;
 	vertical-align:   top;
 	text-align:   left;
+	border : 1px solid white; 
 }
 
 /* The table */
@@ -470,7 +471,7 @@ tr.odd {
 	text-align:   left;
 }
 tr.odd:hover {
-background-color: #FFF7E6;
+background-color: #08639C;
 }
 tr.even {
 	border-color:    black;
@@ -482,7 +483,7 @@ tr.even {
 	text-align:   left;
 }
 tr.even:hover {
-background-color: #FFF7E6;
+background-color: #08639C;
 }
 
 TD.odd, td.gallistnameodd, td.gallistdescriptionodd, td.gallistcreatedodd, td.gallistlastModifodd, td.gallistuserodd,
@@ -732,6 +733,7 @@ table.wikitable {
 
 td.wikicell {
 	background-color: #EFEFEF;
+	color: black;
 }
 
 /* Text in wiki pages is displayed using the following style */
@@ -2410,7 +2412,8 @@ div#rules-copy-panel {
   font-weight:bold; 
 }
 
-table.commentinfo { width: 100%; background-color: #FFF7E6; }
+table.commentinfo { width: 100%; background-color: #000033; }
+
 div#loadstats {
   background-color: #dedede;
   font-size: 70%;
@@ -2556,7 +2559,7 @@ TABLE.admin {
 	color: red;
 }
 .tabmark a:hover {
-	color: black;
+	color: 	#08639C;
 	background-color: #422200;
 }
 
@@ -2673,5 +2676,63 @@ div.admbox {
 }
 div.admbox:hover { background-color: white; }
 div.admbox img { margin-top: 20px; }
+
+/** rbox: remarks box (note/warning/tip/comment) */
+/* split, so that it works with firefox and IE */
+.rbox {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+.rbox-title { 
+  color: black;
+  padding: 0 10px;
+  font-size: small;
+  position: relative;
+  display: inline;
+  margin: 0;
+  font-weight: bold;
+  background-color: #EEEE9C;
+}
+.rbox-title[name="warning"] {
+  border-radius-topright : 1ex;
+  -moz-border-radius-topright : 1ex;
+  -khtml-border-radius-topright : 1ex;
+  font-size: small;
+  padding: 0 10px;   
+  position: relative;
+  display: inline;
+  margin: 0;
+  font-weight: bold;
+  background-color: #EEEE9C;
+}
+.rbox-title[name="note"] {
+  background-color: #EEEE9C;
+}
+.rbox-title[name="comment"], .rbox-title[name="tip"] {
+  background-color: #EEEE9C;
+}
+
+.rbox-data {
+  color: black;
+  padding: 2px;
+  margin: 1px;
+  font-size: small;
+  background-color: #EEEE9C;
+  border: 1px solid #DDCCCC;
+}
+.rbox-data[name="warning"] {
+  background-color: #EFECEC;
+  border: 1px solid #DDCCCC;
+}
+.rbox-data[name="note"] {
+  background-color: #ECECEF;
+  border: 1px solid #CCCCDD;
+}
+.rbox-data[name="comment"], .rbox-data[name="tip"] {            
+  background-color: #EEEE9C;
+  border: 1px solid #DDCCCC;
+}
+
 
 /* end of css file */

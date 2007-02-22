@@ -1,7 +1,13 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.30 2006-12-14 16:40:32 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.31 2007-02-22 13:35:46 sylvieg Exp $ *}
 
 <h1><a href="tiki-assignuser.php?assign_user={$assign_user|escape:url}" class="pagetitle">{tr}Assign user{/tr} {$assign_user} {tr}to groups{/tr}</a></h1>
-<a href="tiki-adminusers.php" class="linkbut">{tr}Admin users{/tr}</a> <a href="tiki-admingroups.php" class="linkbut">{tr}Admin groups{/tr}</a>
+
+{if $tiki_p_admin eq 'y'} {* only full admins can manage groups, not tiki_p_admin_users *}
+<span class="button2"><a href="tiki-admingroups.php" class="linkbut">{tr}Admin groups{/tr}</a></span>
+{/if}
+
+<span class="button2"><a href="tiki-adminusers.php" class="linkbut">{tr}Admin users{/tr}</a></span>
+
 <br />
 
 {if $feature_intertiki eq 'y' and !empty($feature_intertiki_mymaster)}

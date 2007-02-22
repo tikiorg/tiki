@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.66 2006-11-21 05:22:56 bluestrain Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.67 2007-02-22 13:35:45 sylvieg Exp $ *}
 { *TODO: Must fix even/odd table rows detection byusing Smarty 'cycle' *}
 <h1><a href="tiki-assignpermission.php?group={$group}" class="pagetitle">{tr}Assign permissions to group{/tr}: {$group}</a>
 
@@ -11,7 +11,12 @@
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}</h1>
 
-<a href="tiki-admingroups.php" class="linkbut">{tr}Back to groups{/tr}</a><br />
+{if $tiki_p_admin eq 'y'} {* only full admins can manage groups, not tiki_p_admin_users *}
+<span class="button2"><a href="tiki-admingroups.php" class="linkbut">{tr}Admin groups{/tr}</a></span>
+{/if}
+<span class="button2"><a href="tiki-adminusers.php" class="linkbut">{tr}Admin users{/tr}</a></span>
+
+<br />
 
 <h2>{tr}Group Information{/tr}</h2>
 <table class="normal" id="groupinformation">

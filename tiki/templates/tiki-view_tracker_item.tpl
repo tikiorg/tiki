@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker_item.tpl,v 1.118 2007-02-08 13:51:26 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.119 2007-02-22 13:35:46 sylvieg Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
@@ -9,8 +9,13 @@
 <a href="tiki-view_tracker_item.php?trackerId={$trackerId}}&amp;itemId={$itemId}&amp;watch=stop" title="{tr}stop monitor{/tr}"><img src="pics/icons/no_eye.png" width="16" height="16" border="0" align="right" hspace="5" alt="{tr}stop monitor{/tr}" /></a>
 {/if}
 {/if}
+{if $tiki_p_view_trackers eq 'y'}
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
 <span class="button2"><a href="tiki-view_tracker.php?trackerId={$trackerId}" class="linkbut">{tr}View this tracker items{/tr}</a></span>
+{if $user}
+<span class="button2"><a href="tiki-view_tracker_item.php?itemId={$itemId}&amp;trackerId={$trackerId}&amp;monitor=1" class="linkbut">{tr}{$email_mon}{/tr}</a></span>
+{/if}
+{/if}
 {if $tiki_p_admin_trackers eq 'y'}
 &nbsp;&nbsp;
 <span class="button2"><a href="tiki-admin_trackers.php" class="linkbut">{tr}Admin trackers{/tr}</a></span>
@@ -21,6 +26,7 @@
 <br />
 <div>
 {* ------- return/next/previous tab --- *}
+{if $tiki_p_view_trackers eq 'y'}
 <span class="button2">
 <a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}">{tr}back{/tr} {tr}items list{/tr}</a></span>
 <span class="button2">
@@ -30,7 +36,8 @@
 {if $nextmsg}<span class="attention">{$nextmsg}</span>{else}
 <a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}&amp;move=next">{tr}next{/tr} -></a>{/if}</span>
 </div>
-<br /><br />{*
+<br /><br />
+{/if}{*
 
 ***  Display warnings about incorrect values and missing mandatory fields ***
 
@@ -56,7 +63,7 @@
 {if $tracker_info.useAttachments eq 'y'}
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Attachments{/tr} ({$attCount})</a></span>
 {/if}
-{if $tiki_p_modify_tracker_items eq 'y'}
+{if $tiki_p_modify_tracker_items eq 'y' or $special}
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Edit{/tr}</a></span>
 {/if}
 </div>
@@ -186,10 +193,15 @@
 {/if}
 
 {elseif $cur_field.type eq 'y'}
+{if !empty($cur_field.value) and $cur_field.value ne 'None'}
 {assign var=o_opt value=$cur_field.options_array[0]}
-{if $o_opt ne '1' and $cur_field.value ne 'None'}<img border="0" src="img/flags/{$cur_field.value}.gif" alt="{$cur_field.value}"/>{/if}
+{capture name=flag}
+{tr}{$cur_field.value}{/tr}
+{/capture}
+{if $o_opt ne '1'}<img border="0" src="img/flags/{$cur_field.value}.gif" title="{$smarty.capture.flag|replace:'_':' '}" alt="{$smarty.capture.flag|replace:'_':' '}"/>{/if}
 {if $o_opt ne '1' and $o_opt ne '2'}&nbsp;{/if}
-{if $o_opt ne '2'}{tr}{$cur_field.value}{/tr}{/if}
+{if $o_opt ne '2'}{$smarty.capture.flag|replace:'_':' '}{/if}
+{/if}
 
 {elseif $cur_field.type eq 't' or $cur_field.type eq 'n'}
 {if $cur_field.options_array[2]}<span class="formunit">{$cur_field.options_array[2]|escape}&nbsp;</span>{/if}
@@ -331,7 +343,7 @@
 <img border="0" src="img/icons/na_pict.gif" alt="n/a" />
 {/if}
 
-{elseif $cur_field.type eq 'd'}
+{elseif $cur_field.type eq 'd' or $cur_field.type eq 'D'}
 {$cur_field.value|tr_if}
 
 {else}
@@ -452,12 +464,12 @@ src="img/icons/edit.gif" border="0" alt="{tr}edit{/tr}"  hspace="2" vspace="0" /
 {/if}
 
 {* --------------------------------------------------------------- tab with edit --- *}
-{if $tiki_p_modify_tracker_items eq 'y'}
+{if $tiki_p_modify_tracker_items eq 'y' or $special}
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent nohighlight"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}Edit item{/tr}</h2>
 <form enctype="multipart/form-data" action="tiki-view_tracker_item.php" method="post">
 {if $special}
-<input type="hidden" name="view" value="{$special}" />
+<input type="hidden" name="view" value=" {$special}" />
 {else}
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 <input type="hidden" name="itemId" value="{$itemId|escape}" />
@@ -473,6 +485,7 @@ src="img/icons/edit.gif" border="0" alt="{tr}edit{/tr}"  hspace="2" vspace="0" /
 <tr class="formcolor"><td>&nbsp;</td><td colspan="3">
 <input type="submit" name="save" value="{tr}save{/tr}" />
 {* --------------------------- to return to tracker list after saving --------- *}
+{if $tiki_p_view_trackers eq 'y'}
 <input type="submit" name="save_return" value="{tr}save{/tr} & {tr}back{/tr} {tr}items list{/tr}" />
 {if $tiki_p_admin_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y'}<a class="link" href="tiki-view_tracker.php?trackerId={$trackerId}&amp;remove={$itemId}" title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>{/if}
 {* ------------------- *}
@@ -648,13 +661,17 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 <select name="ins_{$cur_field.id}" {if $cur_field.http_request}onchange="selectValues('trackerIdList={$cur_field.http_request[0]}&amp;fieldlist={$cur_field.http_request[3]}&amp;filterfield={$cur_field.http_request[1]}&amp;status={$cur_field.http_request[4]}&amp;mandatory={$cur_field.http_request[6]}&amp;filtervalue='+escape(this.value),'{$cur_field.http_request[5]}')"{/if}>
 </select>
 
-{elseif $cur_field.type eq 'd'}
+{elseif $cur_field.type eq 'd' or $cur_field.type eq 'D'}
 <select name="ins_{$cur_field.id}" {if $cur_field.http_request}onchange="selectValues('trackerIdList={$cur_field.http_request[0]}&amp;fieldlist={$cur_field.http_request[3]}&amp;filterfield={$cur_field.http_request[1]}&amp;status={$cur_field.http_request[4]}&amp;mandatory={$cur_field.http_request[6]}&amp;filtervalue='+escape(this.value),'{$cur_field.http_request[5]}')"{/if}>
 {if $cur_field.isMandatory ne 'y' || empty($cur_field.value)}<option value=""></option>{/if}{*can be empty even if mandatory when coming from a user tracker *}
 {section name=jx loop=$cur_field.options_array}
 <option value="{$cur_field.options_array[jx]|escape}" {if (!empty($cur_field.value) and $cur_field.value eq $cur_field.options_array[jx]) or (empty($cur_field.value) and $cur_field.options_array[jx] eq $cur_field.defaultvalue)}selected="selected"{/if}>{$cur_field.options_array[jx]|tr_if}</option>
+{if !empty($cur_field.value) and $cur_field.value eq $cur_field.options_array[jx]}{assign var=otherValue value=''}{/if}
 {/section}
 </select>
+{if $cur_field.type eq 'D'}
+<br />{tr}Other:{/tr} <input type="text" name="ins_{$cur_field.id}_other" value="{$otherValue|escape}" />
+{/if}
 
 {elseif $cur_field.type eq 'R'}
 {section name=jx loop=$cur_field.options_array}
@@ -667,12 +684,16 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 {elseif $cur_field.type eq 'y'}
 <select name="ins_{$cur_field.id}" {if $cur_field.http_request}onchange="selectValues('trackerIdList={$cur_field.http_request[0]}&amp;fieldlist={$cur_field.http_request[3]}&amp;filterfield={$cur_field.http_request[1]}&amp;status={$cur_field.http_request[4]}&amp;mandatory={$cur_field.http_request[6]}&amp;filtervalue='+escape(this.value),'{$cur_field.http_request[5]}')"{/if}>
 {if $cur_field.isMandatory ne 'y' || empty($cur_field.value)}<option value=""{if $cur_field.value eq '' or $cur_field.value eq 'None'} selected="selected"{/if}></option>{/if}
+{sortlinks}
 {foreach item=flag from=$cur_field.flags}
 {if $flag ne 'None'}
-<option value="{$flag|escape}" {if $cur_field.value ne '' and $cur_field.value eq $flag}selected="selected"{/if}
-style="background-image:url('img/flags/{$flag}.gif');background-repeat:no-repeat;padding-left:25px;padding-bottom:3px;">{tr}{$flag}{/tr}</option>
+{capture name=flag}
+{tr}{$flag}{/tr}
+{/capture}
+<option value="{$flag|escape}" {if $cur_field.value ne '' and $cur_field.value eq $flag}selected="selected"{/if}{if $cur_field.options_array[0] ne '1'} style="background-image:url('img/flags/{$flag}.gif');background-repeat:no-repeat;padding-left:25px;padding-bottom:3px;"{/if}>{$smarty.capture.flag|replace:'_':' '}</option>
 {/if}
 {/foreach}
+{/sortlinks}
 </select>
 
 {elseif $cur_field.type eq 'i'}
@@ -736,7 +757,9 @@ style="background-image:url('img/flags/{$flag}.gif');background-repeat:no-repeat
 <tr class="formcolor"><td>&nbsp;</td><td colspan="3">
 <input type="submit" name="save" value="{tr}save{/tr}" />
 {* --------------------------- to retrun to tracker list after saving --------- *}
-<input type="submit" name="save_return" value="{tr}save{/tr} & {tr}back{/tr} {tr}items list{/tr}" />
+{if $tiki_p_view_trackers eq 'y'}
+<input type="submit" name="save_return" value="{tr}save{/tr} & {tr}back{/tr} {tr}items list{/tr}" /> <span>
+{/if}
 </td></tr>
 </table>
 <input type="hidden" name="offset" value="{$offset|escape}" />
