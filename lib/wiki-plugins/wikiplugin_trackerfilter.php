@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.7 2007-02-08 13:51:22 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.8 2007-02-22 14:34:59 sylvieg Exp $
 function wikiplugin_trackerfilter_help() {
   $help = tra("Filters the items of a tracker, fields are indicated with numeric ids.").":\n";
   $help .= "~np~{TRACKERFILTER(filters=>2/d:4/r:5,TRACKERLIST_params )}{TRACKERFILTER}~/np~";
@@ -105,10 +105,10 @@ function wikiplugin_trackerfilter($data, $params) {
 			$opt['id'] = $val;
 			$opt['name'] = $val;
 			if (!empty($_REQUEST['f_'.$fieldId]) && $_REQUEST['f_'.$fieldId][0] == $val) {
-				$opt['checked'] = 'y';
+				$opt['selected'] = 'y';
 				$selected = true;
 			} else {
-				$opt['checked'] = 'n';
+				$opt['selected'] = 'n';
 			}
 			$opts[] = $opt;
 		}
@@ -136,9 +136,11 @@ function wikiplugin_trackerfilter($data, $params) {
 		$smarty->assign('msg', tra("tracker field type not processed yet"));
 		return $dataRes.$smarty->fetch("error_simple.tpl");
 	}
+
 	$filters[] = array('name' => $field['name'], 'fieldId' => $field['fieldId'], 'format'=>$format, 'opts' => $opts, 'selected'=>$selected);
 	}
-	$smarty->assign('filters', $filters);
+	echo "<pre>";print_r($filters);
+$smarty->assign('filters', $filters);
 	$smarty->assign('trackerId', $trackerId);
 	$data = $smarty->fetch('wiki-plugins/wikiplugin_trackerfilter.tpl');
 	return $dataRes.$data;
