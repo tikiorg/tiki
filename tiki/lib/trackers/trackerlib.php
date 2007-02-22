@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.179 2007-02-22 13:35:40 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.180 2007-02-22 13:56:26 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1942,20 +1942,6 @@ class TrackerLib extends TikiLib {
 			$this->replace_tracker_field($newTrackerId, 0, $field['name'], $field['type'], $field['isMain'], $field['isSearchable'], $field['isTblVisible'], $field['isPublic'], $field['isHidden'], $field['isMandatory'], $field['position'], $field['options'], $field['description']);
 		}
 		return $newTrackerId;
-	}
-	// look for default value: a default value is 2 consecutive same value
-	function set_default_dropdown_option($field) {
-		for ($io = 0; $io < sizeof($field['options_array']); ++$io) {
-			if ($io > 0 && $field['options_array'][$io] == $field['options_array'][$io - 1]) {
-				$field['defaultvalue'] = $field['options_array'][$io];
-				for (; $io < sizeof($field['options_array']) - 1; ++$io) {
-					$field['options_array'][$io] = $field['options_array'][$io + 1];
-				}
-				unset($field['options_array'][$io]);
-				break;
-			}
-		}
-		return $field;
 	}
 	// look for default value: a default value is 2 consecutive same value
 	function set_default_dropdown_option($field) {
