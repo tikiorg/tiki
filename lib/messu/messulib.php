@@ -9,6 +9,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 class Messu extends TikiLib {
 
 	function Messu($db) {
+
 		$this->TikiLib($db);
 	}
 
@@ -53,7 +54,7 @@ class Messu extends TikiLib {
 
 		// Now check if the user should be notified by email
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
-		$machine = $tikilib->httpPrefix(). $foo["path"];
+		$machine = $this->httpPrefix(). $foo["path"];
 		$machine = str_replace('messu-compose', 'messu-mailbox', $machine);
 		if ($this->get_user_preference($user, 'minPrio', 6) <= $priority) {
 			if (!isset($_SERVER["SERVER_NAME"])) {

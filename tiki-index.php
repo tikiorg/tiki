@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.176 2007-02-12 11:47:59 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.177 2007-02-22 13:35:33 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -226,6 +226,12 @@ if ($tiki_p_admin != 'y' && $feature_categories == 'y' && !$object_has_perms) {
     	foreach ($perms_array as $perm => $value) {
     		$$perm = $value;
     	}
+		if ($tiki_p_view_categories == 'y' || $tiki_p_admin_categories == 'y') {
+			$tiki_p_view = 'y';
+			$smarty->assign('tiki_p_view', 'y');
+			$tiki_p_edit = 'y';
+			$smarty->assign('tiki_p_edit', 'y');
+		}
    	} else {
    		$is_categorized = FALSE;
    	}

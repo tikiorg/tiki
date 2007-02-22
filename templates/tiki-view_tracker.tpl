@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker.tpl,v 1.129 2007-02-08 13:51:26 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.130 2007-02-22 13:35:46 sylvieg Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a></h1>
 <div>
@@ -83,12 +83,14 @@ class="statusimg"><img src="{$stdata.image}" title="{$stdata.label}" alt="{$stda
 <option value="y"{if $filtervalue eq 'y'} selected="selected"{/if}>{tr}Yes{/tr}</option>
 <option value="n"{if $filtervalue eq 'n'} selected="selected"{/if}>{tr}No{/tr}</option>
 </select></div>
-{elseif $field.type eq 'd'}
+{elseif $field.type eq 'd' or $field.type eq 'D'}
 <div style="display:{if $filterfield eq $fid}block{else}none{/if};" id="fid{$fid}"><select name="filtervalue[{$fid}]">
 {section name=jx loop=$field.options_array}
 <option value="{$field.options_array[jx]|escape}" {if $filtervalue eq $field.options_array[jx]}selected="selected"{/if}>{$field.options_array[jx]|tr_if}</option>
 {/section}
-</select></div>
+</select>
+{if $field.type eq 'D'}<input type="text" name="filtervalue_other" />{/if}
+</div>
 
 {elseif $field.type eq 'R'}
 <div style="display:{if $filterfield eq $fid}block{else}none{/if};" id="fid{$fid}">
@@ -286,10 +288,17 @@ $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}created{/tr
 {foreach item=ii from=$items[user].field_values[ix].categs}{$ii.name}<br />{/foreach}
 
 {elseif $items[user].field_values[ix].type eq 'y'}
+{if !empty($items[user].field_values[ix].value) and $items[user].field_values[ix].value ne 'None'}
 {assign var=o_opt value=$items[user].field_values[ix].options_array[0]}
-{if $o_opt ne '1' and $items[user].field_values[ix].value ne 'None'}<img border="0" src="img/flags/{$items[user].field_values[ix].value}.gif" title="{$items[user].field_values[ix].value}" alt="{$items[user].field_values[ix].value}" />{/if}
+{capture name=flag}
+{tr}{$items[user].field_values[ix].value}{/tr}
+{/capture}
+{if $o_opt ne '1'}<img border="0" src="img/flags/{$items[user].field_values[ix].value}.gif" title="{$smarty.capture.flag|replace:'_':' '}" alt="{$smarty.capture.flag|replace:'_':' '}" />{/if}
 {if $o_opt ne '1' and $o_opt ne '2'}&nbsp;{/if}
-{if $o_opt ne '2'}{tr}{$items[user].field_values[ix].value}{/tr}{/if}
+{if $o_opt ne '2'}{$smarty.capture.flag|replace:'_':' '}{/if}
+{else}
+&nbsp;
+{/if}
 
 {else}
 {$items[user].field_values[ix].value|truncate:255:"..."|default:"&nbsp;"}
@@ -352,10 +361,15 @@ $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}created{/tr
 </td>
 {elseif $items[user].field_values[ix].type eq 'y'}
 <td class="auto">
+{if !empty($items[user].field_values[ix].value) and $items[user].field_values[ix].value ne 'None'}
 {assign var=o_opt value=$items[user].field_values[ix].options_array[0]}
-{if ($o_opt eq '0' or $o_opt eq 2) and $items[user].field_values[ix].value ne 'None'}<img border="0" src="img/flags/{$items[user].field_values[ix].value}.gif"  title="{$items[user].field_values[ix].value}" alt="{$items[user].field_values[ix].value}"/>{/if}
-{if $o_opt eq '0'}&nbsp;{/if}
-{if $o_opt eq '0' or $o_opt eq 1}{tr}{$items[user].field_values[ix].value}{/tr}{/if}
+{capture name=flag}
+{tr}{$items[user].field_values[ix].value}{/tr}
+{/capture}
+{if $o_opt ne '1'}<img border="0" src="img/flags/{$items[user].field_values[ix].value}.gif"  title="{$smarty.capture.flag|replace:'_':' '}" alt="{$smarty.capture.flag|replace:'_':' '}"/>{/if}
+{if $o_opt ne '1' and $o_opt ne '2'}&nbsp;{/if}
+{if $o_opt ne '2'}{$smarty.capture.flag|replace:'_':' '}{/if}
+{/if}
 </td>
 
 
@@ -600,13 +614,17 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 {html_select_date prefix=$fields[ix].ins_id time=$fields[ix].value start_year="-4" end_year="+4" field_order=$display_field_order} {tr}at{/tr} {html_select_time prefix=$fields[ix].ins_id time=$fields[ix].value display_seconds=false}
 
 {* -------------------- drop down -------------------- *}
-{elseif $fields[ix].type eq 'd'}
+{elseif $fields[ix].type eq 'd' or $fields[ix].type eq 'D'}
 <select name="{$fields[ix].ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
-{if $fields[ix].isMandatory ne 'y'}<option value="" />{/if}
+{assign var=otherValue value=$fields[ix].value}
+<option value="">&nbsp;</option>
 {section name=jx loop=$fields[ix].options_array}
-<option value="{$fields[ix].options_array[jx]|escape}" {if $input_err}{if $fields[ix].value eq $fields[ix].options_array[jx]}selected="selected"{/if}{elseif $defaultvalues.$fid eq $fields[ix].options_array[jx] or $fields[ix].defaultvalue eq $fields[ix].options_array[jx]}selected="selected"{/if}>{$fields[ix].options_array[jx]|tr_if}</option>
+<option value="{$fields[ix].options_array[jx]|escape}" {if $input_err}{if $fields[ix].value eq $fields[ix].options_array[jx]}{assign var=otherValue value=''}selected="selected"{/if}{elseif $defaultvalues.$fid eq $fields[ix].options_array[jx] or $fields[ix].defaultvalue eq $fields[ix].options_array[jx]}selected="selected"{/if}>{$fields[ix].options_array[jx]|tr_if}</option>
 {/section}
 </select>
+{if $fields[ix].type eq 'D'}
+<br />{tr}Other{/tr}: <input type="text" name="{$fields[ix].ins_id}_other" value="{$otherValue|escape}" />
+{/if}
 
 {* -------------------- radio buttons -------------------- *}
 {elseif $fields[ix].type eq 'R'}
@@ -649,13 +667,15 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 
 {* -------------------- country selector -------------------- *}
 {elseif $fields[ix].type eq 'y'}
-<select name="{$fields[ix].ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
+<select name="{$fields[ix].ins_id}">
 <option value=""{if $fields[ix].value eq '' or $fields[ix].value eq 'None'} selected="selected"{/if}>&nbsp;</option>
 {sortlinks}
 {foreach item=flag from=$fields[ix].flags}
 {if $flag ne 'None'}
-<option value="{$flag|escape}" {if $input_err}{if $fields[ix].value eq $flag}selected="selected"{/if}{elseif $flag eq $fields[ix].defaultvalue}selected="selected"{/if}
-style="background-image:url('img/flags/{$flag}.gif');background-repeat:no-repeat;padding-left:25px;padding-bottom:3px;">{tr}{$flag}{/tr}</option>
+{capture name=flag}
+{tr}{$flag}{/tr}
+{/capture}
+<option value="{$flag|escape}" {if $input_err}{if $fields[ix].value eq $flag}selected="selected"{/if}{elseif $flag eq $fields[ix].defaultvalue}selected="selected"{/if}{if $fields[ix].options_array[0] ne '1'} style="background-image:url('img/flags/{$flag}.gif');background-repeat:no-repeat;padding-left:25px;padding-bottom:3px;"{/if}>{$smarty.capture.flag|replace:'_':' '}</option>
 {/if}
 {/foreach}
 {/sortlinks}

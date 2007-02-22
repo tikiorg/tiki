@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.398 2007-02-18 22:58:59 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.399 2007-02-22 13:35:33 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1461,6 +1461,9 @@ if (!$user) {
  	$language = $saveLanguage;
 	$smarty->assign('language', $language);
  }
+
+$stlstl = split("-|\.", $style);
+$style_base = $stlstl[0];
 
 if ($lang_use_db != 'y') {
     // check if needed!!!

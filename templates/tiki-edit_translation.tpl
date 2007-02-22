@@ -1,4 +1,4 @@
-<h1><a href="tiki-edit_translation.php?type={$type}&amp;{if $type eq 'wiki page'}page={$page}{else}id={$id}{/if}">{tr}Edit Translation:{/tr}&nbsp;{$name}</a>
+<h1><a href="tiki-edit_translation.php?type={$type}&amp;{if $type eq 'wiki page'}page={$name|escape}{else}id={$id}{/if}">{tr}Edit Translation:{/tr}&nbsp;{$name}</a>
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Internationalization" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}edit translations{/tr}"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
 {/if}
@@ -91,7 +91,7 @@
 {if $trads|@count <= 1}
 	<input type="submit" class="wikiaction" name="set" value="{tr}go{/tr}"/>
 {else}
-	<input type="submit" class="wikiaction"  value="{tr}add to the set{/tr}"/>
+	<input type="submit" class="wikiaction" name="set" value="{tr}add to the set{/tr}"/>
 {/if}
 
 {if !$articles}

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/block.sortlinks.php,v 1.5 2005-12-12 15:18:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/block.sortlinks.php,v 1.6 2007-02-22 13:35:40 sylvieg Exp $
 /* 
 * Smarty plugin 
 * ------------------------------------------------------------- 
@@ -27,7 +27,8 @@ if ($content) {
 	preg_match('/.*(<[^>]*>)(.*)(<\/[^¨>]*>)/U', $value, $splitted);
 //    $splitted=preg_split("/[<>]/",$value,-1,PREG_SPLIT_NO_EMPTY);
 		if (isset($splitted[2])) {
-    	$links2[$splitted[2]]=$value;
+			$splitted[2] = str_replace(array("Î","É","È"), array('I','E','E'), $splitted[2]);
+    		$links2[$splitted[2]]=$value;
 		}
   }
 

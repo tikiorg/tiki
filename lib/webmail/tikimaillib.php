@@ -45,21 +45,40 @@ class TikiMail extends HtmlMimeMail {
 	
 	function setSubject($subject) {
 		if ($this->charset != "utf-8")
-			parent::setSubject(encodeString($subject, $this->charset));
+			parent::setSubject(encodeString($this->encodeNonInCharset($subject, false), $this->charset));
 		else
 			parent::setSubject($subject);
 	}
 	function setHtml($html, $text = null, $images_dir = null) {
 		if ($this->charset != "utf-8")
-			parent::setHtml(encodeString($html, $this->charset), encodeString($text, $this->charset), $images_dir);
+			
+			parent::setHtml(encodeString($this->encodeNonInCharset($html, true), $this->charset), encodeString($this->encodeNonInCharset($text, false), $this->charset), $images_dir);
 		else
 			parent::setHtml($html, $text , $images_dir);
 	}
 	function setText($text = '') {
 		if ($this->charset != "utf-8")
-			parent::setText(encodeString($text, $this->charset));
+			parent::setText(encodeString($this->encodeNonInCharset($text, false), $this->charset));
 		else
 			parent::setText($text);
+	}
+	/** encode non existing charater is final charset
+	 */
+	function encodeNonInCharset($string, $toHtml=true) {
+		if ($this->charset == 'iso-8859-1') {
+			$bad = array('€','‚', 'ƒ','„', '…', '†', '‡', 'ˆ', '‰', 'Š',
+				'‹', 'Œ', '‘', '’', '“', '”', '•', '–', '—', '˜', '™',
+				'š', '›', 'œ', 'ÿ');
+			$html = array('&euro;', '&sbquo;', '&fnof;', '&bdquo;', '&hellip;', '&dagger;', '&Dagger;', '&circ;', '&permil;', '&Scaron;', 
+				'&lsaquo;', '&OElig;', '&lsquo;', '&rsquo;', '&ldquo;', '&rdquo;', '&bull;', '&ndash;', '&mdash;', '&tilde;', '&trade;',
+				'&scaron;', '&rsaquo;', '&oelig;', '&Yuml;');
+			$text = array('euros', ',', 'f', ',,', '...', 'T','T', '^', '0/00', 'S',
+				'<', 'OE', '\'', '\'', '"', '"', '.', '-', '-', '~', '(TM)',
+				's', '>', 'oe', 'y');
+	
+			return str_replace($bad, $toHtml? $html: $text, $string);
+		} else
+			return $string;
 	}
 }	
 /**
@@ -76,5 +95,6 @@ function encodeString($string, $charset="utf-8") {
 
 	else
 		return $string;
-	}
+}
 ?>
+

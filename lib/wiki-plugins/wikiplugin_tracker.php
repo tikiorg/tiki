@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.59 2007-02-12 11:12:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.60 2007-02-22 13:35:42 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -21,7 +21,7 @@ function wikiplugin_tracker_name($fieldId, $name, $field_errors) {
 	return $name;
 }
 function wikiplugin_tracker($data, $params) {
-	global $tikilib, $userlib, $dbTiki, $notificationlib, $user, $group, $page, $tiki_p_admin, $tiki_p_create_tracker_items, $smarty, $feature_trackers, $feature_multilingual, $userTracker;
+	global $tikilib, $userlib, $dbTiki, $user, $group, $page, $tiki_p_admin, $tiki_p_create_tracker_items, $smarty, $feature_trackers, $feature_multilingual, $userTracker;
 	global $trklib; include_once('lib/trackers/trackerlib.php');
 	
 	//var_dump($_REQUEST);
@@ -94,6 +94,9 @@ function wikiplugin_tracker($data, $params) {
 					} else {
 						$flds['data'][$cpt]['value'] = '';
 					}
+					if (!empty($_REQUEST['track_other'][$fl['fieldId']])) {
+						$flds['data'][$cpt]['value'] = $_REQUEST['track_other'][$fl['fieldId']];
+					}
 					$full_fields[$fl['fieldId']] = $fl;
 					
 					if ($embedded == 'y' and $fl['name'] == 'page') {
@@ -105,10 +108,13 @@ function wikiplugin_tracker($data, $params) {
 						$ins_fields['data'][] = array_merge(array('value' => ''), $fl);
 					$cpt++;
 				}
-		
+
 				if (isset($_REQUEST['track'])) {
 					foreach ($_REQUEST['track'] as $fld=>$val) {
 						//$ins_fields["data"][] = array('fieldId' => $fld, 'value' => $val, 'type' => 1);
+						if (!empty($_REQUEST["track_other"][$fld])) {
+							$val = $_REQUEST["track_other"][$fld];
+						}
 						$ins_fields["data"][] = array_merge(array('value' => $val), $full_fields[$fld]);
 					}
 				}
@@ -312,6 +318,7 @@ function wikiplugin_tracker($data, $params) {
 					$back.= '<input type="hidden" name="authorgroupfieldid" value="'.$f['fieldId'].'" />';
 				}
 				if (in_array($f['fieldId'],$outf)) {
+
 					if (in_array($f['fieldId'],$optional)) {
 						$f['name'] = "<i>".$f['name']."</i>";
 					}
@@ -380,8 +387,8 @@ function wikiplugin_tracker($data, $params) {
 					} elseif ($f['type'] == 'u' and $f['options'] == '1') {
 						$back.= '<tr><td>'.wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors).'</td><td>'.$user;
 					// drop down, user selector or group selector
-					} elseif ($f['type'] == 'd' or $f['type'] == 'u' or $f['type'] == 'g' or $f['type'] == 'r' or $f['type'] == 'R') {
-						if ($f['type'] == 'd' or $f['type'] == 'R') {
+					} elseif ($f['type'] == 'd' or $f['type'] == 'D' or $f['type'] == 'u' or $f['type'] == 'g' or $f['type'] == 'r' or $f['type'] == 'R') {
+						if ($f['type'] == 'd'  or $f['type'] == 'D' or $f['type'] == 'R') {
 							$list = split(',',$f['options']);
 						} elseif ($f['type'] == 'u') {
 							if ($f['options'] == 1 or $f['options'] == 2) {
@@ -406,16 +413,23 @@ function wikiplugin_tracker($data, $params) {
 								}
 							} else {
 								$back.= '<select name="track['.$f["fieldId"].']">';
+								$back .= '<option value=""></option>';
+								$otherValue = $f['value'];
 								foreach ($list as $item) {
-									$selected = $f['value'] == $item ? 'selected="selected"' : '';
+									if ($f['value'] == $item) {
+										$selected = 'selected="selected"';
+										$otherValue = '';
+									} else {
+										$selected = '';
+									}
 									$back.= '<option value="'.$item.'" '.$selected.'>'.$item.'</option>';
 								}
-								$back.= "</select>";
 							}
-							if ($f['isMandatory'] != 'y') {
-								$back .= '<option value=""></option>';
-							}
+
 							$back.= "</select>";
+							if ($f['type'] == 'D') {
+								$back .= '<br />'.tra('Other:').' <input type="text" name="track_other['.$f["fieldId"].']" value="'.$otherValue.'" />';
+							}
 						} else {
 							$back.= '<input type="hidden" name="track['.$f["fieldId"].']" value="'.$user.'" />';
 						}

@@ -27,7 +27,7 @@ if(isset($_REQUEST["year"])) {
 	$year = $_REQUEST["year"];
 }
 
-$thedate = TikiLib::make_time(23,59,59,$mon,$day,$year);
+$thedate = TikiLib::make_time(23,59,59,intval($mon),intval($day),intval($year));
 $_SESSION["thedate"] = $thedate;
 
 $calids=$calendarlib->list_user_calIds();
@@ -149,11 +149,14 @@ $todaylink=$father."day=".date("d")."&amp;mon=".date("m")."&amp;year=".date("Y")
 				$newval="";
 				unset($tmp);
 				$valtime = intval($val);
-				if (array_key_exists(mktime(0, 0, 0, $mon, $valtime, $year),$items)) {
-					$tmp = $items[mktime(0, 0, 0, $mon, $valtime, $year)];
+				if (array_key_exists(mktime(0, 0, 0, intval($mon), intval($valtime), intval($year)),$items)) {
+					$tmp = $items[mktime(0, 0, 0, intval($mon), intval($valtime), intval($year))];
 				}
 				if (isset($tmp)) if (is_array($tmp)) {
-					unset($items[mktime(0, 0, 0, $mon, $valtime, $year)]);
+					unset($items[mktime(0, 0, 0, intval($mon), intval($valtime), intval($year))]);
+
+
+
 					foreach ($tmp as $xx) {
 						// TODO: put more data in the mouseover window
 						$newval .= $xx['name']."<br />";

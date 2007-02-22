@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.69 2007-02-12 11:33:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.70 2007-02-22 13:35:33 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -38,7 +38,7 @@ function batchImportUsers() {
 		$smarty->display("error.tpl");
 		die;	
 	}	
-	$data = @fgetcsv($fhandle, 1000);		
+	$data = @fgetcsv($fhandle, 1000);	
 	while (!feof($fhandle)) {
 		$temp_max = count($fields);
 		for ($i = 0; $i < $temp_max; $i++) {
