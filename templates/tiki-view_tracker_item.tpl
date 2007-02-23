@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.119 2007-02-22 13:35:46 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.120 2007-02-23 15:42:18 nyloth Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
@@ -488,6 +488,7 @@ src="img/icons/edit.gif" border="0" alt="{tr}edit{/tr}"  hspace="2" vspace="0" /
 {if $tiki_p_view_trackers eq 'y'}
 <input type="submit" name="save_return" value="{tr}save{/tr} & {tr}back{/tr} {tr}items list{/tr}" />
 {if $tiki_p_admin_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y'}<a class="link" href="tiki-view_tracker.php?trackerId={$trackerId}&amp;remove={$itemId}" title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>{/if}
+{/if}
 {* ------------------- *}
 {if $tracker_info.showStatus eq 'y' or $tiki_p_admin_trackers eq 'y'}
 <tr class="formcolor"><td>{tr}Status{/tr}</td>
