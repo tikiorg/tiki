@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_blog_post.php,v 1.22 2007-02-12 12:57:12 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_blog_post.php,v 1.23 2007-02-23 17:44:04 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -163,7 +163,7 @@ if (isset($_REQUEST['send'])) {
 
 	/* Check if the emails are valid */
 	foreach ($emails as $email) {
-	  if(!validate_email_syntax($email,$validateEmail)) {
+	  if(!validate_email($email,$validateEmail)) {
 	    $smarty->assign('msg', tra("One of the email addresses you typed is invalid").": " . $email);
 	    $smarty->display("error.tpl");
 	    die;
