@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.60 2007-02-22 13:35:42 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.61 2007-02-25 22:17:57 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -68,7 +68,9 @@ function wikiplugin_tracker($data, $params) {
 		}
 	}
 
-	if (!isset($_REQUEST["ok"]) || $_REQUEST["ok"]  != $trackerId) {
+	$thisIsThePlugin = isset($_REQUEST['trackit']) && $_REQUEST['trackit'] == $trackerId && ((isset($_REQUEST['fields']) && isset($params['fields']) && $_REQUEST['fields'] == $params['fields']) || (!isset($_REQUEST['fields']) && !isset($params['fields'])));
+
+	if (!isset($_REQUEST["ok"]) || $_REQUEST["ok"]  == "n" || !$thisIsThePlugin) {
 	
 		$field_errors = array('err_mandatory'=>array(), 'err_value'=>array());
 	
@@ -84,7 +86,7 @@ function wikiplugin_tracker($data, $params) {
 			$full_fields = array();
 			$mainfield = '';
 
-			if (isset($_REQUEST['trackit']) and $_REQUEST['trackit'] == $trackerId) {
+			if ($thisIsThePlugin) {
 				$cpt = 0;
 				foreach ($flds['data'] as $fl) {
 					// store value to display it later if form
@@ -210,8 +212,11 @@ function wikiplugin_tracker($data, $params) {
 						$mail->send($emailOptions[1]);
 					}
 					if (!empty($page)) {
-						header("Location: tiki-index.php?page=".urlencode($page)."&ok=y");
-					die;
+						$url = "tiki-index.php?page=".urlencode($page)."&ok=y&trackit=$trackerId";
+						if (!empty($params['fields']))
+							$url .= "&fields=".urlencode($params['fields']);
+						header("Location: $url");
+						die;
 					// return "<div>$data</div>";
 					} else {
 						return '';
@@ -278,6 +283,8 @@ function wikiplugin_tracker($data, $params) {
 			if (!empty($page))
 				$back .= '~np~';
 			$back.= '<form enctype="multipart/form-data" method="post"><input type="hidden" name="trackit" value="'.$trackerId.'" />';
+			if (isset($fields))
+				$back .= '<input type="hidden" name="fields" value="'.$params['fields'].'" />';//if plugin inserted twice with the same trackerId
 			if (!empty($_REQUEST['page']))
 				$back.= '<input type="hidden" name="page" value="'.$_REQUEST["page"].'" />';
 			$back.= '<input type="hidden" name="refresh" value="1" />';
