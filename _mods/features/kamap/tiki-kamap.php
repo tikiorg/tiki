@@ -10,9 +10,23 @@ if (!function_exists('ms_newMapObj')) {
   $msg = tra("You must first setup MapServer");
   $access->display_error(basename(__FILE__), $msg);
 }
+if (function_exists('$access->check_feature')) {
+	$access->check_feature('feature_maps');
+	$access->check_permission(array('tiki_p_map_view'), tra("View maps"));
+} else {
+	if(@$feature_maps != 'y') {
+		$smarty->assign('msg',tra("Feature disabled"));
+		$smarty->display("error.tpl");
+		die;
+	}
 
-$access->check_feature('feature_maps');
-$access->check_permission(array('tiki_p_map_view'), tra("View maps"));
+	if($tiki_p_map_view != 'y') {
+		$smarty->assign('msg',tra("You do not have permissions to view the maps"));
+		$smarty->display("error.tpl");
+		die;
+	}
+}
+
 
 // display the name of the map
 $page=$aszMapFiles[$szMap]['title']." Map";

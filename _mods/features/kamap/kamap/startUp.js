@@ -1,6 +1,6 @@
 /**********************************************************************
  *
- * $Id: startUp.js,v 1.1 2007-02-21 23:59:22 franck Exp $
+ * $Id: startUp.js,v 1.2 2007-02-25 20:58:07 franck Exp $
  *
  * purpose: start up code to bootstrap initialization of kaMap within
  *          the sample interface.  Examples of using many parts of
@@ -497,8 +497,19 @@ function dialogToggle( href, szObj) {
 function drawPage() {
     //var browserWidth = getObjectWidth('viewport');
     var browserWidth = getObjectWidth('tiki-center');
-    var browserHeight = getInsideWindowHeight() - getObjectHeight('tiki-top') - getRawObject('siteheader').style.height;
-
+    
+    if (getRawObject('tiki-top')) {
+    	var wtop=getObjectHeight('tiki-top');
+    } else {
+    	var wtop=0;
+    }
+    if (getRawObject('siteheader')) {
+    	var wsite=getRawObject('siteheader').style.height;
+    } else {
+    	var wsite=0;
+    }    
+    
+    var browserHeight = getInsideWindowHeight() - wtop - wsite;
     var viewport = getRawObject('viewport');
 
     //Set Viewport Width

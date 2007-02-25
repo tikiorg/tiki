@@ -2,10 +2,10 @@ contributor:
 $Author: franck $
 
 revision:
-0.0.1
+0.0.2
 
 lastmodif:
-$Date: 2007-02-22 00:33:46 $
+$Date: 2007-02-25 20:58:07 $
 
 files: 
 features/kamap/tiki-kamap.php tiki-kamap.php
@@ -95,3 +95,4 @@ kamap adds a tiled map interface to tikiwiki maps feature.
 
 Changelog:
 0.0.1 initial package
+0.0.2 fixes for 1.9.x support
