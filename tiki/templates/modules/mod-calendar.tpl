@@ -1,17 +1,18 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-calendar.tpl,v 1.38 2007-02-06 04:24:53 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-calendar.tpl,v 1.39 2007-02-26 16:40:51 sylvieg Exp $ *}
 
 {php}
 include_once("lib/class_calendar.php");
 global $dbTiki,$tikilib,$user;
 if(isset($_SESSION["thedate"])) {
-  $day=TikiLib::date_format("d",$_SESSION["thedate"]);
-  $mon=TikiLib::date_format("m",$_SESSION["thedate"]);
-  $year=TikiLib::date_format("Y",$_SESSION["thedate"]);
+  $day=TikiLib::date_format("%d",$_SESSION["thedate"]);
+  $mon=TikiLib::date_format("%m",$_SESSION["thedate"]);
+  $year=TikiLib::date_format("%Y",$_SESSION["thedate"]);
 } else {
-	$day=TikiLib::date_format("d");
-	$mon=TikiLib::date_format("m");
-	$year=TikiLib::date_format("Y");
+	$day=TikiLib::date_format("%d");
+	$mon=TikiLib::date_format("%m");
+	$year=TikiLib::date_format("%Y");
 }
+echo "$day-$mon-$year";
 if(isset($_REQUEST["day"])) {
  $day = $_REQUEST["day"];
 }
