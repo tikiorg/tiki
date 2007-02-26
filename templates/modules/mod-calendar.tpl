@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-calendar.tpl,v 1.39 2007-02-26 16:40:51 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-calendar.tpl,v 1.40 2007-02-26 16:44:30 sylvieg Exp $ *}
 
 {php}
 include_once("lib/class_calendar.php");
@@ -12,7 +12,6 @@ if(isset($_SESSION["thedate"])) {
 	$mon=TikiLib::date_format("%m");
 	$year=TikiLib::date_format("%Y");
 }
-echo "$day-$mon-$year";
 if(isset($_REQUEST["day"])) {
  $day = $_REQUEST["day"];
 }
