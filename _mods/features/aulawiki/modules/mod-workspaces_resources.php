@@ -63,6 +63,7 @@ if (!$exit_module){
 	
 	global $user;
 	global $dbTiki;
+	global $categlib;
 	include_once ('lib/categories/categlib.php');
 	$categlib2 = new CategLib($dbTiki);
 	$ctall = $categlib2->get_all_categories_respect_perms($user, 'tiki_p_view_categories');

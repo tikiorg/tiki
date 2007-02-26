@@ -37,7 +37,7 @@ if ($tiki_p_admin != 'y' && $tiki_p_admin_workspace!='y') {
 	}
 	
 	$now = date("U");
-	if ($workspace["startDate"]>$now || $workspace["endDate"]<$now || $workspace["closed"] == "y") {
+	if ( (($workspace["startDate"]>$now || $workspace["endDate"]<$now) && ceil($workspace["startDate"]/60)!=ceil($workspace["endDate"]/60) ) || $workspace["closed"] == "y") {
 		$smarty->assign('msg', tra("Closed Workspace"));
 		$smarty->display("error.tpl");
 		die;

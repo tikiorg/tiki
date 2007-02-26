@@ -21,7 +21,7 @@
   </select>
   <input class="edubutton" type="submit" name="refresh" value="{tr}Refresh{/tr}">
   <a class="edubutton" href="./tiki-list_file_gallery.php?galleryId={$selectedGal.objId}">{tr}Go{/tr}</a>
-  <a title="{tr}upload file{/tr}" href="./tiki-upload_file.php?galleryId={$selectedGal.objId}"><img src="img/icons/edit.gif" border="0"  width="20" height="16" alt="{tr}upload file{/tr}" /></a>
+  <a title="{tr}upload file{/tr}" href="./tiki-upload_file.php?galleryId={$selectedGal.objId}"><img src="img/icons2/upload.gif" border="0"  width="20" height="16" alt="{tr}upload file{/tr}" /></a>
 </form>
 </div>
 {/if}

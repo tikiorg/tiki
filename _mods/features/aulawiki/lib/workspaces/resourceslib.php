@@ -6,6 +6,7 @@
 * @license http://www.gnu.org/copyleft/lgpl.html GNU/LGPL
 */
 class WorkspaceResourcesLib extends TikiDB {
+	var $db; // The PEAR db object used to access the database
 	function WorkspaceResourcesLib($db) {
 		$this->TikiDB($db);
 	}
@@ -459,7 +460,7 @@ class WorkspaceResourcesLib extends TikiDB {
 	}
 
 	function remove_structure($name, $categoryId) {
-		$this->remove_wikipage($name);
+		$this->remove_wikipage($name, $categoryId);
 	}
 
 	function create_structure($name, $desc, $parentCategoryId) {
@@ -845,7 +846,7 @@ class WorkspaceResourcesLib extends TikiDB {
 		}
 
 		return $ret;*/
-		//global $categlib;
+		global $categlib;
 		global $dbTiki;
 		include_once ('lib/categories/categlib.php');
 		$categlib2 = new CategLib($dbTiki);
@@ -874,7 +875,7 @@ class WorkspaceResourcesLib extends TikiDB {
 	}
 	
 	function get_category($categId, $name = null) {
-		//global $categlib;
+		global $categlib;
 		global $dbTiki;
 		include_once ('lib/categories/categlib.php');
 		$categlib2 = new CategLib($dbTiki);

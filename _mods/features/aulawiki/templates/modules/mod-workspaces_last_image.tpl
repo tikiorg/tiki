@@ -22,7 +22,7 @@
   </select>
   <input class="edubutton" type="submit" name="refresh" value="{tr}Refresh{/tr}">
   <a class="edubutton" href="./tiki-browse_gallery.php?galleryId={$selectedGal.objId}">{tr}Go{/tr}</a>
-  <a title="{tr}upload image{/tr}" href="./tiki-upload_image.php?galleryId={$selectedGal.objId}"><img src="img/icons/edit.gif" border="0"  width="20" height="16" alt="{tr}upload image{/tr}" /></a>
+  <a title="{tr}upload image{/tr}" href="./tiki-upload_image.php?galleryId={$selectedGal.objId}"><img src="img/icons2/upload.gif" border="0"  width="20" height="16" alt="{tr}upload image{/tr}" /></a>
 </form>
 </div>
 {foreach key=key item=lastImage from=$modLastImages}

@@ -6,6 +6,7 @@
 * @copyright (C) 2006 Javier Reyes Gomez (eScire.com)
 * @license http://www.gnu.org/copyleft/lgpl.html GNU/LGPL
 */
+global $categlib;
 include_once ('lib/categories/categlib.php');
 require_once ('lib/workspaces/workspacelib.php');
 

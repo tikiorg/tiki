@@ -14,6 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 include_once ('lib/workspaces/workspacelib.php');
 include_once('lib/wiki/wikilib.php');
+global $categlib;
 include_once('lib/categories/categlib.php');
 global $dbTiki;
 global $userlib;

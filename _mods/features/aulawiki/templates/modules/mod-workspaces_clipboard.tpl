@@ -8,7 +8,7 @@
 {if $error}
 Error: {$error}
 {/if}
-<form name="pasteForm" method="post" action="{$clipboardCurrentUrl}">
+<form name="pasteForm" id="pasteForm" method="post" action="{$clipboardCurrentUrl}">
 <input name="pasteIdCateg" type="hidden" id="pasteIdCateg" value=""> 
       <table  border="0" cellpadding="0" cellspacing="0">
        {foreach from=$clipboard item=clipEntry}

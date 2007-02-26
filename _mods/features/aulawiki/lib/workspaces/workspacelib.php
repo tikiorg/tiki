@@ -9,6 +9,7 @@ include_once ('typeslib.php');
 include_once ('resourceslib.php');
 
 class WorkspaceLib extends TikiDB {
+	var $db; // The PEAR db object used to access the database
 	function WorkspaceLib($db) {
 		$this->TikiDB($db);
 	}
@@ -180,22 +181,24 @@ class WorkspaceLib extends TikiDB {
 		return $wsuid;
 	}
 	function remove_workspace($workspaceId) {
-		global $categlib;
-		include_once ('lib/categories/categlib.php');
-		$resourcesLib = new WorkspaceResourcesLib($this->db);
-		$ws = $this->get_workspace_by_id($workspaceId);
-		if (isset ($ws) && $ws != "") {
-			$this->remove_child_workspaces($workspaceId);
-			$wsTypesLib = new WorkspaceTypesLib($this->db);
-			$wsType = $wsTypesLib->get_workspace_type_by_id($ws["type"]);
-			$this->remove_workspace_groups($ws["code"], $wsType);
-			//$resourcesLib->remove_category_objects($ws["categoryId"]);
-			
-			$this->del_workspace($workspaceId);
-			$this->remove_workspace_category($ws["categoryId"], $categlib);
-			return true;
-		} else {
-			return false;
+		if (isset($workspaceId) && $workspaceId!=0){
+			global $categlib;
+			include_once ('lib/categories/categlib.php');
+			$resourcesLib = new WorkspaceResourcesLib($this->db);
+			$ws = $this->get_workspace_by_id($workspaceId);
+			if (isset ($ws) && $ws != "") {
+				$this->remove_child_workspaces($workspaceId);
+				$wsTypesLib = new WorkspaceTypesLib($this->db);
+				$wsType = $wsTypesLib->get_workspace_type_by_id($ws["type"]);
+				$this->remove_workspace_groups($ws["code"], $wsType);
+				//$resourcesLib->remove_category_objects($ws["categoryId"]);
+				
+				$this->del_workspace($workspaceId);
+				$this->remove_workspace_category($ws["categoryId"], $categlib);
+				return true;
+			} else {
+				return false;
+			}
 		}
 	}
 	
@@ -214,6 +217,7 @@ class WorkspaceLib extends TikiDB {
 	
 	function update_workspace_info($id, $code, $name, $desc, $startDate, $endDate, $closed, $parentId, $type, $categoryId, $parentCategoryId = null, $owner = null, $isuserws = "n", $hide = "n") {
 		global $dbTiki;
+		global $categlib;
 		include_once ('lib/categories/categlib.php');
 		$categlib3 = new CategLib($dbTiki);
 		$resourcesLib = new WorkspaceResourcesLib($this->db);
@@ -260,6 +264,7 @@ class WorkspaceLib extends TikiDB {
 	}
 	function update_workspace_category($oldcatId, $code, $name, $parentId, $parentCategoryId) {
 		global $dbTiki;
+		global $categlib;
 		include_once ('lib/categories/categlib.php');
 		$categlib2 = new CategLib($dbTiki);
 		if (!isset ($parentCategoryId) || $parentCategoryId == "") {
@@ -280,13 +285,15 @@ class WorkspaceLib extends TikiDB {
 	}
 	
 	function remove_workspace_category($categoryId, $categlib) {
-		$resourcesLib = new WorkspaceResourcesLib($this->db);
-		$childCateg = $categlib->get_category_descendants($categoryId);
-		foreach ($childCateg as $key => $categId) {
-			$resourcesLib->remove_category_objects($categId);
+		if (isset($categoryId) && $categoryId!=0){
+			$resourcesLib = new WorkspaceResourcesLib($this->db);
+			$childCateg = $categlib->get_category_descendants($categoryId);
+			foreach ($childCateg as $key => $categId) {
+				$resourcesLib->remove_category_objects($categId);
+			}
+			
+			$categlib->remove_category($categoryId);
 		}
-		
-		$categlib->remove_category($categoryId);
 		return true;
 	}
 	
@@ -502,7 +509,8 @@ class WorkspaceLib extends TikiDB {
 				} else {
 					$hiden = "n";
 				}
-				$wsuid = $this->create_workspace("LF".$workspace["code"].$_REQUEST["wsuser"], $_REQUEST["wsuser"]." personal workspace", "", date("U"), date("U"), "n", $workspace["workspaceId"], $wstype["userwstype"], null, $_REQUEST["wsuser"], "y", $hiden);
+				//$endDate = date('U',mktime(0,0,0,date("m"),  date("d"),  date("Y")+1));
+				$wsuid = $this->create_workspace("LF".$workspace["code"].$_REQUEST["wsuser"], $_REQUEST["wsuser"]." personal workspace", "", $workspace["startDate"], $workspace["endDate"], "n", $workspace["workspaceId"], $wstype["userwstype"], null, $_REQUEST["wsuser"], "y", $hiden);
 				$subWorkspace = $this->get_workspace_by_uid($wsuid);
 			}
 			$wstype = $lfwstype;
