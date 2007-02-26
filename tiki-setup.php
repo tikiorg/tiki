@@ -1,10 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.399 2007-02-22 13:35:33 sylvieg Exp $
-
-// Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.400 2007-02-26 18:31:44 jyhem Exp $
+// Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et.
+// al.
+// All Rights Reserved. See copyright.txt for details and a complete list of
+// authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
+// details.
 
 //xdebug_start_profiling();
 
@@ -233,6 +235,9 @@ if(!isset($section)) $section = '';
 $tikifeedback = array();
 
 $feature_referer_highlight = 'n';
+
+# Variable checking
+$varcheck_errors="";
 
 include_once ('tiki-setup_base.php');
 TikiSetup::check($tikidomain);
@@ -737,7 +742,7 @@ $pref['feature_webmail'] = 'n';
 $pref['webmail_max_attachment'] = 1500000;
 $pref['webmail_view_html'] = 'y';
 
-# contaacts
+# contacts
 $sections['contacts']['feature'] = 'feature_contacts';
 $sections['contacts']['key'] = 'contactId';
 $sections['contacts']['itemkey'] = '';
@@ -1178,21 +1183,21 @@ $pref['use_proxy'] = 'n';
 $pref['user_list_order'] = 'score_desc';
 $pref['webserverauth'] = 'n';
 
-// ******************************************************************************************
+// *****************************************************************************
 // First we populate with default values
 foreach ($pref as $defpref=>$defval) {
 	$$defpref = $defval;
 	$smarty->assign("$defpref", $defval);
 }
 
-// ******************************************************************************************
+// *****************************************************************************
 // start of replacement : get all prefs from db once
 $tikilib->get_all_preferences();
 foreach ($preferences as $name => $val) {
 	$$name = $val;
 	$smarty->assign("$name", $val);
 }
-// ******************************************************************************************
+// *****************************************************************************
 $sections_enabled = array();
 foreach ($sections as $sec=>$dat) {
 	$feat = $dat['feature'];
@@ -1201,7 +1206,7 @@ foreach ($sections as $sec=>$dat) {
 	}
 }
 ksort($sections_enabled);
-// ******************************************************************************************
+// *****************************************************************************
 
 $area = 'tiki';
 $fullscreen = 'n';
@@ -1438,6 +1443,7 @@ if ($tikidomain and is_file("styles/$tikidomain/$site_style")) {
 	$site_style = "$tikidomain/$site_style";
 }
 
+# style 
 $smarty->assign('style', $style);           // that is the pref
 $smarty->assign('site_style', $site_style); // that is the effective site style
 $smarty->assign('user_style', $user_style); // that is the user-chosen style
@@ -1447,6 +1453,11 @@ $headerlib->add_cssfile('styles/transitions/'.$transition_style,50);
 $headerlib->add_cssfile('styles/'.$site_style,51);
 $stlstl = split("-|\.", $site_style);
 $style_base = $stlstl[0];
+
+if($varcheck_errors!="") {
+	$smarty->assign('msg',$varcheck_errors);
+	$smarty->display('error.tpl');
+}
 
 if (!$user) {
 	if (isset($_REQUEST['switchLang'])) {

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.126 2007-02-04 20:09:33 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.127 2007-02-26 18:31:44 jyhem Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -197,16 +197,13 @@ function varcheck($array) {
       	// variable allowed to be empty?
       	if ('+'==substr($vartype[$rq],0,1)) {
       		if ($rv == "") {
-	        	// TODO: better output!
-				print "<html><head><title>".tra("An error occurred.")."</title></head><body><center><br />";
-				print "<b>".tra("An error occurred.")."</b><br /><br /></center>";
-				print tra("Notice: this variable may not be empty:")." <font color='red'>$rq</font></body></html>";
-				die;
+						return(tra("Notice: this variable may not be empty:")." <font color='red'>$rq</font>");
       		}
       		// remove + from type
       		$vartype[$rq]=substr($vartype[$rq],1);
       	}
       	// expand arrays:
+				// TODO: handle return value
         if (is_array($rv)) {
           varcheck($rv);
         // check single parameters:
@@ -220,18 +217,15 @@ function varcheck($array) {
 	          or ($vartype["$rq"] == 'string') and !preg_match($patterns['string'],$rv)
 	          or ($vartype["$rq"] == 'stringlist') and !preg_match($patterns['stringlist'],$rv))
 	        {
-	        	// TODO: better output!
-				print "<html><head><title>".tra("An error occurred.")."</title></head><body><center><br />";
-				print "<b>".tra("An error occurred.")."</b><br /><br /></center>";
-				print tra("Notice: invalid variable value:")." $rq = <font color='red'>".htmlspecialchars($rv)."</font></body></html>";
-				die;
+						return(tra("Notice: invalid variable value:")." $rq = <font color='red'>".htmlspecialchars($rv)."</font>");
 	        }
         }
       }
     } // foreach
   }
 } // varcheck($array)
-varcheck($_REQUEST);
+
+$varcheck_errors=varcheck($_REQUEST);
 
 // rebuild $_REQUEST after sanity check
 unset($_REQUEST);
