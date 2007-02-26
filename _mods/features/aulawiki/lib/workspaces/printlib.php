@@ -34,7 +34,9 @@ function s_toc_structure_tree2($structure_id, $level = 0) {
 		global $tikilib;
 		
 		foreach ( $structure_tree as $key=>$node ) {
-		
+			if ($node['last'] && !$node['first'])
+				break;
+
 			$info = $tikilib->get_page_info($node['pageName']);
 			$pdata = $tikilib->parse_data($info["data"]);
 			$structure_tree[$key]["info"]=$info;
