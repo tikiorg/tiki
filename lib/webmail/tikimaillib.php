@@ -96,5 +96,3 @@ function encodeString($string, $charset="utf-8") {
 	else
 		return $string;
 }
-?>
-
