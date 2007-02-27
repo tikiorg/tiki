@@ -40,8 +40,7 @@ class StructLib extends TikiLib {
 
 		$level = 0;
 		$first = true;
-		header('Content-type: text/html; charset=utf8');
-		echo "<html><body><pre>\n";
+		header('Content-type: text/plain; charset=utf-8');
 		foreach ( $structure_tree as $node ) {
 			//This special case indicates head of structure
 			if ($node['first'] and $node['last']) {
@@ -66,7 +65,6 @@ class StructLib extends TikiLib {
 				$level--;
 			}
 		}
-		echo "\n</pre></body></html>";
 	}
 
 	function s_remove_page($page_ref_id, $delete) {
