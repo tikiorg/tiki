@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.27 2007-02-09 13:06:25 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.28 2007-02-27 22:23:11 niclone Exp $
 //
 
 // $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
@@ -292,11 +292,6 @@ function convert_sortmode($sort_mode) {
     }
     // parse $sort_mode for evil stuff
     $sort_mode = preg_replace('/[^A-Za-z_,]/', '', $sort_mode);
-    $sep = strrpos($sort_mode, '_');
-    // force ending to either _asc or _desc unless it's "random"
-    if ( substr($sort_mode, $sep)!=='_asc' && $sort_mode != 'random') {
-        $sort_mode = substr($sort_mode, 0, $sep) . '_desc';
-    }
 
     if ($sort_mode == 'random') {
 	$map = array("postgres7" => "RANDOM()",
@@ -313,35 +308,41 @@ function convert_sortmode($sort_mode) {
 	return $map[$ADODB_LASTDB];
     }
 
-    switch ($ADODB_LASTDB) {
+    $sorts=explode(',', $sort_mode);
+    foreach($sorts as $k => $sort) {
+
+	// force ending to either _asc or _desc unless it's "random"
+	$sep = strrpos($sort, '_');
+	$dir = substr($sort, $sep);
+	if (($dir !== '_asc') && ($dir !== '_desc')) $sorts[$k].='_asc';
+	
+	switch ($ADODB_LASTDB) {
         case "postgres7":
         case "oci8":
         case "sybase":
         case "mssql":
-            // Postgres needs " " around column names
-            //preg_replace("#([A-Za-z]+)#","\"\$1\"",$sort_mode);
-
-	    $sort_mode = preg_replace("/_asc$/", "\" asc", $sort_mode);
-	    $sort_mode = preg_replace("/_desc$/", "\" desc", $sort_mode);
-	    $sort_mode = str_replace(",", "\",\"",$sort_mode);
-	    $sort_mode = "\"" . $sort_mode;
+	    $sort = preg_replace('/_asc$/', '" asc', $sort);
+	    $sort = preg_replace('/_desc$/', '" desc', $sort);
+	    $sort = '"' . $sort;
 	    break;
 
         case "sqlite":
-            $sort_mode = preg_replace("/_asc$/", " asc", $sort_mode);
-            $sort_mode = preg_replace("/_desc$/", " desc", $sort_mode);
+            $sort = preg_replace('/_asc$/', ' asc', $sort);
+            $sort = preg_replace('/_desc$/', ' desc', $sort);
             break;
 
         case "mysql3":
         case "mysql":
         default:
-	    $sort_mode = preg_replace("/_asc$/", "` asc", $sort_mode);
-	    $sort_mode = preg_replace("/_desc$/", "` desc", $sort_mode);
-	    $sort_mode = str_replace(",", "`,`",$sort_mode);
-	    $sort_mode = "`" . $sort_mode;
+	    $sort = preg_replace('/_asc$/', '` asc', $sort);
+	    $sort = preg_replace('/_desc$/', '` desc', $sort);
+	    $sort = '`' . $sort;
 	    break;
+	}
+	$sorts[$k]=$sort;
     }
 
+    $sort_mode=implode(',', $sorts);
     return $sort_mode;
 }
 
