@@ -1,11 +1,14 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.22 2006-03-16 13:43:12 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.23 2007-02-27 21:53:23 sylvieg Exp $ *}
 
-<h1><a class="pagetitle" href="tiki-forums.php">{tr}Forums{/tr}</a>
+<h1><a class="pagetitle" href="tiki-forums.php">{tr}Forums{/tr}</a></h1>
 
-{if $tiki_p_admin eq 'y'}
-<a href="tiki-admin.php?page=forums" title="{tr}Configure/Options{/tr}">{html_image file='img/icons/config.gif' border='0'  alt="{tr}Configure/Options{/tr}"}</a>
+{if $tiki_p_admin_forum eq 'y'}
+<span class="button2"><a href="tiki-admin_forums.php" class="linkbut">{tr}Admin forums{/tr}</a></span>
 {/if}
-</h1>
+{if $tiki_p_admin eq 'y'}
+<a href="tiki-admin.php?page=forums" title="{tr}Configure/Options{/tr}">{html_image file='pics/icons/wrench.png' border='0'  alt="{tr}Configure/Options{/tr}"}</a>
+{/if}
+
 
 <div  align="center">
 <table class="findtable">
