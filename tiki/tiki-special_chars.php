@@ -1,5 +1,5 @@
 <?php // -*- coding:utf-8 -*-
-/* $Header: /cvsroot/tikiwiki/tiki/tiki-special_chars.php,v 1.4 2006-08-29 20:19:03 sylvieg Exp $ */
+/* $Header: /cvsroot/tikiwiki/tiki/tiki-special_chars.php,v 1.5 2007-02-28 16:21:24 sylvieg Exp $ */
 echo  '<?xml version="1.0" encoding="UTF-8"?>';
 ?>
 <!DOCTYPE html
@@ -153,6 +153,7 @@ onchange="handleListChange(this)">
               <option value="&amp;"> & </option>
 		  <option value="&reg;"> ® </option>
 		  <option value="&trade;"> &trade; </option>
+		  <option value="&plusmn;"> ± </option>
              </select>
           </td>
         </tr>
