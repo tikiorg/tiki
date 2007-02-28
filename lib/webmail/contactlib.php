@@ -13,7 +13,9 @@ class ContactLib extends TikiLib {
 	}
 
 	// Contacts
-	function list_contacts($user, $offset, $maxRecords, $sort_mode, $find, $include_group_contacts = false, $letter = '', $letter_field = 'email') {
+	function list_contacts($user, $offset=-1, $maxRecords=-1,
+			       $sort_mode='firstName_asc,lastName_asc,email_asc',
+			       $find=NULL, $include_group_contacts = false, $letter = '', $letter_field = 'email') {
 
 		if ( $include_group_contacts ) {
 			$user_groups = "'".join("','", $this->get_user_groups($user))."'";
@@ -21,7 +23,7 @@ class ContactLib extends TikiLib {
 		} else $mid = "where `user`=? and `$letter_field` like ?";
 		$bindvars=array($user, $letter.'%');
 		
-		if ($find) {
+		if ($find !== NULL) {
 			$findesc = '%' . $find . '%';
 			$mid .= " and (`nickname` like ? or `firstName` like ? or `lastName` like ? or `email` like ?)";
 			array_push($bindvars, $findesc, $findesc, $findesc, $findesc);
