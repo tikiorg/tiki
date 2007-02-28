@@ -83,7 +83,8 @@
 {if $subtree[ix].first or not $subtree[ix].last}
 <tr {if $page_ref_id eq $subtree[ix].page_ref_id}class="even"{else}class="odd"{/if}>
 {if $subtree[ix].pos eq ''}
-	<td class="heading" >&nbsp;</td>
+	<td class="heading"><a class='link' href='tiki-index.php?page={$subtree[ix].pageName|escape:"url"}' title="{tr}view{/tr}"><img src="pics/icons/magnifier.png" border="0" width="16" height="16" alt="{tr}view{/tr}" />
+		<a class="link" href='tiki-editpage.php?page={$subtree[ix].pageName|escape:"url"}'><img border='0' title='{tr}edit{/tr}' alt='{tr}edit{/tr}' src='pics/icons/page_edit.png' height='16' width='16' /></a></td>
 	<td class="heading">
 		<a class='link' href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}'><b>{$subtree[ix].pageName}{if $subtree[ix].page_alias}({$subtree[ix].page_alias}){/if}</b></a>
 	</td>
