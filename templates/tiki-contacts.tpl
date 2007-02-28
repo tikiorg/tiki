@@ -187,6 +187,6 @@ title="{tr}delete{/tr}"><img src="pics/icons/cross_admin.png" border="0" height=
 	if (defaultvalue != '')
 	    ext_add(extid, text, defaultvalue);
     }
-{/literal}{foreach from=$exts item=ext key=k}extmenu_add('{$k|escape}', '{$ext.tra|escape}', '{$info.ext[$ext.art]|escape:quotes}');{/foreach}{literal}
+{/literal}{foreach from=$exts item=ext key=k}extmenu_add('{$k|escape}', '{$ext.tra|escape}', '{$info.ext[$ext.id]|escape:quotes}');{/foreach}{literal}
 </script>
 {/literal}
