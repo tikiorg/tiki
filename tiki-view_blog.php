@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.58 2007-02-12 12:14:15 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.59 2007-02-28 22:54:20 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -36,11 +36,17 @@ if (!isset($_REQUEST["blogId"])) {
 	$smarty->display("error.tpl");
 	die;
 }
+if (!$blog_data = $tikilib->get_blog($_REQUEST["blogId"])) {
+	$smarty->assign('msg', tra('Incorrect param'));
+	$smarty->display("error.tpl");
+	die;	
+}
 
 $smarty->assign('individual', 'n');
 
 if ($userlib->object_has_one_permission($_REQUEST["blogId"], 'blog')) {
 	$smarty->assign('individual', 'y');
+	$blog_data['public'] = 'n';
 
 	if ($tiki_p_admin != 'y') {
 		// Now get all the permissions that are set for this type of permissions 'image gallery'
@@ -64,6 +70,7 @@ if ($userlib->object_has_one_permission($_REQUEST["blogId"], 'blog')) {
 	$perms_array = $categlib->get_object_categories_perms($user, 'blog', $_REQUEST['blogId']);
    	if ($perms_array) {
    		$is_categorized = TRUE;
+		$blog_data['public'] = 'n';
     	foreach ($perms_array as $perm => $value) {
     		$$perm = $value;
     	}
@@ -92,14 +99,13 @@ if ($tiki_p_blog_admin == 'y') {
 	$smarty->assign('tiki_p_read_blog', 'y');
 }
 
-if ($tiki_p_read_blog != 'y') {
+if ($tiki_p_read_blog != 'y' && $blog_data['public'] != 'y' && $user != $blog_data['user']) {
 	$smarty->assign('msg', tra("Permission denied you can not view this section"));
 
 	$smarty->display("error.tpl");
 	die;
 }
 
-$blog_data = $tikilib->get_blog($_REQUEST["blogId"]);
 $ownsblog = 'n';
 
 if ($user && $user == $blog_data["user"]) {
@@ -190,7 +196,7 @@ $listpages = $bloglib->list_blog_posts($_REQUEST["blogId"], $offset, $blog_data[
 
 $temp_max = count($listpages["data"]);
 for ($i = 0; $i < $temp_max; $i++) {
-	$listpages["data"][$i]["parsed_data"] =preg_replace("/&#([0-9]+);/me", "chr('\\1')", strtr($tikilib->parse_data($bloglib->get_page($listpages["data"][$i]["data"], 1)), array_flip(get_html_translation_table(HTML_ENTITIES)))) ;
+  $listpages["data"][$i]["parsed_data"] =$tikilib->parse_data($bloglib->get_page($listpages["data"][$i]["data"], 1));
 
 	if ($feature_freetags == 'y') {     // And get the Tags for the posts
 		$listpages["data"][$i]["freetags"] = $freetaglib->get_tags_on_object($listpages["data"][$i]["postId"], "blog post");
