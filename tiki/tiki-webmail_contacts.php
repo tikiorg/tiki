@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail_contacts.php,v 1.12 2006-11-28 07:16:46 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail_contacts.php,v 1.13 2007-02-28 13:26:28 niclone Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -79,17 +79,17 @@ $maxRecords = 20;
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 
 if (!isset($_REQUEST["letter"])) {
-	$channels = $contactlib->list_contacts($user, $offset, $maxRecords, $sort_mode, $find);
+	$contacts = $contactlib->list_contacts($user, $offset, $maxRecords, $sort_mode, $find);
 } else {
-	$channels = $contactlib->list_contacts_by_letter($user, $offset, $maxRecords, $sort_mode, $_REQUEST["letter"]);
+	$contacts = $contactlib->list_contacts_by_letter($user, $offset, $maxRecords, $sort_mode, $_REQUEST["letter"]);
 }
 
-$cant_pages = ceil($channels["cant"] / $maxRecords);
+$cant_pages = ceil(count($contacts) / $maxRecords);
 
 $smarty->assign_by_ref('cant_pages', $cant_pages);
 $smarty->assign('actual_page', 1 + ($offset / $maxRecords));
 
-if ($channels["cant"] > ($offset + $maxRecords)) {
+if (count($contacts) > ($offset + $maxRecords)) {
 	$smarty->assign('next_offset', $offset + $maxRecords);
 } else {
 	$smarty->assign('next_offset', -1);
@@ -106,7 +106,7 @@ if ($offset > 0) {
 	$smarty->assign('prev_offset', -1);
 }
 
-$smarty->assign_by_ref('channels', $channels["data"]);
+$smarty->assign_by_ref('channels', $contacts);
 
 ask_ticket('webmail-contact');
 

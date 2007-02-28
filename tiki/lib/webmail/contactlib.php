@@ -35,9 +35,7 @@ class ContactLib extends TikiLib {
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$ret = array();
 
-		$cant = 0;
 		while ($res = $result->fetchRow()) {
-			$cant++;
 			$query = "select `groupName` from `tiki_webmail_contacts_groups` where `contactId`=?";
 			$res2 = $this->query($query,array((int)$res['contactId']));
 			if ($res2) {
@@ -52,10 +50,7 @@ class ContactLib extends TikiLib {
 			$ret[] = $res;
 		}
 
-		$retval = array();
-		$retval["data"] = $ret;
-		$retval["cant"] = $cant;
-		return $retval;
+		return $ret;
 	}
 
 	function are_contacts($contacts, $user) {
@@ -184,6 +179,12 @@ class ContactLib extends TikiLib {
 		while ($row = $res->fetchRow()) $ret[] = $row;
 
  		return $ret;
+	}
+    
+	function get_ext($id) {
+		$this->query('select * from `tiki_webmail_contacts_fields` where `fieldId`=?', array((int)$id));
+		if (!$res->numRows()) return NULL;
+		return $res->fetchRow();
 	}
 	
 	function add_ext($user, $name) {

@@ -25,21 +25,22 @@ $traducted_exts=array();
 foreach($exts as $ext) {
 	$traducted_exts[$ext['fieldId']] = array(
     		'tra' => tra($ext['fieldname']),
-		'art' => $ext['fieldId'],
+		'art' => $ext['fieldname'],
+		'id' => $ext['fieldId'],
 		'show' => $ext['show']
 	);
 }
 
 if ($_REQUEST["contactId"]) {
 	$info = $contactlib->get_contact($_REQUEST["contactId"], $user);
-	/* I'm not sure the user need to see those fields since they are not in his ext list...
 	foreach($info['ext'] as $k => $v) {
 	    if (!in_array($k, array_keys($exts))) {
 		$exts[$k]=$v;
-		$traducted_exts[$k]['tra']=tra($k);
-		$traducted_exts[$k]['art']=$k;
+		$traducted_exts[$k]['tra']=tra($info['fieldname']);
+		$traducted_exts[$k]['art']=$info['fieldname'];
+		$traducted_exts[$k]['id']=$k;
 	    }
-	}*/
+	}
 } else {
 	$info = array();
 	$info["firstName"] = '';
@@ -111,25 +112,30 @@ if (isset($_REQUEST["find"])) {
 $smarty->assign('find', $find);
 $maxRecords = 20;
 
-$channels = $contactlib->list_contacts($user, $offset, $maxRecords, $sort_mode, $find, true, $_REQUEST["letter"]);
+$contacts = $contactlib->list_contacts($user, $offset, $maxRecords, $sort_mode, $find, true, $_REQUEST["letter"]);
 
 if ( isset($_REQUEST['view']) ) $_SESSION['UserContactsView'] = $_REQUEST['view'];
 $smarty->assign('view', $_SESSION['UserContactsView']);
 
-$cant = 0;
-if ( is_array($channels['data']) ) {
+if ( is_array($contacts) ) {
 
 	if ( $_SESSION['UserContactsView'] == 'list' ) {
-		$smarty->assign('all', array($channels['data']));
-		$cant = $channels['cant'];
+		$smarty->assign('all', array($contacts));
+		$cant = count($contacts);
 	} else {
 		// ordering contacts by groups
+		$all=array();
+		$all_personnal=array();
+		$cant = 0;
 
-		foreach ( $channels['data'] as $c ) {
-			if ( is_array($c['groups']) ) foreach ( $c['groups'] as $g ) {
-				$all['data'][$g][] = $c;
-				$cant++;
+		foreach ( $contacts as $c ) {
+			if ( is_array($c['groups']) ) {
+				foreach ( $c['groups'] as $g ) {
+					$all[$g][] = $c;
+					$cant++;
+				}
 			}
+
 			if ( $c['user'] == $user ) {
 				$all_personnal[] = $c;
 				$cant++;
@@ -137,12 +143,12 @@ if ( is_array($channels['data']) ) {
 		}
 	
 		// sort contacts by group name
-		ksort($all['data']);
+		ksort($all);
 	
 		// this group needs to be the last one
-		$all['data']['user_personal_contacts'] =& $all_personnal;
+		$all['user_personal_contacts'] =& $all_personnal;
 
-		$smarty->assign('all', $all['data']);
+		$smarty->assign('all', $all);
 	}
 
 }
