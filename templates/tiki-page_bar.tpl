@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.60 2007-02-16 17:38:55 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.61 2007-02-28 15:20:58 sylvieg Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -55,7 +55,7 @@
 <td><div class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=lock" class="linkbut">{tr}lock{/tr}</a></div></td>
 {/if}
 {if $tiki_p_admin_wiki eq 'y'}
-<td><div class="button2"><a href="tiki-pagepermissions.php?page={$page|escape:"url"}" class="linkbut">{tr}perms{/tr}</a></div></td>
+<td><div class="button2"><a href="tiki-objectpermissions.php?objectId={$page|escape:"url"}&amp;objectName={$page|escape:"url"}&amp;objectType=wiki+page&amp;permType=wiki" class="linkbut">{tr}perms{/tr}</a></div></td>
 {/if}
 
 {if $feature_history eq 'y' and $tiki_p_wiki_view_history eq 'y'}

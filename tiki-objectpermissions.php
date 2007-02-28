@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-objectpermissions.php,v 1.18 2006-12-01 18:15:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-objectpermissions.php,v 1.19 2007-02-28 15:19:54 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -97,6 +97,33 @@ if ($tiki_p_admin_objects != 'y') {
 	$smarty->assign_by_ref('perms', $userPerms);
 } else {
 	$smarty->assign_by_ref('perms', $perms['data']);
+}
+
+if ($feature_categories == 'y') {
+	global $categlib; include_once('lib/categories/categlib.php');
+	// Get the permissions of the categories that this object belongs to,
+	$categ_perms = array();
+	$parents = $categlib->get_object_categories($_REQUEST['objectType'], $_REQUEST['objectId']);
+	foreach ($parents as $categId) {
+		if ($userlib->object_has_one_permission($categId, 'category')) {
+			$categ_perm = $userlib->get_object_permissions($categId, 'category');
+			$categ_perm[0]['catpath'] = $categlib->get_category_name($categId);
+			$categ_perms[] = $categ_perm;
+		} else {
+			$categpath = $categlib->get_category_path($categId);
+			$arraysize = count($categpath);
+			$x = 0;
+			for ($i=$arraysize-2; $i>=0; $i--) {
+				if ($userlib->object_has_one_permission($categpath[$i]['categId'], 'category')) {
+					$categ_perms[] = $userlib->get_object_permissions($categpath[$i]['categId'], 'category');
+					$categ_perms[$x][0]['catpath'] = $categlib->get_category_name($categpath[$i]['categId']);
+					$x++;
+					break 1;
+				}
+			}
+		}
+	}
+	$smarty->assign_by_ref('categ_perms', $categ_perms);
 }
 
 ask_ticket('object-perms');

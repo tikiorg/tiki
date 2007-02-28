@@ -1,8 +1,14 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-objectpermissions.tpl,v 1.19 2006-12-01 18:15:47 sylvieg Exp $ *}
-<h1>{tr}Assign permissions to {/tr}{tr}{$objectType|escape}{/tr} {$objectName|escape}</h1>
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-objectpermissions.tpl,v 1.20 2007-02-28 15:19:54 sylvieg Exp $ *}
+<h1><a href="tiki-objectpermissions.php?objectName={$objectName|escape:url}&amp;objectType={$objectType|escape:url}&amp;objectId={$objectId|escape:url}&amp;permType={$permType|escape:url}">{tr}Assign permissions to {/tr}{tr}{$objectType|escape}{/tr}: {$objectName|escape}</a></h1>
 <a href="{$referer}" class="linkbut">{tr}back{/tr}</a>
-<div>
+
 <h2>{tr}Current permissions for this object{/tr}</h2>
+<div class="rbox" name="tip">
+<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+<div class="rbox-data" name="tip">{tr}These permissions override any global permissions or category permissions affecting this object.{/tr}<br />
+{tr}To edit global permissions <a class="rbox-link" href="tiki-admingroups.php">click here</a>.{/tr}</div>
+</div>
+
 <form method="post" action="tiki-objectpermissions.php">
 <table class="normal">
 <tr><td class="heading"></td><td class="heading">{tr}group{/tr}</td><td class="heading">{tr}permission{/tr}</td><td class="heading">{tr}action{/tr}</td></tr>
@@ -14,7 +20,7 @@
 <td class="{cycle advance=false}">{$page_perms[pg].permName}</td>
 <td class="{cycle advance=true}"><a class="link" href="tiki-objectpermissions.php?referer={$referer|escape:"url"}&amp;action=remove&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;page={$page|escape:"url"}&amp;perm={$page_perms[pg].permName}&amp;group={$page_perms[pg].groupName}" title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" width="16" height="16" alt="{tr}delete{/tr}" border="0" /></a></td></tr>
 {sectionelse}
-<tr><td colspan="4" class="odd">{tr}No individual permissions global permissions apply{/tr}</td></tr>
+<tr><td colspan="4" class="odd">{if !empty($categ_perms)}{tr}No individual permissions, category permissions apply{/tr}{else}{tr}No individual permissions, category permissions apply{/tr}{/if}</td></tr>
 {/section}
 {if $page_perms}
 	<tr><td>
@@ -59,6 +65,7 @@
 <div class="button2">
 <a href="#" onclick="javascript:flip('edithelpzone'); return false;" class="linkbut">{tr}perms help{/tr}</a>
 </div>
+
 <div class="wiki-edithelp"  id='edithelpzone' >
 {cycle print=false values="even,odd"}
 <table class="normal">
@@ -68,4 +75,25 @@
 </table>
 </div>
 </form>
+
+<h2>{tr}Current permissions for categories that this object belongs to{/tr}:</h2>
+{if !empty($page_perms) && !empty($categ_perms)}
+<div class="rbox" name="tip">
+<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+<div class="rbox-data" name="tip">{tr}These permissions do not apply. Special permissions apply.{/tr}
 </div>
+{/if}<table class="normal">
+<tr><td class="heading">{tr}category{/tr}</td><td class="heading">{tr}group{/tr}</td><td class="heading">{tr}permission{/tr}</td></tr>
+{cycle print=false values="even,odd"}
+{section  name=x loop=$categ_perms}
+	{section name=y loop=$categ_perms[x]}
+<tr>
+  <td class="{cycle advance=false}">{$categ_perms[x][0].catpath}</td>
+  <td class="{cycle advance=false}">{$categ_perms[x][y].groupName}</td>
+  <td class="{cycle advance=false}">{$categ_perms[x][y].permName}</td>
+</tr>
+	{/section}
+{sectionelse}
+<tr><td colspan="3">{if empty($page_perms)}{tr}No category permissions; global permissions apply{/tr}{else}{tr}No category permissions; special permissions apply{/tr}{/if}</td></tr>
+{/section}
+</table>
