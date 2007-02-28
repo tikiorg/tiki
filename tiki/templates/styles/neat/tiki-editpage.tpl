@@ -49,9 +49,6 @@
       <span class="tabbut"><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=lock" class="tablink">{tr}lock{/tr}</a></span>
     {/if}
   {/if}
-  {if $tiki_p_admin_wiki eq 'y'}
-    <span class="tabbut"><a href="tiki-pagepermissions.php?page={$page|escape:"url"}" class="tablink">{tr}perms{/tr}</a></span>
-  {/if}
 {/if}
 
 {if $page|lower ne 'sandbox'}
