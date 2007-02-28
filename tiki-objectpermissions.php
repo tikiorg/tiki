@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-objectpermissions.php,v 1.19 2007-02-28 15:19:54 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-objectpermissions.php,v 1.20 2007-02-28 18:11:16 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -43,6 +43,14 @@ $smarty->assign('objectId', $_REQUEST["objectId"]);
 $smarty->assign('objectType', $_REQUEST["objectType"]);
 $smarty->assign('permType', $_REQUEST["permType"]);
 
+if ($_REQUEST['objectType'] == 'wiki' || $_REQUEST['objectType'] == 'wiki page') {
+	global $structlib; include_once('lib/structures/structlib.php');
+	$pageInfoTree = $structlib->s_get_structure_pages($structlib->get_struct_ref_id($_REQUEST['objectId']));
+	if (count($pageInfoTree) > 1) {
+		$smarty->assign('inStructure', 'y');
+	}
+}
+
 // Process the form to assign a new permission to this page
 if (isset($_REQUEST['assign']) && isset($_REQUEST['group']) && isset($_REQUEST['perm'])) {
 	check_ticket('object-perms');
@@ -53,9 +61,19 @@ if (isset($_REQUEST['assign']) && isset($_REQUEST['group']) && isset($_REQUEST['
 			die;
 		}
 	}
-	foreach($_REQUEST['perm'] as $perm) {
-		foreach ($_REQUEST['group'] as $group) {
-			$userlib->assign_object_permission($group, $_REQUEST["objectId"], $_REQUEST["objectType"], $perm);
+	if (!empty($_REQUEST['assignstructure']) && $_REQUEST['assignstructure'] == 'on' && !empty($pageInfoTree)) {
+		foreach($pageInfoTree as $subPage) {
+			foreach($_REQUEST['perm'] as $perm) {
+				foreach ($_REQUEST['group'] as $group) {
+					$userlib->assign_object_permission($group,$subPage["pageName"],'wiki page',$perm);
+				}
+			}
+		}
+	} else {
+		foreach($_REQUEST['perm'] as $perm) {
+			foreach ($_REQUEST['group'] as $group) {
+				$userlib->assign_object_permission($group, $_REQUEST["objectId"], $_REQUEST["objectType"], $perm);
+			}
 		}
 	}
 	$smarty->assign('groupName', $_REQUEST["group"]);
@@ -72,7 +90,13 @@ if (isset($_REQUEST['delsel_x']) && isset($_REQUEST['checked'])) {
 	check_ticket('object-perms');
 	foreach ($_REQUEST['checked'] as $perm) {
 		if (preg_match('/([^ ]*) (.*)/', $perm, $matches)) {
-			$userlib->remove_object_permission($matches[2], $_REQUEST["objectId"], $_REQUEST["objectType"], $matches[1]);
+			if (!empty($_REQUEST['removestructure']) && $_REQUEST['removestructure'] == 'on' && !empty($pageInfoTree)) {
+				foreach($pageInfoTree as $subPage) {
+					$userlib->remove_object_permission($matches[2], $subPage['pageName'], $_REQUEST['objectType'], $matches[1]);
+				}
+			} else {
+				$userlib->remove_object_permission($matches[2], $_REQUEST['objectId'], $_REQUEST['objectType'], $matches[1]);
+			}
 		}
 	}
 }

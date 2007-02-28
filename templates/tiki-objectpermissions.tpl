@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-objectpermissions.tpl,v 1.20 2007-02-28 15:19:54 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-objectpermissions.tpl,v 1.21 2007-02-28 18:11:16 sylvieg Exp $ *}
 <h1><a href="tiki-objectpermissions.php?objectName={$objectName|escape:url}&amp;objectType={$objectType|escape:url}&amp;objectId={$objectId|escape:url}&amp;permType={$permType|escape:url}">{tr}Assign permissions to {/tr}{tr}{$objectType|escape}{/tr}: {$objectName|escape}</a></h1>
 <a href="{$referer}" class="linkbut">{tr}back{/tr}</a>
 
@@ -34,6 +34,9 @@
 <div>
 {tr}Perform action with checked:{/tr} 
 <input type="image" name="delsel" src='pics/icons/cross.png' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' />
+{if isset($inStructure)}
+{tr}and also to all pages of the sub-structure:{/tr} <input name="removestructure" type="checkbox" />
+{/if}
 </div>
 
 <h2>{tr}Assign permissions to this object{/tr}</h2>
@@ -61,6 +64,9 @@
 {/section}
 </select>
 <input type="submit" name="assign" value="{tr}assign{/tr}" />
+{if ($objectType eq 'wiki' or $objectType eq 'wiki page') and !empty($inStructure)}
+{tr}and also to all pages of the sub-structure:{/tr} <input name="assignstructure" type="checkbox" />
+{/if}
 <br /><br />
 <div class="button2">
 <a href="#" onclick="javascript:flip('edithelpzone'); return false;" class="linkbut">{tr}perms help{/tr}</a>
