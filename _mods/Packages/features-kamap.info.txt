@@ -5,7 +5,7 @@ revision:
 0.0.2
 
 lastmodif:
-$Date: 2007-02-25 20:58:07 $
+$Date: 2007-03-01 00:53:27 $
 
 files: 
 features/kamap/tiki-kamap.php tiki-kamap.php
@@ -80,6 +80,8 @@ features/kamap/kamap/tooltip/kaToolTip.js kamap/tooltip/kaToolTip.js
 features/kamap/kamap/tooltip/tooltip.css kamap/tooltip/tooltip.css
 features/kamap/lib/map/maplib.php lib/map/maplib.php
 features/kamap/templates/map/tiki-kamap.tpl templates/map/tiki-kamap.tpl
+features/kamap/img/icons/trdot.gif img/icons/trdot.gif
+features/kamap/images/a_pixel.gif images/a_pixel.gif
 
 author:
 DM Solutions Group Inc.
@@ -96,3 +98,4 @@ kamap adds a tiled map interface to tikiwiki maps feature.
 Changelog:
 0.0.1 initial package
 0.0.2 fixes for 1.9.x support
+0.0.3 fixes for 1.9.x support - missing some images
