@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.28 2007-02-27 22:23:11 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.29 2007-03-01 19:24:08 nyloth Exp $
 //
 
 // $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
@@ -297,6 +297,7 @@ function convert_sortmode($sort_mode) {
 	$map = array("postgres7" => "RANDOM()",
 		     "mysql3" => "RAND()",
 		     "mysql" => "RAND()",
+		     "mysqli" => "RAND()",
 		     "mssql" => "NEWID()",
 		     "firebird" => "1", // does this exist in tiki?
 
@@ -332,7 +333,7 @@ function convert_sortmode($sort_mode) {
             break;
 
         case "mysql3":
-        case "mysql":
+        case "mysql": case "mysqli":
         default:
 	    $sort = preg_replace('/_asc$/', '` asc', $sort);
 	    $sort = preg_replace('/_desc$/', '` desc', $sort);
@@ -358,6 +359,7 @@ function convert_binary() {
 
         case "mysql3":
         case "mysql":
+	case "mysqli":
             return "binary";
         break;
     }
