@@ -23,8 +23,9 @@ function s_print_structure($structure_id) {
 		
 	}
 function s_toc_structure_tree2($structure_id, $level = 0) {
-		global $dbTiki;
+		global $dbTiki, $tikilib, $wikilib, $user;
 		include_once "lib/structures/structlib.php";
+		include_once "lib/wiki/wikilib.php";
 		$structlib2 = new StructLib($this->db);
 		$structure_tree = $structlib2->get_subtree($structure_id);
 		$level = 0;
@@ -41,6 +42,8 @@ function s_toc_structure_tree2($structure_id, $level = 0) {
 			$pdata = $tikilib->parse_data($info["data"]);
 			$structure_tree[$key]["info"]=$info;
 			$structure_tree[$key]["pdata"]=$pdata;
+			$structure_tree[$key]['edit']=$tikilib->user_has_perm_on_object($user,$node['pageName'],'wiki page','tiki_p_edit');
+			$structure_tree[$key]['editable']=$wikilib->is_editable($node['pageName'], $user, $info);
 		}
 		return $structure_tree;
 	}
