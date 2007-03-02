@@ -1,8 +1,8 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_sf.php,v 1.6 2005-05-18 11:02:00 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_sf.php,v 1.7 2007-03-02 19:49:06 luciash Exp $
  *
- * TikiWiki SF auto-links.
+ * Tikiwiki SF auto-links.
  * 
  * Syntax:
  * 

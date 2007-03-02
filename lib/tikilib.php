@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.722 2007-02-22 13:35:39 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.723 2007-03-02 19:49:10 luciash Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -5771,7 +5771,7 @@ if (!$simple_wiki) {
 			 * signifies the end of the
 			 * paragraph. If the paragraph
 			 * formatting feature is off, the
-			 * original TikiWiki behavior is used,
+			 * original Tikiwiki behavior is used,
 			 * in which each line in the source is
 			 * terminated by an explicit line
 			 * break (br tag).

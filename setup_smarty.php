@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.41 2007-01-19 22:56:16 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.42 2007-03-02 19:49:08 luciash Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -18,16 +18,16 @@ if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== FALSE) {
 
 require_once ( 'lib/smarty/libs/Smarty.class.php');
 
-class Smarty_TikiWiki extends Smarty {
+class Smarty_Tikiwiki extends Smarty {
 	
-	function Smarty_TikiWiki($tikidomain = '') {
+	function Smarty_Tikiwiki($tikidomain = '') {
 		if ($tikidomain) { $tikidomain.= '/'; }
 		$this->template_dir = 'templates/';
 		$this->compile_dir = "templates_c/$tikidomain";
 		$this->config_dir = 'configs/';
 		$this->cache_dir = "templates_c/$tikidomain";
 		$this->caching = 0;
-		$this->assign('app_name', 'TikiWiki');
+		$this->assign('app_name', 'Tikiwiki');
 		$this->plugins_dir = array(	// the directory order must be like this to overload a plugin
 			dirname(dirname(SMARTY_DIR)).'/smarty_tiki',
 			SMARTY_DIR.'plugins'
@@ -166,7 +166,7 @@ class Smarty_TikiWiki extends Smarty {
 	}
 }
 
-$smarty = new Smarty_TikiWiki($tikidomain);
+$smarty = new Smarty_Tikiwiki($tikidomain);
 $smarty->load_filter('pre', 'tr');
 // $smarty->load_filter('output','trimwhitespace');
 ?>

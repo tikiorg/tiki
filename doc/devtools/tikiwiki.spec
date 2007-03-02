@@ -1,5 +1,5 @@
 # Command to build: rpmbuild -ba --target noarch tikiwiki.spec
-# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/tikiwiki.spec,v 1.8 2005-05-18 10:59:14 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/tikiwiki.spec,v 1.9 2007-03-02 19:49:09 luciash Exp $
 
 %define name tikiwiki
 %define version 1.9.DR4
@@ -18,10 +18,10 @@ Group: Applications/Internet
 Source: http://prdownloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-root
 Prefix: /var/www/html
-Vendor: The TikiWiki Community
+Vendor: The Tikiwiki Community
 
 %description
-TikiWiki is an open source CMS/Groupware web application which provides a full Wiki environment, as well as Articles, Sections/Categories, User/Group Management (including optional LDAP), Polls and Quizzes, File and Image Galleries, Forums, Weblogs, Calendars, Chat and much more.
+Tikiwiki is an open source CMS/Groupware web application which provides a full Wiki environment, as well as Articles, Sections/Categories, User/Group Management (including optional LDAP), Polls and Quizzes, File and Image Galleries, Forums, Weblogs, Calendars, Chat and much more.
 
 %prep
 

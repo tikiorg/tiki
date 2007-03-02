@@ -1,6 +1,6 @@
-<?php // -*- coding:utf-8 -*- $Header: /cvsroot/tikiwiki/tiki/img/flags/flagnames.php,v 1.9 2007-02-22 13:35:39 sylvieg Exp $
+<?php // -*- coding:utf-8 -*- $Header: /cvsroot/tikiwiki/tiki/img/flags/flagnames.php,v 1.10 2007-03-02 19:49:20 luciash Exp $
 /* 
- * The listing associates country names used as filenames for flags in TikiWiki for language translation
+ * The listing associates country names used as filenames for flags in Tikiwiki for language translation
  */
 
 // This script is only for language translations - so its better to die if called directly.

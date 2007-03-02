@@ -2,7 +2,7 @@
 <tr>
 {if $feature_bot_bar_icons eq 'y'}
 <td id="power">
-<a href="http://tikiwiki.org/" title="TikiWiki"><img style="border: 0; vertical-align: middle" alt="{tr}Powered by{/tr} TikiWiki" src="img/tiki/tikibutton2.png" /></a>
+<a href="http://tikiwiki.org/" title="Tikiwiki"><img style="border: 0; vertical-align: middle" alt="{tr}Powered by{/tr} Tikiwiki" src="img/tiki/tikibutton2.png" /></a>
 <a href="http://www.php.net/" title="PHP"><img style="border: 0; vertical-align: middle" alt="{tr}Powered by{/tr} PHP" src="img/php.png" /></a>
 <a href="http://smarty.php.net/" title="Smarty"><img style="border: 0; vertical-align: middle" alt="{tr}Powered by{/tr} Smarty" src="img/smarty.gif"  /></a>
 <a href="http://adodb.sourceforge.net/" title="ADOdb"><img style="border: 0; vertical-align: middle" alt="{tr}Powered by{/tr} ADOdb" src="img/adodb.png" /></a>
@@ -22,7 +22,7 @@
 [ {$num_queries} {tr}database queries used{/tr} ]<br />
 [ GZIP {$gzip} ] &nbsp; 
 [ {tr}Server load{/tr}: {$server_load} ] &nbsp; 
-[ <a href="http://tikiwiki.org" class="link" style="color:#727272;font-size:85%;">TikiWiki</a> ]</small>
+[ <a href="http://tikiwiki.org" class="link" style="color:#727272;font-size:85%;">Tikiwiki</a> ]</small>
 </div>
 </td>
 {if $rss_wiki eq 'y'}

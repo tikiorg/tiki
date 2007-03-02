@@ -1,7 +1,7 @@
 <?php
 /**
-* @version $Id: tikitable.php,v 1.3 2006-10-06 12:56:47 sylvieg Exp $
-* @package TikiWiki
+* @version $Id: tikitable.php,v 1.4 2007-03-02 19:49:11 luciash Exp $
+* @package Tikiwiki
 * @subpackage db
 * @copyright (C) 2005 the Tiki community
 * @license http://www.gnu.org/copyleft/lgpl.html GNU/LGPL
@@ -16,7 +16,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 /**
  * TikiDBTable Abstract Class.
  * @abstract
- * @package TikiWiki
+ * @package Tikiwiki
  * @subpackage db
  *
  * Parent class to some database derived objects.

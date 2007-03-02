@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.113 2006-12-14 16:40:28 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.114 2007-03-02 19:49:02 luciash Exp $
 
 # The following script will update a tiki database from version 1.8.x to 1.9.x
 # The following script will ALSO update from version 1.9.x to 1.9.y
@@ -1115,7 +1115,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('trk_with_mirror_tables'
 UPDATE tiki_menu_options SET perm="tiki_p_view_trackers" WHERE url="tiki-list_trackers.php";
 
 #2005-05-04 sg
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_tiki_calendar', 'Can view TikiWiki tools calendar', 'basic', 'calendar');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_tiki_calendar', 'Can view Tikiwiki tools calendar', 'basic', 'calendar');
 # DROP TABLE IF EXISTS temp_users_grouppermissions;
 # CREATE TABLE temp_users_grouppermissions (
 #   groupName varchar(255) NOT NULL default '',

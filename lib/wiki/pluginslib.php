@@ -18,10 +18,10 @@
     *    $plugin = new BackLinks();
     *    return $plugin->getDescription();
     * }    * </code>
-    * @package TikiWiki
+    * @package Tikiwiki
     * @subpackage Plugins
     * @author Claudio Bustos
-    * @version $Revision: 1.11 $
+    * @version $Revision: 1.12 $
     */
 
 //this script may only be included - so its better to die if called directly.
@@ -122,7 +122,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
         function getVersion() {
             return tra("No version indicated");
             //return preg_replace("/[Revision: $]/", '',
-            //                    "\$Revision: 1.11 $");
+            //                    "\$Revision: 1.12 $");
         }
         /**
         * Returns the default arguments for the plugin
@@ -161,7 +161,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
     class PluginsLibUtil {
         /**
         * Create a table with information from pages
-        * @param array key ["data"] from one of the functions that retrieve información about pages
+        * @param array key ["data"] from one of the functions that retrieve informaciï¿½n about pages
         * @param array list of keys to show.
         * @param array definition of the principal field. By default: 
         *              array("field"=>"pageName","name"=>"Page")

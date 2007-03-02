@@ -133,7 +133,7 @@ class NotificationLib extends TikiLib {
  	}
 
 	/**
-	 *  Raise a TikiWiki event
+	 *  Raise a Tikiwiki event
 	 *  @param event the event to raise
 	 *  @param data the data associated with the event
 	 *  @param self the object raising the event

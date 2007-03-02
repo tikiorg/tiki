@@ -1,8 +1,8 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_quote.php,v 1.7 2005-10-16 14:35:10 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_quote.php,v 1.8 2007-03-02 19:49:05 luciash Exp $
  *
- * TikiWiki QUOTE plugin.
+ * Tikiwiki QUOTE plugin.
  * 
  * Syntax:
  * 

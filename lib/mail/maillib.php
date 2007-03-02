@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/mail/maillib.php,v 1.1 2004-03-23 16:12:43 luciash Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mail/maillib.php,v 1.2 2007-03-02 19:49:19 luciash Exp $
 
 /* Common shared mail functions */
 
@@ -11,7 +11,7 @@
  * Original code by <gordon at kanazawa-gu dot ac dot jp>.
  * See 'User Contributed Notes' at
  * http://php.benscom.com/manual/en/function.mail.php
- * Rewritten for TikiWiki by <luci at sh dot ground dot cz>
+ * Rewritten for Tikiwiki by <luci at sh dot ground dot cz>
  *
  * For details on Message Header Extensions see
  * http://www.faqs.org/rfcs/rfc2047.html

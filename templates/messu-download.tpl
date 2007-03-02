@@ -7,7 +7,7 @@ Subject: {$items[user].subject}
 Date: {$items[user].date|tiki_short_datetime}
 Message-ID: <{$items[user].hash}-{$items[user].date}>
 X-Priority: {$items[user].priority}
-X-Mailer: TikiWiki
+X-Mailer: Tikiwiki
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
 Size: {$items[user].len}

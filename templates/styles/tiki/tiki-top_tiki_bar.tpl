@@ -1,5 +1,5 @@
 <span id="topleft">
-<a href="/"><img src="styles/tiki/tiki_head.png" width="180" height="37" border="0" alt="TikiWiki" hspace="0" vspace="0" /></a>
+<a href="/"><img src="styles/tiki/tiki_head.png" width="180" height="37" border="0" alt="Tikiwiki" hspace="0" vspace="0" /></a>
 </span>
 <span id="topcenter">
 {include file="tiki-top_bar.tpl"}

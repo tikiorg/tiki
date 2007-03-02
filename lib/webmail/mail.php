@@ -1,7 +1,7 @@
 <?php
 /* TikiMail class
  *
- *  This is the core class for TikiWiki Mail handling. It takes care of all the
+ *  This is the core class for Tikiwiki Mail handling. It takes care of all the
  *  connection faced stuff.
  *
  */

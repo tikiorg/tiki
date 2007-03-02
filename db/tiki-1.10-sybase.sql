@@ -2,8 +2,8 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2007-01-25 15:20:39 $
--- $Author: sylvieg $
+-- $Date: 2007-03-02 19:49:02 $
+-- $Author: luciash $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -6584,7 +6584,7 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_tiki_calendar', 'Can view TikiWiki tools calendar', 'basic', 'tiki')
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_tiki_calendar', 'Can view Tikiwiki tools calendar', 'basic', 'tiki')
 go
 
 

@@ -1,5 +1,5 @@
 # BasicEnabled profile for easy use
-# $Header: /cvsroot/tikiwiki/tiki/db/profiles/basicEnabled.prf,v 1.4 2006-05-22 17:09:08 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/profiles/basicEnabled.prf,v 1.5 2007-03-02 19:49:33 luciash Exp $
 REPLACE INTO tiki_calendars VALUES (1,'Public','Public calendar','admin','n','n','n','n','n','n',1072170381,1072170381,'n');
 REPLACE INTO tiki_modules VALUES ('login_box','r',1,'P','',0,0,'','a:1:{i:0;s:9:\"Anonymous\"\;}');
 REPLACE INTO tiki_modules VALUES ('quick_edit','l',2,'d','',0,0,'','a:1:{i:0;s:10:\"Registered\";}');
@@ -84,7 +84,7 @@ REPLACE INTO tiki_preferences VALUES ('rssfeed_language','en-us');
 REPLACE INTO tiki_preferences VALUES ('rssfeed_webmaster','');
 REPLACE INTO tiki_preferences VALUES ('session_db','n');
 REPLACE INTO tiki_preferences VALUES ('session_lifetime','0');
-REPLACE INTO tiki_preferences VALUES ('siteTitle','TikiWiki');
+REPLACE INTO tiki_preferences VALUES ('siteTitle','Tikiwiki');
 REPLACE INTO tiki_preferences VALUES ('site_busy_msg','Server is currently too busy, please come back later.');
 REPLACE INTO tiki_preferences VALUES ('site_closed','n');
 REPLACE INTO tiki_preferences VALUES ('site_closed_msg','Site is closed for maintainance, please come back later.');

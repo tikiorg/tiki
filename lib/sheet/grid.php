@@ -1800,7 +1800,7 @@ class TikiSheetLabeledOutputHandler extends TikiSheetDataHandler
 	}
 } // }}}1
 
-// TikiWiki Sheet Library {{{1
+// Tikiwiki Sheet Library {{{1
 
 class SheetLib extends TikiLib
 {

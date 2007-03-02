@@ -1,7 +1,7 @@
 <?php
 
 /**
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_showpages.php,v 1.5 2007-01-31 23:52:15 fr_rodo Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_showpages.php,v 1.6 2007-03-02 19:49:06 luciash Exp $
  *
  * SHOWPAGES plugin
  * Displays wiki pages that match a supplied pagename criteria.
@@ -17,9 +17,9 @@
  * Make sure that the wiki page this is used on is not cached if you want more "live" results.
  * under normal loads and sites, this should be cached.
  *
- * @package TikiWiki
+ * @package Tikiwiki
  * @subpackage TikiPlugins
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 function wikiplugin_showpages_help() {

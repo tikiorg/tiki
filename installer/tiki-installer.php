@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.14 2007-01-23 23:01:09 luciash Exp $
+// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.15 2007-03-02 19:49:24 luciash Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -186,15 +186,15 @@ function isWindows() {
 	return $windows;
 }
 
-class Smarty_TikiWiki extends Smarty {
+class Smarty_Tikiwiki extends Smarty {
 
-	function Smarty_TikiWiki() {
+	function Smarty_Tikiwiki() {
 		$this->template_dir = "templates/";
 		$this->compile_dir = "templates_c/";
 		$this->config_dir = "configs/";
 		$this->cache_dir = "cache/";
 		$this->caching = false;
-		$this->assign('app_name', 'TikiWiki');
+		$this->assign('app_name', 'Tikiwiki');
 		$this->plugins_dir = array(
 			dirname(dirname(SMARTY_DIR))."/smarty_tiki",
 			SMARTY_DIR."plugins"
@@ -519,7 +519,7 @@ if ($virtuals and isset($_REQUEST['multi']) and in_array($_REQUEST['multi'],$vir
 }
 
 // Init smarty
-$smarty = new Smarty_TikiWiki();
+$smarty = new Smarty_Tikiwiki();
 //$smarty->load_filter('pre', 'tr');
 $smarty->load_filter('output', 'trimwhitespace');
 $smarty->assign('mid', 'tiki-install.tpl');

@@ -1,10 +1,10 @@
 <?php
 /*
- * Tiki-Wiki ANAME plugin. Go to http://www.TikiMODS.com for more TikiWiki Plugins.
+ * Tiki-Wiki ANAME plugin. Go to http://www.TikiMODS.com for more Tikiwiki Plugins.
  *
  * DESCRIPTION: Puts an anchor into a wiki page. Use in conjunction with the ALINK plugin, which makes links to the anchor.
  * 
- * INSTALLATION: Just put this file into your TikiWiki site's lib/wiki-plugins folder.
+ * INSTALLATION: Just put this file into your Tikiwiki site's lib/wiki-plugins folder.
  * 
  * USAGE SYNTAX:
  * 

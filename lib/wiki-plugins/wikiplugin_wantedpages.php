@@ -1,6 +1,6 @@
 <?php
 /* wikiplugin_wantedpages.php
- * TikiWiki plugin to display wanted Wiki pages
+ * Tikiwiki plugin to display wanted Wiki pages
  * <grk@ducked.net> and <gray@ritualmagick.org>
  * Minor tweaks by avgasse <amedee@amedee.be>
 */
@@ -59,7 +59,7 @@ function getDescription () {
 
 function getVersion () {
 	return preg_replace("/[Revision: $]/", '',
-                "\$Revision: 1.5 $");
+                "\$Revision: 1.6 $");
 }
 
 function run($data, $params) {

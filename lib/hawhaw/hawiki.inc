@@ -2,7 +2,7 @@
 
 // HAWIKI
 // PHP wrapper class for HAWHAW-based wiki's
-// Copyright (C) 2005 Norbert Huffschmid & TikiWiki community
+// Copyright (C) 2005 Norbert Huffschmid & Tikiwiki community
 // Last modified: 28. June 2005
 //
 // This library is free software; you can redistribute it and/or modify it under the
@@ -70,7 +70,7 @@ function HAWIKI_error($error_msg)
 function HAWIKI_specchar($string)
 {
   // special character handling
-  // utf8_decode and reconvert HTML entities (e.g. &uuml; ==> ü)
+  // utf8_decode and reconvert HTML entities (e.g. &uuml; ==> ï¿½)
 
   $trans = get_html_translation_table(HTML_ENTITIES);
   $trans = array_flip ($trans);
@@ -81,7 +81,7 @@ function HAWIKI_specchar($string)
 function HAWIKI_unhtmlentities($string)
 {
   // special character hnadling without utf8-decoding (see above)
-  // &amp; -> &, ü->ü (will be destroyed by utf8_decode)
+  // &amp; -> &, ï¿½->ï¿½ (will be destroyed by utf8_decode)
   $trans = get_html_translation_table (HTML_ENTITIES);
   $trans = array_flip ($trans);
   return(strtr($string, $trans));

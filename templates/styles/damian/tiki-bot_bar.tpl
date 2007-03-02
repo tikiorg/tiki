@@ -1,7 +1,7 @@
 <div id="loadstats" style="text-align: center">
 </div>
 <div id="power" style="text-align: center">
-<small><a href="http://tikiwiki.org" title="TikiWiki">{tr}Powered by{/tr} TikiWiki</a> the ultimate CMS engine.
+<small><a href="http://tikiwiki.org" title="Tikiwiki">{tr}Powered by{/tr} Tikiwiki</a> the ultimate CMS engine.
 </div>
 	<div id="rss" style="text-align: center">
 		{if $feature_wiki eq 'y' and $rss_wiki eq 'y' and $tiki_p_view eq 'y'}

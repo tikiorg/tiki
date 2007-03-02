@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mobile.php,v 1.11 2005-08-18 16:23:05 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mobile.php,v 1.12 2007-03-02 19:49:06 luciash Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -27,7 +27,7 @@ if (isset($_REQUEST['content']) && $_REQUEST['content'] == "about") {
 	$TikiPage->add_text($title);
 
 	$text1 = new HAW_text(
-		hawtra("This TikiWiki site is prepared for access from a lot of mobile devices, e.g. WAP phones, PDA's, i-mode devices and much more."));
+		hawtra("This Tikiwiki site is prepared for access from a lot of mobile devices, e.g. WAP phones, PDA's, i-mode devices and much more."));
 	$text1->set_br(2);
 	$TikiPage->add_text($text1);
 

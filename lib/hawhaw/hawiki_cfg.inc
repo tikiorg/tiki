@@ -1,9 +1,9 @@
 <?php
 
-// HAWIKI config file for TikiWiki
+// HAWIKI config file for Tikiwiki
 // Last modified: 5. June 2005
 
-define("HAWIKI_TITLE", "TikiWiki");              // -> "title" of created HAWHAW deck
+define("HAWIKI_TITLE", "Tikiwiki");              // -> "title" of created HAWHAW deck
 define("HAWIKI_MAXINPUTCHARS", 100000);          // maximum wiki size
 define("HAWIKI_DISP_WIDTH",  300);               // HAWHAW display width (pixel)
 define("HAWIKI_DISP_HEIGHT", 300);               //                height

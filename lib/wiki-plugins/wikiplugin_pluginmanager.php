@@ -17,10 +17,10 @@ function wikiplugin_pluginmanager_help() {
     *           . By default, selected all.
     * </ul>
     *
-    * @package TikiWiki
+    * @package Tikiwiki
     * @subpackage TikiPlugins
     * @author Claudio Bustos
-    * @version $Revision: 1.10 $
+    * @version $Revision: 1.11 $
     */
     class WikiPluginPluginManager extends PluginsLib {
         var $expanded_params = array("info");
@@ -32,7 +32,7 @@ function wikiplugin_pluginmanager_help() {
         }
         function getVersion() {
             return preg_replace("/[Revision: $]/", '',
-                "\$Revision: 1.10 $");
+                "\$Revision: 1.11 $");
         }
         function getDescription() {
             return wikiplugin_pluginmanager_help();

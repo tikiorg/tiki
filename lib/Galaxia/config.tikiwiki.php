@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Configuration of the Galaxia Workflow Engine for TikiWiki
+ * Configuration of the Galaxia Workflow Engine for Tikiwiki
  */
 
 // Common prefix used for all database table names, e.g. galaxia_
@@ -50,7 +50,7 @@ if (!defined('GRAPHVIZ_BIN_DIR')) {
 }
 
 /**
- * TikiWiki-specific adaptations
+ * Tikiwiki-specific adaptations
  */
 
 // Database handler
