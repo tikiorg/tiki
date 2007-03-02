@@ -1,4 +1,4 @@
-TikiWiki - CMS/Groupware
+Tikiwiki - CMS/Groupware
 
 README for /db directory
 ========================
@@ -9,7 +9,7 @@ This directory contains a multitude of database-releated files.
 developer information
 =====================
 
-When adding, changing or removing SQL statements from Tiki, please update tiki.sql and the appropriate conversion file (e.g. tiki_1.9to1.10.sql for changes added between release 1.9 and 1.10 of TikiWiki).
+When adding, changing or removing SQL statements from Tiki, please update tiki.sql and the appropriate conversion file (e.g. tiki_1.9to1.10.sql for changes added between release 1.9 and 1.10 of Tikiwiki).
 
 Please remember that the database schema is frozen after first official release of each major version.
 

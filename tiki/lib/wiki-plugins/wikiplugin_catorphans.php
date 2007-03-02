@@ -1,7 +1,7 @@
 <?php
 /* $Header:
  *
- * TikiWiki CATORPHANS plugin.
+ * Tikiwiki CATORPHANS plugin.
  * 
  * Syntax:
  * 

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.89 2007-01-25 18:18:24 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.90 2007-03-02 19:49:06 luciash Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -9,7 +9,8 @@ $section = 'mytiki';
 require_once ('tiki-setup.php');
 include_once('lib/modules/modlib.php');
 include_once ('lib/userprefs/scrambleEmail.php');
-include_once('lib/registration/registrationlib.php');
+//include_once('lib/registration/registrationlib.php');
+include_once ('lib/userprefs/userprefslib.php');
 
 // User preferences screen
 if ($feature_userPreferences != 'y' && $user != 'admin') {
@@ -65,7 +66,8 @@ if (isset($_REQUEST['userId']) || isset($_REQUEST['view_user'])) {
 
 // Custom fields
 $customfields = array();
-$customfields = $registrationlib->get_customfields($userwatch);
+//$customfields = $registrationlib->get_customfields($userwatch);
+$customfields = $userprefslib->get_userprefs('CustomFields');
 $smarty->assign_by_ref('customfields', $customfields);
 
 $smarty->assign('userwatch', $userwatch);

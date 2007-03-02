@@ -2,7 +2,7 @@ This directory contains source code to Tiki! The wiki with lots of features!
 
 ABOUT DOCUMENTATION
 -------------------
-* official TikiWiki documentation website (for all versions) :
+* official Tikiwiki documentation website (for all versions) :
   http://doc.tikiwiki.org
 
 * It is highly recommended that you refer to the online documentation:
@@ -12,7 +12,7 @@ ABOUT DOCUMENTATION
   documentation, in pdf format (350 pages) (outdated at the time of this
   writing) and a pdf snapshot of doc.tikiwiki.org:
   http://sourceforge.net/project/showfiles.php?group_id=64258&package_id=68737
-* TikiWiki also has an active IRC channel: #tikiwiki on irc.freenode.net
+* Tikiwiki also has an active IRC channel: #tikiwiki on irc.freenode.net
   see http://tikiwiki.org/ConnectingToIRC for how to join the IRC channel
 
 The rest of this document includes parts of the online documentation that

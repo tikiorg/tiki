@@ -30,7 +30,7 @@
 </table>
 <br />
 <table class="normal">
-<tr><td colspan="4" class="heading">{tr}TikiWiki settings{/tr}</td></tr>
+<tr><td colspan="4" class="heading">{tr}Tikiwiki settings{/tr}</td></tr>
 <tr><td class="heading">{tr}Tiki variable{/tr}</td>
 <td class="heading">{tr}Setting{/tr}</td>
 <td class="heading">{tr}Risk Factor{/tr}</td>

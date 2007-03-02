@@ -1450,7 +1450,7 @@ INSERT INTO tiki_secdb VALUES ('c2aaaf108ae770251695e43407303562','./topic_image
 INSERT INTO tiki_secdb VALUES ('01a7df9a754489980a254d84c3212419','./whelp/index.php','1.9',0);
 INSERT INTO tiki_secdb VALUES ('129894fc4014eb3b12e2abf9f81d29b4','./xmlrpc.php','1.9',0);
 
--- TikiWiki 1.9.1 --
+-- Tikiwiki 1.9.1 --
 
 INSERT INTO tiki_secdb VALUES ('54814cbf63e969d25c9770d9945bbf02','./tiki-page_loader.php','1.9.1',0);
 INSERT INTO tiki_secdb VALUES ('88b2852e49809693304fab0162f7db6c','./tiki-survey_stats_survey.php','1.9.1',0);
@@ -2896,7 +2896,7 @@ INSERT INTO tiki_secdb VALUES ('cc543ed92581b7e50c50540d3b45ed80','./templates/s
 INSERT INTO tiki_secdb VALUES ('a25b5510162a87f8e571ddab7219f1aa','./templates/styles/simple/index.php','1.9.1',0);
 INSERT INTO tiki_secdb VALUES ('9105b1eff96d7243273b4b408ef507f3','./tiki-pagination.php','1.9.1',0);
 
--- TikiWiki 1.9.2 --
+-- Tikiwiki 1.9.2 --
 
 INSERT INTO `tiki_secdb` VALUES ('eed296c248e1d157a6d18193e7911ef1','./about.php','1.9.2',0);
 INSERT INTO `tiki_secdb` VALUES ('05e7318aa6ccebeddf740eac147e7b0c','./article_image.php','1.9.2',0);
@@ -4362,7 +4362,7 @@ INSERT INTO `tiki_secdb` VALUES ('29530b51eddcfa9d6d325c141e1c2728','./tests/cor
 INSERT INTO `tiki_secdb` VALUES ('c083238460a3c26608138ae6201c8ad8','./tikimovies/index.php','1.9.2',0);
 INSERT INTO `tiki_secdb` VALUES ('5029547695f5d9a585a46dda420ba4a5','./whelp/index.php','1.9.2',0);
 
--- TikiWiki 1.9.3.1 --
+-- Tikiwiki 1.9.3.1 --
 
 INSERT INTO `tiki_secdb` VALUES ('bc859e45532bd30a4f352357ccf730d1','./backups/index.php','1.9.3.1',0);
 INSERT INTO `tiki_secdb` VALUES ('6c7e6f44bd209bf8fa99b8362760e5c9','./db/case_patch.php','1.9.3.1',0);

@@ -1,8 +1,8 @@
 #!/bin/sh
-# $Id: tikirelease.sh,v 1.14 2006-07-14 11:00:46 sylvieg Exp $
+# $Id: tikirelease.sh,v 1.15 2007-03-02 19:49:09 luciash Exp $
 # written and maintained by mose@tikiwiki.org
 #
-# HOWTO release TikiWiki ?
+# HOWTO release Tikiwiki ?
 # --------------------------
 #
 # 

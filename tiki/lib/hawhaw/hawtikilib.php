@@ -6,9 +6,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/hawhaw/hawtikilib.php,v 1.21 2007-02-04 20:09:39 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/hawhaw/hawtikilib.php,v 1.22 2007-03-02 19:49:16 luciash Exp $
 
-// HAWHAW function library for TikiWiki
+// HAWHAW function library for Tikiwiki
 
 require_once("lib/hawhaw/hawhaw.inc");
 require_once("lib/hawhaw/hawiki_cfg.inc");
@@ -170,7 +170,7 @@ class HAWTIKI_listitem
 function hawtra($string)
 {
   // translate string with tiki-translator and do special character handling
-  // e.g. Menu ==> Men&uuml; ==> Menü
+  // e.g. Menu ==> Men&uuml; ==> Menï¿½
   return(HAWIKI_specchar(tra($string)));
 }
 

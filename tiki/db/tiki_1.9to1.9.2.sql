@@ -26,7 +26,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('trk_with_mirror_tables'
 UPDATE tiki_menu_options SET perm="tiki_p_view_trackers" WHERE url="tiki-list_trackers.php";
 
 #2005-05-04 sg
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_tiki_calendar', 'Can view TikiWiki tools calendar', 'basic', 'calendar');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_tiki_calendar', 'Can view Tikiwiki tools calendar', 'basic', 'calendar');
 DROP TABLE IF EXISTS temp_users_grouppermissions;
 CREATE TABLE temp_users_grouppermissions (
   groupName varchar(255) NOT NULL default '',

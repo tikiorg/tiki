@@ -4,7 +4,7 @@
 
 # ############################################################
 #
-# HOWTO create TikiWiki-Lite ?
+# HOWTO create Tikiwiki-Lite ?
 # --------------------------
 #
 # The following are instructions on how to use the TikiLite script.
@@ -14,8 +14,8 @@
 #
 #To Install
 #
-#   1. Check out a new installation of TikiWiki into a directory of your choice.
-#   2. Move to the top of your TikiWiki installation.
+#   1. Check out a new installation of Tikiwiki into a directory of your choice.
+#   2. Move to the top of your Tikiwiki installation.
 #   3. Modify doc/devtools/tikilite.sh to point to set your defaults.
 #   4. Execute doc/devtools/tikilite.sh - this will remove all non-core files and directories. 
 #

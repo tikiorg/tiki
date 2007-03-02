@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.400 2007-02-26 18:31:44 jyhem Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.401 2007-03-02 19:49:06 luciash Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et.
 // al.
 // All Rights Reserved. See copyright.txt for details and a complete list of
@@ -136,7 +136,7 @@ class TikiSetup extends TikiInit {
 
             print "
 <html><body>
-<h2><font color='red'>TikiWiki is not properly set up:</font></h1>
+<h2><font color='red'>Tikiwiki is not properly set up:</font></h1>
 <pre>
 $errors
 ";
@@ -1045,7 +1045,7 @@ $pref['sitemycode'] = '<div align="center"><b>{tr}Here you can (as an admin) pla
 $pref['sitemycode_publish'] = 'n';
 $pref['feature_sitelogo'] = 'y';
 $pref['sitelogo_bgcolor'] = '';
-$pref['sitelogo_title'] = 'TikiWiki powered site';
+$pref['sitelogo_title'] = 'Tikiwiki powered site';
 $pref['sitelogo_src'] = 'img/tiki/tikilogo.png';
 $pref['sitelogo_alt'] = 'Site Logo';
 $pref['feature_siteloc'] = 'y';

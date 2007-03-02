@@ -17,7 +17,7 @@
       {section name=homeix loop=$left_modules}
       {$left_modules[homeix].data}
       {/section}
-      <div align="center"><a href="https://sourceforge.net/projects/tikiwiki" title="TikiWiki"><img alt="{tr}Powered by{/tr} TikiWiki" src="img/tiki/tikibutton2.png" /></a></div>
+      <div align="center"><a href="https://sourceforge.net/projects/tikiwiki" title="Tikiwiki"><img alt="{tr}Powered by{/tr} Tikiwiki" src="img/tiki/tikibutton2.png" /></a></div>
       </td>
       {/if}
       <td id="centercolumn">

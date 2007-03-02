@@ -8,7 +8,7 @@
 /**
 \mainpage
 
-TikiWiki
+Tikiwiki
 
 DOCUMENTATION
 
@@ -23,7 +23,7 @@ DOCUMENTATION
   come and help if you can and wish.
 
 * Notes about the releases are accessible from http://tikiwiki.org/ReleaseProcess110
-* TikiWiki is also a live community on irc.freenode.net channel #tikiwiki
+* Tikiwiki is also a live community on irc.freenode.net channel #tikiwiki
 
 
 INSTALLATION

@@ -1,6 +1,6 @@
 Tiki Copyright
 ----------------
-$Header: /cvsroot/tikiwiki/tiki/copyright.txt,v 1.12 2006-09-19 16:33:04 ohertel Exp $
+$Header: /cvsroot/tikiwiki/tiki/copyright.txt,v 1.13 2007-03-02 19:49:07 luciash Exp $
 
 The following list gathers the copyrights holders for tikiwiki 
 at the state of 1.9.5 (CVS) version. Each member of that list wrote at 
@@ -8,7 +8,7 @@ least one line, directly or indirectly, in tikiwiki code source.
 The exact proportion of the contribution of each is not an issue, 
 as any copyright change will involve the agreement of everybody. 
 
-This is how we implement the TikiWikiSocialContract.
+This is how we implement the TikiwikiSocialContract.
 http://dev.tikiwiki.org/SocialContract
 
 List of members of the Community
@@ -113,7 +113,7 @@ Last login on tw.o : Tue 02 Aug, 2005
 
 jpg
 Country: Argentina
-Name: Juan Pablo Giménez
+Name: Juan Pablo Gimï¿½nez
 Url: UserPagejpg
 Registered on tw.o : Sat 05 Jul, 2003
 Last login on tw.o : Thu 09 Sep, 2004
@@ -206,7 +206,7 @@ Last login on tw.o : Thu 18 Mar, 2004
 
 loic
 Country: France
-Name: Loïc Monthorin
+Name: Loï¿½c Monthorin
 Registered on tw.o : Mon 14 Jul, 2003
 Last login on tw.o : Mon 09 Feb, 2004
 

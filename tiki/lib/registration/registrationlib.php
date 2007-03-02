@@ -7,8 +7,8 @@
  * @license GNU LGPL
  * @copyright Tiki Community
  * @date created: 2003/3/21 16:48
- * @date last-modified: $Date: 2007-02-12 08:21:47 $
- * $Header: /cvsroot/tikiwiki/tiki/lib/registration/registrationlib.php,v 1.38 2007-02-12 08:21:47 mose Exp $
+ * @date last-modified: $Date: 2007-03-02 19:49:25 $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/registration/registrationlib.php,v 1.39 2007-03-02 19:49:25 luciash Exp $
  */
 
 //this script may only be included - so it's better to die if called directly
@@ -345,7 +345,7 @@ class RegistrationLib extends TikiLib {
 
 
   /**
-   *  A default TikiWiki callback that enters a line in the logs on user registration
+   *  A default Tikiwiki callback that enters a line in the logs on user registration
    *  @access private
    *  @returns true on success, false to halt event proporgation
    */
@@ -356,7 +356,7 @@ class RegistrationLib extends TikiLib {
   }
 
   /**
-   *  A default TikiWiki callback that sends the welcome email on user registraion
+   *  A default Tikiwiki callback that sends the welcome email on user registraion
    *  @access private
    *  @returns true on success, false to halt event proporgation
    */

@@ -20,7 +20,7 @@
 <div class="cbox-data">
 
 {*
- * The following section is typically for features that act like TikiWiki
+ * The following section is typically for features that act like Tikiwiki
  * sections and add a configuration icon to the sections list
  *}
 <table width="100%" class="admin">

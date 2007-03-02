@@ -12,7 +12,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 /*
 the goal of this library is to improve old-style trackers 
 so that we can easily manipulate a table containing values
-of a form outside TikiWiki.
+of a form outside Tikiwiki.
 To achieve that, we store field values in a dedicated 
 table for each tracker:
 

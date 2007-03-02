@@ -1,7 +1,7 @@
 <?php
 /**
- * @version $Id: tiki_registration_fields.php,v 1.2 2006-10-06 12:56:47 sylvieg Exp $
- * @package TikiWiki
+ * @version $Id: tiki_registration_fields.php,v 1.3 2007-03-02 19:49:11 luciash Exp $
+ * @package Tikiwiki
  * @subpackage db
  * @copyright (C) 2005 the Tiki community
  * @license http://www.gnu.org/copyleft/lgpl.html GNU/LGPL

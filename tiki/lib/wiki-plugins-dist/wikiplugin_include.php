@@ -29,9 +29,9 @@
  *       In order to prevent infinite loops, any page can only be included
  *   directly or indirectly 5 times (set in $max_times).
  *
- * @package TikiWiki
+ * @package Tikiwiki
  * @subpackage TikiPlugins
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 function wikiplugin_include_help() {

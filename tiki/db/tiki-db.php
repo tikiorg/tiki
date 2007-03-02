@@ -123,7 +123,7 @@ if (!@$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)
 		or (!@$dbTiki->Execute('select `login` from `users_users` limit 1'))) {
 	print "
 <html><body>
-<h2><font color='red'>TikiWiki is not properly set up:</font></h1>
+<h2><font color='red'>Tikiwiki is not properly set up:</font></h1>
 <div>Unable to connect to the database !</div>
 <a href='tiki-install.php'>Go here to begin the installation process</a>, if you haven't done so already.</p>
 </body></html>

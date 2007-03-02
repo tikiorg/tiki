@@ -1,5 +1,5 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-site_header.tpl,v 1.3 2006-08-29 20:19:15 sylvieg Exp $ *}
-{* Template for TikiWiki site identity header *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-site_header.tpl,v 1.4 2007-03-02 19:49:10 luciash Exp $ *}
+{* Template for Tikiwiki site identity header *}
 {if $feature_sitemycode eq 'y' && ($sitemycode_publish eq 'y' or $tiki_p_admin eq 'y')}{eval var=$sitemycode}{* here can be custom site admin code *}{/if}
 {if $feature_siteloc eq 'y' and $feature_breadcrumbs eq 'y'}
 <div id="sitelocbar">

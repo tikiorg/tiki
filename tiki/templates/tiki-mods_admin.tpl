@@ -1,4 +1,4 @@
-<h1><a href="tiki-mods_admin.php" class="pagetitle">{tr}TikiWiki Mods Configuration{/tr}</a></h1>
+<h1><a href="tiki-mods_admin.php" class="pagetitle">{tr}Tikiwiki Mods Configuration{/tr}</a></h1>
 <div class="navbar"><span class="button2"><a href="tiki-mods.php" class="linkbut">Mods Install/uninstall</a></span></div>
 
 {section name=n loop=$tikifeedback}<div class="simplebox{if $tikifeedback[n].num > 0} highlight{/if}">{$tikifeedback[n].mes}</div>{/section}

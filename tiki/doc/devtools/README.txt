@@ -1,9 +1,9 @@
-TikiWiki DevTools 
+Tikiwiki DevTools 
 -----------------
-$Id: README.txt,v 1.5 2005-05-18 10:59:14 mose Exp $
+$Id: README.txt,v 1.6 2007-03-02 19:49:09 luciash Exp $
 
 The content of this directory is intended to be used for 
-TikiWiki development. It's included in the package for use
+Tikiwiki development. It's included in the package for use
 of developers whose task is to release new versions of tikiwiki.
 
 Main tools

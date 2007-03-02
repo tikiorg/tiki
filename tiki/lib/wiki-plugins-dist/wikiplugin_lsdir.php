@@ -1,8 +1,8 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins-dist/wikiplugin_lsdir.php,v 1.4 2005-10-16 14:35:10 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins-dist/wikiplugin_lsdir.php,v 1.5 2007-03-02 19:49:18 luciash Exp $
  *
- * TikiWiki LSDIR plugin: lists files in a directory
+ * Tikiwiki LSDIR plugin: lists files in a directory
  * 
  * Syntax:
  * 
