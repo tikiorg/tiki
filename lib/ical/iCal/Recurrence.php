@@ -173,7 +173,7 @@ class File_iCal_Recurrence {
     public function setInterval($i) {
         if (ctype_digit($i)) {
             if ($i > 0) {
-                $this->_interval = $i
+                $this->_interval = $i;
             }
             else {
                 trigger_error("Count must not be 0", E_USER_WARNING);
@@ -374,7 +374,7 @@ class File_iCal_Recurrence {
     }
 
     public function deleteSetPos($p) {
-        if ($key = array_search($p, $this_>_setpos)) {
+        if ($key = array_search($p, $this->_setpos)) {
             unset($this->_setpos[$key]);
         }
     }
