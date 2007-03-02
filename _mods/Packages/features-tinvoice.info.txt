@@ -1,11 +1,11 @@
 contributor:
-$Author: niclone $
+$Author: mose $
 
 revision:
-$Revision: 1.1 $
+$Revision: 1.2 $
 
 lastmodif:
-$Date: 2007-03-02 13:33:43 $
+$Date: 2007-03-02 15:01:34 $
 
 files: 
 features/tinvoice/tiki-tinvoice_edit.php tiki-tinvoice_edit.php
@@ -17,52 +17,11 @@ features/tinvoice/templates/tiki-tinvoice_list.php templates/tiki-tinvoice_list.
 features/tinvoice/lib/tinvoice/tinvoicelib.php lib/tinvoice/tinvoicelib.php
 
 sql-install:
-CREATE TABLE if not exists `tiki_tinvoice` (
-  `id` int(11) NOT NULL auto_increment,
-  `id_emitter` int(11) NOT NULL,
-  `id_receiver` int(11) NOT NULL,
-  `idtype_emitter` enum('tiki','contact') NOT NULL,
-  `idtype_receiver` enum('tiki','contact') NOT NULL,
-  `ref` varchar(31) NOT NULL,
-  `date` datetime NOT NULL,
-  `libelle` varchar(256) NOT NULL,
-  `amount` decimal(12,2) NOT NULL default '0.00',
-  `paid` decimal(12,2) NOT NULL default '0.00',
-  PRIMARY KEY  (`id`),
-  KEY `ref` (`ref`)
-);
-CREATE TABLE if not exists `tiki_tinvoice_infos` (
-  `id` int(11) NOT NULL auto_increment,
-  `id_invoice` int(11) NOT NULL,
-  `type` varchar(31) NOT NULL,
-  `value` varchar(256) NOT NULL,
-  PRIMARY KEY  (`id`),
-  KEY `id_invoice` (`id_invoice`)
-);
-CREATE TABLE if not exists `tiki_tinvoice_items` (
-  `id` int(11) NOT NULL auto_increment,
-  `id_invoice` int(11) NOT NULL,
-  `ref` varchar(32) NOT NULL,
-  `designation` varchar(256) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `unitprice` decimal(12,2) NOT NULL,
-  `vat` decimal(5,2) NOT NULL,
-  PRIMARY KEY  (`id`),
-  KEY `id_invoices` (`id_invoice`)
-);
-CREATE TABLE if not exists `tiki_tinvoice_prefs` (
-  `id` int(11) NOT NULL auto_increment,
-  `userId` int(11) NOT NULL,
-  `key` varchar(32) NOT NULL,
-  `value` varchar(256) NOT NULL,
-  PRIMARY KEY  (`id`),
-  KEY `userId` (`userId`)
-);
-CREATE TABLE if not exists `tiki_tinvoice_tva` (
-  `id` int(11) NOT NULL auto_increment,
-  `value` double NOT NULL,
-  PRIMARY KEY  (`id`)
-);
+CREATE TABLE if not exists `tiki_tinvoice` ( `id` int(11) NOT NULL auto_increment, `id_emitter` int(11) NOT NULL, `id_receiver` int(11) NOT NULL, `idtype_emitter` enum('tiki','contact') NOT NULL, `idtype_receiver` enum('tiki','contact') NOT NULL, `ref` varchar(31) NOT NULL, `date` datetime NOT NULL, `libelle` varchar(256) NOT NULL, `amount` decimal(12,2) NOT NULL default '0.00', `paid` decimal(12,2) NOT NULL default '0.00', PRIMARY KEY  (`id`), KEY `ref` (`ref`));
+CREATE TABLE if not exists `tiki_tinvoice_infos` ( `id` int(11) NOT NULL auto_increment, `id_invoice` int(11) NOT NULL, `type` varchar(31) NOT NULL, `value` varchar(256) NOT NULL, PRIMARY KEY  (`id`), KEY `id_invoice` (`id_invoice`));
+CREATE TABLE if not exists `tiki_tinvoice_items` ( `id` int(11) NOT NULL auto_increment, `id_invoice` int(11) NOT NULL, `ref` varchar(32) NOT NULL, `designation` varchar(256) NOT NULL, `quantity` int(11) NOT NULL, `unitprice` decimal(12,2) NOT NULL, `vat` decimal(5,2) NOT NULL, PRIMARY KEY  (`id`), KEY `id_invoices` (`id_invoice`));
+CREATE TABLE if not exists `tiki_tinvoice_prefs` ( `id` int(11) NOT NULL auto_increment, `userId` int(11) NOT NULL, `key` varchar(32) NOT NULL, `value` varchar(256) NOT NULL, PRIMARY KEY  (`id`), KEY `userId` (`userId`));
+CREATE TABLE if not exists `tiki_tinvoice_tva` ( `id` int(11) NOT NULL auto_increment, `value` double NOT NULL, PRIMARY KEY  (`id`));
 
 sql-remove:
 drop table if exists tiki_tinvoice_tva;
