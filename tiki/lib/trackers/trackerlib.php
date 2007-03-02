@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.180 2007-02-22 13:56:26 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.181 2007-03-02 17:05:00 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -178,7 +178,7 @@ class TrackerLib extends TikiLib {
 		}
 	}
 
-	function replace_item_comment($commentId, $itemId, $title, $data, $user) {
+	function replace_item_comment($commentId, $itemId, $title, $data, $user, $options) {
 		global $smarty;
 		global $notificationlib;
 		global $sender_email;
@@ -199,20 +199,10 @@ class TrackerLib extends TikiLib {
 
 		$trackerId = $this->getOne("select `trackerId` from `tiki_tracker_items` where `itemId`=?",array((int) $itemId));
 		$trackerName = $this->getOne("select `name` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
-		global $userlib;
-		$watchers = $this->get_event_watches('tracker_modified',$trackerId);
-		$emails = array();
-		foreach ($watchers as $w) {
-			$emails[] = $userlib->get_user_email($w['user']);
-		}
-		$watchers_item = $this->get_event_watches('tracker_item_modified',$itemId);
-		foreach ($watchers_item as $w) {
-			$emails2[] = $userlib->get_user_email($w['user']);
-		}
-		if (!empty($emails2))
-			$emails = array_merge($emails, $emails2);
+
+		$emails = $this->get_notification_emails($trackerId, $itemId, $options);
+
 		if (count($emails > 0)) {
-			$emails = array_unique($emails);
 			$smarty->assign('mail_date', $this->now);
 			$smarty->assign('mail_user', $user);
 			$smarty->assign('mail_action', 'New comment added for item:' . $itemId . ' at tracker ' . $trackerName);
@@ -971,25 +961,7 @@ class TrackerLib extends TikiLib {
 		if(!$bulk_import) {
 			$options = $this->get_tracker_options( $trackerId );
 
-			global $userlib;
-			$watchers = $this->get_event_watches('tracker_modified',$trackerId);
-			$emails = array();
-			foreach ($watchers as $w) {
-				$emails[] = $userlib->get_user_email($w['user']);
-			}
-			$watchers_item = $this->get_event_watches('tracker_item_modified',$itemId);
-			foreach ($watchers_item as $w) {
-				$emails2[] = $userlib->get_user_email($w['user']);
-			}
-
-			if( array_key_exists( "outboundEmail", $options ) && $options["outboundEmail"] ) {
-				$emails3 = array( $options["outboundEmail"] );
-			}
-
-			if (!empty($emails2))
-				$emails = array_merge($emails, $emails2);
-			if (!empty($emails3))
-				$emails = array_merge($emails, $emails3);
+			$emails = $this->get_notification_emails($trackerId, $itemId, $options);
 
 			if (!isset($_SERVER["SERVER_NAME"])) {
 				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
@@ -1005,7 +977,6 @@ class TrackerLib extends TikiLib {
 			$trackerName = $this->getOne("select `name` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
 
 			if (count($emails) > 0) {
-				$emails = array_unique($emails);
 				if( $simpleEmail == "n" )
 				{
 					$smarty->assign('mail_date', $this->now);
@@ -1956,6 +1927,28 @@ class TrackerLib extends TikiLib {
 			}
 		}
 		return $field;
+	}
+	function get_notification_emails($trackerId, $itemId, $options) {
+		global $userlib;
+		$watchers = $this->get_event_watches('tracker_modified',$trackerId);
+		$emails = array();
+		foreach ($watchers as $w) {
+			$emails[] = $userlib->get_user_email($w['user']);
+		}
+		$watchers_item = $this->get_event_watches('tracker_item_modified',$itemId);
+		foreach ($watchers_item as $w) {
+			$emails2[] = $userlib->get_user_email($w['user']);
+		}
+		if( array_key_exists( "outboundEmail", $options ) && $options["outboundEmail"] ) {
+			$emails3 = array( $options["outboundEmail"] );
+		}
+		if (!empty($emails2))
+			$emails = array_merge($emails, $emails2);
+		if (!empty($emails3))
+			$emails = array_merge($emails, $emails3);
+		if (!empty($emails))
+			$emails = array_unique($emails);
+		return $emails;
 	}
 
 }

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.116 2007-02-22 13:35:33 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.117 2007-03-02 17:05:00 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -954,7 +954,7 @@ if ($tracker_info["useComments"] == 'y') {
 	if ($tiki_p_comment_tracker_items == 'y') {
 		if (isset($_REQUEST["save_comment"])) {
 			check_ticket('view-trackers-items');
-			$trklib->replace_item_comment($_REQUEST["commentId"], $_REQUEST["itemId"], $_REQUEST["comment_title"], $_REQUEST["comment_data"], $user);
+			$trklib->replace_item_comment($_REQUEST["commentId"], $_REQUEST["itemId"], $_REQUEST["comment_title"], $_REQUEST["comment_data"], $user, $tracker_info);
 			$smarty->assign('comment_title', '');
 			$smarty->assign('comment_data', '');
 			$smarty->assign('commentId', 0);
