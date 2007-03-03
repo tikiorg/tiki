@@ -15,7 +15,7 @@
 <b>{$strupage.pageName}</b>&nbsp; <i>(V.{$strupage.info.version})</i>
 </td>
 <td width=250 align="rigth">
-{include file="tiki-page_bar.tpl" page=$strupage.pageName}
+{include file="tiki-page_bar.tpl" page=$strupage.pageName editable=$strupage.editable tiki_p_edit=$strupage.edit}
 </td>
 </tr>
 </table>
