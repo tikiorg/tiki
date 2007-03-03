@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/_mods/features/aulawiki/templates/styles/workspaces/modules/mod-application_menu.tpl,v 1.2 2006-10-22 15:29:33 jreyesg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/_mods/features/aulawiki/templates/styles/workspaces/modules/mod-application_menu.tpl,v 1.3 2007-03-03 08:52:44 jreyesg Exp $ *}
 
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 <div id="mainmenu" style="display: block">

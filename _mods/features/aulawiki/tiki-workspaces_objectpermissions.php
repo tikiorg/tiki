@@ -6,7 +6,7 @@
 * @license http://www.gnu.org/copyleft/lgpl.html GNU/LGPL
 * Based on:
 * */
-// $Header: /cvsroot/tikiwiki/_mods/features/aulawiki/tiki-workspaces_objectpermissions.php,v 1.2 2006-10-22 15:29:31 jreyesg Exp $
+// $Header: /cvsroot/tikiwiki/_mods/features/aulawiki/tiki-workspaces_objectpermissions.php,v 1.3 2007-03-03 08:44:56 jreyesg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.

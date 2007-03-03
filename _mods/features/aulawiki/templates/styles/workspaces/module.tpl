@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/_mods/features/aulawiki/templates/styles/workspaces/module.tpl,v 1.2 2006-10-22 15:29:33 jreyesg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/_mods/features/aulawiki/templates/styles/workspaces/module.tpl,v 1.3 2007-03-03 08:52:06 jreyesg Exp $ *}
 {* Module layout with controls *}
 <div class="box box-{$module_name|escape}">
 <div class="box-title box-title-{$module_name|escape}">

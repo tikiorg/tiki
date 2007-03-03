@@ -50,8 +50,8 @@ if (isset ($_REQUEST["send"])) {
 		$workspace["categoryId"] = null;
 	}
 	
-	if (isset ($_REQUEST["id"]) && ($_REQUEST["id"] != "")) {
-		$workspace["workspaceId"] = $_REQUEST["id"];
+	if (isset ($_REQUEST["workspaceId"]) && ($_REQUEST["workspaceId"] != "")) {
+		$workspace["workspaceId"] = $_REQUEST["workspaceId"];
 	}else{
 		$workspace["workspaceId"] = null;
 	}
@@ -60,7 +60,7 @@ if (isset ($_REQUEST["send"])) {
 	if (isset ($_REQUEST["code"]) && ($_REQUEST["code"] != "")) {
 		$ws = $workspacesLib->get_workspace_by_code($_REQUEST["code"]);
 
-		if ((!isset($_REQUEST["id"]) || $_REQUEST["id"]=="")  && isset($ws) && $ws!=""){ //Other workspace with the same code
+		if ((!isset($_REQUEST["workspaceId"]) || $_REQUEST["workspaceId"]=="")  && isset($ws) && $ws!=""){ //Other workspace with the same code
 			$smarty->assign('page_error_msg', tra("Code in use, please select a different code"));
 			$exit = true;	
 		}
@@ -125,7 +125,7 @@ if (isset ($_REQUEST["send"])) {
 	}
 	$workspace["created"] = date("U");
 	 
-	if (!$exit && isset($_REQUEST["id"]) && ($_REQUEST["id"] != "")) {
+	if (!$exit && isset($_REQUEST["workspaceId"]) && ($_REQUEST["workspaceId"] != "")) {
 		$workspacesLib->update_workspace_info($workspace["workspaceId"], $workspace["code"], $workspace["name"], $workspace["description"], $workspace["startDate"], $workspace["endDate"], $workspace["closed"], $workspace["parentId"], $workspace["type"],null, null, $workspace["owner"], $workspace["isuserws"], $workspace["hide"]);
 	} elseif(!$exit) {
 		$workspacesLib->create_workspace($workspace["code"], $workspace["name"], $workspace["description"], $workspace["startDate"], $workspace["endDate"], $workspace["closed"], $workspace["parentId"], $workspace["type"], null, $workspace["owner"], $workspace["isuserws"], $workspace["hide"]);

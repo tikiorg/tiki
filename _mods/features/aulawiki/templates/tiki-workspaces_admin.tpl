@@ -7,7 +7,7 @@
 <p class="pagetitle">{tr}Workspaces Administration{/tr}</p>
 {include file="tiki-workspaces_module_error.tpl" error=$page_error_msg}
 <form name="form1" method="post" action="tiki-workspaces_admin.php">
-  <input name="id" type="hidden" id="id" value="{$workspace.workspaceId}"/> 
+  <input name="workspaceId" type="hidden" id="workspaceId" value="{$workspace.workspaceId}"/> 
   <input name="categoryId" type="hidden" id="categoryId" value="{$workspace.categoryId}"/> 
   <input name="viewWS" type="hidden" id="viewWS" value="{$viewWS}"/> 
   <input name="parentId" type="hidden" id="parentId" value="{$workspace.parentId}"/>

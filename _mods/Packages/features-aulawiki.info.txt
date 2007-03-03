@@ -2,10 +2,10 @@ contributor:
 $Author: jreyesg $
 
 revision:
-$Revision: 1.4 $
+$Revision: 1.5 $
 
 lastmodif:
-$Date: 2006-10-22 15:41:14 $
+$Date: 2007-03-03 08:41:17 $
 
 files:
 features/aulawiki/aulawiki-assignments_admin.php aulawiki-assignments_admin.php
@@ -254,7 +254,6 @@ DELETE FROM `users_groups` WHERE `groupName`='RolePerms-Owner';
 INSERT INTO `users_groups` (groupName,groupDesc) VALUES ('RolePerms-Teacher', 'Teacher role permissions template');
 INSERT INTO `users_groups` (groupName,groupDesc) VALUES ('RolePerms-Student', 'Student role permissions template');
 INSERT INTO `users_groups` (groupName,groupDesc) VALUES ('RolePerms-Owner', 'Owner role permissions template');
-INSERT INTO users_permissions VALUES ('tiki_p_admin_workspaces','Can admin workspaces','admin','workspaces');
 INSERT INTO users_permissions VALUES ('aulawiki_p_admin_assignments','Can admin assignments','admin','assignments');
 INSERT INTO users_permissions VALUES ('aulawiki_p_view_assignments','Can view assignments','basic','assignments');
 INSERT INTO users_permissions VALUES ('aulawiki_p_edit_assignments','Can edit existing assignments','editors','assignments');
@@ -263,10 +262,10 @@ INSERT INTO users_permissions VALUES ('aulawiki_p_remove_assignments','Can remov
 INSERT INTO users_permissions VALUES ('tiki_p_view_workspace','Can view a workspace','basic','workspace');
 INSERT INTO users_permissions VALUES ('tiki_p_admin_workspace','Can admin workspaces','admin','workspace');
 INSERT INTO users_permissions VALUES ('tiki_p_create_workspace_resour','Can create new workspace resources','editors','workspace');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Workspaces','./tiki-workspaces.php',1020,'','tiki_p_admin_workspaces','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin Workspaces','./tiki-workspaces_admin.php',1022,'','tiki_p_admin_workspaces','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Workspace Types','./tiki-workspaces_types.php',1024,'','tiki_p_admin_workspaces_types','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin Roles','./tiki-workspaces_roles.php',1026,'','tiki_p_admin_workspaces_roles','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Workspaces','./tiki-workspaces_admin.php',1020,'','tiki_p_admin_workspace','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin Workspaces','./tiki-workspaces_admin.php',1022,'','tiki_p_admin_workspace','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Workspace Types','./tiki-workspaces_types.php',1024,'','tiki_p_admin_workspace','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin Roles','./tiki-workspaces_roles.php',1026,'','tiki_p_admin_workspace','');
 INSERT INTO tiki_menus VALUES (100,'Workspace menu','Sample workspace menu','d');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (100,'o','Users/Groups','./tiki-workspaces_view_module.php?module=workspaces_user_groups',10,'','','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (100,'o','Resources','./tiki-workspaces_view_module.php?module=workspaces_resources',52,'','','');
@@ -435,3 +434,13 @@ INSERT INTO `users_permissions` VALUES ('tiki_p_admin_workspace','Can admin work
 INSERT INTO `users_permissions` VALUES ('tiki_p_create_workspace_resour','Can create new workspace resources','editors','workspace');
 :0.8
 UPDATE `tiki_workspace_types` SET `resources`='a:0:{}' WHERE `resources`='a:1:{i:0;s:8:"wikipage";}';
+:1.1
+DELETE FROM `users_grouppermissions` WHERE `permName`='tiki_p_admin_workspaces';
+DELETE FROM tiki_menu_options WHERE menuid=42 AND position=1020;
+DELETE FROM tiki_menu_options WHERE menuid=42 AND position=1022;
+DELETE FROM tiki_menu_options WHERE menuid=42 AND position=1024;
+DELETE FROM tiki_menu_options WHERE menuid=42 AND position=1026;
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Workspaces','./tiki-workspaces_admin.php',1020,'','tiki_p_admin_workspace','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin Workspaces','./tiki-workspaces_admin.php',1022,'','tiki_p_admin_workspace','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Workspace Types','./tiki-workspaces_types.php',1024,'','tiki_p_admin_workspace','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin Roles','./tiki-workspaces_roles.php',1026,'','tiki_p_admin_workspace','');
