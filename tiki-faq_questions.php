@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-faq_questions.php,v 1.24 2005-10-26 15:11:02 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-faq_questions.php,v 1.25 2007-03-05 17:59:04 niclone Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -91,7 +91,7 @@ $smarty->assign('question', $info["question"]); // moved from above
 $smarty->assign('answer', $info["answer"]);     // moved from above
 
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'position,questionId_asc';
+	$sort_mode = 'position_asc,questionId_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
@@ -122,7 +122,7 @@ if (isset($_REQUEST["approve_suggested"])) {
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $channels = $faqlib->list_faq_questions($_REQUEST["faqId"], 0, -1, $sort_mode, $find);
-$allq = $faqlib->list_all_faq_questions(0, -1, 'position,questionId_asc', $_REQUEST["filter"]);
+$allq = $faqlib->list_all_faq_questions(0, -1, 'position_asc,questionId_asc', $_REQUEST["filter"]);
 $smarty->assign_by_ref('allq', $allq["data"]);
 
 $cant_pages = ceil($channels["cant"] / $maxRecords);
