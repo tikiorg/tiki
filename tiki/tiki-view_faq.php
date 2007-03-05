@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_faq.php,v 1.20 2005-05-18 10:59:00 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_faq.php,v 1.21 2007-03-05 18:30:33 niclone Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -68,7 +68,7 @@ $faq_info = $tikilib->get_faq($_REQUEST["faqId"]);
 $smarty->assign('faq_info', $faq_info);
 
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'position,questionId_asc';
+	$sort_mode = 'position_asc,questionId_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
@@ -81,7 +81,7 @@ if (isset($_REQUEST["find"])) {
 
 $smarty->assign('find', $find);
 
-$channels = $faqlib->list_faq_questions($_REQUEST["faqId"], 0, -1, 'position,questionId_asc', $find);
+$channels = $faqlib->list_faq_questions($_REQUEST["faqId"], 0, -1, 'position_asc,questionId_asc', $find);
 
 $smarty->assign_by_ref('channels', $channels["data"]);
 
