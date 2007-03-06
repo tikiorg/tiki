@@ -1,7 +1,7 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.38 2007-03-06 19:30:31 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.39 2007-03-06 20:48:36 sylvieg Exp $
  * 
  * \brief {SPLIT} wiki plugin implementation
  * Usage:
@@ -86,7 +86,7 @@ function wikiplugin_split($data, $params, $pos) {
 			$class = 'class="normal split"';
 		else
 			$class = 'class="split" width="'.$tdtotaltd.'%"';
-	} elseelseif ($fixedsize) {
+	} elseif ($fixedsize) {
 		$columnSize = floor(100 / $maxcols);
 		$class = 'class="normal split"';
 		$percent = true;	

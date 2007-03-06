@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.182 2007-03-06 19:30:29 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.183 2007-03-06 20:53:18 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1883,19 +1883,6 @@ class TrackerLib extends TikiLib {
 	}
 	function get_nb_items($trackerId) {
 		return $this->getOne("select count(*) from `tiki_tracker_items` where `trackerId`=?",array((int) $trackerId));
-	}
-	function get_flags() {
-		$flags = array();
-		$h = opendir("img/flags/");
-		while ($file = readdir($h)) {
-			if (strstr($file, ".gif")) {
-				$parts = explode('.', $file);
-				$flags[] = $parts[0];
-			}
-		}
-		closedir ($h);
-		sort($flags, SORT_STRING);
-		return $flags;	
 	}
 	function duplicate_tracker($trackerId, $name, $description='') {
 		$tracker_info = $this->get_tracker($trackerId);
