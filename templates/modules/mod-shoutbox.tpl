@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-shoutbox.tpl,v 1.27 2007-02-18 11:21:17 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-shoutbox.tpl,v 1.28 2007-03-06 16:48:09 gillesm Exp $ *}
 
 {if $feature_shoutbox eq 'y' and $tiki_p_view_shoutbox eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Shoutbox{/tr}"}{/if}
@@ -35,7 +35,7 @@
           <b>{strip}{$userlink}{/strip}</b>, {$cdate}:
         {/if}
         {$shout_msgs[ix].message}
-        {if $tiki_p_admin_shoutbox eq 'y'}
+        {if $tiki_p_admin_shoutbox eq 'y' || $user == $shout_msgs[ix].user }
           [<a href="{$shout_ownurl}shout_remove={$shout_msgs[ix].msgId}" class="linkmodule">x</a>|<a href="tiki-shoutbox.php?msgId={$shout_msgs[ix].msgId}" class="linkmodule">e</a>]
         {/if}
       </div>

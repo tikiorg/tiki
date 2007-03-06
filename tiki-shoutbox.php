@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-shoutbox.php,v 1.15 2005-05-18 10:58:59 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-shoutbox.php,v 1.16 2007-03-06 16:48:07 gillesm Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -30,27 +30,28 @@ if (!isset($_REQUEST["msgId"])) {
 }
 
 $smarty->assign('msgId', $_REQUEST["msgId"]);
-
 if ($_REQUEST["msgId"]) {
-	if ($tiki_p_admin_shoutbox != 'y') {
-		$smarty->assign('msg', tra("You do not have permission to edit messages"));
+        $info = $shoutboxlib->get_shoutbox($_REQUEST["msgId"]);
+	$owner=$info["user"];
+	if ($tiki_p_admin_shoutbox != 'y' &&  $owner != $user) {
+		$smarty->assign('msg', tra("You do not have permission to edit messages $owner"));
 
 		$smarty->display("error.tpl");
 		die;
 	}
 
-	$info = $shoutboxlib->get_shoutbox($_REQUEST["msgId"]);
+	
 } else {
 	$info = array();
-
 	$info["message"] = '';
 	$info["user"] = $user;
+	$owner=$info["user"];
 }
 
 $smarty->assign('message', $info["message"]);
 $smarty->assign('user', $info["user"]);
 
-if ($tiki_p_admin_shoutbox == 'y') {
+if ($tiki_p_admin_shoutbox == 'y' || $user == $owner ) {
 	if (isset($_REQUEST["remove"])) {
 		$area = 'delshoutboxitem';
 		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
