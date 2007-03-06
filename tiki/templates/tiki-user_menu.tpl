@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_menu.tpl,v 1.26 2007-03-06 19:30:39 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_menu.tpl,v 1.27 2007-03-06 20:31:40 sylvieg Exp $ *}
 {assign var=opensec value='0'}
 {assign var=sep value=''}
 
@@ -66,8 +66,9 @@ $smarty->assign('opensec', $opensec);
 {if $opensec > 0}
 {php}
 global $smarty;
-$opensec = $smarty->get_config_vars('opensec');
-while ($opensec--) {
+$opensec = $smarty->get_template_vars('opensec');
+while ($opensec) {
+	--$opensec;
 	echo '</div>';
 }
 {/php}
