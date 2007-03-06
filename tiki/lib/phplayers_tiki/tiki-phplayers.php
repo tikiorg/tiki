@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/phplayers_tiki/tiki-phplayers.php,v 1.11 2007-03-06 20:15:00 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/phplayers_tiki/tiki-phplayers.php,v 1.12 2007-03-06 20:41:18 sylvieg Exp $
 class TikiPhplayers extends TikiLib {
 	/* Build the input to the phplayers lib for a category tree  */
 	function mkCatEntry($categId, $indent="", $back, $categories, $urlEnd, $tpl='') {
@@ -37,7 +37,6 @@ class TikiPhplayers extends TikiLib {
 	  global $tikilib, $wikilib;
 		$menu_info = $tikilib->get_menu($idMenu);
 		$channels = $tikilib->list_menu_options($idMenu, 0, -1, 'position_asc', '');
-		$output = '';
 		$indented = '';
 		$res = '';
 		$curOption = -1;
@@ -52,7 +51,7 @@ class TikiPhplayers extends TikiLib {
 		foreach ($channels["data"] as $key=>$cd) {
 			$cd["name"] = tra($cd["name"]);
 			if ($cd['type'] == 'o') {
-				$output .= $indented;
+				$res .= $indented;
 			} elseif ($cd['type'] == 's' or $cd['type'] == 'r') {
 				$indented = '.';
 			} elseif ($cd['type'] == '-') {
@@ -60,7 +59,7 @@ class TikiPhplayers extends TikiLib {
 				continue;
 			} else {
 				$indented = str_pad('', $cd['type'], '.');
-				$output .= $indented;
+				$res .= $indented;
 				$indented .= '.';
 			}
 			$res .= ".|".$cd["name"]."|".$cd["url"]."\n";
