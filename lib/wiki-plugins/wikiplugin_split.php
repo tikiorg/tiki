@@ -1,7 +1,7 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.37 2007-01-17 15:32:52 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.38 2007-03-06 19:30:31 sylvieg Exp $
  * 
  * \brief {SPLIT} wiki plugin implementation
  * Usage:
@@ -66,7 +66,7 @@ function wikiplugin_split($data, $params, $pos) {
    if (count($rows) <= 1 && count($rows[0]) <= 1)
       return $data;
 
-	
+	$percent = false;
 	if (isset($colsize)) {
 		$tdsize= explode("|", $colsize);
 		$tdtotal=0;
@@ -75,6 +75,9 @@ function wikiplugin_split($data, $params, $pos) {
 		    $tdsize[$i]=0;
 		  } else {
 			$tdsize[$i] = trim($tdsize[$i]);
+			if (strstr($tdsize[$i], '%')) {
+				$percent = true;
+			}
 		  }
 		  $tdtotal+=$tdsize[$i];
 		}
@@ -83,14 +86,15 @@ function wikiplugin_split($data, $params, $pos) {
 			$class = 'class="normal split"';
 		else
 			$class = 'class="split" width="'.$tdtotaltd.'%"';
-	} else {
+	} elseelseif ($fixedsize) {
 		$columnSize = floor(100 / $maxcols);
-		$class = 'class="normal split"';	
+		$class = 'class="normal split"';
+		$percent = true;	
 	}
 
 	if (!isset($edit)) $edit = 'n';
 	
-	$result = '<table border="0" cellpadding="0" cellspacing="0" class="wikiplugin-split'.($fixedsize ? ' normal' : '').'">';
+	$result = '<table border="0" cellpadding="0" cellspacing="0" class="wikiplugin-split'.($percent ? ' normal' : '').'">';
 
     // Attention: Dont forget to remove leading empty line in section ...
     //            it should remain from previous '---' line...
@@ -107,12 +111,9 @@ function wikiplugin_split($data, $params, $pos) {
             $idx++;
             // Add cell to table
 			if (isset($colsize)) {
-				$width = ' width="'.$tdsize[$idx-2];
-				if (!$fixedsize && substr($tdsize[$idx-2], -1) != '%')
-					$width .= '%';
-				$width .= '" ';
-			} elseif (!$fixedsize) {
-				$width = ' width="$columnSize%" ';
+				$width = ' width="'.$tdsize[$idx-2].'"';
+			} elseif ($fixedsize) {
+				$width = ' width="'.$columnSize.'%" ';
 			} else {
 				$width = '';
 			}

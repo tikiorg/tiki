@@ -1,8 +1,8 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.13 2007-01-17 15:15:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.14 2007-03-06 19:29:48 sylvieg Exp $
 
-// Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
@@ -80,7 +80,7 @@ if ($type == "wiki page") {
 		$smarty->display("error.tpl");
 		die;
 	}
-	$pages = $tikilib->list_pageNames(0, -1, 'pageName_asc');
+  $pages = $tikilib->list_pages(0, -1, 'pageName_asc', '', '',true, false, true);
 	$smarty->assign_by_ref('pages', $pages["data"]);
 }
 else if ($type == "article") {
@@ -129,7 +129,7 @@ if (isset($_REQUEST['detach']) && isset($_REQUEST['srcId'])) { // detach from a 
 				$error = "srcLang";
 				$smarty->assign('error', $error);
 			}
-			else {
+			elseif ($srcInfo['page_id'] != $objId) {
 				$error = $multilinguallib->insertTranslation($type, $srcInfo['page_id'], $srcInfo['lang'], $objId, $langpage);
 				if ($error)
 					$smarty->assign('error', $error);

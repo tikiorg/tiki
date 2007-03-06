@@ -29,9 +29,12 @@
 <tr class="formcolor"><td>{tr}Group{/tr}:</td><td colspan="3"><input id="menu_groupname" type="text" name="groupname" value="{$groupname|escape}" size="34" /></td></tr>
 <tr class="formcolor"><td>{tr}Type{/tr}:</td><td>
 <select name="type">
-<option value="s" {if $type eq 's'}selected="selected"{/if}>{tr}section{/tr}</option>
-<option value="r" {if $type eq 'r'}selected="selected"{/if}>{tr}sorted section{/tr}</option>
 <option value="o" {if $type eq 'o'}selected="selected"{/if}>{tr}option{/tr}</option>
+<option value="s" {if $type eq 's'}selected="selected"{/if}>{tr}section level 0{/tr}</option>
+<option value='1' {if $type eq '1'}selected="selected"{/if}>{tr}section level 1{/tr}</option>
+<option value='2' {if $type eq '2'}selected="selected"{/if}>{tr}section level 2{/tr}</option>
+<option value='3' {if $type eq '3'}selected="selected"{/if}>{tr}section level 3{/tr}</option>
+<option value="r" {if $type eq 'r'}selected="selected"{/if}>{tr}sorted section level 0{/tr}</option>
 <option value="-" {if $type eq '-'}selected="selected"{/if}>{tr}separator{/tr}</option>
 </select>
 </td>

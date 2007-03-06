@@ -1,8 +1,8 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_graph.php,v 1.6 2006-09-19 16:33:16 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_graph.php,v 1.7 2007-03-06 19:29:48 sylvieg Exp $
 
-// Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 require_once ('tiki-setup.php');

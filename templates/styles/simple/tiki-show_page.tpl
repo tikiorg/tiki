@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-show_page.tpl,v 1.12 2006-10-01 14:09:05 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-show_page.tpl,v 1.13 2007-03-06 19:30:44 sylvieg Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle" title="{tr}Refresh{/tr}">
   {if $structure eq 'y' and $page_info.page_alias ne ''}

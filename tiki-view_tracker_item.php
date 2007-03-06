@@ -1,8 +1,8 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.117 2007-03-02 17:05:00 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.118 2007-03-06 19:29:52 sylvieg Exp $
 
-// Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
@@ -398,7 +398,11 @@ foreach($xfields["data"] as $i=>$array) {
 		if ( isset($fields["data"][$i]["options_array"][2])){
 			if (isset($_REQUEST["$ins_id"])) {
 				if (isset($fields["data"][$i]["options_array"][3]) and $fields["data"][$i]["options_array"][3] > 0 and strlen($_REQUEST["$ins_id"]) > $fields["data"][$i]["options_array"][3]) {
-					$ins_fields["data"][$i]["value"] = substr($_REQUEST["$ins_id"],0,$fields["data"][$i]["options_array"][3])." (...)";
+					if (function_exists('mb_substr')) {
+						$ins_fields["data"][$i]["value"] = mb_substr($_REQUEST["$ins_id"],0,$fields["data"][$i]["options_array"][3])." (...)";
+					} else {
+						$ins_fields["data"][$i]["value"] = substr($_REQUEST["$ins_id"],0,$fields["data"][$i]["options_array"][3])." (...)";
+					}
 				} else {
 					$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
 				}

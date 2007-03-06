@@ -1,62 +1,83 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_menu.tpl,v 1.25 2007-02-18 23:55:23 nyloth Exp $ *}
-{assign var=opensec value='n'}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_menu.tpl,v 1.26 2007-03-06 19:30:39 sylvieg Exp $ *}
+{assign var=opensec value='0'}
 {assign var=sep value=''}
-
-{if $menu_info.type eq 'e' or $menu_info.type eq 'd'}
 
 {foreach key=pos item=chdata from=$channels}
 {assign var=cname value=$menu_info.menuId|cat:'__'|cat:$chdata.position}
-{if $chdata.type eq 's'}
-{if $opensec eq 'y'}</div>{/if}
+
+{* ----------------------------- section *}
+{if $chdata.type ne 'o' and  $chdata.type ne '-'}
+
+{if $opensec > 0}
+{assign var=sectionType value=$chdata.type}
+{php}
+global $smarty;
+$opensec = $smarty->get_template_vars('opensec');
+$sectionType= $smarty->get_template_vars('sectionType');
+if ($sectionType == 's' or $sectionType == 'r') {
+	$sectionType = 0;
+}
+while ($opensec > $sectionType) {
+	--$opensec;
+	echo '</div>';
+}
+$smarty->assign('opensec', $opensec);
+{/php}
+{/if}
+
 <div class="separator{$sep}">
 {if $sep eq 'line'}{assign var=sep value=''}{/if}
-
+{if $menu_info.type eq 'e' or $menu_info.type eq 'd'}
+	{if $feature_menusfolderstyle eq 'y'}
+	<a class='separator' href="javascript:icntoggle('menu{$cname}');" title="{tr}Toggle options{/tr}"><img src="img/icons/{if $menu_info.type ne 'd'}o{/if}fo.gif" border="0" name="menu{$cname}icn" alt='{tr}Toggle{/tr}'/></a>
+	{else}
+	<a class='separator' href="javascript:toggle('menu{$cname}');">[-]</a>
+	{/if}
+{/if} 
 {if $chdata.url}
-{if $feature_menusfolderstyle eq 'y'}
-<a class='separator' href="javascript:icntoggle('menu{$cname}');" title="{tr}Toggle options{/tr}"><img src="img/icons/{if $menu_info.type ne 'd'}o{/if}fo.gif" border="0" name="menu{$cname}icn" alt='{tr}Toggle{/tr}'/></a>
-{else}<a class='separator' href="javascript:toggle('menu{$cname}');">[-]</a>{/if} 
-<a href="{$chdata.url|escape}" class="separator">{tr}{$chdata.name}{/tr}</a>
-{if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('menu{$cname}');">[+]</a>{/if} 
-{else}
-{if $feature_menusfolderstyle eq 'y'}
-<a class='separator' href="javascript:icntoggle('menu{$cname}');" title="{tr}Toggle options{/tr}"><img src="img/icons/{if $menu_info.type ne 'd'}o{/if}fo.gif" border="0" name="menu{$cname}icn" alt='{tr}Toggle{/tr}'/>&nbsp;
-{else}<a class='separator' href="javascript:toggle('menu{$cname}');">[-]{/if}{tr}{$chdata.name}{/tr}{if $feature_menusfolderstyle ne 'y'}[+]{/if}</a> 
+	<a href="{$chdata.url|escape}" class="separator">
 {/if}
-</div>
-{assign var=opensec value='y'}
-<div {if $menu_info.type eq 'd' and isset($smarty.session.tiki_cookie_jar.menu.$cname) and $smarty.session.tiki_cookie_jar.menu.$cname ne 'c'}style="display:none;"{else}style="display:block;"{/if} id='menu{$cname}'>
+{tr}{$chdata.name}{/tr}
+{if $chdata.url}
+	</a>
+{/if}
+{if ($menu_info.type eq 'e' or $menu_info.type eq 'd') and $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('menu{$cname}');">[+]</a>{/if} 
+</div> {* separator *}
+
+{assign var=opensec value=$opensec+1}
+{if $menu_info.type eq 'e' or $menu_info.type eq 'd'}
+<div class="menuSection" {if $menu_info.type eq 'd' and $smarty.cookies.menu ne ''}style="display:none;"{else}style="display:block;"{/if} id='menu{$cname}'>
+{else}
+<div class="menuSection">
+{/if}
+
+{* ----------------------------- option *}
 {elseif $chdata.type eq 'o'}
 <div class="option{$sep}"><a href="{$chdata.url|escape}" class="linkmenu">{tr}{$chdata.name}{/tr}</a></div>
 {if $sep eq 'line'}{assign var=sep value=''}{/if}
-{else}
-{if $chdata.type eq '-'}{if $opensec eq 'y'}</div>{/if}{assign var=opensec value='n'}{/if}
+
+{* ----------------------------- separator *}
+{elseif $chdata.type eq '-'}
+{if $opensec > 0}</div>{assign var=opensec value=$opensec-1}{/if}
 {assign var=sep value="line"}
 {/if}
 {/foreach}
-{if $opensec eq 'y'}</div>{/if}
 
-{else}
-{foreach key=pos item=chdata from=$channels}
-{if $chdata.type eq 's'}
-<div class="separator{$sep}"><a class='separator' href="{$chdata.url|escape}">{tr}{$chdata.name}{/tr}</a></div>
-{if $sep eq 'line'}{assign var=sep value=''}{/if}
-{elseif $chdata.type eq 'o'}
-<div class="option{$sep}"><a href="{$chdata.url|escape}" class="linkmenu">{tr}{$chdata.name}{/tr}</a></div>
-{if $sep eq 'line'}{assign var=sep value=''}{/if}
-{else}
-{assign var=sep value='line'}
-{/if}
-{/foreach}
+{if $opensec > 0}
+{php}
+global $smarty;
+$opensec = $smarty->get_config_vars('opensec');
+while ($opensec--) {
+	echo '</div>';
+}
+{/php}
 {/if}
 
-{if $sep eq 'line'}
-<div class="separator{$sep}">&nbsp;</div>
-{/if}
-
+{* --------------------Dynamic menus *}
 {if $menu_info.type eq 'e' or $menu_info.type eq 'd'}
 <script type='text/javascript'>
 {foreach key=pos item=chdata from=$channels}
-{if $chdata.type eq 's'}
+{if $chdata.type ne 'o' and $chdata.type ne '-'}
   {if $feature_menusfolderstyle eq 'y'}
     setfolderstate('menu{$menu_info.menuId|cat:'__'|cat:$chdata.position}', '{$menu_info.type}');
   {else}

@@ -57,6 +57,7 @@
 </table>
 <br />
 
+{if !empty($langpage)}
 <h2>{tr}Set of Translations{/tr}</h2>
 
 {if $trads|@count > 1}
@@ -83,15 +84,16 @@
 	{/if}
 {/if}		
 {if $articles}
-	<select name="srcId">{section name=ix loop=$articles}{if empty($language) or (!empty($langpage) && $langpage ne $articles[ix].lang)}<option value="{$articles[ix].articleId|escape}" {if $articles[ix].articleId == $srcId}checked="checked"{/if}>{$articles[ix].title|truncate:80:"(...)":true}</option>{/if}{/section}</select>
+	<select name="srcId">{section name=ix loop=$articles}{if !empty($articles[ix].lang) and $langpage ne $articles[ix].lang}<option value="{$articles[ix].articleId|escape}" {if $articles[ix].articleId == $srcId}checked="checked"{/if}>{$articles[ix].title|truncate:80:"(...)":true}</option>{/if}{/section}</select>
 {else}
-	<select name="srcName">{section name=ix loop=$pages}<option value="{$pages[ix].pageName|escape}" {if $pages[ix].pageName == $srcId}checked="checked"{/if}>{$pages[ix].pageName|truncate:80:"(...)":true}</option>{/section}</select>
+	<select name="srcName">{section name=ix loop=$pages}{if !empty($pages[ix].lang) and $pages[ix].lang ne $langpage}<option value="{$pages[ix].pageName|escape}" {if $pages[ix].pageName == $srcId}checked="checked"{/if}>{$pages[ix].pageName|truncate:80:"(...)":true}</option>{/if}{/section}</select>
 {/if}
 &nbsp;
 {if $trads|@count <= 1}
 	<input type="submit" class="wikiaction" name="set" value="{tr}go{/tr}"/>
 {else}
 	<input type="submit" class="wikiaction" name="set" value="{tr}add to the set{/tr}"/>
+{/if}
 {/if}
 
 {if !$articles}

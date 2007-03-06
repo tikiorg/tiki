@@ -1,8 +1,8 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.32 2006-12-14 16:40:27 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.33 2007-03-06 19:29:46 sylvieg Exp $
 
-// Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 

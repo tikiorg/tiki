@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/commxmlrpc.php,v 1.19 2005-08-18 16:23:04 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/commxmlrpc.php,v 1.20 2007-03-06 19:29:45 sylvieg Exp $
 
-// Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/commxmlrpc.php,v 1.19 2005-08-18 16:23:04 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/commxmlrpc.php,v 1.20 2007-03-06 19:29:45 sylvieg Exp $
 include_once("lib/init/initlib.php");
 include_once ('db/tiki-db.php');
 

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.45 2007-02-08 13:51:23 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.46 2007-03-06 19:30:39 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
   
@@ -13,7 +13,7 @@
 <div class="navbar"><a class="linkbut" href="tiki-browse_categories.php?parentId={$parentId}" title="{tr}browse the category system{/tr}">{tr}browse category{/tr}</a></div>
 
 {if !empty($errors)}
-<div class="simplebox highlight">{section name=ix loop=$errors}{tr}{$errors[ix]}{/tr}{/section}</div>
+<div class="simplebox highlight">{section name=ix loop=$errors}{$errors[ix]}{/section}</div>
 {/if}
 <div class="tree" id="top">
 <div class="treetitle">{tr}Current category{/tr}: 

@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/tree/categ_admin_tree.php,v 1.5 2005-05-18 11:01:54 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/tree/categ_admin_tree.php,v 1.6 2007-03-06 19:30:29 sylvieg Exp $
  *
  * \brief Categories browse tree
  *
@@ -33,7 +33,7 @@ class CatAdminTreeMaker extends TreeMaker {
 		$r = $this->make_tree_r($rootid, $ar);
 		// $debugger->var_dump('$r');
 		// return tree with java script block that opens the nodes as remembered in cookies
-		return $r . "<script language='Javascript' type='text/javascript'> " . $this->jsscriptblock . " </script>\n";
+		return $r . "<script type='text/javascript'> " . $this->jsscriptblock . " </script>\n";
 	}
 
 	//
@@ -51,7 +51,7 @@ class CatAdminTreeMaker extends TreeMaker {
 	// Unsymmetrical calls is not important :)
 	//
 	function node_start_code($nodeinfo) {
-		return '<div class="treenode"><table width=100%><tr>';
+		return '<div class="treenode"><table width="100%"><tr>';
 	}
 
 	//
@@ -59,7 +59,7 @@ class CatAdminTreeMaker extends TreeMaker {
 		$this->itemID = $this->prefix . 'id' . $nodeinfo["id"];
 
 		$this->jsscriptblock .= "setFlipWithSign('" . $this->itemID . "'); ";
-		return '<td ><a class="catname" title="' . tra(
+		return '<td><a class="catname" title="' . tra(
 			'child categories'). ': ' . $nodeinfo["children"] . ', ' . tra('objects in category'). ': ' . $nodeinfo["objects"] . '" id="flipper' . $this->itemID . '" href="javascript:flipWithSign(\'' . $this->itemID . '\')">[+]</a></td>';
 	}
 
@@ -70,7 +70,7 @@ class CatAdminTreeMaker extends TreeMaker {
 
 	//
 	function node_data_end_code($nodeinfo) {
-		return '</td><td width=10% align="right">' . $nodeinfo["edit"] . $nodeinfo["remove"] . '</td></tr></table></div>';
+		return '</td><td width="10%" align="right">' . $nodeinfo["edit"] . $nodeinfo["remove"] . '</td></tr></table></div>';
 	}
 
 	//

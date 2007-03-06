@@ -1,8 +1,8 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_menu_options.php,v 1.22 2006-12-01 19:37:54 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_menu_options.php,v 1.23 2007-03-06 19:29:46 sylvieg Exp $
 
-// Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
@@ -48,7 +48,7 @@ if ($_REQUEST["optionId"]) {
 	$info["perm"] = '';
 	$info["groupname"] = '';
 	$info["type"] = 'o';
-	$info["position"] = $maxPos + 1;
+	$info["position"] = $maxPos + 2;
 }
 
 $smarty->assign('name', $info["name"]);

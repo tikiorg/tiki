@@ -1,8 +1,8 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_edit.php,v 1.19 2007-02-04 20:09:33 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_edit.php,v 1.20 2007-03-06 19:29:50 sylvieg Exp $
 
-// Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, 
+// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, 
 //                          George G. Geller et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.

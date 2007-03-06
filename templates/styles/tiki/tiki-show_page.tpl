@@ -124,7 +124,9 @@
 {/if}
 {/if}
 
-{if $tiki_p_admin_wiki eq 'y'}
+
+{if $print_page ne 'y'}
+{if $feature_wiki_export eq 'y' and $tiki_p_admin_wiki eq 'y'}
         <span class="tabbut"><a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}" class="tablink">{tr}export{/tr}</a></span>
 {/if}
 

@@ -117,8 +117,11 @@ class MenuLib extends TikiLib {
 	    }
 
 	    $types = array("o" => "option",
-			   "s" => "section",
-			   "r" => "sorted section",
+			   "s" => "section level 0",
+			   "r" => "sorted section level 0",
+				'1' => 'section level 1',
+				'2' => 'section level 2',
+				'3' => 'section level 3',
 			   "-" => "separator");
 
 	    for ($i=0; $i<sizeof($channels); $i++) {

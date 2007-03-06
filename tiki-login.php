@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.58 2006-12-28 20:12:57 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.59 2007-03-06 19:29:49 sylvieg Exp $
 
-// Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.58 2006-12-28 20:12:57 rlpowell Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.59 2007-03-06 19:29:49 sylvieg Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';

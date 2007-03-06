@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/display_banner.php,v 1.15 2005-05-18 10:58:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/display_banner.php,v 1.16 2007-03-06 19:29:45 sylvieg Exp $
 
-// Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/display_banner.php,v 1.15 2005-05-18 10:58:51 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/display_banner.php,v 1.16 2007-03-06 19:29:45 sylvieg Exp $
 
 // Only to be called from edit_banner or view_banner to display the banner without adding
 // impressions to the banner
