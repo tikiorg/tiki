@@ -34,6 +34,10 @@
           <td class="form"><label for="directory-cool-sites">{tr}enable cool sites{/tr}</label></td>
           <td><input type="checkbox" name="directory_cool_sites" id="directory-cool-sites"
               {if $directory_cool_sites eq 'y'}checked="checked"{/if}></td>
+ 	 </tr><tr>
+          <td class="form"><label for="directory-country-flag">{tr}Show Country Flag{/tr}</label></td>
+          <td><input type="checkbox" name="directory_country_flag" id="directory-country-flag"
+              {if $directory_country_flag eq 'y'}checked="checked"{/if}></td>
         </tr><tr>
           <td class="form"><label for="directory-openlinks">{tr}Method to open directory links{/tr}</label></td>
           <td><select name="directory_open_links" id="directory-openlinks">
