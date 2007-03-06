@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.8 2007-02-22 14:34:59 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.9 2007-03-06 20:54:31 sylvieg Exp $
 function wikiplugin_trackerfilter_help() {
   $help = tra("Filters the items of a tracker, fields are indicated with numeric ids.").":\n";
   $help .= "~np~{TRACKERFILTER(filters=>2/d:4/r:5,TRACKERLIST_params )}{TRACKERFILTER}~/np~";
@@ -139,8 +139,7 @@ function wikiplugin_trackerfilter($data, $params) {
 
 	$filters[] = array('name' => $field['name'], 'fieldId' => $field['fieldId'], 'format'=>$format, 'opts' => $opts, 'selected'=>$selected);
 	}
-	echo "<pre>";print_r($filters);
-$smarty->assign('filters', $filters);
+	$smarty->assign('filters', $filters);
 	$smarty->assign('trackerId', $trackerId);
 	$data = $smarty->fetch('wiki-plugins/wikiplugin_trackerfilter.tpl');
 	return $dataRes.$data;
