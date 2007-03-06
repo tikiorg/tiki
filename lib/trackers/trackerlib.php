@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.183 2007-03-06 20:53:18 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.184 2007-03-06 20:57:21 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -491,6 +491,8 @@ class TrackerLib extends TikiLib {
 		global $tiki_p_view_trackers_pending,$tiki_p_view_trackers_closed,$tiki_p_admin_trackers, $feature_categories,$language;
 		if (isset($_REQUEST['dbg'])) { $dbg = true; } else { $dbg = false; }
 		$cat_table = '';
+		$sort_tables = '';
+		$sort_join_clauses = '';
 		$trackerId = (int) $trackerId;
 		$mid = " where tti.`trackerId`=? ";
 		$bindvars = array($trackerId);
