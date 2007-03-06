@@ -17,7 +17,9 @@
 <tr>
 <td class="{cycle advance=false}"><a class="link" href="tiki-directory_redirect.php?siteId={$items[user].siteId}" {if $directory_open_links eq 'n'}target='_blank'{/if}>{$items[user].name}</a></td>
 <td class="{cycle advance=false}">{$items[user].url}</td>
+{if $directory_country_flag eq 'y'}
 <td class="{cycle advance=false}"><img src='img/flags/{$items[user].country}.gif' alt='{$items[user].country}'/></td>
+{/if}
 <td class="{cycle advance=false}">{$items[user].hits}</td>
 </tr>
 <tr>

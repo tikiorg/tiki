@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_browse.tpl,v 1.15 2005-10-16 14:35:10 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_browse.tpl,v 1.16 2007-03-06 11:02:01 gillesm Exp $ *}
 
 {* The heading and category path *}
 {if $feature_siteidentity ne 'y' or $feature_breadcrumbs ne 'y'}
@@ -102,7 +102,9 @@ loc="page" crumbs=$crumbs}
 <br />
 {section name=ix loop=$items}
 <div class="dirsite">
+{if $directory_country_flag eq 'y'}
 <img alt="flag" src="img/flags/{$items[ix].country}.gif" />
+{/if}
 <a class="dirsitelink" href="tiki-directory_redirect.php?siteId={$items[ix].siteId}" {if $directory_open_links eq 'n'}target='_blank'{/if}>{$items[ix].name}</a>
 {if $tiki_p_admin_directory_sites eq 'y'} [<a class="dirsitelink" href="tiki-directory_admin_sites.php?parent={$parent}&amp;siteId={$items[ix].siteId}">{tr}edit{/tr}</a>]{/if} 
 {if $cachepages eq 'y'}(<a  class="dirsitelink" href="tiki-view_cache.php?url={$items[ix].url}" target="_blank">{tr}cache{/tr}</a>){/if}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.401 2007-03-02 19:49:06 luciash Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.402 2007-03-06 11:01:59 gillesm Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et.
 // al.
 // All Rights Reserved. See copyright.txt for details and a complete list of
@@ -797,6 +797,8 @@ $pref['directory_links_per_page'] = 20;
 $pref['directory_open_links'] = 'n';
 $pref['directory_validate_urls'] = 'n';
 $pref['directory_cool_sites'] = 'y';
+$pref['directory_country_flag'] = 'y';
+
 
 # calendar
 $sections['calendar']['feature'] = 'feature_calendar';

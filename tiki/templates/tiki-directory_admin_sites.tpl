@@ -52,6 +52,7 @@
     </select>
     </td>
   </tr>
+{if $directory_country_flag eq 'y'}
   <tr>
     <td class="formcolor">{tr}Country{/tr}:</td>
     <td class="formcolor">
@@ -62,6 +63,7 @@
       </select>
     </td>
   </tr>
+{/if}
   <tr>
     <td class="formcolor">{tr}Is valid{/tr}:</td>
     <td class="formcolor"><input name="isValid" type="checkbox" {if $info.isValid eq 'y'}checked="checked"{/if} /></td>
@@ -83,7 +85,9 @@
   <tr>
     <td class="heading"><a class="tableheading" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
     <td class="heading"><a class="tableheading" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'url_desc'}url_asc{else}url_desc{/if}">{tr}url{/tr}</a></td>
+{if $directory_country_flag eq 'y'}
     <td class="heading"><a class="tableheading" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'country_desc'}country_asc{else}country_desc{/if}">{tr}country{/tr}</a></td>
+{/if}
     <td class="heading"><a class="tableheading" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}hits{/tr}</a></td>
     <td class="heading"><a class="tableheading" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'isValid_desc'}isValid_asc{else}isValid_desc{/if}">{tr}valid{/tr}</a></td>
     <td class="heading">{tr}action{/tr}</td>
@@ -93,7 +97,9 @@
 <tr>
 <td class="{cycle advance=false}">{$items[user].name}</td>
 <td class="{cycle advance=false}"><a href="{$items[user].url}" target="_new">{$items[user].url}</a></td>
+ {if $directory_country_flag eq 'y'}
 <td class="{cycle advance=false}"><img src='img/flags/{$items[user].country}.gif' alt='{$items[user].country}'/></td>
+{/if}
 <td class="{cycle advance=false}">{$items[user].hits}</td>
 <td class="{cycle advance=false}">{$items[user].isValid}</td>
 <td  class="{cycle advance=false}">
