@@ -33,7 +33,7 @@ function since_last_visit_new($user) {
 
     $ret["items"]["comments"]["label"] = tra("new comments");
     $ret["items"]["comments"]["cname"] = "slvn_comments_menu";
-    $query = "select `object`,`objectType`,`title`,`commentDate`,`userName`,`threadId`, `parentId` from `tiki_comments` where `commentDate`>? and `objectType` != 'forum' order by `commentDate` desc";
+	$query = "select `object`,`objectType`,`title`,`commentDate`,`userName`,`threadId`, `parentId` from `tiki_comments` where `commentDate`>? and `objectType` != 'forum' order by `commentDate` desc";
     $result = $tikilib->query($query, array((int)$last));
 
     $count = 0;
@@ -185,6 +185,27 @@ function since_last_visit_new($user) {
     $ret["items"]["faqs"]["count"] = $count;
   }
 
+// directories
+
+if ($tikilib->get_preference("feature_directory") == 'y') {    
+    $ret["items"]["dirs"]["label"] = tra("new directory");
+    $ret["items"]["dirs"]["cname"] = "slvn_dirs_menu";
+
+    $query = "select `siteId`, `name`, `lastModif`  from `tiki_directory_sites` where lastModif>? order by `lastModif` desc";
+    $result = $tikilib->query($query, array((int)$last));
+    $count = 0;
+    while ($res = $result->fetchRow())
+    {
+        if ($userlib->user_has_perm_on_object($user,$res['siteId'], 'directory', 'tiki_p_view_directory')) {
+           $ret["items"]["dirs"]["list"][$count]["href"]  = "tiki-directory_redirect.php?siteId=" . $res["siteId"];
+           $ret["items"]["dirs"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["lastModif"]);
+           $ret["items"]["dirs"]["list"][$count]["label"] = $res["name"]; 
+           $count++;
+        }
+    }
+    $ret["items"]["dirs"]["count"] = $count;
+  }
+
   if ($tikilib->get_preference("feature_blogs") == 'y') {    
     $ret["items"]["blogs"]["label"] = tra("new blogs");
     $ret["items"]["blogs"]["cname"] = "slvn_blogs_menu";
@@ -202,6 +223,7 @@ function since_last_visit_new($user) {
            $count++;
        }
     }
+
 
     $ret["items"]["blogs"]["count"] = $count;
 
@@ -261,6 +283,7 @@ function since_last_visit_new($user) {
     }
     $ret["items"]["images"]["count"] = $count;
   }
+
 
   if ($tikilib->get_preference("feature_file_galleries") == 'y') {
     //file galleries

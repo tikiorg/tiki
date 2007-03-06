@@ -34,8 +34,9 @@ if ($feature_shoutbox == 'y' && $tiki_p_view_shoutbox == 'y') {
 
 	global $smarty;
 	$smarty->assign('shout_ownurl', $shout_father);
-
-	if ($tiki_p_admin_shoutbox == 'y') {
+        $info = $shoutboxlib->get_shoutbox($_REQUEST["msgId"]);
+	$owner=$info["user"];
+	if ($tiki_p_admin_shoutbox == 'y'  || $owner == $user ) {
 		if (isset($_REQUEST["shout_remove"])) {
 			if ($feature_ticketlib2 =='y') {
 				$area = 'delshoutboxentry';

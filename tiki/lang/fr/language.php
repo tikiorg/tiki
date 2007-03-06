@@ -2741,6 +2741,7 @@ $lang=Array(
 "Maximum number of children to show" => "Nombre maximum de sous-catégories à montrer",
 "Allow sites in this category" => "Permettre des sites dans cette catégorie",
 "Show Country Flag" => "Afficher les drapeaux des pays",
+"new directory" => "nouveau(x) lien(s)",
 "Show number of sites in this category" => "Afficher le nombre de sites dans cette catégorie",
 "Editor group" => "Groupe éditeur",
 "Subcategories" => "Sous-catégories",
