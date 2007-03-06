@@ -1,5 +1,5 @@
 # BasicEnabled profile for easy use
-# $Header: /cvsroot/tikiwiki/tiki/db/profiles/basicEnabled.prf,v 1.5 2007-03-02 19:49:33 luciash Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/profiles/basicEnabled.prf,v 1.6 2007-03-06 19:29:56 sylvieg Exp $
 REPLACE INTO tiki_calendars VALUES (1,'Public','Public calendar','admin','n','n','n','n','n','n',1072170381,1072170381,'n');
 REPLACE INTO tiki_modules VALUES ('login_box','r',1,'P','',0,0,'','a:1:{i:0;s:9:\"Anonymous\"\;}');
 REPLACE INTO tiki_modules VALUES ('quick_edit','l',2,'d','',0,0,'','a:1:{i:0;s:10:\"Registered\";}');
@@ -155,6 +155,7 @@ REPLACE INTO users_grouppermissions VALUES ('Anonymous','tiki_p_view_shoutbox','
 REPLACE INTO users_grouppermissions VALUES ('Anonymous','tiki_p_view_stats','');
 REPLACE INTO users_grouppermissions VALUES ('Anonymous','tiki_p_view_survey_stats','');
 REPLACE INTO users_grouppermissions VALUES ('Anonymous','tiki_p_view_trackers','');
+REPLACE INTO users_grouppermissions VALUES ('Anonymous','tiki_p_list_trackers','');
 REPLACE INTO users_grouppermissions VALUES ('Anonymous','tiki_p_vote_chart','');
 REPLACE INTO users_grouppermissions VALUES ('Anonymous','tiki_p_vote_poll','');
 REPLACE INTO users_grouppermissions VALUES ('Editors','tiki_p_abort_instance','');

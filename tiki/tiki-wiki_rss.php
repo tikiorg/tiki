@@ -1,7 +1,7 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-wiki_rss.php,v 1.41 2007-02-12 12:14:15 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-wiki_rss.php,v 1.42 2007-03-06 19:29:52 sylvieg Exp $
 
-// Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 

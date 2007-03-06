@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.181 2007-03-02 17:05:00 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.182 2007-03-06 19:30:29 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1913,6 +1913,19 @@ class TrackerLib extends TikiLib {
 			$this->replace_tracker_field($newTrackerId, 0, $field['name'], $field['type'], $field['isMain'], $field['isSearchable'], $field['isTblVisible'], $field['isPublic'], $field['isHidden'], $field['isMandatory'], $field['position'], $field['options'], $field['description']);
 		}
 		return $newTrackerId;
+	}
+	function get_flags() {
+		$flags = array();
+		$h = opendir("img/flags/");
+		while ($file = readdir($h)) {
+			if (strstr($file, ".gif")) {
+				$parts = explode('.', $file);
+				$flags[] = $parts[0];
+			}
+		}
+		closedir ($h);
+		sort($flags, SORT_STRING);
+		return $flags;	
 	}
 	// look for default value: a default value is 2 consecutive same value
 	function set_default_dropdown_option($field) {

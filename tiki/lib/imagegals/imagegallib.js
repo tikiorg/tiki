@@ -1,6 +1,6 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.js,v 1.2 2006-08-29 20:19:09 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.js,v 1.3 2007-03-06 19:30:10 sylvieg Exp $
 
-// Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // Author: bertrand Gugger

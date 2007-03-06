@@ -1,9 +1,9 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_import.php,v 1.3 2006-09-19 16:33:14 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_import.php,v 1.4 2007-03-06 19:29:47 sylvieg Exp $
 
 // Based on tiki-galleries.php
-// Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 

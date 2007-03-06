@@ -13,11 +13,11 @@
     * creator, version, flag, versions,links,backlinks
     * <li> exclude (allows multiple pagenames) : HomePage|RecentChanges
     * <li> noheader         : by default, false
-    * </ul>
+    * </ul>    
     * @package Tikiwiki
     * @subpackage TikiPlugins
     * @author Claudio Bustos
-    * @version $Revision: 1.24 $
+    * @version $Revision: 1.25 $
     */
     function wikiplugin_titlesearch_help() {
         return tra("Search the titles of all pages in this wiki").":<br />~np~{TITLESEARCH(search=>Admin,info=>hits|user,exclude=>HomePage|SandBox,noheader=>0)}{TITLESEARCH}~/np~";
@@ -40,7 +40,7 @@
         }
         function getVersion() {
             return preg_replace("/[Revision: $]/", '',
-                "\$Revision: 1.24 $");
+                "\$Revision: 1.25 $");
         }
         function run ($data, $params) {
             global $wikilib; include_once('lib/wiki/wikilib.php');

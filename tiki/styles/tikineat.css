@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.29 2007-02-22 13:35:45 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.30 2007-03-06 19:30:32 sylvieg Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -237,6 +237,9 @@ div.separator, div.separatorline {
 	color : black;
 	padding : 2px;
 	border-top : 1px dashed #8CACBB;
+}
+div.menuSection div.menuSection, div.menuSection div.separator {
+	padding-left: 5px;
 }
 .linkmenu, .rsslink {
 	font-size : 10px;

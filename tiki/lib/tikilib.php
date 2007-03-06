@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.723 2007-03-02 19:49:10 luciash Exp $
+// CVS: $Id: tikilib.php,v 1.724 2007-03-06 19:29:58 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3550,7 +3550,6 @@ function add_pageview() {
                 } else {
                         $is_categorized = FALSE;
                 }
-
 		if ($is_categorized && !empty($categperm) && $$categperm != 'y') {
 			$cacheUserPerm[$keyCache] = false;
 			return (FALSE);
@@ -3576,14 +3575,23 @@ function add_pageview() {
       return(TRUE);
     }
 
-	/* tiki_p_admin must be test outside
+	/* get all the perm of an object either in a table or global and smarty set
+	 * OPTIMISATION: better to test tiki_p_admin outside for global=false
 	 * TODO: all the objectType
 	 * global = true set the global perm and smarty var, otherwise return an array of perms
 	 */
 	function get_perm_object($objectId, $objectType, $global=true) {
 		global $tiki_p_admin, $user, $feature_categories, $userlib, $smarty;
 		$ret = array();
-		if ($userlib->object_has_one_permission($objectId, $objectType)) {
+		if ($tiki_p_admin) {
+			if (!$global) {
+				$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
+				foreach ($perms['data'] as $perm) {
+					$ret[$perm['permName']] = 'y';
+				}
+			}
+			/* else : all the perms have already been set in tiki-setup_base */
+		} elseif ($userlib->object_has_one_permission($objectId, $objectType)) {
 			$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
 			foreach ($perms['data'] as $perm) { // foreach perm of the same group of perms
 				$permName = $perm['permName'];
@@ -3599,7 +3607,7 @@ function add_pageview() {
 							$perm = $perm['permName'];
 							$ret[$perm] = 'y';
        						if ($global) {
-								global $perm;
+								global $$perm;
 	        					$$perm = 'y';
         						$smarty->assign("$perm", 'y');
 							}

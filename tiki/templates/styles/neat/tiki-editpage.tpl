@@ -71,7 +71,7 @@
   <span class="tabbut"><a href="tiki-slideshow2.php?page={$page|escape:"url"}" class="tablink">{tr}slides{/tr}</a></span>
 {/if}
 
-{if $tiki_p_admin_wiki eq 'y'}
+{if $feature_wiki_export eq 'y' and $tiki_p_admin_wiki eq 'y'}
         <span class="tabbut"><a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}" class="tablink">{tr}export{/tr}</a></span>
 {/if}
 
@@ -185,7 +185,9 @@
 <tr><td class="formcolor">{tr}Import page{/tr}:</td><td class="formcolor">
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
 <input name="userfile1" type="file" />
+{if $feature_wiki_export eq 'y'}
 <a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}&amp;all=1" class="link">{tr}export all versions{/tr}</a>
+{/if}
 </td></tr>
 {/if}
 {if $feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y'}

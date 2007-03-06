@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/phplayers_tiki/tiki-phplayers.php,v 1.9 2007-01-30 19:48:58 awolfff Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/phplayers_tiki/tiki-phplayers.php,v 1.10 2007-03-06 19:30:19 sylvieg Exp $
 class TikiPhplayers extends TikiLib {
 	/* Build the input to the phplayers lib for a category tree  */
 	function mkCatEntry($categId, $indent="", $back, $categories, $urlEnd, $tpl='') {
@@ -37,7 +37,7 @@ class TikiPhplayers extends TikiLib {
 	  global $tikilib, $wikilib;
 		$menu_info = $tikilib->get_menu($idMenu);
 		$channels = $tikilib->list_menu_options($idMenu, 0, -1, 'position_asc', '');
-		$indented = false;
+		$indented = '';
 		$res = '';
 		$curOption = -1;
 		$url = urldecode($_SERVER['REQUEST_URI']);
@@ -50,14 +50,17 @@ class TikiPhplayers extends TikiLib {
 		}
 		foreach ($channels["data"] as $key=>$cd) {
 			$cd["name"] = tra($cd["name"]);
-			if ($cd["type"] == 'o' and $indented) {
-				$res .= ".";
-			} elseif ($cd["type"] == 's') {
-				$indented = true;
-			} elseif ($cd["type"] == 'r') {
-				$indented = true;
+			if ($cd['type'] == 'o') {
+				$output .= $indented;
+			} elseif ($cd['type'] == 's' or $cd['type'] == 'r') {
+				$indented = '.';
+			} elseif ($cd['type'] == '-') {
+				$indented = substr($indented, 1);
+				continue;
 			} else {
-				$indented = false;
+				$indented = str_pad('', $cd['type'], '.');
+				$output .= $indented;
+				$indented .= '.';
 			}
 			$res .= ".|".$cd["name"]."|".$cd["url"]."\n";
 			if (!empty($cd['url']) && $curOption == -1) {

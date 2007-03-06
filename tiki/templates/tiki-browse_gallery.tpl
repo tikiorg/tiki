@@ -1,3 +1,4 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_gallery.tpl,v 1.37 2007-03-06 19:30:39 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-browse_gallery.php?galleryId={$galleryId}">
 {tr}Browsing Gallery{/tr}: {$name}
 </a></h1>
@@ -25,7 +26,7 @@
 <span class="button2"><a href="tiki-list_gallery.php?galleryId={$galleryId}" class="linkbut">{tr}list gallery{/tr}</a></span>
 {/if}
 {if $rss_image_gallery eq 'y'}
-  <span class="button2"><a href="tiki-image_gallery_rss.php?galleryId={$galleryId}" class="linkbut">RSS</a></span>
+  <span class="button2"><a href="tiki-image_gallery_rss.php?galleryId={$galleryId}" class="linkbut">{tr}RSS{/tr}</a></span>
 {/if}
 <br /><br />
 {if strlen($description) > 0}

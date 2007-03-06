@@ -1,7 +1,7 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/setup.sh,v 1.41 2006-10-18 13:49:48 luciash Exp $
+# $Header: /cvsroot/tikiwiki/tiki/setup.sh,v 1.42 2007-03-06 19:29:45 sylvieg Exp $
 
-# Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+# Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 # All Rights Reserved. See copyright.txt for details and a complete list of authors.
 # Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 

@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/topic_image.php,v 1.15 2005-09-08 01:48:45 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/topic_image.php,v 1.16 2007-03-06 19:29:52 sylvieg Exp $
 
-// Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/topic_image.php,v 1.15 2005-09-08 01:48:45 damosoft Exp $
+# $Header: /cvsroot/tikiwiki/tiki/topic_image.php,v 1.16 2007-03-06 19:29:52 sylvieg Exp $
 
 // application to display an image from the database with 
 // option to resize the image dynamically creating a thumbnail on the fly.
