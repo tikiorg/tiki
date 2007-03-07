@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.61 2007-03-06 19:29:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.62 2007-03-07 14:23:07 gillesm Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -106,6 +106,7 @@ $features_toggles = array(
 	"feature_workflow",
 	"feature_wysiwyg",
 	"feature_xmlrpc",
+	"feature_copyright",
 	"layout_section",
 	"user_assigned_modules"
 );

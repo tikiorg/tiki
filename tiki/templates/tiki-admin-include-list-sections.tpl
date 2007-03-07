@@ -99,6 +99,10 @@
     <a href="tiki-admin.php?page=wysiwyg" title="{tr}wysiwyg{/tr}" class="admbox{if $feature_wysiwyg ne 'y'} off{/if}">
       <img border="0" src="pics/large/wysiwyg48x48.png" alt="{tr}wysiwyg{/tr}" /><br />{tr}wysiwyg{/tr}
     </a>
+    <a href="tiki-admin.php?page=copyright" title="{tr}copyright{/tr}" class="admbox{if $feature_copyright ne 'y'} off{/if}">
+      <img border="0" src="pics/large/copyright48x48.png" alt="{tr}Copyright{/tr}" /><br />{tr}copyright{/tr}
+    </a>
+
   </div>
 </div>
 <br />
