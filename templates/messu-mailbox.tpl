@@ -54,7 +54,7 @@
 </form>
 <br />
 
-<form action="messu-mailbox.php" method="post">
+<form action="messu-mailbox.php" method="post" name="form_messu_mailbox">
 <input type="hidden" name="offset" value="{$offset|escape}" />
 <input type="hidden" name="find" value="{$find|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
@@ -70,10 +70,13 @@
 <option value="isFlagged_y">{tr}Mark as flagged{/tr}</option>
 <option value="isFlagged_n">{tr}Mark as unflagged{/tr}</option>
 </select>
+<script type="text/javascript">
+var CHECKBOX_LIST = [{section name=user loop=$items}'msg[{$items[user].msgId}]'{if not $smarty.section.user.last},{/if}{/section}];
+</script>
 <input type="submit" name="mark" value="{tr}mark{/tr}" />
 <table class="normal" >
   <tr>
-    <td class="heading" >&nbsp;</td>
+    <td class="heading" ><input type="checkbox" name="checkall" onclick="checkbox_list_check_all('form_messu_mailbox',CHECKBOX_LIST,this.checked);" /></td>
     <td class="heading" width='18' >&nbsp;</td>
     <td class="heading" ><a class="tableheading" href="messu-mailbox.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_from_desc'}user_from_asc{else}user_from_desc{/if}">{tr}sender{/tr}</a></td>
     <td class="heading" ><a class="tableheading" href="messu-mailbox.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'subject_desc'}subject_asc{else}subject_desc{/if}">{tr}subject{/tr}</a></td>
