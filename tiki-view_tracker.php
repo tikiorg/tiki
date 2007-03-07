@@ -1,8 +1,8 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.121 2007-03-06 19:29:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.122 2007-03-07 18:33:00 gillesm Exp $
 
-// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
@@ -358,11 +358,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 		} elseif ($fields["data"][$i]["type"] == 'a') { // textarea
 			if (isset($_REQUEST["$ins_id"])) {
 				if (isset($fields["data"][$i]["options_array"][3]) and $fields["data"][$i]["options_array"][3] > 0 and strlen($_REQUEST["$ins_id"]) > $fields["data"][$i]["options_array"][3]) {
-					if (function_exists('mb_substr')) {
-						$ins_fields["data"][$i]["value"] = mb_substr($_REQUEST["$ins_id"],0,$fields["data"][$i]["options_array"][3])." (...)";
-					} else {
-						$ins_fields["data"][$i]["value"] = substr($_REQUEST["$ins_id"],0,$fields["data"][$i]["options_array"][3])." (...)";
-					}
+					$ins_fields["data"][$i]["value"] = substr($_REQUEST["$ins_id"],0,$fields["data"][$i]["options_array"][3])." (...)";
 				} else {
 					$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
 				}
@@ -504,8 +500,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 	}
 	// store values to have them available when there is 
 	// an error in the values typed by an user for a field type.
-	if (isset( $fields['data'][$i]['fieldId']))
-		$fields['data'][$i]['value'] = isset($ins_fields['data'][$i]['value'])?$ins_fields['data'][$i]['value']: '';
+	$fields['data'][$i]['value'] = isset($ins_fields['data'][$i]['value'])?$ins_fields['data'][$i]['value']: '';
 	
 }
 if (!isset($mainfield) and isset($fields["data"][0]["fieldId"]) and isset($fields["data"][0]["value"])) {
