@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.724 2007-03-06 19:29:58 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.725 2007-03-07 15:15:46 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3387,9 +3387,11 @@ function add_pageview() {
 	return $this->list_pages($offset, $maxRecords, $sort_mode, $find, '', true, true);
    }
 
-    function list_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '', $initial = '', $exact_match = true, $onlyName=false, $forListPages=false, $only_orphan_pages = false) {
+    function list_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '', $initial = '', $exact_match = true, $onlyName=false, $forListPages=false, $only_orphan_pages = false, $filter='') {
 	global $wiki_list_links, $wiki_list_versions, $wiki_list_backlinks, $user;
 
+	$join_tables = '';
+	$join_bindvars = array();
 	if ($sort_mode == 'size_desc') $sort_mode = 'page_size_desc';
 	if ($sort_mode == 'size_asc') $sort_mode = 'page_size_asc';
 	
@@ -3413,7 +3415,7 @@ function add_pageview() {
 	if (is_array($find)) { // you can use an array of pages
 	    $mid = " where `pageName` IN (".implode(',',array_fill(0,count($find),'?')).")";
 	    $bindvars = $find;
-	} elseif (is_string($find)) { // or a string
+	} elseif (is_string($find) && !empty($find)) { // or a string
 	    if (!$exact_match && $find) {
 		$find = preg_replace("/(\w+)/","%\\1%",$find);
 		$find = preg_split("/[\s]+/",$find,-1,PREG_SPLIT_NO_EMPTY);
@@ -3427,6 +3429,18 @@ function add_pageview() {
 	    $bindvars = array();
 	}
 
+	if (!empty($filter)) {
+		foreach ($filter as $type=>$val) {
+			if ($type == 'categId') {
+				$join_tables = " inner join `tiki_categorized_objects` as tco on (tco.`objId`= tp.`pageName` and tco.`type`= ?) inner join `tiki_category_objects` as tc on (tc.`catObjectId`=tco.`catObjectId` and tc.`categId`=?) ";
+				$join_bindvars = array('wiki page', $val);
+			} elseif ($type == 'lang') {
+				$mid .= empty($mid)? ' where ': ' and ';
+				$mid .= '`lang`=? ';
+				$bindvars[] = $val;
+			}
+		}
+	}
         if ($initial) {
                 $mid = " where `pageName` like ?";
                 $mmid = $mid;
@@ -3440,6 +3454,9 @@ function add_pageview() {
 		$mid .= 'tl.`toPage` IS NULL and `ts`.page_id IS NULL';
 	}
 
+	if (!empty($join_bindvars)) {
+		$bindvars = empty($bindvars)? $join_bindvars : array_merge($join_bindvars, $bindvars);
+	}
 	$query = "select tp.* from `tiki_pages` as tp $join_tables $mid order by ".$this->convert_sortmode($sort_mode);
 	$query_cant = "select count(*) from `tiki_pages` as tp $join_tables $mid";
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
