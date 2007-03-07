@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.725 2007-03-07 15:15:46 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.726 2007-03-07 15:30:24 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3432,7 +3432,7 @@ function add_pageview() {
 	if (!empty($filter)) {
 		foreach ($filter as $type=>$val) {
 			if ($type == 'categId') {
-				$join_tables = " inner join `tiki_categorized_objects` as tco on (tco.`objId`= tp.`pageName` and tco.`type`= ?) inner join `tiki_category_objects` as tc on (tc.`catObjectId`=tco.`catObjectId` and tc.`categId`=?) ";
+				$join_tables = " inner join `tiki_objects` as tob on (tob.`itemId`= tp.`pageName` and tob.`type`= ?) inner join `tiki_category_objects` as tc on (tc.`catObjectId`=tob.`objectId` and tc.`categId`=?) ";
 				$join_bindvars = array('wiki page', $val);
 			} elseif ($type == 'lang') {
 				$mid .= empty($mid)? ' where ': ' and ';
