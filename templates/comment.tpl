@@ -4,12 +4,7 @@
 <table class="normal">
 {/if}
 
-{if $comments_style != 'commentStyle_headers'}
-  <tr>
-		<td class="heading forumuser">{tr}author{/tr}</td>
-		<td class="heading">{tr}message{/tr}</td>
-  </tr>
-{/if}  
+
 
   <tr>
 		{if $comments_style != 'commentStyle_headers'}
