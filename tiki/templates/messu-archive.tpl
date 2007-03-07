@@ -54,7 +54,7 @@
 </form>
 <br />
 
-<form action="messu-archive.php" method="post">
+<form action="messu-archive.php" method="post" name="form_messu_archive">
 <input type="hidden" name="offset" value="{$offset|escape}" />
 <input type="hidden" name="find" value="{$find|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
@@ -63,9 +63,13 @@
 <input type="hidden" name="priority" value="{$priority|escape}" />
 <input type="submit" name="delete" value="{tr}delete{/tr}" />
 <input type="submit" name="download" value="{tr}download{/tr}" />
+<script type="text/javascript">
+var CHECKBOX_LIST = [{section name=user loop=$items}'msg[{$items[user].msgId}]'{if not $smarty.section.user.last},{/if}{/section}];
+</script>
+
 <table class="normal" >
   <tr>
-    <td class="heading" >&nbsp;</td>
+    <td class="heading" ><input type="checkbox" name="checkall" onclick="checkbox_list_check_all('form_messu_archive',CHECKBOX_LIST,this.checked);" /></td>
     <td class="heading" width='18'>&nbsp;</td>
     <td class="heading" ><a class="tableheading" href="messu-archive.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_from_desc'}user_from_asc{else}user_from_desc{/if}">{tr}sender{/tr}</a></td>
     <td class="heading" ><a class="tableheading" href="messu-archive.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'subject_desc'}subject_asc{else}subject_desc{/if}">{tr}subject{/tr}</a></td>
