@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.74 2007-03-07 16:40:54 gillesm Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.75 2007-03-07 17:01:29 sylvieg Exp $ *}
 
 {if $forum_mode eq 'y'}
 <tr><td>
@@ -129,14 +129,7 @@
   </table>
  
     <table class="normal">
-{if $comments_style != 'commentStyle_headers'}
-  <tr>
-		<td class="heading forumuser">{tr}author{/tr}</td>
-		<td class="heading">{tr}message{/tr}</td>
-  </tr>
-{/if}  
 {if $comments_style != 'commentStyle_plain'}
-
 <tr>
 <td class="odd">
 {/if}
