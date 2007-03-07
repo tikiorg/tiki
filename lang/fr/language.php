@@ -981,6 +981,7 @@ $lang=Array(
 "cannot be found" => "ne peut pas être trouvé",
 "The copyright management feature is not enabled." => "La fonctionnalité copyright n'est pas activée.",
 "Copyright management" => "Gestion du copyright",
+"Copyright system"=>"Système de copyright",
 "You must supply all the information, including title and year." => "Vous devez fournir toutes les informations, y compris titre et année.",
 "Must specify actionId" => "actionId doit être spécifié",
 "You need to change chmod 'whelp' manually to 777" => "Vous devez faire manuellement un chmod 777 sur 'whelp'",

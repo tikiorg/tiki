@@ -218,7 +218,9 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
             {if $feature_help eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Help+System+Future+Concept" target="tikihelp" class="tikihelp" title="{tr}Help System{/tr}">{/if} {tr}Help System{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
     <td>&nbsp;</td> 
-    <td>&nbsp;</td> 
+    <td><input type="checkbox" name="feature_copyright"
+            {if $feature_copyright eq 'y'}checked="checked"{/if}/></td>
+    <td class="form"> {if $feature_copyright eq 'y'}<a href="{$helpurl}Copyright" target="tikihelp" class="tikihelp" title="{tr}Copyright System{/tr}">{/if} {tr}Copyright system{/tr} {if $feature_copyright eq 'y'}</a>{/if}</td> 
     <td>&nbsp;</td> 
 </tr>
 

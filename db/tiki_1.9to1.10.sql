@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.143 2007-02-21 11:54:19 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.144 2007-03-07 14:23:07 gillesm Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -54,6 +54,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_mytiki_task
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_mytiki_items', 'n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_mytiki_workflow', 'n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_tasks_maxRecords', '10');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_copyright', '10');
 
 
 # 2005-08-26 / 2005-09-31: mdavey: new table tiki_events for notificationlib / tikisignal
