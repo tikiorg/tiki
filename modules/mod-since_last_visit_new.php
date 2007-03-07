@@ -345,10 +345,9 @@ if ($tikilib->get_preference("feature_directory") == 'y') {
   $ret["items"]["users"]["cname"] = "slvn_users_menu";
   $query = "select `userId`, `login`, `registrationDate` from `users_users` where `registrationDate`>?";
   $result = $tikilib->query($query, array((int)$last));
-
   $count = 0;
   while ($res = $result->fetchRow()) {
-      $ret["items"]["users"]["list"][$count]["href"]  = "tiki-user_information.php?view_user=" . $res["userId"];
+      $ret["items"]["users"]["list"][$count]["href"]  = "tiki-user_information.php?userId=" . $res["userId"];
       $ret["items"]["users"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["registrationDate"]);
       $ret["items"]["users"]["list"][$count]["label"] = $res["login"]; 
       $count++;
