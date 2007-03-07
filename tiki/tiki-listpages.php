@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.35 2007-03-06 19:29:49 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.36 2007-03-07 15:15:46 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -122,14 +122,23 @@ if ( ! empty($multiprint_pages) ) {
 	
 	$smarty->assign_by_ref('offset', $offset);
 	
-	if (isset($_REQUEST["find"])) {
+	if (!empty($_REQUEST["find"])) {
 		$find = strip_tags($_REQUEST["find"]);
 	} else {
 		$find = '';
 	}
-	
 	$smarty->assign('find', $find);
 	
+	$filter = '';
+	if (!empty($_REQUEST['find_lang'])) {
+		$filter['lang'] = $_REQUEST['find_lang'];
+		$smarty->assign_by_ref('find_lang', $_REQUEST['find_lang']);
+	}
+	if (!empty($_REQUEST['find_categId'])) {
+		$filter['categId'] = $_REQUEST['find_categId'];
+		$smarty->assign_by_ref('find_categId', $_REQUEST['find_categId']);
+	}
+
 	if (isset($_REQUEST["initial"])) {
 		$initial = $_REQUEST["initial"];
 	} else {
@@ -147,7 +156,7 @@ if ( ! empty($multiprint_pages) ) {
 	
 	$smarty->assign('initials', split(' ','a b c d e f g h i j k l m n o p q r s t u v w x y z'));
 	// Get a list of last changes to the Wiki database
-	$listpages = $tikilib->list_pages($offset, $maxRecords, $sort_mode, $find, $initial, $exact_match, false, true, $listpages_orphans);
+	$listpages = $tikilib->list_pages($offset, $maxRecords, $sort_mode, $find, $initial, $exact_match, false, true, $listpages_orphans, $filter);
 	// If there're more records then assign next_offset
 	$cant_pages = ceil($listpages["cant"] / $maxRecords);
 	$smarty->assign_by_ref('cant_pages', $cant_pages);
@@ -164,6 +173,19 @@ if ( ! empty($multiprint_pages) ) {
 	
 	ask_ticket('list-pages');
 	
+	if ($feature_categories == 'y') {
+		global $categlib; include_once ('lib/categories/categlib.php');
+		$categories = $categlib->get_all_categories_ext();
+		$smarty->assign_by_ref('categories', $categories);
+	}
+	if ($feature_multilingual == 'y') {
+        $languages = array();
+        $languages = $tikilib->list_languages();
+        $smarty->assign_by_ref('languages', $languages);
+        $available_languages = unserialize($tikilib->get_preference("available_languages"));
+        $smarty->assign_by_ref('available_languages', $available_languages);
+	}
+
 	$ajaxlib->registerTemplate('tiki-listpages_content.tpl');
 	$ajaxlib->processRequests();
 	
