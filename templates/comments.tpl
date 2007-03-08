@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.77 2007-03-07 23:12:47 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.78 2007-03-08 17:12:01 gillesm Exp $ *}
 
 {if $forum_mode eq 'y'}
 <tr><td>
@@ -291,7 +291,7 @@
       	{tr}Comment{/tr}
       	{/if}
       </label><br /><br />{include file="textareasize.tpl" area_name='editpost2' formId='editpostform'}<br /><br />{if $quicktags}{include file=tiki-edit_help_tool.tpl area_name='editpost2'}{/if}</td>
-      <td class="formcolor"><textarea id="editpost2" name="comments_data" rows="{$rows}" cols="{$cols}">{$comment_data|escape}</textarea>
+      <td class="formcolor"><textarea id="editpost2" name="comments_data" rows="{$rows}" cols="{$cols}">{if $feature_forum_replyempty ne 'y' }{$comment_data|escape}{/if}</textarea>
 	<input type="hidden" name="rows" value="{$rows}"/>
 	<input type="hidden" name="cols" value="{$cols}"/>
       </td>
