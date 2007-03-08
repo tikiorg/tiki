@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_forums.php,v 1.13 2007-03-08 16:24:15 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_forums.php,v 1.14 2007-03-08 16:58:25 gillesm Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -22,6 +22,7 @@ if (isset($_REQUEST["forumprefs"])) {
 	check_ticket('admin-inc-forums');
 	simple_set_toggle('feature_forum_rankings');
 	simple_set_toggle('feature_forum_parse');
+	simple_set_toggle('feature_forum_replyempty');
 	simple_set_toggle('feature_forum_quickjump');
 	simple_set_toggle('feature_forum_topicd');
 	simple_set_value('forums_ordering');
