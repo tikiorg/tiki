@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.79 2007-02-12 12:57:13 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.80 2007-03-08 13:04:50 gillesm Exp $
 
 /**
  * Tiki registration script
@@ -9,7 +9,7 @@
  * @license GNU LGPL
  * @copyright Tiki Community
  * @date created: 2002/10/8 15:54
- * @date last-modified: $Date: 2007-02-12 12:57:13 $
+ * @date last-modified: $Date: 2007-03-08 13:04:50 $
  */
 
 // Initialization
@@ -212,38 +212,39 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
 		}
 
 		// save default user preferences
-		$tikilib->set_user_preference($_REQUEST["name"], 'theme', $style);
-		$tikilib->set_user_preference($_REQUEST["name"], 'userbreadCrumb', 4);
-		$tikilib->set_user_preference($_REQUEST["name"], 'language', $language);
-		$tikilib->set_user_preference($_REQUEST["name"], 'display_timezone', 'Local');
-		$tikilib->set_user_preference($_REQUEST["name"], 'user_information', 'private');
-		$tikilib->set_user_preference($_REQUEST["name"], 'user_dbl', 'n');
-		$tikilib->set_user_preference($_REQUEST["name"], 'diff_versions', 'n');
-		$tikilib->set_user_preference($_REQUEST["name"], 'show_mouseover_user_info', 'n');
-		$tikilib->set_user_preference($_REQUEST["name"], 'email is public', 'n');
-		$tikilib->set_user_preference($_REQUEST["name"], 'mailCharset', 'utf-8');
+		$tikilib->set_user_preference($_REQUEST["name"], 'theme', $tikilib->get_preference("style","tikineat.css"));
+		$tikilib->set_user_preference($_REQUEST["name"], 'userbreadCrumb', $tikilib->get_preference("users_prefs_userbreadCrumb",4));
+		$tikilib->set_user_preference($_REQUEST["name"], 'language',$tikilib->get_preference("langage","en-us"));
+		$tikilib->set_user_preference($_REQUEST["name"], 'display_timezone', $tikilib->get_preference("display_timezone","UTC"));
+		$tikilib->set_user_preference($_REQUEST["name"],'user_information',$tikilib->get_preference("users_prefs_user_information","private"));
+		$tikilib->set_user_preference($_REQUEST["name"], 'user_dbl',$tikilib->get_preference("users_prefs_user_dbl","on"));
+		$tikilib->set_user_preference($_REQUEST["name"], 'diff_versions',$tikilib->get_preference("users_prefs_diff_versions",'n'));
+		$tikilib->set_user_preference($_REQUEST["name"], 'show_mouseover_user_info',$tikilib->get_preference("users_prefs_show_mouseover_user_info",'y'));
+		$tikilib->set_user_preference($_REQUEST["name"], 'email is public',$tikilib->get_preference("users_prefs_email_is_public ",'n'));
+		$tikilib->set_user_preference($_REQUEST["name"], 'mailCharset', $tikilib->get_preference("users_prefs_mailCharset","utf-8"));
 		$tikilib->set_user_preference($_REQUEST["name"], 'realName', '');
 		$tikilib->set_user_preference($_REQUEST["name"], 'homePage', '');
 		$tikilib->set_user_preference($_REQUEST["name"], 'lat', floatval(0));
 		$tikilib->set_user_preference($_REQUEST["name"], 'lon', floatval(0));
 		$tikilib->set_user_preference($_REQUEST["name"], 'country', '');
-		$tikilib->set_user_preference($_REQUEST["name"], 'mess_maxRecords', 10);
-		$tikilib->set_user_preference($_REQUEST["name"], 'mess_archiveAfter', 0);
-		$tikilib->set_user_preference($_REQUEST["name"], 'mess_sendReadStatus', 'n');
-		$tikilib->set_user_preference($_REQUEST["name"], 'minPrio', 6);
-		$tikilib->set_user_preference($_REQUEST["name"], 'allowMsgs', (($allowmsg_by_default == 'y')?'y':'n'));
-		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_pages', 'n');
-		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_blogs', 'n');
-		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_gals', 'n');
-		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_msgs', 'n');
-		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_tasks', 'n');
-		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_items', 'n');
-		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_workflow', 'n');
-		$tikilib->set_user_preference($_REQUEST["name"], 'tasks_maxRecords', 10);
+		$tikilib->set_user_preference($_REQUEST["name"], 'mess_maxRecords',$tikilib->get_preference("users_prefs_mess_maxRecords",10));
+		$tikilib->set_user_preference($_REQUEST["name"], 'mess_archiveAfter', $tikilib->get_preference("users_prefs_mess_archiveAfter",0));
+		$tikilib->set_user_preference($_REQUEST["name"], 'mess_sendReadStatus', $tikilib->get_preference("users_prefs_mess_sendReadStatus",'n'));
+		$tikilib->set_user_preference($_REQUEST["name"], 'minPrio',$tikilib->get_preference("users_prefs_minPrio",6));
+		$tikilib->set_user_preference($_REQUEST["name"], 'allowMsgs', $tikilib->get_preference("users_prefs_allowMsgs",'y'));
+		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_pages', $tikilib->get_preference("users_prefs_mytiki_pages",'n'));
+		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_blogs',$tikilib->get_preference("users_prefs_mytiki_blogs", 'n'));
+		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_gals', $tikilib->get_preference("users_prefs_mytiki_gals",'n'));
+		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_msgs', $tikilib->get_preference("users_prefs_mytiki_msgs",'n'));
+		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_tasks', $tikilib->get_preference("users_prefs_mytiki_tasks",'n'));
+		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_items', $tikilib->get_preference("users_prefs_mytiki_items",'n'));
+		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_workflow', $tikilib->get_preference("users_prefs_mytiki_workflow",'n'));
+		$tikilib->set_user_preference($_REQUEST["name"], 'tasks_maxRecords', $tikilib->get_preference("users_prefs_tasks_maxRecords",10));
 
 		// Custom fields
 		foreach ($customfields as $custpref=>$prefvalue ) {
-		    //print $_REQUEST[$customfields[$custpref]['prefName']];
+	            
+		    
 		    if (isset($_REQUEST[$customfields[$custpref]['prefName']]))
 				$tikilib->set_user_preference($_REQUEST["name"], $customfields[$custpref]['prefName'], $_REQUEST[$customfields[$custpref]['prefName']]);
 		}
