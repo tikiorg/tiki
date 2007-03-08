@@ -392,7 +392,7 @@ class SearchLib extends TikiLib {
  		return $this->_find($search_images, $words, $offset, $maxRecords, $fulltext);
 	}
 
-	function find_forums($words = '', $offset = 0, $maxRecords = -1, $fulltext = false) {
+	function find_forums($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='') {
 		$search_forums = array(
 			'from' => '`tiki_comments` c, `tiki_forums` f',
 			'name' => 'c.`title`',
@@ -409,6 +409,9 @@ class SearchLib extends TikiLib {
 			'objectType' => 'forum',
 			'objectKey' => 'f.`forumId`',
 		);
+		if (!empty($filter) && !empty($filter['forumId'])) {
+			$search_forums['filter'] .= ' AND f.forumId='.$filter['forumId'];
+		}
 
 		return $this->_find($search_forums, $words, $offset, $maxRecords, $fulltext);
 	}
