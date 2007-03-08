@@ -106,6 +106,7 @@ INSERT INTO tiki_preferences VALUES ('feature_file_galleries_comments','n');
 INSERT INTO tiki_preferences VALUES ('feature_file_galleries','n');
 INSERT INTO tiki_preferences VALUES ('feature_file_galleries_rankings','n');
 INSERT INTO tiki_preferences VALUES ('feature_forum_parse','n');
+INSERT INTO tiki_preferences VALUES ('feature_forum_replyempty','n');
 INSERT INTO tiki_preferences VALUES ('feature_forum_quickjump','n');
 INSERT INTO tiki_preferences VALUES ('feature_forum_rankings','y');
 INSERT INTO tiki_preferences VALUES ('feature_forums','n');

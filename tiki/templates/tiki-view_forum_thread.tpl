@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.74 2007-01-15 11:39:20 xavidp Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.75 2007-03-08 17:12:01 gillesm Exp $ *}
 
 <h1><a href="tiki-view_forum.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forum_info.forumId}" class="pagetitle">{tr}Forum{/tr}: {$forum_info.name}</a></h1>
 
@@ -73,7 +73,7 @@ a moderator approves it.{/tr}</small>
 	  
 	  
 	{if $tiki_p_forum_post eq 'y'}
-		<a class="linkbut" href="#form">{tr}reply{/tr}</a>
+		<a class="linkbut" href="#form">{tr}reply eheh{/tr}</a>
 	{/if}
 
   </td>

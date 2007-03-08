@@ -3893,6 +3893,7 @@ $lang=Array(
 "Forums features" => "Fonctionnalités des forums",
 "Accept wiki syntax" => "Accepter la syntaxe Wiki",
 "Forum quick jumps" => "Aller directement au forum",
+"Reply posts are empty" => "Ne pas mettre de citation dans les réponses",
 "Ordering for forums in the forum listing" => "Ordre des forums dans la liste",
 "Creation Date (desc)" => "Date de création (desc)",
 "Topics (desc)" => "Sujets (desc)",
