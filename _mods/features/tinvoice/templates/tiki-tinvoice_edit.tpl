@@ -1,5 +1,5 @@
 <h1>
- <a href="tiki-edit-invoice.php" class="pagetitle">
+ <a href="tiki-tinvoice_edit.php" class="pagetitle">
  {if $invoiceId > 0}
   {tr}Edit Invoice{/tr}
  {else}

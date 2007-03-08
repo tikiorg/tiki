@@ -1,4 +1,7 @@
 <h1><a href="tiki-tinvoice_list.php" class="pagetitle">{tr}Invoices{/tr}</a></h1>
+{if $tiki_p_admin eq 'y'}
+<div class="navbar"><a class="linkbut" href="tiki-tinvoice_edit.php">{tr}create new invoice{/tr}</a></div>
+{/if}
 <a href='tiki-tinvoice_list.php?id_emitter={$me_tikiid}'>Factures Clients</a>&nbsp;&nbsp;&nbsp;
 <a href='tiki-tinvoice_list.php?id_receiver={$me_tikiid}'>Factures Fournisseurs</a>&nbsp;&nbsp;&nbsp;
 
