@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.73 2007-01-09 17:17:10 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.74 2007-03-08 16:44:45 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -22,6 +22,14 @@
 
 </td>
 <td style="text-align:right;">
+{if $feature_forum_local_search eq 'y' or $feature_forum_local_tiki_search eq 'y'}
+<form  class="forms" method="get" action="{if $feature_forum_local_tiki_search eq 'y'}tiki-searchindex.php{else}tiki-searchresults.php{/if}">
+<input id="fuser" name="highlight" size="14" type="text" accesskey="s" />
+<input type="hidden" name="where" value="forums" />
+<input type="hidden" name="forumId" value={$forum_info.forumId} />
+<input type="submit" class="wikiaction" name="search" value="{tr}Find{/tr}"/>
+</form>
+{/if}
 {if $rss_forum eq 'y'}
 <a href="tiki-forum_rss.php?forumId={$forumId}"><img src='img/rss.png' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' /></a>
 {/if}
