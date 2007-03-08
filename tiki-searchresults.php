@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-searchresults.php,v 1.37 2007-03-06 19:29:51 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-searchresults.php,v 1.38 2007-03-08 16:24:15 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -36,6 +36,7 @@ if (!isset($_REQUEST["where"])) {
 $find_where='find_'.$where;
 $smarty->assign('where',$where);
 $smarty->assign('where2',tra($where));
+$filter = array();
 
 if($where=='wikis') {
   if ($feature_wiki != 'y') {
@@ -81,6 +82,9 @@ if($where=='forums') {
 		$smarty->assign('msg',tra("You do not have permission to use this feature"));
 		$smarty->display("error.tpl");
 	  die;
+  }
+  if (!empty($_REQUEST['forumId'])) {
+	$filter['forumId'] = $_REQUEST['forumId'];
   }
 }
 
@@ -140,7 +144,7 @@ if ((!isset($_REQUEST["words"])) || (empty($_REQUEST["words"]))) {
 	$smarty->assign('words', '');
 } else {
 	$words = strip_tags($_REQUEST["words"]);
-	$results = $searchlib->$find_where($words, $offset, $maxRecords, $fulltext);
+	$results = $searchlib->$find_where($words, $offset, $maxRecords, $fulltext, $filter);
 
 	$smarty->assign('words', $words);
 }

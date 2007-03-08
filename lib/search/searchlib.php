@@ -1,5 +1,5 @@
 <?php
-// $Id: searchlib.php,v 1.33 2007-02-09 12:31:35 niclone Exp $
+// $Id: searchlib.php,v 1.34 2007-03-08 16:24:18 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -32,9 +32,9 @@ class SearchLib extends TikiLib {
 		}
 	}
 
-	function find($where,$words,$offset, $maxRecords) {
-	  $exact=$this->find_exact($where,$words,$offset, $maxRecords);
-	  $part=$this->find_part($where,$words,$offset, $maxRecords);
+	function find($where,$words,$offset, $maxRecords, $fulltext='', $filter='') {
+	  $exact=$this->find_exact($where,$words,$offset, $maxRecords, $filter);
+	  $part=$this->find_part($where,$words,$offset, $maxRecords, $filter);
           if (count($part)) foreach ($part["data"] as $p) {
             $same = false;
             foreach ($exact["data"] as $e) {
@@ -56,7 +56,7 @@ class SearchLib extends TikiLib {
 	}
 
 
-        function find_part($where,$words,$offset, $maxRecords) {
+        function find_part($where,$words,$offset, $maxRecords, $filter='') {
           $words=preg_split("/[\s]+/",$words,-1,PREG_SPLIT_NO_EMPTY);
           if (count($words)>0) {
           switch($where) {
@@ -64,7 +64,7 @@ class SearchLib extends TikiLib {
               return $this->find_part_wiki($words,$offset, $maxRecords);
               break;
             case "forums":
-              return $this->find_part_forums($words,$offset, $maxRecords);
+              return $this->find_part_forums($words,$offset, $maxRecords, $filter);
               break;
             case "articles":
               return $this->find_part_articles($words,$offset, $maxRecords);
@@ -198,8 +198,8 @@ class SearchLib extends TikiLib {
                 return $this->find_exact_articles($this->get_wordlist_from_syllables($words),$offset, $maxRecords);
         }
 
-        function find_part_forums($words,$offset, $maxRecords) {
-                return $this->find_exact_forums($this->get_wordlist_from_syllables($words),$offset, $maxRecords);
+        function find_part_forums($words,$offset, $maxRecords, $filter='') {
+                return $this->find_exact_forums($this->get_wordlist_from_syllables($words),$offset, $maxRecords, $filter);
         }
 
         function find_part_blogs($words,$offset, $maxRecords) {
@@ -340,7 +340,7 @@ class SearchLib extends TikiLib {
           return ($res);
         }
 
-	function find_exact($where,$words,$offset, $maxRecords) {
+		function find_exact($where,$words,$offset, $maxRecords, $filter='') {
 	  $words=preg_split("/[\s]+/",$words,-1,PREG_SPLIT_NO_EMPTY);
 	  if (count($words)>0) {
 	  switch($where) {
@@ -348,7 +348,7 @@ class SearchLib extends TikiLib {
 	      return $this->find_exact_wiki($words,$offset, $maxRecords);
 	      break;
 	    case "forums":
-	      return $this->find_exact_forums($words,$offset, $maxRecords);
+	      return $this->find_exact_forums($words,$offset, $maxRecords, $filter);
 	      break;
 	    case "articles":
 	      return $this->find_exact_articles($words,$offset, $maxRecords);
@@ -922,17 +922,24 @@ class SearchLib extends TikiLib {
         }
 
 
-        function find_exact_forums($words,$offset, $maxRecords) {
+        function find_exact_forums($words,$offset, $maxRecords, $filter='') {
           global $feature_forums;
 	  global $user;
           if ($feature_forums== 'y'  && count($words) >0) {
+			$bindvars = $words;
+			if (!empty($filter) && !empty($filter['forumId'])) {
+				$mid = ' and f.`forumId`=? ';
+				$bindvars[] = $filter['forumId'];
+			} else {
+				$mid = '';
+			}
             $query="select distinct s.`page`, s.`location`, s.`last_update`, s.`count`,
                 f.`description`,f.`hits`,f.`lastPost`,f.`name` from
                 `tiki_searchindex` s, `tiki_forums` f where `searchword` in
                 (".implode(',',array_fill(0,count($words),'?')).") and
                 s.`location`='forum' and
-                ".$this->sql_cast("s.`page`","int")."=f.`forumId` order by `hits` desc";
-            $result=$this->query($query,$words,$maxRecords,$offset);
+                ".$this->sql_cast("s.`page`","int")."=f.`forumId` $mid order by `hits` desc";
+            $result=$this->query($query,$bindvars,$maxRecords,$offset);
             $cant=0;
             $ret=array();
             while ($res = $result->fetchRow()) {
@@ -950,25 +957,32 @@ class SearchLib extends TikiLib {
               );
 	     }
             }
-            $fcommres=$this->find_exact_forumcomments($words,$offset, $maxRecords);
+            $fcommres=$this->find_exact_forumcomments($words,$offset, $maxRecords, $filter);
             return array('data' => array_merge($ret,$fcommres["data"]),'cant' => $cant+$fcommres["cant"]);
           } else {
             return array('data' => array(),'cant' => 0);
           }
         }
 
-	function find_exact_forumcomments($words,$offset, $maxRecords) {
+	function find_exact_forumcomments($words,$offset, $maxRecords, $filter) {
 	  global $feature_forums;
 	  global $user;
 	  if ($feature_forums == 'y'  && count($words) >0) {
+	  $bindvars = $words;
+	  if (!empty($filter) && !empty($filter['forumId'])) {
+		$mid = ' and fo.`forumId`=? ';
+		$bindvars[] = $filter['forumId'];
+	  } else {
+		$mid = '';
+	  }
 	  $query="select distinct s.`page`, s.`location`, s.`last_update`, s.`count`,
 	  	f.`data`,f.`hits`,f.`commentDate`,f.`object`,f.`title`,fo.`name` from
 		`tiki_searchindex` s, `tiki_comments` f,`tiki_forums` fo where `searchword` in
 		(".implode(',',array_fill(0,count($words),'?')).") and
 		s.`location`='forumcomment' and
 		".$this->sql_cast("s.`page`","int")."=f.`threadId` and
-		fo.`forumId`=".$this->sql_cast("f.`object`","int")." order by `count` desc";
-	  $result=$this->query($query,$words,$maxRecords,$offset);
+		fo.`forumId`=".$this->sql_cast("f.`object`","int")." $mid order by `count` desc";
+	  $result=$this->query($query,$bindvars,$maxRecords,$offset);
 	  $cant=0;
 	  $ret=array();
 	  while ($res = $result->fetchRow()) {
