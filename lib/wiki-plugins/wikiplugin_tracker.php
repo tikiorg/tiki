@@ -1,12 +1,12 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.61 2007-02-25 22:17:57 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.62 2007-03-08 18:13:01 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
 
 function wikiplugin_tracker_help() {
 	$help = tra("Displays an input form for tracker submit").":\n";
-	$help.= "~np~{TRACKER(trackerId=>1, fields=>id1:id2:id3, action=>Name of submit button, showtitle=>y|n, showdesc=>y|n, showmandatory=>y|n, embedded=>y|n)}Notice{TRACKER}~/np~";
+	$help.= "~np~{TRACKER(trackerId=>1, fields=>id1:id2:id3, action=>Name of submit button, showtitle=>y|n, showdesc=>y|n, showmandatory=>y|n, embedded=>y|n, url=\"http://site.com\")}Notice{TRACKER}~/np~";
 	return $help;
 }
 function wikiplugin_tracker_name($fieldId, $name, $field_errors) {
@@ -211,15 +211,19 @@ function wikiplugin_tracker($data, $params) {
 						$mail->setHeader('From', $emailOptions[0]);
 						$mail->send($emailOptions[1]);
 					}
-					if (!empty($page)) {
-						$url = "tiki-index.php?page=".urlencode($page)."&ok=y&trackit=$trackerId";
-						if (!empty($params['fields']))
-							$url .= "&fields=".urlencode($params['fields']);
+					if (empty($url)) {
+						if (!empty($page)) {
+							$url = "tiki-index.php?page=".urlencode($page)."&ok=y&trackit=$trackerId";
+							if (!empty($params['fields']))
+								$url .= "&fields=".urlencode($params['fields']);
+							header("Location: $url");
+							die;
+						} else {
+							return '';
+						}
+					} else {
 						header("Location: $url");
 						die;
-					// return "<div>$data</div>";
-					} else {
-						return '';
 					}
 				} elseif (isset($_REQUEST['trackit']) and $_REQUEST['trackit'] == $trackerId) {
 					$smarty->assign('wikiplugin_tracker', $trackerId);//used in vote plugin
