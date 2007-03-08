@@ -2,10 +2,10 @@ contributor:
 $Author: niclone $
 
 revision:
-$Revision: 1.4 $
+$Revision: 1.5 $
 
 lastmodif:
-$Date: 2007-03-08 17:52:25 $
+$Date: 2007-03-08 18:22:41 $
 
 files: 
 features/tinvoice/tiki-tinvoice_edit.php tiki-tinvoice_edit.php
@@ -22,7 +22,7 @@ CREATE TABLE if not exists `tiki_tinvoice_infos` ( `id` int(11) NOT NULL auto_in
 CREATE TABLE if not exists `tiki_tinvoice_items` ( `id` int(11) NOT NULL auto_increment, `id_invoice` int(11) NOT NULL, `ref` varchar(32) NOT NULL, `designation` varchar(256) NOT NULL, `quantity` int(11) NOT NULL, `unitprice` decimal(12,2) NOT NULL, `vat` decimal(5,2) NOT NULL, PRIMARY KEY  (`id`), KEY `id_invoices` (`id_invoice`));
 CREATE TABLE if not exists `tiki_tinvoice_prefs` ( `id` int(11) NOT NULL auto_increment, `userId` int(11) NOT NULL, `key` varchar(32) NOT NULL, `value` varchar(256) NOT NULL, PRIMARY KEY  (`id`), KEY `userId` (`userId`));
 CREATE TABLE if not exists `tiki_tinvoice_tva` ( `id` int(11) NOT NULL auto_increment, `value` double NOT NULL, PRIMARY KEY  (`id`));
-INSERT IGNORE INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES ('42','o','My Invoices','tiki-tinvoice_list.php',98,'','','');
+INSERT IGNORE INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES ('42','o','My Invoices','tiki-tinvoice_list.php',98,'','','Registered');
 
 sql-remove:
 drop table if exists tiki_tinvoice_tva;
@@ -30,6 +30,7 @@ drop table if exists tiki_tinvoice_prefs;
 drop table if exists tiki_tinvoice_infos;
 drop table if exists tiki_tinvoice_items;
 drop table if exists tiki_tinvoice;
+delete from tiki_menu_options WHERE menuId='42' AND position='98' AND name='My Invoices';
 
 author:
 Nicolas Dimitrijevic
