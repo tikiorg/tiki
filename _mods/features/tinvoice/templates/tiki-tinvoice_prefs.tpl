@@ -30,6 +30,32 @@
 <input  type="checkbox" name="invoice_paiement_modes[0]"   value="3"  />Prelevement 
     </td>
   </tr>
+  <tr id='tr_invoice_cheque' style='display: none;'>
+      <td><input type='button' value='-' onClick='show_hide_line("invoice_cheque", 0);'></td>
+    <th>Paiement Note</th>
+    <td><textarea  name="invoice_cheque" cols="30" rows="5" >{$invoice_cheque}</textarea><td>
+  </tr>
+
+  <tr id='tr_invoice_emitter_rib' style='display: none;'>
+    <td><input type='button' value='-' onClick='show_hide_line("invoice_emitter_rib", 0);'></td>
+    <th>RIB</th>
+    <td>
+      <table>
+	<tr><th>domiciliation:</th><td><input type="text" size="16" name="invoice_emitter_rib[0]" value="{$invoice_emitter_rib[0]|escape}" /></td></tr>
+	<tr><th>code banque:</th><td><input type="text" size="16" name="invoice_emitter_rib[1]" value="{$invoice_emitter_rib[1]|escape}" /></td></tr>
+	<tr><th>code guichet:</th><td><input type="text" size="16" name="invoice_emitter_rib[2]" value="{$invoice_emitter_rib[2]|escape}" /></td></tr>
+	<tr><th>numero compte:</th><td><input type="text" size="16" name="invoice_emitter_rib[3]" value="{$invoice_emitter_rib[3]|escape}" /></td></tr>
+	<tr><th>clé RIB:</th><td><input type="text" size="16" name="invoice_emitter_rib[4]" value="{$invoice_emitter_rib[4]|escape}" /></td></tr>
+	<tr><th>IBAN:</th><td><input type="text" size="16" name="invoice_emitter_rib[5]" value="{$invoice_emitter_rib[5]|escape}" /></td></tr>
+	<tr><th>BIC:</th><td><input type="text" size="16" name="invoice_emitter_rib[6]" value="{$invoice_emitter_rib[6]|escape}" /></td></tr>
+      </table>
+    <td>
+  </tr>
+  <tr id='tr_invoice_cb' style='display: none;'>
+      <td><input type='button' value='-' onClick='show_hide_line("invoice_cb", 0);'></td>
+    <th>Paiement Url</th>
+    <td><input  name="invoice_cb" size="50"  value="{$invoice_cb|escape}" /></td>
+  </tr>
   <tr id='tr_invoice_emitter_address' style='display: none;'>
     <td><input type='button' value='-' onClick='show_hide_line("invoice_emitter_address", 0);'></td>
     <th>Adresse</th>
@@ -50,21 +76,7 @@
 	</tr>
       </table>
     </tr>
-  <tr id='tr_invoice_emitter_rib' style='display: none;'>
-    <td><input type='button' value='-' onClick='show_hide_line("invoice_emitter_rib", 0);'></td>
-    <th>RIB</th>
-    <td>
-      <table>
-	<tr><th>domiciliation:</th><td><input type="text" size="16" name="invoice_emitter_rib[0]" value="{$invoice_emitter_rib[0]|escape}" /></td></tr>
-	<tr><th>code banque:</th><td><input type="text" size="16" name="invoice_emitter_rib[1]" value="{$invoice_emitter_rib[1]|escape}" /></td></tr>
-	<tr><th>code guichet:</th><td><input type="text" size="16" name="invoice_emitter_rib[2]" value="{$invoice_emitter_rib[2]|escape}" /></td></tr>
-	<tr><th>numero compte:</th><td><input type="text" size="16" name="invoice_emitter_rib[3]" value="{$invoice_emitter_rib[3]|escape}" /></td></tr>
-	<tr><th>clé RIB:</th><td><input type="text" size="16" name="invoice_emitter_rib[4]" value="{$invoice_emitter_rib[4]|escape}" /></td></tr>
-	<tr><th>IBAN:</th><td><input type="text" size="16" name="invoice_emitter_rib[5]" value="{$invoice_emitter_rib[5]|escape}" /></td></tr>
-	<tr><th>BIC:</th><td><input type="text" size="16" name="invoice_emitter_rib[6]" value="{$invoice_emitter_rib[6]|escape}" /></td></tr>
-      </table>
-    <td>
-  </tr>
+  
   <tr id='tr_invoice_emitter_tvanumber' style='display: none;'>
     <td><input type='button' value='-' onClick='show_hide_line("invoice_emitter_tvanumber", 0);'></td>
     <th>N°TVA intracomunautaire</th>
@@ -113,9 +125,11 @@
   <option id='option_invoice_vat_rates' value='invoice_vat_rates'>VAT rates</option>
   <option id='option_invoice_currency' value='invoice_currency'>Currency</option>
   <option id='option_invoice_paiement_modes' value='invoice_paiement_modes'>Paiements</option>
+  <option id='option_invoice_cheque' value='invoice_cheque'>cheque note</option>
+  <option id='option_invoice_emitter_rib' value='invoice_emitter_rib'>RIB</option>
+  <option id='option_invoice_cb' value='invoice_cb'>CB Url</option>
   <option id='option_invoice_emitter_address' value='invoice_emitter_address'>Adresse</option>
   <option id='option_invoice_image' value='invoice_image'>Image</option>
-  <option id='option_invoice_emitter_rib' value='invoice_emitter_rib'>RIB</option>
   <option id='option_invoice_emitter_tvanumber' value='invoice_emitter_tvanumber'>N° TVA intra</option>
   <option id='option_invoice_footer' value='invoice_footer'>Pied de page</option>
   <option id='option_invoice_custom0' value='invoice_custom0'>Custom 0</option>
