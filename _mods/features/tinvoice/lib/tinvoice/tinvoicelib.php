@@ -123,17 +123,16 @@ class TinvoiceLib extends TikiLib {
 					$iban, $bic) {
 	return "$domiciliation\x01$code_banque\x01$code_guichet\x01$numero_compte\x01$cle_rib\x01$iban\x01$bic";
     }
+
     /*public*/ function get_pref_list($FieldName) {
-    	
 	 $FieldValue=tinvoiceLib::fromdb_list($this->get_pref($FieldName));
 	 $list=explode("\x01",$FieldValue);
 	 return	$list;
     }
     
     /*public*/ function set_pref_list($FieldName,$list) {
-    	$FieldValue=implode("\x01",$list);
 	$this->set_pref($FieldName,
-			tinvoiceLib::todb_list($FieldValue));
+			tinvoiceLib::todb_list($list));
     }
 
     /*protected static*/ function fromdb_list($FieldName,$FieldValue) {
@@ -142,8 +141,8 @@ class TinvoiceLib extends TikiLib {
 	return $list;
     }
     
-    /*protected static*/ function todb_list($FieldName,$FieldValue) {
-    	
+    /*protected static*/ function todb_list($FieldName,$list) {
+    	$FieldValue=implode("\x01",$list);
 	return $FieldValue;
     }
 }
