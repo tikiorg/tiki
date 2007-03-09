@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.144 2007-03-07 14:23:07 gillesm Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.145 2007-03-09 19:01:22 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -857,3 +857,6 @@ ALTER TABLE `tiki_webmail_contacts_ext` DROP COLUMN `name`;
 
 #xavi/sylvie 2007-02-21
 ALTER TABLE tiki_searchindex ADD KEY location(location(50), page(200));
+
+#sylvieg 03/09/078
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_tell_a_friend', 'Can send a link to a friend', 'Basic', 'tiki');

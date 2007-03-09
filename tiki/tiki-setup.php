@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.405 2007-03-08 16:58:25 gillesm Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.406 2007-03-09 19:01:20 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -1092,6 +1092,9 @@ $pref['feature_experimental'] = 'n';
 $pref['feature_actionlog'] = 'y';
 $pref['siteTitle'] = '';
 $pref['tmpDir'] = 'temp';
+
+# tell a friend
+$pref['feature_tell_a_friend'] = 'n';
 
 # unsorted features
 $pref['anonCanEdit'] = 'n';

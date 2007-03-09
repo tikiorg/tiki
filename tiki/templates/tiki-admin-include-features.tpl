@@ -73,8 +73,8 @@
     <td><input type="checkbox" name="feature_polls" {if $feature_polls eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Polls" target="tikihelp" class="tikihelp" title="{tr}Polls{/tr}">{/if} {tr}Polls{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
     <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
+    <td><input type="checkbox" name="feature_tell_a_friend" {if $feature_tell_a_friend eq 'y'}checked="checked"{/if}/></td>
+    <td class="form">{if $feature_help eq 'y'}<a href="{$helpurl}Tell+a+Friend" target="tikihelp" class="tikihelp" title="{tr}Tell a Friend{/tr}">{/if} {tr}Tell a Friend{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
     </tr>
   <tr>
     <td><input type="checkbox" name="feature_quizzes" {if $feature_quizzes eq 'y'}checked="checked"{/if}/></td>
