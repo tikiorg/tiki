@@ -3,6 +3,33 @@
 <form id='invoiceprefsform' method='POST' action='tiki-tinvoice_prefs.php'>
 <table>
   <tr><th>-</th><th>Field</th><th>Value</th></tr>
+  <tr id='tr_invoice_vat_rates' style='display: none;'>
+    <td><input type='button' value='-' onClick='show_hide_line("invoice_vat_rates", 0);'></td>
+    <th>Vat Rates values</th>
+    <td><input  name="invoice_vat_rates" size="50"  value="{$invoice_vat_rates|escape}" /><td>
+  </tr>
+  <tr id='tr_invoice_currency' style='display: none;'>
+    <td><input type='button' value='-' onClick='show_hide_line("invoice_currency", 0);'></td>
+    <th>Currency</th>
+    <td><table>
+    	<tr>
+    	<th>Currency Symbol</th>
+    	<td><input  name="invoice_currency_symbol" size="3"  value="{$invoice_currency_symbol|escape}" /></td>
+    	</tr>
+    	<tr>
+    	<th>Currency Name</th>
+    	<td><input  name="invoice_currency_name" size="30"  value="{$invoice_currency_name|escape}" /></td>
+  	</tr></table></td>
+  </tr>
+  <tr id='tr_invoice_paiement_modes' style='display: none;'>
+    <td><input type='button' value='-' onClick='show_hide_line("invoice_paiement_modes", 0);'></td>
+    <th>Paiements Modes</th>
+    <td><input  type="checkbox" name="invoice_paiement_modes[0]"   value="0"  /> Cheque
+<input  type="checkbox" name="invoice_paiement_modes[1]"   value="1"  />Virement
+<input  type="checkbox" name="invoice_paiement_modes[2]"   value="2"  />CB
+<input  type="checkbox" name="invoice_paiement_modes[0]"   value="3"  />Prelevement 
+    </td>
+  </tr>
   <tr id='tr_invoice_emitter_address' style='display: none;'>
     <td><input type='button' value='-' onClick='show_hide_line("invoice_emitter_address", 0);'></td>
     <th>Adresse</th>
@@ -83,6 +110,9 @@
 </table>
 <select id='myselect' onchange='select_change();'>
   <option id='option_none' value='none' disabled selected>Choisissez...</option>
+  <option id='option_invoice_vat_rates' value='invoice_vat_rates'>VAT rates</option>
+  <option id='option_invoice_currency' value='invoice_currency'>Currency</option>
+  <option id='option_invoice_paiement_modes' value='invoice_paiement_modes'>Paiements</option>
   <option id='option_invoice_emitter_address' value='invoice_emitter_address'>Adresse</option>
   <option id='option_invoice_image' value='invoice_image'>Image</option>
   <option id='option_invoice_emitter_rib' value='invoice_emitter_rib'>RIB</option>
