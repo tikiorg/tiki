@@ -417,9 +417,10 @@ class ModsLib {
 function newer($a,$b) {
 	$aa = split('\.',$a);
 	$bb = split('\.',$b);
-	for($i=0;$i<count($aa);$i++) {
+	for($i=0;$i<max(count($aa), count($bb));$i++) {
 		if (!isset($bb[$i])) { $bb[$i] = '0'; }
-		if ($aa[$i] != $bb[$i]) { return strcmp($aa[$i],$bb[$i]); }
+		if (!isset($aa[$i])) { $aa[$i] = '0'; }
+		if ($aa[$i] != $bb[$i]) { return $aa[$i] > $bb[$i]? 1: -1; }
 	} 
 	return 0;
 } 
