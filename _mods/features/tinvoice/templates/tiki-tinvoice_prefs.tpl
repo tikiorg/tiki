@@ -1,4 +1,5 @@
 <h1><a hField="tiki-tinvoice_prefs.php" class="pagetitle">{tr}Format Invoice{/tr}</a></h1>
+<div class="navbar"><a class="linkbut" href="tiki-tinvoice_list.php">{tr}Back to invoices list{/tr}</a></div>
 <form id='invoiceprefsform' method='POST' action='tiki-tinvoice_prefs.php'>
 <table>
   <tr><th>-</th><th>Field</th><th>Value</th></tr>
