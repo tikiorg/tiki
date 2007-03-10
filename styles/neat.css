@@ -484,6 +484,7 @@ FORM {
 
 /* General form elements */
 input, textarea, select {
+	background-color: white;
 	color:    #000000;
 	font-family:   Verdana, Arial, Helvetica, sans-serif;
 	font-size: 10px;
