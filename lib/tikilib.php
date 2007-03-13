@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.726 2007-03-07 15:30:24 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.727 2007-03-13 16:50:10 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3445,7 +3445,6 @@ function add_pageview() {
                 $mid = " where `pageName` like ?";
                 $mmid = $mid;
                 $bindvars = array($initial.'%');
-                $mbindvars = $bindvars;
 	}
 
 	if ( $only_orphan_pages ) {
@@ -3461,8 +3460,7 @@ function add_pageview() {
 	$query_cant = "select count(*) from `tiki_pages` as tp $join_tables $mid";
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
 
-	if ($initial) $cant = $this->getOne($query_cant,$mbindvars);
-	else $cant = $this->getOne($query_cant,$bindvars);
+	$cant = $this->getOne($query_cant,$bindvars);
 
 	$ret = array();
 	while ($res = $result->fetchRow()) {
