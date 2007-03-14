@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-siteid.tpl,v 1.8 2007-03-14 12:59:22 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-siteid.tpl,v 1.9 2007-03-14 13:57:29 pkdille Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -141,10 +141,8 @@
                                         align="center">{tr}Bottom logo{/tr}</td>
 				</tr>
 				<tr>
-					<td class="form"><label
-                                        for="feature_bot_logo">&nbsp;&nbsp;{tr}Bottom
-                                          logo{/tr}:</label></td>
-					<td><input type="checkbox" name="feature_bot_logo" id="sitead_publish"{if $feature_bot_logo eq 'y'} checked="checked"{/if} /></td>
+					<td class="form"><label for="feature_bot_logo">&nbsp;&nbsp;{tr}Bottom logo{/tr}:</label></td>
+                                          <td><input type="checkbox" name="feature_bot_logo" id="sitead_publish"{if $feature_bot_logo eq 'y'} checked="checked"{/if} /></td>
 				</tr>
 
 				<tr>
