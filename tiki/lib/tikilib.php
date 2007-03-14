@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.728 2007-03-14 15:07:00 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.729 2007-03-14 19:50:42 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3434,12 +3434,14 @@ function add_pageview() {
 	if (!empty($filter)) {
 		foreach ($filter as $type=>$val) {
 			if ($type == 'categId') {
-				$join_tables = " inner join `tiki_objects` as tob on (tob.`itemId`= tp.`pageName` and tob.`type`= ?) inner join `tiki_category_objects` as tc on (tc.`catObjectId`=tob.`objectId` and tc.`categId`=?) ";
+				$join_tables .= " inner join `tiki_objects` as tob on (tob.`itemId`= tp.`pageName` and tob.`type`= ?) inner join `tiki_category_objects` as tc on (tc.`catObjectId`=tob.`objectId` and tc.`categId`=?) ";
 				$join_bindvars = array('wiki page', $val);
 			} elseif ($type == 'lang') {
 				$mid .= empty($mid)? ' where ': ' and ';
 				$mid .= '`lang`=? ';
 				$bindvars[] = $val;
+			} elseif ($type == 'structHead') {
+				$join_tables .= " inner join `tiki_structures` as ts on (ts.`page_id` = tp.`page_id` and ts.`parent_id` = 0) ";
 			}
 		}
 	}
@@ -3463,6 +3465,7 @@ function add_pageview() {
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
 
 	$cant = $this->getOne($query_cant,$bindvars);
+print_r($query);
 
 	$ret = array();
 	while ($res = $result->fetchRow()) {

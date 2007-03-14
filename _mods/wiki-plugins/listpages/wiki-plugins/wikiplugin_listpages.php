@@ -1,7 +1,7 @@
 <?php
-// $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/listpages/wiki-plugins/wikiplugin_listpages.php,v 1.1 2007-03-13 17:36:39 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/listpages/wiki-plugins/wikiplugin_listpages.php,v 1.2 2007-03-14 19:49:58 sylvieg Exp $
 function wikiplugin_listpages_help() {
-	return tra("List pages.")."<br />~np~{LISTPAGES(initial=txt,showNameOnly=y,categId=id)}{LISTPAGES}~/np~";
+	return tra("List pages.")."<br />~np~{LISTPAGES(initial=txt,showNameOnly=y,categId=id,structHead=y)}{LISTPAGES}~/np~";
 }
 function wikiplugin_listpages($data, $params) {
 	global $feature_listPages, $tiki_p_view, $tikilib, $smarty;
@@ -19,6 +19,9 @@ function wikiplugin_listpages($data, $params) {
 	}
 	if (!empty($categId)) {
 		$filter['categId'] = $categId;
+	}
+	if (!empty($structHead) && $structHead == 'y') {
+		$filter['structHead'] = $structHead;
 	}
 	if (!isset($offset)) {
 		$offset = 0;
