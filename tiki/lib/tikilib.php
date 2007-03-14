@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.727 2007-03-13 16:50:10 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.728 2007-03-14 15:07:00 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3392,6 +3392,7 @@ function add_pageview() {
 
 	$join_tables = '';
 	$join_bindvars = array();
+	$old_sort_mode = '';
 	if ($sort_mode == 'size_desc') $sort_mode = 'page_size_desc';
 	if ($sort_mode == 'size_asc') $sort_mode = 'page_size_asc';
 	
@@ -3427,6 +3428,7 @@ function add_pageview() {
 	    }
 	} else {
 	    $bindvars = array();
+		$mid = '';
 	}
 
 	if (!empty($filter)) {
@@ -6489,7 +6491,7 @@ if (!$simple_wiki) {
 			    // translated names.
 			    global $langmapping;
 			    global $available_languages;
-					$avlang = unserialize($available_languages);
+				$avlang = unserialize($available_languages);
 			    include_once("lang/langmapping.php");
 			    $formatted = array();
 
