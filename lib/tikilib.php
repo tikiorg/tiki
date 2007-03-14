@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.729 2007-03-14 19:50:42 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.730 2007-03-14 20:02:10 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3465,7 +3465,6 @@ function add_pageview() {
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
 
 	$cant = $this->getOne($query_cant,$bindvars);
-print_r($query);
 
 	$ret = array();
 	while ($res = $result->fetchRow()) {
