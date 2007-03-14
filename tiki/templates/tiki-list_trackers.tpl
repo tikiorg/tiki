@@ -1,3 +1,4 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_trackers.tpl,v 1.15 2007-03-14 20:18:33 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_trackers.php">{tr}Trackers{/tr}</a>
   
       {if $feature_help eq 'y'}
@@ -9,6 +10,10 @@
 <a href="tiki-edit_templates.php?template=tiki-list_trackers.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}list trackers tpl{/tr}">
 <img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}
 </h1>
+
+{if $tiki_p_admin_trackers eq 'y'}
+<span class="button2"><a href="tiki-admin_trackers.php?show=mod#" class="linkbut">{tr}Create trackers{/tr}</a></span>
+{/if}
 
 <form method="get" action="tiki-list_trackers.php">
 <table class="findtable"><tr>
