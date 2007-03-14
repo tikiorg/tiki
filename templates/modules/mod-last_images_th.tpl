@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_images_th.tpl,v 1.6 2007-02-18 11:21:16 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_images_th.tpl,v 1.7 2007-03-14 15:33:18 sylvieg Exp $ *}
 
 {if $feature_galleries eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Last Images{/tr}"}{/if}
@@ -13,6 +13,10 @@
        <img src="show_image.php?id={$modLastImages[ix].imageId}&amp;thumb=1" title="{$modLastImages[ix].name|regex_replace:"/\"/":"'"}" alt="{$modLastImages[ix].description|regex_replace:"/\"/":"'"}" />
        </a>
        </td></tr>
+{if isset($quicktags)}
+<tr><td><a class="linkmodule" href="javascript:insertAt('editwiki','{literal}{{/literal}img src=show_image.php?id={$modLastImages[ix].imageId}{literal}}{/literal}');">{tr}insert original{/tr}</a>
+::<a class="linkmodule" href="javascript:insertAt('editwiki','{literal}{{/literal}img src=show_image.php?id={$modLastImages[ix].imageId}&amp;thumb=1{literal}}{/literal}');">{tr}insert thumbnail{/tr}</a></td></tr>
+{/if}
        </table>
     {/if}
   {/section}
