@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.36 2007-03-07 15:15:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.37 2007-03-14 14:49:39 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -38,7 +38,8 @@ if ($tiki_p_view != 'y') {
    then we check permission to delete pages.
    if so, we call histlib's method remove_all_versions for all the checked pages.
 */
-if ( ($action = $_REQUEST["submit_mult"]) != '' && isset($_REQUEST["checked"]) ) {
+if ( !empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"]) ) {
+	$action = $_REQUEST['submit_mult'];
 	check_ticket('list-pages');
 
 	switch ( $action ) {
@@ -156,7 +157,7 @@ if ( ! empty($multiprint_pages) ) {
 	
 	$smarty->assign('initials', split(' ','a b c d e f g h i j k l m n o p q r s t u v w x y z'));
 	// Get a list of last changes to the Wiki database
-	$listpages = $tikilib->list_pages($offset, $maxRecords, $sort_mode, $find, $initial, $exact_match, false, true, $listpages_orphans, $filter);
+	$listpages = $tikilib->list_pages($offset, $maxRecords, $sort_mode, $find, $initial, $exact_match, false, true, false, $filter);
 	// If there're more records then assign next_offset
 	$cant_pages = ceil($listpages["cant"] / $maxRecords);
 	$smarty->assign_by_ref('cant_pages', $cant_pages);
