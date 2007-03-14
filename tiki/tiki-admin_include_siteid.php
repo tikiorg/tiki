@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_siteid.php,v 1.7 2007-03-06 19:29:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_siteid.php,v 1.8 2007-03-14 12:59:18 pkdille Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -21,7 +21,7 @@ if (isset($_REQUEST["siteidentityset"])) {
  }
 
  	$pref_toggles = array(
-  			"feature_sitemycode",
+  			        "feature_sitemycode",
 				"feature_breadcrumbs",
 				"feature_siteloclabel",
 				"feature_sitelogo",
@@ -30,7 +30,8 @@ if (isset($_REQUEST["siteidentityset"])) {
 				"feature_sitesearch",
 				"feature_sitemenu",
 				"sitemycode_publish",
-				"sitead_publish"
+				"sitead_publish",
+				"feature_bot_logo"
     );
 
     foreach ($pref_toggles as $toggle) {
@@ -44,7 +45,8 @@ if (isset($_REQUEST["siteidentityset"])) {
 				"sitelogo_alt",
 				"sitemycode",
 				"sitead",
-				"sitenav"
+				"sitenav",
+                                "bot_logo_code"
     );
 
     foreach ($pref_simple_values as $svitem) {
