@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.53 2007-03-06 19:29:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.54 2007-03-14 20:18:33 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -33,7 +33,11 @@ if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
 	$smarty->assign('individual', 'y');
 }
 
-$cookietab = '1';
+if (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'mod') {
+	$cookietab = '2';
+} else {
+	$cookietab = '1';
+}
 
 if (isset($_REQUEST["remove"])) {
   $area = 'deltracker';
