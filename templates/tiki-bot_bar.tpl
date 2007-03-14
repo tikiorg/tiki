@@ -1,3 +1,4 @@
+{if $feature_bot_logo eq 'y'}{$bot_logo_code}{/if}
 {if $feature_bot_bar_icons eq 'y'}
 	<div id="power" style="text-align: center">
 		<a href="http://tikiwiki.org/" title="Tikiwiki"><img style="border: 0; vertical-align: middle" alt="{tr}Powered by{/tr} Tikiwiki" src="img/tiki/tikibutton2.png" /></a>

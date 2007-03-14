@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-siteid.tpl,v 1.7 2007-01-29 17:27:54 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-siteid.tpl,v 1.8 2007-03-14 12:59:22 pkdille Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -135,7 +135,24 @@
                                         <td class="form"><label for="feature_sitemenu">{tr}Site menu bar{/tr}:</label></td>
                                         <td><input type="checkbox" name="feature_sitemenu" id="feature_sitemenu"{if $feature_sitemenu eq 'y'} checked="checked"{/if} />{tr}Note: This feature also requires phplayers to be turned on in Admin->Features{/tr}</td>
                                 </tr>
-								
+							
+				<tr>
+					<td class="heading" colspan="2"
+                                        align="center">{tr}Bottom logo{/tr}</td>
+				</tr>
+				<tr>
+					<td class="form"><label
+                                        for="feature_bot_logo">&nbsp;&nbsp;{tr}Bottom
+                                          logo{/tr}:</label></td>
+					<td><input type="checkbox" name="feature_bot_logo" id="sitead_publish"{if $feature_bot_logo eq 'y'} checked="checked"{/if} /></td>
+				</tr>
+
+				<tr>
+					<td class="form"><label for="bot_logo_code">&nbsp;&nbsp;{tr}Content{/tr}:</label></td>
+					<td><textarea name="bot_logo_code" rows="6" style="width: 40%">{$bot_logo_code}</textarea>
+					<br />
+					<small><em>{tr}Example{/tr}</em>:{literal}&lt;a href="http://tikiwiki.org/"&gt;&lt;img src="http://tikiwiki.org/favicon.png"&gt;&lt;/a&gt; {/literal}</small></td>
+				</tr>
 				<tr>
 					<td colspan="2" class="button">
 						<input type="submit" name="siteidentityset" value="{tr}Set features{/tr}" />

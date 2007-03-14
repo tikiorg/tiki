@@ -1923,6 +1923,7 @@ $lang=Array(
 "Admin layout per section" => "Administrer la mise en page par section",
 "Top bar" => "Barre du haut",
 "Bottom bar" => "Barre du bas",
+"Bottom logo" => "Logo de bas de page",
 "Bottom bar icons" => "Barre du bas avec les icônes",
 "Bottom bar debug" => "Barre du bas de debug",
 "View this tracker items" => "Liste des fiches de ce formulaire",
