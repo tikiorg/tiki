@@ -1,0 +1,25 @@
+contributor:
+$Author: niclone $
+
+revision:
+$Revision: 1.1 $
+
+requires:
+avatars-dragonballz
+avatars-gnumes
+avatars-goldorak
+avatars-mcdonald
+avatars-xmen
+
+lastmodif:
+$Date: 2007-03-15 15:35:20 $
+
+Description: 
+This is a meta package containing all avatars package.
+
+licence:
+unknown
+
+Version:
+1.10
+
