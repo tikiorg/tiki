@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mods.php,v 1.9 2007-03-15 14:49:08 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mods.php,v 1.10 2007-03-15 15:57:19 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -167,7 +167,6 @@ if (isset($_REQUEST['action']) and isset($package) and $iswritable) {
 		$modslib->install($mods_dir, $mod->type, $mod->name);
 	}
 
-
 	/* install packages */
 
 	if ($res !== false) foreach($deps['requires'] as $mod) {
@@ -178,9 +177,14 @@ if (isset($_REQUEST['action']) and isset($package) and $iswritable) {
 		$modslib->install($mods_dir, $mod->type, $mod->name);
 	}
 
-} elseif (isset($_REQUEST['button-check'])) {	
-	$deps=$modslib->find_deps($mods_dir, $mods_server, $_REQUEST['install-wants']);
-	$smarty->assign('installask', $deps);
+} elseif (isset($_REQUEST['button-remove'])) {
+	$deps=$modslib->find_deps_remove($mods_dir, $mods_server, $_REQUEST['install-wants']);
+
+	/* remove packages to remove */
+	foreach($deps['toremove'] as $mod) {
+		$modslib->remove($mods_dir, $mod->type, $mod->name);
+	}
+
 }
 
 $local = $modslib->read_list($mods_dir."/Packages/00_list.txt",'local',$type,$find,false);

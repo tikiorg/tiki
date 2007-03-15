@@ -121,7 +121,11 @@ permission (using "./fixperms fix").{/tr}</div>
  </ul>
 
 <br />
+{if $installask.wanted}
 <input type='submit' id='button_install' name='button-install' value='{tr}Install{/tr}'{if $installask.unavailable} style='display: none;'{/if} />
+{elseif $installask.wantedtoremove}
+<input type='submit' id='button_install' name='button-remove' value='{tr}Remove{/tr}'{if $installask.unavailable} style='display: none;'{/if} />
+{/if}
 {literal}
 <script language='JavaScript'>
 function update_button_install() {
