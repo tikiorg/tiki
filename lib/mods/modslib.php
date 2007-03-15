@@ -422,7 +422,7 @@ class ModsLib {
 			$fp = fopen($localfile,"wb");
 			fwrite($fp,$meat);
 			fclose($fp);
-			require("lib/tar.class.php");
+			require_once("lib/tar.class.php");
 			$tar = new tar;
 			if ($tar->openTAR($localfile)) {
 				foreach ($tar->files as $f) {
