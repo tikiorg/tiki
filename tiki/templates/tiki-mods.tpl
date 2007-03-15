@@ -31,6 +31,110 @@ upgrade of packages. When you are done with those operations, think to fix those
 to write files in your web tree (you can use "./fixperms.sh open" to set it up). After installation you need to remove that
 permission (using "./fixperms fix").{/tr}</div>
 {/if}
+{if $installask}
+<form method='post' action='?'>
+<div class="simplebox">
+ <ul>
+ {if $installask.unavailable}
+  <li style='color:#990000'>The following packages are required, but cannot be installed:
+  <ul>{foreach from=$installask.unavailable item=element}
+    <li>{$element->name|escape} ({$element->type|escape}) : 
+     {foreach from=$element->tests item=test}
+      {$test->test}{$test->revision}
+     {/foreach}
+     {foreach from=$element->errors item=error}
+      {$error}
+     {/foreach}
+    </li>
+  {/foreach}</ul>
+ {/if}
+ {if $installask.conflicts}
+  <li style='color:#990000'>The following packages are required, but in conflicts:
+  <ul>{foreach from=$installask.conflicts item=element}
+    <li>{$element->name|escape} ({$element->type|escape}) : 
+     {foreach from=$element->tests item=test}
+      {$test->test}{$test->revision}
+     {/foreach}
+     {foreach from=$element->errors item=error}
+      {$error}
+     {/foreach}
+    </li>
+  {/foreach}</ul>
+ {/if}
+ {if $installask.wanted}
+  <li>The following packages will be <strong>installed</strong>:
+  <ul>{foreach from=$installask.wanted item=element}
+   {if $element->repository eq 'unavailable'}
+    <li>{$element->name|escape} ({$element->type|escape}) but is not in any repository</li>
+   {else}
+    <li><input type='checkbox' onchange='update_button_install();' name='install-wants[]' value='{$element->modname|escape}' checked />{$element->name|escape} {$element->revision} ({$element->type|escape})</li>
+   {/if}
+   {if $element->repository eq 'remote'}
+    (will be downloaded)
+   {/if}
+  {/foreach}</ul>
+  </li>
+ {/if}
+ {if $installask.wantedtoremove}
+  <li>The following packages will be <strong>removed</strong>:
+  <ul>{foreach from=$installask.wantedtoremove item=element}
+   {if $element->repository eq 'installed'}
+    <li><input type='checkbox' onchange='update_button_install();' name='install-wants[]' value='{$element->modname|escape}' checked />{$element->name|escape} {$element->revision} ({$element->type|escape})</li>
+   {else}
+    <li>{$element->name|escape} ({$element->type|escape}) but is not installed</li>
+   {/if}
+  {/foreach}</ul>
+  </li>
+ {/if}
+ {if $installask.toremove}
+  <li>The following <strong>extra</strong> packages will be <strong>removed</strong>:
+  <ul>{foreach from=$installask.toremove item=element}
+    <li>{$element->name|escape} {$element->revision} ({$element->type|escape})</li>
+  {/foreach}</ul>
+  </li>
+ {/if}
+ {if $installask.requires}
+  <li>The following <strong>extra</strong> packages will be <strong>installed</strong>:
+  <ul>{foreach from=$installask.requires item=element}
+   {if $element->repository eq 'unavailable'}
+    <li>{$element->name|escape} ({$element->type|escape}) but is not in any repository</li>
+   {else}
+    <li>{$element->name|escape} {$element->revision} ({$element->type|escape})</li>
+   {/if}
+   {if $element->repository eq 'remote'}
+    (will be downloaded)
+   {/if}
+  {/foreach}</ul>
+  </li>
+ {/if}
+ {if $installask.suggests}
+  <li>Suggested packages:
+  <ul>{foreach from=$installask.suggests item=element}
+   {if $element->repository eq 'unavailable'}
+    <li>{$element[0]->name|escape} ({$element[0]->type|escape}) but is not in any repository</li>
+   {else}
+    <li><input type='checkbox' onchange='update_button_install();' name='install-wants[]' value='{$element[0]->modname|escape}' />{$element[0]->name|escape} ({$element[0]->type|escape})</li>
+   {/if}
+  {/foreach}</ul>
+  </li>
+ {/if}
+ </ul>
+
+<br />
+<input type='submit' id='button_install' name='button-install' value='{tr}Install{/tr}'{if $installask.unavailable} style='display: none;'{/if} />
+{literal}
+<script language='JavaScript'>
+function update_button_install() {
+	var button=document.getElementById('button_install');
+	button.name='button-check';
+	button.value='Check again';
+	button.style.display='';
+}
+</script>
+{/literal}
+</div>
+</form>
+{/if}
 <br />
 
 {if $tikifeedback}
@@ -39,6 +143,7 @@ permission (using "./fixperms fix").{/tr}</div>
 <div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">{$tikifeedback[n].mes}</div>
 {/section}{/if}
 
+{if not $installask}
 <form method="get" action="tiki-mods.php">
 <select name="type" onchange="this.form.submit();">
 <option value="">{tr}all types{/tr}</option>
@@ -58,88 +163,74 @@ permission (using "./fixperms fix").{/tr}</div>
 </tr>
 {cycle values="odd,even" print=false}
 {foreach key=item item=it from=$display.$type}
-<tr class="{if $focus and $focus eq $display.$type.$item.name}focus{else}{cycle}{/if}">
+<tr class="{if $focus and $focus eq $display.$type.$item->name}focus{else}{cycle}{/if}">
 
 {if $feature_mods_provider eq 'y'}
-{assign var=mod value=$public.$type.$item.modname}
-{if $public.$type.$item}
-{if $dist.$mod.rev_major lt $local.$type.$item.rev_major or 
-   ($dist.$mod.rev_major eq $local.$type.$item.rev_major and 
-    $dist.$mod.rev_minor lt $local.$type.$item.rev_minor) or 
-   ($dist.$mod.rev_major eq $local.$type.$item.rev_major and 
-    $dist.$mod.rev_minor eq $local.$type.$item.rev_minor and
-    $dist.$mod.rev_subminor lt $local.$type.$item.rev_subminor)}							
-<td style="background:#fcfeac;"><a href="tiki-mods.php?unpublish={$public.$type.$item.modname|escape:"url"}{$findarg}{$typearg}" title="{tr}Unpublish{/tr}">[x]</a>{if $dist.$mod}<a 
-href="tiki-mods.php?republish={$public.$type.$item.modname|escape:"url"}{$findarg}{$typearg}" title="{tr}Republish{/tr}">{$dist.$mod.revision}&gt;{$local.$type.$item.revision}</a>{/if}
-{else}
-<td style="background:#fcfeac;"><a href="tiki-mods.php?unpublish={$public.$type.$item.modname|escape:"url"}{$findarg}{$typearg}" title="{tr}Unpublish{/tr}">[x]</a>{if $dist.$mod}{$dist.$mod.revision}{/if}
-{/if}
+ {assign var=mod value=$public.$type.$item->modname}
+ {if $public.$type.$item}
+  {if ModsLib::revision_compare($dist.$mod->revision,$local.$type.$item->revision) < 0}
+<td style="background:#fcfeac;"><a href="tiki-mods.php?unpublish={$public.$type.$item->modname|escape:"url"}{$findarg}{$typearg}" title="{tr}Unpublish{/tr}">[x]</a>{if $dist.$mod}<a 
+href="tiki-mods.php?republish={$public.$type.$item->modname|escape:"url"}{$findarg}{$typearg}" title="{tr}Republish{/tr}">{$dist.$mod->revision}&gt;{$local.$type.$item->revision}</a>{/if}
+  {else}
+<td style="background:#fcfeac;"><a href="tiki-mods.php?unpublish={$public.$type.$item->modname|escape:"url"}{$findarg}{$typearg}" title="{tr}Unpublish{/tr}">[x]</a>{if $dist.$mod}{$dist.$mod->revision}{/if}
+  {/if}
 </td>
-{elseif $local.$type.$item}
-<td style="background:#ededed;"><a href="tiki-mods.php?publish={$local.$type.$item.modname|escape:"url"}{$findarg}{$typearg}" title="{tr}Publish{/tr}">[+]</a></td>
-{else}
+ {elseif $local.$type.$item}
+<td style="background:#ededed;"><a href="tiki-mods.php?publish={$local.$type.$item->modname|escape:"url"}{$findarg}{$typearg}" title="{tr}Publish{/tr}">[+]</a></td>
+ {else}
 <td style="background:#ededed;"></td>
-{/if}
+ {/if}
 {/if}
 
 {if $remote.$type.$item}
-{if $remote.$type.$item.rev_major gt $local.$type.$item.rev_major or
-   ($remote.$type.$item.rev_major eq $local.$type.$item.rev_major and
-    $remote.$type.$item.rev_minor gt $local.$type.$item.rev_minor) or
-   ($remote.$type.$item.rev_major eq $local.$type.$item.rev_major and
-   	$remote.$type.$item.rev_minor eq $local.$type.$item.rev_minor and
-    $remote.$type.$item.rev_subminor gt $local.$type.$item.rev_subminor)}
-<td style="background:#fcfeac;"><a href="tiki-mods.php?dl={$remote.$type.$item.modname|escape:"url"}-{$remote.$type.$item.revision}{$findarg}{$typearg}" title="{tr}Download{/tr}">{$remote.$type.$item.revision}</a></td>
-{else}
-<td style="background:#acfeac;"><a href="tiki-mods.php?dl={$remote.$type.$item.modname|escape:"url"}-{$remote.$type.$item.revision}{$findarg}{$typearg}" title="{tr}Download{/tr}">{$remote.$type.$item.revision}</a></td>
-{/if}
+ {if ModsLib::revision_compare($remote.$type.$item->revision, $local.$type.$item->revision) > 0}
+<td style="background:#fcfeac;"><a href="tiki-mods.php?dl={$remote.$type.$item->modname|escape:"url"}-{$remote.$type.$item->revision}{$findarg}{$typearg}" title="{tr}Download{/tr}">{$remote.$type.$item->revision}</a></td>
+ {else}
+<td style="background:#acfeac;"><a href="tiki-mods.php?dl={$remote.$type.$item->modname|escape:"url"}-{$remote.$type.$item->revision}{$findarg}{$typearg}" title="{tr}Download{/tr}">{$remote.$type.$item->revision}</a></td>
+ {/if}
 {else}
 <td style="background:#dcdcdc;"></td>
 {/if}
 
-{if $local.$type.$item.name}
-<td><b><a href="tiki-mods.php?focus={$local.$type.$item.modname|escape:"url"}{$findarg}{$typearg}">{$local.$type.$item.name}</a></b></td>
-<td>{$local.$type.$item.revision}</td>
-<td>{$local.$type.$item.licence}</td>
-<td>{$local.$type.$item.description}</td>
-{if $installed.$type.$item} 
-{if $local.$type.$item.rev_major gt $installed.$type.$item.rev_major or
-   ($local.$type.$item.rev_major eq $installed.$type.$item.rev_major and
-    $local.$type.$item.rev_minor gt $installed.$type.$item.rev_minor) or
-   ($local.$type.$item.rev_major eq $installed.$type.$item.rev_major and
-   	$local.$type.$item.rev_minor eq $installed.$type.$item.rev_minor and
-    $local.$type.$item.rev_subminor gt $installed.$type.$item.rev_subminor)}
-<td style="background:#dcdeac;">{$installed.$type.$item.revision}{if $iswritable}<a href="tiki-mods.php?action=upgrade&amp;package={$local.$type.$item.modname|escape:"url"}{$findarg}{$typearg}">&gt;{$local.$type.$item.revision}</a>{/if}</td>
-{else}
-<td style="background:#acfeac;">{$installed.$type.$item.revision}</td>
-{/if}
-<td style="background:#fcaeac;">{if $iswritable}<a href="tiki-mods.php?action=remove&amp;package={$local.$type.$item.modname|escape:"url"}{$findarg}{$typearg}">{tr}remove{/tr}</a>{/if}</td>
-{else}
-<td colspan="3">{if $iswritable}<a href="tiki-mods.php?action=install&amp;package={$local.$type.$item.modname|escape:"url"}{$findarg}{$typearg}">{tr}install{/tr}</a>{else}<b><s>{tr}Install{/tr}</s></b>{/if}</td>
+{if $local.$type.$item->name}
+<td><b><a href="tiki-mods.php?focus={$local.$type.$item->modname|escape:"url"}{$findarg}{$typearg}">{$local.$type.$item->name}</a></b></td>
+<td>{$local.$type.$item->version}</td>
+<td>{$local.$type.$item->licence}</td>
+<td>{$local.$type.$item->description}</td>
+ {if $installed.$type.$item} 
+  {if ModsLib::revision_compare($local.$type.$item->revision, $installed.$type.$item->revision) > 0}
+<td style="background:#dcdeac;">{$installed.$type.$item->revision}{if $iswritable}<a href="tiki-mods.php?action=upgrade&amp;package={$local.$type.$item->modname|escape:"url"}{$findarg}{$typearg}">&gt;{$local.$type.$item->revision}</a>{/if}</td>
+  {else}
+<td style="background:#acfeac;">{$installed.$type.$item->revision}</td>
+  {/if}
+<td style="background:#fcaeac;">{if $iswritable}<a href="tiki-mods.php?action=remove&amp;package={$local.$type.$item->modname|escape:"url"}{$findarg}{$typearg}">{tr}remove{/tr}</a>{/if}</td>
+ {else}
+<td colspan="3">{if $iswritable}<a href="tiki-mods.php?action=install&amp;package={$local.$type.$item->modname|escape:"url"}{$findarg}{$typearg}">{tr}install{/tr}</a>{else}<b><s>{tr}Install{/tr}</s></b>{/if}</td>
 {/if}
 {else}
-<td>{$remote.$type.$item.name}</td>
-<td>{$remote.$type.$item.revision}</td>
-<td>{$remote.$type.$item.licence}</td>
-<td>{$remote.$type.$item.description}</td>
+<td>{$remote.$type.$item->name}</td>
+<td>{$remote.$type.$item->version}</td>
+<td>{$remote.$type.$item->licence}</td>
+<td>{$remote.$type.$item->description}</td>
 {/if}
 </tr>
 
-{if $focus and $focus eq $local.$type.$item.modname}
+{if $focus and $focus eq $local.$type.$item->modname}
 <tr class="{cycle}"><td colspan="{if $feature_mods_provider eq 'y'}9{else}8{/if}">
 <table><tr><td>
 <div class="simplebox">
-{if $more.docurl}Documentation :<br />{foreach key=ku item=iu from=$more.docurl}<a href="{$iu}">{$iu}</a><br />{/foreach}{/if}
-{if $more.devurl}Development : <br />{foreach key=ku item=iu from=$more.devurl}<a href="{$iu}">{$iu}</a><br />{/foreach}{/if}
-{if $more.help}{$more.help}<br />{/if}
-{if $more.help}{$more.help}<br />{/if}
-{if $more.author}{tr}author{/tr}: {$more.author[0]}<br />{/if}
+{if $more->docurl}Documentation :<br />{foreach key=ku item=iu from=$more->docurl}<a href="{$iu}">{$iu}</a><br />{/foreach}{/if}
+{if $more->devurl}Development : <br />{foreach key=ku item=iu from=$more->devurl}<a href="{$iu}">{$iu}</a><br />{/foreach}{/if}
+{if $more->help}{$more.help}<br />{/if}
+{if $more->help}{$more.help}<br />{/if}
+{if $more->author}{tr}author{/tr}: {$more->author[0]}<br />{/if}
+{if $more->licence}{tr}licence{/tr}: {$more->licence}<br />{/if}
 
-{tr}last modification{/tr}: {$more.lastmodif[0]}<br />
-{tr}by{/tr}: {$more.contributor[0]}<br />
+{tr}last modification{/tr}: {$more->lastmodif}<br />
+{tr}by{/tr}: {$more->contributor[0]}<br />
 </div>
 </td><td>
-{foreach key=kk item=ii from=$more.files}
+{foreach key=kk item=ii from=$more->files}
 {$ii[0]} -&gt; <b>{$ii[1]}</b><br />
 {/foreach}
 </td></tr></table>
@@ -150,4 +241,4 @@ href="tiki-mods.php?republish={$public.$type.$item.modname|escape:"url"}{$findar
 {/foreach}
 {/foreach}
 </table>
-
+{/if}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mods.php,v 1.7 2007-03-06 19:29:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mods.php,v 1.8 2007-03-15 14:24:19 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -61,6 +61,12 @@ if (isset($_REQUEST['type']) and trim($_REQUEST['type'])) {
 $smarty->assign('typearg', $typearg);
 $smarty->assign('type', $type);
 
+$repos=array('installed' => array('url' => $mods_dir.'/Installed',
+				  'content' => $installed),
+	     'local' => array('url' => $mods_dir.'/Packages',
+			      'content' => $local),
+	     'remote' => array('url' => $mods_server.'/Packages',
+			       'content' => $remote));
 
 if ($feature_mods_provider == 'y') {
 	if (!is_dir($mods_dir."/Dist")) {
@@ -69,21 +75,25 @@ if ($feature_mods_provider == 'y') {
 	if (!is_file($mods_dir."/Packages/00_list.public.txt")) {
 		touch($mods_dir."/Packages/00_list.public.txt");
 	}
-	$public = $modslib->read_list($mods_dir."/Packages/00_list.public.txt",$type,$find);
+
+	$public = $modslib->read_list($mods_dir."/Packages/00_list.public.txt",'remote',$type,$find,false);
+
 	if (isset($_REQUEST['republish'])) {
-		$modslib->unpublish($mods_dir."/Packages",$public,array($_REQUEST['republish']));
-		$modslib->publish($mods_dir."/Packages",$public,array($_REQUEST['republish']));
+		$modslib->unpublish($mods_dir,array($_REQUEST['republish']));
+		$modslib->publish($mods_dir,array($_REQUEST['republish']));
 	} elseif (isset($_REQUEST['republishall'])) {
-		$modslib->unpublish($mods_dir."/Packages",$public,$modslib->read_list($mods_dir."/Packages/00_list.txt",$type,$find,'modname'));
-		$modslib->publish($mods_dir."/Packages",$public,$modslib->read_list($mods_dir."/Packages/00_list.txt",$type,$find,'modname'));
+		$items=$modslib->read_list($mods_dir."/Packages/00_list.txt",'local',$type,$find,true);
+		$modslib->unpublish($mods_dir, $items);
+		$modslib->publish($mods_dir, $items);
 	} elseif (isset($_REQUEST['publish'])) {
-		$modslib->publish($mods_dir."/Packages",$public,array($_REQUEST['publish']));
+		$modslib->publish($mods_dir,array($_REQUEST['publish']));
 	} elseif (isset($_REQUEST['publishall'])) {
-		$modslib->publish($mods_dir."/Packages",$public,$modslib->read_list($mods_dir."/Packages/00_list.txt",$type,$find,'modname'));
+		$modslib->publish($mods_dir, $modslib->read_list($mods_dir."/Packages/00_list.txt",'local',$type,$find,true));
 	} elseif (isset($_REQUEST['unpublish'])) {
-		$modslib->unpublish($mods_dir."/Packages",$public,array($_REQUEST['unpublish']));
+		$modslib->unpublish($mods_dir,array($_REQUEST['unpublish']));
 	} elseif (isset($_REQUEST['unpublishall'])) {
-		$modslib->unpublish($mods_dir."/Packages",$public,$modslib->read_list($mods_dir."/Packages/00_list.txt",$type,$find,'modname'));
+		$items=$modslib->read_list($mods_dir."/Packages/00_list.public.txt",'public',$type,$find,true);
+		$modslib->unpublish($mods_dir,$items);
 	}
 	$smarty->assign('public', $public);
 }
@@ -122,33 +132,72 @@ if (isset($_REQUEST['package'])) {
 
 if (isset($_REQUEST['action']) and isset($package) and $iswritable) {
 	if ($_REQUEST['action'] == 'configuration') {
-		$conf = '';
-		foreach ($_REQUEST['conf'] as $k=>$v) {
-			$conf.= "$k:\n$v\n\n";
-		}
-		$modslib->write_conf($mods_dir,$packtype,$package,$_REQUEST['conf']);
+		$mod = new TikiModInfo($packtype, $package);
+		$mod->writeconf($mods_dir, $_REQUEST['conf']);
 		$_REQUEST['action'] = 'upgrade';
 	}
 	if ($_REQUEST['action'] == 'remove') {
-		$modslib->remove($mods_dir,$packtype,$package);
+		$deps=$modslib->find_deps_remove($mods_dir, $mods_server, array($packtype.'-'.$package));
+		var_dump($deps);
+		$smarty->assign('installask', $deps);
+		//$modslib->remove($mods_dir,$packtype,$package);
 	} elseif ($_REQUEST['action'] == 'upgrade') {
 		$modslib->upgrade($mods_dir,$packtype,$package);
 	} elseif ($_REQUEST['action'] == 'install') {
-		$modslib->install($mods_dir,$packtype,$package);
+		$deps=$modslib->find_deps($mods_dir, $mods_server, array($packtype.'-'.$package));
+		$smarty->assign('installask', $deps);
 	}
+} elseif (isset($_REQUEST['button-install'])) {
+	$deps=$modslib->find_deps($mods_dir, $mods_server, $_REQUEST['install-wants']);
+	$res=NULL;
+
+	/* download packages if necessary */
+
+	if ($res !== false) foreach($deps['requires'] as $mod) {
+		if ($modslib->repository == 'remote') {
+			$res=$modslib->dl_remote($mods_server,$mod->modname,$mods_dir);
+			if ($res === false) break;
+		}
+	}
+
+	if ($res !== false) foreach($deps['wanted'] as $mod) {
+		if ($modslib->repository == 'remote') {
+			$res=$modslib->dl_remote($mods_server,$mod->modname,$mods_dir);
+			if ($res === false) break;
+		}
+		$modslib->install($mods_dir, $mod->type, $mod->name);
+	}
+
+
+	/* install packages */
+
+	if ($res !== false) foreach($deps['requires'] as $mod) {
+		$modslib->install($mods_dir, $mod->type, $mod->name);
+	}
+
+	if ($res !== false) foreach($deps['wanted'] as $mod) {
+		$modslib->install($mods_dir, $mod->type, $mod->name);
+	}
+
+} elseif (isset($_REQUEST['button-check'])) {	
+	$deps=$modslib->find_deps($mods_dir, $mods_server, $_REQUEST['install-wants']);
+	$smarty->assign('installask', $deps);
 }
 
-$local = $modslib->read_list($mods_dir."/Packages/00_list.txt",$type,$find);
+$local = $modslib->read_list($mods_dir."/Packages/00_list.txt",'local',$type,$find,false);
 $smarty->assign('local', $local);
 
-$remote = $modslib->read_list($mods_dir."/Packages/00_list.". urlencode($mods_server).".txt",$type,$find);
+$remote = $modslib->read_list($mods_dir."/Packages/00_list.". urlencode($mods_server).".txt",'remote',$type,$find,false);
 $smarty->assign('remote', $remote);
 
-$installed = $modslib->read_list($mods_dir."/Installed/00_list.txt",$type,$find);
+$installed = $modslib->read_list($mods_dir."/Installed/00_list.txt",'installed',$type,$find,false);
 $smarty->assign('installed', $installed);
+//var_dump($local);
+// var_dump($remote);
+// var_dump($installed);
 
 if ($feature_mods_provider == 'y') {
-	$public = $modslib->read_list($mods_dir."/Packages/00_list.public.txt",$type,$find);
+	$public = $modslib->read_list($mods_dir."/Packages/00_list.public.txt",'public',$type,$find,false);
 	$smarty->assign('public', $public);
 	$dist = $modslib->scan_dist($mods_dir."/Dist");
 	$smarty->assign('dist', $dist);
@@ -179,7 +228,9 @@ $smarty->assign('display', $display);
 
 if (isset($_REQUEST['focus'])) {
 	$focus = $_REQUEST['focus'];
-	$more = $modslib->readconf($mods_dir.'/Packages/'.$focus.'.info.txt');
+	$more = new TikiModInfo($focus);
+	$err=$more->readinfo($mods_dir.'/Packages/'.$focus.'.info.txt');
+	if ($err !== false) die($err);
 } else {
 	$focus = false;
 	$more = array();
