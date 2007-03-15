@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-tell_a_friend.php,v 1.1 2007-03-09 19:01:20 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-tell_a_friend.php,v 1.2 2007-03-15 17:53:15 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -27,7 +27,9 @@ if (empty($_REQUEST['url'])) {
 	$smarty->display('error.tpl');
 	die;
 }
-$smarty->assign('url', urldecode($_REQUEST['url'])); 
+$_REQUEST['url'] = preg_replace('/.*tiki-tell_a_friend.php\?url=/', '', $_REQUEST['url']);
+$smarty->assign('url', urldecode($_REQUEST['url']));
+
 $smarty->assign('prefix', $tikilib->httpPrefix());
 
 $error = array();
