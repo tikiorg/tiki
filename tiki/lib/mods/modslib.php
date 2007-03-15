@@ -827,7 +827,6 @@ class ModsLib {
 			foreach($meat as $mod) {
 				if (isset($deps['toremove'][$mod->modname])) continue;
 				if (!is_array($mod->requires)) continue;
-				echo "<p>".$mod->modname."</p>";
 				foreach($mod->requires as $moddep) {
 					if ($moddep->isitin($modtoremove)) {
 						$this->_find_deps_remove($repos, $mod, &$deps);
