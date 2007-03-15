@@ -216,6 +216,7 @@ href="tiki-mods.php?republish={$public.$type.$item->modname|escape:"url"}{$finda
 <td>{$remote.$type.$item->version}</td>
 <td>{$remote.$type.$item->licence}</td>
 <td>{$remote.$type.$item->description}</td>
+<td>{if $iswritable}<a href="tiki-mods.php?action=install&amp;package={$local.$type.$item->modname|escape:"url"}{$findarg}{$typearg}">{tr}install{/tr}</a>{else}<b><s>{tr}Install{/tr}</s></b>{/if}</td>
 {/if}
 </tr>
 
