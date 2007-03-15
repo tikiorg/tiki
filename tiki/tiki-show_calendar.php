@@ -36,12 +36,12 @@ $short_format_day = tra("%m/%d");
 $smarty->assign('short_format_day', $short_format_day);
 
 // Windows requires clean dates!
-$focus_prevday = mktime(0, 0, 0, $focus_month, $focus_day - 1, $focus_year);
-$focus_nextday = mktime(0, 0, 0, $focus_month, $focus_day + 1, $focus_year);
-$focus_prevweek = mktime(0, 0, 0, $focus_month, $focus_day - 7, $focus_year);
-$focus_nextweek = mktime(0, 0, 0, $focus_month, $focus_day + 7, $focus_year);
-$focus_prevmonth = mktime(0, 0, 0, $focus_month - 1, $focus_day, $focus_year);
-$focus_nextmonth = mktime(0, 0, 0, $focus_month + 1, $focus_day, $focus_year);
+$focus_prevday = $tikilib->make_time(0, 0, 0, $focus_month, $focus_day - 1, $focus_year);
+$focus_nextday = $tikilib->make_time(0, 0, 0, $focus_month, $focus_day + 1, $focus_year);
+$focus_prevweek = $tikilib->make_time(0, 0, 0, $focus_month, $focus_day - 7, $focus_year);
+$focus_nextweek = $tikilib->make_time(0, 0, 0, $focus_month, $focus_day + 7, $focus_year);
+$focus_prevmonth = $tikilib->make_time(0, 0, 0, $focus_month - 1, $focus_day, $focus_year);
+$focus_nextmonth = $tikilib->make_time(0, 0, 0, $focus_month + 1, $focus_day, $focus_year);
 
 $smarty->assign('daybefore', $focus_prevday);
 $smarty->assign('weekbefore', $focus_prevweek);
@@ -52,7 +52,7 @@ $smarty->assign('monthafter', $focus_nextmonth);
 $smarty->assign('focusmonth', $focus_month);
 $smarty->assign('focusdate', $focusdate);
 $smarty->assign('focuscell', $focuscell);
-$now = mktime(date('G'), date('i'), date('s'), date('n'), date('d'), date('Y')); /* server date */
+$now = $tikilib->make_time(date('G'), date('i'), date('s'), date('n'), date('d'), date('Y')); /* server date */
 $smarty->assign('now', $now); /* server date */
 if (!isset($dc->getDisplayDateFromServerDate)) {
     $dc = $tikilib->get_date_converter($user);
@@ -87,11 +87,11 @@ $smarty->assign('viewyear', $focus_year);
 
 // calculate timespan for sql query
 if ($calendarViewMode == 'month' || $calendarViewMode == 'quarter' || $calendarViewMode == 'semester') {
-	$daystart = mktime(0,0,0, $focus_month, 1, $focus_year);
+	$daystart = $tikilib->make_time(0,0,0, $focus_month, 1, $focus_year);
 } elseif ($calendarViewMode == 'year') {
-	$daystart = mktime(0,0,0, 1, 1, $focus_year);
+	$daystart = $tikilib->make_time(0,0,0, 1, 1, $focus_year);
 } else {
-	$daystart = mktime(0,0,0,$focus_month, $focus_day, $focus_year);
+	$daystart = $tikilib->make_time(0,0,0,$focus_month, $focus_day, $focus_year);
 }
 $viewstart = $daystart; // viewstart is the beginning of the display, daystart is the beginning of the selected period
 	
@@ -112,15 +112,15 @@ if ($calendarViewMode == 'month' ||
    $viewstart -= $TmpWeekday * $d;
    // this is the last day of $focus_month
    if ($calendarViewMode == 'month') {
-     $viewend = mktime(0,0,0,$focus_month + 1, 1, $focus_year);
+     $viewend = $tikilib->make_time(0,0,0,$focus_month + 1, 1, $focus_year);
    } elseif ($calendarViewMode == 'quarter') {
-     $viewend = mktime(0,0,0,$focus_month + 3, 1, $focus_year);
+     $viewend = $tikilib->make_time(0,0,0,$focus_month + 3, 1, $focus_year);
    } elseif ($calendarViewMode == 'semester') {
-     $viewend = mktime(0,0,0,$focus_month + 6, 1, $focus_year);
+     $viewend = $tikilib->make_time(0,0,0,$focus_month + 6, 1, $focus_year);
    } elseif ($calendarViewMode == 'year') {
-     $viewend = mktime(0,0,0,1, 1, $focus_year+1);
+     $viewend = $tikilib->make_time(0,0,0,1, 1, $focus_year+1);
    } else {
-     $viewend = mktime(0,0,0,$focus_month + 1, 0, $focus_year);
+     $viewend = $tikilib->make_time(0,0,0,$focus_month + 1, 0, $focus_year);
    }
    $viewend -= 1;
    $dayend=$viewend;
@@ -131,9 +131,9 @@ if ($calendarViewMode == 'month' ||
    $lastweek = date("W", $viewend);
    if ($lastweek <= $firstweek) {
 		   $startyear = date("Y",$daystart-1);
-		   $weeksinyear = date("W",mktime(0,0,0,12,31,$startyear));
+		   $weeksinyear = date("W",$tikilib->make_time(0,0,0,12,31,$startyear));
 		   if ($weeksinyear == 1){
-			$weeksinyear = date("W",mktime(0,0,0,12,28,$startyear));
+			$weeksinyear = date("W",$tikilib->make_time(0,0,0,12,28,$startyear));
 		   }
 		   $lastweek += $weeksinyear;
    }
@@ -165,7 +165,7 @@ function m_weeks($y, $m){
                8=>31, 9=>30, 10=>31, 11=>30, 12=>31);
   // weekdays remaining in a week starting on 7 - Sunday...(could be changed)
   $weekdays = array(7=>7, 1=>6, 2=>5, 3=>4, 4=>3, 5=>2, 6=>1);
-  $date = mktime( 0, 0, 0, $m, 1, $y);
+  $date = $tikilib->make_time( 0, 0, 0, $m, 1, $y);
   $leap = date("L", $date);
   // if it is a leap year set February to 29 days, otherwise 28
   $monthdays[2] = ($leap ? 29 : 28);
@@ -244,7 +244,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 			$dday = $daystart;
 		} else {
 			//$dday = $startOfWeek + $d * $w;
-			$dday = mktime(0,0,0, $mloop, $dloop++, $yloop);
+			$dday = $tikilib->make_time(0,0,0, $mloop, $dloop++, $yloop);
 		}
 		$cell[$i][$w]['day'] = $dday;
 		
