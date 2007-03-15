@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mods.php,v 1.11 2007-03-15 16:37:36 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mods.php,v 1.12 2007-03-15 21:25:29 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -60,13 +60,6 @@ if (isset($_REQUEST['type']) and trim($_REQUEST['type'])) {
 }
 $smarty->assign('typearg', $typearg);
 $smarty->assign('type', $type);
-
-$repos=array('installed' => array('url' => $mods_dir.'/Installed',
-				  'content' => $installed),
-	     'local' => array('url' => $mods_dir.'/Packages',
-			      'content' => $local),
-	     'remote' => array('url' => $mods_server.'/Packages',
-			       'content' => $remote));
 
 if ($feature_mods_provider == 'y') {
 	if (!is_dir($mods_dir."/Dist")) {
