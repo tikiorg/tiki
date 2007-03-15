@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mods.php,v 1.8 2007-03-15 14:24:19 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mods.php,v 1.9 2007-03-15 14:49:08 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -138,7 +138,6 @@ if (isset($_REQUEST['action']) and isset($package) and $iswritable) {
 	}
 	if ($_REQUEST['action'] == 'remove') {
 		$deps=$modslib->find_deps_remove($mods_dir, $mods_server, array($packtype.'-'.$package));
-		var_dump($deps);
 		$smarty->assign('installask', $deps);
 		//$modslib->remove($mods_dir,$packtype,$package);
 	} elseif ($_REQUEST['action'] == 'upgrade') {
