@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-mods_admin.tpl,v 1.5 2007-03-06 19:30:39 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-mods_admin.tpl,v 1.6 2007-03-15 14:24:19 niclone Exp $ *}
 <h1><a href="tiki-mods_admin.php" class="pagetitle">{tr}Tikiwiki Mods Configuration{/tr}</a></h1>
 <div class="navbar"><span class="button2"><a href="tiki-mods.php" class="linkbut">{tr}Mods Install/uninstall{/tr}</a></span></div>
 
@@ -24,6 +24,8 @@
 <td><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
 </tr>
 </table>
+
+</form>
 
 <br /><br />
 
