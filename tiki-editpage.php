@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.165 2007-03-06 19:29:48 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.166 2007-03-16 15:13:09 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -927,22 +927,9 @@ if ($feature_categories == 'y') {
 	}
 }
 
-// 27-Jun-2003, by zaufi
-// Get plugins with descriptions
-global $wikilib;
-$plugin_files = $wikilib->list_plugins();
-$plugins = array();
-
-// Request help string from each plugin module
-foreach ($plugin_files as $pfile) {
-  $pinfo["file"] = $pfile;
-
-  $pinfo["help"] = $wikilib->get_plugin_description($pfile);
-  $pinfo["name"] = strtoupper(str_replace(".php", "", str_replace("wikiplugin_", "", $pfile)));
-  $plugins[] = $pinfo;
-}
-
+$plugins = $wikilib->list_plugins(true);
 $smarty->assign_by_ref('plugins', $plugins);
+
 $smarty->assign('showstructs', array());
 
 if ($structlib->page_is_in_structure($_REQUEST["page"])) {

@@ -608,7 +608,7 @@ class WikiLib extends TikiLib {
 	return $ret;
     }
 
-    function list_plugins() {
+    function list_plugins($with_help = false) {
 	$files = array();
 
 	if (is_dir(PLUGINS_DIR)) {
@@ -621,8 +621,19 @@ class WikiLib extends TikiLib {
 	    }
 	}
 	sort($files);
-	return $files;
+	if ($with_help) {
+		$plugins = array();
+		foreach ($files as $pfile) {
+  			$pinfo['file'] = $pfile;
+			$pinfo["help"] = $this->get_plugin_description($pfile);
+			$pinfo["name"] = strtoupper(str_replace(".php", "", str_replace("wikiplugin_", "", $pfile)));
+			$plugins[] = $pinfo;
+		}
+		return $plugins;
+	} else {
+		return $files;
     }
+	}
 
     //
     // Call 'wikiplugin_.*_description()' from given file
