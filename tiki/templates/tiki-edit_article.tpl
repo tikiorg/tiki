@@ -1,10 +1,9 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_article.tpl,v 1.56 2007-03-16 15:01:29 sylvieg Exp $ *}
 {* Note: if you edit this file, make sure to make corresponding edits on tiki-edit_submission.tpl*}
 
 {popup_init src="lib/overlib.js"}
 {include file="tiki-articles-js.tpl"}
-{if $preview}
-{include file="tiki-preview_article.tpl"}
-{/if}
+
 <h1>{if $articleId}<a class="pagetitle" href="tiki-edit_article.php?articleId={$articleId}">{tr}Edit{/tr}: {$title}</a>{else}<a class="pagetitle" href="tiki-edit_article.php?articleId={$articleId}">{tr}Edit article{/tr}{/if}
 {assign var=area_name value="body"}
 
@@ -21,6 +20,10 @@
 <a class="linkbut" href="tiki-list_articles.php">{tr}list articles{/tr}</a>
 <a class="linkbut" href="tiki-view_articles.php">{tr}view articles{/tr}</a>
 <br /><br />
+{if $preview}
+{include file="tiki-preview_article.tpl"}
+{/if}
+
 <form enctype="multipart/form-data" method="post" action="tiki-edit_article.php" id='editpageform'>
 <input type="hidden" name="articleId" value="{$articleId|escape}" />
 <input type="hidden" name="image_data" value="{$image_data|escape}" />
@@ -140,14 +143,16 @@
 &nbsp;{$siteTimeZone}
 </span>
 </td></tr>
-</table>
 {if $tiki_p_use_HTML eq 'y'}
-<div align="center">{tr}Allow HTML{/tr}: <input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/></div>
+<tr class="formcolor"><td>{tr}Allow HTML{/tr}</td><td><input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/></td></tr>
 {/if}
-<div align="center">
-<input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" />
-<input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" />
-</div>
+<tr  class="formcolor"><td></td><td><input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" />
+<input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /></td></tr>
+</table>
 </form>
 <br />
+
+<div class="button2">
+<a href="#edithelp" onclick="javascript:flip('edithelpzone'); return true;" name="edithelp" class="linkbut">{tr}wiki help{/tr}</a>
+</div>
 {include file=tiki-edit_help.tpl}

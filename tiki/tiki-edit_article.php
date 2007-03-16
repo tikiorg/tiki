@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.65 2007-03-06 19:29:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.66 2007-03-16 15:01:29 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -416,6 +416,8 @@ $smarty->assign('siteTimeZone', $display_timezone);
 include_once ('tiki-section_options.php');
 
 include_once("textareasize.php");
+
+include_once('plugins_help.php');
 
 include_once ('lib/quicktags/quicktagslib.php');
 $quicktags = $quicktagslib->list_quicktags(0,100,'taglabel_desc','','articles');
