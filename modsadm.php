@@ -26,12 +26,13 @@ $commands=array('help' => array(),
 // 		'add-source' => array(),
 // 		'remove-source' => array(),
 // 		'list-sources' => array(),
-		'list' => array('options' => array('-l' => array('usage' => 'Do not query for remote mods'),
-						   '-i' => array('usage' => 'Show only installed mods'))),
-		'install' => array('usage' => 'install mod1 [mod2...]',
-				   'options' => array('-d' => array('usage' => "Download only mods, don't install them"))),
-		'remove' => array('usage' => 'remove mod1 [mod2...]'),
-		'publish' => array('usage' => 'publish mod1 [mod2...]'),
+		'list' => array('usage' => '[options] [regex]',
+				'options' => array('-l' => array('help' => 'Do not query for remote mods'),
+						   '-i' => array('help' => 'Show only installed mods'))),
+		'install' => array('usage' => '[options] mod1 [mod2...]',
+				   'options' => array('-d' => array('help' => "Download only mods, don't install them"))),
+		'remove' => array('usage' => 'mod1 [mod2...]'),
+		'publish' => array('usage' => 'mod1 [mod2...]'),
 // 		'unpublish' => array(),
 // 		'republish' => array(),
 		);
@@ -180,16 +181,23 @@ function command_list($goption, $coption, $cparams) {
 	global $modslib;
 	$merged=array();
 
+	if (count($cparams)) {
+		$regex=$cparams[0];
+	} else $regex='';
+
 	foreach($repos as $reponame => $repo) {
 		if ($reponame == 'remote' && in_array('-l', $coption)) continue;
 		if ($reponame != 'installed' && in_array('-i', $coption)) continue;
 		$content=$modslib->read_list($repo['url'], $reponame);
 		foreach($content as $meat) {
 			foreach($meat as $mod) {
+				if (($regex !== '') && !preg_match('/'.$regex.'/', $mod->modname))
+					continue;
 				$merged[$mod->type][$mod->name][$reponame]=$mod;
 			}
 		}
 	}
+
 
 	foreach($merged as $k => $meat) {
 		ksort(&$merged[$k]);
@@ -219,14 +227,14 @@ function usage($err) {
 	echo "php modsadm.php [options] commande\n\n";
 	echo "commands:\n";
 	foreach($commands as $command => $sglonk) {
-		echo "  ".$command."\n";
+		echo "  ".$command.(isset($sglonk['usage']) ? ' '.$sglonk['usage'] : '')."\n";
 	}
 	echo "\ncommands options:\n";
 	foreach($commands as $command => $sglonk) {
 		if (isset($sglonk['options'])) {
 			echo "  ".$command.":\n";
 			foreach($sglonk['options'] as $k => $option) {
-				echo "    $k: ".$option['usage']."\n";
+				echo "    $k: ".$option['help']."\n";
 			}
 		}
 	}
