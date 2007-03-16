@@ -1,4 +1,4 @@
-
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-cms.tpl,v 1.23 2007-03-16 16:45:10 sylvieg Exp $ *}
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
 <div class="rbox-data" name="tip">{tr}Look under "Articles" on the application menu for links to{/tr} "<a class="rbox-link" href="tiki-admin_topics.php">{tr}Admin topics{/tr}</a>" {tr}and{/tr} "<a class="rbox-link" href="tiki-article_types.php">{tr}Admin types{/tr}</a>".</div>
