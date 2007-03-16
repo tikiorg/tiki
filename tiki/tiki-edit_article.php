@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.67 2007-03-16 15:13:09 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.68 2007-03-16 16:40:31 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -68,6 +68,7 @@ $smarty->assign('author', '');
 $smarty->assign('type', 'Article');
 $smarty->assign('rating', 7);
 $smarty->assign('edit_data', 'n');
+$smarty->assign('emails', '');
 
 // If the articleId is passed then get the article data
 // GGG - You have to check for the actual value of the articleId because it
@@ -140,10 +141,24 @@ if (isset($_REQUEST["allowhtml"])) {
 	}
 }
 
-$smarty->assign('preview', 0);
+$errors = array();
+if (empty($_REQUEST['emails']) || $feature_cms_emails != 'y')
+	$emails = '';
+elseif (!empty($_REQUEST['emails'])) {
+	$emails = split(',', $_REQUEST['emails']);
+	foreach ($emails as $email) {
+		if (!validate_email($email, 'y'))
+			$errors[] = tra('Invalid email:').' '.$email;
+	}
+}
+
+if (isset($_REQUEST["preview"]))
+	$smarty->assign('preview', 1);
+else
+	$smarty->assign('preview', 0);
 
 // If we are in preview mode then preview it!
-if (isset($_REQUEST["preview"])) {
+if (isset($_REQUEST["preview"]) or !empty($errors)) {
 	# convert from the displayed 'site' time to 'server' time
 	if (isset($_REQUEST["publish_Hour"])) {
 	$publishDate = $tikilib->make_time($_REQUEST["publish_Hour"], $_REQUEST["publish_Minute"], 0, $_REQUEST["publish_Month"], $_REQUEST["publish_Day"], $_REQUEST["publish_Year"]);
@@ -157,7 +172,6 @@ if (isset($_REQUEST["preview"])) {
 	}
 
 	$smarty->assign('reads', '0');
-	$smarty->assign('preview', 1);
 	$smarty->assign('edit_data', 'y');
 	$smarty->assign('title', strip_tags($_REQUEST["title"], '<a><pre><p><img><hr><b><i>'));
 	$smarty->assign('authorName', $_REQUEST["authorName"]);
@@ -188,6 +202,7 @@ if (isset($_REQUEST["preview"])) {
 	if (!isset($_REQUEST["image_caption"])) $_REQUEST['image_caption'] = '';
 	if (!isset($_REQUEST["lang"])) $_REQUEST['lang'] = '';
 	if (!isset($_REQUEST["type"])) $_REQUEST['type'] = '';
+	if (!isset($_REQUEST['emails'])) $_REQUEST['emails'] = '';
 
   $smarty->assign('topline', $_REQUEST["topline"]);
   $smarty->assign('subtitle', $_REQUEST["subtitle"]);
@@ -204,6 +219,7 @@ if (isset($_REQUEST["preview"])) {
 	$smarty->assign('type', $_REQUEST["type"]);
 	$smarty->assign('rating', $_REQUEST["rating"]);
 	$smarty->assign('entrating', floor($_REQUEST["rating"]));
+	$smarty->assign_by_ref('emails', $_REQUEST['emails']);
 	$imgname = $_REQUEST["image_name"];
 	$data = urldecode($_REQUEST["image_data"]);
 
@@ -272,8 +288,7 @@ if (isset($_REQUEST["preview"])) {
 	$smarty->assign('heading', $heading);
 }
 
-// Pro
-if (isset($_REQUEST["save"])) {
+if (isset($_REQUEST['save']) && empty($errors)) {
 	check_ticket('edit-article');
 	include_once ("lib/imagegals/imagegallib.php");
 
@@ -359,18 +374,11 @@ if (isset($_REQUEST["save"])) {
 		}
 	}
 
-	// If page exists
 	$artid = $artlib->replace_article(strip_tags($_REQUEST["title"], '<a><pre><p><img><hr><b><i>'), $_REQUEST["authorName"],
 		$_REQUEST["topicId"], $useImage, $imgname, $imgsize, $imgtype, $imgdata, $heading, $body, $publishDate, $expireDate, $user,
 		$articleId, $_REQUEST["image_x"], $_REQUEST["image_y"], $_REQUEST["type"], $_REQUEST["topline"], $_REQUEST["subtitle"],
-		$_REQUEST["linkto"], $_REQUEST["image_caption"], $_REQUEST["lang"], $_REQUEST["rating"], $isfloat);
+		$_REQUEST["linkto"], $_REQUEST["image_caption"], $_REQUEST["lang"], $_REQUEST["rating"], $isfloat, $emails);
 
-	/*
-	$links = $tikilib->get_links($body);
-	$notcachedlinks = $tikilib->get_links_nocache($body);
-	$cachedlinks = array_diff($links, $notcachedlinks);
-	$tikilib->cache_links($cachedlinks);
-	*/
 	$cat_type = 'article';
 	$cat_objid = $artid;
 	$cat_desc = substr($_REQUEST["heading"], 0, 200);
@@ -380,6 +388,7 @@ if (isset($_REQUEST["save"])) {
 
 	header ("location: tiki-read_article.php?articleId=$artid");
 }
+$smarty->assign_by_ref('errors', $errors);
 
 // Set date to today before it's too late
 $_SESSION["thedate"] = $tikilib->now;

@@ -39,6 +39,10 @@
           <td><input type="checkbox" name="feature_cms_print" id="articles-print"
               {if $feature_cms_print eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
+          <td class="form"><label for="articles-emails">{tr}Can specify notification emails when creating an article{/tr}:</label></td>
+          <td><input type="checkbox" name="feature_cms_emails" id="articles-emails"
+              {if $feature_cms_emails eq 'y'}checked="checked"{/if} /></td>
+        </tr><tr>
           <td colspan="2" class="button"><input type="submit" name="cmsfeatures"
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>

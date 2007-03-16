@@ -194,7 +194,7 @@ class ArtLib extends TikiLib {
 	// moved from tikilib.php
     function replace_article($title, $authorName, $topicId, $useImage, $imgname, $imgsize, $imgtype, $imgdata, 
 	    $heading, $body, $publishDate, $expireDate, $user, $articleId, $image_x, $image_y, $type, 
-	    $topline, $subtitle, $linkto, $image_caption, $lang, $rating = 0, $isfloat = 'n') {
+							 $topline, $subtitle, $linkto, $image_caption, $lang, $rating = 0, $isfloat = 'n', $emails='') {
 
 		if ($expireDate < $publishDate) {
 		    $expireDate = $publishDate;
@@ -251,6 +251,10 @@ class ArtLib extends TikiLib {
 			foreach ($nots2 as $n) {
 				if (!in_array($n['email'], $nots3))
 					$nots[] = $n;
+			}
+			foreach ($emails as $n) {
+				if (!in_array($n, $nots3))
+					$nots[] = array('email'=>$n);
 			}
 		    if (!isset($_SERVER["SERVER_NAME"])) {
 			    $_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
