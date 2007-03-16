@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.407 2007-03-14 12:59:18 pkdille Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.408 2007-03-16 14:59:53 pkdille Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -1189,6 +1189,7 @@ $pref['useUrlIndex'] = 'n';
 $pref['use_proxy'] = 'n';
 $pref['user_list_order'] = 'score_desc';
 $pref['webserverauth'] = 'n';
+$pref['feature_purifier'] = 'y';
 
 // *****************************************************************************
 // First we populate with default values
