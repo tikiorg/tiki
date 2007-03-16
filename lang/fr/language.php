@@ -1874,6 +1874,7 @@ $lang=Array(
 "Site Logo and Identity" => "Logo et identité du site",
 "Calendar manual selection of time/date" => "Sélection manuelle temps/date dans le calendrier",
 "Help System" => "Système d'aide",
+"HTML Purifier (Content is cleaned to XHTML 1.1 Strict on each save)" => "HTML Purifier (Le contenu est nettoyé en XHTML 1.1 Strict à chaque enregistrement)",
 "Content Features" => "Fonctionnalités contenu",
 "Hotwords" => "Mot/liens automatiques",
 "Edit Templates" => "Modifier les gabarits",

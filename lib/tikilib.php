@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.730 2007-03-14 20:02:10 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.731 2007-03-16 14:59:54 pkdille Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3902,7 +3902,7 @@ function add_pageview() {
 	    return false;
 
 	$html=$is_html?1:0;
-	if ($html) {
+	if ($html && $feature_purifier != 'n') {
 		require "HTMLPurifier.auto.php";
 		$purifier = new HTMLPurifier();
 		$edit_data = $purifier->purify($edit_data);
@@ -6038,7 +6038,7 @@ if (!$simple_wiki) {
 	$version = $old_version + 1;
 
 	$html=$is_html?1:0;
-	if ($html) {
+	if ($html && $feature_purifier != 'n') {
 		require "HTMLPurifier.auto.php";
 		$purifier = new HTMLPurifier();
 		$edit_data = $purifier->purify($edit_data);
