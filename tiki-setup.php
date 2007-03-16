@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.408 2007-03-16 14:59:53 pkdille Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.409 2007-03-16 16:40:31 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -573,6 +573,8 @@ $sections['cms']['itemkey'] = 'articleId';
 $pref['feature_articles'] = 'n';
 $pref['feature_submissions'] = 'n';
 $pref['feature_cms_rankings'] = 'y';
+$pref['feature_cms_print'] = 'y';
+$pref['feature_cms_emails'] = 'n';
 $pref['art_list_title'] = 'y';
 $pref['art_list_title_len'] = '20';
 $pref['art_list_topic'] = 'y';

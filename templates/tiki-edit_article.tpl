@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_article.tpl,v 1.56 2007-03-16 15:01:29 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_article.tpl,v 1.57 2007-03-16 16:40:32 sylvieg Exp $ *}
 {* Note: if you edit this file, make sure to make corresponding edits on tiki-edit_submission.tpl*}
 
 {popup_init src="lib/overlib.js"}
@@ -22,6 +22,16 @@
 <br /><br />
 {if $preview}
 {include file="tiki-preview_article.tpl"}
+{/if}
+
+{if !empty($errors)}
+<div class="simplebox highlight">
+{tr}One of the email addresses you typed is invalid{/tr}<br />
+{foreach from=$errors item=m name=errors}
+{$m}
+{if !$smarty.foreach.errors.last}<br />{/if}
+{/foreach}
+</div>
 {/if}
 
 <form enctype="multipart/form-data" method="post" action="tiki-edit_article.php" id='editpageform'>
@@ -105,7 +115,7 @@
 </td></tr>
 <tr id='show_image_4' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Own image size x{/tr}</td><td><input type="text" name="image_x" value="{$image_x|escape}" />{tr}pixels{/tr}</td></tr>
 <tr id='show_image_5' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Own image size y{/tr}</td><td><input type="text" name="image_y" value="{$image_y|escape}" />{tr}pixels{/tr}</td></tr>
-<tr id='show_image_caption' {if $types.$type.show_image_caption eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Image caption{/tr} *</td><td><input type="text" name="image_caption" value="{$image_caption|escape}" size="60" /></td></tr>
+<tr id='show_image_caption' {if $types.$type.show_image_caption eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Image caption{/tr} *</td><td><input type="text" name="image_caption" value="{$image_caption|escape}" size="80" /></td></tr>
 
 {if $feature_cms_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
 <tr class="formcolor"><td>{tr}Apply template{/tr}</td><td>
@@ -146,7 +156,11 @@
 {if $tiki_p_use_HTML eq 'y'}
 <tr class="formcolor"><td>{tr}Allow HTML{/tr}</td><td><input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/></td></tr>
 {/if}
-<tr  class="formcolor"><td></td><td><input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" />
+{if $feature_cms_emails eq 'y' and $articleId eq 0}
+<tr class="formcolor"><td>{tr}Emails to be notified (separated with commas){/tr}</td><td><input type="text" name="emails" value="{$emails|escape}" size="80" /></td></tr>
+{/if}
+
+<tr class="formcolor"><td></td><td><input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" />
 <input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /></td></tr>
 </table>
 </form>
