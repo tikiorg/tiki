@@ -1,5 +1,6 @@
 <form name="aform" formId='editpageform' action="tiki-take_survey.php" method="post">
 <input type="hidden" name="surveyId" value="{$surveyId|escape}" />
+<input type="hidden" name="vote" value="yes" />
   <h2>{$survey_info.name}</h2>
     <div class="quizdescription">{$survey_info.description}</div>
     {section name=ix loop=$questions}
