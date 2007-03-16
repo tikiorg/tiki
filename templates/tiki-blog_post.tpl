@@ -111,4 +111,8 @@
 </table>
 </form>
 <br />
+
+<div class="button2">
+<a href="#edithelp" onclick="javascript:flip('edithelpzone'); return true;" name="edithelp" class="linkbut">{tr}wiki help{/tr}</a>
+</div>
 {include file=tiki-edit_help.tpl}
