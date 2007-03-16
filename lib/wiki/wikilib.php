@@ -1,4 +1,5 @@
 <?php
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki/wikilib.php,v 1.107 2007-03-16 17:00:41 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
