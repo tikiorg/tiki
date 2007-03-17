@@ -732,17 +732,19 @@ class ModsLib {
 					}
 				}
 				/* compare required conflicts with installed */
-				foreach($repos['installed'] as $dep) {
-					if ($moddep->isitin($dep)) {
-						$mod->errors[]="conflict avec ".$dep->modname;
-						$dep->errors[]="conflict avec ".$mod->modname;
-						if (!isset($deps['conflicts'][$dep->modname])) {
-							$dep->errors[]="3/conflict avec ".$mod->modname;
-							$deps['conflicts'][$dep->modname]=$dep;
-						}
-						if (!isset($deps['conflicts'][$mod->modname])) {
-							$mod->errors[]="4/conflict avec ".$dep->modname;
-							$deps['conflicts'][$mod->modname]=$mod;
+				foreach($repos['installed'] as $meat) {
+					foreach($meat as $dep) {
+						if ($moddep->isitin($dep)) {
+							$mod->errors[]="conflict avec ".$dep->modname;
+							$dep->errors[]="conflict avec ".$mod->modname;
+							if (!isset($deps['conflicts'][$dep->modname])) {
+								$dep->errors[]="3/conflict avec ".$mod->modname;
+								$deps['conflicts'][$dep->modname]=$dep;
+							}
+							if (!isset($deps['conflicts'][$mod->modname])) {
+								$mod->errors[]="4/conflict avec ".$dep->modname;
+								$deps['conflicts'][$mod->modname]=$mod;
+							}
 						}
 					}
 				}
@@ -750,19 +752,21 @@ class ModsLib {
 		}
 
 		/* now search conflicts from the installeds */
-		foreach ($repos['installed'] as $mod) {
-			if (!is_array($mod->conflicts)) continue;
-			foreach($mod->conflicts as $moddep) {
-				/* compare installed with requireds */
-				foreach($deps['toinstall'] as $dep) {
-					if ($moddep->isitin($dep)) {
-						if (!isset($deps['conflicts'][$dep->modname])) {
-							$mod->errors[]="5/conflict avec ".$dep->modname;
-							$deps['conflicts'][$dep->modname]=$dep;
-						}
-						if (!isset($deps['conflicts'][$mod->modname])) {
-							$dep->errors[]="6/conflict avec ".$mod->modname;
-							$deps['conflicts'][$mod->modname]=$mod;
+		foreach ($repos['installed'] as $meat) {
+			foreach ($meat as $mod) {
+				if (!is_array($mod->conflicts)) continue;
+				foreach($mod->conflicts as $moddep) {
+					/* compare installed with requireds */
+					foreach($deps['toinstall'] as $dep) {
+						if ($moddep->isitin($dep)) {
+							if (!isset($deps['conflicts'][$dep->modname])) {
+								$mod->errors[]="5/conflict avec ".$dep->modname;
+								$deps['conflicts'][$dep->modname]=$dep;
+							}
+							if (!isset($deps['conflicts'][$mod->modname])) {
+								$dep->errors[]="6/conflict avec ".$mod->modname;
+								$deps['conflicts'][$mod->modname]=$mod;
+							}
 						}
 					}
 				}
