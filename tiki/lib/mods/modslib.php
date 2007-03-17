@@ -29,12 +29,12 @@ class TikiMod {
 	
 	/*
 	 * return:
-	 *  1 if $mod is newer
-	 * -1 if $this is newer
+	 * -1 if $mod is newer
+	 *  1 if $this is newer
 	 *  0 if same revision
 	 */
-	function isnewer($mod) {
-		if (ModsLib::revision_compare($mod->revision, $this->revision) > 0)
+	function isnewerthan($mod) {
+		if (ModsLib::revision_compare($this->revision, $mod->revision) > 0)
 			return TRUE;
 	}
 
@@ -434,54 +434,45 @@ class ModsLib {
 
 	function dl_remote($remote,$file,$local) {
 		$meat = $this->get_remote($remote."/Dist/".$file.".tgz");
-		if ($meat) {
-			$localfile = $local."/Cache/".$file.".tgz";
-			if (is_file($localfile)) unlink($localfile);
-			$fp = fopen($localfile,"wb");
-			fwrite($fp,$meat);
-			fclose($fp);
-			require_once("lib/tar.class.php");
-			$tar = new tar;
-			if ($tar->openTAR($localfile)) {
-				foreach ($tar->files as $f) {
-					$this->prepare_dir(dirname($local.'/'.$f['name']));
-					$fp = fopen($local.'/'.$f['name'],"wb");
-					fwrite($fp,$f['file'],$f['size']);
-					fclose($fp);
-				}
-			} else {
-				$this->feedback_error(sprintf(tra('File %s is not a valid archive'),$localfile));
-				return false;
+		if ($meat === FALSE) return FALSE;
+
+		$localfile = $local."/Cache/".$file.".tgz";
+		if (is_file($localfile)) unlink($localfile);
+		$fp = fopen($localfile,"wb");
+		fwrite($fp,$meat);
+		fclose($fp);
+		require_once("lib/tar.class.php");
+		$tar = new tar;
+		if ($tar->openTAR($localfile)) {
+			foreach ($tar->files as $f) {
+				$this->prepare_dir(dirname($local.'/'.$f['name']));
+				$fp = fopen($local.'/'.$f['name'],"wb");
+				fwrite($fp,$f['file'],$f['size']);
+				fclose($fp);
 			}
 		} else {
-			$this->feedback_error(sprintf(tra('%s is an empty archive file'),$file));
+			$this->feedback_error(sprintf(tra('File %s is not a valid archive'),$localfile));
 			return false;
 		}
 	}
 
 	function get_remote($url) {
 		$this->feedback_info("downloading '$url'...");
-		$buffer = $fp = '';
-		$u = parse_url($url);
-		if (!$u['path']) $u['path'] = '/';
-		$fp = @fsockopen($u['host'],80,$errno,$errmsg,30);
-		if ($fp) {
-			fwrite($fp,"GET ".$u['path']." HTTP/1.0\nHost: ".$u['host']."\nConnection: close\n\n");
-			while ($buf = fread($fp,1024)) {
-				$buffer.= $buf;
-			}
-			fclose($fp);
-			if (preg_match('/Content-Length: ([0-9]+)/', $buffer, $parts)) {
-				$buffer = substr($buffer, -$parts[1]);
-				return $buffer;
-			} else {
-				$this->feedback_error(sprintf(tra('Invalid remote file on url %s'),$url));
-				return false;
-			}
-		} else {
-			$this->feedback_error(sprintf(tra('Impossible to open %s : %s'),$url,$errmsg));
+		$fp = fopen($url, "r");
+		if ($fp === FALSE) {
+			$this->feedback_error(sprintf(tra('Impossible to open %s : %s'), $url, 'n/a'));
 			return false;
 		}
+		$buffer='';
+		while(($buf = fread($fp, 1024)) !== '') {
+			if ($buf === FALSE) {
+				$this->feedback_error(sprintf(tra('Impossible to read from %s'), $url));
+				return FALSE;
+			}
+			$buffer.=$buf;
+		}
+		fclose($fp);
+		return $buffer;
 	}
 
 	function refresh_remote($remote,$local) {
@@ -679,7 +670,7 @@ class ModsLib {
 		foreach($repos as $repo_name => $repo) {
 			$mod=$this->get_depend_available($moddep, $repo, TRUE);
 			if ($mod !== NULL) {
-				if ($found === NULL || $found->isnewer($found)) {
+				if ($found === NULL || $mod->isnewerthan($found)) {
 					$found=$mod;
 				}
 			}
@@ -690,6 +681,7 @@ class ModsLib {
 	function find_deps($modspath, $mods_server, $modnames) {
 		$deps=array("wanted" => array(),
 			    "toinstall" => array(),
+			    "toupgrade" => array(),
 			    "suggests" => array(),
 			    "conflicts" => array(),
 			    "unavailable" => array());
@@ -773,6 +765,17 @@ class ModsLib {
 			}
 		}
 
+		/* move upgraded package to upgrade */
+ 		foreach($deps['toinstall'] as $k => $toinstall) {
+ 			if (isset($repos['installed'][$toinstall->type])
+			    && isset($repos['installed'][$toinstall->type][$toinstall->name])) {
+				$meat=array('from' => $repos['installed'][$toinstall->type][$toinstall->name],
+					    'to' => $toinstall);
+				$deps['toupgrade'][$toinstall->modname]=$meat;
+				unset($deps['toinstall'][$k]);
+			}
+ 		}
+
 		return $deps;
 	}
 
@@ -786,7 +789,7 @@ class ModsLib {
 				} else {
 					if ($mod->repository == 'installed') continue;
 					if (isset($deps['toinstall'][$mod->modname])) {
-						if ($mod->isnewer($deps['toinstall'][$mod->modname])) {
+						if ($mod->isnewerthan($deps['toinstall'][$mod->modname])) {
 							// if there is an older version in the deps['toinstall'],
 							// this is because a previous requires was requiring
 							// an older one. So we don't try to upgrade it, we
@@ -863,6 +866,14 @@ class ModsLib {
 			}
 		}
 
+		foreach($deps['toupgrade'] as $meat) {
+			$mod=$meat['to'];
+			if ($mod->repository == 'remote') {
+				$res=$this->dl_remote($mods_server,$mod->modname.'-'.$mod->revision,$modspath);
+				if ($res === false) return false;
+			}
+		}
+
 		// we reconstruct deps because now there are modules that are downloaded
 		$this->rebuild_list($modspath."/Packages");
 		
@@ -870,6 +881,11 @@ class ModsLib {
 
 		foreach($deps['toinstall'] as $mod) {
 			$this->install($modspath, $mod);
+		}
+
+		foreach($deps['toupgrade'] as $meat) {
+			$this->remove($modspath, $meat['from'], true);
+			$this->install($modspath, $meat['to'], $meat['from'], true);
 		}
 		
 	}
@@ -880,7 +896,7 @@ class ModsLib {
 		}
 	}
 
-	function install($path,$mod,$from=0,$upgrade=false) {
+	function install($path,$mod,$from=NULL,$upgrade=false) {
 		$this->feedback_info("installing ".$mod->modname." (".$mod->revision.") ...");
 		$file = $path.'/Packages/'.$mod->modname.'.info.txt';
 		$info = new TikiModInfo($mod->modname);
@@ -915,12 +931,12 @@ class ModsLib {
 			uksort($info->sql_upgrade, array($this, 'revision_compare'));
 			global $tikilib;
 			foreach ($info->sql_upgrade as $v=>$vv) {
-				if ($this->revision_compare($from,$v) < 0) {
+				if ($this->revision_compare($from->revision,$v) < 0) {
 					foreach ($vv as $sql) {
 						if (count($conf) and strpos($sql,'$')) {
 							$sql = preg_replace('/\\$([_a-zA-Z0-9]*)/e','$conf[\'\\1\'][0]',$sql);
 						}
-						$this->feedback_error("$from -> $v : $sql");
+						$this->feedback_error($from->revision." -> $v : $sql");
 						$tikilib->query($sql,array());
 					}
 				}
@@ -994,12 +1010,6 @@ class ModsLib {
 			$this->feedback_warning("'$file' was not found for removing");
 		}
 	}
-
-	function upgrade($path,$mod) {
-		$from = $this->remove($path,$mod,$upgrade=true);
-		$this->install($path,$mod,$from,$upgrade=true);
-	}
-
 }
 
 function newer($a,$b) {

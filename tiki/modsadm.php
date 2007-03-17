@@ -85,13 +85,19 @@ function command_install($goption, $coption, $cparams) {
 	if (count($deps['wanted'])) {
 		echo "You asked to install these mods:\n";
 		foreach ($deps['wanted'] as $mod) {
+			echo "  ".$mod->modname."\n";
+		}
+	}
+	if (count($deps['toinstall'])) {
+		echo "The following packages will be installed:\n";
+		foreach ($deps['toinstall'] as $mod) {
 			echo "  ".$mod->modname." (".$mod->revision.")\n";
 		}
 	}
-	if (count($deps['requires'])) {
-		echo "The following packages will be installed:\n";
-		foreach ($deps['requires'] as $mod) {
-			echo "  ".$mod->modname." (".$mod->revision.")\n";
+	if (count($deps['toupgrade'])) {
+		echo "The following packages will be upgraded:\n";
+		foreach ($deps['toupgrade'] as $meat) {
+			echo "  ".$meat['to']->modname." (".$meat['to']->revision.") (from version ".$meat['from']->revision.")\n";
 		}
 	}
 	if (count($deps['suggests'])) {
