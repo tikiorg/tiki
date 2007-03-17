@@ -35,6 +35,31 @@ permission (using "./fixperms fix").{/tr}</div>
 <form method='post' action='?'>
 <div class="simplebox">
  <ul>
+ {if $installask.wanted}
+  <li>You asked to install these mods:
+  <ul>{foreach from=$installask.wanted item=element}
+   {if $element->repository eq 'unavailable'}
+    <li>{$element->name|escape} ({$element->type|escape}) but is not in any repository</li>
+   {else}
+    <li><input type='checkbox' onchange='update_button_install();' name='install-wants[]' value='{$element->modname|escape}' checked />{$element->name|escape} {$element->revision} ({$element->type|escape})</li>
+   {/if}
+   {if $element->repository eq 'remote'}
+    (will be downloaded)
+   {/if}
+  {/foreach}</ul>
+  </li>
+ {/if}
+ {if $installask.wantedtoremove}
+  <li>You asked to <strong>remove</strong> these mods:
+  <ul>{foreach from=$installask.wantedtoremove item=element}
+   {if $element->repository eq 'installed'}
+    <li><input type='checkbox' onchange='update_button_install();' name='install-wants[]' value='{$element->modname|escape}' checked />{$element->name|escape} {$element->revision} ({$element->type|escape})</li>
+   {else}
+    <li>{$element->name|escape} ({$element->type|escape}) but is not installed</li>
+   {/if}
+  {/foreach}</ul>
+  </li>
+ {/if}
  {if $installask.unavailable}
   <li style='color:#990000'>The following packages are required, but cannot be installed:
   <ul>{foreach from=$installask.unavailable item=element}
@@ -61,41 +86,16 @@ permission (using "./fixperms fix").{/tr}</div>
     </li>
   {/foreach}</ul>
  {/if}
- {if $installask.wanted}
-  <li>The following packages will be <strong>installed</strong>:
-  <ul>{foreach from=$installask.wanted item=element}
-   {if $element->repository eq 'unavailable'}
-    <li>{$element->name|escape} ({$element->type|escape}) but is not in any repository</li>
-   {else}
-    <li><input type='checkbox' onchange='update_button_install();' name='install-wants[]' value='{$element->modname|escape}' checked />{$element->name|escape} {$element->revision} ({$element->type|escape})</li>
-   {/if}
-   {if $element->repository eq 'remote'}
-    (will be downloaded)
-   {/if}
-  {/foreach}</ul>
-  </li>
- {/if}
- {if $installask.wantedtoremove}
-  <li>The following packages will be <strong>removed</strong>:
-  <ul>{foreach from=$installask.wantedtoremove item=element}
-   {if $element->repository eq 'installed'}
-    <li><input type='checkbox' onchange='update_button_install();' name='install-wants[]' value='{$element->modname|escape}' checked />{$element->name|escape} {$element->revision} ({$element->type|escape})</li>
-   {else}
-    <li>{$element->name|escape} ({$element->type|escape}) but is not installed</li>
-   {/if}
-  {/foreach}</ul>
-  </li>
- {/if}
  {if $installask.toremove}
-  <li>The following <strong>extra</strong> packages will be <strong>removed</strong>:
+  <li>The following mods will be <strong>removed</strong>:
   <ul>{foreach from=$installask.toremove item=element}
     <li>{$element->name|escape} {$element->revision} ({$element->type|escape})</li>
   {/foreach}</ul>
   </li>
  {/if}
- {if $installask.requires}
-  <li>The following <strong>extra</strong> packages will be <strong>installed</strong>:
-  <ul>{foreach from=$installask.requires item=element}
+ {if $installask.toinstall}
+  <li>The following mods will be <strong>installed</strong>:
+  <ul>{foreach from=$installask.toinstall item=element}
    {if $element->repository eq 'unavailable'}
     <li>{$element->name|escape} ({$element->type|escape}) but is not in any repository</li>
    {else}

@@ -75,14 +75,21 @@ function command_install($goption, $coption, $cparams) {
 		}
 		failure($err);
 	}
+	if (count($deps['conflicts'])) {
+		$err="Sorry, theses packages are required but conflicts:\n";
+		foreach ($deps['conflicts'] as $mod) {
+			$err.=" - ".$mod->modname."\n";
+		}
+		failure($err);
+	}
 	if (count($deps['wanted'])) {
-		echo "The following packages will be installed:\n";
+		echo "You asked to install these mods:\n";
 		foreach ($deps['wanted'] as $mod) {
 			echo "  ".$mod->modname." (".$mod->revision.")\n";
 		}
 	}
 	if (count($deps['requires'])) {
-		echo "The following extra packages will be installed:\n";
+		echo "The following packages will be installed:\n";
 		foreach ($deps['requires'] as $mod) {
 			echo "  ".$mod->modname." (".$mod->revision.")\n";
 		}
@@ -111,13 +118,13 @@ function command_remove($goption, $coption, $cparams) {
 	$deps=$modslib->find_deps_remove($mods_dir, $mods_server, $cparams);
 
 	if (count($deps['wantedtoremove'])) {
-		echo "The following packages will be REMOVED:\n";
+		echo "You asked to remove these mods:\n";
 		foreach ($deps['wantedtoremove'] as $mod) {
 			echo "  ".$mod->modname." (".$mod->revision.")\n";
 		}
 	}
 	if (count($deps['toremove'])) {
-		echo "The following extra packages will be REMOVED:\n";
+		echo "The following packages will be REMOVED:\n";
 		foreach ($deps['toremove'] as $mod) {
 			echo "  ".$mod->modname." (".$mod->revision.")\n";
 		}
