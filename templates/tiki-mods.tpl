@@ -43,9 +43,6 @@ permission (using "./fixperms fix").{/tr}</div>
    {else}
     <li><input type='checkbox' onchange='update_button_install();' name='install-wants[]' value='{$element->modname|escape}' checked />{$element->name|escape} {$element->revision} ({$element->type|escape})</li>
    {/if}
-   {if $element->repository eq 'remote'}
-    (will be downloaded)
-   {/if}
   {/foreach}</ul>
   </li>
  {/if}
@@ -99,10 +96,18 @@ permission (using "./fixperms fix").{/tr}</div>
    {if $element->repository eq 'unavailable'}
     <li>{$element->name|escape} ({$element->type|escape}) but is not in any repository</li>
    {else}
-    <li>{$element->name|escape} {$element->revision} ({$element->type|escape})</li>
+    <li>{$element->name|escape} {$element->revision} ({$element->type|escape}){if $element->repository eq 'remote'} (will be downloaded){/if}</li>
    {/if}
-   {if $element->repository eq 'remote'}
-    (will be downloaded)
+  {/foreach}</ul>
+  </li>
+ {/if}
+ {if $installask.toupgrade}
+  <li>The following mods will be <strong>upgraded</strong>:
+  <ul>{foreach from=$installask.toupgrade item=element}
+   {if $element.to->repository eq 'unavailable'}
+    <li>{$element.to->name|escape} ({$element.to->type|escape}) but is not in any repository</li>
+   {else}
+    <li>{$element.to->name|escape} {$element.to->revision} (from {$element.from->revision}) ({$element.to->type|escape}){if $element.to->repository eq 'remote'} (will be downloaded){/if}</li>
    {/if}
   {/foreach}</ul>
   </li>
@@ -196,26 +201,30 @@ href="tiki-mods.php?republish={$public.$type.$item->modname|escape:"url"}{$finda
 <td style="background:#dcdcdc;"></td>
 {/if}
 
-{if $local.$type.$item->name}
+{if $local.$type.$item}
 <td><b><a href="tiki-mods.php?focus={$local.$type.$item->modname|escape:"url"}{$findarg}{$typearg}">{$local.$type.$item->name}</a></b></td>
 <td>{$local.$type.$item->version[0]}</td>
 <td>{$local.$type.$item->licence}</td>
 <td>{$local.$type.$item->description}</td>
  {if $installed.$type.$item} 
-  {if ModsLib::revision_compare($local.$type.$item->revision, $installed.$type.$item->revision) > 0}
-<td style="background:#dcdeac;">{$installed.$type.$item->revision}{if $iswritable}<a href="tiki-mods.php?action=upgrade&amp;package={$local.$type.$item->modname|escape:"url"}{$findarg}{$typearg}">&gt;{$local.$type.$item->revision}</a>{/if}</td>
+  {if $local.$type.$item->isnewerthan($installed.$type.$item)}
+<td style="background:#dcdeac;">{$installed.$type.$item->revision}{if $iswritable}<a href="tiki-mods.php?action=upgrade&amp;package={$local.$type.$item->modname|escape:"url"}{$findarg}{$typearg}">-&gt;{$local.$type.$item->revision}</a>{/if}</td>
+  {elseif $remote.$type.$item and $remote.$type.$item->isnewerthan($installed.$type.$item)}
+<td style="background:#dcdeac;">{$installed.$type.$item->revision}{if $iswritable}<a href="tiki-mods.php?action=upgrade&amp;package={$remote.$type.$item->modname|escape:"url"}{$findarg}{$typearg}">-&gt;{$remote.$type.$item->revision}</a>{/if}</td>
   {else}
 <td style="background:#acfeac;">{$installed.$type.$item->revision}</td>
   {/if}
 <td style="background:#fcaeac;">{if $iswritable}<a href="tiki-mods.php?action=remove&amp;package={$local.$type.$item->modname|escape:"url"}{$findarg}{$typearg}">{tr}remove{/tr}</a>{/if}</td>
  {else}
+<td></td>
 <td colspan="3">{if $iswritable}<a href="tiki-mods.php?action=install&amp;package={$local.$type.$item->modname|escape:"url"}{$findarg}{$typearg}">{tr}install{/tr}</a>{else}<b><s>{tr}Install{/tr}</s></b>{/if}</td>
-{/if}
+ {/if}
 {else}
 <td>{$remote.$type.$item->name}</td>
 <td>{$remote.$type.$item->version[0]}</td>
 <td>{$remote.$type.$item->licence}</td>
 <td>{$remote.$type.$item->description}</td>
+<td></td>
 <td>{if $iswritable}<a href="tiki-mods.php?action=install&amp;package={$remote.$type.$item->modname|escape:"url"}{$findarg}{$typearg}">{tr}install{/tr}</a>{else}<b><s>{tr}Install{/tr}</s></b>{/if}</td>
 {/if}
 </tr>
