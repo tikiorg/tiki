@@ -198,7 +198,7 @@ href="tiki-mods.php?republish={$public.$type.$item->modname|escape:"url"}{$finda
 
 {if $local.$type.$item->name}
 <td><b><a href="tiki-mods.php?focus={$local.$type.$item->modname|escape:"url"}{$findarg}{$typearg}">{$local.$type.$item->name}</a></b></td>
-<td>{$local.$type.$item->version}</td>
+<td>{$local.$type.$item->version[0]}</td>
 <td>{$local.$type.$item->licence}</td>
 <td>{$local.$type.$item->description}</td>
  {if $installed.$type.$item} 
@@ -213,7 +213,7 @@ href="tiki-mods.php?republish={$public.$type.$item->modname|escape:"url"}{$finda
 {/if}
 {else}
 <td>{$remote.$type.$item->name}</td>
-<td>{$remote.$type.$item->version}</td>
+<td>{$remote.$type.$item->version[0]}</td>
 <td>{$remote.$type.$item->licence}</td>
 <td>{$remote.$type.$item->description}</td>
 <td>{if $iswritable}<a href="tiki-mods.php?action=install&amp;package={$remote.$type.$item->modname|escape:"url"}{$findarg}{$typearg}">{tr}install{/tr}</a>{else}<b><s>{tr}Install{/tr}</s></b>{/if}</td>

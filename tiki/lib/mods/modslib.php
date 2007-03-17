@@ -48,7 +48,7 @@ class TikiModAvailable extends TikiMod {
 	var $repository;      /* string */
 	var $description;     /* array */
 	var $licence;         /* string */
-	var $version;         /* string */
+	var $version;         /* array */
 	var $md5;             /* string */
 	var $requires;        /* array */
 	var $suggests;        /* array */
@@ -67,7 +67,7 @@ class TikiModAvailable extends TikiMod {
 		$out.= "'". addslashes($this->revision) ."',";
 		$out.= "'". is_array($this->description ? addslashes(implode(" ",$this->description)) : '') ."',";
 		$out.= "'". addslashes($this->licence) ."',";
-		$out.= "'". addslashes($this->version) ."',";
+		$out.= "'". addslashes($this->version[0]) ."',"; // probably buggy isn't it?
 		$out.= "'". addslashes($this->md5) ."',";
 		
 		$requires='';
@@ -214,8 +214,7 @@ class TikiModInfo extends TikiModAvailable {
 					$this->lastmodif = trim(preg_replace('/\$[^:]*:([^\$]*)\$/',"$1",trim($line)));
 				break;
 			case 'version':
-				if (empty($this->version))
-					$this->version = trim($line);
+				$this->version[]=trim($line);
 				break;
 			case 'licence':
 				$this->licence = trim($line);
@@ -594,7 +593,7 @@ class ModsLib {
 							while(isset($str[$col])) {
 								$blah=stripslashes($str[$col]);
 								if (preg_match('/^[0-9]+\.[0-9]+[0-9.]*$/', $blah))
-									$mod->version=$blah;
+									$mod->version[]=$blah;
 								elseif (preg_match('/^[0-9abcdefABCDEF]{32}$/', $blah))
 									$mod->md5=$blah;
 								$col++;
@@ -603,7 +602,7 @@ class ModsLib {
 
 						if (count($str) > 7) {
 							// now, $str[5] MUST be version, and $str[6] MUST be md5
-							$mod->version=$str[5];
+							$mod->version[]=$str[5];
 							$mod->md5=$str[6];
 							$mod->readdeps_line($str[7]);
 						}
