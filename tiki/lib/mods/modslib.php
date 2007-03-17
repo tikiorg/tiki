@@ -396,16 +396,35 @@ class TikiModDepend extends TikiMod {
  */
 class ModsLib {
 
-	var $feedback;
+	var $feedback_listeners;
 	var $types;
 
 	function ModsLib() { 
 		$this->feedback = array();
 		$this->types = array();
+		$this->feedback_listeners = array();
 	}
 
-	function add_feedback($feedback) {
-		$this->feedback[]=array('num'=>1, 'mes'=>$feedback);
+	function feedback_info($feedback) {
+		foreach($this->feedback_listeners as $listener) {
+			$listener(-1, $feedback);
+		}
+	}
+
+	function feedback_warning($feedback) {
+		foreach($this->feedback_listeners as $listener) {
+			$listener(0, $feedback);
+		}
+	}
+
+	function feedback_error($feedback) {
+		foreach($this->feedback_listeners as $listener) {
+			$listener(1, $feedback);
+		}
+	}
+
+	function add_feedback_listener($listener) {
+		$this->feedback_listeners[]=$listener;
 	}
 
 	function prepare_dir($path) {
@@ -431,16 +450,17 @@ class ModsLib {
 					fclose($fp);
 				}
 			} else {
-				$this->add_feedback(sprintf(tra('File %s is not a valid archive'),$localfile));
+				$this->feedback_error(sprintf(tra('File %s is not a valid archive'),$localfile));
 				return false;
 			}
 		} else {
-			$this->add_feedback(sprintf(tra('%s is an empty archive file'),$file));
+			$this->feedback_error(sprintf(tra('%s is an empty archive file'),$file));
 			return false;
 		}
 	}
 
 	function get_remote($url) {
+		$this->feedback_info("downloading '$url'...");
 		$buffer = $fp = '';
 		$u = parse_url($url);
 		if (!$u['path']) $u['path'] = '/';
@@ -455,11 +475,11 @@ class ModsLib {
 				$buffer = substr($buffer, -$parts[1]);
 				return $buffer;
 			} else {
-				$this->add_feedback(sprintf(tra('Invalid remote file on url %s'),$url));
+				$this->feedback_error(sprintf(tra('Invalid remote file on url %s'),$url));
 				return false;
 			}
 		} else {
-			$this->add_feedback(sprintf(tra('Impossible to open %s : %s'),$url,$errmsg));
+			$this->feedback_error(sprintf(tra('Impossible to open %s : %s'),$url,$errmsg));
 			return false;
 		}
 	}
@@ -490,9 +510,10 @@ class ModsLib {
 				$mod=new TikiModInfo($modname);
 				if (!isset($public[$mod->type])
 				    || !isset($public[$mod->type][$mod->name])) {
+					$this->feedback_info("packaging ".$mod->modname." ...");
 					$err=$mod->package($modpath, 'Packages/'.$mod->type.'-'.$mod->name.'.info.txt');
 					if ($err !== false) {
-						$this->add_feedback($err);
+						$this->feedback_error($err);
 						continue;
 					}
 					
@@ -555,7 +576,7 @@ class ModsLib {
 				$detail = new TikiModInfo($type, $name);
 				$err=$detail->readinfo($dir.'/'.$l.'.info.txt');
 				if ($err !== FALSE) {
-					$this->add_feedback($err);
+					$this->feedback_error($err);
 					continue;
 				}
 
@@ -835,12 +856,16 @@ class ModsLib {
 		}
 	}
 
-	function install($path,$type,$package,$from=0,$upgrade=false) {
-		$file = $path.'/Packages/'.$type.'-'.$package.'.info.txt';
-		$info = new TikiModInfo($type, $package);
+	function install_with_deps($modspath, $mods_server, $modnames) {
+	}
+
+	function install($path,$mod,$from=0,$upgrade=false) {
+		$this->feedback_info("installing ".$mod->modname." (".$mod->revision.") ...");
+		$file = $path.'/Packages/'.$mod->modname.'.info.txt';
+		$info = new TikiModInfo($mod->modname);
 		$err=$info->readinfo($file);
 		if ($err !== FALSE) {
-			$this->add_feedback($err);
+			$this->feedback_error($err);
 			return;
 		}
 		$conf=array('_SERVER' => $_SERVER);
@@ -874,7 +899,7 @@ class ModsLib {
 						if (count($conf) and strpos($sql,'$')) {
 							$sql = preg_replace('/\\$([_a-zA-Z0-9]*)/e','$conf[\'\\1\'][0]',$sql);
 						}
-						$this->add_feedback("$from -> $v : $sql");
+						$this->feedback_error("$from -> $v : $sql");
 						$tikilib->query($sql,array());
 					}
 				}
@@ -914,13 +939,14 @@ class ModsLib {
 		$this->rebuild_list($path.'/Installed/');
 	}
 
-	function remove($path,$type,$package,$upgrade=false) {
-		$file = $path.'/Installed/'.$type.'-'.$package.'.info.txt';
+	function remove($path,$mod,$upgrade=false) {
+		$this->feedback_info("removing ".$mod->modname." (".$mod->revision.") ...");
+		$file = $path.'/Installed/'.$mod->modname.'.info.txt';
 		if (is_file($file)) {
-			$info = new TikiModInfo($type, $package);
+			$info = new TikiModInfo($mod->modname);
 			$err = $info->readinfo($file);
 			if ($err !== false) {
-				$this->add_feedback($err);
+				$this->feedback_error($err);
 				return false;
 			}
 			if (!$upgrade and is_array($info->sql_remove) and count($info->sql_remove)) {
@@ -931,7 +957,7 @@ class ModsLib {
 			}
 			if (isset($info->files) and count($info->files)) {
 				foreach ($info->files as $f) {
-					if (!@unlink($f[1])) $this->add_feedback(sprintf(tra("%s impossible to remove"), $f[1]));
+					if (!@unlink($f[1])) $this->feedback_warning(sprintf(tra("%s impossible to remove"), $f[1]));
 					if (is_file($f[1] . '.orig.' . $info->revision)) {
 						rename($f[1] . '.orig.' . $info->revision, $f[1]);
 					}
@@ -944,13 +970,13 @@ class ModsLib {
 			}
 			return $info->revision;
 		} else {
-			$this->add_feedback("'$file' was not found for removing");
+			$this->feedback_warning("'$file' was not found for removing");
 		}
 	}
 
-	function upgrade($path,$type,$package) {
-		$from = $this->remove($path,$type,$package,$upgrade=true);
-		$this->install($path,$type,$package,$from,$upgrade=true);
+	function upgrade($path,$mod) {
+		$from = $this->remove($path,$mod,$upgrade=true);
+		$this->install($path,$mod,$from,$upgrade=true);
 	}
 
 }

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mods.php,v 1.12 2007-03-15 21:25:29 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mods.php,v 1.13 2007-03-17 14:58:23 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -42,6 +42,13 @@ if (!is_dir($mods_dir."/Installed")) {
 if (!is_dir($mods_dir."/Cache")) {
 	mkdir($mods_dir."/Cache",02777);
 }
+
+$feedback=array();
+function tikimods_feedback_listener($num, $err) {
+    global $feedback;
+    $feedback[]=array('num'=>$num, 'mes'=>$err);
+}
+$modslib->add_feedback_listener('tikimods_feedback_listener');
 
 if (isset($_REQUEST['find']) and trim($_REQUEST['find'])) {
 	$findarg = '&amp;find='. urlencode($_REQUEST['find']);
@@ -132,7 +139,6 @@ if (isset($_REQUEST['action']) and isset($package) and $iswritable) {
 	if ($_REQUEST['action'] == 'remove') {
 		$deps=$modslib->find_deps_remove($mods_dir, $mods_server, array($packtype.'-'.$package));
 		$smarty->assign('installask', $deps);
-		//$modslib->remove($mods_dir,$packtype,$package);
 	} elseif ($_REQUEST['action'] == 'upgrade') {
 		$modslib->upgrade($mods_dir,$packtype,$package);
 	} elseif ($_REQUEST['action'] == 'install') {
@@ -167,11 +173,11 @@ if (isset($_REQUEST['action']) and isset($package) and $iswritable) {
 	/* install packages */
 
 	if ($res !== false) foreach($deps['requires'] as $mod) {
-		$modslib->install($mods_dir, $mod->type, $mod->name);
+		$modslib->install($mods_dir, $mod);
 	}
 
 	if ($res !== false) foreach($deps['wanted'] as $mod) {
-		$modslib->install($mods_dir, $mod->type, $mod->name);
+		$modslib->install($mods_dir, $mod);
 	}
 
 } elseif (isset($_REQUEST['button-remove'])) {
@@ -179,7 +185,7 @@ if (isset($_REQUEST['action']) and isset($package) and $iswritable) {
 
 	/* remove packages to remove */
 	foreach($deps['toremove'] as $mod) {
-		$modslib->remove($mods_dir, $mod->type, $mod->name);
+		$modslib->remove($mods_dir, $mod);
 	}
 
 }
@@ -238,7 +244,7 @@ if (isset($_REQUEST['focus'])) {
 
 $smarty->assign('focus', $focus);
 $smarty->assign('more', $more);
-$smarty->assign('tikifeedback', $modslib->feedback);
+$smarty->assign('tikifeedback', $feedback);
 $smarty->assign('types', $types);
 
 $smarty->assign('mid', 'tiki-mods.tpl');

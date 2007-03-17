@@ -38,6 +38,22 @@ $commands=array('help' => array(),
 // 		'republish' => array(),
 		);
 
+function tikimods_feedback_listener($num, $err) {
+	switch($num) {
+	case -1:
+		echo $err."\n";
+		break;
+	case 0:
+		echo "! ".$err."\n";
+		break;
+	case 1:
+		echo "*** ".$err."\n";
+		break;
+	}
+}
+$modslib->add_feedback_listener('tikimods_feedback_listener');
+
+
 function ask($str) {
 	//global $STDIN;
 	echo $str;
@@ -97,21 +113,16 @@ function command_install($goption, $coption, $cparams) {
 		if ($mod->repository == 'remote') {
 			echo "downloading: ".$mod->modname.'-'.$mod->revision." ...";
 			$res=$modslib->dl_remote($mods_server,$mod->modname.'-'.$mod->revision,$mods_dir);
-			if ($res === false) {
-				echo "failed\n";
+			if ($res === false)
 				break;
-			} else echo "done.\n";
 		}
 	}
 
 	if ($res !== false) foreach($deps['wanted'] as $mod) {
 		if ($mod->repository == 'remote') {
-			echo "downloading: ".$mod->modname.'-'.$mod->revision." ...";
 			$res=$modslib->dl_remote($mods_server,$mod->modname.'-'.$mod->revision,$mods_dir);
-			if ($res === false) {
-				echo "failed\n";
+			if ($res === false)
 				break;
-			} else echo "done.\n";
 		}
 	}
 
@@ -125,15 +136,11 @@ function command_install($goption, $coption, $cparams) {
 	/* install packages */
 
 	if ($res !== false) foreach($deps['requires'] as $mod) {
-		echo "installing ".$mod->modname." (".$mod->revision.")...";
 		$modslib->install($mods_dir, $mod->type, $mod->name);
-		echo "done.\n";
 	}
 
 	if ($res !== false) foreach($deps['wanted'] as $mod) {
-		echo "installing ".$mod->modname." (".$mod->revision.")...";
 		$modslib->install($mods_dir, $mod->type, $mod->name);
-		echo "done.\n";
 	}
 	
 }
