@@ -689,7 +689,7 @@ class ModsLib {
 
 	function find_deps($modspath, $mods_server, $modnames) {
 		$deps=array("wanted" => array(),
-			    "requires" => array(),
+			    "toinstall" => array(),
 			    "suggests" => array(),
 			    "conflicts" => array(),
 			    "unavailable" => array());
@@ -710,24 +710,16 @@ class ModsLib {
 
 		/* now remove duplicates from suggests */
 		foreach ($deps['suggests'] as $suggest) {
-			if (isset($deps['requires'][$suggest[0]->modname]))
+			if (isset($deps['toinstall'][$suggest[0]->modname]))
 				unset($deps['suggests'][$suggest[0]->modname]);
 		}
 
-		/* now remove all wanted from requires */
-		foreach ($deps['wanted'] as $k => $mod) {
-			if (isset($deps['requires'][$mod->modname])) {
-				$deps['wanted'][$k]=$deps['requires'][$mod->modname];
-				unset($deps['requires'][$mod->modname]);
-			}
-		}
-
 		/* now search conflicts from the requireds */
-		foreach ($deps['requires'] as $mod) {
+		foreach ($deps['toinstall'] as $mod) {
 			if (!is_array($mod->conflicts)) continue;
 			foreach($mod->conflicts as $moddep) {
 				/* compare required conflicts with requireds */
-				foreach($deps['requires'] as $dep) {
+				foreach($deps['toinstall'] as $dep) {
 					if ($moddep->isitin($dep)) {
 						if (!isset($deps['conflicts'][$dep->modname])) {
 							$dep->errors[]="1/conflict avec ".$mod->modname;
@@ -762,7 +754,7 @@ class ModsLib {
 			if (!is_array($mod->conflicts)) continue;
 			foreach($mod->conflicts as $moddep) {
 				/* compare installed with requireds */
-				foreach($deps['requires'] as $dep) {
+				foreach($deps['toinstall'] as $dep) {
 					if ($moddep->isitin($dep)) {
 						if (!isset($deps['conflicts'][$dep->modname])) {
 							$mod->errors[]="5/conflict avec ".$dep->modname;
@@ -789,9 +781,9 @@ class ModsLib {
 					$deps['unavailable'][]=$moddep;
 				} else {
 					if ($mod->repository == 'installed') continue;
-					if (isset($deps['requires'][$mod->modname])) {
-						if ($mod->isnewer($deps['requires'][$mod->modname])) {
-							// if there is an older version in the deps['requires'],
+					if (isset($deps['toinstall'][$mod->modname])) {
+						if ($mod->isnewer($deps['toinstall'][$mod->modname])) {
+							// if there is an older version in the deps['toinstall'],
 							// this is because a previous requires was requiring
 							// an older one. So we don't try to upgrade it, we
 							// just try to see if it is compatible with this require.
@@ -806,7 +798,7 @@ class ModsLib {
 							// not newer, let it
 						}
 					} else {
-						$deps['requires'][$mod->modname]=$mod;
+						$deps['toinstall'][$mod->modname]=$mod;
 						$this->_find_deps($repos, $mod, &$deps);
 					}
 				}
@@ -860,14 +852,7 @@ class ModsLib {
 
 		/* download packages if necessary */
 
-		foreach($deps['requires'] as $mod) {
-			if ($mod->repository == 'remote') {
-				$res=$this->dl_remote($mods_server,$mod->modname.'-'.$mod->revision,$modspath);
-				if ($res === false) return false;
-			}
-		}
-		
-		foreach($deps['wanted'] as $mod) {
+		foreach($deps['toinstall'] as $mod) {
 			if ($mod->repository == 'remote') {
 				$res=$this->dl_remote($mods_server,$mod->modname.'-'.$mod->revision,$modspath);
 				if ($res === false) return false;
@@ -879,11 +864,7 @@ class ModsLib {
 		
 		/* install packages */
 
-		foreach($deps['requires'] as $mod) {
-			$this->install($modspath, $mod);
-		}
-		
-		foreach($deps['wanted'] as $mod) {
+		foreach($deps['toinstall'] as $mod) {
 			$this->install($modspath, $mod);
 		}
 		
