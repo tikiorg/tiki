@@ -59,6 +59,8 @@ Version History:
 				- Changed "private" functions to have
 				  special function names beginning with
 				  two underscores
+        2.2.1   03/17/2007      - return false more often when something
+      (niclone)                   is wrong.
 =======================================================================
 */
 
@@ -233,9 +235,7 @@ class tar {
 		}
 
 		// Parse the TAR file
-		$this->__parseTar();
-
-		return true;
+		return $this->__parseTar();
 	}
 
 
@@ -358,9 +358,7 @@ class tar {
 		$this->filename = $filename;
 
 		// Parse this file
-		$this->__readTar();
-
-		return true;
+		return $this->__readTar();
 	}
 
 
@@ -370,9 +368,7 @@ class tar {
 		if(!file_exists($filename))
 			return false;
 
-		$this->__readTar($filename);
-
-		return true;
+		return $this->__readTar($filename);
 	}
 
 
