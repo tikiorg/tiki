@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mods.php,v 1.13 2007-03-17 14:58:23 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mods.php,v 1.14 2007-03-17 16:29:24 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -147,47 +147,10 @@ if (isset($_REQUEST['action']) and isset($package) and $iswritable) {
 	}
 } elseif (isset($_REQUEST['button-install'])) {
 	$deps=$modslib->find_deps($mods_dir, $mods_server, $_REQUEST['install-wants']);
-	$res=NULL;
-
-	/* download packages if necessary */
-
-	if ($res !== false) foreach($deps['requires'] as $mod) {
-		if ($mod->repository == 'remote') {
-			$res=$modslib->dl_remote($mods_server,$mod->modname.'-'.$mod->revision,$mods_dir);
-			if ($res === false) break;
-		}
-	}
-
-	if ($res !== false) foreach($deps['wanted'] as $mod) {
-		if ($mod->repository == 'remote') {
-			$res=$modslib->dl_remote($mods_server,$mod->modname.'-'.$mod->revision,$mods_dir);
-			if ($res === false) break;
-		}
-	}
-
-	// we reconstruct deps because now there are modules that are downloaded
-	// (this is mainly to re-read_list the local repository)
-	$modslib->rebuild_list($mods_dir."/Packages");
-	$deps=$modslib->find_deps($mods_dir, $mods_server, $_REQUEST['install-wants']);
-
-	/* install packages */
-
-	if ($res !== false) foreach($deps['requires'] as $mod) {
-		$modslib->install($mods_dir, $mod);
-	}
-
-	if ($res !== false) foreach($deps['wanted'] as $mod) {
-		$modslib->install($mods_dir, $mod);
-	}
-
+	$modslib->install_with_deps($mods_dir, $mods_server, $deps);
 } elseif (isset($_REQUEST['button-remove'])) {
 	$deps=$modslib->find_deps_remove($mods_dir, $mods_server, $_REQUEST['install-wants']);
-
-	/* remove packages to remove */
-	foreach($deps['toremove'] as $mod) {
-		$modslib->remove($mods_dir, $mod);
-	}
-
+	$modslib->remove_with_deps($mods_dir, $mods_server, $deps);
 }
 
 $local = $modslib->read_list($mods_dir."/Packages/00_list.txt",'local',$type,$find,false);

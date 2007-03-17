@@ -100,44 +100,7 @@ function command_install($goption, $coption, $cparams) {
 		exit(0);
 	}
 
-	$res=NULL;
-
-	/* download packages if necessary */
-
-	if ($res !== false) foreach($deps['requires'] as $mod) {
-		if ($mod->repository == 'remote') {
-			echo "downloading: ".$mod->modname.'-'.$mod->revision." ...";
-			$res=$modslib->dl_remote($mods_server,$mod->modname.'-'.$mod->revision,$mods_dir);
-			if ($res === false)
-				break;
-		}
-	}
-
-	if ($res !== false) foreach($deps['wanted'] as $mod) {
-		if ($mod->repository == 'remote') {
-			$res=$modslib->dl_remote($mods_server,$mod->modname.'-'.$mod->revision,$mods_dir);
-			if ($res === false)
-				break;
-		}
-	}
-
-	// we reconstruct deps because now there are modules that are downloaded
-	// (this is mainly to re-read_list the local repository)
-	$modslib->rebuild_list($mods_dir."/Packages");
-	$deps=$modslib->find_deps($mods_dir, $mods_server, $cparams);
-
-	if (in_array('-d', $coption)) return;
-
-	/* install packages */
-
-	if ($res !== false) foreach($deps['requires'] as $mod) {
-		$modslib->install($mods_dir, $mod);
-	}
-
-	if ($res !== false) foreach($deps['wanted'] as $mod) {
-		$modslib->install($mods_dir, $mod);
-	}
-	
+	$modslib->install_with_deps($mods_dir, $mods_server, $deps);
 }
 
 function command_remove($goption, $coption, $cparams) {
@@ -168,14 +131,7 @@ function command_remove($goption, $coption, $cparams) {
 
 	$res=NULL;
 
-	/* remove packages */
-
-	if ($res !== false) foreach($deps['toremove'] as $mod) {
-		echo "removing ".$mod->modname." (".$mod->revision.")...";
-		$modslib->remove($mods_dir, $mod);
-		echo "done.\n";
-	}
-	
+	$modslib->remove_with_deps($mods_dir, $mods_server, $deps);	
 }
 
 function command_list($goption, $coption, $cparams) {
