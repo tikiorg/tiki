@@ -131,11 +131,11 @@ function command_install($goption, $coption, $cparams) {
 	/* install packages */
 
 	if ($res !== false) foreach($deps['requires'] as $mod) {
-		$modslib->install($mods_dir, $mod->type, $mod->name);
+		$modslib->install($mods_dir, $mod);
 	}
 
 	if ($res !== false) foreach($deps['wanted'] as $mod) {
-		$modslib->install($mods_dir, $mod->type, $mod->name);
+		$modslib->install($mods_dir, $mod);
 	}
 	
 }
@@ -172,7 +172,7 @@ function command_remove($goption, $coption, $cparams) {
 
 	if ($res !== false) foreach($deps['toremove'] as $mod) {
 		echo "removing ".$mod->modname." (".$mod->revision.")...";
-		$modslib->remove($mods_dir, $mod->type, $mod->name);
+		$modslib->remove($mods_dir, $mod);
 		echo "done.\n";
 	}
 	
