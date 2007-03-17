@@ -1,0 +1,126 @@
+! Readme
+!! History 
+This mods has been written to achieve a successfull and easy way to manage collaborativly a community through a full featured SIG . 
+As mapserver use a mapfile to draw the map, I have added 2 tables into tikiwiki (mysql5) for easy maps and layers management
+Each project map managed by those 2 tables will store points , lines and  polygons in a postgres 8.1 database 
+At creation , each postgres mapproject database is full postgis enabled and formated for points, lines and polygon storage .
+
+!! Prerequisite 
+!!! Prerequisite Tikiwiki
+* Apache 1.3.x or 2.x
+* Php5 or Php4 
+* Mysql 4.x ou 5.x
+
+!!! Prerequisite Cartoweb || kamap || tikiwikimap
+* Apache 1.3.x or 2.x
+* Php 5
+* Postgresql 8.1.x
+* Postgis
+* Mapserver
+*php5mapscript
+ 
+ !! Install 
+ !!! Fast mapserver install on debian sarge [http://www.cartoweb.org/doc/cw3.2/xhtml/appendix.debian_mapserver.html|debian mapserver install ]
+ **** Script Sh [http://84.207.3.217/ds-mapserver-postgis.script2 |ds-mapserver-postgis.script2 ]
+ **** Script Sh [http://84.207.3.217/ds-tw-cartoweb.script|ds-tw-cartoweb.script]
+
+
+ !!! Cartoweb install  [http://www.cartoweb.org/doc/cw3.2/xhtml/user.install.html|Cartoweb installation ]
+ !!! Tikiwiki Install 
+ Install Tikiwiki root inside the cartoweb htdocs directory 
+ {CODE()}
+ alibalo# tree -L 1 cartoweb3
+ cartoweb3
+ ...
+ |-- htdocs/tiki-install.php
+ ...
+ {CODE}
+
+ !! Howto 
+ * Add a map project [tiki-edit_map.php]
+ ** Fields to fill in tiki-edit_map form
+ *** Nom:  -> name of the mapfile  	
+ *** Type:   -> Type of map rendering (tikimap|cartoweb)
+ *** Path -> Path where is stored the mapfile 
+ *** Project Name -> name of the project and the directory where will be placed the mapfiles for cartoweb 
+ *** Base de données -> Name of the postgres db 
+ *** Categorize -> name of the categories  	
+ *** Gateway -> name of a wiki page that will display by default the default template 
+ *** Copyright -> Copyright or Copyleft type of the map 
+ *** Description ->short description of the mapfile
+ * List maps [tiki-list_maps.php]
+ * Add a layer to map project 
+ [tiki-edit_layer.php?mapId=1]
+ **Fields
+ ***Nom: -> Name of the layer 	
+ ***Type: -> type of layer_items (Line|Points|Polygon) 
+ ***Parent LayerGroup Name of the Parent layer 
+ ***Base de données -> Postgres database
+ ***Project Name -> name of the project and the directory where will be placed the mapfiles for cartoweb 
+ ***Table:-> name of the table in the postgresql db where are stored layer_item
+ ***Catégorize -> categorize layer
+ ***Gateway -> name of a wiki page that will display by default the default template 
+ ***Copyright Copyright or Copyleft type of the map 
+ ***CLASS: CLASS of the mapfile , automaticly created at first creation
+ ***Description:-> short description of the layer 
+ * List layers of a mapproject [tiki-list_layers.php?mapId=1]
+ !!! Set permissions 
+ [http://dev.sigfreed.net/tiki-index.php?page=user+permissions|user permissions]
+ !Map permissions:
+ * [tiki-objectpermissions.php?objectName=World&objectType=maps&permType=maps&objectId=1|Assign permission to map]
+ -> tiki_p_map_view				Can view mapfiles 				basic  		maps			
+ -> tiki_p_map_edit				Can edit mapfiles				editors	maps			
+ -> tiki_p_map_delete			Can delete mapfiles			admin		maps			
+ -> tiki_p_map_create			Can create new mapfile			admin		maps			
+ -> tiki_p_map_view_mapfiles		Can view contents of mapfiles		registered	maps			
+ !New layer permissions:
+ * [tiki-objectpermissions.php?objectName=World&objectType=layers&permType=layers&objectId=76|Assign permission to layer]
+ -> tiki_p_layer_view			Can view layer 				basic  		layers			
+ -> tiki_p_layer_edit				Can edit layer				editors	layers			
+ -> tiki_p_layer_delete			Can delete layer				admin		layers			
+ -> tiki_p_layer_create			Can create new layer			admin		layers			
+ !New item_layer  permissions:
+ -> tiki_p_item_layer_view			Can view item_layer 			basic  		layers			
+ -> tiki_p_item_layer_edit			Can edit item_layer				editors	layers			
+ -> tiki_p_item_layer_delete		Can delete item_layer			admin		layers			
+ -> tiki_p_item_layer_create		Can create new item_layer		admin		layers			
+ !!! Phplayers and crossbrowser.com incompatibilities 
+ às the x lib is used by cartoweb there is a big probleme between tabpanel coexistency for those 2 libs 
+ !! Todo's
+ !!! Automatique Map and layer generation
+ at this point of the developpement , the cartoweb mods tikiwiki backoffice is functionnal but still need to be coded the layer.ini and  .map generation using datas stored in tw db 
+ !!! Dynamic postgres db and tables creation
+ i put the sql scripts for db creation and layer type add 
+ !! Mods Package
+ {CODE()}
+alibalo# tree
+.
+|-- README
+|-- db
+|   `-- local2.php
+|-- lib
+|   |-- map
+|   |   |-- CVS
+|   |   |   |-- Entries
+|   |   |   |-- Repository
+|   |   |   `-- Root
+|   |   `-- editorlib.php
+|   |-- mapeditor
+|   `-- tree
+|       `-- layer_list_tree.php
+|-- templates
+|   |-- tiki-mapeditor_edit.tpl
+|   |-- tiki-mapeditor_edit_layer.tpl
+|   |-- tiki-mapeditor_edit_layergroup.tpl
+|   |-- tiki-mapeditor_layer.tpl
+|   |-- tiki-mapeditor_layers.tpl
+|   `-- tiki-mapeditor_maps.tpl
+|-- tiki-mapeditor_edit.php
+|-- tiki-mapeditor_edit_layer.php
+|-- tiki-mapeditor_edit_layergroup.php
+|-- tiki-mapeditor_layers.php
+`-- tiki-mapeditor_maps.php
+ {CODE}
+ [mods/Packages/features-cartoweb.info.txt|features-cartoweb.info.txt]
+
+ [cartoweb.tar.gz]
