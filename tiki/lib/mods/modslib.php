@@ -856,7 +856,43 @@ class ModsLib {
 		}
 	}
 
-	function install_with_deps($modspath, $mods_server, $modnames) {
+	function install_with_deps($modspath, $mods_server, $deps) {
+
+		/* download packages if necessary */
+
+		foreach($deps['requires'] as $mod) {
+			if ($mod->repository == 'remote') {
+				$res=$this->dl_remote($mods_server,$mod->modname.'-'.$mod->revision,$modspath);
+				if ($res === false) return false;
+			}
+		}
+		
+		foreach($deps['wanted'] as $mod) {
+			if ($mod->repository == 'remote') {
+				$res=$this->dl_remote($mods_server,$mod->modname.'-'.$mod->revision,$modspath);
+				if ($res === false) return false;
+			}
+		}
+
+		// we reconstruct deps because now there are modules that are downloaded
+		$this->rebuild_list($modspath."/Packages");
+		
+		/* install packages */
+
+		foreach($deps['requires'] as $mod) {
+			$this->install($modspath, $mod);
+		}
+		
+		foreach($deps['wanted'] as $mod) {
+			$this->install($modspath, $mod);
+		}
+		
+	}
+	
+	function remove_with_deps($modspath, $mods_server, $deps) {
+		foreach($deps['toremove'] as $mod) {
+			$this->remove($modspath, $mod);
+		}
 	}
 
 	function install($path,$mod,$from=0,$upgrade=false) {
