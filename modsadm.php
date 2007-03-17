@@ -8,9 +8,6 @@ if (!defined('STDOUT') || !defined('STDIN') || !defined('STDERR'))
 require_once ('tiki-setup.php');
 include('lib/mods/modslib.php');
 
-//$STDERR = fopen('php://stderr', 'w');
-//$STDIN = fopen('php://stdin', 'r');
-
 $repos=array('installed' => array('url' => $mods_dir.'/Installed/00_list.txt',
 				  'content' => $installed),
 	     'local' => array('url' => $mods_dir.'/Packages/00_list.txt',
@@ -33,7 +30,7 @@ $commands=array('help' => array(),
 		'install' => array('usage' => '[options] mod1 [mod2...]',
 				   'options' => array('-d' => array('help' => "Download only mods, don't install them"))),
 		'remove' => array('usage' => 'mod1 [mod2...]'),
-		'publish' => array('usage' => 'mod1 [mod2...]'),
+// 		'publish' => array('usage' => 'mod1 [mod2...]'),
 // 		'unpublish' => array(),
 // 		'republish' => array(),
 		);
@@ -55,7 +52,6 @@ $modslib->add_feedback_listener('tikimods_feedback_listener');
 
 
 function ask($str) {
-	//global $STDIN;
 	echo $str;
 	$res=fgets(STDIN, 1024);
 	return trim($res);
@@ -66,7 +62,6 @@ function command_help($goption, $coption, $cparams) {
 }
 
 function command_install($goption, $coption, $cparams) {
-	//global $STDIN;
 	global $modslib;
 	global $mods_dir;
 	global $mods_server;
@@ -146,7 +141,6 @@ function command_install($goption, $coption, $cparams) {
 }
 
 function command_remove($goption, $coption, $cparams) {
-	//global $STDIN;
 	global $modslib;
 	global $mods_dir;
 	global $mods_server;
