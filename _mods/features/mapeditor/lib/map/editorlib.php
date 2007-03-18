@@ -291,7 +291,7 @@ class LayerLib extends TikiLib {
   		$iconsymbol=array();
 		do {
     			$content=ltrim($content);
-    			$tag=$this->gettag(&$content);
+    			$tag=$this->gettag($content);
 			if ($tag === FALSE) return $iconsymbol;
     			$tag=strtoupper($tag);
 			switch($tag) {
@@ -328,7 +328,7 @@ class LayerLib extends TikiLib {
       					}
       					$newobj=array();
       					$newobj["tag"]=$tag;
-      					$newobj["value"]=$this->readoneparam(&$content);
+      					$newobj["value"]=$this->readoneparam($content);
       					$curobj[]=$newobj;
       				break;
 
@@ -341,7 +341,7 @@ class LayerLib extends TikiLib {
       					}
       					$newobj=array();
       					$newobj["tag"]=$tag;
-      					$newobj["value"]=$this->readnumberlist(&$content);
+      					$newobj["value"]=$this->readnumberlist($content);
       					$curobj[]=$newobj;
       				break;
 
