@@ -1,0 +1,49 @@
+contributor:
+$Author: tombombadilom $
+
+revision:
+0.0.1
+
+lastmodif:
+$Date: 2007-03-18 11:54:06 $
+
+files: 
+features/mapeditor/tiki-mapeditor_maps.php tiki-mapeditor_maps.php
+features/mapeditor/tiki-mapeditor_edit.php tiki-mapeditor_edit.php
+features/mapeditor/tiki-mapeditor_layers.php tiki-mapeditor_layers.php
+features/mapeditor/tiki-mapeditor_edit_layer.php tiki-mapeditor_edit_layer.php
+features/mapeditor/tiki-mapeditor_edit_layergroup.php tiki-mapeditor_edit_layergroup.php
+features/mapeditor/db/local2.php lib/db/local2.php
+features/mapeditor/lib/map/editorlib.php lib/map/editorlib.php
+features/mapeditor/lib/tree/layer_list_tree.php lib/tree/layer_list-tree.php
+features/mapeditor/templates/tiki-mapeditor_edit_layer.tpl templates/tiki-mapeditor_edit_layer.tpl
+features/mapeditor/templates/tiki-mapeditor_edit.tpl templates/tiki-mapeditor_edit.tpl
+features/mapeditor/templates/tiki-mapeditor_layers.tpl templates/tiki-mapeditor_layers.tpl
+features/mapeditor/templates/tiki-mapeditor_maps.tpl templates/tiki-mapeditor_maps.tpl
+features/mapeditor/templates/tiki-mapeditor_layer.tpl templates/tiki-mapeditor_layer.tpl
+features/mapeditor/templates/tiki-mapeditor_layergroup.tpl templates/tiki-mapeditor_layergroup.tpl
+
+sql-install:
+DROP TABLE IF EXISTS `tiki_maps`;
+CREATE TABLE IF NOT EXISTS `tiki_maps` (`mapId` int(8) NOT NULL auto_increment,`created` int(14) NOT NULL,`modified` int(14) default NULL,`name` text,`projectName` text NOT NULL, `author` text, `type` text, `path` text, `copyright` text, `copyrightUrl` text, `gateway` text, `db` text, `description` text,  PRIMARY KEY  (`mapId`)) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+DROP TABLE IF EXISTS `tiki_map_layer`;
+CREATE TABLE IF NOT EXISTS `tiki_map_layer` (`layerId` int(8) NOT NULL auto_increment, `name` text, `mapId` int(8) NOT NULL, `author` text, `islayerGroup` tinyint(1) NOT NULL, `layerGroupId` int(8) NOT NULL, `layerRendering` text NOT NULL, `layerAggregate` text NOT NULL, `type` text, `config` text, `copyright` text, `copyrightUrl` text, `gateway` text NOT NULL, `db` text, `table` text, `description` text, `created` int(14) default NULL, `modified` int(14) default NULL, `maxitem` int(11) NOT NULL, PRIMARY KEY  (`layerId`)) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=102 ;
+INSERT IGNORE INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES ('42','o','MapEditor','tiki-mapeditor_maps.php',720,'','','Registered');
+sql-remove:
+drop table if exists tiki_maps;
+drop table if exists tiki_map_layer;
+delete from tiki_menu_options WHERE menuId='42' AND position='720' AND name='MapEditor';
+author:
+Tom Bouillut
+
+licence:
+GNU/LGPL
+
+devurl:
+http://dev.sigfreed.net/tiki-index.php?page_ref_id=1
+
+Description: 
+Map Editor  mod intend to add Postgis layer /table creation to add point / line / polygon to tikiwiki used with mapserver (tiki or ka-map or cartoweb ) GIS Framework  
+
+Changelog:
+1.0 initial package 
