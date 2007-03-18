@@ -129,7 +129,7 @@ class TikiModAvailable extends TikiMod {
 				$a=&$this->conflicts;
 			}
 
-			if ($a !== FALSE) $this->_decodedeps(&$a, $m);
+			if ($a !== FALSE) $this->_decodedeps($a, $m);
 		}
 	}
 }
@@ -361,6 +361,7 @@ class TikiModDepend extends TikiMod {
 	 */
 	function isitin($mod) {
 		if ($mod->modname != $this->modname) return FALSE;
+		if (!is_array($this->tests)) return TRUE;
 		foreach($this->tests as $test) {
 			switch($test['test']) {
 			case '=':
@@ -686,7 +687,7 @@ class ModsLib {
 			    "conflicts" => array(),
 			    "unavailable" => array());
 
-		$querymod=new TikiMod('fakemod', 'query');
+		$querymod=new TikiModAvailable('fakemod', 'query');
 		$querymod->requires=array();
 		foreach($modnames as $modname) {
 			$moddep=new TikiModDepend($modname);
