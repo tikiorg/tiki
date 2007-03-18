@@ -1,19 +1,21 @@
 contributor:
-$Author: niclone $
+$Author: tombombadilom $
 
 revision:
-$Revision: 1.5 $
+$Revision: 1.6 $
 
 lastmodif:
-$Date: 2007-03-08 18:22:41 $
+$Date: 2007-03-18 11:50:18 $
 
 files: 
 features/tinvoice/tiki-tinvoice_edit.php tiki-tinvoice_edit.php
 features/tinvoice/tiki-tinvoice_prefs.php tiki-tinvoice_prefs.php
 features/tinvoice/tiki-tinvoice_list.php tiki-tinvoice_list.php
+features/tinvoice/tiki-tinvoice_chart.php tiki-tinvoice_chart.php
 features/tinvoice/templates/tiki-tinvoice_edit.tpl templates/tiki-tinvoice_edit.tpl
 features/tinvoice/templates/tiki-tinvoice_prefs.tpl templates/tiki-tinvoice_prefs.tpl
 features/tinvoice/templates/tiki-tinvoice_list.tpl templates/tiki-tinvoice_list.tpl
+features/tinvoice/templates/tiki-tinvoice_graph.tpl templates/tiki-tinvoice_graph.tpl
 features/tinvoice/lib/tinvoice/tinvoicelib.php lib/tinvoice/tinvoicelib.php
 
 sql-install:
