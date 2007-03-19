@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-fgal.tpl,v 1.28 2007-02-19 00:52:28 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-fgal.tpl,v 1.29 2007-03-19 17:53:55 sylvieg Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -94,6 +94,10 @@
   <div class="cbox-data">
       <form method="post" action="tiki-admin.php?page=fgal">
         <table class="admin"><tr class="formcolor">
+          <td>{tr}ID{/tr}</td>
+          <td><input type="checkbox" name="fgal_list_id"
+              {if $fgal_list_id eq 'y'}checked="checked"{/if} /></td>
+        </tr><tr class="formcolor">
           <td>{tr}Name{/tr}</td>
           <td><input type="checkbox" name="fgal_list_name"
               {if $fgal_list_name eq 'y'}checked="checked"{/if} /></td>
