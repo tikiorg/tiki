@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-fgal.tpl,v 1.29 2007-03-19 17:53:55 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-fgal.tpl,v 1.30 2007-03-19 18:04:53 sylvieg Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -45,7 +45,7 @@
           <td>
 	  <select name="fgal_allow_duplicates">
               <option value="n" {if $fgal_allow_duplicates eq 'n'}selected="selected"{/if}>{tr}Never{/tr}</option>
-              <option value="y" {if $fgal_allow_duplicates eq 'y'}selected="selected"{/if}>{tr}Yes, even in the same fallery{/tr}</option>
+              <option value="y" {if $fgal_allow_duplicates eq 'y'}selected="selected"{/if}>{tr}Yes, even in the same gallery{/tr}</option>
               <option value="different_galleries" {if $fgal_allow_duplicates eq 'different_galleries'}selected="selected"{/if}>{tr}Only in different galleries{/tr}</option>
           </select>
 	  </td>
