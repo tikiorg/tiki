@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.8 2007-02-16 23:45:16 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.9 2007-03-19 17:53:55 sylvieg Exp $ *}
 {if !isset($show_find) or $show_find ne 'n'}
 <div align="center">
 <table class="findtable">
@@ -19,6 +19,10 @@
 <table class="normal">
 <tr>
 {assign var='cntcol' value=1}
+{if $fgal_list_id eq 'y'}
+	{assign var='cntcol' value=$cntcol+1}
+	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?offset={$offset}{if isset($galleryId)}&amp;galleryId={$galleryId}{/if}{if $find}find={$find}{/if}&amp;sort_mode={if $sort_mode eq 'galleryId_desc'}galleryId_asc{else}galleryId_desc{/if}">{tr}ID{/tr}</a></td>
+{/if}
 {if $fgal_list_name eq 'y'}
 	{assign var='cntcol' value=$cntcol+1}
 	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?offset={$offset}{if isset($galleryId)}&amp;galleryId={$galleryId}{/if}{if $find}find={$find}{/if}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
@@ -61,6 +65,12 @@
 {section name=changes loop=$galleries}
 {if $galleries[changes].visible eq 'y' or $tiki_p_admin_file_galleries eq 'y'}
 <tr>
+	{if $fgal_list_id eq 'y'}
+		<td class="{cycle advance=false}">
+			<a class="fgalname" href="tiki-list_file_gallery.php?galleryId={$galleries[changes].id}" title="{tr}list{/tr}">{$galleries[changes].galleryId}</a>
+		</td>
+	{/if}
+
 	{if $fgal_list_name eq 'y'}
 		<td class="{cycle advance=false}">
 			<a class="fgalname" href="tiki-list_file_gallery.php?galleryId={$galleries[changes].id}" title="{tr}list{/tr}">{$galleries[changes].name}</a>

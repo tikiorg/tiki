@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_fgal.php,v 1.23 2007-03-06 19:29:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_fgal.php,v 1.24 2007-03-19 17:53:55 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -52,6 +52,7 @@ if (isset($_REQUEST["filegalfeatures"])) {
 if (isset($_REQUEST["filegallistprefs"])) {
 	check_ticket('admin-inc-fgal');
 
+	simple_set_toggle("fgal_list_id");
 	simple_set_toggle("fgal_list_name");
 	simple_set_toggle("fgal_list_description");
 	simple_set_toggle("fgal_list_type");
