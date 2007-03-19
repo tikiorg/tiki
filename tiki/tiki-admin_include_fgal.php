@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_fgal.php,v 1.24 2007-03-19 17:53:55 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_fgal.php,v 1.25 2007-03-19 19:14:34 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -109,7 +109,7 @@ if (!empty($fgal_sort_mode)) {
 	$smarty->assign('sortorder', 'created');
 	$smarty->assign('sortdirection', 'desc');
 }
-$options_sortorder = array(tra('Creation Date')=>'created', tra('Name')=>'name', tra('Last modification date')=>'lastModif', tra('Hits')=>'hits', tra('Owner') => 'user', tra('Description') => 'description');
+$options_sortorder = array(tra('Creation Date')=>'created', tra('Name')=>'name', tra('Last modification date')=>'lastModif', tra('Hits')=>'hits', tra('Owner') => 'user', tra('Description') => 'description', tra('ID') => 'galleryId');
 $smarty->assign_by_ref('options_sortorder', $options_sortorder);
 
 $handlers = $filegallib->get_file_handlers();
