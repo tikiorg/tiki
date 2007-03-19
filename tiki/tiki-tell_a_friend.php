@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-tell_a_friend.php,v 1.2 2007-03-15 17:53:15 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-tell_a_friend.php,v 1.3 2007-03-19 13:51:07 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -32,7 +32,7 @@ $smarty->assign('url', urldecode($_REQUEST['url']));
 
 $smarty->assign('prefix', $tikilib->httpPrefix());
 
-$error = array();
+$errors = array();
 if (isset($_REQUEST['send'])) {
 	check_ticket('tell-a-friend');
 	$emails = explode(',', $_REQUEST['addresses']);
