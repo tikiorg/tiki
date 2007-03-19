@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.409 2007-03-16 16:40:31 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.410 2007-03-19 18:01:49 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -492,6 +492,7 @@ $pref['file_galleries_comments_default_ordering'] = 'points_desc';
 $pref['file_galleries_comments_per_page'] = 10;
 $pref['feature_file_galleries_batch'] = 'n';
 $pref['feature_file_galleries_rankings'] = 'n';
+$pref['fgal_list_id'] = 'n';
 $pref['fgal_list_name'] = 'y';
 $pref['fgal_list_description'] = 'y';
 $pref['fgal_list_created'] = 'y';
