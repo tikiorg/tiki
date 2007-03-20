@@ -1,5 +1,5 @@
 <?php
-// $Id: outputfilter.highlight.php,v 1.12 2006-09-19 16:33:23 ohertel Exp $
+// $Id: outputfilter.highlight.php,v 1.13 2007-03-20 09:22:51 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -46,6 +46,10 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
                         return $source;
     }
 
+    if (!preg_match('~(.*id="centercolumn"[^>]*>)(.*)(<td[^>]* id="rightcolumn".*)~xsi', $source, $matches))
+	    if (!preg_match('~(.*id="centercolumn"[^>]*>)(.*)~xsi', $source, $matches))
+		    return $source;
+
    $source = preg_replace_callback(
       '~(?:<head>.*</head>                          # head blocks
       |<div[^>]*nohighlight.*</div>\{\*nohighlight  # div with nohightlight
@@ -53,9 +57,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
       |<a[^>]*onmouseover.*onmouseout[^>]*>            # onmouseover (user popup)
       |<[^>]*>                                      # all html tags
       |(' . _enlightColor($highlight) . '))~xsiU',
-      '_enlightColor',  $source);
+      '_enlightColor',  $matches[2]);
 
-    return $source;
+    return $matches[1].$source.$matches[3];
  }
 
 function _enlightColor($matches) {
