@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.731 2007-03-16 14:59:54 pkdille Exp $
+// CVS: $Id: tikilib.php,v 1.732 2007-03-20 15:39:10 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3445,10 +3445,23 @@ function add_pageview() {
 			}
 		}
 	}
-        if ($initial) {
-                $mid = " where `pageName` like ?";
-                $mmid = $mid;
-                $bindvars = array($initial.'%');
+	if (!empty($initial)) {
+		if (is_array($initial)) {
+			$mid = '';
+			foreach($initial as $i) {
+				if (empty($mid))
+					$mid = 'where ';
+				else
+					$mid .= 'or ';
+				$mid .= '`pageName` like ? ';
+				$bindvars[] = $i.'%';
+			}
+			$mmid = $mid;
+		} else {
+			$mid = " where `pageName` like ?";
+			$mmid = $mid;
+			$bindvars = array($initial.'%');
+		}
 	}
 
 	if ( $only_orphan_pages ) {
