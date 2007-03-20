@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_archives.php,v 1.6 2006-12-12 14:26:48 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_archives.php,v 1.7 2007-03-20 21:05:52 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,12 +20,13 @@ if (empty($_REQUEST['fileId']) || !($fileInfo = $filegallib->get_file_info($_REQ
 	die;
 }
 
- if (!($tiki_p_admin == 'y' || $tiki_p_admin_file_galleries == 'y' || $tikilib->user_has_perm_on_object($user, $fileInfo['galleryId'], 'file gallery', 'tiki_p_view_file_gallery'))) {
+$tikilib->get_perm_object($fileInfo['galleryId'], 'file gallery', true);
+
+if (!($tiki_p_admin_file_galleries == 'y' || $tiki_p_view_file_gallery == 'y')) {
 	$smarty->assign('msg', tra("Permission denied you cannot edit this file"));
 	$smarty->display("error.tpl");
 	die;
 }
-$tiki_p_download_files = $tikilib->user_has_perm_on_object($user, $fileInfo['galleryId'], 'file gallery', 'tiki_p_download_files');
 
 $gal_info = $tikilib->get_file_gallery($fileInfo['galleryId']);
 
