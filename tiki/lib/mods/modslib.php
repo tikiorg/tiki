@@ -235,13 +235,13 @@ class TikiModInfo extends TikiModAvailable {
 				$this->author[] = trim($line);
 				break;
 			case 'requires':
-				$this->_decodedeps(&$this->requires, $line);
+				$this->_decodedeps($this->requires, $line);
 				break;
 			case 'suggests':
-				$this->_decodedeps(&$this->suggests, $line);
+				$this->_decodedeps($this->suggests, $line);
 				break;
 			case 'conflicts':
-				$this->_decodedeps(&$this->conflicts, $line);
+				$this->_decodedeps($this->conflicts, $line);
 				break;
 			case 'help':
 				$this->_help[] = trim($line);
@@ -699,7 +699,7 @@ class ModsLib {
 			     'local' => $this->read_list($modspath."/Packages/00_list.txt", 'local'),
 			     'remote' => $this->read_list($modspath."/Packages/00_list.". urlencode($mods_server).".txt", 'remote'));
 		
-		$this->_find_deps($repos, $querymod, &$deps);
+		$this->_find_deps($repos, $querymod, $deps);
 
 		/* now remove duplicates from suggests */
 		foreach ($deps['suggests'] as $suggest) {
@@ -807,7 +807,7 @@ class ModsLib {
 						}
 					} else {
 						$deps['toinstall'][$mod->modname]=$mod;
-						$this->_find_deps($repos, $mod, &$deps);
+						$this->_find_deps($repos, $mod, $deps);
 					}
 				}
 			}
@@ -833,7 +833,7 @@ class ModsLib {
 			if (isset($repos['installed'][$mod->type][$mod->name])) {
 				$mod=$repos['installed'][$mod->type][$mod->name];
 				$deps['wantedtoremove'][$modname]=$mod;
-				$this->_find_deps_remove($repos, $mod, &$deps);
+				$this->_find_deps_remove($repos, $mod, $deps);
 			} else {
 				$deps['wantedtoremove'][$modname]=$mod;
 			}
@@ -849,7 +849,7 @@ class ModsLib {
 				if (!is_array($mod->requires)) continue;
 				foreach($mod->requires as $moddep) {
 					if ($moddep->isitin($modtoremove)) {
-						$this->_find_deps_remove($repos, $mod, &$deps);
+						$this->_find_deps_remove($repos, $mod, $deps);
 					}
 				}
 			}
