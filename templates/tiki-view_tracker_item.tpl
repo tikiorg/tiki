@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.121 2007-03-06 19:30:40 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.122 2007-03-20 09:21:52 gillesm Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
@@ -321,7 +321,7 @@
 
       {elseif $cur_field.type eq 'U'}
 	{$cur_field.value|how_many_user_inscriptions} {tr}subscriptions{/tr} {if $cur_field.maxsubscriptions}(max : {$cur_field.maxsubscriptions}){/if} :
-	{foreach from=$cur_field.users_array name=U_user item=U_user}{$U_user.login}{if $U_user.friends} (+{$U_user.friends}){/if}{if $smarty.foreach.U_user.last}{else},&nbsp;{$last}{/if}{/foreach}
+	{foreach from=$cur_field.users_array name=U_user item=U_user}{$U_user.login|userlink}{if $U_user.friends} (+{$U_user.friends}){/if}{if $smarty.foreach.U_user.last}{else},&nbsp;{$last}{/if}{/foreach}
 	{if $user}
 	<br />{if $cur_field.user_subscription} {tr}You have ever subscribed{/tr}.{else}{tr}You have not yet subscribed{/tr}.{/if}
 	<form method="POST" action="{$smarty.server.REQUEST_URI}" >
