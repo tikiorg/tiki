@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.108 2007-02-18 22:58:59 nyloth Exp $ *} 
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.109 2007-03-20 17:24:22 pkdille Exp $ *} 
 {if $feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
@@ -197,7 +197,7 @@
 {/if}
 </div> {* End of main wiki page *}
 
-{if $has_footnote eq 'y'}<div class="wikitext wikifootnote">{$footnote}</div>{/if}
+{if $has_footnote eq 'y'}<div class="wikitext" id="wikifootnote">{$footnote}</div>{/if}
 
 {if isset($wiki_authors_style) && $wiki_authors_style eq 'business'}
 <p class="editdate">
