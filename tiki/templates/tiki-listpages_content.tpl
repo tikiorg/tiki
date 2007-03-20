@@ -4,10 +4,10 @@
 {if $initial and $initials[ini] eq $initial}
 <span class="button2"><span class="linkbuton">{$initials[ini]|capitalize}</span></span> . 
 {else}
-<a {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?initial={$initials[ini]}{if $offset}&amp;offset={$offset}{/if}&amp;numrows={$maxRecords}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;find_lang={$find_lang}{/if}{if !empty($find_categId)}&amp;find_categId={$find_categId}{/if}{/ajax_href} class="prevnext">{$initials[ini]}</a> . 
+<a {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?initial={$initials[ini]}&amp;numrows={$maxRecords}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;find_lang={$find_lang}{/if}{if !empty($find_categId)}&amp;find_categId={$find_categId}{/if}{/ajax_href} class="prevnext">{$initials[ini]}</a> . 
 {/if}
 {/section}
-<a {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?initial={if $offset}&amp;offset={$offset}{/if}&amp;numrows={$maxRecords}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;find_lang={$find_lang}{/if}{if !empty($find_categId)}&amp;find_categId={$find_categId}{/if}{/ajax_href} class="prevnext">{tr}All{/tr}</a>
+<a {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?initial=&amp;numrows={$maxRecords}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;find_lang={$find_lang}{/if}{if !empty($find_categId)}&amp;find_categId={$find_categId}{/if}{/ajax_href} class="prevnext">{tr}All{/tr}</a>
 </div>
 {/if}
 
