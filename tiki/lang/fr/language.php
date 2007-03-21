@@ -2823,6 +2823,7 @@ $lang=Array(
 "choose a group ..." => "choisir un groupe...",
 "User can choose beyond these groups at registration time" => "Un utilisateur peut choisir parmi ces groupes à l'inscription",
 "Displays user's contribution in the user information page" => "Affiche les contributions de l'utilisateur dans sa page d'information",
+"Displays UserTracker informations in user information page. Format: TrackerId,item1,item2,item3..."=>"Affiche les informations de Trackeruser dans la page d'informations. Format : TrackerId,item1,item2,item3...",
 "Create user if not in Tiki?" => "Créer un utilisateur s'il n'est pas dans Tiki?",
 "Create user if not in Auth?" => "Créer un utilisateur s'il n'est pas dans Auth?",
 "Just use Tiki auth for admin?" => "Utiliser uniquement l'authentification Tiki pour l'administrateur?",
