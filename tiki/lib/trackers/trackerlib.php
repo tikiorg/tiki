@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.184 2007-03-06 20:57:21 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.185 2007-03-21 18:10:00 gillesm Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1838,14 +1838,16 @@ class TrackerLib extends TikiLib {
 		return $ret;
 	}
 	/* look if a tracker has only one item per user and if an item has already being created for the user  or the IP*/
-	function get_user_item($trackerId, $trackerOptions) {
+	function get_user_item($trackerId, $trackerOptions,$userparam=null) {
 		global $user, $IP;
 		if (empty($trackerOptions['oneUserItem']) || $trackerOptions['oneUserItem'] != 'y') {
 			return 0;
 		}
-		if (!empty($user)) {
+
+		$userreal=$userparam!=null?$userparam:$user;
+		if (!empty($userreal)) {
 			if ($fieldId = $this->get_field_id_from_type($trackerId, 'u', '1')) { // user creator field
-				$value = $user;
+				$value = $userreal;
 				$items = $this->get_items_list($trackerId, $fieldId, $value);
 				if ($items)
 					return $items[0];

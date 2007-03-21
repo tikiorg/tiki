@@ -52,6 +52,21 @@
 {/if}
 {/if}
   <tr><td class="form">{tr}Displayed time zone{/tr}:</td><td>{$display_timezone}</td></tr>
+{if $user_tracker_infos}
+  {foreach item=value key=fieldId from=$ValueTrk }
+	
+	{if $FieldTrk[$fieldId].type == 'i' } 
+               <tr><td class="form">{tr}{$FieldTrk[$fieldId].name}{/tr}:</td><td>
+		<img src="{$value}" alt="" {if $FieldTrk[$fieldId].option[2]} width="{$FieldTrk[$fieldId].option[2]}"{/if}{if $FieldTrk[$fieldId].option[3]} height="{$FieldTrk[$fieldId].option[3]}"{/if}>
+	{elseif $value}
+		<tr><td class="form">{tr}{$FieldTrk[$fieldId].name}{/tr}:</td><td>
+		{$value}
+	{/if}
+
+       </td></tr>
+  {/foreach}
+{/if}
+
 {if $feature_friends eq 'y' && $user ne $userwatch && $user}
   {if $friend}
   <tr><td class="form">&nbsp;</td><td class="form">
