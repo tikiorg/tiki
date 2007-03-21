@@ -55,9 +55,9 @@
 {if $user_tracker_infos}
   {foreach item=value key=fieldId from=$ValueTrk }
 	
-	{if $FieldTrk[$fieldId].type == 'i' } 
-               <tr><td class="form">{tr}{$FieldTrk[$fieldId].name}{/tr}:</td><td>
-		<img src="{$value}" alt="" {if $FieldTrk[$fieldId].option[2]} width="{$FieldTrk[$fieldId].option[2]}"{/if}{if $FieldTrk[$fieldId].option[3]} height="{$FieldTrk[$fieldId].option[3]}"{/if}>
+	{if $FieldTrk[$fieldId].type == 'i' and $value ne "" } 
+               <tr><td class="form">{tr}{$FieldTrk[$fieldId].name}{/tr}:</td><td> 
+		<img src="{$value}" alt="" {if $FieldTrk[$fieldId].options[2]} width="{$FieldTrk[$fieldId].options[2]}"{/if}>
 	{elseif $value}
 		<tr><td class="form">{tr}{$FieldTrk[$fieldId].name}{/tr}:</td><td>
 		{$value}
