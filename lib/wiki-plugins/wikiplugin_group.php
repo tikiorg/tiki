@@ -1,12 +1,14 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_group.php,v 1.5 2007-02-08 13:51:22 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_group.php,v 1.6 2007-03-21 19:21:42 sylvieg Exp $
 // Display wiki text if user is in one of listed groups
 // Usage:
 // {GROUP(groups=>Admins|Developers)}wiki text{GROUP}
 
 function wikiplugin_group_help() {
 	$help = tra("Display wiki text if user is in one of listed groups").":\n";
-	$help.= "~np~{GROUP(groups=>Admins|Developers)}wiki text{GROUP}~/np~";
+	$help.= "~np~<br />{GROUP(groups=>Admins|Developers)}wiki text{GROUP}<br />
+	{GROUP(notgroups=>Developers)}wiki text for other groups{GROUP}<br />	
+	{GROUP(groups=>Registered)}wiki text{ELSE}alternate text for other groups{GROUP}~/np~";
 	return $help;
 }
 function wikiplugin_group($data, $params) {

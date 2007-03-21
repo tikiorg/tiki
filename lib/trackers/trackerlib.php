@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.186 2007-03-21 18:24:36 gillesm Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/trackers/trackerlib.php,v 1.187 2007-03-21 19:21:42 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1013,7 +1013,7 @@ class TrackerLib extends TikiLib {
 
 					include_once ('lib/webmail/tikimaillib.php');
 					$mail = new TikiMail();
-					$mail->setSubject(tra('Tracker was modified at '). $_SERVER["SERVER_NAME"]);
+					$mail->setSubject($smarty->fetch('mail/tracker_changed_notification_subject.tpl'));
 					$mail->setText($mail_data);
 					$mail->setHeader("From", $sender_email);
 					$mail->send($emails);

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.54 2007-03-14 20:18:33 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.55 2007-03-21 19:21:39 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -282,6 +282,12 @@ if (isset($_REQUEST["save"])) {
 		$tracker_options['end'] = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["end_Hour"], $_REQUEST["end_Minute"],
                 0, $_REQUEST["end_Month"], $_REQUEST["end_Day"], $_REQUEST["end_Year"]));
 	}
+
+	if (isset($_REQUEST['doNotShowEmptyField']) && ($_REQUEST['doNotShowEmptyField'] == 'on' || $_REQUEST['doNotShowEmptyField'] == 'y')) {
+		$tracker_options['doNotShowEmptyField'] = 'y';
+	} else {
+		$tracker_options['doNotShowEmptyField'] = 'n';
+	}
 	
 	$_REQUEST["trackerId"] = $trklib->replace_tracker($_REQUEST["trackerId"], $_REQUEST["name"], $_REQUEST["description"], $tracker_options);
 	$logslib->add_log('admintrackers','changed or created tracker '.$_REQUEST["name"]);
@@ -318,6 +324,7 @@ $info["name"] = '';
 $info["description"] = '';
 $info["showCreated"] = '';
 $info["useExplicitNames"] = '';
+$info['doNotShowEmptyField'] = '';
 $info["showStatus"] = '';
 $info["showStatusAdminOnly"] = '';
 $info["simpleEmail"] = '';
@@ -361,6 +368,7 @@ $smarty->assign('name', $info["name"]);
 $smarty->assign('description', $info["description"]);
 $smarty->assign('showCreated', $info["showCreated"]);
 $smarty->assign('useExplicitNames', $info["useExplicitNames"]);
+$smarty->assign('doNotShowEmptyField', $info['doNotShowEmptyField']);
 $smarty->assign('showStatus', $info["showStatus"]);
 $smarty->assign('showStatusAdminOnly', $info["showStatusAdminOnly"]);
 $smarty->assign('simpleEmail', $info["simpleEmail"]);

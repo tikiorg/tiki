@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.78 2007-03-08 17:12:01 gillesm Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.79 2007-03-21 19:21:43 sylvieg Exp $ *}
 
 {if $forum_mode eq 'y'}
 <tr><td>
@@ -226,29 +226,6 @@
     {/section}
     <table class="normal">
     <tr>
-      {if $parent_coms}
-	<td class="formcolor">{tr}Reply to parent post{/tr}</td>
-      {else}
-	<td class="formcolor">
-		{if $forum_mode eq 'y'}
-		{tr}Post new reply{/tr}
-		{else}
-		{tr}Post new comment{/tr}
-		{/if}
-	</td>
-      {/if}
-      <td class="formcolor">
-      <input type="submit" name="comments_previewComment" value="{tr}preview{/tr}"/>
-      <input type="submit" name="comments_postComment" value="{tr}post{/tr}"/>
-    {if $forum_mode eq 'y'}
-    <input type="button" name="comments_cancelComment" value="{tr}cancel{/tr}" onclick="hide('{$postclass}');"/>
-    {/if}
-      </td>
-    </tr>
-{if $feature_contribution eq 'y'}
-	{include file="contribution.tpl" in_comment="y"}
-{/if}
-    <tr>
       <td class="formcolor"><label for="comments-title">{tr}Title{/tr}: </label><div class="attention">{tr}Required{/tr}</div></td>
       <td class="formcolor"><input type="text" size="40" name="comments_title" id="comments-title" value="{$comment_title|escape}" /></td>
     </tr>
@@ -304,6 +281,33 @@
 		</td>  
 	</tr>
 	{/if}
+{if $feature_contribution eq 'y'}
+	{include file="contribution.tpl" in_comment="y"}
+{/if}
+{if $feature_antibot eq 'y'}
+	{include file="antibot.tpl"}
+{/if}
+    <tr>
+      {if $parent_coms}
+	<td class="formcolor">{tr}Reply to parent post{/tr}</td>
+      {else}
+	<td class="formcolor">
+		{if $forum_mode eq 'y'}
+		{tr}Post new reply{/tr}
+		{else}
+		{tr}Post new comment{/tr}
+		{/if}
+	</td>
+      {/if}
+      <td class="formcolor">
+      <input type="submit" name="comments_previewComment" value="{tr}preview{/tr}"/>
+      <input type="submit" name="comments_postComment" value="{tr}post{/tr}"/>
+    {if $forum_mode eq 'y'}
+    <input type="button" name="comments_cancelComment" value="{tr}cancel{/tr}" onclick="hide('{$postclass}');"/>
+    {/if}
+      </td>
+    </tr>
+
     </table>
     </form>
   <br />

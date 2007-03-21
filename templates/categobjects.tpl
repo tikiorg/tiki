@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/categobjects.tpl,v 1.6 2006-03-16 13:43:12 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/categobjects.tpl,v 1.7 2007-03-21 19:21:43 sylvieg Exp $ *}
 
 <div class="catblock">
 <div class="cattitle">
 {foreach name=for key=id item=title from=$titles}
-<a href="tiki-browse_categories.php?parentId={$id}">{$title}</a>
+<a href="tiki-browse_categories.php?parentId={$id}">{$title|tr_if}</a>
 {if !$smarty.foreach.for.last} &amp; {/if}
 {/foreach}
 </div>

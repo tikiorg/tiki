@@ -1,7 +1,4 @@
 <?php
-// language will change the strings language only and will add bl for previous compatibility
-//switchLang will change the strings+ page language
-
 require_once('tiki-setup.php');
 include_once('lib/tikilib.php');
 
@@ -12,55 +9,63 @@ elseif (isset($_SERVER['HTTP_REFERER']))
 else
 	$orig_url = $tikiIndex;
 
-if (!preg_match('/(\?|&)bl=/', $orig_url)) {
-	if (strstr($orig_url, 'tiki-index.php?'))
+if (strstr($orig_url, 'tiki-index.php') || strstr($orig_url, 'tiki-read_article.php')) {
+	global $multilinguallib; include_once("lib/multilingual/multilinguallib.php");
+	$orig_url = urldecode($orig_url);
+	if (($txt = strstr($orig_url, '?')) == false) {
+		$txt = '';
+	} else {
+		$txt = substr($txt, 1);
+	}
+	parse_str($txt, $param);
+	if (!empty($param['page_id'])) {
+		$pageId = $param['page_id'];
+		$type = 'wiki page';
+	} else if (!empty($param['page'])) {
+		$page = $param['page'];
+		$info = $tikilib->get_page_info($page);
+		$pageId = $info['page_id'];
+		$type = 'wiki page';
+	} else if (!empty($param['articleId'])) {
+		$pageId = $param['articleId'];
+		$type = 'article';
+	} else {
+		$page = $wikilib->get_default_wiki_page();
+		$info = $tikilib->get_page_info($page);
+		$pageId = $info['page_id'];
+		$type = 'wiki page';
+	}
+	$bestLangPageId = $multilinguallib->selectLangObj($type, $pageId, $_REQUEST['language']);
+	if ($pageId != $bestLangPageId) {
+		if (!empty($param['page_id'])) {
+			$orig_url = preg_replace('/(.*[&?]page_id=)'.$pageId.'(.*)/', '${1}'.$bestLangPageId.'$2', $orig_url);
+		} elseif (!empty($param['articleId'])) {
+				$orig_url = preg_replace('/(.*[&?]articleId=)'.$pageId.'(.*)/', '${1}'.$bestLangPageId.'$2', $orig_url);
+
+		} else {
+			$newPage = $tikilib->get_page_name_from_id($bestLangPageId);
+			$orig_url = preg_replace('/(.*[&?]page=)'.$page.'(.*)/', "$1$newPage$2", $orig_url);
+		}
+	}
+	$orig_url = preg_replace('/(.*)&bl=y(.*)/', '$1$2', $orig_url);
+} elseif (!preg_match('/[?&]lang=/', $orig_url) && !preg_match('/[?&]bl=/', $orig_url)) {
+	if (strstr($orig_url, '?'))
 		$orig_url .= '&bl=y';
-	else if (strstr($orig_url, 'tiki-index.php'))
+	else
 		$orig_url .= '?bl=y';
 }
-$orig_url = preg_replace('/(.*\?.*)switchLang=[a-zA-Z-_]*&?(.*)/', '$1$2', $orig_url);
 
-if(isset($_REQUEST['language'])|| isset($_REQUEST['switchLang'])) {
-	$language = isset($_REQUEST['language'])? $_REQUEST['language']: $_REQUEST['switchLang'];
+$orig_url = preg_replace('/(.*\?.*)switchLang=[a-zA-Z-_]*&?(.*)/', '$1$2', $orig_url);
+$orig_url = preg_replace('/(.*[?&]lang=)[a-zA-Z-_]*(&?.*)/', '$1'.$_REQUEST['language'].'$2', $orig_url); // for tiki-view_lang.php?lang=en
+
+if(isset($_GET['language'])) {
+	$language = $_GET['language'];
 	if($feature_userPreferences == 'y' && $user && $change_language == 'y')  {
 		$tikilib->set_user_preference($user, 'language', $language);
 	}
-	else {
+	else
 		$_SESSION['language'] = $language;
 	}
-}
-
-if (strstr($orig_url, 'tiki-index.php') && isset($_REQUEST['switchLang'])) {
-	global $multilinguallib; include_once('lib/multilingual/multilinguallib.php');
-	global $user;
-	if (preg_match('/tiki-index.php?.*page=([^&]*)/', $orig_url, $matches))
-		$page = $matches[1];
-	else
-		$page = $userlib->get_user_default_homepage2($user);
-	$info = $tikilib->get_page_info($page);
-	$bestLangPageId = $multilinguallib->selectLangObj('wiki page', $info['page_id']);
-//echo "eeee".$info['page_id'].$tikilib->get_page_name_from_id($bestLangPageId).$bestLangPageId;die;
-	if ($info['page_id'] != $bestLangPageId) {
-		$orig_url = 'tiki-index.php?page='.$tikilib->get_page_name_from_id($bestLangPageId);
-//TODO: introduce a get_info_from_id to save a sql request
-	} elseif ($info['lang'] != $language && $feature_homePage_if_bl_missing == 'y') {
-		if (!isset($userPageName))
-			$userPageName = $userlib->get_user_default_homepage2($user);
-		$page = $userPageName;
-		$info = $tikilib->get_page_info($page);
-		$bestLangPageId = $multilinguallib->selectLangObj('wiki page', $info['page_id']);
-		if ($info['page_id'] != $bestLangPageId) {
-			$orig_url = 'tiki-index.php?page='.$tikilib->get_page_name_from_id($bestLangPageId);
-		}
-	}
-} else if ($feature_best_language == 'y') {
-	if (!preg_match('/(\?|&)bl=/', $orig_url)) {
-		if (strstr($orig_url, 'tiki-index.php?page'))
-			$orig_url .= '&bl=y';
-		else if (strstr($orig_url, 'tiki-index.php'))
-			$orig_url .= '?bl=y';
-	}
-}	
 
 header("location: $orig_url");
 exit;

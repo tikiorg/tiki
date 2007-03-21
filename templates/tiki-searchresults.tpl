@@ -1,6 +1,7 @@
 {if !( $searchNoResults ) }
 <h1>{tr}Search results{/tr}:</h1>
 {/if}
+<div class="nohighlight">
 {if !( $searchStyle eq "menu" )}
 {tr}Search in{/tr}:<br />
 <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=pages">{tr}All{/tr}</a>
@@ -75,6 +76,7 @@
 {/if}
     <input type="submit" class="wikiaction" name="search" value="{tr}go{/tr}"/>
 </form>
+</div><!--nohighlight-->
 
 <div class="searchresults">
 {if !($searchNoResults) }
