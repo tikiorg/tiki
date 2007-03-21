@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.40 2007-03-21 19:46:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.41 2007-03-21 20:19:48 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -98,10 +98,10 @@ if ( ! empty($multiprint_pages) ) {
 	// for the information as the number of
 	// days to get in the log 1,3,4,etc
 	// it will default to 1 recovering information for today
-	if (isset($_REQUEST["numrows"])) {
-		$maxRecords = $_REQUEST["numrows"];
+	if (isset($_REQUEST['maxRecords'])) {
+		$maxRecords = $_REQUEST['maxRecords'];
+		$smarty->assign('maxRecords', $maxRecords);
 	}
-	$smarty->assign('maxRecords', $maxRecords);
 	
 	
 	if (!isset($_REQUEST["sort_mode"])) {

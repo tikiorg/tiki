@@ -1,13 +1,14 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.13 2007-03-21 20:19:48 sylvieg Exp $ *}
 {if $cant_pages > 1 or $initial or $find}
 <div align="center">
 {section name=ini loop=$initials}
 {if $initial and $initials[ini] eq $initial}
 <span class="button2"><span class="linkbuton">{$initials[ini]|capitalize}</span></span> . 
 {else}
-<a {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?initial={$initials[ini]}&amp;numrows={$maxRecords}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;find_lang={$find_lang}{/if}{if !empty($find_categId)}&amp;find_categId={$find_categId}{/if}{/ajax_href} class="prevnext">{$initials[ini]}</a> . 
+<a {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?initial={$initials[ini]}{if !empty($maxRecords)}&amp;maxRecords={$maxRecords}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{/ajax_href} class="prevnext">{$initials[ini]}</a> . 
 {/if}
 {/section}
-<a {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?initial=&amp;numrows={$maxRecords}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;find_lang={$find_lang}{/if}{if !empty($find_categId)}&amp;find_categId={$find_categId}{/if}{/ajax_href} class="prevnext">{tr}All{/tr}</a>
+<a {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?initial={if !empty($maxRecords)}&amp;maxRecords={$maxRecords}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{/ajax_href} class="prevnext">{tr}All{/tr}</a>
 </div>
 {/if}
 
@@ -25,41 +26,41 @@
 {/if}
   <td class="heading">&nbsp;</td>
 {if $wiki_list_name eq 'y'}
-	<td class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'pageName_desc'}pageName_asc{else}pageName_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;find_lang={$find_lang}{/if}{if !empty($find_categId)}&amp;find_categId={$find_categId}{/if}{/ajax_href}>{tr}Page{/tr}</a></td>
+	<td class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'pageName_desc'}pageName_asc{else}pageName_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{if !empty($maxRecords)}&amp;maxRecords={$maxRecords}{/if}{/ajax_href}>{tr}Page{/tr}</a></td>
 {/if}
 {if $wiki_list_hits eq 'y'}
-	<td style="text-align:right;" class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;find_lang={$find_lang}{/if}{if !empty($find_categId)}&amp;find_categId={$find_categId}{/if}{/ajax_href}>{tr}Hits{/tr}</a></td>
+	<td style="text-align:right;" class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{if !empty($maxRecords)}&amp;maxRecords={$maxRecords}{/if}{/ajax_href}>{tr}Hits{/tr}</a></td>
 {/if}
 {if $wiki_list_lastmodif eq 'y'}
-	<td class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;find_lang={$find_lang}{/if}{if !empty($find_categId)}&amp;find_categId={$find_categId}{/if}{/ajax_href}>{tr}Last mod{/tr}</a></td>
+	<td class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{if !empty($maxRecords)}&amp;maxRecords={$maxRecords}{/if}{/ajax_href}>{tr}Last mod{/tr}</a></td>
 {/if}
 {if $wiki_list_creator eq 'y'}
-	<td class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'creator_desc'}creator_asc{else}creator_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;find_lang={$find_lang}{/if}{if !empty($find_categId)}&amp;find_categId={$find_categId}{/if}{/ajax_href}>{tr}Creator{/tr}</a></td>
+	<td class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'creator_desc'}creator_asc{else}creator_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{if !empty($maxRecords)}&amp;maxRecords={$maxRecords}{/if}{/ajax_href}>{tr}Creator{/tr}</a></td>
 {/if}
 
 {if $wiki_list_user eq 'y'}
-	<td class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;find_lang={$find_lang}{/if}{if !empty($find_categId)}&amp;find_categId={$find_categId}{/if}{/ajax_href}>{tr}Last author{/tr}</a></td>
+	<td class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{if !empty($maxRecords)}&amp;maxRecords={$maxRecords}{/if}{/ajax_href}>{tr}Last author{/tr}</a></td>
 {/if}
 {if $wiki_list_lastver eq 'y'}
-	<td style="text-align:right;" class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'version_desc'}version_asc{else}version_desc{/if}{if $initial}&amp;initial={$initial}{/if}{/ajax_href}>{tr}Last ver{/tr}</a></td>
+	<td style="text-align:right;" class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'version_desc'}version_asc{else}version_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($maxRecords)}&amp;maxRecords={$maxRecords}{/if}{/ajax_href}>{tr}Last ver{/tr}</a></td>
 {/if}
 {if $wiki_list_comment eq 'y'}
-	<td class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'comment_desc'}comment_asc{else}comment_desc{/if}{if $initial}&amp;initial={$initial}{/if}{/ajax_href}>{tr}Com{/tr}</a></td>
+	<td class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'comment_desc'}comment_asc{else}comment_desc{/if}{if $initial}&amp;initial={$initial}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{/if}{if !empty($maxRecords)}&amp;maxRecords={$maxRecords}{/if}{/ajax_href}>{tr}Com{/tr}</a></td>
 {/if}
 {if $wiki_list_status eq 'y'}
-	<td style="text-align:center;" class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'flag_desc'}flag_asc{else}flag_desc{/if}{if $initial}&amp;initial={$initial}{/if}{/ajax_href}>{tr}Status{/tr}</a></td>
+	<td style="text-align:center;" class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'flag_desc'}flag_asc{else}flag_desc{/if}{if $initial}&amp;initial={$initial}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{if !empty($maxRecords)}&amp;maxRecords={$maxRecords}{/if}{/if}{/ajax_href}>{tr}Status{/tr}</a></td>
 {/if}
 {if $wiki_list_versions eq 'y'}
-	<td style="text-align:right;" class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'versions_desc'}versions_asc{else}versions_desc{/if}{if $initial}&amp;initial={$initial}{/if}{/ajax_href}>{tr}Vers{/tr}</a></td>
+	<td style="text-align:right;" class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'versions_desc'}versions_asc{else}versions_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{if !empty($maxRecords)}&amp;maxRecords={$maxRecords}{/if}{/ajax_href}>{tr}Vers{/tr}</a></td>
 {/if}
 {if $wiki_list_links eq 'y'}
-	<td style="text-align:right;" class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'links_desc'}links_asc{else}links_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;find_lang={$find_lang}{/if}{if !empty($find_categId)}&amp;find_categId={$find_categId}{/if}{/ajax_href}>{tr}Links{/tr}</a></td>
+	<td style="text-align:right;" class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'links_desc'}links_asc{else}links_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{if !empty($maxRecords)}&amp;maxRecords={$maxRecords}{/if}{/ajax_href}>{tr}Links{/tr}</a></td>
 {/if}
 {if $wiki_list_backlinks eq 'y'}
-	<td style="text-align:right;" class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'backlinks_desc'}backlinks_asc{else}backlinks_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;find_lang={$find_lang}{/if}{if !empty($find_categId)}&amp;find_categId={$find_categId}{/if}{/ajax_href}>{tr}Backlinks{/tr}</a></td>
+	<td style="text-align:right;" class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'backlinks_desc'}backlinks_asc{else}backlinks_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{if !empty($maxRecords)}&amp;maxRecords={$maxRecords}{/if}{/ajax_href}>{tr}Backlinks{/tr}</a></td>
 {/if}
 {if $wiki_list_size eq 'y'}
-	<td style="text-align:right;" class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;find_lang={$find_lang}{/if}{if !empty($find_categId)}&amp;find_categId={$find_categId}{/if}{/ajax_href}>{tr}Size{/tr}</a></td>
+	<td style="text-align:right;" class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{if !empty($maxRecords)}&amp;maxRecords={$maxRecords}{/if}{/ajax_href}>{tr}Size{/tr}</a></td>
 {/if}
 </tr>
 {cycle values="even,odd" print=false}
@@ -171,17 +172,17 @@
 <br />
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="prevnext" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$prev_offset}&amp;sort_mode={$sort_mode}{if $initial}&amp;initial={$initial}{/if}{if $find}&amp;find={$find|escape}{/if}{if $exact_match eq 'y'}&amp;exact_match=on{/if}{if !empty($find_lang)}&amp;find_lang={$find_lang}{/if}{if !empty($find_categId)}&amp;find_categId={$find_categId}{/if}{/ajax_href}>{tr}prev{/tr}</a>]
+[<a class="prevnext" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$prev_offset}&amp;sort_mode={$sort_mode}{if $initial}&amp;initial={$initial}{/if}{if $find}&amp;find={$find|escape}{/if}{if $exact_match eq 'y'}&amp;exact_match=on{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{/ajax_href}>{tr}prev{/tr}</a>]
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-[<a class="prevnext" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$next_offset}&amp;sort_mode={$sort_mode}{if $initial}&amp;initial={$initial}{/if}{if $find}&amp;find={$find|escape}{/if}{if $exact_match eq 'y'}&amp;exact_match=on{/if}{if !empty($find_lang)}&amp;find_lang={$find_lang}{/if}{if !empty($find_categId)}&amp;find_categId={$find_categId}{/if}{/ajax_href}>{tr}next{/tr}</a>]
+[<a class="prevnext" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$next_offset}&amp;sort_mode={$sort_mode}{if $initial}&amp;initial={$initial}{/if}{if $find}&amp;find={$find|escape}{/if}{if $exact_match eq 'y'}&amp;exact_match=on{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{/ajax_href}>{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
-<a class="prevnext" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$selector_offset}&amp;sort_mode={$sort_mode}{if $initial}&amp;initial={$initial}{/if}{if $find}&amp;find={$find|escape}{/if}{if $exact_match eq 'y'}&amp;exact_match=on{/if}{if !empty($find_lang)}&amp;find_lang={$find_lang}{/if}{if !empty($find_categId)}&amp;find_categId={$find_categId}{/if}{/ajax_href}>
+<a class="prevnext" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$selector_offset}&amp;sort_mode={$sort_mode}{if $initial}&amp;initial={$initial}{/if}{if $find}&amp;find={$find|escape}{/if}{if $exact_match eq 'y'}&amp;exact_match=on{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{/ajax_href}>
 {$smarty.section.foo.index_next}</a>
 {/section}
 {/if}
