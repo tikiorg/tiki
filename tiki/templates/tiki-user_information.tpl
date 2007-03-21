@@ -27,7 +27,9 @@
   <tr><td class="form">{tr}Country{/tr}:</td><td><img alt="flag" src="img/flags/{$country}.gif" /> {tr}{$country}{/tr}</td></tr>
   {if $change_theme ne 'n'}<tr><td class="form">{tr}Theme{/tr}:</td><td>{$user_style}</td></tr>{/if}
   {if $change_language eq 'y'}<tr><td  class="form">{tr}Language{/tr}:</td><td>{$user_language}</td></tr>{/if}
+  {if $realName }
   <tr><td class="form">{tr}Real Name{/tr}:</td><td>{$realName}</td></tr>
+  {/if}
 {if $gender neq 'Hidden' and $gender}
   <tr><td>{tr}Gender{/tr}:</td><td>{tr}{$gender}{/tr}</td></tr>
 {/if}
