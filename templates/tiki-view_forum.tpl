@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.76 2007-03-21 19:21:44 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.77 2007-03-21 22:21:26 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -97,7 +97,7 @@ a moderator approves it.{/tr}</small>
   <br />
   {/if}
 
-<div id="forumpost" style="display:{if isset($smarty.session.tiki_cookie_jar.show_forumpost) and $smarty.session.tiki_cookie_jar.show_forumpost eq 'y'}block{else}none{/if};">
+<div id="forumpost" style="display:{if (isset($smarty.session.tiki_cookie_jar.show_forumpost) and $smarty.session.tiki_cookie_jar.show_forumpost eq 'y') or $comments_threadId > 0}block{else}none{/if};">
   {if $comments_threadId > 0}
     {tr}Editing comment{/tr}: {$comments_threadId} (<a class="forumbutlink" href="tiki-view_forum.php?openpost=1&amp;forumId={$forum_info.forumId}&amp;comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}">{tr}post new comment{/tr}</a>)
     {/if}
