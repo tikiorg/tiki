@@ -338,6 +338,7 @@ INSERT INTO tiki_preferences VALUES ('wikiSubmitNotice','');
 INSERT INTO tiki_preferences VALUES ('wiki_top_bar','n');
 INSERT INTO tiki_preferences VALUES ('w_use_db','y');
 INSERT INTO tiki_preferences VALUES ('w_use_dir','');
+INSERT INTO tiki_preferences VALUES ('user_tracker_infos','');
 INSERT INTO users_groups VALUES ('Anonymous','Public users not logged',NULL);
 INSERT INTO users_groups VALUES ('Registered','Users logged into the system',NULL);
 INSERT INTO users_permissions VALUES ('tiki_p_abort_instance','Can abort a process instance','editors','workflow');
