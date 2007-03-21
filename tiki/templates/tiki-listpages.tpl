@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages.tpl,v 1.45 2007-03-21 19:21:44 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages.tpl,v 1.46 2007-03-21 20:19:48 sylvieg Exp $ *}
 
 <h1><a href="tiki-listpages.php" class="pagetitle">{tr}Pages{/tr}</a></h1>
 {if $tiki_p_admin eq 'y'}
@@ -11,6 +11,7 @@
 <input type="hidden" name="offset" value="{$offset|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <input type="hidden" name="find" value="{$find|escape}" />
+{if !empty($maxRecords)}<input type="hidden" name="maxRecords" value="{$maxRecords}" />{/if}
 </form>
 
 <div id="tiki-listpages-content">

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_articles.php,v 1.31 2007-03-21 19:21:39 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_articles.php,v 1.32 2007-03-21 20:19:48 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -19,22 +19,13 @@ if ($feature_articles != 'y') {
 	die;
 }
 
-/*
-if($feature_listPages != 'y') {
-  $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display("error.tpl");
-  die;  
-}
-*/
-
-/*
 // Now check permissions to access this page
-if($tiki_p_view != 'y') {
+if($tiki_p_read_article != 'y') {
   $smarty->assign('msg',tra("Permission denied you cannot view pages"));
   $smarty->display("error.tpl");
   die;  
 }
-*/
+
 if (isset($_REQUEST["remove"])) {
 
 	if ($tiki_p_remove_article != 'y') {
@@ -72,8 +63,11 @@ if (!isset($_REQUEST["offset"])) {
 } else {
 	$offset = $_REQUEST["offset"];
 }
-
 $smarty->assign_by_ref('offset', $offset);
+if (!empty($_REQUEST['maxRecords'])) {
+	$maxRecords = $_REQUEST['maxRecords'];
+	$smarty->assign('maxRecords', $maxRecords);
+}
 
 if( ($tiki_p_admin == 'y') || ($tiki_p_admin_cms == 'y') ) {
   $pdate = '';
@@ -122,7 +116,7 @@ $visible_only='y';
 if( ($tiki_p_admin == 'y') || ($tiki_p_admin_cms == 'y') ) { $visible_only="n"; }
 
 // Get a list of last changes to the Wiki database
-$listpages = $tikilib->list_articles($offset, $maxRecords, $sort_mode, $find, $pdate, $user, $_REQUEST["type"], $_REQUEST["topic"], $visible_only, '', $_REQUEST["categId"], $_REQUEST['lang']);
+$listpages = $tikilib->list_articles($offset, $maxRecords, $sort_mode, $find, $pdate, $user, $_REQUEST["type"], $_REQUEST["topic"], $visible_only, '', $_REQUEST["categId"], '', '', $_REQUEST['lang']);
 // If there're more records then assign next_offset
 $cant_pages = ceil($listpages["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
@@ -153,6 +147,13 @@ if ($feature_categories == 'y') {
 	global $categlib; include_once ('lib/categories/categlib.php');
 	$categories = $categlib->get_all_categories_ext();
 	$smarty->assign_by_ref('categories', $categories);
+}
+if ($feature_multilingual == 'y') {
+	$languages = array();
+	$languages = $tikilib->list_languages(false, 'y');
+	$smarty->assign_by_ref('languages', $languages);
+	$avls = unserialize($tikilib->get_preference("available_languages"));
+	$smarty->assign_by_ref('available_languages', $avls);
 }
 
 include_once ('tiki-section_options.php');
