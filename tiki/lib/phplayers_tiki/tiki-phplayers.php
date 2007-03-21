@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/phplayers_tiki/tiki-phplayers.php,v 1.14 2007-03-21 21:05:31 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/phplayers_tiki/tiki-phplayers.php,v 1.15 2007-03-21 21:39:35 sylvieg Exp $
 class TikiPhplayers extends TikiLib {
 	/* Build the input to the phplayers lib for a category tree  */
 	function mkCatEntry($categId, $indent="", $back, $categories, $urlEnd, $tpl='') {
@@ -41,7 +41,7 @@ class TikiPhplayers extends TikiLib {
 		$channels = $tikilib->list_menu_options($idMenu, 0, -1, 'position_asc', '');
 		$indented = '';
 		$res = '';
-		$curOption = -1;
+		$curOption = 0;
 		$url = urldecode($_SERVER['REQUEST_URI']);
 		include_once('lib/wiki/wikilib.php');
 		$homePage = strtolower($wikilib->get_default_wiki_page());
