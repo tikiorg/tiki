@@ -1,9 +1,10 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/phplayers_tiki/tiki-phplayers.php,v 1.13 2007-03-21 19:21:41 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/phplayers_tiki/tiki-phplayers.php,v 1.14 2007-03-21 21:05:31 sylvieg Exp $
 class TikiPhplayers extends TikiLib {
 	/* Build the input to the phplayers lib for a category tree  */
 	function mkCatEntry($categId, $indent="", $back, $categories, $urlEnd, $tpl='') {
 		global $smarty, $language,$categlib;
+		include_once('lib/smarty_tiki/modifier.tr_if.php');
 		$kids = array();
 		foreach ($categories as $cat) {
 			if ($cat['parentId'] == $categId) {
@@ -13,7 +14,8 @@ class TikiPhplayers extends TikiLib {
 		if (count($kids)) {
 			$total = 0;
 			foreach ($kids as $k) {
-				$k['name']= $categlib->get_category_name($k['categId']);
+				$k['name'] = $categlib->get_category_name($k['categId']);
+				$k['name'] = smarty_modifier_tr_if($k['name']);
 				list($subTree, $count) = $this->mkCatEntry($k['categId'],".$indent",'', $categories, $urlEnd, $tpl);
 				$count += $k['objects'];
 				$total += $count;
