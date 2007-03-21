@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-shoutbox.tpl,v 1.28 2007-03-06 16:48:09 gillesm Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-shoutbox.tpl,v 1.29 2007-03-21 20:22:16 gillesm Exp $ *}
 
 {if $feature_shoutbox eq 'y' and $tiki_p_view_shoutbox eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Shoutbox{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="shoutbox" flip=$module_params.flip decorations=$module_params.decorations}
-    {if $tiki_p_post_shoutbox eq 'y'}
+    {if $tiki_p_post_shoutbox eq 'y' and $user}
       {js_maxlength textarea=shout_msg maxlength=255}
       <form action="{$shout_ownurl}" method="post" onsubmit="return verifyForm(this);">
       <div align="center">
