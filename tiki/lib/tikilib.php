@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.732 2007-03-20 15:39:10 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.733 2007-03-21 19:21:40 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3615,7 +3615,7 @@ function add_pageview() {
 	function get_perm_object($objectId, $objectType, $global=true) {
 		global $tiki_p_admin, $user, $feature_categories, $userlib, $smarty;
 		$ret = array();
-		if ($tiki_p_admin) {
+		if ($tiki_p_admin == 'y') {
 			if (!$global) {
 				$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
 				foreach ($perms['data'] as $perm) {
@@ -3682,6 +3682,29 @@ function add_pageview() {
 		switch ($objectType) {
 		case 'tracker':
 			return 'trackers';
+		case 'image gallery':
+		case 'image':
+			return 'image galleries';
+		case 'file gallery':
+		case 'file':
+			return 'file galleries';
+		case 'article':
+		case 'submission':
+			return 'cms';
+		case 'forum':
+			return 'forums';
+		case 'blog':
+		case 'blog post':
+			return 'blogs';
+		case 'wiki page':
+		case 'history':
+			return 'wiki';
+		case 'faq':
+			return 'faqs';
+		case 'survey':
+			return 'surveys';
+		case 'newsletter':
+			return 'newsletters';
 		/* TODO */
 		default:
 			return $objectType;
@@ -3691,6 +3714,29 @@ function add_pageview() {
 		switch ($objectType) {
 		case 'tracker':
 			return 'tiki_p_admin_trackers';
+		case 'image gallery':
+		case 'image':
+			return 'tiki_p_admin_galleries';
+		case 'file gallery':
+		case 'file':
+			return 'tiki_p_admin_file_galleries';
+		case 'article':
+		case 'submission':
+			return 'tiki_p_admin_cms';
+		case 'forum':
+			return 'tiki_p_admin_forum';
+		case 'blog':
+		case 'blog post':
+			return 'tiki_p_blog_admin';
+		case 'wiki page':
+		case 'history':
+			return 'tiki_p_admin_wiki';
+		case 'faq':
+			return 'tiki_p_admin_faqs';
+		case 'survey':
+			return 'tiki_p_admin_surveys';
+		case 'newsletter':
+			return 'tiki_p_admin_newsletters';
 		/* TODO */
 		default:
 			return "tiki_p_admin_$objectType";
@@ -3708,9 +3754,42 @@ function add_pageview() {
 		switch ($objectType) {
 		case 'tracker':
 			$ret['tiki_p_view_trackers'] = 'y';
+			break;
+		case 'image gallery':
+		case 'image':
+			$ret['tiki_p_view_image_gallery'] = 'y';
+			break;
+		case 'file gallery':
+		case 'file':
+			$ret['tiki_p_view_file_gallery'] = 'y';
+			break;
+		case 'article':
+		case 'submission':
+			$ret['tiki_p_read_article'] = 'y';
+			break;
+		case 'forum':
+			$ret['tiki_p_forum_read'] = 'y';
+			break;
+		case 'blog':
+		case 'blog post':
+			$ret['tiki_p_read_blog'] = 'y';
+			break;
+		case 'wiki page':
+		case 'history':
+			$ret['tiki_p_view'] = 'y';
+			break;
+		case 'faq':
+			$ret['tiki_p_view_faqs'] = 'y';
+			break;
+		case 'survey':
+			break;
+		case 'newsletter':
+			$ret['tiki_p_subscribe_newsletters'] = 'y';
+			break;
 		/* TODO */
 		default:
 			$ret["tiki_p_view_$objectType"] = 'y';
+			break;
 		}
 		return $ret;
 	}

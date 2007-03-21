@@ -2,7 +2,7 @@
 
 // $start_time = microtime(true);
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.71 2007-03-06 19:29:44 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.72 2007-03-21 19:21:39 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -158,6 +158,11 @@ $in_reply_to = '';
 if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'))
 	|| ($tiki_p_forum_post == 'y' && isset($forum_mode) && $forum_mode == 'y') ) {
     if (isset($_REQUEST["comments_postComment"])) {
+	  if (empty($user) && $feature_antibot == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
+			$smarty->assign('msg',tra("You have mistyped the anti-bot verification code; please try again."));
+			$smarty->display("error.tpl");
+			die;
+		}
 	$comments_show = 'y';
 
 	if (!empty($_REQUEST["comments_title"]) && !empty($_REQUEST["comments_data"]) && !($feature_contribution == 'y' && ((isset($forum_mode) && $forum_mode == 'y' && $feature_contribution_mandatory_forum == 'y') || ((empty($forum_mode) || $forum_mode == 'n') && $feature_contribution_mandatory_comment == 'y')) && empty($_REQUEST['contributions']))) {
@@ -187,7 +192,6 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 		} else {
 		    $parent_id = $_REQUEST["comments_parentId"];
 		}
-
 		$qId = $commentslib->post_new_comment($comments_objectId, $parent_id,
 			$user,
 			$_REQUEST["comments_title"],

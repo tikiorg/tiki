@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_menu_options.php,v 1.23 2007-03-06 19:29:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_menu_options.php,v 1.24 2007-03-21 19:21:39 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -119,27 +119,35 @@ if (isset($_REQUEST["find"])) {
 } else {
 	$find = '';
 }
-
 $smarty->assign('find', $find);
+
+if (isset($_REQUEST['nbRecords'])) {
+	$nbRecords = $_REQUEST['nbRecords'];
+	if ($nbRecords != $maxRecords)
+		$smarty->assign('nbRecords', $_REQUEST['nbRecords']); 
+} else {
+	$nbRecords = $maxRecords;
+}
+
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $allchannels = $menulib->list_menu_options($_REQUEST["menuId"], 0, -1, $sort_mode, $find);
 $allchannels = $menulib->sort_menu_options($allchannels);
-$channels = $menulib->list_menu_options($_REQUEST["menuId"], $offset, $maxRecords, $sort_mode, $find, true);
+$channels = $menulib->list_menu_options($_REQUEST["menuId"], $offset, $nbRecords, $sort_mode, $find, true);
 $channels = $menulib->describe_menu_types($channels);
-$cant_pages = ceil($channels["cant"] / $maxRecords);
+$cant_pages = ceil($channels["cant"] / $nbRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
+$smarty->assign('actual_page', 1 + ($offset / $nbRecords));
 
-if ($channels["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
+if ($channels["cant"] > ($offset + $nbRecords)) {
+	$smarty->assign('next_offset', $offset + $nbRecords);
 } else {
 	$smarty->assign('next_offset', -1);
 }
 
 // If offset is > 0 then prev_offset
 if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
+	$smarty->assign('prev_offset', $offset - $nbRecords);
 } else {
 	$smarty->assign('prev_offset', -1);
 }

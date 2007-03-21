@@ -1,5 +1,5 @@
 <?php
-// $Id: outputfilter.highlight.php,v 1.13 2007-03-20 09:22:51 nyloth Exp $
+// $Id: outputfilter.highlight.php,v 1.14 2007-03-21 19:21:42 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -45,6 +45,13 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
     if (!isset($highlight) || empty($highlight)) {
                         return $source;
     }
+	if (strstr($source, 'id="rightcolumn"')) {
+		preg_match('~(.* id="centercolumn"[^>]*>)(.*)(<td[^>]* id="rightcolumn".*)~xsi', $source, $matches);
+	} elseif (!preg_match('~(.* id="centercolumn"[^>]*>)(.*)~xsi', $source, $matches)) {
+		return $source;
+	} else {
+		$matches[3] = '';
+	}
 
     if (!preg_match('~(.*id="centercolumn"[^>]*>)(.*)(<td[^>]* id="rightcolumn".*)~xsi', $source, $matches))
 	    if (!preg_match('~(.*id="centercolumn"[^>]*>)(.*)~xsi', $source, $matches))
@@ -52,7 +59,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
    $source = preg_replace_callback(
       '~(?:<head>.*</head>                          # head blocks
-      |<div[^>]*nohighlight.*</div>\{\*nohighlight  # div with nohightlight
+      |<div[^>]*nohighlight.*</div><!--nohighlight--> # div with nohightlight
       |<script[^>]+>.*</script>                     # script blocks
       |<a[^>]*onmouseover.*onmouseout[^>]*>            # onmouseover (user popup)
       |<[^>]*>                                      # all html tags

@@ -33,7 +33,18 @@ if (isset($module_params['sort'])) {
 } else {
 	$sort = 'publishDate_desc';
 }
-$ranking = $tikilib->list_articles($start, $module_rows, $sort, '', '', $user, $type, $topicId, 'y', $topic);
+if (isset($module_params['lang'])) {
+	$lang = $module_params['lang'];
+} else {
+	$lang = '';
+}
+if (isset($module_params['categId'])) {
+	$categId = $module_params['categId'];
+} else {
+	$categId = '';
+}
+
+$ranking = $tikilib->list_articles($start, $module_rows, 'publishDate_desc', '', '', $user, $type, $topicId, 'y', $topic, $categId, $lang);
 
 $smarty->assign('modArticles', $ranking["data"]);
 

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.75 2007-03-08 21:28:31 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.76 2007-03-21 19:21:44 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -184,6 +184,9 @@ a moderator approves it.{/tr}</small>
 	{include file="contribution.tpl"}
 	{/if}
 
+	{if $feature_antibot eq 'y'}
+		{include file="antibot.tpl"}
+	{/if}
     <tr class="formcolor">
       <td>{tr}Post{/tr}</td>
       <td>

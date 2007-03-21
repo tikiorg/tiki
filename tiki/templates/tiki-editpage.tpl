@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.102 2007-03-06 19:30:39 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.103 2007-03-21 19:21:43 sylvieg Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -311,10 +311,7 @@ function searchrep() {
 <input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" /></td></tr>
 
 {if $feature_antibot eq 'y' && $anon_user eq 'y'}
-<tr><td class="formcolor">{tr}Anti-Bot verification code{/tr}:</td>
-<td class="formcolor"><img src="tiki-random_num_img.php" alt='{tr}Random Image{/tr}'/></td></tr>
-<tr><td class="formcolor">{tr}Enter the code you see above{/tr}:</td>
-<td class="formcolor"><input type="text" maxlength="8" size="8" name="antibotcode" /></td></tr>
+{include file=antibot.tpl}
 {/if}
 
 {if $wiki_feature_copyrights  eq 'y'}

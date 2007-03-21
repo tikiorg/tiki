@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.410 2007-03-19 18:01:49 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.411 2007-03-21 19:21:39 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -1775,7 +1775,7 @@ if ($feature_wiki_discuss == 'y') {
 // ------------------------------------------------------
 // setup initial breadcrumb
 $crumbs = array();
-$crumbs[] = new Breadcrumb($siteTitle,'Home',$tikiIndex);
+$crumbs[] = new Breadcrumb($siteTitle,'',$tikiIndex);
 $smarty->assign_by_ref('crumbs', $crumbs);
 
 

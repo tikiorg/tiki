@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.36 2006-12-17 10:48:26 fr_rodo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.37 2007-03-21 19:21:43 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-list_articles.php">{tr}Articles{/tr}</a>
 
@@ -23,37 +23,7 @@
 <a href="tiki-admin.php?page=cms"><img src='pics/icons/wrench.png' border='0' width='16' height='16' alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
 {/if}
 
-<br /><br />
-<div align="center">
-<table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
-   <form method="get" action="tiki-list_articles.php">
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-     <select name="type">
-     <option value='' {if $find_type eq ''}selected="selected"{/if}>{tr}all{/tr}</option>
-     {section name=t loop=$types}
-     <option value="{$types[t].type|escape}" {if $find_type eq $types[t].type}selected="selected"{/if}>{tr}{$types[t].type}{/tr}</option>
-     {/section}
-     </select>
-     <select name="topic">
-     <option value='' {if $find_topic eq ''}selected="selected"{/if}>{tr}all{/tr}</option>
-     {section name=ix loop=$topics}
-     <option value="{$topics[ix].topicId|escape}" {if $find_topic eq $topics[ix].topicId}selected="selected"{/if}>{tr}{$topics[ix].name}{/tr}</option>
-     {/section}
-     </select>
-     <select name="categId">
-     <option value='' {if $find_categId eq ''}selected="selected"{/if}>{tr}all{/tr}</option>
-     {section name=ix loop=$categ}
-     <option value="{$categ[ix].categId|escape}" {if $find_categId eq $categ[ix].categId}selected="selected"{/if}>{tr}{$categ[ix].categpath}{/tr}</option>
-     {/section}
-     </select>
-     <input type="submit" value="{tr}find{/tr}" name="search" />
-   </form>
-   </td>
-</tr>
-</table>
+{include file="find.tpl"}
 
 <table class="normal">
 <tr>

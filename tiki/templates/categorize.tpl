@@ -1,7 +1,7 @@
 {if $feature_categories eq 'y' and (count($categories) gt 0 or $tiki_p_admin_categories eq 'y')}
 <tr class="formcolor">
  <td>{tr}Categorize{/tr}</td>
- <td{if $cols} colspan="{$cols}"{/if}>
+ <td{if $colsCategorize} colspan="{$colsCategorize}"{/if}>
 {if $mandatory_category >= 0}
   <div id="categorizator">
 {else}

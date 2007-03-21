@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_articles.php,v 1.30 2007-03-06 19:29:49 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_articles.php,v 1.31 2007-03-21 19:21:39 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,7 +11,6 @@ $section = 'cms';
 require_once ('tiki-setup.php');
 
 include_once ('lib/articles/artlib.php');
-include_once ('lib/categories/categlib.php');
 
 if ($feature_articles != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_articles");
@@ -109,10 +108,13 @@ if (!isset($_REQUEST["topic"])) {
 if (!isset($_REQUEST["categId"])) {
 	$_REQUEST["categId"] = '';
 }
-
+if (!isset($_REQUEST['lang'])) {
+	$_REQUEST['lang'] = '';
+}
 $smarty->assign('find_topic', $_REQUEST["topic"]);
 $smarty->assign('find_type', $_REQUEST["type"]);
 $smarty->assign('find_categId', $_REQUEST["categId"]);
+$smarty->assign('find_lang', $_REQUEST['lang']);
 
 
 
@@ -120,7 +122,7 @@ $visible_only='y';
 if( ($tiki_p_admin == 'y') || ($tiki_p_admin_cms == 'y') ) { $visible_only="n"; }
 
 // Get a list of last changes to the Wiki database
-$listpages = $tikilib->list_articles($offset, $maxRecords, $sort_mode, $find, $pdate, $user, $_REQUEST["type"], $_REQUEST["topic"], $visible_only, '', $_REQUEST["categId"]);
+$listpages = $tikilib->list_articles($offset, $maxRecords, $sort_mode, $find, $pdate, $user, $_REQUEST["type"], $_REQUEST["topic"], $visible_only, '', $_REQUEST["categId"], $_REQUEST['lang']);
 // If there're more records then assign next_offset
 $cant_pages = ceil($listpages["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
@@ -147,8 +149,11 @@ $smarty->assign_by_ref('topics', $topics);
 $types = $artlib->list_types();
 $smarty->assign_by_ref('types', $types);
 
-$categ = $categlib->get_all_categories_ext();
-$smarty->assign_by_ref('categ', $categ);
+if ($feature_categories == 'y') {
+	global $categlib; include_once ('lib/categories/categlib.php');
+	$categories = $categlib->get_all_categories_ext();
+	$smarty->assign_by_ref('categories', $categories);
+}
 
 include_once ('tiki-section_options.php');
 

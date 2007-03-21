@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/phplayers_tiki/tiki-phplayers.php,v 1.12 2007-03-06 20:41:18 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/phplayers_tiki/tiki-phplayers.php,v 1.13 2007-03-21 19:21:41 sylvieg Exp $
 class TikiPhplayers extends TikiLib {
 	/* Build the input to the phplayers lib for a category tree  */
 	function mkCatEntry($categId, $indent="", $back, $categories, $urlEnd, $tpl='') {
@@ -48,29 +48,51 @@ class TikiPhplayers extends TikiLib {
 		} elseif (preg_match('/tiki-index.php/', $url)) {
 			$url = strtolower($url);
 		}
-		foreach ($channels["data"] as $key=>$cd) {
+		$realKey = 0;
+		$level = 0;
+		foreach ($channels['data'] as $key=>$cd) {
 			$cd["name"] = tra($cd["name"]);
 			if ($cd['type'] == 'o') {
 				$res .= $indented;
 			} elseif ($cd['type'] == 's' or $cd['type'] == 'r') {
 				$indented = '.';
+				$level = 1;
 			} elseif ($cd['type'] == '-') {
 				$indented = substr($indented, 1);
+				--$level;
 				continue;
 			} else {
 				$indented = str_pad('', $cd['type'], '.');
+				$level = $cd['type'] + 1;
 				$res .= $indented;
 				$indented .= '.';
 			}
-			$res .= ".|".$cd["name"]."|".$cd["url"]."\n";
-			if (!empty($cd['url']) && $curOption == -1) {
+			++$realKey;
+			if (!empty($cd['url']) && empty($curOption)) {
 				if ($cd['url'] == 'tiki-index.php') {
 					$cd['url'] .= "?page=$homePage";
 				}
-				if (($pos = strpos($url, strtolower($cd['url']))) !== false && ($pos == 0 || $url[$pos -1] == '/' || $url[$pos - 1] == '\\')) {
-					$curOption = $key+1;
+				if (preg_match('/tiki-index.php/', $cd['url'])) {
+					$cd['url'] = strtolower($cd['url']);
+				}
+				if (($pos = strpos($url, $cd['url'])) !== false && ($pos == 0 || $url[$pos -1] == '/' || $url[$pos - 1] == '\\' || $url[$pos-1] == '=')) {
+					$last = $pos + strlen($cd['url']);
+
+					if ($last >= strlen($url) || $url['last'] == '#' || $url['last'] == '?' || $url['last'] == '&') {
+						$curOption = $realKey;
+						if ($cd['type'] != 's' && $cd['type'] != 'r') {
+							for ($i = $level - 1; $i >= 0; --$i) {
+								$res = str_replace($cur[$i], $cur[$i].'||||1', $res);
+							}
+						}
+					}
 				}
 			}
+			$res.= ".|".$cd["name"]."|".$cd["url"];
+			if (empty($curOption) && $cd['type'] != 'o' && $cd['type'] != '-') {
+				$cur[$level - 1] = $res;
+			}
+ 			$res .= "\n";
 		}
 		return $res;
 	}
