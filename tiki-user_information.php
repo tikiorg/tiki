@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.39 2007-03-06 19:29:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.40 2007-03-21 18:10:00 gillesm Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,8 +11,9 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/messu/messulib.php');
 include_once ('lib/userprefs/scrambleEmail.php');
-include_once('lib/registration/registrationlib.php');
+include_once ('lib/registration/registrationlib.php');
 include_once ('lib/wiki/wikilib.php');
+include_once ('lib/trackers/trackerlib.php');
 
 if (isset($_REQUEST['userId'])) {
 	$userwatch = $tikilib->get_user_login($_REQUEST['userId']);
@@ -132,6 +133,25 @@ if ($feature_display_my_to_others == 'y') {
 	$user_galleries = $tikilib->get_user_galleries($userwatch, -1);
 	$smarty->assign_by_ref('user_galleries', $user_galleries);
 }
+
+if ( $user_tracker_infos ) {
+ // arg passed 11,56,58,68
+ $trackerinfo=explode(',',$user_tracker_infos) ;
+ $UserTrackerID=$trackerinfo[0] ;
+ array_shift ($trackerinfo);
+ foreach ( $trackerinfo  as $value ) 
+  {
+   $field=$trklib->get_tracker_field($value) ;
+   $FieldTrk[$value]=$field;
+   $ValueTrk[$value]=$trklib->get_item_value($UserTrackerID,$trklib->get_user_item($UserTrackerID,array('oneUserItem'=>'y'),$userwatch),$value);
+   $FieldTrk[$value]["options"]=explode(',', $FieldTrk[$value]["options"]);
+  }
+ $smarty->assign_by_ref('FieldTrk',$FieldTrk);
+ $smarty->assign_by_ref('ValueTrk',$ValueTrk);
+}
+
+
+
 
 ask_ticket('user-information');
 
