@@ -28,7 +28,7 @@
   {if $change_theme ne 'n'}<tr><td class="form">{tr}Theme{/tr}:</td><td>{$user_style}</td></tr>{/if}
   {if $change_language eq 'y'}<tr><td  class="form">{tr}Language{/tr}:</td><td>{$user_language}</td></tr>{/if}
   <tr><td class="form">{tr}Real Name{/tr}:</td><td>{$realName}</td></tr>
-{if $gender neq 'Hidden'}
+{if $gender neq 'Hidden' and $gender}
   <tr><td>{tr}Gender{/tr}:</td><td>{tr}{$gender}{/tr}</td></tr>
 {/if}
 
@@ -39,8 +39,8 @@
   {/if}
   {/section}
 
-  <tr><td class="form">{tr}Avatar{/tr}:</td><td>{$avatar}</td></tr>
-  <tr><td class="form">{tr}Homepage{/tr}:</td><td>{if $homePage ne ""}<a href="{$homePage}" class="link" title="{tr}Users HomePage{/tr}">{$homePage}</a>{/if}</td></tr>
+  {if $avatar}<tr><td class="form">{tr}Avatar{/tr}:</td><td>{$avatar}</td></tr>{/if}
+  {if $homepage}  <tr><td class="form">{tr}Homepage{/tr}:</td><td>{if $homePage ne ""}<a href="{$homePage}" class="link" title="{tr}Users HomePage{/tr}">{$homePage}</a>{/if}</td></tr>
 {if $feature_wiki eq 'y' && $feature_wiki_userpage eq 'y'}
   <tr><td class="form">{tr}Personal Wiki Page{/tr}:</td><td>
 {if $userPage_exists}
@@ -49,6 +49,7 @@
 {$feature_wiki_userpage_prefix}{$userinfo.login}<a class="link" href="tiki-editpage.php?page={$feature_wiki_userpage_prefix|escape:'url'}{$userinfo.login|escape:'url'}" title="{tr}Create page{/tr}">?</a>
 {else}&nbsp;{/if}
 </td></tr>
+{/if}
 {/if}
   <tr><td class="form">{tr}Displayed time zone{/tr}:</td><td>{$display_timezone}</td></tr>
 {if $feature_friends eq 'y' && $user ne $userwatch && $user}
