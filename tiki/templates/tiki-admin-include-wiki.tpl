@@ -524,14 +524,6 @@
     </div>
   </div>
 
- 
-    <tr><td class="form">{tr}License Page{/tr}: </td><td><input type="text" name="wikiLicensePage" value="{$wikiLicensePage|escape}" /></td></tr>
-    <tr><td class="form">{tr}Submit Notice{/tr}: </td><td><input type="text" name="wikiSubmitNotice" value="{$wikiSubmitNotice|escape}" /></td></tr>
-    <tr><td colspan="2" class="button"><input type="submit" name="wikisetcopyright" value="{tr}Change preferences{/tr}" /></td></tr>    
-    </table>
-    </form>
-    </div>
-  </div>
 
   <div class="cbox">
     <div class="cbox-title">
