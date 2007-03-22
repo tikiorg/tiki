@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2007-03-09 19:01:21 $
+# $Date: 2007-03-22 20:31:18 $
 # $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -4094,6 +4094,7 @@ CREATE TABLE users_permissions (
   permDesc varchar(250) default NULL,
   level varchar(80) default NULL,
   type varchar(20) default NULL,
+  admin varchar(1) default NULL,
   PRIMARY KEY  (permName)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
@@ -4102,41 +4103,41 @@ CREATE TABLE users_permissions (
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_abort_instance', 'Can abort a process instance', 'editors', 'workflow');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_access_closed_site', 'Can access site when closed', 'admin', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_add_events', 'Can add events in the calendar', 'registered', 'calendar');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin', 'Administrator, can manage users groups and permissions, Hotwords and all the weblog features', 'admin', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin', 'Administrator, can manage users groups and permissions, Hotwords and all the weblog features', 'admin', 'tiki', 'y');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_banners', 'Administrator, can admin banners', 'admin', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_banning', 'Can ban users or ips', 'admin', 'tiki');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_calendar', 'Can create/admin calendars', 'admin', 'calendar');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_categories', 'Can admin categories', 'editors', 'tiki');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_charts', 'Can admin charts', 'admin', 'charts');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_chat', 'Administrator, can create channels remove channels etc', 'editors', 'chat');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_cms', 'Can admin the cms', 'editors', 'cms');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_contribution', 'Can admin contributions', 'admin', 'contribution');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_directory', 'Can admin the directory', 'editors', 'directory');
+INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_calendar', 'Can create/admin calendars', 'admin', 'calendar', 'y');
+INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_categories', 'Can admin categories', 'editors', 'tiki', 'y');
+INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_charts', 'Can admin charts', 'admin', 'charts', 'y');
+INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_chat', 'Administrator, can create channels remove channels etc', 'editors', 'chat', 'y');
+INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_cms', 'Can admin the cms', 'editors', 'cms', 'y');
+INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_contribution', 'Can admin contributions', 'admin', 'contribution', 'y');
+INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_directory', 'Can admin the directory', 'editors', 'directory', 'y');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_directory_cats', 'Can admin directory categories', 'editors', 'directory');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_directory_sites', 'Can admin directory sites', 'editors', 'directory');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_drawings', 'Can admin drawings', 'editors', 'drawings');
+INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_drawings', 'Can admin drawings', 'editors', 'drawings', 'y');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_dynamic', 'Can admin the dynamic content system', 'editors', 'tiki');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_faqs', 'Can admin faqs', 'editors', 'faqs');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_file_galleries', 'Can admin file galleries', 'editors', 'file galleries');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_forum', 'Can admin forums', 'editors', 'forums');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_galleries', 'Can admin Image Galleries', 'editors', 'image galleries');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_games', 'Can admin games', 'editors', 'games');
+INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_faqs', 'Can admin faqs', 'editors', 'faqs', 'y');
+INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_file_galleries', 'Can admin file galleries', 'editors', 'file galleries', 'y');
+INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_forum', 'Can admin forums', 'editors', 'forums', 'y');
+INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_galleries', 'Can admin Image Galleries', 'editors', 'image galleries', 'y');
+INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_games', 'Can admin games', 'editors', 'games', 'y');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_integrator', 'Can admin integrator repositories and rules', 'admin', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_mailin', 'Can admin mail-in accounts', 'admin', 'tiki');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_newsletters', 'Can admin newsletters', 'admin', 'newsletters');
+INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_newsletters', 'Can admin newsletters', 'admin', 'newsletters', 'y');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_objects','Can edit object permissions', 'admin', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_polls','Can admin polls', 'admin', 'tiki');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_quizzes', 'Can admin quizzes', 'editors', 'quizzes');
+INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_quizzes', 'Can admin quizzes', 'editors', 'quizzes', 'y');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_received_articles', 'Can admin received articles', 'editors', 'comm');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_received_pages', 'Can admin received pages', 'editors', 'comm');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_rssmodules','Can admin rss modules', 'admin', 'tiki');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_sheet', 'Can admin sheet', 'admin', 'sheet');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_shoutbox', 'Can admin shoutbox (Edit/remove msgs)', 'editors', 'shoutbox');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_surveys', 'Can admin surveys', 'editors', 'surveys');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_trackers', 'Can admin trackers', 'editors', 'trackers');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_users', 'Can admin users', 'admin', 'user');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_wiki', 'Can admin the wiki', 'editors', 'wiki');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_workflow', 'Can admin workflow processes', 'admin', 'workflow');
+INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_sheet', 'Can admin sheet', 'admin', 'sheet', 'y');
+INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_shoutbox', 'Can admin shoutbox (Edit/remove msgs)', 'editors', 'shoutbox', 'y');
+INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_surveys', 'Can admin surveys', 'editors', 'surveys', 'y');
+INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_trackers', 'Can admin trackers', 'editors', 'trackers', 'y');
+INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_users', 'Can admin users', 'admin', 'user', 'y');
+INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_wiki', 'Can admin the wiki', 'editors', 'wiki', 'y');
+INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_workflow', 'Can admin workflow processes', 'admin', 'workflow', 'y');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_approve_submission', 'Can approve submissions', 'editors', 'cms');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_attach_trackers', 'Can attach files to tracker items', 'registered', 'trackers');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_autoapprove_submission', 'Submited articles automatically approved', 'editors', 'cms');
@@ -4147,7 +4148,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_batch_upload_files_dir', 'Can use Directoy Batch Load', 'editors', 'file galleries');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_batch_upload_image_dir', 'Can use Directory Batch Load', 'editors', 'image galleries');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_batch_upload_images', 'Can upload zip files with images', 'editors', 'image galleries');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_blog_admin', 'Can admin blogs', 'editors', 'blogs');
+INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_blog_admin', 'Can admin blogs', 'editors', 'blogs', 'y');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_blog_post', 'Can post to a blog', 'registered', 'blogs');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_broadcast', 'Can broadcast messages to groups', 'admin', 'messu');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_broadcast_all', 'Can broadcast messages to all user', 'admin', 'messu');
