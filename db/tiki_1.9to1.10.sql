@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.145 2007-03-09 19:01:22 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.146 2007-03-22 20:31:19 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -858,5 +858,34 @@ ALTER TABLE `tiki_webmail_contacts_ext` DROP COLUMN `name`;
 #xavi/sylvie 2007-02-21
 ALTER TABLE tiki_searchindex ADD KEY location(location(50), page(200));
 
-#sylvieg 03/09/078
+#sylvieg 03/09/07
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_tell_a_friend', 'Can send a link to a friend', 'Basic', 'tiki');
+
+#sylvieg 03/22/07
+ALTER TABLE users_permissions ADD admin varchar(1) default NULL;
+UPDATE users_permissions set admin='y' where permName = 'tiki_p_admin';
+UPDATE users_permissions set admin='y' where permName = 'tiki_p_admin_categories';
+UPDATE users_permissions set admin='y' where permName = 'tiki_p_admin_calendar';
+UPDATE users_permissions set type='category' where permName= 'tiki_p_admin_categories';
+UPDATE users_permissions set type='category' where permName= 'tiki_p_view_categories'; 
+UPDATE users_permissions set type='category' where permName= 'tiki_p_edit_categories'; 
+UPDATE users_permissions set admin='y' where permName = 'tiki_p_admin_charts';
+UPDATE users_permissions set admin='y' where permName = 'tiki_p_admin_chat';
+UPDATE users_permissions set admin='y' where permName = 'tiki_p_admin_cms';
+UPDATE users_permissions set admin='y' where permName = 'tiki_p_admin_contribution';
+UPDATE users_permissions set admin='y' where permName = 'tiki_p_admin_directory';
+UPDATE users_permissions set admin='y' where permName = 'tiki_p_admin_faqs';
+UPDATE users_permissions set admin='y' where permName = 'tiki_p_admin_file_galleries';
+UPDATE users_permissions set admin='y' where permName = 'tiki_p_admin_forum';
+UPDATE users_permissions set admin='y' where permName = 'tiki_p_admin_galleries';
+UPDATE users_permissions set admin='y' where permName = 'tiki_p_admin_games';
+UPDATE users_permissions set admin='y' where permName = 'tiki_p_admin_newsletters';
+UPDATE users_permissions set admin='y' where permName = 'tiki_p_admin_quizzes';
+UPDATE users_permissions set admin='y' where permName = 'tiki_p_admin_sheet';
+UPDATE users_permissions set admin='y' where permName = 'tiki_p_admin_shoutbox';
+UPDATE users_permissions set admin='y' where permName = 'tiki_p_admin_surveys';
+UPDATE users_permissions set admin='y' where permName = 'tiki_p_admin_trackers';
+UPDATE users_permissions set admin='y' where permName = 'tiki_p_admin_users';
+UPDATE users_permissions set admin='y' where permName = 'tiki_p_admin_wiki';
+UPDATE users_permissions set admin='y' where permName = 'tiki_p_admin_workflow';
+UPDATE users_permissions set admin='y' where permName = 'tiki_p_blog_admin';
