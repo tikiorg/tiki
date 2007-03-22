@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.118 2007-03-06 19:29:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.119 2007-03-22 15:09:38 gillesm Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -224,6 +224,11 @@ if (isset($_REQUEST["page"])) {
 		$description = "Wysiwyg Editor";//get_strings tra("i18n")
 		$helpUrl = "Wysiwyg Editor Admin";
 		include_once ('tiki-admin_include_wysiwyg.php');		
+	} else if ($adminPage == "copyright") {
+		$admintitle = "Copyright";//get_strings tra("i18n")
+		$description = "Copyright management";//get_strings tra("i18n")
+		$helpUrl = "Copyright";
+		include_once ('tiki-admin_include_copyright.php');		
 	}
 	$url = 'tiki-admin.php'.'?page='.$adminPage;
 	if (!$helpUrl) {$helpUrl = ucfirst($adminPage)."+Config";}

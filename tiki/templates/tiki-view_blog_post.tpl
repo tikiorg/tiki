@@ -43,6 +43,16 @@
 		<a href="tiki-view_blog_post.php?blogId={$smarty.request.blogId}&amp;postId={$smarty.request.postId}&amp;page={$last_page}"><img src='pics/icons/resultset_last.png' border='0' alt='{tr}Last page{/tr}' title='{tr}Last page{/tr}' width='16' height='16' /></a>
 	</div>
 {/if}
+
+{if $blogues_feature_copyrights  eq 'y' and $wikiLicensePage}
+  {if $wikiLicensePage == $page}
+    {if $tiki_p_edit_copyrights eq 'y'}
+      <p class="editdate">{tr}To edit the copyright notices{/tr} <a href="copyrights.php?page={$copyrightpage}">{tr}click here{/tr}</a>.</p>
+    {/if}
+  {else}
+    <p class="editdate">{tr}The content on this page is licensed under the terms of the{/tr} <a href="tiki-index.php?page={$wikiLicensePage}&amp;copyrightpage={$page|escape:"url"}">{$wikiLicensePage}</a>.</p>
+  {/if}
+{/if}
 <hr/>
 <table >
 <tr><td>

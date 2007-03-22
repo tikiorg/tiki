@@ -92,7 +92,7 @@ alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
 		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$next_page}"><img src='pics/icons/resultset_next.png' border='0' alt='{tr}Next page{/tr}' title='{tr}Next page{/tr}' width='16' height='16' /></a>
 
 
-		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$last_page}"><img src='üics/icons/resultset_last.png' border='0' alt='{tr}Last page{/tr}' title='{tr}Last page{/tr}' width='16' height='16' ></a>
+		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$last_page}"><img src='ics/icons/resultset_last.png' border='0' alt='{tr}Last page{/tr}' title='{tr}Last page{/tr}' width='16' height='16' ></a>
 	</div>
 {/if}
 </div>
@@ -101,12 +101,26 @@ alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
 {tr}Source{/tr}: <a href="{$linkto}"{if $popupLinks eq 'y'} target="_blank"{/if}>{$linkto}</a>
 </div>
 {/if}
+
+{if $articles_feature_copyrights  eq 'y' and $wikiLicensePage}
+  {if $wikiLicensePage == $page}
+    {if $tiki_p_edit_copyrights eq 'y'}
+      <p class="editdate">{tr}To edit the copyright notices{/tr} <a href="copyrights.php?page={$copyrightpage}">{tr}click here{/tr}</a>.</p>
+    {/if}
+  {else}
+    <p class="editdate">{tr}The content on this page is licensed under the terms of the{/tr} <a href="tiki-index.php?page={$wikiLicensePage}&amp;copyrightpage={$page|escape:"url"}">{$wikiLicensePage}</a>.</p>
+  {/if}
+{/if}
+
+
 {if $feature_article_comments == 'y'
   && (($tiki_p_read_comments  == 'y'
   && $comments_cant != 0)
   ||  $tiki_p_post_comments  == 'y'
   ||  $tiki_p_edit_comments  == 'y')}
+
 <div id="page-bar">
+
 <table>
 <tr><td>
 <div class="button2">
@@ -123,6 +137,8 @@ alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
 </div>
 </td></tr></table>
 </div>
+
+
 
 {include file=comments.tpl}
 {/if}
