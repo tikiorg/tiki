@@ -1,5 +1,5 @@
 <?php
-// $Id: outputfilter.highlight.php,v 1.14 2007-03-21 19:21:42 sylvieg Exp $
+// $Id: outputfilter.highlight.php,v 1.15 2007-03-22 17:18:30 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -72,9 +72,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function _enlightColor($matches) {
     static $colword = array();
     if (is_string($matches)) { // just to set the color array
-        // This array is used to choose colors for supplied highlight terms
-        $colorArr = array('#ffff66','#ff9999','#A0FFFF','#ff66ff','#99ff99');
-
         // Wrap all the highlight words with tags bolding them and changing
         // their background colors
         $i = 0;
@@ -85,14 +82,14 @@ function _enlightColor($matches) {
 			continue;
             $seaword .= $seasep.preg_quote($word, '~');
             $seasep ='|';
-            $colword[strtolower($word)] = $colorArr[$i%5];
+            $colword[strtolower($word)] = 'highlight_word_'.$i%5;
 			$i++;
         }
         return $seaword;
     }
     // actual replacement callback
     if (isset($matches[1])) {
-        return '<span style="color:black;background-color:' . $colword[strtolower($matches[1])] . ';">' . $matches[1] . '</span>';
+        return '<span class= "'.$colword[strtolower($matches[1])].'">' . $matches[1] . '</span>';
     }
     return $matches[0];
 }
