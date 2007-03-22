@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.61 2007-03-06 19:29:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.62 2007-03-22 15:19:19 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -190,7 +190,7 @@ $listpages = $bloglib->list_blog_posts($_REQUEST["blogId"], $offset, $blog_data[
 
 $temp_max = count($listpages["data"]);
 for ($i = 0; $i < $temp_max; $i++) {
-	$listpages["data"][$i]["parsed_data"] =preg_replace("/&#([0-9]+);/me", "chr('\\1')", strtr($tikilib->parse_data($bloglib->get_page($listpages["data"][$i]["data"], 1)), array_flip(get_html_translation_table(HTML_ENTITIES)))) ;
+	$listpages["data"][$i]["parsed_data"] = $tikilib->parse_data($bloglib->get_page($listpages["data"][$i]["data"], 1)) ;
 
 	if ($feature_freetags == 'y') {     // And get the Tags for the posts
 		$listpages["data"][$i]["freetags"] = $freetaglib->get_tags_on_object($listpages["data"][$i]["postId"], "blog post");
