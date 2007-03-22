@@ -1,5 +1,5 @@
 /* 
-  $Header: /cvsroot/tikiwiki/tiki/styles/mozilla.css,v 1.50 2007-01-09 17:17:09 sylvieg Exp $
+  $Header: /cvsroot/tikiwiki/tiki/styles/mozilla.css,v 1.51 2007-03-22 17:54:56 sylvieg Exp $
   mozilla.css
   This theme is based on the default2 style for Tiki 1.2
   If you want  a short-version CSS template, start with default2
@@ -3028,4 +3028,11 @@ color: black;
 background-color: #edeeef;
 }
 
+.tellafriend {text-align:right;}
+
+.highlight_word_0{color:black;background-color: #ffff66;}
+.highlight_word_1{color:black;background-color: #ff9999;}
+.highlight_word_2{color:black;background-color: #A0FFFF;}
+.highlight_word_3{color:black;background-color: #ff66ff;}
+.highlight_word_4{color:black;background-color: #99ff99;}
 /* end of css file */
