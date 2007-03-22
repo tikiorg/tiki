@@ -43,10 +43,12 @@
 {if $feature_maps eq 'y'}
 <tr><td class="formcolor">{tr}Geographic{/tr}:</td><td class="formcolor"><input type="checkbox" name="geographic" {if $geographic eq 'y'}checked="checked"{/if} /></td></tr>
 {/if}
+{if $preset_galleries_scale ne 'y'}
 <tr><td class="formcolor">{tr}Max Rows per page{/tr}:</td><td class="formcolor"><input type="text" name="maxRows" value="{$maxRows|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Images per row{/tr}:</td><td class="formcolor"><input type="text" name="rowImages" value="{$rowImages|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Thumbnails size X{/tr}:</td><td class="formcolor"><input type="text" name="thumbSizeX" value="{$thumbSizeX|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Thumbnails size Y{/tr}:</td><td class="formcolor"><input type="text" name="thumbSizeY" value="{$thumbSizeY|escape}" /></td></tr>
+{/if}
 <tr><td class="formcolor">{tr}Default sort order{/tr}:</td><td class="formcolor"><select name="sortorder">
 {foreach from=$options_sortorder key=key item=item}
 <option value="{$item}" {if $sortorder == $item} selected="selected"{/if}>{$key}</option>
@@ -80,16 +82,26 @@
 {/foreach}
 </select>
 </td></tr>
+{if $preset_galleries_scale ne 'y'}
 <tr><td class="formcolor">{tr}Available scales{/tr}:</td><td class="formcolor">
+
+{tr}Global default{/tr} {$scaleSizeGalleries}x{$scaleSizeGalleries} ({tr}Bounding box{/tr}) <input type="radio" name="defaultscale" value="{$scaleSizeGalleries}" {if $defaultscale==$scaleSizeGalleries}checked="checked"{/if} />{tr}default scale{/tr}<br />
+
 {section  name=scales loop=$scaleinfo}
+{if $scaleinfo[scales].scale ne $scaleSizeGalleries}
 {tr}Remove{/tr}:<input type="checkbox" name="removescale_{$scaleinfo[scales].scale|escape}" />
 {$scaleinfo[scales].scale}x{$scaleinfo[scales].scale} ({tr}Bounding box{/tr}) <input type="radio" name="defaultscale" value="{$scaleinfo[scales].scale}" {if $defaultscale==$scaleinfo[scales].scale}checked="checked"{/if} />{tr}default scale{/tr}<br />
+{/if}
 {sectionelse}
 {tr}No scales available{/tr}
 {/section}<br />
 {tr}Original image is default scale{/tr}<input type="radio" name="defaultscale" value="o" {if $defaultscale=='o'}checked="checked"{/if} />
 </td></tr>
 <tr><td class="formcolor">{tr}Add scaled images with bounding box of square size{/tr}:</td><td class="formcolor"><input type="text" name="scaleSize" size="4" />{tr}pixels{/tr}</td></tr>
+{else}
+{$defaultscale=$scaleSizeGalleries}
+{/if}
+
 <tr><td class="formcolor">{tr}Owner of the gallery{/tr}:</td><td class="formcolor"><input type="text" name="owner" value="{$owner|escape}"/></td></tr>
 {include file=categorize.tpl}
 {include file=freetag.tpl}

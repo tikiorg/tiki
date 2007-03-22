@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.38 2007-03-06 19:29:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.39 2007-03-22 18:58:11 gillesm Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -234,6 +234,12 @@ if ($_REQUEST["galleryId"] == 0) {
 	$nextscaleinfo = $imagegallib->get_gallery_next_scale($_REQUEST["galleryId"]);
 }
 
+$info["maxRows"]=$maxRowsGalleries;
+$info["rowImages"]=$rowImagesGalleries;
+$info['thumbSizeX'] = $thumbSizeXGalleries;
+$info['thumbSizeY'] = $thumbSizeYGalleries;
+
+
 if (!isset($info["maxRows"]))
 	$info["maxRows"] = 10;
 
@@ -252,6 +258,7 @@ if ($info["maxRows"] == 0)
 if ($info["rowImages"] == 0)
 	$info["rowImages"] = 6;
 
+print $info["rowImages"] ;
 $maxImages = $info["maxRows"] * $info["rowImages"];
 $smarty->assign_by_ref('maxImages', $maxImages);
 $smarty->assign_by_ref('rowImages', $info["rowImages"]);

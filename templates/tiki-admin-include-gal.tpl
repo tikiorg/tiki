@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.27 2006-09-17 09:27:47 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.28 2007-03-22 18:58:11 gillesm Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -152,7 +152,21 @@
 		<td><label>{tr}Visits{/tr}</label></td>
 		<td><input type="checkbox" name="gal_list_visits" {if $gal_list_visits eq 'y'}checked="checked"{/if} /></td>
 	</tr>
-	<tr><td colspan="2" class="button"><input type="submit" name="imagegallistprefs" value="{tr}Change configuration{/tr}" /></td></tr>
+	<tr class="form">
+		<td><label>{tr}Force galleries image size per default{/tr}</label></td>
+		<td><input type="checkbox" name="preset_galleries_scale" {if $preset_galleries_scale eq 'y'}checked="checked"{/if} /></td>
+
+	</tr>
+	
+        <tr><td class="form">{tr}Max Rows per page{/tr}:</td><td class="form"><input type="text" name="maxRows" value="{$maxRows|escape}" /></td></tr>
+        <tr><td class="form">{tr}Images per row{/tr}:</td><td class="form"><input type="text" name="rowImages" value="{$rowImages|escape}" /></td></tr>
+	<tr><td class="form">{tr}Thumbnails size X{/tr}:</td><td class="form"><input type="text" name="thumbSizeX" value="{$thumbSizeX|escape}" /></td></tr>
+	<tr><td class="form">{tr}Thumbnails size Y{/tr}:</td><td class="form"><input type="text" name="thumbSizeY" value="{$thumbSizeY|escape}" /></td></tr>
+	
+	<tr><td class="form">{tr}Default scaled images with bounding box of square size{/tr}:</td><td class="form"><input type="text" name="scaleSize" size="4" value="{$scaleSize|escape}" />{tr}pixels{/tr}</td></tr>
+
+<tr><td colspan="2" class="button"><input type="submit" name="imagegallistprefs" value="{tr}Change configuration{/tr}" /></td></tr>
+
 	</table>	
 	</form>	
   </div>
