@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.55 2007-03-06 19:29:49 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.56 2007-03-22 18:58:11 gillesm Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -75,6 +75,12 @@ $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo["path"] = str_replace("tiki-galleries", "tiki-browse_gallery", $foo["path"]);
 $smarty->assign('url', $tikilib->httpPrefix(). $foo["path"]);
 
+	if (!isset($_REQUEST['maxRows'])) $_REQUEST['maxRows'] = $maxRowsGalleries;
+	if (!isset($_REQUEST['rowImages'])) $_REQUEST['rowImages'] = $rowImagesGalleries;
+	if (!isset($_REQUEST['thumbSizeX'])) $_REQUEST['thumbSizeX'] = $thumbSizeXGalleries;
+	if (!isset($_REQUEST['thumbSizeY'])) $_REQUEST['thumbSizeY'] = $thumbSizeYGalleries;
+	if (!isset($_REQUEST['scaleSize'])) $_REQUEST['scaleSize'] = $scaleSizeGalleries;
+
 if (isset($_REQUEST['edit']) || isset($_REQUEST['preview']) || $_REQUEST["galleryId"] == 0) {
 	if (!isset($_REQUEST['description'])) $_REQUEST['description'] = '';
 	if (!isset($_REQUEST['maxRows'])) $_REQUEST['maxRows'] = 10;
@@ -88,14 +94,17 @@ if (isset($_REQUEST['edit']) || isset($_REQUEST['preview']) || $_REQUEST["galler
 	if (!isset($_REQUEST['defaultscale'])) $_REQUEST['defaultscale'] = 'o';
 }
 
+
 // Init smarty variables to blank values
 //$smarty->assign('theme','');
 $smarty->assign('name', '');
 $smarty->assign('description', '');
-$smarty->assign('maxRows', 10);
-$smarty->assign('rowImages', 6);
-$smarty->assign('thumbSizeX', 80);
-$smarty->assign('thumbSizeY', 80);
+$smarty->assign('maxRows', $_REQUEST['maxRows']);
+$smarty->assign('rowImages', $_REQUEST['rowImages']);
+$smarty->assign('thumbSizeX',$_REQUEST['thumbSizeX']);
+$smarty->assign('thumbSizeY',$_REQUEST['thumbSizeY']);
+$smarty->assign('scaleSize',$_REQUEST['scaleSize']);
+
 $smarty->assign('public', 'n');
 $smarty->assign('edited', 'n');
 $smarty->assign('visible', 'y');

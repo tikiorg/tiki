@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.20 2007-03-06 19:29:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.21 2007-03-22 18:58:10 gillesm Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -85,7 +85,8 @@ if (isset($_REQUEST['imagegallistprefs'])) {
 	"gal_list_lastmodif",
 	"gal_list_user",
 	"gal_list_imgs",
-	"gal_list_visits"
+	"gal_list_visits",
+	"preset_galleries_scale"
 	);
 
 	foreach ($pref_toggles as $toggle) {
@@ -113,6 +114,25 @@ if (isset($_REQUEST['mvimg']) && isset($_REQUEST['move_gallery'])) {
   }
 }
 
+
+
+	if (!isset($_REQUEST['maxRows'])) $_REQUEST['maxRows'] = $maxRowsGalleries;
+	if (!isset($_REQUEST['rowImages'])) $_REQUEST['rowImages'] =$rowImagesGalleries ;
+	if (!isset($_REQUEST['thumbSizeX'])) $_REQUEST['thumbSizeX'] = $thumbSizeXGalleries;
+	if (!isset($_REQUEST['thumbSizeY'])) $_REQUEST['thumbSizeY'] = $thumbSizeYGalleries;
+	if (!isset($_REQUEST['scaleSize'])) $_REQUEST['scaleSize'] = $scaleSizeGalleries;
+        
+        $tikilib->set_preference("maxRowsGalleries",  $_REQUEST['maxRows']);
+        $tikilib->set_preference("rowImagesGalleries",  $_REQUEST['rowImages']);
+        $tikilib->set_preference("thumbSizeXGalleries",  $_REQUEST['thumbSizeX']);
+        $tikilib->set_preference("thumbSizeYGalleries",  $_REQUEST['thumbSizeY']);
+	$tikilib->set_preference("scaleSizeGalleries",  $_REQUEST['scaleSize']);
+        
+	$smarty->assign('maxRows', $_REQUEST['maxRows']);
+	$smarty->assign('rowImages', $_REQUEST['rowImages']);
+	$smarty->assign('thumbSizeX', $_REQUEST['thumbSizeX']);
+	$smarty->assign('thumbSizeY',$_REQUEST['thumbSizeY']);
+	$smarty->assign('scaleSize', $_REQUEST['scaleSize']);
 
 if($imagegallib->havegd) {
 	$gdlib=tra('Detected, Version:').' '.$imagegallib->gdversion;
