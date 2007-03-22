@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/searchlib.php,v 1.44 2007-03-08 16:36:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/searchlib.php,v 1.45 2007-03-22 18:26:21 sylvieg Exp $
 //test
 
 //this script may only be included - so its better to die if called directly.
@@ -481,12 +481,10 @@ class SearchLib extends TikiLib {
 	}
 
 	function find_posts($words = '', $offset = 0, $maxRecords = -1, $fulltext = false) {
-		global $user;
+	  global $user;
 
-		$site_timezone_shortname = $this->get_site_timezone_shortname();
-		$site_time_difference = $this->get_site_time_difference($user);
 		# TODO localize?
-		$pagename = "CONCAT(b.`title`, ' [', " . "DATE_FORMAT(FROM_UNIXTIME(p.created + $site_time_difference), " . "'%M %d %Y %h:%i'), ' $site_timezone_shortname', '] : ', p.`user`)";
+		$pagename = "CONCAT(b.`title`, ' - ', p.`user`)";
 
 		$search_posts = array(
 				      // why using left join here?
