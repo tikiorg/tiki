@@ -1,5 +1,5 @@
 /*
-$Id: trollparty.css,v 1.48 2007-01-13 12:02:54 mose Exp $
+$Id: trollparty.css,v 1.49 2007-03-22 17:54:56 sylvieg Exp $
 made by mose@trollparty.org
 
 background-color: #000000;
@@ -2730,4 +2730,11 @@ div.admbox img { margin-top: 20px; }
 .cssmenu a, .cssmenu h2 {
 	background-color : #000;
 }
+.tellafriend {text-align:right;}
+
+.highlight_word_0{color:black;background-color: #ffff66;}
+.highlight_word_1{color:black;background-color: #ff9999;}
+.highlight_word_2{color:black;background-color: #A0FFFF;}
+.highlight_word_3{color:black;background-color: #ff66ff;}
+.highlight_word_4{color:black;background-color: #99ff99;}
 /* end of css file */

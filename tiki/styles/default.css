@@ -1,5 +1,5 @@
 /* 
-  $Header: /cvsroot/tikiwiki/tiki/styles/default.css,v 1.69 2007-02-22 13:35:45 sylvieg Exp $
+  $Header: /cvsroot/tikiwiki/tiki/styles/default.css,v 1.70 2007-03-22 17:54:54 sylvieg Exp $
   default.css
   This theme is based on the subsilver style for Tiki 1.2
   If you want  a short-version CSS template, start with default2
@@ -3050,4 +3050,11 @@ div.admbox {
 div.admbox:hover { background-color: #DFDFDF; }
 div.admbox img { margin-top: 20px; }
 
+.tellafriend {text-align:right;}
+
+.highlight_word_0{color:black;background-color: #ffff66;}
+.highlight_word_1{color:black;background-color: #ff9999;}
+.highlight_word_2{color:black;background-color: #A0FFFF;}
+.highlight_word_3{color:black;background-color: #ff66ff;}
+.highlight_word_4{color:black;background-color: #99ff99;}
 /* end of css file */
