@@ -2,10 +2,10 @@ contributor:
 $Author: tombombadilom $
 
 revision:
-0.0.1
+0.0.2
 
 lastmodif:
-$Date: 2007-03-22 13:31:30 $
+$Date: 2007-03-23 13:56:33 $
 
 files: 
 features/mapeditor/tiki-mapeditor_maps.php tiki-mapeditor_maps.php
@@ -20,7 +20,6 @@ features/mapeditor/templates/tiki-mapeditor_edit.tpl templates/tiki-mapeditor_ed
 features/mapeditor/templates/tiki-mapeditor_layers.tpl templates/tiki-mapeditor_layers.tpl
 features/mapeditor/templates/tiki-mapeditor_maps.tpl templates/tiki-mapeditor_maps.tpl
 features/mapeditor/templates/tiki-mapeditor_layer.tpl templates/tiki-mapeditor_layer.tpl
-features/mapeditor/templates/tiki-mapeditor_layergroup.tpl templates/tiki-mapeditor_layergroup.tpl
 
 sql-install:
 DROP TABLE IF EXISTS `tiki_maps`;
