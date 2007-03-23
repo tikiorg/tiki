@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.413 2007-03-23 00:53:06 gillesm Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.414 2007-03-23 15:50:23 jyhem Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -952,9 +952,9 @@ if ($pref['https_mode']) {
 	$pref['https_port'] = 443;
 }
 $pref['http_domain'] = '';
-$pref['http_prefix'] = '/';
+$pref['http_prefix'] = dirname($_SERVER["PHP_SELF"].'x');
 $pref['https_domain'] = '';
-$pref['https_prefix'] = '/';
+$pref['https_prefix'] = dirname($_SERVER["PHP_SELF"].'x');
 $pref['base_url'] = 'http://' . $default['feature_server_name'];
 $pref['login_url'] = 'tiki-login.php';
 $pref['login_scr'] = 'tiki-login_scr.php';
@@ -1482,10 +1482,10 @@ if (!$user) {
 		$language = $saveLanguage;
 		$smarty->assign('language', $language);
 	}
- } elseif (!empty($saveLanguage) && $feature_userPreferences != 'y' && $change_language == 'y') {
- 	$language = $saveLanguage;
+} elseif (!empty($saveLanguage) && $feature_userPreferences != 'y' && $change_language == 'y') {
+	$language = $saveLanguage;
 	$smarty->assign('language', $language);
- }
+}
 
 $stlstl = split("-|\.", $style);
 $style_base = $stlstl[0];

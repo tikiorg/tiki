@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.59 2007-03-06 19:29:49 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.60 2007-03-23 15:50:24 jyhem Exp $
 
-// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.59 2007-03-06 19:29:49 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.60 2007-03-23 15:50:24 jyhem Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -60,6 +60,19 @@ if ($tiki_p_admin == 'y') {
 	}
 }
 
+// Get clean strings for $http_prefix and $https_prefix
+// One slash before, no slash after
+$http_prefix = '/'.$http_prefix;
+// http_prefix starts with one / and ends with none. If empty stays empty
+$http_prefix = ereg_replace('^/+', '/', '/'.$http_prefix);
+$http_prefix = ereg_replace('/+$', '', $http_prefix);
+$https_prefix = '/'.$https_prefix;
+// https_prefix starts with one / and ends with none. If empty stays empty
+$https_prefix = ereg_replace('^/+', '/', '/'.$https_prefix);
+$https_prefix = ereg_replace('/+$', '', $https_prefix);
+// This means that the http_prefix or https_prefix is not prepended to $url
+$needs_http_prefix = 1;
+
 $https_mode = isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on';
 $https_login_required = $tikilib->get_preference('https_login_required', 'n');
 
@@ -69,7 +82,7 @@ if ($https_login_required == 'y' && !$https_mode) {
 	if ($https_port != 443)
 		$url .= ':' . $https_port;
 
-	$url .= $https_prefix . $tikiIndex;
+	$url .= $https_prefix .'/'. $tikiIndex;
 
 	if (SID)
 		$url .= '?' . SID;
@@ -200,16 +213,15 @@ if ($feature_intertiki == 'y' and isset($_REQUEST['intertiki']) and in_array($_R
     }
 } else {
 
-// Verify user is valid
-list($isvalid, $user, $error) = $userlib->validate_user($user, $pass, $challenge, $response);
+	// Verify user is valid
+	list($isvalid, $user, $error) = $userlib->validate_user($user, $pass, $challenge, $response);
 
-// If the password is valid but it is due then force the user to change the password by
-// sending the user to the new password change screen without letting him use tiki
-// The user must re-nter the old password so no security risk here
-if ($isvalid) {
-	$isdue = $userlib->is_due($user);
-}
-//}
+	// If the password is valid but it is due then force the user to change the password by
+	// sending the user to the new password change screen without letting him use tiki
+	// The user must re-nter the old password so no security risk here
+	if ($isvalid) {
+		$isdue = $userlib->is_due($user);
+	}
 }
 
 if ($isvalid) {
@@ -224,17 +236,19 @@ if ($isvalid) {
 		$_SESSION["$user_cookie_site"] = $user;
 
 		$smarty->assign_by_ref('user', $user);
-		$url = $_SESSION['loginfrom'];
+		$url_ = $_SESSION['loginfrom'];
+		$needs_http_prefix = 0;
 		$logslib->add_log('login','logged from '.$url);
 //	this code doesn't work
 //                if (($url == $tikiIndex || substr($tikiIndex, strlen($tikiIndex)-strlen($url)-1) == '/'.$url)
-//		     && $useGroupHome == 'y') { /* go to the group page only if the loginfrom is the default page */
+//		     && $useGroupHome == 'y') { .. } /* go to the group page only if the loginfrom is the default page */
 		if (($url == $tikiIndex || basename($url) == $tikiIndex || urldecode(basename($url)) == $tikiIndex || $limitedGoGroupHome == "n") && $useGroupHome == 'y') { /* go to the group page only if the loginfrom is the default page */
 			$groupHome = $tikilib->get_user_preference($user, 'homePage', $groupHome);
 			$groupHome = $userlib->get_user_default_homepage($user);
-    			if ($groupHome) {
-                    $url = preg_match('#^https?:#', $groupHome) ? $groupHome : "tiki-index.php?page=".$groupHome;
-    			}
+			if ($groupHome) {
+				$url = preg_match('#^https?:#', $groupHome) ? $groupHome : "tiki-index.php?page=".$groupHome;
+				$needs_http_prefix = 1;
+			}
 		}
 		//unset session variable in case user su's
 		unset($_SESSION['loginfrom']);
@@ -293,7 +307,11 @@ if ($https_mode) {
 			$http_domain .= ':' . $http_port;
 
 		$prefix .= $http_domain . '/';
-		$url = $prefix . $url;
+		if ( $needs_http_prefix == 1 ) {
+			$url = $prefix . $http_prefix. $url;
+		} else {
+			$url = $prefix . $url;
+		}
 
 		if (SID)
 			$url .= '?' . SID;
@@ -307,7 +325,9 @@ if (isset($user) and $feature_score == 'y') {
 if (isset($_REQUEST['page'])) {
   header('location: ' .  ${$_REQUEST['page']});
 } else {
-  header('location: ' . $url);
+  // url starts with one /
+  $url = ereg_replace('^/+', '/', '/'.$url);
+  header('location: ' . 'http://'.$_SERVER['SERVER_NAME'].$http_prefix.$url);
 }
 exit;
 
