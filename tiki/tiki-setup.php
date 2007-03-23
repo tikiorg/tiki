@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.412 2007-03-23 00:25:15 gillesm Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.413 2007-03-23 00:53:06 gillesm Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -38,7 +38,7 @@ class TikiSetup extends TikiInit {
         $checked = true;
 
         $errors = '';
-        
+
         if (strpos($_SERVER['SERVER_SOFTWARE'],'IIS')==TRUE){
 		if (array_key_exists('PATH_TRANSLATED', $_SERVER)) {
         	$docroot = dirname($_SERVER['PATH_TRANSLATED']);
@@ -181,8 +181,8 @@ to delete them for you if needed.
 
             exit;
         }
-		
-	
+
+
     }
 }
 
@@ -427,6 +427,7 @@ $pref['wiki_watch_comments'] = 'y';
 $pref['wiki_watch_editor'] = 'n';
 $pref['feature_wiki_history_full'] = 'n';
 
+
 # wysiwyg
 $pref['feature_wysiwyg'] = 'n';
 $pref['wysiwyg_optional'] = 'y';
@@ -536,6 +537,7 @@ $pref['gal_list_imgs'] = 'y';
 $pref['gal_list_visits'] = 'y';
 $pref['feature_image_gallery_mandatory_category'] = '-1';
 $pref['gal_imgcache_dir'] = 'temp/cache';
+$pref['preset_galleries_scale'] ='n';
 
 # spellcheck
 if (file_exists('lib/bablotron.php')) {
@@ -655,40 +657,40 @@ $pref['change_language'] = 'y';
 $pref['change_theme'] = 'y';
 $pref['login_is_email'] = 'n';
 $pref['validateUsers'] = 'n';
-$pref['validateEmail'] = 'n'; 
+$pref['validateEmail'] = 'n';
 $pref['forgotPass'] = 'n';
 $pref['change_password'] = 'y';
-$pref['available_languages'] = 'a:0:{}'; 
-$pref['available_styles'] = 'a:0:{}'; 
-$pref['lowercase_username'] = 'n'; 
-$pref['max_username_length'] = '50'; 
-$pref['min_username_length'] = '1'; 
-$pref['users_prefs_allowMsgs'] = 'n'; 
-$pref['users_prefs_country'] = ''; 
-$pref['users_prefs_diff_versions'] = 'n'; 
-$pref['users_prefs_display_timezone'] = 'Local'; 
-$pref['users_prefs_email_is_public'] = 'n'; 
-$pref['users_prefs_homePage'] = ''; 
-$pref['users_prefs_lat'] = ''; 
-$pref['users_prefs_lon'] = ''; 
-$pref['users_prefs_mess_archiveAfter'] = '0'; 
-$pref['users_prefs_mess_maxRecords'] = '10'; 
-$pref['users_prefs_mess_sendReadStatus'] = 'n'; 
-$pref['users_prefs_minPrio'] = '1'; 
-$pref['users_prefs_mytiki_blogs'] = 'y'; 
-$pref['users_prefs_mytiki_gals'] = 'y'; 
-$pref['users_prefs_mytiki_items'] = 'y'; 
-$pref['users_prefs_mytiki_msgs'] = 'y'; 
-$pref['users_prefs_mytiki_pages'] = 'y'; 
-$pref['users_prefs_mytiki_tasks'] = 'y'; 
-$pref['users_prefs_mytiki_workflow'] = 'y'; 
-$pref['users_prefs_realName'] = ''; 
-$pref['users_prefs_show_mouseover_user_info'] = 'y'; 
-$pref['users_prefs_tasks_maxRecords'] = '10'; 
-$pref['users_prefs_user_dbl'] = 'n'; 
-$pref['users_prefs_user_information'] = 'public'; 
-$pref['users_prefs_userbreadCrumb'] = '4'; 
-$pref['validateRegistration'] = 'n'; 
+$pref['available_languages'] = 'a:0:{}';
+$pref['available_styles'] = 'a:0:{}';
+$pref['lowercase_username'] = 'n';
+$pref['max_username_length'] = '50';
+$pref['min_username_length'] = '1';
+$pref['users_prefs_allowMsgs'] = 'n';
+$pref['users_prefs_country'] = '';
+$pref['users_prefs_diff_versions'] = 'n';
+$pref['users_prefs_display_timezone'] = 'Local';
+$pref['users_prefs_email_is_public'] = 'n';
+$pref['users_prefs_homePage'] = '';
+$pref['users_prefs_lat'] = '';
+$pref['users_prefs_lon'] = '';
+$pref['users_prefs_mess_archiveAfter'] = '0';
+$pref['users_prefs_mess_maxRecords'] = '10';
+$pref['users_prefs_mess_sendReadStatus'] = 'n';
+$pref['users_prefs_minPrio'] = '1';
+$pref['users_prefs_mytiki_blogs'] = 'y';
+$pref['users_prefs_mytiki_gals'] = 'y';
+$pref['users_prefs_mytiki_items'] = 'y';
+$pref['users_prefs_mytiki_msgs'] = 'y';
+$pref['users_prefs_mytiki_pages'] = 'y';
+$pref['users_prefs_mytiki_tasks'] = 'y';
+$pref['users_prefs_mytiki_workflow'] = 'y';
+$pref['users_prefs_realName'] = '';
+$pref['users_prefs_show_mouseover_user_info'] = 'y';
+$pref['users_prefs_tasks_maxRecords'] = '10';
+$pref['users_prefs_user_dbl'] = 'n';
+$pref['users_prefs_user_information'] = 'public';
+$pref['users_prefs_userbreadCrumb'] = '4';
+$pref['validateRegistration'] = 'n';
 
 # user messages
 $sections['user_messages']['feature'] = 'feature_messages';
@@ -1090,7 +1092,7 @@ $pref['mods_dir'] = 'mods';
 $pref['mods_server'] = 'http://tikiwiki.org/mods';
 
 # dev
-$pref['feature_experimental'] = 'n'; 
+$pref['feature_experimental'] = 'n';
 
 # admin
 $pref['feature_actionlog'] = 'y';
@@ -1100,6 +1102,8 @@ $pref['tmpDir'] = 'temp';
 # tell a friend
 $pref['feature_tell_a_friend'] = 'n';
 
+#copyright
+$pref['feature_copyright']='n';
 # unsorted features
 $pref['anonCanEdit'] = 'n';
 $pref['cacheimages'] = 'n';
@@ -1193,7 +1197,6 @@ $pref['use_proxy'] = 'n';
 $pref['user_list_order'] = 'score_desc';
 $pref['webserverauth'] = 'n';
 $pref['feature_purifier'] = 'y';
-$pref['preset_galleries_scale'] ='n';
 // *****************************************************************************
 // First we populate with default values
 foreach ($pref as $defpref=>$defval) {
@@ -1347,8 +1350,8 @@ $interlist = unserialize($interlist);
 if ($feature_polls == 'y' and isset($_REQUEST['pollVote'])) {
 	if ($tiki_p_vote_poll == 'y' && isset($_REQUEST['polls_optionId'])) {
 		if( $feature_poll_anonymous == 'y' || $user ) {
-			if (!isset($polllib) or !is_object($polllib)) { 
-				include_once('lib/polls/polllib_shared.php'); 
+			if (!isset($polllib) or !is_object($polllib)) {
+				include_once('lib/polls/polllib_shared.php');
 			}
 			$polllib->poll_vote($user, $_REQUEST['polls_pollId'], $_REQUEST['polls_optionId']);
 			// Poll vote must go first, or the new vote will be seen as the previous one.
@@ -1454,7 +1457,7 @@ if ($tikidomain and is_file("styles/$tikidomain/$site_style")) {
 	$site_style = "$tikidomain/$site_style";
 }
 
-# style 
+# style
 $smarty->assign('style', $style);           // that is the pref
 $smarty->assign('site_style', $site_style); // that is the effective site style
 $smarty->assign('user_style', $user_style); // that is the user-chosen style
@@ -1651,7 +1654,7 @@ if ($feature_referer_stats == 'y') {
 
 //Check for an update of dynamic vars
 if(isset($tiki_p_edit_dynvar) && $tiki_p_edit_dynvar == 'y') {
-    if(isset($_REQUEST['_dyn_update'])) { 
+    if(isset($_REQUEST['_dyn_update'])) {
         foreach($_REQUEST as $name => $value) {
             if(substr($name,0,4)=='dyn_' and $name!='_dyn_update') {
                 $tikilib->update_dynamic_variable(substr($name,4),$_REQUEST[$name]);
@@ -1664,7 +1667,7 @@ if(isset($tiki_p_edit_dynvar) && $tiki_p_edit_dynvar == 'y') {
 // Stats
 if ($feature_stats == 'y') {
     if ($count_admin_pvs == 'y' || $user != 'admin') {
-				if (!isset($section) or ($section != 'chat' and $section != 'livesupport')) { 
+				if (!isset($section) or ($section != 'chat' and $section != 'livesupport')) {
             $tikilib->add_pageview();
         }
     }

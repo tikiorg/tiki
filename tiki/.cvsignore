@@ -1,4 +1,5 @@
 templates_c
+modules/cache
 var
 .project
 phpmyadmin
