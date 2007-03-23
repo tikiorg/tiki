@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.15 2007-03-02 19:49:24 luciash Exp $
+// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.16 2007-03-23 15:50:24 jyhem Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -485,7 +485,7 @@ function check_password() {
 include 'lib/cache/cachelib.php';
 $cachelib->empty_full_cache();
 
-// -------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 // end of functions .. now starts the processing
 
 // After install. This should remove this script.
@@ -727,10 +727,26 @@ if (isset($_SESSION["install-logged-$multi"]) && $_SESSION["install-logged-$mult
 	if (isset($_REQUEST['scratch'])) {
 		process_sql_file ('tiki-' . $dbversion_tiki . "-" . $db_tiki . '.sql',$db_tiki);
 
-		$smarty->assign('dbdone', 'y'); if (isset($_REQUEST['profile'])) {
+		$smarty->assign('dbdone', 'y');
+		if (isset($_REQUEST['profile'])) {
 			process_sql_file ('profiles/' . $_REQUEST['profile'],$db_tiki);
 			//$profile = $_REQUEST['profile'];
 			//print "Profile: $profile";
+		}
+		// Pre-fill database with some default values which can be detected here
+		// TODO: add more
+		$initialprefvalues['http_prefix'] = dirname($_SERVER["PHP_SELF"].'x');
+		$initialprefvalues['https_prefix'] = dirname($_SERVER["PHP_SELF"].'x');
+		while(list($key,$val)=each($initialprefvalues)){
+			#echo "key:$key - value:$val <br />";
+			$query="INSERT INTO tiki_preferences(name,value) VALUES (?,?)";
+			$result = $dbTiki->query($query,array($key,$val));
+			// Are these failedcommands and succcommands arrays used somewhere ?
+			if (!$result) {
+				$failedcommands[]= "Command: ".$statement."\nMessage: ".$dbTiki->ErrorMsg()."\n\n";
+			} else {
+				$succcommands[]=$statement;
+			}
 		}
 	}
 
