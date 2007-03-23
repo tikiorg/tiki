@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.128 2007-03-06 19:29:51 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.129 2007-03-23 14:15:18 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -393,7 +393,7 @@ else {
         }
         if ($len == '')
             return substr($str, $s);
-        else
+        else {
             for ($e = $s; $len > 0; --$len) {//found the real end
                 if ($e >= $limit)
                     break;
@@ -406,6 +406,7 @@ else {
                        }
             }
         return substr($str, $s, $e - $s);
+		}
     }
 }
 
@@ -430,175 +431,25 @@ foreach ($allperms as $vperm) {
 }
 
 // Permissions
-// Get group permissions here
-$perms = $userlib->get_user_permissions($user);
-foreach ($perms as $perm) {
-    //print("Asignando permiso global : $perm<br />");
-    $smarty->assign("$perm", 'y');
-
-    $$perm = 'y';
-}
-
-// If the user can admin file galleries then assign all the file galleries permissions
-if ($tiki_p_admin_file_galleries == 'y') {
-    $perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'file galleries');
-
-    foreach ($perms["data"] as $perm) {
-        $perm = $perm["permName"];
-
-        $smarty->assign("$perm", 'y');
-        $$perm = 'y';
-    }
-}
-
-if ($tiki_p_admin_workflow == 'y') {
-    $perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'workflow');
-
-    foreach ($perms["data"] as $perm) {
-        $perm = $perm["permName"];
-
-        $smarty->assign("$perm", 'y');
-        $$perm = 'y';
-    }
-}
-
-if ($tiki_p_admin_directory == 'y') {
-    $perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'directory');
-
-    foreach ($perms["data"] as $perm) {
-        $perm = $perm["permName"];
-
-        $smarty->assign("$perm", 'y');
-        $$perm = 'y';
-    }
-}
-
-if ($tiki_p_admin_charts == 'y') {
-    $perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'charts');
-
-    foreach ($perms["data"] as $perm) {
-        $perm = $perm["permName"];
-
-        $smarty->assign("$perm", 'y');
-        $$perm = 'y';
-    }
-}
-
-if ($tiki_p_blog_admin == 'y') {
-    $perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'blogs');
-
-    foreach ($perms["data"] as $perm) {
-        $perm = $perm["permName"];
-
-        $smarty->assign("$perm", 'y');
-        $$perm = 'y';
-    }
-}
-
-if ($tiki_p_admin_trackers == 'y') {
-    $perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'trackers');
-
-    foreach ($perms["data"] as $perm) {
-        $perm = $perm["permName"];
-
-        $smarty->assign("$perm", 'y');
-        $$perm = 'y';
-    }
-}
-
-if ($tiki_p_admin_galleries == 'y') {
-    $perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'image galleries');
-
-    foreach ($perms["data"] as $perm) {
-        $perm = $perm["permName"];
-
-        $smarty->assign("$perm", 'y');
-        $$perm = 'y';
-    }
-}
-
-if ($tiki_p_admin_forum == 'y') {
-    $perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'forums');
-
-    foreach ($perms["data"] as $perm) {
-        $perm = $perm["permName"];
-
-        $smarty->assign("$perm", 'y');
-        $$perm = 'y';
-    }
-}
-
-if ($tiki_p_admin_wiki == 'y') {
-    $perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'wiki');
-
-    foreach ($perms["data"] as $perm) {
-        $perm = $perm["permName"];
-
-        $smarty->assign("$perm", 'y');
-        $$perm = 'y';
-    }
-}
-
-if ($tiki_p_admin_faqs == 'y') {
-    $perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'faqs');
-
-    foreach ($perms["data"] as $perm) {
-        $perm = $perm["permName"];
-
-        $smarty->assign("$perm", 'y');
-        $$perm = 'y';
-    }
-}
-
-if ($tiki_p_admin_shoutbox == 'y') {
-    $perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'shoutbox');
-
-    foreach ($perms["data"] as $perm) {
-        $perm = $perm["permName"];
-
-        $smarty->assign("$perm", 'y');
-        $$perm = 'y';
-    }
-}
-
-if ($tiki_p_admin_quizzes == 'y') {
-    $perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'quizzes');
-
-    foreach ($perms["data"] as $perm) {
-        $perm = $perm["permName"];
-
-        $smarty->assign("$perm", 'y');
-        $$perm = 'y';
-    }
-}
-
-if ($tiki_p_admin_cms == 'y') {
-    $perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'cms');
-
-    foreach ($perms["data"] as $perm) {
-        $perm = $perm["permName"];
-
-        $smarty->assign("$perm", 'y');
-        $$perm = 'y';
-    }
-
-    $perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'topics');
-
-    foreach ($perms["data"] as $perm) {
-        $perm = $perm["permName"];
-
-        $smarty->assign("$perm", 'y');
-        $$perm = 'y';
-    }
-}
-
-//Gives admins all permissions
-if ($user == 'admin' || ($user && $userlib->user_has_permission($user, 'tiki_p_admin'))) {
+if ($user == 'admin' || ($user && $userlib->user_has_permission($user, 'tiki_p_admin'))) {//Gives admins all permissions
 	foreach ($allperms as $vperm) {
-		$perm = $vperm["permName"];
+		$perm = $vperm['permName'];
 		$$perm = 'y';
-
-		$smarty->assign("$perm", 'y');
+		$smarty->assign($perm, 'y');
+	}
+} else {
+	$perms = $userlib->get_user_detailled_permissions($user);
+	foreach ($perms as $perm) {
+	    $smarty->assign($perm['permName'], 'y');
+	    $$perm['permName'] = 'y';
+		if ($perm['admin'] == 'y') { // assign all perms of the perm type
+echo '--'.$perm['permName'].'<br>';
+			$ps = $userlib->get_permissions(0, -1, 'permName_desc', '', $perm['type']);
+			foreach ($ps['data'] as $perm) {
+echo $perm['permName'].'<br>';
+				$smarty->assign($perm['permName'], 'y');
+			}
+		}
 	}
 }
 
