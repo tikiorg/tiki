@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.204 2007-03-23 14:15:18 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.205 2007-03-23 19:33:32 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1633,7 +1633,7 @@ function get_included_groups($group) {
 	    }
 	}
 
-	$query = "select `permName`,`type`,`level`,`permDesc` from `users_permissions` $mid order by $sort_mode ";
+	$query = "select * from `users_permissions` $mid order by $sort_mode ";
 
 #	$query_cant = "select count(*) from `users_permissions` $mid";
 	$result = $this->query($query, $values, $maxRecords, $offset);
@@ -1644,18 +1644,12 @@ function get_included_groups($group) {
 	while ($res = $result->fetchRow()) {
 	    $cant++;
 	    if ($group && $this->group_has_permission($group, $res['permName'])) {
-		$hasPerm = 'y';
+		$res['hasPerm'] = 'y';
 	    } else {
-		$hasPerm = 'n';
+		$res['hasPerm'] = 'n';
 	    }
 
-	    $ret[] = array(
-		    'permName' => $res['permName'],
-		    'permDesc' => $res['permDesc'],
-		    'type' => $res['type'],
-		    'level' => $res['level'],
-		    'hasPerm' => $hasPerm,
-		    );
+	    $ret[] = $res;
 	}
 
 	return array(
