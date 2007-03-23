@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_copyright.php,v 1.2 2007-03-22 15:09:38 gillesm Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_copyright.php,v 1.3 2007-03-23 01:08:27 gillesm Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,6 +14,13 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
+if ( $feature_copyright != 'y' )
+{
+	$smarty->assign('msg', tra("This feature is disabled").": feature_copyright");
+        $smarty->display("error.tpl");
+        die;
+
+}
 if (isset($_REQUEST["setcopyright"])) {
         check_ticket('admin-inc-copyright');
         if (isset($_REQUEST["wiki_feature_copyrights"]) && $_REQUEST["wiki_feature_copyrights"] == "on") {
