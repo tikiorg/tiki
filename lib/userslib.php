@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.203 2007-02-15 22:38:37 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.204 2007-03-23 14:15:18 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1674,6 +1674,17 @@ function get_included_groups($group) {
 	    $ret[] = $res["permName"];
 	}
 
+	return $ret;
+    }
+
+    function get_user_detailled_permissions($user) {
+	$groups = $this->get_user_groups($user);
+	$ret = array();
+	$query = 'select distinct up.* from `users_permissions` as up, `users_grouppermissions` as ug where ug.`groupName` in ('.implode(',',array_fill(0,count($groups),'?')).') and up.`permName`=ug.`permName`';
+	$result = $this->query($query, $groups);
+	while ($res = $result->fetchRow()) {
+		$ret[] = $res;
+	}
 	return $ret;
     }
 

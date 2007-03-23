@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.146 2007-03-22 20:31:19 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.147 2007-03-23 14:15:18 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -889,3 +889,5 @@ UPDATE users_permissions set admin='y' where permName = 'tiki_p_admin_users';
 UPDATE users_permissions set admin='y' where permName = 'tiki_p_admin_wiki';
 UPDATE users_permissions set admin='y' where permName = 'tiki_p_admin_workflow';
 UPDATE users_permissions set admin='y' where permName = 'tiki_p_blog_admin';
+UPDATE users_permissions set admin=NULL where permName = 'tiki_p_admin_users';
+UPDATE users_permissions set type='cms' where type = 'topics';
