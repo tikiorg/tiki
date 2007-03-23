@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-assignpermission.php,v 1.30 2007-03-06 19:29:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-assignpermission.php,v 1.31 2007-03-23 19:33:32 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -82,19 +82,6 @@ if (!isset($_REQUEST["sort_mode"])) {
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 
-$maxRecords = 9999;
-
-// If offset is set use it if not then use offset =0
-// use the maxRecords php variable to set the limit
-// if sortMode is not set then use lastModif_desc
-if (!isset($_REQUEST["offset"])) {
-	$offset = 0;
-} else {
-	$offset = $_REQUEST["offset"];
-}
-
-$smarty->assign_by_ref('offset', $offset);
-
 if (isset($_REQUEST["find"])) {
 	$find = $_REQUEST["find"];
 } else {
@@ -137,34 +124,28 @@ $levels = $userlib->get_permission_levels();
 sort($levels);
 $smarty->assign('levels', $levels);
 
-$perms = $userlib->get_permissions($offset, $maxRecords, $sort_mode, $find, $_REQUEST["type"], $group);
-$cant_pages = ceil($perms["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
+$perms = $userlib->get_permissions(0, -1, $sort_mode, $find, $_REQUEST["type"], $group);
 
-if ($perms["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-
-// If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
+foreach ($perms['data'] as $perm) {
+ 	if ($perm['admin'] == 'y') {
+		foreach ($perms['data'] as $key=>$p) {
+			if ($p['type'] == $perm['type'] && $perm['permName'] != $p['permName'])
+				$perms['data'][$key]['from_admin'] = 'y';
+				$perms['data'][$key]['hasPerm'] = 'y';
+		}
+	}
 }
 
 if ($group != 'Anonymous') {
 	// Get the list of permissions for anony
-	$ifa = $userlib->get_permissions($offset, $maxRecords, $sort_mode, $find,$_REQUEST["type"],'Anonymous');
+	$ifa = $userlib->get_permissions(0, -1, $sort_mode, $find,$_REQUEST["type"],'Anonymous');
 	$smarty->assign_by_ref('inherited_from_anon', $ifa['data']);
 	if ($group != 'Registered') {
-		$ifr = $userlib->get_permissions($offset, $maxRecords, $sort_mode, $find,$_REQUEST["type"],'Registered');
+		$ifr = $userlib->get_permissions(0, -1, $sort_mode, $find,$_REQUEST["type"],'Registered');
 		$smarty->assign_by_ref('inherited_from_reg', $ifr['data']);
 		$incgroups = $userlib->get_included_groups($group);
 		foreach($incgroups as $ig) {
-			$ixr = $userlib->get_permissions($offset, $maxRecords, $sort_mode, $find,$_REQUEST["type"],$ig);
+			$ixr = $userlib->get_permissions(0, -1, $sort_mode, $find,$_REQUEST["type"],$ig);
 			$back[$ig] = $ixr['data'];
 		}
 		$smarty->assign_by_ref('inherited_groups_perms',$back);
