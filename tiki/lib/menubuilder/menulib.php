@@ -105,6 +105,44 @@ class MenuLib extends TikiLib {
 		return $res;
 	}
 
+	function prev_pos ($optionId) {
+		$query="select position,menuId from  tiki_menu_options where  optionId =?";
+		$result = $this->query($query,array($optionId));
+        	$res = $result->fetchRow() ;
+		$position1=$res['position'];
+		$menuId=$res['menuId'];
+		$query="select position from tiki_menu_options where menuId =?";
+		$max=0;
+		$result = $this->query($query,array($menuId));
+		while ($res=$result->fetchRow())
+			{
+			$max=( $res['position'] > $max and $res['position'] < $position1)?$res['position']:$max ;
+			}
+		$query = "update `tiki_menu_options` set `position`=? where `position`=? and `menuId`=? ";
+		$result=$this->query($query,array($position1,$max,$menuId));
+		$query = "update `tiki_menu_options` set `position`=? where `optionId`=?";
+		$result=$this->query($query,array($max,$optionId,));
+
+	}
+
+	function next_pos ($optionId) {
+		$query="select position,menuId from  tiki_menu_options where  optionId =?";
+		$result = $this->query($query,array($optionId));
+        	$res = $result->fetchRow() ;
+		$position1=$res['position'];
+		$menuId=$res['menuId'];
+		$query="select position from tiki_menu_options where menuId =?";
+		$min=65935;
+		$result = $this->query($query,array($menuId));
+		while ($res=$result->fetchRow())
+			{
+			$min=( $res['position'] < $min and $res['position'] > $position1)?$res['position']:$min ;
+			}
+		$query = "update `tiki_menu_options` set `position`=? where `position`=? and `menuId`=? ";
+		$result=$this->query($query,array($position1,$min,$menuId));
+		$query = "update `tiki_menu_options` set `position`=? where `optionId`=?";
+		$result=$this->query($query,array($min,$optionId,));
+	}
 	/*
          * gets the result of list_menu_options and create the field "type_description"
          * with description of the type.
@@ -134,7 +172,7 @@ class MenuLib extends TikiLib {
 	    }
 
 	    return $channels;
-	
+
 	}
 }
 global $dbTiki;

@@ -1,4 +1,4 @@
- {* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_menu_options.tpl,v 1.38 2007-03-21 21:11:37 sylvieg Exp $ *}
+ {* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_menu_options.tpl,v 1.39 2007-03-24 20:42:43 gillesm Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_menu_options.php?menuId={$menuId}">{tr}Admin Menu{/tr}: {$menu_info.name}</a><br /><br />
 <span class="button2"><a href="tiki-admin_menus.php" class="linkbut">{tr}List menus{/tr}</a></span>
 <span class="button2"><a href="tiki-admin_menus.php?menuId={$menuId}" class="linkbut">{tr}Edit this menu{/tr}</a></span></h1>
@@ -163,8 +163,11 @@
 <td class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">{tr}type{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'section_desc'}section_asc{else}section_desc{/if}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">{tr}sections{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'perm_desc'}perm_asc{else}perm_desc{/if}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">{tr}permissions{/tr}</a></td>
+
 <td class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupnam_desc'}groupname_asc{else}groupname_desc{/if}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">{tr}group{/tr}</a></td>
-<td class="heading">&nbsp;</td>
+<td class="heading">{tr}up{/tr}</td>
+<td class="heading">{tr}down{/tr}</td>
+<td class="heading">{tr}del{/tr}</td>
 </tr>
 
 {cycle values="odd,even" print=false}
@@ -172,7 +175,7 @@
 <tr>
 <td class="{cycle advance=false}"><input type="checkbox" name="checked[]" value="{$channels[user].optionId|escape}"  {if $smarty.request.checked and in_array($channels[user].optionId,$smarty.request.checked)}checked="checked"{/if} /></td>
 <td class="{cycle advance=false}">{$channels[user].optionId}</td>
-<td class="{cycle advance=false}"><a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}" 
+<td class="{cycle advance=false}"><a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}"
 title="{tr}edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16"  alt='{tr}edit{/tr}' /></a></td>
 <td class="{cycle advance=false}">{$channels[user].position}</td>
 <td class="{cycle advance=false}">{$channels[user].name}</td>
@@ -181,6 +184,18 @@ title="{tr}edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" 
 <td class="{cycle advance=false}">{$channels[user].section}</td>
 <td class="{cycle advance=false}">{$channels[user].perm}</td>
 <td class="{cycle advance=false}">{$channels[user].groupname}</td>
+<td class="{cycle advance=false}">
+&nbsp;&nbsp;
+{if $channels[user].position > 1 }
+<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;up={$channels[user].optionId}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}"
+title="{tr}up{/tr}"><img src="pics/icons/up.png" border="0" height="8" width="16" alt='{tr}up{/tr}' /></a>
+{/if}
+</td>
+<td class="{cycle advance=false}">
+&nbsp;&nbsp;<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;down={$channels[user].optionId}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}"
+title="{tr}down{/tr}"><img src="pics/icons/down.png" border="0" height="8" width="16" alt='{tr}down{/tr}' /></a>
+</td>
+
 <td class="{cycle advance=true}">
 &nbsp;&nbsp;<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}"
 title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>
@@ -193,7 +208,7 @@ title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
 	/* ]]> */</script>
 </table>
 <div align="left">
-{tr}Perform action with checked:{/tr} 
+{tr}Perform action with checked:{/tr}
 <input type="image" name="delsel" src='pics/icons/cross.png' alt={tr}delete{/tr}' title='{tr}delete{/tr}' />
 </div>
 </form>
