@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.40 2006-09-30 16:11:45 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.41 2007-03-24 21:09:04 gillesm Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
-  
+
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Modules+Admin" target="tikihelp" class="tikihelp" title="{tr}admin modules{/tr}">
 <img border='0' src='pics/icons/help.png' alt="{tr}help{/tr}" width="16" height="16" /></a>{/if}
@@ -40,9 +40,9 @@ from Admin->General
 <tr>
 <td class="{cycle advance=false}">{$user_modules[user].name}</td>
 <td class="{cycle advance=false}">{$user_modules[user].title}</td>
-<td class="{cycle}"><a class="link" href="tiki-admin_modules.php?um_edit={$user_modules[user].name}#editcreate">{tr}edit{/tr}</a>
-             <a class="link" href="tiki-admin_modules.php?edit_assign={$user_modules[user].name}#assign">{tr}assign{/tr}</a>
-             <a class="link" href="tiki-admin_modules.php?um_remove={$user_modules[user].name}">{tr}delete{/tr}</a></td>
+<td class="{cycle}"><a class="link" href="tiki-admin_modules.php?um_edit={$user_modules[user].name}#editcreate"><img src="pics/icons/page_edit.png" border="0" width="16" alt='{tr}edit{/tr}' /></a>
+             <a class="link" href="tiki-admin_modules.php?edit_assign={$user_modules[user].name}#assign"><img src="pics/icons/assign.png" border="0" width="16" alt='{tr}assign{/tr}' /></a>
+             <a class="link" href="tiki-admin_modules.php?um_remove={$user_modules[user].name}"><img src="pics/icons/cross.png" border="0"  width="16" alt='{tr}delete{/tr}' /></a></td>
 </tr>
 {sectionelse}
 <tr><td colspan="6" class="odd">
@@ -132,10 +132,10 @@ from Admin->General
 <td class="{cycle advance=false}">{$left[user].params}</td>
 <td class="{cycle advance=false}">{$left[user].module_groups}</td>
 <td class="{cycle}">
-             <a class="link" href="tiki-admin_modules.php?edit_assign={$left[user].name|escape:url}#assign">{tr}edit{/tr}</a>
-             <a class="link" href="tiki-admin_modules.php?modup={$left[user].name|escape:url}#leftmod">{tr}up{/tr}</a>
-             <a class="link" href="tiki-admin_modules.php?moddown={$left[user].name|escape:url}#leftmod">{tr}down{/tr}</a>
-             <a class="link" href="tiki-admin_modules.php?unassign={$left[user].name|escape:url}#leftmod">{tr}x{/tr}</a></td>
+             <a class="link" href="tiki-admin_modules.php?edit_assign={$left[user].name|escape:url}#assign"><img src="pics/icons/page_edit.png" border="0"  width="16" alt='{tr}edit{/tr}' /></a>
+             <a class="link" href="tiki-admin_modules.php?modup={$left[user].name|escape:url}#leftmod"><img src="pics/icons/up.png" border="0"  width="16" alt='{tr}up{/tr}' /></a>
+             <a class="link" href="tiki-admin_modules.php?moddown={$left[user].name|escape:url}#leftmod"><img src="pics/icons/down.png" border="0"  width="16" alt='{tr}down{/tr}' /></a>
+             <a class="link" href="tiki-admin_modules.php?unassign={$left[user].name|escape:url}#leftmod"><img src="pics/icons/cross.png" border="0"  width="16" alt='{tr}x{/tr}' /></a></td>
 </tr>
 {sectionelse}
 <tr><td colspan="6">
@@ -167,10 +167,10 @@ from Admin->General
 <td class="{cycle advance=false}">{$right[user].params}</td>
 <td class="{cycle advance=false}">{$right[user].module_groups}</td>
 <td class="{cycle}">
-             <a class="link" href="tiki-admin_modules.php?edit_assign={$right[user].name|escape:url}#assign">{tr}edit{/tr}</a>
-             <a class="link" href="tiki-admin_modules.php?modup={$right[user].name|escape:url}#rightmod">{tr}up{/tr}</a>
-             <a class="link" href="tiki-admin_modules.php?moddown={$right[user].name|escape:url}#rightmod">{tr}down{/tr}</a>
-             <a class="link" href="tiki-admin_modules.php?unassign={$right[user].name|escape:url}#rightmod">{tr}x{/tr}</a></td>
+             <a class="link" href="tiki-admin_modules.php?edit_assign={$right[user].name|escape:url}#assign"><img src="pics/icons/page_edit.png" border="0" width="16" alt='{tr}edit{/tr}' /></a>
+             <a class="link" href="tiki-admin_modules.php?modup={$right[user].name|escape:url}#rightmod"><img src="pics/icons/up.png" border="0" width="16" alt='{tr}up{/tr}' /></a>
+             <a class="link" href="tiki-admin_modules.php?moddown={$right[user].name|escape:url}#rightmod"><img src="pics/icons/down.png" border="0" width="16" alt='{tr}down{/tr}' /></a>
+             <a class="link" href="tiki-admin_modules.php?unassign={$right[user].name|escape:url}#rightmod"><img src="pics/icons/cross.png" border="0" width="16" alt='{tr}x{/tr}' /></a></td>
 </tr>
 {sectionelse}
 <tr><td colspan="6">
@@ -228,9 +228,9 @@ from Admin->General
   <td>
     <select name="polls" id='list_polls'>
 	<option value="{literal}{{/literal}poll{literal}}{/literal}">--{tr}Random active poll{/tr}--</option>
-	<option value="{literal}{{/literal}poll id=current{literal}}{/literal}">--{tr}Random current poll{/tr}--</option> 
+	<option value="{literal}{{/literal}poll id=current{literal}}{/literal}">--{tr}Random current poll{/tr}--</option>
     {section name=ix loop=$polls}
-    <option value="{literal}{{/literal}poll id={$polls[ix].pollId}{literal}}{/literal}">{$polls[ix].title}</option>   
+    <option value="{literal}{{/literal}poll id={$polls[ix].pollId}{literal}}{/literal}">{$polls[ix].title}</option>
     {/section}
     </select>
   </td>
@@ -263,7 +263,7 @@ from Admin->General
   <td>
     <select name="contents" id='list_contents'>
     {section name=ix loop=$contents}
-    <option value="{literal}{{/literal}content id={$contents[ix].contentId}{literal}}{/literal}">{$contents[ix].description|truncate:20:"...":true}</option>   
+    <option value="{literal}{{/literal}content id={$contents[ix].contentId}{literal}}{/literal}">{$contents[ix].description|truncate:20:"...":true}</option>
     {/section}
     </select>
   </td>
@@ -278,7 +278,7 @@ from Admin->General
   <td>
     <select name="rsss" id='list_rsss'>
     {section name=ix loop=$rsss}
-    <option value="{literal}{{/literal}rss id={$rsss[ix].rssId}{literal}}{/literal}">{$rsss[ix].name}</option>   
+    <option value="{literal}{{/literal}rss id={$rsss[ix].rssId}{literal}}{/literal}">{$rsss[ix].name}</option>
     {/section}
     </select>
   </td>
@@ -294,7 +294,7 @@ from Admin->General
   <td>
     <select name="menus" id='list_menus'>
     {section name=ix loop=$menus}
-    <option value="{literal}{{/literal}menu id={$menus[ix].menuId}{literal}}{/literal}">{$menus[ix].name}</option>   
+    <option value="{literal}{{/literal}menu id={$menus[ix].menuId}{literal}}{/literal}">{$menus[ix].name}</option>
     {/section}
     </select>
   </td>
@@ -319,7 +319,7 @@ from Admin->General
     <a class="link" href="javascript:setUserModuleFromCombo('list_phpmenus');">{tr}use phplayermenu{/tr}</a>
   </td>
 </tr>
-                                                                                                                                                                           
+
 {/if}
 <tr>
   <td class="form">
@@ -328,7 +328,7 @@ from Admin->General
   <td>
     <select name="banners" id='list_banners'>
     {section name=ix loop=$banners}
-    <option value="{literal}{{/literal}banner zone={$banners[ix].zone}{literal}}{/literal}">{$banners[ix].zone}</option>   
+    <option value="{literal}{{/literal}banner zone={$banners[ix].zone}{literal}}{/literal}">{$banners[ix].zone}</option>
     {/section}
     </select>
   </td>
@@ -344,7 +344,7 @@ from Admin->General
   <td>
     <select name=wiki"structures" id='list_wikistructures'>
     {section name=ix loop=$wikistructures}
-    <option value="{literal}{{/literal}wikistructure id={$wikistructures[ix].page_ref_id}{literal}}{/literal}">{$wikistructures[ix].pageName}</option>   
+    <option value="{literal}{{/literal}wikistructure id={$wikistructures[ix].page_ref_id}{literal}}{/literal}">{$wikistructures[ix].pageName}</option>
     {/section}
     </select>
   </td>
