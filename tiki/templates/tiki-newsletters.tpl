@@ -56,6 +56,7 @@
 </form>
 {/if}
 
+{if $showlist eq 'y'}
 <h2>{tr}Available Newsletters{/tr}</h2>
 <div  align="center">
 <table class="findtable">
@@ -104,6 +105,6 @@
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
 {/if}
-
+{/if}
 </div>
 </div>
