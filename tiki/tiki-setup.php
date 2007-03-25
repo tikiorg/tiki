@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.414 2007-03-23 15:50:23 jyhem Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.415 2007-03-25 01:49:53 gillesm Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -335,6 +335,9 @@ if ($wys == 'no' or $wys == 'optional' or $wys == 'default') {
 
 /* ------------------------------------------------------------- */
 /* END of UPGRADE wysiwyg */
+
+
+$pref['tiki_release'] = '1.10';
 
 # wiki
 $sections['wiki page']['feature'] = 'feature_wiki';

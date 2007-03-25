@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.56 2007-01-03 05:23:12 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.57 2007-03-25 01:49:53 gillesm Exp $ *}
 
 <script type="text/javascript">
 {literal}
@@ -29,8 +29,10 @@
       <table class="admin"><tr>
         <td class="heading" colspan="2"
             align="center">{tr}General Preferences{/tr}</td>
-      </tr><tr>
-        <td class="form" ><label for="general-theme">{tr}Theme{/tr}:</label></td>
+      </tr>
+	<tr><td>{tr}Tikiwiki release{/tr} : </td><td>{$tiki_release}</td></tr>
+	<tr>
+	<td class="form" ><label for="general-theme">{tr}Theme{/tr}:</label></td>
         <td width="67%"><select name="style" id="general-theme">
             {section name=ix loop=$styles}
               <option value="{$styles[ix]|escape}" {if $style eq $styles[ix]} selected="selected"{/if}>{$styles[ix]}</option>
@@ -57,9 +59,9 @@
 	<td class="form" >&nbsp;</td><td><a href="tiki-edit_css.php" class="link" title="{tr}Edit CSS{/tr}">{tr}Edit CSS{/tr}</a></td>
 	</tr>
 	{/if}
-      
-      <tr><td colspan="2"><hr/></td></tr>      
-      
+
+      <tr><td colspan="2"><hr/></td></tr>
+
       <tr>
         <td class="form"><label for="general-homepages">{tr}Use group homepages{/tr}:</label></td>
         <td><input type="checkbox" name="useGroupHome" id="general-homepages"
@@ -384,7 +386,7 @@
             {tr}Date and Time Format Help{/tr}</a></td>
       </tr>
 		</table>
-			
+
 			<table class="admin">
 				<tr>
 					<td class="heading" colspan="2" align="center">{tr}Other{/tr}</td>
@@ -404,11 +406,11 @@
 						</select>
 					</td>
 				</tr>
-				
+
 				<tr>
 					<td colspan="2"><hr/></td>
 				</tr>
-				      
+
 				<tr>
 					<td class="form"><label for="site_crumb_seper">{tr}Locations separator{/tr}:</label></td>
 					<td>
@@ -427,7 +429,7 @@
                                                 </div>
                                         </td>
                                 </tr>
-			
+
       <tr>
         <td class="button" colspan='2'>
           <input type="submit" name="prefs" value="{tr}Change preferences{/tr}" />
