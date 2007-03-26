@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.39 2007-03-22 18:58:11 gillesm Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.40 2007-03-26 16:34:10 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -258,7 +258,7 @@ if ($info["maxRows"] == 0)
 if ($info["rowImages"] == 0)
 	$info["rowImages"] = 6;
 
-print $info["rowImages"] ;
+//print $info["rowImages"] ;
 $maxImages = $info["maxRows"] * $info["rowImages"];
 $smarty->assign_by_ref('maxImages', $maxImages);
 $smarty->assign_by_ref('rowImages', $info["rowImages"]);
