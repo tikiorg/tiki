@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.50 2007-02-14 15:16:04 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.51 2007-03-26 14:58:15 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-file_galleries.php?galleryId={$galleryId}{if isset($edit_mode)}&amp;edit_mode=1{/if}">{tr}File Galleries{/tr}</a>
 
@@ -39,7 +39,7 @@
 <form action="tiki-file_galleries.php" method="post">
 <input type="hidden" name="galleryId" value="{$galleryId|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}"/> ({tr}required field for podcasts{/tr})</td></tr>
+<tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" size="50" name="name" value="{$name|escape}"/> ({tr}required field for podcasts{/tr})</td></tr>
 <tr><td class="formcolor">{tr}Type{/tr}:</td><td class="formcolor">
 					<select name="fgal_type">
 						<!-- TODO: make this a configurable list read from database -->
@@ -150,7 +150,7 @@
 <h2>{tr}Duplicate File Gallery{/tr}</h2>
 <form action="tiki-file_galleries.php" method="post">
 <table class="normal">
-<tr class="formcolor"><td>{tr}Name{/tr}</td><td><input type="text" name="name" value="{$name|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}Name{/tr}</td><td><input type="text" size="50" name="name" value="{$name|escape}" /></td></tr>
 <tr class="formcolor"><td>{tr}Description{/tr}</td><td><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
 <tr class="formcolor"><td>{tr}File gallery{/tr}</td>
 <td>
