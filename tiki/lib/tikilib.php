@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.733 2007-03-21 19:21:40 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.734 2007-03-26 14:43:30 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3753,42 +3753,88 @@ function add_pageview() {
 		}
 		switch ($objectType) {
 		case 'tracker':
-			$ret['tiki_p_view_trackers'] = 'y';
+			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+				$ret['tiki_p_view_trackers'] = 'y';
+			}
+			if ($categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+				$ret['tiki_p_modify_tracker_items'] = 'y';
+				$ret['tiki_p_create_tracker_items'] = 'y';
+			}
 			break;
 		case 'image gallery':
 		case 'image':
-			$ret['tiki_p_view_image_gallery'] = 'y';
+			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+				$ret['tiki_p_view_image_gallery'] = 'y';
+				$ret['tiki_p_download_files'] = 'y';
+			}
+			if ($categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+				$ret['tiki_p_upload_images'] = 'y';
+			}
 			break;
 		case 'file gallery':
 		case 'file':
-			$ret['tiki_p_view_file_gallery'] = 'y';
+			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+				$ret['tiki_p_view_file_gallery'] = 'y';
+			}
+			if ($categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+				$ret['tiki_p_upload_files'] = 'y';
+			}
 			break;
 		case 'article':
 		case 'submission':
-			$ret['tiki_p_read_article'] = 'y';
+			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+				$ret['tiki_p_read_article'] = 'y';
+			}
+			if ($categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+				$ret['tiki_p_edit_article'] = 'y';
+				$ret['tiki_p_submit_article'] = 'y';
+			}
 			break;
 		case 'forum':
-			$ret['tiki_p_forum_read'] = 'y';
+			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+				$ret['tiki_p_forum_read'] = 'y';
+			}
+			if ($categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+				$ret['tiki_p_forum_post_topic'] = 'y';
+				$ret['tiki_p_forum_post'] = 'y';
+			}
 			break;
 		case 'blog':
 		case 'blog post':
-			$ret['tiki_p_read_blog'] = 'y';
+			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+				$ret['tiki_p_read_blog'] = 'y';
+			}
+			if ($categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+				$ret['tiki_p_create_blogs'] = 'y';
+				$ret['tiki_p_blog_post'] = 'y';
+			}
 			break;
 		case 'wiki page':
 		case 'history':
-			$ret['tiki_p_view'] = 'y';
+			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+				$ret['tiki_p_view'] = 'y';
+			}
+			if ($categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+				$ret['tiki_p_edit'] = 'y';
+			}
 			break;
 		case 'faq':
-			$ret['tiki_p_view_faqs'] = 'y';
+			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+				$ret['tiki_p_view_faqs'] = 'y';
+			}
 			break;
 		case 'survey':
 			break;
 		case 'newsletter':
-			$ret['tiki_p_subscribe_newsletters'] = 'y';
+			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+				$ret['tiki_p_subscribe_newsletters'] = 'y';
+			}
 			break;
 		/* TODO */
 		default:
-			$ret["tiki_p_view_$objectType"] = 'y';
+			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+				$ret["tiki_p_view_$objectType"] = 'y';
+			}
 			break;
 		}
 		return $ret;
