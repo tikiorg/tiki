@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.60 2007-03-23 15:50:24 jyhem Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.61 2007-03-26 08:26:59 jyhem Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.60 2007-03-23 15:50:24 jyhem Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.61 2007-03-26 08:26:59 jyhem Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -61,12 +61,9 @@ if ($tiki_p_admin == 'y') {
 }
 
 // Get clean strings for $http_prefix and $https_prefix
-// One slash before, no slash after
-$http_prefix = '/'.$http_prefix;
 // http_prefix starts with one / and ends with none. If empty stays empty
 $http_prefix = ereg_replace('^/+', '/', '/'.$http_prefix);
 $http_prefix = ereg_replace('/+$', '', $http_prefix);
-$https_prefix = '/'.$https_prefix;
 // https_prefix starts with one / and ends with none. If empty stays empty
 $https_prefix = ereg_replace('^/+', '/', '/'.$https_prefix);
 $https_prefix = ereg_replace('/+$', '', $https_prefix);
