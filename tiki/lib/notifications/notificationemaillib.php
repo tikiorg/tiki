@@ -1,5 +1,5 @@
 <?php
-// $Id: notificationemaillib.php,v 1.25 2007-02-09 04:59:50 mose Exp $
+// $Id: notificationemaillib.php,v 1.26 2007-03-26 16:32:34 nyloth Exp $
 /** \brief send the email notifications dealing with the forum changes to
   * \brief outbound address + admin notification addresses / forum admin email + watching users addresses
   * \param $event = 'forum_post_topic' or 'forum_post_thread'
@@ -105,7 +105,7 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 		$mail = new TikiMail();
 		$smarty->assign('mail_forum', $forum_info["name"]);
 		$smarty->assign('mail_title', $title);
-		$smarty->assign('mail_date', $this->now);
+		$smarty->assign('mail_date', $tikilib->now);
 		$smarty->assign('mail_message', $data);
 		$smarty->assign('mail_author', $author);
 		if ($feature_contribution == 'y' && !empty($contributions)) {
@@ -206,7 +206,7 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 	    $mail = new TikiMail();
 	    $smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
 	    $smarty->assign('mail_page', $pageName);
-	    $smarty->assign('mail_date', $this->now);
+	    $smarty->assign('mail_date', $tikilib->now);
 	    $smarty->assign('mail_user', $edit_user);
 	    $smarty->assign('mail_comment', $edit_comment);
 	    $newver = $oldver + 1;
@@ -330,7 +330,7 @@ function sendFileGalleryEmailNotification($event, $galleryId, $galleryName, $nam
                 include_once('lib/webmail/tikimaillib.php');
                 $mail = new TikiMail();
                 $smarty->assign('galleryName', $galleryName);
-                $smarty->assign('mail_date', $this->now);
+                $smarty->assign('mail_date', $tikilib->now);
                 $smarty->assign('author', $user);
                 $foo = parse_url($_SERVER["REQUEST_URI"]);
                 $machine = $tikilib->httpPrefix(). dirname( $foo["path"] );
