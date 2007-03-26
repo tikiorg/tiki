@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.119 2007-03-22 15:09:38 gillesm Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.120 2007-03-26 21:45:45 awolfff Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -23,13 +23,15 @@ function simple_set_toggle($feature) {
 	global $_REQUEST, $tikilib, $smarty, $tikifeedback, $$feature;
 	
 	if (isset($_REQUEST[$feature]) && $_REQUEST[$feature] == "on") {
-		if (isset($$feature) && $$feature != 'y') {
+		if ((!isset($$feature) || $$feature != 'y')) {
+			// not yet set at all or not set to y
 			$tikilib->set_preference($feature, 'y');
 			$smarty->assign($feature, 'y');
 			$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("%s enabled"),$feature));
 		}
 	} else {
-		if (isset($$feature) && $$feature != 'n') {
+		if ((!isset($$feature) || $$feature != 'n')) {
+			// not yet set at all or not set to n
 			$tikilib->set_preference($feature, 'n');
 			$smarty->assign($feature, 'n');
 			$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("%s disabled"),$feature));
