@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.49 2007-03-22 17:54:56 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.50 2007-03-27 11:57:21 luciash Exp $
  *
  * 'Simple' style for Tikiwiki - simple and easy to understand yet pleasant for your eye !
  * Enables font re-sizing in all browsers, aims to be standards compliant and WCAG 1.0 compatible (not yet).
@@ -28,8 +28,18 @@ body {
   padding: 0; /* and padding */
 }
 
+#header {
+	background-color: transparent;
+}
+
 #wrapper {
 	background-color: transparent;
+}
+/* this is a special workaround for IE 7 */
+*:first-child+html
+#wrapper {
+	margin-left: -210px;
+	padding-left: 210px;
 }
 
 #wrapper
@@ -46,32 +56,47 @@ body {
 #wrapper
 	#col1
 		div.marginleft {
-			margin-left: 180px;/* change this in your stylesheet too when you change the width of #col2 */
+			margin-left: 210px;/* change this in your stylesheet too when you change the width of #col2 */
 		}
 
 #wrapper
 	#col1
 		div.marginright {
-			margin-right: 180px;/* change this in your stylesheet too when you change the width of #col3 */
+			margin-right: 210px;/* change this in your stylesheet too when you change the width of #col3 */
+		}
+/* this is a special workaround for IE 7 again */
+*:first-child+html
+#wrapper
+	#col1
+		div.marginright {
+			padding-right: 210px;
 		}
 
 #wrapper
 	#col2 {
 		background-color: transparent;
-		overflow: hidden;/* prevent overflowing of the content out of the column */
-		width: 180px;
+		width: 210px;
 	}
 
 #col3 {
 	background-color: transparent;
-	overflow: hidden;/* prevent overflowing of the content out of the column */
-	width: 180px;
+	margin-left: -210px;/* once more a speciality for MSIE to display the 3rd column; change this if you change the width too */
+	width: 210px;
 }
 
+
+/* next comes footer */
 #footer {background-color: transparent}
 .footerbgtrap {background-color: transparent; color: #000}/* this is needed as a little workaround because MSIE tends to display the footer partly without the background specified */
 
 .content {padding: 1em;}/* this takes care of all the content default appearance */
+/* this is a special workaround for IE 7 again */
+*:first-child+html
+#wrapper
+	#col1
+		div.marginright.content {
+			margin-right: 1em;/* change this too if you change in the .content class the value of padding(-right) (important for #col1 only) */
+		}
 
 /*div {border-width: 1px; border-style: solid; padding: 10px; margin: 5px}*/ /* <- if you want to debug with outlines, put this at the bottom of your stylesheet  */
 
@@ -328,11 +353,8 @@ ul, ol {
  background-color: #def;
  border: none;
  margin: 0.2em;
- overflow: auto;
- _overflow: hidden; /* MSIE workaround */
- _overflow-x: auto; /* MSIE workaround */
+ overflow: hidden;
  padding: 0;
- _width: auto; /* MSIE workaround to make overflow work */
 }
 div.box-title {
  background: #abcdef;
@@ -380,6 +402,7 @@ div.box-title table {
 .box-data form {
   text-align: center;
 }
+.box-data select {width: 120px}
 
 /* custom menus */
 .box-data .option, .box-data .separatorline {
@@ -395,6 +418,8 @@ div.box-title table {
   font-weight: bold;
 }
 .box-data .option a.linkmenu:hover {
+	background-color: transparent;
+	border: none;
   color: #000;
 }
 .box-data .separator {
@@ -686,6 +711,7 @@ div.articlebody {
   left: 0;
   top: 0;
   background-color: #FFFFFF;
+  margin-left: 15px;
   visibility: hidden;
 }
 .mdksubmenu table {
