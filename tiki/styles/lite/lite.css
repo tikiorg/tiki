@@ -1,13 +1,14 @@
 /*
- * *lite - "like a KISS ? - lite is that easy !" is an ultimate source ordered layout solution by luci, comments/suggestions e-mail to luci[-at-]sh.ground.cz
- * this is the base layout which should remain untouched. it is meant to be imported only at the top of your stylesheet using @import "lite.css";
+ * *lite - "like a KISS ? - lite is that easy !"
+ * this is an ultimate source ordered layout solution by luci, comments/suggestions by e-mail to luci[-at-]sh.ground.cz
+ * the *lite CSS is the base style which should remain untouched. it is meant to be imported only at the top of your stylesheet using @import "lite.css";
  * for more info see the homepage: http://www.ground.cz/luci/css/lite
  * license: LGPL
  * enjoy !
  */
 
 body {
-	background: silver; color: black;
+	background: #333333; color: black;
 	display: table;/* keep "display: table" here to push the right column to the right when some unwrappable stuff appears in the center col */
 	font-family: sans-serif;
 	font-size: 75%;
@@ -24,9 +25,20 @@ body {
 	background-color: #6F6F6F; color: black;
 	border-color: #6F0;
 	display: block;/* keep "display: block" here to prevent layout breakage (mostly in Firefox) */
-	float: right;
-	_float: left;/* underscore hack here because in MSIE it works only when it is floated the other way */
+	float: left;/* from IE 5.5 to IE 7 it works only when it is floated this way */
 	width: 100%;
+}
+/* here we redefine the float for standards compliant browsers */
+#wrapper[id] {
+	float: right;
+}
+/* and this is a special workaround for IE 7 */
+*:first-child+html
+#wrapper {
+	float: left;/* for IE 7 it must be redefined back to left */
+	margin-left: -180px;
+	padding-left: 180px;
+	width: auto;
 }
 
 #wrapper
@@ -35,6 +47,7 @@ body {
 		border-color: #F00;
 		float: right;
 		width: 100%;
+		min-width: 100%;/* this is especially needed for MSIE 7 */
 	}
 
 #wrapper
@@ -55,34 +68,67 @@ body {
 		div.marginright {
 			margin-right: 180px;/* change this in your stylesheet too when you change the width of #col3 */
 		}
+/* this is a special workaround for IE 7 again */
+*:first-child+html
+#wrapper
+	#col1
+		div.marginright {
+			margin-right: 0;
+			padding-right: 180px;
+		}
 
 #wrapper
 	#col2 {
 		background-color: #C0C0C0; color: black;
 		border-color: #0c0;
-		float: left;
-		_float: right;/* underscore hack here because MSIE likes it floated the opposite way again */
+		float: right;/* from IE 5.5 to IE 6 it works only when it is floated this way */
 		margin-right: -100%;/* this way we set the position of the second column (appears visually as first column) in all browsers */
 		overflow: hidden;/* prevent overflowing of the content out of the column */
 		width: 180px;
 	}
 
+/* here we redefine the float for standards compliant browsers and IE 7 */
+#wrapper[id]
+	#col2 {
+		float: left;/* this time IE 7 differs from its predecessors */
+	}
+
+/* this is a special workaround for IE 7 */
+*:first-child+html
+#wrapper[id]
+	#col2 {
+		margin-left: 0;
+	}
+
 #col3 {
 	background-color: #9f9f9f; color: black;
 	border-color: #00009f;
-	float: right;
-	_float: left;/* underscore hack here because MSIE likes it floated the opposite way again */
-	_margin-left: -180px;/* once more MSIE underscore hack to display the 3rd column; change this if you change the width too */
-	margin-right: -100%;/* ... and this way we display the third column in all other browsers than MSIE */
-	_margin-right: 0;/* and last one just to be sure it will not break in the future when margin-right: -100% will become nomore ignored by MSIE here */
+	float: left;/* for all versions of IE from 5.5 to 7 it works only when it is floated this way again */
+	margin-left: -180px;/* once more a speciality for IE to display the 3rd column; change this if you change the width too */
 	overflow: hidden;/* prevent overflowing of the content out of the column */
 	width: 180px;
 }
 
+/* ... and this way we display the third column in all other good browsers than MSIE */
+html>/*leave this comment here - it acts as an universal anti-IE hack !*/body
+#col3[id] {
+	float: right;
+	margin-right: -100%;
+}
+
+
+/* next comes footer */
 #footer {background-color: #606060; border-color: #066; color: white; clear: both;}
 .footerbgtrap {background-color: #606060; color: white;}/* this is needed as a little workaround because MSIE tends to display the footer partly without the background specified */
 
 .colwrapper {}/* the colwrappers are optional allow extended styling such as graphical borders etc. (the extra divs are commented out by default in the xhtml source) */
 .content {padding: 1em;}/* this takes care of all the content default appearance */
+/* this is a special workaround for IE 7 again */
+*:first-child+html
+#wrapper
+	#col1
+		div.marginright.content {
+			margin-right: 1em;/* change this too if you change in the .content class the value of padding(-right) (important for #col1 only) */
+		}
 
 /*div {border-width: 1px; border-style: solid; padding: 10px; margin: 5px}*/ /* <- if you want to debug with outlines, put this at the bottom of your stylesheet  */
