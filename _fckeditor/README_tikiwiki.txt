@@ -35,34 +35,6 @@ ToolbarSet : make choice of the toolbar used in fckeditor
 Patches for specific Tikiwiki use
 ---------------------------------
 
-* Style patch
-For having the wikitext class declared in the body element en editarea
-zone. The _source/ content is a human-readable version of js/ content,
-but it has been patched as well for understandability purpose.
-
-=======
-lib/fckeditor/editor/_source/internals/fck_1.js
-261c261
-<                       sHtml += '</head><body>' ;
----
->                       sHtml += '</head><body class="wikitext">' ;
-=======
-lib/fckeditor/editor/_source/internals/fck_2.js
-103c103
-<                       '</head><body>' + 
----
->                       '</head><body class="wikitext">' +
-=======
-
-The equivalent changes have to be made in 
-* lib/fckeditor/editor/js/fckeditorcode_gecko.js
-* lib/fckeditor/editor/js/fckeditorcode_ie.js
-That can be done manually (but preserve lines formatting) 
-or by launching that oneline :
-  
-	perl -pi -e 's/head><body>/head><body class="wikitext">/' lib/fckeditor/editor/js/fckeditorcode_*.js
-
-
 * Filemanager MultiTiki patch
 Files to patch get similar changes, in browser and upload connectors:
 lib/fckeditor/editor/filemanager/browser/default/connectors/php/config.php
