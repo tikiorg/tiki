@@ -889,7 +889,7 @@ class Comments extends TikiLib {
 	return true;
     }
 
-    function list_forums($offset, $maxRecords, $sort_mode, $find) {
+    function list_forums($offset, $maxRecords, $sort_mode, $find = '') {
 
 	if ($find) {
 	    $findesc = '%' . $find . '%';
@@ -2053,6 +2053,26 @@ class Comments extends TikiLib {
 	$result = $this->query($query, array( $threadId ) );
 	return true;
     }
+
+	function duplicate_forum($forumId, $name, $description='') {
+		$forum_info = $this->get_forum($forumId);
+		$newForumId = $this->replace_forum(0, $name, $description, $forum_info['controlFlood'],
+	    $forum_info['floodInterval'], $forum_info['moderator'], $forum_info['mail'], $forum_info['useMail'],
+	    $forum_info['usePruneUnreplied'], $forum_info['pruneUnrepliedAge'], $forum_info['usePruneOld'],
+	    $forum_info['pruneMaxAge'], $forum_info['topicsPerPage'], $forum_info['topicOrdering'],
+	    $forum_info['threadOrdering'], $forum_info['section'], $forum_info['topics_list_reads'],
+	    $forum_info['topics_list_replies'], $forum_info['topics_list_pts'],
+	    $forum_info['topics_list_lastpost'], $forum_info['topics_list_author'], $forum_info['vote_threads'],
+	    $forum_info['show_description'], $forum_info['inbound_pop_server'], $forum_info['inbound_pop_port'],
+	    $forum_info['inbound_pop_user'], $forum_info['inbound_pop_password'], $forum_info['outbound_address'],
+	    $forum_info['outbound_mails_for_inbound_mails'], $forum_info['outbound_mails_reply_link'],
+	    $forum_info['outbound_from'], $forum_info['topic_smileys'], $forum_info['topic_summary'], $forum_info['ui_avatar'],
+	    $forum_info['ui_flag'], $forum_info['ui_posts'], $forum_info['ui_level'], $forum_info['ui_email'], $forum_info['ui_online'],
+	    $forum_info['approval_type'], $forum_info['moderator_group'], $forum_info['forum_password'],
+	    $forum_info['forum_use_password'], $forum_info['att'], $forum_info['att_store'], $forum_info['att_store_dir'],
+	    $forum_info['att_max_size'],$forum_info['forum_last_n']);
+		return $newForumId;		
+	}
 }
 
 function compare_replies($ar1, $ar2) {

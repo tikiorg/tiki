@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.41 2007-03-06 19:29:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.42 2007-03-28 13:10:00 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -124,6 +124,23 @@ if (isset($_REQUEST["save"])) {
 	$_REQUEST["forumId"] = 0;
 }
 
+if (!empty($_REQUEST['duplicate']) && !empty($_REQUEST['name']) && !empty($_REQUEST['forumId'])) {
+	$newForumId = $commentslib->duplicate_forum($_REQUEST['forumId'], $_REQUEST['name'], isset($_REQUEST['description'])?$_REQUEST['description']: '' );
+	if (isset($_REQUEST['dupCateg']) && $_REQUEST['dupCateg'] == 'on' && $feature_categories == 'y') {
+		global $categlib; include_once('lib/categories/categlib.php');
+		$cats = $categlib->get_object_categories('forum', $_REQUEST['forumId']);
+		$catObjectId = $categlib->add_categorized_object('forum', $newForumId, isset($_REQUEST['description'])?$_REQUEST['description']: '', $_REQUEST['name'], "tiki-view_forum.php?forumId=$newForumId");
+		foreach($cats as $cat) {
+			$categlib->categorize($catObjectId, $cat);
+		}
+	}
+	if (isset($_REQUEST['dupPerms']) && $_REQUEST['dupPerms'] == 'on') {
+		global $userlib; include_once('lib/userslib.php');
+		$userlib->copy_object_permissions($_REQUEST['forumId'], $newForumId, 'forum');
+	}  
+	$_REQUEST['forumId'] = $newForumId;
+}
+
 if ($_REQUEST["forumId"]) {
 	$info = $commentslib->get_forum($_REQUEST["forumId"]);
 } else {
@@ -190,7 +207,7 @@ foreach ($info as $key => $value) {
 }
 
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'name_desc';
+	$sort_mode = 'name_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
@@ -213,6 +230,12 @@ $smarty->assign('find', $find);
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $channels = $commentslib->list_forums($offset, $maxRecords, $sort_mode, $find);
+if ($offset == 0 && ($maxRecords == -1 || $channels['cant'] <= $maxRecords)) {
+	$smarty->assign_by_ref('allForums', $channels['data']);
+} else {
+	$allForums = $commentslib->list_forums(0, -1,'name_asc');
+	$smarty->assign_by_ref('allForums', $allForums['data']);
+}
 
 $max = count($channels["data"]);
 for ($i = 0; $i < $max; $i++) {
@@ -250,6 +273,9 @@ $cat_type = 'forum';
 $cat_objid = $_REQUEST["forumId"];
 include_once ("categorize_list.php");
 
+if (!empty($_REQUEST['dup_mode'])) {
+	$smarty->assign_by_ref('dup_mode', $_REQUEST['dup_mode']);
+}
 $users = $userlib->list_all_users();
 $smarty->assign_by_ref('users', $users);
 
