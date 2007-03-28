@@ -1,7 +1,7 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_thumb.php,v 1.6 2007-03-28 16:19:49 sylvieg Exp $ */
+/* $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_thumb.php,v 1.7 2007-03-28 16:35:20 sylvieg Exp $ */
 function wikiplugin_thumb_help() {
-	return tra("Displays the thumbnail for an image").":<br />~np~{THUMB(image=>url,id=url,max=>,float=>,url=>)}".tra("description")."{THUMB}~/np~";
+	return tra("Displays the thumbnail for an image").":<br />~np~{THUMB(image=>url,id=url,max=>,float=>,url=>,original=y)}".tra("description")."{THUMB}~/np~";
 }
 
 function wikiplugin_thumb($data, $params) {
@@ -35,11 +35,17 @@ function wikiplugin_thumb($data, $params) {
 			return "''no image''";
 		}
 		$image = "show_image.php?id=$id&thumb=1";
-		$imageOver = "show_image.php?id=$id&scalesize=0";
 		global $imagegallib; include_once('lib/imagegals/imagegallib.php');
-		$info = $imagegallib->get_image_info($id, 'o');
+		if (isset($original) && $original == 'y') {
+			$info = $imagegallib->get_image_info($id, 'o');
+			$scalezize = 0;
+		} else {
+			$info = $imagegallib->get_image_info($id, 's');
+			$scalesize = $imagegallib->get_gallery_default_scale($info['galleryId']);			
+		}
 		$width = $info['xsize'];
 		$height = $info['ysize'];
+		$imageOver = "show_image.php?id=$id&scalesize=$scalesize";
 		$type = $info['type'];
 	} else {
 		if ($tikidomain) {
