@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.61 2007-03-26 08:26:59 jyhem Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.62 2007-03-28 17:48:39 sylvieg Exp $
 
-// Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.61 2007-03-26 08:26:59 jyhem Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.62 2007-03-28 17:48:39 sylvieg Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -233,7 +233,7 @@ if ($isvalid) {
 		$_SESSION["$user_cookie_site"] = $user;
 
 		$smarty->assign_by_ref('user', $user);
-		$url_ = $_SESSION['loginfrom'];
+		$url = $_SESSION['loginfrom'];
 		$needs_http_prefix = 0;
 		$logslib->add_log('login','logged from '.$url);
 //	this code doesn't work
