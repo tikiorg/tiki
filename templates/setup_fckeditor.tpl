@@ -4,6 +4,7 @@ var _FileBrowserLanguage      = 'php' ;
 var _QuickUploadLanguage      = 'php' ;
 var _FileBrowserExtension     = 'php' ;
 
+FCKConfig.BodyClass = 'wikitext';
 FCKConfig.FontNames = 'sans serif;serif;monospace;Arial;Comic Sans MS;Courier New;Tahoma;Times New Roman;Verdana' ;
 
 FCKConfig.ToolbarSets["Tiki"] = [
