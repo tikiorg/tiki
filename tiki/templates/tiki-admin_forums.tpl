@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.51 2007-03-26 15:08:05 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.52 2007-03-28 13:10:01 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_forums.php">{tr}Admin Forums{/tr}</a>
  
 {if $feature_help eq 'y'}
@@ -13,12 +13,16 @@
 <a href="tiki-admin_forums.php" class="linkbut">{tr}Create new forum{/tr}</a>
 {else}
 <a href="#editforums" class="linkbut">{tr}Edit existing forums{/tr}</a>
+{if $dup_mode ne 'y'}
+<a class="linkbut" href="tiki-admin_forums.php?dup_mode=y">{tr}duplicate forum{/tr}</a>
+{/if}
 {/if}
 
 {if $tiki_p_admin eq 'y'}
 <a title="{tr}Configure/Options{/tr}" href="tiki-admin.php?page=forums"><img src="pics/icons/wrench.png" border="0" width="16" height="16" alt='{tr}Configure/Options{/tr}' /></a>
 {/if}
 
+{if $dup_mode != 'y'}
 {if $forumId > 0}
 <h2>{tr}Edit this Forum:{/tr} {$name}</h2>
 {else}
@@ -272,7 +276,31 @@
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
-<a name="editforums" id="editforums"></a><h2>{tr}Edit Existing Forums{/tr}</h2>
+
+{else}{*duplicate*}
+<h2>{tr}Duplicate Forum{/tr}</h2>
+<form action="tiki-admin_forums.php" method="post">
+<table class="normal">
+<tr class="formcolor"><td>{tr}Name{/tr}</td><td><input type="text" size="50" name="name" value="{$name|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}Description{/tr}</td><td><textarea name="description" rows="4" cols="50">{$description|escape}</textarea></td></tr>
+<tr class="formcolor"><td>{tr}Forum{/tr}</td>
+<td>
+<select name="forumId">
+{section name=ix loop=$allForums}
+<option value="{$allForums[ix].forumId}">{$allForums[ix].name}</option>
+{/section}
+</select>
+</td>
+</tr>
+<tr class="formcolor"><td>{tr}Duplicate categories{/tr}</td><td><input type="checkbox" name="dupCateg" /></td></tr>
+<tr class="formcolor"><td>{tr}Duplicate perms{/tr}</td><td><input type="checkbox" name="dupPerms" /></td></tr>
+<tr class="formcolor"><td></td><td><input type="submit" name="duplicate" value="{tr}duplicate {/tr}" /></td></tr>
+</table>
+</form>
+{/if}
+
+<a name="editforums" id="editforums"></a>
+<h2>{tr}Edit Existing Forums{/tr}</h2>
 <div  align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
@@ -287,9 +315,9 @@
 </table>
 <table class="normal">
 <tr>
-<td class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'threads_desc'}threads_asc{else}threads_desc{/if}">{tr}topics{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'comments_desc'}comments_asc{else}comments_desc{/if}">{tr}coms{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}#editforums">{tr}name{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'threads_desc'}threads_asc{else}threads_desc{/if}#editforums">{tr}topics{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'comments_desc'}comments_asc{else}comments_desc{/if}#editforums">{tr}coms{/tr}</a></td>
 <td class="heading">{tr}users{/tr}</td>
 <td class="heading">{tr}age{/tr}</td>
 <td class="heading">{tr}ppd{/tr}</td>
@@ -300,7 +328,7 @@
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
 <tr>
-<td class="odd"><a class="link" href="tiki-view_forum.php?forumId={$channels[user].forumId}">{$channels[user].name}</a></td>
+<td class="{cycle advance=false}"><a class="link" href="tiki-view_forum.php?forumId={$channels[user].forumId}">{$channels[user].name}</a></td>
 <td style="text-align:right;" class="{cycle advance=false}">{$channels[user].threads}</td>
 <td style="text-align:right;" class="{cycle advance=false}">{$channels[user].comments}</td>
 <td style="text-align:right;" class="{cycle advance=false}">{$channels[user].users}</td>
@@ -308,15 +336,15 @@
 <td style="text-align:right;" class="{cycle advance=false}">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
 <!--<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].lastPost|tiki_short_datetime}</td>-->
 <td style="text-align:right;" class="{cycle advance=false}">{$channels[user].hits}</td>
-<td class="{cycle advance=false}">
+<td class="{cycle}">
 {if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
-   <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;forumId={$channels[user].forumId}"><img src="pics/icons/wrench.png" border="0" width="16" height="16" alt='{tr}Configure/Options{/tr}' /></a>
+   <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;forumId={$channels[user].forumId}" title="edit"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>
    {if $channels[user].individual eq 'y'}
-   	<a class="link" href="tiki-objectpermissions.php?objectName=Forum+{$channels[user].name|escape}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}"><img src='pics/icons/key_active.png' border='0' width="16" height="16" alt='{tr}Assign Permissions (Active){/tr}' /></a>
+   	<a class="link" href="tiki-objectpermissions.php?objectName=Forum+{$channels[user].name|escape}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}" title="{tr}active perms{/tr}"><img src='pics/icons/key_active.png' border='0' width="16" height="16" alt='{tr}active perms{/tr}' /></a>
    {else}
-   	<a class="link" href="tiki-objectpermissions.php?objectName=Forum+{$channels[user].name|escape}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}"><img src='pics/icons/key.png' border='0' width="16" height="16" alt='{tr}Assign Permissions{/tr}' /></a>
+   	<a class="link" href="tiki-objectpermissions.php?objectName=Forum+{$channels[user].name|escape}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}" title="{tr}perms{/tr}"><img src='pics/icons/key.png' border='0' width="16" height="16" alt="{tr}perms{/tr}" /></a>
    {/if}
-   &nbsp;&nbsp;<a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].forumId}" title="{tr}Click here to delete this forum{/tr}"><img src='pics/icons/cross.png' border='0' width="16" height="16" alt='{tr}Remove{/tr}' /></a>
+   &nbsp;&nbsp;<a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].forumId}" title="{tr}delete{/tr}"><img src='pics/icons/cross.png' border='0' width="16" height="16" alt='{tr}delete{/tr}' /></a>
 {/if}
 </td>
 </tr>
@@ -324,11 +352,11 @@
 </table>
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-admin_forums.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]
+[<a class="prevnext" href="tiki-admin_forums.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}#editforums">{tr}prev{/tr}</a>]
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-[<a class="prevnext" href="tiki-admin_forums.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+[<a class="prevnext" href="tiki-admin_forums.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}#editforums">{tr}next{/tr}</a>]
 {/if}
 </div>
 </div>
