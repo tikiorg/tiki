@@ -1,7 +1,7 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_thumb.php,v 1.5 2006-08-29 20:19:11 sylvieg Exp $ */
+/* $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_thumb.php,v 1.6 2007-03-28 16:19:49 sylvieg Exp $ */
 function wikiplugin_thumb_help() {
-	return tra("Displays the thumbnail for an image").":<br />~np~{THUMB(image=>,max=>,float=>,url=>)}".tra("description")."{THUMB}~/np~";
+	return tra("Displays the thumbnail for an image").":<br />~np~{THUMB(image=>url,id=url,max=>,float=>,url=>)}".tra("description")."{THUMB}~/np~";
 }
 
 function wikiplugin_thumb($data, $params) {
@@ -27,22 +27,31 @@ function wikiplugin_thumb($data, $params) {
 	}
 
 	if (!isset($url)) {
-		$url = "";
+		$url = "javascript:void()";
 	}
 
-	if (!isset($image)) {
-		return "''no image''";
+	if (empty($image)) {
+		if (empty($id)) {
+			return "''no image''";
+		}
+		$image = "show_image.php?id=$id&thumb=1";
+		$imageOver = "show_image.php?id=$id&scalesize=0";
+		global $imagegallib; include_once('lib/imagegals/imagegallib.php');
+		$info = $imagegallib->get_image_info($id, 'o');
+		$width = $info['xsize'];
+		$height = $info['ysize'];
+		$type = $info['type'];
+	} else {
+		if ($tikidomain) {
+			$image = preg_replace('~wiki_up/~',"wiki_up/$tikidomain/",$image);
+		}
+		if (!is_file($image)) {
+			return "''image not found'' $image";
+		}
+		list($width, $height, $type, $attr) = getimagesize($image);
+		$imageOver = $image;
 	}
 
-	if ($tikidomain) {
-		$image = preg_replace('~wiki_up/~',"wiki_up/$tikidomain/",$image);
-	}
-
-	if (!is_file($image)) {
-		return "''image not found'' $image";
-	}
-
-	list($width, $height, $type, $attr) = getimagesize($image);
 	if ($width > $max or $height > $max) {
 		if ($width > $height) {
 			$factor = $width / $max;
@@ -62,7 +71,7 @@ function wikiplugin_thumb($data, $params) {
 		$smarty->assign('overlib_loaded',1);
 	}
 	$html.= "<a href='$url' style='float:$float;$style' ";
-	$html.= " onmouseover=\"return overlib('$data',BACKGROUND,'$image',WIDTH,'$width',HEIGHT,$height);\" onmouseout='nd();' >";
+	$html.= " onmouseover=\"return overlib('$data',BACKGROUND,'$imageOver',WIDTH,'$width',HEIGHT,$height);\" onmouseout='nd();' >";
 	$html.= "<img src='$image' width='$twidth' height='$theight' /></a>";
 
 	return $html;
