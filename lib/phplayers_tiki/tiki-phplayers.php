@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/phplayers_tiki/tiki-phplayers.php,v 1.15 2007-03-21 21:39:35 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/phplayers_tiki/tiki-phplayers.php,v 1.16 2007-03-28 14:58:45 sylvieg Exp $
 class TikiPhplayers extends TikiLib {
 	/* Build the input to the phplayers lib for a category tree  */
 	function mkCatEntry($categId, $indent="", $back, $categories, $urlEnd, $tpl='') {
@@ -139,7 +139,7 @@ class TikiPhplayers extends TikiLib {
 		}
 		return array($type, $class, $new, $tplFct, $tpl);		
 	}
-	function mkMenu($itall, $name, $style, $file='', $curOption = -1) {
+	function mkMenu($itall, $name, $style, $file='', $curOption = 0) {
 		list($plType, $plClass, $plNew, $plTplFct, $plTpl) = $this->getParamsStyle($style);
 		include_once ("lib/phplayers/lib/PHPLIB.php");
 		include_once ("lib/phplayers_tiki/lib/layersmenu-common.inc.php"); // include Tiki's modified version of that file to keep original intact (luci)
@@ -160,7 +160,7 @@ class TikiPhplayers extends TikiLib {
 			$$plClass->setMenuStructureFile($file);
 		}
 		$$plClass->parseStructureForMenu($name);
-		if ($curOption != -1)
+		if (!empty($curOption))
 		  $$plClass->setSelectedItemByCount($name, $curOption);
 
 		$res = '';
