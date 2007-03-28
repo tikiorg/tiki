@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.42 2007-03-28 13:10:00 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.43 2007-03-28 13:13:41 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -230,12 +230,6 @@ $smarty->assign('find', $find);
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $channels = $commentslib->list_forums($offset, $maxRecords, $sort_mode, $find);
-if ($offset == 0 && ($maxRecords == -1 || $channels['cant'] <= $maxRecords)) {
-	$smarty->assign_by_ref('allForums', $channels['data']);
-} else {
-	$allForums = $commentslib->list_forums(0, -1,'name_asc');
-	$smarty->assign_by_ref('allForums', $allForums['data']);
-}
 
 $max = count($channels["data"]);
 for ($i = 0; $i < $max; $i++) {
@@ -274,6 +268,12 @@ $cat_objid = $_REQUEST["forumId"];
 include_once ("categorize_list.php");
 
 if (!empty($_REQUEST['dup_mode'])) {
+	if ($offset == 0 && ($maxRecords == -1 || $channels['cant'] <= $maxRecords)) {
+		$smarty->assign_by_ref('allForums', $channels['data']);
+	} else {
+		$allForums = $commentslib->list_forums(0, -1,'name_asc');
+		$smarty->assign_by_ref('allForums', $allForums['data']);
+	}
 	$smarty->assign_by_ref('dup_mode', $_REQUEST['dup_mode']);
 }
 $users = $userlib->list_all_users();
