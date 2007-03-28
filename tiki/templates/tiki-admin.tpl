@@ -54,7 +54,6 @@ href="tiki-admin_shoutbox_words.php">{tr}Shoutbox Words{/tr}</a> {/if}
 <a href="tiki-syslog.php">{tr}SysLogs{/tr}</a> 
 <a href="tiki-phpinfo.php">{tr}phpinfo{/tr}</a> 
 <a href="tiki-mods.php">{tr}Mods{/tr}</a>
-<a href="tiki-backup.php">{tr}Backups{/tr}</a>
 {if $feature_banning eq 'y'}<a href="tiki-admin_banning.php">{tr}Banning{/tr}</a> {/if}
 {if $lang_use_db eq 'y'}<a href="tiki-edit_languages.php">{tr}Edit languages{/tr}</a> {/if}
 <hr />
