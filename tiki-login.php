@@ -1,16 +1,34 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.62 2007-03-28 17:48:39 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.63 2007-03-29 20:23:29 jyhem Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.62 2007-03-28 17:48:39 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.63 2007-03-29 20:23:29 jyhem Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
 require_once('tiki-setup.php');
+
+// Get clean strings for $http_prefix and $https_prefix
+// $url_prefix is $http_prefix or $https_prefix depending on context
+$https_mode = isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on';
+// http_prefix is either '/' or '/stuff/'
+$http_prefix = ereg_replace('^/+', '/', '/'.$http_prefix);
+$http_prefix = ereg_replace('/+$', '/', $http_prefix.'/');
+// https_prefix is either '/' or '/stuff/'
+$https_prefix = ereg_replace('^/+', '/', '/'.$https_prefix);
+$https_prefix = ereg_replace('/+$', '/', $https_prefix.'/');
+$url_prefix=($https_mode)?$https_prefix:$http_prefix;
+
+if ($https_mode) {
+	$stay_in_ssl_mode = isset($_REQUEST['stay_in_ssl_mode']) && $_REQUEST['stay_in_ssl_mode'] == 'on';
+	if (!$stay_in_ssl_mode) {
+		$url_prefix=$http_prefix;
+	}
+}
 
 if (!(isset($_REQUEST['user']) or isset($_REQUEST['username']))) {
 	header("Location: tiki-login_scr.php");
@@ -38,7 +56,12 @@ if (!(isset($_SESSION['loginfrom']))) {
 		//Oh well, back to tikiIndex
 //		$_SESSION['loginfrom'] = basename($tikiIndex);
 		$_url = parse_url($tikiIndex);
-		$_SESSION['loginfrom'] = $_url['path'];
+		if( ( $_url['scheme'] != '' ) || ( $_url['path']{0} == '/' ) ) {
+			$_SESSION['loginfrom'] = $_url['path'];
+		} else {
+			$_SESSION['loginfrom'] = $url_prefix.$_url['path'];
+		}
+
 		if (!empty($_url['query'])) {
 			$_SESSION['loginfrom'] .= '?'.$_url['query'];
 		}
@@ -60,17 +83,6 @@ if ($tiki_p_admin == 'y') {
 	}
 }
 
-// Get clean strings for $http_prefix and $https_prefix
-// http_prefix starts with one / and ends with none. If empty stays empty
-$http_prefix = ereg_replace('^/+', '/', '/'.$http_prefix);
-$http_prefix = ereg_replace('/+$', '', $http_prefix);
-// https_prefix starts with one / and ends with none. If empty stays empty
-$https_prefix = ereg_replace('^/+', '/', '/'.$https_prefix);
-$https_prefix = ereg_replace('/+$', '', $https_prefix);
-// This means that the http_prefix or https_prefix is not prepended to $url
-$needs_http_prefix = 1;
-
-$https_mode = isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on';
 $https_login_required = $tikilib->get_preference('https_login_required', 'n');
 
 if ($https_login_required == 'y' && !$https_mode) {
@@ -79,7 +91,7 @@ if ($https_login_required == 'y' && !$https_mode) {
 	if ($https_port != 443)
 		$url .= ':' . $https_port;
 
-	$url .= $https_prefix .'/'. $tikiIndex;
+	$url .= $https_prefix . $tikiIndex;
 
 	if (SID)
 		$url .= '?' . SID;
@@ -226,7 +238,7 @@ if ($isvalid) {
 		// Redirect the user to the screen where he must change his password.
 		// Note that the user is not logged in he's just validated to change his password
 		// The user must re-enter his old password so no security risk involved
-		$url = 'tiki-change_password.php?user=' . urlencode($user). '&oldpass=' . urlencode($pass);
+		$url = $url_prefix.'tiki-change_password.php?user=' . urlencode($user). '&oldpass=' . urlencode($pass);
 	} else {
 		// User is valid and not due to change pass.. start session
 		//session_register('user',$user);
@@ -234,7 +246,6 @@ if ($isvalid) {
 
 		$smarty->assign_by_ref('user', $user);
 		$url = $_SESSION['loginfrom'];
-		$needs_http_prefix = 0;
 		$logslib->add_log('login','logged from '.$url);
 //	this code doesn't work
 //                if (($url == $tikiIndex || substr($tikiIndex, strlen($tikiIndex)-strlen($url)-1) == '/'.$url)
@@ -243,8 +254,7 @@ if ($isvalid) {
 			$groupHome = $tikilib->get_user_preference($user, 'homePage', $groupHome);
 			$groupHome = $userlib->get_user_default_homepage($user);
 			if ($groupHome) {
-				$url = preg_match('#^https?:#', $groupHome) ? $groupHome : "tiki-index.php?page=".$groupHome;
-				$needs_http_prefix = 1;
+				$url = preg_match('#^https?:#', $groupHome) ? $groupHome : $url_prefix."tiki-index.php?page=".$groupHome;
 			}
 		}
 		//unset session variable in case user su's
@@ -252,15 +262,9 @@ if ($isvalid) {
 
 		// No sense in sending user to registration page
 		// This happens if the user has just registered and it's first login
-		if (preg_match("/tiki-register.php/",$url)) {
-		    $url = preg_replace("/tiki-register.php.*$/","tiki-index.php",$url);
-		}
-		if (preg_match("/tiki-login_validate.php/",$url)) {
-		    $url = preg_replace("/tiki-login_validate.php.*$/","tiki-index.php",$url);
-		}
-		if (preg_match("/tiki-login_scr.php/",$url)) {
-		    $url = preg_replace("/tiki-login_scr.php.*$/","tiki-index.php",$url);
-		}
+		$url = preg_replace("/tiki-register.php.*$/","tiki-index.php",$url);
+		$url = preg_replace("/tiki-login_validate.php.*$/","tiki-index.php",$url);
+		$url = preg_replace("/tiki-login_scr.php.*$/","tiki-index.php",$url);
 
 		// Now if the remember me feature is on and the user checked the rememberme checkbox then ...
 		if ($rememberme != 'disabled') {
@@ -285,34 +289,27 @@ if ($isvalid) {
 		$error = tra("You must use the right case for your user name");
 	else
 		$error= tra('Invalid username or password');
-	$url = 'tiki-error.php?error=' . urlencode($error);
+	$url = $url_prefix.'tiki-error.php?error=' . urlencode($error);
 	// on a login error wait this long in seconds. slows down automated login attacks.
     // regular users mistyping on login will experience the delay, too, but wrong logins
     // shouldn't occur that often.
 	sleep(5);
 }
 
-if ($https_mode) {
-	$stay_in_ssl_mode = isset($_REQUEST['stay_in_ssl_mode']) && $_REQUEST['stay_in_ssl_mode'] == 'on';
 
-	if (!$stay_in_ssl_mode) {
-		$prefix      = 'http://';
-		$http_domain = $tikilib->get_preference('http_domain', $_SERVER['SERVER_NAME']);
-		$http_port   = $tikilib->get_preference('http_port', 80);
+if (!$stay_in_ssl_mode) {
+	$prefix      = 'http://';
+	$http_domain = $tikilib->get_preference('http_domain', $_SERVER['SERVER_NAME']);
+	$http_port   = $tikilib->get_preference('http_port', 80);
 
-		if ($http_port != 80)
-			$http_domain .= ':' . $http_port;
+	if ($http_port != 80)
+		$http_domain .= ':' . $http_port;
 
-		$prefix .= $http_domain . '/';
-		if ( $needs_http_prefix == 1 ) {
-			$url = $prefix . $http_prefix. $url;
-		} else {
-			$url = $prefix . $url;
-		}
+	$prefix .= $http_domain ;
+	$url = $prefix . $url;
 
-		if (SID)
-			$url .= '?' . SID;
-	}
+	if (SID)
+		$url .= '?' . SID;
 }
 
 if (isset($user) and $feature_score == 'y') {
@@ -322,9 +319,7 @@ if (isset($user) and $feature_score == 'y') {
 if (isset($_REQUEST['page'])) {
   header('location: ' .  ${$_REQUEST['page']});
 } else {
-  // url starts with one /
-  $url = ereg_replace('^/+', '/', '/'.$url);
-  header('location: ' . 'http://'.$_SERVER['SERVER_NAME'].$http_prefix.$url);
+  header('location: ' . $url);
 }
 exit;
 

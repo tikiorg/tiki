@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.16 2007-03-23 15:50:24 jyhem Exp $
+// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.17 2007-03-29 20:23:29 jyhem Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -734,9 +734,14 @@ if (isset($_SESSION["install-logged-$multi"]) && $_SESSION["install-logged-$mult
 			//print "Profile: $profile";
 		}
 		// Pre-fill database with some default values which can be detected here
-		// TODO: add more
+		// TODO: add more default values pre-filling
+		// Format for http_prefix is either '/' or '/stuff/'
 		$initialprefvalues['http_prefix'] = dirname($_SERVER["PHP_SELF"].'x');
-		$initialprefvalues['https_prefix'] = dirname($_SERVER["PHP_SELF"].'x');
+		if(substr($initialprefvalues['http_prefix'],-1,1) != '/' ) {
+			$initialprefvalues['http_prefix'] .= '/';
+		}
+		$initialprefvalues['https_prefix'] = $initialprefvalues['http_prefix'];
+
 		while(list($key,$val)=each($initialprefvalues)){
 			#echo "key:$key - value:$val <br />";
 			$query="INSERT INTO tiki_preferences(name,value) VALUES (?,?)";
