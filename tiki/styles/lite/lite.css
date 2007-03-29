@@ -1,8 +1,8 @@
 /*
- * *lite - "like a KISS ? - lite is that easy !"
- * this is an ultimate source ordered layout solution by luci, comments/suggestions by e-mail to luci[-at-]sh.ground.cz
+ * *lite CSS - "like a KISS ? - lite is that easy !"
+ * this is an ultimate source ordered layout solution by luci, comments/suggestions by e-mail to luci2007[-at-]ground.cz
  * the *lite CSS is the base style which should remain untouched. it is meant to be imported only at the top of your stylesheet using @import "lite.css";
- * for more info see the homepage: http://www.ground.cz/luci/css/lite
+ * for more info see the project page: http://sf.net/projects/litecss
  * license: LGPL
  * enjoy !
  */
@@ -12,8 +12,8 @@ body {
 	display: table;/* keep "display: table" here to push the right column to the right when some unwrappable stuff appears in the center col */
 	font-family: sans-serif;
 	font-size: 0.7em !important;
-  	font-size /**/:70%;/* simmilar font size across all browsers 
-  	(CSS valid workaround using IE/Win comment bugs - see http://www.info.com.ph/~etan/w3pantheon/style/commentbugs.html) */
+	font-size /**/:70%;/* simmilar font size across all browsers 
+	(CSS valid workaround using IE/Win comment bugs - see http://www.info.com.ph/~etan/w3pantheon/style/commentbugs.html) */
 	margin: 0px; padding: 0px;
 	width: 100%;/* this is needed to keep the width to the maximum available */
 }
@@ -29,7 +29,7 @@ body {
 	width: 100%;
 }
 
-#wrapper {
+#c1c2 {
 	background-color: #6F6F6F; color: black;
 	border-color: #6F0;
 	display: block;/* keep "display: block" here to prevent layout breakage (mostly in Firefox) */
@@ -37,20 +37,20 @@ body {
 	width: 100%;
 }
 /* here we redefine the float for standards compliant browsers */
-#wrapper[id] {
+#c1c2[id] {
 	float: right;
 }
 /* and this is a special workaround for IE 7 */
 *:first-child+html
-#wrapper {
+#c1c2 {
 	float: left;/* for IE 7 it must be redefined back to left */
 	margin-left: -180px;
 	padding-left: 180px;
 	width: auto;
 }
 
-#wrapper
-	#col1 {
+#c1c2
+    #wrapper {
 		background-color: #909090; color: black;
 		border-color: #F00;
 		float: right;
@@ -58,37 +58,36 @@ body {
 		min-width: 100%;/* this is especially needed for MSIE 7 */
 	}
 
-#wrapper
-	#col1
-		div.content {
+#c1c2
+	#wrapper
+		#col1 {
 			background-color: #CFCFCF; color: black;
 			border-color: #000;
-			width: auto !important;
-  			width /**/:100%;/* workaround for IE 5.x:
-  			tables set to 100% width need parent element width of 100% as well*/
 		}
 
-#wrapper
-	#col1
-		div.marginleft {
+#c1c2
+	#wrapper
+		#col1.marginleft {
 			margin-left: 180px;/* change this in your stylesheet too when you change the width of #col2 */
 		}
 
-#wrapper
-	#col1
-		div.marginright {
+#c1c2
+	#wrapper
+		#col1.marginright {
 			margin-right: 180px;/* change this in your stylesheet too when you change the width of #col3 */
 		}
-/* this is a special workaround for IE 7 again */
-*:first-child+html
-#wrapper
-	#col1
-		div.marginright {
-			margin-right: 0;
-			padding-right: 180px;
-		}
 
-#wrapper
+#c1c2
+	#wrapper
+		#col1
+			.content {
+				background-color: white;
+				width: auto !important;
+				width /**/:100%;/* workaround for IE 5.x:
+				tables set to 100% width need parent element width of 100% as well*/
+	    	}
+
+#c1c2
 	#col2 {
 		background-color: #C0C0C0; color: black;
 		border-color: #0c0;
@@ -99,14 +98,14 @@ body {
 	}
 
 /* here we redefine the float for standards compliant browsers and IE 7 */
-#wrapper[id]
+#c1c2[id]
 	#col2 {
 		float: left;/* this time IE 7 differs from its predecessors */
 	}
 
 /* this is a special workaround for IE 7 */
 *:first-child+html
-#wrapper[id]
+#c1c2[id]
 	#col2 {
 		margin-left: 0;
 	}
@@ -132,17 +131,10 @@ html>/*leave this comment here - it acts as an universal anti-IE hack !*/body
 #footer {background-color: #606060; border-color: #066; color: white; clear: both; width: 100%;}
 .footerbgtrap {background-color: #606060; color: white;}/* this is needed as a little workaround because MSIE tends to display the footer partly without the background specified */
 
-.colwrapper {}/* the colwrappers are optional allow extended styling such as graphical borders etc. (the extra divs are commented out by default in the xhtml source) */
 .content {padding: 1em;}/* this takes care of all the content default appearance */
-/* this is a special workaround for IE 7 again */
-*:first-child+html
-#wrapper
-	#col1
-		div.marginright.content {
-			margin-right: 1em;/* change this too if you change in the .content class the value of padding(-right) (important for #col1 only) */
-		}
 
 /*div {border-width: 1px; border-style: solid; padding: 10px; margin: 5px}*/ /* <- if you want to debug with outlines, put this at the bottom of your stylesheet  */
+
 /* some common html elements */
 h1 {font-size: 2.4em}
 h2 {font-size: 2.1em}

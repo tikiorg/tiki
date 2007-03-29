@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.51 2007-03-29 09:12:01 luciash Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.52 2007-03-29 22:32:02 luciash Exp $
  *
  * 'Simple' style for Tikiwiki - simple and easy to understand yet pleasant for your eye !
  * Enables font re-sizing in all browsers, aims to be standards compliant and WCAG 1.0 compatible (not yet).
@@ -22,82 +22,48 @@ body {
   background: #ffffff url("simple/bg.png") top center repeat-y;
   /* shorthand for default font setting. size in percentage and font-family here */
   font-family: "Trebuchet MS", "Luxi Sans", "Lucida Grande", Tahoma, helvetica, sans-serif;
-  font-size: 0.7em !important;
-  font-size /**/:70%;/* simmilar font size across all browsers 
-  (CSS valid workaround using IE/Win comment bugs - see http://www.info.com.ph/~etan/w3pantheon/style/commentbugs.html) */
-  margin: 0; /* zero margins for body */
-  padding: 0; /* and padding */
 }
 
 #header {
 	background-color: transparent;
 }
 
-#wrapper {
+#c1c2 {
 	background-color: transparent;
 }
-/* this is a special workaround for IE 7 */
-*:first-child+html
-#wrapper {
-	margin-left: -210px;
-	padding-left: 210px;
-}
 
-#wrapper
-	#col1 {
+#c1c2
+	#wrapper {
 		background-color: transparent;
 	}
 
-#wrapper
-	#col1
-		div.content {
+#c1c2
+	#wrapper
+		#col1 {
 			background-color: transparent;
 		}
 
-#wrapper
-	#col1
-		div.marginleft {
-			margin-left: 210px;/* change this in your stylesheet too when you change the width of #col2 */
-		}
+#c1c2
+	#wrapper
+		#col1
+			.content {
+				background-color: transparent;
+			}
 
-#wrapper
-	#col1
-		div.marginright {
-			margin-right: 210px;/* change this in your stylesheet too when you change the width of #col3 */
-		}
-/* this is a special workaround for IE 7 again */
-*:first-child+html
-#wrapper
-	#col1
-		div.marginright {
-			padding-right: 210px;
-		}
-
-#wrapper
+#c1c2
 	#col2 {
 		background-color: transparent;
-		width: 210px;
 	}
 
 #col3 {
 	background-color: transparent;
-	margin-left: -210px;/* once more a speciality for MSIE to display the 3rd column; change this if you change the width too */
-	width: 210px;
 }
-
 
 /* next comes footer */
 #footer {background-color: transparent}
 .footerbgtrap {background-color: transparent; color: #000}/* this is needed as a little workaround because MSIE tends to display the footer partly without the background specified */
 
 .content {padding: 1em;}/* this takes care of all the content default appearance */
-/* this is a special workaround for IE 7 again */
-*:first-child+html
-#wrapper
-	#col1
-		div.marginright.content {
-			margin-right: 1em;/* change this too if you change in the .content class the value of padding(-right) (important for #col1 only) */
-		}
 
 /*div {border-width: 1px; border-style: solid; padding: 10px; margin: 5px}*/ /* <- if you want to debug with outlines, put this at the bottom of your stylesheet  */
 
