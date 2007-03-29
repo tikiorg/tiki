@@ -16,13 +16,12 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {if $metatag_robots ne ''}		<meta name="robots" content="{$metatag_robots}" />{/if}
 {if $metatag_revisitafter ne ''}		<meta name="revisit-after" content="{$metatag_revisitafter}" />{/if}
 
-{* --- tikiwiki block --- *}
-{php} include("lib/tiki-dynamic-js.php"); {/php}
+{* --- tikiwiki block --- *}{php} include("lib/tiki-dynamic-js.php"); {/php}
 		<script type="text/javascript" src="lib/tiki-js.js"></script>
 {include file="bidi.tpl"}{* this is included for Right-to-left languages *}
 
 {* --- page title block --- *}
-{strip}
+		{strip}
 		<title>{if $trail}{breadcrumbs type="fulltrail" loc="head" crumbs=$trail}{else}{$siteTitle}
 {if $page ne ''} : {$page|escape}
 {elseif $headtitle} : {$headtitle}
@@ -35,7 +34,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {elseif $userinfo.login ne ''} : {$userinfo.login}
 {/if}{/if}
 		</title>
-{/strip}
+		{/strip}
 
 {* --- main CSS file --- *}
 		<link rel="StyleSheet" media="all" href="styles/{$style}" type="text/css" />
@@ -89,7 +88,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 
 {if $headerlib}{$headerlib->output_headers()}{/if}
 
-</head>
+	</head>
 
 {* ---- BODY ---- *}
 	<body{if $user_dbl eq 'y' and $dblclickedit eq 'y' and $tiki_p_edit eq 'y'} ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}>
@@ -101,105 +100,99 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 
 {if $feature_siteidentity eq 'y'}
 {* Site identity header section *}
-		<div id="header">
-			{include file="tiki-site_header.tpl"}
-		</div>
+		<div id="header"><!-- START of header -->
+	{include file="tiki-site_header.tpl"}
+		</div><!-- END of header -->
 {/if}
 
 {* main content follows here *}
-{if $feature_bidi eq 'y'}
-		<div dir="rtl">
+		<div id="main"{if $feature_bidi eq 'y'} dir="rtl"{/if}><!-- START of main content -->
+{if $feature_top_bar eq 'y'}
+			<div id="tiki-top"><!-- START of Tiki top bar -->
+	{include file="tiki-top_bar.tpl"}
+			</div><!-- END of Tiki top bar -->
 {/if}
-			<div id="main"><!-- START of main content, please don't remove otherwise it breaks the layout in FF -->
-  {if $feature_top_bar eq 'y'}
-				<div id="tiki-top">
-    {include file="tiki-top_bar.tpl"}
-				</div>
-  {/if}
 
-  {if $feature_left_column eq 'user' or $feature_right_column eq 'user'}
-			<div id="tiki-columns">
-      {if $feature_left_column eq 'user'}
+{if $feature_left_column eq 'user' or $feature_right_column eq 'user'}
+			<div id="tiki-columns"><!-- START of Tiki columns switchers -->
+	{if $feature_left_column eq 'user'}
 				<span style="float: left"><a class="flip" href="javascript:icntoggle('col2');">
 					<img name="leftcolumnicn" class="colflip" src="img/icons/ofo.gif" border="0" alt="+/-" />&nbsp;{tr}Show/Hide Left Menus{/tr}&nbsp;</a>
 				</span>
-      {/if}
-      {if $feature_right_column eq 'user'}
+	{/if}
+	{if $feature_right_column eq 'user'}
 				<span style="float: right"><a class="flip" href="javascript:icntoggle('col3');">
 					<img name="rightcolumnicn" class="colflip" src="img/icons/ofo.gif" border="0" alt="+/-" />&nbsp;{tr}Show/Hide Right Menus{/tr}&nbsp;</a>
 				</span>
-      {/if}
+	{/if}
 				<br style='clear: both' />
-			</div>
-  {/if}
+			</div><!-- END of Tiki columns switchers -->
+{/if}
 
-		<div id="wrapper">
+			<div id="c1c2"><!-- START of column 1 and column 2 holder -->
+	
+				<div id="wrapper"><!-- START of column 1 wrapper -->
+					<div id="col1" class="{if $feature_left_column ne 'n'} marginleft{/if}{if $feature_right_column ne 'n'} marginright{/if}">
 
-			<div id="col1">
-				<div class="colwrapper">
-					<div class="content{if $feature_left_column ne 'n'} marginleft{/if}{if $feature_right_column ne 'n'} marginright{/if}">
-      {$mid_data}
-					</div>
+							<div class="content">
+{$mid_data}
+							</div>
+
+					</div><!-- END of column 1 -->
+				</div><!-- END of column1 wrapper -->
+
+{if $feature_left_column ne 'n'}
+				<div id="col2"><!-- START of column 2 -->
+	{section name=homeix loop=$left_modules}
+		{$left_modules[homeix].data}
+	{/section}
+	{if $feature_left_column eq 'user'}
+		{literal}
+					<script type="text/javascript">
+						setfolderstate("leftcolumn");
+					</script>
+		{/literal}
+	{/if}
+				</div><!-- END of column 2 -->
+{/if}
+			</div><!-- END of column 1 and column 2 holder -->
+
+{if $feature_right_column ne 'n'}
+			<div id="col3"><!-- START of column 3 -->
+	{section name=homeix loop=$right_modules}
+		{$right_modules[homeix].data}
+	{/section}
+	{if $feature_right_column eq 'user'}
+		{literal}
+				<script type="text/javascript">
+					setfolderstate("rightcolumn");
+				</script>
+		{/literal}
+	{/if}
+			</div><!-- END of column 3 -->
+{/if}
+
+		</div><!-- END of main content -->
+
+{if $feature_bot_bar eq 'y'}
+		<div id="footer">
+			<div class="footerbgtrap">
+				<div class="content">
+	{include file="tiki-bot_bar.tpl"}
 				</div>
-			</div>
-
-      {if $feature_left_column ne 'n'}
-			<div id="col2">
-      {section name=homeix loop=$left_modules}
-      {$left_modules[homeix].data}
-      {/section}
-          {if $feature_left_column eq 'user'}
-            {literal}
-							<script type="text/javascript">
-								setfolderstate("leftcolumn");
-							</script>
-            {/literal}
-          {/if}
-			</div>
-      {/if}
-
-		</div><!-- END of wrapper -->
-
-      {if $feature_right_column ne 'n'}
-				<div id="col3">
-      {section name=homeix loop=$right_modules}
-      {$right_modules[homeix].data}
-      {/section}
-          {if $feature_right_column eq 'user'}
-					<img src="images/none.gif" height="0" />
-            {literal}
-							<script type="text/javascript">
-								setfolderstate("rightcolumn");
-							</script>
-            {/literal}
-          {/if}
-				</div>
-      {/if}
-
-	</div><!-- END of main -->
-
-  {if $feature_bot_bar eq 'y'}
-	<div id="footer">
-		<div class="footerbgtrap">
-			<div class="content">
-    {include file="tiki-bot_bar.tpl"}
 			</div>
 		</div>
-	</div>
-  {/if}
-{if $feature_bidi eq 'y'}
-</div>
 {/if}
 
 {if $tiki_p_admin eq 'y' and $feature_debug_console eq 'y'}
-  {* Include debugging console. Note it should be processed as near as possible to the end of file *}
+	{* Include debugging console. Note it should be processed as near as possible to the end of file *}
 
-  {php}  include_once("tiki-debug_console.php"); {/php}
-  {include file="tiki-debug_console.tpl"}
+	{php}  include_once("tiki-debug_console.php"); {/php}
+	{include file="tiki-debug_console.tpl"}
 
 {/if}
 {if $lastup}
-		<div style="font-size:x-small;text-align:center;color:#999;">{tr}Last update from CVS{/tr}: {$lastup|tiki_long_datetime}</div>
+		<div style="font-size: x-small; text-align: center; color: #999;">{tr}Last update from CVS{/tr}: {$lastup|tiki_long_datetime}</div>
 {/if}
 	</body>
 </html>
