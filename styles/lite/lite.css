@@ -17,10 +17,16 @@ body {
 	margin: 0px; padding: 0px;
 	width: 100%;/* this is needed to keep the width to the maximum available */
 }
+/* and this is a special workaround for IE 7 */
+*:first-child+html
+body {
+	font-size: 70%;
+}
 
 /* *** THE MAIN LAYOUT *** */
 #header {
-	background-color: white; color: black;
+	background-color: #F0F0F0; color: black; height: auto;
+	width: 100%;
 }
 
 #wrapper {
@@ -55,7 +61,7 @@ body {
 #wrapper
 	#col1
 		div.content {
-			background-color: #F0F0F0; color: black;
+			background-color: #CFCFCF; color: black;
 			border-color: #000;
 			width: auto !important;
   			width /**/:100%;/* workaround for IE 5.x:
@@ -123,7 +129,7 @@ html>/*leave this comment here - it acts as an universal anti-IE hack !*/body
 
 
 /* next comes footer */
-#footer {background-color: #606060; border-color: #066; color: white; clear: both;}
+#footer {background-color: #606060; border-color: #066; color: white; clear: both; width: 100%;}
 .footerbgtrap {background-color: #606060; color: white;}/* this is needed as a little workaround because MSIE tends to display the footer partly without the background specified */
 
 .colwrapper {}/* the colwrappers are optional allow extended styling such as graphical borders etc. (the extra divs are commented out by default in the xhtml source) */
@@ -137,3 +143,10 @@ html>/*leave this comment here - it acts as an universal anti-IE hack !*/body
 		}
 
 /*div {border-width: 1px; border-style: solid; padding: 10px; margin: 5px}*/ /* <- if you want to debug with outlines, put this at the bottom of your stylesheet  */
+/* some common html elements */
+h1 {font-size: 2.4em}
+h2 {font-size: 2.1em}
+h3 {font-size: 1.8em}
+h4 {font-size: 1.5em}
+h5 {font-size: 1.2em}
+h6 {font-size: 0.9em}
