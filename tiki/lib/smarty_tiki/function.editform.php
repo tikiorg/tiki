@@ -28,7 +28,7 @@ function smarty_function_editform($params, &$smarty) {
 		$fcked->Config['AutoDetectLanguage'] = false;
 	}
 	$fcked->Config['DefaultLanguage'] = $language;
-	$fcked->Config['CustomConfigurationsPath'] = $http_prefix.'/setup_fckeditor.php';
+	$fcked->Config['CustomConfigurationsPath'] = $http_prefix.'setup_fckeditor.php';
 	echo $fcked->CreateHtml();
 }
 
