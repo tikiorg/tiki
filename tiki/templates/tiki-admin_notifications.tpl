@@ -1,7 +1,7 @@
 <h1><a class="pagetitle" href="tiki-admin_notifications.php">{tr}EMail notifications{/tr}</a>
 
 {if $feature_help eq 'y'}
-<a href="{$helpurl}EmailNotificationsAdmin" target="tikihelp" class="tikihelp" title="{tr}admin Email Notifications{/tr}">
+<a href="{$helpurl}Mail Notifications" target="tikihelp" class="tikihelp" title="{tr}admin Email Notifications{/tr}">
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
 
 {if $feature_view_tpl eq 'y'}
