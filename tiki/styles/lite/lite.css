@@ -11,7 +11,9 @@ body {
 	background: #333333; color: black;
 	display: table;/* keep "display: table" here to push the right column to the right when some unwrappable stuff appears in the center col */
 	font-family: sans-serif;
-	font-size: 75%;
+	font-size: 0.7em !important;
+  	font-size /**/:70%;/* simmilar font size across all browsers 
+  	(CSS valid workaround using IE/Win comment bugs - see http://www.info.com.ph/~etan/w3pantheon/style/commentbugs.html) */
 	margin: 0px; padding: 0px;
 	width: 100%;/* this is needed to keep the width to the maximum available */
 }
@@ -55,6 +57,9 @@ body {
 		div.content {
 			background-color: #F0F0F0; color: black;
 			border-color: #000;
+			width: auto !important;
+  			width /**/:100%;/* workaround for IE 5.x:
+  			tables set to 100% width need parent element width of 100% as well*/
 		}
 
 #wrapper
