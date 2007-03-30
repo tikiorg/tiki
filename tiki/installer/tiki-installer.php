@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.17 2007-03-29 20:23:29 jyhem Exp $
+// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.18 2007-03-30 17:28:15 jyhem Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -741,6 +741,8 @@ if (isset($_SESSION["install-logged-$multi"]) && $_SESSION["install-logged-$mult
 			$initialprefvalues['http_prefix'] .= '/';
 		}
 		$initialprefvalues['https_prefix'] = $initialprefvalues['http_prefix'];
+		$initialprefvalues['http_domain'] = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : $_SERVER['HTTP_HOST'];
+		$initialprefvalues['https_domain'] = $initialprefvalues['http_domain'];
 
 		while(list($key,$val)=each($initialprefvalues)){
 			#echo "key:$key - value:$val <br />";
