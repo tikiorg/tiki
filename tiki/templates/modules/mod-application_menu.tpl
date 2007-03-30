@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.122 2007-02-18 11:21:15 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.123 2007-03-30 11:59:34 bluestrain Exp $ *}
 {if !isset($tpl_module_title)}{eval assign=tpl_module_title var="{tr}Menu{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="application_menu" flip=$module_params.flip decorations=$module_params.decorations}
 &nbsp;<a href="{$tikiIndex}" class="linkmenu">{tr}Home{/tr}</a><br />
@@ -553,7 +553,6 @@
       {if $feature_polls eq 'y'}
       &nbsp;<a href="tiki-admin_polls.php" class="linkmenu">{tr}Polls{/tr}</a><br />
       {/if}
-      &nbsp;<a href="tiki-backup.php" class="linkmenu">{tr}Backups{/tr}</a><br />
       &nbsp;<a href="tiki-admin_notifications.php" class="linkmenu">{tr}Mail notifications{/tr}</a><br />
       {if $feature_search_stats eq 'y'}
       &nbsp;<a href="tiki-search_stats.php" class="linkmenu">{tr}Search stats{/tr}</a><br />
