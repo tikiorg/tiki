@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.15 2007-01-24 22:36:42 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.16 2007-03-30 17:38:53 sylvieg Exp $ *}
 {* param:$gal_info, $files *}
 {strip}
 
@@ -196,6 +196,7 @@
 		{if $files[changes].archiveId == 0
 			and $user
 			and $gal_info.lockable == 'y'
+			and $tiki_p_edit_gallery_file == 'y'
 			and ($files[changes].lockedby eq '' or $files[changes].lockedby eq $user)
 			and $gal_info.type ne "podcast" and $gal_info.type ne "vidcast"}
 			<a class="fgalname" href="tiki-download_file.php?fileId={$files[changes].fileId}&amp;user={$user|escape}" title="{tr}Download and lock{/tr}">
