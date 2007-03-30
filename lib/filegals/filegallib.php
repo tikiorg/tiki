@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.67 2007-02-22 13:35:40 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.68 2007-03-30 21:43:22 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -481,7 +481,8 @@ class FileGalLib extends TikiLib {
 
 		if (($fgal_use_db == 'n') || ($podCastGallery)) {
 			if (function_exists('md5_file')) {
-				$checksum = md5_file($savedir . $path);
+				if (!($checksum = md5_file($savedir . $path)))
+					$checksum = '';
 			} else {
 				$checksum = md5(implode('', file($savedir . $path)));
 			}
