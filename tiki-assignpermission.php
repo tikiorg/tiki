@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-assignpermission.php,v 1.31 2007-03-23 19:33:32 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-assignpermission.php,v 1.32 2007-03-30 16:39:59 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -127,7 +127,7 @@ $smarty->assign('levels', $levels);
 $perms = $userlib->get_permissions(0, -1, $sort_mode, $find, $_REQUEST["type"], $group);
 
 foreach ($perms['data'] as $perm) {
- 	if ($perm['admin'] == 'y') {
+ 	if ($perm['admin'] == 'y' && $perm['hasPerm'] == 'y') {
 		foreach ($perms['data'] as $key=>$p) {
 			if ($p['type'] == $perm['type'] && $perm['permName'] != $p['permName'])
 				$perms['data'][$key]['from_admin'] = 'y';
