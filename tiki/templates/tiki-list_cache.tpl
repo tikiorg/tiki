@@ -1,7 +1,7 @@
 <h1><a href="tiki-list_cache.php" class="pagetitle">{tr}Cache{/tr}</a>
   
       {if $feature_help eq 'y'}
-<a href="{$helpurl}CacheDoc" target="tikihelp" class="tikihelp" title="{tr}admin cache{/tr}">
+<a href="{$helpurl}Cache" target="tikihelp" class="tikihelp" title="{tr}admin cache{/tr}">
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
 
       {if $feature_view_tpl eq 'y'}
