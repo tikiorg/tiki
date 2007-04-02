@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.57 2007-03-25 01:49:53 gillesm Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.58 2007-04-02 17:39:27 sylvieg Exp $ *}
 
 <script type="text/javascript">
 {literal}
@@ -30,7 +30,7 @@
         <td class="heading" colspan="2"
             align="center">{tr}General Preferences{/tr}</td>
       </tr>
-	<tr><td>{tr}Tikiwiki release{/tr} : </td><td>{$tiki_release}</td></tr>
+	<tr><td class="form">{tr}Tikiwiki release{/tr} : </td><td class="form">{$tiki_release}</td></tr>
 	<tr>
 	<td class="form" ><label for="general-theme">{tr}Theme{/tr}:</label></td>
         <td width="67%"><select name="style" id="general-theme">
