@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.13 2007-03-21 20:19:48 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.14 2007-04-02 17:21:23 sylvieg Exp $ *}
 {if $cant_pages > 1 or $initial or $find}
 <div align="center">
 {section name=ini loop=$initials}
@@ -170,6 +170,8 @@
 {/if}
 </form>
 <br />
+
+{if count($listpages) > 0}
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$prev_offset}&amp;sort_mode={$sort_mode}{if $initial}&amp;initial={$initial}{/if}{if $find}&amp;find={$find|escape}{/if}{if $exact_match eq 'y'}&amp;exact_match=on{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{/ajax_href}>{tr}prev{/tr}</a>]
@@ -187,3 +189,4 @@
 {/section}
 {/if}
 </div>
+{/if}

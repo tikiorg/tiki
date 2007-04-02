@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.10 2007-03-30 12:53:53 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.11 2007-04-02 17:21:20 sylvieg Exp $
 function wikiplugin_trackerfilter_help() {
   $help = tra("Filters the items of a tracker, fields are indicated with numeric ids.").":\n";
   $help .= "~np~{TRACKERFILTER(filters=>2/d:4/r:5,action=>Name of submit button,TRACKERLIST_params )}{TRACKERFILTER}~/np~";
@@ -136,14 +136,12 @@ function wikiplugin_trackerfilter($data, $params) {
 		$smarty->assign('msg', tra("tracker field type not processed yet"));
 		return $dataRes.$smarty->fetch("error_simple.tpl");
 	}
-<<<<<<< wikiplugin_trackerfilter.php
 
-=======
 	if (!isset($action)) {
 		$action = 'filter';// tra('filter');
 	}
 	$smarty->assign('action', $action);
->>>>>>> 1.1.2.11
+
 	$filters[] = array('name' => $field['name'], 'fieldId' => $field['fieldId'], 'format'=>$format, 'opts' => $opts, 'selected'=>$selected);
 	}
 	$smarty->assign('filters', $filters);

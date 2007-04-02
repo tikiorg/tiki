@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.123 2007-03-21 19:21:44 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.124 2007-04-02 17:21:23 sylvieg Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
@@ -79,7 +79,7 @@
 {if $tracker_info.showStatus eq 'y' and ($tracker_info.showStatusAdminOnly ne 'y' or $tiki_p_admin_trackers eq 'y')}
   {assign var=ustatus value=$info.status|default:"p"}
   <tr class="formcolor">
-    <td>{tr}Status{/tr}</td><td>{$status_types.$ustatus.label}</td>
+    <td class="formlabel">{tr}Status{/tr}</td><td>{$status_types.$ustatus.label}</td>
     <td colspan="2">{html_image file=$status_types.$ustatus.image title=$status_types.$ustatus.label alt=$status_types.$ustatus.label}</td>
   </tr>
 {/if}
@@ -96,7 +96,7 @@
       {elseif $stick eq 'y'}
         <td class="formlabel right">{$cur_field.name}</td><td>
       {else}
-        <tr class="formcolor field{$cur_field.fieldId}"><td>{$cur_field.name}
+        <tr class="formcolor field{$cur_field.fieldId}"><td class="formlabel">{$cur_field.name}
         {if ($cur_field.type eq 'l' and $cur_field.options_array[4] eq '1')}
           <br />
           <a href="tiki-view_tracker.php?trackerId={$cur_field.options_array[0]}&amp;filterfield={$cur_field.options_array[1]}&amp;filtervalue={section name=ox loop=$ins_fields}{if $ins_fields[ox].fieldId eq $cur_field.options_array[2]}{$ins_fields[ox].value}{/if}{/section}">{tr}Filter Tracker Items{/tr}</a><br />

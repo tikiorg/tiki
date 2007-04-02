@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.130 2007-03-25 14:10:41 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.131 2007-04-02 17:21:19 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -170,6 +170,7 @@ $vartype['actpass'] = '+string'; // remind password page
 $vartype['user'] = '+string'; // remind password page
 $vartype['remind'] = 'string'; // remind password page
 $vartype['url'] = 'url';
+$vartype['game'] = 'string'; // from games
 // galaxia
 $vartype['aid'] = '+int';
 $vartype['description'] = 'string';

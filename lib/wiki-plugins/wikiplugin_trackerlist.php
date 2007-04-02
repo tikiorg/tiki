@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.28 2007-02-22 13:35:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.29 2007-04-02 17:21:21 sylvieg Exp $
 //
 // TODO : 
 // ----------
@@ -8,7 +8,7 @@
 
 function wikiplugin_trackerlist_help() {
 	$help = tra("Displays the output of a tracker content, fields are indicated with numeric ids.").":\n";
-	$help.= "~np~{TRACKERLIST(trackerId=>1,fields=>2:4:5, showtitle=>y|n, showlinks=>y|n, showdesc=>y|n, showinitials=>y|n, showstatus=>y|n, status=>o|p|c|op|oc|pc|opc, sort_mode=>, max=>, filterfield=>, filtervalue=>, exactvalue=>, checkbox=>fieldId/name/title/submit/action/tpl)}Notice{TRACKERLIST}~/np~";
+	$help.= "~np~{TRACKERLIST(trackerId=>1,fields=>2:4:5, showtitle=>y|n, showlinks=>y|n, showdesc=>y|n, showinitials=>y|n, showstatus=>y|n, status=>o|p|c|op|oc|pc|opc, sort_mode=>, max=>, filterfield=>, filtervalue=>, exactvalue=>, checkbox=>fieldId/name/title/submit/action/tpl,goIfOne=>y|n)}Notice{TRACKERLIST}~/np~";
 	return $help;
 }
 
@@ -227,6 +227,11 @@ function wikiplugin_trackerlist($data, $params) {
 
 		if (count($passfields)) {
 			$items = $trklib->list_items($trackerId, $tr_offset, $max, $tr_sort_mode, $passfields, $filterfield, $filtervalue, $tr_status, $tr_initial, $exactvalue);
+
+			if ($items['cant'] == 1 && isset($goIfOne) && ($goIfOne == 'y' || $goIfOne == 1)) {
+				header('Location: tiki-view_tracker_item.php?itemId='.$items['data'][0]['itemId'].'&amp;trackerId='.$items['data'][0]['trackerId']);
+				die;
+			}
 			
 			if ($rated) {
 				foreach ($items['data'] as $f=>$v) {

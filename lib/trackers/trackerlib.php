@@ -609,8 +609,7 @@ class TrackerLib extends TikiLib {
 				} elseif ($fopt["type"] == 'l') {
 					$optsl = split(',',$fopt['options']);
 					$fopt["links"] = array();
-					$lst = $fil[$optsl[2]];
-					if ($lst) {
+					if (isset($optsl[2]) && ($lst = $fil[$optsl[2]])) {
 						$links = $this->get_items_list($optsl[0],$optsl[1],$lst);
 						foreach ($links as $link) {
 							$fopt["links"][$link] = $this->get_item_value($optsl[0],$link,$optsl[3]);
@@ -788,8 +787,12 @@ class TrackerLib extends TikiLib {
 						if (!empty($opts[4])) {
 							global $imagegallib;include_once('lib/imagegals/imagegallib.php');
 							$imagegallib->image = $ins_fields["data"][$i]['value'];
-							$imagegallib->rescaleImage($opts[4], $opts[4]);
-							$ins_fields["data"][$i]['value'] = $imagegallib->image;
+							$imagegallib->readimagefromstring();
+							$imagegallib->getimageinfo();
+							if ($imagegallib->xsize > $opts[4] || $imagegallib->xsize > $opts[4]) {
+								$imagegallib->rescaleImage($opts[4], $opts[4]);
+								$ins_fields["data"][$i]['value'] = $imagegallib->image;
+							}
 						}
 						if ($ins_fields["data"][$i]['file_size'] <= $this->imgMaxSize) {
 
@@ -801,6 +804,7 @@ class TrackerLib extends TikiLib {
 							fwrite($fw, $ins_fields["data"][$i]['value']);
 							fflush($fw);
 							fclose($fw);
+							chmod($file_name, 0644); // seems necessary on some system (see move_uploaded_file doc on php.net
 
 							$ins_fields['data'][$i]['value'] = $file_name;
 
@@ -1774,8 +1778,6 @@ class TrackerLib extends TikiLib {
 	}
 	function categorized_item($trackerId, $itemId, $mainfield, $ins_categs) {
 		global $categlib; include_once('lib/categories/categlib.php');
-		if (count($ins_categs) <= 0)
-			return;
 		$cat_type = "tracker $trackerId";
 		$cat_objid = $itemId;
 		$cat_desc = '';

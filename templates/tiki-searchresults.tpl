@@ -1,8 +1,10 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-searchresults.tpl,v 1.24 2007-04-02 17:21:23 sylvieg Exp $ *}
 {if !( $searchNoResults ) }
 <h1>{tr}Search results{/tr}:</h1>
 {/if}
 <div class="nohighlight">
 {if !( $searchStyle eq "menu" )}
+<div class="nohighlight">
 {tr}Search in{/tr}:<br />
 <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=pages">{tr}All{/tr}</a>
 {if $feature_wiki eq 'y'}
@@ -35,6 +37,7 @@
 {if $feature_trackers eq 'y'}
  <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=trackers">{tr}trackers{/tr}</a>
 {/if}
+</div><!--nohighlight-->
 <br /><br />
 {tr}Found{/tr} "{$words}" {tr}in{/tr} {$cant_results} {$where2}
 {/if}
