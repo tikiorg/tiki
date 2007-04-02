@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.44 2007-03-06 19:29:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.45 2007-04-02 16:27:12 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -144,7 +144,7 @@ if ($offset) {
 }
 
 if (count($listImgId) > $offset + 1) {
-	$smarty->assign('nextimg', $listImgId[$offset+2]);
+	$smarty->assign('nextimg', $listImgId[$offset+1]);
 } else {
 	$smarty->assign('nextimg', '');
 }
