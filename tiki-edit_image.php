@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_image.php,v 1.20 2007-03-06 19:29:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_image.php,v 1.21 2007-04-02 16:31:42 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -140,7 +140,16 @@ if (isset($_REQUEST["editimage"]) || isset($_REQUEST["editimage_andgonext"])) {
 	    $_REQUEST['lon'] = '';
 	}
 
-	if ($imagegallib->edit_image($imageId, $_REQUEST['name'], $_REQUEST['description'],$_REQUEST['lat'],$_REQUEST['lon'])) {
+	if (!empty($_FILES['userfile']) && !empty($_FILES['userfile']['name'])) {
+	  if ((!empty($gal_match_regex) && !preg_match("/$gal_match_regex/", $_FILES['userfile']['name'], $reqs))
+		  || (!empty($gal_nmatch_regex) && preg_match("/$gal_nmatch_regex/", $_FILES['userfile']['name'], $reqs))) {
+			$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
+			$smarty->display('error.tpl');
+			die;
+		}
+	}
+
+	if ($imagegallib->edit_image($imageId, $_REQUEST['name'], $_REQUEST['description'],$_REQUEST['lat'],$_REQUEST['lon'], $_FILES['userfile'])) {
 		$smarty->assign('show', 'y');
 		$cat_type = 'image';
 		$cat_objid = $imageId;
@@ -165,13 +174,14 @@ if (isset($_REQUEST["editimage"]) || isset($_REQUEST["editimage_andgonext"])) {
 }
 
 $info = $imagegallib->get_image($imageId);
-$smarty->assign('show', 'n');
 $smarty->assign_by_ref('imageId', $imageId);
 $smarty->assign_by_ref('galleryId', $info['galleryId']);
 $smarty->assign_by_ref('name', $info['name']);
 $smarty->assign_by_ref('description', $info['description']);
 $smarty->assign_by_ref('lat', $info['lat']);
 $smarty->assign_by_ref('lon', $info['lon']);
+$smarty->assign_by_ref('filename', $info['filename']);
+$smarty->assign_by_ref('gal_info', $gal_info);
 
 $cat_type = 'image';
 $cat_objid = $imageId;

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.90 2007-02-12 11:12:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.91 2007-04-02 16:31:42 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -793,12 +793,34 @@ class ImageGalsLib extends TikiLib {
 		}
 	}
 
-	function edit_image($id, $name, $description,$lat=NULL,$lon=NULL) {
+	function edit_image($id, $name, $description, $lat=NULL, $lon=NULL, $file=NULL) {
+		global $gal_use_db, $gal_use_dir;
 		$name = strip_tags($name);
 
 		$description = strip_tags($description);
 		$query = "update `tiki_images` set `name`=?, `description`=?, `lat`=?, `lon`=? where `imageId` = ?";
 		$result = $this->query($query,array($name,$description,$lat,$lon,(int)$id));
+		if (!empty($file) && !empty($file['name'])) {
+			if (!is_uploaded_file($file['tmp_name']) || !($fp = fopen($file['tmp_name'], "rb")))
+				return false;
+			$data =  fread($fp, $file['size']);
+			$etag = md5($data);
+			fclose($fp);
+			if ($gal_use_db == 'y') {
+				$query = "update `tiki_images_data` set `data`=?, `etag`=?, `filename`=? where `imageId` = ? and `type`=?";
+				$result = $this->query($query,array($data, $etag, $file['name'], (int)$id, 'o'));
+			} else {
+				$query = "select `path` from `tiki_images` where `imageId`=?";
+				$path = $this->getOne($query, $id);
+				if (!move_uploaded_file($file['tmp_name'], $gal_use_dir.$path)) {
+					return false;
+				}
+				$query = "update `tiki_images_data` set `etag`=?,`filename`=? where `imageId` = ? and `type`=?";
+				$result = $this->query($query,array($etag, $file['name'], (int)$id, 'o'));
+			}
+			$query = "delete from `tiki_images_data` where `imageId`=? and `type`!=?";
+			$result = $this->query($query, array((int)$id, 'o'));
+		}
 		return true;
 	}
 
