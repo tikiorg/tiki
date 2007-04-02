@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-tell_a_friend.php,v 1.3 2007-03-19 13:51:07 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-tell_a_friend.php,v 1.4 2007-04-02 17:32:15 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -27,9 +27,12 @@ if (empty($_REQUEST['url'])) {
 	$smarty->display('error.tpl');
 	die;
 }
-$_REQUEST['url'] = preg_replace('/.*tiki-tell_a_friend.php\?url=/', '', $_REQUEST['url']);
-$smarty->assign('url', urldecode($_REQUEST['url']));
-
+$_REQUEST['url'] = urldecode($_REQUEST['url']);
+if (strstr($_REQUEST['url'], 'tiki-tell_a_friend.php')) {
+	$_REQUEST['url'] = preg_replace('/.*tiki-tell_a_friend.php\?url=/', '', $_REQUEST['url']);
+	header('location: tiki-tell_a_friend.php?url='.$_REQUEST['url']);
+}
+$smarty->assign('url', $_REQUEST['url']);
 $smarty->assign('prefix', $tikilib->httpPrefix());
 
 $errors = array();
@@ -38,8 +41,7 @@ if (isset($_REQUEST['send'])) {
 	$emails = explode(',', $_REQUEST['addresses']);
 	foreach ($emails as $email) {
 		include_once('lib/registration/registrationlib.php');
-		include_once('lib/mods/modslib.php');
-		if (newer($dbversion_tiki, 1.10) >= 0) {
+		if (function_exists('validate_email')) {
 			$ok = validate_email($email, 'y');
 		} else {
 			$ret = $registrationlib->SnowCheckMail($email,'','mini');
