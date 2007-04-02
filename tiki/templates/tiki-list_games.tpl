@@ -38,7 +38,7 @@
 <form enctype="multipart/form-data" action="tiki-list_games.php" method="post">
         <input type="hidden" name="MAX_FILE_SIZE" value="100000000" />
 <table class="normal">
-  <tr><td class="formcolor">{tr}Flash binary (.sqf or .dcr){/tr}:</td>
+  <tr><td class="formcolor">{tr}Flash binary (.swf or .dcr){/tr}:</td>
       <td class="formcolor">
         <input name="flashfile" type="file" />
       </td>

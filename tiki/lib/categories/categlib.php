@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.98 2007-02-09 12:31:25 niclone Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.99 2007-04-02 17:21:19 sylvieg Exp $
  *
  * \brief Categories support class
  *

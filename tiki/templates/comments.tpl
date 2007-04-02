@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.79 2007-03-21 19:21:43 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.80 2007-04-02 17:21:23 sylvieg Exp $ *}
 
 {if $forum_mode eq 'y'}
 <tr><td>

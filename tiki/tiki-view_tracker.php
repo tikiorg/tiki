@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.125 2007-03-15 13:56:15 gillesm Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.126 2007-04-02 17:21:19 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -467,10 +467,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 					}
 					fclose ($fp);
 					$ins_fields["data"][$i]["value"] = $data;
-					if (function_exists('mime_content_type'))
-						$ins_fields["data"][$i]["file_type"] = mime_content_type( $_FILES["$ins_id"]['tmp_name'] );
-					else
-						$ins_fields["data"][$i]["file_type"] = $_FILES["$ins_id"]['type'];
+					$ins_fields['data'][$i]['file_type'] = $_FILES["$ins_id"]['type'];
 					//$ins_fields["data"][$i]["value"] = $_FILES["$ins_id"]['name'];
 					$ins_fields["data"][$i]["file_size"] = $_FILES["$ins_id"]['size'];
 					$ins_fields["data"][$i]["file_name"] = $_FILES["$ins_id"]['name'];
