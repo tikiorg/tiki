@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.39 2007-04-03 19:39:31 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.40 2007-04-03 19:52:14 sylvieg Exp $ *}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Login{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations}
 
@@ -74,7 +74,11 @@
           <tr><td><input type="password" name="pass" id="login-pass" size="20" /></td></tr>
           <tr><td><input type="submit" name="login" value="{tr}login{/tr}" /></td></tr>
           {if $rememberme ne 'disabled'}
-          <tr><td class="module"><label for="login-remember">{tr}Remember me{/tr}</label> <input type="checkbox" name="rme" id="login-remember" value="on"/></td></tr>
+            {if $rememberme eq 'always'}
+              <input type="hidden" name="rme" id="login-remember" value="on"/>
+            {else}
+              <tr><td class="module"><label for="login-remember">{tr}Remember me{/tr}</label> <input type="checkbox" name="rme" id="login-remember" value="on"/></td></tr>
+            {/if}
           {/if}
           <tr>
           {if $forgotPass eq 'y' and $allowRegister eq 'y' and $change_password eq 'y'}

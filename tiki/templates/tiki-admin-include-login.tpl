@@ -1,3 +1,4 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.66 2007-04-03 19:52:14 sylvieg Exp $ *}
 <div class="cbox">
 <div class="cbox-title">{tr}Users &amp; groups{/tr}</div>
 <div class="cbox-data">
@@ -132,7 +133,9 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 <select name="rememberme">
 <option value="disabled" {if $rememberme eq 'disabled'}selected="selected"{/if}>{tr}Disabled{/tr}</option>
 <!--<option value="noadmin" {if $rememberme eq 'noadmin'}selected="selected"{/if}>{tr}Only for users{/tr}</option>-->
-<option value="all" {if $rememberme eq 'all'} selected="selected"{/if}>{tr}Users and admins{/tr}</option>
+<option value="all" {if $rememberme eq 'all'} selected="selected"{/if}>{tr}User's choice{/tr}</option>
+<option value="always" {if $rememberme eq 'always'} selected="selected"{/if}>{tr}Always{/tr}</option>
+</select><br />
 </select><br />
 {tr}Duration:{/tr}
 <select name="remembertime">
