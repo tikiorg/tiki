@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.205 2007-03-23 19:33:32 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.206 2007-04-03 15:10:54 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2005,6 +2005,11 @@ function get_included_groups($group) {
 		$hash.= ".". ($this->now + $remembertime);
 		$this->set_user_preference($user,'cookie',$hash);
 		return $hash;
+	}
+
+	function delete_user_cookie($user) {
+		$query = 'delete from `tiki_user_preferences` where `prefName`=? and `user`=?';
+		$this->query($query, array('cookie',$user));
 	}
 
 	function get_user_by_cookie($hash) {
