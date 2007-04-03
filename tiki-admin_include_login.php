@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.52 2007-03-21 15:41:24 gillesm Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.53 2007-04-03 19:39:30 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -63,7 +63,7 @@ if (isset($_REQUEST["loginprefs"])) {
 	simple_set_toggle('feature_ticketlib2');
 	simple_set_value('highlight_group');
 	simple_set_value('user_tracker_infos');
-	
+	simple_set_toggle('desactive_login_autocomplete');
 
 
     if (isset($_REQUEST["change_language"]) && isset($_REQUEST["available_languages"])) {

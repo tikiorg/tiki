@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.38 2007-02-18 11:21:17 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.39 2007-04-03 19:39:31 sylvieg Exp $ *}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Login{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations}
 
@@ -6,7 +6,7 @@
       {tr}logged as{/tr}: {$user}<br />
       <a class="linkmodule" href="tiki-logout.php">{tr}Logout{/tr}</a><br />
       {if $tiki_p_admin eq 'y'}
-        <form action="{$login_url}" method="post">
+        <form action="{$login_url}" method="post"{if $desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}>
         <label for="login-switchuser">{tr}user{/tr}:</label>
         <input type="hidden" name="su" value="1" />
         <input type="text" name="username" id="login-switchuser" size="8" />
@@ -24,7 +24,7 @@
 		<br /><a class="linkmodule" href="tiki-login_scr.php?user=admin">{tr}Login as admin{/tr}</a>
       {/if}
     {else}
-     <form name="loginbox" action="{$login_url}" method="post" {if $feature_challenge eq 'y'}onsubmit="doChallengeResponse()"{/if}> 
+     <form name="loginbox" action="{$login_url}" method="post" {if $feature_challenge eq 'y'}onsubmit="doChallengeResponse()"{/if}{if $desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}> 
      {if $feature_challenge eq 'y'}
      <script type='text/javascript' src="lib/md5.js"></script>   
      {literal}
@@ -65,6 +65,7 @@
 		{else}
 		  <tr><td><input type="hidden" name="user" id="login-user" value="{$loginuser}" /><b>{$loginuser}</b></td></tr>
 		{/if}
+<script type="text/javascript">document.getElementById('login-user').focus();</script>
           {if $feature_challenge eq 'y'} <!-- quick hack to make challenge/response work until 1.8 tiki auth overhaul -->
           <tr><td class="module"><label for="login-email">{tr}email{/tr}:</label></td></tr>
           <tr><td><input type="text" name="email" id="login-email" size="20" /></td></tr>
