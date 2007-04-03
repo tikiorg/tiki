@@ -178,6 +178,7 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 <td><input type="checkbox" name="feature_display_my_to_others" {if $feature_display_my_to_others eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Displays UserTracker informations in user information page. Format: TrackerId,item1,item2,item3...{/tr}:</td>
 <td><input type="text" name="user_tracker_infos" value="{$user_tracker_infos|escape}" size=50></td></tr>
+<tr><td class="form">{tr}Desactive login autocomplete(not remember login and password){/tr}</td><td><input type="checkbox" name="desactive_login_autocomplete" {if $desactive_login_autocomplete eq 'y'}checked="checked"{/if}/></td></tr>
 
 <tr><td colspan="2" class="button"><input type="submit" name="loginprefs" value="{tr}Change preferences{/tr}" /></td></tr>
 </table>
