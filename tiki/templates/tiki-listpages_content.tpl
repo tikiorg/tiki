@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.14 2007-04-02 17:21:23 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.15 2007-04-03 19:08:05 sylvieg Exp $ *}
 {if $cant_pages > 1 or $initial or $find}
 <div align="center">
 {section name=ini loop=$initials}
@@ -23,44 +23,69 @@
 {if $checkboxes_on eq 'y'}
 <form name="checkboxes_on" method="post" action="{$smarty.server.PHP_SELF}">
   <td class="heading">&nbsp;</td>
+{assign var='cntcol' value='1'}
 {/if}
   <td class="heading">&nbsp;</td>
 {if $wiki_list_name eq 'y'}
+	{assign var='cntcol' value=$cntcol+1}
 	<td class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'pageName_desc'}pageName_asc{else}pageName_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{if !empty($maxRecords)}&amp;maxRecords={$maxRecords}{/if}{/ajax_href}>{tr}Page{/tr}</a></td>
 {/if}
 {if $wiki_list_hits eq 'y'}
+	{assign var='cntcol' value=$cntcol+1}
 	<td style="text-align:right;" class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{if !empty($maxRecords)}&amp;maxRecords={$maxRecords}{/if}{/ajax_href}>{tr}Hits{/tr}</a></td>
 {/if}
 {if $wiki_list_lastmodif eq 'y'}
+	{assign var='cntcol' value=$cntcol+1}
 	<td class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{if !empty($maxRecords)}&amp;maxRecords={$maxRecords}{/if}{/ajax_href}>{tr}Last mod{/tr}</a></td>
 {/if}
 {if $wiki_list_creator eq 'y'}
+	{assign var='cntcol' value=$cntcol+1}
 	<td class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'creator_desc'}creator_asc{else}creator_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{if !empty($maxRecords)}&amp;maxRecords={$maxRecords}{/if}{/ajax_href}>{tr}Creator{/tr}</a></td>
 {/if}
 
 {if $wiki_list_user eq 'y'}
+	{assign var='cntcol' value=$cntcol+1}
 	<td class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{if !empty($maxRecords)}&amp;maxRecords={$maxRecords}{/if}{/ajax_href}>{tr}Last author{/tr}</a></td>
 {/if}
 {if $wiki_list_lastver eq 'y'}
+	{assign var='cntcol' value=$cntcol+1}
 	<td style="text-align:right;" class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'version_desc'}version_asc{else}version_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($maxRecords)}&amp;maxRecords={$maxRecords}{/if}{/ajax_href}>{tr}Last ver{/tr}</a></td>
 {/if}
 {if $wiki_list_comment eq 'y'}
+	{assign var='cntcol' value=$cntcol+1}
 	<td class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'comment_desc'}comment_asc{else}comment_desc{/if}{if $initial}&amp;initial={$initial}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{/if}{if !empty($maxRecords)}&amp;maxRecords={$maxRecords}{/if}{/ajax_href}>{tr}Com{/tr}</a></td>
 {/if}
 {if $wiki_list_status eq 'y'}
+	{assign var='cntcol' value=$cntcol+1}
 	<td style="text-align:center;" class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'flag_desc'}flag_asc{else}flag_desc{/if}{if $initial}&amp;initial={$initial}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{if !empty($maxRecords)}&amp;maxRecords={$maxRecords}{/if}{/if}{/ajax_href}>{tr}Status{/tr}</a></td>
 {/if}
 {if $wiki_list_versions eq 'y'}
+	{assign var='cntcol' value=$cntcol+1}
 	<td style="text-align:right;" class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'versions_desc'}versions_asc{else}versions_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{if !empty($maxRecords)}&amp;maxRecords={$maxRecords}{/if}{/ajax_href}>{tr}Vers{/tr}</a></td>
 {/if}
 {if $wiki_list_links eq 'y'}
+	{assign var='cntcol' value=$cntcol+1}
 	<td style="text-align:right;" class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'links_desc'}links_asc{else}links_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{if !empty($maxRecords)}&amp;maxRecords={$maxRecords}{/if}{/ajax_href}>{tr}Links{/tr}</a></td>
 {/if}
 {if $wiki_list_backlinks eq 'y'}
+	{assign var='cntcol' value=$cntcol+1}
 	<td style="text-align:right;" class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'backlinks_desc'}backlinks_asc{else}backlinks_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{if !empty($maxRecords)}&amp;maxRecords={$maxRecords}{/if}{/ajax_href}>{tr}Backlinks{/tr}</a></td>
 {/if}
 {if $wiki_list_size eq 'y'}
+	{assign var='cntcol' value=$cntcol+1}
 	<td style="text-align:right;" class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{if !empty($maxRecords)}&amp;maxRecords={$maxRecords}{/if}{/ajax_href}>{tr}Size{/tr}</a></td>
+{/if}
+{if $wiki_list_language eq 'y'}
+	{assign var='cntcol' value=$cntcol+1}
+	<td style="text-align:right;" class="heading"><a class="tableheading" href="tiki-listpages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'language_desc'}lang_asc{else}lang_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if $find}&amp;find={$find}{/if}{if $exact_match eq 'y'}&amp;exact_match=on{/if}{if !empty($lang)}&amp;lang={$lang}{/if}{if !empty($categId)}&amp;categId={$categId}{/if}">{tr}Language{/tr}</a></td>
+{/if}
+{if $wiki_list_categories eq 'y'}
+	{assign var='cntcol' value=$cntcol+1}
+	<td style="text-align:right;" class="heading">{tr}Categories{/tr}</td>
+{/if}
+{if $wiki_list_categories_path eq 'y'}
+	{assign var='cntcol' value=$cntcol+1}
+	<td style="text-align:right;" class="heading">{tr}Categories{/tr}</td>
 {/if}
 </tr>
 {cycle values="even,odd" print=false}
@@ -126,10 +151,29 @@
 {if $wiki_list_size eq 'y'}
 	<td style="text-align:right;" class="{cycle advance=false}">{$listpages[changes].len|kbsize}</td>
 {/if}
+{if $wiki_list_language eq 'y'}
+	<td class="{cycle advance=false}">{$listpages[changes].lang}</td>
+{/if}
+{if $wiki_list_categories eq 'y'}
+	<td class="{cycle advance=false}">
+	{foreach item=categ from=$listpages[changes].categname}
+		{if !$smarty.foreach.categ.first}<br />{/if}
+		{$categ}
+	{/foreach}
+	</td>
+{/if}
+{if $wiki_list_categories_path eq 'y'}
+	<td class="{cycle advance=false}">
+	{foreach item=categpath from=$listpages[changes].categpath}
+		{if !$smarty.foreach.categpath.first}<br />{/if}
+		{$categpath}
+	{/foreach}
+	</td>
+{/if}
        {cycle print=false}
 </tr>
 {sectionelse}
-<tr><td colspan="16">
+<tr><td colspan="{$cntcol}">
 <b>{tr}No records found{/tr}</b>
 </td></tr>
 {/section}
@@ -140,7 +184,7 @@
   // in the future, we could extend this to happen serverside as well for the convenience of people w/o javascript.
   // for now those people just have to check every single box
   document.write("<tr><td><input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/></td>");
-  document.write("<td colspan=\"15\"><label for=\"clickall\">{tr}all{/tr}</label></td></tr>");
+  document.write("<td colspan=\"{$cntcols}\"><label for=\"clickall\">{tr}all{/tr}</label></td></tr>");
   //-->                     
   </script>
 {/if}
