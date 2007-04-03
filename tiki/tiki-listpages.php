@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.42 2007-04-02 17:21:18 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.43 2007-04-03 19:06:31 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -171,14 +171,22 @@ if ( ! empty($multiprint_pages) ) {
 	if ($offset > 0) $smarty->assign('prev_offset', $offset - $maxRecords);
 	else $smarty->assign('prev_offset', -1);
 	
-	$smarty->assign_by_ref('listpages', $listpages["data"]);
-	
-	ask_ticket('list-pages');
-	
 	if ($feature_categories == 'y') {
 		global $categlib; include_once ('lib/categories/categlib.php');
 		$categories = $categlib->get_all_categories_ext();
 		$smarty->assign_by_ref('categories', $categories);
+		if ((isset($wiki_list_categories) && $wiki_list_categories == 'y') || (isset($wiki_list_categories_path) && $wiki_list_categories_path == 'y') {
+			foreach ($listpages['data'] as $i=>$page) {
+				$cats = $categlib->get_object_categories('wiki page',$page['pageName']);
+				foreach ($cats as $cat) {
+					$listpages['data'][$i]['categpath'][] = $cp = $categlib->get_category_path($cat);
+					if ($s = strrchr($cp, ':'))
+						$listpages['data'][$i]['categname'][] = substr($s, 1);
+					else
+						$listpages['data'][$i]['categname'][] = $cp;
+				}
+			}
+		}
 	}
 	if ($feature_multilingual == 'y') {
         $languages = array();
@@ -188,6 +196,10 @@ if ( ! empty($multiprint_pages) ) {
         $smarty->assign_by_ref('available_languages', $avls);
 	}
 
+	$smarty->assign_by_ref('listpages', $listpages["data"]);
+	
+	ask_ticket('list-pages');
+	
 	$ajaxlib->registerTemplate('tiki-listpages_content.tpl');
 	$ajaxlib->processRequests();
 	
