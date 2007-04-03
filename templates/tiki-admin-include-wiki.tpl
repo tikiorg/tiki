@@ -266,6 +266,24 @@
     			<input type="checkbox" name="wiki_list_size" {if $wiki_list_size eq 'y'}checked="checked"{/if} />
     		</td>
     	</tr>
+    	<tr>
+    		<td class="form">{tr}Language{/tr}</td>
+    		<td class="form">
+    			<input type="checkbox" name="wiki_list_language" {if $wiki_list_language eq 'y'}checked="checked"{/if} />
+    		</td>
+    	</tr>
+    	<tr>
+    		<td class="form">{tr}Categories{/tr}</td>
+    		<td class="form">
+    			<input type="checkbox" name="wiki_list_categories" {if $wiki_list_categories eq 'y'}checked="checked"{/if} />
+    		</td>
+    	</tr>
+    	<tr>
+    		<td class="form">{tr}Categories path{/tr}</td>
+    		<td class="form">
+    			<input type="checkbox" name="wiki_list_categories_path" {if $wiki_list_categories_path eq 'y'}checked="checked"{/if} />
+    		</td>
+    	</tr>
 
     	<tr>
     		<td colspan="2" class="button">

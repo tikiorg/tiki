@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.99 2007-04-02 17:21:19 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.100 2007-04-03 19:06:31 sylvieg Exp $
  *
  * \brief Categories support class
  *
@@ -97,15 +97,18 @@ class CategLib extends ObjectLib {
 	}
 	
 	function get_category_path($categId) {
-		$info = $this->get_category($categId);
-		$i=999999;
-		$path[$i--] = array('categId'=>$info["categId"],'name'=>$info["name"]);
-		while ($info["parentId"] != 0) {
-			$info = $this->get_category($info["parentId"]);
-			$path[$i--] = array('categId'=>$info["categId"],'name'=>$info["name"]);
+		global $cachelib;
+		if (!$cachelib->isCached('allcategs')) {
+			$categs = $this->build_cache();
+		} else {
+			$categs = unserialize($cachelib->getCached('allcategs'));
 		}
-		ksort($path);
-		return array_values($path);
+		foreach ($categs as $cat) {
+			if ($cat['categId'] == $categId) {
+				return $cat['categpath'];
+			}
+		}
+		return '';
 	}
 
 	function get_category($categId) {
@@ -805,8 +808,10 @@ class CategLib extends ObjectLib {
 			$res["children"] = $this->getOne($query,array($id));
 			$query = "select count(*) from `tiki_category_objects` where `categId`=?";
 			$res["objects"] = $this->getOne($query,array($id));
-			$ret[] = $res;
+			$ret[$categpath] = $res;
 		}
+		ksort($ret);
+		$ret = array_values($ret);
 		$cachelib->cacheItem("allcategs",serialize($ret));
 		return $ret;
 	}
