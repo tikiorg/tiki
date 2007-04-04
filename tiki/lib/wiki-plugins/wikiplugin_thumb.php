@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_thumb.php,v 1.7 2007-03-28 16:35:20 sylvieg Exp $ */
+/* $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_thumb.php,v 1.8 2007-04-04 21:58:41 sylvieg Exp $ */
 function wikiplugin_thumb_help() {
 	return tra("Displays the thumbnail for an image").":<br />~np~{THUMB(image=>url,id=url,max=>,float=>,url=>,original=y)}".tra("description")."{THUMB}~/np~";
 }
@@ -38,10 +38,16 @@ function wikiplugin_thumb($data, $params) {
 		global $imagegallib; include_once('lib/imagegals/imagegallib.php');
 		if (isset($original) && $original == 'y') {
 			$info = $imagegallib->get_image_info($id, 'o');
-			$scalezize = 0;
+			$scalesize = 0;
 		} else {
 			$info = $imagegallib->get_image_info($id, 's');
-			$scalesize = $imagegallib->get_gallery_default_scale($info['galleryId']);			
+			if (empty($info)) {
+				$info = $imagegallib->get_image_info($id, 'o');
+				$scalesize = 0;
+				$original = 'y';
+			} else {
+				$scalesize = $imagegallib->get_gallery_default_scale($info['galleryId']);			
+			}
 		}
 		$width = $info['xsize'];
 		$height = $info['ysize'];
