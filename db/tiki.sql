@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2007-03-23 14:15:18 $
+# $Date: 2007-04-04 17:23:39 $
 # $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -4754,10 +4754,12 @@ CREATE TABLE tiki_registration_fields (
 
 DROP TABLE IF EXISTS tiki_actionlog_conf;
 CREATE TABLE tiki_actionlog_conf (
+ id int(11) NOT NULL auto_increment,
  action varchar(32) NOT NULL default '',
  objectType varchar(32) NOT NULL default '',
  `status` char(1) default '',
-PRIMARY KEY (action, objectType)
+PRIMARY KEY (action, objectType),
+KEY (id)
 ) TYPE=MyISAM;
 INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Created', 'wiki page', 'y');
 INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Updated', 'wiki page', 'y');

@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.148 2007-03-23 18:40:23 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.149 2007-04-04 17:23:39 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -893,3 +893,6 @@ UPDATE users_permissions set admin=NULL where permName = 'tiki_p_admin_users';
 UPDATE users_permissions set type='cms' where type = 'topics';
 
 ALTER TABLE `tiki_links` ADD INDEX `toPage` (`toPage`);
+
+#sylvieg 2007/04/04
+ALTER TABLE `tiki_actionlog_conf` ADD `id` int(11) NOT NULL auto_increment FIRST, ADD KEY (`id`);

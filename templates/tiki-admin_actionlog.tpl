@@ -1,26 +1,19 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.26 2007-02-19 17:01:56 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.27 2007-04-04 17:23:39 sylvieg Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a></h1>
-{if $tiki_p_admin eq 'y'}
-<a name="Setting" />
-<h2>{tr}Setting{/tr}</h2>
-<form method="post" action="tiki-admin_actionlog.php">
-{if !empty($sort_mode)}<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />{/if}
-<table class="smallnormal">
-<tr><th class="heading">{tr}recorded{/tr}</th><th class="heading">{tr}viewed{/tr}</th><th class="heading">{tr}action{/tr}</th><th class="heading">{tr}type{/tr}</th></tr>
-{cycle values="even,odd" print=false}
-{section name=ix loop=$actionlogConf}
-<tr><td class="{cycle advance=false}"><input type="checkbox" name="{$actionlogConf[ix].code}" {if $actionlogConf[ix].status eq 'y' or $actionlogConf[ix].status eq 'v'}checked="checked"{/if} /></td>
-<td class="{cycle advance=false}"><input type="checkbox" name="view_{$actionlogConf[ix].code}" {if $actionlogConf[ix].status eq 'v'}checked="checked"{/if} /></td>
-<td class="{cycle advance=false}">{tr}{$actionlogConf[ix].action}{/tr}</td>
-<td class="{cycle}">{tr}{$actionlogConf[ix].objectType}{/tr}</td></tr>
-{/section}
-<tr><td colspan="3" class="button"><input type="submit" name="setConf" value="{tr}Set{/tr}" /></td></tr>
-</table>
-<div class="rbox">{tr}Wiki page actions except viewed will always be recorded but can be not reported{/tr}</div>
-</form>
+
+{if $feature_tabs eq 'y'}
+{cycle name=tabs values="1,2" print=false advance=false}
+<div id="page-bar">
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Report{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Setting{/tr}</a></span>
+</div>
 {/if}
 
+{cycle name=content values="1,2" print=false advance=false reset=true}
+
+{* -------------------------------------------------- tab with report --- *}
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <a name="Report" />
 <form method="post" action="tiki-admin_actionlog.php#Report">
 <h2>{tr}Filter{/tr}</h2>
@@ -67,8 +60,8 @@
 {/section}
 </select>
 </td></tr><tr class="formcolor">
-<td></td><td>{tr}bytes{/tr}<input type="radio" name="unit" value="bytes"{if $unit ne 'kb'} checked="checked"{/if}> {tr}kb{/tr}<input type="radio" name="unit" value="kb"{if $unit eq 'kb'} checked="checked"{/if}></td></tr>
-<tr class="formcolor"><td></td><td>{tr}Week{/tr}<input type="radio" name="contribTime" value="w"{if $contribTime ne 'd'} checked="checked"{/if}> {tr}Day{/tr}<input type="radio" name="contribTime" value="d"{if $contribTime eq 'd'} checked="checked"{/if}></td></tr>
+<td></td><td>{tr}bytes{/tr}<input type="radio" name="unit" value="bytes"{if $unit ne 'kb'} checked="checked"{/if} /> {tr}kb{/tr}<input type="radio" name="unit" value="kb"{if $unit eq 'kb'} checked="checked"{/if} /></td></tr>
+<tr class="formcolor"><td></td><td>{tr}Week{/tr}<input type="radio" name="contribTime" value="w"{if $contribTime ne 'd'} checked="checked"{/if} /> {tr}Day{/tr}<input type="radio" name="contribTime" value="d"{if $contribTime eq 'd'} checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td colspan="2" class="button"><input type="submit" name="list" value="{tr}Report{/tr}" /></td></tr>
 <tr class="formcolor"><td colspan="2" class="button"><input type="submit" name="graph" value="{tr}Graph{/tr}" /></td></tr>
 {if $tiki_p_admin eq 'y'}
@@ -311,7 +304,42 @@
 </table>
 {/if}
 
-<a name="#csv"></a>
+<a name="csv"></a>
 {if $csv}
 <div class="cbox">{$csv}</div>
 {/if}
+
+</div>{* tab *}
+
+{* -------------------------------------------------- tab with setting --- *}
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+<a name="Setting" />
+<h2>{tr}Setting{/tr}</h2>
+<form method="post" action="tiki-admin_actionlog.php">
+{if !empty($sort_mode)}<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />{/if}
+<table class="smallnormal">
+<tr>
+{if $tiki_p_admin eq 'y'}
+<th class="heading">{tr}recorded{/tr}</th>
+{/if}
+<th class="heading">{tr}viewed{/tr}</th>
+<th class="heading">{tr}action{/tr}</th><th class="heading">{tr}type{/tr}</th>
+</tr>
+{cycle values="even,odd" print=false}
+{section name=ix loop=$actionlogConf}
+<tr>
+{if $tiki_p_admin eq 'y'}
+<td class="{cycle advance=false}"><input type="checkbox" name="{$actionlogConf[ix].code}" {if $actionlogConf[ix].status eq 'y' or $actionlogConf[ix].status eq 'v'}checked="checked"{/if} /></td>
+{/if}
+{if $tiki_p_admin eq 'y' or $actionlogConf[ix].status eq 'y' or $actionlogConf[ix].status eq 'v'}
+<td class="{cycle advance=false}"><input type="checkbox" name="view_{$actionlogConf[ix].code}" {if $actionlogConf[ix].status eq 'v'}checked="checked"{/if} /></td>
+<td class="{cycle advance=false}">{tr}{$actionlogConf[ix].action}{/tr}</td>
+<td class="{cycle}">{tr}{$actionlogConf[ix].objectType}{/tr}</td>
+{/if}
+</tr>
+{/section}
+<tr><td colspan="3" class="button"><input type="submit" name="setConf" value="{tr}Set{/tr}" /></td></tr>
+</table>
+<div class="rbox">{tr}Wiki page actions except viewed will always be recorded but can be not reported{/tr}</div>
+</form>
+</div>{*tab*}
