@@ -487,6 +487,11 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
 	    {if $feature_bot_bar_debug eq 'y'}checked="checked"{/if}/></td>
 	<td colspan="3">&nbsp;</td>
       </tr><tr>
+        <td class="form">{tr}Bottom bar{/tr} (RSS)</td>
+        <td><input type="checkbox" name="feature_bot_bar_rss"
+	    {if $feature_bot_bar_rss eq 'y'}checked="checked"{/if}/></td>
+	<td colspan="3">&nbsp;</td>
+      </tr><tr>
         <td colspan="5" class="button">
           <input type="submit" name="features" value="{tr}Change preferences{/tr}" />
         </td>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.418 2007-04-05 19:01:12 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.419 2007-04-05 19:04:21 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -1086,6 +1086,7 @@ $pref['feature_top_bar'] = 'y';
 $pref['feature_bot_bar'] = 'y';
 $pref['feature_bot_bar_icons'] = 'y';
 $pref['feature_bot_bar_debug'] = 'y';
+$pref['feature_bot_bar_rss'] = 'y';
 $pref['title'] = '';
 $pref['maxRecords'] = 10;
 $pref['maxArticles'] = 10;
