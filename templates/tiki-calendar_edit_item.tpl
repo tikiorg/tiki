@@ -11,8 +11,6 @@
 {if $tiki_p_admin_calendar eq 'y'}
 <span class="button2"><a href="tiki-admin_calendars.php?calendarId={$calendarId}" class="linkbut">{tr}Edit Calendar{/tr}</a></span>
 {/if}
-<br /><br />
-&nbsp;
 {if $id}
 {if $edit}
 <span class="button2"><a href="tiki-calendar_edit_item.php?viewcalitemId={$id}" class="linkbut">{tr}View event{/tr}</a></span>
@@ -20,7 +18,7 @@
 <span class="button2"><a href="tiki-calendar_edit_item.php?calitemId={$id}" class="linkbut">{tr}Edit event{/tr}</a></span>
 {/if}
 {/if}
-{if $tiki_p_add_events eq 'y'}
+{if $tiki_p_add_events eq 'y' and $id }
 <span class="button2"><a href="tiki-calendar_edit_item.php" class="linkbut">{tr}New event{/tr}</a></span>
 {/if}
 {if $id}
@@ -41,20 +39,7 @@
 <table width="100%">
 <tr><td>
 <table class="normal">
-{if $edit}
-<tr><td colspan="2"><input type="submit" name="act" value="Save" />
-{tr}in{/tr}
-<span class="linkbut" style="background-color:#{$listcals.$calendarId.custombgcolor};color:#{$listcals.$calendarId.customfgcolor}">{$listcals.$calendarId.name}</span>
-{tr}or{/tr} 
-<input type="submit" name="act" value="{tr}Go to{/tr}" onclick="document.location='{$myurl}?calendarId='+document.getElementById('calid').value;return false;" />
-<input type="submit" name="act" value="{tr}Duplicate to{/tr}" onclick="document.location='{$myurl}?calendarId='+document.getElementById('calid').value+'&amp;calitemId={$id}&amp;duplicate=1';return false;" />
-<select name="save[calendarId]" id="calid">
-{foreach item=it key=itid from=$listcals}
-<option value="{$it.calendarId}"{if $calendarId eq $itid} selected="selected"{/if}>{$it.name}</option>
-{/foreach}
-</select>
-</td></tr>
-{else}
+{if not $edit}
 <tr class="formcolor"><td>
 {tr}Calendar{/tr}</td>
 <td>{$listcals.$calendarId.name}
@@ -342,6 +327,25 @@ indicating role in a prefix separated by a column like in:{/tr}<br />
 {/if}
 
 </td></tr></table>
+
+{if $edit}
+<table class="normal">
+<tr><td colspan="2"><input type="submit" name="act" value="{tr}Save{/tr}" />
+{tr}in{/tr}
+<span class="linkbut" style="background-color:#{$listcals.$calendarId.custombgcolor};color:#{$listcals.$calendarId.customfgcolor}">{$listcals.$calendarId.name}</span>
+{if $id}
+{tr}or{/tr}
+<input type="submit" name="act" value="{tr}Go to{/tr}" onclick="document.location='{$myurl}?calendarId='+document.getElementById('calid').value;return false;" />
+<input type="submit" name="act" value="{tr}Duplicate to{/tr}" onclick="document.location='{$myurl}?calendarId='+document.getElementById('calid').value+'&amp;calitemId={$id}&amp;duplicate=1';return false;" />
+<select name="save[calendarId]" id="calid">
+{foreach item=it key=itid from=$listcals}
+<option value="{$it.calendarId}"{if $calendarId eq $itid} selected="selected"{/if}>{$it.name}</option>
+{/foreach}
+</select>
+{/if}
+</td></tr>
+</table>
+{/if}
 
 </form>
 
