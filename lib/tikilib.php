@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.734 2007-03-26 14:43:30 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.735 2007-04-05 18:34:22 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4017,6 +4017,7 @@ function add_pageview() {
 	global $smarty, $feature_contribution;
 	global $dbTiki;
 	global $sender_email;
+	global $feature_purifier;
 	include_once ("lib/commentslib.php");
 
 	$commentslib = new Comments($dbTiki);
@@ -6145,6 +6146,7 @@ if (!$simple_wiki) {
 	global $wiki_watch_comments;
 	global $sender_email;
 	global $histlib, $feature_wiki_history_full;
+	global $feature_purifier;
 	include_once ("lib/wiki/histlib.php");
 	include_once ("lib/commentslib.php");
 
