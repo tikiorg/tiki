@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_gallery.php,v 1.27 2007-03-06 19:29:49 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_gallery.php,v 1.28 2007-04-05 23:53:01 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,7 +9,7 @@
 // Initialization
 $section = 'galleries';
 require_once ('tiki-setup.php');
-
+include_once ('lib/categories/categlib.php');
 include_once ("lib/imagegals/imagegallib.php");
 
 if ($feature_galleries != 'y') {
