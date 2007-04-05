@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.103 2007-03-21 19:21:43 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.104 2007-04-05 21:07:57 nyloth Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -224,7 +224,7 @@ function searchrep() {
 {/if}
 
 {if $page|lower neq 'sandbox'}
-<tr class="formcolor"><td>{tr}Edit Summary{/tr}:</td><td><input style="width:90%;" class="wikitext" type="text" name="comment" value="{$commentdata|escape}" /></td></tr>
+<tr class="formcolor" id="input_edit_summary"><td>{tr}Edit Summary{/tr}:</td><td><input style="width:90%;" class="wikitext" type="text" name="comment" value="{$commentdata|escape}" /></td></tr>
 {if $wiki_feature_copyrights  eq 'y'}
 <tr class="formcolor"><td>{tr}Copyright{/tr}:</td><td>
 <table border="0">
@@ -273,6 +273,7 @@ function searchrep() {
 </td></tr>
 {/if}
 
+{if $wysiwyg neq 'y'}
 {if $feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y'}
 <tr class="formcolor"><td>{tr}Upload picture{/tr}:</td><td>
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
@@ -292,6 +293,8 @@ function searchrep() {
 <input type="submit" class="wikiaction" name="attach" value="{tr}attach{/tr}" onClick="javascript:insertImgFile('editwiki','userfile2','hasAlreadyInserted2','file', 'page2', 'attach_comment'); return true;" />
 </td></tr>
 {/if}
+{/if}
+
 {if $feature_wiki_icache eq 'y'}
 <tr class="formcolor"><td>{tr}Cache{/tr}</td><td>
     <select name="wiki_cache">
@@ -306,9 +309,6 @@ function searchrep() {
     </select> 
 </td></tr>
 {/if}
-
-<tr class="formcolor"><td>&nbsp;</td><td><input type="hidden" name="page" value="{$page|escape}" />
-<input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" /></td></tr>
 
 {if $feature_antibot eq 'y' && $anon_user eq 'y'}
 {include file=antibot.tpl}
@@ -331,6 +331,8 @@ function searchrep() {
 {if $tiki_p_minor eq 'y' and $page|lower ne 'sandbox'}
 <input type="submit" class="wikiaction" name="minor" value="{tr}Minor{/tr}" />
 {/if}
+&nbsp;<input type="hidden" name="page" value="{$page|escape}" />
+<input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" />&nbsp;&nbsp;
 <input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /> &nbsp;&nbsp;
 {if $feature_ajax eq 'y'}
 <input type="button" class="wikiaction" value="{tr}save draft{/tr}" onclick="save_draft()">
