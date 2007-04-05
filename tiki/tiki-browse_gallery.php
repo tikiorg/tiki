@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.40 2007-03-26 16:34:10 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.41 2007-04-05 18:34:53 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -233,12 +233,6 @@ if ($_REQUEST["galleryId"] == 0) {
 
 	$nextscaleinfo = $imagegallib->get_gallery_next_scale($_REQUEST["galleryId"]);
 }
-
-$info["maxRows"]=$maxRowsGalleries;
-$info["rowImages"]=$rowImagesGalleries;
-$info['thumbSizeX'] = $thumbSizeXGalleries;
-$info['thumbSizeY'] = $thumbSizeYGalleries;
-
 
 if (!isset($info["maxRows"]))
 	$info["maxRows"] = 10;
