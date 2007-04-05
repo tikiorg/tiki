@@ -10,7 +10,8 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
     global $tikilib, $userlib, $cachelib, $user, $feature_score, $feature_friends, $highlight_group,
 	$feature_community_mouseover, $feature_community_mouseover_name,$feature_community_mouseover_picture,
 	$feature_community_mouseover_friends,$feature_community_mouseover_score,$feature_community_mouseover_country,
-	$feature_community_mouseover_email, $feature_community_mouseover_lastlogin, $feature_community_mouseover_distance,$userprefslib;
+	$feature_community_mouseover_email, $feature_community_mouseover_lastlogin, $feature_community_mouseover_distance,$userprefslib,
+	$user_show_realnames;
 
     $cachePeriod = 60*60*2; // how long does an entry stay in the cache for?  2hr
 
@@ -33,7 +34,6 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
 
     
     $star = '';
-
     $info = array();
     if ($feature_community_mouseover || $feature_score) {
 	$info = $userlib->get_user_info($other_user);
@@ -53,12 +53,14 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
         $friend = '&nbsp;<img src="img/icons/ico_friend.gif" width="7" height="10" alt="'.tra("Friend").'" />&nbsp;';
     }
 
-    if( $fullname )
-    {
-        $ou = $fullname;
-    } else {
-        $ou = $other_user;
+    if ( $fullname != '' ) { $ou = $fullname; }
+    elseif ( $user_show_realnames == 'y' ) {
+	    $user_details = $userlib->get_user_details($other_user);
+	    $ou = $user_details['info']['realName'];
+	    unset($user_details);
     }
+    if ( $ou == '' ) $ou = $other_user;
+
     if($userlib->user_exists($other_user)&&(!empty($friend) || $tikilib->get_user_preference($other_user,'user_information','public')=='public')) {
 			if (isset($info) and is_array($info) and $highlight_group and in_array($highlight_group,$info['groups'])) { 
 			    $ou = '<i class="highlightgroup"><b>'.$ou.'</b></i>';
