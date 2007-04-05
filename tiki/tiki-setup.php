@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.419 2007-04-05 19:04:21 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.420 2007-04-05 19:17:44 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -1473,7 +1473,7 @@ $smarty->assign('site_style', $site_style); // that is the effective site style
 $smarty->assign('user_style', $user_style); // that is the user-chosen style
 include_once("csslib.php");
 $transition_style = $csslib->transition_css('styles/'.$site_style);
-$headerlib->add_cssfile('styles/transitions/'.$transition_style,50);
+if ( $transition_style != '' ) $headerlib->add_cssfile('styles/transitions/'.$transition_style,50);
 $headerlib->add_cssfile('styles/'.$site_style,51);
 $stlstl = split("-|\.", $site_style);
 $style_base = $stlstl[0];
