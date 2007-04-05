@@ -16,6 +16,7 @@
 	</div>
 
 {/if}
+{if $feature_bot_bar_rss eq 'y'}
 	<div id="rss" style="text-align: center">
 		{if $feature_wiki eq 'y' and $rss_wiki eq 'y' and $tiki_p_view eq 'y'}
 				<a title="{tr}Wiki RSS{/tr}" href="tiki-wiki_rss.php?ver={$rssfeed_default_version}"><img alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' style='border: 0; vertical-align: text-bottom;' src='pics/icons/feed.png' width='16' height='16' /></a>
@@ -54,6 +55,7 @@
 				<small>{tr}Calendars{/tr}</small>
 		{/if}
 	</div>
+{/if}
 {if $feature_babelfish eq 'y' or $feature_babelfish_logo eq 'y'}
 	{include file="babelfish.tpl"}
 {/if}
