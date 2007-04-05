@@ -344,7 +344,7 @@ $lang=Array(
 "This is not a valid mail adress" => "Ce n'est pas une adresse électronique valide",
 "mail adress" => "adresse électronique",
 "Admin: Forums" => "Administrer les forums",
-// "Nothing tagged yet" => "Nothing tagged yet",
+"Nothing tagged yet" => "Aucun tag pour le moment",
 // "Fijian" => "Fijian",
 // "Galician" => "Galician",
 // ### end of untranslated words
@@ -1770,6 +1770,7 @@ $lang=Array(
 "Allow same file to be uploaded more than once" => "Permettre à un même fichier d'être envoyé plusieurs fois",
 "Use database to store files" => "Utiliser la base de données pour stocker les fichiers",
 "Use a directory to store files" => "Utiliser un répertoire pour stocker les fichiers",
+"Uploaded" => "Envoyé",
 "Uploaded filenames must match regex" => "Les noms de fichiers envoyés doivent correspondre aux expressions régulières",
 "Uploaded filenames cannot match regex" => "Noms de fichiers envoyés ne doivent pas correspondre aux expressions régulières",
 "Storing files in a directory" => "Archiver les fichiers dans un répertoire",
@@ -5987,6 +5988,7 @@ $lang=Array(
 "Your name" => "Votre nom",
 "Your comment" => "Votre commentaire",
 "Send a link to a friend" => "Envoyer ce lien à un ami",
+"If creator is not checked, will display creator if author not set" => "Si l'auteur n'est pas connu, affichera le créateur <br/> (si la case créateur n'est pas cochée)",
 //"" => "",
 "###end###"=>"###end###");
 ?>
