@@ -1,6 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.26 2007-01-31 11:36:50 darzee Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.27 2007-04-06 19:59:07 nyloth Exp $ *}
 {* Module layout with controls *}
 
+<div class="box-shadow">
 <div class="box box-{$module_name|escape}">
 <div class="box-title">
 {if $user and $user_assigned_modules == 'y' and $feature_modulecontrols eq 'y'}
@@ -47,5 +48,6 @@
 </div>
 <div class="box-footer">
 
+</div>
 </div>
 </div>
