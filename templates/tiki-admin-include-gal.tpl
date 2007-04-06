@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.28 2007-03-22 18:58:11 gillesm Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.29 2007-04-06 17:40:08 nyloth Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -56,6 +56,13 @@
 	</select>
 </td></tr>
 {/if}
+    <tr class="form"><td><label>{tr}Display image informations in a mouseover box{/tr}:</label></td>
+	<td>
+	<input type="radio" name="gal_image_mouseover" value="n" {if $gal_image_mouseover eq 'n'}checked="checked"{/if}/>{tr}no{/tr}
+	<input type="radio" name="gal_image_mouseover" value="y" {if $gal_image_mouseover eq 'y'}checked="checked"{/if}/>{tr}yes{/tr}
+	<input type="radio" name="gal_image_mouseover" value="only" {if $gal_image_mouseover eq 'only'}checked="checked"{/if}/>{tr}yes, and don't display those informations under the image{/tr}
+	</td>
+    </tr>
     <tr><td colspan="2" class="button"><input type="submit" name="galfeatures" value="{tr}Set features{/tr}" /></td></tr>
     </table>
     </form>

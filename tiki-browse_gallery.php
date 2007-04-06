@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.41 2007-04-05 18:34:53 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.42 2007-04-06 17:40:05 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -328,6 +328,15 @@ if ($offset > 0) {
 
 $smarty->assign_by_ref('images', $images["data"]);
 $smarty->assign_by_ref('subgals', $subgals['data']);
+
+// Mouseover data
+if ( $gal_image_mouseover != 'n' ) {
+	foreach ( $images['data'] as $k => $v ) {
+		$smarty->assign_by_ref('file_info', $v);
+		$over_info[$k] = $smarty->fetch("tiki-file_info_box.tpl");
+	}
+	$smarty->assign_by_ref('over_info', $over_info);
+}
 
 if ($feature_image_galleries_comments == 'y') {
 	$comments_per_page = $image_galleries_comments_per_page;

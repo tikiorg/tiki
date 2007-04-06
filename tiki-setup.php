@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.421 2007-04-06 11:45:15 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.422 2007-04-06 17:40:05 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -544,6 +544,7 @@ $pref['gal_list_visits'] = 'y';
 $pref['feature_image_gallery_mandatory_category'] = '-1';
 $pref['gal_imgcache_dir'] = 'temp/cache';
 $pref['preset_galleries_scale'] ='n';
+$pref['gal_image_mouseover'] = 'n';
 
 # spellcheck
 if (file_exists('lib/bablotron.php')) {
