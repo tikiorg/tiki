@@ -342,6 +342,8 @@ indicating role in a prefix separated by a column like in:{/tr}<br />
 <option value="{$it.calendarId}"{if $calendarId eq $itid} selected="selected"{/if}>{$it.name}</option>
 {/foreach}
 </select>
+{else}
+<input type="hidden" name="save[calendarId]" value="{$calendarId}" />
 {/if}
 </td></tr>
 </table>
