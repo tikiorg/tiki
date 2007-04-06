@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.420 2007-04-05 19:17:44 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.421 2007-04-06 11:45:15 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -959,9 +959,9 @@ if ($pref['https_mode']) {
 	$pref['https_port'] = 443;
 }
 $pref['http_domain'] = '';
-$pref['http_prefix'] = dirname($_SERVER["PHP_SELF"].'x');
 $pref['https_domain'] = '';
-$pref['https_prefix'] = dirname($_SERVER["PHP_SELF"].'x');
+$pref['http_prefix'] = (($_SERVER["PHP_SELF"] != '') ? dirname($_SERVER["PHP_SELF"]) : '').'/';
+$pref['https_prefix'] = $pref['http_prefix'];
 $pref['base_url'] = 'http://' . $default['feature_server_name'];
 $pref['login_url'] = 'tiki-login.php';
 $pref['login_scr'] = 'tiki-login_scr.php';
