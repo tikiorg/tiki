@@ -1,4 +1,5 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_gallery.tpl,v 1.37 2007-03-06 19:30:39 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_gallery.tpl,v 1.38 2007-04-06 17:40:08 nyloth Exp $ *}
+{if $gal_image_mouseover neq 'n'}{popup_init src="lib/overlib.js"}{/if}
 <h1><a class="pagetitle" href="tiki-browse_gallery.php?galleryId={$galleryId}">
 {tr}Browsing Gallery{/tr}: {$name}
 </a></h1>
@@ -84,9 +85,11 @@
           <td align="center" {if ((($key +$num_subgals) / $rowImages) % 2)}class="oddthumb"{else}class="eventhumb"{/if}>
           &nbsp;&nbsp;<br />
           
-          <a href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;imageId={$item.imageId}&amp;scalesize={$defaultscale}"><img alt="thumbnail" class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1" /></a>
+          <a href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;imageId={$item.imageId}&amp;scalesize={$defaultscale}" {if $gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key|escape:"javascript"|escape:"html"}{/if} class="linkmenu"><img alt="thumbnail" class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1" /></a>
           <br />
+
           <small class="caption">
+	  {if $gal_image_mouseover neq 'only'}
 		{if $showname=='y'}{$item.name}<br />{/if}
 		{if $showfilename=='y'}{tr}Filename{/tr}: {$item.filename}<br />{/if}
 		{if $showimageid=='y'}{tr}ID{/tr}: {$item.imageId}<br />{/if}
@@ -96,7 +99,10 @@
 		{if $showxysize=='y'}({$item.xsize}x{$item.ysize}){/if}
 		{if $showfilesize=='y'}({$item.filesize} Bytes){/if}
 		{if $showhits=='y'}[{$item.hits} {if $item.hits == 1}{tr}hit{/tr}{else}{tr}hits{/tr}{/if}]{/if}
-          <br />
+	  {else}
+	  	{if $showname=='y' and $item.name neq ''}{$item.name}{else}{$item.filename}{/if}
+	  {/if}
+	  <br />
           {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
 	    		{if $nextx!=0}
             		<a class="gallink" href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;imageId={$item.imageId}&amp;scalesize=0" title="{tr}original size{/tr}"><img src='img/icons2/nav_dot.gif' border='0' width='8' height='11' alt='{tr}original size{/tr}' title='{tr}original size{/tr}' /></a>
