@@ -1,16 +1,19 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.63 2007-03-29 20:23:29 jyhem Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.64 2007-04-06 11:45:15 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.63 2007-03-29 20:23:29 jyhem Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.64 2007-04-06 11:45:15 nyloth Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
 require_once('tiki-setup.php');
+
+$old_http_prefix = $http_prefix;
+$old_https_prefix = $https_prefix;
 
 // Get clean strings for $http_prefix and $https_prefix
 // $url_prefix is $http_prefix or $https_prefix depending on context
@@ -22,6 +25,12 @@ $http_prefix = ereg_replace('/+$', '/', $http_prefix.'/');
 $https_prefix = ereg_replace('^/+', '/', '/'.$https_prefix);
 $https_prefix = ereg_replace('/+$', '/', $https_prefix.'/');
 $url_prefix=($https_mode)?$https_prefix:$http_prefix;
+
+// Update database value with the cleaned prefixes if they have changed
+if ( $old_http_prefix != $http_prefix ) $tikilib->set_preference('http_prefix', $http_prefix);
+unset($old_http_prefix);
+if ( $old_https_prefix != $https_prefix ) $tikilib->set_preference('https_prefix', $https_prefix);
+unset($old_https_prefix);
 
 if ($https_mode) {
 	$stay_in_ssl_mode = isset($_REQUEST['stay_in_ssl_mode']) && $_REQUEST['stay_in_ssl_mode'] == 'on';
