@@ -5995,6 +5995,7 @@ $lang=Array(
 "Send a link to a friend" => "Envoyer ce lien à un ami",
 "If creator is not checked, will display creator if author not set" => "Si l'auteur n'est pas connu, affichera le créateur <br/> (si la case créateur n'est pas cochée)",
 "Go to" => "Aller dans",
+"Visible Calendars" => "Calendriers visibles",
 //"" => "",
 "###end###"=>"###end###");
 ?>
