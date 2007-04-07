@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.51 2007-03-26 14:58:15 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.52 2007-04-07 00:15:08 nyloth Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-file_galleries.php?galleryId={$galleryId}{if isset($edit_mode)}&amp;edit_mode=1{/if}">{tr}File Galleries{/tr}</a>
 
@@ -152,7 +152,7 @@
 <table class="normal">
 <tr class="formcolor"><td>{tr}Name{/tr}</td><td><input type="text" size="50" name="name" value="{$name|escape}" /></td></tr>
 <tr class="formcolor"><td>{tr}Description{/tr}</td><td><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
-<tr class="formcolor"><td>{tr}File gallery{/tr}</td>
+<tr class="formcolor"><td>{tr}File Gallery{/tr}</td>
 <td>
 <select name="galleryId">
 {section name=ix loop=$allGalleries}
@@ -163,7 +163,7 @@
 </tr>
 <tr class="formcolor"><td>{tr}Duplicate categories{/tr}</td><td><input type="checkbox" name="dupCateg" /></td></tr>
 <tr class="formcolor"><td>{tr}Duplicate perms{/tr}</td><td><input type="checkbox" name="dupPerms" /></td></tr>
-<tr class="formcolor"><td></td><td><input type="submit" name="duplicate" value="{tr}duplicate {/tr}" /></td></tr>
+<tr class="formcolor"><td></td><td><input type="submit" name="duplicate" value="{tr}duplicate{/tr}" /></td></tr>
 </table>
 </form>
 {/if}
