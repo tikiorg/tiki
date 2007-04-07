@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.43 2007-03-19 19:14:34 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.44 2007-04-07 10:48:25 nyloth Exp $
 
 	require_once('tiki-setup.php');
 	include_once('lib/filegals/filegallib.php');
@@ -286,7 +286,7 @@
 			key_check($area);
 			$filegallib->remove_file_gallery($_REQUEST["removegal"], $_REQUEST['galleryId']);
 		} else {
-		  key_get($area, tra('Remove file gallery:').' '.$info['name']);
+		  key_get($area, tra('Remove file gallery: ').' '.$info['name']);
 		}
 	}
 	
