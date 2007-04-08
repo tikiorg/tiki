@@ -19,17 +19,15 @@
 <a href="{$myurl}?todate={$cell[w][d].day}" title="{tr}change focus{/tr}">{$cell[w][d].day|date_format:$short_format_day}</a> {* day is unix timestamp *}
 </span>
 {if $tiki_p_add_events eq 'y' and count($listcals) > 0}
-<a href="tiki-calendar_edit_item.php?todate={$cell[w][d].day}" title="{tr}add item{/tr}" class="addevent">{tr}+{/tr}</a>
+<a href="tiki-calendar_edit_item.php?todate={$cell[w][d].day}" title="{tr}add item{/tr}" class="addevent"><img src="pics/icons/calendar_add.png" border="0" alt="{tr}+{/tr}" /></a>
 {/if}
-.<br />
+<br />
 </div>
 <div class="calcontent">
 {section name=items loop=$cell[w][d].items}
 {assign var=over value=$cell[w][d].items[items].over}
 {assign var=calendarId value=$cell[w][d].items[items].calendarId}
-<span class="calprio{$cell[w][d].items[items].prio}" style="padding:0 2px;color:#666;float:left;">{$cell[w][d].items[items].prio}</span>
-<div class="Cal{$cell[w][d].items[items].type} calId{$cell[w][d].items[items].calendarId}">
-<a style="padding:0 3px;background-color:#{$infocals.$calendarId.custombgcolor};color:#{$infocals.$calendarId.customfgcolor};"
+<span class="calprio{$cell[w][d].items[items].prio}" style="padding:0 2px;color:#666;float:left;">{$cell[w][d].items[items].prio}</span><div class="Cal{$cell[w][d].items[items].type} calId{$cell[w][d].items[items].calendarId}"><a style="padding:0 3px;background-color:#{$infocals.$calendarId.custombgcolor};color:#{$infocals.$calendarId.customfgcolor};"
 {if $myurl eq "tiki-action_calendar.php"}
 {if $cell[w][d].items[items].modifiable eq "y" || $cell[w][d].items[items].visible eq 'y'}href="{$cell[w][d].items[items].url}"{/if}
 {else}
