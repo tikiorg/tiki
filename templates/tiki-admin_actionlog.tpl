@@ -1,6 +1,16 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.27 2007-04-04 17:23:39 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.28 2007-04-08 23:47:56 bluestrain Exp $ *}
 
-<h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a></h1>
+<h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a>
+{if $feature_help eq 'y'}
+<a href="{$helpurl}Action Log" target="tikihelp" class="tikihelp" title="{tr}Action Log{/tr}">
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+{/if}
+{if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=tiki-admin_actionlog.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin groups template{/tr}">
+<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' />
+</a>
+{/if}
+</h1>
 
 {if $feature_tabs eq 'y'}
 {cycle name=tabs values="1,2" print=false advance=false}
