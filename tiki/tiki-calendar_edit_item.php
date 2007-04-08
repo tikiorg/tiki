@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_edit_item.php,v 1.16 2007-02-12 11:33:24 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_edit_item.php,v 1.17 2007-04-08 22:48:35 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -219,7 +219,6 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 	} else {
 		$now = $tikilib->now;
 	}
-	$now_time = 14*60*60;
 	$calitem = array(
 		'calitemId'=>0,
 		'user'=>$user,
@@ -232,9 +231,7 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 		'categoryId'=>0,
 		'nlId'=>0,
 		'start'=>$now,
-		'time_start'=>$now_time,
-		'end'=>$now,
-		'time_end'=>$now_time+(60*60),
+		'end'=>$now+(60*60),
 		'duration'=>(60*60) 
 		);
 	$id = 0;
