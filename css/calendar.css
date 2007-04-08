@@ -313,16 +313,6 @@ a.viewmodeoff img {
 	margin : 1px !important;
 	border : 0 !important;
 }
-#caltable tbody tr td:last-child .calcontent,
-#caltable tbody tr td:last-child .calfocus,
-#caltable tbody tr td:last-child .calfocuson {
-	margin-right : 1px;
-	border-right : 1px solid #999;
-}
-#caltable tbody tr:last-child td .calcontent {
-	margin-bottom : 1px;
-	border-bottom : 1px solid #999;
-}
 .addevent {
 	padding: 0 5px;
 	_padding: 0;
@@ -368,4 +358,18 @@ a.viewmodeoff img {
 .status1     { background-color : #6f6; border : 1px solid #000; color : #000; }
 .status2     { background-color : #f66; border : 1px solid #000; color : #000; }
 
+select[name=start_Hour], select[name=start_Minute], select[name=end_Hour], select[name=end_Minute] { min-width: 40px; }
+#caltable { border-collapse: collapse; margin-top: 5px; }
+#caltable td { padding: 2px; }
+.days { font-size : 11px; font-weight: bold; color: #555555; }
+.calodd, .caleven { border: 1px solid #8CACBB; }
+.calfocus a:hover { background-color: transparent; border-bottom: 2px solid #8CACBB; }
+.calfocuson a:hover { background-color: transparent; }
+a.addevent:hover { border-bottom:0px; }
+.calfocus, .calfocuson { border-bottom: 1px dotted #8CACBB; padding-bottom: 4px; }
+.calfocus { background-color: #b4d0ec; }
+.caldark a { display: none; }
+.caldark { border: 1px dotted #8CACBB; background-color: transparent; }
+.caldark .calfocus { background-color: #def; }
+.calfocuson + .calcontent { background-color: #f1e5ae; }
 
