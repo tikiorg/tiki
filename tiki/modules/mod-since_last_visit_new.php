@@ -6,15 +6,16 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 if (!function_exists('since_last_visit_new')) {
-function since_last_visit_new($user) {
+function since_last_visit_new($user, $params = null) {
   if (!$user) return false;
 
   global $tikilib;
   global $userlib;
   $ret = array();
   $ret["label"] = tra("Since your last visit");
+  if ( $params == null ) $params = array();
 
-  if (strpos($_SERVER["SCRIPT_NAME"],"tiki-calendar.php") && isset($_REQUEST["todate"]) && $_REQUEST["todate"]) {
+  if ( $params['calendar_focus'] != 'ignore' && strpos($_SERVER["SCRIPT_NAME"],"tiki-calendar.php") && isset($_REQUEST["todate"]) && $_REQUEST["todate"]) {
     $last = $_REQUEST["todate"];
     $_SESSION["slvn_last_login"] = $last;
     $ret["label"] = tra("Changes")." ".tra("since");
@@ -393,8 +394,8 @@ if ($tikilib->get_preference("feature_directory") == 'y') {
 
 }
 }
-   
-$slvn_info = since_last_visit_new($user);
+
+$slvn_info = since_last_visit_new($user, $module_params);
 $smarty->assign('slvn_info', $slvn_info);
 
 ?>
