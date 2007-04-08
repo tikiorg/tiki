@@ -75,7 +75,7 @@
 <td style="border:0;padding-top:2px;">
 <a href="#" onclick="document.f.start_Hour.selectedIndex=(document.f.start_Hour.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>
 </td>
-<td rowspan="2" style="border:0;">
+<td rowspan="2" style="border:0;" class="html_select_time">
 {html_select_time prefix="start_" display_seconds=false time=$calitem.start minute_interval=$calendar_timespan hour_minmax=$hour_minmax}
 </td>
 <td style="border:0;padding-top:2px;">
@@ -116,7 +116,7 @@
 <td style="border:0;padding-top:2px;">
 <a href="#" onclick="document.f.end_Hour.selectedIndex=(document.f.end_Hour.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>
 </td>
-<td rowspan="2" style="border:0;">
+<td rowspan="2" style="border:0;" class="html_select_time">
 {html_select_time prefix="end_" display_seconds=false time=$calitem.time_end minute_interval=$calendar_timespan hour_minmax=$hour_minmax}
 </td>
 <td style="border:0;padding-top:2px;">
@@ -138,7 +138,7 @@
 <table cellpadding="0" cellspacing="0" border="0" style="border:0;display:none;" id="end_duration">
 <tr><td style="border:0;padding-top:2px;">
 <a href="#" onclick="document.f.duration_Hour.selectedIndex=(document.f.duration_Hour.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>
-</td><td style="border:0;" rowspan="2">
+</td><td style="border:0;" rowspan="2" class="html_select_time">
 {html_select_time prefix="duration_" display_seconds=false time=$calitem.duration|default:'01:00' minute_interval=$calendar_timespan}
 </td><td style="border:0;padding-top:2px;">
 <a href="#" onclick="document.f.duration_Minute.selectedIndex=(document.f.duration_Minute.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>

@@ -372,4 +372,4 @@ a.addevent:hover { border-bottom:0px; }
 .caldark { border: 1px dotted #8CACBB; background-color: transparent; }
 .caldark .calfocus { background-color: #def; }
 .calfocuson + .calcontent { background-color: #f1e5ae; }
-
+.html_select_time { white-space: nowrap; }
