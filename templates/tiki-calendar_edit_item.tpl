@@ -117,7 +117,7 @@
 <a href="#" onclick="document.f.end_Hour.selectedIndex=(document.f.end_Hour.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>
 </td>
 <td rowspan="2" style="border:0;" class="html_select_time">
-{html_select_time prefix="end_" display_seconds=false time=$calitem.time_end minute_interval=$calendar_timespan hour_minmax=$hour_minmax}
+{html_select_time prefix="end_" display_seconds=false time=$calitem.end minute_interval=$calendar_timespan hour_minmax=$hour_minmax}
 </td>
 <td style="border:0;padding-top:2px;">
 <a href="#" onclick="document.f.end_Minute.selectedIndex=(document.f.end_Minute.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>
