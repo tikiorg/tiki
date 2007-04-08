@@ -349,7 +349,6 @@ FCKToolbarSet.prototype.RefreshModeState = function( editorInstance )
 
 FCKToolbarSet.prototype.RefreshItemsState = function( editorInstance )
 {
-//	FCKDebug.Output( 'Refreshing Commands...' ) ;	// @Packager.RemoveLine
 
 	var aItems = ( editorInstance ? editorInstance.ToolbarSet : this ).ItemsContextSensitive ;
 

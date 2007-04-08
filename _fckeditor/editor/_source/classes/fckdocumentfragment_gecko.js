@@ -32,7 +32,6 @@ var FCKDocumentFragment = function( parentDocument, baseDocFrag )
 
 FCKDocumentFragment.prototype =
 {
-	TypeName : 'FCKDocumentFragment',		// @Packager.RemoveLine
 
 	// Append the contents of this Document Fragment to another element.
 	AppendTo : function( targetNode )

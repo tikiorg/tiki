@@ -63,7 +63,6 @@ FCKW3CRange.CreateFromRange = function( parentDocument, sourceRange )
 
 FCKW3CRange.prototype =
 {
-	TypeName : 'FCKW3CRange',		// @Packager.RemoveLine
 
 	_UpdateCollapsed : function()
 	{

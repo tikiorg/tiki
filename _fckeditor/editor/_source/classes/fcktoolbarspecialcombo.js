@@ -35,7 +35,6 @@ var FCKToolbarSpecialCombo = function()
 	this._LastValue			= null ;
 }
 
-FCKToolbarSpecialCombo.prototype.TypeOf = 'FCKToolbarSpecialCombo' ;		// @Packager.RemoveLine
 
 function FCKToolbarSpecialCombo_OnSelect( itemId, item )
 {

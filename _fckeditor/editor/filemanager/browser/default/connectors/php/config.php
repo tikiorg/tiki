@@ -45,11 +45,6 @@ global $Config ;
 // SECURITY: You must explicitelly enable this "connector". (Set it to "true").
 $Config['Enabled'] = true ;
 
-// @Packager.Remove.Start
-// Attention: In the development version (SVN) the PHP connector is enabled by default.
-$Config['Enabled'] = true ;
-// @Packager.Remove.End
-
 // Path to user files relative to the document root.
 $Config['UserFilesPath'] = $tikipath.'img/wiki_up/'.$tikidomain ;
 

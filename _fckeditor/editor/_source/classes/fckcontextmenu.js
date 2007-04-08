@@ -39,7 +39,6 @@ var FCKContextMenu = function( parentWindow, langDir )
 	this._Redraw = true ;
 }
 
-FCKContextMenu.prototype.TypeName = 'FCKContextMenu' ;		// @Packager.RemoveLine
 
 FCKContextMenu.prototype.SetMouseClickWindow = function( mouseClickWindow )
 {

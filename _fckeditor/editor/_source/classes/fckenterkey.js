@@ -50,16 +50,13 @@ var FCKEnterKey = function( targetWindow, enterMode, shiftEnterMode )
 	oKeystrokeHandler.AttachToElement( targetWindow.document ) ;
 }
 
-FCKEnterKey.prototype.TypeName = 'FCKEnterKey' ;		// @Packager.RemoveLine
 
 function FCKEnterKey_OnKeystroke(  keyCombination, keystrokeValue )
 {
 	var oEnterKey = this._EnterKey ;
 
-	/* @Packager.RemoveLine
 	try
 	{
-	@Packager.RemoveLine */
 		switch ( keystrokeValue )
 		{
 			case 'Enter' :
@@ -77,14 +74,12 @@ function FCKEnterKey_OnKeystroke(  keyCombination, keystrokeValue )
 			case 'Delete' :
 				return oEnterKey.DoDelete() ;
 		}
-	/* @Packager.RemoveLine
 	}
 	catch (e)
 	{
 		// If for any reason we are not able to handle it, go
 		// ahead with the browser default behavior.
 	}
-	@Packager.RemoveLine */
 
 	return false ;
 }

@@ -35,7 +35,6 @@ var FCKToolbarButtonUI = function( name, label, tooltip, iconPathOrStripInfoArra
 		FCK.IECleanup.AddItem( this, FCKToolbarButtonUI_Cleanup ) ;
 }
 
-FCKToolbarButtonUI.prototype.TypeName = 'FCKToolbarButtonUI' ;		// @Packager.RemoveLine
 
 FCKToolbarButtonUI.prototype._CreatePaddingElement = function( document )
 {

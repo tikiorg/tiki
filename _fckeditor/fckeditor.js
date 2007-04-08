@@ -1,4 +1,4 @@
-﻿/*
+/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
  * Copyright (C) 2003-2007 Frederico Caldeira Knabben
  *
@@ -37,10 +37,8 @@ var FCKeditor = function( instanceName, width, height, toolbarSet, value )
 	this.BasePath		= '/fckeditor/' ;
 	this.CheckBrowser	= true ;
 	this.DisplayErrors	= true ;
-	this.EnableSafari	= false ;		// This is a temporary property, while Safari support is under development.
-	this.EnableSafari	= true ;		// @Packager.RemoveLine
-	this.EnableOpera	= false ;		// This is a temporary property, while Opera support is under development.
-	this.EnableOpera	= true ;		// @Packager.RemoveLine
+	this.EnableSafari	= true ; // Enabling Safari support in TikiWiki as a best effort feature
+	this.EnableOpera	= true ; // Enabling Opera support in TikiWiki as a best effort feature
 
 	this.Config			= new Object() ;
 
@@ -48,8 +46,8 @@ var FCKeditor = function( instanceName, width, height, toolbarSet, value )
 	this.OnError		= null ;	// function( source, errorNumber, errorDescription )
 }
 
-FCKeditor.prototype.Version			= '[Development]' ;
-FCKeditor.prototype.VersionBuild	= '[DEV]' ;
+FCKeditor.prototype.Version			= '2.4.2' ;
+FCKeditor.prototype.VersionBuild	= '14978' ;
 
 FCKeditor.prototype.Create = function()
 {

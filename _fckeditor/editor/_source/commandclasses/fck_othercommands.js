@@ -77,7 +77,6 @@ FCKFontNameCommand.prototype.Execute = function( fontName )
 	if (fontName == null || fontName == "")
 	{
 		// TODO: Remove font name attribute.
-		/*jsl:pass*/ // @Packager.RemoveLine
 	}
 	else
 		FCK.ExecuteNamedCommand( 'FontName', fontName ) ;

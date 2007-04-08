@@ -29,7 +29,6 @@ var FCKDomRange = function( sourceWindow )
 
 FCKDomRange.prototype =
 {
-	TypeName : 'FCKDomRange',		// @Packager.RemoveLine
 
 	_UpdateElementInfo : function()
 	{
@@ -434,10 +433,6 @@ FCKDomRange.prototype =
 				}
 
 				this._UpdateElementInfo() ;
-			break ;											// @Packager.Remove.Start
-
-			default :
-				throw( 'Invalid unit "' + unit + '"' ) ;	// @Packager.Remove.End
 		}
 	},
 

@@ -26,7 +26,6 @@ var FCKMenuBlock = function()
 	this._Items	= new Array() ;
 }
 
-FCKMenuBlock.prototype.TypeName = 'FCKMenuBlock' ;		// @Packager.RemoveLine
 
 FCKMenuBlock.prototype.Count = function()
 {

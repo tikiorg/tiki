@@ -488,7 +488,6 @@ var FCK =
 	{
 		try
 		{
-	//		FCKDebug.Output( 'queryCommandEnabled for "' + commandName + '": ' + FCK.EditorDocument.queryCommandEnabled( commandName ), '#99ff99' ) ;	// @Packager.RemoveLine
 
 			if ( !FCK.EditorDocument.queryCommandEnabled( commandName ) )
 				return FCK_TRISTATE_DISABLED ;
@@ -497,7 +496,6 @@ var FCK =
 		}
 		catch ( e )
 		{
-	//		FCKDebug.Output( 'Error getting the state for ' + commandName + ': ' + e.description, '#ff0000' ) ;	// @Packager.RemoveLine
 			return FCK_TRISTATE_OFF ;
 		}
 	},

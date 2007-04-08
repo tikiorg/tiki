@@ -30,7 +30,6 @@ var FCKMenuBlockPanel = function()
 
 FCKMenuBlockPanel.prototype = new FCKMenuBlock() ;
 
-FCKMenuBlockPanel.prototype.TypeName = 'FCKMenuBlockPanel' ;		// @Packager.RemoveLine
 
 // Override the create method.
 FCKMenuBlockPanel.prototype.Create = function()

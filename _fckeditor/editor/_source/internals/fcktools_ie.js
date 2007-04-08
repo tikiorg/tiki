@@ -141,8 +141,6 @@ FCKTools.AddEventListenerEx = function( sourceObject, eventName, listener, param
 	o.Params = paramsArray || [] ;	// Memory leak if we have DOM objects here.
 	o.Listener = function( ev )
 	{
-		if ( !ev )							// Assertion // @Packager.RemoveLine
-			throw( 'ev is undefined' ) ;	// Assertion // @Packager.RemoveLine
 		return listener.apply( o.Source, [ ev ].concat( o.Params ) ) ;
 	}
 

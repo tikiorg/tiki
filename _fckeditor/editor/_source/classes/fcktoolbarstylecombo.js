@@ -32,7 +32,6 @@ var FCKToolbarStyleCombo = function( tooltip, style )
 // Inherit from FCKToolbarSpecialCombo.
 FCKToolbarStyleCombo.prototype = new FCKToolbarSpecialCombo ;
 
-FCKToolbarStyleCombo.prototype.TypeOf = 'FCKToolbarStyleCombo' ;		// @Packager.RemoveLine
 
 FCKToolbarStyleCombo.prototype.GetLabel = function()
 {

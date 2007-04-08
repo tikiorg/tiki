@@ -32,7 +32,6 @@ var FCKToolbarFontSizeCombo = function( tooltip, style )
 // Inherit from FCKToolbarSpecialCombo.
 FCKToolbarFontSizeCombo.prototype = new FCKToolbarSpecialCombo ;
 
-FCKToolbarFontSizeCombo.prototype.TypeOf = 'FCKToolbarFontSizeCombo' ;		// @Packager.RemoveLine
 
 FCKToolbarFontSizeCombo.prototype.GetLabel = function()
 {

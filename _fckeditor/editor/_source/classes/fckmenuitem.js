@@ -37,7 +37,6 @@ var FCKMenuItem = function( parentMenuBlock, name, label, iconPathOrStripInfoArr
 		FCK.IECleanup.AddItem( this, FCKMenuItem_Cleanup ) ;
 }
 
-FCKMenuItem.prototype.TypeName = 'FCKMenuItem' ;		// @Packager.RemoveLine
 
 FCKMenuItem.prototype.AddItem = function( name, label, iconPathOrStripInfoArrayOrIndex, isDisabled )
 {

@@ -73,7 +73,6 @@ var FCKPanel = function( parentWindow )
 
 	oDocument.oncontextmenu = FCKTools.CancelEvent ;
 
-	oDocument.body.bgColor = '#FF0000' ;		// @Packager.RemoveLine - Just to be sure that the context menu popup is not bigger that it should be.
 
 	// Create the main DIV that is used as the panel base.
 	this.MainNode = oDocument.body.appendChild( oDocument.createElement('DIV') ) ;
@@ -82,7 +81,6 @@ var FCKPanel = function( parentWindow )
 	this.MainNode.style.cssFloat = this.IsRTL ? 'right' : 'left' ;
 }
 
-FCKPanel.prototype.TypeName = 'FCKPanel' ;		// @Packager.RemoveLine
 
 FCKPanel.prototype.AppendStyleSheet = function( styleSheet )
 {

@@ -60,7 +60,6 @@ FCKStyleDef.prototype._AddAttributes = function( targetElement )
 		{
 			case 'src' :
 				targetElement.setAttribute( '_fcksavedurl', this.Attributes[a], 0 ) ;
-				/*jsl:fallthru*/ // @Packager.RemoveLine
 			default :
 				targetElement.setAttribute( a, this.Attributes[a], 0 ) ;
 		}

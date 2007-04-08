@@ -274,10 +274,6 @@ function FCK_ContextMenu_GetListener( listenerName )
 					menu.AddItem( 'NumberedList', FCKLang.NumberedListProp, 26 ) ;
 				}
 			}} ;
-		// @Packager.Remove.Start
-		default :
-			alert( 'Unknown context menu listener "' + listenerName + '"' ) ;
-		// @Packager.Remove.End
 	}
 	return null ;
 }

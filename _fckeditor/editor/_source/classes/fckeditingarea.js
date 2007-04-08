@@ -34,7 +34,6 @@ var FCKEditingArea = function( targetElement )
 		FCK.IECleanup.AddItem( this, FCKEditingArea_Cleanup ) ;
 }
 
-FCKEditingArea.prototype.TypeName = 'FCKEditingArea' ;			// @Packager.RemoveLine
 
 /**
  * @param {String} html The complete HTML for the page, including DOCTYPE and the <html> tag.

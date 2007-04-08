@@ -1,4 +1,4 @@
-﻿/*
+/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
  * Copyright (C) 2003-2007 Frederico Caldeira Knabben
  *
@@ -40,8 +40,8 @@ function InitializeAPI()
 		// objects that aren't really FCKeditor instances.
 		var sScript =
 			'var FCKeditorAPI = {' +
-				'Version : "[Development]",' +
-				'VersionBuild : "[DEV]",' +
+				'Version : "2.4.2",' +
+				'VersionBuild : "14978",' +
 				'__Instances : new Object(),' +
 
 				'GetInstance : function( name )' +
