@@ -79,18 +79,33 @@ $smarty->assign('timeFormat12_24', $timeFormat12_24);
 $short_format_day = tra("%m/%d");
 $smarty->assign('short_format_day', $short_format_day);
 
+$focus_day_limited = min($focus_day, 28); // To make "previous month" work if the current focus is on, for example, the last day of march.
+
 $focus_prevday = TikiLib::make_time(0, 0, 0, $focus_month, $focus_day - 1, $focus_year);
-$focus_nextday = TikiLib::make_time(0, 0, 0, $focus_month, $focus_day + 1, $focus_year);
 $focus_prevweek = TikiLib::make_time(0, 0, 0, $focus_month, $focus_day - 7, $focus_year);
+$focus_prevmonth = TikiLib::make_time(0, 0, 0,
+	(($focus_month == 1) ? 12 : $focus_month - 1), // TikiLib::make_time() used with timezones doesn't support month = 0
+	$focus_day_limited,
+	(($focus_month == 1) ? $focus_year - 1 : $focus_year)
+);
+$focus_prevquarter = TikiLib::make_time(0, 0, 0,
+	(($focus_month == 3) ? 12 : $focus_month - 3),
+	$focus_day_limited,
+	(($focus_month == 3) ? $focus_year - 1 : $focus_year)
+);
+$focus_prevsemester = TikiLib::make_time(0, 0, 0,
+	(($focus_month == 6) ? 12 : $focus_month - 6),
+	$focus_day_limited,
+	(($focus_month == 6) ? $focus_year - 1 : $focus_year)
+);
+$focus_prevyear = TikiLib::make_time(0, 0, 0, $focus_month, $focus_day, $focus_year - 1);
+
+$focus_nextday = TikiLib::make_time(0, 0, 0, $focus_month, $focus_day + 1, $focus_year);
 $focus_nextweek = TikiLib::make_time(0, 0, 0, $focus_month, $focus_day + 7, $focus_year);
-$focus_prevmonth = TikiLib::make_time(0, 0, 0, $focus_month - 1, $focus_day, $focus_year);
-$focus_nextmonth = TikiLib::make_time(0, 0, 0, $focus_month + 1, $focus_day, $focus_year);
-$focus_prevquarter = TikiLib::make_time(0, 0, 0, $focus_month - 3, $focus_day, $focus_year);
-$focus_nextquarter = TikiLib::make_time(0, 0, 0, $focus_month + 3, $focus_day, $focus_year);
-$focus_prevsemester = TikiLib::make_time(0, 0, 0, $focus_month - 6, $focus_day, $focus_year);
-$focus_nextsemester = TikiLib::make_time(0, 0, 0, $focus_month + 6, $focus_day, $focus_year);
-$focus_prevyear = TikiLib::make_time(0, 0, 0, $focus_month - 12, $focus_day, $focus_year);
-$focus_nextyear = TikiLib::make_time(0, 0, 0, $focus_month + 12, $focus_day, $focus_year);
+$focus_nextmonth = TikiLib::make_time(0, 0, 0, $focus_month + 1, $focus_day_limited, $focus_year);
+$focus_nextquarter = TikiLib::make_time(0, 0, 0, $focus_month + 3, $focus_day_limited, $focus_year);
+$focus_nextsemester = TikiLib::make_time(0, 0, 0, $focus_month + 6, $focus_day_limited, $focus_year);
+$focus_nextyear = TikiLib::make_time(0, 0, 0, $focus_month, $focus_day, $focus_year + 1);
 
 $smarty->assign('daybefore', $focus_prevday);
 $smarty->assign('weekbefore', $focus_prevweek);
