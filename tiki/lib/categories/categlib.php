@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.100 2007-04-03 19:06:31 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.101 2007-04-10 21:27:10 sylvieg Exp $
  *
  * \brief Categories support class
  *
@@ -69,7 +69,7 @@ class CategLib extends ObjectLib {
 				$res["incat"] = 'n';
 			}
       
-      $catpath = $this->get_category_path($res["categId"]);
+			$catpath = $this->get_category_path($res["categId"]);
 			$tepath = array();	
 			foreach ($catpath as $cat) {
 				$tepath[] = $cat['name'];
@@ -91,12 +91,12 @@ class CategLib extends ObjectLib {
 		ksort($ret);
 		
 		$retval = array();
-    $retval["data"] = array_values($ret);
+		$retval["data"] = array_values($ret);
 		$retval["cant"] = $cant;
 		return $retval;
 	}
-	
-	function get_category_path($categId) {
+
+	function get_category_path_string($categId) {
 		global $cachelib;
 		if (!$cachelib->isCached('allcategs')) {
 			$categs = $this->build_cache();
@@ -109,6 +109,18 @@ class CategLib extends ObjectLib {
 			}
 		}
 		return '';
+	}
+
+	function get_category_path($categId) {
+		$info = $this->get_category($categId);
+		$i=999999;
+		$path[$i--] = array('categId'=>$info["categId"],'name'=>$info["name"]);
+		while ($info["parentId"] != 0) {
+			$info = $this->get_category($info["parentId"]);
+			$path[$i--] = array('categId'=>$info["categId"],'name'=>$info["name"]);
+		}
+		ksort($path);
+		return array_values($path);
 	}
 
 	function get_category($categId) {
@@ -797,7 +809,7 @@ class CategLib extends ObjectLib {
 		while ($res = $result->fetchRow()) {
 			$id = $res["categId"];
 			$catpath = $this->get_category_path($id);
-			$tepath = array();	
+			$tepath = array();
 			foreach ($catpath as $cat) {
 				$tepath[] = $cat['name'];
 			}
