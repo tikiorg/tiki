@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.80 2007-04-02 17:21:23 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.81 2007-04-12 00:04:56 mose Exp $ *}
 
 {if $forum_mode eq 'y'}
 <tr><td>
@@ -27,11 +27,11 @@
   <input type="hidden" name="comments_grandParentId" value="{$comments_grandParentId|escape}" />    
   <input type="hidden" name="comments_reply_threadId" value="{$comments_reply_threadId|escape}" />    
   <input type="hidden" name="comments_offset" value="0" />
-	<input type="hidden" name="topics_offset" value="{$smarty.request.topics_offset|escape}" />
-	<input type="hidden" name="topics_find" value="{$smarty.request.topics_find|escape}" />
-	<input type="hidden" name="topics_sort_mode" value="{$smarty.request.topics_sort_mode|escape}" />
-	<input type="hidden" name="topics_threshold" value="{$smarty.request.topics_threshold|escape}" />
-	<input type="hidden" name="forumId" value="{$forumId|escape}" />
+	{if $smarty.request.topics_offset}<input type="hidden" name="topics_offset" value="{$smarty.request.topics_offset|escape}" />{/if}
+	{if $smarty.request.topics_find}<input type="hidden" name="topics_find" value="{$smarty.request.topics_find|escape}" />{/if}
+	{if $smarty.request.topics_sort_mode}<input type="hidden" name="topics_sort_mode" value="{$smarty.request.topics_sort_mode|escape}" />{/if}
+	{if $smarty.request.topics_threshold}<input type="hidden" name="topics_threshold" value="{$smarty.request.topics_threshold|escape}" />{/if}
+	{if $forumId}<input type="hidden" name="forumId" value="{$forumId|escape}" />{/if}
 
 
 		{if $tiki_p_admin_forum eq 'y' and $forum_mode eq 'y'}
