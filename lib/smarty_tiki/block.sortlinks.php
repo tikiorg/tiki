@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/block.sortlinks.php,v 1.6 2007-02-22 13:35:40 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/block.sortlinks.php,v 1.7 2007-04-13 14:19:48 sylvieg Exp $
 /* 
 * Smarty plugin 
 * ------------------------------------------------------------- 
@@ -28,11 +28,15 @@ if ($content) {
 //    $splitted=preg_split("/[<>]/",$value,-1,PREG_SPLIT_NO_EMPTY);
 		if (isset($splitted[2])) {
 			$splitted[2] = str_replace(array("Î","É","È"), array('I','E','E'), $splitted[2]);
-    		$links2[$splitted[2]]=$value;
+			$links2[$splitted[2]]=$value;
 		}
   }
 
-  ksort($links2);
+  if (isset($params['case']) && $params['case'] == false) {
+        uksort($links2, 'strcasecmp');
+  } else {
+        ksort($links2);
+  }
   foreach($links2 as $value) {
     echo $value;
   }
