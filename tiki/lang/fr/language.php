@@ -6002,7 +6002,8 @@ $lang=Array(
 "The directory can be outside the web space." => "Le répertoire peut être en-dehors de l'espace web",
 "If you enable Directory Batch Loading, you need to setup a web-readable directory (outside of your web space is better). Then setup a way to upload files in that dir, either by scp, ftp, or other protocols" => "Si vous autorisez le téléchargement par lots, il vous faudra définir un répertoire accessible en lecture depuis le web (en-dehors de votre espace web serait mieux). Ensuite, prévoir un moyen pour télécharger des fichiers vers ce répertoire (par scp, ftp ou d'autres protocoles).",
 "The server must be able to read the directory."=>"Le serveur web doit avoir les droits en lecture sur le répertoire.",
-"PodCast directory (must be web accessible)" => "Répertoire de podcast (doit être accessible depuis le web)",
+"PodCast directory (must be web accessible):" => "Répertoire de podcast (doit être accessible depuis le web):",
+"Only in different galleries"=>"Seulement dans des galeries différentes",
 //"" => "",
 "###end###"=>"###end###");
 ?>
