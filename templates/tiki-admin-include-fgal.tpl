@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-fgal.tpl,v 1.30 2007-03-19 18:04:53 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-fgal.tpl,v 1.31 2007-04-17 13:06:28 pkdille Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -65,7 +65,7 @@
               value="{$fgal_podcast_dir|escape}" size="50" /><br /><i>({tr}required field for podcasts{/tr})</i></td>
         </tr><tr class="formcolor">
 		<td colspan="2"><b>{tr}Directory Batch Loading{/tr}</b><br />
-		{tr}If you enable Directory Batch Loading, you need to setup a web-readable directory (outside of your web space is better). Then setup a way to upload filed in that dir, either by scp, ftp, or other protocols{/tr}</td></tr>
+		{tr}If you enable Directory Batch Loading, you need to setup a web-readable directory (outside of your web space is better). Then setup a way to upload files in that dir, either by scp, ftp, or other protocols{/tr}</td></tr>
     	<tr class="formcolor"><td><label>{tr}Enable directory batch loading{/tr}:</label></td><td><input type="checkbox" name="feature_file_galleries_batch" {if $feature_file_galleries_batch eq 'y'}checked="checked"{/if}/></td></tr>
     	<tr class="formcolor"><td><label>{tr}Batch loading directory{/tr}:</label></td><td><input type="text" name="fgal_batch_dir" value="{$fgal_batch_dir|escape}" size="50" /><br /><i>{tr}The server must be able to read the directory.{/tr}<br />{tr}The directory can be outside the web space.{/tr}</i></td></tr>
 		<tr class="formcolor">
