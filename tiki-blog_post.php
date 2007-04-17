@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.60 2007-03-16 17:18:08 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.61 2007-04-17 16:27:40 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -31,11 +31,11 @@ if ((empty($_REQUEST['blogId']) && $tiki_p_blog_post != 'y') || (!empty($_REQUES
 	die;
 }
 
-$smarty->assign('wysiwyg', 'n');
-
-if (isset($_REQUEST['wysiwyg']) && $_REQUEST['wysiwyg'] == 'y') {
-	$smarty->assign('wysiwyg', 'y');
-}
+if ( $feature_wysiwyg == 'y' &&
+	( $wysiwyg_default == 'y' && ! isset($_REQUEST['wysiwyg']) )
+	|| ( isset($_REQUEST['wysiwyg']) && $_REQUEST['wysiwyg'] == 'y' )
+) $smarty->assign('wysiwyg', 'y');
+else $smarty->assign('wysiwyg', 'n');
 
 if (isset($_REQUEST["blogId"])) {
 	$blogId = $_REQUEST["blogId"];
