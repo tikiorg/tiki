@@ -1,9 +1,11 @@
 {popup_init src="lib/overlib.js"}
 <h1><a class="pagetitle" href="tiki-blog_post.php?blogId={$blogId}&amp;postId={$postId}">{tr}Edit Post{/tr}</a></h1><br />
-{if $wysiwyg eq 'n'}
+{if $feature_wysiwyg eq 'y' and $wysiwyg_optional eq 'y'}
+{if $wysiwyg ne 'y'}
 <span class="button2"><a class="linkbut" href="tiki-blog_post.php?{if $blogId ne ''}blogId={$blogId}&amp;{/if}{if $postId ne ''}&amp;postId={$postId}{/if}&amp;wysiwyg=y">{tr}Use wysiwyg editor{/tr}</a></span>
 {else}
 <span class="button2"><a class="linkbut" href="tiki-blog_post.php?{if $blogId ne ''}blogId={$blogId}&amp;{/if}{if $postId ne ''}&amp;postId={$postId}{/if}&amp;wysiwyg=n">{tr}Use normal editor{/tr}</a></span>
+{/if}
 {/if}
 {if $contribution_needed eq 'y'}
 <div class="simplebox highlight">{tr}A contribution is mandatory{/tr}</div>
@@ -36,7 +38,7 @@
 </select>
 </td></tr>
 {assign var=area_name value="blogedit"}
-{if $feature_smileys eq 'y'}
+{if $feature_smileys eq 'y' && not $wysiwyg}
 <tr><td class="editblogform">{tr}Smileys{/tr}</td><td class="editblogform">
    {include file="tiki-smileys.tpl" area_name='blogedit'}
 </td></tr>
@@ -46,24 +48,20 @@
 <input type="text" size="80" name="title" value="{$title|escape}" />
 </td></tr>
 {/if}
+{if $wysiwyg eq 'n' and $wysiwyg_optional eq 'y'}
 <tr><td class="editblogform">{tr}Data{/tr}
-{if $wysiwyg eq 'n'}<br /><br />{include file="textareasize.tpl" area_name='blogedit' formId='editpageform'}{/if}
+<br /><br />{include file="textareasize.tpl" area_name='blogedit' formId='editpageform'}
 <br />
 {include file=tiki-edit_help_tool.tpl area_name="blogedit"}
 </td><td class="editblogform">
 <b>{tr}Use ...page... to separate pages in a multi-page post{/tr}</b><br />
 <textarea id='blogedit' class="wikiedit" name="data" rows="{$rows}" cols="{$cols}" wrap="virtual">{$data|escape}</textarea>
+{else}
+<td class="editblogform" colspan="2">
+{editform Meat=$data InstanceName='data' ToolbarSet="Tiki"}
+{/if}
 <input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/>
-{if $wysiwyg eq 'y'}
-	<script type="text/javascript" src="lib/htmlarea/htmlarea.js"></script>
-	<script type="text/javascript" src="lib/htmlarea/htmlarea-lang-en.js"></script>
-	<script type="text/javascript" src="lib/htmlarea/dialog.js"></script>
-	<style type="text/css">
-		@import url(lib/htmlarea/htmlarea.css);
-	</style>
-	<script defer='defer'>(new HTMLArea(document.forms['blogpost']['data'])).generate();</script>
-{/if}
 </td></tr>
 {if $postId > 0}
 	<tr><td class="editblogform">{tr}Upload image for this post{/tr}</td>
