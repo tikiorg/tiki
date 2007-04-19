@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.29 2007-04-02 17:21:21 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.30 2007-04-19 20:41:32 sylvieg Exp $
 //
 // TODO : 
 // ----------
@@ -224,6 +224,7 @@ function wikiplugin_trackerlist($data, $params) {
 		$smarty->assign_by_ref('filterfield',$filtervalue);
 		$smarty->assign_by_ref('fields', $passfields);
 		$smarty->assign_by_ref('filterfield',$exactvalue);
+		$smarty->assign_by_ref('listfields', $listfields);
 
 		if (count($passfields)) {
 			$items = $trklib->list_items($trackerId, $tr_offset, $max, $tr_sort_mode, $passfields, $filterfield, $filtervalue, $tr_status, $tr_initial, $exactvalue);
