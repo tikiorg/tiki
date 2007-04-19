@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.735 2007-04-05 18:34:22 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.736 2007-04-19 16:21:11 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3395,6 +3395,7 @@ function add_pageview() {
 	$old_sort_mode = '';
 	if ($sort_mode == 'size_desc') $sort_mode = 'page_size_desc';
 	if ($sort_mode == 'size_asc') $sort_mode = 'page_size_asc';
+	$select = '';
 	
 	// If sort mode is versions, links or backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
 	if (in_array($sort_mode, array(
@@ -3442,6 +3443,7 @@ function add_pageview() {
 				$bindvars[] = $val;
 			} elseif ($type == 'structHead') {
 				$join_tables .= " inner join `tiki_structures` as ts on (ts.`page_id` = tp.`page_id` and ts.`parent_id` = 0) ";
+				$select .= ',ts.`page_alias`';
 			}
 		}
 	}
@@ -3473,7 +3475,7 @@ function add_pageview() {
 	if (!empty($join_bindvars)) {
 		$bindvars = empty($bindvars)? $join_bindvars : array_merge($join_bindvars, $bindvars);
 	}
-	$query = "select tp.* from `tiki_pages` as tp $join_tables $mid order by ".$this->convert_sortmode($sort_mode);
+	$query = "select tp.* $select from `tiki_pages` as tp $join_tables $mid order by ".$this->convert_sortmode($sort_mode);
 	$query_cant = "select count(*) from `tiki_pages` as tp $join_tables $mid";
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
 

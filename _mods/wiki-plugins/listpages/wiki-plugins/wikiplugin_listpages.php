@@ -1,7 +1,7 @@
 <?php
-// $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/listpages/wiki-plugins/wikiplugin_listpages.php,v 1.2 2007-03-14 19:49:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/listpages/wiki-plugins/wikiplugin_listpages.php,v 1.3 2007-04-19 16:22:47 sylvieg Exp $
 function wikiplugin_listpages_help() {
-	return tra("List pages.")."<br />~np~{LISTPAGES(initial=txt,showNameOnly=y,categId=id,structHead=y)}{LISTPAGES}~/np~";
+	return tra("List pages.")."<br />~np~{LISTPAGES(initial=txt,showNameOnly=y,categId=id,structHead=y,showPageAlias=y)}{LISTPAGES}~/np~";
 }
 function wikiplugin_listpages($data, $params) {
 	global $feature_listPages, $tiki_p_view, $tikilib, $smarty;
@@ -31,6 +31,8 @@ function wikiplugin_listpages($data, $params) {
 	}
 	$listpages = $tikilib->list_pages($offset, $max, 'pageName_asc', '', $initial, true, (isset($showOnlyName)&& $showOnlyName == 'y')? true: false, false, false, $filter);
 	$smarty->assign_by_ref('listpages', $listpages['data']);
+	if (!empty($showPageAlias) && $showPageAlias == 'y')
+		$smarty->assign_by_ref('showPageAlias', $showPageAlias);
 	if (isset($showNameOnly) && $showNameOnly == 'y') {
 		$ret = $smarty->fetch('wiki-plugins/wikiplugin_listpagenames.tpl');
 	} else {
