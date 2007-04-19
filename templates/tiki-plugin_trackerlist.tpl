@@ -1,4 +1,4 @@
-{* $Id: tiki-plugin_trackerlist.tpl,v 1.19 2007-02-22 13:35:46 sylvieg Exp $ *}
+{* $Id: tiki-plugin_trackerlist.tpl,v 1.20 2007-04-19 20:41:31 sylvieg Exp $ *}
 {if $showtitle eq 'y'}<div class="pagetitle">{$tracker_info.name}</div>{/if}
 {if $showdesc eq 'y'}<div class="wikitext">{$tracker_info.description}</div>{/if}
 
@@ -24,7 +24,8 @@
 	<td class="heading auto" style="width:20px;">&nbsp;</td>
 {/if}
 
-{foreach key=jx item=ix from=$fields}
+{foreach item=iy from=$listfields}
+{assign var=ix value=$fields[$iy]}
 {if $ix.isPublic eq 'y' and $ix.isHidden ne 'y' and $ix.type ne 'x' and $ix.type ne 'h'}
 {if $ix.type eq 'l'}
 <td class="heading auto">{$ix.name|default:"&nbsp;"}</td>
