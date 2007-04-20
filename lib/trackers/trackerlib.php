@@ -588,6 +588,10 @@ class TrackerLib extends TikiLib {
 					$fopt["trackerId"] = $opts[0];
 				} elseif ($fopt["type"] == 'a') {
 					$fopt["pvalue"] = $this->parse_data(trim($fopt["value"]));
+				} elseif ($fopt["type"] == 'C') {
+					$calc = preg_replace('/#([0-9])/','$fil[\1]',$fopt['options']);
+					eval('$computed = '.$calc.';');
+					$fopt['value'] = $computed;
 				} elseif ($fopt["type"] == 's') {
 					$key = 'tracker.'.$trackerId.'.'.$itid;
 					$fopt["numvotes"] = $this->getOne("select count(*) from `tiki_user_votings` where `id`=?",array($key));
@@ -933,7 +937,7 @@ class TrackerLib extends TikiLib {
 								} else {
 									$new_value = $value;
 								}
-								$the_data .= "$name".":\n   $value\n\n";
+								$the_data .= "$name".":\n   $new_value\n\n";
 							}
 							$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
 							$this->query($query,array((int) $itemId,(int) $fieldId,(string)$value));
@@ -945,7 +949,7 @@ class TrackerLib extends TikiLib {
 							} else {
 								$new_value = $value;
 							}
-							$the_data .= "$name".":\n   $value\n\n";
+							$the_data .= "$name".":\n   $new_value\n\n";
 						}
 
 						$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
@@ -1753,6 +1757,10 @@ class TrackerLib extends TikiLib {
 		$type['s'] = array(
 			'label'=>tra('system'),
 			'opt'=>false);
+		$type['C'] = array(
+			'label'=>tra('Computed field'),
+			'opt'=>true,
+			'help'=>tra('Formula for computation, using # for indicating fields and +,*,/,- and parenthesis for operations.'));
 
 		return $type;
 	}
