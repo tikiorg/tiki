@@ -33,7 +33,8 @@
     </select>
     </td>
 </tr> 
-<tr><td class="formcolor">{tr}Email or user:{/tr}</td>        
+<tr><td class="formcolor">{tr}User:{/tr}</td><td class="formcolor"><input type="text" id="flogin" name="login" /></td></tr>
+<tr><td class="formcolor">{tr}Email:{/tr}</td>        
     <td class="formcolor">
       <input type="text" id='femail' name="email" />
       <a href="#" onclick="javascript:document.getElementById('femail').value='{$admin_mail}'" class="link">{tr}use admin email{/tr}</a>
@@ -62,6 +63,7 @@
 <td class="heading"><a class="tableheading" href="tiki-admin_notifications.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'event_desc'}event_asc{else}event_desc{/if}">{tr}event{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_notifications.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'object_desc'}object_asc{else}object_desc{/if}">{tr}object{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_notifications.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}email{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-admin_notifications.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}user{/tr}</a></td>
 <td class="heading">{tr}action{/tr}</td>
 </tr>
 {cycle print=false values="even,odd"}
@@ -70,8 +72,9 @@
 <td>{$channels[user].event}</td>
 <td>{$channels[user].object}</td>
 <td>{$channels[user].email}</td>
+<td>{$channels[user].user}</td>
 <td>
-   <a class="link" href="tiki-admin_notifications.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removeevent={$channels[user].hash}">{tr}remove{/tr}</a>
+   <a class="link" href="tiki-admin_notifications.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removeevent={$channels[user].hash}"><img src='pics/icons/cross.png' border='0' width='16' height='16' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' /></a>
 </td>
 </tr>
 {sectionelse}
