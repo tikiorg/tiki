@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_menu.tpl,v 1.27 2007-03-06 20:31:40 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_menu.tpl,v 1.28 2007-04-20 09:33:49 mose Exp $ *}
 {assign var=opensec value='0'}
 {assign var=sep value=''}
 
@@ -35,12 +35,12 @@ $smarty->assign('opensec', $opensec);
 	{/if}
 {/if} 
 {if $chdata.url}
-	<a href="{$chdata.url|escape}" class="separator">
+<a href="{$chdata.url|escape}" class="separator">
+{else}
+<a href="javascript:icntoggle('menu{$cname}');" class="separator">
 {/if}
 {tr}{$chdata.name}{/tr}
-{if $chdata.url}
-	</a>
-{/if}
+</a>
 {if ($menu_info.type eq 'e' or $menu_info.type eq 'd') and $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('menu{$cname}');">[+]</a>{/if} 
 </div> {* separator *}
 
