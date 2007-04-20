@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.149 2007-04-04 17:23:39 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.150 2007-04-20 15:09:58 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -477,7 +477,7 @@ DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Freetag
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Freetags','tiki-browse_freetags.php',27,'feature_freetags','tiki_p_view_freetags','');
 
 #2005-12-16 lfagundes
-ALTER TABLE `tiki_history` ADD KEY(`user`);
+ALTER TABLE `tiki_history` ADD KEY user (`user`);
 
 #2006-01-05 sg
 ALTER TABLE users_groups ADD registrationUsersFieldIds text;
@@ -490,8 +490,8 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_display_my_to_o
 
 #2006-02-11 lfagundes
 alter table tiki_private_messages add `received` tinyint(1) not null default 0;
-alter table tiki_private_messages add key(`received`); 
-alter table tiki_private_messages add key(`timestamp`); 
+alter table tiki_private_messages add key received (`received`); 
+alter table tiki_private_messages add key timestamp (`timestamp`); 
 
 # "data" is reserved word in cpaint
 alter table tiki_private_messages add `message` varchar(255);
@@ -687,7 +687,7 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_events', 'Can view events details', 'registered', 'calendar');
 
 #sylvieg 2006-12-08
-ALTER TABLE tiki_objects ADD KEY(type, objectId);
+ALTER TABLE tiki_objects ADD KEY type (type, objectId);
 ALTER TABLE `tiki_file_galleries` ADD `show_modified` char(1) default NULL;
 
 #sylvieg 2006-12-12
@@ -697,14 +697,14 @@ ALTER TABLE `tiki_file_galleries` ADD `show_creator` char(1) default NULL;
 UPDATE tiki_file_galleries SET show_creator='y' WHERE show_created='y' and show_creator is NULL;
 
 #sylvieg 2006-12-20
-ALTER TABLE tiki_files ADD KEY(created);
-ALTER TABLE tiki_files ADD KEY(archiveId);
-ALTER TABLE tiki_files ADD KEY(galleryId);
-ALTER TABLE tiki_user_assigned_modules  DROP PRIMARY KEY , ADD PRIMARY KEY (name(30),user,position);
-ALTER TABLE tiki_theme_control_objects DROP PRIMARY KEY , ADD PRIMARY KEY (objId(100), type(100));
-ALTER TABLE tiki_objects ADD KEY(itemId, type);
-ALTER TABLE users_users ADD KEY(registrationDate);
-ALTER TABLE tiki_rss_modules ADD KEY(name);
+ALTER TABLE tiki_files ADD KEY created (created);
+ALTER TABLE tiki_files ADD KEY archiveId (archiveId);
+ALTER TABLE tiki_files ADD KEY galleryId (galleryId);
+ALTER TABLE tiki_user_assigned_modules  DROP PRIMARY KEY , ADD PRIMARY KEY name (name(30),user,position);
+ALTER TABLE tiki_theme_control_objects DROP PRIMARY KEY , ADD PRIMARY KEY objId (objId(100), type(100));
+ALTER TABLE tiki_objects ADD KEY itemId (itemId, type);
+ALTER TABLE users_users ADD KEY registrationDate (registrationDate);
+ALTER TABLE tiki_rss_modules ADD KEY name (name);
 
 #sylvie 2006-12-21
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_actionlog', 'Can view action log', 'registered', 'tiki');
@@ -827,8 +827,8 @@ alter table tiki_user_quizzes change user user varchar(200) default '';
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_assign_perm_blog', 'Can assign perms to blog', 'admin', 'blogs');
 
 #01/16/2007 sylvieg
-ALTER TABLE tiki_directory_sites ADD KEY(isValid);
-ALTER TABLE tiki_directory_sites ADD KEY(url);
+ALTER TABLE tiki_directory_sites ADD KEY isValid (isValid);
+ALTER TABLE tiki_directory_sites ADD KEY url (url);
 
 #02/01/2007 mkalbere
 ALTER TABLE `tiki_tracker_item_fields` ADD FULLTEXT (value);
@@ -895,4 +895,4 @@ UPDATE users_permissions set type='cms' where type = 'topics';
 ALTER TABLE `tiki_links` ADD INDEX `toPage` (`toPage`);
 
 #sylvieg 2007/04/04
-ALTER TABLE `tiki_actionlog_conf` ADD `id` int(11) NOT NULL auto_increment FIRST, ADD KEY (`id`);
+ALTER TABLE `tiki_actionlog_conf` ADD `id` int(11) NOT NULL auto_increment FIRST, ADD KEY id (`id`);
