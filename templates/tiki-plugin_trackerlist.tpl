@@ -1,4 +1,4 @@
-{* $Id: tiki-plugin_trackerlist.tpl,v 1.21 2007-04-19 22:06:32 sylvieg Exp $ *}
+{* $Id: tiki-plugin_trackerlist.tpl,v 1.22 2007-04-20 21:29:36 sylvieg Exp $ *}
 {if $showtitle eq 'y'}<div class="pagetitle">{$tracker_info.name}</div>{/if}
 {if $showdesc eq 'y'}<div class="wikitext">{$tracker_info.description}</div>{/if}
 
@@ -66,115 +66,113 @@
 {html_image file=$status_types.$ustatus.image title=$status_types.$ustatus.label alt=$status_types.$ustatus.label}
 </td>
 {/if}
+{section name=ix loop=$items[user].field_values}
 
-{foreach item=iy from=$listfields}
-{assign var=ix value=$items[user].field_values[$iy]}
-
-{if $ix.isPublic eq 'y' and $ix.isHidden ne 'y' and $ix.type ne 'x' and $ix.type ne 'h'}
-{if $ix.type eq 'l'}
+{if $items[user].field_values[ix].isPublic eq 'y' and $items[user].field_values[ix].isHidden ne 'y' and $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h'}
+{if $items[user].field_values[ix].type eq 'l'}
 <td class="auto">
-{foreach key=tid item=tlabel from=$ix.links}
-<div><a href="tiki-view_tracker_item.php?trackerId={$ix.trackerId}&amp;itemId={$tid}" class="link">{$tlabel}</a></div>
+{foreach key=tid item=tlabel from=$items[user].field_values[ix].links}
+<div><a href="tiki-view_tracker_item.php?trackerId={$items[user].field_values[ix].trackerId}&amp;itemId={$tid}" class="link">{$tlabel}</a></div>
 {/foreach}
 </td>
-{elseif $showlinks eq 'y' and $ix.isMain eq 'y' or ($ix.linkId and $ix.trackerId)}
+{elseif $showlinks eq 'y' and $items[user].field_values[ix].isMain eq 'y' or ($items[user].field_values[ix].linkId and $items[user].field_values[ix].trackerId)}
 <td class="auto">
 
-{if $ix.linkId and $ix.trackerId}
-<a href="tiki-view_tracker_item.php?trackerId={$ix.trackerId}&amp;itemId={$ix.linkId}" class="link">
+{if $items[user].field_values[ix].linkId and $items[user].field_values[ix].trackerId}
+<a href="tiki-view_tracker_item.php?trackerId={$items[user].field_values[ix].trackerId}&amp;itemId={$items[user].field_values[ix].linkId}" class="link">
 
 {elseif $tiki_p_admin eq 'y' or $perms.tiki_p_view_trackers eq 'y' or $perms.tiki_p_modify_tracker_items eq 'y' or $perms.tiki_p_comment_tracker_items eq 'y'}
-<a class="tablename" href="tiki-view_tracker_item.php?trackerId={$ix.trackerId}&amp;itemId={$items[user].itemId}&amp;show=view&amp;from={$page|escape:'url'}">
+<a class="tablename" href="tiki-view_tracker_item.php?trackerId={$items[user].field_values[ix].trackerId}&amp;itemId={$items[user].itemId}&amp;show=view&amp;from={$page|escape:'url'}">
 {/if}
 
-{if $ix.type eq 'f'}
-{$ix.value|tiki_short_datetime|default:"&nbsp;"}
+{if $items[user].field_values[ix].type eq 'f'}
+{$items[user].field_values[ix].value|tiki_short_datetime|default:"&nbsp;"}
 
-{elseif $ix.type eq 'c'}
-[ {$ix.value|replace:"y":"{tr}Yes{/tr}"|replace:"n":"{tr}No{/tr}"|default:"{tr}No{/tr}"} ]
+{elseif $items[user].field_values[ix].type eq 'c'}
+[ {$items[user].field_values[ix].value|replace:"y":"{tr}Yes{/tr}"|replace:"n":"{tr}No{/tr}"|default:"{tr}No{/tr}"} ]
 
-{elseif $ix.type eq 'i'}
-<img src="{$ix.value}" alt="" />
+{elseif $items[user].field_values[ix].type eq 'i'}
+<img src="{$items[user].field_values[ix].value}" alt="" />
 
-{elseif $ix.type eq 'e'}
-{foreach item=ii from=$ix.categs}{$ii.name}<br />{/foreach}
+{elseif $items[user].field_values[ix].type eq 'e'}
+{foreach item=ii from=$items[user].field_values[ix].categs}{$ii.name}<br />{/foreach}
 
-{elseif $ix.type eq 'd'}
-{$ix.value|tr_if}
+{elseif $items[user].field_values[ix].type eq 'd'}
+{$items[user].field_values[ix].value|tr_if}
 
 {else}
-{$ix.value|truncate:255:"..."|default:"&nbsp;"}
+{$items[user].field_values[ix].value|truncate:255:"..."|default:"&nbsp;"}
 
 {/if}
 
-{if $perms.tiki_p_view_trackers eq 'y' or $perms.tiki_p_modify_tracker_items eq 'y' or $perms.tiki_p_comment_tracker_items eq 'y' or $ix.linkId}</a>{/if}
+{if $perms.tiki_p_view_trackers eq 'y' or $perms.tiki_p_modify_tracker_items eq 'y' or $perms.tiki_p_comment_tracker_items eq 'y' or $items[user].field_values[ix].linkId}</a>{/if}
 </td>
 {else}
-{if $ix.type eq 'f' or $ix.type eq 'j'}
+{if $items[user].field_values[ix].type eq 'f' or $items[user].field_values[ix].type eq 'j'}
 <td class="auto">
-{$ix.value|tiki_short_datetime|default:"&nbsp;"}
+{$items[user].field_values[ix].value|tiki_short_datetime|default:"&nbsp;"}
 </td>
 
-{elseif $ix.type eq 'c'}
+{elseif $items[user].field_values[ix].type eq 'c'}
 <td class="auto">
-{$ix.value|replace:"y":"{tr}Yes{/tr}"|replace:"n":"{tr}No{/tr}"|default:"{tr}No{/tr}"}
+{$items[user].field_values[ix].value|replace:"y":"{tr}Yes{/tr}"|replace:"n":"{tr}No{/tr}"|default:"{tr}No{/tr}"}
 </td>
 
-{elseif $ix.type eq 's' and $ix.name eq "Rating" and $perms.tiki_p_tracker_view_ratings eq 'y'}
+{elseif $items[user].field_values[ix].type eq 's' and $items[user].field_values[ix].name eq "Rating" and $perms.tiki_p_tracker_view_ratings eq 'y'}
 <td class="auto">
-<b title="{tr}Rating{/tr}: {$ix.value|default:"-"}, {tr}Number of voices{/tr}: {$ix.numvotes|default:"-"}, {tr}Average{/tr}: {$ix.voteavg|default:"-"}">&nbsp;{$ix.value|default:"-"}&nbsp;</b></td>
+<b title="{tr}Rating{/tr}: {$items[user].field_values[ix].value|default:"-"}, {tr}Number of voices{/tr}: {$items[user].field_values[ix].numvotes|default:"-"}, {tr}Average{/tr}: {$items[user].field_values[ix].voteavg|default:"-"}">&nbsp;{$items[user].field_values[ix].value|default:"-"}&nbsp;</b></td>
 {if $perms.tiki_p_tracker_vote_ratings eq 'y'}
 <td class="auto" nowrap="nowrap">
 <span class="button2">
 {if $items[user].my_rate eq NULL}
 <b class="linkbut highlight">-</b>
 {else}
-<a href="{$smarty.server.PHP_SELF}?{if $page}page={$page|escape:url}&amp;{/if}trackerId={$items[user].trackerId}&amp;itemId={$items[user].itemId}&amp;fieldId={$ix.fieldId}&amp;rate_{$items[user].trackerId}=NULL" 
+<a href="{$smarty.server.PHP_SELF}?{if $page}page={$page|escape:url}&amp;{/if}trackerId={$items[user].trackerId}&amp;itemId={$items[user].itemId}&amp;fieldId={$items[user].field_values[ix].fieldId}&amp;rate_{$items[user].trackerId}=NULL" 
 class="linkbut">-</a>
 {/if}
-{section name=i loop=$ix.options_array}
-{if $ix.options_array[i] eq $items[user].my_rate}
-<b class="linkbut highlight">{$ix.options_array[i]}</b>
+{section name=i loop=$items[user].field_values[ix].options_array}
+{if $items[user].field_values[ix].options_array[i] eq $items[user].my_rate}
+<b class="linkbut highlight">{$items[user].field_values[ix].options_array[i]}</b>
 {else}
-<a href="{$smarty.server.PHP_SELF}?{if $page}page={$page|escape:url}&amp;{/if}trackerId={$items[user].trackerId}&amp;itemId={$items[user].itemId}&amp;fieldId={$ix.fieldId}&amp;rate_{$items[user].trackerId}={$ix.options_array[i]}" 
-class="linkbut">{$ix.options_array[i]}</a>
+<a href="{$smarty.server.PHP_SELF}?{if $page}page={$page|escape:url}&amp;{/if}trackerId={$items[user].trackerId}&amp;itemId={$items[user].itemId}&amp;fieldId={$items[user].field_values[ix].fieldId}&amp;rate_{$items[user].trackerId}={$items[user].field_values[ix].options_array[i]}" 
+class="linkbut">{$items[user].field_values[ix].options_array[i]}</a>
 {/if}
 {/section}
 </span>
 </td>
 {/if}
 
-{elseif $ix.type eq 'e'}
+{elseif $items[user].field_values[ix].type eq 'e'}
 <td class="auto">
-{foreach item=ii from=$ix.categs}{$ii.name}<br />{/foreach}
+{foreach item=ii from=$items[user].field_values[ix].categs}{$ii.name}<br />{/foreach}
 </td>
 
-{elseif $ix.type eq 'y'}
+{elseif $items[user].field_values[ix].type eq 'y'}
 <td class="auto">
-{assign var=o_opt value=$ix.options_array[0]}
-{if $o_opt ne '1'}<img border="0" src="img/flags/{$ix.value}.gif" title="{$ix.value}" />{/if}
+{assign var=o_opt value=$items[user].field_values[ix].options_array[0]}
+{if $o_opt ne '1'}<img border="0" src="img/flags/{$items[user].field_values[ix].value}.gif" title="{$items[user].field_values[ix].value}" />{/if}
 {if $o_opt ne '1' and $o_opt ne '2'}&nbsp;{/if}
-{if $o_opt ne '2'}{tr}{$ix.value}{/tr}{/if}
+{if $o_opt ne '2'}{tr}{$items[user].field_values[ix].value}{/tr}{/if}
 </td>
 
-{elseif $ix.type eq 'a'}
+{elseif $items[user].field_values[ix].type eq 'a'}
 <td class="auto">
-{$ix.pvalue|default:"&nbsp;"}
+{$items[user].field_values[ix].pvalue|default:"&nbsp;"}
 </td>
 
-{elseif $ix.type eq 'd'}
-<td class="auto">{$ix.value|tr_if}</td>
+{elseif $items[user].field_values[ix].type eq 'd'}
+<td class="auto">{$items[user].field_values[ix].value|tr_if}</td>
 
 
-{elseif $ix.type ne 'x' and $ix.type ne 'h'}
+{elseif $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h'}
 <td class="auto">
-{$ix.value|default:"&nbsp;"}
+{$items[user].field_values[ix].value|default:"&nbsp;"}
 </td>
 {/if}
 {/if}
 
 {/if}
-{/foreach}
+{/section}
 
 {if $tracker_info.showCreated eq 'y'}
 <td>{$items[user].created|tiki_short_datetime}</td>
