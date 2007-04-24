@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.31 2007-04-23 16:05:27 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.32 2007-04-24 18:23:49 sylvieg Exp $
 //
 // TODO : 
 // ----------
@@ -166,17 +166,7 @@ function wikiplugin_trackerlist($data, $params) {
 		$allfields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '');
 		if (!empty($fields)) {
 			$listfields = split(':',$fields);
-			$tmp = array();
-			foreach ($listfields as $fieldId) {
-				foreach ($allfields['data'] as $field) {
-					if ($field['fieldId'] == $fieldId) {
-						$tmp[] = $field;
-						break;
-					}
-				}
-			}
-			$allfields['data'] = $tmp;
-			$allfields['cant'] = sizeof(tmp);
+			$allfields = $trklib->sort_fields($allfields, $listfields);
 		} else {
 			foreach($allfields['data'] as $f) {
 				$listfields[] = $f['fieldId'];

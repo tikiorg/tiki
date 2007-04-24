@@ -1963,6 +1963,24 @@ class TrackerLib extends TikiLib {
 			$emails = array_unique($emails);
 		return $emails;
 	}
+	/* sort allFileds function of a list of fields */
+	function sort_fields($allFields, $listFields) {
+		$tmp = array();
+		foreach ($listFields as $fieldId) {
+			if (substr($fieldId, 0, 1) == '-') {
+				$fieldId = substr($fieldId, 1);
+			}
+			foreach ($allFields['data'] as $field) {
+				if ($field['fieldId'] == $fieldId) {
+					$tmp[] = $field;
+					break;
+				}
+			}
+		}
+		$allFields['data'] = $tmp;
+		$allFields['cant'] = sizeof(tmp);
+		return $allFields;
+	}
 
 }
 

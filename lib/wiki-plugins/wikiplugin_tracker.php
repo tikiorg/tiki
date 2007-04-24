@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.62 2007-03-08 18:13:01 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.63 2007-04-24 18:23:49 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -244,7 +244,7 @@ function wikiplugin_tracker($data, $params) {
 			$outf = array();
 			if (isset($fields)) {
 				$fl = split(":",$fields);
-			
+				$flds = $trklib->sort_fields($flds, $fl);		
 				foreach ($fl as $l) {
 					if (substr($l,0,1) == '-') {
 						$l = substr($l,1);
