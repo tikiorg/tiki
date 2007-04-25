@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.61 2007-02-28 15:20:58 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.62 2007-04-25 18:39:48 sylvieg Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -6,7 +6,7 @@
     <tr>
 
 {if $edit_page eq 'y'}
-  {if $wysiwyg eq 'n'} {* Show this button only in normal editing mode *}
+  {if $wysiwyg eq 'n' or $wysiwyg_wiki_parsed eq 'y' or $wysiwyg_wiki_semi_parsed eq 'y'} {* Show this button only in normal editing mode *}
   <td>
     <div class="button2">
       <a href="#edithelp" onclick="javascript:flip('edithelpzone'); return true;" name="edithelp" class="linkbut">{tr}wiki help{/tr}</a>

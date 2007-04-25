@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.47 2006-11-07 14:21:54 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.48 2007-04-25 18:39:48 sylvieg Exp $ *}
 {* Show wiki syntax and plugins help *}
 {* TODO: Add links to add samples to edit form *}
 
 <div class="wiki-edithelp"  id='edithelpzone' >
 <div id="wikihelp-tab">
-{if count($plugins) ne 0}
+{if count($plugins) ne 0 and !($wysiwyg ne 'y' and $wysiwyg_wiki_parsed ne 'y' and $wysiwyg_wiki_semi_parsed ne 'y')}
   <div style="text-align: right;">
     <a href="javascript:hide('wikihelp-tab');show('wikiplhelp-tab');">{tr}Show Plugins Help{/tr}</a>
     <a title="{tr}Close{/tr}" href="javascript:flip('edithelpzone');">[x]</a>
@@ -21,6 +21,7 @@
 {/if}
 
 <table width="100%">
+{if $wysiwyg eq 'n' or ($wysiwyg eq 'y' and $wysiwyg_wiki_parsed eq 'y')}
 <tr><td width="20%"><strong>{tr}Bold text{/tr}:</strong></td><td> 2 {tr}underscores{/tr} "_". {tr}Example{/tr}: __{tr}text{/tr}__</td></tr>
 <tr><td width="20%"><strong>{tr}Italic text{/tr}:</strong></td><td> 2 {tr}single quotes{/tr} "'". {tr}Example{/tr}: ''{tr}text{/tr}''</td></tr>
 <tr><td><strong>{tr}Centered text{/tr}:</strong></td><td> 2 {tr}colons{/tr} ":". {tr}Example{/tr}: ::{tr}some text{/tr}::</td></tr>
@@ -31,17 +32,19 @@
 <tr><td><strong>{tr}Lists{/tr}:</strong></td><td> * {tr}for bullet lists{/tr}, # {tr}for numbered lists{/tr}, ;{tr}term{/tr}:{tr}definition{/tr} {tr}for definiton lists{/tr}</td></tr>
 <tr><td><strong>{tr}Headings{/tr}:</strong></td><td> "!", "!!", "!!!" {tr}make headings{/tr}</td></tr>
 <tr><td><strong>{tr}Show/Hide{/tr}:</strong></td><td> "!+", "!!-" {tr}show/hide heading section. + (shown) or - (hidden) by default{/tr}.</td></tr>
-<tr><td><strong>{tr}Wiki References{/tr}:</strong></td><td> {tr}JoinCapitalizedWords or use{/tr} (({tr}page{/tr})) {tr}or{/tr} (({tr}page|desc{/tr})) {tr}for wiki references{/tr}, )){tr}SomeName{/tr}(( {tr}prevents referencing{/tr}</td></tr>
-<tr><td><strong>{tr}External links{/tr}:</strong></td><td> {tr}use square brackets for an external link: [URL] or [URL|link_description] or [URL|description|nocache]  (that last form prevents the local Wiki from caching the page; please use that form for large pages!).{/tr}<br />{tr}For an external Wiki, use ExternalWikiName:PageName or ((External Wiki Name: Page Name)){/tr}</td></tr>
 {if $feature_wiki_tables eq 'new'}
 <tr><td><strong>{tr}Tables{/tr}:</strong></td><td> "||{tr}row{/tr}1-{tr}col{/tr}1|{tr}row{/tr}1-{tr}col{/tr}2|{tr}row{/tr}1-{tr}col{/tr}3<br />{tr}row{/tr}2-{tr}col{/tr}1|{tr}row{/tr}2-{tr}col{/tr}2|{tr}row{/tr}2-{tr}col{/tr}3||" {tr}creates a table{/tr}</td></tr>
 {else}
 <tr><td><strong>{tr}Tables{/tr}:</strong></td><td> "||{tr}row{/tr}1-{tr}col{/tr}1|{tr}row{/tr}1-{tr}col{/tr}2|{tr}row{/tr}1-{tr}col{/tr}3||{tr}row{/tr}2-{tr}col{/tr}1|{tr}row{/tr}2-{tr}col{/tr}2|{tr}row{/tr}2-{tr}col{/tr}3||" {tr}creates a table{/tr}</td></tr>
 {/if}
+<tr><td><strong>{tr}Horizontal rule{/tr}:</strong></td><td>"-<em></em>-<em></em>-<em></em>-" {tr}makes a horizontal rule{/tr}</td></tr>
+{/if}{* wysiwyg *}
+
+<tr><td><strong>{tr}Wiki References{/tr}:</strong></td><td> {tr}JoinCapitalizedWords or use{/tr} (({tr}page{/tr})) {tr}or{/tr} (({tr}page|desc{/tr})) {tr}for wiki references{/tr}, )){tr}SomeName{/tr}(( {tr}prevents referencing{/tr}</td></tr>
+<tr><td><strong>{tr}External links{/tr}:</strong></td><td> {tr}use square brackets for an external link: [URL] or [URL|link_description] or [URL|description|nocache]  (that last form prevents the local Wiki from caching the page; please use that form for large pages!).{/tr}<br />{tr}For an external Wiki, use ExternalWikiName:PageName or ((External Wiki Name: Page Name)){/tr}</td></tr>
 <tr><td><strong>{tr}Images{/tr}:</strong></td><td> "{literal}{{/literal}img src=http://example.com/foo.jpg width=200 height=100 align=center imalign=right link=http://www.yahoo.com desc=foo alt=txt usemap=name class=xyz}" {tr}displays an image{/tr} {tr}height width desc link and align are optional{/tr}</td></tr>
 <tr><td><strong>{tr}Non cacheable images{/tr}:</strong></td><td> "{literal}{{/literal}img src=http://example.com/foo.jpg?nocache=1 width=200 height=100 align=center link=http://www.yahoo.com desc=foo}" {tr}displays an image{/tr} {tr}height width desc link and align are optional{/tr}</td></tr>
 <tr><td><strong>{tr}Line break{/tr}:</strong></td><td>"%%%" {tr}(very useful especially in tables){/tr}</td></tr>
-<tr><td><strong>{tr}Horizontal rule{/tr}:</strong></td><td>"-<em></em>-<em></em>-<em></em>-" {tr}makes a horizontal rule{/tr}</td></tr>
 {if $feature_drawings eq 'y'}
 <tr><td><strong>{tr}Drawings{/tr}:</strong></td><td> {literal}{{/literal}draw name=foo} {tr}creates the editable drawing foo{/tr}</td></tr>
 {/if}
