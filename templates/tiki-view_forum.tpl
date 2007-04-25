@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.78 2007-04-02 17:21:23 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.79 2007-04-25 18:16:17 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -354,11 +354,11 @@ a moderator approves it.{/tr}</small>
 
   {if $tiki_p_admin_forum eq 'y' or ($comments_coms[ix].userName == $user && $tiki_p_forum_post eq 'y') }
   <a href="tiki-view_forum.php?openpost=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}"
-     class="admlink">{html_image file='img/icons/edit.gif' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}'}</a>
+     class="admlink">{html_image file='pics/icons/page_edit.png' border='0'  width="16" height="16" alt='{tr}edit{/tr}' title='{tr}edit{/tr}'}</a>
    {/if}
   {if $tiki_p_admin_forum eq 'y' }
    <a href="tiki-view_forum.php?comments_remove=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}"
-     class="admlink"><img src="img/icons2/delete.gif" border="0" width="16" height="16"  alt='{tr}remove{/tr}' title='{tr}remove{/tr}' /></a>
+     class="admlink"><img src="pics/icons/cross.png" border="0" width="16" height="16"  alt='{tr}remove{/tr}' title='{tr}remove{/tr}' /></a>
   {/if}
 
   </td>   
