@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.52 2007-03-28 13:10:01 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.53 2007-04-25 18:16:17 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_forums.php">{tr}Admin Forums{/tr}</a>
  
 {if $feature_help eq 'y'}
@@ -11,6 +11,7 @@
 
 {if $forumId > 0}
 <a href="tiki-admin_forums.php" class="linkbut">{tr}Create new forum{/tr}</a>
+<a href="tiki-view_forum.php?forumId={$forumId}" class="linkbut">{tr}View this forum{/tr}</a>
 {else}
 <a href="#editforums" class="linkbut">{tr}Edit existing forums{/tr}</a>
 {if $dup_mode ne 'y'}
