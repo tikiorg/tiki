@@ -1,5 +1,5 @@
 <?php
-// $Id: notificationemaillib.php,v 1.26 2007-03-26 16:32:34 nyloth Exp $
+// $Id: notificationemaillib.php,v 1.27 2007-04-25 17:01:58 sylvieg Exp $
 /** \brief send the email notifications dealing with the forum changes to
   * \brief outbound address + admin notification addresses / forum admin email + watching users addresses
   * \param $event = 'forum_post_topic' or 'forum_post_thread'
@@ -25,34 +25,32 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 		include_once('lib/webmail/tikimaillib.php');
 		$mail = new TikiMail();
 		$mail->setSubject($title);
-		$foo = parse_url($_SERVER["REQUEST_URI"]);
-		$machine = $tikilib->httpPrefix() . dirname( $foo["path"] );
-		if ($event == 'forum_post_topic') {
-			$reply_link="\n\n----\n\nReply Link: <" . $machine
-			. "/tiki-view_forum_thread.php?forumId=" .
-			$forum_info['forumId'] .
-			"&comments_parentId=$threadId#form>\n";
+		if (!empty($forum_info['outbound_mails_reply_link']) && $forum_info['outbound_mails_reply_link'] == 'y') {
+			$foo = parse_url($_SERVER["REQUEST_URI"]);
+			$machine = $tikilib->httpPrefix() . dirname( $foo["path"] );
+			if ($event == 'forum_post_topic') {
+				$reply_link="$machine/tiki-view_forum_thread.php?forumId=" .
+				$forum_info['forumId'] .
+				"&comments_parentId=$threadId#form";
+			} else {
+		  		$reply_link="$machine/tiki-view_forum_thread.php?forumId=" .
+				$forum_info['forumId'] .
+				"&comments_reply_threadId=$object&comments_parentId=$threadId&post_reply=1#form";
+			}
 		} else {
-		  $reply_link="\n\n----\n\nReply Link: <" . $machine
-			. "/tiki-view_forum_thread.php?forumId=" .
-			$forum_info['forumId'] .
-			"&comments_reply_threadId=$object&comments_parentId=$threadId&post_reply=1#form>\n";
+			$reply_link = '';
 		}
-
-		if( array_key_exists( 'outbound_mails_reply_link', $forum_info )
-		    && $forum_info['outbound_mails_reply_link'] )
-		{
-		    $mail->setText($title."\n".$data.$reply_link);
-		} else {
-		    $mail->setText($title."\n".$data);
-		}
-
+		$smarty->assign('title', $title);
+		$smarty->assign('data', $data);
+		$smarty->assign('reply_link', $reply_link);
+		$smarty->assign('author', $author);
+		$mail_data = $smarty->fetch("mail/forum_outbound.tpl");
+		$mail->setText($mail_data);
 		$mail->setHeader("Reply-To", $my_sender);
 		$mail->setHeader("From", $my_sender);
 		$mail->setSubject($topicName);
 
-		if ($inReplyTo)
-		{
+		if ($inReplyTo)	{
 		    $mail->setHeader("In-Reply-To", "<".$inReplyTo.">");
 		}
 
@@ -83,7 +81,7 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 
 	// Users watching this forum or this post
 	if ($feature_user_watches == 'y') {
-		$nots = $tikilib->get_event_watches($event, $object);
+		$nots = $tikilib->get_event_watches($event, $parentId? $parentId: $object);
 		for ($i = count($nots) - 1; $i >=0; --$i) {
 			$nots[$i]['language'] = $tikilib->get_user_preference($nots[$i]['user'], "language", $defaultLanguage);
 		}
