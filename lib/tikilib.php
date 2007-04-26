@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.736 2007-04-19 16:21:11 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.737 2007-04-26 13:26:21 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -323,7 +323,7 @@ class TikiLib extends TikiDB {
 		case 'topic_article_created':
 		    global $userlib, $topicId;
 		    $res['perm']= ($userlib->user_has_permission($res['user'],'tiki_p_read_article') &&
-		                   $this->user_has_perm_on_object($res['user'],$topicId,'topic','tiki_p_topic_read'));
+		                   (empty($topicId) || $this->user_has_perm_on_object($res['user'],$topicId,'topic','tiki_p_topic_read')));
 		    break;
 		case 'calendar_changed':
 			$res['perm']= $this->user_has_perm_on_object($res['user'],$object,'calendar','tiki_p_view_calendar');
@@ -2727,7 +2727,7 @@ function add_pageview() {
 	$result = $this->query($query, array($oldy));
 	while ($res = $result->fetchRow()) {
 		if ($res['user'] && $res['user'] != $user)
-			$logslib->add_log('login', 'timeout', $res['user'], '', '', $res['timestamp']+ $delay);
+			$logslib->add_log('login', 'timeout', $res['user'], ' ', ' ', $res['timestamp']+ $delay);
 	}
 	$query = "delete from `tiki_sessions` where `sessionId`=? or `timestamp`<?";
 	$bindvars = array($sessionId, $oldy);
