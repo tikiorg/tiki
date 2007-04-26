@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.424 2007-04-25 14:45:55 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.425 2007-04-26 11:38:49 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -1693,17 +1693,23 @@ $user_preferences = array();
 // no compression at all
 $smarty->assign('gzip','Disabled');
 $smarty->assign('gzip_handler','none');
-// php compression enabled?
-if (ini_get('zlib.output_compression') == 1) {
-    $smarty->assign('gzip','Enabled');
-    $smarty->assign('gzip_handler','php');
-// if not, check if tiki compression is enabled
-} elseif ($feature_obzip == 'y' && (empty($output_zip) || $output_zip != 'n')) {
-	// tiki compression is enabled, then let activate the handler
-	ob_start ("ob_gzhandler");
-	$smarty->assign('gzip_handler','tiki');
-	$smarty->assign('gzip','Enabled');
-}
+
+if ( $force_no_compression === true ) ini_set('zlib.output_compression', 'off');
+else {
+	// php compression enabled?
+	if (ini_get('zlib.output_compression') == 1) {
+		$smarty->assign('gzip','Enabled');
+		$smarty->assign('gzip_handler','php');
+	// if not, check if tiki compression is enabled
+	} elseif ($feature_obzip == 'y') {
+		// tiki compression is enabled, then let activate the handler
+		if ($feature_obzip == 'y') {
+			ob_start ('ob_gzhandler');
+			$smarty->assign('gzip_handler','tiki');
+			$smarty->assign('gzip','Enabled');
+		}
+	}
+} 
 
 //print("tiki-setup: before include debugger.php:".$tiki_timer->elapsed()."<br />");
 /* Include debugger class declaration. So use loggin facility in
