@@ -1,7 +1,7 @@
 <?php
-// CVS: $Id: tiki-download_file.php,v 1.29 2007-04-25 14:45:55 sylvieg Exp $
+// CVS: $Id: tiki-download_file.php,v 1.30 2007-04-26 13:34:02 sylvieg Exp $
 // Initialization
-$output_zip = 'n';
+$force_no_compression = true;
 require_once('tiki-setup.php');
 include_once ('lib/stats/statslib.php');
 include_once('lib/filegals/filegallib.php');

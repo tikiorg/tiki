@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.425 2007-04-26 11:38:49 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.426 2007-04-26 13:34:02 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -1694,8 +1694,9 @@ $user_preferences = array();
 $smarty->assign('gzip','Disabled');
 $smarty->assign('gzip_handler','none');
 
-if ( $force_no_compression === true ) ini_set('zlib.output_compression', 'off');
-else {
+if (!empty($force_no_compression) && $force_no_compression) {
+	ini_set('zlib.output_compression', 'off');
+} else {
 	// php compression enabled?
 	if (ini_get('zlib.output_compression') == 1) {
 		$smarty->assign('gzip','Enabled');
