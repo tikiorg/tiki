@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.40 2007-02-19 17:01:56 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.41 2007-04-26 12:55:54 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -45,7 +45,8 @@ class LogsLib extends TikiLib {
 		$mid = '';
 		if ($find) {
 			$findesc = '%'.$find.'%';
-			$amid[] = "`logmessage` like ?";
+			$amid[] = "`logmessage` like ? or `loguser` like ?";
+			$bindvars[] = $findesc;
 			$bindvars[] = $findesc;
 		}
 		if ($type) {
