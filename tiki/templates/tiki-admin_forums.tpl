@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.53 2007-04-25 18:16:17 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.54 2007-04-27 17:54:18 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_forums.php">{tr}Admin Forums{/tr}</a>
  
 {if $feature_help eq 'y'}
@@ -9,15 +9,16 @@
 <a href="tiki-edit_templates.php?template=tiki-admin_forums.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin forums template{/tr}"><img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}</h1>
 
-{if $forumId > 0}
+{if $forumId > 0 or $dup_mode eq 'y'}
 <a href="tiki-admin_forums.php" class="linkbut">{tr}Create new forum{/tr}</a>
-<a href="tiki-view_forum.php?forumId={$forumId}" class="linkbut">{tr}View this forum{/tr}</a>
-{else}
-<a href="#editforums" class="linkbut">{tr}Edit existing forums{/tr}</a>
+{/if}
 {if $dup_mode ne 'y'}
-<a class="linkbut" href="tiki-admin_forums.php?dup_mode=y">{tr}duplicate forum{/tr}</a>
+<a class="linkbut" href="tiki-admin_forums.php?dup_mode=y">{tr}Duplicate forum{/tr}</a>
 {/if}
+{if $forumId > 0}
+<a href="tiki-view_forum.php?forumId={$forumId}" class="linkbut">{tr}View this forum{/tr}</a>
 {/if}
+<a href="#editforums" class="linkbut">{tr}List forums{/tr}</a>
 
 {if $tiki_p_admin eq 'y'}
 <a title="{tr}Configure/Options{/tr}" href="tiki-admin.php?page=forums"><img src="pics/icons/wrench.png" border="0" width="16" height="16" alt='{tr}Configure/Options{/tr}' /></a>
@@ -329,7 +330,7 @@
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
 <tr>
-<td class="{cycle advance=false}"><a class="link" href="tiki-view_forum.php?forumId={$channels[user].forumId}">{$channels[user].name}</a></td>
+<td class="{cycle advance=false}"><a class="link" href="tiki-view_forum.php?forumId={$channels[user].forumId}" title="{tr}view{/tr}">{$channels[user].name}</a></td>
 <td style="text-align:right;" class="{cycle advance=false}">{$channels[user].threads}</td>
 <td style="text-align:right;" class="{cycle advance=false}">{$channels[user].comments}</td>
 <td style="text-align:right;" class="{cycle advance=false}">{$channels[user].users}</td>
@@ -338,8 +339,8 @@
 <!--<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].lastPost|tiki_short_datetime}</td>-->
 <td style="text-align:right;" class="{cycle advance=false}">{$channels[user].hits}</td>
 <td class="{cycle}">
-{if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
-   <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;forumId={$channels[user].forumId}" title="edit"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>
+<a class="link" href="tiki-view_forum.php?forumId={$channels[user].forumId}" title="{tr}view{/tr}"><img border='0' height="16" width="18" src='pics/icons/table.png' alt="{tr}view{/tr}" </a>{if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
+   <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;forumId={$channels[user].forumId}" title="{tr}edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>
    {if $channels[user].individual eq 'y'}
    	<a class="link" href="tiki-objectpermissions.php?objectName=Forum+{$channels[user].name|escape}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}" title="{tr}active perms{/tr}"><img src='pics/icons/key_active.png' border='0' width="16" height="16" alt='{tr}active perms{/tr}' /></a>
    {else}
