@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.107 2007-03-22 13:14:01 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.108 2007-04-27 20:59:26 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -291,16 +291,22 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 			    $_REQUEST['comment_topicsmiley'], $_REQUEST["comment_topicsummary"], $_REQUEST["comments_title"]);
 
 		    // PROCESS ATTACHMENT HERE        
-		    if( $qId && isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name']) )
-		    {
-			check_ticket('view-forum');
-			$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
-			$commentslib->add_thread_attachment(
-				$forum_info, $qId, $fp, '',
-				$_FILES['userfile1']['name'],
-				$_FILES['userfile1']['type'],
-				$_FILES['userfile1']['size'] );
-		    }
+		    if( $qId && isset($_FILES['userfile1'])) {
+				if (is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
+					check_ticket('view-forum');
+					$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
+					$commentslib->add_thread_attachment(
+						$forum_info, $qId, $fp, '',
+						$_FILES['userfile1']['name'],
+						$_FILES['userfile1']['type'],
+						$_FILES['userfile1']['size'] );
+		    		}
+				else {
+					$smarty->assign('msg', $tikilib->uploaded_file_error($_FILES['userfile1']['error']));
+					$smarty->display("error.tpl");
+					die;
+				}
+			}
 		    //END ATTACHMENT PROCESSING
 		    // Now process attchement here (queued attachment)
 		} else {
@@ -335,7 +341,6 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 					$_REQUEST['comment_topicsmiley'],
 					isset($_REQUEST['contributions'])? $_REQUEST['contributions']: ''
 					);
-
 			    // The thread *WAS* successfully created.
 			    if( $threadId ) 
 			    {
@@ -347,15 +352,20 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 
 
 			// PROCESS ATTACHMENT HERE        
-			if( $threadId && isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name']) )
-			{
-			    check_ticket('view-forum');
-			    $fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
-			    $commentslib->add_thread_attachment(
-				    $forum_info, $threadId, $fp, '',
-				    $_FILES['userfile1']['name'],
-				    $_FILES['userfile1']['type'],
-				    $_FILES['userfile1']['size'] );
+			if( $threadId && isset($_FILES['userfile1'])) {
+				if (is_uploaded_file($_FILES['userfile1']['tmp_name']))	{
+				    check_ticket('view-forum');
+				    $fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
+				    $commentslib->add_thread_attachment(
+					    $forum_info, $threadId, $fp, '',
+					    $_FILES['userfile1']['name'],
+					    $_FILES['userfile1']['type'],
+					    $_FILES['userfile1']['size'] );
+				} else {
+					$smarty->assign('msg', $tikilib->uploaded_file_error($_FILES['userfile1']['error']));
+					$smarty->display("error.tpl");
+					die;
+				}
 			}
 			//END ATTACHMENT PROCESSING
 			$commentslib->register_forum_post($_REQUEST["forumId"], 0);
@@ -363,15 +373,22 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 			    $commentslib->update_comment($_REQUEST["comments_threadId"], $_REQUEST["comments_title"], '', ($_REQUEST["comments_data"]), $_REQUEST["comment_topictype"], $_REQUEST['comment_topicsummary'], $_REQUEST['comment_topicsmiley'], 'forum:'.$_REQUEST["forumId"], isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '');
 
 			    // PROCESS ATTACHMENT HERE
-			    if ($_REQUEST['comments_threadId'] && isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
-				check_ticket('view-forum');
-				$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
-				$commentslib->add_thread_attachment(
-					$forum_info, $_REQUEST["comments_threadId"], $fp, '',
-					$_FILES['userfile1']['name'],
-					$_FILES['userfile1']['type'],
-					$_FILES['userfile1']['size'] );
-			    }
+			    if ($_REQUEST['comments_threadId'] && isset($_FILES['userfile1'])) {
+					if (is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
+						check_ticket('view-forum');
+						$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
+						$commentslib->add_thread_attachment(
+							$forum_info, $_REQUEST["comments_threadId"], $fp, '',
+							$_FILES['userfile1']['name'],
+							$_FILES['userfile1']['type'],
+							$_FILES['userfile1']['size'] );
+			    		}
+					else {
+						$smarty->assign('msg', $tikilib->uploaded_file_error($_FILES['userfile1']['error']));
+						$smarty->display("error.tpl");
+						die;
+					}
+				}
 			    //END ATTACHMENT PROCESSING
 		    }
 		}
