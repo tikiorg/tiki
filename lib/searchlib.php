@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/searchlib.php,v 1.45 2007-03-22 18:26:21 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/searchlib.php,v 1.46 2007-04-30 16:28:38 sylvieg Exp $
 //test
 
 //this script may only be included - so its better to die if called directly.
@@ -132,24 +132,24 @@ class SearchLib extends TikiLib {
 		    $sqlJoin .= " JOIN `users_objectpermissions` u ON u.`objectId` = md5(" . $this->db->concat("'$objType'", "lower($objKeyPerm)") . ") AND u.`objectType`= ? ";
 		    $bindJoin[] = $objType;
 		      
-		    if ($globalPerm == 'y') {
 			$sqlJoin = ' LEFT ' . $sqlJoin;
 			$sqlFields .= ", count(u.`objectId`) as perms, max(u.`permName`=? and u.`groupName` IN ($groupStr)) as allow ";
 			$bindFields[] = $permNameObj;
 			$bindFields = array_merge($bindFields, $groupList);
 
 			$sqlGroup = " GROUP BY $objKeyGroup ";
-			$sqlHaving = " HAVING perms=? or allow=? ";
+			$sqlHaving = " HAVING perms=?";
+			if ($globalPerm == 'y') {
+				$sqlHaving .= " or ";
+			} else {
+				$sqlHaving .= " and ";
+			}
+			$sqlHaving .= "allow=? ";
 
 			$bindHaving = array(0,1);
-		    } else {
-			$sqlJoin = ' INNER ' . $sqlJoin;
-			$sqlJoin .= " AND u.`permName`=? ";
-			$bindJoin[] = $permNameObj;
-		    }
 	 	}
 
-		$chkCatPerm = $feature_search_show_forbidden_cat != 'y' && $tiki_p_admin != 'y' && !empty($objType) && !empty($objKeyCat) && !empty($objKeyGroup) && $feature_categories == 'y' && $globalPerm == 'y';
+		$chkCatPerm = $feature_search_show_forbidden_cat != 'y' && $tiki_p_admin != 'y' && !empty($objType) && !empty($objKeyCat) && !empty($objKeyGroup) && $feature_categories == 'y';
 
 		if ($chkCatPerm) {
 
@@ -172,7 +172,13 @@ class SearchLib extends TikiLib {
 		    $sqlGroup = " GROUP BY $objKeyGroup ";
 
 		    if ($chkObjPerm) {
-			$sqlHaving = " HAVING (perms=? AND (NOT categorized OR NOT forbidden)) or allow=? ";
+			$sqlHaving = " HAVING (perms=? AND (NOT categorized OR NOT forbidden))";
+			if ($globalPerm == 'y') {
+				$sqlHaving .= " or ";
+			} else {
+				$sqlHaving .= " and ";
+			}
+			$sqlHaving .= "allow=? ";
 			$bindHaving = array(0, 1);
 		    } else {
 			$sqlHaving = " HAVING NOT categorized OR NOT forbidden ";
@@ -238,7 +244,9 @@ class SearchLib extends TikiLib {
 		$ret = array();
 
 		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+			//if (($feature_search_show_forbidden_cat == 'y' || $feature_search_show_forbidden_obj == 'y') && !$this->user_has_perm_on_object($user,$res['id1'],$objType,$permName) continue;
 			$href = sprintf(urldecode($h['href']), urlencode($res['id1']), $res['id2']);
+echo "<pre>";print_r($res);echo $href;
 
 			// taking first 240 chars of text can bring broken html tags, better remove all tags.
 			$res['data'] = preg_replace("/<[^>]+>/","",$res['data']);
