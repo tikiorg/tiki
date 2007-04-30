@@ -21,7 +21,7 @@
           <td class="heading" colspan="2">{tr}Search features{/tr}</td>
         </tr><tr>
 	  <td class="form">
-	{if $feature_help eq 'y'}<a href="{$helpurl}Full+Text+Search" target="tikihelp" class="tikihelp" title="{tr}Full Text Search{/tr}">{/if}
+	{if $feature_help eq 'y'}<a href="{$helpurl}Search+Admin" target="tikihelp" class="tikihelp" title="{tr}Full Text Search{/tr}">{/if}
 		{tr}Full Text Search{/tr}
 		{if $feature_help eq 'y'}</a>{/if}
 	        :</td>
@@ -32,7 +32,7 @@
           <td class="heading" colspan="2">{tr}Performance issues{/tr}</td>
         </tr><tr>
 	<td class="form">
-	{if $feature_help eq 'y'}<a href="{$helpurl}WYSIWYCA+Search" target="tikihelp" class="tikihelp" title="{tr}Search may show forbidden results. Much better performance though.{/tr}">{/if}
+	{if $feature_help eq 'y'}<a href="{$helpurl}Search+Admin" target="tikihelp" class="tikihelp" title="{tr}Search may show forbidden results. Much better performance though.{/tr}">{/if}
 		{tr}Ignore individual object permissions{/tr}
 		{if $feature_help eq 'y'}</a>{/if}
 	        :</td>
@@ -40,7 +40,7 @@
                 {if $feature_search_show_forbidden_obj eq 'y'}checked="checked"{/if}/></td>
         </tr><tr>
 	<td class="form">
-	{if $feature_help eq 'y'}<a href="{$helpurl}WYSIWYCA+Search" target="tikihelp" class="tikihelp" title="{tr}Search may show forbidden results. Much better performance though.{/tr}">{/if}
+	{if $feature_help eq 'y'}<a href="{$helpurl}Search+Admin" target="tikihelp" class="tikihelp" title="{tr}Search may show forbidden results. Much better performance though.{/tr}">{/if}
 		{tr}Ignore category viewing restrictions{/tr}
 		{if $feature_help eq 'y'}</a>{/if}
 	        :</td>
