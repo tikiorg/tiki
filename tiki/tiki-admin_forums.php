@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.43 2007-03-28 13:13:41 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.44 2007-04-30 18:14:52 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -281,6 +281,17 @@ $smarty->assign_by_ref('users', $users);
 
 $groups = $userlib->list_all_groups();
 $smarty->assign_by_ref('groups', $groups);
+
+$maxAttachSize = ini_get('upload_max_filesize');
+if (preg_match('/^([\d\.]+)([gmk])?$/i', $maxAttachSize, $matches) && !empty($matches[2])) {
+		$maxAttachSize = $matches[1];
+		switch (strtolower($matches[0][strlen($matches[0]) - 1])) {
+		case 'g': $maxAttachSize *= 1024;
+		case 'm': $maxAttachSize *= 1024;
+		case 'k': $maxAttachSize *= 1024;
+	}
+}
+$smarty->assign_by_ref('maxAttachSize', $maxAttachSize);
 
 $sections = $tikilib->get_forum_sections();
 $smarty->assign_by_ref('sections', $sections);
