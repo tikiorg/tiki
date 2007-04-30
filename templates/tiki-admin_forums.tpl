@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.54 2007-04-27 17:54:18 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.55 2007-04-30 18:14:52 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_forums.php">{tr}Admin Forums{/tr}</a>
  
 {if $feature_help eq 'y'}
@@ -268,7 +268,7 @@
 			</tr>
 			<tr>
 				<td class="formcolor">
-				{tr}Max attachment size (bytes){/tr}: <input type="text" name="att_max_size" value="{$att_max_size|escape}" />
+				{tr}Max attachment size (bytes){/tr}: <input type="text" name="att_max_size" value="{$att_max_size|escape}" /><br /><i>{tr}Max:{/tr} {$maxAttachSize}</i>
 				</td>
 			</tr>
 		</table>
