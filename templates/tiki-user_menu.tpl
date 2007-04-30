@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_menu.tpl,v 1.28 2007-04-20 09:33:49 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_menu.tpl,v 1.29 2007-04-30 22:24:07 sylvieg Exp $ *}
 {assign var=opensec value='0'}
 {assign var=sep value=''}
 
@@ -34,7 +34,7 @@ $smarty->assign('opensec', $opensec);
 	<a class='separator' href="javascript:toggle('menu{$cname}');">[-]</a>
 	{/if}
 {/if} 
-{if $chdata.url}
+{if $chdata.url and $link_on_section eq 'y'}
 <a href="{$chdata.url|escape}" class="separator">
 {else}
 <a href="javascript:icntoggle('menu{$cname}');" class="separator">

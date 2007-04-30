@@ -13,7 +13,11 @@ function smarty_function_menu($params, &$smarty)
     // Param = zone
 
     $smarty->caching = true;
-
+	if (empty($link_on_section) || $link_on_section == 'y') {
+		$smarty->assign('link_on_section', 'y');
+	} else {
+		 $smarty->assign('link_on_section', 'n');
+	}
 //REYES problema al crear directorios con nombres demasiado largos
     if ($user) {
     	$uid = md5($tikilib->get_user_cache_id($user));
