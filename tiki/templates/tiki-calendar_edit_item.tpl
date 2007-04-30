@@ -47,7 +47,7 @@
 {/if}
 
 <tr class="formcolor">
-<td>{tr}Event Name{/tr}</td>
+<td>{tr}Title{/tr}</td>
 <td>
 {if $edit}
 <input type="text" name="save[name]" value="{$calitem.name|escape}" size="32" style="width:90%;"/>
@@ -56,7 +56,7 @@
 {/if}
 </td>
 </tr>
-<tr >
+<tr class="formcolor">
 <td>{tr}Start{/tr}</td><td>
 {if $edit}
 <table cellpadding="0" cellspacing="0" border="0" style="border:0;">
@@ -96,7 +96,7 @@
 {/if}
 </td>
 </tr>
-<tr >
+<tr class="formcolor">
 <td>{tr}End{/tr}</td><td>
 {if $edit}
 <input type="hidden" name="save[end_or_duration]" value="end" id="end_or_duration" />
