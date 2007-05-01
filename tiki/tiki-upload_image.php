@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_image.php,v 1.42 2007-03-06 19:29:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_image.php,v 1.43 2007-05-01 16:28:18 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -185,7 +185,7 @@ if (isset($_REQUEST["upload"])) {
 				$error_msg = tra('The uploaded file ist not recognized as a image');
 	        }
 		} else {
-			$error_msg = tra("cannot process upload");
+			$error_msg = $tikilib->uploaded_file_error($_FILES['userfile1']['error']);
 		}
 		}
 	}
