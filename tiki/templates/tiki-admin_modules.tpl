@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.42 2007-04-26 18:27:28 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.43 2007-05-01 15:37:11 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
 
@@ -294,7 +294,7 @@ from Admin->General
   <td>
     <select name="menus" id='list_menus'>
     {section name=ix loop=$menus}
-    <option value="{literal}{{/literal}menu id={$menus[ix].menuId}{literal}}{/literal}">{$menus[ix].name}</option>
+    <option value="{literal}{{/literal}menu id={$menus[ix].menuId} link_on_section=y{literal}}{/literal}">{$menus[ix].name}</option>
     {/section}
     </select>
   </td>
