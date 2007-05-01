@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.53 2007-03-06 19:29:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.54 2007-05-01 18:32:13 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -138,7 +138,7 @@ if (isset($_REQUEST["upload"]) && !empty($_REQUEST['galleryId'])) {
 		if (isset($_FILES["userfile$i"]) && !empty($_FILES["userfile$i"]['name'])) {
 			// Were there any problems with the upload?  If so, report here.
 			if (!is_uploaded_file($_FILES["userfile$i"]['tmp_name'])) {
-				$errors[] = tra('Upload was not successful').': '.FileGalLib::convert_error_to_string($_FILES["userfile$i"]['error']);
+				$errors[] = tra('Upload was not successful').': '.$tikilib->uploaded_file_error($_FILES["userfile$i"]['error']);
 				continue;
 			}
 				
