@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.80 2007-03-08 13:04:50 gillesm Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.81 2007-05-02 15:36:48 sylvieg Exp $
 
 /**
  * Tiki registration script
@@ -9,7 +9,7 @@
  * @license GNU LGPL
  * @copyright Tiki Community
  * @date created: 2002/10/8 15:54
- * @date last-modified: $Date: 2007-03-08 13:04:50 $
+ * @date last-modified: $Date: 2007-05-02 15:36:48 $
  */
 
 // Initialization
@@ -136,7 +136,11 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
   }
   
 	if ($login_is_email == 'y') {
-		$_REQUEST['email'] = $_REQUEST["name"];
+		if (empty($_REQUEST['novalidation']) || $_REQUEST['novalidation'] != 'yes') {
+			$_POST['email'] = $_REQUEST['email'] = $_REQUEST['name'];
+		} else {
+			$_POST['name'] = $_REQUEST['name'] = $_REQUEST['email'];
+		}
 	}
 
 	$email_valid = 'y';
