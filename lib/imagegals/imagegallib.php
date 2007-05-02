@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.92 2007-05-02 13:49:10 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.93 2007-05-02 14:44:09 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -893,7 +893,7 @@ class ImageGalsLib extends TikiLib {
 
 		global $feature_score;
 		if ($feature_score == 'y') {
-		    $this->score_event($user, 'gallery_new_img');
+		    $this->score_event($user, 'igallery_new_img');
 		}
 		global $feature_actionlog;
 		if ($feature_actionlog == 'y') {
