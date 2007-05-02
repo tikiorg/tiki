@@ -1978,7 +1978,7 @@ class TrackerLib extends TikiLib {
 			}
 		}
 		$allFields['data'] = $tmp;
-		$allFields['cant'] = sizeof(tmp);
+		$allFields['cant'] = sizeof($tmp);
 		return $allFields;
 	}
 
