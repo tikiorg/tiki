@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.43 2007-05-02 13:49:12 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.44 2007-05-02 14:00:16 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -223,7 +223,7 @@ if($feature_user_watches == 'y') {
 		}
     }
     $smarty->assign('user_watching_gal','n');
-    if($user && $tikilib->get_user_event_watches($user,'image_gallery_changed',$_REQUEST['galleryId'])) {
+    if($user && $tikilib->user_watches($user,'image_gallery_changed',$_REQUEST['galleryId'], 'image gallery')) {
 	$smarty->assign('user_watching_gal','y');
     }
 }
