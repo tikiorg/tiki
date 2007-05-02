@@ -98,7 +98,7 @@
 <tr class="{cycle}">
 <td>{$channels[user].fieldId}</td>
 <td>{if $tracker_info.useRatings ne 'y' or $channels[user].name ne "Rating"}
-<a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}{if $max and $max ne $maxRecords}&amp;max={$max}{/if}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}&amp;fieldId={$channels[user].fieldId}">{tr}edit{/tr}</a>
+<a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}{if $max and $max ne $maxRecords}&amp;max={$max}{/if}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}&amp;fieldId={$channels[user].fieldId}" title="{tr}edit{/tr}"><img src='pics/icons/page_edit.png' border='0' width="16" hight="16" alt="{tr}edit{/tr}"></a>
 {/if}</td>
 <td>{$channels[user].position}</td>
 <td>{$channels[user].name}</td>
@@ -113,7 +113,7 @@
 <td>{$channels[user].isMandatory}</td>
 <td>{$channels[user].description|truncate:14:"..."}</td>
 <td>{if $tracker_info.useRatings ne 'y' or $channels[user].name ne "Rating"}
-<a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}{if $max and $max ne $maxRecords}&amp;max={$max}{/if}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].fieldId}"><img src="pics/icons/cross.png" border="0" alt="{tr}remove{/tr}" width='16' height='16' /></a> 
+<a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}{if $max and $max ne $maxRecords}&amp;max={$max}{/if}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].fieldId}" title="{tr}remove{/tr}"><img src="pics/icons/cross.png" border="0" alt="{tr}remove{/tr}" width='16' height='16' /></a> 
 <a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;fieldId={$channels[user].fieldId}&amp;up=1{if $offset > 1}&amp;offset={$offset}{/if}{if $max and $max ne $maxRecords}&amp;max={$max}{/if}"><img src="pics/icons/resultset_down.png" border="0" alt="{tr}down{/tr}" title="{tr}down{/tr}" width='16' height='16' /></a>
 {/if}</td>
 </tr>
@@ -148,12 +148,25 @@
 {if $offset}<input type="hidden" name="offset" value="{$offset|escape}" />{/if}
 {if $sort_mode}<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />{/if}
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
+{tr}Export fieldId also{/tr}
+<input type="checkbox" name="exportAll"{if $export_all eq 'y'} checked="checked"{/if}/>
+<input type="submit" name="refresh" value="{tr}Refresh{/tr}" />
+</form>
+
+<form action="tiki-admin_tracker_fields.php" method="post">
+{if $find}<input type="hidden" name="find" value="{$find|escape}" />{/if}
+{if $max and $max ne $maxRecords}<input type="hidden" name="max" value="{$max|escape}" />{/if}
+{if $offset}<input type="hidden" name="offset" value="{$offset|escape}" />{/if}
+{if $sort_mode}<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />{/if}
+<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 <input type="hidden" name="import" value="1" />
 <textarea name="rawmeat" cols="62" rows="32" wrap="soft">
 {section name=user loop=$channels}
 {if $tracker_info.useRatings ne 'y' or $channels[user].name ne "Rating"}
 [FIELD{$channels[user].fieldId}]
+{if $export_all eq 'y'}
 fieldId = {$channels[user].fieldId}
+{/if}
 name = {$channels[user].name}
 position = {$channels[user].position}
 type = {$channels[user].type}

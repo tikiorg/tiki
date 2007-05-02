@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.45 2007-03-06 19:29:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.46 2007-05-02 21:58:05 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -181,6 +181,10 @@ function replace_tracker_from_request( $tracker_info )
     $smarty->assign('isMandatory', $isMandatory);
     $smarty->assign('description', '');
     $smarty->assign('position', $trklib->get_last_position($_REQUEST["trackerId"])+1);
+}
+
+if (isset($_REQUEST['refresh']) && isset($_REQUEST['exportAll'])) {
+	$smarty->assign('export_all', 'y');
 }
 
 if (isset($_REQUEST["save"])) {
