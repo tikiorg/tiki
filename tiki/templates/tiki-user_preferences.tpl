@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.94 2007-01-03 07:55:24 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.95 2007-05-02 15:52:24 sylvieg Exp $ *}
 <h1>{if $userwatch ne $user}<a class="pagetitle" href="tiki-user_preferences.php?view_user={$userwatch}">{tr}User Preferences{/tr}: {$userwatch}</a>{else}<a class="pagetitle" href="tiki-user_preferences.php">{tr}User Preferences{/tr}</a>{/if}
 
 {if $feature_help eq 'y'}
@@ -235,12 +235,16 @@
   <div class="cbox-title">{tr}Account Information{/tr}</div>
   <div class="cbox-data">
   {if $auth_method neq 'cas' || ($cas_skip_admin eq 'y' && $user eq 'admin')}
-  {if $change_password neq 'n'}{tr}Leave "New password" and "Confirm new password" fields blank to keep current password{/tr}{/if}
+  {if $change_password neq 'n' and $login_is_email ne 'y'}{tr}Leave "New password" and "Confirm new password" fields blank to keep current password{/tr}{/if}
   {/if}
   <form action="tiki-user_preferences.php" method="post">
   <input type="hidden" name="view_user" value="{$userwatch|escape}" />
   <table class="admin">
-  <tr><td class="form">{tr}Email address{/tr}:</td><td class="form"><input type="text" name="email" value="{$userinfo.email|escape}" /></td></tr>
+  {if $login_is_email eq 'y'}
+	<input type="hidden" name="email" value="{$userinfo.email|escape}" />
+  {else}
+    <tr><td class="form">{tr}Email address{/tr}:</td><td class="form"><input type="text" name="email" value="{$userinfo.email|escape}" /></td></tr>
+  {/if}
 {if $auth_method neq 'cas' || ($cas_skip_admin eq 'y' && $user eq 'admin')}
   {if $change_password neq 'n'}
   <tr><td class="form">{tr}New password{/tr}:</td><td class="form"><input type="password" name="pass1" /></td></tr>
