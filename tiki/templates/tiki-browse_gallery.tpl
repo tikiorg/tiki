@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_gallery.tpl,v 1.38 2007-04-06 17:40:08 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_gallery.tpl,v 1.39 2007-05-02 13:49:12 sylvieg Exp $ *}
 {if $gal_image_mouseover neq 'n'}{popup_init src="lib/overlib.js"}{/if}
 <h1><a class="pagetitle" href="tiki-browse_gallery.php?galleryId={$galleryId}">
 {tr}Browsing Gallery{/tr}: {$name}
 </a></h1>
 
-&nbsp;&nbsp;
+<div class="navbar">
 <span class="button2"><a href="tiki-galleries.php" class="linkbut" title="{tr}list galleries{/tr}">{tr}list galleries{/tr}</a></span>
 {if $system eq 'n'}
   {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
@@ -29,7 +29,15 @@
 {if $rss_image_gallery eq 'y'}
   <span class="button2"><a href="tiki-image_gallery_rss.php?galleryId={$galleryId}" class="linkbut">{tr}RSS{/tr}</a></span>
 {/if}
-<br /><br />
+	{if $user and $feature_user_watches eq 'y'}
+		{if $user_watching_gal eq 'n'}
+			<a href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;watch_event=image_gallery_changed&amp;watch_object={$galleryId}&amp;watch_action=add" title="{tr}monitor this gallery{/tr}">{html_image file='img/icons/icon_watch.png' border='0' alt="{tr}monitor this gallery{/tr}"}</a>
+		{else}
+			<a href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;watch_event=image_gallery_changed&amp;watch_object={$galleryId}&amp;watch_action=remove" title="{tr}stop monitoring this gallery{/tr}">{html_image file='img/icons/icon_unwatch.png' border='0' alt="{tr}stop monitoring this gallery{/tr}"}</a>
+		{/if}
+	{/if}
+</div>
+
 {if strlen($description) > 0}
 	<div class="imgaldescr">
 	  {$description}

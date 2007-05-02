@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.42 2007-04-06 17:40:05 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.43 2007-05-02 13:49:12 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -211,6 +211,21 @@ if (isset($_REQUEST["rotateleft"])) {
 	}
 
 	$imagegallib->rotate_left_image($_REQUEST["rotateleft"]);
+}
+// Watches
+if($feature_user_watches == 'y') {
+    if($user && isset($_REQUEST['watch_event'])) {
+		check_ticket('browse-gallery');
+		if($_REQUEST['watch_action']=='add') {
+	    	$tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'image gallery',$gal_info['name'],'tiki-browse_gallery.php?galleryId='.$_REQUEST['galleryId']);
+		} else {
+	    	$tikilib->remove_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object']);
+		}
+    }
+    $smarty->assign('user_watching_gal','n');
+    if($user && $tikilib->get_user_event_watches($user,'image_gallery_changed',$_REQUEST['galleryId'])) {
+	$smarty->assign('user_watching_gal','y');
+    }
 }
 
 $smarty->assign('system', 'n');
