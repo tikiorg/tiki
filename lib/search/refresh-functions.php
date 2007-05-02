@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/search/refresh-functions.php,v 1.19 2007-05-02 13:25:46 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/search/refresh-functions.php,v 1.20 2007-05-02 16:31:40 nyloth Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -14,14 +14,10 @@ function refresh_index($object_type, $object_id = null) {
 	$query_from = " from `tiki_$object_type`";
 	$query_limit = -1;
 	$query_offset = 0;
+	$query_vars = array();
 
 	$cant_query = 'select count(*)'.$query_from;
 	$cant_vars = null;
-
-	if ( is_integer($object_id) && $object_id != 0 ) { // Index one object identified by its id
-		$query_vars[0] = $object_id;
-		$query_where = ' where id = ?';
-	} else $query_vars = array();
 
 	switch ( $object_type ) {
 
@@ -78,16 +74,16 @@ function refresh_index($object_type, $object_id = null) {
 		$index_type = 'filegal';
 		$f_id = 'archiveId';
 		$f_content = array('id', 'name', 'description');
-		$query_where .= (( $query_where == '' ) ? ' where' : ' and').' archiveId = ?';
-		$query_vars[] = 0;
+		$query_where = ' where archiveId = ?';
+		$query_vars = array(0);
 		break;
 
 	case 'files': //case 'fgal': case 'file': 
 		$index_type = 'file';
 		$f_id = 'fileId';
 		$f_content = array('data', 'description', 'name', 'search_data');
-		$query_where .= (( $query_where == '' ) ? ' where' : ' and').' archiveId = ?';
-		$query_vars[] = 0;
+		$query_where = ' where archiveId = ?';
+		$query_vars = array(0);
 		break;
 
 	case 'forums': //case 'forum':
@@ -114,9 +110,8 @@ function refresh_index($object_type, $object_id = null) {
 		$cant_vars = array('t','a');
 		$index_type = 'trackeritem';
 		$query_from = ' from `tiki_tracker_item_fields` f, `tiki_tracker_fields` tf';
-		$query_where .= (( $query_where == '' ) ? ' where' : ' and').' tf.`type` in (?,?) and tf.`fieldId`=f.`fieldId';
-		$query_vars[] = 't';
-		$query_vars[] = 'a';
+		$query_where = ' where tf.`type` in (?,?) and tf.`fieldId`=f.`fieldId';
+		$query_vars = array('t','a');
 		$f_id = array('id1' => 'f.`itemId`', 'id2' => 'f.`fieldId`');
 		$f_content = 'f.`value`';
 		break;
@@ -139,6 +134,10 @@ function refresh_index($object_type, $object_id = null) {
 		$query_limit = 1;
 		$cant = $tikilib->getOne($cant_query, $cant_vars);
 		if ( $cant > 0 ) $query_offset = rand(0, $cant - 1); else return true;
+	} elseif ( ( is_integer($object_id) && $object_id != 0 ) || is_string($object_id) ) {
+		// Index one object identified by its id
+		$query_vars[] = $object_id;
+		$query_where .= (($query_where == '') ? ' where ' : ' and ' ).(is_array($f_id) ? $f_id[0] : $f_id).' = ?';
 	}
 
 	if ( !empty($f_id) && !empty($f_content) ) {
