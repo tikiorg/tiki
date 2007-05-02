@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.738 2007-04-27 20:59:25 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.739 2007-05-02 13:49:11 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -327,6 +327,9 @@ class TikiLib extends TikiDB {
 		    break;
 		case 'calendar_changed':
 			$res['perm']= $this->user_has_perm_on_object($res['user'],$object,'calendar','tiki_p_view_calendar');
+			break;
+		case 'image_gallery_changed':
+			$res['perm'] = $this->user_has_perm_on_object($res['user'],$object,'image gallery','tiki_p_view_image_gallery');
 			break;
 		default:
 			// for security we deny all others.
@@ -3753,6 +3756,15 @@ function add_pageview() {
 		foreach ($perms['data'] as $perm) {
 			$ret[$perm['permName']] = 'n';
 		}
+		if (empty($categPerms['tiki_p_view_categories'])) {
+			$categPerms['tiki_p_view_categories'] = 'n';
+		}
+		if (empty($categPerms['tiki_p_edit_categories'])) {
+			$categPerms['tiki_p_edit_categories'] = 'n';
+		}
+		if (empty($categPerms['tiki_p_admin_categories'])) {
+			$categPerms['tiki_p_admin_categories'] = 'n';
+		}
 		switch ($objectType) {
 		case 'tracker':
 			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
@@ -6032,9 +6044,7 @@ if (!$simple_wiki) {
 
 	// Replace rss modules
 	if (preg_match_all("/\{rss +id=([0-9]+) *(max=([0-9]+))? *\}/", $data, $rsss)) {
-	    if (!isset($rsslib)) {
-		include ('lib/rss/rsslib.php');
-	    }
+	    global $rsslib; include_once ('lib/rss/rsslib.php');
 
 	    $temp_max = count($rsss[0]);
 	    for ($i = 0; $i < $temp_max; $i++) {

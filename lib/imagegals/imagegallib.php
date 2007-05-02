@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.91 2007-04-02 16:31:42 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.92 2007-05-02 13:49:10 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -481,7 +481,7 @@ class ImageGalsLib extends TikiLib {
 					}
 
 					$imageId = $this->insert_image($galleryId, $file,
-						'', $file, $this->filetype, $this->image, $this->filesize, $this->xsize, $this->ysize, $user, '', '');
+						'', $file, $this->filetype, $this->image, $this->filesize, $this->xsize, $this->ysize, $user, '', '', NULL, NULL,$gal_info);
 
 					$numimages++;
 				}
@@ -824,7 +824,7 @@ class ImageGalsLib extends TikiLib {
 		return true;
 	}
 
-	function insert_image($galleryId, $name, $description, $filename, $filetype, &$data, $size, $xsize, $ysize, $user, $t_data, $t_type ,$lat=NULL, $lon=NULL) {
+	function insert_image($galleryId, $name, $description, $filename, $filetype, &$data, $size, $xsize, $ysize, $user, $t_data, $t_type ,$lat=NULL, $lon=NULL, $gal_info=NULL) {
 		global $gal_use_db;
 
 		global $gal_use_dir;
@@ -893,7 +893,7 @@ class ImageGalsLib extends TikiLib {
 
 		global $feature_score;
 		if ($feature_score == 'y') {
-		    $this->score_event($user, 'igallery_new_img');
+		    $this->score_event($user, 'gallery_new_img');
 		}
 		global $feature_actionlog;
 		if ($feature_actionlog == 'y') {
@@ -901,7 +901,30 @@ class ImageGalsLib extends TikiLib {
 			$logslib->add_action('Uploaded', $galleryId, 'image gallery', 'imageId='.$imageId);
 		}
 		
+		$this->notify($imageId, $galleryId, $name, $filename, $description, isset($gal_info['name'])?$gal_info['name']: '', $user);
+
 		return $imageId;
+	}
+
+	function notify($imageId, $galleryId, $name, $filename, $description, $galleryName, $user) {
+		global $feature_user_watches;
+		if ($feature_user_watches == 'y') {
+			include_once('lib/notifications/notificationemaillib.php');
+			global $smarty, $tikilib;
+			$nots = $this->get_event_watches('image_gallery_changed', $galleryId);
+			$smarty->assign_by_ref('galleryId', $galleryId);
+			$smarty->assign_by_ref('galleryName', $galleryName);
+			$smarty->assign_by_ref('mail_date', date('U'));
+			$smarty->assign_by_ref('author', $user);
+			$foo = parse_url($_SERVER["REQUEST_URI"]);
+			$machine = $tikilib->httpPrefix(). dirname( $foo["path"] );
+			$smarty->assign_by_ref('mail_machine', $machine);
+			$smarty->assign_by_ref('fname', $name);
+			$smarty->assign_by_ref('filename', $filename);
+			$smarty->assign_by_ref('description', $description);
+			$smarty->assign_by_ref('imageId', $imageId);
+			sendEmailNotification($nots, 'watch', 'user_watch_image_gallery_changed_subject.tpl', NULL, 'user_watch_image_gallery_upload.tpl');
+		}
 	}
 
 	function rotate_image($id, $angle) {
@@ -2011,11 +2034,11 @@ class ImageGalsLib extends TikiLib {
 							$t_type = $t_pinfo["extension"];
 							$t_type = 'image/' . $t_type;
 
-							$imageId = $this->insert_image(0, '', '', $name, $type, $data, $size, $size_x, $size_y, 'admin', $t_data, $t_type);
+							$imageId = $this->insert_image(0, '', '', $name, $type, $data, $size, $size_x, $size_y, 'admin', $t_data, $t_type, NULL, NULL, $gal_info);
 						//print("Imagen generada en $imageId<br />");
 						} else {
 							//print("No GD detected generating image without thumbnail<br />");
-							$imageId = $this->insert_image(0, '', '', $name, $type, $data, $size, 100, 100, 'admin', '', '');
+							$imageId = $this->insert_image(0, '', '', $name, $type, $data, $size, 100, 100, 'admin', '', '', NULL, NULL, $gal_info);
 						//print("Imagen en $imageId<br />");
 						}
 
@@ -2031,7 +2054,7 @@ class ImageGalsLib extends TikiLib {
 		} // foreach
 		return $page_data;
 	}
-	function get_one_image_from_disk($userfile, $galleryId=0, $name='', $description='') {
+	function get_one_image_from_disk($userfile, $galleryId=0, $name='', $description='', $gal_info='') {
 		global $tmpDir, $user;
 		$ret = array();
 		if (is_uploaded_file($_FILES[$userfile]['tmp_name'])) {
@@ -2072,7 +2095,7 @@ class ImageGalsLib extends TikiLib {
 			}
 			if ($name == '')
 				$name = $file_name;
-			if (($imageId = $this->insert_image($galleryId, $name, $description, $file_name, $type, $ret['data'], $size, 0, 0, $user, '', ''))===false) {
+			if (($imageId = $this->insert_image($galleryId, $name, $description, $file_name, $type, $ret['data'], $size, 0, 0, $user, '', '', NULL, NULL, $gal_info))===false) {
 				$ret['msg'] = tra('Upload was not successful');
 			} else {
 				$ret['imageId'] = $imageId;
