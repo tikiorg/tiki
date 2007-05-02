@@ -57,7 +57,7 @@
 </form>
 
 <!-- {$plug} -->
-
+<a name="list"></a>
 <h2>{tr}Tracker fields{/tr}</h2>
 <div  align="center">
 <table class="findtable">
@@ -122,17 +122,17 @@
 <br />
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-admin_tracker_fields.php?{if $find}find={$find}&amp;{/if}trackerId={$trackerId}{if $max and $max ne $maxRecords}&amp;max={$max}{/if}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-admin_tracker_fields.php?{if $find}find={$find}&amp;{/if}trackerId={$trackerId}{if $max and $max ne $maxRecords}&amp;max={$max}{/if}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}#list">{tr}prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-admin_tracker_fields.php?{if $find}find={$find}&amp;{/if}trackerId={$trackerId}{if $max and $max ne $maxRecords}&amp;max={$max}{/if}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="tiki-admin_tracker_fields.php?{if $find}find={$find}&amp;{/if}trackerId={$trackerId}{if $max and $max ne $maxRecords}&amp;max={$max}{/if}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}#list">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
-<a class="prevnext" href="tiki-admin_tracker_fields.php?{if $find}find={$find}&amp;{/if}trackerId={$trackerId}{if $max and $max ne $maxRecords}&amp;max={$max}{/if}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
+<a class="prevnext" href="tiki-admin_tracker_fields.php?{if $find}find={$find}&amp;{/if}trackerId={$trackerId}{if $max and $max ne $maxRecords}&amp;max={$max}{/if}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}#list">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
 {/if}
