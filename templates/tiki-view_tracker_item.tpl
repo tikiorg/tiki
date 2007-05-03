@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.124 2007-04-02 17:21:23 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.125 2007-05-03 13:47:55 sylvieg Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 <div>
@@ -125,7 +125,8 @@
 
       {elseif $cur_field.type eq 'e'}
         {assign var=fca value=$cur_field.options}
-        <table width="100%"><tr>{cycle name="1_$fca" values=",</tr><tr>" advance=false print=false}
+        {* style with all the categories
+		<table width="100%"><tr>{cycle name="1_$fca" values=",</tr><tr>" advance=false print=false}
         {foreach key=ku item=iu from=$ins_fields.$ix.$fca}
           {assign var=fcat value=$iu.categId}
           <td width="50%" nowrap="nowrap">
@@ -136,7 +137,13 @@
           {/if}
           {cycle name="1_$fca"}
         {/foreach}
-        </tr></table></td></tr>
+        </tr></table>
+		*}
+		{foreach key=ku item=iu from=$ins_fields.$ix.$fca}
+		{assign var=fcat value=$iu.categId}
+		{if $cur_field.cat.$fcat eq 'y'}{$iu.name}<br />{/if}
+		{/foreach}
+		</td></tr>
 
       {elseif $cur_field.type eq 'c'}
         {if $cur_field.value eq 'y'}{tr}Yes{/tr}
