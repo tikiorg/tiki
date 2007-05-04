@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/search/refresh-functions.php,v 1.20 2007-05-02 16:31:40 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/search/refresh-functions.php,v 1.21 2007-05-04 09:21:26 nyloth Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -18,6 +18,8 @@ function refresh_index($object_type, $object_id = null) {
 
 	$cant_query = 'select count(*)'.$query_from;
 	$cant_vars = null;
+
+	$filtering_expr = array('$content = strip_tags($content);');
 
 	switch ( $object_type ) {
 
@@ -53,7 +55,7 @@ function refresh_index($object_type, $object_id = null) {
 
 	case 'comments': //case 'wiki comment': case 'comment': 
 		$f_index_type = 'objectType';
-		$filtering_expr = '$index_type .= "comment";';
+		$filtering_expr[] = '$index_type .= "comment";';
 		$f_id = 'threadId';
 		$f_content = array('title', 'data', 'summary', 'objectType');
 		break;
@@ -72,18 +74,18 @@ function refresh_index($object_type, $object_id = null) {
 
 	case 'file_galleries';
 		$index_type = 'filegal';
-		$f_id = 'archiveId';
-		$f_content = array('id', 'name', 'description');
-		$query_where = ' where archiveId = ?';
-		$query_vars = array(0);
+		$f_id = 'galleryId';
+		$f_content = array('name', 'description');
 		break;
 
 	case 'files': //case 'fgal': case 'file': 
 		$index_type = 'file';
 		$f_id = 'fileId';
 		$f_content = array('data', 'description', 'name', 'search_data');
+		$f_other = 'archiveId';
 		$query_where = ' where archiveId = ?';
 		$query_vars = array(0);
+		unset($filtering_expr);
 		break;
 
 	case 'forums': //case 'forum':
@@ -102,7 +104,7 @@ function refresh_index($object_type, $object_id = null) {
 		$index_type = 'wiki';
 		$f_id = 'pageName';
 		$f_content = array('data', 'description', 'pageName');
-		$filtering_expr = '$content = $tikilib->parse_data($content);';
+		$filtering_expr[] = '$content = $tikilib->parse_data($content);';
 		break;
 
 	case 'tracker_items': //case 'track': case 'trackeritem': 
@@ -110,10 +112,10 @@ function refresh_index($object_type, $object_id = null) {
 		$cant_vars = array('t','a');
 		$index_type = 'trackeritem';
 		$query_from = ' from `tiki_tracker_item_fields` f, `tiki_tracker_fields` tf';
-		$query_where = ' where tf.`type` in (?,?) and tf.`fieldId`=f.`fieldId';
+		$query_where = ' where tf.`type` in (?,?) and tf.`fieldId`=f.`fieldId`';
 		$query_vars = array('t','a');
 		$f_id = array('id1' => 'f.`itemId`', 'id2' => 'f.`fieldId`');
-		$f_content = 'f.`value`';
+		$f_content = array('content' => 'f.`value`');
 		break;
 
 	case 'trackers': //case 'tracker':
@@ -137,15 +139,16 @@ function refresh_index($object_type, $object_id = null) {
 	} elseif ( ( is_integer($object_id) && $object_id != 0 ) || is_string($object_id) ) {
 		// Index one object identified by its id
 		$query_vars[] = $object_id;
-		$query_where .= (($query_where == '') ? ' where ' : ' and ' ).(is_array($f_id) ? $f_id[0] : $f_id).' = ?';
+		$query_where .= (($query_where == '') ? ' where ' : ' and ' ).(is_array($f_id) ? $f_id['id1'] : $f_id).' = ?';
 	}
 
 	if ( !empty($f_id) && !empty($f_content) ) {
 
 		if ( !is_array($f_id) ) $f_id = array($f_id);
 		if ( !is_array($f_content) ) $f_content = array($f_content);
-		foreach ( $f_id as $k_id => $v_id ) $query_fields .= (($query!='')?', ':'').$v_id.(is_string($k_id)?' as '.$k_id:'');
+		foreach ( $f_id as $k_id => $v_id ) $query_fields .= (($query_fields!='')?', ':'').$v_id.(is_string($k_id)?' as '.$k_id:'');
 		foreach ( $f_content as $k_content => $v_content ) $query_fields .= ', '.$v_content.(is_string($k_content)?' as '.$k_content:'');
+		if ( !empty($f_other) ) $query_fields .= ', '.( is_array($f_other) ? implode(', ', $f_other) : $f_other );
 
 		$result = $tikilib->query('select '.$query_fields.$query_from.$query_where, $query_vars, $query_limit, $query_offset);
 
@@ -153,7 +156,8 @@ function refresh_index($object_type, $object_id = null) {
 
 			foreach ( $f_id as $k_id => $v_id ) $id .= (($id!='')?'#':'').$res[(is_string($k_id)?$k_id:$v_id)];
 			foreach ( $f_content as $k_content => $v_content ) $content .= ' '.$res[(is_string($k_content)?$k_content:$v_content)];
-			if ( $filtering_expr != '' ) eval($filtering_expr);
+			if ( $f_index_type != '' ) $index_type = $res[$f_index_type];
+			if ( is_array($filtering_expr) ) foreach ( $filtering_expr as $expr ) eval($expr);
 
 			insert_index(search_index($content), $index_type, $id);
 
@@ -178,10 +182,11 @@ function refresh_index_oldest() {
 
 function &search_index($data) {
 	$words = array();
-	$data = trim(strtolower(strip_tags($data)));
+	// $data = trim(strtolower(strip_tags($data))); // Don't use strip_tags here, this is not always binary safe (and doesn't correctly handle files data)
+	$data = trim(strtolower($data));
 	if ( $data != '' ) {
 		$sstrings = preg_split('/\s+/', $data, -1, PREG_SPLIT_NO_EMPTY); // split into words
-		foreach ( $sstrings as $value) $words[$value]++; // count words
+		foreach ( $sstrings as $value ) $words[$value]++; // count words
 	}
 	return $words;
 }
