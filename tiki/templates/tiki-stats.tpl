@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-stats.tpl,v 1.28 2007-04-06 12:08:45 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-stats.tpl,v 1.29 2007-05-04 16:47:16 nyloth Exp $ *}
 
 <h1><a href="tiki-stats.php" class="pagetitle">{tr}Stats{/tr}</a></h1>
 
@@ -25,7 +25,7 @@
 <table class="normal">
 
 {* Site stats *}
-<tr><td colspan="2"><a name="site_stats"></a></td></tr>
+<tr><td colspan="2" id="site_stats"></td></tr>
 <tr><td class="heading" colspan="2">{tr}Site Stats{/tr}</td></tr>
 <tr><td class="even">{tr}Started{/tr}</td><td class="even" style="text-align:right;">{$site_stats.started|tiki_long_date}</td></tr>
 <tr><td class="odd">{tr}Days online{/tr}</td><td class="odd" style="text-align:right;">{$site_stats.days}</td></tr>
@@ -37,7 +37,7 @@
 
 {* Wiki Stats *}
 {if $wiki_stats}
-<tr><td colspan="2"><a name="wiki_stats"></a></td></tr>
+<tr><td colspan="2" id="wiki_stats"></td></tr>
 <tr><td class="heading" colspan="2">{tr}Wiki Stats{/tr}</td></tr>
 <tr><td class="even">{tr}Wiki Pages{/tr}</td><td class="even" style="text-align:right;">{$wiki_stats.pages}</td></tr>
 <tr><td class="odd">{tr}Size of Wiki Pages{/tr}</td><td class="odd" style="text-align:right;">{$wiki_stats.size} {tr}Mb{/tr}</td></tr>
@@ -52,7 +52,7 @@
 
 {* Image gallleries stats *}
 {if $igal_stats}
-<tr><td colspan="2"><a name="igal_stats"></a></td></tr>
+<tr><td colspan="2" id="igal_stats"></td></tr>
 <tr><td class="heading" colspan="2">{tr}Image galleries Stats{/tr}</td></tr>
 <tr><td class="even">{tr}Galleries{/tr}</td><td class="even" style="text-align:right;">{$igal_stats.galleries}</td></tr>
 <tr><td class="odd">{tr}Images{/tr}</td><td class="odd" style="text-align:right;">{$igal_stats.images}</td></tr>
@@ -65,7 +65,7 @@
 
 {* File gallleries stats *}
 {if $fgal_stats}
-<tr><td colspan="2"><a name="fgal_stats"></a></td></tr>
+<tr><td colspan="2" id="fgal_stats"></td></tr>
 <tr><td class="heading" colspan="2">{tr}File galleries Stats{/tr}</td></tr>
 <tr><td class="even">{tr}Galleries{/tr}</td><td class="even" style="text-align:right;">{$fgal_stats.galleries}</td></tr>
 <tr><td class="odd">{tr}Files{/tr}</td><td class="odd" style="text-align:right;">{$fgal_stats.files}</td></tr>
@@ -79,7 +79,7 @@
 
 {* CMS stats *}
 {if $cms_stats}
-<tr><td colspan="2"><a name="cms_stats"></a></td></tr>
+<tr><td colspan="2" id="cms_stats"></td></tr>
 <tr><td class="heading" colspan="2">{tr}CMS Stats{/tr}</td></tr>
 <tr><td class="even">{tr}Articles{/tr}</td><td class="even" style="text-align:right;">{$cms_stats.articles}</td></tr>
 <tr><td class="odd">{tr}Total reads{/tr}</td><td class="odd" style="text-align:right;">{$cms_stats.reads}</td></tr>
@@ -92,7 +92,7 @@
 
 {* Forum stats *}
 {if $forum_stats}
-<tr><td colspan="2"><a name="forum_stats"></a></td></tr>
+<tr><td colspan="2" id="forum_stats"></td></tr>
 <tr><td class="heading" colspan="2">{tr}Forum Stats{/tr}</td></tr>
 <tr><td class="even">{tr}Forums{/tr}</td><td class="even" style="text-align:right;">{$forum_stats.forums}</td></tr>
 <tr><td class="odd">{tr}Total topics{/tr}</td><td class="odd" style="text-align:right;">{$forum_stats.topics}</td></tr>
@@ -105,7 +105,7 @@
 
 {* Blogs stats *}
 {if $blog_stats}
-<tr><td colspan="2"><a name="blog_stats"></a></td></tr>
+<tr><td colspan="2" id="blog_stats"></td></tr>
 <tr><td class="heading" colspan="2">{tr}Blog Stats{/tr}</td></tr>
 <tr><td class="even">{tr}Weblogs{/tr}</td><td class="even" style="text-align:right;">{$blog_stats.blogs}</td></tr>
 <tr><td class="odd">{tr}Total posts{/tr}</td><td class="odd" style="text-align:right;">{$blog_stats.posts}</td></tr>
@@ -118,7 +118,7 @@
 
 {* Poll stats *}
 {if $poll_stats}
-<tr><td colspan="2"><a name="poll_stats"></a></td></tr>
+<tr><td colspan="2" id="poll_stats"></td></tr>
 <tr><td class="heading" colspan="2">{tr}Poll Stats{/tr}</td></tr>
 <tr><td class="even">{tr}Polls{/tr}</td><td class="even" style="text-align:right;">{$poll_stats.polls}</td></tr>
 <tr><td class="odd">{tr}Total votes{/tr}</td><td class="odd" style="text-align:right;">{$poll_stats.votes}</td></tr>
@@ -128,7 +128,7 @@
 
 {* FAQ stats *}
 {if $faq_stats}
-<tr><td colspan="2"><a name="faq_stats"></a></td></tr>
+<tr><td colspan="2" id="faq_stats"></td></tr>
 <tr><td class="heading" colspan="2">{tr}Faq Stats{/tr}</td></tr>
 <tr><td class="even">{tr}FAQs{/tr}</td><td class="even" style="text-align:right;">{$faq_stats.faqs}</td></tr>
 <tr><td class="odd">{tr}Total questions{/tr}</td><td class="odd" style="text-align:right;">{$faq_stats.questions}</td></tr>
@@ -138,7 +138,7 @@
 
 {* Users stats *}
 {if $user_stats}
-<tr><td colspan="2"><a name="user_stats"></a></td></tr>
+<tr><td colspan="2" id="user_stats"></td></tr>
 <tr><td class="heading" colspan="2">{tr}User Stats{/tr}</td></tr>
 <tr><td class="even">{tr}Users{/tr}</td><td class="even" style="text-align:right;">{$user_stats.users}</td></tr>
 <tr><td class="odd">{tr}User bookmarks{/tr}</td><td class="odd" style="text-align:right;">{$user_stats.bookmarks}</td></tr>
@@ -148,7 +148,7 @@
 
 {* Quiz stats *}
 {if $quiz_stats}
-<tr><td colspan="2"><a name="quiz_stats"></a></td></tr>
+<tr><td colspan="2" id="quiz_stats"></td></tr>
 <tr><td class="heading" colspan="2">{tr}Quiz Stats{/tr}</td></tr>
 <tr><td class="even">{tr}Quizzes{/tr}</td><td class="even" style="text-align:right;">{$quiz_stats.quizzes}</td></tr>
 <tr><td class="odd">{tr}Questions{/tr}</td><td class="odd" style="text-align:right;">{$quiz_stats.questions}</td></tr>
@@ -164,7 +164,7 @@
 <br />
 {if $best_objects_stats}
 <table class="normal">
-<tr><td colspan="3"><a name="best_objects_stats"></a></td></tr>
+<tr><td colspan="3" id="best_objects_stats"></td></tr>
 <tr><td class="heading" colspan="3">{tr}Most viewed objects{/tr}</td></tr>
 <tr><td class="heading">{tr}Object{/tr}</td><td class="heading">{tr}Section{/tr}</td><td class="heading">{tr}Hits{/tr}</td></tr>
 {section name=i loop=$best_objects_stats}
@@ -185,7 +185,7 @@
 <br />
 {if $best_objects_stats_lastweek}
 <table class="normal">
-<tr><td colspan="3"><a name="best_objects_stats_lastweek"></a></td></tr>
+<tr><td colspan="3" id="best_objects_stats_lastweek"></td></tr>
 <tr><td class="heading" colspan="3">{tr}Most viewed objects in the last 7 days{/tr}</td></tr>
 <tr><td class="heading">{tr}Object{/tr}</td><td class="heading">{tr}Section{/tr}</td><td class="heading">{tr}Hits{/tr}</td></tr>
 {section name=i loop=$best_objects_stats_lastweek}
