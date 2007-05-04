@@ -1107,6 +1107,13 @@ class TrackerLib extends TikiLib {
 		
 		
 		}
+
+		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
+		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+			require_once('lib/search/refresh-functions.php');
+			refresh_index('tracker_items', $itemId);
+		}
+
 		return $itemId;
 	}
 
@@ -1177,6 +1184,7 @@ class TrackerLib extends TikiLib {
 			return -1;
 		}
 		$total = 0;
+		$need_reindex = array();
 		$fields = $this->list_tracker_fields($trackerId, 0, -1, 'position_asc', '');
 		while (($data = fgetcsv($csvHandle,100000)) !== FALSE) {
 			$status = array_shift($data);
@@ -1186,6 +1194,7 @@ class TrackerLib extends TikiLib {
 			$max = count($data);
 			$nextId = $this->getOne('select max(`itemId`) from `tiki_tracker_items`');
 			$itemId = (int) $nextId + 1;
+			$need_reindex[] = $itemId;
 			$query = "insert into `tiki_tracker_items`(`trackerId`,`created`,`lastModif`,`status`,`itemId`) values(?,?,?,?,?)";
 			$result = $this->query($query,array((int) $trackerId,(int) $this->now,(int) $this->now,$status,(int)$itemId));
 			if (trim($categs)) {
@@ -1209,6 +1218,14 @@ class TrackerLib extends TikiLib {
 			}
 			$total++;
 		}
+
+		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
+		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' && is_array($need_reindex) ) {
+			require_once('lib/search/refresh-functions.php');
+			foreach ( $need_reindex as $id ) refresh_index('tracker_items', $id);
+			unset($need_reindex);
+		}
+
 		return $total;
 	}
 	
@@ -1425,6 +1442,13 @@ class TrackerLib extends TikiLib {
 			$this->query('delete from `tiki_tracker_fields` where `fieldId`=?',array((int)$ratingId));
 		}
 		$this->clear_tracker_cache($trackerId);
+
+		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
+		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+			require_once('lib/search/refresh-functions.php');
+			refresh_index('trackers', $trackerId);
+		}
+
 		return $trackerId;
 	}
 

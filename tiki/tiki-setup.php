@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.426 2007-04-26 13:34:02 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.427 2007-05-04 09:25:46 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -741,6 +741,7 @@ $pref['feature_search'] = 'y';
 $pref['feature_search_fulltext'] = 'y';
 $pref['feature_search_show_forbidden_obj'] = 'n';
 $pref['feature_search_show_forbidden_cat'] = 'n';
+$pref['search_refresh_index_mode'] = 'normal';
 
 # chat
 $sections['chat']['feature'] = 'feature_chat';
@@ -1757,7 +1758,7 @@ if ($feature_integrator == 'y')
  */
 
 # Don't waste time refreshing if we're using full text search.
-if ($feature_search == 'y' && $feature_search_fulltext != 'y' ) {
+if ($feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'random' ) {
   include_once('lib/search/refresh.php');
   register_shutdown_function('refresh_search_index');
 }

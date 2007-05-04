@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.93 2007-05-02 14:44:09 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.94 2007-05-04 09:25:48 nyloth Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -821,6 +821,13 @@ class ImageGalsLib extends TikiLib {
 			$query = "delete from `tiki_images_data` where `imageId`=? and `type`!=?";
 			$result = $this->query($query, array((int)$id, 'o'));
 		}
+
+		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
+		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+			require_once('lib/search/refresh-functions.php');
+			refresh_index('images', $id);
+		}
+
 		return true;
 	}
 
@@ -899,6 +906,11 @@ class ImageGalsLib extends TikiLib {
 		if ($feature_actionlog == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
 			$logslib->add_action('Uploaded', $galleryId, 'image gallery', 'imageId='.$imageId);
+		}
+		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
+		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+			require_once('lib/search/refresh-functions.php');
+			refresh_index('images', $imageId);
 		}
 		
 		$this->notify($imageId, $galleryId, $name, $filename, $description, isset($gal_info['name'])?$gal_info['name']: '', $user);
@@ -1815,6 +1827,12 @@ class ImageGalsLib extends TikiLib {
 			if ($feature_score == 'y') {
 			    $this->score_event($user, 'igallery_new');
 			}
+		}
+
+		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
+		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+			require_once('lib/search/refresh-functions.php');
+			refresh_index('galleries', $galleryId);
 		}
 
 		return $galleryId;
