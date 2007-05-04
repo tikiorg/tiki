@@ -1,6 +1,6 @@
 -- $Rev$
--- $Date: 2007-03-02 19:49:02 $
--- $Author: luciash $
+-- $Date: 2007-05-04 17:45:51 $
+-- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -11,7 +11,7 @@
 -- Server version: 4.0.13
 -- PHP Version: 4.2.3
 -- Database : tikiwiki
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table galaxia_activities
@@ -20,10 +20,10 @@
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "galaxia_activities";
+DROP TABLE IF EXISTS 'galaxia_activities';
 
-CREATE TABLE "galaxia_activities" (
-  "activityId" bigserial,
+CREATE TABLE 'galaxia_activities' (
+  "activityId" INTEGER,
   "name" varchar(80) default NULL,
   "normalized_name" varchar(80) default NULL,
   "pId" bigint NOT NULL default '0',
@@ -35,9 +35,9 @@ CREATE TABLE "galaxia_activities" (
   "description" text,
   "expirationTime" integer unsigned NOT NULL default '0',
   PRIMARY KEY ("activityId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table galaxia_activity_roles
@@ -46,15 +46,15 @@ CREATE TABLE "galaxia_activities" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "galaxia_activity_roles";
+DROP TABLE IF EXISTS 'galaxia_activity_roles';
 
-CREATE TABLE "galaxia_activity_roles" (
+CREATE TABLE 'galaxia_activity_roles' (
   "activityId" bigint NOT NULL default '0',
   "roleId" bigint NOT NULL default '0',
   PRIMARY KEY ("activityId","roleId")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table galaxia_instance_activities
@@ -63,9 +63,9 @@ CREATE TABLE "galaxia_activity_roles" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "galaxia_instance_activities";
+DROP TABLE IF EXISTS 'galaxia_instance_activities';
 
-CREATE TABLE "galaxia_instance_activities" (
+CREATE TABLE 'galaxia_instance_activities' (
   "instanceId" bigint NOT NULL default '0',
   "activityId" bigint NOT NULL default '0',
   "started" bigint NOT NULL default '0',
@@ -73,9 +73,9 @@ CREATE TABLE "galaxia_instance_activities" (
   "user" varchar(200) default '',
   "status" varchar(11) CHECK ("status" IN ('running','completed')) default NULL,
   PRIMARY KEY ("instanceId","activityId")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table galaxia_instance_comments
@@ -84,10 +84,10 @@ CREATE TABLE "galaxia_instance_activities" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "galaxia_instance_comments";
+DROP TABLE IF EXISTS 'galaxia_instance_comments';
 
-CREATE TABLE "galaxia_instance_comments" (
-  "cId" bigserial,
+CREATE TABLE 'galaxia_instance_comments' (
+  "cId" INTEGER,
   "instanceId" bigint NOT NULL default '0',
   "user" varchar(200) default '',
   "activityId" bigint default NULL,
@@ -97,9 +97,9 @@ CREATE TABLE "galaxia_instance_comments" (
   "activity" varchar(80) default NULL,
   "timestamp" bigint default NULL,
   PRIMARY KEY ("cId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table galaxia_instances
@@ -108,10 +108,10 @@ CREATE TABLE "galaxia_instance_comments" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "galaxia_instances";
+DROP TABLE IF EXISTS 'galaxia_instances';
 
-CREATE TABLE "galaxia_instances" (
-  "instanceId" bigserial,
+CREATE TABLE 'galaxia_instances' (
+  "instanceId" INTEGER,
   "pId" bigint NOT NULL default '0',
   "started" bigint default NULL,
   "name" varchar(200) NOT NULL default 'No Name',
@@ -122,9 +122,9 @@ CREATE TABLE "galaxia_instances" (
   "status" varchar(11) CHECK ("status" IN ('active','exception','aborted','completed')) default NULL,
   "properties" bytea,
   PRIMARY KEY ("instanceId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table galaxia_processes
@@ -133,10 +133,10 @@ CREATE TABLE "galaxia_instances" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "galaxia_processes";
+DROP TABLE IF EXISTS 'galaxia_processes';
 
-CREATE TABLE "galaxia_processes" (
-  "pId" bigserial,
+CREATE TABLE 'galaxia_processes' (
+  "pId" INTEGER,
   "name" varchar(80) default NULL,
   "isValid" char(1) default NULL,
   "isActive" char(1) default NULL,
@@ -145,9 +145,9 @@ CREATE TABLE "galaxia_processes" (
   "lastModif" bigint default NULL,
   "normalized_name" varchar(80) default NULL,
   PRIMARY KEY ("pId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table galaxia_roles
@@ -156,18 +156,18 @@ CREATE TABLE "galaxia_processes" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "galaxia_roles";
+DROP TABLE IF EXISTS 'galaxia_roles';
 
-CREATE TABLE "galaxia_roles" (
-  "roleId" bigserial,
+CREATE TABLE 'galaxia_roles' (
+  "roleId" INTEGER,
   "pId" bigint NOT NULL default '0',
   "lastModif" bigint default NULL,
   "name" varchar(80) default NULL,
   "description" text,
   PRIMARY KEY ("roleId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table galaxia_transitions
@@ -176,16 +176,16 @@ CREATE TABLE "galaxia_roles" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "galaxia_transitions";
+DROP TABLE IF EXISTS 'galaxia_transitions';
 
-CREATE TABLE "galaxia_transitions" (
+CREATE TABLE 'galaxia_transitions' (
   "pId" bigint NOT NULL default '0',
   "actFromId" bigint NOT NULL default '0',
   "actToId" bigint NOT NULL default '0',
   PRIMARY KEY ("actFromId","actToId")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table galaxia_user_roles
@@ -194,16 +194,16 @@ CREATE TABLE "galaxia_transitions" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "galaxia_user_roles";
+DROP TABLE IF EXISTS 'galaxia_user_roles';
 
-CREATE TABLE "galaxia_user_roles" (
+CREATE TABLE 'galaxia_user_roles' (
   "pId" bigint NOT NULL default '0',
-  "roleId" bigserial,
+  "roleId" INTEGER,
   "user" varchar(200) NOT NULL default '',
   PRIMARY KEY ("roleId","user")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table galaxia_workitems
@@ -212,10 +212,10 @@ CREATE TABLE "galaxia_user_roles" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "galaxia_workitems";
+DROP TABLE IF EXISTS 'galaxia_workitems';
 
-CREATE TABLE "galaxia_workitems" (
-  "itemId" bigserial,
+CREATE TABLE 'galaxia_workitems' (
+  "itemId" INTEGER,
   "instanceId" bigint NOT NULL default '0',
   "orderId" bigint NOT NULL default '0',
   "activityId" bigint NOT NULL default '0',
@@ -224,9 +224,9 @@ CREATE TABLE "galaxia_workitems" (
   "ended" bigint default NULL,
   "user" varchar(200) default '',
   PRIMARY KEY ("itemId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table messu_messages
@@ -235,10 +235,10 @@ CREATE TABLE "galaxia_workitems" (
 -- Last update: Jul 12, 2003 at 08:29 PM
 --
 
-DROP TABLE "messu_messages";
+DROP TABLE IF EXISTS 'messu_messages';
 
-CREATE TABLE "messu_messages" (
-  "msgId" bigserial,
+CREATE TABLE 'messu_messages' (
+  "msgId" INTEGER,
   "user" varchar(200) NOT NULL default '',
   "user_from" varchar(200) NOT NULL default '',
   "user_to" text,
@@ -254,9 +254,9 @@ CREATE TABLE "messu_messages" (
   "isFlagged" char(1) default NULL,
   "priority" smallint default NULL,
   PRIMARY KEY ("msgId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table messu_archive (same structure as messu_messages)
@@ -266,10 +266,10 @@ CREATE TABLE "messu_messages" (
 -- Last update: Feb 26, 2005 at 03:00 PM
 --
 
-DROP TABLE "messu_archive";
+DROP TABLE IF EXISTS 'messu_archive';
 
-CREATE TABLE "messu_archive" (
-  "msgId" bigserial,
+CREATE TABLE 'messu_archive' (
+  "msgId" INTEGER,
   "user" varchar(40) NOT NULL default '',
   "user_from" varchar(40) NOT NULL default '',
   "user_to" text,
@@ -285,9 +285,9 @@ CREATE TABLE "messu_archive" (
   "isFlagged" char(1) default NULL,
   "priority" smallint default NULL,
   PRIMARY KEY ("msgId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table messu_sent (same structure as messu_messages)
@@ -297,10 +297,10 @@ CREATE TABLE "messu_archive" (
 -- Last update: Feb 26, 2005 at 11:00 PM
 --
 
-DROP TABLE "messu_sent";
+DROP TABLE IF EXISTS 'messu_sent';
 
-CREATE TABLE "messu_sent" (
-  "msgId" bigserial,
+CREATE TABLE 'messu_sent' (
+  "msgId" INTEGER,
   "user" varchar(40) NOT NULL default '',
   "user_from" varchar(40) NOT NULL default '',
   "user_to" text,
@@ -316,19 +316,19 @@ CREATE TABLE "messu_sent" (
   "isFlagged" char(1) default NULL,
   "priority" smallint default NULL,
   PRIMARY KEY ("msgId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
-DROP TABLE "sessions";
+DROP TABLE IF EXISTS 'sessions';
 
-CREATE TABLE "sessions"(
+CREATE TABLE 'sessions'(
   "sesskey" char(32) NOT NULL,
   "expiry" bigint unsigned NOT NULL,
   "expireref" varchar(64),
   "data" text NOT NULL,
   PRIMARY KEY ("sesskey")
-) ;
+);
 
 CREATE  INDEX "sessions_expiry" ON "sessions"("expiry");
 
@@ -339,10 +339,10 @@ CREATE  INDEX "sessions_expiry" ON "sessions"("expiry");
 -- Last update: Jul 13, 2003 at 12:29 AM
 --
 
-DROP TABLE "tiki_actionlog";
+DROP TABLE IF EXISTS 'tiki_actionlog';
 
-CREATE TABLE "tiki_actionlog" (
-  "actionId" serial,
+CREATE TABLE 'tiki_actionlog' (
+  "actionId" INTEGER,
   "action" varchar(255) NOT NULL default '',
   "lastModif" bigint default NULL,
   "object" varchar(255) default NULL,
@@ -352,19 +352,19 @@ CREATE TABLE "tiki_actionlog" (
   "comment" varchar(200) default NULL,
   "categId" bigint NOT NULL default '0',
   PRIMARY KEY ("actionId")
-) ;
+);
 
 
-DROP TABLE "tiki_actionlog_params";
+DROP TABLE IF EXISTS 'tiki_actionlog_params';
 
-CREATE TABLE "tiki_actionlog_params" (
+CREATE TABLE 'tiki_actionlog_params' (
   "actionId" integer NOT NULL,
   "name" varchar(40) NOT NULL,
   "value" text,
   KEY  (actionId)
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_articles
@@ -374,10 +374,10 @@ CREATE TABLE "tiki_actionlog_params" (
 -- Last check: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_articles";
+DROP TABLE IF EXISTS 'tiki_articles';
 
-CREATE TABLE "tiki_articles" (
-  "articleId" serial,
+CREATE TABLE 'tiki_articles' (
+  "articleId" INTEGER,
   "topline" varchar(255) default NULL,
   "title" varchar(255) default NULL,
   "subtitle" varchar(255) default NULL,
@@ -410,7 +410,7 @@ CREATE TABLE "tiki_articles" (
   "rating" decimal(3,2) default NULL,
   "isfloat" char(1) default NULL,
   PRIMARY KEY ("articleId")
-)   ;
+) ;
 
 CREATE  INDEX "tiki_articles_title" ON "tiki_articles"("title");
 CREATE  INDEX "tiki_articles_heading" ON "tiki_articles"("heading");
@@ -418,11 +418,11 @@ CREATE  INDEX "tiki_articles_body" ON "tiki_articles"("body");
 CREATE  INDEX "tiki_articles_author" ON "tiki_articles"("author");
 CREATE  INDEX "tiki_articles_nbreads" ON "tiki_articles"("nbreads");
 CREATE  INDEX "tiki_articles_ft" ON "tiki_articles"("title","heading","body");
--- --------------------------------------------------------
+-- ******************************************************
 
-DROP TABLE "tiki_article_types";
+DROP TABLE IF EXISTS 'tiki_article_types';
 
-CREATE TABLE "tiki_article_types" (
+CREATE TABLE 'tiki_article_types' (
   "type" varchar(50) NOT NULL,
   "use_ratings" varchar(1) default NULL,
   "show_pre_publ" varchar(1) default NULL,
@@ -444,7 +444,7 @@ CREATE TABLE "tiki_article_types" (
   "creator_edit" varchar(1) default NULL,
   "comment_can_rate_article" char(1) default NULL,
   PRIMARY KEY ("type")
-)  ;
+) ;
 
 
 INSERT INTO "tiki_article_types" ("type") VALUES ('Article');
@@ -463,10 +463,10 @@ INSERT INTO "tiki_article_types" ("type","show_post_expire","heading_only","allo
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_banners";
+DROP TABLE IF EXISTS 'tiki_banners';
 
-CREATE TABLE "tiki_banners" (
-  "bannerId" bigserial,
+CREATE TABLE 'tiki_banners' (
+  "bannerId" INTEGER,
   "client" varchar(200) NOT NULL default '',
   "url" varchar(255) default NULL,
   "title" varchar(255) default NULL,
@@ -496,9 +496,9 @@ CREATE TABLE "tiki_banners" (
   "clicks" integer default NULL,
   "zone" varchar(40) default NULL,
   PRIMARY KEY ("bannerId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_banning
@@ -507,10 +507,10 @@ CREATE TABLE "tiki_banners" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_banning";
+DROP TABLE IF EXISTS 'tiki_banning';
 
-CREATE TABLE "tiki_banning" (
-  "banId" bigserial,
+CREATE TABLE 'tiki_banning' (
+  "banId" INTEGER,
   "mode" varchar(6) CHECK ("mode" IN ('user','ip')) default NULL,
   "title" varchar(200) default NULL,
   "ip1" char(3) default NULL,
@@ -524,9 +524,9 @@ CREATE TABLE "tiki_banning" (
   "created" bigint default NULL,
   "message" text,
   PRIMARY KEY ("banId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_banning_sections
@@ -535,15 +535,15 @@ CREATE TABLE "tiki_banning" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_banning_sections";
+DROP TABLE IF EXISTS 'tiki_banning_sections';
 
-CREATE TABLE "tiki_banning_sections" (
+CREATE TABLE 'tiki_banning_sections' (
   "banId" bigint NOT NULL default '0',
   "section" varchar(100) NOT NULL default '',
   PRIMARY KEY ("banId","section")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_blog_activity
@@ -552,16 +552,16 @@ CREATE TABLE "tiki_banning_sections" (
 -- Last update: Jul 12, 2003 at 04:52 PM
 --
 
-DROP TABLE "tiki_blog_activity";
+DROP TABLE IF EXISTS 'tiki_blog_activity';
 
-CREATE TABLE "tiki_blog_activity" (
+CREATE TABLE 'tiki_blog_activity' (
   "blogId" integer NOT NULL default '0',
   "day" bigint NOT NULL default '0',
   "posts" integer default NULL,
   PRIMARY KEY ("blogId","day")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_blog_posts
@@ -571,10 +571,10 @@ CREATE TABLE "tiki_blog_activity" (
 -- Last check: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_blog_posts";
+DROP TABLE IF EXISTS 'tiki_blog_posts';
 
-CREATE TABLE "tiki_blog_posts" (
-  "postId" serial,
+CREATE TABLE 'tiki_blog_posts' (
+  "postId" INTEGER,
   "blogId" integer NOT NULL default '0',
   "data" text,
   "data_size" bigint unsigned NOT NULL default '0',
@@ -585,13 +585,13 @@ CREATE TABLE "tiki_blog_posts" (
   "title" varchar(80) default NULL,
   "priv" varchar(1) default NULL,
   PRIMARY KEY ("postId")
-)   ;
+) ;
 
 CREATE  INDEX "tiki_blog_posts_data" ON "tiki_blog_posts"("data");
 CREATE  INDEX "tiki_blog_posts_blogId" ON "tiki_blog_posts"("blogId");
 CREATE  INDEX "tiki_blog_posts_created" ON "tiki_blog_posts"("created");
 CREATE  INDEX "tiki_blog_posts_ft" ON "tiki_blog_posts"("data","title");
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_blog_posts_images
@@ -600,19 +600,19 @@ CREATE  INDEX "tiki_blog_posts_ft" ON "tiki_blog_posts"("data","title");
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_blog_posts_images";
+DROP TABLE IF EXISTS 'tiki_blog_posts_images';
 
-CREATE TABLE "tiki_blog_posts_images" (
-  "imgId" bigserial,
+CREATE TABLE 'tiki_blog_posts_images' (
+  "imgId" INTEGER,
   "postId" bigint NOT NULL default '0',
   "filename" varchar(80) default NULL,
   "filetype" varchar(80) default NULL,
   "filesize" bigint default NULL,
   "data" bytea,
   PRIMARY KEY ("imgId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_blogs
@@ -622,10 +622,10 @@ CREATE TABLE "tiki_blog_posts_images" (
 -- Last check: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_blogs";
+DROP TABLE IF EXISTS 'tiki_blogs';
 
-CREATE TABLE "tiki_blogs" (
-  "blogId" serial,
+CREATE TABLE 'tiki_blogs' (
+  "blogId" INTEGER,
   "created" bigint default NULL,
   "lastModif" bigint default NULL,
   "title" varchar(200) default NULL,
@@ -644,13 +644,13 @@ CREATE TABLE "tiki_blogs" (
   "allow_comments" char(1) default NULL,
   "show_avatar" char(1) default NULL,
   PRIMARY KEY ("blogId")
-)   ;
+) ;
 
 CREATE  INDEX "tiki_blogs_title" ON "tiki_blogs"("title");
 CREATE  INDEX "tiki_blogs_description" ON "tiki_blogs"("description");
 CREATE  INDEX "tiki_blogs_hits" ON "tiki_blogs"("hits");
 CREATE  INDEX "tiki_blogs_ft" ON "tiki_blogs"("title","description");
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_calendar_categories
@@ -659,17 +659,17 @@ CREATE  INDEX "tiki_blogs_ft" ON "tiki_blogs"("title","description");
 -- Last update: Jul 12, 2003 at 07:05 AM
 --
 
-DROP TABLE "tiki_calendar_categories";
+DROP TABLE IF EXISTS 'tiki_calendar_categories';
 
-CREATE TABLE "tiki_calendar_categories" (
-  "calcatId" bigserial,
+CREATE TABLE 'tiki_calendar_categories' (
+  "calcatId" INTEGER,
   "calendarId" bigint NOT NULL default '0',
   "name" varchar(255) NOT NULL default '',
   PRIMARY KEY ("calcatId")
-)   ;
+) ;
 
 CREATE UNIQUE INDEX "tiki_calendar_categories_catname" ON "tiki_calendar_categories"("calendarId","name");
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_calendar_items
@@ -678,10 +678,10 @@ CREATE UNIQUE INDEX "tiki_calendar_categories_catname" ON "tiki_calendar_categor
 -- Last update: Jul 12, 2003 at 07:43 AM
 --
 
-DROP TABLE "tiki_calendar_items";
+DROP TABLE IF EXISTS 'tiki_calendar_items';
 
-CREATE TABLE "tiki_calendar_items" (
-  "calitemId" bigserial,
+CREATE TABLE 'tiki_calendar_items' (
+  "calitemId" INTEGER,
   "calendarId" bigint NOT NULL default '0',
   "start" bigint NOT NULL default '0',
   "end" bigint NOT NULL default '0',
@@ -698,10 +698,10 @@ CREATE TABLE "tiki_calendar_items" (
   "created" bigint NOT NULL default '0',
   "lastmodif" bigint NOT NULL default '0',
   PRIMARY KEY ("calitemId")
-)   ;
+) ;
 
 CREATE  INDEX "tiki_calendar_items_calendarId" ON "tiki_calendar_items"("calendarId");
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_calendar_locations
@@ -710,18 +710,18 @@ CREATE  INDEX "tiki_calendar_items_calendarId" ON "tiki_calendar_items"("calenda
 -- Last update: Jul 12, 2003 at 07:05 AM
 --
 
-DROP TABLE "tiki_calendar_locations";
+DROP TABLE IF EXISTS 'tiki_calendar_locations';
 
-CREATE TABLE "tiki_calendar_locations" (
-  "callocId" bigserial,
+CREATE TABLE 'tiki_calendar_locations' (
+  "callocId" INTEGER,
   "calendarId" bigint NOT NULL default '0',
   "name" varchar(255) NOT NULL default '',
   "description" bytea,
   PRIMARY KEY ("callocId")
-)   ;
+) ;
 
 CREATE UNIQUE INDEX "tiki_calendar_locations_locname" ON "tiki_calendar_locations"("calendarId","name");
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_calendar_roles
@@ -730,16 +730,16 @@ CREATE UNIQUE INDEX "tiki_calendar_locations_locname" ON "tiki_calendar_location
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_calendar_roles";
+DROP TABLE IF EXISTS 'tiki_calendar_roles';
 
-CREATE TABLE "tiki_calendar_roles" (
+CREATE TABLE 'tiki_calendar_roles' (
   "calitemId" bigint NOT NULL default '0',
   "username" varchar(200) NOT NULL default '',
   "role" varchar(3) CHECK ("role" IN ('0','1','2','3','6')) NOT NULL default '0',
   PRIMARY KEY ("calitemId","username","role")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_calendars
@@ -748,10 +748,10 @@ CREATE TABLE "tiki_calendar_roles" (
 -- Last update: Jul 05, 2003 at 02:03 PM
 --
 
-DROP TABLE "tiki_calendars";
+DROP TABLE IF EXISTS 'tiki_calendars';
 
-CREATE TABLE "tiki_calendars" (
-  "calendarId" bigserial,
+CREATE TABLE 'tiki_calendars' (
+  "calendarId" INTEGER,
   "name" varchar(80) NOT NULL default '',
   "description" varchar(255) default NULL,
   "user" varchar(200) NOT NULL default '',
@@ -763,22 +763,22 @@ CREATE TABLE "tiki_calendars" (
   "customsubscription" varchar(3) CHECK ("customsubscription" IN ('n','y')) NOT NULL default 'n',
   "created" bigint NOT NULL default '0',
   "lastmodif" bigint NOT NULL default '0',
-  "personal" enum ('n', 'y') NOT NULL default 'n',
+  "personal" varchar(4) CHECK ("personal" IN ('n', 'y')) NOT NULL default 'n',
   PRIMARY KEY ("calendarId")
-)  ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
-DROP TABLE "tiki_calendar_options";
+DROP TABLE IF EXISTS 'tiki_calendar_options';
 
-CREATE TABLE "tiki_calendar_options" (
+CREATE TABLE 'tiki_calendar_options' (
   "calendarId" bigint NOT NULL default 0,
   "optionName" varchar(120) NOT NULL default '',
   "value" varchar(255),
   PRIMARY KEY (calendarId,optionName)
-)  ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 --
 -- Table structure for table tiki_categories
 --
@@ -786,18 +786,18 @@ CREATE TABLE "tiki_calendar_options" (
 -- Last update: Jul 04, 2003 at 09:47 PM
 --
 
-DROP TABLE "tiki_categories";
+DROP TABLE IF EXISTS 'tiki_categories';
 
-CREATE TABLE "tiki_categories" (
-  "categId" bigserial,
+CREATE TABLE 'tiki_categories' (
+  "categId" INTEGER,
   "name" varchar(100) default NULL,
   "description" varchar(250) default NULL,
   "parentId" bigint default NULL,
   "hits" integer default NULL,
   PRIMARY KEY ("categId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_categorized_objects
@@ -806,10 +806,10 @@ CREATE TABLE "tiki_categories" (
 -- Last update: Dec 06, 2005 
 --
 
-DROP TABLE "tiki_objects";
+DROP TABLE IF EXISTS 'tiki_objects';
 
-CREATE TABLE "tiki_objects" (
-  "objectId" bigserial,
+CREATE TABLE 'tiki_objects' (
+  "objectId" INTEGER,
   "type" varchar(50) default NULL,
   "itemId" varchar(255) default NULL,
   "description" text,
@@ -820,19 +820,19 @@ CREATE TABLE "tiki_objects" (
   PRIMARY KEY ("objectId")
   KEY (type, objectId),
   KEY (itemId, type)
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
--- Table structure for table `tiki_categorized_objects`
+-- Table structure for table tiki_categorized_objects
 --
 
-DROP TABLE `tiki_categorized_objects`;
+DROP TABLE IF EXISTS 'tiki_categorized_objects';
 
-CREATE TABLE `tiki_categorized_objects` (
-  `catObjectId` bigint NOT NULL default '0',
-  PRIMARY KEY ("`catObjectId`")
-)  ;
+CREATE TABLE tiki_categorized_objects (
+  catObjectId bigint NOT NULL default '0',
+  PRIMARY KEY ("catObjectId")
+) ;
 
 
 
@@ -843,15 +843,15 @@ CREATE TABLE `tiki_categorized_objects` (
 -- Last update: Jul 13, 2003 at 01:09 AM
 --
 
-DROP TABLE "tiki_category_objects";
+DROP TABLE IF EXISTS 'tiki_category_objects';
 
-CREATE TABLE "tiki_category_objects" (
+CREATE TABLE 'tiki_category_objects' (
   "catObjectId" bigint NOT NULL default '0',
   "categId" bigint NOT NULL default '0',
   PRIMARY KEY ("catObjectId","categId")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_category_sites
@@ -860,15 +860,15 @@ CREATE TABLE "tiki_category_objects" (
 -- Last update: Jul 07, 2003 at 01:53 AM
 --
 
-DROP TABLE "tiki_object_ratings";
+DROP TABLE IF EXISTS 'tiki_object_ratings';
 
-CREATE TABLE "tiki_object_ratings" (
+CREATE TABLE 'tiki_object_ratings' (
   "catObjectId" bigint NOT NULL default '0',
   "pollId" bigint NOT NULL default '0',
   PRIMARY KEY ("catObjectId","pollId")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_category_sites
@@ -877,15 +877,15 @@ CREATE TABLE "tiki_object_ratings" (
 -- Last update: Jul 07, 2003 at 01:53 AM
 --
 
-DROP TABLE "tiki_category_sites";
+DROP TABLE IF EXISTS 'tiki_category_sites';
 
-CREATE TABLE "tiki_category_sites" (
+CREATE TABLE 'tiki_category_sites' (
   "categId" bigint NOT NULL default '0',
   "siteId" bigint NOT NULL default '0',
   PRIMARY KEY ("categId","siteId")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_chart_items
@@ -894,10 +894,10 @@ CREATE TABLE "tiki_category_sites" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_chart_items";
+DROP TABLE IF EXISTS 'tiki_chart_items';
 
-CREATE TABLE "tiki_chart_items" (
-  "itemId" bigserial,
+CREATE TABLE 'tiki_chart_items' (
+  "itemId" INTEGER,
   "title" varchar(250) default NULL,
   "description" text,
   "chartId" bigint NOT NULL default '0',
@@ -907,9 +907,9 @@ CREATE TABLE "tiki_chart_items" (
   "points" bigint default NULL,
   "average" decimal(4,2) default NULL,
   PRIMARY KEY ("itemId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_charts
@@ -918,10 +918,10 @@ CREATE TABLE "tiki_chart_items" (
 -- Last update: Jul 06, 2003 at 08:14 AM
 --
 
-DROP TABLE "tiki_charts";
+DROP TABLE IF EXISTS 'tiki_charts';
 
-CREATE TABLE "tiki_charts" (
-  "chartId" bigserial,
+CREATE TABLE 'tiki_charts' (
+  "chartId" INTEGER,
   "title" varchar(250) default NULL,
   "description" text,
   "hits" bigint default NULL,
@@ -940,9 +940,9 @@ CREATE TABLE "tiki_charts" (
   "voteAgainAfter" bigint default NULL,
   "created" bigint default NULL,
   PRIMARY KEY ("chartId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_charts_rankings
@@ -951,9 +951,9 @@ CREATE TABLE "tiki_charts" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_charts_rankings";
+DROP TABLE IF EXISTS 'tiki_charts_rankings';
 
-CREATE TABLE "tiki_charts_rankings" (
+CREATE TABLE 'tiki_charts_rankings' (
   "chartId" bigint NOT NULL default '0',
   "itemId" bigint NOT NULL default '0',
   "position" bigint NOT NULL default '0',
@@ -963,9 +963,9 @@ CREATE TABLE "tiki_charts_rankings" (
   "rvotes" bigint NOT NULL default '0',
   "raverage" decimal(4,2) NOT NULL default '0.00',
   PRIMARY KEY ("chartId","itemId","period")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_charts_votes
@@ -974,17 +974,17 @@ CREATE TABLE "tiki_charts_rankings" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_charts_votes";
+DROP TABLE IF EXISTS 'tiki_charts_votes';
 
-CREATE TABLE "tiki_charts_votes" (
+CREATE TABLE 'tiki_charts_votes' (
   "user" varchar(200) NOT NULL default '',
   "itemId" bigint NOT NULL default '0',
   "timestamp" bigint default NULL,
   "chartId" bigint default NULL,
   PRIMARY KEY ("user","itemId")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_chat_channels
@@ -993,10 +993,10 @@ CREATE TABLE "tiki_charts_votes" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_chat_channels";
+DROP TABLE IF EXISTS 'tiki_chat_channels';
 
-CREATE TABLE "tiki_chat_channels" (
-  "channelId" serial,
+CREATE TABLE 'tiki_chat_channels' (
+  "channelId" INTEGER,
   "name" varchar(30) default NULL,
   "description" varchar(250) default NULL,
   "max_users" integer default NULL,
@@ -1005,9 +1005,9 @@ CREATE TABLE "tiki_chat_channels" (
   "active" char(1) default NULL,
   "refresh" integer default NULL,
   PRIMARY KEY ("channelId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_chat_messages
@@ -1016,18 +1016,18 @@ CREATE TABLE "tiki_chat_channels" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_chat_messages";
+DROP TABLE IF EXISTS 'tiki_chat_messages';
 
-CREATE TABLE "tiki_chat_messages" (
-  "messageId" serial,
+CREATE TABLE 'tiki_chat_messages' (
+  "messageId" INTEGER,
   "channelId" integer NOT NULL default '0',
   "data" varchar(255) default NULL,
   "poster" varchar(200) NOT NULL default 'anonymous',
   "timestamp" bigint default NULL,
   PRIMARY KEY ("messageId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_chat_users
@@ -1036,16 +1036,16 @@ CREATE TABLE "tiki_chat_messages" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_chat_users";
+DROP TABLE IF EXISTS 'tiki_chat_users';
 
-CREATE TABLE "tiki_chat_users" (
+CREATE TABLE 'tiki_chat_users' (
   "nickname" varchar(200) NOT NULL default '',
   "channelId" integer NOT NULL default '0',
   "timestamp" bigint default NULL,
   PRIMARY KEY ("nickname","channelId")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_comments
@@ -1055,10 +1055,10 @@ CREATE TABLE "tiki_chat_users" (
 -- Last check: Jul 11, 2003 at 01:52 AM
 --
 
-DROP TABLE "tiki_comments";
+DROP TABLE IF EXISTS 'tiki_comments';
 
-CREATE TABLE "tiki_comments" (
-  "threadId" bigserial,
+CREATE TABLE 'tiki_comments' (
+  "threadId" INTEGER,
   "object" varchar(255) NOT NULL default '',
   "objectType" varchar(32) NOT NULL default '',
   "parentId" bigint default NULL,
@@ -1079,7 +1079,7 @@ CREATE TABLE "tiki_comments" (
   "in_reply_to" varchar(128) default NULL,
   "comment_rating" smallint default NULL,  
   PRIMARY KEY ("threadId")
-)   ;
+) ;
 
 CREATE  INDEX "tiki_comments_title" ON "tiki_comments"("title");
 CREATE  INDEX "tiki_comments_data" ON "tiki_comments"("data");
@@ -1089,7 +1089,7 @@ CREATE  INDEX "tiki_comments_tc_pi" ON "tiki_comments"("parentId");
 CREATE  INDEX "tiki_comments_threaded" ON "tiki_comments"("message_id" "in_reply_to" "parentId");
 CREATE  INDEX "tiki_comments_ft" ON "tiki_comments"("title","data");
 CREATE UNIQUE INDEX "tiki_comments_no_repeats" ON "tiki_comments"("parentId" "userName" "title" "commentDate" "message_id" "in_reply_to");
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_content
@@ -1098,15 +1098,15 @@ CREATE UNIQUE INDEX "tiki_comments_no_repeats" ON "tiki_comments"("parentId" "us
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_content";
+DROP TABLE IF EXISTS 'tiki_content';
 
-CREATE TABLE "tiki_content" (
-  "contentId" serial,
+CREATE TABLE 'tiki_content' (
+  "contentId" INTEGER,
   "description" text,
   PRIMARY KEY ("contentId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_content_templates
@@ -1115,17 +1115,17 @@ CREATE TABLE "tiki_content" (
 -- Last update: Jul 12, 2003 at 12:37 AM
 --
 
-DROP TABLE "tiki_content_templates";
+DROP TABLE IF EXISTS 'tiki_content_templates';
 
-CREATE TABLE "tiki_content_templates" (
-  "templateId" bigserial,
+CREATE TABLE 'tiki_content_templates' (
+  "templateId" INTEGER,
   "content" bytea,
   "name" varchar(200) default NULL,
   "created" bigint default NULL,
   PRIMARY KEY ("templateId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_content_templates_sections
@@ -1134,15 +1134,15 @@ CREATE TABLE "tiki_content_templates" (
 -- Last update: Jul 12, 2003 at 12:37 AM
 --
 
-DROP TABLE "tiki_content_templates_sections";
+DROP TABLE IF EXISTS 'tiki_content_templates_sections';
 
-CREATE TABLE "tiki_content_templates_sections" (
+CREATE TABLE 'tiki_content_templates_sections' (
   "templateId" bigint NOT NULL default '0',
   "section" varchar(250) NOT NULL default '',
   PRIMARY KEY ("templateId","section")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_cookies
@@ -1151,15 +1151,15 @@ CREATE TABLE "tiki_content_templates_sections" (
 -- Last update: Jul 10, 2003 at 04:00 AM
 --
 
-DROP TABLE "tiki_cookies";
+DROP TABLE IF EXISTS 'tiki_cookies';
 
-CREATE TABLE "tiki_cookies" (
-  "cookieId" bigserial,
+CREATE TABLE 'tiki_cookies' (
+  "cookieId" INTEGER,
   "cookie" text,
   PRIMARY KEY ("cookieId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_copyrights
@@ -1168,10 +1168,10 @@ CREATE TABLE "tiki_cookies" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_copyrights";
+DROP TABLE IF EXISTS 'tiki_copyrights';
 
-CREATE TABLE "tiki_copyrights" (
-  "copyrightId" bigserial,
+CREATE TABLE 'tiki_copyrights' (
+  "copyrightId" INTEGER,
   "page" varchar(200) default NULL,
   "title" varchar(200) default NULL,
   "year" bigint default NULL,
@@ -1179,9 +1179,9 @@ CREATE TABLE "tiki_copyrights" (
   "copyright_order" bigint default NULL,
   "userName" varchar(200) default '',
   PRIMARY KEY ("copyrightId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_directory_categories
@@ -1190,10 +1190,10 @@ CREATE TABLE "tiki_copyrights" (
 -- Last update: Jul 12, 2003 at 08:59 PM
 --
 
-DROP TABLE "tiki_directory_categories";
+DROP TABLE IF EXISTS 'tiki_directory_categories';
 
-CREATE TABLE "tiki_directory_categories" (
-  "categId" bigserial,
+CREATE TABLE 'tiki_directory_categories' (
+  "categId" INTEGER,
   "parent" bigint default NULL,
   "name" varchar(240) default NULL,
   "description" text,
@@ -1205,9 +1205,9 @@ CREATE TABLE "tiki_directory_categories" (
   "editorGroup" varchar(200) default NULL,
   "hits" bigint default NULL,
   PRIMARY KEY ("categId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_directory_search
@@ -1216,15 +1216,15 @@ CREATE TABLE "tiki_directory_categories" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_directory_search";
+DROP TABLE IF EXISTS 'tiki_directory_search';
 
-CREATE TABLE "tiki_directory_search" (
+CREATE TABLE 'tiki_directory_search' (
   "term" varchar(250) NOT NULL default '',
   "hits" bigint default NULL,
   PRIMARY KEY ("term")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_directory_sites
@@ -1233,10 +1233,10 @@ CREATE TABLE "tiki_directory_search" (
 -- Last update: Jul 12, 2003 at 07:32 PM
 --
 
-DROP TABLE "tiki_directory_sites";
+DROP TABLE IF EXISTS 'tiki_directory_sites';
 
-CREATE TABLE "tiki_directory_sites" (
-  "siteId" bigserial,
+CREATE TABLE 'tiki_directory_sites' (
+  "siteId" INTEGER,
   "name" varchar(240) default NULL,
   "description" text,
   "url" varchar(255) default NULL,
@@ -1250,10 +1250,10 @@ CREATE TABLE "tiki_directory_sites" (
   PRIMARY KEY ("siteId")
   KEY (isValid),
   KEY (url)
-)   ;
+) ;
 
 CREATE  INDEX "tiki_directory_sites_ft" ON "tiki_directory_sites"("name","description");
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_drawings
@@ -1262,10 +1262,10 @@ CREATE  INDEX "tiki_directory_sites_ft" ON "tiki_directory_sites"("name","descri
 -- Last update: Jul 08, 2003 at 05:02 AM
 --
 
-DROP TABLE "tiki_drawings";
+DROP TABLE IF EXISTS 'tiki_drawings';
 
-CREATE TABLE "tiki_drawings" (
-  "drawId" bigserial,
+CREATE TABLE 'tiki_drawings' (
+  "drawId" INTEGER,
   "version" integer default NULL,
   "name" varchar(250) default NULL,
   "filename_draw" varchar(250) default NULL,
@@ -1273,9 +1273,9 @@ CREATE TABLE "tiki_drawings" (
   "timestamp" bigint default NULL,
   "user" varchar(200) default '',
   PRIMARY KEY ("drawId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_dsn
@@ -1284,28 +1284,28 @@ CREATE TABLE "tiki_drawings" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_dsn";
+DROP TABLE IF EXISTS 'tiki_dsn';
 
-CREATE TABLE "tiki_dsn" (
-  "dsnId" bigserial,
+CREATE TABLE 'tiki_dsn' (
+  "dsnId" INTEGER,
   "name" varchar(200) NOT NULL default '',
   "dsn" varchar(255) default NULL,
   PRIMARY KEY ("dsnId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 
-DROP TABLE "tiki_dynamic_variables";
+DROP TABLE IF EXISTS 'tiki_dynamic_variables';
 
-CREATE TABLE "tiki_dynamic_variables" (
+CREATE TABLE 'tiki_dynamic_variables' (
   "name" varchar(40) NOT NULL,
   "data" text,
   PRIMARY KEY ("name")
 );
 
 
--- --------------------------------------------------------
+-- ******************************************************
 --
 -- Table structure for table tiki_extwiki
 --
@@ -1313,16 +1313,16 @@ CREATE TABLE "tiki_dynamic_variables" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_extwiki";
+DROP TABLE IF EXISTS 'tiki_extwiki';
 
-CREATE TABLE "tiki_extwiki" (
-  "extwikiId" bigserial,
+CREATE TABLE 'tiki_extwiki' (
+  "extwikiId" INTEGER,
   "name" varchar(200) NOT NULL default '',
   "extwiki" varchar(255) default NULL,
   PRIMARY KEY ("extwikiId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_faq_questions
@@ -1332,22 +1332,22 @@ CREATE TABLE "tiki_extwiki" (
 -- Last check: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_faq_questions";
+DROP TABLE IF EXISTS 'tiki_faq_questions';
 
-CREATE TABLE "tiki_faq_questions" (
-  "questionId" bigserial,
+CREATE TABLE 'tiki_faq_questions' (
+  "questionId" INTEGER,
   "faqId" bigint default NULL,
   "position" smallint default NULL,
   "question" text,
   "answer" text,
   PRIMARY KEY ("questionId")
-)   ;
+) ;
 
 CREATE  INDEX "tiki_faq_questions_faqId" ON "tiki_faq_questions"("faqId");
 CREATE  INDEX "tiki_faq_questions_question" ON "tiki_faq_questions"("question");
 CREATE  INDEX "tiki_faq_questions_answer" ON "tiki_faq_questions"("answer");
 CREATE  INDEX "tiki_faq_questions_ft" ON "tiki_faq_questions"("question","answer");
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_faqs
@@ -1357,10 +1357,10 @@ CREATE  INDEX "tiki_faq_questions_ft" ON "tiki_faq_questions"("question","answer
 -- Last check: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_faqs";
+DROP TABLE IF EXISTS 'tiki_faqs';
 
-CREATE TABLE "tiki_faqs" (
-  "faqId" bigserial,
+CREATE TABLE 'tiki_faqs' (
+  "faqId" INTEGER,
   "title" varchar(200) default NULL,
   "description" text,
   "created" bigint default NULL,
@@ -1368,13 +1368,13 @@ CREATE TABLE "tiki_faqs" (
   "hits" integer default NULL,
   "canSuggest" char(1) default NULL,
   PRIMARY KEY ("faqId")
-)   ;
+) ;
 
 CREATE  INDEX "tiki_faqs_title" ON "tiki_faqs"("title");
 CREATE  INDEX "tiki_faqs_description" ON "tiki_faqs"("description");
 CREATE  INDEX "tiki_faqs_hits" ON "tiki_faqs"("hits");
 CREATE  INDEX "tiki_faqs_ft" ON "tiki_faqs"("title","description");
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_featured_links
@@ -1383,9 +1383,9 @@ CREATE  INDEX "tiki_faqs_ft" ON "tiki_faqs"("title","description");
 -- Last update: Jul 12, 2003 at 11:08 PM
 --
 
-DROP TABLE "tiki_featured_links";
+DROP TABLE IF EXISTS 'tiki_featured_links';
 
-CREATE TABLE "tiki_featured_links" (
+CREATE TABLE 'tiki_featured_links' (
   "url" varchar(200) NOT NULL default '',
   "title" varchar(200) default NULL,
   "description" text,
@@ -1393,19 +1393,19 @@ CREATE TABLE "tiki_featured_links" (
   "position" integer default NULL,
   "type" char(1) default NULL,
   PRIMARY KEY ("url")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 -- Table structure for table tiki_file_galleries
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 13, 2003 at 01:13 AM
 --
 
-DROP TABLE "tiki_file_galleries";
+DROP TABLE IF EXISTS 'tiki_file_galleries';
 
-CREATE TABLE "tiki_file_galleries" (
-  "galleryId" bigserial,
+CREATE TABLE 'tiki_file_galleries' (
+  "galleryId" INTEGER,
   "name" varchar(80) NOT NULL default '',
   "type" varchar(20) NOT NULL default 'default',
   "description" text,
@@ -1435,9 +1435,9 @@ CREATE TABLE "tiki_file_galleries" (
   "show_author" char(1) default NULL,
   "show_creator" char(1) default NULL,
   PRIMARY KEY ("galleryId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_files
@@ -1447,10 +1447,10 @@ CREATE TABLE "tiki_file_galleries" (
 -- Last check: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_files";
+DROP TABLE IF EXISTS 'tiki_files';
 
-CREATE TABLE "tiki_files" (
-  "fileId" bigserial,
+CREATE TABLE 'tiki_files' (
+  "fileId" INTEGER,
   "galleryId" bigint NOT NULL default '0',
   "name" varchar(200) NOT NULL default '',
   "description" text,
@@ -1475,7 +1475,7 @@ CREATE TABLE "tiki_files" (
   "comment" varchar(200) default NULL,
   "archiveId" bigint default 0,
   PRIMARY KEY ("fileId")
-)   ;
+) ;
 
 CREATE  INDEX "tiki_files_name" ON "tiki_files"("name");
 CREATE  INDEX "tiki_files_description" ON "tiki_files"("description");
@@ -1484,7 +1484,7 @@ CREATE  INDEX "tiki_files_created" ON "tiki_files"("created");
 CREATE  INDEX "tiki_files_archiveId" ON "tiki_files"("archiveId");
 CREATE  INDEX "tiki_files_galleryId" ON "tiki_files"("galleryId");
 CREATE  INDEX "tiki_files_ft" ON "tiki_files"("name","description","search_data");
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_forum_attachments
@@ -1493,10 +1493,10 @@ CREATE  INDEX "tiki_files_ft" ON "tiki_files"("name","description","search_data"
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_forum_attachments";
+DROP TABLE IF EXISTS 'tiki_forum_attachments';
 
-CREATE TABLE "tiki_forum_attachments" (
-  "attId" bigserial,
+CREATE TABLE 'tiki_forum_attachments' (
+  "attId" INTEGER,
   "threadId" bigint NOT NULL default '0',
   "qId" bigint NOT NULL default '0',
   "forumId" bigint default NULL,
@@ -1508,9 +1508,9 @@ CREATE TABLE "tiki_forum_attachments" (
   "created" bigint default NULL,
   "path" varchar(250) default NULL,
   PRIMARY KEY ("attId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_forum_reads
@@ -1519,17 +1519,17 @@ CREATE TABLE "tiki_forum_attachments" (
 -- Last update: Jul 12, 2003 at 07:17 PM
 --
 
-DROP TABLE "tiki_forum_reads";
+DROP TABLE IF EXISTS 'tiki_forum_reads';
 
-CREATE TABLE "tiki_forum_reads" (
+CREATE TABLE 'tiki_forum_reads' (
   "user" varchar(200) NOT NULL default '',
   "threadId" bigint NOT NULL default '0',
   "forumId" bigint default NULL,
   "timestamp" bigint default NULL,
   PRIMARY KEY ("user","threadId")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_forums
@@ -1538,10 +1538,10 @@ CREATE TABLE "tiki_forum_reads" (
 -- Last update: Jul 12, 2003 at 11:14 PM
 --
 
-DROP TABLE "tiki_forums";
+DROP TABLE IF EXISTS 'tiki_forums';
 
-CREATE TABLE "tiki_forums" (
-  "forumId" serial,
+CREATE TABLE 'tiki_forums' (
+  "forumId" INTEGER,
   "name" varchar(40) default NULL,
   "description" text,
   "created" bigint default NULL,
@@ -1596,9 +1596,9 @@ CREATE TABLE "tiki_forums" (
   "forum_last_n" smallint default 0,
   "mandatory_contribution" char(1) default NULL,
   PRIMARY KEY ("forumId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_forums_queue
@@ -1607,10 +1607,10 @@ CREATE TABLE "tiki_forums" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_forums_queue";
+DROP TABLE IF EXISTS 'tiki_forums_queue';
 
-CREATE TABLE "tiki_forums_queue" (
-  "qId" bigserial,
+CREATE TABLE 'tiki_forums_queue' (
+  "qId" INTEGER,
   "object" varchar(32) default NULL,
   "parentId" bigint default NULL,
   "forumId" bigint default NULL,
@@ -1624,9 +1624,9 @@ CREATE TABLE "tiki_forums_queue" (
   "topic_title" varchar(240) default NULL,
   "summary" varchar(240) default NULL,
   PRIMARY KEY ("qId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_forums_reported
@@ -1635,9 +1635,9 @@ CREATE TABLE "tiki_forums_queue" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_forums_reported";
+DROP TABLE IF EXISTS 'tiki_forums_reported';
 
-CREATE TABLE "tiki_forums_reported" (
+CREATE TABLE 'tiki_forums_reported' (
   "threadId" bigint NOT NULL default '0',
   "forumId" bigint NOT NULL default '0',
   "parentId" bigint NOT NULL default '0',
@@ -1645,9 +1645,9 @@ CREATE TABLE "tiki_forums_reported" (
   "timestamp" bigint default NULL,
   "reason" varchar(250) default NULL,
   PRIMARY KEY ("threadId")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_galleries
@@ -1657,10 +1657,10 @@ CREATE TABLE "tiki_forums_reported" (
 -- Last check: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_galleries";
+DROP TABLE IF EXISTS 'tiki_galleries';
 
-CREATE TABLE "tiki_galleries" (
-  "galleryId" bigserial,
+CREATE TABLE 'tiki_galleries' (
+  "galleryId" INTEGER,
   "name" varchar(80) NOT NULL default '',
   "description" text,
   "created" bigint default NULL,
@@ -1690,13 +1690,13 @@ CREATE TABLE "tiki_galleries" (
   "showfilename" char(1) NOT NULL default 'n',
   "defaultscale" varchar(10) NOT NULL DEFAULT 'o',
   PRIMARY KEY ("galleryId")
-)   ;
+) ;
 
 CREATE  INDEX "tiki_galleries_name" ON "tiki_galleries"("name");
 CREATE  INDEX "tiki_galleries_description" ON "tiki_galleries"("description");
 CREATE  INDEX "tiki_galleries_hits" ON "tiki_galleries"("hits");
 CREATE  INDEX "tiki_galleries_ft" ON "tiki_galleries"("name","description");
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_galleries_scales
@@ -1705,15 +1705,15 @@ CREATE  INDEX "tiki_galleries_ft" ON "tiki_galleries"("name","description");
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_galleries_scales";
+DROP TABLE IF EXISTS 'tiki_galleries_scales';
 
-CREATE TABLE "tiki_galleries_scales" (
+CREATE TABLE 'tiki_galleries_scales' (
   "galleryId" bigint NOT NULL default '0',
   "scale" bigint NOT NULL default '0',
   PRIMARY KEY ("galleryId","scale")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_games
@@ -1722,17 +1722,17 @@ CREATE TABLE "tiki_galleries_scales" (
 -- Last update: Jul 05, 2003 at 08:23 PM
 --
 
-DROP TABLE "tiki_games";
+DROP TABLE IF EXISTS 'tiki_games';
 
-CREATE TABLE "tiki_games" (
+CREATE TABLE 'tiki_games' (
   "gameName" varchar(200) NOT NULL default '',
   "hits" integer default NULL,
   "votes" integer default NULL,
   "points" integer default NULL,
   PRIMARY KEY ("gameName")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_group_inclusion
@@ -1741,15 +1741,15 @@ CREATE TABLE "tiki_games" (
 -- Last update: Jul 05, 2003 at 02:03 AM
 --
 
-DROP TABLE "tiki_group_inclusion";
+DROP TABLE IF EXISTS 'tiki_group_inclusion';
 
-CREATE TABLE "tiki_group_inclusion" (
+CREATE TABLE 'tiki_group_inclusion' (
   "groupName" varchar(255) NOT NULL default '',
   "includeGroup" varchar(255) NOT NULL default '',
   PRIMARY KEY ("groupName","includeGroup")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_history
@@ -1758,10 +1758,10 @@ CREATE TABLE "tiki_group_inclusion" (
 -- Last update: Mar 30, 2005 at 10:21 PM
 --
 
-DROP TABLE "tiki_history";
+DROP TABLE IF EXISTS 'tiki_history';
 
-CREATE TABLE "tiki_history" (
-  "historyId" bigserial,
+CREATE TABLE 'tiki_history' (
+  "historyId" INTEGER,
   "pageName" varchar(160) NOT NULL default '',
   "version" integer NOT NULL default '0',
   "version_minor" integer NOT NULL default '0',
@@ -1774,9 +1774,9 @@ CREATE TABLE "tiki_history" (
   "type" varchar(50) default NULL,
   PRIMARY KEY ("pageName","version")
   KEY(historyId)
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_hotwords
@@ -1785,15 +1785,15 @@ CREATE TABLE "tiki_history" (
 -- Last update: Jul 10, 2003 at 11:04 PM
 --
 
-DROP TABLE "tiki_hotwords";
+DROP TABLE IF EXISTS 'tiki_hotwords';
 
-CREATE TABLE "tiki_hotwords" (
+CREATE TABLE 'tiki_hotwords' (
   "word" varchar(40) NOT NULL default '',
   "url" varchar(255) NOT NULL default '',
   PRIMARY KEY ("word")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_html_pages
@@ -1802,18 +1802,18 @@ CREATE TABLE "tiki_hotwords" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_html_pages";
+DROP TABLE IF EXISTS 'tiki_html_pages';
 
-CREATE TABLE "tiki_html_pages" (
+CREATE TABLE 'tiki_html_pages' (
   "pageName" varchar(200) NOT NULL default '',
   "content" bytea,
   "refresh" bigint default NULL,
   "type" char(1) default NULL,
   "created" bigint default NULL,
   PRIMARY KEY ("pageName")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_html_pages_dynamic_zones
@@ -1822,17 +1822,17 @@ CREATE TABLE "tiki_html_pages" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_html_pages_dynamic_zones";
+DROP TABLE IF EXISTS 'tiki_html_pages_dynamic_zones';
 
-CREATE TABLE "tiki_html_pages_dynamic_zones" (
+CREATE TABLE 'tiki_html_pages_dynamic_zones' (
   "pageName" varchar(40) NOT NULL default '',
   "zone" varchar(80) NOT NULL default '',
   "type" char(2) default NULL,
   "content" text,
   PRIMARY KEY ("pageName","zone")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_images
@@ -1842,10 +1842,10 @@ CREATE TABLE "tiki_html_pages_dynamic_zones" (
 -- Last check: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_images";
+DROP TABLE IF EXISTS 'tiki_images';
 
-CREATE TABLE "tiki_images" (
-  "imageId" bigserial,
+CREATE TABLE 'tiki_images' (
+  "imageId" INTEGER,
   "galleryId" bigint NOT NULL default '0',
   "name" varchar(200) NOT NULL default '',
   "description" text,
@@ -1856,7 +1856,7 @@ CREATE TABLE "tiki_images" (
   "hits" bigint default NULL,
   "path" varchar(255) default NULL,
   PRIMARY KEY ("imageId")
-)   ;
+) ;
 
 CREATE  INDEX "tiki_images_name" ON "tiki_images"("name");
 CREATE  INDEX "tiki_images_description" ON "tiki_images"("description");
@@ -1865,7 +1865,7 @@ CREATE  INDEX "tiki_images_ti_gId" ON "tiki_images"("galleryId");
 CREATE  INDEX "tiki_images_ti_cr" ON "tiki_images"("created");
 CREATE  INDEX "tiki_images_ti_us" ON "tiki_images"("user");
 CREATE  INDEX "tiki_images_ft" ON "tiki_images"("name","description");
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_images_data
@@ -1875,9 +1875,9 @@ CREATE  INDEX "tiki_images_ft" ON "tiki_images"("name","description");
 -- Last check: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_images_data";
+DROP TABLE IF EXISTS 'tiki_images_data';
 
-CREATE TABLE "tiki_images_data" (
+CREATE TABLE 'tiki_images_data' (
   "imageId" bigint NOT NULL default '0',
   "xsize" integer NOT NULL default '0',
   "ysize" integer NOT NULL default '0',
@@ -1888,10 +1888,10 @@ CREATE TABLE "tiki_images_data" (
   "data" bytea,
   "etag" varchar(32) default NULL,
   PRIMARY KEY ("imageId","xsize","ysize","type")
-) ;
+);
 
 CREATE  INDEX "tiki_images_data_t_i_d_it" ON "tiki_images_data"("imageId","type");
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_language
@@ -1900,16 +1900,16 @@ CREATE  INDEX "tiki_images_data_t_i_d_it" ON "tiki_images_data"("imageId","type"
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_language";
+DROP TABLE IF EXISTS 'tiki_language';
 
-CREATE TABLE "tiki_language" (
+CREATE TABLE 'tiki_language' (
   "source" bytea NOT NULL,
   "lang" char(16) NOT NULL default '',
   "tran" bytea,
   PRIMARY KEY ("source","lang")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_languages
@@ -1918,18 +1918,18 @@ CREATE TABLE "tiki_language" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_languages";
+DROP TABLE IF EXISTS 'tiki_languages';
 
-CREATE TABLE "tiki_languages" (
+CREATE TABLE 'tiki_languages' (
   "lang" char(16) NOT NULL default '',
   "language" varchar(255) default NULL,
   PRIMARY KEY ("lang")
-) ;
+);
 
--- --------------------------------------------------------
-INSERT INTO tiki_languages(lang, language) VALUES('en','English');
+-- ******************************************************
+INSERT INTO "tiki_languages" ("lang","language") VALUES ('en','English');
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_link_cache
@@ -1938,19 +1938,19 @@ INSERT INTO tiki_languages(lang, language) VALUES('en','English');
 -- Last update: Jul 12, 2003 at 06:06 PM
 --
 
-DROP TABLE "tiki_link_cache";
+DROP TABLE IF EXISTS 'tiki_link_cache';
 
-CREATE TABLE "tiki_link_cache" (
-  "cacheId" bigserial,
+CREATE TABLE 'tiki_link_cache' (
+  "cacheId" INTEGER,
   "url" varchar(250) default NULL,
   "data" bytea,
   "refresh" bigint default NULL,
   PRIMARY KEY ("cacheId")
-)   ;
+) ;
 
 CREATE INDEX urlindex ON tiki_link_cache (url(250));
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_links
@@ -1959,16 +1959,16 @@ CREATE INDEX urlindex ON tiki_link_cache (url(250));
 -- Last update: Jul 12, 2003 at 11:39 PM
 --
 
-DROP TABLE "tiki_links";
+DROP TABLE IF EXISTS 'tiki_links';
 
-CREATE TABLE "tiki_links" (
+CREATE TABLE 'tiki_links' (
   "fromPage" varchar(160) NOT NULL default '',
   "toPage" varchar(160) NOT NULL default '',
   PRIMARY KEY ("fromPage","toPage")
-) ;
+);
 
 CREATE  INDEX "tiki_links_toPage" ON "tiki_links"("toPage");
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_live_support_events
@@ -1977,10 +1977,10 @@ CREATE  INDEX "tiki_links_toPage" ON "tiki_links"("toPage");
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_live_support_events";
+DROP TABLE IF EXISTS 'tiki_live_support_events';
 
-CREATE TABLE "tiki_live_support_events" (
-  "eventId" bigserial,
+CREATE TABLE 'tiki_live_support_events' (
+  "eventId" INTEGER,
   "reqId" varchar(32) NOT NULL default '',
   "type" varchar(40) default NULL,
   "seqId" bigint default NULL,
@@ -1988,9 +1988,9 @@ CREATE TABLE "tiki_live_support_events" (
   "data" text,
   "timestamp" bigint default NULL,
   PRIMARY KEY ("eventId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_live_support_message_comments
@@ -1999,17 +1999,17 @@ CREATE TABLE "tiki_live_support_events" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_live_support_message_comments";
+DROP TABLE IF EXISTS 'tiki_live_support_message_comments';
 
-CREATE TABLE "tiki_live_support_message_comments" (
-  "cId" bigserial,
+CREATE TABLE 'tiki_live_support_message_comments' (
+  "cId" INTEGER,
   "msgId" bigint default NULL,
   "data" text,
   "timestamp" bigint default NULL,
   PRIMARY KEY ("cId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_live_support_messages
@@ -2018,10 +2018,10 @@ CREATE TABLE "tiki_live_support_message_comments" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_live_support_messages";
+DROP TABLE IF EXISTS 'tiki_live_support_messages';
 
-CREATE TABLE "tiki_live_support_messages" (
-  "msgId" bigserial,
+CREATE TABLE 'tiki_live_support_messages' (
+  "msgId" INTEGER,
   "data" text,
   "timestamp" bigint default NULL,
   "user" varchar(200) not null default '',
@@ -2034,9 +2034,9 @@ CREATE TABLE "tiki_live_support_messages" (
   "module" smallint default NULL,
   "email" varchar(250) default NULL,
   PRIMARY KEY ("msgId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_live_support_modules
@@ -2045,30 +2045,30 @@ CREATE TABLE "tiki_live_support_messages" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_live_support_modules";
+DROP TABLE IF EXISTS 'tiki_live_support_modules';
 
-CREATE TABLE "tiki_live_support_modules" (
-  "modId" serial,
+CREATE TABLE 'tiki_live_support_modules' (
+  "modId" INTEGER,
   "name" varchar(90) default NULL,
   PRIMARY KEY ("modId")
-)   ;
+) ;
 
--- --------------------------------------------------------
-INSERT INTO tiki_live_support_modules(name) VALUES('wiki');
+-- ******************************************************
+INSERT INTO "tiki_live_support_modules" ("name") VALUES ('wiki');
 
-INSERT INTO tiki_live_support_modules(name) VALUES('forums');
+INSERT INTO "tiki_live_support_modules" ("name") VALUES ('forums');
 
-INSERT INTO tiki_live_support_modules(name) VALUES('image galleries');
+INSERT INTO "tiki_live_support_modules" ("name") VALUES ('image galleries');
 
-INSERT INTO tiki_live_support_modules(name) VALUES('file galleries');
+INSERT INTO "tiki_live_support_modules" ("name") VALUES ('file galleries');
 
-INSERT INTO tiki_live_support_modules(name) VALUES('directory');
+INSERT INTO "tiki_live_support_modules" ("name") VALUES ('directory');
 
-INSERT INTO tiki_live_support_modules(name) VALUES('workflow');
+INSERT INTO "tiki_live_support_modules" ("name") VALUES ('workflow');
 
-INSERT INTO tiki_live_support_modules(name) VALUES('charts');
+INSERT INTO "tiki_live_support_modules" ("name") VALUES ('charts');
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_live_support_operators
@@ -2077,9 +2077,9 @@ INSERT INTO tiki_live_support_modules(name) VALUES('charts');
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_live_support_operators";
+DROP TABLE IF EXISTS 'tiki_live_support_operators';
 
-CREATE TABLE "tiki_live_support_operators" (
+CREATE TABLE 'tiki_live_support_operators' (
   "user" varchar(200) NOT NULL default '',
   "accepted_requests" bigint default NULL,
   "status" varchar(20) default NULL,
@@ -2092,9 +2092,9 @@ CREATE TABLE "tiki_live_support_operators" (
   "points" bigint default NULL,
   "status_since" bigint default NULL,
   PRIMARY KEY ("user")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_live_support_requests
@@ -2103,9 +2103,9 @@ CREATE TABLE "tiki_live_support_operators" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_live_support_requests";
+DROP TABLE IF EXISTS 'tiki_live_support_requests';
 
-CREATE TABLE "tiki_live_support_requests" (
+CREATE TABLE 'tiki_live_support_requests' (
   "reqId" varchar(32) NOT NULL default '',
   "user" varchar(200) NOT NULL default '',
   "tiki_user" varchar(200) default NULL,
@@ -2121,9 +2121,9 @@ CREATE TABLE "tiki_live_support_requests" (
   "chat_started" bigint default NULL,
   "chat_ended" bigint default NULL,
   PRIMARY KEY ("reqId")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_logs
@@ -2132,10 +2132,10 @@ CREATE TABLE "tiki_live_support_requests" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_logs";
+DROP TABLE IF EXISTS 'tiki_logs';
 
-CREATE TABLE "tiki_logs" (
-  "logId" serial,
+CREATE TABLE 'tiki_logs' (
+  "logId" INTEGER,
   "logtype" varchar(20) NOT NULL,
   "logmessage" text NOT NULL,
   "loguser" varchar(40) NOT NULL,
@@ -2143,11 +2143,11 @@ CREATE TABLE "tiki_logs" (
   "logclient" text NOT NULL,
   "logtime" bigint NOT NULL,
   PRIMARY KEY ("logId")
-) ;
+);
 
 CREATE  INDEX "tiki_logs_logtype" ON "tiki_logs"("logtype");
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_mail_events
@@ -2156,15 +2156,15 @@ CREATE  INDEX "tiki_logs_logtype" ON "tiki_logs"("logtype");
 -- Last update: Jul 11, 2003 at 05:28 AM
 --
 
-DROP TABLE "tiki_mail_events";
+DROP TABLE IF EXISTS 'tiki_mail_events';
 
-CREATE TABLE "tiki_mail_events" (
+CREATE TABLE 'tiki_mail_events' (
   "event" varchar(200) default NULL,
   "object" varchar(200) default NULL,
   "email" varchar(200) default NULL
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_mailin_accounts
@@ -2173,10 +2173,10 @@ CREATE TABLE "tiki_mail_events" (
 -- Last update: Jun 17, 2004 at 03:06 PM EST
 --
 
-DROP TABLE "tiki_mailin_accounts";
+DROP TABLE IF EXISTS 'tiki_mailin_accounts';
 
-CREATE TABLE "tiki_mailin_accounts" (
-  "accountId" bigserial,
+CREATE TABLE 'tiki_mailin_accounts' (
+  "accountId" INTEGER,
   "user" varchar(200) NOT NULL default '',
   "account" varchar(50) NOT NULL default '',
   "pop" varchar(255) default NULL,
@@ -2194,9 +2194,9 @@ CREATE TABLE "tiki_mailin_accounts" (
   "article_type" varchar(50) default NULL,
   "discard_after" varchar(255) default NULL,
   PRIMARY KEY ("accountId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_menu_languages
@@ -2205,15 +2205,15 @@ CREATE TABLE "tiki_mailin_accounts" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_menu_languages";
+DROP TABLE IF EXISTS 'tiki_menu_languages';
 
-CREATE TABLE "tiki_menu_languages" (
-  "menuId" serial,
+CREATE TABLE 'tiki_menu_languages' (
+  "menuId" INTEGER,
   "language" char(16) NOT NULL default '',
   PRIMARY KEY ("menuId","language")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_menu_options
@@ -2222,10 +2222,10 @@ CREATE TABLE "tiki_menu_languages" (
 -- Last update: Nov 21, 2003 at 07:05 AM
 --
 
-DROP TABLE "tiki_menu_options";
+DROP TABLE IF EXISTS 'tiki_menu_options';
 
-CREATE TABLE "tiki_menu_options" (
-  "optionId" serial,
+CREATE TABLE 'tiki_menu_options' (
+  "optionId" INTEGER,
   "menuId" integer default NULL,
   "type" char(1) default NULL,
   "name" varchar(200) default NULL,
@@ -2235,9 +2235,9 @@ CREATE TABLE "tiki_menu_options" (
   "perm" varchar(255) default NULL,
   "groupname" varchar(255) default NULL,
   PRIMARY KEY ("optionId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Home','tiki-index.php',10,'','','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Chat','tiki-chat.php',15,'feature_chat','tiki_p_chat','');
@@ -2261,7 +2261,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','(debug)','javascript:toggle("debugconsole")',40,'feature_debug_console','tiki_p_admin','');
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','MyTiki','',50,'','','Registered');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','MyTiki','tiki-my_tiki.php',50,'','','Registered');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','MyTiki home','tiki-my_tiki.php',51,'','','Registered');
 
@@ -2292,7 +2292,13 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','My watches','tiki-user_watches.php',110,'feature_user_watches','','Registered');
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Workflow','',150,'feature_workflow','tiki_p_use_workflow','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Workflow','tiki-g-user_processes.php',150,'feature_workflow','tiki_p_use_workflow','');
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','User processes','tiki-g-user_processes.php',152,'feature_workflow','tiki_p_use_workflow','');
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','User activities','tiki-g-user_activities.php',153,'feature_workflow','tiki_p_use_workflow','');
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','User instances','tiki-g-user_instances.php',154,'feature_workflow','tiki_p_use_workflow','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin processes','tiki-g-admin_processes.php',155,'feature_workflow','tiki_p_admin_workflow','');
 
@@ -2302,12 +2308,6 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Monitor instances','tiki-g-monitor_instances.php',170,'feature_workflow','tiki_p_admin_workflow','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','User processes','tiki-g-user_processes.php',175,'feature_workflow','tiki_p_use_workflow','');
-
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','User activities','tiki-g-user_activities.php',180,'feature_workflow','tiki_p_use_workflow','');
-
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','User instances','tiki-g-user_instances.php',185,'feature_workflow','tiki_p_use_workflow','');
-
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Community','','187','feature_friends','tiki_p_list_users','');
 
@@ -2316,7 +2316,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Friendship Network','tiki-friends.php','189','feature_friends','','');
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Wiki','',200,'feature_wiki','tiki_p_view','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Wiki','tiki-index.php',200,'feature_wiki','tiki_p_view','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Wiki Home','tiki-index.php',202,'feature_wiki','tiki_p_view','');
 
@@ -2342,7 +2342,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Image Galleries','',300,'feature_galleries','tiki_p_view_image_gallery','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Image Galleries','tiki-galleries.php',300,'feature_galleries','tiki_p_view_image_gallery','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Galleries','tiki-galleries.php',305,'feature_galleries','tiki_p_view_image_gallery','');
 
@@ -2355,7 +2355,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','System gallery','tiki-list_gallery.php?galleryId=0',320,'feature_galleries','tiki_p_admin_galleries','');
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Articles','',350,'feature_articles','tiki_p_read_article','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Articles','tiki-view_articles.php',350,'feature_articles','tiki_p_read_article','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Articles home','tiki-view_articles.php',355,'feature_articles','tiki_p_read_article','');
 
@@ -2382,7 +2382,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin types','tiki-article_types.php',395,'feature_articles','tiki_p_read_article,tiki_p_admin_cms','');
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Blogs','',450,'feature_blogs','tiki_p_read_blog','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Blogs','tiki-list_blogs.php',450,'feature_blogs','tiki_p_read_blog','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','List blogs','tiki-list_blogs.php',455,'feature_blogs','tiki_p_read_blog','');
 
@@ -2395,7 +2395,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin posts','tiki-list_posts.php',475,'feature_blogs','tiki_p_read_blog,tiki_p_blog_admin','');
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Forums','',500,'feature_forums','tiki_p_forum_read','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Forums','tiki-forums.php',500,'feature_forums','tiki_p_forum_read','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','List forums','tiki-forums.php',505,'feature_forums','tiki_p_forum_read','');
 
@@ -2404,11 +2404,11 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin forums','tiki-admin_forums.php',515,'feature_forums','tiki_p_forum_read,tiki_p_admin_forum','');
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Directory','',550,'feature_directory','tiki_p_view_directory','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Directory','tiki-directory_browse.php',550,'feature_directory','tiki_p_view_directory','');
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Browse directory','tiki-directory_browse.php',552,'feature_directory','tiki_p_view_directory','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Submit a new link','tiki-directory_add_site.php',555,'feature_directory','tiki_p_submit_link','');
-
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Browse directory','tiki-directory_browse.php',560,'feature_directory','tiki_p_view_directory','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin directory','tiki-directory_admin.php',565,'feature_directory','tiki_p_view_directory,tiki_p_admin_directory_cats','');
 
@@ -2417,7 +2417,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin directory','tiki-directory_admin.php',565,'feature_directory','tiki_p_view_directory,tiki_p_validate_links','');
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','File Galleries','',600,'feature_file_galleries','tiki_p_view_file_gallery','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','File Galleries','tiki-file_galleries.php',600,'feature_file_galleries','tiki_p_view_file_gallery','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','List galleries','tiki-file_galleries.php',605,'feature_file_galleries','tiki_p_view_file_gallery','');
 
@@ -2428,14 +2428,14 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Directory batch','tiki-batch_upload_files.php',617,'feature_file_galleries_batch','tiki_p_batch_upload_file_dir','');
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','FAQs','',650,'feature_faqs','tiki_p_view_faqs','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','FAQs','tiki-list_faqs.php',650,'feature_faqs','tiki_p_view_faqs','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','List FAQs','tiki-list_faqs.php',665,'feature_faqs','tiki_p_view_faqs','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin FAQs','tiki-list_faqs.php',660,'feature_faqs','tiki_p_admin_faqs','');
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Maps','',700,'feature_maps','tiki_p_map_view','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Maps','tiki-map.phtml',700,'feature_maps','tiki_p_map_view','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','View Maps','tiki-map.phtml',703,'feature_maps','tiki_p_map_view','');
 
@@ -2444,7 +2444,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Layer management','tiki-map_upload.php',710,'feature_maps','tiki_p_map_edit','');
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Quizzes','',750,'feature_quizzes','','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Quizzes','tiki-list_quizzes.php',750,'feature_quizzes','','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','List quizzes','tiki-list_quizzes.php',755,'feature_quizzes','','');
 
@@ -2453,19 +2453,19 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin quiz','tiki-edit_quiz.php',765,'feature_quizzes','tiki_p_admin_quizzes','');
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','TikiSheet','',780,'feature_sheet','tiki_p_view_sheet','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','TikiSheet','tiki-sheets.php',780,'feature_sheet','tiki_p_view_sheet','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','List TikiSheets','tiki-sheets.php',782,'feature_sheet','tiki_p_view_sheet','');
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Trackers','',800,'feature_trackers','tiki_p_view_trackers','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Trackers','tiki-list_trackers.php',800,'feature_trackers','tiki_p_view_trackers','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','List trackers','tiki-list_trackers.php',805,'feature_trackers','tiki_p_view_trackers','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin trackers','tiki-admin_trackers.php',810,'feature_trackers','tiki_p_admin_trackers','');
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Surveys','',850,'feature_surveys','','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Surveys','tiki-list_surveys.php',850,'feature_surveys','','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','List surveys','tiki-list_surveys.php',855,'feature_surveys','','');
 
@@ -2474,11 +2474,11 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin surveys','tiki-admin_surveys.php',865,'feature_surveys','tiki_p_admin_surveys','');
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Newsletters','',900,'feature_newsletters','tiki_p_subscribe_newsletters','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Newsletters','tiki-newsletters.php',900,'feature_newsletters','tiki_p_subscribe_newsletters','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Newsletters','',900,'feature_newsletters','tiki_p_send_newsletters','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Newsletters','tiki-newsletters.php',900,'feature_newsletters','tiki_p_send_newsletters','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Newsletters','',900,'feature_newsletters','tiki_p_admin_newsletters','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Newsletters','tiki-newsletters.php',900,'feature_newsletters','tiki_p_admin_newsletters','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Newsletters','tiki-newsletters.php',903,'feature_newsletters','tiki_p_subscribe_newsletters','');
 
@@ -2492,46 +2492,46 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Charts','',1000,'feature_charts','','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Charts','tiki-charts.php',1000,'feature_charts','','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'','Charts','tiki-charts.php',1003,'feature_charts','','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Charts','tiki-charts.php',1003,'feature_charts','','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin charts','tiki-admin_charts.php',1005,'feature_charts','tiki_p_admin_charts','');
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','',1050,'','tiki_p_admin','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','',1050,'','tiki_p_admin_chat','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_chat','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','',1050,'','tiki_p_admin_categories','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_categories','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','',1050,'','tiki_p_admin_banners','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_banners','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','',1050,'','tiki_p_edit_templates','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_edit_templates','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','',1050,'','tiki_p_edit_cookies','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_edit_cookies','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','',1050,'','tiki_p_admin_dynamic','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_dynamic','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','',1050,'','tiki_p_admin_mailin','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_mailin','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','',1050,'','tiki_p_edit_content_templates','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_edit_content_templates','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','',1050,'','tiki_p_edit_html_pages','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_edit_html_pages','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','',1050,'','tiki_p_view_referer_stats','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_view_referer_stats','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','',1050,'','tiki_p_admin_drawings','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_drawings','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','',1050,'','tiki_p_admin_shoutbox','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_shoutbox','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','',1050,'','tiki_p_live_support_admin','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_live_support_admin','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','',1050,'','user_is_operator','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','user_is_operator','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','',1050,'feature_integrator','tiki_p_admin_integrator','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'feature_integrator','tiki_p_admin_integrator','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','',1050,'','tiki_p_admin_contribution','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_contribution','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin home','tiki-admin.php',1051,'','tiki_p_admin','');
 
@@ -2634,7 +2634,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Contribution','tiki-admin_contribution.php',1265,'feature_contribution','tiki_p_admin_contribution','');
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_menus
@@ -2643,20 +2643,20 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_menus";
+DROP TABLE IF EXISTS 'tiki_menus';
 
-CREATE TABLE "tiki_menus" (
-  "menuId" serial,
+CREATE TABLE 'tiki_menus' (
+  "menuId" INTEGER,
   "name" varchar(200) NOT NULL default '',
   "description" text,
   "type" char(1) default NULL,
   PRIMARY KEY ("menuId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 INSERT INTO "tiki_menus" ("menuId","name","description","type") VALUES ('42','Application menu','Main extensive navigation menu','d');
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_minical_events
@@ -2665,11 +2665,11 @@ INSERT INTO "tiki_menus" ("menuId","name","description","type") VALUES ('42','Ap
 -- Last update: Jul 09, 2003 at 04:06 AM
 --
 
-DROP TABLE "tiki_minical_events";
+DROP TABLE IF EXISTS 'tiki_minical_events';
 
-CREATE TABLE "tiki_minical_events" (
+CREATE TABLE 'tiki_minical_events' (
   "user" varchar(200) default '',
-  "eventId" bigserial,
+  "eventId" INTEGER,
   "title" varchar(250) default NULL,
   "description" text,
   "start" bigint default NULL,
@@ -2679,9 +2679,9 @@ CREATE TABLE "tiki_minical_events" (
   "topicId" bigint default NULL,
   "reminded" char(1) default NULL,
   PRIMARY KEY ("eventId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_minical_topics
@@ -2690,11 +2690,11 @@ CREATE TABLE "tiki_minical_events" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_minical_topics";
+DROP TABLE IF EXISTS 'tiki_minical_topics';
 
-CREATE TABLE "tiki_minical_topics" (
+CREATE TABLE 'tiki_minical_topics' (
   "user" varchar(200) default '',
-  "topicId" bigserial,
+  "topicId" INTEGER,
   "name" varchar(250) default NULL,
   "filename" varchar(200) default NULL,
   "filetype" varchar(200) default NULL,
@@ -2703,9 +2703,9 @@ CREATE TABLE "tiki_minical_topics" (
   "path" varchar(250) default NULL,
   "isIcon" char(1) default NULL,
   PRIMARY KEY ("topicId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_modules
@@ -2714,9 +2714,9 @@ CREATE TABLE "tiki_minical_topics" (
 -- Last update: Jul 12, 2003 at 11:44 PM
 --
 
-DROP TABLE "tiki_modules";
+DROP TABLE IF EXISTS 'tiki_modules';
 
-CREATE TABLE "tiki_modules" (
+CREATE TABLE 'tiki_modules' (
   "name" varchar(200) NOT NULL default '',
   "position" char(1) default NULL,
   "ord" smallint default NULL,
@@ -2727,9 +2727,9 @@ CREATE TABLE "tiki_modules" (
   "params" varchar(255) default NULL,
   "groups" text,
   PRIMARY KEY ("name")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 INSERT INTO "tiki_modules" ("name","position","ord","cache_time","groups") VALUES ('login_box','r',1,0,'a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}');
 
 INSERT INTO "tiki_modules" ("name","position","ord","cache_time","params","groups") VALUES ('mnu_application_menu','l',1,0,'flip=y','a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}');
@@ -2738,7 +2738,7 @@ INSERT INTO "tiki_modules" ("name","position","ord","cache_time","groups") VALUE
 
 INSERT INTO "tiki_modules" ("name","position","ord","cache_time","groups") VALUES ('assistant','l',10,0,'a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}');
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_newsletter_subscriptions
@@ -2747,9 +2747,9 @@ INSERT INTO "tiki_modules" ("name","position","ord","cache_time","groups") VALUE
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_newsletter_subscriptions";
+DROP TABLE IF EXISTS 'tiki_newsletter_subscriptions';
 
-CREATE TABLE "tiki_newsletter_subscriptions" (
+CREATE TABLE 'tiki_newsletter_subscriptions' (
   "nlId" bigint NOT NULL default '0',
   "email" varchar(255) NOT NULL default '',
   "code" varchar(32) default NULL,
@@ -2757,9 +2757,9 @@ CREATE TABLE "tiki_newsletter_subscriptions" (
   "subscribed" bigint default NULL,
   "isUser" char(1) NOT NULL default 'n',
   PRIMARY KEY ("nlId","email","isUser")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_newsletter_groups
@@ -2768,16 +2768,16 @@ CREATE TABLE "tiki_newsletter_subscriptions" (
 -- Last update: Jan 18, 2005
 --
 
-DROP TABLE "tiki_newsletter_groups";
+DROP TABLE IF EXISTS 'tiki_newsletter_groups';
 
-CREATE TABLE "tiki_newsletter_groups" (
+CREATE TABLE 'tiki_newsletter_groups' (
   "nlId" bigint NOT NULL default '0',
   "groupName" varchar(255) NOT NULL default '',
   "code" varchar(32) default NULL,
   PRIMARY KEY ("nlId","groupName")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_newsletters
@@ -2786,10 +2786,10 @@ CREATE TABLE "tiki_newsletter_groups" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_newsletters";
+DROP TABLE IF EXISTS 'tiki_newsletters';
 
-CREATE TABLE "tiki_newsletters" (
-  "nlId" bigserial,
+CREATE TABLE 'tiki_newsletters' (
+  "nlId" INTEGER,
   "name" varchar(200) default NULL,
   "description" text,
   "created" bigint default NULL,
@@ -2803,9 +2803,9 @@ CREATE TABLE "tiki_newsletters" (
   "validateAddr" char(1) default 'y',
   "frequency" bigint default NULL,
   PRIMARY KEY ("nlId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_newsreader_marks
@@ -2814,17 +2814,17 @@ CREATE TABLE "tiki_newsletters" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_newsreader_marks";
+DROP TABLE IF EXISTS 'tiki_newsreader_marks';
 
-CREATE TABLE "tiki_newsreader_marks" (
+CREATE TABLE 'tiki_newsreader_marks' (
   "user" varchar(200) NOT NULL default '',
   "serverId" bigint NOT NULL default '0',
   "groupName" varchar(255) NOT NULL default '',
   "timestamp" bigint NOT NULL default '0',
-  PRIMARY KEY ("`user`","serverId","groupName")
-) ;
+  PRIMARY KEY ("user","serverId","groupName")
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_newsreader_servers
@@ -2833,19 +2833,19 @@ CREATE TABLE "tiki_newsreader_marks" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_newsreader_servers";
+DROP TABLE IF EXISTS 'tiki_newsreader_servers';
 
-CREATE TABLE "tiki_newsreader_servers" (
+CREATE TABLE 'tiki_newsreader_servers' (
   "user" varchar(200) NOT NULL default '',
-  "serverId" bigserial,
+  "serverId" INTEGER,
   "server" varchar(250) default NULL,
   "port" smallint default NULL,
   "username" varchar(200) default NULL,
   "password" varchar(200) default NULL,
   PRIMARY KEY ("serverId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_page_footnotes
@@ -2855,16 +2855,16 @@ CREATE TABLE "tiki_newsreader_servers" (
 -- Last check: Jul 12, 2003 at 10:00 AM
 --
 
-DROP TABLE "tiki_page_footnotes";
+DROP TABLE IF EXISTS 'tiki_page_footnotes';
 
-CREATE TABLE "tiki_page_footnotes" (
+CREATE TABLE 'tiki_page_footnotes' (
   "user" varchar(200) NOT NULL default '',
   "pageName" varchar(250) NOT NULL default '',
   "data" text,
-  PRIMARY KEY ("`user`","pageName")
-) ;
+  PRIMARY KEY ("user","pageName")
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_pages
@@ -2874,10 +2874,10 @@ CREATE TABLE "tiki_page_footnotes" (
 -- Last check: Jul 12, 2003 at 10:01 AM
 --
 
-DROP TABLE "tiki_pages";
+DROP TABLE IF EXISTS 'tiki_pages';
 
-CREATE TABLE "tiki_pages" (
-  "page_id" bigserial,
+CREATE TABLE 'tiki_pages' (
+  "page_id" INTEGER,
   "pageName" varchar(160) NOT NULL default '',
   "hits" integer default NULL,
   "data" mediumtext,
@@ -2902,13 +2902,13 @@ CREATE TABLE "tiki_pages" (
   "created" bigint,
   PRIMARY KEY ("page_id")
   KEY lastModif(lastModif)
-)  ;
+);
 
 CREATE  INDEX "tiki_pages_data" ON "tiki_pages"("data");
 CREATE  INDEX "tiki_pages_pageRank" ON "tiki_pages"("pageRank");
 CREATE  INDEX "tiki_pages_ft" ON "tiki_pages"("pageName","description","data");
 CREATE UNIQUE INDEX "tiki_pages_pageName" ON "tiki_pages"("pageName");
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_page_drafts
@@ -2916,19 +2916,19 @@ CREATE UNIQUE INDEX "tiki_pages_pageName" ON "tiki_pages"("pageName");
 -- Creation: March 12, 2006 at 
 --
 
-DROP TABLE "tiki_page_drafts";
+DROP TABLE IF EXISTS 'tiki_page_drafts';
 
-CREATE TABLE "tiki_page_drafts" (
+CREATE TABLE 'tiki_page_drafts' (
   "user" varchar(200) default '',
   "pageName" varchar(255) NOT NULL,
   "data" mediumtext,
   "description" varchar(200) default NULL,
   "comment" varchar(200) default NULL,
   "lastModif" bigint default NULL,
-  PRIMARY KEY ("pageName","`user`")
-) ;
+  PRIMARY KEY ("pageName","user")
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_pageviews
@@ -2937,30 +2937,30 @@ CREATE TABLE "tiki_page_drafts" (
 -- Last update: Jul 13, 2003 at 01:52 AM
 --
 
-DROP TABLE "tiki_pageviews";
+DROP TABLE IF EXISTS 'tiki_pageviews';
 
-CREATE TABLE "tiki_pageviews" (
+CREATE TABLE 'tiki_pageviews' (
   "day" bigint NOT NULL default '0',
   "pageviews" bigint default NULL,
   PRIMARY KEY ("day")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_poll_objects
 --
 
-DROP TABLE "tiki_poll_objects";
+DROP TABLE IF EXISTS 'tiki_poll_objects';
 
-CREATE TABLE `tiki_poll_objects` (
-  `catObjectId` bigint NOT NULL default '0',
-  `pollId` bigint NOT NULL default '0',
-  `title` varchar(255) default NULL,
-  PRIMARY KEY ("`catObjectId`","`pollId`")
-) ;
+CREATE TABLE tiki_poll_objects (
+  catObjectId bigint NOT NULL default '0',
+  pollId bigint NOT NULL default '0',
+  title varchar(255) default NULL,
+  PRIMARY KEY ("catObjectId","pollId")
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_poll_options
@@ -2969,18 +2969,18 @@ CREATE TABLE `tiki_poll_objects` (
 -- Last update: Jul 06, 2003 at 07:57 PM
 --
 
-DROP TABLE "tiki_poll_options";
+DROP TABLE IF EXISTS 'tiki_poll_options';
 
-CREATE TABLE "tiki_poll_options" (
+CREATE TABLE 'tiki_poll_options' (
   "pollId" integer NOT NULL default '0',
-  "optionId" serial,
+  "optionId" INTEGER,
   "title" varchar(200) default NULL,
   "position" smallint NOT NULL default '0',
   "votes" integer default NULL,
   PRIMARY KEY ("optionId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_polls
@@ -2989,18 +2989,18 @@ CREATE TABLE "tiki_poll_options" (
 -- Last update: Jul 06, 2003 at 07:57 PM
 --
 
-DROP TABLE "tiki_polls";
+DROP TABLE IF EXISTS 'tiki_polls';
 
-CREATE TABLE "tiki_polls" (
-  "pollId" serial,
+CREATE TABLE 'tiki_polls' (
+  "pollId" INTEGER,
   "title" varchar(200) default NULL,
   "votes" integer default NULL,
   "active" char(1) default NULL,
   "publishDate" bigint default NULL,
   PRIMARY KEY ("pollId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_preferences
@@ -3009,15 +3009,15 @@ CREATE TABLE "tiki_polls" (
 -- Last update: Jul 12, 2003 at 12:04 PM
 --
 
-DROP TABLE "tiki_preferences";
+DROP TABLE IF EXISTS 'tiki_preferences';
 
-CREATE TABLE "tiki_preferences" (
+CREATE TABLE 'tiki_preferences' (
   "name" varchar(40) NOT NULL default '',
   "value" text,
   PRIMARY KEY ("name")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_private_messages
@@ -3026,10 +3026,10 @@ CREATE TABLE "tiki_preferences" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_private_messages";
+DROP TABLE IF EXISTS 'tiki_private_messages';
 
-CREATE TABLE "tiki_private_messages" (
-  "messageId" serial,
+CREATE TABLE 'tiki_private_messages' (
+  "messageId" INTEGER,
   "toNickname" varchar(200) NOT NULL default '',
   "message" varchar(255) default NULL,
   "poster" varchar(200) NOT NULL default 'anonymous',
@@ -3038,9 +3038,9 @@ CREATE TABLE "tiki_private_messages" (
   "key"(received),
   "key"(timestamp),
   PRIMARY KEY ("messageId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_programmed_content
@@ -3049,17 +3049,17 @@ CREATE TABLE "tiki_private_messages" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_programmed_content";
+DROP TABLE IF EXISTS 'tiki_programmed_content';
 
-CREATE TABLE "tiki_programmed_content" (
-  "pId" serial,
+CREATE TABLE 'tiki_programmed_content' (
+  "pId" INTEGER,
   "contentId" integer NOT NULL default '0',
   "publishDate" bigint NOT NULL default '0',
   "data" text,
   PRIMARY KEY ("pId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_quiz_question_options
@@ -3068,17 +3068,17 @@ CREATE TABLE "tiki_programmed_content" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_quiz_question_options";
+DROP TABLE IF EXISTS 'tiki_quiz_question_options';
 
-CREATE TABLE "tiki_quiz_question_options" (
-  "optionId" bigserial,
+CREATE TABLE 'tiki_quiz_question_options' (
+  "optionId" INTEGER,
   "questionId" bigint default NULL,
   "optionText" text,
   "points" smallint default NULL,
   PRIMARY KEY ("optionId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_quiz_questions
@@ -3087,19 +3087,19 @@ CREATE TABLE "tiki_quiz_question_options" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_quiz_questions";
+DROP TABLE IF EXISTS 'tiki_quiz_questions';
 
-CREATE TABLE "tiki_quiz_questions" (
-  "questionId" bigserial,
+CREATE TABLE 'tiki_quiz_questions' (
+  "questionId" INTEGER,
   "quizId" bigint default NULL,
   "question" text,
   "position" smallint default NULL,
   "type" char(1) default NULL,
   "maxPoints" smallint default NULL,
   PRIMARY KEY ("questionId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_quiz_results
@@ -3108,18 +3108,18 @@ CREATE TABLE "tiki_quiz_questions" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_quiz_results";
+DROP TABLE IF EXISTS 'tiki_quiz_results';
 
-CREATE TABLE "tiki_quiz_results" (
-  "resultId" bigserial,
+CREATE TABLE 'tiki_quiz_results' (
+  "resultId" INTEGER,
   "quizId" bigint default NULL,
   "fromPoints" smallint default NULL,
   "toPoints" smallint default NULL,
   "answer" text,
   PRIMARY KEY ("resultId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_quiz_stats
@@ -3128,17 +3128,17 @@ CREATE TABLE "tiki_quiz_results" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_quiz_stats";
+DROP TABLE IF EXISTS 'tiki_quiz_stats';
 
-CREATE TABLE "tiki_quiz_stats" (
+CREATE TABLE 'tiki_quiz_stats' (
   "quizId" bigint NOT NULL default '0',
   "questionId" bigint NOT NULL default '0',
   "optionId" bigint NOT NULL default '0',
   "votes" bigint default NULL,
   PRIMARY KEY ("quizId","questionId","optionId")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_quiz_stats_sum
@@ -3147,9 +3147,9 @@ CREATE TABLE "tiki_quiz_stats" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_quiz_stats_sum";
+DROP TABLE IF EXISTS 'tiki_quiz_stats_sum';
 
-CREATE TABLE "tiki_quiz_stats_sum" (
+CREATE TABLE 'tiki_quiz_stats_sum' (
   "quizId" bigint NOT NULL default '0',
   "quizName" varchar(255) default NULL,
   "timesTaken" bigint default NULL,
@@ -3157,9 +3157,9 @@ CREATE TABLE "tiki_quiz_stats_sum" (
   "avgavg" decimal(5,2) default NULL,
   "avgtime" decimal(5,2) default NULL,
   PRIMARY KEY ("quizId")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_quizzes
@@ -3168,10 +3168,10 @@ CREATE TABLE "tiki_quiz_stats_sum" (
 -- Last update: April 29, 2004
 --
 
-DROP TABLE "tiki_quizzes";
+DROP TABLE IF EXISTS 'tiki_quizzes';
 
-CREATE TABLE "tiki_quizzes" (
-  "quizId" bigserial,
+CREATE TABLE 'tiki_quizzes' (
+  "quizId" INTEGER,
   "name" varchar(255) default NULL,
   "description" text,
   "canRepeat" char(1) default NULL,
@@ -3209,9 +3209,9 @@ CREATE TABLE "tiki_quizzes" (
   "sEpilogue" text,
   "passingperct" smallint default 0,
   PRIMARY KEY ("quizId","nVersion")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_received_articles
@@ -3220,10 +3220,10 @@ CREATE TABLE "tiki_quizzes" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_received_articles";
+DROP TABLE IF EXISTS 'tiki_received_articles';
 
-CREATE TABLE "tiki_received_articles" (
-  "receivedArticleId" bigserial,
+CREATE TABLE 'tiki_received_articles' (
+  "receivedArticleId" INTEGER,
   "receivedFromSite" varchar(200) default NULL,
   "receivedFromUser" varchar(200) default NULL,
   "receivedDate" bigint default NULL,
@@ -3247,9 +3247,9 @@ CREATE TABLE "tiki_received_articles" (
   "type" varchar(50) default NULL,
   "rating" decimal(3,2) default NULL,
   PRIMARY KEY ("receivedArticleId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_received_pages
@@ -3258,10 +3258,10 @@ CREATE TABLE "tiki_received_articles" (
 -- Last update: Jul 09, 2003 at 03:56 AM
 --
 
-DROP TABLE "tiki_received_pages";
+DROP TABLE IF EXISTS 'tiki_received_pages';
 
-CREATE TABLE "tiki_received_pages" (
-  "receivedPageId" bigserial,
+CREATE TABLE 'tiki_received_pages' (
+  "receivedPageId" INTEGER,
   "pageName" varchar(160) NOT NULL default '',
   "data" bytea,
   "description" varchar(200) default NULL,
@@ -3270,9 +3270,9 @@ CREATE TABLE "tiki_received_pages" (
   "receivedFromUser" varchar(200) default NULL,
   "receivedDate" bigint default NULL,
   PRIMARY KEY ("receivedPageId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_referer_stats
@@ -3281,16 +3281,16 @@ CREATE TABLE "tiki_received_pages" (
 -- Last update: Jul 13, 2003 at 01:30 AM
 --
 
-DROP TABLE "tiki_referer_stats";
+DROP TABLE IF EXISTS 'tiki_referer_stats';
 
-CREATE TABLE "tiki_referer_stats" (
+CREATE TABLE 'tiki_referer_stats' (
   "referer" varchar(255) NOT NULL default '',
   "hits" bigint default NULL,
   "last" bigint default NULL,
   PRIMARY KEY ("referer")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_related_categories
@@ -3299,15 +3299,15 @@ CREATE TABLE "tiki_referer_stats" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_related_categories";
+DROP TABLE IF EXISTS 'tiki_related_categories';
 
-CREATE TABLE "tiki_related_categories" (
+CREATE TABLE 'tiki_related_categories' (
   "categId" bigint NOT NULL default '0',
   "relatedTo" bigint NOT NULL default '0',
   PRIMARY KEY ("categId","relatedTo")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_rss_modules
@@ -3316,10 +3316,10 @@ CREATE TABLE "tiki_related_categories" (
 -- Last update: Jul 12, 2003 at 10:19 AM
 --
 
-DROP TABLE "tiki_rss_modules";
+DROP TABLE IF EXISTS 'tiki_rss_modules';
 
-CREATE TABLE "tiki_rss_modules" (
-  "rssId" serial,
+CREATE TABLE 'tiki_rss_modules' (
+  "rssId" INTEGER,
   "name" varchar(30) NOT NULL default '',
   "description" text,
   "url" varchar(255) NOT NULL default '',
@@ -3329,10 +3329,10 @@ CREATE TABLE "tiki_rss_modules" (
   "showPubDate" char(1) default 'n',
   "content" bytea,
   PRIMARY KEY ("rssId")
-)   ;
+) ;
 
 CREATE  INDEX "tiki_rss_modules_name" ON "tiki_rss_modules"("name");
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_rss_feeds
@@ -3341,52 +3341,53 @@ CREATE  INDEX "tiki_rss_modules_name" ON "tiki_rss_modules"("name");
 -- Last update: Oct 14, 2003 at 20:34 PM
 --
 
-DROP TABLE "tiki_rss_feeds";
+DROP TABLE IF EXISTS 'tiki_rss_feeds';
 
-CREATE TABLE "tiki_rss_feeds" (
+CREATE TABLE 'tiki_rss_feeds' (
   "name" varchar(30) NOT NULL default '',
   "rssVer" char(1) NOT NULL default '1',
   "refresh" integer default '300',
   "lastUpdated" bigint default NULL,
   "cache" bytea,
   PRIMARY KEY ("name","rssVer")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
-DROP TABLE "tiki_searchindex";
+DROP TABLE IF EXISTS 'tiki_searchindex';
 
-CREATE TABLE "tiki_searchindex"(
+CREATE TABLE 'tiki_searchindex'(
   "searchword" varchar(80) NOT NULL default '',
   "location" varchar(80) NOT NULL default '',
   "page" varchar(255) NOT NULL default '',
   "count" bigint NOT NULL default '1',
   "last_update" bigint NOT NULL default '0',
   PRIMARY KEY ("searchword","location","page")
-) ;
+);
 
 CREATE  INDEX "tiki_searchindex_last_update" ON "tiki_searchindex"("last_update");
+CREATE  INDEX "tiki_searchindex_location" ON "tiki_searchindex"("location" "page");
 
 -- LRU (last recently used) list for searching parts of words
-DROP TABLE "tiki_searchsyllable";
+DROP TABLE IF EXISTS 'tiki_searchsyllable';
 
-CREATE TABLE "tiki_searchsyllable"(
+CREATE TABLE 'tiki_searchsyllable'(
   "syllable" varchar(80) NOT NULL default '',
   "lastUsed" bigint NOT NULL default '0',
   "lastUpdated" bigint NOT NULL default '0',
   PRIMARY KEY ("syllable")
-) ;
+);
 
 CREATE  INDEX "tiki_searchsyllable_lastUsed" ON "tiki_searchsyllable"("lastUsed");
 
 -- searchword caching table for search syllables
-DROP TABLE "tiki_searchwords";
+DROP TABLE IF EXISTS 'tiki_searchwords';
 
-CREATE TABLE "tiki_searchwords"(
+CREATE TABLE 'tiki_searchwords'(
   "syllable" varchar(80) NOT NULL default '',
   "searchword" varchar(80) NOT NULL default '',
   PRIMARY KEY ("syllable","searchword")
-) ;
+);
 
 
 --
@@ -3396,30 +3397,30 @@ CREATE TABLE "tiki_searchwords"(
 -- Last update: Jul 12, 2003 at 10:55 PM
 --
 
-DROP TABLE "tiki_search_stats";
+DROP TABLE IF EXISTS 'tiki_search_stats';
 
-CREATE TABLE "tiki_search_stats" (
+CREATE TABLE 'tiki_search_stats' (
   "term" varchar(50) NOT NULL default '',
   "hits" bigint default NULL,
   PRIMARY KEY ("term")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_secdb
 --
 --
 
-DROP TABLE "tiki_secdb";
+DROP TABLE IF EXISTS 'tiki_secdb';
 
-CREATE TABLE "tiki_secdb"(
+CREATE TABLE 'tiki_secdb'(
   "md5_value" varchar(32) NOT NULL,
   "filename" varchar(250) NOT NULL,
   "tiki_version" varchar(60) NOT NULL,
   "severity" smallint NOT NULL default '0',
   PRIMARY KEY ("md5_value","filename","tiki_version")
-) ;
+);
 
 CREATE  INDEX "tiki_secdb_sdb_fn" ON "tiki_secdb"("filename");
 
@@ -3430,17 +3431,17 @@ CREATE  INDEX "tiki_secdb_sdb_fn" ON "tiki_secdb"("filename");
 -- Last update: Jul 13, 2003 at 01:52 AM
 --
 
-DROP TABLE "tiki_semaphores";
+DROP TABLE IF EXISTS 'tiki_semaphores';
 
-CREATE TABLE "tiki_semaphores" (
+CREATE TABLE 'tiki_semaphores' (
   "semName" varchar(250) NOT NULL default '',
   "objectType" varchar(20) default 'wiki page',
   "user" varchar(200) default NULL,
   "timestamp" bigint default NULL,
   PRIMARY KEY ("semName")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_sent_newsletters
@@ -3449,10 +3450,10 @@ CREATE TABLE "tiki_semaphores" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_sent_newsletters";
+DROP TABLE IF EXISTS 'tiki_sent_newsletters';
 
-CREATE TABLE "tiki_sent_newsletters" (
-  "editionId" bigserial,
+CREATE TABLE 'tiki_sent_newsletters' (
+  "editionId" INTEGER,
   "nlId" bigint NOT NULL default '0',
   "users" bigint default NULL,
   "sent" bigint default NULL,
@@ -3460,25 +3461,25 @@ CREATE TABLE "tiki_sent_newsletters" (
   "data" bytea,
   "datatxt" bytea,
   PRIMARY KEY ("editionId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_sent_newsletters_errors
 --
 
-DROP TABLE "tiki_sent_newsletters_errors";
+DROP TABLE IF EXISTS 'tiki_sent_newsletters_errors';
 
-CREATE TABLE "tiki_sent_newsletters_errors" (
+CREATE TABLE 'tiki_sent_newsletters_errors' (
   "editionId" bigint,
   "email" varchar(255),
   "login" varchar(40) default '',
   "error" char(1) default '',
   KEY  (editionId)
-)  ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 
 --
@@ -3488,35 +3489,35 @@ CREATE TABLE "tiki_sent_newsletters_errors" (
 -- Last update: Jul 13, 2003 at 01:52 AM
 --
 
-DROP TABLE "tiki_sessions";
+DROP TABLE IF EXISTS 'tiki_sessions';
 
-CREATE TABLE "tiki_sessions" (
+CREATE TABLE 'tiki_sessions' (
   "sessionId" varchar(32) NOT NULL default '',
   "user" varchar(200) default NULL,
   "timestamp" bigint default NULL,
   "tikihost" varchar(200) default NULL,
   PRIMARY KEY ("sessionId")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 -- Tables for TikiSheet
-DROP TABLE "tiki_sheet_layout";
+DROP TABLE IF EXISTS 'tiki_sheet_layout';
 
-CREATE TABLE "tiki_sheet_layout" (
+CREATE TABLE 'tiki_sheet_layout' (
   "sheetId" integer NOT NULL default '0',
   "begin" bigint NOT NULL default '0',
   "end" bigint default NULL,
   "headerRow" smallint NOT NULL default '0',
   "footerRow" smallint NOT NULL default '0',
   "className" varchar(64) default NULL
-) ;
+);
 
 CREATE UNIQUE INDEX "tiki_sheet_layout_sheetId" ON "tiki_sheet_layout"("sheetId","begin");
 
-DROP TABLE "tiki_sheet_values";
+DROP TABLE IF EXISTS 'tiki_sheet_values';
 
-CREATE TABLE "tiki_sheet_values" (
+CREATE TABLE 'tiki_sheet_values' (
   "sheetId" integer NOT NULL default '0',
   "begin" bigint NOT NULL default '0',
   "end" bigint default NULL,
@@ -3528,20 +3529,20 @@ CREATE TABLE "tiki_sheet_values" (
   "height" smallint NOT NULL default '1',
   "format" varchar(255) default NULL,
   "user" varchar(200) default NULL
-) ;
+);
 
 CREATE  INDEX "tiki_sheet_values_sheetId_2" ON "tiki_sheet_values"("sheetId","rowIndex","columnIndex");
 CREATE UNIQUE INDEX "tiki_sheet_values_sheetId" ON "tiki_sheet_values"("sheetId","begin","rowIndex","columnIndex");
 
-DROP TABLE "tiki_sheets";
+DROP TABLE IF EXISTS 'tiki_sheets';
 
-CREATE TABLE "tiki_sheets" (
-  "sheetId" serial,
+CREATE TABLE 'tiki_sheets' (
+  "sheetId" INTEGER,
   "title" varchar(200) NOT NULL default '',
   "description" text,
   "author" varchar(200) NOT NULL default '',
   PRIMARY KEY ("sheetId")
-) ;
+);
 
 
 --
@@ -3551,32 +3552,32 @@ CREATE TABLE "tiki_sheets" (
 -- Last update: Jul 12, 2003 at 08:21 PM
 --
 
-DROP TABLE "tiki_shoutbox";
+DROP TABLE IF EXISTS 'tiki_shoutbox';
 
-CREATE TABLE "tiki_shoutbox" (
-  "msgId" bigserial,
+CREATE TABLE 'tiki_shoutbox' (
+  "msgId" INTEGER,
   "message" varchar(255) default NULL,
   "timestamp" bigint default NULL,
   "user" varchar(200) default NULL,
   "hash" varchar(32) default NULL,
   PRIMARY KEY ("msgId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_shoutbox_words
 --
 
-DROP TABLE "tiki_shoutbox_words";
+DROP TABLE IF EXISTS 'tiki_shoutbox_words';
 
-CREATE TABLE "tiki_shoutbox_words" (
+CREATE TABLE 'tiki_shoutbox_words' (
   "word" VARCHAR( 40 ) NOT NULL ,
   "qty" INT DEFAULT '0' NOT NULL ,
   PRIMARY KEY ("word")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_structure_versions
@@ -3585,15 +3586,15 @@ CREATE TABLE "tiki_shoutbox_words" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_structure_versions";
+DROP TABLE IF EXISTS 'tiki_structure_versions';
 
-CREATE TABLE "tiki_structure_versions" (
-  "structure_id" bigserial,
+CREATE TABLE 'tiki_structure_versions' (
+  "structure_id" INTEGER,
   "version" bigint default NULL,
   PRIMARY KEY ("structure_id")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_structures
@@ -3602,10 +3603,10 @@ CREATE TABLE "tiki_structure_versions" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_structures";
+DROP TABLE IF EXISTS 'tiki_structures';
 
-CREATE TABLE "tiki_structures" (
-  "page_ref_id" bigserial,
+CREATE TABLE 'tiki_structures' (
+  "page_ref_id" INTEGER,
   "structure_id" bigint NOT NULL,
   "parent_id" bigint default NULL,
   "page_id" bigint NOT NULL,
@@ -3613,11 +3614,11 @@ CREATE TABLE "tiki_structures" (
   "page_alias" varchar(240) NOT NULL default '',
   "pos" smallint default NULL,
   PRIMARY KEY ("page_ref_id")
-)   ;
+) ;
 
 CREATE  INDEX "tiki_structures_pidpaid" ON "tiki_structures"("page_id","parent_id");
 CREATE  INDEX "tiki_structures_page_id" ON "tiki_structures"("page_id");
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_submissions
@@ -3626,10 +3627,10 @@ CREATE  INDEX "tiki_structures_page_id" ON "tiki_structures"("page_id");
 -- Last update: Nov 29, 2006 at 08:46 PM
 --
 
-DROP TABLE "tiki_submissions";
+DROP TABLE IF EXISTS 'tiki_submissions';
 
-CREATE TABLE "tiki_submissions" (
-  "subId" serial,
+CREATE TABLE 'tiki_submissions' (
+  "subId" INTEGER,
   "topline" varchar(255) default NULL,
   "title" varchar(255) default NULL,
   "subtitle" varchar(255) default NULL,
@@ -3663,9 +3664,9 @@ CREATE TABLE "tiki_submissions" (
   "rating" decimal(3,2) default NULL,
   "isfloat" char(1) default NULL,
   PRIMARY KEY ("subId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_suggested_faq_questions
@@ -3674,19 +3675,19 @@ CREATE TABLE "tiki_submissions" (
 -- Last update: Jul 11, 2003 at 08:52 PM
 --
 
-DROP TABLE "tiki_suggested_faq_questions";
+DROP TABLE IF EXISTS 'tiki_suggested_faq_questions';
 
-CREATE TABLE "tiki_suggested_faq_questions" (
-  "sfqId" bigserial,
+CREATE TABLE 'tiki_suggested_faq_questions' (
+  "sfqId" INTEGER,
   "faqId" bigint NOT NULL default '0',
   "question" text,
   "answer" text,
   "created" bigint default NULL,
   "user" varchar(200) default NULL,
   PRIMARY KEY ("sfqId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_survey_question_options
@@ -3695,17 +3696,17 @@ CREATE TABLE "tiki_suggested_faq_questions" (
 -- Last update: Jul 11, 2003 at 12:55 AM
 --
 
-DROP TABLE "tiki_survey_question_options";
+DROP TABLE IF EXISTS 'tiki_survey_question_options';
 
-CREATE TABLE "tiki_survey_question_options" (
-  "optionId" bigserial,
+CREATE TABLE 'tiki_survey_question_options' (
+  "optionId" INTEGER,
   "questionId" bigint NOT NULL default '0',
   "qoption" text,
   "votes" bigint default NULL,
   PRIMARY KEY ("optionId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_survey_questions
@@ -3714,10 +3715,10 @@ CREATE TABLE "tiki_survey_question_options" (
 -- Last update: Jul 11, 2003 at 11:55 PM
 --
 
-DROP TABLE "tiki_survey_questions";
+DROP TABLE IF EXISTS 'tiki_survey_questions';
 
-CREATE TABLE "tiki_survey_questions" (
-  "questionId" bigserial,
+CREATE TABLE 'tiki_survey_questions' (
+  "questionId" INTEGER,
   "surveyId" bigint NOT NULL default '0',
   "question" text,
   "options" text,
@@ -3727,9 +3728,9 @@ CREATE TABLE "tiki_survey_questions" (
   "value" bigint default NULL,
   "average" decimal(4,2) default NULL,
   PRIMARY KEY ("questionId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_surveys
@@ -3738,10 +3739,10 @@ CREATE TABLE "tiki_survey_questions" (
 -- Last update: Jul 12, 2003 at 07:40 PM
 --
 
-DROP TABLE "tiki_surveys";
+DROP TABLE IF EXISTS 'tiki_surveys';
 
-CREATE TABLE "tiki_surveys" (
-  "surveyId" bigserial,
+CREATE TABLE 'tiki_surveys' (
+  "surveyId" INTEGER,
   "name" varchar(200) default NULL,
   "description" text,
   "taken" bigint default NULL,
@@ -3749,9 +3750,9 @@ CREATE TABLE "tiki_surveys" (
   "created" bigint default NULL,
   "status" char(1) default NULL,
   PRIMARY KEY ("surveyId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_tags
@@ -3760,9 +3761,9 @@ CREATE TABLE "tiki_surveys" (
 -- Last update: Jul 06, 2003 at 02:58 AM
 --
 
-DROP TABLE "tiki_tags";
+DROP TABLE IF EXISTS 'tiki_tags';
 
-CREATE TABLE "tiki_tags" (
+CREATE TABLE 'tiki_tags' (
   "tagName" varchar(80) NOT NULL default '',
   "pageName" varchar(160) NOT NULL default '',
   "hits" integer default NULL,
@@ -3775,9 +3776,9 @@ CREATE TABLE "tiki_tags" (
   "ip" varchar(15) default NULL,
   "flag" char(1) default NULL,
   PRIMARY KEY ("tagName","pageName")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_theme_control_categs
@@ -3786,15 +3787,15 @@ CREATE TABLE "tiki_tags" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_theme_control_categs";
+DROP TABLE IF EXISTS 'tiki_theme_control_categs';
 
-CREATE TABLE "tiki_theme_control_categs" (
+CREATE TABLE 'tiki_theme_control_categs' (
   "categId" bigint NOT NULL default '0',
   "theme" varchar(250) NOT NULL default '',
   PRIMARY KEY ("categId")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_theme_control_objects
@@ -3803,17 +3804,17 @@ CREATE TABLE "tiki_theme_control_categs" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_theme_control_objects";
+DROP TABLE IF EXISTS 'tiki_theme_control_objects';
 
-CREATE TABLE "tiki_theme_control_objects" (
+CREATE TABLE 'tiki_theme_control_objects' (
   "objId" varchar(250) NOT NULL default '',
   "type" varchar(250) NOT NULL default '',
   "name" varchar(250) NOT NULL default '',
   "theme" varchar(250) NOT NULL default '',
   PRIMARY KEY ("objId","type")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_theme_control_sections
@@ -3822,15 +3823,15 @@ CREATE TABLE "tiki_theme_control_objects" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_theme_control_sections";
+DROP TABLE IF EXISTS 'tiki_theme_control_sections';
 
-CREATE TABLE "tiki_theme_control_sections" (
+CREATE TABLE 'tiki_theme_control_sections' (
   "section" varchar(250) NOT NULL default '',
   "theme" varchar(250) NOT NULL default '',
   PRIMARY KEY ("section")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_topics
@@ -3839,10 +3840,10 @@ CREATE TABLE "tiki_theme_control_sections" (
 -- Last update: Jul 04, 2003 at 10:10 PM
 --
 
-DROP TABLE "tiki_topics";
+DROP TABLE IF EXISTS 'tiki_topics';
 
-CREATE TABLE "tiki_topics" (
-  "topicId" bigserial,
+CREATE TABLE 'tiki_topics' (
+  "topicId" INTEGER,
   "name" varchar(40) default NULL,
   "image_name" varchar(80) default NULL,
   "image_type" varchar(80) default NULL,
@@ -3851,9 +3852,9 @@ CREATE TABLE "tiki_topics" (
   "active" char(1) default NULL,
   "created" bigint default NULL,
   PRIMARY KEY ("topicId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_tracker_fields
@@ -3862,10 +3863,10 @@ CREATE TABLE "tiki_topics" (
 -- Last update: Jul 08, 2003 at 01:48 PM
 --
 
-DROP TABLE "tiki_tracker_fields";
+DROP TABLE IF EXISTS 'tiki_tracker_fields';
 
-CREATE TABLE "tiki_tracker_fields" (
-  "fieldId" bigserial,
+CREATE TABLE 'tiki_tracker_fields' (
+  "fieldId" INTEGER,
   "trackerId" bigint NOT NULL default '0',
   "name" varchar(255) default NULL,
   "options" text,
@@ -3880,9 +3881,9 @@ CREATE TABLE "tiki_tracker_fields" (
   "isMultilingual" char(1) default 'n',
   "description" text,
   PRIMARY KEY ("fieldId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_tracker_item_attachments
@@ -3891,10 +3892,10 @@ CREATE TABLE "tiki_tracker_fields" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_tracker_item_attachments";
+DROP TABLE IF EXISTS 'tiki_tracker_item_attachments';
 
-CREATE TABLE "tiki_tracker_item_attachments" (
-  "attId" bigserial,
+CREATE TABLE 'tiki_tracker_item_attachments' (
+  "attId" INTEGER,
   "itemId" bigint NOT NULL default 0,
   "filename" varchar(80) default NULL,
   "filetype" varchar(80) default NULL,
@@ -3908,9 +3909,9 @@ CREATE TABLE "tiki_tracker_item_attachments" (
   "longdesc" bytea,
   "version" varchar(40) default NULL,
   PRIMARY KEY ("attId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_tracker_item_comments
@@ -3919,19 +3920,19 @@ CREATE TABLE "tiki_tracker_item_attachments" (
 -- Last update: Jul 12, 2003 at 08:12 AM
 --
 
-DROP TABLE "tiki_tracker_item_comments";
+DROP TABLE IF EXISTS 'tiki_tracker_item_comments';
 
-CREATE TABLE "tiki_tracker_item_comments" (
-  "commentId" bigserial,
+CREATE TABLE 'tiki_tracker_item_comments' (
+  "commentId" INTEGER,
   "itemId" bigint NOT NULL default '0',
   "user" varchar(200) default NULL,
   "data" text,
   "title" varchar(200) default NULL,
   "posted" bigint default NULL,
   PRIMARY KEY ("commentId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_tracker_item_fields
@@ -3940,18 +3941,18 @@ CREATE TABLE "tiki_tracker_item_comments" (
 -- Last update: Jul 12, 2003 at 08:26 AM
 --
 
-DROP TABLE "tiki_tracker_item_fields";
+DROP TABLE IF EXISTS 'tiki_tracker_item_fields';
 
-CREATE TABLE "tiki_tracker_item_fields" (
+CREATE TABLE 'tiki_tracker_item_fields' (
   "itemId" bigint NOT NULL default '0',
   "fieldId" bigint NOT NULL default '0',
   "lang" char(16) default NULL,
   "value" text,
   PRIMARY KEY ("itemId","fieldId","lang")
-) ;
+);
 
 CREATE  INDEX "tiki_tracker_item_fields_ft" ON "tiki_tracker_item_fields"("value");
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_tracker_items
@@ -3960,18 +3961,18 @@ CREATE  INDEX "tiki_tracker_item_fields_ft" ON "tiki_tracker_item_fields"("value
 -- Last update: Jul 12, 2003 at 08:26 AM
 --
 
-DROP TABLE "tiki_tracker_items";
+DROP TABLE IF EXISTS 'tiki_tracker_items';
 
-CREATE TABLE "tiki_tracker_items" (
-  "itemId" bigserial,
+CREATE TABLE 'tiki_tracker_items' (
+  "itemId" INTEGER,
   "trackerId" bigint NOT NULL default '0',
   "created" bigint default NULL,
   "status" char(1) default NULL,
   "lastModif" bigint default NULL,
   PRIMARY KEY ("itemId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_tracker_options
@@ -3980,16 +3981,16 @@ CREATE TABLE "tiki_tracker_items" (
 -- Last update: Jul 08, 2003 at 01:48 PM
 --
 
-DROP TABLE "tiki_tracker_options";
+DROP TABLE IF EXISTS 'tiki_tracker_options';
 
-CREATE TABLE "tiki_tracker_options" (
+CREATE TABLE 'tiki_tracker_options' (
   "trackerId" bigint NOT NULL default '0',
   "name" varchar(80) NOT NULL default '',
   "value" text default NULL,
   PRIMARY KEY ("trackerId","name")
-)  ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 
 --
@@ -3999,10 +4000,10 @@ CREATE TABLE "tiki_tracker_options" (
 -- Last update: Jul 12, 2003 at 08:26 AM
 --
 
-DROP TABLE "tiki_trackers";
+DROP TABLE IF EXISTS 'tiki_trackers';
 
-CREATE TABLE "tiki_trackers" (
-  "trackerId" bigserial,
+CREATE TABLE 'tiki_trackers' (
+  "trackerId" INTEGER,
   "name" varchar(255) default NULL,
   "description" text,
   "created" bigint default NULL,
@@ -4017,9 +4018,9 @@ CREATE TABLE "tiki_trackers" (
   "showAttachments" char(1) default NULL,
   "orderAttachments" varchar(255) NOT NULL default 'filename,created,filesize,downloads,desc',
   PRIMARY KEY ("trackerId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_untranslated
@@ -4028,18 +4029,18 @@ CREATE TABLE "tiki_trackers" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_untranslated";
+DROP TABLE IF EXISTS 'tiki_untranslated';
 
-CREATE TABLE "tiki_untranslated" (
-  "id" bigserial,
+CREATE TABLE 'tiki_untranslated' (
+  "id" INTEGER,
   "source" bytea NOT NULL,
   "lang" char(16) NOT NULL default '',
   PRIMARY KEY ("source","lang")
-)   ;
+) ;
 
 CREATE  INDEX "tiki_untranslated_id_2" ON "tiki_untranslated"("id");
 CREATE UNIQUE INDEX "tiki_untranslated_id" ON "tiki_untranslated"("id");
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_user_answers
@@ -4048,17 +4049,17 @@ CREATE UNIQUE INDEX "tiki_untranslated_id" ON "tiki_untranslated"("id");
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_user_answers";
+DROP TABLE IF EXISTS 'tiki_user_answers';
 
-CREATE TABLE "tiki_user_answers" (
+CREATE TABLE 'tiki_user_answers' (
   "userResultId" bigint NOT NULL default '0',
   "quizId" bigint NOT NULL default '0',
   "questionId" bigint NOT NULL default '0',
   "optionId" bigint NOT NULL default '0',
   PRIMARY KEY ("userResultId","quizId","questionId","optionId")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 
 --
@@ -4069,10 +4070,10 @@ CREATE TABLE "tiki_user_answers" (
 --
 
 
-DROP TABLE "tiki_user_answers_uploads";
+DROP TABLE IF EXISTS 'tiki_user_answers_uploads';
 
-CREATE TABLE "tiki_user_answers_uploads" (
-  "answerUploadId" serial,
+CREATE TABLE 'tiki_user_answers_uploads' (
+  "answerUploadId" INTEGER,
   "userResultId" bigint NOT NULL default '0',
   "questionId" bigint NOT NULL default '0',
   "filename" varchar(255) NOT NULL default '',
@@ -4080,7 +4081,7 @@ CREATE TABLE "tiki_user_answers_uploads" (
   "filesize" varchar(255) NOT NULL default '',
   "filecontent" bytea NOT NULL,
   PRIMARY KEY ("answerUploadId")
-) ;
+);
 
 
 
@@ -4091,18 +4092,18 @@ CREATE TABLE "tiki_user_answers_uploads" (
 -- Last update: Jul 12, 2003 at 08:25 PM
 --
 
-DROP TABLE "tiki_user_assigned_modules";
+DROP TABLE IF EXISTS 'tiki_user_assigned_modules';
 
-CREATE TABLE "tiki_user_assigned_modules" (
+CREATE TABLE 'tiki_user_assigned_modules' (
   "name" varchar(200) NOT NULL default '',
   "position" char(1) default NULL,
   "ord" smallint default NULL,
   "type" char(1) default NULL,
   "user" varchar(200) NOT NULL default '',
   PRIMARY KEY ("name","user","position")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_user_bookmarks_folders
@@ -4111,17 +4112,17 @@ CREATE TABLE "tiki_user_assigned_modules" (
 -- Last update: Jul 11, 2003 at 08:35 AM
 --
 
-DROP TABLE "tiki_user_bookmarks_folders";
+DROP TABLE IF EXISTS 'tiki_user_bookmarks_folders';
 
-CREATE TABLE "tiki_user_bookmarks_folders" (
-  "folderId" bigserial,
+CREATE TABLE 'tiki_user_bookmarks_folders' (
+  "folderId" INTEGER,
   "parentId" bigint default NULL,
   "user" varchar(200) NOT NULL default '',
   "name" varchar(30) default NULL,
   PRIMARY KEY ("user","folderId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_user_bookmarks_urls
@@ -4130,10 +4131,10 @@ CREATE TABLE "tiki_user_bookmarks_folders" (
 -- Last update: Jul 11, 2003 at 08:36 AM
 --
 
-DROP TABLE "tiki_user_bookmarks_urls";
+DROP TABLE IF EXISTS 'tiki_user_bookmarks_urls';
 
-CREATE TABLE "tiki_user_bookmarks_urls" (
-  "urlId" bigserial,
+CREATE TABLE 'tiki_user_bookmarks_urls' (
+  "urlId" INTEGER,
   "name" varchar(30) default NULL,
   "url" varchar(250) default NULL,
   "data" bytea,
@@ -4141,9 +4142,9 @@ CREATE TABLE "tiki_user_bookmarks_urls" (
   "folderId" bigint NOT NULL default '0',
   "user" varchar(200) NOT NULL default '',
   PRIMARY KEY ("urlId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_user_mail_accounts
@@ -4152,10 +4153,10 @@ CREATE TABLE "tiki_user_bookmarks_urls" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_user_mail_accounts";
+DROP TABLE IF EXISTS 'tiki_user_mail_accounts';
 
-CREATE TABLE "tiki_user_mail_accounts" (
-  "accountId" bigserial,
+CREATE TABLE 'tiki_user_mail_accounts' (
+  "accountId" INTEGER,
   "user" varchar(200) NOT NULL default '',
   "account" varchar(50) NOT NULL default '',
   "pop" varchar(255) default NULL,
@@ -4168,9 +4169,9 @@ CREATE TABLE "tiki_user_mail_accounts" (
   "useAuth" char(1) default NULL,
   "smtpPort" smallint default NULL,
   PRIMARY KEY ("accountId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_user_menus
@@ -4179,19 +4180,19 @@ CREATE TABLE "tiki_user_mail_accounts" (
 -- Last update: Jul 11, 2003 at 10:58 PM
 --
 
-DROP TABLE "tiki_user_menus";
+DROP TABLE IF EXISTS 'tiki_user_menus';
 
-CREATE TABLE "tiki_user_menus" (
+CREATE TABLE 'tiki_user_menus' (
   "user" varchar(200) NOT NULL default '',
-  "menuId" bigserial,
+  "menuId" INTEGER,
   "url" varchar(250) default NULL,
   "name" varchar(40) default NULL,
   "position" smallint default NULL,
   "mode" char(1) default NULL,
   PRIMARY KEY ("menuId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_user_modules
@@ -4200,17 +4201,17 @@ CREATE TABLE "tiki_user_menus" (
 -- Last update: Jul 05, 2003 at 03:16 AM
 --
 
-DROP TABLE "tiki_user_modules";
+DROP TABLE IF EXISTS 'tiki_user_modules';
 
-CREATE TABLE "tiki_user_modules" (
+CREATE TABLE 'tiki_user_modules' (
   "name" varchar(200) NOT NULL default '',
   "title" varchar(40) default NULL,
   "data" bytea,
   "parse" char(1) default NULL,
   PRIMARY KEY ("name")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 INSERT INTO "tiki_user_modules" ("name","title","data","parse") VALUES ('mnu_application_menu', 'Menu', '{menu id=42}', 'n');
 
 
@@ -4221,11 +4222,11 @@ INSERT INTO "tiki_user_modules" ("name","title","data","parse") VALUES ('mnu_app
 -- Last update: Jul 12, 2003 at 07:52 AM
 --
 
-DROP TABLE "tiki_user_notes";
+DROP TABLE IF EXISTS 'tiki_user_notes';
 
-CREATE TABLE "tiki_user_notes" (
+CREATE TABLE 'tiki_user_notes' (
   "user" varchar(200) NOT NULL default '',
-  "noteId" bigserial,
+  "noteId" INTEGER,
   "created" bigint default NULL,
   "name" varchar(255) default NULL,
   "lastModif" bigint default NULL,
@@ -4233,9 +4234,9 @@ CREATE TABLE "tiki_user_notes" (
   "size" bigint default NULL,
   "parse_mode" varchar(20) default NULL,
   PRIMARY KEY ("noteId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_user_postings
@@ -4244,18 +4245,18 @@ CREATE TABLE "tiki_user_notes" (
 -- Last update: Jul 13, 2003 at 01:12 AM
 --
 
-DROP TABLE "tiki_user_postings";
+DROP TABLE IF EXISTS 'tiki_user_postings';
 
-CREATE TABLE "tiki_user_postings" (
+CREATE TABLE 'tiki_user_postings' (
   "user" varchar(200) NOT NULL default '',
   "posts" bigint default NULL,
   "last" bigint default NULL,
   "first" bigint default NULL,
   "level" integer default NULL,
   PRIMARY KEY ("user")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_user_preferences
@@ -4264,16 +4265,16 @@ CREATE TABLE "tiki_user_postings" (
 -- Last update: Jul 13, 2003 at 01:09 AM
 --
 
-DROP TABLE "tiki_user_preferences";
+DROP TABLE IF EXISTS 'tiki_user_preferences';
 
-CREATE TABLE "tiki_user_preferences" (
+CREATE TABLE 'tiki_user_preferences' (
   "user" varchar(200) NOT NULL default '',
   "prefName" varchar(40) NOT NULL default '',
   "value" varchar(250) default NULL,
   PRIMARY KEY ("user","prefName")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_user_quizzes
@@ -4282,9 +4283,9 @@ CREATE TABLE "tiki_user_preferences" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_user_quizzes";
+DROP TABLE IF EXISTS 'tiki_user_quizzes';
 
-CREATE TABLE "tiki_user_quizzes" (
+CREATE TABLE 'tiki_user_quizzes' (
   "user" varchar(200) default '',
   "quizId" bigint default NULL,
   "timestamp" bigint default NULL,
@@ -4292,11 +4293,11 @@ CREATE TABLE "tiki_user_quizzes" (
   "points" bigint default NULL,
   "maxPoints" bigint default NULL,
   "resultId" bigint default NULL,
-  "userResultId" bigserial,
+  "userResultId" INTEGER,
   PRIMARY KEY ("userResultId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_user_taken_quizzes
@@ -4305,15 +4306,15 @@ CREATE TABLE "tiki_user_quizzes" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_user_taken_quizzes";
+DROP TABLE IF EXISTS 'tiki_user_taken_quizzes';
 
-CREATE TABLE "tiki_user_taken_quizzes" (
+CREATE TABLE 'tiki_user_taken_quizzes' (
   "user" varchar(200) NOT NULL default '',
   "quizId" varchar(255) NOT NULL default '',
   PRIMARY KEY ("user","quizId")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 
 --
@@ -4322,9 +4323,9 @@ CREATE TABLE "tiki_user_taken_quizzes" (
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jan 25, 2005 by sir-b & moresun
 --
-DROP TABLE "tiki_user_tasks_history";
+DROP TABLE IF EXISTS 'tiki_user_tasks_history';
 
-CREATE TABLE "tiki_user_tasks_history" (
+CREATE TABLE 'tiki_user_tasks_history' (
   "belongs_to" integer(14) NOT NULL,                   -- the fist task in a history it has the same id as the task id
   "task_version" integer(4) NOT NULL DEFAULT 0,        -- version number for the history it starts with 0
   "title" varchar(250) NOT NULL,                       -- title
@@ -4343,7 +4344,7 @@ CREATE TABLE "tiki_user_tasks_history" (
   "accepted_creator" char(1) DEFAULT NULL,             -- y - yes, n - no, null - waiting
   "accepted_user" char(1) DEFAULT NULL,                -- y - yes, n - no, null - waiting
   PRIMARY KEY (belongs_to, task_version)
-)   ;
+) ;
 
 
 
@@ -4353,10 +4354,10 @@ CREATE TABLE "tiki_user_tasks_history" (
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jan 25, 2005 by sir-b & moresun
 --
-DROP TABLE "tiki_user_tasks";
+DROP TABLE IF EXISTS 'tiki_user_tasks';
 
-CREATE TABLE "tiki_user_tasks" (
-  "taskId" integer(14) NOT NULL auto_increment,        -- task id
+CREATE TABLE 'tiki_user_tasks' (
+  "taskId" INTEGER,        -- task id
   "last_version" integer(4) NOT NULL DEFAULT 0,        -- last version of the task starting with 0
   "user" varchar(200) NOT NULL DEFAULT '',              -- task user
   "creator" varchar(200) NOT NULL,                     -- username of creator
@@ -4369,10 +4370,10 @@ CREATE TABLE "tiki_user_tasks" (
   "percentage" smallint default NULL,
   PRIMARY KEY (taskId),
   UNIQUE(creator, created)
-)  ;
+);
 
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_user_votings
@@ -4381,16 +4382,16 @@ CREATE TABLE "tiki_user_tasks" (
 -- Last update: Jul 11, 2003 at 11:55 PM
 --
 
-DROP TABLE "tiki_user_votings";
+DROP TABLE IF EXISTS 'tiki_user_votings';
 
-CREATE TABLE "tiki_user_votings" (
+CREATE TABLE 'tiki_user_votings' (
   "user" varchar(200) NOT NULL default '',
   "id" varchar(255) NOT NULL default '',
   "optionId" bigint NOT NULL default 0,
-  PRIMARY KEY ("`user`","id")
-) ;
+  PRIMARY KEY ("user","id")
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_user_watches
@@ -4399,9 +4400,9 @@ CREATE TABLE "tiki_user_votings" (
 -- Last update: Jul 12, 2003 at 08:07 AM
 --
 
-DROP TABLE "tiki_user_watches";
+DROP TABLE IF EXISTS 'tiki_user_watches';
 
-CREATE TABLE "tiki_user_watches" (
+CREATE TABLE 'tiki_user_watches' (
   "user" varchar(200) NOT NULL default '',
   "event" varchar(40) NOT NULL default '',
   "object" varchar(200) NOT NULL default '',
@@ -4410,10 +4411,10 @@ CREATE TABLE "tiki_user_watches" (
   "type" varchar(200) default NULL,
   "url" varchar(250) default NULL,
   "email" varchar(200) default NULL,
-  PRIMARY KEY ("`user`","event","object")
-) ;
+  PRIMARY KEY ("user","event","object")
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_userfiles
@@ -4422,11 +4423,11 @@ CREATE TABLE "tiki_user_watches" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_userfiles";
+DROP TABLE IF EXISTS 'tiki_userfiles';
 
-CREATE TABLE "tiki_userfiles" (
+CREATE TABLE 'tiki_userfiles' (
   "user" varchar(200) NOT NULL default '',
-  "fileId" bigserial,
+  "fileId" INTEGER,
   "name" varchar(200) default NULL,
   "filename" varchar(200) default NULL,
   "filetype" varchar(200) default NULL,
@@ -4437,9 +4438,9 @@ CREATE TABLE "tiki_userfiles" (
   "path" varchar(255) default NULL,
   "created" bigint default NULL,
   PRIMARY KEY ("fileId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_userpoints
@@ -4448,15 +4449,15 @@ CREATE TABLE "tiki_userfiles" (
 -- Last update: Jul 11, 2003 at 05:47 AM
 --
 
-DROP TABLE "tiki_userpoints";
+DROP TABLE IF EXISTS 'tiki_userpoints';
 
-CREATE TABLE "tiki_userpoints" (
+CREATE TABLE 'tiki_userpoints' (
   "user" varchar(200) default NULL,
   "points" decimal(8,2) default NULL,
   "voted" integer default NULL
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_users
@@ -4465,17 +4466,17 @@ CREATE TABLE "tiki_userpoints" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_users";
+DROP TABLE IF EXISTS 'tiki_users';
 
-CREATE TABLE "tiki_users" (
+CREATE TABLE 'tiki_users' (
   "user" varchar(200) NOT NULL default '',
   "password" varchar(40) default NULL,
   "email" varchar(200) default NULL,
   "lastLogin" bigint default NULL,
   PRIMARY KEY ("user")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_webmail_contacts
@@ -4484,29 +4485,29 @@ CREATE TABLE "tiki_users" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_webmail_contacts";
+DROP TABLE IF EXISTS 'tiki_webmail_contacts';
 
-CREATE TABLE "tiki_webmail_contacts" (
-  "contactId" bigserial,
+CREATE TABLE 'tiki_webmail_contacts' (
+  "contactId" INTEGER,
   "firstName" varchar(80) default NULL,
   "lastName" varchar(80) default NULL,
   "email" varchar(250) default NULL,
   "nickname" varchar(200) default NULL,
   "user" varchar(200) NOT NULL default '',
   PRIMARY KEY ("contactId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
-DROP TABLE "tiki_webmail_contacts_groups";
+DROP TABLE IF EXISTS 'tiki_webmail_contacts_groups';
 
-CREATE TABLE "tiki_webmail_contacts_groups" (
+CREATE TABLE 'tiki_webmail_contacts_groups' (
   "contactId" bigint NOT NULL,
   "groupName" varchar(255) NOT NULL,
   PRIMARY KEY ("contactId","groupName")
-)  ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_webmail_messages
@@ -4515,9 +4516,9 @@ CREATE TABLE "tiki_webmail_contacts_groups" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_webmail_messages";
+DROP TABLE IF EXISTS 'tiki_webmail_messages';
 
-CREATE TABLE "tiki_webmail_messages" (
+CREATE TABLE 'tiki_webmail_messages' (
   "accountId" bigint NOT NULL default '0',
   "mailId" varchar(255) NOT NULL default '',
   "user" varchar(200) NOT NULL default '',
@@ -4525,9 +4526,9 @@ CREATE TABLE "tiki_webmail_messages" (
   "isReplied" char(1) default NULL,
   "isFlagged" char(1) default NULL,
   PRIMARY KEY ("accountId","mailId")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_wiki_attachments
@@ -4536,10 +4537,10 @@ CREATE TABLE "tiki_webmail_messages" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_wiki_attachments";
+DROP TABLE IF EXISTS 'tiki_wiki_attachments';
 
-CREATE TABLE "tiki_wiki_attachments" (
-  "attId" bigserial,
+CREATE TABLE 'tiki_wiki_attachments' (
+  "attId" INTEGER,
   "page" varchar(200) NOT NULL default '',
   "filename" varchar(80) default NULL,
   "filetype" varchar(80) default NULL,
@@ -4551,9 +4552,9 @@ CREATE TABLE "tiki_wiki_attachments" (
   "created" bigint default NULL,
   "comment" varchar(250) default NULL,
   PRIMARY KEY ("attId")
-)   ;
+) ;
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table tiki_zones
@@ -4562,14 +4563,14 @@ CREATE TABLE "tiki_wiki_attachments" (
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_zones";
+DROP TABLE IF EXISTS 'tiki_zones';
 
-CREATE TABLE "tiki_zones" (
+CREATE TABLE 'tiki_zones' (
   "zone" varchar(40) NOT NULL default '',
   PRIMARY KEY ("zone")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 --
 -- Table structure for table tiki_download
 --
@@ -4577,23 +4578,23 @@ CREATE TABLE "tiki_zones" (
 -- Last update: Apr 15 2004 at 07:42 PM
 --
 
-DROP TABLE "tiki_download";
+DROP TABLE IF EXISTS 'tiki_download';
 
-CREATE TABLE "tiki_download" (
-  "id" bigserial,
+CREATE TABLE 'tiki_download' (
+  "id" INTEGER,
   "object" varchar(255) NOT NULL default '',
   "userId" integer NOT NULL default '0',
   "type" varchar(20) NOT NULL default '',
   "date" bigint NOT NULL default '0',
   "IP" varchar(50) NOT NULL default '',
   PRIMARY KEY ("id")
-) ;
+);
 
 CREATE  INDEX "tiki_download_object" ON "tiki_download"("object","userId","type");
 CREATE  INDEX "tiki_download_userId" ON "tiki_download"("userId");
 CREATE  INDEX "tiki_download_type" ON "tiki_download"("type");
 CREATE  INDEX "tiki_download_date" ON "tiki_download"("date");
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table users_grouppermissions
@@ -4602,16 +4603,16 @@ CREATE  INDEX "tiki_download_date" ON "tiki_download"("date");
 -- Last update: Jul 11, 2003 at 07:22 AM
 --
 
-DROP TABLE "users_grouppermissions";
+DROP TABLE IF EXISTS 'users_grouppermissions';
 
-CREATE TABLE "users_grouppermissions" (
+CREATE TABLE 'users_grouppermissions' (
   "groupName" varchar(255) NOT NULL default '',
   "permName" varchar(31) NOT NULL default '',
   "value" char(1) default '',
   PRIMARY KEY ("groupName","permName")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 INSERT INTO "users_grouppermissions" ("groupName","permName") VALUES ('Anonymous','tiki_p_view');
 
@@ -4623,9 +4624,9 @@ INSERT INTO "users_grouppermissions" ("groupName","permName") VALUES ('Anonymous
 -- Last update: Jul 03, 2003 at 08:57 PM
 --
 
-DROP TABLE "users_groups";
+DROP TABLE IF EXISTS 'users_groups';
 
-CREATE TABLE "users_groups" (
+CREATE TABLE 'users_groups' (
   "groupName" varchar(255) NOT NULL default '',
   "groupDesc" varchar(255) default NULL,
   "groupHome" varchar(255),
@@ -4636,9 +4637,9 @@ CREATE TABLE "users_groups" (
   "registrationChoice" char(1) default NULL,
   "registrationUsersFieldIds" text,
   PRIMARY KEY ("groupName")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table users_objectpermissions
@@ -4647,17 +4648,17 @@ CREATE TABLE "users_groups" (
 -- Last update: Jul 12, 2003 at 07:20 AM
 --
 
-DROP TABLE "users_objectpermissions";
+DROP TABLE IF EXISTS 'users_objectpermissions';
 
-CREATE TABLE "users_objectpermissions" (
+CREATE TABLE 'users_objectpermissions' (
   "groupName" varchar(255) NOT NULL default '',
   "permName" varchar(31) NOT NULL default '',
   "objectType" varchar(20) NOT NULL default '',
   "objectId" varchar(32) NOT NULL default '',
   PRIMARY KEY ("objectId","objectType","groupName","permName")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table users_permissions
@@ -4666,17 +4667,18 @@ CREATE TABLE "users_objectpermissions" (
 -- Last update: Jul 11, 2003 at 07:22 AM
 --
 
-DROP TABLE "users_permissions";
+DROP TABLE IF EXISTS 'users_permissions';
 
-CREATE TABLE "users_permissions" (
+CREATE TABLE 'users_permissions' (
   "permName" varchar(31) NOT NULL default '',
   "permDesc" varchar(250) default NULL,
   "level" varchar(80) default NULL,
   "type" varchar(20) default NULL,
+  "admin" varchar(1) default NULL,
   PRIMARY KEY ("permName")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 -- 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_abort_instance', 'Can abort a process instance', 'editors', 'workflow');
@@ -4685,55 +4687,55 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_add_events', 'Can add events in the calendar', 'registered', 'calendar');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin', 'Administrator, can manage users groups and permissions, Hotwords and all the weblog features', 'admin', 'tiki');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin', 'Administrator, can manage users groups and permissions, Hotwords and all the weblog features', 'admin', 'tiki', 'y');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_banners', 'Administrator, can admin banners', 'admin', 'tiki');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_banning', 'Can ban users or ips', 'admin', 'tiki');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_calendar', 'Can create/admin calendars', 'admin', 'calendar');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_calendar', 'Can create/admin calendars', 'admin', 'calendar', 'y');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_categories', 'Can admin categories', 'editors', 'tiki');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_categories', 'Can admin categories', 'editors', 'tiki', 'y');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_charts', 'Can admin charts', 'admin', 'charts');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_charts', 'Can admin charts', 'admin', 'charts', 'y');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_chat', 'Administrator, can create channels remove channels etc', 'editors', 'chat');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_chat', 'Administrator, can create channels remove channels etc', 'editors', 'chat', 'y');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_cms', 'Can admin the cms', 'editors', 'cms');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_cms', 'Can admin the cms', 'editors', 'cms', 'y');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_contribution', 'Can admin contributions', 'admin', 'contribution');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_contribution', 'Can admin contributions', 'admin', 'contribution', 'y');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_directory', 'Can admin the directory', 'editors', 'directory');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_directory', 'Can admin the directory', 'editors', 'directory', 'y');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_directory_cats', 'Can admin directory categories', 'editors', 'directory');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_directory_sites', 'Can admin directory sites', 'editors', 'directory');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_drawings', 'Can admin drawings', 'editors', 'drawings');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_drawings', 'Can admin drawings', 'editors', 'drawings', 'y');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_dynamic', 'Can admin the dynamic content system', 'editors', 'tiki');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_faqs', 'Can admin faqs', 'editors', 'faqs');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_faqs', 'Can admin faqs', 'editors', 'faqs', 'y');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_file_galleries', 'Can admin file galleries', 'editors', 'file galleries');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_file_galleries', 'Can admin file galleries', 'editors', 'file galleries', 'y');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_forum', 'Can admin forums', 'editors', 'forums');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_forum', 'Can admin forums', 'editors', 'forums', 'y');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_galleries', 'Can admin Image Galleries', 'editors', 'image galleries');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_galleries', 'Can admin Image Galleries', 'editors', 'image galleries', 'y');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_games', 'Can admin games', 'editors', 'games');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_games', 'Can admin games', 'editors', 'games', 'y');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_integrator', 'Can admin integrator repositories and rules', 'admin', 'tiki');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_mailin', 'Can admin mail-in accounts', 'admin', 'tiki');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_newsletters', 'Can admin newsletters', 'admin', 'newsletters');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_newsletters', 'Can admin newsletters', 'admin', 'newsletters', 'y');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_objects','Can edit object permissions', 'admin', 'tiki');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_polls','Can admin polls', 'admin', 'tiki');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_quizzes', 'Can admin quizzes', 'editors', 'quizzes');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_quizzes', 'Can admin quizzes', 'editors', 'quizzes', 'y');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_received_articles', 'Can admin received articles', 'editors', 'comm');
 
@@ -4741,19 +4743,19 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_rssmodules','Can admin rss modules', 'admin', 'tiki');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_sheet', 'Can admin sheet', 'admin', 'sheet');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_sheet', 'Can admin sheet', 'admin', 'sheet', 'y');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_shoutbox', 'Can admin shoutbox (Edit/remove msgs)', 'editors', 'shoutbox');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_shoutbox', 'Can admin shoutbox (Edit/remove msgs)', 'editors', 'shoutbox', 'y');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_surveys', 'Can admin surveys', 'editors', 'surveys');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_surveys', 'Can admin surveys', 'editors', 'surveys', 'y');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_trackers', 'Can admin trackers', 'editors', 'trackers');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_trackers', 'Can admin trackers', 'editors', 'trackers', 'y');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_users', 'Can admin users', 'admin', 'user');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_wiki', 'Can admin the wiki', 'editors', 'wiki');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_wiki', 'Can admin the wiki', 'editors', 'wiki', 'y');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_workflow', 'Can admin workflow processes', 'admin', 'workflow');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_workflow', 'Can admin workflow processes', 'admin', 'workflow', 'y');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_approve_submission', 'Can approve submissions', 'editors', 'cms');
 
@@ -4775,7 +4777,7 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_batch_upload_images', 'Can upload zip files with images', 'editors', 'image galleries');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_blog_admin', 'Can admin blogs', 'editors', 'blogs');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_blog_admin', 'Can admin blogs', 'editors', 'blogs', 'y');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_blog_post', 'Can post to a blog', 'registered', 'blogs');
 
@@ -4945,7 +4947,7 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_tasks_send', 'Can send tasks to other users', 'registered', 'user');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_topic_read', 'Can read a topic (Applies only to individual topic perms)', 'basic', 'topics');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_topic_read', 'Can read a topic (Applies only to individual topic perms)', 'basic', 'cms');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_tracker_view_ratings', 'Can view rating result for tracker items', 'basic', 'trackers');
 
@@ -5011,9 +5013,11 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_templates', 'Can view site templates', 'admin', 'tiki');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_tiki_calendar', 'Can view Tikiwiki tools calendar', 'basic', 'tiki');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_tiki_calendar', 'Can view Tikiwiki tools calendar', 'basic', 'calendar');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_trackers', 'Can view trackers', 'basic', 'trackers');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_list_trackers', 'Can list trackers', 'basic', 'trackers');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_trackers_closed', 'Can view trackers closed items', 'registered', 'trackers');
 
@@ -5053,7 +5057,9 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_assign_perm_blog', 'Can assign perms to blog', 'admin', 'blogs');
 
--- --------------------------------------------------------
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_tell_a_friend', 'Can send a link to a friend', 'Basic', 'tiki');
+
+-- ******************************************************
 
 --
 -- Table structure for table users_usergroups
@@ -5062,20 +5068,20 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 -- Last update: Jul 12, 2003 at 09:31 PM
 --
 
-DROP TABLE "users_usergroups";
+DROP TABLE IF EXISTS 'users_usergroups';
 
-CREATE TABLE "users_usergroups" (
+CREATE TABLE 'users_usergroups' (
   "userId" integer NOT NULL default '0',
   "groupName" varchar(255) NOT NULL default '',
   PRIMARY KEY ("userId","groupName")
-) ;
+);
 
--- --------------------------------------------------------
+-- ******************************************************
 INSERT INTO "users_groups" ("groupName","groupDesc") VALUES ('Anonymous','Public users not logged');
 
 INSERT INTO "users_groups" ("groupName","groupDesc") VALUES ('Registered','Users logged into the system');
 
--- --------------------------------------------------------
+-- ******************************************************
 
 --
 -- Table structure for table users_users
@@ -5084,10 +5090,10 @@ INSERT INTO "users_groups" ("groupName","groupDesc") VALUES ('Registered','Users
 -- Last update: Jul 13, 2003 at 01:07 AM
 --
 
-DROP TABLE "users_users";
+DROP TABLE IF EXISTS 'users_users';
 
-CREATE TABLE "users_users" (
-  "userId" serial,
+CREATE TABLE 'users_users' (
+  "userId" INTEGER,
   "email" varchar(200) default NULL,
   "login" varchar(200) NOT NULL default '',
   "password" varchar(30) default '',
@@ -5108,12 +5114,12 @@ CREATE TABLE "users_users" (
   "avatarType" char(1) default NULL,
   "score" bigint NOT NULL default 0,
   PRIMARY KEY ("userId")
-)   ;
+) ;
 
 CREATE  INDEX "users_users_login" ON "users_users"("login");
 CREATE  INDEX "users_users_score" ON "users_users"("score");
 CREATE  INDEX "users_users_registrationDate" ON "users_users"("registrationDate");
--- --------------------------------------------------------
+-- ******************************************************
 ------ Administrator account
 INSERT INTO "users_users" ("email","login","password","hash") VALUES ('','admin','admin','f6fdffe48c908deb0f4c3bd36c032e72');
 
@@ -5121,16 +5127,16 @@ UPDATE "users_users" SET "currentLogin"="lastLogin" "registrationDate"="lastLogi
 
 INSERT INTO "tiki_user_preferences" ("user","prefName","value") VALUES ('admin','realName','System Administrator');
 
--- --------------------------------------------------------
+-- ******************************************************
 -- 
 
 --
 -- Table structure for table 'tiki_integrator_reps'
 --
-DROP TABLE "tiki_integrator_reps";
+DROP TABLE IF EXISTS 'tiki_integrator_reps';
 
-CREATE TABLE "tiki_integrator_reps" (
-  "repID" bigserial,
+CREATE TABLE 'tiki_integrator_reps' (
+  "repID" INTEGER,
   "name" varchar(255) NOT NULL default '',
   "path" varchar(255) NOT NULL default '',
   "start_page" varchar(255) NOT NULL default '',
@@ -5140,7 +5146,7 @@ CREATE TABLE "tiki_integrator_reps" (
   "expiration" bigint NOT NULL default '0',
   "description" text NOT NULL,
   PRIMARY KEY ("repID")
-) ;
+);
 
 
 --
@@ -5152,10 +5158,10 @@ INSERT INTO tiki_integrator_reps VALUES ('1','Doxygened (1.3.4) Documentation','
 --
 -- Table structure for table 'tiki_integrator_rules'
 --
-DROP TABLE "tiki_integrator_rules";
+DROP TABLE IF EXISTS 'tiki_integrator_rules';
 
-CREATE TABLE "tiki_integrator_rules" (
-  "ruleID" bigserial,
+CREATE TABLE 'tiki_integrator_rules' (
+  "ruleID" INTEGER,
   "repID" bigint NOT NULL default '0',
   "ord" smallint unsigned NOT NULL default '0',
   "srch" bytea NOT NULL,
@@ -5166,7 +5172,7 @@ CREATE TABLE "tiki_integrator_rules" (
   "enabled" char(1) NOT NULL default 'n',
   "description" text NOT NULL,
   PRIMARY KEY ("ruleID")
-) ;
+);
 
 CREATE  INDEX "tiki_integrator_rules_repID" ON "tiki_integrator_rules"("repID");
 
@@ -5183,16 +5189,16 @@ INSERT INTO tiki_integrator_rules VALUES ('3','1','3','href=(\"|\')(?!(--|(http|
 --
 -- Table structures for table 'tiki_quicktags'
 -- 
-DROP TABLE "tiki_quicktags";
+DROP TABLE IF EXISTS 'tiki_quicktags';
 
-CREATE TABLE "tiki_quicktags" (
-  "tagId" serial,
+CREATE TABLE 'tiki_quicktags' (
+  "tagId" INTEGER,
   "taglabel" varchar(255) default NULL,
   "taginsert" text,
   "tagicon" varchar(255) default NULL,
   "tagcategory" varchar(255) default NULL,
   PRIMARY KEY ("tagId")
-)   ;
+) ;
 
 CREATE  INDEX "tiki_quicktags_tagcategory" ON "tiki_quicktags"("tagcategory");
 CREATE  INDEX "tiki_quicktags_taglabel" ON "tiki_quicktags"("taglabel");
@@ -5542,15 +5548,15 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 
 
 --translated objects table
-DROP TABLE "tiki_translated_objects";
+DROP TABLE IF EXISTS 'tiki_translated_objects';
 
-CREATE TABLE "tiki_translated_objects" (
-  "traId" bigserial,
+CREATE TABLE 'tiki_translated_objects' (
+  "traId" INTEGER,
   "type" varchar(50) NOT NULL,
   "objId" varchar(255) NOT NULL,
   "lang" varchar(16) default NULL,
   PRIMARY KEY (type, objId)
-)  ;
+);
 
 CREATE  INDEX "tiki_translated_objects_traId" ON "tiki_translated_objects"( "traId" );
 
@@ -5559,33 +5565,33 @@ CREATE  INDEX "tiki_translated_objects_traId" ON "tiki_translated_objects"( "tra
 -- Community tables begin
 --
 
-DROP TABLE "tiki_friends";
+DROP TABLE IF EXISTS 'tiki_friends';
 
-CREATE TABLE "tiki_friends" (
+CREATE TABLE 'tiki_friends' (
   "user" char(200) NOT NULL default '',
   "friend" char(200) NOT NULL default '',
-  PRIMARY KEY ("`user`","friend")
-) ;
+  PRIMARY KEY ("user","friend")
+);
 
 
-DROP TABLE "tiki_friendship_requests";
+DROP TABLE IF EXISTS 'tiki_friendship_requests';
 
-CREATE TABLE "tiki_friendship_requests" (
+CREATE TABLE 'tiki_friendship_requests' (
   "userFrom" char(200) NOT NULL default '',
   "userTo" char(200) NOT NULL default '',
   "tstamp" timestamp(3) NOT NULL,
   PRIMARY KEY ("userFrom","userTo")
-) ;
+);
 
 
-DROP TABLE "tiki_score";
+DROP TABLE IF EXISTS 'tiki_score';
 
-CREATE TABLE "tiki_score" (
+CREATE TABLE 'tiki_score' (
   "event" varchar(40) NOT NULL default '',
   "score" bigint NOT NULL default '0',
   "expiration" bigint NOT NULL default '0',
   PRIMARY KEY ("event")
-) ;
+);
 
 
 
@@ -5650,15 +5656,15 @@ INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('wiki_edit',5,0)
 INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('wiki_attach_file',3,0);
 
 
-DROP TABLE "tiki_users_score";
+DROP TABLE IF EXISTS 'tiki_users_score';
 
-CREATE TABLE "tiki_users_score" (
+CREATE TABLE 'tiki_users_score' (
   "user" char(200) NOT NULL default '',
   "event_id" char(40) NOT NULL default '',
   "expire" bigint NOT NULL default '0',
   "tstamp" timestamp(3) NOT NULL,
   PRIMARY KEY ("user","event_id")
-) ;
+);
 
 CREATE  INDEX "tiki_users_score_user" ON "tiki_users_score"("user","event_id","expire");
 
@@ -5674,12 +5680,12 @@ CREATE  INDEX "tiki_users_score_user" ON "tiki_users_score"("user","event_id","e
 -- Last update: Nov 02, 2004 at 05:59 PM
 --
 
-DROP TABLE "tiki_file_handlers";
+DROP TABLE IF EXISTS 'tiki_file_handlers';
 
-CREATE TABLE "tiki_file_handlers" (
+CREATE TABLE 'tiki_file_handlers' (
   "mime_type" varchar(64) default NULL,
   "cmd" varchar(238) default NULL
-) ;
+);
 
 
 --
@@ -5689,15 +5695,15 @@ CREATE TABLE "tiki_file_handlers" (
 -- Last update: Aug 04, 2005 at 05:59 PM
 --
 
-DROP TABLE "tiki_stats";
+DROP TABLE IF EXISTS 'tiki_stats';
 
-CREATE TABLE "tiki_stats" (
+CREATE TABLE 'tiki_stats' (
   "object" varchar(255) NOT NULL default '',
   "type" varchar(20) NOT NULL default '',
   "day" bigint NOT NULL default '0',
   "hits" bigint NOT NULL default '0',
   PRIMARY KEY ("object","type","day")
-) ;
+);
 
 
 --
@@ -5707,28 +5713,28 @@ CREATE TABLE "tiki_stats" (
 -- Last update: Sep 31, 2005 at 12:29 PM - mdavey
 --
 
-DROP TABLE "tiki_events";
+DROP TABLE IF EXISTS 'tiki_events';
 
-CREATE TABLE "tiki_events" (
+CREATE TABLE 'tiki_events' (
   "callback_type" smallint NOT NULL default '3',
-  `order` smallint NOT NULL default '50',
+  order smallint NOT NULL default '50',
   "event" varchar(200) NOT NULL default '',
   "file" varchar(200) NOT NULL default '',  
   "object" varchar(200) NOT NULL default '',
   "method" varchar(200) NOT NULL default '',
-  PRIMARY KEY ("callback_type","`order`")
-) ;
+  PRIMARY KEY ("callback_type","order")
+);
 
 
-INSERT INTO "tiki_events" ("callback_type","`order`","event","file","object","method") VALUES ('1', '20', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikiwiki_setup_custom_fields');
+INSERT INTO "tiki_events" ("callback_type","order","event","file","object","method") VALUES ('1', '20', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikiwiki_setup_custom_fields');
 
 INSERT INTO "tiki_events" ("event","file","object","method") VALUES ('user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikiwiki_save_registration');
 
-INSERT INTO "tiki_events" ("callback_type","`order`","event","file","object","method") VALUES ('5', '20', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_logslib_user_registers');
+INSERT INTO "tiki_events" ("callback_type","order","event","file","object","method") VALUES ('5', '20', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_logslib_user_registers');
 
-INSERT INTO "tiki_events" ("callback_type","`order`","event","file","object","method") VALUES ('5', '25', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikiwiki_send_email');
+INSERT INTO "tiki_events" ("callback_type","order","event","file","object","method") VALUES ('5', '25', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikiwiki_send_email');
 
-INSERT INTO "tiki_events" ("callback_type","`order`","event","file","object","method") VALUES ('5', '30', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikimail_user_registers');
+INSERT INTO "tiki_events" ("callback_type","order","event","file","object","method") VALUES ('5', '30', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikimail_user_registers');
 
 
 --
@@ -5738,27 +5744,29 @@ INSERT INTO "tiki_events" ("callback_type","`order`","event","file","object","me
 -- Last update: Aug 31, 2005 at 12:57 PM - mdavey
 -- 
 
-DROP TABLE "tiki_registration_fields";
+DROP TABLE IF EXISTS 'tiki_registration_fields';
 
-CREATE TABLE "tiki_registration_fields" (
-  "id" bigserial,
+CREATE TABLE 'tiki_registration_fields' (
+  "id" INTEGER,
   "field" varchar(255) NOT NULL default '',
   "name" varchar(255) default NULL,
   "type" varchar(255) NOT NULL default 'text',
-  `show` smallint NOT NULL default '0',
+  show smallint NOT NULL default '0',
   "size" varchar(10) default '10',
   PRIMARY KEY ("id")
-) ;
+);
 
 
-DROP TABLE "tiki_actionlog_conf";
+DROP TABLE IF EXISTS 'tiki_actionlog_conf';
 
-CREATE TABLE "tiki_actionlog_conf" (
+CREATE TABLE 'tiki_actionlog_conf' (
+  "id" INTEGER,
   "action" varchar(32) NOT NULL default '',
   "objectType" varchar(32) NOT NULL default '',
- `status` char(1) default '',
-PRIMARY KEY (action, objectType)
-) ;
+ status char(1) default '',
+PRIMARY KEY (action, objectType),
+KEY (id)
+);
 
 INSERT INTO "tiki_actionlog_conf" ("action","objectType","status") VALUES ('Created', 'wiki page', 'y');
 
@@ -5830,7 +5838,7 @@ INSERT INTO "tiki_actionlog_conf" ("action","objectType","status") VALUES ('Upda
 
 INSERT INTO "tiki_actionlog_conf" ("action","objectType","status") VALUES ('Removed', 'blog', 'n');
 
--- --------------------------------------------------------
+-- ******************************************************
 
 
 -- Table structure for folksonomy tables
@@ -5839,20 +5847,20 @@ INSERT INTO "tiki_actionlog_conf" ("action","objectType","status") VALUES ('Remo
 -- Last update: Out 16, 2005 - batawata
 -- 
 
-DROP TABLE "tiki_freetags";
+DROP TABLE IF EXISTS 'tiki_freetags';
 
-CREATE TABLE "tiki_freetags" (
-  "tagId" bigserial,
+CREATE TABLE 'tiki_freetags' (
+  "tagId" INTEGER,
   "tag" varchar(30) NOT NULL default '',
   "raw_tag" varchar(50) NOT NULL default '',
   PRIMARY KEY ("tagId")
-) ;
+);
 
 
-DROP TABLE "tiki_freetagged_objects";
+DROP TABLE IF EXISTS 'tiki_freetagged_objects';
 
-CREATE TABLE "tiki_freetagged_objects" (
-  "tagId" bigserial,
+CREATE TABLE 'tiki_freetagged_objects' (
+  "tagId" INTEGER,
   "objectId" bigint NOT NULL default 0,
   "user" varchar(200) NOT NULL default '',
   "created" bigint NOT NULL default '0',
@@ -5860,28 +5868,51 @@ CREATE TABLE "tiki_freetagged_objects" (
   KEY (tagId),
   KEY (user),
   KEY (objectId)
-) ;
+);
 
 
 
-DROP TABLE "tiki_contributions";
+DROP TABLE IF EXISTS 'tiki_contributions';
 
-CREATE TABLE "tiki_contributions" (
-  "contributionId" bigserial,
+CREATE TABLE 'tiki_contributions' (
+  "contributionId" INTEGER,
   "name" varchar(100) default NULL,
   "description" varchar(250) default NULL,
   PRIMARY KEY ("contributionId")
-) ;
+);
 
 
-DROP TABLE "tiki_contributions_assigned";
+DROP TABLE IF EXISTS 'tiki_contributions_assigned';
 
-CREATE TABLE "tiki_contributions_assigned" (
+CREATE TABLE 'tiki_contributions_assigned' (
   "contributionId" bigint NOT NULL,
   "objectId" bigint NOT NULL,
   PRIMARY KEY ("objectId","contributionId")
-) ;
+);
 
+
+DROP TABLE IF EXISTS 'tiki_webmail_contacts_ext';
+
+CREATE TABLE tiki_webmail_contacts_ext (
+  contactId bigint NOT NULL,
+  fieldId bigint unsigned NOT NULL,
+  value varchar(256) NOT NULL,
+  hidden smallint NOT NULL,
+  KEY contactId (contactId)
+) ENGINE=MyISAM;
+
+
+DROP TABLE IF EXISTS 'tiki_webmail_contacts_fields';
+
+CREATE TABLE tiki_webmail_contacts_fields (
+  fieldId INTEGER,
+  user VARCHAR( 200 ) NOT NULL ,
+  fieldname VARCHAR( 256 ) NOT NULL ,
+  order smallint NOT NULL default '0',
+  show char(1) NOT NULL default 'n',
+  PRIMARY KEY ( fieldId ),
+  "INDEX" ( user )
+) ENGINE = MyISAM ;
 
 ;
 
