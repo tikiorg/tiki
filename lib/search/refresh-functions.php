@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/search/refresh-functions.php,v 1.21 2007-05-04 09:21:26 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/search/refresh-functions.php,v 1.22 2007-05-04 09:29:59 nyloth Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -183,9 +183,9 @@ function refresh_index_oldest() {
 function &search_index($data) {
 	$words = array();
 	// $data = trim(strtolower(strip_tags($data))); // Don't use strip_tags here, this is not always binary safe (and doesn't correctly handle files data)
-	$data = trim(strtolower($data));
+	$data = trim(strtolower(preg_replace('/[\s\x7f\x00-\x1f]+/', ' ', $data))); // Remove ascii non-printable characters and convert all whitespaces characters in spaces
 	if ( $data != '' ) {
-		$sstrings = preg_split('/\s+/', $data, -1, PREG_SPLIT_NO_EMPTY); // split into words
+		$sstrings = preg_split('/ /', $data, -1, PREG_SPLIT_NO_EMPTY); // split into words (do NOT use the split function that doesn't correctly handle some characters !)
 		foreach ( $sstrings as $value ) $words[$value]++; // count words
 	}
 	return $words;
