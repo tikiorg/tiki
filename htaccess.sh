@@ -12,19 +12,8 @@ if [ "$1" = "off" ]; then
         ACTION=deactivating
 fi
  
-ENTRIES=". `/bin/ls -Rd *`"
-for ENTRY in ${ENTRIES}
-do
-        # only work on directories:
-        if [ -d "$ENTRY" ]; then
-                # do nothing if $NEW already available
-                if [ ! -e ${ENTRY}/${NEW} ]; then
-                        # if $OLD available, rename it
-                        if [ -e ${ENTRY}/${OLD} ]; then
-                                echo "${ACTION} ${ENTRY}/.htaccess"
-                                chmod 644 ${ENTRY}/${OLD}
-                                mv ${ENTRY}/${OLD} ${ENTRY}/${NEW}
-                        fi
-                fi
-        fi
+for i in $(find . -name ${OLD}); do
+	chmod 644 $i
+	echo "${ACTION} `dirname $i`/${NEW}"
+	mv $i `dirname $i`/${NEW}
 done
