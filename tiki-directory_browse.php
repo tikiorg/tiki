@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_browse.php,v 1.14 2007-03-06 19:29:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_browse.php,v 1.15 2007-05-04 14:46:27 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -38,7 +38,7 @@ if ($_REQUEST["parent"] == 0) {
 	$all = 1;
 } else {
 	$parent_info = $dirlib->dir_get_category($_REQUEST['parent']);
-
+	$smarty->assign('parent_info', $parent_info);
 	$parent_name = $parent_info['name'];
 }
 
