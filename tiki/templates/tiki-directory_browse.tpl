@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_browse.tpl,v 1.16 2007-03-06 11:02:01 gillesm Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_browse.tpl,v 1.17 2007-05-04 14:46:27 sylvieg Exp $ *}
 
 {* The heading and category path *}
 {if $feature_siteidentity ne 'y' or $feature_breadcrumbs ne 'y'}
@@ -17,6 +17,7 @@ loc="page" crumbs=$crumbs}
 {if $feature_siteidentity ne 'y' or $feature_breadcrumbs ne 'y'}
 <a class="dirlink" href="tiki-directory_browse.php?parent=0">Top</a>{if $parent > 0} >> {/if}{$path}
 {/if}
+<div class="description">{$parent_info.description}</div>
 <br /><br />
 <div align="center">
 <form action="tiki-directory_search.php" method="post">
