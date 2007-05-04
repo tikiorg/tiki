@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.21 2006-12-23 15:17:02 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.22 2007-05-04 16:35:52 nyloth Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a>
 
@@ -14,10 +14,6 @@
 
 {include file=tiki-mytiki_bar.tpl}
 <br />
-
-{if $feature_actionlog == 'y' and !empty($user)}
-
-{/if}
 
 {if $feature_wiki eq 'y' and $mytiki_pages eq 'y'}
 <div id="content1" class="content">
