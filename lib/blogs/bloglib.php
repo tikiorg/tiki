@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/blogs/bloglib.php,v 1.59 2007-02-12 08:21:45 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/blogs/bloglib.php,v 1.60 2007-05-04 09:25:47 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -97,6 +97,11 @@ class BlogLib extends TikiLib {
 			}
 		}
 
+		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
+		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+			require_once('lib/search/refresh-functions.php');
+			refresh_index('blogs', $blogId);
+		}
 		return $blogId;
 	}
 
@@ -273,6 +278,12 @@ class BlogLib extends TikiLib {
 			$logslib->add_action('Posted', $blogId, 'blog', "blogId=$blogId&amp;postId=$id&amp;add=".strlen($data)."#postId$id", '', '', '', '', $contributions);
 		}
 
+		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
+		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+			require_once('lib/search/refresh-functions.php');
+			refresh_index('blog_posts', $id);
+		}
+
 		return $id;
 	}
 
@@ -335,6 +346,11 @@ class BlogLib extends TikiLib {
 		if ($feature_actionlog == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
 			$logslib->add_action('Updated', $blogId, 'blog', "blogId=$blogId&amp;postId=$postId#postId$postId", '', '', '', '', $contributions);
+		}
+		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
+		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+			require_once('lib/search/refresh-functions.php');
+			refresh_index('blog_posts', $postId);
 		}
 	}
 

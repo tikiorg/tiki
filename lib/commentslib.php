@@ -869,6 +869,12 @@ class Comments extends TikiLib {
 		    array($name,(int) $this->now));
 	}
 
+	global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
+	if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+		require_once('lib/search/refresh-functions.php');
+		refresh_index('forums', $forumId);
+	}
+
 	return $forumId;
     }
 
@@ -1798,6 +1804,11 @@ class Comments extends TikiLib {
 		global $contributionlib; include_once('lib/contribution/contributionlib.php');
 		$contributionlib->assign_contributions($contributions, $threadId, 'comment', $title, '', '');
 	}
+	global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
+	if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+		require_once('lib/search/refresh-functions.php');
+		refresh_index('comments', $threadId);
+	}
     }
 
     function post_new_comment($objectId, $parentId, $userName,
@@ -1942,6 +1953,11 @@ class Comments extends TikiLib {
 	if ($feature_contribution == 'y') {
 		global $contributionlib; include_once('lib/contribution/contributionlib.php');
 		$contributionlib->assign_contributions($contributions, $threadId, 'comment', $title, '', '');
+	}
+	global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
+	if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+		require_once('lib/search/refresh-functions.php');
+		refresh_index('comments', $threadId);
 	}
 
 	return $threadId;

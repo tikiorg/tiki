@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_search.php,v 1.18 2007-03-06 19:29:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_search.php,v 1.19 2007-05-04 09:25:46 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -26,6 +26,7 @@ if (isset($_REQUEST["searchprefs"])) {
 	simple_set_int("search_syll_age");
 	simple_set_int("search_lru_purge_rate");
 	simple_set_int("search_lru_length");
+	simple_set_value("search_refresh_index_mode");
 }
 
 global $tiki_p_admin;

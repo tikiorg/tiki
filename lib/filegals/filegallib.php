@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.69 2007-05-01 18:32:13 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.70 2007-05-04 09:25:48 nyloth Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -110,6 +110,11 @@ class FileGalLib extends TikiLib {
 		if ($feature_actionlog == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
 			$logslib->add_action('Uploaded', $galleryId, 'file gallery', "fileId=$fileId&amp;add=$size");
+		}
+		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
+		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+			require_once('lib/search/refresh-functions.php');
+			refresh_index('files', $fileId);
 		}
 
 		//Watches
@@ -345,6 +350,12 @@ class FileGalLib extends TikiLib {
 			}
 		}
 
+		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
+		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+			require_once('lib/search/refresh-functions.php');
+			refresh_index('file_galleries', $galleryId);
+		}
+
 		return $galleryId;
 	}
 
@@ -464,6 +475,12 @@ class FileGalLib extends TikiLib {
 			$this->query($query,array($this->now,$galleryId));
 		}
 
+		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
+		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+			require_once('lib/search/refresh-functions.php');
+			refresh_index('files', $id);
+		}
+
 		return $result;
 	}
 
@@ -543,6 +560,12 @@ class FileGalLib extends TikiLib {
 			$this->query($query,array($this->now,$gal_info['galleryId']));
 		}
 
+		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
+		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+			require_once('lib/search/refresh-functions.php');
+			refresh_index('files', $id);
+		}
+
 		return $id;
 	}
 
@@ -597,7 +620,7 @@ class FileGalLib extends TikiLib {
 			}
 		}
 		include_once("lib/search/refresh-functions.php");
-		refresh_index_files();
+		refresh_index('files');
 	}
 
 	function get_search_text_for_data($data,$path,$type, $galleryId) {

@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.739 2007-05-02 13:49:11 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.740 2007-05-04 09:25:47 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4032,6 +4032,7 @@ function add_pageview() {
 	global $dbTiki;
 	global $sender_email;
 	global $feature_purifier;
+	global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
 	include_once ("lib/commentslib.php");
 
 	$commentslib = new Comments($dbTiki);
@@ -4135,6 +4136,11 @@ function add_pageview() {
 	global $feature_score;
 	if ($feature_score == 'y') {
 	    $this->score_event($user, 'wiki_new');
+	}
+
+	if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+		require_once('lib/search/refresh-functions.php');
+		refresh_index('pages', $name);
 	}
 
 	return true;
@@ -6159,6 +6165,7 @@ if (!$simple_wiki) {
 	global $sender_email;
 	global $histlib, $feature_wiki_history_full;
 	global $feature_purifier;
+	global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
 	include_once ("lib/wiki/histlib.php");
 	include_once ("lib/commentslib.php");
 
@@ -6314,6 +6321,10 @@ if (!$simple_wiki) {
         	    $this->score_event($user, 'wiki_edit');
 	        }
 
+	}
+	if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+		require_once('lib/search/refresh-functions.php');
+		refresh_index('pages', $pageName);
 	}
 
     }

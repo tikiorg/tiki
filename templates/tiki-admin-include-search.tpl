@@ -69,6 +69,14 @@
 <tr>
           <td class="heading" colspan="2">{tr}Settings for searching content{/tr}</td>
         </tr><tr>
+          <td class="form">{tr}Search refresh mode{/tr}:</td>
+	  <td>
+	  <select name="search_refresh_index_mode">
+	  <option value="normal" {if $search_refresh_index_mode eq 'normal'}selected="selected"{/if}>{tr}normal{/tr}</option>
+	  <option value="random" {if $search_refresh_index_mode eq 'random'}selected="selected"{/if}>{tr}random{/tr}</option>
+	  </select>
+	  </td>
+        </tr><tr>
           <td class="form"><label for="search-refresh">{tr}Search refresh rate{/tr}:</label></td>
 	  <td><input size="5" type="text" name="search_refresh_rate" id="search-refresh"
 	      value="{$search_refresh_rate|escape}" /> {tr}0 for no refresh{/tr}</td>

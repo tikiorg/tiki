@@ -279,6 +279,13 @@ class ArtLib extends TikiLib {
 		    }
 	    }
 
+
+		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
+		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+			require_once('lib/search/refresh-functions.php');
+			refresh_index('articles', $articleId);
+		}
+
 		return $articleId;
     }
 

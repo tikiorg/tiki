@@ -875,6 +875,13 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 		$result = $this->query($query,array((int)$cant_items,(int) $this->now,(int) $trackerId));
 
 		if (!$itemId) $itemId = $new_itemId;
+
+		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
+		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+			require_once('lib/search/refresh-functions.php');
+			refresh_index('tracker_items', $itemId);
+		}
+
 		return $itemId;
 	}
 
@@ -967,6 +974,15 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 			} else {
 				$this->query('delete from `tiki_tracker_fields` where `fieldId`=?',array((int)$ratingId));
 			}
+
+			// -------------------
+			global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
+			if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+				require_once('lib/search/refresh-functions.php');
+				refresh_index('trackers', $trackerId);
+			}
+
+			// -------------------
 			return $trackerId;
 			// -------------------
 		}

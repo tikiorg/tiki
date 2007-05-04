@@ -408,7 +408,6 @@ class DirLib extends TikiLib {
 		if ($siteId) {
 			$query = "update `tiki_directory_sites` set `name`=?, `description`=?, `url`=?, `country`=?, `isValid`=?, `lastModif`=?  where `siteId`=?";
 			$this->query($query,array($name,$description,$url,$country,$isValid,(int)$this->now,(int)$siteId));
-			return $siteId;
 		} else {
 			$query = "insert into `tiki_directory_sites`(`name`,`description`,`url`,`country`,`isValid`,`hits`,`created`,`lastModif`) values(?,?,?,?,?,?,?,?)";
 			$this->query($query,array($name,$description,$url,$country,$isValid,0,(int)$this->now,(int)$this->now));
@@ -417,10 +416,14 @@ class DirLib extends TikiLib {
 			if ($cachepages == 'y') {
 				$this->cache_url($url);
 			}
-
-			return $siteId;
 		}
-	// Now try to cache the site
+
+		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
+		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+			require_once('lib/search/refresh-functions.php');
+			refresh_index('directory_sites', $siteId);
+		}
+		return $siteId;
 	}
 
 	// Replace
@@ -433,6 +436,12 @@ class DirLib extends TikiLib {
 			$query = "insert into `tiki_directory_categories`(`parent`,`hits`,`name`,`description`,`childrenType`,`viewableChildren`,`allowSites`,`showCount`,`editorGroup`,`sites`) values(?,?,?,?,?,?,?,?,?,?)";
 			$this->query($query,array((int)$parent,0,$name,$description,$childrenType,(int)$viewableChildren,$allowSites,$showCount,$editorGroup,0));
 			$categId = $this->getOne("select max(`categId`) from `tiki_directory_categories` where `name`=?",array($name));
+		}
+
+		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
+		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+			require_once('lib/search/refresh-functions.php');
+			refresh_index('directory_categories', $categId);
 		}
 		return $categId;
 	}
