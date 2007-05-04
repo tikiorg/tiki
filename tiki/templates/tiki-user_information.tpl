@@ -54,18 +54,13 @@
 {/if}
 {/if}
   <tr><td class="form">{tr}Displayed time zone{/tr}:</td><td>{$display_timezone}</td></tr>
-{if $user_tracker_infos}
-  {foreach item=value key=fieldId from=$ValueTrk }
-	
-	{if $FieldTrk[$fieldId].type == 'i' and $value ne "" } 
-               <tr><td class="form">{tr}{$FieldTrk[$fieldId].name}{/tr}:</td><td> 
-		<img src="{$value}" alt="" {if $FieldTrk[$fieldId].options[2]} width="{$FieldTrk[$fieldId].options[2]}"{/if}>
-	{elseif $value}
-		<tr><td class="form">{tr}{$FieldTrk[$fieldId].name}{/tr}:</td><td>
-		{$value}
-	{/if}
 
-       </td></tr>
+{if $user_tracker_infos}
+  {foreach item=itemField from=$userItem.field_values}
+	{if $itemField.value ne ''}
+		<tr><td class="form">{tr}{$itemField.name}{/tr}:</td>
+		<td>{include file="tracker_item_field_value.tpl" item=$itemField}</td></tr>
+	{/if}
   {/foreach}
 {/if}
 
