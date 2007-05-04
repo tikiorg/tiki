@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/search/refresh-functions.php,v 1.23 2007-05-04 10:09:36 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/search/refresh-functions.php,v 1.24 2007-05-04 12:13:43 nyloth Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -104,7 +104,7 @@ function refresh_index($object_type, $object_id = null) {
 		$index_type = 'wiki';
 		$f_id = 'pageName';
 		$f_content = array('data', 'description', 'pageName');
-		$filtering_expr[] = '$content = $tikilib->parse_data($content);';
+		array_unshift($filtering_expr, '$content = $tikilib->parse_data($content);');
 		break;
 
 	case 'tracker_items': //case 'track': case 'trackeritem': 
