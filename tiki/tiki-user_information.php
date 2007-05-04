@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.40 2007-03-21 18:10:00 gillesm Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.41 2007-05-04 14:09:48 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -135,23 +135,17 @@ if ($feature_display_my_to_others == 'y') {
 }
 
 if ( $user_tracker_infos ) {
- // arg passed 11,56,58,68
- $trackerinfo=explode(',',$user_tracker_infos) ;
- $UserTrackerID=$trackerinfo[0] ;
- array_shift ($trackerinfo);
- foreach ( $trackerinfo  as $value ) 
-  {
-   $field=$trklib->get_tracker_field($value) ;
-   $FieldTrk[$value]=$field;
-   $ValueTrk[$value]=$trklib->get_item_value($UserTrackerID,$trklib->get_user_item($UserTrackerID,array('oneUserItem'=>'y'),$userwatch),$value);
-   $FieldTrk[$value]["options"]=explode(',', $FieldTrk[$value]["options"]);
-  }
- $smarty->assign_by_ref('FieldTrk',$FieldTrk);
- $smarty->assign_by_ref('ValueTrk',$ValueTrk);
+	// arg passed 11,56,58,68=trackerId,fieldId...
+	$trackerinfo = explode(',',$user_tracker_infos) ;
+	$userTrackerId = $trackerinfo[0] ;
+	array_shift ($trackerinfo);
+	$fields = $trklib->list_tracker_fields($userTrackerId, 0, -1, 'position_asc', '', true, array('fields'=>$trackerinfo));
+	foreach ($fields['data'] as $field) {
+		$lll[$field['fieldId']] = $field;
+	}
+	$items = $trklib->list_items($userTrackerId, 0, 1, '',  $lll, $trklib->get_field_id_from_type($userTrackerId, 'u', '1'), $userwatch);
+	$smarty->assign_by_ref('userItem',$items['data'][0]);
 }
-
-
-
 
 ask_ticket('user-information');
 
