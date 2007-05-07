@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.64 2007-04-06 11:45:15 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.65 2007-05-07 16:45:08 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.64 2007-04-06 11:45:15 nyloth Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.65 2007-05-07 16:45:08 sylvieg Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -296,6 +296,8 @@ if ($isvalid) {
 		$error = tra("Account disabled");
 	else if ($error == USER_AMBIGOUS)
 		$error = tra("You must use the right case for your user name");
+	else if ($error == USER_NOT_VALIDATED)
+		$error = tra("You are not yet validated");
 	else
 		$error= tra('Invalid username or password');
 	$url = $url_prefix.'tiki-error.php?error=' . urlencode($error);

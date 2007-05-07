@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.81 2007-05-02 15:36:48 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.82 2007-05-07 16:45:08 sylvieg Exp $
 
 /**
  * Tiki registration script
@@ -9,13 +9,11 @@
  * @license GNU LGPL
  * @copyright Tiki Community
  * @date created: 2002/10/8 15:54
- * @date last-modified: $Date: 2007-05-02 15:36:48 $
+ * @date last-modified: $Date: 2007-05-07 16:45:08 $
  */
 
 // Initialization
 require_once('tiki-setup.php');
-// require_once('lib/tikilib.php'); # httpScheme()
-// include_once('lib/webmail/tikimaillib.php');
 include_once('lib/registration/registrationlib.php');
 include_once('lib/notifications/notificationlib.php');
 
@@ -49,6 +47,7 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
     $smarty->display("error.tpl");
     die;
   }
+
   if($userlib->user_exists($_REQUEST["name"])) {
     $smarty->assign('msg',tra("User already exists"));
     $smarty->display("error.tpl");
