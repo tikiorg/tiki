@@ -39,5 +39,7 @@ FCKConfig.tikilinkDlgTitle    = '{tr}Tiki Link - Insert internal link{/tr}' ;
 FCKConfig.tikilinkDlgName   = '{tr}Wiki Link insert{/tr}' ;
 FCKConfig.tikilinkDlgSelection    = '{tr}Please make a selection of text in order to create a link{/tr}' ;
 
+FCKConfig.LinkBrowser = false;
+FCKConfig.LinkUpload = false;
 
 FCKConfig.Plugins.Add( 'tikiimage' ) ;
