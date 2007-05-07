@@ -19,6 +19,14 @@
 <h2>{tr}Create new template{/tr}</h2>
 {/if}
 <form action="tiki-admin_content_templates.php" method="post">
+{if $feature_wysiwyg eq 'y' and $wysiwyg_optional eq 'y'}
+{if $wysiwyg ne 'y'}
+<span class="button2"><a class="linkbut" href="?templateId={$templateId}&amp;wysiwyg=y">{tr}Use wysiwyg editor{/tr}</a></span>
+{else}
+<span class="button2"><a class="linkbut" href="?templateId={$templateId}&amp;wysiwyg=n">{tr}Use normal editor{/tr}</a></span>
+{/if}
+{/if}
+<br />
 <input type="hidden" name="templateId" value="{$templateId|escape}" />
 <table class="normal">
 <tr><td class="formcolor">{tr}name{/tr}:</td><td class="formcolor"><input type="text" maxlength="255" size="40" name="name" value="{$info.name|escape}" /></td></tr>
@@ -37,16 +45,26 @@
 {if $feature_html_pages eq 'y'}
 <tr><td class="formcolor">{tr}use in HTML pages{/tr}:</td><td class="formcolor"><input type="checkbox" name="section_html" {if $info.section_html eq 'y'}checked="checked"{/if} /></td></tr>
 {/if}
-<tr><td class="formcolor">{tr}template{/tr}:<br /><br />
+<tr>
 {assign var=area_name value="editwiki"}
-{include file="textareasize.tpl" area_name='editwiki' formId='editpageform'}<br /><br />
-{include file=tiki-edit_help_tool.tpl}</td>
-<td class="formcolor"><textarea id='editwiki' name="content" rows="25" cols="60">{$info.content|escape}</textarea></td></tr>
+{if $wysiwyg ne 'y'}
+<td class="formcolor">{tr}template{/tr}:<br /><br />
+{tr}Edit{/tr}:<br /><br />
+{include file="textareasize.tpl" area_name='editwiki' formId='editpageform' ToolbarSet='Tiki'}<br /><br />
+{include file=tiki-edit_help_tool.tpl area_name='editwiki'}</td>
+<td class="formcolor">
+<textarea id='editwiki' class="wikiedit" name="content" rows="{$rows}" cols="{$cols}" style="WIDTH: 100%;">{$info.content|escape}</textarea>
+<input type="hidden" name="rows" value="{$rows}"/>
+<input type="hidden" name="cols" value="{$cols}"/>
+{else}
+<td colspan="2">
+{editform Meat=$info.content InstanceName='content' ToolbarSet="Tiki"}
+{/if}
+</td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}Preview{/tr}" /></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
-
 
 <h2>{tr}Templates{/tr}</h2>
 <div  align="center">
