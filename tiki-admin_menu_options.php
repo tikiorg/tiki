@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_menu_options.php,v 1.26 2007-04-02 17:21:18 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_menu_options.php,v 1.27 2007-05-07 08:27:07 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -170,6 +170,7 @@ if ($offset > 0) {
 
 $smarty->assign_by_ref('channels', $channels["data"]);
 $smarty->assign_by_ref('allchannels', $allchannels["data"]);
+$smarty->assign_by_ref('allgroups', $userlib->list_all_groups());
 ask_ticket('admin-menu-options');
 
 // disallow robots to index page:
