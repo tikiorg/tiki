@@ -1,4 +1,4 @@
- {* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_menu_options.tpl,v 1.41 2007-04-02 17:47:23 sylvieg Exp $ *}
+ {* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_menu_options.tpl,v 1.42 2007-05-07 08:27:07 nyloth Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_menu_options.php?menuId={$menuId}">{tr}Admin Menu{/tr}: {$menu_info.name}</a><br /><br />
 <span class="button2"><a href="tiki-admin_menus.php" class="linkbut">{tr}List menus{/tr}</a></span>
 <span class="button2"><a href="tiki-admin_menus.php?menuId={$menuId}" class="linkbut">{tr}Edit this menu{/tr}</a></span></h1>
@@ -28,7 +28,14 @@
 <tr class="formcolor"><td>{tr}URL{/tr}:</td><td colspan="3"><input id="menu_url" type="text" name="url" value="{$url|escape}" size="34" /></td></tr>
 <tr class="formcolor"><td>{tr}Sections{/tr}:</td><td colspan="3"><input id="menu_section" type="text" name="section" value="{$section|escape}" size="34" /></td></tr>
 <tr class="formcolor"><td>{tr}Permissions{/tr}:</td><td colspan="3"><input id="menu_perm" type="text" name="perm" value="{$perm|escape}" size="34" /></td></tr>
-<tr class="formcolor"><td>{tr}Group{/tr}:</td><td colspan="3"><input id="menu_groupname" type="text" name="groupname" value="{$groupname|escape}" size="34" /></td></tr>
+<tr class="formcolor"><td>{tr}Group{/tr}:</td><td colspan="3">
+<select id="menu_groupname" name="groupname">
+<option value="">&nbsp;</option>
+{foreach key=k item=i from=$allgroups}
+<option value="{$i}" {if $i eq $groupname}selected="selected"{/if}>{$i}</option>
+{/foreach}
+</select>
+</td></tr>
 <tr class="formcolor"><td>{tr}Type{/tr}:</td><td>
 <select name="type">
 <option value="o" {if $type eq 'o'}selected="selected"{/if}>{tr}option{/tr}</option>
