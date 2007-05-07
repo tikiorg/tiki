@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.740 2007-05-04 09:25:47 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.741 2007-05-07 16:47:39 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3659,7 +3659,7 @@ function add_pageview() {
 					}
 				}
 			}
-			return $ret; // special perms - no look at categ
+			return $ret; // special perms - do not look further
 		} elseif ($feature_categories == 'y') {
 			global $categlib; include_once('lib/categories/categlib.php');
 			$perms = $categlib->get_object_categories_perms($user, $objectType, $objectId);
@@ -3673,12 +3673,14 @@ function add_pageview() {
 						$ret[$perm] = $value;
 					}
 				}
+				return $ret; // categ perm - do not look further
 			}
-		} elseif (!$global) {
+		}
+		if (!$global) {
 			$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
-			foreach ($perms as $perm) {
-				global $$perm;
-				$ret[$perm] = $$perm;
+			foreach ($perms['data'] as $perm) {
+				global $$perm['permName'];
+				$ret[$perm['permName']] = $$perm['permName'];
 			}
 		}
 		return $ret;
