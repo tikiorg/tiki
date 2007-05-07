@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.58 2007-04-02 17:39:27 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.59 2007-05-07 13:15:08 sylvieg Exp $ *}
 
 <script type="text/javascript">
 {literal}
@@ -304,16 +304,15 @@
       </tr>
 			<tr>
         <td class="form"><label for="general-contact">{tr}Contact user{/tr}:</label></td>
-{if $feature_contact eq 'y'}
         <td><input type="text" name="contact_user" id="general-contact" value="{$contact_user|escape}" size="40" /></td>
       </tr><tr>
         <td class="form"><label for="contact_anon">{tr}Allow anonymous users to "Contact Us"{/tr}:</label></td>
         <td><input type="checkbox" name="contact_anon" id="contact_anon"
               {if $contact_anon eq 'y'}checked="checked"{/if}/>
-        </td>
-{else}
-        <td>{tr}contact feature disabled{/tr}</td>
+{if $feature_contact eq 'y'}
+        {tr}contact feature disabled{/tr}
 {/if}
+        </td>
       </tr><tr>
         <td class="form"><label for="general-session_db">{tr}Store session data in database{/tr}:</label></td>
         <td><input type="checkbox" name="session_db" id="general-session_db"
