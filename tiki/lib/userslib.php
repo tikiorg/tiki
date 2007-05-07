@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.208 2007-05-07 16:09:03 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.209 2007-05-07 16:45:08 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -18,6 +18,7 @@ define("PASSWORD_INCORRECT", -3);
 define("USER_NOT_FOUND", -5);
 define("ACCOUNT_DISABLED", -6);
 define ("USER_AMBIGOUS", -7);
+define('USER_NOT_VALIDATED', -8);
 
 //added for Auth v1.3 support
 define ("AUTH_LOGIN_OK", 0);
@@ -784,6 +785,9 @@ class UsersLib extends TikiLib {
 
 	// next verify the password with every hashes methods
 	if ($feature_challenge == 'n' || empty($response)) {
+		if ($res['provpass']) {
+			return array(USER_NOT_VALIDATED, $user);
+		}
 	    if ($res['hash'] == md5($pass)) // old old method md5(pass), for compatibility
 		return array(true, $user);
  
