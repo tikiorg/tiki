@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.59 2007-05-07 13:15:08 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.60 2007-05-07 13:17:26 sylvieg Exp $ *}
 
 <script type="text/javascript">
 {literal}
@@ -309,7 +309,7 @@
         <td class="form"><label for="contact_anon">{tr}Allow anonymous users to "Contact Us"{/tr}:</label></td>
         <td><input type="checkbox" name="contact_anon" id="contact_anon"
               {if $contact_anon eq 'y'}checked="checked"{/if}/>
-{if $feature_contact eq 'y'}
+{if $feature_contact ne 'y'}
         {tr}contact feature disabled{/tr}
 {/if}
         </td>
