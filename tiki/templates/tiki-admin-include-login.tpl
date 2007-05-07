@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.67 2007-05-03 13:57:34 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.68 2007-05-07 13:06:59 sylvieg Exp $ *}
 <div class="cbox">
 <div class="cbox-title">{tr}Users &amp; groups{/tr}</div>
 <div class="cbox-data">
@@ -29,7 +29,7 @@
 </select></td></tr>
 <!--<tr><td class="form">{tr}Use WebServer authentication for Tiki{/tr}:</td><td><input type="checkbox" name="webserverauth" {if $webserverauth eq 'y'}checked="checked"{/if}/></td></tr>-->
 <tr><td class="form">{tr}Users can register{/tr}:</td><td><input type="checkbox" name="allowRegister" {if $allowRegister eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="form">{tr}... but need admin validation{/tr}:</td><td><input type="checkbox" name="validateRegistration" {if $validateRegistration eq 'y'}checked="checked"{/if}/> <a href ="tiki-admin.php?page=features">{tr}User Messages{/tr}</a> {tr}must be turned on and notification is sent to the admin's{/tr} <a href="messu-mailbox.php">{tr}inter-user message inbox{/tr}</a></td></tr>
+<tr><td class="form">{tr}... but need admin validation{/tr}:</td><td><input type="checkbox" name="validateRegistration" {if $validateRegistration eq 'y'}checked="checked"{/if}/>
 <tr><td class="form">{tr}Create a group for each user <br />(with the same name as the user){/tr}:</td><td><input type="checkbox"
 name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Use tracker for more user information{/tr}:</td><td><input type="checkbox" name="userTracker" {if $userTracker eq 'y'}checked="checked"{/if} /></td></tr>
