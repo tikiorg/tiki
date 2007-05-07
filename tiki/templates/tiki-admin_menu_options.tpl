@@ -1,4 +1,4 @@
- {* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_menu_options.tpl,v 1.42 2007-05-07 08:27:07 nyloth Exp $ *}
+ {* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_menu_options.tpl,v 1.43 2007-05-07 17:02:04 nyloth Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_menu_options.php?menuId={$menuId}">{tr}Admin Menu{/tr}: {$menu_info.name}</a><br /><br />
 <span class="button2"><a href="tiki-admin_menus.php" class="linkbut">{tr}List menus{/tr}</a></span>
 <span class="button2"><a href="tiki-admin_menus.php?menuId={$menuId}" class="linkbut">{tr}Edit this menu{/tr}</a></span></h1>
@@ -29,10 +29,10 @@
 <tr class="formcolor"><td>{tr}Sections{/tr}:</td><td colspan="3"><input id="menu_section" type="text" name="section" value="{$section|escape}" size="34" /></td></tr>
 <tr class="formcolor"><td>{tr}Permissions{/tr}:</td><td colspan="3"><input id="menu_perm" type="text" name="perm" value="{$perm|escape}" size="34" /></td></tr>
 <tr class="formcolor"><td>{tr}Group{/tr}:</td><td colspan="3">
-<select id="menu_groupname" name="groupname">
+<select id="menu_groupname" name="groupname[]" size="4" multiple>
 <option value="">&nbsp;</option>
-{foreach key=k item=i from=$allgroups}
-<option value="{$i}" {if $i eq $groupname}selected="selected"{/if}>{$i}</option>
+{foreach key=k item=i from=$option_groups}
+<option value="{$k}" {$i}>{$k}</option>
 {/foreach}
 </select>
 </td></tr>

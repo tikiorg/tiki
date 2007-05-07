@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_menu_options.php,v 1.27 2007-05-07 08:27:07 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_menu_options.php,v 1.28 2007-05-07 17:02:04 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -55,7 +55,6 @@ $smarty->assign('name', $info["name"]);
 $smarty->assign('url', $info["url"]);
 $smarty->assign('section', $info["section"]);
 $smarty->assign('perm', $info["perm"]);
-$smarty->assign('groupname', $info["groupname"]);
 $smarty->assign('type', $info["type"]);
 $smarty->assign('position', $info["position"]);
 
@@ -100,6 +99,8 @@ if (isset($_REQUEST['delsel_x']) && isset($_REQUEST['checked'])) {
 }
 
 if (isset($_REQUEST["save"])) {
+	if ( is_array($_REQUEST["groupname"] ) ) $_REQUEST["groupname"] = implode(',', $_REQUEST["groupname"]);
+
 include_once('lib/modules/modlib.php');
 	check_ticket('admin-menu-options');
 	$menulib->replace_menu_option($_REQUEST["menuId"], $_REQUEST["optionId"], $_REQUEST["name"], $_REQUEST["url"],
@@ -170,7 +171,12 @@ if ($offset > 0) {
 
 $smarty->assign_by_ref('channels', $channels["data"]);
 $smarty->assign_by_ref('allchannels', $allchannels["data"]);
-$smarty->assign_by_ref('allgroups', $userlib->list_all_groups());
+
+if ( isset($info['groupname']) && ! is_array($info['groupname']) ) $info['groupname'] = explode(',', $info['groupname']);
+$all_groups = $userlib->list_all_groups();
+if ( is_array($all_groups) ) foreach ( $all_groups as $g ) $option_groups[$g] = ( in_array($g, $info['groupname']) ) ? 'selected="selected"' : '';
+$smarty->assign_by_ref('option_groups', $option_groups);
+
 ask_ticket('admin-menu-options');
 
 // disallow robots to index page:
