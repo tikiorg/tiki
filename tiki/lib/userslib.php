@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.207 2007-05-07 15:54:37 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.208 2007-05-07 16:09:03 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -181,8 +181,8 @@ class UsersLib extends TikiLib {
 	function user_exists($user) {
 		static $rv = array();
 		if (!isset($rv[$user])) {
-			$query = "select count(*) from `users_users` where upper(`login`) = ? and `provpass` = ?";
-			$result = $this->getOne($query, array(strtoupper($user),''));
+			$query = "select count(*) from `users_users` where upper(`login`) = ?";
+			$result = $this->getOne($query, array(strtoupper($user)));
 			$rv[$user] = $result;
 		}
 		return $rv[$user];
