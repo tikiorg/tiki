@@ -49,7 +49,6 @@ function smarty_function_popup($params, &$smarty)
             case 'closefont':
             case 'fgbackground':
             case 'bgbackground':
-            case 'inarray':
             case 'caparray':
             case 'capicon':
             case 'background':
