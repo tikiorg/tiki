@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.150 2007-04-20 15:09:58 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.151 2007-05-09 14:47:52 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -896,3 +896,6 @@ ALTER TABLE `tiki_links` ADD INDEX `toPage` (`toPage`);
 
 #sylvieg 2007/04/04
 ALTER TABLE `tiki_actionlog_conf` ADD `id` int(11) NOT NULL auto_increment FIRST, ADD KEY id (`id`);
+
+#sylvieg 2007/05/09
+UPDATE users_permissions set permName='tiki_p_batch_upload_file_dir' where permName='tiki_p_batch_upload_files_dir';
