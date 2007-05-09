@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/searchlib.php,v 1.46 2007-04-30 16:28:38 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/searchlib.php,v 1.47 2007-05-09 14:15:20 sylvieg Exp $
 //test
 
 //this script may only be included - so its better to die if called directly.
@@ -246,7 +246,6 @@ class SearchLib extends TikiLib {
 		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
 			//if (($feature_search_show_forbidden_cat == 'y' || $feature_search_show_forbidden_obj == 'y') && !$this->user_has_perm_on_object($user,$res['id1'],$objType,$permName) continue;
 			$href = sprintf(urldecode($h['href']), urlencode($res['id1']), $res['id2']);
-echo "<pre>";print_r($res);echo $href;
 
 			// taking first 240 chars of text can bring broken html tags, better remove all tags.
 			$res['data'] = preg_replace("/<[^>]+>/","",$res['data']);
