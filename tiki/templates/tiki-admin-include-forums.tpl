@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-forums.tpl,v 1.19 2007-03-08 17:12:01 gillesm Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-forums.tpl,v 1.20 2007-05-09 14:08:12 sylvieg Exp $ *}
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
 <div class="rbox-data" name="tip">{tr}To add/remove forums, look for "Admin forums" under "Forums" on the application menu, or{/tr} <a class="rbox-link" href="tiki-admin_forums.php">{tr}click here{/tr}</a>.</div>
@@ -64,6 +64,14 @@
           <td><label>{tr}Non-Tiki search local to a forum{/tr}</td>
           <td><input type="checkbox" name="feature_forum_local_search"
               {if $feature_forum_local_search eq 'y'}checked="checked"{/if}/></td>			
+        </tr><tr class="form">
+          <td><label>{tr}Tiki search local to forums{/tr}</td>
+          <td><input type="checkbox" name="feature_forums_tiki_search"
+              {if $feature_forums_tiki_search eq 'y'}checked="checked"{/if}/></td>			
+        </tr><tr class="form">
+          <td><label>{tr}Non-Tiki search local to forums{/tr}</td>
+          <td><input type="checkbox" name="feature_forums_search"
+              {if $feature_forums_search eq 'y'}checked="checked"{/if}/></td>			
         </tr><tr>
           <td colspan="2" class="button"><input type="submit" name="forumprefs"
               value="{tr}Change preferences{/tr}" /></td>

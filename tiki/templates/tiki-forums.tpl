@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.24 2007-04-25 18:16:17 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.25 2007-05-09 14:08:12 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-forums.php">{tr}Forums{/tr}</a></h1>
 
@@ -20,6 +20,15 @@
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
+{if $feature_forums_search eq 'y' or $feature_forums_tiki_search eq 'y'}
+<td>
+<form  class="forms" method="get" action="{if $feature_forum_local_tiki_search eq 'y'}tiki-searchindex.php{else}tiki-searchresults.php{/if}">
+<input name="highlight" size="30" type="text" />
+<input type="hidden" name="where" value="forums" />
+<input type="submit" class="wikiaction" name="search" value="{tr}Forums search{/tr}"/>
+</form>
+</td>
+{/if}
 </tr>
 </table>
 <table class="normal">
