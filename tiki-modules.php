@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.62 2007-03-06 19:29:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.63 2007-05-09 15:38:07 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -47,6 +47,7 @@ foreach ( array('left_modules', 'right_modules') as $these_modules_name ) {
 // note indent missing to preserve CVS history
 $these_modules =& $$these_modules_name;
 $temp_max = count($these_modules);
+$show_columns[$these_modules_name] = 'n';
 for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
 
 	$mod_reference = &$these_modules[$mod_counter];
@@ -103,6 +104,7 @@ for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
 //		if ($tikidomain) { $cachefile.= "$tikidomain/"; }
 //		$cachefile.= 'mod-' . $mod_reference["name"] . '.tpl.'.$language.'.cache';
 //		$nocache = 'templates/modules/mod-' . $mod_reference["name"] . '.tpl.nocache';
+		$show_columns[$these_modules_name] = 'y';
 		$template = 'modules/mod-' . $mod_reference["name"] . '.tpl';
 		$phpfile = 'modules/mod-' . $mod_reference["name"] . '.php';
 
@@ -148,6 +150,7 @@ for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
 	}
 } // end for
 $smarty->assign_by_ref($these_modules_name, $these_modules);
+$smarty->assign_by_ref('show_columns', $show_columns);
 } // end foreach
 $module_nodecorations = array('decorations' => 'n');
 $module_isflippable = array('flip' => 'y');
