@@ -59,7 +59,7 @@
   {foreach item=itemField from=$userItem.field_values}
 	{if $itemField.value ne ''}
 		<tr><td class="form">{tr}{$itemField.name}{/tr}:</td>
-		<td>{include file="tracker_item_field_value.tpl" item=$itemField}</td></tr>
+		<td>{include file="tracker_item_field_value.tpl" field_value=$itemField item=$itemField}</td></tr>
 	{/if}
   {/foreach}
 {/if}
