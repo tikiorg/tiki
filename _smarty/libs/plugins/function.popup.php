@@ -54,7 +54,6 @@ function smarty_function_popup($params, &$smarty)
             case 'capicon':
             case 'background':
             case 'frame':
-            case 'function':
                 $append .= ',' . strtoupper($_key) . ",'$_value'";
                 break;
 
