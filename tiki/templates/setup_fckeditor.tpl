@@ -41,5 +41,6 @@ FCKConfig.tikilinkDlgSelection    = '{tr}Please make a selection of text in orde
 
 FCKConfig.LinkBrowser = false;
 FCKConfig.LinkUpload = false;
+FCKConfig.ProcessHTMLEntities = false;
 
 FCKConfig.Plugins.Add( 'tikiimage' ) ;
