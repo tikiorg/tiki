@@ -128,12 +128,12 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 			<tr><td>
 			{tr}Create database (clean install) with profile{/tr}:
 			</td><td>
-			<select name="profile">
+			<select name="profile" size="{$profiles|@count}">
 			{section name=ix loop=$profiles}
 			<option value="{$profiles[ix].name|escape}">{$profiles[ix].desc}</option>
 			{/section}
 			</select>
-			<button type="submit" name="scratch" value="create">{tr}create{/tr}</button>
+			<input type="submit" name="scratch" value="create" />
 		    </td></tr><tr>
 			<td height="100" valign="top">
 			</td><td height="100" valign="top">
@@ -151,12 +151,12 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 		    <tr><td>			
 			{tr}Update database using script{/tr}: 
 			</td><td>
-			<select name="file">
+			<select name="file" size="{$files|@count}">
 			{section name=ix loop=$files}
 			<option value="{$files[ix]|escape}">{$files[ix]}</option>
 			{/section}
 			</select>
-			<button type="submit" name="update" value="update">{tr}update{/tr}</button>
+			<input type="submit" name="update" value="update" />
 		    </td></tr>
 		    <tr><td colspan="2">
 			{tr}For database update from 1.8 or later{/tr}:
@@ -189,7 +189,8 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 			<b>{tr}This site has an admin account configured{/tr}</b><br />
 		    {tr}Please enter your admin password to continue{/tr}<br /><br />
 
-     <form name="loginbox" action="tiki-install.php" method="post"> 
+     <form name="loginbox" action="tiki-install.php" method="post">
+			<input type="hidden" name="login" value="admin" />
 			{if $multi}<input type="hidden" name="multi" value="{$multi}" />{/if}
 			{if $lang}<input type="hidden" name="lang" value="{$lang}" />{/if}
           <table>
