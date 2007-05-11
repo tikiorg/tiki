@@ -5,8 +5,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-global $notificationlib; include_once ('lib/notifications/notificationlib.php');
-
 class TrackerLib extends TikiLib {
 
 	var $trackerinfo_cache;
@@ -179,7 +177,7 @@ class TrackerLib extends TikiLib {
 
 	function replace_item_comment($commentId, $itemId, $title, $data, $user, $options) {
 		global $smarty;
-		global $notificationlib;
+		global $notificationlib; include_once ('lib/notifications/notificationlib.php');
 		global $sender_email;
 		$title = strip_tags($title);
 		$data = strip_tags($data, "<a>");
@@ -589,7 +587,7 @@ class TrackerLib extends TikiLib {
 				} elseif ($fopt["type"] == 'a') {
 					$fopt["pvalue"] = $this->parse_data(trim($fopt["value"]));
 				} elseif ($fopt["type"] == 'C') {
-					$calc = preg_replace('/#([0-9])/','$fil[\1]',$fopt['options']);
+					$calc = preg_replace('/#([0-9]+)/','$fil[\1]',$fopt['options']);
 					eval('$computed = '.$calc.';');
 					$fopt['value'] = $computed;
 				} elseif ($fopt["type"] == 's') {
@@ -724,7 +722,7 @@ class TrackerLib extends TikiLib {
 	function replace_item($trackerId, $itemId, $ins_fields, $status = '', $ins_categs = array(), $bulk_import = false) {
 		global $user;
 		global $smarty;
-		global $notificationlib;
+		global $notificationlib; include_once ('lib/notifications/notificationlib.php');
 		global $sender_email;
 		global $cachelib;
 		global $categlib;
@@ -908,6 +906,7 @@ class TrackerLib extends TikiLib {
 				else {
 
 					$is_date = (isset($ins_fields["data"][$i]["type"]) and ($ins_fields["data"][$i]["type"] == 'f' or $ins_fields["data"][$i]["type"] == 'j'));
+
 					$is_visible = !isset($ins_fields["data"][$i]["isHidden"]) || $ins_fields["data"][$i]["isHidden"] == 'n';
 
 					if ($itemId) {

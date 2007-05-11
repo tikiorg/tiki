@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.122 2007-04-20 18:49:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.123 2007-05-11 16:38:47 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -800,7 +800,7 @@ if ($_REQUEST["itemId"]) {
 					$smarty->assign("U_liste",$U_liste);
 
 				} elseif ($fields["data"][$i]["type"] == 'C') {
-					$calc = preg_replace('/#([0-9])/','$info[\1]',$fields["data"][$i]['options']);
+					$calc = preg_replace('/#([0-9]+)/','$info[\1]',$fields["data"][$i]['options']);
 					eval('$computed = '.$calc.';');
 					$ins_fields["data"][$i]["value"] = $computed;
 				} elseif ($fields["data"][$i]["type"] == 'g') {
