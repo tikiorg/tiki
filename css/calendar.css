@@ -235,12 +235,12 @@
 .calnavigation {
 	text-align : center;
 	border : 1px solid #ccc;
-	font-size : 11px;
+	font-size : 13px;
+	font-weight : bold;
 	clear: both;
+	vertical-align : middle;
 }
 .calnavigation a {
-	font-size : 160%;
-	font-weight : bold;
 	padding : 0 20px 4px 20px;
 	line-height : 11px;
 }
