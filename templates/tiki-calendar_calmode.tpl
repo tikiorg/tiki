@@ -1,4 +1,4 @@
-<table cellpadding="0" cellspacing="0" border="0" width="100%" id="caltable">
+<table cellpadding="0" cellspacing="0" border="0" id="caltable">
 <tr><td width="10px">&nbsp;</td>
 {section name=dn loop=$daysnames}
 <th class="days" width="14%">{$daysnames[dn]}</td>
@@ -35,7 +35,7 @@
 {/if}
 {if $calendar_sticky_popup eq "y" and $cell[w][d].items[items].calitemId}{popup sticky=true fullhtml="1" text=$over|escape:"javascript"|escape:"html"}{else}
 {popup fullhtml="1" text=$over|escape:"javascript"|escape:"html"}{/if}
-class="linkmenu">{$cell[w][d].items[items].name|truncate:$trunc:".."|default:"..."}</a>
+>{$cell[w][d].items[items].name|truncate:$trunc:".."|default:"..."}</a>
 {if $cell[w][d].items[items].web}
 <a href="{$cell[w][d].items[items].web}" target="_other" class="calweb" title="{$cell[w][d].items[items].web}"><img src="img/icons/external_link.gif" width="7" height="7" alt="&gt;" border="0"/></a>
 {/if}

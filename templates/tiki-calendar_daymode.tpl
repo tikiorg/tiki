@@ -1,5 +1,4 @@
-<div class="wikitext">
-<table cellpadding="0" cellspacing="0" border="0"  id="caltable" width="100%">
+<table cellpadding="0" cellspacing="0" border="0" id="caltable">
 <tr><td width="42" class="heading">{tr}Hours{/tr}</td><td class="heading">{tr}Events{/tr}</td></tr>
 {cycle values="odd,even" print=false}
 {foreach key=k item=h from=$hours}
@@ -28,4 +27,3 @@
 </td></tr>
 {/foreach}
 </table>
-</div>
