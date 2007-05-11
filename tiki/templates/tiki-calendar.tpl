@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.72 2007-04-07 10:48:26 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.73 2007-05-11 08:41:33 nyloth Exp $ *}
 {popup_init src="lib/overlib.js"}
 <div id="calscreen">
 
@@ -55,7 +55,6 @@ none
 </form>
 
 
-<div style="margin:5px;">
 {include file="tiki-calendar_nav.tpl"}
 
 {if $viewlist eq 'list'}
@@ -68,8 +67,5 @@ none
 {include file="tiki-calendar_calmode.tpl"}
 
 {/if}
-</div>
-
-</div>
 
 </div>

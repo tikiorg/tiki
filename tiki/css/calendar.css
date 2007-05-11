@@ -223,15 +223,20 @@
 .tabrow {
 	margin : 0;
 	font-size : 11px;
-	margin-left : 10px;
+	padding : 1px 10px 4px 10px;
+	clear: both;
 }
 .tabrow a {
 	text-decoration : none;
 }
+.tabrow .viewmode { float: left; }
+.tabrow .jscalrow { float: right; white-space: nowrap; cursor: pointer; }
+.tabrow .daterow { border : 1px #ddd; }
 .calnavigation {
 	text-align : center;
 	border : 1px solid #ccc;
 	font-size : 11px;
+	clear: both;
 }
 .calnavigation a {
 	font-size : 160%;
@@ -250,9 +255,6 @@
 }
 td.middle {
 	vertical-align : middle;
-}
-.daterow:active {
-	border : 1px inset #ddd;
 }
 .mininotes {
 	font-size : 9px;
@@ -295,9 +297,6 @@ a.viewmodeoff img {
 	padding-left : 3px;
 	_padding-left : 0;
 	border : 0;
-}
-#caltable {
-	_width : 95%;
 }
 #caltable .days {
 	border : 0;
@@ -359,7 +358,7 @@ a.viewmodeoff img {
 .status2     { background-color : #f66; border : 1px solid #000; color : #000; }
 
 select[name=start_Hour], select[name=start_Minute], select[name=end_Hour], select[name=end_Minute] { min-width: 40px; }
-#caltable { border-collapse: collapse; margin-top: 5px; }
+#caltable, #calscreen table.normal { clear: both; border-collapse: collapse; margin-top: 5px; width: 100%; font-size: 11px;}
 #caltable td { padding: 2px; }
 .days { font-size : 11px; font-weight: bold; color: #555555; }
 .calodd, .caleven { border: 1px solid #8CACBB; }

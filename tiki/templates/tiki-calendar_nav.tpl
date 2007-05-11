@@ -1,26 +1,24 @@
 {* calendar view to be included in tiki-calendar.tpl, tiki-action_calendar.tpl, and wikiplugin-calendar *}
 <div class="tabrow">
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
-<tr>
-<td align="left" nowrap="nowrap">
+
+<div class="viewmode">
 <a href="{$myurl}?viewmode=day" class="viewmode{if $viewmode eq 'day'}on{else}off{/if}" title="{tr}day{/tr}"><img src="img/icons/cal_day.gif" width="30" height="24" border="0" alt="{tr}day{/tr}" /></a>
 <a href="{$myurl}?viewmode=week" class="viewmode{if $viewmode eq 'week'}on{else}off{/if}" title="{tr}week{/tr}"><img src="img/icons/cal_week.gif" width="30" height="24" border="0" alt="{tr}week{/tr}" /></a>
 <a href="{$myurl}?viewmode=month" class="viewmode{if $viewmode eq 'month'}on{else}off{/if}" title="{tr}month{/tr}"><img src="img/icons/cal_month.gif" width="30" height="24" border="0" alt="{tr}month{/tr}" /></a>
 <a href="{$myurl}?viewmode=quarter" class="viewmode{if $viewmode eq 'quarter'}on{else}off{/if}" title="{tr}quater{/tr}"><img src="img/icons/cal_quarter.gif" width="30" height="24" border="0" alt="{tr}quarter{/tr}" /></a>
 <a href="{$myurl}?viewmode=semester" class="viewmode{if $viewmode eq 'semester'}on{else}off{/if}" title="{tr}semester{/tr}"><img src="img/icons/cal_semester.gif" width="30" height="24" border="0" alt="{tr}semester{/tr}" /></a>
 <a href="{$myurl}?viewmode=year" class="viewmode{if $viewmode eq 'year'}on{else}off{/if}" title="{tr}year{/tr}"><img src="img/icons/cal_year.gif" width="30" height="24" border="0" alt="{tr}year{/tr}" /></a>
-</td>
-<td align="right" nowrap="nowrap" style="text-align:right;">
+</div>
 
 {if $feature_jscalendar eq 'y'}
+<div class="jscalrow">
 <form action="{$myurl}" method="post" name="f">
 {jscalendar date="$focusdate" id="trig" goto="$jscal_url" align="Bc"}
 </form>
-
+</div>
 {else}
 <div class="daterow">
-
-<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<table cellspacing="0" cellpadding="0" border="0">
 <tr>
 <td><a href="{$myurl}?todate={$daybefore}" class="link" title="{$daybefore|tiki_long_date}">&laquo;&nbsp;{tr}day{/tr}</a></td>
 <td style="text-align:center; padding-right:5px; padding-left: 5px;" class="middle" rowspan="3" nowrap="nowrap"><b>{tr}Focus:{/tr}<br />{$focusdate|tiki_long_date}</b></td>
@@ -34,9 +32,6 @@
 </table>
 </div>
 {/if}
-
-</td>
-</tr></table>
 
 <div class="calnavigation">
 {if $viewmode eq "day"}
