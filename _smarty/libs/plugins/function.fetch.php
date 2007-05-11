@@ -48,7 +48,7 @@ function smarty_function_fetch($params, &$smarty)
         }
     } else {
         // not a local file
-        if(preg_match('!^http://!i',$params['file'])) {
+        if(preg_match('!^https?://!i',$params['file'])) {
             // http fetch
             if($uri_parts = parse_url($params['file'])) {
                 // set defaults
