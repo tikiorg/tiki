@@ -1208,6 +1208,7 @@ $lang=Array(
 "No image yet, sorry." => "Pas encore d'images, désolé.",
 "Removed" => "Supprimé",
 "Created" => "Créé",
+"Updated" => "Mis à jour",
 "__WARNING__: No such module \$plugin! " => "__ATTENTION__: Aucun module \$plugin! ",
 "new" => "créer",
 "show" => "montrer",
