@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_contacts_prefs.php,v 1.5 2007-02-13 03:13:20 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_contacts_prefs.php,v 1.6 2007-05-13 20:26:08 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -23,10 +23,18 @@ if ($feature_contacts != 'y') {
 	die;
 }
 
-if (isset($_REQUEST['ext_remove'])) $contactlib->remove_ext($user, $_REQUEST['ext_remove']);
-if (isset($_REQUEST['ext_add'])) $contactlib->add_ext($user, $_REQUEST['ext_add']);
-if (isset($_REQUEST['ext_show'])) $contactlib->modify_ext($user, $_REQUEST['ext_show'], array('show' => 'y'));
-if (isset($_REQUEST['ext_hide'])) $contactlib->modify_ext($user, $_REQUEST['ext_hide'], array('show' => 'n'));
+$cookietab = 1;
+
+if (isset($_REQUEST['prefs'])) {
+	$tikilib->set_user_preference($user, 'user_contacts_default_view', $_REQUEST['user_contacts_default_view']);
+	$cookietab = 1;
+}
+$smarty->assign('user_contacts_default_view', $tikilib->get_user_preference($user, 'user_contacts_default_view'), 'group');
+
+if (isset($_REQUEST['ext_remove'])) { $contactlib->remove_ext($user, $_REQUEST['ext_remove']); $cookietab = 2; }
+if (isset($_REQUEST['ext_add'])) { $contactlib->add_ext($user, $_REQUEST['ext_add']); $cookietab = 2; }
+if (isset($_REQUEST['ext_show'])) { $contactlib->modify_ext($user, $_REQUEST['ext_show'], array('show' => 'y')); $cookietab = 2; }
+if (isset($_REQUEST['ext_hide'])) { $contactlib->modify_ext($user, $_REQUEST['ext_hide'], array('show' => 'n')); $cookietab = 2; }
 
 $exts =& $contactlib->get_ext_list($user);
 $nb_exts = count($exts);
@@ -42,6 +50,7 @@ if (isset($_REQUEST['ext_up'])) {
 			break;
 		}
 	}
+	$cookietab = 2;
 }
 if (isset($_REQUEST['ext_down'])) {
 	if ( is_array($exts) ) foreach ( $exts as $k => $ext ) {
@@ -51,10 +60,14 @@ if (isset($_REQUEST['ext_down'])) {
 			break;
 		}
 	}
+	$cookietab = 2;
 }
 
 $exts = $contactlib->get_ext_list($user);
 $smarty->assign('exts', $exts);
+
+setcookie('tab',$cookietab);
+$smarty->assign_by_ref('cookietab',$cookietab);
 
 include_once ('tiki-mytiki_shared.php');
 

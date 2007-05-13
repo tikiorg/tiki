@@ -17,10 +17,45 @@
 	<span class="button2"><a href="tiki-contacts.php" class="linkbut" title="{tr}Contacts{/tr}">{tr}Contacts{/tr}</a></span>
 </div>
 
-<h2>{tr}User Contacts Preferences{/tr}</h2>
+<table class="admin" style="clear:both;"><tr><td>
 
-<h3>Contacts Possible Fields:</h3>
+{if $feature_tabs eq 'y'}
+{cycle values="1,2" name=tabs print=false advance=false}
+<div id="page-bar">
+	<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Options{/tr}</a></span>
+	<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Manage Fields{/tr}</a></span>
+</div>
+{/if}
+
+{cycle name=content values="1,2" print=false advance=false}
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+
+<div class="cbox">
+<div class="cbox-title">{tr}Options{/tr}</div>
+<div class="cbox-data">
 <form method='POST' action='tiki-user_contacts_prefs.php'>
+<table class="admin">
+	<tr><td class="form">{tr}Default view{/tr}:</td>
+	<td class="form">
+		<input type='radio' name='user_contacts_default_view' value='list' {if $user_contacts_default_view eq 'list'}checked="checked"{/if}/>{tr}list view{/tr}
+		<input type='radio' name='user_contacts_default_view' value='group' {if $user_contacts_default_view neq 'list'}checked="checked"{/if}/>{tr}group view{/tr}
+	</td></tr>
+	<tr><td colspan="2" class="button">
+		<input type='submit' name='prefs' value='{tr}Change preferences{/tr}' />
+	</td></tr>
+</table>
+</form>
+</div>
+</div>
+</div>
+
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+
+<div class="cbox">
+<div class="cbox-title">{tr}Manage Fields{/tr}</div>
+<div class="cbox-data">
+<form method='POST' action='tiki-user_contacts_prefs.php'>
+<table class="admin"><tr><td>
 <table class="normal">
   <tr>
 	<td class="heading" colspan=2>{tr}Order{/tr}</td>
@@ -53,5 +88,14 @@
   {/foreach}
 {/cycle}
 </table>
-add: <input type='text' name='ext_add' /> <input type='submit' value='Add' />
+</td></tr>
+<tr><td colspan="2" class="button">
+	add: <input type='text' name='ext_add' /> <input type='submit' name='add_fields' value='Add' />
+</td></tr>
+</table>
 </form>
+</div>
+</div>
+</div>
+
+</td></tr></table>
