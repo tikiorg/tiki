@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.60 2007-05-07 13:17:26 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.61 2007-05-13 16:34:43 nyloth Exp $ *}
 
 <script type="text/javascript">
 {literal}
@@ -391,6 +391,9 @@
 					<td class="heading" colspan="2" align="center">{tr}Other{/tr}</td>
 				</tr>
 				<tr>
+				<td class="form"><label for="user_show_realnames">{tr}When possible, show the real user name instead of login:{/tr}</label></td>
+				<td><input type="checkbox" name="user_show_realnames" id="user_show_realnames" {if $user_show_realnames eq 'y'}checked="checked"{/if}/></td>
+				</tr>
 				<tr>
 					<td class="form"><label for="site_favicon">{tr}Favicon icon file name:{/tr}</label></td>
 					<td><input type="text" name="site_favicon" id="site_favicon" value="{$site_favicon}" size="12" maxlength="32" /></td>
