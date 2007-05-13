@@ -6,7 +6,7 @@
 
 {if $show_calname eq 'y' and $cellcalname}<div class='box-title' style="background-color:#{$infocals.$cellcalendarId.custombgcolor};color:#{$infocals.$cellcalendarId.customfgcolor};"><b>{$cellcalname}</b></div>{/if}
 
-{if $cellid and ($tiki_p_view_events eq 'y' or $tiki_p_admin eq 'y')}
+{if $cellid and $tiki_p_view_events eq 'y'}
 <div style="text-align:right" class='box-title'>
 {if $calendar_sticky_popup eq "y"}
 <a href="tiki-calendar_edit_item.php?viewcalitemId={$cellid}" title="{tr}details{/tr}"><img src="pics/icons/magnifier.png" border="0" width="16" height="16"
