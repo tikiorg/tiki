@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.9 2007-03-19 17:53:55 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.10 2007-05-13 22:09:01 nyloth Exp $ *}
 {if !isset($show_find) or $show_find ne 'n'}
 <div align="center">
 <table class="findtable">
@@ -106,7 +106,7 @@
 	{/if}
 	
 	{if $fgal_list_user eq 'y'}
-		<td class="{cycle advance=false}">{$galleries[changes].user|escape}</td>
+		<td class="{cycle advance=false}">{$galleries[changes].user|userlink}</td>
 	{/if}
 	
 	{if $fgal_list_files eq 'y'}

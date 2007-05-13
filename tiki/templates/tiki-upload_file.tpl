@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_file.tpl,v 1.28 2007-04-07 00:16:51 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_file.tpl,v 1.29 2007-05-13 22:09:01 nyloth Exp $ *}
 
 <h1><a href="tiki-upload_file.php{if !empty($galleryId)}?galleryId={$galleryId}{if $editFileId}&amp;fileId={$editFileId}{/if}{/if}" class="pagetitle">{if $editFileId}{tr}Edit File:{/tr} {$fileInfo.filename}{else}{tr}Upload File{/tr}{/if}</a></h1>
 {if count($galleries) > 0}
@@ -54,7 +54,7 @@
 	{if $tiki_p_admin_file_galleries eq 'y'}
 	<tr><td class="formcolor">{tr}Creator{/tr}</td><td class="formcolor">
 	<select name="user">
-	{section name=ix loop=$users}<option value="{$users[ix].login|escape}"{if (isset($fileInfo) and $fileInfo.user eq $users[ix].login) or (!isset($fileInfo) and $user == $users[ix].login)}  selected="selected"{/if}>{$users[ix].login|escape}</option>{/section}
+	{section name=ix loop=$users}<option value="{$users[ix].login|escape}"{if (isset($fileInfo) and $fileInfo.user eq $users[ix].login) or (!isset($fileInfo) and $user == $users[ix].login)}  selected="selected"{/if}>{$users[ix].login|userlink|strip_tags|trim}</option>{/section}
 	</select>
 	</td></tr>
 	{/if}
