@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.741 2007-05-07 16:47:39 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.742 2007-05-13 17:32:02 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1328,34 +1328,28 @@ function add_pageview() {
     /*shared*/
     function list_faqs($offset, $maxRecords, $sort_mode, $find) {
 
-	if ($find) {
+	if ( $find ) {
 	    $findesc = '%' . $find . '%';
-	    $mid = " where (`title` like ? or `description` like ?)";
-	    $bindvars=array($findesc,$findesc);
-	} else {
-	    $mid = "";
-	    $bindvars=array();
-	}
+	    $mid = ' where (`title` like ? or `description` like ?)';
+	    $bindvars = array($findesc, $findesc);
+	} else $bindvars = array();
+	
 	$query = "select * from `tiki_faqs` $mid order by ".$this->convert_sortmode($sort_mode);
-	$query_cant = "select count(*) from `tiki_faqs` $mid";
-	$result = $this->query($query,$bindvars,$maxRecords,$offset);
-	$cant = $this->getOne($query_cant,$bindvars);
+	$result = $this->query($query, $bindvars, $maxRecords, $offset);
 	$ret = array();
 
-	while ($res = $result->fetchRow()) {
-
+	while ( $res = $result->fetchRow() ) {
 	    global $user;
-	    $add=$this->user_has_perm_on_object($user,$res['faqId'],'faq','tiki_p_view_faqs');
-		if ($add) {
-		    $res["suggested"] = $this->getOne("select count(*) from `tiki_suggested_faq_questions` where `faqId`=?",array((int) $res["faqId"]));
+	    $add = $this->user_has_perm_on_object($user, $res['faqId'], 'faq', 'tiki_p_view_faqs');
+		if ( $add ) {
+			$res['suggested'] = $this->getOne('select count(*) from `tiki_suggested_faq_questions` where `faqId`=?', array((int) $res['faqId']));
+			$res['questions'] = $this->getOne('select count(*) from `tiki_faq_questions` where `faqId`=?', array((int) $res['faqId']));
 		}
-		    $ret[] = $res;
-
+		$ret[] = $res;
 	}
 
-	$retval = array();
-	$retval["data"] = $ret;
-	$retval["cant"] = $cant;
+	$retval['data'] = $ret;
+	$retval['cant'] = count($ret);
 	return $retval;
     }
 

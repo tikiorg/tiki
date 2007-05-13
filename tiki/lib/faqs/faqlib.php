@@ -101,12 +101,8 @@ class FaqLib extends TikiLib {
 	}
 
 	function remove_faq_question($questionId) {
-		$faqId = $this->getOne("select `faqId` from `tiki_faq_questions` where `questionId`=?",array($questionId));
-
-		$query = "delete from `tiki_faq_questions` where `questionId`=?";
-		$result = $this->query($query,array($questionId));
-		$query = "update `tiki_faqs` set `questions`=`questions`-1 where `faqId`=?";
-		$result = $this->query($query,array($faqId));
+		$faqId = $this->getOne('select `faqId` from `tiki_faq_questions` where `questionId`=?', array($questionId));
+		$result = $this->query('delete from `tiki_faq_questions` where `questionId`=?', array($questionId));
 		return true;
 	}
 
@@ -137,21 +133,16 @@ class FaqLib extends TikiLib {
 	function replace_faq_question($faqId, $questionId, $question, $answer) {
 
 		// Check the name
-		if ($questionId) {
-			$query = "update `tiki_faq_questions` set `question`=?,`answer`=? where `questionId`=?";
-			$bindvars=array($question,$answer,(int) $questionId);
-			$result = $this->query($query,$bindvars);
+		if ( $questionId ) {
+			$query = 'update `tiki_faq_questions` set `question`=?,`answer`=? where `questionId`=?';
+			$bindvars = array($question, $answer, (int) $questionId);
+			$result = $this->query($query, $bindvars);
 		} else {
-			$query = "update `tiki_faqs` set `questions`=`questions`+1 where `faqId`=?";
-
-			$result = $this->query($query,array((int) $faqId));
-			$query = "delete from `tiki_faq_questions` where `faqId`=? and question=?";
-			$result = $this->query($query,array((int) $faqId,$question),-1,-1,false);
-			$query = "insert into `tiki_faq_questions`(`faqId`,`question`,`answer`)
-                		values(?,?,?)";
-			$result = $this->query($query,array((int) $faqId,$question,$answer));
-			$questionId = $this->getOne("select max(questionId) from `tiki_faq_questions` where `faqId`=?", $faqId);
-
+			$query = 'delete from `tiki_faq_questions` where `faqId`=? and question=?';
+			$result = $this->query($query, array((int) $faqId, $question), -1, -1, false);
+			$query = 'insert into `tiki_faq_questions`(`faqId`,`question`,`answer`) values(?,?,?)';
+			$result = $this->query($query, array((int) $faqId, $question, $answer));
+			$questionId = $this->getOne('select max(questionId) from `tiki_faq_questions` where `faqId`=?', $faqId);
 		}
 
 		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
@@ -166,17 +157,15 @@ class FaqLib extends TikiLib {
 	function replace_faq($faqId, $title, $description, $canSuggest) {
 
 		// Check the name
-		if ($faqId) {
-			$query = "update `tiki_faqs` set `title`=?,`description`=? ,`canSuggest`=? where `faqId`=?";
-
-			$result = $this->query($query,array($title,$description,$canSuggest,(int) $faqId));
+		if ( $faqId ) {
+			$query = 'update `tiki_faqs` set `title`=?,`description`=? ,`canSuggest`=? where `faqId`=?';
+			$result = $this->query($query, array($title, $description, $canSuggest, (int) $faqId));
 		} else {
-			$query = "delete from `tiki_faqs`where `title`=?";
-			$result = $this->query($query,array($title),-1,-1,false);
-			$query = "insert into `tiki_faqs`(`title`,`description`,`created`,`hits`,`questions`,`canSuggest`)
-                		values(?,?,?,?,?,?)";
-			$result = $this->query($query,array($title,$description,(int) $this->now,0,0,$canSuggest));
-			$faqId = $this->getOne("select max(`faqId`) from `tiki_faqs` where `title`=? and `created`=?",array($title,(int) $this->now));
+			$query = 'delete from `tiki_faqs` where `title`=?';
+			$result = $this->query($query, array($title), -1, -1, false);
+			$query = 'insert into `tiki_faqs`(`title`,`description`,`created`,`hits`,`canSuggest`) values(?,?,?,?,?)';
+			$result = $this->query($query, array($title, $description, (int) $this->now, 0, $canSuggest));
+			$faqId = $this->getOne('select max(`faqId`) from `tiki_faqs` where `title`=? and `created`=?', array($title, (int) $this->now));
 		}
 
 		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
