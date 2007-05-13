@@ -68,7 +68,7 @@
 {foreach from=$exts item=ext key=k}{if $ext.show eq 'y'}
 <td class="heading"><a class="tableheading">{$ext.tra}</a></td>
 {/if}{/foreach}
-<td class="heading">{tr}Groups{/tr}</td>
+{if $view eq 'list'}<td class="heading">{tr}Groups{/tr}</td>{/if}
 <td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
@@ -86,7 +86,7 @@
 {foreach from=$exts item=ext key=e}{if $ext.show eq 'y'}
 	<td class="{cycle advance=false}">{$channels[user].ext[$e]}</td>
 {/if}{/foreach}
-<td class="{cycle advance=false}">{if isset($channels[user].groups)}{foreach item=it name=gr from=$channels[user].groups}{$it}{if $smarty.foreach.gr.index+1 ne $smarty.foreach.gr.last}, {/if}{/foreach}{else}&nbsp;{/if}</td>
+{if $view eq 'list'}<td class="{cycle advance=false}">{if isset($channels[user].groups)}{foreach item=it name=gr from=$channels[user].groups}{$it}{if $smarty.foreach.gr.index+1 ne $smarty.foreach.gr.last}, {/if}{/foreach}{else}&nbsp;{/if}</td>{/if}
 <td class="{cycle advance=false}">&nbsp;
 {if $channels[user].user eq $user}
 <a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}" 
