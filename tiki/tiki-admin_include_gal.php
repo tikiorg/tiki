@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.22 2007-04-06 17:40:05 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.23 2007-05-13 12:52:34 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -26,15 +26,11 @@ if (isset($_REQUEST["galfeatures"])) {
 	simple_set_toggle ("feature_image_galleries_comments");
 	simple_set_toggle ("feature_gal_slideshow");
 	simple_set_toggle ("feature_gal_batch");
-	simple_set_toggle ("feature_gal_imgcache");
 
 	// Check for last character being a / or a \
 	// My next commit is to create a clas to put this code into
 	if (substr($_REQUEST["gal_use_dir"], -1) != "\\" && substr($_REQUEST["gal_use_dir"], -1) != "/" && $_REQUEST["gal_use_dir"] != "") {
 		$_REQUEST["gal_use_dir"] .= "/";
-	}
-	if (substr($_REQUEST["gal_imgcache_dir"], -1) != "\\" && substr($_REQUEST["gal_imgcache_dir"], -1) != "/" && $_REQUEST["gal_imgcache_dir"] != "") {
-		$_REQUEST["gal_imgcache_dir"] .= "/";
 	}
 	if (substr($_REQUEST["gal_batch_dir"], -1) != "\\" && substr($_REQUEST["gal_batch_dir"], -1) != "/" && $_REQUEST["gal_batch_dir"] != "") {
 		$_REQUEST["gal_batch_dir"] .= "/";
@@ -47,7 +43,6 @@ if (isset($_REQUEST["galfeatures"])) {
 	"gal_match_regex",
 	"gal_nmatch_regex",
 	"gal_batch_dir",
-	"gal_imgcache_dir",
 	'feature_image_gallery_mandatory_category',
 	'gal_image_mouseover',
 	);

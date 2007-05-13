@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.427 2007-05-04 09:25:46 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.428 2007-05-13 12:52:34 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -522,7 +522,6 @@ $sections['galleries']['itemkey'] = 'imageId';
 $pref['feature_galleries'] = 'n';
 $pref['feature_gal_batch'] = 'n';
 $pref['feature_gal_slideshow'] = 'n';
-$pref['feature_gal_imgcache'] = 'n';
 $pref['home_gallery'] = 0;
 $pref['gal_use_db'] = 'y';
 $pref['gal_use_lib'] = 'gd';
@@ -542,7 +541,6 @@ $pref['gal_list_user'] = 'y';
 $pref['gal_list_imgs'] = 'y';
 $pref['gal_list_visits'] = 'y';
 $pref['feature_image_gallery_mandatory_category'] = '-1';
-$pref['gal_imgcache_dir'] = 'temp/cache';
 $pref['preset_galleries_scale'] ='n';
 $pref['gal_image_mouseover'] = 'n';
 
