@@ -44,3 +44,5 @@ FCKConfig.LinkUpload = false;
 FCKConfig.ProcessHTMLEntities = false;
 
 FCKConfig.Plugins.Add( 'tikiimage' ) ;
+FCKConfig.tikiimageBtn = '{tr}Insert an image{/tr}' ;
+FCKConfig.tikiimageDlgTitle = '{tr}Tiki Image - Insert an image{/tr}' ;
