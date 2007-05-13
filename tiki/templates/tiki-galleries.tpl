@@ -200,7 +200,7 @@
   <td class="{cycle advance=false}">{$galleries[changes].lastModif|tiki_short_datetime}</td>
 {/if}
 {if $gal_list_user eq 'y'}
-  <td class="{cycle advance=false}">{$galleries[changes].user}</td>
+  <td class="{cycle advance=false}">{$galleries[changes].user|userlink}</td>
 {/if}
 {if $gal_list_imgs eq 'y'}
   <td style="text-align:right;" class="{cycle advance=false}">{$galleries[changes].images}</td>

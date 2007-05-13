@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_image.tpl,v 1.46 2007-01-02 16:18:00 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_image.tpl,v 1.47 2007-05-13 22:31:40 nyloth Exp $ *}
 
 {if $popup}
 <?xml version="1.0" encoding="UTF-8"?>
@@ -112,7 +112,7 @@
   		<tr><td class="odd">{tr}Latitude (WGS84/decimal degrees){/tr}:</td><td class="odd">{$lat|escape}</td></tr>
   		<tr><td class="even">{tr}Longitude (WGS84/decimal degrees){/tr}:</td><td class="even">{$lon|escape}</td></tr>
   	{/if}
-	<tr><td class="odd">{tr}Author{/tr}:</td><td class="odd">{$image_user}</td></tr>
+	<tr><td class="odd">{tr}Author{/tr}:</td><td class="odd">{$image_user|userlink}</td></tr>
 	{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
 	  <tr><td class="even">{tr}Move image{/tr}:</td><td class="odd">
 	  <form action="tiki-browse_image.php" method="post">

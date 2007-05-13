@@ -39,7 +39,7 @@
 </td>
 <td class="{cycle advance=false}">{$images[changes].created|tiki_short_datetime}&nbsp;</td>
 <td class="{cycle advance=false}">{$images[changes].hits}&nbsp;</td>
-<td class="{cycle advance=false}">{$images[changes].user}&nbsp;</td>
+<td class="{cycle advance=false}">{$images[changes].user|userlink}&nbsp;</td>
 <td class="{cycle}">{$images[changes].filesize|kbsize}&nbsp;</td>
 </tr>
 {sectionelse}
