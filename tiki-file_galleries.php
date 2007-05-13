@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.44 2007-04-07 10:48:25 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.45 2007-05-13 22:09:01 nyloth Exp $
 
 	require_once('tiki-setup.php');
 	include_once('lib/filegals/filegallib.php');
@@ -366,7 +366,7 @@
 	} else {
 	  $smarty->assign('prev_offset',-1); 
 	}
-	
+
 	if ($offset == 0 && ($maxRecords == -1 || $galleries['cant'] <= $maxRecords)) {
 		$smarty->assign_by_ref('allGalleries', $galleries['data']);
 	} else {
@@ -375,7 +375,6 @@
 	}
 
 	$smarty->assign_by_ref('galleries',$galleries["data"]);
-	//print_r($galleries["data"]);
 
 	if ($tiki_p_admin_file_galleries == 'y' || $tiki_p_admin == 'y') {
 		$users = $tikilib->list_users(0, -1, 'login_asc');

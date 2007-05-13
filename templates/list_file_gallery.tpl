@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.17 2007-04-05 18:56:38 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.18 2007-05-13 22:09:01 nyloth Exp $ *}
 {* param:$gal_info, $files *}
 {strip}
 
@@ -160,15 +160,15 @@
 	<td class="{cycle advance=false}">{$files[changes].created|tiki_short_date}</td>
 {/if}
 {if $gal_info.show_creator eq 'y'}
-	<td class="{cycle advance=false}">{$files[changes].user|escape}</td>
+	<td class="{cycle advance=false}">{$files[changes].user|userlink}</td>
 {/if}
 {if $gal_info.show_author eq 'y'}
-	<td class="{cycle advance=false}">{if $files[changes].author}{$files[changes].author|escape}{elseif $gal_info.show_creator ne 'y'}{$files[changes].user|escape}{/if}</td>
+	<td class="{cycle advance=false}">{if $files[changes].author}{$files[changes].author|escape}{elseif $gal_info.show_creator ne 'y'}{$files[changes].user|userlink}{/if}</td>
 {/if}
 
 {if isset($gal_info.show_modified) and $gal_info.show_modified eq 'y'}
 	<td class="{cycle advance=false}">{if $gal_info.show_created ne 'y' or $files[changes].created ne $files[changes].lastModif}{$files[changes].lastModif|tiki_short_date}{/if}</td>
-	<td class="{cycle advance=false}">{if $gal_info.show_created ne 'y' or $files[changes].created ne $files[changes].lastModif}{$files[changes].lastModifUser|escape}{/if}</td>
+	<td class="{cycle advance=false}">{if $gal_info.show_created ne 'y' or $files[changes].created ne $files[changes].lastModif}{$files[changes].lastModifUser|userlink}{/if}</td>
 {/if}
 
 {if isset($gal_info.show_comment) and $gal_info.show_comment eq 'y'}
