@@ -16,7 +16,7 @@
 </div>
 </div>
 
-<form action="tiki-contacts.php" method="post" id="editform" name='editform_contact' style="float:right;margin:5px;display:{ if $contactId}block{else}none{/if};">
+<form action="tiki-contacts.php" method="post" id="editform" name='editform_contact' style="clear:both;margin:5px;display:{ if $contactId}block{else}none{/if};">
 <input type="hidden" name="locSection" value="contacts" />
 <input type="hidden" name="contactId" value="{$contactId|escape}" />
 <table class="normal"><tbody id='tbody_editcontact'>
@@ -43,7 +43,7 @@
 </tbody></table>
 </form>
 
-<div align="center" style="float:right;margin:5px;">
+<div align="center" style="clear:both;margin:5px;">
 <table class="findtable">
 <tr><td>{tr}Find{/tr}</td>
    <td>
