@@ -5381,6 +5381,7 @@ $lang=Array(
 "Long time format" => "Format long pour le temps",
 "Short time format" => "Format court pour le temps",
 "Date and Time Format Help" => "Aide sur le format des dates et temps",
+"When possible, show the real user name instead of login:" => "Lorsque possible, afficher le nom réel de l'utilisateur au lieu du login :",
 "Favicon icon file name:" => "Nom du fichier de l'icône Favicon :",
 "Favicon icon MIME type:" => "Type MIME de l'icône :",
 "Locations separator" => "Séparateur des fils d'Ariane",
