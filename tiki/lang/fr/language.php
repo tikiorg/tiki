@@ -3305,6 +3305,7 @@ $lang=Array(
 "semester" => "semestre",
 "calendar view" => "vue calendrier",
 "list view" => "vue en liste",
+"group view" => "vue par groupe",
 "Look under \"Articles\" on the application menu for links to" => "Regardez sous \"Articles\" dans le menu application pour les liens vers",
 "CMS features" => "Fonctionnalités du CMS",
 "Submissions" => "Soumissions",
