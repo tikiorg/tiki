@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_gallery.tpl,v 1.39 2007-05-02 13:49:12 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_gallery.tpl,v 1.40 2007-05-13 22:31:40 nyloth Exp $ *}
 {if $gal_image_mouseover neq 'n'}{popup_init src="lib/overlib.js"}{/if}
 <h1><a class="pagetitle" href="tiki-browse_gallery.php?galleryId={$galleryId}">
 {tr}Browsing Gallery{/tr}: {$name}
@@ -80,7 +80,7 @@
 			{if $showimageid=='y'}{tr}ID{/tr}: {$item.galleryId}<br />{/if}
 			{if $showdescription=='y'}{$item.description}<br />{/if}
 			{if $showcreated=='y'}{tr}Created{/tr}: {$item.created|tiki_short_date}<br />{/if}
-			{if $showuser=='y'}{tr}User{/tr}: <a href="tiki-user_information.php?user={$item.user|escape}">{$item.user}</a><br />{/if}
+			{if $showuser=='y'}{tr}User{/tr}: {$item.user|userlink}<br />{/if}
 			{if $showxysize=='y' || $showfilesize=='y'}({$item.numimages} Images){/if}
 			{if $showhits=='y'}[{$item.hits} {if $item.hits == 1}{tr}hit{/tr}{else}{tr}hits{/tr}{/if}]<br />{/if}
                         </small>
@@ -103,7 +103,7 @@
 		{if $showimageid=='y'}{tr}ID{/tr}: {$item.imageId}<br />{/if}
 		{if $showdescription=='y'}{$item.description}<br />{/if}
 		{if $showcreated=='y'}{tr}Created{/tr}: {$item.created|tiki_short_date}<br />{/if}
-		{if $showuser=='y'}{tr}User{/tr}: <a href="tiki-user_information.php?view_user={$item.user|escape}">{$item.user}</a><br />{/if}
+		{if $showuser=='y'}{tr}User{/tr}: {$item.user|userlink}<br />{/if}
 		{if $showxysize=='y'}({$item.xsize}x{$item.ysize}){/if}
 		{if $showfilesize=='y'}({$item.filesize} Bytes){/if}
 		{if $showhits=='y'}[{$item.hits} {if $item.hits == 1}{tr}hit{/tr}{else}{tr}hits{/tr}{/if}]{/if}
