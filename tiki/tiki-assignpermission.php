@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-assignpermission.php,v 1.32 2007-03-30 16:39:59 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-assignpermission.php,v 1.33 2007-05-13 12:52:46 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -129,9 +129,10 @@ $perms = $userlib->get_permissions(0, -1, $sort_mode, $find, $_REQUEST["type"], 
 foreach ($perms['data'] as $perm) {
  	if ($perm['admin'] == 'y' && $perm['hasPerm'] == 'y') {
 		foreach ($perms['data'] as $key=>$p) {
-			if ($p['type'] == $perm['type'] && $perm['permName'] != $p['permName'])
+			if ($p['type'] == $perm['type'] && $perm['permName'] != $p['permName']) {
 				$perms['data'][$key]['from_admin'] = 'y';
 				$perms['data'][$key]['hasPerm'] = 'y';
+			}
 		}
 	}
 }
