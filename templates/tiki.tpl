@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki.tpl,v 1.35 2007-05-09 15:38:07 nyloth Exp $ *}{include file="header.tpl"}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki.tpl,v 1.36 2007-05-13 12:50:29 nyloth Exp $ *}{include file="header.tpl"}
 {* Index we display a wiki page here *}
 {if $feature_bidi eq 'y'}
 <div dir="rtl">
@@ -29,14 +29,14 @@
       <td id="centercolumn" valign="top">
  		{/if}
       {if $feature_left_column eq 'user' or $feature_right_column eq 'user'}
-        <div>
+        <div id="showhide_columns">
       {if $feature_left_column eq 'user' && $left_modules|@count > 0 && $show_columns.left_modules ne 'n'}
-	<div style="text-align:left;float:left;position:absolute;"><a class="flip" href="javascript:flip('leftcolumn','table-cell');">
-        <img  align="left" name="leftcolumnicn" class="colflip" src="img/icons/ofo.gif" border="0" alt="+/-" />&nbsp;{tr}Show/Hide Left Menus{/tr}&nbsp;</a></div>
+	<div style="text-align:left;float:left;"><a class="flip" href="javascript:flip('leftcolumn','table-cell');">
+        <img name="leftcolumnicn" class="colflip" src="img/icons/ofo.gif" border="0" alt="+/-" />&nbsp;{tr}Show/Hide Left Menus{/tr}&nbsp;</a></div>
       {/if}
       {if $feature_right_column eq 'user'&& $right_modules|@count > 0 && $show_columns.right_modules ne 'n'}
-        <div style="text-align:right;float:right;"><a class="flip" href="javascript:flip('rightcolumn','table-cell');" align="right">
-        <img align="right" name="rightcolumnicn" class="colflip" src="img/icons/ofo.gif" border="0" alt="+/-" />&nbsp;{tr}Show/Hide Right Menus{/tr}&nbsp;</a></div>
+        <div style="text-align:right;float:right;"><a class="flip" href="javascript:flip('rightcolumn','table-cell');">
+        &nbsp;{tr}Show/Hide Right Menus{/tr}&nbsp;<img name="rightcolumnicn" class="colflip" src="img/icons/ofo.gif" border="0" alt="+/-" /></a></div>
       {/if}
         <br clear="both">
         </div>
