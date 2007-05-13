@@ -1,5 +1,5 @@
 <?php
-// $Id: searchlib.php,v 1.34 2007-03-08 16:24:18 sylvieg Exp $
+// $Id: searchlib.php,v 1.35 2007-05-13 18:31:03 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -745,14 +745,13 @@ class SearchLib extends TikiLib {
 	  global $feature_wiki;
 	  global $user;
 	  if ($feature_wiki == 'y'  && count($words) >0) {
-	  $query="select distinct s.`page`, s.`location`, s.`last_update`, s.`count`,
-	  	p.`data`, p.`hits`, p.`lastModif` from
-	        `tiki_searchindex` s, `tiki_pages` p  where `searchword` in
-		(".implode(',',array_fill(0,count($words),'?')).") and
-		s.`location`='wiki' and
-		s.`page`=p.`pageName` order by `count` desc";
+	  $query = "select distinct s.`page`, s.`location`, s.`last_update`, sum(s.`count`) as `count`, p.`data`, p.`hits`, p.`lastModif` 
+		from `tiki_searchindex` s, `tiki_pages` p  
+		where `searchword` in (".implode(',',array_fill(0,count($words),'?')).") 
+			and s.`location`='wiki' and s.`page`=p.`pageName`
+		group by s.`page`, s.`location`, s.`last_update`, p.`data`, p.`hits`, p.`lastModif`
+		order by `count` desc";
 	  $result=$this->query($query,$words,$maxRecords,$offset);
-
 	  $cant=0;
 	  $ret=array();
           while ($res = $result->fetchRow()) {
