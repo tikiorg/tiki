@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-siteid.tpl,v 1.9 2007-03-14 13:57:29 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-siteid.tpl,v 1.10 2007-05-14 11:32:08 pkdille Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -120,7 +120,7 @@
 				</tr>
 				<tr>
 					<td class="form"><label for="sitead">&nbsp;&nbsp;{tr}Content{/tr}:</label></td>
-					<td><textarea name="sitead" rows="6" style="width: 40%" id="sitead">{$sitead}</textarea>
+					<td><textarea name="sitead" rows="6" style="width: 90%" id="sitead">{$sitead}</textarea>
 					<br />
 					<small><em>{tr}Example{/tr}</em>: {literal}{banner zone='Test'}{/literal}</small></td>
 				</tr>
@@ -147,7 +147,7 @@
 
 				<tr>
 					<td class="form"><label for="bot_logo_code">&nbsp;&nbsp;{tr}Content{/tr}:</label></td>
-					<td><textarea name="bot_logo_code" rows="6" style="width: 40%">{$bot_logo_code}</textarea>
+					<td><textarea name="bot_logo_code" rows="6" style="width: 90%">{$bot_logo_code}</textarea>
 					<br />
 					<small><em>{tr}Example{/tr}</em>:{literal}&lt;a href="http://tikiwiki.org/"&gt;&lt;img src="http://tikiwiki.org/favicon.png"&gt;&lt;/a&gt; {/literal}</small></td>
 				</tr>
