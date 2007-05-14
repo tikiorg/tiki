@@ -1938,13 +1938,19 @@ class TrackerLib extends TikiLib {
 		$newTrackerId = $this->replace_tracker(0, $name, $description, array());
 		$query = "select * from `tiki_tracker_options` where `trackerId`=?";
 		$result = $this->query($query, array($trackerId));
-		$query = "insert into `tiki_tracker_options`(`trackerId`,`name`,`value`) values(?,?,?)";
 		while ($res = $result->fetchRow()) {
-			$this->query($query, array($newTrackerId, $res['name'],$res['value']));
+			$options[$res['name']] = $res['value'];
 		}
 		$fields = $this->list_tracker_fields($trackerId, 0, -1, 'position_asc', '');
 		foreach($fields['data'] as $field) {
-			$this->replace_tracker_field($newTrackerId, 0, $field['name'], $field['type'], $field['isMain'], $field['isSearchable'], $field['isTblVisible'], $field['isPublic'], $field['isHidden'], $field['isMandatory'], $field['position'], $field['options'], $field['description']);
+			$newFieldId = $this->replace_tracker_field($newTrackerId, 0, $field['name'], $field['type'], $field['isMain'], $field['isSearchable'], $field['isTblVisible'], $field['isPublic'], $field['isHidden'], $field['isMandatory'], $field['position'], $field['options'], $field['description']);
+			if ($options['defaultOrderKey'] == $field['fieldId']) {
+				$options['defaultOrderKey'] = $newFieldId;
+			}
+		}
+		$query = "insert into `tiki_tracker_options`(`trackerId`,`name`,`value`) values(?,?,?)";
+		foreach ($options as $name=>$val) {
+			$this->query($query, array($newTrackerId, $name, $val));
 		}
 		return $newTrackerId;
 	}
