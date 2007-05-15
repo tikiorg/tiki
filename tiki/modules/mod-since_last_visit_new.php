@@ -176,7 +176,7 @@ function since_last_visit_new($user, $params = null) {
     $count = 0;
     while ($res = $result->fetchRow())
     {
-        if ($userlib->user_has_perm_on_object($user,$res['faqId'], 'faq', 'tiki_p_view_faq')) {
+        if ($userlib->user_has_perm_on_object($user,$res['faqId'], 'faq', 'tiki_p_view_faqs')) {
            $ret["items"]["faqs"]["list"][$count]["href"]  = "tiki-view_faq.php?faqId=" . $res["faqId"];
            $ret["items"]["faqs"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["created"]);
            $ret["items"]["faqs"]["list"][$count]["label"] = $res["title"]; 
