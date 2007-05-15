@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.11 2006-02-11 15:00:24 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.12 2007-05-15 07:06:10 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.11 2006-02-11 15:00:24 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.12 2007-05-15 07:06:10 mose Exp $
 //
 
 // Initialization
@@ -26,6 +26,12 @@ if ($tiki_p_view_freetags != 'y') {
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;
+}
+
+if ($tiki_p_admin == 'y') {
+	if (isset($_REQUEST['del'])) {
+		$freetaglib->delete_object_tag($_REQUEST['itemit'],$_REQUEST['typeit'],$_REQUEST['tag']);
+	}
 }
 
 if (!isset($_REQUEST['tag'])) {
