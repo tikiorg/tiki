@@ -1,4 +1,4 @@
-{* $Id: tiki-plugin_trackerlist.tpl,v 1.23 2007-05-07 20:52:32 sylvieg Exp $ *}
+{* $Id: tiki-plugin_trackerlist.tpl,v 1.24 2007-05-15 16:11:52 sylvieg Exp $ *}
 {if $showtitle eq 'y'}<div class="pagetitle">{$tracker_info.name}</div>{/if}
 {if $showdesc eq 'y'}<div class="wikitext">{$tracker_info.description}</div>{/if}
 
@@ -41,7 +41,7 @@
 {/if}
 {/if}
 {/foreach}
-{if $tracker_info.showCreated eq 'y'}
+{if (empty($showcreated) && $tracker_info.showCreated eq 'y') || (!empty($showcreated) && $showcreated eq 'y')}
 <td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?{if $page}page={$page|escape:url}&amp;{/if}tr_sort_mode={if 
 	$tr_sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}{if $tr_offset}&amp;tr_offset={$tr_offset}{/if}{if $tr_initial}&amp;tr_initial={$tr_initial}{/if}">{tr}created{/tr}</a></td>
 {/if}
@@ -78,7 +78,7 @@
 {/section}
 {* ------------------------------------ *}
 
-{if $tracker_info.showCreated eq 'y'}
+{if (empty($showcreated) && $tracker_info.showCreated eq 'y') || (!empty($showcreated) && $showcreated eq 'y')}
 <td>{$items[user].created|tiki_short_datetime}</td>
 {/if}
 {if $tracker_info.showLastModif eq 'y'}
