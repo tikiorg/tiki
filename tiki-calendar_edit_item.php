@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_edit_item.php,v 1.17 2007-04-08 22:48:35 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_edit_item.php,v 1.18 2007-05-15 11:32:49 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -134,7 +134,17 @@ if (isset($_POST['act'])) {
 	$save = $_POST['save'];
 	if (empty($save['user'])) $save['user'] = $user;
 	$newcalid = $save['calendarId'];
-	//	header('Content-type: text/plain');var_dump($caladd);die;
+
+	// Take care of timestamps dates coming from jscalendar
+	if ( isset($save['date_start']) || isset($save['date_end']) ) {
+		$_REQUEST['start_date_Month'] = TikiLib::date_format("%m", $save['date_start']);
+		$_REQUEST['start_date_Day'] = TikiLib::date_format("%d", $save['date_start']);
+		$_REQUEST['start_date_Year'] = TikiLib::date_format("%Y", $save['date_start']);
+		$_REQUEST['end_date_Month'] = TikiLib::date_format("%m", $save['date_end']);
+		$_REQUEST['end_date_Day'] = TikiLib::date_format("%d", $save['date_end']);
+		$_REQUEST['end_date_Year'] = TikiLib::date_format("%Y", $save['date_end']);
+	}
+
 	if ((empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_add_events']) 
 	or (!empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_change_events'])) {
 		if (empty($save['name'])) $save['name'] = tra("event without name");
@@ -143,9 +153,9 @@ if (isset($_POST['act'])) {
 			$_REQUEST['start_Hour'],
 			$_REQUEST['start_Minute'],
 			0,
-			TikiLib::date_format("%m", $save['date_start']),
-			TikiLib::date_format("%d", $save['date_start']),
-			TikiLib::date_format("%Y", $save['date_start'])
+			$_REQUEST['start_date_Month'],
+			$_REQUEST['start_date_Day'],
+			$_REQUEST['start_date_Year']
 		);
 
 		if ($save['end_or_duration'] == 'duration') {
@@ -156,9 +166,9 @@ if (isset($_POST['act'])) {
 				$_REQUEST['end_Hour'],
 				$_REQUEST['end_Minute'],
 				0,
-				TikiLib::date_format("%m", $save['date_end']),
-				TikiLib::date_format("%d", $save['date_end']),
-				TikiLib::date_format("%Y", $save['date_end'])
+				$_REQUEST['end_date_Month'],
+				$_REQUEST['end_date_Day'],
+				$_REQUEST['end_date_Year']
 			);
 			$save['duration'] = max(0, $save['end'] - $save['start']);
 		}
