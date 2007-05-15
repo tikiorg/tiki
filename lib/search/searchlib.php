@@ -1,5 +1,5 @@
 <?php
-// $Id: searchlib.php,v 1.35 2007-05-13 18:31:03 nyloth Exp $
+// $Id: searchlib.php,v 1.36 2007-05-15 10:19:41 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -864,7 +864,7 @@ class SearchLib extends TikiLib {
             $cant=0;
             $ret=array();
             while ($res = $result->fetchRow()) {
-	     if($this->user_has_perm_on_object($user,$res["page"],'faq','tiki_p_view_faq')) {
+	     if($this->user_has_perm_on_object($user,$res["page"],'faq','tiki_p_view_faqs')) {
               ++$cant;
               $href = "tiki-view_faq.php?faqId=".urlencode($res["page"]);
               $ret[] = array(
@@ -900,7 +900,7 @@ class SearchLib extends TikiLib {
             $cant=0;
             $ret=array();
             while ($res = $result->fetchRow()) {
-	     if($this->user_has_perm_on_object($user,$res["faqId"],'faq','tiki_p_view_faq')) {
+	     if($this->user_has_perm_on_object($user,$res["faqId"],'faq','tiki_p_view_faqs')) {
               ++$cant;
               $href = "tiki-view_faq.php?faqId=".urlencode($res["faqId"])."#".urlencode($res["page"]);
               $ret[] = array(
