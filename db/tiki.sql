@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2007-05-09 14:47:52 $
+# $Date: 2007-05-15 23:29:38 $
 # $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -1409,7 +1409,7 @@ CREATE TABLE tiki_forum_reads (
 DROP TABLE IF EXISTS tiki_forums;
 CREATE TABLE tiki_forums (
   forumId int(8) NOT NULL auto_increment,
-  name varchar(40) default NULL,
+  name varchar(255) default NULL,
   description text,
   created int(14) default NULL,
   lastPost int(14) default NULL,
