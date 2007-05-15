@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.25 2006-02-05 16:10:07 amette Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.26 2007-05-15 07:06:11 mose Exp $ *}
 
 {if $feature_ajax eq 'y'}
 {include file='tiki-ajax_header.tpl' test=$test}
@@ -6,12 +6,6 @@
 {/if}
 
 <h1>{tr}Browse related tags{/tr}</h1>
-
-{if $freetags_browse_show_cloud eq 'y'}
-{foreach from=$most_popular_tags item=popular_tag}
-<a class="freetag_{$popular_tag.size}" href="tiki-browse_freetags.php?tag={$popular_tag.tag}">{$popular_tag.tag}</a> 
-{/foreach}
-{/if}
 
 {if $feature_morcego eq 'y' and $freetags_feature_3d eq 'y'}
 
@@ -51,7 +45,8 @@
 </div>
 {/if}
 
-<h2>Objects tagged <span id="currentTag2">{$tag}</span></h2>
+<br />
+<br />
 
 {if $feature_ajax eq 'y'}
 <div class="navbar">
@@ -142,10 +137,21 @@
   {if $feature_articles eq 'y'}
   <a class="linkbut" href="tiki-browse_freetags.php?tag={$tag}&amp;type=article">{if $type eq 'article'}<span class="highlight">{/if}{tr}Articles{/tr}{if $type eq 'article'}</span>{/if}</a>
   {/if}   
- 
+<br /> 
+<br /> 
+<table width="100%">
+<td width="200">
+{if $freetags_browse_show_cloud eq 'y'}
+{foreach from=$most_popular_tags item=popular_tag}
+<a class="freetag_{$popular_tag.size}" href="tiki-browse_freetags.php?tag={$popular_tag.tag}" style="padding:0 2px;{if $tag eq $popular_tag.tag}color:#000;background-color:#eec;{/if}">{$popular_tag.tag}</a> 
+{/foreach}
+{/if}
+</td><td>
+
   <h3>{$cantobjects} {tr}results found{/tr}</h3>
   {if $cantobjects > 0}
-  <form action="tiki-browse_freetags.php" method="get">
+  <form action="tiki-browse_freetags.php" method="get" style="padding:5px 0;">
+	<b>{tr}Tag{/tr}</b> <div class="simplebox" style="display:inline;padding:2px 5px;">{$tag}</div>
   <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
   <input type="hidden" name="tag" value="{$tag|escape}" />
   {tr}Find:{/tr} <input type="text" name="find" />
@@ -158,25 +164,25 @@
   <td>{tr}{$objects[ix].type|replace:"wiki page":"Wiki"|replace:"article":"Article"|regex_replace:"/tracker [0-9]*/":"tracker item"}{/tr}</td>
   <td><a href="{$objects[ix].href}" class="catname">{$objects[ix].name}</a></td>
   <td>{$objects[ix].description}&nbsp;</td>
+  <td align="right"><a href="tiki-browse_freetags.php?del=1&amp;tag={$tag}{if $type}&amp;type={$type|escape:'url'}{/if}&amp;typeit={$objects[ix].type|escape:'url'}&amp;itemit={$objects[ix].name|escape:'url'}">del</a></td>
   </tr>
   {/section}
   </table>
   <br />   
-
   <div align="center">
     <div class="mini">
       {if $prev_offset >= 0}
-        [<a class="prevnext" href="tiki-browse_freetags.php?tag={$tag}&find={$find}&amp;type={$type}&amp;offset={$prev_offset}">{tr}prev{/tr}</a>]&nbsp;
+        [<a class="prevnext" href="tiki-browse_freetags.php?tag={$tag|escape:'url'}&find={$find|escape:'url'}&amp;type={$type|escape:'url'}&amp;offset={$prev_offset}">{tr}prev{/tr}</a>]&nbsp;
       {/if}
       {tr}Page{/tr}: {$actual_page}/{$cant_pages}
       {if $next_offset >= 0}
-        &nbsp;[<a class="prevnext" href="tiki-browse_freetags.php?tag={$tag}&find={$find}&amp;type={$type}&amp;offset={$next_offset}">{tr}next{/tr}</a>]
+        &nbsp;[<a class="prevnext" href="tiki-browse_freetags.php?tag={$tag|escape:'url'}&find={$find|escape:'url'}&amp;type={$type|escape:'url'}&amp;offset={$next_offset}">{tr}next{/tr}</a>]
       {/if}
       {if $direct_pagination eq 'y'}
         <br />
         {section loop=$cant_pages name=foo}
           {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
-          <a class="prevnext" href="tiki-browse_freetags.php?tag={$tag}&find={$find}&amp;type={$type}&amp;offset={$selector_offset}">
+          <a class="prevnext" href="tiki-browse_freetags.php?tag={$tag|escape:'url'}&find={$find|escape:'url'}&amp;type={$type|escape:'url'}&amp;offset={$selector_offset}">
             {$smarty.section.foo.index_next}
           </a>&nbsp;
         {/section}
@@ -184,4 +190,5 @@
    </div>
   </div>
   {/if}
+</td></tr></table>
 {/if $feature_ajax}

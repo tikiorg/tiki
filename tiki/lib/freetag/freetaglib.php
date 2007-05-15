@@ -475,7 +475,11 @@ class FreetagLib extends ObjectLib {
 	    $normalized_valid_chars = $this->_normalized_valid_chars;
 	    $tag = preg_replace("/[^$normalized_valid_chars]/", "", $tag);
 	}
-	return $this->_normalize_in_lowercase ? strtolower($tag) : $tag;
+	if (function_exists('mb_strtolower')) {
+		return $this->_normalize_in_lowercase ? mb_strtolower($tag,'UTF-8') : $tag;
+	} else {
+		return $this->_normalize_in_lowercase ? strtolower($tag) : $tag;
+	}
 	    
     }
 	
@@ -493,9 +497,9 @@ class FreetagLib extends ObjectLib {
      *
      * @return string Returns the tag in normalized form.
      */ 
-    function delete_object_tag($user, $itemId, $type, $tag) {
-	if (!isset($user) || !isset($itemId) || !isset($type) || !isset($tag) ||
-	    empty($user) || empty($itemId) || empty($type) || empty($tag)) {
+    function delete_object_tag($itemId, $type, $tag, $user=false) {
+	if (!isset($itemId) || !isset($type) || !isset($tag) ||
+	    empty($itemId) || empty($type) || empty($tag)) {
 	    die("delete_object_tag argument missing");
 	    return false;
 	}
@@ -507,16 +511,13 @@ class FreetagLib extends ObjectLib {
 	} else {
 
 	    $objectId = $this->get_object_id($type, $itemId);
-		
-	    $query = "DELETE FROM `tiki_freetagged_objects`
-			WHERE `user` = ?
-			AND `objectId` = ?
-			AND `tagId` = ?
-			LIMIT 1
-			";
-	    $bindvals = array($user, $objectId, $tagId);
-
-	    $this->query($query, $bindvals);
+	    $query = "delete from `tiki_freetagged_objects` where `objectId`=? and `tagId`=?";
+			$bindvars = array($objectId, $tagId);
+			if ($user) {
+				$query.= " and `user`=?";
+				$bindvars[] = $user;
+			}
+	    $this->query($query, $bindvars);
 		
 	    return true;
 
@@ -656,7 +657,7 @@ class FreetagLib extends ObjectLib {
 
 	foreach ($oldTags['data'] as $tag) {
 	    if (!in_array($tag['raw_tag'], $tagArray)) {
-		$this->delete_object_tag($user, $itemId, $type, $tag['raw_tag']);
+		$this->delete_object_tag($itemId, $type, $tag['raw_tag'],$user);
 	    }
 	}
 
