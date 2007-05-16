@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.152 2007-05-15 23:29:39 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.153 2007-05-16 14:38:23 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -107,7 +107,7 @@ ALTER TABLE tiki_comments ADD INDEX THREADED (message_id, in_reply_to, parentId)
 
 # 2005-09-07: rlpowell: These changes stop the mail system from repeatedly adding the same posts.
 ALTER TABLE tiki_comments MODIFY COLUMN `userName` varchar(40) default NULL;
-ALTER IGNORE TABLE tiki_comments ADD UNIQUE (parentId, userName, title, commentDate, message_id, in_reply_to);
+ALTER IGNORE TABLE tiki_comments ADD UNIQUE parentId(parentId, userName, title, commentDate, message_id, in_reply_to);
 # NOTE: It is possible to lose data with the "ALTER IGNORE TABLE" line, but it should only be repeat data anyways.
 # In addition, ALTER IGNORE TABLE is a MySQL extension.  If it doesn't work,
 # the following should give you a tiki_comments table that you can apply the unique key to, but I suggest
@@ -902,3 +902,14 @@ UPDATE users_permissions set permName='tiki_p_batch_upload_file_dir' where permN
 
 #sylvieg 2007/05/15
 ALTER TABLE tiki_forums  CHANGE name name varchar(255);
+ALTER TABLE tiki_comments CHANGE title title varchar(255);
+ALTER TABLE tiki_comments DROP KEY parentId;
+ALTER TABLE tiki_comments DROP KEY parentId_2;
+ALTER TABLE tiki_comments DROP KEY parentId_3;
+ALTER TABLE tiki_comments DROP KEY parentId_4;
+ALTER TABLE tiki_comments DROP KEY parentId_5;
+ALTER TABLE tiki_comments DROP KEY parentId_6;
+ALTER TABLE tiki_comments DROP KEY parentId_8;
+ALTER TABLE tiki_comments DROP KEY tc_pi;
+ALTER TABLE tiki_comments DROP KEY no_repeats;
+ALTER TABLE tiki_comments ADD UNIQUE KEY no_repeats(parentId, userName(40), title(100), commentDate, message_id(40), in_reply_to(40));

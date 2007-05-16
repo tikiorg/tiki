@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2007-05-15 23:29:38 $
+# $Date: 2007-05-16 14:38:22 $
 # $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -976,7 +976,7 @@ CREATE TABLE tiki_comments (
   points decimal(8,2) default NULL,
   votes int(8) default NULL,
   average decimal(8,4) default NULL,
-  title varchar(100) default NULL,
+  title varchar(255) default NULL,
   data text,
   hash varchar(32) default NULL,
   user_ip varchar(15) default NULL,
@@ -986,12 +986,11 @@ CREATE TABLE tiki_comments (
   in_reply_to varchar(128) default NULL,
   comment_rating tinyint(2) default NULL,  
   PRIMARY KEY  (threadId),
-  UNIQUE KEY no_repeats (parentId, userName, title(40), commentDate, message_id(40), in_reply_to(40)),
+  UNIQUE KEY no_repeats (parentId, userName(40), title(100), commentDate, message_id(40), in_reply_to(40)),
   KEY title (title),
   KEY data (data(255)),
   KEY object (object),
   KEY hits (hits),
-  KEY tc_pi (parentId),
   KEY threaded (message_id, in_reply_to, parentId),
   FULLTEXT KEY ft (title,data)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.81 2007-04-27 21:43:33 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.82 2007-05-16 14:38:23 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -110,7 +110,7 @@ a moderator approves it.{/tr}</small>
     <table class="normal">
     <tr class="formcolor">
       <td>{tr}Title{/tr}</td>
-      <td><input type="text" name="comments_title" value="{$comment_title|escape}" /></td>
+      <td><input type="text" name="comments_title" value="{$comment_title|escape}" size="80" /></td>
     </tr>      
     {if $forum_info.forum_use_password ne 'n'}
     <tr class="formcolor">
