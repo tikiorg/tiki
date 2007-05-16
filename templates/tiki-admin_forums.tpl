@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.56 2007-05-15 23:29:41 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.57 2007-05-16 12:55:08 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_forums.php">{tr}Admin Forums{/tr}</a>
  
 {if $feature_help eq 'y'}
@@ -36,7 +36,7 @@
 <form action="tiki-admin_forums.php" method="post">
 <input type="hidden" name="forumId" value="{$forumId|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" size="255" value="{$name|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" size="50" value="{$name|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
 <tr><td class="formcolor">{tr}Show description{/tr}:</td><td class="formcolor"><input type="checkbox" name="show_description" {if $show_description eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Prevent flooding{/tr}:</td><td class="formcolor"><input type="checkbox" name="controlFlood" {if $controlFlood eq 'y'}checked="checked"{/if} /> 
