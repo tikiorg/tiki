@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.123 2007-05-11 16:38:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.124 2007-05-16 17:01:58 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -208,8 +208,14 @@ $smarty->assign_by_ref('urlquery', $urlquery);
 //*********** that's all for prev/next *****************
 
 $smarty->assign('itemId', $_REQUEST["itemId"]);
-if (!isset($item_info))
+if (!isset($item_info)) {
 	$item_info = $trklib->get_tracker_item($_REQUEST["itemId"]);
+	if (empty($item_info)) {
+		$smarty->assign('msg', tra("No item indicated"));
+		$smarty->display("error.tpl");
+		die;
+	}  
+}
 $smarty->assign('item_info', $item_info);
 
 $smarty->assign('individual', 'n');
