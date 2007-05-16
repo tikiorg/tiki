@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.126 2007-04-02 17:21:19 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.127 2007-05-16 16:47:08 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -715,7 +715,9 @@ $items = $trklib->list_items($_REQUEST["trackerId"], $offset, $maxRecords, $sort
 //var_dump($_REQUEST["trackerId"], $offset, $maxRecords, $sort_mode, $listfields, $filterfield, $filtervalue, $_REQUEST["status"],$initial,$exactvalue,$numsort);
 //die;
 //var_dump($items);die();
-$urlquery['status'] = $_REQUEST["status"];
+if ($_REQUEST['status'] != 'o') {
+	$urlquery['status'] = $_REQUEST['status'];
+}
 $urlquery['initial'] = $initial;
 $urlquery['trackerId'] = $_REQUEST["trackerId"];
 $urlquery['sort_mode'] = $sort_mode;
