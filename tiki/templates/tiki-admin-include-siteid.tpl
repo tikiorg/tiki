@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-siteid.tpl,v 1.11 2007-05-17 15:48:55 fr_rodo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-siteid.tpl,v 1.12 2007-05-17 16:19:38 fr_rodo Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -134,6 +134,10 @@
 				<tr> 
                                         <td class="form"><label for="feature_sitemenu">{tr}Site menu bar{/tr}:</label></td>
                                         <td><input type="checkbox" name="feature_sitemenu" id="feature_sitemenu"{if $feature_sitemenu eq 'y'} checked="checked"{/if} />{tr}Note: This feature also requires phplayers to be turned on in Admin->Features{/tr}</td>
+                                </tr>
+				<tr> 
+                                        <td class="form"><label for="feature_topbar_id_menu">{tr}Menu ID{/tr}:</label></td>
+                                        <td><input type="text" name="feature_topbar_id_menu" id="feature_topbar_id_menu" value="{$feature_topbar_id_menu}" size="6" maxlength="6" /></td>
                                 </tr>
 				<tr> 
                                         <td class="form"><label for="feature_topbar_version">{tr}Current Version{/tr}:</label></td>

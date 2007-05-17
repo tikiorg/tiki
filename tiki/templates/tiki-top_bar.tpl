@@ -13,7 +13,7 @@ title="tikiwiki.org">{tr}Tiki community{/tr}</a>
   &#160;//&#160;<a href="javascript:toggle('debugconsole');">{tr}debug{/tr}</a>
 {/if}
 {if $feature_phplayers eq 'y' and $feature_siteidentity eq 'y' and $feature_sitemenu eq 'y'}
-{phplayers id=42 type=horiz}
+{phplayers id=$feature_topbar_id_menu type=horiz}
 {/if}
 {if $feature_tell_a_friend eq 'y' && $tiki_p_tell_a_friend eq 'y'}
 <div class="tellafriend"><a href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Email this page{/tr}</a></div>
