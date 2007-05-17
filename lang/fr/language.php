@@ -2724,6 +2724,7 @@ $lang=Array(
 "Site Menu" => "Menu du site",
 "Site menu bar" => "Barre de menu sur le site",
 "Note: This feature also requires phplayers to be turned on in Admin->Features" => "Remarque : cette fonctionnalité demande aussi que la fonctionnalité phplayers soit aussi activée dans Admin->Fonctionnalités",
+"Menu ID" => "ID du menu",
 "Dynamic content system" => "Système de contenu dynamique",
 "Help on Dynamic Content" => "Aide sur le contenu dynamique",
 "admin DynamicContent tpl" => "gabarit de l'administration du contenu dynamique",
