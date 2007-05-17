@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/fmsc.css,v 1.8 2007-03-22 17:54:54 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/fmsc.css,v 1.9 2007-05-17 15:19:20 sylvieg Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -32,7 +32,7 @@ H2 {
 	color : #DFC05D;
 	padding-right: 10px;
 	padding-left: 15px;
-	background-image: url(/img/cercle.gif);
+	background-image: url(hec/fleche_h2.gif);
 	background-repeat: no-repeat;
 	margin-left: 15px;
 	margin-top: 7px;
@@ -234,8 +234,9 @@ DIV#tiki-top {
 	vertical-align: bottom;
 }
 #logo {
-	background-image: url(hec/logo.gif);
+/*	background-image: url(hec/logo.gif);
 	background-repeat: no-repeat;
+*/
 	height: 62px;
 	font-size: 19px;
 	font-weight: normal;
@@ -1764,13 +1765,13 @@ div.messureadbody {
 	text-indent: 8px;
 }
 .Cal0 {
-	background-image: url(hec/attente2.gif);
+	background-image: url(hec/attente.gif);
 }
 .Cal1 {
-	background-image: url(hec/confirmer2.gif);
+	background-image: url(hec/confirmer.gif);
 }
 .Cal2 {
-	background-image: url(hec/annuler2.gif);
+	background-image: url(hec/annuler.gif);
 }
 
 .Cal0:before {
@@ -2022,7 +2023,7 @@ div.tabrow {
 .confirmer {
    /*font-family: Verdana, Arial, Helvetica, sans-serif;
    font-size: 10px;
-   background-image: url(confirmer.gif);
+   background-image: url(hec/confirmer.gif);
    height: 8px;
    width: 8px;
    padding-right: 30px;
@@ -2032,7 +2033,7 @@ div.tabrow {
 
 font-family: Verdana, Arial, Helvetica, sans-serif;
    font-size: 10px;
-   background-image: url(confirmer.gif);
+   background-image: url(hec/confirmer.gif);
    height: 8px;
    padding-right: 30px;
    padding-left: 12px;
@@ -2042,7 +2043,7 @@ font-family: Verdana, Arial, Helvetica, sans-serif;
 .attente {
   /* font-family: Verdana, Arial, Helvetica, sans-serif;
    font-size: 10px;
-   background-image: url(attente.gif);
+   background-image: url(hec/attente.gif);
    height: 8px;
    width: 8px;
    padding-right: 30px;
@@ -2052,7 +2053,7 @@ font-family: Verdana, Arial, Helvetica, sans-serif;
 
 font-family: Verdana, Arial, Helvetica, sans-serif;
    font-size: 10px;
-   background-image: url(attente.gif);
+   background-image: url(hec/attente.gif);
    height: 8px;
    padding-right: 30px;
    padding-left: 12px;
@@ -2062,7 +2063,7 @@ font-family: Verdana, Arial, Helvetica, sans-serif;
 .annuler {
    /*font-family: Verdana, Arial, Helvetica, sans-serif;
    font-size: 10px;
-   background-image: url(annuler.gif);
+   background-image: url(hec/annuler.gif);
    height: 8px;
    width: 8px;
    padding-right: 30px;
@@ -2072,7 +2073,7 @@ font-family: Verdana, Arial, Helvetica, sans-serif;
 
 font-family: Verdana, Arial, Helvetica, sans-serif;
    font-size: 10px;
-   background-image: url(annuler.gif);
+   background-image: url(hec/annuler.gif);
    height: 8px;
    padding-right: 30px;
    padding-left: 12px;
