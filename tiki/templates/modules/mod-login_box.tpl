@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.41 2007-04-19 22:34:34 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.42 2007-05-17 07:14:08 nkoth Exp $ *}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Login{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations}
 
@@ -60,7 +60,7 @@
           <table>
           <tr><td class="module"><label for="login-user">{tr}user{/tr}:</label></td></tr>
 		{if $loginuser eq ''}
-          <tr><td><input type="text" name="user" id="login-user" size="20" /></td></tr>
+          <tr><td><input type="text" name="user" id="login-user" size="14" /></td></tr>
 	  <script type="text/javascript">document.getElementById('login-user').focus();</script>
 		{else}
 		  <tr><td><input type="hidden" name="user" id="login-user" value="{$loginuser}" /><b>{$loginuser}</b></td></tr>
@@ -68,10 +68,10 @@
 <script type="text/javascript">document.getElementById('login-user').focus();</script>
           {if $feature_challenge eq 'y'} <!-- quick hack to make challenge/response work until 1.8 tiki auth overhaul -->
           <tr><td class="module"><label for="login-email">{tr}email{/tr}:</label></td></tr>
-          <tr><td><input type="text" name="email" id="login-email" size="20" /></td></tr>
+          <tr><td><input type="text" name="email" id="login-email" size="14" /></td></tr>
           {/if}
           <tr><td class="module"><label for="login-pass">{tr}pass{/tr}:</label></td></tr>
-          <tr><td><input type="password" name="pass" id="login-pass" size="20" /></td></tr>
+          <tr><td><input type="password" name="pass" id="login-pass" size="14" /></td></tr>
           <tr><td><input type="submit" name="login" value="{tr}login{/tr}" /></td></tr>
           {if $rememberme ne 'disabled'}
             {if $rememberme eq 'always'}
