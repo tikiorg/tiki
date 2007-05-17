@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_siteid.php,v 1.8 2007-03-14 12:59:18 pkdille Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_siteid.php,v 1.9 2007-05-17 15:48:55 fr_rodo Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -29,6 +29,9 @@ if (isset($_REQUEST["siteidentityset"])) {
 				"feature_sitead",
 				"feature_sitesearch",
 				"feature_sitemenu",
+				"feature_topbar_version",
+				"feature_topbar_date",
+				"feature_topbar_debug",
 				"sitemycode_publish",
 				"sitead_publish",
 				"feature_bot_logo"
