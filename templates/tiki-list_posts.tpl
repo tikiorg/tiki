@@ -3,13 +3,13 @@
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}Blogs" target="tikihelp" class="tikihelp" title="{tr}Blogs{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
 
 
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-list_posts.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}list posts tpl{/tr}">
-<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}
+<img src="pics/icons/shape_square_edit.png" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}
 
 
 
@@ -49,8 +49,8 @@
 <td class="odd">&nbsp;{$listpages[changes].size}&nbsp;</td>
 <td class="odd">&nbsp;{$listpages[changes].user}&nbsp;</td>
 <td class="odd">
-<a class="link" href="tiki-list_posts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].postId}"><img border='0' title='{tr}remove{/tr}' alt='{tr}remove{/tr}' src='img/icons2/delete.gif' /></a>
-<a class="link" href="tiki-blog_post.php?postId={$listpages[changes].postId}"><img border='0' title='{tr}edit{/tr}' alt='{tr}edit{/tr}' src='img/icons/edit.gif' /></a>
+<a class="link" href="tiki-list_posts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].postId}"><img border='0' height="16" width="16" title='{tr}remove{/tr}' alt='{tr}remove{/tr}' src='pics/icons/cross.png' /></a>
+<a class="link" href="tiki-blog_post.php?postId={$listpages[changes].postId}"><img border='0' height="16" width="16" title='{tr}edit{/tr}' alt='{tr}edit{/tr}' src='pics/icons/page_edit.png' /></a>
 </td>
 {else}
 <td class="even">&nbsp;{$listpages[changes].postId}&nbsp;</td>
@@ -59,8 +59,8 @@
 <td class="even">&nbsp;{$listpages[changes].size}&nbsp;</td>
 <td class="even">&nbsp;{$listpages[changes].user}&nbsp;</td>
 <td class="even">
-<a class="link" href="tiki-list_posts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].postId}"><img border='0' title='{tr}remove{/tr}' alt='{tr}remove{/tr}' src='img/icons2/delete.gif' /></a>
-<a class="link" href="tiki-blog_post.php?postId={$listpages[changes].postId}"><img border='0' title='{tr}edit{/tr}' alt='{tr}edit{/tr}' src='img/icons/edit.gif' /></a>
+<a class="link" href="tiki-blog_post.php?postId={$listpages[changes].postId}"><img border='0' height="16" width="16" title='{tr}edit{/tr}' alt='{tr}edit{/tr}' src='pics/icons/page_edit.png' /></a>
+<a class="link" href="tiki-list_posts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].postId}"><img border='0' height="16" width="16" title='{tr}remove{/tr}' alt='{tr}remove{/tr}' src='pics/icons/cross.png' /></a>
 </td>
 {/if}
 </tr>
