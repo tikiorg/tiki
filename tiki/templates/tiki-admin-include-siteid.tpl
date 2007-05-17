@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-siteid.tpl,v 1.10 2007-05-14 11:32:08 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-siteid.tpl,v 1.11 2007-05-17 15:48:55 fr_rodo Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -129,11 +129,23 @@
 					<td><input type="checkbox" name="sitead_publish" id="sitead_publish"{if $sitead_publish eq 'y'} checked="checked"{/if} /></td>
 				</tr>
 				<tr>
-					<td class="heading" colspan="2" align="center">{tr}Site Menu{/tr}</td>
+					<td class="heading" colspan="2" align="center">{tr}Top bar{/tr}</td>
 				</tr>
 				<tr> 
                                         <td class="form"><label for="feature_sitemenu">{tr}Site menu bar{/tr}:</label></td>
                                         <td><input type="checkbox" name="feature_sitemenu" id="feature_sitemenu"{if $feature_sitemenu eq 'y'} checked="checked"{/if} />{tr}Note: This feature also requires phplayers to be turned on in Admin->Features{/tr}</td>
+                                </tr>
+				<tr> 
+                                        <td class="form"><label for="feature_topbar_version">{tr}Current Version{/tr}:</label></td>
+                                        <td><input type="checkbox" name="feature_topbar_version" id="feature_topbar_version"{if $feature_topbar_version eq 'y'} checked="checked"{/if} /></td>
+                                </tr>
+				<tr> 
+                                        <td class="form"><label for="feature_topbar_date">{tr}Date{/tr}:</label></td>
+                                        <td><input type="checkbox" name="feature_topbar_date" id="feature_topbar_date"{if $feature_topbar_date eq 'y'} checked="checked"{/if} /></td>
+                                </tr>
+				<tr> 
+                                        <td class="form"><label for="feature_topbar_debug">{tr}Debugger Console{/tr}:</label></td>
+                                        <td><input type="checkbox" name="feature_topbar_debug" id="feature_topbar_debug"{if $feature_topbar_debug eq 'y'} checked="checked"{/if} /></td>
                                 </tr>
 							
 				<tr>
