@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.209 2007-05-07 16:45:08 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.210 2007-05-17 14:11:13 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1876,7 +1876,7 @@ function get_included_groups($group) {
 	$cachelib->invalidate('userslist');
     }
 
-    function add_user($user, $pass, $email, $provpass = '') {
+    function add_user($user, $pass, $email, $provpass = '',$pass_first_login=false) {
 	global $pass_due, $tikilib, $cachelib, $patterns;
 	global $feature_clear_passwords;
 
@@ -1889,7 +1889,11 @@ function get_included_groups($group) {
 	if ($feature_clear_passwords == 'n')
 	    $pass = '';
 
-	$new_pass_due = $this->now + (60 * 60 * 24 * $pass_due);
+	if ($pass_first_login) {
+		$new_pass_due = 0;
+	} else {
+		$new_pass_due = $this->now + (60 * 60 * 24 * $pass_due);
+	}
 	$query = "insert into
 	    `users_users`(`login`, `password`, `email`, `provpass`,
 		    `registrationDate`, `hash`, `pass_due`, `created`)
