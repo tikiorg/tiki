@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.71 2007-03-06 19:29:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.72 2007-05-17 14:11:14 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -88,7 +88,8 @@ function batchImportUsers() {
 			}
 			$exist = true;
 		} else {
-			$userlib->add_user($u['login'], $u['password'], $u['email']);
+			$pass_first_login = (isset($_REQUEST['pass_first_login']) && $_REQUEST['pass_first_login'] == 'on') ? true: false;
+			$userlib->add_user($u['login'], $u['password'], $u['email'], '', $pass_first_login);
 			$logslib->add_log('users',sprintf(tra("Created account %s <%s>"),$u['login'], $u['email']));
 		}
 		$userlib->set_user_fields($u);
@@ -128,7 +129,6 @@ function batchImportUsers() {
 		$smarty->assign_by_ref('errors', $errors);
 	}
 }
-
 $cookietab = "1";
 
 // Process the form to add a user here
@@ -147,7 +147,8 @@ if (isset($_REQUEST["newuser"])) {
 			} elseif (!preg_match($patterns['login'],$_REQUEST['name'])) {
 				$tikifeedback[] = array('num'=>1,'mes'=>tra("User login contains invalid characters"));
 			} else {
-				if ($userlib->add_user($_REQUEST["name"], $_REQUEST["pass"], $_REQUEST["email"])) {
+				$pass_first_login = (isset($_REQUEST['pass_first_login']) && $_REQUEST['pass_first_login'] == 'on') ? true: false;
+				if ($userlib->add_user($_REQUEST["name"], $_REQUEST["pass"], $_REQUEST["email"], '', $pass_first_login)) {
 					$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("New %s created with %s %s."),tra("user"),tra("username"),$_REQUEST["name"]));
 					$cookietab = '1';
 					$_REQUEST['find'] = $_REQUEST["name"];
