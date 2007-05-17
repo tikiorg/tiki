@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.430 2007-05-17 16:19:38 fr_rodo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.431 2007-05-17 18:25:30 fr_rodo Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -1062,6 +1062,7 @@ $pref['sitemycode'] = '<div align="center"><b>{tr}Here you can (as an admin) pla
 $pref['sitemycode_publish'] = 'n';
 $pref['feature_sitelogo'] = 'y';
 $pref['sitelogo_bgcolor'] = '';
+$pref['sitelogo_align'] = 'left';
 $pref['sitelogo_title'] = 'Tikiwiki powered site';
 $pref['sitelogo_src'] = 'img/tiki/tikilogo.png';
 $pref['sitelogo_alt'] = 'Site Logo';

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-site_header.tpl,v 1.7 2007-03-02 19:49:08 luciash Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-site_header.tpl,v 1.8 2007-05-17 18:25:30 fr_rodo Exp $ *}
 {* Template for Tikiwiki site identity header *}
 {if $feature_sitemycode eq 'y' && ($sitemycode_publish eq 'y' or $tiki_p_admin eq 'y')}{eval var=$sitemycode}{* here can be custom site admin code *}{/if}
 {if $feature_siteloc eq 'y' and $feature_breadcrumbs eq 'y'}
@@ -40,7 +40,7 @@
 {* site navigation bar *}
 {/if}
 {if $feature_sitelogo eq 'y'}
-<div id="sitelogo"{if $sitelogo_bgcolor ne ''} style="background-color: {$sitelogo_bgcolor};"{/if}>
+<div id="sitelogo"{if $sitelogo_bgcolor ne ''} style="background-color: {$sitelogo_bgcolor};text-align: {$sitelogo_align};"{/if}>
 	<a href="./" title="{$sitelogo_title}"><img src="{$sitelogo_src}" alt="{$sitelogo_alt}" style="border: none" /></a>
 </div>{* site logo *}
 {/if}
