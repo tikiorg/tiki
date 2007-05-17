@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-siteid.tpl,v 1.12 2007-05-17 16:19:38 fr_rodo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-siteid.tpl,v 1.13 2007-05-17 18:25:30 fr_rodo Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -100,6 +100,15 @@
 				<tr>
 					<td class="form"><label for="sitelogo_bgcolor">&nbsp;&nbsp;{tr}Site logo background color{/tr}:</label></td>
 					<td><input type="text" name="sitelogo_bgcolor" id="sitelogo_bgcolor" value="{$sitelogo_bgcolor}" size="15" maxlength="15" /></td>
+				</tr>
+				<tr>
+					<td class="form"><label for="sitelogo_align">&nbsp;&nbsp;{tr}Site logo alignment{/tr}:</label></td>
+					<td><select name="sitelogo_align" id="sitelogo_align">
+						<option value="left" {if $sitelogo_align eq 'left'}selected="selected"{/if}>{tr}on left side{/tr}</option>
+						<option value="center" {if $sitelogo_align eq 'center'}selected="selected"{/if}>{tr}on center{/tr}</option>
+						<option value="right" {if $sitelogo_align eq 'right'}selected="selected"{/if}>{tr}on right side{/tr}</option>
+						</select>
+					</td>
 				</tr>
 				<tr>
 					<td class="form"><label for="sitelogo_title">&nbsp;&nbsp;{tr}Site logo title (on mouse over){/tr}:</label></td>
