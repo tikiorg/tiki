@@ -100,7 +100,8 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 </head>
 
 <body {if isset($section) and $section eq 'wiki page' and $user_dbl eq 'y' and $dblclickedit eq 'y' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}
-{if $msgError} onload="javascript:location.hash='msgError'" {/if}>
+{if $msgError} onload="javascript:location.hash='msgError'"{/if}
+{if $section} class="tiki_{$section}"{/if}>
 {if $minical_reminders>100}
 <iframe width='0' height='0' frameborder="0" src="tiki-minical_reminders.php"></iframe>
 {/if}
