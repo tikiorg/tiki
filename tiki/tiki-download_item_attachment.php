@@ -1,14 +1,14 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-download_item_attachment.php,v 1.14 2007-03-06 19:29:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-download_item_attachment.php,v 1.15 2007-05-18 16:02:25 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
-include_once("lib/init/initlib.php");
-require_once ('tiki-setup_base.php');
+$force_no_compression = true;
+require_once ('tiki-setup.php');
 
 include_once ('lib/trackers/trackerlib.php');
 
