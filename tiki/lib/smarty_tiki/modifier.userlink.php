@@ -6,7 +6,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set', $fullname='') {
+function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set', $fullname='', $max_length=0) {
     global $tikilib, $userlib, $cachelib, $user, $feature_score, $feature_friends, $highlight_group,
 	$feature_community_mouseover, $feature_community_mouseover_name,$feature_community_mouseover_picture,
 	$feature_community_mouseover_friends,$feature_community_mouseover_score,$feature_community_mouseover_country,
@@ -19,9 +19,9 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
     $show_friends = $feature_friends == 'y' && $tikilib->verify_friendship($user, $other_user);
     
     if( $show_mouseover || $show_friends ) {
-        $cacheItem = "userlink.".$user.".".$other_user.$fullname;
+        $cacheItem = "userlink.".$user.".".$other_user.$fullname.$max_length;
     } else {
-        $cacheItem = "userlink.".$other_user.$fullname;
+        $cacheItem = "userlink.".$other_user.$fullname.$max_length;
     }
     $cacheDate = $cachelib->getCachedDate($cacheItem);
     if( $cacheDate ) {
@@ -60,6 +60,7 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
 	    unset($user_details);
     }
     if ( $ou == '' ) $ou = $other_user;
+    if ( $max_length > 0 ) $ou = smarty_modifier_truncate($ou, $max_length, '...', true);
 
     if($userlib->user_exists($other_user)&&(!empty($friend) || $tikilib->get_user_preference($other_user,'user_information','public')=='public')) {
 			if (isset($info) and is_array($info) and $highlight_group and in_array($highlight_group,$info['groups'])) { 

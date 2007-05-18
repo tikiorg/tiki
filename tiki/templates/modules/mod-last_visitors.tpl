@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_visitors.tpl,v 1.6 2007-05-16 16:35:25 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_visitors.tpl,v 1.7 2007-05-18 07:58:30 nyloth Exp $ *}
 
 {if $nonums eq 'y'}
 {if !isset($tpl_module_title)}
@@ -17,7 +17,7 @@
       <td class="module">&nbsp;
        <a class="linkmodule" href="tiki-user_information.php?view_user={$item.user|escape:"url"}">
         {if $maxlen > 0}{* 0 is default value for maxlen eq to 'no truncate' *}
-         {$item.user|userlink|truncate:$maxlen:"...":true}
+         {$item.user|userlink:'link':'not_set':'':$maxlen}
         {else}
          {$item.user|userlink}
         {/if}
