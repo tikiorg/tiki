@@ -88,7 +88,7 @@ function since_last_visit_new($user, $params = null) {
 				if (isset($ret["items"]["comments"]["list"][$count]["href"])) {
 					$ret["items"]["comments"]["list"][$count]["href"] .= '&amp;comments_show=y#threadId'.$res['threadId'];
 				}
-      	$ret["items"]["comments"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["commentDate"]) ." ". tra("by") ." ". $res["userName"];
+      	$ret["items"]["comments"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["commentDate"]) ." ". tra("by") ." ". trim(strip_tags(smarty_modifier_userlink($res["userName"])));
       	$ret["items"]["comments"]["list"][$count]["label"] = $res["title"]; 
       	$count++;
 	}
@@ -112,7 +112,7 @@ function since_last_visit_new($user, $params = null) {
 	  } else {
           	$ret["items"]["posts"]["list"][$count]["href"].=$res["threadId"];
 	  }
-      	$ret["items"]["posts"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["commentDate"]) ." ". tra("by") ." ". $res["userName"];
+      	$ret["items"]["posts"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["commentDate"]) ." ". tra("by") ." ". trim(strip_tags(smarty_modifier_userlink($res["userName"])));
       	$ret["items"]["posts"]["list"][$count]["label"] = $res["title"]; 
         ++$count;	
 	 }
@@ -132,7 +132,7 @@ function since_last_visit_new($user, $params = null) {
     {
         if ($userlib->user_has_perm_on_object($user,$res['pageName'], 'wiki page', 'tiki_p_view')) {
            $ret["items"]["pages"]["list"][$count]["href"]  = "tiki-index.php?page=" . urlencode($res["pageName"]);
-           $ret["items"]["pages"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["lastModif"]) ." ". tra("by") ." ". $res["user"];
+           $ret["items"]["pages"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["lastModif"]) ." ". tra("by") ." ". trim(strip_tags(smarty_modifier_userlink($res["user"])));
            $ret["items"]["pages"]["list"][$count]["label"] = $res["pageName"]; 
            $count++;
        }
@@ -219,7 +219,7 @@ if ($tikilib->get_preference("feature_directory") == 'y') {
     {
         if ($userlib->user_has_perm_on_object($user,$res['blogId'], 'blog', 'tiki_p_read_blog')) {
            $ret["items"]["blogs"]["list"][$count]["href"]  = "tiki-view_blog.php?blogId=" . $res["blogId"];
-           $ret["items"]["blogs"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["created"]) ." ". tra("by") ." ". $res["user"];
+           $ret["items"]["blogs"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["created"]) ." ". tra("by") ." ". trim(strip_tags(smarty_modifier_userlink($res["user"])));
            $ret["items"]["blogs"]["list"][$count]["label"] = $res["title"]; 
            $count++;
        }
@@ -239,7 +239,7 @@ if ($tikilib->get_preference("feature_directory") == 'y') {
     {
         if ($userlib->user_has_perm_on_object($user,$res['blogId'], 'blog', 'tiki_p_read_blog')) {
            $ret["items"]["blogPosts"]["list"][$count]["href"]  = "tiki-view_blog_post.php?blogId=" . $res["blogId"] . "&postId=" . $res["postId"];
-           $ret["items"]["blogPosts"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["created"]) ." ". tra("by") ." ". $res["user"];
+           $ret["items"]["blogPosts"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["created"]) ." ". tra("by") ." ". trim(strip_tags(smarty_modifier_userlink($res["user"])));
            $ret["items"]["blogPosts"]["list"][$count]["label"] = $res["title"]; 
            $count++;
        }
@@ -259,7 +259,7 @@ if ($tikilib->get_preference("feature_directory") == 'y') {
     {
         if ($userlib->user_has_perm_on_object($user,$res['galleryId'], 'image gallery', 'tiki_p_view_image_gallery')) {
            $ret["items"]["imageGalleries"]["list"][$count]["href"]  = "tiki-browse_gallery.php?galleryId=" . $res["galleryId"];
-           $ret["items"]["imageGalleries"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["created"]) ." ". tra("by") ." ". $res["user"];
+           $ret["items"]["imageGalleries"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["created"]) ." ". tra("by") ." ". trim(strip_tags(smarty_modifier_userlink($res["user"])));
            $ret["items"]["imageGalleries"]["list"][$count]["label"] = $res["name"]; 
            $count++;
        }
@@ -277,7 +277,7 @@ if ($tikilib->get_preference("feature_directory") == 'y') {
     {
         if ($userlib->user_has_perm_on_object($user,$res['galleryId'], 'image gallery', 'tiki_p_view_image_gallery')) {
            $ret["items"]["images"]["list"][$count]["href"]  = "tiki-browse_image.php?galleryId=" . $res["galleryId"]. "&imageId=" .$res["imageId"];
-           $ret["items"]["images"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["created"]) ." ". tra("by") ." ". $res["user"];
+           $ret["items"]["images"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["created"]) ." ". tra("by") ." ". trim(strip_tags(smarty_modifier_userlink($res["user"])));
            $ret["items"]["images"]["list"][$count]["label"] = $res["name"]; 
            $count++;
        }
@@ -298,7 +298,7 @@ if ($tikilib->get_preference("feature_directory") == 'y') {
     {
         if ($userlib->user_has_perm_on_object($user,$res['galleryId'], 'file gallery', 'tiki_p_view_file_gallery')) {
            $ret["items"]["fileGalleries"]["list"][$count]["href"]  = "tiki-list_file_gallery.php?galleryId=" . $res["galleryId"];
-           $ret["items"]["fileGalleries"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["created"]) ." ". tra("by") ." ". $res["user"];
+           $ret["items"]["fileGalleries"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["created"]) ." ". tra("by") ." ". trim(strip_tags(smarty_modifier_userlink($res["user"])));
            $ret["items"]["fileGalleries"]["list"][$count]["label"] = $res["name"]; 
            $count++;
         }
@@ -316,7 +316,7 @@ if ($tikilib->get_preference("feature_directory") == 'y') {
     {
         if ($userlib->user_has_perm_on_object($user,$res['galleryId'], 'file gallery', 'tiki_p_view_file_gallery')) {
            $ret["items"]["files"]["list"][$count]["href"]  = "tiki-list_file_gallery.php?galleryId=" . $res["galleryId"];
-           $ret["items"]["files"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["created"]) ." ". tra("by") ." ". $res["user"];
+           $ret["items"]["files"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["created"]) ." ". tra("by") ." ". trim(strip_tags(smarty_modifier_userlink($res["user"])));
            $ret["items"]["files"]["list"][$count]["label"] = $res["name"]. " (".$res["filename"].")"; 
            $count++;
         }
