@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.74 2007-05-13 12:52:20 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.75 2007-05-20 01:43:53 nyloth Exp $ *}
 {popup_init src="lib/overlib.js"}
 <div id="calscreen">
 
@@ -15,8 +15,8 @@
 <span class="button2"><a href="tiki-admin_calendars.php{if $displayedcals|@count eq 1}?calendarId={$displayedcals[0]}{/if}" class="linkbut">{tr}admin{/tr}</a></span>
 <span class="button2"><a href="tiki-admin.php?page=calendar" class="linkbut">{tr}Configure/Options{/tr}</a></span>
 {/if}
-{if $tiki_p_add_event eq 'y'}
-<span class="button2"><a href="tiki-calendar_edit_item.php"class="linkbut">{tr}add item{/tr}</a></span>
+{if $tiki_p_add_events eq 'y'}
+<span class="button2"><a href="tiki-calendar_edit_item.php"class="linkbut">{tr}add event{/tr}</a></span>
 {/if}
 
 {if count($listcals) > 1}

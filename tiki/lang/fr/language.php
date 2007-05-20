@@ -1970,6 +1970,7 @@ $lang=Array(
 "Edit" => "Modifier",
 "admin" => "administrer",
 "add item" => "ajouter un item",
+"add event" => "ajouter un événement",
 "Edit/Create" => "Modifier/Ajouter",
 "change focus" => "changer le focus",
 "details" => "détails",
