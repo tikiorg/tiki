@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/search/refresh-functions.php,v 1.24 2007-05-04 12:13:43 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/search/refresh-functions.php,v 1.25 2007-05-20 02:40:36 nyloth Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -19,7 +19,10 @@ function refresh_index($object_type, $object_id = null) {
 	$cant_query = 'select count(*)'.$query_from;
 	$cant_vars = null;
 
-	$filtering_expr = array('$content = strip_tags($content);');
+	//$filtering_expr = array('$content = strip_tags($content);');
+	// strip tags seems to be bugged (maybe due to UTF-8 content ?)
+	$mb = function_exists('mb_ereg_replace') ? 'mb_' : '';
+	$filtering_expr = array('$content = '.$mb.'ereg_replace("<\s*/?\s*([a-zA-Z]+)[^>]*>", " ", $content);');
 
 	switch ( $object_type ) {
 
