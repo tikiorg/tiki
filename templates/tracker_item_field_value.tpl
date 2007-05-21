@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.2 2007-05-07 20:50:14 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.3 2007-05-21 16:57:31 sylvieg Exp $ *}
 {strip}
 {* param: list_mode(y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $item(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain) *}
 
 {if $field_value.type ne 'x' and $field_value.type ne 'G'}
 {* ******************** link to the item ******************** *}
-{if $showlinks ne 'n'}
+{if $showlinks ne 'y'}
 	{assign var='is_link' value='n'}
 {elseif $field_value.isMain eq 'y'
  and ($tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y'
