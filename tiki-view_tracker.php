@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.127 2007-05-16 16:47:08 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.128 2007-05-22 07:22:13 mose Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -523,6 +523,10 @@ if (($tiki_p_admin_trackers == 'y' or $tiki_p_modify_tracker_items == 'y') and i
   } else {
     key_get($area);
   }
+} elseif (($tiki_p_admin_trackers == 'y' or $tiki_p_modify_tracker_items == 'y') and isset($_REQUEST["batchaction"]) and $_REQUEST["batchaction"] == 'delete') {
+	foreach ($_REQUEST['action'] as $batchid) {
+		$trklib->remove_tracker_item($batchid);
+	}
 }
 
 

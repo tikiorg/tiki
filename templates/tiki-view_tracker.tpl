@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.134 2007-05-16 16:47:09 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.135 2007-05-22 07:22:13 mose Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a></h1>
 <div>
@@ -62,6 +62,7 @@
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 
 {if (($tracker_info.showStatus eq 'y' and $tracker_info.showStatusAdminOnly ne 'y') or $tiki_p_admin_trackers eq 'y') or $show_filters eq 'y'}
+
 <form action="tiki-view_tracker.php" method="get">
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 {if $status}<input type="hidden" name="status" value="{$status}" />{/if}
@@ -174,6 +175,7 @@ class="prevnext">{tr}All{/tr}</a>
 </div>
 {/if}
 {* ------- list headings --- *}
+<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}">
 <table class="normal">
 <tr>
 {if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
@@ -211,7 +213,11 @@ $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}created{/tr
 {if $tiki_p_admin_trackers eq 'y'}<td class="heading" width="5%">{tr}dls{/tr}</td>{/if}
 {/if}
 {if $tiki_p_admin_trackers eq 'y'}
-<td class="heading" width="5%">&nbsp;</td>
+<td class="heading" width="5%">
+<script type='text/javascript'>
+document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'action[]',this.checked)\"/><label for=\"clickall\">{tr}all{/tr}</label>");
+</script>
+</td>
 {/if}
 </tr>
 
@@ -446,12 +452,26 @@ link="{tr}list attachments{/tr}"><img src="img/icons/folderin.gif" border="0" al
 {/if}
 {if $tiki_p_admin_trackers eq 'y'}
 <td><a class="link" href="tiki-view_tracker.php?status={$status}&amp;trackerId={$trackerId}{if $offset}&amp;offset={$offset}{/if}{if $sort_mode ne ''}&amp;sort_mode={$sort_mode}{/if}&amp;remove={$items[user].itemId}" 
-title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a></td>
+title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>
+<input type="checkbox" name="action[]" value='{$items[user].itemId}' style="border:1px;font-size:80%;" />
+</td>
 {/if}
 </tr>
 {assign var=itemoff value=$itemoff+1}
 {/section}
 </table>
+<div style="text-align:right;">
+<script type='text/javascript'>
+document.write("<input name=\"switcher\" id=\"clickall2\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'action[]',this.checked)\"/><label for=\"clickall2\">{tr}select all{/tr}</label>");
+</script>
+<select name="batchaction">
+<option value="">{tr}with checked{/tr}</option>
+<option value="delete">{tr}Delete{/tr}</option>
+</select>
+<input type="hidden" name="trackerId" value="{$trackerId}" />
+<input type="submit" name="act" value="{tr}ok{/tr}" />
+</div>
+</form>
 {include file="tiki-pagination.tpl"}
 </div>
 {else}<!-- {cycle name=content assign=focustab} -->
