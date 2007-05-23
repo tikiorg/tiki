@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.211 2007-05-17 22:54:48 rlpowell Exp $
+// CVS: $Id: userslib.php,v 1.212 2007-05-23 19:30:31 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1390,23 +1390,22 @@ function get_included_groups($group) {
 	return $ret;
     }
 
-    function get_user_info($user, $inclusion=false) {
-	$query = "select * from `users_users` where `login`=?";
-	$result = $this->query($query,array($user));
+    function get_user_info($user, $inclusion = false, $field = 'login') {
+    	global $login_is_email;
+	if ( $field == 'userId' ) $user = (int)$user;
+	elseif ( $field != 'login' ) return false;
+
+	$result = $this->query("select * from `users_users` where `$field`=?", array($user));
 	$res = $result->fetchRow();
-	if ($inclusion) {
-		$groups = $this->get_user_groups_inclusion($user);
-	} else {
-		$groups = $this->get_user_groups($user);
-	}
-	$res["groups"] = $groups;
-	if (isset($res['registrationDate'])) {
-		$res["age"] = $this->now - $res['registrationDate'];
-	} else {
-		$res['age'] = 0;
-	}
+
+	$res['groups'] = ( $inclusion ) ? $this->get_user_groups_inclusion($user) : $this->get_user_groups($user);
+	$res['age'] = ( ! isset($res['registrationDate']) ) ? 0 : $this->now - $res['registrationDate'];
+	if ( $login_is_email == 'y' && $res['login'] != 'admin' ) $res['email'] = $res['login'];
+
 	return $res;
     }
+
+    function get_userid_info($user, $inclusion = false) { return $this->get_user_info($user, $inclusion, 'userId'); }
     
     // this is not being used anywhere until now in remote.php
     // refactoring to use new cachelib instead of global var in memory - batawata 2006-02-07
@@ -1527,16 +1526,6 @@ function get_included_groups($group) {
 	}
 
 	return $ret;
-    }
-
-    function get_userid_info($user) {
-	$query = "select * from `users_users` where `userId` = ?";
-	$result = $this->query($query, array((int)$user));
-	$res = $result->fetchRow();
-	$res["groups"] = $this->get_user_groups($res['login']);
-	if (isset($res['registrationDate']))
-		$res["age"] = $this->now - $res['registrationDate'];
-	return $res;
     }
 
 	function get_tracker_usergroup($user) {
@@ -1980,7 +1969,8 @@ function get_included_groups($group) {
     }
 
     function get_user_email($user) {
-        return $this->getOne("select `email` from `users_users` where " . $this->convert_binary(). " `login`=?", array($user));
+    	global $login_is_email;
+        return ( $login_is_email == 'y' && $user != 'admin' ) ? $user : $this->getOne("select `email` from `users_users` where " . $this->convert_binary(). " `login`=?", array($user));
     }
 
     /**
