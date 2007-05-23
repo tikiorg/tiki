@@ -1,3 +1,4 @@
+<div class="navbar"><a class="linkbut" href="tiki-list_blogs.php">{tr}list blogs{/tr}</a>
 {if strlen($heading) > 0}
 {eval var=$heading}
 {else}
