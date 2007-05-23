@@ -24,10 +24,10 @@
 <a name="q{$channels[ix].questionId}"></a>
 <div class="faqqa">
 <div class="faqquestion">
-{tr}Q{/tr}: {$channels[ix].question}
+<span class="faq_question_prefix">{tr}Q{/tr}: </span>{$channels[ix].question}
 </div>
 <div class="faqanswer">
-{tr}A{/tr}: {$channels[ix].parsed}
+<span class="faq_answer_prefix">{tr}A{/tr}: </span>{$channels[ix].parsed}
 </div>
 </div>
 {/section}
