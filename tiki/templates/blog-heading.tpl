@@ -2,7 +2,7 @@
 <div class="blogdesc">{tr}Description:{/tr} {$description}</div>
 <div class="bloginfo">
 {tr}Created by{/tr} {$creator|userlink}{tr} on {/tr}{$created|tiki_short_datetime}<br />
-{tr}Last modified{/tr} {$lastModif|tiki_short_datetime}<br />
+{tr}Last post{/tr} {$lastModif|tiki_short_datetime}<br />
 <span style="float:right;">
 		{if $tiki_p_blog_post eq "y"}
 		{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y" or $public eq "y"}
