@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login_validate.php,v 1.20 2007-03-06 19:29:49 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login_validate.php,v 1.21 2007-05-24 17:51:53 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -40,6 +40,7 @@ if ($isvalid) {
 		$logslib->add_log('register','validated account '.$user);
 	} else {
 		$_SESSION["$user_cookie_site"] = $user;
+		$smarty->assign('user', $user);
 	}
 	$smarty->assign('msg', tra("Account validated successfully."));
 	$smarty->display("information.tpl");
