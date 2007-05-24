@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.92 2007-05-02 15:52:24 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.93 2007-05-24 14:38:33 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -164,7 +164,7 @@ if (isset($_REQUEST["prefs"])) {
 if (isset($_REQUEST['info'])) {
 	check_ticket('user-prefs');
 
-	if (isset($_REQUEST["realName"]))
+	if (isset($_REQUEST["realName"]) && $auth_ldap_nameattr == '')
 		$tikilib->set_user_preference($userwatch, 'realName', $_REQUEST["realName"]);
 
 	/* this should be optional
