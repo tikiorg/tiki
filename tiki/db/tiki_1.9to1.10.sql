@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.154 2007-05-24 14:30:46 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.155 2007-05-24 20:32:50 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -514,7 +514,7 @@ CREATE TABLE tiki_contributions_assigned (
 
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_contribution', 'n');
 DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='r' and name='Admin' and url='tiki-admin.php' and position='1150' and section='' and perm='tiki_p_admin_contribution' and groupname='' ;
-INSERT INTO `tiki_menu_options` (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin','',1050,'','tiki_p_admin_contribution','');
+INSERT INTO `tiki_menu_options` (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_contribution','');
 DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Contribution' and url='tiki-admin_contribution.php' and position='1265' and section='feature_contribution' and perm='tiki_p_admin_contribution' and groupname='' ;
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Contribution','tiki-admin_contribution.php',1265,'feature_contribution','tiki_p_admin_contribution','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_contribution_mandatory', 'n');
