@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.96 2007-05-23 19:30:31 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.97 2007-05-24 14:38:33 nyloth Exp $ *}
 <h1>{if $userwatch ne $user}<a class="pagetitle" href="tiki-user_preferences.php?view_user={$userwatch}">{tr}User Preferences{/tr}: {$userwatch}</a>{else}<a class="pagetitle" href="tiki-user_preferences.php">{tr}User Preferences{/tr}</a>{/if}
 
 {if $feature_help eq 'y'}
@@ -54,7 +54,7 @@
   <input type="hidden" name="user" value="{$userwatch|escape}" />
   <table class="admin">
   <tr><td class="form">{tr}User{/tr}:</td><td class="form">{$userinfo.login}{if $login_is_email eq 'y' and $userinfo.login neq 'admin'} <i>({tr}Use the email as username{/tr})</i>{/if}</td></tr>
-  <tr><td class="form">{tr}Real Name{/tr}:</td><td class="form"><input type="text" name="realName" value="{$realName|escape}" /></td></tr>
+  <tr><td class="form">{tr}Real Name{/tr}:</td><td class="form">{if $auth_ldap_nameattr eq ''}<input type="text" name="realName" value="{$realName|escape}" />{else}{$realName}{/if}</td></tr>
 
 	{* this should be optional
   <tr><td class="form">{tr}Gender{/tr}:</td>
