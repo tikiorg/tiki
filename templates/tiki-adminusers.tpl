@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.92 2007-05-24 16:51:37 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.93 2007-05-24 21:00:36 nyloth Exp $ *}
 {popup_init src="lib/overlib.js"}
 <h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
 
@@ -248,10 +248,20 @@ title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
   {/if}
 {/if}
 </td></tr>
+{*
+  No need to specify user password or to ask him to change it, if :
+    Tiki is using the Tiki + PEAR Auth systems
+    AND Tiki won't create the user in the Tiki auth system
+    AND Tiki won't create the user in the PEAR Auth system 
+*}
+{if $auth_method eq 'auth' and ( $auth_create_user_tiki eq 'n' or $auth_skip_admin eq 'y' ) and $auth_create_user_auth eq 'n' }
+<tr class="formcolor"><td colspan="2"><b>{tr}No password is required{/tr}</b><br /><i>{tr}Tikiwiki is configured to delegate the password managment to LDAP through PEAR Auth.{/tr}</i></td></tr>
+{else}
 <tr class="formcolor"><td>{tr}Pass{/tr}:</td><td><input type="password" name="pass" id="pass" /></td></tr>
 <tr class="formcolor"><td>{tr}Again{/tr}:</td><td><input type="password" name="pass2" id="pass2" /></td></tr>
-{if $login_is_email neq 'y'}<tr class="formcolor"><td>{tr}Email{/tr}:</td><td><input type="text" name="email" size="30"  value="{$userinfo.email|escape}" /></td></tr>{/if}
 <tr class="formcolor"><td>{tr}User must change his password at first login{/tr}</td><td><input type="checkbox" name="pass_first_login" /></td></tr>
+{/if}
+{if $login_is_email neq 'y'}<tr class="formcolor"><td>{tr}Email{/tr}:</td><td><input type="text" name="email" size="30"  value="{$userinfo.email|escape}" /></td></tr>{/if}
 {if $userinfo.userId != 0}
 <tr class="formcolor"><td>{tr}Created{/tr}:</td><td>{$userinfo.created|tiki_long_datetime}</td></tr>
 <tr class="formcolor"><td>{tr}Registration{/tr}:</td><td>{if $userinfo.registrationDate}{$userinfo.registrationDate|tiki_long_datetime}{/if}</td></tr>
@@ -263,7 +273,7 @@ title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
 <input type="hidden" name="edituser" value="1" />
 <input type="submit" name="submit" value="{tr}Save{/tr}" />
 {else}
-<tr class="formcolor"><td>{tr}Batch upload (CSV file<a {popup text='login,password,email,groups<br />user1,password1,email1,&quot;group1,group2&quot;<br />user2, password2,email2'}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>){/tr}:</td><td><input type="file" name="csvlist"/><br /><input type="radio" name="overwrite" value="y" checked="checked" />&nbsp;{tr}Overwrite{/tr}<br /><input type="radio" name="overwrite" value="c"/>&nbsp;{tr}Overwrite but keep the previous login if the login exists in another case{/tr}<br /><input type="radio" name="overwrite" value="n" />&nbsp;{tr}Don't overwrite{/tr}<br />{tr}Overwrite groups:{/tr} <input type="checkbox" name="overwriteGroup" /></td></tr>
+<tr class="formcolor"><td>{tr}Batch upload (CSV file):{/tr} <a {popup text='login,password,email,groups<br />user1,password1,email1,&quot;group1,group2&quot;<br />user2, password2,email2'}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a></td><td><input type="file" name="csvlist"/><br /><input type="radio" name="overwrite" value="y" checked="checked" />&nbsp;{tr}Overwrite{/tr}<br /><input type="radio" name="overwrite" value="c"/>&nbsp;{tr}Overwrite but keep the previous login if the login exists in another case{/tr}<br /><input type="radio" name="overwrite" value="n" />&nbsp;{tr}Don't overwrite{/tr}<br />{tr}Overwrite groups:{/tr} <input type="checkbox" name="overwriteGroup" /></td></tr>
 <tr class="formcolor"><td>&nbsp;</td><td>
 <input type="hidden" name="newuser" value="1" />
 <input type="submit" name="submit" value="{tr}Add{/tr}" />
@@ -280,10 +290,13 @@ title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
 <br /><br />
 {/if}
 
+{if ! ( $auth_method eq 'auth' and ( $auth_create_user_tiki eq 'n' or $auth_skip_admin eq 'y' ) and $auth_create_user_auth eq 'n' ) }
 <table class="normal">
 <tr class="formcolor"><td>
 <a class="link" href="javascript:genPass('genepass','pass','pass2');">{tr}Generate a password{/tr}</a></td>
 <td><input id='genepass' type="text" /></td></tr>
 </table>
+{/if}
+
 </div>
 

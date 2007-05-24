@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.215 2007-05-24 14:30:48 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.216 2007-05-24 21:00:36 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -243,7 +243,7 @@ class UsersLib extends TikiLib {
 	// For each auth method, validate user in auth, if valid, verify tiki user exists and create if necessary (as configured)
 	// Once complete, update_lastlogin and return result, username and login message.
     function validate_user(&$user, $pass, $challenge, $response) {
-	global $tikilib, $sender_email, $feature_intertiki, $feature_intertiki_mymaster, $min_pass_length;
+	global $tikilib, $sender_email, $feature_intertiki, $feature_intertiki_mymaster, $min_pass_length, $user_ldap_attributes;
 
 	if ($user != 'admin' && $feature_intertiki == 'y' && !empty($feature_intertiki_mymaster)) {
 	    // slave intertiki sites should never check passwords locally, just for admin
@@ -613,9 +613,10 @@ class UsersLib extends TikiLib {
 		    $result = $this->add_user($user, $pass, '');
 
 		    // if it worked ok, just log in
-		    if ($result == USER_VALID)
+		    if ($result == USER_VALID) {
 			// before we log in, update the login counter
 			return array($this->update_lastlogin($user), $user, $result);
+		    } 
 		    // if the server didn't work, do something!
 		    elseif ($result == SERVER_ERROR) {
 			// check the notification status for this type of error
@@ -704,7 +705,7 @@ class UsersLib extends TikiLib {
 
     // validate the user in the PEAR::Auth system
     function validate_user_auth($user, $pass) {
-	global $tikilib;
+	global $tikilib, $user_ldap_attributes;
 
 	include_once ("Auth/Auth.php");
 
@@ -751,19 +752,8 @@ class UsersLib extends TikiLib {
 	$a->login();
 	switch ($a->getStatus()) {
 		case AUTH_LOGIN_OK:
-			// Retrieve LDAP information to update user data
-			if ( $nameattr != '' ) {
-				$realname = $a->getAuthData($nameattr);
-				if ( $realname != '' ) {
-					global $cachelib, $tikidomain;
-					require_once("lib/cache/cachelib.php");
-					$this->set_user_preference($user, 'realName', $realname);
-					// Erase cache to update displayed user info
-					//   Do not just invalidate cache for 'user_details_'.$user and 'userslist', 
-					//   since userlink smarty modifier is also using cache with multiple possibilities of keys.
-					$cachelib->erase_dir_content("temp/cache/$tikidomain");
-				}
-			}
+			// Retrieve LDAP information to update user data a bit later (when he will be completely validated or auto-created)
+			if ( $nameattr != '' ) $user_ldap_attributes['auth_ldap_nameattr'] = $a->getAuthData($nameattr);
 			return USER_VALID;
 
 		case AUTH_USER_NOT_FOUND:
@@ -1888,10 +1878,9 @@ function get_included_groups($group) {
 	// Generate a unique hash; this is also done below in set_user_fields()
 	$hash = $this->hash_pass($user, $pass);
 
-	if ($feature_clear_passwords == 'n')
-	    $pass = '';
+	if ( $feature_clear_passwords == 'n' ) $pass = '';
 
-	if ($pass_first_login) {
+	if ( $pass_first_login ) {
 		$new_pass_due = 0;
 		$new_email_due = 0;
 	} else {

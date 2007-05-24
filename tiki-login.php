@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.67 2007-05-24 17:59:51 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.68 2007-05-24 21:00:31 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.67 2007-05-24 17:59:51 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.68 2007-05-24 21:00:31 nyloth Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -243,7 +243,21 @@ if ($feature_intertiki == 'y' and isset($_REQUEST['intertiki']) and in_array($_R
 		$isdue = $userlib->is_due($user);
 		if ($user != 'admin') {//admin has not necessarely an email
 			$isEmailDue = $userlib->is_email_due($user, 'email');
+
+			// Update some user details from LDAP
+			if ( is_array($user_ldap_attributes) ) {
+				if ( $user_ldap_attributes['auth_ldap_nameattr'] != '' ) { 
+					global $cachelib, $tikidomain;
+					require_once("lib/cache/cachelib.php");
+					$tikilib->set_user_preference($user, 'realName', $user_ldap_attributes['auth_ldap_nameattr']);
+					// Erase cache to update displayed user info
+					//   Do not just invalidate cache for 'user_details_'.$user and 'userslist',
+					//   since userlink smarty modifier is also using cache with multiple possibilities of keys.
+					$cachelib->erase_dir_content("temp/cache/$tikidomain");
+				}
+			}
 		}
+
 	}
 }
 
