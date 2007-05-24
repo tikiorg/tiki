@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.68 2007-05-07 13:06:59 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.69 2007-05-24 07:19:01 nyloth Exp $ *}
 <div class="cbox">
 <div class="cbox-title">{tr}Users &amp; groups{/tr}</div>
 <div class="cbox-data">
@@ -221,7 +221,8 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 <tr><td class="form">{tr}LDAP Member Is DN{/tr}:</td><td><input type="text" name="auth_ldap_memberisdn" value="{$auth_ldap_memberisdn|escape}" /></td></tr>
 <tr><td class="form">{tr}LDAP Admin User{/tr}:</td><td><input type="text" name="auth_ldap_adminuser" value="{$auth_ldap_adminuser|escape}" /></td></tr>
 <tr><td class="form">{tr}LDAP Admin Pwd{/tr}:</td><td><input type="password" name="auth_ldap_adminpass" value="{$auth_ldap_adminpass|escape}" /></td></tr>
-<tr><td class="form">{tr}LDAP Verion{/tr}:</td><td><input type="text" name="auth_ldap_version" value="{$auth_ldap_version|escape}" /></td></tr>
+<tr><td class="form">{tr}LDAP Version{/tr}:</td><td><input type="text" name="auth_ldap_version" value="{$auth_ldap_version|escape}" /></td></tr>
+<tr><td class="form">{tr}LDAP Realname Attribute{/tr}:</td><td><input type="text" name="auth_ldap_nameattr" value="{$auth_ldap_nameattr|escape}" /></td></tr>
 <tr><td colspan="2" class="button"><input type="submit" name="auth_pear" value="{tr}Change preferences{/tr}" /></td></tr>
 </table>
 </form>

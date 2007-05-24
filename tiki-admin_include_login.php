@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.53 2007-04-03 19:39:30 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.54 2007-05-24 07:19:01 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -119,6 +119,7 @@ if (isset($_REQUEST["auth_pear"])) {
 	simple_set_toggle('auth_ldap_memberisdn');
 	simple_set_value('auth_ldap_adminuser');
 	simple_set_value('auth_ldap_adminpass');
+	simple_set_value('auth_ldap_nameattr');
 }
 
 if (isset($_REQUEST["auth_pam"])) {
