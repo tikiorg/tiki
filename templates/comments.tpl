@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.81 2007-04-12 00:04:56 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.82 2007-05-24 14:39:09 sylvieg Exp $ *}
 
 {if $forum_mode eq 'y'}
 <tr><td>
@@ -227,7 +227,7 @@
     <table class="normal">
     <tr>
       <td class="formcolor"><label for="comments-title">{tr}Title{/tr}: </label><div class="attention">{tr}Required{/tr}</div></td>
-      <td class="formcolor"><input type="text" size="40" name="comments_title" id="comments-title" value="{$comment_title|escape}" /></td>
+      <td class="formcolor"><input type="text" size="50" name="comments_title" id="comments-title" value="{$comment_title|escape}" /></td>
     </tr>
 
 {* Start: Xenfasa adding and testing article ratings in comments here. Not fully functional yet *}
