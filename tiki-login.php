@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.65 2007-05-07 16:45:08 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.66 2007-05-24 14:32:57 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.65 2007-05-07 16:45:08 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.66 2007-05-24 14:32:57 sylvieg Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -115,6 +115,7 @@ $challenge = isset($_REQUEST['challenge']) ? $_REQUEST['challenge'] : false;
 $response = isset($_REQUEST['response']) ? $_REQUEST['response'] : false;
 $isvalid = false;
 $isdue = false;
+$isEmailDue = false;
 
 if ($feature_intertiki == 'y') {
   if (strstr($user,'@') && empty($feature_intertiki_mymaster)) {
@@ -176,6 +177,7 @@ if ($feature_intertiki == 'y' and isset($_REQUEST['intertiki']) and in_array($_R
 	} else {
 	    $isvalid = true;
 	    $isdue = false;
+		$isEmailDue = false;
 
 	    $logslib->add_log('login','intertiki : '.$user.'@'.$_REQUEST['intertiki']);
 
@@ -239,6 +241,9 @@ if ($feature_intertiki == 'y' and isset($_REQUEST['intertiki']) and in_array($_R
 	// The user must re-nter the old password so no security risk here
 	if ($isvalid) {
 		$isdue = $userlib->is_due($user);
+		if ($user != 'admin') {//admin has not necessarely an email
+			$isEmailDue = $userlib->is_due($user, 'email');
+		}
 	}
 }
 
@@ -248,6 +253,8 @@ if ($isvalid) {
 		// Note that the user is not logged in he's just validated to change his password
 		// The user must re-enter his old password so no security risk involved
 		$url = $url_prefix.'tiki-change_password.php?user=' . urlencode($user). '&oldpass=' . urlencode($pass);
+	} elseif ($isEmailDue) {
+		$userlib->send_confirm_email($user);
 	} else {
 		// User is valid and not due to change pass.. start session
 		//session_register('user',$user);

@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.214 2007-05-24 09:22:20 nyloth Exp $
+// CVS: $Id: userslib.php,v 1.215 2007-05-24 14:30:48 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -47,7 +47,7 @@ class UsersLib extends TikiLib {
 	global $feature_clear_passwords;
 
 	$query = "select `email` from `users_users` where `login` = ?";
-	$email = $this->getOne($query, array('admin'));
+	$email = $this->geOne($query, array('admin'));
 	$hash = $this->hash_pass("admin", $pass);
 
 	if ($feature_clear_passwords == 'n')
@@ -1856,7 +1856,7 @@ function get_included_groups($group) {
     }
 
     function confirm_user($user) {
-	global $feature_clear_passwords,$cachelib;
+	global $feature_clear_passwords,$cachelib, $email_due;
 
 	$query = "select `provpass`, `login` from `users_users` where `login`=?";
 	$result = $this->query($query, array($user));
@@ -1868,19 +1868,19 @@ function get_included_groups($group) {
 	    $provpass = '';
 	}
 
-	$query = "update `users_users` set `password`=? ,`hash`=? ,`provpass`=? where `login`=?";
+	$query = "update `users_users` set `password`=? ,`hash`=? ,`provpass`=?, `email_due`=? where `login`=?";
 	$result = $this->query($query, array(
 		    $provpass,
 		    $hash,
 		    '',
+			$this->now+ (60 * 60 * 24 * $email_due),
 		    $user
 		    ));
 	$cachelib->invalidate('userslist');
     }
 
     function add_user($user, $pass, $email, $provpass = '',$pass_first_login=false) {
-	global $pass_due, $tikilib, $cachelib, $patterns;
-	global $feature_clear_passwords;
+	global $pass_due, $tikilib, $cachelib, $patterns, $email_due, $feature_clear_passwords;
 
 	if ($this->user_exists($user) || empty($user) || !preg_match($patterns['login'],$user))
 	    return false;
@@ -1893,13 +1893,15 @@ function get_included_groups($group) {
 
 	if ($pass_first_login) {
 		$new_pass_due = 0;
+		$new_email_due = 0;
 	} else {
 		$new_pass_due = $this->now + (60 * 60 * 24 * $pass_due);
+		$new_email_due = $this->now + (60 * 60 * 24 * $email_due);
 	}
 	$query = "insert into
 	    `users_users`(`login`, `password`, `email`, `provpass`,
-		    `registrationDate`, `hash`, `pass_due`, `created`)
-	    values(?,?,?,?,?,?,?,?)";
+		    `registrationDate`, `hash`, `pass_due`, `email_due`, `created`)
+	    values(?,?,?,?,?,?,?,?,?)";
 	$result = $this->query($query, array(
 		    $user,
 		    $pass,
@@ -1908,6 +1910,7 @@ function get_included_groups($group) {
 		    (int) $this->now,
 		    $hash,
 		    (int) $new_pass_due,
+			(int) $new_email_due,
 		    (int) $this->now
 		    ));
 
@@ -2050,21 +2053,31 @@ function get_included_groups($group) {
     }
     
     function is_due($user) {
-    	global $change_password;
-			global $phpcas_enabled;
-			global $auth_method;
-
+    	global $change_password, $phpcas_enabled, $auth_method, $pass_due;
+		if ($pass_due < 0) {
+			return false;
+		}
     	// if CAS auth is enabled, don't check if password is due since CAS does not use local Tiki passwords
     	if (($phpcas_enabled == 'y' and $auth_method == 'cas') || $change_password != 'y') {
     		return false;
     	}
-    	
-	$due = $this->getOne("select `pass_due`  from `users_users` where " . $this->convert_binary(). " `login`=?", array($user));
+		$due = $this->getOne("select `pass_due`  from `users_users` where " . $this->convert_binary(). " `login`=?", array($user));
+		if ($due <= $this->now) {
+		    return true;
+		}
+		return false;
+    }
 
-	if ($due <= $this->now)
-	    return true;
-
-	return false;
+    function is_email_due($user) {
+    	global $email_due;
+		if ($email_due < 0) {
+			return false;
+		}
+		$due = $this->getOne("select `email_due`  from `users_users` where " . $this->convert_binary(). " `login`=?", array($user));
+		if ($due <= $this->now) {
+		    return true;
+		}
+		return false;
     }
 
     function renew_user_password($user) {
@@ -2436,6 +2449,44 @@ function get_included_groups($group) {
 		return ($this->getOne($query, array($group)));
 	}
 
+	function confirm_email($user, $pass) {
+		global $email_due, $tikilib;
+		$query = 'select `provpass`, `login` from `users_users` where `login`=?';
+		$result = $this->query($query, array($user));
+		if (!($res = $result->fetchRow())) {
+			return false;
+		}
+		if (md5($res['provpass']) == $pass){
+			$query = 'update `users_users` set `provpass`=?, `email_due`=? where `login`=? and `provpass`=?';
+			$this->query($query, array('', $tikilib->now+ (60 * 60 * 24 * $email_due), $user, $res['provpass']));
+			return true;
+		}
+		return false;
+	}
+
+	function send_confirm_email($user) {
+		global $smarty, $language, $tikilib;
+		include_once ('lib/webmail/tikimaillib.php');
+		$languageEmail = $this->get_user_preference($_REQUEST["username"], "language", $language);
+		$apass = $this->renew_user_password($user);
+		$apass = md5($apass);
+		$smarty->assign('mail_apass',$apass);
+		$smarty->assign('user', $user);
+		$mail = new TikiMail();
+		$mail_data = $smarty->fetchLang($languageEmail, 'mail/confirm_user_email_subject.tpl');
+		$mail_data = sprintf($mail_data, $_SERVER['SERVER_NAME']);
+		$mail->setSubject($mail_data);
+		$foo = parse_url($_SERVER["REQUEST_URI"]);
+		$mail_machine = $tikilib->httpPrefix().str_replace('tiki-login.php', 'tiki-confirm_user_email.php', $foo['path']);
+		$smarty->assign('mail_machine', $mail_machine);
+		$mail_data = $smarty->fetchLang($languageEmail, 'mail/confirm_user_email.tpl');		
+		$mail->setText($mail_data);
+		if (!$mail->send(array($this->get_user_email($user)))) {
+			$smarty->assign('msg', tra("The user email confirmation can't be sent. Contact the administrator"));
+		} else {
+			$smarty->assign('msg', 'It is time to confirm your email. You will receive an mail with the instruction to follow');
+		}
+	}
 }
 
 /* For the emacs weenies in the crowd.
