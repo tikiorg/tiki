@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.68 2007-05-24 21:00:31 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.69 2007-05-24 21:17:27 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.68 2007-05-24 21:00:31 nyloth Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.69 2007-05-24 21:17:27 nyloth Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -242,7 +242,10 @@ if ($feature_intertiki == 'y' and isset($_REQUEST['intertiki']) and in_array($_R
 	if ($isvalid) {
 		$isdue = $userlib->is_due($user);
 		if ($user != 'admin') {//admin has not necessarely an email
-			$isEmailDue = $userlib->is_email_due($user, 'email');
+			if ( ! $login_is_email ) {
+				// Ask to confirm e-mail only if it is not the login, which is supposed to be valid since created by admin or after a successful authentication.
+				$isEmailDue = $userlib->is_email_due($user, 'email');
+			}
 
 			// Update some user details from LDAP
 			if ( is_array($user_ldap_attributes) ) {
