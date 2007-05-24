@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.213 2007-05-24 07:19:01 nyloth Exp $
+// CVS: $Id: userslib.php,v 1.214 2007-05-24 09:22:20 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -754,7 +754,15 @@ class UsersLib extends TikiLib {
 			// Retrieve LDAP information to update user data
 			if ( $nameattr != '' ) {
 				$realname = $a->getAuthData($nameattr);
-				if ( $realname != '' ) $this->set_user_preference($user, 'realName', $realname);
+				if ( $realname != '' ) {
+					global $cachelib, $tikidomain;
+					require_once("lib/cache/cachelib.php");
+					$this->set_user_preference($user, 'realName', $realname);
+					// Erase cache to update displayed user info
+					//   Do not just invalidate cache for 'user_details_'.$user and 'userslist', 
+					//   since userlink smarty modifier is also using cache with multiple possibilities of keys.
+					$cachelib->erase_dir_content("temp/cache/$tikidomain");
+				}
 			}
 			return USER_VALID;
 
