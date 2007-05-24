@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.66 2007-05-24 14:32:57 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.67 2007-05-24 17:59:51 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.66 2007-05-24 14:32:57 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.67 2007-05-24 17:59:51 sylvieg Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -242,7 +242,7 @@ if ($feature_intertiki == 'y' and isset($_REQUEST['intertiki']) and in_array($_R
 	if ($isvalid) {
 		$isdue = $userlib->is_due($user);
 		if ($user != 'admin') {//admin has not necessarely an email
-			$isEmailDue = $userlib->is_due($user, 'email');
+			$isEmailDue = $userlib->is_email_due($user, 'email');
 		}
 	}
 }
@@ -255,6 +255,8 @@ if ($isvalid) {
 		$url = $url_prefix.'tiki-change_password.php?user=' . urlencode($user). '&oldpass=' . urlencode($pass);
 	} elseif ($isEmailDue) {
 		$userlib->send_confirm_email($user);
+		$smarty->assign('msg', tra('To log on this site, your email must be confirmed.').' '.tra('An email has been sent to you with the instructions to follow.'));
+		$smarty->display('information.tpl');
 	} else {
 		// User is valid and not due to change pass.. start session
 		//session_register('user',$user);
