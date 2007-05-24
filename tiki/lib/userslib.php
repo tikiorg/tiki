@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.212 2007-05-23 19:30:31 nyloth Exp $
+// CVS: $Id: userslib.php,v 1.213 2007-05-24 07:19:01 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -731,7 +731,11 @@ class UsersLib extends TikiLib {
 	//added to allow for ldap systems that do not allow anonymous bind
 	$options["binddn"] = $tikilib->get_preference("auth_ldap_adminuser", "");
 	$options["bindpw"] = $tikilib->get_preference("auth_ldap_adminpass", "");
- 
+
+	// attributes to fetch
+	$options['attributes'] = array();
+	if ( $nameattr = $tikilib->get_preference("auth_ldap_nameattr") ) $options['attributes'][] = $nameattr;
+
 	// set the Auth options
 	//$a = new Auth("LDAP", $options, "", false, $user, $pass);
 	
@@ -747,6 +751,11 @@ class UsersLib extends TikiLib {
 	$a->login();
 	switch ($a->getStatus()) {
 		case AUTH_LOGIN_OK:
+			// Retrieve LDAP information to update user data
+			if ( $nameattr != '' ) {
+				$realname = $a->getAuthData($nameattr);
+				if ( $realname != '' ) $this->set_user_preference($user, 'realName', $realname);
+			}
 			return USER_VALID;
 
 		case AUTH_USER_NOT_FOUND:
@@ -866,7 +875,7 @@ class UsersLib extends TikiLib {
 
     // create a new user in the Auth directory
     function create_user_auth($user, $pass) {
-	global $tikilib, $sender_email;
+	global $tikilib, $sender_email, $login_is_email;
 
 	$options = array();
 	$options["url"] = $tikilib->get_preference("auth_ldap_url", "");
@@ -887,8 +896,7 @@ class UsersLib extends TikiLib {
 
 	// set additional attributes here
 	$userattr = array();
-	$userattr["email"] = $this->getOne("select `email` from `users_users`
-			where `login`=?", array($user));
+	$userattr["email"] = ( $login_is_email == 'y' ) ? $user : $this->getOne("select `email` from `users_users` where `login`=?", array($user));
 
 	// set the Auth options
 	$a = new Auth("LDAP", $options);

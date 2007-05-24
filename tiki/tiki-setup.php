@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.431 2007-05-17 18:25:30 fr_rodo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.432 2007-05-24 07:19:01 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -947,6 +947,7 @@ $pref['auth_ldap_memberisdn'] = 'y';
 $pref['auth_ldap_adminuser'] = '';
 $pref['auth_ldap_adminpass'] = '';
 $pref['auth_ldap_version'] = 3;
+$pref['auth_ldap_nameattr'] = 'displayName';
 $pref['https'] = 'auto';
 $pref['https_login'] = 'n';
 $pref['https_login_required'] = 'n';
