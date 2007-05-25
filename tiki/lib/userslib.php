@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.219 2007-05-25 16:59:04 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.220 2007-05-25 18:32:25 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2419,14 +2419,14 @@ function get_included_groups($group) {
 
 	function confirm_email($user, $pass) {
 		global $email_due, $tikilib;
-		$query = 'select `provpass`, `login` from `users_users` where `login`=?';
+		$query = 'select `provpass`, `login`, `unsuccessful_logins` from `users_users` where `login`=?';
 		$result = $this->query($query, array($user));
 		if (!($res = $result->fetchRow())) {
 			return false;
 		}
 		if (md5($res['provpass']) == $pass){
-			$query = 'update `users_users` set `provpass`=?, `email_confirm`=? where `login`=? and `provpass`=?';
-			$this->query($query, array('', $tikilib->now, $user, $res['provpass']));
+			$query = 'update `users_users` set `provpass`=?, `email_confirm`=?, `unsuccessful_logins`=? where `login`=? and `provpass`=?';
+			$this->query($query, array('', $tikilib->now, 0, $user, $res['provpass']));
 			return true;
 		}
 		return false;
