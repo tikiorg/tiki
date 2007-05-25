@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.46 2007-05-13 12:53:00 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.47 2007-05-25 20:29:27 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -159,6 +159,9 @@ if ( ! empty($multiprint_pages) ) {
 	
 	// Get a list of last changes to the Wiki database
 	//   $listpages_orphans must not be initialized here because it can already have received a value from another script
+	if (!isset($listpages_orphans)) {
+		$listpages_orphans = false;
+	}
 	$listpages = $tikilib->list_pages($offset, $maxRecords, $sort_mode, $find, $initial, $exact_match, false, true, $listpages_orphans, $filter);
 	// If there're more records then assign next_offset
 	$cant_pages = ceil($listpages["cant"] / $maxRecords);
