@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.72 2007-05-25 10:06:55 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.73 2007-05-25 13:12:09 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.72 2007-05-25 10:06:55 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.73 2007-05-25 13:12:09 sylvieg Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -257,7 +257,6 @@ if ($feature_intertiki == 'y' and isset($_REQUEST['intertiki']) and in_array($_R
 				}
 			}
 		}
-
 	}
 }
 
@@ -309,6 +308,19 @@ if ($isvalid) {
 		}
 	}
 } else {
+	if ($error == PASSWORD_INCORRECT && $unsuccessful_logins >= 0) {
+ 		if (($nb_bad_logins = $userlib->unsuccessful_logins($user)) >= $unsuccessful_logins) {
+			$msg = sprintf(tra('More than %d unsuccessful login attempts have been made.'), $unsuccessful_logins);
+			$smarty->assign('msg', $msg);
+			$userlib->send_confirm_email($user, 'unsuccessful_logins');
+			$smarty->assign('msg', $msg.' '.tra('An email has been sent to you with the instructions to follow.'));
+			unset($user);
+			$smarty->assign($user, '');
+			$smarty->display('information.tpl');
+			die;
+		}
+		$userlib->set_unsuccessful_logins($user, $nb_bad_logins + 1);
+	}
 	unset($user);
 	unset($isvalid);
 	if ($error == PASSWORD_INCORRECT)
