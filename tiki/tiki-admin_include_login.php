@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.55 2007-05-24 14:30:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.56 2007-05-25 13:15:29 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -33,6 +33,7 @@ if (isset($_REQUEST["loginprefs"])) {
 	simple_set_value('min_pass_length');
 	simple_set_value('pass_due');
 	simple_set_value('email_due');
+	simple_set_value('unsuccessful_logins');
 	simple_set_toggle('validateUsers');
 	simple_set_toggle('validateEmail');
 	simple_set_toggle('login_is_email');

@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.155 2007-05-24 20:32:50 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.156 2007-05-25 13:12:09 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -915,4 +915,5 @@ ALTER TABLE tiki_comments DROP KEY no_repeats;
 ALTER TABLE tiki_comments ADD UNIQUE KEY no_repeats(parentId, userName(40), title(100), commentDate, message_id(40), in_reply_to(40));
 
 #sylvieg 2007/05/23
-ALTER TABLE users_users ADD email_due int(14) default NULL;
+ALTER TABLE users_users ADD email_due int(14) default NULL AFTER pass_due;
+ALTER TABLE users_users ADD unsuccessful_logins int(14) default 0;

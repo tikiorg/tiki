@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.216 2007-05-24 21:00:36 nyloth Exp $
+// CVS: $Id: userslib.php,v 1.217 2007-05-25 13:12:10 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -815,30 +815,10 @@ class UsersLib extends TikiLib {
 	    //print("challenge: ".$_SESSION["challenge"]." challenge: $challenge<br />");
 	    //print("response : $response<br />");
 	    if ($response == md5($user . $hash . $_SESSION["challenge"])) {
-		// Check
-		$current = $this->getOne("select `currentLogin` from `users_users` where `login`=?", array($user));
-
-		if (is_null($current)) {
-		    // First time
-		    $current = $this->now;
-		}
-
-		$query = "update `users_users` set `lastLogin`=? where `login`=?";
-		$result = $this->query($query, array(
-			    (int)$current,
-			    $user
-			    ));
-
-		// check
-		$query = "update `users_users` set `currentLogin`=? where `login`=?";
-		$result = $this->query($query, array(
-			    (int)$this->now,
-			    $user
-			    ));
-
-		return array(true, $user);
+			$this->update_lastlogin($user);
+			return array(true, $user);
 	    } else {
-		return array(false, $user);
+			return array(false, $user);
 	    }
 	}
 
@@ -855,16 +835,11 @@ class UsersLib extends TikiLib {
 	    $current = $this->now;
 	}
 
-	$query = "update `users_users` set `lastLogin`=? where `login`=?";
+	$query = "update `users_users` set `lastLogin`=?, `currentLogin`=?, `unsuccessful_logins`=? where `login`=?";
 	$result = $this->query($query, array(
 		    (int)$current,
-		    $user
-		    ));
-
-	// check
-	$query = "update `users_users` set `currentLogin`=? where `login`=?";
-	$result = $this->query($query, array(
-		    (int)$this->now,
+			(int)$this->now,
+			0,
 		    $user
 		    ));
 
@@ -2069,6 +2044,10 @@ function get_included_groups($group) {
 		return false;
     }
 
+	function unsuccessful_logins($user) {
+		return $this->getOne('select `unsuccessful_logins` from `users_users` where ' . $this->convert_binary(). ' `login`=?', array($user));
+	}
+
     function renew_user_password($user) {
 		$pass = $this->genPass();
 		// Note that tiki-generated passwords are due inmediatley
@@ -2453,7 +2432,12 @@ function get_included_groups($group) {
 		return false;
 	}
 
-	function send_confirm_email($user) {
+	function set_unsuccessful_logins($user, $nb) {
+ 		$query = 'update `users_users` set `unsuccessful_logins`=? where `login` = ?';
+		$this->query($query, array($nb, $user));
+	}
+
+	function send_confirm_email($user,$tpl='confirm_user_email') {
 		global $smarty, $language, $tikilib;
 		include_once ('lib/webmail/tikimaillib.php');
 		$languageEmail = $this->get_user_preference($_REQUEST["username"], "language", $language);
@@ -2462,13 +2446,13 @@ function get_included_groups($group) {
 		$smarty->assign('mail_apass',$apass);
 		$smarty->assign('user', $user);
 		$mail = new TikiMail();
-		$mail_data = $smarty->fetchLang($languageEmail, 'mail/confirm_user_email_subject.tpl');
+		$mail_data = $smarty->fetchLang($languageEmail, "mail/$tpl_subject.tpl");
 		$mail_data = sprintf($mail_data, $_SERVER['SERVER_NAME']);
 		$mail->setSubject($mail_data);
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 		$mail_machine = $tikilib->httpPrefix().str_replace('tiki-login.php', 'tiki-confirm_user_email.php', $foo['path']);
 		$smarty->assign('mail_machine', $mail_machine);
-		$mail_data = $smarty->fetchLang($languageEmail, 'mail/confirm_user_email.tpl');		
+		$mail_data = $smarty->fetchLang($languageEmail, "mail/$tpl.tpl");		
 		$mail->setText($mail_data);
 		if (!$mail->send(array($this->get_user_email($user)))) {
 			$smarty->assign('msg', tra("The user email confirmation can't be sent. Contact the administrator"));
