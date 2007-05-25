@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_image.tpl,v 1.47 2007-05-13 22:31:40 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_image.tpl,v 1.48 2007-05-25 20:06:30 pkdille Exp $ *}
 
 {if $popup}
 <?xml version="1.0" encoding="UTF-8"?>
@@ -15,10 +15,10 @@
 {else}
 <div id="{$rootid}browse_image">
   <h2><a class="pagetitle pixurl" href="{$url_base}{$imageId}">{tr}Browsing Image{/tr}: <span class="noslideshow">{$name}</span><span class="slideshow_i pixurl" style="display: none">#{$imageId}</span></a></h2>
-  <p>
-    <a class="linkbut" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}" style="float: left;">{tr}return to gallery{/tr}</a>
+  <p style="float:left;position:absolute;">
+    <a class="linkbut" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}" style="">{tr}return to gallery{/tr}</a>
     {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
-      <a class="linkbut pixurl" href="tiki-edit_image.php?galleryId={$galleryId}&amp;edit={$imageId}&amp;sort_mode={$sort_mode}" style="float: right;">{tr}edit image{/tr}</a>
+      <a class="linkbut pixurl" href="tiki-edit_image.php?galleryId={$galleryId}&amp;edit={$imageId}&amp;sort_mode={$sort_mode}" style="">{tr}edit image{/tr}</a>
     {/if}
   </p>
 {/if}
