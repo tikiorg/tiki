@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-wysiwyg.tpl,v 1.1 2006-12-16 11:16:46 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-wysiwyg.tpl,v 1.2 2007-05-25 22:33:48 pkdille Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -32,7 +32,7 @@
         </tr><tr>
           <td class="form"><label for="wysiwyg_toolbar">{tr}Toolbar content{/tr}:</label></td><td><td>
         </tr><tr>
-          <td colspan="2"><textarea cols="62" rows="8" name="wysiwyg_toolbar" id="wysiwyg_toolbar">{$wysiwyg_toolbar}</textarea></td>
+          <td colspan="2"><textarea cols="90" rows="8" name="wysiwyg_toolbar" id="wysiwyg_toolbar">{$wysiwyg_toolbar}</textarea></td>
         </tr><tr>
           <td colspan="2" class="button"><input type="submit" name="wysiwygfeatures" value="{tr}Change preferences{/tr}" /></td>
         </tr></table>

@@ -206,7 +206,7 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
   </tr>
 	<tr>
     <td><input type="checkbox" name="feature_wysiwyg" {if $feature_wysiwyg eq 'y'}checked="checked"{/if}/></td>
-    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Wysiwyg+Editor" target="tikihelp" class="tikihelp" title="{tr}tikiwiki.org help{/tr}: {tr}Wysiwyg Editor{/tr}">{/if} {tr}Wysiwyg Editor{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
+    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Wysiwyg+Editor" target="tikihelp" class="tikihelp" title="{tr}tikiwiki.org help{/tr}: {tr}Wysiwyg editor{/tr}">{/if} {tr}Wysiwyg editor{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
     <td>&nbsp;</td>
     <td><input type="checkbox" name="feature_fullscreen" {if $feature_fullscreen eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Fullscreen" target="tikihelp" class="tikihelp" title="{tr}tikiwiki.org help{/tr}:
