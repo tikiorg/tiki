@@ -59,7 +59,7 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
 	    $ou = $user_details['info']['realName'];
 	    unset($user_details);
     }
-    if ( $ou == '' ) $ou = $other_user;
+    if ( empty($ou) || $ou == '' ) $ou = $other_user;
     if ( $max_length > 0 ) $ou = smarty_modifier_truncate($ou, $max_length, '...', true);
 
     if($userlib->user_exists($other_user)&&(!empty($friend) || $tikilib->get_user_preference($other_user,'user_information','public')=='public')) {
