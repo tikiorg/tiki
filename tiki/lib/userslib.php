@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.217 2007-05-25 13:12:10 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.218 2007-05-25 14:43:27 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2446,7 +2446,7 @@ function get_included_groups($group) {
 		$smarty->assign('mail_apass',$apass);
 		$smarty->assign('user', $user);
 		$mail = new TikiMail();
-		$mail_data = $smarty->fetchLang($languageEmail, "mail/$tpl_subject.tpl");
+		$mail_data = $smarty->fetchLang($languageEmail, "mail/$tpl"."_subject.tpl");
 		$mail_data = sprintf($mail_data, $_SERVER['SERVER_NAME']);
 		$mail->setSubject($mail_data);
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
