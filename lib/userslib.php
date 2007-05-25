@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.218 2007-05-25 14:43:27 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.219 2007-05-25 16:59:04 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1821,7 +1821,7 @@ function get_included_groups($group) {
     }
 
     function confirm_user($user) {
-	global $feature_clear_passwords,$cachelib, $email_due;
+	global $feature_clear_passwords,$cachelib;
 
 	$query = "select `provpass`, `login` from `users_users` where `login`=?";
 	$result = $this->query($query, array($user));
@@ -1833,19 +1833,19 @@ function get_included_groups($group) {
 	    $provpass = '';
 	}
 
-	$query = "update `users_users` set `password`=? ,`hash`=? ,`provpass`=?, `email_due`=? where `login`=?";
+	$query = "update `users_users` set `password`=? ,`hash`=? ,`provpass`=?, `email_confirm`=? where `login`=?";
 	$result = $this->query($query, array(
 		    $provpass,
 		    $hash,
 		    '',
-			$this->now+ (60 * 60 * 24 * $email_due),
+			$this->now,
 		    $user
 		    ));
 	$cachelib->invalidate('userslist');
     }
 
     function add_user($user, $pass, $email, $provpass = '',$pass_first_login=false) {
-	global $pass_due, $tikilib, $cachelib, $patterns, $email_due, $feature_clear_passwords;
+	global $tikilib, $cachelib, $patterns, $email_due, $feature_clear_passwords;
 
 	if ($this->user_exists($user) || empty($user) || !preg_match($patterns['login'],$user))
 	    return false;
@@ -1856,15 +1856,14 @@ function get_included_groups($group) {
 	if ( $feature_clear_passwords == 'n' ) $pass = '';
 
 	if ( $pass_first_login ) {
-		$new_pass_due = 0;
-		$new_email_due = 0;
+		$new_pass_confirm = 0;
 	} else {
-		$new_pass_due = $this->now + (60 * 60 * 24 * $pass_due);
-		$new_email_due = $this->now + (60 * 60 * 24 * $email_due);
+		$new_pass_confirm = $this->now;
 	}
+	$new_email_confirm = $this->now;
 	$query = "insert into
 	    `users_users`(`login`, `password`, `email`, `provpass`,
-		    `registrationDate`, `hash`, `pass_due`, `email_due`, `created`)
+		    `registrationDate`, `hash`, `pass_confirm`, `email_confirm`, `created`)
 	    values(?,?,?,?,?,?,?,?,?)";
 	$result = $this->query($query, array(
 		    $user,
@@ -1873,8 +1872,8 @@ function get_included_groups($group) {
 		    $provpass,
 		    (int) $this->now,
 		    $hash,
-		    (int) $new_pass_due,
-			(int) $new_email_due,
+		    (int) $new_pass_confirm,
+			(int) $new_email_confirm,
 		    (int) $this->now
 		    ));
 
@@ -2018,15 +2017,18 @@ function get_included_groups($group) {
     
     function is_due($user) {
     	global $change_password, $phpcas_enabled, $auth_method, $pass_due;
-		if ($pass_due < 0) {
-			return false;
-		}
     	// if CAS auth is enabled, don't check if password is due since CAS does not use local Tiki passwords
     	if (($phpcas_enabled == 'y' and $auth_method == 'cas') || $change_password != 'y') {
     		return false;
     	}
-		$due = $this->getOne("select `pass_due`  from `users_users` where " . $this->convert_binary(). " `login`=?", array($user));
-		if ($due <= $this->now) {
+		$confirm = $this->getOne("select `pass_confirm`  from `users_users` where " . $this->convert_binary(). " `login`=?", array($user));
+		if (!$confirm) {
+			return true;
+		}
+		if ($pass_due < 0) {
+			return false;
+		}
+		if ($confirm + (60 * 60 * 24 * $pass_due) < $this->now) {
 		    return true;
 		}
 		return false;
@@ -2037,8 +2039,8 @@ function get_included_groups($group) {
 		if ($email_due < 0) {
 			return false;
 		}
-		$due = $this->getOne("select `email_due`  from `users_users` where " . $this->convert_binary(). " `login`=?", array($user));
-		if ($due <= $this->now) {
+		$confirm = $this->getOne("select `email_confirm`  from `users_users` where " . $this->convert_binary(). " `login`=?", array($user));
+		if ($confirm + (60 * 60 * 24 * $email_due) < $this->now) {
 		    return true;
 		}
 		return false;
@@ -2063,7 +2065,7 @@ function get_included_groups($group) {
 		$pass = $this->getOne($query, array($user));
 		if (($pass <> '') && ($actpass == md5($pass))) {
 			$hash = $this->hash_pass($user, $pass);
-			$query = "update `users_users` set `password`=?, `hash`=?, `pass_due`=? where " . $this->convert_binary() . " `login`=?";
+			$query = "update `users_users` set `password`=?, `hash`=?, `pass_confirm`=? where " . $this->convert_binary() . " `login`=?";
 			$result = $this->query($query, array("", $hash, (int)$this->now, $user));
 			return $pass;
 		}
@@ -2071,22 +2073,20 @@ function get_included_groups($group) {
     }
 
     function change_user_password($user, $pass) {
-	global $pass_due;
-
 	global $feature_clear_passwords;
 
 	$hash = $this->hash_pass($user, $pass);
-	$new_pass_due = $this->now + (60 * 60 * 24 * $pass_due);
+	$new_pass_confirm = $this->now;
 
 	if ($feature_clear_passwords == 'n') {
 	    $pass = '';
 	}
 
-	$query = "update `users_users` set `hash`=? ,`password`=? ,`pass_due`=?, `provpass`=? where " . $this->convert_binary(). " `login`=?";
+	$query = "update `users_users` set `hash`=? ,`password`=? ,`pass_confirm`=?, `provpass`=? where " . $this->convert_binary(). " `login`=?";
 	$result = $this->query($query, array(
 		    $hash,
 		    $pass,
-		    $new_pass_due,
+		    $new_pass_confirm,
 		    "",
 		    $user
 		    ));
@@ -2425,8 +2425,8 @@ function get_included_groups($group) {
 			return false;
 		}
 		if (md5($res['provpass']) == $pass){
-			$query = 'update `users_users` set `provpass`=?, `email_due`=? where `login`=? and `provpass`=?';
-			$this->query($query, array('', $tikilib->now+ (60 * 60 * 24 * $email_due), $user, $res['provpass']));
+			$query = 'update `users_users` set `provpass`=?, `email_confirm`=? where `login`=? and `provpass`=?';
+			$this->query($query, array('', $tikilib->now, $user, $res['provpass']));
 			return true;
 		}
 		return false;

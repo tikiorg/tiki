@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2007-05-25 13:12:08 $
+# $Date: 2007-05-25 16:59:03 $
 # $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -4327,8 +4327,8 @@ CREATE TABLE users_users (
   currentLogin int(14) default NULL,
   registrationDate int(14) default NULL,
   challenge varchar(32) default NULL,
-  pass_due int(14) default NULL,
-  email_due int(14) default NULL,
+  pass_confirm int(14) default NULL,
+  email_confirm int(14) default NULL,
   hash varchar(32) default NULL,
   created int(14) default NULL,
   avatarName varchar(80) default NULL,
