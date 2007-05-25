@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2007-05-09 14:49:49 $
+# $Date: 2007-05-25 14:08:23 $
 # $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -976,7 +976,7 @@ CREATE TABLE tiki_comments (
   points decimal(8,2) default NULL,
   votes int(8) default NULL,
   average decimal(8,4) default NULL,
-  title varchar(100) default NULL,
+  title varchar(255) default NULL,
   data text,
   hash varchar(32) default NULL,
   user_ip varchar(15) default NULL,
@@ -986,12 +986,11 @@ CREATE TABLE tiki_comments (
   in_reply_to varchar(128) default NULL,
   comment_rating tinyint(2) default NULL,  
   PRIMARY KEY  (threadId),
-  UNIQUE KEY no_repeats (parentId, userName, title(40), commentDate, message_id(40), in_reply_to(40)),
+  UNIQUE KEY no_repeats (parentId, userName(40), title(100), commentDate, message_id(40), in_reply_to(40)),
   KEY title (title),
   KEY data (data(255)),
   KEY object (object),
   KEY hits (hits),
-  KEY tc_pi (parentId),
   KEY threaded (message_id, in_reply_to, parentId),
   FULLTEXT KEY ft (title,data)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
@@ -1409,7 +1408,7 @@ CREATE TABLE tiki_forum_reads (
 DROP TABLE IF EXISTS tiki_forums;
 CREATE TABLE tiki_forums (
   forumId int(8) NOT NULL auto_increment,
-  name varchar(40) default NULL,
+  name varchar(255) default NULL,
   description text,
   created int(14) default NULL,
   lastPost int(14) default NULL,
@@ -2041,7 +2040,7 @@ CREATE TABLE tiki_menu_options (
   PRIMARY KEY  (optionId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Home','tiki-index.php',10,'','','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Home','./',10,'','','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Chat','tiki-chat.php',15,'feature_chat','tiki_p_chat','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Contact us','tiki-contact.php',20,'feature_contact','','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Stats','tiki-stats.php',23,'feature_stats','tiki_p_view_stats','');
@@ -4329,6 +4328,7 @@ CREATE TABLE users_users (
   registrationDate int(14) default NULL,
   challenge varchar(32) default NULL,
   pass_due int(14) default NULL,
+  email_due int(14) default NULL,
   hash varchar(32) default NULL,
   created int(14) default NULL,
   avatarName varchar(80) default NULL,
@@ -4338,6 +4338,7 @@ CREATE TABLE users_users (
   avatarLibName varchar(200) default NULL,
   avatarType char(1) default NULL,
   score int(11) NOT NULL default 0,
+  unsuccessful_logins int(14) default 0,
   PRIMARY KEY  (userId),
   KEY login (login),
   KEY score (score),

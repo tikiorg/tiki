@@ -1,5 +1,5 @@
 -- $Rev$
--- $Date: 2007-05-09 14:49:50 $
+-- $Date: 2007-05-25 14:08:23 $
 -- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
@@ -1150,7 +1150,7 @@ CREATE TABLE "tiki_comments" (
   "points" decimal(8,2) default NULL,
   "votes" number(8) default NULL,
   "average" decimal(8,4) default NULL,
-  "title" varchar(100) default NULL,
+  "title" varchar(255) default NULL,
   "data" clob,
   "hash" varchar(32) default NULL,
   "user_ip" varchar(15) default NULL,
@@ -1171,7 +1171,6 @@ CREATE  INDEX "tiki_comments_title" ON "tiki_comments"("title");
 CREATE  INDEX "tiki_comments_data" ON "tiki_comments"("data");
 CREATE  INDEX "tiki_comments_object" ON "tiki_comments"("object");
 CREATE  INDEX "tiki_comments_hits" ON "tiki_comments"("hits");
-CREATE  INDEX "tiki_comments_tc_pi" ON "tiki_comments"("parentId");
 CREATE  INDEX "tiki_comments_threaded" ON "tiki_comments"("message_id" "in_reply_to" "parentId");
 CREATE  INDEX "tiki_comments_ft" ON "tiki_comments"("title","data");
 CREATE UNIQUE INDEX "tiki_comments_no_repeats" ON "tiki_comments"("parentId" "userName" "title" "commentDate" "message_id" "in_reply_to");
@@ -1675,7 +1674,7 @@ DROP TABLE "tiki_forums";
 CREATE SEQUENCE "tiki_forums_sequ" INCREMENT BY 1 START WITH 1;
 CREATE TABLE "tiki_forums" (
   "forumId" number(8) NOT NULL,
-  "name" varchar(40) default NULL,
+  "name" varchar(255) default NULL,
   "description" clob,
   "created" number(14) default NULL,
   "lastPost" number(14) default NULL,
@@ -2400,7 +2399,7 @@ SELECT "tiki_menu_options_sequ".nextval into :NEW."optionId" FROM DUAL;
 END;
 /
 -- --------------------------------------------------------
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Home','tiki-index.php',10,'','','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Home','./',10,'','','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Chat','tiki-chat.php',15,'feature_chat','tiki_p_chat','');
 
@@ -5353,6 +5352,7 @@ CREATE TABLE "users_users" (
   "registrationDate" number(14) default NULL,
   "challenge" varchar(32) default NULL,
   "pass_due" number(14) default NULL,
+  "email_due" number(14) default NULL,
   "hash" varchar(32) default NULL,
   "created" number(14) default NULL,
   "avatarName" varchar(80) default NULL,
@@ -5362,6 +5362,7 @@ CREATE TABLE "users_users" (
   "avatarLibName" varchar(200) default NULL,
   "avatarType" char(1) default NULL,
   "score" number(11) default 0 NOT NULL,
+  "unsuccessful_logins" number(14) default 0,
   PRIMARY KEY ("userId")
 )   ;
 
