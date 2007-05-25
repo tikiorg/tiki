@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.61 2007-05-13 16:34:43 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.62 2007-05-25 20:24:53 sylvieg Exp $ *}
 
 <script type="text/javascript">
 {literal}
@@ -158,6 +158,7 @@
             </select>
 						{tr}visible to admin only{/tr}
 						<input type="checkbox" name="error_reporting_adminonly"{if $error_reporting_adminonly eq 'y'} checked="checked"{/if} />
+						<br />{tr}smarty notice reporting{/tr}<input type="checkbox" name="smarty_notice_reporting"{if $smarty_notice_reporting eq 'y'} checked="checked"{/if} />
       </td>
       </tr><tr>
       <td class="form"><label for="general-charset">{tr}Default charset for sending mail:{/tr}</label></td>
