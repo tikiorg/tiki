@@ -2,7 +2,7 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2007-05-09 14:49:50 $
+-- $Date: 2007-05-25 14:08:23 $
 -- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
@@ -1276,7 +1276,7 @@ CREATE TABLE "tiki_comments" (
   "points" decimal(8,2) default NULL NULL,
   "votes" numeric(8,0) default NULL NULL,
   "average" decimal(8,4) default NULL NULL,
-  "title" varchar(100) default NULL NULL,
+  "title" varchar(255) default NULL NULL,
   "data" text default '',
   "hash" varchar(32) default NULL NULL,
   "user_ip" varchar(15) default NULL NULL,
@@ -1297,8 +1297,6 @@ go
 CREATE  INDEX "tiki_comments_object" ON "tiki_comments"("object")
 go
 CREATE  INDEX "tiki_comments_hits" ON "tiki_comments"("hits")
-go
-CREATE  INDEX "tiki_comments_tc_pi" ON "tiki_comments"("parentId")
 go
 CREATE  INDEX "tiki_comments_threaded" ON "tiki_comments"("message_id" "in_reply_to" "parentId")
 go
@@ -1853,7 +1851,7 @@ go
 
 CREATE TABLE "tiki_forums" (
   "forumId" numeric(8 ,0) identity,
-  "name" varchar(40) default NULL NULL,
+  "name" varchar(255) default NULL NULL,
   "description" text default '',
   "created" numeric(14,0) default NULL NULL,
   "lastPost" numeric(14,0) default NULL NULL,
@@ -2691,7 +2689,7 @@ go
 
 
 -- --------------------------------------------------------
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Home','tiki-index.php',10,'','','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Home','./',10,'','','')
 go
 
 
@@ -6734,6 +6732,7 @@ CREATE TABLE "users_users" (
   "registrationDate" numeric(14,0) default NULL NULL,
   "challenge" varchar(32) default NULL NULL,
   "pass_due" numeric(14,0) default NULL NULL,
+  "email_due" numeric(14,0) default NULL NULL,
   "hash" varchar(32) default NULL NULL,
   "created" numeric(14,0) default NULL NULL,
   "avatarName" varchar(80) default NULL NULL,
@@ -6743,6 +6742,7 @@ CREATE TABLE "users_users" (
   "avatarLibName" varchar(200) default NULL NULL,
   "avatarType" char(1) default NULL NULL,
   "score" numeric(11,0) default 0 NOT NULL,
+  "unsuccessful_logins" numeric(14,0) default 0,
   PRIMARY KEY ("userId")
 )   
 go
