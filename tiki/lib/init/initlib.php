@@ -1,4 +1,4 @@
-<?php // $Id: initlib.php,v 1.13 2006-11-29 10:39:10 mose Exp $
+<?php // $Id: initlib.php,v 1.14 2007-05-25 20:24:53 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
@@ -102,7 +102,7 @@ class TikiInit {
 }
 
 function tiki_error_handling($errno, $errstr, $errfile, $errline) {
-	global $error_reporting_level,$tiki_p_admin,$phpErrors;
+	global $error_reporting_level,$tiki_p_admin,$phpErrors, $smarty_notice_reporting;
 	$err[E_ERROR]           = 'E_ERROR';
 	$err[E_CORE_ERROR]      = 'E_CORE_ERROR';
 	$err[E_USER_ERROR]      = 'E_USER_ERROR';
@@ -139,6 +139,8 @@ function tiki_error_handling($errno, $errstr, $errfile, $errline) {
 		case E_NOTICE:
 		case E_USER_NOTICE:
 			if ($error_reporting_level == '2047' and $tiki_p_admin == 'y') {
+				if ($smarty_notice_reporting != 'y' && strstr($errfile, '.tpl.php'))
+					break;
 				$back = "<div style='padding:4px;border:1px solid #000;background-color:#FF6;font-size:10px;'>";
 				$back.= "<b>PHP (".PHP_VERSION.") NOTICE ($errno):</b><br />";
 				$back.= "<tt><b>File:</b></tt> $errfile<br />";

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.54 2007-04-05 18:57:45 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.55 2007-05-25 20:24:53 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -47,6 +47,7 @@ elseif (isset($_REQUEST["prefs"])) {
         "session_db",
 	"contact_anon",
 	"error_reporting_adminonly",
+	"smarty_notice_reporting",
 	"user_show_realnames"
     );
 
