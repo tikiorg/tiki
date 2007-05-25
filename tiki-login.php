@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.73 2007-05-25 13:12:09 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.74 2007-05-25 14:14:26 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.73 2007-05-25 13:12:09 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.74 2007-05-25 14:14:26 sylvieg Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -269,7 +269,10 @@ if ($isvalid) {
 	} elseif ($isEmailDue) {
 		$userlib->send_confirm_email($user);
 		$smarty->assign('msg', tra('To log on this site, your email must be confirmed.').' '.tra('An email has been sent to you with the instructions to follow.'));
+		$smarty->assign('user', '');
+		unset($user);
 		$smarty->display('information.tpl');
+		die;
 	} else {
 		// User is valid and not due to change pass.. start session
 		//session_register('user',$user);
