@@ -52,12 +52,14 @@
 <td>{tr}Database type{/tr}:</td>
 <td>
 <select name="db">
-{section name=dbnames loop=$dbservers}
-<option value="{$dbservers[dbnames]}">{$dbservers[dbnames]}</option>
-{/section}
+{foreach key=dsn item=dbname from=$dbservers}
+<option value="{$dsn}">{$dbname}</option>
+{/foreach}
 </select>
 </td>
-<td>{tr}The type of database you intend to use{/tr}</td>
+<td>{tr}The type of database you intend to use{/tr}<br />
+<i>{tr}Only databases supported by your PHP installation are listed here. If your database is not in the list, try to install the appropriate PHP extension.{/tr}</i>
+</td>
 </tr>
 
 <tr class="formcolor">
@@ -204,29 +206,42 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 
 		  {/if}
     	{else}
-    		<b>{tr}Print operations executed successfully{/tr}</b><br />
-    		<textarea rows="15" cols="80">
-    		{section loop=$succcommands name=ix}
-    		{$succcommands[ix]}
-    		{/section}
-    		</textarea><br /><br />
-    		<b>{tr}Print operations failed{/tr}</b><br />
+    		<b>{tr}Print operations executed successfully{/tr}:</b> {$succcommands|@count} {tr}sql queries{/tr}<br />
+    		<b>{tr}Print operations failed{/tr}:</b> {$failedcommands|@count} {tr}sql queries{/tr}<br />
+		{if $failedcommands|@count > 0}
     		<textarea rows="15" cols="80">
     		{section loop=$failedcommands name=ix}
     		{$failedcommands[ix]}
     		{/section}
-    		</textarea><br /><br />
+    		</textarea><br />
+		{/if}
+		<br />
+
+		<div style="border-style: solid; border-width: 1; padding: 4; background-color: #a9ff9b;">
+		<p align="center">
+		<span style="font-size: large; padding: 4px;">
     		{tr}Your database has been configured and Tikiwiki is ready to run! If
     		this is your first install, your admin password is 'admin'. You can
     		now log in into Tikiwiki as user 'admin' and start configuring
-    		the application.{/tr}<br />
-    		{tr}Note: This install script may be potentially harmful so we strongly
-    		recommend you to disable the script and then proceed into Tiki. If
-    		you decide to reuse later, just follow the instructions in
-		tiki-install.php to restore{/tr}.<br /><br />
+    		the application.{/tr}
+		</span>
+		</p>
+		</div>
+    		<br />
 
     		{tr}READ THE FOLLOWING NOTES BEFORE ENTERING TIKI USING THE LINKS BELOW!{/tr}
-    		
+
+		<div class="rbox" name="tip">
+		<div class="rbox-title" name="tip">Note</div>
+		<div class="rbox-data" name="tip">
+		{tr}Note: This install script may be potentially harmful so we strongly
+		recommend you to disable the script and then proceed into Tiki. If
+		you decide to reuse later, just follow the instructions in
+		tiki-install.php to restore{/tr}.
+		</div>
+		</div>
+
+{if $php_memory_limit < 64 * 1024 * 1024}
     		<div class="rbox" name="tip">
             <div class="rbox-title" name="tip">Note</div>  
             <div class="rbox-data" name="tip">{tr}Make sure tiki gets more than 8 MB of memory for script execution. 
@@ -234,7 +249,7 @@ See file php.ini, the relevant key is memory_limit. Use something like memory_li
 webserver. Too little memory will cause blank pages!{/tr}</div>
             </div>
 			
-	{if $php_memory_limit eq ''}
+	{if $php_memory_limit <= 0}
 		<div style="border-style: solid; border-width: 1; padding: 4">
 		  <p align="center">
 		  <span style="padding: 2px; background-color: #00FF00">
@@ -242,11 +257,11 @@ webserver. Too little memory will cause blank pages!{/tr}</div>
 		  </span>
 		</div>	
 	
-	{elseif $php_memory_limit eq '8M'}
+	{elseif $php_memory_limit <= 8 * 1024 * 1024}
 		<div style="border-style: solid; border-width: 1; padding: 4">
 		  <p align="center">
 		  <span style="text-decoration: blink; font-size: x-large; padding: 4px; background-color: #FF0000">
-		  {tr}Tiki has detected your PHP memory limit at only 8 Megs{/tr}
+		  {tr}Tiki has detected your PHP memory limit at{/tr}: {$php_memory_limit|kbsize:true:0}
 		  </span>
 		</div>
 
@@ -254,28 +269,31 @@ webserver. Too little memory will cause blank pages!{/tr}</div>
 		<div style="border-style: solid; border-width: 1; padding: 4">
 		  <p align="center">
 		  <span style="font-size: large; padding: 4px;">
-{tr}Tiki has detected your PHP memory_limit at{/tr}: {$php_memory_limit}. 
+		  {tr}Tiki has detected your PHP memory_limit at{/tr}: {$php_memory_limit|kbsize:true:0}. 
 		  </span>
 		</div>	
 	{/if}			
-			
-            <br />
+{/if}			
 
+		{if isset($smarty.post.scratch)}
     		<div class="rbox" name="tip">
             <div class="rbox-title" name="tip">{tr}Note{/tr}</div>  
             <div class="rbox-data" name="tip">{tr}If this is a first time installation, go to tiki-admin.php after login to start configuring your new Tiki installation{/tr}.</div>
             </div>
             <br />
-
+	    	{/if}
+	
+		{if isset($smarty.post.update)}
     		<div class="rbox" name="tip">
             <div class="rbox-title" name="tip">{tr}Note{/tr}</div>  
             <div class="rbox-data" name="tip">{tr}If you did a Tiki upgrade, make sure to clean the caches (templates_c/) manually or by using the feature on admin / system{/tr}.</div>
             </div>
             <br />
+	    	{/if}
             <br />
-            {tr}Now you may proceed by clicking one of these links{/tr}:<br /><br />
+            <b>{tr}Now you may proceed by clicking one of these links{/tr}:</b><br /><br />
 
-    		<a href="tiki-install.php?kill=1" class="link">{tr}Click here to disable the install script and proceed into tiki{/tr}.</a><br /><br />
+    		<a href="tiki-install.php?kill=1" class="link"><b>{tr}Click here to disable the install script and proceed into tiki{/tr}.</b></a><br /><br />
     		<a href="tiki-index.php" class="link">{tr}Click here to proceed into tiki without disabling the script{/tr}.</a><br /><br />
     		<a href="tiki-install.php?reset=yes{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" class="link">{tr}Reset database connection settings{/tr}.</a><br /><br />
     		<a href="tiki-install.php{if $multi}?multi={$multi}{/if}{if $lang}{if $multi}&amp;{else}?{/if}lang={$lang}{/if}" class="link">{tr}Go back and run another install/upgrade script{/tr}</a> - {tr}do not use your Back button in your browser!{/tr}<br /><br />
