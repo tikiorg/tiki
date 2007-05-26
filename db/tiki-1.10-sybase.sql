@@ -2,7 +2,7 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2007-05-25 14:08:23 $
+-- $Date: 2007-05-26 11:18:53 $
 -- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
@@ -6731,8 +6731,8 @@ CREATE TABLE "users_users" (
   "currentLogin" numeric(14,0) default NULL NULL,
   "registrationDate" numeric(14,0) default NULL NULL,
   "challenge" varchar(32) default NULL NULL,
-  "pass_due" numeric(14,0) default NULL NULL,
-  "email_due" numeric(14,0) default NULL NULL,
+  "pass_confirm" numeric(14,0) default NULL NULL,
+  "email_confirm" numeric(14,0) default NULL NULL,
   "hash" varchar(32) default NULL NULL,
   "created" numeric(14,0) default NULL NULL,
   "avatarName" varchar(80) default NULL NULL,
