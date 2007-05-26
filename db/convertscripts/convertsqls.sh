@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/db/convertscripts/convertsqls.sh,v 1.9 2005-08-18 14:00:36 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/convertscripts/convertsqls.sh,v 1.10 2007-05-26 16:25:04 nyloth Exp $
 
 
 VERSION="1.10"
@@ -17,6 +17,7 @@ if [ "$2" ] ; then
 fi
 
 cp ../tiki.sql ../tiki-$VERSION-mysql.sql
+cp ../tiki.sql ../tiki-$VERSION-mysqli.sql
 # /* the scripts use mysql.sql */
 wget -O pgsql72.sql.tmp "http://$TIKISERVER/db/convertscripts/mysql3topgsql72.php?version=$VERSION" 
 wget -O sybase.sql.tmp "http://$TIKISERVER/db/convertscripts/mysql3tosybase.php?version=$VERSION" 

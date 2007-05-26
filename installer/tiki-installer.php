@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.18 2007-03-30 17:28:15 jyhem Exp $
+// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.19 2007-05-26 16:25:04 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -42,6 +42,7 @@ include_once('lib/init/tra.php');
 
 function process_sql_file($file,$db_tiki) {
 	global $dbTiki;
+	if ( ! is_object($dbTiki) ) return false;
 
 	global $succcommands;
 	global $failedcommands;
@@ -61,19 +62,11 @@ function process_sql_file($file,$db_tiki) {
 		$command.= fread($fp,4096);
 	}
 	
-	switch ($db_tiki) {
-	  case "sybase":
-	    $statements=split("(\r|\n)go(\r|\n)",$command);
-	    break;
-          case "mssql":
-	    $statements=split("(\r|\n)go(\r|\n)",$command);
-            break;
-	  case "oci8":
-	    $statements=preg_split("#(;\s*\n)|(\n/\n)#",$command);
-	    break;
-	  default:
-		$statements=preg_split("#(;\s*\n)|(;\s*\r\n)#",$command);
-	    break;
+	switch ( $db_tiki ) {
+	  case 'sybase': $statements = split("(\r|\n)go(\r|\n)", $command); break;
+          case 'mssql': $statements = split("(\r|\n)go(\r|\n)", $command); break;
+	  case 'oci8': $statements = preg_split("#(;\s*\n)|(\n/\n)#", $command); break;
+	  default: $statements = preg_split("#(;\s*\n)|(;\s*\r\n)#", $command); break;
 	}
 	$prestmt="";
 	$do_exec=true;
@@ -402,7 +395,7 @@ function load_profiles() {
 	// the profiles are only mysql-safe at this time, so make other DB's only show the default, which is empty
 	global $db_tiki;
 	global $smarty;
-	if ($db_tiki == "mysql") {
+	if ($db_tiki == 'mysql' || $db_tiki == 'mysqli') {
         	$profiles = array();
         	$h = opendir('db/profiles/');
 
@@ -482,6 +475,19 @@ function check_password() {
 	}
 }
 
+// from PHP manual (ini-get function example)
+function return_bytes( $val ) {
+	$val = trim($val);
+	$last = strtolower($val{strlen($val)-1});
+	switch ( $last ) {
+		// The 'G' modifier is available since PHP 5.1.0
+		case 'g': $val *= 1024;
+		case 'm': $val *= 1024;
+		case 'k': $val *= 1024;
+	}
+	return $val;
+}
+
 include 'lib/cache/cachelib.php';
 $cachelib->empty_full_cache();
 
@@ -534,17 +540,14 @@ $tiki_version = '1.10';
 $smarty->assign('tiki_version', $tiki_version);
 
 // Available DB Servers
-$dbservers = array('MySQL', 'PostgeSQL 7.2+', 'Oracle', 'Sybase','SQLLite','MSSQL');
-
-$dbtodsn = array(
-	"MySQL" => "mysql",
-	"PostgeSQL 7.2+" => "pgsql",
-	"Oracle" => "oci8",
-	"Sybase" => "sybase",
-	"SQLLite" => "sqlite",
-	"MSSQL" => "mssql"
-);
-
+$dbservers = array();
+if ( function_exists('mysqli_connect') ) $dbservers['mysqli'] = 'MySQL 4.1+ (mysqli)';
+if ( function_exists('mysql_connect') ) $dbservers['mysql'] = 'MySQL old (mysql)';
+if ( function_exists('pg_connect') ) $dbservers['pgsql'] = 'PostgeSQL 7.2+';
+if ( function_exists('oci_connect') ) $dbservers['oci8'] = 'Oracle';
+if ( function_exists('sybase_connect') ) $dbservers['sybase'] = 'Sybase';
+if ( function_exists('sqlite_open') ) $dbservers['sqlite'] = 'SQLLite';
+if ( function_exists('mssql_connect') ) $dbservers['mssql'] = 'MSSQL';
 $smarty->assign_by_ref('dbservers', $dbservers);
 
 $errors = '';
@@ -599,7 +602,9 @@ if (!file_exists($local)) {
 
 	if (!isset($db_tiki)) {
 		//upgrade from 1.7.X
-		$db_tiki="mysql";
+		//$db_tiki="mysql";
+		//upgrade from 1.10 : if no db is specified, use the first db that this php installation can handle
+		$db_tiki = reset($dbservers);
 		write_local_php($db_tiki,$host_tiki,$user_tiki,$pass_tiki,$dbs_tiki);
 	}
 
@@ -611,7 +616,7 @@ if (!file_exists($local)) {
 	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 	
 	// avoid errors in ADONewConnection() (wrong darabase driver etc...)
-	if(array_search($db_tiki,$dbtodsn)==FALSE) {
+	if( ! isset($dbservers[$db_tiki]) ) {
 		$dbcon = false;
 		$smarty->assign('dbcon', 'n');
 	} else {
@@ -666,8 +671,8 @@ echo "admin_acc=$admin_acc<br>";
 if ((!$dbcon or (isset($_REQUEST['resetdb']) and $_REQUEST['resetdb']=='y' && 
 		($admin_acc=='n' || (isset($_SESSION["install-logged-$multi"]) && $_SESSION["install-logged-$multi"]=='y'))
 	)) && isset($_REQUEST['dbinfo'])) {
-	
-	$dbTiki = &ADONewConnection($dbtodsn[$_REQUEST['db']]);
+
+	$dbTiki = &ADONewConnection($_REQUEST['db']);
 
 	if (isset($_REQUEST['name']) and $_REQUEST['name']) {
 		if (!@$dbTiki->Connect($_REQUEST['host'], $_REQUEST['user'], $_REQUEST['pass'], $_REQUEST['name'])) {
@@ -677,7 +682,7 @@ if ((!$dbcon or (isset($_REQUEST['resetdb']) and $_REQUEST['resetdb']=='y' &&
 		} else {
 			$dbcon = true;
 			$smarty->assign('dbcon', 'y');
-			write_local_php($dbtodsn[$_REQUEST['db']],$_REQUEST['host'], $_REQUEST['user'],$_REQUEST['pass'],$_REQUEST['name']);
+			write_local_php($_REQUEST['db'], $_REQUEST['host'], $_REQUEST['user'], $_REQUEST['pass'], $_REQUEST['name']);
 		}
 	}
 }
@@ -721,7 +726,7 @@ if ($admin_acc=='n') {
 $smarty->assign('dbdone', 'n');
 $smarty->assign('logged', $logged);
 
-if (isset($_SESSION["install-logged-$multi"]) && $_SESSION["install-logged-$multi"] == 'y') {
+if ( is_object($dbTiki) && isset($_SESSION["install-logged-$multi"]) && $_SESSION["install-logged-$multi"] == 'y') {
 	$smarty->assign('logged', 'y');
 
 	if (isset($_REQUEST['scratch'])) {
@@ -765,8 +770,8 @@ if (isset($_SESSION["install-logged-$multi"]) && $_SESSION["install-logged-$mult
 }
 $smarty->assign_by_ref('tikifeedback', $tikifeedback);
 
-$php_memory_limit = ini_get('memory_limit');
-$smarty->assign('php_memory_limit', $php_memory_limit);
+$php_memory_limit = return_bytes(ini_get('memory_limit'));
+$smarty->assign('php_memory_limit', intval($php_memory_limit));
 
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
