@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendars_rss.php,v 1.10 2007-03-06 19:29:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendars_rss.php,v 1.11 2007-05-27 15:51:14 tombombadilom Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -44,7 +44,7 @@ if ($output["data"]=="EMPTY") {
 	$descId = "body";
 	$dateId = "start";
 	$authorId = "user";
-	$readrepl = "tiki-calendar.php?editmode=details&$id=%s";
+	$readrepl = "tiki-calendar_edit_item.php?viewcalitemId=%s";
 
 	$tmp = $tikilib->get_preference('title_rss_'.$feed, '');
 	if ($tmp<>'') $title = $tmp;
