@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.94 2007-05-04 09:25:48 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.95 2007-05-28 19:12:41 nyloth Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -1969,8 +1969,7 @@ class ImageGalsLib extends TikiLib {
 	function capture_images($data) {
 		global $tmpDir;
 		global $tikilib;
-		$cacheimages = $this->get_preference("cacheimages", 'y');
-
+		$cacheimages = $this->get_preference("cacheimages", 'n');
 		if ($cacheimages != 'y')
 			return $data;
 
@@ -1988,7 +1987,7 @@ class ImageGalsLib extends TikiLib {
 
 		foreach ($merge as $img) {
 			// This prevents caching images
-			if (!strstr($img, "show_image.php") && !strstr($img, "nocache") && @getimagesize($img)) {
+			if (!strstr($img, "img/wiki_up") && !strstr($img, "show_image.php") && !strstr($img, "nocache") && @getimagesize($img)) {
 				//print("Procesando: $img<br />");
 				@$fp = fopen($img, "r");
 
