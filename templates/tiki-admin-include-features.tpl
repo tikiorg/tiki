@@ -228,6 +228,9 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
     <td><input type="checkbox" name="feature_purifier" {if $feature_purifier eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> <a href="{$helpurl}Purifier" target="tikihelp" class="tikihelp" title="{tr}HTML Purifier{/tr}"> {tr}HTML Purifier (Content is cleaned to XHTML 1.1 Strict on each save){/tr} </td>
     <td>&nbsp;</td> 
+    <td><input type="checkbox" name="feature_lightbox" {if $feature_lightbox eq 'y'}checked="checked"{/if}/></td>
+    <td class="form"> <a href="{$helpurl}Lightbox" target="tikihelp" class="tikihelp" title="{tr}Lightbox{/tr}"> {tr}Lightbox (Javascript modern visual effects on images){/tr} </td>
+    <td>&nbsp;</td> 
 </tr>
 
 {* ---------- Content features ------------ *}

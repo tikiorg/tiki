@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_gallery.tpl,v 1.40 2007-05-13 22:31:40 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_gallery.tpl,v 1.41 2007-05-28 22:04:15 nyloth Exp $ *}
 {if $gal_image_mouseover neq 'n'}{popup_init src="lib/overlib.js"}{/if}
 <h1><a class="pagetitle" href="tiki-browse_gallery.php?galleryId={$galleryId}">
 {tr}Browsing Gallery{/tr}: {$name}
@@ -92,8 +92,11 @@
         {foreach from=$images key=key item=item}
           <td align="center" {if ((($key +$num_subgals) / $rowImages) % 2)}class="oddthumb"{else}class="eventhumb"{/if}>
           &nbsp;&nbsp;<br />
-          
-          <a href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;imageId={$item.imageId}&amp;scalesize={$defaultscale}" {if $gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key|escape:"javascript"|escape:"html"}{/if} class="linkmenu"><img alt="thumbnail" class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1" /></a>
+{if $feature_lightbox neq 'y'}
+          <a href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;imageId={$item.imageId}&amp;scalesize={$defaultscale}" {if $gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key|escape:"javascript"|escape:"html"}{/if} class="linkmenu"><img class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1" /></a>
+{else}
+	<a href="show_image.php?id={$item.imageId}" rel="lightbox[gallery]" title="{if $showname=='y' and $item.name neq ''}{$item.name}{else}{$item.filename}{/if}" {if $gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key|escape:"javascript"|escape:"html"}{/if} class="linkmenu"><img class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1" /></a>
+{/if}
           <br />
 
           <small class="caption">
