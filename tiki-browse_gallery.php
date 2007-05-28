@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.44 2007-05-02 14:00:16 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.45 2007-05-28 22:52:16 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -385,6 +385,14 @@ if ($feature_actionlog == 'y') {
 }
 
 // Display the template
+
+if ( $feature_lightbox == 'y' ) {
+	$headerlib->add_jsfile('lib/lightbox/js/prototype.js');
+	$headerlib->add_jsfile('lib/lightbox/js/scriptaculous.js?load=effects');
+	$headerlib->add_jsfile('lib/lightbox/js/lightbox.js');
+	$headerlib->add_cssfile('lib/lightbox/css/lightbox.css');
+}
+
 $smarty->assign('mid', 'tiki-browse_gallery.tpl');
 $smarty->display("tiki.tpl");
 
