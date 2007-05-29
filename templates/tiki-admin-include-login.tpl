@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.71 2007-05-25 13:15:29 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.72 2007-05-29 21:56:32 luciash Exp $ *}
 <div class="cbox">
 <div class="cbox-title">{tr}Users &amp; groups{/tr}</div>
 <div class="cbox-data">
@@ -181,9 +181,10 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 </td></tr>
 <tr><td class="form">{tr}Displays user's contribution in the user information page{/tr}:</td>
 <td><input type="checkbox" name="feature_display_my_to_others" {if $feature_display_my_to_others eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="form">{tr}Displays UserTracker informations in user information page. Format: trackerId,fieldId1,fireldId2,...:{/tr}</td>
-<td><input type="text" name="user_tracker_infos" value="{$user_tracker_infos|escape}" size=50></td></tr>
-<tr><td class="form">{tr}Desactive login autocomplete(not remember login and password){/tr}</td><td><input type="checkbox" name="desactive_login_autocomplete" {if $desactive_login_autocomplete eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Displays UserTracker information in user information page. Format: trackerId, fieldId1, fieldId2, …{/tr}:</td>
+<td><input type="text" name="user_tracker_infos" value="{$user_tracker_infos|escape}" size="50" /></td></tr>
+<tr><td class="form">{tr}Deactivate login autocomplete (do not remember login and password){/tr}:</td>
+<td><input type="checkbox" name="desactive_login_autocomplete" {if $desactive_login_autocomplete eq 'y'}checked="checked"{/if}/></td></tr>
 
 <tr><td colspan="2" class="button"><input type="submit" name="loginprefs" value="{tr}Change preferences{/tr}" /></td></tr>
 </table>
