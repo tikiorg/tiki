@@ -367,7 +367,7 @@ if ($tikilib->get_preference("feature_directory") == 'y') {
     require_once('lib/cache/cachelib.php');
     while ($res = $result->fetchRow())
     {
-        if ($userlib->user_has_perm_on_object($user,$res['trackerId'], 'trackers', 'tiki_p_view_trackers')) {
+        if ($userlib->user_has_perm_on_object($user,$res['trackerId'], 'tracker', 'tiki_p_view_trackers')) {
            $ret["items"]["trackers"]["list"][$count]["href"]  = "tiki-view_tracker_item.php?itemId=" . $res["itemId"];
            $ret["items"]["trackers"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["lastModif"]);
 	   
