@@ -345,7 +345,8 @@ indicating role in a prefix separated by a column like in:{/tr}<br />
 {else}
 <input type="hidden" name="save[calendarId]" value="{$calendarId}" />
 {/if}
-</td></tr>
+</td>
+<td><a href="tiki-calendar_edit_item.php?calitemId={$id}&amp;delete=y" title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a></td></tr>
 </table>
 {/if}
 
