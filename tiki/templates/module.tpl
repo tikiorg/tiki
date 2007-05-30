@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.27 2007-04-06 19:59:07 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.28 2007-05-30 12:58:18 luciash Exp $ *}
 {* Module layout with controls *}
 
 <div class="box-shadow">
@@ -16,7 +16,7 @@
 <a title="{tr}Hide module contents{/tr}" class="flipmodtitle" href="javascript:icntoggle('mod-{$module_name|escape}','mo.png');"><img name="mod-{$module_name|escape}icn" class="flipmodimage" src="img/icons/omo.png" border="0" alt="[{tr}hide{/tr}]" /></a>
 </td>
 {/if}
-<td width="11"><a title="{tr}Move module to opposite side{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_move={$module_name|escape}"><img src="img/icons2/admin_move.gif" border="0" alt="[{tr}opp side{/tr}]" /></a></td>
+<td width="16"><a title="{tr}Move module to opposite side{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_move={$module_name|escape}"><img src="pics/icons/arrow_right-left.png" border="0" width="16" height="16" alt="[{tr}opp side{/tr}]" /></a></td>
 <td width="16"><a title="{tr}Unassign this module{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_unassign={$module_name|escape}" onclick="return confirmTheLink(this,'{tr}Are you sure you want to unassign this module?{/tr}')"><img border="0" width="16" height="16" alt="[{tr}remove{/tr}]" src="pics/icons/cross.png" /></a></td>
 </tr>
 </table>
