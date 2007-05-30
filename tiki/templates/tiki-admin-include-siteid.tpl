@@ -1,10 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-siteid.tpl,v 1.13 2007-05-17 18:25:30 fr_rodo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-siteid.tpl,v 1.14 2007-05-30 11:37:07 luciash Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-<div class="rbox-data" name="tip">{tr}Don't forget: to use feature you will need to enable it on{/tr} <a class="rbox-link" href="tiki-admin.php?page=features">{tr}Admin->Features{/tr}</a></div>
+<div class="rbox-data" name="tip">{tr}Don't forget: to use the feature you will need to enable it on{/tr} <a class="rbox-link" href="tiki-admin.php?page=features">{tr}Admin{/tr}&nbsp;{$site_crumb_seper}&nbsp;{tr}Features{/tr}</a></div>
 </div>
-<br />
 
 <div class="cbox">
     <div class="cbox-title">
@@ -15,10 +14,10 @@
 		<form method="post" action="tiki-admin.php?page=siteid">
 			<table class="admin">
 				<tr>
-					<td class="heading" colspan="2" align="center">{tr}Custom Code{/tr}</td>
+					<td class="heading" colspan="2" align="center">{tr}Custom Site Header{/tr}</td>
 				</tr>	
 				<tr>
-					<td class="form"><label for="feature_sitemycode">{tr}Custom code{/tr}:</label></td>
+					<td class="form"><label for="feature_sitemycode">{tr}Enable{/tr}:</label></td>
 					<td><input type="checkbox" name="feature_sitemycode" id="feature_sitemycode"{if $feature_sitemycode eq 'y'} checked="checked"{/if} /></td>
 				</tr>
 				<tr>
@@ -94,7 +93,7 @@
 					<td><input type="checkbox" name="feature_sitelogo" id="feature_sitelogo"{if $feature_sitelogo eq 'y'} checked="checked"{/if} /></td>
 				</tr>
 				<tr>
-					<td class="form"><label for="sitelogo_src">&nbsp;&nbsp;{tr}Site logo source{/tr}:</label></td>
+					<td class="form"><label for="sitelogo_src">&nbsp;&nbsp;{tr}Site logo source (image path){/tr}:</label></td>
 					<td><input type="text" name="sitelogo_src" id="sitelogo_src" value="{$sitelogo_src}" size="60" style="width: 90%" /></td>
 				</tr>
 				<tr>
@@ -124,7 +123,7 @@
 				</tr>
 				
 				<tr>
-					<td class="form"><label for="feature_sitead">{tr}Site ads and banners{/tr}:</label></td>
+					<td class="form"><label for="feature_sitead">{tr}Enable{/tr}:</label></td>
 					<td><input type="checkbox" name="feature_sitead" id="feature_sitead"{if $feature_sitead eq 'y'} checked="checked"{/if} /></td>
 				</tr>
 				<tr>
@@ -163,18 +162,18 @@
 							
 				<tr>
 					<td class="heading" colspan="2"
-                                        align="center">{tr}Bottom logo{/tr}</td>
+                                        align="center">{tr}Custom Site Footer{/tr}</td>
 				</tr>
 				<tr>
-					<td class="form"><label for="feature_bot_logo">&nbsp;&nbsp;{tr}Bottom logo{/tr}:</label></td>
-                                          <td><input type="checkbox" name="feature_bot_logo" id="sitead_publish"{if $feature_bot_logo eq 'y'} checked="checked"{/if} /></td>
+					<td class="form"><label for="feature_bot_logo">&nbsp;&nbsp;{tr}Enable{/tr}:</label></td>
+                                          <td><input type="checkbox" name="feature_bot_logo" id="feature_bot_logo"{if $feature_bot_logo eq 'y'} checked="checked"{/if} /></td>
 				</tr>
 
 				<tr>
 					<td class="form"><label for="bot_logo_code">&nbsp;&nbsp;{tr}Content{/tr}:</label></td>
 					<td><textarea name="bot_logo_code" rows="6" style="width: 90%">{$bot_logo_code}</textarea>
 					<br />
-					<small><em>{tr}Example{/tr}</em>:{literal}&lt;a href="http://tikiwiki.org/"&gt;&lt;img src="http://tikiwiki.org/favicon.png"&gt;&lt;/a&gt; {/literal}</small></td>
+					<small><em>{tr}Example{/tr}</em>:&lt;div style="text-align: center"&gt;&lt;small&gt;Powered by Tikiwiki&lt;/small&gt;&lt;/div&gt;</small></td>
 				</tr>
 				<tr>
 					<td colspan="2" class="button">
