@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.46 2007-03-06 19:29:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.47 2007-05-30 16:37:23 luciash Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -130,6 +130,20 @@ if (isset($_REQUEST["moddown"])) {
 	$_REQUEST["moddown"] = urldecode($_REQUEST["moddown"]);
 
 	$modlib->module_down($_REQUEST["moddown"]);
+}
+
+if (isset($_REQUEST["modleft"])) {
+	check_ticket('admin-modules');
+	$_REQUEST["modleft"] = urldecode($_REQUEST["modleft"]);
+
+	$modlib->module_left($_REQUEST["modleft"]);
+}
+
+if (isset($_REQUEST["modright"])) {
+	check_ticket('admin-modules');
+	$_REQUEST["modright"] = urldecode($_REQUEST["modright"]);
+
+	$modlib->module_right($_REQUEST["modright"]);
 }
 
 /* Edit or delete a user module */
