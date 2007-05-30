@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.742 2007-05-13 17:32:02 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.743 2007-05-30 13:30:01 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4499,7 +4499,7 @@ function add_pageview() {
 
 		if( $plugin_start == "~pp~" )
 		{
-		    $noparsed["data"][] = "<pre>" . $plugin_data . "</pre>";
+		    $noparsed["data"][] = "<pre>" . str_replace('\\','\\\\',$plugin_data) . "</pre>";
 		} else if( preg_match( "/^ *&lt;[pP][rR][eE]&gt;/", $plugin_start ) ) {
 		    preg_match( "/^ *&lt;([pP][rR][eE])&gt;/", $plugin_start, $plugins );
 		    $plugin_start2 = $plugins[1];
@@ -4507,7 +4507,7 @@ function add_pageview() {
 		    $plugin_end2 = $plugins[1];
 		    $noparsed["data"][] = "<" . $plugin_start2 . ">" . $plugin_data . "</" . $plugin_end2 . ">";
 		} else {
-		    $noparsed["data"][] = $plugin_data;
+		    $noparsed["data"][] = str_replace('\\','\\\\',$plugin_data);
 		}
 
 		// Replace plugin section with its output in data
