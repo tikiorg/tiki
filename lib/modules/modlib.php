@@ -92,6 +92,20 @@ class ModLib extends TikiLib {
 		$result = $this->query($query,array($name));
 		return true;
 	}
+	
+	function module_left($name) {
+		$query = "update `tiki_modules` set `position`='l' where `name`=?";
+
+		$result = $this->query($query,array($name));
+		return true;
+	}
+	
+	function module_right($name) {
+		$query = "update `tiki_modules` set `position`='r' where `name`=?";
+
+		$result = $this->query($query,array($name));
+		return true;
+	}
 
 	function get_all_modules() {
 		$user_modules = $this->list_user_modules();
