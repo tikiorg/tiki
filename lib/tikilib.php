@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.744 2007-05-30 13:34:33 mose Exp $
+// CVS: $Id: tikilib.php,v 1.745 2007-05-30 13:58:30 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4492,6 +4492,7 @@ function add_pageview() {
 		$key = md5($this->genPass());
 		$noparsed["key"][] = "/". preg_quote($key)."/";
 
+		$plugin_data = str_replace('\\','\\\\',$plugin_data);
 		if( strstr( $plugin_data, '$' ) )
 		{
 		    $plugin_data = str_replace('$', '\$', $plugin_data);
@@ -4499,15 +4500,15 @@ function add_pageview() {
 
 		if( $plugin_start == "~pp~" )
 		{
-		    $noparsed["data"][] = "<pre>" . str_replace('\\','\\\\',$plugin_data) . "</pre>";
+		    $noparsed["data"][] = "<pre>" . $plugin_data . "</pre>";
 		} else if( preg_match( "/^ *&lt;[pP][rR][eE]&gt;/", $plugin_start ) ) {
 		    preg_match( "/^ *&lt;([pP][rR][eE])&gt;/", $plugin_start, $plugins );
 		    $plugin_start2 = $plugins[1];
 		    preg_match( "/^ *&lt;\/([pP][rR][eE])&gt;/", $plugin_end, $plugins );
 		    $plugin_end2 = $plugins[1];
-		    $noparsed["data"][] = "<" . $plugin_start2 . ">" . str_replace('\\','\\\\',$plugin_data) . "</" . $plugin_end2 . ">";
+		    $noparsed["data"][] = "<" . $plugin_start2 . ">" . $plugin_data . "</" . $plugin_end2 . ">";
 		} else {
-		    $noparsed["data"][] = str_replace('\\','\\\\',$plugin_data);
+		    $noparsed["data"][] = $plugin_data;
 		}
 
 		// Replace plugin section with its output in data
