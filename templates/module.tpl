@@ -1,19 +1,23 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.28 2007-05-30 12:58:18 luciash Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.29 2007-05-30 14:01:59 luciash Exp $ *}
 {* Module layout with controls *}
 
 <div class="box-shadow">
-<div class="box box-{$module_name|escape}">
-<div class="box-title">
+	<div class="box box-{$module_name|escape}">
+		<div class="box-title">
 {if $user and $user_assigned_modules == 'y' and $feature_modulecontrols eq 'y'}
-<table width="100%"><tr>
-<td width="11"><a title="{tr}Move module up{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_up={$module_name|escape}"><img src="pics/icons/resultset_up.png" border="0" width="16" height="16" alt="[{tr}up{/tr}]" /></a></td>
-<td width="11"><a title="{tr}Move module down{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_down={$module_name|escape}"><img src="pics/icons/resultset_down.png" border="0" width="16" height="16" alt="[{tr}down{/tr}]" /></a></td>
-<td {if $module_flip eq 'y'}ondblclick="javascript:icntoggle('mod-{$module_name|escape}','mo.png');"{/if}>
+			<table width="100%"><tr>
+				<td width="11"><a title="{tr}Move module up{/tr}" 
+				href="{$current_location|escape}{$mpchar|escape}mc_up={$module_name|escape}"><img 
+				src="pics/icons/resultset_up.png" border="0" width="16" height="16" alt="[{tr}up{/tr}]" /></a></td>
+				<td width="11"><a title="{tr}Move module down{/tr}" 
+				href="{$current_location|escape}{$mpchar|escape}mc_down={$module_name|escape}"><img 
+				src="pics/icons/resultset_down.png" border="0" width="16" height="16" alt="[{tr}down{/tr}]" /></a></td>
+				<td {if $module_flip eq 'y'}ondblclick="javascript:icntoggle('mod-{$module_name|escape}','module.png');"{/if}>
 <span class="box-titletext">{$module_title}</span>
 </td>
 {if $module_flip eq 'y'}
-<td width="11">
-<a title="{tr}Hide module contents{/tr}" class="flipmodtitle" href="javascript:icntoggle('mod-{$module_name|escape}','mo.png');"><img name="mod-{$module_name|escape}icn" class="flipmodimage" src="img/icons/omo.png" border="0" alt="[{tr}hide{/tr}]" /></a>
+<td width="16">
+<a title="{tr}Toggle module contents{/tr}" class="flipmodtitle" href="javascript:icntoggle('mod-{$module_name|escape}','module.png');"><img name="mod-{$module_name|escape}icn" class="flipmodimage" src="pics/icons/module.png" border="0" width="16" height="16" alt="[{tr}toggle{/tr}]" /></a>
 </td>
 {/if}
 <td width="16"><a title="{tr}Move module to opposite side{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_move={$module_name|escape}"><img src="pics/icons/arrow_right-left.png" border="0" width="16" height="16" alt="[{tr}opp side{/tr}]" /></a></td>
@@ -23,31 +27,31 @@
 {else}
 {if $module_flip eq 'y'}
 <table width="100%"><tr>
-<td ondblclick="javascript:icntoggle('mod-{$module_name|escape}','mo.png');">
+<td ondblclick="javascript:icntoggle('mod-{$module_name|escape}','module.png');">
 <span class="box-titletext">
 {/if}
 {$module_title}
 {if $module_flip eq 'y'}</span>
 </td>
-<td width="11">
-<a title="{tr}Hide module contents{/tr}" class="flipmodtitle" href="javascript:icntoggle('mod-{$module_name|escape}','mo.png');"><img name="mod-{$module_name|escape}icn" class="flipmodimage" src="img/icons/omo.png" border="0" alt="[{tr}hide{/tr}]" /></a>
+<td width="16">
+<a title="{tr}Toggle module contents{/tr}" class="flipmodtitle" href="javascript:icntoggle('mod-{$module_name|escape}','module.png');"><img name="mod-{$module_name|escape}icn" class="flipmodimage" src="pics/icons/module.png" border="0" alt="[{tr}hide{/tr}]" /></a>
 </td>
 </tr>
 </table>
 {/if}
 {/if}
-</div>
-<div id="mod-{$module_name|escape}" style="display: block" class="box-data">
+		</div>
+		<div id="mod-{$module_name|escape}" style="display: block" class="box-data">
 {$module_content}
 {$module_error}
 {if $module_flip eq 'y'}
-<script type="text/javascript">
-  setsectionstate('mod-{$module_name|escape}','{$module_dstate}', 'mo.png');
-</script>
+			<script type="text/javascript">
+				setsectionstate('mod-{$module_name|escape}','{$module_dstate}', 'module.png');
+			</script>
 {/if}
-</div>
-<div class="box-footer">
+		</div>
+		<div class="box-footer">
 
-</div>
-</div>
+		</div>
+	</div>
 </div>
