@@ -25,7 +25,8 @@ require_once ('lib/structures/structlib.php');
 if (!isset($structlib)) {
   $structlib = new StructLib($dbTiki);
 }
-if (!isset($_REQUEST["page"]) || $_REQUEST["page"] == '') {
+if (!isset($_REQUEST["page"])) $_REQUEST["page"]='';
+if ($_REQUEST["page"] == '') {
 if (isset($_REQUEST["page_ref_id"])) {
     // If a structure page has been requested
     $page_ref_id = $_REQUEST["page_ref_id"];
