@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_users.tpl,v 1.1 2005-12-14 17:40:34 lfagundes Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_users.tpl,v 1.2 2007-05-31 09:42:59 nyloth Exp $ *}
 
 <script src="lib/cpaint/cpaint2.inc.compressed.js" type="text/javascript"></script>
 <script src="lib/freetag/freetag_ajax.js" type="text/javascript"></script>
@@ -10,7 +10,7 @@
 <div class="morcego_embedded">
 <h2>{tr}Network of Users related to{/tr}: <span id="currentTag1">{$tag}</span></h2>
 <applet codebase="./lib/wiki3d" archive="morcego-0.4.0.jar" code="br.arca.morcego.Morcego" width="{$wiki_3d_width}" height="{$wiki_3d_height}">
-      <param name="serverUrl" value="{$base_url}/tiki-users3d_xmlrpc.php">
+      <param name="serverUrl" value="{$base_url}tiki-users3d_xmlrpc.php">
       <param name="startNode" value="{$view_user}">
       <param name="windowWidth" value="{$wiki_3d_width}">
       <param name="windowHeight" value="{$wiki_3d_height}">

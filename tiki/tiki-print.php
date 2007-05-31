@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-print.php,v 1.31 2007-03-06 19:29:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-print.php,v 1.32 2007-05-31 09:42:56 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -93,31 +93,8 @@ if (empty($info["user"])) {
 
 $smarty->assign_by_ref('lastUser', $info["user"]);
 
-//Store the page URL to be displayed on print page
-$http_domain = $tikilib->get_preference('http_domain', false);
-$http_port = $tikilib->get_preference('http_port', 80);
-$http_prefix = $tikilib->get_preference('http_prefix', '/');
-$http_svrname = $tikilib->get_preference('feature_server_name','');
-if ($http_domain) {
-
-	$prefix = 'http://' . $http_domain;
-
-	if ($http_port != 80)
-		$prefix .= ':' . $http_port;
-
-	$prefix .= $http_prefix;
-	$smarty->assign('urlprefix', $prefix);
-} else {
-  $prefix = 'http://'.$http_svrname;
-  $prefix .= $http_prefix;
-  $smarty->assign('urlprefix', $prefix);
-}
-
-if (isset($structure) && $structure == 'y' && isset($page_info['page_alias']) && $page_info['page_alias'] != '') {
-    $crumbpage = $page_info['page_alias'];
-} else {
-    $crumbpage = $page;
-}
+if (isset($structure) && $structure == 'y' && isset($page_info['page_alias']) && $page_info['page_alias'] != '') $crumbpage = $page_info['page_alias'];
+else $crumbpage = $page;
 
 $crumbs[] = new Breadcrumb($crumbpage,
 			   $info["description"],
@@ -133,8 +110,9 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the Index Template
 $creator = $wikilib->get_creator($page);
 $smarty->assign('creator', $creator);
-$smarty->assign('print_page','y');
+$smarty->assign('print_page', 'y');
+$smarty->assign('urlprefix', $url_base); // Obsolete, use url_base instead. This is for compatibility purposes only.
 $smarty->assign('mid', 'tiki-show_page.tpl');
-$smarty->display("tiki-print.tpl");
+$smarty->display('tiki-print.tpl');
 
 ?>

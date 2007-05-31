@@ -15,7 +15,7 @@ $map = array ("getSubGraph" => array( "function" => "getSubGraph" ) );
 $server = new XML_RPC_Server( $map );
 
 function getSubGraph($params) {
-    global $freetaglib, $dbTiki;
+    global $freetaglib, $dbTiki, $base_url;
 
     $nodeName = $params->getParam(0); $nodeName = $nodeName->scalarVal();
     $depth = $params->getParam(1); $depth = $depth->scalarVal();
@@ -51,14 +51,8 @@ function getSubGraph($params) {
 
 	    $node = array();
 
-	    $base_url = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-	    $base_url = preg_replace('/\/tiki-freetag3d_xmlrpc.php.*$/','',$base_url);
-
-	    if ($feature_ajax == 'y') {
-		$actionUrl = "javascript:browseToTag('$nodeName');";
-	    } else {
-		$actionUrl = "$base_url".'/tiki-browse_freetags.php?tag='."$nodeName";
-	    }
+	    if ( $feature_ajax == 'y' ) $actionUrl = "javascript:browseToTag('$nodeName');";
+	    else $actionUrl = $base_url.'tiki-browse_freetags.php?tag='.$nodeName;
 
 	    $node['neighbours'] = new XML_RPC_Value($neighbours, "array");
 	    if (!empty($color)) {

@@ -1,112 +1,55 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.75 2007-05-25 18:32:26 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.76 2007-05-31 09:42:56 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.75 2007-05-25 18:32:26 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.76 2007-05-31 09:42:56 nyloth Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
 require_once('tiki-setup.php');
 
-$old_http_prefix = $http_prefix;
-$old_https_prefix = $https_prefix;
-
-// Get clean strings for $http_prefix and $https_prefix
-// $url_prefix is $http_prefix or $https_prefix depending on context
-$https_mode = isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on';
-// http_prefix is either '/' or '/stuff/'
-$http_prefix = ereg_replace('^/+', '/', '/'.$http_prefix);
-$http_prefix = ereg_replace('/+$', '/', $http_prefix.'/');
-// https_prefix is either '/' or '/stuff/'
-$https_prefix = ereg_replace('^/+', '/', '/'.$https_prefix);
-$https_prefix = ereg_replace('/+$', '/', $https_prefix.'/');
-$url_prefix=($https_mode)?$https_prefix:$http_prefix;
-
-// Update database value with the cleaned prefixes if they have changed
-if ( $old_http_prefix != $http_prefix ) $tikilib->set_preference('http_prefix', $http_prefix);
-unset($old_http_prefix);
-if ( $old_https_prefix != $https_prefix ) $tikilib->set_preference('https_prefix', $https_prefix);
-unset($old_https_prefix);
-
-if ($https_mode) {
-	$stay_in_ssl_mode = isset($_REQUEST['stay_in_ssl_mode']) && $_REQUEST['stay_in_ssl_mode'] == 'on';
-	if (!$stay_in_ssl_mode) {
-		$url_prefix=$http_prefix;
-	}
-}
-
-if (!(isset($_REQUEST['user']) or isset($_REQUEST['username']))) {
-	header("Location: tiki-login_scr.php");
+if ( ! (isset($_REQUEST['user']) or isset($_REQUEST['username'])) ) {
+	header('Location: '.$base_url.'tiki-login_scr.php');
 	die;
 }
 // Alert user if cookies are switched off
-if (ini_get('session.use_cookies') == 1) {
-	if(!isset($_COOKIE['PHPSESSID'])) {
-		$url = 'tiki-error.php?error=' . urlencode(tra('You have to enable cookies to be able to login to this site'));
-		header("location: $url");
-		die;
-	}
+if ( ini_get('session.use_cookies') == 1 && ! isset($_COOKIE['PHPSESSID']) ) {
+	header('Location: '.$base_url.'tiki-error.php?error='.urlencode(tra('You have to enable cookies to be able to login to this site')));
+	die;
 }
 
-//Remember where user is logging in from and send them back later; using session variable for those of us who use WebISO services
-if (!(isset($_SESSION['loginfrom']))) {
-	if (isset($_SERVER['HTTP_REFERER'])) {
-//		$_SESSION['loginfrom'] = basename($_SERVER['HTTP_REFERER']);
-		$_url = parse_url($_SERVER['HTTP_REFERER']);
-		$_SESSION['loginfrom'] = $_url['path'];
-		if (!empty($_url['query'])) {
-			$_SESSION['loginfrom'] .= '?'.$_url['query'];
-		}
-	} else {
-		//Oh well, back to tikiIndex
-//		$_SESSION['loginfrom'] = basename($tikiIndex);
-		$_url = parse_url($tikiIndex);
-		if( ( $_url['scheme'] != '' ) || ( $_url['path']{0} == '/' ) ) {
-			$_SESSION['loginfrom'] = $_url['path'];
-		} else {
-			$_SESSION['loginfrom'] = $url_prefix.$_url['path'];
-		}
-
-		if (!empty($_url['query'])) {
-			$_SESSION['loginfrom'] .= '?'.$_url['query'];
-		}
-	}
-}
-
-if ($tiki_p_admin == 'y') {
-	if (isset($_REQUEST["su"])) {
-		if ($userlib->user_exists($_REQUEST['username'])) {
-			$_SESSION["$user_cookie_site"] = $_REQUEST["username"];
-			$smarty->assign_by_ref('user', $_REQUEST["username"]);
-		}
-
-		$url = $_SESSION['loginfrom'];
-		//unset session variable for the next su
-		unset($_SESSION['loginfrom']);
-		header("location: $url");
-		die;
-	}
-}
-
-$https_login_required = $tikilib->get_preference('https_login_required', 'n');
-
-if ($https_login_required == 'y' && !$https_mode) {
-	$url = 'https://' . $https_domain;
-
-	if ($https_port != 443)
-		$url .= ':' . $https_port;
-
-	$url .= $https_prefix . $tikiIndex;
-
-	if (SID)
-		$url .= '?' . SID;
-
-	header("Location " . $url);
+// Redirect to HTTPS if we are not in HTTPS but we allow and require HTTPS login
+if ( ! $https_mode && ( $https_login != 'n' && $https_login_required == 'y' ) ) {
+	header('location: '.$base_url_https.$login_url);
 	exit;
+}
+
+// Remember where user is logging in from and send them back later; using session variable for those of us who use WebISO services
+// Note that loginfrom will always be a complete URL (http://...)
+if ( ! isset($_SESSION['loginfrom']) ) {
+	$_SESSION['loginfrom'] = ( isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $tikiIndex );
+	if ( ! ereg('^http', $_SESSION['loginfrom']) ) {
+		if ( $_SESSION['loginfrom']{0} == '/' ) $_SESSION['loginfrom'] = $url_scheme.'://'.$url_host.(($url_port!='')?":$url_port":'').$_SESSION['loginfrom'];
+		else $_SESSION['loginfrom'] = $base_url.$_SESSION['loginfrom'];
+	}
+}
+
+if ( $tiki_p_admin == 'y' ) {
+	if ( isset($_REQUEST['su']) ) {
+		if ( $userlib->user_exists($_REQUEST['username']) ) {
+			$_SESSION[$user_cookie_site] = $_REQUEST['username'];
+			$smarty->assign_by_ref('user', $_REQUEST['username']);
+		}
+
+		header('location: '.$_SESSION['loginfrom']);
+		// Unset session variable for the next su
+		unset($_SESSION['loginfrom']);
+		exit;
+	}
 }
 
 $user = isset($_REQUEST['user']) ? $_REQUEST['user'] : false;
@@ -117,23 +60,20 @@ $isvalid = false;
 $isdue = false;
 $isEmailDue = false;
 
-if ($feature_intertiki == 'y') {
-  if (strstr($user,'@') && empty($feature_intertiki_mymaster)) {
-    $_REQUEST['intertiki'] = substr($user,strpos($user,'@')+1);
-    $user = substr($user,0,strpos($user,'@'));
-  } elseif (!empty($feature_intertiki_mymaster)) {
-    $_REQUEST['intertiki'] = $feature_intertiki_mymaster;
-  }
-}
+// admin is always local
+if ( $user == 'admin' ) $feature_intertiki = 'n';
 
-if ($user == 'admin') {
-    // admin is always local
-    $feature_intertiki = 'n';
-    unset($_REQUEST['intertiki']);
-}
+// Determine the intertiki domain
+if ( $feature_intertiki == 'y' ) {
+	if ( ! empty($feature_intertiki_mymaster) ) $_REQUEST['intertiki'] = $feature_intertiki_mymaster;
+	elseif ( strstr($user, '@') ) {
+		list($user, $intertiki_domain) = explode('@', $user);
+		$_REQUEST['intertiki'] = $intertiki_domain;
+	}
+} else unset($_REQUEST['intertiki']);
 
-
-if ($feature_intertiki == 'y' and isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'],array_keys($interlist)) and $user and $pass) {
+// Go through the intertiki process
+if ( isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_keys($interlist)) ) {
 
     include_once('XML/RPC.php');
 
@@ -239,16 +179,16 @@ if ($feature_intertiki == 'y' and isset($_REQUEST['intertiki']) and in_array($_R
 	// If the password is valid but it is due then force the user to change the password by
 	// sending the user to the new password change screen without letting him use tiki
 	// The user must re-nter the old password so no security risk here
-	if ($isvalid) {
+	if ( $isvalid ) {
 		$isdue = $userlib->is_due($user);
-		if ($user != 'admin') {//admin has not necessarely an email
+		if ( $user != 'admin' ) { // admin has not necessarely an email
 			$isEmailDue = $userlib->is_email_due($user, 'email');
 
 			// Update some user details from LDAP
 			if ( is_array($user_ldap_attributes) ) {
 				if ( $user_ldap_attributes['auth_ldap_nameattr'] != '' ) { 
 					global $cachelib, $tikidomain;
-					require_once("lib/cache/cachelib.php");
+					require_once('lib/cache/cachelib.php');
 					$tikilib->set_user_preference($user, 'realName', $user_ldap_attributes['auth_ldap_nameattr']);
 					// Erase cache to update displayed user info
 					//   Do not just invalidate cache for 'user_details_'.$user and 'userslist',
@@ -260,12 +200,12 @@ if ($feature_intertiki == 'y' and isset($_REQUEST['intertiki']) and in_array($_R
 	}
 }
 
-if ($isvalid) {
-	if ($isdue) {
+if ( $isvalid ) {
+	if ( $isdue ) {
 		// Redirect the user to the screen where he must change his password.
 		// Note that the user is not logged in he's just validated to change his password
 		// The user must re-enter his old password so no security risk involved
-		$url = $url_prefix.'tiki-change_password.php?user=' . urlencode($user). '&oldpass=' . urlencode($pass);
+		$url = 'tiki-change_password.php?user=' . urlencode($user). '&oldpass=' . urlencode($pass);
 	} elseif ($isEmailDue) {
 		$userlib->send_confirm_email($user);
 		$smarty->assign('msg', tra('To log on this site, your email must be confirmed.').' '.tra('An email has been sent to you with the instructions to follow.'));
@@ -275,44 +215,51 @@ if ($isvalid) {
 		die;
 	} else {
 		// User is valid and not due to change pass.. start session
-		//session_register('user',$user);
-		$_SESSION["$user_cookie_site"] = $user;
+		$_SESSION[$user_cookie_site] = $user;
 
 		$smarty->assign_by_ref('user', $user);
 		$url = $_SESSION['loginfrom'];
 		$logslib->add_log('login','logged from '.$url);
-//	this code doesn't work
-//                if (($url == $tikiIndex || substr($tikiIndex, strlen($tikiIndex)-strlen($url)-1) == '/'.$url)
-//		     && $useGroupHome == 'y') { .. } /* go to the group page only if the loginfrom is the default page */
-		if (($url == $tikiIndex || basename($url) == $tikiIndex || urldecode(basename($url)) == $tikiIndex || $limitedGoGroupHome == "n") && $useGroupHome == 'y') { /* go to the group page only if the loginfrom is the default page */
-			$groupHome = $tikilib->get_user_preference($user, 'homePage', $groupHome);
-			$groupHome = $userlib->get_user_default_homepage($user);
-			if ($groupHome) {
-				$url = preg_match('#^https?:#', $groupHome) ? $groupHome : $url_prefix."tiki-index.php?page=".$groupHome;
+
+		// Special '?page=...' case. Accept only some values to avoid security problems
+		switch ( $_REQUEST['page'] ) {
+		case 'tikiIndex':
+			$url = ${$_REQUEST['page']};
+			break;
+		default:
+			// Go to the group page ?
+			if ( $useGroupHome == 'y' ) {
+				$url_vars = parse_url($url);
+				// Go to the group page only if the loginfrom is the default page
+				if ( $limitedGoGroupHome == 'n' || $url == $tikiIndex || $url_vars['path'] == $tikiIndex || basename($url_vars['path']) == $tikiIndex ) {
+					$groupHome = $userlib->get_user_default_homepage($user);
+					if ( $user != '' ) $groupHome = $tikilib->get_user_preference($user, 'homePage', $groupHome);
+					if ( $groupHome != '' ) $url = ( preg_match('/^(\/|https?:)/', $groupHome) ) ? $groupHome : 'tiki-index.php?page='.$groupHome;
+				}
+				unset($url_vars);
 			}
-		}
-		//unset session variable in case user su's
-		unset($_SESSION['loginfrom']);
-
-		// No sense in sending user to registration page
-		// This happens if the user has just registered and it's first login
-		$url = preg_replace("/tiki-register.php.*$/","tiki-index.php",$url);
-		$url = preg_replace("/tiki-login_validate.php.*$/","tiki-index.php",$url);
-		$url = preg_replace("/tiki-login_scr.php.*$/","tiki-index.php",$url);
-
-		// Now if the remember me feature is on and the user checked the rememberme checkbox then ...
-		if ($rememberme != 'disabled') {
-			if (isset($_REQUEST['rme']) && $_REQUEST['rme'] == 'on') {
-				$hash = $userlib->create_user_cookie($_REQUEST['user']);
-				$time = substr($hash,strpos($hash,'.')+1);
-				setcookie($user_cookie_site, $hash, $time, $cookie_path, $cookie_domain);
-				$logslib->add_log('login',"got a cookie for $remembertime seconds");
+			unset($url_vars);
+			// Unset session variable in case user su's
+			unset($_SESSION['loginfrom']);
+	
+			// No sense in sending user to registration page or no page at all
+			// This happens if the user has just registered and it's first login
+			if ( $url == '' || ereg('(tiki-register|tiki-login_validate|tiki-login_scr)\.php', $url) ) $url = $tikiIndex;
+	
+			// Now if the remember me feature is on and the user checked the rememberme checkbox then ...
+			if ( $rememberme != 'disabled' ) {
+				if ( isset($_REQUEST['rme']) && $_REQUEST['rme'] == 'on' ) {
+					$hash = $userlib->create_user_cookie($_REQUEST['user']);
+					$time = substr($hash,strpos($hash,'.')+1);
+					setcookie($user_cookie_site, $hash, $time, $cookie_path, $cookie_domain);
+					$logslib->add_log('login',"got a cookie for $remembertime seconds");
+				}
 			}
 		}
 	}
 } else {
-	if ($error == PASSWORD_INCORRECT && $unsuccessful_logins >= 0) {
- 		if (($nb_bad_logins = $userlib->unsuccessful_logins($user)) >= $unsuccessful_logins) {
+	if ( $error == PASSWORD_INCORRECT && $unsuccessful_logins >= 0 ) {
+ 		if ( ($nb_bad_logins = $userlib->unsuccessful_logins($user)) >= $unsuccessful_logins ) {
 			$msg = sprintf(tra('More than %d unsuccessful login attempts have been made.'), $unsuccessful_logins);
 			$smarty->assign('msg', $msg);
 			$userlib->send_confirm_email($user, 'unsuccessful_logins');
@@ -326,50 +273,33 @@ if ($isvalid) {
 	}
 	unset($user);
 	unset($isvalid);
-	if ($error == PASSWORD_INCORRECT)
-		$error = tra("Invalid password");
-	else if ($error == USER_NOT_FOUND)
-		$error = tra("Invalid username");
-	else if ($error == ACCOUNT_DISABLED)
-		$error = tra("Account disabled");
-	else if ($error == USER_AMBIGOUS)
-		$error = tra("You must use the right case for your user name");
-	else if ($error == USER_NOT_VALIDATED)
-		$error = tra("You are not yet validated");
-	else
-		$error= tra('Invalid username or password');
-	$url = $url_prefix.'tiki-error.php?error=' . urlencode($error);
+
+	switch ( $error ) {
+	case PASSWORD_INCORRECT: $error = tra('Invalid password'); break;
+	case USER_NOT_FOUND: $error = tra('Invalid username'); break;
+	case ACCOUNT_DISABLED: $error = tra('Account disabled'); break;
+	case USER_AMBIGOUS: $error = tra('You must use the right case for your user name'); break;
+	case USER_NOT_VALIDATED: $error = tra('You are not yet validated'); break;
+	default: $error = tra('Invalid username or password');
+	}
+	$url = 'tiki-error.php?error='.urlencode($error);
+
 	// on a login error wait this long in seconds. slows down automated login attacks.
-    // regular users mistyping on login will experience the delay, too, but wrong logins
-    // shouldn't occur that often.
+	// regular users mistyping on login will experience the delay, too, but wrong logins
+	// shouldn't occur that often.
 	sleep(5);
 }
 
+if ( isset($user) and $feature_score == 'y' ) $tikilib->score_event($user, 'login');
 
-if (!$stay_in_ssl_mode) {
-	$prefix      = 'http://';
-	$http_domain = $tikilib->get_preference('http_domain', $_SERVER['SERVER_NAME']);
-	$http_port   = $tikilib->get_preference('http_port', 80);
 
-	if ($http_port != 80)
-		$http_domain .= ':' . $http_port;
+// RFC 2616 defines that the 'Location' HTTP headerconsists of an absolute URI
+if ( ! eregi('^https?\:', $url) ) $url = ( ereg('^/', $url) ? $url_scheme.'://'.$url_host.(($url_port!='')?":$url_port":'') : $base_url ).$url;
 
-	$prefix .= $http_domain ;
-	$url = $prefix . $url;
+// Force HTTP mode if needed
+if ( $stay_in_ssl_mode != 'y' || ! $https_mode ) $url = str_replace('https://', 'http://', $url);
 
-	if (SID)
-		$url .= '?' . SID;
-}
-
-if (isset($user) and $feature_score == 'y') {
-	$tikilib->score_event($user, 'login');
-}
-
-if (isset($_REQUEST['page'])) {
-  header('location: ' .  ${$_REQUEST['page']});
-} else {
-  header('location: ' . $url);
-}
+if ( SID ) $url .= '?'.SID;
+header('Location: '.$url);
 exit;
-
 ?>

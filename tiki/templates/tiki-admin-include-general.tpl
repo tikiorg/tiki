@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.62 2007-05-25 20:24:53 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.63 2007-05-31 09:42:58 nyloth Exp $ *}
 
 <script type="text/javascript">
 {literal}
@@ -254,49 +254,22 @@
           {tr}compression is handled by{/tr}: {$gzip_handler}
           </div>{/if}
         </td>
-        <td><input type="checkbox" name="feature_obzip" id="general-gzip"
-              {if $feature_obzip eq 'y'}checked="checked"{/if}/>
-
-
-        </td>
+        <td><input type="checkbox" name="feature_obzip" id="general-gzip" {if $feature_obzip eq 'y'}checked="checked"{/if}/></td>
         <td>&nbsp;</td>
         <td class="form"><label for="general-pageviews">{tr}Count admin pageviews{/tr}:</label></td>
-        <td><input type="checkbox" name="count_admin_pvs" id="general-pageviews"
-              {if $count_admin_pvs eq 'y'}checked="checked"{/if}/>
-        </td>
+        <td><input type="checkbox" name="count_admin_pvs" id="general-pageviews" {if $count_admin_pvs eq 'y'}checked="checked"{/if}/></td>
       </tr><tr>
         <td class="form"><label for="general-anon_modules">{tr}Hide anonymous-only modules from registered users{/tr}:</label></td>
-        <td><input type="checkbox" name="modseparateanon" id="general-anon_modules"
-              {if $modseparateanon eq 'y'}checked="checked"{/if}/>
-        </td>
+        <td><input type="checkbox" name="modseparateanon" id="general-anon_modules" {if $modseparateanon eq 'y'}checked="checked"{/if}/></td>
         <td>&nbsp;</td>
       </tr></table>
 
       <table class="admin"><tr>
         <td colspan="2"><hr/></td>
       </tr><tr>
-        <td class="form" >
-          <label for="general-server_name">{tr}Server name (for absolute URIs){/tr}:</label></td>
-        <td ><input type="text" name="feature_server_name" id="general-server_name"
-                               value="{$feature_server_name|escape}" size="40" /></td>
-      </tr><tr>
-        <td class="form" >
-          <label for="general-https">{tr}HTTPS Server{/tr}:</label></td>
-        <td ><select name="https" id="general-https">
-             <option value="auto" {if $https=="auto"}selected="selected"{/if}>{tr}Automatic (uses HTTPS variable){/tr}</option>
-             <option value="http" {if $https=="http"}selected="selected"{/if}>{tr}No{/tr}</option>
-             <option value="https" {if $https=="https"}selected="selected"{/if}>{tr}Yes{/tr}</option>
-              </select>
-                               </td>
-      </tr><tr>
         <td class="form"><label for="general-browser_title">{tr}Browser title{/tr}:</label></td>
         <td><input type="text" name="siteTitle" id="general-browser_title" value="{$siteTitle|escape}" size="40" /></td>
       </tr><tr>
-<!--
-        <td class="form"><label for="general-tiki_title">{tr}Wiki_Tiki_Title{/tr}: </label></td>
-        <td><input type="text" size="5" name="title" id="general-tiki_title" value="{$title|escape}" size="40" /></td>
-      </tr><tr>
--->
         <td class="form"><label for="general-temp">{tr}Temporary directory{/tr}:</label></td>
         <td><input type="text" name="tmpDir" id="general-temp" value="{$tmpDir|escape}" size="50" /></td>
       </tr><tr>

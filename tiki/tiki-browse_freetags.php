@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.12 2007-05-15 07:06:10 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.13 2007-05-31 09:42:56 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.12 2007-05-15 07:06:10 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.13 2007-05-31 09:42:56 nyloth Exp $
 //
 
 // Initialization
@@ -109,10 +109,6 @@ if ($offset > 0) {
 } else {
 	$smarty->assign('prev_offset', -1);
 }
-
-$base_url = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-$base_url = preg_replace('/\/tiki-browse_freetags.php.+$/','',$base_url);
-$smarty->assign('base_url',$base_url);
 
 $section = 'freetags';
 include_once ('tiki-section_options.php');

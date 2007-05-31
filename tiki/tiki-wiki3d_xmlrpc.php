@@ -9,13 +9,11 @@ require_once('lib/userslib.php');
 require_once("XML/Server.php");
 require_once("lib/wiki/wikilib.php");
 
-
 $map = array ("getSubGraph" => array( "function" => "getSubGraph" ) );
-
 $server = new XML_RPC_Server( $map );
 
 function getSubGraph($params) {
-    global $wikilib, $dbTiki;
+    global $wikilib, $dbTiki, $base_url;
 
     $nodeName = $params->getParam(0); $nodeName = $nodeName->scalarVal();
     $depth = $params->getParam(1); $depth = $depth->scalarVal();
@@ -47,25 +45,19 @@ function getSubGraph($params) {
 
 	    $node = array();
 
-	    $base_url = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-	    $base_url = preg_replace('/\/tiki-wiki3d_xmlrpc.php.*$/','',$base_url);
-
-	    if ($wikilib->page_exists($nodeName)) {
+	    if ( $wikilib->page_exists($nodeName) ) {
 		$color = $existing_color;
-		$actionUrl = "${base_url}/tiki-index.php?page=${nodeName}";
+		$actionUrl = $base_url.'tiki-index.php?page='.$nodeName;
 	    } else {
 		$color = $missing_color;
-		$actionUrl = "${base_url}/tiki-editpage.php?page=${nodeName}";
+		$actionUrl = $base_url.'tiki-editpage.php?page='.$nodeName;
 	    }
 
 	    $node['neighbours'] = new XML_RPC_Value($neighbours, "array");
-	    if (!empty($color)) {
-		$node['color'] = new XML_RPC_Value($color, "string");
-	    }
+	    if ( ! empty($color) ) $node['color'] = new XML_RPC_Value($color, "string");
+
 	    $node['actionUrl'] = new XML_RPC_Value($actionUrl, "string");
-
 	    $nodes[$nodeName] = new XML_RPC_Value($node, "struct");
-
 	}
 	$i++;
 	$queue = $nextQueue;

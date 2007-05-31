@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.19 2007-05-26 16:25:04 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.20 2007-05-31 09:42:56 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -687,9 +687,7 @@ if ((!$dbcon or (isset($_REQUEST['resetdb']) and $_REQUEST['resetdb']=='y' &&
 	}
 }
 
-if (isset($_REQUEST['restart'])) {
-	$_SESSION["install-logged-$multi"] = '';
-}
+if ( isset($_REQUEST['restart']) ) $_SESSION["install-logged-$multi"] = '';
 
 //Load Profiles
 load_profiles();
@@ -714,57 +712,25 @@ $smarty->assign('admin_acc', $admin_acc);
 
 // Since we do have an admin account the user must login to 
 // use the install script
-if (isset($_REQUEST['login'])) {
-	$tikifeedback[] = check_password();
-}
+if ( isset($_REQUEST['login']) ) $tikifeedback[] = check_password();
 
 // If no admin account then we are logged
-if ($admin_acc=='n') {
-	$_SESSION["install-logged-$multi"] = 'y';
-}
+if ( $admin_acc == 'n' ) $_SESSION["install-logged-$multi"] = 'y';
 
 $smarty->assign('dbdone', 'n');
 $smarty->assign('logged', $logged);
 
-if ( is_object($dbTiki) && isset($_SESSION["install-logged-$multi"]) && $_SESSION["install-logged-$multi"] == 'y') {
+if ( is_object($dbTiki) && isset($_SESSION["install-logged-$multi"]) && $_SESSION["install-logged-$multi"] == 'y' ) {
 	$smarty->assign('logged', 'y');
 
-	if (isset($_REQUEST['scratch'])) {
-		process_sql_file ('tiki-' . $dbversion_tiki . "-" . $db_tiki . '.sql',$db_tiki);
-
+	if ( isset($_REQUEST['scratch']) ) {
+		process_sql_file('tiki-'.$dbversion_tiki.'-'.$db_tiki.'.sql', $db_tiki);
 		$smarty->assign('dbdone', 'y');
-		if (isset($_REQUEST['profile'])) {
-			process_sql_file ('profiles/' . $_REQUEST['profile'],$db_tiki);
-			//$profile = $_REQUEST['profile'];
-			//print "Profile: $profile";
-		}
-		// Pre-fill database with some default values which can be detected here
-		// TODO: add more default values pre-filling
-		// Format for http_prefix is either '/' or '/stuff/'
-		$initialprefvalues['http_prefix'] = dirname($_SERVER["PHP_SELF"].'x');
-		if(substr($initialprefvalues['http_prefix'],-1,1) != '/' ) {
-			$initialprefvalues['http_prefix'] .= '/';
-		}
-		$initialprefvalues['https_prefix'] = $initialprefvalues['http_prefix'];
-		$initialprefvalues['http_domain'] = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : $_SERVER['HTTP_HOST'];
-		$initialprefvalues['https_domain'] = $initialprefvalues['http_domain'];
-
-		while(list($key,$val)=each($initialprefvalues)){
-			#echo "key:$key - value:$val <br />";
-			$query="INSERT INTO tiki_preferences(name,value) VALUES (?,?)";
-			$result = $dbTiki->query($query,array($key,$val));
-			// Are these failedcommands and succcommands arrays used somewhere ?
-			if (!$result) {
-				$failedcommands[]= "Command: ".$statement."\nMessage: ".$dbTiki->ErrorMsg()."\n\n";
-			} else {
-				$succcommands[]=$statement;
-			}
-		}
+		if ( isset($_REQUEST['profile']) ) process_sql_file('profiles/'.$_REQUEST['profile'], $db_tiki);
 	}
 
-	if (isset($_REQUEST['update'])) {
-		process_sql_file ($_REQUEST['file'],$db_tiki);
-
+	if ( isset($_REQUEST['update']) ) {
+		process_sql_file($_REQUEST['file'], $db_tiki);
 		$smarty->assign('dbdone', 'y');
 	}
 }
@@ -772,7 +738,6 @@ $smarty->assign_by_ref('tikifeedback', $tikifeedback);
 
 $php_memory_limit = return_bytes(ini_get('memory_limit'));
 $smarty->assign('php_memory_limit', intval($php_memory_limit));
-
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 include "lib/headerlib.php";
