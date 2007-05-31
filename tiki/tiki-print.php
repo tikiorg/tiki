@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-print.php,v 1.32 2007-05-31 09:42:56 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-print.php,v 1.33 2007-05-31 16:50:51 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -111,7 +111,7 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 $creator = $wikilib->get_creator($page);
 $smarty->assign('creator', $creator);
 $smarty->assign('print_page', 'y');
-$smarty->assign('urlprefix', $url_base); // Obsolete, use url_base instead. This is for compatibility purposes only.
+$smarty->assign('urlprefix', $base_url); // Obsolete, use base_url instead. This is for compatibility purposes only.
 $smarty->assign('mid', 'tiki-show_page.tpl');
 $smarty->display('tiki-print.tpl');
 
