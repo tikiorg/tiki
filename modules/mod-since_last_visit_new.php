@@ -5,6 +5,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
+
+require_once('lib/smarty_tiki/modifier.userlink.php');
+
 if (!function_exists('since_last_visit_new')) {
 function since_last_visit_new($user, $params = null) {
   if (!$user) return false;
