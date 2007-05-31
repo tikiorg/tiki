@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.438 2007-05-31 09:42:56 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.439 2007-05-31 17:50:38 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -1326,6 +1326,7 @@ if (!isset($feature_bidi)) { $feature_bidi = 'n'; }
 $smarty->assign('feature_bidi', $feature_bidi);
 
 if ( isset($_REQUEST['stay_in_ssl_mode']) ) $stay_in_ssl_mode = ( $_REQUEST['stay_in_ssl_mode'] == 'y' || $_REQUEST['stay_in_ssl_mode'] == 'on' ) ? 'y' : 'n';
+else $stay_in_ssl_mode = 'n';
 
 // Show the 'Stay in SSL mode' checkbox only in those cases:
 //  - We are already in HTTPS
