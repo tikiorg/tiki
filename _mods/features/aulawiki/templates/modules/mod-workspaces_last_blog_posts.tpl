@@ -22,8 +22,10 @@
       {/foreach}
   </select>
   <input class="edubutton" type="submit" name="refresh" value="{tr}Refresh{/tr}">
+  {if !empty($selectedBlog.objId)}
   <a class="edubutton" href="./tiki-view_blog.php?blogId={$selectedBlog.objId}">{tr}Go{/tr}</a>
   <a title="{tr}edit{/tr}" href="./tiki-blog_post.php?blogId={$selectedBlog.objId}"><img src="img/icons/edit.gif" border="0"  width="20" height="16" alt="{tr}post{/tr}" /></a>
+  {/if}
 </form>
 </div>
 {/if}

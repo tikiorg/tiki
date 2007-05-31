@@ -80,6 +80,9 @@ if (!isset ($workspace)) {
 	
 		$smarty->assign_by_ref('modLastBlogPosts', $posts["data"]);
 		$smarty->assign_by_ref('workspaceBlogs', $blogs);
+		if (count($blogs) == 1) {
+			$smarty->assign_by_ref('selectedBlog', $blogs[0]);
+		}
 	}
 
 	$smarty->assign('showBar', isset ($module_params["showBar"]) ? $module_params["showBar"] : 'y');
