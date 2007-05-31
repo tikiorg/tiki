@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.43 2007-05-17 12:59:07 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.44 2007-05-31 09:42:59 nyloth Exp $ *}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Login{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations}
 
@@ -6,7 +6,7 @@
       {tr}logged as{/tr}: {$user|userlink}<br />
       <a class="linkmodule" href="tiki-logout.php">{tr}Logout{/tr}</a><br />
       {if $tiki_p_admin eq 'y'}
-        <form action="{$login_url}" method="post"{if $desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}>
+        <form action="{if $https_login neq 'n' && $https_login_required eq 'y'}{$base_url_https}{/if}{$login_url}" method="post"{if $desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}>
         <label for="login-switchuser">{tr}user{/tr}:</label>
         <input type="hidden" name="su" value="1" />
         <input type="text" name="username" id="login-switchuser" size="{if empty($module_params.input_size)}20{else}{$module_params.input_size}{/if}" />
@@ -24,7 +24,7 @@
 		<br /><a class="linkmodule" href="tiki-login_scr.php?user=admin">{tr}Login as admin{/tr}</a>
       {/if}
     {else}
-     <form name="loginbox" action="{$login_url}" method="post" {if $feature_challenge eq 'y'}onsubmit="doChallengeResponse()"{/if}{if $desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}> 
+     <form name="loginbox" action="{if $https_login neq 'n' && $https_login_required eq 'y'}{$base_url_https}{/if}{$login_url}" method="post" {if $feature_challenge eq 'y'}onsubmit="doChallengeResponse()"{/if}{if $desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}> 
      {if $feature_challenge eq 'y'}
      <script type='text/javascript' src="lib/md5.js"></script>   
      {literal}
@@ -90,15 +90,15 @@
           {if ($forgotPass ne 'y' or $change_password ne 'y') and $allowRegister eq 'y'}
             <td  class="module" valign="bottom"><a class="linkmodule" href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}register{/tr}</a></td>
           {/if}
-          {if ($forgotPass ne 'y' or $change_password ne 'y')and $allowRegister ne 'y'}
+          {if ($forgotPass ne 'y' or $change_password ne 'y') and $allowRegister ne 'y'}
           <td valign="bottom">&nbsp;</td>
           {/if}
           </tr>
-          {if $http_login_url ne '' or $https_login_url ne ''}
+          {if $https_login neq 'n' and $https_login_required neq 'y'}
           <tr>
-          <td  class="module" valign="bottom">
-            <a class="linkmodule" href="{$http_login_url}" title="{tr}Click here to login using the default security protocol{/tr}">{tr}standard{/tr}</a> |
-            <a class="linkmodule" href="{$https_login_url}" title="{tr}Click here to login using a secure protocol{/tr}">{tr}secure{/tr}</a>
+          <td class="module" valign="bottom">
+            <a class="linkmodule" href="{$base_url_http}{$login_url}" title="{tr}Click here to login using the default security protocol{/tr}">{tr}standard{/tr}</a> |
+            <a class="linkmodule" href="{$base_url_https}{$login_url}" title="{tr}Click here to login using a secure protocol{/tr}">{tr}secure{/tr}</a>
           </td>
           </tr>
           {/if}

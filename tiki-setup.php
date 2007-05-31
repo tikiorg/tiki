@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.437 2007-05-29 20:04:45 luciash Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.438 2007-05-31 09:42:56 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -18,7 +18,6 @@ if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
 //header('Content-Type: text/html; charset=utf-8');
 
 $phpErrors = array();
-// include_once("lib/init/setup_inc.php");
 include_once('lib/init/initlib.php');
 
 class TikiSetup extends TikiInit {
@@ -953,26 +952,19 @@ $pref['auth_ldap_nameattr'] = 'displayName';
 $pref['https'] = 'auto';
 $pref['https_login'] = 'n';
 $pref['https_login_required'] = 'n';
-$pref['https_mode'] = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on';
-if ($pref['https_mode']) {
-	$pref['http_port'] = 80;
-	$pref['https_port'] = isset($_SERVER['SERVER_PORT']) ? $_SERVER['SERVER_PORT'] : 443;
-} else {
-	$pref['http_port'] = isset($_SERVER['SERVER_PORT']) ? $_SERVER['SERVER_PORT'] : 80;
-	$pref['https_port'] = 443;
+global $https_mode;
+$https_mode = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on';
+if ( isset($_SERVER['SERVER_PORT']) ) {
+	if ( $https_mode ) $pref['https_port'] = $_SERVER['SERVER_PORT'];
+	else $pref['http_port'] = $_SERVER['SERVER_PORT'];
 }
-$pref['http_domain'] = '';
-$pref['https_domain'] = '';
-$pref['http_prefix'] = (($_SERVER["PHP_SELF"] != '') ? dirname($_SERVER["PHP_SELF"]) : '/');
-$pref['https_prefix'] = $pref['http_prefix'];
-$pref['base_url'] = 'http://' . $default['feature_server_name'];
 $pref['login_url'] = 'tiki-login.php';
 $pref['login_scr'] = 'tiki-login_scr.php';
 $pref['register_url'] = 'tiki-register.php';
 $pref['error_url'] = 'tiki-error.php';
 $pref['highlight_group'] = '';
 $pref['cookie_path'] = '/';
-$pref['cookie_domain'] = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : $_SERVER['HTTP_HOST'];
+$pref['cookie_domain'] = '';
 $pref['cookie_name'] = 'tikiwiki';
 $pref['user_tracker_infos'] = '';
 $pref['desactive_login_autocomplete'] = 'n';
@@ -984,6 +976,7 @@ if ($phpcas_enabled == 'y') {
 	$pref['cas_port'] = '';
 	$pref['cas_path'] = '';
 }
+
 
 # intertiki
 $pref['feature_intertiki'] = 'n';
@@ -1175,7 +1168,6 @@ $pref['feature_redirect_on_error'] = 'n';
 $pref['feature_referer_highlight'] = 'n';
 $pref['feature_referer_stats'] = 'n';
 $pref['feature_score'] = 'n';
-$pref['feature_server_name'] = (isset($_SERVER['SERVER_NAME'])) ? $_SERVER['SERVER_NAME']  : $_SERVER['HTTP_HOST'];
 $pref['feature_sheet'] = 'n';
 $pref['feature_shoutbox'] = 'n';
 $pref['feature_smileys'] = 'y';
@@ -1232,6 +1224,8 @@ foreach ($preferences as $name => $val) {
 	$$name = $val;
 	$smarty->assign("$name", $val);
 }
+unset($pref);
+
 // *****************************************************************************
 $sections_enabled = array();
 foreach ($sections as $sec=>$dat) {
@@ -1265,17 +1259,46 @@ $smarty->assign('uses_jscalendar', 'n');
 $smarty->assign('uses_phplayers', 'n');
 $smarty->assign('fullscreen', 'n');
 $smarty->assign('semUser', '');
-if (!empty($section)) {
-	$smarty->assign('section', $section);
-}
+if ( ! empty($section) ) $smarty->assign('section', $section);
 ini_set('docref_root',$php_docroot);
 
+/* Automatically set params used for absolute URLs - BEGIN */
+
 $tikipath = dirname($_SERVER['SCRIPT_FILENAME']);
-if (substr($tikipath,-1,1) != '/') $tikipath.= '/';
+if ( substr($tikipath,-1,1) != '/' ) $tikipath .= '/';
+
 $tikiroot = dirname($_SERVER['PHP_SELF']);
-if (substr($tikiroot,-1,1) != '/') $tikiroot.= '/';
-$smarty->assign('tikipath',$tikipath);
-$smarty->assign('tikiroot',$tikiroot);
+if ( substr($tikiroot,-1,1) != '/' ) $tikiroot .= '/';
+
+if ( $https_port == 443 ) $https_port = '';
+if ( $http_port == 80 ) $http_port = '';
+
+$url_scheme = $https_mode ? 'https' : 'http';
+$url_host = (isset($_SERVER['SERVER_NAME'])) ? $_SERVER['SERVER_NAME']  : $_SERVER['HTTP_HOST'];
+$url_port = $https_mode ? $https_port : $http_port;
+$url_path = $tikiroot;
+$base_url = $url_scheme.'://'.$url_host.(($url_port!='')?":$url_port":'').$url_path;
+$base_url_http = 'http://'.$url_host.(($http_port!='')?":$http_port":'').$url_path;
+$base_url_https = 'https://'.$url_host.(($https_port!='')?":$https_port":'').$url_path;
+
+$smarty->assign('tikipath', $tikipath);
+$smarty->assign('tikiroot', $tikiroot);
+$smarty->assign('url_scheme', $url_scheme);
+$smarty->assign('url_host', $url_host);
+$smarty->assign('url_port', $url_port);
+$smarty->assign('url_path', $url_path);
+
+$smarty->assign('base_url', $base_url);
+$smarty->assign('base_url_http', $base_url_http);
+$smarty->assign('base_url_https', $base_url_https);
+
+// OBSOLETED vars (just for compatibility purposes)
+$smarty->assign('http_domain', $http_domain = $url_host);
+$smarty->assign('http_prefix', $http_prefix = $url_path);
+$smarty->assign('http_login_url', $http_login_url = $login_url);
+$smarty->assign('https_login_url', $https_login_url = $login_url);
+
+/* Automatically set params used for absolute URLs - END */
 
 if (isset($_SESSION['tiki_cookie_jar'])) {
 	foreach ($_SESSION['tiki_cookie_jar'] as $nn=>$vv) {
@@ -1297,64 +1320,28 @@ if ($error_reporting_level == 1) {
 }
 error_reporting($error_reporting_level);
 
-
 $smarty->assign('wiki_extras', 'n');
 
 if (!isset($feature_bidi)) { $feature_bidi = 'n'; }
 $smarty->assign('feature_bidi', $feature_bidi);
 
+if ( isset($_REQUEST['stay_in_ssl_mode']) ) $stay_in_ssl_mode = ( $_REQUEST['stay_in_ssl_mode'] == 'y' || $_REQUEST['stay_in_ssl_mode'] == 'on' ) ? 'y' : 'n';
 
-if ($https_login == 'y' || $https_login_required == 'y') {
-	$http_login_url = 'http://' . $http_domain;
-	if ($http_port != 80) {
-		$http_login_url .= ':' . $http_port;
-	}
-	$http_login_url .= $http_prefix . $tikiIndex;
-	if (SID) {
-		$http_login_url .= '?' . SID;
-	}
-	$edit_data = htmlentities(isset($_REQUEST['edit']) ? $_REQUEST['edit'] : '', ENT_QUOTES);
-	$https_login_url = 'https://' . $https_domain;
-	if ($https_port != 443) {
-		$https_login_url .= ':' . $https_port;
-	}
-	$https_login_url .= $https_prefix . $tikiIndex;
-	if (SID) {
-		$https_login_url .= '?' . SID;
-	}
-	$stay_in_ssl_mode = isset($_REQUEST['stay_in_ssl_mode']) ? $_REQUEST['stay_in_ssl_mode'] : '';
-	if ($https_login_required == 'y') {
-		$show_stay_in_ssl_mode = !$https_mode ? 'y' : 'n';
-		$smarty->assign('show_stay_in_ssl_mode', $show_stay_in_ssl_mode);
-		if (!$https_mode) {
-			$https_login_url = 'https://' . $https_domain;
-			if ($https_port != 443) {
-				$https_login_url .= ':' . $https_port;
-			}
-			$https_login_url .= $https_prefix . $login_url;
-			if (SID) {
-				$https_login_url .= '?' . SID;
-			}
-			$smarty->assign('login_url', $https_login_url);
-		} else {
-			$stay_in_ssl_mode = 'on';
-		}
-	} else {
-		$smarty->assign('http_login_url', $http_login_url);
-		$smarty->assign('https_login_url', $https_login_url);
-		$show_stay_in_ssl_mode = $https_mode ? 'y' : 'n';
-	}
-	$smarty->assign('show_stay_in_ssl_mode', $show_stay_in_ssl_mode);
-	$smarty->assign('stay_in_ssl_mode', $stay_in_ssl_mode);
-}
+// Show the 'Stay in SSL mode' checkbox only in those cases:
+//  - We are already in HTTPS
+//  - We are not in HTTPS, but login in HTTPS is required
+//
+// In both cases, HTTPS login also need to be allowed
+//
+$show_stay_in_ssl_mode = ( $https_login != 'n' && ( $https_mode || ( $https_login_required == 'y' && ! $https_mode ) ) ) ? 'y' : 'n';
 
-if ($wiki_page_regex == 'strict') {
-	$page_regex = '([A-Za-z0-9_])([\.: A-Za-z0-9_\-])*([A-Za-z0-9_])';
-} elseif ($wiki_page_regex == 'full') {
-	$page_regex = '([A-Za-z0-9_]|[\x80-\xFF])([\.: A-Za-z0-9_\-]|[\x80-\xFF])*([A-Za-z0-9_]|[\x80-\xFF])';
-} else {
-	$page_regex = '([^\n|\(\)])((?!(\)\)|\||\n)).)*?';
-}
+$smarty->assign('login_url', $login_url);
+$smarty->assign('show_stay_in_ssl_mode', $show_stay_in_ssl_mode);
+$smarty->assign('stay_in_ssl_mode', $stay_in_ssl_mode);
+
+if ($wiki_page_regex == 'strict') $page_regex = '([A-Za-z0-9_])([\.: A-Za-z0-9_\-])*([A-Za-z0-9_])';
+elseif ($wiki_page_regex == 'full') $page_regex = '([A-Za-z0-9_]|[\x80-\xFF])([\.: A-Za-z0-9_\-]|[\x80-\xFF])*([A-Za-z0-9_]|[\x80-\xFF])';
+else $page_regex = '([^\n|\(\)])((?!(\)\)|\||\n)).)*?';
 
 $wiki_dump_exists = 'n';
 $dump_path = 'dump';
@@ -1400,22 +1387,22 @@ if ($feature_detect_language == 'y') {
 	}
 }
 
-$group = '';
-
-$group = $userlib->get_user_default_group($user);
-if($useGroupHome == 'y') {
+if ( $useGroupHome == 'y' ) {
 	$groupHome = $userlib->get_user_default_homepage($user);
-	if ($groupHome) {
-		if (preg_match('#^https?:#', $groupHome)) {
-			$tikiIndex = $groupHome;
-		} else {
-			$tikiIndex = 'tiki-index.php?page='.$groupHome;
+	if ( $user != '' ) $groupHome = $tikilib->get_user_preference($user, 'homePage', $groupHome);
+	if ( $groupHome != '' ) {
+		if ( ! preg_match('/^(\/|https?:)/', $groupHome) ) {
 			$wikiHomePage = $groupHome;
-			$smarty->assign('wikiHomePage',$wikiHomePage);
-		}
+			$tikiIndex = 'tiki-index.php?page='.$wikiHomePage;
+			$smarty->assign('wikiHomePage', $wikiHomePage);
+		} else $tikiIndex = $groupHome;
 	}
 }
 
+// Be absolutely sure we have a value for tikiIndex
+if ( $tikiIndex == '' ) $tikiIndex = 'tiki-index.php';
+
+$group = $userlib->get_user_default_group($user);
 $smarty->assign('default_group',$group);
 
 $user_dbl = 'y';
@@ -1593,58 +1580,6 @@ if ($user && $feature_usermenu == 'y') {
     }
 }
 
-$ownurl = $tikilib->httpPrefix(). $_SERVER['REQUEST_URI'];
-
-// Turn off all error reporting; parse_url emits E_WARNING to the logs when it
-// gets given real crap.
-$old_error_reporting = error_reporting(0);
-$parsed = parse_url($_SERVER['REQUEST_URI']);
-error_reporting($old_error_reporting);
-
-if (!isset($parsed['query'])) {
-    $parsed['query'] = '';
-}
-
-if (!isset($parsed['path'])) {
-    $parsed['path'] = '';
-}
-
-parse_str($parsed['query'], $query);
-$father = $tikilib->httpPrefix(). $parsed['path'];
-
-if (count($query) > 0) {
-    $first = 1;
-
-    foreach ($query as $name => $val) {
-	if ($first) {
-	    $first = false;
-
-	    $father .= '?' . $name . '=' . $val;
-	} else {
-	    $father .= '&amp;' . $name . '=' . $val;
-	}
-    }
-
-    $father .= '&amp;';
-} else {
-    $father .= '?';
-}
-
-
-$ownurl_father = $father;
-$smarty->assign('ownurl', $ownurl);
-
-// load lib configs
-/*
-if ($libdir = opendir('lib')) {
-	while (FALSE !== ($libname = readdir($libdir))) {
-		$configIncFile = 'lib/'.$libname.'/setup_inc.php';
-		if (is_dir( 'lib/'.$libname ) && file_exists( $configIncFile )) {
-			include_once( $configIncFile );
-		}
-	}
-}
-*/
 $allowMsgs = 'n';
 
 if ($user) {

@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.745 2007-05-30 13:58:30 mose Exp $
+// CVS: $Id: tikilib.php,v 1.746 2007-05-31 09:42:57 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -6735,24 +6735,13 @@ if (!$simple_wiki) {
 
 
     function httpScheme() {
-       $https=$this->get_preference('https','auto');
-       switch($https) {
-	  case 'auto':
-	  default:
-	     $e=((isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) ? 's' : '');
-	     break;
-	  case 'http':
-	     $e='';
-	     break;
-	  case 'https':
-	     $e='s';
-	     break;
-	  }
-       return 'http' .$e;
+	global $url_scheme;     
+	return $url_scheme;
     }
 
     function httpPrefix() {
-        return $this->httpScheme().'://'.$_SERVER['HTTP_HOST'];
+	global $url_scheme, $url_host, $url_port;
+	return $url_scheme.'://'.$url_host.(($url_port!='')?":$url_port":'');    
     }
 
     function distance($lat1,$lon1,$lat2,$lon2) {

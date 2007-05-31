@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.26 2007-05-15 07:06:11 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.27 2007-05-31 09:42:59 nyloth Exp $ *}
 
 {if $feature_ajax eq 'y'}
 {include file='tiki-ajax_header.tpl' test=$test}
@@ -12,7 +12,7 @@
 <div class="morcego_embedded">
 <h2>{tr}Network of Tags related to{/tr}: <span id="currentTag1">{$tag}</span></h2>
 <applet codebase="./lib/wiki3d" archive="morcego-0.4.0.jar" code="br.arca.morcego.Morcego" width="{$freetags_3d_width}" height="{$freetags_3d_height}">
-      <param name="serverUrl" value="{$base_url}/tiki-freetag3d_xmlrpc.php">
+      <param name="serverUrl" value="{$base_url}tiki-freetag3d_xmlrpc.php">
       <param name="startNode" value="{$tag}">
       <param name="windowWidth" value="{$freetags_3d_width}">
       <param name="windowHeight" value="{$freetags_3d_height}">

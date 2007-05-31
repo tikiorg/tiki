@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_articles.tpl,v 1.14 2007-02-18 11:21:16 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_articles.tpl,v 1.15 2007-05-31 09:42:59 nyloth Exp $ *}
 
 {if $feature_articles eq 'y'}
 {if !isset($tpl_module_title)}
@@ -15,7 +15,7 @@
         {if $nonums != 'y'}<td class="module">{$smarty.section.ix.index_next})</td>{/if}
         <td class="module">
 		  {if $absurl == 'y'}
-          <a class="linkmodule" href="{$feature_server_name}tiki-read_article.php?articleId={$modLastArticles[ix].articleId}" title="{$modLastArticles[ix].publishDate|tiki_short_datetime}, {tr}by{/tr} {$modLastArticles[ix].author}">
+          <a class="linkmodule" href="{$base_url}tiki-read_article.php?articleId={$modLastArticles[ix].articleId}" title="{$modLastArticles[ix].publishDate|tiki_short_datetime}, {tr}by{/tr} {$modLastArticles[ix].author}">
             {$modLastArticles[ix].title}
           </a>
 		  {else}

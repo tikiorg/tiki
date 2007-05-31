@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-google.tpl,v 1.17 2007-02-18 11:21:16 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-google.tpl,v 1.18 2007-05-31 09:42:59 nyloth Exp $ *}
 
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Google Search{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="google" flip=$module_params.flip decorations=$module_params.decorations}
@@ -9,9 +9,9 @@
   <input type="hidden" name="btnG" value="Google Search"/>
   <input name="googles" type="image" src="img/googleg.gif" alt="Google" align="left" />&nbsp;
   <input type="text" name="q" size="12"  maxlength="100" />
-  {if $http_domain ne ''}
-    <input type="hidden" name="domains" value="{$http_domain}" /><br />
-    <input type="radio" name="sitesearch" value="{$http_domain}" checked="checked" />{$http_domain}<br />
+  {if $url_host ne ''}
+    <input type="hidden" name="domains" value="{$url_host}" /><br />
+    <input type="radio" name="sitesearch" value="{$url_host}" checked="checked" />{$url_host}<br />
     <input type="radio" name="sitesearch" value="" />WWW
   {/if}
 </form>

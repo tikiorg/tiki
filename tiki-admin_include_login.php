@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.56 2007-05-25 13:15:29 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.57 2007-05-31 09:42:55 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -49,12 +49,8 @@ if (isset($_REQUEST["loginprefs"])) {
 	simple_set_toggle('https_login');
 	simple_set_toggle('https_login_required');
 	simple_set_value('feature_crypt_passwords');
-	simple_set_value('http_domain');
 	simple_set_value('http_port');
-	simple_set_value('http_prefix');
-	simple_set_value('https_domain');
 	simple_set_value('https_port');
-	simple_set_value('https_prefix');
 	simple_set_value('rememberme');
 	simple_set_value('remembertime');
 	simple_set_value('cookie_name');

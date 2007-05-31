@@ -14,7 +14,7 @@ $map = array ("getSubGraph" => array( "function" => "getSubGraph" ) );
 $server = new XML_RPC_Server( $map );
 
 function getSubGraph($params) {
-    global $dbTiki;
+    global $dbTiki, $base_url;
 
     $userlib = new UsersLib($dbTiki);
 
@@ -53,9 +53,6 @@ function getSubGraph($params) {
 	    }
 
 	    $node = array();
-
-	    $base_url = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-	    $base_url = preg_replace('/\/tiki-users3d_xmlrpc.php.*$/','',$base_url);
 
 	    $actionUrl = "javascript:listObjects('$nodeName');";
 	    $color = '#0000FF';
