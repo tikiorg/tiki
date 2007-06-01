@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-compose.php,v 1.38 2007-03-06 19:29:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-compose.php,v 1.39 2007-06-01 14:04:25 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -74,7 +74,7 @@ if (!isset($_REQUEST['priority']))
 	$_REQUEST['priority'] = 3;
 
 // Strip Re:Re:Re: from subject
-if(isset($_REQUEST['reply'])||isset($_REQUEST['replyall'])) {
+if(!empty($_REQUEST['reply'])||!empty($_REQUEST['replyall'])) {
 	$_REQUEST['subject'] = tra("Re:") . ereg_replace("^(".tra("Re:").")+", "", $_REQUEST['subject']);
 	$smarty->assign('reply', 'y');
 }
