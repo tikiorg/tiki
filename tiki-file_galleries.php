@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.45 2007-05-13 22:09:01 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.46 2007-06-01 18:36:56 sylvieg Exp $
 
 	require_once('tiki-setup.php');
 	include_once('lib/filegals/filegallib.php');
@@ -10,7 +10,7 @@
 	  die;  
 	}
 	
-	if($tiki_p_view_file_gallery != 'y') {
+	if ((isset($tiki_p_list_file_galleries) && $tiki_p_list_file_galleries != 'y') || (!isset($tiki_p_list_file_galleries) && $tiki_p_view_file_gallery != 'y')) {
 	  $smarty->assign('msg',tra("Permission denied you cannot view this section"));
 	  $smarty->display("error.tpl");
 	  die;
@@ -148,6 +148,7 @@
 			$smarty->assign('sortorder', 'created');
 			$smarty->assign('sortdirection', 'desc');
 		}
+		list($fgal_list_id, $fgal_list_name, $fgal_list_description, $fgal_list_type, $fgal_list_created, $fgal_list_lastmodif) = split(':',$info['subgal_conf']);
 	  }
 	} elseif (!empty($_REQUEST['dup_mode'])) {
 		$smarty->assign('dup_mode','y');
