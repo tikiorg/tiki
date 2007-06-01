@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.76 2007-05-31 09:42:56 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.77 2007-06-01 13:56:01 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.76 2007-05-31 09:42:56 nyloth Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.77 2007-06-01 13:56:01 nyloth Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -22,9 +22,14 @@ if ( ini_get('session.use_cookies') == 1 && ! isset($_COOKIE['PHPSESSID']) ) {
 	die;
 }
 
-// Redirect to HTTPS if we are not in HTTPS but we allow and require HTTPS login
-if ( ! $https_mode && ( $https_login != 'n' && $https_login_required == 'y' ) ) {
+// Redirect to HTTPS if we are not in HTTPS but we require HTTPS login
+if ( ! $https_mode && $https_login == 'required' ) {
 	header('location: '.$base_url_https.$login_url);
+	exit;
+}
+// Redirect to HTTP if we are in HTTPS but we doesn't allow HTTPS login
+if ( $https_mode && $https_login == 'disabled' ) {
+	header('location: '.$base_url_http.$login_url);
 	exit;
 }
 

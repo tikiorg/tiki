@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.439 2007-05-31 17:50:38 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.440 2007-06-01 13:56:01 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -949,15 +949,11 @@ $pref['auth_ldap_adminuser'] = '';
 $pref['auth_ldap_adminpass'] = '';
 $pref['auth_ldap_version'] = 3;
 $pref['auth_ldap_nameattr'] = 'displayName';
-$pref['https'] = 'auto';
-$pref['https_login'] = 'n';
-$pref['https_login_required'] = 'n';
-global $https_mode;
-$https_mode = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on';
-if ( isset($_SERVER['SERVER_PORT']) ) {
-	if ( $https_mode ) $pref['https_port'] = $_SERVER['SERVER_PORT'];
-	else $pref['http_port'] = $_SERVER['SERVER_PORT'];
-}
+$pref['https_login'] = 'allowed';
+$pref['feature_show_stay_in_ssl_mode'] = 'y';
+$pref['feature_switch_ssl_mode'] = 'y';
+$pref['https_port'] = 443;
+$pref['http_port'] = 80;
 $pref['login_url'] = 'tiki-login.php';
 $pref['login_scr'] = 'tiki-login_scr.php';
 $pref['register_url'] = 'tiki-register.php';
@@ -1273,6 +1269,15 @@ if ( substr($tikiroot,-1,1) != '/' ) $tikiroot .= '/';
 if ( $https_port == 443 ) $https_port = '';
 if ( $http_port == 80 ) $http_port = '';
 
+
+// Detect if we are in HTTPS / SSL mode.
+// Since $_SERVER['HTTPS'] will not be set on some installation, we may need to check port also.
+$https_mode = false;
+if ( ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' )
+	|| ( $https_port == '' && $_SERVER['SERVER_PORT'] == 443 )
+	|| ( $https_port > 0 && $_SERVER['SERVER_PORT'] == $https_port )
+) $https_mode = true;
+
 $url_scheme = $https_mode ? 'https' : 'http';
 $url_host = (isset($_SERVER['SERVER_NAME'])) ? $_SERVER['SERVER_NAME']  : $_SERVER['HTTP_HOST'];
 $url_port = $https_mode ? $https_port : $http_port;
@@ -1297,6 +1302,11 @@ $smarty->assign('http_domain', $http_domain = $url_host);
 $smarty->assign('http_prefix', $http_prefix = $url_path);
 $smarty->assign('http_login_url', $http_login_url = $login_url);
 $smarty->assign('https_login_url', $https_login_url = $login_url);
+if ( $https_login_required == 'y' ) {
+	$tikilib->set_preference('https_login_required','');
+	$smarty->assign('https_login', $https_login = 'required');
+} elseif ( $https_login == 'y' ) $smarty->assign('https_login', $https_login = 'allowed');
+elseif ( $https_login == 'n' ) $smarty->assign('https_login', $https_login = 'disabled');
 
 /* Automatically set params used for absolute URLs - END */
 
@@ -1325,16 +1335,16 @@ $smarty->assign('wiki_extras', 'n');
 if (!isset($feature_bidi)) { $feature_bidi = 'n'; }
 $smarty->assign('feature_bidi', $feature_bidi);
 
-if ( isset($_REQUEST['stay_in_ssl_mode']) ) $stay_in_ssl_mode = ( $_REQUEST['stay_in_ssl_mode'] == 'y' || $_REQUEST['stay_in_ssl_mode'] == 'on' ) ? 'y' : 'n';
-else $stay_in_ssl_mode = 'n';
+if ( isset($_REQUEST['stay_in_ssl_mode']) ) {
+	// We stay in HTTPS / SSL mode if 'stay_in_ssl_mode' has an 'y' or 'on' value
+	$stay_in_ssl_mode = ( $_REQUEST['stay_in_ssl_mode'] == 'y' || $_REQUEST['stay_in_ssl_mode'] == 'on' ) ? 'y' : 'n';
+} else {
+	// Set default value of 'stay_in_ssl_mode' to the current mode state
+	$stay_in_ssl_mode = $https_mode ? 'y' : 'n';
+}
 
-// Show the 'Stay in SSL mode' checkbox only in those cases:
-//  - We are already in HTTPS
-//  - We are not in HTTPS, but login in HTTPS is required
-//
-// In both cases, HTTPS login also need to be allowed
-//
-$show_stay_in_ssl_mode = ( $https_login != 'n' && ( $https_mode || ( $https_login_required == 'y' && ! $https_mode ) ) ) ? 'y' : 'n';
+// Show the 'Stay in SSL mode' checkbox only if we are already in HTTPS
+$show_stay_in_ssl_mode = $https_mode ? 'y' : 'n';
 
 $smarty->assign('login_url', $login_url);
 $smarty->assign('show_stay_in_ssl_mode', $show_stay_in_ssl_mode);
