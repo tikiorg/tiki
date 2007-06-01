@@ -192,7 +192,7 @@ function since_last_visit_new($user, $params = null) {
 // directories
 
 if ($tikilib->get_preference("feature_directory") == 'y') {    
-    $ret["items"]["dirs"]["label"] = tra("new directory");
+    $ret["items"]["dirs"]["label"] = tra("new sites");
     $ret["items"]["dirs"]["cname"] = "slvn_dirs_menu";
 
     $query = "select `siteId`, `name`, `lastModif`  from `tiki_directory_sites` where lastModif>? order by `lastModif` desc";
