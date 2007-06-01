@@ -5,7 +5,7 @@
 <a class="linkbut" href="tiki-faq_questions.php?faqId={$faqId}">{tr}new question{/tr}</a><br />
 <br />
 <h2>{tr}Edit FAQ questions{/tr}</h2>
-<form action="tiki-faq_questions.php" method="post">
+<form action="tiki-faq_questions.php" method="post" id="editpageform">
 <input type="hidden" name="questionId" value="{$questionId|escape}" />
 <input type="hidden" name="faqId" value="{$faqId|escape}" />
 
@@ -19,6 +19,7 @@
 </tr>
 <tr>
 <td class="formcolor">{tr}Answer{/tr}:
+<br /> {include file="textareasize.tpl" area_name='faqans' formId='editpageform'}
 <br />{include file=tiki-edit_help_tool.tpl area_name="faqans"}
 </td>
 <td class="formcolor" >
