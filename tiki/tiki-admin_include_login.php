@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.57 2007-05-31 09:42:55 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.58 2007-06-01 13:56:01 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -46,8 +46,9 @@ if (isset($_REQUEST["loginprefs"])) {
 	simple_set_toggle('feature_clear_passwords');
 	simple_set_toggle('forgotPass');
 	simple_set_value('feature_crypt_passwords');
-	simple_set_toggle('https_login');
-	simple_set_toggle('https_login_required');
+	simple_set_value('https_login');
+	simple_set_toggle('feature_show_stay_in_ssl_mode');
+	simple_set_toggle('feature_switch_ssl_mode');
 	simple_set_value('feature_crypt_passwords');
 	simple_set_value('http_port');
 	simple_set_value('https_port');

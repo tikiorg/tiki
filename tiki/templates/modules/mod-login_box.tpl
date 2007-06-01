@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.44 2007-05-31 09:42:59 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.45 2007-06-01 13:56:01 nyloth Exp $ *}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Login{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations}
 
@@ -6,7 +6,7 @@
       {tr}logged as{/tr}: {$user|userlink}<br />
       <a class="linkmodule" href="tiki-logout.php">{tr}Logout{/tr}</a><br />
       {if $tiki_p_admin eq 'y'}
-        <form action="{if $https_login neq 'n' && $https_login_required eq 'y'}{$base_url_https}{/if}{$login_url}" method="post"{if $desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}>
+        <form action="{if $https_login eq 'encouraged' || $https_login eq 'required'}{$base_url_https}{/if}{$login_url}" method="post"{if $desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}>
         <label for="login-switchuser">{tr}user{/tr}:</label>
         <input type="hidden" name="su" value="1" />
         <input type="text" name="username" id="login-switchuser" size="{if empty($module_params.input_size)}20{else}{$module_params.input_size}{/if}" />
@@ -24,7 +24,7 @@
 		<br /><a class="linkmodule" href="tiki-login_scr.php?user=admin">{tr}Login as admin{/tr}</a>
       {/if}
     {else}
-     <form name="loginbox" action="{if $https_login neq 'n' && $https_login_required eq 'y'}{$base_url_https}{/if}{$login_url}" method="post" {if $feature_challenge eq 'y'}onsubmit="doChallengeResponse()"{/if}{if $desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}> 
+     <form name="loginbox" action="{if $https_login eq 'encouraged' || $https_login eq 'required'}{$base_url_https}{/if}{$login_url}" method="post" {if $feature_challenge eq 'y'}onsubmit="doChallengeResponse()"{/if}{if $desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}> 
      {if $feature_challenge eq 'y'}
      <script type='text/javascript' src="lib/md5.js"></script>   
      {literal}
@@ -94,7 +94,7 @@
           <td valign="bottom">&nbsp;</td>
           {/if}
           </tr>
-          {if $https_login neq 'n' and $https_login_required neq 'y'}
+          {if $feature_switch_ssl_mode eq 'y' && ($https_login eq 'allowed' || $https_login eq 'encouraged')}
           <tr>
           <td class="module" valign="bottom">
             <a class="linkmodule" href="{$base_url_http}{$login_url}" title="{tr}Click here to login using the default security protocol{/tr}">{tr}standard{/tr}</a> |
@@ -102,7 +102,7 @@
           </td>
           </tr>
           {/if}
-          {if $show_stay_in_ssl_mode eq 'y'}
+          {if $feature_show_stay_in_ssl_mode eq 'y' && $show_stay_in_ssl_mode eq 'y'}
             <tr>
               <td class="module">
                 <label for="login-stayssl">{tr}stay in ssl mode{/tr}:</label>?
@@ -115,7 +115,7 @@
       </tr>
       </table>
 
-      {if $show_stay_in_ssl_mode ne 'y'}
+      {if $feature_show_stay_in_ssl_mode neq 'y' || $show_stay_in_ssl_mode neq 'y'}
         <input type="hidden" name="stay_in_ssl_mode" value="{$stay_in_ssl_mode|escape}" />
       {/if}
 			{if $use_intertiki_auth eq 'y'}

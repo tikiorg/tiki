@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.73 2007-05-31 09:42:59 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.74 2007-06-01 13:56:01 nyloth Exp $ *}
 <div class="cbox">
 <div class="cbox-title">{tr}Users &amp; groups{/tr}</div>
 <div class="cbox-data">
@@ -120,8 +120,16 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 <tr><td class="form">{tr}Password invalid after days{/tr}:</td><td><input type="text" name="pass_due" value="{$pass_due|escape}" /><i>-1 for never</i></td></tr>
 <tr><td class="form">{tr}Re-validate user by email after days{/tr}:</td><td><input type="text" name="email_due" value="{$email_due|escape}" /><i>-1 for never</i></td></tr>
 <tr><td class="form">{tr}Re-validate user by email after unsuccessful logins{/tr}:</td><td><input type="text" name="unsuccessful_logins" value="{$unsuccessful_logins|escape}" /><i>-1 for never</i></td></tr>
-<tr><td class="form">{tr}Allow secure (https) login{/tr}:</td><td><input type="checkbox" name="https_login" {if $https_login eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="form">{tr}Require secure (https) login{/tr}:</td><td><input type="checkbox" name="https_login_required" {if $https_login_required eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}HTTPS login{/tr}:</td><td class="form">
+<select name="https_login">
+<option value="disabled"{if $https_login eq 'disabled'} selected="selected"{/if}>{tr}Disabled{/tr}</option>
+<option value="allowed"{if $https_login eq 'allowed'} selected="selected"{/if}>{tr}Allow secure (https) login{/tr}</option>
+<option value="encouraged"{if $https_login eq 'encouraged'} selected="selected"{/if}>{tr}Encourage secure (https) login{/tr}</option>
+<option value="required"{if $https_login eq 'required'} selected="selected"{/if}>{tr}Require secure (https) login{/tr}</option>
+</select>
+</td></tr>
+<tr><td class="form">{tr}Users can choose to stay in SSL mode after an HTTPS login{/tr}:</td><td><input type="checkbox" name="feature_show_stay_in_ssl_mode" {if $feature_show_stay_in_ssl_mode eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Users can switch between secured or standard mode at login{/tr}:</td><td><input type="checkbox" name="feature_switch_ssl_mode" {if $feature_switch_ssl_mode eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}HTTP port{/tr}:</td><td><input type="text" name="http_port" size="5" value="{$http_port|escape}" /></td></tr>
 <tr><td class="form">{tr}HTTPS port{/tr}:</td><td><input type="text" name="https_port" size="5" value="{$https_port|escape}" /></td></tr>
 <tr><td class="form">{tr}Remember me feature{/tr}:</td><td class="form">
