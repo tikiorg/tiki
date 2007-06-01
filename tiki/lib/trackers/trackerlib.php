@@ -1006,6 +1006,7 @@ class TrackerLib extends TikiLib {
 					}
 					$smarty->assign('mail_trackerId', $trackerId);
 					$smarty->assign('mail_trackerName', $trackerName);
+					$smarty->assign('server_name', $_SERVER['SERVER_NAME']);
 					$foo = parse_url($_SERVER["REQUEST_URI"]);
 					$machine = $this->httpPrefix(). $foo["path"];
 					$smarty->assign('mail_machine', $machine);
