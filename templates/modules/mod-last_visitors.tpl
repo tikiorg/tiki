@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_visitors.tpl,v 1.8 2007-06-02 14:51:27 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_visitors.tpl,v 1.9 2007-06-02 15:25:57 nyloth Exp $ *}
 
-{if $nonums eq 'y'}
 {if !isset($tpl_module_title)}
+{if $nonums eq 'y'}
 {eval var="{tr}Last `$module_rows` visitors{/tr}" assign="tpl_module_title"}
 {else}
 {eval var="{tr}Last visitors{/tr}" assign="tpl_module_title"}
