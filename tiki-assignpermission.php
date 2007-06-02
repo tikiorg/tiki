@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-assignpermission.php,v 1.33 2007-05-13 12:52:46 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-assignpermission.php,v 1.34 2007-06-02 21:56:48 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -39,13 +39,15 @@ if (!$userlib->group_exists($group)) {
 $smarty->assign_by_ref('group', $group);
 
 if (isset($_REQUEST['allper'])) {
-	check_ticket('admin-perms');
-	if ($_REQUEST['oper'] == 'assign') {
-		$userlib->assign_level_permissions($group, $_REQUEST['level']);
-		$logslib->add_log('perms',"assigned all perms level ".$_REQUEST['level']." to group $group");
-	} else {
-		$userlib->remove_level_permissions($group, $_REQUEST['level']);
-		$logslib->add_log('perms',"unassigned all perms level ".$_REQUEST['level']." from group $group");
+	check_ticket('admin-perms');	
+	foreach ($_REQUEST['level'] as $t_level) { 
+		if ($_REQUEST['oper'] == 'assign') {
+			$userlib->assign_level_permissions($group, $t_level);
+			$logslib->add_log('perms',"assigned all perms level ".$t_level." to group $group");
+		} else {
+			$userlib->remove_level_permissions($group, $t_level);
+			$logslib->add_log('perms',"unassigned all perms level ".$t_level." from group $group");
+		}
 	}
 }
 
