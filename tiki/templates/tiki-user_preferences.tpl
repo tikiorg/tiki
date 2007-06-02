@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.98 2007-06-02 12:08:11 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.99 2007-06-02 15:58:19 nyloth Exp $ *}
 <h1>{if $userwatch ne $user}<a class="pagetitle" href="tiki-user_preferences.php?view_user={$userwatch}">{tr}User Preferences{/tr}: {$userwatch}</a>{else}<a class="pagetitle" href="tiki-user_preferences.php">{tr}User Preferences{/tr}</a>{/if}
 
 {if $feature_help eq 'y'}
@@ -231,6 +231,7 @@
   </div>
   </div>
 
+{if $change_password neq 'n' or ! ($login_is_email eq 'y' and $userinfo.login neq 'admin')}
   <div class="cbox">
   <div class="cbox-title">{tr}Account Information{/tr}</div>
   <div class="cbox-data">
@@ -259,6 +260,7 @@
   </form>
   </div>
   </div>
+{/if}
 
 </div>
 
