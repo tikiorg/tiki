@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.54 2007-06-02 15:47:06 luciash Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.55 2007-06-02 16:12:22 luciash Exp $
  *
  * 'Simple' style for Tikiwiki - simple and easy to understand yet pleasant for your eye !
  * Enables font re-sizing in all browsers, aims to be standards compliant and WCAG 1.0 compatible (not yet).
@@ -211,7 +211,7 @@ button:hover {
 
 fieldset {
 	border: solid 1px #99ccff;
-	padding: 0.9m;
+	padding: 0.9em;
 }
 
 /* All select elements, NOTE: text-align: start is RTL languages compatible */
