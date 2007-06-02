@@ -1,16 +1,24 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.45 2007-06-01 13:56:01 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.46 2007-06-02 01:50:29 luciash Exp $ *}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Login{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations}
 
     {if $user}
-      {tr}logged as{/tr}: {$user|userlink}<br />
-      <a class="linkmodule" href="tiki-logout.php">{tr}Logout{/tr}</a><br />
+      <div>{tr}Logged in as{/tr}: <br />
+      {$user|userlink}</div>
+      <p class="center"><a class="linkmodule linkbut" href="tiki-logout.php">{tr}logout{/tr}</a></p>
       {if $tiki_p_admin eq 'y'}
         <form action="{if $https_login eq 'encouraged' || $https_login eq 'required'}{$base_url_https}{/if}{$login_url}" method="post"{if $desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}>
-        <label for="login-switchuser">{tr}user{/tr}:</label>
-        <input type="hidden" name="su" value="1" />
-        <input type="text" name="username" id="login-switchuser" size="{if empty($module_params.input_size)}20{else}{$module_params.input_size}{/if}" />
-        <input type="submit" name="actsu" value="{tr}set{/tr}" />
+         <fieldset>
+          <legend>{tr}Switch User{/tr}</legend>
+          <label for="login-switchuser">{tr}User{/tr}:</label>
+          <input type="hidden" name="su" value="1" />
+          <input type="text" name="username" id="login-switchuser" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
+         {if $feature_help eq 'y'}
+          <sup><a class="linkmodule tikihelp" href="tiki-admin_modules.php"
+          title="{tr}parameters{/tr}: $input_size {tr}applicable for this item{/tr}"><small><strong>?</strong></small></a></sup>
+         {/if}
+          <p class="center"><button type="submit" name="actsu">{tr}switch{/tr}</button></p>
+         </fieldset>
         </form>
       {/if}
       {elseif $auth_method eq 'cas' && $showloginboxes neq 'y'}
@@ -54,70 +62,59 @@
      <input type="hidden" name="challenge" value="{$challenge|escape}" />
      <input type="hidden" name="response" value="" />
      {/if}
-      <table border="0">
-      <tr>
-        <td>
-          <table>
-          <tr><td class="module"><label for="login-user">{tr}user{/tr}:</label></td></tr>
+        <fieldset>
+          <legend>{tr}Login as{/tr}&hellip;</legend>
+            <div><label for="login-user">{tr}User{/tr}:</label><br />
 		{if $loginuser eq ''}
-          <tr><td><input type="text" name="user" id="login-user" size="{if empty($module_params.input_size)}20{else}{$module_params.input_size}{/if}" /></td></tr>
+              <input type="text" name="user" id="login-user" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
 	  <script type="text/javascript">document.getElementById('login-user').focus();</script>
 		{else}
-		  <tr><td><input type="hidden" name="user" id="login-user" value="{$loginuser}" /><b>{$loginuser}</b></td></tr>
-		{/if}
-<script type="text/javascript">document.getElementById('login-user').focus();</script>
+		      <input type="hidden" name="user" id="login-user" value="{$loginuser}" /><b>{$loginuser}</b>
+		{/if}</div>
+		<script type="text/javascript">document.getElementById('login-user').focus();</script>
           {if $feature_challenge eq 'y'} <!-- quick hack to make challenge/response work until 1.8 tiki auth overhaul -->
-          <tr><td class="module"><label for="login-email">{tr}email{/tr}:</label></td></tr>
-          <tr><td><input type="text" name="email" id="login-email" size="{if empty($module_params.input_size)}20{else}{$module_params.input_size}{/if}" /></td></tr>
+          <div><label for="login-email">{tr}email{/tr}:</label><br />
+          <input type="text" name="email" id="login-email" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" /></div>
           {/if}
-          <tr><td class="module"><label for="login-pass">{tr}pass{/tr}:</label></td></tr>
-          <tr><td><input type="password" name="pass" id="login-pass" size="{if empty($module_params.input_size)}20{else}{$module_params.input_size}{/if}" /></td></tr>
-          <tr><td><input type="submit" name="login" value="{tr}login{/tr}" /></td></tr>
+          <div><label for="login-pass">{tr}Password{/tr}:</label><br />
+          <input type="password" name="pass" id="login-pass" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" /></div>
           {if $rememberme ne 'disabled'}
             {if $rememberme eq 'always'}
-              <input type="hidden" name="rme" id="login-remember" value="on"/>
+              <input type="hidden" name="rme" id="login-remember" value="on" />
             {else}
-              <tr><td class="module"><label for="login-remember">{tr}Remember me{/tr}</label> <input type="checkbox" name="rme" id="login-remember" value="on"/></td></tr>
+              <p class="center"><label for="login-remember">{tr}Remember me{/tr}</label> <input type="checkbox" name="rme" id="login-remember" value="on" /></p>
             {/if}
           {/if}
-          <tr>
+          <p class="center"><button type="submit" name="login">{tr}login{/tr}</button></p>
+       </fieldset>
+          
           {if $forgotPass eq 'y' and $allowRegister eq 'y' and $change_password eq 'y'}
-            <td  class="module" valign="bottom">[ <a class="linkmodule" href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}register{/tr}</a> | <a class="linkmodule" href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my pass{/tr}</a> ]</td>
+            <p>[ <a class="linkmodule" href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}register{/tr}</a> | <a class="linkmodule" href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my pass{/tr}</a> ]</p>
           {/if}
           {if $forgotPass eq 'y' and $allowRegister ne 'y' and $change_password eq 'y'}
-            <td  class="module" valign="bottom"><a class="linkmodule" href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my pass{/tr}</a></td>
+            <p><a class="linkmodule" href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my password{/tr}</a></p>
           {/if}
           {if ($forgotPass ne 'y' or $change_password ne 'y') and $allowRegister eq 'y'}
-            <td  class="module" valign="bottom"><a class="linkmodule" href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}register{/tr}</a></td>
+            <p><a class="linkmodule" href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}register{/tr}</a></p>
           {/if}
           {if ($forgotPass ne 'y' or $change_password ne 'y') and $allowRegister ne 'y'}
-          <td valign="bottom">&nbsp;</td>
+          &nbsp;
           {/if}
-          </tr>
           {if $feature_switch_ssl_mode eq 'y' && ($https_login eq 'allowed' || $https_login eq 'encouraged')}
-          <tr>
-          <td class="module" valign="bottom">
+          <p>
             <a class="linkmodule" href="{$base_url_http}{$login_url}" title="{tr}Click here to login using the default security protocol{/tr}">{tr}standard{/tr}</a> |
             <a class="linkmodule" href="{$base_url_https}{$login_url}" title="{tr}Click here to login using a secure protocol{/tr}">{tr}secure{/tr}</a>
-          </td>
-          </tr>
+          </p>
           {/if}
           {if $feature_show_stay_in_ssl_mode eq 'y' && $show_stay_in_ssl_mode eq 'y'}
-            <tr>
-              <td class="module">
-                <label for="login-stayssl">{tr}stay in ssl mode{/tr}:</label>?
-                <input type="checkbox" name="stay_in_ssl_mode" id="login-stayssl" {if $stay_in_ssl_mode eq 'y'}checked="checked"{/if} />
-              </td>
-            </tr>
+                <p><label for="login-stayssl">{tr}stay in ssl mode{/tr}:</label>?
+                <input type="checkbox" name="stay_in_ssl_mode" id="login-stayssl" {if $stay_in_ssl_mode eq 'y'}checked="checked"{/if} /></p>
           {/if}
-          </table>
-        </td>
-      </tr>
-      </table>
 
       {if $feature_show_stay_in_ssl_mode neq 'y' || $show_stay_in_ssl_mode neq 'y'}
         <input type="hidden" name="stay_in_ssl_mode" value="{$stay_in_ssl_mode|escape}" />
       {/if}
+      
 			{if $use_intertiki_auth eq 'y'}
 				<select name='intertiki'>
 					<option value="">{tr}local account{/tr}</option>
