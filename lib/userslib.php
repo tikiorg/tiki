@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.220 2007-05-25 18:32:25 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.221 2007-06-02 22:11:25 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1489,8 +1489,8 @@ function get_included_groups($group) {
 
     $cachelib->invalidate("allperms");
 
-	$query = "delete from `users_permissions` where `permName` = ? and `level` = ?";
-	$result = $this->query($query, array('', $level));
+	$query = "delete from `users_permissions` where `permName` = ?";
+	$result = $this->query($query, array(''));
 	$query = "insert into `users_permissions`(`permName`, `permDesc`,
 		`type`, `level`) values('','','',?)";
 	$this->query($query, array($level));
@@ -1604,8 +1604,13 @@ function get_included_groups($group) {
 		$mid .= " where `permName` like ?";
 		$values[] = '%'.$find.'%';
 	    }
+	} else {
+		if ($mid) {
+		$mid .= " and `permName` > ''";		
+	    } else {
+		$mid .= " where `permName` > ''";		
+	    }
 	}
-
 	$query = "select * from `users_permissions` $mid order by $sort_mode ";
 
 #	$query_cant = "select count(*) from `users_permissions` $mid";
