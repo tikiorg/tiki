@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.441 2007-06-02 12:08:11 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.442 2007-06-02 13:00:20 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -1302,7 +1302,7 @@ $smarty->assign('http_domain', $http_domain = $url_host);
 $smarty->assign('http_prefix', $http_prefix = $url_path);
 $smarty->assign('http_login_url', $http_login_url = $login_url);
 $smarty->assign('https_login_url', $https_login_url = $login_url);
-if ( $https_login_required == 'y' ) {
+if ( isset($https_login_required) && $https_login_required == 'y' ) {
 	$tikilib->set_preference('https_login_required','');
 	$smarty->assign('https_login', $https_login = 'required');
 } elseif ( $https_login == 'y' ) $smarty->assign('https_login', $https_login = 'allowed');
