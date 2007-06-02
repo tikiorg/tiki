@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_visitors.tpl,v 1.7 2007-05-18 07:58:30 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_visitors.tpl,v 1.8 2007-06-02 14:51:27 nyloth Exp $ *}
 
 {if $nonums eq 'y'}
 {if !isset($tpl_module_title)}
@@ -8,23 +8,16 @@
 {/if}
 {/if}
 {tikimodule title=$tpl_module_title name="last_visitors" flip=$module_params.flip decorations=$module_params.decorations}
-   <table  border="0" cellpadding="0" cellspacing="0">
+    <ol style="list-style-position:inside; margin:0; padding:0;{if $nonums eq 'y'} list-style-type:none;{else} list-style-type:decimal;{/if}">
     {foreach from=$modLastVisitors key=key item=item}
-     <tr>
-      {if $nonums != 'y'}
-        <td class="module" valign="top">{$key+1})</td>
-      {/if}
-      <td class="module">&nbsp;
-       <a class="linkmodule" href="tiki-user_information.php?view_user={$item.user|escape:"url"}">
+        <li><a class="linkmodule" href="tiki-user_information.php?view_user={$item.user|escape:"url"}">
         {if $maxlen > 0}{* 0 is default value for maxlen eq to 'no truncate' *}
          {$item.user|userlink:'link':'not_set':'':$maxlen}
         {else}
          {$item.user|userlink}
         {/if}
-       </a>
-	{tr}at{/tr} {$item.currentLogin|tiki_short_datetime}
-      </td>
-     </tr>
+       </a><div style="text-align:right;">{$item.currentLogin|tiki_short_datetime}</div>
+      </li>
     {/foreach}
-   </table>
+    </ol>
 {/tikimodule}
