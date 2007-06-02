@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.68 2007-03-23 19:33:32 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.69 2007-06-02 21:56:48 nkoth Exp $ *}
 <h1><a href="tiki-assignpermission.php?group={$group|escape:url}" class="pagetitle">{tr}Assign permissions to group{/tr}: {$group}</a>
 
 {if $feature_help eq 'y'}
@@ -51,8 +51,8 @@
 <option value="assign">{tr}assign{/tr}</option>
 <option value="remove">{tr}remove{/tr}</option>
 </select>
-{tr}all permissions in level{/tr}:
-<select name="level">
+{tr}all permissions in level{/tr}:  
+<select name="level[]" multiple="yes" size="5">
 {html_options output=$levels values=$levels selected=$perms[user].level}
 </select>
 <input type="submit" name="allper" value="{tr}update{/tr}" />
