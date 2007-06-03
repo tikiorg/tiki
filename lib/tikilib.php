@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.747 2007-06-03 01:40:08 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.748 2007-06-03 02:15:29 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2170,6 +2170,7 @@ function add_pageview() {
 	    $mid = 'where (`login` like ? or p1.`value` like ?)';
 	    $bindvars = array($user, $findesc, $findesc);
 	    $bindvars2 = array($findesc, $findesc);
+	    $find_join = " left join `tiki_user_preferences` p1 on (u.`login` = p1.`user` and p1.`prefName` = 'realName')";
 	} else {
 	    $mid = '';
 	    $bindvars = array($user);
@@ -2193,6 +2194,11 @@ function add_pageview() {
 			unset($regs);
 		}
 	
+		if ( $find_join != '' && $sort_value == 'realName' ) {
+			// Avoid two joins if we can do only one
+			$find_join = '';
+			$mid = 'where (`login` like ? or p.`value` like ?)';
+		}
 		$sort_mode = "p.`value` $sort_way";
 		$pref_where = ( ( $mid == '' ) ? 'where' : $mid.' and' )." p.`prefName` = '$sort_value'";
 		$pref_join = 'left join `tiki_user_preferences` p on (u.`login` = p.`user`)';
@@ -2201,7 +2207,7 @@ function add_pageview() {
 	} else {
 	
 		$sort_mode = $this->convert_sortmode($sort_mode);
-		$pref_where = '';
+		$pref_where = $mid;
 		$pref_join = '';
 		$pref_field = '';
 	}
@@ -2209,9 +2215,9 @@ function add_pageview() {
 	if ( $sort_mode != '' ) $sort_mode = 'order by '.$sort_mode;
 
 	// Need to use a subquery to avoid bad results when using a limit and an offset, with at least MySQL
-	$query = "select * from (select u.* $pref_field, f.`friend` from `users_users` u $pref_join left join `tiki_friends` as f on (u.`login` = f.`friend` and f.`user`=?) $pref_where $sort_mode) as tab";
+	$query = "select * from (select u.* $pref_field, f.`friend` from `users_users` u $pref_join $find_join left join `tiki_friends` as f on (u.`login` = f.`friend` and f.`user`=?) $pref_where $sort_mode) as tab";
 
-	$query_cant = "select count(distinct login) from `users_users` $mid";
+	$query_cant = "select count(distinct u.`login`) from `users_users` u $find_join $mid";
 	$result = $this->query($query, $bindvars, $maxRecords, $offset);
 	$cant = $this->getOne($query_cant, $bindvars2);
 
