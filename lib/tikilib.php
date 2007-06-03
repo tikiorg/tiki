@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.746 2007-05-31 09:42:57 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.747 2007-06-03 01:40:08 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2161,61 +2161,68 @@ function add_pageview() {
 	}
     }
 
-
-    function list_users($offset = 0, $maxRecords = -1, $sort_mode = 'realName', $find = '')
+    function list_users($offset = 0, $maxRecords = -1, $sort_mode = 'pref:realName', $find = '', $include_prefs = true)
     {
-	global $user;
+	global $user, $userprefslib;
 
-	if($find) {
+	if ( $find ) {
 	    $findesc = '%'.$find.'%';
-	    $mid=" where (`login` like ? or p.`value` like ?) ";
-	    $bindvars=array($user,$findesc,$findesc);
-	    $bindvars2=array($findesc,$findesc);
+	    $mid = 'where (`login` like ? or p1.`value` like ?)';
+	    $bindvars = array($user, $findesc, $findesc);
+	    $bindvars2 = array($findesc, $findesc);
 	} else {
-	    $mid='';
-	    $bindvars=array($user);
-	    $bindvars2=array();
+	    $mid = '';
+	    $bindvars = array($user);
+	    $bindvars2 = array();
 	}
 
-	$sort_mode = $this->convert_sortmode($sort_mode);
+	// This allows to use a sort_mode by prefs
+	// In this case, sort_mode must have this syntax :
+	//   pref:PREFERENCE_NAME[_asc|_desc]
+	// e.g. to sort on country :
+	//   pref:country  OR  pref:country_asc  OR  pref:country_desc
 
-	// TODO: This is lousy, later we have to configure what fields would be fetched
-	// but how to get preferences avoiding the join, sort by any field and paginate without
-	// loading all user list in memory?
+	if ( $ppos = strpos($sort_mode, ':') ) {
 
-	// This query is not database independent. the "is not null" and the left join syntax should be replaced
+		$sort_mode = substr($sort_mode, $ppos + 1);
+		$sort_by_pref = true;
 
-	// Fixed the not null. After some research i came to the conclusion that only these dbms that i use
-	// lack a ansi outer join syntax. I guess using outer joins should be ok. redflo.
-	if (substr($sort_mode,1,7)=="country") {
-		$query = "select u.*, f.`user` as friend, p.`value` as country from `users_users` as u left join `tiki_friends` as f on u.`login`=f.`friend` and f.`user`=? left join `tiki_user_preferences` p on u.`login`=p.`user` and p.`prefName`='country' $mid order by $sort_mode";
+		if ( ereg('^(.+)_(asc|desc)$', $sort_mode, $regs) ) {
+			$sort_value = $regs[1];
+			$sort_way = $regs[2];
+			unset($regs);
+		}
+	
+		$sort_mode = "p.`value` $sort_way";
+		$pref_where = ( ( $mid == '' ) ? 'where' : $mid.' and' )." p.`prefName` = '$sort_value'";
+		$pref_join = 'left join `tiki_user_preferences` p on (u.`login` = p.`user`)';
+		$pref_field = ', p.`value` as sf';
+
 	} else {
-		$query = "select u.*, f.`user` as friend, p.`value` as realName from `users_users` as u left join `tiki_friends` as f on u.`login`=f.`friend` and f.`user`=? left join `tiki_user_preferences` p on u.`login`=p.`user` and p.`prefName`='realName' $mid order by $sort_mode";
+	
+		$sort_mode = $this->convert_sortmode($sort_mode);
+		$pref_where = '';
+		$pref_join = '';
+		$pref_field = '';
 	}
-	$query_cant = "select count(*) from `users_users` u left join `tiki_user_preferences` p on u.`login`=p.`user` and p.`prefName`='realName' $mid";
-	$result = $this->query($query,$bindvars,$maxRecords,$offset);
-	$cant = $this->getOne($query_cant,$bindvars2);
-	$ret = Array();
+
+	if ( $sort_mode != '' ) $sort_mode = 'order by '.$sort_mode;
+
+	// Need to use a subquery to avoid bad results when using a limit and an offset, with at least MySQL
+	$query = "select * from (select u.* $pref_field, f.`friend` from `users_users` u $pref_join left join `tiki_friends` as f on (u.`login` = f.`friend` and f.`user`=?) $pref_where $sort_mode) as tab";
+
+	$query_cant = "select count(distinct login) from `users_users` $mid";
+	$result = $this->query($query, $bindvars, $maxRecords, $offset);
+	$cant = $this->getOne($query_cant, $bindvars2);
+
+	$ret = array();
 	while ($res = $result->fetchRow()) {
-	    $res['friend']=!($res['friend']=='');
+	    $res['friend'] = ( $res['friend'] != '' );
+	    if ( $include_prefs ) $res['preferences'] = $userprefslib->get_userprefs($res['login']);
 	    $ret[] = $res;
 	}
 
-  for ($i=0;$i<count($ret);$i++) {
- 		$query = "select * from `tiki_user_preferences` where `user`=?";
-		$result = $this->query($query,array($ret[$i]["login"]));
-		$retuser = array();
-
-		while ($res = $result->fetchRow()) {
-			$retuser[] = $res;
-		}
-		$ret[$i]["preferences"]=$retuser;
-	}
-
-	$retval = Array();
-	$retval["data"] = $ret;
-	$retval["cant"] = $cant;
-	return $retval;
+	return array('data' => $ret, 'cant' => $cant);
     }
 
     // BLOG METHODS ////

@@ -24,8 +24,7 @@ function wikiplugin_topfriends($data, $params) {
 		return ' ';
 	}
 
-	$sort_mode = 'score_desc'; $find = '';
-	$listusers = $tikilib->list_users(0 , $limit, $sort_mode, $find);
+	$listusers = $tikilib->list_users(0 , $limit, 'score_desc', '', false);
 	$smarty->assign_by_ref('listusers', $listusers["data"]);
 
 	return $smarty->fetch('plugins/plugin-topfriends.tpl');
