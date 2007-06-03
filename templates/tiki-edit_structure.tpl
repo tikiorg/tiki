@@ -6,7 +6,7 @@
 {tr}You will remove{/tr} '{$removePageName}' {tr}and its subpages from the structure, now you have two options:{/tr}
 <ul>
 <li><a class="link" href="tiki-edit_structure.php?page_ref_id={$removepage}&amp;rremove={$removepage}">{tr}Remove only from structure{/tr}</a></li>
-<li><a class="link" href="tiki-edit_structure.php?page_ref_id={$removepage}&amp;sremove={$removepage}">{tr}Remove from structure and remove page too{/tr}</a></li>
+{if $page_removable == 'y'}<li><a class="link" href="tiki-edit_structure.php?page_ref_id={$removepage}&amp;sremove={$removepage}">{tr}Remove from structure and remove page too{/tr}</a></li>{/if}
 </ul>
 <br />
 {/if}
