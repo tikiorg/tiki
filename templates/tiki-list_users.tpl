@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_users.tpl,v 1.14 2007-06-03 02:28:06 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_users.tpl,v 1.15 2007-06-03 10:33:17 nyloth Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_users.php">{tr}User List{/tr}</a>
 
 {if $feature_help eq 'y'}
@@ -21,7 +21,7 @@
 <table bgcolor="#ffffff" class="normal">
 <tr>
   <td class="heading"><a href="tiki-list_users.php?offset={$offset}&amp;find={$find}&amp;sort_mode={if $sort_mode eq 'login_desc'}login_asc{else}login_desc{/if}" class="userlistheading" style="color: White;">{tr}User{/tr}</a>&nbsp;</td>
-{if $feature_community_list_name eq 'y'}
+{if $feature_community_list_name eq 'y' and $user_show_realnames neq 'y'}
   <td class="heading"><a class="userlistheading" href="tiki-list_users.php?offset={$offset}&amp;find={$find}&amp;sort_mode={if $sort_mode eq 'pref:realName_desc'}pref:realName_asc{else}pref:realName_desc{/if}" style="color: White;">{tr}Real Name{/tr}</a>&nbsp;</td>
 {/if}
 {if $feature_score eq 'y'}{if $feature_community_list_score eq 'y'}
@@ -36,7 +36,7 @@
 {section name=changes loop=$listusers}
 <tr>
   <td class="odd">&nbsp;{$listusers[changes].login|userlink}&nbsp;</td>
-{if $feature_community_list_name eq 'y'}
+{if $feature_community_list_name eq 'y' and $user_show_realnames neq 'y'}
   <td class="odd">&nbsp;{$listusers[changes].realName}&nbsp;</td>
 {/if}
 {if $feature_score eq 'y'}{if $feature_community_list_score eq 'y'}
