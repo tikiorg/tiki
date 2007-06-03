@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_users.tpl,v 1.13 2007-06-03 01:40:13 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_users.tpl,v 1.14 2007-06-03 02:28:06 nyloth Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_users.php">{tr}User List{/tr}</a>
 
 {if $feature_help eq 'y'}
@@ -20,15 +20,15 @@
 </table>
 <table bgcolor="#ffffff" class="normal">
 <tr>
-  <td class="heading"><a href="tiki-list_users.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'login_desc'}login_asc{else}login_desc{/if}" class="userlistheading" style="color: White;">{tr}User{/tr}</a>&nbsp;</td>
+  <td class="heading"><a href="tiki-list_users.php?offset={$offset}&amp;find={$find}&amp;sort_mode={if $sort_mode eq 'login_desc'}login_asc{else}login_desc{/if}" class="userlistheading" style="color: White;">{tr}User{/tr}</a>&nbsp;</td>
 {if $feature_community_list_name eq 'y'}
-  <td class="heading"><a class="userlistheading" href="tiki-list_users.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'pref:realName_desc'}pref:realName_asc{else}pref:realName_desc{/if}" style="color: White;">{tr}Real Name{/tr}</a>&nbsp;</td>
+  <td class="heading"><a class="userlistheading" href="tiki-list_users.php?offset={$offset}&amp;find={$find}&amp;sort_mode={if $sort_mode eq 'pref:realName_desc'}pref:realName_asc{else}pref:realName_desc{/if}" style="color: White;">{tr}Real Name{/tr}</a>&nbsp;</td>
 {/if}
 {if $feature_score eq 'y'}{if $feature_community_list_score eq 'y'}
-  <td class="heading"><a class="userlistheading" href="tiki-list_users.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'score_desc'}score_asc{else}score_desc{/if}" style="color: White;">{tr}Score{/tr}</a>&nbsp;</td>
+  <td class="heading"><a class="userlistheading" href="tiki-list_users.php?offset={$offset}&amp;find={$find}&amp;sort_mode={if $sort_mode eq 'score_desc'}score_asc{else}score_desc{/if}" style="color: White;">{tr}Score{/tr}</a>&nbsp;</td>
 {/if}{/if}
 {if $feature_community_list_country eq 'y'}
-  <td class="heading"><a class="userlistheading" href="tiki-list_users.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'pref:country_desc'}pref:country_asc{else}pref:country_desc{/if}" style="color: White;">{tr}Country{/tr}</a>&nbsp;</td>
+  <td class="heading"><a class="userlistheading" href="tiki-list_users.php?offset={$offset}&amp;find={$find}&amp;sort_mode={if $sort_mode eq 'pref:country_desc'}pref:country_asc{else}pref:country_desc{/if}" style="color: White;">{tr}Country{/tr}</a>&nbsp;</td>
 {/if}
 {if $feature_community_list_distance eq 'y'}<td class="heading">{tr}Distance (km){/tr}&nbsp;</td>{/if}
 </tr>
