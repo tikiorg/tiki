@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.52 2007-04-07 00:15:08 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.53 2007-06-03 01:40:13 nyloth Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-file_galleries.php?galleryId={$galleryId}{if isset($edit_mode)}&amp;edit_mode=1{/if}">{tr}File Galleries{/tr}</a>
 
@@ -127,7 +127,7 @@
 {if $tiki_p_admin eq 'y' or $tiki_p_admin_file_galleries eq 'y'}
 <tr><td class="formcolor">{tr}Owner of the gallery{/tr}:</td><td class="formcolor">
 <select name="user">
-{section name=ix loop=$users}<option value="{$users[ix].login|escape}"{if $creator eq $users[ix].login}  selected="selected"{/if}>{$users[ix].login|escape}</option>{/section}
+{section name=ix loop=$users}<option value="{$users[ix].login|escape}"{if $creator eq $users[ix].login} selected="selected"{/if}>{$users[ix].login|username}</option>{/section}
 </select>
 </td></tr>
 {/if}

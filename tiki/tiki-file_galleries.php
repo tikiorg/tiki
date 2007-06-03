@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.46 2007-06-01 18:36:56 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.47 2007-06-03 01:40:08 nyloth Exp $
 
 	require_once('tiki-setup.php');
 	include_once('lib/filegals/filegallib.php');
@@ -378,7 +378,7 @@
 	$smarty->assign_by_ref('galleries',$galleries["data"]);
 
 	if ($tiki_p_admin_file_galleries == 'y' || $tiki_p_admin == 'y') {
-		$users = $tikilib->list_users(0, -1, 'login_asc');
+		$users = $tikilib->list_users(0, -1, 'login_asc', '', false);
 		$smarty->assign_by_ref('users', $users['data']);
 	}
 $options_sortorder = array(tra('Creation Date')=>'created', tra('Name')=>'name', tra('Filename')=>'filename', tra('Size')=>'filesize', tra('Owner') => 'user',tra('Downloads') => 'downloads', tra('ID') => 'fileId');
