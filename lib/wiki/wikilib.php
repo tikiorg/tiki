@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki/wikilib.php,v 1.108 2007-05-04 09:25:49 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki/wikilib.php,v 1.109 2007-06-03 00:48:10 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -574,7 +574,9 @@ class WikiLib extends TikiLib {
       else {
 		if ($feature_wiki_userpage == 'y' and strcasecmp(substr($page, 0, strlen($feature_wiki_userpage_prefix)), $feature_wiki_userpage_prefix) == 0 and strcasecmp($page, $feature_wiki_userpage_prefix.$user) != 0)
 			return false;
-            return ($this->is_locked($page, $info) == null || $user == $this->is_locked($page, $info))? true : false;
+		if (!$this->user_has_perm_on_object($user,$page,'wiki page','tiki_p_edit'))
+			return false;
+		return ($this->is_locked($page, $info) == null || $user == $this->is_locked($page, $info))? true : false;
 	}
     }
 
