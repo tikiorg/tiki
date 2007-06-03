@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.82 2007-05-07 16:45:08 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.83 2007-06-03 22:43:24 sylvieg Exp $
 
 /**
  * Tiki registration script
@@ -9,7 +9,7 @@
  * @license GNU LGPL
  * @copyright Tiki Community
  * @date created: 2002/10/8 15:54
- * @date last-modified: $Date: 2007-05-07 16:45:08 $
+ * @date last-modified: $Date: 2007-06-03 22:43:24 $
  */
 
 // Initialization
@@ -266,10 +266,17 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
 $smarty->assign('email_valid',$email_valid);
 
 $listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
+$nbChoiceGroups = 0;
 foreach ($listgroups['data'] as $gr) {
 	if ($gr['registrationChoice'] == 'y') {
-		$smarty->assign('listgroups', $listgroups['data'] );
-		break;
+		++$nbChoiceGroups;
+		$theChoiceGroup = $gr['groupName'];
+	}
+}
+if ($nbChoiceGroups) {
+	$smarty->assign('listgroups', $listgroups['data'] );
+	if ($nbChoiceGroups == 1) {
+		$smarty->assign_by_ref('theChoiceGroup', $theChoiceGroup);
 	}
 }
 ask_ticket('register');

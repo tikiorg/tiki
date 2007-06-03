@@ -83,7 +83,9 @@
       {/section}
       
       {* Groups *}
-      {if $listgroups}
+      {if isset($theChoiceGroup)}
+        <input type="hidden" name="chosenGroup" value="{$theChoiceGroup|escape}" />
+      {elseif $listgroups}
         <tr><td class="formcolor">{tr}Select your group{/tr}</td><td class="formcolor">
         {foreach item=gr from=$listgroups}
           {if $gr.registrationChoice eq 'y'}<input type="radio" name="chosenGroup" value="{$gr.groupName|escape}">{if $gr.groupDesc}{$gr.groupDesc}{else}{$gr.groupName}{/if}</input><br />{/if}
