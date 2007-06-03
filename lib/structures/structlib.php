@@ -245,6 +245,18 @@ class StructLib extends TikiLib {
       $aux['page_ref_id'] = $res['page_ref_id'];
       $aux['pageName']    = $res['pageName'];
       $aux['page_alias']  = $res['page_alias'];
+		global $user;
+		if ($this->user_has_perm_on_object($user,$res['pageName'],'wiki page','tiki_p_edit')) {	
+      		$aux['editable'] = 'y';
+      		$aux['viewable'] = 'y';
+		} else {
+			$aux['editable'] = 'n';			
+			if ($this->user_has_perm_on_object($user,$res['pageName'],'wiki page','tiki_p_view')) {
+				$aux['viewable'] = 'y';
+			} else {
+				$aux['viewable'] = 'n';
+			}
+		}
       if (strlen($parent_pos) == 0) {
          $aux['pos'] = "$pos";
       }
