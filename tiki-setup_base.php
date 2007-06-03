@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.133 2007-06-03 01:40:08 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.134 2007-06-03 13:12:03 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -452,10 +452,9 @@ if ($user == 'admin' || ($user && $userlib->user_has_permission($user, 'tiki_p_a
 	    $smarty->assign($perm['permName'], 'y');
 	    $$perm['permName'] = 'y';
 		if ($perm['admin'] == 'y') { // assign all perms of the perm type
-//echo '--'.$perm['permName'].'<br>';
 			$ps = $userlib->get_permissions(0, -1, 'permName_desc', '', $perm['type']);
 			foreach ($ps['data'] as $perm) {
-//echo $perm['permName'].'<br>';
+				$$perm['permName'] = 'y';
 				$smarty->assign($perm['permName'], 'y');
 			}
 		}
