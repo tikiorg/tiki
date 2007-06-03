@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-objectpermissions.tpl,v 1.21 2007-02-28 18:11:16 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-objectpermissions.tpl,v 1.22 2007-06-03 13:35:26 sylvieg Exp $ *}
 <h1><a href="tiki-objectpermissions.php?objectName={$objectName|escape:url}&amp;objectType={$objectType|escape:url}&amp;objectId={$objectId|escape:url}&amp;permType={$permType|escape:url}">{tr}Assign permissions to {/tr}{tr}{$objectType|escape}{/tr}: {$objectName|escape}</a></h1>
 <a href="{$referer}" class="linkbut">{tr}back{/tr}</a>
 
@@ -52,13 +52,14 @@
 <input type="hidden" name="permType" value="{$permType|escape}" />
 <input type="submit" name="assign" value="{tr}assign{/tr}" />
 
-<select name="perm[]" multiple="multiple" size="{$perms|@count}">
+{assign var=nbp value=$perms|@count}
+<select name="perm[]" multiple="multiple" size="{$nbp}">
 {section name=prm loop=$perms}
 <option value="{$perms[prm].permName|escape}">{$perms[prm].permName|escape}</option>
 {/section}
 </select>
 {tr}to group{/tr}:
-<select name="group[]" multiple="multiple" size="{$perms|@count}">
+<select name="group[]" multiple="multiple" size="{if $nbp <=1}5{else}{$nbp}{/if}">
 {section name=grp loop=$groups}
 <option value="{$groups[grp].groupName|escape}" {if $groupName eq $groups[grp].groupName }selected="selected"{/if}>{$groups[grp].groupName|escape}</option>
 {/section}
