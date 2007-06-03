@@ -1,5 +1,5 @@
 <?php
-// $Id: outputfilter.highlight.php,v 1.16 2007-04-02 17:21:19 sylvieg Exp $
+// $Id: outputfilter.highlight.php,v 1.17 2007-06-03 21:53:23 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -94,11 +94,15 @@ function _enlightColor($matches) {
  // q= for Google, p= for Yahoo
  function _refererhi() {
      $referer = parse_url($_SERVER['HTTP_REFERER']);
+     if (empty($referer['query'])) {
+         return '';
+     }
      parse_str($referer['query'],$vars);
      if (isset($vars['q'])) {
          return $vars['q'];
      } else if (isset($vars['p'])) {
          return $vars['p'];
      }
+     return '';
  }
 ?>
