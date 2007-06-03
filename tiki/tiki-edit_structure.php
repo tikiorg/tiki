@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.31 2007-03-06 19:29:48 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.32 2007-06-03 04:25:13 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -25,6 +25,15 @@ if (!isset($_REQUEST["page_ref_id"])) {
 	die;
 }
 
+$structure_info = $structlib->s_get_structure_info($_REQUEST["page_ref_id"]);
+$page_info      = $structlib->s_get_page_info($_REQUEST["page_ref_id"]);
+
+if (!$tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_view')) {
+	$smarty->assign('msg',tra('Permission denied you cannot view this page'));
+	$smarty->display("error.tpl");
+	die;
+}
+
 $smarty->assign('remove', 'n');
 
 if (isset($_REQUEST["remove"])) {
@@ -35,7 +44,6 @@ if (isset($_REQUEST["remove"])) {
 	$smarty->assign('removePageName', $remove_info["pageName"]);
 }
 
-$page_info      = $structlib->s_get_page_info($_REQUEST["page_ref_id"]);
 if (isset($_REQUEST["rremove"])) {
   $area = 'delstructure';
   if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
@@ -60,8 +68,6 @@ if (isset($_REQUEST["sremove"])) {
   }
 }
 
-$page_info      = $structlib->s_get_page_info($_REQUEST["page_ref_id"]);
-$structure_info = $structlib->s_get_structure_info($_REQUEST["page_ref_id"]);
 if (!isset($structure_info) or !isset($page_info) ) {
 	$smarty->assign('msg', tra("Invalid structure_id or page_ref_id"));
 
@@ -72,6 +78,11 @@ if (!isset($structure_info) or !isset($page_info) ) {
 $smarty->assign('page_ref_id', $_REQUEST["page_ref_id"]);
 $smarty->assign('structure_id', $structure_info["page_ref_id"]);
 $smarty->assign('structure_name', $structure_info["pageName"]);
+
+if ($tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_edit'))
+	$smarty->assign('editable', 'y');
+else
+	$smarty->assign('editable', 'n');		
 
 if (isset($_REQUEST["create"])) {
 	check_ticket('edit-structure');
