@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-searchindex.tpl,v 1.13 2007-05-13 12:51:03 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-searchindex.tpl,v 1.14 2007-06-04 23:51:39 nyloth Exp $ *}
 {if !( $searchNoResults ) }
 <h1>{tr}Search results{/tr}:</h1>
 {/if}
@@ -84,8 +84,8 @@
 <div class="searchresults">
 {if !($searchNoResults) }
 <br /><br />
-{section  name=search loop=$results}
-{tr}{$results[search].location}{/tr}:&nbsp;<a href="{$results[search].href}&amp;highlight={$words}" class="wiki">{$results[search].pageName|strip_tags|escape}</a> ({tr}Hits{/tr}: {$results[search].hits})
+{section name=search loop=$results}
+{tr}{$results[search].location}{/tr}:&nbsp;<a href="{$results[search].href}&amp;highlight={$words}{$results[search].anchor}" class="wiki">{$results[search].pageName|strip_tags|escape}</a> ({tr}Hits{/tr}: {$results[search].hits})
 {if $feature_search_fulltext eq 'y'}
 	{if $results[search].relevance <= 0}
 		&nbsp;({tr}Simple search{/tr})

@@ -1,5 +1,5 @@
 <?php
-// $Id: searchlib.php,v 1.36 2007-05-15 10:19:41 nyloth Exp $
+// $Id: searchlib.php,v 1.37 2007-06-04 23:51:39 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -48,11 +48,7 @@ class SearchLib extends TikiLib {
               $exact["cant"]++;
             }
           }
-          $res=$exact;
-//	  $res=array();
-//	  $res["data"]=array_merge($exact["data"],$part["data"]);
-//	  $res["cant"]=$exact["cant"]+$part["cant"];
-	  return $res;
+	  return $exact;
 	}
 
 
@@ -902,7 +898,7 @@ class SearchLib extends TikiLib {
             while ($res = $result->fetchRow()) {
 	     if($this->user_has_perm_on_object($user,$res["faqId"],'faq','tiki_p_view_faqs')) {
               ++$cant;
-              $href = "tiki-view_faq.php?faqId=".urlencode($res["faqId"])."#".urlencode($res["page"]);
+              $href = "tiki-view_faq.php?faqId=".urlencode($res["faqId"]);
               $ret[] = array(
                 'pageName' => substr($res["question"],0,40),
                 'location' => tra("FAQ")."::".$res["title"],
@@ -910,6 +906,7 @@ class SearchLib extends TikiLib {
                 'hits' => $res["hits"],
                 'lastModif' => $res["created"],
                 'href' => $href,
+		'anchor' => '#q'.urlencode($res['page']),
                 'relevance' => $res["hits"]
               );
 	     }
