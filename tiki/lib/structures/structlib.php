@@ -92,7 +92,12 @@ class StructLib extends TikiLib {
 			  $this->remove_all_versions($page_info['pageName']);
       }
 		}
-
+	// Remove the space created by the removal
+	$page_info = $this->s_get_page_info($page_ref_id);		
+	if (isset($page_info["parent_id"])) {
+		$query = "update `tiki_structures` set `pos`=`pos`-1 where `pos`>? and `parent_id`=?";
+		$this->query($query,array((int)$page_info["pos"], (int)$page_info["parent_id"]));
+	}
     //Remove the structure node
 		$query = 'delete from `tiki_structures` where `page_ref_id`=?';
 		$result = $this->query($query, array((int)$page_ref_id));
@@ -104,18 +109,22 @@ class StructLib extends TikiLib {
 		$page_info = $this->s_get_page_info($page_ref_id);
 		$parent_info = $this->s_get_parent_info($page_ref_id);
 		//If there is a parent and the parent isnt the structure root node.
-		if (isset($parent_info) && isset($parent_info["parent_id"])) {
+		if (isset($parent_info) && $parent_info["parent_id"]) {
 			//Make a space for the node after its parent
 			$query = 'update `tiki_structures` set `pos`=`pos`+1 where `pos`>? and `parent_id`=?';
 			$this->query($query,array((int)$parent_info['pos'], (int)$parent_info['parent_id']));
 			//Move the node up one level
 			$query = 'update `tiki_structures` set `parent_id`=?, `pos`=(? + 1) where `page_ref_id`=?';
 			$this->query($query, array((int)$parent_info['parent_id'], (int)$parent_info['pos'], (int)$page_ref_id));
+			//Remove the space that was created by the promotion
+  			$query = "update `tiki_structures` set `pos`=`pos`-1 where `pos`>? and `parent_id`=?";
+  			$this->query($query,array((int)$page_info["pos"], (int)$page_info["parent_id"]));
 		}
 	}
 
 	function demote_node($page_ref_id) {
 		$page_info = $this->s_get_page_info($page_ref_id);
+		$parent_info = $this->s_get_parent_info($page_ref_id);
 		$query = 'select `page_ref_id`, `pos` from `tiki_structures` where `pos`<? and `parent_id`=? order by `pos` desc';
 		$result = $this->query($query,array((int)$page_info['pos'], (int)$page_info['parent_id']));
 		if ($previous = $result->fetchRow()) {
@@ -129,6 +138,9 @@ class StructLib extends TikiLib {
 			}
 			$query = 'update `tiki_structures` set `parent_id`=?, `pos`=(? + 1) where `page_ref_id`=?';
 			$this->query($query, array((int)$previous['page_ref_id'], (int)$pos, (int)$page_ref_id));
+			//Remove the space created by the demotion			
+			$query = "update `tiki_structures` set `pos`=`pos`-1 where `pos`>? and `parent_id`=?";
+			$this->query($query,array((int)$parent_info["pos"], (int)$parent_info["parent_id"]));  
 		}
 	}
 
