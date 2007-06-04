@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.46 2007-05-31 12:34:57 luciash Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.47 2007-06-04 15:55:31 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
 
@@ -135,11 +135,11 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
 <td class="{cycle advance=false}">{$left[user].params}</td>
 <td class="{cycle advance=false}">{$left[user].module_groups}</td>
 <td class="{cycle}">
-             <a class="link" href="tiki-admin_modules.php?edit_assign={$left[user].name|escape:url}#assign" title="{tr}edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>
-             <a class="link" href="tiki-admin_modules.php?modup={$left[user].name|escape:url}#leftmod" title="{tr}move up{/tr}"><img src="pics/icons/resultset_up.png" border="0" width="16" height="16" alt='{tr}up{/tr}' /></a>
-             <a class="link" href="tiki-admin_modules.php?moddown={$left[user].name|escape:url}#leftmod" title="{tr}move down{/tr}"><img src="pics/icons/resultset_down.png" border="0" width="16" height="16" alt='{tr}down{/tr}' /></a>
-             <a class="link" href="tiki-admin_modules.php?modright={$left[user].name|escape:url}#rightmod" title="{tr}move to right column{/tr}"><img src="pics/icons/arrow_right.png" border="0" width="16" height="16" alt='{tr}right{/tr}' /></a>
-             <a class="link" href="tiki-admin_modules.php?unassign={$left[user].name|escape:url}#leftmod" title="{tr}unassign{/tr}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}x{/tr}' /></a></td>
+             <a class="link" href="tiki-admin_modules.php?edit_assign={$left[user].name|escape:url}&amp;position={$left[user].position}&amp;ord={$left[user].ord}#assign" title="{tr}edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>
+             <a class="link" href="tiki-admin_modules.php?modup={$left[user].name|escape:url}&amp;position={$left[user].position}&amp;ord={$left[user].ord}#leftmod" title="{tr}move up{/tr}"><img src="pics/icons/resultset_up.png" border="0" width="16" height="16" alt='{tr}up{/tr}' /></a>
+             <a class="link" href="tiki-admin_modules.php?moddown={$left[user].name|escape:url}&amp;position={$left[user].position}&amp;ord={$left[user].ord}#leftmod" title="{tr}move down{/tr}"><img src="pics/icons/resultset_down.png" border="0" width="16" height="16" alt='{tr}down{/tr}' /></a>
+             <a class="link" href="tiki-admin_modules.php?modright={$left[user].name|escape:url}&amp;position={$left[user].position}&amp;ord={$left[user].ord}#rightmod" title="{tr}move to right column{/tr}"><img src="pics/icons/arrow_right.png" border="0" width="16" height="16" alt='{tr}right{/tr}' /></a>
+             <a class="link" href="tiki-admin_modules.php?unassign={$left[user].name|escape:url}&amp;position={$left[user].position}&amp;ord={$left[user].ord}#leftmod" title="{tr}unassign{/tr}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}x{/tr}' /></a></td>
 </tr>
 {sectionelse}
 <tr><td colspan="6">
@@ -171,11 +171,11 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
 <td class="{cycle advance=false}">{$right[user].params}</td>
 <td class="{cycle advance=false}">{$right[user].module_groups}</td>
 <td class="{cycle}">
-             <a class="link" href="tiki-admin_modules.php?edit_assign={$right[user].name|escape:url}#assign" title="{tr}edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>
-             <a class="link" href="tiki-admin_modules.php?modup={$right[user].name|escape:url}#rightmod" title="{tr}move up{/tr}"><img src="pics/icons/resultset_up.png" border="0" width="16" height="16" alt='{tr}up{/tr}' /></a>
-             <a class="link" href="tiki-admin_modules.php?moddown={$right[user].name|escape:url}#rightmod" title="{tr}move down{/tr}"><img src="pics/icons/resultset_down.png" border="0" width="16" height="16" alt='{tr}down{/tr}' /></a>
-             <a class="link" href="tiki-admin_modules.php?modleft={$right[user].name|escape:url}#leftmod" title="{tr}move to left column{/tr}"><img src="pics/icons/arrow_left.png" border="0" width="16" height="16" alt='{tr}left{/tr}' /></a>
-             <a class="link" href="tiki-admin_modules.php?unassign={$right[user].name|escape:url}#rightmod" title="{tr}unassign{/tr}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}x{/tr}' /></a></td>
+             <a class="link" href="tiki-admin_modules.php?edit_assign={$right[user].name|escape:url}&amp;position={$right[user].position}&amp;ord={$right[user].ord}#assign" title="{tr}edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>
+             <a class="link" href="tiki-admin_modules.php?modup={$right[user].name|escape:url}&amp;position={$right[user].position}&amp;ord={$right[user].ord}#rightmod" title="{tr}move up{/tr}"><img src="pics/icons/resultset_up.png" border="0" width="16" height="16" alt='{tr}up{/tr}' /></a>
+             <a class="link" href="tiki-admin_modules.php?moddown={$right[user].name|escape:url}&amp;position={$right[user].position}&amp;ord={$right[user].ord}#rightmod" title="{tr}move down{/tr}"><img src="pics/icons/resultset_down.png" border="0" width="16" height="16" alt='{tr}down{/tr}' /></a>
+             <a class="link" href="tiki-admin_modules.php?modleft={$right[user].name|escape:url}&amp;position={$right[user].position}&amp;ord={$right[user].ord}#leftmod" title="{tr}move to left column{/tr}"><img src="pics/icons/arrow_left.png" border="0" width="16" height="16" alt='{tr}left{/tr}' /></a>
+             <a class="link" href="tiki-admin_modules.php?unassign={$right[user].name|escape:url}&amp;position={$right[user].position}&amp;ord={$right[user].ord}#rightmod" title="{tr}unassign{/tr}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}x{/tr}' /></a></td>
 </tr>
 {sectionelse}
 <tr><td colspan="6">

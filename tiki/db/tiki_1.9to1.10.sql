@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.158 2007-05-30 12:58:57 pkdille Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.159 2007-06-04 15:55:31 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -924,3 +924,6 @@ ALTER TABLE users_users CHANGE pass_due pass_confirm int(14) default NULL;
 
 #pkdille 2007/05/31
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_users','');
+#sylvieg 2007/06/01
+ALTER TABLE `tiki_modules` DROP PRIMARY KEY;
+ALTER TABLE `tiki_modules` ADD PRIMARY KEY  (name, position, ord);
