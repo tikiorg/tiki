@@ -1,5 +1,5 @@
 <?php
-// $Id: outputfilter.highlight.php,v 1.17 2007-06-03 21:53:23 sylvieg Exp $
+// $Id: outputfilter.highlight.php,v 1.18 2007-06-04 20:53:13 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -45,22 +45,24 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
     if (!isset($highlight) || empty($highlight)) {
                         return $source;
     }
+    	$matches = array();
 	if (strstr($source, 'id="rightcolumn"')) {
-		preg_match('~(.* id="centercolumn"[^>]*>)(.*)(<td[^>]* id="rightcolumn".*)~xsi', $source, $matches);
+		preg_match('~(.* id="centercolumn"[^>]*>)(.*?)(<td[^>]* id="rightcolumn".*)~xsiU', $source, $matches);
 	} elseif (!preg_match('~(.* id="centercolumn"[^>]*>)(.*)~xsi', $source, $matches)) {
 		return $source;
 	} else {
 		$matches[3] = '';
 	}
 
-   $source = preg_replace_callback(
-      '~(?:<head>.*</head>                          # head blocks
-      |<div[^>]*nohighlight.*</div><!--nohighlight--> # div with nohightlight
-      |<script[^>]+>.*</script>                     # script blocks
-      |<a[^>]*onmouseover.*onmouseout[^>]*>            # onmouseover (user popup)
-      |<[^>]*>                                      # all html tags
-      |(' . _enlightColor($highlight) . '))~xsiU',
-      '_enlightColor',  $matches[2]);
+	// Avoid highlight parsing in unknown cases where $matches[2] is empty, which will result in an empty page.
+	if ( $matches[2] != '' ) $source = preg_replace_callback(
+	      '~(?:<head>.*</head>                          # head blocks
+	      |<div[^>]*nohighlight.*</div><!--nohighlight--> # div with nohightlight
+	      |<script[^>]+>.*</script>                     # script blocks
+	      |<a[^>]*onmouseover.*onmouseout[^>]*>            # onmouseover (user popup)
+	      |<[^>]*>                                      # all html tags
+	      |(' . _enlightColor($highlight) . '))~xsiU',
+	      '_enlightColor',  $matches[2]);
 
     return $matches[1].$source.$matches[3];
  }
