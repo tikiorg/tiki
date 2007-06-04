@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.111 2007-06-04 18:45:23 nkoth Exp $ *} 
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.112 2007-06-04 19:15:49 nkoth Exp $ *} 
 {if $feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
@@ -146,7 +146,7 @@
 		  {/if}/></a>{/if}
   </td>
   <td>
-{if $tiki_p_edit_structures and $tiki_p_edit_structures eq 'y' }
+{if $tiki_p_edit_structures and $tiki_p_edit_structures eq 'y' and $struct_editable eq 'y'}
     <form action="tiki-editpage.php" method="post">
       <input type="hidden" name="current_page_id" value="{$page_info.page_ref_id}" />
       <input type="text" name="page" />

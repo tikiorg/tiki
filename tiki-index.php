@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.178 2007-03-06 19:29:49 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.179 2007-06-04 19:15:49 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -104,6 +104,10 @@ if(isset($page_ref_id)) {
     $_REQUEST['page']=$page;
     $structure_path = $structlib->get_structure_path($page_ref_id);
     $smarty->assign('structure_path', $structure_path);
+    if ($tikilib->user_has_perm_on_object($user,$navigation_info['home']['pageName'],'wiki page','tiki_p_edit'))
+		$smarty->assign('struct_editable', 'y');
+	else
+		$smarty->assign('struct_editable', 'n');		
 } else {
     $page_ref_id = '';
 }
