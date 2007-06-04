@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.32 2006-12-08 21:44:43 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.33 2007-06-04 13:31:02 nkoth Exp $ *}
 <h1><a href="tiki-admin_structures.php" class="pagetitle">{tr}Structures{/tr}</a>
   
 {if $feature_help eq 'y'}
@@ -29,7 +29,7 @@
   <td class="{cycle}">
   <a title="{tr}export pages{/tr}" class="link" href="tiki-admin_structures.php?export={$channels[ix].page_ref_id|escape:"url"}"><img src='pics/icons/disk.png' alt="{tr}export pages{/tr}" border='0' width='16' height='16' /></a>
   <a title="{tr}dump tree{/tr}" class="link" href="tiki-admin_structures.php?export_tree={$channels[ix].page_ref_id|escape:"url"}"><img src='pics/icons/chart_organisation.png' alt="{tr}dump tree{/tr}" border='0' width='16' height='16' /></a>
-  <a title="{tr}delete{/tr}" class="link" href="tiki-admin_structures.php?remove={$channels[ix].page_ref_id|escape:"url"}"><img src='pics/icons/cross.png' alt="{tr}remove{/tr}" border='0' width='16' height='16' /></a>
+  {if $channels[ix].editable == 'y'}<a title="{tr}delete{/tr}" class="link" href="tiki-admin_structures.php?remove={$channels[ix].page_ref_id|escape:"url"}"><img src='pics/icons/cross.png' alt="{tr}remove{/tr}" border='0' width='16' height='16' /></a>{/if}
   <a title="{tr}create webhelp{/tr}" class="link" href="tiki-create_webhelp.php?struct={$channels[ix].page_ref_id|escape:"url"}"><img src="pics/icons/help.png" alt="{tr}create webhelp{/tr}" border='0' width='16' height='16' /></a>
   {if $channels[ix].webhelp eq 'y'} 
   <a title="{tr}view webhelp{/tr}" class="link" href="whelp/{$channels[ix].pageName}/index.html"><img src="pics/icons/book_open.png" alt="{tr}view webhelp{/tr}" border='0' width='16' height='16' /></a>
