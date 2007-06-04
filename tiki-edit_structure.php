@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.33 2007-06-03 04:40:41 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.34 2007-06-04 18:09:46 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -143,14 +143,25 @@ if (isset($_REQUEST["find_objects"])) {
 
 $smarty->assign('find_objects', $find_objects);
 
+if (!empty($_REQUEST['categId'])) {
+	$filter['categId'] = $_REQUEST['categId'];
+	$smarty->assign_by_ref('find_categId', $_REQUEST['categId']);
+}
+	
 // Get all wiki pages for the dropdown menu
-$listpages = $tikilib->list_pages(0, 50, 'pageName_asc', $find_objects);
+$listpages = $tikilib->list_pages(0, 50, 'pageName_asc', $find_objects, '', true, false, false, false, $filter);
 $smarty->assign_by_ref('listpages', $listpages["data"]);
 
 
 $subtree = $structlib->get_subtree($structure_info["page_ref_id"]);
 $smarty->assign('subtree', $subtree);
 
+if ($feature_categories == 'y') {
+	global $categlib; include_once ('lib/categories/categlib.php');
+	$categories = $categlib->get_all_categories_respect_perms($user, 'tiki_p_view_categories');
+	$smarty->assign_by_ref('categories', $categories);
+}
+	
 ask_ticket('edit-structure');
 
 include_once ('tiki-section_options.php');

@@ -55,11 +55,19 @@
   <tr>
   <td class="formcolor">
   {tr}Use pre-existing page{/tr}<br />
-        <input type="text" name="find_objects" />
+        <input type="text" name="find_objects" value="{$find_objects|escape}" />
         <input type="submit" value="{tr}filter{/tr}" name="search_objects" />
+        {if $feature_categories eq 'y'}	
+		<select name="categId">
+		<option value='' {if $find_categId eq ''}selected="selected"{/if}>{tr}any category{/tr}</option>
+		{section name=ix loop=$categories}
+			<option value="{$categories[ix].categId|escape}" {if $find_categId eq $categories[ix].categId}selected="selected"{/if}>{tr}{$categories[ix].categpath}{/tr}</option>
+		{/section}
+		</select>
+		{/if}
   </td>
   <td class="formcolor">
-  <select name="name2[]" multiple="multiple" size="5">
+  <select name="name2[]" multiple="multiple" size="8">
   {section name=list loop=$listpages}
   <option value="{$listpages[list].pageName|escape}">{$listpages[list].pageName|truncate:40:"(...)":true}</option>
   {/section}
