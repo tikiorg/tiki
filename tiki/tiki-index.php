@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.182 2007-06-04 21:18:22 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.183 2007-06-04 23:00:33 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -279,6 +279,12 @@ if($tiki_p_view != 'y') {
     } 
     $smarty->display('error.tpl');
     die;  
+}
+
+// Convert page to structure
+if (isset($_REQUEST['convertstructure']) && isset($structs) && count($structs) == 0) {
+	$page_ref_id = $structlib->s_create_page(0, null, $page);
+	header('Location: tiki-index.php?page_ref_id='.$page_ref_id );
 }
 
 // Get translated page
