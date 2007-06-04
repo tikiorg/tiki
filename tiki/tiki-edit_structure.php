@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.37 2007-06-04 19:12:43 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.38 2007-06-04 19:32:04 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -40,7 +40,10 @@ if (isset($_REQUEST["remove"])) {
 	check_ticket('edit-structure');
 	$smarty->assign('remove', 'y');
   $remove_info = $structlib->s_get_page_info($_REQUEST["remove"]);
-	if ($tiki_p_remove == 'y' && $tikilib->user_has_perm_on_object($user,$remove_info["pageName"],'wiki page','tiki_p_edit'))
+  	$structs = $structlib->get_page_structures($remove_info['pageName'],$structure);
+    //If page is member of more than one structure, do not give option to remove page
+    $single_struct = count($structs) == 1; 
+	if ($tiki_p_remove == 'y' && $single_struct && $tikilib->user_has_perm_on_object($user,$remove_info["pageName"],'wiki page','tiki_p_edit'))
 		$smarty->assign('page_removable', 'y');
 	else
 		$smarty->assign('page_removable', 'n');
