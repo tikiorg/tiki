@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.179 2007-06-04 19:15:49 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.180 2007-06-04 19:57:39 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -76,13 +76,19 @@ if (!isset($page_ref_id)) {
     $structs = $structlib->get_page_structures($_REQUEST["page"],$structure);
     //If page is only member of one structure, display if requested
     $single_struct = count($structs) == 1; 
-    if ($feature_wiki_open_as_structure == 'y' and $single_struct ) {
+    if ($feature_wiki_open_as_structure == 'y' and $single_struct and $tikilib->user_has_perm_on_object($user,$structs[0]['pageName'],'wiki page','tiki_p_view')) {
       $page_ref_id=$structs[0]['req_page_ref_id'];
       $_REQUEST['page_ref_id']=$page_ref_id;
     }
     //Otherwise, populate a list of structures
     else {
-      $smarty->assign('showstructs', $structs);
+		$structs_with_perm = array(); 
+		foreach ($structs as $t_structs) {
+			if ($tikilib->user_has_perm_on_object($user,$t_structs['pageName'],'wiki page','tiki_p_view')) {
+      			$structs_with_perm[] = $t_structs;
+			}
+		}
+		if (!empty($structs_with_perm)) $smarty->assign('showstructs', $structs_with_perm);      		
     }
 
 }
