@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.159 2007-06-04 15:55:31 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.160 2007-06-04 17:09:25 nkoth Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -868,7 +868,7 @@ UPDATE users_permissions set admin='y' where permName = 'tiki_p_admin_categories
 UPDATE users_permissions set admin='y' where permName = 'tiki_p_admin_calendar';
 UPDATE users_permissions set type='category' where permName= 'tiki_p_admin_categories';
 UPDATE users_permissions set type='category' where permName= 'tiki_p_view_categories'; 
-UPDATE users_permissions set type='category' where permName= 'tiki_p_edit_categories'; 
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_categories', 'Can edit items in categories', 'registered', 'category');
 UPDATE users_permissions set admin='y' where permName = 'tiki_p_admin_charts';
 UPDATE users_permissions set admin='y' where permName = 'tiki_p_admin_chat';
 UPDATE users_permissions set admin='y' where permName = 'tiki_p_admin_cms';
