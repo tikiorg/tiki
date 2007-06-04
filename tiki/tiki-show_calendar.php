@@ -157,24 +157,6 @@ if ($calendarViewMode == 'month' ||
    $weekdays = array(date('w',$focusdate));
    $numberofweeks = 0;
 }
-// untested (by me, anyway!) function grabbed from the php.net site:
-// [2004/01/05:rpg]
-function m_weeks($y, $m){
-  // monthday array
-  $monthdays = array(1=>31, 3=>31, 4=>30, 5=>31, 6=>30,7=>31,
-               8=>31, 9=>30, 10=>31, 11=>30, 12=>31);
-  // weekdays remaining in a week starting on 7 - Sunday...(could be changed)
-  $weekdays = array(7=>7, 1=>6, 2=>5, 3=>4, 4=>3, 5=>2, 6=>1);
-  $date = $tikilib->make_time( 0, 0, 0, $m, 1, $y);
-  $leap = date("L", $date);
-  // if it is a leap year set February to 29 days, otherwise 28
-  $monthdays[2] = ($leap ? 29 : 28);
-  // get the weekday of the first day of the month
-  $wn = strftime("%u",$date);
-  $days = $monthdays[$m] - $weekdays[$wn];
-  return (ceil($days/7) + 1);
-}
-
 
 $smarty->assign('viewstart', $viewstart);
 $smarty->assign('viewend', $viewend);
