@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.47 2007-05-25 20:29:27 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.48 2007-06-04 17:43:47 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -177,7 +177,7 @@ if ( ! empty($multiprint_pages) ) {
 	
 	if ($feature_categories == 'y') {
 		global $categlib; include_once ('lib/categories/categlib.php');
-		$categories = $categlib->get_all_categories_ext();
+		$categories = $categlib->get_all_categories_respect_perms($user, 'tiki_p_view_categories');
 		$smarty->assign_by_ref('categories', $categories);
 		if ((isset($wiki_list_categories) && $wiki_list_categories == 'y') || (isset($wiki_list_categories_path) && $wiki_list_categories_path == 'y')) {
 			foreach ($listpages['data'] as $i=>$page) {
