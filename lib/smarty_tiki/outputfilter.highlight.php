@@ -1,5 +1,5 @@
 <?php
-// $Id: outputfilter.highlight.php,v 1.18 2007-06-04 20:53:13 nyloth Exp $
+// $Id: outputfilter.highlight.php,v 1.19 2007-06-04 21:00:44 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -47,7 +47,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
     }
     	$matches = array();
 	if (strstr($source, 'id="rightcolumn"')) {
-		preg_match('~(.* id="centercolumn"[^>]*>)(.*?)(<td[^>]* id="rightcolumn".*)~xsiU', $source, $matches);
+		preg_match('~(.* id="centercolumn"[^>]*>)(.*?)(<td[^>]* id="rightcolumn".*?)~xsiU', $source, $matches);
 	} elseif (!preg_match('~(.* id="centercolumn"[^>]*>)(.*)~xsi', $source, $matches)) {
 		return $source;
 	} else {
