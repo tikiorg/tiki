@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.101 2007-04-10 21:27:10 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.102 2007-06-04 15:10:32 nkoth Exp $
  *
  * \brief Categories support class
  *
@@ -842,46 +842,20 @@ class CategLib extends ObjectLib {
 	function get_all_categories_respect_perms($user, $perm) {
 		global $cachelib;
 		global $userlib;
-		global $tiki_p_admin;
 		
-//		if (!$cachelib->isCached("allcategs")) {
+//		if (!$cachelib->isCached("allcategs")) {			
+			$result = $this->get_all_categories_ext();
 			$ret = array();
-			$query = "select * from `tiki_categories` order by `name`";
-			$result = $this->query($query,array());
-			while ($res = $result->fetchRow()) {
-
-				$add = TRUE;
-				if ($tiki_p_admin != 'y' && $userlib->object_has_one_permission($res['categId'], 'category')) {
-					if (!$userlib->object_has_permission($user, $res['categId'], 'category', $perm)) {
-						$add = FALSE;
-					}
-				} elseif ($tiki_p_admin != 'y') {
-					$categpath = $this->get_category_path($res['categId']);
-					$arraysize = count($categpath);
-					for ($i=$arraysize-2; $i>=0; $i--) {
-						if ($userlib->object_has_one_permission($categpath[$i]['categId'], 'category')) {
-							if ($userlib->object_has_permission($user, $categpath[$i]['categId'], 'category', $perm)) {
-								$add = TRUE;
-								break 1;
-								// break out of one FOR loop
-							} else {
-								$add = FALSE;
-								break 1;
-								// break out of one FOR loop
-							}
-						}
-					}
-				}
+			foreach ($result as $res) {
 				
-				if ($add) {
-					$id = $res["categId"];
-					$res['name']=$this->get_category_name($id);
-					$query = "select count(*) from `tiki_categories` where `parentId`=?";
-					$res["children"] = $this->getOne($query,array($id));
-					$query = "select count(*) from `tiki_category_objects` where `categId`=?";
-					$res["objects"] = $this->getOne($query,array($id));
-					$ret[] = $res;
+				if ($userlib->user_has_permission($user, 'tiki_p_admin') || !$userlib->object_has_one_permission($res['categId'], 'category')) {
+					$ret[] = $res;				
+				} else {
+					if ($userlib->object_has_permission($user, $res['categId'], 'category', $perm)) {
+						$ret[] = $res;
+					}
 				}
+
 			}
 //			$cachelib->cacheItem("allcategs.$user.$perm",serialize($ret));
 //		} else {
