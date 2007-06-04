@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.110 2007-05-31 09:42:59 nyloth Exp $ *} 
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.111 2007-06-04 18:45:23 nkoth Exp $ *} 
 {if $feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
@@ -163,6 +163,7 @@
 </tr>
 <tr>
   <td colspan="2">
+  	<a href="tiki-edit_structure.php?page_ref_id={$home_info.page_ref_id}"><img src='pics/icons/chart_organisation.png' alt="{tr}Structure{/tr}" title="{tr}Structure{/tr}" border='0' width='16' height='16' /></a>&nbsp;&nbsp;
     {section loop=$structure_path name=ix}
       {if $structure_path[ix].parent_id}&nbsp;{$site_crumb_seper}&nbsp;{/if}
 	  <a href="tiki-index.php?page_ref_id={$structure_path[ix].page_ref_id}">
