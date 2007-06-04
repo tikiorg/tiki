@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.47 2007-06-03 01:40:08 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.48 2007-06-04 22:45:14 sylvieg Exp $
 
 	require_once('tiki-setup.php');
 	include_once('lib/filegals/filegallib.php');
@@ -67,9 +67,6 @@
 	}
 	$smarty->assign('find',$find);
 	
-	if(!isset($_REQUEST["galleryId"])) {
-	  $_REQUEST["galleryId"] = 0;
-	}
 	$smarty->assign('galleryId',$_REQUEST["galleryId"]);
 	
 	$foo = parse_url($_SERVER["REQUEST_URI"]);
@@ -140,15 +137,24 @@
 	    $smarty->assign_by_ref('visible',$info["visible"]);
 		$smarty->assign_by_ref('parentId',$info['parentId']);
 		$smarty->assign_by_ref('creator',$info['user']);
-		if ($info['sort_mode']) {
-			preg_match('/(.*)_(asc|desc)/', $info['sort_mode'], $matches);
+		if ($info['sort_mode']	&& preg_match('/(.*)_(asc|desc)/', $info['sort_mode'], $matches)) {
 			$smarty->assign('sortorder',$matches[1]);
 			$smarty->assign('sortdirection', $matches[2]);
 		} else {
 			$smarty->assign('sortorder', 'created');
 			$smarty->assign('sortdirection', 'desc');
 		}
-		list($fgal_list_id, $fgal_list_name, $fgal_list_description, $fgal_list_type, $fgal_list_created, $fgal_list_lastmodif) = split(':',$info['subgal_conf']);
+		list($fgal_list_id, $fgal_list_name, $fgal_list_description, $fgal_list_type, $fgal_list_created, $fgal_list_lastmodif, $fgal_list_user, $fgal_list_files, $fgal_list_hits, $fgal_list_parent) = split(':',$info['subgal_conf']);
+		$smarty->assign('fgal_list_id', $fgal_list_id);
+		$smarty->assign('fgal_list_name', $fgal_list_name);
+		$smarty->assign('fgal_list_description', $fgal_list_description);
+		$smarty->assign('fgal_list_type', $fgal_list_type);
+		$smarty->assign('fgal_list_created', $fgal_list_created);
+		$smarty->assign('fgal_list_lastmodif', $fgal_list_lastmodif);
+		$smarty->assign('fgal_list_user', $fgal_list_user);
+		$smarty->assign('fgal_list_files', $fgal_list_files);
+		$smarty->assign('fgal_list_hits', $fgal_list_hits);
+		$smarty->assign('fgal_list_parent', $fgal_list_parent);
 	  }
 	} elseif (!empty($_REQUEST['dup_mode'])) {
 		$smarty->assign('dup_mode','y');
@@ -238,7 +244,9 @@
 	  $_REQUEST['show_modified']=isset($_REQUEST['show_modified'])?'y':'n';
 	  $_REQUEST['sortorder']=isset($_REQUEST['sortorder'])?$_REQUEST['sortorder']:'created';
 	  $_REQUEST['sortdirection']=isset($_REQUEST['sortdirection']) && $_REQUEST['sortdirection'] == 'asc'? 'asc':'desc';
-	  $fgid = $filegallib->replace_file_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST['user'], $_REQUEST["maxRows"], $public, $visible,$_REQUEST['show_id'],$_REQUEST['show_icon'],$_REQUEST['show_name'],$_REQUEST['show_size'],$_REQUEST['show_description'],$_REQUEST['show_created'],$_REQUEST['show_dl'],$_REQUEST['max_desc'],$_REQUEST['fgal_type'], $_REQUEST['parentId'], $lockable, $_REQUEST['show_lockedby'], $_REQUEST['archives'], $_REQUEST['sortorder'].'_'.$_REQUEST['sortdirection'], $_REQUEST['show_modified'], $_REQUEST['show_creator'], $_REQUEST['show_author']);
+	  
+	  $_REQUEST['subgal_conf']=implode(':', array(isset($_REQUEST['fgal_list_id'])?'y':'n', isset($_REQUEST['fgal_list_name'])?'y':'n', isset($_REQUEST['fgal_list_description'])?'y':'n', isset($_REQUEST['fgal_list_type'])?'y':'n', isset($_REQUEST['fgal_list_created'])?'y':'n', isset($_REQUEST['fgal_list_lastmodif'])?'y':'n', isset($_REQUEST['fgal_list_user'])?'y':'n', isset($_REQUEST['fgal_list_files'])?'y':'n', isset($_REQUEST['fgal_list_hits'])?'y':'n', isset($_REQUEST['fgal_list_parent'])?'y':'n'));
+	  $fgid = $filegallib->replace_file_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST['user'], $_REQUEST["maxRows"], $public, $visible,$_REQUEST['show_id'],$_REQUEST['show_icon'],$_REQUEST['show_name'],$_REQUEST['show_size'],$_REQUEST['show_description'],$_REQUEST['show_created'],$_REQUEST['show_dl'],$_REQUEST['max_desc'],$_REQUEST['fgal_type'], $_REQUEST['parentId'], $lockable, $_REQUEST['show_lockedby'], $_REQUEST['archives'], $_REQUEST['sortorder'].'_'.$_REQUEST['sortdirection'], $_REQUEST['show_modified'], $_REQUEST['show_creator'], $_REQUEST['show_author'], $_REQUEST['subgal_conf']);
 	  
 		if ($feature_categories == 'y') {
 			$cat_type='file gallery';

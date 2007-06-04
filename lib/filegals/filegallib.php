@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.70 2007-05-04 09:25:48 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.71 2007-06-04 22:46:55 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -314,7 +314,7 @@ class FileGalLib extends TikiLib {
 	}
 
 	function replace_file_gallery($galleryId, $name, $description, $user, $maxRows, $public, $visible = 'y', $show_id, $show_icon,
-								  $show_name, $show_size, $show_description, $show_created, $show_dl, $max_desc, $fgal_type='default', $parentId=-1, $lockable='n', $show_lockedby='y', $archives=-1, $sort_mode='', $show_modified='n', $show_creator='y', $show_author='n') {
+								  $show_name, $show_size, $show_description, $show_created, $show_dl, $max_desc, $fgal_type='default', $parentId=-1, $lockable='n', $show_lockedby='y', $archives=-1, $sort_mode='', $show_modified='n', $show_creator='y', $show_author='n', $subgal_conf) {
 		// if the user is admin or the user is the same user and the gallery exists then replace if not then
 		// create the gallary if the name is unused.
 		$name = strip_tags($name);
@@ -325,8 +325,8 @@ class FileGalLib extends TikiLib {
 		}
 
 		if ($galleryId > 0) {
-			$query = "update `tiki_file_galleries` set `name`=?, `maxRows`=?, `description`=?,`lastModif`=?, `public`=?, `visible`=?,`show_icon`=?,`show_id`=?,`show_name`=?,`show_description`=?,`show_size`=?,`show_created`=?,`show_dl`=?,`max_desc`=?,`type`=?,`parentId`=?,`user`=?,`lockable`=?,`show_lockedby`=?, `archives`=?, `sort_mode`=?, `show_modified`=?, `show_creator`=?, `show_author`=? where `galleryId`=?";
-			$bindvars=array($name,(int) $maxRows,$description,(int) $this->now,$public,$visible,$show_icon,$show_id,$show_name,$show_description,$show_size,$show_created,$show_dl,(int) $max_desc, $fgal_type, $parentId, $user, $lockable, $show_lockedby, $archives, $sort_mode, $show_modified, $show_creator, $show_author,(int)$galleryId);
+			$query = "update `tiki_file_galleries` set `name`=?, `maxRows`=?, `description`=?,`lastModif`=?, `public`=?, `visible`=?,`show_icon`=?,`show_id`=?,`show_name`=?,`show_description`=?,`show_size`=?,`show_created`=?,`show_dl`=?,`max_desc`=?,`type`=?,`parentId`=?,`user`=?,`lockable`=?,`show_lockedby`=?, `archives`=?, `sort_mode`=?, `show_modified`=?, `show_creator`=?, `show_author`=?, `subgal_conf`=? where `galleryId`=?";
+			$bindvars=array($name,(int) $maxRows,$description,(int) $this->now,$public,$visible,$show_icon,$show_id,$show_name,$show_description,$show_size,$show_created,$show_dl,(int) $max_desc, $fgal_type, $parentId, $user, $lockable, $show_lockedby, $archives, $sort_mode, $show_modified, $show_creator, $show_author,$subgal_conf,(int)$galleryId);
 
 			$result = $this->query($query,$bindvars);
 
@@ -335,11 +335,11 @@ class FileGalLib extends TikiLib {
 			$this->query($query,$bindvars);
 		} else {
 			// Create a new record
-			$query = "insert into `tiki_file_galleries`(`name`,`description`,`created`,`user`,`lastModif`,`maxRows`,`public`,`hits`,`visible`,`show_id`,`show_icon`,`show_name`,`show_description`,`show_created`,`show_dl`,`max_desc`,`type`, `parentId`, `lockable`, `show_lockedby`, `archives`, `sort_mode`, `show_modified`, `show_creator`, `show_author`)
+			$query = "insert into `tiki_file_galleries`(`name`,`description`,`created`,`user`,`lastModif`,`maxRows`,`public`,`hits`,`visible`,`show_id`,`show_icon`,`show_name`,`show_description`,`show_created`,`show_dl`,`max_desc`,`type`, `parentId`, `lockable`, `show_lockedby`, `archives`, `sort_mode`, `show_modified`, `show_creator`, `show_author`, `subgal_conf`)
                                     values (?,?,?,?,?,?,?,?,?,
-                                    ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                                    ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			$bindvars=array($name,$description,(int) $this->now,$user,(int) $this->now,(int) $maxRows,$public,0,$visible,
-							$show_id,$show_icon,$show_name,$show_description,$show_created,$show_dl,(int) $max_desc, $fgal_type, $parentId, $lockable, $show_lockedby, $archives, $sort_mode, $show_modified, $show_creator, $show_author);
+							$show_id,$show_icon,$show_name,$show_description,$show_created,$show_dl,(int) $max_desc, $fgal_type, $parentId, $lockable, $show_lockedby, $archives, $sort_mode, $show_modified, $show_creator, $show_author, $subgal_conf);
 
 			$result = $this->query($query,$bindvars);
 			$galleryId

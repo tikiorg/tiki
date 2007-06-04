@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.160 2007-06-04 17:09:25 nkoth Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.161 2007-06-04 22:46:55 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -927,3 +927,6 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 #sylvieg 2007/06/01
 ALTER TABLE `tiki_modules` DROP PRIMARY KEY;
 ALTER TABLE `tiki_modules` ADD PRIMARY KEY  (name, position, ord);
+
+#sylvieg 2007/06/04
+ALTER TABLE `tiki_file_galleries` ADD `subgal_conf` varchar(200) default NULL;
