@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.749 2007-06-03 02:28:06 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.750 2007-06-04 20:25:25 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2163,7 +2163,8 @@ function add_pageview() {
 
     function list_users($offset = 0, $maxRecords = -1, $sort_mode = 'pref:realName', $find = '', $include_prefs = true)
     {
-	global $user, $userprefslib;
+	global $user;
+	global $userprefslib;include_once('lib/userprefs/userprefslib.php');
 
 	if ( $find ) {
 	    $findesc = '%'.$find.'%';
@@ -2177,6 +2178,9 @@ function add_pageview() {
 	    $mid = '';
 	    $bindvars = array($user);
 	    $bindvars2 = array();
+	    $find_join = '';
+	    $find_join_cant = '';
+	    $mid_cant = '';
 	}
 
 	// This allows to use a sort_mode by prefs
