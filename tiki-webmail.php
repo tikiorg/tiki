@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.34 2007-03-06 19:29:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.35 2007-06-04 10:47:33 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -609,7 +609,7 @@ if ($_REQUEST["locSection"] == 'compose') {
 		$to_array = $contactlib->parse_nicknames($to_array);
 
 		// Get email addresses not in the address book
-		$not_contacts = $contactllib->are_contacts($to_array, $user);
+		$not_contacts = $contactlib->are_contacts($to_array, $user);
 
 		if (count($not_contacts) > 0) {
 			$smarty->assign('notcon', 'y');
