@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.35 2007-06-04 18:16:37 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.36 2007-06-04 18:57:11 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -44,7 +44,6 @@ if (isset($_REQUEST["remove"])) {
 		$smarty->assign('page_removable', 'y');
 	else
 		$smarty->assign('page_removable', 'n');
-	$smarty->assign('editable', 'n');	
 	$smarty->assign('removepage', $_REQUEST["remove"]);
 	$smarty->assign('removePageName', $remove_info["pageName"]);
 }
