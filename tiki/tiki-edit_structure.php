@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.34 2007-06-04 18:09:46 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.35 2007-06-04 18:16:37 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -143,6 +143,7 @@ if (isset($_REQUEST["find_objects"])) {
 
 $smarty->assign('find_objects', $find_objects);
 
+$filter = '';
 if (!empty($_REQUEST['categId'])) {
 	$filter['categId'] = $_REQUEST['categId'];
 	$smarty->assign_by_ref('find_categId', $_REQUEST['categId']);
