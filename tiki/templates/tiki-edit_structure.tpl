@@ -1,5 +1,5 @@
 <h1><a class="pagetitle" href="tiki-edit_structure.php?page_ref_id={$page_ref_id}">
-  {tr}Modify Structure{/tr}: {$structure_name}
+  {if $editable == 'y'}{tr}Modify Structure{/tr}{else}{tr}Structure{/tr}{/if}: {$structure_name}
 </a></h1>
 
 {if $remove eq 'y'}
