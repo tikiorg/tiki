@@ -652,12 +652,22 @@ function list_structures($offset, $maxRecords, $sort_mode, $find) {
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
+			global $user;
+	        if ( $this->user_has_perm_on_object($user,$res['pageName'],'wiki page','tiki_p_view') ) {
+	        
 			if(file_exists('whelp/'.$res['pageName'].'/index.html')) {
 			  $res['webhelp']='y';
 			} else {
 			  $res['webhelp']='n';
 			}
+			if ( $this->user_has_perm_on_object($user,$res['pageName'],'wiki page','tiki_p_edit') ) {
+				$res['editable']='y';
+			} else {
+				$res['editable']='n';
+			}	
 			$ret[] = $res;
+			
+	        } // end check for perm if 
 		}
 
 		$retval = array();

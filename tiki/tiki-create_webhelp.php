@@ -58,6 +58,12 @@ if ($tiki_p_edit_structures != 'y') {
 $struct_info = $structlib->s_get_structure_info($_REQUEST['struct']);
 $smarty->assign_by_ref('struct_info',$struct_info);
 
+if (!$tikilib->user_has_perm_on_object($user,$struct_info["pageName"],'wiki page','tiki_p_view')) {
+	$smarty->assign('msg',tra('Permission denied you cannot view this page'));
+	$smarty->display("error.tpl");
+	die;
+}
+	
 $smarty->assign('generated','y');
 if(isset($_REQUEST['create'])) {
   $name=$_REQUEST['name'];

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.25 2007-03-06 19:29:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.26 2007-06-04 13:31:00 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -22,9 +22,15 @@ if ($tiki_p_edit_structures != 'y') {
 
 if (isset($_REQUEST['rremove'])) {
   $area = 'delstruct';
+  $structure_info = $structlib->s_get_structure_info($_REQUEST['rremove']);
+	if (!$tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_edit')) {
+		$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
+		$smarty->display("error.tpl");
+		die;		
+	}
   if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
-		$structlib->s_remove_page($_REQUEST["rremove"], false);
+		$structlib->s_remove_page($_REQUEST["rremove"], false);		
 	} else {
 		key_get($area);
 	}
@@ -32,6 +38,12 @@ if (isset($_REQUEST['rremove'])) {
 
 if (isset($_REQUEST['rremovex'])) {
   $area = 'delstructandpages';
+  $structure_info = $structlib->s_get_structure_info($_REQUEST['rremovex']);
+	if (!$tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_edit')) {
+		$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
+		$smarty->display("error.tpl");
+		die;		
+	}
   if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$structlib->s_remove_page($_REQUEST["rremovex"], true);
@@ -42,11 +54,23 @@ if (isset($_REQUEST['rremovex'])) {
 
 if (isset($_REQUEST['export'])) {
 	check_ticket('admin-structures');
+	$structure_info = $structlib->s_get_structure_info($_REQUEST['export']);
+	if (!$tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_view')) {
+		$smarty->assign('msg',tra('Permission denied you cannot view this page'));
+		$smarty->display("error.tpl");
+		die;
+	}
 	$structlib->s_export_structure($_REQUEST['export']);
 }
 
 if (isset($_REQUEST['export_tree'])) {
 	check_ticket('admin-structures');
+	$structure_info = $structlib->s_get_structure_info($_REQUEST['export_tree']);
+	if (!$tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_view')) {
+		$smarty->assign('msg',tra('Permission denied you cannot view this page'));
+		$smarty->display("error.tpl");
+		die;
+	}
 	header ("content-type: text/plain");
 
 	$structlib->s_export_structure_tree($_REQUEST['export_tree']);
@@ -57,6 +81,12 @@ $smarty->assign('askremove', 'n');
 
 if (isset($_REQUEST['remove'])) {
 	check_ticket('admin-structures');
+	$structure_info = $structlib->s_get_structure_info($_REQUEST['remove']);
+	if (!$tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_edit')) {
+		$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
+		$smarty->display("error.tpl");
+		die;		
+	}
 	$smarty->assign('askremove', 'y');
 
 	$smarty->assign('remove', $_REQUEST['remove']);
