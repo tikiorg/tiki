@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.47 2007-05-30 16:37:23 luciash Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.48 2007-06-04 15:55:32 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -69,11 +69,9 @@ $smarty->assign('assign_selected','');
 $smarty->assign('assign_type','');
 $smarty->assign('assign_title','');
 
-if (isset($_REQUEST["edit_assign"])) {
+if (isset($_REQUEST['edit_assign']) && isset($_REQUEST['position']) && isset($_REQUEST['ord'])) {
 	check_ticket('admin-modules');
-	$_REQUEST["edit_assign"] = urldecode($_REQUEST["edit_assign"]);
-
-	$info = $modlib->get_assigned_module($_REQUEST["edit_assign"]);
+	$info = $modlib->get_assigned_module($_REQUEST['edit_assign'], $_REQUEST['position'], $_REQUEST['ord']);
 	$grps = '';
 
 	if ($info["groups"]) {
@@ -110,40 +108,30 @@ if (isset($_REQUEST["edit_assign"])) {
 	}
 }
 
-if (isset($_REQUEST["unassign"])) {
+if (isset($_REQUEST['unassign']) && isset($_REQUEST['position']) && isset($_REQUEST['ord'])) {
 	check_ticket('admin-modules');
-	$_REQUEST["unassign"] = urldecode($_REQUEST["unassign"]);
-
-	$modlib->unassign_module($_REQUEST["unassign"]);
+	$modlib->unassign_module($_REQUEST['unassign'], $_REQUEST['position'], $_REQUEST['ord']);
 	$logslib->add_log('adminmodules','unassigned module '.$_REQUEST["unassign"]);
 }
 
-if (isset($_REQUEST["modup"])) {
+if (isset($_REQUEST['modup']) && isset($_REQUEST['position']) && isset($_REQUEST['ord'])) {
 	check_ticket('admin-modules');
-	$_REQUEST["modup"] = urldecode($_REQUEST["modup"]);
-
-	$modlib->module_up($_REQUEST["modup"]);
+	$modlib->module_up($_REQUEST['modup'], $_REQUEST['position'], $_REQUEST['ord']);
 }
 
-if (isset($_REQUEST["moddown"])) {
+if (isset($_REQUEST['moddown']) && isset($_REQUEST['position']) && isset($_REQUEST['ord'])) {
 	check_ticket('admin-modules');
-	$_REQUEST["moddown"] = urldecode($_REQUEST["moddown"]);
-
-	$modlib->module_down($_REQUEST["moddown"]);
+	$modlib->module_down($_REQUEST['moddown'], $_REQUEST['position'], $_REQUEST['ord']);
 }
 
-if (isset($_REQUEST["modleft"])) {
+if (isset($_REQUEST['modleft']) && isset($_REQUEST['position']) && isset($_REQUEST['ord'])) {
 	check_ticket('admin-modules');
-	$_REQUEST["modleft"] = urldecode($_REQUEST["modleft"]);
-
-	$modlib->module_left($_REQUEST["modleft"]);
+	$modlib->module_left($_REQUEST['modleft'], $_REQUEST['position'], $_REQUEST['ord']);
 }
 
-if (isset($_REQUEST["modright"])) {
+if (isset($_REQUEST['modright']) && isset($_REQUEST['position']) && isset($_REQUEST['ord'])) {
 	check_ticket('admin-modules');
-	$_REQUEST["modright"] = urldecode($_REQUEST["modright"]);
-
-	$modlib->module_right($_REQUEST["modright"]);
+	$modlib->module_right($_REQUEST['modright'], $_REQUEST['position'], $_REQUEST['ord']);
 }
 
 /* Edit or delete a user module */
