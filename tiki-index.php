@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.181 2007-06-04 20:11:28 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.182 2007-06-04 21:18:22 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -113,7 +113,17 @@ if(isset($page_ref_id)) {
     if ($tikilib->user_has_perm_on_object($user,$navigation_info['home']['pageName'],'wiki page','tiki_p_edit'))
 		$smarty->assign('struct_editable', 'y');
 	else
-		$smarty->assign('struct_editable', 'n');		
+		$smarty->assign('struct_editable', 'n');	
+	// To show position    
+    if (count($structure_path) > 1) {		
+		for ($i = 1; $i < count($structure_path); $i++) {
+			$cur_pos .= $structure_path[$i]["pos"] . "." ;
+		}
+		$cur_pos = substr($cur_pos, 0, strlen($cur_pos)-1);      
+	} else {
+		$cur_pos = tra("Top");
+	}
+	$smarty->assign('cur_pos', $cur_pos);	
 } else {
     $page_ref_id = '';
 }
