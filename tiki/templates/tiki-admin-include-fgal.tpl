@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-fgal.tpl,v 1.31 2007-04-17 13:06:28 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-fgal.tpl,v 1.32 2007-06-04 22:45:15 sylvieg Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -93,57 +93,20 @@
   <div class="cbox-title">{tr}Gallery listing configuration{/tr}</div>
   <div class="cbox-data">
       <form method="post" action="tiki-admin.php?page=fgal">
-        <table class="admin"><tr class="formcolor">
-          <td>{tr}ID{/tr}</td>
-          <td><input type="checkbox" name="fgal_list_id"
-              {if $fgal_list_id eq 'y'}checked="checked"{/if} /></td>
-        </tr><tr class="formcolor">
-          <td>{tr}Name{/tr}</td>
-          <td><input type="checkbox" name="fgal_list_name"
-              {if $fgal_list_name eq 'y'}checked="checked"{/if} /></td>
-        </tr><tr class="formcolor">
-          <td>{tr}Description{/tr}</td>
-          <td><input type="checkbox" name="fgal_list_description"
-              {if $fgal_list_description eq 'y'}checked="checked"{/if} /></td>
-        </tr><tr class="formcolor">
-          <td>{tr}Type{/tr}</td>
-          <td><input type="checkbox" name="fgal_list_type"
-              {if $fgal_list_type eq 'y'}checked="checked"{/if} /></td>
-        </tr><tr class="formcolor">
-          <td>{tr}Created{/tr}</td>
-          <td><input type="checkbox" name="fgal_list_created"
-              {if $fgal_list_created eq 'y'}checked="checked"{/if} /></td>
-        </tr><tr class="formcolor">
-          <td>{tr}Last modified{/tr}</td>
-          <td><input type="checkbox" name="fgal_list_lastmodif"
-              {if $fgal_list_lastmodif eq 'y'}checked="checked"{/if} /></td>
-        </tr><tr class="formcolor">
-          <td>{tr}User{/tr}</td>
-          <td><input type="checkbox" name="fgal_list_user"
-              {if $fgal_list_user eq 'y'}checked="checked"{/if} /></td>
-        </tr><tr class="formcolor">
-          <td>{tr}Files{/tr}</td>
-          <td><input type="checkbox" name="fgal_list_files"
-              {if $fgal_list_files eq 'y'}checked="checked"{/if} /></td>
-        </tr><tr class="formcolor">
-          <td>{tr}Hits{/tr}</td>
-          <td><input type="checkbox" name="fgal_list_hits"
-              {if $fgal_list_hits eq 'y'}checked="checked"{/if} /></td>
-        </tr><tr class="formcolor">
-          <td>{tr}Parent gallery{/tr}</td>
-          <td><input type="checkbox" name="fgal_list_parent"
-              {if $fgal_list_parent eq 'y'}checked="checked"{/if} /></td>
-		</tr><tr class="formcolor">
-          <td>{tr}Default sort order{/tr}</td>
-          <td><select name="sortorder">
+        <table class="admin">
+		{include file="fgal_listing_conf.tpl"}
+		<tr class="formcolor">
+		<td>{tr}Default sort order{/tr}</td>
+		<td><select name="fgal_sortorder">
 			{foreach from=$options_sortorder key=key item=item}
-			<option value="{$item|escape}" {if $sortorder == $item} selected="selected"{/if}>{$key}</option>
+			<option value="{$item|escape}" {if $fgal_sortorder == $item} selected="selected"{/if}>{$key}</option>
 			{/foreach}
 			</select>
-			<input type="radio" name="sortdirection" value="desc" {if $sortdirection == 'desc'}checked="checked"{/if} />{tr}descending{/tr}
-			<input type="radio" name="sortdirection" value="asc" {if $sortdirection == 'asc'}checked="checked"{/if} />{tr}ascending{/tr}
+			<input type="radio" name="fgal_sortdirection" value="desc" {if $fgal_sortdirection == 'desc'}checked="checked"{/if} />{tr}descending{/tr}
+			<input type="radio" name="fgal_sortdirection" value="asc" {if $fgal_sortdirection == 'asc'}checked="checked"{/if} />{tr}ascending{/tr}
 		</td>
-        </tr><tr class="formcolor">
+		</tr>
+        <tr class="formcolor">
           <td colspan="2" class="button"><input type="submit"
               name="filegallistprefs" value="{tr}Change configuration{/tr}" /></td>
         </tr></table>

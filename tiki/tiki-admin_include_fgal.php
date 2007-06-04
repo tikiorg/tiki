@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_fgal.php,v 1.25 2007-03-19 19:14:34 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_fgal.php,v 1.26 2007-06-04 22:45:14 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -62,7 +62,7 @@ if (isset($_REQUEST["filegallistprefs"])) {
 	simple_set_toggle("fgal_list_files");
 	simple_set_toggle("fgal_list_hits");
 	simple_set_toggle('fgal_list_parent');
-	$_REQUEST['fgal_sort_mode'] = (empty($_REQUEST['sortorder'])?'created':$_REQUEST['sortorder']).'_'.(empty($_REQUEST['sortdirection'])?'desc':$_REQUEST['sortdirection']);
+	$_REQUEST['fgal_sort_mode'] = (empty($_REQUEST['fgal_sortorder'])?'created':$_REQUEST['fgal_sortorder']).'_'.(empty($_REQUEST['fgal_sortdirection'])?'desc':$_REQUEST['fgal_sortdirection']);
 	$fgal_sort_mode = $_REQUEST['fgal_sort_mode'];
 	simple_set_value('fgal_sort_mode');
 }
@@ -101,13 +101,12 @@ if (isset($_REQUEST["filegalredosearch"])) {
 	$filegallib->reindex_all_files_for_search_text();
 }
 
-if (!empty($fgal_sort_mode)) {
-	preg_match('/(.*)_(asc|desc)/', $fgal_sort_mode, $matches);
-	$smarty->assign('sortorder',$matches[1]);
-	$smarty->assign('sortdirection', $matches[2]);
+if (!empty($fgal_sort_mode) &&	preg_match('/(.*)_(asc|desc)/', $fgal_sort_mode, $matches)) {
+	$smarty->assign('fgal_sortorder',$matches[1]);
+	$smarty->assign('fgal_sortdirection', $matches[2]);
 } else {
-	$smarty->assign('sortorder', 'created');
-	$smarty->assign('sortdirection', 'desc');
+	$smarty->assign('fgal_sortorder', 'created');
+	$smarty->assign('fgal_sortdirection', 'desc');
 }
 $options_sortorder = array(tra('Creation Date')=>'created', tra('Name')=>'name', tra('Last modification date')=>'lastModif', tra('Hits')=>'hits', tra('Owner') => 'user', tra('Description') => 'description', tra('ID') => 'galleryId');
 $smarty->assign_by_ref('options_sortorder', $options_sortorder);

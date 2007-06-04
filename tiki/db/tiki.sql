@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-06-04 17:13:32 $
-# $Author: nkoth $
+# $Date: 2007-06-04 22:46:54 $
+# $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -1308,6 +1308,7 @@ CREATE TABLE tiki_file_galleries (
   show_modified char(1) default NULL,
   show_author char(1) default NULL,
   show_creator char(1) default NULL,
+  subgal_conf varchar(200) default NULL,
   PRIMARY KEY  (galleryId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
