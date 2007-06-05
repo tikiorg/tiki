@@ -1,15 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.105 2007-05-13 22:31:40 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.106 2007-06-05 00:47:05 nkoth Exp $ *}
 
 {popup_init src="lib/overlib.js"}
-
-{* Check to see if there is an editing conflict *}
-{if $editpageconflict == 'y'}
-<script type='text/javascript'>
-<!-- //Hide Script
-	alert("{tr}This page is being edited by{/tr} {$semUser|userlink|strip_tags|trim|escape}. {tr}Proceed at your own peril{/tr}.")
-//End Hide Script -->
-</script>
-{/if}
 
 {if $feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
