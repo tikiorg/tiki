@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.35 2007-06-04 10:47:33 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.36 2007-06-05 16:04:00 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -31,7 +31,7 @@ require_once ("lib/webmail/net_pop3.php");
 //require_once ("lib/webmail/mimeDecode.php");
 require_once ("lib/mail/mimelib.php");
 include_once ("lib/webmail/class.rc4crypt.php");
-include_once ("lib/webmail/htmlMimeMail.php");
+include_once ("lib/webmail/tikimaillib.php");
 /*
 function parse_output(&$obj, &$parts, $i) {
 	if (!empty($obj->parts)) {
@@ -558,11 +558,16 @@ if ($_REQUEST["locSection"] == 'compose') {
 	$smarty->assign('attaching', 'n');
 
 	if (isset($_REQUEST["send"])) {
-		$mail = new htmlMimeMail();
+		$mail = new TikiMail($user);
 
-		$mail->setFrom($current["account"]);
-		$mail->setCc($_REQUEST["cc"]);
-		$mail->setBcc($_REQUEST["bcc"]);
+		$email = $userlib->get_user_email($user);
+		$mail->setFrom($email);
+		if (!empty($_REQUEST["cc"])) {
+			$mail->setCc($_REQUEST["cc"]);
+		}
+		if (!empty($_REQUEST["bcc"])) {
+			$mail->setBcc($_REQUEST["bcc"]);
+		}
 		$mail->setSubject($_REQUEST["subject"]);
 
 		if ($_REQUEST["attach1"]) {
