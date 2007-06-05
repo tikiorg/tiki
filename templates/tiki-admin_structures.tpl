@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.34 2007-06-05 01:24:03 nkoth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.35 2007-06-05 01:27:30 nkoth Exp $ *}
 <h1><a href="tiki-admin_structures.php" class="pagetitle">{tr}Structures{/tr}</a>
   
 {if $feature_help eq 'y'}
@@ -23,9 +23,8 @@
       {$channels[ix].pageName}
 	  {if $channels[ix].page_alias}
         ({$channels[ix].page_alias})
-	  {/if}
-	  &nbsp;&nbsp;<a class='link' href='tiki-index.php?page={$channels[ix].pageName|escape:"url"}' title="{tr}view{/tr}"><img src="pics/icons/magnifier.png" border="0" width="16" height="16" alt="{tr}view{/tr}" /></a>
-  </a>
+	  {/if}	
+  </a>&nbsp;&nbsp;<a class='link' href='tiki-index.php?page={$channels[ix].pageName|escape:"url"}' title="{tr}view{/tr}"><img src="pics/icons/magnifier.png" border="0" width="16" height="16" alt="{tr}view{/tr}" /></a>
   </td>
   <td class="{cycle}">
   <a title="{tr}export pages{/tr}" class="link" href="tiki-admin_structures.php?export={$channels[ix].page_ref_id|escape:"url"}"><img src='pics/icons/disk.png' alt="{tr}export pages{/tr}" border='0' width='16' height='16' /></a>
