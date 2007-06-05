@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.74 2007-06-01 13:56:01 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.75 2007-06-05 16:28:37 nyloth Exp $ *}
 <div class="cbox">
 <div class="cbox-title">{tr}Users &amp; groups{/tr}</div>
 <div class="cbox-data">
@@ -125,6 +125,7 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 <option value="disabled"{if $https_login eq 'disabled'} selected="selected"{/if}>{tr}Disabled{/tr}</option>
 <option value="allowed"{if $https_login eq 'allowed'} selected="selected"{/if}>{tr}Allow secure (https) login{/tr}</option>
 <option value="encouraged"{if $https_login eq 'encouraged'} selected="selected"{/if}>{tr}Encourage secure (https) login{/tr}</option>
+<option value="force_nocheck"{if $https_login eq 'force_nocheck'} selected="selected"{/if}>{tr}Consider we are in always in HTTPS, but do not check{/tr}</option>
 <option value="required"{if $https_login eq 'required'} selected="selected"{/if}>{tr}Require secure (https) login{/tr}</option>
 </select>
 </td></tr>

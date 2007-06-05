@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.442 2007-06-02 13:00:20 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.443 2007-06-05 16:28:37 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -1271,11 +1271,18 @@ if ( $http_port == 80 ) $http_port = '';
 
 
 // Detect if we are in HTTPS / SSL mode.
+//
 // Since $_SERVER['HTTPS'] will not be set on some installation, we may need to check port also.
+//
+// 'force_nocheck' option is used to set all absolute URI to https, but without checking if we are in https
+//    This is useful in certain cases.
+//    For example, this allow to have full HTTPS when using an entrance proxy that will use HTTPS connection with the client browser, but use an HTTP only connection to the server that hosts tikiwiki.
+// 
 $https_mode = false;
 if ( ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' )
 	|| ( $https_port == '' && $_SERVER['SERVER_PORT'] == 443 )
 	|| ( $https_port > 0 && $_SERVER['SERVER_PORT'] == $https_port )
+	|| $https_login == 'force_nocheck'
 ) $https_mode = true;
 
 $url_scheme = $https_mode ? 'https' : 'http';
