@@ -184,7 +184,8 @@ class StructLib extends TikiLib {
   function s_create_page($parent_id, $after_ref_id, $name, $alias='') {
     $ret = null;
     // If the page doesn't exist then create a new wiki page!
-      $created = $this->create_page($name, 0, '', $this->now, tra('created from structure'), 'system', '0.0.0.0', '');
+	$newpagebody = tra("Table of contents") . ":" . "{toc}"; 
+      $created = $this->create_page($name, 0, $newpagebody, $this->now, tra('created from structure'), 'system', '0.0.0.0', '');
 		// if were not trying to add a duplicate structure head
 		if ($created or isset($parent_id)) {
             //Get the page Id
