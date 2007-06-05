@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.26 2007-06-04 13:31:00 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.27 2007-06-05 03:19:35 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -92,6 +92,7 @@ if (isset($_REQUEST['remove'])) {
 	$smarty->assign('remove', $_REQUEST['remove']);
 }
 
+$smarty->assign('just_created', 'n');
 if (isset($_REQUEST["create"])) {
 	check_ticket('admin-structures');
 	if ((empty($_REQUEST['name']))) {
@@ -109,6 +110,8 @@ if (isset($_REQUEST["create"])) {
 		die;
 	}
 
+	$smarty->assign('just_created', $structure_id);
+	$smarty->assign('just_created_name', $_REQUEST['name']);	
     $parents[0] = $structure_id;
 	$last_pages[0] = null;
 	$tree_lines = explode("\n", $_REQUEST["tree"]);
