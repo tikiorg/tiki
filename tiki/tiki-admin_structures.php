@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.27 2007-06-05 03:19:35 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.28 2007-06-05 04:48:19 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -92,6 +92,10 @@ if (isset($_REQUEST['remove'])) {
 	$smarty->assign('remove', $_REQUEST['remove']);
 }
 
+if ($feature_categories == 'y') {
+	include_once ("categorize_list.php");
+}
+
 $smarty->assign('just_created', 'n');
 if (isset($_REQUEST["create"])) {
 	check_ticket('admin-structures');
@@ -168,7 +172,39 @@ if (isset($_REQUEST["find"])) {
 $smarty->assign('find', $find);
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
-$channels = $structlib->list_structures($offset, $maxRecords, $sort_mode, $find);
+
+if (isset($_REQUEST['maxRecords'])) {
+	$maxRecords = $_REQUEST['maxRecords'];
+	$smarty->assign('maxRecords', $maxRecords);
+}
+
+$filter = '';
+if (!empty($_REQUEST['lang'])) {
+	$filter['lang'] = $_REQUEST['lang'];
+	$smarty->assign_by_ref('find_lang', $_REQUEST['lang']);
+}
+if (!empty($_REQUEST['categId'])) {
+	$filter['categId'] = $_REQUEST['categId'];
+	$smarty->assign_by_ref('find_categId', $_REQUEST['categId']);
+}
+
+if (isset($_REQUEST["exact_match"])) {
+	$exact_match = true;
+	$smarty->assign('exact_match', 'y');
+} else {
+	$exact_match = false;
+	$smarty->assign('exact_match', 'n');
+}  
+
+if ($feature_multilingual == 'y') {
+	$languages = array();
+	$languages = $tikilib->list_languages(false, 'y');
+	$smarty->assign_by_ref('languages', $languages);
+	$avls = unserialize($tikilib->get_preference("available_languages"));
+	$smarty->assign_by_ref('available_languages', $avls);
+}
+
+$channels = $structlib->list_structures($offset, $maxRecords, $sort_mode, $find, $exact_match, $filter);
 
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
