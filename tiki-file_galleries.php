@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.48 2007-06-04 22:45:14 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.49 2007-06-05 14:13:23 sylvieg Exp $
 
 	require_once('tiki-setup.php');
 	include_once('lib/filegals/filegallib.php');
@@ -144,17 +144,19 @@
 			$smarty->assign('sortorder', 'created');
 			$smarty->assign('sortdirection', 'desc');
 		}
-		list($fgal_list_id, $fgal_list_name, $fgal_list_description, $fgal_list_type, $fgal_list_created, $fgal_list_lastmodif, $fgal_list_user, $fgal_list_files, $fgal_list_hits, $fgal_list_parent) = split(':',$info['subgal_conf']);
-		$smarty->assign('fgal_list_id', $fgal_list_id);
-		$smarty->assign('fgal_list_name', $fgal_list_name);
-		$smarty->assign('fgal_list_description', $fgal_list_description);
-		$smarty->assign('fgal_list_type', $fgal_list_type);
-		$smarty->assign('fgal_list_created', $fgal_list_created);
-		$smarty->assign('fgal_list_lastmodif', $fgal_list_lastmodif);
-		$smarty->assign('fgal_list_user', $fgal_list_user);
-		$smarty->assign('fgal_list_files', $fgal_list_files);
-		$smarty->assign('fgal_list_hits', $fgal_list_hits);
-		$smarty->assign('fgal_list_parent', $fgal_list_parent);
+		if (!empty($info['subgal_conf'])) {
+			list($fgal_list_id, $fgal_list_name, $fgal_list_description, $fgal_list_type, $fgal_list_created, $fgal_list_lastmodif, $fgal_list_user, $fgal_list_files, $fgal_list_hits, $fgal_list_parent) = split(':',$info['subgal_conf']);
+			$smarty->assign('fgal_list_id', $fgal_list_id);
+			$smarty->assign('fgal_list_name', $fgal_list_name);
+			$smarty->assign('fgal_list_description', $fgal_list_description);
+			$smarty->assign('fgal_list_type', $fgal_list_type);
+			$smarty->assign('fgal_list_created', $fgal_list_created);
+			$smarty->assign('fgal_list_lastmodif', $fgal_list_lastmodif);
+			$smarty->assign('fgal_list_user', $fgal_list_user);
+			$smarty->assign('fgal_list_files', $fgal_list_files);
+			$smarty->assign('fgal_list_hits', $fgal_list_hits);
+			$smarty->assign('fgal_list_parent', $fgal_list_parent);
+		}
 	  }
 	} elseif (!empty($_REQUEST['dup_mode'])) {
 		$smarty->assign('dup_mode','y');
