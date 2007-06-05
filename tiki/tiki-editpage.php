@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.166 2007-03-16 15:13:09 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.167 2007-06-05 00:47:05 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -72,10 +72,10 @@ if (isset($_REQUEST['minor'])) {
 }
 // We set empty wiki page name as default here if not set (before including Tiki modules)
 
-$editpageconflict = 'n';
-$beingEdited = 'n';
-$semUser = '';
 if ($feature_warn_on_edit == 'y') {
+	$editpageconflict = 'n';
+	$beingEdited = 'n';
+	$semUser = '';
 	$u = $user? $user: 'anonymous';
 	if (!empty($page) && ($page != 'sandbox' || $page == 'sandbox' && $tiki_p_admin == 'y')) {
 		if (!isset($_REQUEST['save'])) {
@@ -92,10 +92,20 @@ if ($feature_warn_on_edit == 'y') {
 			}
 		}
 	}
+	if ($editpageconflict == 'y' && !isset($_REQUEST["conflictoverride"]) ) { 				
+		$msg = tra("This page is being edited by ") .
+			$semUser . ". " . 
+			tra("Please check with the user before editing the page,
+			otherwise the changes will be stored as two separate versions in the history and
+			you will have to manually merge them later. ") ;
+		$msg .= '<br /><br /><a href="tiki-editpage.php?page=';
+		$msg .= urlencode($page);
+		$msg .= '&conflictoverride=y">Override lock and carry on with edit</a>';
+		$smarty->assign('msg',$msg);
+		$smarty->display("error.tpl");
+		die;
+	}
 }
-$smarty->assign('semUser', $semUser);
-$smarty->assign('beingEdited', $beingEdited);
-$smarty->assign('editpageconflict', $editpageconflict);
 
 $category_needed = false;
 $contribution_needed = false;
