@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.63 2007-05-09 15:38:07 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.64 2007-06-05 18:32:23 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -115,6 +115,8 @@ for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
 		$smarty->assign_by_ref('module_rows',$mod_reference["rows"]);
 			$mod_reference["data"] = '';
             $smarty->assign_by_ref('module_params', $module_params); // module code can unassign this if it wants to hide params
+			$smarty->assign('module_ord', $mod_reference['ord']);
+			$smarty->assign('module_position', $mod_reference['position']);
 			if (file_exists($phpfile)) {
 				include ($phpfile);
 			}
