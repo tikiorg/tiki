@@ -484,196 +484,206 @@ class TrackerLib extends TikiLib {
 	}
 	
 	/* experimental shared */
-	function list_items($trackerId, $offset, $maxRecords, $sort_mode, $listfields, $filterfield='', $filtervalue='', $status = '', $initial = '',$exactvalue='',$numsort=false) {
-		global $tiki_p_view_trackers_pending,$tiki_p_view_trackers_closed,$tiki_p_admin_trackers, $feature_categories,$language;
-		if (isset($_REQUEST['dbg'])) { $dbg = true; } else { $dbg = false; }
+	function list_items($trackerId, $offset, $maxRecords, $sort_mode, $listfields, $filterfield = '', $filtervalue = '', $status = '', $initial = '', $exactvalue = '', $numsort = false) {
+		global $tiki_p_view_trackers_pending, $tiki_p_view_trackers_closed, $tiki_p_admin_trackers, $feature_categories, $language;
 		$cat_table = '';
 		$sort_tables = '';
 		$sort_join_clauses = '';
-		$trackerId = (int) $trackerId;
-		$mid = " where tti.`trackerId`=? ";
+		$csort_mode = '';
+		$corder = '';
+		$trackerId = (int)$trackerId;
+
+		$mid = ' WHERE tti.`trackerId` = ? ';
 		$bindvars = array($trackerId);
-		if ($status) {
-			if (!$this->getSqlStatus($status, $mid, $bindvars))
-				return (array("cant"=>0, "data"=>''));
+
+		if ( $status && ! $this->getSqlStatus($status, $mid, $bindvars) ) {
+			return array('cant' => 0, 'data' => '');
 		}
-		if ($initial) {
-			$mid.= "and ttif.`value` like ?";
+		if ( $initial ) {
+			$mid .= ' AND ttif.`value` LIKE ?';
 			$bindvars[] = $initial.'%';
 		}
-		if (!$sort_mode) {
-			$sort_mode = "lastModif_desc";
-		}
+		if ( ! $sort_mode ) $sort_mode = 'lastModif_desc';
 
-		if (substr($sort_mode,0,2) == "f_" or $filtervalue or $exactvalue) {
-		        $cat_table='';
-		        if (substr($sort_mode,0,2) == "f_") {
-			  list($a,$asort_mode,$corder) = split('_',$sort_mode);
-			  $mid .= " and sttif.`fieldId`=? ";
-			  $bindvars[] = $asort_mode;
-			  $csort_mode = "sttif.`value` ";
-			  $sort_tables = ', `tiki_tracker_item_fields` sttif, `tiki_tracker_fields` sttf';
-			  $sort_join_clauses = ' and tti.`itemId`=sttif.`itemId` and sttf.`fieldId`=sttif.`fieldId`';
+		if ( substr($sort_mode, 0, 2) == 'f_' or $filtervalue or $exactvalue ) {
+			$cat_table = '';
+			if ( substr($sort_mode, 0, 2) == 'f_' ) {
+				list($a, $asort_mode, $corder) = split('_', $sort_mode);
+				$csort_mode = 'sttif.`value` ';
+				$sort_tables = ' LEFT JOIN (`tiki_tracker_item_fields` sttif, `tiki_tracker_fields` sttf)'
+					.' ON (tti.`itemId` = sttif.`itemId`'
+						." AND sttif.`fieldId` = $asort_mode"
+						.' AND sttf.`fieldId` = sttif.`fieldId`'
+					.')';
 			} else {
-			  list($csort_mode,$corder) = split('_',$sort_mode);
-			  $csort_mode = "tti.`".$csort_mode."` ";
+				list($csort_mode, $corder) = split('_', $sort_mode);
+				$csort_mode = 'tti.`'.$csort_mode.'` ';
 			}
 
-			if (is_array($filterfield)) {
-				for ($i = count($filterfield) - 1; $i >=0; --$i) {
-					$cat_table .= ", `tiki_tracker_item_fields` ttif$i";
-					$this->getSqlFilter($trackerId, $filterfield[$i], isset($exactvalue[$i])?$exactvalue[$i]:'', isset($filtervalue[$i])?$filtervalue[$i]:'', $cat_table, $mid, $bindvars, $i);
-					if ($i)
-						$mid .= " and  ttif$i.`itemId`=ttif0.`itemId` ";
-					else
-						$mid .= " and  ttif0.`itemId`=ttif.`itemId` ";
+			if ( is_array($filterfield) ) {
+				for ( $i = count($filterfield) - 1 ; $i >= 0 ; --$i ) {
+					$j = ( $i > 0 ) ? '0' : '';
+					$cat_table .= " INNER JOIN `tiki_tracker_item_fields` ttif$i ON ttif$i.`itemId` = ttif$j.`itemId`";
+					$this->getSqlFilter(
+						$trackerId,
+						$filterfield[$i],
+						isset($exactvalue[$i]) ? $exactvalue[$i] : '',
+						isset($filtervalue[$i]) ? $filtervalue[$i] : '',
+						$cat_table, $mid, $bindvars, $i
+					);
 				}
-			} else {
-				$this->getSqlFilter($trackerId, $filterfield, $exactvalue, $filtervalue, $cat_table, $mid, $bindvars);
-			}
-
-			if ($numsort) {
-				$sort_field = "right(lpad($csort_mode,40,'0'),40)";
-				$query = "select tti.*, ttif.`value`,ttf.`type`, $sort_field as ok from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf $sort_tables $cat_table $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` $sort_join_clauses group by tti.`itemId` order by ".$this->convert_sortmode('ok_'.$corder);
-				
-			} else {
-				$query = "select tti.*, ttif.`value`,ttf.`type` from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf $sort_tables $cat_table $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` $sort_join_clauses group by tti.`itemId` order by ".$csort_mode.$corder;
-			}
-
-			$query_cant = "select count(distinct ttif.`itemId`) from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf $sort_tables $cat_table $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` ".$sort_join_clauses;
+			} else $this->getSqlFilter($trackerId, $filterfield, $exactvalue, $filtervalue, $cat_table, $mid, $bindvars);
 		} else {
+			list($csort_mode, $corder) = split('_', $sort_mode);
+			$sort_tables = '';
+			$cat_tables = '';
+		}
 
-			$query = "select tti.*, ttif.`value` from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif $mid and tti.`itemId`=ttif.`itemId` group by tti.`itemId` order by ".$this->convert_sortmode($sort_mode);
-			$query_cant = "select count(distinct ttif.`itemId`) from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif $mid and tti.`itemId`=ttif.`itemId`";
-		}
-		if ($dbg) {
-			header('Content-type: text/plain');
-			var_dump($query);
-			die();
-		}
-		if (isset($_REQUEST['dbug']) && $_REQUEST['dbug'] == '1') { header('Content-type: text/plain');var_dump($query,$bindvars);die(); }
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvars);
+		$base_tables = '('
+			.' `tiki_tracker_items` tti'
+			.' INNER JOIN `tiki_tracker_item_fields` ttif ON tti.`itemId` = ttif.`itemId`'
+			.' INNER JOIN `tiki_tracker_fields` ttf ON ttf.`fieldId` = ttif.`fieldId`'
+			.')';
+
+		$query = 'SELECT tti.*, ttif.`value`, ttf.`type`'
+				.', '.( ($numsort) ? "right(lpad($csort_mode,40,'0'),40)" : $csort_mode).' as `sortvalue`'
+			.' FROM '.$base_tables.$sort_tables.$cat_table
+			.$mid
+			.' GROUP BY tti.`itemId`'
+			.' ORDER BY '.$this->convert_sortmode('sortvalue_'.$corder);
+
+		$query_cant = 'SELECT count(DISTINCT ttif.`itemId`) FROM '.$base_tables.$sort_tables.$cat_table.$mid;
+
+		$result = $this->query($query, $bindvars, $maxRecords, $offset);
+		$cant = $this->getOne($query_cant, $bindvars);
 		$type = '';
 		$ret = array();
-		while ($res = $result->fetchRow()) {
+
+		while ( $res = $result->fetchRow() ) {
 			$fields = array();
 			$opts = array();
-			$itid = $res["itemId"];
-			$bindvars = array((string)$language,(int) $res["itemId"]);
-			$mid = " (`lang`=? or `lang` is null or `lang`='') and ";
-			$query2 = "select ttf.`fieldId`, `value`,`isPublic` from `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf where ttif.`fieldId`=ttf.`fieldId` and $mid `itemId`=? order by `position` asc,lang desc";
-			$result2 = $this->query($query2,$bindvars);
 			$last = array();
 			$res2 = array();
 			$fil = array();
-			$kx = "";
-			while ($res1 = $result2->fetchRow()) {
+			$kx = '';
+
+			$itid = $res['itemId'];
+			$bindvars = array((string)$language, (int)$res['itemId']);
+
+			$query2 = 'SELECT ttf.`fieldId`, `value`, `isPublic`'
+				.' FROM `tiki_tracker_item_fields` ttif INNER JOIN `tiki_tracker_fields` ttf ON ttif.`fieldId` = ttf.`fieldId`'
+				." WHERE (`lang` = ? or `lang` is null or `lang` = '') AND `itemId` = ?"
+				.' ORDER BY `position` ASC, `lang` DESC';
+			$result2 = $this->query($query2, $bindvars);
+
+			while ( $res1 = $result2->fetchRow() ) {
 				$inid = $res1['fieldId'];
 				$fil["$inid"] = $res1['value'];
 			}
-			foreach ($listfields as $fieldId=>$fopt) {
-				if (isset($fil[$fieldId])) {
-					$fopt['value'] = $fil[$fieldId];
-				} else {
-					$fopt['value'] = "";
-				}
-				$fopt["linkId"] = '';
-				if ($fopt["type"] == 'r') {
-					$fopt["links"] = array();
-					$opts = split(',',$fopt['options']);
-					$fopt["linkId"] = $this->get_item_id($opts[0],$opts[1],$fopt["value"]);
-					$fopt["trackerId"] = $opts[0];
-				} elseif ($fopt["type"] == 'a') {
-					$fopt["pvalue"] = $this->parse_data(trim($fopt["value"]));
-				} elseif ($fopt["type"] == 'C') {
-					$calc = preg_replace('/#([0-9]+)/','$fil[\1]',$fopt['options']);
+
+			foreach ( $listfields as $fieldId => $fopt ) {
+				$fopt['value'] = ( isset($fil[$fieldId]) ) ? $fil[$fieldId] : '';
+				$fopt['linkId'] = '';
+
+				switch ( $fopt['type'] ) {
+				case 'r':
+					$fopt['links'] = array();
+					$opts = split(',', $fopt['options']);
+					$fopt['linkId'] = $this->get_item_id($opts[0], $opts[1], $fopt['value']);
+					$fopt['trackerId'] = $opts[0];
+					break;
+				case 'a':
+					$fopt['pvalue'] = $this->parse_data(trim($fopt['value']));
+					break;
+				case 'C':
+					$calc = preg_replace('/#([0-9]+)/', '$fil[\1]', $fopt['options']);
 					eval('$computed = '.$calc.';');
 					$fopt['value'] = $computed;
-				} elseif ($fopt["type"] == 's') {
+					break;
+				case 's':
 					$key = 'tracker.'.$trackerId.'.'.$itid;
-					$fopt["numvotes"] = $this->getOne("select count(*) from `tiki_user_votings` where `id`=?",array($key));
-					if ($fopt["numvotes"] > 0) {
-						$voteavg = $fopt["value"]/$fopt["numvotes"];
-					} else $voteavg = '0';
-					$fopt["voteavg"] = $voteavg;
-				} elseif ($fopt["type"] == 'e') {
-				        global $categlib;include_once('lib/categories/categlib.php');
+					$fopt['numvotes'] = $this->getOne('select count(*) from `tiki_user_votings` where `id` = ?', array($key));
+					$fopt['voteavg'] = ( $fopt['numvotes'] > 0 ) ? ($fopt['value'] / $fopt['numvotes']) : '0';
+					break;
+				case 'e':
+					global $categlib;
+					include_once('lib/categories/categlib.php');
 					$mycats = $categlib->get_child_categories($fopt['options']);
-					$zcats = $categlib->get_object_categories("tracker ".$trackerId,$res["itemId"]);
+					$zcats = $categlib->get_object_categories('tracker '.$trackerId, $res['itemId']);
 					$cats = array();
-					foreach ($mycats as $m) {
-						if (in_array($m['categId'],$zcats)) {
+					foreach ( $mycats as $m ) {
+						if ( in_array($m['categId'], $zcats) ) {
 							$cats[] = $m;
 						}
 					}
 					$fopt['categs'] = $cats;
-				} elseif ($fopt["type"] == 'l') {
-					$optsl = split(',',$fopt['options']);
-					$fopt["links"] = array();
-					if (isset($optsl[2]) && ($lst = $fil[$optsl[2]])) {
-						$links = $this->get_items_list($optsl[0],$optsl[1],$lst);
-						foreach ($links as $link) {
-							$fopt["links"][$link] = $this->get_item_value($optsl[0],$link,$optsl[3]);
+					break;
+				case 'l':
+					$optsl = split(',', $fopt['options']);
+					$fopt['links'] = array();
+					if ( isset($optsl[2]) && ($lst = $fil[$optsl[2]]) ) {
+						$links = $this->get_items_list($optsl[0], $optsl[1], $lst);
+						foreach ( $links as $link ) {
+							$fopt['links'][$link] = $this->get_item_value($optsl[0], $link, $optsl[3]);
 						}
-						$fopt["trackerId"] = $optsl[0];
+						$fopt['trackerId'] = $optsl[0];
 					}
+					break;
 				}
-				if (isset($fopt["options"])) {
-					$fopt["options_array"] = split(',',$fopt["options"]);
-					if ($fopt['type'] == 'i') {
-						global $imagegallib; include_once('lib/imagegals/imagegallib.php');
-						if ($imagegallib->readimagefromfile($fopt["value"])) {
+
+				if ( isset($fopt['options']) ) {
+					$fopt['options_array'] = split(',', $fopt['options']);
+					if ( $fopt['type'] == 'i' ) {
+						global $imagegallib;
+						include_once('lib/imagegals/imagegallib.php');
+						if ( $imagegallib->readimagefromfile($fopt['value']) ) {
 							$imagegallib->getimageinfo();
-							if (!isset($fopt['options_array'][1]))
-								$fopt['options_array'][1] = 0;
+							if ( ! isset($fopt['options_array'][1]) ) $fopt['options_array'][1] = 0;
 							$t = $imagegallib->ratio($imagegallib->xsize, $imagegallib->ysize, $fopt['options_array'][0], $fopt['options_array'][1] );
 							$fopt['options_array'][0] = round($t * $imagegallib->xsize);
 							$fopt['options_array'][1] = round($t * $imagegallib->ysize);
-							if (isset($fopt['options_array'][2])) {
-								if (!isset($fopt['options_array'][3]))
-									$fopt['options_array'][3] = 0;
+							if ( isset($fopt['options_array'][2]) ) {
+								if ( ! isset($fopt['options_array'][3]) ) $fopt['options_array'][3] = 0;
 								$t = $imagegallib->ratio($imagegallib->xsize, $imagegallib->ysize, $fopt['options_array'][2], $fopt['options_array'][3] );
 								$fopt['options_array'][2] = round($t * $imagegallib->xsize);
 								$fopt['options_array'][3] = round($t * $imagegallib->ysize);
 							}
 						}
-					}elseif ($fopt['type'] == 'r' && isset($fopt["options_array"][3])) {
-					     $fopt["displayedvalue"]=$this->concat_item_from_fieldslist($fopt["options_array"][0],$this->get_item_id($fopt["options_array"][0],$fopt["options_array"][1],$fopt["value"]),$fopt["options_array"][3]);
-					} else if ($fopt['type'] == 'd') {
+					} elseif ( $fopt['type'] == 'r' && isset($fopt['options_array'][3]) ) {
+						$fopt['displayedvalue'] = $this->concat_item_from_fieldslist(
+							$fopt['options_array'][0],
+							$this->get_item_id($fopt['options_array'][0], $fopt['options_array'][1], $fopt['value']),
+							$fopt['options_array'][3]
+						);
+					} elseif ( $fopt['type'] == 'd' || $fopt['type'] == 'D' ) {
 						global $feature_multilingual;
-						if ($feature_multilingual == 'y') {
-							foreach ($fopt['options_array'] as $key=>$l) {
-									$fopt['options_array'][$key] = tra($l);
+						if ( $feature_multilingual == 'y' ) {
+							foreach ( $fopt['options_array'] as $key => $l ) {
+								$fopt['options_array'][$key] = tra($l);
 							}
 						}
-					} else if ($fopt['type'] == 'd' || $fopt['type'] == 'D') {
-						global $feature_multilingual;
-						if ($feature_multilingual == 'y') {
-							foreach ($fopt['options_array'] as $key=>$l) {
-									$fopt['options_array'][$key] = tra($l);
-							}
-						}
-						$fopt = $this->set_default_dropdown_option($fopt);						
+						$fopt = $this->set_default_dropdown_option($fopt);
 					}
 				}
-				if (empty($asort_mode) || ($fieldId == $asort_mode)) {
-					$kx = $fopt["value"].'.'.$itid;
+
+				if ( empty($asort_mode) || $fieldId == $asort_mode ) {
+					$kx = $fopt['value'].'.'.$itid;
 				}
-				$last[$fieldId] = $fopt["value"];
+
+				$last[$fieldId] = $fopt['value'];
 				$fields[] = $fopt;
 			}
-			$res["field_values"] = $fields;
-			$res["comments"] = $this->getOne("select count(*) from `tiki_tracker_item_comments` where `itemId`=?",array((int) $itid));
-			if ($kx == "") // ex: if the sort field is non visible, $kx is null
+
+			$res['field_values'] = $fields;
+			$res['comments'] = $this->getOne('select count(*) from `tiki_tracker_item_comments` where `itemId` = ?', array((int)$itid));
+			if ( $kx == '' ) // ex: if the sort field is non visible, $kx is null
 				$ret[] = $res;
-			else
-				$ret["$kx"] = $res;
+			else $ret[$kx] = $res;
 		}
 
 		$retval = array();
-		$retval["data"] = array_values($ret);
-		$retval["cant"] = $cant;
+		$retval['data'] = array_values($ret);
+		$retval['cant'] = $cant;
 		return $retval;
 	}
 
