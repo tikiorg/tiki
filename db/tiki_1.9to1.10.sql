@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.161 2007-06-04 22:46:55 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.162 2007-06-05 13:23:47 nkoth Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -930,3 +930,10 @@ ALTER TABLE `tiki_modules` ADD PRIMARY KEY  (name, position, ord);
 
 #sylvieg 2007/06/04
 ALTER TABLE `tiki_file_galleries` ADD `subgal_conf` varchar(200) default NULL;
+
+#nkoth 2007/06/05 
+#in 1.10 can be used for users without tiki_p_edit_structures
+#to show and browse the list of structures. Access to the structure
+#creating and edit functions are still restricted to tiki_p_edit_structures
+
+UPDATE tiki_menu_options SET perm='tiki_p_view' where url='tiki-admin_structures.php';
