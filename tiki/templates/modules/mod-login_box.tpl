@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.47 2007-06-03 22:50:23 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.48 2007-06-05 12:51:05 luciash Exp $ *}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Login{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations}
 
@@ -16,7 +16,7 @@
           <sup><a class="linkmodule tikihelp" href="tiki-admin_modules.php"
           title="{tr}parameters{/tr}: $input_size {tr}applicable for this item{/tr}"><small><strong>?</strong></small></a></sup>
          {/if}
-          <p class="center"><button type="submit" name="actsu">{tr}switch{/tr}</button></p>
+          <p style="text-align: center"><button type="submit" name="actsu">{tr}switch{/tr}</button></p>
          </fieldset>
         </form>
       {/if}
@@ -81,10 +81,10 @@
             {if $rememberme eq 'always'}
               <input type="hidden" name="rme" id="login-remember" value="on" />
             {else}
-              <p class="center"><label for="login-remember">{tr}Remember me{/tr}</label> <input type="checkbox" name="rme" id="login-remember" value="on" /></p>
+              <p style="text-align: center"><label for="login-remember">{tr}Remember me{/tr}</label> <input type="checkbox" name="rme" id="login-remember" value="on" /></p>
             {/if}
           {/if}
-          <p class="center"><button type="submit" name="login">{tr}login{/tr}</button></p>
+          <p style="text-align: center"><button type="submit" name="login">{tr}login{/tr}</button></p>
        </fieldset>
           
           {if $forgotPass eq 'y' and $allowRegister eq 'y' and $change_password eq 'y'}
