@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.183 2007-06-04 23:00:33 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.184 2007-06-05 00:14:10 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -68,12 +68,12 @@ if (isset($_REQUEST['page_ref_id'])) {
 if (!isset($page_ref_id)) {
     //Check to see if its a member of any structures
     if (isset($_REQUEST['structure']) && !empty($_REQUEST['structure'])) {
-      $structure=$_REQUEST['structure'];
+      $struct=$_REQUEST['structure'];
     } else {
-      $structure='';
+      $struct='';
     }
     //Get the structures this page is a member of
-    $structs = $structlib->get_page_structures($_REQUEST["page"],$structure);
+    $structs = $structlib->get_page_structures($_REQUEST["page"],$struct);
 	$structs_with_perm = array(); 
 	foreach ($structs as $t_structs) {
 		if ($tikilib->user_has_perm_on_object($user,$t_structs['pageName'],'wiki page','tiki_p_view')) {
@@ -82,13 +82,9 @@ if (!isset($page_ref_id)) {
 	}
     //If page is only member of one structure, display if requested
     $single_struct = count($structs_with_perm) == 1; 
-    if ($feature_wiki_open_as_structure == 'y' and $single_struct) {
+    if ((!empty($struct) || $feature_wiki_open_as_structure == 'y') && $single_struct) {
       $page_ref_id=$structs_with_perm[0]['req_page_ref_id'];
       $_REQUEST['page_ref_id']=$page_ref_id;
-    }
-    //Otherwise, populate a list of structures
-    else  {
-		$smarty->assign('showstructs', $structs_with_perm);      		
     }
 
 }
@@ -110,6 +106,14 @@ if(isset($page_ref_id)) {
     $_REQUEST['page']=$page;
     $structure_path = $structlib->get_structure_path($page_ref_id);
     $smarty->assign('structure_path', $structure_path);
+    // Need to have showstructs when in more than one struct - for usability reasons 
+	$structs = $structlib->get_page_structures($page);
+	$structs_with_perm = array(); 
+	foreach ($structs as $t_structs) {
+		if ($tikilib->user_has_perm_on_object($user,$t_structs['pageName'],'wiki page','tiki_p_view')) {
+			$structs_with_perm[] = $t_structs;
+		}
+	}    	
     if ($tikilib->user_has_perm_on_object($user,$navigation_info['home']['pageName'],'wiki page','tiki_p_edit'))
 		$smarty->assign('struct_editable', 'y');
 	else
@@ -128,6 +132,7 @@ if(isset($page_ref_id)) {
     $page_ref_id = '';
 }
 
+$smarty->assign('showstructs', $structs_with_perm);
 $page = $_REQUEST['page'];
 $smarty->assign_by_ref('page',$page);
 $smarty->assign('page_ref_id', $page_ref_id);

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.113 2007-06-04 21:18:39 nkoth Exp $ *} 
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.114 2007-06-05 00:14:10 nkoth Exp $ *} 
 {if $feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
@@ -63,13 +63,13 @@
 		</td>
 	{/if}
 
-	{if !$page_ref_id and count($showstructs) ne 0}
+	{if $structure == 'y' and count($showstructs) > 1 or $structure eq 'n' and count($showstructs) ne 0 }
 		<td style="vertical-align:top;text-align:right;width:42px;">
 		<form action="tiki-index.php" method="post">
 		<select name="page_ref_id" onchange="page_ref_id.form.submit()">
 		<option>{tr}Structures{/tr}...</option>
 		{section name=struct loop=$showstructs}
-		<option value="{$showstructs[struct].req_page_ref_id}">
+		<option value="{$showstructs[struct].req_page_ref_id}" {if $showstructs[struct].pageName eq $structure_path[0].pageName}selected="selected"{/if}>
 		{if $showstructs[struct].page_alias} 
 			{$showstructs[struct].page_alias}
 		{else}
