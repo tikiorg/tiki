@@ -88,7 +88,7 @@ class StructLib extends TikiLib {
 	  	$count = $this->getOne($query, array((int)$page_info['page_id']));
 	global $wikilib;
 	include_once('lib/wiki/wikilib.php');
-      if ($count = 1 && $wikilib->is_editable($page_info['pageName'], $user)) {
+      if ($count == 1 && $wikilib->is_editable($page_info['pageName'], $user)) {
 			  $this->remove_all_versions($page_info['pageName']);
       }
 		}
