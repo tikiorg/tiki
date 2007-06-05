@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.38 2007-06-05 05:32:23 nkoth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.39 2007-06-05 06:59:13 nkoth Exp $ *}
 <h1><a href="tiki-admin_structures.php" class="pagetitle">{tr}Structures{/tr}</a>
   
 {if $feature_help eq 'y'}
@@ -9,10 +9,20 @@
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>
 {/if}</h1>
 
-{if $just_created neq 'n'}
+{if $just_created neq 'n' && $tiki_p_edit_structures == 'y'}
 {tr}The structure{/tr} <a class='tablename' href='tiki-edit_structure.php?page_ref_id={$just_created}'>{$just_created_name|escape}</a>&nbsp;&nbsp;<a class='link' href='tiki-index.php?page={$just_created_name|escape:"url"}' title="{tr}view{/tr}"><img src="pics/icons/magnifier.png" border="0" width="16" height="16" alt="{tr}view{/tr}" /></a>&nbsp;&nbsp;{tr}has just been created.{/tr}
 <br />
 {/if}
+
+{if $askremove eq 'y'}
+<br />
+{tr}You will remove structure{/tr}: {$removename|escape}<br />
+<a class="link" href="tiki-admin_structures.php?rremove={$remove|escape:"url"}">{tr}Destroy the structure leaving the wiki pages{/tr}</a>
+{if $tiki_p_remove == 'y'}
+<br /><a class="link" href="tiki-admin_structures.php?rremovex={$remove|escape:"url"}">{tr}Destroy the structure and remove the pages{/tr}</a>
+{/if}
+{/if}
+
 {include file="find.tpl"}
 
 <h2>{tr}Structures{/tr}</h2>
@@ -34,12 +44,12 @@
   </td>
   <td class="{cycle}">
   {if $feature_wiki_export eq 'y' and $tiki_p_admin_wiki eq 'y'}<a title="{tr}export pages{/tr}" class="link" href="tiki-admin_structures.php?export={$channels[ix].page_ref_id|escape:"url"}"><img src='pics/icons/disk.png' alt="{tr}export pages{/tr}" border='0' width='16' height='16' /></a>{/if}
-  <a title="{tr}dump tree{/tr}" class="link" href="tiki-admin_structures.php?export_tree={$channels[ix].page_ref_id|escape:"url"}"><img src='pics/icons/chart_organisation.png' alt="{tr}dump tree{/tr}" border='0' width='16' height='16' /></a>
+  {if $tiki_p_edit_structures == 'y'}<a title="{tr}dump tree{/tr}" class="link" href="tiki-admin_structures.php?export_tree={$channels[ix].page_ref_id|escape:"url"}"><img src='pics/icons/chart_organisation.png' alt="{tr}dump tree{/tr}" border='0' width='16' height='16' /></a>{/if}
   {if $channels[ix].editable == 'y'}<a title="{tr}delete{/tr}" class="link" href="tiki-admin_structures.php?remove={$channels[ix].page_ref_id|escape:"url"}"><img src='pics/icons/cross.png' alt="{tr}remove{/tr}" border='0' width='16' height='16' /></a>{/if}
-  <a title="{tr}create webhelp{/tr}" class="link" href="tiki-create_webhelp.php?struct={$channels[ix].page_ref_id|escape:"url"}"><img src="pics/icons/help.png" alt="{tr}create webhelp{/tr}" border='0' width='16' height='16' /></a>
-  {if $channels[ix].webhelp eq 'y'} 
+  {if $feature_create_webhelp == 'y' && $tiki_p_edit_structures == 'y'}<a title="{tr}create webhelp{/tr}" class="link" href="tiki-create_webhelp.php?struct={$channels[ix].page_ref_id|escape:"url"}"><img src="pics/icons/help.png" alt="{tr}create webhelp{/tr}" border='0' width='16' height='16' /></a>{/if}
+  {if $feature_create_webhelp == 'y' && $channels[ix].webhelp eq 'y'} 
   <a title="{tr}view webhelp{/tr}" class="link" href="whelp/{$channels[ix].pageName}/index.html"><img src="pics/icons/book_open.png" alt="{tr}view webhelp{/tr}" border='0' width='16' height='16' /></a>
-  {/if}
+  {/if}&nbsp;
   </td>
 </tr>
 {/section}
@@ -63,14 +73,7 @@
 {/if}
   </div>
 
-{if $askremove eq 'y'}
-<br />
-<a class="link" href="tiki-admin_structures.php?rremove={$remove|escape:"url"}">{tr}Destroy the structure leaving the wiki pages{/tr}</a>
-{if $tiki_p_remove == 'y'}
-<br /><a class="link" href="tiki-admin_structures.php?rremovex={$remove|escape:"url"}">{tr}Destroy the structure and remove the pages{/tr}</a>
-{/if}
-{/if}
-
+{if $tiki_p_edit_structures == 'y'}
 <h2>{tr}Create new structure{/tr}</h2>
 <small>{tr}Use single spaces to indent structure levels{/tr}</small>
 <form action="tiki-admin_structures.php" method="post">
@@ -91,3 +94,4 @@
 </tr>
 </table>
 </form>
+{/if}

@@ -49,6 +49,13 @@ function deldirfiles($dir){
   closedir($current_dir);
 }
 
+if ($feature_wiki_structure_webhelp != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled").": feature_charts");
+
+	$smarty->display("error.tpl");
+	die;
+}
+
 if ($tiki_p_edit_structures != 'y') {
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");

@@ -476,6 +476,8 @@
     </td></tr>
     <tr><td class="form">{tr}Uses Slideshow{/tr}:</td><td><input type="checkbox" name="wiki_uses_slides" {if $wiki_uses_slides eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Open page as structure{/tr}:</td><td><input type="checkbox" name="feature_wiki_open_as_structure" {if $feature_wiki_open_as_structure eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Categorize structure pages together{/tr}:</td><td><input type="checkbox" name="feature_wiki_categorize_structure" {if $feature_wiki_categorize_structure eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Create webhelp from structure{/tr}:</td><td><input type="checkbox" name="feature_create_webhelp" {if $feature_create_webhelp eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Use external link icons{/tr}:</td><td><input type="checkbox" name="feature_wiki_ext_icon" {if $feature_wiki_ext_icon eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}User's Page{/tr}:</td><td><input type="checkbox" name="feature_wiki_userpage" {if $feature_wiki_userpage eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}UserPage prefix{/tr}:</td><td><input type="text" name="feature_wiki_userpage_prefix" value="{$feature_wiki_userpage_prefix|default:'UserPage'}" size="12" /></td></tr>

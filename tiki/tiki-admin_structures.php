@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.29 2007-06-05 05:32:23 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.30 2007-06-05 06:59:12 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,12 +13,20 @@ require_once ('tiki-setup.php');
 include_once ('lib/structures/structlib.php');
 include_once ("lib/ziplib.php");
 
-if ($tiki_p_edit_structures != 'y') {
+if ($tiki_p_view != 'y') {
+// This allows tiki_p_view in, in order to see structure tree - security hardening for editing features below.
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 
 	$smarty->display("error.tpl");
 	die;
 }
+
+if ($feature_categories == 'y') {
+	include_once ("categorize_list.php");
+}
+
+// start security hardened section
+if ($tiki_p_edit_structures == 'y') {
 
 if (isset($_REQUEST['rremove'])) {
   $area = 'delstruct';
@@ -88,12 +96,8 @@ if (isset($_REQUEST['remove'])) {
 		die;		
 	}
 	$smarty->assign('askremove', 'y');
-
+	$smarty->assign('removename', $structure_info["pageName"]);
 	$smarty->assign('remove', $_REQUEST['remove']);
-}
-
-if ($feature_categories == 'y') {
-	include_once ("categorize_list.php");
 }
 
 $smarty->assign('just_created', 'n');
@@ -148,6 +152,8 @@ if (isset($_REQUEST["create"])) {
 		}
 	}
 }
+
+} // end of security hardening
 
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'pageName_asc';
