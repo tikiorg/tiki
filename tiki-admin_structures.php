@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.28 2007-06-05 04:48:19 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.29 2007-06-05 05:32:23 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -55,7 +55,7 @@ if (isset($_REQUEST['rremovex'])) {
 if (isset($_REQUEST['export'])) {
 	check_ticket('admin-structures');
 	$structure_info = $structlib->s_get_structure_info($_REQUEST['export']);
-	if (!$tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_view')) {
+	if ($feature_wiki_export != 'y' || $tiki_p_admin_wiki != 'y' || !$tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_view')) {
 		$smarty->assign('msg',tra('Permission denied you cannot view this page'));
 		$smarty->display("error.tpl");
 		die;
