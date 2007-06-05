@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.71 2007-06-04 22:46:55 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.72 2007-06-05 14:44:43 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -314,7 +314,7 @@ class FileGalLib extends TikiLib {
 	}
 
 	function replace_file_gallery($galleryId, $name, $description, $user, $maxRows, $public, $visible = 'y', $show_id, $show_icon,
-								  $show_name, $show_size, $show_description, $show_created, $show_dl, $max_desc, $fgal_type='default', $parentId=-1, $lockable='n', $show_lockedby='y', $archives=-1, $sort_mode='', $show_modified='n', $show_creator='y', $show_author='n', $subgal_conf) {
+								  $show_name, $show_size, $show_description, $show_created, $show_dl, $max_desc, $fgal_type='default', $parentId=-1, $lockable='n', $show_lockedby='y', $archives=-1, $sort_mode='', $show_modified='n', $show_creator='y', $show_author='n', $subgal_conf='') {
 		// if the user is admin or the user is the same user and the gallery exists then replace if not then
 		// create the gallary if the name is unused.
 		$name = strip_tags($name);
@@ -734,7 +734,7 @@ class FileGalLib extends TikiLib {
 	function duplicate_file_gallery($galleryId, $name, $description = '') {
 		global $user;
 		$info = $this->get_file_gallery_info($galleryId);
-		$newGalleryId = $this->replace_file_gallery(0, $name, $description, $user, $info['maxRows'], $info['public'], $info['visible'], $info['show_id'], $info['show_icon'], $info['show_name'], $info['show_size'], $info['show_description'], $info['show_created'], $info['show_dl'], $info['max_desc'], $info['type'], $info['parentId'], $info['lockable'], $info['show_lockedby'], $info['archives'], $info['sort_mode'], $info['show_modified'], $info['show_creator'], $info['show_author']);
+		$newGalleryId = $this->replace_file_gallery(0, $name, $description, $user, $info['maxRows'], $info['public'], $info['visible'], $info['show_id'], $info['show_icon'], $info['show_name'], $info['show_size'], $info['show_description'], $info['show_created'], $info['show_dl'], $info['max_desc'], $info['type'], $info['parentId'], $info['lockable'], $info['show_lockedby'], $info['archives'], $info['sort_mode'], $info['show_modified'], $info['show_creator'], $info['show_author'], $info['subgal_conf']);
 		return $newGalleryId;
 	}
 }
