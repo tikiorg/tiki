@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.41 2007-06-05 12:16:41 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.42 2007-06-05 14:44:43 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -128,17 +128,17 @@ if ($tiki_p_view_file_gallery != 'y') {
 $smarty->assign_by_ref('gal_info', $gal_info);
 if (!empty($gal_info['subgal_conf'])) {
 	list($fgal_list_id, $fgal_list_name, $fgal_list_description, $fgal_list_type, $fgal_list_created, $fgal_list_lastmodif, $fgal_list_user, $fgal_list_files, $fgal_list_hits, $fgal_list_parent) = split(':',$gal_info['subgal_conf']);
+	$smarty->assign('fgal_list_id', $fgal_list_id);
+	$smarty->assign('fgal_list_name', $fgal_list_name);
+	$smarty->assign('fgal_list_description', $fgal_list_description);
+	$smarty->assign('fgal_list_type', $fgal_list_type);
+	$smarty->assign('fgal_list_created', $fgal_list_created);
+	$smarty->assign('fgal_list_lastmodif', $fgal_list_lastmodif);
+	$smarty->assign('fgal_list_user', $fgal_list_user);
+	$smarty->assign('fgal_list_files', $fgal_list_files);
+	$smarty->assign('fgal_list_hits', $fgal_list_hits);
+	$smarty->assign('fgal_list_parent', $fgal_list_parent);
 }
-$smarty->assign('fgal_list_id', $fgal_list_id);
-$smarty->assign('fgal_list_name', $fgal_list_name);
-$smarty->assign('fgal_list_description', $fgal_list_description);
-$smarty->assign('fgal_list_type', $fgal_list_type);
-$smarty->assign('fgal_list_created', $fgal_list_created);
-$smarty->assign('fgal_list_lastmodif', $fgal_list_lastmodif);
-$smarty->assign('fgal_list_user', $fgal_list_user);
-$smarty->assign('fgal_list_files', $fgal_list_files);
-$smarty->assign('fgal_list_hits', $fgal_list_hits);
-$smarty->assign('fgal_list_parent', $fgal_list_parent);
 
 $smarty->assign_by_ref('galleryId', $_REQUEST['galleryId']);
 
