@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.38 2007-06-04 19:32:04 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.39 2007-06-05 01:09:28 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -91,6 +91,7 @@ if ($tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki pa
 else
 	$smarty->assign('editable', 'n');		
 
+$smarty->assign('alert_exists', 'n');
 if (isset($_REQUEST["create"])) {
 	check_ticket('edit-structure');
 	if (isset($_REQUEST["pageAlias"]))	{
@@ -104,7 +105,9 @@ if (isset($_REQUEST["create"])) {
 	if (!(empty($_REQUEST['name']))) {
 		$structlib->s_create_page($_REQUEST["page_ref_id"], $after, $_REQUEST["name"], '');
 		$userlib->copy_object_permissions($page_info["pageName"], $_REQUEST["name"],'wiki page');
-
+		if ($tikilib->page_exists($_REQUEST["name"])) {
+			$smarty->assign('alert_exists', 'y');
+		}
 	} 
 	elseif(!empty($_REQUEST['name2'])) {
 		foreach ($_REQUEST['name2'] as $name) {

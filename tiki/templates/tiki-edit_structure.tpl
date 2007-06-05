@@ -11,6 +11,11 @@
 <br />
 {/if}
 
+{if $alert_exists eq 'y'}
+<strong>{tr}The page already exists. The page that has been added to the structure is the existing one.{/tr}</strong>
+<br />
+{/if}
+
 {if $editable == 'y'}
 <form action="tiki-edit_structure.php" method="post">
 <input type="hidden" name="page_ref_id" value="{$page_ref_id}" />
