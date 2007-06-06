@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.221 2007-06-02 22:11:25 nkoth Exp $
+// CVS: $Id: userslib.php,v 1.222 2007-06-06 09:54:07 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -988,19 +988,23 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $fin
 	$result = $this->query($query, array($group, $include));
     }
 
-function get_included_groups($group) {
+function get_included_groups($group, $recur=true) {
 	$engroup = urlencode($group);
-	if (!isset($this->groupinclude_cache[$engroup])) {
+	if (!$recur || !isset($this->groupinclude_cache[$engroup])) {
 		$query = "select `includeGroup`  from `tiki_group_inclusion` where `groupName`=?";
 		$result = $this->query($query, array($group));
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res["includeGroup"];
-			$ret2 = $this->get_included_groups($res["includeGroup"]);
-			$ret = array_merge($ret, $ret2);
+			if ($recur) {
+				$ret2 = $this->get_included_groups($res["includeGroup"]);
+				$ret = array_merge($ret, $ret2);
+			}
 		}
 		$back = array_unique($ret);
-		$this->groupinclude_cache[$engroup] = $back;
+		if (!$recur) {
+			$this->groupinclude_cache[$engroup] = $back;
+		}
 		return $back; 
 	} else {
 		return $this->groupinclude_cache[$engroup];

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.56 2007-03-06 19:29:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.57 2007-06-06 09:54:07 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -205,7 +205,7 @@ if (isset($_REQUEST["group"])and $_REQUEST["group"]) {
 	
 	//$allgroups = $userlib->list_all_groups();
 	$allgroups = $userlib->list_can_include_groups($re["groupName"]);
-	$rs = $userlib->get_included_groups($_REQUEST["group"]);
+	$rs = $userlib->get_included_groups($_REQUEST['group'], false);
 
 	foreach ($allgroups as $rr) {
 		$inc["$rr"] = "n";
