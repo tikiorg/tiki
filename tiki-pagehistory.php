@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.40 2007-03-06 19:29:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.41 2007-06-06 13:27:04 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -49,18 +49,18 @@ if (!isset($_REQUEST["source"])) {
     }
 }
 
+$info = $tikilib->get_page_info($page);
+$smarty->assign_by_ref('info', $info);
+
 // If the page doesn't exist then display an error
 //check_page_exits($page);
 
-if (isset($_REQUEST["delete"]) && isset($_REQUEST["hist"])) {
+if (isset($_REQUEST["delete"]) && isset($_REQUEST["hist"]) && $info["flag"] != 'L') {
 	check_ticket('page-history');
 	foreach (array_keys($_REQUEST["hist"])as $version) {
 		$histlib->remove_version($_REQUEST["page"], $version);
 	}
 }
-
-$info = $tikilib->get_page_info($page);
-$smarty->assign_by_ref('info', $info);
 
 if ($feature_contribution == 'y') {
 	global $contributionlib; include_once('lib/contribution/contributionlib.php');
