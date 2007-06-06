@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.750 2007-06-04 20:25:25 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.751 2007-06-06 15:40:55 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -5070,15 +5070,16 @@ function add_pageview() {
 	    if ($structId == '') {
 	    //And we are currently viewing a structure
 	    $page_info = $structlib->s_get_page_info($page_ref_id);
+	    $structure_info = $structlib->s_get_structure_info($page_ref_id);
 	    if (isset($page_info)) {
-		$html = $structlib->get_toc($page_ref_id,$order,$showdesc,$shownum,'',$type,'',$maxdepth);
+		$html = $structlib->get_toc($page_ref_id,$order,$showdesc,$shownum,'',$type,'',$maxdepth, $structure_info['pageName']);
                 $data = str_replace($tocs[0][$i], $html, $data);
 	    } else {
                 //Dont display the {toc} string for non structure pages
                 $data = str_replace($tocs[0][$i], '', $data);
 	    }
 	    } else {
-	      $html = $structlib->fetch_toc($structlib->build_subtree_toc($structId),$showdesc,$shownum,$type,'',$maxdepth);
+	      $html = $structlib->fetch_toc($structlib->build_subtree_toc($structId),$showdesc,$shownum,$type,'',$maxdepth, 0, $structure_info['pageName']);
 	      $data = str_replace($tocs[0][$i], $html, $data);
 	    }
 	}

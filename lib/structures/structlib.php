@@ -391,13 +391,13 @@ class StructLib extends TikiLib {
 		return $back;
 	}
 
-	function get_toc($page_ref_id,$order='asc',$showdesc=false,$numbering=true,$numberPrefix='',$type='plain',$page='',$maxdepth=0) {
+	function get_toc($page_ref_id,$order='asc',$showdesc=false,$numbering=true,$numberPrefix='',$type='plain',$page='',$maxdepth=0, $structurePageName) {
 		global $smarty;
 		$structure_tree = $this->build_subtree_toc($page_ref_id,false,$order,$numberPrefix);
-		return $this->fetch_toc($structure_tree,$showdesc,$numbering,$type,$page,$maxdepth)."\n";
+		return $this->fetch_toc($structure_tree,$showdesc,$numbering,$type,$page,$maxdepth,0,$structurePageName)."\n";
 	}
 
-	function fetch_toc($structure_tree,$showdesc,$numbering,$type='plain',$page='',$maxdepth=0,$cur_depth=0) {
+	function fetch_toc($structure_tree,$showdesc,$numbering,$type='plain',$page='',$maxdepth=0,$cur_depth=0,$structurePageName) {
 		global $smarty;
 		$ret='';
 		if ($structure_tree != '') {
@@ -413,7 +413,8 @@ class StructLib extends TikiLib {
 					} else {
 						$smarty->assign('hilite',false);
 					}
-
+					
+					$smarty->assign('structurePageName',$structurePageName);
 					$smarty->assign_by_ref('structure_tree',$leaf);
 					$smarty->assign('showdesc',$showdesc);
 					$smarty->assign('numbering',$numbering);
