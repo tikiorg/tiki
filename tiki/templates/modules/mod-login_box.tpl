@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.49 2007-06-05 16:28:37 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.50 2007-06-06 12:18:22 luciash Exp $ *}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Login{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations}
 
     {if $user}
-      <div>{tr}Logged in as{/tr}: {$user|userlink}</div>
-      <a class="linkmodule linkbut" href="tiki-logout.php">{tr}logout{/tr}</a>
+      <div>{tr}Logged in as{/tr}: <span style="white-space: nowrap">{$user|userlink}</span></div>
+      <p style="text-align: center"><a class="linkmodule linkbut" href="tiki-logout.php">{tr}logout{/tr}</a></p>
       {if $tiki_p_admin eq 'y'}
         <form action="{if $https_login eq 'encouraged' || $https_login eq 'required' || $https_login eq 'force_nocheck'}{$base_url_https}{/if}{$login_url}" method="post"{if $desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}>
          <fieldset>
