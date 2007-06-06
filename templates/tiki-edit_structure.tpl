@@ -164,7 +164,7 @@
 {include file=categorize.tpl}
 </table>
 <input type="submit" name="recategorize" value="{tr}update{/tr}" />
-&nbsp;&nbsp;{tr}Remove ALL existing page categories{/tr}: <input type="checkbox" name="cat_override" />
+&nbsp;&nbsp;{tr}Remove existing categories from ALL pages before recategorizing{/tr}: <input type="checkbox" name="cat_override" />
 </form>
 {/if}
 <br />
