@@ -1,12 +1,12 @@
 <h1><a class="pagetitle" href="tiki-edit_structure.php?page_ref_id={$page_ref_id}">
   {if $editable == 'y'}{tr}Modify Structure{/tr}{else}{tr}Structure{/tr}{/if}: {$structure_name}
 </a></h1>
-<div class="navbar"><a class="linkbut" href="tiki-admin_structures.php?parentId={$parentId}" title="{tr}Structures{/tr}">{tr}Structures{/tr}</a></div>
+<div class="navbar"><a class="linkbut" href="tiki-admin_structures.php" title="{tr}Structures{/tr}">{tr}Structures{/tr}</a></div>
 {if $remove eq 'y'}
 {tr}You will remove{/tr} '{$removePageName}' {if $page_removable == 'y'}{tr}and its subpages from the structure, now you have two options:{/tr}{else}{tr}and its subpages from the structure{/tr}{/if}
 <ul>
-<li><a class="link" href="tiki-edit_structure.php?page_ref_id={$removepage}&amp;rremove={$removepage}">{tr}Remove only from structure{/tr}</a></li>
-{if $page_removable == 'y'}<li><a class="link" href="tiki-edit_structure.php?page_ref_id={$removepage}&amp;sremove={$removepage}">{tr}Remove from structure and remove page too{/tr}</a></li>{/if}
+<li><a class="link" href="tiki-edit_structure.php?page_ref_id={$structure_id}&amp;rremove={$removepage}">{tr}Remove only from structure{/tr}</a></li>
+{if $page_removable == 'y'}<li><a class="link" href="tiki-edit_structure.php?page_ref_id={$structure_id}&amp;sremove={$removepage}">{tr}Remove from structure and remove page too{/tr}</a></li>{/if}
 </ul>
 <br />
 {/if}
@@ -14,6 +14,38 @@
 {if $alert_exists eq 'y'}
 <strong>{tr}The page already exists. The page that has been added to the structure is the existing one.{/tr}</strong>
 <br />
+{/if}
+
+{if count($alert_in_st) > 0}
+{tr}Note that the following pages are also part of another structure. Make sure that access permissions (if any) do not conflict:{/tr}
+{foreach from=$alert_in_st item=thest}
+&nbsp;&nbsp;<a class='tablename' href='tiki-index.php?page={$thest|escape:"url"}' target="_blank">{$thest}</a>
+{/foreach}
+<br /><br />
+{/if}
+
+{if count($alert_categorized) > 0}
+{tr}The following pages added have automatically been categorized with the same categories as the structure:{/tr}
+{foreach from=$alert_categorized item=thecat}
+&nbsp;&nbsp;<a class='tablename' href='tiki-index.php?page={$thecat|escape:"url"}' target="_blank">{$thecat}</a>
+{/foreach}
+<br /><br />
+{/if}
+
+{if count($alert_to_remove_cats) > 0}
+{tr}The following pages have categories but the structure has none. You may wish to uncategorize them to be consistent:{/tr}
+{foreach from=$alert_to_remove_cats item=thecat}
+&nbsp;&nbsp;<a class='tablename' href='tiki-index.php?page={$thecat|escape:"url"}' target="_blank">{$thecat}</a>
+{/foreach}
+<br /><br />
+{/if}
+
+{if count($alert_to_remove_extra_cats) > 0}
+{tr}The following pages are in categories that the structure is not in. You may wish to recategorize them in order to be consistent:{/tr}
+{foreach from=$alert_to_remove_extra_cats item=theextracat}
+&nbsp;&nbsp;<a class='tablename' href='tiki-index.php?page={$theextracat|escape:"url"}' target="_blank">{$theextracat}</a>
+{/foreach}
+<br /><br />
 {/if}
 
 <h2>{tr}Structure Layout{/tr}</h2>
@@ -124,6 +156,16 @@
 </tr>
 </table>
 </form>
-
+{if $tiki_p_view_categories == 'y' && $feature_wiki_categorize_structure == 'y' && $all_editable == 'y'}
+<form action="tiki-edit_structure.php" method="post">
+<input type="hidden" name="page_ref_id" value="{$page_ref_id}" />
+<h3>{tr}Categorize all pages in structure together{/tr}:</h3>
+<table class="normal">
+{include file=categorize.tpl}
+</table>
+<input type="submit" name="recategorize" value="{tr}update{/tr}" />
+&nbsp;&nbsp;{tr}Remove ALL existing page categories{/tr}: <input type="checkbox" name="cat_override" />
+</form>
+{/if}
 <br />
 {/if}{* end of if structure editable *}
