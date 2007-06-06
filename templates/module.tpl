@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.30 2007-06-05 18:32:24 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.31 2007-06-06 12:35:34 luciash Exp $ *}
 {* Module layout with controls *}
 
 <div class="box-shadow">
@@ -46,7 +46,7 @@
 {$module_error}
 {if $module_flip eq 'y'}
 			<script type="text/javascript">
-				setsectionstate('mod-{$module_name|escape}','{$module_dstate}', 'module.png');
+				setsectionstate('mod-{$module_name|cat:$module_position|cat:$module_ord|escape}','{$module_dstate}', 'module.png');
 			</script>
 {/if}
 		</div>
