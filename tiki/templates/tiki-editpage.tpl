@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.106 2007-06-05 00:47:05 nkoth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.107 2007-06-06 04:19:27 nkoth Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -84,6 +84,9 @@
 {/section}
 <input type="hidden" name="categId" value="{$categIdstr}" />
 <input type="hidden" name="cat_categorize" value="on" />
+{if $feature_wiki_categorize_structure eq 'y'}
+<tr class="formcolor"><td colspan="2">{tr}Categories will be inherited from the structure top page{/tr}</td></tr>
+{/if}
 {else}
 {if $tiki_p_view_categories eq 'y'}
 {include file=categorize.tpl}
