@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.168 2007-06-06 03:10:44 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.169 2007-06-06 03:44:06 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -52,6 +52,12 @@ if (isset($_REQUEST["current_page_id"])) {
 	}
     if ($tikilib->page_exists($_REQUEST['page'])) {
 		$smarty->assign('msg', $_REQUEST['page'] . " " . tra("page not added (Exists)"));
+		$smarty->display("error.tpl");
+		die;
+	}
+	$structure_info = $structlib->s_get_structure_info($_REQUEST['current_page_id']);
+	if ($tiki_p_edit_structures  != 'y' || !$tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_edit')) {
+		$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
 		$smarty->display("error.tpl");
 		die;
 	}
