@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.30 2007-06-05 06:59:12 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.31 2007-06-06 04:32:43 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -19,10 +19,6 @@ if ($tiki_p_view != 'y') {
 
 	$smarty->display("error.tpl");
 	die;
-}
-
-if ($feature_categories == 'y') {
-	include_once ("categorize_list.php");
 }
 
 // start security hardened section
@@ -100,6 +96,10 @@ if (isset($_REQUEST['remove'])) {
 	$smarty->assign('remove', $_REQUEST['remove']);
 }
 
+$alert_in_st = array();
+$alert_categorized = array();
+$alert_to_remove_cats = array();
+$alert_to_remove_extra_cats = array();
 $smarty->assign('just_created', 'n');
 if (isset($_REQUEST["create"])) {
 	check_ticket('admin-structures');
@@ -117,6 +117,15 @@ if (isset($_REQUEST["create"])) {
 		$smarty->display("error.tpl");
 		die;
 	}
+
+	$cat_name = $_REQUEST['name'];
+	$cat_objid = $cat_name;
+	$cat_href="tiki-index.php?page=" . urlencode($cat_name);
+ 	$cat_desc = '';
+ 	$cat_type='wiki page';	 	
+	include_once("categorize.php");
+	$categories = array(); // needed to prevent double entering (the first time when page is being categorized in categorize.php)
+	include_once("categorize_list.php"); // needs to be up here to avoid picking up selection of cats from other existing sub-pages
 
 	$smarty->assign('just_created', $structure_id);
 	$smarty->assign('just_created_name', $_REQUEST['name']);	
@@ -144,16 +153,64 @@ if (isset($_REQUEST["create"])) {
             if (!empty($names[1])) {
 				$alias = $names[1];
 		    }
+		    if ($tikilib->page_exists(trim($line))) {
+		    	$strucs = $structlib->get_page_structures(trim($line));
+		    	if (count($strucs) > 0) {
+					$alert_in_st[] = trim($line);
+		    	}	
+		    }
 			$new_page_ref_id = $structlib->s_create_page($parent_id, $last_page, trim($line), trim($alias));
 			if (isset($new_page_ref_id)) {
 			    $parents[$tabs + 1] = $new_page_ref_id;
 			    $last_pages[$tabs] = $new_page_ref_id;
+			    $cat_name = trim($line);
+				$cat_objid = $cat_name;
+				$cat_href="tiki-index.php?page=" . urlencode($cat_name);
+				$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
+			    if ($feature_wiki_categorize_structure == 'y' && !$catObjectId) {
+    			// page that is added is not categorized -> categorize it if necessary
+			    if (isset($_REQUEST["cat_categorize"]) && $_REQUEST["cat_categorize"] == 'on' && isset($_REQUEST["cat_categories"])) {
+					$catObjectId = $categlib->add_categorized_object($cat_type, $cat_objid, $cat_desc, $cat_name, $cat_href);
+					$alert_categorized[] = $cat_name;
+					foreach ($_REQUEST["cat_categories"] as $cat_acat) {						
+						$categlib->categorize($catObjectId, $cat_acat);
+					}
+				}
+			    } elseif ($feature_wiki_categorize_structure == 'y') {
+				// page that is added is categorized
+			    if (!isset($_REQUEST["cat_categories"]) || !isset($_REQUEST["cat_categorize"]) || isset($_REQUEST["cat_categorize"]) && $_REQUEST["cat_categorize"] != 'on') {
+					// alert that current pages are categorized					
+					$alert_to_remove_cats[] = $cat_name;					 
+				} else {
+					// add categories and alert that current pages have different categories
+					$cats = $categlib->get_object_categories($cat_type, $cat_objid);
+					$numberofcats = count($cats);
+					$alert_categorized[] = $cat_name;					
+					foreach ($_REQUEST["cat_categories"] as $cat_acat) {
+						if (!in_array($cat_acat,$cats,true)) {
+							$categlib->categorize($catObjectId, $cat_acat);
+							$numberofcats += 1;							
+						}
+					}
+					if ($numberofcats > count($_REQUEST["cat_categories"])) {
+						$alert_to_remove_extra_cats[] = $cat_name;
+					}	
+				}
+			    }			    
 		    }
 		}
 	}
 }
+$smarty->assign('alert_in_st', $alert_in_st);
+$smarty->assign('alert_categorized', $alert_categorized);
+$smarty->assign('alert_to_remove_cats', $alert_to_remove_cats);
+$smarty->assign('alert_to_remove_extra_cats', $alert_to_remove_extra_cats);
 
 } // end of security hardening
+
+if ($feature_categories == 'y') {
+	include_once("categorize_list.php");
+}
 
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'pageName_asc';
