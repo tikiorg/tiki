@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.39 2007-06-05 06:59:13 nkoth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.40 2007-06-06 04:32:43 nkoth Exp $ *}
 <h1><a href="tiki-admin_structures.php" class="pagetitle">{tr}Structures{/tr}</a>
   
 {if $feature_help eq 'y'}
@@ -10,8 +10,9 @@
 {/if}</h1>
 
 {if $just_created neq 'n' && $tiki_p_edit_structures == 'y'}
-{tr}The structure{/tr} <a class='tablename' href='tiki-edit_structure.php?page_ref_id={$just_created}'>{$just_created_name|escape}</a>&nbsp;&nbsp;<a class='link' href='tiki-index.php?page={$just_created_name|escape:"url"}' title="{tr}view{/tr}"><img src="pics/icons/magnifier.png" border="0" width="16" height="16" alt="{tr}view{/tr}" /></a>&nbsp;&nbsp;{tr}has just been created.{/tr}
 <br />
+{tr}The structure{/tr} <a class='tablename' href='tiki-edit_structure.php?page_ref_id={$just_created}'>{$just_created_name|escape}</a>&nbsp;&nbsp;<a class='link' href='tiki-index.php?page={$just_created_name|escape:"url"}' title="{tr}view{/tr}"><img src="pics/icons/magnifier.png" border="0" width="16" height="16" alt="{tr}view{/tr}" /></a>&nbsp;&nbsp;{tr}has just been created.{/tr}
+<br /><br />
 {/if}
 
 {if $askremove eq 'y'}
@@ -20,7 +21,40 @@
 <a class="link" href="tiki-admin_structures.php?rremove={$remove|escape:"url"}">{tr}Destroy the structure leaving the wiki pages{/tr}</a>
 {if $tiki_p_remove == 'y'}
 <br /><a class="link" href="tiki-admin_structures.php?rremovex={$remove|escape:"url"}">{tr}Destroy the structure and remove the pages{/tr}</a>
+<br /><br />
 {/if}
+{/if}
+
+{if count($alert_in_st) > 0}
+{tr}Note that the following pages are also part of another structure. Make sure that access permissions (if any) do not conflict:{/tr}
+{foreach from=$alert_in_st item=thest}
+&nbsp;&nbsp;<a class='tablename' href='tiki-index.php?page={$thest|escape:"url"}' target="_blank">{$thest}</a>
+{/foreach}
+<br /><br />
+{/if}
+
+{if count($alert_categorized) > 0}
+{tr}The following pages have automatically been categorized with the same categories as the structure:{/tr}
+{foreach from=$alert_categorized item=thecat}
+&nbsp;&nbsp;<a class='tablename' href='tiki-index.php?page={$thecat|escape:"url"}' target="_blank">{$thecat}</a>
+{/foreach}
+<br /><br />
+{/if}
+
+{if count($alert_to_remove_cats) > 0}
+{tr}The following pages have categories but the structure has none. You may wish to uncategorize them to be consistent:{/tr}
+{foreach from=$alert_to_remove_cats item=thecat}
+&nbsp;&nbsp;<a class='tablename' href='tiki-index.php?page={$thecat|escape:"url"}' target="_blank">{$thecat}</a>
+{/foreach}
+<br /><br />
+{/if}
+
+{if count($alert_to_remove_extra_cats) > 0}
+{tr}The following pages are in categories that the structure is not in. You may wish to recategorize them in order to be consistent:{/tr}
+{foreach from=$alert_to_remove_extra_cats item=theextracat}
+&nbsp;&nbsp;<a class='tablename' href='tiki-index.php?page={$theextracat|escape:"url"}' target="_blank">{$theextracat}</a>
+{/foreach}
+<br /><br />
 {/if}
 
 {include file="find.tpl"}
@@ -88,6 +122,9 @@
    <td class="formcolor">{tr}tree{/tr}:<br />(optional)</td>
    <td colspan=3 class="formcolor"><textarea rows="5" cols="60" name="tree"></textarea></td>
 </tr>    
+{if $tiki_p_view_categories eq 'y'}
+{include file=categorize.tpl}
+{/if}
 <tr>
    <td class="formcolor">&nbsp;</td>
    <td colspan=3 class="formcolor"><input type="submit" value="{tr}create new structure{/tr}" name="create" /></td>
