@@ -391,13 +391,13 @@ class StructLib extends TikiLib {
 		return $back;
 	}
 
-	function get_toc($page_ref_id,$order='asc',$showdesc=false,$numbering=true,$numberPrefix='',$type='plain',$page='',$maxdepth=0, $structurePageName) {
+	function get_toc($page_ref_id,$order='asc',$showdesc=false,$numbering=true,$numberPrefix='',$type='plain',$page='',$maxdepth=0, $structurePageName='') {
 		global $smarty;
 		$structure_tree = $this->build_subtree_toc($page_ref_id,false,$order,$numberPrefix);
 		return $this->fetch_toc($structure_tree,$showdesc,$numbering,$type,$page,$maxdepth,0,$structurePageName)."\n";
 	}
 
-	function fetch_toc($structure_tree,$showdesc,$numbering,$type='plain',$page='',$maxdepth=0,$cur_depth=0,$structurePageName) {
+	function fetch_toc($structure_tree,$showdesc,$numbering,$type='plain',$page='',$maxdepth=0,$cur_depth=0,$structurePageName='') {
 		global $smarty;
 		$ret='';
 		if ($structure_tree != '') {
