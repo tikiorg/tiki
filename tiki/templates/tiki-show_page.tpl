@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.114 2007-06-05 00:14:10 nkoth Exp $ *} 
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.115 2007-06-06 15:32:52 nkoth Exp $ *} 
 {if $feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
@@ -116,21 +116,21 @@
 <tr>
   <td>
     {if $prev_info and $prev_info.page_ref_id}
-		<a href="tiki-index.php?page_ref_id={$prev_info.page_ref_id}"><img src="pics/icons/resultset_previous.png" border="0" height="16" width="16" alt="{tr}Previous page{/tr}" 
+		<a href="tiki-index.php?page={$prev_info.pageName|escape:'url'}&amp;structure={$home_info.pageName|escape:'url'}"><img src="pics/icons/resultset_previous.png" border="0" height="16" width="16" alt="{tr}Previous page{/tr}" 
    			{if $prev_info.page_alias}
    				title='{$prev_info.page_alias}'
    			{else}
    				title='{$prev_info.pageName}'
    			{/if}/></a>{else}<img src="img/icons2/8.gif" alt="" border="0" height="1" width="8" />{/if}
 	{if $parent_info}
-   	<a href="tiki-index.php?page_ref_id={$parent_info.page_ref_id}"><img src="pics/icons/resultset_up.png" border="0" height="16" width="16" alt="{tr}Parent page{/tr}" 
+   	<a href="tiki-index.php?page={$parent_info.pageName|escape:'url'}&amp;structure={$home_info.pageName|escape:'url'}"><img src="pics/icons/resultset_up.png" border="0" height="16" width="16" alt="{tr}Parent page{/tr}" 
         {if $parent_info.page_alias}
    	      title='{$parent_info.page_alias}'
         {else}
    	      title='{$parent_info.pageName}'
         {/if}/></a>{else}<img src="img/icons2/8.gif" alt="" border="0" height="1" width="8" />{/if}
    	{if $next_info and $next_info.page_ref_id}
-      <a href="tiki-index.php?page_ref_id={$next_info.page_ref_id}"><img src="pics/icons/resultset_next.png" height="16" width="16" border="0" alt="{tr}Next page{/tr}" 
+      <a href="tiki-index.php?page={$next_info.pageName|escape:'url'}&amp;structure={$home_info.pageName|escape:'url'}"><img src="pics/icons/resultset_next.png" height="16" width="16" border="0" alt="{tr}Next page{/tr}" 
 		  {if $next_info.page_alias}
 			  title='{$next_info.page_alias}'
 		  {else}
@@ -138,7 +138,7 @@
 		  {/if}/></a>{else}<img src="img/icons2/8.gif" alt="" border="0" height="1" width="8" />
 	{/if}
 	{if $home_info}
-   	<a href="tiki-index.php?page_ref_id={$home_info.page_ref_id}"><img src="pics/icons/house.png" border="0" height="16" width="16" alt="{tr}TOC{/tr}" 
+   	<a href="tiki-index.php?page={$home_info.pageName|escape:'url'}&amp;structure={$home_info.pageName|escape:'url'}"><img src="pics/icons/house.png" border="0" height="16" width="16" alt="{tr}TOC{/tr}" 
 		  {if $home_info.page_alias}
 			  title='{$home_info.page_alias}'
 		  {else}
@@ -167,7 +167,7 @@
 	({$cur_pos})&nbsp;&nbsp;	
     {section loop=$structure_path name=ix}
       {if $structure_path[ix].parent_id}&nbsp;{$site_crumb_seper}&nbsp;{/if}
-	  <a href="tiki-index.php?page_ref_id={$structure_path[ix].page_ref_id}">
+	  <a href="tiki-index.php?page={$structure_path[ix].pageName|escape:'url'}&amp;structure={$home_info.pageName|escape:'url'}">
       {if $structure_path[ix].page_alias}
         {$structure_path[ix].page_alias}
 	  {else}
