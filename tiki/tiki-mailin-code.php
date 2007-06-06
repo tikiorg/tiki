@@ -127,8 +127,8 @@ var_dump($aux);
         
         $heading = $msgbody;
         $topicId = $acc['article_topicId'];
-        $user = $aux['sender']['user'];
-        $authorName = $user;
+        $userm = $aux['sender']['user'];
+        $authorName = $userm;
         $body = '';
         $publishDate = $tikilib->now;
         $expireDate = $tikilib->now + 365*24*60*60;
@@ -154,7 +154,7 @@ var_dump($aux);
 			include_once('lib/articles/artlib.php');
 		}
 		$subid = $artlib->replace_submission($title, $authorName, $topicId, $useImage, $imgname, $imgsize, $imgtype, $imgdata, $heading, 
-											$body, $publishDate, $expireDate, $user, $subId, $image_x, $image_y, $type, 
+											$body, $publishDate, $expireDate, $userm, $subId, $image_x, $image_y, $type, 
 											$topline, $subtitle, $linkto, $image_caption, $lang, $rating, $isfloat);
 
 		global $tiki_p_autoapprove_submission;
