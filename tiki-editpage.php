@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.169 2007-06-06 03:44:06 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.170 2007-06-06 04:19:27 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -939,6 +939,11 @@ if ($feature_freetags == 'y') {
 }
 if ($feature_categories == 'y') {
 	include_once ("categorize_list.php");
+	
+	if (isset($_REQUEST["current_page_id"]) && $feature_wiki_categorize_structure == 'y' && $categlib->is_categorized('wiki page', $structure_info["pageName"])) {
+		$categIds = $categlib->get_object_categories('wiki page', $structure_info["pageName"]);
+		$smarty->assign('categIds',$categIds);
+	}
 
 	if (isset($_SERVER['HTTP_REFERER']) && strstr($_SERVER['HTTP_REFERER'], 'tiki-index.php') && !$tikilib->page_exists($_REQUEST["page"])) { // default the categs the page you come from for a new page
 		if (preg_match('/page=([^\&]+)/', $_SERVER['HTTP_REFERER'], $ms))
