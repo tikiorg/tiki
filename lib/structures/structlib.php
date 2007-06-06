@@ -239,12 +239,18 @@ class StructLib extends TikiLib {
       $aux['page_ref_id'] = $struct_info['page_ref_id'];
       $aux['pageName']    = $struct_info['pageName'];
       $aux['page_alias']  = $struct_info['page_alias'];
+      global $wikilib; include_once('lib/wiki/wikilib.php');
+      $is_locked = $wikilib->is_locked($struct_info['pageName']);
+      if ($is_locked) {
+        $aux['flag'] = 'L';
+        $aux['user'] = $is_locked;
+      }
       $ret[] = $aux;
       $level++;
     }
 
 		//Get all child nodes for this page_ref_id
-    $query = 'select `page_ref_id`, `page_alias`, `pageName`';
+    $query = 'select `page_ref_id`, `page_alias`, `pageName`, `flag`, `user`';
     $query .= 'from `tiki_structures` ts, `tiki_pages` tp ';
     $query .= 'where ts.`page_id` = tp.`page_id` and `parent_id`=? order by `pos` asc';
 		$result = $this->query($query,array((int)$page_ref_id));
@@ -258,6 +264,8 @@ class StructLib extends TikiLib {
       $aux['page_ref_id'] = $res['page_ref_id'];
       $aux['pageName']    = $res['pageName'];
       $aux['page_alias']  = $res['page_alias'];
+      $aux["flag"]  = $res["flag"];
+	  $aux["user"]  = $res["user"];
 		global $user;
 		if ($this->user_has_perm_on_object($user,$res['pageName'],'wiki page','tiki_p_edit')) {	
       		$aux['editable'] = 'y';
