@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.167 2007-06-05 00:47:05 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.168 2007-06-06 03:10:44 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -45,6 +45,16 @@ $smarty->assign('page_ref_id',$page_ref_id);
 
 //Is new page to be inserted into structure?
 if (isset($_REQUEST["current_page_id"])) {
+	if (empty($_REQUEST['page'])) {
+		$smarty->assign('msg', tra("You must specify a page name, it will be created if it doesn't exist."));
+		$smarty->display("error.tpl");
+		die;
+	}
+    if ($tikilib->page_exists($_REQUEST['page'])) {
+		$smarty->assign('msg', $_REQUEST['page'] . " " . tra("page not added (Exists)"));
+		$smarty->display("error.tpl");
+		die;
+	}
   $smarty->assign('current_page_id',$_REQUEST["current_page_id"]);
   if (isset($_REQUEST["add_child"])) {
     $smarty->assign('add_child', "true");
