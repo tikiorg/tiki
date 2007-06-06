@@ -1,12 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.40 2007-06-05 06:59:12 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.41 2007-06-06 04:28:19 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+
 $section = 'wiki page';
 require_once ('tiki-setup.php');
 
@@ -34,15 +35,21 @@ $smarty->assign('structure_id', $structure_info["page_ref_id"]);
 $smarty->assign('structure_name', $structure_info["pageName"]);
 
 if ($tiki_p_edit_structures  == 'y' && $tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_edit'))
-	$smarty->assign('editable', 'y');
+	$editable = 'y';
 else
-	$smarty->assign('editable', 'n');
+	$editable = 'n';
+$smarty->assign('editable', $editable);
 	
 if (!$tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_view')) {
 	$smarty->assign('msg',tra('Permission denied you cannot view this page'));
 	$smarty->display("error.tpl");
 	die;
 }
+
+$alert_categorized = array();
+$alert_in_st = array();
+$alert_to_remove_cats = array();
+$alert_to_remove_extra_cats = array();
 
 // start security hardened section
 if ($tiki_p_edit_structures == 'y') {
@@ -116,9 +123,64 @@ if (isset($_REQUEST["create"])) {
 	elseif(!empty($_REQUEST['name2'])) {
 		foreach ($_REQUEST['name2'] as $name) {
 			$new_page_ref_id = $structlib->s_create_page($_REQUEST["page_ref_id"], $after, $name, '');
-      $after = $new_page_ref_id;
-		}
+      $after = $new_page_ref_id;      
+		}	
 	}
+	
+	if ($feature_wiki_categorize_structure == 'y') {      	
+		global $categlib;
+		if (!is_object($categlib)) {
+			include_once('lib/categories/categlib.php');
+		}
+		$pages_added = array();
+		if (!(empty($_REQUEST['name']))) { 
+			$pages_added[] = $_REQUEST['name'];
+		} elseif(!empty($_REQUEST['name2'])) {
+  			foreach ($_REQUEST['name2'] as $name) {
+				$pages_added[] = $name;
+  			}
+		}
+		$cat_type = 'wiki page';		
+		foreach ($pages_added as $name) {
+			$cat_objid = $name;
+			$cat_name = $cat_objid;
+			$cat_href = "tiki-index.php?page=".urlencode($cat_objid);
+		
+			$catObjectId = $categlib->is_categorized($cat_type, $structure_info["pageName"]);		
+			if (!$catObjectId) {
+	    		// we are not categorized
+				if ($categlib->is_categorized($cat_type, $cat_objid)) {
+					$alert_to_remove_cats[] = $cat_name;
+				}
+			} else {
+		    	// we are categorized
+				$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
+				$structure_cats = $categlib->get_object_categories($cat_type, $structure_info["pageName"]);
+				if (!$catObjectId) {
+					// added page is not categorized 
+					$catObjectId = $categlib->add_categorized_object($cat_type, $cat_objid, $cat_desc, $cat_name, $cat_href);
+					foreach ($structure_cats as $cat_acat) {						
+						$categlib->categorize($catObjectId, $cat_acat);
+					}			
+					$alert_categorized[] = $cat_name;
+				} else {
+					// added page is categorized				
+					$cats = $categlib->get_object_categories($cat_type, $cat_objid);						
+					$numberofcats = count($cats);
+					$alert_categorized[] = $cat_name;
+					foreach ($structure_cats as $cat_acat) {
+						if (!in_array($cat_acat,$cats,true)) {
+							$categlib->categorize($catObjectId, $cat_acat);
+							$numberofcats += 1;							
+						}
+					}
+					if ($numberofcats > count($_REQUEST["cat_categories"])) {
+						$alert_to_remove_extra_cats[] = $cat_name;
+					}
+				}
+			}
+		}
+	}	
 }
 
 if (isset($_REQUEST["move_node"])) {
@@ -168,10 +230,100 @@ $smarty->assign_by_ref('listpages', $listpages["data"]);
 $subtree = $structlib->get_subtree($structure_info["page_ref_id"]);
 $smarty->assign('subtree', $subtree);
 
-if ($feature_categories == 'y') {
-	global $categlib; include_once ('lib/categories/categlib.php');
-	$categories = $categlib->get_all_categories_respect_perms($user, 'tiki_p_view_categories');
-	$smarty->assign_by_ref('categories', $categories);
+// Re-categorize
+if ($tiki_p_edit_structures == 'y' && $editable == 'y') {
+	$all_editable = 'y';
+	foreach ($subtree as $k => $st) {
+		if ($st['editable'] != 'y' && $k > 0) {
+			$all_editable = 'n';
+ 			break;
+		}
+	}	
+} else {
+	$all_editable = 'n';
+}
+$smarty->assign('all_editable', $all_editable);
+
+if (isset($_REQUEST["recategorize"]) && $feature_wiki_categorize_structure == 'y' && $all_editable == 'y') {
+	$cat_name = $structure_info["pageName"];
+	$cat_objid = $cat_name;
+	$cat_href="tiki-index.php?page=" . urlencode($cat_name);
+ 	$cat_desc = '';
+ 	$cat_type='wiki page';
+	include_once("categorize.php");
+	$categories = array(); // needed to prevent double entering (the first time when page is being categorized in categorize.php)
+	//include_once("categorize_list.php"); // needs to be up here to avoid picking up selection of cats from other existing sub-pages	
+	//get array of pages in structure
+	$othobjid = $structlib->s_get_structure_pages($structure_info["page_ref_id"]);	
+	foreach ($othobjid as $othobjs) {	
+		if ($othobjs["parent_id"] > 0) {				
+		// check for page being in other structure.
+		$strucs = $structlib->get_page_structures($othobjs["pageName"]);
+		if (count($strucs) > 1) {
+			$alert_in_st[] = $othobjs["pageName"];
+		}								
+		$cat_objid = $othobjs["pageName"];
+		$cat_name = $cat_objid;
+		$cat_href = "tiki-index.php?page=".urlencode($cat_objid);
+		
+		$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);		
+		if (!$catObjectId) {
+    	// page that is added is not categorized -> categorize it if necessary
+		if (isset($_REQUEST["cat_categorize"]) && $_REQUEST["cat_categorize"] == 'on' && isset($_REQUEST["cat_categories"])) {
+			$catObjectId = $categlib->add_categorized_object($cat_type, $cat_objid, $cat_desc, $cat_name, $cat_href);			
+			foreach ($_REQUEST["cat_categories"] as $cat_acat) {						
+				$categlib->categorize($catObjectId, $cat_acat);
+			}
+		}
+		} else {
+		// page that is added is categorized
+		if (!isset($_REQUEST["cat_categories"]) || !isset($_REQUEST["cat_categorize"]) || isset($_REQUEST["cat_categorize"]) && $_REQUEST["cat_categorize"] != 'on') {
+			if ($_REQUEST["cat_override"] == "on") {
+				$categlib->uncategorize_object($cat_type, $cat_objid);
+			} else {
+				$alert_to_remove_cats[] = $cat_name;
+			}
+		} else {
+			if ($_REQUEST["cat_override"] == "on") {
+				$categlib->uncategorize_object($cat_type, $cat_objid);
+				foreach ($_REQUEST["cat_categories"] as $cat_acat) {
+					$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
+					if (!$catObjectId) {
+						// The object is not categorized  
+						$catObjectId = $categlib->add_categorized_object($cat_type, $cat_objid, $cat_desc, $cat_name, $cat_href);
+					}						
+					$categlib->categorize($catObjectId, $cat_acat);
+				}
+			} else {
+				$cats = $categlib->get_object_categories($cat_type, $cat_objid);						
+				$numberofcats = count($cats);
+				foreach ($_REQUEST["cat_categories"] as $cat_acat) {
+					if (!in_array($cat_acat,$cats,true)) {
+						$categlib->categorize($catObjectId, $cat_acat);
+						$numberofcats += 1;							
+					}
+				}
+				if ($numberofcats > count($_REQUEST["cat_categories"])) {
+					$alert_to_remove_extra_cats[] = $cat_name;
+				}	
+			}
+		}
+		}
+		}	    
+	}
+}
+$smarty->assign('alert_in_st', $alert_in_st);
+$smarty->assign('alert_categorized', $alert_categorized);
+$smarty->assign('alert_to_remove_cats', $alert_to_remove_cats);
+$smarty->assign('alert_to_remove_extra_cats', $alert_to_remove_extra_cats);
+
+if ($feature_wiki_categorize_structure == 'y' && $all_editable == 'y') {
+	$cat_name = $structure_info["pageName"];
+	$cat_objid = $cat_name;
+	$cat_href="tiki-index.php?page=" . urlencode($cat_name);
+ 	$cat_desc = '';
+ 	$cat_type='wiki page'; 		
+	include_once("categorize_list.php");
 }
 	
 ask_ticket('edit-structure');
