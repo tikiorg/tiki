@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.63 2007-04-24 18:23:49 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.64 2007-06-07 15:16:31 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -88,6 +88,9 @@ function wikiplugin_tracker($data, $params) {
 
 			if ($thisIsThePlugin) {
 				$cpt = 0;
+				if (!isset($fields)) {
+					$fields_plugin = split(':', $fields);
+				}
 				foreach ($flds['data'] as $fl) {
 					// store value to display it later if form
 					// isn't fully filled.
@@ -95,6 +98,13 @@ function wikiplugin_tracker($data, $params) {
 						$flds['data'][$cpt]['value'] = $_REQUEST['track'][$fl['fieldId']];
 					} else {
 						$flds['data'][$cpt]['value'] = '';
+						if ($fl['type'] == 'R' && $fl['isMandatory'] == 'y' && !isset($_REQUEST['track'][$fl['fieldId']])) {
+							// if none radio is selected, there will be no value and no error if mandatory
+							if (empty($fields_plugin) || in_array($fl['fieldId'], $fields_plugin)) {
+								$ins_fields['data'][] = array_merge(array('value' => ''), $fl);
+							}
+						}
+
 					}
 					if (!empty($_REQUEST['track_other'][$fl['fieldId']])) {
 						$flds['data'][$cpt]['value'] = $_REQUEST['track_other'][$fl['fieldId']];
@@ -164,6 +174,7 @@ function wikiplugin_tracker($data, $params) {
 						$categorized_fields[] = $m[1];
 					}
 		 		}
+
 				// Check field values for each type and presence of mandatory ones
 				$field_errors = $trklib->check_field_values($ins_fields, $categorized_fields);
 			
@@ -419,7 +430,7 @@ function wikiplugin_tracker($data, $params) {
 							$back.= "</td><td>";
 							if ($f['type'] == 'R') {
 								foreach ($list as $item) {
-									$selected = $f['value'] == $item ? 'selected="selected"' : '';
+									$selected = $f['value'] == $item ? 'checked="checked"' : '';
 									$back .= $item.' <input type="radio" name="track['.$f["fieldId"].']" value="'.$item.'" '.$selected.'>';
 								}
 							} else {
