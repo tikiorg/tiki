@@ -1,7 +1,12 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-survey_stats.tpl,v 1.11 2007-06-07 13:26:16 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-survey_stats.php">{tr}Stats for surveys{/tr}</a></h1>
+
+<div class="navbar">
 <span class="button2"><a class="linkbut" href="tiki-list_surveys.php">{tr}list surveys{/tr}</a></span>
 <span class="button2"><a class="linkbut" href="tiki-survey_stats.php">{tr}survey stats{/tr}</a></span>
-{if $tiki_p_admin_surveys eq 'y'}<span class="button2"><a class="linkbut" href="tiki-admin_surveys.php">{tr}admin surveys{/tr}</a></span>{/if}<br /><br />
+{if $tiki_p_admin_surveys eq 'y'}<span class="button2"><a class="linkbut" href="tiki-admin_surveys.php">{tr}admin surveys{/tr}</a></span>{/if}
+</div>
+
 <h2>{tr}Surveys{/tr}</h2>
 <div  align="center">
 <table class="findtable">
