@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/fmsc.css,v 1.11 2007-06-07 13:27:54 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/fmsc.css,v 1.12 2007-06-07 13:42:35 sylvieg Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -868,7 +868,7 @@ div.searchdate {
 }
 .highlight {
 	background-color : #eeee99 !important;
-	color : #5A5A58;
+	color : #515A61 !important;
 }
 
 div#edithelpzone {
