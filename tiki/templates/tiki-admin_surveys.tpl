@@ -1,5 +1,5 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_surveys.tpl,v 1.23 2007-06-07 13:26:16 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_surveys.php">{tr}Admin surveys{/tr}</a>
-
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Surveys" target="tikihelp" class="tikihelp" title="{tr}Surveys{/tr}">
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
@@ -7,13 +7,10 @@
 <a href="tiki-edit_templates.php?template=tiki-admin_surveys.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}administer surveys template{/tr}">
 <img border="0" src="pics/icons/shape_square_edit.png" alt="{tr}edit{/tr}" width="16" height="16" /></a>{/if}</h1>
 
-<!-- the two link buttons -->
-
+<div class="navbar">
 <span class="button2"><a class="linkbut" href="tiki-list_surveys.php">{tr}list surveys{/tr}</a></span>
 <span class="button2"><a class="linkbut" href="tiki-survey_stats.php">{tr}survey stats{/tr}</a></span>
-
-<!-- describe the new survey -->
-<br /><br />
+</div>
 
 {if $info.surveyId > 0}
 <h2>{tr}Edit this Survey:{/tr} {$info.name}</h2>
@@ -57,7 +54,7 @@
 </form>
 <!--  find in existing surveys -->
 <h2>{tr}Surveys{/tr}</h2>
-<div  align="center">
+
 <table class="findtable">
 <tr><td>{tr}Find{/tr}</td>
    <td>
@@ -135,7 +132,6 @@
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
 {/if}
-</div>
 </div>
 
 <!--end tiki-admin_surveys.tpl... last edited by dgd-->

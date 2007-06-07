@@ -1,21 +1,18 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_stats.tpl,v 1.10 2007-06-07 13:26:16 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-quiz_stats.php">{tr}Stats for quizzes{/tr}</a>
-  
-      {if $feature_help eq 'y'}
+{if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=QuizzesDoc#id320349" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Quizzes{/tr}">
 <img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" />
 </a>
 {/if}
-
-      {if $feature_view_tpl eq 'y'}
+{if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-quiz_stats.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}list quizzes tpl{/tr}">
 <img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}</h1>
 
-<a class="linkbut" href="tiki-list_quizzes.php">{tr}list quizzes{/tr}</a>
-<!-- commented out/ redundant --->
-{* redundant
-<a class="linkbut" href="tiki-quiz_stats.php">{tr}quiz stats{/tr}</a>
-*}
-<a class="linkbut" href="tiki-edit_quiz.php">{tr}admin quizzes{/tr}</a><br /><br />
+<div class="navbar"><a class="linkbut" href="tiki-list_quizzes.php">{tr}list quizzes{/tr}</a>
+<a class="linkbut" href="tiki-edit_quiz.php">{tr}admin quizzes{/tr}</a>
+</div>
+
 <h2>{tr}Quizzes{/tr}</h2>
 <! -- begin find field ---!>
 <div  align="center">
