@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/fmsc.css,v 1.10 2007-05-18 15:54:45 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/fmsc.css,v 1.11 2007-06-07 13:27:54 sylvieg Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -180,7 +180,7 @@ input {
 input[type=checkbox], input[type=radio] {
 	border : 0;
 }
-input[type=submit] {
+a.linkbut, input[type=submit] {
 	font-size : 10px;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	border : 1px solid #827B77;
@@ -189,7 +189,7 @@ input[type=submit] {
 	color: #FFFFFF;
 	margin: 0px;
 	padding: 1px;
-
+	text-decoration: none;
 }
 input[type=submit]:hover {
 	background-color : #FFFFFF;
@@ -934,12 +934,6 @@ DIV#page-bar table, DIV#page-bar td, DIV#page-bar tr {
 }
 
 /* Links in buttons */
-.linkbut, .linkbut:visited {
-	font-size : 10px;
-	color : #5B5A59;
-	font-weight : normal;
-	text-decoration : underline;
-}
 .linkbut:hover {
 	color : #FF6633;
 }
@@ -1184,8 +1178,9 @@ div.showimage {
 	text-align : center;
 	margin : 5px 0;
 }
-div.imgaldescr {
+div.imgaldescr, .galdesc {
 	margin : 10px;
+	text-align:left;
 }
 .sorttitle {
 	margin-left : 10px;
@@ -2354,4 +2349,10 @@ div.admbox img { margin-top: 20px; }
 .highlight_word_2{color:black;background-color: #A0FFFF;}
 .highlight_word_3{color:black;background-color: #ff66ff;}
 .highlight_word_4{color:black;background-color: #99ff99;}
+.findtable {
+	margin: 5px auto;
+}
+.navbar {
+	margin: 10px 0;
+}
 /* end of css file */
