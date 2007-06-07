@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.162 2007-06-05 13:23:47 nkoth Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.163 2007-06-07 11:58:49 mose Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -924,6 +924,7 @@ ALTER TABLE users_users CHANGE pass_due pass_confirm int(14) default NULL;
 
 #pkdille 2007/05/31
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_users','');
+
 #sylvieg 2007/06/01
 ALTER TABLE `tiki_modules` DROP PRIMARY KEY;
 ALTER TABLE `tiki_modules` ADD PRIMARY KEY  (name, position, ord);
@@ -937,3 +938,8 @@ ALTER TABLE `tiki_file_galleries` ADD `subgal_conf` varchar(200) default NULL;
 #creating and edit functions are still restricted to tiki_p_edit_structures
 
 UPDATE tiki_menu_options SET perm='tiki_p_view' where url='tiki-admin_structures.php';
+
+#mose 07 06 07 
+alter table tiki_menu_options add userlevel int(4) default 0 after groupname;
+
+
