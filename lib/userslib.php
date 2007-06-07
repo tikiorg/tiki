@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.222 2007-06-06 09:54:07 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.223 2007-06-07 13:45:47 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -971,7 +971,6 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $fin
 	    $aux["groups"] = $groups;
 	    $aux["currentLogin"] = $res["currentLogin"];
 	    $aux["age"] = $this->now - $res["registrationDate"];
-	    $aux["age"] = $now - $res["registrationDate"];
 		$aux['provpass'] = $res['provpass'];
 	    $ret[] = $aux;
 	}
