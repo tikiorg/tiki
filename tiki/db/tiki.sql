@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-06-05 13:23:47 $
-# $Author: nkoth $
+# $Date: 2007-06-07 11:58:49 $
+# $Author: mose $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -2038,6 +2038,7 @@ CREATE TABLE tiki_menu_options (
   section varchar(255) default NULL,
   perm varchar(255) default NULL,
   groupname varchar(255) default NULL,
+  userlevel int(4) default 0,
   PRIMARY KEY  (optionId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
