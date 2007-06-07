@@ -1,9 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.38 2007-06-01 18:36:56 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.39 2007-06-07 12:58:25 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}">{tr}Listing Gallery{/tr}: {$name}</a></h1>
 
-<table><tr>
-<td style="vertical-align:top;">
-
+<div class="navbar">
+<table><td>
 {if $tiki_p_list_file_galleries eq 'y' or (!isset($tiki_p_list_file_galleries) and $tiki_p_view_file_gallery eq 'y')}<a href="tiki-file_galleries.php" class="linkbut" title="{tr}list galleries{/tr}">{tr}list galleries{/tr}</a>{/if}
 
 {if $tiki_p_admin_file_galleries eq 'y' or $user eq $gal_info.user}
@@ -41,6 +40,7 @@
 	{/if}  
 
 </td></tr></table>
+</div>
 
 <table>
 <tr><td width="48">

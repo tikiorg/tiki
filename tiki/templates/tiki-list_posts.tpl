@@ -1,25 +1,19 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_posts.tpl,v 1.29 2007-06-07 12:58:25 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_posts.php">{tr}Blogs{/tr}</a>
-
-  
-      {if $feature_help eq 'y'}
+{if $feature_help eq 'y'}
 <a href="{$helpurl}Blogs" target="tikihelp" class="tikihelp" title="{tr}Blogs{/tr}">
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
-
-
-
-      {if $feature_view_tpl eq 'y'}
+{if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-list_posts.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}list posts tpl{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}
-
-
-
-
 </h1>
+
+<div class="navbar">
 <a class="linkbut" href="tiki-edit_blog.php">{tr}edit blog{/tr}</a>
 <a class="linkbut" href="tiki-blog_post.php">{tr}post{/tr}</a>
 <a class="linkbut" href="tiki-list_blogs.php">{tr}list blogs{/tr}</a>
-<br /><br />
-<div align="center">
+</div>
+
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
@@ -87,5 +81,4 @@
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
 {/if}
-</div>
 </div>

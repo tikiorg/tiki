@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.138 2007-06-01 21:20:21 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.139 2007-06-07 12:58:25 sylvieg Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a></h1>
-<div>
+<div class="navbar">
 {if $feature_user_watches eq 'y' and $tiki_p_watch_trackers eq 'y'}
 {if $user_watching_tracker ne 'y'}
 <a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;watch=add" title="{tr}monitor{/tr}"><img src="pics/icons/eye.png" width="16" height="16" border="0" align="right" hspace="5" alt="{tr}monitor{/tr}" /></a>
@@ -23,16 +23,16 @@
 <span class="button2"><a href="tiki-tracker_rss.php?trackerId={$trackerId}" class="linkbut"><img src='img/rss.png' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' /></a></span>
 {/if}
 </div>
-<br />
+
+{if !empty($tracker_info.description)}
 <div class="wikitext">{$tracker_info.description}</div>
-{if $mail_msg}
+{/if}
+
+{if !empty($mail_msg)}
 <div class="wikitext">{$mail_msg}</div>
 {/if}
-<br />{* 
 
-***  Display warnings about incorrect values and missing mandatory fields *** 
-
-*}{if count($err_mandatory) > 0}<div class="simplebox highlight">
+{if count($err_mandatory) > 0}<div class="simplebox highlight">
 {tr}Following mandatory fields are missing{/tr}&nbsp;:<br/>
 	{section name=ix loop=$err_mandatory}
 {$err_mandatory[ix].name}{if !$smarty.section.ix.last},&nbsp;{/if}

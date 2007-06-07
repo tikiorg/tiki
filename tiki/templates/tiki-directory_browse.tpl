@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_browse.tpl,v 1.17 2007-05-04 14:46:27 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_browse.tpl,v 1.18 2007-06-07 12:58:25 sylvieg Exp $ *}
 
 {* The heading and category path *}
 {if $feature_siteidentity ne 'y' or $feature_breadcrumbs ne 'y'}
@@ -12,14 +12,14 @@ loc="page" crumbs=$crumbs}
 {/if}
 {* The navigation bar *}
 {include file=tiki-directory_bar.tpl}
-<br /><br />
+
 {* The category path *}
 {if $feature_siteidentity ne 'y' or $feature_breadcrumbs ne 'y'}
 <a class="dirlink" href="tiki-directory_browse.php?parent=0">Top</a>{if $parent > 0} >> {/if}{$path}
 {/if}
 <div class="description">{$parent_info.description}</div>
 <br /><br />
-<div align="center">
+<div class="findtable">
 <form action="tiki-directory_search.php" method="post">
 <input type="hidden" name="parent" value="{$parent|escape}" />
 {tr}Find{/tr}: 

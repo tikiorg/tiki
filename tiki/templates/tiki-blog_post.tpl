@@ -1,5 +1,7 @@
 {popup_init src="lib/overlib.js"}
-<h1><a class="pagetitle" href="tiki-blog_post.php?blogId={$blogId}&amp;postId={$postId}">{tr}Edit Post{/tr}</a></h1><br />
+<h1><a class="pagetitle" href="tiki-blog_post.php?blogId={$blogId}&amp;postId={$postId}">{tr}Edit Post{/tr}</a></h1>
+
+<div class="navbar">
 {if $feature_wysiwyg eq 'y' and $wysiwyg_optional eq 'y'}
 {if $wysiwyg ne 'y'}
 <span class="button2"><a class="linkbut" href="tiki-blog_post.php?{if $blogId ne ''}blogId={$blogId}&amp;{/if}{if $postId ne ''}&amp;postId={$postId}{/if}&amp;wysiwyg=y">{tr}Use wysiwyg editor{/tr}</a></span>
@@ -7,17 +9,18 @@
 <span class="button2"><a class="linkbut" href="tiki-blog_post.php?{if $blogId ne ''}blogId={$blogId}&amp;{/if}{if $postId ne ''}&amp;postId={$postId}{/if}&amp;wysiwyg=n">{tr}Use normal editor{/tr}</a></span>
 {/if}
 {/if}
+{if $blogId > 0 }
+<span class="button2"><a class="linkbut" href="tiki-view_blog.php?blogId={$blogId}">{tr}view blog{/tr}</a></span>
+{/if}
+<span class="button2"><a class="linkbut" href="tiki-list_blogs.php">{tr}list blogs{/tr}</a></span>
+</div>
+
 {if $contribution_needed eq 'y'}
 <div class="simplebox highlight">{tr}A contribution is mandatory{/tr}</div>
 {/if}
 {if $preview eq 'y'}
 	{include file=tiki-preview_post.tpl}
 {/if}
-{if $blogId > 0 }
-<span class="button2"><a class="linkbut" href="tiki-view_blog.php?blogId={$blogId}">{tr}view blog{/tr}</a></span>
-{/if}
-<span class="button2"><a class="linkbut" href="tiki-list_blogs.php">{tr}list blogs{/tr}</a></span>
-<br /><br />
 
   <div class="rbox" name="tip">
   <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  

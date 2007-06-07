@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.57 2007-05-16 12:55:08 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.58 2007-06-07 12:58:25 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_forums.php">{tr}Admin Forums{/tr}</a>
  
 {if $feature_help eq 'y'}
@@ -9,6 +9,7 @@
 <a href="tiki-edit_templates.php?template=tiki-admin_forums.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin forums template{/tr}"><img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}</h1>
 
+<div class="navbar">
 {if $forumId > 0 or $dup_mode eq 'y'}
 <a href="tiki-admin_forums.php" class="linkbut">{tr}Create new forum{/tr}</a>
 {/if}
@@ -19,10 +20,10 @@
 <a href="tiki-view_forum.php?forumId={$forumId}" class="linkbut">{tr}View this forum{/tr}</a>
 {/if}
 <a href="#editforums" class="linkbut">{tr}List forums{/tr}</a>
-
 {if $tiki_p_admin eq 'y'}
 <a title="{tr}Configure/Options{/tr}" href="tiki-admin.php?page=forums"><img src="pics/icons/wrench.png" border="0" width="16" height="16" alt='{tr}Configure/Options{/tr}' /></a>
 {/if}
+</div>
 
 {if $dup_mode != 'y'}
 {if $forumId > 0}

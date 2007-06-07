@@ -1,4 +1,4 @@
-<div id="page-bar">
+<div class="navbar" id="page-bar">
 <table>
 <tr>
 {if $tiki_p_admin_directory_cats eq 'y' or $tiki_p_admin_directory_sites eq 'y' or $tiki_p_validate_links eq 'y'}

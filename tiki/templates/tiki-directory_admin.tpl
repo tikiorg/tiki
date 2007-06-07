@@ -1,18 +1,14 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_admin.tpl,v 1.18 2007-06-07 12:58:25 sylvieg Exp $ *}
 <h1><a href="tiki-directory_admin.php" class="pagetitle">{tr}Directory Administration{/tr}</a>
-
-  
-      {if $feature_help eq 'y'}
+{if $feature_help eq 'y'}
 <a href="{$helpurl}Directory" target="tikihelp" class="tikihelp" title="{tr}Directory{/tr}">
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
-
-
-
-      {if $feature_view_tpl eq 'y'}
+{if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-directory_admin.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin directory tpl{/tr}">
 <img border='0' src='img/icons/info.gif' alt='{tr}edit tpl{/tr}' /></a>{/if}</h1>
 
 {include file=tiki-directory_admin_bar.tpl}
-<br /><br />
+
 <b>{tr}Statistics{/tr}</b><br /><br />
 {tr}There are{/tr} {$stats.invalid} {tr}invalid sites{/tr}<br />
 {tr}There are{/tr} {$stats.valid} {tr}valid sites{/tr}<br />
