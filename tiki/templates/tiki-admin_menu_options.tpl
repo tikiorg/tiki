@@ -1,4 +1,4 @@
- {* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_menu_options.tpl,v 1.43 2007-05-07 17:02:04 nyloth Exp $ *}
+ {* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_menu_options.tpl,v 1.44 2007-06-07 11:49:02 mose Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_menu_options.php?menuId={$menuId}">{tr}Admin Menu{/tr}: {$menu_info.name}</a><br /><br />
 <span class="button2"><a href="tiki-admin_menus.php" class="linkbut">{tr}List menus{/tr}</a></span>
 <span class="button2"><a href="tiki-admin_menus.php?menuId={$menuId}" class="linkbut">{tr}Edit this menu{/tr}</a></span></h1>
@@ -184,7 +184,7 @@
 title="{tr}edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16"  alt='{tr}edit{/tr}' /></a></td>
 <td class="{cycle advance=false}">{$channels[user].position}</td>
 <td class="{cycle advance=false}">{$channels[user].name}</td>
-<td class="{cycle advance=false}"><a href="{$channels[user].url|escape}" class="link" target="_new">{$channels[user].url}</a></td>
+<td class="{cycle advance=false}"><a href="{$channels[user].url|escape}" class="link" target="_new">{$channels[user].url|truncate:40:' ...'}</a></td>
 <td class="{cycle advance=false}">{$channels[user].type_description}</td>
 <td class="{cycle advance=false}">{$channels[user].section}</td>
 <td class="{cycle advance=false}">{$channels[user].perm}</td>
