@@ -1,4 +1,4 @@
-<div id="page-bar">
+<div class="navbar" id="page-bar">
 <table>
 <tr>
 <td><div  class="button2"><a href="tiki-directory_browse.php" class="linkbut">{tr}browse{/tr}</a></div></td>

@@ -1,10 +1,12 @@
 <h1><a class="pagetitle" href="tiki-list_submissions.php">{tr}Submissions{/tr}</a></h1>
+
+<div class="navbar">
 <a class="linkbut" href="tiki-edit_submission.php">{tr}edit new submission{/tr}</a>
 {if $tiki_p_read_article eq 'y'}
 <a class="linkbut" href="tiki-list_articles.php">{tr}List articles{/tr}</a>
 {/if}
-<br /><br />
-<div align="center">
+</div>
+
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
@@ -16,6 +18,7 @@
    </td>
 </tr>
 </table>
+
 <table class="normal">
 <tr>
 {if $art_list_title eq 'y'}
@@ -79,6 +82,7 @@
 </td></tr>
 {/section}
 </table>
+
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-list_submissions.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
@@ -95,5 +99,4 @@
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
 {/if}
-</div>
 </div>

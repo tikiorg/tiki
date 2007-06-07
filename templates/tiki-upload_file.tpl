@@ -1,8 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_file.tpl,v 1.29 2007-05-13 22:09:01 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_file.tpl,v 1.30 2007-06-07 12:58:25 sylvieg Exp $ *}
 
 <h1><a href="tiki-upload_file.php{if !empty($galleryId)}?galleryId={$galleryId}{if $editFileId}&amp;fileId={$editFileId}{/if}{/if}" class="pagetitle">{if $editFileId}{tr}Edit File:{/tr} {$fileInfo.filename}{else}{tr}Upload File{/tr}{/if}</a></h1>
+
 {if count($galleries) > 0}
-	{if !empty($galleryId)}<a href="tiki-list_file_gallery.php?galleryId={$galleryId}" class="linkbut">{tr}Browse gallery{/tr}</a>{/if}<br /><br />
+	{if !empty($galleryId)}<div class="navbar"><a href="tiki-list_file_gallery.php?galleryId={$galleryId}" class="linkbut">{tr}Browse gallery{/tr}</a>{/if}</div>
 
 {if !$editFileId}
 	{if $feature_file_galleries_batch eq 'y'}

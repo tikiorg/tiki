@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.38 2007-03-21 19:21:44 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.39 2007-06-07 12:58:25 sylvieg Exp $ *}
 <h1><a href="tiki-upload_image.php{if $galleryId}?galleryId={$galleryId}{/if}" class="pagetitle">{tr}Upload Image{/tr}</a>
 
 {if $feature_help eq 'y'}
@@ -11,8 +11,7 @@
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}</h1>
 
-{* link button *}
-
+<div class="navbar">
 <span class="button2">
 {if $galleryId ne ''}
 <a href="tiki-browse_gallery.php?galleryId={$galleryId}" class="linkbut">
@@ -25,7 +24,8 @@
       <span class="button2"><a href="tiki-batch_upload.php{if $galleryId}?galleryId={$galleryId}{/if}" class="linkbut">{tr}Directory batch{/tr}</a></span>
     {/if}
   {/if}
-<br /><br />
+</div>
+
 {if count($galleries) > 0}
 	<div align="center">
 	<form enctype="multipart/form-data" action="tiki-upload_image.php" method="post">

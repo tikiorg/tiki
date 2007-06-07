@@ -18,8 +18,10 @@
 <img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}' /></a>
 {/if}</h1>
 
+<div class="navbar">
 <a class="linkbut" href="tiki-list_submissions.php">{tr}list submissions{/tr}</a>
-<br /><br />
+</div>
+
 <form enctype="multipart/form-data" method="post" action="tiki-edit_submission.php" id='editpageform'>
 <input type="hidden" name="subId" value="{$subId|escape}" />
 <input type="hidden" name="image_data" value="{$image_data|escape}" />

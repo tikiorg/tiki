@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_article.tpl,v 1.57 2007-03-16 16:40:32 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_article.tpl,v 1.58 2007-06-07 12:58:25 sylvieg Exp $ *}
 {* Note: if you edit this file, make sure to make corresponding edits on tiki-edit_submission.tpl*}
 
 {popup_init src="lib/overlib.js"}
@@ -17,9 +17,11 @@
 <img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}' /></a>
 {/if}</h1>
 
+<div class="navbar">
 <a class="linkbut" href="tiki-list_articles.php">{tr}list articles{/tr}</a>
 <a class="linkbut" href="tiki-view_articles.php">{tr}view articles{/tr}</a>
-<br /><br />
+</div>
+
 {if $preview}
 {include file="tiki-preview_article.tpl"}
 {/if}

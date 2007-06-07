@@ -1,9 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.18 2007-05-13 22:09:01 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.19 2007-06-07 12:58:25 sylvieg Exp $ *}
 {* param:$gal_info, $files *}
 {strip}
 
 {if !isset($show_find) or $show_find ne 'n'}
-<div align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
@@ -18,7 +17,6 @@
    </td>
 </tr>
 </table>
-</div>
 {/if}
 
 <form  name="checkboxes_on" method="post" action="{$smarty.server.PHP_SELF}">

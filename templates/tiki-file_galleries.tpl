@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.54 2007-06-04 22:45:15 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.55 2007-06-07 12:58:25 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-file_galleries.php?galleryId={$galleryId}{if isset($edit_mode)}&amp;edit_mode=1{/if}">{tr}File Galleries{/tr}</a>
 
@@ -12,6 +12,7 @@
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}</h1>
 
+<div class="navbar">
 {if $edit_mode eq 'y' or $dup_mode eq 'y'}
 <a class="linkbut" href="tiki-file_galleries.php">{tr}list galleries{/tr}</a>
 {/if}
@@ -24,6 +25,7 @@
 {if $tiki_p_admin eq 'y'}
 <a href="tiki-admin.php?page=fgal"><img src='pics/icons/wrench.png' border='0' alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
 {/if}
+</div>
 
 {if $tiki_p_create_file_galleries eq 'y'}
 {if $edit_mode eq 'y'}
