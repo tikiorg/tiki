@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.199 2007-06-08 10:56:54 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.200 2007-06-08 15:03:33 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1795,7 +1795,7 @@ class TrackerLib extends TikiLib {
 		$type['U'] = array(
 			'label'=>tra('User subscription'),
 			'opt'=>false,
-			'help'=>tra('Allow registred use to subscribe to an item. They can add a number of friends.'));
+			'help'=>tra('Allow registered user to subscribe to an item. They can add a number of friends.'));
 		$type['G'] = array(
 			'label'=>tra('Google map'),
 			'opt'=>false,
