@@ -96,7 +96,33 @@ $lang=Array(
 "Permission denied you cannot upload files" => "Droit d'accès refusé : vous ne pouvez pas envoyer de fichiers sur le serveur",
 // ### end of unused words
 
+"drop down with other textfield" => "liste déroulante avec champ de texte autre",
+"Other:" => "Autre :",
+"The mail can't be sent. Contact the administrator" => "Le courriel ne peut pas être envoyé. Contactez l'administrateur",
+"Delete selected" => "Effacer les sélectionnés",
+"Create your new custom module below. Make sure to preview first and make sure all is OK before <a href=\"#assign\">assigning it</a>. Using html, you will be fine. However, if you improperly use wiki syntax or Smarty code, you could lock yourself out of the site." => "Créer votre module fait sur mesure. Assurez vous de faire un aperçu avant de <a href=\"#assign\">l'assigner</a>. L'utilisation d'une mauvaise syntaxe wiki ou de code smarty (pas de problème avec html) peut vous empêcher d'utiliser le site",
+"Unzip all zip files" => "Dézipper tous les fichiers zips",
+"Tiki integrator" => "Integrateur Tiki",
+"Categories path" => "Chemin des catégories",
+"A new file was posted to image gallery" => "Un nouveau fichier a été téléchargé dans une galerie d'images ",
+"Image Gallery {\$galleryName} changed" => "La galerie d'images {\$galleryName} a changé",
+"Do not show empty fields in item view?" => "Ne pas montrer les champs vides à l'affichage d'une fiche?",
+"Show these fields (ID comma separated) in a popup on item link when listing tracker items?" => "Montrer ces champs (Ids séparés par des virgules) dans une popup au passage sur le lien vers la fiche lors de l'affichage des fiches d'un formulaire?",
+"any type" => "tout type",
+"all topic" => "tous les sujets",
+"any language" => "toute langue",
+"any category" => "toute catégorie",
+"(Only .gif images, and aproximately 45px x 45px)" => "(Seulement les images .gif, et approximativement 45px x 45px)",
+"Flash binary (.swf or .dcr)" => "Binaire Flash (.swf or .dcr)",
+"Mods Install/uninstall" => "Installer/Désinstaller les mods",
+"section level 0" => "section niveau 0",
+"section level 1" => "section niveau 1",
+"section level 2" => "section niveau 2",
+"section level 3" => "section niveau 3",
+"sorted section level 0" => "section triée niveau 0",
+"Number of lines" => "Nombre de lignes",
 "Multilingual content" => "Contenu multilingue",
+
 // ### start of untranslated words
 // ### uncomment value pairs as you translate
 "Not enable for this type of object" => "Non permis pour ce type d'objet",
