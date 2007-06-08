@@ -1,17 +1,16 @@
 <h1><a href="tiki-webmail.php" class="pagetitle">{tr}Webmail{/tr}</a>
-
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Webmail" target="tikihelp" class="tikihelp" title="{tr}Webmail Doc{/tr}">
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
 {/if}
-
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-webmail.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Webmail Doc template{/tr}">
 <img border="0" src="img/icons/info.gif" alt="{tr}edit{/tr}" /></a>
-{/if}</h1>
-
-
-
+{/if}
+{if $tiki_p_admin eq 'y'}
+<a href="tiki-admin.php?page=webmail" title="{tr}admin feature{/tr}">{html_image file='pics/icons/wrench.png' border='0'  alt="{tr}admin feature{/tr}"}</a>
+{/if}
+</h1>
 
 {include file=tiki-mytiki_bar.tpl}
 <br /><br />

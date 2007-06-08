@@ -1,9 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-orphan_pages.tpl,v 1.22 2007-02-18 15:52:59 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-orphan_pages.tpl,v 1.23 2007-06-08 18:07:48 sylvieg Exp $ *}
 
 <h1><a href="tiki-orphan_pages.php" class="pagetitle">{tr}Orphan Pages{/tr}</a></h1>
 {if $tiki_p_admin eq 'y'}
-<a href="tiki-admin.php?page=wiki"><img src='pics/icons/wrench.png' border='0' alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" width='16' height='16' /></a>
+<a href="tiki-admin.php?page=wiki"><img src='pics/icons/wrench.png' border='0' alt="{tr}admin feature{/tr}" title="{tr}admin feature{/tr}" width='16' height='16' /></a>
 {/if}
+
 <table class="findtable">
 <tr><td class="findtitle">{tr}Find{/tr}</td>
    <td class="findtitle">

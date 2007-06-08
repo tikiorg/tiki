@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.39 2007-06-07 12:58:25 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.40 2007-06-08 18:07:48 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-list_articles.php">{tr}Articles{/tr}</a>
 
@@ -6,11 +6,14 @@
 <a href="{$helpurl}Articles" target="tikihelp" class="tikihelp" title="{tr}List Articles{/tr}">
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
 {/if}
-
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-list_articles.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}list articles tpl{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}edit template{/tr}' /></a>
-{/if}</h1>
+{/if}
+{if $tiki_p_admin eq 'y'}
+<a href="tiki-admin.php?page=cms"><img src='pics/icons/wrench.png' border='0' width='16' height='16' alt="{tr}admin feature{/tr}" title="{tr}admin feature{/tr}" /></a>
+{/if}
+</h1>
 
 <div class="navbar">
 {if $tiki_p_edit_article eq 'y'}
@@ -19,9 +22,6 @@
 <a class="linkbut" href="tiki-view_articles.php">{tr}view articles{/tr}</a>
 {if $feature_submissions == 'y' && ($tiki_p_approve_submission == "y" || $tiki_p_remove_submission == "y" || $tiki_p_edit_submission == "y")}
 <a class="linkbut" href="tiki-list_submissions.php">{tr}View submissions{/tr}</a>
-{/if}
-{if $tiki_p_admin eq 'y'}
-<a href="tiki-admin.php?page=cms"><img src='pics/icons/wrench.png' border='0' width='16' height='16' alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
 {/if}
 </div>
 

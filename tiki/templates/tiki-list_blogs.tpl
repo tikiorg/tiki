@@ -1,9 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_blogs.tpl,v 1.39 2007-05-23 17:50:40 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_blogs.tpl,v 1.40 2007-06-08 18:07:48 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a>
 {if $tiki_p_admin eq 'y'}
-<a href="tiki-admin.php?page=blogs"><img src='pics/icons/wrench.png' border='0' width='16' height='16' alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
+<a href="tiki-admin.php?page=blogs"><img src='pics/icons/wrench.png' border='0' width='16' height='16' alt="{tr}admin feature{/tr}" title="{tr}admin feature{/tr}" /></a>
 {/if}
 </h1>
+
 {if $tiki_p_create_blogs eq 'y'}
 <div class="navbar"><a class="linkbut" href="tiki-edit_blog.php">{tr}create new blog{/tr}</a></div>
 {/if}
