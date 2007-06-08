@@ -1,16 +1,16 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-galleries.tpl,v 1.60 2007-06-08 18:07:48 sylvieg Exp $ *}
+
 <h1><a href="tiki-galleries.php" class="pagetitle">{tr}Galleries{/tr}</a>
-
-      {if $feature_help eq 'y'}
-<a href="{$helpurl}Image+Galleries" target="tikihelp" class="tikihelp" title="{tr}Image Gallery{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
-
-
-      {if $feature_view_tpl eq 'y'}
+{if $feature_help eq 'y'}
+<a href="{$helpurl}Image+Galleries" target="tikihelp" class="tikihelp" title="{tr}Image Gallery{/tr}" >
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+{/if}
+{if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-galleries.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}galleries tpl{/tr}">
-<img src="pics/icons/shape_square_edit.png" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}
-
+<img src="pics/icons/shape_square_edit.png" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>
+{/if}
 {if $tiki_p_admin eq 'y'}
-<a href="tiki-admin.php?page=gal" class="tikihelp"><img src='pics/icons/wrench.png' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}"  height="16" width="16" /></a>
+<a href="tiki-admin.php?page=gal" class="tikihelp"><img src='pics/icons/wrench.png' border='0'  alt="{tr}admin feature{/tr}" title="{tr}admin feature{/tr}"  height="16" width="16" /></a>
 {/if}</h1>
 
 {if $tiki_p_create_galleries eq 'y'}

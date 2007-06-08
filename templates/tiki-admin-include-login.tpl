@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.75 2007-06-05 16:28:37 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.76 2007-06-08 18:07:48 sylvieg Exp $ *}
 <div class="cbox">
 <div class="cbox-title">{tr}Users &amp; groups{/tr}</div>
 <div class="cbox-data">
@@ -178,7 +178,7 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 <option value="{$gr.groupName|escape}" {if $gr.registrationChoice eq 'y'} selected="selected"{/if}>{$gr.groupName|truncate:"52":" ..."}</option>
 {/if}
 {/foreach}
-</select>
+</select><br /><i>Specify the fields that will be asked in admin->groups</i>
 </td></tr>
 <tr><td class="form">{tr}Displays user's contribution in the user information page{/tr}:</td>
 <td><input type="checkbox" name="feature_display_my_to_others" {if $feature_display_my_to_others eq 'y'}checked="checked"{/if}/></td></tr>

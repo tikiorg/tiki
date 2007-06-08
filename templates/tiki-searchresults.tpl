@@ -1,6 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-searchresults.tpl,v 1.24 2007-04-02 17:21:23 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-searchresults.tpl,v 1.25 2007-06-08 18:07:48 sylvieg Exp $ *}
 {if !( $searchNoResults ) }
-<h1>{tr}Search results{/tr}:</h1>
+<h1>{tr}Search results{/tr}
+{if $tiki_p_admin eq 'y'}
+<a href="tiki-admin.php?page=search" title="{tr}admin feature{/tr}">{html_image file='pics/icons/wrench.png' border='0'  alt="{tr}admin feature{/tr}"}</a>
+{/if}
+</h1>
 {/if}
 <div class="nohighlight">
 {if !( $searchStyle eq "menu" )}

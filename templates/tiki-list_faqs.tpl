@@ -1,15 +1,16 @@
 <h1><a class="pagetitle" href="tiki-list_faqs.php">{tr}FAQs{/tr}</a>
 
 {if $feature_help eq 'y'}
-
 <a href="{$helpurl}FAQs" target="tikihelp" class="tikihelp" title="{tr}FAQs{/tr}">
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
-
-
-
-      {if $feature_view_tpl eq 'y'}
+{if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-list_faqs.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}list faqs tpl{/tr}">
-<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}</h1>
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>
+{/if}
+{if $tiki_p_admin eq 'y'}
+<a href="tiki-admin.php?page=faqs" title="{tr}admin feature{/tr}">{html_image file='pics/icons/wrench.png' border='0'  alt="{tr}admin feature{/tr}"}</a>
+{/if}
+</h1>
 
 {if $tiki_p_admin_faqs eq 'y'}
 {if $faqId > 0}
