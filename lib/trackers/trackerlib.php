@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.200 2007-06-08 15:03:33 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.201 2007-06-08 16:23:10 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2005,7 +2005,7 @@ class TrackerLib extends TikiLib {
 			$emails2[] = $userlib->get_user_email($w['user']);
 		}
 		if( array_key_exists( "outboundEmail", $options ) && $options["outboundEmail"] ) {
-			$emails3 = array( $options["outboundEmail"] );
+			$emails3 = split(',', $options['outboundEmail']);
 		}
 		if (!empty($emails2))
 			$emails = array_merge($emails, $emails2);
