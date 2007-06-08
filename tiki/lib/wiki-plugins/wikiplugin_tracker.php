@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.64 2007-06-07 15:16:31 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.65 2007-06-08 10:56:54 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -101,7 +101,7 @@ function wikiplugin_tracker($data, $params) {
 						if ($fl['type'] == 'R' && $fl['isMandatory'] == 'y' && !isset($_REQUEST['track'][$fl['fieldId']])) {
 							// if none radio is selected, there will be no value and no error if mandatory
 							if (empty($fields_plugin) || in_array($fl['fieldId'], $fields_plugin)) {
-								$ins_fields['data'][] = array_merge(array('value' => ''), $fl);
+								$_REQUEST['track'][$fl['fieldId']] = '';
 							}
 						}
 

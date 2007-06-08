@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.95 2007-06-07 14:03:53 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.96 2007-06-08 10:56:54 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 <h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
 
@@ -27,7 +27,7 @@
 {if $tikifeedback}
 <div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">{section name=n loop=$tikifeedback}{$tikifeedback[n].mes}<br />{/section}</div>
 {/if}
-<br />
+
 {if $added != "" or $discarded != "" or $discardlist != ''}
 <div class="simplebox">
 <h2>{tr}Batch Upload Results{/tr}</h2>
@@ -50,8 +50,6 @@
 {/if}
 </div>
 {/if}
-
-<br /><br />
 
 {if $feature_tabs eq 'y'}
 {cycle name=tabs values="1,2,3,4" print=false advance=false reset=true}

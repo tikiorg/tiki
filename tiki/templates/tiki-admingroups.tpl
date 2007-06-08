@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.70 2007-06-06 09:54:07 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.71 2007-06-08 10:56:54 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -50,7 +50,7 @@
 </tr></table>
 </form>
 
-{if $cant_pages > 1}
+{if $cant_pages > 1 or !empty($initial) or !empty($find)}
 <div align="center">
 {section name=ini loop=$initials}
 {if $initial and $initials[ini] eq $initial}

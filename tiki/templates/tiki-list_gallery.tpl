@@ -1,5 +1,6 @@
 <h1><a href="tiki-list_gallery.php?galleryId={$galleryId}" class="pagetitle">{tr}Browsing Gallery{/tr}: {$name}</a></h1>
 
+<div class="navbar">
 {if $system eq 'n'}
   {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
     <a  href="tiki-galleries.php?edit_mode=1&amp;galleryId={$galleryId}" class="linkbut">{tr}edit gallery{/tr}</a>
@@ -12,12 +13,13 @@
   {/if}
 {/if}
 <a href="tiki-browse_gallery.php?galleryId={$galleryId}" class="linkbut">{tr}browse gallery{/tr}</a>
-<br /><br /> 
+</div>
+
 <div class="galdesc">
   {$description}
 </div>
 
-  <h3>{tr}Gallery Images{/tr}</h3>
+  <h2>{tr}Gallery Images{/tr}</h2>
 <div align="center">
 <table class="normal">
 <tr>
