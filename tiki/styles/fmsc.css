@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/fmsc.css,v 1.12 2007-06-07 13:42:35 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/fmsc.css,v 1.13 2007-06-08 18:13:32 sylvieg Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -1535,6 +1535,7 @@ td.categobjectsdataodd {
 	padding : 1px 6px 1px 6px;
 	background-color : transparent;
 	color : #666666;
+	text-align: left;
 }
 .catlists:last-child {
 	border-bottom : 1px solid #FFFFFF;
@@ -2355,4 +2356,8 @@ div.admbox img { margin-top: 20px; }
 .navbar {
 	margin: 10px 0;
 }
+.searchresults {
+text-align: left;
+}
+
 /* end of css file */
