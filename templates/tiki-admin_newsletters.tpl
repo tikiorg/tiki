@@ -1,3 +1,4 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_newsletters.tpl,v 1.28 2007-06-08 10:56:54 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_newsletters.php">{tr}Admin newsletters{/tr}</a>
   
 {if $feature_help eq 'y'}
@@ -8,9 +9,11 @@
 <a href="tiki-edit_templates.php?template=tiki-admin_newsletters.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin newsletters template{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>{/if}</h1>
 
+<div class="navbar">
 <span class="button2"><a class="linkbut" href="tiki-newsletters.php">{tr}list newsletters{/tr}</a></span>
 <span class="button2"><a class="linkbut" href="tiki-send_newsletters.php">{tr}send newsletters{/tr}</a></span>
-<br /><br />
+</div>
+
 <h2>{tr}Create/edit newsletters{/tr}</h2>
 {if $individual eq 'y'}
 <a class="link" href="tiki-objectpermissions.php?objectName={$info.name|escape:"url"}&amp;objectType=newsletter&amp;permType=newsletters&amp;objectId={$info.nlId}">{tr}There are individual permissions set for this newsletter{/tr}</a><br /><br />

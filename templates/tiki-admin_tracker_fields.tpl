@@ -1,6 +1,7 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_tracker_fields.tpl,v 1.51 2007-06-08 10:56:54 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}">{tr}Admin tracker{/tr}: {$tracker_info.name}</a></h1>
 
-<div>
+<div  class="navbar">
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
 {if $tiki_p_admin_trackers eq 'y'}
 <span class="button2"><a href="tiki-admin_trackers.php" class="linkbut">{tr}Admin trackers{/tr}</a></span>
@@ -9,7 +10,6 @@
 <span class="button2"><a href="tiki-view_tracker.php?trackerId={$trackerId}" class="linkbut">{tr}View this tracker items{/tr}</a></span>
 </div>
 
-<br /><br />
 <h2>{tr}Edit tracker fields{/tr}</h2>
 <form action="tiki-admin_tracker_fields.php" method="post">
 {if $find}<input type="hidden" name="find" value="{$find|escape}" />{/if}
@@ -59,7 +59,7 @@
 <!-- {$plug} -->
 <a name="list"></a>
 <h2>{tr}Tracker fields{/tr}</h2>
-<div  align="center">
+
 <table class="findtable">
 <tr><td>{tr}Find{/tr}</td>
 <td>
@@ -137,7 +137,6 @@
 {/section}
 {/if}
 
-</div>
 </div>
 
 <h2>{tr}Import/export trackers fields{/tr}</h2>

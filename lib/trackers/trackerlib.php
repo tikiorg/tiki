@@ -1,4 +1,5 @@
 <?php
+// CVS: $Id: trackerlib.php,v 1.199 2007-06-08 10:56:54 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
