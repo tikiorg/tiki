@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.78 2007-06-08 10:56:54 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.79 2007-06-08 16:23:09 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
   
 {if $feature_help eq 'y'}
@@ -122,7 +122,7 @@ for a tracker and they must be valid in SQL{/tr}</em>
 </td></tr>
 <tr class="formcolor"><td class="auto" colspan="2">{tr}Show status to tracker admin only{/tr}</td><td>
 <input type="checkbox" name="showStatusAdminOnly" {if $showStatusAdminOnly eq 'y'}checked="checked"{/if} /></td></tr>
-<tr class="formcolor"><td class="auto" colspan="2">{tr}Send copies of all activity in this tracker to this e-mail address{/tr}:</td><td><input type="text" name="outboundEmail" value="{$outboundEmail|escape}" /></td></tr>
+<tr class="formcolor"><td class="auto" colspan="2">{tr}Send copies of all activity in this tracker to this e-mail address{/tr}:<br /><i>{tr}You can add several email addresses by separating them with commas.{/tr}</i></td><td><input type="text" name="outboundEmail" value="{$outboundEmail|escape}" /></td></tr>
 <tr class="formcolor"><td class="auto" colspan="2">{tr}Use simplified e-mail format{/tr}
 <br /><i>{tr}The tracker will use the text field named Subject if any as subject and will use the user email or for anonymous the email field if any as sender{/tr}</i>
 </td><td>
