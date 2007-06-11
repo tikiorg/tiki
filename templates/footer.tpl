@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/footer.tpl,v 1.9 2006-11-28 14:34:11 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/footer.tpl,v 1.10 2007-06-11 10:11:17 sylvieg Exp $ *}
 
 {if count($phpErrors)}
 <span class="button2"><a href="#" onclick="flip('errors');return false;" class="linkbut">{tr}Show php error messages{/tr}</a></span><br />
@@ -19,7 +19,7 @@
 {/if}
 
 {if $lastup}
-<div class="cvsup" style="font-size:x-small;text-align:center;color:#999;">{tr}Last update from CVS{/tr}: {$lastup|tiki_long_datetime}</div>
+<div class="cvsup" style="font-size:x-small;text-align:center;color:#999;">{tr}Last update from CVS{/tr}({$tiki_release}): {$lastup|tiki_long_datetime}</div>
 {/if}
 </body>
 </html>  
