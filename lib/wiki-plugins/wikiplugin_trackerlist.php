@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.33 2007-05-15 16:11:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.34 2007-06-11 01:54:32 mose Exp $
 //
 // TODO : 
 // ----------
@@ -157,6 +157,8 @@ function wikiplugin_trackerlist($data, $params) {
 
 		if (!isset($filtervalue)) {
 			$filtervalue = '';
+		} elseif ($filtervalue == '#user') {
+			$filtervalue = $user;
 		}
 		
 		if (!isset($exactvalue)) {
