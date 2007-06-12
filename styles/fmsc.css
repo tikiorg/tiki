@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/fmsc.css,v 1.13 2007-06-08 18:13:32 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/fmsc.css,v 1.14 2007-06-12 10:50:10 sylvieg Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -1758,24 +1758,17 @@ div.messureadbody {
 	padding-bottom: 2px;
 	background-repeat: no-repeat;
 	background-position: left top;
-	text-indent: 8px;
+	text-indent: 2px;
 }
-.Cal0 {
+.Cal0:before {
 	background-image: url(hec/attente.gif);
 }
-.Cal1 {
-	background-image: url(hec/confirmer.gif);
-}
-.Cal2 {
-	background-image: url(hec/annuler.gif);
-}
-
-.Cal0:before {
-}
 .Cal1:before {
+	background-image: url(hec/confirmer.gif);
 	background-color : #FFCC77;
 }
 .Cal2:before {
+	background-image: url(hec/annuler.gif);
 	background-color : #EEEEAA;
 }
 .caltitle {
