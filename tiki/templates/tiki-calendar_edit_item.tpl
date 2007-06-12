@@ -261,7 +261,7 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 {if $edit}
 <input type="text" name="save[url]" value="{$calitem.url}" size="32" style="width:90%;" />
 {else}
-<a href="{$calitem.url|escape:'url'}">{$calitem.url}</a>
+<a href="{$calitem.url}">{$calitem.url}</a>
 {/if}
 </td>
 </tr>
