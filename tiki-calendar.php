@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.69 2007-03-06 19:29:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.70 2007-06-12 09:41:18 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -260,7 +260,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
         $smarty->assign('celllocation', $le["location"]);
         $smarty->assign('cellcategory', $le["category"]);
         $smarty->assign('cellname', $le["name"]);
-        $smarty->assign('cellurl', $le["url"]);
+        $smarty->assign('cellurl', $le["web"]);
         $smarty->assign('cellid', $le["calitemId"]);
         $smarty->assign('celldescription', $tikilib->parse_data($le["description"]));
         $smarty->assign('cellmodif', $le['modifiable']);
