@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_edit_item.php,v 1.18 2007-05-15 11:32:49 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_edit_item.php,v 1.19 2007-06-12 12:22:08 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -215,6 +215,7 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 	$calitem = $calendarlib->get_item($_REQUEST['viewcalitemId']);
 	$id = $_REQUEST['viewcalitemId'];
 	$calendar = $calendarlib->get_calendar($calitem['calendarId']);
+	$hour_minmax = ceil(($calendar['startday'])/(60*60)).'-'. ceil(($calendar['endday'])/(60*60));
 	$_REQUEST['calendarId'] = $calitem['calendarId'];
 } elseif (isset($_REQUEST['calitemId']) and ($tiki_p_change_events == 'y' or $tiki_p_view_events == 'y')) {
 	$calitem = $calendarlib->get_item($_REQUEST['calitemId']);
