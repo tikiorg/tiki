@@ -1,7 +1,6 @@
 <h1><a class="pagetitle" href="tiki-calendar_edit_item.php">{tr}Calendar Item{/tr}</a></h1>
 
-<div class="page-bar">
-&nbsp;
+<div class="navbar">
 {if $tiki_p_view_calendar eq 'y'}
 <span class="button2"><a href="tiki-calendar.php" class="linkbut">{tr}Calendar{/tr}</a></span>
 {/if}
