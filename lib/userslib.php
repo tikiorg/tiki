@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.224 2007-06-12 18:01:08 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.225 2007-06-12 23:45:52 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -47,8 +47,8 @@ class UsersLib extends TikiLib {
 	global $feature_clear_passwords;
 
 	$query = "select `email` from `users_users` where `login` = ?";
-	$email = $this->geOne($query, array('admin'));
-	$hash = $this->hash_pass("admin", $pass);
+	$email = $this->getOne($query, array('admin'));
+	$hash = $this->hash_pass($pass);
 
 	if ($feature_clear_passwords == 'n')
 	    $pass = '';
@@ -242,7 +242,7 @@ class UsersLib extends TikiLib {
 
 	// For each auth method, validate user in auth, if valid, verify tiki user exists and create if necessary (as configured)
 	// Once complete, update_lastlogin and return result, username and login message.
-    function validate_user(&$user, $pass, $challenge, $response) {
+    function validate_user(&$user, $pass, $challenge, $response, $validate_phase=false) {
 	global $tikilib, $sender_email, $feature_intertiki, $feature_intertiki_mymaster, $min_pass_length, $user_ldap_attributes;
 
 	if ($user != 'admin' && $feature_intertiki == 'y' && !empty($feature_intertiki_mymaster)) {
@@ -288,7 +288,7 @@ class UsersLib extends TikiLib {
 	// first attempt a login via the standard Tiki system
 	// 
 	if (!($auth_shib || $auth_cas) || $user == 'admin') {
-		list($result, $user) = $this->validate_user_tiki($user, $pass, $challenge, $response);
+		list($result, $user) = $this->validate_user_tiki($user, $pass, $challenge, $response, $validate_phase);
 	} else {
 		$result = NULL;
 	}
@@ -768,7 +768,7 @@ class UsersLib extends TikiLib {
     }
 
     // validate the user in the Tiki database
-    function validate_user_tiki($user, $pass, $challenge, $response) {
+    function validate_user_tiki($user, $pass, $challenge, $response, $validate_phase=false) {
 	global $feature_challenge;
 
 	// first verify that the user exists
@@ -792,14 +792,20 @@ class UsersLib extends TikiLib {
 
 	// next verify the password with every hashes methods
 	if ($feature_challenge == 'n' || empty($response)) {
-	    if ($res['hash'] == md5($pass)) // old old method md5(pass), for compatibility
-		return array(true, $user);
- 
-	    if ($res['hash'] == md5($user.$pass.trim($res['email']))) // old method md5(user.pass.email), for compatibility
- 		return array(true, $user);
+		if (!$validate_phase and $res['provpass']) {
+			return array(USER_NOT_VALIDATED, $user);
+		}
+	    if ($res['hash'] == md5($user.$pass.trim($res['email']))) // very old method md5(user.pass.email), for compatibility
+ 		return array(USER_VALID, $user);
 
-	    if ($this->hash_pass($user, $pass, $res['hash']) == $res['hash']) // new method (crypt-md5) and tikihash method (md5(user.pass))
-		return array(true, $user);
+	    if ($res['hash'] == md5($user.$pass)) // old method md5(user.pass), for compatibility
+		return array(USER_VALID, $user);
+ 
+	    if ($res['hash'] == md5($pass)) // normal method md5(pass)
+		return array(USER_VALID, $user);
+ 
+	    if ($this->hash_pass($pass, $res['hash']) == $res['hash']) // new method (crypt-md5) and tikihash method (md5(pass))
+		return array(USER_VALID, $user);
 
 	    return array(PASSWORD_INCORRECT, $user);
 	} else {
@@ -816,7 +822,7 @@ class UsersLib extends TikiLib {
 	    //print("response : $response<br />");
 	    if ($response == md5($user . $hash . $_SESSION["challenge"])) {
 			$this->update_lastlogin($user);
-			return array(true, $user);
+			return array(USER_VALID, $user);
 	    } else {
 			return array(false, $user);
 	    }
@@ -1780,7 +1786,7 @@ function get_included_groups($group, $recur=true) {
 	    
     }
 
-    function hash_pass($user, $pass, $salt = NULL) {
+    function hash_pass($pass, $salt = NULL) {
 	global $feature_crypt_passwords;
 
 	$hashmethod=$feature_crypt_passwords;
@@ -1824,7 +1830,7 @@ function get_included_groups($group, $recur=true) {
 	    
 	case 'tikihash':
 	default:
-	    return md5($user.$pass);
+	    return md5($pass);
 	}
     }
 
@@ -1834,7 +1840,7 @@ function get_included_groups($group, $recur=true) {
 	$query = "select `provpass`, `login` from `users_users` where `login`=?";
 	$result = $this->query($query, array($user));
 	$res = $result->fetchRow();
-	$hash = $this->hash_pass($res['login'],  $res['provpass']);
+	$hash = $this->hash_pass($res['provpass']);
 	$provpass = $res["provpass"];
 
 	if ($feature_clear_passwords == 'n') {
@@ -1859,7 +1865,7 @@ function get_included_groups($group, $recur=true) {
 	    return false;
 
 	// Generate a unique hash; this is also done below in set_user_fields()
-	$hash = $this->hash_pass($user, $pass);
+	$hash = $this->hash_pass($pass);
 
 	if ( $feature_clear_passwords == 'n' ) $pass = '';
 
@@ -1931,7 +1937,7 @@ function get_included_groups($group, $recur=true) {
 	// lfagundes - only if pass is provided, admin doesn't need it
 	// is this still necessary?
 	if (!empty($pass)) {
-	    $hash = $this->hash_pass($user, $pass);
+	    $hash = $this->hash_pass($pass);
 	    $query = "update `users_users` set `hash`=?  where " . $this->convert_binary(). " `login`=?";
 	    $result = $this->query($query, array(
 						 $hash,
@@ -2072,7 +2078,7 @@ function get_included_groups($group, $recur=true) {
 		$query = "select `provpass`  from `users_users` where " . $this->convert_binary() . " `login`=?";
 		$pass = $this->getOne($query, array($user));
 		if (($pass <> '') && ($actpass == md5($pass))) {
-			$hash = $this->hash_pass($user, $pass);
+			$hash = $this->hash_pass($pass);
 			$query = "update `users_users` set `password`=?, `hash`=?, `pass_confirm`=? where " . $this->convert_binary() . " `login`=?";
 			$result = $this->query($query, array("", $hash, (int)$this->now, $user));
 			return $pass;
@@ -2083,7 +2089,7 @@ function get_included_groups($group, $recur=true) {
     function change_user_password($user, $pass) {
 	global $feature_clear_passwords;
 
-	$hash = $this->hash_pass($user, $pass);
+	$hash = $this->hash_pass($pass);
 	$new_pass_confirm = $this->now;
 
 	if ($feature_clear_passwords == 'n') {
@@ -2172,7 +2178,7 @@ function get_included_groups($group, $recur=true) {
 
 	    // I don't think there are currently cases where login and email are undefined
 	    //$hash = md5($u['login'] . $u['password'] . $u['email']);
-	    $hash = $this->hash_pass($u['login'], $u['password']);
+	    $hash = $this->hash_pass($u['password']);
 	    $q[] = "`hash` = ?";
 	    $bindvars[] = $hash;
 	}
