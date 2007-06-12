@@ -1,5 +1,5 @@
 <?php
-
+// $Header: /cvsroot/tikiwiki/tiki/lib/calendar/calendarlib.php,v 1.72 2007-06-12 09:16:33 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
