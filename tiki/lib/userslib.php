@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.223 2007-06-07 13:45:47 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.224 2007-06-12 18:01:08 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1384,7 +1384,7 @@ function get_included_groups($group, $recur=true) {
 
 	$res['groups'] = ( $inclusion ) ? $this->get_user_groups_inclusion($user) : $this->get_user_groups($user);
 	$res['age'] = ( ! isset($res['registrationDate']) ) ? 0 : $this->now - $res['registrationDate'];
-	if ( $login_is_email == 'y' && $res['login'] != 'admin' ) $res['email'] = $res['login'];
+	if ( $login_is_email == 'y' && isset($res['login']) && $res['login'] != 'admin' ) $res['email'] = $res['login'];
 
 	return $res;
     }
