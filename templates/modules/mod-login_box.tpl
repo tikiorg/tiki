@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.50 2007-06-06 12:18:22 luciash Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.51 2007-06-12 16:13:54 sylvieg Exp $ *}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Login{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations}
 
@@ -63,7 +63,7 @@
      {/if}
         <fieldset>
           <legend>{tr}Login as{/tr}&hellip;</legend>
-            <div><label for="login-user">{tr}User{/tr}:</label><br />
+            <div><label for="login-user">{if $login_is_email eq 'y'}{tr}Email{/tr}{else}{tr}User{/tr}{/if}:</label><br />
 		{if $loginuser eq ''}
               <input type="text" name="user" id="login-user" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
 	  <script type="text/javascript">document.getElementById('login-user').focus();</script>
