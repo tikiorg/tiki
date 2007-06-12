@@ -249,8 +249,8 @@ class CalendarLib extends TikiLib {
 		$res["participants"] = $ppl;
 		$res["organizers"] = $org;
 		
-		$res['date_start'] = (int)$res['start'] - (int)$res['time_start'];
-		$res['date_end'] = (int)$res['end'] - (int)$res['time_end'];
+		$res['date_start'] = (int)$res['start'];
+		$res['date_end'] = (int)$res['end'];
 		
 		$res['duration'] = $res['end'] - $res['start'];
 		$res['parsed'] = $this->parse_data($res['description']);
