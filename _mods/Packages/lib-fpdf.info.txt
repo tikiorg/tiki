@@ -1,0 +1,132 @@
+contributor:
+$Author: niclone $
+
+revision:
+$Revision: 1.1 $
+
+lastmodif:
+$Date: 2007-06-13 20:44:53 $
+
+files: 
+lib/fpdf/doc/acceptpagebreak.htm lib/fpdf/doc/acceptpagebreak.htm
+lib/fpdf/doc/addfont.htm lib/fpdf/doc/addfont.htm
+lib/fpdf/doc/addlink.htm lib/fpdf/doc/addlink.htm
+lib/fpdf/doc/addpage.htm lib/fpdf/doc/addpage.htm
+lib/fpdf/doc/aliasnbpages.htm lib/fpdf/doc/aliasnbpages.htm
+lib/fpdf/doc/cell.htm lib/fpdf/doc/cell.htm
+lib/fpdf/doc/close.htm lib/fpdf/doc/close.htm
+lib/fpdf/doc/error.htm lib/fpdf/doc/error.htm
+lib/fpdf/doc/footer.htm lib/fpdf/doc/footer.htm
+lib/fpdf/doc/fpdf.htm lib/fpdf/doc/fpdf.htm
+lib/fpdf/doc/getstringwidth.htm lib/fpdf/doc/getstringwidth.htm
+lib/fpdf/doc/getx.htm lib/fpdf/doc/getx.htm
+lib/fpdf/doc/gety.htm lib/fpdf/doc/gety.htm
+lib/fpdf/doc/header.htm lib/fpdf/doc/header.htm
+lib/fpdf/doc/image.htm lib/fpdf/doc/image.htm
+lib/fpdf/doc/index.htm lib/fpdf/doc/index.htm
+lib/fpdf/doc/line.htm lib/fpdf/doc/line.htm
+lib/fpdf/doc/link.htm lib/fpdf/doc/link.htm
+lib/fpdf/doc/ln.htm lib/fpdf/doc/ln.htm
+lib/fpdf/doc/multicell.htm lib/fpdf/doc/multicell.htm
+lib/fpdf/doc/output.htm lib/fpdf/doc/output.htm
+lib/fpdf/doc/pageno.htm lib/fpdf/doc/pageno.htm
+lib/fpdf/doc/rect.htm lib/fpdf/doc/rect.htm
+lib/fpdf/doc/setauthor.htm lib/fpdf/doc/setauthor.htm
+lib/fpdf/doc/setautopagebreak.htm lib/fpdf/doc/setautopagebreak.htm
+lib/fpdf/doc/setcompression.htm lib/fpdf/doc/setcompression.htm
+lib/fpdf/doc/setcreator.htm lib/fpdf/doc/setcreator.htm
+lib/fpdf/doc/setdisplaymode.htm lib/fpdf/doc/setdisplaymode.htm
+lib/fpdf/doc/setdrawcolor.htm lib/fpdf/doc/setdrawcolor.htm
+lib/fpdf/doc/setfillcolor.htm lib/fpdf/doc/setfillcolor.htm
+lib/fpdf/doc/setfont.htm lib/fpdf/doc/setfont.htm
+lib/fpdf/doc/setfontsize.htm lib/fpdf/doc/setfontsize.htm
+lib/fpdf/doc/setkeywords.htm lib/fpdf/doc/setkeywords.htm
+lib/fpdf/doc/setleftmargin.htm lib/fpdf/doc/setleftmargin.htm
+lib/fpdf/doc/setlinewidth.htm lib/fpdf/doc/setlinewidth.htm
+lib/fpdf/doc/setlink.htm lib/fpdf/doc/setlink.htm
+lib/fpdf/doc/setmargins.htm lib/fpdf/doc/setmargins.htm
+lib/fpdf/doc/setrightmargin.htm lib/fpdf/doc/setrightmargin.htm
+lib/fpdf/doc/setsubject.htm lib/fpdf/doc/setsubject.htm
+lib/fpdf/doc/settextcolor.htm lib/fpdf/doc/settextcolor.htm
+lib/fpdf/doc/settitle.htm lib/fpdf/doc/settitle.htm
+lib/fpdf/doc/settopmargin.htm lib/fpdf/doc/settopmargin.htm
+lib/fpdf/doc/setx.htm lib/fpdf/doc/setx.htm
+lib/fpdf/doc/setxy.htm lib/fpdf/doc/setxy.htm
+lib/fpdf/doc/sety.htm lib/fpdf/doc/sety.htm
+lib/fpdf/doc/text.htm lib/fpdf/doc/text.htm
+lib/fpdf/doc/write.htm lib/fpdf/doc/write.htm
+lib/fpdf/FAQ.htm lib/fpdf/FAQ.htm
+lib/fpdf/font/courier.php lib/fpdf/font/courier.php
+lib/fpdf/font/helvetica.php lib/fpdf/font/helvetica.php
+lib/fpdf/font/helveticab.php lib/fpdf/font/helveticab.php
+lib/fpdf/font/helveticabi.php lib/fpdf/font/helveticabi.php
+lib/fpdf/font/helveticai.php lib/fpdf/font/helveticai.php
+lib/fpdf/font/makefont/cp1250.map lib/fpdf/font/makefont/cp1250.map
+lib/fpdf/font/makefont/cp1251.map lib/fpdf/font/makefont/cp1251.map
+lib/fpdf/font/makefont/cp1252.map lib/fpdf/font/makefont/cp1252.map
+lib/fpdf/font/makefont/cp1253.map lib/fpdf/font/makefont/cp1253.map
+lib/fpdf/font/makefont/cp1254.map lib/fpdf/font/makefont/cp1254.map
+lib/fpdf/font/makefont/cp1255.map lib/fpdf/font/makefont/cp1255.map
+lib/fpdf/font/makefont/cp1257.map lib/fpdf/font/makefont/cp1257.map
+lib/fpdf/font/makefont/cp1258.map lib/fpdf/font/makefont/cp1258.map
+lib/fpdf/font/makefont/cp874.map lib/fpdf/font/makefont/cp874.map
+lib/fpdf/font/makefont/iso-8859-1.map lib/fpdf/font/makefont/iso-8859-1.map
+lib/fpdf/font/makefont/iso-8859-11.map lib/fpdf/font/makefont/iso-8859-11.map
+lib/fpdf/font/makefont/iso-8859-15.map lib/fpdf/font/makefont/iso-8859-15.map
+lib/fpdf/font/makefont/iso-8859-16.map lib/fpdf/font/makefont/iso-8859-16.map
+lib/fpdf/font/makefont/iso-8859-2.map lib/fpdf/font/makefont/iso-8859-2.map
+lib/fpdf/font/makefont/iso-8859-4.map lib/fpdf/font/makefont/iso-8859-4.map
+lib/fpdf/font/makefont/iso-8859-5.map lib/fpdf/font/makefont/iso-8859-5.map
+lib/fpdf/font/makefont/iso-8859-7.map lib/fpdf/font/makefont/iso-8859-7.map
+lib/fpdf/font/makefont/iso-8859-9.map lib/fpdf/font/makefont/iso-8859-9.map
+lib/fpdf/font/makefont/koi8-r.map lib/fpdf/font/makefont/koi8-r.map
+lib/fpdf/font/makefont/koi8-u.map lib/fpdf/font/makefont/koi8-u.map
+lib/fpdf/font/makefont/makefont.php lib/fpdf/font/makefont/makefont.php
+lib/fpdf/font/symbol.php lib/fpdf/font/symbol.php
+lib/fpdf/font/times.php lib/fpdf/font/times.php
+lib/fpdf/font/timesb.php lib/fpdf/font/timesb.php
+lib/fpdf/font/timesbi.php lib/fpdf/font/timesbi.php
+lib/fpdf/font/timesi.php lib/fpdf/font/timesi.php
+lib/fpdf/font/zapfdingbats.php lib/fpdf/font/zapfdingbats.php
+lib/fpdf/fpdf.css lib/fpdf/fpdf.css
+lib/fpdf/fpdf.php lib/fpdf/fpdf.php
+lib/fpdf/histo.htm lib/fpdf/histo.htm
+lib/fpdf/install.txt lib/fpdf/install.txt
+lib/fpdf/tutorial/20k_c1.txt lib/fpdf/tutorial/20k_c1.txt
+lib/fpdf/tutorial/20k_c2.txt lib/fpdf/tutorial/20k_c2.txt
+lib/fpdf/tutorial/calligra.afm lib/fpdf/tutorial/calligra.afm
+lib/fpdf/tutorial/calligra.php lib/fpdf/tutorial/calligra.php
+lib/fpdf/tutorial/calligra.ttf lib/fpdf/tutorial/calligra.ttf
+lib/fpdf/tutorial/calligra.z lib/fpdf/tutorial/calligra.z
+lib/fpdf/tutorial/countries.txt lib/fpdf/tutorial/countries.txt
+lib/fpdf/tutorial/index.htm lib/fpdf/tutorial/index.htm
+lib/fpdf/tutorial/logo.png lib/fpdf/tutorial/logo.png
+lib/fpdf/tutorial/logo_pb.png lib/fpdf/tutorial/logo_pb.png
+lib/fpdf/tutorial/makefont.php lib/fpdf/tutorial/makefont.php
+lib/fpdf/tutorial/tuto1.htm lib/fpdf/tutorial/tuto1.htm
+lib/fpdf/tutorial/tuto1.php lib/fpdf/tutorial/tuto1.php
+lib/fpdf/tutorial/tuto2.htm lib/fpdf/tutorial/tuto2.htm
+lib/fpdf/tutorial/tuto2.php lib/fpdf/tutorial/tuto2.php
+lib/fpdf/tutorial/tuto3.htm lib/fpdf/tutorial/tuto3.htm
+lib/fpdf/tutorial/tuto3.php lib/fpdf/tutorial/tuto3.php
+lib/fpdf/tutorial/tuto4.htm lib/fpdf/tutorial/tuto4.htm
+lib/fpdf/tutorial/tuto4.php lib/fpdf/tutorial/tuto4.php
+lib/fpdf/tutorial/tuto5.htm lib/fpdf/tutorial/tuto5.htm
+lib/fpdf/tutorial/tuto5.php lib/fpdf/tutorial/tuto5.php
+lib/fpdf/tutorial/tuto6.htm lib/fpdf/tutorial/tuto6.htm
+lib/fpdf/tutorial/tuto6.php lib/fpdf/tutorial/tuto6.php
+lib/fpdf/tutorial/tuto7.htm lib/fpdf/tutorial/tuto7.htm
+lib/fpdf/tutorial/tuto7.php lib/fpdf/tutorial/tuto7.php
+
+author:
+Olivier PLATHEY
+
+licence:
+Free
+
+Description: 
+FPDF is a PHP class which allows to generate PDF files with pure PHP, that is to say without using the PDFlib library. F from FPDF stands for Free: you may use it for any kind of usage and modify it to suit your needs.
+
+Changelog:
+1.53 latest release of fpdf at this time
+
