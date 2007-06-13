@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.163 2007-06-07 11:58:49 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.164 2007-06-13 15:15:53 jyhem Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -580,7 +580,6 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_username_length','5
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('lowercase_username','n');
 
 #2006-05-25 sampaioprimo
-insert into users_grouppermissions (groupName,permName) values('Anonymous','tiki_p_wiki_view_source');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_source', 'Can view source of wiki pages', 'basic', 'wiki');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_source','y');
 
@@ -618,7 +617,6 @@ ALTER TABLE tiki_logs CHANGE logip logip varchar(200);
 
 #sylvieg 11/3/06
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_watch_trackers', 'Can watch tracker', 'Registered', 'trackers');
-INSERT INTO users_grouppermissions (groupName,permName) values('Registered','tiki_p_watch_trackers');
 
 #sylvieg 11/6/6
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_list_type','n');
