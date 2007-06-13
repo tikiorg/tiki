@@ -2,9 +2,20 @@
 // Initialization
 $section = 'tinvoice';
 require_once ('tiki-setup.php');
-
 require_once ('lib/tinvoice/tinvoicelib.php');
 require_once ('lib/webmail/contactlib.php');
+if ($feature_tinvoice != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled").": feature_tinvoice");
+
+	$smarty->display("error.tpl");
+	die;
+}
+if ($tiki_p_tinvoice != 'y') {
+	$smarty->assign('msg', tra("You do not have permission to use this feature"));
+
+	$smarty->display("error.tpl");
+	die;
+}
 
 
 if ($feature_categories == 'y') {
