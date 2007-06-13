@@ -65,7 +65,114 @@ class TinvoiceLib extends TikiLib {
 	}
 	return $ret;
     }
+   
+    /*public*/ function get_period_dates($todate, $graphPeriod ) {
+    	$period=array();
+	if ($graphPeriod == "week") {
+		$weekDay=date('w',$todate);
+		$vd=24*60*60;
+		for ($i=0; $i<7; $i++) {
+			$k0=($i - $weekDay);
+			$tdate= $todate + ($k0*$vd);
+			$period[$i]['date']=$tdate;
+		}
+	} else if ($graphPeriod == "month") {
+		$vd=24*60*60;
+		$m = TikiLib::date_format("%m", $todate);
+		$y = TikiLib::date_format("%Y", $todate);
+		// get first day of the month
+		$firstday=mktime(0,0,0,$m,1,$y);
+		//get last day 
+		$lastday=mktime(0,0,0,$m+1,0,$y);
+		$lastdayNb=TikiLib::date_format("%d", $lastday);
+		for ($i=0; $i<=($lastdayNb-1); $i++) {
+			$tdate= $firstday + $i*$vd;
+			$period[$i]['date']=$tdate;
+		}
+	} else if ($graphPeriod == "trimester") {
+		// remove this later 
+		$xtype="day";
+		// set trimester dates 
+		$m = TikiLib::date_format("%m", $todate);
+		$y = TikiLib::date_format("%Y", $todate);
+		$T1F= mktime(0,0,0,1,1,$y);
+		$T1L= mktime(0,0,0,4,0,$y);
+		$T2F= mktime(0,0,0,4,1,$y);
+		$T2L =mktime(0,0,0,7,0,$y);
+		$T3F= mktime(0,0,0,7,1,$y);
+		$T3L= mktime(0,0,0,10,0,$y);
+		$T4F= mktime(0,0,0,10,1,$y);
+		$T4L= mktime(0,0,0,0,0,$y+1);
+
+		// get trimester dates 
+		if ($T1F <= $todate && $T1L >= $todate) {
+			$t=1;
+			$TF=$T1F;
+			$TL=$T1L;
+		} else if ($T2F <= $todate && $T2L >= $todate) {
+			$t=2;
+			$TF=$T2F;
+			$TL=$T2L;
+		} else if ($T3F <= $todate && $T3L >= $todate) {
+			$t=3;
+			$TF=$T3F;
+			$TL=$T3L;
+		} else if ($T4F <= $todate && $T4L >= $todate) {
+			$t=4;
+			$TF=$T4F;
+			$TL=$T4L;
+		}
+
+		if ($xtype=="day") {
+			$vd=24*60*60;
+			$nf= TikiLib::date_format("%j", $TF);
+			$nl= TikiLib::date_format("%j", $TL);
+			$maxdays=($nl-$nf);
+			for ($i=0; $i<=$maxdays; $i++) {
+				$tdate= $TF + $i*$vd;
+				$period[$i]['date']=$tdate;
+			}
+		}
+	} else {
+		$period=FALSE;	
+	}
+	return $period;
+}
+    /*public*/ function extract_Invoices($id_emitter=NULL, $idtype_emitter=NULL,
+    				      $id_receiver=NULL, $idtype_receiver=NULL,
+    				      $todate=NULL,
+    				      $period,
+    				      $sort_mode="date_asc") {
     
+    	$aquery=array();
+    	if (($id_emitter > 0) && ($idtype_emitter !== NULL)) {
+    	    $aquery['id_emitter']=(int)$id_emitter;
+    	    $aquery['idtype_emitter']=$idtype_emitter;
+    	}
+    	if (($id_receiver > 0) && ($idtype_receiver !== NULL)) {
+    	    $aquery['id_receiver']=(int)$id_receiver;
+    	    $aquery['idtype_receiver']=$idtype_receiver;
+    	}
+    	
+    	$a="";
+    	$b=array();
+    	foreach($aquery as $k => $v) {
+    		$a.=($a == '' ? 'WHERE ' : ' AND ')."`$k`=?";
+    		$b[]=$v;
+    	}
+    	if (($todate > 0) && ($todate !== NULL)) {
+    	    $max= count($period)-1;
+    	    $TF= TikiLib::date_format("%Y-%m-%d 00:00:00", $period[0]['date']); 
+    	    $TL= TikiLib::date_format("%Y-%m-%d 23:59:59", $period[$max]['date']); 
+    	    $b= array($TF,$TL);
+    	    $a.="WHERE `date`  >= ? AND `date` <= ? GROUP BY `date` ORDER BY `date` asc";}
+    	$query = "select `date`, sum(`amount`) from `tiki_tinvoice` $a";
+    	$result = $this->query($query, $b);
+    	while ($res = $result->fetchRow()) {	    
+    		$ret[]=new Tinvoice($this, $res);
+    	}
+    	return $ret;
+    }
     /*private*/ function init_prefs() {
 	$prefs=array();
 	$result=$this->query("SELECT * from tiki_tinvoice_prefs WHERE `userId`=?",
@@ -361,7 +468,9 @@ class Tinvoice {
     /*public*/ function get_amount() {
 	return $this->get_inline_info("amount");
     }
-
+    /*public*/ function get_sum_amount() {
+	return $this->get_inline_info("sum(`amount`)");
+    }
     /*public*/ function get_paid() {
 	return $this->get_inline_info("paid");
     }
@@ -380,6 +489,14 @@ class Tinvoice {
     
     /*public*/ function get_date() {
 	return $this->get_inline_info("date");
+    }
+    /*public*/ function get_date_as_timestamp() {
+    	$a= $this->get_inline_info("date");
+    	$t=explode(" ",$a);
+    	$t1=explode("-",$t[0]);
+    	$t2=explode(":",$t[1]);
+    	$ta= mktime($t2[0],$t2[1],$t2[2],$t1[1],$t1[2],$t1[0]);
+    	return $ta;
     }
 
     /*public*/ function set_date($date) {

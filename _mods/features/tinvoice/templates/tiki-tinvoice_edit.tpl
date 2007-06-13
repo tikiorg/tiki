@@ -7,10 +7,20 @@
  {/if}
  </a>
 </h1>
+<div class="navbar">
+{if $tiki_p_admin eq 'y'}<a class="linkbut" href="tiki-tinvoice_list.php">{tr}Invoices list{/tr}</a>&nbsp;{/if}
+<a class="linkbut" href="tiki-tinvoice_prefs.php">{tr}Invoices preferences{/tr}</a>
+</div>
 <form method='POST' action='tiki-tinvoice_edit.php'>
 <table>
- <tr><th>Date:</th><td><input type='text' name='invoice_date' value='{$invoice_date|escape}'></td></tr>
- <tr><th>Libelle:</th><td><input type='text' name='invoice_libelle' value='{$invoice_libelle|escape}'></td></tr>
+ <tr><th>Date:</th><td>
+ {if $feature_jscalendar ne 'y'} 
+ <input type='text' name='invoice_date' value='{$invoice_date|escape}'></td></tr>
+{else}
+{jscalendar id="start" date=$invoice_date fieldname="invoice_date" ifFormat="%d/%m/%Y" align="Bc" showtime='n'}
+{/if}
+
+<tr><th>Libelle:</th><td><input type='text' name='invoice_libelle' value='{$invoice_libelle|escape}'></td></tr>
  <tr><th>Date limite de paiement:</th><td><input type='text' name='invoice_datelimit' value='{$invoice_datelimit|escape}'></td></tr>
  <tr><th>Ref devis:</th><td><input type='text' name='invoice_refdevis' value='{$invoice_refdevis|escape}'></td></tr>
  <tr><th>Ref Bon de Commande:</th><td><input type='text' name='invoice_refbondecommande' value='{$invoice_refbondecommande|escape}'></td></tr>
