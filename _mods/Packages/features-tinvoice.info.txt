@@ -2,10 +2,13 @@ contributor:
 $Author: niclone $
 
 revision:
-$Revision: 1.12 $
+$Revision: 1.13 $
 
 lastmodif:
-$Date: 2007-06-13 17:42:42 $
+$Date: 2007-06-14 09:12:06 $
+
+requires:
+lib-fpdf_freefonts
 
 files: 
 features/tinvoice/tiki-tinvoice_edit.php tiki-tinvoice_edit.php
