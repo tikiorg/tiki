@@ -12,6 +12,8 @@
 <a class="linkbut" href="tiki-tinvoice_prefs.php">{tr}Invoices preferences{/tr}</a>
 </div>
 <form method='POST' action='tiki-tinvoice_edit.php'>
+
+<table><tr><td>
 <table>
  <tr><th>Date:</th><td>
  {if $feature_jscalendar ne 'y'} 
@@ -23,12 +25,13 @@
  <tr>
   <th>Client:</th>
   <td>
-   <select name='invoice_id_receiver'>
+   <select name='invoice_id_receiver' id='invoice_id_receiver'>
     <option disabled selected>Choisir...</option>
     {foreach from=$contacts item=contact}
     <option value='{$contact.contactId}'>{$contact.firstName|escape} {$contact.lastName|escape}</option>
     {/foreach}
    </select>
+   <input type='button' name='zob' value='zob' onclick='xajax_myajax_getcontact(document.getElementById("invoice_id_receiver").value)'>
   </td>
  </tr>
  <tr><th>Libelle:</th><td><input type='text' name='invoice_libelle' value='{$invoice_libelle|escape}'></td></tr>
@@ -37,6 +40,12 @@
  <tr><th>Ref Bon de Commande:</th><td><input type='text' name='invoice_refbondecommande' value='{$invoice_refbondecommande|escape}'></td></tr>
  <tr><th>TVA intra du client:</th><td><input type='text' name='invoice_receiver_tvanumber' value='{$invoice_receiver_tvanumber|escape}'></td></tr>
 </table>
+</td><td>
+<b>Addresse de facturation :</b><br />
+<textarea id='receiveraddress'>
+grr
+</textarea>
+</td></tr></table>
 <table>
  <tbody id='invoicetbody'>
   <tr><th>-</th><th>ref</th><th>désignation</th><th>VAT</th><th>qty</th><th>P.U H.T</th><th>P.T H.T</th></tr>

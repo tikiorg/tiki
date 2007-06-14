@@ -2,7 +2,7 @@
 // Initialization
 $section = 'tinvoice';
 require_once ('tiki-setup.php');
-
+require_once ("lib/ajax/ajaxlib.php");
 require_once ('lib/webmail/contactlib.php');
 require_once ('lib/tinvoice/tinvoicelib.php');
 
@@ -22,6 +22,18 @@ if ($feature_categories == 'y') {
     include_once ('lib/categories/categlib.php');
 }
 
+
+function getContactExt($contact, $exts, $fieldname) {
+    foreach($exts as $ext) {
+	if ($ext['fieldname'] == $fieldname) {
+	    if (isset($contact['ext'][$ext['fieldId']])) {
+		return $contact['ext'][$ext['fieldId']];
+	    } else return NULL;
+	}
+    }
+    return NULL;
+}
+
 /*static*/
 class tiki_edit_invoice {
     /*static public*/ function init() {
@@ -29,6 +41,7 @@ class tiki_edit_invoice {
 	global $dbTiki;
 	global $user, $userlib;
 	global $contactlib;
+	global $ajaxlib;
 
 	$tinvoicelib = new TinvoiceLib($dbTiki);
 	$id_invoice=isset($_REQUEST['invoiceId']) ? (int)$_REQUEST['invoiceId'] : 0;
@@ -61,12 +74,19 @@ class tiki_edit_invoice {
 	//$smarty->assign('me_tikiid', $userlib->get_user_id($user));
 
 	// Display the template
+// 	var_dump($contactlib->list_contacts($user));
+// 	var_dump($contactlib->get_ext_list($user));
+
+
 	$smarty->assign('contacts', $contactlib->list_contacts($user));
 	$smarty->assign('mid', 'tiki-tinvoice_edit.tpl');
+	domyajax();
 	$smarty->display("tiki.tpl");
     }
 
     /*static public*/ function create_or_edit_invoice($tinvoice) {
+	global $user, $userlib;
+	global $contactlib;
 
 	$id_invoice=$tinvoice->get_id();
 	$isnew=($id_invoice == 0);
@@ -106,6 +126,11 @@ class tiki_edit_invoice {
 	$tinvoice->set_refdevis($_REQUEST['invoice_refdevis']);
 	$tinvoice->set_refbondecommande($_REQUEST['invoice_refbondecommande']);
 	$tinvoice->set_receiver_tvanumber($_REQUEST['invoice_receiver_tvanumber']);
+
+
+	$receiver=$contactlib->get_contact((int)$_REQUEST["invoice_id_receiver"], $user);
+        $exts=$contactlib->get_ext_list($user);
+
 	$tinvoice->commit();
 	return $tinvoice->get_id();
     }
@@ -153,6 +178,30 @@ class tiki_edit_invoice {
     
 }
 
-tiki_edit_invoice::init();
+
+function myajax_getcontact($arg) {
+    global $user, $userlib;
+    global $contactlib;
+
+    $contact=$contactlib->get_contact((int)$arg, $user);
+
+    $objResponse = new xajaxResponse();
+    $objResponse->addAssign("receiveraddress", "value", ''.$contact['firstName'].' '.$contact['lastName']);
+
+    return $objResponse;
+}
+
+function domyajax() {
+    global $ajaxlib;
+
+    $ajaxlib->registerFunction("myajax_getcontact");
+    $ajaxlib->processRequests();
+}
+
+if (isset($_REQUEST['xajax'])) {
+    domyajax();
+} else {
+    tiki_edit_invoice::init();
+}
 
 ?>
