@@ -1,0 +1,46 @@
+contributor:
+$Author: niclone $
+
+revision:
+$Revision: 1.0 $
+
+lastmodif:
+$Date: 2007/06/14 07:48:48 $
+
+requires:
+lib-fpdf
+
+files: 
+lib/fpdf_bitstreamvera/font/VeraBd.php lib/fpdf/font/VeraBd.php
+lib/fpdf_bitstreamvera/font/VeraBd.z lib/fpdf/font/VeraBd.z
+lib/fpdf_bitstreamvera/font/VeraBI.php lib/fpdf/font/VeraBI.php
+lib/fpdf_bitstreamvera/font/VeraBI.z lib/fpdf/font/VeraBI.z
+lib/fpdf_bitstreamvera/font/VeraIt.php lib/fpdf/font/VeraIt.php
+lib/fpdf_bitstreamvera/font/VeraIt.z lib/fpdf/font/VeraIt.z
+lib/fpdf_bitstreamvera/font/VeraMoBd.php lib/fpdf/font/VeraMoBd.php
+lib/fpdf_bitstreamvera/font/VeraMoBd.z lib/fpdf/font/VeraMoBd.z
+lib/fpdf_bitstreamvera/font/VeraMoBI.php lib/fpdf/font/VeraMoBI.php
+lib/fpdf_bitstreamvera/font/VeraMoBI.z lib/fpdf/font/VeraMoBI.z
+lib/fpdf_bitstreamvera/font/VeraMoIt.php lib/fpdf/font/VeraMoIt.php
+lib/fpdf_bitstreamvera/font/VeraMoIt.z lib/fpdf/font/VeraMoIt.z
+lib/fpdf_bitstreamvera/font/VeraMono.php lib/fpdf/font/VeraMono.php
+lib/fpdf_bitstreamvera/font/VeraMono.z lib/fpdf/font/VeraMono.z
+lib/fpdf_bitstreamvera/font/Vera.php lib/fpdf/font/Vera.php
+lib/fpdf_bitstreamvera/font/VeraSeBd.php lib/fpdf/font/VeraSeBd.php
+lib/fpdf_bitstreamvera/font/VeraSeBd.z lib/fpdf/font/VeraSeBd.z
+lib/fpdf_bitstreamvera/font/VeraSe.php lib/fpdf/font/VeraSe.php
+lib/fpdf_bitstreamvera/font/VeraSe.z lib/fpdf/font/VeraSe.z
+lib/fpdf_bitstreamvera/font/Vera.z lib/fpdf/font/Vera.z
+
+author:
+Upstream Author: Bitstream
+Packaged for tikiwiki fpdf mods by Nicolas Dimitrijevic
+
+licence:
+Free
+
+Description:
+Bitstream Vera fonts converted for fpdf mods
+
+Changelog:
+1.0 initial package
