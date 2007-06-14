@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.166 2007-06-14 18:14:19 jyhem Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.167 2007-06-14 18:22:08 jyhem Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -832,12 +832,12 @@ ALTER TABLE tiki_directory_sites ADD KEY isValid (isValid);
 ALTER TABLE tiki_directory_sites ADD KEY url (url);
 
 #02/01/2007 mkalbere & Jyhem 2007-06-14
-ALTER TABLE `tiki_tracker_item_fields` DROP KEY value;
-ALTER TABLE `tiki_tracker_item_fields` DROP KEY value_1;
-ALTER TABLE `tiki_tracker_item_fields` DROP KEY value_2;
-ALTER TABLE `tiki_tracker_item_fields` DROP KEY value_3;
-ALTER TABLE `tiki_tracker_item_fields` DROP KEY value_4;
-ALTER TABLE `tiki_tracker_item_fields` DROP KEY value_5;
+ALTER TABLE `tiki_tracker_item_fields` DROP INDEX value;
+ALTER TABLE `tiki_tracker_item_fields` DROP INDEX value_1;
+ALTER TABLE `tiki_tracker_item_fields` DROP INDEX value_2;
+ALTER TABLE `tiki_tracker_item_fields` DROP INDEX value_3;
+ALTER TABLE `tiki_tracker_item_fields` DROP INDEX value_4;
+ALTER TABLE `tiki_tracker_item_fields` DROP INDEX value_5;
 ALTER TABLE `tiki_tracker_item_fields` ADD FULLTEXT KEY ft (value);
 
 #05/02/2007 niclone
