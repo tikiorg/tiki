@@ -12,7 +12,7 @@
 <br />
 <br />
 
-Client : 
+{tr}Client {/tr}: 
 <select>
 {foreach from=$contacts item=contact}
 <option disabled selected>Choisir...</option>
@@ -20,7 +20,7 @@ Client :
 {/foreach}
 </select>
 
-Fournisseur:
+{tr}Supplier{/tr} :
 <select>
 {foreach from=$contacts item=contact}
 <option disabled selected>Choisir...</option>
