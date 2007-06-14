@@ -24,7 +24,9 @@ Fournisseur:
 </select>
 
 <hr />
-{include file=tiki-tinvoice_graph.tpl}
+{if $feature_jpgraph eq 'y'}
+	{include file=tiki-tinvoice_graph.tpl}
+{/if}
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-tinvoice_lists.php">{tr}Date{/tr}</a></td>
