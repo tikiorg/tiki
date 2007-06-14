@@ -38,7 +38,7 @@
  <tr><th>Date limite de paiement:</th><td><input type='text' name='invoice_datelimit' value='{$invoice_datelimit|escape}'></td></tr>
  <tr><th>Ref devis:</th><td><input type='text' name='invoice_refdevis' value='{$invoice_refdevis|escape}'></td></tr>
  <tr><th>Ref Bon de Commande:</th><td><input type='text' name='invoice_refbondecommande' value='{$invoice_refbondecommande|escape}'></td></tr>
- <tr><th>TVA intra du client:</th><td><input type='text' name='invoice_receiver_tvanumber' value='{$invoice_receiver_tvanumber|escape}'></td></tr>
+ <tr><th>TVA intra du client:</th><td><input type='text' id='invoice_receiver_tvanumber' name='invoice_receiver_tvanumber' value='{$invoice_receiver_tvanumber|escape}'></td></tr>
 </table>
 </td><td width='50%'>
 <b>Addresse de facturation :</b><br />

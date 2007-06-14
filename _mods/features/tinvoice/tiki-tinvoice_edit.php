@@ -181,9 +181,10 @@ function myajax_getcontact($arg) {
     global $user, $userlib;
     global $contactlib;
 
+    $exts=$contactlib->get_ext_list($user);
     $contact=$contactlib->get_contact((int)$arg, $user);
 
-    $exts=$contactlib->get_ext_list($user);
+    $objResponse = new xajaxResponse();
 
     $address='';
     if (isset($contact['lastName'])) {
@@ -209,7 +210,7 @@ function myajax_getcontact($arg) {
     if ($tmp !== NULL) $address.=$tmp."\n";
 
     $tmp=getContactExt($contact, $exts, 'Zip Code');
-    if ($tmp !== NULL) $address.=$tmp."\n";
+    if ($tmp !== NULL) $address.=$tmp." ";
 
     $tmp=getContactExt($contact, $exts, 'City');
     if ($tmp !== NULL) $address.=$tmp."\n";
@@ -220,10 +221,10 @@ function myajax_getcontact($arg) {
     $tmp=getContactExt($contact, $exts, 'Country');
     if ($tmp !== NULL) $address.=$tmp."\n";
 
-    $objResponse = new xajaxResponse();
     $objResponse->addAssign("receiveraddress", "value", $address);
 
-
+    $tmp=getContactExt($contact, $exts, 'VAT Number');
+    $objResponse->addAssign("invoice_receiver_tvanumber", "value", $tmp === NULL ? '' : $tmp);
 
     return $objResponse;
 }
