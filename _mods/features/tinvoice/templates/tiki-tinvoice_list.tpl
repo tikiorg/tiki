@@ -1,11 +1,16 @@
 <h1><a href="tiki-tinvoice_list.php" class="pagetitle">{tr}Invoices{/tr}</a></h1>
 <div class="navbar">
-{if $tiki_p_admin eq 'y'}<a class="linkbut" href="tiki-tinvoice_edit.php">{tr}create new invoice{/tr}</a>&nbsp;{/if}
+{if $tiki_p_tinvoice_edit eq 'y'}<a class="linkbut" href="tiki-tinvoice_edit.php">{tr}create new invoice{/tr}</a>&nbsp;{/if}
 <a class="linkbut" href="tiki-tinvoice_prefs.php">{tr}Invoices preferences{/tr}</a>
 </div>
-<h2><a href="tiki-tinvoice_edit.php" class="link">{tr}add invoice{/tr}</a></h2>
-<a href='tiki-tinvoice_list.php?id_emitter={$me_tikiid}'>Factures Clients</a>&nbsp;&nbsp;&nbsp;
-<a href='tiki-tinvoice_list.php?id_receiver={$me_tikiid}'>Factures Fournisseurs</a>&nbsp;&nbsp;&nbsp;
+<div style="width: 500px; float: left;" class="button2">
+<a class="linkbut" href='tiki-tinvoice_list.php?id_emitter={$me_tikiid}'>{tr}clients invoices{/tr}</a>&nbsp;
+<a class="linkbut" href='tiki-tinvoice_list.php?id_receiver={$me_tikiid}'>{tr} supplier invoices{/tr}</a>&nbsp;
+<a class="linkbut" href='tiki-tinvoice_payment.php?id_receiver={$me_tikiid}'>{tr}payments {/tr}</a>&nbsp;
+<a class="linkbut" href='tiki-tinvoice_expenses.php?id_receiver={$me_tikiid}'>{tr}expenses{/tr}</a>
+</div>
+<br />
+<br />
 
 Client : 
 <select>
@@ -24,9 +29,7 @@ Fournisseur:
 </select>
 
 <hr />
-{if $feature_jpgraph eq 'y'}
-	{include file=tiki-tinvoice_graph.tpl}
-{/if}
+{include file=tiki-tinvoice_graph.tpl}
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-tinvoice_lists.php">{tr}Date{/tr}</a></td>
