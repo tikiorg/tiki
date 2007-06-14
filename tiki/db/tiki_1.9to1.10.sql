@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.165 2007-06-13 16:30:44 jyhem Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.166 2007-06-14 18:14:19 jyhem Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -498,7 +498,7 @@ alter table tiki_private_messages add `message` varchar(255);
 update tiki_private_messages set `message`=`data`;
 alter table `tiki_private_messages` drop `data`;
 
-# sylvieg 3/2/06
+# sylvieg 3/2/06 & Jyhem 2007-06-14
 CREATE TABLE tiki_contributions (
   contributionId int(12) NOT NULL auto_increment,
   name varchar(100) default NULL,
@@ -513,7 +513,7 @@ CREATE TABLE tiki_contributions_assigned (
 ) TYPE=MyISAM;
 
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_contribution', 'n');
-DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='r' and name='Admin' and url='tiki-admin.php' and position='1150' and section='' and perm='tiki_p_admin_contribution' and groupname='' ;
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='r' and name='Admin' and url='tiki-admin.php' and position='1050' and section='' and perm='tiki_p_admin_contribution' and groupname='' ;
 INSERT INTO `tiki_menu_options` (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_contribution','');
 DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Contribution' and url='tiki-admin_contribution.php' and position='1265' and section='feature_contribution' and perm='tiki_p_admin_contribution' and groupname='' ;
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Contribution','tiki-admin_contribution.php',1265,'feature_contribution','tiki_p_admin_contribution','');
@@ -579,8 +579,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('min_username_length','1
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_username_length','50');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('lowercase_username','n');
 
-#2006-05-25 sampaioprimo
-INSERT INTO users_grouppermissions (groupName,permName) VALUES ('Anonymous','tiki_p_wiki_view_source');
+#2006-05-25 sampaioprimo & Jyhem 2007-06-14
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_source', 'Can view source of wiki pages', 'basic', 'wiki');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_source','y');
 
@@ -631,12 +630,12 @@ update tiki_preferences set name='auth_pear_port' where name='auth_ldap_port';
 ALTER TABLE `tiki_file_galleries` ADD `parentId` int(14) NOT NULL default -1;
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_list_parent','n');
 
-#sylvieg 2006-11-16
+#sylvieg 2006-11-16 & Jyhem 2007-06-14
 ALTER TABLE `tiki_file_galleries` ADD `lockable` char(1) default 'n';
 ALTER TABLE `tiki_file_galleries` ADD `show_lockedby` char(1) default NULL;
 ALTER TABLE `tiki_files` ADD `lockedby`  varchar(40) default NULL;
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_gallery_file', 'Can edit a gallery file', 'editors', 'file galleries');
-DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Directory bacth' and url='tiki-batch_upload_files.php' and position='617' and section='feature_file_galleries_batch' and perm='tiki_p_batch_upload_file_dir' and groupname='' ;
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Directory batch' and url='tiki-batch_upload_files.php' and position='617' and section='feature_file_galleries_batch' and perm='tiki_p_batch_upload_file_dir' and groupname='' ;
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Directory batch','tiki-batch_upload_files.php',617,'feature_file_galleries_batch','tiki_p_batch_upload_file_dir','');
 
 #mkalbere 2006-11-23 - To have multilingual tracker fields
@@ -653,7 +652,8 @@ ALTER TABLE `tiki_files` ADD `archiveId` int(14) default 0;
 ALTER TABLE `tiki_articles` CHANGE `title` `title` varchar(255) default NULL;
 ALTER TABLE `tiki_submissions` CHANGE `title` `title` varchar(255) default NULL;
 
-# mose 2006-11-28 - new user contacts menu entry
+# mose 2006-11-28 - new user contacts menu entry & Jyhem 2007-06-14
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Contacts' and url='tiki-contacts.php' and position='87' and section='feature_contacts' and perm='' and groupname='Registered' ;
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Contacts','tiki-contacts.php',87,'feature_contacts','','Registered');
 
 # mose 2006-11-28 - new contacts groups feature
@@ -672,7 +672,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 #sylvieg 2006-12-01
 ALTER TABLE `tiki_file_galleries` ADD `sort_mode` char(20) default NULL;
 
-# mose 2006-12-03
+# mose 2006-12-03 & Jyhem 2007-06-14
 CREATE TABLE tiki_calendar_options (
 	calendarId int(14) NOT NULL default 0,
 	optionName varchar(120) NOT NULL default '',
@@ -681,6 +681,7 @@ CREATE TABLE tiki_calendar_options (
 ) TYPE=MyISAM ;
 
 update `users_permissions` set type='tiki' where `permName`='tiki_p_view_tiki_calendar' and `type`='calendar';
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Tiki Calendar' and url='tiki-action_calendar.php' and position='36' and section='feature_action_calendar' and perm='tiki_p_view_tiki_calendar' and groupname='' ;
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Tiki Calendar','tiki-action_calendar.php',36,'feature_action_calendar','tiki_p_view_tiki_calendar','');
 
 # mose 2006-12-05
@@ -830,8 +831,14 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 ALTER TABLE tiki_directory_sites ADD KEY isValid (isValid);
 ALTER TABLE tiki_directory_sites ADD KEY url (url);
 
-#02/01/2007 mkalbere
-ALTER TABLE `tiki_tracker_item_fields` ADD FULLTEXT (value);
+#02/01/2007 mkalbere & Jyhem 2007-06-14
+ALTER TABLE `tiki_tracker_item_fields` DROP KEY value;
+ALTER TABLE `tiki_tracker_item_fields` DROP KEY value_1;
+ALTER TABLE `tiki_tracker_item_fields` DROP KEY value_2;
+ALTER TABLE `tiki_tracker_item_fields` DROP KEY value_3;
+ALTER TABLE `tiki_tracker_item_fields` DROP KEY value_4;
+ALTER TABLE `tiki_tracker_item_fields` DROP KEY value_5;
+ALTER TABLE `tiki_tracker_item_fields` ADD FULLTEXT KEY ft (value);
 
 #05/02/2007 niclone
 CREATE TABLE IF NOT EXISTS `tiki_webmail_contacts_ext` (
@@ -922,7 +929,8 @@ ALTER TABLE users_users ADD unsuccessful_logins int(14) default 0;
 ALTER TABLE users_users CHANGE email_due email_confirm int(14) default NULL;
 ALTER TABLE users_users CHANGE pass_due pass_confirm int(14) default NULL;
 
-#pkdille 2007/05/31
+#pkdille 2007/05/31 & Jyhem 2007-06-14
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='r' and name='Admin' and url='tiki-admin.php' and position='1050' and section='' and perm='tiki_p_admin_users' and groupname='' ;
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_users','');
 
 #sylvieg 2007/06/01
