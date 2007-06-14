@@ -32,11 +32,11 @@ Fournisseur:
 {include file=tiki-tinvoice_graph.tpl}
 <table class="normal">
 <tr>
-<td class="heading"><a class="tableheading" href="tiki-tinvoice_lists.php">{tr}Date{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-tinvoice_lists.php">{tr}Libelle{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-tinvoice_lists.php">{tr}Ref{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-tinvoice_lists.php">{tr}amount{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-tinvoice_lists.php">{tr}paid{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-tinvoice_list.php">{tr}Date{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-tinvoice_list.php">{tr}Libelle{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-tinvoice_list.php">{tr}Ref{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-tinvoice_list.php">{tr}amount{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-tinvoice_list.php">{tr}paid{/tr}</a></td>
 <td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
