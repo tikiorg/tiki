@@ -3,7 +3,9 @@
 $section = 'tinvoice';
 require_once ('tiki-setup.php');
 
-include_once ('lib/tinvoice/tinvoicelib.php');
+require_once ('lib/webmail/contactlib.php');
+require_once ('lib/tinvoice/tinvoicelib.php');
+
 if ($feature_tinvoice != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_tinvoice");
 
@@ -25,7 +27,8 @@ class tiki_edit_invoice {
     /*static public*/ function init() {
 	global $smarty;
 	global $dbTiki;
-	//global $user, $userlib;
+	global $user, $userlib;
+	global $contactlib;
 
 	$tinvoicelib = new TinvoiceLib($dbTiki);
 	$id_invoice=isset($_REQUEST['invoiceId']) ? (int)$_REQUEST['invoiceId'] : 0;
@@ -58,6 +61,7 @@ class tiki_edit_invoice {
 	//$smarty->assign('me_tikiid', $userlib->get_user_id($user));
 
 	// Display the template
+	$smarty->assign('contacts', $contactlib->list_contacts($user));
 	$smarty->assign('mid', 'tiki-tinvoice_edit.tpl');
 	$smarty->display("tiki.tpl");
     }
@@ -93,7 +97,8 @@ class tiki_edit_invoice {
 	    else
 		$tinvoice->add_line($ref, $designation, $vat, $qty, $unitprice);
 	}
-	
+
+	$tinvoice->set_receiver($_REQUEST["invoice_id_receiver"], 'contact');
 	$tinvoice->set_date($_REQUEST["invoice_date"]);
 	$tinvoice->set_libelle($_REQUEST['invoice_libelle']);
 	if ($_REQUEST["invoice_datelimit"] != "")

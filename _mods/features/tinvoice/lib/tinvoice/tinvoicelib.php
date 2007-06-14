@@ -465,6 +465,26 @@ class Tinvoice {
 	$this->set_inline_info("ref", $ref);
     }
 
+    /*public*/ function set_emitter($id_emitter, $idtype) {
+	$this->set_inline_info("id_emitter", $id_emitter);
+	$this->set_inline_info("idtype_emitter", $idtype);
+    }
+
+    /*public*/ function get_emitter() {
+	return array('id_emitter' => $this->get_inline_info('id_emitter'),
+		     'idtype_emitter' => $this->get_inline_info('idtype_emitter'));
+    }
+
+    /*public*/ function set_receiver($id_receiver, $idtype) {
+	$this->set_inline_info("id_receiver", $id_receiver);
+	$this->set_inline_info("idtype_receiver", $idtype);
+    }
+
+    /*public*/ function get_receiver() {
+	return array('id_receiver' => $this->get_inline_info('id_receiver'),
+		     'idtype_receiver' => $this->get_inline_info('idtype_receiver'));
+    }
+
     /*public*/ function get_amount() {
 	return $this->get_inline_info("amount");
     }

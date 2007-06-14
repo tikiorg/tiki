@@ -20,7 +20,18 @@
 {jscalendar id="start" date=$invoice_date fieldname="invoice_date" ifFormat="%d/%m/%Y" align="Bc" showtime='n'}
 {/if}
 
-<tr><th>Libelle:</th><td><input type='text' name='invoice_libelle' value='{$invoice_libelle|escape}'></td></tr>
+ <tr>
+  <th>Client:</th>
+  <td>
+   <select name='invoice_id_receiver'>
+    <option disabled selected>Choisir...</option>
+    {foreach from=$contacts item=contact}
+    <option value='{$contact.contactId}'>{$contact.firstName|escape} {$contact.lastName|escape}</option>
+    {/foreach}
+   </select>
+  </td>
+ </tr>
+ <tr><th>Libelle:</th><td><input type='text' name='invoice_libelle' value='{$invoice_libelle|escape}'></td></tr>
  <tr><th>Date limite de paiement:</th><td><input type='text' name='invoice_datelimit' value='{$invoice_datelimit|escape}'></td></tr>
  <tr><th>Ref devis:</th><td><input type='text' name='invoice_refdevis' value='{$invoice_refdevis|escape}'></td></tr>
  <tr><th>Ref Bon de Commande:</th><td><input type='text' name='invoice_refbondecommande' value='{$invoice_refbondecommande|escape}'></td></tr>
