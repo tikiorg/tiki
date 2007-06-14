@@ -68,7 +68,6 @@ $smarty->assign('me_tikiid', $userlib->get_user_id($user));
 $contacts=$contactlib->list_contacts($user);
 $smarty->assign('contacts', $contacts);
 
-
 // Display the template
 $smarty->assign('mid', 'tiki-tinvoice_list.tpl');
 $smarty->display("tiki.tpl");

@@ -14,16 +14,16 @@
 
 {tr}Client {/tr}: 
 <select>
-{foreach from=$contacts item=contact}
 <option disabled selected>Choisir...</option>
+{foreach from=$contacts item=contact}
 <option>{$contact.firstName|escape} {$contact.lastName|escape}</option>
 {/foreach}
 </select>
 
 {tr}Supplier{/tr} :
 <select>
-{foreach from=$contacts item=contact}
 <option disabled selected>Choisir...</option>
+{foreach from=$contacts item=contact}
 <option>{$contact.firstName|escape} {$contact.lastName|escape}</option>
 {/foreach}
 </select>
