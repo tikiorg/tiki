@@ -13,7 +13,7 @@
 </div>
 <form method='POST' action='tiki-tinvoice_edit.php'>
 
-<table><tr><td>
+<table width='100%'><tr><td>
 <table>
  <tr><th>Date:</th><td>
  {if $feature_jscalendar ne 'y'} 
@@ -40,10 +40,10 @@
  <tr><th>Ref Bon de Commande:</th><td><input type='text' name='invoice_refbondecommande' value='{$invoice_refbondecommande|escape}'></td></tr>
  <tr><th>TVA intra du client:</th><td><input type='text' name='invoice_receiver_tvanumber' value='{$invoice_receiver_tvanumber|escape}'></td></tr>
 </table>
-</td><td>
+</td><td width='50%'>
 <b>Addresse de facturation :</b><br />
-<textarea id='receiveraddress'>
-grr
+<textarea id='receiveraddress' name='receiveraddress' style='width: 100%; height: 100px;'>
+{$receiveraddress|escape}
 </textarea>
 </td></tr></table>
 <table>

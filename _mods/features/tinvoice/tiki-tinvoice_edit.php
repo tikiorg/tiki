@@ -74,9 +74,6 @@ class tiki_edit_invoice {
 	//$smarty->assign('me_tikiid', $userlib->get_user_id($user));
 
 	// Display the template
-// 	var_dump($contactlib->list_contacts($user));
-// 	var_dump($contactlib->get_ext_list($user));
-
 
 	$smarty->assign('contacts', $contactlib->list_contacts($user));
 	$smarty->assign('mid', 'tiki-tinvoice_edit.tpl');
@@ -126,7 +123,7 @@ class tiki_edit_invoice {
 	$tinvoice->set_refdevis($_REQUEST['invoice_refdevis']);
 	$tinvoice->set_refbondecommande($_REQUEST['invoice_refbondecommande']);
 	$tinvoice->set_receiver_tvanumber($_REQUEST['invoice_receiver_tvanumber']);
-
+	$tinvoice->set_receiver_address($_REQUEST['receiveraddress']);
 
 	$receiver=$contactlib->get_contact((int)$_REQUEST["invoice_id_receiver"], $user);
         $exts=$contactlib->get_ext_list($user);
@@ -157,6 +154,7 @@ class tiki_edit_invoice {
 	$smarty->assign("invoice_refdevis", $tinvoice->get_refdevis());
 	$smarty->assign("invoice_refbondecommande", $tinvoice->get_refbondecommande());
 	$smarty->assign("invoice_receiver_tvanumber", $tinvoice->get_receiver_tvanumber());
+	$smarty->assign("receiveraddress", $tinvoice->get_receiver_address());
     }
     
     /*static public*/ function open_new_invoice($tinvoice) {
@@ -185,8 +183,47 @@ function myajax_getcontact($arg) {
 
     $contact=$contactlib->get_contact((int)$arg, $user);
 
+    $exts=$contactlib->get_ext_list($user);
+
+    $address='';
+    if (isset($contact['lastName'])) {
+	if (isset($contact['firstName']))
+	    $address.=$contact['firstName'].' ';
+	$address.=$contact['lastName'];
+	$address.="\n";
+    }
+
+    $tmp=getContactExt($contact, $exts, 'Company');
+    if ($tmp !== NULL) $address.=$tmp."\n";
+
+    $tmp=getContactExt($contact, $exts, 'Organization');
+    if ($tmp !== NULL) $address.=$tmp."\n";
+
+    $tmp=getContactExt($contact, $exts, 'Department');
+    if ($tmp !== NULL) $address.=$tmp."\n";
+
+    $tmp=getContactExt($contact, $exts, 'Division');
+    if ($tmp !== NULL) $address.=$tmp."\n";
+
+    $tmp=getContactExt($contact, $exts, 'Street Address');
+    if ($tmp !== NULL) $address.=$tmp."\n";
+
+    $tmp=getContactExt($contact, $exts, 'Zip Code');
+    if ($tmp !== NULL) $address.=$tmp."\n";
+
+    $tmp=getContactExt($contact, $exts, 'City');
+    if ($tmp !== NULL) $address.=$tmp."\n";
+
+    $tmp=getContactExt($contact, $exts, 'State');
+    if ($tmp !== NULL) $address.=$tmp."\n";
+
+    $tmp=getContactExt($contact, $exts, 'Country');
+    if ($tmp !== NULL) $address.=$tmp."\n";
+
     $objResponse = new xajaxResponse();
-    $objResponse->addAssign("receiveraddress", "value", ''.$contact['firstName'].' '.$contact['lastName']);
+    $objResponse->addAssign("receiveraddress", "value", $address);
+
+
 
     return $objResponse;
 }
