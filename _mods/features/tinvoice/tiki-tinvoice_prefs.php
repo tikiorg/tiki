@@ -8,7 +8,18 @@ include_once ('lib/tinvoice/tinvoicelib.php');
 if ($feature_categories == 'y') {
     include_once ('lib/categories/categlib.php');
 }
+if ($feature_tinvoice != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled").": feature_tinvoice");
 
+	$smarty->display("error.tpl");
+	die;
+}
+if ($tiki_p_tinvoice != 'y') {
+	$smarty->assign('msg', tra("You do not have permission to use this feature"));
+
+	$smarty->display("error.tpl");
+	die;
+}
 class tiki_invoice_prefs {
     var $tinvoicelib;
 
