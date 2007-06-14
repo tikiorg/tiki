@@ -1,0 +1,51 @@
+contributor:
+$Author: niclone $
+
+revision:
+$Revision: 1.1 $
+
+lastmodif:
+$Date: 2007-06-14 07:48:48 $
+
+requires:
+lib-fpdf
+
+files: 
+lib/fpdf_freefonts/font/FreeMonoBoldOblique.php lib/fpdf/font/FreeMonoBoldOblique.php
+lib/fpdf_freefonts/font/FreeMonoBoldOblique.z lib/fpdf/font/FreeMonoBoldOblique.z
+lib/fpdf_freefonts/font/FreeMonoBold.php lib/fpdf/font/FreeMonoBold.php
+lib/fpdf_freefonts/font/FreeMonoBold.z lib/fpdf/font/FreeMonoBold.z
+lib/fpdf_freefonts/font/FreeMonoOblique.php lib/fpdf/font/FreeMonoOblique.php
+lib/fpdf_freefonts/font/FreeMonoOblique.z lib/fpdf/font/FreeMonoOblique.z
+lib/fpdf_freefonts/font/FreeMono.php lib/fpdf/font/FreeMono.php
+lib/fpdf_freefonts/font/FreeMono.z lib/fpdf/font/FreeMono.z
+lib/fpdf_freefonts/font/FreeSansBoldOblique.php lib/fpdf/font/FreeSansBoldOblique.php
+lib/fpdf_freefonts/font/FreeSansBoldOblique.z lib/fpdf/font/FreeSansBoldOblique.z
+lib/fpdf_freefonts/font/FreeSansBold.php lib/fpdf/font/FreeSansBold.php
+lib/fpdf_freefonts/font/FreeSansBold.z lib/fpdf/font/FreeSansBold.z
+lib/fpdf_freefonts/font/FreeSansOblique.php lib/fpdf/font/FreeSansOblique.php
+lib/fpdf_freefonts/font/FreeSansOblique.z lib/fpdf/font/FreeSansOblique.z
+lib/fpdf_freefonts/font/FreeSans.php lib/fpdf/font/FreeSans.php
+lib/fpdf_freefonts/font/FreeSans.z lib/fpdf/font/FreeSans.z
+lib/fpdf_freefonts/font/FreeSerifBoldItalic.php lib/fpdf/font/FreeSerifBoldItalic.php
+lib/fpdf_freefonts/font/FreeSerifBoldItalic.z lib/fpdf/font/FreeSerifBoldItalic.z
+lib/fpdf_freefonts/font/FreeSerifBold.php lib/fpdf/font/FreeSerifBold.php
+lib/fpdf_freefonts/font/FreeSerifBold.z lib/fpdf/font/FreeSerifBold.z
+lib/fpdf_freefonts/font/FreeSerifItalic.php lib/fpdf/font/FreeSerifItalic.php
+lib/fpdf_freefonts/font/FreeSerifItalic.z lib/fpdf/font/FreeSerifItalic.z
+lib/fpdf_freefonts/font/FreeSerif.php lib/fpdf/font/FreeSerif.php
+lib/fpdf_freefonts/font/FreeSerif.z lib/fpdf/font/FreeSerif.z
+
+author:
+Upstream Author: Primoz Peterlin
+Packaged for tikiwiki fpdf mods by Nicolas Dimitrijevic
+
+licence:
+GNU/GPL
+
+Description:
+Fonts from the FreeFont project http://savannah.nongnu.org/download/freefont/ converted for fpdf mods
+
+Changelog:
+1.0 initial package
+
