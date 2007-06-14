@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mods.php,v 1.15 2007-03-17 21:56:33 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mods.php,v 1.16 2007-06-14 08:22:54 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -143,6 +143,9 @@ if (isset($_REQUEST['action']) and isset($package) and $iswritable) {
 		$deps=$modslib->find_deps($mods_dir, $mods_server, array($packtype.'-'.$package));
 		$smarty->assign('installask', $deps);
 	}
+} elseif (isset($_REQUEST['button-check'])) {
+	$deps=$modslib->find_deps($mods_dir, $mods_server, $_REQUEST['install-wants']);
+	$smarty->assign('installask', $deps);
 } elseif (isset($_REQUEST['button-install'])) {
 	$deps=$modslib->find_deps($mods_dir, $mods_server, $_REQUEST['install-wants']);
 	$modslib->install_with_deps($mods_dir, $mods_server, $deps);
