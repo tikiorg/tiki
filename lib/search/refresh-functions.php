@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/search/refresh-functions.php,v 1.25 2007-05-20 02:40:36 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/search/refresh-functions.php,v 1.26 2007-06-15 14:37:11 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -15,6 +15,8 @@ function refresh_index($object_type, $object_id = null) {
 	$query_limit = -1;
 	$query_offset = 0;
 	$query_vars = array();
+	$query_where = '';
+	$query_fields = '';
 
 	$cant_query = 'select count(*)'.$query_from;
 	$cant_vars = null;
