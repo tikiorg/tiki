@@ -58,6 +58,12 @@ function smarty_function_jscalendar($params, &$smarty) {
 		$id = $_GLOBALS['now'];
 	}
 
+	if (isset($params['ifFormat'])) {
+		$ifFormat =  preg_replace('/"/','\"',$params['ifFormat']);
+	} else {
+	        $ifFormat = '%s';
+	}
+
 	if (isset($params['align'])) {
 		$align = substr(preg_replace('/[^bBrRtTlLc]/','',$params['align']),0,2);
 	} else {
@@ -90,7 +96,7 @@ function smarty_function_jscalendar($params, &$smarty) {
 	if ($fieldname) {
 		$back.= "inputField : \"id_$id\",\n";
 	}
-	$back.= "ifFormat : \"%s\",\n";
+	$back.= "ifFormat : \"$ifFormat\",\n";
 	$back.= "displayArea : \"disp_$id\",\n";
 	$back.= "daFormat : \"$format\",\n";
 	// $back.= "singleClick : true,\n";
