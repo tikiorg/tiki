@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.116 2007-06-15 11:26:11 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.117 2007-06-15 11:33:06 mose Exp $
 
 # The following script will update a tiki database from version 1.8.x to 1.9.x
 # The following script will ALSO update from version 1.9.x to 1.9.y
@@ -562,7 +562,6 @@ UPDATE tiki_pages set lang=null where lang="NULL";
 #Added June13th 2004 lfagundes
 ALTER TABLE users_score RENAME TO tiki_users_score;
 ALTER TABLE users_users ADD score int4 NOT NULL default 0;
-ALTER TABLE users_users DROP KEY score;
 ALTER TABLE users_users ADD KEY (score);
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_score','n');
 
@@ -675,7 +674,6 @@ ALTER TABLE `tiki_images` ADD `lon` float default NULL AFTER `description`;
 
 # added on 07 10 04 00:01:12 by mose
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_comments', 'Can view wiki comments', 'basic', 'wiki');
-insert into users_grouppermissions (groupName,permName) values('Anonymous','tiki_p_wiki_view_comments');
 
 # added on 11 10 04 06:28:29 by more for registration validation by admin
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('validateRegistration','n');
@@ -730,39 +728,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('default_wiki_diff_style
 #added on 2004-10-24 by redflo
 ALTER TABLE `tiki_images_data` ADD `etag` varchar(32) default NULL;
 
-# Now for tiki_project goodies
-# Damo stuff
-CREATE TABLE tiki_projects (
-  projectId int(10) unsigned NOT NULL auto_increment,
-  active char(1) NOT NULL default 'n',
-  projectName varchar(200) NOT NULL default '',
-  projectFriendlyName varchar(200) NOT NULL default '',
-  projectDescription text NOT NULL,
-  Created int(14) default NULL,
-  lastModif int(14) default NULL,
-  PRIMARY KEY  (projectId)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
-		
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('https','auto');
-
-
-CREATE TABLE tiki_projects_preferences (
-  preferenceId int(10) NOT NULL auto_increment,
-  projectId int(10) NOT NULL default '0',
-  name varchar(40) NOT NULL,
-  value varchar(250) default NULL,
-  PRIMARY KEY (preferenceId)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
-
-DROP TABLE IF EXISTS tiki_projects_objects;
-CREATE TABLE tiki_projects_objects (
-  prjobjId int(10) unsigned NOT NULL auto_increment,
-  projectId int(10) NOT NULL,
-  objectType varchar(20) NOT NULL,
-  objectId int(11) NOT NULL,
-  url varchar(250),
-  PRIMARY KEY (prjobjId)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
 	  
 ALTER TABLE `tiki_quicktags` CHANGE `taginsert` `taginsert` TEXT DEFAULT NULL;
 
@@ -1051,9 +1017,6 @@ UPDATE users_permissions SET type="topics" WHERE permName='tiki_p_topic_read';
 
 # 2005_04-23 removed projects 
 delete from tiki_menu_options where section='feature_projects';
-DROP TABLE IF EXISTS tiki_projects;
-DROP TABLE IF EXISTS tiki_projects_objects;
-DROP TABLE IF EXISTS tiki_projects_preferences;
 
 # 2005-04-24 rss tracker
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_tracker','10');
@@ -1061,18 +1024,6 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_tracker','n');
 
 # added on 2005-04-24 by ohertel: view wiki history
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_history', 'Can view wiki history', 'basic', 'wiki');
-
-# 2005-04-24 toggg: view wiki history copied for groups
-# DROP TABLE IF EXISTS temp_users_grouppermissions;
-# CREATE TABLE temp_users_grouppermissions (
-#   groupName varchar(255) NOT NULL default '',
-#   permName varchar(30) NOT NULL default '',
-#   value char(1) default '',
-#   PRIMARY KEY  (groupName(30),permName)
-# ) TYPE=MyISAM;
-# INSERT into temp_users_grouppermissions SELECT groupName, 'tiki_p_wiki_view_history', value FROM users_grouppermissions WHERE permName='tiki_p_view';
-# INSERT into users_grouppermissions SELECT * FROM temp_users_grouppermissions;
-# DROP TABLE temp_users_grouppermissions;
 
 # 2005-04-25 redflo: tiki_secdb for admin->security checks
 # DROP TABLE IF EXISTS tiki_secdb;
@@ -1116,16 +1067,6 @@ UPDATE tiki_menu_options SET perm="tiki_p_view_trackers" WHERE url="tiki-list_tr
 
 #2005-05-04 sg
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_tiki_calendar', 'Can view Tikiwiki tools calendar', 'basic', 'calendar');
-# DROP TABLE IF EXISTS temp_users_grouppermissions;
-# CREATE TABLE temp_users_grouppermissions (
-#   groupName varchar(255) NOT NULL default '',
-#   permName varchar(30) NOT NULL default '',
-#   value char(1) default '',
-#   PRIMARY KEY  (groupName(30),permName)
-# ) TYPE=MyISAM;
-# INSERT into temp_users_grouppermissions SELECT groupName, 'tiki_p_view_tiki_calendar', value FROM users_grouppermissions WHERE permName='tiki_p_view_calendar';
-# INSERT into users_grouppermissions SELECT * FROM temp_users_grouppermissions;
-# DROP TABLE temp_users_grouppermissions;
 
 # 2005-05-10 redflo
 alter table tiki_sessions add tikihost varchar(200) default NULL;
@@ -1297,8 +1238,6 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_multilingual','
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_export','n');
 ALTER TABLE `tiki_quizzes` DROP PRIMARY KEY , ADD PRIMARY KEY ( `quizId` , `nVersion` );
 ALTER TABLE `tiki_trackers` ADD showAttachments char(1) default NULL AFTER useAttachments;
-#INSERT IGNORE INTO users_grouppermissions (groupName,permName,value) VALUES ('Anonymous','tiki_p_view','');
-#INSERT IGNORE INTO users_grouppermissions (groupName,permName,value) VALUES ('Anonymous','tiki_p_wiki_view_history','');
 
 # 2006-10-21 mose/cfreeze - changed pear auth params to be more generic
 update tiki_preferences set name='auth_pear_host' where name='auth_ldap_host';
@@ -1309,3 +1248,6 @@ ALTER TABLE tiki_categorized_objects ADD KEY(type, objId);
 
 #sylvieg 2007-03-23
 ALTER TABLE `tiki_links` ADD INDEX `toPage` (`toPage`);
+
+# 2006-06-09 nkoth - new preference eq 'y' to keep the default
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_import_page','y');
