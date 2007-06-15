@@ -47,6 +47,11 @@
     <th>Pied de page</th>
     <td><textarea  name="invoice_footer" cols="30" rows="5" >{$invoice_footer}</textarea><td>
   </tr>
+  <tr id='tr_invoice_locale' style='display: none;'>
+    <td><input type='button' value='-' onClick='show_hide_line("invoice_locale", 0);'></td>
+    <th>Monetary Locale</th>
+    <td><input type="text" size="60" name="invoice_locale" value="{$invoice_locale|escape}" /><td>
+  </tr>
   <tr id='tr_invoice_custom0' style='display: none;'>
     <td><input type='button' value='-' onClick='show_hide_line("invoice_custom0", 0);'></td>
     <th>Custom 0</th>
@@ -87,6 +92,7 @@
   <option id='option_invoice_emitter_rib' value='invoice_emitter_rib'>RIB</option>
   <option id='option_invoice_emitter_tvanumber' value='invoice_emitter_tvanumber'>N° TVA intra</option>
   <option id='option_invoice_footer' value='invoice_footer'>Pied de page</option>
+  <option id='option_invoice_locale' value='invoice_locale'>Monetary Locale</option>
   <option id='option_invoice_custom0' value='invoice_custom0'>Custom 0</option>
   <option id='option_invoice_custom1' value='invoice_custom1'>Custom 1</option>
   <option id='option_invoice_custom2' value='invoice_custom2'>Custom 2</option>

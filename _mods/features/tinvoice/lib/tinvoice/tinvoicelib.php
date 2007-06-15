@@ -488,9 +488,12 @@ class Tinvoice {
     /*public*/ function get_amount() {
 	return $this->get_inline_info("amount");
     }
+
+    /* curious, buggy thing ! */
     /*public*/ function get_sum_amount() {
 	return $this->get_inline_info("sum(`amount`)");
     }
+
     /*public*/ function get_paid() {
 	return $this->get_inline_info("paid");
     }

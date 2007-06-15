@@ -41,7 +41,7 @@ class tiki_invoice_prefs {
     /*private*/ function open_prefs() {
 	global $smarty;
 	
-	$keys=array('emitter_address', 'image', 'emitter_rib', 'emitter_tvanumber', 'footer',
+	$keys=array('emitter_address', 'image', 'emitter_rib', 'emitter_tvanumber', 'footer', 'locale', 
 		    'custom0', 'custom1', 'custom2', 'custom3');
 	$show='';
 	foreach($keys as $key) {
@@ -67,7 +67,7 @@ class tiki_invoice_prefs {
     }
 
     /*private*/ function save_prefs() {
-	$keys=array('emitter_address', 'image', 'emitter_rib', 'emitter_tvanumber', 'footer',
+	$keys=array('emitter_address', 'image', 'emitter_rib', 'emitter_tvanumber', 'footer', 'locale', 
 		    'custom0', 'custom1', 'custom2', 'custom3');
 	foreach($keys as $key) {
 	    if (!isset($_REQUEST['active_invoice_'.$key])
