@@ -19,7 +19,7 @@
  {if $feature_jscalendar ne 'y'} 
  <input type='text' name='invoice_date' value='{$invoice_date|escape}'></td></tr>
 {else}
-{jscalendar id="start" date=$invoice_date fieldname="invoice_date" ifFormat="%d/%m/%Y" align="Bc" showtime='n'}
+{jscalendar id="start" date=$invoice_date fieldname="invoice_date" ifFormat="%Y-%m-%d" align="Bc" showtime='n'}
 {/if}
 
  <tr>

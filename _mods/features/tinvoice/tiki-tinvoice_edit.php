@@ -34,6 +34,12 @@ function getContactExt($contact, $exts, $fieldname) {
     return NULL;
 }
 
+function getthedate($str) {
+    if (preg_match('/^[0-9]{4}-[01][0-9]-[0123][0-9]$/', $str)) return $str;
+    if (preg_match('/^[0-9]{8,20}$/', $str)) return strftime('%Y-%m-%d', $str);
+    return $str;
+}
+
 /*static*/
 class tiki_edit_invoice {
     /*static public*/ function init() {
@@ -116,10 +122,10 @@ class tiki_edit_invoice {
 	}
 
 	$tinvoice->set_receiver($_REQUEST["invoice_id_receiver"], 'contact');
-	$tinvoice->set_date($_REQUEST["invoice_date"]);
+	$tinvoice->set_date(getthedate($_REQUEST["invoice_date"]));
 	$tinvoice->set_libelle($_REQUEST['invoice_libelle']);
 	if ($_REQUEST["invoice_datelimit"] != "")
-	    $tinvoice->set_datelimit($_REQUEST["invoice_datelimit"]);
+	    $tinvoice->set_datelimit(getthedate($_REQUEST["invoice_datelimit"]));
 	$tinvoice->set_refdevis($_REQUEST['invoice_refdevis']);
 	$tinvoice->set_refbondecommande($_REQUEST['invoice_refbondecommande']);
 	$tinvoice->set_receiver_tvanumber($_REQUEST['invoice_receiver_tvanumber']);
@@ -240,6 +246,7 @@ if (isset($_REQUEST['xajax'])) {
     domyajax();
 } else {
     tiki_edit_invoice::init();
+    var_dump($_POST);
 }
 
 ?>
