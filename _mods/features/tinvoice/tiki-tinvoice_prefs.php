@@ -42,7 +42,7 @@ class tiki_invoice_prefs {
 	global $smarty;
 	
 	$keys=array('emitter_address', 'image', 'emitter_rib', 'emitter_tvanumber', 'footer', 'locale', 
-		    'custom0', 'custom1', 'custom2', 'custom3');
+		    'daycountlimit', 'custom0', 'custom1', 'custom2', 'custom3');
 	$show='';
 	foreach($keys as $key) {
 	    $value=$this->tinvoicelib->get_pref($key);
@@ -68,7 +68,7 @@ class tiki_invoice_prefs {
 
     /*private*/ function save_prefs() {
 	$keys=array('emitter_address', 'image', 'emitter_rib', 'emitter_tvanumber', 'footer', 'locale', 
-		    'custom0', 'custom1', 'custom2', 'custom3');
+		    'daycountlimit', 'custom0', 'custom1', 'custom2', 'custom3');
 	foreach($keys as $key) {
 	    if (!isset($_REQUEST['active_invoice_'.$key])
 		|| $_REQUEST['active_invoice_'.$key]=='0') {

@@ -168,7 +168,10 @@ class tiki_edit_invoice {
 	$smarty->assign("initinvoicelines",
 			"add_invoice_line(--last_invoice_id, '', '', 19.60, 1, 0.00);\n");
 	$smarty->assign("invoice_date", date("Y-m-d"));
-	$smarty->assign("invoice_datelimit", date("Y-m-d", strtotime("now + 1 month")));
+
+	$daycountlimit=$tinvoice->tinvoicelib->get_pref("daycountlimit");
+	if (!$daycountlimit) $daycountlimit=30;
+	$smarty->assign("invoice_datelimit", date("Y-m-d", strtotime("now + ".$daycountlimit." day")));
     }
 
     /*static public*/ function show_invoice($tinvoice) {
