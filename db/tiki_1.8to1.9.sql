@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.115 2007-04-02 17:21:19 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.116 2007-06-15 11:26:11 mose Exp $
 
 # The following script will update a tiki database from version 1.8.x to 1.9.x
 # The following script will ALSO update from version 1.9.x to 1.9.y
@@ -1297,8 +1297,8 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_multilingual','
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_export','n');
 ALTER TABLE `tiki_quizzes` DROP PRIMARY KEY , ADD PRIMARY KEY ( `quizId` , `nVersion` );
 ALTER TABLE `tiki_trackers` ADD showAttachments char(1) default NULL AFTER useAttachments;
-INSERT IGNORE INTO users_grouppermissions (groupName,permName,value) VALUES ('Anonymous','tiki_p_view','');
-INSERT IGNORE INTO users_grouppermissions (groupName,permName,value) VALUES ('Anonymous','tiki_p_wiki_view_history','');
+#INSERT IGNORE INTO users_grouppermissions (groupName,permName,value) VALUES ('Anonymous','tiki_p_view','');
+#INSERT IGNORE INTO users_grouppermissions (groupName,permName,value) VALUES ('Anonymous','tiki_p_wiki_view_history','');
 
 # 2006-10-21 mose/cfreeze - changed pear auth params to be more generic
 update tiki_preferences set name='auth_pear_host' where name='auth_ldap_host';
