@@ -31,7 +31,7 @@ class TinvoiceLib extends TikiLib {
 	}
     }
 
-    /*public*/ function new_invoice($id) {
+    /*public*/ function new_invoice() {
 	return new Tinvoice($this);
     }
 
