@@ -18,6 +18,7 @@
     <input type="text" name="email" value="{$smarty.post.email}"/>
     <input type="hidden" name="name" value="{$smarty.post.name}"/>
     <input type="hidden" name="pass" value="{$smarty.post.pass}"/>
+    <input type="hidden" name="regcode" value="{$smarty.post.regcode}"/>
     <input type="hidden" name="novalidation" value="yes"/>
     {if $chosenGroup}<input type="hidden" name="chosenGroup" value="{$smarty.post.chosenGroup}" />{/if}
     <input type="submit" name="register" value="{tr}register{/tr}" />
