@@ -2,6 +2,7 @@
 <div class="navbar">
 {if $tiki_p_tinvoice_edit eq 'y'}<a class="linkbut" href="tiki-tinvoice_edit.php?id_emitter={$me_tikiid}">{tr}create new invoice{/tr}</a>&nbsp;{/if}
 <a class="linkbut" href="tiki-tinvoice_prefs.php">{tr}Invoices preferences{/tr}</a>
+<a class="linkbut" href="tiki-tinvoice_graph.php">{tr}Invoices Graphs{/tr}</a>
 </div>
 <div style="width: 500px; float: left;" class="button2">
 <a class="linkbut" href='tiki-tinvoice_list.php?id_emitter={$me_tikiid}'>{tr}clients invoices{/tr}</a>&nbsp;
@@ -28,8 +29,6 @@
 {/foreach}
 </select>
 
-<hr />
-{include file=tiki-tinvoice_graph.tpl}
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-tinvoice_list.php">{tr}Date{/tr}</a></td>

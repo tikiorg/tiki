@@ -1,3 +1,9 @@
+<div class="navbar">
+{if $tiki_p_tinvoice_edit eq 'y'}<a class="linkbut" href="tiki-tinvoice_edit.php?id_emitter={$me_tikiid}">{tr}create new invoice{/tr}</a>&nbsp;{/if}
+<a class="linkbut" href="tiki-tinvoice_prefs.php">{tr}Invoices preferences{/tr}</a>
+<a class="linkbut" href="tiki-tinvoice_list.php">{tr}list Invoices {/tr}</a>
+</div>
+
 <hr />
 <div class="navbar" style="height: 36px;"><div class="button2" style="text-align: center; width: 70px; float: left;"><a class="linkbut" {if $graphPeriod eq "week"} style="background-color: orange" {/if} href="tiki-tinvoice_list.php?graphPeriod=week&todate={$todate}">{tr}Week{/tr}</a>&nbsp;
 	</div><div class="button2" style="text-align: center; width: 70px; float: left;"><a class="linkbut"  {if $graphPeriod eq "month"} style="background-color: orange" {/if} href="tiki-tinvoice_list.php?graphPeriod=month&todate={$todate}">{tr}Month{/tr}</a>&nbsp;
@@ -19,6 +25,7 @@
 		<option >Filter ---</option>
 		<option >Invoices</option>
 		<option >Paiements</option>
+		<option >Expenses</option>
 	</select>
 </div><div class="button2" style="text-align: center; width: 125px; float: left;">{jscalendar id="start" date=$todate fieldname="todate" align="Bc" showtime='n'}
 </div>
