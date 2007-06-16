@@ -25,13 +25,12 @@
  <tr>
   <th>Client:</th>
   <td>
-   <select name='invoice_id_receiver' id='invoice_id_receiver'>
+   <select name='invoice_id_receiver' id='invoice_id_receiver' onChange='xajax_myajax_getcontact(document.getElementById("invoice_id_receiver").value)'>
     <option disabled selected>Choisir...</option>
     {foreach from=$contacts item=contact}
     <option value='{$contact.contactId}'>{$contact.firstName|escape} {$contact.lastName|escape}</option>
     {/foreach}
    </select>
-   <input type='button' name='zob' value='zob' onclick='xajax_myajax_getcontact(document.getElementById("invoice_id_receiver").value)'>
   </td>
  </tr>
  <tr><th>Libelle:</th><td><input type='text' name='invoice_libelle' value='{$invoice_libelle|escape}'></td></tr>
