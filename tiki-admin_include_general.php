@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.56 2007-05-31 09:42:55 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.57 2007-06-16 22:09:13 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,17 +12,7 @@
 require_once('tiki-setup.php');  
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
-if (isset($_REQUEST["change_style"])) {
-	check_ticket('admin-inc-general');
-	simple_set_value('style');
-	//byref_set_value("site_style", "style");
-	if ($site_style != $user_style) {
-		header('Location: tiki-admin.php?page=general');
-		die;
-	}
-}
-// Handle Update
-elseif (isset($_REQUEST["prefs"])) {
+if (isset($_REQUEST["prefs"])) {
 	check_ticket('admin-inc-general');
     $pref_toggles = array(
         "anonCanEdit",
@@ -32,12 +22,6 @@ elseif (isset($_REQUEST["prefs"])) {
         "direct_pagination",
         "feature_menusfolderstyle",
         "feature_obzip",
-        "feature_detect_language",
-        "lang_use_db",
-        "modallgroups",
-        "modseparateanon", // MGvK
-        "popupLinks",
-        "record_untranslated",
         "site_closed",
         "useGroupHome",
         "limitedGoGroupHome",
@@ -45,10 +29,11 @@ elseif (isset($_REQUEST["prefs"])) {
         "use_load_threshold",
         "use_proxy",
         "session_db",
-	"contact_anon",
-	"error_reporting_adminonly",
-	"smarty_notice_reporting",
-	"user_show_realnames"
+        "contact_anon",
+        "feature_help",
+        "error_reporting_adminonly",
+        "smarty_notice_reporting",
+        "user_show_realnames"
     );
 
     foreach ($pref_toggles as $toggle) {
@@ -84,7 +69,6 @@ elseif (isset($_REQUEST["prefs"])) {
     $pref_byref_values = array(
         "display_field_order",
         "display_timezone",
-        "language",
         "server_timezone",
         "long_date_format",
         "long_time_format",
@@ -169,11 +153,6 @@ while ($file = readdir($h)) {
 }
 closedir ($h);
 $smarty->assign_by_ref("slide_styles", $slide_styles);
-
-// Get list of available languages
-$languages = array();
-$languages = $tikilib->list_languages();
-$smarty->assign_by_ref("languages", $languages);
 
 // Get list of time zones
 $smarty->assign_by_ref("timezones", $GLOBALS['_DATE_TIMEZONE_DATA']);
