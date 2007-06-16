@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.751 2007-06-06 15:40:55 nkoth Exp $
+// CVS: $Id: tikilib.php,v 1.752 2007-06-16 16:01:50 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1341,11 +1341,12 @@ function add_pageview() {
 	while ( $res = $result->fetchRow() ) {
 	    global $user;
 	    $add = $this->user_has_perm_on_object($user, $res['faqId'], 'faq', 'tiki_p_view_faqs');
-		if ( $add ) {
+		if ($add) {
 			$res['suggested'] = $this->getOne('select count(*) from `tiki_suggested_faq_questions` where `faqId`=?', array((int) $res['faqId']));
 			$res['questions'] = $this->getOne('select count(*) from `tiki_faq_questions` where `faqId`=?', array((int) $res['faqId']));
-		}
-		$ret[] = $res;
+		    $ret[] = $res;		    
+		}		    
+
 	}
 
 	$retval['data'] = $ret;
@@ -3157,6 +3158,11 @@ function add_pageview() {
 
 	$query = "delete from `tiki_user_watches` where `event`=? and `object`=?";
 	$this->query($query,array('wiki_page_changed', $page));
+ 
+	$atts = $wikilib->list_wiki_attachments($page, 0, -1, 'created_desc', '');
+	foreach ($atts["data"] as $at) {
+		$wikilib->remove_wiki_attachment($at["attId"]);
+	}
 
 	$wikilib->remove_footnote('', $page);
 
@@ -3403,7 +3409,7 @@ function add_pageview() {
 	return $this->list_pages($offset, $maxRecords, $sort_mode, $find, '', true, true);
    }
 
-    function list_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '', $initial = '', $exact_match = true, $onlyName=false, $forListPages=false, $only_orphan_pages = false, $filter='') {
+    function list_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '', $initial = '', $exact_match = true, $onlyName=false, $forListPages=false, $only_orphan_pages = false, $filter='', $onlyCant=false) {
 	global $wiki_list_links, $wiki_list_versions, $wiki_list_backlinks, $user;
 
 	$join_tables = '';
@@ -3491,6 +3497,12 @@ function add_pageview() {
 	if (!empty($join_bindvars)) {
 		$bindvars = empty($bindvars)? $join_bindvars : array_merge($join_bindvars, $bindvars);
 	}
+		if ($onlyCant) {
+			$query_cant = "select count(*) from `tiki_pages` tp left join `tiki_links` tl on tp.`pageName` = tl.`toPage` left join `tiki_structures` ts on  tp.`page_id`= ts.`page_id`where tl.`toPage` IS NULL and  `ts`.page_id IS NULL";
+			$cant = $this->getOne($query_cant,$bindvars);
+			return (array('cant'=>$cant));
+		}
+
 	$query = "select tp.* $select from `tiki_pages` as tp $join_tables $mid order by ".$this->convert_sortmode($sort_mode);
 	$query_cant = "select count(*) from `tiki_pages` as tp $join_tables $mid";
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
@@ -4516,7 +4528,6 @@ function add_pageview() {
 		{
 		    $plugin_data = str_replace('$', '\$', $plugin_data);
 		}
-
 		if( $plugin_start == "~pp~" )
 		{
 		    $noparsed["data"][] = "<pre>" . $plugin_data . "</pre>";
@@ -6815,7 +6826,7 @@ if (!$simple_wiki) {
 		$fhash = '';
 		$chunk = '';
 		if ($store_type == 'dir') {
-			$fhash = md5($name = $file_name);
+			$fhash = md5($name = $file_name.date('U'));
 			$fw = fopen($w_use_dir.$fhash, "wb");
 			if (!$fw)
 			    return array("ok"=>false, "error"=>tra('Cannot write to this file:').$fhash);

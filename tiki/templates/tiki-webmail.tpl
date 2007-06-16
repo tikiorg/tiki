@@ -1,3 +1,5 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-webmail.tpl,v 1.35 2007-06-16 16:02:09 sylvieg Exp $ *}
+
 <h1><a href="tiki-webmail.php" class="pagetitle">{tr}Webmail{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Webmail" target="tikihelp" class="tikihelp" title="{tr}Webmail Doc{/tr}">
@@ -208,12 +210,12 @@ title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
 </table>
 <table >
 {if $fullheaders eq 'n'}
-<tr class="formcolor"><td>{tr}From{/tr}</td><td>{$headers.from}</td></tr>
-<tr class="formcolor"><td>{tr}To{/tr}</td><td>{$headers.to}</td></tr>
+<tr class="formcolor"><td>{tr}From{/tr}</td><td>{$headers.from|escape}</td></tr>
+<tr class="formcolor"><td>{tr}To{/tr}</td><td>{$headers.to|escape}</td></tr>
 {if $headers.cc}
-<tr class="formcolor"><td>{tr}Cc{/tr}</td><td>{$headers.cc}</td></tr>
+<tr class="formcolor"><td>{tr}Cc{/tr}</td><td>{$headers.cc|escape}</td></tr>
 {/if}
-<tr class="formcolor"><td>{tr}Subject{/tr}</td><td>{$headers.subject}</td></tr>
+<tr class="formcolor"><td>{tr}Subject{/tr}</td><td>{$headers.subject|escape}</td></tr>
 <tr class="formcolor"><td>{tr}Date{/tr}</td><td>{$headers.timestamp|tiki_short_datetime}</td></tr>
 {/if}
 {if $fullheaders eq 'y'}
@@ -233,7 +235,7 @@ title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
 {$bodies[ix]|nl2br}
 <hr />
 {/section}
-</div>
+
 {section name=ix loop=$attachs}
 <div class="simplebox">
 <a class="link" href="tiki-webmail_download_attachment.php?locSection=read&amp;msgid={$msgid}&amp;getpart={$attachs[ix].part}">{$attachs[ix].name|iconify}{$attachs[ix].name}</a>
@@ -284,7 +286,7 @@ title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
 <tr>
 <td class="{cycle advance=false}">{$channels[user].firstName}</td>
 <td class="{cycle advance=false}">{$channels[user].lastName}</td>
-<td class="{cycle advance=false}"><a class="link" href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">{$channels[user].email}</a>
+<td class="{cycle advance=false}"><a class="link" href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">{$channels[user].email|escape}</a>
 [&nbsp;&nbsp;<a class="link" href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$channels[user].contactId}" 
 title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>&nbsp;&nbsp;]
 </td>

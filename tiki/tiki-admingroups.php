@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.57 2007-06-06 09:54:07 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.58 2007-06-16 16:01:44 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -90,8 +90,7 @@ if (isset($_REQUEST["save"]) and isset($_REQUEST["olgroup"]) and !empty($_REQUES
 
 // Process a form to remove a group
 if (isset($_REQUEST["action"])) {
-	if ($_REQUEST["action"] == 'delete') {
-		$userlib->remove_group($_REQUEST["group"]);
+	if ($_REQUEST["action"] == 'delete') {		
 		$area = 'delgroup';
 		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);

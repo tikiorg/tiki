@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.82 2007-05-16 14:38:23 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.83 2007-06-16 16:02:08 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -120,18 +120,19 @@ a moderator approves it.{/tr}</small>
     	</td>
     </tr>
     {/if}
+	{if $tiki_p_admin_forum eq 'y' or $forum_info.topic_smileys eq 'y'}
     <tr class="formcolor">
       <td>{tr}Type{/tr}</td>
       <td>
+      {if $tiki_p_admin_forum eq 'y'}
       <select name="comment_topictype">
       <option value="n" {if $comment_topictype eq 'n'}selected="selected"{/if}>{tr}normal{/tr}</option>
-      {if $tiki_p_admin_forum eq 'y'}
       <option value="a" {if $comment_topictype eq 'a'}selected="selected"{/if}>{tr}announce{/tr}</option>
       <option value="h" {if $comment_topictype eq 'h'}selected="selected"{/if}>{tr}hot{/tr}</option>
       <option value="s" {if $comment_topictype eq 's'}selected="selected"{/if}>{tr}sticky{/tr}</option>
       <option value="l" {if $comment_topictype eq 'l'}selected="selected"{/if}>{tr}locked{/tr}</option>
-      {/if}
       </select>
+      {/if}
       {if $forum_info.topic_smileys eq 'y'}
       <select name="comment_topicsmiley">
       <option value="" {if $comment_topicsmiley eq ''}selected="selected"{/if}>{tr}no feeling{/tr}</option>
@@ -148,6 +149,7 @@ a moderator approves it.{/tr}</small>
       {/if}
       </td>
     </tr>
+	{/if}
     {if $forum_info.topic_summary eq 'y'}
     <tr class="formcolor">
     	<td>{tr}Summary{/tr}</td>
@@ -192,7 +194,7 @@ a moderator approves it.{/tr}</small>
       <td>
       <input type="submit" name="comments_previewComment" value="{tr}preview{/tr}"/>
       <input type="submit" name="comments_postComment" value="{tr}post{/tr}"/>
-      <input type="button" name="comments_postComment" value="{tr}cancel{/tr}" onclick="hide('forumpost');"/></td>
+      <input type="button" name="comments_postComment" value="{tr}cancel{/tr}" onclick="hide('forumpost');"/>
       </td>
     </tr>
     </table>
@@ -319,11 +321,11 @@ a moderator approves it.{/tr}</small>
   </td>
   {/if}	
   <td style="text-align:center;" class="{cycle advance=false}">
-  {if $comments_coms[ix].type eq 'n'}<img src="img/silk/page{$newtopic}.png" alt="{tr}normal{/tr}" />{/if}
-  {if $comments_coms[ix].type eq 'a'}<img src="img/silk/announce{$newtopic}.png" alt="{tr}announce{/tr}" />{/if}
-  {if $comments_coms[ix].type eq 'h'}<img src="img/silk/hot{$newtopic}.png" alt="{tr}hot{/tr}" />{/if}
-  {if $comments_coms[ix].type eq 's'}<img src="img/silk/sticky{$newtopic}.png" alt="{tr}sticky{/tr}" />{/if}
-  {if $comments_coms[ix].type eq 'l'}<img src="img/silk/locked{$newtopic}.png" alt="{tr}locked{/tr}" />{/if}
+  {if $comments_coms[ix].type eq 'n'}<img src="img/silk/page{$newtopic}.png" alt="{tr}normal{/tr}" title="{tr}normal{/tr}{if $newtopic}-{tr}new{/tr}{/if}" />{/if}
+  {if $comments_coms[ix].type eq 'a'}<img src="img/silk/announce{$newtopic}.png" alt="{tr}announce{/tr}" title="{tr}announce{/tr}{if $newtopic}-{tr}new{/tr}{/if}" />{/if}
+  {if $comments_coms[ix].type eq 'h'}<img src="img/silk/hot{$newtopic}.png" alt="{tr}hot{/tr}" title="{tr}hot{/tr}{if $newtopic}-{tr}new{/tr}{/if}" />{/if}
+  {if $comments_coms[ix].type eq 's'}<img src="img/silk/sticky{$newtopic}.png" alt="{tr}sticky{/tr}" title="{tr}sticky{/tr}{if $newtopic}-{tr}new{/tr}{/if}" />{/if}
+  {if $comments_coms[ix].type eq 'l'}<img src="img/silk/locked{$newtopic}.png" alt="{tr}locked{/tr}" title="{tr}locked{/tr}{if $newtopic}-{tr}new{/tr}{/if}" />{/if}
   </td>
   {if $forum_info.topic_smileys eq 'y'}
   <td style="text-align:center;" class="{cycle advance=false}">

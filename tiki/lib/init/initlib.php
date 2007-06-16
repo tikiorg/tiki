@@ -1,4 +1,4 @@
-<?php // $Id: initlib.php,v 1.14 2007-05-25 20:24:53 sylvieg Exp $
+<?php // $Id: initlib.php,v 1.15 2007-06-16 16:01:54 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
@@ -66,7 +66,10 @@ class TikiInit {
 		} else {
 			$include_path = $path;
 		}
-		return ini_set('include_path', $include_path);
+		if (phpversion() >= '4.3')
+			return set_include_path ($include_path);
+		else
+			return ini_set('include_path', $include_path);
 	}
 
 
@@ -80,7 +83,10 @@ class TikiInit {
 		} else {
 			$include_path = $path;
 		}
-		return ini_set('include_path', $include_path);
+		if (phpversion() >= '4.3')
+			return set_include_path ($include_path);
+		else
+			return ini_set('include_path', $include_path);		
 	}
 
 

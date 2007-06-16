@@ -483,7 +483,8 @@
     <tr><td class="form">{tr}UserPage prefix{/tr}:</td><td><input type="text" name="feature_wiki_userpage_prefix" value="{$feature_wiki_userpage_prefix|default:'UserPage'}" size="12" /></td></tr>
     <tr><td class="form">{tr}Page creators are admin of their pages{/tr}:</td><td><input type="checkbox" name="wiki_creator_admin" {if $wiki_creator_admin eq 'y'}checked="checked"{/if}/></td></tr>    
     <tr><td class="form">{tr}Import HTML{/tr}:</td><td><input type="checkbox" name="feature_wiki_import_html" {if $feature_wiki_import_html eq 'y'}checked="checked"{/if}/></td></tr>    
-
+    <tr><td class="form">{tr}Import Page{/tr}:</td><td><input type="checkbox" name="feature_wiki_import_page" {if $feature_wiki_import_page eq 'y'}checked="checked"{/if}/></td></tr>
+    
     <tr><td class="form">{tr}List authors{/tr}:</td><td>
     <select name="wiki_authors_style">
     <option value="classic" {if $wiki_authors_style eq 'classic'}selected="selected"{/if}>{tr}as Creator &amp; Last Editor{/tr}</option>
@@ -515,6 +516,7 @@
     <option value="both" {if $wiki_page_navigation_bar eq 'both'}selected="selected"{/if}>{tr}Both{/tr}</option>
     </select>
     </td></tr>
+    <tr><td class="form">{tr}Regex search and replace{/tr}:</td><td><input type="checkbox" name="feature_wiki_replace" {if $feature_wiki_replace eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td colspan="2" class="button"><input type="submit" name="wikifeatures" value="{tr}Set features{/tr}" /></td></tr>
     </table>
     </form>

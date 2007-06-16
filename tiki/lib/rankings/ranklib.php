@@ -99,6 +99,8 @@ class RankLib extends TikiLib {
 				$aux['name'] = $res['name'] . ': ' . $res['title'];
 				$aux['hits'] = $res['commentDate'];
 				$aux['href'] = 'tiki-view_forum_thread.php?forumId=' . $res['forumId'] . '&amp;comments_parentId=' . $res['threadId'];
+				$aux['date'] = $res['commentDate'];
+				$aux['user'] = $res['userName'];
 				$ret[] = $aux;
 				++$count;
 			}
@@ -128,6 +130,8 @@ class RankLib extends TikiLib {
 				$tmp = $res['parentId'];
 				if ($tmp == 0) $tmp = $res['threadId'];
 				$aux['href'] = 'tiki-view_forum_thread.php?forumId=' . $res['forumId'] . '&amp;comments_parentId=' . $tmp;
+				$aux['date'] = $res['commentDate'];
+				$aux['user'] = $res['userName'];
 				$ret[] = $aux;
 				++$count;
 			}

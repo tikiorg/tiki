@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.184 2007-06-05 00:14:10 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.185 2007-06-16 16:01:44 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -187,8 +187,8 @@ if(empty($info) && !($user && $feature_wiki_userpage == 'y' && strcasecmp($featu
   $likepages = $wikilib->get_like_pages($page);
   /* if we have exactly one match, redirect to it */
   if(count($likepages) == 1  && !$isUserPage) {
-    header ("Status: 402 Found"); /* PHP3 */
-    header ("HTTP/1.0 402 Found"); /* PHP4 */
+    header ("Status: 302 Found"); /* PHP3 */
+    header ("HTTP/1.0 302 Found"); /* PHP4 */
     header("Location: tiki-index.php?page=$likepages[0]");
     die;
   }

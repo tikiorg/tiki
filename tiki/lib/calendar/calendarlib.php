@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/calendar/calendarlib.php,v 1.72 2007-06-12 09:16:33 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/calendar/calendarlib.php,v 1.73 2007-06-16 16:01:53 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -120,7 +120,7 @@ class CalendarLib extends TikiLib {
 		while ($res = $result->fetchRow()) {
 			$allItemsFromCalendar[] = $res['calitemId'];
 		}
-		if (count($allItemsFromCalendar)) {
+		if (count($allItemsFromCalendar) > 0) {
 			$query = "delete from `tiki_calendar_roles` where `calitemId` in (".implode(',', array_fill(0,count($allItemsFromCalendar),'?')).")";
 			$this->query($query,array($allItemsFromCalendar));
 		}
@@ -133,6 +133,9 @@ class CalendarLib extends TikiLib {
 		$this->query($query,array($calendarId));
 		$query = "delete from `tiki_calendar_locations` where `calendarId`=?";
 		$this->query($query,array($calendarId));
+		// uncategorize calendar
+		global $categlib; require_once('lib/categories/categlib.php');
+		$categlib->uncategorize_object('calendar', $calendarId);
 		// now remove the calendar itself:
 		$query = "delete from `tiki_calendars` where `calendarId`=?";
 		$this->query($query,array($calendarId));

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.70 2007-06-12 09:41:18 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.71 2007-06-16 16:01:44 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -56,42 +56,28 @@ foreach ($rawcals["data"] as $cal_id=>$cal_data) {
 			$cal_data["tiki_p_add_events"] = 'n';
 			$cal_data["tiki_p_change_events"] = 'n';
 		}
-	} else {
-		if ($userlib->object_has_one_permission($cal_id,'calendar')) {
-			if ($userlib->object_has_permission($user, $cal_id, 'calendar', 'tiki_p_admin_calendar')) {
-				$cal_data["tiki_p_view_calendar"] = 'y';
-				$cal_data["tiki_p_add_events"] = 'y';
-				$cal_data["tiki_p_change_events"] = 'y';
-			} else {
-				if ($userlib->object_has_permission($user, $cal_id, 'calendar', 'tiki_p_view_calendar')) {
-					$cal_data["tiki_p_view_calendar"] = 'y';
-				} else {
-					$cal_data["tiki_p_view_calendar"] = 'n';
-				}
-				if ($userlib->object_has_permission($user, $cal_id, 'calendar', 'tiki_p_view_events')) {
-					$cal_data["tiki_p_view_events"] = 'y';
-				} else {
-					$cal_data["tiki_p_view_events"] = 'n';
-				}
-				if ($userlib->object_has_permission($user, $cal_id, 'calendar', 'tiki_p_add_events')) {
-					$cal_data["tiki_p_add_events"] = 'y';
-					$tiki_p_add_events = "y";
-					$smarty->assign("tiki_p_add_events", "y");
-				} else {
-					$cal_data["tiki_p_add_events"] = 'n';
-				}
-				if ($userlib->object_has_permission($user, $cal_id, 'calendar', 'tiki_p_change_events')) {
-					$cal_data["tiki_p_change_events"] = 'y';
-				} else {
-					$cal_data["tiki_p_change_events"] = 'n';
-				}
-				$smarty->assign("tiki_p_change_events", $cal_data["tiki_p_change_events"] );
-			}
+	} else {		
+		if ($userlib->user_has_perm_on_object($user, $cal_id, 'calendar', 'tiki_p_view_calendar')) {
+			$cal_data["tiki_p_view_calendar"] = 'y';
 		} else {
-			$cal_data["tiki_p_view_calendar"] = $tiki_p_view_calendar;
-			$cal_data["tiki_p_view_events"] = $tiki_p_view_events;
-			$cal_data["tiki_p_add_events"] = $tiki_p_add_events;
-			$cal_data["tiki_p_change_events"] = $tiki_p_change_events;
+			$cal_data["tiki_p_view_calendar"] = 'n';
+		}
+		if ($userlib->user_has_perm_on_object($user, $cal_id, 'calendar', 'tiki_p_add_events')) {
+			$cal_data["tiki_p_add_events"] = 'y';
+			$tiki_p_add_events = "y";
+			$smarty->assign("tiki_p_add_events", "y");
+		} else {
+			$cal_data["tiki_p_add_events"] = 'n';
+		}
+		if ($userlib->user_has_perm_on_object($user, $cal_id, 'calendar', 'tiki_p_change_events')) {
+			$cal_data["tiki_p_change_events"] = 'y';
+		} else {
+			$cal_data["tiki_p_change_events"] = 'n';
+		}
+		if ($userlib->user_has_perm_on_object($user, $cal_id, 'calendar', 'tiki_p_admin_calendar')) {
+			$cal_data["tiki_p_view_calendar"] = 'y';
+			$cal_data["tiki_p_add_events"] = 'y';
+			$cal_data["tiki_p_change_events"] = 'y';
 		}
 	}
 	if ($cal_data["tiki_p_view_calendar"] == 'y') {

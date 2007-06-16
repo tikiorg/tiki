@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.201 2007-06-08 16:23:10 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.202 2007-06-16 16:01:58 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -583,6 +583,7 @@ class TrackerLib extends TikiLib {
 			}
 
 			foreach ( $listfields as $fieldId => $fopt ) {
+				$fopt['fieldId'] = $fieldId;
 				$fopt['value'] = ( isset($fil[$fieldId]) ) ? $fil[$fieldId] : '';
 				$fopt['linkId'] = '';
 
@@ -1459,7 +1460,7 @@ class TrackerLib extends TikiLib {
 			if (!$ratingId) $ratingId = 0;
 			if (!isset($ratingoptions)) $ratingoptions = '';
 			if (!isset($showratings)) $showratings = 'n';
-			$this->replace_tracker_field($trackerId,$ratingId,'Rating','s','-','-',$showratings,'y','-','-',0,$ratingoptions);
+			$this->replace_tracker_field($trackerId,$ratingId,'Rating','s','-','-',$showratings,'y','n','-',0,$ratingoptions);
 		} else {
 			$this->query('delete from `tiki_tracker_fields` where `fieldId`=?',array((int)$ratingId));
 		}
@@ -1835,7 +1836,10 @@ class TrackerLib extends TikiLib {
 		$cat_type = "tracker $trackerId";
 		$cat_objid = $itemId;
 		$cat_desc = '';
-		$cat_name = $mainfield;
+		if (empty($mainfield))
+				$cat_name = $itemId;
+		else
+				$cat_name = $mainfield;
 		$cat_href = "tiki-view_tracker_item.php?trackerId=$trackerId&amp;itemId=$itemId";
 		$categlib->uncategorize_object($cat_type, $cat_objid);
 		foreach ($ins_categs as $cats) {

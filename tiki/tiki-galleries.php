@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.56 2007-03-22 18:58:11 gillesm Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.57 2007-06-16 16:01:44 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -268,8 +268,18 @@ if (isset($_REQUEST["edit"]) && $feature_categories == 'y' && $feature_image_gal
 		$_REQUEST['showuser'],$_REQUEST['showhits'],$_REQUEST['showxysize'],$_REQUEST['showfilesize'],$_REQUEST['showfilename'],$_REQUEST['defaultscale'],$geographic);
 
 	#add scales
-	if (isset($_REQUEST["scaleSize"]) && is_numeric($_REQUEST["scaleSize"])) {
-		$imagegallib->add_gallery_scale($gid, $_REQUEST["scaleSize"]);
+	if (isset($_REQUEST["scaleSize"])) {
+		if (strstr($_REQUEST["scaleSize"],',')) {
+			$sc = split(',',$_REQUEST["scaleSize"]);
+			foreach ($sc as $thisc) {
+				$thisc = trim($thisc);
+				if (is_numeric($thisc)) {
+					$imagegallib->add_gallery_scale($gid, $thisc);
+				}
+			}
+		} elseif (is_numeric($_REQUEST["scaleSize"])) {
+			$imagegallib->add_gallery_scale($gid, $_REQUEST["scaleSize"]);
+		}
 	}
 
 	#remove scales

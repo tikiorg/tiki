@@ -2,7 +2,7 @@
 
 // $start_time = microtime(true);
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.72 2007-03-21 19:21:39 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.73 2007-06-16 16:01:41 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -353,6 +353,10 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 		//$access->display_error(basename(__FILE__), $msgError);
 	}
     }
+} elseif (isset($_REQUEST['comments_postComment'])) {
+	$smarty->assign('msg', tra("You do not have permission to use this feature"));
+	$smarty->display("error.tpl");
+    die;
 }
 
 // $end_time = microtime(true);

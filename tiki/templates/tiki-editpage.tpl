@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.107 2007-06-06 04:19:27 nkoth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.108 2007-06-16 16:02:07 sylvieg Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -190,7 +190,7 @@ function searchrep() {
 {/literal}
 </script>
 
-<tr class="formcolor"><td>{tr}Search {/tr}:</td><td>
+<tr class="formcolor"><td>{tr}Regex search {/tr}:</td><td>
 <input style="width:100;" class="wikitext" type="text" id="search"/>
 {tr}Replace to{/tr}:
 <input style="width:100;" class="wikitext" type="text" id="replace"/>
@@ -257,7 +257,7 @@ function searchrep() {
 </tr>
 {/if}
 
-{if $tiki_p_admin_wiki eq 'y'}
+{if $tiki_p_admin_wiki eq 'y' && $feature_wiki_import_page eq 'y'}
 <tr class="formcolor"><td>{tr}Import page{/tr}:</td><td>
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
 <input name="userfile1" type="file" />

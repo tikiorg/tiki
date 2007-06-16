@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-forums_last_topics.tpl,v 1.12 2007-05-31 09:42:59 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-forums_last_topics.tpl,v 1.13 2007-06-16 16:02:09 sylvieg Exp $ *}
 
 {if $feature_forums eq 'y'}
 {if !isset($tpl_module_title)}
@@ -15,11 +15,11 @@
         {if $nonums != 'y'}<td valign="top" class="module">{$smarty.section.ix.index_next})</td>{/if}
         <td class="module">
 		  {if $absurl == 'y'}
-          <a class="linkmodule" href="{$base_url}{$modForumsLastTopics[ix].href}">
+          <a class="linkmodule" href="{$base_url}{$modForumsLastTopics[ix].href}" title="{$modForumsLastTopics[ix].date|tiki_short_datetime}, {tr}by{/tr} {if $modForumsLastTopics[ix].user ne ''}{$modForumsLastTopics[ix].user}{else}{tr}Anonymous{/tr}{/if}">
             {$modForumsLastTopics[ix].name}
           </a>
 		  {else}
-          <a class="linkmodule" href="{$modForumsLastTopics[ix].href}">
+          <a class="linkmodule" href="{$modForumsLastTopics[ix].href}" title="{$modForumsLastTopics[ix].date|tiki_short_datetime}, {tr}by{/tr} {if $modForumsLastTopics[ix].user ne ''}{$modForumsLastTopics[ix].user}{else}{tr}Anonymous{/tr}{/if}">
             {$modForumsLastTopics[ix].name}
           </a>
 		  {/if}

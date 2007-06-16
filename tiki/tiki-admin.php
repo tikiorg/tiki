@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.121 2007-05-25 22:33:44 pkdille Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.122 2007-06-16 16:01:41 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -21,7 +21,7 @@ if ($tiki_p_admin != 'y') {
 
 function simple_set_toggle($feature) {
 	global $_REQUEST, $tikilib, $smarty, $tikifeedback, $$feature;
-	
+
 	if (isset($_REQUEST[$feature]) && $_REQUEST[$feature] == "on") {
 		if ((!isset($$feature) || $$feature != 'y')) {
 			// not yet set at all or not set to y
@@ -215,11 +215,12 @@ if (isset($_REQUEST["page"])) {
 	} else if ($adminPage == "gmap") {
 		$admintitle = "Google Maps";//get_strings tra("Google Maps")
 		$description = "Google Maps";//get_strings tra("Google Maps")
+		$helpUrl = "gmap";
 		include_once ('tiki-admin_include_gmap.php');
 	} else if ($adminPage == "i18n") {
 		$admintitle = "i18n";//get_strings tra("i18n")
 		$description = "Internationalization";//get_strings tra("i18n")
-		$helpUrl = "Internationalization Admin";
+		$helpUrl = "Ii18h";
 		include_once ('tiki-admin_include_i18n.php');		
 	} else if ($adminPage == "wysiwyg") {
 		$admintitle = "wysiwyg";//get_strings tra("i18n")
@@ -231,6 +232,26 @@ if (isset($_REQUEST["page"])) {
 		$description = "Copyright management";//get_strings tra("i18n")
 		$helpUrl = "Copyright";
 		include_once ('tiki-admin_include_copyright.php');		
+	} else if ($adminPage == "category") {
+		$admintitle = "Category";//get_strings tra("Category")
+		$description = "Category";//get_strings tra("Category")
+		$helpUrl = "Category";
+		include_once ('tiki-admin_include_category.php');
+	} else if ($adminPage == "module") {
+		$admintitle = "Module";//get_strings tra("Module")
+		$description = "Module";//get_strings tra("Module")
+		$helpUrl = "Module";
+		include_once ('tiki-admin_include_module.php');
+	} else if ($adminPage == "theme") {
+		$admintitle = "Theme";//get_strings tra("Theme")
+		$description = "Theme";//get_strings tra("Theme")
+		$helpUrl = "Theme";
+		include_once ('tiki-admin_include_theme.php');
+	} else if ($adminPage == "textarea") {
+		$admintitle = "Text area";//get_strings tra("Text area")
+		$description = "Text area";//get_strings tra("Text area")
+		$helpUrl = "Text area";
+		include_once ('tiki-admin_include_textarea.php');
 	}
 	$url = 'tiki-admin.php'.'?page='.$adminPage;
 	if (!$helpUrl) {$helpUrl = ucfirst($adminPage)."+Config";}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.79 2007-06-08 16:23:09 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.80 2007-06-16 16:02:06 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
   
 {if $feature_help eq 'y'}
@@ -217,6 +217,11 @@ for a tracker and they must be valid in SQL{/tr}</em>
 <tr class="formcolor"><td class="auto" colspan="2">{tr}Do not show empty fields in item view?{/tr}</td><td>
 <input type="checkbox" name="doNotShowEmptyField" {if $doNotShowEmptyField eq 'y'}checked="checked"{/if} />
 </td></tr>
+
+<tr class="formcolor">
+<td class="auto" colspan="2">{tr}Show these fields (ID comma separated) in a popup on item link when listing tracker items?{/tr}</td>
+<td><input type="text" name="showPopup" value="{$showPopup|escape}" /></td>
+</tr>
 
 <tr class="formcolor"><td>&nbsp;</td><td colspan="2"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>

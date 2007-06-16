@@ -1,7 +1,7 @@
 <?php
 
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_category.php,v 1.17 2006-09-19 16:33:24 ohertel Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_category.php,v 1.18 2007-06-16 16:01:59 sylvieg Exp $
  *
  * Tiki-Wiki CATEGORY plugin.
  * 
@@ -19,7 +19,7 @@
  * 
   */
 function wikiplugin_category_help() {
-	return tra("Insert list of items for the current/given category into wiki page").":<br />~np~{CATEGORY(id=>1+2+3, types=>article+blog+faq+fgal+igal+newsletter+event+poll+quiz+survey+tracker+wiki+img, sort=>[type|created|name|hits|shuffle]_[asc|desc], sub=>y|n, split=>y|n)}{CATEGORY}~/np~";
+	return tra("Insert list of items for the current/given category into wiki page").":<br />~np~{CATEGORY(id=>1+2+3, types=>article+blog+faq+fgal+forum+igal+newsletter+event+poll+quiz+survey+tracker+wiki+img, sort=>[type|created|name|hits|shuffle]_[asc|desc], sub=>y|n, split=>y|n)}{CATEGORY}~/np~";
 }
 
 function wikiplugin_category($data, $params) {

@@ -2476,8 +2476,8 @@ TABLE.admin { width: 100%; }
         left: 0;
         top: 0;
         visibility: hidden;
-         -moz-opacity:0.8;
-	filter:alpha(opacity=80)
+         -moz-opacity:0.9;
+	filter:alpha(opacity=90)
 }
 
 .mdksubframe    {
@@ -2501,11 +2501,11 @@ TABLE.admin { width: 100%; }
 }
 
 .mdkitem a:link {
-        color: #FFFFFF;
+        color: black;
 }
 
 .mdkitem a:visited      {
-        color: #FFFFFF;
+        color: grey;
 }
 
 .mdkitem a:hover        {

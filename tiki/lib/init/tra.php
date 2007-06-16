@@ -34,12 +34,11 @@ function tra($content, $lg='') {
 			}
 		} else {
 			global $tikilib,$multilinguallib;
-			$tag=isset($multilinguallib)?$multilinguallib->getInteractiveTag($content):"";
 			$query = "select `tran` from `tiki_language` where `source`=? and `lang`=?";
 			$result = $tikilib->query($query, array($content,$lg == ""? $language: $lg));
 			$res = $result->fetchRow();
 			if (!$res) {
-				return $content.$tag;
+				return $content;
 			}
 			if (!isset($res["tran"])) {
 				global $record_untranslated;
@@ -47,10 +46,10 @@ function tra($content, $lg='') {
 					$query = "insert into `tiki_untranslated` (`source`,`lang`) values (?,?)";
 					$tikilib->query($query, array($content,$language),-1,-1,false);
 				}
-				return $content.$tag;
+				return $content;
 			}
 			$res["tran"] = preg_replace("~&lt;br(\s*/)&gt;~","<br$1>",$res["tran"]);
-			return $res["tran"].$tag;
+			return $res["tran"];
 		}
 	}
 }

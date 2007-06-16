@@ -101,6 +101,18 @@
     <a href="tiki-admin.php?page=copyright" class="admbox{if $feature_copyright ne 'y'} off{/if}" style="background-image: url('pics/large/copyright48x48.png')">
       <img src="pics/trans.png" alt="{tr}Copyright{/tr}" title="{tr}Copyright{/tr}{if $feature_copyright ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Copyright{/tr}</span>
     </a>
+    <a href="tiki-admin.php?page=category" class="admbox{if $feature_categories ne 'y'} off{/if}" style="background-image: url('mg/icons/admin_category.png')">
+      <img src="pics/trans.png" alt="{tr}Categories{/tr}" title="{tr}Categories{/tr}{if $feature_categories ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Categories{/tr}</span>
+    </a>
+    <a href="tiki-admin.php?page=module" class="admbox" style="background-image: url('img/mytiki/modules.gif')">
+      <img src="pics/trans.png" alt="{tr}Module{/tr}" title="{tr}Module{/tr}" /><span>{tr}Module{/tr}</span>
+    </a>
+    <a href="tiki-admin.php?page=theme" class="admbox" style="background-image: url('img/icons/admin_theme.png')">
+      <img src="pics/trans.png" alt="{tr}Theme{/tr}" title="{tr}Theme{/tr}" /><span>{tr}Theme{/tr}</span>
+    </a>
+   <a href="tiki-admin.php?page=textarea" class="admbox" style="background-image: url('img/icons/admin_textarea.png')">
+      <img src="pics/trans.png" alt="{tr}Text Area{/tr}" title="{tr}Text Area{/tr}" /><span>{tr}Text Area{/tr}</span>
+    </a>
 
   </div>
 </div>

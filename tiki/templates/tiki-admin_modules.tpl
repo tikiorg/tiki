@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.47 2007-06-04 15:55:31 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.48 2007-06-16 16:02:06 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
 
@@ -184,12 +184,21 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
 {/section}
 </table>
 <br />
+
 <a name="editcreate"></a>
 {if $um_name eq ''}
 <h2>{tr}Create new user module{/tr}</h2>
 {else}
 <h2>{tr}Edit this user module:{/tr} {$um_name}</h2>
 {/if}
+
+<div class="rbox" name="tip">
+<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+<div class="rbox-data" name="tip">{tr}Create your new custom module below. Make sure to preview first and make sure all is OK before <a href="#assign">assigning it</a>. Using html, you will be fine. However, if you improperly use wiki syntax or Smarty code, you could lock yourself out of the site.{/tr}
+</div>
+</div>
+<br />
+
 <table class="normal"><tr><td valign="top" class="odd">
 	{if $wysiwyg eq 'n'}
 		<a class="linkbut" href="tiki-admin_modules.php?wysiwyg=y#editcreate">{tr}Use wysiwyg editor{/tr}</a>

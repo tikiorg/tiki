@@ -2797,7 +2797,7 @@ div#loadstats {
   position: absolute;
   left: 0;
   top: 0;
-  background-color: #FFFFFF;
+  background-color: #00287B;
   visibility: hidden;
 }
 .mdksubmenu table {
@@ -2823,6 +2823,7 @@ div#loadstats {
   position: relative;
   display: block;
   text-decoration: none;
+  color: white;
 }
 
 .mdkitem a:visited  {

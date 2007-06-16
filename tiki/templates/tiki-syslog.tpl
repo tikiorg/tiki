@@ -1,3 +1,4 @@
+{* $Id: tiki-syslog.tpl,v 1.12 2007-06-16 16:02:08 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-syslog.php">{tr}SysLog{/tr}</a>
 
 {if $feature_help eq 'y'}
@@ -28,10 +29,11 @@
 <form method="get" action="tiki-syslog.php">
 <input type="text" name="find" value="{$find|escape}" />
 <input type="submit" value="{tr}find{/tr}" name="search" />
-<input type="text" name="max" value="{$maxRecords|escape}" size= 4" /> {tr}rows{/tr}
+<input type="text" name="max" value="{$maxRecords|escape}" size="4" /> {tr}rows{/tr}
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 </form>
 </td></tr></table>
+</div>
 
 <div class="simplebox">
 <table class="normal">

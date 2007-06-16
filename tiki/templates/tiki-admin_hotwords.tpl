@@ -1,3 +1,4 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_hotwords.tpl,v 1.25 2007-06-16 16:02:05 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_hotwords.php">{tr}Admin Hotwords{/tr}</a>
   
 {if $feature_help eq 'y'}
@@ -44,14 +45,15 @@
 <td class="{cycle advance=false}">{$words[user].word}</td>
 <td class="{cycle advance=false}">{$words[user].url}</td>
 <td class="{cycle advance=true}">
-&nbsp;&nbsp;<a class="link" href="tiki-admin_hotwords.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$words[user].word}" 
-title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>&nbsp;&nbsp;
+<a class="link" href="tiki-admin_hotwords.php?remove={$words[user].word|escape:"url"}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}" 
+title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>
 </td>
 </tr>
 {sectionelse}
 <tr><td colspan="3" class="odd">{tr}No records found{/tr}</td></tr>
 {/section}
 </table>
+
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" class="link" href="tiki-admin_hotwords.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
