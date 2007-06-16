@@ -1,4 +1,4 @@
-
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.100 2007-06-16 22:09:14 sylvieg Exp $ *}
 {* this is the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
  * there are five cells for every row, the middle cell is empty to keep feature and ckboxes separate
@@ -28,8 +28,8 @@
     <td class="heading" colspan="5" align="center">{tr}Tiki sections and features{/tr}</td>
   </tr>
   <tr>
-    <td ><input type="checkbox" name="feature_wiki" {if $feature_wiki eq 'y'}checked="checked"{/if}/></td>
-    <td class="form" > {if $feature_help eq 'y'}<a href="{$helpurl}Wiki" target="tikihelp" class="tikihelp" title="{tr}Wiki{/tr}">{/if} {tr}Wiki{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
+    <td >&nbsp;</td>
+    <td class="form" > <a href="tiki-admin.php?page=general#help">Help System</a></td>
     <td >&nbsp;</td>
     <td><input type="checkbox" name="feature_blogs" {if $feature_blogs eq 'y'}checked="checked"{/if}/></td>
     <td class="form" > {if $feature_help eq 'y'}<a href="{$helpurl}Blogs" target="tikihelp" class="tikihelp" title="{tr}Wiki{/tr}">{/if} {tr}Blogs{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
@@ -67,7 +67,7 @@
     <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Directory" target="tikihelp" class="tikihelp" title="{tr}Directory{/tr}">{/if} {tr}Directory{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
     <td>&nbsp;</td>
     <td><input type="checkbox" name="feature_webmail" {if $feature_webmail eq 'y'}checked="checked"{/if}/></td>
-    <td class="form"> {if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=WebmailDoc" target="tikihelp" class="tikihelp" title="{tr}Webmail{/tr}">{/if} {tr}Webmail{/tr} {if $feature_help eq 'y'}</a>{/if} </td>
+    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Webmail" target="tikihelp" class="tikihelp" title="{tr}Webmail{/tr}">{/if} {tr}Webmail{/tr} {if $feature_help eq 'y'}</a>{/if} </td>
     </tr>
   <tr>
     <td><input type="checkbox" name="feature_polls" {if $feature_polls eq 'y'}checked="checked"{/if}/></td>
@@ -92,35 +92,35 @@
     </tr>
   <tr>
     <td><input type="checkbox" name="feature_games" {if $feature_games eq 'y'}checked="checked"{/if}/></td>
-    <td class="form"> {if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=Games" target="tikihelp" class="tikihelp" title="{tr}Games{/tr}">{/if} {tr}Games{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
+    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Games" target="tikihelp" class="tikihelp" title="{tr}Games{/tr}">{/if} {tr}Games{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
     <td>&nbsp;</td>
     <td><input type="checkbox" name="feature_workflow" {if $feature_workflow eq 'y'}checked="checked"{/if}/></td>
-    <td class="form"> {if $feature_help eq 'y'}<a href="http://workflow.tikiwiki.org/" target="tikihelp" class="tikihelp" title="{tr}Workflow{/tr}">{/if} {tr}Workflow engine{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
+    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Workflow" target="tikihelp" class="tikihelp" title="{tr}Workflow{/tr}">{/if} {tr}Workflow engine{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
     </tr>
   <tr>
     <td><input type="checkbox" name="feature_newsletters" {if $feature_newsletters eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Newsletters" target="tikihelp" class="tikihelp" title="{tr}Newsletters{/tr}">{/if} {tr}Newsletters{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
     <td>&nbsp;</td>
     <td><input type="checkbox" name="feature_live_support" {if $feature_live_support eq 'y'}checked="checked"{/if}/></td>
-    <td class="form"> {if $feature_help eq 'y'}<a href="http://tikiwiki.org/LiveSupportDoc" target="tikihelp" class="tikihelp" title="{tr}Live Support{/tr}">{/if} {tr}Live support system{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
+    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Live+Support" target="tikihelp" class="tikihelp" title="{tr}Live Support{/tr}">{/if} {tr}Live support system{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
     </tr>
   <tr>
 		<td><input type="checkbox" name="feature_minical" {if $feature_minical eq 'y'}checked="checked"{/if}/></td>
 		<td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Calendar" target="tikihelp" class="tikihelp" title="{tr}Mini Calendar{/tr}">{/if} {tr}Mini Calendar{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
 		<td>&nbsp;</td>
     <td><input type="checkbox" name="feature_surveys" {if $feature_surveys eq 'y'}checked="checked"{/if}/></td>
-    <td class="form"> {if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=SurveyDoc" target="tikihelp" class="tikihelp" title="{tr}Surveys{/tr}">{/if} {tr}Surveys{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
+    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Surveys" target="tikihelp" class="tikihelp" title="{tr}Surveys{/tr}">{/if} {tr}Surveys{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
      </tr>
   <tr>
-    <td><input type="checkbox" name="feature_categories" {if $feature_categories eq 'y'}checked="checked"{/if}/></td>
-    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Categories" target="tikihelp" class="tikihelp" title="{tr}Categories{/tr}">{/if} {tr}Categories{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
+    <td>&nbsp;</td>
+    <td class="form"> <a href="tiki-admin.php?page=category">{tr}Categories{/tr}</a></td>
     <td>&nbsp;</td>
 		<td><input type="checkbox" name="feature_maps" {if $feature_maps eq 'y'}checked="checked"{/if}/></td>
 		<td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Maps" target="tikihelp" class="tikihelp" title="{tr}Maps{/tr}">{/if} {tr}Maps{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
   </tr>
   <tr>
-    <td><input type="checkbox" name="feature_categorypath" {if $feature_categorypath eq 'y'}checked="checked"{/if}/></td>
-    <td class="form"> {tr}Show Category Path{/tr} </td>
+    <td>&nbsp;</td>
+    <td class="form">&nbsp;</td>
     <td>&nbsp;</td>
     <td><input type="checkbox" name="feature_gmap" {if $feature_gmap eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {if $feature_help eq 'y'}<a href="http://tikiwiki.org/Gmap" target="tikihelp" class="tikihelp" title="{tr}tikiwiki.org help{/tr}: {tr}Google Maps{/tr}">{/if} {tr}Google Maps{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
@@ -133,8 +133,8 @@
     <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Calendar" target="tikihelp" class="tikihelp" title="{tr}Calendar{/tr}">{/if} {tr}Calendar{/tr} {if $feature_help eq 'y'}</a>{/if}</td></tr>
     </tr>
   <tr>
-    <td><input type="checkbox" name="feature_modulecontrols" {if $feature_modulecontrols eq 'y'}checked="checked"{/if}/></td>
-    <td class="form"> {if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=RecipeModuleControls" target="tikihelp" class="tikihelp" title="{tr}Show Module Controls{/tr}">{/if} {tr}Show Module Controls{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
+    <td>&nbsp;</td>
+    <td class="form"> <a href="tiki-admin.php?page=module">{tr}Show Module Controls{/tr}</a></td>
     <td>&nbsp;</td>
     <td><input type="checkbox" name="feature_action_calendar" {if $feature_action_calendar eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Action+Calendar" target="tikihelp" class="tikihelp" title="{tr}tikiwiki.org help{/tr}: {tr}Action Calendar{/tr}">{/if} {tr}Tiki Calendar{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
@@ -143,8 +143,8 @@
     <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Mail-in" target="tikihelp" class="tikihelp" title="{tr}Mail-in{/tr}">{/if} 
 {tr}Mail-in{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
     <td>&nbsp;</td>
-    <td><input type="checkbox" name="feature_view_tpl" {if $feature_view_tpl eq 'y'}checked="checked"{/if}/></td>
-    <td class="form"> {if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=EditTemplatesDoc" target="tikihelp" class="tikihelp" title="{tr}Template Viewing{/tr}">{/if} {tr}Tiki Template Viewing{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
+    <td>&nbsp;</td>
+    <td class="form"> <a href="tiki-admin.php?page=theme"> {tr}Tiki Template Viewing{/tr} </a></td>
     </tr>
   <tr>
     <td><input type="checkbox" name="feature_integrator" {if $feature_integrator eq 'y'}checked="checked"{/if}/></td>
@@ -158,8 +158,8 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
     <td><input type="checkbox" name="feature_jscalendar" {if $feature_jscalendar eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=JsCalendar" target="tikihelp" class="tikihelp" title="{tr}JsCalendar{/tr}">{/if} {tr}JsCalendar{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
     <td>&nbsp;</td>
-    <td><input type="checkbox" name="feature_tabs" {if $feature_tabs eq 'y'}checked="checked"{/if}/></td>
-    <td class="form"> {tr}Use Tabs{/tr} </td>
+    <td>&nbsp;</td>
+    <td class="form"> <a href="tiki-admin.php?page=theme">{tr}Use Tabs{/tr}</a> </td>
     </tr>
   <tr>
     <td><input type="checkbox" name="feature_score" {if $feature_score eq 'y'}checked="checked"{/if} /></td>
@@ -252,9 +252,8 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
             {if $feature_hotwords_nw eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Hotwords" target="tikihelp" class="tikihelp" title="{tr}Hotwords in New Windows{/tr}">{/if} {tr}Hotwords in New Windows{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
     <td class="form">&nbsp;</td>
-    <td><input type="checkbox" name="feature_editcss"
-            {if $feature_editcss eq 'y'}checked="checked"{/if}/></td>
-    <td class="form"> {if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=CssEditDev" target="tikihelp" class="tikihelp" title="{tr}Edit CSS{/tr}">{/if} {tr}Edit CSS{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
+    <td>&nbsp;</td>
+    <td class="form"> &nbsp;</td>
   </tr>
   <tr>
     <td><input type="checkbox" name="feature_custom_home"
@@ -279,14 +278,12 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
             {if $feature_charts eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {tr}Charts{/tr} </td>
     <td class="form">&nbsp;</td>
-    <td><input type="checkbox" name="feature_smileys"
-            {if $feature_smileys eq 'y'}checked="checked"{/if}/></td>
-    <td class="form"> {if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=AllowSmileys" target="tikihelp" class="tikihelp" title="{tr}Allow Smileys{/tr}">{/if} {tr}Allow Smileys{/tr} {if $feature_help eq 'y'}</a>{/if} </td>
+    <td>&nbsp;</td>
+    <td class="form"> <a href="tiki-admin.php?page=textarea">{tr}Allow Smileys{/tr}</a> </td>
   </tr>
   <tr>
-    <td><input type="checkbox" name="feature_autolinks"
-            {if $feature_autolinks eq 'y'}checked="checked"{/if}/></td>
-    <td class="form"> {if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=AutoLinks" target="tikihelp" class="tikihelp" title="{tr}AutoLinks{/tr}">{/if} {tr}AutoLinks{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
+    <td>&nbsp;</td>
+    <td class="form"> <a href="tiki-admin.php?page=textarea">{tr}Allow Smileys{/tr}</a></td>
     <td class="form">&nbsp;</td>
     <td><input type="checkbox" name="feature_use_quoteplugin"
             {if $feature_use_quoteplugin eq 'y'}checked="checked"{/if}/></td>
@@ -316,9 +313,8 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
     <td class="form"> {if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=CommunicationsCenterDoc" target="tikihelp" class="tikihelp" title="{tr}Communications (send/receive objects){/tr}">{/if} {tr}Communications (send/receive objects){/tr} {if $feature_help eq 'y'}</a>{/if} </td>
     </tr>
   <tr>
-    <td><input type="checkbox" name="feature_theme_control"
-            {if $feature_theme_control eq 'y'}checked="checked"{/if}/></td>
-    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Theme+Control" target="tikihelp" class="tikihelp" title="{tr}Theme Control{/tr}">{/if} {tr}Theme Control{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
+    <td>&nbsp;</td>
+    <td class="form"> <a href="tiki-admin.php?page=theme">{tr}Theme Control{/tr}</a></td>
     <td>&nbsp;</td>
     <td><input type="checkbox" name="feature_xmlrpc"
             {if $feature_xmlrpc eq 'y'}checked="checked"{/if}/></td>
@@ -427,7 +423,7 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
   </tr>
 	<tr>
     <td><input type="checkbox" name="feature_newsreader" {if $feature_newsreader eq 'y'}checked="checked"{/if}/></td>
-    <td class="form"> {if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=NewsreaderDoc" target="tikihelp" class="tikihelp" title="{tr}Newsreader{/tr}">{/if} {tr}Newsreader{/tr} {if $feature_help eq 'y'}</a>{/if} </td>
+    <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Newsreader" target="tikihelp" class="tikihelp" title="{tr}Newsreader{/tr}">{/if} {tr}Newsreader{/tr} {if $feature_help eq 'y'}</a>{/if} </td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.66 2007-05-28 22:04:14 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.67 2007-06-16 22:09:13 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -21,7 +21,6 @@ $features_toggles = array(
 	"feature_actionlog",
 	"feature_ajax",
 	"feature_articles",
-	"feature_autolinks",
 	"feature_banners",
 	"feature_banning",
 	"feature_blogs",
@@ -30,9 +29,6 @@ $features_toggles = array(
 	"feature_bot_bar_icons",
 	"feature_bot_bar_rss",
 	"feature_calendar",
-	"feature_categories",
-	"feature_categoryobjects",
-	"feature_categorypath",
 	"feature_category_reinforce",
 	"feature_charts",
 	"feature_chat",
@@ -45,8 +41,6 @@ $features_toggles = array(
 	"feature_directory",
 	"feature_drawings",
 	"feature_dynamic_content",
-	"feature_edit_templates",
-	"feature_editcss",
 	"feature_events",
 	"feature_faqs",
 	"feature_featuredLinks",
@@ -58,8 +52,7 @@ $features_toggles = array(
 	"feature_galleries",
 	"feature_games",
 	"feature_gmap",
-	"feature_help",
-        "feature_purifier",
+	"feature_purifier",
 	"feature_hotwords",
 	"feature_hotwords_nw",
 	"feature_html_pages",
@@ -72,7 +65,6 @@ $features_toggles = array(
 	"feature_messages",
 	"feature_minical",
 	"feature_mobile",
-	"feature_modulecontrols",
 	"feature_morcego",
 	"feature_newsletters",
 	"feature_newsreader",
@@ -88,12 +80,9 @@ $features_toggles = array(
 	"feature_sheet",
 	"feature_shoutbox",
 	"feature_siteidentity",
-	"feature_smileys",
 	"feature_stats",
 	"feature_surveys",
-	"feature_tabs",
 	"feature_tasks",
-	"feature_theme_control",
 	"feature_top_bar",
 	"feature_trackers",
 	"feature_use_quoteplugin",
@@ -103,7 +92,6 @@ $features_toggles = array(
 	"feature_user_watches_translations",
 	"feature_userfiles",
 	"feature_usermenu",
-	"feature_view_tpl",
 	"feature_webmail",
 	"feature_wiki",
 	"feature_workflow",

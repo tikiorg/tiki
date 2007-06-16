@@ -1,24 +1,5 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.63 2007-05-31 09:42:58 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.64 2007-06-16 22:09:14 sylvieg Exp $ *}
 
-<script type="text/javascript">
-{literal}
-
-  function previous_site_style() {
-	var select = document.getElementById('general-theme');
-	if (select.selectedIndex > 0) {
-		select.selectedIndex--;
-	}
-  }
-
-  function next_site_style() {
-	var select = document.getElementById('general-theme');
-	if (select.selectedIndex < select.length-1) {
-		select.selectedIndex++;
-	}
-  }
-
-{/literal}
-</script>
 <div class="cbox">
   <div class="cbox-title">
     {tr}{$crumbs[$crumb]->description}{/tr}
@@ -31,36 +12,8 @@
             align="center">{tr}General Preferences{/tr}</td>
       </tr>
 	<tr><td class="form">{tr}Tikiwiki release{/tr} : </td><td class="form">{$tiki_release}</td></tr>
-	<tr>
-	<td class="form" ><label for="general-theme">{tr}Theme{/tr}:</label></td>
-        <td width="67%"><select name="style" id="general-theme">
-            {section name=ix loop=$styles}
-              <option value="{$styles[ix]|escape}" {if $style eq $styles[ix]} selected="selected"{/if}>{$styles[ix]}</option>
-            {/section}
-            </select>
-						{$site_style} - {$style} - {$user_style}
-            &nbsp;<a href="javascript:previous_site_style();" title="{tr}prev{/tr}"><img src="pics/icons/resultset_previous.png" alt="{tr}previous{/tr}" height="16" width="16" border="0" /></a>
-            <a href="javascript:next_site_style();" title="{tr}next{/tr}"><img src="pics/icons/resultset_next.png" alt="{tr}next{/tr}" height="16" width="16" border="0" /></a>&nbsp;
-            <input type="submit" name="change_style" value="{tr}Change style only{/tr}" />
-        </td>
-      </tr><tr>
-        <td class="form"><label for="general-slideshows">{tr}Slideshows theme{/tr}:</label></td>
-        <td><select name="slide_style" id="general-slideshows">
-            {section name=ix loop=$slide_styles}
-              <option value="{$slide_styles[ix]|escape}"
-                {if $slide_style eq $slide_styles[ix]}selected="selected"{/if}>
-                {$slide_styles[ix]}</option>
-            {/section}
-            </select>
-        </td>
-	</tr>
-	{if $feature_editcss eq 'y' and $tiki_p_create_css eq 'y'}
-	<tr>
-	<td class="form" >&nbsp;</td><td><a href="tiki-edit_css.php" class="link" title="{tr}Edit CSS{/tr}">{tr}Edit CSS{/tr}</a></td>
-	</tr>
-	{/if}
 
-      <tr><td colspan="2"><hr/></td></tr>
+      <tr><td colspan="2"><a href="tiki-admin.php?page=theme">{tr}Theme{/tr}</a><hr/></td></tr>
 
       <tr>
         <td class="form"><label for="general-homepages">{tr}Use group homepages{/tr}:</label></td>
@@ -115,30 +68,6 @@
             </select>
         </td>
       </tr><tr><td colspan="2"><hr/></td></tr><tr>
-        <td class="form"><label for="general-lang">{tr}Language{/tr}:</label></td>
-        <td>
-        <select name="language" id="general-lang">
-        {section name=ix loop=$languages}
-        <option value="{$languages[ix].value|escape}"
-          {if $language eq $languages[ix].value}selected="selected"{/if}>{$languages[ix].name}</option>
-        {/section}
-        </select>
-        </td>
-      </tr><tr>
-	<td class="form"><label for="general-detect_language">{tr}Detect browser language{/tr}:</label></td>
-        <td><input type="checkbox" name="feature_detect_language" id="general-detect_language"
-              {if $feature_detect_language eq 'y'}checked="checked"{/if}/></td>
-      </tr><tr>
-        <td class="form"><label for="general-db_translation">{tr}Use database for translation{/tr}:</label></td>
-        <td><input type="checkbox" name="lang_use_db" id="general-db_translation"
-              {if $lang_use_db eq 'y'}checked="checked"{/if}/></td>
-        {if $lang_use_db eq 'y'}
-          </tr><tr>
-            <td class="form"><label for="general-untranslated">{tr}Record untranslated{/tr}:</label></td>
-            <td><input type="checkbox" name="record_untranslated" id="general-untranslated"
-                  {if $record_untranslated eq 'y'}checked="checked"{/if}/></td>
-        {/if}
-      </tr><tr>
         <td class="form"><label for="general-os">{tr}OS{/tr}:</label></td>
         <td><select name="system_os" id="general-os">
             <option value="unix"
@@ -212,16 +141,10 @@
         <td colspan="5"><hr/></td></tr>
         <tr>
         <td class="form" >
-          <label for="general-ext_links">{tr}Open external links in new window{/tr}:</label></td>
-        <td ><input type="checkbox" name="popupLinks" id="general-ext_links"
-              {if $popupLinks eq 'y'}checked="checked"{/if}/>
-        </td>
+          <a href="tiki-admin.php?page=textarea">{tr}Open external links in new window{/tr}:</a></td>
         <td >&nbsp;</td>
         <td class="form" >
-          <label for="general-modules">{tr}Display modules to all groups always{/tr}:</label></td>
-        <td ><input type="checkbox" name="modallgroups" id="general-modules"
-              {if $modallgroups eq 'y'}checked="checked"{/if} {popup text="Hint: If you lose your login module, use tiki-login_scr.php to be able to login!" textcolor=red}/>
-        </td>
+          <a href="tiki-admin.php?page=module">{tr}Display modules to all groups always{/tr}</a></td>
       </tr><tr>
         <td class="form"><label for="general-cache_ext_pages">{tr}Use cache for external pages{/tr}:</label></td>
         <td><input type="checkbox" name="cachepages" id="general-cache_ext_pages"
@@ -259,8 +182,7 @@
         <td class="form"><label for="general-pageviews">{tr}Count admin pageviews{/tr}:</label></td>
         <td><input type="checkbox" name="count_admin_pvs" id="general-pageviews" {if $count_admin_pvs eq 'y'}checked="checked"{/if}/></td>
       </tr><tr>
-        <td class="form"><label for="general-anon_modules">{tr}Hide anonymous-only modules from registered users{/tr}:</label></td>
-        <td><input type="checkbox" name="modseparateanon" id="general-anon_modules" {if $modseparateanon eq 'y'}checked="checked"{/if}/></td>
+		<td class="form"><a href="tiki-admin.php?page=module">{tr}Hide anonymous-only modules from registered users{/tr}</a></td>
         <td>&nbsp;</td>
       </tr></table>
 
@@ -310,6 +232,11 @@
         <td class="form"><label for="general-max_records">{tr}Maximum number of records in listings{/tr}:</label></td>
         <td><input size="5" type="text" name="maxRecords" id="general-max_records"
                    value="{$maxRecords|escape}" /></td>
+
+      </tr><tr>
+        <td class="form"><label for="feature_help">{tr}Help System{/tr}:</label></td>
+        <td><input type="checkbox" name="feature_help" id="general-feature_help" {if $feature_help eq 'y'}checked="checked"{/if} /></td>
+
       </tr><tr>
         <td class="form"><label for="general-helpurl">{tr}Help URL{/tr}:</label></td>
         <td><input type="text" name="helpurl" id="general-helpurl" value="{$helpurl|escape}" size="40" /></td>
