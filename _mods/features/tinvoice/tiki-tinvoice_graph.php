@@ -3,9 +3,18 @@
 $section = 'tinvoice';
 require_once ('tiki-setup.php');
 require_once ('lib/tinvoice/tinvoicelib.php');
-require_once ('lib/webmail/contactlib.php');
+// xajax addon 
+require_once("lib/ajax/ajaxlib.php");
+
+
 if ($feature_tinvoice != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_tinvoice");
+
+	$smarty->display("error.tpl");
+	die;
+}
+if ($feature_ajax != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled").": feature_ajax");
 
 	$smarty->display("error.tpl");
 	die;
@@ -16,9 +25,6 @@ if ($tiki_p_tinvoice != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-
-// xajax addon 
-require_once("lib/ajax/ajaxlib.php");
 
 
 if ($feature_categories == 'y') {
@@ -52,10 +58,33 @@ if (isset($_REQUEST['xtype'])) {
 	$smarty->assign("prev", $prev);
 	$smarty->assign("next", $next);
 }
+#-------------Functions used by xajaxlib - it can be an include
 
-// xajax addon
-$ajaxlib->registerTemplate(tiki-tinvoice_graph.tpl);
+function tra_ajax($response) {
+ $objResponse = new xajaxResponse();
+ $objResponse->addAssign("result", "innerHTML", tra($response['str'],$response['lang']));
+ return $objResponse;
+}
+function load_graph($graphPeriod,$todate) {
+ $objResponse = new xajaxResponse();
+ $objResponse->replace("chart", "HTML", "xajax", "<img id='chart' border='0' alt='tinvoice graphs' src='tiki-tinvoice_chart.php?graphPeriod=".$graphPeriod."&todate=".$todate."' />");
+ return $objResponse;
+}
+
+#----------------------------------------------------------------
+
+$xajax = new xajax();
+# registering the functions - xajax will generate the js code.
+$xajax->registerFunction("tra_ajax");
+$xajax->registerFunction("loadComponent");
+$xajax->registerFunction("load_graph");
+$ajaxlib->registerTemplate("tiki-tinvoice_graph.tpl");
 $ajaxlib->processRequests();
+
+#assigning the js code to: xajax_js -> this var will be printed in the template file - {$xajax_js}
+$smarty->assign("xajax_js",$xajax->getJavascript('','lib/ajax/xajax_js/xajax.js'));
+
+
 // Display the template
 $smarty->assign('mid', 'tiki-tinvoice_graph.tpl');
 $smarty->display("tiki.tpl");

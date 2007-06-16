@@ -12,6 +12,12 @@ if ($feature_tinvoice != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
+if ($feature_ajax != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled").": feature_ajax");
+
+	$smarty->display("error.tpl");
+	die;
+}
 if ($tiki_p_tinvoice_edit != 'y') {
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 
