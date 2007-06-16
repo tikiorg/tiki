@@ -180,14 +180,6 @@ $graph->legend->SetShadow();
 // Add a drop shadow
 $graph->SetShadow();
 
-//if ($graphPeriod != "week" && $graphPeriod != "month") {
-//	$datax = $gDateLocale->GetShortMonth();
-//	$graph->xaxis->SetTickLabels($datax)
-//}
-
-// ...and add it to the graPH
-
-
 // Display the graph
 $graph->Stroke();
 

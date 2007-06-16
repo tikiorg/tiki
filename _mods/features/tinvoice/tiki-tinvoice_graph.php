@@ -36,40 +36,49 @@ if ($feature_categories == 'y') {
 $tinvoicelib=new TinvoiceLib($dbTiki);
 
 
-if (isset($_REQUEST['graphPeriod'])) {
-	$graphPeriod=$_REQUEST['graphPeriod'];
-} else {
-	$graphPeriod="week";
-}
-if (isset($_REQUEST['todate'])) {
-	$todate=$_REQUEST['todate'];
-} else {
-	$todate=date("U");
-}
-if (isset($_REQUEST['xtype'])) {
-	$xtype=$_REQUEST['xtype'];
-} else {
-	$smarty->assign("graphPeriod", $graphPeriod);
-	$smarty->assign("todate", $todate);
-	$smarty->assign("xtype", $xtype);
-	$period=$tinvoicelib->get_period_dates($todate,$graphPeriod);
-	$next=$todate + count($period)*24*60*60;
-	$prev=$todate - count($period)*24*60*60;
-	$smarty->assign("prev", $prev);
-	$smarty->assign("next", $next);
-}
+ 	if (isset($_REQUEST['graphPeriod'])) {
+		$graphPeriod=$_REQUEST['graphPeriod'];
+	} else {
+		$graphPeriod="week";
+	}
+	if (isset($_REQUEST['filter'])) {
+		$filter=$_REQUEST['filter'];
+	} else {
+		$filter="Invoices";
+	}
+	if (isset($_REQUEST['todate'])) {
+		$todate=$_REQUEST['todate'];
+	} else {
+		$todate=date("U");
+	}
+	if (isset($_REQUEST['xtype'])) {
+		$xtype=$_REQUEST['xtype'];
+	} else {
+		$smarty->assign("graphPeriod", $graphPeriod);
+		$smarty->assign("todate", $todate);
+		$smarty->assign("xtype", $xtype);
+		$smarty->assign("filter", $filter);
+		$period=$tinvoicelib->get_period_dates($todate,$graphPeriod);
+		$next=$todate + count($period)*24*60*60;
+		$prev=$todate - count($period)*24*60*60;
+		$smarty->assign("prev", $prev);
+		$smarty->assign("next", $next);
+	}
 #-------------Functions used by xajaxlib - it can be an include
 
 function tra_ajax($response) {
- $objResponse = new xajaxResponse();
- $objResponse->addAssign("result", "innerHTML", tra($response['str'],$response['lang']));
- return $objResponse;
+	$objResponse = new xajaxResponse();
+	$objResponse->addAssign("result", "innerHTML", tra($response['str'],$response['lang']));
+	return $objResponse;
 }
+
 function load_graph($graphPeriod,$todate) {
- $objResponse = new xajaxResponse();
- $objResponse->replace("chart", "HTML", "xajax", "<img id='chart' border='0' alt='tinvoice graphs' src='tiki-tinvoice_chart.php?graphPeriod=".$graphPeriod."&todate=".$todate."' />");
- return $objResponse;
-}
+	global $graphPeriod, $todate;
+	$objResponse = new xajaxResponse();
+	//$objResponse->clear("divchart","innerHTML");
+	$objResponse->replace("divchart", "innerHTML","<img id='chart' border='0' alt='tinvoice graphs' src='tiki-tinvoice_chart.php?graphPeriod=".$graphPeriod."&todate=".$todate."' />");
+ 	return $objResponse;
+	}
 
 #----------------------------------------------------------------
 
@@ -79,6 +88,7 @@ $xajax->registerFunction("tra_ajax");
 $xajax->registerFunction("loadComponent");
 $xajax->registerFunction("load_graph");
 $ajaxlib->registerTemplate("tiki-tinvoice_graph.tpl");
+//load_graph($graphPeriod,$todate);
 $ajaxlib->processRequests();
 
 #assigning the js code to: xajax_js -> this var will be printed in the template file - {$xajax_js}
