@@ -69,3 +69,17 @@
 {if $feature_wysiwyg eq 'y'}
 <a href="tiki-admin.php?page=wysiwyg" title="{tr}Wysiwyg editor{/tr}" class="link"><img border="0" src="pics/large/wysiwyg.png" alt="{tr}Wysiwyg editor{/tr}" width="32" height="32" /></a>
 {/if}
+<a href="tiki-admin.php?page=i18n" title="{tr}i18n{/tr}" class="link"><img border="0"
+   src="img/icons/admin_i18n.png" alt="{tr}i18n{/tr}" /></a>
+
+<a href="tiki-admin.php?page=category" title="{tr}Category{/tr}" class="link"><img border="0"
+   src="img/icons/admin_category.png" alt="{tr}Category{/tr}" /></a>
+
+<a href="tiki-admin.php?page=module" title="{tr}Module{/tr}" class="link"><img border="0"
+   src="img/mytiki/modules.gif" alt="{tr}Module{/tr}" /></a>   
+   
+<a href="tiki-admin.php?page=theme" title="{tr}Theme{/tr}" class="link"><img border="0"
+   src="img/icons/admin_theme.png" alt="{tr}Theme{/tr}" /></a>
+
+<a href="tiki-admin.php?page=textarea" title="{tr}Text area{/tr}" class="link"><img border="0"
+   src="img/icons/admin_textarea.png" alt="{tr}Text area{/tr}" /></a>      

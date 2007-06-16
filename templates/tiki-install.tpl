@@ -135,7 +135,7 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 			<option value="{$profiles[ix].name|escape}">{$profiles[ix].desc}</option>
 			{/section}
 			</select>
-			<input type="submit" name="scratch" value="create" />
+			<input type="submit" name="scratch" value="{tr}create{/tr}" />
 		    </td></tr><tr>
 			<td height="100" valign="top">
 			</td><td height="100" valign="top">
@@ -158,7 +158,7 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 			<option value="{$files[ix]|escape}">{$files[ix]}</option>
 			{/section}
 			</select>
-			<input type="submit" name="update" value="update" />
+			<input type="submit" name="update" value="{tr}update{/tr}" />
 		    </td></tr>
 		    <tr><td colspan="2">
 			{tr}For database update from 1.8 or later{/tr}:

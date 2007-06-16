@@ -13,8 +13,8 @@ class StatsLib extends TikiLib {
 
 	// obsolete, but keeped for compatibility purposes
 	// use Tikilib::list_pages() instead
-	function list_orphan_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '', $onlyName=false) {
-		return $this->list_pages($offset, $maxRecords, $sort_mode, $find, '', true, $onlyName, true, true);
+	function list_orphan_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '', $onlyCant=false) {
+		return $this->list_pages($offset, $maxRecords, $sort_mode, $find, '', true, true, true, true, false, '', $onlyCant);
 	}
 
 	function wiki_stats() {

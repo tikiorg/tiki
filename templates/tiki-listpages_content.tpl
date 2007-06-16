@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.15 2007-04-03 19:08:05 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.16 2007-06-16 16:02:08 sylvieg Exp $ *}
 {if $cant_pages > 1 or $initial or $find}
 <div align="center">
 {section name=ini loop=$initials}
@@ -81,11 +81,11 @@
 {/if}
 {if $wiki_list_categories eq 'y'}
 	{assign var='cntcol' value=$cntcol+1}
-	<td style="text-align:right;" class="heading">{tr}Categories{/tr}</td>
+	<td class="heading">{tr}Categories{/tr}</td>
 {/if}
 {if $wiki_list_categories_path eq 'y'}
 	{assign var='cntcol' value=$cntcol+1}
-	<td style="text-align:right;" class="heading">{tr}Categories{/tr}</td>
+	<td class="heading">{tr}Categories{/tr}</td>
 {/if}
 </tr>
 {cycle values="even,odd" print=false}

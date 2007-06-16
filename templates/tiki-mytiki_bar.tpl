@@ -75,7 +75,7 @@
 </a></td>
 {/if}
 
-{if $feature_minical eq 'y'}
+{if $feature_minical eq 'y' and $tiki_p_minical eq 'y'}
 <td valign="top"><a class="link" href="tiki-minical.php" title="{tr}Mini Calendar{/tr}">
 <img  border="0" src="img/mytiki/minical.gif" alt="{tr}Mini Calendar{/tr}" /><br />
 </a></td>

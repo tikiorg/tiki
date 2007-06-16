@@ -130,7 +130,7 @@
 </div>
 {if count($suggested) > 0}
 
-{* this is the next section* }
+{* this is the next section *}
 
 <h2>{tr}Suggested questions{/tr}</h2>
 <table class="normal">

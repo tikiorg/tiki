@@ -1,4 +1,4 @@
-{* $Id: tiki-plugin_trackerlist.tpl,v 1.25 2007-05-24 14:21:20 sylvieg Exp $ *}
+{* $Id: tiki-plugin_trackerlist.tpl,v 1.26 2007-06-16 16:02:08 sylvieg Exp $ *}
 {if $showtitle eq 'y'}<div class="pagetitle">{$tracker_info.name}</div>{/if}
 {if $showdesc eq 'y'}<div class="wikitext">{$tracker_info.description}</div>{/if}
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_flash.php,v 1.7 2007-01-09 17:17:08 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_flash.php,v 1.8 2007-06-16 16:01:59 sylvieg Exp $
 
 // Wiki plugin to display a SWF file
 // damian aka damosoft 30 March 2004
@@ -12,6 +12,10 @@ function wikiplugin_flash_help() {
 function wikiplugin_flash($data, $params) {
 	
 	extract ($params,EXTR_SKIP);
+
+	if (empty($movie)) {
+		return tra('Missing parameter movie to the plugin flash');
+	}
 	
 	if (!isset($width)) {
 	$width = "425";

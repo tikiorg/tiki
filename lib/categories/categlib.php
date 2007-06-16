@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.102 2007-06-04 15:10:32 nkoth Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.103 2007-06-16 16:01:54 sylvieg Exp $
  *
  * \brief Categories support class
  *
@@ -75,6 +75,7 @@ class CategLib extends ObjectLib {
 				$tepath[] = $cat['name'];
 			}
 			$categpath = implode("::",$tepath);
+			$categpathforsort = implode("!!",$tepath); // needed to prevent cat::subcat to be sorted after cat2::subcat 
 			$res["categpath"] = $categpath;
 			$res["tepath"] = $tepath;
 			$res["deep"] = count($tepath);
@@ -85,7 +86,7 @@ class CategLib extends ObjectLib {
 			} else {
 				$res['has_perm'] = 'n';
 			}
-			$ret["$categpath"] = $res;
+			$ret["$categpathforsort"] = $res;
 		}
 
 		ksort($ret);
@@ -814,13 +815,14 @@ class CategLib extends ObjectLib {
 				$tepath[] = $cat['name'];
 			}
 			$categpath = implode("::",$tepath);
+			$categpathforsort = implode("!!",$tepath); // needed to prevent cat::subcat to be sorted after cat2::subcat
 			$res["categpath"] = $categpath;
 			$res["tepath"] = $tepath;
 			$query = "select count(*) from `tiki_categories` where `parentId`=?";
 			$res["children"] = $this->getOne($query,array($id));
 			$query = "select count(*) from `tiki_category_objects` where `categId`=?";
 			$res["objects"] = $this->getOne($query,array($id));
-			$ret[$categpath] = $res;
+			$ret[$categpathforsort] = $res;
 		}
 		ksort($ret);
 		$ret = array_values($ret);
@@ -1124,8 +1126,8 @@ class CategLib extends ObjectLib {
 	return $forbidden;
     }
 	function approve_submission($subId, $articleId) {
-		$query = "update `tiki_objects` set `type`= ?, `objectId`= ?, `href`=? where `objectId` = ?";
-		$this->query($query, array('article', (int)$articleId, "tiki-read_article.php?articleId=$articleId", (int)$subId));
+		$query = "update `tiki_objects` set `type`= ?, `objectId`= ?, `href`=? where `objectId` = ?" and `type`= ?";
+		$this->query($query, array('article', (int)$articleId, "tiki-read_article.php?articleId=$articleId", (int)$subId, 'submission'));
 	}
 	/* build the portion of list join if filter by category
 	 */

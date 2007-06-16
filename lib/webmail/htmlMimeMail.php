@@ -9,8 +9,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 /**
 * Filename.......: class.html.mime.mail.inc
 * Project........: HTML Mime mail class
-* Last Modified..: $Date: 2007-02-04 20:09:46 $
-* CVS Revision...: $Revision: 1.18 $
+* Last Modified..: $Date: 2007-06-16 16:01:58 $
+* CVS Revision...: $Revision: 1.19 $
 * Copyright......: 2001, 2002 Richard Heyes
 */
 
@@ -890,7 +890,7 @@ class htmlMimeMail {
 *    re-build the message.
 *
 * @author  Richard Heyes <richard@phpguru.org>
-* @version $Revision: 1.18 $
+* @version $Revision: 1.19 $
 * @package Mail
 */
 class Mail_mimePart {
@@ -1180,7 +1180,7 @@ class Mail_mimePart {
 *
 * @author  Richard Heyes <richard@phpguru.org>
 * @author  Chuck Hagenbuch <chuck@horde.org>
-* @version $Revision: 1.18 $
+* @version $Revision: 1.19 $
 * @package Mail
 */
 class Mail_RFC822 {
@@ -2158,7 +2158,8 @@ class smtp {
 			$greeting = $this->get_data();
 
 			if (is_resource($this->connection)) {
-				return $this->auth ? $this->ehlo() : $this->helo();
+				$m = $this->auth ? $this->ehlo() : $this->helo();
+				return $m;
 			} else {
 				$this->errors[] = 'Failed to connect to server: ' . $errstr;
 

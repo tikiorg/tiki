@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.124 2007-05-16 17:01:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.125 2007-06-16 16:01:47 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -87,8 +87,6 @@ if (!isset($_REQUEST["trackerId"]) || !$_REQUEST["trackerId"]) {
 	$smarty->display("error.tpl");
 	die;
 }
-
-$smarty->assign('trackerId', $_REQUEST["trackerId"]);
 
 if (!isset($utid) and !isset($gtid) and (!isset($_REQUEST["itemId"]) or !$_REQUEST["itemId"])) {
 	$smarty->assign('msg', tra("No item indicated"));
@@ -250,7 +248,6 @@ if (!empty($propagate) && $propagate) { // if local set of tiki_p_admin_trackers
 $tracker_info = $trklib->get_tracker($_REQUEST["trackerId"]);
 if ($t = $trklib->get_tracker_options($_REQUEST["trackerId"]))
 	$tracker_info = array_merge($tracker_info,$t);
-$smarty->assign('tracker_info', $tracker_info);
 if (!isset($tracker_info["writerCanModify"]) or (isset($utid) and ($_REQUEST['trackerId'] != $utid['usersTrackerId']))) {
 	$tracker_info["writerCanModify"] = 'n';
 }
@@ -917,6 +914,8 @@ foreach ($ins_fields['data'] as $sid => $onefield) {
 }
 
 $smarty->assign('id_fields', $id_fields);
+$smarty->assign('trackerId', $_REQUEST["trackerId"]);
+$smarty->assign('tracker_info', $tracker_info);
 $smarty->assign_by_ref('info', $info);
 $smarty->assign_by_ref('fields', $fields["data"]);
 $smarty->assign_by_ref('ins_fields', $ins_fields["data"]);

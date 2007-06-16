@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/fmsc.css,v 1.14 2007-06-12 10:50:10 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/fmsc.css,v 1.15 2007-06-16 16:02:03 sylvieg Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -171,6 +171,9 @@ input, textarea, select {
 	color : #333F5C;
 	margin: 1px;
 	border : 1px solid #827B77;
+}
+textarea {
+	width: 100%;
 }
 input {
 	text-indent : 2px;
@@ -918,7 +921,8 @@ DIV#page-bar table, DIV#page-bar td, DIV#page-bar tr {
 	font-size : 10px;
 	margin : 0 1px 0 0;
 	padding : 0;
-
+	white-space: nowrap;
+	line-height: 20px;
 }
 .button3 {
 	border-radius : 5px 5px 0 0;

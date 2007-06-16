@@ -14,7 +14,7 @@
       <tr>
         {if $nonums != 'y'}<td valign="top" class="module">{$smarty.section.ix.index_next})</td>{/if}
         <td class="module">
-          <a class="linkmodule" href="{$modForumsLastPosts[ix].href}">
+          <a class="linkmodule" href="{$modForumsLastPosts[ix].href}" title="{$modForumsLastPosts[ix].date|tiki_short_datetime}, {tr}by{/tr} {if $modForumsLastPosts[ix].user ne ''}{$modForumsLastPosts[ix].user}{else}{tr}Anonymous{/tr}{/if}">
             {$modForumsLastPosts[ix].name}
           </a>
         </td>

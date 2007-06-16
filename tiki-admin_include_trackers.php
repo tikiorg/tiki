@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_trackers.php,v 1.13 2007-03-06 19:29:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_trackers.php,v 1.14 2007-06-16 16:01:43 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-include "lib/trackers/trackerlib.php";
+include_once("lib/trackers/trackerlib.php");
 
 if (isset($_REQUEST["trkset"])) {
 	check_ticket('admin-inc-trackers');

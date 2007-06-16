@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-remind_password.php,v 1.29 2007-03-06 19:29:51 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-remind_password.php,v 1.30 2007-06-16 16:01:45 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -76,7 +76,11 @@ if (isset($_REQUEST["remind"])) {
 		$mail = new TikiMail($_REQUEST["username"]);
 		$mail->setSubject(sprintf($mail_data, $_SERVER["SERVER_NAME"]));
 		$mail->setText($smarty->fetchLang($languageEmail, 'mail/password_reminder.tpl'));
-		$mail->send(array($email));
+		if (!$mail->send(array($email))) {
+			$smarty->assign('msg', tra("The mail can't be sent. Contact the administrator"));
+	    	$smarty->display("error.tpl");
+    		die;
+		}
 
 		// Just show "success" message and no form
 		$smarty->assign('showmsg', 'y');

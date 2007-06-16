@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-galleries.tpl,v 1.60 2007-06-08 18:07:48 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-galleries.tpl,v 1.61 2007-06-16 16:02:07 sylvieg Exp $ *}
 
 <h1><a href="tiki-galleries.php" class="pagetitle">{tr}Galleries{/tr}</a>
 {if $feature_help eq 'y'}
@@ -97,7 +97,7 @@
 {/section}<br />
 {tr}Original image is default scale{/tr}<input type="radio" name="defaultscale" value="o" {if $defaultscale=='o'}checked="checked"{/if} />
 </td></tr>
-<tr><td class="formcolor">{tr}Add scaled images with bounding box of square size{/tr}:</td><td class="formcolor"><input type="text" name="scaleSize" size="4" />{tr}pixels{/tr}</td></tr>
+<tr><td class="formcolor">{tr}Add scaled images with bounding box of square size{/tr}:</td><td class="formcolor"><input type="text" name="scaleSize" />{tr}pixels{/tr}</td></tr>
 {else}
 {$defaultscale=$scaleSizeGalleries}
 {/if}

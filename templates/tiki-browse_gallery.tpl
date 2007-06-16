@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_gallery.tpl,v 1.41 2007-05-28 22:04:15 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_gallery.tpl,v 1.42 2007-06-16 16:02:07 sylvieg Exp $ *}
 {if $gal_image_mouseover neq 'n'}{popup_init src="lib/overlib.js"}{/if}
 <h1><a class="pagetitle" href="tiki-browse_gallery.php?galleryId={$galleryId}">
 {tr}Browsing Gallery{/tr}: {$name}
@@ -25,6 +25,7 @@
 
 {if $tiki_p_admin_galleries eq 'y'}
 <span class="button2"><a href="tiki-list_gallery.php?galleryId={$galleryId}" class="linkbut">{tr}list gallery{/tr}</a></span>
+<span class="button2"><a href="tiki-show_all_images.php?id={$galleryId}" class="linkbut">{tr}All Images{/tr}</a></span>
 {/if}
 {if $rss_image_gallery eq 'y'}
   <span class="button2"><a href="tiki-image_gallery_rss.php?galleryId={$galleryId}" class="linkbut">{tr}RSS{/tr}</a></span>

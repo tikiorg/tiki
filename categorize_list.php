@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/categorize_list.php,v 1.24 2007-03-06 19:29:44 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/categorize_list.php,v 1.25 2007-06-16 16:01:41 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,13 +34,18 @@ if ($feature_categories == 'y') {
 	for ($i = 0; $i < count($all_categories); $i++) {
 		if($userlib->user_has_perm_on_object($user,$all_categories[$i]['categId'],'category','tiki_p_view_categories')) {
 			$categories[] = $all_categories[$i];
-		}	
+		}
 	}
 
+if (isset ($categories)) {
 	$num_categories = count($categories);
+}
+else {
+	$num_categories = 0;
+};
 
 	for ($i = 0; $i < $num_categories; $i++) {
-	  if (!empty($cats) && in_array($categories[$i]["categId"], $cats)) {
+		if (!empty($cats) && in_array($categories[$i]["categId"], $cats)) {
 			$categories[$i]["incat"] = 'y';
 		} else {
 			$categories[$i]["incat"] = 'n';

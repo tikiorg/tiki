@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-debug_console.tpl,v 1.6 2003-09-25 01:05:21 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-debug_console.tpl,v 1.7 2007-06-16 16:02:07 sylvieg Exp $ *}
 
 {if $tiki_p_admin eq 'y' and $feature_debug_console eq 'y'}
 <div class="debugconsole" id="debugconsole" style="{$debugconsole_style}">
 
 {* Command prompt form *}
-<form method="post" action="{$console_father}">
+<form method="post" action="{$console_father|escape}">
 <table border="0" >
   <tr><td colspan="3" align="right">
     <b>{tr}Tiki Debugger Console{/tr}</b>
@@ -14,11 +14,11 @@
   </td></tr>
   <tr>
     <td class="formcolor"><small>{tr}Current URL{/tr}:</small></td>
-    <td class="formcolor">{$console_father}</td>
+    <td class="formcolor">{$console_father|escape}</td>
   </tr>
   <tr>
     <td class="formcolor">{tr}Command{/tr}:</td>
-    <td class="formcolor"><input type="text" name="command" size="90" value='{$command|escape:"html"}' /></td>
+    <td class="formcolor"><input type="text" name="command" size="70" value='{$command|escape:"html"}' /></td>
   </tr>
   <tr>
     <td class="formcolor"></td>

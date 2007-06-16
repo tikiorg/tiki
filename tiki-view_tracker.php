@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.129 2007-05-23 16:53:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.130 2007-06-16 16:01:46 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,7 +34,6 @@ if (!isset($_REQUEST["trackerId"])) {
 	die;
 }
 
-$smarty->assign('trackerId', $_REQUEST["trackerId"]);
 $smarty->assign('individual', 'n');
 
 if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
@@ -203,14 +202,17 @@ if (count($status_types) == 0) {
 	$tracker_info["showStatus"] = 'n';
 }
 
-$smarty->assign('tracker_info', $tracker_info);
-
 $xfields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '');
+if (!empty($tracker_info['showPopup'])) {
+	$popupFields = explode(',', $tracker_info['showPopup']);
+	$smarty->assign_by_ref('popupFields', $popupFields);
+} else {
+	$popupFields = array();
+}
 
 $writerfield = '';
 $writergroupfield = '';
 $mainfield = '';
-$mainfieldId = 0;
 $orderkey = false;
 $listfields = array();
 
@@ -230,17 +232,12 @@ for ($i = 0; $i < $temp_max; $i++) {
 	$filter_id = 'filter_' . $fid;
 	$xfields["data"][$i]["filter_id"] = $filter_id;
 	
-	if (!isset($mainfield) and $xfields["data"][$i]['isMain'] == 'y') {
-		$mainfield = $xfields["data"][$i]["name"];
-		$mainfieldId = $fid;
-	}
-
 	if (!empty($tracker_info['defaultOrderKey']) and $tracker_info['defaultOrderKey'] == $xfields["data"][$i]['fieldId']) {
 		$orderkey = true;
 	}
-	if (($xfields["data"][$i]['isTblVisible'] == 'y' or $xfields["data"][$i]['isSearchable'] == 'y') 
+	if (($xfields["data"][$i]['isTblVisible'] == 'y' or $xfields["data"][$i]['isSearchable'] == 'y' or in_array($fid, $popupFields)) 
 //		and ($xfields["data"][$i]['isPublic'] == 'y' or $tiki_p_admin_trackers == 'y') ispublic is for tracker plugin not normal view
-		and ($xfields["data"][$i]['isHidden'] == 'n' or $tiki_p_admin_trackers == 'y' or ($xfields["data"][$i]['type'] == 's'and $tiki_p_tracker_view_ratings == 'y'))
+		and ($xfields["data"][$i]['isHidden'] == 'n'  or $tiki_p_admin_trackers == 'y' or ($xfields["data"][$i]['type'] == 's'and $tiki_p_tracker_view_ratings == 'y'))
 		) {
 		
 		$listfields[$fid]['type'] = $xfields["data"][$i]["type"];
@@ -503,11 +500,11 @@ for ($i = 0; $i < $temp_max; $i++) {
 	// an error in the values typed by an user for a field type.
 	if (isset( $fields['data'][$i]['fieldId']))
 		$fields['data'][$i]['value'] = isset($ins_fields['data'][$i]['value'])?$ins_fields['data'][$i]['value']: '';
-	
+
+	if (empty($mainfield) and isset($fields['data'][$i]['isMain']) && $fields["data"][$i]["isMain"] == 'y' and !empty($fields["data"][$i]["value"])) {
+		$mainfield = $fields["data"][$i]["value"];
 }
-if (!isset($mainfield) and isset($fields["data"][0]["fieldId"]) and isset($fields["data"][0]["value"])) {
-	$mainfield = $fields["data"][0]["value"];
-	$mainfieldId = $fields["data"][0]["fieldId"];
+	
 }
 if ($textarea_options) {
 	include_once ('lib/quicktags/quicktagslib.php');
@@ -776,6 +773,8 @@ foreach ($listfields as $sfid => $oneitem) {
 	}
 }
 
+$smarty->assign('trackerId', $_REQUEST["trackerId"]);
+$smarty->assign('tracker_info', $tracker_info);
 $smarty->assign_by_ref('items', $items["data"]);
 $smarty->assign_by_ref('item_count', $items['cant']);
 $smarty->assign_by_ref('listfields', $listfields);
@@ -801,6 +800,7 @@ foreach ($fields['data'] as $it) {
 	}
 }
 }
+
 if ($items['data']) {
 	foreach ($items['data'] as $f=>$v) {
 		$items['data'][$f]['my_rate'] = $tikilib->get_user_vote("tracker.".$_REQUEST["trackerId"].'.'.$items['data'][$f]['itemId'],$user);

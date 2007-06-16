@@ -1,5 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.139 2007-06-07 12:58:25 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.140 2007-06-16 16:02:08 sylvieg Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
+{if !empty($tracker_info.showPopup)}
+{popup_init src="lib/overlib.js"}
+{/if}
+
 <h1><a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a></h1>
 <div class="navbar">
 {if $feature_user_watches eq 'y' and $tiki_p_watch_trackers eq 'y'}
@@ -9,7 +13,7 @@
 <a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;watch=stop" title="{tr}stop monitor{/tr}"><img src="pics/icons/no_eye.png" width="16" height="16" border="0" align="right" hspace="5" alt="{tr}stop monitor{/tr}" /></a>
 {/if}
 {/if}
-{if $tiki_p_list_trackers eq 'y' or (!isset($tiki_p_list_trackers) and $tiki_p_view_trackers eq 'y')}<span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>{/if}
+{if (isset($tiki_p_list_trackers) and $tiki_p_list_trackers eq 'y') or (!isset($tiki_p_list_trackers) and $tiki_p_view_trackers eq 'y')}<span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>{/if}
 {if $filtervalue}
 <span class="button2"><a href="tiki-view_tracker.php?trackerId={$trackerId}" class="linkbut">{tr}View this tracker items{/tr}</a></span>
 {/if}
@@ -184,10 +188,9 @@ class="prevnext">{tr}All{/tr}</a>
 {section name=ix loop=$fields}
 {if $fields[ix].type eq 'l' and $fields[ix].isTblVisible eq 'y'}
 <td class="heading auto">{$fields[ix].name|default:"&nbsp;"}</td>
-{elseif $fields[ix].type eq 's' and $fields[ix].name eq "Rating" and $fields[ix].isTblVisible eq 'y'}
+{elseif $fields[ix].type eq 's' and ($fields[ix].name eq "Rating" or $fields[ix].name eq tra("Rating")) and $fields[ix].isTblVisible eq 'y'}
 	<td class="heading auto"{if $tiki_p_tracker_vote_ratings eq 'y' and $user ne ''} colspan="2"{/if}>
-		<a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}{if $initial}initial={$initial}&amp;{/if}trackerId={$trackerId}
-	        {if $offset}&amp;offset={$offset}{/if}&amp;sort_mode=f_{if $sort_mode eq 'f_'|cat:$fields[ix].fieldId|cat:'_asc'}
+		<a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}{if $initial}initial={$initial}&amp;{/if}trackerId={$trackerId}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode=f_{if $sort_mode eq 'f_'|cat:$fields[ix].fieldId|cat:'_asc'}
 		{$fields[ix].fieldId|escape:"url"}_desc{else}{$fields[ix].fieldId|escape:"url"}_asc{/if}">
 			{$fields[ix].name|truncate:255:"..."|default:"&nbsp;"}
 		</a>
@@ -252,7 +255,21 @@ document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" oncli
 
 {if $tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y' 
  or ($tracker_info.writerCanModify eq 'y' and $user and $my eq $user) or ($tracker_info.writerCanModify eq 'y' and $group and $ours eq $group)}
-<a class="tablename" href="tiki-view_tracker_item.php?itemId={$items[user].itemId}&amp;show=view{if $offset}&amp;offset={$offset}{/if}{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}">
+{if !empty($tracker_info.showPopup)}
+{capture name=popup}
+<div class="cbox">
+<table>
+{cycle values="odd,even" print=false}
+{foreach from=$items[user].field_values item=f}
+	{if in_array($f.fieldId, $popupFields)}
+<tr><th class="{cycle advance=false}">{$f.name}</th><td class="{cycle}">{include file="tracker_item_field_value.tpl" field_value=$f}</td></tr>
+	{/if}
+{/foreach}
+</table>
+</div>
+{/capture}
+{/if}
+<a class="tablename" href="tiki-view_tracker_item.php?itemId={$items[user].itemId}&amp;show=view{if $offset}&amp;offset={$offset}{/if}{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}"{if !empty($tracker_info.showPopup)} {popup text=$smarty.capture.popup|escape:"javascript"|escape:"html" fullhtml="1" hauto=true vauto=true  }{/if}>
 {/if}
 
 {if  ($items[user].field_values[ix].type eq 't' or $items[user].field_values[ix].type eq 'n' or $items[user].field_values[ix].type eq 'c') 
@@ -386,7 +403,7 @@ document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" oncli
 
 </td>
 
-{elseif $items[user].field_values[ix].type eq 's' and $items[user].field_values[ix].name eq "Rating" and $tiki_p_tracker_view_ratings eq 'y'}
+{elseif $items[user].field_values[ix].type eq 's' and ($items[user].field_values[ix].name eq "Rating" or $items[user].field_values[ix].name eq tra("Rating"))  and $tiki_p_tracker_view_ratings eq 'y'}
 	<td class="auto">
 		<b title="{tr}Rating{/tr}: {$items[user].field_values[ix].value|default:"-"}, {tr}Number of voices{/tr}: {$items[user].field_values[ix].numvotes|default:"-"}, {tr}Average{/tr}: {$items[user].field_values[ix].voteavg|default:"-"}">
 			&nbsp;{$items[user].field_values[ix].value|default:"-"}&nbsp;
@@ -503,7 +520,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {section name=ix loop=$fields}
 {assign var=fid value=$fields[ix].fieldId}
 
-{if $fields[ix].isHidden eq 'n' or $tiki_p_admin_trackers eq 'y'}
+{if $fields[ix].isHidden eq 'n' or $fields[ix].isHidden eq '-'  or $tiki_p_admin_trackers eq 'y'}
 {if $fields[ix].type ne 'x' and $fields[ix].type ne 'l' and $fields[ix].type ne 'q'}
 {if $fields[ix].type eq 'h'}
 </table>
@@ -525,7 +542,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {/if}
 
 {* -------------------- system -------------------- *}
-{if $fields[ix].type eq 's' and $fields[ix].name eq "Rating" and $tiki_p_tracker_vote_ratings eq 'y'}
+{if $fields[ix].type eq 's' and ($fields[ix].name eq "Rating" or $fields[ix].name eq tra("Rating")) and $tiki_p_tracker_vote_ratings eq 'y'}
 	{section name=i loop=$fields[ix].options_array}
 		<input name="{$fields[ix].ins_id}" type="radio" value="{$fields[ix].options_array[i]|escape}" />{$fields[ix].options_array[i]}
 	{/section}

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_backlinks.php,v 1.16 2007-03-02 19:49:05 luciash Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_backlinks.php,v 1.17 2007-06-16 16:01:59 sylvieg Exp $
 
     /**
     * Include the library {@link PluginsLib}
@@ -22,7 +22,7 @@
     * @package Tikiwiki
     * @subpackage TikiPlugins
     * @author Claudio Bustos
-    * @version $Revision: 1.16 $
+    * @version $Revision: 1.17 $
     */
     function wikiplugin_backlinks_help() {
         return tra("List all pages which link to specific pages").":<br />~np~{BACKLINKS(info=>hits|user,exclude=>HomePage|SandBox,include_self=>1,noheader=>0,page=>HomePage)}{BACKLINKS}~/np~";
@@ -44,10 +44,10 @@
         }
         function getVersion() {
             return preg_replace("/[Revision: $]/", '',
-                "\$Revision: 1.16 $");
+                "\$Revision: 1.17 $");
         }
         function run ($data, $params) {
-            global $wikilib;
+            global $wikilib; include_once('lib/wiki/wikilib.php');
             $params = $this->getParams($params, true);
             $aInfoPreset = array_keys($this->aInfoPresetNames);
             extract ($params,EXTR_SKIP);

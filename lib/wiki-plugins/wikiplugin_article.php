@@ -15,10 +15,8 @@ function wikiplugin_article($data, $params) {
 	extract ($params,EXTR_SKIP);
 
 	if (!isset($Id)) {
-		global $artlib;
-		if (!is_object($artlib)) {
-			include "lib/articles/artlib.php";
-		}
+		global $artlib;	include_once('lib/articles/artlib.php');
+
 		$last = $artlib->list_articles(0,1);
 		$Id = $last['data'][0]["articleId"];
 	}

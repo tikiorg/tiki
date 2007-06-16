@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-tracker_rss.php,v 1.9 2007-03-06 19:29:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-tracker_rss.php,v 1.10 2007-06-16 16:01:46 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -24,7 +24,7 @@ if (!isset($_REQUEST["trackerId"])) {
         $errmsg=tra("No trackerId specified");
         require_once ('tiki-rss_error.php');
 }
-if ($tiki_p_view_trackers or !$tikilib->user_has_perm_on_object($user,$_REQUEST['trackerId'],'tracker','tiki_p_view_trackers')) {
+if ($tiki_p_admin_trackers != 'y' && !$tikilib->user_has_perm_on_object($user,$_REQUEST['trackerId'],'tracker','tiki_p_view_trackers')) {
 	$errmsg=tra("Permission denied you cannot view this section");
 	require_once ('tiki-rss_error.php');
 }

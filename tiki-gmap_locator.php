@@ -35,7 +35,7 @@ $smarty->assign('gmap_defaulty',$gmap_defaulty);
 $smarty->assign('gmap_defaultz',$gmap_defaultz);
 
 $smarty->assign('input','n');
-if (isset($_REQUEST['for'])) {
+if ($user and isset($_REQUEST['for'])) {
 	if ($_REQUEST['for'] == 'user') {
 		if (isset($_REQUEST['point']) and is_array($_REQUEST['point'])) {
 			$p = $_REQUEST['point'];
@@ -88,7 +88,7 @@ if (isset($_REQUEST['for'])) {
 	  $smarty->assign('backlink',tra('Back to item'));
 	}
 }
-if (isset($_REQUEST['recenter']) and $pointx and $pointy) {
+if ($user and isset($_REQUEST['recenter']) and $pointx and $pointy) {
 	$smarty->assign('gmap_defaultx',$pointx);
 	$smarty->assign('gmap_defaulty',$pointy);
 }

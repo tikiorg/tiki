@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mods.php,v 1.16 2007-06-14 08:22:54 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mods.php,v 1.17 2007-06-16 16:01:45 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,7 +8,7 @@
 
 // Initialization
 require_once ('tiki-setup.php');
-include('lib/mods/modslib.php');
+include_once('lib/mods/modslib.php');
 
 if ($tiki_p_admin != 'y') {
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));

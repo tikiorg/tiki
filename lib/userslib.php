@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.226 2007-06-13 17:37:42 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.227 2007-06-16 16:01:52 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1045,7 +1045,7 @@ function get_included_groups($group, $recur=true) {
 	    $bindvars = array($initial . "%");
 	}
 	if ($inGroups) {
-		$mid = $mid? ' and ': ' where ';
+		$mid .= $mid? ' and ': ' where ';
 		$mid .= '`groupName` in (';
 		$cpt = 0;
 		foreach ($inGroups as $grp=>$value) {
@@ -2128,6 +2128,8 @@ function get_included_groups($group, $recur=true) {
 		$query = "update `users_objectpermissions` set `groupName`=? where `groupName`=?";
 		$result = $this->query($query, array($group, $olgroup));
 		$query = "update `tiki_group_inclusion` set `groupName`=? where `groupName`=?";
+		$result = $this->query($query, array($group, $olgroup));
+		$query = "update `tiki_group_inclusion` set `includeGroup`=? where `includeGroup`=?";
 		$result = $this->query($query, array($group, $olgroup));
 		$query = "update `tiki_newsreader_marks` set `groupName`=? where `groupName`=?";
 		$result = $this->query($query, array($group, $olgroup));

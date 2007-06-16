@@ -24,25 +24,22 @@ foreach ($rawcals["data"] as $cal_id=>$cal_data) {
 			$canView = 'n';
 		}
 	} else {
-		if ($userlib->object_has_one_permission($cal_id,'calendar')) {
-			if ($userlib->object_has_permission($user, $cal_id, 'calendar', 'tiki_p_view_calendar')) {
+			if ($userlib->user_has_perm_on_object($user, $cal_id, 'calendar', 'tiki_p_view_calendar')) {
 				$canView = 'y';
 			} else {
 				$canView = 'n';
 			}		
-			if ($userlib->object_has_permission($user, $cal_id, 'calendar', 'tiki_p_admin_calendar')) {
+			if ($userlib->user_has_perm_on_object($user, $cal_id, 'calendar', 'tiki_p_admin_calendar')) {
 				$canView = 'y';
-			}
-		} else {
-			$canView = $tiki_p_view_calendar;
-		}
+			}				
 	}
 	if ($canView == 'y') {
 		$viewable[] = $cal_id;
 	}
 }
 
-$events = $calendarlib->upcoming_events($module_rows,
+$events = array();
+if (!empty($viewable))  $events = $calendarlib->upcoming_events($module_rows,
     array_intersect(isset($module_params["calendarId"]) ? array($module_params["calendarId"]) : $calIds, $viewable),
     isset($module_params["maxDays"]) ? $module_params["maxDays"] : 365);
 $smarty->assign('modUpcomingEvents', $events);

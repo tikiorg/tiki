@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.58 2007-06-07 12:58:25 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.59 2007-06-16 16:02:05 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_forums.php">{tr}Admin Forums{/tr}</a>
  
 {if $feature_help eq 'y'}
@@ -342,6 +342,9 @@
 <td class="{cycle}">
 <a class="link" href="tiki-view_forum.php?forumId={$channels[user].forumId}" title="{tr}view{/tr}"><img border='0' height="16" width="18" src='pics/icons/table.png' alt="{tr}view{/tr}" </a>{if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
    <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;forumId={$channels[user].forumId}" title="{tr}edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>
+{if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
+   <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;forumId={$channels[user].forumId}"><img src="img/icons/config.gif" border="0" width="16" height="16" alt='{tr}Configure/Options{/tr}' /></a>
+{/if}
    {if $channels[user].individual eq 'y'}
    	<a class="link" href="tiki-objectpermissions.php?objectName=Forum+{$channels[user].name|escape}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}" title="{tr}active perms{/tr}"><img src='pics/icons/key_active.png' border='0' width="16" height="16" alt='{tr}active perms{/tr}' /></a>
    {else}

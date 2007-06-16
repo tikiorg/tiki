@@ -83,7 +83,7 @@ function subavt() {
 <h2>{tr}Upload your own avatar{/tr}</h2>
 <form enctype="multipart/form-data" action="tiki-pick_avatar.php" method="post">
 <table class="normal">
-<tr><td class="formcolor">{tr}File{/tr}:</td><td class="formcolor">
+<tr><td class="formcolor">{tr}File{/tr} {tr}(Only .gif images, and aproximately 45px x 45px){/tr}:</td><td class="formcolor">
 <input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
 <input name="userfile1" type="file" />
 </td></tr>

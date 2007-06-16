@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.75 2007-05-20 01:43:53 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.76 2007-06-16 16:02:07 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 <div id="calscreen">
 
@@ -48,7 +48,7 @@ none
 {if count($listcals) > 1}
 <form id="filtercal" method="get" action="{$myurl}" name="f" style="display:none;">
 <div class="caltitle">{tr}Group Calendars{/tr}</div>
-<div class="caltoggle"><input name="calswitch" id="calswitch" type="checkbox" onchange="switchCheckboxes(this.form,'calIds[]',this.checked);"/> <label for="calswitch">{tr}check / uncheck all{/tr}</label></div>
+<div class="caltoggle"><input name="calswitch" id="calswitch" type="checkbox" onclick="switchCheckboxes(this.form,'calIds[]',this.checked);"/> <label for="calswitch">{tr}check / uncheck all{/tr}</label></div>
 {foreach item=k from=$listcals}
 <div class="calcheckbox"><input type="checkbox" name="calIds[]" value="{$k|escape}" id="groupcal_{$k}" {if $thiscal.$k}checked="checked"{/if} />
 <label for="groupcal_{$k}" class="calId{$k}">{$infocals.$k.name} (id #{$k})</label>

@@ -1,5 +1,5 @@
 /* 
-  $Header: /cvsroot/tikiwiki/tiki/styles/bluegreen.css,v 1.57 2007-03-22 17:54:54 sylvieg Exp $
+  $Header: /cvsroot/tikiwiki/tiki/styles/bluegreen.css,v 1.58 2007-06-16 16:02:02 sylvieg Exp $
   bluegreen.css
   This theme is based on the default2 style for Tiki 1.2
   If you want  a short-version CSS template, start by copying default2
@@ -124,6 +124,7 @@ div.box {
 	margin-bottom:   10px;
 	border:   1px solid black;
 	padding-bottom:   10px;
+	overflow:   hidden;
 	width:   170px;
 }
 

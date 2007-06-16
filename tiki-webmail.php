@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.36 2007-06-05 16:04:00 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.37 2007-06-16 16:01:47 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -249,6 +249,9 @@ if ($_REQUEST["locSection"] == 'read') {
 		$output['header']["replycc"] = $cc_addresses;
 
 		$output['header']["replyto"] = $to_addresses;
+	}
+	if (!isset($output['header']["delivery-date"])) {
+		$output['header']['delivery-date'] = $output['header']['date'];
 	}
 	$output['header']['timestamp'] = strtotime($output['header']['delivery-date']);
 	$smarty->assign('headers', $output['header']);

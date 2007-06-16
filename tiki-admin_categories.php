@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.45 2007-03-06 19:29:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.46 2007-06-16 16:01:41 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -250,8 +250,8 @@ function array_csort($marray, $column) {
 }
 
 $catree = $categlib->list_all_categories(0,-1,'name_asc','','',0);
-$catree = array_csort($catree['data'],'categpath');
-$smarty->assign('catree', $catree);
+//$catree = array_csort($catree['data'],'categpath'); not needed as array is already sorted when returned from categlib
+$smarty->assign('catree', $catree['data']);
 
 // var_dump($catree); 
 

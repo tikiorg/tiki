@@ -30,6 +30,7 @@ if (strstr($orig_url, 'tiki-index.php') || strstr($orig_url, 'tiki-read_article.
 		$pageId = $param['articleId'];
 		$type = 'article';
 	} else {
+		global $wikilib; include_once('lib/wiki/wikilib.php');
 		$page = $wikilib->get_default_wiki_page();
 		$info = $tikilib->get_page_info($page);
 		$pageId = $info['page_id'];
