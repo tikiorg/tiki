@@ -1,7 +1,7 @@
 <?php
 
 require_once("tiki-setup.php");
-require_once("lib/xajax/xajax.inc.php");
+require_once ("lib/ajax/ajaxlib.php");
 
 
 #---------------------------------Functions used by xajaxlib - it can be an include
@@ -31,7 +31,7 @@ $xajax->registerFunction("get_template");
 $xajax->processRequests();
 
 #assigning the js code to: xajax_js -> this var will be printed in the template file - {$xajax_js}
-$smarty->assign("xajax_js",$xajax->getJavascript());
+$smarty->assign("xajax_js",$xajax->getJavascript('','lib/ajax/xajax_js/xajax.js'));
 
 $smarty->assign('mid','tiki-xajax_example.tpl');
 $smarty->display('tiki.tpl');
