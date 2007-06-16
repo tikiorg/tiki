@@ -7,8 +7,8 @@
  * @license GNU LGPL
  * @copyright Tiki Community
  * @date created: 2003/3/21 16:48
- * @date last-modified: $Date: 2007-03-02 19:49:25 $
- * $Header: /cvsroot/tikiwiki/tiki/lib/registration/registrationlib.php,v 1.39 2007-03-02 19:49:25 luciash Exp $
+ * @date last-modified: $Date: 2007-06-16 19:09:14 $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/registration/registrationlib.php,v 1.40 2007-06-16 19:09:14 toggg Exp $
  */
 
 //this script may only be included - so it's better to die if called directly
@@ -293,6 +293,7 @@ class RegistrationLib extends TikiLib {
                         $smarty->assign('email',$_REQUEST['email']);
                         $smarty->assign('login',$_REQUEST['name']);
                         $smarty->assign('password',$_REQUEST['pass']);
+                        $smarty->assign('regcode',$_REQUEST['regcode']);
                         $email_valid = 'no';
         } else {
 //                      $smarty->assign('msg',"$ret[1]");

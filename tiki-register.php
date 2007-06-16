@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.84 2007-06-07 17:35:08 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.85 2007-06-16 19:09:15 toggg Exp $
 
 /**
  * Tiki registration script
@@ -9,7 +9,7 @@
  * @license GNU LGPL
  * @copyright Tiki Community
  * @date created: 2002/10/8 15:54
- * @date last-modified: $Date: 2007-06-07 17:35:08 $
+ * @date last-modified: $Date: 2007-06-16 19:09:15 $
  */
 
 // Initialization
@@ -55,7 +55,7 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
   }
   
   if($rnd_num_reg == 'y') {
-  	if($novalidation != 'yes' and(!isset($_SESSION['random_number']) || $_SESSION['random_number']!=$_REQUEST['regcode'])) {
+  	if (!isset($_SESSION['random_number']) || $_SESSION['random_number']!=$_REQUEST['regcode']) {
     $smarty->assign('msg',tra("Wrong registration code"));
     $smarty->display("error.tpl");
     die;	
