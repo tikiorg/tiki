@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.103 2007-06-16 16:01:54 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.104 2007-06-16 22:18:09 sylvieg Exp $
  *
  * \brief Categories support class
  *
@@ -1126,7 +1126,7 @@ class CategLib extends ObjectLib {
 	return $forbidden;
     }
 	function approve_submission($subId, $articleId) {
-		$query = "update `tiki_objects` set `type`= ?, `objectId`= ?, `href`=? where `objectId` = ?" and `type`= ?";
+		$query = "update `tiki_objects` set `type`= ?, `objectId`= ?, `href`=? where `objectId` = ? and `type`= ?";
 		$this->query($query, array('article', (int)$articleId, "tiki-read_article.php?articleId=$articleId", (int)$subId, 'submission'));
 	}
 	/* build the portion of list join if filter by category
