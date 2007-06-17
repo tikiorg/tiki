@@ -20,6 +20,7 @@ ask_ticket('admin-inc-category');
 	"feature_categoryobjects",
 	"feature_categorypath",
 	"feature_search_show_forbidden_cat",
+	"feature_category_reinforce",
     );
 
 
