@@ -1,3 +1,4 @@
+<div id="tinvoice-graph">
 <div class="navbar">
 {if $tiki_p_tinvoice_edit eq 'y'}<a class="linkbut" href="tiki-tinvoice_edit.php?id_emitter={$me_tikiid}">{tr}create new invoice{/tr}</a>&nbsp;{/if}
 <a class="linkbut" href="tiki-tinvoice_prefs.php">{tr}Invoices preferences{/tr}</a>
@@ -5,7 +6,7 @@
 </div>
 
 <hr />
-<div id="tinvoice-chart">
+
 Choose your graph: <form id="filter" action="tiki-tinvoice_graph.php" onChange="submit();" method="post"><select name="filter">
 		<option >Filter ---</option>
 		<option {if $filter eq "Invoices"} selected {/if}>Invoices</option>
@@ -14,7 +15,7 @@ Choose your graph: <form id="filter" action="tiki-tinvoice_graph.php" onChange="
 		<option  {if $filter eq "Clients"} selected {/if}>Clients</option>
 		<option  {if $filter eq "Suppliers"} selected {/if}>Suppliers</option>
 	</select>
-<div class="button2" style="width: 150px; float: right;">{jscalendar id="start" date=$todate fieldname="todate" align="Bc" showtime='n'}
+<div class="button2" style="width: 170px; float: right;">{jscalendar id="start" date=$todate fieldname="todate" goto="tiki-tinvoice_graph.php" align="Bc" showtime='n'}
 </div>
 
 </form>
@@ -28,12 +29,14 @@ Choose your graph: <form id="filter" action="tiki-tinvoice_graph.php" onChange="
 	</div><div class="button2" style="text-align: center; width: 70px; float: left;"><a class="linkbut"  {if $graphPeriod eq "month"} style="background-color: orange" {/if}
 	{ajax_href template=tiki-tinvoice_graph.tpl
 	htmlelement=tinvoice-graph}tiki-tinvoice_graph.php?graphPeriod=month&todate={$todate}&filter={$filter}{/ajax_href}>{tr}Month{/tr}</a>&nbsp;
-	</div><div class="button2" style="text-align: center; width: 70px; float: left;"><a class="linkbut"  {if $graphPeriod eq "trimester"} style="background-color: orange" {/if} href="tiki-tinvoice_graph.php?graphPeriod=trimester&todate={$todate}&filter={$filter}" onclick="toggle('xtype');">{tr}Trimester{/tr}</a>&nbsp;
+	</div><div class="button2" style="text-align: center; width: 70px; float: left;"><a class="linkbut"  {if $graphPeriod eq "trimester"} style="background-color: orange" {/if}
+	{ajax_href template=tiki-tinvoice_graph.tpl
+	htmlelement=tinvoice-graph}tiki-tinvoice_graph.php?graphPeriod=trimester&todate={$todate}&filter={$filter}{/ajax_href} onclick="toggle('xtype');">{tr}Trimester{/tr}</a>&nbsp;
 	<form id="xtype" method="get" action="tiki-tinvoice_graph.php" name="f" style="text-align: left; width: 220px; border: 1px solid black; display: {if $graphPeriod eq "trimester" || $graphPeriod eq "semester" || $graphPeriod eq "year"}block{else}none{/if};">
 <input type="hidden" name="graphPeriod" value="{$graphPeriod}" />
 <input type="hidden" name="todate" value="{$todate}" />
 <input type="hidden" name="filter" value="{$filter}" />
-<div class="calcheckbox"><span>View by</span><input type="radio" name="xtype" {if $xtype eq "day"}checked=checked {/if}  onclick="document.forms['xtype'].submit();" value="day" id="xtype_1"  />
+<div class="calcheckbox" style="margin-top: 5px; width: 260px;"><span>View by</span><input type="radio" name="xtype" {if $xtype eq "day"}checked=checked {/if}  onclick="document.forms['xtype'].submit();" value="day" id="xtype_1"  />
 	<label for="xtype_1" class="linkbut">Day</label>
 <input type="radio" name="xtype" {if $xtype eq "week"}checked=checked {/if}  onclick="document.forms['xtype'].submit();" value="week" id="xtype_2"  />
 	<label for="xtype_2" class="linkbut">Week</label>
@@ -41,12 +44,19 @@ Choose your graph: <form id="filter" action="tiki-tinvoice_graph.php" onChange="
 	<label for="xtype_3" class="linkbut">Month</label>
 </div>
 </form>
-</div><div  class="button2" style="text-align: center; width: 70px; float: left;"><a class="linkbut"  {if $graphPeriod eq "semester"} style="background-color: orange" {/if} href="tiki-tinvoice_graph.php?graphPeriod=semester&todate={$todate}&filter={$filter}" onclick="toggle('xtype');">{tr}Semester{/tr}</a>&nbsp;
-	</div><div class="button2"  style="text-align: center; width: 70px; float: left;"><a class="linkbut"  {if $graphPeriod eq "year"} style="background-color: orange" {/if} href="tiki-tinvoice_graph.php?graphPeriod=year&todate={$todate}&filter={$filter}" onclick="toggle('xtype');">{tr}Year{/tr}</a>&nbsp;
+</div><div  class="button2" style="text-align: center; width: 70px; float: left;"><a class="linkbut"  {if $graphPeriod eq "semester"} style="background-color: orange" {/if} 
+	{ajax_href template=tiki-tinvoice_graph.tpl
+	htmlelement=tinvoice-graph}tiki-tinvoice_graph.php?graphPeriod=semester&todate={$todate}&filter={$filter}{/ajax_href} onclick="toggle('xtype');">{tr}Semester{/tr}</a>&nbsp;
+	</div><div class="button2"  style="text-align: center; width: 70px; float: left;"><a class="linkbut"  {if $graphPeriod eq "year"} style="background-color: orange" {/if}  {ajax_href template=tiki-tinvoice_graph.tpl
+	htmlelement=tinvoice-graph}tiki-tinvoice_graph.php?graphPeriod=year&todate={$todate}&filter={$filter}{/ajax_href} onclick="toggle('xtype');">{tr}Year{/tr}</a>&nbsp;
 	</div></div>
 <div class="navbar">
-	<a class="linkbut" href="tiki-tinvoice_graph.php?graphPeriod={$graphPeriod}&todate={$prev}&filter={$filter}" alt="{tr}previous{/tr}">{tr}<< Previous {$graphPeriod}{/tr}</a>&nbsp;
-	<a class="linkbut" href="tiki-tinvoice_graph.php?graphPeriod={$graphPeriod}&todate={$next}&filter={$filter}" alt="{tr}next{/tr}">{tr}Next {$graphPeriod}>>{/tr}</a>&nbsp;
+	<a class="linkbut" 
+		{ajax_href template=tiki-tinvoice_graph.tpl
+	htmlelement=tinvoice-graph}tiki-tinvoice_graph.php?graphPeriod={$graphPeriod}&todate={$prev}&filter={$filter}{/ajax_href} >{tr}<< Previous {$graphPeriod}{/tr}</a>&nbsp;
+	<a class="linkbut"
+		{ajax_href template=tiki-tinvoice_graph.tpl
+	htmlelement=tinvoice-graph}tiki-tinvoice_graph.php?graphPeriod={$graphPeriod}&todate={$next}&filter={$filter}{/ajax_href} >{tr}Next {$graphPeriod} >>{/tr}</a>&nbsp;
 </div>
 
 <div id="divchart" align="center">
