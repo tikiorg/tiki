@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.100 2007-06-16 22:09:14 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.101 2007-06-17 14:03:29 sylvieg Exp $ *}
 {* this is the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
  * there are five cells for every row, the middle cell is empty to keep feature and ckboxes separate
@@ -126,8 +126,8 @@
     <td class="form"> {if $feature_help eq 'y'}<a href="http://tikiwiki.org/Gmap" target="tikihelp" class="tikihelp" title="{tr}tikiwiki.org help{/tr}: {tr}Google Maps{/tr}">{/if} {tr}Google Maps{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
     </tr>
   <tr>
-    <td><input type="checkbox" name="feature_categoryobjects" {if $feature_categoryobjects eq 'y'}checked="checked"{/if}/></td>
-    <td class="form"> {tr}Show Category Objects{/tr} </td>
+    <td>&nbsp;</td>
+    <td class="form">&nbsp;</td>
     <td>&nbsp;</td>
     <td><input type="checkbox" name="feature_calendar" {if $feature_calendar eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {if $feature_help eq 'y'}<a href="{$helpurl}Calendar" target="tikihelp" class="tikihelp" title="{tr}Calendar{/tr}">{/if} {tr}Calendar{/tr} {if $feature_help eq 'y'}</a>{/if}</td></tr>
@@ -337,14 +337,6 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
     <td><input type="checkbox" name="feature_redirect_on_error"
     	{if $feature_redirect_on_error eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {tr}Redirect On Error{/tr} </td>
-    </tr>
-  <tr>
-    <td><input type="checkbox" name="feature_category_reinforce"
-            {if $feature_category_reinforce eq 'y'}checked="checked"{/if}/></td>
-    <td class="form"> {if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=Category" target="tikihelp" class="tikihelp" title="{tr}Reinforce categories{/tr}">{/if} {tr}Reinforce categories{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
-    <td>&nbsp;</td>
-    <td></td>
-    <td class="form"></td>
     </tr>
 {* --- User Features --- *}
   <tr>

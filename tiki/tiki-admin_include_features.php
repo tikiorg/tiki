@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.67 2007-06-16 22:09:13 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.68 2007-06-17 14:03:29 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -29,7 +29,6 @@ $features_toggles = array(
 	"feature_bot_bar_icons",
 	"feature_bot_bar_rss",
 	"feature_calendar",
-	"feature_category_reinforce",
 	"feature_charts",
 	"feature_chat",
 	"feature_comm",

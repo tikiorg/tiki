@@ -39,14 +39,15 @@
 	<td class="form">
 	{if $feature_help eq 'y'}<a href="{$helpurl}WYSIWYCA+Search" target="tikihelp" class="tikihelp" title="{tr}Search may show forbidden results. Much better performance though.{/tr}">{/if}
 		{tr}Ignore category viewing restrictions{/tr} ({tr}Search{/tr})
-		{if $feature_help eq 'y'}</a>{/if}
-	        :</td>
+		{if $feature_help eq 'y'}</a>{/if}</td>
           <td><input type="checkbox" name="feature_search_show_forbidden_cat"
                 {if $feature_search_show_forbidden_cat eq 'y'}checked="checked"{/if}/></td>
 	</tr>
 	<tr>
-
-		
+		<td class="form"> {if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=Category" target="tikihelp" class="tikihelp" title="{tr}Reinforce categories{/tr}">{/if} {tr}Reinforce categories{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
+		<td><input type="checkbox" name="feature_category_reinforce" {if $feature_category_reinforce eq 'y'}checked="checked"{/if}/></td>
+	</tr>in 
+	<tr>
           <td colspan="2" class="button"><input type="submit" name="categorysetup" value="{tr}Save{/tr}" /></td>
 		  
         </tr>
