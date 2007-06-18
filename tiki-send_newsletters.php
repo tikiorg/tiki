@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.36 2007-03-06 19:29:51 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.37 2007-06-18 15:43:43 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,6 +8,7 @@
 
 // Initialization
 require_once ('tiki-setup.php');
+@ini_set('max_execution_time', 0); //will not work in safe_mode is on
 
 include_once ('lib/newsletters/nllib.php');
 
