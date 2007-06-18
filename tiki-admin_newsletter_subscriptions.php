@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_newsletter_subscriptions.php,v 1.20 2007-03-06 19:29:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_newsletter_subscriptions.php,v 1.21 2007-06-18 15:29:30 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -129,6 +129,7 @@ if (isset($_REQUEST["add"]) && isset($_REQUEST['group']) && $_REQUEST['group'] !
 	check_ticket('admin-nl-subsriptions');
 	$nllib->add_group_users($_REQUEST["nlId"], $_REQUEST['group'], $confirmEmail, $addEmail);
 }
+
 if (isset($_REQUEST["addbatch"]) && isset($_FILES['batch_subscription']) && $tiki_p_batch_subscribe_email == 'y' && $tiki_p_subscribe_email == 'y') {
     check_ticket('admin-nl-subscription');
 
@@ -143,12 +144,14 @@ if (isset($_REQUEST["addbatch"]) && isset($_FILES['batch_subscription']) && $tik
     }
 
     for ($i = 0; $i<sizeof($emails); $i++) {
-	$email = $emails[$i];
-	if ($nllib->newsletter_subscribe($_REQUEST["nlId"], $email, 'n', '', 'y')) {
-    		$ok[] = $email;
-	} else {
-	    	$error[] = $email;
-	}
+		$email = trim($emails[$i]);
+		if (empty($email))
+			continue;
+		if ($nllib->newsletter_subscribe($_REQUEST["nlId"], $email, 'n', '', 'y')) {
+			$ok[] = $email;
+		} else {
+			$error[] = $email;
+		}
     }
 }
 if (isset($_REQUEST["addgroup"]) && isset($_REQUEST['group']) && $_REQUEST['group'] != ""){

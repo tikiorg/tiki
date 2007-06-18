@@ -51,8 +51,8 @@
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor" colspan="2"><input type="submit" name="add" value="{tr}add{/tr}" /></td></tr>
 </table>
 </form>
-{if $tiki_p_batch_subscribe_email eq "y" && $tiki_p_subscribe_email eq "y"} 	 
 
+{if $tiki_p_batch_subscribe_email eq "y" && $tiki_p_subscribe_email eq "y"} 	 
 <h2>{tr}Batch e-mail subscribe{/tr}</h2> 	 
 <form action="tiki-admin_newsletter_subscriptions.php" method="post" enctype="multipart/form-data"> 	 
 <input type="hidden" name="nlId" value="{$nlId|escape}" /> 	 
@@ -138,7 +138,7 @@
 {else}{tr}yes{/tr}{/if}</td>
 <td class="{cycle advance=false}">{$channels[user].subscribed|tiki_short_datetime}</td>
 <td class="{cycle}">
-   <a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].nlId}&amp;{if $channels[user].isUser eq "y"}user{else}email{/if}={$channels[user].email}"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt='{tr}remove{/tr}' /></a>
+   <a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].nlId}&amp;{if $channels[user].isUser eq "y"}user{else}email{/if}={$channels[user].email}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}remove{/tr}' /></a>
 </td>
 </tr>
 {/section}
