@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-send_newsletters.tpl,v 1.22 2007-06-07 12:58:25 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-send_newsletters.tpl,v 1.23 2007-06-18 15:43:43 sylvieg Exp $ *}
 {$showBoxCheck}
 <h1><a class="pagetitle" href="tiki-send_newsletters.php">{tr}Send newsletters{/tr} {if $nlId ne '0'}{$nlName}{/if}</a></h1>
 {if $tiki_p_admin_newsletters eq "y"}<div class="navbar"><span class="button2"><a class="linkbut" href="tiki-admin_newsletters.php">{tr}admin newsletters{/tr}</a></span></div>{/if}
@@ -107,12 +107,12 @@
 <input type="hidden" name="cols" value="{$cols}"/>
 </td></tr>
 <tr>  
-    <TD class="formcolor" id="txtcol1">{tr}Data Txt{/tr}:<br /><br />{include file="textareasize.tpl" area_name='editnltxt' formId='editpageform'}</TD>
+    <td class="formcolor" id="txtcol1">{tr}Data Txt{/tr}:<br /><br />{include file="textareasize.tpl" area_name='editnltxt' formId='editpageform'}</td>
     <td class="formcolor" id="txtcol2" ><textarea id='editnltxt' name="datatxt" rows="{$rows}" cols="{$cols}">{$info.datatxt|escape}</textarea>
 </td></tr>
 
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}Preview{/tr}" />&nbsp;<input type="submit" name="save_only" value="{tr}Save as draft{/tr}" /></td></tr>
-<tr><td  class="formcolor">&nbsp;</td><td>&nbsp;<input type="submit" name="save" value="{tr}Send Newsletters{/tr}" /></td></tr>
+<tr><td  class="formcolor">&nbsp;</td><td class="formcolor">&nbsp;<input type="submit" name="save" value="{tr}Send Newsletters{/tr}" /></td></tr>
 </table>
 </form>
 </div>
