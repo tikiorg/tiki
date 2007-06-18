@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.101 2007-06-17 14:03:29 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.102 2007-06-18 13:02:14 sylvieg Exp $ *}
 {* this is the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
  * there are five cells for every row, the middle cell is empty to keep feature and ckboxes separate
@@ -28,8 +28,8 @@
     <td class="heading" colspan="5" align="center">{tr}Tiki sections and features{/tr}</td>
   </tr>
   <tr>
-    <td >&nbsp;</td>
-    <td class="form" > <a href="tiki-admin.php?page=general#help">Help System</a></td>
+    <td ><input type="checkbox" name="feature_wiki" {if $feature_wiki eq 'y'}checked="checked"{/if}/></td>
+    <td class="form" > {if $feature_help eq 'y'}<a href="{$helpurl}Wiki" target="tikihelp" class="tikihelp" title="{tr}Wiki{/tr}">{/if} {tr}Wiki{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
     <td >&nbsp;</td>
     <td><input type="checkbox" name="feature_blogs" {if $feature_blogs eq 'y'}checked="checked"{/if}/></td>
     <td class="form" > {if $feature_help eq 'y'}<a href="{$helpurl}Blogs" target="tikihelp" class="tikihelp" title="{tr}Wiki{/tr}">{/if} {tr}Blogs{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
