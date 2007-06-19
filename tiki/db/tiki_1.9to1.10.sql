@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.167 2007-06-14 18:22:08 jyhem Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.168 2007-06-19 15:12:31 jyhem Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -950,4 +950,6 @@ UPDATE tiki_menu_options SET perm='tiki_p_view' where url='tiki-admin_structures
 #mose 07 06 07 
 alter table tiki_menu_options add userlevel int(4) default 0 after groupname;
 
+#Jyhem 2007-06-19
+DELETE FROM `users_permissions` WHERE permName='tiki_p_batch_upload_files_dir';
 
