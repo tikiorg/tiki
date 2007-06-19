@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.4 2007-06-16 16:02:09 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.5 2007-06-19 10:41:43 sylvieg Exp $ *}
 {strip}
-{* param: list_mode(y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $item(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain) *}
+{* param: list_mode(y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain) *}
 
 {if $field_value.type ne 'x' and $field_value.type ne 'G'}
 {* ******************** link to the item ******************** *}
@@ -44,7 +44,7 @@
 	&nbsp;
 
 {* -------------------- test field, numeric, grop down, radio,user/group/IP selector, autopincrement, dynamic list *}
-{elseif $field_value.type eq  't' or $field_value.type eq 'n' or $field_value.type eq 'd' or $field_value.type eq 'D' or $field_value.type eq 'R' or $field_value.type eq 'u' or $field_value.type eq 'g' or $field_value.type eq 'I' or $field_value.type eq 'q' or $field_value.type eq 'w'}
+{elseif $field_value.type eq  't' or $field_value.type eq 'n' or $field_value.type eq 'd' or $field_value.type eq 'D' or $field_value.type eq 'R' or $field_value.type eq 'u' or $field_value.type eq 'g' or $field_value.type eq 'I' or $field_value.type eq 'q' or $field_value.type eq 'w' or $field_value.type eq 'C'}
 	{if $list_mode eq 'y'}
 		{$field_value.value|truncate:255:"..."|default:"&nbsp;"}
 	{else}
@@ -114,7 +114,7 @@
 	{/if}
 
 {* -------------------- rating -------------------- *}
-{elseif $field_value.type eq 's' and $field_value.name eq "Rating" and $tiki_p_tracker_view_ratings eq 'y'}
+{elseif $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")) and $tiki_p_tracker_view_ratings eq 'y'}
 		<b title="{tr}Rating{/tr}: {$field_value.value|default:"-"}, {tr}Number of voices{/tr}: {$field_value.numvotes|default:"-"}, {tr}Average{/tr}: {$field_value.voteavg|default:"-"}">
 			&nbsp;{$field_value.value|default:"-"}&nbsp;
 		</b>
