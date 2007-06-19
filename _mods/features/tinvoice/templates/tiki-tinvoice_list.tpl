@@ -36,6 +36,7 @@
 <td class="heading"><a class="tableheading" href="tiki-tinvoice_list.php">{tr}Ref{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-tinvoice_list.php">{tr}amount{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-tinvoice_list.php">{tr}vat{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-tinvoice_list.php">{tr}status{/tr}</a></td>
 <td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
@@ -46,6 +47,7 @@
 <td class="{cycle advance=false}">{$invoice->get_ref()}</td>
 <td class="{cycle advance=false}">{$invoice->get_amount()}</td>
 <td class="{cycle advance=false}">{$invoice->get_amount_vat()}</td>
+<td class="{cycle advance=false}">{$invoice->get_status()}</td>
 <td class="{cycle advance=false}">&nbsp;
 <a href="tiki-tinvoice_edit.php?invoiceId={$invoice->get_id()}&amp;pdf=1" title="{tr}view invoices{/tr}"><img src="pics/icons/table.png" border="0" height="16" width="16" alt='{tr}Contact Invoices{/tr}' /></a>
 <a href="tiki-tinvoice_edit.php?invoiceId={$invoice->get_id()}"><img src="pics/icons/page_edit.png" border="0" height="16" width="16" alt='{tr}edit{/tr}' /></a>

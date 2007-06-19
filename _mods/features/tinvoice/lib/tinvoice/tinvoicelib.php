@@ -496,6 +496,14 @@ class Tinvoice {
 	return $this->get_inline_info("amount_vat");
     }
 
+    /*public*/ function get_status() {
+	return $this->get_inline_info("status");
+    }
+
+    /*public*/ function set_status($status) {
+	$this->set_inline_info("status", $status);
+    }
+
     /* curious, buggy thing ! */
     /*public*/ function get_sum_amount() {
 	return $this->get_inline_info("sum(`amount`)");
