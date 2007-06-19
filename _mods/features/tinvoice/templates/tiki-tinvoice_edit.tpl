@@ -26,9 +26,9 @@
   <th>Client:</th>
   <td>
    <select name='invoice_id_receiver' id='invoice_id_receiver' onChange='xajax_myajax_getcontact(document.getElementById("invoice_id_receiver").value)'>
-    <option disabled selected>Choisir...</option>
+    <option >Choisir...</option>
     {foreach from=$contacts item=contact}
-    <option value='{$contact.contactId}'>{$contact.firstName|escape} {$contact.lastName|escape}</option>
+    <option {if $contact.contactId eq $id_receiver} selected {/if} value='{$contact.contactId}'>{if $contact.ext.7}{$contact.ext.7}{else}{$contact.firstName|escape} {$contact.lastName|escape}{/if}</option>
     {/foreach}
    </select>
   </td>

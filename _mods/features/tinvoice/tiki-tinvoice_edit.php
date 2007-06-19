@@ -88,6 +88,10 @@ class tiki_edit_invoice {
 	// Display the template
 
 	$smarty->assign('contacts', $contactlib->list_contacts($user));
+	$c=$contactlib->list_contacts($user);
+
+	var_dump($c[0][ext][7]);
+
 	$smarty->assign('mid', 'tiki-tinvoice_edit.tpl');
 	domyajax();
 	$smarty->display("tiki.tpl");
