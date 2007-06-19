@@ -206,16 +206,20 @@ function myajax_getcontact($arg) {
     $objResponse = new xajaxResponse();
 
     $address='';
-    if (isset($contact['lastName'])) {
-	if (isset($contact['firstName']))
-	    $address.=$contact['firstName'].' ';
-	$address.=$contact['lastName'];
-	$address.="\n";
-    }
+    
 
     $tmp=getContactExt($contact, $exts, 'Company');
-    if ($tmp !== NULL) $address.=$tmp."\n";
-
+    if ($tmp !== NULL) {
+    	$address.=$tmp."\n";
+    } else {
+	if (isset($contact['lastName'])) {
+		if (isset($contact['firstName'])) {
+	    		$address.=$contact['firstName'].' ';
+		}
+		$address.=$contact['lastName'];
+		$address.="\n";
+	}
+    }
     $tmp=getContactExt($contact, $exts, 'Organization');
     if ($tmp !== NULL) $address.=$tmp."\n";
 
