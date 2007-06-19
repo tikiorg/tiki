@@ -2,10 +2,10 @@ contributor:
 $Author: niclone $
 
 revision:
-$Revision: 1.20 $
+$Revision: 1.21 $
 
 lastmodif:
-$Date: 2007-06-19 13:28:36 $
+$Date: 2007-06-19 16:38:31 $
 
 requires:
 lib-fpdf_freefonts
@@ -25,7 +25,7 @@ features/tinvoice/templates/tiki-tinvoice_graph.tpl templates/tiki-tinvoice_grap
 features/tinvoice/lib/tinvoice/tinvoicelib.php lib/tinvoice/tinvoicelib.php
 
 sql-install:
-CREATE TABLE if not exists `tiki_tinvoice` ( `id` int(11) NOT NULL auto_increment, `id_emitter` int(11) NOT NULL, `id_receiver` int(11) NOT NULL, `idtype_emitter` enum('tiki','contact') collate utf8_bin NOT NULL, `idtype_receiver` enum('tiki','contact') collate utf8_bin NOT NULL, `ref` varchar(31) collate utf8_bin NOT NULL, `date` datetime NOT NULL, `status` enum('draft','emitted','paid','canceled') collate utf8_bin NOT NULL, `libelle` varchar(256) collate utf8_bin NOT NULL, `amount` decimal(12,2) NOT NULL default '0.00', `amount_vat` decimal(12,2) NOT NULL, PRIMARY KEY (`id`), KEY `ref` (`ref`));
+CREATE TABLE `tiki_tinvoice` ( `id` int(11) NOT NULL auto_increment, `id_emitter` int(11) NOT NULL, `id_receiver` int(11) NOT NULL, `idtype_emitter` enum('tiki','contact') collate utf8_bin NOT NULL, `idtype_receiver` enum('tiki','contact') collate utf8_bin NOT NULL, `annual_id` int(11) default NULL, `ref` varchar(31) collate utf8_bin NOT NULL, `date` datetime NOT NULL, `status` enum('draft','emitted','paid','canceled') collate utf8_bin NOT NULL, `libelle` varchar(256) collate utf8_bin NOT NULL, `amount` decimal(12,2) NOT NULL default '0.00', `amount_vat` decimal(12,2) NOT NULL, PRIMARY KEY (`id`), KEY `ref` (`ref`));
 CREATE TABLE if not exists `tiki_tinvoice_infos` ( `id` int(11) NOT NULL auto_increment, `id_invoice` int(11) NOT NULL, `type` varchar(31) NOT NULL, `value` varchar(256) NOT NULL, PRIMARY KEY (`id`), KEY `id_invoice` (`id_invoice`));
 CREATE TABLE if not exists `tiki_tinvoice_items` ( `id` int(11) NOT NULL auto_increment, `id_invoice` int(11) NOT NULL, `ref` varchar(32) NOT NULL, `designation` varchar(256) NOT NULL, `quantity` int(11) NOT NULL, `unitprice` decimal(12,2) NOT NULL, `vat` decimal(5,2) NOT NULL, PRIMARY KEY (`id`), KEY `id_invoices` (`id_invoice`));
 CREATE TABLE if not exists `tiki_tinvoice_prefs` ( `id` int(11) NOT NULL auto_increment, `userId` int(11) NOT NULL, `key` varchar(32) NOT NULL, `value` varchar(256) NOT NULL, PRIMARY KEY (`id`), KEY `userId` (`userId`));
@@ -51,6 +51,7 @@ sql-upgrade:
 ALTER TABLE tiki_tinvoice DROP paid;
 ALTER TABLE tiki_tinvoice ADD amount_vat DECIMAL(12, 2) NOT NULL AFTER amount;
 ALTER TABLE `tiki_tinvoice` ADD `status` ENUM( 'draft', 'emitted', 'paid', 'canceled' ) NOT NULL AFTER `date`;
+ALTER TABLE `tiki_tinvoice` ADD `annual_id` INT NULL AFTER `idtype_receiver`;
 
 author:
 Nicolas Dimitrijevic
