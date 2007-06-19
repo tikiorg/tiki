@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.132 2007-06-16 16:02:08 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.133 2007-06-19 10:41:43 sylvieg Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
@@ -10,7 +10,6 @@
 <a href="tiki-view_tracker_item.php?trackerId={$trackerId}}&amp;itemId={$itemId}&amp;watch=stop" title="{tr}stop monitor{/tr}"><img src="pics/icons/no_eye.png" width="16" height="16" border="0" align="right" hspace="5" alt="{tr}stop monitor{/tr}" /></a>
 {/if}
 {/if}
-<div>
 {if (isset($tiki_p_list_trackers) and $tiki_p_list_trackers eq 'y' or (!isset($tiki_p_list_trackers) and $tiki_p_view_trackers eq 'y'))}<span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
 {/if}
 {if $tiki_p_view_trackers eq 'y'}
@@ -70,7 +69,7 @@
 {/if}
 
 {cycle name=content values="1,2,3,4,5" print=false advance=false reset=true}
-{* --- tab with view --- *}
+{* --- tab with view ------------------------------------------------------------------------- *}
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}View item{/tr}</h2>
 <table class="normal">
@@ -341,45 +340,7 @@
 	{/if}
 	{if $cur_field.user_subscription}<br /><input type="submit" name="user_unsubscribe" value="{tr}Unsubscribe{/tr}" />{/if}
 	</form>
-{elseif $cur_field.type eq 'm'}
-{if $cur_field.options_array[0] eq '1' and $cur_field.value}
-{mailto address=$cur_field.value|escape encode="hex"}
-{elseif $cur_field.options_array[0] eq '2' and $cur_field.value}
-{mailto address=$cur_field.value|escape encode="none"}
-{else}
-{$cur_field.value|escape|default:"&nbsp;"}
 {/if}
-
-{elseif $cur_field.type eq 's' and ($cur_field.name eq "Rating" or $cur_field.name eq tra("Rating")) and $tiki_p_tracker_view_ratings eq 'y'}
-		<b title="{tr}Rating{/tr}: {$cur_field.value|default:"-"}, {tr}Number of voices{/tr}: {$cur_field.numvotes|default:"-"}, {tr}Average{/tr}: {$cur_field.voteavg|default:"-"}">
-			&nbsp;{$cur_field.value|default:"-"}&nbsp;
-		</b>
-	{if $tiki_p_tracker_vote_ratings eq 'y'}
-			<span class="button2">
-			{if $my_rate eq NULL}
-				<b class="linkbut highlight">-</b>
-			{else}
-				<a href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}{else}?{/if}
-					trackerId={$trackerId}
-					&amp;itemId={$itemId}
-					&amp;fieldId={$cur_field.fieldId}
-					&amp;rate=NULL"
-					class="linkbut">-</a>
-			{/if}
-				{section name=i loop=$cur_field.options_array}
-					{if $cur_field.options_array[i] eq $my_rate}
-						<b class="linkbut highlight">{$cur_field.options_array[i]}</b>
-					{else}
-						<a href="{$smarty.server.PHP_SELF}?
-						trackerId={$trackerId}
-						&amp;itemId={$itemId}
-						&amp;fieldId={$cur_field.fieldId}
-						&amp;rate={$cur_field.options_array[i]}"
-						class="linkbut">{$cur_field.options_array[i]}</a>
-					{/if}
-				{/section}
-			</span>
-	{/if}
 
 {elseif $cur_field.type eq 'i'}
 {if $cur_field.value ne ''}
@@ -716,7 +677,7 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 {/section}
 </select>
 {if $cur_field.type eq 'D'}
-<br />{tr}Other{/tr}: <input type="text" name="ins_{$cur_field.id}_other" value="{$otherValue|escape}" />
+<br />{tr}Other:{/tr} <input type="text" name="ins_{$cur_field.id}_other" value="{$otherValue|escape}" />
 {/if}
 
 {elseif $cur_field.type eq 'R'}
