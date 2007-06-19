@@ -932,8 +932,6 @@ class ModsLib {
 				die;
 			}
 		}
-		echo "<p>Upgrade: $upgrade</p>";
-		echo "<p>array:"; var_dump($info->sql_upgrade); echo "</p>";
 		if ($upgrade and is_array($info->sql_upgrade) and count($info->sql_upgrade)) {
 			uksort($info->sql_upgrade, array($this, 'revision_compare'));
 			global $tikilib;
