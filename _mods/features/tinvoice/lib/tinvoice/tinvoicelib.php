@@ -399,10 +399,13 @@ class Tinvoice {
     /*private*/ function resync_amount() {
 	$lines=$this->get_lines();
 	$amount=0.00;
+	$amount_vat=0.00;
 	foreach($lines as $line) {
-	    $amount+=$line['quantity']*$line['unitprice']*(($line['vat']/100.0)+1.0);
+	    $amount+=$line['quantity']*$line['unitprice'];
+	    $amount_vat+=$line['quantity']*$line['unitprice']*($line['vat']/100.0);
 	}
 	$this->set_inline_info('amount', $amount);
+	$this->set_inline_info('amount_vat', $amount_vat);
     }
 
     /*public*/ function get_lines() {
@@ -487,6 +490,10 @@ class Tinvoice {
 
     /*public*/ function get_amount() {
 	return $this->get_inline_info("amount");
+    }
+
+    /*public*/ function get_amount_vat() {
+	return $this->get_inline_info("amount_vat");
     }
 
     /* curious, buggy thing ! */
