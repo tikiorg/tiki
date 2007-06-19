@@ -506,7 +506,6 @@
 	</select>
 </td></tr>
     <tr><td class="form">{tr}Print Page{/tr}:</td><td><input type="checkbox" name="feature_wiki_print" {if $feature_wiki_print eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="form">{tr}Search and replace{/tr}:</td><td><input type="checkbox" name="feature_wiki_replace" {if $feature_wiki_replace eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Allow HTML{/tr}:</td><td><input type="checkbox" name="feature_wiki_allowhtml" {if $feature_wiki_allowhtml eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Show page version{/tr}:</td><td><input type="checkbox" name="wiki_show_version" {if $wiki_show_version eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Page navigation bar position (displayed when page break '...page...' are used){/tr}:</td><td>
