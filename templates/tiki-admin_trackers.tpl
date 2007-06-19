@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.80 2007-06-16 16:02:06 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.81 2007-06-19 14:04:04 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
   
 {if $feature_help eq 'y'}
@@ -283,7 +283,6 @@ categories = {$catsdump}
 </form>
 <form action="tiki-import_tracker.php?trackerId={$trackerId}" method="post" enctype="multipart/form-data">
 <table class="normal">
-<tr class="formcolor"><td>{tr}Download CSV export{/tr}</td><td><a href="tiki-export_tracker.php?trackerId={$trackerId}" class="linkbut">{tr}tracker_{$trackerId}.csv{/tr}</a></td></tr>
 <tr class="formcolor"><td>{tr}Import file{/tr}</td><td><input name="importfile" type="file" /></td></tr>
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}save{/tr}" /></td></tr>
 </table>
