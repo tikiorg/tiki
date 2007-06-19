@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.81 2007-06-19 14:04:04 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.82 2007-06-19 14:08:22 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
   
 {if $feature_help eq 'y'}
@@ -272,7 +272,7 @@ categories = {$catsdump}
 <h3>{tr}Import/Export CSV Data{/tr}</h3>
 <form action="tiki-export_tracker.php?trackerId={$trackerId}" method="post">
 <table class="normal">
-<tr class="formcolor"><td>{tr}Download CVS export{/tr}</td>
+<tr class="formcolor"><td>{tr}Download CSV export{/tr}</td>
 <td>{tr}File: {/tr}{tr}tracker{/tr}_{$trackerId}.csv<br />{tr}Charset encoding:{/tr} <select name="encoding"><option value="UTF-8" selected="selected">{tr}UTF-8{/tr}</option><option value="ISO-8859-1">{tr}ISO-8859-1{/tr}</option></select>
 <br /><input type="radio" name="which" value="list"/> {tr}Fields searchable and visible in items list{/tr}
 <br /><input type="radio" name="which" value="item"/> {tr}Fields visible in an item view{/tr} 
@@ -283,7 +283,7 @@ categories = {$catsdump}
 </form>
 <form action="tiki-import_tracker.php?trackerId={$trackerId}" method="post" enctype="multipart/form-data">
 <table class="normal">
-<tr class="formcolor"><td>{tr}Import file{/tr}</td><td><input name="importfile" type="file" /></td></tr>
+<tr class="formcolor"><td>{tr}Import CSV file{/tr}</td><td><input name="importfile" type="file" /></td></tr>
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}save{/tr}" /></td></tr>
 </table>
 </form>
