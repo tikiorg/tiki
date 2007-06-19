@@ -2,10 +2,10 @@ contributor:
 $Author: niclone $
 
 revision:
-$Revision: 1.17 $
+$Revision: 1.18 $
 
 lastmodif:
-$Date: 2007-06-19 11:12:41 $
+$Date: 2007-06-19 11:57:02 $
 
 requires:
 lib-fpdf_freefonts
@@ -47,8 +47,10 @@ delete from tiki_menu_options WHERE menuId='42' AND position='98' AND name='My I
 delete from users_permissions WHERE permName='tiki_p_tinvoice' OR permName='tiki_p_tinvoice_edit' OR permName='tiki_p_tinvoice_del' OR permName='tiki_p_tinvoice_chart';
 
 sql-upgrade:
-:1.21
+:1.18
 ALTER TABLE tiki_tinvoice DROP paid;
+ALTER TABLE tiki_tinvoice ADD amount_vat DECIMAL(12, 2) NOT NULL AFTER amount;
+ALTER TABLE `tiki_tinvoice` ADD `status` ENUM( 'draft', 'emitted', 'paid', 'canceled' ) NOT NULL AFTER `date`;
 
 author:
 Nicolas Dimitrijevic
