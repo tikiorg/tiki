@@ -164,7 +164,8 @@ class tiki_edit_invoice {
 	$smarty->assign("initinvoicelines", $str);
 	$smarty->assign("invoice_date", date("Y-m-d", strtotime($tinvoice->get_date())));
 	$smarty->assign("invoice_libelle", $tinvoice->get_libelle());
-	$smarty->assign("invoice_id_receiver", $tinvoice->get_receiver());
+	$invoice_receiver=$tinvoice->get_receiver();
+	$smarty->assign("invoice_id_receiver", $invoice_receiver['id_receiver']);
 	if ($tinvoice->get_datelimit() !== NULL)
 	    $smarty->assign("invoice_datelimit", date("Y-m-d", strtotime($tinvoice->get_datelimit())));
 	$smarty->assign("invoice_refdevis", $tinvoice->get_refdevis());
