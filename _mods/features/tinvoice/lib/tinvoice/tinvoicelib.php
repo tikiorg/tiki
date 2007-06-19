@@ -501,6 +501,35 @@ class Tinvoice {
     }
 
     /*public*/ function set_status($status) {
+	$oldstatus=$this->get_inline_info("status");
+	if (($oldstatus == 'draft') && ($status == 'emitted')) { // create a new invoice number
+
+	    // TODO: verify that the invoice date is equal or after the last emitted invoice.
+
+	    $ts=$this->get_date_as_timestamp();
+	    
+	    // update new annual_id
+	    $query = "select max(annual_id) as theid from `tiki_tinvoice` where `date` > ?";
+	    $result = $this->tinvoicelib->query($query, array(date("Y")+"-01-01 00:00:00", $ts));
+	    $res = $result->fetchRow();
+	    $annual_id=$res['theid'] + 1;
+	    $this->set_inline_info('annual_id', $annual_id);
+
+	    // make a new invoice number (nice graphical art isn't it?)
+	    $format=$this->tinvoicelib->get_pref('numberingformat');
+	    $ref=strftime($format, $ts);
+	    $ref=str_replace('#########', sprintf('%09d', $annual_id));
+	    $ref=str_replace('########', sprintf('%08d', $annual_id));
+	    $ref=str_replace('#######', sprintf('%07d', $annual_id));
+	    $ref=str_replace('######', sprintf('%06d', $annual_id));
+	    $ref=str_replace('#####', sprintf('%05d', $annual_id));
+	    $ref=str_replace('####', sprintf('%04d', $annual_id));
+	    $ref=str_replace('###', sprintf('%03d', $annual_id));
+	    $ref=str_replace('##', sprintf('%02d', $annual_id));
+	    $ref=str_replace('#', sprintf('%01d', $annual_id));
+	    $this->set_inline_info("ref", $ref);
+	}
+	
 	$this->set_inline_info("status", $status);
     }
 
