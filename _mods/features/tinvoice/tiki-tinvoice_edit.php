@@ -88,9 +88,8 @@ class tiki_edit_invoice {
 	// Display the template
 
 	$smarty->assign('contacts', $contactlib->list_contacts($user));
-	$c=$contactlib->list_contacts($user);
-
-	var_dump($c[0][ext][7]);
+	//$c=$contactlib->list_contacts($user);
+	//var_dump($c[0][ext][7]);
 
 	$smarty->assign('mid', 'tiki-tinvoice_edit.tpl');
 	domyajax();
@@ -165,6 +164,7 @@ class tiki_edit_invoice {
 	$smarty->assign("initinvoicelines", $str);
 	$smarty->assign("invoice_date", date("Y-m-d", strtotime($tinvoice->get_date())));
 	$smarty->assign("invoice_libelle", $tinvoice->get_libelle());
+	$smarty->assign("invoice_id_receiver", $tinvoice->get_receiver());
 	if ($tinvoice->get_datelimit() !== NULL)
 	    $smarty->assign("invoice_datelimit", date("Y-m-d", strtotime($tinvoice->get_datelimit())));
 	$smarty->assign("invoice_refdevis", $tinvoice->get_refdevis());
