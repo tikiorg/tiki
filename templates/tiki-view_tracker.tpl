@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.140 2007-06-16 16:02:08 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.141 2007-06-20 21:35:58 sylvieg Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -660,7 +660,7 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 {/section}
 </select>
 {if $fields[ix].type eq 'D'}
-<br />{tr}Other{/tr}: <input type="text" name="{$fields[ix].ins_id}_other" value="{$otherValue|escape}" />
+<br />{tr}Other:{/tr} <input type="text" name="{$fields[ix].ins_id}_other" value="{$otherValue|escape}" />
 {/if}
 
 {* -------------------- radio buttons -------------------- *}
