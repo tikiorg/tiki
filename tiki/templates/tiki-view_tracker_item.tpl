@@ -1,7 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.133 2007-06-19 10:41:43 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.134 2007-06-20 13:54:04 sylvieg Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
+{* --------- navigation ------ *}
 <div class="navbar">
 {if $feature_user_watches eq 'y' and $tiki_p_watch_trackers eq 'y'}
 {if $user_watching_tracker ne 'y'}
@@ -23,9 +24,9 @@
 {/if}
 </div>
 
-<div>
-{* ------- return/next/previous tab --- *}
 {if $tiki_p_view_trackers eq 'y'}
+{* ------- return/next/previous tab --- *}
+<div class="navbar">
 <span class="button2">
 <a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}">{tr}back{/tr} {tr}items list{/tr}</a></span>
 <span class="button2">
@@ -35,23 +36,26 @@
 {if $nextmsg}<span class="attention">{$nextmsg}</span>{else}
 <a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}&amp;move=next">{tr}next{/tr} -></a>{/if}</span>
 </div>
-<br /><br />
-{/if}{*
+{/if}
 
-***  Display warnings about incorrect values and missing mandatory fields ***
-
-*}{if count($err_mandatory) > 0}<div class="simplebox highlight">
+{****  Display warnings about incorrect values and missing mandatory fields ***}
+{if count($err_mandatory) > 0}
+<div class="simplebox highlight">
 {tr}Following mandatory fields are missing{/tr}&nbsp;:<br/>
 	{section name=ix loop=$err_mandatory}
 {$err_mandatory[ix].name}{if !$smarty.section.ix.last},&nbsp;{/if}
 	{/section}
-</div><br />{/if}
-{if count($err_value) > 0}<div class="simplebox highlight">
+</div><br />
+{/if}
+{if count($err_value) > 0}
+<div class="simplebox highlight">
 {tr}Following fields are incorrect{/tr}&nbsp;:<br/>
 	{section name=ix loop=$err_value}
 {$err_value[ix].name}{if !$smarty.section.ix.last},&nbsp;{/if}
 	{/section}
-</div><br />{/if}
+</div><br />
+{/if}
+
 {if $feature_tabs eq 'y'}
 {cycle name=tabs values="1,2,3,4,5" print=false advance=false reset=true}
 <div id="page-bar">
@@ -80,285 +84,40 @@
     <td colspan="2">{html_image file=$status_types.$ustatus.image title=$status_types.$ustatus.label alt=$status_types.$ustatus.label}</td>
   </tr>
 {/if}
+{assign var=stick value="n"}
+
 {foreach from=$ins_fields key=ix item=cur_field}
   {if ($cur_field.isHidden ne 'y' or $tiki_p_admin_trackers eq 'y') and !($tracker_info.doNotShowEmptyField eq 'y' and empty($cur_field.value) and empty($cur_field.cat))}
-    {if $cur_field.type eq 'h'}
-      </table>
-      <h2>{$cur_field.name}</h2>
-      <table class="normal">
+	{if $cur_field.type eq 'h'}
+		</table>
+		<h2>{$cur_field.name}</h2>
+		<table class="normal">
+	{elseif $cur_field.type ne 'x'}
+		{if $stick ne 'y'}
+			<tr class="formcolor field{$cur_field.fieldId}"><td class="formlabel">
+		{else}
+			<td class="formlabel right">
+		{/if}
+		{$cur_field.name}
+		{if ($cur_field.type eq 'l' and $cur_field.options_array[4] eq '1')}
+			<br />
+			<a href="tiki-view_tracker.php?trackerId={$cur_field.options_array[0]}&amp;filterfield={$cur_field.options_array[1]}&amp;filtervalue={section name=ox loop=$ins_fields}{if $ins_fields[ox].fieldId eq $cur_field.options_array[2]}{$ins_fields[ox].value}{/if}{/section}">{tr}Filter Tracker Items{/tr}</a>
+		{/if}
+		</td>
 
-    {elseif $cur_field.type ne 'x'}
-      {if ($cur_field.type eq 'c' or $fields[ix].type eq 't' or $fields[ix].type eq 'n') and $fields[ix].options_array[0] eq '1'}
-        <tr class="formcolor"><td class="formlabel">{$cur_field.name}</td><td>
-      {elseif $stick eq 'y'}
-        <td class="formlabel right">{$cur_field.name}</td><td>
-      {else}
-        <tr class="formcolor field{$cur_field.fieldId}"><td class="formlabel">{$cur_field.name}
-        {if ($cur_field.type eq 'l' and $cur_field.options_array[4] eq '1')}
-          <br />
-          <a href="tiki-view_tracker.php?trackerId={$cur_field.options_array[0]}&amp;filterfield={$cur_field.options_array[1]}&amp;filtervalue={section name=ox loop=$ins_fields}{if $ins_fields[ox].fieldId eq $cur_field.options_array[2]}{$ins_fields[ox].value}{/if}{/section}">{tr}Filter Tracker Items{/tr}</a><br />
-        {/if}
+		{if ($cur_field.type eq 'c' or $cur_field.type eq 't' or $cur_field.type eq 'n') and $cur_field.options_array[0] eq '1'}
+			{assign var=stick value="y"}
+		{else}
+			{assign var=stick value="n"}
+		{/if}
+		{if $stick eq 'y'}<td>{else}<td colspan="3">{/if}
 
-        </td>
-        <td colspan="3">
-      {/if}
-      {if $cur_field.type eq 'f' or $cur_field.type eq 'j'}
-        {$cur_field.value|tiki_long_date} {$cur_field.value|tiki_long_time}</td></tr>
+		{include file="tracker_item_field_value.tpl" field_value=$cur_field list_mode=n}
 
-      {elseif $cur_field.type eq 'l'}
-        {foreach key=tid item=tlabel from=$cur_field.links}
-          {if $cur_field.options_array[4] eq '1'}
-            <div><a href="tiki-view_tracker_item.php?trackerId={$cur_field.trackerId}&amp;itemId={$tid}" class="link">{$tlabel}</a></div>
-          {else}
-            <div>{$tlabel}</div>
-          {/if}
-        {/foreach}
-
-      {elseif $cur_field.type eq 'u'}
-        <a href="tiki-user_information.php?view_user={$cur_field.value|escape:"url"}">{$cur_field.value}</a>
-
-      {elseif $cur_field.type eq 'a'}
-        {$cur_field.pvalue|default:"&nbsp;"}
-
-      {elseif $cur_field.type eq 'e'}
-        {assign var=fca value=$cur_field.options}
-        {* style with all the categories
-		<table width="100%"><tr>{cycle name="1_$fca" values=",</tr><tr>" advance=false print=false}
-        {foreach key=ku item=iu from=$ins_fields.$ix.$fca}
-          {assign var=fcat value=$iu.categId}
-          <td width="50%" nowrap="nowrap">
-          {if $cur_field.cat.$fcat eq 'y'}
-            <tt>X&nbsp;</tt><b>{$iu.name}</b></td>
-          {else}
-            <tt>&nbsp;&nbsp;</tt><s>{$iu.name}</s></td>
-          {/if}
-          {cycle name="1_$fca"}
-        {/foreach}
-        </tr></table>
-		*}
-		{foreach key=ku item=iu from=$ins_fields.$ix.$fca}
-		{assign var=fcat value=$iu.categId}
-		{if $cur_field.cat.$fcat eq 'y'}{$iu.name}<br />{/if}
-		{/foreach}
-		</td></tr>
-
-      {elseif $cur_field.type eq 'c'}
-        {if $cur_field.value eq 'y'}{tr}Yes{/tr}
-        {else}{tr}No{/tr}
-        {/if}
-        {if $cur_field.options_array[0] eq '1' and $stick ne 'y'}
-          </td>
-          {assign var=stick value="y"}
-        {else}
-          </td></tr>
-          {assign var=stick value="n"}
-        {/if}
-
-      {elseif $cur_field.type eq 'y'}
-        {assign var=o_opt value=$cur_field.options_array[0]}
-        {if $o_opt ne '1'}<img border="0" src="img/flags/{$cur_field.value}.gif" />{/if}
-        {if $o_opt ne '1' and $o_opt ne '2'}&nbsp;{/if}
-        {if $o_opt ne '2'}{tr}{$cur_field.value}{/tr}{/if}
-
-      {elseif $cur_field.type eq 't' or $cur_field.type eq 'n'}
-        {if $cur_field.options_array[2]}<span class="formunit">{$cur_field.options_array[2]|escape}&nbsp;</span>{/if}
-        {$cur_field.value|escape:"html"|default:"&nbsp;"}
-        {if $cur_field.options_array[3]}<span class="formunit">&nbsp;{$cur_field.options_array[3]|escape}</span>{/if}
-
-{elseif $cur_field.type eq 'a'}
-{$cur_field.pvalue|default:"&nbsp;"}
-
-{elseif $cur_field.type eq 'e'}
-{assign var=fca value=$cur_field.options}
-{* style with all the categories
-<table width="100%"><tr>{cycle name="1_$fca" values=",</tr><tr>" advance=false print=false}
-{foreach key=ku item=iu from=$ins_fields.$ix.$fca name=eforeach}
-{assign var=fcat value=$iu.categId}
-<td width="50%" nowrap="nowrap">
-{if $cur_field.cat.$fcat eq 'y'}<tt>X&nbsp;</tt><b>{$iu.name}</b></td>{else}<tt>&nbsp;&nbsp;</tt><s>{$iu.name}</s></td>{/if}
-{if !$smarty.foreach.eforeach.last{cycle name="1_$fca"}{else}{if $ins_fields.$ix.$fca|@count%2}<td></td>{/if}</tr>{/if}
-{/foreach}
-</tr></table>
-*}
-{foreach key=ku item=iu from=$ins_fields.$ix.$fca}
-{assign var=fcat value=$iu.categId}
-{if $cur_field.cat.$fcat eq 'y'}{$iu.name}<br />{/if}
-{/foreach}
-</td></tr>
-
-{elseif $cur_field.type eq 'c'}
-{if $cur_field.value eq 'y'}{tr}Yes{/tr}
-{else}{tr}No{/tr}
-{/if}
-{if $cur_field.options_array[0] eq '1' and $stick ne 'y'}
-</td>
-{assign var=stick value="y"}
-{else}
-</td></tr>
-{assign var=stick value="n"}
-{/if}
-
-{elseif $cur_field.type eq 'y'}
-{if !empty($cur_field.value) and $cur_field.value ne 'None'}
-{assign var=o_opt value=$cur_field.options_array[0]}
-{capture name=flag}
-{tr}{$cur_field.value}{/tr}
-{/capture}
-{if $o_opt ne '1'}<img border="0" src="img/flags/{$cur_field.value}.gif" title="{$smarty.capture.flag|replace:'_':' '}" alt="{$smarty.capture.flag|replace:'_':' '}"/>{/if}
-{if $o_opt ne '1' and $o_opt ne '2'}&nbsp;{/if}
-{if $o_opt ne '2'}{$smarty.capture.flag|replace:'_':' '}{/if}
-{/if}
-
-{elseif $cur_field.type eq 't' or $cur_field.type eq 'n'}
-{if $cur_field.options_array[2]}<span class="formunit">{$cur_field.options_array[2]|escape}&nbsp;</span>{/if}
-{$cur_field.value|escape:"html"|default:"&nbsp;"}
-{if $cur_field.options_array[3]}<span class="formunit">&nbsp;{$cur_field.options_array[3]|escape}</span>{/if}
-
-{if $cur_field.options_array[0] eq '1' and $stick ne 'y'}
-{* ********** was only for 1.8 <tr><td class="formcolor">{$cur_field.name}</td>
-          <td class="formcolor">
-          {if $cur_field.type eq 'f'}
-            {$cur_field.value|tiki_short_datetime}
-          {else}
-            {$cur_field.value}
-          {/if} ************ *}
-          </td>
-          {assign var=stick value="y"}
-        {else}
-          </td></tr>
-          {assign var=stick value="n"}
-        {/if}
-
-      {elseif $cur_field.type eq 'r'}
-        {if $cur_field.options_array[2] eq '1'}<a href="tiki-view_tracker_item.php?trackerId={$cur_field.options_array[0]}&amp;itemId={$cur_field.linkId}" class="link">{/if}
-        {if $cur_field.options_array[3] ne ''}
-              {$cur_field.displayedvalue}
-        {else}
-              {$cur_field.value|default:"&nbsp;"}
-        {/if}
-        {if $cur_field.options_array[2] eq '1'}</a>{/if}
-
-      {elseif $cur_field.type eq 'm'}
-        {if $cur_field.options_array[0] eq '1' and $cur_field.value}
-          {mailto address=$cur_field.value|escape encode="hex"}
-        {elseif $cur_field.options_array[0] eq '2' and $cur_field.value}
-          {mailto address=$cur_field.value|escape encode="none"}
-        {else}
-          {$cur_field.value|escape|default:"&nbsp;"}
-        {/if}
-
-      {elseif $cur_field.type eq 's' and $cur_field.name eq "Rating" and $tiki_p_tracker_view_ratings eq 'y'}
-        <b title="{tr}Rating{/tr}: {$cur_field.value|default:"-"}, {tr}Number of voices{/tr}: {$cur_field.numvotes|default:"-"}, {tr}Average{/tr}: {$cur_field.voteavg|default:"-"}"> &nbsp;{$cur_field.value|default:"-"}&nbsp;
-        </b>
-        {if $tiki_p_tracker_vote_ratings eq 'y'}
-          <span class="button2">
-          {if $my_rate eq NULL}
-            <b class="linkbut highlight">-</b>
-          {else}
-            <a href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}{else}?{/if}
-            trackerId={$trackerId}
-            &amp;itemId={$itemId}
-            &amp;fieldId={$cur_field.fieldId}
-            &amp;rate=NULL"
-            class="linkbut">-</a>
-          {/if}
-          {section name=i loop=$cur_field.options_array}
-          {if $cur_field.options_array[i] eq $my_rate}
-            <b class="linkbut highlight">{$cur_field.options_array[i]}</b>
-          {else}
-            <a href="{$smarty.server.PHP_SELF}?
-            trackerId={$trackerId}
-            &amp;itemId={$itemId}
-            &amp;fieldId={$cur_field.fieldId}
-            &amp;rate={$cur_field.options_array[i]}"
-            class="linkbut">{$cur_field.options_array[i]}</a>
-          {/if}
-          {/section}
-          </span>
-        {/if}
-
-      {elseif $cur_field.type eq 'i'}
-        {if $cur_field.value ne ''}
-          <img src="{$cur_field.value}" alt="" {if $cur_field.options_array[2]} width="{$cur_field.options_array[2]}"{/if}{if $cur_field.options_array[3]} height="{$cur_field.options_array[3]}"{/if} />
-        {else}
-          <img border="0" src="img/icons/na_pict.gif" alt="n/a" />
-        {/if}
-
-
-      {elseif $cur_field.type eq 'G'}
-      {if $feature_gmap eq 'y'}
-        Google Map : X = {$cur_field.x} ; Y = {$cur_field.y} ; Zoom = {$cur_field.z}
-	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key={$gmap_key}" type="text/javascript">
-	</script>
-	<div id="map" style="width: 500px; height: 400px;border: 1px solid #000;"></div>
-	</div>
-	<script type="text/javascript">
-	//<![CDATA[
-	function load() {literal}{{/literal}
-	  var map = new GMap2(document.getElementById("map"));
-	  map.addControl(new GLargeMapControl());
-	  map.addControl(new GMapTypeControl());
-	  map.addControl(new GScaleControl());
-	  map.setCenter(new GLatLng({$cur_field.y}, {$cur_field.x}), {$cur_field.z});
-
-	  map.addOverlay(new GMarker(new GLatLng({$cur_field.y},{$cur_field.x})));
-
-/*	  GEvent.addListener(map, "zoomend", function(gold, gnew) {literal}{{/literal}
-	    document.getElementById('defz').value = gnew;
-	    document.getElementById('pointz').value = gnew;
-	  {literal}});{/literal}
-
-	  GEvent.addListener(map, "moveend", function() {literal}{{/literal}
-	    document.getElementById('defx').value = map.getCenter().x;
-	    document.getElementById('defy').value = map.getCenter().y;
-	  {literal}});{/literal}
-*/
-	{literal}}{/literal}
-//	load();
-	//]]>
-	window.onload=load;
-	</script>
-	{else}
-	  {tr}Google Maps is not enabled.{/tr}
+		</td>
+		{if $stick ne 'y'}</tr>{/if}
 	{/if}
-
-
-      {elseif $cur_field.type eq 'U'}
-	{$cur_field.value|how_many_user_inscriptions} {tr}subscriptions{/tr} {if $cur_field.maxsubscriptions}(max : {$cur_field.maxsubscriptions}){/if} :
-	{foreach from=$cur_field.users_array name=U_user item=U_user}{$U_user.login|userlink}{if $U_user.friends} (+{$U_user.friends}){/if}{if $smarty.foreach.U_user.last}{else},&nbsp;{$last}{/if}{/foreach}
-	{if $user}
-	<br />{if $cur_field.user_subscription} {tr}You have ever subscribed{/tr}.{else}{tr}You have not yet subscribed{/tr}.{/if}
-	<form method="POST" action="{$smarty.server.REQUEST_URI}" >
-	<input type="hidden" name="U_fieldId" value="{$cur_field.fieldId}" />
-	<input type="hidden" name="itemId" value="{$itemId}" />
-	<input type="hidden" name="trackerId" value="{$trackerId}" />
-	<input type="submit" name="user_subscribe" value="{tr}Subscribe{/tr}" /> {tr}with{/tr}
-	{if $U_liste}
-	  {html_options options=$U_liste name="user_friends" selected=$cur_field.user_nb_friends} {tr}friends{/tr}
-	{else}
-	  <input type="text" size="4" name="user_friends" value="{$cur_field.user_nb_friends}" /> {tr}friends{/tr}
-	{/if}
-	{if $cur_field.user_subscription}<br /><input type="submit" name="user_unsubscribe" value="{tr}Unsubscribe{/tr}" />{/if}
-	</form>
-{/if}
-
-{elseif $cur_field.type eq 'i'}
-{if $cur_field.value ne ''}
-<img src="{$cur_field.value}" alt="" {if $cur_field.options_array[2]} width="{$cur_field.options_array[2]}"{/if}{if $cur_field.options_array[3]} height="{$cur_field.options_array[3]}"{/if} />
-{else}
-<img border="0" src="img/icons/na_pict.gif" alt="n/a" />
-{/if}
-
-{elseif $cur_field.type eq 'd' or $cur_field.type eq 'D'}
-{$cur_field.value|tr_if}
-
-{else}
-{$cur_field.value|default:"&nbsp;"}
-</td></tr>
-{assign var=stick value="n"}
-{/if}
-{/if}
-{/if}
+  {/if}
 {/foreach}
 </table>
 </div>

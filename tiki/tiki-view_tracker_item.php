@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.125 2007-06-16 16:01:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.126 2007-06-20 13:54:03 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -705,10 +705,12 @@ if ($_REQUEST["itemId"]) {
 					if (isset($_REQUEST['save']) || isset($_REQUEST['save_return'])) {
 						foreach ($ins_categs as $c) {
 							$ins_fields['data'][$i]['cat']["$c"] = 'y';
+							$ins_fields['data'][$i]['categs'][] = $categlib->get_category($c);
 						}
 					} else {
 						foreach ($cat as $c) {
 							$ins_fields['data'][$i]['cat']["$c"] = 'y';
+							$ins_fields['data'][$i]['categs'][] = $categlib->get_category($c);
 						}
 					}
 				} elseif ($fields["data"][$i]["type"] == 'l') {

@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.5 2007-06-19 10:41:43 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.6 2007-06-20 13:54:04 sylvieg Exp $ *}
 {strip}
-{* param: list_mode(y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain) *}
+{* param: list_mode(y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain), item *}
 
-{if $field_value.type ne 'x' and $field_value.type ne 'G'}
+{if $field_value.type ne 'x'}
 {* ******************** link to the item ******************** *}
 {if $showlinks ne 'y'}
 	{assign var='is_link' value='n'}
@@ -115,9 +115,9 @@
 
 {* -------------------- rating -------------------- *}
 {elseif $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")) and $tiki_p_tracker_view_ratings eq 'y'}
-		<b title="{tr}Rating{/tr}: {$field_value.value|default:"-"}, {tr}Number of voices{/tr}: {$field_value.numvotes|default:"-"}, {tr}Average{/tr}: {$field_value.voteavg|default:"-"}">
-			&nbsp;{$field_value.value|default:"-"}&nbsp;
-		</b>
+	<b title="{tr}Rating{/tr}: {$field_value.value|default:"-"}, {tr}Number of voices{/tr}: {$field_value.numvotes|default:"-"}, {tr}Average{/tr}: {$field_value.voteavg|default:"-"}">
+		&nbsp;{$field_value.value|default:"-"}&nbsp;
+	</b>
 	{if $tiki_p_tracker_vote_ratings eq 'y'}
 		<div nowrap="nowrap">
 			<span class="button2">
@@ -154,7 +154,65 @@
 {* -------------------- subscription -------------------- *}
 {elseif $field_value.type eq 'U'}
 	{$field_value.value|how_many_user_inscriptions} {tr}subscriptions{/tr}
+	{if $list_mode ne 'y'}
+	{if $field_value.maxsubscriptions}(max : {$field_value.maxsubscriptions}){/if} :
+	{foreach from=$field_value.users_array name=U_user item=U_user}
+		{$U_user.login|userlink}{if $U_user.friends} (+{$U_user.friends}){/if}{if $smarty.foreach.U_user.last}{else},&nbsp;{$last}{/if}
+	{/foreach}
+	{if $user}
+		<br />
+		{if $field_value.user_subscription} {tr}You have ever subscribed{/tr}.{else}{tr}You have not yet subscribed{/tr}.{/if}
+		<form method="POST" action="{$smarty.server.REQUEST_URI}" >
+		<input type="hidden" name="U_fieldId" value="{$field_value.fieldId}" />
+		<input type="hidden" name="itemId" value="{$itemId}" />
+		<input type="hidden" name="trackerId" value="{$trackerId}" />
+		<input type="submit" name="user_subscribe" value="{tr}Subscribe{/tr}" /> {tr}with{/tr}
+		{if $U_liste}
+			{html_options options=$U_liste name="user_friends" selected=$field_value.user_nb_friends} {tr}friends{/tr}
+		{else}
+			<input type="text" size="4" name="user_friends" value="{$field_value.user_nb_friends}" /> {tr}friends{/tr}
+		{/if}
+		{if $field_value.user_subscription}<br /><input type="submit" name="user_unsubscribe" value="{tr}Unsubscribe{/tr}" />{/if}
+		</form>
+	{/if}
+	{/if}
 
+{* -------------------- google map -------------------- *}
+{elseif $field_value.type eq 'G'}
+	{if $feature_gmap eq 'y'}
+	Google Map : X = {$field_value.x} ; Y = {$field_value.y} ; Zoom = {$field_value.z}
+	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key={$gmap_key}" type="text/javascript">
+	</script>
+	<div id="map" style="width: 500px; height: 400px;border: 1px solid #000;">
+	</div>
+	<script type="text/javascript">
+	//<![CDATA[
+	function load() {literal}{{/literal}
+	var map = new GMap2(document.getElementById("map"));
+	  map.addControl(new GLargeMapControl());
+	  map.addControl(new GMapTypeControl());
+	  map.addControl(new GScaleControl());
+	  map.setCenter(new GLatLng({$field_value.y}, {$field_value.x}), {$field_value.z});
+	  map.addOverlay(new GMarker(new GLatLng({$field_value.y},{$field_value.x})));
+
+/*	  GEvent.addListener(map, "zoomend", function(gold, gnew) {literal}{{/literal}
+	    document.getElementById('defz').value = gnew;
+	    document.getElementById('pointz').value = gnew;
+	  {literal}});{/literal}
+
+	  GEvent.addListener(map, "moveend", function() {literal}{{/literal}
+	    document.getElementById('defx').value = map.getCenter().x;
+	    document.getElementById('defy').value = map.getCenter().y;
+	  {literal}});{/literal}
+*/
+	{literal}}{/literal}
+//	load();
+	//]]>
+	window.onload=load;
+	</script>
+	{else}
+	  {tr}Google Maps is not enabled.{/tr}
+	{/if}
 
 {* -------------------- other field -------------------- *}
 {* w *}
