@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-download_item_attachment.php,v 1.15 2007-05-18 16:02:25 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-download_item_attachment.php,v 1.16 2007-06-20 19:20:55 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,15 +12,21 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/trackers/trackerlib.php');
 
-if ($tiki_p_view_trackers != 'y') {
-	die;
-}
-
 if (!isset($_REQUEST["attId"])) {
 	die;
 }
 
 $info = $trklib->get_item_attachment($_REQUEST["attId"]);
+$itemInfo = $trklib->get_tracker_item($info["itemId"]);
+
+if ((isset($itemInfo['status']) and $itemInfo['status'] == 'p' && !$tikilib->user_has_perm_on_object($user, $itemInfo['trackerId'], 'tracker', 'tiki_p_view_trackers_pending')) 
+	||  (isset($itemInfo['status']) and $itemInfo['status'] == 'c' && !$tikilib->user_has_perm_on_object($user, $itemInfo['trackerId'], 'tracker', 'tiki_p_view_trackers_closed'))
+	||  ($tiki_p_admin_trackers != 'y' && !$tikilib->user_has_perm_on_object($user, $itemInfo['trackerId'], 'tracker', 'tiki_p_view_trackers')	  
+	) ) {
+		$smarty->assign('msg', tra('Permission denied'));
+		$smarty->display('error.tpl');
+		die;
+}
 
 $t_use_db = $tikilib->get_preference('t_use_db', 'y');
 $t_use_dir = $tikilib->get_preference('t_use_dir', '');
