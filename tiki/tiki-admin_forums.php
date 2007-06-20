@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.44 2007-04-30 18:14:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.45 2007-06-20 18:38:58 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -265,6 +265,7 @@ if ($offset > 0) {
 
 $cat_type = 'forum';
 $cat_objid = $_REQUEST["forumId"];
+$categories = array();
 include_once ("categorize_list.php");
 
 if (!empty($_REQUEST['dup_mode'])) {
