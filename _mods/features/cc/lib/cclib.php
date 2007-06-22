@@ -362,13 +362,14 @@ class CcLib extends UsersLib {
 					}
 				}
 			}
-			if (count($allp)) {
+			if (!empty($allp) && count($allp)) {
 				foreach ($allp as $url=>$data) {
 					$data[2] = preg_replace(array('/:/','/\//'),array('@','.'),$data[2]);
 				}
 			}
 		}
 		$result = $this->query('select `cpun`,`email`,`url`,`lastupdate`,`status` from `cc_providers`',array());
+		$ret = array();
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
