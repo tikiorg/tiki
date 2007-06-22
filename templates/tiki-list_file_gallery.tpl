@@ -1,8 +1,23 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.39 2007-06-07 12:58:25 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.40 2007-06-22 13:44:27 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}">{tr}Listing Gallery{/tr}: {$name}</a></h1>
 
 <div class="navbar">
-<table><td>
+{if $user and $feature_user_watches eq 'y'}
+	{if $user_watching_file_gallery eq 'n'}
+		<a href="tiki-list_file_gallery.php?galleryId={$galleryId|escape:"url"}&amp;galleryName={$name|escape:"url"}&amp;watch_event=file_gallery_changed&amp;watch_object={$galleryId|escape:"url"}&amp;watch_action=add">{html_image file='pics/icons/eye.png' border='0' alt='{tr}monitor this gallery{/tr}' title='{tr}monitor this gallery{/tr}' align='right'}</a>
+	{else}
+		<a href="tiki-list_file_gallery.php?galleryId={$galleryId|escape:"url"}&amp;galleryName={$name|escape:"url"}&amp;watch_event=file_gallery_changed&amp;watch_object={$galleryId|escape:"url"}&amp;watch_action=remove">{html_image file='pics/icons/no_eye.png' border='0' alt='{tr}stop monitoring this gallery{/tr}' title='{tr}stop monitoring this gallery{/tr}' align='right'}</a>
+	{/if}
+{/if}  
+{if $rss_file_gallery eq 'y'}
+	{if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"}
+	<a href="tiki-file_gallery_rss.php?galleryId={$galleryId}&amp;ver=PODCAST">
+	<img src='img/rss_podcast_80_15.png' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}'  align='right' /></a>
+	{else}
+	<a href="tiki-file_gallery_rss.php?galleryId={$galleryId}">
+	<img src='pics/icons/feed.png' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' align='right' /></a>
+	{/if}
+{/if}
 {if $tiki_p_list_file_galleries eq 'y' or (!isset($tiki_p_list_file_galleries) and $tiki_p_view_file_gallery eq 'y')}<a href="tiki-file_galleries.php" class="linkbut" title="{tr}list galleries{/tr}">{tr}list galleries{/tr}</a>{/if}
 
 {if $tiki_p_admin_file_galleries eq 'y' or $user eq $gal_info.user}
@@ -18,28 +33,6 @@
   {/if}
 {/if}
 
-{if $rss_file_gallery eq 'y'}
-	{if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"}
-	<a href="tiki-file_gallery_rss.php?galleryId={$galleryId}&amp;ver=PODCAST">
-	<img src='img/rss_podcast_80_15.png' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' /></a>
-	{else}
-	<a href="tiki-file_gallery_rss.php?galleryId={$galleryId}">
-	<img src='pics/icons/feed.png' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' /></a>
-	{/if}
-{/if}
-
-</td>
-<td style="text-align:right;width:142px;wrap:nowrap">
-
-       {if $user and $feature_user_watches eq 'y'}
-		{if $user_watching_file_gallery eq 'n'}
-			<a href="tiki-list_file_gallery.php?galleryId={$galleryId|escape:"url"}&amp;galleryName={$name|escape:"url"}&amp;watch_event=file_gallery_changed&amp;watch_object={$galleryId|escape:"url"}&amp;watch_action=add">{html_image file='pics/icons/eye.png' border='0' alt='{tr}monitor this gallery{/tr}' title='{tr}monitor this gallery{/tr}'}</a>
-		{else}
-			<a href="tiki-list_file_gallery.php?galleryId={$galleryId|escape:"url"}&amp;galleryName={$name|escape:"url"}&amp;watch_event=file_gallery_changed&amp;watch_object={$galleryId|escape:"url"}&amp;watch_action=remove">{html_image file='pics/icons/no_eye.png' border='0' alt='{tr}stop monitoring this gallery{/tr}' title='{tr}stop monitoring this gallery{/tr}'}</a>
-		{/if}
-	{/if}  
-
-</td></tr></table>
 </div>
 
 <table>
@@ -82,8 +75,7 @@
 {else}
 <span class="highlight">{$comments_cant} {tr}comments{/tr}</span>
 {/if}
-<span id="comzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y'}inline{else}non
-e{/if};">({tr}close{/tr})</span>
+<span id="comzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y'}inline{else}none{/if};">({tr}hide{/tr})</span>
 </a>
 </div>
 </td></tr></table>
