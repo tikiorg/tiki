@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.76 2007-06-16 16:02:07 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.77 2007-06-22 21:04:00 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 <div id="calscreen">
 
@@ -19,7 +19,7 @@
 <span class="button2"><a href="tiki-calendar_edit_item.php"class="linkbut">{tr}add event{/tr}</a></span>
 {/if}
 
-{if count($listcals) > 1}
+{if count($listcals) >= 1}
 <span class="button2"><a href="#" title="{tr}Click to select visible calendars{/tr}" class="linkbut" onclick="toggle('filtercal');">{tr}Visible Calendars{/tr}</a></span>
 
 {if count($thiscal)}
@@ -45,7 +45,7 @@ none
 </div>
 <h1><a class="pagetitle" href="tiki-calendar.php">{if $displayedcals|@count eq 1}{tr}Calendar:{/tr} {assign var=x value=$displayedcals[0]}{$infocals[$x].name}{else}{tr}Calendar{/tr}{/if}</a></h1>
 
-{if count($listcals) > 1}
+{if count($listcals) >= 1}
 <form id="filtercal" method="get" action="{$myurl}" name="f" style="display:none;">
 <div class="caltitle">{tr}Group Calendars{/tr}</div>
 <div class="caltoggle"><input name="calswitch" id="calswitch" type="checkbox" onclick="switchCheckboxes(this.form,'calIds[]',this.checked);"/> <label for="calswitch">{tr}check / uncheck all{/tr}</label></div>
