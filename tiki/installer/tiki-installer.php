@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.21 2007-06-22 20:46:25 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.22 2007-06-22 21:02:07 sylvieg Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -316,18 +316,18 @@ function error_and_exit() {
 	
         $PHP_CONFIG_FILE_PATH = PHP_CONFIG_FILE_PATH;
 
-        ob_start();
         $httpd_conf = 'httpd.conf';
+/*
+        ob_start();
+        phpinfo (INFO_MODULES);
 
         if (preg_match('/Server Root<\/b><\/td><td\s+align="left">([^<]*)</', ob_get_contents(), $m)) {
                 $httpd_conf = $m[1] . '/' . $httpd_conf;
         }
 
         ob_end_clean();
-
+*/
         print "<html><body>\n<h2><font color='red'>Tiki Installer cannot proceed:</font></h2>\n<pre>\n$errors";
-        phpinfo (INFO_MODULES);
-
         if (!isWindows()) {
                 print "<br />You may either create missing directories and chmod directories manually to 777, or run one of the sets of commands below.
 <b><a href='tiki-install.php'>Execute the Tiki installer again</a></b> after you run the commands below.
