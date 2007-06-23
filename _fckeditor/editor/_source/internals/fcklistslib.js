@@ -28,7 +28,7 @@
 var FCKListsLib =
 {
 	// We are not handling <ins> and <del> as block elements, for now.
-	BlockElements : { address:1,blockquote:1,center:1,div:1,dl:1,fieldset:1,form:1,h1:1,h2:1,h3:1,h4:1,h5:1,h6:1,hr:1,noscript:1,ol:1,p:1,pre:1,script:1,table:1,ul:1 },
+	BlockElements : { address:1,blockquote:1,center:1,div:1,dl:1,fieldset:1,form:1,h1:1,h2:1,h3:1,h4:1,h5:1,h6:1,hr:1,marquee:1,noscript:1,ol:1,p:1,pre:1,script:1,table:1,ul:1 },
 
 	// Block elements that may be filled with &nbsp; if empty.
 	NonEmptyBlockElements : { p:1,div:1,h1:1,h2:1,h3:1,h4:1,h5:1,h6:1,address:1,pre:1,ol:1,ul:1,li:1,td:1,th:1 },

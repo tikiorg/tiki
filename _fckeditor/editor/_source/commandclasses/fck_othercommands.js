@@ -167,7 +167,12 @@ FCKSaveCommand.prototype.Execute = function()
 	}
 
 	// Submit the form.
-	oForm.submit() ;
+	// If there's a button named "submit" then the form.submit() function is masked and
+	// can't be called in Mozilla, so we call the click() method of that button.
+	if ( typeof( oForm.submit ) == 'function' )
+		oForm.submit() ;
+	else
+		oForm.submit.click() ;
 }
 
 FCKSaveCommand.prototype.GetState = function()
@@ -297,14 +302,14 @@ FCKUnlinkCommand.prototype.Execute = function()
 	if ( FCKBrowserInfo.IsGecko )
 	{
 		var oLink = FCK.Selection.MoveToAncestorNode( 'A' ) ;
+		// The unlink command can generate a span in Firefox, so let's do it our way. See #430
 		if ( oLink )
-			FCK.Selection.SelectNode( oLink ) ;
+			FCKTools.RemoveOuterTags( oLink ) ;
+
+		return ;
 	}
-
+	
 	FCK.ExecuteNamedCommand( this.Name ) ;
-
-	if ( FCKBrowserInfo.IsGecko )
-		FCK.Selection.Collapse( true ) ;
 }
 
 FCKUnlinkCommand.prototype.GetState = function()

@@ -130,7 +130,12 @@ function Ok()
 		eCaption.innerHTML = document.getElementById('txtCaption').value ;
 	}
 	else if ( bExists && eCaption )
-		eCaption.parentNode.removeChild( eCaption ) ;
+	{
+		if ( oEditor.FCKBrowserInfo.IsIE )
+			eCaption.innerHTML = '' ;	// TODO: It causes an IE internal error if using removeChild or table.deleteCaption().
+		else
+			eCaption.parentNode.removeChild( eCaption ) ;
+	}
 
 	if (! bExists)
 	{

@@ -163,8 +163,12 @@ FCKXHtml.TagProcessors['form'] = function( node, htmlNode )
 	if ( htmlNode.acceptCharset && htmlNode.acceptCharset.length > 0 && htmlNode.acceptCharset != 'UNKNOWN' )
 		FCKXHtml._AppendAttribute( node, 'accept-charset', htmlNode.acceptCharset ) ;
 
-	if ( htmlNode.name )
-		FCKXHtml._AppendAttribute( node, 'name', htmlNode.name ) ;
+	// IE has a bug and htmlNode.attributes['name'].specified=false if there is
+	// no element with id="name" inside the form (#360 and SF-BUG-1155726).
+	var nameAtt = htmlNode.attributes['name'] ;
+
+	if ( nameAtt && nameAtt.value.length > 0 )
+		FCKXHtml._AppendAttribute( node, 'name', nameAtt.value ) ;
 
 	node = FCKXHtml._AppendChildNodes( node, htmlNode ) ;
 

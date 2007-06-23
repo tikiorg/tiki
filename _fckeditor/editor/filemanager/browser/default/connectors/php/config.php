@@ -59,7 +59,7 @@ $Config['UserFilesAbsolutePath'] = '' ;
 $Config['ForceSingleExtension'] = true ;
 
 $Config['AllowedExtensions']['File']	= array() ;
-$Config['DeniedExtensions']['File']		= array('html','htm','php','php2','php3','php4','php5','phtml','pwml','inc','asp','aspx','ascx','jsp','cfm','cfc','pl','bat','exe','com','dll','vbs','js','reg','cgi','htaccess','asis') ;
+$Config['DeniedExtensions']['File']		= array('html','htm','php','php2','php3','php4','php5','phtml','pwml','inc','asp','aspx','ascx','jsp','cfm','cfc','pl','bat','exe','com','dll','vbs','js','reg','cgi','htaccess','asis','sh','shtml','shtm','phtm') ;
 
 $Config['AllowedExtensions']['Image']	= array('jpg','gif','jpeg','png') ;
 $Config['DeniedExtensions']['Image']	= array() ;

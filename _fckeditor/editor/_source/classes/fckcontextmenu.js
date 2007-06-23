@@ -23,7 +23,9 @@
 
 var FCKContextMenu = function( parentWindow, langDir )
 {
-	var oPanel = this._Panel = new FCKPanel( parentWindow, true ) ;
+	this.CtrlDisable = false ;
+
+	var oPanel = this._Panel = new FCKPanel( parentWindow ) ;
 	oPanel.AppendStyleSheet( FCKConfig.SkinPath + 'fck_editor.css' ) ;
 	oPanel.IsContextMenu = true ;
 
@@ -86,6 +88,9 @@ function FCKContextMenu_Document_OnContextMenu( e )
 	{
 		if ( el._FCKContextMenu )
 		{
+			if ( el._FCKContextMenu.CtrlDisable && ( e.ctrlKey || e.metaKey ) )
+				return true ;
+
 			FCKTools.CancelEvent( e ) ;
 			FCKContextMenu_AttachedElement_OnContextMenu( e, el._FCKContextMenu, el ) ;
 		}
@@ -99,6 +104,9 @@ function FCKContextMenu_AttachedElement_OnContextMenu( ev, fckContextMenu, el )
 
 //	if ( iButton != 2 )
 //		return ;
+
+	if ( fckContextMenu.CtrlDisable && ( ev.ctrlKey || ev.metaKey ) )
+		return true ;
 
 	var eTarget = el || this ;
 

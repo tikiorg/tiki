@@ -123,24 +123,21 @@ FCKXHtml._AppendAttribute = function( xmlNode, attributeName, attributeValue )
 
 FCKXHtml._AppendChildNodes = function( xmlNode, htmlNode, isBlockElement )
 {
-	// Trim block elements. This is also needed to avoid Firefox leaving extra
-	// BRs at the end of them.
-	if ( isBlockElement )
-		FCKDomTools.TrimNode( htmlNode, true ) ;
-
-	var iCount = 0 ;
-
 	var oNode = htmlNode.firstChild ;
 
 	while ( oNode )
 	{
-		if ( this._AppendNode( xmlNode, oNode ) )
-			iCount++ ;
-
+		this._AppendNode( xmlNode, oNode ) ;
 		oNode = oNode.nextSibling ;
 	}
 
-	if ( iCount == 0 )
+	// Trim block elements. This is also needed to avoid Firefox leaving extra
+	// BRs at the end of them.
+	if ( isBlockElement )
+		FCKDomTools.TrimNode( xmlNode, true ) ;
+
+	// If the resulting node is empty.
+	if ( xmlNode.childNodes.length == 0 )
 	{
 		if ( isBlockElement && FCKConfig.FillEmptyBlocks )
 		{

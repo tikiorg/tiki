@@ -71,15 +71,15 @@ Translation status
 
 If the "Detect Browser Language" is enabled, FCK will try to fit that 
 choice. Available languages are for now:
-ar bg bn bs ca cs da de el en-au en-ca en en-uk eo es et eu fa fi fo fr
-gl he hi hr hu it ja km ko lt lv mn ms nb nl no pl pt-br pt ro ru sk sl
-sr sr-latn sv th tr uk vi zh-cn zh
+af ar bg bn bs ca cs da de el en-au en-ca en en-uk eo es et eu fa fi fo
+fr gl he hi hr hu it ja km ko lt lv mn ms nb nl no pl pt-br pt ro ru sk
+sl sr sr-latn sv th tr uk vi zh-cn zh
 
 in tikiwiki we have :
 ar ca cn cs da de dk el en en-uk es fj fr gl he hr hu it ja ko nl no pl
 po pt pt-br ru sb sk sp sr sr-latn sv sw tv tw uk
 
-So, we still miss FCKeditor transation for :
+So, we still miss FCKeditor translation for :
 cn dk fj po sb sp sw tv tw
 
 

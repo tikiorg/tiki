@@ -36,7 +36,7 @@ var FCKSpecialCombo = function( caption, fieldWidth, panelWidth, panelMaxHeight,
 
 	this.Items = new Object() ;
 
-	this._Panel = new FCKPanel( parentWindow || window, true ) ;
+	this._Panel = new FCKPanel( parentWindow || window ) ;
 	this._Panel.AppendStyleSheet( FCKConfig.SkinPath + 'fck_editor.css' ) ;
 	this._PanelBox = this._Panel.MainNode.appendChild( this._Panel.Document.createElement( 'DIV' ) ) ;
 	this._PanelBox.className = 'SC_Panel' ;

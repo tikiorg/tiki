@@ -64,7 +64,7 @@ if ( FCKBrowserInfo.IsIE || FCKBrowserInfo.IsOpera )
 			if ( oLink.name.length > 0 )
 			{
 				//if the anchor has some content then we just add a temporary class
-				if ( oLink.innerHTML != '' )
+				if ( oLink.innerHTML !== '' )
 				{
 					if ( FCKBrowserInfo.IsIE )
 						oLink.className += ' FCK__AnchorC' ;
@@ -172,13 +172,13 @@ FCKFlashProcessor.ProcessDocument = function( document )
 	}
 }
 
-FCKFlashProcessor.RefreshView = function( placholderImage, originalEmbed )
+FCKFlashProcessor.RefreshView = function( placeHolderImage, originalEmbed )
 {
-	if ( originalEmbed.width > 0 )
-		placholderImage.style.width = FCKTools.ConvertHtmlSizeToStyle( originalEmbed.width ) ;
+	if ( originalEmbed.getAttribute( 'width' ) > 0 )
+		placeHolderImage.style.width = FCKTools.ConvertHtmlSizeToStyle( originalEmbed.getAttribute( 'width' ) ) ;
 
-	if ( originalEmbed.height > 0 )
-		placholderImage.style.height = FCKTools.ConvertHtmlSizeToStyle( originalEmbed.height ) ;
+	if ( originalEmbed.getAttribute( 'height' ) > 0 )
+		placeHolderImage.style.height = FCKTools.ConvertHtmlSizeToStyle( originalEmbed.getAttribute( 'height' ) ) ;
 }
 
 FCK.GetRealElement = function( fakeElement )

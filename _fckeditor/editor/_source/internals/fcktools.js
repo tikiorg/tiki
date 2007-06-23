@@ -223,3 +223,11 @@ FCKTools.CloneObject = function( sourceObject )
 	fCloneCreator.prototype = sourceObject ;
 	return new fCloneCreator ;
 }
+
+FCKTools.GetLastItem = function( list )
+{
+	if ( list.length > 0 )
+		return list[ list.length - 1 ] ;
+
+	return null ;
+}

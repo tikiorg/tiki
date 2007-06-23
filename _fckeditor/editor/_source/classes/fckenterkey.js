@@ -171,7 +171,7 @@ FCKEnterKey.prototype._ExecuteBackspace = function( range, previous, currentBloc
 	var bCustom = false ;
 
 	// We could be in a nested LI.
-	if ( !previous && currentBlock.nodeName.IEquals( 'LI' ) && currentBlock.parentNode.parentNode.nodeName.IEquals( 'LI' ) )
+	if ( !previous && currentBlock && currentBlock.nodeName.IEquals( 'LI' ) && currentBlock.parentNode.parentNode.nodeName.IEquals( 'LI' ) )
 	{
 		this._OutdentWithSelection( currentBlock, range ) ;
 		return true ;
@@ -261,7 +261,7 @@ FCKEnterKey.prototype.DoDelete = function()
 	oRange.MoveToSelection() ;
 
 	// There is just one special case for collapsed selections at the end of a block.
-	if ( oRange.CheckIsCollapsed() && oRange.CheckEndOfBlock( FCKBrowserInfo.IsGecko ) )
+	if ( oRange.CheckIsCollapsed() && oRange.CheckEndOfBlock( FCKBrowserInfo.IsGeckoLike ) )
 	{
 		var oCurrentBlock = oRange.StartBlock ;
 
@@ -402,7 +402,7 @@ FCKEnterKey.prototype._ExecuteEnterBlock = function( blockTag, range )
 					// Move the selection to the new block.
 					oRange.MoveToElementEditStart( eNewBlock ) ;
 
-					if ( FCKBrowserInfo.IsGecko )
+					if ( FCKBrowserInfo.IsGeckoLike )
 						eNewBlock.scrollIntoView( false ) ;
 				}
 			}
@@ -474,7 +474,7 @@ FCKEnterKey.prototype._ExecuteEnterBr = function( blockTag )
 				FCKDomTools.InsertAfterNode( eBr, this.Window.document.createTextNode( '' ) ) ;
 
 			// If we are at the end of a block, we must be sure the bogus node is available in that block.
-			if ( bIsEndOfBlock && FCKBrowserInfo.IsGecko )
+			if ( bIsEndOfBlock && FCKBrowserInfo.IsGeckoLike )
 				this._AppendBogusBr( eBr.parentNode ) ;
 
 			if ( FCKBrowserInfo.IsIE )
@@ -525,10 +525,10 @@ FCKEnterKey.prototype._FixBlock = function( range, isStart, blockTag )
 // Appends a bogus <br> at the end of the element, if not yet available.
 FCKEnterKey.prototype._AppendBogusBr = function( element )
 {
-	var eLastChild = element.getElementsByTagName('br') ;
+	if ( !element )
+		return ;
 
-	if ( eLastChild )
-		eLastChild = eLastChild[ eLastChild.legth - 1 ] ;
+	var eLastChild = FCKTools.GetLastItem( element.getElementsByTagName('br') ) ;
 
 	if ( !eLastChild || eLastChild.getAttribute( 'type', 2 ) != '_moz' )
 		element.appendChild( FCKTools.CreateBogusBR( this.Window.document ) ) ;

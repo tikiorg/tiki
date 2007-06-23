@@ -25,7 +25,7 @@
 FCKSelection.GetType = function()
 {
 	return FCK.EditorDocument.selection.type ;
-}
+} ;
 
 // Retrieves the selected element (if any), just in the case that a single
 // element (object like and image or a table) is selected.
@@ -38,7 +38,8 @@ FCKSelection.GetSelectedElement = function()
 		if ( oRange && oRange.item )
 			return FCK.EditorDocument.selection.createRange().item(0) ;
 	}
-}
+	return null ;
+} ;
 
 FCKSelection.GetParentElement = function()
 {
@@ -51,7 +52,7 @@ FCKSelection.GetParentElement = function()
 		default :
 			return FCK.EditorDocument.selection.createRange().parentElement() ;
 	}
-}
+} ;
 
 FCKSelection.SelectNode = function( node )
 {
@@ -72,7 +73,7 @@ FCKSelection.SelectNode = function( node )
 	}
 
 	oRange.select() ;
-}
+} ;
 
 FCKSelection.Collapse = function( toStart )
 {
@@ -83,7 +84,7 @@ FCKSelection.Collapse = function( toStart )
 		oRange.collapse( toStart == null || toStart === true ) ;
 		oRange.select() ;
 	}
-}
+} ;
 
 // The "nodeTagName" parameter must be Upper Case.
 FCKSelection.HasAncestorNode = function( nodeTagName )
@@ -107,7 +108,7 @@ FCKSelection.HasAncestorNode = function( nodeTagName )
 	}
 
 	return false ;
-}
+} ;
 
 // The "nodeTagName" parameter must be UPPER CASE.
 FCKSelection.MoveToAncestorNode = function( nodeTagName )
@@ -139,7 +140,7 @@ FCKSelection.MoveToAncestorNode = function( nodeTagName )
 		oNode = oNode.parentNode ;
 
 	return oNode ;
-}
+} ;
 
 FCKSelection.Delete = function()
 {
@@ -153,6 +154,6 @@ FCKSelection.Delete = function()
 	}
 
 	return oSel ;
-}
+} ;
 
 

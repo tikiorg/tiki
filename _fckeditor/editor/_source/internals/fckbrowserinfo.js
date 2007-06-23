@@ -41,7 +41,17 @@ var FCKBrowserInfo =
 	if ( browserInfo.IsGecko )
 	{
 		var geckoVersion = s.match( /gecko\/(\d+)/ )[1] ;
-		browserInfo.IsGecko10 = geckoVersion < 20051111 ;	// Actually "10" refers to Gecko versions before Firefox 1.5, where Gecko 20051111 has been released.
+
+		// Actually "10" refers to Gecko versions before Firefox 1.5, when
+		// Gecko 1.8 (build 20051111) has been released.
+
+		// Some browser (like Mozilla 1.7.13) may have a Gecko build greater
+		// than 20051111, so we must also check for the revision number not to
+		// be 1.7 (we are assuming that rv < 1.7 will not have build > 20051111).
+
+		// TODO: Future versions may consider the rv number only, but it is
+		// still to check that all Gecko based browser present the rv number.
+		browserInfo.IsGecko10 = ( ( geckoVersion < 20051111 ) || ( /rv:1\.7/.test(s) ) ) ;
 	}
 	else
 		browserInfo.IsGecko10 = false ;

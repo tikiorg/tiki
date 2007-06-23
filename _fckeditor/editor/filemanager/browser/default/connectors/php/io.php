@@ -41,7 +41,20 @@ function ServerMapFolder( $resourceType, $folderPath )
 	$sResourceTypePath = $GLOBALS["UserFilesDirectory"] . strtolower( $resourceType ) . '/' ;
 
 	// Ensure that the directory exists.
-	CreateServerFolder( $sResourceTypePath ) ;
+	$sErrorMsg = CreateServerFolder( $sResourceTypePath ) ;
+	if ( $sErrorMsg != '' )
+	{
+		if ( isset( $GLOBALS['HeaderSent'] ) && $GLOBALS['HeaderSent'] )
+		{ 
+			SendErrorNode( 1, "Error creating folder \"{$sResourceTypePath}\" ({$sErrorMsg})" ) ;
+			CreateXmlFooter() ;
+			exit ;
+		}
+		else
+		{
+			SendError( 1, "Error creating folder \"{$sResourceTypePath}\" ({$sErrorMsg})" ) ;
+		}
+	}
 
 	// Return the resource type directory combined with the required path.
 	return $sResourceTypePath . RemoveFromStart( $folderPath, '/' ) ;
@@ -96,6 +109,17 @@ function GetRootPath()
 	$sSelfPath = $_SERVER['PHP_SELF'] ;
 	$sSelfPath = substr( $sSelfPath, 0, strrpos( $sSelfPath, '/' ) ) ;
 
-	return substr( $sRealPath, 0, strlen( $sRealPath ) - strlen( $sSelfPath ) ) ;
+	// Get the slash according to the filesystem
+	$slash = ( strpos( $sRealPath, '/' ) === false ) ? '\\' : '/' ;
+	$sSelfPath = str_replace( '/', $slash, $sSelfPath ) ;
+	
+	$position = strpos( $sRealPath, $sSelfPath ) ;
+
+	// This can check only that this script isn't run from a virtual dir
+	// But it avoids problems the problems that arise if it isn't checked
+	if ( $position === false || $position <> strlen( $sRealPath ) - strlen( $sSelfPath ) )
+		SendError( 1, 'Sorry, can\'t map "UserFilesPath" to a physical path. You must set the "UserFilesAbsolutePath" value in "editor/filemanager/browser/default/connectors/php/config.php".' ) ;
+
+	return substr( $sRealPath, 0, $position ) ;
 }
 ?>

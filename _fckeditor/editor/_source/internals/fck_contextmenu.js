@@ -34,6 +34,7 @@ FCK.ContextMenu.RegisterListener = function( listener )
 function FCK_ContextMenu_Init()
 {
 	var oInnerContextMenu = FCK.ContextMenu._InnerContextMenu = new FCKContextMenu( FCKBrowserInfo.IsIE ? window : window.parent, FCKLang.Dir ) ;
+	oInnerContextMenu.CtrlDisable	= FCKConfig.BrowserContextMenuOnCtrl ;
 	oInnerContextMenu.OnBeforeOpen	= FCK_ContextMenu_OnBeforeOpen ;
 	oInnerContextMenu.OnItemClick	= FCK_ContextMenu_OnItemClick ;
 

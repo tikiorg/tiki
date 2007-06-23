@@ -31,6 +31,11 @@ var FCK =
 	Toolbar		: null,
 	HasFocus	: false,
 
+	AttachToOnSelectionChange : function( functionPointer )
+	{
+		this.Events.AttachEvent( 'OnSelectionChange', functionPointer ) ;
+	},
+
 	GetLinkedFieldValue : function()
 	{
 		return this.LinkedField.value ;
@@ -87,7 +92,7 @@ var FCK =
 		}
 
 		this.EditingArea = new FCKEditingArea( document.getElementById( 'xEditingArea' ) ) ;
-		this.EditingArea.FFSpellChecker = false ;
+		this.EditingArea.FFSpellChecker = FCKConfig.FirefoxSpellChecker ;
 
 		// Final setup of the lists lib.
 		FCKListsLib.Setup() ;
@@ -293,7 +298,7 @@ var FCK =
 
 		// IE doesn't support <abbr> and it breaks it. Let's protect it.
 		if ( FCKBrowserInfo.IsIE )
-			sTags += sTags.length > 0 ? '|ABBR' : 'ABBR' ;
+			sTags += sTags.length > 0 ? '|ABBR|XML' : 'ABBR|XML' ;
 		
 		var oRegex ;
 		if ( sTags.length > 0 )
@@ -316,7 +321,7 @@ var FCK =
 		if ( FCKBrowserInfo.IsIE )
 			sTags += '|HR' ;
 
-		oRegex = new RegExp( '<((' + sTags + ')(?=\s|>)[\s\S]*?)/?>', 'gi' ) ;
+		oRegex = new RegExp( '<((' + sTags + ')(?=\\s|>|/)[\\s\\S]*?)/?>', 'gi' ) ;
 		html = html.replace( oRegex, '<FCK:$1 />' ) ;
 
 		return html ;
@@ -759,7 +764,7 @@ var FCKTempBin =
 	{
 		var i = 0 ;
 		while ( i < this.Elements.length )
-			this.Elements[ i++ ] == null ;
+			this.Elements[ i++ ] = null ;
 		this.Elements.length = 0 ;
 	}
 } ;

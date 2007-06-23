@@ -162,7 +162,10 @@ FCKConfig.ProtectedSource.RegexEntries = [
 	/<script[\s\S]*?<\/script>/gi,
 
 	// <noscript> tags (get lost in IE and messed up in FF).
-	/<noscript[\s\S]*?<\/noscript>/gi
+	/<noscript[\s\S]*?<\/noscript>/gi,
+	
+	// Protect <object> tags. See #359.
+	/<object[\s\S]+?<\/object>/gi
 ] ;
 
 FCKConfig.ProtectedSource.Add = function( regexPattern )

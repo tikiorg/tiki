@@ -77,7 +77,8 @@ var FCKDomTools =
 				case 1 :
 					if ( eChildNode.nodeName.toUpperCase() == 'BR' && ( ignoreEndBRs || eChildNode.getAttribute( 'type', 2 ) == '_moz' ) )
 					{
-						node.removeChild( eChildNode ) ;
+						// Use "eChildNode.parentNode" instead of "node" to avoid IE bug (#324).
+						eChildNode.parentNode.removeChild( eChildNode ) ;
 						continue ;
 					}
 					break ;

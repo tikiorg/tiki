@@ -70,6 +70,7 @@ function FCKToolbarSet_Create( overhideLocation )
 
 			// Create the IFRAME that will hold the toolbar inside the target element.
 			var eToolbarIFrame = FCKTools.GetElementDocument( eToolbarTarget ).createElement( 'iframe' ) ;
+			eToolbarIFrame.src = 'javascript:void(0)' ;
 			eToolbarIFrame.frameBorder = 0 ;
 			eToolbarIFrame.width = '100%' ;
 			eToolbarIFrame.height = '10' ;
@@ -238,6 +239,11 @@ FCKToolbarSet.prototype.Load = function( toolbarSetName )
 	for ( var x = 0 ; x < ToolbarSet.length ; x++ )
 	{
 		var oToolbarItems = ToolbarSet[x] ;
+
+		// If the configuration for the toolbar is missing some element or has any extra comma
+		// this item won't be valid, so skip it and keep on processing.
+		if ( !oToolbarItems ) 
+			continue ;
 
 		var oToolbar ;
 

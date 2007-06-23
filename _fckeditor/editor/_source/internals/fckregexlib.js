@@ -59,9 +59,9 @@ ForceSimpleAmpersand : /___FCKAmp___/g ,
 SpaceNoClose	: /\/>/g ,
 
 // Empty elements may be <p></p> or even a simple opening <p> (see #211).
-EmptyParagraph	: /^<([^ >]+)[^>]*>\s*(<\/\1>)?$/ ,
+EmptyParagraph	: /^<(p|div|address|h\d|center)(?=[ >])[^>]*>\s*(<\/\1>)?$/ ,
 
-EmptyOutParagraph : /^<([^ >]+)[^>]*>(?:\s*|&nbsp;)(<\/\1>)?$/ ,
+EmptyOutParagraph : /^<(p|div|address|h\d|center)(?=[ >])[^>]*>(?:\s*|&nbsp;)(<\/\1>)?$/ ,
 
 TagBody			: /></ ,
 
@@ -77,8 +77,8 @@ GeckoEntitiesMarker : /#\?-\:/g ,
 // We look for the "src" and href attribute with the " or ' or whithout one of
 // them. We have to do all in one, otherwhise we will have problems with URLs
 // like "thumbnail.php?src=someimage.jpg" (SF-BUG 1554141).
-ProtectUrlsImg	: /<img(?=\s).*?\ssrc=((?:("|').*?\2)|(?:[^"'][^ >]+))/gi ,
-ProtectUrlsA	: /<a(?=\s).*?\shref=((?:("|').*?\2)|(?:[^"'][^ >]+))/gi ,
+ProtectUrlsImg	: /<img(?=\s).*?\ssrc=((?:(?:\s*)("|').*?\2)|(?:[^"'][^ >]+))/gi ,
+ProtectUrlsA	: /<a(?=\s).*?\shref=((?:(?:\s*)("|').*?\2)|(?:[^"'][^ >]+))/gi ,
 
 Html4DocType	: /HTML 4\.0 Transitional/i ,
 DocTypeTag		: /<!DOCTYPE[^>]*>/i ,

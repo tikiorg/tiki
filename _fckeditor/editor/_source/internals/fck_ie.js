@@ -163,8 +163,15 @@ FCK.InsertHtml = function( html )
 	if ( oSel.type.toLowerCase() == 'control' )
 		oSel.clear() ;
 
+	// Using the following trick, any comment in the begining of the HTML will
+	// be preserved.
+	html = '<span id="__fakeFCKRemove__">&nbsp;</span>' + html ;
+
 	// Insert the HTML.
 	oSel.createRange().pasteHTML( html ) ;
+
+	// Remove the fake node
+	FCK.EditorDocument.getElementById('__fakeFCKRemove__').removeNode( true ) ;
 
 	FCKDocumentProcessor.Process( FCK.EditorDocument ) ;
 }
@@ -216,7 +223,7 @@ FCK.Paste = function()
 		FCK.PasteAsPlainText() ;
 		return false ;
 	}
-	
+
 	var sHTML = FCK._CheckIsPastingEnabled( true ) ;
 
 	if ( sHTML === false )
@@ -261,7 +268,7 @@ FCK.PasteAsPlainText = function()
 		FCKDialog.OpenDialog( 'FCKDialog_Paste', FCKLang.PasteAsText, 'dialog/fck_paste.html', 400, 330, 'PlainText' ) ;
 		return ;
 	}
-	
+
 	// Get the data available in the clipboard in text format.
 	var sText = clipboardData.getData("Text") ;
 
@@ -281,17 +288,17 @@ FCK._CheckIsPastingEnabled = function( returnContents )
 	// pasting operations are enabled in the secutiry settings of IE6 and IE7.
 	// It adds a little bit of overhead to the check, but so far that's the
 	// only way, mainly because of IE7.
-	
+
 	FCK._PasteIsEnabled = false ;
-	
+
 	document.body.attachEvent( 'onpaste', FCK_CheckPasting_Listener ) ;
-	
+
 	// The execCommand in GetClipboardHTML will fire the "onpaste", only if the
 	// security settings are enabled.
 	var oReturn = FCK.GetClipboardHTML() ;
 
 	document.body.detachEvent( 'onpaste', FCK_CheckPasting_Listener ) ;
-	
+
 	if ( FCK._PasteIsEnabled )
 	{
 		if ( !returnContents )
@@ -344,18 +351,35 @@ FCK.GetClipboardHTML = function()
 	return sData ;
 }
 
-FCK.AttachToOnSelectionChange = function( functionPointer )
-{
-	this.Events.AttachEvent( 'OnSelectionChange', functionPointer ) ;
-}
-
 FCK.CreateLink = function( url )
 {
+	// Creates the array that will be returned. It contains one or more created links (see #220).
+	var aCreatedLinks = new Array() ;
+
 	// Remove any existing link in the selection.
 	FCK.ExecuteNamedCommand( 'Unlink' ) ;
 
 	if ( url.length > 0 )
 	{
+		// If there are several images, and you try to link each one, all the images get inside the link:
+		// <img><img> -> <a><img></a><img> -> <a><img><img></a> due to the call to 'CreateLink' (bug in IE)
+		if (FCKSelection.GetType() == 'Control')
+		{
+			// Create a link
+			var oLink = this.EditorDocument.createElement( 'A' ) ;
+			oLink.href = url ;
+
+			// Get the selected object
+			var oControl = FCKSelection.GetSelectedElement() ;
+			// Put the link just before the object
+			oControl.parentNode.insertBefore(oLink, oControl) ;
+			// Move the object inside the link
+			oControl.parentNode.removeChild( oControl ) ;
+			oLink.appendChild( oControl ) ;
+
+			return [ oLink ] ;
+		}
+
 		// Generate a temporary name for the link.
 		var sTempUrl = 'javascript:void(0);/*' + ( new Date().getTime() ) + '*/' ;
 
@@ -369,15 +393,27 @@ FCK.CreateLink = function( url )
 		{
 			var oLink = oLinks[i] ;
 
-			if ( oLink.href == sTempUrl )
+			// Check it this a newly created link.
+			// getAttribute must be used. oLink.url may cause problems with IE7 (#555).
+			if ( oLink.getAttribute( 'href', 2 ) == sTempUrl )
 			{
 				var sInnerHtml = oLink.innerHTML ;	// Save the innerHTML (IE changes it if it is like an URL).
 				oLink.href = url ;
 				oLink.innerHTML = sInnerHtml ;		// Restore the innerHTML.
-				return oLink ;
+
+				// If the last child is a <br> move it outside the link or it
+				// will be too easy to select this link again #388.
+				var oLastChild = oLink.lastChild ;
+				if ( oLastChild && oLastChild.nodeName == 'BR' )
+				{
+					// Move the BR after the link.
+					FCKDomTools.InsertAfterNode( oLink, oLink.removeChild( oLastChild ) ) ;
+				}
+
+				aCreatedLinks.push( oLink ) ;
 			}
 		}
 	}
 
-	return null ;
+	return aCreatedLinks ;
 }

@@ -60,9 +60,14 @@ var FCKPanel = function( parentWindow )
 
 		oDocument = this.Document = oIFrameWindow.document ;
 
+		// Workaround for Safari 12256. Ticket #63
+		var sBase = '' ;
+		if ( FCKBrowserInfo.IsSafari )
+			sBase = '<base href="' + window.document.location + '">' ;
+
 		// Initialize the IFRAME document body.
 		oDocument.open() ;
-		oDocument.write( '<html><head></head><body style="margin:0px;padding:0px;"><\/body><\/html>' ) ;
+		oDocument.write( '<html><head>' + sBase + '<\/head><body style="margin:0px;padding:0px;"><\/body><\/html>' ) ;
 		oDocument.close() ;
 
 		FCKTools.AddEventListenerEx( oIFrameWindow, 'focus', FCKPanel_Window_OnFocus, this ) ;
@@ -251,7 +256,7 @@ FCKPanel.prototype.CreateChildPanel = function()
 {
 	var oWindow = this._Popup ? FCKTools.GetDocumentWindow( this.Document ) : this._Window ;
 
-	var oChildPanel = new FCKPanel( oWindow, true ) ;
+	var oChildPanel = new FCKPanel( oWindow ) ;
 	oChildPanel.ParentPanel = this ;
 
 	return oChildPanel ;

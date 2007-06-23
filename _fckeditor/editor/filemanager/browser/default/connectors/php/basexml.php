@@ -39,7 +39,7 @@ function SetXmlHeaders()
 	header('Pragma: no-cache') ;
 
 	// Set the response format.
-	header( 'Content-Type:text/xml; charset=utf-8' ) ;
+	header( 'Content-Type: text/xml; charset=utf-8' ) ;
 }
 
 function CreateXmlHeader( $command, $resourceType, $currentFolder )
@@ -54,6 +54,8 @@ function CreateXmlHeader( $command, $resourceType, $currentFolder )
 
 	// Add the current folder node.
 	echo '<CurrentFolder path="' . ConvertToXmlAttribute( $currentFolder ) . '" url="' . ConvertToXmlAttribute( GetUrlFromPath( $resourceType, $currentFolder ) ) . '" />' ;
+
+	$GLOBALS['HeaderSent'] = true ;
 }
 
 function CreateXmlFooter()
@@ -68,8 +70,17 @@ function SendError( $number, $text )
 	// Create the XML document header
 	echo '<?xml version="1.0" encoding="utf-8" ?>' ;
 
-	echo '<Connector><Error number="' . $number . '" text="' . htmlspecialchars( $text ) . '" /></Connector>' ;
+	echo '<Connector>' ;
+	
+	SendErrorNode(  $number, $text ) ;
+	
+	echo '</Connector>' ;
 
 	exit ;
+}
+
+function SendErrorNode(  $number, $text )
+{
+	echo '<Error number="' . $number . '" text="' . htmlspecialchars( $text ) . '" />' ;
 }
 ?>

@@ -202,8 +202,8 @@ function CleanWord( oNode, bIgnoreFont, bRemoveStyles )
 		html = html.replace( /<H(\d)([^>]*)>/gi, '<h$1>' ) ;
 
 		// Word likes to insert extra <font> tags, when using MSIE. (Wierd).
-		html = html.replace( /<(H\d)><FONT[^>]*>(.*?)<\/FONT><\/\1>/gi, '<$1>$2</$1>' );
-		html = html.replace( /<(H\d)><EM>(.*?)<\/EM><\/\1>/gi, '<$1>$2</$1>' );
+		html = html.replace( /<(H\d)><FONT[^>]*>(.*?)<\/FONT><\/\1>/gi, '<$1>$2<\/$1>' );
+		html = html.replace( /<(H\d)><EM>(.*?)<\/EM><\/\1>/gi, '<$1>$2<\/$1>' );
 	}
 	else
 	{

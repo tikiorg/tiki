@@ -86,7 +86,13 @@ else
 	$sServerDir = GetRootPath() . $Config["UserFilesPath"] ;
 
 if ( $Config['UseFileType'] )
-	$sServerDir .= $sType . '/' ;
+	$sServerDir .= strtolower($sType) . '/' ;
+
+//check for the directory before uploading the file
+if(!is_dir($sServerDir))
+{
+    mkdir($sServerDir);
+} 
 
 while ( true )
 {
@@ -112,7 +118,7 @@ while ( true )
 		}
 
 		if ( $Config['UseFileType'] )
-			$sFileUrl = $Config["UserFilesPath"] . $sType . '/' . $sFileName ;
+			$sFileUrl = $Config["UserFilesPath"] . strtolower($sType) . '/' . $sFileName ;
 		else
 			$sFileUrl = $Config["UserFilesPath"] . $sFileName ;
 

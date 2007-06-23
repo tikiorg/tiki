@@ -38,7 +38,7 @@ var FCKTextColorCommand = function( type )
 	else
 		oWindow = window.parent ;
 
-	this._Panel = new FCKPanel( oWindow, true ) ;
+	this._Panel = new FCKPanel( oWindow ) ;
 	this._Panel.AppendStyleSheet( FCKConfig.SkinPath + 'fck_editor.css' ) ;
 	this._Panel.MainNode.className = 'FCK_Panel' ;
 	this._CreatePanelBody( this._Panel.Document, this._Panel.MainNode ) ;

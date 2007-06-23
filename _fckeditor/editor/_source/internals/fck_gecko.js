@@ -124,11 +124,6 @@ FCK.ExecuteRedirectedNamedCommand = function( commandName, commandParameter )
 	}
 }
 
-FCK.AttachToOnSelectionChange = function( functionPointer )
-{
-	this.Events.AttachEvent( 'OnSelectionChange', functionPointer ) ;
-}
-
 FCK.Paste = function()
 {
 	if ( FCKConfig.ForcePasteAsPlainText )
@@ -230,6 +225,9 @@ FCK.GetClipboardHTML = function()
 
 FCK.CreateLink = function( url )
 {
+	// Creates the array that will be returned. It contains one or more created links (see #220).
+	var aCreatedLinks = new Array() ;
+
 	FCK.ExecuteNamedCommand( 'Unlink' ) ;
 
 	if ( url.length > 0 )
@@ -240,15 +238,17 @@ FCK.CreateLink = function( url )
 		// Use the internal "CreateLink" command to create the link.
 		FCK.ExecuteNamedCommand( 'CreateLink', sTempUrl ) ;
 
-		// Retrieve the just created link using XPath.
-		var oLink = this.EditorDocument.evaluate("//a[@href='" + sTempUrl + "']", this.EditorDocument.body, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue ;
+		// Retrieve the just created links using XPath.
+		var oLinksInteractor = this.EditorDocument.evaluate("//a[@href='" + sTempUrl + "']", this.EditorDocument.body, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null) ;
 
-		if ( oLink )
+		// Add all links to the returning array.
+		for ( var i = 0 ; i < oLinksInteractor.snapshotLength ; i++ )
 		{
+			var oLink = oLinksInteractor.snapshotItem( i ) ;
 			oLink.href = url ;
-			return oLink ;
+			aCreatedLinks.push( oLink ) ;
 		}
 	}
 
-	return null ;
+	return aCreatedLinks ;
 }
