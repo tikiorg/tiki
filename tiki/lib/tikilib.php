@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.752 2007-06-16 16:01:50 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.753 2007-06-24 19:22:42 ang23 Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -5193,8 +5193,8 @@ function add_pageview() {
 	// Dynamic variables are similar to dynamic content but they are editable
 	// from the page directly, intended for short data, not long text but text
 	// will work too
-	//     Now won't match HTML-style '%nn' letter codes.
-	if (preg_match_all("/%([^% 0-9][^% 0-9][^% ]*)%/",$data,$dvars)) {
+	//     Now won't match HTML-style '%nn' letter codes and some special utf8 situations...
+	if (preg_match_all("/%([^% 0-9][^% 0-9][^% 0-9][^% 0-9][^% ]*)%/",$data,$dvars)) {
 	    // remove repeated elements
 	    $dvars = array_unique($dvars[1]);
 	    // Now replace each dynamic variable by a pair composed of the
