@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.85 2007-06-16 19:09:15 toggg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.86 2007-06-25 16:32:40 niclone Exp $
 
 /**
  * Tiki registration script
@@ -9,7 +9,7 @@
  * @license GNU LGPL
  * @copyright Tiki Community
  * @date created: 2002/10/8 15:54
- * @date last-modified: $Date: 2007-06-16 19:09:15 $
+ * @date last-modified: $Date: 2007-06-25 16:32:40 $
  */
 
 // Initialization
@@ -290,6 +290,15 @@ $smarty->assign('min_pass_length', $min_pass_length);
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
+
+// xajax
+if ($feature_ajax == 'y') {
+    require_once("lib/ajax/ajaxlib.php");
+    $ajaxlib->setRequestURI('tiki-register_ajax.php');
+    $ajaxlib->registerFunction('AJAXCheckUserName');
+    $ajaxlib->registerFunction('AJAXCheckMail');
+    $ajaxlib->processRequests(); // I don't really want a "process" function here, but if I don't call it here, it will not registerfunctions....
+}
 
 $smarty->assign('mid','tiki-register.tpl');
 $smarty->display("tiki.tpl");
