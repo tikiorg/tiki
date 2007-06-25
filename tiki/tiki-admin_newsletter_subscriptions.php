@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_newsletter_subscriptions.php,v 1.21 2007-06-18 15:29:30 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_newsletter_subscriptions.php,v 1.22 2007-06-25 13:33:29 mose Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -77,8 +77,8 @@ if (isset($_REQUEST["remove"])) {
 		key_check($area);
 		if (isset($_REQUEST["email"]))
 			$nllib->remove_newsletter_subscription($_REQUEST["remove"], $_REQUEST["email"], "n");
-		elseif (isset($_REQUEST["user"]))
-			$nllib->remove_newsletter_subscription($_REQUEST["remove"], $_REQUEST["user"], "y");
+		elseif (isset($_REQUEST["subuser"]))
+			$nllib->remove_newsletter_subscription($_REQUEST["remove"], $_REQUEST["subuser"], "y");
 		elseif (isset($_REQUEST["group"]))
 			$nllib->remove_newsletter_group($_REQUEST["remove"], $_REQUEST["group"]);
 	} else {
@@ -90,8 +90,8 @@ if (isset($_REQUEST["valid"])) {
 	check_ticket('admin-nl-subsriptions');
 		if (isset($_REQUEST["email"]))
 			$nllib->valid_subscription($_REQUEST["valid"], $_REQUEST["email"], "n");
-		elseif (isset($_REQUEST["user"]))
-			$nllib->valid_subscription($_REQUEST["valid"], $_REQUEST["user"], "y");
+		elseif (isset($_REQUEST["subuser"]))
+			$nllib->valid_subscription($_REQUEST["valid"], $_REQUEST["subuser"], "y");
 }
 
 if (isset($_REQUEST["confirmEmail"]) && $_REQUEST["confirmEmail"] == "on")
@@ -117,9 +117,9 @@ if (isset($_REQUEST["add"]) && isset($_REQUEST["email"]) && $_REQUEST["email"] !
 		$nllib->newsletter_subscribe($_REQUEST["nlId"], trim($_REQUEST["email"]), "n", $confirmEmail, "");
 	}
 }
-if (isset($_REQUEST["add"]) && isset($_REQUEST['user']) && $_REQUEST['user'] != "") {
+if (isset($_REQUEST["add"]) && isset($_REQUEST['subuser']) && $_REQUEST['subuser'] != "") {
 	check_ticket('admin-nl-subsriptions');
-	$sid = $nllib->newsletter_subscribe($_REQUEST["nlId"], $_REQUEST["user"], "y", $confirmEmail, $addEmail);
+	$sid = $nllib->newsletter_subscribe($_REQUEST["nlId"], $_REQUEST["subuser"], "y", $confirmEmail, $addEmail);
 }
 if (isset($_REQUEST["add"]) && isset($_REQUEST["addall"]) && $_REQUEST["addall"] == "on") {
 	check_ticket('admin-nl-subsriptions');

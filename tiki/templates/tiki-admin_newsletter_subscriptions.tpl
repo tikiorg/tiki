@@ -25,7 +25,7 @@
 <br /><i>{tr}You can add several email addresses by separating them with commas.{/tr}</i>
 </td></tr>
 <tr><td class="formcolor">{tr}User{/tr}:</td><td class="formcolor">
-<select name="user">
+<select name="subuser">
 <option value="">---</option>
 {foreach key=id item=one from=$users}
 <option value="{$one|escape}">{$one|escape}</option>
@@ -138,7 +138,7 @@
 {else}{tr}yes{/tr}{/if}</td>
 <td class="{cycle advance=false}">{$channels[user].subscribed|tiki_short_datetime}</td>
 <td class="{cycle}">
-   <a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].nlId}&amp;{if $channels[user].isUser eq "y"}user{else}email{/if}={$channels[user].email}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}remove{/tr}' /></a>
+   <a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].nlId}&amp;{if $channels[user].isUser eq "y"}subuser{else}email{/if}={$channels[user].email}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}remove{/tr}' /></a>
 </td>
 </tr>
 {/section}
