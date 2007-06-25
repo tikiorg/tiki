@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.170 2007-06-06 04:19:27 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.171 2007-06-25 14:58:00 sampaioprimo Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -936,6 +936,10 @@ include_once ('tiki-section_options.php');
 
 if ($feature_freetags == 'y') {
 	include_once ("freetag_list.php");
+	//If in preview mode get the tags from the form and not from database
+	if ($_REQUEST["preview"]) {
+	    $smarty->assign('taglist',$_REQUEST["freetag_string"]);
+	}
 }
 if ($feature_categories == 'y') {
 	include_once ("categorize_list.php");
