@@ -84,7 +84,7 @@ function smarty_function_html_select_time($params, &$smarty)
         $html_result .= '>'."\n";
         $html_result .= smarty_function_html_options(array('output'          => $hours,
                                                            'values'          => $hours,
-                                                           'selected'      => strftime($hour_fmt, $time),
+                                                           'selected'      => TikiLib::date_format($hour_fmt, $time),
                                                            'print_result' => false),
                                                      $smarty);
         $html_result .= "</select>\n";
