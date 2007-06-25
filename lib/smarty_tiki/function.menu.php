@@ -46,7 +46,4 @@ function smarty_function_menu($params, &$smarty)
 
 function compare_menu_options($a, $b) { return strcmp(tra($a['name']), tra($b['name'])); }
 
-
-
 ?>
-
