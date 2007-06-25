@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.446 2007-06-22 20:52:13 gillesm Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.447 2007-06-25 19:44:34 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -1466,7 +1466,7 @@ if ($feature_userPreferences == 'y') {
 				$tikilib->set_user_preference($user, 'language', $language);
 			} else {
 				$user_language = $tikilib->get_user_preference($user, 'language', $language);
-				if ($user_language) {
+				if ($user_language && $language != $user_language && file_exists("lang/$user_language/language.php")) {
 					$language = $user_language;
 				}
 			}
