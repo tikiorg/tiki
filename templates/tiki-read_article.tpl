@@ -1,6 +1,9 @@
 {if $is_categorized eq 'y' and $feature_categories eq 'y' and $feature_categorypath eq 'y'}
 <div align="right">{$display_catpath}</div>
 {/if}
+{if $feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and isset($freetags.data[0])}
+{include file="freetag_list.tpl"}
+{/if}
 
 {if $show_topline eq 'y' and $topline}<div class="articletopline">{$topline}</div>{/if}
 <div class="articletitle">
