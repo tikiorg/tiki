@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.68 2007-03-16 16:40:31 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.69 2007-06-25 14:46:22 sampaioprimo Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,6 +11,10 @@ $section = 'cms';
 require_once ('tiki-setup.php');
 
 include_once ('lib/articles/artlib.php');
+
+if ($feature_freetags == 'y') {
+	include_once('lib/freetag/freetaglib.php');
+}
 
 if ($feature_articles != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_articles");
@@ -384,7 +388,8 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 	$cat_desc = substr($_REQUEST["heading"], 0, 200);
 	$cat_name = $_REQUEST["title"];
 	$cat_href = "tiki-read_article.php?articleId=" . $cat_objid;
-	include_once ("categorize.php");
+	include_once("categorize.php");
+	include_once ("freetag_apply.php");
 
 	header ("location: tiki-read_article.php?articleId=$artid");
 }
@@ -415,6 +420,13 @@ if ($feature_multilingual == 'y') {
 $cat_type = 'article';
 $cat_objid = $articleId;
 include_once ("categorize_list.php");
+
+if ($feature_freetags == 'y') {
+    include_once ("freetag_list.php");
+    if ($_REQUEST["preview"]) {
+	$smarty->assign('taglist',$_REQUEST["freetag_string"]);
+    }
+}
 
 $smarty->assign('publishDate', $publishDate);
 $smarty->assign('publishDateSite', $publishDate);

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_article.tpl,v 1.58 2007-06-07 12:58:25 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_article.tpl,v 1.59 2007-06-25 14:46:22 sampaioprimo Exp $ *}
 {* Note: if you edit this file, make sure to make corresponding edits on tiki-edit_submission.tpl*}
 
 {popup_init src="lib/overlib.js"}
@@ -161,6 +161,8 @@
 {if $feature_cms_emails eq 'y' and $articleId eq 0}
 <tr class="formcolor"><td>{tr}Emails to be notified (separated with commas){/tr}</td><td><input type="text" name="emails" value="{$emails|escape}" size="80" /></td></tr>
 {/if}
+
+{include file=freetag.tpl}
 
 <tr class="formcolor"><td></td><td><input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" />
 <input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /></td></tr>

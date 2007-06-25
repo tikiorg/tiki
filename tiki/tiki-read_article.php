@@ -1,12 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.57 2007-03-06 19:29:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.58 2007-06-25 14:46:22 sampaioprimo Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'cms';
 require_once ('tiki-setup.php');
 include_once ('lib/stats/statslib.php');
 
@@ -37,6 +38,22 @@ if (!isset($_REQUEST["articleId"])) {
 
 	$smarty->display("error.tpl");
 	die;
+}
+
+//This is basicaly a copy of part of the freetag code from tiki-setup.php and should be only there. The problem is that the section name for articles is "cms" and the object name for article in the table tiki_objects is "article". Maybe it is a good idea to use "cms" on tiki_objects instead "article" and then this block of code can be removed. Another solution?
+if ($feature_freetags == 'y') {
+  include_once ('lib/freetag/freetaglib.php');
+	$here = $sections[$section];
+
+	if (isset($here['itemkey']) and isset($_REQUEST[$here['itemkey']])) {
+		$tags = $freetaglib->get_tags_on_object($_REQUEST[$here['itemkey']], "article ".$_REQUEST[$here['key']]);
+	} elseif (isset($here['key']) and isset($_REQUEST[$here['key']])) {
+		$tags = $freetaglib->get_tags_on_object($_REQUEST[$here['key']], "article");
+	} else {
+		$tags = array();
+	}
+	$smarty->assign('freetags',$tags);
+	$headerlib->add_cssfile('css/freetags.css');
 }
 
 // no need to check articleId; if it doesn't exist script would have died above
