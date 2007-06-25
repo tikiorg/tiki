@@ -5,49 +5,44 @@
   exit;
 }*/
 require_once('tiki-setup.php');
+require_once('lib/ajax/ajaxlib.php');
 
-function AJAXCheckUserName($name, $nameSequence) {
-	global $cpAJAX;
+function AJAXCheckUserName($name) {
 	global $userlib;
 	
-	$nameMessage_result_node =& $cpAJAX->add_node('nameMessage');
-	$nameSequence_result_node =& $cpAJAX->add_node('nameSequence');
+	$objResponse = new xajaxResponse();
 	
 	if (empty($name)) {
-		$nameMessage_result_node->set_data(tra('empty'));
-		$nameSequence_result_node->set_data($nameSequence);
+		$objResponse->addAssign("checkfield", "innerHTML", tra("empty"));
 	} else if ($userlib->user_exists($name)) {
-		$nameMessage_result_node->set_data(tra('User already exists'));
-		$nameSequence_result_node->set_data($nameSequence);
+		$objResponse->addAssign("checkfield", "innerHTML", tra('User already exists'));
 	} else {
-		$nameMessage_result_node->set_data(tra('Valid').' '.tra('user'));
-		$nameSequence_result_node->set_data($nameSequence);
+		$objResponse->addAssign("checkfield", "innerHTML", tra('Valid').' '.tra('user'));
 	}
+
+	return $objResponse;
 }
 
 
-function AJAXCheckMail($mail, $mailSequence) {
-	global $cpAJAX;
-	$mailMessage_result_node =& $cpAJAX->add_node('mailMessage');
-	$mailSequence_result_node =& $cpAJAX->add_node('mailSequence');
+function AJAXCheckMail($mail) {
+
+	$objResponse = new xajaxResponse();
 
 	if (empty($mail)) {
-		$mailMessage_result_node->set_data(tra('empty'));
-		$mailSequence_result_node->set_data($mailSequence);		
+		$objResponse->addAssign("checkmail", "innerHTML", tra("empty"));
 	} else if (!eregi("^[_a-z0-9\.\-]+@[_a-z0-9\.\-]+\.[a-z]{2,4}$", $mail)) {
-		$mailMessage_result_node->set_data(tra('This is not a valid mail adress'));
-		$mailSequence_result_node->set_data($mailSequence);		
+		$objResponse->addAssign("checkmail", "innerHTML", tra('This is not a valid mail adress'));
 	} else {
-		$mailMessage_result_node->set_data(tra('Valid').' '.tra('mail adress'));
-		$mailSequence_result_node->set_data($mailSequence);		
+		$objResponse->addAssign("checkmail", "innerHTML", tra('Valid').' '.tra('mail adress'));
 	}
+
+	return $objResponse;
 }
 
-require_once('lib/cpaint/cpaint2.inc.php');
-$cpAJAX = new cpaint();
-$cpAJAX->register('AJAXCheckUserName');
-$cpAJAX->register('AJAXCheckMail');
-$cpAJAX->start();
-$cpAJAX->return_data();
+// xajax
+$ajaxlib->setRequestURI('tiki-register_ajax.php');
+$ajaxlib->registerFunction('AJAXCheckUserName');
+$ajaxlib->registerFunction('AJAXCheckMail');
+$ajaxlib->processRequests();
 
 ?>
