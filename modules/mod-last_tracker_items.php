@@ -37,29 +37,11 @@ if ($feature_trackers == 'y') {
 		$tmp=null;
 		$smarty->assign('modlifn', $module_params["name"]);
   		$smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');
+		$smarty->assign('modLastItems', $ranking["data"]);
 	} else {
-
-		$ranking = array('data'=>array(
-				0 =>array(
-					'field_values'=>array(
-						0 => array(
-						'name' => 'usage',
-						'value' => tra('This module requires parameters trackerId and name set')))
-					)
-				));
-		$smarty->assign('modlifn', 'usage');
-		$smarty->assign('nonums','y');
-/*		$ranking = array("data"=>array()); */
-	}
-/* **************** no merge from 1.8 needed foreach ($ranking["data"] as $itkey=>$oneitem) {
-    foreach ($oneitem['field_values'] as $ifld=>$valfld) {
-        if ($valfld['type'] == 'f') {
-            $ranking["data"][$itkey]['field_values'][$ifld]['value'] =
-                strtotime($valfld['value']);
-        }
+		$smarty->assign('module_error', tra('This module requires parameters trackerId and name set'));
     }
- *************** */
-	$smarty->assign('modLastItems', $ranking["data"]);
+
 }
 
 ?>
