@@ -1,7 +1,6 @@
 <h2>{tr}Register as a new user{/tr}</h2>
 <br />
 {if $feature_ajax eq 'y'}
-  <script src="lib/cpaint/cpaint2.inc.compressed.js" type="text/javascript"></script>
   <script src="lib/registration/register_ajax.js" type="text/javascript"></script>
 {/if}
 
