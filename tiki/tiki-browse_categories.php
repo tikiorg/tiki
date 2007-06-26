@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.34 2007-04-02 17:21:18 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.35 2007-06-26 21:00:58 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -113,7 +113,7 @@ if(!$canView) {
 //$ctall = $categlib->get_all_categories();
 $ctall = $categlib->get_all_categories_respect_perms($user, 'tiki_p_view_categories');
 
-if ($feature_phplayers == 'y') {
+if ($feature_phplayers == 'y' && $feature_category_use_phplayers == 'y') {
 	global $tikiphplayers; include_once('lib/phplayers_tiki/tiki-phplayers.php');
 	$urlEnd = "&amp;deep=$deep";
 	if ($type)

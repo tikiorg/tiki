@@ -46,7 +46,11 @@
 	<tr>
 		<td class="form"> {if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=Category" target="tikihelp" class="tikihelp" title="{tr}Reinforce categories{/tr}">{/if} {tr}Reinforce categories{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
 		<td><input type="checkbox" name="feature_category_reinforce" {if $feature_category_reinforce eq 'y'}checked="checked"{/if}/></td>
-	</tr>in 
+	</tr>
+	<tr>
+		<td class="form"> {if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=Category" target="tikihelp" class="tikihelp" title="{tr}Category{/tr}">{/if} {tr}Categories browse uses PhpLayers{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
+		<td><input type="checkbox" name="feature_category_use_phplayers" {if $feature_category_use_phplayers eq 'y'}checked="checked"{/if}/><i>{tr}The feature must be activated{/tr}</i></td>
+	</tr>
 	<tr>
           <td colspan="2" class="button"><input type="submit" name="categorysetup" value="{tr}Save{/tr}" /></td>
 		  
