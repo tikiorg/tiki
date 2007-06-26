@@ -12,22 +12,37 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 
 
-if (isset($_REQUEST["multimediasetup"])) {
-ask_ticket('admin-inc-multimedia');
 
-    $pref_toggles = array(
-	"feature_smileys",
-	"popupLinks",
-	"feature_autolinks",
-    );
+    $pref_toggles_Colors = array('ProgressBarPlay','ProgressBarLoad','ProgressBarButton','ProgressBar','VolumeOn','VolumeOff','VolumeButton',
+	'Button','ButtonPressed','ButtonOver','ButtonInfo','ButtonInfoPressed','ButtonInfoOver','ButtonInfoText','ID3','PlayTime',
+	'TotalTime','PanelDisplay','AlertMesg');
+    $pref_toggles_Values = array('PreloadDelay','VideoHeight','VideoLength','URLAppend','LimitedMsg',
+	'MaxPlay');
 
 
-    foreach ($pref_toggles as $toggle) {
-        simple_set_toggle ($toggle);
-    }
+   
+   $xmlmm=fopen('tikimovies/multiplayer.xml','w');
+   fwrite ( $xmlmm,'<interface name="default">'."\n");
+   fwrite ( $xmlmm,'	<Color>'."\n");
 
-
+   foreach ($pref_toggles_Colors as $toggle) {
+	if (!isset($_REQUEST[$toggle])) $_REQUEST[$toggle] = ${$toggle};
+      $tikilib->set_preference($toggle,  $_REQUEST[$toggle]);
+      $smarty->assign($toggle, $_REQUEST[$toggle]);
+     fwrite ( $xmlmm,"		<$toggle>${$toggle}</$toggle>"."\n");
 }
+    fwrite ( $xmlmm,'	</Color>'."\n");
+    fwrite ( $xmlmm,'	<Value>'."\n");
 
+   foreach ($pref_toggles_Values as $toggle) {
+	if (!isset($_REQUEST[$toggle])) $_REQUEST[$toggle] = ${$toggle};
+      $tikilib->set_preference($toggle,  $_REQUEST[$toggle]);
+      $smarty->assign($toggle, $_REQUEST[$toggle]);
+      if ( ${$toggle} ) fwrite ( $xmlmm,"		<$toggle>${$toggle}</$toggle>"."\n");
+}
+    fwrite ( $xmlmm,'	</Value>'."\n");
+    fwrite ( $xmlmm,'</interface>'."\n");
+
+    fclose ($xmlmm);
 
 ?>
