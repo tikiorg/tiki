@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.447 2007-06-25 19:44:34 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.448 2007-06-26 15:19:36 gillesm Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -543,6 +543,36 @@ $pref['gal_list_visits'] = 'y';
 $pref['feature_image_gallery_mandatory_category'] = '-1';
 $pref['preset_galleries_scale'] ='n';
 $pref['gal_image_mouseover'] = 'n';
+
+# multimedia
+
+	$pref['ProgressBarPlay']='#FF8D41';
+	$pref['ProgressBarLoad']="#A7A7A7";
+	$pref['ProgressBarButton']="#FF0000";
+	$pref['ProgressBar']="#C3C3C3";
+	$pref['VolumeOn']="#21AC2A";
+	$pref['VolumeOff']="#8EFF8A";
+	$pref['VolumeButton']=0;
+	$pref['Button']="#555555";
+	$pref['ButtonPressed']="#FF00FF";
+	$pref['ButtonOver']="#B3B3B3";
+	$pref['ButtonInfo']="#C3C3C3";
+	$pref['ButtonInfoPressed']="#555555";
+	$pref['ButtonInfoOver']="#FF8D41";
+	$pref['ButtonInfoText']="#FFFFFF";
+	$pref['ID3']="#6CDCEB";
+	$pref['PlayTime']="#00FF00";
+	$pref['TotalTime']="#FF2020";
+	$pref['PanelDisplay']="#555555";
+	$pref['AlertMesg']="#00FFFF";
+	$pref['PreloadDelay']=3;
+	$pref['VideoHeight']=240;
+	$pref['VideoLength']=300;
+	$pref['ProgressBarPlay']="#FFFFFF";
+	$pref['URLAppend']="";
+	$pref['LimitedMsg']="You are limited to 1 minute";
+	$pref['MaxPlay']=60;
+	
 
 # spellcheck
 if (file_exists('lib/bablotron.php')) {
