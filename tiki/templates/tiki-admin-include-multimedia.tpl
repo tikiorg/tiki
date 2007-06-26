@@ -12,7 +12,7 @@
     {tr}{$crumbs[$crumb]->description}{/tr}
     {help crumb=$crumbs[$crumb]}
   </div>
-<OBJECT CLASSID="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0" WIDTH="200" HEIGHT="200"><PARAM NAME="movie" VALUE="tikimovies/multiplayer.swf"><PARAM NAME="quality" VALUE="high"><PARAM NAME="wmode" VALUE="transparent"><embed src="tikimovies/multiplayer.swf" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="200" height="200" wmode="transparent"></embed></object><br />
+<object CLASSID="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0" WIDTH="200" HEIGHT="100"><PARAM NAME="movie" VALUE="tikimovies/multiplayer.swf"><PARAM NAME="quality" VALUE="high"><PARAM NAME="wmode" VALUE="transparent"><embed src="tikimovies/multiplayer.swf" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="200" height="100" wmode="transparent"></embed></object><br />
 	
       <form action="tiki-admin.php?page=multimedia" method="post">
         <table class="admin">

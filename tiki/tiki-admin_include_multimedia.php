@@ -21,15 +21,17 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 
    
-   $xmlmm=fopen('tikimovies/multiplayer.xml','w');
+   $xmlmm=fopen('multiplayer.xml','w');
    fwrite ( $xmlmm,'<interface name="default">'."\n");
    fwrite ( $xmlmm,'	<Color>'."\n");
 
    foreach ($pref_toggles_Colors as $toggle) {
+	$value=${$toggle};
+	$hexavalue=str_replace("#","0x",$value);
 	if (!isset($_REQUEST[$toggle])) $_REQUEST[$toggle] = ${$toggle};
       $tikilib->set_preference($toggle,  $_REQUEST[$toggle]);
       $smarty->assign($toggle, $_REQUEST[$toggle]);
-     fwrite ( $xmlmm,"		<$toggle>${$toggle}</$toggle>"."\n");
+     fwrite ( $xmlmm,"		<$toggle>$hexavalue</$toggle>"."\n");
 }
     fwrite ( $xmlmm,'	</Color>'."\n");
     fwrite ( $xmlmm,'	<Value>'."\n");
