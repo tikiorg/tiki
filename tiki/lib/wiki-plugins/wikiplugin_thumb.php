@@ -1,7 +1,7 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_thumb.php,v 1.8 2007-04-04 21:58:41 sylvieg Exp $ */
+/* $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_thumb.php,v 1.9 2007-06-26 18:25:45 sylvieg Exp $ */
 function wikiplugin_thumb_help() {
-	return tra("Displays the thumbnail for an image").":<br />~np~{THUMB(image=>url,id=url,max=>,float=>,url=>,original=y)}".tra("description")."{THUMB}~/np~";
+	return tra("Displays the thumbnail for an image").":<br />~np~{THUMB(image=>url,id=url,max=>,float=>,url=>,original=y, sticky=n)}".tra("description")."{THUMB}~/np~";
 }
 
 function wikiplugin_thumb($data, $params) {
@@ -83,7 +83,11 @@ function wikiplugin_thumb($data, $params) {
 		$smarty->assign('overlib_loaded',1);
 	}
 	$html.= "<a href='$url' style='float:$float;$style' ";
-	$html.= " onmouseover=\"return overlib('$data',BACKGROUND,'$imageOver',WIDTH,'$width',HEIGHT,$height);\" onmouseout='nd();' >";
+	$html.= " onmouseover=\"return overlib('$data',BACKGROUND,'$imageOver',WIDTH,'$width',HEIGHT,$height";
+	if (isset($sticky) && $sticky == 'y') {
+		$html .= ',STICKY';
+	}
+	$html .= ");\" onmouseout='nd();' >";
 	$html.= "<img src='$image' width='$twidth' height='$theight' /></a>";
 
 	return $html;
