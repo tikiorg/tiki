@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-searchindex.tpl,v 1.14 2007-06-04 23:51:39 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-searchindex.tpl,v 1.15 2007-06-26 15:29:14 sylvieg Exp $ *}
 {if !( $searchNoResults ) }
 <h1>{tr}Search results{/tr}:</h1>
 {/if}
@@ -72,6 +72,9 @@
     {/if}
     {if $feature_articles eq 'y'}
        <option value="articles">{tr}articles{/tr}</option>
+    {/if}
+    {if $feature_trackers eq 'y'}
+       <option value="trackers">{tr}trackers{/tr}</option>
     {/if}
     </select>
 {else}
