@@ -5960,7 +5960,6 @@ $lang=Array(
 "Permission denied you cannot move images from this gallery" => "Droit d'accès refusé : vous ne pouvez pas déplacer d'images de cette galerie",
 "Permission denied you cannot view the calendar" => "Droit d'accès refusé : vous ne pouvez pas voir le calendrier",
 "optional" => "facultatif",
-<<<<<<< language.php
 "Wiki Features" => "Fonctionnalités Wiki",
 "Anonymous editors must input anti-bot code" => "Les éditeurs anonymes doivent saisir un code anti-bot",
 "Similar" => "Similaire",
@@ -7147,7 +7146,6 @@ $lang=Array(
 "The passwords did not match" => "Le mot de passe ne correspond pas",
 "Cannot create or update module: You need to specify a name to the module" => "Impossible de créer ou de mettre à jour le module : vous devez spécifier le nom du module",
 "Cannot create or update module: You cannot leave the data field empty" => "Impossible de créer ou de mettre à jour le module : vous ne pouvez pas laisser le champ de données vide",
-=======
 "event without name" => "événement sans nom",
 "Access Denied" => "Accès refusé",
 "First day of week: Sunday (its ID is 0) - translators you need to localize this string!" => "Premier jour de la semaine : lundi (son ID est 1)",
@@ -7248,7 +7246,6 @@ $lang=Array(
 "Tiki RSS feed for forum: " => "Canal de syndication RSS Tiki pour le forum : ",
 "Tiki RSS feed for forums" => "Canal de syndication RSS Tiki pour les forums",
 "Last topics in forums." => "Derniers sujets des forums.",
->>>>>>> 1.233
 "Accepted friendship request from %s" => "Demande d'amitié acceptée de %s",
 "Refused friendship request from %s" => "Demande d'amitié refusée de %s",
 "Broke friendship with %s" => "Casser l'amitié avec %s",
