@@ -1,13 +1,13 @@
 <interface name="default">
 	<Color>
-		<ProgressBarPlay>0xFF8D00</ProgressBarPlay>
+		<ProgressBarPlay>0xFF8D22</ProgressBarPlay>
 		<ProgressBarLoad>0xA7A7A7</ProgressBarLoad>
 		<ProgressBarButton>0xFF0000</ProgressBarButton>
-		<ProgressBar>0xFF0000</ProgressBar>
+		<ProgressBar>0xDD8800</ProgressBar>
 		<VolumeOn>0xFF0000</VolumeOn>
 		<VolumeOff>0xFF0000</VolumeOff>
 		<VolumeButton></VolumeButton>
-		<Button>0xFF0000</Button>
+		<Button>0x666666</Button>
 		<ButtonPressed>0xFF0000</ButtonPressed>
 		<ButtonOver>0xFF0000</ButtonOver>
 		<ButtonInfo>0xFFFF0D</ButtonInfo>
@@ -15,9 +15,9 @@
 		<ButtonInfoOver>0xFF0000</ButtonInfoOver>
 		<ButtonInfoText>0xFF0000</ButtonInfoText>
 		<ID3>0xFF0000</ID3>
-		<PlayTime>0xFF0000</PlayTime>
+		<PlayTime>0x00FF66</PlayTime>
 		<TotalTime>0xFF0000</TotalTime>
-		<PanelDisplay>0xFF0000</PanelDisplay>
+		<PanelDisplay>0x00000</PanelDisplay>
 		<AlertMesg>0xFF66DD</AlertMesg>
 	</Color>
 	<Value>
