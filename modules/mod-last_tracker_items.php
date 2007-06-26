@@ -17,6 +17,7 @@ if ($feature_trackers == 'y') {
 	} else {
 		$status = '';
 	}
+	$modLastItems = array();
 	if (isset($module_params["trackerId"]) && isset($module_params["name"])) {
 		$tmp = $tikilib->list_tracker_items($module_params["trackerId"], 0, $module_rows, 'created_desc', '', $status);
 		foreach ($tmp["data"] as $data) {
@@ -30,14 +31,13 @@ if ($feature_trackers == 'y') {
 			}
 			$data["id"]=$module_params["trackerId"];
 			$data["field_values"]=null;
-		
-			$ranking["data"][] = $data;
+			$modLastItems[] = $data;
 			$data=null;
 		}
 		$tmp=null;
 		$smarty->assign('modlifn', $module_params["name"]);
   		$smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');
-		$smarty->assign('modLastItems', $ranking["data"]);
+		$smarty->assign('modLastItems', $modLastItems);
 	} else {
 		$smarty->assign('module_error', tra('This module requires parameters trackerId and name set'));
     }
