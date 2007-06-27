@@ -81,3 +81,13 @@
 
 <a href="tiki-admin.php?page=textarea" title="{tr}Text area{/tr}" class="link"><img border="0"
    src="img/icons/admin_textarea.png" alt="{tr}Text area{/tr}" /></a>      
+{if $feature_copyright eq 'y'}
+<a href="tiki-admin.php?page=copyright" title="{tr}Copyright{/tr}" class="link"><img border="0"
+   src="pics/large/copyright48x48.png" alt="{tr}Copyright{/tr}" width="32" height="32" /></a>
+{/if}
+{if $feature_multimedia eq 'y'}
+<a href="tiki-admin.php?page=multimedia" title="{tr}Copyright{/tr}" class="link"><img border="0"
+   src="img/icons/multimedia.png" alt="{tr}Multimedia{/tr}"  width="32" height="32" /></a>
+{/if}
+
+
