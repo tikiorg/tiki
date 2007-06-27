@@ -1,5 +1,5 @@
 <?php
-
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.150 2007-06-27 16:04:48 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -117,7 +117,6 @@ class Comments extends TikiLib {
 	{
 
 	    $fhash = '';
-
 	    if ($forum_info['att_store'] == 'dir') {
 		$fhash = md5(uniqid('.'));
 		// Just in case the directory doesn't have the trailing slash
@@ -148,7 +147,9 @@ class Comments extends TikiLib {
 		}
 		fclose ($fp);
 	    } else {
-		fwrite($fw, $data);
+	    	if ($forum_info['att_store'] == 'dir') {
+			fwrite($fw, $data);
+		}
 	    }
 
 	    if ($forum_info['att_store'] == 'dir') {
