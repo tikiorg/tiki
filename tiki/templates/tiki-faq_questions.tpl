@@ -9,7 +9,7 @@
 <input type="hidden" name="questionId" value="{$questionId|escape}" />
 <input type="hidden" name="faqId" value="{$faqId|escape}" />
 
-{* begin table * }
+{* begin table *}
 <table class="normal">
 <tr>
 <td class="formcolor">{tr}Question{/tr}:</td>
@@ -30,14 +30,14 @@
 <td  class="formcolor">&nbsp;</td>
 <td class="formcolor" >
 <input type="submit" name="save" value="{tr}Save{/tr}" />
-{* set your changes and save 'em * }
+{* set your changes and save 'em *}
 </td>
 </tr>
 </table>
-{* end table * }
+{* end table *}
 
 </form>
-{* This is the area for choosing questions from the db... it really should support choosing options from the answers * }
+{* This is the area for choosing questions from the db... it really should support choosing options from the answers *}
 
 <h2> {tr}Use a question from another FAQ{/tr}</h2>
 <form action="tiki-faq_questions.php" method="post">
@@ -56,7 +56,7 @@
 <td class="formcolor" >
 <select name="usequestionId">
 {section name=ix loop=$allq}
-{* Ok, here's where you change the truncation field for this field * }
+{* Ok, here's where you change the truncation field for this field *}
 <option value="{$allq[ix].questionId|escape|truncate:20:"":true}">{$allq[ix].question|escape|truncate:110:"":true}</option>
 {/section}
 </select>
@@ -72,7 +72,7 @@
 </form>
 <br />
 
-{* next big chunk * }
+{* next big chunk *}
 
 <h2>{tr}FAQ questions{/tr}</h2>
 <div  align="center">
