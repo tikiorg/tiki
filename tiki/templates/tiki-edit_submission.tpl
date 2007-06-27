@@ -147,6 +147,9 @@
 {if $tiki_p_use_HTML eq 'y'}
 <div align="center">{tr}Allow HTML{/tr}: <input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/></div>
 {/if}
+
+{include file=freetag.tpl}
+
 <div align="center">
 <input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" />
 <input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" />

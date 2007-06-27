@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.59 2007-03-06 19:29:48 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.60 2007-06-27 19:15:17 sampaioprimo Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,6 +10,10 @@
 require_once ('tiki-setup.php');
 
 include_once ('lib/articles/artlib.php');
+
+if ($feature_freetags == 'y') {
+    include_once('lib/freetag/freetaglib.php');
+}
 
 if ($feature_submissions != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_submissions");
@@ -386,6 +390,7 @@ if (isset($_REQUEST["save"])) {
 	$cat_name = $_REQUEST["title"];
 	$cat_href = "tiki-edit_submission.php?subId=" . $cat_objid;
 	include_once ("categorize.php");
+	include_once ("freetag_apply.php");
 	if ($tiki_p_autoapprove_submission == 'y') {
 		$artlib->approve_submission($subid);
 
@@ -422,6 +427,13 @@ if ($feature_multilingual == 'y') {
 $cat_type = 'submission';
 $cat_objid = $subId;
 include_once ("categorize_list.php");
+
+if ($feature_freetags == 'y') {
+    include_once ("freetag_list.php");
+    if ($_REQUEST["preview"]) {
+	$smarty->assign('taglist',$_REQUEST["freetag_string"]);
+    }
+}
 
 $smarty->assign('publishDateSite', $publishDate);
 $smarty->assign('expireDateSite', $expireDate);
