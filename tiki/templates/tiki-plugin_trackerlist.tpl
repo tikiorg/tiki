@@ -1,4 +1,4 @@
-{* $Id: tiki-plugin_trackerlist.tpl,v 1.26 2007-06-16 16:02:08 sylvieg Exp $ *}
+{* $Id: tiki-plugin_trackerlist.tpl,v 1.27 2007-06-28 19:03:18 sylvieg Exp $ *}
 {if $showtitle eq 'y'}<div class="pagetitle">{$tracker_info.name}</div>{/if}
 {if $showdesc eq 'y'}<div class="wikitext">{$tracker_info.description}</div>{/if}
 
@@ -18,6 +18,7 @@
 {if $checkbox && $items|@count gt 0}<form method="post" action="{$checkbox.action}">{/if}
 
 <table class="normal wikiplugin_trackerlist">
+{if $showfieldname ne 'n'}
 <tr>
 {if $checkbox}<td class="heading">{$checkbox.title}</td>{/if}
 {if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $perms.tiki_p_admin_trackers eq 'y'))}
@@ -56,6 +57,7 @@
 <td class="heading" width="5%">{tr}atts{/tr}</td>
 {/if}
 </tr>
+{/if}
 
 {cycle values="odd,even" print=false}
 {section name=user loop=$items}
