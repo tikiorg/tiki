@@ -1,7 +1,7 @@
 <?php
-// $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/trackeritemfield/wiki-plugins/wikiplugin_trackeritemfield.php,v 1.3 2007-02-10 15:20:20 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/trackeritemfield/wiki-plugins/wikiplugin_trackeritemfield.php,v 1.4 2007-06-28 19:27:52 sylvieg Exp $
 function wikiplugin_trackeritemfield_help() {
-	$help = tra("Displays the value of an tracker item field or the wiki text if test is true (if itemId not specified, the user tracker).").":\n";
+	$help = tra("Displays the value of a tracker item field or the wiki text if the value of the field is set (if itemId not specified, use the itemId of the url or the user tracker).").":\n";
 	$help .= "~np~{TRACKERITEMFIELD(itemId=>1, fieldId=>1, test=>1|0)}".tra('Wiki text')."{TRACKERITEMFIELD}~/np~";
 	return $help;
 }
@@ -10,6 +10,9 @@ function wikiplugin_trackeritemfield($data, $params) {
 	global $trklib; include_once('lib/trackers/trackerlib.php');
 
 	extract ($params, EXTR_SKIP);
+	if (empty($itemId) && !empty($_REQUEST['itemId'])) {
+		$itemId = $_REQUEST['itemId'];
+	}
 	if (empty($itemId) && $userTracker == 'y' && !empty($group) && ($utid = $userlib->get_usertrackerid($group)) && $utid['usersTrackerId']) {
 		$trackerId = $utid['usersTrackerId'];
 		$itemId = $trklib->get_item_id($trackerId, $utid['usersFieldId'], $user);
