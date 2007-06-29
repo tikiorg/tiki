@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.151 2007-06-29 23:19:06 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.152 2007-06-29 23:28:29 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -471,7 +471,6 @@ class Comments extends TikiLib {
 					$this->add_thread_attachment($forum_info, $threadid, '', $part['body'],	$part_name, $part['type'], strlen( $part['body'] ),	1 );
 				} elseif ($part['disposition'] == 'inline') {
 					foreach ($part['parts'] as $p) {
-						echo "<pre>JJJ"; print_r($p);
 						$this->add_thread_attachment($forum_info, $threadid, '', $p['body'], '-', $p['type'], strlen( $p['body'] ),	1 );
 					}
 				}
