@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.150 2007-06-27 16:04:48 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.151 2007-06-29 23:19:06 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -106,8 +106,7 @@ class Comments extends TikiLib {
 	return $this->getOne("select count(*) from `tiki_forum_reads` where `user`=? and `threadId`=?",array($user,$threadId));
     }
 
-    function add_thread_attachment( $forum_info, $threadId, $fp = '', $data = '', $name, $type, $size, $inbound_mail = 0 )
-    {
+    function add_thread_attachment( $forum_info, $threadId, $fp = '', $data = '', $name, $type, $size, $inbound_mail = 0 ) {
 	global $smarty, $tiki_p_admin_forum, $tiki_p_forum_attach;
 
 	// Deal with attachment
@@ -459,25 +458,23 @@ class Comments extends TikiLib {
 	    $this->register_forum_post($forumId,$parentId);
 
 	    // Process attachments
-	    if( array_key_exists( 'parts', $output ) && count( $output['parts'] ) > 1 )
-	    {
-		foreach( $output['parts'] as $part )
-		{
-		    if( array_key_exists( 'disposition', $part ) && $part['disposition'] == "attachment" )
-		    {
-			if( strlen( $part['d_parameters']['filename'] ) > 0 )
-			{
-			    $part_name = $part['d_parameters']['filename'];
-			} else {
-			    $part_name = "Unnamed File";
-			}
-
-			$forum_info = $this->get_forum( $forumId );
-			$this->add_thread_attachment(
-				$forum_info, $threadid, '', $part['body'],
-				$part_name, $part['type'],
-				strlen( $part['body'] ),
-				1 );
+	    if( array_key_exists( 'parts', $output ) && count( $output['parts'] ) > 1 ) {
+		$forum_info = $this->get_forum( $forumId );
+		foreach( $output['parts'] as $part ) {
+		    if (array_key_exists( 'disposition', $part )) {
+				if ($part['disposition'] == 'attachment') {
+					if( strlen( $part['d_parameters']['filename'] ) > 0 ) {
+						$part_name = $part['d_parameters']['filename'];
+					} else {
+						$part_name = "Unnamed File";
+					}
+					$this->add_thread_attachment($forum_info, $threadid, '', $part['body'],	$part_name, $part['type'], strlen( $part['body'] ),	1 );
+				} elseif ($part['disposition'] == 'inline') {
+					foreach ($part['parts'] as $p) {
+						echo "<pre>JJJ"; print_r($p);
+						$this->add_thread_attachment($forum_info, $threadid, '', $p['body'], '-', $p['type'], strlen( $p['body'] ),	1 );
+					}
+				}
 		    }
 		}
 	    }
