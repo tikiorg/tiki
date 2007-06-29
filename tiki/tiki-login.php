@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.78 2007-06-29 12:37:17 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.79 2007-06-29 13:58:05 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.78 2007-06-29 12:37:17 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.79 2007-06-29 13:58:05 sylvieg Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -213,7 +213,7 @@ if ( $isvalid ) {
 		$url = 'tiki-change_password.php?user=' . urlencode($user). '&oldpass=' . urlencode($pass);
 	} elseif ($isEmailDue) {
 		$userlib->send_confirm_email($user);
-		$smarty->assign('msg', tra('To log on this site, your email must be confirmed.').' '.tra('An email has been sent to you with the instructions to follow.'));
+		$smarty->assign('msg', tra('For security purposes; we must periodically validate your email to allow continued access to this site.').' '.tra('A validation email has been sent to you with the instructions to follow.').' '.tra('Thank you.'));
 		$smarty->assign('user', '');
 		unset($user);
 		$smarty->display('information.tpl');
