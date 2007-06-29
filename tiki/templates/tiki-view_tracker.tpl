@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.141 2007-06-20 21:35:58 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.142 2007-06-29 06:36:07 xavidp Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -477,6 +477,7 @@ title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
 {assign var=itemoff value=$itemoff+1}
 {/section}
 </table>
+{if $tiki_p_admin_trackers eq 'y'}
 <div style="text-align:right;">
 <script type='text/javascript'>
 document.write("<input name=\"switcher\" id=\"clickall2\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'action[]',this.checked)\"/><label for=\"clickall2\">{tr}select all{/tr}</label>");
@@ -488,6 +489,7 @@ document.write("<input name=\"switcher\" id=\"clickall2\" type=\"checkbox\" oncl
 <input type="hidden" name="trackerId" value="{$trackerId}" />
 <input type="submit" name="act" value="{tr}ok{/tr}" />
 </div>
+{/if}
 </form>
 {include file="tiki-pagination.tpl"}
 </div>
