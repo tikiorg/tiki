@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.142 2007-06-29 06:36:07 xavidp Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.143 2007-06-29 16:33:41 gillesm Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -304,6 +304,10 @@ document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" oncli
 <img border="0" src="img/icons/na_pict.gif" alt="n/a" />
 {/if}
 
+{elseif $items[user].field_values[ix].type eq 'M'}
+{if $items[user].field_values[ix].value ne ''}
+<img border="0" src="img/icons/multimedia.png"  width=20 height=20 alt="Flash multimedia content" />
+{/if}
 {elseif $items[user].field_values[ix].type eq 'm'}
 {$items[user].field_values[ix].value|default:"&nbsp;"}
 
@@ -608,6 +612,14 @@ document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall
 {* -------------------- image -------------------- *}
 {elseif $fields[ix].type eq 'i'}
 <input type="file" name="{$fields[ix].ins_id}" {if $input_err}value="{$fields[ix].value}"{/if}/>
+
+{* -------------------- multimedia -------------------- *}
+{elseif $fields[ix].type eq 'M'}
+{if ($fields[ix].options_array[0] > '2')}
+<input type="file" name="{$fields[ix].ins_id}" /><br />
+{else}
+<input type="text" name="{$fields[ix].ins_id}" value="{$fields[ix].value}" /><br />
+{/if}
 
 {* -------------------- text field / email -------------------- *}
 {elseif $fields[ix].type eq 't' || $fields[ix].type eq 'm'}

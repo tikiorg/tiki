@@ -1,11 +1,13 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.202 2007-06-16 16:01:58 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.203 2007-06-29 16:33:41 gillesm Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
+
+					
 class TrackerLib extends TikiLib {
 
 	var $trackerinfo_cache;
@@ -831,6 +833,34 @@ class TrackerLib extends TikiLib {
 						continue;
 					}
 				}
+			if ( $ins_fields["data"][$i]["type"] == 'M' && $ins_fields["data"][$i]["options_array"][0] >= '3' && isset($ins_fields["data"][$i]['value'])) {
+					$itId = $itemId ? $itemId : $new_itemId;
+					$old_file = $this->get_item_value($trackerId, $itemId, $ins_fields["data"][$i]['fieldId']);
+					if($ins_fields["data"][$i]["value"] == 'blank') {
+						if(file_exists($old_file)) {
+							unlink($old_file);
+						}
+						$ins_fields["data"][$i]["value"] = '';
+					} else if( $ins_fields["data"][$i]['value'] != '' ) {
+						$opts = split(',', $ins_fields['data'][$i]["options"]);
+						global $filegallib; include_once ("lib/filegals/filegallib.php");
+						$fileGalId=$filegallib->insert_file(4,$ins_fields["data"][$i]["file_name"] ,$ins_fields["data"][$i]["file_name"] , $ins_fields["data"][$i]["file_name"] ,$ins_fields["data"][$i]["value"] ,$ins_fields["data"][$i]["file_size"] ,$ins_fields["data"][$i]["file_type"] , "system",time() , '', "system", $created='', $lockedby=NULL) ; 
+
+ 						if (!$fileId) {
+							$errors[] = tra('Upload was not successful. Duplicate file content ?'). ': ' . $name;
+// 						if (($fgal_use_db == 'n') || ($podCastGallery)) {
+// 							@unlink($savedir . $fhash);
+// 						}
+						global $URLAppend ;
+print "cool $fileGalId";
+// 						if ( $URLAppend == "" ) { }
+						$ins_fields["data"][$i]["value"]="$fileGalId";
+					
+					}
+					     }
+					
+					}
+				
 				// ---------------------------
                 if (isset($ins_fields["data"][$i]["fieldId"]))
 				   $fieldId = $ins_fields["data"][$i]["fieldId"];
@@ -1261,6 +1291,7 @@ class TrackerLib extends TikiLib {
 		foreach($ins_fields['data'] as $f) {
 
 			if (isset($f['isMandatory']) && $f['isMandatory'] == 'y') {
+			
 				if (isset($f['type']) &&  $f['type'] == 'e') {
 					if (!in_array($f['fieldId'], $categorized_fields))
 						$mandatory_fields[] = $f;
@@ -1303,6 +1334,34 @@ class TrackerLib extends TikiLib {
 						$erroneous_values[] = $f;
 					}
 					break;
+				//multimedia
+				case 'M':
+				global $URLAppend;
+				if ( empty($f['options_array'][0]) 
+					||$f['options_array'][0] == '0' || $f['options_array'][0] == '2' ) {
+					//MP3 file in gallery expected 
+					  $file=$URLAppend.$f['value'];
+					  list($rest1,$idfilegal)=split('=',$file);
+					  include_once ('lib/filegals/filegallib.php');
+					  $info = $filegallib->get_file_info($idfilegal);
+					  $filetype = $info['filetype'];
+					  if ( $filetype != "audio/x-mp3" ) {
+					$f['error'] = tra('field is not a link to mp3');
+					$erroneous_values[] = $f; 				
+					  }
+					}
+				elseif ($f['options_array'][0] == '1' || $f['options_array'][0] == '2' ) {
+					// FLV file in gallery expected 
+					  $file=$URLAppend.$f['value'] ;
+					  list($rest1,$idfilegal)=split('=',$file);
+					  include_once ('lib/filegals/filegallib.php');
+					  $info = $filegallib->get_file_info($idfilegal);
+					  $filetype = $info['filetype'];
+					  if ( $filetype != "application/octet-stream" ) {
+				   	   $f['error'] = tra('field is not a link to FLV');
+					   $erroneous_values[] = $f; 				
+					  }
+					}
 				}
 			}
 		}
@@ -1789,6 +1848,10 @@ class TrackerLib extends TikiLib {
 			'label'=>tra('email'),
 			'opt'=>true,
 			'help'=>tra('Email address options: 0|1|2 where 0 puts the address as plain text, 1 does a hex encoded mailto link (more difficult for web spiders to pick it up and spam) and 2 does the normal href mailto.') );
+		$type['M'] = array(
+			'label'=>tra('multimedia'),
+			'opt'=>true,
+			'help'=>tra(' 0|1|2|3|4|5 0,xsize,ysize. First record :0 for URL in file gal of MP3 only, 1 for URL of FLV in file gal video only , 2 for URL of MP3 or Video in file gal, 3 donwload MP3 only, 4 donwload FLV video only, 5 download FLV or MP3 (default is 0). Second record : X size of flash applet(default is 200) , Y size of flash applet (default is 100) ' ));
 		$type['q'] = array(
 			'label'=>tra('auto-increment'),
 			'opt'=>false,

@@ -12,7 +12,8 @@
     {tr}{$crumbs[$crumb]->description}{/tr}
     {help crumb=$crumbs[$crumb]}
   </div>
-<object CLASSID="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0" WIDTH="200" HEIGHT="100"><PARAM NAME="movie" VALUE="tikimovies/multiplayer.swf"><PARAM NAME="quality" VALUE="high"><PARAM NAME="wmode" VALUE="transparent"><embed src="tikimovies/multiplayer.swf" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="200" height="100" wmode="transparent"></embed></object><br />
+
+{include file=multiplayer.tpl url="" w=200 h=100}
 	
       <form action="tiki-admin.php?page=multimedia" method="post">
         <table class="admin">
@@ -31,7 +32,7 @@
 	<td class="form">{tr}Volume Off Color{/tr}:</td><td class="form"><input type="text" name="VolumeOff" value="{$VolumeOff|escape}" size=7/><span style="height:8px;width:30px;background-color:{$VolumeOff};">&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
 	</tr>
    	<tr>
-	<td class="form">{tr}Volume Button Color{/tr}:</td><td class="form"><input type="text" name="ButtonPressed" value="{$ButtonPressed|escape}" size=7/><span style="height:8px;width:30px;background-color:{$ButtonPressed};">&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+	<td class="form">{tr}Volume Button Color{/tr}:</td><td class="form"><input type="text" name="VolumeButton" value="{$VolumeButton|escape}" size=7/><span style="height:8px;width:30px;background-color:{$VolumeButton};">&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
 	<td class="form">{tr}Button Color{/tr}:</td><td class="form"><input type="text" name="Button" value="{$Button|escape}" size=7/><span style="height:8px;width:30px;background-color:{$Button};">&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
 	</tr>
    	<tr>
@@ -73,6 +74,9 @@
    	<tr>
 	<td  class="form">{tr}Message after limited time{/tr}:</td><td class="form"><input type="text" name="LimitedMsg" value="{$LimitedMsg|escape}" size="25"/></td>
 	</tr>
+	<td  class="form">{tr}ID of System File Galleries to upload multimedia files{/tr}:</td><td class="form"><input type="text" name="MultimediaGalerie" value="{$MultimediaGalerie|escape}" size="4"/></td>
+	</tr>
+        
         <td colspan="4" class="button"><input type="submit" name="multimediasetup" value="{tr}Save{/tr}" /></td>
 	 	  
         </tr>

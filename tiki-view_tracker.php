@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.130 2007-06-16 16:01:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.131 2007-06-29 16:33:41 gillesm Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -438,8 +438,21 @@ for ($i = 0; $i < $temp_max; $i++) {
 				
 				if (isset($fields["data"][$i]["options_array"][3]))
 									       $fields["data"][$i]["listdisplay"] =$trklib->concat_all_items_from_fieldslist($fields["data"][$i]["options_array"][0],$fields["data"][$i]["options_array"][3]);
-				
-				
+			}	
+			elseif (($fields["data"][$i]["type"] == 'M') && ($fields["data"][$i]["options_array"][0] >= '3' ) )	{
+				if (isset($_FILES["$ins_id"]) &&  is_uploaded_file($_FILES["$ins_id"]['tmp_name'])) {	
+					$fp = fopen( $_FILES["$ins_id"]['tmp_name'], 'rb' );
+					$data = '';
+					while (!feof($fp)) {
+						$data .= fread($fp, 8192 * 16);
+					}
+					fclose ($fp);
+					$ins_fields["data"][$i]["value"] = $data;					
+					$ins_fields["data"][$i]["file_type"] = $_FILES["$ins_id"]['type'];
+					$ins_fields["data"][$i]["file_size"] = $_FILES["$ins_id"]['size'];
+					$ins_fields["data"][$i]["file_name"] = $_FILES["$ins_id"]['name'];
+				}
+
 			} elseif ($fields["data"][$i]["type"] == 'i')	{ // image
 				if (isset($_FILES["$ins_id"]) && is_uploaded_file($_FILES["$ins_id"]['tmp_name'])) {
 					if (!empty($gal_match_regex)) {

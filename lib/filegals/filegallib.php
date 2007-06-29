@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.72 2007-06-05 14:44:43 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.73 2007-06-29 16:33:41 gillesm Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -102,6 +102,7 @@ class FileGalLib extends TikiLib {
 		$query = "select max(`fileId`) from `tiki_files` where `created`=?";
 		$fileId = $this->getOne($query,array((int) $created));
 
+print "héhé $fileId";
 		global $feature_score;
 		if ($feature_score == 'y') {
 		    $this->score_event($user, 'fgallery_new_file');
