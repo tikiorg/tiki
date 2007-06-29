@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.73 2007-06-29 16:33:41 gillesm Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.74 2007-06-29 21:53:34 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -95,14 +95,12 @@ class FileGalLib extends TikiLib {
 		
 		$query = "insert into `tiki_files`(`galleryId`,`name`,`description`,`filename`,`filesize`,`filetype`,`data`,`user`,`created`,`downloads`,`path`,`hash`,`search_data`,`lastModif`,`lastModifUser`, `comment`, `author`, `lockedby`)
                           values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		$result =
-		$this->query($query,array($galleryId,$name,$description,$filename,$size,$type,$data,$creator,$created,0,$path,$checksum,$search_data,(int)$this->now,$user,$comment, $author, $lockedby));
+		$result = $this->query($query,array($galleryId,trim($name),$description,$filename,$size,$type,$data,$creator,$created,0,$path,$checksum,$search_data,(int)$this->now,$user,$comment, $author, $lockedby));
 		$query = "update `tiki_file_galleries` set `lastModif`=? where `galleryId`=?";
 		$result = $this->query($query,array((int) $this->now,$galleryId));
 		$query = "select max(`fileId`) from `tiki_files` where `created`=?";
 		$fileId = $this->getOne($query,array((int) $created));
 
-print "héhé $fileId";
 		global $feature_score;
 		if ($feature_score == 'y') {
 		    $this->score_event($user, 'fgallery_new_file');
@@ -315,7 +313,7 @@ print "héhé $fileId";
 	}
 
 	function replace_file_gallery($galleryId, $name, $description, $user, $maxRows, $public, $visible = 'y', $show_id, $show_icon,
-								  $show_name, $show_size, $show_description, $show_created, $show_dl, $max_desc, $fgal_type='default', $parentId=-1, $lockable='n', $show_lockedby='y', $archives=-1, $sort_mode='', $show_modified='n', $show_creator='y', $show_author='n', $subgal_conf='') {
+								  $show_name, $show_size, $show_description, $show_created, $show_dl, $max_desc, $fgal_type='default', $parentId=-1, $lockable='n', $show_lockedby='y', $archives=-1, $sort_mode='', $show_modified='n', $show_creator='y', $show_author='n', $subgal_conf='', $fileTracker) {
 		// if the user is admin or the user is the same user and the gallery exists then replace if not then
 		// create the gallary if the name is unused.
 		$name = strip_tags($name);
@@ -327,7 +325,7 @@ print "héhé $fileId";
 
 		if ($galleryId > 0) {
 			$query = "update `tiki_file_galleries` set `name`=?, `maxRows`=?, `description`=?,`lastModif`=?, `public`=?, `visible`=?,`show_icon`=?,`show_id`=?,`show_name`=?,`show_description`=?,`show_size`=?,`show_created`=?,`show_dl`=?,`max_desc`=?,`type`=?,`parentId`=?,`user`=?,`lockable`=?,`show_lockedby`=?, `archives`=?, `sort_mode`=?, `show_modified`=?, `show_creator`=?, `show_author`=?, `subgal_conf`=? where `galleryId`=?";
-			$bindvars=array($name,(int) $maxRows,$description,(int) $this->now,$public,$visible,$show_icon,$show_id,$show_name,$show_description,$show_size,$show_created,$show_dl,(int) $max_desc, $fgal_type, $parentId, $user, $lockable, $show_lockedby, $archives, $sort_mode, $show_modified, $show_creator, $show_author,$subgal_conf,(int)$galleryId);
+			$bindvars=array(trim($name),(int) $maxRows,$description,(int) $this->now,$public,$visible,$show_icon,$show_id,$show_name,$show_description,$show_size,$show_created,$show_dl,(int) $max_desc, $fgal_type, $parentId, $user, $lockable, $show_lockedby, $archives, $sort_mode, $show_modified, $show_creator, $show_author,$subgal_conf,(int)$galleryId);
 
 			$result = $this->query($query,$bindvars);
 
@@ -520,7 +518,7 @@ print "héhé $fileId";
 
 		if ($gal_info['archives'] == -1 || !$didFileReplace) { // no archive
 			$query = "update `tiki_files` set `name`=?, `description`=?, `filename`=?, `filesize`=?, `filetype`=?, `data`=?, `lastModifUser`=?, `lastModif`=?, `path`=?, `hash`=?, `search_data`=?, `author`=?, `user`=?, `lockedby`=?  where `fileId`=?";
-			if (!($result = $this->query($query,array($name,$description,$filename,$size,$type,$data,$user,(int)$this->now,$path,$checksum,$search_data,$author,$creator,$lockedby, $id))))
+			if (!($result = $this->query($query,array(trim($name),$description,$filename,$size,$type,$data,$user,(int)$this->now,$path,$checksum,$search_data,$author,$creator,$lockedby, $id))))
 				return false;
 			
 			if ($didFileReplace && !empty($oldPath)) {
