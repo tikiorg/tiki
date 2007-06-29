@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.203 2007-06-29 16:33:41 gillesm Exp $
+// CVS: $Id: trackerlib.php,v 1.204 2007-06-29 16:51:41 gillesm Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -852,7 +852,6 @@ class TrackerLib extends TikiLib {
 // 							@unlink($savedir . $fhash);
 // 						}
 						global $URLAppend ;
-print "cool $fileGalId";
 // 						if ( $URLAppend == "" ) { }
 						$ins_fields["data"][$i]["value"]="$fileGalId";
 					
