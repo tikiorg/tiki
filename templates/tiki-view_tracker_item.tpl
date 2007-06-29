@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.135 2007-06-29 16:33:41 gillesm Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.136 2007-06-29 16:51:42 gillesm Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
@@ -476,6 +476,10 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 <input type="file" name="ins_{$cur_field.id}" value="{$cur_field.value}" /><br />
 {else}
 <input type="text" name="ins_{$cur_field.id}" value="{$cur_field.value}" /><br />
+{if $cur_field.value ne ''}
+{include file=multiplayer.tpl url="$cur_field.value" w=200 h=100}
+<a href="tiki-view_tracker_item.php?trackerId={$trackerId}&itemId={$itemId}&fieldId={$cur_field.id}&fieldName={$cur_field.name}&removeMultimedia">{tr}remove multimedia{/tr}</a>
+{/if}
 {/if}
 
 {elseif $cur_field.type eq 'U'}
