@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.6 2007-06-20 13:54:04 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.7 2007-06-29 16:33:41 gillesm Exp $ *}
 {strip}
 {* param: list_mode(y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain), item *}
 
@@ -58,6 +58,19 @@
 	{else}
 		<img border="0" src="img/icons/na_pict.gif" alt="n/a" />
 	{/if}
+
+{* -------------------- Multimedia -------------------- *}
+{elseif $field_value.type eq 'M'}
+	
+	{if $fied_value.options_array[0] > '2'}
+	  {assign URL="tiki-list_file_gallery.php?galleryId=4"}
+	{else}
+	   {assign URL=$URLAppend}.$field_value.value}
+	{/if}
+	{if $field_value.value ne ''}
+		<object CLASSID="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0" WIDTH="200" HEIGHT="100""><PARAM NAME="movie" VALUE="tikimovies/multiplayer.swf"><PARAM NAME="quality" VALUE="high"><PARAM NAME="wmode" VALUE="transparent"><embed src="tikimovies/multiplayer.swf?URL={$URL}" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="200" height="100" wmode="transparent"></embed></object><br />
+	{/if}
+
 
 {* -------------------- textarea -------------------- *}
 {elseif $field_value.type eq 'a'}

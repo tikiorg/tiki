@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.55 2007-05-13 21:51:43 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.56 2007-06-29 16:33:41 gillesm Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -262,8 +262,7 @@ if (isset($_REQUEST["upload"]) && !empty($_REQUEST['galleryId'])) {
 					$fileId = $filegallib->replace_file($editFileId, $_REQUEST["name"], $_REQUEST["description"], $name, $data, $size, $type, $_REQUEST['user'], $fhash, $_REQUEST['comment'], $gal_info, $didFileReplace, $_REQUEST['author'], $fileInfo['lastModif'], $lockedby);
 				}
 				else
-				  $fileId	= $filegallib->insert_file($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $name, $data, $size, $type, $_REQUEST['user'], $fhash, '', $_REQUEST['author']);
-
+				  $fileId= $filegallib->insert_file($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $name, $data, $size, $type, $_REQUEST['user'], $fhash, '', $_REQUEST['author']);
 				if (!$fileId) {
 					$errors[] = tra('Upload was not successful. Duplicate file content'). ': ' . $name;
 					if (($fgal_use_db == 'n') || ($podCastGallery)) {

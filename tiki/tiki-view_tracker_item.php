@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.127 2007-06-20 18:38:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.128 2007-06-29 16:33:41 gillesm Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -467,6 +467,23 @@ foreach($xfields["data"] as $i=>$array) {
 				$fields["data"][$i]["value"] = '';
 			}
 
+
+			if (($fields["data"][$i]["type"] == 'M') && ($fields["data"][$i]["options_array"][0] >= '3' ) )	{
+
+				if (isset($_FILES["$ins_id"]) && is_uploaded_file($_FILES["$ins_id"]['tmp_name'])) {	
+					$fp = fopen( $_FILES["$ins_id"]['tmp_name'], 'rb' );
+					$data = '';
+					while (!feof($fp)) {
+						$data .= fread($fp, 8192 * 16);
+					}
+					fclose ($fp);
+					$ins_fields["data"][$i]["value"] = $data;					
+					$ins_fields["data"][$i]["file_type"] = $_FILES["$ins_id"]['type'];
+					$ins_fields["data"][$i]["file_size"] = $_FILES["$ins_id"]['size'];
+					$ins_fields["data"][$i]["file_name"] = $_FILES["$ins_id"]['name'];
+				}
+			}
+		
 			if ($fields["data"][$i]["type"] == 'i')	{
 				if (isset($_FILES["$ins_id"]) && is_uploaded_file($_FILES["$ins_id"]['tmp_name'])) {					
 					if (!empty($gal_match_regex)) {
@@ -843,6 +860,8 @@ if ($_REQUEST["itemId"]) {
 				} else {
 					$ins_fields["data"][$i]["value"] = $info["$fid"];
 				}
+
+
 				if ($fields['data'][$i]['type'] == 'i' && !empty($ins_fields["data"][$i]['options_array'][2]) && !empty($ins_fields['data'][$i]['value'])) {
 					global $imagegallib; include_once('lib/imagegals/imagegallib.php');
 					if ($imagegallib->readimagefromfile($ins_fields['data'][$i]['value'])) {

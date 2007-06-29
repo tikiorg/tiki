@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.124 2007-06-22 20:52:13 gillesm Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.125 2007-06-29 16:33:40 gillesm Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -253,8 +253,8 @@ if (isset($_REQUEST["page"])) {
 		$helpUrl = "Text area";
 		include_once ('tiki-admin_include_textarea.php');
 	} else if ($adminPage == "multimedia") {
-		$admintitle = "Multimedia";//get_strings tra("Text area")
-		$description = "Multimedia";//get_strings tra("Text area")
+		$admintitle = "Multimedia";//get_strings tra("Multimedia")
+		$description = "Multimedia";//get_strings tra("Multimedia")
 		$helpUrl = "Multimedia";
 		include_once ('tiki-admin_include_multimedia.php');
 	}

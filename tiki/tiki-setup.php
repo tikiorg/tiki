@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.449 2007-06-26 21:00:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.450 2007-06-29 16:33:41 gillesm Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -572,7 +572,7 @@ $pref['gal_image_mouseover'] = 'n';
 	$pref['URLAppend']="";
 	$pref['LimitedMsg']="You are limited to 1 minute";
 	$pref['MaxPlay']=60;
-	
+	$pref['MultimediaGalerie']=1;
 
 # spellcheck
 if (file_exists('lib/bablotron.php')) {

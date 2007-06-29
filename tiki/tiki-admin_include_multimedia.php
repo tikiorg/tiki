@@ -16,8 +16,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
     $pref_toggles_Colors = array('ProgressBarPlay','ProgressBarLoad','ProgressBarButton','ProgressBar','VolumeOn','VolumeOff','VolumeButton',
 	'Button','ButtonPressed','ButtonOver','ButtonInfo','ButtonInfoPressed','ButtonInfoOver','ButtonInfoText','ID3','PlayTime',
 	'TotalTime','PanelDisplay','AlertMesg');
-    $pref_toggles_Values = array('PreloadDelay','VideoHeight','VideoLength','URLAppend','LimitedMsg',
-	'MaxPlay');
+    $pref_toggles_Values = array('PreloadDelay','VideoHeight','VideoLength','MaxPlay');
+    $pref_toggles_Text = array('URLAppend','LimitedMsg');
+    $pref_toggles_System = array('MultimediaGalerie');	
 
 
    
@@ -26,25 +27,45 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
    fwrite ( $xmlmm,'	<Color>'."\n");
 
    foreach ($pref_toggles_Colors as $toggle) {
-	$value=${$toggle};
-	$hexavalue=str_replace("#","0x",$value);
 	if (!isset($_REQUEST[$toggle])) $_REQUEST[$toggle] = ${$toggle};
-      $tikilib->set_preference($toggle,  $_REQUEST[$toggle]);
-      $smarty->assign($toggle, $_REQUEST[$toggle]);
-     fwrite ( $xmlmm,"		<$toggle>$hexavalue</$toggle>"."\n");
+        $tikilib->set_preference($toggle,  $_REQUEST[$toggle]);
+// 	$value=${$toggle};
+	$hexavalue=str_replace("#","0x",$_REQUEST[$toggle]);
+	fwrite ( $xmlmm,"		<$toggle>$hexavalue</$toggle>"."\n");
+	
+        $smarty->assign($toggle, $_REQUEST[$toggle]);
 }
     fwrite ( $xmlmm,'	</Color>'."\n");
     fwrite ( $xmlmm,'	<Value>'."\n");
 
-   foreach ($pref_toggles_Values as $toggle) {
+    foreach ($pref_toggles_Values as $toggle) {
 	if (!isset($_REQUEST[$toggle])) $_REQUEST[$toggle] = ${$toggle};
       $tikilib->set_preference($toggle,  $_REQUEST[$toggle]);
       $smarty->assign($toggle, $_REQUEST[$toggle]);
       if ( ${$toggle} ) fwrite ( $xmlmm,"		<$toggle>${$toggle}</$toggle>"."\n");
 }
     fwrite ( $xmlmm,'	</Value>'."\n");
-    fwrite ( $xmlmm,'</interface>'."\n");
 
+    fwrite ( $xmlmm,'	<Text>'."\n");
+
+    foreach ($pref_toggles_Text as $toggle) {
+	if (!isset($_REQUEST[$toggle])) $_REQUEST[$toggle] = ${$toggle};
+      $tikilib->set_preference($toggle,  $_REQUEST[$toggle]);
+      $smarty->assign($toggle, $_REQUEST[$toggle]);
+      if ( ${$toggle} ) fwrite ( $xmlmm,"		<$toggle>${$toggle}</$toggle>"."\n");
+}
+    fwrite ( $xmlmm,'	</Text>'."\n");
+    
+
+
+    fwrite ( $xmlmm,'</interface>'."\n");
+    flush($xmlmm);
     fclose ($xmlmm);
+ 
+    foreach ($pref_toggles_System as $toggle) {
+      if (!isset($_REQUEST[$toggle])) $_REQUEST[$toggle] = ${$toggle};
+      $tikilib->set_preference($toggle,  $_REQUEST[$toggle]);
+      $smarty->assign($toggle, $_REQUEST[$toggle]);
+}
 
 ?>
