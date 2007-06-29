@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.77 2007-06-01 13:56:01 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.78 2007-06-29 12:37:17 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.77 2007-06-01 13:56:01 nyloth Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.78 2007-06-29 12:37:17 sylvieg Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -256,7 +256,7 @@ if ( $isvalid ) {
 				if ( isset($_REQUEST['rme']) && $_REQUEST['rme'] == 'on' ) {
 					$hash = $userlib->create_user_cookie($_REQUEST['user']);
 					$time = substr($hash,strpos($hash,'.')+1);
-					setcookie($user_cookie_site, $hash, $time, $cookie_path, $cookie_domain);
+					setcookie($user_cookie_site, $hash.'.'.$user, $time, $cookie_path, $cookie_domain);
 					$logslib->add_log('login',"got a cookie for $remembertime seconds");
 				}
 			}
