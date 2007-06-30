@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/categorize_list.php,v 1.25 2007-06-16 16:01:41 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/categorize_list.php,v 1.26 2007-06-30 12:13:50 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -31,6 +31,7 @@ if ($feature_categories == 'y') {
 		$smarty->assign('mandatory_category', $$pref);
 	} else
 		$all_categories = $categlib->list_categs();
+	$categories = array();
 	for ($i = 0; $i < count($all_categories); $i++) {
 		if($userlib->user_has_perm_on_object($user,$all_categories[$i]['categId'],'category','tiki_p_view_categories')) {
 			$categories[] = $all_categories[$i];
