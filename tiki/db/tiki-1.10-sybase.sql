@@ -2,8 +2,8 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2007-05-26 11:18:53 $
--- $Author: sylvieg $
+-- $Date: 2007-07-01 16:56:02 $
+-- $Author: mose $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -1720,6 +1720,7 @@ CREATE TABLE "tiki_file_galleries" (
   "show_modified" char(1) default NULL NULL,
   "show_author" char(1) default NULL NULL,
   "show_creator" char(1) default NULL NULL,
+  "subgal_conf" varchar(200) default NULL NULL,
   PRIMARY KEY ("galleryId")
 )   
 go
@@ -2683,6 +2684,7 @@ CREATE TABLE "tiki_menu_options" (
   "section" varchar(255) default NULL NULL,
   "perm" varchar(255) default NULL NULL,
   "groupname" varchar(255) default NULL NULL,
+  "userlevel" numeric(4,0) default 0,
   PRIMARY KEY ("optionId")
 )   
 go
@@ -2885,7 +2887,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Structures','tiki-admin_structures.php',250,'feature_wiki','tiki_p_edit_structures','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Structures','tiki-admin_structures.php',250,'feature_wiki','tiki_p_view','')
 go
 
 
@@ -3040,11 +3042,11 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','List galleries','tiki-file_galleries.php',605,'feature_file_galleries','tiki_p_view_file_gallery','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','List galleries','tiki-file_galleries.php',605,'feature_file_galleries','tiki_p_list_file_galleries','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Rankings','tiki-file_galleries_rankings.php',610,'feature_file_galleries,feature_file_galleries_rankings','tiki_p_view_file_gallery','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Rankings','tiki-file_galleries_rankings.php',610,'feature_file_galleries,feature_file_galleries_rankings','tiki_p_list_file_galleries','')
 go
 
 
@@ -3113,11 +3115,11 @@ go
 
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Trackers','tiki-list_trackers.php',800,'feature_trackers','tiki_p_view_trackers','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Trackers','tiki-list_trackers.php',800,'feature_trackers','tiki_p_list_trackers','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','List trackers','tiki-list_trackers.php',805,'feature_trackers','tiki_p_view_trackers','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','List trackers','tiki-list_trackers.php',805,'feature_trackers','tiki_p_list_trackers','')
 go
 
 
@@ -3255,6 +3257,10 @@ go
 
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_contribution','')
+go
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_users','')
 go
 
 
@@ -3567,7 +3573,7 @@ CREATE TABLE "tiki_modules" (
   "rows" numeric(4,0) default NULL NULL,
   "params" varchar(255) default NULL NULL,
   "groups" text default '',
-  PRIMARY KEY ("name")
+  PRIMARY KEY ("name","position","ord")
 ) 
 go
 
@@ -3663,6 +3669,7 @@ CREATE TABLE "tiki_newsletters" (
   "unsubMsg" char(1) default 'y',
   "validateAddr" char(1) default 'y',
   "frequency" numeric(14,0) default NULL NULL,
+  "author" varchar(200) default NULL NULL,
   PRIMARY KEY ("nlId")
 )   
 go
@@ -5949,7 +5956,7 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") V
 go
 
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_categories', 'Can admin categories', 'editors', 'tiki', 'y')
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_categories', 'Can admin categories', 'editors', 'category', 'y')
 go
 
 
@@ -6182,6 +6189,10 @@ go
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_article', 'Can edit articles', 'editors', 'cms')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_categories', 'Can edit items in categories', 'registered', 'category')
 go
 
 
@@ -6513,7 +6524,7 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_categories', 'Can browse categories', 'basic', 'tiki')
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_categories', 'Can browse categories', 'basic', 'category')
 go
 
 
@@ -6674,6 +6685,10 @@ go
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_tell_a_friend', 'Can send a link to a friend', 'Basic', 'tiki')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_list_file_galleries', 'Can list file galleries', 'basic', 'file galleries')
 go
 
 

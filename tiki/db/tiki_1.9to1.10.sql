@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.168 2007-06-19 15:12:31 jyhem Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.169 2007-07-01 16:56:02 mose Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -952,4 +952,7 @@ alter table tiki_menu_options add userlevel int(4) default 0 after groupname;
 
 #Jyhem 2007-06-19
 DELETE FROM `users_permissions` WHERE permName='tiki_p_batch_upload_files_dir';
+
+#mose because tomtom is just a lazy guy 01 07 07 
+ALTER TABLE `tiki_newsletters` ADD `author` varchar(200) default NULL;
 
