@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-06-16 16:01:48 $
-# $Author: sylvieg $
+# $Date: 2007-07-01 16:56:02 $
+# $Author: mose $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -2402,6 +2402,7 @@ CREATE TABLE tiki_newsletters (
   unsubMsg char(1) default 'y',
   validateAddr char(1) default 'y',
   frequency int(14) default NULL,
+	author varchar(200) default NULL,
   PRIMARY KEY  (nlId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
