@@ -55,6 +55,7 @@ a:hover {
 	font-size: 11px;
 	background: #ddd;
 }
+.post .postbody .content { margin: 0; }
 #tiki-left {
 	position: absolute;
 	width: 150px;
