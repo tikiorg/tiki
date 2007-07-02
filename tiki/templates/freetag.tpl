@@ -1,4 +1,4 @@
-{if $feature_freetags eq 'y'}
+{if $feature_freetags eq 'y' && $tiki_p_freetags_tag eq 'y'}
 
 <script type="text/javascript">
 {literal}
