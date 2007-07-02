@@ -11,7 +11,7 @@
 {if $confirm eq 'y'}
 <table class="normal">
 <tr>
-  <td colspan="2" class="heading">{tr}Subscription confirmed!{/tr}</td>
+  <td colspan="2" class="heading highlight">{tr}Subscription confirmed!{/tr}</td>
 </tr>
 <tr>
   <td class="even">{tr}Name{/tr}:</td>
