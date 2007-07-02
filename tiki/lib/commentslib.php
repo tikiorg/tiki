@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.153 2007-07-02 15:15:51 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.154 2007-07-02 20:53:19 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1205,10 +1205,10 @@ class Comments extends TikiLib {
 	    $res['user_posts'] = $res2['posts'];
 	    $res['user_level'] = $res2['level'];
 
-	    if ($this->get_user_preference($res['userName'], 'email is public', 'n') == 'y') {
-		$res['user_email'] = $this->getOne("select `email` from
-			`users_users` where `login`=?",
-			array( $res['userName'] ) );
+	    // 'email is public' never has 'y' value, because it is now used to choose the email scrambling method
+	    // ... so, we need to test if it's not equal to 'n'
+	    if ($this->get_user_preference($res['userName'], 'email is public', 'n') != 'n') {
+		$res['user_email'] = $this->getOne("select `email` from `users_users` where `login`=?", array( $res['userName'] ) );
 	    } else {
 		$res['user_email'] = '';
 	    }
