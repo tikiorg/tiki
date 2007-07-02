@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.152 2007-06-29 23:28:29 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.153 2007-07-02 15:15:51 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1922,7 +1922,7 @@ class Comments extends TikiLib {
 		    array( $object[0], (string) $object[1],(int) $this->now, $userName,
 			$title, $data, $hash, (int) $parentId, $type,
 			$summary, $smiley, $_SERVER["REMOTE_ADDR"],
-			$message_id, $in_reply_to)
+			$message_id, (string) $in_reply_to)
 		    );
 	}
 
