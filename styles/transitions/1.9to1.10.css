@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/transitions/1.9to1.10.css,v 1.10 2007-06-07 12:58:25 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/transitions/1.9to1.10.css,v 1.11 2007-07-02 20:53:20 nyloth Exp $
 
 The following CSS classes were added to Tiki between v1.9 and v1.10
 They should be added to themes (possibly with tweaks) to make the theme v1.10 ready
@@ -51,3 +51,126 @@ div#ajaxLoading {
 .highlight_word_3{color:black;background-color: #ff66ff;}
 .highlight_word_4{color:black;background-color: #99ff99;}
 .navbar{margin: 10px 0;}
+
+/* Forums */
+.post .postbody {
+	clear: both;
+	width: 100%;
+	border-top: solid 1px gray;
+	border-bottom: solid 1px #E7EAED;
+	border-left: solid 1px #E7EAED;
+	border-right: solid 1px #E7EAED;
+	margin: 0;
+	margin-top: 5px;
+	padding: 3px 0px 3px 0px;
+	background-color: #F9FCFF;
+}
+.post .postbody-title {
+	display: block;
+	background-color: #E0EAF4; 
+	border-bottom: 1px solid #ACCCDD;
+	margin-bottom: 4px;
+	height: 100%;
+	overflow: auto;
+	padding-top: 2px;
+}
+.post .postbody-title .checkbox { float: left; }
+.post .postbody-title .title {
+	float: left;
+	color: #29677B;
+	font-weight: bold;
+	font-size: 12px;
+	margin-left: 5px;
+	margin-top: 3px;
+}
+.post .author {	
+	text-align: right;
+	vertical-align: top;
+}
+.post .author_post_info {
+	display: block;
+	background-color: #E0EAF4;
+	padding: 0 2px 2px 2px;
+}
+.post .author_actions { display: block; }
+.post .author_post_info_on { font-style: italic; }
+.post .author_info {
+	float: right;
+	background-color: #F0F8FF;
+	padding: 0 2px 2px 2px;
+	margin-left: 5px;
+	border-left: 1px solid #D7E5F3;
+	border-bottom: 1px solid #D7E5F3;
+}
+.commentStyle_headers .author_info { float: left; }
+.post .postbody-title .actions { float: right; }
+.post .postbody .content {
+	float: left;
+	padding: 0px 3px 3px 3px;
+	width: 100%;
+}
+.post .postbody .attachments {
+	clear: both;
+	border-top: 1px dotted #D9D9D9;
+	margin-top: 5px; 
+}
+.post .postbody .attachments img { vertical-align: text-bottom; }
+.post .postfooter .actions, .post .postfooter .status {
+	display:inline;
+	margin-left: 5px;
+	vertical-align: top;
+}
+.post .postfooter {
+	float: right;
+	text-align: right;
+}
+.post .inner > .postfooter { clear: both; }
+.post .contribution {
+	background-color: #F0F8FF;
+	border: 1px solid #D7E5F3;
+	padding: 0 2px 0 2px;
+}
+.post .avatar {
+	float: right;
+	margin-bottom: 5px;
+	margin-left: 4px;
+	padding: 3px;
+	border: 1px solid #ACCCDD;
+	background-color: #E0EAF4;
+}
+.sub_comment { padding-left: 20px; }
+.sub_comment_area {
+	clear: both;
+	background: url("../../img/edge.gif") no-repeat top left; 
+}
+
+.forum_actions .actions {
+	clear: both;
+	border: 1px solid #999999;
+	background-color: #E1EBF5;
+	padding: 3px 3px 3px 3px;
+	vertical-align: middle;
+}
+.forum_actions .actions .action { 
+	margin-right: 10px;
+}
+.forum_actions .headers { vertical-align: bottom; }
+.forum_actions .headers .title {
+	float: left;
+	background-color: #C7D0D9;
+	border: 1px solid #999999;
+	border-bottom: 0;
+	padding: 1px;
+}
+.forum_actions .headers .infos {
+	float: right;
+	font-size: smaller;
+	padding-top: 2px;
+}
+.thread_pagination {
+	text-align: center;
+	margin-bottom: 10px;
+}
+.nb_replies { white-space: nowrap; }
+.post_preview, .top_post { margin-bottom: 15px; }
+/*.post .postbody .signature { float: left; }*/
