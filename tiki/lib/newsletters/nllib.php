@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.57 2007-07-01 17:02:58 tombombadilom Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.58 2007-07-02 01:34:42 tombombadilom Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -34,6 +34,57 @@ class NlLib extends TikiLib {
 		$result = $this->query($query,array((int)$nlId));
 	}
 
+	function list_author_newsletters($offset=0, $maxRecords=-1, $sort_mode, $find='', $update='', $perms='',$userName) {
+		global $user, $tikilib;
+		$bindvars = array();
+		if ($find) {
+			$findesc = '%' . $find . '%';
+			$mid = " where (`name` like ? or `description` like ?) and `author` =?";
+			$bindvars[] = $findesc;
+			$bindvars[] = $findesc;
+			$bindvars[] = $userName;
+		} else {
+			$mid = " where `author` =?";
+			$bindvars[] = $userName;
+		}
+
+		$query = "select * from `tiki_newsletters` $mid order by ".$this->convert_sortmode("$sort_mode");
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = 0;
+		$ret = array();
+
+		while ($res = $result->fetchRow()) {
+			$res['tiki_p_admin_newsletters'] = $tikilib->user_has_perm_on_object($user, $res['nlId'], 'newsletter', 'tiki_p_admin_newsletters')? 'y': 'n';
+			$res['tiki_p_send_newsletters'] = $tikilib->user_has_perm_on_object($user, $res['nlId'], 'newsletter', 'tiki_p_send_newsletters')? 'y': 'n';
+			$res['tiki_p_subscribe_newsletters'] = $tikilib->user_has_perm_on_object($user, $res['nlId'], 'newsletter', 'tiki_p_subscribe_newsletters')? 'y': 'n';
+			if (!empty($perms)) {
+				$hasPerm = false;
+				if (is_array($perms)) {
+					foreach ($perms as $perm) {
+			 			if ($res[$perm] == 'y') {
+							$hasPerm = true;
+							break;
+						}
+					}
+				} else {
+					$hasPerm = $res[$perm];
+				}
+				if (!$hasPerm)
+					continue;
+			}
+			++$cant;
+			$ok = count($this->get_all_subscribers($res["nlId"], ""));
+			$notok = $this->getOne("select count(*) from `tiki_newsletter_subscriptions` where `valid`=? and `nlId`=?",array('n',(int)$res["nlId"]));
+			$res["users"] = $ok + $notok;
+			$res["confirmed"] = $ok;
+			$ret[] = $res;
+		}
+		$retval = array();
+		$retval["data"] = $ret;
+		$retval["cant"] = $cant;
+		return $retval;
+	}
+	
 	/* get only the email subscribers */
 	function get_subscribers($nlId) {
 		$query = "select `email` from `tiki_newsletter_subscriptions` where `valid`=? and `nlId`=? and isUser !='y'";
