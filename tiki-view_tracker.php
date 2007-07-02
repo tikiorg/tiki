@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.131 2007-06-29 16:33:41 gillesm Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.132 2007-07-02 13:35:13 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -624,8 +624,6 @@ if (isset($_REQUEST['import'])) {
 	}
 }
 
-$smarty->assign_by_ref('fields', $fields["data"]);
-
 if (!isset($_REQUEST["sort_mode"])) {
 	if (isset($tracker_info['defaultOrderKey'])) {
 		if ($tracker_info['defaultOrderKey'] == -1)
@@ -661,8 +659,12 @@ if (!isset($_REQUEST["offset"])) {
 } else {
 	$offset = $_REQUEST["offset"];
 }
-
 $smarty->assign_by_ref('offset', $offset);
+
+if (!empty($_REQUEST["maxRecords"])) {
+	$maxRecords = $_REQUEST['maxRecords'];
+	$smarty->assign('maxRecords', $maxRecords);
+}
 
 if (isset($_REQUEST["initial"])) {
 	$initial = $_REQUEST["initial"];
@@ -788,6 +790,7 @@ foreach ($listfields as $sfid => $oneitem) {
 
 $smarty->assign('trackerId', $_REQUEST["trackerId"]);
 $smarty->assign('tracker_info', $tracker_info);
+$smarty->assign('fields', $fields['data']);
 $smarty->assign_by_ref('items', $items["data"]);
 $smarty->assign_by_ref('item_count', $items['cant']);
 $smarty->assign_by_ref('listfields', $listfields);
