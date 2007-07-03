@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.30 2007-03-05 18:41:38 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.31 2007-07-03 15:01:13 sept_7 Exp $
 //
 
 // $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
@@ -231,6 +231,7 @@ function convert_query(&$query) {
         break;
 
         case "postgres7":
+        case "postgres8":
         case "sybase":
             $query = preg_replace("/`/", "\"", $query);
         break;
@@ -295,6 +296,7 @@ function convert_sortmode($sort_mode) {
 
     if ($sort_mode == 'random') {
 	$map = array("postgres7" => "RANDOM()",
+		     "postgres8" => "RANDOM()",
 		     "mysql3" => "RAND()",
 		     "mysql" => "RAND()",
 		     "mysqli" => "RAND()",
@@ -319,6 +321,7 @@ function convert_sortmode($sort_mode) {
 	
 	switch ($ADODB_LASTDB) {
         case "postgres7":
+        case "postgres8":
         case "oci8":
         case "sybase":
         case "mssql":
@@ -353,6 +356,7 @@ function convert_binary() {
     switch ($ADODB_LASTDB) {
         case "oci8":
         case "postgres7":
+        case "postgres8":
         case "sqlite":
             return;
         break;

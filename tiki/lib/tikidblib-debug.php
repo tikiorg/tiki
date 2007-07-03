@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib-debug.php,v 1.15 2007-02-09 12:31:22 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib-debug.php,v 1.16 2007-07-03 15:01:13 sept_7 Exp $
 //
 
 
@@ -248,6 +248,7 @@ function convert_query(&$query) {
         break;
 
         case "postgres7":
+        case "postgres8":
         case "sybase":
             $query = preg_replace("/`/", "\"", $query);
 
@@ -319,6 +320,7 @@ function convert_sortmode($sort_mode) {
 
     switch ($ADODB_LASTDB) {
         case "postgres7":
+        case "postgres8":
         case "oci8":
         case "sybase":
         case "mssql":
@@ -355,6 +357,7 @@ function convert_binary() {
     switch ($ADODB_LASTDB) {
         case "oci8":
         case "postgres7":
+        case "postgres8":
         case "sqlite":
             return;
 
