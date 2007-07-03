@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.205 2007-06-29 16:55:34 gillesm Exp $
+// CVS: $Id: trackerlib.php,v 1.206 2007-07-03 16:03:33 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2088,11 +2088,18 @@ class TrackerLib extends TikiLib {
 			if (substr($fieldId, 0, 1) == '-') {
 				$fieldId = substr($fieldId, 1);
 			}
-			foreach ($allFields['data'] as $field) {
+			foreach ($allFields['data'] as $i=>$field) {
 				if ($field['fieldId'] == $fieldId) {
 					$tmp[] = $field;
+					$allFields['data'][$i]['fieldId'] = 0;
 					break;
 				}
+			}
+		}
+		// do not forget the admin fields like user selector
+		foreach ($allFields['data'] as $field) {
+			if ($field['fieldId']) {
+				$tmp[] = $field;
 			}
 		}
 		$allFields['data'] = $tmp;
