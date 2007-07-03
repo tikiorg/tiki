@@ -2,7 +2,7 @@
 
 // $start_time = microtime(true);
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.73 2007-06-16 16:01:41 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.74 2007-07-03 14:30:39 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -170,8 +170,8 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 		$_REQUEST["comments_parentId"] = 0;
 	    }
 
-	    //Replace things between square brackets by links
-	    $_REQUEST["comments_data"] = strip_tags($_REQUEST["comments_data"]);
+	    // Remove HTML tags and empty lines at the end of the posted comment
+	    $_REQUEST["comments_data"] = rtrim(strip_tags($_REQUEST["comments_data"]));
 
 	    if ($_REQUEST["comments_threadId"] == 0) {
 		if (isset($_REQUEST["comments_reply_threadId"]) &&
