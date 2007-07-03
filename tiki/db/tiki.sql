@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-07-01 16:56:02 $
-# $Author: mose $
+# $Date: 2007-07-03 21:58:53 $
+# $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -2483,7 +2483,7 @@ CREATE TABLE tiki_pages (
   flag char(1) default NULL,
   points int(8) default NULL,
   votes int(8) default NULL,
-  cache mediumtext,
+  cache longtext,
   wiki_cache int(10) default NULL,
   cache_timestamp int(14) default NULL,
   pageRank decimal(4,3) default NULL,
