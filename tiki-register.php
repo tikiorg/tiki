@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.86 2007-06-25 16:32:40 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.87 2007-07-03 18:37:45 sylvieg Exp $
 
 /**
  * Tiki registration script
@@ -9,7 +9,7 @@
  * @license GNU LGPL
  * @copyright Tiki Community
  * @date created: 2002/10/8 15:54
- * @date last-modified: $Date: 2007-06-25 16:32:40 $
+ * @date last-modified: $Date: 2007-07-03 18:37:45 $
  */
 
 // Initialization
@@ -39,6 +39,23 @@ $customfields = array();
 $customfields = $registrationlib->get_customfields();
 $smarty->assign_by_ref('customfields', $customfields);
 		
+$listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
+$nbChoiceGroups = 0;
+$mandatoryChoiceGroups = true;
+foreach ($listgroups['data'] as $gr) {
+	if ($gr['registrationChoice'] == 'y') {
+		++$nbChoiceGroups;
+		$theChoiceGroup = $gr['groupName'];
+		if ($gr['groupName'] == 'Registered')
+			$mandatoryChoiceGroups = false;
+	}
+}
+if ($nbChoiceGroups) {
+	$smarty->assign('listgroups', $listgroups['data'] );
+	if ($nbChoiceGroups == 1) {
+		$smarty->assign_by_ref('theChoiceGroup', $theChoiceGroup);
+	}
+}
 
 if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST['pass'])) {
   check_ticket('register');
@@ -133,6 +150,11 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
       die;
     }
   }
+  if ($nbChoiceGroups > 0 && $mandatoryChoiceGroups && empty($_REQUEST['chosenGroup'])) {
+      $smarty->assign('msg',tra('You must choose a group'));
+      $smarty->display("error.tpl");
+      die;
+    }	  
   
 	if ($login_is_email == 'y') {
 		if (empty($_REQUEST['novalidation']) || $_REQUEST['novalidation'] != 'yes') {
@@ -265,20 +287,6 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
 }
 $smarty->assign('email_valid',$email_valid);
 
-$listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
-$nbChoiceGroups = 0;
-foreach ($listgroups['data'] as $gr) {
-	if ($gr['registrationChoice'] == 'y') {
-		++$nbChoiceGroups;
-		$theChoiceGroup = $gr['groupName'];
-	}
-}
-if ($nbChoiceGroups) {
-	$smarty->assign('listgroups', $listgroups['data'] );
-	if ($nbChoiceGroups == 1) {
-		$smarty->assign_by_ref('theChoiceGroup', $theChoiceGroup);
-	}
-}
 ask_ticket('register');
 
 $_VALID = tra("Please enter a valid %s.  No spaces, more than %d characters and contain %s");
